@@ -97,6 +97,7 @@ private import gtk.Bin;
  * custom <accel-groups> element, which supports any number of <group>
  * elements representing the GtkAccelGroup objects you want to add to your
  * window (synonymous with gtk_window_add_accel_group().
+ * $(DDOC_COMMENT example)
  */
 public class Window : Bin
 {
@@ -1737,6 +1738,7 @@ public class Window : Bin
 	 * to be called when the window has its "final" size, i.e. after calling
 	 * gtk_widget_show_all() on the contents and gtk_window_set_geometry_hints()
 	 * on the window.
+	 * $(DDOC_COMMENT example)
 	 * Params:
 	 * geometry = geometry string
 	 * Returns: TRUE if string was parsed successfully

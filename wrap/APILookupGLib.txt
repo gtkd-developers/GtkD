@@ -1157,6 +1157,8 @@ class: TimeZone
 prefix: g_time_zone_
 import: glib.Str
 structWrap: GTimeZone* TimeZone
+nocode: g_time_zone_new_local
+nocode: g_time_zone_new_utc
 outFile: TimeZone
 
 file: glib-GDateTime.html
@@ -1171,7 +1173,91 @@ structWrap: GTimeZone* TimeZone
 structWrap: GTimeVal* TimeVal
 structWrap: gconstpointer DateTime
 
+nocode: g_date_time_new_now_utc
+nocode: g_date_time_new_now_local
+nocode: g_date_time_new_from_unix_local
+nocode: g_date_time_new_from_unix_utc
+nocode: g_date_time_new_from_timeval_local
+nocode: g_date_time_new_from_timeval_utc
+nocode: g_date_time_new_local
+nocode: g_date_time_new_utc
+
 code: start
+	/**
+	 * Creates a GDateTime corresponding to the given Unix time t
+	 * Unix time is the number of seconds that have elapsed since 1970-01-01
+	 * 00:00:00 UTC, regardless of the local time offset.
+	 * 
+	 * This call can fail (returning NULL) if t represents a time outside
+	 * of the supported range of GDateTime.
+	 * You should release the return value by calling g_date_time_unref()
+	 * when you are done with it.
+	 * Since 2.26
+	 * 
+	 * Params:
+	 *     t   = the Unix time
+	 *     utc = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (long t, bool utc = true)
+	{
+		// GDateTime * g_date_time_new_from_unix_local (gint64 t);
+		GDateTime* p;
+
+		if ( utc )
+		{
+			p = g_date_time_new_from_unix_utc(t);
+		}
+		else
+		{
+			p = g_date_time_new_from_unix_local(t);
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_date_time_new_from_unix_local(t)");
+		}
+		this(cast(GDateTime*) p);
+	}
+
+	/**
+	 * Creates a GDateTime corresponding to the given GTimeVal tv.
+	 * The time contained in a GTimeVal is always stored in the form of
+	 * seconds elapsed since 1970-01-01 00:00:00 UTC, regardless of the
+	 * local time offset.
+	 * 
+	 * This call can fail (returning NULL) if tv represents a time outside
+	 * of the supported range of GDateTime.
+	 * You should release the return value by calling unref()
+	 * when you are done with it.
+	 * Since 2.26
+	 * 
+	 * Params:
+	 *     tv  = a GTimeVal
+	 *     utc = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (TimeVal tv, bool utc = true)
+	{
+		// GDateTime * g_date_time_new_from_timeval_local (const GTimeVal *tv);
+		GDateTime* p;
+
+		if ( utc )
+		{
+			p = g_date_time_new_from_timeval_utc((tv is null) ? null : tv.getTimeValStruct());
+		}
+		else
+		{
+			p = g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct());
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
+		}
+		this(cast(GDateTime*) p);
+	}
+
 	override bool opEquals(Object rhs)
 	{
 		DateTime date = cast(DateTime)rhs;

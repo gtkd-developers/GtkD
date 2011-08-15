@@ -40,6 +40,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_time_zone_new_local
+ * 	- g_time_zone_new_utc
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -167,28 +169,6 @@ public class TimeZone
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_time_zone_new(Str.toStringz(identifier))");
-		}
-		this(cast(GTimeZone*) p);
-	}
-	
-	/**
-	 * Creates a GTimeZone corresponding to local time.
-	 * This is equivalent to calling g_time_zone_new() with the value of the
-	 * TZ environment variable (including the possibility
-	 * of NULL). Changes made to TZ after the first
-	 * call to this function may or may not be noticed by future calls.
-	 * You should release the return value by calling g_time_zone_unref()
-	 * when you are done with it.
-	 * Since 2.26
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GTimeZone * g_time_zone_new_local (void);
-		auto p = g_time_zone_new_local();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_time_zone_new_local()");
 		}
 		this(cast(GTimeZone*) p);
 	}

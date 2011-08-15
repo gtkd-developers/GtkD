@@ -79,6 +79,7 @@ private import gstreamer.Caps;
  * created one will typically allocate memory for it and set the size of the
  * buffer data. The following example creates a buffer that can hold a given
  * video frame with a given width, height and bits per plane.
+ * $(DDOC_COMMENT example)
  * Alternatively, use gst_buffer_new_and_alloc()
  * to create a buffer with preallocated data of a given size.
  * The data pointed to by the buffer can be retrieved with the GST_BUFFER_DATA()

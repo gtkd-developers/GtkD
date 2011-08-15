@@ -68,6 +68,7 @@ private import glib.ConstructionException;
  *  The type is initially introduced (usually upon loading the module
  *  the first time, or by your main application that knows what modules
  *  introduces what types), like this:
+ * $(DDOC_COMMENT example)
  *  where new_type_plugin is an implementation of the
  *  GTypePlugin interface.
  *  The type's implementation is referenced, e.g. through

@@ -140,11 +140,13 @@ private import glib.Str;
  * provided. The first example shows three ways of getting the iter at the
  * location “3:2:5”. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
+ * $(DDOC_COMMENT example)
  * This second example shows a quick way of iterating through a list and
  * getting a string and an integer from each row. The
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
+ * $(DDOC_COMMENT example)
  */
 public class TreePath
 {

@@ -98,6 +98,7 @@ private import gtk.Label;
  * set (see GtkAccelFlags).
  * A GtkAccelLabel can display multiple accelerators and even signal names,
  * though it is almost always used to display just one accelerator key.
+ * $(DDOC_COMMENT example)
  */
 public class AccelLabel : Label
 {

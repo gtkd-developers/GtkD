@@ -93,6 +93,7 @@ public import glib.ListG;
  * multiple <attribute> elements. Each <attribute> element has
  * a name attribute which specifies a property of the cell renderer; the
  * content of the element is the attribute value.
+ * $(DDOC_COMMENT example)
  */
 public template CellLayoutT(TStruct)
 {

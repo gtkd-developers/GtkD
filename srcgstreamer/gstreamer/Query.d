@@ -84,6 +84,7 @@ private import gstreamer.Structure;
  * Query values can be set using gst_query_set_xxx(), and parsed using
  * gst_query_parse_xxx() helpers.
  * The following example shows how to query the duration of a pipeline:
+ * $(DDOC_COMMENT example)
  * Last reviewed on 2006-02-14 (0.10.4)
  */
 public class Query

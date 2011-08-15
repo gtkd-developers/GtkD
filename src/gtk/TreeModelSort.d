@@ -104,11 +104,13 @@ private import gobject.ObjectG;
  * view of the data without affecting the other. By contrast, if we
  * simply put the same model in each widget, then sorting the first would
  * sort the second.
+ * $(DDOC_COMMENT example)
  * To demonstrate how to access the underlying child model from the sort
  * model, the next example will be a callback for the GtkTreeSelection
  * "changed" signal. In this callback, we get a string from COLUMN_1 of
  * the model. We then modify the string, find the same selected row on the
  * child model, and change the row there.
+ * $(DDOC_COMMENT example)
  */
 public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortableIF
 {

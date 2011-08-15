@@ -100,6 +100,8 @@ private import glib.Str;
  * To destroy a memory chunk, use g_mem_chunk_destroy().
  * To help debug memory chunks, use g_mem_chunk_info() and
  * g_mem_chunk_print().
+ * $(DDOC_COMMENT example)
+ * $(DDOC_COMMENT example)
  */
 public class MemoryChunk
 {

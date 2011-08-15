@@ -82,7 +82,9 @@ private import gtk.Dialog;
  * you can also pass in the GTK_DIALOG_MODAL flag, gtk_dialog_run() automatically
  * makes the dialog modal and waits for the user to respond to it. gtk_dialog_run()
  * returns when any dialog button is clicked.
+ * $(DDOC_COMMENT example)
  * You might do a non-modal GtkMessageDialog as follows:
+ * $(DDOC_COMMENT example)
  */
 public class MessageDialog : Dialog
 {

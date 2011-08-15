@@ -131,6 +131,7 @@ private import gtk.Container;
  * GtkTreeView as GtkBuildable
  * The GtkTreeView implementation of the GtkBuildable interface accepts
  * GtkTreeViewColumn objects as <child> elements in UI definitions.
+ * $(DDOC_COMMENT example)
  */
 public class TreeView : Container
 {

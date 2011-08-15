@@ -84,6 +84,7 @@ private import gtk.Dialog;
  *  Note that GtkFileChooserDialog does not have any methods of its
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
+ * $(DDOC_COMMENT example)
  * Response Codes
  *  GtkFileChooserDialog inherits from GtkDialog, so buttons that
  *  go in its action area have response codes such as

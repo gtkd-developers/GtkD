@@ -87,6 +87,7 @@ private import gtk.Misc;
  * custom <attributes> element, which supports any number of <attribute>
  * elements. the <attribute> element has attributes named name, value,
  * start and end and allows you to specify PangoAttribute values for this label.
+ * $(DDOC_COMMENT example)
  * The start and end attributes specify the range of characters to which the
  * Pango attribute applies. If start and end are not specified, the attribute is
  * applied to the whole text. Note that specifying ranges does not make much
@@ -105,16 +106,20 @@ private import gtk.Misc;
  * mnemonic's target widget, you have to tell the label about the target
  * using gtk_label_set_mnemonic_widget(). Here's a simple example where
  * the label is inside a button:
+ * $(DDOC_COMMENT example)
  * There's a convenience function to create buttons with a mnemonic label
  * already inside:
+ * $(DDOC_COMMENT example)
  * To create a mnemonic for a widget alongside the label, such as a
  * GtkEntry, you have to point the label at the entry with
  * gtk_label_set_mnemonic_widget():
+ * $(DDOC_COMMENT example)
  * <hr>
  * Markup (styled text)
  * To make it easy to format text in a label (changing colors, fonts,
  * etc.), label text can be provided in a simple markup format.
  * Here's how to create a label with a small font:
+ * $(DDOC_COMMENT example)
  * (See complete documentation of available
  * tags in the Pango manual.)
  * The markup passed to gtk_label_set_markup() must be valid; for example,
@@ -154,6 +159,7 @@ private import gtk.Misc;
  * a with href and title attributes. GTK+ renders links similar to the
  * way they appear in web browsers, with colored, underlined text. The title
  * attribute is displayed as a tooltip on the link. An example looks like this:
+ * $(DDOC_COMMENT example)
  * It is possible to implement custom handling for links and their tooltips with
  * the "activate-link" signal and the gtk_label_get_current_uri() function.
  */

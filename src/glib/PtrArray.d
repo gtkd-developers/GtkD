@@ -78,6 +78,7 @@ private import glib.ConstructionException;
  * To access an element of a pointer array, use g_ptr_array_index().
  * To set the size of a pointer array, use g_ptr_array_set_size().
  * To free a pointer array, use g_ptr_array_free().
+ * $(DDOC_COMMENT example)
  */
 public class PtrArray
 {

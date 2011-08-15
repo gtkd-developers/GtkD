@@ -100,6 +100,9 @@ public class MessageLog
 	 * Note that since the G_LOG_LEVEL_ERROR log level is always fatal, if
 	 * you want to set a handler for this log level you must combine it with
 	 * G_LOG_FLAG_FATAL.
+	 * $(DDOC_COMMENT example)
+	 * $(DDOC_COMMENT example)
+	 * $(DDOC_COMMENT example)
 	 * Params:
 	 * logDomain = the log domain, or NULL for the default "" application domain.
 	 * logLevels = the log levels to apply the log handler for. To handle fatal

@@ -97,6 +97,7 @@ private import gtk.CheckButton;
  * To remove a GtkRadioButton from one group and make it part of a new one, use gtk_radio_button_set_group().
  * The group list does not need to be freed, as each GtkRadioButton will remove
  * itself and its list item when it is destroyed.
+ * $(DDOC_COMMENT example)
  * When an unselected button in the group is clicked the clicked button
  * receives the "toggled" signal, as does the previously selected button.
  * Inside the "toggled" handler, gtk_toggle_button_get_active() can be used

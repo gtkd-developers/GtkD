@@ -92,6 +92,7 @@ private import glib.Str;
  * the bookmark as "private" to the applications and groups that has it
  * registered; the URI and MIME type of an icon, to be used when displaying
  * the bookmark inside a GUI.
+ * $(DDOC_COMMENT example)
  * A bookmark file might contain more than one bookmark; each bookmark
  * is accessed through its URI.
  * The important caveat of bookmark files is that when you add a new

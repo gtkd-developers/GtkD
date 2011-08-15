@@ -195,10 +195,12 @@ private import gtk.ObjectGtk;
  * The GtkWidget implementation of the GtkBuildable interface supports a
  * custom <accelerator> element, which has attributes named key,
  * modifiers and signal and allows to specify accelerators.
+ * $(DDOC_COMMENT example)
  * In addition to accelerators, GtkWidget also support a
  * custom <accessible> element, which supports actions and relations.
  * Properties on the accessible implementation of an object can be set by accessing the
  * internal child "accessible" of a GtkWidget.
+ * $(DDOC_COMMENT example)
  */
 public class Widget : ObjectGtk, BuildableIF
 {
@@ -1093,6 +1095,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * the data was processed successfully.
 	 * The handler may inspect and modify drag_context->action before calling
 	 * gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as shown in the
+	 * $(DDOC_COMMENT example)
 	 */
 	void addOnDragDataReceived(void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1275,6 +1278,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * last "drag-leave" and if not, treat the drag-motion signal as
 	 * an "enter" signal. Upon an "enter", the handler will typically highlight
 	 * the drop site with gtk_drag_highlight().
+	 * $(DDOC_COMMENT example)
 	 */
 	void addOnDragMotion(bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3527,6 +3531,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * To reliably find the toplevel GtkWindow, use
 	 * gtk_widget_get_toplevel() and check if the TOPLEVEL flags
 	 * is set on the result.
+	 * $(DDOC_COMMENT example)
 	 * Returns: the topmost ancestor of widget, or widget itself if there's no ancestor.. transfer none.
 	 */
 	public Widget getToplevel()

@@ -146,6 +146,7 @@ public import gtk.FileFilter;
  * gtk_file_chooser_set_preview_widget_active() with a boolean
  * flag that indicates whether your callback could successfully
  * generate a preview.
+ * $(DDOC_COMMENT example)
  * <hr>
  * Adding Extra Widgets
  * You can add extra widgets to a file chooser to provide options
@@ -154,6 +155,7 @@ public import gtk.FileFilter;
  * file in read-only mode. You can use
  * gtk_file_chooser_set_extra_widget() to insert additional
  * widgets in a file chooser.
+ * $(DDOC_COMMENT example)
  * Note
  *  If you want to set more than one extra widget in the file
  *  chooser, you can a container such as a GtkVBox or a GtkTable
@@ -167,6 +169,7 @@ public import gtk.FileFilter;
  * widget has several key
  * bindings and their associated signals. This section
  * describes the available key binding signals.
+ * $(DDOC_COMMENT example)
  * You can change these defaults to something else. For
  * example, to add a Shift modifier to a few
  * of the default bindings, you can include the following
@@ -340,6 +343,7 @@ public template FileChooserT(TStruct)
 	 * dialog should be used, it should return
 	 * GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM. The following example
 	 * illustrates this.
+	 * $(DDOC_COMMENT example)
 	 *
 	 * Since 2.8
 	 */

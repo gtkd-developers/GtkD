@@ -93,6 +93,7 @@ private import gtk.Dialog;
  * If you want provide your own hooks overriding the default ones, it is
  * important to do so before setting the website and email URL properties,
  * like this:
+ * $(DDOC_COMMENT example)
  * To disable the default hooks, you can pass NULL as the hook func. Then,
  * the GtkAboutDialog widget will not display the website or the
  * email addresses as clickable.
@@ -104,6 +105,7 @@ private import gtk.Dialog;
  * application, but in order to ensure proper translation of the title,
  * applications should set the title property explicitly when constructing
  * a GtkAboutDialog, as shown in the following example:
+ * $(DDOC_COMMENT example)
  * Note that prior to GTK+ 2.12, the "program-name" property
  * was called "name". This was changed to avoid the conflict with the
  * "name" property.

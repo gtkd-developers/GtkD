@@ -86,6 +86,7 @@ private import gtk.ObjectGtk;
  * widget inside a GtkEventBox and add a tooltip to that instead.
  * The default appearance of all tooltips in a program is determined by the current GTK+ theme that the user has selected.
  * Information about the tooltip (if any) associated with an arbitrary widget can be retrieved using gtk_tooltips_data_get().
+ * $(DDOC_COMMENT example)
  */
 public class Tooltips : ObjectGtk
 {

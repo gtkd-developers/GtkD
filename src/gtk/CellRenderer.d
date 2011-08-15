@@ -202,6 +202,7 @@ public class CellRenderer : ObjectGtk
 	 * Note that GTK+ doesn't guarantee that cell renderers will
 	 * continue to use the same kind of widget for editing in future
 	 * releases, therefore you should check the type of editable
+	 * $(DDOC_COMMENT example)
 	 * Since 2.6
 	 * See Also
 	 * GtkCellRendererText,GtkCellRendererPixbuf,GtkCellRendererToggle

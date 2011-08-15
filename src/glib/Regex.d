@@ -336,6 +336,7 @@ public class Regex
 	 * i.e. you must free it regardless if regular expression actually matched.
 	 * To retrieve all the non-overlapping matches of the pattern in
 	 * string you can use g_match_info_next().
+	 * $(DDOC_COMMENT example)
 	 * string is not copied and is used in GMatchInfo internally. If
 	 * you use any GMatchInfo method (except g_match_info_free()) after
 	 * freeing or modifying string then the behaviour is undefined.
@@ -376,6 +377,7 @@ public class Regex
 	 * freeing or modifying string then the behaviour is undefined.
 	 * To retrieve all the non-overlapping matches of the pattern in
 	 * string you can use g_match_info_next().
+	 * $(DDOC_COMMENT example)
 	 * Since 2.14
 	 * Params:
 	 * string = the string to scan for matches. [array length=string_len]

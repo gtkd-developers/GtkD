@@ -586,6 +586,7 @@ public class SourceView : TextView
 	 * If you also specified a function with
 	 * gtk_source_view_set_mark_category_tooltip_markup_func() the markup
 	 * variant takes precedence.
+	 * $(DDOC_COMMENT example)
 	 * Since 2.8
 	 * Params:
 	 * category = a mark category.

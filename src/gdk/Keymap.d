@@ -331,6 +331,7 @@ public class Keymap : ObjectG
 	 * symbol is shifted, so when comparing a key press to a
 	 * <Control>plus accelerator <Shift> should
 	 * be masked out.
+	 * $(DDOC_COMMENT example)
 	 * An older interpretation consumed_modifiers was that it contained
 	 * all modifiers that might affect the translation of the key;
 	 * this allowed accelerators to be stored with irrelevant consumed

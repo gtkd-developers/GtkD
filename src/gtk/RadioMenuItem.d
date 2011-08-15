@@ -82,6 +82,7 @@ private import gtk.CheckMenuItem;
  * remove itself and its list item when it is destroyed.
  * The correct way to create a group of radio menu items is approximatively
  * this:
+ * $(DDOC_COMMENT example)
  */
 public class RadioMenuItem : CheckMenuItem
 {

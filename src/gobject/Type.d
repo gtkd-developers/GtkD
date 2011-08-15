@@ -340,6 +340,7 @@ public class Type
 	 * MyObject defined in the standard GObject
 	 * fashion.
 	 * type's class_init() function.
+	 * $(DDOC_COMMENT example)
 	 * Since 2.4
 	 * Params:
 	 * gClass = class structure for an instantiatable type

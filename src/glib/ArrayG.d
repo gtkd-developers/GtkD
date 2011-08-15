@@ -77,6 +77,7 @@ private import glib.Str;
  * To access an element of an array, use g_array_index().
  * To set the size of an array, use g_array_set_size().
  * To free an array, use g_array_free().
+ * $(DDOC_COMMENT example)
  */
 public class ArrayG
 {

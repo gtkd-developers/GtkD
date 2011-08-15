@@ -92,6 +92,7 @@ private import glib.VariantType;
  * provided by this interface.
  * The code in the example program below demonstrates GValue's
  * features.
+ * $(DDOC_COMMENT example)
  */
 public class Value
 {

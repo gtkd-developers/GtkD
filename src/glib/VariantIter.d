@@ -357,6 +357,7 @@ public class VariantIter
 	 * NULL is returned.
 	 * Use g_variant_unref() to drop your reference on the return value when
 	 * you no longer need it.
+	 * $(DDOC_COMMENT example)
 	 * Since 2.24
 	 * Returns: a GVariant, or NULL. [allow-none]
 	 */

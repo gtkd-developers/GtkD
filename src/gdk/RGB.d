@@ -107,6 +107,7 @@ private import gdk.Visual;
  * accelerated using mediaLib, which provides hardware acceleration on Intel,
  * AMD, and Sparc chipsets. If desired, mediaLib support can be turned off
  * by setting the GDK_DISABLE_MEDIALIB environment variable.
+ * $(DDOC_COMMENT example)
  */
 public class RGB
 {

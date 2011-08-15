@@ -85,10 +85,12 @@ private import glib.OptionGroup;
  * gst_init() before it can be used. You should pass pointers to the main argc
  * and argv variables so that GStreamer can process its own command line
  * options, as shown in the following example.
+ * $(DDOC_COMMENT example)
  * It's allowed to pass two NULL pointers to gst_init() in case you don't want
  * to pass the command line args to GStreamer.
  * You can also use GOption to initialize your own parameters as shown in
  * the next code fragment:
+ * $(DDOC_COMMENT example)
  * Use gst_version() to query the library version at runtime or use the
  * GST_VERSION_* macros to find the version at compile time. Optionally
  * gst_version_string() returns a printable string.

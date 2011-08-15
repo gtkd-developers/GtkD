@@ -84,6 +84,7 @@ private import gtk.Widget;
  * Note that GDK automatically clears the exposed area
  * to the background color before sending the expose event, and
  * that drawing is implicitly clipped to the exposed area.
+ * $(DDOC_COMMENT example)
  * Expose events are normally delivered when a drawing area first comes
  * onscreen, or when it's covered by another window and then uncovered
  * (exposed). You can also force an expose event by adding to the "damage

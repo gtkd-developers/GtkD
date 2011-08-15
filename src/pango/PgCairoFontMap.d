@@ -97,6 +97,7 @@ private import pango.PgFontMap;
  * of the current transformation matrix. Note that the basic metrics
  * functions in Pango report results in integer Pango units. To get
  * to the floating point units used in Cairo divide by PANGO_SCALE.
+ * $(DDOC_COMMENT example)
  * Figure  2.  Output of Example  1, “Using Pango with Cairo”
  */
 public class PgCairoFontMap : PgFontMap

@@ -5152,6 +5152,7 @@ public struct GtkProgress{}
  * Here is how one passes an integer as user data,
  * for when you just want to specify a constant int
  * as parameter to your function:
+ * $(DDOC_COMMENT example)
  * object  :
  * the object associated with the signal, e.g. if a button
  * is getting pressed, this is that button.
@@ -5199,6 +5200,7 @@ public struct GtkProgress{}
  * This is useful for passing a standard function in as a callback.
  * For example, if you wanted a button's press to gtk_widget_show()
  * some widget, you could write:
+ * $(DDOC_COMMENT example)
  * object  :
  * the object which emits the signal.
  * name  :

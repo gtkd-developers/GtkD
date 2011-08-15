@@ -129,6 +129,7 @@ public class HashTableIter
 	 * Initializes a key/value pair iterator and associates it with
 	 * hash_table. Modifying the hash table after calling this function
 	 * invalidates the returned iterator.
+	 * $(DDOC_COMMENT example)
 	 * Since 2.16
 	 * Params:
 	 * hashTable = a GHashTable.

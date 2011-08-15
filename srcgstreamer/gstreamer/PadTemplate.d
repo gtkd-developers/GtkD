@@ -98,8 +98,10 @@ private import gstreamer.ObjectGst;
  * or gst_pad_new_from_static_template()) or to add to an element class
  * (see gst_element_class_add_pad_template()).
  * The following code example shows the code to create a pad from a padtemplate.
+ * $(DDOC_COMMENT example)
  * The following example shows you how to add the padtemplate to an
  * element class, this is usually done in the base_init of the class:
+ * $(DDOC_COMMENT example)
  * Last reviewed on 2006-02-14 (0.10.3)
  */
 public class PadTemplate : ObjectGst

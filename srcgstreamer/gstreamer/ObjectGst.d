@@ -103,12 +103,14 @@ private import gobject.ObjectG;
  * nothing if an object is already sunk (has no floating reference).
  * When you add a GstElement to its parent container, the parent container will
  * do this:
+ * $(DDOC_COMMENT example)
  * This means that the container now owns a reference to the child element
  * (since it called gst_object_ref()), and the child element has no floating
  * reference.
  * The purpose of the floating reference is to keep the child element alive
  * until you add it to a parent container, which then manages the lifetime of
  * the object itself:
+ * $(DDOC_COMMENT example)
  * Another effect of this is, that calling gst_object_unref() on a bin object,
  * will also destoy all the GstElement objects in it. The same is true for
  * calling gst_bin_remove().

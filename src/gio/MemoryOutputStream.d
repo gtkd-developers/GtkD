@@ -129,6 +129,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * If realloc_fn is non-NULL, it will be used for resizing the internal
 	 * storage when necessary. To construct a fixed-size output stream,
 	 * pass NULL as realloc_fn.
+	 * $(DDOC_COMMENT example)
 	 * Params:
 	 * data = pointer to a chunk of memory to use, or NULL
 	 * size = the size of data

@@ -81,6 +81,7 @@ private import gtk.Button;
  * gtk_toggle_button_set_active(), and retrieved using
  * gtk_toggle_button_get_active().
  * To simply switch the state of a toggle button, use gtk_toggle_button_toggled.
+ * $(DDOC_COMMENT example)
  */
 public class ToggleButton : Button
 {

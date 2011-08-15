@@ -379,6 +379,7 @@ public class Thread
 	 * waiting thread will be woken up and get retval as the return value
 	 * of g_thread_join(). If the current thread is not joinable, retval
 	 * is ignored. Calling
+	 * $(DDOC_COMMENT example)
 	 * is equivalent to returning retval from the function func, as given
 	 * to g_thread_create().
 	 * Note

@@ -116,6 +116,7 @@ private import gtk.Widget;
  * state
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
+ * $(DDOC_COMMENT example)
  */
 public class IconSet
 {

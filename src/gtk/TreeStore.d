@@ -110,6 +110,7 @@ private import gobject.ObjectG;
  * to specify the model columns with a <columns> element that may
  * contain multiple <column> elements, each specifying one model
  * column. The "type" attribute specifies the data type for the column.
+ * $(DDOC_COMMENT example)
  */
 public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF, TreeSortableIF
 {

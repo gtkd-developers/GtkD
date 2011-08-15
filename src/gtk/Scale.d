@@ -145,6 +145,7 @@ public class Scale : Range
 	 * value. That string will then be used to display the scale's value.
 	 * Here's an example signal handler which displays a value 1.0 as
 	 * with "-->1.0<--".
+	 * $(DDOC_COMMENT example)
 	 */
 	void addOnFormatValue(string delegate(gdouble, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

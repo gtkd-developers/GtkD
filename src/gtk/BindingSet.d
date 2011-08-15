@@ -98,12 +98,14 @@ private import glib.ScannerG;
  * For example for binding Control and the left or right cursor keys of a
  * GtkEntry widget to the "move-cursor" signal, so movement occurs
  * in 3 letter steps, the following binding can be used:
+ * $(DDOC_COMMENT example)
  * GTK+ already defines a number of useful bindings for the widgets it provides.
  * Because custom bindings set up in RC files take precedence over the default
  * bindings shipped with GTK+, overriding existing bindings as demonstrated in
  * Installing a key binding
  * works as expected. The same mechanism can not be used to "unbind" existing
  * bindings, however.
+ * $(DDOC_COMMENT example)
  * The above example will not have the desired effect of causing
  * "<Control>Right" and "<Control>Left" key presses to be ignored
  * by GTK+. Instead, it just causes any existing bindings from the bindings
@@ -113,6 +115,7 @@ private import glib.ScannerG;
  * key bindings, and will eventually lookup and find the default GTK+ bindings
  * for entries which implement word movement. To keep GTK+ from activating its
  * default bindings, the "unbind" keyword can be used like this:
+ * $(DDOC_COMMENT example)
  * Now, GTK+ will find a match when looking up "<Control>Right" and
  * "<Control>Left" key presses before it resorts to its default
  * bindings, and the match instructs it to abort ("unbind") the search, so

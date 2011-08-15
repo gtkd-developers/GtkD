@@ -250,6 +250,7 @@ public struct GdkPixbufFormat
  * The signature of a module is stored as an array of
  * GdkPixbufModulePatterns. The array is terminated by a pattern
  * where the prefix is NULL.
+ * $(DDOC_COMMENT example)
  * char  *prefix;
  * the prefix for this pattern
  * char  *mask;

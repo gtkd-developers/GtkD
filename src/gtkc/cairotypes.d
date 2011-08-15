@@ -37,6 +37,7 @@ alias ubyte uchar;
  * cairo_bool_t will always be either 0 or 1, but testing against
  * these values explicitly is not encouraged; just use the
  * value as a boolean condition.
+ * $(DDOC_COMMENT example)
  */
 public alias int cairo_bool_t;
 /**

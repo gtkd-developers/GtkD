@@ -117,6 +117,7 @@ private import gobject.ObjectG;
  * by the widget, widget_class,
  * and class declarations. As an example
  * of such a statement:
+ * $(DDOC_COMMENT example)
  * attaches the style "my-entry-class" to all
  * widgets whose widget path matches the
  * pattern "mywindow.*.GtkEntry".
@@ -136,6 +137,7 @@ private import gobject.ObjectG;
  * Since GTK+ 2.10,widget_class paths can also contain
  * <classname> substrings, which are matching
  * the class with the given name and any derived classes. For instance,
+ * $(DDOC_COMMENT example)
  * will match GtkLabel widgets which are contained in any kind of menu item.
  * So, if you have a GtkEntry named "myentry", inside of a
  * horizontal box in a window named "mywindow", then the
@@ -144,6 +146,7 @@ private import gobject.ObjectG;
  * Matching against class is a little different. The pattern match is done
  * against all class names in the widgets class hierarchy (not the layout
  * hierarchy) in sequence, so the pattern:
+ * $(DDOC_COMMENT example)
  * will match not just GtkButton widgets, but also GtkToggleButton and
  * GtkCheckButton widgets, since those classes derive from GtkButton.
  * Additionally, a priority can be specified for each pattern, and styles
@@ -182,7 +185,9 @@ private import gobject.ObjectG;
  *  This reduces the overall amount of RC styles that have to be considered
  *  for a match across a group of applications.
  *  Merge multiple styles which use the same matching rule, for instance:
+ * $(DDOC_COMMENT example)
  *  is faster to match as:
+ * $(DDOC_COMMENT example)
  *  Use of wildcards should be avoided, this can reduce the individual RC style
  *  match to a single integer comparison in most cases.
  *  To avoid complex recursive matching, specification of full class names
@@ -371,6 +376,7 @@ private import gobject.ObjectG;
  *  This is an abbreviation for
  *  shade (0.7, color).
  * Here are some examples of color expressions:
+ * $(DDOC_COMMENT example)
  * In a stock definition, icon sources are specified as a
  * 4-tuple of image filename or icon name, text direction, widget state, and size, in that
  * order. Each icon source specifies an image filename or icon name to use with a given
@@ -382,13 +388,17 @@ private import gobject.ObjectG;
  * wildcard, and if direction/state/size are omitted they default to
  * *. So for example, the following specifies different icons to
  * use for left-to-right and right-to-left languages:
+ * $(DDOC_COMMENT example)
  * This could be abbreviated as follows:
+ * $(DDOC_COMMENT example)
  * You can specify custom icons for specific sizes, as follows:
+ * $(DDOC_COMMENT example)
  * The sizes that come with GTK+ itself are "gtk-menu",
  * "gtk-small-toolbar", "gtk-large-toolbar",
  * "gtk-button", "gtk-dialog". Applications
  * can define other sizes.
  * It's also possible to use custom icons for a given state, for example:
+ * $(DDOC_COMMENT example)
  * When selecting an icon source to use, GTK+ will consider text direction most
  * important, state second, and size third. It will select the best match based on
  * those criteria. If an attribute matches exactly (e.g. you specified
@@ -400,6 +410,7 @@ private import gobject.ObjectG;
  * Key bindings allow the user to specify actions to be
  * taken on particular key presses. The form of a binding
  * set declaration is:
+ * $(DDOC_COMMENT example)
  * key is a string consisting of a
  * series of modifiers followed by the name of a key. The
  * modifiers can be:

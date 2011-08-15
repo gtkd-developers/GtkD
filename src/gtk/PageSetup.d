@@ -91,6 +91,7 @@ private import gobject.ObjectG;
  * To obtain a GtkPageSetup use gtk_page_setup_new()
  * to get the defaults, or use gtk_print_run_page_setup_dialog() to show
  * the page setup dialog and receive the resulting page setup.
+ * $(DDOC_COMMENT example)
  * Printing support was added in GTK+ 2.10.
  */
 public class PageSetup : ObjectG

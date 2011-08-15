@@ -40,6 +40,14 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_date_time_new_now_utc
+ * 	- g_date_time_new_now_local
+ * 	- g_date_time_new_from_unix_local
+ * 	- g_date_time_new_from_unix_utc
+ * 	- g_date_time_new_from_timeval_local
+ * 	- g_date_time_new_from_timeval_utc
+ * 	- g_date_time_new_local
+ * 	- g_date_time_new_utc
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -126,6 +134,81 @@ public class DateTime
 		this.gDateTime = gDateTime;
 	}
 	
+	/**
+	 * Creates a GDateTime corresponding to the given Unix time t
+	 * Unix time is the number of seconds that have elapsed since 1970-01-01
+	 * 00:00:00 UTC, regardless of the local time offset.
+	 *
+	 * This call can fail (returning NULL) if t represents a time outside
+	 * of the supported range of GDateTime.
+	 * You should release the return value by calling g_date_time_unref()
+	 * when you are done with it.
+	 * Since 2.26
+	 *
+	 * Params:
+	 *     t   = the Unix time
+	 *     utc = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (long t, bool utc = true)
+	{
+		// GDateTime * g_date_time_new_from_unix_local (gint64 t);
+		GDateTime* p;
+		
+		if ( utc )
+		{
+			p = g_date_time_new_from_unix_utc(t);
+		}
+		else
+		{
+			p = g_date_time_new_from_unix_local(t);
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_date_time_new_from_unix_local(t)");
+		}
+		this(cast(GDateTime*) p);
+	}
+	
+	/**
+	 * Creates a GDateTime corresponding to the given GTimeVal tv.
+	 * The time contained in a GTimeVal is always stored in the form of
+	 * seconds elapsed since 1970-01-01 00:00:00 UTC, regardless of the
+	 * local time offset.
+	 *
+	 * This call can fail (returning NULL) if tv represents a time outside
+	 * of the supported range of GDateTime.
+	 * You should release the return value by calling unref()
+	 * when you are done with it.
+	 * Since 2.26
+	 *
+	 * Params:
+	 *     tv  = a GTimeVal
+	 *     utc = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (TimeVal tv, bool utc = true)
+	{
+		// GDateTime * g_date_time_new_from_timeval_local (const GTimeVal *tv);
+		GDateTime* p;
+		
+		if ( utc )
+		{
+			p = g_date_time_new_from_timeval_utc((tv is null) ? null : tv.getTimeValStruct());
+		}
+		else
+		{
+			p = g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct());
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
+		}
+		this(cast(GDateTime*) p);
+	}
+	
 	override bool opEquals(Object rhs)
 	{
 		DateTime date = cast(DateTime)rhs;
@@ -208,76 +291,6 @@ public class DateTime
 	}
 	
 	/**
-	 * Creates a GDateTime corresponding to this exact instant in the local
-	 * time zone.
-	 * This is equivalent to calling g_date_time_new_now() with the time
-	 * zone returned by g_time_zone_new_local().
-	 * Since 2.26
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GDateTime * g_date_time_new_now_local (void);
-		auto p = g_date_time_new_now_local();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_date_time_new_now_local()");
-		}
-		this(cast(GDateTime*) p);
-	}
-	
-	/**
-	 * Creates a GDateTime corresponding to the given Unix time t in the
-	 * local time zone.
-	 * Unix time is the number of seconds that have elapsed since 1970-01-01
-	 * 00:00:00 UTC, regardless of the local time offset.
-	 * This call can fail (returning NULL) if t represents a time outside
-	 * of the supported range of GDateTime.
-	 * You should release the return value by calling g_date_time_unref()
-	 * when you are done with it.
-	 * Since 2.26
-	 * Params:
-	 * t = the Unix time
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (long t)
-	{
-		// GDateTime * g_date_time_new_from_unix_local (gint64 t);
-		auto p = g_date_time_new_from_unix_local(t);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_date_time_new_from_unix_local(t)");
-		}
-		this(cast(GDateTime*) p);
-	}
-	
-	/**
-	 * Creates a GDateTime corresponding to the given GTimeVal tv in the
-	 * local time zone.
-	 * The time contained in a GTimeVal is always stored in the form of
-	 * seconds elapsed since 1970-01-01 00:00:00 UTC, regardless of the
-	 * local time offset.
-	 * This call can fail (returning NULL) if tv represents a time outside
-	 * of the supported range of GDateTime.
-	 * You should release the return value by calling g_date_time_unref()
-	 * when you are done with it.
-	 * Since 2.26
-	 * Params:
-	 * tv = a GTimeVal
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (TimeVal tv)
-	{
-		// GDateTime * g_date_time_new_from_timeval_local (const GTimeVal *tv);
-		auto p = g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
-		}
-		this(cast(GDateTime*) p);
-	}
-	
-	/**
 	 * Creates a new GDateTime corresponding to the given date and time in
 	 * the time zone tz.
 	 * The year must be between 1 and 9999, month between 1 and 12 and day
@@ -310,32 +323,6 @@ public class DateTime
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_date_time_new((tz is null) ? null : tz.getTimeZoneStruct(), year, month, day, hour, minute, seconds)");
-		}
-		this(cast(GDateTime*) p);
-	}
-	
-	/**
-	 * Creates a new GDateTime corresponding to the given date and time in
-	 * the local time zone.
-	 * This call is equivalent to calling g_date_time_new() with the time
-	 * zone returned by g_time_zone_new_local().
-	 * Since 2.26.
-	 * Params:
-	 * year = the year component of the date
-	 * month = the month component of the date
-	 * day = the day component of the date
-	 * hour = the hour component of the date
-	 * minute = the minute component of the date
-	 * seconds = the number of seconds past the minute
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (int year, int month, int day, int hour, int minute, double seconds)
-	{
-		// GDateTime * g_date_time_new_local (gint year,  gint month,  gint day,  gint hour,  gint minute,  gdouble seconds);
-		auto p = g_date_time_new_local(year, month, day, hour, minute, seconds);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_date_time_new_local(year, month, day, hour, minute, seconds)");
 		}
 		this(cast(GDateTime*) p);
 	}

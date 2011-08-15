@@ -113,6 +113,7 @@ private import gdk.Threads;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
+ * $(DDOC_COMMENT example)
  * It's OK to use the GLib main loop directly instead of gtk_main(),
  * though it involves slightly more typing. See GMainLoop in the GLib
  * documentation.
@@ -379,6 +380,7 @@ public class Main
 	/**
 	 * Checks if any events are pending. This can be used to update the GUI
 	 * and invoke timeouts etc. while doing some time intensive computation.
+	 * $(DDOC_COMMENT example)
 	 * Returns: TRUE if any events are pending, FALSE otherwise.
 	 */
 	public static int eventsPending()

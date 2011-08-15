@@ -108,6 +108,7 @@ private import gobject.ObjectG;
  * state
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
+ * $(DDOC_COMMENT example)
  */
 public class IconFactory : ObjectG
 {

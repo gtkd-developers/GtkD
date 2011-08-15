@@ -86,6 +86,7 @@ private import gobject.ObjectG;
  * of the cairo surface.
  * GtkPrintContext objects gets passed to the ::begin-print, ::end-print,
  * ::request-page-setup and ::draw-page signals on the GtkPrintOperation.
+ * $(DDOC_COMMENT example)
  * Printing support was added in GTK+ 2.10.
  */
 public class PrintContext : ObjectG

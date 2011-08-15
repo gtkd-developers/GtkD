@@ -80,6 +80,7 @@ private import gtk.Dialog;
  * that match a given pattern. This can be used for example, to show only
  * *.txt files, or only files beginning with gtk*.
  * Simple file operations; create directory, delete file, and rename file, are available from buttons at the top of the dialog. These can be hidden using gtk_file_selection_hide_fileop_buttons() and shown again using gtk_file_selection_show_fileop_buttons().
+ * $(DDOC_COMMENT example)
  */
 public class FileSelection : Dialog
 {

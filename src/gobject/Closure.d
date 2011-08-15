@@ -308,6 +308,7 @@ public class Closure
 	 * Allocates a struct of the given size and initializes the initial
 	 * part as a GClosure. This function is mainly useful when
 	 * implementing new types of closures.
+	 * $(DDOC_COMMENT example)
 	 * Params:
 	 * sizeofClosure = the size of the structure to allocate, must be at least
 	 *  sizeof (GClosure)

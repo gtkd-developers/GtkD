@@ -89,6 +89,7 @@ private import gtk.Dialog;
  * those for GtkDialog.
  * Note that GtkRecentChooserDialog does not have any methods of its own.
  * Instead, you should use the functions that work on a GtkRecentChooser.
+ * $(DDOC_COMMENT example)
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentChooserDialog : Dialog, RecentChooserIF

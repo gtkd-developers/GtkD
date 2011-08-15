@@ -79,6 +79,8 @@ private import gtk.Entry;
  * that it can be checked to ensure it is in a given range.
  * The main properties of a GtkSpinButton are through a GtkAdjustment. See the
  * GtkAdjustment section for more details about an adjustment's properties.
+ * $(DDOC_COMMENT example)
+ * $(DDOC_COMMENT example)
  */
 public class SpinButton : Entry
 {
@@ -186,6 +188,7 @@ public class SpinButton : Entry
 	/**
 	 * The ::output signal can be used to change to formatting
 	 * of the value that is displayed in the spin buttons entry.
+	 * $(DDOC_COMMENT example)
 	 */
 	void addOnOutput(bool delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

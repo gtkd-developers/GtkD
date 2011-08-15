@@ -81,6 +81,7 @@ public import gtk.Action;
  * the action pointer and boolean flag on your instance, and calling
  * gtk_activatable_do_set_related_action() and
  * gtk_activatable_sync_action_properties() at the appropriate times.
+ * $(DDOC_COMMENT example)
  */
 public template ActivatableT(TStruct)
 {

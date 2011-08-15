@@ -351,6 +351,7 @@ public class SimpleXML
 	 * interface.
 	 * As an example, see the following implementation of a simple
 	 * parser that counts the number of tags encountered.
+	 * $(DDOC_COMMENT example)
 	 * In order to allow this parser to be easily used as a subparser, the
 	 * Since 2.18
 	 * Params:

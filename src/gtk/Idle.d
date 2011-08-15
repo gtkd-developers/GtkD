@@ -83,6 +83,7 @@ private import glib.ConstructionException;
  * - for example, when an Open button is clicked you might display a
  * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
  * to the main loop and await more user input.
+ * $(DDOC_COMMENT example)
  * It's OK to use the GLib main loop directly instead of gtk_main(),
  * though it involves slightly more typing. See GMainLoop in the GLib
  * documentation.

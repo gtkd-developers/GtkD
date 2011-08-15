@@ -117,6 +117,7 @@ public class Messages
 	 * Prompts the user with [E]xit, [H]alt, show [S]tack trace or [P]roceed.
 	 * This function is intended to be used for debugging use only. The following
 	 * example shows how it can be used together with the g_log() functions.
+	 * $(DDOC_COMMENT example)
 	 * If [E]xit is selected, the application terminates with a call to
 	 * _exit(0).
 	 * If [H]alt is selected, the application enters an infinite loop.

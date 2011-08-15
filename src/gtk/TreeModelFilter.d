@@ -183,6 +183,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Note that func is called whenever a row is inserted, when it may still be
 	 * empty. The visible function should therefore take special care of empty
 	 * rows, like in the example below.
+	 * $(DDOC_COMMENT example)
 	 * Since 2.4
 	 * Params:
 	 * func = A GtkTreeModelFilterVisibleFunc, the visible function.

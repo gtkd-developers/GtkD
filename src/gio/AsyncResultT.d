@@ -88,6 +88,7 @@ public import gobject.ObjectG;
  * also take a reference to the GAsyncResult and call "_finish()"
  * later; however, the "_finish()" function may be called at most once.
  * Example of a typical asynchronous operation flow:
+ * $(DDOC_COMMENT example)
  * The callback for an asynchronous operation is called only once, and is
  * always called, even in the case of a cancelled operation. On cancellation
  * the result is a G_IO_ERROR_CANCELLED error.

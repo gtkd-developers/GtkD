@@ -104,6 +104,7 @@ private import gtk.Misc;
  * GdkPixbuf ("pixel buffer") from a file, and then display that.
  * There's a convenience function to do this, gtk_image_new_from_file(),
  * used as follows:
+ * $(DDOC_COMMENT example)
  * If the file isn't loaded successfully, the image will contain a
  * "broken image" icon similar to that used in many web browsers.
  * If you want to handle errors in loading the file yourself,
@@ -119,6 +120,7 @@ private import gtk.Misc;
  * so by default does not receive events. If you want to receive events
  * on the image, such as button clicks, place the image inside a
  * GtkEventBox, then connect to the event signals on the event box.
+ * $(DDOC_COMMENT example)
  * When handling events on the event box, keep in mind that coordinates
  * in the image may be different from event box coordinates due to
  * the alignment and padding settings on the image (see GtkMisc).

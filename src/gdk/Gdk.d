@@ -509,6 +509,7 @@ public class Gdk
 	 * This function allows X errors to be trapped instead of the normal behavior
 	 * of exiting the application. It should only be used if it is not possible to
 	 * avoid the X error in any other way.
+	 * $(DDOC_COMMENT example)
 	 */
 	public static void errorTrapPush()
 	{

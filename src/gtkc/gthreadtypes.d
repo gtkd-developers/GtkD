@@ -173,13 +173,16 @@ public struct GThread{}
  * The GMutex struct is an opaque data structure to represent a mutex
  * (mutual exclusion). It can be used to protect data against shared
  * access. Take for example the following function:
+ * $(DDOC_COMMENT example)
  * It is easy to see that this won't work in a multi-threaded
  * application. There current_number must be protected against shared
  * access. A first naive implementation would be:
+ * $(DDOC_COMMENT example)
  * This looks like it would work, but there is a race condition while
  * constructing the mutex and this code cannot work reliable. Please do
  * not use such constructs in your own programs! One working solution
  * is:
+ * $(DDOC_COMMENT example)
  * GStaticMutex provides a simpler and safer way of doing this.
  * If you want to use a mutex, and your code should also work without
  * calling g_thread_init() first, then you can not use a GMutex, as
@@ -200,6 +203,7 @@ public struct GMutex{}
  * but can be defined at compile-time. Here is a shorter, easier and
  * safer version of our give_me_next_number()
  * example:
+ * $(DDOC_COMMENT example)
  * Sometimes you would like to dynamically create a mutex. If you don't
  * want to require prior calling to g_thread_init(), because your code
  * should also be usable in non-threaded programs, you are not able to
@@ -250,6 +254,7 @@ public struct GStaticRecMutex{}
  * desirable that several readers can read at once, whereas of course
  * only one writer may write at a time. Take a look at the following
  * example:
+ * $(DDOC_COMMENT example)
  * This example shows an array which can be accessed by many readers
  * (the my_array_get() function) simultaneously,
  * whereas the writers (the my_array_set()
@@ -289,6 +294,7 @@ public struct GStaticRWLock{}
  * condition to be false. If other threads change the state of this
  * condition they signal the GCond, and that causes the waiting
  * threads to be woken up.
+ * $(DDOC_COMMENT example)
  * Whenever a thread calls pop_data() now, it will
  * wait until current_data is non-NULL, i.e. until some other thread
  * has called push_data().
@@ -318,6 +324,7 @@ public struct GCond{}
  * above. Suppose we don't want current_number to be
  * shared between the threads, but instead to be private to each thread.
  * This can be done as follows:
+ * $(DDOC_COMMENT example)
  * Here the pointer belonging to the key
  * current_number_key is read. If it is NULL, it has
  * not been set yet. Then get memory for an integer value, assign this
@@ -340,6 +347,7 @@ public struct GPrivate{}
  * similar to the difference between GMutex and GStaticMutex. Now
  * look at our give_me_next_number() example with
  * GStaticPrivate:
+ * $(DDOC_COMMENT example)
  */
 public struct GStaticPrivate{}
 
@@ -372,6 +380,7 @@ public struct GOnce
  * of the variable you intent to protect with the lock. Look at our
  * give_me_next_number() example using the
  * G_LOCK_* macros:
+ * $(DDOC_COMMENT example)
  * name  :
  * the name of the lock.
  */
@@ -436,6 +445,7 @@ public struct GOnce
  * Note
  * Calling g_once() recursively on the same GOnce struct in
  * func will lead to a deadlock.
+ * $(DDOC_COMMENT example)
  * once  :
  * a GOnce structure
  * func  :

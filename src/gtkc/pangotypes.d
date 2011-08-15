@@ -1957,6 +1957,7 @@ public struct PangoEngineShapeClass
  * function should be called in your script_engine_init() function for
  * each type that your module implements, and then your script_engine_create()
  * function can create instances of the object as follows:
+ * $(DDOC_COMMENT example)
  * name  :
  *  Name of the the type to register (for example:, ArabicEngineFc
  * prefix  :
@@ -1979,6 +1980,7 @@ public struct PangoEngineShapeClass
  * function should be called in your script_engine_init() function for
  * each type that your module implements, and then your script_engine_create()
  * function can create instances of the object as follows:
+ * $(DDOC_COMMENT example)
  * name  :
  *  Name of the the type to register (for example:, ArabicEngineFc
  * prefix  :

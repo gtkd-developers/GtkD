@@ -91,10 +91,12 @@ private import gobject.ObjectG;
  * is already sunk (has no floating reference).
  * When you add a widget to its parent container, the parent container
  * will do this:
+ * $(DDOC_COMMENT example)
  * This means that the container now owns a reference to the child widget
  * and the child widget has no floating reference.
  * The purpose of the floating reference is to keep the child widget alive
  * until you add it to a parent container:
+ * $(DDOC_COMMENT example)
  * GtkWindow is a special case, because GTK+ itself will ref/sink it on creation.
  * That is, after calling gtk_window_new(), the GtkWindow will have one
  * reference which is owned by GTK+, and no floating references.

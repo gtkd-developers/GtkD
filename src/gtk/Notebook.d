@@ -92,6 +92,7 @@ private import gtk.Container;
  * To add a child widget in the notebooks action area, specify
  * "action-start" or "action-end" as the "type" attribute of the <child>
  * element.
+ * $(DDOC_COMMENT example)
  */
 public class Notebook : Container
 {
@@ -967,6 +968,7 @@ public class Notebook : Container
 	 * destination and accept the target "GTK_NOTEBOOK_TAB". The notebook
 	 * will fill the selection with a GtkWidget** pointing to the child
 	 * widget that corresponds to the dropped tab.
+	 * $(DDOC_COMMENT example)
 	 * If you want a notebook to accept drags from other widgets,
 	 * you will have to set your own DnD code to do it.
 	 * Since 2.10

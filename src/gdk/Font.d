@@ -85,6 +85,7 @@ private import pango.PgFontDescription;
  * consists of a sequence of fields separated (and surrounded by) '-'
  * characters. For example, Adobe Helvetica Bold 12 pt, has the
  * full description:
+ * $(DDOC_COMMENT example)
  * The fields in the XLFD are:
  * Foundry
  * the company or organization where the font originated.
@@ -127,6 +128,7 @@ private import pango.PgFontDescription;
  * '*' can be used as a wildcard to match any portion of
  * the XLFD. For instance, the above example could
  * also be specified as
+ * $(DDOC_COMMENT example)
  * It is generally a good idea to use wildcards for any
  * portion of the XLFD that your program does not care
  * about specifically, since that will improve the

@@ -321,6 +321,7 @@ public class PgRenderer : ObjectG
 	 * pieces being joined together into one drawing call. For
 	 * instance, if a subclass of PangoRenderer was to add a stipple
 	 * option for drawing underlines, it needs to call
+	 * $(DDOC_COMMENT example)
 	 * When the stipple changes or underlines with different stipples
 	 * might be joined together. Pango automatically calls this for
 	 * changes to colors. (See pango_renderer_set_color())

@@ -259,11 +259,13 @@ public class Source
 	 * This is important when you operate upon your objects
 	 * from within idle handlers, but may have freed the object
 	 * before the dispatch of your idle handler.
+	 * $(DDOC_COMMENT example)
 	 * This will fail in a multi-threaded application if the
 	 * widget is destroyed before the idle handler fires due
 	 * to the use after free in the callback. A solution, to
 	 * this particular problem, is to check to if the source
 	 * has already been destroy within the callback.
+	 * $(DDOC_COMMENT example)
 	 * Since 2.12
 	 * Returns: TRUE if the source has been destroyed
 	 */

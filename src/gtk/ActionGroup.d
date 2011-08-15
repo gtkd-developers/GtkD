@@ -108,6 +108,7 @@ private import gobject.ObjectG;
  * modifiers and allows to specify accelerators. This is similar to the
  * <accelerator> element of GtkWidget, the main difference is that
  * it doesn't allow you to specify a signal.
+ * $(DDOC_COMMENT example)
  */
 public class ActionGroup : ObjectG, BuildableIF
 {

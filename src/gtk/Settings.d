@@ -92,6 +92,7 @@ private import gobject.ObjectG;
  * facility. When doing so, you need to be aware that settings that are specific
  * to individual widgets may not be available before the widget type has been
  * realized at least once. The following example demonstrates a way to do this:
+ * $(DDOC_COMMENT example)
  * There is one GtkSettings instance per screen. It can be obtained with
  * gtk_settings_get_for_screen(), but in many cases, it is more convenient
  * to use gtk_widget_get_settings(). gtk_settings_get_default() returns the

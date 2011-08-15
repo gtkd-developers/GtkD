@@ -81,6 +81,7 @@ private import gtk.Container;
  * gtk_socket_get_id(). Before using this function,
  * the socket must have been realized, and for hence,
  * have been added to its parent.
+ * $(DDOC_COMMENT example)
  * Note that if you pass the window ID of the socket to another
  * process that will create a plug in the socket, you
  * must make sure that the socket widget is not destroyed

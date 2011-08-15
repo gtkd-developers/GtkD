@@ -115,6 +115,7 @@ private import gobject.ObjectG;
  * application writer to call gtk_tree_model_row_changed to emit the
  * "row_changed" signal. This most commonly affects lists with
  * GdkPixbufs stored.
+ * $(DDOC_COMMENT example)
  * Performance Considerations
  * Internally, the GtkListStore was implemented with a linked list with a
  * tail pointer prior to GTK+ 2.6. As a result, it was fast at data
@@ -153,6 +154,7 @@ private import gobject.ObjectG;
  * to specify the content of a list store in a UI definition,
  * data, not presentation,
  * and common wisdom is to separate the two, as far as possible.
+ * $(DDOC_COMMENT example)
  */
 public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, TreeDragDestIF, TreeSortableIF
 {

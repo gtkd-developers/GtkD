@@ -103,6 +103,7 @@ private import gstreamer.TagList;
  * Messages are posted by objects in the pipeline and are passed to the
  * application using the GstBus.
  * The basic use pattern of posting a message on a GstBus is as follows:
+ * $(DDOC_COMMENT example)
  * A GstElement usually posts messages on the bus provided by the parent
  * container using gst_element_post_message().
  * Last reviewed on 2005-11-09 (0.9.4)

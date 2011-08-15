@@ -245,6 +245,7 @@ private import gobject.ObjectG;
  * in a UI definition by specifying the "type" attribute on a <child>
  * The possible values for the "type" attribute are described in
  * the sections describing the widget-specific portions of UI definitions.
+ * $(DDOC_COMMENT example)
  * Beyond this general structure, several object classes define
  * their own XML DTD fragments for filling in the ANY placeholders
  * in the DTD above. Note that a custom element in a <child>

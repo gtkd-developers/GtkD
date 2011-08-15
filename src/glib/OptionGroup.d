@@ -91,6 +91,7 @@ private import glib.Str;
  * (where groupname is the name of a
  * GOptionGroup) and write a text similar to the one shown in the
  * following example to stdout.
+ * $(DDOC_COMMENT example)
  * GOption groups options in GOptionGroups, which makes it easy to
  * incorporate options from multiple sources. The intended use for this is
  * to let applications collect option groups from the libraries it uses,
@@ -103,6 +104,7 @@ private import glib.Str;
  * g_option_context_parse().
  * Here is a complete example of setting up GOption to parse the example
  * commandline above and produce the example help output.
+ * $(DDOC_COMMENT example)
  */
 public class OptionGroup
 {

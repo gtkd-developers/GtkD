@@ -100,6 +100,7 @@ private import gstreamer.MiniObject;
  * construct and use seek events.
  * To do that gst_event_new_seek() is used to create a seek event. It takes
  * the needed parameters to specity seeking time and mode.
+ * $(DDOC_COMMENT example)
  * Last reviewed on 2006-09-6 (0.10.10)
  */
 public class Event

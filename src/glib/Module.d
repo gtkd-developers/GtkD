@@ -86,6 +86,7 @@ private import glib.Str;
  * If your module introduces static data to common subsystems in the running
  * program, e.g. through calling g_quark_from_static_string ("my-module-stuff"),
  * it must ensure that it is never unloaded, by calling g_module_make_resident().
+ * $(DDOC_COMMENT example)
  */
 public class Module
 {

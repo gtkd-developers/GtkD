@@ -158,6 +158,7 @@ private import gtk.Widget;
  * supports a <packing> element for children, which can
  * contain multiple <property> elements that specify
  * child properties for the child.
+ * $(DDOC_COMMENT example)
  * Since 2.16, child properties can also be marked as translatable using
  * the same "translatable", "comments" and "context" attributes that are used
  * for regular properties.

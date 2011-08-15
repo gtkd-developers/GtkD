@@ -1767,7 +1767,9 @@ public struct GBinding{}
 /*
  * The most general convenience macro for type implementations, on which
  * G_DEFINE_TYPE(), etc are based.
+ * $(DDOC_COMMENT example)
  * expands to
+ * $(DDOC_COMMENT example)
  * The only pieces which have to be manually provided are the definitions of
  * the instance and class structure and the definitions of the instance and
  * class init functions.
@@ -1878,7 +1880,9 @@ public struct GBinding{}
 /*
  * A more general version of G_DEFINE_DYNAMIC_TYPE() which
  * allows to specify GTypeFlags and custom code.
+ * $(DDOC_COMMENT example)
  * expands to
+ * $(DDOC_COMMENT example)
  * TypeName  :
  * The name of the new type, in Camel case.
  * type_name  :
@@ -2035,6 +2039,7 @@ public struct GBinding{}
  * This signal is typically used to obtain change notification for a
  * single property, by specifying the property name as a detail in the
  * g_signal_connect() call, like this:
+ * $(DDOC_COMMENT example)
  * It is important to note that you must use
  * canonical parameter names as
  * detail strings for the notify signal.
@@ -3098,6 +3103,7 @@ public typedef extern(C) void  function (void*) GBaseFinalizeFunc;
  * is performed for class initialization of derived types as well.
  * An example may help to correspond the intend of the different class
  * initializers:
+ * $(DDOC_COMMENT example)
  * Initialization of TypeBClass will first cause initialization of
  * TypeAClass (derived classes reference their parent classes, see
  * g_type_class_ref() on this).

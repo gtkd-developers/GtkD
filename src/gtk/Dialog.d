@@ -119,6 +119,7 @@ private import gtk.Window;
  * For the simple dialog in the following example, in reality you'd probably use
  * GtkMessageDialog to save yourself some effort. But you'd need to create the
  * dialog contents manually if you had more than a simple message in the dialog.
+ * $(DDOC_COMMENT example)
  * GtkDialog as GtkBuildable
  * The GtkDialog implementation of the GtkBuildable interface exposes the
  * vbox and action_area as internal children with the names "vbox" and
@@ -127,6 +128,7 @@ private import gtk.Window;
  * can contain multiple <action-widget> elements. The "response"
  * attribute specifies a numeric response, and the content of the element
  * is the id of widget (which should be a child of the dialogs action_area).
+ * $(DDOC_COMMENT example)
  */
 public class Dialog : Window
 {

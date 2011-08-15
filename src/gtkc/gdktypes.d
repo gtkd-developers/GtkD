@@ -2137,6 +2137,7 @@ public struct GdkColormap
  * Main Gtk struct.
  * The GdkVisual structure contains information about
  * a particular visual.
+ * $(DDOC_COMMENT example)
  * GObject  parent_instance;
  * inherited portion from GObject
  * GdkVisualType  type;
@@ -2237,6 +2238,7 @@ public struct GdkWindow{}
  * the "character grid" will be allowed.
  * Here's an example of how the terminal example would be implemented, assuming
  * a terminal area widget called "terminal" and a toplevel window "toplevel":
+ * $(DDOC_COMMENT example)
  * The other useful fields are the min_aspect and max_aspect fields; these
  * contain a width/height ratio as a floating point number. If a geometry widget is
  * set, the aspect applies to the geometry widget rather than the entire window.

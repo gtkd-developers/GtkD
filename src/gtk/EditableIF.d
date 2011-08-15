@@ -75,6 +75,7 @@ private import glib.Str;
  * As an example of the latter usage, by connecting
  * the following handler to "insert_text", an application
  * can convert all entry into a widget into uppercase.
+ * $(DDOC_COMMENT example)
  */
 public interface EditableIF
 {

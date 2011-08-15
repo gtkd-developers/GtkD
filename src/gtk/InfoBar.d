@@ -91,6 +91,7 @@ private import gtk.HBox;
  * classified as error message, warning, informational message, etc,
  * by using gtk_info_bar_set_message_type(). GTK+ uses the message type
  * to determine the background color of the message area.
+ * $(DDOC_COMMENT example)
  * GtkInfoBar as GtkBuildable
  * The GtkInfoBar implementation of the GtkBuildable interface exposes
  * the content area and action area as internal children with the names

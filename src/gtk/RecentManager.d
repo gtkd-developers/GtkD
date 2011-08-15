@@ -97,7 +97,9 @@ private import gobject.ObjectG;
  * files is shared with other people using them. In case the
  * default screen is being used, adding a new recently used
  * file is as simple as:
+ * $(DDOC_COMMENT example)
  * While looking up a recently used file is as simple as:
+ * $(DDOC_COMMENT example)
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentManager : ObjectG

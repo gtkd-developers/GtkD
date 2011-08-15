@@ -105,11 +105,13 @@ version(Tango) {
  * This means that it is not specifically claimed to be "owned" by
  * any code portion. The main motivation for providing floating references is
  * C convenience. In particular, it allows code to be written as:
+ * $(DDOC_COMMENT example)
  * If container_add_child() will g_object_ref_sink() the
  * passed in child, no reference of the newly created child is leaked.
  * Without floating references, container_add_child()
  * can only g_object_ref() the new child, so to implement this code without
  * reference leaks, it would have to be written as:
+ * $(DDOC_COMMENT example)
  * The floating reference can be converted into
  * an ordinary reference by calling g_object_ref_sink().
  * For already sunken objects (objects that don't have a floating reference
@@ -122,6 +124,7 @@ version(Tango) {
  * Some object implementations may need to save an objects floating state
  * across certain code portions (an example is GtkMenu), to achive this, the
  * following sequence can be used:
+ * $(DDOC_COMMENT example)
  */
 public class ObjectG
 {
@@ -300,6 +303,7 @@ public class ObjectG
 	 * is called to reinstate the previous value.
 	 * This signal is typically used to obtain change notification for a
 	 * single property, by specifying the property name as a detail in the
+	 * $(DDOC_COMMENT example)
 	 * It is important to note that you must use
 	 * canonical parameter names as
 	 * detail strings for the notify signal.

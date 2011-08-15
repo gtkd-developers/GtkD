@@ -113,6 +113,7 @@ private import gtk.Bin;
  * "label" as the "type" attribute of a <child> element.
  * A normal content child can be specified without specifying
  * a <child> type attribute.
+ * $(DDOC_COMMENT example)
  */
 public class Expander : Bin
 {

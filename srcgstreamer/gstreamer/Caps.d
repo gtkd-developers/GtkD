@@ -85,6 +85,7 @@ private import gstreamer.Structure;
  * pointed to by the buffer with gst_buffer_set_caps(). Caps attached to
  * a GstBuffer allow for format negotiation upstream and downstream.
  * A GstCaps can be constructed with the following code fragment:
+ * $(DDOC_COMMENT example)
  * A GstCaps is fixed when it has no properties with ranges or lists. Use
  * gst_caps_is_fixed() to test for fixed caps. Only fixed caps can be
  * set on a GstPad or GstBuffer.

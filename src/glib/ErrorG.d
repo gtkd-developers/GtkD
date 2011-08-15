@@ -87,8 +87,10 @@ private import glib.Str;
  * This is why most functions in GLib and GTK+ do not use the GError facility.
  * Functions that can fail take a return location for a GError as their last argument.
  * For example:
+ * $(DDOC_COMMENT example)
  * If you pass a non-NULL value for the error argument, it should
  * point to a location where an error can be placed. For example:
+ * $(DDOC_COMMENT example)
  * Note that err != NULL in this example is a
  * reliable indicator of whether
  * g_file_get_contents() failed. Additionally, g_file_get_contents() returns
@@ -96,6 +98,7 @@ private import glib.Str;
  * Because g_file_get_contents() returns FALSE on failure, if you are only
  * interested in whether it failed and don't need to display an error message, you
  * can pass NULL for the error argument:
+ * $(DDOC_COMMENT example)
  * The GError object contains three fields: domain indicates
  * the module the error-reporting function is located in, code
  * indicates the specific error that occurred, and message is a
@@ -113,14 +116,18 @@ private import glib.Str;
  * g_set_error(). Typically, if a fatal error occurs you want to g_set_error(),
  * then return immediately. g_set_error() does nothing if the error location passed
  * to it is NULL. Here's an example:
+ * $(DDOC_COMMENT example)
  * Things are somewhat more complicated if you yourself call another function that
  * can report a GError. If the sub-function indicates fatal errors in some way
  * other than reporting a GError, such as by returning TRUE on success, you can
  * simply do the following:
+ * $(DDOC_COMMENT example)
  * If the sub-function does not indicate errors other than by reporting a GError,
  * you need to create a temporary GError since the passed-in one may be NULL.
  * g_propagate_error() is intended for use in this case.
+ * $(DDOC_COMMENT example)
  * Error pileups are always a bug. For example, this code is incorrect:
+ * $(DDOC_COMMENT example)
  * tmp_error should be checked immediately after
  * sub_function_that_can_fail(), and either cleared or propagated upward. The rule
  * is: after each error, you must either handle the error, or return it to the
@@ -128,6 +135,7 @@ private import glib.Str;
  * equivalent of handling an error by always doing nothing about it. So the
  * following code is fine, assuming errors in sub_function_that_can_fail() are not
  * fatal to my_function_that_can_fail():
+ * $(DDOC_COMMENT example)
  * Note that passing NULL for the error location ignores
  * errors; it's equivalent to try { sub_function_that_can_fail(); } catch
  * (...) {} in C++. It does not mean to leave errors
@@ -136,6 +144,7 @@ private import glib.Str;
  * The error domain is called
  * <NAMESPACE>_<MODULE>_ERROR, for example
  * G_SPAWN_ERROR or G_THREAD_ERROR:
+ * $(DDOC_COMMENT example)
  * The quark function for the error domain is called <namespace>_<module>_error_quark, for example g_spawn_error_quark() or %g_thread_error_quark().
  * The error codes are in an enumeration called
  * <Namespace><Module>Error; for example,

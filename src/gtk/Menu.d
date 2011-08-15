@@ -93,6 +93,8 @@ private import gtk.MenuShell;
  * Applications can display a GtkMenu as a popup menu by calling the
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
+ * $(DDOC_COMMENT example)
+ * $(DDOC_COMMENT example)
  */
 public class Menu : MenuShell
 {

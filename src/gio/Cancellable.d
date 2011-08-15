@@ -146,6 +146,7 @@ public class Cancellable : ObjectG
 	 * are two helper functions: g_cancellable_connect() and
 	 * g_cancellable_disconnect() which protect against problems
 	 * like this.
+	 * $(DDOC_COMMENT example)
 	 * Note that the cancelled signal is emitted in the thread that
 	 * the user cancelled from, which may be the main thread. So, the
 	 * cancellable signal should not do something that can block.

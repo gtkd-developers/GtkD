@@ -105,6 +105,7 @@ private import gdk.Drawable;
  * gdk_window_set_composited() on the child window. For a
  * composited window it is the responsibility of the
  * application to render the window contents at the right spot.
+ * $(DDOC_COMMENT example)
  * In the example Example  7, “Composited windows”, a button is
  * placed inside of an event box inside of a window. The event box is
  * set as composited and therefore is no longer automatically drawn to

@@ -81,6 +81,7 @@ private import glib.Str;
  * Desktop
  * Entry Specification, here is a quick summary: Key files
  * consists of groups of key-value pairs, interspersed with comments.
+ * $(DDOC_COMMENT example)
  * Lines beginning with a '#' and blank lines are considered comments.
  * Groups are started by a header line containing the group name enclosed
  * in '[' and ']', and ended implicitly by the start of the next group or

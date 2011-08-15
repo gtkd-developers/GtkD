@@ -111,6 +111,7 @@ private import gobject.ObjectG;
  * size group are specified by a <widgets> element that may
  * contain multiple <widget> elements, one for each member
  * of the size group. The name attribute gives the id of the widget.
+ * $(DDOC_COMMENT example)
  */
 public class SizeGroup : ObjectG, BuildableIF
 {

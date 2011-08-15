@@ -80,6 +80,7 @@ private import gstreamer.PluginFeature;
  * functions. How to create and register these functions is described in
  * the section
  * "Writing typefind functions".
+ * $(DDOC_COMMENT example)
  * The above example shows how to write a very simple typefinder that
  * identifies the given data. You can get quite a bit more complicated than
  * that though.

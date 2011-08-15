@@ -85,6 +85,8 @@ private import glib.ConstructionException;
  * to use the new g_slice API instead of g_malloc() and
  * friends, as long as objects are not resized during their lifetime and the
  * object size used at allocation time is still available when freeing.
+ * $(DDOC_COMMENT example)
+ * $(DDOC_COMMENT example)
  */
 public class MemorySlice
 {

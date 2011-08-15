@@ -108,6 +108,7 @@ private import gtk.Container;
  * The application can set the position of the slider
  * as if it were set by the user, by calling
  * gtk_paned_set_position().
+ * $(DDOC_COMMENT example)
  */
 public class Paned : Container, OrientableIF
 {

@@ -129,6 +129,7 @@ public alias int GPid;
  * To print a code point in the U+-notation, use the format string
  * "U+04"G_GINT32_FORMAT"X".
  * To scan, use the format string "U+06"G_GINT32_FORMAT"X".
+ * $(DDOC_COMMENT example)
  */
 public alias uint gunichar;
 
@@ -154,6 +155,7 @@ public alias ushort gunichar2;
  * Therefore, GTime will overflow in the year 2038, and
  * you cannot use the address of a GTime variable as argument
  * to the UNIX time() function. Instead, do the following:
+ * $(DDOC_COMMENT example)
  */
 public alias int GTime;
 
@@ -3235,6 +3237,7 @@ public struct GVariantBuilder{}
  * Checks the version of the GLib library.
  * Returns TRUE if the version of the GLib header files is the same
  * as or newer than the passed-in version.
+ * $(DDOC_COMMENT example)
  * major  :
  * the major version number.
  * minor  :
@@ -3652,6 +3655,7 @@ public struct GVariantBuilder{}
  * used as a context. This is mainly useful for short strings which
  * may need different translations, depending on the context in which
  * they are used.
+ * $(DDOC_COMMENT example)
  * Note
  * If you are using the C_() macro, you need to make sure that you
  * pass --keyword=C_:1c,2 to xgettext when extracting
@@ -3672,6 +3676,7 @@ public struct GVariantBuilder{}
  * This is useful in situations where the translated strings can't
  * be directly used, e.g. in string array initializers.
  * To get the translated string, call gettext() at runtime.
+ * $(DDOC_COMMENT example)
  * String  :
  * the string to be translated
  * Since 2.4
@@ -3684,6 +3689,7 @@ public struct GVariantBuilder{}
  * This is useful in situations where the translated strings can't
  * be directly used, e.g. in string array initializers.
  * To get the translated string, you should call g_dpgettext2() at runtime.
+ * $(DDOC_COMMENT example)
  * Note
  * If you are using the NC_() macro, you need to make sure that you
  * pass --keyword=NC_:1c,2 to xgettext when extracting
@@ -4066,6 +4072,7 @@ public struct GVariantBuilder{}
 /*
  * Returns the element of a GArray at the given index. The return
  * value is cast to the given type.
+ * $(DDOC_COMMENT example)
  * a  :
  * a GArray.
  * t  :

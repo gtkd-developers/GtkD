@@ -131,6 +131,7 @@ private import gobject.ObjectG;
  * so that the icon information is shared with other people
  * looking up icons. In the case where the default screen is
  * being used, looking up an icon can be as simple as:
+ * $(DDOC_COMMENT example)
  */
 public class IconTheme : ObjectG
 {

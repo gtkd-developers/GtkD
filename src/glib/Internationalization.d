@@ -72,6 +72,7 @@ private import glib.Str;
  * glib/gi18n.h. For use in a library, must include
  * glib/gi18n-lib.h after defining
  * the GETTEXT_PACKAGE macro suitably for your library:
+ * $(DDOC_COMMENT example)
  * The gettext manual covers details of how to set up message extraction
  * with xgettext.
  */

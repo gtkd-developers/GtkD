@@ -110,6 +110,7 @@ private import gobject.ObjectG;
  * When the user finished the dialog various signals will be emitted on the
  * GtkPrintOperation, the main one being ::draw-page, which you are supposed
  * to catch and render the page on the provided GtkPrintContext using Cairo.
+ * $(DDOC_COMMENT example)
  * By default GtkPrintOperation uses an external application to do
  * print preview. To implement a custom print preview, an application
  * must connect to the preview signal. The functions
@@ -312,6 +313,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Emitted for every page that is printed. The signal handler
 	 * must render the page_nr's page onto the cairo context obtained
 	 * from context using gtk_print_context_get_cairo_context().
+	 * $(DDOC_COMMENT example)
 	 * Use gtk_print_operation_set_use_full_page() and
 	 * gtk_print_operation_set_unit() before starting the print operation
 	 * to set up the transformation of the cairo context according to your
@@ -840,6 +842,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * "done" signal will be emitted with the result of the
 	 * operation when the it is done (i.e. when the dialog is canceled, or when
 	 * the print succeeds or fails).
+	 * $(DDOC_COMMENT example)
 	 * Note that gtk_print_operation_run() can only be called once on a
 	 * given GtkPrintOperation.
 	 * Since 2.10

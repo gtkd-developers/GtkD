@@ -306,6 +306,7 @@ public class Pixbuf : ObjectG
 	 *  padding at the end of a row. The "rowstride" value of a pixbuf,
 	 *  as returned by gdk_pixbuf_get_rowstride(), indicates the number
 	 *  of bytes between rows.
+	 * $(DDOC_COMMENT example)
 	 * Note
 	 * 	If you are doing memcpy() of raw pixbuf data, note that the
 	 * 	last row in the pixbuf may not be as wide as the full
@@ -395,6 +396,7 @@ public class Pixbuf : ObjectG
 	 *  image doesn't have an alpha channel, calling
 	 *  gdk_pixbuf_composite_color() function has exactly the same effect
 	 *  as calling gdk_pixbuf_scale().
+	 * $(DDOC_COMMENT example)
 	 */
 	
 	/**

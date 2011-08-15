@@ -201,6 +201,7 @@ public class FileUtils
 	 * For example, you might think you could use G_FILE_TEST_IS_SYMLINK
 	 * to know whether it is safe to write to a file without being
 	 * tricked into writing into a different location. It doesn't work!
+	 * $(DDOC_COMMENT example)
 	 * Another thing to note is that G_FILE_TEST_EXISTS and
 	 * G_FILE_TEST_IS_EXECUTABLE are implemented using the access()
 	 * system call. This usually doesn't matter, but if your program

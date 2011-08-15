@@ -83,6 +83,8 @@ private import gio.IOExtension;
  * that implements the functionality. Additionally, each implementation
  * of an extension point has a name, and a priority. Use
  * g_io_extension_point_implement() to implement an extension point.
+ * $(DDOC_COMMENT example)
+ * $(DDOC_COMMENT example)
  *  It is up to the code that registered the extension point how
  *  it uses the implementations that have been associated with it.
  *  Depending on the use case, it may use all implementations, or
