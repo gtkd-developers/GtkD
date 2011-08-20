@@ -188,7 +188,7 @@ public class EntryBuffer : ObjectG
 	 * initialChars = initial buffer text, or NULL. allow-none.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string initialChars)
+	public this (char[] initialChars)
 	{
 		// GtkEntryBuffer* gtk_entry_buffer_new (const gchar *initial_chars,  gint n_initial_chars);
 		auto p = gtk_entry_buffer_new(initialChars.ptr, cast(int) initialChars.length);
@@ -221,7 +221,7 @@ public class EntryBuffer : ObjectG
 	 * Params:
 	 * chars = the new text
 	 */
-	public void setText(string chars)
+	public void setText(char[] chars)
 	{
 		// void gtk_entry_buffer_set_text (GtkEntryBuffer *buffer,  const gchar *chars,  gint n_chars);
 		gtk_entry_buffer_set_text(gtkEntryBuffer, chars.ptr, cast(int) chars.length);
@@ -292,7 +292,7 @@ public class EntryBuffer : ObjectG
 	 * chars = the text to insert into the buffer.
 	 * Returns: The number of characters actually inserted.
 	 */
-	public uint insertText(uint position, string chars)
+	public uint insertText(uint position, char[] chars)
 	{
 		// guint gtk_entry_buffer_insert_text (GtkEntryBuffer *buffer,  guint position,  const gchar *chars,  gint n_chars);
 		return gtk_entry_buffer_insert_text(gtkEntryBuffer, position, chars.ptr, cast(int) chars.length);
@@ -337,7 +337,7 @@ public class EntryBuffer : ObjectG
 	 * position = position at which text was inserted
 	 * chars = text that was inserted
 	 */
-	public void emitInsertedText(uint position, string chars)
+	public void emitInsertedText(uint position, char[] chars)
 	{
 		// void gtk_entry_buffer_emit_inserted_text (GtkEntryBuffer *buffer,  guint position,  const gchar *chars,  guint n_chars);
 		gtk_entry_buffer_emit_inserted_text(gtkEntryBuffer, position, chars.ptr, cast(int) chars.length);

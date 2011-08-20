@@ -24,40 +24,34 @@
  * Conversion parameters:
  * inFile  = 
  * outPack = gio
- * outFile = SocketAddressEnumerator
- * strct   = GSocketAddressEnumerator
+ * outFile = ProxyResolver
+ * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = SocketAddressEnumerator
+ * clss    = ProxyResolver
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = ObjectG
  * implements:
+ * 	- ProxyResolverIF
  * prefixes:
- * 	- g_socket_address_enumerator_
  * omit structs:
  * omit prefixes:
- * 	- g_socket_connectable_
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.AsyncResultIF
- * 	- gio.Cancellable
- * 	- gio.SocketAddress
+ * 	- gobject.ObjectG
+ * 	- gio.ProxyResolverT
+ * 	- gio.ProxyResolverIF
  * structWrap:
- * 	- GAsyncResult* -> AsyncResultIF
- * 	- GCancellable* -> Cancellable
- * 	- GSocketAddress* -> SocketAddress
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gio.SocketAddressEnumerator;
+module gio.ProxyResolver;
 
 public  import gtkc.giotypes;
 
@@ -65,47 +59,40 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
-private import glib.ErrorG;
-private import glib.GException;
-private import gio.AsyncResultIF;
-private import gio.Cancellable;
-private import gio.SocketAddress;
+private import gobject.ObjectG;
+private import gio.ProxyResolverT;
+private import gio.ProxyResolverIF;
 
 
 
 
 /**
  */
-public class SocketAddressEnumerator
+public class ProxyResolver : ObjectG, ProxyResolverIF
 {
 	
-	/** the main Gtk struct */
-	protected GSocketAddressEnumerator* gSocketAddressEnumerator;
-	
-	
-	public GSocketAddressEnumerator* getSocketAddressEnumeratorStruct()
-	{
-		return gSocketAddressEnumerator;
-	}
-	
+	// Minimal implementation.
+	mixin ProxyResolverT!(GProxyResolver);
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
-		return cast(void*)gSocketAddressEnumerator;
+		return cast(void*)gProxyResolver;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GSocketAddressEnumerator* gSocketAddressEnumerator)
+	public this (GProxyResolver* gProxyResolver)
 	{
-		if(gSocketAddressEnumerator is null)
+		if(gProxyResolver is null)
 		{
 			this = null;
 			return;
 		}
-		this.gSocketAddressEnumerator = gSocketAddressEnumerator;
+		
+		super(cast(GObject*)gProxyResolver);
+		this.gProxyResolver = gProxyResolver;
 	}
 	
 	/**

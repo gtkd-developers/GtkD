@@ -199,7 +199,7 @@ public class UnixSocketAddress : SocketAddress
 	 * type = a GUnixSocketAddressType
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string path, GUnixSocketAddressType type)
+	public this (char[] path, GUnixSocketAddressType type)
 	{
 		// GSocketAddress * g_unix_socket_address_new_with_type (const gchar *path,  gint path_len,  GUnixSocketAddressType type);
 		auto p = g_unix_socket_address_new_with_type(path.ptr, cast(int) path.length, type);

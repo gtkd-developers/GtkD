@@ -37,12 +37,6 @@ addAliases: start
 addAliases: end
 
 addEnums: start
-public enum GConverterFlags
-{
-  NO_FLAGS     = 0,
-  INPUT_AT_END = 1 << 0,
-  FLUSH        = 1 << 1
-}
 addEnums: end
 
 addStructs: start
@@ -282,6 +276,43 @@ out: g_converter_convert bytes_written
 
 interface: ConverterIF
 outFile: ConverterT
+
+file:
+class: Converter
+extend: ObjectG
+implements: ConverterIF
+import: gobject.ObjectG
+
+# imports for Converter Interface
+import: gio.ConverterT
+import: gio.ConverterIF
+
+code: start
+	// Minimal implementation.
+	mixin ConverterT!(GConverter);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gConverter;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GConverter* gConverter)
+	{
+		if(gConverter is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gConverter);
+		this.gConverter = gConverter;
+	}
+code: end
+outFile: Converter
 
 file: GCharsetConverter.html
 struct: GCharsetConverter
@@ -609,6 +640,26 @@ ctorStruct: GOutputStream
 class: UnixOutputStream
 prefix: g_unix_output_stream_
 outFile: UnixOutputStream
+
+file: gio-GConverterInputstream.html
+struct: GConverterInputStream
+ctorStruct: GInputStream
+class: ConverterInputStream
+prefix: g_converter_input_stream_
+import: gio.Converter
+import: gio.ConverterIF
+structWrap: GConverter* ConverterIF
+outFile: ConverterInputStream
+
+file: gio-GConverterOutputstream.html
+struct: GConverterOutputStream
+ctorStruct: GOutputStream
+class: ConverterOutputStream
+prefix: g_converter_output_stream_
+import: gio.Converter
+import: gio.ConverterIF
+structWrap: GConverter* ConverterIF
+outFile: ConverterOutputStream
 
 ###########################################################
 ### File types and applications ###########################
@@ -1226,10 +1277,9 @@ import: glib.GException
 import: glib.Source
 import: gio.SocketAddress
 import: gio.Cancellable
-#TODO: Wrap Credentials.
-#import: gio.Credentials
+import: gio.Credentials
 import: gio.SocketControlMessage
-#structWrap: GCredentials* Credentials
+structWrap: GCredentials* Credentials
 structWrap: GSource* Source
 structWrap: GSocketAddress* SocketAddress
 structWrap: GCancellable* Cancellable
@@ -1341,6 +1391,100 @@ structWrap: GUnixFDList* UnixFDList
 array: g_unix_fd_message_steal_fds Return length
 outFile: UnixFDMessage
 
+file: GCredentials.html
+struct: GCredentials
+class: Credentials
+prefix: g_credentials_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+structWrap: GCredentials* Credentials
+outFile: Credentials
+
+file: GUnixCredentialsMessage.html
+struct: GUnixCredentialsMessage
+ctorStruct: GSocketControlMessage
+class: UnixCredentialsMessage
+prefix: g_unix_credentials_message_
+import: gio.Credentials
+structWrap: GCredentials* Credentials
+outFile: UnixCredentialsMessage
+
+file: GProxy.html
+struct: GProxy
+class: ProxyT
+template: TStruct
+prefix: g_initable_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.IOStream
+import: gio.ProxyAddress
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GIOStream* IOStream
+structWrap: GProxy* ProxyIF
+structWrap: GProxyAddress* ProxyAddress
+interface: ProxyIF
+outFile: ProxyT
+
+file:
+class: Proxy
+extend: ObjectG
+implements: ProxyIF
+import: gobject.ObjectG
+
+#imports for Proxy Interface.
+import: gio.ProxyT
+import: gio.ProxyIF
+
+code: start
+	// Minimal implementation.
+	mixin ProxyT!(GProxy);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gProxy;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GProxy* gProxy)
+	{
+		if(gProxy is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gProxy);
+		this.gProxy = gProxy;
+	}
+code: end
+outFile: Proxy
+
+file: GProxyAddress.html
+struct: GProxyAddress
+ctorStruct: GSocketAddress
+class: ProxyAddress
+implements: SocketConnectableIF
+prefix: g_proxy_address_
+import: glib.Str
+
+#imports for SocketConnectable Interface.
+import: gio.SocketConnectableT
+import: gio.SocketConnectableIF
+
+code: start
+	// add the SocketConnectable capabilities
+	mixin SocketConnectableT!(GProxyAddress);
+code: end
+outFile: ProxyAddress
+
 ###########################################################
 ### Highlevel network functionallity ######################
 ###########################################################
@@ -1382,22 +1526,19 @@ outFile: SocketConnection
 file: GUnixConnection.html
 struct: GUnixConnection
 class: UnixConnection
-prefix:  g_unix_connection_
-strictPrefix: Y
+prefix: g_unix_connection_
 import: glib.ErrorG
 import: glib.GException
 import: gio.Cancellable
-#TODO: Wrap Credentials.
-#import: gio.Credentials
+import: gio.Credentials
 structWrap: GCancellable* Cancellable
-#structWrap: GCredentials* Credentials
+structWrap: GCredentials* Credentials
 outFile: UnixConnection
 
 file: GTcpConnection.html
 struct: GTcpConnection
 class: TcpConnection
 prefix: g_tcp_connection_
-strictPrefix: Y
 outFile: TcpConnection
 
 file: GSocketListener.html
@@ -1423,7 +1564,6 @@ out: g_socket_listener_accept source_object
 inout: g_socket_listener_accept_finish source_object
 out: g_socket_listener_accept_socket source_object
 inout: g_socket_listener_accept_socket_finish source_object
-
 outFile: SocketListener
 
 file: GSocketService.html
@@ -1459,6 +1599,61 @@ structWrap: GCancellable* Cancellable
 structWrap: GResolver* Resolver
 outFile: Resolver
 
+file: GProxyResolver.html
+struct: GProxyResolver
+class: ProxyResolverT
+template: TStruct
+prefix: g_proxy_resolver_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.ProxyResolver
+import: gio.ProxyResolverIF
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GProxyResolver* ProxyResolverIF
+interface: ProxyResolverIF
+outFile: ProxyResolverT
+
+file:
+class: ProxyResolver
+extend: ObjectG
+implements: ProxyResolverIF
+import: gobject.ObjectG
+
+#imports for ProxyResolver Interface.
+import: gio.ProxyResolverT
+import: gio.ProxyResolverIF
+
+code: start
+	// Minimal implementation.
+	mixin ProxyResolverT!(GProxyResolver);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gProxyResolver;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GProxyResolver* gProxyResolver)
+	{
+		if(gProxyResolver is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gProxyResolver);
+		this.gProxyResolver = gProxyResolver;
+	}
+code: end
+outFile: ProxyResolver
+
 file: GSocketConnectable.html
 struct: GSocketConnectable
 class: SocketConnectableT
@@ -1469,6 +1664,43 @@ import: gio.SocketAddressEnumerator
 structWrap: GSocketAddressEnumerator* SocketAddressEnumerator
 interface: SocketConnectableIF
 outFile: SocketConnectableT
+
+file:
+class: SocketConnectable
+extend: ObjectG
+implements: SocketConnectableIF
+import: gobject.ObjectG
+
+#imports for SocketConnectable Interface.
+import: gio.SocketConnectableT
+import: gio.SocketConnectableIF
+
+code: start
+	// Minimal implementation.
+	mixin SocketConnectableT!(GSocketConnectable);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gSocketConnectable;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GSocketConnectable* gSocketConnectable)
+	{
+		if(gSocketConnectable is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gSocketConnectable);
+		this.gSocketConnectable = gSocketConnectable;
+	}
+code: end
+outFile: SocketConnectable
 
 struct: GSocketAddressEnumerator
 class: SocketAddressEnumerator
@@ -1493,6 +1725,7 @@ prefix: g_network_address_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: gio.SocketConnectable
 import: gio.SocketConnectableIF
 structWrap: GSocketConnectable* SocketConnectableIF
 
@@ -1600,9 +1833,62 @@ outFile: FilenameCompleter
 ### Settings ##############################################
 ###########################################################
 
+file: GSettings.html
+struct: GSettings
+class: Settings
+prefix: g_settings_
+import: glib.Str
+import: glib.Variant
+import: glib.VariantType
+import: gobject.Value
+import: gio.SettingsBackend
+structWrap: GVariant* Variant
+structWrap: GVariantType* VariantType
+structWrap: GValue* Value
+structWrap: GSettings* Settings
+structWrap: GSettingsBackend* SettingsBackend
+array: g_settings_set_strv value
+outFile: Settings
+
+file: GSettingsBackend.html
+struct: GSettingsBackend
+class: SettingsBackend
+prefix: g_settings_backend_
+import: glib.Str
+import: glib.BBTree
+import: glib.Variant
+structWrap: GTree* BBTree
+structWrap: GVariant* Variant
+out: g_settings_backend_flatten_tree path
+out: g_settings_backend_flatten_tree keys
+out: g_settings_backend_flatten_tree values
+array: g_settings_backend_flatten_tree keys
+array: g_settings_backend_flatten_tree values keys.length
+outFile: SettingsBackend
+
 ###########################################################
 ### Permissions ###########################################
 ###########################################################
+
+file: GPermission.html
+struct: GPermission
+class: Permission
+prefix: g_permission_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+outFile: Permission
+
+file: GSimplePermission.html
+struct: GSimplePermission
+ctorStruct: GPermission
+class: SimplePermission
+prefix: g_simple_permission_
+outFile: SimplePermission
 
 ###########################################################
 ### Extending GIO #########################################

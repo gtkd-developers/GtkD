@@ -50,6 +50,8 @@ public alias dchar unichar;
 public alias wchar unichar2;
 public alias uint time_t;
 public alias uint XID;
+public alias uint uid_t;
+
 
 version(Tango)
 {
@@ -2311,6 +2313,8 @@ public enum GVariantParseError
 }
 alias GVariantParseError VariantParseError;
 
+public struct GSocketControlMessageClass{}
+public struct GInetSocketAddressClass{}
 
 /**
  * Main Gtk struct.

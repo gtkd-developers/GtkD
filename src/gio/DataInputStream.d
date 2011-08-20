@@ -434,7 +434,7 @@ public class DataInputStream : BufferedInputStream
 	 * Returns: a string with the data that was read before encountering any of the stop characters. Set length to a gsize to get the length of the string. This function will return NULL on an error
 	 * Throws: GException on failure.
 	 */
-	public string readUpto(string stopChars, Cancellable cancellable)
+	public string readUpto(char[] stopChars, Cancellable cancellable)
 	{
 		// char * g_data_input_stream_read_upto (GDataInputStream *stream,  const gchar *stop_chars,  gssize stop_chars_len,  gsize *length,  GCancellable *cancellable,  GError **error);
 		gsize length;
@@ -469,7 +469,7 @@ public class DataInputStream : BufferedInputStream
 	 * callback = callback to call when the request is satisfied
 	 * userData = the data to pass to callback function
 	 */
-	public void readUptoAsync(string stopChars, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void readUptoAsync(char[] stopChars, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_data_input_stream_read_upto_async (GDataInputStream *stream,  const gchar *stop_chars,  gssize stop_chars_len,  gint io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_data_input_stream_read_upto_async(gDataInputStream, stopChars.ptr, cast(int) stopChars.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);

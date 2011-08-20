@@ -147,9 +147,6 @@ public struct Funct
 			if ( !getArrayType(currParm, currParmType,  convParms) && !getOutOrRefType(currParm, currParmType,  convParms) )
 				parmsWrap ~= getWrappedType(currParmType.dup, convParms);
 
-			if ( parmsWrap[$-1] == "char[]" || parmsWrap[$-1] == "gchar[]")
-				parmsWrap[$-1] = "string";
-
 			parms ~= currParm.dup;
 			
 			if ( p<text.length && text[p]==',') ++p;

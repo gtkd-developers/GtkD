@@ -45,8 +45,10 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- gio.Cancellable
+ * 	- gio.Credentials
  * structWrap:
  * 	- GCancellable* -> Cancellable
+ * 	- GCredentials* -> Credentials
  * module aliases:
  * local aliases:
  * overrides:
@@ -63,6 +65,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import gio.Cancellable;
+private import gio.Credentials;
 
 
 
@@ -199,7 +202,7 @@ public class UnixConnection : SocketConnection
 	 * Returns: Received credentials on success (free with g_object_unref()), NULL if error is set.
 	 * Throws: GException on failure.
 	 */
-	public GCredentials* receiveCredentials(Cancellable cancellable)
+	public Credentials receiveCredentials(Cancellable cancellable)
 	{
 		// GCredentials * g_unix_connection_receive_credentials  (GUnixConnection *connection,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -211,7 +214,11 @@ public class UnixConnection : SocketConnection
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		if(p is null)
+		{
+			return null;
+		}
+		return new Credentials(cast(GCredentials*) p);
 	}
 	
 	/**

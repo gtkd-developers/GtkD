@@ -24,40 +24,34 @@
  * Conversion parameters:
  * inFile  = 
  * outPack = gio
- * outFile = SocketAddressEnumerator
- * strct   = GSocketAddressEnumerator
+ * outFile = Proxy
+ * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = SocketAddressEnumerator
+ * clss    = Proxy
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = ObjectG
  * implements:
+ * 	- ProxyIF
  * prefixes:
- * 	- g_socket_address_enumerator_
  * omit structs:
  * omit prefixes:
- * 	- g_socket_connectable_
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.AsyncResultIF
- * 	- gio.Cancellable
- * 	- gio.SocketAddress
+ * 	- gobject.ObjectG
+ * 	- gio.ProxyT
+ * 	- gio.ProxyIF
  * structWrap:
- * 	- GAsyncResult* -> AsyncResultIF
- * 	- GCancellable* -> Cancellable
- * 	- GSocketAddress* -> SocketAddress
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gio.SocketAddressEnumerator;
+module gio.Proxy;
 
 public  import gtkc.giotypes;
 
@@ -65,47 +59,40 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
-private import glib.ErrorG;
-private import glib.GException;
-private import gio.AsyncResultIF;
-private import gio.Cancellable;
-private import gio.SocketAddress;
+private import gobject.ObjectG;
+private import gio.ProxyT;
+private import gio.ProxyIF;
 
 
 
 
 /**
  */
-public class SocketAddressEnumerator
+public class Proxy : ObjectG, ProxyIF
 {
 	
-	/** the main Gtk struct */
-	protected GSocketAddressEnumerator* gSocketAddressEnumerator;
-	
-	
-	public GSocketAddressEnumerator* getSocketAddressEnumeratorStruct()
-	{
-		return gSocketAddressEnumerator;
-	}
-	
+	// Minimal implementation.
+	mixin ProxyT!(GProxy);
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
-		return cast(void*)gSocketAddressEnumerator;
+		return cast(void*)gProxy;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GSocketAddressEnumerator* gSocketAddressEnumerator)
+	public this (GProxy* gProxy)
 	{
-		if(gSocketAddressEnumerator is null)
+		if(gProxy is null)
 		{
 			this = null;
 			return;
 		}
-		this.gSocketAddressEnumerator = gSocketAddressEnumerator;
+		
+		super(cast(GObject*)gProxy);
+		this.gProxy = gProxy;
 	}
 	
 	/**

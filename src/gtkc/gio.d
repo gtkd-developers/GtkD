@@ -336,6 +336,9 @@ static this()
 	Linker.link(g_converter_convert, "g_converter_convert", LIBRARY.GIO);
 	Linker.link(g_converter_reset, "g_converter_reset", LIBRARY.GIO);
 
+	// gio.Converter
+
+
 	// gio.CharsetConverter
 
 	Linker.link(g_charset_converter_new, "g_charset_converter_new", LIBRARY.GIO);
@@ -542,6 +545,16 @@ static this()
 	Linker.link(g_unix_output_stream_set_close_fd, "g_unix_output_stream_set_close_fd", LIBRARY.GIO);
 	Linker.link(g_unix_output_stream_get_close_fd, "g_unix_output_stream_get_close_fd", LIBRARY.GIO);
 	Linker.link(g_unix_output_stream_get_fd, "g_unix_output_stream_get_fd", LIBRARY.GIO);
+
+	// gio.ConverterInputStream
+
+	Linker.link(g_converter_input_stream_new, "g_converter_input_stream_new", LIBRARY.GIO);
+	Linker.link(g_converter_input_stream_get_converter, "g_converter_input_stream_get_converter", LIBRARY.GIO);
+
+	// gio.ConverterOutputStream
+
+	Linker.link(g_converter_output_stream_new, "g_converter_output_stream_new", LIBRARY.GIO);
+	Linker.link(g_converter_output_stream_get_converter, "g_converter_output_stream_get_converter", LIBRARY.GIO);
 
 	// gio.ContentType
 
@@ -934,6 +947,46 @@ static this()
 	Linker.link(g_unix_fd_message_append_fd, "g_unix_fd_message_append_fd", LIBRARY.GIO);
 	Linker.link(g_unix_fd_message_steal_fds, "g_unix_fd_message_steal_fds", LIBRARY.GIO);
 
+	// gio.Credentials
+
+	Linker.link(g_credentials_new, "g_credentials_new", LIBRARY.GIO);
+	Linker.link(g_credentials_to_string, "g_credentials_to_string", LIBRARY.GIO);
+	Linker.link(g_credentials_get_native, "g_credentials_get_native", LIBRARY.GIO);
+	Linker.link(g_credentials_set_native, "g_credentials_set_native", LIBRARY.GIO);
+	Linker.link(g_credentials_is_same_user, "g_credentials_is_same_user", LIBRARY.GIO);
+	Linker.link(g_credentials_get_unix_user, "g_credentials_get_unix_user", LIBRARY.GIO);
+	Linker.link(g_credentials_set_unix_user, "g_credentials_set_unix_user", LIBRARY.GIO);
+
+	// gio.UnixCredentialsMessage
+
+	Linker.link(g_unix_credentials_message_new, "g_unix_credentials_message_new", LIBRARY.GIO);
+	Linker.link(g_unix_credentials_message_new_with_credentials, "g_unix_credentials_message_new_with_credentials", LIBRARY.GIO);
+	Linker.link(g_unix_credentials_message_get_credentials, "g_unix_credentials_message_get_credentials", LIBRARY.GIO);
+	Linker.link(g_unix_credentials_message_is_supported, "g_unix_credentials_message_is_supported", LIBRARY.GIO);
+
+	// gio.ProxyT
+
+
+	// gio.ProxyT
+
+	Linker.link(g_proxy_connect, "g_proxy_connect", LIBRARY.GIO);
+	Linker.link(g_proxy_connect_async, "g_proxy_connect_async", LIBRARY.GIO);
+	Linker.link(g_proxy_connect_finish, "g_proxy_connect_finish", LIBRARY.GIO);
+	Linker.link(g_proxy_get_default_for_protocol, "g_proxy_get_default_for_protocol", LIBRARY.GIO);
+	Linker.link(g_proxy_supports_hostname, "g_proxy_supports_hostname", LIBRARY.GIO);
+
+	// gio.Proxy
+
+
+	// gio.ProxyAddress
+
+	Linker.link(g_proxy_address_get_destination_hostname, "g_proxy_address_get_destination_hostname", LIBRARY.GIO);
+	Linker.link(g_proxy_address_get_destination_port, "g_proxy_address_get_destination_port", LIBRARY.GIO);
+	Linker.link(g_proxy_address_get_password, "g_proxy_address_get_password", LIBRARY.GIO);
+	Linker.link(g_proxy_address_get_protocol, "g_proxy_address_get_protocol", LIBRARY.GIO);
+	Linker.link(g_proxy_address_get_username, "g_proxy_address_get_username", LIBRARY.GIO);
+	Linker.link(g_proxy_address_new, "g_proxy_address_new", LIBRARY.GIO);
+
 	// gio.SocketClient
 
 	Linker.link(g_socket_client_add_application_proxy, "g_socket_client_add_application_proxy", LIBRARY.GIO);
@@ -1027,6 +1080,20 @@ static this()
 	Linker.link(g_resolver_lookup_service_finish, "g_resolver_lookup_service_finish", LIBRARY.GIO);
 	Linker.link(g_resolver_free_targets, "g_resolver_free_targets", LIBRARY.GIO);
 
+	// gio.ProxyResolverT
+
+
+	// gio.ProxyResolverT
+
+	Linker.link(g_proxy_resolver_get_default, "g_proxy_resolver_get_default", LIBRARY.GIO);
+	Linker.link(g_proxy_resolver_is_supported, "g_proxy_resolver_is_supported", LIBRARY.GIO);
+	Linker.link(g_proxy_resolver_lookup, "g_proxy_resolver_lookup", LIBRARY.GIO);
+	Linker.link(g_proxy_resolver_lookup_async, "g_proxy_resolver_lookup_async", LIBRARY.GIO);
+	Linker.link(g_proxy_resolver_lookup_finish, "g_proxy_resolver_lookup_finish", LIBRARY.GIO);
+
+	// gio.ProxyResolver
+
+
 	// gio.SocketConnectableT
 
 
@@ -1035,11 +1102,11 @@ static this()
 	Linker.link(g_socket_connectable_enumerate, "g_socket_connectable_enumerate", LIBRARY.GIO);
 	Linker.link(g_socket_connectable_proxy_enumerate, "g_socket_connectable_proxy_enumerate", LIBRARY.GIO);
 
+	// gio.SocketConnectable
+
+
 	// gio.SocketAddressEnumerator
 
-	Linker.link(g_socket_address_enumerator_next, "g_socket_address_enumerator_next", LIBRARY.GIO);
-	Linker.link(g_socket_address_enumerator_next_async, "g_socket_address_enumerator_next_async", LIBRARY.GIO);
-	Linker.link(g_socket_address_enumerator_next_finish, "g_socket_address_enumerator_next_finish", LIBRARY.GIO);
 
 	// gio.NetworkAddress
 
@@ -1076,6 +1143,72 @@ static this()
 	Linker.link(g_filename_completer_get_completion_suffix, "g_filename_completer_get_completion_suffix", LIBRARY.GIO);
 	Linker.link(g_filename_completer_get_completions, "g_filename_completer_get_completions", LIBRARY.GIO);
 	Linker.link(g_filename_completer_set_dirs_only, "g_filename_completer_set_dirs_only", LIBRARY.GIO);
+
+	// gio.Settings
+
+	Linker.link(g_settings_new, "g_settings_new", LIBRARY.GIO);
+	Linker.link(g_settings_new_with_path, "g_settings_new_with_path", LIBRARY.GIO);
+	Linker.link(g_settings_new_with_backend, "g_settings_new_with_backend", LIBRARY.GIO);
+	Linker.link(g_settings_new_with_backend_and_path, "g_settings_new_with_backend_and_path", LIBRARY.GIO);
+	Linker.link(g_settings_sync, "g_settings_sync", LIBRARY.GIO);
+	Linker.link(g_settings_get_value, "g_settings_get_value", LIBRARY.GIO);
+	Linker.link(g_settings_set_value, "g_settings_set_value", LIBRARY.GIO);
+	Linker.link(g_settings_is_writable, "g_settings_is_writable", LIBRARY.GIO);
+	Linker.link(g_settings_delay, "g_settings_delay", LIBRARY.GIO);
+	Linker.link(g_settings_apply, "g_settings_apply", LIBRARY.GIO);
+	Linker.link(g_settings_revert, "g_settings_revert", LIBRARY.GIO);
+	Linker.link(g_settings_get_has_unapplied, "g_settings_get_has_unapplied", LIBRARY.GIO);
+	Linker.link(g_settings_get_child, "g_settings_get_child", LIBRARY.GIO);
+	Linker.link(g_settings_reset, "g_settings_reset", LIBRARY.GIO);
+	Linker.link(g_settings_get, "g_settings_get", LIBRARY.GIO);
+	Linker.link(g_settings_set, "g_settings_set", LIBRARY.GIO);
+	Linker.link(g_settings_get_boolean, "g_settings_get_boolean", LIBRARY.GIO);
+	Linker.link(g_settings_set_boolean, "g_settings_set_boolean", LIBRARY.GIO);
+	Linker.link(g_settings_get_int, "g_settings_get_int", LIBRARY.GIO);
+	Linker.link(g_settings_set_int, "g_settings_set_int", LIBRARY.GIO);
+	Linker.link(g_settings_get_double, "g_settings_get_double", LIBRARY.GIO);
+	Linker.link(g_settings_set_double, "g_settings_set_double", LIBRARY.GIO);
+	Linker.link(g_settings_get_string, "g_settings_get_string", LIBRARY.GIO);
+	Linker.link(g_settings_set_string, "g_settings_set_string", LIBRARY.GIO);
+	Linker.link(g_settings_get_strv, "g_settings_get_strv", LIBRARY.GIO);
+	Linker.link(g_settings_set_strv, "g_settings_set_strv", LIBRARY.GIO);
+	Linker.link(g_settings_get_enum, "g_settings_get_enum", LIBRARY.GIO);
+	Linker.link(g_settings_set_enum, "g_settings_set_enum", LIBRARY.GIO);
+	Linker.link(g_settings_get_flags, "g_settings_get_flags", LIBRARY.GIO);
+	Linker.link(g_settings_set_flags, "g_settings_set_flags", LIBRARY.GIO);
+	Linker.link(g_settings_get_mapped, "g_settings_get_mapped", LIBRARY.GIO);
+	Linker.link(g_settings_bind, "g_settings_bind", LIBRARY.GIO);
+	Linker.link(g_settings_bind_with_mapping, "g_settings_bind_with_mapping", LIBRARY.GIO);
+	Linker.link(g_settings_bind_writable, "g_settings_bind_writable", LIBRARY.GIO);
+	Linker.link(g_settings_unbind, "g_settings_unbind", LIBRARY.GIO);
+
+	// gio.SettingsBackend
+
+	Linker.link(g_settings_backend_changed, "g_settings_backend_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_path_changed, "g_settings_backend_path_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_keys_changed, "g_settings_backend_keys_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_path_writable_changed, "g_settings_backend_path_writable_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_writable_changed, "g_settings_backend_writable_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_changed_tree, "g_settings_backend_changed_tree", LIBRARY.GIO);
+	Linker.link(g_settings_backend_flatten_tree, "g_settings_backend_flatten_tree", LIBRARY.GIO);
+	Linker.link(g_keyfile_settings_backend_new, "g_keyfile_settings_backend_new", LIBRARY.GIO);
+
+	// gio.Permission
+
+	Linker.link(g_permission_get_allowed, "g_permission_get_allowed", LIBRARY.GIO);
+	Linker.link(g_permission_get_can_acquire, "g_permission_get_can_acquire", LIBRARY.GIO);
+	Linker.link(g_permission_get_can_release, "g_permission_get_can_release", LIBRARY.GIO);
+	Linker.link(g_permission_acquire, "g_permission_acquire", LIBRARY.GIO);
+	Linker.link(g_permission_acquire_async, "g_permission_acquire_async", LIBRARY.GIO);
+	Linker.link(g_permission_acquire_finish, "g_permission_acquire_finish", LIBRARY.GIO);
+	Linker.link(g_permission_release, "g_permission_release", LIBRARY.GIO);
+	Linker.link(g_permission_release_async, "g_permission_release_async", LIBRARY.GIO);
+	Linker.link(g_permission_release_finish, "g_permission_release_finish", LIBRARY.GIO);
+	Linker.link(g_permission_impl_update, "g_permission_impl_update", LIBRARY.GIO);
+
+	// gio.SimplePermission
+
+	Linker.link(g_simple_permission_new, "g_simple_permission_new", LIBRARY.GIO);
 
 	// gio.Vfs
 
@@ -1419,6 +1552,9 @@ mixin( gshared ~"extern(C)
 	GConverterResult function(GConverter* converter, void* inbuf, gsize inbufSize, void* outbuf, gsize outbufSize, GConverterFlags flags, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_converter_convert;
 	void function(GConverter* converter) c_g_converter_reset;
 	
+	// gio.Converter
+	
+	
 	// gio.CharsetConverter
 	
 	GCharsetConverter* function(gchar* toCharset, gchar* fromCharset, GError** error) c_g_charset_converter_new;
@@ -1625,6 +1761,16 @@ mixin( gshared ~"extern(C)
 	void function(GUnixOutputStream* stream, gboolean closeFd) c_g_unix_output_stream_set_close_fd;
 	gboolean function(GUnixOutputStream* stream) c_g_unix_output_stream_get_close_fd;
 	gint function(GUnixOutputStream* stream) c_g_unix_output_stream_get_fd;
+	
+	// gio.ConverterInputStream
+	
+	GInputStream* function(GInputStream* baseStream, GConverter* converter) c_g_converter_input_stream_new;
+	GConverter* function(GConverterInputStream* converterStream) c_g_converter_input_stream_get_converter;
+	
+	// gio.ConverterOutputStream
+	
+	GOutputStream* function(GOutputStream* baseStream, GConverter* converter) c_g_converter_output_stream_new;
+	GConverter* function(GConverterOutputStream* converterStream) c_g_converter_output_stream_get_converter;
 	
 	// gio.ContentType
 	
@@ -2017,6 +2163,46 @@ mixin( gshared ~"extern(C)
 	gboolean function(GUnixFDMessage* message, gint fd, GError** error) c_g_unix_fd_message_append_fd;
 	gint* function(GUnixFDMessage* message, gint* length) c_g_unix_fd_message_steal_fds;
 	
+	// gio.Credentials
+	
+	GCredentials* function() c_g_credentials_new;
+	gchar* function(GCredentials* credentials) c_g_credentials_to_string;
+	gpointer function(GCredentials* credentials, GCredentialsType nativeType) c_g_credentials_get_native;
+	void function(GCredentials* credentials, GCredentialsType nativeType, gpointer native) c_g_credentials_set_native;
+	gboolean function(GCredentials* credentials, GCredentials* otherCredentials, GError** error) c_g_credentials_is_same_user;
+	uid_t function(GCredentials* credentials, GError** error) c_g_credentials_get_unix_user;
+	gboolean function(GCredentials* credentials, uid_t uid, GError** error) c_g_credentials_set_unix_user;
+	
+	// gio.UnixCredentialsMessage
+	
+	GSocketControlMessage* function() c_g_unix_credentials_message_new;
+	GSocketControlMessage* function(GCredentials* credentials) c_g_unix_credentials_message_new_with_credentials;
+	GCredentials* function(GUnixCredentialsMessage* message) c_g_unix_credentials_message_get_credentials;
+	gboolean function() c_g_unix_credentials_message_is_supported;
+	
+	// gio.ProxyT
+	
+	
+	// gio.ProxyT
+	
+	GIOStream* function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GError** error) c_g_proxy_connect;
+	void function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_proxy_connect_async;
+	GIOStream* function(GProxy* proxy, GAsyncResult* result, GError** error) c_g_proxy_connect_finish;
+	GProxy* function(gchar* protocol) c_g_proxy_get_default_for_protocol;
+	gboolean function(GProxy* proxy) c_g_proxy_supports_hostname;
+	
+	// gio.Proxy
+	
+	
+	// gio.ProxyAddress
+	
+	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_destination_hostname;
+	guint16 function(GProxyAddress* proxy) c_g_proxy_address_get_destination_port;
+	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_password;
+	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_protocol;
+	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_username;
+	GSocketAddress* function(GInetAddress* inetaddr, guint16 port, gchar* protocol, gchar* destHostname, guint16 destPort, gchar* username, gchar* password) c_g_proxy_address_new;
+	
 	// gio.SocketClient
 	
 	void function(GSocketClient* client, gchar* protocol) c_g_socket_client_add_application_proxy;
@@ -2110,6 +2296,20 @@ mixin( gshared ~"extern(C)
 	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_service_finish;
 	void function(GList* targets) c_g_resolver_free_targets;
 	
+	// gio.ProxyResolverT
+	
+	
+	// gio.ProxyResolverT
+	
+	GProxyResolver* function() c_g_proxy_resolver_get_default;
+	gboolean function(GProxyResolver* resolver) c_g_proxy_resolver_is_supported;
+	gchar** function(GProxyResolver* resolver, gchar* uri, GCancellable* cancellable, GError** error) c_g_proxy_resolver_lookup;
+	void function(GProxyResolver* resolver, gchar* uri, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_proxy_resolver_lookup_async;
+	gchar** function(GProxyResolver* resolver, GAsyncResult* result, GError** error) c_g_proxy_resolver_lookup_finish;
+	
+	// gio.ProxyResolver
+	
+	
 	// gio.SocketConnectableT
 	
 	
@@ -2118,11 +2318,11 @@ mixin( gshared ~"extern(C)
 	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_enumerate;
 	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_proxy_enumerate;
 	
+	// gio.SocketConnectable
+	
+	
 	// gio.SocketAddressEnumerator
 	
-	GSocketAddress* function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_socket_address_enumerator_next;
-	void function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_address_enumerator_next_async;
-	GSocketAddress* function(GSocketAddressEnumerator* enumerator, GAsyncResult* result, GError** error) c_g_socket_address_enumerator_next_finish;
 	
 	// gio.NetworkAddress
 	
@@ -2159,6 +2359,72 @@ mixin( gshared ~"extern(C)
 	char* function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completion_suffix;
 	char** function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completions;
 	void function(GFilenameCompleter* completer, gboolean dirsOnly) c_g_filename_completer_set_dirs_only;
+	
+	// gio.Settings
+	
+	GSettings* function(gchar* schema) c_g_settings_new;
+	GSettings* function(gchar* schema, gchar* path) c_g_settings_new_with_path;
+	GSettings* function(gchar* schema, GSettingsBackend* backend) c_g_settings_new_with_backend;
+	GSettings* function(gchar* schema, GSettingsBackend* backend, gchar* path) c_g_settings_new_with_backend_and_path;
+	void function() c_g_settings_sync;
+	GVariant* function(GSettings* settings, gchar* key) c_g_settings_get_value;
+	gboolean function(GSettings* settings, gchar* key, GVariant* value) c_g_settings_set_value;
+	gboolean function(GSettings* settings, gchar* name) c_g_settings_is_writable;
+	void function(GSettings* settings) c_g_settings_delay;
+	void function(GSettings* settings) c_g_settings_apply;
+	void function(GSettings* settings) c_g_settings_revert;
+	gboolean function(GSettings* settings) c_g_settings_get_has_unapplied;
+	GSettings* function(GSettings* settings, gchar* name) c_g_settings_get_child;
+	void function(GSettings* settings, gchar* key) c_g_settings_reset;
+	void function(GSettings* settings, gchar* key, gchar* format, ... ) c_g_settings_get;
+	gboolean function(GSettings* settings, gchar* key, gchar* format, ... ) c_g_settings_set;
+	gboolean function(GSettings* settings, gchar* key) c_g_settings_get_boolean;
+	gboolean function(GSettings* settings, gchar* key, gboolean value) c_g_settings_set_boolean;
+	gint function(GSettings* settings, gchar* key) c_g_settings_get_int;
+	gboolean function(GSettings* settings, gchar* key, gint value) c_g_settings_set_int;
+	gdouble function(GSettings* settings, gchar* key) c_g_settings_get_double;
+	gboolean function(GSettings* settings, gchar* key, gdouble value) c_g_settings_set_double;
+	gchar* function(GSettings* settings, gchar* key) c_g_settings_get_string;
+	gboolean function(GSettings* settings, gchar* key, gchar* value) c_g_settings_set_string;
+	gchar** function(GSettings* settings, gchar* key) c_g_settings_get_strv;
+	gboolean function(GSettings* settings, gchar* key, gchar** value) c_g_settings_set_strv;
+	gint function(GSettings* settings, gchar* key) c_g_settings_get_enum;
+	gboolean function(GSettings* settings, gchar* key, gint value) c_g_settings_set_enum;
+	guint function(GSettings* settings, gchar* key) c_g_settings_get_flags;
+	gboolean function(GSettings* settings, gchar* key, guint value) c_g_settings_set_flags;
+	gpointer function(GSettings* settings, gchar* key, GSettingsGetMapping mapping, gpointer userData) c_g_settings_get_mapped;
+	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, GSettingsBindFlags flags) c_g_settings_bind;
+	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, GSettingsBindFlags flags, GSettingsBindGetMapping getMapping, GSettingsBindSetMapping setMapping, gpointer userData, GDestroyNotify destroy) c_g_settings_bind_with_mapping;
+	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, gboolean inverted) c_g_settings_bind_writable;
+	void function(gpointer object, gchar* property) c_g_settings_unbind;
+	
+	// gio.SettingsBackend
+	
+	void function(GSettingsBackend* backend, gchar* key, gpointer originTag) c_g_settings_backend_changed;
+	void function(GSettingsBackend* backend, gchar* path, gpointer originTag) c_g_settings_backend_path_changed;
+	void function(GSettingsBackend* backend, gchar* path, gchar** items, gpointer originTag) c_g_settings_backend_keys_changed;
+	void function(GSettingsBackend* backend, gchar* path) c_g_settings_backend_path_writable_changed;
+	void function(GSettingsBackend* backend, gchar* key) c_g_settings_backend_writable_changed;
+	void function(GSettingsBackend* backend, GTree* tree, gpointer originTag) c_g_settings_backend_changed_tree;
+	void function(GTree* tree, gchar** path, gchar*** keys, GVariant*** values) c_g_settings_backend_flatten_tree;
+	GSettingsBackend* function(gchar* filename, gchar* rootPath, gchar* rootGroup) c_g_keyfile_settings_backend_new;
+	
+	// gio.Permission
+	
+	gboolean function(GPermission* permission) c_g_permission_get_allowed;
+	gboolean function(GPermission* permission) c_g_permission_get_can_acquire;
+	gboolean function(GPermission* permission) c_g_permission_get_can_release;
+	gboolean function(GPermission* permission, GCancellable* cancellable, GError** error) c_g_permission_acquire;
+	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_permission_acquire_async;
+	gboolean function(GPermission* permission, GAsyncResult* result, GError** error) c_g_permission_acquire_finish;
+	gboolean function(GPermission* permission, GCancellable* cancellable, GError** error) c_g_permission_release;
+	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_permission_release_async;
+	gboolean function(GPermission* permission, GAsyncResult* result, GError** error) c_g_permission_release_finish;
+	void function(GPermission* permission, gboolean allowed, gboolean canAcquire, gboolean canRelease) c_g_permission_impl_update;
+	
+	// gio.SimplePermission
+	
+	GPermission* function(gboolean allowed) c_g_simple_permission_new;
 	
 	// gio.Vfs
 	
@@ -2499,6 +2765,9 @@ alias c_g_simple_async_report_gerror_in_idle  g_simple_async_report_gerror_in_id
 alias c_g_converter_convert  g_converter_convert;
 alias c_g_converter_reset  g_converter_reset;
 
+// gio.Converter
+
+
 // gio.CharsetConverter
 
 alias c_g_charset_converter_new  g_charset_converter_new;
@@ -2705,6 +2974,16 @@ alias c_g_unix_output_stream_new  g_unix_output_stream_new;
 alias c_g_unix_output_stream_set_close_fd  g_unix_output_stream_set_close_fd;
 alias c_g_unix_output_stream_get_close_fd  g_unix_output_stream_get_close_fd;
 alias c_g_unix_output_stream_get_fd  g_unix_output_stream_get_fd;
+
+// gio.ConverterInputStream
+
+alias c_g_converter_input_stream_new  g_converter_input_stream_new;
+alias c_g_converter_input_stream_get_converter  g_converter_input_stream_get_converter;
+
+// gio.ConverterOutputStream
+
+alias c_g_converter_output_stream_new  g_converter_output_stream_new;
+alias c_g_converter_output_stream_get_converter  g_converter_output_stream_get_converter;
 
 // gio.ContentType
 
@@ -3097,6 +3376,46 @@ alias c_g_unix_fd_message_get_fd_list  g_unix_fd_message_get_fd_list;
 alias c_g_unix_fd_message_append_fd  g_unix_fd_message_append_fd;
 alias c_g_unix_fd_message_steal_fds  g_unix_fd_message_steal_fds;
 
+// gio.Credentials
+
+alias c_g_credentials_new  g_credentials_new;
+alias c_g_credentials_to_string  g_credentials_to_string;
+alias c_g_credentials_get_native  g_credentials_get_native;
+alias c_g_credentials_set_native  g_credentials_set_native;
+alias c_g_credentials_is_same_user  g_credentials_is_same_user;
+alias c_g_credentials_get_unix_user  g_credentials_get_unix_user;
+alias c_g_credentials_set_unix_user  g_credentials_set_unix_user;
+
+// gio.UnixCredentialsMessage
+
+alias c_g_unix_credentials_message_new  g_unix_credentials_message_new;
+alias c_g_unix_credentials_message_new_with_credentials  g_unix_credentials_message_new_with_credentials;
+alias c_g_unix_credentials_message_get_credentials  g_unix_credentials_message_get_credentials;
+alias c_g_unix_credentials_message_is_supported  g_unix_credentials_message_is_supported;
+
+// gio.ProxyT
+
+
+// gio.ProxyT
+
+alias c_g_proxy_connect  g_proxy_connect;
+alias c_g_proxy_connect_async  g_proxy_connect_async;
+alias c_g_proxy_connect_finish  g_proxy_connect_finish;
+alias c_g_proxy_get_default_for_protocol  g_proxy_get_default_for_protocol;
+alias c_g_proxy_supports_hostname  g_proxy_supports_hostname;
+
+// gio.Proxy
+
+
+// gio.ProxyAddress
+
+alias c_g_proxy_address_get_destination_hostname  g_proxy_address_get_destination_hostname;
+alias c_g_proxy_address_get_destination_port  g_proxy_address_get_destination_port;
+alias c_g_proxy_address_get_password  g_proxy_address_get_password;
+alias c_g_proxy_address_get_protocol  g_proxy_address_get_protocol;
+alias c_g_proxy_address_get_username  g_proxy_address_get_username;
+alias c_g_proxy_address_new  g_proxy_address_new;
+
 // gio.SocketClient
 
 alias c_g_socket_client_add_application_proxy  g_socket_client_add_application_proxy;
@@ -3190,6 +3509,20 @@ alias c_g_resolver_lookup_service_async  g_resolver_lookup_service_async;
 alias c_g_resolver_lookup_service_finish  g_resolver_lookup_service_finish;
 alias c_g_resolver_free_targets  g_resolver_free_targets;
 
+// gio.ProxyResolverT
+
+
+// gio.ProxyResolverT
+
+alias c_g_proxy_resolver_get_default  g_proxy_resolver_get_default;
+alias c_g_proxy_resolver_is_supported  g_proxy_resolver_is_supported;
+alias c_g_proxy_resolver_lookup  g_proxy_resolver_lookup;
+alias c_g_proxy_resolver_lookup_async  g_proxy_resolver_lookup_async;
+alias c_g_proxy_resolver_lookup_finish  g_proxy_resolver_lookup_finish;
+
+// gio.ProxyResolver
+
+
 // gio.SocketConnectableT
 
 
@@ -3198,11 +3531,11 @@ alias c_g_resolver_free_targets  g_resolver_free_targets;
 alias c_g_socket_connectable_enumerate  g_socket_connectable_enumerate;
 alias c_g_socket_connectable_proxy_enumerate  g_socket_connectable_proxy_enumerate;
 
+// gio.SocketConnectable
+
+
 // gio.SocketAddressEnumerator
 
-alias c_g_socket_address_enumerator_next  g_socket_address_enumerator_next;
-alias c_g_socket_address_enumerator_next_async  g_socket_address_enumerator_next_async;
-alias c_g_socket_address_enumerator_next_finish  g_socket_address_enumerator_next_finish;
 
 // gio.NetworkAddress
 
@@ -3239,6 +3572,72 @@ alias c_g_filename_completer_new  g_filename_completer_new;
 alias c_g_filename_completer_get_completion_suffix  g_filename_completer_get_completion_suffix;
 alias c_g_filename_completer_get_completions  g_filename_completer_get_completions;
 alias c_g_filename_completer_set_dirs_only  g_filename_completer_set_dirs_only;
+
+// gio.Settings
+
+alias c_g_settings_new  g_settings_new;
+alias c_g_settings_new_with_path  g_settings_new_with_path;
+alias c_g_settings_new_with_backend  g_settings_new_with_backend;
+alias c_g_settings_new_with_backend_and_path  g_settings_new_with_backend_and_path;
+alias c_g_settings_sync  g_settings_sync;
+alias c_g_settings_get_value  g_settings_get_value;
+alias c_g_settings_set_value  g_settings_set_value;
+alias c_g_settings_is_writable  g_settings_is_writable;
+alias c_g_settings_delay  g_settings_delay;
+alias c_g_settings_apply  g_settings_apply;
+alias c_g_settings_revert  g_settings_revert;
+alias c_g_settings_get_has_unapplied  g_settings_get_has_unapplied;
+alias c_g_settings_get_child  g_settings_get_child;
+alias c_g_settings_reset  g_settings_reset;
+alias c_g_settings_get  g_settings_get;
+alias c_g_settings_set  g_settings_set;
+alias c_g_settings_get_boolean  g_settings_get_boolean;
+alias c_g_settings_set_boolean  g_settings_set_boolean;
+alias c_g_settings_get_int  g_settings_get_int;
+alias c_g_settings_set_int  g_settings_set_int;
+alias c_g_settings_get_double  g_settings_get_double;
+alias c_g_settings_set_double  g_settings_set_double;
+alias c_g_settings_get_string  g_settings_get_string;
+alias c_g_settings_set_string  g_settings_set_string;
+alias c_g_settings_get_strv  g_settings_get_strv;
+alias c_g_settings_set_strv  g_settings_set_strv;
+alias c_g_settings_get_enum  g_settings_get_enum;
+alias c_g_settings_set_enum  g_settings_set_enum;
+alias c_g_settings_get_flags  g_settings_get_flags;
+alias c_g_settings_set_flags  g_settings_set_flags;
+alias c_g_settings_get_mapped  g_settings_get_mapped;
+alias c_g_settings_bind  g_settings_bind;
+alias c_g_settings_bind_with_mapping  g_settings_bind_with_mapping;
+alias c_g_settings_bind_writable  g_settings_bind_writable;
+alias c_g_settings_unbind  g_settings_unbind;
+
+// gio.SettingsBackend
+
+alias c_g_settings_backend_changed  g_settings_backend_changed;
+alias c_g_settings_backend_path_changed  g_settings_backend_path_changed;
+alias c_g_settings_backend_keys_changed  g_settings_backend_keys_changed;
+alias c_g_settings_backend_path_writable_changed  g_settings_backend_path_writable_changed;
+alias c_g_settings_backend_writable_changed  g_settings_backend_writable_changed;
+alias c_g_settings_backend_changed_tree  g_settings_backend_changed_tree;
+alias c_g_settings_backend_flatten_tree  g_settings_backend_flatten_tree;
+alias c_g_keyfile_settings_backend_new  g_keyfile_settings_backend_new;
+
+// gio.Permission
+
+alias c_g_permission_get_allowed  g_permission_get_allowed;
+alias c_g_permission_get_can_acquire  g_permission_get_can_acquire;
+alias c_g_permission_get_can_release  g_permission_get_can_release;
+alias c_g_permission_acquire  g_permission_acquire;
+alias c_g_permission_acquire_async  g_permission_acquire_async;
+alias c_g_permission_acquire_finish  g_permission_acquire_finish;
+alias c_g_permission_release  g_permission_release;
+alias c_g_permission_release_async  g_permission_release_async;
+alias c_g_permission_release_finish  g_permission_release_finish;
+alias c_g_permission_impl_update  g_permission_impl_update;
+
+// gio.SimplePermission
+
+alias c_g_simple_permission_new  g_simple_permission_new;
 
 // gio.Vfs
 

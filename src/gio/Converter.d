@@ -24,40 +24,34 @@
  * Conversion parameters:
  * inFile  = 
  * outPack = gio
- * outFile = SocketAddressEnumerator
- * strct   = GSocketAddressEnumerator
+ * outFile = Converter
+ * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = SocketAddressEnumerator
+ * clss    = Converter
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = ObjectG
  * implements:
+ * 	- ConverterIF
  * prefixes:
- * 	- g_socket_address_enumerator_
  * omit structs:
  * omit prefixes:
- * 	- g_socket_connectable_
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.AsyncResultIF
- * 	- gio.Cancellable
- * 	- gio.SocketAddress
+ * 	- gobject.ObjectG
+ * 	- gio.ConverterT
+ * 	- gio.ConverterIF
  * structWrap:
- * 	- GAsyncResult* -> AsyncResultIF
- * 	- GCancellable* -> Cancellable
- * 	- GSocketAddress* -> SocketAddress
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gio.SocketAddressEnumerator;
+module gio.Converter;
 
 public  import gtkc.giotypes;
 
@@ -65,47 +59,40 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
-private import glib.ErrorG;
-private import glib.GException;
-private import gio.AsyncResultIF;
-private import gio.Cancellable;
-private import gio.SocketAddress;
+private import gobject.ObjectG;
+private import gio.ConverterT;
+private import gio.ConverterIF;
 
 
 
 
 /**
  */
-public class SocketAddressEnumerator
+public class Converter : ObjectG, ConverterIF
 {
 	
-	/** the main Gtk struct */
-	protected GSocketAddressEnumerator* gSocketAddressEnumerator;
-	
-	
-	public GSocketAddressEnumerator* getSocketAddressEnumeratorStruct()
-	{
-		return gSocketAddressEnumerator;
-	}
-	
+	// Minimal implementation.
+	mixin ConverterT!(GConverter);
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
-		return cast(void*)gSocketAddressEnumerator;
+		return cast(void*)gConverter;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GSocketAddressEnumerator* gSocketAddressEnumerator)
+	public this (GConverter* gConverter)
 	{
-		if(gSocketAddressEnumerator is null)
+		if(gConverter is null)
 		{
 			this = null;
 			return;
 		}
-		this.gSocketAddressEnumerator = gSocketAddressEnumerator;
+		
+		super(cast(GObject*)gConverter);
+		this.gConverter = gConverter;
 	}
 	
 	/**

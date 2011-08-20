@@ -49,11 +49,13 @@
  * 	- glib.Source
  * 	- gio.SocketAddress
  * 	- gio.Cancellable
+ * 	- gio.Credentials
  * 	- gio.SocketControlMessage
  * 	- gio.InitableT
  * 	- gio.InitableIF
  * structWrap:
  * 	- GCancellable* -> Cancellable
+ * 	- GCredentials* -> Credentials
  * 	- GSocketAddress* -> SocketAddress
  * 	- GSocketControlMessage* -> SocketControlMessage
  * 	- GSource* -> Source
@@ -79,6 +81,7 @@ private import glib.GException;
 private import glib.Source;
 private import gio.SocketAddress;
 private import gio.Cancellable;
+private import gio.Credentials;
 private import gio.SocketControlMessage;
 private import gio.InitableT;
 private import gio.InitableIF;
@@ -464,7 +467,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public gssize receiveFrom(ref SocketAddress address, string buffer, Cancellable cancellable)
+	public gssize receiveFrom(ref SocketAddress address, char[] buffer, Cancellable cancellable)
 	{
 		// gssize g_socket_receive_from (GSocket *socket,  GSocketAddress **address,  gchar *buffer,  gsize size,  GCancellable *cancellable,  GError **error);
 		GSocketAddress* outaddress = (address is null) ? null : address.getSocketAddressStruct();
@@ -1211,7 +1214,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: NULL if error is set, otherwise a GCredentials object that must be freed with g_object_unref().
 	 * Throws: GException on failure.
 	 */
-	public GCredentials* getCredentials()
+	public Credentials getCredentials()
 	{
 		// GCredentials * g_socket_get_credentials (GSocket *socket,  GError **error);
 		GError* err = null;
@@ -1223,6 +1226,10 @@ public class Socket : ObjectG, InitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		if(p is null)
+		{
+			return null;
+		}
+		return new Credentials(cast(GCredentials*) p);
 	}
 }

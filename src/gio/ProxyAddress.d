@@ -1,0 +1,206 @@
+/*
+ * This file is part of gtkD.
+ *
+ * gtkD is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * gtkD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with gtkD; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+ 
+// generated automatically - do not change
+// find conversion definition on APILookup.txt
+// implement new conversion functionalities on the wrap.utils pakage
+
+/*
+ * Conversion parameters:
+ * inFile  = GProxyAddress.html
+ * outPack = gio
+ * outFile = ProxyAddress
+ * strct   = GProxyAddress
+ * realStrct=
+ * ctorStrct=GSocketAddress
+ * clss    = ProxyAddress
+ * interf  = 
+ * class Code: Yes
+ * interface Code: No
+ * template for:
+ * extend  = 
+ * implements:
+ * 	- SocketConnectableIF
+ * prefixes:
+ * 	- g_proxy_address_
+ * omit structs:
+ * omit prefixes:
+ * omit code:
+ * omit signals:
+ * imports:
+ * 	- glib.Str
+ * 	- gio.SocketConnectableT
+ * 	- gio.SocketConnectableIF
+ * structWrap:
+ * module aliases:
+ * local aliases:
+ * overrides:
+ */
+
+module gio.ProxyAddress;
+
+public  import gtkc.giotypes;
+
+private import gtkc.gio;
+private import glib.ConstructionException;
+
+
+private import glib.Str;
+private import gio.SocketConnectableT;
+private import gio.SocketConnectableIF;
+
+
+
+private import gio.InetSocketAddress;
+
+/**
+ * Description
+ * Support for proxied GInetSocketAddress.
+ */
+public class ProxyAddress : InetSocketAddress, SocketConnectableIF
+{
+	
+	/** the main Gtk struct */
+	protected GProxyAddress* gProxyAddress;
+	
+	
+	public GProxyAddress* getProxyAddressStruct()
+	{
+		return gProxyAddress;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gProxyAddress;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GProxyAddress* gProxyAddress)
+	{
+		if(gProxyAddress is null)
+		{
+			this = null;
+			return;
+		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gProxyAddress);
+		if( ptr !is null )
+		{
+			this = cast(ProxyAddress)ptr;
+			return;
+		}
+		super(cast(GInetSocketAddress*)gProxyAddress);
+		this.gProxyAddress = gProxyAddress;
+	}
+	
+	protected override void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gProxyAddress = cast(GProxyAddress*)obj;
+	}
+	
+	// add the SocketConnectable capabilities
+	mixin SocketConnectableT!(GProxyAddress);
+	
+	/**
+	 */
+	
+	/**
+	 * Gets proxy's destination hostname.
+	 * Since 2.26
+	 * Returns: the proxy's destination hostname
+	 */
+	public string getDestinationHostname()
+	{
+		// const gchar * g_proxy_address_get_destination_hostname  (GProxyAddress *proxy);
+		return Str.toString(g_proxy_address_get_destination_hostname(gProxyAddress));
+	}
+	
+	/**
+	 * Gets proxy's destination port.
+	 * Since 2.26
+	 * Returns: the proxy's destination port
+	 */
+	public ushort getDestinationPort()
+	{
+		// guint16 g_proxy_address_get_destination_port  (GProxyAddress *proxy);
+		return g_proxy_address_get_destination_port(gProxyAddress);
+	}
+	
+	/**
+	 * Gets proxy's password.
+	 * Since 2.26
+	 * Returns: the proxy's password
+	 */
+	public string getPassword()
+	{
+		// const gchar * g_proxy_address_get_password (GProxyAddress *proxy);
+		return Str.toString(g_proxy_address_get_password(gProxyAddress));
+	}
+	
+	/**
+	 * Gets proxy's protocol.
+	 * Since 2.26
+	 * Returns: the proxy's protocol
+	 */
+	public string getProtocol()
+	{
+		// const gchar * g_proxy_address_get_protocol (GProxyAddress *proxy);
+		return Str.toString(g_proxy_address_get_protocol(gProxyAddress));
+	}
+	
+	/**
+	 * Gets proxy's username.
+	 * Since 2.26
+	 * Returns: the proxy's username
+	 */
+	public string getUsername()
+	{
+		// const gchar * g_proxy_address_get_username (GProxyAddress *proxy);
+		return Str.toString(g_proxy_address_get_username(gProxyAddress));
+	}
+	
+	/**
+	 * Creates a new GProxyAddress for inetaddr with protocol that should
+	 * tunnel through dest_hostname and dest_port.
+	 * Since 2.26
+	 * Params:
+	 * inetaddr = The proxy server GInetAddress.
+	 * port = The proxy server port.
+	 * protocol = The proxy protocol to support, in lower case (e.g. socks, http).
+	 * destHostname = The destination hostname the the proxy should tunnel to.
+	 * destPort = The destination port to tunnel to.
+	 * username = The username to authenticate to the proxy server (or NULL).
+	 * password = The password to authenticate to the proxy server (or NULL).
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GInetAddress* inetaddr, ushort port, string protocol, string destHostname, ushort destPort, string username, string password)
+	{
+		// GSocketAddress * g_proxy_address_new (GInetAddress *inetaddr,  guint16 port,  const gchar *protocol,  const gchar *dest_hostname,  guint16 dest_port,  const gchar *username,  const gchar *password);
+		auto p = g_proxy_address_new(inetaddr, port, Str.toStringz(protocol), Str.toStringz(destHostname), destPort, Str.toStringz(username), Str.toStringz(password));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_proxy_address_new(inetaddr, port, Str.toStringz(protocol), Str.toStringz(destHostname), destPort, Str.toStringz(username), Str.toStringz(password))");
+		}
+		this(cast(GProxyAddress*) p);
+	}
+}

@@ -26,12 +26,6 @@ module gtkc.giotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
-public enum GConverterFlags
-{
-	NO_FLAGS     = 0,
-	INPUT_AT_END = 1 << 0,
-	FLUSH        = 1 << 1
-}
 /**
  * Flags used when querying a GFileInfo.
  * G_FILE_QUERY_INFO_NONE
@@ -856,6 +850,24 @@ public enum GUnixSocketAddressType
 alias GUnixSocketAddressType UnixSocketAddressType;
 
 /**
+ * Enumeration describing different kinds of native credential types.
+ * G_CREDENTIALS_TYPE_INVALID
+ * Indicates an invalid native credential type.
+ * G_CREDENTIALS_TYPE_LINUX_UCRED
+ * The native credentials type is a struct ucred.
+ * G_CREDENTIALS_TYPE_FREEBSD_CMSGCRED
+ * The native credentials type is a struct cmsgcred.
+ * Since 2.26
+ */
+public enum GCredentialsType
+{
+	TYPE_INVALID,
+	TYPE_LINUX_UCRED,
+	TYPE_FREEBSD_CMSGCRED
+}
+alias GCredentialsType CredentialsType;
+
+/**
  * An error code used with G_RESOLVER_ERROR in a GError returned
  * from a GResolver routine.
  * G_RESOLVER_ERROR_NOT_FOUND
@@ -885,6 +897,39 @@ public enum GResolverError
 	INTERNAL
 }
 alias GResolverError ResolverError;
+
+/**
+ * Flags used when creating a binding. These flags determine in which
+ * direction the binding works. The default is to synchronize in both
+ * directions.
+ * G_SETTINGS_BIND_DEFAULT
+ * Equivalent to G_SETTINGS_BIND_GET|G_SETTINGS_BIND_SET
+ * G_SETTINGS_BIND_GET
+ * Update the GObject property when the setting changes.
+ *  It is an error to use this flag if the property is not writable.
+ * G_SETTINGS_BIND_SET
+ * Update the setting when the GObject property changes.
+ *  It is an error to use this flag if the property is not readable.
+ * G_SETTINGS_BIND_NO_SENSITIVITY
+ * Do not try to bind a "sensitivity" property to the writability of the setting
+ * G_SETTINGS_BIND_GET_NO_CHANGES
+ * When set in addition to G_SETTINGS_BIND_GET, set the GObject property
+ *  value initially from the setting, but do not listen for changes of the setting
+ * G_SETTINGS_BIND_INVERT_BOOLEAN
+ * When passed to g_settings_bind(), uses a pair of mapping functions that invert
+ *  the boolean value when mapping between the setting and the property. The setting and property must both
+ *  be booleans. You can not pass this flag to g_settings_bind_with_mapping().
+ */
+public enum GSettingsBindFlags
+{
+	DEFAULT,
+	GET = (1<<0),
+	SET = (1<<1),
+	NO_SENSITIVITY = (1<<2),
+	GET_NO_CHANGES = (1<<3),
+	INVERT_BOOLEAN = (1<<4)
+}
+alias GSettingsBindFlags SettingsBindFlags;
 
 
 /**
@@ -1540,6 +1585,22 @@ public struct GUnixOutputStream{}
 
 /**
  * Main Gtk struct.
+ * An implementation of GFilterInputStream that allows data
+ * conversion.
+ */
+public struct GConverterInputStream{}
+
+
+/**
+ * Main Gtk struct.
+ * An implementation of GFilterOutputStream that allows data
+ * conversion.
+ */
+public struct GConverterOutputStream{}
+
+
+/**
+ * Main Gtk struct.
  * Information about an installed application and methods to launch
  * it (with file arguments).
  */
@@ -2140,6 +2201,56 @@ public struct GUnixFDMessage{}
 
 /**
  * Main Gtk struct.
+ * The GCredentials structure contains only private data and
+ * should only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GCredentials{}
+
+
+/**
+ * Main Gtk struct.
+ * The GUnixCredentialsMessage structure contains only private data
+ * and should only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GUnixCredentialsMessage{}
+
+
+/**
+ * Class structure for GUnixCredentialsMessage.
+ * Since 2.26
+ */
+public struct GUnixCredentialsMessageClass
+{
+	GSocketControlMessageClass parentClass;
+}
+
+
+/**
+ * Main Gtk struct.
+ * Interface that handles proxy connection and payload.
+ * Since 2.26
+ */
+public struct GProxy{}
+
+
+/**
+ * Main Gtk struct.
+ * A GInetSocketAddress representing a connection via a proxy server
+ * Since 2.26
+ */
+public struct GProxyAddress{}
+
+
+public struct GProxyAddressClass
+{
+	GInetSocketAddressClass parentClass;
+}
+
+
+/**
+ * Main Gtk struct.
  * A helper class for network servers to listen for and accept connections.
  * Since 2.22
  */
@@ -2152,6 +2263,20 @@ public struct GSocketClient{}
  * Since 2.22
  */
 public struct GSocketConnection{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GUnixConnection{}
+
+
+/**
+ * Main Gtk struct.
+ * A GSocketConnection for UNIX domain socket connections.
+ * Since 2.22
+ */
+public struct GTcpConnection{}
 
 
 /**
@@ -2187,46 +2312,11 @@ public struct GResolver{}
 
 
 /**
- * Interface for objects that contain or generate GSocketAddresses.
- */
-public struct GSocketConnectable{}
-
-
-/**
- * Provides an interface for returning a GSocketAddressEnumerator
- * and GProxyAddressEnumerator
- * GTypeInterface  g_iface;
- * The parent interface.
- * enumerate  ()
- * Creates a GSocketAddressEnumerator
- * proxy_enumerate  ()
- * Creates a GProxyAddressEnumerator
- */
-public struct GSocketConnectableIface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) GSocketAddressEnumerator *  function(GSocketConnectable *connectable)  enumerate;
-	extern(C) GSocketAddressEnumerator *  function(GSocketConnectable *connectable)  proxyEnumerate;
-}
-
-
-/**
  * Main Gtk struct.
- * Enumerator type for objects that contain or generate
- * GSocketAddresses.
+ * Interface that can be used to resolve proxy address.
+ * Since 2.26
  */
-public struct GSocketAddressEnumerator{}
-
-
-/**
- * A subclass of GSocketAddressEnumerator that takes another address
- * enumerator and wraps its results in GProxyAddresses as
- * directed by the default GProxyResolver.
- * Property Details
- * The "connectable" property
- */
-public struct GProxyAddressEnumerator{}
+public struct GProxyResolver{}
 
 
 /**
@@ -2257,6 +2347,51 @@ public struct GSrvTarget{}
  * Completes filenames based on files that exist within the file system.
  */
 public struct GFilenameCompleter{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GSettings{}
+
+
+/**
+ * Main Gtk struct.
+ * An implementation of a settings storage repository.
+ */
+public struct GSettingsBackend{}
+
+
+public struct GSettingsBackendClass
+{
+	GObjectClass parentClass;
+	extern(C) GVariant *  function(GSettingsBackend *backend,char *key,GVariantType *expectedType,int defaultValue) read;
+	extern(C) int  function(GSettingsBackend *backend,char *key) getWritable;
+	extern(C) int  function(GSettingsBackend *backend,char *key,GVariant *value,void* originTag) write;
+	extern(C) int  function(GSettingsBackend *backend,GTree *tree,void* originTag) writeTree;
+	extern(C) void  function(GSettingsBackend *backend,char *key,void* originTag) reset;
+	extern(C) void  function(GSettingsBackend *backend,char *name) subscribe;
+	extern(C) void  function(GSettingsBackend *backend,char *name) unsubscribe;
+	extern(C) void  function(GSettingsBackend *backend) sync;
+	extern(C) GPermission *  function(GSettingsBackend *backend,char *path) getPermission;
+	void* padding[24];
+}
+
+
+/**
+ * Main Gtk struct.
+ * GPermission is an opaque data structure and can only be accessed
+ * using the following functions.
+ */
+public struct GPermission{}
+
+
+/**
+ * Main Gtk struct.
+ * GSimplePermission is an opaque data structure. There are no methods
+ * except for those defined by GPermission.
+ */
+public struct GSimplePermission{}
 
 
 /**
@@ -2388,3 +2523,60 @@ public typedef extern(C) void*  function (void*, gsize) GReallocFunc;
  */
 // gboolean (*GSocketSourceFunc) (GSocket *socket,  GIOCondition condition,  gpointer user_data);
 public typedef extern(C) int  function (GSocket*, GIOCondition, void*) GSocketSourceFunc;
+
+/*
+ * The type of the function that is used to convert from a value stored
+ * in a GSettings to a value that is useful to the application.
+ * If the value is successfully mapped, the result should be stored at
+ * result and TRUE returned. If mapping fails (for example, if value
+ * is not in the right format) then FALSE should be returned.
+ * If value is NULL then it means that the mapping function is being
+ * given a "last chance" to successfully return a valid value. TRUE
+ * must be returned in this case.
+ * value  :
+ * the GVariant to map, or NULL
+ * result  :
+ * the result of the mapping
+ * user_data  :
+ * the user data that was passed to g_settings_get_mapped()
+ * Returns  :
+ * TRUE if the conversion succeeded, FALSE in case of an error
+ */
+// gboolean (*GSettingsGetMapping) (GVariant *value,  gpointer *result,  gpointer user_data);
+public typedef extern(C) int  function (GVariant*, gpointer*, void*) GSettingsGetMapping;
+
+/*
+ * The type for the function that is used to convert an object property
+ * value to a GVariant for storing it in GSettings.
+ * value  :
+ * a GValue containing the property value to map
+ * expected_type  :
+ * the GVariantType to create
+ * user_data  :
+ * user data that was specified when the binding was created
+ * Returns  :
+ * a new GVariant holding the data from value,
+ *  or NULL in case of an error
+ */
+// GVariant * (*GSettingsBindSetMapping) (const GValue *value,  const GVariantType *expected_type,  gpointer user_data);
+public typedef extern(C) GVariant *  function (GValue*, GVariantType*, void*) GSettingsBindSetMapping;
+
+/*
+ * The type for the function that is used to convert from GSettings to
+ * an object property. The value is already initialized to hold values
+ * of the appropriate type.
+ * value  :
+ * return location for the property value
+ * variant  :
+ * the GVariant
+ * user_data  :
+ * user data that was specified when the binding was created
+ * Returns  :
+ * TRUE if the conversion succeeded, FALSE in case of an error
+ * Property Details
+ * The "backend" property
+ *  "backend" GSettingsBackend* : Read / Write / Construct Only
+ * The GSettingsBackend for this settings object.
+ */
+// gboolean (*GSettingsBindGetMapping) (GValue *value,  GVariant *variant,  gpointer user_data);
+public typedef extern(C) int  function (GValue*, GVariant*, void*) GSettingsBindGetMapping;

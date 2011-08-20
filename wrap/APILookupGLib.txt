@@ -55,6 +55,8 @@ public alias dchar unichar;
 public alias wchar unichar2;
 public alias uint time_t;
 public alias uint XID;
+public alias uint uid_t;
+
 
 version(Tango)
 {
@@ -125,6 +127,8 @@ enum GPriority
 addEnums: end
 
 addStructs: start
+public struct GSocketControlMessageClass{}
+public struct GInetSocketAddressClass{}
 addStructs: end
 
 addTypes: start

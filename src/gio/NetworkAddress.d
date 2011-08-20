@@ -47,6 +47,7 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.SocketConnectable
  * 	- gio.SocketConnectableIF
  * 	- gio.SocketConnectableT
  * structWrap:
@@ -67,6 +68,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
 private import gio.SocketConnectableT;
 
