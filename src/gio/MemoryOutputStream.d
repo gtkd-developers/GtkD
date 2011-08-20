@@ -192,4 +192,19 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 		// gsize g_memory_output_stream_get_data_size  (GMemoryOutputStream *ostream);
 		return g_memory_output_stream_get_data_size(gMemoryOutputStream);
 	}
+	
+	/**
+	 * Gets any loaded data from the ostream. Ownership of the data
+	 * is transferred to the caller; when no longer needed it must be
+	 * freed using the free function set in ostream's
+	 * "destroy-function" property.
+	 * ostream must be closed before calling this function.
+	 * Since 2.26
+	 * Returns: the stream's data. [transfer full]
+	 */
+	public void* stealData()
+	{
+		// gpointer g_memory_output_stream_steal_data (GMemoryOutputStream *ostream);
+		return g_memory_output_stream_steal_data(gMemoryOutputStream);
+	}
 }

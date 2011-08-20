@@ -230,7 +230,7 @@ public class FileEnumerator : ObjectG
 	 * Finishes the asynchronous operation started with g_file_enumerator_next_files_async().
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: a GList of GFileInfos. You must free the list with g_list_free() and unref the infos with g_object_unref() when you're done with them.
+	 * Returns: a GList of GFileInfos. You must free the list with g_list_free() and unref the infos with g_object_unref() when you're done with them. [transfer full][element-type FileInfo]
 	 * Throws: GException on failure.
 	 */
 	public ListG nextFilesFinish(AsyncResultIF result)

@@ -89,76 +89,76 @@ public class ContentType
 	/**
 	 * Compares two content types for equality.
 	 * Params:
-	 * type1 = a content type string.
-	 * type2 = a content type string.
+	 * type1 = a content type string
+	 * type2 = a content type string
 	 * Returns: TRUE if the two strings are identical or equivalent, FALSE otherwise.
 	 */
 	public static int equals(string type1, string type2)
 	{
-		// gboolean g_content_type_equals (const char *type1,  const char *type2);
+		// gboolean g_content_type_equals (const gchar *type1,  const gchar *type2);
 		return g_content_type_equals(Str.toStringz(type1), Str.toStringz(type2));
 	}
 	
 	/**
 	 * Determines if type is a subset of supertype.
 	 * Params:
-	 * type = a content type string.
-	 * supertype = a string.
+	 * type = a content type string
+	 * supertype = a content type string
 	 * Returns: TRUE if type is a kind of supertype, FALSE otherwise.
 	 */
 	public static int isA(string type, string supertype)
 	{
-		// gboolean g_content_type_is_a (const char *type,  const char *supertype);
+		// gboolean g_content_type_is_a (const gchar *type,  const gchar *supertype);
 		return g_content_type_is_a(Str.toStringz(type), Str.toStringz(supertype));
 	}
 	
 	/**
 	 * Checks if the content type is the generic "unknown" type.
-	 * On unix this is the "application/octet-stream" mimetype,
+	 * On UNIX this is the "application/octet-stream" mimetype,
 	 * while on win32 it is "*".
 	 * Params:
-	 * type = a content type string.
+	 * type = a content type string
 	 * Returns: TRUE if the type is the unknown type.
 	 */
 	public static int isUnknown(string type)
 	{
-		// gboolean g_content_type_is_unknown (const char *type);
+		// gboolean g_content_type_is_unknown (const gchar *type);
 		return g_content_type_is_unknown(Str.toStringz(type));
 	}
 	
 	/**
 	 * Gets the human readable description of the content type.
 	 * Params:
-	 * type = a content type string.
-	 * Returns: a short description of the content type type.
+	 * type = a content type string
+	 * Returns: a short description of the content type type. Free the returned string with g_free()
 	 */
 	public static string getDescription(string type)
 	{
-		// char * g_content_type_get_description (const char *type);
+		// gchar * g_content_type_get_description (const gchar *type);
 		return Str.toString(g_content_type_get_description(Str.toStringz(type)));
 	}
 	
 	/**
-	 * Gets the mime-type for the content type. If one is registered
+	 * Gets the mime type for the content type, if one is registered.
 	 * Params:
-	 * type = a content type string.
-	 * Returns: the registered mime-type for the given type, or NULL if unknown.
+	 * type = a content type string
+	 * Returns: the registered mime type for the given type, or NULL if unknown. [allow-none]
 	 */
 	public static string getMimeType(string type)
 	{
-		// char * g_content_type_get_mime_type (const char *type);
+		// gchar * g_content_type_get_mime_type (const gchar *type);
 		return Str.toString(g_content_type_get_mime_type(Str.toStringz(type)));
 	}
 	
 	/**
 	 * Gets the icon for a content type.
 	 * Params:
-	 * type = a content type string.
-	 * Returns: GIcon corresponding to the content type.
+	 * type = a content type string
+	 * Returns: GIcon corresponding to the content type. Free the returned object with g_object_unref()
 	 */
 	public static IconIF getIcon(string type)
 	{
-		// GIcon * g_content_type_get_icon (const char *type);
+		// GIcon * g_content_type_get_icon (const gchar *type);
 		auto p = g_content_type_get_icon(Str.toStringz(type));
 		if(p is null)
 		{
@@ -171,12 +171,12 @@ public class ContentType
 	 * Checks if a content type can be executable. Note that for instance
 	 * things like text files can be executables (i.e. scripts and batch files).
 	 * Params:
-	 * type = a content type string.
+	 * type = a content type string
 	 * Returns: TRUE if the file type corresponds to a type that can be executable, FALSE otherwise.
 	 */
 	public static int canBeExecutable(string type)
 	{
-		// gboolean g_content_type_can_be_executable (const char *type);
+		// gboolean g_content_type_can_be_executable (const gchar *type);
 		return g_content_type_can_be_executable(Str.toStringz(type));
 	}
 	
@@ -184,12 +184,12 @@ public class ContentType
 	 * Tries to find a content type based on the mime type name.
 	 * Since 2.18
 	 * Params:
-	 * mimeType = a mime type string.
-	 * Returns: Newly allocated string with content type or NULL when does not know.
+	 * mimeType = a mime type string
+	 * Returns: Newly allocated string with content type or NULL. Free with g_free(). [allow-none]
 	 */
 	public static string fromMimeType(string mimeType)
 	{
-		// char * g_content_type_from_mime_type (const char *mime_type);
+		// gchar * g_content_type_from_mime_type (const gchar *mime_type);
 		return Str.toString(g_content_type_from_mime_type(Str.toStringz(mimeType)));
 	}
 	
@@ -199,14 +199,15 @@ public class ContentType
 	 * or data may be NULL, in which case the guess will be based solely
 	 * on the other argument.
 	 * Params:
-	 * filename = a string, or NULL
-	 * data = a stream of data, or NULL
-	 * resultUncertain = a flag indicating the certainty of the result
-	 * Returns: a string indicating a guessed content type for the given data.
+	 * filename = a string, or NULL. [allow-none]
+	 * data = a stream of data, or NULL. [allow-none][array length=data_size]
+	 * resultUncertain = return location for the certainty
+	 *  of the result, or NULL. [allow-none][out]
+	 * Returns: a string indicating a guessed content type for the given data. Free with g_free()
 	 */
 	public static string guess(string filename, char[] data, out int resultUncertain)
 	{
-		// char * g_content_type_guess (const char *filename,  const guchar *data,  gsize data_size,  gboolean *result_uncertain);
+		// gchar * g_content_type_guess (const gchar *filename,  const guchar *data,  gsize data_size,  gboolean *result_uncertain);
 		return Str.toString(g_content_type_guess(Str.toStringz(filename), data.ptr, cast(int) data.length, &resultUncertain));
 	}
 	
@@ -218,7 +219,8 @@ public class ContentType
 	 * x-content/audio-cdda (for audio CDs) or x-content/image-dcf
 	 * (for a camera memory card). See the shared-mime-info
 	 * specification for more on x-content types.
-	 * This function is useful in the implementation of g_mount_guess_content_type().
+	 * This function is useful in the implementation of
+	 * g_mount_guess_content_type().
 	 * Since 2.18
 	 * Params:
 	 * root = the root of the tree to guess a type for
@@ -226,15 +228,16 @@ public class ContentType
 	 */
 	public static string[] guessForTree(File root)
 	{
-		// char ** g_content_type_guess_for_tree (GFile *root);
+		// gchar ** g_content_type_guess_for_tree (GFile *root);
 		return Str.toStringArray(g_content_type_guess_for_tree((root is null) ? null : root.getFileStruct()));
 	}
 	
 	/**
 	 * Gets a list of strings containing all the registered content types
 	 * known to the system. The list and its data should be freed using
-	 * g_list_foreach(list, g_free, NULL) and g_list_free(list)
-	 * Returns: GList of the registered content types.
+	 * g_list_foreach (list, g_free, NULL);
+	 * g_list_free (list);
+	 * Returns: GList of the registered content types
 	 */
 	public static ListG gContentTypesGetRegistered()
 	{

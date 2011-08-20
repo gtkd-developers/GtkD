@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = 
+ * inFile  = GUnixConnection.html
  * outPack = gio
  * outFile = UnixConnection
  * strct   = GUnixConnection
@@ -66,22 +66,19 @@ private import gio.Cancellable;
 
 
 
-private import gio.TcpConnection;
+private import gio.SocketConnection;
 
 /**
  * Description
- * GSocketConnection is a GIOStream for a connected socket. They
- * can be created either by GSocketClient when connecting to a host,
- * or by GSocketListener when accepting a new client.
- * The type of the GSocketConnection object returned from these calls
- * depends on the type of the underlying socket that is in use. For
- * instance, for a TCP/IP connection it will be a GTcpConnection.
- * Chosing what type of object to construct is done with the socket
- * connection factory, and it is possible for 3rd parties to register
- * custom socket connection types for specific combination of socket
- * family/type/protocol using g_socket_connection_factory_register_type().
+ * This is the subclass of GSocketConnection that is created
+ * for UNIX domain sockets.
+ * It contains functions to do some of the UNIX socket specific
+ * functionality like passing file descriptors.
+ * Note that <gio/gunixconnection.h> belongs to
+ * the UNIX-specific GIO interfaces, thus you have to use the
+ * gio-unix-2.0.pc pkg-config file when using it.
  */
-public class UnixConnection : TcpConnection
+public class UnixConnection : SocketConnection
 {
 	
 	/** the main Gtk struct */
@@ -117,7 +114,7 @@ public class UnixConnection : TcpConnection
 			this = cast(UnixConnection)ptr;
 			return;
 		}
-		super(cast(GTcpConnection*)gUnixConnection);
+		super(cast(GSocketConnection*)gUnixConnection);
 		this.gUnixConnection = gUnixConnection;
 	}
 	
@@ -139,7 +136,7 @@ public class UnixConnection : TcpConnection
 	 * implementations.
 	 * Since 2.22
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: a file descriptor on success, -1 on error.
 	 * Throws: GException on failure.
 	 */
@@ -168,7 +165,7 @@ public class UnixConnection : TcpConnection
 	 * Since 2.22
 	 * Params:
 	 * fd = a file descriptor
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: a TRUE on success, NULL on error.
 	 * Throws: GException on failure.
 	 */
@@ -178,6 +175,67 @@ public class UnixConnection : TcpConnection
 		GError* err = null;
 		
 		auto p = g_unix_connection_send_fd(gUnixConnection, fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Receives credentials from the sending end of the connection. The
+	 * sending end has to call g_unix_connection_send_credentials() (or
+	 * similar) for this to work.
+	 * As well as reading the credentials this also reads (and discards) a
+	 * single byte from the stream, as this is required for credentials
+	 * passing to work on some implementations.
+	 * Other ways to exchange credentials with a foreign peer includes the
+	 * GUnixCredentialsMessage type and g_socket_get_credentials() function.
+	 * Since 2.26
+	 * Params:
+	 * cancellable = A GCancellable or NULL.
+	 * Returns: Received credentials on success (free with g_object_unref()), NULL if error is set.
+	 * Throws: GException on failure.
+	 */
+	public GCredentials* receiveCredentials(Cancellable cancellable)
+	{
+		// GCredentials * g_unix_connection_receive_credentials  (GUnixConnection *connection,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_unix_connection_receive_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Passes the credentials of the current user the receiving side
+	 * of the connection. The recieving end has to call
+	 * g_unix_connection_receive_credentials() (or similar) to accept the
+	 * credentials.
+	 * As well as sending the credentials this also writes a single NUL
+	 * byte to the stream, as this is required for credentials passing to
+	 * work on some implementations.
+	 * Other ways to exchange credentials with a foreign peer includes the
+	 * GUnixCredentialsMessage type and g_socket_get_credentials() function.
+	 * Since 2.26
+	 * Params:
+	 * cancellable = A GCancellable or NULL.
+	 * Returns: TRUE on success, FALSE if error is set.
+	 * Throws: GException on failure.
+	 */
+	public int sendCredentials(Cancellable cancellable)
+	{
+		// gboolean g_unix_connection_send_credentials (GUnixConnection *connection,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_unix_connection_send_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{

@@ -64,7 +64,7 @@ private import gio.OutputStream;
 /**
  * Description
  * GUnixOutputStream implements GOutputStream for writing to a
- * unix file descriptor, including asynchronous operations. The file
+ * UNIX file descriptor, including asynchronous operations. The file
  * descriptor must be selectable, so it doesn't work with opened files.
  * Note that <gio/gunixoutputstream.h> belongs
  * to the UNIX-specific GIO interfaces, thus you have to use the

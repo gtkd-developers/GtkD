@@ -221,7 +221,7 @@ public class FileInfo : ObjectG
 	 * Lists the file info structure's attributes.
 	 * Params:
 	 * nameSpace = a file attribute key's namespace.
-	 * Returns: a null-terminated array of strings of all of the possible attribute types for the given name_space, or NULL on error.
+	 * Returns: a null-terminated array of strings of all of the possible attribute types for the given name_space, or NULL on error. [array zero-terminated=1][transfer full zero-terminated=1]
 	 */
 	public string[] listAttributes(string nameSpace)
 	{
@@ -270,10 +270,10 @@ public class FileInfo : ObjectG
 	 * Gets the attribute type, value and status for an attribute key.
 	 * Params:
 	 * attribute = a file attribute key
-	 * type = return location for the attribute type, or NULL
-	 * valuePp = return location for the attribute value, or NULL
-	 * status = return location for the attribute status, or NULL
-	 * Returns: TRUE if info has an attribute named attribute, FALSE otherwise.
+	 * type = return location for the attribute type, or NULL. [out][allow-none]
+	 * valuePp = return location for the attribute value, or NULL. [out][allow-none]
+	 * status = return location for the attribute status, or NULL. [out][allow-none]
+	 * Returns: TRUE if info has an attribute named attribute, FALSE otherwise. [transfer none]
 	 */
 	public int getAttributeData(string attribute, out GFileAttributeType type, out void* valuePp, out GFileAttributeStatus status)
 	{
@@ -407,7 +407,7 @@ public class FileInfo : ObjectG
 	 * not contain a GObject, NULL will be returned.
 	 * Params:
 	 * attribute = a file attribute key.
-	 * Returns: a GObject associated with the given attribute, or NULL otherwise.
+	 * Returns: a GObject associated with the given attribute, or NULL otherwise. [transfer none]
 	 */
 	public ObjectG getAttributeObject(string attribute)
 	{
@@ -651,7 +651,7 @@ public class FileInfo : ObjectG
 	
 	/**
 	 * Gets the icon for a file.
-	 * Returns: GIcon for the given info.
+	 * Returns: GIcon for the given info. [transfer none]
 	 */
 	public IconIF getIcon()
 	{

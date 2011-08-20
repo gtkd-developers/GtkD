@@ -81,4 +81,19 @@ public class ErrorGIO
 		// GIOErrorEnum g_io_error_from_errno (gint err_no);
 		return g_io_error_from_errno(errNo);
 	}
+	
+	/**
+	 * Converts some common error codes into GIO error codes. The
+	 * fallback value G_IO_ERROR_FAILED is returned for error codes not
+	 * handled.
+	 * Since 2.26
+	 * Params:
+	 * errorCode = Windows error number.
+	 * Returns: GIOErrorEnum value for the given error number.
+	 */
+	public static GIOErrorEnum fromWin32_Error(int errorCode)
+	{
+		// GIOErrorEnum g_io_error_from_win32_error (gint error_code);
+		return g_io_error_from_win32_error(errorCode);
+	}
 }

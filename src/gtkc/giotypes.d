@@ -320,6 +320,27 @@ alias GFileType FileType;
  * Need more input to finish operation. Since 2.24
  * G_IO_ERROR_INVALID_DATA
  * There input data was invalid. Since 2.24
+ * G_IO_ERROR_DBUS_ERROR
+ * A remote object generated an error that
+ *  doesn't correspond to a locally registered GError error
+ *  domain. Use g_dbus_error_get_remote_error() to extract the D-Bus
+ *  error name and g_dbus_error_strip_remote_error() to fix up the
+ *  message so it matches what was received on the wire. Since 2.26.
+ * G_IO_ERROR_HOST_UNREACHABLE
+ * Host unreachable. Since 2.26
+ * G_IO_ERROR_NETWORK_UNREACHABLE
+ * Network unreachable. Since 2.26
+ * G_IO_ERROR_CONNECTION_REFUSED
+ * Connection refused. Since 2.26
+ * G_IO_ERROR_PROXY_FAILED
+ * Connection to proxy server failed. Since 2.26
+ * G_IO_ERROR_PROXY_AUTH_FAILED
+ * Proxy authentication failed. Since 2.26
+ * G_IO_ERROR_PROXY_NEED_AUTH
+ * Proxy server needs authentication. Since 2.26
+ * G_IO_ERROR_PROXY_NOT_ALLOWED
+ * Proxy connection is not allowed by ruleset.
+ *  Since 2.26
  */
 public enum GIOErrorEnum
 {
@@ -358,7 +379,15 @@ public enum GIOErrorEnum
 	NOT_INITIALIZED,
 	ADDRESS_IN_USE,
 	PARTIAL_INPUT,
-	INVALID_DATA
+	INVALID_DATA,
+	DBUS_ERROR,
+	HOST_UNREACHABLE,
+	NETWORK_UNREACHABLE,
+	CONNECTION_REFUSED,
+	PROXY_FAILED,
+	PROXY_AUTH_FAILED,
+	PROXY_NEED_AUTH,
+	PROXY_NOT_ALLOWED
 }
 alias GIOErrorEnum IOErrorEnum;
 
@@ -481,6 +510,24 @@ public enum GConverterResult
 alias GConverterResult ConverterResult;
 
 /**
+ * Flags used when calling a g_converter_convert().
+ * G_CONVERTER_NO_FLAGS
+ * No flags.
+ * G_CONVERTER_INPUT_AT_END
+ * At end of input data
+ * G_CONVERTER_FLUSH
+ * Flush data
+ * Since 2.24
+ */
+public enum GConverterFlags
+{
+	NO_FLAGS = 0, /+*< nick=none >+/
+	INPUT_AT_END = (1 << 0), /+*< nick=input-at-end >+/
+	FLUSH = (1 << 1) /+*< nick=flush >+/
+}
+alias GConverterFlags ConverterFlags;
+
+/**
  * Used to select the type of data format to use for GZlibDecompressor
  * and GZlibCompressor.
  * G_ZLIB_COMPRESSOR_FORMAT_ZLIB
@@ -564,12 +611,15 @@ alias GDataStreamNewlineType DataStreamNewlineType;
  * Application opens in a terminal window.
  * G_APP_INFO_CREATE_SUPPORTS_URIS
  * Application supports URI arguments.
+ * G_APP_INFO_CREATE_SUPPORTS_STARTUP_NOTIFICATION
+ * Application supports startup notification. Since 2.26
  */
 public enum GAppInfoCreateFlags
 {
 	NONE = 0, /+*< nick=none >+/
 	NEEDS_TERMINAL = (1 << 0), /+*< nick=needs-terminal >+/
-	SUPPORTS_URIS = (1 << 1) /+*< nick=supports-uris >+/
+	SUPPORTS_URIS = (1 << 1), /+*< nick=supports-uris >+/
+	SUPPORTS_STARTUP_NOTIFICATION = (1 << 2) /+*< nick=supports-startup-notification >+/
 }
 alias GAppInfoCreateFlags AppInfoCreateFlags;
 
@@ -767,6 +817,43 @@ public enum GSocketFamily
 	IPV6 = 23
 }
 alias GSocketFamily SocketFamily;
+
+/**
+ * The type of name used by a GUnixSocketAddress.
+ * G_UNIX_SOCKET_ADDRESS_PATH indicates a traditional unix domain
+ * socket bound to a filesystem path. G_UNIX_SOCKET_ADDRESS_ANONYMOUS
+ * indicates a socket not bound to any name (eg, a client-side socket,
+ * or a socket created with socketpair()).
+ * For abstract sockets, there are two incompatible ways of naming
+ * them: the man pages suggest using the entire struct
+ * sockaddr_un as the name, padding the unused parts of the
+ * sun_path field with zeroes; this corresponds to
+ * G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED. However, many programs
+ * instead just use a portion of sun_path, and pass an appropriate
+ * smaller length to bind() or connect(). This is
+ * G_UNIX_SOCKET_ADDRESS_ABSTRACT.
+ * G_UNIX_SOCKET_ADDRESS_INVALID
+ * invalid
+ * G_UNIX_SOCKET_ADDRESS_ANONYMOUS
+ * anonymous
+ * G_UNIX_SOCKET_ADDRESS_PATH
+ * a filesystem path
+ * G_UNIX_SOCKET_ADDRESS_ABSTRACT
+ * an abstract name
+ * G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED
+ * an abstract name, 0-padded
+ *  to the full length of a unix socket name
+ * Since 2.26
+ */
+public enum GUnixSocketAddressType
+{
+	INVALID,
+	ANONYMOUS,
+	PATH,
+	ABSTRACT,
+	ABSTRACT_PADDED
+}
+alias GUnixSocketAddressType UnixSocketAddressType;
 
 /**
  * An error code used with G_RESOLVER_ERROR in a GError returned
@@ -1789,12 +1876,6 @@ public struct GDriveIface
 
 
 /**
- * Implementation of the GMount interface for Unix systems.
- */
-public struct GUnixMount{}
-
-
-/**
  * Defines a Unix mount point (e.g. /dev).
  * This corresponds roughly to a fstab entry.
  */
@@ -2059,66 +2140,6 @@ public struct GUnixFDMessage{}
 
 /**
  * Main Gtk struct.
- * The object that handles DNS resolution. Use g_resolver_get_default()
- * to get the default resolver.
- */
-public struct GResolver{}
-
-
-/**
- * Interface for objects that contain or generate GSocketAddresses.
- */
-public struct GSocketConnectable{}
-
-
-/**
- * Provides an interface for returning a GSocketAddressEnumerator
- * GTypeInterface  g_iface;
- * The parent interface.
- * enumerate  ()
- * Creates a GSocketAddressEnumerator
- */
-public struct GSocketConnectableIface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) GSocketAddressEnumerator *  function(GSocketConnectable *connectable)  enumerate;
-}
-
-
-/**
- * Main Gtk struct.
- * Enumerator type for objects that contain or generate
- * GSocketAddresses.
- */
-public struct GSocketAddressEnumerator{}
-
-
-/**
- * Main Gtk struct.
- * A GSocketConnectable for resolving a hostname and connecting to
- * that host.
- */
-public struct GNetworkAddress{}
-
-
-/**
- * Main Gtk struct.
- * A GSocketConnectable for resolving a SRV record and connecting to
- * that service.
- */
-public struct GNetworkService{}
-
-
-/**
- * Main Gtk struct.
- * A single target host/port that a network service is running on.
- */
-public struct GSrvTarget{}
-
-
-/**
- * Main Gtk struct.
  * A helper class for network servers to listen for and accept connections.
  * Since 2.22
  */
@@ -2131,16 +2152,6 @@ public struct GSocketClient{}
  * Since 2.22
  */
 public struct GSocketConnection{}
-
-
-/**
- * A GSocketConnection for UNIX domain socket connections.
- * Since 2.22
- */
-public struct GTcpConnection{}
-
-
-public struct GUnixConnection{}
 
 
 /**
@@ -2165,6 +2176,80 @@ public struct GSocketService{}
  * Since 2.22
  */
 public struct GThreadedSocketService{}
+
+
+/**
+ * Main Gtk struct.
+ * The object that handles DNS resolution. Use g_resolver_get_default()
+ * to get the default resolver.
+ */
+public struct GResolver{}
+
+
+/**
+ * Interface for objects that contain or generate GSocketAddresses.
+ */
+public struct GSocketConnectable{}
+
+
+/**
+ * Provides an interface for returning a GSocketAddressEnumerator
+ * and GProxyAddressEnumerator
+ * GTypeInterface  g_iface;
+ * The parent interface.
+ * enumerate  ()
+ * Creates a GSocketAddressEnumerator
+ * proxy_enumerate  ()
+ * Creates a GProxyAddressEnumerator
+ */
+public struct GSocketConnectableIface
+{
+	GTypeInterface gIface;
+	/+* Virtual Table +/
+	extern(C) GSocketAddressEnumerator *  function(GSocketConnectable *connectable)  enumerate;
+	extern(C) GSocketAddressEnumerator *  function(GSocketConnectable *connectable)  proxyEnumerate;
+}
+
+
+/**
+ * Main Gtk struct.
+ * Enumerator type for objects that contain or generate
+ * GSocketAddresses.
+ */
+public struct GSocketAddressEnumerator{}
+
+
+/**
+ * A subclass of GSocketAddressEnumerator that takes another address
+ * enumerator and wraps its results in GProxyAddresses as
+ * directed by the default GProxyResolver.
+ * Property Details
+ * The "connectable" property
+ */
+public struct GProxyAddressEnumerator{}
+
+
+/**
+ * Main Gtk struct.
+ * A GSocketConnectable for resolving a hostname and connecting to
+ * that host.
+ */
+public struct GNetworkAddress{}
+
+
+/**
+ * Main Gtk struct.
+ * A GSocketConnectable for resolving a SRV record and connecting to
+ * that service.
+ */
+public struct GNetworkService{}
+
+
+/**
+ * Main Gtk struct.
+ * A single target host/port that a network service is running on.
+ */
+public struct GSrvTarget{}
 
 
 /**

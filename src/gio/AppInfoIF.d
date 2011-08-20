@@ -142,7 +142,7 @@ public interface AppInfoIF
 	 * Creates a new GAppInfo from the given information.
 	 * Params:
 	 * commandline = the commandline to use
-	 * applicationName = the application name, or NULL to use commandline
+	 * applicationName = the application name, or NULL to use commandline. [allow-none]
 	 * flags = flags that can specify details of the created GAppInfo
 	 * Returns: new GAppInfo for given command.
 	 * Throws: GException on failure.
@@ -210,7 +210,7 @@ public interface AppInfoIF
 	
 	/**
 	 * Gets the icon for the application.
-	 * Returns: the default GIcon for appinfo.
+	 * Returns: the default GIcon for appinfo. [transfer none]
 	 */
 	public IconIF getIcon();
 	
@@ -219,7 +219,7 @@ public interface AppInfoIF
 	 * as arguments, using the optional launch_context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, error will be set accordingly.
-	 * To lauch the application without arguments pass a NULL files list.
+	 * To launch the application without arguments pass a NULL files list.
 	 * Note that even if the launch is successful the application launched
 	 * can fail to start if it runs into problems during startup. There is
 	 * no way to detect this.
@@ -227,9 +227,17 @@ public interface AppInfoIF
 	 * unsupported uris with strange formats like mailto:), so if you have
 	 * a textual uri you want to pass in as argument, consider using
 	 * g_app_info_launch_uris() instead.
+	 * On UNIX, this function sets the <envvar>GIO_LAUNCHED_DESKTOP_FILE</envvar>
+	 * environment variable with the path of the launched desktop file and
+	 * <envvar>GIO_LAUNCHED_DESKTOP_FILE_PID</envvar> to the process
+	 * id of the launched process. This can be used to ignore
+	 * <envvar>GIO_LAUNCHED_DESKTOP_FILE</envvar>, should it be inherited
+	 * by further processes. The <envvar>DISPLAY</envvar> and
+	 * <envvar>DESKTOP_STARTUP_ID</envvar> environment variables are also
+	 * set, based on information provided in launch_context.
 	 * Params:
-	 * files = a GList of GFile objects
-	 * launchContext = a GAppLaunchContext or NULL
+	 * files = a GList of GFile objects. [element-type GFile]
+	 * launchContext = a GAppLaunchContext or NULL. [allow-none]
 	 * Returns: TRUE on successful launch, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -257,8 +265,8 @@ public interface AppInfoIF
 	 * can fail to start if it runs into problems during startup. There is
 	 * no way to detect this.
 	 * Params:
-	 * uris = a GList containing URIs to launch.
-	 * launchContext = a GAppLaunchContext or NULL
+	 * uris = a GList containing URIs to launch. [element-type char*]
+	 * launchContext = a GAppLaunchContext or NULL. [allow-none]
 	 * Returns: TRUE on successful launch, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -352,7 +360,7 @@ public interface AppInfoIF
 	 * NotShowIn. See g_app_info_should_show().
 	 * The returned list does not include applications which have
 	 * the Hidden key set.
-	 * Returns: a newly allocated GList of references to GAppInfos.
+	 * Returns: a newly allocated GList of references to GAppInfos. [element-type GAppInfo][transfer full GAppInfo]
 	 */
 	public static ListG getAll();
 	
@@ -360,7 +368,7 @@ public interface AppInfoIF
 	 * Gets a list of all GAppInfos for a given content type.
 	 * Params:
 	 * contentType = the content type to find a GAppInfo for
-	 * Returns: GList of GAppInfos for given content_type or NULL on error.
+	 * Returns: GList of GAppInfos for given content_type or NULL on error. [element-type GAppInfo][transfer full GAppInfo]
 	 */
 	public static ListG getAllForType(string contentType);
 	

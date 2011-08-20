@@ -65,7 +65,18 @@ private import gio.SocketAddress;
 
 /**
  * Description
- * Support for UNIX-domain (aka local) sockets.
+ * Support for UNIX-domain (also known as local) sockets.
+ * UNIX domain sockets are generally visible in the filesystem.
+ * However, some systems support abstract socket names which are not
+ * visible in the filesystem and not affected by the filesystem
+ * permissions, visibility, etc. Currently this is only supported
+ * under Linux. If you attempt to use abstract sockets on other
+ * systems, function calls may return G_IO_ERROR_NOT_SUPPORTED
+ * errors. You can use g_unix_socket_address_abstract_names_supported()
+ * to see if abstract names are supported.
+ * Note that <gio/gunixsocketaddress.h> belongs to
+ * the UNIX-specific GIO interfaces, thus you have to use the
+ * gio-unix-2.0.pc pkg-config file when using it.
  */
 public class UnixSocketAddress : SocketAddress
 {
@@ -137,20 +148,10 @@ public class UnixSocketAddress : SocketAddress
 	}
 	
 	/**
-	 * Creates a new abstract GUnixSocketAddress for path.
-	 * Unix domain sockets are generally visible in the filesystem. However, some
-	 * systems support abstract socket name which are not visible in the
-	 * filesystem and not affected by the filesystem permissions, visibility, etc.
-	 * Note that not all systems (really only Linux) support abstract
-	 * socket names, so if you use them on other systems function calls may
-	 * return G_IO_ERROR_NOT_SUPPORTED errors. You can use
-	 * g_unix_socket_address_abstract_names_supported() to see if abstract
-	 * names are supported.
-	 * If path_len is -1 then path is assumed to be a zero terminated
-	 * string (although in general abstract names need not be zero terminated
-	 * and can have embedded nuls). All bytes after path_len up to the max size
-	 * of an abstract unix domain name is filled with zero bytes.
-	 * Since 2.22
+	 * Warning
+	 * g_unix_socket_address_new_abstract is deprecated and should not be used in newly-written code. Use g_unix_socket_address_new_with_type().
+	 * Creates a new G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED
+	 * GUnixSocketAddress for path.
 	 * Params:
 	 * path = the abstract name
 	 * pathLen = the length of path, or -1
@@ -158,7 +159,7 @@ public class UnixSocketAddress : SocketAddress
 	 */
 	public this (string path, int pathLen)
 	{
-		// GSocketAddress * g_unix_socket_address_new_abstract (const gchar *path,  int path_len);
+		// GSocketAddress * g_unix_socket_address_new_abstract (const gchar *path,  gint path_len);
 		auto p = g_unix_socket_address_new_abstract(Str.toStringz(path), pathLen);
 		if(p is null)
 		{
@@ -168,7 +169,51 @@ public class UnixSocketAddress : SocketAddress
 	}
 	
 	/**
-	 * Gets address's path.
+	 * Creates a new GUnixSocketAddress of type type with name path.
+	 * If type is G_UNIX_SOCKET_ADDRESS_PATH, this is equivalent to
+	 * calling g_unix_socket_address_new().
+	 * If path_type is G_UNIX_SOCKET_ADDRESS_ABSTRACT, then path_len
+	 * bytes of path will be copied to the socket's path, and only those
+	 * bytes will be considered part of the name. (If path_len is -1,
+	 * then path is assumed to be NUL-terminated.) For example, if path
+	 * was "test", then calling g_socket_address_get_native_size() on the
+	 * returned socket would return 7 (2 bytes of overhead, 1 byte for the
+	 * abstract-socket indicator byte, and 4 bytes for the name "test").
+	 * If path_type is G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED, then
+	 * path_len bytes of path will be copied to the socket's path, the
+	 * rest of the path will be padded with 0 bytes, and the entire
+	 * zero-padded buffer will be considered the name. (As above, if
+	 * path_len is -1, then path is assumed to be NUL-terminated.) In
+	 * this case, g_socket_address_get_native_size() will always return
+	 * the full size of a struct sockaddr_un, although
+	 * g_unix_socket_address_get_path_len() will still return just the
+	 * length of path.
+	 * G_UNIX_SOCKET_ADDRESS_ABSTRACT is preferred over
+	 * G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED for new programs. Of course,
+	 * when connecting to a server created by another process, you must
+	 * use the appropriate type corresponding to how that process created
+	 * its listening socket.
+	 * Since 2.26
+	 * Params:
+	 * path = the name
+	 * type = a GUnixSocketAddressType
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string path, GUnixSocketAddressType type)
+	{
+		// GSocketAddress * g_unix_socket_address_new_with_type (const gchar *path,  gint path_len,  GUnixSocketAddressType type);
+		auto p = g_unix_socket_address_new_with_type(path.ptr, cast(int) path.length, type);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_unix_socket_address_new_with_type(path.ptr, cast(int) path.length, type)");
+		}
+		this(cast(GUnixSocketAddress*) p);
+	}
+	
+	/**
+	 * Warning
+	 * g_unix_socket_address_get_is_abstract is deprecated and should not be used in newly-written code. Use g_unix_socket_address_get_address_type()
+	 * Tests if address is abstract.
 	 * Since 2.22
 	 * Returns: TRUE if the address is abstract, FALSE otherwise
 	 */
@@ -176,6 +221,17 @@ public class UnixSocketAddress : SocketAddress
 	{
 		// gboolean g_unix_socket_address_get_is_abstract  (GUnixSocketAddress *address);
 		return g_unix_socket_address_get_is_abstract(gUnixSocketAddress);
+	}
+	
+	/**
+	 * Gets address's type.
+	 * Since 2.26
+	 * Returns: a GUnixSocketAddressType
+	 */
+	public GUnixSocketAddressType getAddressType()
+	{
+		// GUnixSocketAddressType g_unix_socket_address_get_address_type  (GUnixSocketAddress *address);
+		return g_unix_socket_address_get_address_type(gUnixSocketAddress);
 	}
 	
 	/**

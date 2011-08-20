@@ -745,7 +745,7 @@ public class File : ObjectG
 	 * filesystem the file is on.
 	 * Params:
 	 * etag = an optional entity tag for the
-	 *  current GFile, or NULL to ignore.
+	 *  current GFile, or NULL to ignore. [allow-none]
 	 * makeBackup = TRUE if a backup should be created.
 	 * flags = a set of GFileCreateFlags.
 	 * cancellable = optional GCancellable object, NULL to ignore.
@@ -875,7 +875,7 @@ public class File : ObjectG
 	 * g_file_replace_finish() to get the result of the operation.
 	 * Params:
 	 * etag = an entity tag for the
-	 *  current GFile, or NULL to ignore.
+	 *  current GFile, or NULL to ignore. [allow-none]
 	 * makeBackup = TRUE if a backup should be created.
 	 * flags = a set of GFileCreateFlags.
 	 * ioPriority = the I/O priority
@@ -921,10 +921,10 @@ public class File : ObjectG
 	 * Gets the requested information about specified file. The result
 	 * is a GFileInfo object that contains key-value attributes (such as
 	 * the type or size of the file).
-	 * The attribute value is a string that specifies the file attributes that
+	 * The attributes value is a string that specifies the file attributes that
 	 * should be gathered. It is not an error if it's not possible to read a particular
-	 * requested attribute from a file - it just won't be set. attribute should
-	 * be a comma-separated list of attribute or attribute wildcards. The wildcard "*"
+	 * requested attribute from a file - it just won't be set. attributes should
+	 * be a comma-separated list of attributes or attribute wildcards. The wildcard "*"
 	 * means all attributes, and a wildcard like "standard::*" means all attributes in the standard
 	 * namespace. An example attribute query be "standard::*,owner::user".
 	 * The standard attributes are available as defines, like G_FILE_ATTRIBUTE_STANDARD_NAME.
@@ -1067,10 +1067,10 @@ public class File : ObjectG
 	 * about the filesystem the file is on, rather than the file itself.
 	 * For instance the amount of space available and the type of
 	 * the filesystem.
-	 * The attribute value is a string that specifies the file attributes that
+	 * The attributes value is a string that specifies the file attributes that
 	 * should be gathered. It is not an error if it's not possible to read a particular
-	 * requested attribute from a file - it just won't be set. attribute should
-	 * be a comma-separated list of attribute or attribute wildcards. The wildcard "*"
+	 * requested attribute from a file - it just won't be set. attributes should
+	 * be a comma-separated list of attributes or attribute wildcards. The wildcard "*"
 	 * means all attributes, and a wildcard like "fs:*" means all attributes in the fs
 	 * namespace. The standard namespace for filesystem attributes is "fs".
 	 * Common attributes of interest are G_FILE_ATTRIBUTE_FILESYSTEM_SIZE
@@ -1269,10 +1269,10 @@ public class File : ObjectG
 	 * Gets the requested information about the files in a directory. The result
 	 * is a GFileEnumerator object that will give out GFileInfo objects for
 	 * all the files in the directory.
-	 * The attribute value is a string that specifies the file attributes that
+	 * The attributes value is a string that specifies the file attributes that
 	 * should be gathered. It is not an error if it's not possible to read a particular
-	 * requested attribute from a file - it just won't be set. attribute should
-	 * be a comma-separated list of attribute or attribute wildcards. The wildcard "*"
+	 * requested attribute from a file - it just won't be set. attributes should
+	 * be a comma-separated list of attributes or attribute wildcards. The wildcard "*"
 	 * means all attributes, and a wildcard like "standard::*" means all attributes in the standard
 	 * namespace. An example attribute query be "standard::*,owner::user".
 	 * The standard attributes are available as defines, like G_FILE_ATTRIBUTE_STANDARD_NAME.
@@ -1711,12 +1711,13 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Creates a symbolic link.
+	 * Creates a symbolic link named file which contains the string
+	 * symlink_value.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * symlinkValue = a string with the value of the new symlink.
+	 * symlinkValue = a string with the path for the target of the new symlink
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: TRUE on the creation of a new symlink, FALSE otherwise.
 	 * Throws: GException on failure.
@@ -1887,7 +1888,7 @@ public class File : ObjectG
 	 * Finishes setting an attribute started in g_file_set_attributes_async().
 	 * Params:
 	 * result = a GAsyncResult.
-	 * info = a GFileInfo.
+	 * info = a GFileInfo. [out][transfer full]
 	 * Returns: TRUE if the attributes were set correctly, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2604,11 +2605,11 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * contents = a location to place the contents of the file.
+	 * contents = a location to place the contents of the file. [out][transfer full]
 	 * length = a location to place the length of the contents of the file,
-	 *  or NULL if the length is not needed
+	 *  or NULL if the length is not needed. [out][allow-none]
 	 * etagOut = a location to place the current entity tag for the file,
-	 *  or NULL if the entity tag is not needed
+	 *  or NULL if the entity tag is not needed. [out][allow-none]
 	 * Returns: TRUE if the file's contents were successfully loaded. FALSE if there were errors.
 	 * Throws: GException on failure.
 	 */
@@ -2661,11 +2662,11 @@ public class File : ObjectG
 	 * set to the new entity tag for the file.
 	 * Params:
 	 * res = a GAsyncResult.
-	 * contents = a location to place the contents of the file.
+	 * contents = a location to place the contents of the file. [out][transfer full]
 	 * length = a location to place the length of the contents of the file,
-	 *  or NULL if the length is not needed
+	 *  or NULL if the length is not needed. [out][allow-none]
 	 * etagOut = a location to place the current entity tag for the file,
-	 *  or NULL if the entity tag is not needed
+	 *  or NULL if the entity tag is not needed. [out][allow-none]
 	 * Returns: TRUE if the load was successful. If FALSE and error is present, it will be set appropriately.
 	 * Throws: GException on failure.
 	 */
@@ -2718,11 +2719,11 @@ public class File : ObjectG
 	 * needed.
 	 * Params:
 	 * res = a GAsyncResult.
-	 * contents = a location to place the contents of the file.
+	 * contents = a location to place the contents of the file. [out][transfer full]
 	 * length = a location to place the length of the contents of the file,
-	 *  or NULL if the length is not needed
+	 *  or NULL if the length is not needed. [out][allow-none]
 	 * etagOut = a location to place the current entity tag for the file,
-	 *  or NULL if the entity tag is not needed
+	 *  or NULL if the entity tag is not needed. [out][allow-none]
 	 * Returns: TRUE if the load was successful. If FALSE and error is present, it will be set appropriately.
 	 * Throws: GException on failure.
 	 */
@@ -2759,7 +2760,7 @@ public class File : ObjectG
 	 * contents = a string containing the new contents for file.
 	 * length = the length of contents in bytes.
 	 * etag = the old entity tag
-	 *  for the document, or NULL
+	 *  for the document, or NULL. [allow-none]
 	 * makeBackup = TRUE if a backup should be created.
 	 * flags = a set of GFileCreateFlags.
 	 * newEtag = a location to a new entity tag
@@ -2801,7 +2802,7 @@ public class File : ObjectG
 	 * Params:
 	 * contents = string of contents to replace the file with.
 	 * length = the length of contents in bytes.
-	 * etag = a new entity tag for the file, or NULL
+	 * etag = a new entity tag for the file, or NULL. [allow-none]
 	 * makeBackup = TRUE if a backup should be created.
 	 * flags = a set of GFileCreateFlags.
 	 * cancellable = optional GCancellable object, NULL to ignore.
@@ -2822,7 +2823,7 @@ public class File : ObjectG
 	 * res = a GAsyncResult.
 	 * newEtag = a location of a new entity tag
 	 *  for the document. This should be freed with g_free() when it is no
-	 *  longer needed, or NULL
+	 *  longer needed, or NULL. [out][allow-none]
 	 * Returns: TRUE on success, FALSE on failure.
 	 * Throws: GException on failure.
 	 */
@@ -3064,7 +3065,7 @@ public class File : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * etag = an optional entity tag for the
-	 *  current GFile, or NULL to ignore
+	 *  current GFile, or NULL to ignore. [allow-none]
 	 * makeBackup = TRUE if a backup should be created
 	 * flags = a set of GFileCreateFlags
 	 * cancellable = optional GCancellable object, NULL to ignore
@@ -3100,7 +3101,7 @@ public class File : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * etag = an entity tag for the
-	 *  current GFile, or NULL to ignore.
+	 *  current GFile, or NULL to ignore. [allow-none]
 	 * makeBackup = TRUE if a backup should be created.
 	 * flags = a set of GFileCreateFlags.
 	 * ioPriority = the I/O priority

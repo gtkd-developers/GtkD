@@ -104,4 +104,25 @@ public template SocketConnectableT(TStruct)
 		}
 		return new SocketAddressEnumerator(cast(GSocketAddressEnumerator*) p);
 	}
+	
+	/**
+	 * Creates a GSocketAddressEnumerator for connectable that will
+	 * return GProxyAddresses for addresses that you must connect
+	 * to via a proxy.
+	 * If connectable does not implement
+	 * g_socket_connectable_proxy_enumerate(), this will fall back to
+	 * calling g_socket_connectable_enumerate().
+	 * Since 2.26
+	 * Returns: a new GSocketAddressEnumerator.
+	 */
+	public SocketAddressEnumerator proxyEnumerate()
+	{
+		// GSocketAddressEnumerator * g_socket_connectable_proxy_enumerate  (GSocketConnectable *connectable);
+		auto p = g_socket_connectable_proxy_enumerate(getSocketConnectableTStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new SocketAddressEnumerator(cast(GSocketAddressEnumerator*) p);
+	}
 }

@@ -153,7 +153,7 @@ public class IOStream : ObjectG
 	 * Gets the input stream for this object. This is used
 	 * for reading.
 	 * Since 2.22
-	 * Returns: a GInputStream, owned by the GIOStream. Do not free.
+	 * Returns: a GInputStream, owned by the GIOStream. Do not free. [transfer none]
 	 */
 	public InputStream getInputStream()
 	{
@@ -170,7 +170,7 @@ public class IOStream : ObjectG
 	 * Gets the output stream for this object. This is used for
 	 * writing.
 	 * Since 2.22
-	 * Returns: a GOutputStream, owned by the GIOStream. Do not free.
+	 * Returns: a GOutputStream, owned by the GIOStream. Do not free. [transfer none]
 	 */
 	public OutputStream getOutputStream()
 	{

@@ -88,6 +88,8 @@ public import gio.Cancellable;
  * directly, or indirectly via a foo_thing_new_async() wrapper. This will call
  * g_async_initable_init_async() under the cover, calling back with NULL and
  * a set GError on failure.
+ * A typical implementation might look something like this:
+ * $(DDOC_COMMENT example)
  */
 public template AsyncInitableT(TStruct)
 {

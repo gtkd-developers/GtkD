@@ -300,7 +300,7 @@ public template DriveT(TStruct)
 	 * Get a list of mountable volumes for drive.
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
-	 * Returns: GList containing any GVolume objects on the given drive.
+	 * Returns: GList containing any GVolume objects on the given drive. [element-type GVolume][transfer full GVolume]
 	 */
 	public ListG getVolumes()
 	{

@@ -177,19 +177,19 @@ public interface VolumeIF
 	
 	/**
 	 * Gets the icon for volume.
-	 * Returns: a GIcon. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 * Returns: a GIcon. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */
 	public IconIF getIcon();
 	
 	/**
 	 * Gets the drive for the volume.
-	 * Returns: a GDrive or NULL if volume is not associated with a drive. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 * Returns: a GDrive or NULL if volume is not associated with a drive. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */
 	public DriveIF getDrive();
 	
 	/**
 	 * Gets the mount for the volume.
-	 * Returns: a GMount or NULL if volume isn't mounted. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 * Returns: a GMount or NULL if volume isn't mounted. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */
 	public MountIF getMount();
 	
@@ -236,7 +236,7 @@ public interface VolumeIF
 	 * and GAsyncResult returned in the callback.
 	 * Params:
 	 * flags = flags affecting the operation
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
+	 * mountOperation = a GMountOperation or NULL to avoid user interaction. [allow-none]
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * callback = a GAsyncReadyCallback, or NULL.
 	 * userData = user data that gets passed to callback

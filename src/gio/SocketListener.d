@@ -210,7 +210,7 @@ public class SocketListener : ObjectG
 	 * type = a GSocketType
 	 * protocol = a GSocketProtocol
 	 * sourceObject = Optional GObject identifying this source
-	 * effectiveAddress = location to store the address that was bound to, or NULL.
+	 * effectiveAddress = location to store the address that was bound to, or NULL. [out][allow-none]
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -303,7 +303,7 @@ public class SocketListener : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Since 2.22
 	 * Params:
-	 * sourceObject = location where GObject pointer will be stored, or NULL
+	 * sourceObject = location where GObject pointer will be stored, or NULL. [out][transfer none][allow-none]
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GSocketConnection on success, NULL on error.
 	 * Throws: GException on failure.
@@ -390,7 +390,7 @@ public class SocketListener : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Since 2.22
 	 * Params:
-	 * sourceObject = location where GObject pointer will be stored, or NULL
+	 * sourceObject = location where GObject pointer will be stored, or NULL. [out][transfer none][allow-none]
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a GSocket on success, NULL on error.
 	 * Throws: GException on failure.

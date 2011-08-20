@@ -43,9 +43,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gio.FileInfo
  * 	- gio.ConverterT
  * 	- gio.ConverterIF
  * structWrap:
+ * 	- GFileInfo* -> FileInfo
  * module aliases:
  * local aliases:
  * overrides:
@@ -59,6 +61,7 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
+private import gio.FileInfo;
 private import gio.ConverterT;
 private import gio.ConverterIF;
 
@@ -139,5 +142,25 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 			throw new ConstructionException("null returned by g_zlib_decompressor_new(format)");
 		}
 		this(cast(GZlibDecompressor*) p);
+	}
+	
+	/**
+	 * Retrieves the GFileInfo constructed from the GZIP header data
+	 * of compressed data processed by compressor, or NULL if decompressor's
+	 * "format" property is not G_ZLIB_COMPRESSOR_FORMAT_GZIP,
+	 * or the header data was not fully processed yet, or it not present in the
+	 * data stream at all.
+	 * Since 2.26
+	 * Returns: a GFileInfo, or NULL. [transfer none]
+	 */
+	public FileInfo getFileInfo()
+	{
+		// GFileInfo * g_zlib_decompressor_get_file_info (GZlibDecompressor *decompressor);
+		auto p = g_zlib_decompressor_get_file_info(gZlibDecompressor);
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileInfo(cast(GFileInfo*) p);
 	}
 }

@@ -136,6 +136,10 @@ private import gobject.ObjectG;
  * g_simple_async_result_get_op_res_gssize() are
  * provided, getting the operation's result as a gpointer, gboolean, and
  * gssize, respectively.
+ * For the details of the requirements implementations must respect, see
+ * GAsyncResult. A typical implementation of an asynchronous operation
+ * using GSimpleAsyncResult looks something like this:
+ * $(DDOC_COMMENT example)
  */
 public class SimpleAsyncResult : ObjectG, AsyncResultIF
 {
@@ -311,10 +315,12 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * First, result is checked to ensure that it is really a
 	 * GSimpleAsyncResult. Second, source is checked to ensure that it
 	 * matches the source object of result. Third, source_tag is
-	 * checked to ensure that it is equal to the source_tag argument given
-	 * to g_simple_async_result_new() (which, by convention, is a pointer
-	 * to the _async function corresponding to the _finish function from
-	 * which this function is called).
+	 * checked to ensure that it is either NULL (as it is when the result was
+	 * created by g_simple_async_report_error_in_idle() or
+	 * g_simple_async_report_gerror_in_idle()) or equal to the
+	 * source_tag argument given to g_simple_async_result_new() (which, by
+	 * convention, is a pointer to the _async function corresponding to the
+	 * _finish function from which this function is called).
 	 * Params:
 	 * result = the GAsyncResult passed to the _finish function.
 	 * source = the GObject passed to the _finish function.
@@ -343,6 +349,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * the thread where the asynchronous result was to be delivered, as it
 	 * invokes the callback directly. If you are in a different thread use
 	 * g_simple_async_result_complete_in_idle().
+	 * Calling this function takes a reference to simple for as long as
+	 * is needed to complete the call.
 	 */
 	public void complete()
 	{

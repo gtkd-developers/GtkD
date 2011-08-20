@@ -492,7 +492,7 @@ public class VolumeMonitor : ObjectG
 	 * Gets a list of drives connected to the system.
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
-	 * Returns: a GList of connected GDrive objects.
+	 * Returns: a GList of connected GDrive objects. [element-type GDrive][transfer full GDrive]
 	 */
 	public ListG getConnectedDrives()
 	{
@@ -509,7 +509,7 @@ public class VolumeMonitor : ObjectG
 	 * Gets a list of the volumes on the system.
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
-	 * Returns: a GList of GVolume objects.
+	 * Returns: a GList of GVolume objects. [element-type GVolume][transfer full GVolume]
 	 */
 	public ListG getVolumes()
 	{
@@ -526,7 +526,7 @@ public class VolumeMonitor : ObjectG
 	 * Gets a list of the mounts on the system.
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
-	 * Returns: a GList of GMount objects.
+	 * Returns: a GList of GMount objects. [element-type GMount][transfer full GMount]
 	 */
 	public ListG getMounts()
 	{

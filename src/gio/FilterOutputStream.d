@@ -66,6 +66,10 @@ private import gio.OutputStream;
 
 /**
  * Description
+ * Base class for output stream implementations that perform some
+ * kind of filtering operation on a base stream. Typical examples
+ * of filtering operations are character set conversion, compression
+ * and byte order flipping.
  */
 public class FilterOutputStream : OutputStream
 {
@@ -118,7 +122,7 @@ public class FilterOutputStream : OutputStream
 	
 	/**
 	 * Gets the base stream for the filter stream.
-	 * Returns: a GOutputStream.
+	 * Returns: a GOutputStream. [transfer none]
 	 */
 	public OutputStream getBaseStream()
 	{

@@ -247,6 +247,7 @@ static this()
 	// gio.ErrorGIO
 
 	Linker.link(g_io_error_from_errno, "g_io_error_from_errno", LIBRARY.GIO);
+	Linker.link(g_io_error_from_win32_error, "g_io_error_from_win32_error", LIBRARY.GIO);
 
 	// gio.MountOperation
 
@@ -345,10 +346,13 @@ static this()
 	// gio.ZlibCompressor
 
 	Linker.link(g_zlib_compressor_new, "g_zlib_compressor_new", LIBRARY.GIO);
+	Linker.link(g_zlib_compressor_get_file_info, "g_zlib_compressor_get_file_info", LIBRARY.GIO);
+	Linker.link(g_zlib_compressor_set_file_info, "g_zlib_compressor_set_file_info", LIBRARY.GIO);
 
 	// gio.ZlibDecompressor
 
 	Linker.link(g_zlib_decompressor_new, "g_zlib_decompressor_new", LIBRARY.GIO);
+	Linker.link(g_zlib_decompressor_get_file_info, "g_zlib_decompressor_get_file_info", LIBRARY.GIO);
 
 	// gio.SeekableT
 
@@ -462,6 +466,7 @@ static this()
 	Linker.link(g_memory_output_stream_get_data, "g_memory_output_stream_get_data", LIBRARY.GIO);
 	Linker.link(g_memory_output_stream_get_size, "g_memory_output_stream_get_size", LIBRARY.GIO);
 	Linker.link(g_memory_output_stream_get_data_size, "g_memory_output_stream_get_data_size", LIBRARY.GIO);
+	Linker.link(g_memory_output_stream_steal_data, "g_memory_output_stream_steal_data", LIBRARY.GIO);
 
 	// gio.BufferedInputStream
 
@@ -503,6 +508,9 @@ static this()
 	Linker.link(g_data_input_stream_read_line, "g_data_input_stream_read_line", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_line_async, "g_data_input_stream_read_line_async", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_line_finish, "g_data_input_stream_read_line_finish", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_upto, "g_data_input_stream_read_upto", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_upto_async, "g_data_input_stream_read_upto_async", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_upto_finish, "g_data_input_stream_read_upto_finish", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_until, "g_data_input_stream_read_until", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_until_async, "g_data_input_stream_read_until_async", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_until_finish, "g_data_input_stream_read_until_finish", LIBRARY.GIO);
@@ -826,9 +834,11 @@ static this()
 	Linker.link(g_socket_receive, "g_socket_receive", LIBRARY.GIO);
 	Linker.link(g_socket_receive_from, "g_socket_receive_from", LIBRARY.GIO);
 	Linker.link(g_socket_receive_message, "g_socket_receive_message", LIBRARY.GIO);
+	Linker.link(g_socket_receive_with_blocking, "g_socket_receive_with_blocking", LIBRARY.GIO);
 	Linker.link(g_socket_send, "g_socket_send", LIBRARY.GIO);
 	Linker.link(g_socket_send_to, "g_socket_send_to", LIBRARY.GIO);
 	Linker.link(g_socket_send_message, "g_socket_send_message", LIBRARY.GIO);
+	Linker.link(g_socket_send_with_blocking, "g_socket_send_with_blocking", LIBRARY.GIO);
 	Linker.link(g_socket_close, "g_socket_close", LIBRARY.GIO);
 	Linker.link(g_socket_is_closed, "g_socket_is_closed", LIBRARY.GIO);
 	Linker.link(g_socket_shutdown, "g_socket_shutdown", LIBRARY.GIO);
@@ -842,6 +852,8 @@ static this()
 	Linker.link(g_socket_set_blocking, "g_socket_set_blocking", LIBRARY.GIO);
 	Linker.link(g_socket_get_keepalive, "g_socket_get_keepalive", LIBRARY.GIO);
 	Linker.link(g_socket_set_keepalive, "g_socket_set_keepalive", LIBRARY.GIO);
+	Linker.link(g_socket_get_timeout, "g_socket_get_timeout", LIBRARY.GIO);
+	Linker.link(g_socket_set_timeout, "g_socket_set_timeout", LIBRARY.GIO);
 	Linker.link(g_socket_get_family, "g_socket_get_family", LIBRARY.GIO);
 	Linker.link(g_socket_get_fd, "g_socket_get_fd", LIBRARY.GIO);
 	Linker.link(g_socket_get_local_address, "g_socket_get_local_address", LIBRARY.GIO);
@@ -849,6 +861,7 @@ static this()
 	Linker.link(g_socket_get_remote_address, "g_socket_get_remote_address", LIBRARY.GIO);
 	Linker.link(g_socket_get_socket_type, "g_socket_get_socket_type", LIBRARY.GIO);
 	Linker.link(g_socket_speaks_ipv4, "g_socket_speaks_ipv4", LIBRARY.GIO);
+	Linker.link(g_socket_get_credentials, "g_socket_get_credentials", LIBRARY.GIO);
 
 	// gio.InetAddress
 
@@ -888,7 +901,9 @@ static this()
 
 	Linker.link(g_unix_socket_address_new, "g_unix_socket_address_new", LIBRARY.GIO);
 	Linker.link(g_unix_socket_address_new_abstract, "g_unix_socket_address_new_abstract", LIBRARY.GIO);
+	Linker.link(g_unix_socket_address_new_with_type, "g_unix_socket_address_new_with_type", LIBRARY.GIO);
 	Linker.link(g_unix_socket_address_get_is_abstract, "g_unix_socket_address_get_is_abstract", LIBRARY.GIO);
+	Linker.link(g_unix_socket_address_get_address_type, "g_unix_socket_address_get_address_type", LIBRARY.GIO);
 	Linker.link(g_unix_socket_address_get_path, "g_unix_socket_address_get_path", LIBRARY.GIO);
 	Linker.link(g_unix_socket_address_get_path_len, "g_unix_socket_address_get_path_len", LIBRARY.GIO);
 	Linker.link(g_unix_socket_address_abstract_names_supported, "g_unix_socket_address_abstract_names_supported", LIBRARY.GIO);
@@ -919,62 +934,9 @@ static this()
 	Linker.link(g_unix_fd_message_append_fd, "g_unix_fd_message_append_fd", LIBRARY.GIO);
 	Linker.link(g_unix_fd_message_steal_fds, "g_unix_fd_message_steal_fds", LIBRARY.GIO);
 
-	// gio.Resolver
-
-	Linker.link(g_resolver_get_default, "g_resolver_get_default", LIBRARY.GIO);
-	Linker.link(g_resolver_set_default, "g_resolver_set_default", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_name, "g_resolver_lookup_by_name", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_name_async, "g_resolver_lookup_by_name_async", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_name_finish, "g_resolver_lookup_by_name_finish", LIBRARY.GIO);
-	Linker.link(g_resolver_free_addresses, "g_resolver_free_addresses", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_address, "g_resolver_lookup_by_address", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_address_async, "g_resolver_lookup_by_address_async", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_address_finish, "g_resolver_lookup_by_address_finish", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_service, "g_resolver_lookup_service", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_service_async, "g_resolver_lookup_service_async", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_service_finish, "g_resolver_lookup_service_finish", LIBRARY.GIO);
-	Linker.link(g_resolver_free_targets, "g_resolver_free_targets", LIBRARY.GIO);
-
-	// gio.SocketConnectableT
-
-
-	// gio.SocketConnectableT
-
-	Linker.link(g_socket_connectable_enumerate, "g_socket_connectable_enumerate", LIBRARY.GIO);
-
-	// gio.SocketAddressEnumerator
-
-	Linker.link(g_socket_address_enumerator_next, "g_socket_address_enumerator_next", LIBRARY.GIO);
-	Linker.link(g_socket_address_enumerator_next_async, "g_socket_address_enumerator_next_async", LIBRARY.GIO);
-	Linker.link(g_socket_address_enumerator_next_finish, "g_socket_address_enumerator_next_finish", LIBRARY.GIO);
-
-	// gio.NetworkAddress
-
-	Linker.link(g_network_address_new, "g_network_address_new", LIBRARY.GIO);
-	Linker.link(g_network_address_get_hostname, "g_network_address_get_hostname", LIBRARY.GIO);
-	Linker.link(g_network_address_get_port, "g_network_address_get_port", LIBRARY.GIO);
-	Linker.link(g_network_address_parse, "g_network_address_parse", LIBRARY.GIO);
-
-	// gio.NetworkService
-
-	Linker.link(g_network_service_new, "g_network_service_new", LIBRARY.GIO);
-	Linker.link(g_network_service_get_service, "g_network_service_get_service", LIBRARY.GIO);
-	Linker.link(g_network_service_get_protocol, "g_network_service_get_protocol", LIBRARY.GIO);
-	Linker.link(g_network_service_get_domain, "g_network_service_get_domain", LIBRARY.GIO);
-
-	// gio.SrvTarget
-
-	Linker.link(g_srv_target_new, "g_srv_target_new", LIBRARY.GIO);
-	Linker.link(g_srv_target_copy, "g_srv_target_copy", LIBRARY.GIO);
-	Linker.link(g_srv_target_free, "g_srv_target_free", LIBRARY.GIO);
-	Linker.link(g_srv_target_get_hostname, "g_srv_target_get_hostname", LIBRARY.GIO);
-	Linker.link(g_srv_target_get_port, "g_srv_target_get_port", LIBRARY.GIO);
-	Linker.link(g_srv_target_get_priority, "g_srv_target_get_priority", LIBRARY.GIO);
-	Linker.link(g_srv_target_get_weight, "g_srv_target_get_weight", LIBRARY.GIO);
-	Linker.link(g_srv_target_list_sort, "g_srv_target_list_sort", LIBRARY.GIO);
-
 	// gio.SocketClient
 
+	Linker.link(g_socket_client_add_application_proxy, "g_socket_client_add_application_proxy", LIBRARY.GIO);
 	Linker.link(g_socket_client_new, "g_socket_client_new", LIBRARY.GIO);
 	Linker.link(g_socket_client_connect, "g_socket_client_connect", LIBRARY.GIO);
 	Linker.link(g_socket_client_connect_async, "g_socket_client_connect_async", LIBRARY.GIO);
@@ -985,14 +947,21 @@ static this()
 	Linker.link(g_socket_client_connect_to_service, "g_socket_client_connect_to_service", LIBRARY.GIO);
 	Linker.link(g_socket_client_connect_to_service_async, "g_socket_client_connect_to_service_async", LIBRARY.GIO);
 	Linker.link(g_socket_client_connect_to_service_finish, "g_socket_client_connect_to_service_finish", LIBRARY.GIO);
+	Linker.link(g_socket_client_connect_to_uri, "g_socket_client_connect_to_uri", LIBRARY.GIO);
+	Linker.link(g_socket_client_connect_to_uri_async, "g_socket_client_connect_to_uri_async", LIBRARY.GIO);
+	Linker.link(g_socket_client_connect_to_uri_finish, "g_socket_client_connect_to_uri_finish", LIBRARY.GIO);
 	Linker.link(g_socket_client_set_family, "g_socket_client_set_family", LIBRARY.GIO);
 	Linker.link(g_socket_client_set_local_address, "g_socket_client_set_local_address", LIBRARY.GIO);
 	Linker.link(g_socket_client_set_protocol, "g_socket_client_set_protocol", LIBRARY.GIO);
 	Linker.link(g_socket_client_set_socket_type, "g_socket_client_set_socket_type", LIBRARY.GIO);
+	Linker.link(g_socket_client_set_timeout, "g_socket_client_set_timeout", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_family, "g_socket_client_get_family", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_local_address, "g_socket_client_get_local_address", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_protocol, "g_socket_client_get_protocol", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_socket_type, "g_socket_client_get_socket_type", LIBRARY.GIO);
+	Linker.link(g_socket_client_get_timeout, "g_socket_client_get_timeout", LIBRARY.GIO);
+	Linker.link(g_socket_client_get_enable_proxy, "g_socket_client_get_enable_proxy", LIBRARY.GIO);
+	Linker.link(g_socket_client_set_enable_proxy, "g_socket_client_set_enable_proxy", LIBRARY.GIO);
 
 	// gio.SocketConnection
 
@@ -1003,15 +972,17 @@ static this()
 	Linker.link(g_socket_connection_factory_lookup_type, "g_socket_connection_factory_lookup_type", LIBRARY.GIO);
 	Linker.link(g_socket_connection_factory_register_type, "g_socket_connection_factory_register_type", LIBRARY.GIO);
 
-	// gio.TcpConnection
-
-	Linker.link(g_tcp_connection_set_graceful_disconnect, "g_tcp_connection_set_graceful_disconnect", LIBRARY.GIO);
-	Linker.link(g_tcp_connection_get_graceful_disconnect, "g_tcp_connection_get_graceful_disconnect", LIBRARY.GIO);
-
 	// gio.UnixConnection
 
 	Linker.link(g_unix_connection_receive_fd, "g_unix_connection_receive_fd", LIBRARY.GIO);
 	Linker.link(g_unix_connection_send_fd, "g_unix_connection_send_fd", LIBRARY.GIO);
+	Linker.link(g_unix_connection_receive_credentials, "g_unix_connection_receive_credentials", LIBRARY.GIO);
+	Linker.link(g_unix_connection_send_credentials, "g_unix_connection_send_credentials", LIBRARY.GIO);
+
+	// gio.TcpConnection
+
+	Linker.link(g_tcp_connection_set_graceful_disconnect, "g_tcp_connection_set_graceful_disconnect", LIBRARY.GIO);
+	Linker.link(g_tcp_connection_get_graceful_disconnect, "g_tcp_connection_get_graceful_disconnect", LIBRARY.GIO);
 
 	// gio.SocketListener
 
@@ -1039,6 +1010,65 @@ static this()
 	// gio.ThreadedSocketService
 
 	Linker.link(g_threaded_socket_service_new, "g_threaded_socket_service_new", LIBRARY.GIO);
+
+	// gio.Resolver
+
+	Linker.link(g_resolver_get_default, "g_resolver_get_default", LIBRARY.GIO);
+	Linker.link(g_resolver_set_default, "g_resolver_set_default", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_by_name, "g_resolver_lookup_by_name", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_by_name_async, "g_resolver_lookup_by_name_async", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_by_name_finish, "g_resolver_lookup_by_name_finish", LIBRARY.GIO);
+	Linker.link(g_resolver_free_addresses, "g_resolver_free_addresses", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_by_address, "g_resolver_lookup_by_address", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_by_address_async, "g_resolver_lookup_by_address_async", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_by_address_finish, "g_resolver_lookup_by_address_finish", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_service, "g_resolver_lookup_service", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_service_async, "g_resolver_lookup_service_async", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_service_finish, "g_resolver_lookup_service_finish", LIBRARY.GIO);
+	Linker.link(g_resolver_free_targets, "g_resolver_free_targets", LIBRARY.GIO);
+
+	// gio.SocketConnectableT
+
+
+	// gio.SocketConnectableT
+
+	Linker.link(g_socket_connectable_enumerate, "g_socket_connectable_enumerate", LIBRARY.GIO);
+	Linker.link(g_socket_connectable_proxy_enumerate, "g_socket_connectable_proxy_enumerate", LIBRARY.GIO);
+
+	// gio.SocketAddressEnumerator
+
+	Linker.link(g_socket_address_enumerator_next, "g_socket_address_enumerator_next", LIBRARY.GIO);
+	Linker.link(g_socket_address_enumerator_next_async, "g_socket_address_enumerator_next_async", LIBRARY.GIO);
+	Linker.link(g_socket_address_enumerator_next_finish, "g_socket_address_enumerator_next_finish", LIBRARY.GIO);
+
+	// gio.NetworkAddress
+
+	Linker.link(g_network_address_new, "g_network_address_new", LIBRARY.GIO);
+	Linker.link(g_network_address_get_hostname, "g_network_address_get_hostname", LIBRARY.GIO);
+	Linker.link(g_network_address_get_port, "g_network_address_get_port", LIBRARY.GIO);
+	Linker.link(g_network_address_get_scheme, "g_network_address_get_scheme", LIBRARY.GIO);
+	Linker.link(g_network_address_parse, "g_network_address_parse", LIBRARY.GIO);
+	Linker.link(g_network_address_parse_uri, "g_network_address_parse_uri", LIBRARY.GIO);
+
+	// gio.NetworkService
+
+	Linker.link(g_network_service_new, "g_network_service_new", LIBRARY.GIO);
+	Linker.link(g_network_service_get_service, "g_network_service_get_service", LIBRARY.GIO);
+	Linker.link(g_network_service_get_protocol, "g_network_service_get_protocol", LIBRARY.GIO);
+	Linker.link(g_network_service_get_domain, "g_network_service_get_domain", LIBRARY.GIO);
+	Linker.link(g_network_service_get_scheme, "g_network_service_get_scheme", LIBRARY.GIO);
+	Linker.link(g_network_service_set_scheme, "g_network_service_set_scheme", LIBRARY.GIO);
+
+	// gio.SrvTarget
+
+	Linker.link(g_srv_target_new, "g_srv_target_new", LIBRARY.GIO);
+	Linker.link(g_srv_target_copy, "g_srv_target_copy", LIBRARY.GIO);
+	Linker.link(g_srv_target_free, "g_srv_target_free", LIBRARY.GIO);
+	Linker.link(g_srv_target_get_hostname, "g_srv_target_get_hostname", LIBRARY.GIO);
+	Linker.link(g_srv_target_get_port, "g_srv_target_get_port", LIBRARY.GIO);
+	Linker.link(g_srv_target_get_priority, "g_srv_target_get_priority", LIBRARY.GIO);
+	Linker.link(g_srv_target_get_weight, "g_srv_target_get_weight", LIBRARY.GIO);
+	Linker.link(g_srv_target_list_sort, "g_srv_target_list_sort", LIBRARY.GIO);
 
 	// gio.FilenameCompleter
 
@@ -1300,6 +1330,7 @@ mixin( gshared ~"extern(C)
 	// gio.ErrorGIO
 	
 	GIOErrorEnum function(gint errNo) c_g_io_error_from_errno;
+	GIOErrorEnum function(gint errorCode) c_g_io_error_from_win32_error;
 	
 	// gio.MountOperation
 	
@@ -1398,10 +1429,13 @@ mixin( gshared ~"extern(C)
 	// gio.ZlibCompressor
 	
 	GZlibCompressor* function(GZlibCompressorFormat format, int level) c_g_zlib_compressor_new;
+	GFileInfo* function(GZlibCompressor* compressor) c_g_zlib_compressor_get_file_info;
+	void function(GZlibCompressor* compressor, GFileInfo* fileInfo) c_g_zlib_compressor_set_file_info;
 	
 	// gio.ZlibDecompressor
 	
 	GZlibDecompressor* function(GZlibCompressorFormat format) c_g_zlib_decompressor_new;
+	GFileInfo* function(GZlibDecompressor* decompressor) c_g_zlib_decompressor_get_file_info;
 	
 	// gio.SeekableT
 	
@@ -1515,6 +1549,7 @@ mixin( gshared ~"extern(C)
 	gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_size;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data_size;
+	gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_steal_data;
 	
 	// gio.BufferedInputStream
 	
@@ -1556,6 +1591,9 @@ mixin( gshared ~"extern(C)
 	char* function(GDataInputStream* stream, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_line;
 	void function(GDataInputStream* stream, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_line_async;
 	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_line_finish;
+	char* function(GDataInputStream* stream, gchar* stopChars, gssize stopCharsLen, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_upto;
+	void function(GDataInputStream* stream, gchar* stopChars, gssize stopCharsLen, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_upto_async;
+	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_upto_finish;
 	char* function(GDataInputStream* stream, gchar* stopChars, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_until;
 	void function(GDataInputStream* stream, gchar* stopChars, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_until_async;
 	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_until_finish;
@@ -1590,16 +1628,16 @@ mixin( gshared ~"extern(C)
 	
 	// gio.ContentType
 	
-	gboolean function(char* type1, char* type2) c_g_content_type_equals;
-	gboolean function(char* type, char* supertype) c_g_content_type_is_a;
-	gboolean function(char* type) c_g_content_type_is_unknown;
-	char* function(char* type) c_g_content_type_get_description;
-	char* function(char* type) c_g_content_type_get_mime_type;
-	GIcon* function(char* type) c_g_content_type_get_icon;
-	gboolean function(char* type) c_g_content_type_can_be_executable;
-	char* function(char* mimeType) c_g_content_type_from_mime_type;
-	char* function(char* filename, guchar* data, gsize dataSize, gboolean* resultUncertain) c_g_content_type_guess;
-	char** function(GFile* root) c_g_content_type_guess_for_tree;
+	gboolean function(gchar* type1, gchar* type2) c_g_content_type_equals;
+	gboolean function(gchar* type, gchar* supertype) c_g_content_type_is_a;
+	gboolean function(gchar* type) c_g_content_type_is_unknown;
+	gchar* function(gchar* type) c_g_content_type_get_description;
+	gchar* function(gchar* type) c_g_content_type_get_mime_type;
+	GIcon* function(gchar* type) c_g_content_type_get_icon;
+	gboolean function(gchar* type) c_g_content_type_can_be_executable;
+	gchar* function(gchar* mimeType) c_g_content_type_from_mime_type;
+	gchar* function(gchar* filename, guchar* data, gsize dataSize, gboolean* resultUncertain) c_g_content_type_guess;
+	gchar** function(GFile* root) c_g_content_type_guess_for_tree;
 	GList* function() c_g_content_types_get_registered;
 	
 	// gio.AppInfoT
@@ -1879,9 +1917,11 @@ mixin( gshared ~"extern(C)
 	gssize function(GSocket* socket, gchar* buffer, gsize size, GCancellable* cancellable, GError** error) c_g_socket_receive;
 	gssize function(GSocket* socket, GSocketAddress** address, gchar* buffer, gsize size, GCancellable* cancellable, GError** error) c_g_socket_receive_from;
 	gssize function(GSocket* socket, GSocketAddress** address, GInputVector* vectors, gint numVectors, GSocketControlMessage*** messages, gint* numMessages, gint* flags, GCancellable* cancellable, GError** error) c_g_socket_receive_message;
+	gssize function(GSocket* socket, gchar* buffer, gsize size, gboolean blocking, GCancellable* cancellable, GError** error) c_g_socket_receive_with_blocking;
 	gssize function(GSocket* socket, gchar* buffer, gsize size, GCancellable* cancellable, GError** error) c_g_socket_send;
 	gssize function(GSocket* socket, GSocketAddress* address, gchar* buffer, gsize size, GCancellable* cancellable, GError** error) c_g_socket_send_to;
 	gssize function(GSocket* socket, GSocketAddress* address, GOutputVector* vectors, gint numVectors, GSocketControlMessage** messages, gint numMessages, gint flags, GCancellable* cancellable, GError** error) c_g_socket_send_message;
+	gssize function(GSocket* socket, gchar* buffer, gsize size, gboolean blocking, GCancellable* cancellable, GError** error) c_g_socket_send_with_blocking;
 	gboolean function(GSocket* socket, GError** error) c_g_socket_close;
 	gboolean function(GSocket* socket) c_g_socket_is_closed;
 	gboolean function(GSocket* socket, gboolean shutdownRead, gboolean shutdownWrite, GError** error) c_g_socket_shutdown;
@@ -1895,6 +1935,8 @@ mixin( gshared ~"extern(C)
 	void function(GSocket* socket, gboolean blocking) c_g_socket_set_blocking;
 	gboolean function(GSocket* socket) c_g_socket_get_keepalive;
 	void function(GSocket* socket, gboolean keepalive) c_g_socket_set_keepalive;
+	guint function(GSocket* socket) c_g_socket_get_timeout;
+	void function(GSocket* socket, guint timeout) c_g_socket_set_timeout;
 	GSocketFamily function(GSocket* socket) c_g_socket_get_family;
 	int function(GSocket* socket) c_g_socket_get_fd;
 	GSocketAddress* function(GSocket* socket, GError** error) c_g_socket_get_local_address;
@@ -1902,6 +1944,7 @@ mixin( gshared ~"extern(C)
 	GSocketAddress* function(GSocket* socket, GError** error) c_g_socket_get_remote_address;
 	GSocketType function(GSocket* socket) c_g_socket_get_socket_type;
 	gboolean function(GSocket* socket) c_g_socket_speaks_ipv4;
+	GCredentials* function(GSocket* socket, GError** error) c_g_socket_get_credentials;
 	
 	// gio.InetAddress
 	
@@ -1940,8 +1983,10 @@ mixin( gshared ~"extern(C)
 	// gio.UnixSocketAddress
 	
 	GSocketAddress* function(gchar* path) c_g_unix_socket_address_new;
-	GSocketAddress* function(gchar* path, int pathLen) c_g_unix_socket_address_new_abstract;
+	GSocketAddress* function(gchar* path, gint pathLen) c_g_unix_socket_address_new_abstract;
+	GSocketAddress* function(gchar* path, gint pathLen, GUnixSocketAddressType type) c_g_unix_socket_address_new_with_type;
 	gboolean function(GUnixSocketAddress* address) c_g_unix_socket_address_get_is_abstract;
+	GUnixSocketAddressType function(GUnixSocketAddress* address) c_g_unix_socket_address_get_address_type;
 	char* function(GUnixSocketAddress* address) c_g_unix_socket_address_get_path;
 	gsize function(GUnixSocketAddress* address) c_g_unix_socket_address_get_path_len;
 	gboolean function() c_g_unix_socket_address_abstract_names_supported;
@@ -1972,62 +2017,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GUnixFDMessage* message, gint fd, GError** error) c_g_unix_fd_message_append_fd;
 	gint* function(GUnixFDMessage* message, gint* length) c_g_unix_fd_message_steal_fds;
 	
-	// gio.Resolver
-	
-	GResolver* function() c_g_resolver_get_default;
-	void function(GResolver* resolver) c_g_resolver_set_default;
-	GList* function(GResolver* resolver, gchar* hostname, GCancellable* cancellable, GError** error) c_g_resolver_lookup_by_name;
-	void function(GResolver* resolver, gchar* hostname, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_by_name_async;
-	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_by_name_finish;
-	void function(GList* addresses) c_g_resolver_free_addresses;
-	gchar* function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GError** error) c_g_resolver_lookup_by_address;
-	void function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_by_address_async;
-	gchar* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_by_address_finish;
-	GList* function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GError** error) c_g_resolver_lookup_service;
-	void function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_service_async;
-	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_service_finish;
-	void function(GList* targets) c_g_resolver_free_targets;
-	
-	// gio.SocketConnectableT
-	
-	
-	// gio.SocketConnectableT
-	
-	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_enumerate;
-	
-	// gio.SocketAddressEnumerator
-	
-	GSocketAddress* function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_socket_address_enumerator_next;
-	void function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_address_enumerator_next_async;
-	GSocketAddress* function(GSocketAddressEnumerator* enumerator, GAsyncResult* result, GError** error) c_g_socket_address_enumerator_next_finish;
-	
-	// gio.NetworkAddress
-	
-	GSocketConnectable* function(gchar* hostname, guint16 port) c_g_network_address_new;
-	gchar* function(GNetworkAddress* addr) c_g_network_address_get_hostname;
-	guint16 function(GNetworkAddress* addr) c_g_network_address_get_port;
-	GSocketConnectable* function(gchar* hostAndPort, guint16 defaultPort, GError** error) c_g_network_address_parse;
-	
-	// gio.NetworkService
-	
-	GSocketConnectable* function(gchar* service, gchar* protocol, gchar* domain) c_g_network_service_new;
-	gchar* function(GNetworkService* srv) c_g_network_service_get_service;
-	gchar* function(GNetworkService* srv) c_g_network_service_get_protocol;
-	gchar* function(GNetworkService* srv) c_g_network_service_get_domain;
-	
-	// gio.SrvTarget
-	
-	GSrvTarget* function(gchar* hostname, guint16 port, guint16 priority, guint16 weight) c_g_srv_target_new;
-	GSrvTarget* function(GSrvTarget* target) c_g_srv_target_copy;
-	void function(GSrvTarget* target) c_g_srv_target_free;
-	gchar* function(GSrvTarget* target) c_g_srv_target_get_hostname;
-	guint16 function(GSrvTarget* target) c_g_srv_target_get_port;
-	guint16 function(GSrvTarget* target) c_g_srv_target_get_priority;
-	guint16 function(GSrvTarget* target) c_g_srv_target_get_weight;
-	GList* function(GList* targets) c_g_srv_target_list_sort;
-	
 	// gio.SocketClient
 	
+	void function(GSocketClient* client, gchar* protocol) c_g_socket_client_add_application_proxy;
 	GSocketClient* function() c_g_socket_client_new;
 	GSocketConnection* function(GSocketClient* client, GSocketConnectable* connectable, GCancellable* cancellable, GError** error) c_g_socket_client_connect;
 	void function(GSocketClient* client, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_client_connect_async;
@@ -2038,14 +2030,21 @@ mixin( gshared ~"extern(C)
 	GSocketConnection* function(GSocketClient* client, gchar* domain, gchar* service, GCancellable* cancellable, GError** error) c_g_socket_client_connect_to_service;
 	void function(GSocketClient* client, gchar* domain, gchar* service, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_client_connect_to_service_async;
 	GSocketConnection* function(GSocketClient* client, GAsyncResult* result, GError** error) c_g_socket_client_connect_to_service_finish;
+	GSocketConnection* function(GSocketClient* client, gchar* uri, guint16 defaultPort, GCancellable* cancellable, GError** error) c_g_socket_client_connect_to_uri;
+	void function(GSocketClient* client, gchar* uri, guint16 defaultPort, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_client_connect_to_uri_async;
+	GSocketConnection* function(GSocketClient* client, GAsyncResult* result, GError** error) c_g_socket_client_connect_to_uri_finish;
 	void function(GSocketClient* client, GSocketFamily family) c_g_socket_client_set_family;
 	void function(GSocketClient* client, GSocketAddress* address) c_g_socket_client_set_local_address;
 	void function(GSocketClient* client, GSocketProtocol protocol) c_g_socket_client_set_protocol;
 	void function(GSocketClient* client, GSocketType type) c_g_socket_client_set_socket_type;
+	void function(GSocketClient* client, guint timeout) c_g_socket_client_set_timeout;
 	GSocketFamily function(GSocketClient* client) c_g_socket_client_get_family;
 	GSocketAddress* function(GSocketClient* client) c_g_socket_client_get_local_address;
 	GSocketProtocol function(GSocketClient* client) c_g_socket_client_get_protocol;
 	GSocketType function(GSocketClient* client) c_g_socket_client_get_socket_type;
+	guint function(GSocketClient* client) c_g_socket_client_get_timeout;
+	gboolean function(GSocketClient* client) c_g_socket_client_get_enable_proxy;
+	void function(GSocketClient* client, gboolean enable) c_g_socket_client_set_enable_proxy;
 	
 	// gio.SocketConnection
 	
@@ -2056,15 +2055,17 @@ mixin( gshared ~"extern(C)
 	GType function(GSocketFamily family, GSocketType type, gint protocolId) c_g_socket_connection_factory_lookup_type;
 	void function(GType gType, GSocketFamily family, GSocketType type, gint protocol) c_g_socket_connection_factory_register_type;
 	
-	// gio.TcpConnection
-	
-	void function(GTcpConnection* connection, gboolean gracefulDisconnect) c_g_tcp_connection_set_graceful_disconnect;
-	gboolean function(GTcpConnection* connection) c_g_tcp_connection_get_graceful_disconnect;
-	
 	// gio.UnixConnection
 	
 	gint function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_receive_fd;
 	gboolean function(GUnixConnection* connection, gint fd, GCancellable* cancellable, GError** error) c_g_unix_connection_send_fd;
+	GCredentials* function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_receive_credentials;
+	gboolean function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_send_credentials;
+	
+	// gio.TcpConnection
+	
+	void function(GTcpConnection* connection, gboolean gracefulDisconnect) c_g_tcp_connection_set_graceful_disconnect;
+	gboolean function(GTcpConnection* connection) c_g_tcp_connection_get_graceful_disconnect;
 	
 	// gio.SocketListener
 	
@@ -2092,6 +2093,65 @@ mixin( gshared ~"extern(C)
 	// gio.ThreadedSocketService
 	
 	GSocketService* function(int maxThreads) c_g_threaded_socket_service_new;
+	
+	// gio.Resolver
+	
+	GResolver* function() c_g_resolver_get_default;
+	void function(GResolver* resolver) c_g_resolver_set_default;
+	GList* function(GResolver* resolver, gchar* hostname, GCancellable* cancellable, GError** error) c_g_resolver_lookup_by_name;
+	void function(GResolver* resolver, gchar* hostname, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_by_name_async;
+	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_by_name_finish;
+	void function(GList* addresses) c_g_resolver_free_addresses;
+	gchar* function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GError** error) c_g_resolver_lookup_by_address;
+	void function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_by_address_async;
+	gchar* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_by_address_finish;
+	GList* function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GError** error) c_g_resolver_lookup_service;
+	void function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_service_async;
+	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_service_finish;
+	void function(GList* targets) c_g_resolver_free_targets;
+	
+	// gio.SocketConnectableT
+	
+	
+	// gio.SocketConnectableT
+	
+	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_enumerate;
+	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_proxy_enumerate;
+	
+	// gio.SocketAddressEnumerator
+	
+	GSocketAddress* function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_socket_address_enumerator_next;
+	void function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_address_enumerator_next_async;
+	GSocketAddress* function(GSocketAddressEnumerator* enumerator, GAsyncResult* result, GError** error) c_g_socket_address_enumerator_next_finish;
+	
+	// gio.NetworkAddress
+	
+	GSocketConnectable* function(gchar* hostname, guint16 port) c_g_network_address_new;
+	gchar* function(GNetworkAddress* addr) c_g_network_address_get_hostname;
+	guint16 function(GNetworkAddress* addr) c_g_network_address_get_port;
+	gchar* function(GNetworkAddress* addr) c_g_network_address_get_scheme;
+	GSocketConnectable* function(gchar* hostAndPort, guint16 defaultPort, GError** error) c_g_network_address_parse;
+	GSocketConnectable* function(gchar* uri, guint16 defaultPort, GError** error) c_g_network_address_parse_uri;
+	
+	// gio.NetworkService
+	
+	GSocketConnectable* function(gchar* service, gchar* protocol, gchar* domain) c_g_network_service_new;
+	gchar* function(GNetworkService* srv) c_g_network_service_get_service;
+	gchar* function(GNetworkService* srv) c_g_network_service_get_protocol;
+	gchar* function(GNetworkService* srv) c_g_network_service_get_domain;
+	gchar* function(GNetworkService* srv) c_g_network_service_get_scheme;
+	void function(GNetworkService* srv, gchar* scheme) c_g_network_service_set_scheme;
+	
+	// gio.SrvTarget
+	
+	GSrvTarget* function(gchar* hostname, guint16 port, guint16 priority, guint16 weight) c_g_srv_target_new;
+	GSrvTarget* function(GSrvTarget* target) c_g_srv_target_copy;
+	void function(GSrvTarget* target) c_g_srv_target_free;
+	gchar* function(GSrvTarget* target) c_g_srv_target_get_hostname;
+	guint16 function(GSrvTarget* target) c_g_srv_target_get_port;
+	guint16 function(GSrvTarget* target) c_g_srv_target_get_priority;
+	guint16 function(GSrvTarget* target) c_g_srv_target_get_weight;
+	GList* function(GList* targets) c_g_srv_target_list_sort;
 	
 	// gio.FilenameCompleter
 	
@@ -2350,6 +2410,7 @@ alias c_g_file_enumerator_get_container  g_file_enumerator_get_container;
 // gio.ErrorGIO
 
 alias c_g_io_error_from_errno  g_io_error_from_errno;
+alias c_g_io_error_from_win32_error  g_io_error_from_win32_error;
 
 // gio.MountOperation
 
@@ -2448,10 +2509,13 @@ alias c_g_charset_converter_get_num_fallbacks  g_charset_converter_get_num_fallb
 // gio.ZlibCompressor
 
 alias c_g_zlib_compressor_new  g_zlib_compressor_new;
+alias c_g_zlib_compressor_get_file_info  g_zlib_compressor_get_file_info;
+alias c_g_zlib_compressor_set_file_info  g_zlib_compressor_set_file_info;
 
 // gio.ZlibDecompressor
 
 alias c_g_zlib_decompressor_new  g_zlib_decompressor_new;
+alias c_g_zlib_decompressor_get_file_info  g_zlib_decompressor_get_file_info;
 
 // gio.SeekableT
 
@@ -2565,6 +2629,7 @@ alias c_g_memory_output_stream_new  g_memory_output_stream_new;
 alias c_g_memory_output_stream_get_data  g_memory_output_stream_get_data;
 alias c_g_memory_output_stream_get_size  g_memory_output_stream_get_size;
 alias c_g_memory_output_stream_get_data_size  g_memory_output_stream_get_data_size;
+alias c_g_memory_output_stream_steal_data  g_memory_output_stream_steal_data;
 
 // gio.BufferedInputStream
 
@@ -2606,6 +2671,9 @@ alias c_g_data_input_stream_read_uint64  g_data_input_stream_read_uint64;
 alias c_g_data_input_stream_read_line  g_data_input_stream_read_line;
 alias c_g_data_input_stream_read_line_async  g_data_input_stream_read_line_async;
 alias c_g_data_input_stream_read_line_finish  g_data_input_stream_read_line_finish;
+alias c_g_data_input_stream_read_upto  g_data_input_stream_read_upto;
+alias c_g_data_input_stream_read_upto_async  g_data_input_stream_read_upto_async;
+alias c_g_data_input_stream_read_upto_finish  g_data_input_stream_read_upto_finish;
 alias c_g_data_input_stream_read_until  g_data_input_stream_read_until;
 alias c_g_data_input_stream_read_until_async  g_data_input_stream_read_until_async;
 alias c_g_data_input_stream_read_until_finish  g_data_input_stream_read_until_finish;
@@ -2929,9 +2997,11 @@ alias c_g_socket_check_connect_result  g_socket_check_connect_result;
 alias c_g_socket_receive  g_socket_receive;
 alias c_g_socket_receive_from  g_socket_receive_from;
 alias c_g_socket_receive_message  g_socket_receive_message;
+alias c_g_socket_receive_with_blocking  g_socket_receive_with_blocking;
 alias c_g_socket_send  g_socket_send;
 alias c_g_socket_send_to  g_socket_send_to;
 alias c_g_socket_send_message  g_socket_send_message;
+alias c_g_socket_send_with_blocking  g_socket_send_with_blocking;
 alias c_g_socket_close  g_socket_close;
 alias c_g_socket_is_closed  g_socket_is_closed;
 alias c_g_socket_shutdown  g_socket_shutdown;
@@ -2945,6 +3015,8 @@ alias c_g_socket_get_blocking  g_socket_get_blocking;
 alias c_g_socket_set_blocking  g_socket_set_blocking;
 alias c_g_socket_get_keepalive  g_socket_get_keepalive;
 alias c_g_socket_set_keepalive  g_socket_set_keepalive;
+alias c_g_socket_get_timeout  g_socket_get_timeout;
+alias c_g_socket_set_timeout  g_socket_set_timeout;
 alias c_g_socket_get_family  g_socket_get_family;
 alias c_g_socket_get_fd  g_socket_get_fd;
 alias c_g_socket_get_local_address  g_socket_get_local_address;
@@ -2952,6 +3024,7 @@ alias c_g_socket_get_protocol  g_socket_get_protocol;
 alias c_g_socket_get_remote_address  g_socket_get_remote_address;
 alias c_g_socket_get_socket_type  g_socket_get_socket_type;
 alias c_g_socket_speaks_ipv4  g_socket_speaks_ipv4;
+alias c_g_socket_get_credentials  g_socket_get_credentials;
 
 // gio.InetAddress
 
@@ -2991,7 +3064,9 @@ alias c_g_inet_socket_address_get_port  g_inet_socket_address_get_port;
 
 alias c_g_unix_socket_address_new  g_unix_socket_address_new;
 alias c_g_unix_socket_address_new_abstract  g_unix_socket_address_new_abstract;
+alias c_g_unix_socket_address_new_with_type  g_unix_socket_address_new_with_type;
 alias c_g_unix_socket_address_get_is_abstract  g_unix_socket_address_get_is_abstract;
+alias c_g_unix_socket_address_get_address_type  g_unix_socket_address_get_address_type;
 alias c_g_unix_socket_address_get_path  g_unix_socket_address_get_path;
 alias c_g_unix_socket_address_get_path_len  g_unix_socket_address_get_path_len;
 alias c_g_unix_socket_address_abstract_names_supported  g_unix_socket_address_abstract_names_supported;
@@ -3022,62 +3097,9 @@ alias c_g_unix_fd_message_get_fd_list  g_unix_fd_message_get_fd_list;
 alias c_g_unix_fd_message_append_fd  g_unix_fd_message_append_fd;
 alias c_g_unix_fd_message_steal_fds  g_unix_fd_message_steal_fds;
 
-// gio.Resolver
-
-alias c_g_resolver_get_default  g_resolver_get_default;
-alias c_g_resolver_set_default  g_resolver_set_default;
-alias c_g_resolver_lookup_by_name  g_resolver_lookup_by_name;
-alias c_g_resolver_lookup_by_name_async  g_resolver_lookup_by_name_async;
-alias c_g_resolver_lookup_by_name_finish  g_resolver_lookup_by_name_finish;
-alias c_g_resolver_free_addresses  g_resolver_free_addresses;
-alias c_g_resolver_lookup_by_address  g_resolver_lookup_by_address;
-alias c_g_resolver_lookup_by_address_async  g_resolver_lookup_by_address_async;
-alias c_g_resolver_lookup_by_address_finish  g_resolver_lookup_by_address_finish;
-alias c_g_resolver_lookup_service  g_resolver_lookup_service;
-alias c_g_resolver_lookup_service_async  g_resolver_lookup_service_async;
-alias c_g_resolver_lookup_service_finish  g_resolver_lookup_service_finish;
-alias c_g_resolver_free_targets  g_resolver_free_targets;
-
-// gio.SocketConnectableT
-
-
-// gio.SocketConnectableT
-
-alias c_g_socket_connectable_enumerate  g_socket_connectable_enumerate;
-
-// gio.SocketAddressEnumerator
-
-alias c_g_socket_address_enumerator_next  g_socket_address_enumerator_next;
-alias c_g_socket_address_enumerator_next_async  g_socket_address_enumerator_next_async;
-alias c_g_socket_address_enumerator_next_finish  g_socket_address_enumerator_next_finish;
-
-// gio.NetworkAddress
-
-alias c_g_network_address_new  g_network_address_new;
-alias c_g_network_address_get_hostname  g_network_address_get_hostname;
-alias c_g_network_address_get_port  g_network_address_get_port;
-alias c_g_network_address_parse  g_network_address_parse;
-
-// gio.NetworkService
-
-alias c_g_network_service_new  g_network_service_new;
-alias c_g_network_service_get_service  g_network_service_get_service;
-alias c_g_network_service_get_protocol  g_network_service_get_protocol;
-alias c_g_network_service_get_domain  g_network_service_get_domain;
-
-// gio.SrvTarget
-
-alias c_g_srv_target_new  g_srv_target_new;
-alias c_g_srv_target_copy  g_srv_target_copy;
-alias c_g_srv_target_free  g_srv_target_free;
-alias c_g_srv_target_get_hostname  g_srv_target_get_hostname;
-alias c_g_srv_target_get_port  g_srv_target_get_port;
-alias c_g_srv_target_get_priority  g_srv_target_get_priority;
-alias c_g_srv_target_get_weight  g_srv_target_get_weight;
-alias c_g_srv_target_list_sort  g_srv_target_list_sort;
-
 // gio.SocketClient
 
+alias c_g_socket_client_add_application_proxy  g_socket_client_add_application_proxy;
 alias c_g_socket_client_new  g_socket_client_new;
 alias c_g_socket_client_connect  g_socket_client_connect;
 alias c_g_socket_client_connect_async  g_socket_client_connect_async;
@@ -3088,14 +3110,21 @@ alias c_g_socket_client_connect_to_host_finish  g_socket_client_connect_to_host_
 alias c_g_socket_client_connect_to_service  g_socket_client_connect_to_service;
 alias c_g_socket_client_connect_to_service_async  g_socket_client_connect_to_service_async;
 alias c_g_socket_client_connect_to_service_finish  g_socket_client_connect_to_service_finish;
+alias c_g_socket_client_connect_to_uri  g_socket_client_connect_to_uri;
+alias c_g_socket_client_connect_to_uri_async  g_socket_client_connect_to_uri_async;
+alias c_g_socket_client_connect_to_uri_finish  g_socket_client_connect_to_uri_finish;
 alias c_g_socket_client_set_family  g_socket_client_set_family;
 alias c_g_socket_client_set_local_address  g_socket_client_set_local_address;
 alias c_g_socket_client_set_protocol  g_socket_client_set_protocol;
 alias c_g_socket_client_set_socket_type  g_socket_client_set_socket_type;
+alias c_g_socket_client_set_timeout  g_socket_client_set_timeout;
 alias c_g_socket_client_get_family  g_socket_client_get_family;
 alias c_g_socket_client_get_local_address  g_socket_client_get_local_address;
 alias c_g_socket_client_get_protocol  g_socket_client_get_protocol;
 alias c_g_socket_client_get_socket_type  g_socket_client_get_socket_type;
+alias c_g_socket_client_get_timeout  g_socket_client_get_timeout;
+alias c_g_socket_client_get_enable_proxy  g_socket_client_get_enable_proxy;
+alias c_g_socket_client_set_enable_proxy  g_socket_client_set_enable_proxy;
 
 // gio.SocketConnection
 
@@ -3106,15 +3135,17 @@ alias c_g_socket_connection_factory_create_connection  g_socket_connection_facto
 alias c_g_socket_connection_factory_lookup_type  g_socket_connection_factory_lookup_type;
 alias c_g_socket_connection_factory_register_type  g_socket_connection_factory_register_type;
 
-// gio.TcpConnection
-
-alias c_g_tcp_connection_set_graceful_disconnect  g_tcp_connection_set_graceful_disconnect;
-alias c_g_tcp_connection_get_graceful_disconnect  g_tcp_connection_get_graceful_disconnect;
-
 // gio.UnixConnection
 
 alias c_g_unix_connection_receive_fd  g_unix_connection_receive_fd;
 alias c_g_unix_connection_send_fd  g_unix_connection_send_fd;
+alias c_g_unix_connection_receive_credentials  g_unix_connection_receive_credentials;
+alias c_g_unix_connection_send_credentials  g_unix_connection_send_credentials;
+
+// gio.TcpConnection
+
+alias c_g_tcp_connection_set_graceful_disconnect  g_tcp_connection_set_graceful_disconnect;
+alias c_g_tcp_connection_get_graceful_disconnect  g_tcp_connection_get_graceful_disconnect;
 
 // gio.SocketListener
 
@@ -3142,6 +3173,65 @@ alias c_g_socket_service_is_active  g_socket_service_is_active;
 // gio.ThreadedSocketService
 
 alias c_g_threaded_socket_service_new  g_threaded_socket_service_new;
+
+// gio.Resolver
+
+alias c_g_resolver_get_default  g_resolver_get_default;
+alias c_g_resolver_set_default  g_resolver_set_default;
+alias c_g_resolver_lookup_by_name  g_resolver_lookup_by_name;
+alias c_g_resolver_lookup_by_name_async  g_resolver_lookup_by_name_async;
+alias c_g_resolver_lookup_by_name_finish  g_resolver_lookup_by_name_finish;
+alias c_g_resolver_free_addresses  g_resolver_free_addresses;
+alias c_g_resolver_lookup_by_address  g_resolver_lookup_by_address;
+alias c_g_resolver_lookup_by_address_async  g_resolver_lookup_by_address_async;
+alias c_g_resolver_lookup_by_address_finish  g_resolver_lookup_by_address_finish;
+alias c_g_resolver_lookup_service  g_resolver_lookup_service;
+alias c_g_resolver_lookup_service_async  g_resolver_lookup_service_async;
+alias c_g_resolver_lookup_service_finish  g_resolver_lookup_service_finish;
+alias c_g_resolver_free_targets  g_resolver_free_targets;
+
+// gio.SocketConnectableT
+
+
+// gio.SocketConnectableT
+
+alias c_g_socket_connectable_enumerate  g_socket_connectable_enumerate;
+alias c_g_socket_connectable_proxy_enumerate  g_socket_connectable_proxy_enumerate;
+
+// gio.SocketAddressEnumerator
+
+alias c_g_socket_address_enumerator_next  g_socket_address_enumerator_next;
+alias c_g_socket_address_enumerator_next_async  g_socket_address_enumerator_next_async;
+alias c_g_socket_address_enumerator_next_finish  g_socket_address_enumerator_next_finish;
+
+// gio.NetworkAddress
+
+alias c_g_network_address_new  g_network_address_new;
+alias c_g_network_address_get_hostname  g_network_address_get_hostname;
+alias c_g_network_address_get_port  g_network_address_get_port;
+alias c_g_network_address_get_scheme  g_network_address_get_scheme;
+alias c_g_network_address_parse  g_network_address_parse;
+alias c_g_network_address_parse_uri  g_network_address_parse_uri;
+
+// gio.NetworkService
+
+alias c_g_network_service_new  g_network_service_new;
+alias c_g_network_service_get_service  g_network_service_get_service;
+alias c_g_network_service_get_protocol  g_network_service_get_protocol;
+alias c_g_network_service_get_domain  g_network_service_get_domain;
+alias c_g_network_service_get_scheme  g_network_service_get_scheme;
+alias c_g_network_service_set_scheme  g_network_service_set_scheme;
+
+// gio.SrvTarget
+
+alias c_g_srv_target_new  g_srv_target_new;
+alias c_g_srv_target_copy  g_srv_target_copy;
+alias c_g_srv_target_free  g_srv_target_free;
+alias c_g_srv_target_get_hostname  g_srv_target_get_hostname;
+alias c_g_srv_target_get_port  g_srv_target_get_port;
+alias c_g_srv_target_get_priority  g_srv_target_get_priority;
+alias c_g_srv_target_get_weight  g_srv_target_get_weight;
+alias c_g_srv_target_list_sort  g_srv_target_list_sort;
 
 // gio.FilenameCompleter
 

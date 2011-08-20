@@ -331,22 +331,22 @@ public class InputStream : ObjectG
 	/**
 	 * Request an asynchronous skip of count bytes from the stream.
 	 * When the operation is finished callback will be called.
-	 * You can then call g_input_stream_skip_finish() to get the result of the
-	 * operation.
-	 * During an async request no other sync and async calls are allowed, and will
-	 * result in G_IO_ERROR_PENDING errors.
+	 * You can then call g_input_stream_skip_finish() to get the result
+	 * of the operation.
+	 * During an async request no other sync and async calls are allowed,
+	 * and will result in G_IO_ERROR_PENDING errors.
 	 * A value of count larger than G_MAXSSIZE will cause a G_IO_ERROR_INVALID_ARGUMENT error.
-	 * On success, the number of bytes skipped will be passed to the
-	 * callback. It is not an error if this is not the same as the requested size, as it
+	 * On success, the number of bytes skipped will be passed to the callback.
+	 * It is not an error if this is not the same as the requested size, as it
 	 * can happen e.g. near the end of a file, but generally we try to skip
 	 * as many bytes as requested. Zero is returned on end of file
 	 * (or if count is zero), but never otherwise.
-	 * Any outstanding i/o request with higher priority (lower numerical value) will
-	 * be executed before an outstanding request with lower priority. Default
-	 * priority is G_PRIORITY_DEFAULT.
-	 * The asyncronous methods have a default fallback that uses threads to implement
-	 * asynchronicity, so they are optional for inheriting classes. However, if you
-	 * override one you must override all.
+	 * Any outstanding i/o request with higher priority (lower numerical value)
+	 * will be executed before an outstanding request with lower priority.
+	 * Default priority is G_PRIORITY_DEFAULT.
+	 * The asynchronous methods have a default fallback that uses threads to
+	 * implement asynchronicity, so they are optional for inheriting classes.
+	 * However, if you override one, you must override all.
 	 * Params:
 	 * count = the number of bytes that will be skipped from the stream
 	 * ioPriority = the I/O priority

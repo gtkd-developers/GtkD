@@ -306,6 +306,8 @@ file: GZlibCompressor.html
 struct: GZlibCompressor
 class: ZlibCompressor
 implements: ConverterIF
+import: gio.FileInfo
+structWrap: GFileInfo* FileInfo
 prefix: g_zlib_compressor_
 
 #imports for Converter Interface.
@@ -322,6 +324,8 @@ file: GZlibDecompressor.html
 struct: GZlibDecompressor
 class: ZlibDecompressor
 implements: ConverterIF
+import: gio.FileInfo
+structWrap: GFileInfo* FileInfo
 prefix: g_zlib_decompressor_
 
 #imports for Converter Interface.
@@ -563,10 +567,18 @@ import: gio.Cancellable
 import: gio.InputStream
 structWrap: GCancellable* Cancellable
 structWrap: GInputStream* InputStream
-out: g_data_input_stream_read_line length
-out: g_data_input_stream_read_until length
+
 out: g_data_input_stream_read_line_finish result
+out: g_data_input_stream_read_upto_finish result
 out: g_data_input_stream_read_until_finish result
+array:  g_data_input_stream_read_line Return length
+array: g_data_input_stream_read_line_finish Return length
+array: g_data_input_stream_read_upto stop_chars stop_chars_len
+array: g_data_input_stream_read_upto Return length
+array: g_data_input_stream_read_upto_async stop_chars stop_chars_len
+array: g_data_input_stream_read_upto_finish Return length
+array: g_data_input_stream_read_until Return length
+array: g_data_input_stream_read_until_finish Return length
 
 nocode: g_data_input_stream_read_byte
 outFile: DataInputStream
@@ -1200,7 +1212,7 @@ interface: AsyncInitableIF
 outFile: AsyncInitableT
 
 ###########################################################
-### Lowlevel platform-independent network support #########
+### Lowlevel network support ##############################
 ###########################################################
 
 file: GSocket.html
@@ -1214,7 +1226,10 @@ import: glib.GException
 import: glib.Source
 import: gio.SocketAddress
 import: gio.Cancellable
+#TODO: Wrap Credentials.
+#import: gio.Credentials
 import: gio.SocketControlMessage
+#structWrap: GCredentials* Credentials
 structWrap: GSource* Source
 structWrap: GSocketAddress* SocketAddress
 structWrap: GCancellable* Cancellable
@@ -1292,6 +1307,7 @@ ctorStruct: GSocketAddress
 class: UnixSocketAddress
 prefix: g_unix_socket_address_
 import: glib.Str
+array: g_unix_socket_address_new_with_type path path_len
 outFile: UnixSocketAddress
 
 file: GSocketControlMessage.html
@@ -1324,6 +1340,104 @@ import: gio.UnixFDList
 structWrap: GUnixFDList* UnixFDList
 array: g_unix_fd_message_steal_fds Return length
 outFile: UnixFDMessage
+
+###########################################################
+### Highlevel network functionallity ######################
+###########################################################
+
+file: GSocketClient.html
+struct: GSocketClient
+class: SocketClient
+prefix: g_socket_client_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.SocketAddress
+import: gio.SocketConnection
+import: gio.SocketConnectableIF
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GSocketAddress* SocketAddress
+structWrap: GSocketConnection* SocketConnection
+structWrap: GSocketConnectable* SocketConnectableIF
+outFile: SocketClient
+
+file: GSocketConnection.html
+struct: GSocketConnection
+class: SocketConnection
+prefix: g_socket_connection_
+noprefix: g_tcp_connection_
+noprefix: g_unix_connection_
+import: glib.ErrorG
+import: glib.GException
+import: gio.Socket
+import: gio.SocketAddress
+structWrap: GSocket* Socket
+structWrap: GSocketAddress* SocketAddress
+structWrap: GSocketConnection* SocketConnection
+outFile: SocketConnection
+
+file: GUnixConnection.html
+struct: GUnixConnection
+class: UnixConnection
+prefix:  g_unix_connection_
+strictPrefix: Y
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+#TODO: Wrap Credentials.
+#import: gio.Credentials
+structWrap: GCancellable* Cancellable
+#structWrap: GCredentials* Credentials
+outFile: UnixConnection
+
+file: GTcpConnection.html
+struct: GTcpConnection
+class: TcpConnection
+prefix: g_tcp_connection_
+strictPrefix: Y
+outFile: TcpConnection
+
+file: GSocketListener.html
+struct: GSocketListener
+class: SocketListener
+prefix: g_socket_listener_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Socket
+import: gio.SocketAddress
+import: gio.SocketConnection
+structWrap: GObject* ObjectG
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GSocketAddress* SocketAddress
+structWrap: GSocketConnection* SocketConnection
+structWrap: GSocket* Socket
+
+out: g_socket_listener_add_address effective_address
+out: g_socket_listener_accept source_object
+inout: g_socket_listener_accept_finish source_object
+out: g_socket_listener_accept_socket source_object
+inout: g_socket_listener_accept_socket_finish source_object
+
+outFile: SocketListener
+
+file: GSocketService.html
+struct: GSocketService
+class: SocketService
+prefix: g_socket_service_
+outFile: SocketService
+
+file: GThreadedSocketService.html
+struct: GThreadedSocketService
+ctorStruct: GSocketService
+class: ThreadedSocketService
+prefix: g_threaded_socket_service_
+outFile: ThreadedSocketService
 
 ###########################################################
 ### DNS resolution ########################################
@@ -1464,97 +1578,12 @@ structWrap: GSrvTarget* SrvTarget
 outFile: SrvTarget
 
 ###########################################################
-### Highlevel network functionallity ######################
+### Lowlevel D-Bus Support ################################
 ###########################################################
 
-file: GSocketClient.html
-struct: GSocketClient
-class: SocketClient
-prefix: g_socket_client_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gio.AsyncResultIF
-import: gio.Cancellable
-import: gio.SocketAddress
-import: gio.SocketConnection
-import: gio.SocketConnectableIF
-structWrap: GAsyncResult* AsyncResultIF
-structWrap: GCancellable* Cancellable
-structWrap: GSocketAddress* SocketAddress
-structWrap: GSocketConnection* SocketConnection
-structWrap: GSocketConnectable* SocketConnectableIF
-outFile: SocketClient
-
-file: GSocketConnection.html
-struct: GSocketConnection
-class: SocketConnection
-prefix: g_socket_connection_
-noprefix: g_tcp_connection_
-noprefix: g_unix_connection_
-import: glib.ErrorG
-import: glib.GException
-import: gio.Socket
-import: gio.SocketAddress
-structWrap: GSocket* Socket
-structWrap: GSocketAddress* SocketAddress
-structWrap: GSocketConnection* SocketConnection
-outFile: SocketConnection
-
-struct: GTcpConnection
-class: TcpConnection
-prefix: g_tcp_connection_
-strictPrefix: Y
-outFile: TcpConnection
-
-struct: GUnixConnection
-class: UnixConnection
-prefix:  g_unix_connection_
-strictPrefix: Y
-import: glib.ErrorG
-import: glib.GException
-import: gio.Cancellable
-structWrap: GCancellable* Cancellable
-outFile: UnixConnection
-
-file: GSocketListener.html
-struct: GSocketListener
-class: SocketListener
-prefix: g_socket_listener_
-import: glib.ErrorG
-import: glib.GException
-import: gio.AsyncResultIF
-import: gio.Cancellable
-import: gio.Socket
-import: gio.SocketAddress
-import: gio.SocketConnection
-structWrap: GObject* ObjectG
-structWrap: GAsyncResult* AsyncResultIF
-structWrap: GCancellable* Cancellable
-structWrap: GSocketAddress* SocketAddress
-structWrap: GSocketConnection* SocketConnection
-structWrap: GSocket* Socket
-
-out: g_socket_listener_add_address effective_address
-out: g_socket_listener_accept source_object
-inout: g_socket_listener_accept_finish source_object
-out: g_socket_listener_accept_socket source_object
-inout: g_socket_listener_accept_socket_finish source_object
-
-outFile: SocketListener
-
-file: GSocketService.html
-struct: GSocketService
-class: SocketService
-prefix: g_socket_service_
-outFile: SocketService
-
-file: GThreadedSocketService.html
-struct: GThreadedSocketService
-ctorStruct: GSocketService
-class: ThreadedSocketService
-prefix: g_threaded_socket_service_
-outFile: ThreadedSocketService
+###########################################################
+### HighLevel D-Bus Support ###############################
+###########################################################
 
 ###########################################################
 ### Utilities #############################################
@@ -1566,6 +1595,14 @@ class: FilenameCompleter
 prefix: g_filename_completer_
 import: glib.Str
 outFile: FilenameCompleter
+
+###########################################################
+### Settings ##############################################
+###########################################################
+
+###########################################################
+### Permissions ###########################################
+###########################################################
 
 ###########################################################
 ### Extending GIO #########################################

@@ -85,6 +85,11 @@ private import glib.Str;
  *  Depending on the use case, it may use all implementations, or
  *  only the one with the highest priority, or pick a specific
  *  one by name.
+ *  To avoid opening all modules just to find out what extension
+ *  points they implement, GIO makes use of a caching mechanism,
+ *  see gio-querymodules.
+ *  You are expected to run this command after installing a
+ *  GIO module.
  */
 public class IOExtension
 {

@@ -43,9 +43,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gio.FileInfo
  * 	- gio.ConverterT
  * 	- gio.ConverterIF
  * structWrap:
+ * 	- GFileInfo* -> FileInfo
  * module aliases:
  * local aliases:
  * overrides:
@@ -59,6 +61,7 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
+private import gio.FileInfo;
 private import gio.ConverterT;
 private import gio.ConverterIF;
 
@@ -140,5 +143,39 @@ public class ZlibCompressor : ObjectG, ConverterIF
 			throw new ConstructionException("null returned by g_zlib_compressor_new(format, level)");
 		}
 		this(cast(GZlibCompressor*) p);
+	}
+	
+	/**
+	 * Returns the "file-info" property.
+	 * Since 2.26
+	 * Returns: a GFileInfo, or NULL. [transfer none]
+	 */
+	public FileInfo getFileInfo()
+	{
+		// GFileInfo * g_zlib_compressor_get_file_info (GZlibCompressor *compressor);
+		auto p = g_zlib_compressor_get_file_info(gZlibCompressor);
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileInfo(cast(GFileInfo*) p);
+	}
+	
+	/**
+	 * Sets file_info in compressor. If non-NULL, and compressor's
+	 * "format" property is G_ZLIB_COMPRESSOR_FORMAT_GZIP,
+	 * it will be used to set the file name and modification time in
+	 * the GZIP header of the compressed data.
+	 * Note: it is an error to call this function while a compression is in
+	 * progress; it may only be called immediately after creation of compressor,
+	 * or after resetting it with g_converter_reset().
+	 * Since 2.26
+	 * Params:
+	 * fileInfo = a GFileInfo. [allow-none]
+	 */
+	public void setFileInfo(FileInfo fileInfo)
+	{
+		// void g_zlib_compressor_set_file_info (GZlibCompressor *compressor,  GFileInfo *file_info);
+		g_zlib_compressor_set_file_info(gZlibCompressor, (fileInfo is null) ? null : fileInfo.getFileInfoStruct());
 	}
 }

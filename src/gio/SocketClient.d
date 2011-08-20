@@ -143,6 +143,30 @@ public class SocketClient : ObjectG
 	 */
 	
 	/**
+	 * Enable proxy protocols to be handled by the application. When the
+	 * indicated proxy protocol is returned by the GProxyResolver,
+	 * GSocketClient will consider this protocol as supported but will
+	 * not try find a GProxy instance to handle handshaking. The
+	 * application must check for this case by calling
+	 * g_socket_connection_get_remote_address() on the returned
+	 * GSocketConnection, and seeing if it's a GProxyAddress of the
+	 * appropriate type, to determine whether or not it needs to handle
+	 * the proxy handshaking itself.
+	 * This should be used for proxy protocols that are dialects of
+	 * another protocol such as HTTP proxy. It also allows cohabitation of
+	 * proxy protocols that are reused between protocols. A good example
+	 * is HTTP. It can be used to proxy HTTP, FTP and Gopher and can also
+	 * be use as generic socket proxy through the HTTP CONNECT method.
+	 * Params:
+	 * protocol = The proxy protocol
+	 */
+	public void addApplicationProxy(string protocol)
+	{
+		// void g_socket_client_add_application_proxy  (GSocketClient *client,  const gchar *protocol);
+		g_socket_client_add_application_proxy(gSocketClient, Str.toStringz(protocol));
+	}
+	
+	/**
 	 * Creates a new GSocketClient with the default options.
 	 * Since 2.22
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -424,6 +448,94 @@ public class SocketClient : ObjectG
 	}
 	
 	/**
+	 * This is a helper function for g_socket_client_connect().
+	 * Attempts to create a TCP connection with a network URI.
+	 * uri may be any valid URI containing an "authority" (hostname/port)
+	 * component. If a port is not specified in the URI, default_port
+	 * will be used.
+	 * Using this rather than g_socket_client_connect() or
+	 * g_socket_client_connect_to_host() allows GSocketClient to
+	 * determine when to use application-specific proxy protocols.
+	 * Upon a successful connection, a new GSocketConnection is constructed
+	 * and returned. The caller owns this new object and must drop their
+	 * reference to it when finished with it.
+	 * In the event of any failure (DNS error, service not found, no hosts
+	 * connectable) NULL is returned and error (if non-NULL) is set
+	 * accordingly.
+	 * Since 2.26
+	 * Params:
+	 * uri = A network URI
+	 * defaultPort = the default port to connect to
+	 * cancellable = a GCancellable, or NULL
+	 * Returns: a GSocketConnection on success, NULL on error.
+	 * Throws: GException on failure.
+	 */
+	public SocketConnection connectToUri(string uri, ushort defaultPort, Cancellable cancellable)
+	{
+		// GSocketConnection * g_socket_client_connect_to_uri (GSocketClient *client,  const gchar *uri,  guint16 default_port,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_client_connect_to_uri(gSocketClient, Str.toStringz(uri), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new SocketConnection(cast(GSocketConnection*) p);
+	}
+	
+	/**
+	 * This is the asynchronous version of g_socket_client_connect_to_uri().
+	 * When the operation is finished callback will be
+	 * called. You can then call g_socket_client_connect_to_uri_finish() to get
+	 * the result of the operation.
+	 * Since 2.26
+	 * Params:
+	 * uri = a network uri
+	 * defaultPort = the default port to connect to
+	 * cancellable = a GCancellable, or NULL
+	 * callback = a GAsyncReadyCallback
+	 * userData = user data for the callback
+	 */
+	public void connectToUriAsync(string uri, ushort defaultPort, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_socket_client_connect_to_uri_async  (GSocketClient *client,  const gchar *uri,  guint16 default_port,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_socket_client_connect_to_uri_async(gSocketClient, Str.toStringz(uri), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an async connect operation. See g_socket_client_connect_to_uri_async()
+	 * Since 2.26
+	 * Params:
+	 * result = a GAsyncResult.
+	 * Returns: a GSocketConnection on success, NULL on error.
+	 * Throws: GException on failure.
+	 */
+	public SocketConnection connectToUriFinish(AsyncResultIF result)
+	{
+		// GSocketConnection * g_socket_client_connect_to_uri_finish  (GSocketClient *client,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_client_connect_to_uri_finish(gSocketClient, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new SocketConnection(cast(GSocketConnection*) p);
+	}
+	
+	/**
 	 * Sets the socket family of the socket client.
 	 * If this is set to something other than G_SOCKET_FAMILY_INVALID
 	 * then the sockets created by this object will be of the specified
@@ -491,6 +603,22 @@ public class SocketClient : ObjectG
 	}
 	
 	/**
+	 * Sets the I/O timeout for sockets created by client. timeout is a
+	 * time in seconds, or 0 for no timeout (the default).
+	 * The timeout value affects the initial connection attempt as well,
+	 * so setting this may cause calls to g_socket_client_connect(), etc,
+	 * to fail with G_IO_ERROR_TIMED_OUT.
+	 * Since 2.26
+	 * Params:
+	 * timeout = the timeout
+	 */
+	public void setTimeout(uint timeout)
+	{
+		// void g_socket_client_set_timeout (GSocketClient *client,  guint timeout);
+		g_socket_client_set_timeout(gSocketClient, timeout);
+	}
+	
+	/**
 	 * Gets the socket family of the socket client.
 	 * See g_socket_client_set_family() for details.
 	 * Since 2.22
@@ -506,7 +634,7 @@ public class SocketClient : ObjectG
 	 * Gets the local address of the socket client.
 	 * See g_socket_client_set_local_address() for details.
 	 * Since 2.22
-	 * Returns: a GSocketAddres or NULL. don't free
+	 * Returns: a GSocketAddres or NULL. don't free. [transfer none]
 	 */
 	public SocketAddress getLocalAddress()
 	{
@@ -541,5 +669,43 @@ public class SocketClient : ObjectG
 	{
 		// GSocketType g_socket_client_get_socket_type (GSocketClient *client);
 		return g_socket_client_get_socket_type(gSocketClient);
+	}
+	
+	/**
+	 * Gets the I/O timeout time for sockets created by client.
+	 * See g_socket_client_set_timeout() for details.
+	 * Since 2.26
+	 * Returns: the timeout in seconds
+	 */
+	public uint getTimeout()
+	{
+		// guint g_socket_client_get_timeout (GSocketClient *client);
+		return g_socket_client_get_timeout(gSocketClient);
+	}
+	
+	/**
+	 * Gets the proxy enable state; see g_socket_client_set_enable_proxy()
+	 * Since 2.26
+	 * Returns: whether proxying is enabled
+	 */
+	public int getEnableProxy()
+	{
+		// gboolean g_socket_client_get_enable_proxy (GSocketClient *client);
+		return g_socket_client_get_enable_proxy(gSocketClient);
+	}
+	
+	/**
+	 * Sets whether or not client attempts to make connections via a
+	 * proxy server. When enabled (the default), GSocketClient will use a
+	 * GProxyResolver to determine if a proxy protocol such as SOCKS is
+	 * needed, and automatically do the necessary proxy negotiation.
+	 * Since 2.26
+	 * Params:
+	 * enable = whether to enable proxies
+	 */
+	public void setEnableProxy(int enable)
+	{
+		// void g_socket_client_set_enable_proxy (GSocketClient *client,  gboolean enable);
+		g_socket_client_set_enable_proxy(gSocketClient, enable);
 	}
 }

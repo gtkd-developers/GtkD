@@ -186,4 +186,29 @@ public class NetworkService : ObjectG, SocketConnectableIF
 		// const gchar * g_network_service_get_domain (GNetworkService *srv);
 		return Str.toString(g_network_service_get_domain(gNetworkService));
 	}
+	
+	/**
+	 * Get's the URI scheme used to resolve proxies. By default, the service name
+	 * is used as scheme.
+	 * Since 2.26
+	 * Returns: srv's scheme name
+	 */
+	public string getScheme()
+	{
+		// const gchar * g_network_service_get_scheme (GNetworkService *srv);
+		return Str.toString(g_network_service_get_scheme(gNetworkService));
+	}
+	
+	/**
+	 * Set's the URI scheme used to resolve proxies. By default, the service name
+	 * is used as scheme.
+	 * Since 2.26
+	 * Params:
+	 * scheme = a URI scheme
+	 */
+	public void setScheme(string scheme)
+	{
+		// void g_network_service_set_scheme (GNetworkService *srv,  const gchar *scheme);
+		g_network_service_set_scheme(gNetworkService, Str.toStringz(scheme));
+	}
 }

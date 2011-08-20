@@ -147,6 +147,9 @@ public struct Funct
 			if ( !getArrayType(currParm, currParmType,  convParms) && !getOutOrRefType(currParm, currParmType,  convParms) )
 				parmsWrap ~= getWrappedType(currParmType.dup, convParms);
 
+			if ( parmsWrap[$-1] == "char[]" || parmsWrap[$-1] == "gchar[]")
+				parmsWrap[$-1] = "string";
+
 			parms ~= currParm.dup;
 			
 			if ( p<text.length && text[p]==',') ++p;
@@ -586,9 +589,18 @@ public struct Funct
 		{
 			if ( parmsWrap[i] == "string" )
 			{
-				parmToGtk = "Str.toStringz("
-							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
-							~")";
+				if ( name in convParms.array && 
+					parms[i] in convParms.array[name] &&
+					convParms.array[name][parms[i]] != "" )
+				{
+					parmToGtk = GtkDClass.idsToGtkD(parms[i], convParms, aliases) ~".ptr";
+				}
+				else
+				{
+					parmToGtk = "Str.toStringz("
+								~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
+								~")";
+				}
 			}
 			else if ( parmsWrap[i] == "string[]" )
 			{
@@ -1039,7 +1051,6 @@ public struct Funct
 							{
 								char[] lenid = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
 
-								bd ~= "";
 								bd ~= "return Str.toString(p, "~ lenid ~");";
 							}
 							else

@@ -135,13 +135,14 @@ public class OutputStream : ObjectG
 	/**
 	 * Tries to write count bytes from buffer into the stream. Will block
 	 * during the operation.
-	 * If count is zero returns zero and does nothing. A value of count
+	 * If count is 0, returns 0 and does nothing. A value of count
 	 * larger than G_MAXSSIZE will cause a G_IO_ERROR_INVALID_ARGUMENT error.
 	 * On success, the number of bytes written to the stream is returned.
 	 * It is not an error if this is not the same as the requested size, as it
-	 * can happen e.g. on a partial i/o error, or if there is not enough
-	 * storage in the stream. All writes either block until at least one byte
-	 * is written, so zero is never returned (unless count is zero).
+	 * can happen e.g. on a partial I/O error, or if there is not enough
+	 * storage in the stream. All writes block until at least one byte
+	 * is written or an error occurs; 0 is never returned (unless
+	 * count is 0).
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned. If an
@@ -149,7 +150,7 @@ public class OutputStream : ObjectG
 	 * partial result will be returned, without an error.
 	 * On error -1 is returned and error is set accordingly.
 	 * Params:
-	 * buffer = the buffer containing the data to write.
+	 * buffer = the buffer containing the data to write. [array length=count][element-type uint8]
 	 * count = the number of bytes to write
 	 * cancellable = optional cancellable object
 	 * Returns: Number of bytes written, or -1 on error
@@ -181,7 +182,7 @@ public class OutputStream : ObjectG
 	 * is set to indicate the error status, bytes_written is updated to contain
 	 * the number of bytes written into the stream before the error occurred.
 	 * Params:
-	 * buffer = the buffer containing the data to write.
+	 * buffer = the buffer containing the data to write. [array length=count][element-type uint8]
 	 * count = the number of bytes to write
 	 * bytesWritten = location to store the number of bytes that was
 	 *  written to the stream
@@ -312,6 +313,9 @@ public class OutputStream : ObjectG
 	 * callback. It is not an error if this is not the same as the
 	 * requested size, as it can happen e.g. on a partial I/O error,
 	 * but generally we try to write as many bytes as requested.
+	 * You are guaranteed that this method will never fail with
+	 * G_IO_ERROR_WOULD_BLOCK - if stream can't accept more data, the
+	 * method will just wait until this changes.
 	 * Any outstanding I/O request with higher priority (lower numerical
 	 * value) will be executed before an outstanding request with lower
 	 * priority. Default priority is G_PRIORITY_DEFAULT.
@@ -321,7 +325,7 @@ public class OutputStream : ObjectG
 	 * For the synchronous, blocking version of this function, see
 	 * g_output_stream_write().
 	 * Params:
-	 * buffer = the buffer containing the data to write.
+	 * buffer = the buffer containing the data to write. [array length=count][element-type uint8]
 	 * count = the number of bytes to write
 	 * ioPriority = the io priority of the request.
 	 * cancellable = optional GCancellable object, NULL to ignore.

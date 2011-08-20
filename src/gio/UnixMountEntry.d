@@ -238,12 +238,12 @@ public class UnixMountEntry
 	}
 	
 	/**
-	 * Gets a GList of strings containing the unix mount points.
+	 * Gets a GList of GUnixMountPoint containing the unix mount points.
 	 * If time_read is set, it will be filled with the mount timestamp,
 	 * allowing for checking if the mounts have changed with
 	 * g_unix_mounts_points_changed_since().
 	 * Params:
-	 * timeRead = guint64 to contain a timestamp.
+	 * timeRead = guint64 to contain a timestamp. [allow-none]
 	 * Returns: a GList of the UNIX mountpoints.
 	 */
 	public static ListG pointsGet(ulong* timeRead)
@@ -258,12 +258,12 @@ public class UnixMountEntry
 	}
 	
 	/**
-	 * Gets a GList of strings containing the unix mounts.
+	 * Gets a GList of GUnixMountEntry containing the unix mounts.
 	 * If time_read is set, it will be filled with the mount
 	 * timestamp, allowing for checking if the mounts have changed
 	 * with g_unix_mounts_changed_since().
 	 * Params:
-	 * timeRead = guint64 to contain a timestamp.
+	 * timeRead = guint64 to contain a timestamp, or NULL. [allow-none]
 	 * Returns: a GList of the UNIX mounts.
 	 */
 	public static ListG mountsGet(ref ulong timeRead)

@@ -90,6 +90,11 @@ private import gio.IOExtension;
  *  Depending on the use case, it may use all implementations, or
  *  only the one with the highest priority, or pick a specific
  *  one by name.
+ *  To avoid opening all modules just to find out what extension
+ *  points they implement, GIO makes use of a caching mechanism,
+ *  see gio-querymodules.
+ *  You are expected to run this command after installing a
+ *  GIO module.
  */
 public class IOExtensionPoint
 {
@@ -146,7 +151,7 @@ public class IOExtensionPoint
 	/**
 	 * Gets a list of all extensions that implement this extension point.
 	 * The list is sorted by priority, beginning with the highest priority.
-	 * Returns: a GList of GIOExtensions. The list is owned by GIO and should not be modified
+	 * Returns: a GList of GIOExtensions. The list is owned by GIO and should not be modified. [element-type GIOExtension][transfer none GIOExtension]
 	 */
 	public ListG getExtensions()
 	{

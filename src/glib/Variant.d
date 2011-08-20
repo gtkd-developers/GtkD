@@ -1034,7 +1034,6 @@ public class Variant
 		// gchar * g_variant_dup_string (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_dup_string(gVariant, &length);
-		
 		return Str.toString(p, length);
 	}
 	
@@ -1142,7 +1141,6 @@ public class Variant
 		// gchar * g_variant_dup_bytestring (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_dup_bytestring(gVariant, &length);
-		
 		return Str.toString(p, length);
 	}
 	

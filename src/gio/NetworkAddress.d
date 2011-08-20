@@ -217,4 +217,47 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 		// guint16 g_network_address_get_port (GNetworkAddress *addr);
 		return g_network_address_get_port(gNetworkAddress);
 	}
+	
+	/**
+	 * Gets addr's scheme
+	 * Since 2.26
+	 * Returns: addr's scheme (NULL if not built from URI)
+	 */
+	public string getScheme()
+	{
+		// const gchar * g_network_address_get_scheme (GNetworkAddress *addr);
+		return Str.toString(g_network_address_get_scheme(gNetworkAddress));
+	}
+	
+	/**
+	 * Creates a new GSocketConnectable for connecting to the given
+	 * uri. May fail and return NULL in case parsing uri fails.
+	 * Using this rather than g_network_address_new() or
+	 * g_network_address_parse_host() allows GSocketClient to determine
+	 * when to use application-specific proxy protocols.
+	 * Since 2.26
+	 * Params:
+	 * uri = the hostname and optionally a port
+	 * defaultPort = The default port if none is found in the URI
+	 * Returns: the new GNetworkAddress, or NULL on error
+	 * Throws: GException on failure.
+	 */
+	public static SocketConnectableIF parseUri(string uri, ushort defaultPort)
+	{
+		// GSocketConnectable * g_network_address_parse_uri (const gchar *uri,  guint16 default_port,  GError **error);
+		GError* err = null;
+		
+		auto p = g_network_address_parse_uri(Str.toStringz(uri), defaultPort, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new SocketConnectable(cast(GSocketConnectable*) p);
+	}
 }

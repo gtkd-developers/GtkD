@@ -191,7 +191,7 @@ public class SocketConnection : IOStream
 	 * This can be useful if you want to do something unusual on it
 	 * not supported by the GSocketConnection APIs.
 	 * Since 2.22
-	 * Returns: a GSocketAddress or NULL on error.
+	 * Returns: a GSocketAddress or NULL on error. [transfer none]
 	 */
 	public Socket getSocket()
 	{

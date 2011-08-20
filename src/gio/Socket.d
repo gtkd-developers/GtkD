@@ -464,7 +464,7 @@ public class Socket : ObjectG, InitableIF
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public gssize receiveFrom(ref SocketAddress address, char[] buffer, Cancellable cancellable)
+	public gssize receiveFrom(ref SocketAddress address, string buffer, Cancellable cancellable)
 	{
 		// gssize g_socket_receive_from (GSocket *socket,  GSocketAddress **address,  gchar *buffer,  gsize size,  GCancellable *cancellable,  GError **error);
 		GSocketAddress* outaddress = (address is null) ? null : address.getSocketAddressStruct();
@@ -498,12 +498,13 @@ public class Socket : ObjectG, InitableIF
 	 * discarded. This is to facilitate the common practice of sending a
 	 * single '\0' byte for the purposes of transferring ancillary data.
 	 * messages, if non-NULL, will be set to point to a newly-allocated
-	 * array of GSocketControlMessage instances. These correspond to the
-	 * control messages received from the kernel, one
-	 * GSocketControlMessage per message from the kernel. This array is
-	 * NULL-terminated and must be freed by the caller using g_free(). If
-	 * messages is NULL, any control messages received will be
-	 * discarded.
+	 * array of GSocketControlMessage instances or NULL if no such
+	 * messages was received. These correspond to the control messages
+	 * received from the kernel, one GSocketControlMessage per message
+	 * from the kernel. This array is NULL-terminated and must be freed
+	 * by the caller using g_free() after calling g_object_unref() on each
+	 * element. If messages is NULL, any control messages received will
+	 * be discarded.
 	 * num_messages, if non-NULL, will be set to the number of control
 	 * messages received.
 	 * If both messages and num_messages are non-NULL, then
@@ -531,7 +532,7 @@ public class Socket : ObjectG, InitableIF
 	 * Params:
 	 * address = a pointer to a GSocketAddress pointer, or NULL
 	 * vectors = an array of GInputVector structs
-	 * messages = a pointer which will be filled with an array of
+	 * messages = a pointer which may be filled with an array of
 	 *  GSocketControlMessages, or NULL
 	 * flags = a pointer to an int containing GSocketMsgFlags flags
 	 * cancellable = a GCancellable or NULL
@@ -567,6 +568,35 @@ public class Socket : ObjectG, InitableIF
 		{
 			messages[i] = new SocketControlMessage(cast(GSocketControlMessage*) outmessages[i]);
 		}
+		return p;
+	}
+	
+	/**
+	 * This behaves exactly the same as g_socket_receive(), except that
+	 * the choice of blocking or non-blocking behavior is determined by
+	 * the blocking argument rather than by socket's properties.
+	 * Since 2.26
+	 * Params:
+	 * buffer = a buffer to read data into (which should be at least size
+	 *  bytes long).
+	 * size = the number of bytes you want to read from the socket
+	 * blocking = whether to do blocking or non-blocking I/O
+	 * cancellable = a GCancellable or NULL
+	 * Returns: Number of bytes read, or -1 on error
+	 * Throws: GException on failure.
+	 */
+	public gssize receiveWithBlocking(string buffer, gsize size, int blocking, Cancellable cancellable)
+	{
+		// gssize g_socket_receive_with_blocking (GSocket *socket,  gchar *buffer,  gsize size,  gboolean blocking,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_receive_with_blocking(gSocket, Str.toStringz(buffer), size, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		return p;
 	}
 	
@@ -697,6 +727,34 @@ public class Socket : ObjectG, InitableIF
 	}
 	
 	/**
+	 * This behaves exactly the same as g_socket_send(), except that
+	 * the choice of blocking or non-blocking behavior is determined by
+	 * the blocking argument rather than by socket's properties.
+	 * Since 2.26
+	 * Params:
+	 * buffer = the buffer containing the data to send.
+	 * size = the number of bytes to send
+	 * blocking = whether to do blocking or non-blocking I/O
+	 * cancellable = a GCancellable or NULL
+	 * Returns: Number of bytes written (which may be less than size), or -1 on error
+	 * Throws: GException on failure.
+	 */
+	public gssize sendWithBlocking(string buffer, gsize size, int blocking, Cancellable cancellable)
+	{
+		// gssize g_socket_send_with_blocking (GSocket *socket,  const gchar *buffer,  gsize size,  gboolean blocking,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_send_with_blocking(gSocket, Str.toStringz(buffer), size, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Closes the socket, shutting down any active connection.
 	 * Closing a socket does not wait for all outstanding I/O operations
 	 * to finish, so the caller should not rely on them to be guaranteed
@@ -807,6 +865,11 @@ public class Socket : ObjectG, InitableIF
 	 * is likely 0 unless cancellation happened at the same time as a
 	 * condition change). You can check for this in the callback using
 	 * g_cancellable_is_cancelled().
+	 * If socket has a timeout set, and it is reached before condition
+	 * occurs, the source will then trigger anyway, reporting G_IO_IN or
+	 * G_IO_OUT depending on condition. However, socket will have been
+	 * marked as having had a timeout, and so the next GSocket I/O method
+	 * you call will then fail with a G_IO_ERROR_TIMED_OUT.
 	 * Since 2.22
 	 * Params:
 	 * condition = a GIOCondition mask to monitor
@@ -829,6 +892,13 @@ public class Socket : ObjectG, InitableIF
 	 * The operations specified in condition are checked for and masked
 	 * against the currently-satisfied conditions on socket. The result
 	 * is returned.
+	 * Note that on Windows, it is possible for an operation to return
+	 * G_IO_ERROR_WOULD_BLOCK even immediately after
+	 * g_socket_condition_check() has claimed that the socket is ready for
+	 * writing. Rather than calling g_socket_condition_check() and then
+	 * writing to the socket if it succeeds, it is generally better to
+	 * simply try writing to the socket right away, and try again later if
+	 * the initial attempt returns G_IO_ERROR_WOULD_BLOCK.
 	 * It is meaningless to specify G_IO_ERR or G_IO_HUP in condition;
 	 * these conditions will always be set in the output if they are true.
 	 * This call never blocks.
@@ -846,8 +916,11 @@ public class Socket : ObjectG, InitableIF
 	/**
 	 * Waits for condition to become true on socket. When the condition
 	 * is met, TRUE is returned.
-	 * If cancellable is cancelled before the condition is met then FALSE
-	 * is returned and error, if non-NULL, is set to G_IO_ERROR_CANCELLED.
+	 * If cancellable is cancelled before the condition is met, or if the
+	 * socket has a timeout set and it is reached before the condition is
+	 * met, then FALSE is returned and error, if non-NULL, is set to
+	 * the appropriate value (G_IO_ERROR_CANCELLED or
+	 * G_IO_ERROR_TIMED_OUT).
 	 * Since 2.22
 	 * Params:
 	 * condition = a GIOCondition mask to wait for
@@ -963,6 +1036,45 @@ public class Socket : ObjectG, InitableIF
 	{
 		// void g_socket_set_keepalive (GSocket *socket,  gboolean keepalive);
 		g_socket_set_keepalive(gSocket, keepalive);
+	}
+	
+	/**
+	 * Gets the timeout setting of the socket. For details on this, see
+	 * g_socket_set_timeout().
+	 * Since 2.26
+	 * Returns: the timeout in seconds
+	 */
+	public uint getTimeout()
+	{
+		// guint g_socket_get_timeout (GSocket *socket);
+		return g_socket_get_timeout(gSocket);
+	}
+	
+	/**
+	 * Sets the time in seconds after which I/O operations on socket will
+	 * time out if they have not yet completed.
+	 * On a blocking socket, this means that any blocking GSocket
+	 * operation will time out after timeout seconds of inactivity,
+	 * returning G_IO_ERROR_TIMED_OUT.
+	 * On a non-blocking socket, calls to g_socket_condition_wait() will
+	 * also fail with G_IO_ERROR_TIMED_OUT after the given time. Sources
+	 * created with g_socket_create_source() will trigger after
+	 * timeout seconds of inactivity, with the requested condition
+	 * set, at which point calling g_socket_receive(), g_socket_send(),
+	 * g_socket_check_connect_result(), etc, will fail with
+	 * G_IO_ERROR_TIMED_OUT.
+	 * If timeout is 0 (the default), operations will never time out
+	 * on their own.
+	 * Note that if an I/O operation is interrupted by a signal, this may
+	 * cause the timeout to be reset.
+	 * Since 2.26
+	 * Params:
+	 * timeout = the timeout for socket, in seconds, or 0 for none
+	 */
+	public void setTimeout(uint timeout)
+	{
+		// void g_socket_set_timeout (GSocket *socket,  guint timeout);
+		g_socket_set_timeout(gSocket, timeout);
 	}
 	
 	/**
@@ -1082,5 +1194,35 @@ public class Socket : ObjectG, InitableIF
 	{
 		// gboolean g_socket_speaks_ipv4 (GSocket *socket);
 		return g_socket_speaks_ipv4(gSocket);
+	}
+	
+	/**
+	 * Returns the credentials of the foreign process connected to this
+	 * socket, if any (e.g. it is only supported for G_SOCKET_FAMILY_UNIX
+	 * sockets).
+	 * If this operation isn't supported on the OS, the method fails with
+	 * the G_IO_ERROR_NOT_SUPPORTED error. On Linux this is implemented
+	 * by reading the SO_PEERCRED option on the underlying socket.
+	 * Other ways to obtain credentials from a foreign peer includes the
+	 * GUnixCredentialsMessage type and
+	 * g_unix_connection_send_credentials() /
+	 * g_unix_connection_receive_credentials() functions.
+	 * Since 2.26
+	 * Returns: NULL if error is set, otherwise a GCredentials object that must be freed with g_object_unref().
+	 * Throws: GException on failure.
+	 */
+	public GCredentials* getCredentials()
+	{
+		// GCredentials * g_socket_get_credentials (GSocket *socket,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_get_credentials(gSocket, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }
