@@ -899,6 +899,416 @@ public enum GResolverError
 alias GResolverError ResolverError;
 
 /**
+ * Flags describing the access control of a D-Bus property.
+ * G_DBUS_PROPERTY_INFO_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_PROPERTY_INFO_FLAGS_READABLE
+ * Property is readable.
+ * G_DBUS_PROPERTY_INFO_FLAGS_WRITABLE
+ * Property is writable.
+ * Since 2.26
+ */
+public enum GDBusPropertyInfoFlags
+{
+	NONE = 0,
+	READABLE = (1<<0),
+	WRITABLE = (1<<1)
+}
+alias GDBusPropertyInfoFlags DBusPropertyInfoFlags;
+
+/**
+ * Error codes for the G_DBUS_ERROR error domain.
+ * G_DBUS_ERROR_FAILED
+ * A generic error; "something went wrong" - see the error message for
+ * more.
+ * G_DBUS_ERROR_NO_MEMORY
+ * There was not enough memory to complete an operation.
+ * G_DBUS_ERROR_SERVICE_UNKNOWN
+ * The bus doesn't know how to launch a service to supply the bus name
+ * you wanted.
+ * G_DBUS_ERROR_NAME_HAS_NO_OWNER
+ * The bus name you referenced doesn't exist (i.e. no application owns
+ * it).
+ * G_DBUS_ERROR_NO_REPLY
+ * No reply to a message expecting one, usually means a timeout occurred.
+ * G_DBUS_ERROR_IO_ERROR
+ * Something went wrong reading or writing to a socket, for example.
+ * G_DBUS_ERROR_BAD_ADDRESS
+ * A D-Bus bus address was malformed.
+ * G_DBUS_ERROR_NOT_SUPPORTED
+ * Requested operation isn't supported (like ENOSYS on UNIX).
+ * G_DBUS_ERROR_LIMITS_EXCEEDED
+ * Some limited resource is exhausted.
+ * G_DBUS_ERROR_ACCESS_DENIED
+ * Security restrictions don't allow doing what you're trying to do.
+ * G_DBUS_ERROR_AUTH_FAILED
+ * Authentication didn't work.
+ * G_DBUS_ERROR_NO_SERVER
+ * Unable to connect to server (probably caused by ECONNREFUSED on a
+ * socket).
+ * G_DBUS_ERROR_TIMEOUT
+ * Certain timeout errors, possibly ETIMEDOUT on a socket. Note that
+ * G_DBUS_ERROR_NO_REPLY is used for message reply timeouts. Warning:
+ * this is confusingly-named given that G_DBUS_ERROR_TIMED_OUT also
+ * exists. We can't fix it for compatibility reasons so just be
+ * careful.
+ * G_DBUS_ERROR_NO_NETWORK
+ * No network access (probably ENETUNREACH on a socket).
+ * G_DBUS_ERROR_ADDRESS_IN_USE
+ * Can't bind a socket since its address is in use (i.e. EADDRINUSE).
+ * G_DBUS_ERROR_DISCONNECTED
+ * The connection is disconnected and you're trying to use it.
+ * G_DBUS_ERROR_INVALID_ARGS
+ * Invalid arguments passed to a method call.
+ * G_DBUS_ERROR_FILE_NOT_FOUND
+ * Missing file.
+ * G_DBUS_ERROR_FILE_EXISTS
+ * Existing file and the operation you're using does not silently overwrite.
+ * G_DBUS_ERROR_UNKNOWN_METHOD
+ * Method name you invoked isn't known by the object you invoked it on.
+ * G_DBUS_ERROR_TIMED_OUT
+ * Certain timeout errors, e.g. while starting a service. Warning: this is
+ * confusingly-named given that G_DBUS_ERROR_TIMEOUT also exists. We
+ * can't fix it for compatibility reasons so just be careful.
+ * G_DBUS_ERROR_MATCH_RULE_NOT_FOUND
+ * Tried to remove or modify a match rule that didn't exist.
+ * G_DBUS_ERROR_MATCH_RULE_INVALID
+ * The match rule isn't syntactically valid.
+ * G_DBUS_ERROR_SPAWN_EXEC_FAILED
+ * While starting a new process, the exec() call failed.
+ * G_DBUS_ERROR_SPAWN_FORK_FAILED
+ * While starting a new process, the fork() call failed.
+ * G_DBUS_ERROR_SPAWN_CHILD_EXITED
+ * While starting a new process, the child exited with a status code.
+ * G_DBUS_ERROR_SPAWN_CHILD_SIGNALED
+ * While starting a new process, the child exited on a signal.
+ * G_DBUS_ERROR_SPAWN_FAILED
+ * While starting a new process, something went wrong.
+ * G_DBUS_ERROR_SPAWN_SETUP_FAILED
+ * We failed to setup the environment correctly.
+ * G_DBUS_ERROR_SPAWN_CONFIG_INVALID
+ * We failed to setup the config parser correctly.
+ * G_DBUS_ERROR_SPAWN_SERVICE_INVALID
+ * Bus name was not valid.
+ * G_DBUS_ERROR_SPAWN_SERVICE_NOT_FOUND
+ * Service file not found in system-services directory.
+ * G_DBUS_ERROR_SPAWN_PERMISSIONS_INVALID
+ * Permissions are incorrect on the setuid helper.
+ * G_DBUS_ERROR_SPAWN_FILE_INVALID
+ * Service file invalid (Name, User or Exec missing).
+ * G_DBUS_ERROR_SPAWN_NO_MEMORY
+ * Tried to get a UNIX process ID and it wasn't available.
+ * G_DBUS_ERROR_UNIX_PROCESS_ID_UNKNOWN
+ * Tried to get a UNIX process ID and it wasn't available.
+ * G_DBUS_ERROR_INVALID_SIGNATURE
+ * A type signature is not valid.
+ * G_DBUS_ERROR_INVALID_FILE_CONTENT
+ * A file contains invalid syntax or is otherwise broken.
+ * G_DBUS_ERROR_SELINUX_SECURITY_CONTEXT_UNKNOWN
+ * Asked for SELinux security context and it wasn't available.
+ * G_DBUS_ERROR_ADT_AUDIT_DATA_UNKNOWN
+ * Asked for ADT audit data and it wasn't available.
+ * G_DBUS_ERROR_OBJECT_PATH_IN_USE
+ * There's already an object with the requested object path.
+ * Since 2.26
+ */
+public enum GDBusError
+{
+	/+* Well-known errors inn the org.freedesktop.DBus.Error namespace +/
+	G_DBUS_ERROR_FAILED, /+* org.freedesktop.DBus.Error.Failed +/
+	G_DBUS_ERROR_NO_MEMORY, /+* org.freedesktop.DBus.Error.NoMemory +/
+	G_DBUS_ERROR_SERVICE_UNKNOWN, /+* org.freedesktop.DBus.Error.ServiceUnknown +/
+	G_DBUS_ERROR_NAME_HAS_NO_OWNER, /+* org.freedesktop.DBus.Error.NameHasNoOwner +/
+	G_DBUS_ERROR_NO_REPLY, /+* org.freedesktop.DBus.Error.NoReply +/
+	G_DBUS_ERROR_IO_ERROR, /+* org.freedesktop.DBus.Error.IOError +/
+	G_DBUS_ERROR_BAD_ADDRESS, /+* org.freedesktop.DBus.Error.BadAddress +/
+	G_DBUS_ERROR_NOT_SUPPORTED, /+* org.freedesktop.DBus.Error.NotSupported +/
+	G_DBUS_ERROR_LIMITS_EXCEEDED, /+* org.freedesktop.DBus.Error.LimitsExceeded +/
+	G_DBUS_ERROR_ACCESS_DENIED, /+* org.freedesktop.DBus.Error.AccessDenied +/
+	G_DBUS_ERROR_AUTH_FAILED, /+* org.freedesktop.DBus.Error.AuthFailed +/
+	G_DBUS_ERROR_NO_SERVER, /+* org.freedesktop.DBus.Error.NoServer +/
+	G_DBUS_ERROR_TIMEOUT, /+* org.freedesktop.DBus.Error.Timeout +/
+	G_DBUS_ERROR_NO_NETWORK, /+* org.freedesktop.DBus.Error.NoNetwork +/
+	G_DBUS_ERROR_ADDRESS_IN_USE, /+* org.freedesktop.DBus.Error.AddressInUse +/
+	G_DBUS_ERROR_DISCONNECTED, /+* org.freedesktop.DBus.Error.Disconnected +/
+	G_DBUS_ERROR_INVALID_ARGS, /+* org.freedesktop.DBus.Error.InvalidArgs +/
+	G_DBUS_ERROR_FILE_NOT_FOUND, /+* org.freedesktop.DBus.Error.FileNotFound +/
+	G_DBUS_ERROR_FILE_EXISTS, /+* org.freedesktop.DBus.Error.FileExists +/
+	G_DBUS_ERROR_UNKNOWN_METHOD, /+* org.freedesktop.DBus.Error.UnknownMethod +/
+	G_DBUS_ERROR_TIMED_OUT, /+* org.freedesktop.DBus.Error.TimedOut +/
+	G_DBUS_ERROR_MATCH_RULE_NOT_FOUND, /+* org.freedesktop.DBus.Error.MatchRuleNotFound +/
+	G_DBUS_ERROR_MATCH_RULE_INVALID, /+* org.freedesktop.DBus.Error.MatchRuleInvalid +/
+	G_DBUS_ERROR_SPAWN_EXEC_FAILED, /+* org.freedesktop.DBus.Error.Spawn.ExecFailed +/
+	G_DBUS_ERROR_SPAWN_FORK_FAILED, /+* org.freedesktop.DBus.Error.Spawn.ForkFailed +/
+	G_DBUS_ERROR_SPAWN_CHILD_EXITED, /+* org.freedesktop.DBus.Error.Spawn.ChildExited +/
+	G_DBUS_ERROR_SPAWN_CHILD_SIGNALED, /+* org.freedesktop.DBus.Error.Spawn.ChildSignaled +/
+	G_DBUS_ERROR_SPAWN_FAILED, /+* org.freedesktop.DBus.Error.Spawn.Failed +/
+	G_DBUS_ERROR_SPAWN_SETUP_FAILED, /+* org.freedesktop.DBus.Error.Spawn.FailedToSetup +/
+	G_DBUS_ERROR_SPAWN_CONFIG_INVALID, /+* org.freedesktop.DBus.Error.Spawn.ConfigInvalid +/
+	G_DBUS_ERROR_SPAWN_SERVICE_INVALID, /+* org.freedesktop.DBus.Error.Spawn.ServiceNotValid +/
+	G_DBUS_ERROR_SPAWN_SERVICE_NOT_FOUND, /+* org.freedesktop.DBus.Error.Spawn.ServiceNotFound +/
+	G_DBUS_ERROR_SPAWN_PERMISSIONS_INVALID, /+* org.freedesktop.DBus.Error.Spawn.PermissionsInvalid +/
+	G_DBUS_ERROR_SPAWN_FILE_INVALID, /+* org.freedesktop.DBus.Error.Spawn.FileInvalid +/
+	G_DBUS_ERROR_SPAWN_NO_MEMORY, /+* org.freedesktop.DBus.Error.Spawn.NoMemory +/
+	G_DBUS_ERROR_UNIX_PROCESS_ID_UNKNOWN, /+* org.freedesktop.DBus.Error.UnixProcessIdUnknown +/
+	G_DBUS_ERROR_INVALID_SIGNATURE, /+* org.freedesktop.DBus.Error.InvalidSignature +/
+	G_DBUS_ERROR_INVALID_FILE_CONTENT, /+* org.freedesktop.DBus.Error.InvalidFileContent +/
+	G_DBUS_ERROR_SELINUX_SECURITY_CONTEXT_UNKNOWN, /+* org.freedesktop.DBus.Error.SELinuxSecurityContextUnknown +/
+	G_DBUS_ERROR_ADT_AUDIT_DATA_UNKNOWN, /+* org.freedesktop.DBus.Error.AdtAuditDataUnknown +/
+	G_DBUS_ERROR_OBJECT_PATH_IN_USE /+* org.freedesktop.DBus.Error.ObjectPathInUse +/
+}
+alias GDBusError DBusError;
+
+/**
+ * Message types used in GDBusMessage.
+ * G_DBUS_MESSAGE_TYPE_INVALID
+ * Message is of invalid type.
+ * G_DBUS_MESSAGE_TYPE_METHOD_CALL
+ * Method call.
+ * G_DBUS_MESSAGE_TYPE_METHOD_RETURN
+ * Method reply.
+ * G_DBUS_MESSAGE_TYPE_ERROR
+ * Error reply.
+ * G_DBUS_MESSAGE_TYPE_SIGNAL
+ * Signal emission.
+ * Since 2.26
+ */
+public enum GDBusMessageType
+{
+	TYPE_INVALID,
+	TYPE_METHOD_CALL,
+	TYPE_METHOD_RETURN,
+	TYPE_ERROR,
+	TYPE_SIGNAL
+}
+alias GDBusMessageType DBusMessageType;
+
+/**
+ * Message flags used in GDBusMessage.
+ * G_DBUS_MESSAGE_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_MESSAGE_FLAGS_NO_REPLY_EXPECTED
+ * A reply is not expected.
+ * G_DBUS_MESSAGE_FLAGS_NO_AUTO_START
+ * The bus must not launch an
+ * owner for the destination name in response to this message.
+ * Since 2.26
+ */
+public enum GDBusMessageFlags
+{
+	NONE = 0,
+	NO_REPLY_EXPECTED = (1<<0),
+	NO_AUTO_START = (1<<1)
+}
+alias GDBusMessageFlags DBusMessageFlags;
+
+/**
+ * Header fields used in GDBusMessage.
+ * G_DBUS_MESSAGE_HEADER_FIELD_INVALID
+ * Not a valid header field.
+ * G_DBUS_MESSAGE_HEADER_FIELD_PATH
+ * The object path.
+ * G_DBUS_MESSAGE_HEADER_FIELD_INTERFACE
+ * The interface name.
+ * G_DBUS_MESSAGE_HEADER_FIELD_MEMBER
+ * The method or signal name.
+ * G_DBUS_MESSAGE_HEADER_FIELD_ERROR_NAME
+ * The name of the error that occurred.
+ * G_DBUS_MESSAGE_HEADER_FIELD_REPLY_SERIAL
+ * The serial number the message is a reply to.
+ * G_DBUS_MESSAGE_HEADER_FIELD_DESTINATION
+ * The name the message is intended for.
+ * G_DBUS_MESSAGE_HEADER_FIELD_SENDER
+ * Unique name of the sender of the message (filled in by the bus).
+ * G_DBUS_MESSAGE_HEADER_FIELD_SIGNATURE
+ * The signature of the message body.
+ * G_DBUS_MESSAGE_HEADER_FIELD_NUM_UNIX_FDS
+ * The number of UNIX file descriptors that accompany the message.
+ * Since 2.26
+ */
+public enum GDBusMessageHeaderField
+{
+	INVALID,
+	PATH,
+	INTERFACE,
+	MEMBER,
+	ERROR_NAME,
+	REPLY_SERIAL,
+	DESTINATION,
+	SENDER,
+	SIGNATURE,
+	NUM_UNIX_FDS
+}
+alias GDBusMessageHeaderField DBusMessageHeaderField;
+
+/**
+ * Enumeration used to describe the byte order of a D-Bus message.
+ * G_DBUS_MESSAGE_BYTE_ORDER_BIG_ENDIAN
+ * The byte order is big endian.
+ * G_DBUS_MESSAGE_BYTE_ORDER_LITTLE_ENDIAN
+ * The byte order is little endian.
+ * Since 2.26
+ */
+public enum GDBusMessageByteOrder
+{
+	BIG_ENDIAN = 'B',
+	LITTLE_ENDIAN = 'l'
+}
+alias GDBusMessageByteOrder DBusMessageByteOrder;
+
+/**
+ * An enumeration for well-known message buses.
+ * G_BUS_TYPE_STARTER
+ * An alias for the message bus that activated the process, if any.
+ * G_BUS_TYPE_NONE
+ * Not a message bus.
+ * G_BUS_TYPE_SYSTEM
+ * The system-wide message bus.
+ * G_BUS_TYPE_SESSION
+ * The login session message bus.
+ * Since 2.26
+ */
+public enum GBusType
+{
+	TYPE_STARTER = -1,
+	TYPE_NONE = 0,
+	TYPE_SYSTEM = 1,
+	TYPE_SESSION = 2
+}
+alias GBusType BusType;
+
+/**
+ * Flags used when creating a new GDBusConnection.
+ * G_DBUS_CONNECTION_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT
+ * Perform authentication against server.
+ * G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER
+ * Perform authentication against client.
+ * G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS
+ * When
+ * authenticating as a server, allow the anonymous authentication
+ * method.
+ * G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION
+ * Pass this flag if connecting to a peer that is a
+ * message bus. This means that the Hello() method will be invoked as part of the connection setup.
+ * G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING
+ * If set, processing of D-Bus messages is
+ * delayed until g_dbus_connection_start_message_processing() is called.
+ * Since 2.26
+ */
+public enum GDBusConnectionFlags
+{
+	NONE = 0,
+	AUTHENTICATION_CLIENT = (1<<0),
+	AUTHENTICATION_SERVER = (1<<1),
+	AUTHENTICATION_ALLOW_ANONYMOUS = (1<<2),
+	MESSAGE_BUS_CONNECTION = (1<<3),
+	DELAY_MESSAGE_PROCESSING = (1<<4)
+}
+alias GDBusConnectionFlags DBusConnectionFlags;
+
+/**
+ * Capabilities negotiated with the remote peer.
+ * G_DBUS_CAPABILITY_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_CAPABILITY_FLAGS_UNIX_FD_PASSING
+ * The connection
+ * supports exchanging UNIX file descriptors with the remote peer.
+ * Since 2.26
+ */
+public enum GDBusCapabilityFlags
+{
+	NONE = 0,
+	UNIX_FD_PASSING = (1<<0)
+}
+alias GDBusCapabilityFlags DBusCapabilityFlags;
+
+/**
+ * Flags used in g_dbus_connection_call() and similar APIs.
+ * G_DBUS_CALL_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_CALL_FLAGS_NO_AUTO_START
+ * The bus must not launch
+ * an owner for the destination name in response to this method
+ * invocation.
+ * Since 2.26
+ */
+public enum GDBusCallFlags
+{
+	NONE = 0,
+	NO_AUTO_START = (1<<0)
+}
+alias GDBusCallFlags DBusCallFlags;
+
+/**
+ * Flags used when subscribing to signals via g_dbus_connection_signal_subscribe().
+ * G_DBUS_SIGNAL_FLAGS_NONE
+ * No flags set.
+ * Since 2.26
+ */
+public enum GDBusSignalFlags
+{
+	NONE = 0
+}
+alias GDBusSignalFlags DBusSignalFlags;
+
+/**
+ * Flags used when sending GDBusMessages on a GDBusConnection.
+ * G_DBUS_SEND_MESSAGE_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL
+ * Do not automatically
+ * assign a serial number from the GDBusConnection object when
+ * sending a message.
+ * Since 2.26
+ */
+public enum GDBusSendMessageFlags
+{
+	NONE = 0,
+	PRESERVE_SERIAL = (1<<0)
+}
+alias GDBusSendMessageFlags DBusSendMessageFlags;
+
+/**
+ * Flags passed to g_dbus_connection_register_subtree().
+ * G_DBUS_SUBTREE_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES
+ * Method calls to objects not in the enumerated range
+ *  will still be dispatched. This is useful if you want
+ *  to dynamically spawn objects in the subtree.
+ * Since 2.26
+ */
+public enum GDBusSubtreeFlags
+{
+	NONE = 0,
+	DISPATCH_TO_UNENUMERATED_NODES = (1<<0)
+}
+alias GDBusSubtreeFlags DBusSubtreeFlags;
+
+/**
+ * Flags used when creating a GDBusServer.
+ * G_DBUS_SERVER_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_SERVER_FLAGS_RUN_IN_THREAD
+ * All "new-connection"
+ * signals will run in separated dedicated threads (see signal for
+ * details).
+ * G_DBUS_SERVER_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS
+ * Allow the anonymous
+ * authentication method.
+ * Since 2.26
+ */
+public enum GDBusServerFlags
+{
+	NONE = 0,
+	RUN_IN_THREAD = (1<<0),
+	AUTHENTICATION_ALLOW_ANONYMOUS = (1<<1)
+}
+alias GDBusServerFlags DBusServerFlags;
+
+/**
  * Flags used when creating a binding. These flags determine in which
  * direction the binding works. The default is to synchronize in both
  * directions.
@@ -2321,6 +2731,49 @@ public struct GProxyResolver{}
 
 /**
  * Main Gtk struct.
+ * Interface for objects that contain or generate GSocketAddresses.
+ */
+public struct GSocketConnectable{}
+
+
+/**
+ * Provides an interface for returning a GSocketAddressEnumerator
+ * and GProxyAddressEnumerator
+ * GTypeInterface  g_iface;
+ * The parent interface.
+ * enumerate  ()
+ * Creates a GSocketAddressEnumerator
+ * proxy_enumerate  ()
+ * Creates a GProxyAddressEnumerator
+ */
+public struct GSocketConnectableIface
+{
+	GTypeInterface gIface;
+	/+* Virtual Table +/
+	extern(C) GSocketAddressEnumerator *  function(GSocketConnectable *connectable)  enumerate;
+	extern(C) GSocketAddressEnumerator *  function(GSocketConnectable *connectable)  proxyEnumerate;
+}
+
+
+/**
+ * Enumerator type for objects that contain or generate
+ * GSocketAddresses.
+ */
+public struct GSocketAddressEnumerator{}
+
+
+/**
+ * A subclass of GSocketAddressEnumerator that takes another address
+ * enumerator and wraps its results in GProxyAddresses as
+ * directed by the default GProxyResolver.
+ * Property Details
+ * The "connectable" property
+ */
+public struct GProxyAddressEnumerator{}
+
+
+/**
+ * Main Gtk struct.
  * A GSocketConnectable for resolving a hostname and connecting to
  * that host.
  */
@@ -2340,6 +2793,268 @@ public struct GNetworkService{}
  * A single target host/port that a network service is running on.
  */
 public struct GSrvTarget{}
+
+
+/**
+ * Information about an annotation.
+ * volatile  gint  ref_count;
+ * The reference count or -1 if statically allocated.
+ * gchar  *key;
+ * The name of the annotation, e.g. "org.freedesktop.DBus.Deprecated".
+ * gchar  *value;
+ * The value of the annotation.
+ * GDBusAnnotationInfo  **annotations;
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * Since 2.26
+ */
+public struct GDBusAnnotationInfo
+{
+	int refCount;
+	char *key;
+	char *value;
+	GDBusAnnotationInfo **annotations;
+}
+
+
+/**
+ * Information about an argument for a method or a signal.
+ * volatile  gint  ref_count;
+ * The reference count or -1 if statically allocated.
+ * gchar  *name;
+ * Name of the argument, e.g. unix_user_id.
+ * gchar  *signature;
+ * D-Bus signature of the argument (a single complete type).
+ * GDBusAnnotationInfo  **annotations;
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * Since 2.26
+ */
+public struct GDBusArgInfo
+{
+	int refCount;
+	char *name;
+	char *signature;
+	GDBusAnnotationInfo **annotations;
+}
+
+
+/**
+ * Information about a method on an D-Bus interface.
+ * volatile  gint  ref_count;
+ * The reference count or -1 if statically allocated.
+ * gchar  *name;
+ * The name of the D-Bus method, e.g. RequestName.
+ * GDBusArgInfo  **in_args;
+ * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no in arguments.
+ * GDBusArgInfo  **out_args;
+ * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no out arguments.
+ * GDBusAnnotationInfo  **annotations;
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * Since 2.26
+ */
+public struct GDBusMethodInfo
+{
+	int refCount;
+	char *name;
+	GDBusArgInfo **inArgs;
+	GDBusArgInfo **outArgs;
+	GDBusAnnotationInfo **annotations;
+}
+
+
+/**
+ * Information about a signal on a D-Bus interface.
+ * volatile  gint  ref_count;
+ * The reference count or -1 if statically allocated.
+ * gchar  *name;
+ * The name of the D-Bus signal, e.g. "NameOwnerChanged".
+ * GDBusArgInfo  **args;
+ * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no arguments.
+ * GDBusAnnotationInfo  **annotations;
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * Since 2.26
+ */
+public struct GDBusSignalInfo
+{
+	int refCount;
+	char *name;
+	GDBusArgInfo **args;
+	GDBusAnnotationInfo **annotations;
+}
+
+
+/**
+ * Information about a D-Bus property on a D-Bus interface.
+ * volatile  gint  ref_count;
+ * The reference count or -1 if statically allocated.
+ * gchar  *name;
+ * The name of the D-Bus property, e.g. "SupportedFilesystems".
+ * gchar  *signature;
+ * The D-Bus signature of the property (a single complete type).
+ * GDBusPropertyInfoFlags  flags;
+ * Access control flags for the property.
+ * GDBusAnnotationInfo  **annotations;
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * Since 2.26
+ */
+public struct GDBusPropertyInfo
+{
+	int refCount;
+	char *name;
+	char *signature;
+	GDBusPropertyInfoFlags flags;
+	GDBusAnnotationInfo **annotations;
+}
+
+
+/**
+ * Information about a D-Bus interface.
+ * volatile  gint  ref_count;
+ * The reference count or -1 if statically allocated.
+ * gchar  *name;
+ * The name of the D-Bus interface, e.g. "org.freedesktop.DBus.Properties".
+ * GDBusMethodInfo  **methods;
+ * A pointer to a NULL-terminated array of pointers to GDBusMethodInfo structures or NULL if there are no methods.
+ * GDBusSignalInfo  **signals;
+ * A pointer to a NULL-terminated array of pointers to GDBusSignalInfo structures or NULL if there are no signals.
+ * GDBusPropertyInfo  **properties;
+ * A pointer to a NULL-terminated array of pointers to GDBusPropertyInfo structures or NULL if there are no properties.
+ * GDBusAnnotationInfo  **annotations;
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * Since 2.26
+ */
+public struct GDBusInterfaceInfo
+{
+	int refCount;
+	char *name;
+	GDBusMethodInfo **methods;
+	GDBusSignalInfo **signals;
+	GDBusPropertyInfo **properties;
+	GDBusAnnotationInfo **annotations;
+}
+
+
+/**
+ * Information about nodes in a remote object hierarchy.
+ * volatile  gint  ref_count;
+ * The reference count or -1 if statically allocated.
+ * gchar  *path;
+ * The path of the node or NULL if omitted. Note that this may be a relative path. See the D-Bus specification for more details.
+ * GDBusInterfaceInfo  **interfaces;
+ * A pointer to a NULL-terminated array of pointers to GDBusInterfaceInfo structures or NULL if there are no interfaces.
+ * GDBusNodeInfo  **nodes;
+ * A pointer to a NULL-terminated array of pointers to GDBusNodeInfo structures or NULL if there are no nodes.
+ * GDBusAnnotationInfo  **annotations;
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * Since 2.26
+ */
+public struct GDBusNodeInfo
+{
+	int refCount;
+	char *path;
+	GDBusInterfaceInfo **interfaces;
+	GDBusNodeInfo **nodes;
+	GDBusAnnotationInfo **annotations;
+}
+
+
+/**
+ * Struct used in g_dbus_error_register_error_domain().
+ * gint  error_code;
+ * An error code.
+ * const  gchar  *dbus_error_name;
+ * The D-Bus error name to associate with error_code.
+ * Since 2.26
+ */
+public struct GDBusErrorEntry
+{
+	int errorCode;
+	char *dbusErrorName;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusMessage structure contains only private data and should
+ * only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GDBusMessage{}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusConnection structure contains only private data and
+ * should only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GDBusConnection{}
+
+
+/**
+ * Virtual table for handling properties and method calls for a D-Bus
+ * interface.
+ * If you want to handle getting/setting D-Bus properties asynchronously, simply
+ * register an object with the org.freedesktop.DBus.Properties
+ * D-Bus interface using g_dbus_connection_register_object().
+ * GDBusInterfaceMethodCallFunc  method_call;
+ * Function for handling incoming method calls.
+ * GDBusInterfaceGetPropertyFunc  get_property;
+ * Function for getting a property.
+ * GDBusInterfaceSetPropertyFunc  set_property;
+ * Function for setting a property.
+ * Since 2.26
+ */
+public struct GDBusInterfaceVTable
+{
+	GDBusInterfaceMethodCallFunc methodCall;
+	GDBusInterfaceGetPropertyFunc getProperty;
+	GDBusInterfaceSetPropertyFunc setProperty;
+}
+
+
+/**
+ * Virtual table for handling subtrees registered with g_dbus_connection_register_subtree().
+ * GDBusSubtreeEnumerateFunc  enumerate;
+ * Function for enumerating child nodes.
+ * GDBusSubtreeIntrospectFunc  introspect;
+ * Function for introspecting a child node.
+ * GDBusSubtreeDispatchFunc  dispatch;
+ * Function for dispatching a remote call on a child node.
+ * Since 2.26
+ */
+public struct GDBusSubtreeVTable
+{
+	GDBusSubtreeEnumerateFunc enumerate;
+	GDBusSubtreeIntrospectFunc introspect;
+	GDBusSubtreeDispatchFunc dispatch;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusMethodInvocation structure contains only private data and
+ * should only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GDBusMethodInvocation{}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusServer structure contains only private data and
+ * should only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GDBusServer{}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusAuthObserver structure contains only private data and
+ * should only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GDBusAuthObserver{}
 
 
 /**
@@ -2523,6 +3238,215 @@ public typedef extern(C) void*  function (void*, gsize) GReallocFunc;
  */
 // gboolean (*GSocketSourceFunc) (GSocket *socket,  GIOCondition condition,  gpointer user_data);
 public typedef extern(C) int  function (GSocket*, GIOCondition, void*) GSocketSourceFunc;
+
+/*
+ * Signature for callback function used in g_dbus_connection_signal_subscribe().
+ * connection  :
+ * A GDBusConnection.
+ * sender_name  :
+ * The unique bus name of the sender of the signal.
+ * object_path  :
+ * The object path that the signal was emitted on.
+ * interface_name  :
+ * The name of the interface.
+ * signal_name  :
+ * The name of the signal.
+ * parameters  :
+ * A GVariant tuple with parameters for the signal.
+ * user_data  :
+ * User data passed when subscribing to the signal.
+ * Since 2.26
+ */
+// void (*GDBusSignalCallback) (GDBusConnection *connection,  const gchar *sender_name,  const gchar *object_path,  const gchar *interface_name,  const gchar *signal_name,  GVariant *parameters,  gpointer user_data);
+public typedef extern(C) void  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, void*) GDBusSignalCallback;
+
+/*
+ * Signature for function used in g_dbus_connection_add_filter().
+ * A filter function is passed a GDBusMessage and expected to return
+ * a GDBusMessage too. Passive filter functions that don't modify the
+ * message can simply return the message object:
+ * $(DDOC_COMMENT example)
+ * Filter functions that wants to drop a message can simply return NULL:
+ * $(DDOC_COMMENT example)
+ * Finally, a filter function may modify a message by copying it:
+ * $(DDOC_COMMENT example)
+ * If the returned GDBusMessage is different from message and cannot
+ * be sent on connection (it could use features, such as file
+ * descriptors, not compatible with connection), then a warning is
+ * logged to standard error. Applications can
+ * check this ahead of time using g_dbus_message_to_blob() passing a
+ * GDBusCapabilityFlags value obtained from connection.
+ * connection  :
+ *  A GDBusConnection. [transfer none]
+ * message  :
+ *  A locked GDBusMessage that the filter function takes ownership of. [transfer full]
+ * incoming  :
+ * TRUE if it is a message received from the other peer, FALSE if it is
+ * a message to be sent to the other peer.
+ * user_data  :
+ * User data passed when adding the filter.
+ * Returns  :
+ *  A GDBusMessage that will be freed with
+ * g_object_unref() or NULL to drop the message. Passive filter
+ * functions can simply return the passed message object. [transfer full][allow-none]
+ * Since 2.26
+ */
+// GDBusMessage * (*GDBusMessageFilterFunction) (GDBusConnection *connection,  GDBusMessage *message,  gboolean incoming,  gpointer user_data);
+public typedef extern(C) GDBusMessage *  function (GDBusConnection*, GDBusMessage*, int, void*) GDBusMessageFilterFunction;
+
+/*
+ * The type of the method_call function in GDBusInterfaceVTable.
+ * connection  :
+ * A GDBusConnection.
+ * sender  :
+ * The unique bus name of the remote caller.
+ * object_path  :
+ * The object path that the method was invoked on.
+ * interface_name  :
+ * The D-Bus interface name the method was invoked on.
+ * method_name  :
+ * The name of the method that was invoked.
+ * parameters  :
+ * A GVariant tuple with parameters.
+ * invocation  :
+ * A GDBusMethodInvocation object that can be used to return a value or error.
+ * user_data  :
+ * The user_data gpointer passed to g_dbus_connection_register_object().
+ * Since 2.26
+ */
+// void (*GDBusInterfaceMethodCallFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *method_name,  GVariant *parameters,  GDBusMethodInvocation *invocation,  gpointer user_data);
+public typedef extern(C) void  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, GDBusMethodInvocation*, void*) GDBusInterfaceMethodCallFunc;
+
+/*
+ * The type of the get_property function in GDBusInterfaceVTable.
+ * connection  :
+ * A GDBusConnection.
+ * sender  :
+ * The unique bus name of the remote caller.
+ * object_path  :
+ * The object path that the method was invoked on.
+ * interface_name  :
+ * The D-Bus interface name for the property.
+ * property_name  :
+ * The name of the property to get the value of.
+ * error  :
+ * Return location for error.
+ * user_data  :
+ * The user_data gpointer passed to g_dbus_connection_register_object().
+ * Returns  :
+ *  A GVariant with the value for property_name or NULL if
+ *  error is set. If the returned GVariant is floating, it is
+ *  consumed - otherwise its reference count is decreased by one.
+ * Since 2.26
+ */
+// GVariant * (*GDBusInterfaceGetPropertyFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *property_name,  GError **error,  gpointer user_data);
+public typedef extern(C) GVariant *  function (GDBusConnection*, char*, char*, char*, char*, GError**, void*) GDBusInterfaceGetPropertyFunc;
+
+/*
+ * The type of the set_property function in GDBusInterfaceVTable.
+ * connection  :
+ * A GDBusConnection.
+ * sender  :
+ * The unique bus name of the remote caller.
+ * object_path  :
+ * The object path that the method was invoked on.
+ * interface_name  :
+ * The D-Bus interface name for the property.
+ * property_name  :
+ * The name of the property to get the value of.
+ * value  :
+ * The value to set the property to.
+ * error  :
+ * Return location for error.
+ * user_data  :
+ * The user_data gpointer passed to g_dbus_connection_register_object().
+ * Returns  :
+ *  TRUE if the property was set to value, FALSE if error is set.
+ * Since 2.26
+ */
+// gboolean (*GDBusInterfaceSetPropertyFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *property_name,  GVariant *value,  GError **error,  gpointer user_data);
+public typedef extern(C) int  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, GError**, void*) GDBusInterfaceSetPropertyFunc;
+
+/*
+ * The type of the enumerate function in GDBusSubtreeVTable.
+ * This function is called when generating introspection data and also
+ * when preparing to dispatch incoming messages in the event that the
+ * G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES flag is not
+ * specified (ie: to verify that the object path is valid).
+ * Hierarchies are not supported; the items that you return should not
+ * contain the '/' character.
+ * The return value will be freed with g_strfreev().
+ * connection  :
+ * A GDBusConnection.
+ * sender  :
+ * The unique bus name of the remote caller.
+ * object_path  :
+ * The object path that was registered with g_dbus_connection_register_subtree().
+ * user_data  :
+ * The user_data gpointer passed to g_dbus_connection_register_subtree().
+ * Returns  :
+ *  A newly allocated array of strings for node names that are children of object_path.
+ * Since 2.26
+ */
+// gchar ** (*GDBusSubtreeEnumerateFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  gpointer user_data);
+public typedef extern(C) char **  function (GDBusConnection*, char*, char*, void*) GDBusSubtreeEnumerateFunc;
+
+/*
+ * The type of the introspect function in GDBusSubtreeVTable.
+ * Subtrees are flat. node, if non-NULL, is always exactly one
+ * segment of the object path (ie: it never contains a slash).
+ * This function should return NULL to indicate that there is no object
+ * at this node.
+ * If this function returns non-NULL, the return value is expected to
+ * be a NULL-terminated array of pointers to GDBusInterfaceInfo
+ * structures describing the interfaces implemented by node. This
+ * array will have g_dbus_interface_info_unref() called on each item
+ * before being freed with g_free().
+ * The difference between returning NULL and an array containing zero
+ * items is that the standard DBus interfaces will returned to the
+ * remote introspector in the empty array case, but not in the NULL
+ * case.
+ * connection  :
+ * A GDBusConnection.
+ * sender  :
+ * The unique bus name of the remote caller.
+ * object_path  :
+ * The object path that was registered with g_dbus_connection_register_subtree().
+ * node  :
+ * A node that is a child of object_path (relative to object_path) or NULL for the root of the subtree.
+ * user_data  :
+ * The user_data gpointer passed to g_dbus_connection_register_subtree().
+ * Returns  :
+ *  A NULL-terminated array of pointers to GDBusInterfaceInfo, or NULL.
+ * Since 2.26
+ */
+// GDBusInterfaceInfo ** (*GDBusSubtreeIntrospectFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *node,  gpointer user_data);
+public typedef extern(C) GDBusInterfaceInfo **  function (GDBusConnection*, char*, char*, char*, void*) GDBusSubtreeIntrospectFunc;
+
+/*
+ * The type of the dispatch function in GDBusSubtreeVTable.
+ * Subtrees are flat. node, if non-NULL, is always exactly one
+ * segment of the object path (ie: it never contains a slash).
+ * connection  :
+ * A GDBusConnection.
+ * sender  :
+ * The unique bus name of the remote caller.
+ * object_path  :
+ * The object path that was registered with g_dbus_connection_register_subtree().
+ * interface_name  :
+ * The D-Bus interface name that the method call or property access is for.
+ * node  :
+ * A node that is a child of object_path (relative to object_path) or NULL for the root of the subtree.
+ * out_user_data  :
+ * Return location for user data to pass to functions in the returned GDBusInterfaceVTable (never NULL).
+ * user_data  :
+ * The user_data gpointer passed to g_dbus_connection_register_subtree().
+ * Returns  :
+ *  A GDBusInterfaceVTable or NULL if you don't want to handle the methods.
+ * Since 2.26
+ */
+// const GDBusInterfaceVTable * (*GDBusSubtreeDispatchFunc)  (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *node,  gpointer *out_user_data,  gpointer user_data);
+public typedef extern(C) GDBusInterfaceVTable *  function (GDBusConnection*, char*, char*, char*, char*, gpointer*, void*) GDBusSubtreeDispatchFunc;
 
 /*
  * The type of the function that is used to convert from a value stored

@@ -1137,6 +1137,184 @@ static this()
 	Linker.link(g_srv_target_get_weight, "g_srv_target_get_weight", LIBRARY.GIO);
 	Linker.link(g_srv_target_list_sort, "g_srv_target_list_sort", LIBRARY.GIO);
 
+	// gio.DBusUtilities
+
+	Linker.link(g_dbus_generate_guid, "g_dbus_generate_guid", LIBRARY.GIO);
+	Linker.link(g_dbus_is_guid, "g_dbus_is_guid", LIBRARY.GIO);
+	Linker.link(g_dbus_is_name, "g_dbus_is_name", LIBRARY.GIO);
+	Linker.link(g_dbus_is_unique_name, "g_dbus_is_unique_name", LIBRARY.GIO);
+	Linker.link(g_dbus_is_member_name, "g_dbus_is_member_name", LIBRARY.GIO);
+	Linker.link(g_dbus_is_interface_name, "g_dbus_is_interface_name", LIBRARY.GIO);
+	Linker.link(g_dbus_is_address, "g_dbus_is_address", LIBRARY.GIO);
+	Linker.link(g_dbus_is_supported_address, "g_dbus_is_supported_address", LIBRARY.GIO);
+	Linker.link(g_dbus_address_get_stream, "g_dbus_address_get_stream", LIBRARY.GIO);
+	Linker.link(g_dbus_address_get_stream_finish, "g_dbus_address_get_stream_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_address_get_stream_sync, "g_dbus_address_get_stream_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_address_get_for_bus_sync, "g_dbus_address_get_for_bus_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_annotation_info_lookup, "g_dbus_annotation_info_lookup", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_lookup_method, "g_dbus_interface_info_lookup_method", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_lookup_signal, "g_dbus_interface_info_lookup_signal", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_lookup_property, "g_dbus_interface_info_lookup_property", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_generate_xml, "g_dbus_interface_info_generate_xml", LIBRARY.GIO);
+	Linker.link(g_dbus_node_info_new_for_xml, "g_dbus_node_info_new_for_xml", LIBRARY.GIO);
+	Linker.link(g_dbus_node_info_lookup_interface, "g_dbus_node_info_lookup_interface", LIBRARY.GIO);
+	Linker.link(g_dbus_node_info_generate_xml, "g_dbus_node_info_generate_xml", LIBRARY.GIO);
+	Linker.link(g_dbus_node_info_ref, "g_dbus_node_info_ref", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_ref, "g_dbus_interface_info_ref", LIBRARY.GIO);
+	Linker.link(g_dbus_method_info_ref, "g_dbus_method_info_ref", LIBRARY.GIO);
+	Linker.link(g_dbus_signal_info_ref, "g_dbus_signal_info_ref", LIBRARY.GIO);
+	Linker.link(g_dbus_property_info_ref, "g_dbus_property_info_ref", LIBRARY.GIO);
+	Linker.link(g_dbus_arg_info_ref, "g_dbus_arg_info_ref", LIBRARY.GIO);
+	Linker.link(g_dbus_annotation_info_ref, "g_dbus_annotation_info_ref", LIBRARY.GIO);
+	Linker.link(g_dbus_node_info_unref, "g_dbus_node_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_unref, "g_dbus_interface_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_method_info_unref, "g_dbus_method_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_signal_info_unref, "g_dbus_signal_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_property_info_unref, "g_dbus_property_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_arg_info_unref, "g_dbus_arg_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_annotation_info_unref, "g_dbus_annotation_info_unref", LIBRARY.GIO);
+
+	// gio.DBusError
+
+	Linker.link(g_dbus_error_is_remote_error, "g_dbus_error_is_remote_error", LIBRARY.GIO);
+	Linker.link(g_dbus_error_get_remote_error, "g_dbus_error_get_remote_error", LIBRARY.GIO);
+	Linker.link(g_dbus_error_strip_remote_error, "g_dbus_error_strip_remote_error", LIBRARY.GIO);
+	Linker.link(g_dbus_error_register_error_domain, "g_dbus_error_register_error_domain", LIBRARY.GIO);
+	Linker.link(g_dbus_error_register_error, "g_dbus_error_register_error", LIBRARY.GIO);
+	Linker.link(g_dbus_error_unregister_error, "g_dbus_error_unregister_error", LIBRARY.GIO);
+	Linker.link(g_dbus_error_new_for_dbus_error, "g_dbus_error_new_for_dbus_error", LIBRARY.GIO);
+	Linker.link(g_dbus_error_set_dbus_error, "g_dbus_error_set_dbus_error", LIBRARY.GIO);
+	Linker.link(g_dbus_error_set_dbus_error_valist, "g_dbus_error_set_dbus_error_valist", LIBRARY.GIO);
+	Linker.link(g_dbus_error_encode_gerror, "g_dbus_error_encode_gerror", LIBRARY.GIO);
+
+	// gio.DBusMessage
+
+	Linker.link(g_dbus_message_new, "g_dbus_message_new", LIBRARY.GIO);
+	Linker.link(g_dbus_message_new_signal, "g_dbus_message_new_signal", LIBRARY.GIO);
+	Linker.link(g_dbus_message_new_method_call, "g_dbus_message_new_method_call", LIBRARY.GIO);
+	Linker.link(g_dbus_message_new_method_reply, "g_dbus_message_new_method_reply", LIBRARY.GIO);
+	Linker.link(g_dbus_message_new_method_error, "g_dbus_message_new_method_error", LIBRARY.GIO);
+	Linker.link(g_dbus_message_new_method_error_valist, "g_dbus_message_new_method_error_valist", LIBRARY.GIO);
+	Linker.link(g_dbus_message_new_method_error_literal, "g_dbus_message_new_method_error_literal", LIBRARY.GIO);
+	Linker.link(g_dbus_message_print, "g_dbus_message_print", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_locked, "g_dbus_message_get_locked", LIBRARY.GIO);
+	Linker.link(g_dbus_message_lock, "g_dbus_message_lock", LIBRARY.GIO);
+	Linker.link(g_dbus_message_copy, "g_dbus_message_copy", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_byte_order, "g_dbus_message_get_byte_order", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_byte_order, "g_dbus_message_set_byte_order", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_message_type, "g_dbus_message_get_message_type", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_message_type, "g_dbus_message_set_message_type", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_serial, "g_dbus_message_get_serial", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_serial, "g_dbus_message_set_serial", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_flags, "g_dbus_message_get_flags", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_flags, "g_dbus_message_set_flags", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_body, "g_dbus_message_get_body", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_body, "g_dbus_message_set_body", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_unix_fd_list, "g_dbus_message_get_unix_fd_list", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_unix_fd_list, "g_dbus_message_set_unix_fd_list", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_num_unix_fds, "g_dbus_message_get_num_unix_fds", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_num_unix_fds, "g_dbus_message_set_num_unix_fds", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_header_fields, "g_dbus_message_get_header_fields", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_header, "g_dbus_message_get_header", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_header, "g_dbus_message_set_header", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_destination, "g_dbus_message_get_destination", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_destination, "g_dbus_message_set_destination", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_error_name, "g_dbus_message_get_error_name", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_error_name, "g_dbus_message_set_error_name", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_interface, "g_dbus_message_get_interface", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_interface, "g_dbus_message_set_interface", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_member, "g_dbus_message_get_member", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_member, "g_dbus_message_set_member", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_path, "g_dbus_message_get_path", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_path, "g_dbus_message_set_path", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_reply_serial, "g_dbus_message_get_reply_serial", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_reply_serial, "g_dbus_message_set_reply_serial", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_sender, "g_dbus_message_get_sender", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_sender, "g_dbus_message_set_sender", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_signature, "g_dbus_message_get_signature", LIBRARY.GIO);
+	Linker.link(g_dbus_message_set_signature, "g_dbus_message_set_signature", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_arg0, "g_dbus_message_get_arg0", LIBRARY.GIO);
+	Linker.link(g_dbus_message_to_blob, "g_dbus_message_to_blob", LIBRARY.GIO);
+	Linker.link(g_dbus_message_bytes_needed, "g_dbus_message_bytes_needed", LIBRARY.GIO);
+	Linker.link(g_dbus_message_new_from_blob, "g_dbus_message_new_from_blob", LIBRARY.GIO);
+	Linker.link(g_dbus_message_to_gerror, "g_dbus_message_to_gerror", LIBRARY.GIO);
+
+	// gio.DBusConnection
+
+	Linker.link(g_bus_get, "g_bus_get", LIBRARY.GIO);
+	Linker.link(g_bus_get_finish, "g_bus_get_finish", LIBRARY.GIO);
+	Linker.link(g_bus_get_sync, "g_bus_get_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_new, "g_dbus_connection_new", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_new_finish, "g_dbus_connection_new_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_new_sync, "g_dbus_connection_new_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_new_for_address, "g_dbus_connection_new_for_address", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_new_for_address_finish, "g_dbus_connection_new_for_address_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_new_for_address_sync, "g_dbus_connection_new_for_address_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_start_message_processing, "g_dbus_connection_start_message_processing", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_close, "g_dbus_connection_close", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_close_finish, "g_dbus_connection_close_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_close_sync, "g_dbus_connection_close_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_is_closed, "g_dbus_connection_is_closed", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_flush, "g_dbus_connection_flush", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_flush_finish, "g_dbus_connection_flush_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_flush_sync, "g_dbus_connection_flush_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_get_exit_on_close, "g_dbus_connection_get_exit_on_close", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_set_exit_on_close, "g_dbus_connection_set_exit_on_close", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_get_stream, "g_dbus_connection_get_stream", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_get_guid, "g_dbus_connection_get_guid", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_get_unique_name, "g_dbus_connection_get_unique_name", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_get_capabilities, "g_dbus_connection_get_capabilities", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_get_peer_credentials, "g_dbus_connection_get_peer_credentials", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_call, "g_dbus_connection_call", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_call_finish, "g_dbus_connection_call_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_call_sync, "g_dbus_connection_call_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_emit_signal, "g_dbus_connection_emit_signal", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_signal_subscribe, "g_dbus_connection_signal_subscribe", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_signal_unsubscribe, "g_dbus_connection_signal_unsubscribe", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_send_message, "g_dbus_connection_send_message", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_send_message_with_reply, "g_dbus_connection_send_message_with_reply", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_send_message_with_reply_finish, "g_dbus_connection_send_message_with_reply_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_send_message_with_reply_sync, "g_dbus_connection_send_message_with_reply_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_add_filter, "g_dbus_connection_add_filter", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_remove_filter, "g_dbus_connection_remove_filter", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_register_object, "g_dbus_connection_register_object", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_unregister_object, "g_dbus_connection_unregister_object", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_register_subtree, "g_dbus_connection_register_subtree", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_unregister_subtree, "g_dbus_connection_unregister_subtree", LIBRARY.GIO);
+
+	// gio.DBusMethodInvocation
+
+	Linker.link(g_dbus_method_invocation_get_sender, "g_dbus_method_invocation_get_sender", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_object_path, "g_dbus_method_invocation_get_object_path", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_interface_name, "g_dbus_method_invocation_get_interface_name", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_method_name, "g_dbus_method_invocation_get_method_name", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_method_info, "g_dbus_method_invocation_get_method_info", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_connection, "g_dbus_method_invocation_get_connection", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_message, "g_dbus_method_invocation_get_message", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_parameters, "g_dbus_method_invocation_get_parameters", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_user_data, "g_dbus_method_invocation_get_user_data", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_return_value, "g_dbus_method_invocation_return_value", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_return_error, "g_dbus_method_invocation_return_error", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_return_error_valist, "g_dbus_method_invocation_return_error_valist", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_return_error_literal, "g_dbus_method_invocation_return_error_literal", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_return_gerror, "g_dbus_method_invocation_return_gerror", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_return_dbus_error, "g_dbus_method_invocation_return_dbus_error", LIBRARY.GIO);
+
+	// gio.DBusServer
+
+	Linker.link(g_dbus_server_new_sync, "g_dbus_server_new_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_server_start, "g_dbus_server_start", LIBRARY.GIO);
+	Linker.link(g_dbus_server_stop, "g_dbus_server_stop", LIBRARY.GIO);
+	Linker.link(g_dbus_server_is_active, "g_dbus_server_is_active", LIBRARY.GIO);
+	Linker.link(g_dbus_server_get_guid, "g_dbus_server_get_guid", LIBRARY.GIO);
+	Linker.link(g_dbus_server_get_flags, "g_dbus_server_get_flags", LIBRARY.GIO);
+	Linker.link(g_dbus_server_get_client_address, "g_dbus_server_get_client_address", LIBRARY.GIO);
+
+	// gio.DBusAuthObserver
+
+	Linker.link(g_dbus_auth_observer_new, "g_dbus_auth_observer_new", LIBRARY.GIO);
+	Linker.link(g_dbus_auth_observer_authorize_authenticated_peer, "g_dbus_auth_observer_authorize_authenticated_peer", LIBRARY.GIO);
+
 	// gio.FilenameCompleter
 
 	Linker.link(g_filename_completer_new, "g_filename_completer_new", LIBRARY.GIO);
@@ -2353,6 +2531,184 @@ mixin( gshared ~"extern(C)
 	guint16 function(GSrvTarget* target) c_g_srv_target_get_weight;
 	GList* function(GList* targets) c_g_srv_target_list_sort;
 	
+	// gio.DBusUtilities
+	
+	gchar* function() c_g_dbus_generate_guid;
+	gboolean function(gchar* string) c_g_dbus_is_guid;
+	gboolean function(gchar* string) c_g_dbus_is_name;
+	gboolean function(gchar* string) c_g_dbus_is_unique_name;
+	gboolean function(gchar* string) c_g_dbus_is_member_name;
+	gboolean function(gchar* string) c_g_dbus_is_interface_name;
+	gboolean function(gchar* string) c_g_dbus_is_address;
+	gboolean function(gchar* string, GError** error) c_g_dbus_is_supported_address;
+	void function(gchar* address, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_address_get_stream;
+	GIOStream* function(GAsyncResult* res, gchar** outGuid, GError** error) c_g_dbus_address_get_stream_finish;
+	GIOStream* function(gchar* address, gchar** outGuid, GCancellable* cancellable, GError** error) c_g_dbus_address_get_stream_sync;
+	gchar* function(GBusType busType, GCancellable* cancellable, GError** error) c_g_dbus_address_get_for_bus_sync;
+	gchar* function(GDBusAnnotationInfo** annotations, gchar* name) c_g_dbus_annotation_info_lookup;
+	GDBusMethodInfo* function(GDBusInterfaceInfo* info, gchar* name) c_g_dbus_interface_info_lookup_method;
+	GDBusSignalInfo* function(GDBusInterfaceInfo* info, gchar* name) c_g_dbus_interface_info_lookup_signal;
+	GDBusPropertyInfo* function(GDBusInterfaceInfo* info, gchar* name) c_g_dbus_interface_info_lookup_property;
+	void function(GDBusInterfaceInfo* info, guint indent, GString* stringBuilder) c_g_dbus_interface_info_generate_xml;
+	GDBusNodeInfo* function(gchar* xmlData, GError** error) c_g_dbus_node_info_new_for_xml;
+	GDBusInterfaceInfo* function(GDBusNodeInfo* info, gchar* name) c_g_dbus_node_info_lookup_interface;
+	void function(GDBusNodeInfo* info, guint indent, GString* stringBuilder) c_g_dbus_node_info_generate_xml;
+	GDBusNodeInfo* function(GDBusNodeInfo* info) c_g_dbus_node_info_ref;
+	GDBusInterfaceInfo* function(GDBusInterfaceInfo* info) c_g_dbus_interface_info_ref;
+	GDBusMethodInfo* function(GDBusMethodInfo* info) c_g_dbus_method_info_ref;
+	GDBusSignalInfo* function(GDBusSignalInfo* info) c_g_dbus_signal_info_ref;
+	GDBusPropertyInfo* function(GDBusPropertyInfo* info) c_g_dbus_property_info_ref;
+	GDBusArgInfo* function(GDBusArgInfo* info) c_g_dbus_arg_info_ref;
+	GDBusAnnotationInfo* function(GDBusAnnotationInfo* info) c_g_dbus_annotation_info_ref;
+	void function(GDBusNodeInfo* info) c_g_dbus_node_info_unref;
+	void function(GDBusInterfaceInfo* info) c_g_dbus_interface_info_unref;
+	void function(GDBusMethodInfo* info) c_g_dbus_method_info_unref;
+	void function(GDBusSignalInfo* info) c_g_dbus_signal_info_unref;
+	void function(GDBusPropertyInfo* info) c_g_dbus_property_info_unref;
+	void function(GDBusArgInfo* info) c_g_dbus_arg_info_unref;
+	void function(GDBusAnnotationInfo* info) c_g_dbus_annotation_info_unref;
+	
+	// gio.DBusError
+	
+	gboolean function(GError* error) c_g_dbus_error_is_remote_error;
+	gchar* function(GError* error) c_g_dbus_error_get_remote_error;
+	gboolean function(GError* error) c_g_dbus_error_strip_remote_error;
+	void function(gchar* errorDomainQuarkName, gsize* quarkVolatile, GDBusErrorEntry* entries, guint numEntries) c_g_dbus_error_register_error_domain;
+	gboolean function(GQuark errorDomain, gint errorCode, gchar* dbusErrorName) c_g_dbus_error_register_error;
+	gboolean function(GQuark errorDomain, gint errorCode, gchar* dbusErrorName) c_g_dbus_error_unregister_error;
+	GError* function(gchar* dbusErrorName, gchar* dbusErrorMessage) c_g_dbus_error_new_for_dbus_error;
+	void function(GError** error, gchar* dbusErrorName, gchar* dbusErrorMessage, gchar* format, ... ) c_g_dbus_error_set_dbus_error;
+	void function(GError** error, gchar* dbusErrorName, gchar* dbusErrorMessage, gchar* format, va_list varArgs) c_g_dbus_error_set_dbus_error_valist;
+	gchar* function(GError* error) c_g_dbus_error_encode_gerror;
+	
+	// gio.DBusMessage
+	
+	GDBusMessage* function() c_g_dbus_message_new;
+	GDBusMessage* function(gchar* path, gchar* intrface, gchar* signal) c_g_dbus_message_new_signal;
+	GDBusMessage* function(gchar* name, gchar* path, gchar* intrface, gchar* method) c_g_dbus_message_new_method_call;
+	GDBusMessage* function(GDBusMessage* methodCallMessage) c_g_dbus_message_new_method_reply;
+	GDBusMessage* function(GDBusMessage* methodCallMessage, gchar* errorName, gchar* errorMessageFormat, ... ) c_g_dbus_message_new_method_error;
+	GDBusMessage* function(GDBusMessage* methodCallMessage, gchar* errorName, gchar* errorMessageFormat, va_list varArgs) c_g_dbus_message_new_method_error_valist;
+	GDBusMessage* function(GDBusMessage* methodCallMessage, gchar* errorName, gchar* errorMessage) c_g_dbus_message_new_method_error_literal;
+	gchar* function(GDBusMessage* message, guint indent) c_g_dbus_message_print;
+	gboolean function(GDBusMessage* message) c_g_dbus_message_get_locked;
+	void function(GDBusMessage* message) c_g_dbus_message_lock;
+	GDBusMessage* function(GDBusMessage* message, GError** error) c_g_dbus_message_copy;
+	GDBusMessageByteOrder function(GDBusMessage* message) c_g_dbus_message_get_byte_order;
+	void function(GDBusMessage* message, GDBusMessageByteOrder byteOrder) c_g_dbus_message_set_byte_order;
+	GDBusMessageType function(GDBusMessage* message) c_g_dbus_message_get_message_type;
+	void function(GDBusMessage* message, GDBusMessageType type) c_g_dbus_message_set_message_type;
+	guint32 function(GDBusMessage* message) c_g_dbus_message_get_serial;
+	void function(GDBusMessage* message, guint32 serial) c_g_dbus_message_set_serial;
+	GDBusMessageFlags function(GDBusMessage* message) c_g_dbus_message_get_flags;
+	void function(GDBusMessage* message, GDBusMessageFlags flags) c_g_dbus_message_set_flags;
+	GVariant* function(GDBusMessage* message) c_g_dbus_message_get_body;
+	void function(GDBusMessage* message, GVariant* bod) c_g_dbus_message_set_body;
+	GUnixFDList* function(GDBusMessage* message) c_g_dbus_message_get_unix_fd_list;
+	void function(GDBusMessage* message, GUnixFDList* fdList) c_g_dbus_message_set_unix_fd_list;
+	guint32 function(GDBusMessage* message) c_g_dbus_message_get_num_unix_fds;
+	void function(GDBusMessage* message, guint32 value) c_g_dbus_message_set_num_unix_fds;
+	guchar* function(GDBusMessage* message) c_g_dbus_message_get_header_fields;
+	GVariant* function(GDBusMessage* message, GDBusMessageHeaderField headerField) c_g_dbus_message_get_header;
+	void function(GDBusMessage* message, GDBusMessageHeaderField headerField, GVariant* value) c_g_dbus_message_set_header;
+	gchar* function(GDBusMessage* message) c_g_dbus_message_get_destination;
+	void function(GDBusMessage* message, gchar* value) c_g_dbus_message_set_destination;
+	gchar* function(GDBusMessage* message) c_g_dbus_message_get_error_name;
+	void function(GDBusMessage* message, gchar* value) c_g_dbus_message_set_error_name;
+	gchar* function(GDBusMessage* message) c_g_dbus_message_get_interface;
+	void function(GDBusMessage* message, gchar* value) c_g_dbus_message_set_interface;
+	gchar* function(GDBusMessage* message) c_g_dbus_message_get_member;
+	void function(GDBusMessage* message, gchar* value) c_g_dbus_message_set_member;
+	gchar* function(GDBusMessage* message) c_g_dbus_message_get_path;
+	void function(GDBusMessage* message, gchar* value) c_g_dbus_message_set_path;
+	guint32 function(GDBusMessage* message) c_g_dbus_message_get_reply_serial;
+	void function(GDBusMessage* message, guint32 value) c_g_dbus_message_set_reply_serial;
+	gchar* function(GDBusMessage* message) c_g_dbus_message_get_sender;
+	void function(GDBusMessage* message, gchar* value) c_g_dbus_message_set_sender;
+	gchar* function(GDBusMessage* message) c_g_dbus_message_get_signature;
+	void function(GDBusMessage* message, gchar* value) c_g_dbus_message_set_signature;
+	gchar* function(GDBusMessage* message) c_g_dbus_message_get_arg0;
+	guchar* function(GDBusMessage* message, gsize* outSize, GDBusCapabilityFlags capabilities, GError** error) c_g_dbus_message_to_blob;
+	gssize function(guchar* blob, gsize blobLen, GError** error) c_g_dbus_message_bytes_needed;
+	GDBusMessage* function(guchar* blob, gsize blobLen, GDBusCapabilityFlags capabilities, GError** error) c_g_dbus_message_new_from_blob;
+	gboolean function(GDBusMessage* message, GError** error) c_g_dbus_message_to_gerror;
+	
+	// gio.DBusConnection
+	
+	void function(GBusType busType, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_bus_get;
+	GDBusConnection* function(GAsyncResult* res, GError** error) c_g_bus_get_finish;
+	GDBusConnection* function(GBusType busType, GCancellable* cancellable, GError** error) c_g_bus_get_sync;
+	void function(GIOStream* stream, gchar* guid, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_new;
+	GDBusConnection* function(GAsyncResult* res, GError** error) c_g_dbus_connection_new_finish;
+	GDBusConnection* function(GIOStream* stream, gchar* guid, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GError** error) c_g_dbus_connection_new_sync;
+	void function(gchar* address, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_new_for_address;
+	GDBusConnection* function(GAsyncResult* res, GError** error) c_g_dbus_connection_new_for_address_finish;
+	GDBusConnection* function(gchar* address, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GError** error) c_g_dbus_connection_new_for_address_sync;
+	void function(GDBusConnection* connection) c_g_dbus_connection_start_message_processing;
+	void function(GDBusConnection* connection, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_close;
+	gboolean function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_close_finish;
+	gboolean function(GDBusConnection* connection, GCancellable* cancellable, GError** error) c_g_dbus_connection_close_sync;
+	gboolean function(GDBusConnection* connection) c_g_dbus_connection_is_closed;
+	void function(GDBusConnection* connection, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_flush;
+	gboolean function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_flush_finish;
+	gboolean function(GDBusConnection* connection, GCancellable* cancellable, GError** error) c_g_dbus_connection_flush_sync;
+	gboolean function(GDBusConnection* connection) c_g_dbus_connection_get_exit_on_close;
+	void function(GDBusConnection* connection, gboolean exitOnClose) c_g_dbus_connection_set_exit_on_close;
+	GIOStream* function(GDBusConnection* connection) c_g_dbus_connection_get_stream;
+	gchar* function(GDBusConnection* connection) c_g_dbus_connection_get_guid;
+	gchar* function(GDBusConnection* connection) c_g_dbus_connection_get_unique_name;
+	GDBusCapabilityFlags function(GDBusConnection* connection) c_g_dbus_connection_get_capabilities;
+	GCredentials* function(GDBusConnection* connection) c_g_dbus_connection_get_peer_credentials;
+	void function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_call;
+	GVariant* function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_call_finish;
+	GVariant* function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_connection_call_sync;
+	gboolean function(GDBusConnection* connection, gchar* destinationBusName, gchar* objectPath, gchar* interfaceName, gchar* signalName, GVariant* parameters, GError** error) c_g_dbus_connection_emit_signal;
+	guint function(GDBusConnection* connection, gchar* sender, gchar* interfaceName, gchar* member, gchar* objectPath, gchar* arg0, GDBusSignalFlags flags, GDBusSignalCallback callback, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_dbus_connection_signal_subscribe;
+	void function(GDBusConnection* connection, guint subscriptionId) c_g_dbus_connection_signal_unsubscribe;
+	gboolean function(GDBusConnection* connection, GDBusMessage* message, GDBusSendMessageFlags flags, guint32* outSerial, GError** error) c_g_dbus_connection_send_message;
+	void function(GDBusConnection* connection, GDBusMessage* message, GDBusSendMessageFlags flags, gint timeoutMsec, guint32* outSerial, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_send_message_with_reply;
+	GDBusMessage* function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_send_message_with_reply_finish;
+	GDBusMessage* function(GDBusConnection* connection, GDBusMessage* message, GDBusSendMessageFlags flags, gint timeoutMsec, guint32* outSerial, GCancellable* cancellable, GError** error) c_g_dbus_connection_send_message_with_reply_sync;
+	guint function(GDBusConnection* connection, GDBusMessageFilterFunction filterFunction, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_dbus_connection_add_filter;
+	void function(GDBusConnection* connection, guint filterId) c_g_dbus_connection_remove_filter;
+	guint function(GDBusConnection* connection, gchar* objectPath, GDBusInterfaceInfo* interfaceInfo, GDBusInterfaceVTable* vtable, gpointer userData, GDestroyNotify userDataFreeFunc, GError** error) c_g_dbus_connection_register_object;
+	gboolean function(GDBusConnection* connection, guint registrationId) c_g_dbus_connection_unregister_object;
+	guint function(GDBusConnection* connection, gchar* objectPath, GDBusSubtreeVTable* vtable, GDBusSubtreeFlags flags, gpointer userData, GDestroyNotify userDataFreeFunc, GError** error) c_g_dbus_connection_register_subtree;
+	gboolean function(GDBusConnection* connection, guint registrationId) c_g_dbus_connection_unregister_subtree;
+	
+	// gio.DBusMethodInvocation
+	
+	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_sender;
+	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_object_path;
+	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_interface_name;
+	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_method_name;
+	GDBusMethodInfo* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_method_info;
+	GDBusConnection* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_connection;
+	GDBusMessage* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_message;
+	GVariant* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_parameters;
+	gpointer function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_user_data;
+	void function(GDBusMethodInvocation* invocation, GVariant* parameters) c_g_dbus_method_invocation_return_value;
+	void function(GDBusMethodInvocation* invocation, GQuark domain, gint code, gchar* format, ... ) c_g_dbus_method_invocation_return_error;
+	void function(GDBusMethodInvocation* invocation, GQuark domain, gint code, gchar* format, va_list varArgs) c_g_dbus_method_invocation_return_error_valist;
+	void function(GDBusMethodInvocation* invocation, GQuark domain, gint code, gchar* message) c_g_dbus_method_invocation_return_error_literal;
+	void function(GDBusMethodInvocation* invocation, GError* error) c_g_dbus_method_invocation_return_gerror;
+	void function(GDBusMethodInvocation* invocation, gchar* errorName, gchar* errorMessage) c_g_dbus_method_invocation_return_dbus_error;
+	
+	// gio.DBusServer
+	
+	GDBusServer* function(gchar* address, GDBusServerFlags flags, gchar* guid, GDBusAuthObserver* observer, GCancellable* cancellable, GError** error) c_g_dbus_server_new_sync;
+	void function(GDBusServer* server) c_g_dbus_server_start;
+	void function(GDBusServer* server) c_g_dbus_server_stop;
+	gboolean function(GDBusServer* server) c_g_dbus_server_is_active;
+	gchar* function(GDBusServer* server) c_g_dbus_server_get_guid;
+	GDBusServerFlags function(GDBusServer* server) c_g_dbus_server_get_flags;
+	gchar* function(GDBusServer* server) c_g_dbus_server_get_client_address;
+	
+	// gio.DBusAuthObserver
+	
+	GDBusAuthObserver* function() c_g_dbus_auth_observer_new;
+	gboolean function(GDBusAuthObserver* observer, GIOStream* stream, GCredentials* credentials) c_g_dbus_auth_observer_authorize_authenticated_peer;
+	
 	// gio.FilenameCompleter
 	
 	GFilenameCompleter* function() c_g_filename_completer_new;
@@ -3565,6 +3921,184 @@ alias c_g_srv_target_get_port  g_srv_target_get_port;
 alias c_g_srv_target_get_priority  g_srv_target_get_priority;
 alias c_g_srv_target_get_weight  g_srv_target_get_weight;
 alias c_g_srv_target_list_sort  g_srv_target_list_sort;
+
+// gio.DBusUtilities
+
+alias c_g_dbus_generate_guid  g_dbus_generate_guid;
+alias c_g_dbus_is_guid  g_dbus_is_guid;
+alias c_g_dbus_is_name  g_dbus_is_name;
+alias c_g_dbus_is_unique_name  g_dbus_is_unique_name;
+alias c_g_dbus_is_member_name  g_dbus_is_member_name;
+alias c_g_dbus_is_interface_name  g_dbus_is_interface_name;
+alias c_g_dbus_is_address  g_dbus_is_address;
+alias c_g_dbus_is_supported_address  g_dbus_is_supported_address;
+alias c_g_dbus_address_get_stream  g_dbus_address_get_stream;
+alias c_g_dbus_address_get_stream_finish  g_dbus_address_get_stream_finish;
+alias c_g_dbus_address_get_stream_sync  g_dbus_address_get_stream_sync;
+alias c_g_dbus_address_get_for_bus_sync  g_dbus_address_get_for_bus_sync;
+alias c_g_dbus_annotation_info_lookup  g_dbus_annotation_info_lookup;
+alias c_g_dbus_interface_info_lookup_method  g_dbus_interface_info_lookup_method;
+alias c_g_dbus_interface_info_lookup_signal  g_dbus_interface_info_lookup_signal;
+alias c_g_dbus_interface_info_lookup_property  g_dbus_interface_info_lookup_property;
+alias c_g_dbus_interface_info_generate_xml  g_dbus_interface_info_generate_xml;
+alias c_g_dbus_node_info_new_for_xml  g_dbus_node_info_new_for_xml;
+alias c_g_dbus_node_info_lookup_interface  g_dbus_node_info_lookup_interface;
+alias c_g_dbus_node_info_generate_xml  g_dbus_node_info_generate_xml;
+alias c_g_dbus_node_info_ref  g_dbus_node_info_ref;
+alias c_g_dbus_interface_info_ref  g_dbus_interface_info_ref;
+alias c_g_dbus_method_info_ref  g_dbus_method_info_ref;
+alias c_g_dbus_signal_info_ref  g_dbus_signal_info_ref;
+alias c_g_dbus_property_info_ref  g_dbus_property_info_ref;
+alias c_g_dbus_arg_info_ref  g_dbus_arg_info_ref;
+alias c_g_dbus_annotation_info_ref  g_dbus_annotation_info_ref;
+alias c_g_dbus_node_info_unref  g_dbus_node_info_unref;
+alias c_g_dbus_interface_info_unref  g_dbus_interface_info_unref;
+alias c_g_dbus_method_info_unref  g_dbus_method_info_unref;
+alias c_g_dbus_signal_info_unref  g_dbus_signal_info_unref;
+alias c_g_dbus_property_info_unref  g_dbus_property_info_unref;
+alias c_g_dbus_arg_info_unref  g_dbus_arg_info_unref;
+alias c_g_dbus_annotation_info_unref  g_dbus_annotation_info_unref;
+
+// gio.DBusError
+
+alias c_g_dbus_error_is_remote_error  g_dbus_error_is_remote_error;
+alias c_g_dbus_error_get_remote_error  g_dbus_error_get_remote_error;
+alias c_g_dbus_error_strip_remote_error  g_dbus_error_strip_remote_error;
+alias c_g_dbus_error_register_error_domain  g_dbus_error_register_error_domain;
+alias c_g_dbus_error_register_error  g_dbus_error_register_error;
+alias c_g_dbus_error_unregister_error  g_dbus_error_unregister_error;
+alias c_g_dbus_error_new_for_dbus_error  g_dbus_error_new_for_dbus_error;
+alias c_g_dbus_error_set_dbus_error  g_dbus_error_set_dbus_error;
+alias c_g_dbus_error_set_dbus_error_valist  g_dbus_error_set_dbus_error_valist;
+alias c_g_dbus_error_encode_gerror  g_dbus_error_encode_gerror;
+
+// gio.DBusMessage
+
+alias c_g_dbus_message_new  g_dbus_message_new;
+alias c_g_dbus_message_new_signal  g_dbus_message_new_signal;
+alias c_g_dbus_message_new_method_call  g_dbus_message_new_method_call;
+alias c_g_dbus_message_new_method_reply  g_dbus_message_new_method_reply;
+alias c_g_dbus_message_new_method_error  g_dbus_message_new_method_error;
+alias c_g_dbus_message_new_method_error_valist  g_dbus_message_new_method_error_valist;
+alias c_g_dbus_message_new_method_error_literal  g_dbus_message_new_method_error_literal;
+alias c_g_dbus_message_print  g_dbus_message_print;
+alias c_g_dbus_message_get_locked  g_dbus_message_get_locked;
+alias c_g_dbus_message_lock  g_dbus_message_lock;
+alias c_g_dbus_message_copy  g_dbus_message_copy;
+alias c_g_dbus_message_get_byte_order  g_dbus_message_get_byte_order;
+alias c_g_dbus_message_set_byte_order  g_dbus_message_set_byte_order;
+alias c_g_dbus_message_get_message_type  g_dbus_message_get_message_type;
+alias c_g_dbus_message_set_message_type  g_dbus_message_set_message_type;
+alias c_g_dbus_message_get_serial  g_dbus_message_get_serial;
+alias c_g_dbus_message_set_serial  g_dbus_message_set_serial;
+alias c_g_dbus_message_get_flags  g_dbus_message_get_flags;
+alias c_g_dbus_message_set_flags  g_dbus_message_set_flags;
+alias c_g_dbus_message_get_body  g_dbus_message_get_body;
+alias c_g_dbus_message_set_body  g_dbus_message_set_body;
+alias c_g_dbus_message_get_unix_fd_list  g_dbus_message_get_unix_fd_list;
+alias c_g_dbus_message_set_unix_fd_list  g_dbus_message_set_unix_fd_list;
+alias c_g_dbus_message_get_num_unix_fds  g_dbus_message_get_num_unix_fds;
+alias c_g_dbus_message_set_num_unix_fds  g_dbus_message_set_num_unix_fds;
+alias c_g_dbus_message_get_header_fields  g_dbus_message_get_header_fields;
+alias c_g_dbus_message_get_header  g_dbus_message_get_header;
+alias c_g_dbus_message_set_header  g_dbus_message_set_header;
+alias c_g_dbus_message_get_destination  g_dbus_message_get_destination;
+alias c_g_dbus_message_set_destination  g_dbus_message_set_destination;
+alias c_g_dbus_message_get_error_name  g_dbus_message_get_error_name;
+alias c_g_dbus_message_set_error_name  g_dbus_message_set_error_name;
+alias c_g_dbus_message_get_interface  g_dbus_message_get_interface;
+alias c_g_dbus_message_set_interface  g_dbus_message_set_interface;
+alias c_g_dbus_message_get_member  g_dbus_message_get_member;
+alias c_g_dbus_message_set_member  g_dbus_message_set_member;
+alias c_g_dbus_message_get_path  g_dbus_message_get_path;
+alias c_g_dbus_message_set_path  g_dbus_message_set_path;
+alias c_g_dbus_message_get_reply_serial  g_dbus_message_get_reply_serial;
+alias c_g_dbus_message_set_reply_serial  g_dbus_message_set_reply_serial;
+alias c_g_dbus_message_get_sender  g_dbus_message_get_sender;
+alias c_g_dbus_message_set_sender  g_dbus_message_set_sender;
+alias c_g_dbus_message_get_signature  g_dbus_message_get_signature;
+alias c_g_dbus_message_set_signature  g_dbus_message_set_signature;
+alias c_g_dbus_message_get_arg0  g_dbus_message_get_arg0;
+alias c_g_dbus_message_to_blob  g_dbus_message_to_blob;
+alias c_g_dbus_message_bytes_needed  g_dbus_message_bytes_needed;
+alias c_g_dbus_message_new_from_blob  g_dbus_message_new_from_blob;
+alias c_g_dbus_message_to_gerror  g_dbus_message_to_gerror;
+
+// gio.DBusConnection
+
+alias c_g_bus_get  g_bus_get;
+alias c_g_bus_get_finish  g_bus_get_finish;
+alias c_g_bus_get_sync  g_bus_get_sync;
+alias c_g_dbus_connection_new  g_dbus_connection_new;
+alias c_g_dbus_connection_new_finish  g_dbus_connection_new_finish;
+alias c_g_dbus_connection_new_sync  g_dbus_connection_new_sync;
+alias c_g_dbus_connection_new_for_address  g_dbus_connection_new_for_address;
+alias c_g_dbus_connection_new_for_address_finish  g_dbus_connection_new_for_address_finish;
+alias c_g_dbus_connection_new_for_address_sync  g_dbus_connection_new_for_address_sync;
+alias c_g_dbus_connection_start_message_processing  g_dbus_connection_start_message_processing;
+alias c_g_dbus_connection_close  g_dbus_connection_close;
+alias c_g_dbus_connection_close_finish  g_dbus_connection_close_finish;
+alias c_g_dbus_connection_close_sync  g_dbus_connection_close_sync;
+alias c_g_dbus_connection_is_closed  g_dbus_connection_is_closed;
+alias c_g_dbus_connection_flush  g_dbus_connection_flush;
+alias c_g_dbus_connection_flush_finish  g_dbus_connection_flush_finish;
+alias c_g_dbus_connection_flush_sync  g_dbus_connection_flush_sync;
+alias c_g_dbus_connection_get_exit_on_close  g_dbus_connection_get_exit_on_close;
+alias c_g_dbus_connection_set_exit_on_close  g_dbus_connection_set_exit_on_close;
+alias c_g_dbus_connection_get_stream  g_dbus_connection_get_stream;
+alias c_g_dbus_connection_get_guid  g_dbus_connection_get_guid;
+alias c_g_dbus_connection_get_unique_name  g_dbus_connection_get_unique_name;
+alias c_g_dbus_connection_get_capabilities  g_dbus_connection_get_capabilities;
+alias c_g_dbus_connection_get_peer_credentials  g_dbus_connection_get_peer_credentials;
+alias c_g_dbus_connection_call  g_dbus_connection_call;
+alias c_g_dbus_connection_call_finish  g_dbus_connection_call_finish;
+alias c_g_dbus_connection_call_sync  g_dbus_connection_call_sync;
+alias c_g_dbus_connection_emit_signal  g_dbus_connection_emit_signal;
+alias c_g_dbus_connection_signal_subscribe  g_dbus_connection_signal_subscribe;
+alias c_g_dbus_connection_signal_unsubscribe  g_dbus_connection_signal_unsubscribe;
+alias c_g_dbus_connection_send_message  g_dbus_connection_send_message;
+alias c_g_dbus_connection_send_message_with_reply  g_dbus_connection_send_message_with_reply;
+alias c_g_dbus_connection_send_message_with_reply_finish  g_dbus_connection_send_message_with_reply_finish;
+alias c_g_dbus_connection_send_message_with_reply_sync  g_dbus_connection_send_message_with_reply_sync;
+alias c_g_dbus_connection_add_filter  g_dbus_connection_add_filter;
+alias c_g_dbus_connection_remove_filter  g_dbus_connection_remove_filter;
+alias c_g_dbus_connection_register_object  g_dbus_connection_register_object;
+alias c_g_dbus_connection_unregister_object  g_dbus_connection_unregister_object;
+alias c_g_dbus_connection_register_subtree  g_dbus_connection_register_subtree;
+alias c_g_dbus_connection_unregister_subtree  g_dbus_connection_unregister_subtree;
+
+// gio.DBusMethodInvocation
+
+alias c_g_dbus_method_invocation_get_sender  g_dbus_method_invocation_get_sender;
+alias c_g_dbus_method_invocation_get_object_path  g_dbus_method_invocation_get_object_path;
+alias c_g_dbus_method_invocation_get_interface_name  g_dbus_method_invocation_get_interface_name;
+alias c_g_dbus_method_invocation_get_method_name  g_dbus_method_invocation_get_method_name;
+alias c_g_dbus_method_invocation_get_method_info  g_dbus_method_invocation_get_method_info;
+alias c_g_dbus_method_invocation_get_connection  g_dbus_method_invocation_get_connection;
+alias c_g_dbus_method_invocation_get_message  g_dbus_method_invocation_get_message;
+alias c_g_dbus_method_invocation_get_parameters  g_dbus_method_invocation_get_parameters;
+alias c_g_dbus_method_invocation_get_user_data  g_dbus_method_invocation_get_user_data;
+alias c_g_dbus_method_invocation_return_value  g_dbus_method_invocation_return_value;
+alias c_g_dbus_method_invocation_return_error  g_dbus_method_invocation_return_error;
+alias c_g_dbus_method_invocation_return_error_valist  g_dbus_method_invocation_return_error_valist;
+alias c_g_dbus_method_invocation_return_error_literal  g_dbus_method_invocation_return_error_literal;
+alias c_g_dbus_method_invocation_return_gerror  g_dbus_method_invocation_return_gerror;
+alias c_g_dbus_method_invocation_return_dbus_error  g_dbus_method_invocation_return_dbus_error;
+
+// gio.DBusServer
+
+alias c_g_dbus_server_new_sync  g_dbus_server_new_sync;
+alias c_g_dbus_server_start  g_dbus_server_start;
+alias c_g_dbus_server_stop  g_dbus_server_stop;
+alias c_g_dbus_server_is_active  g_dbus_server_is_active;
+alias c_g_dbus_server_get_guid  g_dbus_server_get_guid;
+alias c_g_dbus_server_get_flags  g_dbus_server_get_flags;
+alias c_g_dbus_server_get_client_address  g_dbus_server_get_client_address;
+
+// gio.DBusAuthObserver
+
+alias c_g_dbus_auth_observer_new  g_dbus_auth_observer_new;
+alias c_g_dbus_auth_observer_authorize_authenticated_peer  g_dbus_auth_observer_authorize_authenticated_peer;
 
 // gio.FilenameCompleter
 

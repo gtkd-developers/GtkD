@@ -39,6 +39,7 @@
  * 	- g_socket_connectable_
  * omit structs:
  * omit prefixes:
+ * 	- g_socket_address_enumerator_
  * omit code:
  * omit signals:
  * imports:

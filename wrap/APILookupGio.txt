@@ -1659,7 +1659,7 @@ struct: GSocketConnectable
 class: SocketConnectableT
 template: TStruct
 prefix: g_socket_connectable_
-strictPrefix: Y
+noprefix: g_socket_address_enumerator_
 import: gio.SocketAddressEnumerator
 structWrap: GSocketAddressEnumerator* SocketAddressEnumerator
 interface: SocketConnectableIF
@@ -1705,7 +1705,7 @@ outFile: SocketConnectable
 struct: GSocketAddressEnumerator
 class: SocketAddressEnumerator
 prefix: g_socket_address_enumerator_
-noprefix: g_socket_connectable_
+strictPrefix: Y
 import: glib.ErrorG
 import: glib.GException
 import: gio.AsyncResultIF
@@ -1813,6 +1813,162 @@ outFile: SrvTarget
 ###########################################################
 ### Lowlevel D-Bus Support ################################
 ###########################################################
+
+file: gio-D-Bus-Utilities.html
+class: DBusUtilities
+prefix: g_dbus_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.StringG
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.IOStream
+openFile: DBusUtilities
+
+file: gio-D-Bus-Addresses.html
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GIOStream* IOStream
+out: g_dbus_address_get_stream_finish out_guid
+out: g_dbus_address_get_stream_sync out_guid
+mergeFile: DBusUtilities
+
+file: gio-D-Bus-Introspection-Data.html
+structWrap: GString* StringG
+closeFile: DBusUtilities
+
+file: gio-GDBusError.html
+struct: GError
+class: DBusError
+prefix: g_dbus_error_
+import: glib.Str
+import: glib.ErrorG
+structWrap: GError* ErrorG
+array: g_dbus_error_register_error_domain entries num_entries
+out: g_dbus_error_register_error_domain quark_volatile
+out: g_dbus_error_set_dbus_error error
+out: g_dbus_error_set_dbus_error_valist error
+outFile: DBusError
+
+file: GDBusMessage.html
+struct: GDBusMessage
+class: DBusMessage
+prefix: g_dbus_message_
+alias: body bod
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.Variant
+import: gio.UnixFDList
+structWrap: GError* ErrorG
+structWrap: GVariant* Variant
+structWrap: GDBusMessage* DBusMessage
+structWrap: GUnixFDList* UnixFDList
+array: g_dbus_message_to_blob Return out_size
+array: g_dbus_message_bytes_needed blob blob_len
+array: g_dbus_message_new_from_blob blob blob_len
+out: g_dbus_message_to_gerror error
+outFile: DBusMessage
+
+file: GDBusConnection.html
+struct: GDBusConnection
+class: DBusConnection
+implements: InitableIF
+implements: AsyncInitableIF
+prefix: g_dbus_connection_
+prefix: g_dbus_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.Variant
+import: glib.VariantType
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.Credentials
+import: gio.DBusAuthObserver
+import: gio.DBusMessage
+import: gio.DBusMethodInvocation
+import: gio.IOStream
+structWrap: GVariant* Variant
+structWrap: GVariantType* VariantType
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GCredentials* Credentials
+structWrap: GDBusAuthObserver* DBusAuthObserver
+structWrap: GDBusConnection* DBusConnection
+structWrap: GDBusMessage* DBusMessage
+structWrap: GDBusMethodInvocation* DBusMethodInvocation
+structWrap: GIOStream* IOStream
+
+#imports for Initable Interface.
+import: gio.InitableT
+import: gio.InitableIF
+
+#imports for AsyncInitable Interface.
+import: gio.AsyncInitableT
+import: gio.AsyncInitableIF
+
+out: g_dbus_connection_send_message out_serial
+out: g_dbus_connection_send_message_with_reply out_serial
+out: g_dbus_connection_send_message_with_reply_sync out_serial
+
+code: start
+	// add the Initable capabilities
+	mixin InitableT!(DBusConnection);
+
+	// add the AsyncInitable capabilities
+	mixin AsyncInitableT!(DBusConnection);
+code: end
+outFile: DBusConnection
+
+file: GDBusMethodInvocation.html
+struct: GDBusMethodInvocation
+class: DBusMethodInvocation
+prefix: g_dbus_method_invocation_
+import: glib.Str
+import: glib.ErrorG
+import: glib.Variant
+import: gio.DBusConnection
+import: gio.DBusMessage
+structWrap: GError* ErrorG
+structWrap: GVariant* Variant
+structWrap: GDBusConnection* DBusConnection
+structWrap: GDBusMessage* DBusMessage
+outFile: DBusMethodInvocation
+
+file: GDBusServer.html
+struct: GDBusServer
+class: DBusServer
+implements: InitableIF
+prefix: g_dbus_server_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+import: gio.DBusAuthObserver
+structWrap: GCancellable* Cancellable
+structWrap: GDBusAuthObserver* DBusAuthObserver
+
+#imports for Initable Interface.
+import: gio.InitableT
+import: gio.InitableIF
+
+code: start
+	// add the Initable capabilities
+	mixin InitableT!(GDBusServer);
+code: end
+outFile: DBusServer
+
+file: GDBusAuthObserver.html
+struct: GDBusAuthObserver
+class: DBusAuthObserver
+prefix: g_dbus_auth_observer_
+import: gio.Credentials
+import: gio.IOStream
+structWrap: GCredentials* Credentials
+structWrap: GIOStream* IOStream
+outFile: DBusAuthObserver
 
 ###########################################################
 ### HighLevel D-Bus Support ###############################
