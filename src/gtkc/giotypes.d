@@ -1309,6 +1309,65 @@ public enum GDBusServerFlags
 alias GDBusServerFlags DBusServerFlags;
 
 /**
+ * Flags used in g_bus_own_name().
+ * G_BUS_NAME_OWNER_FLAGS_NONE
+ * No flags set.
+ * G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT
+ * Allow another message bus connection to claim the the name.
+ * G_BUS_NAME_OWNER_FLAGS_REPLACE
+ * If another message bus connection owns the name and have
+ * specified G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
+ * Since 2.26
+ */
+public enum GBusNameOwnerFlags
+{
+	NONE = 0, /+*< nick=none >+/
+	ALLOW_REPLACEMENT = (1 << 0), /+*< nick=allow-replacement >+/
+	REPLACE = (1 << 1) /+*< nick=replace >+/
+}
+alias GBusNameOwnerFlags BusNameOwnerFlags;
+
+/**
+ * Flags used in g_bus_watch_name().
+ * G_BUS_NAME_WATCHER_FLAGS_NONE
+ * No flags set.
+ * G_BUS_NAME_WATCHER_FLAGS_AUTO_START
+ * If no-one owns the name when
+ * beginning to watch the name, ask the bus to launch an owner for the
+ * name.
+ * Since 2.26
+ */
+public enum GBusNameWatcherFlags
+{
+	NONE = 0,
+	AUTO_START = (1<<0)
+}
+alias GBusNameWatcherFlags BusNameWatcherFlags;
+
+/**
+ * Flags used when constructing an instance of a GDBusProxy derived class.
+ * G_DBUS_PROXY_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES
+ * Don't load properties.
+ * G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS
+ * Don't connect to signals on the remote object.
+ * G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START
+ * If not set and the proxy if for a well-known name,
+ * then request the bus to launch an owner for the name if no-one owns the name. This flag can
+ * only be used in proxies for well-known names.
+ * Since 2.26
+ */
+public enum GDBusProxyFlags
+{
+	NONE = 0,
+	DO_NOT_LOAD_PROPERTIES = (1<<0),
+	DO_NOT_CONNECT_SIGNALS = (1<<1),
+	DO_NOT_AUTO_START = (1<<2)
+}
+alias GDBusProxyFlags DBusProxyFlags;
+
+/**
  * Flags used when creating a binding. These flags determine in which
  * direction the binding works. The default is to synchronize in both
  * directions.
@@ -3059,6 +3118,31 @@ public struct GDBusAuthObserver{}
 
 /**
  * Main Gtk struct.
+ * The GDBusProxy structure contains only private data and
+ * should only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GDBusProxy{}
+
+
+/**
+ * Class structure for GDBusProxy.
+ * g_properties_changed  ()
+ * Signal class handler for the "g-properties-changed" signal.
+ * g_signal  ()
+ * Signal class handler for the "g-signal" signal.
+ * Since 2.26
+ */
+public struct GDBusProxyClass
+{
+	/+* Signals +/
+	extern(C) void  function(GDBusProxy *proxy,GVariant *changedProperties,char* *invalidatedProperties) gPropertiesChanged;
+	extern(C) void  function(GDBusProxy *proxy,char *senderName,char *signalName,GVariant *parameters) gSignal;
+}
+
+
+/**
+ * Main Gtk struct.
  * Completes filenames based on files that exist within the file system.
  */
 public struct GFilenameCompleter{}
@@ -3447,6 +3531,74 @@ public typedef extern(C) GDBusInterfaceInfo **  function (GDBusConnection*, char
  */
 // const GDBusInterfaceVTable * (*GDBusSubtreeDispatchFunc)  (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *node,  gpointer *out_user_data,  gpointer user_data);
 public typedef extern(C) GDBusInterfaceVTable *  function (GDBusConnection*, char*, char*, char*, char*, gpointer*, void*) GDBusSubtreeDispatchFunc;
+
+/*
+ * Invoked when a connection to a message bus has been obtained.
+ * connection  :
+ * The GDBusConnection to a message bus.
+ * name  :
+ * The name that is requested to be owned.
+ * user_data  :
+ * User data passed to g_bus_own_name().
+ * Since 2.26
+ */
+// void (*GBusAcquiredCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
+public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusAcquiredCallback;
+
+/*
+ * Invoked when the name is acquired.
+ * connection  :
+ * The GDBusConnection on which to acquired the name.
+ * name  :
+ * The name being owned.
+ * user_data  :
+ * User data passed to g_bus_own_name() or g_bus_own_name_on_connection().
+ * Since 2.26
+ */
+// void (*GBusNameAcquiredCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
+public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNameAcquiredCallback;
+
+/*
+ * Invoked when the name is lost or connection has been closed.
+ * connection  :
+ * The GDBusConnection on which to acquire the name or NULL if
+ * the connection was disconnected.
+ * name  :
+ * The name being owned.
+ * user_data  :
+ * User data passed to g_bus_own_name() or g_bus_own_name_on_connection().
+ * Since 2.26
+ */
+// void (*GBusNameLostCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
+public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNameLostCallback;
+
+/*
+ * Invoked when the name being watched is known to have to have a owner.
+ * connection  :
+ * The GDBusConnection the name is being watched on.
+ * name  :
+ * The name being watched.
+ * name_owner  :
+ * Unique name of the owner of the name being watched.
+ * user_data  :
+ * User data passed to g_bus_watch_name().
+ * Since 2.26
+ */
+// void (*GBusNameAppearedCallback) (GDBusConnection *connection,  const gchar *name,  const gchar *name_owner,  gpointer user_data);
+public typedef extern(C) void  function (GDBusConnection*, char*, char*, void*) GBusNameAppearedCallback;
+
+/*
+ * Invoked when the name being watched is known not to have to have a owner.
+ * connection  :
+ * The GDBusConnection the name is being watched on.
+ * name  :
+ * The name being watched.
+ * user_data  :
+ * User data passed to g_bus_watch_name().
+ * Since 2.26
+ */
+// void (*GBusNameVanishedCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
+public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNameVanishedCallback;
 
 /*
  * The type of the function that is used to convert from a value stored

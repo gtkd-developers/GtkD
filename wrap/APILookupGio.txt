@@ -113,7 +113,6 @@ out: g_file_replace_contents_finish new_etag
 # g_file_new_for_commandline_arg also accepts paths ans uris
 nocode: g_file_new_for_path
 nocode: g_file_new_for_uri
-
 outFile: File
 
 
@@ -1318,6 +1317,40 @@ import: glib.Str
 override: toString
 array: g_inet_address_new_from_bytes bytes
 array: g_inet_address_to_bytes Return getNativeSize()
+
+nocode: g_inet_address_new_any
+nocode: g_inet_address_new_loopback
+
+code: start
+	/**
+	 * Creates a GInetAddress for the "any" address (unassigned/"don't
+	 * care") for family.
+	 * Since 2.22
+	 * Params:
+	 * family = the address family
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GSocketFamily family, bool loopback = false)
+	{
+		// GInetAddress * g_inet_address_new_any (GSocketFamily family);
+		GInetAddress* p;
+
+		if ( loopback )
+		{
+			p = g_inet_address_new_loopback(family);
+		}
+		else
+		{
+			p = g_inet_address_new_any(family);
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_inet_address_new_any(family)");
+		}
+		this(cast(GInetAddress*) p);
+	}
+code: end
 outFile: InetAddress
 
 file: GSocketAddress.html
@@ -1913,12 +1946,52 @@ out: g_dbus_connection_send_message out_serial
 out: g_dbus_connection_send_message_with_reply out_serial
 out: g_dbus_connection_send_message_with_reply_sync out_serial
 
+nocode: g_dbus_connection_new_finish
+nocode: g_dbus_connection_new_for_address_finish
+
 code: start
 	// add the Initable capabilities
 	mixin InitableT!(DBusConnection);
 
 	// add the AsyncInitable capabilities
 	mixin AsyncInitableT!(DBusConnection);
+
+	/**
+	 * Finishes an operation started with g_dbus_connection_new().
+	 * Since 2.26
+	 * Params:
+	 *      res    = A GAsyncResult obtained from the GAsyncReadyCallback
+	 *               passed to g_dbus_connection_new().
+	 *     address = If true finish an address.
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (AsyncResultIF res, bool address = false)
+	{
+		// GDBusConnection * g_dbus_connection_new_finish (GAsyncResult *res,  GError **error);
+		GError* err = null;
+		GDBusConnection* p;
+		
+		if ( address )
+		{
+			p = g_dbus_connection_new_for_address_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+		}
+		this(cast(GDBusConnection*) p);
+	}	
 code: end
 outFile: DBusConnection
 
@@ -1973,6 +2046,80 @@ outFile: DBusAuthObserver
 ###########################################################
 ### HighLevel D-Bus Support ###############################
 ###########################################################
+
+file: gio-Owning-Bus-Names.html
+class: DBusNames
+prefix: g_bus_
+import: glib.Str
+import: gobject.Closure
+import: gio.DBusConnection
+structWrap: GClosure* Closure
+structWrap: GDBusConnection* DBusConnection
+openFile: DBusNames
+
+file: gio-Watching-Bus-Names.html
+structWrap: GClosure* Closure
+structWrap: GDBusConnection* DBusConnection
+closeFile: DBusNames
+
+file: GDBusProxy.html
+struct: GDBusProxy
+class: DBusProxy
+prefix: g_dbus_proxy_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.Variant
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.DBusConnection
+structWrap: GVariant* Variant
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GDBusConnection* DBusConnection
+
+nocode: g_dbus_proxy_new_finish
+nocode: g_dbus_proxy_new_for_bus_finish
+
+code: start
+/**
+	 * Finishes creating a GDBusProxy.
+	 * Since 2.26
+	 * Params:
+	 *     res    = A GAsyncResult obtained from the GAsyncReadyCallback
+	 *              function passed to g_dbus_proxy_new().
+	 *     forBus = If true finish an address.
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (AsyncResultIF res, bool forBus = false)
+	{
+		// GDBusProxy * g_dbus_proxy_new_finish (GAsyncResult *res,  GError **error);
+		GError* err = null;
+		GDBusProxy* p;
+
+		if ( forBus )
+		{
+			p = g_dbus_proxy_new_for_bus_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+	
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+		}
+		this(cast(GDBusProxy*) p);
+	}
+code: end
+outFile: DBusProxy
 
 ###########################################################
 ### Utilities #############################################

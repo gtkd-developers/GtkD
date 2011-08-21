@@ -43,6 +43,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_dbus_connection_new_finish
+ * 	- g_dbus_connection_new_for_address_finish
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -173,6 +175,43 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	
 	// add the AsyncInitable capabilities
 	mixin AsyncInitableT!(DBusConnection);
+	
+	/**
+	 * Finishes an operation started with g_dbus_connection_new().
+	 * Since 2.26
+	 * Params:
+	 *      res    = A GAsyncResult obtained from the GAsyncReadyCallback
+	 *               passed to g_dbus_connection_new().
+	 *     address = If true finish an address.
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (AsyncResultIF res, bool address = false)
+	{
+		// GDBusConnection * g_dbus_connection_new_finish (GAsyncResult *res,  GError **error);
+		GError* err = null;
+		GDBusConnection* p;
+		
+		if ( address )
+		{
+			p = g_dbus_connection_new_for_address_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+		}
+		this(cast(GDBusConnection*) p);
+	}
 	
 	/**
 	 */
@@ -338,33 +377,6 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	{
 		// void g_dbus_connection_new (GIOStream *stream,  const gchar *guid,  GDBusConnectionFlags flags,  GDBusAuthObserver *observer,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_dbus_connection_new((stream is null) ? null : stream.getIOStreamStruct(), Str.toStringz(guid), flags, (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
-	}
-	
-	/**
-	 * Finishes an operation started with g_dbus_connection_new().
-	 * Since 2.26
-	 * Params:
-	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_connection_new().
-	 * Throws: GException on failure.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (AsyncResultIF res)
-	{
-		// GDBusConnection * g_dbus_connection_new_finish (GAsyncResult *res,  GError **error);
-		GError* err = null;
-		
-		auto p = g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
-		}
-		this(cast(GDBusConnection*) p);
 	}
 	
 	/**

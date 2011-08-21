@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = InetAddress
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_inet_address_new_any
+ * 	- g_inet_address_new_loopback
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -123,6 +125,35 @@ public class InetAddress : ObjectG
 	}
 	
 	/**
+	 * Creates a GInetAddress for the "any" address (unassigned/"don't
+	 * care") for family.
+	 * Since 2.22
+	 * Params:
+	 * family = the address family
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GSocketFamily family, bool loopback = false)
+	{
+		// GInetAddress * g_inet_address_new_any (GSocketFamily family);
+		GInetAddress* p;
+		
+		if ( loopback )
+		{
+			p = g_inet_address_new_loopback(family);
+		}
+		else
+		{
+			p = g_inet_address_new_any(family);
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_inet_address_new_any(family)");
+		}
+		this(cast(GInetAddress*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -160,25 +191,6 @@ public class InetAddress : ObjectG
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_inet_address_new_from_bytes(bytes.ptr, family)");
-		}
-		this(cast(GInetAddress*) p);
-	}
-	
-	/**
-	 * Creates a GInetAddress for the "any" address (unassigned/"don't
-	 * care") for family.
-	 * Since 2.22
-	 * Params:
-	 * family = the address family
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GSocketFamily family)
-	{
-		// GInetAddress * g_inet_address_new_any (GSocketFamily family);
-		auto p = g_inet_address_new_any(family);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_inet_address_new_any(family)");
 		}
 		this(cast(GInetAddress*) p);
 	}

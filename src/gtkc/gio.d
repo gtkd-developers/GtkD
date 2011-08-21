@@ -1315,6 +1315,44 @@ static this()
 	Linker.link(g_dbus_auth_observer_new, "g_dbus_auth_observer_new", LIBRARY.GIO);
 	Linker.link(g_dbus_auth_observer_authorize_authenticated_peer, "g_dbus_auth_observer_authorize_authenticated_peer", LIBRARY.GIO);
 
+	// gio.DBusNames
+
+	Linker.link(g_bus_own_name, "g_bus_own_name", LIBRARY.GIO);
+	Linker.link(g_bus_own_name_on_connection, "g_bus_own_name_on_connection", LIBRARY.GIO);
+	Linker.link(g_bus_unown_name, "g_bus_unown_name", LIBRARY.GIO);
+	Linker.link(g_bus_own_name_with_closures, "g_bus_own_name_with_closures", LIBRARY.GIO);
+	Linker.link(g_bus_own_name_on_connection_with_closures, "g_bus_own_name_on_connection_with_closures", LIBRARY.GIO);
+	Linker.link(g_bus_watch_name, "g_bus_watch_name", LIBRARY.GIO);
+	Linker.link(g_bus_watch_name_on_connection, "g_bus_watch_name_on_connection", LIBRARY.GIO);
+	Linker.link(g_bus_unwatch_name, "g_bus_unwatch_name", LIBRARY.GIO);
+	Linker.link(g_bus_watch_name_with_closures, "g_bus_watch_name_with_closures", LIBRARY.GIO);
+	Linker.link(g_bus_watch_name_on_connection_with_closures, "g_bus_watch_name_on_connection_with_closures", LIBRARY.GIO);
+
+	// gio.DBusProxy
+
+	Linker.link(g_dbus_proxy_new, "g_dbus_proxy_new", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_finish, "g_dbus_proxy_new_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_sync, "g_dbus_proxy_new_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_for_bus, "g_dbus_proxy_new_for_bus", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_for_bus_finish, "g_dbus_proxy_new_for_bus_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_for_bus_sync, "g_dbus_proxy_new_for_bus_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_flags, "g_dbus_proxy_get_flags", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_connection, "g_dbus_proxy_get_connection", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_name, "g_dbus_proxy_get_name", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_name_owner, "g_dbus_proxy_get_name_owner", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_object_path, "g_dbus_proxy_get_object_path", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_interface_name, "g_dbus_proxy_get_interface_name", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_default_timeout, "g_dbus_proxy_get_default_timeout", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_set_default_timeout, "g_dbus_proxy_set_default_timeout", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_cached_property, "g_dbus_proxy_get_cached_property", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_set_cached_property, "g_dbus_proxy_set_cached_property", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_cached_property_names, "g_dbus_proxy_get_cached_property_names", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_set_interface_info, "g_dbus_proxy_set_interface_info", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_interface_info, "g_dbus_proxy_get_interface_info", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call, "g_dbus_proxy_call", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call_finish, "g_dbus_proxy_call_finish", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call_sync, "g_dbus_proxy_call_sync", LIBRARY.GIO);
+
 	// gio.FilenameCompleter
 
 	Linker.link(g_filename_completer_new, "g_filename_completer_new", LIBRARY.GIO);
@@ -2709,6 +2747,44 @@ mixin( gshared ~"extern(C)
 	GDBusAuthObserver* function() c_g_dbus_auth_observer_new;
 	gboolean function(GDBusAuthObserver* observer, GIOStream* stream, GCredentials* credentials) c_g_dbus_auth_observer_authorize_authenticated_peer;
 	
+	// gio.DBusNames
+	
+	guint function(GBusType busType, gchar* name, GBusNameOwnerFlags flags, GBusAcquiredCallback busAcquiredHandler, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_own_name;
+	guint function(GDBusConnection* connection, gchar* name, GBusNameOwnerFlags flags, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_own_name_on_connection;
+	void function(guint ownerId) c_g_bus_unown_name;
+	guint function(GBusType busType, gchar* name, GBusNameOwnerFlags flags, GClosure* busAcquiredClosure, GClosure* nameAcquiredClosure, GClosure* nameLostClosure) c_g_bus_own_name_with_closures;
+	guint function(GDBusConnection* connection, gchar* name, GBusNameOwnerFlags flags, GClosure* nameAcquiredClosure, GClosure* nameLostClosure) c_g_bus_own_name_on_connection_with_closures;
+	guint function(GBusType busType, gchar* name, GBusNameWatcherFlags flags, GBusNameAppearedCallback nameAppearedHandler, GBusNameVanishedCallback nameVanishedHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_watch_name;
+	guint function(GDBusConnection* connection, gchar* name, GBusNameWatcherFlags flags, GBusNameAppearedCallback nameAppearedHandler, GBusNameVanishedCallback nameVanishedHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_watch_name_on_connection;
+	void function(guint watcherId) c_g_bus_unwatch_name;
+	guint function(GBusType busType, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_with_closures;
+	guint function(GDBusConnection* connection, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_on_connection_with_closures;
+	
+	// gio.DBusProxy
+	
+	void function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_new;
+	GDBusProxy* function(GAsyncResult* res, GError** error) c_g_dbus_proxy_new_finish;
+	GDBusProxy* function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GError** error) c_g_dbus_proxy_new_sync;
+	void function(GBusType busType, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_new_for_bus;
+	GDBusProxy* function(GAsyncResult* res, GError** error) c_g_dbus_proxy_new_for_bus_finish;
+	GDBusProxy* function(GBusType busType, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GError** error) c_g_dbus_proxy_new_for_bus_sync;
+	GDBusProxyFlags function(GDBusProxy* proxy) c_g_dbus_proxy_get_flags;
+	GDBusConnection* function(GDBusProxy* proxy) c_g_dbus_proxy_get_connection;
+	gchar* function(GDBusProxy* proxy) c_g_dbus_proxy_get_name;
+	gchar* function(GDBusProxy* proxy) c_g_dbus_proxy_get_name_owner;
+	gchar* function(GDBusProxy* proxy) c_g_dbus_proxy_get_object_path;
+	gchar* function(GDBusProxy* proxy) c_g_dbus_proxy_get_interface_name;
+	gint function(GDBusProxy* proxy) c_g_dbus_proxy_get_default_timeout;
+	void function(GDBusProxy* proxy, gint timeoutMsec) c_g_dbus_proxy_set_default_timeout;
+	GVariant* function(GDBusProxy* proxy, gchar* propertyName) c_g_dbus_proxy_get_cached_property;
+	void function(GDBusProxy* proxy, gchar* propertyName, GVariant* value) c_g_dbus_proxy_set_cached_property;
+	gchar** function(GDBusProxy* proxy) c_g_dbus_proxy_get_cached_property_names;
+	void function(GDBusProxy* proxy, GDBusInterfaceInfo* info) c_g_dbus_proxy_set_interface_info;
+	GDBusInterfaceInfo* function(GDBusProxy* proxy) c_g_dbus_proxy_get_interface_info;
+	void function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_call;
+	GVariant* function(GDBusProxy* proxy, GAsyncResult* res, GError** error) c_g_dbus_proxy_call_finish;
+	GVariant* function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_proxy_call_sync;
+	
 	// gio.FilenameCompleter
 	
 	GFilenameCompleter* function() c_g_filename_completer_new;
@@ -4099,6 +4175,44 @@ alias c_g_dbus_server_get_client_address  g_dbus_server_get_client_address;
 
 alias c_g_dbus_auth_observer_new  g_dbus_auth_observer_new;
 alias c_g_dbus_auth_observer_authorize_authenticated_peer  g_dbus_auth_observer_authorize_authenticated_peer;
+
+// gio.DBusNames
+
+alias c_g_bus_own_name  g_bus_own_name;
+alias c_g_bus_own_name_on_connection  g_bus_own_name_on_connection;
+alias c_g_bus_unown_name  g_bus_unown_name;
+alias c_g_bus_own_name_with_closures  g_bus_own_name_with_closures;
+alias c_g_bus_own_name_on_connection_with_closures  g_bus_own_name_on_connection_with_closures;
+alias c_g_bus_watch_name  g_bus_watch_name;
+alias c_g_bus_watch_name_on_connection  g_bus_watch_name_on_connection;
+alias c_g_bus_unwatch_name  g_bus_unwatch_name;
+alias c_g_bus_watch_name_with_closures  g_bus_watch_name_with_closures;
+alias c_g_bus_watch_name_on_connection_with_closures  g_bus_watch_name_on_connection_with_closures;
+
+// gio.DBusProxy
+
+alias c_g_dbus_proxy_new  g_dbus_proxy_new;
+alias c_g_dbus_proxy_new_finish  g_dbus_proxy_new_finish;
+alias c_g_dbus_proxy_new_sync  g_dbus_proxy_new_sync;
+alias c_g_dbus_proxy_new_for_bus  g_dbus_proxy_new_for_bus;
+alias c_g_dbus_proxy_new_for_bus_finish  g_dbus_proxy_new_for_bus_finish;
+alias c_g_dbus_proxy_new_for_bus_sync  g_dbus_proxy_new_for_bus_sync;
+alias c_g_dbus_proxy_get_flags  g_dbus_proxy_get_flags;
+alias c_g_dbus_proxy_get_connection  g_dbus_proxy_get_connection;
+alias c_g_dbus_proxy_get_name  g_dbus_proxy_get_name;
+alias c_g_dbus_proxy_get_name_owner  g_dbus_proxy_get_name_owner;
+alias c_g_dbus_proxy_get_object_path  g_dbus_proxy_get_object_path;
+alias c_g_dbus_proxy_get_interface_name  g_dbus_proxy_get_interface_name;
+alias c_g_dbus_proxy_get_default_timeout  g_dbus_proxy_get_default_timeout;
+alias c_g_dbus_proxy_set_default_timeout  g_dbus_proxy_set_default_timeout;
+alias c_g_dbus_proxy_get_cached_property  g_dbus_proxy_get_cached_property;
+alias c_g_dbus_proxy_set_cached_property  g_dbus_proxy_set_cached_property;
+alias c_g_dbus_proxy_get_cached_property_names  g_dbus_proxy_get_cached_property_names;
+alias c_g_dbus_proxy_set_interface_info  g_dbus_proxy_set_interface_info;
+alias c_g_dbus_proxy_get_interface_info  g_dbus_proxy_get_interface_info;
+alias c_g_dbus_proxy_call  g_dbus_proxy_call;
+alias c_g_dbus_proxy_call_finish  g_dbus_proxy_call_finish;
+alias c_g_dbus_proxy_call_sync  g_dbus_proxy_call_sync;
 
 // gio.FilenameCompleter
 

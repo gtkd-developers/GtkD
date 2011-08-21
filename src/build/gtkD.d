@@ -231,6 +231,8 @@ private import gio.DBusConnection;
 private import gio.DBusMethodInvocation;
 private import gio.DBusServer;
 private import gio.DBusAuthObserver;
+private import gio.DBusNames;
+private import gio.DBusProxy;
 private import gio.FilenameCompleter;
 private import gio.Settings;
 private import gio.SettingsBackend;
