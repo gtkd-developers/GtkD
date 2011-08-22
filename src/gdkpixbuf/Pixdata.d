@@ -74,12 +74,6 @@ private import glib.Str;
 
 /**
  * Description
- * Using GdkPixdata, images can be compiled into an application,
- * making it unnecessary to refer to external image files at runtime.
- * gdk-pixbuf includes a utility named gdk-pixbuf-csource, which
- * can be used to convert image files into GdkPixdata structures suitable
- * for inclusion in C sources. To convert the GdkPixdata structures back
- * into GdkPixbufs, use gdk_pixbuf_from_pixdata.
  */
 public class Pixdata
 {
@@ -206,7 +200,7 @@ public class Pixdata
 	/**
 	 * Generates C source code suitable for compiling images directly
 	 * into programs.
-	 * GTK+ ships with a program called gdk-pixbuf-csource
+	 * gdk-pixbuf ships with a program called gdk-pixbuf-csource
 	 * which offers a command line interface to this function.
 	 * Params:
 	 * name = used for naming generated data structures or macros.

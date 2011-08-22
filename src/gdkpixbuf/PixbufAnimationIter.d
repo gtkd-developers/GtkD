@@ -69,13 +69,6 @@ private import gobject.ObjectG;
 
 /**
  * Description
- *  The gdk-pixbuf library provides a simple mechanism to load and represent
- *  animations. An animation is conceptually a series of frames to be displayed
- *  over time. Each frame is the same size. The animation may not be represented
- *  as a series of frames internally; for example, it may be stored as a
- *  sprite and instructions for moving the sprite around a background. To display
- *  an animation you don't need to understand its representation, however; you just
- *  ask gdk-pixbuf what should be displayed at a given point in time.
  */
 public class PixbufAnimationIter : ObjectG
 {
@@ -192,7 +185,7 @@ public class PixbufAnimationIter : ObjectG
 	 * gdk_pixbuf_animation_iter_advance(). Copy the pixbuf to keep it
 	 * (don't just add a reference), as it may get recycled as you advance
 	 * the iterator.
-	 * Returns: the pixbuf to be displayed
+	 * Returns: the pixbuf to be displayed. [transfer none]
 	 */
 	public Pixbuf getPixbuf()
 	{

@@ -2,10 +2,6 @@
 mkdir gtkdocs
 cd gtkdocs
 
-curl http://developer.gnome.org/atk/atk-html-1.32.0.tar.gz | tar xvfz -
-ln -s atk-html-1.32.0 atk
-exit
-
 #GLIB
 curl http://developer.gnome.org/glib/glib-html-2.26.1.tar.gz | tar xvfz -
 ln -s glib-html-2.26.1 gthread
@@ -23,8 +19,8 @@ ln -s atk-html-1.32.0 atk
 curl http://library.gnome.org/devel/pango/pango-html-1.28.0.tar.gz | tar xvfz -
 ln -s pango-html-1.28.0 pango
 #GDK-PIXBUF
-curl http://library.gnome.org/devel/gdk-pixbuf/gdk-pixbuf-html-2.20.1.tar.gz | tar xvfz -
-ln -s gdk-pixbuf-html-2.20.1 gdk-pixbuf
+curl http://developer.gnome.org/gdk-pixbuf/gdk-pixbuf-html-2.22.1.tar.gz | tar xvfz -
+ln -s gdk-pixbuf-html-2.22.1 gdk-pixbuf
 #GDK
 curl http://library.gnome.org/devel/gdk/gdk-html-2.20.1.tar.gz | tar xvfz -
 ln -s gdk-html-2.20.1 gdk

@@ -272,139 +272,30 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Description
-	 *  The most basic way to create a pixbuf is to wrap an existing pixel
-	 *  buffer with a GdkPixbuf structure. You can use the
-	 *  gdk_pixbuf_new_from_data() function to do this You need to specify
-	 *  the destroy notification function that will be called when the
-	 *  data buffer needs to be freed; this will happen when a GdkPixbuf
-	 *  is finalized by the reference counting functions If you have a
-	 *  chunk of static data compiled into your application, you can pass
-	 *  in NULL as the destroy notification function so that the data
-	 *  will not be freed.
-	 *  The gdk_pixbuf_new() function can be used as a convenience to
-	 *  create a pixbuf with an empty buffer. This is equivalent to
-	 *  allocating a data buffer using malloc() and
-	 *  then wrapping it with gdk_pixbuf_new_from_data(). The gdk_pixbuf_new()
-	 *  function will compute an optimal rowstride so that rendering can be
-	 *  performed with an efficient algorithm.
-	 *  As a special case, you can use the gdk_pixbuf_new_from_xpm_data()
-	 *  function to create a pixbuf from inline XPM image data.
-	 *  You can also copy an existing pixbuf with the gdk_pixbuf_copy()
-	 *  function. This is not the same as just doing a g_object_ref()
-	 *  on the old pixbuf; the copy function will actually duplicate the
-	 *  pixel data in memory and create a new GdkPixbuf structure for it.
 	 */
 	
 	/**
 	 * Description
-	 *  The GdkPixbuf structure contains
-	 *  information that describes an image in memory.
-	 * Image Data
-	 *  Image data in a pixbuf is stored in memory in uncompressed,
-	 *  packed format. Rows in the image are stored top to bottom, and
-	 *  in each row pixels are stored from left to right. There may be
-	 *  padding at the end of a row. The "rowstride" value of a pixbuf,
-	 *  as returned by gdk_pixbuf_get_rowstride(), indicates the number
-	 *  of bytes between rows.
-	 * $(DDOC_COMMENT example)
-	 * Note
-	 * 	If you are doing memcpy() of raw pixbuf data, note that the
-	 * 	last row in the pixbuf may not be as wide as the full
-	 * 	rowstride, but rather just as wide as the pixel data needs to
-	 * 	be. That is, it is unsafe to do memcpy (dest,
-	 * 	pixels, rowstride * height) to copy a whole pixbuf.
-	 * 	Use gdk_pixbuf_copy() instead, or compute the width in bytes
-	 * 	of the last row as width * ((n_channels *
-	 * 	bits_per_sample + 7) / 8).
 	 */
 	
 	/**
 	 * Description
-	 *  GdkPixbuf structures are reference counted. This means that an
-	 *  application can share a single pixbuf among many parts of the
-	 *  code. When a piece of the program needs to keep a pointer to a
-	 *  pixbuf, it should add a reference to it by calling g_object_ref().
-	 *  When it no longer needs the pixbuf, it should subtract a reference
-	 *  by calling g_object_unref(). The pixbuf will be destroyed when
-	 *  its reference count drops to zero. Newly-created GdkPixbuf
-	 *  structures start with a reference count of one.
-	 * Note
-	 *  As GdkPixbuf is derived from GObject now, gdk_pixbuf_ref() and
-	 *  gdk_pixbuf_unref() are deprecated in favour of g_object_ref()
-	 *  and g_object_unref() resp.
-	 *  Finalizing a pixbuf means to free its pixel
-	 *  data and to free the GdkPixbuf structure itself. Most of the
-	 *  library functions that create GdkPixbuf structures create the
-	 *  pixel data by themselves and define the way it should be freed;
-	 *  you do not need to worry about those. The only function that lets
-	 *  you specify how to free the pixel data is
-	 *  gdk_pixbuf_new_from_data(). Since you pass it a pre-allocated
-	 *  pixel buffer, you must also specify a way to free that data. This
-	 *  is done with a function of type GdkPixbufDestroyNotify. When a
-	 *  pixbuf created with gdk_pixbuf_new_from_data() is finalized, your
-	 *  destroy notification function will be called, and it is its
-	 *  responsibility to free the pixel array.
 	 */
 	
 	/**
 	 * Description
-	 *  The gdk-pixbuf library provides a simple mechanism for loading
-	 *  an image from a file in synchronous fashion. This means that the
-	 *  library takes control of the application while the file is being
-	 *  loaded; from the user's point of view, the application will block
-	 *  until the image is done loading.
-	 *  This interface can be used by applications in which blocking is
-	 *  acceptable while an image is being loaded. It can also be used to
-	 *  load small images in general. Applications that need progressive
-	 *  loading can use the GdkPixbufLoader functionality instead.
 	 */
 	
 	/**
 	 * Description
-	 * These functions allow to save a GdkPixbuf in a number of
-	 * file formats. The formatted data can be written to a file
-	 * or to a memory buffer. gdk-pixbuf can also call a user-defined
-	 * callback on the data, which allows to e.g. write the image
-	 * to a socket or store it in a database.
 	 */
 	
 	/**
 	 * Description
-	 *  The gdk-pixbuf contains functions to scale pixbufs, to scale
-	 *  pixbufs and composite against an existing image, and to scale
-	 *  pixbufs and composite against a solid color or checkerboard.
-	 *  Compositing a checkerboard is a common way to show an image with
-	 *  an alpha channel in image-viewing and editing software.
-	 *  Since the full-featured functions (gdk_pixbuf_scale(),
-	 *  gdk_pixbuf_composite(), and gdk_pixbuf_composite_color()) are
-	 *  rather complex to use and have many arguments, two simple
-	 *  convenience functions are provided, gdk_pixbuf_scale_simple() and
-	 *  gdk_pixbuf_composite_color_simple() which create a new pixbuf of a
-	 *  given size, scale an original image to fit, and then return the
-	 *  new pixbuf.
-	 *  Scaling and compositing functions take advantage of MMX hardware
-	 *  acceleration on systems where MMX is supported. If gdk-pixbuf is built
-	 *  with the Sun mediaLib library, these functions are instead accelerated
-	 *  using mediaLib, which provides hardware acceleration on Intel, AMD,
-	 *  and Sparc chipsets. If desired, mediaLib support can be turned off by
-	 *  setting the GDK_DISABLE_MEDIALIB environment variable.
-	 *  The following example demonstrates handling an expose event by
-	 *  rendering the appropriate area of a source image (which is scaled
-	 *  to fit the widget) onto the widget's window. The source image is
-	 *  rendered against a checkerboard, which provides a visual
-	 *  representation of the alpha channel if the image has one. If the
-	 *  image doesn't have an alpha channel, calling
-	 *  gdk_pixbuf_composite_color() function has exactly the same effect
-	 *  as calling gdk_pixbuf_scale().
-	 * $(DDOC_COMMENT example)
 	 */
 	
 	/**
 	 * Description
-	 *  These functions provide miscellaneous utilities for manipulating
-	 *  pixbufs. The pixel data in pixbufs may of course be manipulated
-	 *  directly by applications, but several common operations can be
-	 *  performed by these functions instead.
 	 */
 	
 	/**
@@ -617,7 +508,7 @@ public class Pixbuf : ObjectG
 	 * height = Height of the image in pixels, must be > 0
 	 * rowstride = Distance in bytes between row starts
 	 * destroyFn = Function used to free the data when the pixbuf's reference count
-	 * drops to zero, or NULL if the data should not be freed
+	 * drops to zero, or NULL if the data should not be freed. [scope async]
 	 * destroyFnData = Closure data to pass to the destroy notification function
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -655,7 +546,7 @@ public class Pixbuf : ObjectG
 	 * storing as inline data in a program. This is useful if you want to
 	 * ship a program with images, but don't want to depend on any
 	 * external files.
-	 * GTK+ ships with a program called gdk-pixbuf-csource
+	 * gdk-pixbuf ships with a program called gdk-pixbuf-csource
 	 * which allows for conversion of GdkPixbufs into such a inline representation.
 	 * In almost all cases, you should pass the --raw flag to
 	 * Params:
@@ -713,7 +604,7 @@ public class Pixbuf : ObjectG
 	/**
 	 * Creates a new GdkPixbuf with a copy of the information in the specified
 	 * pixbuf.
-	 * Returns: A newly-created pixbuf with a reference count of 1, or NULL if not enough memory could be allocated.
+	 * Returns: A newly-created pixbuf with a reference count of 1, or NULL if not enough memory could be allocated. [transfer full]
 	 */
 	public Pixbuf copy()
 	{
@@ -768,7 +659,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
-	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called “Image Data” for information about how the pixel data is stored in memory.
+	 * Returns: A pointer to the pixbuf's pixel data. Please see ??? for information about how the pixel data is stored in memory.
 	 */
 	public char* getPixels()
 	{
@@ -1043,7 +934,7 @@ public class Pixbuf : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * saveFunc = a function that is called to save each block of data that
-	 *  the save routine generates.
+	 *  the save routine generates. [scope call]
 	 * userData = user data to pass to the save function.
 	 * type = name of file format.
 	 * optionKeys = name of options to set, NULL-terminated
@@ -1081,7 +972,7 @@ public class Pixbuf : ObjectG
 	 * destWidth = the width of destination image
 	 * destHeight = the height of destination image
 	 * interpType = the interpolation type for the transformation.
-	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it. [transfer full]
 	 */
 	public Pixbuf scaleSimple(int destWidth, int destHeight, GdkInterpType interpType)
 	{
@@ -1136,7 +1027,7 @@ public class Pixbuf : ObjectG
 	 * checkSize = the size of checks in the checkboard (must be a power of two)
 	 * color1 = the color of check at upper left
 	 * color2 = the color of the other check
-	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it. [transfer full]
 	 */
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
 	{
@@ -1218,7 +1109,7 @@ public class Pixbuf : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * angle = the angle to rotate by
-	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it. [transfer full]
 	 */
 	public Pixbuf rotateSimple(GdkPixbufRotation angle)
 	{
@@ -1237,7 +1128,7 @@ public class Pixbuf : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * horizontal = TRUE to flip horizontally, FALSE to flip vertically
-	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could be allocated for it. [transfer full]
 	 */
 	public Pixbuf flip(int horizontal)
 	{
@@ -1264,7 +1155,7 @@ public class Pixbuf : ObjectG
 	 * r = Red value to substitute.
 	 * g = Green value to substitute.
 	 * b = Blue value to substitute.
-	 * Returns: A newly-created pixbuf with a reference count of 1.
+	 * Returns: A newly-created pixbuf with a reference count of 1. [transfer full]
 	 */
 	public Pixbuf addAlpha(int substituteColor, char r, char g, char b)
 	{
@@ -1328,7 +1219,7 @@ public class Pixbuf : ObjectG
 	 * appropriate transform will be performed so that the pixbuf
 	 * is oriented correctly.
 	 * Since 2.12
-	 * Returns: A newly-created pixbuf, or a reference to the input pixbuf (with an increased reference count).
+	 * Returns: A newly-created pixbuf, or a reference to the input pixbuf (with an increased reference count). [transfer full]
 	 */
 	public Pixbuf applyEmbeddedOrientation()
 	{

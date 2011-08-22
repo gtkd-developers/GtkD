@@ -83,6 +83,8 @@ static this()
 
 	Linker.link(gdk_pixbuf_set_option, "gdk_pixbuf_set_option", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_formats, "gdk_pixbuf_get_formats", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_copy, "gdk_pixbuf_format_copy", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_free, "gdk_pixbuf_format_free", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_get_name, "gdk_pixbuf_format_get_name", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_get_description, "gdk_pixbuf_format_get_description", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_get_mime_types, "gdk_pixbuf_format_get_mime_types", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
@@ -147,6 +149,8 @@ mixin( gshared ~"extern(C)
 	
 	gboolean function(GdkPixbuf* pixbuf, gchar* key, gchar* value) c_gdk_pixbuf_set_option;
 	GSList* function() c_gdk_pixbuf_get_formats;
+	GdkPixbufFormat* function(GdkPixbufFormat* format) c_gdk_pixbuf_format_copy;
+	void function(GdkPixbufFormat* format) c_gdk_pixbuf_format_free;
 	gchar* function(GdkPixbufFormat* format) c_gdk_pixbuf_format_get_name;
 	gchar* function(GdkPixbufFormat* format) c_gdk_pixbuf_format_get_description;
 	gchar** function(GdkPixbufFormat* format) c_gdk_pixbuf_format_get_mime_types;
@@ -208,6 +212,8 @@ alias c_gdk_pixbuf_loader_close  gdk_pixbuf_loader_close;
 
 alias c_gdk_pixbuf_set_option  gdk_pixbuf_set_option;
 alias c_gdk_pixbuf_get_formats  gdk_pixbuf_get_formats;
+alias c_gdk_pixbuf_format_copy  gdk_pixbuf_format_copy;
+alias c_gdk_pixbuf_format_free  gdk_pixbuf_format_free;
 alias c_gdk_pixbuf_format_get_name  gdk_pixbuf_format_get_name;
 alias c_gdk_pixbuf_format_get_description  gdk_pixbuf_format_get_description;
 alias c_gdk_pixbuf_format_get_mime_types  gdk_pixbuf_format_get_mime_types;

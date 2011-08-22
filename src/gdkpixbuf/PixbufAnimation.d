@@ -83,13 +83,6 @@ private import gobject.ObjectG;
 
 /**
  * Description
- *  The gdk-pixbuf library provides a simple mechanism to load and represent
- *  animations. An animation is conceptually a series of frames to be displayed
- *  over time. Each frame is the same size. The animation may not be represented
- *  as a series of frames internally; for example, it may be stored as a
- *  sprite and instructions for moving the sprite around a background. To display
- *  an animation you don't need to understand its representation, however; you just
- *  ask gdk-pixbuf what should be displayed at a given point in time.
  */
 public class PixbufAnimation : ObjectG
 {
@@ -220,7 +213,7 @@ public class PixbufAnimation : ObjectG
 	 * A delay time of -1 is possible, indicating "infinite."
 	 * Params:
 	 * startTime = time when the animation starts playing
-	 * Returns: an iterator to move over the animation
+	 * Returns: an iterator to move over the animation. [transfer full]
 	 */
 	public PixbufAnimationIter getIter(TimeVal startTime)
 	{
@@ -253,7 +246,7 @@ public class PixbufAnimation : ObjectG
 	 * unanimated image, which might be the first frame, or something more
 	 * sophisticated. If an animation hasn't loaded any frames yet, this
 	 * function will return NULL.
-	 * Returns: unanimated image representing the animation
+	 * Returns: unanimated image representing the animation. [transfer none]
 	 */
 	public Pixbuf getStaticImage()
 	{
