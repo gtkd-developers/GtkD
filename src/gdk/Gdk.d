@@ -88,7 +88,7 @@ public class Gdk
 	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
 	 * by GTK+ applications.
 	 * Params:
-	 * argv = . array length=argc. inout length=argc.
+	 * argv = . [array length=argc][inout length=argc]
 	 */
 	public static void init(ref string[] argv)
 	{
@@ -108,7 +108,7 @@ public class Gdk
 	/**
 	 * Initialize the library for use.
 	 * Params:
-	 * argv = . array length=argc. inout length=argc.
+	 * argv = . [array length=argc][inout length=argc]
 	 * Returns: TRUE if initialization succeeded.
 	 */
 	public static int initCheck(ref string[] argv)

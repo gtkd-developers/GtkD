@@ -121,6 +121,8 @@ public class ImageGdk
 	 */
 	
 	/**
+	 * Warning
+	 * gdk_image_new is deprecated and should not be used in newly-written code.
 	 * Creates a new GdkImage.
 	 * Params:
 	 * type = the type of the GdkImage, one of GDK_IMAGE_NORMAL, GDK_IMAGE_SHARED
@@ -224,6 +226,8 @@ public class ImageGdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_image_get_colormap has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
 	 * Retrieves the colormap for a given image, if it exists. An image
 	 * will have a colormap if the drawable from which it was created has
 	 * a colormap, or if a colormap was set explicitely with
@@ -242,6 +246,8 @@ public class ImageGdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_image_set_colormap has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
 	 * Sets the colormap for the image to the given colormap. Normally
 	 * there's no need to use this function, images are created with the
 	 * correct colormap if you get the image from a drawable. If you
@@ -257,6 +263,143 @@ public class ImageGdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_image_get_bits_per_pixel has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the number of bits per pixel of the image.
+	 * Since 2.22
+	 * Returns: the bits per pixel
+	 */
+	public ushort getBitsPerPixel()
+	{
+		// guint16 gdk_image_get_bits_per_pixel (GdkImage *image);
+		return gdk_image_get_bits_per_pixel(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_bytes_per_pixel has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the number of bytes per pixel of the image.
+	 * Since 2.22
+	 * Returns: the bytes per pixel
+	 */
+	public ushort getBytesPerPixel()
+	{
+		// guint16 gdk_image_get_bytes_per_pixel (GdkImage *image);
+		return gdk_image_get_bytes_per_pixel(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_bytes_per_line has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the number of bytes per line of the image.
+	 * Since 2.22
+	 * Returns: the bytes per line
+	 */
+	public ushort getBytesPerLine()
+	{
+		// guint16 gdk_image_get_bytes_per_line (GdkImage *image);
+		return gdk_image_get_bytes_per_line(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_byte_order has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the byte order of the image.
+	 * Since 2.22
+	 * Returns: a GdkVisual
+	 */
+	public GdkByteOrder getByteOrder()
+	{
+		// GdkByteOrder gdk_image_get_byte_order (GdkImage *image);
+		return gdk_image_get_byte_order(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_depth has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the depth of the image.
+	 * Since 2.22
+	 * Returns: the depth
+	 */
+	public ushort getDepth()
+	{
+		// guint16 gdk_image_get_depth (GdkImage *image);
+		return gdk_image_get_depth(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_height has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the height of the image.
+	 * Since 2.22
+	 * Returns: the height
+	 */
+	public int getHeight()
+	{
+		// gint gdk_image_get_height (GdkImage *image);
+		return gdk_image_get_height(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_image_type has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the type of a given image.
+	 * Since 2.22
+	 * Returns: the GdkImageType of the image
+	 */
+	public GdkImageType getImageType()
+	{
+		// GdkImageType gdk_image_get_image_type (GdkImage *image);
+		return gdk_image_get_image_type(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_visual has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the visual that was used to create the image.
+	 * Since 2.22
+	 * Returns: a GdkVisual
+	 */
+	public Visual getVisual()
+	{
+		// GdkVisual * gdk_image_get_visual (GdkImage *image);
+		auto p = gdk_image_get_visual(gdkImage);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_width has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Determines the width of the image.
+	 * Since 2.22
+	 * Returns: the width
+	 */
+	public int getWidth()
+	{
+		// gint gdk_image_get_width (GdkImage *image);
+		return gdk_image_get_width(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_get_pixels has been deprecated since version 2.22 and should not be used in newly-written code. GdkImage should not be used anymore.
+	 * Returns a pointer to the pixel data of the image.
+	 * Since 2.22
+	 * Returns: the pixel data of the image
+	 */
+	public void* getPixels()
+	{
+		// gpointer gdk_image_get_pixels (GdkImage *image);
+		return gdk_image_get_pixels(gdkImage);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_image_put_pixel is deprecated and should not be used in newly-written code.
 	 * Sets a pixel in a GdkImage to a given pixel value.
 	 * Params:
 	 * x = the x coordinate of the pixel to set.
@@ -270,6 +413,8 @@ public class ImageGdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_image_get_pixel is deprecated and should not be used in newly-written code.
 	 * Gets a pixel value at a specified position in a GdkImage.
 	 * Params:
 	 * x = the x coordinate of the pixel to get.

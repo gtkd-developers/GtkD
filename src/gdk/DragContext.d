@@ -36,7 +36,8 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- gdk-drag_context_
+ * 	- gdk_drag_context_
+ * 	- gdk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -122,7 +123,7 @@ public class DragContext
 	 * Returns the selection atom for the current source window.
 	 * Returns: the selection atom.
 	 */
-	public GdkAtom gdkDragGetSelection()
+	public GdkAtom dragGetSelection()
 	{
 		// GdkAtom gdk_drag_get_selection (GdkDragContext *context);
 		return gdk_drag_get_selection(gdkDragContext);
@@ -134,7 +135,7 @@ public class DragContext
 	 * Params:
 	 * time = the timestamp for this operation.
 	 */
-	public void gdkDragAbort(uint time)
+	public void dragAbort(uint time)
 	{
 		// void gdk_drag_abort (GdkDragContext *context,  guint32 time_);
 		gdk_drag_abort(gdkDragContext, time);
@@ -148,7 +149,7 @@ public class DragContext
 	 * ok = TRUE if the drop is accepted.
 	 * time = the timestamp for this operation.
 	 */
-	public void gdkDropReply(int ok, uint time)
+	public void dropReply(int ok, uint time)
 	{
 		// void gdk_drop_reply (GdkDragContext *context,  gboolean ok,  guint32 time_);
 		gdk_drop_reply(gdkDragContext, ok, time);
@@ -156,17 +157,17 @@ public class DragContext
 	
 	/**
 	 * Creates a new GdkDragContext.
-	 * Returns: the newly created GdkDragContext.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static DragContext gdkDragContextNew()
+	public this ()
 	{
 		// GdkDragContext * gdk_drag_context_new (void);
 		auto p = gdk_drag_context_new();
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gdk_drag_context_new()");
 		}
-		return new DragContext(cast(GdkDragContext*) p);
+		this(cast(GdkDragContext*) p);
 	}
 	
 	/**
@@ -175,7 +176,7 @@ public class DragContext
 	 * Params:
 	 * time = the timestamp for this operation.
 	 */
-	public void gdkDragDrop(uint time)
+	public void dragDrop(uint time)
 	{
 		// void gdk_drag_drop (GdkDragContext *context,  guint32 time_);
 		gdk_drag_drop(gdkDragContext, time);
@@ -191,10 +192,10 @@ public class DragContext
 	 *  should be ignored, since it is put up by the drag source as an icon.
 	 * xRoot = the x position of the pointer in root coordinates.
 	 * yRoot = the y position of the pointer in root coordinates.
-	 * destWindow = location to store the destination window in.. out.
-	 * protocol = location to store the DND protocol in.. out.
+	 * destWindow = location to store the destination window in. [out]
+	 * protocol = location to store the DND protocol in. [out]
 	 */
-	public void gdkDragFindWindow(Window dragWindow, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
+	public void dragFindWindow(Window dragWindow, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
 	{
 		// void gdk_drag_find_window (GdkDragContext *context,  GdkWindow *drag_window,  gint x_root,  gint y_root,  GdkWindow **dest_window,  GdkDragProtocol *protocol);
 		GdkWindow* outdestWindow = null;
@@ -216,10 +217,10 @@ public class DragContext
 	 * screen = the screen where the destination window is sought.
 	 * xRoot = the x position of the pointer in root coordinates.
 	 * yRoot = the y position of the pointer in root coordinates.
-	 * destWindow = location to store the destination window in.. out.
-	 * protocol = location to store the DND protocol in.. out.
+	 * destWindow = location to store the destination window in. [out]
+	 * protocol = location to store the DND protocol in. [out]
 	 */
-	public void gdkDragFindWindowForScreen(Window dragWindow, Screen screen, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
+	public void dragFindWindowForScreen(Window dragWindow, Screen screen, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
 	{
 		// void gdk_drag_find_window_for_screen (GdkDragContext *context,  GdkWindow *drag_window,  GdkScreen *screen,  gint x_root,  gint y_root,  GdkWindow **dest_window,  GdkDragProtocol *protocol);
 		GdkWindow* outdestWindow = null;
@@ -234,10 +235,76 @@ public class DragContext
 	 * gdk_drag_context_ref has been deprecated since version 2.2 and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Deprecated function; use g_object_ref() instead.
 	 */
-	public void gdkDragContextRef()
+	public void doref()
 	{
 		// void gdk_drag_context_ref (GdkDragContext *context);
 		gdk_drag_context_ref(gdkDragContext);
+	}
+	
+	/**
+	 * Determines the bitmask of actions proposed by the source if
+	 * gdk_drag_context_suggested_action() returns GDK_ACTION_ASK.
+	 * Since 2.22
+	 * Returns: the GdkDragAction flags
+	 */
+	public GdkDragAction getActions()
+	{
+		// GdkDragAction gdk_drag_context_get_actions (GdkDragContext *context);
+		return gdk_drag_context_get_actions(gdkDragContext);
+	}
+	
+	/**
+	 * Determines the action chosen by the drag destination.
+	 * Since 2.22
+	 * Returns: a GdkDragAction value
+	 */
+	public GdkDragAction getSelectedAction()
+	{
+		// GdkDragAction gdk_drag_context_get_selected_action  (GdkDragContext *context);
+		return gdk_drag_context_get_selected_action(gdkDragContext);
+	}
+	
+	/**
+	 * Determines the suggested drag action of the context.
+	 * Since 2.22
+	 * Returns: a GdkDragAction value
+	 */
+	public GdkDragAction getSuggestedAction()
+	{
+		// GdkDragAction gdk_drag_context_get_suggested_action  (GdkDragContext *context);
+		return gdk_drag_context_get_suggested_action(gdkDragContext);
+	}
+	
+	/**
+	 * Retrieves the list of targets of the context.
+	 * Since 2.22
+	 * Returns: a GList of targets. [transfer none][element-type GdkAtom]
+	 */
+	public ListG listTargets()
+	{
+		// GList * gdk_drag_context_list_targets (GdkDragContext *context);
+		auto p = gdk_drag_context_list_targets(gdkDragContext);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Returns the GdkWindow where the DND operation started.
+	 * Since 2.22
+	 * Returns: a GdkWindow. [transfer none]
+	 */
+	public Window getSourceWindow()
+	{
+		// GdkWindow * gdk_drag_context_get_source_window (GdkDragContext *context);
+		auto p = gdk_drag_context_get_source_window(gdkDragContext);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -245,10 +312,11 @@ public class DragContext
 	 * This function is called by the drag source.
 	 * Params:
 	 * window = the source window for this drag.
-	 * targets = the offered targets, as list of GdkAtoms
+	 * targets = the offered targets,
+	 *  as list of GdkAtoms. [transfer none][element-type GdkAtom]
 	 * Returns: a newly created GdkDragContext.
 	 */
-	public static DragContext gdkDragBegin(Window window, ListG targets)
+	public static DragContext dragBegin(Window window, ListG targets)
 	{
 		// GdkDragContext * gdk_drag_begin (GdkWindow *window,  GList *targets);
 		auto p = gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct());
@@ -274,7 +342,7 @@ public class DragContext
 	 * time = the timestamp for this operation.
 	 * Returns: FIXME
 	 */
-	public int gdkDragMotion(Window destWindow, GdkDragProtocol protocol, int xRoot, int yRoot, GdkDragAction suggestedAction, GdkDragAction possibleActions, uint time)
+	public int dragMotion(Window destWindow, GdkDragProtocol protocol, int xRoot, int yRoot, GdkDragAction suggestedAction, GdkDragAction possibleActions, uint time)
 	{
 		// gboolean gdk_drag_motion (GdkDragContext *context,  GdkWindow *dest_window,  GdkDragProtocol protocol,  gint x_root,  gint y_root,  GdkDragAction suggested_action,  GdkDragAction possible_actions,  guint32 time_);
 		return gdk_drag_motion(gdkDragContext, (destWindow is null) ? null : destWindow.getWindowStruct(), protocol, xRoot, yRoot, suggestedAction, possibleActions, time);
@@ -287,7 +355,7 @@ public class DragContext
 	 * success = TRUE if the data was successfully received.
 	 * time = the timestamp for this operation.
 	 */
-	public void gdkDropFinish(int success, uint time)
+	public void dropFinish(int success, uint time)
 	{
 		// void gdk_drop_finish (GdkDragContext *context,  gboolean success,  guint32 time_);
 		gdk_drop_finish(gdkDragContext, success, time);
@@ -300,7 +368,7 @@ public class DragContext
 	 * protocol = location where the supported DND protocol is returned.
 	 * Returns: the windowing system specific id for the window where the drop should happen. This may be xid or the id of a proxy window, or zero if xid doesn't support Drag and Drop.
 	 */
-	public static GdkNativeWindow gdkDragGetProtocol(GdkNativeWindow xid, out GdkDragProtocol protocol)
+	public static GdkNativeWindow dragGetProtocol(GdkNativeWindow xid, out GdkDragProtocol protocol)
 	{
 		// GdkNativeWindow gdk_drag_get_protocol (GdkNativeWindow xid,  GdkDragProtocol *protocol);
 		return gdk_drag_get_protocol(xid, &protocol);
@@ -315,7 +383,7 @@ public class DragContext
 	 * protocol = location where the supported DND protocol is returned.
 	 * Returns: the windowing system id of the window where the drop should happen. This may be xid or the id of a proxy window, or zero if xid doesn't support Drag and Drop.
 	 */
-	public static GdkNativeWindow gdkDragGetProtocolForDisplay(Display display, GdkNativeWindow xid, out GdkDragProtocol protocol)
+	public static GdkNativeWindow dragGetProtocolForDisplay(Display display, GdkNativeWindow xid, out GdkDragProtocol protocol)
 	{
 		// GdkNativeWindow gdk_drag_get_protocol_for_display (GdkDisplay *display,  GdkNativeWindow xid,  GdkDragProtocol *protocol);
 		return gdk_drag_get_protocol_for_display((display is null) ? null : display.getDisplayStruct(), xid, &protocol);
@@ -326,7 +394,7 @@ public class DragContext
 	 * gdk_drag_context_unref has been deprecated since version 2.2 and should not be used in newly-written code. Use g_object_unref() instead.
 	 * Deprecated function; use g_object_unref() instead.
 	 */
-	public void gdkDragContextUnref()
+	public void unref()
 	{
 		// void gdk_drag_context_unref (GdkDragContext *context);
 		gdk_drag_context_unref(gdkDragContext);
@@ -341,7 +409,7 @@ public class DragContext
 	 *  or 0 to indicate that a drop will not be accepted.
 	 * time = the timestamp for this operation.
 	 */
-	public void gdkDragStatus(GdkDragAction action, uint time)
+	public void dragStatus(GdkDragAction action, uint time)
 	{
 		// void gdk_drag_status (GdkDragContext *context,  GdkDragAction action,  guint32 time_);
 		gdk_drag_status(gdkDragContext, action, time);
@@ -355,7 +423,7 @@ public class DragContext
 	 * Since 2.6
 	 * Returns: TRUE if the drop was successful.
 	 */
-	public int gdkDragDropSucceeded()
+	public int dragDropSucceeded()
 	{
 		// gboolean gdk_drag_drop_succeeded (GdkDragContext *context);
 		return gdk_drag_drop_succeeded(gdkDragContext);

@@ -85,6 +85,9 @@ private import gdk.Drawable;
  * is the number of bits per pixels. Bitmaps are simply pixmaps
  * with a depth of 1. (That is, they are monochrome bitmaps - each
  * pixel can be either on or off).
+ * GTK 3 will remove GdkPixmap and GdkBitmap. You should use cairo
+ * surfaces instead. However, because a lot of functions still use these
+ * types, they are not deprecated.
  */
 public class Pixmap : Drawable
 {
@@ -137,6 +140,9 @@ public class Pixmap : Drawable
 	
 	/**
 	 * Create a new pixmap with a given size and depth.
+	 * Please use gdk_window_create_similar_surface() instead of this
+	 * function if you're not forced to use a GdkPixmap. It is intended
+	 * as the replacement function for this function in GTK 3.
 	 * Params:
 	 * drawable = A GdkDrawable, used to determine default values
 	 * for the new pixmap. Can be NULL if depth is specified,
@@ -159,6 +165,12 @@ public class Pixmap : Drawable
 	}
 	
 	/**
+	 * Warning
+	 * gdk_pixmap_create_from_data has been deprecated since version 2.22 and should not be used in newly-written code. If you must replicate the functionality of this
+	 * function, create a pixmap using gdk_pixmap_new(), cairo_paint() it
+	 * with the background color and then create a Cairo image surface as
+	 * pointed out in the docs to gdk_bitmap_create_from_data() and use
+	 * this surface with cairo_mask_surface() to paint the foreground color.
 	 * Create a two-color pixmap from data in XBM data.
 	 * Params:
 	 * drawable = a GdkDrawable, used to determine default values
@@ -183,6 +195,11 @@ public class Pixmap : Drawable
 	}
 	
 	/**
+	 * Warning
+	 * gdk_pixmap_create_from_xpm has been deprecated since version 2.22 and should not be used in newly-written code. Use a GdkPixbuf instead. You can use
+	 * gdk_pixbuf_new_from_file() to create it.
+	 * If you must use a pixmap, use gdk_pixmap_new() to
+	 * create it and Cairo to draw the pixbuf onto it.
 	 * Create a pixmap from a XPM file.
 	 * Params:
 	 * drawable = a GdkDrawable, used to determine default values
@@ -194,7 +211,7 @@ public class Pixmap : Drawable
 	 * that are transparent in the input file. Can be NULL,
 	 * in which case a default color will be used.
 	 * filename = the filename of a file containing XPM data.
-	 * Returns: the GdkPixmap. transfer none.
+	 * Returns: the GdkPixmap. [transfer none]
 	 */
 	public static Pixmap createFromXpm(Drawable drawable, out Bitmap mask, Color transparentColor, string filename)
 	{
@@ -212,6 +229,11 @@ public class Pixmap : Drawable
 	}
 	
 	/**
+	 * Warning
+	 * gdk_pixmap_colormap_create_from_xpm has been deprecated since version 2.22 and should not be used in newly-written code. Use a GdkPixbuf instead. You can use
+	 * gdk_pixbuf_new_from_file() to create it.
+	 * If you must use a pixmap, use gdk_pixmap_new() to
+	 * create it and Cairo to draw the pixbuf onto it.
 	 * Create a pixmap from a XPM file using a particular colormap.
 	 * Params:
 	 * drawable = a GdkDrawable, used to determine default values
@@ -225,7 +247,7 @@ public class Pixmap : Drawable
 	 * that are transparent in the input file. Can be NULL,
 	 * in which case a default color will be used.
 	 * filename = the filename of a file containing XPM data.
-	 * Returns: the GdkPixmap.. transfer none.
+	 * Returns: the GdkPixmap. [transfer none]
 	 */
 	public static Pixmap colormapCreateFromXpm(Drawable drawable, Colormap colormap, out Bitmap mask, Color transparentColor, string filename)
 	{
@@ -243,18 +265,23 @@ public class Pixmap : Drawable
 	}
 	
 	/**
+	 * Warning
+	 * gdk_pixmap_create_from_xpm_d has been deprecated since version 2.22 and should not be used in newly-written code. Use a GdkPixbuf instead. You can use
+	 * gdk_pixbuf_new_from_xpm_data() to create it.
+	 * If you must use a pixmap, use gdk_pixmap_new() to
+	 * create it and Cairo to draw the pixbuf onto it.
 	 * Create a pixmap from data in XPM format.
 	 * Params:
 	 * drawable = a GdkDrawable, used to determine default values
 	 *  for the new pixmap.
 	 * mask = Pointer to a place to store a bitmap representing
 	 *  the transparency mask of the XPM file. Can be NULL,
-	 *  in which case transparency will be ignored.. out.
+	 *  in which case transparency will be ignored. [out]
 	 * transparentColor = This color will be used for the pixels
 	 *  that are transparent in the input file. Can be NULL
 	 *  in which case a default color will be used.
 	 * data = Pointer to a string containing the XPM data.
-	 * Returns: the GdkPixmap.. transfer none.
+	 * Returns: the GdkPixmap. [transfer none]
 	 */
 	public static Pixmap createFromXpmD(Drawable drawable, out Bitmap mask, Color transparentColor, string[] data)
 	{
@@ -272,6 +299,11 @@ public class Pixmap : Drawable
 	}
 	
 	/**
+	 * Warning
+	 * gdk_pixmap_colormap_create_from_xpm_d has been deprecated since version 2.22 and should not be used in newly-written code. Use a GdkPixbuf instead. You can use
+	 * gdk_pixbuf_new_from_xpm_data() to create it.
+	 * If you must use a pixmap, use gdk_pixmap_new() to
+	 * create it and Cairo to draw the pixbuf onto it.
 	 * Create a pixmap from data in XPM format using a particular
 	 * colormap.
 	 * Params:
@@ -286,7 +318,7 @@ public class Pixmap : Drawable
 	 *  that are transparent in the input file. Can be NULL,
 	 *  in which case a default color will be used.
 	 * data = Pointer to a string containing the XPM data.
-	 * Returns: the GdkPixmap.. transfer none.
+	 * Returns: the GdkPixmap. [transfer none]
 	 */
 	public static Pixmap colormapCreateFromXpmD(Drawable drawable, Colormap colormap, out Bitmap mask, Color transparentColor, string[] data)
 	{

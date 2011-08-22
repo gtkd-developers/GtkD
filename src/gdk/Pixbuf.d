@@ -443,9 +443,9 @@ public class Pixbuf : ObjectG
 	 * Same as gdk_pixbuf_get_from_drawable() but gets the pixbuf from
 	 * an image.
 	 * Params:
-	 * dest = Destination pixbuf, or NULL if a new pixbuf should be created.. allow-none.
+	 * dest = Destination pixbuf, or NULL if a new pixbuf should be created. [allow-none]
 	 * src = Source GdkImage.
-	 * cmap = A colormap, or NULL to use the one for src. allow-none.
+	 * cmap = A colormap, or NULL to use the one for src. [allow-none]
 	 * srcX = Source X coordinate within drawable.
 	 * srcY = Source Y coordinate within drawable.
 	 * destX = Destination X coordinate in pixbuf, or 0 if dest is NULL.

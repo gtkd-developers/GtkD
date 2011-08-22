@@ -206,7 +206,7 @@ public class Drawable : ObjectG
 	 * Params:
 	 * key = name to store the data under
 	 * data = arbitrary data
-	 * destroyFunc = function to free data, or NULL. allow-none.
+	 * destroyFunc = function to free data, or NULL. [allow-none]
 	 */
 	public void setData(string key, void* data, GDestroyNotify destroyFunc)
 	{
@@ -329,8 +329,8 @@ public class Drawable : ObjectG
 	 * size is the size reported in the most-recently-processed configure
 	 * event, rather than the current size on the X server.
 	 * Params:
-	 * width = location to store drawable's width, or NULL. allow-none.
-	 * height = location to store drawable's height, or NULL. allow-none.
+	 * width = location to store drawable's width, or NULL. [out][allow-none]
+	 * height = location to store drawable's height, or NULL. [out][allow-none]
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -377,6 +377,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_point has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_rectangle() and cairo_fill() or
+	 * cairo_move_to() and cairo_stroke() instead.
 	 * Draws a point, using the foreground color and other attributes of
 	 * the GdkGC.
 	 * Params:
@@ -391,6 +394,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_points has been deprecated since version 2.22 and should not be used in newly-written code. Use n_points calls to cairo_rectangle() and
+	 * cairo_fill() instead.
 	 * Draws a number of points, using the foreground color and other
 	 * attributes of the GdkGC.
 	 * Params:
@@ -404,8 +410,10 @@ public class Drawable : ObjectG
 	}
 	
 	/**
-	 * Draws a line, using the foreground color and other attributes of
-	 * the GdkGC.
+	 * Warning
+	 * gdk_draw_line has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_line_to() and cairo_stroke() instead.
+	 * Be aware that the default line width in Cairo is 2 pixels and that your
+	 * coordinates need to describe the center of the line. To draw a single
 	 * Params:
 	 * gc = a GdkGC.
 	 * x1_ = the x coordinate of the start point.
@@ -420,6 +428,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_lines has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_line_to() and cairo_stroke() instead. See the
+	 * documentation of gdk_draw_line() for notes on line drawing with Cairo.
 	 * Draws a series of lines connecting the given points.
 	 * The way in which joins between lines are draw is determined by the
 	 * GdkCapStyle value in the GdkGC. This can be set with
@@ -435,6 +446,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_pixbuf has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_cairo_set_source_pixbuf() and cairo_paint() or
+	 * cairo_rectangle() and cairo_fill() instead.
 	 * Renders a rectangular portion of a pixbuf to a drawable. The destination
 	 * drawable must have a colormap. All windows have a colormap, however, pixmaps
 	 * only have colormap by default if they were created with a non-NULL window
@@ -449,7 +463,7 @@ public class Drawable : ObjectG
 	 * variable.
 	 * Since 2.2
 	 * Params:
-	 * gc = a GdkGC, used for clipping, or NULL. allow-none.
+	 * gc = a GdkGC, used for clipping, or NULL. [allow-none]
 	 * pixbuf = a GdkPixbuf
 	 * srcX = Source X coordinate within pixbuf.
 	 * srcY = Source Y coordinates within pixbuf.
@@ -468,6 +482,10 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_segments has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_move_to(), cairo_line_to() and cairo_stroke()
+	 * instead. See the documentation of gdk_draw_line() for notes on line drawing
+	 * with Cairo.
 	 * Draws a number of unconnected lines.
 	 * Params:
 	 * gc = a GdkGC.
@@ -481,6 +499,10 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_rectangle has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_rectangle() and cairo_fill() or cairo_stroke()
+	 * instead. For stroking, the same caveats for converting code apply as for
+	 * gdk_draw_line().
 	 * Draws a rectangular outline or filled rectangle, using the foreground color
 	 * and other attributes of the GdkGC.
 	 * A rectangle drawn filled is 1 pixel smaller in both dimensions than a
@@ -505,6 +527,10 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_arc has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_arc() and cairo_fill() or cairo_stroke()
+	 * instead. Note that arcs just like any drawing operation in Cairo are
+	 * antialiased unless you call cairo_set_antialias().
 	 * Draws an arc or a filled 'pie slice'. The arc is defined by the bounding
 	 * rectangle of the entire ellipse, and the start and end angles of the part
 	 * of the ellipse to be drawn.
@@ -527,6 +553,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_polygon has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_line_to() or cairo_append_path() and
+	 * cairo_fill() or cairo_stroke() instead.
 	 * Draws an outlined or filled polygon.
 	 * Params:
 	 * gc = a GdkGC.
@@ -543,6 +572,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_trapezoids has been deprecated since version 2.22 and should not be used in newly-written code. Use Cairo path contruction functions and cairo_fill()
+	 * instead.
 	 * Draws a set of anti-aliased trapezoids. The trapezoids are
 	 * combined using saturation addition, then drawn over the background
 	 * as a set. This is low level functionality used internally to implement
@@ -560,6 +592,8 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_glyphs has been deprecated since version 2.22 and should not be used in newly-written code. Use pango_cairo_show_glyphs() instead.
 	 * This is a low-level function; 99% of text rendering should be done
 	 * using gdk_draw_layout() instead.
 	 * A glyph is a single image in a font. This function draws a sequence of
@@ -581,6 +615,8 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_glyphs_transformed has been deprecated since version 2.22 and should not be used in newly-written code. Use pango_cairo_show_glyphs() instead.
 	 * Renders a PangoGlyphString onto a drawable, possibly
 	 * transforming the layed-out coordinates through a transformation
 	 * matrix. Note that the transformation matrix for font is not
@@ -591,7 +627,7 @@ public class Drawable : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * gc = a GdkGC
-	 * matrix = a PangoMatrix, or NULL to use an identity transformation. allow-none.
+	 * matrix = a PangoMatrix, or NULL to use an identity transformation. [allow-none]
 	 * font = the font in which to draw the string
 	 * x = the x position of the start of the string (in Pango
 	 *  units in user space coordinates)
@@ -606,6 +642,8 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_layout_line is deprecated and should not be used in newly-written code.
 	 * Render a PangoLayoutLine onto an GDK drawable
 	 * If the layout's PangoContext has a transformation matrix set, then
 	 * x and y specify the position of the left edge of the baseline
@@ -624,6 +662,8 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_layout_line_with_colors is deprecated and should not be used in newly-written code.
 	 * Render a PangoLayoutLine onto a GdkDrawable, overriding the
 	 * layout's normal colors with foreground and/or background.
 	 * foreground and background need not be allocated.
@@ -636,8 +676,8 @@ public class Drawable : ObjectG
 	 * x = the x position of start of string (in pixels)
 	 * y = the y position of baseline (in pixels)
 	 * line = a PangoLayoutLine
-	 * foreground = foreground override color, or NULL for none. allow-none.
-	 * background = background override color, or NULL for none. allow-none.
+	 * foreground = foreground override color, or NULL for none. [allow-none]
+	 * background = background override color, or NULL for none. [allow-none]
 	 */
 	public void drawLayoutLineWithColors(GC gc, int x, int y, PgLayoutLine line, Color foreground, Color background)
 	{
@@ -646,6 +686,8 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_layout is deprecated and should not be used in newly-written code.
 	 * Render a PangoLayout onto a GDK drawable
 	 * If the layout's PangoContext has a transformation matrix set, then
 	 * x and y specify the position of the top left corner of the
@@ -665,6 +707,8 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_layout_with_colors is deprecated and should not be used in newly-written code.
 	 * Render a PangoLayout onto a GdkDrawable, overriding the
 	 * layout's normal colors with foreground and/or background.
 	 * foreground and background need not be allocated.
@@ -678,8 +722,8 @@ public class Drawable : ObjectG
 	 * x = the X position of the left of the layout (in pixels)
 	 * y = the Y position of the top of the layout (in pixels)
 	 * layout = a PangoLayout
-	 * foreground = foreground override color, or NULL for none. allow-none.
-	 * background = background override color, or NULL for none. allow-none.
+	 * foreground = foreground override color, or NULL for none. [allow-none]
+	 * background = background override color, or NULL for none. [allow-none]
 	 */
 	public void drawLayoutWithColors(GC gc, int x, int y, PgLayout layout, Color foreground, Color background)
 	{
@@ -742,6 +786,10 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_drawable has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_cairo_set_source_pixmap(), cairo_rectangle()
+	 * and cairo_fill() to draw pixmap on top of other drawables. Also keep
+	 * in mind that the limitations on allowed sources do not apply to Cairo.
 	 * Copies the width x height region of src at coordinates (xsrc,
 	 * ysrc) to coordinates (xdest, ydest) in drawable.
 	 * width and/or height may be given as -1, in which case the entire
@@ -772,6 +820,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_image has been deprecated since version 2.22 and should not be used in newly-written code. Do not use GdkImage anymore, instead use Cairo image
+	 * surfaces.
 	 * Draws a GdkImage onto a drawable.
 	 * The depth of the GdkImage must match the depth of the GdkDrawable.
 	 * Params:
@@ -793,6 +844,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drawable_get_image has been deprecated since version 2.22 and should not be used in newly-written code. Use drawable as the source and draw to a Cairo image
+	 * surface if you want to download contents to the client.
 	 * A GdkImage stores client-side image data (pixels). In contrast,
 	 * GdkPixmap and GdkWindow are server-side
 	 * objects. gdk_drawable_get_image() obtains the pixels from a
@@ -837,12 +891,15 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drawable_copy_to_image has been deprecated since version 2.22 and should not be used in newly-written code. Use drawable as the source and draw to a Cairo image
+	 * surface if you want to download contents to the client.
 	 * Copies a portion of drawable into the client side image structure
 	 * image. If image is NULL, creates a new image of size width x height
 	 * and copies into that. See gdk_drawable_get_image() for further details.
 	 * Since 2.4
 	 * Params:
-	 * image = a GdkDrawable, or NULL if a new image should be created.. allow-none.
+	 * image = a GdkDrawable, or NULL if a new image should be created. [allow-none]
 	 * srcX = x coordinate on drawable
 	 * srcY = y coordinate on drawable
 	 * destX = x coordinate within image. Must be 0 if image is NULL

@@ -126,6 +126,8 @@ public class RgbCmap
 	 */
 	
 	/**
+	 * Warning
+	 * gdk_rgb_cmap_new is deprecated and should not be used in newly-written code.
 	 * Creates a new GdkRgbCmap structure. The cmap maps color indexes to
 	 * RGB colors. If n_colors is less than 256, then images containing
 	 * color values greater than or equal to n_colors will produce undefined
@@ -146,6 +148,8 @@ public class RgbCmap
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_cmap_free is deprecated and should not be used in newly-written code.
 	 * Frees the memory associated with a GdkRgbCmap created by gdk_rgb_cmap_new().
 	 */
 	public void free()

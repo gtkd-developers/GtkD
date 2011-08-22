@@ -121,7 +121,8 @@ public class Rectangle
 	 * pass NULL for dest.
 	 * Params:
 	 * src2 = a GdkRectangle
-	 * dest = return location for the intersection of src1 and src2, or NULL. allow-none.
+	 * dest = return location for the
+	 * intersection of src1 and src2, or NULL. [out caller-allocates][allow-none caller-allocates]
 	 * Returns: TRUE if the rectangles intersect.
 	 */
 	public int intersect(Rectangle src2, Rectangle dest)

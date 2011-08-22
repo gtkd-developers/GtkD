@@ -74,6 +74,9 @@ private import gdk.Drawable;
  * is the number of bits per pixels. Bitmaps are simply pixmaps
  * with a depth of 1. (That is, they are monochrome bitmaps - each
  * pixel can be either on or off).
+ * GTK 3 will remove GdkPixmap and GdkBitmap. You should use cairo
+ * surfaces instead. However, because a lot of functions still use these
+ * types, they are not deprecated.
  */
 public class Bitmap
 {
@@ -111,6 +114,15 @@ public class Bitmap
 	 */
 	
 	/**
+	 * Warning
+	 * gdk_bitmap_create_from_data has been deprecated since version 2.22 and should not be used in newly-written code. You can create a Cairo image surface using
+	 * cairo_image_surface_create_for_data() instead. Specify
+	 * CAIRO_FORMAT_A1 as the format to get a bitmap. Keep in mind that
+	 * Cairo images must have a rowstride of 4 bytes, so you will need
+	 * to align your data properly. If you must use a pixmap, use
+	 * gdk_pixmap_new() with a depth of 1 to create a bitmap and then use
+	 * gdk_cairo_create(), cairo_set_source_surface() and cairo_paint()
+	 * to draw the image surface to the bitmap.
 	 * Creates a new bitmap from data in XBM format.
 	 * Params:
 	 * drawable = a GdkDrawable, used to determine default values

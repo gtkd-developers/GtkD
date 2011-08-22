@@ -203,7 +203,7 @@ public class AppLaunchContext
 	 * See also gdk_app_launch_context_set_icon_name().
 	 * Since 2.14
 	 * Params:
-	 * icon = a GIcon, or NULL. allow-none.
+	 * icon = a GIcon, or NULL. [allow-none]
 	 */
 	public void setIcon(IconIF icon)
 	{
@@ -221,7 +221,7 @@ public class AppLaunchContext
 	 * for the launched application itself.
 	 * Since 2.14
 	 * Params:
-	 * iconName = an icon name, or NULL. allow-none.
+	 * iconName = an icon name, or NULL. [allow-none]
 	 */
 	public void setIconName(string iconName)
 	{

@@ -130,6 +130,9 @@ public class Region
 	}
 	
 	/**
+	 * Warning
+	 * gdk_region_polygon has been deprecated since version 2.22 and should not be used in newly-written code. There is no replacement. For working with paths, please
+	 *  use Cairo.
 	 * Creates a new GdkRegion using the polygon defined by a
 	 * number of points.
 	 * Params:
@@ -205,7 +208,7 @@ public class Region
 	 * Obtains the area covered by the region as a list of rectangles.
 	 * The array returned in rectangles must be freed with g_free().
 	 * Params:
-	 * rectangles = return location for an array of rectangles. array length=n_rectangles. transfer container length=n_rectangles.
+	 * rectangles = return location for an array of rectangles. [array length=n_rectangles][transfer container length=n_rectangles]
 	 */
 	public void getRectangles(out GdkRectangle[] rectangles)
 	{
@@ -241,6 +244,9 @@ public class Region
 	}
 	
 	/**
+	 * Warning
+	 * gdk_region_rect_equal has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_region_new_rect() and gdk_region_equal() to
+	 *  achieve the same effect.
 	 * Finds out if a regions is the same as a rectangle.
 	 * Since 2.18
 	 * Params:
@@ -291,6 +297,8 @@ public class Region
 	}
 	
 	/**
+	 * Warning
+	 * gdk_region_shrink has been deprecated since version 2.22 and should not be used in newly-written code. There is no replacement for this function.
 	 * Resizes a region by the specified amount.
 	 * Positive values shrink the region. Negative values expand it.
 	 * Params:
@@ -368,6 +376,8 @@ public class Region
 	}
 	
 	/**
+	 * Warning
+	 * gdk_region_spans_intersect_foreach has been deprecated since version 2.22 and should not be used in newly-written code. There is no replacement.
 	 * Calls a function on each span in the intersection of region and spans.
 	 * Params:
 	 * spans = an array of GdkSpans

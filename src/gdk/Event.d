@@ -245,7 +245,7 @@ public class Event
 	 * Frees a GdkEvent, freeing or decrementing any resources associated with it.
 	 * Note that this function should only be called with events returned from
 	 * functions such as gdk_event_peek(), gdk_event_get(),
-	 * gdk_event_get_graphics_expose() and gdk_event_copy().
+	 * gdk_event_get_graphics_expose() and gdk_event_copy() and gdk_event_new().
 	 */
 	public void free()
 	{
@@ -270,7 +270,7 @@ public class Event
 	 * in the event. event may be NULL, in which case it's treated
 	 * as if the event had no state field.
 	 * Params:
-	 * state = return location for state
+	 * state = return location for state. [out]
 	 * Returns: TRUE if there was a state field in the event
 	 */
 	public int getState(out GdkModifierType state)
@@ -283,8 +283,8 @@ public class Event
 	 * Extract the axis value for a particular axis use from
 	 * an event structure.
 	 * Params:
-	 * axisUse = the axis use to look for
-	 * value = location to store the value found
+	 * axisUse = the axis use to look for. [out]
+	 * value = location to store the value found. [out]
 	 * Returns: TRUE if the specified axis was found, otherwise FALSE
 	 */
 	public int getAxis(GdkAxisUse axisUse, out double value)
@@ -296,8 +296,8 @@ public class Event
 	/**
 	 * Extract the event window relative x/y coordinates from an event.
 	 * Params:
-	 * xWin = location to put event window x coordinate
-	 * yWin = location to put event window y coordinate
+	 * xWin = location to put event window x coordinate. [out]
+	 * yWin = location to put event window y coordinate. [out]
 	 * Returns: TRUE if the event delivered event window coordinates
 	 */
 	public int getCoords(out double xWin, out double yWin)
@@ -309,8 +309,8 @@ public class Event
 	/**
 	 * Extract the root window relative x/y coordinates from an event.
 	 * Params:
-	 * xRoot = location to put root window x coordinate
-	 * yRoot = location to put root window y coordinate
+	 * xRoot = location to put root window x coordinate. [out]
+	 * yRoot = location to put root window y coordinate. [out]
 	 * Returns: TRUE if the event delivered root window coordinates
 	 */
 	public int getRootCoords(out double xRoot, out double yRoot)

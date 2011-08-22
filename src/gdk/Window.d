@@ -53,6 +53,7 @@
  * 	- gdk.Pixmap
  * 	- gdk.Cursor
  * 	- glib.ListG
+ * 	- cairo.Pattern
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkBitmap* -> Bitmap
@@ -63,6 +64,7 @@
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
  * 	- GdkWindow* -> Window
+ * 	- cairo_pattern_t* -> Pattern
  * module aliases:
  * local aliases:
  * overrides:
@@ -87,6 +89,7 @@ private import gdk.Color;
 private import gdk.Pixmap;
 private import gdk.Cursor;
 private import glib.ListG;
+private import cairo.Pattern;
 
 
 
@@ -124,7 +127,6 @@ private import gdk.Drawable;
  * allow not only to modify the rendering of the child window onto its parent,
  * but also to apply coordinate transformations.
  * To integrate an offscreen window into a window hierarchy, one has to call
- * gdk_window_set_embedder() and handle a number of signals. The
  * gdk_offscreen_window_set_embedder() and handle a number of signals. The
  * "pick-embedded-child" signal on the embedder window is used to
  * select an offscreen child at given coordinates, and the "to-embedder"
@@ -281,7 +283,7 @@ public class Window : Drawable
 	 * display, parent must be specified.
 	 * Params:
 	 * parent = a GdkWindow, or NULL to create the window as a child of
-	 *  the default root window for the default display.. allow-none.
+	 *  the default root window for the default display. [allow-none]
 	 * attributes = attributes of the new window
 	 * attributesMask = mask indicating which fields in attributes are valid
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -329,9 +331,9 @@ public class Window : Drawable
 	 * NOTE: For multihead-aware widgets or applications use
 	 * gdk_display_get_window_at_pointer() instead.
 	 * Params:
-	 * winX = return location for origin of the window under the pointer. out. allow-none.
-	 * winY = return location for origin of the window under the pointer. out. allow-none.
-	 * Returns: window under the mouse pointer. transfer none.
+	 * winX = return location for origin of the window under the pointer. [out][allow-none]
+	 * winY = return location for origin of the window under the pointer. [out][allow-none]
+	 * Returns: window under the mouse pointer. [transfer none]
 	 */
 	public static Window atPointer(out int winX, out int winY)
 	{
@@ -418,6 +420,28 @@ public class Window : Drawable
 	{
 		// gboolean gdk_window_is_viewable (GdkWindow *window);
 		return gdk_window_is_viewable(gdkWindow);
+	}
+	
+	/**
+	 * Determines whether or not the window is shaped.
+	 * Since 2.22
+	 * Returns: TRUE if window is shaped
+	 */
+	public int isShaped()
+	{
+		// gboolean gdk_window_is_shaped (GdkWindow *window);
+		return gdk_window_is_shaped(gdkWindow);
+	}
+	
+	/**
+	 * Determines whether or not the window is an input only window.
+	 * Since 2.22
+	 * Returns: TRUE if window is input only
+	 */
+	public int isInputOnly()
+	{
+		// gboolean gdk_window_is_input_only (GdkWindow *window);
+		return gdk_window_is_input_only(gdkWindow);
 	}
 	
 	/**
@@ -654,6 +678,18 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Determines whether window is composited.
+	 * See gdk_window_set_composited().
+	 * Since 2.22
+	 * Returns: TRUE if the window is composited.
+	 */
+	public int getComposited()
+	{
+		// gboolean gdk_window_get_composited (GdkWindow *window);
+		return gdk_window_get_composited(gdkWindow);
+	}
+	
+	/**
 	 * Repositions a window relative to its parent window.
 	 * For toplevel windows, window managers may ignore or modify the move;
 	 * you should probably use gtk_window_move() on a GtkWindow widget
@@ -756,6 +792,18 @@ public class Window : Drawable
 	{
 		// void gdk_window_flush (GdkWindow *window);
 		gdk_window_flush(gdkWindow);
+	}
+	
+	/**
+	 * Checks whether the window has a native window or not. Note that
+	 * you can use gdk_window_ensure_native() if a native window is needed.
+	 * Since 2.22
+	 * Returns: TRUE if the window has a native window, FALSE otherwise.
+	 */
+	public int hasNative()
+	{
+		// gboolean gdk_window_has_native (GdkWindow *window);
+		return gdk_window_has_native(gdkWindow);
 	}
 	
 	/**
@@ -867,7 +915,7 @@ public class Window : Drawable
 	 * requests the restack, does not guarantee it.
 	 * Since 2.18
 	 * Params:
-	 * sibling = a GdkWindow that is a sibling of window, or NULL. allow-none.
+	 * sibling = a GdkWindow that is a sibling of window, or NULL. [allow-none]
 	 * above = a boolean
 	 */
 	public void restack(Window sibling, int above)
@@ -1043,7 +1091,7 @@ public class Window : Drawable
 	 * gdk_window_invalidate_region() for details.
 	 * Params:
 	 * rect = rectangle to invalidate or NULL to invalidate the whole
-	 *  window. allow-none.
+	 *  window. [allow-none]
 	 * invalidateChildren = whether to also invalidate child windows
 	 */
 	public void invalidateRect(Rectangle rect, int invalidateChildren)
@@ -1187,13 +1235,13 @@ public class Window : Drawable
 	 * likely to change in future releases of GDK.
 	 * Params:
 	 * realDrawable = location to store the drawable to which drawing should be
-	 *  done.. out.
+	 *  done. [out]
 	 * xOffset = location to store the X offset between coordinates in window,
 	 *  and the underlying window system primitive coordinates for
-	 *  *real_drawable.. out.
+	 *  *real_drawable. [out]
 	 * yOffset = location to store the Y offset between coordinates in window,
 	 *  and the underlying window system primitive coordinates for
-	 *  *real_drawable.. out.
+	 *  *real_drawable. [out]
 	 */
 	public void getInternalPaintInfo(out Drawable realDrawable, out int xOffset, out int yOffset)
 	{
@@ -1289,6 +1337,18 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Determines whether or not the desktop environment shuld be hinted that
+	 * the window does not want to receive input focus.
+	 * Since 2.22
+	 * Returns: whether or not the window should receive input focus.
+	 */
+	public int getAcceptFocus()
+	{
+		// gboolean gdk_window_get_accept_focus (GdkWindow *window);
+		return gdk_window_get_accept_focus(gdkWindow);
+	}
+	
+	/**
 	 * Setting focus_on_map to FALSE hints the desktop environment that the
 	 * window doesn't want to receive input focus when it is mapped.
 	 * focus_on_map should be turned off for windows that aren't triggered
@@ -1304,6 +1364,18 @@ public class Window : Drawable
 	{
 		// void gdk_window_set_focus_on_map (GdkWindow *window,  gboolean focus_on_map);
 		gdk_window_set_focus_on_map(gdkWindow, focusOnMap);
+	}
+	
+	/**
+	 * Determines whether or not the desktop environment should be hinted that the
+	 * window does not want to receive input focus when it is mapped.
+	 * Since 2.22
+	 * Returns: whether or not the window wants to receive input focus when it is mapped.
+	 */
+	public int getFocusOnMap()
+	{
+		// gboolean gdk_window_get_focus_on_map (GdkWindow *window);
+		return gdk_window_get_focus_on_map(gdkWindow);
 	}
 	
 	/**
@@ -1425,7 +1497,7 @@ public class Window : Drawable
 	 * function does nothing.
 	 * Since 2.10
 	 * Params:
-	 * mask = shape mask, or NULL. allow-none.
+	 * mask = shape mask, or NULL. [allow-none]
 	 * x = X position of shape mask with respect to window
 	 * y = Y position of shape mask with respect to window
 	 */
@@ -1550,7 +1622,7 @@ public class Window : Drawable
 	 * implementing a custom widget.)
 	 * The color must be allocated; gdk_rgb_find_color() is the best way
 	 * to allocate a color.
-	 * See also gdk_window_set_back_pixmap().
+	 * See also gdk_window_set_background_pixmap().
 	 * Params:
 	 * color = an allocated GdkColor
 	 */
@@ -1577,7 +1649,7 @@ public class Window : Drawable
 	 * when the window is obscured then exposed, and when you call
 	 * gdk_window_clear().
 	 * Params:
-	 * pixmap = a GdkPixmap, or NULL. allow-none.
+	 * pixmap = a GdkPixmap, or NULL. [allow-none]
 	 * parentRelative = whether the tiling origin is at the origin of
 	 *  window's parent
 	 */
@@ -1588,13 +1660,31 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Gets the pattern used to clear the background on window. If window
+	 * does not have its own background and reuses the parent's, NULL is
+	 * returned and you'll have to query it yourself.
+	 * Since 2.22
+	 * Returns: The pattern to use for the background or NULL to use the parent's background.
+	 */
+	public Pattern getBackgroundPattern()
+	{
+		// cairo_pattern_t * gdk_window_get_background_pattern (GdkWindow *window);
+		auto p = gdk_window_get_background_pattern(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
+	}
+	
+	/**
 	 * Sets the mouse pointer for a GdkWindow. Use gdk_cursor_new_for_display()
 	 * or gdk_cursor_new_from_pixmap() to create the cursor. To make the cursor
 	 * invisible, use GDK_BLANK_CURSOR. Passing NULL for the cursor argument
 	 * to gdk_window_set_cursor() means that window will use the cursor of its
 	 * parent window. Most windows should use this default.
 	 * Params:
-	 * cursor = a cursor
+	 * cursor = a cursor. [allow-none]
 	 */
 	public void setCursor(Cursor cursor)
 	{
@@ -1703,7 +1793,7 @@ public class Window : Drawable
 	 * image quality since the window manager may only need to scale the
 	 * icon by a small amount or not at all.
 	 * Params:
-	 * pixbufs = A list of pixbufs, of different sizes.
+	 * pixbufs = A list of pixbufs, of different sizes. [transfer none][element-type GdkPixbuf]
 	 */
 	public void setIconList(ListG pixbufs)
 	{
@@ -1725,6 +1815,18 @@ public class Window : Drawable
 	{
 		// void gdk_window_set_modal_hint (GdkWindow *window,  gboolean modal);
 		gdk_window_set_modal_hint(gdkWindow, modal);
+	}
+	
+	/**
+	 * Determines whether or not the window manager is hinted that window
+	 * has modal behaviour.
+	 * Since 2.22
+	 * Returns: whether or not the window has the modal hint set.
+	 */
+	public int getModalHint()
+	{
+		// gboolean gdk_window_get_modal_hint (GdkWindow *window);
+		return gdk_window_get_modal_hint(gdkWindow);
 	}
 	
 	/**
@@ -1901,17 +2003,73 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Transforms window coordinates from a parent window to a child
+	 * window, where the parent window is the normal parent as returned by
+	 * gdk_window_get_parent() for normal windows, and the window's
+	 * embedder as returned by gdk_offscreen_window_get_embedder() for
+	 * offscreen windows.
+	 * For normal windows, calling this function is equivalent to subtracting
+	 * the return values of gdk_window_get_position() from the parent coordinates.
+	 * For offscreen windows however (which can be arbitrarily transformed),
+	 * this function calls the GdkWindow::from-embedder: signal to translate
+	 * the coordinates.
+	 * You should always use this function when writing generic code that
+	 * walks down a window hierarchy.
+	 * See also: gdk_window_coords_to_parent()
+	 * Since 2.22
+	 * Params:
+	 * parentX = X coordinate in parent's coordinate system
+	 * parentY = Y coordinate in parent's coordinate system
+	 * x = return location for X coordinate in child's coordinate system. [out][allow-none]
+	 * y = return location for Y coordinate in child's coordinate system. [out][allow-none]
+	 */
+	public void coordsFromParent(double parentX, double parentY, out double x, out double y)
+	{
+		// void gdk_window_coords_from_parent (GdkWindow *window,  gdouble parent_x,  gdouble parent_y,  gdouble *x,  gdouble *y);
+		gdk_window_coords_from_parent(gdkWindow, parentX, parentY, &x, &y);
+	}
+	
+	/**
+	 * Transforms window coordinates from a child window to its parent
+	 * window, where the parent window is the normal parent as returned by
+	 * gdk_window_get_parent() for normal windows, and the window's
+	 * embedder as returned by gdk_offscreen_window_get_embedder() for
+	 * offscreen windows.
+	 * For normal windows, calling this function is equivalent to adding
+	 * the return values of gdk_window_get_position() to the child coordinates.
+	 * For offscreen windows however (which can be arbitrarily transformed),
+	 * this function calls the GdkWindow::to-embedder: signal to translate
+	 * the coordinates.
+	 * You should always use this function when writing generic code that
+	 * walks up a window hierarchy.
+	 * See also: gdk_window_coords_from_parent()
+	 * Since 2.22
+	 * Params:
+	 * x = X coordinate in child's coordinate system
+	 * y = Y coordinate in child's coordinate system
+	 * parentX = return location for X coordinate
+	 * in parent's coordinate system, or NULL. [out][allow-none]
+	 * parentY = return location for Y coordinate
+	 * in parent's coordinate system, or NULL. [out][allow-none]
+	 */
+	public void coordsToParent(double x, double y, out double parentX, out double parentY)
+	{
+		// void gdk_window_coords_to_parent (GdkWindow *window,  gdouble x,  gdouble y,  gdouble *parent_x,  gdouble *parent_y);
+		gdk_window_coords_to_parent(gdkWindow, x, y, &parentX, &parentY);
+	}
+	
+	/**
 	 * Obtains the current pointer position and modifier state.
 	 * The position is given in coordinates relative to the upper left
 	 * corner of window.
 	 * Params:
 	 * x = return location for X coordinate of pointer or NULL to not
-	 *  return the X coordinate. out. allow-none.
+	 *  return the X coordinate. [out][allow-none]
 	 * y = return location for Y coordinate of pointer or NULL to not
-	 *  return the Y coordinate. out. allow-none.
+	 *  return the Y coordinate. [out][allow-none]
 	 * mask = return location for modifier mask or NULL to not return the
-	 *  modifier mask. out. allow-none.
-	 * Returns: the window containing the pointer (as with gdk_window_at_pointer()), or NULL if the window containing the pointer isn't known to GDK. transfer none.
+	 *  modifier mask. [out][allow-none]
+	 * Returns: the window containing the pointer (as with gdk_window_at_pointer()), or NULL if the window containing the pointer isn't known to GDK. [transfer none]
 	 */
 	public Window getPointer(out int x, out int y, out GdkModifierType mask)
 	{
@@ -1931,6 +2089,10 @@ public class Window : Drawable
 	 * Xlib calls mixed with GDK calls on the X11 platform. It may also
 	 * matter for toplevel windows, because the window manager may choose
 	 * to reparent them.
+	 * Note that you should use gdk_window_get_effective_parent() when
+	 * writing generic code that walks up a window hierarchy, because
+	 * gdk_window_get_parent() will most likely not do what you expect if
+	 * there are offscreen windows in the hierarchy.
 	 * Returns: parent of window
 	 */
 	public Window getParent()
@@ -1945,10 +2107,33 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Obtains the parent of window, as known to GDK. Works like
+	 * gdk_window_get_parent() for normal windows, but returns the
+	 * window's embedder for offscreen windows.
+	 * See also: gdk_offscreen_window_get_embedder()
+	 * Since 2.22
+	 * Returns: effective parent of window
+	 */
+	public Window getEffectiveParent()
+	{
+		// GdkWindow * gdk_window_get_effective_parent (GdkWindow *window);
+		auto p = gdk_window_get_effective_parent(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
+	}
+	
+	/**
 	 * Gets the toplevel window that's an ancestor of window.
 	 * Any window type but GDK_WINDOW_CHILD is considered a
 	 * toplevel window, as is a GDK_WINDOW_CHILD window that
 	 * has a root window as parent.
+	 * Note that you should use gdk_window_get_effective_toplevel() when
+	 * you want to get to a window's toplevel as seen on screen, because
+	 * gdk_window_get_toplevel() will most likely not do what you expect
+	 * if there are offscreen windows in the hierarchy.
 	 * Returns: the toplevel window containing window
 	 */
 	public Window getToplevel()
@@ -1963,13 +2148,32 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Gets the toplevel window that's an ancestor of window.
+	 * Works like gdk_window_get_toplevel(), but treats an offscreen window's
+	 * embedder as its parent, using gdk_window_get_effective_parent().
+	 * See also: gdk_offscreen_window_get_embedder()
+	 * Since 2.22
+	 * Returns: the effective toplevel window containing window
+	 */
+	public Window getEffectiveToplevel()
+	{
+		// GdkWindow * gdk_window_get_effective_toplevel (GdkWindow *window);
+		auto p = gdk_window_get_effective_toplevel(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
+	}
+	
+	/**
 	 * Gets the list of children of window known to GDK.
 	 * This function only returns children created via GDK,
 	 * so for example it's useless when used with the root window;
 	 * it only returns windows an application created itself.
 	 * The returned list must be freed, but the elements in the
 	 * list need not be.
-	 * Returns: list of child windows inside window
+	 * Returns: list of child windows inside window. [transfer container][element-type GdkWindow]
 	 */
 	public ListG getChildren()
 	{
@@ -1985,7 +2189,7 @@ public class Window : Drawable
 	/**
 	 * Like gdk_window_get_children(), but does not copy the list of
 	 * children, so the list does not need to be freed.
-	 * Returns: a reference to the list of child windows in window
+	 * Returns: a reference to the list of child windows in window. [transfer none][element-type GdkWindow]
 	 */
 	public ListG peekChildren()
 	{

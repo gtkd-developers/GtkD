@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gdk_window_create_similar_surface
  * 	- gdk_cairo_create
  * 	- gdk_cairo_set_source_color
  * 	- gdk_cairo_set_source_pixbuf

@@ -254,7 +254,7 @@ public class Screen : ObjectG
 	 * Gets the default screen for the default display. (See
 	 * gdk_display_get_default()).
 	 * Since 2.2
-	 * Returns: a GdkScreen, or NULL if there is no default display. . transfer none.
+	 * Returns: a GdkScreen, or NULL if there is no default display. [transfer none]
 	 */
 	public static Screen getDefault()
 	{
@@ -270,7 +270,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the default colormap for screen.
 	 * Since 2.2
-	 * Returns: the default GdkColormap. . transfer none.
+	 * Returns: the default GdkColormap. [transfer none]
 	 */
 	public Colormap getDefaultColormap()
 	{
@@ -298,7 +298,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the system's default colormap for screen
 	 * Since 2.2
-	 * Returns: the default colormap for screen. . transfer none.
+	 * Returns: the default colormap for screen. [transfer none]
 	 */
 	public Colormap getSystemColormap()
 	{
@@ -316,7 +316,7 @@ public class Screen : ObjectG
 	 * This is the visual for the root window of the display.
 	 * The return value should not be freed.
 	 * Since 2.2
-	 * Returns: the system visual . transfer none.
+	 * Returns: the system visual. [transfer none]
 	 */
 	public Visual getSystemVisual()
 	{
@@ -330,13 +330,15 @@ public class Screen : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_screen_get_rgb_colormap has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_screen_get_system_colormap()
 	 * Gets the preferred colormap for rendering image data on screen.
 	 * Not a very useful function; historically, GDK could only render RGB
 	 * image data to one colormap and visual, but in the current version
 	 * it can render to any colormap and visual. So there's no need to
 	 * call this function.
 	 * Since 2.2
-	 * Returns: the preferred colormap . transfer none.
+	 * Returns: the preferred colormap. [transfer none]
 	 */
 	public Colormap getRgbColormap()
 	{
@@ -350,6 +352,8 @@ public class Screen : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_screen_get_rgb_visual has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_screen_get_system_visual()
 	 * Gets a "preferred visual" chosen by GdkRGB for rendering image data
 	 * on screen. In previous versions of
 	 * GDK, this was the only visual GdkRGB could use for rendering. In
@@ -357,7 +361,7 @@ public class Screen : ObjectG
 	 * the optimal one in those previous versions. GdkRGB can now render to
 	 * drawables with any visual.
 	 * Since 2.2
-	 * Returns: The GdkVisual chosen by GdkRGB. . transfer none.
+	 * Returns: The GdkVisual chosen by GdkRGB. [transfer none]
 	 */
 	public Visual getRgbVisual()
 	{
@@ -383,7 +387,7 @@ public class Screen : ObjectG
 	 * For setting an overall opacity for a top-level window, see
 	 * gdk_window_set_opacity().
 	 * Since 2.8
-	 * Returns: a colormap to use for windows with an alpha channel or NULL if the capability is not available. . transfer none.
+	 * Returns: a colormap to use for windows with an alpha channel or NULL if the capability is not available. [transfer none]
 	 */
 	public Colormap getRgbaColormap()
 	{
@@ -401,7 +405,7 @@ public class Screen : ObjectG
 	 * alpha channel. See the docs for gdk_screen_get_rgba_colormap()
 	 * for caveats.
 	 * Since 2.8
-	 * Returns: a visual to use for windows with an alpha channel or NULL if the capability is not available. . transfer none.
+	 * Returns: a visual to use for windows with an alpha channel or NULL if the capability is not available. [transfer none]
 	 */
 	public Visual getRgbaVisual()
 	{
@@ -432,7 +436,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the root window of screen.
 	 * Since 2.2
-	 * Returns: the root window . transfer none.
+	 * Returns: the root window. [transfer none]
 	 */
 	public Window getRootWindow()
 	{
@@ -526,7 +530,7 @@ public class Screen : ObjectG
 	 * and might expect pixels to be in a certain format.
 	 * Call g_list_free() on the return value when you're finished with it.
 	 * Since 2.2
-	 * Returns: a list of visuals; the list must be freed, but not its contents
+	 * Returns: a list of visuals; the list must be freed, but not its contents. [transfer container][element-type GdkVisual]
 	 */
 	public ListG listVisuals()
 	{
@@ -546,7 +550,7 @@ public class Screen : ObjectG
 	 * The returned list should be freed with g_list_free(), but
 	 * its elements need not be freed.
 	 * Since 2.2
-	 * Returns: list of toplevel windows, free with g_list_free()
+	 * Returns: list of toplevel windows, free with g_list_free(). [transfer container][element-type GdkWindow]
 	 */
 	public ListG getToplevelWindows()
 	{
@@ -746,7 +750,7 @@ public class Screen : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * options = a cairo_font_options_t, or NULL to unset any
-	 *  previously set default font options.. allow-none.
+	 *  previously set default font options. [allow-none]
 	 */
 	public void setFontOptions(FontOption options)
 	{
@@ -820,7 +824,7 @@ public class Screen : ObjectG
 	 * windows it contains, so it should be freed using g_list_free() and
 	 * its windows unrefed using g_object_unref() when no longer needed.
 	 * Since 2.10
-	 * Returns: a list of GdkWindows for the current window stack, or NULL.
+	 * Returns: a list of GdkWindows for the current window stack, or NULL. [transfer full][element-type GdkWindow]
 	 */
 	public ListG getWindowStack()
 	{

@@ -131,6 +131,8 @@ public enum GdkGrabStatus
 alias GdkGrabStatus GrabStatus;
 
 /**
+ * Warning
+ * GdkFillRule is deprecated and should not be used in newly-written code.
  * The method for determining which pixels are included in a region, when
  * creating a GdkRegion from a polygon.
  * The fill rule is only relevant for polygons which overlap themselves.
@@ -1820,6 +1822,9 @@ public struct GdkRectangle
 
 /**
  * A GdkRegion represents a set of pixels on the screen.
+ * In GTK3, GdkRegion will be replaced by cairo_region_t. All the functions
+ * listed in this section will go away and you will have to use the relevant
+ * Cairo functions. The conversion can be done using simple serch and replace.
  */
 public struct GdkRegion{}
 
@@ -1954,6 +1959,8 @@ public struct GdkBitmap{}
 
 
 /**
+ * Warning
+ * GdkRgbCmap is deprecated and should not be used in newly-written code.
  * A private data structure which maps color indices to actual RGB
  * colors. This is used only for gdk_draw_indexed_image().
  * guint32  colors[256];
@@ -1973,28 +1980,6 @@ public struct GdkRgbCmap
  * The GdkImage struct contains information on the image and the pixel data.
  * GObject  parent_instance;
  * the parent instance
- * GdkImageType  type;
- * the type of the image.
- * GdkVisual  *visual;
- * the visual.
- * GdkByteOrder  byte_order;
- * the byte order.
- * gint  width;
- * the width of the image in pixels.
- * gint  height;
- * the height of the image in pixels.
- * guint16  depth;
- * the depth of the image, i.e. the number of bits per pixel.
- * guint16  bpp;
- * the number of bytes per pixel.
- * guint16  bpl;
- * the number of bytes per line of the image.
- * guint16  bits_per_pixel;
- * the number of bits per pixel.
- * gpointer  mem;
- * the pixel data.
- * GdkColormap  *colormap;
- * the GdkColormap associated with the image
  */
 public struct GdkImage
 {
@@ -2037,8 +2022,6 @@ public struct GdkColor
 /**
  * Main Gtk struct.
  * The colormap structure contains the following public fields.
- * gint  size;
- * For pseudo-color colormaps, the number of colors
  */
 public struct GdkColormap
 {
@@ -2054,14 +2037,6 @@ public struct GdkColormap
  * $(DDOC_COMMENT example)
  * GObject  parent_instance;
  * inherited portion from GObject
- * GdkVisualType  type;
- * The type of this visual.
- * gint  depth;
- * The number of bits per pixel.
- * GdkByteOrder  byte_order;
- * The byte-order for this visual.
- * gint  colormap_size;
- * The number of entries in the colormap, for
  */
 public struct GdkVisual
 {
@@ -2105,8 +2080,6 @@ public struct GdkFont
 /**
  * Main Gtk struct.
  * A GdkCursor structure represents a cursor.
- * GdkCursorType  type;
- * the GdkCursorType of the cursor
  */
 public struct GdkCursor
 {
@@ -2907,18 +2880,6 @@ public struct GdkKeymapKey
  * drag in progress. It is used on both source and destination sides.
  * GObject  parent_instance;
  * the parent instance
- * GdkDragProtocol  protocol;
- * the DND protocol which governs this drag.
- * gboolean  is_source;
- * TRUE if the context is used on the source side.
- * GdkWindow  *source_window;
- * the source of this drag.
- * GdkWindow  *dest_window;
- * the destination window of this drag.
- * GList  *targets;
- * a list of targets offered by the source.
- * GdkDragAction  actions;
- * a bitmask of actions proposed by the source when
  */
 public struct GdkDragContext
 {
@@ -2944,22 +2905,6 @@ public struct GdkDragContext
  * to configure various aspects of the device.
  * GObject  parent_instance;
  * the parent instance
- * gchar  *name;
- * the name of this device.
- * GdkInputSource  source;
- * the type of this device.
- * GdkInputMode  mode;
- * the mode of this device
- * gboolean  has_cursor;
- * TRUE if the pointer follows device motion.
- * gint  num_axes;
- * the length of the axes array.
- * GdkDeviceAxis  *axes;
- * an array of GdkDeviceAxis, describing the axes of this device.
- * gint  num_keys;
- * the length of the keys array.
- * GdkDeviceKey  *keys;
- * an array of GdkDeviceKey, describing the mapped macro buttons
  */
 public struct GdkDevice
 {
@@ -3327,6 +3272,8 @@ public struct GdkAppLaunchContext{}
 // #define gdk_font_lookup_for_display(display, xid) ((GdkFont*) gdk_xid_table_lookup_for_display (display, ((xid)|XID_FONT_BIT)))
 
 /*
+ * Warning
+ * GdkSpanFunc is deprecated and should not be used in newly-written code.
  * This defines the type of the function passed to
  * gdk_region_spans_intersect_foreach().
  * span  :

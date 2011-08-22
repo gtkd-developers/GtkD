@@ -43,6 +43,7 @@
  * 	- gdk_device_get_history
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ListG
  * 	- gdk.Window
  * structWrap:
@@ -62,6 +63,7 @@ private import gtkc.gdk;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ListG;
 private import gdk.Window;
 
@@ -208,6 +210,17 @@ public class Device
 	}
 	
 	/**
+	 * Determines the name of the device.
+	 * Since 2.22
+	 * Returns: a name
+	 */
+	public string getName()
+	{
+		// const gchar * gdk_device_get_name (GdkDevice *device);
+		return Str.toString(gdk_device_get_name(gdkDevice));
+	}
+	
+	/**
 	 * Sets the source type for an input device.
 	 * Params:
 	 * source = the source type.
@@ -216,6 +229,17 @@ public class Device
 	{
 		// void gdk_device_set_source (GdkDevice *device,  GdkInputSource source);
 		gdk_device_set_source(gdkDevice, source);
+	}
+	
+	/**
+	 * Determines the type of the device.
+	 * Since 2.22
+	 * Returns: a GdkInputSource
+	 */
+	public GdkInputSource getSource()
+	{
+		// GdkInputSource gdk_device_get_source (GdkDevice *device);
+		return gdk_device_get_source(gdkDevice);
 	}
 	
 	/**
@@ -233,6 +257,17 @@ public class Device
 	}
 	
 	/**
+	 * Determines the mode of the device.
+	 * Since 2.22
+	 * Returns: a GdkInputSource
+	 */
+	public GdkInputMode getMode()
+	{
+		// GdkInputMode gdk_device_get_mode (GdkDevice *device);
+		return gdk_device_get_mode(gdkDevice);
+	}
+	
+	/**
 	 * Specifies the X key event to generate when a macro button of a device
 	 * is pressed.
 	 * Params:
@@ -247,6 +282,21 @@ public class Device
 	}
 	
 	/**
+	 * If index has a valid keyval, this function will
+	 * fill in keyval and modifiers with the keyval settings.
+	 * Since 2.22
+	 * Params:
+	 * index = the index of the macro button to get.
+	 * keyval = return value for the keyval.
+	 * modifiers = return value for modifiers.
+	 */
+	public void getKey(uint index, out uint keyval, out GdkModifierType modifiers)
+	{
+		// void gdk_device_get_key (GdkDevice *device,  guint index,  guint *keyval,  GdkModifierType *modifiers);
+		gdk_device_get_key(gdkDevice, index, &keyval, &modifiers);
+	}
+	
+	/**
 	 * Specifies how an axis of a device is used.
 	 * Params:
 	 * index = the index of the axis.
@@ -256,6 +306,19 @@ public class Device
 	{
 		// void gdk_device_set_axis_use (GdkDevice *device,  guint index_,  GdkAxisUse use);
 		gdk_device_set_axis_use(gdkDevice, index, use);
+	}
+	
+	/**
+	 * Returns the axis use for index.
+	 * Since 2.22
+	 * Params:
+	 * index = the index of the axis.
+	 * Returns: a GdkAxisUse specifying how the axis is used.
+	 */
+	public GdkAxisUse getAxisUse(uint index)
+	{
+		// GdkAxisUse gdk_device_get_axis_use (GdkDevice *device,  guint index);
+		return gdk_device_get_axis_use(gdkDevice, index);
 	}
 	
 	/**
@@ -291,7 +354,7 @@ public class Device
 	 * Frees an array of GdkTimeCoord that was returned by gdk_device_get_history().
 	 * Frees an array of GdkTimeCoord that was returned by gdk_device_get_history().
 	 * Params:
-	 * events = an array of GdkTimeCoord.. inout. transfer none.
+	 * events = an array of GdkTimeCoord. [inout][transfer none]
 	 */
 	public static void freeHistory(GdkTimeCoord*[] events)
 	{
@@ -312,6 +375,17 @@ public class Device
 	{
 		// gboolean gdk_device_get_axis (GdkDevice *device,  gdouble *axes,  GdkAxisUse use,  gdouble *value);
 		return gdk_device_get_axis(gdkDevice, axes.ptr, use, &value);
+	}
+	
+	/**
+	 * Gets the number of axes of a device.
+	 * Since 2.22
+	 * Returns: the number of axes of device
+	 */
+	public int getNAxes()
+	{
+		// gint gdk_device_get_n_axes (GdkDevice *device);
+		return gdk_device_get_n_axes(gdkDevice);
 	}
 	
 	/**

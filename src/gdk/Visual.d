@@ -184,7 +184,7 @@ public class Visual
 	 * For example, a visual might support 24-bit color, or 8-bit color,
 	 * and might expect pixels to be in a certain format.
 	 * Call g_list_free() on the return value when you're finished with it.
-	 * Returns: a list of visuals; the list must be freed, but not its contents
+	 * Returns: a list of visuals; the list must be freed, but not its contents. [transfer container][element-type GdkVisual]
 	 */
 	public static ListG gdkListVisuals()
 	{
@@ -223,7 +223,7 @@ public class Visual
 	 * Get the system's default visual for the default GDK screen.
 	 * This is the visual for the root window of the display.
 	 * The return value should not be freed.
-	 * Returns: system visual. transfer none.
+	 * Returns: system visual. [transfer none]
 	 */
 	public static Visual getSystem()
 	{
@@ -239,7 +239,7 @@ public class Visual
 	/**
 	 * Get the visual with the most available colors for the default
 	 * GDK screen. The return value should not be freed.
-	 * Returns: best visual. transfer none.
+	 * Returns: best visual. [transfer none]
 	 */
 	public static Visual getBest()
 	{
@@ -259,7 +259,7 @@ public class Visual
 	 * be freed. NULL may be returned if no visual supports depth.
 	 * Params:
 	 * depth = a bit depth
-	 * Returns: best visual for the given depth. transfer none.
+	 * Returns: best visual for the given depth. [transfer none]
 	 */
 	public static Visual getBestWithDepth(int depth)
 	{
@@ -279,7 +279,7 @@ public class Visual
 	 * visual_type.
 	 * Params:
 	 * visualType = a visual type
-	 * Returns: best visual of the given type. transfer none.
+	 * Returns: best visual of the given type. [transfer none]
 	 */
 	public static Visual getBestWithType(GdkVisualType visualType)
 	{
@@ -297,7 +297,7 @@ public class Visual
 	 * Params:
 	 * depth = a bit depth
 	 * visualType = a visual type
-	 * Returns: best visual with both depth and visual_type, or NULL if none. transfer none.
+	 * Returns: best visual with both depth and visual_type, or NULL if none. [transfer none]
 	 */
 	public static Visual getBestWithBoth(int depth, GdkVisualType visualType)
 	{
@@ -313,7 +313,7 @@ public class Visual
 	/**
 	 * Gets the screen to which this visual belongs
 	 * Since 2.2
-	 * Returns: the screen to which this visual belongs. . transfer none.
+	 * Returns: the screen to which this visual belongs. [transfer none]
 	 */
 	public Screen getScreen()
 	{
@@ -324,5 +324,114 @@ public class Visual
 			return null;
 		}
 		return new Screen(cast(GdkScreen*) p);
+	}
+	
+	/**
+	 * Returns the number of significant bits per red, green and blue value.
+	 * Since 2.22
+	 * Returns: The number of significant bits per color value for visual.
+	 */
+	public int getBitsPerRgb()
+	{
+		// gint gdk_visual_get_bits_per_rgb (GdkVisual *visual);
+		return gdk_visual_get_bits_per_rgb(gdkVisual);
+	}
+	
+	/**
+	 * Obtains values that are needed to calculate blue pixel values in TrueColor
+	 * and DirectColor. The "mask" is the significant bits within the pixel.
+	 * The "shift" is the number of bits left we must shift a primary for it
+	 * to be in position (according to the "mask"). Finally, "precision" refers
+	 * to how much precision the pixel value contains for a particular primary.
+	 * Since 2.22
+	 * Params:
+	 * mask = A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
+	 * shift = A pointer to a gint to be filled in, or NULL. [out][allow-none]
+	 * precision = A pointer to a gint to be filled in, or NULL. [out][allow-none]
+	 */
+	public void getBluePixelDetails(out uint mask, out int shift, out int precision)
+	{
+		// void gdk_visual_get_blue_pixel_details (GdkVisual *visual,  guint32 *mask,  gint *shift,  gint *precision);
+		gdk_visual_get_blue_pixel_details(gdkVisual, &mask, &shift, &precision);
+	}
+	
+	/**
+	 * Returns the byte order of this visual.
+	 * Since 2.22
+	 * Returns: A GdkByteOrder stating the byte order of visual.
+	 */
+	public GdkByteOrder getByteOrder()
+	{
+		// GdkByteOrder gdk_visual_get_byte_order (GdkVisual *visual);
+		return gdk_visual_get_byte_order(gdkVisual);
+	}
+	
+	/**
+	 * Returns the size of a colormap for this visual.
+	 * Since 2.22
+	 * Returns: The size of a colormap that is suitable for visual.
+	 */
+	public int getColormapSize()
+	{
+		// gint gdk_visual_get_colormap_size (GdkVisual *visual);
+		return gdk_visual_get_colormap_size(gdkVisual);
+	}
+	
+	/**
+	 * Returns the bit depth of this visual.
+	 * Since 2.22
+	 * Returns: The bit depth of this visual.
+	 */
+	public int getDepth()
+	{
+		// gint gdk_visual_get_depth (GdkVisual *visual);
+		return gdk_visual_get_depth(gdkVisual);
+	}
+	
+	/**
+	 * Obtains values that are needed to calculate green pixel values in TrueColor
+	 * and DirectColor. The "mask" is the significant bits within the pixel.
+	 * The "shift" is the number of bits left we must shift a primary for it
+	 * to be in position (according to the "mask"). Finally, "precision" refers
+	 * to how much precision the pixel value contains for a particular primary.
+	 * Since 2.22
+	 * Params:
+	 * mask = A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
+	 * shift = A pointer to a gint to be filled in, or NULL. [out][allow-none]
+	 * precision = A pointer to a gint to be filled in, or NULL. [out][allow-none]
+	 */
+	public void getGreenPixelDetails(out uint mask, out int shift, out int precision)
+	{
+		// void gdk_visual_get_green_pixel_details (GdkVisual *visual,  guint32 *mask,  gint *shift,  gint *precision);
+		gdk_visual_get_green_pixel_details(gdkVisual, &mask, &shift, &precision);
+	}
+	
+	/**
+	 * Obtains values that are needed to calculate red pixel values in TrueColor
+	 * and DirectColor. The "mask" is the significant bits within the pixel.
+	 * The "shift" is the number of bits left we must shift a primary for it
+	 * to be in position (according to the "mask"). Finally, "precision" refers
+	 * to how much precision the pixel value contains for a particular primary.
+	 * Since 2.22
+	 * Params:
+	 * mask = A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
+	 * shift = A pointer to a gint to be filled in, or NULL. [out][allow-none]
+	 * precision = A pointer to a gint to be filled in, or NULL. [out][allow-none]
+	 */
+	public void getRedPixelDetails(out uint mask, out int shift, out int precision)
+	{
+		// void gdk_visual_get_red_pixel_details (GdkVisual *visual,  guint32 *mask,  gint *shift,  gint *precision);
+		gdk_visual_get_red_pixel_details(gdkVisual, &mask, &shift, &precision);
+	}
+	
+	/**
+	 * Returns the type of visual this is (PseudoColor, TrueColor, etc).
+	 * Since 2.22
+	 * Returns: A GdkVisualType stating the type of visual.
+	 */
+	public GdkVisualType getVisualType()
+	{
+		// GdkVisualType gdk_visual_get_visual_type (GdkVisual *visual);
+		return gdk_visual_get_visual_type(gdkVisual);
 	}
 }

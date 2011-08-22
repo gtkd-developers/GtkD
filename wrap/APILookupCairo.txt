@@ -387,12 +387,20 @@ structWrap: cairo_surface_t* Surface
 structWrap: cairo_font_options_t* FontOption
 import: glib.Str
 import: cairo.FontOption
+import: gdk.Window
+import: gtkc.gdk
 
 out: cairo_surface_get_device_offset x_offset
 out: cairo_surface_get_device_offset y_offset
 out: cairo_surface_get_fallback_resolution x_pixels_per_inch
 out: cairo_surface_get_fallback_resolution y_pixels_per_inch
 
+code: start
+	this(Window window, cairo_content_t content, int width,int height)
+	{
+		this(gdk_window_create_similar_surface(window.getWindowStruct(), content, width, height));
+	}
+code: end
 outFile: Surface
 
 file: cairo-image-surface.html

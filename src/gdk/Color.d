@@ -320,7 +320,7 @@ public class Color
 	 * '#ffffffffffff')
 	 * Params:
 	 * spec = the string specifying the color.
-	 * color = the GdkColor to fill in. out.
+	 * color = the GdkColor to fill in. [out]
 	 * Returns: TRUE if the parsing succeeded.
 	 */
 	public static int parse(string spec, out GdkColor color)

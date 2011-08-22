@@ -128,6 +128,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_rgb_image is deprecated and should not be used in newly-written code.
 	 * Draws an RGB image in the drawable. This is the core GdkRGB
 	 * function, and likely the only one you will need to use.
 	 * The rowstride parameter allows for lines to be aligned more flexibly.
@@ -160,6 +162,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_rgb_image_dithalign is deprecated and should not be used in newly-written code.
 	 * Draws an RGB image in the drawable, with an adjustment for dither alignment.
 	 * This function is useful when drawing dithered images into a window
 	 * that may be scrolled. Pixel (x, y) will be drawn dithered as if its
@@ -190,6 +194,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_indexed_image is deprecated and should not be used in newly-written code.
 	 * Draws an indexed image in the drawable, using a GdkRgbCmap to assign
 	 * actual colors to the color indices.
 	 * Params:
@@ -212,6 +218,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_gray_image is deprecated and should not be used in newly-written code.
 	 * Draws a grayscale image in the drawable.
 	 * Params:
 	 * drawable = The GdkDrawable to draw in (usually a GdkWindow).
@@ -232,6 +240,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_rgb_32_image is deprecated and should not be used in newly-written code.
 	 * Draws a padded RGB image in the drawable. The image is stored as one
 	 * pixel per 32-bit word. It is laid out as a red byte, a green byte, a
 	 * blue byte, and a padding byte.
@@ -258,6 +268,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_draw_rgb_32_image_dithalign has been deprecated since version 2.22 and should not be used in newly-written code. Cairo handles colors automatically.
 	 * Like gdk_draw_rgb_32_image(), but allows you to specify the dither
 	 * offsets. See gdk_draw_rgb_image_dithalign() for more details.
 	 * Params:
@@ -326,6 +338,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_find_color has been deprecated since version 2.22 and should not be used in newly-written code. Cairo handles colors automatically.
 	 * colormap should be the colormap for the graphics context and
 	 * drawable you're using to draw. If you're drawing to a GtkWidget,
 	 * call gtk_widget_get_colormap().
@@ -349,6 +363,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_set_install is deprecated and should not be used in newly-written code.
 	 * If install is TRUE, directs GdkRGB to always install a new "private"
 	 * colormap rather than trying to find a best fit with the colors already
 	 * allocated. Ordinarily, GdkRGB will install a colormap only if a
@@ -365,6 +381,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_set_min_colors is deprecated and should not be used in newly-written code.
 	 * Sets the minimum number of colors for the color cube. Generally,
 	 * GdkRGB tries to allocate the largest color cube it can. If it can't
 	 * allocate a color cube at least as large as min_colors, it installs a
@@ -379,13 +397,15 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_get_visual has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_visual_get_system_visual (gdk_screen_get_default()) instead.
 	 * Gets a "preferred visual" chosen by GdkRGB for rendering image data
 	 * on the default screen. In previous versions of GDK, this was the
 	 * only visual GdkRGB could use for rendering. In current versions,
 	 * it's simply the visual GdkRGB would have chosen as the optimal one
 	 * in those previous versions. GdkRGB can now render to drawables with
 	 * any visual.
-	 * Returns: The GdkVisual chosen by GdkRGB.. transfer none.
+	 * Returns: The GdkVisual chosen by GdkRGB. [transfer none]
 	 */
 	public static Visual rgbGetVisual()
 	{
@@ -399,12 +419,14 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_get_colormap has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_screen_get_system_colormap (gdk_screen_get_default()) instead.
 	 * Get the preferred colormap for rendering image data. Not a
 	 * very useful function; historically, GDK could only render RGB image
 	 * data to one colormap and visual, but in the current version it can
 	 * render to any colormap and visual. So there's no need to call this
 	 * function.
-	 * Returns: the preferred colormap. transfer none.
+	 * Returns: the preferred colormap. [transfer none]
 	 */
 	public static Colormap rgbGetColormap()
 	{
@@ -418,6 +440,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_ditherable is deprecated and should not be used in newly-written code.
 	 * Determines whether the preferred visual is ditherable. This function may be
 	 * useful for presenting a user interface choice to the user about which
 	 * dither mode is desired; if the display is not ditherable, it may make
@@ -431,6 +455,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_colormap_ditherable is deprecated and should not be used in newly-written code.
 	 * Determines whether the visual associated with cmap is ditherable. This
 	 * function may be useful for presenting a user interface choice to the user
 	 * about which dither mode is desired; if the display is not ditherable, it may
@@ -446,6 +472,8 @@ public class RGB
 	}
 	
 	/**
+	 * Warning
+	 * gdk_rgb_set_verbose is deprecated and should not be used in newly-written code.
 	 * Sets the "verbose" flag. This is generally only useful for debugging.
 	 * Params:
 	 * verbose = TRUE if verbose messages are desired.

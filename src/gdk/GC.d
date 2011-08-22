@@ -159,6 +159,8 @@ public class GC : ObjectG
 	 */
 	
 	/**
+	 * Warning
+	 * gdk_gc_new has been deprecated since version 2.22 and should not be used in newly-written code. Use Cairo for rendering.
 	 * Create a new graphics context with default values.
 	 * Params:
 	 * drawable = a GdkDrawable. The created GC must always be used
@@ -177,6 +179,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_new_with_values has been deprecated since version 2.22 and should not be used in newly-written code. Use Cairo for rendering.
 	 * Create a new GC with the given initial values.
 	 * Params:
 	 * drawable = a GdkDrawable. The created GC must always be used
@@ -198,6 +202,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_get_screen is deprecated and should not be used in newly-written code.
 	 * Gets the GdkScreen for which gc was created
 	 * Since 2.2
 	 * Returns: the GdkScreen for gc.
@@ -214,6 +220,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_values has been deprecated since version 2.22 and should not be used in newly-written code. Use Cairo for rendering.
 	 * Sets attributes of a graphics context in bulk. For each flag set in
 	 * values_mask, the corresponding field will be read from values and
 	 * set as the new value for gc. If you're only setting a few values
@@ -230,6 +238,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_get_values has been deprecated since version 2.22 and should not be used in newly-written code. Use Cairo for rendering.
 	 * Retrieves the current values from a graphics context. Note that
 	 * only the pixel values of the values->foreground and values->background
 	 * are filled, use gdk_colormap_query_color() to obtain the rgb values
@@ -244,6 +254,9 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_foreground has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_cairo_set_source_color() to use a GdkColor
+	 * as the source in Cairo.
 	 * Sets the foreground color for a graphics context.
 	 * Note that this function uses color->pixel, use
 	 * gdk_gc_set_rgb_fg_color() to specify the foreground
@@ -258,6 +271,11 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_background has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_cairo_set_source_color() to use a GdkColor
+	 * as the source in Cairo. Note that if you want to draw a background and a
+	 * foreground in Cairo, you need to call drawing functions (like cairo_fill())
+	 * twice.
 	 * Sets the background color for a graphics context.
 	 * Note that this function uses color->pixel, use
 	 * gdk_gc_set_rgb_bg_color() to specify the background
@@ -272,6 +290,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_rgb_fg_color has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_cairo_set_source_color() instead.
 	 * Set the foreground color of a GC using an unallocated color. The
 	 * pixel value for the color will be determined using GdkRGB. If the
 	 * colormap for the GC has not previously been initialized for GdkRGB,
@@ -288,6 +308,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_rgb_bg_color has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_cairo_set_source_color() instead.
 	 * Set the background color of a GC using an unallocated color. The
 	 * pixel value for the color will be determined using GdkRGB. If the
 	 * colormap for the GC has not previously been initialized for GdkRGB,
@@ -320,6 +342,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_function has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_set_operator() with Cairo.
 	 * Determines how the current pixel values and the
 	 * pixel values being drawn are combined to produce
 	 * the final pixel values.
@@ -331,6 +355,10 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_fill has been deprecated since version 2.22 and should not be used in newly-written code. You can achieve tiling in Cairo by using
+	 * cairo_pattern_set_extend() on the source. For stippling, see the
+	 * deprecation comments on gdk_gc_set_stipple().
 	 * Set the fill mode for a graphics context.
 	 * Params:
 	 * fill = the new fill mode.
@@ -342,9 +370,8 @@ public class GC : ObjectG
 	}
 	
 	/**
-	 * Set a tile pixmap for a graphics context.
-	 * This will only be used if the fill mode
-	 * is GDK_TILED.
+	 * Warning
+	 * gdk_gc_set_tile has been deprecated since version 2.22 and should not be used in newly-written code. The following code snippet sets a tiling GdkPixmap
 	 * Params:
 	 * tile = the new tile pixmap.
 	 */
@@ -355,6 +382,12 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_stipple has been deprecated since version 2.22 and should not be used in newly-written code. Stippling has no direct replacement in Cairo. If you
+	 * want to achieve an identical look, you can use the stipple bitmap as a
+	 * mask. Most likely, this involves rendering the source to an intermediate
+	 * surface using cairo_push_group() first, so that you can then use
+	 * cairo_mask() to achieve the stippled look.
 	 * Set the stipple bitmap for a graphics context. The
 	 * stipple will only be used if the fill mode is
 	 * GDK_STIPPLED or GDK_OPAQUE_STIPPLED.
@@ -368,6 +401,11 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_ts_origin has been deprecated since version 2.22 and should not be used in newly-written code. You can set the origin for tiles and stipples in Cairo
+	 * by changing the source's matrix using cairo_pattern_set_matrix(). Or you
+	 * can specify it with gdk_cairo_set_source_pixmap() as shown in the example
+	 * for gdk_gc_set_tile().
 	 * Set the origin when using tiles or stipples with
 	 * the GC. The tile or stipple will be aligned such
 	 * that the upper left corner of the tile or stipple
@@ -383,6 +421,9 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_clip_origin has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_translate() before applying the clip path in
+	 * Cairo.
 	 * Sets the origin of the clip mask. The coordinates are
 	 * interpreted relative to the upper-left corner of
 	 * the destination drawable of the current operation.
@@ -397,6 +438,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_clip_mask has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_mask() instead.
 	 * Sets the clip mask for a graphics context from a bitmap.
 	 * The clip mask is interpreted relative to the clip
 	 * origin. (See gdk_gc_set_clip_origin()).
@@ -410,6 +453,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_clip_rectangle has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_rectangle() and cairo_clip() in Cairo.
 	 * Sets the clip mask for a graphics context from a
 	 * rectangle. The clip mask is interpreted relative to the clip
 	 * origin. (See gdk_gc_set_clip_origin()).
@@ -423,6 +468,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_clip_region has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_cairo_region() and cairo_clip() in Cairo.
 	 * Sets the clip mask for a graphics context from a region structure.
 	 * The clip mask is interpreted relative to the clip origin. (See
 	 * gdk_gc_set_clip_origin()).
@@ -436,6 +483,11 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_subwindow has been deprecated since version 2.22 and should not be used in newly-written code. There is no replacement. If you need to control
+	 * subwindows, you must use drawing operations of the underlying window
+	 * system manually. Cairo will always use GDK_INCLUDE_INFERIORS on sources
+	 * and masks and GDK_CLIP_BY_CHILDREN on targets.
 	 * Sets how drawing with this GC on a window will affect child
 	 * windows of that window.
 	 * Params:
@@ -448,6 +500,11 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_exposures has been deprecated since version 2.22 and should not be used in newly-written code. There is no replacement. If you need to control
+	 * exposures, you must use drawing operations of the underlying window
+	 * system or use gdk_window_invalidate_rect(). Cairo will never
+	 * generate exposures.
 	 * Sets whether copying non-visible portions of a drawable
 	 * using this graphics context generate exposure events
 	 * for the corresponding regions of the destination
@@ -462,6 +519,12 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_line_attributes has been deprecated since version 2.22 and should not be used in newly-written code. Use the Cairo functions cairo_set_line_width(),
+	 * cairo_set_line_join(), cairo_set_line_cap() and cairo_set_dash()
+	 * to affect the stroking behavior in Cairo. Keep in mind that the default
+	 * attributes of a cairo_t are different from the default attributes of
+	 * a GdkGC.
 	 * Sets various attributes of how lines are drawn. See
 	 * the corresponding members of GdkGCValues for full
 	 * explanations of the arguments.
@@ -478,6 +541,8 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_dashes has been deprecated since version 2.22 and should not be used in newly-written code. Use cairo_set_dash() to set the dash in Cairo.
 	 * Sets the way dashed-lines are drawn. Lines will be
 	 * drawn with alternating on and off segments of the
 	 * lengths specified in dash_list. The manner in
@@ -499,6 +564,9 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_copy has been deprecated since version 2.22 and should not be used in newly-written code. Use Cairo for drawing. cairo_save() and cairo_restore()
+	 * can be helpful in cases where you'd have copied a GdkGC.
 	 * Copy the set of values from one graphics context
 	 * onto another graphics context.
 	 * Params:
@@ -511,6 +579,9 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_set_colormap has been deprecated since version 2.22 and should not be used in newly-written code. There is no replacement. Cairo handles colormaps
+	 * automatically, so there is no need to care about them.
 	 * Sets the colormap for the GC to the given colormap. The depth
 	 * of the colormap's visual must match the depth of the drawable
 	 * for which the GC was created.
@@ -524,6 +595,9 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_get_colormap has been deprecated since version 2.22 and should not be used in newly-written code. There is no replacement. Cairo handles colormaps
+	 * automatically, so there is no need to care about them.
 	 * Retrieves the colormap for a given GC, if it exists.
 	 * A GC will have a colormap if the drawable for which it was created
 	 * has a colormap, or if a colormap was set explicitely with
@@ -542,6 +616,9 @@ public class GC : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_gc_offset has been deprecated since version 2.22 and should not be used in newly-written code. There is no direct replacement, as this is just a
+	 * convenience function for gdk_gc_set_ts_origin and gdk_gc_set_clip_origin().
 	 * Offset attributes such as the clip and tile-stipple origins
 	 * of the GC so that drawing at x - x_offset, y - y_offset with
 	 * the offset GC has the same effect as drawing at x, y with the original

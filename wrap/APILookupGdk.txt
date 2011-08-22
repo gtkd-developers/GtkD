@@ -812,8 +812,6 @@ file: gdk-Visuals.html
 struct: GdkVisual
 class: Visual
 prefix: gdk_visual_
-#import: gdk.VisualType*
-#structWrap: GdkVisualType** VisualType*
 import: glib.ListG
 structWrap: GList* ListG
 structWrap: GdkVisual* Visual
@@ -822,6 +820,15 @@ structWrap: GdkScreen* Screen
 
 out: gdk_query_visual_types visual_types
 array: gdk_query_visual_types visual_types count
+out: gdk_visual_get_blue_pixel_details mask
+out: gdk_visual_get_blue_pixel_details shift
+out: gdk_visual_get_blue_pixel_details precision
+out: gdk_visual_get_green_pixel_details mask
+out: gdk_visual_get_green_pixel_details shift
+out: gdk_visual_get_green_pixel_details precision
+out: gdk_visual_get_red_pixel_details mask
+out: gdk_visual_get_red_pixel_details shift
+out: gdk_visual_get_red_pixel_details precision
 
 nocode: gdk_query_depths
 
@@ -935,6 +942,8 @@ import: gdk.Cursor
 structWrap: GdkCursor* Cursor
 import: glib.ListG
 structWrap: GList* ListG
+import: cairo.Pattern
+structWrap: cairo_pattern_t* Pattern
 #import: gdk.ModifierType
 #structWrap: GdkModifierType* ModifierType
 #import: gdk.WMDecoration
@@ -968,7 +977,10 @@ out: gdk_window_get_pointer mask
 out: gdk_window_get_decorations decorations
 out: gdk_window_get_root_coords root_x
 out: gdk_window_get_root_coords root_y
-
+out: gdk_window_coords_from_parent x
+out: gdk_window_coords_from_parent y
+out: gdk_window_coords_to_parent parent_x
+out: gdk_window_coords_to_parent parent_y
 outFile: Window
 
 file: gdk-Events.html
@@ -1066,12 +1078,11 @@ outFile: Selection
 file: gdk-Drag-and-Drop.html
 struct: GdkDragContext
 class: DragContext
-prefix: gdk-drag_context_
+prefix: gdk_drag_context_
+prefix: gdk_
 structWrap: GdkDragContext* DragContext
 import: gdk.Window
 structWrap: GdkWindow* Window
-#import: gdk.DragProtocol
-#structWrap: GdkDragProtocol* DragProtocol
 import: gdk.Screen
 structWrap: GdkScreen* Screen
 import: glib.ListG
@@ -1109,6 +1120,7 @@ file: gdk-Input-Devices.html
 struct: GdkDevice
 class: Device
 prefix: gdk_device_
+import: glib.Str
 import: glib.ListG
 structWrap: GList* ListG
 structWrap: GdkDevice* Device
@@ -1122,6 +1134,8 @@ array: gdk_device_free_history events n_events
 #do we need a length?
 array: gdk_device_get_axis axes
 out: gdk_device_get_axis value
+out: gdk_device_get_key keyval
+out: gdk_device_get_key modifiers
 
 nocode: gdk_device_get_history
 
@@ -1263,6 +1277,7 @@ structWrap: GdkPixmap* Pixmap
 structWrap: GdkRectangle* Rectangle
 structWrap: GdkRegion* Region
 
+nocode: gdk_window_create_similar_surface
 nocode: gdk_cairo_create
 nocode: gdk_cairo_set_source_color
 nocode: gdk_cairo_set_source_pixbuf

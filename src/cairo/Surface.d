@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Surface
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,6 +44,8 @@
  * imports:
  * 	- glib.Str
  * 	- cairo.FontOption
+ * 	- gdk.Window
+ * 	- gtkc.gdk
  * structWrap:
  * 	- cairo_font_options_t* -> FontOption
  * 	- cairo_surface_t* -> Surface
@@ -62,6 +64,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import cairo.FontOption;
+private import gdk.Window;
+private import gtkc.gdk;
 
 
 
@@ -105,6 +109,11 @@ public class Surface
 			return;
 		}
 		this.cairo_surface = cairo_surface;
+	}
+	
+	this(Window window, cairo_content_t content, int width,int height)
+	{
+		this(gdk_window_create_similar_surface(window.getWindowStruct(), content, width, height));
 	}
 	
 	/**

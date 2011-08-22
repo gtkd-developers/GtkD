@@ -339,11 +339,11 @@ public class Keymap : ObjectG
 	 * hardwareKeycode = a keycode
 	 * state = a modifier state
 	 * group = active keyboard group
-	 * keyval = return location for keyval, or NULL. out. allow-none.
-	 * effectiveGroup = return location for effective group, or NULL. out. allow-none.
-	 * level = return location for level, or NULL. out. allow-none.
+	 * keyval = return location for keyval, or NULL. [out][allow-none]
+	 * effectiveGroup = return location for effective group, or NULL. [out][allow-none]
+	 * level = return location for level, or NULL. [out][allow-none]
 	 * consumedModifiers = return location for modifiers that were used to
-	 *  determine the group or level, or NULL. out. allow-none.
+	 *  determine the group or level, or NULL. [out][allow-none]
 	 * Returns: TRUE if there was a keyval bound to the keycode/state/group
 	 */
 	public int translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, out uint keyval, out int effectiveGroup, out int level, out GdkModifierType consumedModifiers)
@@ -510,8 +510,8 @@ public class Keymap : ObjectG
 	 * Examples of keyvals are GDK_a, GDK_Enter, GDK_F1, etc.
 	 * Params:
 	 * symbol = a keyval
-	 * lower = return location for lowercase version of symbol. out.
-	 * upper = return location for uppercase version of symbol. out.
+	 * lower = return location for lowercase version of symbol. [out]
+	 * upper = return location for uppercase version of symbol. [out]
 	 */
 	public static void gdkKeyvalConvertCase(uint symbol, out uint lower, out uint upper)
 	{

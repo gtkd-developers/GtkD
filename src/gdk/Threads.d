@@ -153,7 +153,7 @@ public static uint gdkThreadsAddIdle(GSourceFunc funct, void* data)
  * priority = the priority of the idle source. Typically this will be in the
  *  range btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE
  * data = data to pass to function
- * notify = function to call when the idle is removed, or NULL. allow-none.
+ * notify = function to call when the idle is removed, or NULL. [allow-none]
  * Returns: the ID (greater than 0) of the event source.
  */
 public static uint gdkThreadsAddIdleFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
@@ -199,7 +199,7 @@ public static uint gdkThreadsAddTimeout(uint interval, GSourceFunc funct, void* 
  * interval = the time between calls to the function, in milliseconds
  *  (1/1000ths of a second)
  * data = data to pass to function
- * notify = function to call when the timeout is removed, or NULL. allow-none.
+ * notify = function to call when the timeout is removed, or NULL. [allow-none]
  * Returns: the ID (greater than 0) of the event source.
  */
 public static uint gdkThreadsAddTimeoutFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
@@ -234,7 +234,7 @@ public static uint gdkThreadsAddTimeoutSeconds(uint interval, GSourceFunc funct,
  *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
  * interval = the time between calls to the function, in seconds
  * data = data to pass to function
- * notify = function to call when the timeout is removed, or NULL. allow-none.
+ * notify = function to call when the timeout is removed, or NULL. [allow-none]
  * Returns: the ID (greater than 0) of the event source.
  */
 public static uint gdkThreadsAddTimeoutSecondsFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)

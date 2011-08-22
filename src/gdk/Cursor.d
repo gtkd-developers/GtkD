@@ -280,6 +280,17 @@ public class Cursor
 	}
 	
 	/**
+	 * Returns the cursor type for this cursor.
+	 * Since 2.22
+	 * Returns: a GdkCursorType
+	 */
+	public GdkCursorType getCursorType()
+	{
+		// GdkCursorType gdk_cursor_get_cursor_type (GdkCursor *cursor);
+		return gdk_cursor_get_cursor_type(gdkCursor);
+	}
+	
+	/**
 	 * Adds a reference to cursor.
 	 * Returns: Same cursor that was passed in
 	 */
