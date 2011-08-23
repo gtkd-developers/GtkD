@@ -180,7 +180,7 @@ public class ProgressBar : Progress
 	/**
 	 * Causes the given text to appear superimposed on the progress bar.
 	 * Params:
-	 * text = a UTF-8 string, or NULL . allow-none.
+	 * text = a UTF-8 string, or NULL. [allow-none]
 	 */
 	public void setText(string text)
 	{
@@ -298,7 +298,7 @@ public class ProgressBar : Progress
 	 * gtk_progress_bar_new_with_adjustment is deprecated and should not be used in newly-written code.
 	 * Creates a new GtkProgressBar with an associated GtkAdjustment.
 	 * Params:
-	 * adjustment = . allow-none.
+	 * adjustment = . [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment)

@@ -227,7 +227,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 * the row pointed at by child_iter. If sort_iter was not set, FALSE
 	 * is returned. Note: a boolean is only returned since 2.14.
 	 * Params:
-	 * sortIter = An uninitialized GtkTreeIter.
+	 * sortIter = An uninitialized GtkTreeIter. [out]
 	 * childIter = A valid GtkTreeIter pointing to a row on the child model
 	 * Returns: TRUE, if sort_iter was set, i.e. if sort_iter is a valid iterator pointer to a visible row in the child model.
 	 */
@@ -261,7 +261,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	/**
 	 * Sets child_iter to point to the row pointed to by sorted_iter.
 	 * Params:
-	 * childIter = An uninitialized GtkTreeIter
+	 * childIter = An uninitialized GtkTreeIter. [out]
 	 * sortedIter = A valid GtkTreeIter pointing to a row on tree_model_sort.
 	 */
 	public void convertIterToChildIter(TreeIter childIter, TreeIter sortedIter)

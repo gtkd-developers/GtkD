@@ -298,7 +298,7 @@ public class Style : ObjectG
 	
 	/**
 	 * Params:
-	 * area = . allow-none.
+	 * area = . [allow-none]
 	 */
 	public void applyDefaultBackground(Window window, int setBg, GtkStateType stateType, Rectangle area, int x, int y, int width, int height)
 	{
@@ -354,8 +354,8 @@ public class Style : ObjectG
 	 * size = (type int) the size to render the icon at. A size of
 	 *  (GtkIconSize)-1 means render at the size of the source and
 	 *  don't scale.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * Returns: a newly-created GdkPixbuf containing the rendered icon
 	 */
 	public Pixbuf renderIcon(IconSource source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
@@ -398,7 +398,7 @@ public class Style : ObjectG
 	 * use style->font_desc instead.
 	 * Params:
 	 * font = a GdkFont, or NULL to use the GdkFont corresponding
-	 *  to style->font_desc.. allow-none.
+	 *  to style->font_desc. [allow-none]
 	 */
 	public void setFont(Font font)
 	{
@@ -859,9 +859,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = the type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * arrowType = the type of arrow to draw
 	 * fill = TRUE if the arrow tip should be filled
 	 * x = x origin of the rectangle to draw the arrow in
@@ -882,9 +882,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = the type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the box
 	 * y = y origin of the box
 	 * width = the width of the box
@@ -904,9 +904,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the rectangle
 	 * y = y origin of the rectangle
 	 * width = width of the rectangle
@@ -929,9 +929,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = the type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the rectangle to draw the check in
 	 * y = y origin of the rectangle to draw the check in
 	 * width = the width of the rectangle to draw the check in
@@ -951,9 +951,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = the type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the rectangle to draw the diamond in
 	 * y = y origin of the rectangle to draw the diamond in
 	 * width = width of the rectangle to draw the diamond in
@@ -972,9 +972,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the extension
 	 * y = y origin of the extension
 	 * width = width of the extension
@@ -994,9 +994,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = the type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the box
 	 * y = y origin of the box
 	 * width = the width of the box
@@ -1015,9 +1015,9 @@ public class Style : ObjectG
 	 * window = a GdkWindow
 	 * stateType = a state
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = the x origin of the rectangle around which to draw a focus indicator
 	 * y = the y origin of the rectangle around which to draw a focus indicator
 	 * width = the width of the rectangle around which to draw a focus indicator
@@ -1036,9 +1036,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the handle
 	 * y = y origin of the handle
 	 * width = with of the handle
@@ -1058,9 +1058,9 @@ public class Style : ObjectG
 	 * window = a GdkWindow
 	 * stateType = a state
 	 * area = rectangle to which the output is clipped, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x1 = the starting x coordinate
 	 * x2 = the ending x coordinate
 	 * y = the y coordinate
@@ -1079,9 +1079,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = the type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the rectangle to draw the option in
 	 * y = y origin of the rectangle to draw the option in
 	 * width = the width of the rectangle to draw the option in
@@ -1100,9 +1100,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * points = an array of GdkPoints
 	 * nPoints = length of points
 	 * fill = TRUE if the polygon should be filled
@@ -1121,9 +1121,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = type of shadow to draw
 	 * area = clip rectangle or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the rectangle
 	 * y = y origin of the rectangle
 	 * width = width of the rectangle
@@ -1144,9 +1144,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the rectangle
 	 * y = y origin of the rectangle
 	 * width = width of the rectangle
@@ -1169,9 +1169,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = a shadow
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = the x origin of the rectangle in which to draw a slider
 	 * y = the y origin of the rectangle in which to draw a slider
 	 * width = the width of the rectangle in which to draw a slider
@@ -1191,9 +1191,9 @@ public class Style : ObjectG
 	 * window = a GdkWindow
 	 * stateType = a state
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget (may be NULL). allow-none.
-	 * detail = a style detail (may be NULL). allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget (may be NULL). [allow-none]
+	 * detail = a style detail (may be NULL). [allow-none]
 	 * step = the nth step, a value between 0 and "num-steps"
 	 * x = the x origin of the rectangle in which to draw the spinner
 	 * y = the y origin of the rectangle in which to draw the spinner
@@ -1214,9 +1214,9 @@ public class Style : ObjectG
 	 * window = a GdkWindow
 	 * stateType = a state
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin
 	 * y = y origin
 	 * string = the string to draw
@@ -1235,9 +1235,9 @@ public class Style : ObjectG
 	 * stateType = a state
 	 * shadowType = the type of shadow to draw
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin of the rectangle to draw the tab in
 	 * y = y origin of the rectangle to draw the tab in
 	 * width = the width of the rectangle to draw the tab in
@@ -1256,9 +1256,9 @@ public class Style : ObjectG
 	 * window = a GdkWindow
 	 * stateType = a state
 	 * area = rectangle to which the output is clipped, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * y1_ = the starting y coordinate
 	 * y2_ = the ending y coordinate
 	 * x = the x coordinate
@@ -1283,9 +1283,9 @@ public class Style : ObjectG
 	 * window = a GdkWindow
 	 * stateType = a state
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = the x position to draw the expander at
 	 * y = the y position to draw the expander at
 	 * expanderStyle = the style to draw the expander in; determines
@@ -1306,9 +1306,9 @@ public class Style : ObjectG
 	 * useText = whether to use the text or foreground
 	 *  graphics context of style
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * x = x origin
 	 * y = y origin
 	 * layout = the layout to draw
@@ -1326,9 +1326,9 @@ public class Style : ObjectG
 	 * window = a GdkWindow
 	 * stateType = a state
 	 * area = clip rectangle, or NULL if the
-	 *  output should not be clipped. allow-none.
-	 * widget = the widget. allow-none.
-	 * detail = a style detail. allow-none.
+	 *  output should not be clipped. [allow-none]
+	 * widget = the widget. [allow-none]
+	 * detail = a style detail. [allow-none]
 	 * edge = the edge in which to draw the resize grip
 	 * x = the x origin of the rectangle in which to draw the resize grip
 	 * y = the y origin of the rectangle in which to draw the resize grip
@@ -1349,7 +1349,7 @@ public class Style : ObjectG
 	 * widget = a GtkWidget
 	 * drawable = a GdkDrawable
 	 * area = rectangle to which the output is clipped, or NULL if the
-	 *  output should not be clipped. allow-none.
+	 *  output should not be clipped. [allow-none]
 	 * location = location where to draw the cursor (location->width is ignored)
 	 * isPrimary = if the cursor should be the primary cursor color.
 	 * direction = whether the cursor is left-to-right or

@@ -2854,7 +2854,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * of the same dialog.
 	 * Params:
 	 * widget = a GtkWidget
-	 * widgetPointer = address of a variable that contains widget. inout. transfer none.
+	 * widgetPointer = address of a variable that contains widget. [inout][transfer none]
 	 */
 	public void destroyed(ref Widget widgetPointer)
 	{
@@ -3161,8 +3161,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * pass a static string, you can save some memory by interning it first with
 	 * g_intern_static_string().
 	 * Params:
-	 * accelPath = path used to look up the accelerator. allow-none.
-	 * accelGroup = a GtkAccelGroup.. allow-none.
+	 * accelPath = path used to look up the accelerator. [allow-none]
+	 * accelGroup = a GtkAccelGroup. [allow-none]
 	 */
 	public void setAccelPath(string accelPath, AccelGroup accelGroup)
 	{
@@ -3177,7 +3177,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * by connecting to the GtkAccelGroup::accel-changed signal of the
 	 * GtkAccelGroup of a closure which can be found out with
 	 * gtk_accel_group_from_accel_closure().
-	 * Returns: a newly allocated GList of closures
+	 * Returns: a newly allocated GList of closures. [transfer container][element-type GClosure]
 	 */
 	public ListG listAccelClosures()
 	{
@@ -3288,6 +3288,9 @@ public class Widget : ObjectGtk, BuildableIF
 	 * something like GtkFrame won't work.
 	 * More precisely, it must have the GTK_CAN_FOCUS flag set. Use
 	 * gtk_widget_set_can_focus() to modify that flag.
+	 * The widget also needs to be realized and mapped. This is indicated by the
+	 * related signals. Grabbing the focus immediately after creating the widget
+	 * will likely fail and cause critical warnings.
 	 */
 	public void grabFocus()
 	{
@@ -3392,7 +3395,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Gets widget's parent window.
-	 * Returns: the parent window of widget.. transfer none.
+	 * Returns: the parent window of widget. [transfer none]
 	 */
 	public Window getParentWindow()
 	{
@@ -3532,7 +3535,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * gtk_widget_get_toplevel() and check if the TOPLEVEL flags
 	 * is set on the result.
 	 * $(DDOC_COMMENT example)
-	 * Returns: the topmost ancestor of widget, or widget itself if there's no ancestor.. transfer none.
+	 * Returns: the topmost ancestor of widget, or widget itself if there's no ancestor. [transfer none]
 	 */
 	public Widget getToplevel()
 	{
@@ -3557,7 +3560,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * widget = a GtkWidget
 	 * widgetType = ancestor type
-	 * Returns: the ancestor widget, or NULL if not found. transfer none.
+	 * Returns: the ancestor widget, or NULL if not found. [transfer none]
 	 */
 	public Widget getAncestor(GType widgetType)
 	{
@@ -3573,7 +3576,7 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Gets the colormap that will be used to render widget. No reference will
 	 * be added to the returned colormap; it should not be unreferenced.
-	 * Returns: the colormap used by widget. transfer none.
+	 * Returns: the colormap used by widget. [transfer none]
 	 */
 	public Colormap getColormap()
 	{
@@ -3602,7 +3605,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Gets the visual that will be used to render widget.
-	 * Returns: the visual for widget. transfer none.
+	 * Returns: the visual for widget. [transfer none]
 	 */
 	public Visual getVisual()
 	{
@@ -3634,8 +3637,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * GTK_NO_WINDOW widgets, and are relative to widget->allocation.x,
 	 * widget->allocation.y for widgets that are GTK_NO_WINDOW widgets.
 	 * Params:
-	 * x = return location for the X coordinate, or NULL. out. allow-none.
-	 * y = return location for the Y coordinate, or NULL. out. allow-none.
+	 * x = return location for the X coordinate, or NULL. [out][allow-none]
+	 * y = return location for the Y coordinate, or NULL. [out][allow-none]
 	 */
 	public void getPointer(out int x, out int y)
 	{
@@ -3665,8 +3668,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * destWidget = a GtkWidget
 	 * srcX = X position relative to src_widget
 	 * srcY = Y position relative to src_widget
-	 * destX = location to store X position relative to dest_widget. out.
-	 * destY = location to store Y position relative to dest_widget. out.
+	 * destX = location to store X position relative to dest_widget. [out]
+	 * destY = location to store Y position relative to dest_widget. [out]
 	 * Returns: FALSE if either widget was not realized, or there was no common ancestor. In this case, nothing is stored in *dest_x and *dest_y. Otherwise TRUE.
 	 */
 	public int translateCoordinates(Widget destWidget, int srcX, int srcY, out int destX, out int destY)
@@ -3698,7 +3701,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * gtk_widget_modify_style().
 	 * Params:
 	 * style = a GtkStyle, or NULL to remove the effect of a previous
-	 *  gtk_widget_set_style() and go back to the default style. allow-none.
+	 *  gtk_widget_set_style() and go back to the default style. [allow-none]
 	 */
 	public void setStyle(Style style)
 	{
@@ -3720,7 +3723,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Simply an accessor function that returns widget->style.
-	 * Returns: the widget's GtkStyle. transfer none.
+	 * Returns: the widget's GtkStyle. [transfer none]
 	 */
 	public Style getStyle()
 	{
@@ -3783,7 +3786,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Returns the default style used by all widgets initially.
-	 * Returns: the default style. This GtkStyle object is owned by GTK+ and should not be modified or freed.. transfer none.
+	 * Returns: the default style. This GtkStyle object is owned by GTK+ and should not be modified or freed. [transfer none]
 	 */
 	public static Style getDefaultStyle()
 	{
@@ -3798,7 +3801,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Obtains the default colormap used to create widgets.
-	 * Returns: default widget colormap. transfer none.
+	 * Returns: default widget colormap. [transfer none]
 	 */
 	public static Colormap getDefaultColormap()
 	{
@@ -3814,7 +3817,7 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Obtains the visual of the default colormap. Not really useful;
 	 * used to be useful before gdk_colormap_get_visual() existed.
-	 * Returns: visual of the default colormap. transfer none.
+	 * Returns: visual of the default colormap. [transfer none]
 	 */
 	public static Visual getDefaultVisual()
 	{
@@ -3888,7 +3891,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * transparent windows etc., see gdk_window_shape_combine_mask()
 	 * for more information.
 	 * Params:
-	 * shapeMask = shape to be added, or NULL to remove an existing shape. allow-none.
+	 * shapeMask = shape to be added, or NULL to remove an existing shape. [allow-none]
 	 * offsetX = X position of shape mask with respect to window
 	 * offsetY = Y position of shape mask with respect to window
 	 */
@@ -3904,7 +3907,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * gdk_window_input_shape_combine_mask() for more information.
 	 * Since 2.10
 	 * Params:
-	 * shapeMask = shape to be added, or NULL to remove an existing shape. allow-none.
+	 * shapeMask = shape to be added, or NULL to remove an existing shape. [allow-none]
 	 * offsetX = X position of shape mask with respect to window
 	 * offsetY = Y position of shape mask with respect to window
 	 */
@@ -3928,9 +3931,9 @@ public class Widget : ObjectGtk, BuildableIF
 	 * i.e. starting with widget's name instead of starting with the name
 	 * of widget's outermost ancestor.
 	 * Params:
-	 * pathLength = location to store length of the path, or NULL. out. allow-none.
-	 * path = location to store allocated path string, or NULL. out. allow-none.
-	 * pathReversed = location to store allocated reverse path string, or NULL. out. allow-none.
+	 * pathLength = location to store length of the path, or NULL. [out][allow-none]
+	 * path = location to store allocated path string, or NULL. [out][allow-none]
+	 * pathReversed = location to store allocated reverse path string, or NULL. [out][allow-none]
 	 */
 	public void path(out uint pathLength, out string path, out string pathReversed)
 	{
@@ -3948,10 +3951,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Same as gtk_widget_path(), but always uses the name of a widget's type,
 	 * never uses a custom name set with gtk_widget_set_name().
 	 * Params:
-	 * pathLength = location to store the length of the class path, or NULL. out. allow-none.
-	 * path = (out) (allow-none) location to store the class path as an allocated string, or NULL
-	 * pathReversed = (out) (allow-none) location to store the reverse class path as an allocated
-	 *  string, or NULL
+	 * pathLength = location to store the length of the class path, or NULL. [out][allow-none]
+	 * path = location to store the class path as an allocated string, or NULL. [out][allow-none]
+	 * pathReversed = location to store the reverse class path as an allocated
+	 *  string, or NULL. [out][allow-none]
 	 */
 	public void classPath(out uint pathLength, out string path, out string pathReversed)
 	{
@@ -4013,7 +4016,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * the passed-in style and sets the copy as the new modifier style,
 	 * thus dropping any reference to the old modifier style. Add a reference
 	 * to the modifier style if you want to keep it alive.
-	 * Returns: the modifier style for the widget. This rc style is owned by the widget. If you want to keep a pointer to value this around, you must add a refcount using g_object_ref().. transfer none.
+	 * Returns: the modifier style for the widget. This rc style is owned by the widget. If you want to keep a pointer to value this around, you must add a refcount using g_object_ref(). [transfer none]
 	 */
 	public RcStyle getModifierStyle()
 	{
@@ -4034,7 +4037,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * state = the state for which to set the foreground color
 	 * color = the color to assign (does not need to be allocated),
 	 *  or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_fg().. allow-none.
+	 *  of gtk_widget_modify_fg(). [allow-none]
 	 */
 	public void modifyFg(GtkStateType state, Color color)
 	{
@@ -4057,7 +4060,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * state = the state for which to set the background color
 	 * color = the color to assign (does not need to be allocated),
 	 *  or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_bg().. allow-none.
+	 *  of gtk_widget_modify_bg(). [allow-none]
 	 */
 	public void modifyBg(GtkStateType state, Color color)
 	{
@@ -4075,7 +4078,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * state = the state for which to set the text color
 	 * color = the color to assign (does not need to be allocated),
 	 *  or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_text().. allow-none.
+	 *  of gtk_widget_modify_text(). [allow-none]
 	 */
 	public void modifyText(GtkStateType state, Color color)
 	{
@@ -4100,7 +4103,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * state = the state for which to set the base color
 	 * color = the color to assign (does not need to be allocated),
 	 *  or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_base().. allow-none.
+	 *  of gtk_widget_modify_base(). [allow-none]
 	 */
 	public void modifyBase(GtkStateType state, Color color)
 	{
@@ -4113,7 +4116,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * untouched. See also gtk_widget_modify_style().
 	 * Params:
 	 * fontDesc = the font description to use, or NULL to undo
-	 *  the effect of previous calls to gtk_widget_modify_font().. allow-none.
+	 *  the effect of previous calls to gtk_widget_modify_font(). [allow-none]
 	 */
 	public void modifyFont(PgFontDescription fontDesc)
 	{
@@ -4169,7 +4172,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * deal with changes to the context by calling pango_layout_context_changed()
 	 * on the layout in response to the "style-set" and
 	 * "direction-changed" signals for the widget.
-	 * Returns: the PangoContext for the widget.. transfer none.
+	 * Returns: the PangoContext for the widget. [transfer none]
 	 */
 	public PgContext getPangoContext()
 	{
@@ -4222,7 +4225,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * size = (type int) a stock size. A size of (GtkIconSize)-1 means
 	 *  render at the size of the source and don't scale (if there are
 	 *  multiple source sizes, GTK+ picks one of the available sizes).
-	 * detail = render detail to pass to theme engine. allow-none.
+	 * detail = render detail to pass to theme engine. [allow-none]
 	 * Returns: a new pixbuf, or NULL if the stock ID wasn't known
 	 */
 	public Pixbuf renderIcon(string stockId, GtkIconSize size, string detail)
@@ -4422,8 +4425,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * can be scrolled by placing them in a GtkViewport, which does
 	 * support scrolling.
 	 * Params:
-	 * hadjustment = an adjustment for horizontal scrolling, or NULL. allow-none.
-	 * vadjustment = an adjustment for vertical scrolling, or NULL. allow-none.
+	 * hadjustment = an adjustment for horizontal scrolling, or NULL. [allow-none]
+	 * vadjustment = an adjustment for vertical scrolling, or NULL. [allow-none]
 	 * Returns: TRUE if the widget supports scrolling
 	 */
 	public int setScrollAdjustments(Adjustment hadjustment, Adjustment vadjustment)
@@ -4479,7 +4482,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * klass = a GtkWidgetClass
 	 * propertyName = the name of the style property to find
-	 * Returns: the GParamSpec of the style property or NULL if class has no style property with that name.. allow-none.
+	 * Returns: the GParamSpec of the style property or NULL if class has no style property with that name. [allow-none]
 	 */
 	public static ParamSpec classFindStyleProperty(GtkWidgetClass* klass, string propertyName)
 	{
@@ -4561,6 +4564,24 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Sends the focus change event to widget
+	 * This function is not meant to be used by applications. The only time it
+	 * should be used is when it is necessary for a GtkWidget to assign focus
+	 * to a widget that is semantically owned by the first widget even though
+	 * it's not a direct child - for instance, a search entry in a floating
+	 * window similar to the quick search in GtkTreeView.
+	 * Since 2.22
+	 * Params:
+	 * event = a GdkEvent of type GDK_FOCUS_CHANGE
+	 * Returns: the return value from the event signal emission: TRUE if the event was handled, and FALSE otherwise
+	 */
+	public int sendFocusChange(Event event)
+	{
+		// gboolean gtk_widget_send_focus_change (GtkWidget *widget,  GdkEvent *event);
+		return gtk_widget_send_focus_change(gtkWidget, (event is null) ? null : event.getEventStruct());
+	}
+	
+	/**
 	 * Gets the value of a style property of widget.
 	 * Params:
 	 * propertyName = the name of a style property
@@ -4615,7 +4636,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * first ancestor class for which such an implementation is defined.
 	 * The documentation of the ATK
 	 * library contains more information about accessible objects and their uses.
-	 * Returns: the AtkObject associated with widget. transfer none.
+	 * Returns: the AtkObject associated with widget. [transfer none]
 	 */
 	public ObjectAtk getAccessible()
 	{
@@ -4704,7 +4725,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Returns the parent container of widget.
-	 * Returns: the parent container of widget, or NULL. transfer none.
+	 * Returns: the parent container of widget, or NULL. [transfer none]
 	 */
 	public Widget getParent()
 	{
@@ -4723,7 +4744,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Note that this function can only be called when the GtkWidget
 	 * is attached to a toplevel, since the settings object is specific
 	 * to a particular GdkScreen.
-	 * Returns: the relevant GtkSettings object. transfer none.
+	 * Returns: the relevant GtkSettings object. [transfer none]
 	 */
 	public Settings getSettings()
 	{
@@ -4748,7 +4769,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 *  default clipboard. Another common value
 	 *  is GDK_SELECTION_PRIMARY, which gives
 	 *  the primary X selection.
-	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent for all time. . transfer none.
+	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent for all time. [transfer none]
 	 */
 	public Clipboard getClipboard(GdkAtom selection)
 	{
@@ -4769,7 +4790,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * resources when a widget has been realized, and you should
 	 * free those resources when the widget is unrealized.
 	 * Since 2.2
-	 * Returns: the GdkDisplay for the toplevel for this widget. . transfer none.
+	 * Returns: the GdkDisplay for the toplevel for this widget. [transfer none]
 	 */
 	public Display getDisplay()
 	{
@@ -4791,7 +4812,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * create display specific resources when a widget has been realized,
 	 * and you should free those resources when the widget is unrealized.
 	 * Since 2.2
-	 * Returns: the GdkWindow root window for the toplevel for this widget. . transfer none.
+	 * Returns: the GdkWindow root window for the toplevel for this widget. [transfer none]
 	 */
 	public Window getRootWindow()
 	{
@@ -4813,7 +4834,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * resources when a widget has been realized, and you should
 	 * free those resources when the widget is unrealized.
 	 * Since 2.2
-	 * Returns: the GdkScreen for the toplevel for this widget. . transfer none.
+	 * Returns: the GdkScreen for the toplevel for this widget. [transfer none]
 	 */
 	public Screen getScreen()
 	{
@@ -4849,8 +4870,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * actually use, call gtk_widget_size_request() instead of
 	 * this function.
 	 * Params:
-	 * width = return location for width, or NULL. allow-none.
-	 * height = return location for height, or NULL. allow-none.
+	 * width = return location for width, or NULL. [out][allow-none]
+	 * height = return location for height, or NULL. [out][allow-none]
 	 */
 	public void getSizeRequest(out int width, out int height)
 	{
@@ -4968,7 +4989,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * (GFunc)g_object_ref, NULL) first, and then unref all the
 	 * widgets afterwards.
 	 * Since 2.4
-	 * Returns: the list of mnemonic labels; free this list with g_list_free() when you are done with it. . element-type GtkWidget. transfer container GtkWidget.
+	 * Returns: the list of mnemonic labels; free this list with g_list_free() when you are done with it. [element-type GtkWidget][transfer container GtkWidget]
 	 */
 	public ListG listMnemonicLabels()
 	{
@@ -5100,7 +5121,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * gtk_tooltip_set_markup().
 	 * Since 2.12
 	 * Params:
-	 * markup = the contents of the tooltip for widget, or NULL. allow-none.
+	 * markup = the contents of the tooltip for widget, or NULL. [allow-none]
 	 */
 	public void setTooltipMarkup(string markup)
 	{
@@ -5139,7 +5160,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * GtkWindow created by default, or the custom tooltip window set
 	 * using gtk_widget_set_tooltip_window().
 	 * Since 2.12
-	 * Returns: The GtkWindow of the current tooltip. . transfer none.
+	 * Returns: The GtkWindow of the current tooltip. [transfer none]
 	 */
 	public GtkWindow* getTooltipWindow()
 	{
@@ -5157,7 +5178,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * have the name "gtk-tooltip", see gtk_widget_set_name().
 	 * Since 2.12
 	 * Params:
-	 * customWindow = a GtkWindow, or NULL. allow-none.
+	 * customWindow = a GtkWindow, or NULL. [allow-none]
 	 */
 	public void setTooltipWindow(GtkWindow* customWindow)
 	{
@@ -5227,7 +5248,7 @@ public class Widget : ObjectGtk, BuildableIF
  * The returned pixmap can be NULL, if the resulting clip_area was empty.
  * Since 2.14
  * Params:
- * clipRect = a GdkRectangle or NULL. allow-none.
+ * clipRect = a GdkRectangle or NULL. [allow-none]
  * Returns: GdkPixmap snapshot of the widget
  */
 public Pixmap getSnapshot(Rectangle clipRect)
@@ -5348,9 +5369,9 @@ public int getHasWindow()
  * all realized widgets have a non-NULL "window" pointer
  * (gtk_widget_get_window() never returns a NULL window when a widget
  * is realized), but for many of them it's actually the GdkWindow of
- * one of its parent widgets. Widgets that create a window for
- * themselves in GtkWidget::realize() however must announce this by
- * calling this function with has_window = TRUE.
+ * one of its parent widgets. Widgets that do not create a window for
+ * themselves in GtkWidget::realize() must announce this by
+ * calling this function with has_window = FALSE.
  * This function should only be called by widget implementations,
  * and they should call it in their init() function.
  * Since 2.18
@@ -5613,7 +5634,7 @@ public int getMapped()
  * Normally, gtk_widget_size_request() should be used.
  * Since 2.20
  * Params:
- * requisition = a pointer to a GtkRequisition to copy to. out.
+ * requisition = a pointer to a GtkRequisition to copy to. [out]
  */
 public void getRequisition(out GtkRequisition requisition)
 {

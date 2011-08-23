@@ -76,8 +76,7 @@ private import gtk.Ruler;
  * utilized around other widgets such as a text widget. The ruler is used to show
  * the location of the mouse on the window and to show the size of the window in
  * specified units. The available units of measurement are GTK_PIXELS, GTK_INCHES
- * and GTK_CENTIMETERS. GTK_PIXELS is the default.
- * rulers.
+ * and GTK_CENTIMETERS. GTK_PIXELS is the default unit of measurement.
  */
 public class VRuler : Ruler
 {

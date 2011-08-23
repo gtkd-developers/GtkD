@@ -216,7 +216,7 @@ public class Viewport : Bin
 	/**
 	 * Sets the horizontal adjustment of the viewport.
 	 * Params:
-	 * adjustment = a GtkAdjustment.. allow-none.
+	 * adjustment = a GtkAdjustment. [allow-none]
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -227,7 +227,7 @@ public class Viewport : Bin
 	/**
 	 * Sets the vertical adjustment of the viewport.
 	 * Params:
-	 * adjustment = a GtkAdjustment.. allow-none.
+	 * adjustment = a GtkAdjustment. [allow-none]
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{
@@ -266,6 +266,22 @@ public class Viewport : Bin
 	{
 		// GdkWindow* gtk_viewport_get_bin_window (GtkViewport *viewport);
 		auto p = gtk_viewport_get_bin_window(gtkViewport);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
+	}
+	
+	/**
+	 * Gets the view window of the GtkViewport.
+	 * Since 2.22
+	 * Returns: a GdkWindow. [transfer none]
+	 */
+	public Window getViewWindow()
+	{
+		// GdkWindow* gtk_viewport_get_view_window (GtkViewport *viewport);
+		auto p = gtk_viewport_get_view_window(gtkViewport);
 		if(p is null)
 		{
 			return null;

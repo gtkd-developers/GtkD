@@ -599,8 +599,8 @@ public class Range : Widget, OrientableIF
 	 * This function is useful mainly for GtkRange subclasses.
 	 * Since 2.20
 	 * Params:
-	 * sliderStart = return location for the slider's start, or NULL. allow-none.
-	 * sliderEnd = return location for the slider's end, or NULL. allow-none.
+	 * sliderStart = return location for the slider's start, or NULL. [allow-none]
+	 * sliderEnd = return location for the slider's end, or NULL. [allow-none]
 	 */
 	public void getSliderRange(out int sliderStart, out int sliderEnd)
 	{

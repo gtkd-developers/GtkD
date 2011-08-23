@@ -184,7 +184,7 @@ public class StockItem
 	 * Retrieves a list of all known stock IDs added to a GtkIconFactory
 	 * or registered with gtk_stock_add(). The list must be freed with g_slist_free(),
 	 * and each string in the list must be freed with g_free().
-	 * Returns: a list of known stock IDs. element-type utf8. transfer full utf8.
+	 * Returns: a list of known stock IDs. [element-type utf8][transfer full utf8]
 	 */
 	public static ListSG listIds()
 	{

@@ -446,7 +446,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the page_setup from
 	 * groupName = the name of the group in the key_file to read, or NULL
-	 *  to use the default name "Page Setup". allow-none.
+	 *  to use the default name "Page Setup". [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -500,7 +500,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the page_setup from
 	 * groupName = the name of the group in the key_file to read, or NULL
-	 *  to use the default name "Page Setup". allow-none.
+	 *  to use the default name "Page Setup". [allow-none]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */

@@ -170,7 +170,7 @@ public class Tooltip : ObjectG
 	 * If markup is NULL, the label will be hidden.
 	 * Since 2.12
 	 * Params:
-	 * markup = a markup string (see Pango markup format) or NULL. allow-none.
+	 * markup = a markup string (see Pango markup format) or NULL. [allow-none]
 	 */
 	public void setMarkup(string markup)
 	{
@@ -183,7 +183,7 @@ public class Tooltip : ObjectG
 	 * will be hidden. See also gtk_tooltip_set_markup().
 	 * Since 2.12
 	 * Params:
-	 * text = a text string or NULL. allow-none.
+	 * text = a text string or NULL. [allow-none]
 	 */
 	public void setText(string text)
 	{
@@ -196,7 +196,7 @@ public class Tooltip : ObjectG
 	 * pixbuf. If pixbuf is NULL, the image will be hidden.
 	 * Since 2.12
 	 * Params:
-	 * pixbuf = a GdkPixbuf, or NULL. allow-none.
+	 * pixbuf = a GdkPixbuf, or NULL. [allow-none]
 	 */
 	public void setIcon(Pixbuf pixbuf)
 	{
@@ -210,8 +210,8 @@ public class Tooltip : ObjectG
 	 * by size. If stock_id is NULL, the image will be hidden.
 	 * Since 2.12
 	 * Params:
-	 * stockId = a stock id, or NULL. allow-none.
-	 * size = a stock icon size. type int
+	 * stockId = a stock id, or NULL. [allow-none]
+	 * size = a stock icon size. [type int]
 	 */
 	public void setIconFromStock(string stockId, GtkIconSize size)
 	{
@@ -225,8 +225,8 @@ public class Tooltip : ObjectG
 	 * by size. If icon_name is NULL, the image will be hidden.
 	 * Since 2.14
 	 * Params:
-	 * iconName = an icon name, or NULL. allow-none.
-	 * size = a stock icon size. type int
+	 * iconName = an icon name, or NULL. [allow-none]
+	 * size = a stock icon size. [type int]
 	 */
 	public void setIconFromIconName(string iconName, GtkIconSize size)
 	{
@@ -240,8 +240,8 @@ public class Tooltip : ObjectG
 	 * by size. If gicon is NULL, the image will be hidden.
 	 * Since 2.20
 	 * Params:
-	 * gicon = a GIcon representing the icon, or NULL. allow-none.
-	 * size = a stock icon size. type int
+	 * gicon = a GIcon representing the icon, or NULL. [allow-none]
+	 * size = a stock icon size. [type int]
 	 */
 	public void setIconFromGicon(IconIF gicon, GtkIconSize size)
 	{
@@ -258,7 +258,7 @@ public class Tooltip : ObjectG
 	 * and gtk_tooltip_set_icon().
 	 * Since 2.12
 	 * Params:
-	 * customWidget = a GtkWidget, or NULL to unset the old custom widget.. allow-none.
+	 * customWidget = a GtkWidget, or NULL to unset the old custom widget. [allow-none]
 	 */
 	public void setCustom(Widget customWidget)
 	{

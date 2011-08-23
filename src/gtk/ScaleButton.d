@@ -236,13 +236,13 @@ public class ScaleButton : Button, OrientableIF
 	 * a stepping of step.
 	 * Since 2.12
 	 * Params:
-	 * size = a stock icon size. in.
+	 * size = a stock icon size. [in]
 	 * min = the minimum value of the scale (usually 0)
 	 * max = the maximum value of the scale (usually 100)
 	 * step = the stepping of value when a scroll-wheel event,
 	 *  or up/down arrow event occurs (usually 2)
 	 * icons = a NULL-terminated array of icon names, or NULL if
-	 *  you want to set the list later with gtk_scale_button_set_icons(). allow-none.
+	 *  you want to set the list later with gtk_scale_button_set_icons(). [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkIconSize size, double min, double max, double step, string[] icons)

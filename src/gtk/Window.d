@@ -202,7 +202,7 @@ public class Window : Bin
 	
 	void delegate(Window)[] onActivateFocusListeners;
 	/**
-	 * The ::activate-default signal is a
+	 * The ::activate-focus signal is a
 	 * keybinding signal
 	 * which gets emitted when the user activates the currently
 	 * focused widget of window.
@@ -547,7 +547,7 @@ public class Window : Bin
 	
 	/**
 	 * Gets the value set by gtk_window_set_gravity().
-	 * Returns: window gravity. transfer none.
+	 * Returns: window gravity. [transfer none]
 	 */
 	public GdkGravity getGravity()
 	{
@@ -579,7 +579,7 @@ public class Window : Bin
 	 * On Windows, this function puts the child window on top of the parent,
 	 * much as the window manager would have done on X.
 	 * Params:
-	 * parent = parent window, or NULL. allow-none.
+	 * parent = parent window, or NULL. [allow-none]
 	 */
 	public void setTransientFor(Window parent)
 	{
@@ -618,7 +618,7 @@ public class Window : Bin
 	/**
 	 * Returns the GdkScreen associated with window.
 	 * Since 2.2
-	 * Returns: a GdkScreen. . transfer none.
+	 * Returns: a GdkScreen. [transfer none]
 	 */
 	public override Screen getScreen()
 	{
@@ -668,7 +668,7 @@ public class Window : Bin
 	 * callbacks that might destroy the widgets, you must call
 	 * g_list_foreach (result, (GFunc)g_object_ref, NULL) first, and
 	 * then unref all the widgets afterwards.
-	 * Returns: list of toplevel widgets. element-type GtkWidget. transfer container GtkWidget.
+	 * Returns: list of toplevel widgets. [element-type GtkWidget][transfer container GtkWidget]
 	 */
 	public static ListG listToplevels()
 	{
@@ -758,7 +758,7 @@ public class Window : Bin
 	 * if the toplevel window focused; if the toplevel window
 	 * is not focused then gtk_widget_has_focus (widget) will
 	 * not be TRUE for the widget.
-	 * Returns: the currently focused widget, or NULL if there is none.. transfer none.
+	 * Returns: the currently focused widget, or NULL if there is none. [transfer none]
 	 */
 	public Widget getFocus()
 	{
@@ -779,7 +779,7 @@ public class Window : Bin
 	 * gtk_widget_grab_focus() instead of this function.
 	 * Params:
 	 * focus = widget to be the new focus widget, or NULL to unset
-	 *  any focus widget for the toplevel window.. allow-none.
+	 *  any focus widget for the toplevel window. [allow-none]
 	 */
 	public void setFocus(Widget focus)
 	{
@@ -814,7 +814,7 @@ public class Window : Bin
 	 * widget you'd like to make the default using GTK_WIDGET_SET_FLAGS().
 	 * Params:
 	 * defaultWidget = widget to be the default, or NULL to unset the
-	 *  default widget for the toplevel.. allow-none.
+	 *  default widget for the toplevel. [allow-none]
 	 */
 	public void setDefault(Widget defaultWidget)
 	{
@@ -1361,8 +1361,8 @@ public class Window : Bin
 	 * for that dimension, so the "natural" size of the window will be
 	 * used.
 	 * Params:
-	 * width = location to store the default width, or NULL. allow-none.
-	 * height = location to store the default height, or NULL. allow-none.
+	 * width = location to store the default width, or NULL. [allow-none]
+	 * height = location to store the default height, or NULL. [allow-none]
 	 */
 	public void getDefaultSize(out int width, out int height)
 	{
@@ -1391,10 +1391,10 @@ public class Window : Bin
 	 * Retrieves the dimensions of the frame window for this toplevel.
 	 * See gtk_window_set_has_frame(), gtk_window_set_frame_dimensions().
 	 * Params:
-	 * left = location to store the width of the frame at the left, or NULL. allow-none.
-	 * top = location to store the height of the frame at the top, or NULL. allow-none.
-	 * right = location to store the width of the frame at the returns, or NULL. allow-none.
-	 * bottom = location to store the height of the frame at the bottom, or NULL. allow-none.
+	 * left = location to store the width of the frame at the left, or NULL. [out][allow-none]
+	 * top = location to store the height of the frame at the top, or NULL. [out][allow-none]
+	 * right = location to store the width of the frame at the returns, or NULL. [out][allow-none]
+	 * bottom = location to store the height of the frame at the bottom, or NULL. [out][allow-none]
 	 */
 	public void getFrameDimensions(out int left, out int top, out int right, out int bottom)
 	{
@@ -1417,7 +1417,7 @@ public class Window : Bin
 	 * Gets the value set by gtk_window_set_icon() (or if you've
 	 * called gtk_window_set_icon_list(), gets the first icon in
 	 * the icon list).
-	 * Returns: icon for window. transfer none.
+	 * Returns: icon for window. [transfer none]
 	 */
 	public Pixbuf getIcon()
 	{
@@ -1434,7 +1434,7 @@ public class Window : Bin
 	 * Retrieves the list of icons set by gtk_window_set_icon_list().
 	 * The list is copied, but the reference count on each
 	 * member won't be incremented.
-	 * Returns: copy of window's icon list. element-type GdkPixbuf. transfer container GdkPixbuf.
+	 * Returns: copy of window's icon list. [element-type GdkPixbuf][transfer container GdkPixbuf]
 	 */
 	public ListG getIconList()
 	{
@@ -1574,8 +1574,8 @@ public class Window : Bin
 	 * doing it yourself - gtk_window_set_position() will frequently
 	 * handle the details for you.
 	 * Params:
-	 * width = return location for width, or NULL. allow-none.
-	 * height = return location for height, or NULL. allow-none.
+	 * width = return location for width, or NULL. [out][allow-none]
+	 * height = return location for height, or NULL. [out][allow-none]
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -1596,7 +1596,7 @@ public class Window : Bin
 	/**
 	 * Fetches the transient parent for this window. See
 	 * gtk_window_set_transient_for().
-	 * Returns: the transient parent for this window, or NULL if no transient parent has been set.. transfer none.
+	 * Returns: the transient parent for this window, or NULL if no transient parent has been set. [transfer none]
 	 */
 	public Window getTransientFor()
 	{
@@ -1679,7 +1679,7 @@ public class Window : Bin
 	 * window is NULL or if window does not have an explicit
 	 * window group.
 	 * Since 2.10
-	 * Returns: the GtkWindowGroup for a window or the default group . transfer none.
+	 * Returns: the GtkWindowGroup for a window or the default group. [transfer none]
 	 */
 	public WindowGroup getGroup()
 	{
@@ -1690,6 +1690,17 @@ public class Window : Bin
 			return null;
 		}
 		return new WindowGroup(cast(GtkWindowGroup*) p);
+	}
+	
+	/**
+	 * Returns whether window has an explicit window group.
+	 * Since 2.22
+	 * Returns: TRUE if window has an explicit window group.
+	 */
+	public int hasGroup()
+	{
+		// gboolean gtk_window_has_group (GtkWindow *window);
+		return gtk_window_has_group(gtkWindow);
 	}
 	
 	/**
@@ -1787,7 +1798,7 @@ public class Window : Bin
 	 * icon for all windows in your app at once.
 	 * See gtk_window_set_icon_list() for more details.
 	 * Params:
-	 * list = a list of GdkPixbuf
+	 * list = a list of GdkPixbuf. [element-type GdkPixbuf][transfer container GdkPixbuf]
 	 */
 	public static void setDefaultIconList(ListG list)
 	{
@@ -1863,7 +1874,7 @@ public class Window : Bin
 	 * See also gtk_window_set_default_icon_list() to set the icon
 	 * for all windows in your application in one go.
 	 * Params:
-	 * icon = icon image, or NULL. allow-none.
+	 * icon = icon image, or NULL. [allow-none]
 	 */
 	public void setIcon(Pixbuf icon)
 	{
@@ -1933,7 +1944,7 @@ public class Window : Bin
 	 * property which is mentioned in the ICCCM.
 	 * Since 2.6
 	 * Params:
-	 * name = the name of the themed icon. allow-none.
+	 * name = the name of the themed icon. [allow-none]
 	 */
 	public void setIconName(string name)
 	{

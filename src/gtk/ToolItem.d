@@ -366,8 +366,8 @@ public class ToolItem : Bin, ActivatableIF
 	 * Since 2.4
 	 * Params:
 	 * tooltips = The GtkTooltips object to be used
-	 * tipText = text to be used as tooltip text for tool_item. allow-none.
-	 * tipPrivate = text to be used as private tooltip text. allow-none.
+	 * tipText = text to be used as tooltip text for tool_item. [allow-none]
+	 * tipPrivate = text to be used as private tooltip text. [allow-none]
 	 */
 	public void setTooltip(Tooltips tooltips, string tipText, string tipPrivate)
 	{
@@ -526,7 +526,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * GtkToolItem should call this function to find out what size icons
 	 * they should use.
 	 * Since 2.4
-	 * Returns: a GtkIconSize indicating the icon size used for tool_item . type int
+	 * Returns: a GtkIconSize indicating the icon size used for tool_item. [type int]
 	 */
 	public GtkIconSize getIconSize()
 	{
@@ -606,7 +606,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * gtk_tool_item_set_proxy_menu_item(), ie. the GtkMenuItem
 	 * that is going to appear in the overflow menu.
 	 * Since 2.4
-	 * Returns: The GtkMenuItem that is going to appear in the overflow menu for tool_item. . transfer none.
+	 * Returns: The GtkMenuItem that is going to appear in the overflow menu for tool_item. [transfer none]
 	 */
 	public Widget retrieveProxyMenuItem()
 	{

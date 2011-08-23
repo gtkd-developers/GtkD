@@ -127,7 +127,7 @@ public class IconSize
 	 * are free to render the pixbuf however they like, including changing
 	 * the usual size.
 	 * Params:
-	 * size = an icon size. type int
+	 * size = an icon size. [type int]
 	 * width = location to store icon width
 	 * height = location to store icon height
 	 * Returns: TRUE if size was a valid size
@@ -153,7 +153,7 @@ public class IconSize
 	 * Params:
 	 * settings = a GtkSettings object, used to determine
 	 *  which set of user preferences to used.
-	 * size = an icon size. type int
+	 * size = an icon size. [type int]
 	 * width = location to store icon width
 	 * height = location to store icon height
 	 * Returns: TRUE if size was a valid size
@@ -171,7 +171,7 @@ public class IconSize
 	 * name = name of the icon size
 	 * width = the icon width
 	 * height = the icon height
-	 * Returns: integer value representing the size. type int
+	 * Returns: integer value representing the size. [type int]
 	 */
 	public static GtkIconSize register(string name, int width, int height)
 	{
@@ -184,7 +184,7 @@ public class IconSize
 	 * So calling gtk_icon_size_from_name() with alias as argument
 	 * will return target.
 	 * Params:
-	 * target = an existing icon size. type int
+	 * target = an existing icon size. [type int]
 	 */
 	public static void registerAlias(string alia, GtkIconSize target)
 	{
@@ -208,7 +208,7 @@ public class IconSize
 	 * Gets the canonical name of the given icon size. The returned string
 	 * is statically allocated and should not be freed.
 	 * Params:
-	 * size = a GtkIconSize.. type int
+	 * size = a GtkIconSize. [type int]
 	 * Returns: the name of the given icon size.
 	 */
 	public static string getName(GtkIconSize size)

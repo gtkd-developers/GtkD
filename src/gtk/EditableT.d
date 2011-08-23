@@ -232,8 +232,8 @@ public template EditableT(TStruct)
 	 * selected both will be identical and FALSE will be returned.
 	 * Note that positions are specified in characters, not bytes.
 	 * Params:
-	 * startPos = location to store the starting position, or NULL. out. allow-none.
-	 * endPos = location to store the end position, or NULL. out. allow-none.
+	 * startPos = location to store the starting position, or NULL. [out][allow-none]
+	 * endPos = location to store the end position, or NULL. [out][allow-none]
 	 * Returns: TRUE if an area is selected, FALSE otherwise
 	 */
 	public int getSelectionBounds(int* startPos, int* endPos)
@@ -250,7 +250,7 @@ public template EditableT(TStruct)
 	 * Params:
 	 * newText = the text to append
 	 * newTextLength = the length of the text in bytes, or -1
-	 * position = location of the position text will be inserted at. in-out.
+	 * position = location of the position text will be inserted at. [in-out]
 	 */
 	public void insertText(string newText, int newTextLength, ref int position)
 	{

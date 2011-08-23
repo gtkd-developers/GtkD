@@ -134,7 +134,7 @@ private import gobject.ObjectG;
  * the name assigned by gtk_widget_set_name() is used if present, otherwise
  * the class name of the widget, while for the class path, the class name is
  * always used.
- * Since GTK+ 2.10,widget_class paths can also contain
+ * Since GTK+ 2.10, widget_class paths can also contain
  * <classname> substrings, which are matching
  * the class with the given name and any derived classes. For instance,
  * $(DDOC_COMMENT example)
@@ -543,9 +543,9 @@ public class RcStyle : ObjectG
 	 * Params:
 	 * settings = a GtkSettings object
 	 * widgetPath = the widget path to use when looking up the style, or NULL
-	 *  if no matching against the widget path should be done. allow-none.
+	 *  if no matching against the widget path should be done. [allow-none]
 	 * classPath = the class path to use when looking up the style, or NULL
-	 *  if no matching against the class path should be done.. allow-none.
+	 *  if no matching against the class path should be done. [allow-none]
 	 * type = a type that will be used along with parent types of this type
 	 *  when matching against class styles, or G_TYPE_NONE
 	 * Returns: A style created by matching with the supplied paths, or NULL if nothing matching was specified and the default style should be used. The returned value is owned by GTK+ as part of an internal cache, so you must call g_object_ref() on the returned value if you want to keep a reference to it.
@@ -730,7 +730,7 @@ public class RcStyle : ObjectG
 	 * Since 2.12
 	 * Params:
 	 * scanner = a GScanner
-	 * style = a GtkRcStyle, or NULL. allow-none.
+	 * style = a GtkRcStyle, or NULL. [allow-none]
 	 * color = a pointer to a GdkColor structure in which to store the result
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found
 	 */

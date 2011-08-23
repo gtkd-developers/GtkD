@@ -173,8 +173,8 @@ public class ToggleAction : Action
 	 * Since 2.4
 	 * Params:
 	 * name = A unique name for the action
-	 * label = The label displayed in menu items and on buttons, or NULL. allow-none.
-	 * tooltip = A tooltip for the action, or NULL. allow-none.
+	 * label = The label displayed in menu items and on buttons, or NULL. [allow-none]
+	 * tooltip = A tooltip for the action, or NULL. [allow-none]
 	 * stockId = The stock icon to display in widgets representing the
 	 *  action, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.

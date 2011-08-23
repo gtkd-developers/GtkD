@@ -193,7 +193,7 @@ public class ImageMenuItem : MenuItem
 	 * Note that it depends on the show-menu-images setting whether
 	 * the image will be displayed or not.
 	 * Params:
-	 * image = a widget to set as the image for the menu item.. allow-none.
+	 * image = a widget to set as the image for the menu item. [allow-none]
 	 */
 	public void setImage(Widget image)
 	{

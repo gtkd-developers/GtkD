@@ -537,7 +537,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Returns the list of action groups associated with self.
 	 * Since 2.4
-	 * Returns: a GList of action groups. The list is owned by GTK+ and should not be modified. . element-type GtkActionGroup. transfer none GtkActionGroup.
+	 * Returns: a GList of action groups. The list is owned by GTK+ and should not be modified. [element-type GtkActionGroup][transfer none GtkActionGroup]
 	 */
 	public ListG getActionGroups()
 	{
@@ -553,7 +553,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Returns the GtkAccelGroup associated with self.
 	 * Since 2.4
-	 * Returns: the GtkAccelGroup. . transfer none.
+	 * Returns: the GtkAccelGroup. [transfer none]
 	 */
 	public AccelGroup getAccelGroup()
 	{
@@ -581,7 +581,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * path = a path
-	 * Returns: the widget found by following the path, or NULL if no widget was found. . transfer none.
+	 * Returns: the widget found by following the path, or NULL if no widget was found. [transfer none]
 	 */
 	public Widget getWidget(string path)
 	{
@@ -601,7 +601,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * types = specifies the types of toplevel widgets to include. Allowed
 	 *  types are GTK_UI_MANAGER_MENUBAR, GTK_UI_MANAGER_TOOLBAR and
 	 *  GTK_UI_MANAGER_POPUP.
-	 * Returns: a newly-allocated GSList of all toplevel widgets of the requested types. Free the returned list with g_slist_free(). . element-type GtkWidget. transfer container GtkWidget.
+	 * Returns: a newly-allocated GSList of all toplevel widgets of the requested types. Free the returned list with g_slist_free(). [element-type GtkWidget][transfer container GtkWidget]
 	 */
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{
@@ -708,7 +708,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * mergeId = the merge id for the merged UI, see gtk_ui_manager_new_merge_id()
 	 * path = a path
 	 * name = the name for the added UI element
-	 * action = the name of the action to be proxied, or NULL to add a separator. allow-none.
+	 * action = the name of the action to be proxied, or NULL to add a separator. [allow-none]
 	 * type = the type of UI element to add.
 	 * top = if TRUE, the UI element is added before its siblings, otherwise it
 	 *  is added after its siblings.

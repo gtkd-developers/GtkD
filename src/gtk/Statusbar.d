@@ -273,6 +273,19 @@ public class Statusbar : HBox
 	}
 	
 	/**
+	 * Forces the removal of all messages from a statusbar's
+	 * stack with the exact context_id.
+	 * Since 2.22
+	 * Params:
+	 * contextId = a context identifier
+	 */
+	public void removeAll(uint contextId)
+	{
+		// void gtk_statusbar_remove_all (GtkStatusbar *statusbar,  guint context_id);
+		gtk_statusbar_remove_all(gtkStatusbar, contextId);
+	}
+	
+	/**
 	 * Sets whether the statusbar has a resize grip.
 	 * TRUE by default.
 	 * Params:

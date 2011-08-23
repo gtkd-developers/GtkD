@@ -128,11 +128,11 @@ public class AspectFrame : Frame
 	 * Params:
 	 * label = Label text.
 	 * xalign = Horizontal alignment of the child within the allocation of
-	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 * to 1.0 (right aligned)
+	 *  the GtkAspectFrame. This ranges from 0.0 (left aligned)
+	 *  to 1.0 (right aligned)
 	 * yalign = Vertical alignment of the child within the allocation of
-	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 * to 1.0 (right aligned)
+	 *  the GtkAspectFrame. This ranges from 0.0 (left aligned)
+	 *  to 1.0 (right aligned)
 	 * ratio = The desired aspect ratio.
 	 * obeyChild = If TRUE, ratio is ignored, and the aspect
 	 *  ratio is taken from the requistion of the child.
@@ -153,11 +153,11 @@ public class AspectFrame : Frame
 	 * Set parameters for an existing GtkAspectFrame.
 	 * Params:
 	 * xalign = Horizontal alignment of the child within the allocation of
-	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 * to 1.0 (right aligned)
+	 *  the GtkAspectFrame. This ranges from 0.0 (left aligned)
+	 *  to 1.0 (right aligned)
 	 * yalign = Vertical alignment of the child within the allocation of
-	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 * to 1.0 (right aligned)
+	 *  the GtkAspectFrame. This ranges from 0.0 (left aligned)
+	 *  to 1.0 (right aligned)
 	 * ratio = The desired aspect ratio.
 	 * obeyChild = If TRUE, ratio is ignored, and the aspect
 	 *  ratio is taken from the requistion of the child.

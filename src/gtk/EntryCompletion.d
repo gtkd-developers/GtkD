@@ -335,7 +335,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * If model is NULL, then it will unset the model.
 	 * Since 2.4
 	 * Params:
-	 * model = The GtkTreeModel.. allow-none.
+	 * model = The GtkTreeModel. [allow-none]
 	 */
 	public void setModel(TreeModelIF model)
 	{

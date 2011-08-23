@@ -126,7 +126,7 @@ public class HScrollbar : Scrollbar
 	/**
 	 * Creates a new horizontal scrollbar.
 	 * Params:
-	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment. allow-none.
+	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment)

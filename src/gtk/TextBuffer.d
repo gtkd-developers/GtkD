@@ -875,7 +875,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Creates a new text buffer.
 	 * Params:
-	 * table = a tag table, or NULL to create a new one. allow-none.
+	 * table = a tag table, or NULL to create a new one. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TextTagTable table)
@@ -915,7 +915,7 @@ public class TextBuffer : ObjectG
 	
 	/**
 	 * Get the GtkTextTagTable associated with this buffer.
-	 * Returns: the buffer's tag table. transfer none.
+	 * Returns: the buffer's tag table. [transfer none]
 	 */
 	public TextTagTable getTagTable()
 	{
@@ -938,7 +938,7 @@ public class TextBuffer : ObjectG
 	 * inserted text.
 	 * Params:
 	 * iter = a position in the buffer
-	 * text = UTF-8 format text to insert
+	 * text = text in UTF-8 format. [array length=len][element-type uint8]
 	 * len = length of text in bytes, or -1
 	 */
 	public void insert(TextIter iter, string text, int len)
@@ -951,7 +951,7 @@ public class TextBuffer : ObjectG
 	 * Simply calls gtk_text_buffer_insert(), using the current
 	 * cursor position as the insertion point.
 	 * Params:
-	 * text = some text in UTF-8 format
+	 * text = text in UTF-8 format. [array length=len][element-type uint8]
 	 * len = length of text, in bytes
 	 */
 	public void insertAtCursor(string text, int len)
@@ -1218,10 +1218,10 @@ public class TextBuffer : ObjectG
 	 * Emits the "mark-set" signal as notification of the mark's initial
 	 * placement.
 	 * Params:
-	 * markName = name for mark, or NULL. allow-none.
+	 * markName = name for mark, or NULL. [allow-none]
 	 * where = location to place mark
 	 * leftGravity = whether the mark has left gravity
-	 * Returns: the new GtkTextMark object
+	 * Returns: the new GtkTextMark object. [transfer none]
 	 */
 	public TextMark createMark(string markName, TextIter where, int leftGravity)
 	{
@@ -1313,7 +1313,7 @@ public class TextBuffer : ObjectG
 	 * mark exists in the buffer.
 	 * Params:
 	 * name = a mark name
-	 * Returns: a GtkTextMark, or NULL. transfer none.
+	 * Returns: a GtkTextMark, or NULL. [transfer none]
 	 */
 	public TextMark getMark(string name)
 	{
@@ -1331,7 +1331,7 @@ public class TextBuffer : ObjectG
 	 * Equivalent to calling gtk_text_buffer_get_mark() to get the mark
 	 * named "insert", but very slightly more efficient, and involves less
 	 * typing.
-	 * Returns: insertion point mark. transfer none.
+	 * Returns: insertion point mark. [transfer none]
 	 */
 	public TextMark getInsert()
 	{
@@ -1355,7 +1355,7 @@ public class TextBuffer : ObjectG
 	 * gtk_text_buffer_get_selection_bounds() is another convenient function
 	 * for handling the selection, if you just want to know whether there's a
 	 * selection and what its bounds are.
-	 * Returns: selection bound mark. transfer none.
+	 * Returns: selection bound mark. [transfer none]
 	 */
 	public TextMark getSelectionBound()
 	{
@@ -1495,7 +1495,7 @@ public class TextBuffer : ObjectG
 	 * are not allowed. Note characters, not bytes;
 	 * UTF-8 may encode one character as multiple bytes.
 	 * Params:
-	 * iter = iterator to initialize
+	 * iter = iterator to initialize. [out]
 	 * lineNumber = line number counting from 0
 	 * charOffset = char offset from start of line
 	 */
@@ -1511,7 +1511,7 @@ public class TextBuffer : ObjectG
 	 * of characters in the buffer, iter is initialized to the end iterator,
 	 * the iterator one past the last valid character in the buffer.
 	 * Params:
-	 * iter = iterator to initialize
+	 * iter = iterator to initialize. [out]
 	 * charOffset = char offset from start of buffer, counting from 0, or -1
 	 */
 	public void getIterAtOffset(TextIter iter, int charOffset)
@@ -1523,7 +1523,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Initializes iter to the start of the given line.
 	 * Params:
-	 * iter = iterator to initialize
+	 * iter = iterator to initialize. [out]
 	 * lineNumber = line number counting from 0
 	 */
 	public void getIterAtLine(TextIter iter, int lineNumber)
@@ -1538,7 +1538,7 @@ public class TextBuffer : ObjectG
 	 * beyond the end of the line. Note bytes, not
 	 * characters; UTF-8 may encode one character as multiple bytes.
 	 * Params:
-	 * iter = iterator to initialize
+	 * iter = iterator to initialize. [out]
 	 * lineNumber = line number counting from 0
 	 * byteIndex = byte index from start of line
 	 */
@@ -1551,7 +1551,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Initializes iter with the current position of mark.
 	 * Params:
-	 * iter = iterator to initialize
+	 * iter = iterator to initialize. [out]
 	 * mark = a GtkTextMark in buffer
 	 */
 	public void getIterAtMark(TextIter iter, TextMark mark)
@@ -1563,7 +1563,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Obtains the location of anchor within buffer.
 	 * Params:
-	 * iter = an iterator to be initialized
+	 * iter = an iterator to be initialized. [out]
 	 * anchor = a child anchor that appears in buffer
 	 */
 	public void getIterAtChildAnchor(TextIter iter, TextChildAnchor anchor)
@@ -1577,7 +1577,7 @@ public class TextBuffer : ObjectG
 	 * is the same as using gtk_text_buffer_get_iter_at_offset() to get
 	 * the iter at character offset 0.
 	 * Params:
-	 * iter = iterator to initialize
+	 * iter = iterator to initialize. [out]
 	 */
 	public void getStartIter(TextIter iter)
 	{
@@ -1593,7 +1593,7 @@ public class TextBuffer : ObjectG
 	 * the buffer (call gtk_text_buffer_get_start_iter() to get
 	 * character position 0) to the end iterator.
 	 * Params:
-	 * iter = iterator to initialize
+	 * iter = iterator to initialize. [out]
 	 */
 	public void getEndIter(TextIter iter)
 	{
@@ -1605,8 +1605,8 @@ public class TextBuffer : ObjectG
 	 * Retrieves the first and last iterators in the buffer, i.e. the
 	 * entire buffer lies within the range [start,end).
 	 * Params:
-	 * start = iterator to initialize with first position in the buffer
-	 * end = iterator to initialize with the end iterator
+	 * start = iterator to initialize with first position in the buffer. [out]
+	 * end = iterator to initialize with the end iterator. [out]
 	 */
 	public void getBounds(TextIter start, TextIter end)
 	{
@@ -1666,7 +1666,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 * clipboard = the GtkClipboard to paste from
 	 * overrideLocation = location to insert pasted text, or NULL for
-	 *  at the cursor. allow-none.
+	 *  at the cursor. [allow-none]
 	 * defaultEditable = whether the buffer is editable by default
 	 */
 	public void pasteClipboard(Clipboard clipboard, TextIter overrideLocation, int defaultEditable)
@@ -1707,8 +1707,8 @@ public class TextBuffer : ObjectG
 	 * NULL, then they are not filled in, but the return value still indicates
 	 * whether text is selected.
 	 * Params:
-	 * start = iterator to initialize with selection start
-	 * end = iterator to initialize with selection end
+	 * start = iterator to initialize with selection start. [out]
+	 * end = iterator to initialize with selection end. [out]
 	 * Returns: whether the selection has nonzero length
 	 */
 	public int getSelectionBounds(TextIter start, TextIter end)
@@ -1940,7 +1940,7 @@ public class TextBuffer : ObjectG
 	 * gtk_text_buffer_register_serialize_tagset() for details.
 	 * Since 2.10
 	 * Params:
-	 * tagsetName = an optional tagset name, on NULL. allow-none.
+	 * tagsetName = an optional tagset name, on NULL. [allow-none]
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
 	 */
 	public GdkAtom registerDeserializeTagset(string tagsetName)
@@ -1983,7 +1983,7 @@ public class TextBuffer : ObjectG
 	 * receiving buffer to deal with with pasting of arbitrary tags.
 	 * Since 2.10
 	 * Params:
-	 * tagsetName = an optional tagset name, on NULL. allow-none.
+	 * tagsetName = an optional tagset name, on NULL. [allow-none]
 	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
 	 */
 	public GdkAtom registerSerializeTagset(string tagsetName)

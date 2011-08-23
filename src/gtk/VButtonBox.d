@@ -159,7 +159,7 @@ public class VButtonBox : ButtonBox
 	
 	/**
 	 * Warning
-	 * gtk_vbutton_box_get_spacing_default is deprecated and should not be used in newly-written code.
+	 * gtk_vbutton_box_get_spacing_default has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_box_get_spacing() instead.
 	 * Retrieves the current default spacing for vertical button boxes. This is the number of pixels
 	 * to be placed between the buttons when they are arranged.
 	 * Returns: the default number of pixels between buttons.
@@ -172,7 +172,7 @@ public class VButtonBox : ButtonBox
 	
 	/**
 	 * Warning
-	 * gtk_vbutton_box_set_spacing_default is deprecated and should not be used in newly-written code.
+	 * gtk_vbutton_box_set_spacing_default has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_box_set_spacing() instead.
 	 * Changes the default spacing that is placed between widgets in an
 	 * vertical button box.
 	 * Params:
@@ -186,7 +186,7 @@ public class VButtonBox : ButtonBox
 	
 	/**
 	 * Warning
-	 * gtk_vbutton_box_get_layout_default is deprecated and should not be used in newly-written code.
+	 * gtk_vbutton_box_get_layout_default has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_button_box_get_layout() instead.
 	 * Retrieves the current layout used to arrange buttons in button box widgets.
 	 * Returns: the current GtkButtonBoxStyle.
 	 */
@@ -198,7 +198,7 @@ public class VButtonBox : ButtonBox
 	
 	/**
 	 * Warning
-	 * gtk_vbutton_box_set_layout_default is deprecated and should not be used in newly-written code.
+	 * gtk_vbutton_box_set_layout_default has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_button_box_set_layout() instead.
 	 * Sets a new layout mode that will be used by all button boxes.
 	 * Params:
 	 * layout = a new GtkButtonBoxStyle.

@@ -68,6 +68,7 @@ private import gtk.Bin;
  * Description
  * The GtkItem widget is an abstract base class for GtkMenuItem, GtkListItem
  * and GtkTreeItem.
+ * GtkItem is deprecated and will be removed in GTK+ 3.
  */
 public class Item : Bin
 {
@@ -202,6 +203,8 @@ public class Item : Bin
 	
 	
 	/**
+	 * Warning
+	 * gtk_item_select has been deprecated since version 2.22 and should not be used in newly-written code. Use gtk_menu_item_select() instead
 	 * Emits the "select" signal on the given item.
 	 */
 	public void select()
@@ -211,6 +214,8 @@ public class Item : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_item_deselect has been deprecated since version 2.22 and should not be used in newly-written code. Use gtk_menu_item_deselect() instead
 	 * Emits the "deselect" signal on the given item.
 	 */
 	public void deselect()
@@ -220,6 +225,8 @@ public class Item : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_item_toggle has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * Emits the "toggle" signal on the given item.
 	 */
 	public void toggle()

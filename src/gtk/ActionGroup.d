@@ -382,7 +382,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * actionName = the name of the action
-	 * Returns: the action, or NULL if no action by that name exists . transfer-none
+	 * Returns: the action, or NULL if no action by that name exists. [transfer-none]
 	 */
 	public Action getAction(string actionName)
 	{
@@ -398,7 +398,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	/**
 	 * Lists the actions in the action group.
 	 * Since 2.4
-	 * Returns: an allocated list of the action objects in the action group . element-type GtkAction. transfer container GtkAction.
+	 * Returns: an allocated list of the action objects in the action group. [element-type GtkAction][transfer container GtkAction]
 	 */
 	public ListG listActions()
 	{
@@ -439,7 +439,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * action = the action to add
 	 * accelerator = the accelerator for the action, in
 	 *  the format understood by gtk_accelerator_parse(), or "" for no accelerator, or
-	 *  NULL to use the stock accelerator. allow-none.
+	 *  NULL to use the stock accelerator. [allow-none]
 	 */
 	public void addActionWithAccel(Action action, string accelerator)
 	{

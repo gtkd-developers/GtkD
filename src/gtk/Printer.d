@@ -353,7 +353,7 @@ public class Printer : ObjectG
 	 * This will return and empty list unless the printer's details are
 	 * available, see gtk_printer_has_details() and gtk_printer_request_details().
 	 * Since 2.12
-	 * Returns: a newly allocated list of newly allocated GtkPageSetup s. . element-type GtkPageSetup. transfer full GtkPageSetup.
+	 * Returns: a newly allocated list of newly allocated GtkPageSetup s. [element-type GtkPageSetup][transfer full GtkPageSetup]
 	 */
 	public ListG listPapers()
 	{

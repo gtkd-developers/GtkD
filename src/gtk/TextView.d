@@ -45,6 +45,7 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Adjustment
  * 	- gtk.TextBuffer
  * 	- gtk.TextMark
  * 	- gtk.TextIter
@@ -59,6 +60,7 @@
  * 	- GList* -> ListG
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
+ * 	- GtkAdjustment* -> Adjustment
  * 	- GtkTextAttributes* -> TextAttributes
  * 	- GtkTextBuffer* -> TextBuffer
  * 	- GtkTextChildAnchor* -> TextChildAnchor
@@ -82,6 +84,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Adjustment;
 private import gtk.TextBuffer;
 private import gtk.TextMark;
 private import gtk.TextIter;
@@ -635,13 +638,13 @@ public class TextView : Container
 		}
 	}
 	
-	void delegate(GtkAdjustment*, GtkAdjustment*, TextView)[] onSetScrollAdjustmentsListeners;
+	void delegate(Adjustment, Adjustment, TextView)[] onSetScrollAdjustmentsListeners;
 	/**
 	 * Set the scroll adjustments for the text view. Usually scrolled containers
 	 * like GtkScrolledWindow will emit this signal to connect two instances
 	 * of GtkScrollbar to the scroll directions of the GtkTextView.
 	 */
-	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
 		{
@@ -658,9 +661,9 @@ public class TextView : Container
 	}
 	extern(C) static void callBackSetScrollAdjustments(GtkTextView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TextView textView)
 	{
-		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, TextView) dlg ; textView.onSetScrollAdjustmentsListeners )
+		foreach ( void delegate(Adjustment, Adjustment, TextView) dlg ; textView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(vertical, arg2, textView);
+			dlg(new Adjustment(vertical), new Adjustment(arg2), textView);
 		}
 	}
 	
@@ -774,7 +777,7 @@ public class TextView : Container
 	 * to this function, you must remove that reference yourself; GtkTextView
 	 * will not "adopt" it.
 	 * Params:
-	 * buffer = a GtkTextBuffer. allow-none.
+	 * buffer = a GtkTextBuffer. [allow-none]
 	 */
 	public void setBuffer(TextBuffer buffer)
 	{
@@ -786,7 +789,7 @@ public class TextView : Container
 	 * Returns the GtkTextBuffer being displayed by this text view.
 	 * The reference count on the buffer is not incremented; the caller
 	 * of this function won't own a new reference.
-	 * Returns: a GtkTextBuffer. transfer none.
+	 * Returns: a GtkTextBuffer. [transfer none]
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -906,7 +909,7 @@ public class TextView : Container
 	 * coordinates to coordinates for one of the windows in the text view.
 	 * Params:
 	 * iter = a GtkTextIter
-	 * location = bounds of the character at iter
+	 * location = bounds of the character at iter. [out]
 	 */
 	public void getIterLocation(TextIter iter, Rectangle location)
 	{
@@ -921,9 +924,9 @@ public class TextView : Container
 	 * If non-NULL, line_top will be filled with the coordinate of the top
 	 * edge of the line.
 	 * Params:
-	 * targetIter = a GtkTextIter
+	 * targetIter = a GtkTextIter. [out]
 	 * y = a y coordinate
-	 * lineTop = return location for top coordinate of the line
+	 * lineTop = return location for top coordinate of the line. [out]
 	 */
 	public void getLineAtY(TextIter targetIter, int y, out int lineTop)
 	{
@@ -937,8 +940,8 @@ public class TextView : Container
 	 * convert to window coordinates with gtk_text_view_buffer_to_window_coords().
 	 * Params:
 	 * iter = a GtkTextIter
-	 * y = return location for a y coordinate
-	 * height = return location for a height
+	 * y = return location for a y coordinate. [out]
+	 * height = return location for a height. [out]
 	 */
 	public void getLineYrange(TextIter iter, out int y, out int height)
 	{
@@ -953,7 +956,7 @@ public class TextView : Container
 	 * event, you have to convert those to buffer coordinates with
 	 * gtk_text_view_window_to_buffer_coords().
 	 * Params:
-	 * iter = a GtkTextIter
+	 * iter = a GtkTextIter. [out]
 	 * x = x position, in buffer coordinates
 	 * y = y position, in buffer coordinates
 	 */
@@ -975,11 +978,11 @@ public class TextView : Container
 	 * characters.
 	 * Since 2.6
 	 * Params:
-	 * iter = a GtkTextIter
+	 * iter = a GtkTextIter. [out]
 	 * trailing = if non-NULL, location to store an integer indicating where
 	 *  in the grapheme the user clicked. It will either be
 	 *  zero, or the number of characters in the grapheme.
-	 *  0 represents the trailing edge of the grapheme.
+	 *  0 represents the trailing edge of the grapheme. [out][allow-none]
 	 * x = x position, in buffer coordinates
 	 * y = y position, in buffer coordinates
 	 */
@@ -998,8 +1001,8 @@ public class TextView : Container
 	 * win = a GtkTextWindowType except GTK_TEXT_WINDOW_PRIVATE
 	 * bufferX = buffer x coordinate
 	 * bufferY = buffer y coordinate
-	 * windowX = window x coordinate return location
-	 * windowY = window y coordinate return location
+	 * windowX = window x coordinate return location or NULL. [out][allow-none]
+	 * windowY = window y coordinate return location or NULL. [out][allow-none]
 	 */
 	public void bufferToWindowCoords(GtkTextWindowType win, int bufferX, int bufferY, out int windowX, out int windowY)
 	{
@@ -1016,8 +1019,8 @@ public class TextView : Container
 	 * win = a GtkTextWindowType except GTK_TEXT_WINDOW_PRIVATE
 	 * windowX = window x coordinate
 	 * windowY = window y coordinate
-	 * bufferX = buffer x coordinate return location
-	 * bufferY = buffer y coordinate return location
+	 * bufferX = buffer x coordinate return location or NULL. [out][allow-none]
+	 * bufferY = buffer y coordinate return location or NULL. [out][allow-none]
 	 */
 	public void windowToBufferCoords(GtkTextWindowType win, int windowX, int windowY, out int bufferX, out int bufferY)
 	{
@@ -1034,7 +1037,7 @@ public class TextView : Container
 	 * realized.
 	 * Params:
 	 * win = window to get
-	 * Returns: a GdkWindow, or NULL. transfer none.
+	 * Returns: a GdkWindow, or NULL. [transfer none]
 	 */
 	public Window getWindow(GtkTextWindowType win)
 	{
@@ -1590,5 +1593,70 @@ public class TextView : Container
 			return null;
 		}
 		return new TextAttributes(cast(GtkTextAttributes*) p);
+	}
+	
+	/**
+	 * Allow the GtkTextView input method to internally handle key press
+	 * and release events. If this function returns TRUE, then no further
+	 * processing should be done for this key event. See
+	 * gtk_im_context_filter_keypress().
+	 * Note that you are expected to call this function from your handler
+	 * when overriding key event handling. This is needed in the case when
+	 * you need to insert your own key handling between the input method
+	 * and the default key event handling of the GtkTextView.
+	 * $(DDOC_COMMENT example)
+	 * Since 2.22
+	 * Params:
+	 * event = the key event
+	 * Returns: TRUE if the input method handled the key event.
+	 */
+	public int imContextFilterKeypress(GdkEventKey* event)
+	{
+		// gboolean gtk_text_view_im_context_filter_keypress  (GtkTextView *text_view,  GdkEventKey *event);
+		return gtk_text_view_im_context_filter_keypress(gtkTextView, event);
+	}
+	
+	/**
+	 * Reset the input method context of the text view if needed.
+	 * This can be necessary in the case where modifying the buffer
+	 * would confuse on-going input method behavior.
+	 * Since 2.22
+	 */
+	public void resetImContext()
+	{
+		// void gtk_text_view_reset_im_context (GtkTextView *text_view);
+		gtk_text_view_reset_im_context(gtkTextView);
+	}
+	
+	/**
+	 * Gets the horizontal-scrolling GtkAdjustment.
+	 * Since 2.22
+	 * Returns: pointer to the horizontal GtkAdjustment. [transfer none]
+	 */
+	public Adjustment getHadjustment()
+	{
+		// GtkAdjustment* gtk_text_view_get_hadjustment (GtkTextView *text_view);
+		auto p = gtk_text_view_get_hadjustment(gtkTextView);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
+	}
+	
+	/**
+	 * Gets the vertical-scrolling GtkAdjustment.
+	 * Since 2.22
+	 * Returns: pointer to the vertical GtkAdjustment. [transfer none]
+	 */
+	public Adjustment getVadjustment()
+	{
+		// GtkAdjustment* gtk_text_view_get_vadjustment (GtkTextView *text_view);
+		auto p = gtk_text_view_get_vadjustment(gtkTextView);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 }

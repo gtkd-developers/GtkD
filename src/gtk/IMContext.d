@@ -362,7 +362,7 @@ public class IMContext : ObjectG
 	 * also be used for purposes internal to the input method.
 	 * Params:
 	 * window = the client window. This may be NULL to indicate
-	 *  that the previous client window no longer exists.. allow-none.
+	 *  that the previous client window no longer exists. [allow-none]
 	 */
 	public void setClientWindow(Window window)
 	{

@@ -266,8 +266,8 @@ public class Scale : Range
 	 * values are undefined.
 	 * Since 2.4
 	 * Params:
-	 * x = location to store X offset of layout, or NULL. allow-none.
-	 * y = location to store Y offset of layout, or NULL. allow-none.
+	 * x = location to store X offset of layout, or NULL. [allow-none]
+	 * y = location to store Y offset of layout, or NULL. [allow-none]
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -290,7 +290,7 @@ public class Scale : Range
 	 *  is drawn above the scale, anything else below. For a vertical scale,
 	 *  GTK_POS_LEFT is drawn to the left of the scale, anything else to the
 	 *  right.
-	 * markup = Text to be shown at the mark, using Pango markup, or NULL. allow-none.
+	 * markup = Text to be shown at the mark, using Pango markup, or NULL. [allow-none]
 	 */
 	public void addMark(double value, GtkPositionType position, string markup)
 	{

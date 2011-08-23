@@ -94,10 +94,10 @@ private import gobject.ObjectG;
  * Description
  * Actions represent operations that the user can be perform, along with
  * some information how it should be presented in the interface. Each action
- * provides methods to create icons, menu items and toolbar items representing
- * itself.
- * As well as the callback that is called when the action gets activated, the
- * following also gets associated with the action:
+ * provides methods to create icons, menu items and toolbar items
+ * representing itself.
+ * As well as the callback that is called when the action gets activated,
+ * the following also gets associated with the action:
  * a name (not translated, for path lookup)
  * a label (translated, for display)
  * an accelerator
@@ -261,8 +261,8 @@ public class Action : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * name = A unique name for the action
-	 * label = the label displayed in menu items and on buttons, or NULL. allow-none.
-	 * tooltip = a tooltip for the action, or NULL. allow-none.
+	 * label = the label displayed in menu items and on buttons, or NULL. [allow-none]
+	 * tooltip = a tooltip for the action, or NULL. [allow-none]
 	 * stockId = the stock icon to display in widgets representing the
 	 *  action, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -385,7 +385,7 @@ public class Action : ObjectG, BuildableIF
 	 * create icons displayed in the proxy widgets.
 	 * Since 2.4
 	 * Params:
-	 * iconSize = the size of the icon that should be created.. type int
+	 * iconSize = the size of the icon that should be created. [type int]
 	 * Returns: a widget that displays the icon for this action.
 	 */
 	public Widget createIcon(GtkIconSize iconSize)
@@ -487,7 +487,7 @@ public class Action : ObjectG, BuildableIF
 	 * Returns the proxy widgets for an action.
 	 * See also gtk_widget_get_action().
 	 * Since 2.4
-	 * Returns: a GSList of proxy widgets. The list is owned by GTK+ and must not be modified. . element-type GtkWidget. transfer none GtkWidget.
+	 * Returns: a GSList of proxy widgets. The list is owned by GTK+ and must not be modified. [element-type GtkWidget][transfer none GtkWidget]
 	 */
 	public ListSG getProxies()
 	{
@@ -663,7 +663,7 @@ public class Action : ObjectG, BuildableIF
 	 * will be installed.
 	 * Since 2.4
 	 * Params:
-	 * accelGroup = a GtkAccelGroup or NULL. allow-none.
+	 * accelGroup = a GtkAccelGroup or NULL. [allow-none]
 	 */
 	public void setAccelGroup(AccelGroup accelGroup)
 	{

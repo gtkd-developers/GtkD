@@ -241,11 +241,11 @@ public class CellRenderer : ObjectGtk
 	 * Params:
 	 * cell = a GtkCellRenderer
 	 * widget = the widget the renderer is rendering to
-	 * cellArea = The area a cell will be allocated, or NULL. allow-none.
-	 * xOffset = location to return x offset of cell relative to cell_area, or NULL. allow-none.
-	 * yOffset = location to return y offset of cell relative to cell_area, or NULL. allow-none.
-	 * width = location to return width needed to render a cell, or NULL. allow-none.
-	 * height = location to return height needed to render a cell, or NULL. allow-none.
+	 * cellArea = The area a cell will be allocated, or NULL. [allow-none]
+	 * xOffset = location to return x offset of cell relative to cell_area, or NULL. [allow-none]
+	 * yOffset = location to return y offset of cell relative to cell_area, or NULL. [allow-none]
+	 * width = location to return width needed to render a cell, or NULL. [allow-none]
+	 * height = location to return height needed to render a cell, or NULL. [allow-none]
 	 */
 	public void getSize(Widget widget, Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
@@ -358,8 +358,8 @@ public class CellRenderer : ObjectGtk
 	/**
 	 * Fills in width and height with the appropriate size of cell.
 	 * Params:
-	 * width = location to fill in with the fixed width of the cell, or NULL. allow-none.
-	 * height = location to fill in with the fixed height of the cell, or NULL. allow-none.
+	 * width = location to fill in with the fixed width of the cell, or NULL. [allow-none]
+	 * height = location to fill in with the fixed height of the cell, or NULL. [allow-none]
 	 */
 	public void getFixedSize(out int width, out int height)
 	{
@@ -429,8 +429,8 @@ public class CellRenderer : ObjectGtk
 	 * Fills in xalign and yalign with the appropriate values of cell.
 	 * Since 2.18
 	 * Params:
-	 * xalign = location to fill in with the x alignment of the cell, or NULL. allow-none.
-	 * yalign = location to fill in with the y alignment of the cell, or NULL. allow-none.
+	 * xalign = location to fill in with the x alignment of the cell, or NULL. [allow-none]
+	 * yalign = location to fill in with the y alignment of the cell, or NULL. [allow-none]
 	 */
 	public void getAlignment(out float xalign, out float yalign)
 	{
@@ -455,8 +455,8 @@ public class CellRenderer : ObjectGtk
 	 * Fills in xpad and ypad with the appropriate values of cell.
 	 * Since 2.18
 	 * Params:
-	 * xpad = location to fill in with the x padding of the cell, or NULL. allow-none.
-	 * ypad = location to fill in with the y padding of the cell, or NULL. allow-none.
+	 * xpad = location to fill in with the x padding of the cell, or NULL. [allow-none]
+	 * ypad = location to fill in with the y padding of the cell, or NULL. [allow-none]
 	 */
 	public void getPadding(out int xpad, out int ypad)
 	{

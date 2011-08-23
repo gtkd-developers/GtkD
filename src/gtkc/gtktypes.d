@@ -1106,7 +1106,7 @@ alias GtkSignalRunType SignalRunType;
  *  parent is destroyed, see gtk_window_set_destroy_with_parent().
  * GTK_DIALOG_NO_SEPARATOR
  * Don't put a separator between the
- *  action area and the dialog content.
+ *  action area and the dialog content. This option has been deprecated in GTK+ 2.22. It will be removed in GTK+ 3
  */
 public enum GtkDialogFlags
 {
@@ -1198,6 +1198,10 @@ alias GtkMessageType MessageType;
  * Prebuilt sets of buttons for the dialog. If
  * none of these choices are appropriate, simply use GTK_BUTTONS_NONE
  * then call gtk_dialog_add_buttons().
+ * Note
+ *  Please note that GTK_BUTTONS_OK, GTK_BUTTONS_YES_NO
+ *  and GTK_BUTTONS_OK_CANCEL are discouraged by the
+ *  GNOME HIG.
  * GTK_BUTTONS_NONE
  * no buttons at all
  * GTK_BUTTONS_OK
@@ -1223,20 +1227,25 @@ public enum GtkButtonsType
 alias GtkButtonsType ButtonsType;
 
 /**
- * An enum for determining the page role inside the GtkAssistant. It's used to
- * handle buttons sensitivity and visibility.
- * Note that an assistant needs to end its page flow with a page of type GTK_ASSISTANT_PAGE_CONFIRM
- * or GTK_ASSISTANT_PAGE_SUMMARY to be correct.
+ * An enum for determining the page role inside the GtkAssistant. It's
+ * used to handle buttons sensitivity and visibility.
+ * Note that an assistant needs to end its page flow with a page of type
+ * GTK_ASSISTANT_PAGE_CONFIRM, GTK_ASSISTANT_PAGE_SUMMARY or
+ * GTK_ASSISTANT_PAGE_PROGRESS to be correct.
  * GTK_ASSISTANT_PAGE_CONTENT
  * The page has regular contents.
  * GTK_ASSISTANT_PAGE_INTRO
- * The page contains an introduction to the assistant task.
+ * The page contains an introduction to the
+ *  assistant task.
  * GTK_ASSISTANT_PAGE_CONFIRM
- * The page lets the user confirm or deny the changes.
+ * The page lets the user confirm or deny the
+ *  changes.
  * GTK_ASSISTANT_PAGE_SUMMARY
- * The page informs the user of the changes done.
+ * The page informs the user of the changes
+ *  done.
  * GTK_ASSISTANT_PAGE_PROGRESS
- * Used for tasks that take a long time to complete, blocks the assistant until the page is marked as complete.
+ * Used for tasks that take a long time to
+ *  complete, blocks the assistant until the page is marked as complete.
  */
 public enum GtkAssistantPageType
 {
@@ -1332,6 +1341,7 @@ alias GtkProgressBarStyle ProgressBarStyle;
  * At the beginning of the entry (depending on the text direction).
  * GTK_ENTRY_ICON_SECONDARY
  * At the end of the entry (depending on the text direction).
+ * Since 2.16
  */
 public enum GtkEntryIconPosition
 {
@@ -2118,6 +2128,9 @@ public enum GtkMenuDirectionType
 alias GtkMenuDirectionType MenuDirectionType;
 
 /**
+ * Warning
+ * GtkObjectFlags has been deprecated since version 2.22 and should not be used in newly-written code. Do not re-use GtkObject flags but use your own variable to
+ *  store flags.
  * Tells about the state of the object.
  * GTK_IN_DESTRUCTION
  * the object is currently being destroyed. This is used
@@ -3867,8 +3880,6 @@ public struct GtkRadioActionEntry
 
 /**
  * Main Gtk struct.
- * The GtkAction struct contains only private members
- * and should not be accessed directly.
  */
 public struct GtkAction{}
 
@@ -4052,8 +4063,6 @@ public struct GtkInputDialog{}
 
 /**
  * Main Gtk struct.
- * The GtkAlignment struct contains private data only, and should
- * be accessed using the functions below.
  */
 public struct GtkAlignment{}
 
@@ -4085,7 +4094,6 @@ public struct GtkHButtonBox{}
 
 /**
  * Main Gtk struct.
- * GtkVButtonBox does not contain any public fields.
  */
 public struct GtkVButtonBox{}
 
@@ -4130,6 +4138,8 @@ public struct GtkNotebook{}
 
 
 /**
+ * Warning
+ * GtkNotebookPage is deprecated and should not be used in newly-written code.
  * The GtkNotebookPage is an opaque implementation detail of GtkNotebook.
  */
 public struct GtkNotebookPage{}
@@ -4301,9 +4311,6 @@ public struct GtkAdjustment{}
 
 /**
  * Main Gtk struct.
- * The GtkArrow struct containes the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
  */
 public struct GtkArrow{}
 
@@ -4402,11 +4409,6 @@ public struct GtkAccessible{}
 
 /**
  * Main Gtk struct.
- * The GtkBin struct contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * GtkWidget *child;
- * the child widget.
  */
 public struct GtkBin{}
 
@@ -4427,6 +4429,14 @@ public struct GtkBox
 
 
 /**
+ * Warning
+ * GtkBoxChild has been deprecated since version 2.22 and should not be used in newly-written code. Use gtk_container_get_children() instead.
+ * The GtkBoxChild holds a child widget of GtkBox and describes how the child
+ * is to be packed into the GtkBox. All fields of this GtkBoxChild should be
+ * considered read-only and they should never be set directly by an application.
+ * Use gtk_box_query_child_packing() and gtk_box_set_child_packing() to query
+ * and set the GtkBoxChild.padding, GtkBoxChild.expand, GtkBoxChild.fill and
+ * GtkBoxChild.pack fields.
  * The GtkBoxChild holds a child widget of GtkBox and describes
  * how the child is to be packed into the GtkBox. Use
  * gtk_box_query_child_packing() and gtk_box_set_child_packing() to query
@@ -4712,9 +4722,6 @@ public struct GtkPlug{}
 
 /**
  * Main Gtk struct.
- * The GtkSocket structure contains the plug_window
- * field. (This field should be considered read-only. It should
- * never be set by an application.)
  */
 public struct GtkSocket{}
 
@@ -4772,8 +4779,6 @@ public struct GtkHRuler{}
 
 /**
  * Main Gtk struct.
- * The GtkVRuler struct contains private data and should be accessed
- * using the functions below.
  */
 public struct GtkVRuler{}
 
@@ -5982,6 +5987,9 @@ public struct GtkProgress{}
 // #define GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID(object, property_id, pspec)
 
 /*
+ * Warning
+ * GTK_OBJECT_FLAGS has been deprecated since version 2.22 and should not be used in newly-written code. Do not re-use GtkObject flags but use your own variable to
+ *  store flags.
  * Gets the GtkObjectFlags for an object without directly
  * accessing its members.
  * obj  :
@@ -6276,6 +6284,13 @@ public struct GtkProgress{}
 // #define GTK_WIDGET_DOUBLE_BUFFERED(wid)	 ((GTK_WIDGET_FLAGS (wid)  GTK_DOUBLE_BUFFERED) != 0)
 
 /*
+ * Warning
+ * GTK_WIDGET_SET_FLAGS has been deprecated since version 2.22 and should not be used in newly-written code. Use the proper function instead: gtk_widget_set_app_paintable(),
+ *  gtk_widget_set_can_default(), gtk_widget_set_can_focus(),
+ *  gtk_widget_set_double_buffered(), gtk_widget_set_has_window(),
+ *  gtk_widget_set_mapped(), gtk_widget_set_no_show_all(),
+ *  gtk_widget_set_realized(), gtk_widget_set_receives_default(),
+ *  gtk_widget_set_sensitive() or gtk_widget_set_visible().
  * Turns on certain widget flags.
  * wid  :
  * a GtkWidget.
@@ -6286,6 +6301,8 @@ public struct GtkProgress{}
 // #define GTK_WIDGET_SET_FLAGS(wid,flag)	 G_STMT_START{ (GTK_WIDGET_FLAGS (wid) |= (flag)); }G_STMT_END
 
 /*
+ * Warning
+ * GTK_WIDGET_UNSET_FLAGS has been deprecated since version 2.22 and should not be used in newly-written code. Use the proper function instead. See GTK_WIDGET_SET_FLAGS().
  * Turns off certain widget flags.
  * wid  :
  * a GtkWidget.
@@ -6624,7 +6641,7 @@ public typedef extern(C) void  function (GtkAboutDialog*, char*, void*) GtkAbout
  * data  :
  * user data.
  * Returns  :
- * The next page number.
+ *  The next page number.
  */
 // gint (*GtkAssistantPageFunc) (gint current_page,  gpointer data);
 public typedef extern(C) int  function (int, void*) GtkAssistantPageFunc;

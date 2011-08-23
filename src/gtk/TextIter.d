@@ -136,7 +136,7 @@ public class TextIter
 	
 	/**
 	 * Returns the GtkTextBuffer this iterator is associated with.
-	 * Returns: the buffer. transfer none.
+	 * Returns: the buffer. [transfer none]
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -340,7 +340,7 @@ public class TextIter
 	 * If the element at iter is a pixbuf, the pixbuf is returned
 	 * (with no new reference count added). Otherwise,
 	 * NULL is returned.
-	 * Returns: the pixbuf at iter. transfer none.
+	 * Returns: the pixbuf at iter. [transfer none]
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -359,7 +359,7 @@ public class TextIter
 	 * they are just marks in between iterable locations), multiple marks
 	 * can exist in the same place. The returned list is not in any
 	 * meaningful order.
-	 * Returns: list of GtkTextMark. element-type GtkTextMark. transfer container GtkTextMark.
+	 * Returns: list of GtkTextMark. [element-type GtkTextMark][transfer container GtkTextMark]
 	 */
 	public ListSG getMarks()
 	{
@@ -381,7 +381,7 @@ public class TextIter
 	 * does not have the tag applied to it.
 	 * Params:
 	 * toggledOn = TRUE to get toggled-on tags
-	 * Returns: tags toggled at this point. element-type GtkTextTag. transfer container GtkTextTag.
+	 * Returns: tags toggled at this point. [element-type GtkTextTag][transfer container GtkTextTag]
 	 */
 	public ListSG getToggledTags(int toggledOn)
 	{
@@ -419,7 +419,7 @@ public class TextIter
 	 * gtk_text_iter_has_tag() tells you whether an iterator is
 	 * within a tagged range.
 	 * Params:
-	 * tag = a GtkTextTag, or NULL. allow-none.
+	 * tag = a GtkTextTag, or NULL. [allow-none]
 	 * Returns: whether iter is the start of a range tagged with tag
 	 */
 	public int beginsTag(TextTag tag)
@@ -436,7 +436,7 @@ public class TextIter
 	 * gtk_text_iter_has_tag() tells you whether an iterator is
 	 * within a tagged range.
 	 * Params:
-	 * tag = a GtkTextTag, or NULL. allow-none.
+	 * tag = a GtkTextTag, or NULL. [allow-none]
 	 * Returns: whether iter is the end of a range tagged with tag
 	 */
 	public int endsTag(TextTag tag)
@@ -450,7 +450,7 @@ public class TextIter
 	 * gtk_text_iter_ends_tag()), i.e. it tells you whether a range with
 	 * tag applied to it begins or ends at iter.
 	 * Params:
-	 * tag = a GtkTextTag, or NULL. allow-none.
+	 * tag = a GtkTextTag, or NULL. [allow-none]
 	 * Returns: whether tag is toggled on or off at iter
 	 */
 	public int togglesTag(TextTag tag)
@@ -476,7 +476,7 @@ public class TextIter
 	 * priority (highest-priority tags are last). The GtkTextTag in the
 	 * list don't have a reference added, but you have to free the list
 	 * itself.
-	 * Returns: list of GtkTextTag. element-type GtkTextTag. transfer container GtkTextTag.
+	 * Returns: list of GtkTextTag. [element-type GtkTextTag][transfer container GtkTextTag]
 	 */
 	public ListSG getTags()
 	{
@@ -1317,7 +1317,7 @@ public class TextIter
 	 * the location of the toggle, or to the end of the buffer
 	 * if no toggle is found.
 	 * Params:
-	 * tag = a GtkTextTag, or NULL. allow-none.
+	 * tag = a GtkTextTag, or NULL. [allow-none]
 	 * Returns: whether we found a tag toggle after iter
 	 */
 	public int forwardToTagToggle(TextTag tag)
@@ -1335,7 +1335,7 @@ public class TextIter
 	 * to the location of the toggle, or the start of the buffer
 	 * if no toggle is found.
 	 * Params:
-	 * tag = a GtkTextTag, or NULL. allow-none.
+	 * tag = a GtkTextTag, or NULL. [allow-none]
 	 * Returns: whether we found a tag toggle before iter
 	 */
 	public int backwardToTagToggle(TextTag tag)
@@ -1352,7 +1352,7 @@ public class TextIter
 	 * Params:
 	 * pred = a function to be called on each character
 	 * userData = user data for pred
-	 * limit = search limit, or NULL for none . allow-none.
+	 * limit = search limit, or NULL for none. [allow-none]
 	 * Returns: whether a match was found
 	 */
 	public int forwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
@@ -1366,7 +1366,7 @@ public class TextIter
 	 * Params:
 	 * pred = function to be called on each character
 	 * userData = user data for pred
-	 * limit = search limit, or NULL for none. allow-none.
+	 * limit = search limit, or NULL for none. [allow-none]
 	 * Returns: whether a match was found
 	 */
 	public int backwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
@@ -1392,9 +1392,9 @@ public class TextIter
 	 * Params:
 	 * str = a search string
 	 * flags = flags affecting how the search is done
-	 * matchStart = return location for start of match, or NULL. allow-none.
-	 * matchEnd = return location for end of match, or NULL. allow-none.
-	 * limit = bound for the search, or NULL for the end of the buffer. allow-none.
+	 * matchStart = return location for start of match, or NULL. [out caller-allocates][allow-none caller-allocates]
+	 * matchEnd = return location for end of match, or NULL. [out caller-allocates][allow-none caller-allocates]
+	 * limit = bound for the search, or NULL for the end of the buffer. [allow-none]
 	 * Returns: whether a match was found
 	 */
 	public int forwardSearch(string str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
@@ -1408,9 +1408,9 @@ public class TextIter
 	 * Params:
 	 * str = search string
 	 * flags = bitmask of flags affecting the search
-	 * matchStart = return location for start of match, or NULL. allow-none.
-	 * matchEnd = return location for end of match, or NULL. allow-none.
-	 * limit = location of last possible match_start, or NULL for start of buffer. allow-none.
+	 * matchStart = return location for start of match, or NULL. [out caller-allocates][allow-none caller-allocates]
+	 * matchEnd = return location for end of match, or NULL. [out caller-allocates][allow-none caller-allocates]
+	 * limit = location of last possible match_start, or NULL for start of buffer. [allow-none]
 	 * Returns: whether a match was found
 	 */
 	public int backwardSearch(string str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)

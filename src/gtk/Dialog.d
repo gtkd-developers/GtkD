@@ -435,6 +435,8 @@ public class Dialog : Window
 	}
 	
 	/**
+	 * Warning
+	 * gtk_dialog_get_has_separator has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * Accessor for whether the dialog has a separator.
 	 * Returns: TRUE if the dialog has a separator
 	 */
@@ -458,8 +460,9 @@ public class Dialog : Window
 	}
 	
 	/**
+	 * Warning
+	 * gtk_dialog_set_has_separator has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * Sets whether the dialog has a separator above the buttons.
-	 * TRUE by default.
 	 * Params:
 	 * setting = TRUE to have a separator
 	 */
@@ -527,7 +530,7 @@ public class Dialog : Window
 	 * notified if the button order setting changes.
 	 * Since 2.6
 	 * Params:
-	 * screen = a GdkScreen, or NULL to use the default screen. allow-none.
+	 * screen = a GdkScreen, or NULL to use the default screen. [allow-none]
 	 * Returns: Whether the alternative button order should be used
 	 */
 	public static int alternativeDialogButtonOrder(Screen screen)

@@ -156,7 +156,7 @@ public class FileFilter : ObjectGtk
 	 * Since 2.4
 	 * Params:
 	 * name = the human-readable-name for the filter, or NULL
-	 *  to remove any existing name.. allow-none.
+	 *  to remove any existing name. [allow-none]
 	 */
 	public void setName(string name)
 	{

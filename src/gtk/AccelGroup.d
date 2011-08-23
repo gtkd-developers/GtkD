@@ -275,7 +275,7 @@ public class AccelGroup : ObjectG
 	 * Since 2.20 closure can be NULL.
 	 * Params:
 	 * closure = the closure to remove from this accelerator group, or NULL
-	 *  to remove all closures. allow-none.
+	 *  to remove all closures. [allow-none]
 	 * Returns: TRUE if the closure was found and got disconnected
 	 */
 	public int disconnect(Closure closure)
@@ -304,7 +304,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * accelKey = key value of the accelerator
 	 * accelMods = modifier combination of the accelerator
-	 * Returns: an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is owned by GTK+ and must not be freed. . allow-none.
+	 * Returns: an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is owned by GTK+ and must not be freed. [allow-none]
 	 */
 	public GtkAccelGroupEntry[] query(uint accelKey, GdkModifierType accelMods)
 	{
@@ -373,7 +373,7 @@ public class AccelGroup : ObjectG
 	 * see gtk_accel_group_connect().
 	 * Params:
 	 * closure = a GClosure
-	 * Returns: the GtkAccelGroup to which closure is connected, or NULL.. allow-none.
+	 * Returns: the GtkAccelGroup to which closure is connected, or NULL. [allow-none]
 	 */
 	public static AccelGroup fromAccelClosure(Closure closure)
 	{
@@ -419,7 +419,7 @@ public class AccelGroup : ObjectG
 	 * Gets a list of all accel groups which are attached to object.
 	 * Params:
 	 * object = a GObject, usually a GtkWindow
-	 * Returns: a list of all accel groups which are attached to object. element-type GtkAccelGroup. transfer none GtkAccelGroup.
+	 * Returns: a list of all accel groups which are attached to object. [element-type GtkAccelGroup][transfer none GtkAccelGroup]
 	 */
 	public static ListSG accelGroupsFromObject(ObjectG object)
 	{
@@ -469,6 +469,9 @@ public class AccelGroup : ObjectG
 	 * "<Release>z" (the last one is for key release).
 	 * The parser is fairly liberal and allows lower or upper case,
 	 * and also abbreviations such as "<Ctl>" and "<Ctrl>".
+	 * Key names are parsed using gdk_keyval_from_name(). For character keys the
+	 * name is not the symbol, but the lowercase name, e.g. one would use
+	 * "<Ctrl>minus" instead of "<Ctrl>-".
 	 * If the parse fails, accelerator_key and accelerator_mods will
 	 * be set to 0 (zero).
 	 * Params:

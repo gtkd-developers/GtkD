@@ -526,7 +526,7 @@ public class StatusIcon : ObjectG
 	 * See gtk_status_icon_new_from_pixbuf() for details.
 	 * Since 2.10
 	 * Params:
-	 * pixbuf = a GdkPixbuf or NULL. allow-none.
+	 * pixbuf = a GdkPixbuf or NULL. [allow-none]
 	 */
 	public void setFromPixbuf(Pixbuf pixbuf)
 	{
@@ -724,7 +724,7 @@ public class StatusIcon : ObjectG
 	 * Sets the tooltip of the status icon.
 	 * Since 2.10
 	 * Params:
-	 * tooltipText = the tooltip text, or NULL. allow-none.
+	 * tooltipText = the tooltip text, or NULL. [allow-none]
 	 */
 	public void setTooltip(string tooltipText)
 	{
@@ -769,7 +769,7 @@ public class StatusIcon : ObjectG
 	 * gtk_tooltip_set_markup().
 	 * Since 2.16
 	 * Params:
-	 * markup = the contents of the tooltip for status_icon, or NULL. allow-none.
+	 * markup = the contents of the tooltip for status_icon, or NULL. [allow-none]
 	 */
 	public void setTooltipMarkup(string markup)
 	{
@@ -881,6 +881,8 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_status_icon_set_blinking has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * Makes the status icon start or stop blinking.
 	 * Note that blinking user interface elements may be problematic
 	 * for some users, and thus may be turned off, in which case
@@ -896,6 +898,8 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_status_icon_get_blinking has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * Returns whether the icon is blinking, see
 	 * gtk_status_icon_set_blinking().
 	 * Since 2.10
@@ -951,13 +955,13 @@ public class StatusIcon : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * screen = return location for the screen, or NULL if the
-	 *  information is not needed. out. transfer none. allow-none.
+	 *  information is not needed. [out][transfer none][allow-none]
 	 * area = return location for the area occupied by the status
-	 *  icon, or NULL. out. allow-none.
+	 *  icon, or NULL. [out][allow-none]
 	 * orientation = return location for the orientation of the panel
 	 *  in which the status icon is embedded, or NULL. A panel
 	 *  at the top or bottom of the screen is horizontal, a panel
-	 *  at the left or right is vertical.. out. allow-none.
+	 *  at the left or right is vertical. [out][allow-none]
 	 * Returns: TRUE if the location information has been filled in
 	 */
 	public int getGeometry(out Screen screen, out GdkRectangle area, out GtkOrientation orientation)

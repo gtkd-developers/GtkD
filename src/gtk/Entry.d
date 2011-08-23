@@ -891,7 +891,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * This function returns the entry's "inner-border" property. See
 	 * gtk_entry_set_inner_border() for more information.
 	 * Since 2.10
-	 * Returns: the entry's GtkBorder, or NULL if none was set. . transfer none.
+	 * Returns: the entry's GtkBorder, or NULL if none was set. [transfer none]
 	 */
 	public Border getInnerBorder()
 	{
@@ -952,7 +952,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * pixel-exact positioning of the entry is important.
 	 * Since 2.10
 	 * Params:
-	 * border = a GtkBorder, or NULL. allow-none.
+	 * border = a GtkBorder, or NULL. [allow-none]
 	 */
 	public void setInnerBorder(Border border)
 	{
@@ -1045,7 +1045,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_layout_index_to_text_index() and
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
-	 * Returns: the PangoLayout for this entry. transfer none.
+	 * Returns: the PangoLayout for this entry. [transfer none]
 	 */
 	public PgLayout getLayout()
 	{
@@ -1076,8 +1076,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
 	 * Params:
-	 * x = location to store X offset of layout, or NULL. allow-none.
-	 * y = location to store Y offset of layout, or NULL. allow-none.
+	 * x = location to store X offset of layout, or NULL. [allow-none]
+	 * y = location to store Y offset of layout, or NULL. [allow-none]
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -1143,7 +1143,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * completion is set to NULL.
 	 * Since 2.4
 	 * Params:
-	 * completion = The GtkEntryCompletion or NULL. allow-none.
+	 * completion = The GtkEntryCompletion or NULL. [allow-none]
 	 */
 	public void setCompletion(EntryCompletion completion)
 	{
@@ -1189,7 +1189,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Retrieves the horizontal cursor adjustment for the entry.
 	 * See gtk_entry_set_cursor_hadjustment().
 	 * Since 2.12
-	 * Returns: the horizontal cursor adjustment, or NULL if none has been set. . transfer none.
+	 * Returns: the horizontal cursor adjustment, or NULL if none has been set. [transfer none]
 	 */
 	public Adjustment getCursorHadjustment()
 	{
@@ -1268,12 +1268,45 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Allow the GtkEntry input method to internally handle key press
+	 * and release events. If this function returns TRUE, then no further
+	 * processing should be done for this key event. See
+	 * gtk_im_context_filter_keypress().
+	 * Note that you are expected to call this function from your handler
+	 * when overriding key event handling. This is needed in the case when
+	 * you need to insert your own key handling between the input method
+	 * and the default key event handling of the GtkEntry.
+	 * See gtk_text_view_reset_im_context() for an example of use.
+	 * Since 2.22
+	 * Params:
+	 * event = the key event
+	 * Returns: TRUE if the input method handled the key event.
+	 */
+	public int imContextFilterKeypress(GdkEventKey* event)
+	{
+		// gboolean gtk_entry_im_context_filter_keypress  (GtkEntry *entry,  GdkEventKey *event);
+		return gtk_entry_im_context_filter_keypress(gtkEntry, event);
+	}
+	
+	/**
+	 * Reset the input method context of the entry if needed.
+	 * This can be necessary in the case where modifying the buffer
+	 * would confuse on-going input method behavior.
+	 * Since 2.22
+	 */
+	public void resetImContext()
+	{
+		// void gtk_entry_reset_im_context (GtkEntry *entry);
+		gtk_entry_reset_im_context(gtkEntry);
+	}
+	
+	/**
 	 * Sets the icon shown in the specified position using a pixbuf.
 	 * If pixbuf is NULL, no icon will be shown in the specified position.
 	 * Since 2.16
 	 * Params:
 	 * iconPos = Icon position
-	 * pixbuf = A GdkPixbuf, or NULL. allow-none.
+	 * pixbuf = A GdkPixbuf, or NULL. [allow-none]
 	 */
 	public void setIconFromPixbuf(GtkEntryIconPosition iconPos, Pixbuf pixbuf)
 	{
@@ -1288,7 +1321,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = Icon position
-	 * stockId = The name of the stock item, or NULL. allow-none.
+	 * stockId = The name of the stock item, or NULL. [allow-none]
 	 */
 	public void setIconFromStock(GtkEntryIconPosition iconPos, string stockId)
 	{
@@ -1305,7 +1338,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = The position at which to set the icon
-	 * iconName = An icon name, or NULL. allow-none.
+	 * iconName = An icon name, or NULL. [allow-none]
 	 */
 	public void setIconFromIconName(GtkEntryIconPosition iconPos, string iconName)
 	{
@@ -1322,7 +1355,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = The position at which to set the icon
-	 * icon = The icon to set, or NULL. allow-none.
+	 * icon = The icon to set, or NULL. [allow-none]
 	 */
 	public void setIconFromGicon(GtkEntryIconPosition iconPos, IconIF icon)
 	{
@@ -1495,7 +1528,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = the icon position
-	 * tooltip = the contents of the tooltip for the icon, or NULL. allow-none.
+	 * tooltip = the contents of the tooltip for the icon, or NULL. [allow-none]
 	 */
 	public void setIconTooltipText(GtkEntryIconPosition iconPos, string tooltip)
 	{
@@ -1527,7 +1560,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = the icon position
-	 * tooltip = the contents of the tooltip for the icon, or NULL. allow-none.
+	 * tooltip = the contents of the tooltip for the icon, or NULL. [allow-none]
 	 */
 	public void setIconTooltipMarkup(GtkEntryIconPosition iconPos, string tooltip)
 	{

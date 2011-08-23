@@ -158,7 +158,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Since 2.4
 	 * Params:
 	 * childModel = A GtkTreeModel.
-	 * root = A GtkTreePath or NULL.. allow-none.
+	 * root = A GtkTreePath or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF childModel, TreePath root)
@@ -187,8 +187,8 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Since 2.4
 	 * Params:
 	 * func = A GtkTreeModelFilterVisibleFunc, the visible function.
-	 * data = User data to pass to the visible function, or NULL.. allow-none.
-	 * destroy = Destroy notifier of data, or NULL.. allow-none.
+	 * data = User data to pass to the visible function, or NULL. [allow-none]
+	 * destroy = Destroy notifier of data, or NULL. [allow-none]
 	 */
 	public void setVisibleFunc(GtkTreeModelFilterVisibleFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -208,8 +208,8 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Params:
 	 * types = The GTypes of the columns.
 	 * func = A GtkTreeModelFilterModifyFunc
-	 * data = User data to pass to the modify function, or NULL.. allow-none.
-	 * destroy = Destroy notifier of data, or NULL.. allow-none.
+	 * data = User data to pass to the modify function, or NULL. [allow-none]
+	 * destroy = Destroy notifier of data, or NULL. [allow-none]
 	 */
 	public void setModifyFunc(GType[] types, GtkTreeModelFilterModifyFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -255,7 +255,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Since 2.4
 	 * Params:
 	 * filter = A GtkTreeModelFilter.
-	 * filterIter = An uninitialized GtkTreeIter.
+	 * filterIter = An uninitialized GtkTreeIter. [out]
 	 * childIter = A valid GtkTreeIter pointing to a row on the child model.
 	 * Returns: TRUE, if filter_iter was set, i.e. if child_iter is a valid iterator pointing to a visible row in child model.
 	 */
@@ -270,7 +270,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * Since 2.4
 	 * Params:
 	 * filter = A GtkTreeModelFilter.
-	 * childIter = An uninitialized GtkTreeIter.
+	 * childIter = An uninitialized GtkTreeIter. [out]
 	 * filterIter = A valid GtkTreeIter pointing to a row on filter.
 	 */
 	public void convertIterToChildIter(TreeIter childIter, TreeIter filterIter)

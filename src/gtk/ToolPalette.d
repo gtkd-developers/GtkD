@@ -289,7 +289,7 @@ public class ToolPalette : Container, OrientableIF
 	 * Gets the size of icons in the tool palette.
 	 * See gtk_tool_palette_set_icon_size().
 	 * Since 2.20
-	 * Returns: the GtkIconSize of icons in the tool palette . type int
+	 * Returns: the GtkIconSize of icons in the tool palette. [type int]
 	 */
 	public GtkIconSize getIconSize()
 	{
@@ -302,7 +302,7 @@ public class ToolPalette : Container, OrientableIF
 	 * Since 2.20
 	 * Params:
 	 * iconSize = the GtkIconSize that icons in the tool
-	 *  palette shall have. type int
+	 *  palette shall have. [type int]
 	 */
 	public void setIconSize(GtkIconSize iconSize)
 	{

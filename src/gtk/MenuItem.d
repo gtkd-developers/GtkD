@@ -448,7 +448,7 @@ public class MenuItem : Item, ActivatableIF
 	 * Sets or replaces the menu item's submenu, or removes it when a NULL
 	 * submenu is passed.
 	 * Params:
-	 * submenu = the submenu, or NULL. allow-none.
+	 * submenu = the submenu, or NULL. [allow-none]
 	 */
 	public void setSubmenu(Widget submenu)
 	{
@@ -503,7 +503,7 @@ public class MenuItem : Item, ActivatableIF
 	 * g_intern_static_string().
 	 * Params:
 	 * accelPath = accelerator path, corresponding to this menu item's
-	 *  functionality, or NULL to unset the current path.. allow-none.
+	 *  functionality, or NULL to unset the current path. [allow-none]
 	 */
 	public void setAccelPath(string accelPath)
 	{

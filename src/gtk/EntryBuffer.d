@@ -129,6 +129,8 @@ public class EntryBuffer : ObjectG
 	
 	void delegate(guint, guint, EntryBuffer)[] onDeletedTextListeners;
 	/**
+	 * This signal is emitted after text is deleted from the buffer.
+	 * Since 2.18
 	 */
 	void addOnDeletedText(void delegate(guint, guint, EntryBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -145,16 +147,18 @@ public class EntryBuffer : ObjectG
 		}
 		onDeletedTextListeners ~= dlg;
 	}
-	extern(C) static void callBackDeletedText(GtkEntryBuffer* entrybufferStruct, guint arg1, guint arg2, EntryBuffer entryBuffer)
+	extern(C) static void callBackDeletedText(GtkEntryBuffer* bufferStruct, guint position, guint nChars, EntryBuffer entryBuffer)
 	{
 		foreach ( void delegate(guint, guint, EntryBuffer) dlg ; entryBuffer.onDeletedTextListeners )
 		{
-			dlg(arg1, arg2, entryBuffer);
+			dlg(position, nChars, entryBuffer);
 		}
 	}
 	
 	void delegate(guint, string, guint, EntryBuffer)[] onInsertedTextListeners;
 	/**
+	 * This signal is emitted after text is inserted into the buffer.
+	 * Since 2.18
 	 */
 	void addOnInsertedText(void delegate(guint, string, guint, EntryBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -171,11 +175,11 @@ public class EntryBuffer : ObjectG
 		}
 		onInsertedTextListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertedText(GtkEntryBuffer* entrybufferStruct, guint arg1, gchar* arg2, guint arg3, EntryBuffer entryBuffer)
+	extern(C) static void callBackInsertedText(GtkEntryBuffer* bufferStruct, guint position, gchar* chars, guint nChars, EntryBuffer entryBuffer)
 	{
 		foreach ( void delegate(guint, string, guint, EntryBuffer) dlg ; entryBuffer.onInsertedTextListeners )
 		{
-			dlg(arg1, Str.toString(arg2), arg3, entryBuffer);
+			dlg(position, Str.toString(chars), nChars, entryBuffer);
 		}
 	}
 	
@@ -185,7 +189,7 @@ public class EntryBuffer : ObjectG
 	 * Optionally, specify initial text to set in the buffer.
 	 * Since 2.18
 	 * Params:
-	 * initialChars = initial buffer text, or NULL. allow-none.
+	 * initialChars = initial buffer text, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (char[] initialChars)

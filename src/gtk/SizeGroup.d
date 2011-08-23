@@ -264,7 +264,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Returns the list of widgets associated with size_group.
 	 * Since 2.10
-	 * Returns: a GSList of widgets. The list is owned by GTK+ and should not be modified. . element-type GtkWidget. transfer none GtkWidget.
+	 * Returns: a GSList of widgets. The list is owned by GTK+ and should not be modified. [element-type GtkWidget][transfer none GtkWidget]
 	 */
 	public ListSG getWidgets()
 	{

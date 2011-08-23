@@ -76,8 +76,7 @@ private import gtk.Box;
  * The primary purpose of this class is to keep track of the various properties
  * of GtkHButtonBox and GtkVButtonBox widgets.
  * gtk_button_box_get_child_size() retrieves the minimum width and height
- * for widgets in a given button box. gtk_button_box_set_child_size()
- * allows those properties to be changed.
+ * for widgets in a given button box.
  * The internal padding of buttons can be retrieved and changed per button box using
  * gtk_button_box_get_child_ipadding() and gtk_button_box_set_child_ipadding()
  * respectively.
@@ -256,12 +255,7 @@ public class ButtonBox : Box
 	
 	/**
 	 * Warning
-	 * gtk_button_box_set_child_size is deprecated and should not be used in newly-written code. Use the style properties
-	 *  "child-min-width"
-	 *  and
-	 *  "child-min-height"
-	 *  instead.
-	 * Sets a new default size for the children of a given button box.
+	 * gtk_button_box_set_child_size is deprecated and should not be used in newly-written code. This is not supported anymore and can only be set through the theme
 	 * Params:
 	 * minWidth = a default width for buttons in widget
 	 * minHeight = a default height for buttons in widget

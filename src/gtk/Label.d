@@ -634,8 +634,8 @@ public class Label : Misc
 	 * when using the PangoLayout functions you need to convert to
 	 * and from pixels using PANGO_PIXELS() or PANGO_SCALE.
 	 * Params:
-	 * x = location to store X offset of layout, or NULL. allow-none.
-	 * y = location to store Y offset of layout, or NULL. allow-none.
+	 * x = location to store X offset of layout, or NULL. [allow-none]
+	 * y = location to store Y offset of layout, or NULL. [allow-none]
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -707,7 +707,7 @@ public class Label : Misc
 	 * this signal will activate the widget if there are no mnemonic collisions
 	 * and toggle focus between the colliding widgets otherwise.
 	 * Params:
-	 * widget = the target GtkWidget. allow-none.
+	 * widget = the target GtkWidget. [allow-none]
 	 */
 	public void setMnemonicWidget(Widget widget)
 	{
@@ -825,7 +825,7 @@ public class Label : Misc
 	 * pixel positions, in combination with gtk_label_get_layout_offsets().
 	 * The returned layout is owned by the label so need not be
 	 * freed by the caller.
-	 * Returns: the PangoLayout for this label. transfer none.
+	 * Returns: the PangoLayout for this label. [transfer none]
 	 */
 	public PgLayout getLayout()
 	{

@@ -157,8 +157,8 @@ public class PrintUnixDialog : Dialog
 	 * Creates a new GtkPrintUnixDialog.
 	 * Since 2.10
 	 * Params:
-	 * title = Title of the dialog, or NULL. allow-none.
-	 * parent = Transient parent of the dialog, or NULL. allow-none.
+	 * title = Title of the dialog, or NULL. [allow-none]
+	 * parent = Transient parent of the dialog, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string title, Window parent)
@@ -230,7 +230,7 @@ public class PrintUnixDialog : Dialog
 	 * operation before the print dialog is shown.
 	 * Since 2.10
 	 * Params:
-	 * settings = a GtkPrintSettings, or NULL. allow-none.
+	 * settings = a GtkPrintSettings, or NULL. [allow-none]
 	 */
 	public void setPrintSettings(PrintSettings settings)
 	{

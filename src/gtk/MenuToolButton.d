@@ -287,8 +287,8 @@ public class MenuToolButton : ToolButton
 	 * Since 2.6
 	 * Params:
 	 * tooltips = the GtkTooltips object to be used
-	 * tipText = text to be used as tooltip text for tool_item. allow-none.
-	 * tipPrivate = text to be used as private tooltip text. allow-none.
+	 * tipText = text to be used as tooltip text for tool_item. [allow-none]
+	 * tipPrivate = text to be used as private tooltip text. [allow-none]
 	 */
 	public void setArrowTooltip(Tooltips tooltips, string tipText, string tipPrivate)
 	{

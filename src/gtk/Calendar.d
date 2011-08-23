@@ -186,6 +186,8 @@ public class Calendar : Widget
 	/**
 	 * Emitted when the user clicks a button to change the selected month on a
 	 * calendar.
+	 * Emitted when the user clicks a button to change the selected month on a
+	 * calendar.
 	 */
 	void addOnMonthChanged(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -332,6 +334,9 @@ public class Calendar : Widget
 	
 	/**
 	 * Shifts the calendar to a different month.
+	 * Note that this function always returns TRUE, and you should
+	 * ignore the return value. In GTK+ 3, this function will not
+	 * return a value.
 	 * Params:
 	 * month = a month number between 0 and 11.
 	 * year = the year the month is in.
@@ -357,6 +362,9 @@ public class Calendar : Widget
 	
 	/**
 	 * Places a visual marker on a particular day.
+	 * Note that this function always returns TRUE, and you should
+	 * ignore the return value. In GTK+ 3, this function will not
+	 * return a value.
 	 * Params:
 	 * day = the day number to mark between 1 and 31.
 	 * Returns: TRUE, always
@@ -369,6 +377,9 @@ public class Calendar : Widget
 	
 	/**
 	 * Removes the visual marker from a particular day.
+	 * Note that this function always returns TRUE, and you should
+	 * ignore the return value. In GTK+ 3, this function will not
+	 * return a value.
 	 * Params:
 	 * day = the day number to unmark between 1 and 31.
 	 * Returns: TRUE, always
@@ -415,9 +426,9 @@ public class Calendar : Widget
 	/**
 	 * Obtains the selected date from a GtkCalendar.
 	 * Params:
-	 * year = location to store the year number, or NULL. allow-none.
-	 * month = location to store the month number (between 0 and 11), or NULL. allow-none.
-	 * day = location to store the day number (between 1 and 31), or NULL. allow-none.
+	 * year = location to store the year number, or NULL. [allow-none]
+	 * month = location to store the month number (between 0 and 11), or NULL. [allow-none]
+	 * day = location to store the day number (between 1 and 31), or NULL. [allow-none]
 	 */
 	public void getDate(out uint year, out uint month, out uint day)
 	{

@@ -222,7 +222,7 @@ public class Main
 	 * You shouldn't call this function explicitely if you are using
 	 * gtk_init(), or gtk_init_check().
 	 * Params:
-	 * argv = a pointer to the array of command line arguments.. array. inout.
+	 * argv = a pointer to the array of command line arguments. [array][inout]
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.
 	 */
 	public static int parseArgs(ref string[] argv)
@@ -265,9 +265,9 @@ public class Main
 	 * similar things.
 	 * Params:
 	 * argc = Address of the argc parameter of your
-	 *  main() function. Changed if any arguments were handled.. inout.
+	 *  main() function. Changed if any arguments were handled. [inout]
 	 * argv = Address of the argv parameter of main().
-	 *  Any parameters understood by gtk_init() are stripped before return.. array length=argc. inout length=argc. allow-none length=argc.
+	 *  Any parameters understood by gtk_init() are stripped before return. [array length=argc][inout length=argc][allow-none length=argc]
 	 */
 	public static void init(int* argc, char*** argv)
 	{
@@ -283,7 +283,7 @@ public class Main
 	 * with the user - for example a curses or command line interface.
 	 * Params:
 	 * argv = Address of the argv parameter of main().
-	 *  Any parameters understood by gtk_init() are stripped before return.. array length=argc. inout length=argc. allow-none length=argc.
+	 *  Any parameters understood by gtk_init() are stripped before return. [array length=argc][inout length=argc][allow-none length=argc]
 	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
 	 */
 	public static int initCheck(ref string[] argv)

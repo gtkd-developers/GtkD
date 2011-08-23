@@ -161,7 +161,7 @@ public class WindowGroup : ObjectG
 	/**
 	 * Returns a list of the GtkWindows that belong to window_group.
 	 * Since 2.14
-	 * Returns: A newly-allocated list of windows inside the group. . element-type GtkWidget. transfer container GtkWidget.
+	 * Returns: A newly-allocated list of windows inside the group. [element-type GtkWidget][transfer container GtkWidget]
 	 */
 	public ListG listWindows()
 	{
@@ -172,5 +172,14 @@ public class WindowGroup : ObjectG
 			return null;
 		}
 		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Returns:
+	 */
+	public GtkWidget* getCurrentGrab()
+	{
+		// GtkWidget * gtk_window_group_get_current_grab (GtkWindowGroup *window_group);
+		return gtk_window_group_get_current_grab(gtkWindowGroup);
 	}
 }

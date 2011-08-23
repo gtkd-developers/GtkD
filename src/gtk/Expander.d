@@ -283,7 +283,7 @@ public class Expander : Bin
 	 * This will also clear any previously set labels.
 	 * Since 2.4
 	 * Params:
-	 * label = a string. allow-none.
+	 * label = a string. [allow-none]
 	 */
 	public void setLabel(string label)
 	{
@@ -367,7 +367,7 @@ public class Expander : Bin
 	 * that will appear embedded alongside the expander arrow.
 	 * Since 2.4
 	 * Params:
-	 * labelWidget = the new label widget. allow-none.
+	 * labelWidget = the new label widget. [allow-none]
 	 */
 	public void setLabelWidget(Widget labelWidget)
 	{
@@ -390,5 +390,31 @@ public class Expander : Bin
 			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Sets whether the label widget should fill all available horizontal space
+	 * allocated to expander.
+	 * Since 2.22
+	 * Params:
+	 * labelFill = TRUE if the label should should fill all available horizontal
+	 *  space
+	 */
+	public void setLabelFill(int labelFill)
+	{
+		// void gtk_expander_set_label_fill (GtkExpander *expander,  gboolean label_fill);
+		gtk_expander_set_label_fill(gtkExpander, labelFill);
+	}
+	
+	/**
+	 * Returns whether the label widget will fill all available horizontal
+	 * space allocated to expander.
+	 * Since 2.22
+	 * Returns: TRUE if the label widget will fill all available horizontal space
+	 */
+	public int getLabelFill()
+	{
+		// gboolean gtk_expander_get_label_fill (GtkExpander *expander);
+		return gtk_expander_get_label_fill(gtkExpander);
 	}
 }

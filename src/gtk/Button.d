@@ -48,11 +48,13 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gdk.Window
  * 	- gtk.Widget
  * 	- gtk.Image
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
+ * 	- GdkWindow* -> Window
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -70,6 +72,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gdk.Window;
 private import gtk.Widget;
 private import gtk.Image;
 private import gtk.ActivatableT;
@@ -715,5 +718,22 @@ public class Button : Bin, ActivatableIF
 	{
 		// GtkPositionType gtk_button_get_image_position (GtkButton *button);
 		return gtk_button_get_image_position(gtkButton);
+	}
+	
+	/**
+	 * Returns the button's event window if it is realized, NULL otherwise.
+	 * This function should be rarely needed.
+	 * Since 2.22
+	 * Returns: button's event window. [transfer none]
+	 */
+	public Window getEventWindow()
+	{
+		// GdkWindow* gtk_button_get_event_window (GtkButton *button);
+		auto p = gtk_button_get_event_window(gtkButton);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 }

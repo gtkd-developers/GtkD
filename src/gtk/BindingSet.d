@@ -165,7 +165,7 @@ public class BindingSet
 	 * keyval = key value
 	 * modifiers = key modifier
 	 * signalName = signal name to be bound
-	 * bindingArgs = list of GtkBindingArg signal arguments
+	 * bindingArgs = list of GtkBindingArg signal arguments. [transfer none][element-type GtkBindingArg]
 	 */
 	public void bindingEntryAddSignall(uint keyval, GdkModifierType modifiers, string signalName, ListSG bindingArgs)
 	{

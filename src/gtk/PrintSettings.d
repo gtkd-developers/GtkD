@@ -200,7 +200,7 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * key = a key
-	 * value = a string value, or NULL. allow-none.
+	 * value = a string value, or NULL. [allow-none]
 	 */
 	public void set(string key, string value)
 	{
@@ -1029,7 +1029,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the settings from
 	 * groupName = the name of the group to use, or NULL to use
-	 *  the default "Print Settings". allow-none.
+	 *  the default "Print Settings". [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -1085,7 +1085,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the settings from
 	 * groupName = the name of the group to use, or NULL to use the default
-	 *  "Print Settings". allow-none.
+	 *  "Print Settings". [allow-none]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */

@@ -291,6 +291,22 @@ public class TreePath
 	}
 	
 	/**
+	 * Returns the current indices of path.
+	 * This is an array of integers, each representing a node in a tree.
+	 * It also returns the number of elements in the array.
+	 * The array should not be freed.
+	 * Since 2.22
+	 * Params:
+	 * depth = Number of elements returned in the integer array
+	 * Returns: The current indices, or NULL. [array length=depth][transfer none length=depth]
+	 */
+	public int* getIndicesWithDepth(int* depth)
+	{
+		// gint * gtk_tree_path_get_indices_with_depth  (GtkTreePath *path,  gint *depth);
+		return gtk_tree_path_get_indices_with_depth(gtkTreePath, depth);
+	}
+	
+	/**
 	 * Frees path.
 	 */
 	public void free()

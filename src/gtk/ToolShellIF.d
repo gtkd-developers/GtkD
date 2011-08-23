@@ -87,7 +87,7 @@ public interface ToolShellIF
 	 * Retrieves the current ellipsize mode for the tool shell. Tool items must not
 	 * call this function directly, but rely on gtk_tool_item_get_ellipsize_mode()
 	 * instead.
-	 * Since 2.14
+	 * Since 2.20
 	 * Returns: the current ellipsize mode of shell
 	 */
 	public PangoEllipsizeMode getEllipsizeMode();
@@ -96,7 +96,7 @@ public interface ToolShellIF
 	 * Retrieves the icon size for the tool shell. Tool items must not call this
 	 * function directly, but rely on gtk_tool_item_get_icon_size() instead.
 	 * Since 2.14
-	 * Returns: the current size for icons of shell . type int
+	 * Returns: the current size for icons of shell. [type int]
 	 */
 	public GtkIconSize getIconSize();
 	
@@ -130,7 +130,7 @@ public interface ToolShellIF
 	 * Retrieves the current text alignment for the tool shell. Tool items must not
 	 * call this function directly, but rely on gtk_tool_item_get_text_alignment()
 	 * instead.
-	 * Since 2.14
+	 * Since 2.20
 	 * Returns: the current text alignment of shell
 	 */
 	public float getTextAlignment();
@@ -139,7 +139,7 @@ public interface ToolShellIF
 	 * Retrieves the current text orientation for the tool shell. Tool items must not
 	 * call this function directly, but rely on gtk_tool_item_get_text_orientation()
 	 * instead.
-	 * Since 2.14
+	 * Since 2.20
 	 * Returns: the current text orientation of shell
 	 */
 	public GtkOrientation getTextOrientation();
@@ -158,7 +158,7 @@ public interface ToolShellIF
 	 * Retrieves the current text size group for the tool shell. Tool items must not
 	 * call this function directly, but rely on gtk_tool_item_get_text_size_group()
 	 * instead.
-	 * Since 2.14
+	 * Since 2.20
 	 * Returns: the current text size group of shell
 	 */
 	public SizeGroup getTextSizeGroup();

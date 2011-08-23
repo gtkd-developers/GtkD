@@ -1130,12 +1130,14 @@ structWrap: GdkWindow* Window
 # do we need a length?
 array: gdk_device_get_state axes
 out: gdk_device_get_state mask
+out: gdk_device_free_history events
 array: gdk_device_free_history events n_events
 #do we need a length?
 array: gdk_device_get_axis axes
 out: gdk_device_get_axis value
 out: gdk_device_get_key keyval
 out: gdk_device_get_key modifiers
+inout: 
 
 nocode: gdk_device_get_history
 

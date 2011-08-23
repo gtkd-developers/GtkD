@@ -237,7 +237,7 @@ public class IconTheme : ObjectG
 	 * Gets the icon theme for the default screen. See
 	 * gtk_icon_theme_get_for_screen().
 	 * Since 2.4
-	 * Returns: A unique GtkIconTheme associated with the default screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it. . transfer none.
+	 * Returns: A unique GtkIconTheme associated with the default screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it. [transfer none]
 	 */
 	public static IconTheme getDefault()
 	{
@@ -262,7 +262,7 @@ public class IconTheme : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * screen = a GdkScreen
-	 * Returns: A unique GtkIconTheme associated with the given screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it. . transfer none.
+	 * Returns: A unique GtkIconTheme associated with the given screen. This icon theme is associated with the screen and can be used as long as the screen is open. Do not ref or unref it. [transfer none]
 	 */
 	public static IconTheme getForScreen(Screen screen)
 	{
@@ -318,7 +318,7 @@ public class IconTheme : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * path = location to store a list of icon theme path directories or NULL
-	 *  The stored value should be freed with g_strfreev().. allow-none. out.
+	 *  The stored value should be freed with g_strfreev(). [allow-none][out]
 	 */
 	public void getSearchPath(out string[] path)
 	{
@@ -509,7 +509,7 @@ public class IconTheme : ObjectG
 	 * Gets the list of contexts available within the current
 	 * hierarchy of icon themes
 	 * Since 2.12
-	 * Returns: a GList list holding the names of all the contexts in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). . element-type utf8. transfer full utf8.
+	 * Returns: a GList list holding the names of all the contexts in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). [element-type utf8][transfer full utf8]
 	 */
 	public ListG listContexts()
 	{
@@ -532,7 +532,7 @@ public class IconTheme : ObjectG
 	 * Params:
 	 * context = a string identifying a particular type of icon,
 	 *  or NULL to list all icons.
-	 * Returns: a GList list holding the names of all the icons in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). . element-type utf8. transfer none utf8.
+	 * Returns: a GList list holding the names of all the icons in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). [element-type utf8][transfer none utf8]
 	 */
 	public ListG listIcons(string context)
 	{

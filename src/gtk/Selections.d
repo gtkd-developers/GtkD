@@ -101,7 +101,7 @@ public class Selections
 	 * Claims ownership of a given selection for a particular widget,
 	 * or, if widget is NULL, release ownership of the selection.
 	 * Params:
-	 * widget = a GtkWidget, or NULL.. allow-none.
+	 * widget = a GtkWidget, or NULL. [allow-none]
 	 * selection = an interned atom representing the selection to claim
 	 * time = timestamp with which to claim the selection
 	 * Returns: TRUE if the operation succeeded
@@ -118,7 +118,7 @@ public class Selections
 	 * Since 2.2
 	 * Params:
 	 * display = the Gdkdisplay where the selection is set
-	 * widget = new selection owner (a GdkWidget), or NULL.. allow-none.
+	 * widget = new selection owner (a GdkWidget), or NULL. [allow-none]
 	 * selection = an interned atom representing the selection to claim.
 	 * time = timestamp with which to claim the selection
 	 * Returns: TRUE if the operation succeeded
@@ -287,7 +287,7 @@ public class Selections
 	 * Since 2.6
 	 * Params:
 	 * selectionData = a GtkSelectionData
-	 * Returns: if the selection data contains a list of URIs, a newly allocated NULL-terminated string array containing the URIs, otherwise NULL. If the result is non-NULL it must be freed with g_strfreev(). . array zero-terminated=1. element-type utf8. transfer full utf8.
+	 * Returns: if the selection data contains a list of URIs, a newly allocated NULL-terminated string array containing the URIs, otherwise NULL. If the result is non-NULL it must be freed with g_strfreev(). [array zero-terminated=1][element-type utf8][transfer full utf8]
 	 */
 	public static string[] dataGetUris(GtkSelectionData* selectionData)
 	{

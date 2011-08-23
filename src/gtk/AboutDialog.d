@@ -195,7 +195,7 @@ public class AboutDialog : Dialog
 	 * If this is not set, it defaults to g_get_application_name().
 	 * Since 2.6
 	 * Params:
-	 * name = the program name. allow-none.
+	 * name = the program name. [allow-none]
 	 */
 	public override void setName(string name)
 	{
@@ -288,7 +288,7 @@ public class AboutDialog : Dialog
 	 * This should be a short string of one or two lines.
 	 * Since 2.6
 	 * Params:
-	 * comments = a comments string. allow-none.
+	 * comments = a comments string. [allow-none]
 	 */
 	public void setComments(string comments)
 	{
@@ -313,7 +313,7 @@ public class AboutDialog : Dialog
 	 * hidden.
 	 * Since 2.6
 	 * Params:
-	 * license = the license information or NULL. allow-none.
+	 * license = the license information or NULL. [allow-none]
 	 */
 	public void setLicense(string license)
 	{
@@ -363,7 +363,7 @@ public class AboutDialog : Dialog
 	 * before calling this function.
 	 * Since 2.6
 	 * Params:
-	 * website = a URL string starting with "http://". allow-none.
+	 * website = a URL string starting with "http://". [allow-none]
 	 */
 	public void setWebsite(string website)
 	{
@@ -490,7 +490,7 @@ public class AboutDialog : Dialog
 	 * Using gettext(), a simple way to achieve that is to mark the
 	 * Since 2.6
 	 * Params:
-	 * translatorCredits = the translator credits. allow-none.
+	 * translatorCredits = the translator credits. [allow-none]
 	 */
 	public void setTranslatorCredits(string translatorCredits)
 	{
@@ -520,7 +520,7 @@ public class AboutDialog : Dialog
 	 * gtk_window_set_default_icon() will be used.
 	 * Since 2.6
 	 * Params:
-	 * logo = a GdkPixbuf, or NULL. allow-none.
+	 * logo = a GdkPixbuf, or NULL. [allow-none]
 	 */
 	public void setLogo(Pixbuf logo)
 	{
@@ -545,7 +545,7 @@ public class AboutDialog : Dialog
 	 * gtk_window_set_default_icon() will be used.
 	 * Since 2.6
 	 * Params:
-	 * iconName = an icon name, or NULL. allow-none.
+	 * iconName = an icon name, or NULL. [allow-none]
 	 */
 	public void setLogoIconName(string iconName)
 	{

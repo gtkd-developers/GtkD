@@ -433,7 +433,7 @@ public template TreeModelT(TStruct)
 	 * Returns the type of the column.
 	 * Params:
 	 * index = The column index.
-	 * Returns: The type of the column.
+	 * Returns: The type of the column. [transfer none]
 	 */
 	public GType getColumnType(int index)
 	{
@@ -445,7 +445,7 @@ public template TreeModelT(TStruct)
 	 * Sets iter to a valid iterator pointing to path_string, if it
 	 * exists. Otherwise, iter is left invalid and FALSE is returned.
 	 * Params:
-	 * iter = An uninitialized GtkTreeIter.
+	 * iter = An uninitialized GtkTreeIter. [out]
 	 * pathString = A string representation of a GtkTreePath.
 	 * Returns: TRUE, if iter was set.
 	 */
@@ -459,7 +459,7 @@ public template TreeModelT(TStruct)
 	 * Initializes iter with the first iterator in the tree (the one at the path
 	 * "0") and returns TRUE. Returns FALSE if the tree is empty.
 	 * Params:
-	 * iter = The uninitialized GtkTreeIter.
+	 * iter = The uninitialized GtkTreeIter. [out]
 	 * Returns: TRUE, if iter was set.
 	 */
 	public int getIterFirst(TreeIter iter)
@@ -490,7 +490,7 @@ public template TreeModelT(TStruct)
 	 * Sets iter to point to the node following it at the current level. If there
 	 * is no next iter, FALSE is returned and iter is set to be invalid.
 	 * Params:
-	 * iter = The GtkTreeIter.
+	 * iter = The GtkTreeIter. [inout]
 	 * Returns: TRUE if iter has been changed to the next node.
 	 */
 	public int iterNext(TreeIter iter)
@@ -506,8 +506,8 @@ public template TreeModelT(TStruct)
 	 * If parent is NULL returns the first node, equivalent to
 	 * gtk_tree_model_get_iter_first (tree_model, iter);
 	 * Params:
-	 * iter = The new GtkTreeIter to be set to the child.
-	 * parent = The GtkTreeIter, or NULL. allow-none.
+	 * iter = The new GtkTreeIter to be set to the child. [out]
+	 * parent = The GtkTreeIter, or NULL. [allow-none]
 	 * Returns: TRUE, if child has been set to the first child.
 	 */
 	public int iterChildren(TreeIter iter, TreeIter parent)
@@ -532,7 +532,7 @@ public template TreeModelT(TStruct)
 	 * Returns the number of children that iter has. As a special case, if iter
 	 * is NULL, then the number of toplevel nodes is returned.
 	 * Params:
-	 * iter = The GtkTreeIter, or NULL.. allow-none.
+	 * iter = The GtkTreeIter, or NULL. [allow-none]
 	 * Returns: The number of children of iter.
 	 */
 	public int iterNChildren(TreeIter iter)
@@ -548,8 +548,8 @@ public template TreeModelT(TStruct)
 	 * node after this function has been called. As a special case, if parent is
 	 * NULL, then the nth root node is set.
 	 * Params:
-	 * iter = The GtkTreeIter to set to the nth child.
-	 * parent = The GtkTreeIter to get the child from, or NULL.. allow-none.
+	 * iter = The GtkTreeIter to set to the nth child. [out]
+	 * parent = The GtkTreeIter to get the child from, or NULL. [allow-none]
 	 * n = Then index of the desired child.
 	 * Returns: TRUE, if parent has an nth child.
 	 */
@@ -565,7 +565,7 @@ public template TreeModelT(TStruct)
 	 * is returned. child will remain a valid node after this function has been
 	 * called.
 	 * Params:
-	 * iter = The new GtkTreeIter to set to the parent.
+	 * iter = The new GtkTreeIter to set to the parent. [out]
 	 * child = The GtkTreeIter.
 	 * Returns: TRUE, if iter is set to the parent of child.
 	 */

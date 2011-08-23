@@ -273,7 +273,7 @@ public class IconInfo
 	 * GTK_ICON_LOOKUP_USE_BUILTIN to
 	 * gtk_icon_theme_lookup_icon().
 	 * Since 2.4
-	 * Returns: the built-in image pixbuf, or NULL. No extra reference is added to the returned pixbuf, so if you want to keep it around, you must use g_object_ref(). The returned image must not be modified. . transfer none.
+	 * Returns: the built-in image pixbuf, or NULL. No extra reference is added to the returned pixbuf, so if you want to keep it around, you must use g_object_ref(). The returned image must not be modified. [transfer none]
 	 */
 	public Pixbuf getBuiltinPixbuf()
 	{
@@ -372,7 +372,7 @@ public class IconInfo
 	 * Since 2.4
 	 * Params:
 	 * points = location to store pointer to an array of points, or NULL
-	 *  free the array of points with g_free().. allow-none. out.
+	 *  free the array of points with g_free(). [allow-none][out]
 	 * Returns: TRUE if there are any attach points for the icon.
 	 */
 	public int getAttachPoints(out GdkPoint[] points)

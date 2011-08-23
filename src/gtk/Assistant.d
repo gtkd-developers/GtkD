@@ -80,8 +80,9 @@ private import gtk.Window;
  * GtkAssistant as GtkBuildable
  * The GtkAssistant implementation of the GtkBuildable interface exposes the
  * action_area as internal children with the name "action_area".
- * To add pages to an assistant in GtkBuilder, simply add it as a <child>
- * to the GtkAssistant object, and set its child properties as necessary.
+ * To add pages to an assistant in GtkBuilder, simply add it as a
+ * <child> to the GtkAssistant object, and set its child properties
+ * as necessary.
  */
 public class Assistant : Window
 {
@@ -140,7 +141,7 @@ public class Assistant : Window
 	 * page, unless the current page is the last one.
 	 * A handler for the ::apply signal should carry out the actions for which
 	 * the wizard has collected data. If the action takes a long time to complete,
-	 * you might consider to put a page of type GTK_ASSISTANT_PAGE_PROGRESS
+	 * you might consider putting a page of type GTK_ASSISTANT_PAGE_PROGRESS
 	 * after the confirmation page and handle this operation within the
 	 * "prepare" signal of the progress page.
 	 * Since 2.10
@@ -379,7 +380,7 @@ public class Assistant : Window
 	 * page.
 	 * Since 2.10
 	 * Params:
-	 * pageFunc = the GtkAssistantPageFunc, or NULL to use the default one. allow-none.
+	 * pageFunc = the GtkAssistantPageFunc, or NULL to use the default one. [allow-none]
 	 * data = user data for page_func
 	 * destroy = destroy notifier for data
 	 */
@@ -449,7 +450,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * pixbuf = the new header image page. allow-none.
+	 * pixbuf = the new header image page. [allow-none]
 	 */
 	public void setPageHeaderImage(Widget page, Pixbuf pixbuf)
 	{
@@ -481,7 +482,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * pixbuf = the new header image page. allow-none.
+	 * pixbuf = the new header image page. [allow-none]
 	 */
 	public void setPageSideImage(Widget page, Pixbuf pixbuf)
 	{
@@ -567,6 +568,23 @@ public class Assistant : Window
 	 * function is when changing a value on the current page
 	 * affects the future page flow of the assistant.
 	 * Since 2.10
+	 */
+	public void updateButtonsState()
+	{
+		// void gtk_assistant_update_buttons_state (GtkAssistant *assistant);
+		gtk_assistant_update_buttons_state(gtkAssistant);
+	}
+	
+	/**
+	 * Erases the visited page history so the back button is not
+	 * shown on the current page, and removes the cancel button
+	 * from subsequent pages.
+	 * Use this when the information provided up to the current
+	 * page is hereafter deemed permanent and cannot be modified
+	 * or undone. For example, showing a progress page to track
+	 * a long-running, unreversible operation after the user has
+	 * clicked apply on a confirmation page.
+	 * Since 2.22
 	 * Child Property Details
 	 * The "complete" child property
 	 *  "complete" gboolean : Read / Write
@@ -576,9 +594,9 @@ public class Assistant : Window
 	 * Default value: FALSE
 	 * Since 2.10
 	 */
-	public void updateButtonsState()
+	public void commit()
 	{
-		// void gtk_assistant_update_buttons_state (GtkAssistant *assistant);
-		gtk_assistant_update_buttons_state(gtkAssistant);
+		// void gtk_assistant_commit (GtkAssistant *assistant);
+		gtk_assistant_commit(gtkAssistant);
 	}
 }

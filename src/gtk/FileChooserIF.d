@@ -617,7 +617,7 @@ public interface FileChooserIF
 	 * folder cannot be represented as local filenames they will be ignored. (See
 	 * gtk_file_chooser_get_uris())
 	 * Since 2.4
-	 * Returns: a GSList containing the filenames of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free(). . element-type utf8. transfer full utf8.
+	 * Returns: a GSList containing the filenames of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type utf8][transfer full utf8]
 	 */
 	public ListSG getFilenames();
 	
@@ -707,7 +707,7 @@ public interface FileChooserIF
 	 * Lists all the selected files and subfolders in the current folder of
 	 * chooser. The returned names are full absolute URIs.
 	 * Since 2.4
-	 * Returns: a GSList containing the URIs of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free(). . element-type utf8. transfer full utf8.
+	 * Returns: a GSList containing the URIs of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type utf8][transfer full utf8]
 	 */
 	public ListSG getUris();
 	
@@ -861,7 +861,7 @@ public interface FileChooserIF
 	 * Lists the current set of user-selectable filters; see
 	 * gtk_file_chooser_add_filter(), gtk_file_chooser_remove_filter().
 	 * Since 2.4
-	 * Returns: a GSList containing the current set of user selectable filters. The contents of the list are owned by GTK+, but you must free the list itself with g_slist_free() when you are done with it. . element-type utf8. transfer container utf8.
+	 * Returns: a GSList containing the current set of user selectable filters. The contents of the list are owned by GTK+, but you must free the list itself with g_slist_free() when you are done with it. [element-type utf8][transfer container utf8]
 	 */
 	public ListSG listFilters();
 	
@@ -912,7 +912,7 @@ public interface FileChooserIF
 	 * Queries the list of shortcut folders in the file chooser, as set by
 	 * gtk_file_chooser_add_shortcut_folder().
 	 * Since 2.4
-	 * Returns: A list of folder filenames, or NULL if there are no shortcut folders. Free the returned list with g_slist_free(), and the filenames with g_free(). . element-type utf8. transfer full utf8.
+	 * Returns: A list of folder filenames, or NULL if there are no shortcut folders. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type utf8][transfer full utf8]
 	 */
 	public ListSG listShortcutFolders();
 	
@@ -943,7 +943,7 @@ public interface FileChooserIF
 	 * Queries the list of shortcut folders in the file chooser, as set by
 	 * gtk_file_chooser_add_shortcut_folder_uri().
 	 * Since 2.4
-	 * Returns: A list of folder URIs, or NULL if there are no shortcut folders. Free the returned list with g_slist_free(), and the URIs with g_free(). . element-type utf8. transfer full utf8.
+	 * Returns: A list of folder URIs, or NULL if there are no shortcut folders. Free the returned list with g_slist_free(), and the URIs with g_free(). [element-type utf8][transfer full utf8]
 	 */
 	public ListSG listShortcutFolderUris();
 	
@@ -970,7 +970,7 @@ public interface FileChooserIF
 	 * Lists all the selected files and subfolders in the current folder of chooser
 	 * as GFile. An internal function, see gtk_file_chooser_get_uris().
 	 * Since 2.14
-	 * Returns: a GSList containing a GFile for each selected file and subfolder in the current folder. Free the returned list with g_slist_free(), and the files with g_object_unref(). . element-type utf8. transfer full utf8.
+	 * Returns: a GSList containing a GFile for each selected file and subfolder in the current folder. Free the returned list with g_slist_free(), and the files with g_object_unref(). [element-type utf8][transfer full utf8]
 	 */
 	public ListSG getFiles();
 	

@@ -356,10 +356,15 @@ public class Device
 	 * Params:
 	 * events = an array of GdkTimeCoord. [inout][transfer none]
 	 */
-	public static void freeHistory(GdkTimeCoord*[] events)
+	public static void freeHistory(out GdkTimeCoord[] events)
 	{
 		// void gdk_device_free_history (GdkTimeCoord **events,  gint n_events);
-		gdk_device_free_history(events.ptr, cast(int) events.length);
+		GdkTimeCoord* outevents = null;
+		int nEvents;
+		
+		gdk_device_free_history(&outevents, nEvents);
+		
+		events = outevents[0 .. nEvents];
 	}
 	
 	/**

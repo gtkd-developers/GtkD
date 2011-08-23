@@ -1192,6 +1192,7 @@ class: MessageDialog
 prefix: gtk_message_dialog_
 prefix: gtk_
 import: glib.Str
+import: gtk.VBox
 import: gtk.Window
 structWrap: GtkWindow* Window
 import: gtk.Widget
@@ -1199,6 +1200,7 @@ structWrap: GtkWidget* Widget
 
 nocode: gtk_message_dialog_new
 nocode: gtk_message_dialog_new_with_markup
+nocode: gtk_message_dialog_get_message_area
 
 code: start
 	/**
@@ -1298,7 +1300,21 @@ code: start
 
 		this(p);
 	}
-	
+
+	/**
+	 * Since 2.22
+	 * Returns: A GtkVBox corresponding to the "message area" in the message_dialog. This is the box where the dialog's primary and secondary labels are packed. You can add your own extra content to that box and it will appear below those labels, on the right side of the dialog's image (or on the left for right-to-left languages). See gtk_dialog_get_content_area() for the corresponding function in the parent GtkDialog.
+	 */
+	public VBox getMessageArea()
+	{
+		// GtkWidget * gtk_message_dialog_get_message_area (GtkMessageDialog *message_dialog);
+		auto p = gtk_message_dialog_get_message_area(gtkMessageDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VBox(cast(GtkVBox*) p);
+	}
 code: end
 
 outFile: MessageDialog
@@ -2034,6 +2050,8 @@ implements: ActivatableIF
 prefix: gtk_button_
 prefix: gtk_
 import: glib.Str
+import: gdk.Window
+structWrap: GdkWindow* Window
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Image
@@ -3030,6 +3048,8 @@ prefix: gtk_text_view_
 prefix: gtk_
 noprefix: gtk_text_child_anchor_
 import: glib.Str
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 import: gtk.TextMark
@@ -3204,6 +3224,7 @@ structWrap: GValue* Value
 nocode: gtk_tree_model_get_value
 
 array: gtk_tree_model_rows_reordered new_order
+array: gtk_tree_path_get_indices_with_depth Return depth
 
 interfaceCode: start
 	/**
@@ -6685,8 +6706,27 @@ prefix: gtk_
 import: glib.Str
 import: gdk.Font
 structWrap: GdkFont* Font
+import: gtk.FontSelection
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+nocode: gtk-font-selection-dialog-get-font-selection
+code: start
+	/**
+	 * Retrieves the GtkFontSelection widget embedded in the dialog.
+	 * Since 2.22
+	 * Returns: the embedded GtkFontSelection
+	 */
+	public FontSelection getFontSelection()
+	{
+		// GtkWidget * gtk_font_selection_dialog_get_font_selection  (GtkFontSelectionDialog *fsd);
+		auto p = gtk_font_selection_dialog_get_font_selection(gtkFontSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new FontSelection(cast(GtkFontSelection*) p);
+	}
+code: end
 outFile: FontSelectionDialog
 
 file: GtkInputDialog.html
@@ -7020,6 +7060,8 @@ structWrap: GtkWidget* Widget
 prefix: gtk_table_
 prefix: gtk_
 
+out: gtk_table_get_size rows
+out: gtk_table_get_size columns
 nocode: gtk_table_new
 
 code: start
@@ -7637,6 +7679,8 @@ struct: GtkAccessible
 class: Accessible
 prefix: gtk_accessible_
 prefix: gtk_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 outFile: Accessible
 
 ###########################################################
@@ -8683,7 +8727,7 @@ outFile: RecentFilter
 ### Interface builder #####################################
 ###########################################################
 
-file: gtk-gtkbuildable.html
+file: GtkBuildable.html
 struct: GtkBuildable
 class: BuildableT
 template: TStruct

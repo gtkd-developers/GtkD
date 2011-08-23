@@ -150,7 +150,7 @@ public class Settings : ObjectG
 	/**
 	 * Gets the GtkSettings object for the default GDK screen, creating
 	 * it if necessary. See gtk_settings_get_for_screen().
-	 * Returns: a GtkSettings object. If there is no default screen, then returns NULL.. transfer none.
+	 * Returns: a GtkSettings object. If there is no default screen, then returns NULL. [transfer none]
 	 */
 	public static Settings getDefault()
 	{

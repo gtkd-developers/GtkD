@@ -176,7 +176,7 @@ public class TextTag : ObjectG
 	 * Creates a GtkTextTag. Configure the tag using object arguments,
 	 * i.e. using g_object_set().
 	 * Params:
-	 * name = tag name, or NULL. allow-none.
+	 * name = tag name, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)

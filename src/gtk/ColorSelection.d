@@ -251,7 +251,7 @@ public class ColorSelection : VBox
 	/**
 	 * Sets color to be the current color in the GtkColorSelection widget.
 	 * Params:
-	 * color = a GdkColor to fill in with the current color.
+	 * color = a GdkColor to fill in with the current color. [out]
 	 */
 	public void getCurrentColor(Color color)
 	{

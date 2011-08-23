@@ -521,7 +521,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 * Sets the widget in the header to be widget. If widget is NULL, then the
 	 * header button is set with a GtkLabel set to the title of tree_column.
 	 * Params:
-	 * widget = A child GtkWidget, or NULL.. allow-none.
+	 * widget = A child GtkWidget, or NULL. [allow-none]
 	 */
 	public void setWidget(Widget widget)
 	{
@@ -689,11 +689,11 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 * Obtains the width and height needed to render the column. This is used
 	 * primarily by the GtkTreeView.
 	 * Params:
-	 * cellArea = The area a cell in the column will be allocated, or NULL. allow-none.
-	 * xOffset = location to return x offset of a cell relative to cell_area, or NULL. allow-none.
-	 * yOffset = location to return y offset of a cell relative to cell_area, or NULL. allow-none.
-	 * width = location to return width needed to render a cell, or NULL. allow-none.
-	 * height = location to return height needed to render a cell, or NULL. allow-none.
+	 * cellArea = The area a cell in the column will be allocated, or NULL. [allow-none]
+	 * xOffset = location to return x offset of a cell relative to cell_area, or NULL. [allow-none]
+	 * yOffset = location to return y offset of a cell relative to cell_area, or NULL. [allow-none]
+	 * width = location to return width needed to render a cell, or NULL. [allow-none]
+	 * height = location to return height needed to render a cell, or NULL. [allow-none]
 	 */
 	public void cellGetSize(Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{

@@ -195,8 +195,8 @@ public class Tooltips : ObjectGtk
 	 * Adds a tooltip containing the message tip_text to the specified GtkWidget.
 	 * Params:
 	 * widget = the GtkWidget you wish to associate the tip with.
-	 * tipText = a string containing the tip itself.. allow-none.
-	 * tipPrivate = a string of any further information that may be useful if the user gets stuck.. allow-none.
+	 * tipText = a string containing the tip itself. [allow-none]
+	 * tipPrivate = a string of any further information that may be useful if the user gets stuck. [allow-none]
 	 */
 	public void setTip(Widget widget, string tipText, string tipPrivate)
 	{

@@ -611,7 +611,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * to the "request-page-setup" signal.
 	 * Since 2.10
 	 * Params:
-	 * defaultPageSetup = a GtkPageSetup, or NULL. allow-none.
+	 * defaultPageSetup = a GtkPageSetup, or NULL. [allow-none]
 	 */
 	public void setDefaultPageSetup(PageSetup defaultPageSetup)
 	{
@@ -642,7 +642,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * see gtk_print_operation_run().
 	 * Since 2.10
 	 * Params:
-	 * printSettings = GtkPrintSettings. allow-none.
+	 * printSettings = GtkPrintSettings. [allow-none]
 	 */
 	public void setPrintSettings(PrintSettings printSettings)
 	{
@@ -820,7 +820,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Sets the label for the tab holding custom widgets.
 	 * Since 2.10
 	 * Params:
-	 * label = the label to use, or NULL to use the default label. allow-none.
+	 * label = the label to use, or NULL to use the default label. [allow-none]
 	 */
 	public void setCustomTabLabel(string label)
 	{
@@ -848,7 +848,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Since 2.10
 	 * Params:
 	 * action = the action to start
-	 * parent = Transient parent of the dialog. allow-none.
+	 * parent = Transient parent of the dialog. [allow-none]
 	 * Returns: the result of the print operation. A return value of GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was completed successfully. In this case, it is a good idea to obtain the used print settings with gtk_print_operation_get_print_settings() and store them for reuse with the next print operation. A value of GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running asynchronously, and will emit the "done" signal when done.
 	 * Throws: GException on failure.
 	 */
@@ -1035,8 +1035,8 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * a problem.
 	 * Since 2.10
 	 * Params:
-	 * parent = transient parent. allow-none.
-	 * pageSetup = an existing GtkPageSetup. allow-none.
+	 * parent = transient parent. [allow-none]
+	 * pageSetup = an existing GtkPageSetup. [allow-none]
 	 * settings = a GtkPrintSettings
 	 * Returns: a new GtkPageSetup
 	 */
@@ -1058,8 +1058,8 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * from a signal handler for the ::response signal of the dialog.
 	 * Since 2.10
 	 * Params:
-	 * parent = transient parent, or NULL. allow-none.
-	 * pageSetup = an existing GtkPageSetup, or NULL. allow-none.
+	 * parent = transient parent, or NULL. [allow-none]
+	 * pageSetup = an existing GtkPageSetup, or NULL. [allow-none]
 	 * settings = a GtkPrintSettings
 	 * doneCb = a function to call when the user saves the modified page setup
 	 * data = user data to pass to done_cb

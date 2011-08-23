@@ -238,7 +238,7 @@ public class Menu : MenuShell
 	 * Since 2.2
 	 * Params:
 	 * screen = a GdkScreen, or NULL if the screen should be
-	 *  determined by the widget the menu is attached to.. allow-none.
+	 *  determined by the widget the menu is attached to. [allow-none]
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -297,10 +297,10 @@ public class Menu : MenuShell
 	 * Only if no such event is available, gtk_get_current_event_time() can
 	 * be used instead.
 	 * Params:
-	 * parentMenuShell = the menu shell containing the triggering menu item, or NULL. allow-none.
-	 * parentMenuItem = the menu item whose activation triggered the popup, or NULL. allow-none.
-	 * func = a user supplied function used to position the menu, or NULL. allow-none.
-	 * data = user supplied data to be passed to func.. allow-none.
+	 * parentMenuShell = the menu shell containing the triggering menu item, or NULL. [allow-none]
+	 * parentMenuItem = the menu item whose activation triggered the popup, or NULL. [allow-none]
+	 * func = a user supplied function used to position the menu, or NULL. [allow-none]
+	 * data = user supplied data to be passed to func. [allow-none]
 	 * button = the mouse button which was pressed to initiate the event.
 	 * activateTime = the time at which the activation event occurred.
 	 */
@@ -316,7 +316,7 @@ public class Menu : MenuShell
 	 * this menu is being used in with gtk_window_add_accel_group(), in order
 	 * for those windows to support all the accelerators contained in this group.
 	 * Params:
-	 * accelGroup = . allow-none.
+	 * accelGroup = . [allow-none]
 	 */
 	public void setAccelGroup(AccelGroup accelGroup)
 	{
@@ -352,7 +352,7 @@ public class Menu : MenuShell
 	 * menu items "New" and "Exit", will, after
 	 * gtk_menu_set_accel_path (menu, "<Gnumeric-Sheet>/File");
 	 * Params:
-	 * accelPath = a valid accelerator path. allow-none.
+	 * accelPath = a valid accelerator path. [allow-none]
 	 */
 	public void setAccelPath(string accelPath)
 	{
@@ -568,7 +568,7 @@ public class Menu : MenuShell
 	 * Since 2.6
 	 * Params:
 	 * widget = a GtkWidget
-	 * Returns: the list of menus attached to his widget. . element-type GtkWidget. transfer none GtkWidget.
+	 * Returns: the list of menus attached to his widget. [element-type GtkWidget][transfer none GtkWidget]
 	 */
 	public static ListG getForAttachWidget(Widget widget)
 	{

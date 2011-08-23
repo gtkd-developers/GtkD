@@ -2,10 +2,6 @@
 mkdir gtkdocs
 cd gtkdocs
 
-curl http://developer.gnome.org/gdk/gdk-html-2.22.1.tar.gz | tar xvfz -
-ln -s gdk-html-2.22.1 gdk
-exit
-
 #GLIB
 curl http://developer.gnome.org/glib/glib-html-2.26.1.tar.gz | tar xvfz -
 ln -s glib-html-2.26.1 gthread
@@ -29,8 +25,8 @@ ln -s gdk-pixbuf-html-2.22.1 gdk-pixbuf
 curl http://developer.gnome.org/gdk/gdk-html-2.22.1.tar.gz | tar xvfz -
 ln -s gdk-html-2.22.1 gdk
 #GTK
-curl http://library.gnome.org/devel/gtk/gtk-html-2.20.1.tar.gz | tar xvfz -
-ln -s gtk-html-2.20.1 gtk
+curl http://developer.gnome.org/gtk/gtk-html-2.22.1.tar.gz | tar xvfz -
+ln -s gtk-html-2.22.1 gtk
 #CAIRO
 curl http://library.gnome.org/devel/cairo/cairo-html-1.8.0.tar.gz | tar xvfz -
 ln -s cairo-html-1.8.0 cairo

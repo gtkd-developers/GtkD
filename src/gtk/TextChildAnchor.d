@@ -651,7 +651,7 @@ public class TextChildAnchor
 	/**
 	 * Gets a list of all widgets anchored at this child anchor.
 	 * The returned list should be freed with g_list_free().
-	 * Returns: list of widgets anchored at anchor. element-type GtkWidget. transfer container GtkWidget.
+	 * Returns: list of widgets anchored at anchor. [element-type GtkWidget][transfer container GtkWidget]
 	 */
 	public ListG getWidgets()
 	{

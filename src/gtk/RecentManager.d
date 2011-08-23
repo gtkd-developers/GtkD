@@ -208,7 +208,7 @@ public class RecentManager : ObjectG
 	 * in your application without caring about memory management. The
 	 * returned instance will be freed when you application terminates.
 	 * Since 2.10
-	 * Returns: A unique GtkRecentManager. Do not ref or unref it. . transfer none.
+	 * Returns: A unique GtkRecentManager. Do not ref or unref it. [transfer none]
 	 */
 	public static RecentManager getDefault()
 	{
@@ -391,7 +391,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 * uri = the URI of a recently used resource
 	 * newUri = the new URI of the recently used resource, or NULL to
-	 *  remove the item pointed by uri in the list. allow-none.
+	 *  remove the item pointed by uri in the list. [allow-none]
 	 * Returns: TRUE on success.
 	 * Throws: GException on failure.
 	 */
@@ -411,6 +411,10 @@ public class RecentManager : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_recent_manager_get_limit has been deprecated since version 2.22 and should not be used in newly-written code. The length of the list should be managed by the
+	 *  view (implementing GtkRecentChooser), and not by the model (the
+	 *  GtkRecentManager). See "limit".
 	 * Gets the maximum number of items that the gtk_recent_manager_get_items()
 	 * function should return.
 	 * Since 2.10
@@ -423,6 +427,10 @@ public class RecentManager : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_recent_manager_set_limit has been deprecated since version 2.22 and should not be used in newly-written code. The length of the list should be managed by the
+	 *  view (implementing GtkRecentChooser), and not by the model (the
+	 *  GtkRecentManager). See "limit".
 	 * Sets the maximum number of item that the gtk_recent_manager_get_items()
 	 * function should return. If limit is set to -1, then return all the
 	 * items.
@@ -439,7 +447,7 @@ public class RecentManager : ObjectG
 	/**
 	 * Gets the list of recently used resources.
 	 * Since 2.10
-	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free(). . element-type GtkRecentInfo. transfer full GtkRecentInfo.
+	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free(). [element-type GtkRecentInfo][transfer full GtkRecentInfo]
 	 */
 	public ListG getItems()
 	{

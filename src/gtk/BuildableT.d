@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-gtkbuildable.html
+ * inFile  = GtkBuildable.html
  * outPack = gtk
  * outFile = BuildableT
  * strct   = GtkBuildable
@@ -140,7 +140,7 @@ public template BuildableT(TStruct)
 	 * Params:
 	 * builder = a GtkBuilder
 	 * child = child to add
-	 * type = kind of child or NULL. allow-none.
+	 * type = kind of child or NULL. [allow-none]
 	 */
 	public void addChild(Builder builder, ObjectG child, string type)
 	{
@@ -188,7 +188,7 @@ public template BuildableT(TStruct)
 	 * Since 2.12
 	 * Params:
 	 * builder = a GtkBuilder used to construct this object
-	 * child = child object or NULL for non-child tags. allow-none.
+	 * child = child object or NULL for non-child tags. [allow-none]
 	 * tagname = name of tag
 	 * parser = a GMarkupParser structure to fill in
 	 * data = return location for user data that will be passed in
@@ -207,7 +207,7 @@ public template BuildableT(TStruct)
 	 * Since 2.12
 	 * Params:
 	 * builder = GtkBuilder used to construct this object
-	 * child = child object or NULL for non-child tags. allow-none.
+	 * child = child object or NULL for non-child tags. [allow-none]
 	 * tagname = name of tag
 	 * data = user data that will be passed in to parser functions
 	 */
@@ -223,7 +223,7 @@ public template BuildableT(TStruct)
 	 * Since 2.12
 	 * Params:
 	 * builder = a GtkBuilder
-	 * child = child object or NULL for non-child tags. allow-none.
+	 * child = child object or NULL for non-child tags. [allow-none]
 	 * tagname = the name of the tag
 	 * data = user data created in custom_tag_start
 	 */

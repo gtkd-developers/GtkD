@@ -433,7 +433,7 @@ public class Container : Widget
 	/**
 	 * Returns the container's non-internal children. See
 	 * gtk_container_forall() for details on what constitutes an "internal" child.
-	 * Returns: a newly-allocated list of the container's non-internal children.. element-type GtkWidget. transfer container GtkWidget.
+	 * Returns: a newly-allocated list of the container's non-internal children. [element-type GtkWidget][transfer container GtkWidget]
 	 */
 	public ListG getChildren()
 	{
@@ -460,9 +460,11 @@ public class Container : Widget
 	}
 	
 	/**
-	 * Returns the current focus child widget inside container.
+	 * Returns the current focus child widget inside container. This is not the
+	 * currently focused widget. That can be obtained by calling
+	 * gtk_window_get_focus().
 	 * Since 2.14
-	 * Returns: The child widget which has the focus inside container, or NULL if none is set.
+	 * Returns: The child widget which will recieve the focus inside container when the conatiner is focussed, or NULL if none is set.
 	 */
 	public Widget getFocusChild()
 	{
@@ -480,8 +482,10 @@ public class Container : Widget
 	 * This function emits the GtkContainer::set_focus_child signal of
 	 * container. Implementations of GtkContainer can override the
 	 * default behaviour by overriding the class closure of this signal.
+	 * This is function is mostly meant to be used by widgets. Applications can use
+	 * gtk_widget_grab_focus() to manualy set the focus to a specific widget.
 	 * Params:
-	 * child = a GtkWidget, or NULL. allow-none.
+	 * child = a GtkWidget, or NULL. [allow-none]
 	 */
 	public void setFocusChild(Widget child)
 	{
@@ -492,7 +496,7 @@ public class Container : Widget
 	/**
 	 * Retrieves the vertical focus adjustment for the container. See
 	 * gtk_container_set_focus_vadjustment().
-	 * Returns: the vertical focus adjustment, or NULL if none has been set.. transfer none.
+	 * Returns: the vertical focus adjustment, or NULL if none has been set. [transfer none]
 	 */
 	public Adjustment getFocusVadjustment()
 	{
@@ -527,7 +531,7 @@ public class Container : Widget
 	/**
 	 * Retrieves the horizontal focus adjustment for the container. See
 	 * gtk_container_set_focus_hadjustment().
-	 * Returns: the horizontal focus adjustment, or NULL if none has been set.. transfer none.
+	 * Returns: the horizontal focus adjustment, or NULL if none has been set. [transfer none]
 	 */
 	public Adjustment getFocusHadjustment()
 	{
@@ -716,7 +720,7 @@ public class Container : Widget
 	 *  container, or NULL. You should free this list
 	 *  using g_list_free() when you are done with it, however
 	 *  no additional reference count is added to the
-	 *  individual widgets in the focus chain.. element-type GtkWidget. out GtkWidget. transfer container GtkWidget.
+	 *  individual widgets in the focus chain. [element-type GtkWidget][out GtkWidget][transfer container GtkWidget]
 	 * Returns: TRUE if the focus chain of the container has been set explicitly.
 	 */
 	public int getFocusChain(out ListG focusableWidgets)
@@ -738,7 +742,7 @@ public class Container : Widget
 	 * in the chain that isn't always packed. The necessary checks are done
 	 * when the focus chain is actually traversed.
 	 * Params:
-	 * focusableWidgets = the new focus chain
+	 * focusableWidgets = the new focus chain. [transfer none][element-type GtkWidget]
 	 */
 	public void setFocusChain(ListG focusableWidgets)
 	{
@@ -760,7 +764,7 @@ public class Container : Widget
 	 * Params:
 	 * cclass = a GtkContainerClass
 	 * propertyName = the name of the child property to find
-	 * Returns: the GParamSpec of the child property or NULL if class has no child property with that name.. allow-none.
+	 * Returns: the GParamSpec of the child property or NULL if class has no child property with that name. [allow-none]
 	 */
 	public static ParamSpec classFindChildProperty(GObjectClass* cclass, string propertyName)
 	{

@@ -158,7 +158,7 @@ public template ActivatableT(TStruct)
 	 * "use-action-appearance" changes.
 	 * Since 2.16
 	 * Params:
-	 * action = the related GtkAction or NULL. allow-none.
+	 * action = the related GtkAction or NULL. [allow-none]
 	 */
 	public void syncActionProperties(Action action)
 	{

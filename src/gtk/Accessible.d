@@ -43,7 +43,9 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtk.Widget
  * structWrap:
+ * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -57,6 +59,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import gtk.Widget;
 
 
 
@@ -122,5 +125,34 @@ public class Accessible : ObjectAtk
 	{
 		// void gtk_accessible_connect_widget_destroyed  (GtkAccessible *accessible);
 		gtk_accessible_connect_widget_destroyed(gtkAccessible);
+	}
+	
+	/**
+	 * Gets the GtkWidget corresponding to the GtkAccessible. The returned widget
+	 * does not have a reference added, so you do not need to unref it.
+	 * Since 2.22
+	 * Returns: pointer to the GtkWidget corresponding to the GtkAccessible, or NULL. [transfer none]
+	 */
+	public Widget getWidget()
+	{
+		// GtkWidget* gtk_accessible_get_widget (GtkAccessible *accessible);
+		auto p = gtk_accessible_get_widget(gtkAccessible);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Sets the GtkWidget corresponding to the GtkAccessible.
+	 * Since 2.22
+	 * Params:
+	 * widget = a GtkWidget
+	 */
+	public void setWidget(Widget widget)
+	{
+		// void gtk_accessible_set_widget (GtkAccessible *accessible,  GtkWidget *widget);
+		gtk_accessible_set_widget(gtkAccessible, (widget is null) ? null : widget.getWidgetStruct());
 	}
 }

@@ -72,11 +72,11 @@ private import gtk.Container;
  * Together with GtkPlug, GtkSocket provides the ability
  * to embed widgets from one process into another process
  * in a fashion that is transparent to the user. One
- * process creates a GtkSocket widget and, passes the
+ * process creates a GtkSocket widget and passes
  * that widget's window ID to the other process,
  * which then creates a GtkPlug with that window ID.
  * Any widgets contained in the GtkPlug then will appear
- * inside the first applications window.
+ * inside the first application's window.
  * The socket's window ID is obtained by using
  * gtk_socket_get_id(). Before using this function,
  * the socket must have been realized, and for hence,
@@ -89,11 +89,9 @@ private import gtk.Container;
  * cause unpredictable consequences, the most likely
  * consequence being that the plug will appear as a
  * separate toplevel window. You can check if the plug
- * has been created by examining the
- * plug_window field of the
- * GtkSocket structure. If this field is non-NULL,
- * then the plug has been successfully created inside
- * of the socket.
+ * has been created by using gtk_socket_get_plug_window(). If
+ * it returns a non-NULL value, then the plug has been
+ * successfully created inside of the socket.
  * When GTK+ is notified that the embedded window has been
  * destroyed, then it will destroy the socket as well. You
  * should always, therefore, be prepared for your sockets
@@ -197,10 +195,7 @@ public class Socket : Container
 	 * The default action is to destroy the GtkSocket widget, so if you
 	 * want to reuse it you must add a signal handler that returns TRUE.
 	 * See Also
-	 * GtkPlug
-	 * the widget that plugs into a GtkSocket.
-	 * XEmbed
-	 * the XEmbed Protocol Specification.
+	 * GtkPlug, XEmbed
 	 */
 	void addOnPlugRemoved(bool delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

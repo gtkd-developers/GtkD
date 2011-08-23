@@ -290,8 +290,8 @@ public interface RecentChooserIF
 	 * Since 2.10
 	 * Params:
 	 * sortFunc = the comparison function
-	 * sortData = user data to pass to sort_func, or NULL. allow-none.
-	 * dataDestroy = destroy notifier for sort_data, or NULL. allow-none.
+	 * sortData = user data to pass to sort_func, or NULL. [allow-none]
+	 * dataDestroy = destroy notifier for sort_data, or NULL. [allow-none]
 	 */
 	public void setSortFunc(GtkRecentSortFunc sortFunc, void* sortData, GDestroyNotify dataDestroy);
 	
@@ -355,7 +355,7 @@ public interface RecentChooserIF
 	 * The return value of this function is affected by the "sort-type" and
 	 * "limit" properties of chooser.
 	 * Since 2.10
-	 * Returns: A newly allocated list of GtkRecentInfo objects. You should use gtk_recent_info_unref() on every item of the list, and then free the list itself using g_list_free(). . element-type GtkRecentInfo. transfer full GtkRecentInfo.
+	 * Returns: A newly allocated list of GtkRecentInfo objects. You should use gtk_recent_info_unref() on every item of the list, and then free the list itself using g_list_free(). [element-type GtkRecentInfo][transfer full GtkRecentInfo]
 	 */
 	public ListG getItems();
 	
@@ -390,7 +390,7 @@ public interface RecentChooserIF
 	/**
 	 * Gets the GtkRecentFilter objects held by chooser.
 	 * Since 2.10
-	 * Returns: A singly linked list of GtkRecentFilter objects. You should just free the returned list using g_slist_free(). . element-type GtkRecentFilter. transfer container GtkRecentFilter.
+	 * Returns: A singly linked list of GtkRecentFilter objects. You should just free the returned list using g_slist_free(). [element-type GtkRecentFilter][transfer container GtkRecentFilter]
 	 */
 	public ListSG listFilters();
 	

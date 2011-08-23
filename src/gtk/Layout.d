@@ -173,8 +173,8 @@ public class Layout : Container
 	 * you'd like the layout to use for scrolling, pass NULL for
 	 * hadjustment and vadjustment.
 	 * Params:
-	 * hadjustment = horizontal scroll adjustment, or NULL. allow-none.
-	 * vadjustment = vertical scroll adjustment, or NULL. allow-none.
+	 * hadjustment = horizontal scroll adjustment, or NULL. [allow-none]
+	 * vadjustment = vertical scroll adjustment, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
@@ -232,8 +232,8 @@ public class Layout : Container
 	 * the total extents of the layout's scrollbar area. See
 	 * gtk_layout_set_size().
 	 * Params:
-	 * width = location to store the width set on layout, or NULL. allow-none.
-	 * height = location to store the height set on layout, or NULL. allow-none.
+	 * width = location to store the width set on layout, or NULL. [allow-none]
+	 * height = location to store the height set on layout, or NULL. [allow-none]
 	 */
 	public void getSize(out uint width, out uint height)
 	{
@@ -305,7 +305,7 @@ public class Layout : Container
 	 * Sets the horizontal scroll adjustment for the layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 	 * Params:
-	 * adjustment = new scroll adjustment. allow-none.
+	 * adjustment = new scroll adjustment. [allow-none]
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -317,7 +317,7 @@ public class Layout : Container
 	 * Sets the vertical scroll adjustment for the layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 	 * Params:
-	 * adjustment = new scroll adjustment. allow-none.
+	 * adjustment = new scroll adjustment. [allow-none]
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{

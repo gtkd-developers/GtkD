@@ -227,7 +227,7 @@ public class Clipboard : ObjectG
 	 * See gtk_clipboard_get_for_display() for complete details.
 	 * Params:
 	 * selection = a GdkAtom which identifies the clipboard to use
-	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent and, since it is owned by GTK+, must not be freed or unreffed.. transfer none.
+	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent and, since it is owned by GTK+, must not be freed or unreffed. [transfer none]
 	 */
 	public static Clipboard get(GdkAtom selection)
 	{
@@ -268,7 +268,7 @@ public class Clipboard : ObjectG
 	 * display = the display for which the clipboard is to be retrieved or created
 	 * selection = a GdkAtom which identifies the clipboard
 	 *  to use.
-	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent and, since it is owned by GTK+, must not be freed or unrefd. . transfer none.
+	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent and, since it is owned by GTK+, must not be freed or unrefd. [transfer none]
 	 */
 	public static Clipboard getForDisplay(Display display, GdkAtom selection)
 	{
@@ -592,7 +592,7 @@ public class Clipboard : ObjectG
 	 * for the data to be received using the main loop, so events,
 	 * timeouts, etc, may be dispatched during the wait.
 	 * Since 2.14
-	 * Returns: a newly-allocated NULL-terminated array of strings which must be freed with g_strfreev(), or NULL if retrieving the selection data failed. (This could happen for various reasons, in particular if the clipboard was empty or if the contents of the clipboard could not be converted into URI form.) . array zero-terminated=1. element-type utf8. transfer full utf8.
+	 * Returns: a newly-allocated NULL-terminated array of strings which must be freed with g_strfreev(), or NULL if retrieving the selection data failed. (This could happen for various reasons, in particular if the clipboard was empty or if the contents of the clipboard could not be converted into URI form.). [array zero-terminated=1][element-type utf8][transfer full utf8]
 	 */
 	public string[] waitForUris()
 	{
@@ -722,8 +722,9 @@ public class Clipboard : ObjectG
 	 * see gdk_display_store_clipboard() for more information.
 	 * Since 2.6
 	 * Params:
-	 * targets = array containing information about which forms should be stored
-	 *  or NULL to indicate that all forms should be stored.
+	 * targets = array containing information about which forms
+	 *  should be stored or NULL to indicate that all forms should
+	 *  be stored. [allow-none]
 	 */
 	public void setCanStore(GtkTargetEntry[] targets)
 	{

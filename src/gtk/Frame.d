@@ -162,7 +162,7 @@ public class Frame : Bin
 	 * Sets the text of the label. If label is NULL,
 	 * the current label is removed.
 	 * Params:
-	 * label = the text to use as the label of the frame. allow-none.
+	 * label = the text to use as the label of the frame. [allow-none]
 	 */
 	public void setLabel(string label)
 	{
@@ -229,8 +229,8 @@ public class Frame : Bin
 	 * Retrieves the X and Y alignment of the frame's label. See
 	 * gtk_frame_set_label_align().
 	 * Params:
-	 * xalign = location to store X alignment of frame's label, or NULL. allow-none.
-	 * yalign = location to store X alignment of frame's label, or NULL. allow-none.
+	 * xalign = location to store X alignment of frame's label, or NULL. [allow-none]
+	 * yalign = location to store X alignment of frame's label, or NULL. [allow-none]
 	 */
 	public void getLabelAlign(out float xalign, out float yalign)
 	{

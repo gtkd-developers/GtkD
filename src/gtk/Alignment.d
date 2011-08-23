@@ -202,16 +202,16 @@ public class Alignment : Bin
 	 * Creates a new GtkAlignment.
 	 * Params:
 	 * xalign = the horizontal alignment of the child widget, from 0 (left) to 1
-	 * (right).
+	 *  (right).
 	 * yalign = the vertical alignment of the child widget, from 0 (top) to 1
-	 * (bottom).
+	 *  (bottom).
 	 * xscale = the amount that the child widget expands horizontally to fill up
-	 * unused space, from 0 to 1.
-	 * A value of 0 indicates that the child widget should never expand.
-	 * A value of 1 indicates that the child widget will expand to fill all of the
-	 * space allocated for the GtkAlignment.
+	 *  unused space, from 0 to 1.
+	 *  A value of 0 indicates that the child widget should never expand.
+	 *  A value of 1 indicates that the child widget will expand to fill all of the
+	 *  space allocated for the GtkAlignment.
 	 * yscale = the amount that the child widget expands vertically to fill up
-	 * unused space, from 0 to 1. The values are similar to xscale.
+	 *  unused space, from 0 to 1. The values are similar to xscale.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (float xalign, float yalign, float xscale, float yscale)
@@ -229,16 +229,16 @@ public class Alignment : Bin
 	 * Sets the GtkAlignment values.
 	 * Params:
 	 * xalign = the horizontal alignment of the child widget, from 0 (left) to 1
-	 * (right).
+	 *  (right).
 	 * yalign = the vertical alignment of the child widget, from 0 (top) to 1
-	 * (bottom).
+	 *  (bottom).
 	 * xscale = the amount that the child widget expands horizontally to fill up
-	 * unused space, from 0 to 1.
-	 * A value of 0 indicates that the child widget should never expand.
-	 * A value of 1 indicates that the child widget will expand to fill all of the
-	 * space allocated for the GtkAlignment.
+	 *  unused space, from 0 to 1.
+	 *  A value of 0 indicates that the child widget should never expand.
+	 *  A value of 1 indicates that the child widget will expand to fill all of the
+	 *  space allocated for the GtkAlignment.
 	 * yscale = the amount that the child widget expands vertically to fill up
-	 * unused space, from 0 to 1. The values are similar to xscale.
+	 *  unused space, from 0 to 1. The values are similar to xscale.
 	 */
 	public void set(float xalign, float yalign, float xscale, float yscale)
 	{
@@ -251,10 +251,10 @@ public class Alignment : Bin
 	 * See gtk_alignment_set_padding().
 	 * Since 2.4
 	 * Params:
-	 * paddingTop = location to store the padding for the top of the widget, or NULL. allow-none.
-	 * paddingBottom = location to store the padding for the bottom of the widget, or NULL. allow-none.
-	 * paddingLeft = location to store the padding for the left of the widget, or NULL. allow-none.
-	 * paddingRight = location to store the padding for the right of the widget, or NULL. allow-none.
+	 * paddingTop = location to store the padding for the top of the widget, or NULL. [allow-none]
+	 * paddingBottom = location to store the padding for the bottom of the widget, or NULL. [allow-none]
+	 * paddingLeft = location to store the padding for the left of the widget, or NULL. [allow-none]
+	 * paddingRight = location to store the padding for the right of the widget, or NULL. [allow-none]
 	 */
 	public void getPadding(out uint paddingTop, out uint paddingBottom, out uint paddingLeft, out uint paddingRight)
 	{

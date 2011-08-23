@@ -281,7 +281,7 @@ public class SpinButton : Entry
 	 * Changes the properties of an existing spin button. The adjustment, climb rate,
 	 * and number of decimal places are all changed accordingly, after this function call.
 	 * Params:
-	 * adjustment = a GtkAdjustment.. allow-none.
+	 * adjustment = a GtkAdjustment. [allow-none]
 	 * climbRate = the new climb rate.
 	 * digits = the number of decimal places to display in the spin button.
 	 */
@@ -504,8 +504,8 @@ public class SpinButton : Entry
 	 * Gets the current step and page the increments used by spin_button. See
 	 * gtk_spin_button_set_increments().
 	 * Params:
-	 * step = location to store step increment, or NULL. allow-none.
-	 * page = location to store page increment, or NULL. allow-none.
+	 * step = location to store step increment, or NULL. [allow-none]
+	 * page = location to store page increment, or NULL. [allow-none]
 	 */
 	public void getIncrements(out double step, out double page)
 	{
@@ -528,8 +528,8 @@ public class SpinButton : Entry
 	 * Gets the range allowed for spin_button. See
 	 * gtk_spin_button_set_range().
 	 * Params:
-	 * min = location to store minimum allowed value, or NULL. allow-none.
-	 * max = location to store maximum allowed value, or NULL. allow-none.
+	 * min = location to store minimum allowed value, or NULL. [allow-none]
+	 * max = location to store maximum allowed value, or NULL. [allow-none]
 	 */
 	public void getRange(out double min, out double max)
 	{

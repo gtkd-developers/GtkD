@@ -223,7 +223,7 @@ public class CellView : Widget, CellLayoutIF
 	 * NULL, then it will unset the old model.
 	 * Since 2.6
 	 * Params:
-	 * model = a GtkTreeModel. allow-none.
+	 * model = a GtkTreeModel. [allow-none]
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -257,7 +257,7 @@ public class CellView : Widget, CellLayoutIF
 	 * the GtkCellView becomes temporarily empty.
 	 * Since 2.6
 	 * Params:
-	 * path = a GtkTreePath or NULL to unset.. allow-none.
+	 * path = a GtkTreePath or NULL to unset. [allow-none]
 	 */
 	public void setDisplayedRow(TreePath path)
 	{

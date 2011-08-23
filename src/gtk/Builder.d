@@ -739,7 +739,7 @@ public class Builder : ObjectG
 	 * See "translation-domain".
 	 * Since 2.12
 	 * Params:
-	 * domain = the translation domain or NULL. allow-none.
+	 * domain = the translation domain or NULL. [allow-none]
 	 */
 	public void setTranslationDomain(string domain)
 	{

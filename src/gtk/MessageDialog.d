@@ -43,9 +43,11 @@
  * omit code:
  * 	- gtk_message_dialog_new
  * 	- gtk_message_dialog_new_with_markup
+ * 	- gtk_message_dialog_get_message_area
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.VBox
  * 	- gtk.Window
  * 	- gtk.Widget
  * structWrap:
@@ -65,6 +67,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtk.VBox;
 private import gtk.Window;
 private import gtk.Widget;
 
@@ -85,6 +88,9 @@ private import gtk.Dialog;
  * $(DDOC_COMMENT example)
  * You might do a non-modal GtkMessageDialog as follows:
  * $(DDOC_COMMENT example)
+ * GtkMessageDialog as GtkBuildable
+ * The GtkMessageDialog implementation of the GtkBuildable interface exposes
+ * the message area as an internal child with the name "message_area".
  */
 public class MessageDialog : Dialog
 {
@@ -230,6 +236,20 @@ public class MessageDialog : Dialog
 		this(p);
 	}
 	
+	/**
+	 * Since 2.22
+	 * Returns: A GtkVBox corresponding to the "message area" in the message_dialog. This is the box where the dialog's primary and secondary labels are packed. You can add your own extra content to that box and it will appear below those labels, on the right side of the dialog's image (or on the left for right-to-left languages). See gtk_dialog_get_content_area() for the corresponding function in the parent GtkDialog.
+	 */
+	public VBox getMessageArea()
+	{
+		// GtkWidget * gtk_message_dialog_get_message_area (GtkMessageDialog *message_dialog);
+		auto p = gtk_message_dialog_get_message_area(gtkMessageDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VBox(cast(GtkVBox*) p);
+	}
 	
 	/**
 	 */

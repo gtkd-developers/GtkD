@@ -322,9 +322,13 @@ public class RadioButton : CheckButton
 	 * the layout of your interface in any way, so if you are changing the group,
 	 * it is likely you will need to re-arrange the user interface to reflect these
 	 * changes.
+	 * Sets a GtkRadioButton's group. It should be noted that this does not change
+	 * the layout of your interface in any way, so if you are changing the group,
+	 * it is likely you will need to re-arrange the user interface to reflect these
+	 * changes.
 	 * Params:
-	 * group = an existing radio button group, such as one returned from
-	 * gtk_radio_button_get_group().
+	 * group = an existing radio
+	 *  button group, such as one returned from gtk_radio_button_get_group(). [transfer none][element-type GtkRadioButton]
 	 */
 	public void setGroup(ListSG group)
 	{
@@ -334,7 +338,7 @@ public class RadioButton : CheckButton
 	
 	/**
 	 * Retrieves the group assigned to a radio button.
-	 * Returns: a linked list containing all the radio buttons in the same group as radio_button. The returned list is owned by the radio button and must not be modified or freed.. element-type GtkRadioButton. transfer none GtkRadioButton.
+	 * Returns: a linked list containing all the radio buttons in the same group as radio_button. The returned list is owned by the radio button and must not be modified or freed. [element-type GtkRadioButton][transfer none GtkRadioButton]
 	 */
 	public ListSG getGroup()
 	{

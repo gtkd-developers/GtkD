@@ -580,6 +580,7 @@ static this()
 	Linker.link(gtk_message_dialog_set_markup, "gtk_message_dialog_set_markup", LIBRARY.GTK);
 	Linker.link(gtk_message_dialog_set_image, "gtk_message_dialog_set_image", LIBRARY.GTK);
 	Linker.link(gtk_message_dialog_get_image, "gtk_message_dialog_get_image", LIBRARY.GTK);
+	Linker.link(gtk_message_dialog_get_message_area, "gtk_message_dialog_get_message_area", LIBRARY.GTK);
 	Linker.link(gtk_message_dialog_format_secondary_text, "gtk_message_dialog_format_secondary_text", LIBRARY.GTK);
 	Linker.link(gtk_message_dialog_format_secondary_markup, "gtk_message_dialog_format_secondary_markup", LIBRARY.GTK);
 
@@ -672,6 +673,7 @@ static this()
 	Linker.link(gtk_window_get_accept_focus, "gtk_window_get_accept_focus", LIBRARY.GTK);
 	Linker.link(gtk_window_get_focus_on_map, "gtk_window_get_focus_on_map", LIBRARY.GTK);
 	Linker.link(gtk_window_get_group, "gtk_window_get_group", LIBRARY.GTK);
+	Linker.link(gtk_window_has_group, "gtk_window_has_group", LIBRARY.GTK);
 	Linker.link(gtk_window_get_window_type, "gtk_window_get_window_type", LIBRARY.GTK);
 	Linker.link(gtk_window_move, "gtk_window_move", LIBRARY.GTK);
 	Linker.link(gtk_window_parse_geometry, "gtk_window_parse_geometry", LIBRARY.GTK);
@@ -700,6 +702,7 @@ static this()
 	Linker.link(gtk_window_group_add_window, "gtk_window_group_add_window", LIBRARY.GTK);
 	Linker.link(gtk_window_group_remove_window, "gtk_window_group_remove_window", LIBRARY.GTK);
 	Linker.link(gtk_window_group_list_windows, "gtk_window_group_list_windows", LIBRARY.GTK);
+	Linker.link(gtk_window_group_get_current_grab, "gtk_window_group_get_current_grab", LIBRARY.GTK);
 
 	// gtk.AboutDialog
 
@@ -762,6 +765,7 @@ static this()
 	Linker.link(gtk_assistant_add_action_widget, "gtk_assistant_add_action_widget", LIBRARY.GTK);
 	Linker.link(gtk_assistant_remove_action_widget, "gtk_assistant_remove_action_widget", LIBRARY.GTK);
 	Linker.link(gtk_assistant_update_buttons_state, "gtk_assistant_update_buttons_state", LIBRARY.GTK);
+	Linker.link(gtk_assistant_commit, "gtk_assistant_commit", LIBRARY.GTK);
 
 	// gtk.OffscreenWindow
 
@@ -891,6 +895,7 @@ static this()
 	Linker.link(gtk_statusbar_push, "gtk_statusbar_push", LIBRARY.GTK);
 	Linker.link(gtk_statusbar_pop, "gtk_statusbar_pop", LIBRARY.GTK);
 	Linker.link(gtk_statusbar_remove, "gtk_statusbar_remove", LIBRARY.GTK);
+	Linker.link(gtk_statusbar_remove_all, "gtk_statusbar_remove_all", LIBRARY.GTK);
 	Linker.link(gtk_statusbar_set_has_resize_grip, "gtk_statusbar_set_has_resize_grip", LIBRARY.GTK);
 	Linker.link(gtk_statusbar_get_has_resize_grip, "gtk_statusbar_get_has_resize_grip", LIBRARY.GTK);
 	Linker.link(gtk_statusbar_get_message_area, "gtk_statusbar_get_message_area", LIBRARY.GTK);
@@ -983,6 +988,7 @@ static this()
 	Linker.link(gtk_button_get_image, "gtk_button_get_image", LIBRARY.GTK);
 	Linker.link(gtk_button_set_image_position, "gtk_button_set_image_position", LIBRARY.GTK);
 	Linker.link(gtk_button_get_image_position, "gtk_button_get_image_position", LIBRARY.GTK);
+	Linker.link(gtk_button_get_event_window, "gtk_button_get_event_window", LIBRARY.GTK);
 
 	// gtk.CheckButton
 
@@ -1089,6 +1095,8 @@ static this()
 	Linker.link(gtk_entry_set_progress_pulse_step, "gtk_entry_set_progress_pulse_step", LIBRARY.GTK);
 	Linker.link(gtk_entry_get_progress_pulse_step, "gtk_entry_get_progress_pulse_step", LIBRARY.GTK);
 	Linker.link(gtk_entry_progress_pulse, "gtk_entry_progress_pulse", LIBRARY.GTK);
+	Linker.link(gtk_entry_im_context_filter_keypress, "gtk_entry_im_context_filter_keypress", LIBRARY.GTK);
+	Linker.link(gtk_entry_reset_im_context, "gtk_entry_reset_im_context", LIBRARY.GTK);
 	Linker.link(gtk_entry_set_icon_from_pixbuf, "gtk_entry_set_icon_from_pixbuf", LIBRARY.GTK);
 	Linker.link(gtk_entry_set_icon_from_stock, "gtk_entry_set_icon_from_stock", LIBRARY.GTK);
 	Linker.link(gtk_entry_set_icon_from_icon_name, "gtk_entry_set_icon_from_icon_name", LIBRARY.GTK);
@@ -1472,6 +1480,10 @@ static this()
 	Linker.link(gtk_text_view_set_accepts_tab, "gtk_text_view_set_accepts_tab", LIBRARY.GTK);
 	Linker.link(gtk_text_view_get_accepts_tab, "gtk_text_view_get_accepts_tab", LIBRARY.GTK);
 	Linker.link(gtk_text_view_get_default_attributes, "gtk_text_view_get_default_attributes", LIBRARY.GTK);
+	Linker.link(gtk_text_view_im_context_filter_keypress, "gtk_text_view_im_context_filter_keypress", LIBRARY.GTK);
+	Linker.link(gtk_text_view_reset_im_context, "gtk_text_view_reset_im_context", LIBRARY.GTK);
+	Linker.link(gtk_text_view_get_hadjustment, "gtk_text_view_get_hadjustment", LIBRARY.GTK);
+	Linker.link(gtk_text_view_get_vadjustment, "gtk_text_view_get_vadjustment", LIBRARY.GTK);
 
 	// gtk.TextChildAnchor
 
@@ -1490,6 +1502,7 @@ static this()
 	Linker.link(gtk_tree_path_prepend_index, "gtk_tree_path_prepend_index", LIBRARY.GTK);
 	Linker.link(gtk_tree_path_get_depth, "gtk_tree_path_get_depth", LIBRARY.GTK);
 	Linker.link(gtk_tree_path_get_indices, "gtk_tree_path_get_indices", LIBRARY.GTK);
+	Linker.link(gtk_tree_path_get_indices_with_depth, "gtk_tree_path_get_indices_with_depth", LIBRARY.GTK);
 	Linker.link(gtk_tree_path_free, "gtk_tree_path_free", LIBRARY.GTK);
 	Linker.link(gtk_tree_path_copy, "gtk_tree_path_copy", LIBRARY.GTK);
 	Linker.link(gtk_tree_path_compare, "gtk_tree_path_compare", LIBRARY.GTK);
@@ -1789,6 +1802,8 @@ static this()
 	Linker.link(gtk_icon_view_get_selection_mode, "gtk_icon_view_get_selection_mode", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_set_orientation, "gtk_icon_view_set_orientation", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_get_orientation, "gtk_icon_view_get_orientation", LIBRARY.GTK);
+	Linker.link(gtk_icon_view_set_item_orientation, "gtk_icon_view_set_item_orientation", LIBRARY.GTK);
+	Linker.link(gtk_icon_view_get_item_orientation, "gtk_icon_view_get_item_orientation", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_set_columns, "gtk_icon_view_set_columns", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_get_columns, "gtk_icon_view_get_columns", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_set_item_width, "gtk_icon_view_set_item_width", LIBRARY.GTK);
@@ -1817,6 +1832,8 @@ static this()
 	Linker.link(gtk_icon_view_get_tooltip_context, "gtk_icon_view_get_tooltip_context", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_set_tooltip_column, "gtk_icon_view_set_tooltip_column", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_get_tooltip_column, "gtk_icon_view_get_tooltip_column", LIBRARY.GTK);
+	Linker.link(gtk_icon_view_get_item_row, "gtk_icon_view_get_item_row", LIBRARY.GTK);
+	Linker.link(gtk_icon_view_get_item_column, "gtk_icon_view_get_item_column", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_enable_model_drag_source, "gtk_icon_view_enable_model_drag_source", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_enable_model_drag_dest, "gtk_icon_view_enable_model_drag_dest", LIBRARY.GTK);
 	Linker.link(gtk_icon_view_unset_model_drag_source, "gtk_icon_view_unset_model_drag_source", LIBRARY.GTK);
@@ -2644,6 +2661,7 @@ static this()
 	Linker.link(gtk_font_selection_dialog_get_apply_button, "gtk_font_selection_dialog_get_apply_button", LIBRARY.GTK);
 	Linker.link(gtk_font_selection_dialog_get_cancel_button, "gtk_font_selection_dialog_get_cancel_button", LIBRARY.GTK);
 	Linker.link(gtk_font_selection_dialog_get_ok_button, "gtk_font_selection_dialog_get_ok_button", LIBRARY.GTK);
+	Linker.link(gtk_font_selection_dialog_get_font_selection, "gtk_font_selection_dialog_get_font_selection", LIBRARY.GTK);
 
 	// gtk.InputDialog
 
@@ -2761,6 +2779,8 @@ static this()
 	Linker.link(gtk_notebook_get_tab_pos, "gtk_notebook_get_tab_pos", LIBRARY.GTK);
 	Linker.link(gtk_notebook_get_tab_reorderable, "gtk_notebook_get_tab_reorderable", LIBRARY.GTK);
 	Linker.link(gtk_notebook_get_tab_detachable, "gtk_notebook_get_tab_detachable", LIBRARY.GTK);
+	Linker.link(gtk_notebook_get_tab_hborder, "gtk_notebook_get_tab_hborder", LIBRARY.GTK);
+	Linker.link(gtk_notebook_get_tab_vborder, "gtk_notebook_get_tab_vborder", LIBRARY.GTK);
 	Linker.link(gtk_notebook_set_current_page, "gtk_notebook_set_current_page", LIBRARY.GTK);
 	Linker.link(gtk_notebook_set_group_id, "gtk_notebook_set_group_id", LIBRARY.GTK);
 	Linker.link(gtk_notebook_get_group_id, "gtk_notebook_get_group_id", LIBRARY.GTK);
@@ -2786,6 +2806,7 @@ static this()
 	Linker.link(gtk_table_get_row_spacing, "gtk_table_get_row_spacing", LIBRARY.GTK);
 	Linker.link(gtk_table_get_col_spacing, "gtk_table_get_col_spacing", LIBRARY.GTK);
 	Linker.link(gtk_table_get_default_col_spacing, "gtk_table_get_default_col_spacing", LIBRARY.GTK);
+	Linker.link(gtk_table_get_size, "gtk_table_get_size", LIBRARY.GTK);
 
 	// gtk.Expander
 
@@ -2803,6 +2824,8 @@ static this()
 	Linker.link(gtk_expander_get_use_markup, "gtk_expander_get_use_markup", LIBRARY.GTK);
 	Linker.link(gtk_expander_set_label_widget, "gtk_expander_set_label_widget", LIBRARY.GTK);
 	Linker.link(gtk_expander_get_label_widget, "gtk_expander_get_label_widget", LIBRARY.GTK);
+	Linker.link(gtk_expander_set_label_fill, "gtk_expander_set_label_fill", LIBRARY.GTK);
+	Linker.link(gtk_expander_get_label_fill, "gtk_expander_get_label_fill", LIBRARY.GTK);
 
 	// gtk.OrientableT
 
@@ -3227,10 +3250,13 @@ static this()
 	Linker.link(gtk_viewport_set_shadow_type, "gtk_viewport_set_shadow_type", LIBRARY.GTK);
 	Linker.link(gtk_viewport_get_shadow_type, "gtk_viewport_get_shadow_type", LIBRARY.GTK);
 	Linker.link(gtk_viewport_get_bin_window, "gtk_viewport_get_bin_window", LIBRARY.GTK);
+	Linker.link(gtk_viewport_get_view_window, "gtk_viewport_get_view_window", LIBRARY.GTK);
 
 	// gtk.Accessible
 
 	Linker.link(gtk_accessible_connect_widget_destroyed, "gtk_accessible_connect_widget_destroyed", LIBRARY.GTK);
+	Linker.link(gtk_accessible_get_widget, "gtk_accessible_get_widget", LIBRARY.GTK);
+	Linker.link(gtk_accessible_set_widget, "gtk_accessible_set_widget", LIBRARY.GTK);
 
 	// gtk.Bin
 
@@ -3520,6 +3546,7 @@ static this()
 	Linker.link(gtk_widget_class_list_style_properties, "gtk_widget_class_list_style_properties", LIBRARY.GTK);
 	Linker.link(gtk_widget_region_intersect, "gtk_widget_region_intersect", LIBRARY.GTK);
 	Linker.link(gtk_widget_send_expose, "gtk_widget_send_expose", LIBRARY.GTK);
+	Linker.link(gtk_widget_send_focus_change, "gtk_widget_send_focus_change", LIBRARY.GTK);
 	Linker.link(gtk_widget_style_get, "gtk_widget_style_get", LIBRARY.GTK);
 	Linker.link(gtk_widget_style_get_property, "gtk_widget_style_get_property", LIBRARY.GTK);
 	Linker.link(gtk_widget_style_get_valist, "gtk_widget_style_get_valist", LIBRARY.GTK);
@@ -4414,6 +4441,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkMessageDialog* messageDialog, gchar* str) c_gtk_message_dialog_set_markup;
 	void function(GtkMessageDialog* dialog, GtkWidget* image) c_gtk_message_dialog_set_image;
 	GtkWidget* function(GtkMessageDialog* dialog) c_gtk_message_dialog_get_image;
+	GtkWidget* function(GtkMessageDialog* messageDialog) c_gtk_message_dialog_get_message_area;
 	void function(GtkMessageDialog* messageDialog, gchar* messageFormat, ... ) c_gtk_message_dialog_format_secondary_text;
 	void function(GtkMessageDialog* messageDialog, gchar* messageFormat, ... ) c_gtk_message_dialog_format_secondary_markup;
 	
@@ -4506,6 +4534,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkWindow* window) c_gtk_window_get_accept_focus;
 	gboolean function(GtkWindow* window) c_gtk_window_get_focus_on_map;
 	GtkWindowGroup* function(GtkWindow* window) c_gtk_window_get_group;
+	gboolean function(GtkWindow* window) c_gtk_window_has_group;
 	GtkWindowType function(GtkWindow* window) c_gtk_window_get_window_type;
 	void function(GtkWindow* window, gint x, gint y) c_gtk_window_move;
 	gboolean function(GtkWindow* window, gchar* geometry) c_gtk_window_parse_geometry;
@@ -4534,6 +4563,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkWindowGroup* windowGroup, GtkWindow* window) c_gtk_window_group_add_window;
 	void function(GtkWindowGroup* windowGroup, GtkWindow* window) c_gtk_window_group_remove_window;
 	GList* function(GtkWindowGroup* windowGroup) c_gtk_window_group_list_windows;
+	GtkWidget* function(GtkWindowGroup* windowGroup) c_gtk_window_group_get_current_grab;
 	
 	// gtk.AboutDialog
 	
@@ -4596,6 +4626,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkAssistant* assistant, GtkWidget* child) c_gtk_assistant_add_action_widget;
 	void function(GtkAssistant* assistant, GtkWidget* child) c_gtk_assistant_remove_action_widget;
 	void function(GtkAssistant* assistant) c_gtk_assistant_update_buttons_state;
+	void function(GtkAssistant* assistant) c_gtk_assistant_commit;
 	
 	// gtk.OffscreenWindow
 	
@@ -4725,6 +4756,7 @@ mixin( gshared ~"extern(C)
 	guint function(GtkStatusbar* statusbar, guint contextId, gchar* text) c_gtk_statusbar_push;
 	void function(GtkStatusbar* statusbar, guint contextId) c_gtk_statusbar_pop;
 	void function(GtkStatusbar* statusbar, guint contextId, guint messageId) c_gtk_statusbar_remove;
+	void function(GtkStatusbar* statusbar, guint contextId) c_gtk_statusbar_remove_all;
 	void function(GtkStatusbar* statusbar, gboolean setting) c_gtk_statusbar_set_has_resize_grip;
 	gboolean function(GtkStatusbar* statusbar) c_gtk_statusbar_get_has_resize_grip;
 	GtkWidget* function(GtkStatusbar* statusbar) c_gtk_statusbar_get_message_area;
@@ -4817,6 +4849,7 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkButton* button) c_gtk_button_get_image;
 	void function(GtkButton* button, GtkPositionType position) c_gtk_button_set_image_position;
 	GtkPositionType function(GtkButton* button) c_gtk_button_get_image_position;
+	GdkWindow* function(GtkButton* button) c_gtk_button_get_event_window;
 	
 	// gtk.CheckButton
 	
@@ -4923,6 +4956,8 @@ mixin( gshared ~"extern(C)
 	void function(GtkEntry* entry, gdouble fraction) c_gtk_entry_set_progress_pulse_step;
 	gdouble function(GtkEntry* entry) c_gtk_entry_get_progress_pulse_step;
 	void function(GtkEntry* entry) c_gtk_entry_progress_pulse;
+	gboolean function(GtkEntry* entry, GdkEventKey* event) c_gtk_entry_im_context_filter_keypress;
+	void function(GtkEntry* entry) c_gtk_entry_reset_im_context;
 	void function(GtkEntry* entry, GtkEntryIconPosition iconPos, GdkPixbuf* pixbuf) c_gtk_entry_set_icon_from_pixbuf;
 	void function(GtkEntry* entry, GtkEntryIconPosition iconPos, gchar* stockId) c_gtk_entry_set_icon_from_stock;
 	void function(GtkEntry* entry, GtkEntryIconPosition iconPos, gchar* iconName) c_gtk_entry_set_icon_from_icon_name;
@@ -5306,6 +5341,10 @@ mixin( gshared ~"extern(C)
 	void function(GtkTextView* textView, gboolean acceptsTab) c_gtk_text_view_set_accepts_tab;
 	gboolean function(GtkTextView* textView) c_gtk_text_view_get_accepts_tab;
 	GtkTextAttributes* function(GtkTextView* textView) c_gtk_text_view_get_default_attributes;
+	gboolean function(GtkTextView* textView, GdkEventKey* event) c_gtk_text_view_im_context_filter_keypress;
+	void function(GtkTextView* textView) c_gtk_text_view_reset_im_context;
+	GtkAdjustment* function(GtkTextView* textView) c_gtk_text_view_get_hadjustment;
+	GtkAdjustment* function(GtkTextView* textView) c_gtk_text_view_get_vadjustment;
 	
 	// gtk.TextChildAnchor
 	
@@ -5324,6 +5363,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreePath* path, gint index) c_gtk_tree_path_prepend_index;
 	gint function(GtkTreePath* path) c_gtk_tree_path_get_depth;
 	gint* function(GtkTreePath* path) c_gtk_tree_path_get_indices;
+	gint* function(GtkTreePath* path, gint* depth) c_gtk_tree_path_get_indices_with_depth;
 	void function(GtkTreePath* path) c_gtk_tree_path_free;
 	GtkTreePath* function(GtkTreePath* path) c_gtk_tree_path_copy;
 	gint function(GtkTreePath* a, GtkTreePath* b) c_gtk_tree_path_compare;
@@ -5623,6 +5663,8 @@ mixin( gshared ~"extern(C)
 	GtkSelectionMode function(GtkIconView* iconView) c_gtk_icon_view_get_selection_mode;
 	void function(GtkIconView* iconView, GtkOrientation orientation) c_gtk_icon_view_set_orientation;
 	GtkOrientation function(GtkIconView* iconView) c_gtk_icon_view_get_orientation;
+	void function(GtkIconView* iconView, GtkOrientation orientation) c_gtk_icon_view_set_item_orientation;
+	GtkOrientation function(GtkIconView* iconView) c_gtk_icon_view_get_item_orientation;
 	void function(GtkIconView* iconView, gint columns) c_gtk_icon_view_set_columns;
 	gint function(GtkIconView* iconView) c_gtk_icon_view_get_columns;
 	void function(GtkIconView* iconView, gint itemWidth) c_gtk_icon_view_set_item_width;
@@ -5651,6 +5693,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkIconView* iconView, gint* x, gint* y, gboolean keyboardTip, GtkTreeModel** model, GtkTreePath** path, GtkTreeIter* iter) c_gtk_icon_view_get_tooltip_context;
 	void function(GtkIconView* iconView, gint column) c_gtk_icon_view_set_tooltip_column;
 	gint function(GtkIconView* iconView) c_gtk_icon_view_get_tooltip_column;
+	gint function(GtkIconView* iconView, GtkTreePath* path) c_gtk_icon_view_get_item_row;
+	gint function(GtkIconView* iconView, GtkTreePath* path) c_gtk_icon_view_get_item_column;
 	void function(GtkIconView* iconView, GdkModifierType startButtonMask, GtkTargetEntry* targets, gint nTargets, GdkDragAction actions) c_gtk_icon_view_enable_model_drag_source;
 	void function(GtkIconView* iconView, GtkTargetEntry* targets, gint nTargets, GdkDragAction actions) c_gtk_icon_view_enable_model_drag_dest;
 	void function(GtkIconView* iconView) c_gtk_icon_view_unset_model_drag_source;
@@ -6478,6 +6522,7 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_apply_button;
 	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_cancel_button;
 	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_ok_button;
+	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_font_selection;
 	
 	// gtk.InputDialog
 	
@@ -6595,6 +6640,8 @@ mixin( gshared ~"extern(C)
 	GtkPositionType function(GtkNotebook* notebook) c_gtk_notebook_get_tab_pos;
 	gboolean function(GtkNotebook* notebook, GtkWidget* child) c_gtk_notebook_get_tab_reorderable;
 	gboolean function(GtkNotebook* notebook, GtkWidget* child) c_gtk_notebook_get_tab_detachable;
+	guint16 function(GtkNotebook* notebook) c_gtk_notebook_get_tab_hborder;
+	guint16 function(GtkNotebook* notebook) c_gtk_notebook_get_tab_vborder;
 	void function(GtkNotebook* notebook, gint pageNum) c_gtk_notebook_set_current_page;
 	void function(GtkNotebook* notebook, gint groupId) c_gtk_notebook_set_group_id;
 	gint function(GtkNotebook* notebook) c_gtk_notebook_get_group_id;
@@ -6620,6 +6667,7 @@ mixin( gshared ~"extern(C)
 	guint function(GtkTable* table, guint row) c_gtk_table_get_row_spacing;
 	guint function(GtkTable* table, guint column) c_gtk_table_get_col_spacing;
 	guint function(GtkTable* table) c_gtk_table_get_default_col_spacing;
+	void function(GtkTable* table, guint* rows, guint* columns) c_gtk_table_get_size;
 	
 	// gtk.Expander
 	
@@ -6637,6 +6685,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkExpander* expander) c_gtk_expander_get_use_markup;
 	void function(GtkExpander* expander, GtkWidget* labelWidget) c_gtk_expander_set_label_widget;
 	GtkWidget* function(GtkExpander* expander) c_gtk_expander_get_label_widget;
+	void function(GtkExpander* expander, gboolean labelFill) c_gtk_expander_set_label_fill;
+	gboolean function(GtkExpander* expander) c_gtk_expander_get_label_fill;
 	
 	// gtk.OrientableT
 	
@@ -7061,10 +7111,13 @@ mixin( gshared ~"extern(C)
 	void function(GtkViewport* viewport, GtkShadowType type) c_gtk_viewport_set_shadow_type;
 	GtkShadowType function(GtkViewport* viewport) c_gtk_viewport_get_shadow_type;
 	GdkWindow* function(GtkViewport* viewport) c_gtk_viewport_get_bin_window;
+	GdkWindow* function(GtkViewport* viewport) c_gtk_viewport_get_view_window;
 	
 	// gtk.Accessible
 	
 	void function(GtkAccessible* accessible) c_gtk_accessible_connect_widget_destroyed;
+	GtkWidget* function(GtkAccessible* accessible) c_gtk_accessible_get_widget;
+	void function(GtkAccessible* accessible, GtkWidget* widget) c_gtk_accessible_set_widget;
 	
 	// gtk.Bin
 	
@@ -7354,6 +7407,7 @@ mixin( gshared ~"extern(C)
 	GParamSpec** function(GtkWidgetClass* klass, guint* nProperties) c_gtk_widget_class_list_style_properties;
 	GdkRegion* function(GtkWidget* widget, GdkRegion* region) c_gtk_widget_region_intersect;
 	gint function(GtkWidget* widget, GdkEvent* event) c_gtk_widget_send_expose;
+	gboolean function(GtkWidget* widget, GdkEvent* event) c_gtk_widget_send_focus_change;
 	void function(GtkWidget* widget, gchar* firstPropertyName, ... ) c_gtk_widget_style_get;
 	void function(GtkWidget* widget, gchar* propertyName, GValue* value) c_gtk_widget_style_get_property;
 	void function(GtkWidget* widget, gchar* firstPropertyName, va_list varArgs) c_gtk_widget_style_get_valist;
@@ -8245,6 +8299,7 @@ alias c_gtk_message_dialog_new_with_markup  gtk_message_dialog_new_with_markup;
 alias c_gtk_message_dialog_set_markup  gtk_message_dialog_set_markup;
 alias c_gtk_message_dialog_set_image  gtk_message_dialog_set_image;
 alias c_gtk_message_dialog_get_image  gtk_message_dialog_get_image;
+alias c_gtk_message_dialog_get_message_area  gtk_message_dialog_get_message_area;
 alias c_gtk_message_dialog_format_secondary_text  gtk_message_dialog_format_secondary_text;
 alias c_gtk_message_dialog_format_secondary_markup  gtk_message_dialog_format_secondary_markup;
 
@@ -8337,6 +8392,7 @@ alias c_gtk_window_get_urgency_hint  gtk_window_get_urgency_hint;
 alias c_gtk_window_get_accept_focus  gtk_window_get_accept_focus;
 alias c_gtk_window_get_focus_on_map  gtk_window_get_focus_on_map;
 alias c_gtk_window_get_group  gtk_window_get_group;
+alias c_gtk_window_has_group  gtk_window_has_group;
 alias c_gtk_window_get_window_type  gtk_window_get_window_type;
 alias c_gtk_window_move  gtk_window_move;
 alias c_gtk_window_parse_geometry  gtk_window_parse_geometry;
@@ -8365,6 +8421,7 @@ alias c_gtk_window_group_new  gtk_window_group_new;
 alias c_gtk_window_group_add_window  gtk_window_group_add_window;
 alias c_gtk_window_group_remove_window  gtk_window_group_remove_window;
 alias c_gtk_window_group_list_windows  gtk_window_group_list_windows;
+alias c_gtk_window_group_get_current_grab  gtk_window_group_get_current_grab;
 
 // gtk.AboutDialog
 
@@ -8427,6 +8484,7 @@ alias c_gtk_assistant_get_page_complete  gtk_assistant_get_page_complete;
 alias c_gtk_assistant_add_action_widget  gtk_assistant_add_action_widget;
 alias c_gtk_assistant_remove_action_widget  gtk_assistant_remove_action_widget;
 alias c_gtk_assistant_update_buttons_state  gtk_assistant_update_buttons_state;
+alias c_gtk_assistant_commit  gtk_assistant_commit;
 
 // gtk.OffscreenWindow
 
@@ -8556,6 +8614,7 @@ alias c_gtk_statusbar_get_context_id  gtk_statusbar_get_context_id;
 alias c_gtk_statusbar_push  gtk_statusbar_push;
 alias c_gtk_statusbar_pop  gtk_statusbar_pop;
 alias c_gtk_statusbar_remove  gtk_statusbar_remove;
+alias c_gtk_statusbar_remove_all  gtk_statusbar_remove_all;
 alias c_gtk_statusbar_set_has_resize_grip  gtk_statusbar_set_has_resize_grip;
 alias c_gtk_statusbar_get_has_resize_grip  gtk_statusbar_get_has_resize_grip;
 alias c_gtk_statusbar_get_message_area  gtk_statusbar_get_message_area;
@@ -8648,6 +8707,7 @@ alias c_gtk_button_set_image  gtk_button_set_image;
 alias c_gtk_button_get_image  gtk_button_get_image;
 alias c_gtk_button_set_image_position  gtk_button_set_image_position;
 alias c_gtk_button_get_image_position  gtk_button_get_image_position;
+alias c_gtk_button_get_event_window  gtk_button_get_event_window;
 
 // gtk.CheckButton
 
@@ -8754,6 +8814,8 @@ alias c_gtk_entry_get_progress_fraction  gtk_entry_get_progress_fraction;
 alias c_gtk_entry_set_progress_pulse_step  gtk_entry_set_progress_pulse_step;
 alias c_gtk_entry_get_progress_pulse_step  gtk_entry_get_progress_pulse_step;
 alias c_gtk_entry_progress_pulse  gtk_entry_progress_pulse;
+alias c_gtk_entry_im_context_filter_keypress  gtk_entry_im_context_filter_keypress;
+alias c_gtk_entry_reset_im_context  gtk_entry_reset_im_context;
 alias c_gtk_entry_set_icon_from_pixbuf  gtk_entry_set_icon_from_pixbuf;
 alias c_gtk_entry_set_icon_from_stock  gtk_entry_set_icon_from_stock;
 alias c_gtk_entry_set_icon_from_icon_name  gtk_entry_set_icon_from_icon_name;
@@ -9137,6 +9199,10 @@ alias c_gtk_text_view_get_tabs  gtk_text_view_get_tabs;
 alias c_gtk_text_view_set_accepts_tab  gtk_text_view_set_accepts_tab;
 alias c_gtk_text_view_get_accepts_tab  gtk_text_view_get_accepts_tab;
 alias c_gtk_text_view_get_default_attributes  gtk_text_view_get_default_attributes;
+alias c_gtk_text_view_im_context_filter_keypress  gtk_text_view_im_context_filter_keypress;
+alias c_gtk_text_view_reset_im_context  gtk_text_view_reset_im_context;
+alias c_gtk_text_view_get_hadjustment  gtk_text_view_get_hadjustment;
+alias c_gtk_text_view_get_vadjustment  gtk_text_view_get_vadjustment;
 
 // gtk.TextChildAnchor
 
@@ -9155,6 +9221,7 @@ alias c_gtk_tree_path_append_index  gtk_tree_path_append_index;
 alias c_gtk_tree_path_prepend_index  gtk_tree_path_prepend_index;
 alias c_gtk_tree_path_get_depth  gtk_tree_path_get_depth;
 alias c_gtk_tree_path_get_indices  gtk_tree_path_get_indices;
+alias c_gtk_tree_path_get_indices_with_depth  gtk_tree_path_get_indices_with_depth;
 alias c_gtk_tree_path_free  gtk_tree_path_free;
 alias c_gtk_tree_path_copy  gtk_tree_path_copy;
 alias c_gtk_tree_path_compare  gtk_tree_path_compare;
@@ -9454,6 +9521,8 @@ alias c_gtk_icon_view_set_selection_mode  gtk_icon_view_set_selection_mode;
 alias c_gtk_icon_view_get_selection_mode  gtk_icon_view_get_selection_mode;
 alias c_gtk_icon_view_set_orientation  gtk_icon_view_set_orientation;
 alias c_gtk_icon_view_get_orientation  gtk_icon_view_get_orientation;
+alias c_gtk_icon_view_set_item_orientation  gtk_icon_view_set_item_orientation;
+alias c_gtk_icon_view_get_item_orientation  gtk_icon_view_get_item_orientation;
 alias c_gtk_icon_view_set_columns  gtk_icon_view_set_columns;
 alias c_gtk_icon_view_get_columns  gtk_icon_view_get_columns;
 alias c_gtk_icon_view_set_item_width  gtk_icon_view_set_item_width;
@@ -9482,6 +9551,8 @@ alias c_gtk_icon_view_set_tooltip_cell  gtk_icon_view_set_tooltip_cell;
 alias c_gtk_icon_view_get_tooltip_context  gtk_icon_view_get_tooltip_context;
 alias c_gtk_icon_view_set_tooltip_column  gtk_icon_view_set_tooltip_column;
 alias c_gtk_icon_view_get_tooltip_column  gtk_icon_view_get_tooltip_column;
+alias c_gtk_icon_view_get_item_row  gtk_icon_view_get_item_row;
+alias c_gtk_icon_view_get_item_column  gtk_icon_view_get_item_column;
 alias c_gtk_icon_view_enable_model_drag_source  gtk_icon_view_enable_model_drag_source;
 alias c_gtk_icon_view_enable_model_drag_dest  gtk_icon_view_enable_model_drag_dest;
 alias c_gtk_icon_view_unset_model_drag_source  gtk_icon_view_unset_model_drag_source;
@@ -10309,6 +10380,7 @@ alias c_gtk_font_selection_dialog_set_preview_text  gtk_font_selection_dialog_se
 alias c_gtk_font_selection_dialog_get_apply_button  gtk_font_selection_dialog_get_apply_button;
 alias c_gtk_font_selection_dialog_get_cancel_button  gtk_font_selection_dialog_get_cancel_button;
 alias c_gtk_font_selection_dialog_get_ok_button  gtk_font_selection_dialog_get_ok_button;
+alias c_gtk_font_selection_dialog_get_font_selection  gtk_font_selection_dialog_get_font_selection;
 
 // gtk.InputDialog
 
@@ -10426,6 +10498,8 @@ alias c_gtk_notebook_get_tab_label_text  gtk_notebook_get_tab_label_text;
 alias c_gtk_notebook_get_tab_pos  gtk_notebook_get_tab_pos;
 alias c_gtk_notebook_get_tab_reorderable  gtk_notebook_get_tab_reorderable;
 alias c_gtk_notebook_get_tab_detachable  gtk_notebook_get_tab_detachable;
+alias c_gtk_notebook_get_tab_hborder  gtk_notebook_get_tab_hborder;
+alias c_gtk_notebook_get_tab_vborder  gtk_notebook_get_tab_vborder;
 alias c_gtk_notebook_set_current_page  gtk_notebook_set_current_page;
 alias c_gtk_notebook_set_group_id  gtk_notebook_set_group_id;
 alias c_gtk_notebook_get_group_id  gtk_notebook_get_group_id;
@@ -10451,6 +10525,7 @@ alias c_gtk_table_get_homogeneous  gtk_table_get_homogeneous;
 alias c_gtk_table_get_row_spacing  gtk_table_get_row_spacing;
 alias c_gtk_table_get_col_spacing  gtk_table_get_col_spacing;
 alias c_gtk_table_get_default_col_spacing  gtk_table_get_default_col_spacing;
+alias c_gtk_table_get_size  gtk_table_get_size;
 
 // gtk.Expander
 
@@ -10468,6 +10543,8 @@ alias c_gtk_expander_set_use_markup  gtk_expander_set_use_markup;
 alias c_gtk_expander_get_use_markup  gtk_expander_get_use_markup;
 alias c_gtk_expander_set_label_widget  gtk_expander_set_label_widget;
 alias c_gtk_expander_get_label_widget  gtk_expander_get_label_widget;
+alias c_gtk_expander_set_label_fill  gtk_expander_set_label_fill;
+alias c_gtk_expander_get_label_fill  gtk_expander_get_label_fill;
 
 // gtk.OrientableT
 
@@ -10892,10 +10969,13 @@ alias c_gtk_viewport_set_vadjustment  gtk_viewport_set_vadjustment;
 alias c_gtk_viewport_set_shadow_type  gtk_viewport_set_shadow_type;
 alias c_gtk_viewport_get_shadow_type  gtk_viewport_get_shadow_type;
 alias c_gtk_viewport_get_bin_window  gtk_viewport_get_bin_window;
+alias c_gtk_viewport_get_view_window  gtk_viewport_get_view_window;
 
 // gtk.Accessible
 
 alias c_gtk_accessible_connect_widget_destroyed  gtk_accessible_connect_widget_destroyed;
+alias c_gtk_accessible_get_widget  gtk_accessible_get_widget;
+alias c_gtk_accessible_set_widget  gtk_accessible_set_widget;
 
 // gtk.Bin
 
@@ -11185,6 +11265,7 @@ alias c_gtk_widget_class_find_style_property  gtk_widget_class_find_style_proper
 alias c_gtk_widget_class_list_style_properties  gtk_widget_class_list_style_properties;
 alias c_gtk_widget_region_intersect  gtk_widget_region_intersect;
 alias c_gtk_widget_send_expose  gtk_widget_send_expose;
+alias c_gtk_widget_send_focus_change  gtk_widget_send_focus_change;
 alias c_gtk_widget_style_get  gtk_widget_style_get;
 alias c_gtk_widget_style_get_property  gtk_widget_style_get_property;
 alias c_gtk_widget_style_get_valist  gtk_widget_style_get_valist;

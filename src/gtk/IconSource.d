@@ -242,7 +242,7 @@ public class IconSource
 	/**
 	 * Obtains the icon size this source applies to. The return value
 	 * is only useful/meaningful if the icon size is not wildcarded.
-	 * Returns: icon size this source matches.. type int
+	 * Returns: icon size this source matches. [type int]
 	 */
 	public GtkIconSize getSize()
 	{
@@ -382,7 +382,7 @@ public class IconSource
 	 * Sets the name of an icon to look up in the current icon theme
 	 * to use as a base image when creating icon variants for GtkIconSet.
 	 * Params:
-	 * iconName = name of icon to use. allow-none.
+	 * iconName = name of icon to use. [allow-none]
 	 */
 	public void setIconName(string iconName)
 	{
@@ -398,7 +398,7 @@ public class IconSource
 	 * call gtk_icon_source_set_size_wildcarded() to un-wildcard it
 	 * in addition to calling this function.
 	 * Params:
-	 * size = icon size this source applies to. type int
+	 * size = icon size this source applies to. [type int]
 	 */
 	public void setSize(GtkIconSize size)
 	{

@@ -363,4 +363,18 @@ public class Table : Container
 		// guint gtk_table_get_default_col_spacing (GtkTable *table);
 		return gtk_table_get_default_col_spacing(gtkTable);
 	}
+	
+	/**
+	 * Since 2.22
+	 * Params:
+	 * rows = return location for the number of
+	 *  rows, or NULL. [out][allow-none]
+	 * columns = return location for the number
+	 *  of columns, or NULL. [out][allow-none]
+	 */
+	public void getSize(out uint rows, out uint columns)
+	{
+		// void gtk_table_get_size (GtkTable *table,  guint *rows,  guint *columns);
+		gtk_table_get_size(gtkTable, &rows, &columns);
+	}
 }

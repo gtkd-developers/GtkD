@@ -129,7 +129,7 @@ public class PaperSize
 	 * see gtk_paper_size_get_default().
 	 * Since 2.10
 	 * Params:
-	 * name = a paper size name, or NULL. allow-none.
+	 * name = a paper size name, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
@@ -236,7 +236,7 @@ public class PaperSize
 	 * Params:
 	 * includeCustom = whether to include custom paper sizes
 	 *  as defined in the page setup dialog
-	 * Returns: a newly allocated list of newly allocated GtkPaperSize objects . element-type GtkPaperSize. transfer full GtkPaperSize.
+	 * Returns: a newly allocated list of newly allocated GtkPaperSize objects. [element-type GtkPaperSize][transfer full GtkPaperSize]
 	 */
 	public static ListG getPaperSizes(int includeCustom)
 	{

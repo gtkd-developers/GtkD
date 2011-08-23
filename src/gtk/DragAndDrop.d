@@ -162,7 +162,7 @@ public class DragAndDrop
 	 * targets = a pointer to an array of GtkTargetEntrys
 	 *  indicating the drop types that this widget will accept, or NULL.
 	 *  Later you can access the list with gtk_drag_dest_get_target_list()
-	 *  and gtk_drag_dest_find_target().. allow-none. array length=n_targets.
+	 *  and gtk_drag_dest_find_target(). [allow-none][array length=n_targets]
 	 * nTargets = the number of entries in targets
 	 * actions = a bitmask of possible actions for a drop onto this widget.
 	 */
@@ -214,7 +214,7 @@ public class DragAndDrop
 	 * widget = drag destination widget
 	 * context = drag context
 	 * targetList = list of droppable targets, or NULL to use
-	 *  gtk_drag_dest_get_target_list (widget).. allow-none.
+	 *  gtk_drag_dest_get_target_list (widget). [allow-none]
 	 * Returns: first target that the source offers and the dest can accept, or GDK_NONE
 	 */
 	public static GdkAtom destFindTarget(Widget widget, DragContext context, TargetList targetList)
@@ -247,7 +247,7 @@ public class DragAndDrop
 	 * gtk_drag_dest_set().
 	 * Params:
 	 * widget = a GtkWidget that's a drag destination
-	 * targetList = list of droppable targets, or NULL for none. allow-none.
+	 * targetList = list of droppable targets, or NULL for none. [allow-none]
 	 */
 	public static void destSetTargetList(Widget widget, TargetList targetList)
 	{
@@ -419,6 +419,12 @@ public class DragAndDrop
 	 * only needs to be used when the application is
 	 * starting drags itself, and is not needed when
 	 * gtk_drag_source_set() is used.
+	 * The event is used to retrieve the timestamp that will be used internally to
+	 * grab the pointer. If event is NULL, then GDK_CURRENT_TIME will be used.
+	 * However, you should try to pass a real event in all cases, since that can be
+	 * used by GTK+ to get information about the start position of the drag, for
+	 * example if the event is a GDK_MOTION_NOTIFY.
+	 * Generally there are three cases when you want to start a drag by hand by calling
 	 * Params:
 	 * widget = the source widget.
 	 * targets = The targets (data formats) in which the
@@ -536,7 +542,7 @@ public class DragAndDrop
 	 * Params:
 	 * colormap = the colormap of the icon
 	 * pixmap = the image data for the icon
-	 * mask = the transparency mask for an image, or NULL. allow-none.
+	 * mask = the transparency mask for an image, or NULL. [allow-none]
 	 * hotX = The X offset within widget of the hotspot.
 	 * hotY = The Y offset within widget of the hotspot.
 	 */
@@ -571,7 +577,7 @@ public class DragAndDrop
 	 * widget = a GtkWidget
 	 * startButtonMask = the bitmask of buttons that can start the drag
 	 * targets = the table of targets that the drag will support,
-	 *  may be NULL. allow-none. array length=n_targets.
+	 *  may be NULL. [allow-none][array length=n_targets]
 	 * nTargets = the number of items in targets
 	 * actions = the bitmask of possible actions for a drag from this widget
 	 */
@@ -590,7 +596,7 @@ public class DragAndDrop
 	 * widget = a GtkWidget
 	 * colormap = the colormap of the icon
 	 * pixmap = the image data for the icon
-	 * mask = the transparency mask for an image.. allow-none.
+	 * mask = the transparency mask for an image. [allow-none]
 	 */
 	public static void sourceSetIcon(Widget widget, Colormap colormap, Pixmap pixmap, Bitmap mask)
 	{
@@ -657,7 +663,7 @@ public class DragAndDrop
 	 * Since 2.4
 	 * Params:
 	 * widget = a GtkWidget that's a drag source
-	 * targetList = list of draggable targets, or NULL for none. allow-none.
+	 * targetList = list of draggable targets, or NULL for none. [allow-none]
 	 */
 	public static void sourceSetTargetList(Widget widget, TargetList targetList)
 	{
