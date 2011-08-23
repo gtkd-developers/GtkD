@@ -45,8 +45,10 @@
  * imports:
  * 	- glib.ListG
  * 	- gtk.Window
+ * 	- gtk.Widget
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
@@ -63,6 +65,7 @@ private import glib.ConstructionException;
 
 private import glib.ListG;
 private import gtk.Window;
+private import gtk.Widget;
 
 
 
@@ -177,9 +180,14 @@ public class WindowGroup : ObjectG
 	/**
 	 * Returns:
 	 */
-	public GtkWidget* getCurrentGrab()
+	public Widget getCurrentGrab()
 	{
 		// GtkWidget * gtk_window_group_get_current_grab (GtkWindowGroup *window_group);
-		return gtk_window_group_get_current_grab(gtkWindowGroup);
+		auto p = gtk_window_group_get_current_grab(gtkWindowGroup);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 }

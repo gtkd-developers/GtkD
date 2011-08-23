@@ -1591,6 +1591,8 @@ import: glib.ListG
 structWrap: GList* ListG
 import: gtk.Window
 structWrap: GtkWindow* Window
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 outFile: WindowGroup
 
 file: GtkAboutDialog.html
@@ -3162,7 +3164,7 @@ prefix: gtk_tree_path_
 import: glib.Str
 structWrap: GtkTreePath* TreePath
 
-array: gtk_tree_path_get_indices Return getDepth()
+array: gtk_tree_path_get_indices Return depth
 
 override: toString
 
@@ -6709,7 +6711,7 @@ structWrap: GdkFont* Font
 import: gtk.FontSelection
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-nocode: gtk-font-selection-dialog-get-font-selection
+nocode: gtk_font_selection_dialog_get_font_selection
 code: start
 	/**
 	 * Retrieves the GtkFontSelection widget embedded in the dialog.

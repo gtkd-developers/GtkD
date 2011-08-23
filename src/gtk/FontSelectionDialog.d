@@ -41,7 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk-font-selection-dialog-get-font-selection
+ * 	- gtk_font_selection_dialog_get_font_selection
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -278,22 +278,6 @@ public class FontSelectionDialog : Dialog
 	{
 		// GtkWidget * gtk_font_selection_dialog_get_ok_button  (GtkFontSelectionDialog *fsd);
 		auto p = gtk_font_selection_dialog_get_ok_button(gtkFontSelectionDialog);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
-	}
-	
-	/**
-	 * Retrieves the GtkFontSelection widget embedded in the dialog.
-	 * Since 2.22
-	 * Returns: the embedded GtkFontSelection
-	 */
-	public Widget getFontSelection()
-	{
-		// GtkWidget * gtk_font_selection_dialog_get_font_selection  (GtkFontSelectionDialog *fsd);
-		auto p = gtk_font_selection_dialog_get_font_selection(gtkFontSelectionDialog);
 		if(p is null)
 		{
 			return null;

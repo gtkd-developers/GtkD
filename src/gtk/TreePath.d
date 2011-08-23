@@ -287,7 +287,7 @@ public class TreePath
 	{
 		// gint * gtk_tree_path_get_indices (GtkTreePath *path);
 		auto p = gtk_tree_path_get_indices(gtkTreePath);
-		return p[0 .. getDepth()];
+		return p[0 .. depth];
 	}
 	
 	/**
