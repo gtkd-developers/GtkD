@@ -287,7 +287,7 @@ public class TreePath
 	{
 		// gint * gtk_tree_path_get_indices (GtkTreePath *path);
 		auto p = gtk_tree_path_get_indices(gtkTreePath);
-		return p[0 .. depth];
+		return p[0 .. getDepth()];
 	}
 	
 	/**
@@ -296,14 +296,14 @@ public class TreePath
 	 * It also returns the number of elements in the array.
 	 * The array should not be freed.
 	 * Since 2.22
-	 * Params:
-	 * depth = Number of elements returned in the integer array
 	 * Returns: The current indices, or NULL. [array length=depth][transfer none length=depth]
 	 */
-	public int* getIndicesWithDepth(int* depth)
+	public int[] getIndicesWithDepth()
 	{
 		// gint * gtk_tree_path_get_indices_with_depth  (GtkTreePath *path,  gint *depth);
-		return gtk_tree_path_get_indices_with_depth(gtkTreePath, depth);
+		int depth;
+		auto p = gtk_tree_path_get_indices_with_depth(gtkTreePath, &depth);
+		return p[0 .. depth];
 	}
 	
 	/**

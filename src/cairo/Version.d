@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-version-info.html
+ * inFile  = cairo-Version-Information.html
  * outPack = cairo
  * outFile = Version
  * strct   = 
@@ -126,7 +126,7 @@ public class Version
 	 */
 	public static string cairoVersionString()
 	{
-		// const char* cairo_version_string (void);
+		// const char * cairo_version_string (void);
 		return Str.toString(cairo_version_string());
 	}
 }

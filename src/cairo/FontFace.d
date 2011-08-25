@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-font-face.html
+ * inFile  = cairo-cairo-font-face-t.html
  * outPack = cairo
  * outFile = FontFace
  * strct   = cairo_font_face_t
@@ -67,8 +67,8 @@ private import glib.ConstructionException;
  * slant, and other characteristic but no size, transformation, or size.
  * Font faces are created using font-backend-specific
  * constructors, typically of the form
- * cairo_backend_font_face_create(),
- * or implicitly using the toy text API by way of
+ * cairo_backend_font_face_create(), or implicitly
+ * using the toy text API by way of
  * cairo_select_font_face(). The resulting face can be accessed using
  * cairo_get_font_face().
  */
@@ -117,7 +117,7 @@ public class FontFace
 	 */
 	public FontFace reference()
 	{
-		// cairo_font_face_t* cairo_font_face_reference (cairo_font_face_t *font_face);
+		// cairo_font_face_t * cairo_font_face_reference (cairo_font_face_t *font_face);
 		auto p = cairo_font_face_reference(cairo_font_face);
 		if(p is null)
 		{
@@ -200,7 +200,7 @@ public class FontFace
 	 */
 	public void* getUserData(cairo_user_data_key_t* key)
 	{
-		// void* cairo_font_face_get_user_data (cairo_font_face_t *font_face,  const cairo_user_data_key_t *key);
+		// void * cairo_font_face_get_user_data (cairo_font_face_t *font_face,  const cairo_user_data_key_t *key);
 		return cairo_font_face_get_user_data(cairo_font_face, key);
 	}
 }

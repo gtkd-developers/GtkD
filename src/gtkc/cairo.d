@@ -75,6 +75,7 @@ static this()
 	Linker.link(cairo_clip, "cairo_clip", LIBRARY.CAIRO);
 	Linker.link(cairo_clip_preserve, "cairo_clip_preserve", LIBRARY.CAIRO);
 	Linker.link(cairo_clip_extents, "cairo_clip_extents", LIBRARY.CAIRO);
+	Linker.link(cairo_in_clip, "cairo_in_clip", LIBRARY.CAIRO);
 	Linker.link(cairo_reset_clip, "cairo_reset_clip", LIBRARY.CAIRO);
 	Linker.link(cairo_rectangle_list_destroy, "cairo_rectangle_list_destroy", LIBRARY.CAIRO);
 	Linker.link(cairo_copy_clip_rectangle_list, "cairo_copy_clip_rectangle_list", LIBRARY.CAIRO);
@@ -181,6 +182,32 @@ static this()
 	Linker.link(cairo_pattern_set_user_data, "cairo_pattern_set_user_data", LIBRARY.CAIRO);
 	Linker.link(cairo_pattern_get_user_data, "cairo_pattern_get_user_data", LIBRARY.CAIRO);
 
+	// cairo.Region
+
+	Linker.link(cairo_region_create, "cairo_region_create", LIBRARY.CAIRO);
+	Linker.link(cairo_region_create_rectangle, "cairo_region_create_rectangle", LIBRARY.CAIRO);
+	Linker.link(cairo_region_create_rectangles, "cairo_region_create_rectangles", LIBRARY.CAIRO);
+	Linker.link(cairo_region_copy, "cairo_region_copy", LIBRARY.CAIRO);
+	Linker.link(cairo_region_reference, "cairo_region_reference", LIBRARY.CAIRO);
+	Linker.link(cairo_region_destroy, "cairo_region_destroy", LIBRARY.CAIRO);
+	Linker.link(cairo_region_status, "cairo_region_status", LIBRARY.CAIRO);
+	Linker.link(cairo_region_get_extents, "cairo_region_get_extents", LIBRARY.CAIRO);
+	Linker.link(cairo_region_num_rectangles, "cairo_region_num_rectangles", LIBRARY.CAIRO);
+	Linker.link(cairo_region_get_rectangle, "cairo_region_get_rectangle", LIBRARY.CAIRO);
+	Linker.link(cairo_region_is_empty, "cairo_region_is_empty", LIBRARY.CAIRO);
+	Linker.link(cairo_region_contains_point, "cairo_region_contains_point", LIBRARY.CAIRO);
+	Linker.link(cairo_region_contains_rectangle, "cairo_region_contains_rectangle", LIBRARY.CAIRO);
+	Linker.link(cairo_region_equal, "cairo_region_equal", LIBRARY.CAIRO);
+	Linker.link(cairo_region_translate, "cairo_region_translate", LIBRARY.CAIRO);
+	Linker.link(cairo_region_intersect, "cairo_region_intersect", LIBRARY.CAIRO);
+	Linker.link(cairo_region_intersect_rectangle, "cairo_region_intersect_rectangle", LIBRARY.CAIRO);
+	Linker.link(cairo_region_subtract, "cairo_region_subtract", LIBRARY.CAIRO);
+	Linker.link(cairo_region_subtract_rectangle, "cairo_region_subtract_rectangle", LIBRARY.CAIRO);
+	Linker.link(cairo_region_union, "cairo_region_union", LIBRARY.CAIRO);
+	Linker.link(cairo_region_union_rectangle, "cairo_region_union_rectangle", LIBRARY.CAIRO);
+	Linker.link(cairo_region_xor, "cairo_region_xor", LIBRARY.CAIRO);
+	Linker.link(cairo_region_xor_rectangle, "cairo_region_xor_rectangle", LIBRARY.CAIRO);
+
 	// cairo.FontFace
 
 	Linker.link(cairo_font_face_reference, "cairo_font_face_reference", LIBRARY.CAIRO);
@@ -241,14 +268,30 @@ static this()
 	Linker.link(cairo_user_font_face_set_text_to_glyphs_func, "cairo_user_font_face_set_text_to_glyphs_func", LIBRARY.CAIRO);
 	Linker.link(cairo_user_font_face_get_text_to_glyphs_func, "cairo_user_font_face_get_text_to_glyphs_func", LIBRARY.CAIRO);
 
+	// cairo.Device
+
+	Linker.link(cairo_device_reference, "cairo_device_reference", LIBRARY.CAIRO);
+	Linker.link(cairo_device_destroy, "cairo_device_destroy", LIBRARY.CAIRO);
+	Linker.link(cairo_device_status, "cairo_device_status", LIBRARY.CAIRO);
+	Linker.link(cairo_device_finish, "cairo_device_finish", LIBRARY.CAIRO);
+	Linker.link(cairo_device_flush, "cairo_device_flush", LIBRARY.CAIRO);
+	Linker.link(cairo_device_get_type, "cairo_device_get_type", LIBRARY.CAIRO);
+	Linker.link(cairo_device_get_reference_count, "cairo_device_get_reference_count", LIBRARY.CAIRO);
+	Linker.link(cairo_device_set_user_data, "cairo_device_set_user_data", LIBRARY.CAIRO);
+	Linker.link(cairo_device_get_user_data, "cairo_device_get_user_data", LIBRARY.CAIRO);
+	Linker.link(cairo_device_acquire, "cairo_device_acquire", LIBRARY.CAIRO);
+	Linker.link(cairo_device_release, "cairo_device_release", LIBRARY.CAIRO);
+
 	// cairo.Surface
 
 	Linker.link(cairo_surface_create_similar, "cairo_surface_create_similar", LIBRARY.CAIRO);
+	Linker.link(cairo_surface_create_for_rectangle, "cairo_surface_create_for_rectangle", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_reference, "cairo_surface_reference", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_destroy, "cairo_surface_destroy", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_status, "cairo_surface_status", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_finish, "cairo_surface_finish", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_flush, "cairo_surface_flush", LIBRARY.CAIRO);
+	Linker.link(cairo_surface_get_device, "cairo_surface_get_device", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_get_font_options, "cairo_surface_get_font_options", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_get_content, "cairo_surface_get_content", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_mark_dirty, "cairo_surface_mark_dirty", LIBRARY.CAIRO);
@@ -264,6 +307,8 @@ static this()
 	Linker.link(cairo_surface_copy_page, "cairo_surface_copy_page", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_show_page, "cairo_surface_show_page", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_has_show_text_glyphs, "cairo_surface_has_show_text_glyphs", LIBRARY.CAIRO);
+	Linker.link(cairo_surface_set_mime_data, "cairo_surface_set_mime_data", LIBRARY.CAIRO);
+	Linker.link(cairo_surface_get_mime_data, "cairo_surface_get_mime_data", LIBRARY.CAIRO);
 
 	// cairo.ImageSurface
 
@@ -284,6 +329,9 @@ static this()
 
 	Linker.link(cairo_pdf_surface_create, "cairo_pdf_surface_create", LIBRARY.CAIRO);
 	Linker.link(cairo_pdf_surface_create_for_stream, "cairo_pdf_surface_create_for_stream", LIBRARY.CAIRO);
+	Linker.link(cairo_pdf_surface_restrict_to_version, "cairo_pdf_surface_restrict_to_version", LIBRARY.CAIRO);
+	Linker.link(cairo_pdf_get_versions, "cairo_pdf_get_versions", LIBRARY.CAIRO);
+	Linker.link(cairo_pdf_version_to_string, "cairo_pdf_version_to_string", LIBRARY.CAIRO);
 	Linker.link(cairo_pdf_surface_set_size, "cairo_pdf_surface_set_size", LIBRARY.CAIRO);
 
 	// cairo.PostScriptSurface
@@ -381,6 +429,7 @@ mixin( gshared ~"extern(C)
 	void function(cairo_t* cr) c_cairo_clip;
 	void function(cairo_t* cr) c_cairo_clip_preserve;
 	void function(cairo_t* cr, double* x1, double* y1, double* x2, double* y2) c_cairo_clip_extents;
+	cairo_bool_t function(cairo_t* cr, double x, double y) c_cairo_in_clip;
 	void function(cairo_t* cr) c_cairo_reset_clip;
 	void function(cairo_rectangle_list_t* rectangleList) c_cairo_rectangle_list_destroy;
 	cairo_rectangle_list_t* function(cairo_t* cr) c_cairo_copy_clip_rectangle_list;
@@ -487,6 +536,32 @@ mixin( gshared ~"extern(C)
 	cairo_status_t function(cairo_pattern_t* pattern, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy) c_cairo_pattern_set_user_data;
 	void* function(cairo_pattern_t* pattern, cairo_user_data_key_t* key) c_cairo_pattern_get_user_data;
 	
+	// cairo.Region
+	
+	cairo_region_t* function() c_cairo_region_create;
+	cairo_region_t* function(cairo_rectangle_int_t* rectangle) c_cairo_region_create_rectangle;
+	cairo_region_t* function(cairo_rectangle_int_t* rects, int count) c_cairo_region_create_rectangles;
+	cairo_region_t* function(cairo_region_t* original) c_cairo_region_copy;
+	cairo_region_t* function(cairo_region_t* region) c_cairo_region_reference;
+	void function(cairo_region_t* region) c_cairo_region_destroy;
+	cairo_status_t function(cairo_region_t* region) c_cairo_region_status;
+	void function(cairo_region_t* region, cairo_rectangle_int_t* extents) c_cairo_region_get_extents;
+	int function(cairo_region_t* region) c_cairo_region_num_rectangles;
+	void function(cairo_region_t* region, int nth, cairo_rectangle_int_t* rectangle) c_cairo_region_get_rectangle;
+	cairo_bool_t function(cairo_region_t* region) c_cairo_region_is_empty;
+	cairo_bool_t function(cairo_region_t* region, int x, int y) c_cairo_region_contains_point;
+	cairo_region_overlap_t function(cairo_region_t* region, cairo_rectangle_int_t* rectangle) c_cairo_region_contains_rectangle;
+	cairo_bool_t function(cairo_region_t* a, cairo_region_t* b) c_cairo_region_equal;
+	void function(cairo_region_t* region, int dx, int dy) c_cairo_region_translate;
+	cairo_status_t function(cairo_region_t* dst, cairo_region_t* other) c_cairo_region_intersect;
+	cairo_status_t function(cairo_region_t* dst, cairo_rectangle_int_t* rectangle) c_cairo_region_intersect_rectangle;
+	cairo_status_t function(cairo_region_t* dst, cairo_region_t* other) c_cairo_region_subtract;
+	cairo_status_t function(cairo_region_t* dst, cairo_rectangle_int_t* rectangle) c_cairo_region_subtract_rectangle;
+	cairo_status_t function(cairo_region_t* dst, cairo_region_t* other) c_cairo_region_union;
+	cairo_status_t function(cairo_region_t* dst, cairo_rectangle_int_t* rectangle) c_cairo_region_union_rectangle;
+	cairo_status_t function(cairo_region_t* dst, cairo_region_t* other) c_cairo_region_xor;
+	cairo_status_t function(cairo_region_t* dst, cairo_rectangle_int_t* rectangle) c_cairo_region_xor_rectangle;
+	
 	// cairo.FontFace
 	
 	cairo_font_face_t* function(cairo_font_face_t* fontFace) c_cairo_font_face_reference;
@@ -547,14 +622,30 @@ mixin( gshared ~"extern(C)
 	void function(cairo_font_face_t* fontFace, cairo_user_scaled_font_text_to_glyphs_func_t textToGlyphsFunc) c_cairo_user_font_face_set_text_to_glyphs_func;
 	cairo_user_scaled_font_text_to_glyphs_func_t function(cairo_font_face_t* fontFace) c_cairo_user_font_face_get_text_to_glyphs_func;
 	
+	// cairo.Device
+	
+	cairo_device_t* function(cairo_device_t* device) c_cairo_device_reference;
+	void function(cairo_device_t* device) c_cairo_device_destroy;
+	cairo_status_t function(cairo_device_t* device) c_cairo_device_status;
+	void function(cairo_device_t* device) c_cairo_device_finish;
+	void function(cairo_device_t* device) c_cairo_device_flush;
+	cairo_device_type_t function(cairo_device_t* device) c_cairo_device_get_type;
+	uint function(cairo_device_t* device) c_cairo_device_get_reference_count;
+	cairo_status_t function(cairo_device_t* device, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy) c_cairo_device_set_user_data;
+	void* function(cairo_device_t* device, cairo_user_data_key_t* key) c_cairo_device_get_user_data;
+	cairo_status_t function(cairo_device_t* device) c_cairo_device_acquire;
+	void function(cairo_device_t* device) c_cairo_device_release;
+	
 	// cairo.Surface
 	
 	cairo_surface_t* function(cairo_surface_t* other, cairo_content_t content, int width, int height) c_cairo_surface_create_similar;
+	cairo_surface_t* function(cairo_surface_t* target, double x, double y, double width, double height) c_cairo_surface_create_for_rectangle;
 	cairo_surface_t* function(cairo_surface_t* surface) c_cairo_surface_reference;
 	void function(cairo_surface_t* surface) c_cairo_surface_destroy;
 	cairo_status_t function(cairo_surface_t* surface) c_cairo_surface_status;
 	void function(cairo_surface_t* surface) c_cairo_surface_finish;
 	void function(cairo_surface_t* surface) c_cairo_surface_flush;
+	cairo_device_t* function(cairo_surface_t* surface) c_cairo_surface_get_device;
 	void function(cairo_surface_t* surface, cairo_font_options_t* options) c_cairo_surface_get_font_options;
 	cairo_content_t function(cairo_surface_t* surface) c_cairo_surface_get_content;
 	void function(cairo_surface_t* surface) c_cairo_surface_mark_dirty;
@@ -570,6 +661,8 @@ mixin( gshared ~"extern(C)
 	void function(cairo_surface_t* surface) c_cairo_surface_copy_page;
 	void function(cairo_surface_t* surface) c_cairo_surface_show_page;
 	cairo_bool_t function(cairo_surface_t* surface) c_cairo_surface_has_show_text_glyphs;
+	cairo_status_t function(cairo_surface_t* surface, char* mimeType, uchar* data, ulong length, cairo_destroy_func_t destroy, void* closure) c_cairo_surface_set_mime_data;
+	void function(cairo_surface_t* surface, char* mimeType, uchar** data, ulong* length) c_cairo_surface_get_mime_data;
 	
 	// cairo.ImageSurface
 	
@@ -590,6 +683,9 @@ mixin( gshared ~"extern(C)
 	
 	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints) c_cairo_pdf_surface_create;
 	cairo_surface_t* function(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints) c_cairo_pdf_surface_create_for_stream;
+	void function(cairo_surface_t* surface, cairo_pdf_version_t versio) c_cairo_pdf_surface_restrict_to_version;
+	void function(cairo_pdf_version_t** versions, int* numVersions) c_cairo_pdf_get_versions;
+	char* function(cairo_pdf_version_t versio) c_cairo_pdf_version_to_string;
 	void function(cairo_surface_t* surface, double widthInPoints, double heightInPoints) c_cairo_pdf_surface_set_size;
 	
 	// cairo.PostScriptSurface
@@ -684,6 +780,7 @@ alias c_cairo_get_tolerance  cairo_get_tolerance;
 alias c_cairo_clip  cairo_clip;
 alias c_cairo_clip_preserve  cairo_clip_preserve;
 alias c_cairo_clip_extents  cairo_clip_extents;
+alias c_cairo_in_clip  cairo_in_clip;
 alias c_cairo_reset_clip  cairo_reset_clip;
 alias c_cairo_rectangle_list_destroy  cairo_rectangle_list_destroy;
 alias c_cairo_copy_clip_rectangle_list  cairo_copy_clip_rectangle_list;
@@ -790,6 +887,32 @@ alias c_cairo_pattern_get_reference_count  cairo_pattern_get_reference_count;
 alias c_cairo_pattern_set_user_data  cairo_pattern_set_user_data;
 alias c_cairo_pattern_get_user_data  cairo_pattern_get_user_data;
 
+// cairo.Region
+
+alias c_cairo_region_create  cairo_region_create;
+alias c_cairo_region_create_rectangle  cairo_region_create_rectangle;
+alias c_cairo_region_create_rectangles  cairo_region_create_rectangles;
+alias c_cairo_region_copy  cairo_region_copy;
+alias c_cairo_region_reference  cairo_region_reference;
+alias c_cairo_region_destroy  cairo_region_destroy;
+alias c_cairo_region_status  cairo_region_status;
+alias c_cairo_region_get_extents  cairo_region_get_extents;
+alias c_cairo_region_num_rectangles  cairo_region_num_rectangles;
+alias c_cairo_region_get_rectangle  cairo_region_get_rectangle;
+alias c_cairo_region_is_empty  cairo_region_is_empty;
+alias c_cairo_region_contains_point  cairo_region_contains_point;
+alias c_cairo_region_contains_rectangle  cairo_region_contains_rectangle;
+alias c_cairo_region_equal  cairo_region_equal;
+alias c_cairo_region_translate  cairo_region_translate;
+alias c_cairo_region_intersect  cairo_region_intersect;
+alias c_cairo_region_intersect_rectangle  cairo_region_intersect_rectangle;
+alias c_cairo_region_subtract  cairo_region_subtract;
+alias c_cairo_region_subtract_rectangle  cairo_region_subtract_rectangle;
+alias c_cairo_region_union  cairo_region_union;
+alias c_cairo_region_union_rectangle  cairo_region_union_rectangle;
+alias c_cairo_region_xor  cairo_region_xor;
+alias c_cairo_region_xor_rectangle  cairo_region_xor_rectangle;
+
 // cairo.FontFace
 
 alias c_cairo_font_face_reference  cairo_font_face_reference;
@@ -850,14 +973,30 @@ alias c_cairo_user_font_face_get_unicode_to_glyph_func  cairo_user_font_face_get
 alias c_cairo_user_font_face_set_text_to_glyphs_func  cairo_user_font_face_set_text_to_glyphs_func;
 alias c_cairo_user_font_face_get_text_to_glyphs_func  cairo_user_font_face_get_text_to_glyphs_func;
 
+// cairo.Device
+
+alias c_cairo_device_reference  cairo_device_reference;
+alias c_cairo_device_destroy  cairo_device_destroy;
+alias c_cairo_device_status  cairo_device_status;
+alias c_cairo_device_finish  cairo_device_finish;
+alias c_cairo_device_flush  cairo_device_flush;
+alias c_cairo_device_get_type  cairo_device_get_type;
+alias c_cairo_device_get_reference_count  cairo_device_get_reference_count;
+alias c_cairo_device_set_user_data  cairo_device_set_user_data;
+alias c_cairo_device_get_user_data  cairo_device_get_user_data;
+alias c_cairo_device_acquire  cairo_device_acquire;
+alias c_cairo_device_release  cairo_device_release;
+
 // cairo.Surface
 
 alias c_cairo_surface_create_similar  cairo_surface_create_similar;
+alias c_cairo_surface_create_for_rectangle  cairo_surface_create_for_rectangle;
 alias c_cairo_surface_reference  cairo_surface_reference;
 alias c_cairo_surface_destroy  cairo_surface_destroy;
 alias c_cairo_surface_status  cairo_surface_status;
 alias c_cairo_surface_finish  cairo_surface_finish;
 alias c_cairo_surface_flush  cairo_surface_flush;
+alias c_cairo_surface_get_device  cairo_surface_get_device;
 alias c_cairo_surface_get_font_options  cairo_surface_get_font_options;
 alias c_cairo_surface_get_content  cairo_surface_get_content;
 alias c_cairo_surface_mark_dirty  cairo_surface_mark_dirty;
@@ -873,6 +1012,8 @@ alias c_cairo_surface_get_user_data  cairo_surface_get_user_data;
 alias c_cairo_surface_copy_page  cairo_surface_copy_page;
 alias c_cairo_surface_show_page  cairo_surface_show_page;
 alias c_cairo_surface_has_show_text_glyphs  cairo_surface_has_show_text_glyphs;
+alias c_cairo_surface_set_mime_data  cairo_surface_set_mime_data;
+alias c_cairo_surface_get_mime_data  cairo_surface_get_mime_data;
 
 // cairo.ImageSurface
 
@@ -893,6 +1034,9 @@ alias c_cairo_surface_write_to_png_stream  cairo_surface_write_to_png_stream;
 
 alias c_cairo_pdf_surface_create  cairo_pdf_surface_create;
 alias c_cairo_pdf_surface_create_for_stream  cairo_pdf_surface_create_for_stream;
+alias c_cairo_pdf_surface_restrict_to_version  cairo_pdf_surface_restrict_to_version;
+alias c_cairo_pdf_get_versions  cairo_pdf_get_versions;
+alias c_cairo_pdf_version_to_string  cairo_pdf_version_to_string;
 alias c_cairo_pdf_surface_set_size  cairo_pdf_surface_set_size;
 
 // cairo.PostScriptSurface

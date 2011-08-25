@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-font-options.html
+ * inFile  = cairo-cairo-font-options-t.html
  * outPack = cairo
  * outFile = FontOption
  * strct   = cairo_font_options_t
@@ -63,10 +63,10 @@ private import glib.ConstructionException;
 
 /**
  * Description
- * The font options specify how fonts should be rendered. Most of the time the
- * font options implied by a surface are just right and do not need any changes,
- * but for pixel-based targets tweaking font options may result in superior
- * output on a particular display.
+ * The font options specify how fonts should be rendered. Most of the
+ * time the font options implied by a surface are just right and do not
+ * need any changes, but for pixel-based targets tweaking font options
+ * may result in superior output on a particular display.
  */
 public class FontOption
 {
@@ -110,7 +110,7 @@ public class FontOption
 	 */
 	public static FontOption create()
 	{
-		// cairo_font_options_t* cairo_font_options_create (void);
+		// cairo_font_options_t * cairo_font_options_create (void);
 		auto p = cairo_font_options_create();
 		if(p is null)
 		{
@@ -126,7 +126,7 @@ public class FontOption
 	 */
 	public FontOption copy()
 	{
-		// cairo_font_options_t* cairo_font_options_copy (const cairo_font_options_t *original);
+		// cairo_font_options_t * cairo_font_options_copy (const cairo_font_options_t *original);
 		auto p = cairo_font_options_copy(cairo_font_options);
 		if(p is null)
 		{
@@ -136,7 +136,7 @@ public class FontOption
 	}
 	
 	/**
-	 * Destroys a cairo_font_options_t object created with with
+	 * Destroys a cairo_font_options_t object created with
 	 * cairo_font_options_create() or cairo_font_options_copy().
 	 */
 	public void destroy()

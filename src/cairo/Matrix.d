@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-matrix.html
+ * inFile  = cairo-cairo-matrix-t.html
  * outPack = cairo
  * outFile = Matrix
  * strct   = cairo_matrix_t
@@ -65,17 +65,17 @@ private import glib.Str;
 
 /**
  * Description
- *  cairo_matrix_t is used throughout cairo to convert between different
- *  coordinate spaces. A cairo_matrix_t holds an affine transformation,
- *  such as a scale, rotation, shear, or a combination of these.
- *  The transformation of a point (x,y)
- *  is given by:
- *  x_new = xx * x + xy * y + x0;
- *  y_new = yx * x + yy * y + y0;
- *  The current transformation matrix of a cairo_t, represented as a
- *  cairo_matrix_t, defines the transformation from user-space
- *  coordinates to device-space coordinates. See cairo_get_matrix() and
- *  cairo_set_matrix().
+ * cairo_matrix_t is used throughout cairo to convert between different
+ * coordinate spaces. A cairo_matrix_t holds an affine transformation,
+ * such as a scale, rotation, shear, or a combination of these.
+ * The transformation of a point (x,y)
+ * is given by:
+ * x_new = xx * x + xy * y + x0;
+ * y_new = yx * x + yy * y + y0;
+ * The current transformation matrix of a cairo_t, represented as a
+ * cairo_matrix_t, defines the transformation from user-space
+ * coordinates to device-space coordinates. See cairo_get_matrix() and
+ * cairo_set_matrix().
  */
 public class Matrix
 {
@@ -227,7 +227,7 @@ public class Matrix
 	}
 	
 	/**
-	 * Changes matrix to be the inverse of it's original value. Not
+	 * Changes matrix to be the inverse of its original value. Not
 	 * all transformation matrices have inverses; if the matrix
 	 * collapses points together (it is degenerate),
 	 * then it has no inverse and this function will fail.

@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-pdf-surface.html
+ * inFile  = cairo-PDF-Surfaces.html
  * outPack = cairo
  * outFile = PdfSurface
  * strct   = cairo_surface_t
@@ -110,14 +110,17 @@ public class PdfSurface : Surface
 	 * to filename.
 	 * Since 1.2
 	 * Params:
-	 * filename = a filename for the PDF output (must be writable)
+	 * filename = a filename for the PDF output (must be writable), NULL may be
+	 *  used to specify no output. This will generate a PDF surface that
+	 *  may be queried and used as a source, without generating a
+	 *  temporary file.
 	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if an error such as out of memory occurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static PdfSurface create(string filename, double widthInPoints, double heightInPoints)
 	{
-		// cairo_surface_t* cairo_pdf_surface_create (const char *filename,  double width_in_points,  double height_in_points);
+		// cairo_surface_t * cairo_pdf_surface_create (const char *filename,  double width_in_points,  double height_in_points);
 		auto p = cairo_pdf_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
 		if(p is null)
 		{
@@ -131,7 +134,10 @@ public class PdfSurface : Surface
 	 * incrementally to the stream represented by write_func and closure.
 	 * Since 1.2
 	 * Params:
-	 * writeFunc = a cairo_write_func_t to accept the output data
+	 * writeFunc = a cairo_write_func_t to accept the output data, may be NULL
+	 *  to indicate a no-op write_func. With a no-op write_func,
+	 *  the surface may be queried or used as a source without
+	 *  generating any temporary files.
 	 * closure = the closure argument for write_func
 	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
@@ -139,13 +145,63 @@ public class PdfSurface : Surface
 	 */
 	public static PdfSurface createForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
 	{
-		// cairo_surface_t* cairo_pdf_surface_create_for_stream (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
+		// cairo_surface_t * cairo_pdf_surface_create_for_stream (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
 		auto p = cairo_pdf_surface_create_for_stream(writeFunc, closure, widthInPoints, heightInPoints);
 		if(p is null)
 		{
 			return null;
 		}
 		return new PdfSurface(cast(cairo_surface_t*) p);
+	}
+	
+	/**
+	 * Restricts the generated PDF file to version. See cairo_pdf_get_versions()
+	 * for a list of available version values that can be used here.
+	 * This function should only be called before any drawing operations
+	 * have been performed on the given surface. The simplest way to do
+	 * this is to call this function immediately after creating the
+	 * surface.
+	 * Since 1.10
+	 * Params:
+	 * version = PDF version
+	 */
+	public void restrictToVersion(cairo_pdf_version_t versio)
+	{
+		// void cairo_pdf_surface_restrict_to_version  (cairo_surface_t *surface,  cairo_pdf_version_t version);
+		cairo_pdf_surface_restrict_to_version(cairo_surface, versio);
+	}
+	
+	/**
+	 * Used to retrieve the list of supported versions. See
+	 * cairo_pdf_surface_restrict_to_version().
+	 * Since 1.10
+	 * Params:
+	 * versions = supported version list
+	 */
+	public static void cairoPdfGetVersions(out cairo_pdf_version_t[] versions)
+	{
+		// void cairo_pdf_get_versions (cairo_pdf_version_t const **versions,  int *num_versions);
+		cairo_pdf_version_t* outversions = null;
+		int numVersions;
+		
+		cairo_pdf_get_versions(&outversions, &numVersions);
+		
+		versions = outversions[0 .. numVersions];
+	}
+	
+	/**
+	 * Get the string representation of the given version id. This function
+	 * will return NULL if version isn't valid. See cairo_pdf_get_versions()
+	 * for a way to get the list of valid version ids.
+	 * Since 1.10
+	 * Params:
+	 * version = a version id
+	 * Returns: the string associated to given version.
+	 */
+	public static string cairoPdfVersionToString(cairo_pdf_version_t versio)
+	{
+		// const char * cairo_pdf_version_to_string (cairo_pdf_version_t version);
+		return Str.toString(cairo_pdf_version_to_string(versio));
 	}
 	
 	/**

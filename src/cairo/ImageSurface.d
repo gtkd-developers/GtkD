@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-image-surface.html
+ * inFile  = cairo-Image-Surfaces.html
  * outPack = cairo
  * outFile = ImageSurface
  * strct   = cairo_surface_t
@@ -140,7 +140,7 @@ public class ImageSurface : Surface
 	 */
 	public static ImageSurface create(cairo_format_t format, int width, int height)
 	{
-		// cairo_surface_t* cairo_image_surface_create (cairo_format_t format,  int width,  int height);
+		// cairo_surface_t * cairo_image_surface_create (cairo_format_t format,  int width,  int height);
 		auto p = cairo_image_surface_create(format, width, height);
 		if(p is null)
 		{
@@ -153,7 +153,7 @@ public class ImageSurface : Surface
 	 * Creates an image surface for the provided pixel data. The output
 	 * buffer must be kept around until the cairo_surface_t is destroyed
 	 * or cairo_surface_finish() is called on the surface. The initial
-	 * contents of buffer will be used as the initial image contents; you
+	 * contents of data will be used as the initial image contents; you
 	 * must explicitly clear the buffer, using, for example,
 	 * cairo_rectangle() and cairo_fill() if you want it cleared.
 	 * Note that the stride may be larger than
@@ -161,7 +161,7 @@ public class ImageSurface : Surface
 	 * and row. This alignment is required to allow high-performance rendering
 	 * within cairo. The correct way to obtain a legal stride value is to
 	 * call cairo_format_stride_for_width() with the desired format and
-	 * maximum image width value, and the use the resulting stride value
+	 * maximum image width value, and then use the resulting stride value
 	 * to allocate the data and to create the image surface. See
 	 * cairo_format_stride_for_width() for example code.
 	 * Params:
@@ -179,7 +179,7 @@ public class ImageSurface : Surface
 	 */
 	public static ImageSurface createForData(ubyte* data, cairo_format_t format, int width, int height, int stride)
 	{
-		// cairo_surface_t* cairo_image_surface_create_for_data (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
+		// cairo_surface_t * cairo_image_surface_create_for_data (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
 		auto p = cairo_image_surface_create_for_data(data, format, width, height, stride);
 		if(p is null)
 		{
@@ -192,11 +192,11 @@ public class ImageSurface : Surface
 	 * Get a pointer to the data of the image surface, for direct
 	 * inspection or modification.
 	 * Since 1.2
-	 * Returns: a pointer to the image data of this surface or NULL if surface is not an image surface.
+	 * Returns: a pointer to the image data of this surface or NULL if surface is not an image surface, or if cairo_surface_finish() has been called.
 	 */
 	public ubyte* getData()
 	{
-		// unsigned char* cairo_image_surface_get_data (cairo_surface_t *surface);
+		// unsigned char * cairo_image_surface_get_data (cairo_surface_t *surface);
 		return cairo_image_surface_get_data(cairo_surface);
 	}
 	
@@ -251,7 +251,7 @@ public class ImageSurface : Surface
 	 */
 	public static ImageSurface createFromPng(string filename)
 	{
-		// cairo_surface_t* cairo_image_surface_create_from_png (const char *filename);
+		// cairo_surface_t * cairo_image_surface_create_from_png (const char *filename);
 		auto p = cairo_image_surface_create_from_png(Str.toStringz(filename));
 		if(p is null)
 		{
@@ -266,11 +266,11 @@ public class ImageSurface : Surface
 	 * Params:
 	 * readFunc = function called to read the data of the file
 	 * closure = data to pass to read_func.
-	 * Returns: a new cairo_surface_t initialized with the contents of the PNG file or NULL if the data read is not a valid PNG image or memory could not be allocated for the operation.
+	 * Returns: a new cairo_surface_t initialized with the contents of the PNG file or a "nil" surface if the data read is not a valid PNG image or memory could not be allocated for the operation. A nil surface can be checked for with cairo_surface_status(surface) which
 	 */
 	public static ImageSurface createFromPngStream(cairo_read_func_t readFunc, void* closure)
 	{
-		// cairo_surface_t* cairo_image_surface_create_from_png_stream  (cairo_read_func_t read_func,  void *closure);
+		// cairo_surface_t * cairo_image_surface_create_from_png_stream  (cairo_read_func_t read_func,  void *closure);
 		auto p = cairo_image_surface_create_from_png_stream(readFunc, closure);
 		if(p is null)
 		{

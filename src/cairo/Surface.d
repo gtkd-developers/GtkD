@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-surface.html
+ * inFile  = cairo-cairo-surface-t.html
  * outPack = cairo
  * outFile = Surface
  * strct   = cairo_surface_t
@@ -40,13 +40,16 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- array: cairo_surface_get_mime_data
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- cairo.Device
  * 	- cairo.FontOption
  * 	- gdk.Window
  * 	- gtkc.gdk
  * structWrap:
+ * 	- cairo_device_t* -> Device
  * 	- cairo_font_options_t* -> FontOption
  * 	- cairo_surface_t* -> Surface
  * module aliases:
@@ -63,6 +66,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import cairo.Device;
 private import cairo.FontOption;
 private import gdk.Window;
 private import gtkc.gdk;
@@ -78,6 +82,14 @@ private import gtkc.gdk;
  * A cairo surface is created by using backend-specific
  * constructors, typically of the form
  * cairo_backend_surface_create().
+ * Most surface types allow accessing the surface without using Cairo
+ * functions. If you do this, keep in mind that it is mandatory that you call
+ * cairo_surface_flush() before reading from or writing to the surface and that
+ * you must use cairo_surface_mark_dirty() after modifying it.
+ * $(DDOC_COMMENT example)
+ * Note that for other surface types it might be necessary to acquire the
+ * surface's device first. See cairo_device_acquire() for a discussion of
+ * devices.
  */
 public class Surface
 {
@@ -117,6 +129,26 @@ public class Surface
 	}
 	
 	/**
+	 * Return mime data previously attached to surface using the
+	 * specified mime type. If no data has been attached with the given
+	 * mime type, data is set NULL.
+	 * Since 1.10
+	 * Params:
+	 * mimeType = the mime type of the image data
+	 * data = the image data to attached to the surface
+	 */
+	public void getMimeData(string mimeType, out ubyte[] data)
+	{
+		// void cairo_surface_get_mime_data (cairo_surface_t *surface,  const char *mime_type,  unsigned char **data,  unsigned long *length);
+		uchar* outdata = null;
+		ulong length;
+		
+		cairo_surface_get_mime_data(cairo_surface, Str.toStringz(mimeType), &outdata, &length);
+		
+		data = outdata[0 .. cast(size_t)length];
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -136,8 +168,40 @@ public class Surface
 	 */
 	public Surface createSimilar(cairo_content_t content, int width, int height)
 	{
-		// cairo_surface_t* cairo_surface_create_similar (cairo_surface_t *other,  cairo_content_t content,  int width,  int height);
+		// cairo_surface_t * cairo_surface_create_similar (cairo_surface_t *other,  cairo_content_t content,  int width,  int height);
 		auto p = cairo_surface_create_similar(cairo_surface, content, width, height);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Surface(cast(cairo_surface_t*) p);
+	}
+	
+	/**
+	 * Create a new surface that is a rectangle within the target surface.
+	 * All operations drawn to this surface are then clipped and translated
+	 * onto the target surface. Nothing drawn via this sub-surface outside of
+	 * its bounds is drawn onto the target surface, making this a useful method
+	 * for passing constrained child surfaces to library routines that draw
+	 * directly onto the parent surface, i.e. with no further backend allocations,
+	 * double buffering or copies.
+	 * Note
+	 * The semantics of subsurfaces have not been finalized yet
+	 * unless the rectangle is in full device units, is contained within
+	 * the extents of the target surface, and the target or subsurface's
+	 * device transforms are not changed.
+	 * Since 1.10
+	 * Params:
+	 * x = the x-origin of the sub-surface from the top-left of the target surface (in device-space units)
+	 * y = the y-origin of the sub-surface from the top-left of the target surface (in device-space units)
+	 * width = width of the sub-surface (in device-space units)
+	 * height = height of the sub-surface (in device-space units)
+	 * Returns: a pointer to the newly allocated surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs.
+	 */
+	public Surface createForRectangle(double x, double y, double width, double height)
+	{
+		// cairo_surface_t * cairo_surface_create_for_rectangle (cairo_surface_t *target,  double x,  double y,  double width,  double height);
+		auto p = cairo_surface_create_for_rectangle(cairo_surface, x, y, width, height);
 		if(p is null)
 		{
 			return null;
@@ -155,7 +219,7 @@ public class Surface
 	 */
 	public Surface reference()
 	{
-		// cairo_surface_t* cairo_surface_reference (cairo_surface_t *surface);
+		// cairo_surface_t * cairo_surface_reference (cairo_surface_t *surface);
 		auto p = cairo_surface_reference(cairo_surface);
 		if(p is null)
 		{
@@ -209,7 +273,7 @@ public class Surface
 	
 	/**
 	 * Do any pending drawing for the surface and also restore any
-	 * temporary modification's cairo has made to the surface's
+	 * temporary modifications cairo has made to the surface's
 	 * state. This function must be called before switching from
 	 * drawing on the surface with cairo to drawing on it directly
 	 * with native APIs. If the surface doesn't support direct access,
@@ -219,6 +283,23 @@ public class Surface
 	{
 		// void cairo_surface_flush (cairo_surface_t *surface);
 		cairo_surface_flush(cairo_surface);
+	}
+	
+	/**
+	 * This function returns the device for a surface.
+	 * See cairo_device_t.
+	 * Since 1.10
+	 * Returns: The device for surface or NULL if the surface does not have an associated device.
+	 */
+	public Device getDevice()
+	{
+		// cairo_device_t * cairo_surface_get_device (cairo_surface_t *surface);
+		auto p = cairo_surface_get_device(cairo_surface);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Device(cast(cairo_device_t*) p);
 	}
 	
 	/**
@@ -415,7 +496,7 @@ public class Surface
 	 */
 	public void* getUserData(cairo_user_data_key_t* key)
 	{
-		// void* cairo_surface_get_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key);
+		// void * cairo_surface_get_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key);
 		return cairo_surface_get_user_data(cairo_surface, key);
 	}
 	
@@ -458,8 +539,6 @@ public class Surface
 	 * act like a cairo_show_glyphs() operation. Users can use this
 	 * function to avoid computing UTF-8 text and cluster mapping if the
 	 * target surface does not use it.
-	 * There is a convenience function for this that takes a cairo_t,
-	 * namely cairo_has_show_text_glyphs().
 	 * Since 1.8
 	 * Returns: TRUE if surface supports cairo_show_text_glyphs(), FALSE otherwise
 	 */
@@ -467,5 +546,52 @@ public class Surface
 	{
 		// cairo_bool_t cairo_surface_has_show_text_glyphs (cairo_surface_t *surface);
 		return cairo_surface_has_show_text_glyphs(cairo_surface);
+	}
+	
+	/**
+	 * Attach an image in the format mime_type to surface. To remove
+	 * the data from a surface, call this function with same mime type
+	 * and NULL for data.
+	 * The attached image (or filename) data can later be used by backends
+	 * which support it (currently: PDF, PS, SVG and Win32 Printing
+	 * surfaces) to emit this data instead of making a snapshot of the
+	 * surface. This approach tends to be faster and requires less
+	 * memory and disk space.
+	 * The recognized MIME types are the following: CAIRO_MIME_TYPE_JPEG,
+	 * CAIRO_MIME_TYPE_PNG, CAIRO_MIME_TYPE_JP2, CAIRO_MIME_TYPE_URI.
+	 * See corresponding backend surface docs for details about which MIME
+	 * types it can handle. Caution: the associated MIME data will be
+	 * discarded if you draw on the surface afterwards. Use this function
+	 * with care.
+	 * Since 1.10
+	 * Params:
+	 * mimeType = the MIME type of the image data
+	 * data = the image data to attach to the surface
+	 * destroy = a cairo_destroy_func_t which will be called when the
+	 * surface is destroyed or when new image data is attached using the
+	 * same mime type.
+	 * closure = the data to be passed to the destroy notifier
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if a slot could not be allocated for the user data.
+	 */
+	public cairo_status_t setMimeData(string mimeType, ubyte[] data, cairo_destroy_func_t destroy, void* closure)
+	{
+		// cairo_status_t cairo_surface_set_mime_data (cairo_surface_t *surface,  const char *mime_type,  unsigned char *data,  unsigned long  length,  cairo_destroy_func_t destroy,  void *closure);
+		return cairo_surface_set_mime_data(cairo_surface, Str.toStringz(mimeType), data.ptr, cast(int) data.length, destroy, closure);
+	}
+	
+	/**
+	 * Return mime data previously attached to surface using the
+	 * specified mime type. If no data has been attached with the given
+	 * mime type, data is set NULL.
+	 * Since 1.10
+	 * Params:
+	 * mimeType = the mime type of the image data
+	 * data = the image data to attached to the surface
+	 * length = the length of the image data
+	 */
+	public void getMimeData(string mimeType, out ubyte* data, ulong* length)
+	{
+		// void cairo_surface_get_mime_data (cairo_surface_t *surface,  const char *mime_type,  unsigned char **data,  unsigned long *length);
+		cairo_surface_get_mime_data(cairo_surface, Str.toStringz(mimeType), &data, length);
 	}
 }

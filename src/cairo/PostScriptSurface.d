@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-ps-surface.html
+ * inFile  = cairo-PostScript-Surfaces.html
  * outPack = cairo
  * outFile = PostScriptSurface
  * strct   = cairo_surface_t
@@ -115,14 +115,17 @@ public class PostScriptSurface : Surface
 	 * vary. See cairo_ps_surface_set_size().
 	 * Since 1.2
 	 * Params:
-	 * filename = a filename for the PS output (must be writable)
+	 * filename = a filename for the PS output (must be writable), NULL may be
+	 *  used to specify no output. This will generate a PS surface that
+	 *  may be queried and used as a source, without generating a
+	 *  temporary file.
 	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if an error such as out of memory occurs. You can use cairo_surface_status() to check for this.
 	 */
 	public static PostScriptSurface create(string filename, double widthInPoints, double heightInPoints)
 	{
-		// cairo_surface_t* cairo_ps_surface_create (const char *filename,  double width_in_points,  double height_in_points);
+		// cairo_surface_t * cairo_ps_surface_create (const char *filename,  double width_in_points,  double height_in_points);
 		auto p = cairo_ps_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
 		if(p is null)
 		{
@@ -140,7 +143,10 @@ public class PostScriptSurface : Surface
 	 * output can vary. See cairo_ps_surface_set_size().
 	 * Since 1.2
 	 * Params:
-	 * writeFunc = a cairo_write_func_t to accept the output data
+	 * writeFunc = a cairo_write_func_t to accept the output data, may be NULL
+	 *  to indicate a no-op write_func. With a no-op write_func,
+	 *  the surface may be queried or used as a source without
+	 *  generating any temporary files.
 	 * closure = the closure argument for write_func
 	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
@@ -148,7 +154,7 @@ public class PostScriptSurface : Surface
 	 */
 	public static PostScriptSurface createForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
 	{
-		// cairo_surface_t* cairo_ps_surface_create_for_stream (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
+		// cairo_surface_t * cairo_ps_surface_create_for_stream (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
 		auto p = cairo_ps_surface_create_for_stream(writeFunc, closure, widthInPoints, heightInPoints);
 		if(p is null)
 		{
@@ -204,7 +210,7 @@ public class PostScriptSurface : Surface
 	 */
 	public static string levelToString(cairo_ps_level_t level)
 	{
-		// const char* cairo_ps_level_to_string (cairo_ps_level_t level);
+		// const char * cairo_ps_level_to_string (cairo_ps_level_t level);
 		return Str.toString(cairo_ps_level_to_string(level));
 	}
 	

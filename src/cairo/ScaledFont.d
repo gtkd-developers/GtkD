@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-scaled-font.html
+ * inFile  = cairo-cairo-scaled-font-t.html
  * outPack = cairo
  * outFile = ScaledFont
  * strct   = cairo_scaled_font_t
@@ -126,13 +126,12 @@ public class ScaledFont
 	 * ctm = user to device transformation matrix with which the font will
 	 *  be used.
 	 * options = options to use when getting metrics for the font and
-	 *  rendering with it. A NULL pointer will be interpreted as
-	 *  meaning the default options.
+	 *  rendering with it.
 	 * Returns: a newly created cairo_scaled_font_t. Destroy with cairo_scaled_font_destroy()
 	 */
 	public static ScaledFont create(FontFace fontFace, Matrix fontMatrix, Matrix ctm, FontOption options)
 	{
-		// cairo_scaled_font_t* cairo_scaled_font_create (cairo_font_face_t *font_face,  const cairo_matrix_t *font_matrix,  const cairo_matrix_t *ctm,  const cairo_font_options_t *options);
+		// cairo_scaled_font_t * cairo_scaled_font_create (cairo_font_face_t *font_face,  const cairo_matrix_t *font_matrix,  const cairo_matrix_t *ctm,  const cairo_font_options_t *options);
 		auto p = cairo_scaled_font_create((fontFace is null) ? null : fontFace.getFontFaceStruct(), (fontMatrix is null) ? null : fontMatrix.getMatrixStruct(), (ctm is null) ? null : ctm.getMatrixStruct(), (options is null) ? null : options.getFontOptionStruct());
 		if(p is null)
 		{
@@ -151,7 +150,7 @@ public class ScaledFont
 	 */
 	public ScaledFont reference()
 	{
-		// cairo_scaled_font_t* cairo_scaled_font_reference (cairo_scaled_font_t *scaled_font);
+		// cairo_scaled_font_t * cairo_scaled_font_reference (cairo_scaled_font_t *scaled_font);
 		auto p = cairo_scaled_font_reference(cairo_scaled_font);
 		if(p is null)
 		{
@@ -247,9 +246,10 @@ public class ScaledFont
 	 * entries available there. If the provided glyph array is too short for
 	 * the conversion, a new glyph array is allocated using cairo_glyph_allocate()
 	 * and placed in glyphs. Upon return, num_glyphs always contains the
-	 * number of generated glyphs. If the value glyphs points at has changed
+	 * number of generated glyphs. If the value glyphs points to has changed
 	 * after the call, the user is responsible for freeing the allocated glyph
-	 * array using cairo_glyph_free().
+	 * array using cairo_glyph_free(). This may happen even if the provided
+	 * array was large enough.
 	 * If clusters is not NULL, num_clusters and cluster_flags should not be NULL,
 	 * and cluster mapping will be computed.
 	 * The semantics of how cluster array allocation works is similar to the glyph
@@ -261,7 +261,8 @@ public class ScaledFont
 	 * and placed in clusters. Upon return, num_clusters always contains the
 	 * number of generated clusters. If the value clusters points at has changed
 	 * after the call, the user is responsible for freeing the allocated cluster
-	 * array using cairo_text_cluster_free().
+	 * array using cairo_text_cluster_free(). This may happen even if the provided
+	 * array was large enough.
 	 * In the simplest case, glyphs and clusters can point to NULL initially
 	 * Since 1.8
 	 * Params:
@@ -291,13 +292,14 @@ public class ScaledFont
 	}
 	
 	/**
-	 * Gets the font face that this scaled font was created for.
+	 * Gets the font face that this scaled font uses. This is the
+	 * font face passed to cairo_scaled_font_create().
 	 * Since 1.2
 	 * Returns: The cairo_font_face_t with which scaled_font was created.
 	 */
 	public FontFace getFontFace()
 	{
-		// cairo_font_face_t* cairo_scaled_font_get_font_face (cairo_scaled_font_t *scaled_font);
+		// cairo_font_face_t * cairo_scaled_font_get_font_face (cairo_scaled_font_t *scaled_font);
 		auto p = cairo_scaled_font_get_font_face(cairo_scaled_font);
 		if(p is null)
 		{
@@ -334,6 +336,9 @@ public class ScaledFont
 	
 	/**
 	 * Stores the CTM with which scaled_font was created into ctm.
+	 * Note that the translation offsets (x0, y0) of the CTM are ignored
+	 * by cairo_scaled_font_create(). So, the matrix this
+	 * function returns always has 0,0 as x0,y0.
 	 * Since 1.2
 	 * Params:
 	 * ctm = return value for the CTM
@@ -362,6 +367,7 @@ public class ScaledFont
 	/**
 	 * This function returns the type of the backend used to create
 	 * a scaled font. See cairo_font_type_t for available types.
+	 * However, this function never returns CAIRO_FONT_TYPE_TOY.
 	 * Since 1.2
 	 * Returns: The type of scaled_font.
 	 */
@@ -413,7 +419,7 @@ public class ScaledFont
 	 */
 	public void* getUserData(cairo_user_data_key_t* key)
 	{
-		// void* cairo_scaled_font_get_user_data (cairo_scaled_font_t *scaled_font,  const cairo_user_data_key_t *key);
+		// void * cairo_scaled_font_get_user_data (cairo_scaled_font_t *scaled_font,  const cairo_user_data_key_t *key);
 		return cairo_scaled_font_get_user_data(cairo_scaled_font, key);
 	}
 }

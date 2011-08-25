@@ -245,10 +245,12 @@ private import gio.IOExtensionPoint;
 
 private import cairo.Context;
 private import cairo.Pattern;
+private import cairo.Region;
 private import cairo.FontFace;
 private import cairo.ScaledFont;
 private import cairo.FontOption;
 private import cairo.UserFontFace;
+private import cairo.Device;
 private import cairo.Surface;
 private import cairo.ImageSurface;
 private import cairo.PdfSurface;

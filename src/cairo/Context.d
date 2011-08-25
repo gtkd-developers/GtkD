@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-context.html
+ * inFile  = cairo-cairo-t.html
  * outPack = cairo
  * outFile = Context
  * strct   = cairo_t
@@ -101,14 +101,14 @@ private import gdk.Drawable;
 
 /**
  * Description
- *  cairo_t is the main object used when drawing with cairo. To
- *  draw with cairo, you create a cairo_t, set the target surface,
- *  and drawing options for the cairo_t, create shapes with
- *  functions like cairo_move_to() and cairo_line_to(), and then
- *  draw shapes with cairo_stroke() or cairo_fill().
- *  cairo_t's can be pushed to a stack via cairo_save().
- *  They may then safely be changed, without loosing the current state.
- *  Use cairo_restore() to restore to the saved state.
+ * cairo_t is the main object used when drawing with cairo. To
+ * draw with cairo, you create a cairo_t, set the target surface,
+ * and drawing options for the cairo_t, create shapes with
+ * functions like cairo_move_to() and cairo_line_to(), and then
+ * draw shapes with cairo_stroke() or cairo_fill().
+ * cairo_t's can be pushed to a stack via cairo_save().
+ * They may then safely be changed, without loosing the current state.
+ * Use cairo_restore() to restore to the saved state.
  */
 public class Context
 {
@@ -292,23 +292,22 @@ public class Context
 	
 	/**
 	 * Description
-	 * Cairo has two sets of text rendering capabilities:
-	 *  The functions with text in their name form cairo's
-	 *  toy text API. The toy API takes UTF-8 encoded
-	 *  text and is limited in its functionality to rendering simple
-	 *  left-to-right text with no advanced features. That means for example
-	 *  that most complex scripts like Hebrew, Arabic, and Indic scripts are
-	 *  out of question. No kerning or correct positioning of diacritical marks
-	 *  either. The font selection is pretty limited too and doesn't handle the
-	 *  case that the selected font does not cover the characters in the text.
-	 *  This set of functions are really that, a toy text API, for testing and
-	 *  demonstration purposes. Any serious application should avoid them.
-	 *  The functions with glyphs in their name form cairo's
-	 *  low-level text API. The low-level API relies on
-	 *  the user to convert text to a set of glyph indexes and positions. This
-	 *  is a very hard problem and is best handled by external libraries, like
-	 *  the pangocairo that is part of the Pango text layout and rendering library.
-	 *  Pango is available from http://www.pango.org/.
+	 * The functions with text in their name form cairo's
+	 * toy text API. The toy API takes UTF-8 encoded
+	 * text and is limited in its functionality to rendering simple
+	 * left-to-right text with no advanced features. That means for example
+	 * that most complex scripts like Hebrew, Arabic, and Indic scripts are
+	 * out of question. No kerning or correct positioning of diacritical marks
+	 * either. The font selection is pretty limited too and doesn't handle the
+	 * case that the selected font does not cover the characters in the text.
+	 * This set of functions are really that, a toy text API, for testing and
+	 * demonstration purposes. Any serious application should avoid them.
+	 * The functions with glyphs in their name form cairo's
+	 * low-level text API. The low-level API relies on
+	 * the user to convert text to a set of glyph indexes and positions. This
+	 * is a very hard problem and is best handled by external libraries, like
+	 * the pangocairo that is part of the Pango text layout and rendering library.
+	 * Pango is available from http://www.pango.org/.
 	 */
 	
 	/**
@@ -326,7 +325,7 @@ public class Context
 	 */
 	public static Context create(Surface target)
 	{
-		// cairo_t* cairo_create (cairo_surface_t *target);
+		// cairo_t * cairo_create (cairo_surface_t *target);
 		auto p = cairo_create((target is null) ? null : target.getSurfaceStruct());
 		if(p is null)
 		{
@@ -345,7 +344,7 @@ public class Context
 	 */
 	public Context reference()
 	{
-		// cairo_t* cairo_reference (cairo_t *cr);
+		// cairo_t * cairo_reference (cairo_t *cr);
 		auto p = cairo_reference(cairo);
 		if(p is null)
 		{
@@ -416,7 +415,7 @@ public class Context
 	 */
 	public Surface getTarget()
 	{
-		// cairo_surface_t* cairo_get_target (cairo_t *cr);
+		// cairo_surface_t * cairo_get_target (cairo_t *cr);
 		auto p = cairo_get_target(cairo);
 		if(p is null)
 		{
@@ -467,7 +466,7 @@ public class Context
 	 * detailed description of group rendering.
 	 * Since 1.2
 	 * Params:
-	 * content = a %cairo_content_t indicating the type of group that
+	 * content = a cairo_content_t indicating the type of group that
 	 *  will be created
 	 */
 	public void pushGroupWithContent(cairo_content_t content)
@@ -490,7 +489,7 @@ public class Context
 	 */
 	public Pattern popGroup()
 	{
-		// cairo_pattern_t* cairo_pop_group (cairo_t *cr);
+		// cairo_pattern_t * cairo_pop_group (cairo_t *cr);
 		auto p = cairo_pop_group(cairo);
 		if(p is null)
 		{
@@ -527,7 +526,7 @@ public class Context
 	 */
 	public Surface getGroupTarget()
 	{
-		// cairo_surface_t* cairo_get_group_target (cairo_t *cr);
+		// cairo_surface_t * cairo_get_group_target (cairo_t *cr);
 		auto p = cairo_get_group_target(cairo);
 		if(p is null)
 		{
@@ -604,7 +603,7 @@ public class Context
 	 * The x and y parameters give the user-space coordinate at which
 	 * the surface origin should appear. (The surface origin is its
 	 * upper-left corner before any transformation has been applied.) The
-	 * x and y patterns are negated and then set as translation values
+	 * x and y parameters are negated and then set as translation values
 	 * in the pattern matrix.
 	 * Other than the initial translation pattern matrix, as described
 	 * above, all other pattern attributes, (such as its extend mode), are
@@ -629,7 +628,7 @@ public class Context
 	 */
 	public Pattern getSource()
 	{
-		// cairo_pattern_t* cairo_get_source (cairo_t *cr);
+		// cairo_pattern_t * cairo_get_source (cairo_t *cr);
 		auto p = cairo_get_source(cairo);
 		if(p is null)
 		{
@@ -683,7 +682,7 @@ public class Context
 	 * dashes.
 	 * If any value in dashes is negative, or if all values are 0, then
 	 * cr will be put into an error state with a status of
-	 * #CAIRO_STATUS_INVALID_DASH.
+	 * CAIRO_STATUS_INVALID_DASH.
 	 * Params:
 	 * dashes = an array specifying alternate lengths of on and off stroke portions
 	 * offset = an offset into the dash pattern at which the stroke should start
@@ -814,7 +813,7 @@ public class Context
 	 * stroking operation, not the user space and CTM in effect at the
 	 * time of the call to cairo_set_line_width(). The simplest usage
 	 * makes both of these spaces identical. That is, if there is no
-	 * change to the CTM between a call to cairo_set_line_with() and the
+	 * change to the CTM between a call to cairo_set_line_width() and the
 	 * stroking operation, then one can just pass user-space values to
 	 * cairo_set_line_width() and ignore this note.
 	 * As with the other stroke parameters, the current line width is
@@ -913,7 +912,10 @@ public class Context
 	 * is less than tolerance. The default value is 0.1. A larger
 	 * value will give better performance, a smaller value, better
 	 * appearance. (Reducing the value from the default value of 0.1
-	 * is unlikely to improve appearance significantly.)
+	 * is unlikely to improve appearance significantly.) The accuracy of paths
+	 * within Cairo is limited by the precision of its internal arithmetic, and
+	 * the prescribed tolerance is restricted to the smallest
+	 * representable internal value.
 	 * Params:
 	 * tolerance = the tolerance, in device units (typically pixels)
 	 */
@@ -964,10 +966,10 @@ public class Context
 	 * The current clip region affects all drawing operations by
 	 * effectively masking out any changes to the surface that are outside
 	 * the current clip region.
-	 * Calling cairo_clip() can only make the clip region smaller, never
+	 * Calling cairo_clip_preserve() can only make the clip region smaller, never
 	 * larger. But the current clip is part of the graphics state, so a
 	 * temporary restriction of the clip region can be achieved by
-	 * calling cairo_clip() within a cairo_save()/cairo_restore()
+	 * calling cairo_clip_preserve() within a cairo_save()/cairo_restore()
 	 * pair. The only other means of increasing the size of the clip
 	 * region is cairo_reset_clip().
 	 */
@@ -991,6 +993,23 @@ public class Context
 	{
 		// void cairo_clip_extents (cairo_t *cr,  double *x1,  double *y1,  double *x2,  double *y2);
 		cairo_clip_extents(cairo, &x1, &y1, &x2, &y2);
+	}
+	
+	/**
+	 * Tests whether the given point is inside the area that would be
+	 * visible through the current clip, i.e. the area that would be filled by
+	 * a cairo_paint() operation.
+	 * See cairo_clip(), and cairo_clip_preserve().
+	 * Since 1.10
+	 * Params:
+	 * x = X coordinate of the point to test
+	 * y = Y coordinate of the point to test
+	 * Returns: A non-zero value if the point is inside, or zero if outside.
+	 */
+	public cairo_bool_t inClip(double x, double y)
+	{
+		// cairo_bool_t cairo_in_clip (cairo_t *cr,  double x,  double y);
+		return cairo_in_clip(cairo, x, y);
 	}
 	
 	/**
@@ -1037,7 +1056,7 @@ public class Context
 	 */
 	public cairo_rectangle_list_t* copyClipRectangleList()
 	{
-		// cairo_rectangle_list_t* cairo_copy_clip_rectangle_list (cairo_t *cr);
+		// cairo_rectangle_list_t * cairo_copy_clip_rectangle_list (cairo_t *cr);
 		return cairo_copy_clip_rectangle_list(cairo);
 	}
 	
@@ -1198,10 +1217,9 @@ public class Context
 	/**
 	 * Computes a bounding box in user coordinates covering the area that
 	 * would be affected, (the "inked" area), by a cairo_stroke()
-	 * operation operation given the current path and stroke
-	 * parameters. If the current path is empty, returns an empty
-	 * rectangle ((0,0), (0,0)). Surface dimensions and clipping are not
-	 * taken into account.
+	 * operation given the current path and stroke parameters.
+	 * If the current path is empty, returns an empty rectangle ((0,0), (0,0)).
+	 * Surface dimensions and clipping are not taken into account.
 	 * Note that if the line width is set to exactly zero, then
 	 * cairo_stroke_extents() will return an empty rectangle. Contrast with
 	 * cairo_path_extents() which can be used to compute the non-empty
@@ -1312,7 +1330,7 @@ public class Context
 	 */
 	public void* getUserData(cairo_user_data_key_t* key)
 	{
-		// void* cairo_get_user_data (cairo_t *cr,  const cairo_user_data_key_t *key);
+		// void * cairo_get_user_data (cairo_t *cr,  const cairo_user_data_key_t *key);
 		return cairo_get_user_data(cairo, key);
 	}
 	
@@ -1327,7 +1345,7 @@ public class Context
 	 */
 	public cairo_path_t* copyPath()
 	{
-		// cairo_path_t* cairo_copy_path (cairo_t *cr);
+		// cairo_path_t * cairo_copy_path (cairo_t *cr);
 		return cairo_copy_path(cairo);
 	}
 	
@@ -1348,7 +1366,7 @@ public class Context
 	 */
 	public cairo_path_t* copyPathFlat()
 	{
-		// cairo_path_t* cairo_copy_path_flat (cairo_t *cr);
+		// cairo_path_t * cairo_copy_path_flat (cairo_t *cr);
 		return cairo_copy_path_flat(cairo);
 	}
 	
@@ -1893,6 +1911,12 @@ public class Context
 	 * remember), but the standard CSS2 generic family names, ("serif",
 	 * "sans-serif", "cursive", "fantasy", "monospace"), are likely to
 	 * work as expected.
+	 * If family starts with the string "cairo:", or if no native font
+	 * backends are compiled in, cairo will use an internal font family.
+	 * The internal font family recognizes many modifiers in the family
+	 * string, most notably, it recognizes the string "monospace". That is,
+	 * the family name "cairo:monospace" will use the monospace version of
+	 * the internal font family.
 	 * For "real" font selection, see the font-backend-specific
 	 * font_face_create functions for the font backend you are using. (For
 	 * example, if you are using the freetype-based cairo-ft font backend,
@@ -2020,7 +2044,7 @@ public class Context
 	 */
 	public FontFace getFontFace()
 	{
-		// cairo_font_face_t* cairo_get_font_face (cairo_t *cr);
+		// cairo_font_face_t * cairo_get_font_face (cairo_t *cr);
 		auto p = cairo_get_font_face(cairo);
 		if(p is null)
 		{
@@ -2052,7 +2076,7 @@ public class Context
 	 */
 	public ScaledFont getScaledFont()
 	{
-		// cairo_scaled_font_t* cairo_get_scaled_font (cairo_t *cr);
+		// cairo_scaled_font_t * cairo_get_scaled_font (cairo_t *cr);
 		auto p = cairo_get_scaled_font(cairo);
 		if(p is null)
 		{
@@ -2106,9 +2130,9 @@ public class Context
 	 * This operation has rendering effects similar to cairo_show_glyphs()
 	 * but, if the target surface supports it, uses the provided text and
 	 * cluster mapping to embed the text for the glyphs shown in the output.
-	 * The cairo_has_show_text_glyphs() function can be used to query that.
-	 * If the target does not support it, this function acts like
-	 * cairo_show_glyphs().
+	 * If the target does not support the extended attributes, this function
+	 * acts like the basic cairo_show_glyphs() as if it had been passed
+	 * glyphs and num_glyphs.
 	 * The mapping between utf8 and glyphs is provided by an array of
 	 * clusters. Each cluster covers a number of
 	 * text bytes and glyphs, and neighboring clusters cover neighboring
@@ -2197,7 +2221,7 @@ public class Context
 	 * family is assumed. The default family then can be queried using
 	 * cairo_toy_font_face_get_family().
 	 * The cairo_select_font_face() function uses this to create font faces.
-	 * See that function for limitations of toy font faces.
+	 * See that function for limitations and other details of toy font faces.
 	 * Since 1.8
 	 * Params:
 	 * family = a font family name, encoded in UTF-8
@@ -2207,7 +2231,7 @@ public class Context
 	 */
 	public static FontFace toyFontFaceCreate(string family, cairo_font_slant_t slant, cairo_font_weight_t weight)
 	{
-		// cairo_font_face_t* cairo_toy_font_face_create (const char *family,  cairo_font_slant_t slant,  cairo_font_weight_t weight);
+		// cairo_font_face_t * cairo_toy_font_face_create (const char *family,  cairo_font_slant_t slant,  cairo_font_weight_t weight);
 		auto p = cairo_toy_font_face_create(Str.toStringz(family), slant, weight);
 		if(p is null)
 		{
@@ -2225,7 +2249,7 @@ public class Context
 	 */
 	public static string toyFontFaceGetFamily(FontFace fontFace)
 	{
-		// const char* cairo_toy_font_face_get_family (cairo_font_face_t *font_face);
+		// const char * cairo_toy_font_face_get_family (cairo_font_face_t *font_face);
 		return Str.toString(cairo_toy_font_face_get_family((fontFace is null) ? null : fontFace.getFontFaceStruct()));
 	}
 	

@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-error-status.html
+ * inFile  = cairo-Error-handling.html
  * outPack = cairo
  * outFile = Status
  * strct   = 
@@ -89,7 +89,7 @@ public class Status
 	 */
 	public static string oString(cairo_status_t status)
 	{
-		// const char* cairo_status_to_string (cairo_status_t status);
+		// const char * cairo_status_to_string (cairo_status_t status);
 		return Str.toString(cairo_status_to_string(status));
 	}
 	

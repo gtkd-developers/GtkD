@@ -28,8 +28,8 @@ ln -s gdk-html-2.22.1 gdk
 curl http://developer.gnome.org/gtk/gtk-html-2.22.1.tar.gz | tar xvfz -
 ln -s gtk-html-2.22.1 gtk
 #CAIRO
-curl http://library.gnome.org/devel/cairo/cairo-html-1.8.0.tar.gz | tar xvfz -
-ln -s cairo-html-1.8.0 cairo
+curl http://cairographics.org/releases/cairo-1.10.2.tar.gz | tar xvfz -
+ln -s cairo-1.10.2/doc/public/html cairo
 #GTKGLEXT
 #wget http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2
 #tar xvfj gtkglext-1.2.0.tar.bz2

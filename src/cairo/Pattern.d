@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = cairo-pattern.html
+ * inFile  = cairo-cairo-pattern-t.html
  * outPack = cairo
  * outFile = Pattern
  * strct   = cairo_pattern_t
@@ -70,8 +70,9 @@ private import cairo.Surface;
 /**
  * Description
  * cairo_pattern_t is the paint with which cairo draws.
- * The primary use of patterns is as the source for all cairo drawing operations,
- * although they can also be used as masks, that is, as the brush too.
+ * The primary use of patterns is as the source for all cairo drawing
+ * operations, although they can also be used as masks, that is, as the
+ * brush too.
  * A cairo pattern is created by using one of the many constructors,
  * of the form cairo_pattern_create_type()
  * or implicitly through
@@ -214,7 +215,7 @@ public class Pattern
 	 */
 	public static Pattern createRgb(double red, double green, double blue)
 	{
-		// cairo_pattern_t* cairo_pattern_create_rgb (double red,  double green,  double blue);
+		// cairo_pattern_t * cairo_pattern_create_rgb (double red,  double green,  double blue);
 		auto p = cairo_pattern_create_rgb(red, green, blue);
 		if(p is null)
 		{
@@ -237,7 +238,7 @@ public class Pattern
 	 */
 	public static Pattern createRgba(double red, double green, double blue, double alpha)
 	{
-		// cairo_pattern_t* cairo_pattern_create_rgba (double red,  double green,  double blue,  double alpha);
+		// cairo_pattern_t * cairo_pattern_create_rgba (double red,  double green,  double blue,  double alpha);
 		auto p = cairo_pattern_create_rgba(red, green, blue, alpha);
 		if(p is null)
 		{
@@ -270,7 +271,7 @@ public class Pattern
 	 */
 	public static Pattern createForSurface(Surface surface)
 	{
-		// cairo_pattern_t* cairo_pattern_create_for_surface (cairo_surface_t *surface);
+		// cairo_pattern_t * cairo_pattern_create_for_surface (cairo_surface_t *surface);
 		auto p = cairo_pattern_create_for_surface((surface is null) ? null : surface.getSurfaceStruct());
 		if(p is null)
 		{
@@ -317,7 +318,7 @@ public class Pattern
 	 */
 	public static Pattern createLinear(double x0, double y0, double x1, double y1)
 	{
-		// cairo_pattern_t* cairo_pattern_create_linear (double x0,  double y0,  double x1,  double y1);
+		// cairo_pattern_t * cairo_pattern_create_linear (double x0,  double y0,  double x1,  double y1);
 		auto p = cairo_pattern_create_linear(x0, y0, x1, y1);
 		if(p is null)
 		{
@@ -362,7 +363,7 @@ public class Pattern
 	 */
 	public static Pattern createRadial(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
 	{
-		// cairo_pattern_t* cairo_pattern_create_radial (double cx0,  double cy0,  double radius0,  double cx1,  double cy1,  double radius1);
+		// cairo_pattern_t * cairo_pattern_create_radial (double cx0,  double cy0,  double radius0,  double cx1,  double cy1,  double radius1);
 		auto p = cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1);
 		if(p is null)
 		{
@@ -400,7 +401,7 @@ public class Pattern
 	 */
 	public Pattern reference()
 	{
-		// cairo_pattern_t* cairo_pattern_reference (cairo_pattern_t *pattern);
+		// cairo_pattern_t * cairo_pattern_reference (cairo_pattern_t *pattern);
 		auto p = cairo_pattern_reference(cairo_pattern);
 		if(p is null)
 		{
@@ -574,7 +575,7 @@ public class Pattern
 	 */
 	public void* getUserData(cairo_user_data_key_t* key)
 	{
-		// void* cairo_pattern_get_user_data (cairo_pattern_t *pattern,  const cairo_user_data_key_t *key);
+		// void * cairo_pattern_get_user_data (cairo_pattern_t *pattern,  const cairo_user_data_key_t *key);
 		return cairo_pattern_get_user_data(cairo_pattern, key);
 	}
 }

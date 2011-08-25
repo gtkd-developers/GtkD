@@ -1640,6 +1640,8 @@ public class GtkDClass
 							case "3BU": v = "TRIPLE_"~v[1..v.length]; break;
 							case "1_1": v = "VERSION_"~v; break;
 							case "1_2": v = "VERSION_"~v; break;
+							case "1_4": v = "VERSION_"~v; break;
+							case "1_5": v = "VERSION_"~v; break;
 							default:
 								// nothing
 								break;
