@@ -36,11 +36,21 @@ ifeq ("$(OS)","Linux")
     LDFLAGS+=$(LINKERFLAG)-ldl
 endif
 
-ifeq ("$(ARCH)", "x86_64") 
-    DCFLAGS+=-m64
-	LDFLAGS+=-m64
-endif 
+ifndef MODEL
+    ifeq ("$(ARCH)", "x86_64")
+        MODEL=64
+    else
+        MODEL=32
+    endif
+endif
 
+ifeq ($(MODEL), 64) 
+   DCFLAGS+=-m64
+   LDFLAGS+=-m64
+else
+   DCFLAGS+=-m32
+   LDFLAGS+=-m32
+endif
 
 AR=ar
 RANLIB=ranlib
