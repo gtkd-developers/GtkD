@@ -271,11 +271,16 @@ public class Spawn
 		{
 			this.file = file;
 			this.read = read;
+			
+			version(druntime)
+			{
+				super(&run);
+			}
 		}
 		
 		version(druntime)
 		{
-			public int run()
+			public void run()
 			{
 				string line = readLine(file);
 				while( line !is null )
@@ -287,7 +292,6 @@ public class Spawn
 					}
 					line = readLine(file);
 				}
-				return 0;
 			}
 		}
 		else
