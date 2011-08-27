@@ -87,31 +87,7 @@ import: glib.Str
 import: glib.HashTable
 import: glib.ListG
 import: gda.ParameterList
-
-nocode: gda_init
-
-code: start
-
-	/**
-	 * Initializes the GDA library.
-	 * Params:
-	 *  appId = name of the program.
-	 *  version = revision number of the program.
-	 *  args = args from main().
-	 */
-	public static void init(string appId, string versio, string[] args)
-	{
-		// void gda_init (const gchar *app_id,  const gchar *version,  gint nargs,  gchar *args[]);
-		gchar*[] argv = (new char*[args.length]);
-		int argc = 0;
-		foreach (string p; args)
-		{
-			argv[argc++] = cast(gchar*)p;
-		}
-		
-		gda_init(Str.toStringz(appId), Str.toStringz(versio), argc, argv);
-	}
-code:end
+array: gda_init args nargs
 openFile: Gda
 
 file: libgda-gda-util.html

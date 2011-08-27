@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Gda
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,7 +40,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gda_init
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -76,28 +75,20 @@ public class Gda
 {
 	
 	/**
+	 * Description
+	 */
+	
+	/**
 	 * Initializes the GDA library.
 	 * Params:
-	 *  appId = name of the program.
-	 *  version = revision number of the program.
-	 *  args = args from main().
+	 * appId = name of the program.
+	 * args = list of arguments, usually argv from main().
 	 */
 	public static void init(string appId, string versio, string[] args)
 	{
 		// void gda_init (const gchar *app_id,  const gchar *version,  gint nargs,  gchar *args[]);
-		gchar*[] argv = (new char*[args.length]);
-		int argc = 0;
-		foreach (string p; args)
-		{
-			argv[argc++] = cast(gchar*)p;
-		}
-		
-		gda_init(Str.toStringz(appId), Str.toStringz(versio), argc, argv);
+		gda_init(Str.toStringz(appId), Str.toStringz(versio), cast(int) args.length, Str.toStringzArray(args));
 	}
-	
-	/**
-	 * Description
-	 */
 	
 	/**
 	 * Runs the GDA main loop, which is nothing more than the Bonobo main
