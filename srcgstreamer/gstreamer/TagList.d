@@ -166,7 +166,7 @@ public class TagList
 	 */
 	public static void mergeStringsWithComma(Value dest, Value src)
 	{
-		// void gst_tag_merge_strings_with_comma  (GValue *dest,  const GValue *src);
+		// void gst_tag_merge_strings_with_comma (GValue *dest,  const GValue *src);
 		gst_tag_merge_strings_with_comma((dest is null) ? null : dest.getValueStruct(), (src is null) ? null : src.getValueStruct());
 	}
 	

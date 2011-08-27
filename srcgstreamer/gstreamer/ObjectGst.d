@@ -172,13 +172,13 @@ public class ObjectGst : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(ObjectG, ParamSpec, ObjectGst)[] onDeepNotifyListeners;
+	void delegate(ObjectGst, ParamSpec, ObjectGst)[] onDeepNotifyListeners;
 	/**
 	 * The deep notify signal is used to be notified of property changes. It is
 	 * typically attached to the toplevel bin to receive notifications from all
 	 * the elements contained in that bin.
 	 */
-	void addOnDeepNotify(void delegate(ObjectG, ParamSpec, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDeepNotify(void delegate(ObjectGst, ParamSpec, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("deep-notify" in connectedSignals) )
 		{
@@ -193,11 +193,11 @@ public class ObjectGst : ObjectG
 		}
 		onDeepNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackDeepNotify(GstObject* gstobjectStruct, GObject* propObject, GParamSpec* prop, ObjectGst objectGst)
+	extern(C) static void callBackDeepNotify(GstObject* gstobjectStruct, GstObject* propObject, GParamSpec* prop, ObjectGst objectGst)
 	{
-		foreach ( void delegate(ObjectG, ParamSpec, ObjectGst) dlg ; objectGst.onDeepNotifyListeners )
+		foreach ( void delegate(ObjectGst, ParamSpec, ObjectGst) dlg ; objectGst.onDeepNotifyListeners )
 		{
-			dlg(new ObjectG(propObject), new ParamSpec(prop), objectGst);
+			dlg(new ObjectGst(propObject), new ParamSpec(prop), objectGst);
 		}
 	}
 	

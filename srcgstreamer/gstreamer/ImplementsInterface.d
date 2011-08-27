@@ -114,7 +114,7 @@ public class ImplementsInterface
 	 */
 	public static int implementsInterface(Element element, GType ifaceType)
 	{
-		// gboolean gst_element_implements_interface  (GstElement *element,  GType iface_type);
+		// gboolean gst_element_implements_interface (GstElement *element,  GType iface_type);
 		return gst_element_implements_interface((element is null) ? null : element.getElementStruct(), ifaceType);
 	}
 	

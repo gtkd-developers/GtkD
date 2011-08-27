@@ -424,7 +424,7 @@ public class Registry : ObjectGst
 	 */
 	public PluginFeature lookupFeature(string name)
 	{
-		// GstPluginFeature* gst_registry_lookup_feature  (GstRegistry *registry,  const char *name);
+		// GstPluginFeature* gst_registry_lookup_feature (GstRegistry *registry,  const char *name);
 		auto p = gst_registry_lookup_feature(gstRegistry, Str.toStringz(name));
 		if(p is null)
 		{
@@ -460,9 +460,10 @@ public class Registry : ObjectGst
 	}
 	
 	/**
-	 * Write the cache to file. Part of the code was taken from gstregistryxml.c
+	 * Write the registry to a cache to file at given location.
 	 * Params:
-	 * Returns:
+	 * location = a filename
+	 * Returns: TRUE on success.
 	 */
 	public int binaryWriteCache(string location)
 	{

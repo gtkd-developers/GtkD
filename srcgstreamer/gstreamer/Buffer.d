@@ -182,7 +182,11 @@ public class Buffer
 	
 	/**
 	 * Creates a newly allocated buffer with data of the given size.
-	 * The buffer memory is not cleared.
+	 * The buffer memory is not cleared. If the requested amount of
+	 * memory can't be allocated, the program will abort. Use
+	 * gst_buffer_try_new_and_alloc() if you want to handle this case
+	 * gracefully or have gotten the size to allocate from an untrusted
+	 * source such as a media stream.
 	 * Note that when size == 0, the buffer data pointer will be NULL.
 	 * MT safe.
 	 * Params:
@@ -198,6 +202,27 @@ public class Buffer
 			throw new ConstructionException("null returned by gst_buffer_new_and_alloc(size)");
 		}
 		this(cast(GstBuffer*) p);
+	}
+	
+	/**
+	 * Tries to create a newly allocated buffer with data of the given size. If
+	 * the requested amount of memory can't be allocated, NULL will be returned.
+	 * The buffer memory is not cleared.
+	 * Note that when size == 0, the buffer data pointer will be NULL.
+	 * MT safe.
+	 * Params:
+	 * size = the size of the new buffer's data.
+	 * Returns: a new GstBuffer, or NULL if the memory couldn't be allocated. Since 0.10.13
+	 */
+	public static Buffer tryNewAndAlloc(uint size)
+	{
+		// GstBuffer* gst_buffer_try_new_and_alloc (guint size);
+		auto p = gst_buffer_try_new_and_alloc(size);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Buffer(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -219,6 +244,24 @@ public class Buffer
 			return null;
 		}
 		return new Buffer(cast(GstBuffer*) p);
+	}
+	
+	/**
+	 * Copies the metadata from src into dest. The data, size and mallocdata
+	 * fields are not copied.
+	 * flags indicate which fields will be copied. Use GST_BUFFER_COPY_ALL to copy
+	 * all the metadata fields.
+	 * This function is typically called from a custom buffer copy function after
+	 * creating dest and setting the data, size, mallocdata.
+	 * Params:
+	 * src = a source GstBuffer
+	 * flags = flags indicating what metadata fields should be copied.
+	 * Since 0.10.13
+	 */
+	public void copyMetadata(Buffer src, GstBufferCopyFlags flags)
+	{
+		// void gst_buffer_copy_metadata (GstBuffer *dest,  const GstBuffer *src,  GstBufferCopyFlags flags);
+		gst_buffer_copy_metadata(gstBuffer, (src is null) ? null : src.getBufferStruct(), flags);
 	}
 	
 	/**
@@ -244,7 +287,7 @@ public class Buffer
 	 */
 	public Buffer makeMetadataWritable()
 	{
-		// GstBuffer* gst_buffer_make_metadata_writable  (GstBuffer *buf);
+		// GstBuffer* gst_buffer_make_metadata_writable (GstBuffer *buf);
 		auto p = gst_buffer_make_metadata_writable(gstBuffer);
 		if(p is null)
 		{
@@ -356,9 +399,13 @@ public class Buffer
 	}
 	
 	/**
+	 * Warning
+	 * gst_buffer_stamp is deprecated and should not be used in newly-written code. use gst_buffer_copy_metadata() instead, it provides more
+	 * control.
 	 * Copies additional information (the timestamp, duration, and offset start
 	 * and end) from one buffer to the other.
-	 * This function does not copy any buffer flags or caps.
+	 * This function does not copy any buffer flags or caps and is equivalent to
+	 * gst_buffer_copy_metadata(dest, src, GST_BUFFER_COPY_TIMESTAMPS).
 	 * Params:
 	 * src = buffer to stamp from
 	 */

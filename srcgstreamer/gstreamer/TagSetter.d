@@ -91,7 +91,7 @@ private import gstreamer.TagList;
  * merge_mode = gst_tag_setter_get_tag_merge_mode (tagsetter);
  * tagsetter_tags = gst_tag_setter_get_tag_list (tagsetter);
  * event_tags = (const GstTagList *) element->event_tags;
- * GST_LOG_OBJECT (tagsetter, "merging tags, merge mode = d", merge_mode);
+ * GST_LOG_OBJECT (tagsetter, "merging tags, merge mode = %d", merge_mode);
  * GST_LOG_OBJECT (tagsetter, "event tags: %" GST_PTR_FORMAT, event_tags);
  * GST_LOG_OBJECT (tagsetter, "set tags: %" GST_PTR_FORMAT, application_tags);
  * result = gst_tag_list_merge (application_tags, event_tags, merge_mode);
@@ -180,7 +180,7 @@ public class TagSetter
 	 */
 	public TagList getTagList()
 	{
-		// const GstTagList* gst_tag_setter_get_tag_list  (GstTagSetter *setter);
+		// const GstTagList* gst_tag_setter_get_tag_list (GstTagSetter *setter);
 		auto p = gst_tag_setter_get_tag_list(gstTagSetter);
 		if(p is null)
 		{
@@ -198,7 +198,7 @@ public class TagSetter
 	 */
 	public void setTagMergeMode(GstTagMergeMode mode)
 	{
-		// void gst_tag_setter_set_tag_merge_mode  (GstTagSetter *setter,  GstTagMergeMode mode);
+		// void gst_tag_setter_set_tag_merge_mode (GstTagSetter *setter,  GstTagMergeMode mode);
 		gst_tag_setter_set_tag_merge_mode(gstTagSetter, mode);
 	}
 	
@@ -209,7 +209,7 @@ public class TagSetter
 	 */
 	public GstTagMergeMode getTagMergeMode()
 	{
-		// GstTagMergeMode gst_tag_setter_get_tag_merge_mode  (GstTagSetter *setter);
+		// GstTagMergeMode gst_tag_setter_get_tag_merge_mode (GstTagSetter *setter);
 		return gst_tag_setter_get_tag_merge_mode(gstTagSetter);
 	}
 }

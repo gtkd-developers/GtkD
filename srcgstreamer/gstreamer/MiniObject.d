@@ -170,7 +170,7 @@ public class MiniObject
 	 */
 	public MiniObject makeWritable()
 	{
-		// GstMiniObject* gst_mini_object_make_writable  (GstMiniObject *mini_object);
+		// GstMiniObject* gst_mini_object_make_writable (GstMiniObject *mini_object);
 		auto p = gst_mini_object_make_writable(gstMiniObject);
 		if(p is null)
 		{

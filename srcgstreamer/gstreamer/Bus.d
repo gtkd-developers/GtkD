@@ -545,7 +545,7 @@ public class Bus : ObjectGst
 	 * events = a mask of GstMessageType, representing the set of message types to
 	 * poll for.
 	 * timeout = the poll timeout, as a GstClockTimeDiff, or -1 to poll indefinitely.
-	 * Returns: The message that was received, or NULL if the poll timed out. The message is taken from the bus and needs to be unreffed with gst_message_unref() after usage. Signal Details The "message" signal void user_function (GstBus *bus, GstMessage *message, gpointer user_data) : Run last / Has details A message has been posted on the bus. This signal is emitted from a GSource added to the mainloop. this signal will only be emitted when there is a mainloop running.
+	 * Returns: The message that was received, or NULL if the poll timed out. The message is taken from the bus and needs to be unreffed with gst_message_unref() after usage. Signal Details The "message" signal void user_function (GstBus *bus, GstMessage *message, gpointer user_data) : Run Last / Has Details A message has been posted on the bus. This signal is emitted from a GSource added to the mainloop. this signal will only be emitted when there is a mainloop running.
 	 */
 	public Message poll(GstMessageType events, GstClockTimeDiff timeout)
 	{

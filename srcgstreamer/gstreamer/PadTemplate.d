@@ -209,7 +209,7 @@ public class PadTemplate : ObjectGst
 	 */
 	public static Caps staticPadTemplateGetCaps(GstStaticPadTemplate* templ)
 	{
-		// GstCaps* gst_static_pad_template_get_caps  (GstStaticPadTemplate *templ);
+		// GstCaps* gst_static_pad_template_get_caps (GstStaticPadTemplate *templ);
 		auto p = gst_static_pad_template_get_caps(templ);
 		if(p is null)
 		{
@@ -242,7 +242,7 @@ public class PadTemplate : ObjectGst
 	
 	/**
 	 * Gets the capabilities of the pad template.
-	 * Returns: the GstCaps of the pad template. If you need to keep a reference to the caps, take a ref (see gst_caps_ref()). Signal Details The "pad-created" signal void user_function (GstPadTemplate *pad_template, GstPad *pad, gpointer user_data) : Run last This signal is fired when an element creates a pad from this template.
+	 * Returns: the GstCaps of the pad template. If you need to keep a reference to the caps, take a ref (see gst_caps_ref()). Signal Details The "pad-created" signal void user_function (GstPadTemplate *pad_template, GstPad *pad, gpointer user_data) : Run Last This signal is fired when an element creates a pad from this template.
 	 */
 	public Caps getCaps()
 	{

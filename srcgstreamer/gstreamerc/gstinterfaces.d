@@ -40,6 +40,7 @@ static this()
 	Linker.link(gst_x_overlay_got_xwindow_id, "gst_x_overlay_got_xwindow_id", LIBRARY.GSTINTERFACES);
 	Linker.link(gst_x_overlay_prepare_xwindow_id, "gst_x_overlay_prepare_xwindow_id", LIBRARY.GSTINTERFACES);
 	Linker.link(gst_x_overlay_expose, "gst_x_overlay_expose", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_x_overlay_handle_events, "gst_x_overlay_handle_events", LIBRARY.GSTINTERFACES);
 }
 
 mixin( gshared ~"extern(C)
@@ -51,6 +52,7 @@ mixin( gshared ~"extern(C)
 	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_got_xwindow_id;
 	void function(GstXOverlay* overlay) c_gst_x_overlay_prepare_xwindow_id;
 	void function(GstXOverlay* overlay) c_gst_x_overlay_expose;
+	void function(GstXOverlay* overlay, gboolean handleEvents) c_gst_x_overlay_handle_events;
 }");
 
 // gstinterfaces.XOverlay
@@ -59,3 +61,4 @@ alias c_gst_x_overlay_set_xwindow_id  gst_x_overlay_set_xwindow_id;
 alias c_gst_x_overlay_got_xwindow_id  gst_x_overlay_got_xwindow_id;
 alias c_gst_x_overlay_prepare_xwindow_id  gst_x_overlay_prepare_xwindow_id;
 alias c_gst_x_overlay_expose  gst_x_overlay_expose;
+alias c_gst_x_overlay_handle_events  gst_x_overlay_handle_events;

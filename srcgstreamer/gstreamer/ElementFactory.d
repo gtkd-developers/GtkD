@@ -206,7 +206,7 @@ public class ElementFactory : PluginFeature
 	 */
 	public string getLongname()
 	{
-		// const gchar* gst_element_factory_get_longname  (GstElementFactory *factory);
+		// const gchar* gst_element_factory_get_longname (GstElementFactory *factory);
 		return Str.toString(gst_element_factory_get_longname(gstElementFactory));
 	}
 	
@@ -226,7 +226,7 @@ public class ElementFactory : PluginFeature
 	 */
 	public string getDescription()
 	{
-		// const gchar* gst_element_factory_get_description  (GstElementFactory *factory);
+		// const gchar* gst_element_factory_get_description (GstElementFactory *factory);
 		return Str.toString(gst_element_factory_get_description(gstElementFactory));
 	}
 	
@@ -256,7 +256,7 @@ public class ElementFactory : PluginFeature
 	 */
 	public int getUriType()
 	{
-		// gint gst_element_factory_get_uri_type  (GstElementFactory *factory);
+		// gint gst_element_factory_get_uri_type (GstElementFactory *factory);
 		return gst_element_factory_get_uri_type(gstElementFactory);
 	}
 	
@@ -271,6 +271,18 @@ public class ElementFactory : PluginFeature
 	{
 		// gchar** gst_element_factory_get_uri_protocols  (GstElementFactory *factory);
 		return Str.toStringArray(gst_element_factory_get_uri_protocols(gstElementFactory));
+	}
+	
+	/**
+	 * Check if factory implements the interface with name interfacename.
+	 * Params:
+	 * interfacename = an interface name
+	 * Returns: TRUE when factory implement the interface. Since 0.10.14
+	 */
+	public int hasInterface(string interfacename)
+	{
+		// gboolean gst_element_factory_has_interface (GstElementFactory *factory,  const gchar *interfacename);
+		return gst_element_factory_has_interface(gstElementFactory, Str.toStringz(interfacename));
 	}
 	
 	/**
@@ -321,7 +333,7 @@ public class ElementFactory : PluginFeature
 	 */
 	public int canSinkCaps(Caps caps)
 	{
-		// gboolean gst_element_factory_can_sink_caps  (GstElementFactory *factory,  const GstCaps *caps);
+		// gboolean gst_element_factory_can_sink_caps (GstElementFactory *factory,  const GstCaps *caps);
 		return gst_element_factory_can_sink_caps(gstElementFactory, (caps is null) ? null : caps.getCapsStruct());
 	}
 	
@@ -333,7 +345,7 @@ public class ElementFactory : PluginFeature
 	 */
 	public int canSrcCaps(Caps caps)
 	{
-		// gboolean gst_element_factory_can_src_caps  (GstElementFactory *factory,  const GstCaps *caps);
+		// gboolean gst_element_factory_can_src_caps (GstElementFactory *factory,  const GstCaps *caps);
 		return gst_element_factory_can_src_caps(gstElementFactory, (caps is null) ? null : caps.getCapsStruct());
 	}
 	

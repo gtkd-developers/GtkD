@@ -115,6 +115,8 @@ addEnums: start
 addEnums: end
 
 addStructs: start
+	struct GstBinPrivate{}
+
 	align(1) public struct GstBuffer
 	{
 		GstMiniObject mini_object;
@@ -1013,6 +1015,7 @@ out: gst_message_parse_segment_start position
 out: gst_message_parse_buffering percent
 out: gst_message_parse_duration format
 out: gst_message_parse_duration duration
+out: gst_message_parse_async_start new_base_time
 
 nocode: gst_message_parse_tag
 #I'm not so sure about the following:
@@ -1026,6 +1029,7 @@ nocode: gst_message_new_state_dirty
 nocode: gst_message_new_eos
 nocode: gst_message_new_error
 nocode: gst_message_new_info
+nocode: gst_message_new_latency
 
 #This is a way to get the type of the message:
 code: start
@@ -1244,6 +1248,20 @@ code: start
 	{
 		// GstMessage* gst_message_new_info (GstObject *src,  GError *error,  gchar *debug);
 		return new Message(cast(GstMessage*)gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+	}
+
+	/**
+	 * This message can be posted by elements when their latency requirements
+	 * have changed.
+	 * Params:
+	 *     src = The object originating the message.
+	 * Returns:
+	 * The new latency message. MT safe.
+	 */
+	public static Message newLatency(ObjectGst src)
+	{
+		// GstMessage* gst_message_new_latency (GstObject *src);
+		return new Message(cast(GstMessage*)gst_message_new_latency((src is null) ? null : src.getObjectGstStruct()) );
 	}
 code: end
 outFile: Message

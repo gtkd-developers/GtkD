@@ -131,7 +131,7 @@ public class PluginFeature : ObjectGst
 	 */
 	public int typeNameFilter(GstTypeNameData* data)
 	{
-		// gboolean gst_plugin_feature_type_name_filter  (GstPluginFeature *feature,  GstTypeNameData *data);
+		// gboolean gst_plugin_feature_type_name_filter (GstPluginFeature *feature,  GstTypeNameData *data);
 		return gst_plugin_feature_type_name_filter(gstPluginFeature, data);
 	}
 	
@@ -219,7 +219,7 @@ public class PluginFeature : ObjectGst
 	 */
 	public int checkVersion(uint minMajor, uint minMinor, uint minMicro)
 	{
-		// gboolean gst_plugin_feature_check_version  (GstPluginFeature *feature,  guint min_major,  guint min_minor,  guint min_micro);
+		// gboolean gst_plugin_feature_check_version (GstPluginFeature *feature,  guint min_major,  guint min_minor,  guint min_micro);
 		return gst_plugin_feature_check_version(gstPluginFeature, minMajor, minMinor, minMicro);
 	}
 }

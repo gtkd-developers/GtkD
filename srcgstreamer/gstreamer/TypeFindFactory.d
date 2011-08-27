@@ -137,7 +137,7 @@ public class TypeFindFactory : PluginFeature
 	
 	/**
 	 * Gets the list of all registered typefind factories. You must free the
-	 * list using g_list_free.
+	 * list using gst_plugin_feature_list_free.
 	 * Returns: the list of all registered GstTypeFindFactory.
 	 */
 	public static ListG getList()
@@ -187,7 +187,7 @@ public class TypeFindFactory : PluginFeature
 	 */
 	public void callFunction(TypeFind find)
 	{
-		// void gst_type_find_factory_call_function  (GstTypeFindFactory *factory,  GstTypeFind *find);
+		// void gst_type_find_factory_call_function (GstTypeFindFactory *factory,  GstTypeFind *find);
 		gst_type_find_factory_call_function(gstTypeFindFactory, (find is null) ? null : find.getTypeFindStruct());
 	}
 }

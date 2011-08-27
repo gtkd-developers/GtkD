@@ -385,7 +385,7 @@ public class Index : ObjectGst
 	 */
 	public GstIndexEntry* getAssocEntryFull(int id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, long value, GCompareDataFunc func, void* userData)
 	{
-		// GstIndexEntry* gst_index_get_assoc_entry_full  (GstIndex *index,  gint id,  GstIndexLookupMethod method,  GstAssocFlags flags,  GstFormat format,  gint64 value,  GCompareDataFunc func,  gpointer user_data);
+		// GstIndexEntry* gst_index_get_assoc_entry_full (GstIndex *index,  gint id,  GstIndexLookupMethod method,  GstAssocFlags flags,  GstFormat format,  gint64 value,  GCompareDataFunc func,  gpointer user_data);
 		return gst_index_get_assoc_entry_full(gstIndex, id, method, flags, format, value, func, userData);
 	}
 	

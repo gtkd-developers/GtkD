@@ -464,7 +464,7 @@ public class Pad : ObjectGst
 	 * This function can be used on both src and sinkpads. Note that srcpads are
 	 * always negotiated before sinkpads so it is possible that the negotiated caps
 	 * on the srcpad do not match the negotiated caps of the peer.
-	 * Returns: the negotiated GstCaps of the pad link. Free the caps when you no longer need it. This function returns NULL when the pad has no peer or is not negotiated yet. MT safe.
+	 * Returns: the negotiated GstCaps of the pad link. Unref the caps when you no longer need it. This function returns NULL when the pad has no peer or is not negotiated yet. MT safe.
 	 */
 	public Caps getNegotiatedCaps()
 	{
@@ -483,7 +483,7 @@ public class Pad : ObjectGst
 	 */
 	public Caps getPadTemplateCaps()
 	{
-		// const GstCaps* gst_pad_get_pad_template_caps  (GstPad *pad);
+		// const GstCaps* gst_pad_get_pad_template_caps (GstPad *pad);
 		auto p = gst_pad_get_pad_template_caps(gstPad);
 		if(p is null)
 		{
@@ -569,7 +569,7 @@ public class Pad : ObjectGst
 	 * callback.
 	 * Params:
 	 * blocked = boolean indicating we should block or unblock
-	 * Returns: TRUE if the pad could be blocked. This function can fail wrong parameters were passed or the pad was already in the requested state. MT safe.
+	 * Returns: TRUE if the pad could be blocked. This function can fail if the wrong parameters were passed or the pad was already in the requested state. MT safe.
 	 */
 	public int setBlocked(int blocked)
 	{
@@ -592,7 +592,7 @@ public class Pad : ObjectGst
 	 * callback = GstPadBlockCallback that will be called when the
 	 *  operation succeeds
 	 * userData = user data passed to the callback
-	 * Returns: TRUE if the pad could be blocked. This function can fail if wrong parameters were passed or the pad was already in the requested state. MT safe.
+	 * Returns: TRUE if the pad could be blocked. This function can fail if the wrong parameters were passed or the pad was already in the requested state. MT safe.
 	 */
 	public int setBlockedAsync(int blocked, GstPadBlockCallback callback, void* userData)
 	{
@@ -768,7 +768,7 @@ public class Pad : ObjectGst
 	 */
 	public this (GstStaticPadTemplate* templ, string name)
 	{
-		// GstPad* gst_pad_new_from_static_template  (GstStaticPadTemplate *templ,  const gchar *name);
+		// GstPad* gst_pad_new_from_static_template (GstStaticPadTemplate *templ,  const gchar *name);
 		auto p = gst_pad_new_from_static_template(templ, Str.toStringz(name));
 		if(p is null)
 		{
@@ -814,7 +814,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn allocBufferAndSetCaps(ulong offset, int size, Caps caps, out Buffer buf)
 	{
-		// GstFlowReturn gst_pad_alloc_buffer_and_set_caps  (GstPad *pad,  guint64 offset,  gint size,  GstCaps *caps,  GstBuffer **buf);
+		// GstFlowReturn gst_pad_alloc_buffer_and_set_caps (GstPad *pad,  guint64 offset,  gint size,  GstCaps *caps,  GstBuffer **buf);
 		GstBuffer* outbuf = null;
 		
 		auto p = gst_pad_alloc_buffer_and_set_caps(gstPad, offset, size, (caps is null) ? null : caps.getCapsStruct(), &outbuf);
@@ -831,7 +831,7 @@ public class Pad : ObjectGst
 	 */
 	public void setBufferallocFunction(GstPadBufferAllocFunction bufalloc)
 	{
-		// void gst_pad_set_bufferalloc_function  (GstPad *pad,  GstPadBufferAllocFunction bufalloc);
+		// void gst_pad_set_bufferalloc_function (GstPad *pad,  GstPadBufferAllocFunction bufalloc);
 		gst_pad_set_bufferalloc_function(gstPad, bufalloc);
 	}
 	
@@ -848,14 +848,14 @@ public class Pad : ObjectGst
 	}
 	
 	/**
-	 * Sets the given checkgetrange function for the pad. Implement this function on
-	 * a pad if you dynamically support getrange based scheduling on the pad.
+	 * Sets the given checkgetrange function for the pad. Implement this function
+	 * on a pad if you dynamically support getrange based scheduling on the pad.
 	 * Params:
 	 * check = the GstPadCheckGetRangeFunction to set.
 	 */
 	public void setCheckgetrangeFunction(GstPadCheckGetRangeFunction check)
 	{
-		// void gst_pad_set_checkgetrange_function  (GstPad *pad,  GstPadCheckGetRangeFunction check);
+		// void gst_pad_set_checkgetrange_function (GstPad *pad,  GstPadCheckGetRangeFunction check);
 		gst_pad_set_checkgetrange_function(gstPad, check);
 	}
 	
@@ -866,8 +866,10 @@ public class Pad : ObjectGst
 	 * description of a getrange function. If pad has no getrange function
 	 * installed (see gst_pad_set_getrange_function()) this function returns
 	 * GST_FLOW_NOT_SUPPORTED.
-	 * buffer's caps must either be unset or the same as what is already configured
-	 * on pad. Renegotiation within a running pull-mode pipeline is not supported.
+	 * buffer's caps must either be unset or the same as what is already
+	 * configured on pad. Renegotiation within a running pull-mode pipeline is not
+	 * supported.
+	 * This is a lowlevel function. Usualy gst_pad_pull_range() is used.
 	 * Params:
 	 * offset = The start offset of the buffer
 	 * size = The length of the buffer
@@ -886,8 +888,8 @@ public class Pad : ObjectGst
 	}
 	
 	/**
-	 * Sets the given getrange function for the pad. The getrange function is called to
-	 * produce a new GstBuffer to start the processing pipeline. see
+	 * Sets the given getrange function for the pad. The getrange function is
+	 * called to produce a new GstBuffer to start the processing pipeline. see
 	 * GstPadGetRangeFunction for a description of the getrange function.
 	 * Params:
 	 * get = the GstPadGetRangeFunction to set.
@@ -981,8 +983,8 @@ public class Pad : ObjectGst
 	 * the srcpad's getcaps function is directly related to the stream data. Again,
 	 * getcaps should return the most specific caps it reasonably can, since this
 	 * helps with autoplugging.
-	 * Note that the return value from getcaps is owned by the caller, so the caller
-	 * should unref the caps after usage.
+	 * Note that the return value from getcaps is owned by the caller, so the
+	 * caller should unref the caps after usage.
 	 * Params:
 	 * getcaps = the GstPadGetCapsFunction to set.
 	 */
@@ -1117,7 +1119,7 @@ public class Pad : ObjectGst
 	 */
 	public void setActivatepushFunction(GstPadActivateModeFunction activatepush)
 	{
-		// void gst_pad_set_activatepush_function  (GstPad *pad,  GstPadActivateModeFunction activatepush);
+		// void gst_pad_set_activatepush_function (GstPad *pad,  GstPadActivateModeFunction activatepush);
 		gst_pad_set_activatepush_function(gstPad, activatepush);
 	}
 	
@@ -1130,7 +1132,7 @@ public class Pad : ObjectGst
 	 */
 	public void setActivatepullFunction(GstPadActivateModeFunction activatepull)
 	{
-		// void gst_pad_set_activatepull_function  (GstPad *pad,  GstPadActivateModeFunction activatepull);
+		// void gst_pad_set_activatepull_function (GstPad *pad,  GstPadActivateModeFunction activatepull);
 		gst_pad_set_activatepull_function(gstPad, activatepull);
 	}
 	
@@ -1142,9 +1144,9 @@ public class Pad : ObjectGst
 	 * pad, this function will call any installed setcaps function on pad (see
 	 * gst_pad_set_setcaps_function()). In case of failure to renegotiate the new
 	 * format, this function returns GST_FLOW_NOT_NEGOTIATED.
-	 * The function proceeds calling gst_pad_chain() on the peer pad and returns the
-	 * value from that function. If pad has no peer, GST_FLOW_NOT_LINKED will be
-	 * returned.
+	 * The function proceeds calling gst_pad_chain() on the peer pad and returns
+	 * the value from that function. If pad has no peer, GST_FLOW_NOT_LINKED will
+	 * be returned.
 	 * In all cases, success or failure, the caller loses its reference to buffer
 	 * after calling this function.
 	 * Params:
@@ -1196,8 +1198,9 @@ public class Pad : ObjectGst
 	 * function returns the result of gst_pad_get_range() on the peer pad.
 	 * See gst_pad_get_range() for a list of return values and for the
 	 * semantics of the arguments of this function.
-	 * buffer's caps must either be unset or the same as what is already configured
-	 * on pad. Renegotiation within a running pull-mode pipeline is not supported.
+	 * buffer's caps must either be unset or the same as what is already
+	 * configured on pad. Renegotiation within a running pull-mode pipeline is not
+	 * supported.
 	 * Params:
 	 * offset = The start offset of the buffer
 	 * size = The length of the buffer
@@ -1218,9 +1221,9 @@ public class Pad : ObjectGst
 	/**
 	 * Activates or deactivates the given pad in pull mode via dispatching to the
 	 * pad's activatepullfunc. For use from within pad activation functions only.
-	 * When called on sink pads, will first proxy the call to the peer pad, which is
-	 * expected to activate its internally linked pads from within its activate_pull
-	 * function.
+	 * When called on sink pads, will first proxy the call to the peer pad, which
+	 * is expected to activate its internally linked pads from within its
+	 * activate_pull function.
 	 * If you don't know what this is, you probably don't want to call it.
 	 * Params:
 	 * active = whether or not the pad should be active.
@@ -1259,9 +1262,9 @@ public class Pad : ObjectGst
 	 * To find out whether an event type is upstream, downstream, or downstream and
 	 * serialized, see GstEventTypeFlags, gst_event_type_get_flags(),
 	 * GST_EVENT_IS_UPSTREAM, GST_EVENT_IS_DOWNSTREAM, and
-	 * GST_EVENT_IS_SERIALIZED. Note that in practice that an application or plugin
-	 * doesn't need to bother itself with this information; the core handles all
-	 * necessary locks and checks.
+	 * GST_EVENT_IS_SERIALIZED. Note that in practice that an application or
+	 * plugin doesn't need to bother itself with this information; the core handles
+	 * all necessary locks and checks.
 	 * This function takes owership of the provided event so you should
 	 * gst_event_ref() it if you want to reuse the event after this call.
 	 * Params:
@@ -1450,7 +1453,7 @@ public class Pad : ObjectGst
 	 */
 	public GstQueryType* getQueryTypesDefault()
 	{
-		// const GstQueryType* gst_pad_get_query_types_default  (GstPad *pad);
+		// const GstQueryType* gst_pad_get_query_types_default (GstPad *pad);
 		return gst_pad_get_query_types_default(gstPad);
 	}
 	
@@ -1461,7 +1464,7 @@ public class Pad : ObjectGst
 	 */
 	public void setInternalLinkFunction(GstPadIntLinkFunction intlink)
 	{
-		// void gst_pad_set_internal_link_function  (GstPad *pad,  GstPadIntLinkFunction intlink);
+		// void gst_pad_set_internal_link_function (GstPad *pad,  GstPadIntLinkFunction intlink);
 		gst_pad_set_internal_link_function(gstPad, intlink);
 	}
 	
@@ -1492,7 +1495,7 @@ public class Pad : ObjectGst
 	 */
 	public ListG getInternalLinksDefault()
 	{
-		// GList* gst_pad_get_internal_links_default  (GstPad *pad);
+		// GList* gst_pad_get_internal_links_default (GstPad *pad);
 		auto p = gst_pad_get_internal_links_default(gstPad);
 		if(p is null)
 		{
@@ -1546,8 +1549,8 @@ public class Pad : ObjectGst
 	 * The function returns GST_FLOW_WRONG_STATE if the pad was flushing.
 	 * If the caps on buffer are different from the current caps on pad, this
 	 * function will call any setcaps function (see gst_pad_set_setcaps_function())
-	 * installed on pad. If the new caps are not acceptable for pad, this function
-	 * returns GST_FLOW_NOT_NEGOTIATED.
+	 * installed on pad. If the new caps are not acceptable for pad, this
+	 * function returns GST_FLOW_NOT_NEGOTIATED.
 	 * The function proceeds calling the chain function installed on pad (see
 	 * gst_pad_set_chain_function()) and the return value of that function is
 	 * returned to the caller. GST_FLOW_NOT_SUPPORTED is returned if pad has no

@@ -2,6 +2,13 @@
 mkdir gtkdocs
 cd gtkdocs
 
+#gstreamer
+curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.14.tar.gz | tar xvfz -
+ln -s gstreamer-0.10.14/docs/gst/html gstreamer
+curl http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.14.tar.gz | tar xvfz -
+ln -s gst-plugins-base-0.10.14/docs/libs/html gstinterfaces
+exit
+
 #GLIB
 curl http://developer.gnome.org/glib/glib-html-2.26.1.tar.gz | tar xvfz -
 ln -s glib-html-2.26.1 gthread
@@ -51,8 +58,8 @@ curl http://library.gnome.org/devel/gtksourceview/gtksourceview-html-2.10.3.tar.
 ln -s gtksourceview-html-2.10.3 sourceview
 
 #gstreamer
-curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.12.tar.gz | tar xvfz -
-ln -s gstreamer-0.10.12/docs/gst/html gstreamer
-curl http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.12.tar.gz | tar xvfz -
-ln -s gst-plugins-base-0.10.12/docs/libs/html gstinterfaces
+curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.14.tar.gz | tar xvfz -
+ln -s gstreamer-0.10.14/docs/gst/html gstreamer
+curl http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.14.tar.gz | tar xvfz -
+ln -s gst-plugins-base-0.10.14/docs/libs/html gstinterfaces
 

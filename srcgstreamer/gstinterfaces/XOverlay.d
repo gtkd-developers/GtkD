@@ -195,7 +195,7 @@ public class XOverlay
 	 */
 	public void prepareXwindowId()
 	{
-		// void gst_x_overlay_prepare_xwindow_id  (GstXOverlay *overlay);
+		// void gst_x_overlay_prepare_xwindow_id (GstXOverlay *overlay);
 		gst_x_overlay_prepare_xwindow_id(gstXOverlay);
 	}
 	
@@ -207,5 +207,20 @@ public class XOverlay
 	{
 		// void gst_x_overlay_expose (GstXOverlay *overlay);
 		gst_x_overlay_expose(gstXOverlay);
+	}
+	
+	/**
+	 * Tell an overlay that it should handle events from the window system. These
+	 * events are forwared upstream as navigation events. In some window system,
+	 * events are not propagated in the window hierarchy if a client is listening
+	 * for them. This method allows you to disable events handling completely
+	 * from the XOverlay.
+	 * Params:
+	 * handleEvents = a gboolean indicating if events should be handled or not.
+	 */
+	public void handleEvents(int handleEvents)
+	{
+		// void gst_x_overlay_handle_events (GstXOverlay *overlay,  gboolean handle_events);
+		gst_x_overlay_handle_events(gstXOverlay, handleEvents);
 	}
 }

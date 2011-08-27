@@ -513,7 +513,7 @@ public class Event
 	 */
 	public void parseNewSegmentFull(ref int update, ref double rate, ref double appliedRate, ref GstFormat format, out long start, out long stop, out long position)
 	{
-		// void gst_event_parse_new_segment_full  (GstEvent *event,  gboolean *update,  gdouble *rate,  gdouble *applied_rate,  GstFormat *format,  gint64 *start,  gint64 *stop,  gint64 *position);
+		// void gst_event_parse_new_segment_full (GstEvent *event,  gboolean *update,  gdouble *rate,  gdouble *applied_rate,  GstFormat *format,  gint64 *start,  gint64 *stop,  gint64 *position);
 		gst_event_parse_new_segment_full(gstEvent, &update, &rate, &appliedRate, &format, &start, &stop, &position);
 	}
 	

@@ -78,6 +78,7 @@ static this()
 	Linker.link(gst_element_class_get_pad_template_list, "gst_element_class_get_pad_template_list", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_class_install_std_props, "gst_element_class_install_std_props", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_class_set_details, "gst_element_class_set_details", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_class_set_details_simple, "gst_element_class_set_details_simple", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_add_pad, "gst_element_add_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_get_pad, "gst_element_get_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_create_all_pads, "gst_element_create_all_pads", LIBRARY.GSTREAMER);
@@ -122,6 +123,7 @@ static this()
 	Linker.link(gst_element_state_get_name, "gst_element_state_get_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_state_change_return_get_name, "gst_element_state_change_return_get_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_sync_state_with_parent, "gst_element_sync_state_with_parent", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_change_state, "gst_element_change_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_found_tags, "gst_element_found_tags", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_found_tags_for_pad, "gst_element_found_tags_for_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_message_full, "gst_element_message_full", LIBRARY.GSTREAMER);
@@ -171,7 +173,9 @@ static this()
 
 	Linker.link(gst_buffer_new, "gst_buffer_new", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_new_and_alloc, "gst_buffer_new_and_alloc", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_try_new_and_alloc, "gst_buffer_try_new_and_alloc", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_ref, "gst_buffer_ref", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_copy_metadata, "gst_buffer_copy_metadata", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_is_metadata_writable, "gst_buffer_is_metadata_writable", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_make_metadata_writable, "gst_buffer_make_metadata_writable", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_caps, "gst_buffer_get_caps", LIBRARY.GSTREAMER);
@@ -258,6 +262,7 @@ static this()
 	Linker.link(gst_clock_new_periodic_id, "gst_clock_new_periodic_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_internal_time, "gst_clock_get_internal_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_adjust_unlocked, "gst_clock_adjust_unlocked", LIBRARY.GSTREAMER);
+	Linker.link(gst_clock_unadjust_unlocked, "gst_clock_unadjust_unlocked", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_calibration, "gst_clock_get_calibration", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_set_calibration, "gst_clock_set_calibration", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_id_get_time, "gst_clock_id_get_time", LIBRARY.GSTREAMER);
@@ -280,6 +285,7 @@ static this()
 	Linker.link(gst_element_factory_get_num_pad_templates, "gst_element_factory_get_num_pad_templates", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_factory_get_uri_type, "gst_element_factory_get_uri_type", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_factory_get_uri_protocols, "gst_element_factory_get_uri_protocols", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_factory_has_interface, "gst_element_factory_has_interface", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_factory_create, "gst_element_factory_create", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_factory_make, "gst_element_factory_make", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_factory_can_sink_caps, "gst_element_factory_can_sink_caps", LIBRARY.GSTREAMER);
@@ -496,6 +502,8 @@ static this()
 	Linker.link(gst_message_new_warning, "gst_message_new_warning", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_duration, "gst_message_new_duration", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_state_dirty, "gst_message_new_state_dirty", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_async_start, "gst_message_new_async_start", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_async_done, "gst_message_new_async_done", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_latency, "gst_message_new_latency", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_clock_lost, "gst_message_parse_clock_lost", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_clock_provide, "gst_message_parse_clock_provide", LIBRARY.GSTREAMER);
@@ -509,6 +517,7 @@ static this()
 	Linker.link(gst_message_parse_buffering, "gst_message_parse_buffering", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_warning, "gst_message_parse_warning", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_duration, "gst_message_parse_duration", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_parse_async_start, "gst_message_parse_async_start", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_ref, "gst_message_ref", LIBRARY.GSTREAMER);
 
 	// gstreamer.PadTemplate
@@ -835,6 +844,7 @@ mixin( gshared ~"extern(C)
 	GList* function(GstElementClass* elementClass) c_gst_element_class_get_pad_template_list;
 	void function(GstElementClass* klass, gchar* firstName, ... ) c_gst_element_class_install_std_props;
 	void function(GstElementClass* klass, GstElementDetails* details) c_gst_element_class_set_details;
+	void function(GstElementClass* klass, gchar* longname, gchar* classification, gchar* description, gchar* author) c_gst_element_class_set_details_simple;
 	gboolean function(GstElement* element, GstPad* pad) c_gst_element_add_pad;
 	GstPad* function(GstElement* element, gchar* name) c_gst_element_get_pad;
 	void function(GstElement* element) c_gst_element_create_all_pads;
@@ -879,6 +889,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(GstState state) c_gst_element_state_get_name;
 	gchar* function(GstStateChangeReturn stateRet) c_gst_element_state_change_return_get_name;
 	gboolean function(GstElement* element) c_gst_element_sync_state_with_parent;
+	GstStateChangeReturn function(GstElement* element, GstStateChange transition) c_gst_element_change_state;
 	void function(GstElement* element, GstTagList* list) c_gst_element_found_tags;
 	void function(GstElement* element, GstPad* pad, GstTagList* list) c_gst_element_found_tags_for_pad;
 	void function(GstElement* element, GstMessageType type, GQuark domain, gint code, gchar* text, gchar* dbug, gchar* file, gchar* funct, gint line) c_gst_element_message_full;
@@ -928,7 +939,9 @@ mixin( gshared ~"extern(C)
 	
 	GstBuffer* function() c_gst_buffer_new;
 	GstBuffer* function(guint size) c_gst_buffer_new_and_alloc;
+	GstBuffer* function(guint size) c_gst_buffer_try_new_and_alloc;
 	GstBuffer* function(GstBuffer* buf) c_gst_buffer_ref;
+	void function(GstBuffer* dest, GstBuffer* src, GstBufferCopyFlags flags) c_gst_buffer_copy_metadata;
 	gboolean function(GstBuffer* buf) c_gst_buffer_is_metadata_writable;
 	GstBuffer* function(GstBuffer* buf) c_gst_buffer_make_metadata_writable;
 	GstCaps* function(GstBuffer* buffer) c_gst_buffer_get_caps;
@@ -1015,6 +1028,7 @@ mixin( gshared ~"extern(C)
 	GstClockID function(GstClock* clock, GstClockTime startTime, GstClockTime interval) c_gst_clock_new_periodic_id;
 	GstClockTime function(GstClock* clock) c_gst_clock_get_internal_time;
 	GstClockTime function(GstClock* clock, GstClockTime internal) c_gst_clock_adjust_unlocked;
+	GstClockTime function(GstClock* clock, GstClockTime external) c_gst_clock_unadjust_unlocked;
 	void function(GstClock* clock, GstClockTime* internal, GstClockTime* external, GstClockTime* rateNum, GstClockTime* rateDenom) c_gst_clock_get_calibration;
 	void function(GstClock* clock, GstClockTime internal, GstClockTime external, GstClockTime rateNum, GstClockTime rateDenom) c_gst_clock_set_calibration;
 	GstClockTime function(GstClockID id) c_gst_clock_id_get_time;
@@ -1037,6 +1051,7 @@ mixin( gshared ~"extern(C)
 	guint function(GstElementFactory* factory) c_gst_element_factory_get_num_pad_templates;
 	gint function(GstElementFactory* factory) c_gst_element_factory_get_uri_type;
 	gchar** function(GstElementFactory* factory) c_gst_element_factory_get_uri_protocols;
+	gboolean function(GstElementFactory* factory, gchar* interfacename) c_gst_element_factory_has_interface;
 	GstElement* function(GstElementFactory* factory, gchar* name) c_gst_element_factory_create;
 	GstElement* function(gchar* factoryname, gchar* name) c_gst_element_factory_make;
 	gboolean function(GstElementFactory* factory, GstCaps* caps) c_gst_element_factory_can_sink_caps;
@@ -1253,6 +1268,8 @@ mixin( gshared ~"extern(C)
 	GstMessage* function(GstObject* src, GError* error, gchar* dbug) c_gst_message_new_warning;
 	GstMessage* function(GstObject* src, GstFormat format, gint64 duration) c_gst_message_new_duration;
 	GstMessage* function(GstObject* src) c_gst_message_new_state_dirty;
+	GstMessage* function(GstObject* src, gboolean newBaseTime) c_gst_message_new_async_start;
+	GstMessage* function(GstObject* src) c_gst_message_new_async_done;
 	GstMessage* function(GstObject* src) c_gst_message_new_latency;
 	void function(GstMessage* message, GstClock** clock) c_gst_message_parse_clock_lost;
 	void function(GstMessage* message, GstClock** clock, gboolean* ready) c_gst_message_parse_clock_provide;
@@ -1266,6 +1283,7 @@ mixin( gshared ~"extern(C)
 	void function(GstMessage* message, gint* percent) c_gst_message_parse_buffering;
 	void function(GstMessage* message, GError** gerror, gchar** dbug) c_gst_message_parse_warning;
 	void function(GstMessage* message, GstFormat* format, gint64* duration) c_gst_message_parse_duration;
+	void function(GstMessage* message, gboolean* newBaseTime) c_gst_message_parse_async_start;
 	GstMessage* function(GstMessage* msg) c_gst_message_ref;
 	
 	// gstreamer.PadTemplate
@@ -1589,6 +1607,7 @@ alias c_gst_element_class_get_pad_template  gst_element_class_get_pad_template;
 alias c_gst_element_class_get_pad_template_list  gst_element_class_get_pad_template_list;
 alias c_gst_element_class_install_std_props  gst_element_class_install_std_props;
 alias c_gst_element_class_set_details  gst_element_class_set_details;
+alias c_gst_element_class_set_details_simple  gst_element_class_set_details_simple;
 alias c_gst_element_add_pad  gst_element_add_pad;
 alias c_gst_element_get_pad  gst_element_get_pad;
 alias c_gst_element_create_all_pads  gst_element_create_all_pads;
@@ -1633,6 +1652,7 @@ alias c_gst_element_lost_state  gst_element_lost_state;
 alias c_gst_element_state_get_name  gst_element_state_get_name;
 alias c_gst_element_state_change_return_get_name  gst_element_state_change_return_get_name;
 alias c_gst_element_sync_state_with_parent  gst_element_sync_state_with_parent;
+alias c_gst_element_change_state  gst_element_change_state;
 alias c_gst_element_found_tags  gst_element_found_tags;
 alias c_gst_element_found_tags_for_pad  gst_element_found_tags_for_pad;
 alias c_gst_element_message_full  gst_element_message_full;
@@ -1682,7 +1702,9 @@ alias c_gst_bin_find_unconnected_pad  gst_bin_find_unconnected_pad;
 
 alias c_gst_buffer_new  gst_buffer_new;
 alias c_gst_buffer_new_and_alloc  gst_buffer_new_and_alloc;
+alias c_gst_buffer_try_new_and_alloc  gst_buffer_try_new_and_alloc;
 alias c_gst_buffer_ref  gst_buffer_ref;
+alias c_gst_buffer_copy_metadata  gst_buffer_copy_metadata;
 alias c_gst_buffer_is_metadata_writable  gst_buffer_is_metadata_writable;
 alias c_gst_buffer_make_metadata_writable  gst_buffer_make_metadata_writable;
 alias c_gst_buffer_get_caps  gst_buffer_get_caps;
@@ -1769,6 +1791,7 @@ alias c_gst_clock_new_single_shot_id  gst_clock_new_single_shot_id;
 alias c_gst_clock_new_periodic_id  gst_clock_new_periodic_id;
 alias c_gst_clock_get_internal_time  gst_clock_get_internal_time;
 alias c_gst_clock_adjust_unlocked  gst_clock_adjust_unlocked;
+alias c_gst_clock_unadjust_unlocked  gst_clock_unadjust_unlocked;
 alias c_gst_clock_get_calibration  gst_clock_get_calibration;
 alias c_gst_clock_set_calibration  gst_clock_set_calibration;
 alias c_gst_clock_id_get_time  gst_clock_id_get_time;
@@ -1791,6 +1814,7 @@ alias c_gst_element_factory_get_author  gst_element_factory_get_author;
 alias c_gst_element_factory_get_num_pad_templates  gst_element_factory_get_num_pad_templates;
 alias c_gst_element_factory_get_uri_type  gst_element_factory_get_uri_type;
 alias c_gst_element_factory_get_uri_protocols  gst_element_factory_get_uri_protocols;
+alias c_gst_element_factory_has_interface  gst_element_factory_has_interface;
 alias c_gst_element_factory_create  gst_element_factory_create;
 alias c_gst_element_factory_make  gst_element_factory_make;
 alias c_gst_element_factory_can_sink_caps  gst_element_factory_can_sink_caps;
@@ -2007,6 +2031,8 @@ alias c_gst_message_new_buffering  gst_message_new_buffering;
 alias c_gst_message_new_warning  gst_message_new_warning;
 alias c_gst_message_new_duration  gst_message_new_duration;
 alias c_gst_message_new_state_dirty  gst_message_new_state_dirty;
+alias c_gst_message_new_async_start  gst_message_new_async_start;
+alias c_gst_message_new_async_done  gst_message_new_async_done;
 alias c_gst_message_new_latency  gst_message_new_latency;
 alias c_gst_message_parse_clock_lost  gst_message_parse_clock_lost;
 alias c_gst_message_parse_clock_provide  gst_message_parse_clock_provide;
@@ -2020,6 +2046,7 @@ alias c_gst_message_parse_tag  gst_message_parse_tag;
 alias c_gst_message_parse_buffering  gst_message_parse_buffering;
 alias c_gst_message_parse_warning  gst_message_parse_warning;
 alias c_gst_message_parse_duration  gst_message_parse_duration;
+alias c_gst_message_parse_async_start  gst_message_parse_async_start;
 alias c_gst_message_ref  gst_message_ref;
 
 // gstreamer.PadTemplate

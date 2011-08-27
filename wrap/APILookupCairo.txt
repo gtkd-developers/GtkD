@@ -422,7 +422,7 @@ out: cairo_surface_get_fallback_resolution y_pixels_per_inch
 out: cairo_surface_get_mime_data data
 array: cairo_surface_set_mime_data data length
 
-nocode: array: cairo_surface_get_mime_data
+nocode: cairo_surface_get_mime_data
 
 code: start
 	this(Window window, cairo_content_t content, int width,int height)

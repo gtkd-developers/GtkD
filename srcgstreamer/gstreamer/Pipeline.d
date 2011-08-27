@@ -276,7 +276,7 @@ public class Pipeline : Bin
 	 */
 	public void setNewStreamTime(GstClockTime time)
 	{
-		// void gst_pipeline_set_new_stream_time  (GstPipeline *pipeline,  GstClockTime time);
+		// void gst_pipeline_set_new_stream_time (GstPipeline *pipeline,  GstClockTime time);
 		gst_pipeline_set_new_stream_time(gstPipeline, time);
 	}
 	
@@ -292,7 +292,7 @@ public class Pipeline : Bin
 	 */
 	public GstClockTime getLastStreamTime()
 	{
-		// GstClockTime gst_pipeline_get_last_stream_time  (GstPipeline *pipeline);
+		// GstClockTime gst_pipeline_get_last_stream_time (GstPipeline *pipeline);
 		return gst_pipeline_get_last_stream_time(gstPipeline);
 	}
 	

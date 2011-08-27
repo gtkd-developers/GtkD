@@ -88,9 +88,9 @@ private import glib.Str;
  * The public last_stop field contains the last set stop position in the segment.
  * For elements that perform seeks, the current segment should be updated with the
  * gst_segment_set_seek() and the values from the seek event. This method will update
- * all the segment fields. The last_pos field will contain the new playback position.
+ * all the segment fields. The last_stop field will contain the new playback position.
  * If the cur_type was different from GST_SEEK_TYPE_NONE, playback continues from
- * the last_pos position, possibly with updated flags or rate.
+ * the last_stop position, possibly with updated flags or rate.
  * For elements that want to use GstSegment to track the playback region, use
  * gst_segment_set_newsegment() to update the segment fields with the information from
  * the newsegment event. The gst_segment_clip() method can be used to check and clip
@@ -102,7 +102,7 @@ private import glib.Str;
  * For elements that need to perform operations on media data in stream_time,
  * gst_segment_to_stream_time() can be used to convert a timestamp and the segment
  * info to stream time (which is always between 0 and the duration of the stream).
- * Last reviewed on 2006-05-03 (0.10.6)
+ * Last reviewed on 2007-05-17 (0.10.13)
  */
 public class Segment
 {
@@ -148,6 +148,8 @@ public class Segment
 	 * When the function returns TRUE, clip_start and clip_stop will be
 	 * updated. If clip_start or clip_stop are different from start or stop
 	 * respectively, the region fell partially in the segment.
+	 * Note that when stop is -1, clip_stop will be set to the end of the
+	 * segment. Depending on the use case, this may or may not be what you want.
 	 * Params:
 	 * format = the format of the segment.
 	 * start = the start position in the segment

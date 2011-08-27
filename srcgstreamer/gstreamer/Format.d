@@ -140,7 +140,7 @@ public static int formatsContains(GstFormat[] formats, GstFormat format)
  */
 public static GstFormatDefinition* getDetails(GstFormat format)
 {
-	// const GstFormatDefinition* gst_format_get_details  (GstFormat format);
+	// const GstFormatDefinition* gst_format_get_details (GstFormat format);
 	return gst_format_get_details(format);
 }
 

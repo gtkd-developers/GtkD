@@ -315,18 +315,35 @@ public class Clock : ObjectGst
 	}
 	
 	/**
-	 * Converts the given internal clock time to the real time, adjusting for the
+	 * Converts the given internal clock time to the external time, adjusting for the
 	 * rate and reference time set with gst_clock_set_calibration() and making sure
 	 * that the returned time is increasing. This function should be called with the
 	 * clock's OBJECT_LOCK held and is mainly used by clock subclasses.
+	 * This function is te reverse of gst_clock_unadjust_unlocked().
 	 * Params:
 	 * internal = a clock time
-	 * Returns: the converted time of the clock. MT safe.
+	 * Returns: the converted time of the clock.
 	 */
 	public GstClockTime adjustUnlocked(GstClockTime internal)
 	{
 		// GstClockTime gst_clock_adjust_unlocked (GstClock *clock,  GstClockTime internal);
 		return gst_clock_adjust_unlocked(gstClock, internal);
+	}
+	
+	/**
+	 * Converts the given external clock time to the internal time of clock,
+	 * using the rate and reference time set with gst_clock_set_calibration().
+	 * This function should be called with the clock's OBJECT_LOCK held and
+	 * is mainly used by clock subclasses.
+	 * This function is te reverse of gst_clock_adjust_unlocked().
+	 * Params:
+	 * external = an external clock time
+	 * Returns: the internal time of the clock corresponding to external. Since 0.10.13
+	 */
+	public GstClockTime unadjustUnlocked(GstClockTime external)
+	{
+		// GstClockTime gst_clock_unadjust_unlocked (GstClock *clock,  GstClockTime external);
+		return gst_clock_unadjust_unlocked(gstClock, external);
 	}
 	
 	/**

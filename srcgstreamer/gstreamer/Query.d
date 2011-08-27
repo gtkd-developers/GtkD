@@ -268,7 +268,7 @@ public class Query
 	 */
 	public static Iterator typeIterateDefinitions()
 	{
-		// GstIterator* gst_query_type_iterate_definitions  (void);
+		// GstIterator* gst_query_type_iterate_definitions (void);
 		auto p = gst_query_type_iterate_definitions();
 		if(p is null)
 		{

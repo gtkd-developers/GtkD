@@ -358,7 +358,7 @@ public class Structure
 	 */
 	public void removeFieldsValist(string fieldname, void* varargs)
 	{
-		// void gst_structure_remove_fields_valist  (GstStructure *structure,  const gchar *fieldname,  va_list varargs);
+		// void gst_structure_remove_fields_valist (GstStructure *structure,  const gchar *fieldname,  va_list varargs);
 		gst_structure_remove_fields_valist(gstStructure, Str.toStringz(fieldname), varargs);
 	}
 	
@@ -620,7 +620,7 @@ public class Structure
 	 */
 	public void setParentRefcount(int* refcount)
 	{
-		// void gst_structure_set_parent_refcount  (GstStructure *structure,  gint *refcount);
+		// void gst_structure_set_parent_refcount (GstStructure *structure,  gint *refcount);
 		gst_structure_set_parent_refcount(gstStructure, refcount);
 	}
 	
@@ -712,7 +712,7 @@ public class Structure
 	 */
 	public int fixateFieldBoolean(string fieldName, int target)
 	{
-		// gboolean gst_structure_fixate_field_boolean  (GstStructure *structure,  const char *field_name,  gboolean target);
+		// gboolean gst_structure_fixate_field_boolean (GstStructure *structure,  const char *field_name,  gboolean target);
 		return gst_structure_fixate_field_boolean(gstStructure, Str.toStringz(fieldName), target);
 	}
 }

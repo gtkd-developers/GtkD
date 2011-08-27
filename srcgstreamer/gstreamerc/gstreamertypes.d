@@ -236,9 +236,9 @@ alias GstStateChange StateChange;
  * GST_STATE_CHANGE_ASYNC
  *  the state change will happen asynchronously
  * GST_STATE_CHANGE_NO_PREROLL
- *  the state change succeeded but the element cannot
- *  produce data in PAUSED. This typically happens
- *  with live sources.
+ *  the state change succeeded but the element
+ *  cannot produce data in PAUSED. This typically
+ *  happens with live sources.
  */
 public enum GstStateChangeReturn
 {
@@ -298,6 +298,26 @@ public enum GstBufferFlag
 	FLAG_LAST = (GstMiniObjectFlags.LAST << 8)
 }
 alias GstBufferFlag BufferFlag;
+
+/**
+ * A set of flags that can be provided to the gst_buffer_copy_metadata()
+ * function to specify which metadata fields should be copied.
+ * GST_BUFFER_COPY_FLAGS
+ *  flag indicating that buffer flags should be copied
+ * GST_BUFFER_COPY_TIMESTAMPS
+ *  flag indicating that buffer timestamp, duration,
+ * offset and offset_end should be copied
+ * GST_BUFFER_COPY_CAPS
+ *  flag indicating that buffer caps should be copied
+ * Since 0.10.13
+ */
+public enum GstBufferCopyFlags
+{
+	FLAGS = (1 << 0),
+	TIMESTAMPS = (1 << 1),
+	CAPS = (1 << 2),
+}
+alias GstBufferCopyFlags BufferCopyFlags;
 
 /**
  * The standard flags that a bus may have.
@@ -535,6 +555,9 @@ alias GstFormat Format;
  *  used if a plugin is missing.
  * GST_CORE_ERROR_CLOCK
  *  used for clock related errors.
+ * GST_CORE_ERROR_DISABLED
+ *  used if functionality has been disabled at
+ *  compile time (Since: 0.10.13).
  * GST_CORE_ERROR_NUM_ERRORS
  *  the number of core error types.
  */
@@ -553,6 +576,7 @@ public enum GstCoreError
 	TAG,
 	MISSING_PLUGIN,
 	CLOCK,
+	DISABLED,
 	NUM_ERRORS
 }
 alias GstCoreError CoreError;
@@ -930,7 +954,8 @@ alias GstPadLinkReturn PadLinkReturn;
  *  this to define custom success codes.
  *  Since 0.10.7.
  * GST_FLOW_RESEND
- * 		 Resend buffer, possibly with new caps.
+ * 		 Resend buffer, possibly with new caps (not
+ *  send yet).
  * GST_FLOW_OK
  * 		 Data passing was ok.
  * GST_FLOW_NOT_LINKED
@@ -995,9 +1020,14 @@ alias GstActivateMode ActivateMode;
  * GST_MESSAGE_UNKNOWN
  *  an undefined message
  * GST_MESSAGE_EOS
- *  end-of-stream reached in a pipeline
+ *  end-of-stream reached in a pipeline. The application will
+ * only receive this message in the PLAYING state and every time it sets a
+ * pipeline to PLAYING that is in the EOS state. The application can perform a
+ * seek in the pipeline to a new position.
  * GST_MESSAGE_ERROR
- *  an error occured
+ *  an error occured. Whe the application receives an error
+ * message it should stop playback of the pipeline and not assume that more
+ * data will be played.
  * GST_MESSAGE_WARNING
  *  a warning occured.
  * GST_MESSAGE_INFO
@@ -1005,13 +1035,20 @@ alias GstActivateMode ActivateMode;
  * GST_MESSAGE_TAG
  *  a tag was found.
  * GST_MESSAGE_BUFFERING
- *  the pipeline is buffering
+ *  the pipeline is buffering. When the application
+ * receives a buffering message in the PLAYING state for a non-live pipeline it
+ * must PAUSE the pipeline until the buffering completes, when the percentage
+ * field in the message is 100%. For live pipelines, no action must be
+ * performed and the buffering percentage can be used to infor the user about
+ * the progress.
  * GST_MESSAGE_STATE_CHANGED
  *  a state change happened
  * GST_MESSAGE_STATE_DIRTY
- *  an element changed state in a streaming thread
+ *  an element changed state in a streaming thread.
+ * This message is deprecated.
  * GST_MESSAGE_STEP_DONE
- *  a framestep finished.
+ *  a framestep finished. This message is not yet
+ * implemented.
  * GST_MESSAGE_CLOCK_PROVIDE
  *  an element notifies its capability of providing
  *  a clock.
@@ -1020,7 +1057,7 @@ alias GstActivateMode ActivateMode;
  *  unusable. The pipeline will select a new clock on
  *  the next PLAYING state change.
  * GST_MESSAGE_NEW_CLOCK
- *  a new clock was selected in the pipeline
+ *  a new clock was selected in the pipeline.
  * GST_MESSAGE_STRUCTURE_CHANGE
  *  the structure of the pipeline changed.
  * GST_MESSAGE_STREAM_STATUS
@@ -1041,6 +1078,12 @@ alias GstActivateMode ActivateMode;
  * GST_MESSAGE_LATENCY
  *  Posted by elements when their latency changes. The
  * pipeline will calculate and distribute a new latency. Since: 0.10.12
+ * GST_MESSAGE_ASYNC_START
+ *  Posted by elements when they start an ASYNC state
+ * change. Since: 0.10.13
+ * GST_MESSAGE_ASYNC_DONE
+ *  Posted by elements when they complete an ASYNC state
+ * change. Since: 0.10.13
  * GST_MESSAGE_ANY
  *  mask for all of the above messages.
  */
@@ -1067,6 +1110,8 @@ public enum GstMessageType
 	SEGMENT_DONE = (1 << 17),
 	DURATION = (1 << 18),
 	LATENCY = (1 << 19),
+	ASYNC_START = (1 << 20),
+	ASYNC_DONE = (1 << 21),
 	ANY = ~0
 }
 alias GstMessageType MessageType;
@@ -1367,6 +1412,8 @@ public enum GstTypeFindProbability
 }
 alias GstTypeFindProbability TypeFindProbability;
 
+struct GstBinPrivate{}
+
 align(1) public struct GstBuffer
 {
 	GstMiniObject mini_object;
@@ -1552,6 +1599,7 @@ public struct GstBin
 	int clockDirty;
 	GstClock *providedClock;
 	GstElement *clockProvider;
+	GstBinPrivate *priv;
 }
 
 
@@ -2272,6 +2320,15 @@ public struct GstTypeFindFactory{}
 // #define GST_STATE_RETURN(elem)		(GST_ELEMENT_CAST(elem)->last_return)
 
 /*
+ * This macro returns the target GstState of the element.
+ * elem:
+ *  a GstElement to return the target state for.
+ * Since 0.10.13
+ */
+// TODO
+// #define GST_STATE_TARGET(elem)		(GST_ELEMENT_CAST(elem)->abidata.ABI.target_state)
+
+/*
  * Given a current state cur and a next state next, calculate the associated
  * GstStateChange transition.
  * cur:
@@ -2484,11 +2541,19 @@ public struct GstTypeFindFactory{}
  * Gets the number of children in a bin.
  * bin:
  *  a GstBin
+ * Property Details
+ * The "async-handling" property
+ *  "async-handling" gboolean : Read / Write
+ * If set to TRUE, the bin will handle asynchronous state changes.
+ * This should be used only if the bin subclass is modifying the state
+ * of its childs on its own.
+ * Default value: FALSE
+ * Since 0.10.13
  * Signal Details
  * The "element-added" signal
  * void user_function (GstBin *bin,
  *  GstElement *element,
- *  gpointer user_data) : Run first
+ *  gpointer user_data) : Run First
  * Will be emitted after the element was added to the bin.
  * bin:
  *  the GstBin
@@ -3246,8 +3311,10 @@ public struct GstTypeFindFactory{}
 
 /*
  * Macro to test if the given GstFlowReturn value indicates a fatal
- * error. This macro is mainly used in elements to decide when an error
- * message should be posted on the bus.
+ * error. This macro is mainly used in elements driving the pipeline to decide
+ * whether an error message should be posted on the bus. Note that such
+ * elements may also need to post an error message in the GST_FLOW_NOT_LINKED
+ * case which is not caught by this macro.
  * ret:
  *  a GstFlowReturn value
  */
@@ -3565,7 +3632,7 @@ public struct GstTypeFindFactory{}
  * The "feature-added" signal
  * void user_function (GstRegistry *registry,
  *  gpointer feature,
- *  gpointer user_data) : Run last
+ *  gpointer user_data) : Run Last
  * Signals that a feature has been added to the registry (possibly
  * replacing a previously-added one by the same name)
  * registry:
@@ -3645,7 +3712,7 @@ public typedef extern(C) GstMiniObject*  function (GstMiniObject*) GstMiniObject
  * obj:
  *  MiniObject to finalize
  */
-// void (*GstMiniObjectFinalizeFunction)  (GstMiniObject *obj);
+// void (*GstMiniObjectFinalizeFunction) (GstMiniObject *obj);
 public typedef extern(C) void  function (GstMiniObject*) GstMiniObjectFinalizeFunction;
 
 /*
@@ -3755,7 +3822,7 @@ public typedef extern(C) void  function (void*) GstIteratorDisposeFunction;
  * Returns:
  *  the result of the operation.
  */
-// GstIteratorResult (*GstIteratorNextFunction)  (GstIterator *it,  gpointer *result);
+// GstIteratorResult (*GstIteratorNextFunction) (GstIterator *it,  gpointer *result);
 public typedef extern(C) GstIteratorResult  function (GstIterator*, gpointer*) GstIteratorNextFunction;
 
 /*
@@ -4057,7 +4124,7 @@ public typedef extern(C) int  function (GstPad*, GstQuery*) GstPadQueryFunction;
  * Returns:
  *  a constant array of query types
  */
-// const GstQueryType* (*GstPadQueryTypeFunction)  (GstPad *pad);
+// const GstQueryType* (*GstPadQueryTypeFunction) (GstPad *pad);
 public typedef extern(C) GstQueryType*  function (GstPad*) GstPadQueryTypeFunction;
 
 /*

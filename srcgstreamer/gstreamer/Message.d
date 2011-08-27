@@ -53,6 +53,7 @@
  * 	- gst_message_new_eos
  * 	- gst_message_new_error
  * 	- gst_message_new_info
+ * 	- gst_message_new_latency
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -358,6 +359,20 @@ public class Message
 	}
 	
 	/**
+	 * This message can be posted by elements when their latency requirements
+	 * have changed.
+	 * Params:
+	 *     src = The object originating the message.
+	 * Returns:
+	 * The new latency message. MT safe.
+	 */
+	public static Message newLatency(ObjectGst src)
+	{
+		// GstMessage* gst_message_new_latency (GstObject *src);
+		return new Message(cast(GstMessage*)gst_message_new_latency((src is null) ? null : src.getObjectGstStruct()) );
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -378,7 +393,7 @@ public class Message
 	 */
 	public Structure getStructure()
 	{
-		// const GstStructure* gst_message_get_structure  (GstMessage *message);
+		// const GstStructure* gst_message_get_structure (GstMessage *message);
 		auto p = gst_message_get_structure(gstMessage);
 		if(p is null)
 		{
@@ -566,19 +581,38 @@ public class Message
 	}
 	
 	/**
-	 * This message can be posted by elements when their latency requirements have
-	 * changed.
+	 * This message is posted by elements when they start an ASYNC state change.
+	 * new_base_time is set to TRUE when the element lost its state when it was
+	 * PLAYING.
+	 * Params:
+	 * src = The object originating the message.
+	 * newBaseTime = if a new base_time should be set on the element
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ObjectGst src, int newBaseTime)
+	{
+		// GstMessage* gst_message_new_async_start (GstObject *src,  gboolean new_base_time);
+		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime)");
+		}
+		this(cast(GstMessage*) p);
+	}
+	
+	/**
+	 * The message is posted when elements completed an ASYNC state change.
 	 * Params:
 	 * src = The object originating the message.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectGst src)
 	{
-		// GstMessage* gst_message_new_latency (GstObject *src);
-		auto p = gst_message_new_latency((src is null) ? null : src.getObjectGstStruct());
+		// GstMessage* gst_message_new_async_done (GstObject *src);
+		auto p = gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_message_new_latency((src is null) ? null : src.getObjectGstStruct())");
+			throw new ConstructionException("null returned by gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct())");
 		}
 		this(cast(GstMessage*) p);
 	}
@@ -764,6 +798,19 @@ public class Message
 	{
 		// void gst_message_parse_duration (GstMessage *message,  GstFormat *format,  gint64 *duration);
 		gst_message_parse_duration(gstMessage, &format, &duration);
+	}
+	
+	/**
+	 * Extract the new_base_time from the async_start message.
+	 * MT safe.
+	 * Params:
+	 * newBaseTime = Result location for the new_base_time or NULL
+	 * Since 0.10.13
+	 */
+	public void parseAsyncStart(out int newBaseTime)
+	{
+		// void gst_message_parse_async_start (GstMessage *message,  gboolean *new_base_time);
+		gst_message_parse_async_start(gstMessage, &newBaseTime);
 	}
 	
 	/**

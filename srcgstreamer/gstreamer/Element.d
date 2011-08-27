@@ -329,7 +329,7 @@ public class Element : ObjectGst
 		}
 		onPadAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
+	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GstPad* newPad, Element element)
 	{
 		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
 		{
@@ -358,7 +358,7 @@ public class Element : ObjectGst
 		}
 		onPadRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackPadRemoved(GstElement* gstelementStruct, GObject* oldPad, Element element)
+	extern(C) static void callBackPadRemoved(GstElement* gstelementStruct, GstPad* oldPad, Element element)
 	{
 		foreach ( void delegate(Pad, Element) dlg ; element.onPadRemovedListeners )
 		{
@@ -376,7 +376,7 @@ public class Element : ObjectGst
 	 */
 	public static void classAddPadTemplate(GstElementClass* klass, PadTemplate templ)
 	{
-		// void gst_element_class_add_pad_template  (GstElementClass *klass,  GstPadTemplate *templ);
+		// void gst_element_class_add_pad_template (GstElementClass *klass,  GstPadTemplate *templ);
 		gst_element_class_add_pad_template(klass, (templ is null) ? null : templ.getPadTemplateStruct());
 	}
 	
@@ -393,7 +393,7 @@ public class Element : ObjectGst
 	 */
 	public static PadTemplate classGetPadTemplate(GstElementClass* elementClass, string name)
 	{
-		// GstPadTemplate* gst_element_class_get_pad_template  (GstElementClass *element_class,  const gchar *name);
+		// GstPadTemplate* gst_element_class_get_pad_template (GstElementClass *element_class,  const gchar *name);
 		auto p = gst_element_class_get_pad_template(elementClass, Str.toStringz(name));
 		if(p is null)
 		{
@@ -432,6 +432,31 @@ public class Element : ObjectGst
 	{
 		// void gst_element_class_set_details (GstElementClass *klass,  const GstElementDetails *details);
 		gst_element_class_set_details(klass, details);
+	}
+	
+	/**
+	 * Sets the detailed information for a GstElementClass. Simpler version of
+	 * gst_element_class_set_details() that generates less linker overhead.
+	 * Note
+	 * This function is for use in _base_init functions only.
+	 * The detail parameter strings are copied into the GstElementDetails for
+	 * the element class.
+	 * Params:
+	 * klass = class to set details for
+	 * longname = The long English name of the element. E.g. "File Sink"
+	 * classification = String describing the type of element, as an unordered list
+	 * separated with slashes ('/'). See draft-klass.txt of the design docs
+	 * for more details and common types. E.g: "Sink/File"
+	 * description = Sentence describing the purpose of the element.
+	 * E.g: "Write stream to a file"
+	 * author = Name and contact details of the author(s). Use \n to separate
+	 * multiple author details. E.g: "Joe Bloggs <joe.blogs at foo.com>"
+	 * Since 0.10.14
+	 */
+	public static void classSetDetailsSimple(GstElementClass* klass, string longname, string classification, string description, string author)
+	{
+		// void gst_element_class_set_details_simple  (GstElementClass *klass,  const gchar *longname,  const gchar *classification,  const gchar *description,  const gchar *author);
+		gst_element_class_set_details_simple(klass, Str.toStringz(longname), Str.toStringz(classification), Str.toStringz(description), Str.toStringz(author));
 	}
 	
 	/**
@@ -661,6 +686,7 @@ public class Element : ObjectGst
 	 * Links src to dest. The link must be from source to
 	 * destination; the other direction will not be tried. The function looks for
 	 * existing pads that aren't linked yet. It will request new pads if necessary.
+	 * Such pads need to be released manualy when unlinking.
 	 * If multiple links are possible, only one is established.
 	 * Make sure you have added your elements to a bin or pipeline with
 	 * gst_bin_add() before trying to link them.
@@ -677,6 +703,8 @@ public class Element : ObjectGst
 	/**
 	 * Unlinks all source pads of the source element with all sink pads
 	 * of the sink element to which they are linked.
+	 * If the link has been made using gst_element_link(), it could have created an
+	 * requestpad, which has to be released using gst_element_release_request_pad().
 	 * Params:
 	 * dest = the sink GstElement to unlink.
 	 */
@@ -796,7 +824,8 @@ public class Element : ObjectGst
 	}
 	
 	/**
-	 * Returns the bus of the element.
+	 * Returns the bus of the element. Note that only a GstPipeline will provide a
+	 * bus for the application.
 	 * Returns: the element's GstBus. unref after usage. MT safe.
 	 */
 	public Bus getBus()
@@ -1044,7 +1073,7 @@ public class Element : ObjectGst
 	 */
 	public GstStateChangeReturn continueState(GstStateChangeReturn ret)
 	{
-		// GstStateChangeReturn gst_element_continue_state  (GstElement *element,  GstStateChangeReturn ret);
+		// GstStateChangeReturn gst_element_continue_state (GstElement *element,  GstStateChangeReturn ret);
 		return gst_element_continue_state(gstElement, ret);
 	}
 	
@@ -1052,10 +1081,15 @@ public class Element : ObjectGst
 	 * Brings the element to the lost state. The current state of the
 	 * element is copied to the pending state so that any call to
 	 * gst_element_get_state() will return GST_STATE_CHANGE_ASYNC.
+	 * An ASYNC_START message is posted with an indication to distribute a new
+	 * base_time to the element.
+	 * If the element was PLAYING, it will go to PAUSED. The element
+	 * will be restored to its PLAYING state by the parent pipeline when it
+	 * prerolls again.
 	 * This is mostly used for elements that lost their preroll buffer
-	 * in the GST_STATE_PAUSED state after a flush, they become GST_STATE_PAUSED
-	 * again if a new preroll buffer is queued.
-	 * This function can only be called when the element is currently
+	 * in the GST_STATE_PAUSED or GST_STATE_PLAYING state after a flush,
+	 * they will go to their pending state again when a new preroll buffer is
+	 * queued. This function can only be called when the element is currently
 	 * not in error or an async state change.
 	 * This function is used internally and should normally not be called from
 	 * plugins or applications.
@@ -1098,8 +1132,22 @@ public class Element : ObjectGst
 	 */
 	public int syncStateWithParent()
 	{
-		// gboolean gst_element_sync_state_with_parent  (GstElement *element);
+		// gboolean gst_element_sync_state_with_parent (GstElement *element);
 		return gst_element_sync_state_with_parent(gstElement);
+	}
+	
+	/**
+	 * Perform transition on element.
+	 * This function must be called with STATE_LOCK held and is mainly used
+	 * internally.
+	 * Params:
+	 * transition = the requested transition
+	 * Returns: the GstStateChangeReturn of the state transition.
+	 */
+	public GstStateChangeReturn changeState(GstStateChange transition)
+	{
+		// GstStateChangeReturn gst_element_change_state (GstElement *element,  GstStateChange transition);
+		return gst_element_change_state(gstElement, transition);
 	}
 	
 	/**
@@ -1176,7 +1224,7 @@ public class Element : ObjectGst
 	 */
 	public GstQueryType* getQueryTypes()
 	{
-		// const GstQueryType* gst_element_get_query_types  (GstElement *element);
+		// const GstQueryType* gst_element_get_query_types (GstElement *element);
 		return gst_element_get_query_types(gstElement);
 	}
 	
@@ -1269,7 +1317,8 @@ public class Element : ObjectGst
 	 * it receives the event in the READY state.
 	 * Params:
 	 * format = a GstFormat to execute the seek in, such as GST_FORMAT_TIME
-	 * seekFlags = seek options
+	 * seekFlags = seek options; playback applications will usually want to use
+	 *  GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT here
 	 * seekPos = position to seek to (relative to the start); if you are doing
 	 *  a seek in GST_FORMAT_TIME this value is in nanoseconds -
 	 *  multiply with GST_SECOND to convert seconds to nanoseconds or
@@ -1294,7 +1343,7 @@ public class Element : ObjectGst
 	 * cur = The value of the new current position
 	 * stopType = The type and flags for the new stop position
 	 * stop = The value of the new stop position
-	 * Returns: TRUE if the event was handled. MT safe. Signal Details The "no-more-pads" signal void user_function (GstElement *gstelement, gpointer user_data) : Run last This signals that the element will not generate more dynamic pads.
+	 * Returns: TRUE if the event was handled. MT safe. Signal Details The "no-more-pads" signal void user_function (GstElement *gstelement, gpointer user_data) : Run Last This signals that the element will not generate more dynamic pads.
 	 */
 	public int seek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType curType, long cur, GstSeekType stopType, long stop)
 	{

@@ -498,7 +498,7 @@ public class Bin : Element
 	 */
 	public Iterator iterateAllByInterface(GType iface)
 	{
-		// GstIterator* gst_bin_iterate_all_by_interface  (GstBin *bin,  GType iface);
+		// GstIterator* gst_bin_iterate_all_by_interface (GstBin *bin,  GType iface);
 		auto p = gst_bin_iterate_all_by_interface(gstBin, iface);
 		if(p is null)
 		{
