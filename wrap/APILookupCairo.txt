@@ -498,7 +498,7 @@ extend: cairo_surface_t
 prefix: cairo_recording_surface_
 prefix: cairo_surface_
 prefix: cairo_
-openFile: RecordingSurface
+outFile: RecordingSurface
 
 #file: cairo-win32-surface.html
 #mergeFile: Surface

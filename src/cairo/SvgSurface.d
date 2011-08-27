@@ -36,9 +36,6 @@
  * extend  = cairo_surface_t
  * implements:
  * prefixes:
- * 	- cairo_recording_surface_
- * 	- cairo_surface_
- * 	- cairo_
  * 	- cairo_svg_surface_
  * 	- cairo_svg_
  * omit structs:
@@ -124,7 +121,7 @@ public class SvgSurface : Surface
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if an error such as out of memory occurs. You can use cairo_surface_status() to check for this.
 	 */
-	public static SvgSurface svgSurfaceCreate(string filename, double widthInPoints, double heightInPoints)
+	public static SvgSurface create(string filename, double widthInPoints, double heightInPoints)
 	{
 		// cairo_surface_t * cairo_svg_surface_create (const char *filename,  double width_in_points,  double height_in_points);
 		auto p = cairo_svg_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
@@ -149,7 +146,7 @@ public class SvgSurface : Surface
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if an error such as out of memory occurs. You can use cairo_surface_status() to check for this.
 	 */
-	public static SvgSurface svgSurfaceCreateForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
+	public static SvgSurface createForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
 	{
 		// cairo_surface_t * cairo_svg_surface_create_for_stream (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
 		auto p = cairo_svg_surface_create_for_stream(writeFunc, closure, widthInPoints, heightInPoints);
@@ -171,7 +168,7 @@ public class SvgSurface : Surface
 	 * Params:
 	 * version = SVG version
 	 */
-	public void svgSurfaceRestrictToVersion(cairo_svg_version_t versio)
+	public void restrictToVersion(cairo_svg_version_t versio)
 	{
 		// void cairo_svg_surface_restrict_to_version  (cairo_surface_t *surface,  cairo_svg_version_t version);
 		cairo_svg_surface_restrict_to_version(cairo_surface, versio);
@@ -184,7 +181,7 @@ public class SvgSurface : Surface
 	 * Params:
 	 * versions = supported version list
 	 */
-	public static void svgGetVersions(out cairo_svg_version_t[] versions)
+	public static void getVersions(out cairo_svg_version_t[] versions)
 	{
 		// void cairo_svg_get_versions (cairo_svg_version_t const **versions,  int *num_versions);
 		cairo_svg_version_t* outversions = null;
@@ -204,7 +201,7 @@ public class SvgSurface : Surface
 	 * version = a version id
 	 * Returns: the string associated to given version.
 	 */
-	public static string svgVersionToString(cairo_svg_version_t versio)
+	public static string versionToString(cairo_svg_version_t versio)
 	{
 		// const char * cairo_svg_version_to_string (cairo_svg_version_t version);
 		return Str.toString(cairo_svg_version_to_string(versio));

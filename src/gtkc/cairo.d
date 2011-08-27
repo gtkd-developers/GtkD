@@ -348,6 +348,11 @@ static this()
 	Linker.link(cairo_ps_surface_dsc_begin_page_setup, "cairo_ps_surface_dsc_begin_page_setup", LIBRARY.CAIRO);
 	Linker.link(cairo_ps_surface_dsc_comment, "cairo_ps_surface_dsc_comment", LIBRARY.CAIRO);
 
+	// cairo.RecordingSurface
+
+	Linker.link(cairo_recording_surface_create, "cairo_recording_surface_create", LIBRARY.CAIRO);
+	Linker.link(cairo_recording_surface_ink_extents, "cairo_recording_surface_ink_extents", LIBRARY.CAIRO);
+
 	// cairo.SvgSurface
 
 	Linker.link(cairo_svg_surface_create, "cairo_svg_surface_create", LIBRARY.CAIRO);
@@ -702,6 +707,11 @@ mixin( gshared ~"extern(C)
 	void function(cairo_surface_t* surface) c_cairo_ps_surface_dsc_begin_page_setup;
 	void function(cairo_surface_t* surface, char* comment) c_cairo_ps_surface_dsc_comment;
 	
+	// cairo.RecordingSurface
+	
+	cairo_surface_t* function(cairo_content_t content, cairo_rectangle_t* extents) c_cairo_recording_surface_create;
+	void function(cairo_surface_t* surface, double* x0, double* y0, double* width, double* height) c_cairo_recording_surface_ink_extents;
+	
 	// cairo.SvgSurface
 	
 	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints) c_cairo_svg_surface_create;
@@ -1052,6 +1062,11 @@ alias c_cairo_ps_surface_set_size  cairo_ps_surface_set_size;
 alias c_cairo_ps_surface_dsc_begin_setup  cairo_ps_surface_dsc_begin_setup;
 alias c_cairo_ps_surface_dsc_begin_page_setup  cairo_ps_surface_dsc_begin_page_setup;
 alias c_cairo_ps_surface_dsc_comment  cairo_ps_surface_dsc_comment;
+
+// cairo.RecordingSurface
+
+alias c_cairo_recording_surface_create  cairo_recording_surface_create;
+alias c_cairo_recording_surface_ink_extents  cairo_recording_surface_ink_extents;
 
 // cairo.SvgSurface
 

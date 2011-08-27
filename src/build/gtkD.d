@@ -255,6 +255,7 @@ private import cairo.Surface;
 private import cairo.ImageSurface;
 private import cairo.PdfSurface;
 private import cairo.PostScriptSurface;
+private import cairo.RecordingSurface;
 private import cairo.SvgSurface;
 private import cairo.Matrix;
 private import cairo.Status;
