@@ -33,7 +33,7 @@ public import gtkc.gdktypes;
 
 version(LLVM)
 {
-	extern (C) Object _d_allocclass(ClassInfo ci);
+	extern (C) void* _d_allocclass(ClassInfo ci);
 }
 else
 {

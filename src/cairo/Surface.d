@@ -40,7 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- array: cairo_surface_get_mime_data
+ * 	- cairo_surface_get_mime_data
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -577,21 +577,5 @@ public class Surface
 	{
 		// cairo_status_t cairo_surface_set_mime_data (cairo_surface_t *surface,  const char *mime_type,  unsigned char *data,  unsigned long  length,  cairo_destroy_func_t destroy,  void *closure);
 		return cairo_surface_set_mime_data(cairo_surface, Str.toStringz(mimeType), data.ptr, cast(int) data.length, destroy, closure);
-	}
-	
-	/**
-	 * Return mime data previously attached to surface using the
-	 * specified mime type. If no data has been attached with the given
-	 * mime type, data is set NULL.
-	 * Since 1.10
-	 * Params:
-	 * mimeType = the mime type of the image data
-	 * data = the image data to attached to the surface
-	 * length = the length of the image data
-	 */
-	public void getMimeData(string mimeType, out ubyte* data, ulong* length)
-	{
-		// void cairo_surface_get_mime_data (cairo_surface_t *surface,  const char *mime_type,  unsigned char **data,  unsigned long *length);
-		cairo_surface_get_mime_data(cairo_surface, Str.toStringz(mimeType), &data, length);
 	}
 }
