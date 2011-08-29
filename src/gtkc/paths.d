@@ -92,10 +92,10 @@ version(darwinX11)
 	//of GTK+. This directory is according to the Macports http://www.macports.org
 	//default installation location. There should be installation instructions
 	//in the gtkD wiki at DSource.
-	const char[] DIRECTORY = "/opt/local/lib/";
-	const char[] INTERFACE = "x11";
+	const string DIRECTORY = "/opt/local/lib/";
+	const string INTERFACE = "x11";
 
-	const char[][LIBRARY.max+1] importLibs =
+	const string[LIBRARY.max+1] importLibs =
 	[
 		LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
 		LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
@@ -104,9 +104,11 @@ version(darwinX11)
 		LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
 		LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
 		LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
+		LIBRARY.GIO:           DIRECTORY~"libgio-2.0.dylib",
 		LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
 		LIBRARY.GTK:           DIRECTORY~"libgtk-"~INTERFACE~"-2.0.dylib",
 		LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
+		LIBRARY.PANGOCAIRO:    DIRECTORY~"libpangocairo-1.0.dylib",
 		LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
 		LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
 		LIBRARY.GL:            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
@@ -119,7 +121,7 @@ version(darwinX11)
 		LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
 	];
 }
-else //default version (The Quartz GTK+ Framework):
+else //default version (The Quartz GTK+):
 {
 	//This version is for the native Quartz port of GTK+
 	//which can be found from http://www.gtk-osx.org/
@@ -127,32 +129,25 @@ else //default version (The Quartz GTK+ Framework):
 	//that package and need to be installed separately,
 	//possibly through Macports.
 
-	const char[] FRAMEWORKS_DIR = "/Library/Frameworks/";
-	const char[] INTERFACE = "quartz";
-	const char[] DIRECTORY = "/opt/local/lib/";
-
-	//On OS X we can just specify the framework. But we could also
-	//specify the individual libraries like this:
-	//LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Libraries/libcairo.2.dylib",
-	//but we'll do it like this instead:
-	//LIBRARY.CAIRO:  	FRAMEWORKS_DIR~"Cairo.framework/Cairo",
+	const string INTERFACE = "quartz";
+	const string DIRECTORY = "/opt/local/lib/";
 
 	const string[LIBRARY.max+1] importLibs =
 	[
-		LIBRARY.ATK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-		LIBRARY.CAIRO:         FRAMEWORKS_DIR~"Cairo.framework/Cairo",
-		LIBRARY.GDK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-		LIBRARY.GDKPIXBUF:     FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-		LIBRARY.GLIB:          FRAMEWORKS_DIR~"GLib.framework/GLib",
-		LIBRARY.GMODULE:       FRAMEWORKS_DIR~"GLib.framework/GLib",
-		LIBRARY.GOBJECT:       FRAMEWORKS_DIR~"GLib.framework/GLib",
-		LIBRARY.GIO:           FRAMEWORKS_DIR~"GLib.framework/GLib",
-		LIBRARY.GTHREAD:       FRAMEWORKS_DIR~"GLib.framework/GLib",
-		LIBRARY.GTK:           FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-		LIBRARY.PANGO:         FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-		LIBRARY.PANGOCAIRO:    FRAMEWORKS_DIR~"Gtk.framework/Gtk",
-		LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",//This isn't currently available
-		LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",//This isn't currently available
+		LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
+		LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
+		LIBRARY.GDK:           DIRECTORY~"libgdk-"~INTERFACE~"-2.0.dylib",
+		LIBRARY.GDKPIXBUF:     DIRECTORY~"libgdk_pixbuf-2.0.dylib",
+		LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
+		LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
+		LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
+		LIBRARY.GIO:           DIRECTORY~"libgio-2.0.dylib",
+		LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
+		LIBRARY.GTK:           DIRECTORY~"libgtk-"~INTERFACE~"-2.0.dylib",
+		LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
+		LIBRARY.PANGOCAIRO:    DIRECTORY~"libpangocairo-1.0.dylib",
+		LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-"~INTERFACE~"-1.0.dylib",
+		LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-"~INTERFACE~"-1.0.dylib",
 		LIBRARY.GL:            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
 		LIBRARY.GLU:           "/System/Library/Frameworks/OpenGL.framework/OpenGL",
 		LIBRARY.GLEXT:         "/System/Library/Frameworks/OpenGL.framework/OpenGL",
