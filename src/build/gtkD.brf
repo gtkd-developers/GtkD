@@ -4,7 +4,8 @@
 -I..
 -I../../srcgl
 -I../../srcsv
--I../../srcgda 
+-I../../srcgda
+-I../../srcgstreamer
 -allobj
 -cleanup
 -Xphobos
