@@ -159,7 +159,7 @@ public class Context
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries )
+		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries && (cast(int)*cairo) > 0 )
 		{
 			cairo_destroy(cairo);
 		}
