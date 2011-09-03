@@ -58,11 +58,10 @@ public struct Linker
 	 *     symbol    = The name of the symbol to link
 	 *     libraries = One or more libraries to search for the symbol
 	 */
-	//Gives an error with gdc 0.24: link(T) matches both link(T) and link(T)
-	//public static void link(T)(inout T funct, string symbol, string[] libraries ...)
-	//{
-	//	funct = cast(T)getSymbol(symbol, libraries);
-	//}
+	public static void link(T)(inout T funct, string symbol, string[] libraries ...)
+	{
+		funct = cast(T)getSymbol(symbol, libraries);
+	}
 
 	/*
 	 * Gets a simbol from one of the provided libraries
