@@ -111,6 +111,8 @@ out: cairo_stroke_extents y1
 out: cairo_stroke_extents x2
 out: cairo_stroke_extents y2
 
+nocode: cairo_destroy
+
 code: start
 
 
@@ -131,7 +133,7 @@ code: start
 
 	~this ()
 	{
-		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries && *(cast(int*)cairo) > 0 )
+		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries && cairo !is null )
 		{
 			cairo_destroy(cairo);
 		}
@@ -245,6 +247,23 @@ code: start
 	{
 		// cairo_text_cluster_t* cairo_text_cluster_allocate (int num_clusters);
 		return cairo_text_cluster_allocate(numClusters)[0 .. numClusters];
+	}
+
+	/**
+	 * Decreases the reference count on cr by one. If the result
+	 * is zero, then cr and all associated resources are freed.
+	 * See cairo_reference().
+	 */
+	public void destroy()
+	{
+		int refCount = *(cast(int*)cairo);
+
+		// void cairo_destroy (cairo_t *cr);
+		cairo_destroy(cairo);
+
+		//if refCount is 1 the actual refCount after cairo_destroy is 0.
+		if ( refCount == 1 )
+			cairo = null;
 	}
 code: end
 

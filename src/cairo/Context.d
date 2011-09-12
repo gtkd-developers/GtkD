@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- cairo_destroy
  * omit signals:
  * imports:
  * 	- cairo.FontFace
@@ -159,7 +160,7 @@ public class Context
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries && *(cast(int*)cairo) > 0 )
+		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries && cairo !is null )
 		{
 			cairo_destroy(cairo);
 		}
@@ -276,6 +277,23 @@ public class Context
 	}
 	
 	/**
+	 * Decreases the reference count on cr by one. If the result
+	 * is zero, then cr and all associated resources are freed.
+	 * See cairo_reference().
+	 */
+	public void destroy()
+	{
+		int refCount = *(cast(int*)cairo);
+		
+		// void cairo_destroy (cairo_t *cr);
+		cairo_destroy(cairo);
+		
+		//if refCount is 1 the actual refCount after cairo_destroy is 0.
+		if ( refCount == 1 )
+		cairo = null;
+	}
+	
+	/**
 	 * Description
 	 * Paths are the most basic drawing tools and are primarily used to implicitly
 	 * generate simple masks.
@@ -351,17 +369,6 @@ public class Context
 			return null;
 		}
 		return new Context(cast(cairo_t*) p);
-	}
-	
-	/**
-	 * Decreases the reference count on cr by one. If the result
-	 * is zero, then cr and all associated resources are freed.
-	 * See cairo_reference().
-	 */
-	public void destroy()
-	{
-		// void cairo_destroy (cairo_t *cr);
-		cairo_destroy(cairo);
 	}
 	
 	/**
