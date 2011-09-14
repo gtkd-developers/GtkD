@@ -44,6 +44,10 @@
  * omit code:
  * 	- gtk_action_get_stock_id
  * 	- gtk_action_set_stock_id
+ * 	- gtk_action_create_icon
+ * 	- gtk_action_create_menu_item
+ * 	- gtk_action_create_tool_item
+ * 	- gtk_action_create_menu
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -53,6 +57,10 @@
  * 	- glib.ListSG
  * 	- gobject.Closure
  * 	- gtk.AccelGroup
+ * 	- gtk.Image
+ * 	- gtk.Menu
+ * 	- gtk.MenuItem
+ * 	- gtk.ToolItem
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -83,6 +91,10 @@ private import gtk.Widget;
 private import glib.ListSG;
 private import gobject.Closure;
 private import gtk.AccelGroup;
+private import gtk.Image;
+private import gtk.Menu;
+private import gtk.MenuItem;
+private import gtk.ToolItem;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -215,6 +227,75 @@ public class Action : ObjectG, BuildableIF
 	{
 		// void gtk_action_set_stock_id (GtkAction *action,  const gchar *stock_id);
 		gtk_action_set_stock_id(gtkAction, Str.toStringz(StockDesc[stockId]));
+	}
+	
+	/**
+	 * This function is intended for use by action implementations to
+	 * create icons displayed in the proxy widgets.
+	 * Since 2.4
+	 * Params:
+	 * iconSize = the size of the icon that should be created. [type int]
+	 * Returns: a widget that displays the icon for this action.
+	 */
+	public Image createIcon(GtkIconSize iconSize)
+	{
+		// GtkWidget * gtk_action_create_icon (GtkAction *action,  GtkIconSize icon_size);
+		auto p = gtk_action_create_icon(gtkAction, iconSize);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Image(cast(GtkImage*) p);
+	}
+	
+	/**
+	 * Creates a menu item widget that proxies for the given action.
+	 * Since 2.4
+	 * Returns: a menu item connected to the action.
+	 */
+	public MenuItem createMenuItem()
+	{
+		// GtkWidget * gtk_action_create_menu_item (GtkAction *action);
+		auto p = gtk_action_create_menu_item(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new MenuItem(cast(GtkMenuItem*) p);
+	}
+	
+	/**
+	 * Creates a toolbar item widget that proxies for the given action.
+	 * Since 2.4
+	 * Returns: a toolbar item connected to the action.
+	 */
+	public ToolItem createToolItem()
+	{
+		// GtkWidget * gtk_action_create_tool_item (GtkAction *action);
+		auto p = gtk_action_create_tool_item(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ToolItem(cast(GtkToolItem*) p);
+	}
+	
+	/**
+	 * If action provides a GtkMenu widget as a submenu for the menu
+	 * item or the toolbar item it creates, this function returns an
+	 * instance of that menu.
+	 * Since 2.12
+	 * Returns: the menu item provided by the action, or NULL.
+	 */
+	public Menu createMenu()
+	{
+		// GtkWidget * gtk_action_create_menu (GtkAction *action);
+		auto p = gtk_action_create_menu(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Menu(cast(GtkMenu*) p);
 	}
 	
 	/**
@@ -378,75 +459,6 @@ public class Action : ObjectG, BuildableIF
 	{
 		// void gtk_action_activate (GtkAction *action);
 		gtk_action_activate(gtkAction);
-	}
-	
-	/**
-	 * This function is intended for use by action implementations to
-	 * create icons displayed in the proxy widgets.
-	 * Since 2.4
-	 * Params:
-	 * iconSize = the size of the icon that should be created. [type int]
-	 * Returns: a widget that displays the icon for this action.
-	 */
-	public Widget createIcon(GtkIconSize iconSize)
-	{
-		// GtkWidget * gtk_action_create_icon (GtkAction *action,  GtkIconSize icon_size);
-		auto p = gtk_action_create_icon(gtkAction, iconSize);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
-	}
-	
-	/**
-	 * Creates a menu item widget that proxies for the given action.
-	 * Since 2.4
-	 * Returns: a menu item connected to the action.
-	 */
-	public Widget createMenuItem()
-	{
-		// GtkWidget * gtk_action_create_menu_item (GtkAction *action);
-		auto p = gtk_action_create_menu_item(gtkAction);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
-	}
-	
-	/**
-	 * Creates a toolbar item widget that proxies for the given action.
-	 * Since 2.4
-	 * Returns: a toolbar item connected to the action.
-	 */
-	public Widget createToolItem()
-	{
-		// GtkWidget * gtk_action_create_tool_item (GtkAction *action);
-		auto p = gtk_action_create_tool_item(gtkAction);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
-	}
-	
-	/**
-	 * If action provides a GtkMenu widget as a submenu for the menu
-	 * item or the toolbar item it creates, this function returns an
-	 * instance of that menu.
-	 * Since 2.12
-	 * Returns: the menu item provided by the action, or NULL.
-	 */
-	public Widget createMenu()
-	{
-		// GtkWidget * gtk_action_create_menu (GtkAction *action);
-		auto p = gtk_action_create_menu(gtkAction);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
