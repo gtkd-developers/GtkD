@@ -13,23 +13,21 @@ ifndef DC
         DC=dmd
     else ifneq ($(strip $(shell which ldc 2>/dev/null)),)
         DC=ldc
+    else ifneq ($(strip $(shell which ldc2 2>/dev/null)),)
+        DC=ldc2
     else
         DC=gdc
     endif
 endif
 
-ifeq ("$(DC)","dmd")
-    DCFLAGS=-O
-    LINKERFLAG=-L
-    output=-of$@
-else ifeq ("$(DC)","ldc")
-    DCFLAGS=-O
-    LINKERFLAG=-L
-    output=-of$@
-else
+ifeq ("$(DC)","gdc")
     DCFLAGS=-O2
     LINKERFLAG=-Xlinker 
     output=-o $@
+else
+    DCFLAGS=-O
+    LINKERFLAG=-L
+    output=-of$@
 endif
 
 ifeq ("$(OS)","Linux")
