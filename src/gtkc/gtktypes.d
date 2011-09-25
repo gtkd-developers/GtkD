@@ -31,9 +31,16 @@ public import gtkc.atktypes;
 public import gtkc.gdkpixbuftypes;
 public import gtkc.gdktypes;
 
-version(LLVM)
+version(LDC)
 {
-	extern (C) void* _d_allocclass(ClassInfo ci);
+	version(D_Version2)
+	{
+		extern(C) Object _d_newclass(ClassInfo ci);
+	}
+	else
+	{
+		extern (C) void* _d_allocclass(ClassInfo ci);
+	}
 }
 else
 {

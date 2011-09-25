@@ -460,8 +460,14 @@ public class Builder : ObjectG
 	 */
 	public ObjectG newFromObject(GObject* cobj)
 	{
-		//version( !LLVM )
-		version(LLVM) {} else
+		version(LDC)
+		{
+			version(D_Version2)
+			{
+				alias ClassInfo.find findClassInfo;
+			}
+		}
+		else
 		{
 			alias ClassInfo.find findClassInfo;
 		}
@@ -550,28 +556,32 @@ public class Builder : ObjectG
 		return str.length >= prefix.length && str[0..prefix.length] == prefix;
 	}
 	
-	version(LLVM)
+	version(LDC)
 	{
-		private Object _d_newclass(ClassInfo ci)
+		//version( !D_Version2 )
+		version(D_Version2) {} else
 		{
-			void* p = cast(void*)_d_allocclass(ci);
-			(cast(byte*) p)[0 .. ci.init.length] = ci.init[];
-			
-			return cast(Object) p;
-		}
-		
-		private ClassInfo findClassInfo(string classname)
-		{
-			foreach ( m; ModuleInfo )
+			private Object _d_newclass(ClassInfo ci)
 			{
-				foreach ( c; m.localClasses )
-				{
-					if ( c.name == classname )
-					return c;
-				}
+				void* p = cast(void*)_d_allocclass(ci);
+				(cast(byte*) p)[0 .. ci.init.length] = ci.init[];
+				
+				return cast(Object) p;
 			}
-
-			return null;
+			
+			private ClassInfo findClassInfo(string classname)
+			{
+				foreach ( m; ModuleInfo )
+				{
+					foreach ( c; m.localClasses )
+					{
+						if ( c.name == classname )
+						return c;
+					}
+				}
+				
+				return null;
+			}
 		}
 	}
 	
