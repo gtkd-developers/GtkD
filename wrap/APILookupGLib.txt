@@ -83,10 +83,12 @@ else
 
 version(D_Version2)
 {
+	mixin("enum _shared = \"shared \";");
 	mixin("enum gshared = \"__gshared \";");
 }
 else
 {
+	const char[] _shared = "";
 	const char[] gshared = "";
 }
 

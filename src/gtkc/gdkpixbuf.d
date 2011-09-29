@@ -32,70 +32,70 @@ private import gtkc.gdkpixbuftypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-static this()
+mixin( _shared ~ "static this()
 {
 	// gdkpixbuf.Pixdata
 
-	Linker.link(gdk_pixdata_from_pixbuf, "gdk_pixdata_from_pixbuf", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_from_pixdata, "gdk_pixbuf_from_pixdata", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixdata_serialize, "gdk_pixdata_serialize", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixdata_deserialize, "gdk_pixdata_deserialize", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixdata_to_csource, "gdk_pixdata_to_csource", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixdata_from_pixbuf, \"gdk_pixdata_from_pixbuf\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_from_pixdata, \"gdk_pixbuf_from_pixdata\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixdata_serialize, \"gdk_pixdata_serialize\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixdata_deserialize, \"gdk_pixdata_deserialize\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixdata_to_csource, \"gdk_pixdata_to_csource\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 
 	// gdkpixbuf.PixbufAnimation
 
-	Linker.link(gdk_pixbuf_animation_new_from_file, "gdk_pixbuf_animation_new_from_file", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_ref, "gdk_pixbuf_animation_ref", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_unref, "gdk_pixbuf_animation_unref", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_get_width, "gdk_pixbuf_animation_get_width", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_get_height, "gdk_pixbuf_animation_get_height", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_get_iter, "gdk_pixbuf_animation_get_iter", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_is_static_image, "gdk_pixbuf_animation_is_static_image", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_get_static_image, "gdk_pixbuf_animation_get_static_image", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_new_from_file, \"gdk_pixbuf_animation_new_from_file\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_ref, \"gdk_pixbuf_animation_ref\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_unref, \"gdk_pixbuf_animation_unref\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_get_width, \"gdk_pixbuf_animation_get_width\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_get_height, \"gdk_pixbuf_animation_get_height\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_get_iter, \"gdk_pixbuf_animation_get_iter\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_is_static_image, \"gdk_pixbuf_animation_is_static_image\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_get_static_image, \"gdk_pixbuf_animation_get_static_image\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 
 	// gdkpixbuf.PixbufAnimationIter
 
-	Linker.link(gdk_pixbuf_animation_iter_advance, "gdk_pixbuf_animation_iter_advance", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_iter_get_delay_time, "gdk_pixbuf_animation_iter_get_delay_time", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_iter_on_currently_loading_frame, "gdk_pixbuf_animation_iter_on_currently_loading_frame", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_animation_iter_get_pixbuf, "gdk_pixbuf_animation_iter_get_pixbuf", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_iter_advance, \"gdk_pixbuf_animation_iter_advance\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_iter_get_delay_time, \"gdk_pixbuf_animation_iter_get_delay_time\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_iter_on_currently_loading_frame, \"gdk_pixbuf_animation_iter_on_currently_loading_frame\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_iter_get_pixbuf, \"gdk_pixbuf_animation_iter_get_pixbuf\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 
 	// gdkpixbuf.PixbufSimpleAnimation
 
-	Linker.link(gdk_pixbuf_simple_anim_new, "gdk_pixbuf_simple_anim_new", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_simple_anim_add_frame, "gdk_pixbuf_simple_anim_add_frame", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_simple_anim_set_loop, "gdk_pixbuf_simple_anim_set_loop", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_simple_anim_get_loop, "gdk_pixbuf_simple_anim_get_loop", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_simple_anim_new, \"gdk_pixbuf_simple_anim_new\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_simple_anim_add_frame, \"gdk_pixbuf_simple_anim_add_frame\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_simple_anim_set_loop, \"gdk_pixbuf_simple_anim_set_loop\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_simple_anim_get_loop, \"gdk_pixbuf_simple_anim_get_loop\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 
 	// gdkpixbuf.PixbufLoader
 
-	Linker.link(gdk_pixbuf_loader_new, "gdk_pixbuf_loader_new", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_loader_new_with_type, "gdk_pixbuf_loader_new_with_type", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_loader_new_with_mime_type, "gdk_pixbuf_loader_new_with_mime_type", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_loader_get_format, "gdk_pixbuf_loader_get_format", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_loader_write, "gdk_pixbuf_loader_write", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_loader_set_size, "gdk_pixbuf_loader_set_size", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_loader_get_pixbuf, "gdk_pixbuf_loader_get_pixbuf", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_loader_get_animation, "gdk_pixbuf_loader_get_animation", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_loader_close, "gdk_pixbuf_loader_close", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_new, \"gdk_pixbuf_loader_new\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_new_with_type, \"gdk_pixbuf_loader_new_with_type\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_new_with_mime_type, \"gdk_pixbuf_loader_new_with_mime_type\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_get_format, \"gdk_pixbuf_loader_get_format\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_write, \"gdk_pixbuf_loader_write\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_set_size, \"gdk_pixbuf_loader_set_size\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_get_pixbuf, \"gdk_pixbuf_loader_get_pixbuf\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_get_animation, \"gdk_pixbuf_loader_get_animation\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_close, \"gdk_pixbuf_loader_close\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 
 	// gdkpixbuf.PixbufFormat
 
-	Linker.link(gdk_pixbuf_set_option, "gdk_pixbuf_set_option", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_get_formats, "gdk_pixbuf_get_formats", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_copy, "gdk_pixbuf_format_copy", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_free, "gdk_pixbuf_format_free", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_get_name, "gdk_pixbuf_format_get_name", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_get_description, "gdk_pixbuf_format_get_description", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_get_mime_types, "gdk_pixbuf_format_get_mime_types", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_get_extensions, "gdk_pixbuf_format_get_extensions", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_is_writable, "gdk_pixbuf_format_is_writable", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_is_scalable, "gdk_pixbuf_format_is_scalable", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_is_disabled, "gdk_pixbuf_format_is_disabled", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_set_disabled, "gdk_pixbuf_format_set_disabled", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_format_get_license, "gdk_pixbuf_format_get_license", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_get_file_info, "gdk_pixbuf_get_file_info", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-}
+	Linker.link(gdk_pixbuf_set_option, \"gdk_pixbuf_set_option\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_get_formats, \"gdk_pixbuf_get_formats\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_copy, \"gdk_pixbuf_format_copy\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_free, \"gdk_pixbuf_format_free\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_get_name, \"gdk_pixbuf_format_get_name\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_get_description, \"gdk_pixbuf_format_get_description\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_get_mime_types, \"gdk_pixbuf_format_get_mime_types\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_get_extensions, \"gdk_pixbuf_format_get_extensions\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_is_writable, \"gdk_pixbuf_format_is_writable\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_is_scalable, \"gdk_pixbuf_format_is_scalable\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_is_disabled, \"gdk_pixbuf_format_is_disabled\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_set_disabled, \"gdk_pixbuf_format_set_disabled\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_get_license, \"gdk_pixbuf_format_get_license\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_get_file_info, \"gdk_pixbuf_get_file_info\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+}");
 
 mixin( gshared ~"extern(C)
 {

@@ -32,16 +32,16 @@ private import gstreamerc.gstinterfacestypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-static this()
+mixin( _shared ~ "static this()
 {
 	// gstinterfaces.XOverlay
 
-	Linker.link(gst_x_overlay_set_xwindow_id, "gst_x_overlay_set_xwindow_id", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_x_overlay_got_xwindow_id, "gst_x_overlay_got_xwindow_id", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_x_overlay_prepare_xwindow_id, "gst_x_overlay_prepare_xwindow_id", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_x_overlay_expose, "gst_x_overlay_expose", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_x_overlay_handle_events, "gst_x_overlay_handle_events", LIBRARY.GSTINTERFACES);
-}
+	Linker.link(gst_x_overlay_set_xwindow_id, \"gst_x_overlay_set_xwindow_id\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_x_overlay_got_xwindow_id, \"gst_x_overlay_got_xwindow_id\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_x_overlay_prepare_xwindow_id, \"gst_x_overlay_prepare_xwindow_id\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_x_overlay_expose, \"gst_x_overlay_expose\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_x_overlay_handle_events, \"gst_x_overlay_handle_events\", LIBRARY.GSTINTERFACES);
+}");
 
 mixin( gshared ~"extern(C)
 {

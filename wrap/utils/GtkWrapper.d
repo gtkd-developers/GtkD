@@ -895,7 +895,7 @@ public class GtkWrapper : WrapperIF
 		{
 			externalText ~= "\nprivate import gtkc.Loader;"
 			                "\nprivate import gtkc.paths;\n"
-			                "\nstatic this()"
+			                "\nmixin( _shared ~ \"static this()"
 			                "\n{";
 
 			char[] library = "LIBRARY."~ loaderTableName.toupper();
@@ -935,14 +935,14 @@ public class GtkWrapper : WrapperIF
 						char[] functName = std.string.strip(dec[pos+1..$]);
 						if ( functName.length > 0 )
 						{
-							externalText ~= "Linker.link("~ functName ~", \""~ functName ~"\", "~ getLibrary(functName) ~");";
+							externalText ~= "Linker.link("~ functName ~", \\\""~ functName ~"\\\", "~ getLibrary(functName) ~");";
 						}
 					}
 					externalText ~= '\n';
 				}
 			}
 
-			externalText ~= "}\n\n"
+			externalText ~= "}\");\n\n"
 			                "mixin( gshared ~\"extern(C)\n"
 			                "{\n";
 

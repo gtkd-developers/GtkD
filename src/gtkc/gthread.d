@@ -32,87 +32,87 @@ private import gtkc.gthreadtypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-static this()
+mixin( _shared ~ "static this()
 {
 	// gthread.Mutex
 
-	Linker.link(g_mutex_new, "g_mutex_new", LIBRARY.GTHREAD);
-	Linker.link(g_mutex_lock, "g_mutex_lock", LIBRARY.GTHREAD);
-	Linker.link(g_mutex_trylock, "g_mutex_trylock", LIBRARY.GTHREAD);
-	Linker.link(g_mutex_unlock, "g_mutex_unlock", LIBRARY.GTHREAD);
-	Linker.link(g_mutex_free, "g_mutex_free", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_new, \"g_mutex_new\", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_lock, \"g_mutex_lock\", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_trylock, \"g_mutex_trylock\", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_unlock, \"g_mutex_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_free, \"g_mutex_free\", LIBRARY.GTHREAD);
 
 	// gthread.StaticMutex
 
-	Linker.link(g_static_mutex_init, "g_static_mutex_init", LIBRARY.GTHREAD);
-	Linker.link(g_static_mutex_lock, "g_static_mutex_lock", LIBRARY.GTHREAD);
-	Linker.link(g_static_mutex_trylock, "g_static_mutex_trylock", LIBRARY.GTHREAD);
-	Linker.link(g_static_mutex_unlock, "g_static_mutex_unlock", LIBRARY.GTHREAD);
-	Linker.link(g_static_mutex_get_mutex, "g_static_mutex_get_mutex", LIBRARY.GTHREAD);
-	Linker.link(g_static_mutex_free, "g_static_mutex_free", LIBRARY.GTHREAD);
+	Linker.link(g_static_mutex_init, \"g_static_mutex_init\", LIBRARY.GTHREAD);
+	Linker.link(g_static_mutex_lock, \"g_static_mutex_lock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_mutex_trylock, \"g_static_mutex_trylock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_mutex_unlock, \"g_static_mutex_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_mutex_get_mutex, \"g_static_mutex_get_mutex\", LIBRARY.GTHREAD);
+	Linker.link(g_static_mutex_free, \"g_static_mutex_free\", LIBRARY.GTHREAD);
 
 	// gthread.StaticRecMutex
 
-	Linker.link(g_static_rec_mutex_init, "g_static_rec_mutex_init", LIBRARY.GTHREAD);
-	Linker.link(g_static_rec_mutex_lock, "g_static_rec_mutex_lock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rec_mutex_trylock, "g_static_rec_mutex_trylock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rec_mutex_unlock, "g_static_rec_mutex_unlock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rec_mutex_lock_full, "g_static_rec_mutex_lock_full", LIBRARY.GTHREAD);
-	Linker.link(g_static_rec_mutex_unlock_full, "g_static_rec_mutex_unlock_full", LIBRARY.GTHREAD);
-	Linker.link(g_static_rec_mutex_free, "g_static_rec_mutex_free", LIBRARY.GTHREAD);
+	Linker.link(g_static_rec_mutex_init, \"g_static_rec_mutex_init\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rec_mutex_lock, \"g_static_rec_mutex_lock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rec_mutex_trylock, \"g_static_rec_mutex_trylock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rec_mutex_unlock, \"g_static_rec_mutex_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rec_mutex_lock_full, \"g_static_rec_mutex_lock_full\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rec_mutex_unlock_full, \"g_static_rec_mutex_unlock_full\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rec_mutex_free, \"g_static_rec_mutex_free\", LIBRARY.GTHREAD);
 
 	// gthread.RWLock
 
-	Linker.link(g_static_rw_lock_init, "g_static_rw_lock_init", LIBRARY.GTHREAD);
-	Linker.link(g_static_rw_lock_reader_lock, "g_static_rw_lock_reader_lock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rw_lock_reader_trylock, "g_static_rw_lock_reader_trylock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rw_lock_reader_unlock, "g_static_rw_lock_reader_unlock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rw_lock_writer_lock, "g_static_rw_lock_writer_lock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rw_lock_writer_trylock, "g_static_rw_lock_writer_trylock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rw_lock_writer_unlock, "g_static_rw_lock_writer_unlock", LIBRARY.GTHREAD);
-	Linker.link(g_static_rw_lock_free, "g_static_rw_lock_free", LIBRARY.GTHREAD);
+	Linker.link(g_static_rw_lock_init, \"g_static_rw_lock_init\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rw_lock_reader_lock, \"g_static_rw_lock_reader_lock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rw_lock_reader_trylock, \"g_static_rw_lock_reader_trylock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rw_lock_reader_unlock, \"g_static_rw_lock_reader_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rw_lock_writer_lock, \"g_static_rw_lock_writer_lock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rw_lock_writer_trylock, \"g_static_rw_lock_writer_trylock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rw_lock_writer_unlock, \"g_static_rw_lock_writer_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_static_rw_lock_free, \"g_static_rw_lock_free\", LIBRARY.GTHREAD);
 
 	// gthread.Cond
 
-	Linker.link(g_cond_new, "g_cond_new", LIBRARY.GTHREAD);
-	Linker.link(g_cond_signal, "g_cond_signal", LIBRARY.GTHREAD);
-	Linker.link(g_cond_broadcast, "g_cond_broadcast", LIBRARY.GTHREAD);
-	Linker.link(g_cond_wait, "g_cond_wait", LIBRARY.GTHREAD);
-	Linker.link(g_cond_timed_wait, "g_cond_timed_wait", LIBRARY.GTHREAD);
-	Linker.link(g_cond_free, "g_cond_free", LIBRARY.GTHREAD);
+	Linker.link(g_cond_new, \"g_cond_new\", LIBRARY.GTHREAD);
+	Linker.link(g_cond_signal, \"g_cond_signal\", LIBRARY.GTHREAD);
+	Linker.link(g_cond_broadcast, \"g_cond_broadcast\", LIBRARY.GTHREAD);
+	Linker.link(g_cond_wait, \"g_cond_wait\", LIBRARY.GTHREAD);
+	Linker.link(g_cond_timed_wait, \"g_cond_timed_wait\", LIBRARY.GTHREAD);
+	Linker.link(g_cond_free, \"g_cond_free\", LIBRARY.GTHREAD);
 
 	// gthread.Private
 
-	Linker.link(g_private_new, "g_private_new", LIBRARY.GTHREAD);
-	Linker.link(g_private_get, "g_private_get", LIBRARY.GTHREAD);
-	Linker.link(g_private_set, "g_private_set", LIBRARY.GTHREAD);
+	Linker.link(g_private_new, \"g_private_new\", LIBRARY.GTHREAD);
+	Linker.link(g_private_get, \"g_private_get\", LIBRARY.GTHREAD);
+	Linker.link(g_private_set, \"g_private_set\", LIBRARY.GTHREAD);
 
 	// gthread.StaticPrivate
 
-	Linker.link(g_static_private_init, "g_static_private_init", LIBRARY.GTHREAD);
-	Linker.link(g_static_private_get, "g_static_private_get", LIBRARY.GTHREAD);
-	Linker.link(g_static_private_set, "g_static_private_set", LIBRARY.GTHREAD);
-	Linker.link(g_static_private_free, "g_static_private_free", LIBRARY.GTHREAD);
+	Linker.link(g_static_private_init, \"g_static_private_init\", LIBRARY.GTHREAD);
+	Linker.link(g_static_private_get, \"g_static_private_get\", LIBRARY.GTHREAD);
+	Linker.link(g_static_private_set, \"g_static_private_set\", LIBRARY.GTHREAD);
+	Linker.link(g_static_private_free, \"g_static_private_free\", LIBRARY.GTHREAD);
 
 	// gthread.Thread
 
-	Linker.link(g_thread_init, "g_thread_init", LIBRARY.GTHREAD);
-	Linker.link(g_thread_supported, "g_thread_supported", LIBRARY.GTHREAD);
-	Linker.link(g_thread_get_initialized, "g_thread_get_initialized", LIBRARY.GTHREAD);
-	Linker.link(g_thread_create, "g_thread_create", LIBRARY.GTHREAD);
-	Linker.link(g_thread_create_full, "g_thread_create_full", LIBRARY.GTHREAD);
-	Linker.link(g_thread_self, "g_thread_self", LIBRARY.GTHREAD);
-	Linker.link(g_thread_join, "g_thread_join", LIBRARY.GTHREAD);
-	Linker.link(g_thread_set_priority, "g_thread_set_priority", LIBRARY.GTHREAD);
-	Linker.link(g_thread_yield, "g_thread_yield", LIBRARY.GTHREAD);
-	Linker.link(g_thread_exit, "g_thread_exit", LIBRARY.GTHREAD);
-	Linker.link(g_thread_foreach, "g_thread_foreach", LIBRARY.GTHREAD);
-	Linker.link(g_once_init_enter, "g_once_init_enter", LIBRARY.GTHREAD);
-	Linker.link(g_once_init_leave, "g_once_init_leave", LIBRARY.GTHREAD);
-	Linker.link(g_bit_lock, "g_bit_lock", LIBRARY.GTHREAD);
-	Linker.link(g_bit_trylock, "g_bit_trylock", LIBRARY.GTHREAD);
-	Linker.link(g_bit_unlock, "g_bit_unlock", LIBRARY.GTHREAD);
-}
+	Linker.link(g_thread_init, \"g_thread_init\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_supported, \"g_thread_supported\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_get_initialized, \"g_thread_get_initialized\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_create, \"g_thread_create\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_create_full, \"g_thread_create_full\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_self, \"g_thread_self\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_join, \"g_thread_join\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_set_priority, \"g_thread_set_priority\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_yield, \"g_thread_yield\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_exit, \"g_thread_exit\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_foreach, \"g_thread_foreach\", LIBRARY.GTHREAD);
+	Linker.link(g_once_init_enter, \"g_once_init_enter\", LIBRARY.GTHREAD);
+	Linker.link(g_once_init_leave, \"g_once_init_leave\", LIBRARY.GTHREAD);
+	Linker.link(g_bit_lock, \"g_bit_lock\", LIBRARY.GTHREAD);
+	Linker.link(g_bit_trylock, \"g_bit_trylock\", LIBRARY.GTHREAD);
+	Linker.link(g_bit_unlock, \"g_bit_unlock\", LIBRARY.GTHREAD);
+}");
 
 mixin( gshared ~"extern(C)
 {
