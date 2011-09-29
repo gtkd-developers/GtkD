@@ -3782,10 +3782,10 @@ public class TreeModel : ObjectG, TreeModelIF
 {
 	static GObjectClass* parentClass = null;
 	
-	static this()
+	mixin( _shared ~ "static this()
 	{
-		Linker.link(gtk_tree_model_get_type, "gtk_tree_model_get_type", LIBRARY.GTK);
-	}
+		Linker.link(gtk_tree_model_get_type, \"gtk_tree_model_get_type\", LIBRARY.GTK);
+	}");
 	
 	// Minimal implementation.
 	mixin TreeModelT!(GtkTreeModel);
