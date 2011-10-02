@@ -7,6 +7,7 @@ ARCH=$(shell arch || uname -m)
 
 # make gtkD libs and test
 all: libs test
+shared: shared-libs libs test
 
 ifndef DC
     ifneq ($(strip $(shell which dmd 2>/dev/null)),)
@@ -28,6 +29,12 @@ else
     DCFLAGS=-O
     LINKERFLAG=-L
     output=-of$@
+endif
+
+ifneq (,$(findstring ldc,$(DC)))
+    FPIC=-relocation-model=pic
+else
+	FPIC=-fPIC
 endif
 
 ifeq ("$(OS)","Linux")
@@ -58,55 +65,37 @@ define make-lib
     $(RANLIB) $@
 endef
 
-
 #######################################################################
 
 LIBNAME_GTKD = libgtkd.a
-SOURCES_GTKD = $(shell find \
-        src/atk \
-        src/cairo \
-        src/gdk \
-        src/gdkpixbuf \
-        src/gio \
-        src/glade \
-        src/glib \
-        src/gobject \
-        src/gthread \
-        src/gtk \
-        src/gtkc \
-        src/pango \
-        -name '*.d' )
-OBJECTS_GTKD = $(shell echo $(SOURCES_GTKD) | sed -e 's/\.d/\.o/g')
+SONAME_GTKD = libgtkd.so
+SOURCES_GTKD = $(subst src/build/gtkD.d,,$(wildcard src/*/*.d))
+OBJECTS_GTKD = $(patsubst %.d,%.o,$(SOURCES_GTKD))
+PICOBJECTS_GTKD = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKD))
 
 LIBNAME_GTKDGL = libgtkdgl.a
-SOURCES_GTKDGL = $(shell find \
-        srcgl/glgdk \
-        srcgl/glgtk \
-        srcgl/gtkglc \
-        -name '*.d' )
-OBJECTS_GTKDGL = $(shell echo $(SOURCES_GTKDGL) | sed -e 's/\.d/\.o/g')
+SONAME_GTKDGL = libgtkdgl.so
+SOURCES_GTKDGL = $(wildcard srcgl/*/*.d)
+OBJECTS_GTKDGL = $(patsubst %.d,%.o,$(SOURCES_GTKDGL))
+PICOBJECTS_GTKDGL = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDGL))
 
 LIBNAME_GTKDSV = libgtkdsv.a
-SOURCES_GTKDSV = $(shell find \
-        srcsv/gsv \
-        srcsv/gsvc \
-        -name '*.d' )
-OBJECTS_GTKDSV = $(shell echo $(SOURCES_GTKDSV) | sed -e 's/\.d/\.o/g')
+SONAME_GTKDSV = libgtkdsv.so
+SOURCES_GTKDSV = $(wildcard srcsv/*/*.d)
+OBJECTS_GTKDSV = $(patsubst %.d,%.o,$(SOURCES_GTKDSV))
+PICOBJECTS_GTKDSV = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDSV))
 
 LIBNAME_GTKDGDA = libgtkdgda.a
-SOURCES_GTKDGDA = $(shell find \
-        srcgda/gda \
-        srcgda/gdac \
-        -name '*.d' )
-OBJECTS_GTKDGDA = $(shell echo $(SOURCES_GTKDGDA) | sed -e 's/\.d/\.o/g')
+SONAME_GTKDGDA = libgtkdgda.so
+SOURCES_GTKDGDA = $(wildcard srcgda/*/*.d)
+OBJECTS_GTKDGDA = $(patsubst %.d,%.o,$(SOURCES_GTKDGDA))
+PICOBJECTS_GTKDGDA = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDGDA))
 
 LIBNAME_GSTREAMERD = libgstreamerd.a
-SOURCES_GSTREAMERD = $(shell find \
-        srcgstreamer/gstinterfaces \
-        srcgstreamer/gstreamer \
-        srcgstreamer/gstreamerc \
-        -name '*.d' )
-OBJECTS_GSTREAMERD = $(shell echo $(SOURCES_GSTREAMERD) | sed -e 's/\.d/\.o/g')
+SONAME_GSTREAMERD = libgstreamerd.so
+SOURCES_GSTREAMERD = $(wildcard srcgstreamer/*/*.d)
+OBJECTS_GSTREAMERD = $(patsubst %.d,%.o,$(SOURCES_GSTREAMERD))
+PICOBJECTS_GSTREAMERD = $(patsubst %.o,%.pic.o,$(OBJECTS_GSTREAMERD))
 
 #######################################################################
 
@@ -127,8 +116,10 @@ OBJECTS_DEMO = $(shell echo $(SOURCES_DEMO) | sed -e 's/\.d/\.o/g')
 
 ifeq ("$(OS)","Darwin")
     libs: gtkd
+    shared-libs: shared-gtkd
 else
     libs: gtkd gtkdgl sv
+    shared-libs: shared-gtkd shared-gtkdgl shared-sv
 endif
 
 gtkd:      $(LIBNAME_GTKD)
@@ -136,6 +127,14 @@ gtkdgl:    $(LIBNAME_GTKDGL)
 sv:        $(LIBNAME_GTKDSV)
 gda:       $(LIBNAME_GTKDGDA)
 gstreamer: $(LIBNAME_GSTREAMERD)
+
+shared-gtkd:      $(SONAME_GTKD)
+shared-gtkdgl:    $(SONAME_GTKDGL)
+shared-sv:        $(SONAME_GTKDSV)
+shared-gda:       $(SONAME_GTKDGDA)
+shared-gstreamer: $(SONAME_GSTREAMERD)
+
+#######################################################################
 
 $(LIBNAME_GTKD): IMPORTS=-Isrc
 $(LIBNAME_GTKD): $(OBJECTS_GTKD)
@@ -159,12 +158,37 @@ $(LIBNAME_GSTREAMERD): $(LIBNAME_GTKD) $(OBJECTS_GSTREAMERD)
 
 #######################################################################
 
+# When we get a shared standard lib use:
+# $(DC) $(LINKERFLAG)-shared $^ $(output)
+
+$(SONAME_GTKD): IMPORTS=-Isrc
+$(SONAME_GTKD): $(PICOBJECTS_GTKD)
+	$(CC) -shared $^ -o $@
+
+$(SONAME_GTKDGL): IMPORTS=-Isrc -Isrcgl
+$(SONAME_GTKDGL): $(PICOBJECTS_GTKDGL)
+	$(CC) -shared $^ -o $@
+
+$(SONAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
+$(SONAME_GTKDSV): $(PICOBJECTS_GTKDSV)
+	$(CC) -shared $^ -o $@
+
+$(SONAME_GTKDGDA): IMPORTS=-Isrc -Isrcgda
+$(SONAME_GTKDGDA): $(PICOBJECTS_GTKDGDA)
+	$(CC) -shared $^ -o $@
+
+$(SONAME_GTKDGSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
+$(SONAME_GTKDGSTREAMERD): $(PICOBJECTS_GTKDGSTREAMERD)
+	$(CC) -shared $^ -o $@
+
+#######################################################################
+
 # -Idemos
 
 test: $(BINNAME_DEMO)
 
 $(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
-$(BINNAME_DEMO): $(OBJECTS_DEMO) $(LIBNAME_GTKD)
+$(BINNAME_DEMO): $(LIBNAME_GTKD) $(OBJECTS_DEMO)
 	$(DC) $(OBJECTS_DEMO) $(output) $(LDFLAGS) $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd
 
 #######################################################################
@@ -172,12 +196,20 @@ $(BINNAME_DEMO): $(OBJECTS_DEMO) $(LIBNAME_GTKD)
 %.o : %.d
 	$(DC) $(DCFLAGS) $(IMPORTS) -c $< $(output)
 
+%.pic.o : %.d
+#ifneq (,$(findstring ldc,$(DC)))
+	$(DC) $(DCFLAGS) $(FPIC) $(IMPORTS) -c $< $(output)
+#else
+#	$(error shared not suported with $(DC))
+#endif
 #######################################################################
 
 ifeq ("$(OS)","Darwin")
     install: install-gtkd
+    install-shared: install-shared-gtkd
 else
     install: install-gtkd install-gtkdgl install-gtkdsv
+    install-shared: install-shared-gtkd install-shared-gtkdgl install-shared-gtkdsv
 endif
 
 install-gtkd: gtkd
@@ -202,31 +234,52 @@ install-gstreamer: gstreamer install-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/lib
 
+install-shared-gtkd: shared-gtkd install-gtkd
+	install -m 644 $(SONAME_GTKD)   $(DESTDIR)$(prefix)/lib
+
+install-shared-gtkdgl: shared-gtkdgl install-gtkdgl
+	install -m 644 $(SONAME_GTKDGL)   $(DESTDIR)$(prefix)/lib
+
+install-shared-gtkdsv: shared-sv install-gtkdsv
+	install -m 644 $(SONAME_GTKDSV)   $(DESTDIR)$(prefix)/lib
+
+install-shared-gda: shared-gda install-gtkdsv
+	install -m 644 $(SONAME_GTKDGDA)   $(DESTDIR)$(prefix)/lib
+
+install-shared-gstreamer: shared-gstreamer install-gstreamer
+	install -m 644 $(SONAME_GTKDGDA)   $(DESTDIR)$(prefix)/lib
+
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKD)
+	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GTKD)
 
 uninstall-gtkdgl:
 	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDGL)
+	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GTKDGL)
 
 uninstall-gtkdsv:
 	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDSV)	
+	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDSV)
+	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GTKDSV)
 
 uninstall-gda:
 	$(foreach dir,$(shell ls srcgda), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDGDA)
+	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GTKDGDA)
 
 uninstall-gstreamer:
 	$(foreach dir,$(shell ls srcgstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GSTREAMERD)
+	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GSTREAMERD)
 
 clean:
-	-rm -f $(LIBNAME_GTKD)       $(OBJECTS_GTKD) 
-	-rm -f $(LIBNAME_GTKDGL)     $(OBJECTS_GTKDGL) 
-	-rm -f $(LIBNAME_GTKDSV)     $(OBJECTS_GTKDSV) 
-	-rm -f $(LIBNAME_GTKDGDA)    $(OBJECTS_GTKDGDA) 
-	-rm -f $(LIBNAME_GSTREAMERD) $(OBJECTS_GSTREAMERD) 
+	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
+	-rm -f $(LIBNAME_GTKDGL)     $(SONAME_GTKDGL)     $(OBJECTS_GTKDGL)     $(PICOBJECTS_GTKDGL)
+	-rm -f $(LIBNAME_GTKDSV)     $(SONAME_GTKDSV)     $(OBJECTS_GTKDSV)     $(PICOBJECTS_GTKDSV)
+	-rm -f $(LIBNAME_GTKDGDA)    $(SONAME_GTKDGDA)    $(OBJECTS_GTKDGDA)    $(PICOBJECTS_GTKDGDA)
+	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)
 	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)
+	-rm -rf .pic 
 
