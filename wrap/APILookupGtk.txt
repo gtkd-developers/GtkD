@@ -5801,6 +5801,17 @@ prefix: gtk_tool_shell_
 import: gtk.SizeGroup
 structWrap: GtkSizeGroup* SizeGroup
 alias: getStyle toolShellGetStyle
+nocode: gtk_tool_shell_get_orientation
+interfaceCode: start
+	/**
+	 * Retrieves the current orientation for the tool shell. Tool items must not
+	 * call this function directly, but rely on gtk_tool_item_get_orientation()
+	 * instead.
+	 * Since 2.14
+	 * Returns: the current orientation of shell
+	 */
+	public GtkOrientation getOrientation();
+interfaceCode: end
 interface: ToolShellIF
 outFile: ToolShellT
 
@@ -5983,6 +5994,19 @@ import: gtk.ToolShellT
 code: start
 	// add the ToolShell capabilities
 	mixin ToolShellT!(GtkToolItemGroup);
+
+	/**
+	 * Retrieves the current orientation for the tool shell. Tool items must not
+	 * call this function directly, but rely on gtk_tool_item_get_orientation()
+	 * instead.
+	 * Since 2.14
+	 * Returns: the current orientation of shell
+	 */
+	public GtkOrientation getOrientation()
+	{
+		// GtkOrientation gtk_tool_shell_get_orientation (GtkToolShell *shell);
+		return gtk_tool_shell_get_orientation(getToolShellTStruct());
+	}
 code: end
 outFile: ToolItemGroup
 

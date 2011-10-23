@@ -131,6 +131,19 @@ public class ToolItemGroup : Container, ToolShellIF
 	mixin ToolShellT!(GtkToolItemGroup);
 	
 	/**
+	 * Retrieves the current orientation for the tool shell. Tool items must not
+	 * call this function directly, but rely on gtk_tool_item_get_orientation()
+	 * instead.
+	 * Since 2.14
+	 * Returns: the current orientation of shell
+	 */
+	public GtkOrientation getOrientation()
+	{
+		// GtkOrientation gtk_tool_shell_get_orientation (GtkToolShell *shell);
+		return gtk_tool_shell_get_orientation(getToolShellTStruct());
+	}
+	
+	/**
 	 */
 	
 	/**

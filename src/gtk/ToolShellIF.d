@@ -31,7 +31,7 @@
  * clss    = ToolShellT
  * interf  = ToolShellIF
  * class Code: No
- * interface Code: No
+ * interface Code: Yes
  * template for:
  * extend  = 
  * implements:
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_tool_shell_get_orientation
  * omit signals:
  * imports:
  * 	- gtk.SizeGroup
@@ -81,6 +82,15 @@ public interface ToolShellIF
 	
 	
 	/**
+	 * Retrieves the current orientation for the tool shell. Tool items must not
+	 * call this function directly, but rely on gtk_tool_item_get_orientation()
+	 * instead.
+	 * Since 2.14
+	 * Returns: the current orientation of shell
+	 */
+	public GtkOrientation getOrientation();
+	
+	/**
 	 */
 	
 	/**
@@ -99,15 +109,6 @@ public interface ToolShellIF
 	 * Returns: the current size for icons of shell. [type int]
 	 */
 	public GtkIconSize getIconSize();
-	
-	/**
-	 * Retrieves the current orientation for the tool shell. Tool items must not
-	 * call this function directly, but rely on gtk_tool_item_get_orientation()
-	 * instead.
-	 * Since 2.14
-	 * Returns: the current orientation of shell
-	 */
-	public GtkOrientation getOrientation();
 	
 	/**
 	 * Returns the relief style of buttons on shell. Tool items must not call this

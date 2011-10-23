@@ -31,7 +31,7 @@
  * clss    = ToolShellT
  * interf  = ToolShellIF
  * class Code: No
- * interface Code: No
+ * interface Code: Yes
  * template for:
  * 	- TStruct
  * extend  = 
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_tool_shell_get_orientation
  * omit signals:
  * imports:
  * 	- gtk.SizeGroup
@@ -110,19 +111,6 @@ public template ToolShellT(TStruct)
 	{
 		// GtkIconSize gtk_tool_shell_get_icon_size (GtkToolShell *shell);
 		return gtk_tool_shell_get_icon_size(getToolShellTStruct());
-	}
-	
-	/**
-	 * Retrieves the current orientation for the tool shell. Tool items must not
-	 * call this function directly, but rely on gtk_tool_item_get_orientation()
-	 * instead.
-	 * Since 2.14
-	 * Returns: the current orientation of shell
-	 */
-	public GtkOrientation getOrientation()
-	{
-		// GtkOrientation gtk_tool_shell_get_orientation (GtkToolShell *shell);
-		return gtk_tool_shell_get_orientation(getToolShellTStruct());
 	}
 	
 	/**
