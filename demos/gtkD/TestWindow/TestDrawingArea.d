@@ -388,7 +388,7 @@ class TestDrawingArea : VBox
 					pol1.length = polygonStar.length;
 					for ( int scale = 10 ; scale<= 300; scale+=15)
 					{
-						foreach(int i , inout GdkPoint p ; polygonStar)
+						foreach(int i , ref GdkPoint p ; polygonStar)
 						{
 							pol1[i].x = p.x*scale/2+x;
 							pol1[i].y = p.y*scale/2+y;
