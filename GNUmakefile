@@ -1,6 +1,7 @@
 #makeAll.sh
 SHELL=/bin/sh
 prefix=/usr/local
+libdir=lib
 
 OS=$(shell uname || uname -s)
 ARCH=$(shell arch || uname -m)
@@ -215,64 +216,64 @@ endif
 install-gtkd: gtkd
 	install -d $(DESTDIR)$(prefix)/include/d
 	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
-	install -d $(DESTDIR)$(prefix)/lib
-	install -m 644 $(LIBNAME_GTKD)   $(DESTDIR)$(prefix)/lib
+	install -d $(DESTDIR)$(prefix)/$(libdir)
+	install -m 644 $(LIBNAME_GTKD)   $(DESTDIR)$(prefix)/$(libdir)
 
 install-gtkdgl: gtkdgl install-gtkd
 	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
-	install -m 644 $(LIBNAME_GTKDGL) $(DESTDIR)$(prefix)/lib
+	install -m 644 $(LIBNAME_GTKDGL) $(DESTDIR)$(prefix)/$(libdir)
 
 install-gtkdsv: sv install-gtkd
 	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
-	install -m 644 $(LIBNAME_GTKDSV) $(DESTDIR)$(prefix)/lib
+	install -m 644 $(LIBNAME_GTKDSV) $(DESTDIR)$(prefix)/$(libdir)
 
 install-gda: gda install-gtkd
 	(cd srcgda; echo $(SOURCES_GTKDGDA) | sed -e s,srcgda/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
-	install -m 644 $(LIBNAME_GTKDGDA) $(DESTDIR)$(prefix)/lib
+	install -m 644 $(LIBNAME_GTKDGDA) $(DESTDIR)$(prefix)/$(libdir)
 
 install-gstreamer: gstreamer install-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
-	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/lib
+	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gtkd: shared-gtkd install-gtkd
-	install -m 644 $(SONAME_GTKD)   $(DESTDIR)$(prefix)/lib
+	install -m 644 $(SONAME_GTKD)   $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gtkdgl: shared-gtkdgl install-gtkdgl
-	install -m 644 $(SONAME_GTKDGL)   $(DESTDIR)$(prefix)/lib
+	install -m 644 $(SONAME_GTKDGL)   $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gtkdsv: shared-sv install-gtkdsv
-	install -m 644 $(SONAME_GTKDSV)   $(DESTDIR)$(prefix)/lib
+	install -m 644 $(SONAME_GTKDSV)   $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gda: shared-gda install-gtkdsv
-	install -m 644 $(SONAME_GTKDGDA)   $(DESTDIR)$(prefix)/lib
+	install -m 644 $(SONAME_GTKDGDA)   $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gstreamer: shared-gstreamer install-gstreamer
-	install -m 644 $(SONAME_GTKDGDA)   $(DESTDIR)$(prefix)/lib
+	install -m 644 $(SONAME_GTKDGDA)   $(DESTDIR)$(prefix)/$(libdir)
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKD)
-	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GTKD)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
 
 uninstall-gtkdgl:
 	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDGL)
-	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GTKDGL)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGL)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
 
 uninstall-gtkdsv:
 	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDSV)
-	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GTKDSV)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDSV)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
 
 uninstall-gda:
 	$(foreach dir,$(shell ls srcgda), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GTKDGDA)
-	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GTKDGDA)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGDA)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA)
 
 uninstall-gstreamer:
 	$(foreach dir,$(shell ls srcgstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/$(LIBNAME_GSTREAMERD)
-	rm -f $(DESTDIR)$(prefix)/lib/$(SONAME_GSTREAMERD)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GSTREAMERD)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
 
 clean:
 	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
