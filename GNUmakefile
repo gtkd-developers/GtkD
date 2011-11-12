@@ -198,11 +198,11 @@ $(BINNAME_DEMO): $(LIBNAME_GTKD) $(OBJECTS_DEMO)
 	$(DC) $(DCFLAGS) $(IMPORTS) -c $< $(output)
 
 %.pic.o : %.d
-#ifneq (,$(findstring ldc,$(DC)))
+ifneq (,$(findstring ldc,$(DC)))
 	$(DC) $(DCFLAGS) $(FPIC) $(IMPORTS) -c $< $(output)
-#else
-#	$(error shared not suported with $(DC))
-#endif
+else
+	$(error shared not suported with $(DC))
+endif
 #######################################################################
 
 ifeq ("$(OS)","Darwin")
