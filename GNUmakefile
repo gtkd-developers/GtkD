@@ -190,7 +190,7 @@ test: $(BINNAME_DEMO)
 
 $(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
 $(BINNAME_DEMO): $(LIBNAME_GTKD) $(OBJECTS_DEMO)
-	$(DC) $(OBJECTS_DEMO) $(output) $(LDFLAGS) $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd
+	$(DC) $(OBJECTS_DEMO) $(output) $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd $(LDFLAGS)
 
 #######################################################################
 
