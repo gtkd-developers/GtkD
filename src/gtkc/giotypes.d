@@ -3228,7 +3228,7 @@ public struct GIOExtensionPoint{}
  * user data passed to the callback.
  */
 // void (*GFileProgressCallback) (goffset current_num_bytes,  goffset total_num_bytes,  gpointer user_data);
-public typedef extern(C) void  function (long, long, void*) GFileProgressCallback;
+public alias extern(C) void  function (long, long, void*) GFileProgressCallback;
 
 /*
  * When loading the partial contents of a file with g_file_load_partial_contents_async(),
@@ -3245,7 +3245,7 @@ public typedef extern(C) void  function (long, long, void*) GFileProgressCallbac
  *  TRUE if more data should be read back. FALSE otherwise.
  */
 // gboolean (*GFileReadMoreCallback) (const char *file_contents,  goffset file_size,  gpointer callback_data);
-public typedef extern(C) int  function (char*, long, void*) GFileReadMoreCallback;
+public alias extern(C) int  function (char*, long, void*) GFileReadMoreCallback;
 
 /*
  * Type definition for a function that will be called back when an asynchronous
@@ -3258,7 +3258,7 @@ public typedef extern(C) int  function (char*, long, void*) GFileReadMoreCallbac
  * user data passed to the callback.
  */
 // void (*GAsyncReadyCallback) (GObject *source_object,  GAsyncResult *res,  gpointer user_data);
-public typedef extern(C) void  function (GObject*, GAsyncResult*, void*) GAsyncReadyCallback;
+public alias extern(C) void  function (GObject*, GAsyncResult*, void*) GAsyncReadyCallback;
 
 /*
  * I/O Job function.
@@ -3278,7 +3278,7 @@ public typedef extern(C) void  function (GObject*, GAsyncResult*, void*) GAsyncR
  *  complete the job, FALSE if the job is complete (or cancelled)
  */
 // gboolean (*GIOSchedulerJobFunc) (GIOSchedulerJob *job,  GCancellable *cancellable,  gpointer user_data);
-public typedef extern(C) int  function (GIOSchedulerJob*, GCancellable*, void*) GIOSchedulerJobFunc;
+public alias extern(C) int  function (GIOSchedulerJob*, GCancellable*, void*) GIOSchedulerJobFunc;
 
 /*
  * Simple thread function that runs an asynchronous operation and
@@ -3291,7 +3291,7 @@ public typedef extern(C) int  function (GIOSchedulerJob*, GCancellable*, void*) 
  * optional GCancellable object, NULL to ignore.
  */
 // void (*GSimpleAsyncThreadFunc) (GSimpleAsyncResult *res,  GObject *object,  GCancellable *cancellable);
-public typedef extern(C) void  function (GSimpleAsyncResult*, GObject*, GCancellable*) GSimpleAsyncThreadFunc;
+public alias extern(C) void  function (GSimpleAsyncResult*, GObject*, GCancellable*) GSimpleAsyncThreadFunc;
 
 /*
  * Changes the size of the memory block pointed to by data to
@@ -3305,7 +3305,7 @@ public typedef extern(C) void  function (GSimpleAsyncResult*, GObject*, GCancell
  *  a pointer to the reallocated memory
  */
 // gpointer (*GReallocFunc) (gpointer data,  gsize size);
-public typedef extern(C) void*  function (void*, gsize) GReallocFunc;
+public alias extern(C) void*  function (void*, gsize) GReallocFunc;
 
 /*
  * This is the function type of the callback used for the GSource
@@ -3321,7 +3321,7 @@ public typedef extern(C) void*  function (void*, gsize) GReallocFunc;
  * Since 2.22
  */
 // gboolean (*GSocketSourceFunc) (GSocket *socket,  GIOCondition condition,  gpointer user_data);
-public typedef extern(C) int  function (GSocket*, GIOCondition, void*) GSocketSourceFunc;
+public alias extern(C) int  function (GSocket*, GIOCondition, void*) GSocketSourceFunc;
 
 /*
  * Signature for callback function used in g_dbus_connection_signal_subscribe().
@@ -3342,7 +3342,7 @@ public typedef extern(C) int  function (GSocket*, GIOCondition, void*) GSocketSo
  * Since 2.26
  */
 // void (*GDBusSignalCallback) (GDBusConnection *connection,  const gchar *sender_name,  const gchar *object_path,  const gchar *interface_name,  const gchar *signal_name,  GVariant *parameters,  gpointer user_data);
-public typedef extern(C) void  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, void*) GDBusSignalCallback;
+public alias extern(C) void  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, void*) GDBusSignalCallback;
 
 /*
  * Signature for function used in g_dbus_connection_add_filter().
@@ -3376,7 +3376,7 @@ public typedef extern(C) void  function (GDBusConnection*, char*, char*, char*, 
  * Since 2.26
  */
 // GDBusMessage * (*GDBusMessageFilterFunction) (GDBusConnection *connection,  GDBusMessage *message,  gboolean incoming,  gpointer user_data);
-public typedef extern(C) GDBusMessage *  function (GDBusConnection*, GDBusMessage*, int, void*) GDBusMessageFilterFunction;
+public alias extern(C) GDBusMessage *  function (GDBusConnection*, GDBusMessage*, int, void*) GDBusMessageFilterFunction;
 
 /*
  * The type of the method_call function in GDBusInterfaceVTable.
@@ -3399,7 +3399,7 @@ public typedef extern(C) GDBusMessage *  function (GDBusConnection*, GDBusMessag
  * Since 2.26
  */
 // void (*GDBusInterfaceMethodCallFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *method_name,  GVariant *parameters,  GDBusMethodInvocation *invocation,  gpointer user_data);
-public typedef extern(C) void  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, GDBusMethodInvocation*, void*) GDBusInterfaceMethodCallFunc;
+public alias extern(C) void  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, GDBusMethodInvocation*, void*) GDBusInterfaceMethodCallFunc;
 
 /*
  * The type of the get_property function in GDBusInterfaceVTable.
@@ -3424,7 +3424,7 @@ public typedef extern(C) void  function (GDBusConnection*, char*, char*, char*, 
  * Since 2.26
  */
 // GVariant * (*GDBusInterfaceGetPropertyFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *property_name,  GError **error,  gpointer user_data);
-public typedef extern(C) GVariant *  function (GDBusConnection*, char*, char*, char*, char*, GError**, void*) GDBusInterfaceGetPropertyFunc;
+public alias extern(C) GVariant *  function (GDBusConnection*, char*, char*, char*, char*, GError**, void*) GDBusInterfaceGetPropertyFunc;
 
 /*
  * The type of the set_property function in GDBusInterfaceVTable.
@@ -3449,7 +3449,7 @@ public typedef extern(C) GVariant *  function (GDBusConnection*, char*, char*, c
  * Since 2.26
  */
 // gboolean (*GDBusInterfaceSetPropertyFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *property_name,  GVariant *value,  GError **error,  gpointer user_data);
-public typedef extern(C) int  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, GError**, void*) GDBusInterfaceSetPropertyFunc;
+public alias extern(C) int  function (GDBusConnection*, char*, char*, char*, char*, GVariant*, GError**, void*) GDBusInterfaceSetPropertyFunc;
 
 /*
  * The type of the enumerate function in GDBusSubtreeVTable.
@@ -3473,7 +3473,7 @@ public typedef extern(C) int  function (GDBusConnection*, char*, char*, char*, c
  * Since 2.26
  */
 // gchar ** (*GDBusSubtreeEnumerateFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  gpointer user_data);
-public typedef extern(C) char **  function (GDBusConnection*, char*, char*, void*) GDBusSubtreeEnumerateFunc;
+public alias extern(C) char **  function (GDBusConnection*, char*, char*, void*) GDBusSubtreeEnumerateFunc;
 
 /*
  * The type of the introspect function in GDBusSubtreeVTable.
@@ -3505,7 +3505,7 @@ public typedef extern(C) char **  function (GDBusConnection*, char*, char*, void
  * Since 2.26
  */
 // GDBusInterfaceInfo ** (*GDBusSubtreeIntrospectFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *node,  gpointer user_data);
-public typedef extern(C) GDBusInterfaceInfo **  function (GDBusConnection*, char*, char*, char*, void*) GDBusSubtreeIntrospectFunc;
+public alias extern(C) GDBusInterfaceInfo **  function (GDBusConnection*, char*, char*, char*, void*) GDBusSubtreeIntrospectFunc;
 
 /*
  * The type of the dispatch function in GDBusSubtreeVTable.
@@ -3530,7 +3530,7 @@ public typedef extern(C) GDBusInterfaceInfo **  function (GDBusConnection*, char
  * Since 2.26
  */
 // const GDBusInterfaceVTable * (*GDBusSubtreeDispatchFunc)  (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *node,  gpointer *out_user_data,  gpointer user_data);
-public typedef extern(C) GDBusInterfaceVTable *  function (GDBusConnection*, char*, char*, char*, char*, gpointer*, void*) GDBusSubtreeDispatchFunc;
+public alias extern(C) GDBusInterfaceVTable *  function (GDBusConnection*, char*, char*, char*, char*, gpointer*, void*) GDBusSubtreeDispatchFunc;
 
 /*
  * Invoked when a connection to a message bus has been obtained.
@@ -3543,7 +3543,7 @@ public typedef extern(C) GDBusInterfaceVTable *  function (GDBusConnection*, cha
  * Since 2.26
  */
 // void (*GBusAcquiredCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
-public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusAcquiredCallback;
+public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusAcquiredCallback;
 
 /*
  * Invoked when the name is acquired.
@@ -3556,7 +3556,7 @@ public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusAcq
  * Since 2.26
  */
 // void (*GBusNameAcquiredCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
-public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNameAcquiredCallback;
+public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusNameAcquiredCallback;
 
 /*
  * Invoked when the name is lost or connection has been closed.
@@ -3570,7 +3570,7 @@ public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNam
  * Since 2.26
  */
 // void (*GBusNameLostCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
-public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNameLostCallback;
+public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusNameLostCallback;
 
 /*
  * Invoked when the name being watched is known to have to have a owner.
@@ -3585,7 +3585,7 @@ public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNam
  * Since 2.26
  */
 // void (*GBusNameAppearedCallback) (GDBusConnection *connection,  const gchar *name,  const gchar *name_owner,  gpointer user_data);
-public typedef extern(C) void  function (GDBusConnection*, char*, char*, void*) GBusNameAppearedCallback;
+public alias extern(C) void  function (GDBusConnection*, char*, char*, void*) GBusNameAppearedCallback;
 
 /*
  * Invoked when the name being watched is known not to have to have a owner.
@@ -3598,7 +3598,7 @@ public typedef extern(C) void  function (GDBusConnection*, char*, char*, void*) 
  * Since 2.26
  */
 // void (*GBusNameVanishedCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
-public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNameVanishedCallback;
+public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusNameVanishedCallback;
 
 /*
  * The type of the function that is used to convert from a value stored
@@ -3619,7 +3619,7 @@ public typedef extern(C) void  function (GDBusConnection*, char*, void*) GBusNam
  * TRUE if the conversion succeeded, FALSE in case of an error
  */
 // gboolean (*GSettingsGetMapping) (GVariant *value,  gpointer *result,  gpointer user_data);
-public typedef extern(C) int  function (GVariant*, gpointer*, void*) GSettingsGetMapping;
+public alias extern(C) int  function (GVariant*, gpointer*, void*) GSettingsGetMapping;
 
 /*
  * The type for the function that is used to convert an object property
@@ -3635,7 +3635,7 @@ public typedef extern(C) int  function (GVariant*, gpointer*, void*) GSettingsGe
  *  or NULL in case of an error
  */
 // GVariant * (*GSettingsBindSetMapping) (const GValue *value,  const GVariantType *expected_type,  gpointer user_data);
-public typedef extern(C) GVariant *  function (GValue*, GVariantType*, void*) GSettingsBindSetMapping;
+public alias extern(C) GVariant *  function (GValue*, GVariantType*, void*) GSettingsBindSetMapping;
 
 /*
  * The type for the function that is used to convert from GSettings to
@@ -3655,4 +3655,4 @@ public typedef extern(C) GVariant *  function (GValue*, GVariantType*, void*) GS
  * The GSettingsBackend for this settings object.
  */
 // gboolean (*GSettingsBindGetMapping) (GValue *value,  GVariant *variant,  gpointer user_data);
-public typedef extern(C) int  function (GValue*, GVariant*, void*) GSettingsBindGetMapping;
+public alias extern(C) int  function (GValue*, GVariant*, void*) GSettingsBindGetMapping;

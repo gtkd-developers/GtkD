@@ -462,14 +462,14 @@ public struct GdaValue
  * user_data :
  */
 // void (*GdaInitFunc) (gpointer user_data);
-public typedef extern(C) void  function (void*) GdaInitFunc;
+public alias extern(C) void  function (void*) GdaInitFunc;
 
 /*
  * path :
  * user_data :
  */
 // void (*GdaConfigListenerFunc) (const gchar *path,  gpointer user_data);
-public typedef extern(C) void  function (char*, void*) GdaConfigListenerFunc;
+public alias extern(C) void  function (char*, void*) GdaConfigListenerFunc;
 
 /*
  * model :
@@ -478,4 +478,4 @@ public typedef extern(C) void  function (char*, void*) GdaConfigListenerFunc;
  * Returns :
  */
 // gboolean (*GdaDataModelForeachFunc) (GdaDataModel *model,  GdaRow *row,  gpointer user_data);
-public typedef extern(C) int  function (GdaDataModel*, GdaRow*, void*) GdaDataModelForeachFunc;
+public alias extern(C) int  function (GdaDataModel*, GdaRow*, void*) GdaDataModelForeachFunc;

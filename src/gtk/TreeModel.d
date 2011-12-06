@@ -89,8 +89,8 @@ struct CustomTreeModelClass
 }
 
 //We need this function for the interface implementation.
-extern(C) typedef GType function()c_gtk_tree_model_get_type;
-c_gtk_tree_model_get_type gtk_tree_model_get_type;
+extern(C) GType function() c_gtk_tree_model_get_type;
+alias c_gtk_tree_model_get_type gtk_tree_model_get_type;
 
 /**
  */

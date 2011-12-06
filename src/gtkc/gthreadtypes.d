@@ -469,4 +469,4 @@ public struct GOnce
  *  g_thread_join().
  */
 // gpointer (*GThreadFunc) (gpointer data);
-public typedef extern(C) void*  function (void*) GThreadFunc;
+public alias extern(C) void*  function (void*) GThreadFunc;

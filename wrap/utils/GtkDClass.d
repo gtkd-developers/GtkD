@@ -2537,7 +2537,7 @@ public class GtkDClass
 
 
 
-		char[] f = "public typedef extern(C) ";
+		char[] f = "public alias extern(C) ";
 		int pos = 0;
 		char[] type = until(pos, line, "(");
 		until(pos, line, "*");

@@ -2034,7 +2034,7 @@ public struct PangoEngineShapeClass
  * Since 1.4
  */
 // gboolean (*PangoFontsetForeachFunc) (PangoFontset *fontset,  PangoFont *font,  gpointer data);
-public typedef extern(C) int  function (PangoFontset*, PangoFont*, void*) PangoFontsetForeachFunc;
+public alias extern(C) int  function (PangoFontset*, PangoFont*, void*) PangoFontsetForeachFunc;
 
 /*
  * A copy function passed to attribute new functions that take
@@ -2045,7 +2045,7 @@ public typedef extern(C) int  function (PangoFontset*, PangoFont*, void*) PangoF
  * a new copy of data.
  */
 // gpointer (*PangoAttrDataCopyFunc) (gconstpointer data);
-public typedef extern(C) void*  function (void*) PangoAttrDataCopyFunc;
+public alias extern(C) void*  function (void*) PangoAttrDataCopyFunc;
 
 /*
  * A predicate function used by pango_attr_list_filter()
@@ -2058,7 +2058,7 @@ public typedef extern(C) void*  function (void*) PangoAttrDataCopyFunc;
  * TRUE if the attribute should be filtered out
  */
 // gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,  gpointer data);
-public typedef extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFunc;
+public alias extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFunc;
 
 /*
  * Function type for rendering attributes of type PANGO_ATTR_SHAPE
@@ -2077,4 +2077,4 @@ public typedef extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterF
  * user data passed to pango_cairo_context_set_shape_renderer()
  */
 // void (*PangoCairoShapeRendererFunc) (cairo_t *cr,  PangoAttrShape *attr,  gboolean do_path,  gpointer data);
-public typedef extern(C) void  function (cairo_t*, PangoAttrShape*, int, void*) PangoCairoShapeRendererFunc;
+public alias extern(C) void  function (cairo_t*, PangoAttrShape*, int, void*) PangoCairoShapeRendererFunc;

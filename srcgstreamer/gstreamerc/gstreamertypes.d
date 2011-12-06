@@ -3701,7 +3701,7 @@ public struct GstTypeFindFactory{}
  *  reference to cloned instance.
  */
 // GstMiniObject* (*GstMiniObjectCopyFunction) (const GstMiniObject *obj);
-public typedef extern(C) GstMiniObject*  function (GstMiniObject*) GstMiniObjectCopyFunction;
+public alias extern(C) GstMiniObject*  function (GstMiniObject*) GstMiniObjectCopyFunction;
 
 /*
  * Virtual function prototype for methods to free ressources used by
@@ -3713,7 +3713,7 @@ public typedef extern(C) GstMiniObject*  function (GstMiniObject*) GstMiniObject
  *  MiniObject to finalize
  */
 // void (*GstMiniObjectFinalizeFunction) (GstMiniObject *obj);
-public typedef extern(C) void  function (GstMiniObject*) GstMiniObjectFinalizeFunction;
+public alias extern(C) void  function (GstMiniObject*) GstMiniObjectFinalizeFunction;
 
 /*
  * Specifies the type of function passed to gst_bus_add_watch() or
@@ -3733,7 +3733,7 @@ public typedef extern(C) void  function (GstMiniObject*) GstMiniObjectFinalizeFu
  *  FALSE if the event source should be removed.
  */
 // gboolean (*GstBusFunc) (GstBus *bus,  GstMessage *message,  gpointer data);
-public typedef extern(C) int  function (GstBus*, GstMessage*, void*) GstBusFunc;
+public alias extern(C) int  function (GstBus*, GstMessage*, void*) GstBusFunc;
 
 /*
  * Handler will be invoked synchronously, when a new message has been injected
@@ -3751,7 +3751,7 @@ public typedef extern(C) int  function (GstBus*, GstMessage*, void*) GstBusFunc;
  *  GstBusSyncReply stating what to do with the message
  */
 // GstBusSyncReply (*GstBusSyncHandler) (GstBus *bus,  GstMessage *message,  gpointer data);
-public typedef extern(C) GstBusSyncReply  function (GstBus*, GstMessage*, void*) GstBusSyncHandler;
+public alias extern(C) GstBusSyncReply  function (GstBus*, GstMessage*, void*) GstBusSyncHandler;
 
 /*
  * The function prototype of the callback.
@@ -3767,7 +3767,7 @@ public typedef extern(C) GstBusSyncReply  function (GstBus*, GstMessage*, void*)
  *  TRUE or FALSE (currently unused)
  */
 // gboolean (*GstClockCallback) (GstClock *clock,  GstClockTime time,  GstClockID id,  gpointer user_data);
-public typedef extern(C) int  function (GstClock*, GstClockTime, GstClockID, void*) GstClockCallback;
+public alias extern(C) int  function (GstClock*, GstClockTime, GstClockID, void*) GstClockCallback;
 
 /*
  * Function to filter out entries in the index.
@@ -3782,7 +3782,7 @@ public typedef extern(C) int  function (GstClock*, GstClockTime, GstClockID, voi
  * to the index, FALSE otherwise.
  */
 // gboolean (*GstIndexFilter) (GstIndex *index,  GstIndexEntry *entry,  gpointer user_data);
-public typedef extern(C) int  function (GstIndex*, GstIndexEntry*, void*) GstIndexFilter;
+public alias extern(C) int  function (GstIndex*, GstIndexEntry*, void*) GstIndexFilter;
 
 /*
  * Function to resolve ids to writer descriptions.
@@ -3798,7 +3798,7 @@ public typedef extern(C) int  function (GstIndex*, GstIndexEntry*, void*) GstInd
  *  TRUE if an id could be assigned to the writer.
  */
 // gboolean (*GstIndexResolver) (GstIndex *index,  GstObject *writer,  gchar **writer_string,  gpointer user_data);
-public typedef extern(C) int  function (GstIndex*, GstObject*, gchar**, void*) GstIndexResolver;
+public alias extern(C) int  function (GstIndex*, GstObject*, gchar**, void*) GstIndexResolver;
 
 /*
  * The function that will be called when a GList iterator is freed. The
@@ -3807,7 +3807,7 @@ public typedef extern(C) int  function (GstIndex*, GstObject*, gchar**, void*) G
  *  the owner of the iterator
  */
 // void (*GstIteratorDisposeFunction) (gpointer owner);
-public typedef extern(C) void  function (void*) GstIteratorDisposeFunction;
+public alias extern(C) void  function (void*) GstIteratorDisposeFunction;
 
 /*
  * The function that will be called when the next element of the iterator
@@ -3823,7 +3823,7 @@ public typedef extern(C) void  function (void*) GstIteratorDisposeFunction;
  *  the result of the operation.
  */
 // GstIteratorResult (*GstIteratorNextFunction) (GstIterator *it,  gpointer *result);
-public typedef extern(C) GstIteratorResult  function (GstIterator*, gpointer*) GstIteratorNextFunction;
+public alias extern(C) GstIteratorResult  function (GstIterator*, gpointer*) GstIteratorNextFunction;
 
 /*
  * The function that will be called after the next item of the iterator
@@ -3840,7 +3840,7 @@ public typedef extern(C) GstIteratorResult  function (GstIterator*, gpointer*) G
  *  the result of the operation.
  */
 // GstIteratorItem (*GstIteratorItemFunction) (GstIterator *it,  gpointer item);
-public typedef extern(C) GstIteratorItem  function (GstIterator*, void*) GstIteratorItemFunction;
+public alias extern(C) GstIteratorItem  function (GstIterator*, void*) GstIteratorItemFunction;
 
 /*
  * This function will be called whenever a concurrent update happened
@@ -3854,7 +3854,7 @@ public typedef extern(C) GstIteratorItem  function (GstIterator*, void*) GstIter
  *  the iterator
  */
 // void (*GstIteratorResyncFunction) (GstIterator *it);
-public typedef extern(C) void  function (GstIterator*) GstIteratorResyncFunction;
+public alias extern(C) void  function (GstIterator*) GstIteratorResyncFunction;
 
 /*
  * This function will be called when the iterator is freed.
@@ -3865,7 +3865,7 @@ public typedef extern(C) void  function (GstIterator*) GstIteratorResyncFunction
  *  the iterator
  */
 // void (*GstIteratorFreeFunction) (GstIterator *it);
-public typedef extern(C) void  function (GstIterator*) GstIteratorFreeFunction;
+public alias extern(C) void  function (GstIterator*) GstIteratorFreeFunction;
 
 /*
  * A function to be passed to gst_iterator_fold().
@@ -3879,7 +3879,7 @@ public typedef extern(C) void  function (GstIterator*) GstIteratorFreeFunction;
  *  TRUE if the fold should continue, FALSE if it should stop.
  */
 // gboolean (*GstIteratorFoldFunction) (gpointer item,  GValue *ret,  gpointer user_data);
-public typedef extern(C) int  function (void*, GValue*, void*) GstIteratorFoldFunction;
+public alias extern(C) int  function (void*, GValue*, void*) GstIteratorFoldFunction;
 
 /*
  * Callback used by gst_pad_set_blocked_async(). Gets called when the blocking
@@ -3892,7 +3892,7 @@ public typedef extern(C) int  function (void*, GValue*, void*) GstIteratorFoldFu
  *  the gpointer to optional user data.
  */
 // void (*GstPadBlockCallback) (GstPad *pad,  gboolean blocked,  gpointer user_data);
-public typedef extern(C) void  function (GstPad*, int, void*) GstPadBlockCallback;
+public alias extern(C) void  function (GstPad*, int, void*) GstPadBlockCallback;
 
 /*
  * Ask the sinkpad pad to allocate a buffer with offset, size and caps.
@@ -3924,7 +3924,7 @@ public typedef extern(C) void  function (GstPad*, int, void*) GstPadBlockCallbac
  *  value means buf does not hold a valid buffer.
  */
 // GstFlowReturn (*GstPadBufferAllocFunction) (GstPad *pad,  guint64 offset,  guint size,  GstCaps *caps,  GstBuffer **buf);
-public typedef extern(C) GstFlowReturn  function (GstPad*, ulong, uint, GstCaps*, GstBuffer**) GstPadBufferAllocFunction;
+public alias extern(C) GstFlowReturn  function (GstPad*, ulong, uint, GstCaps*, GstBuffer**) GstPadBufferAllocFunction;
 
 /*
  * A function that will be called on sinkpads when chaining buffers.
@@ -3942,7 +3942,7 @@ public typedef extern(C) GstFlowReturn  function (GstPad*, ulong, uint, GstCaps*
  *  GST_FLOW_OK for success
  */
 // GstFlowReturn (*GstPadChainFunction) (GstPad *pad,  GstBuffer *buffer);
-public typedef extern(C) GstFlowReturn  function (GstPad*, GstBuffer*) GstPadChainFunction;
+public alias extern(C) GstFlowReturn  function (GstPad*, GstBuffer*) GstPadChainFunction;
 
 /*
  * Check if pad can be activated in pull mode.
@@ -3954,7 +3954,7 @@ public typedef extern(C) GstFlowReturn  function (GstPad*, GstBuffer*) GstPadCha
  *  TRUE if the pad can operate in pull mode.
  */
 // gboolean (*GstPadCheckGetRangeFunction) (GstPad *pad);
-public typedef extern(C) int  function (GstPad*) GstPadCheckGetRangeFunction;
+public alias extern(C) int  function (GstPad*) GstPadCheckGetRangeFunction;
 
 /*
  * This function will be called on source pads when a peer element
@@ -3993,7 +3993,7 @@ public typedef extern(C) int  function (GstPad*) GstPadCheckGetRangeFunction;
  *  GST_FLOW_OK for success
  */
 // GstFlowReturn (*GstPadGetRangeFunction) (GstPad *pad,  guint64 offset,  guint length,  GstBuffer **buffer);
-public typedef extern(C) GstFlowReturn  function (GstPad*, ulong, uint, GstBuffer**) GstPadGetRangeFunction;
+public alias extern(C) GstFlowReturn  function (GstPad*, ulong, uint, GstBuffer**) GstPadGetRangeFunction;
 
 /*
  * Function signature to handle an event for the pad.
@@ -4005,7 +4005,7 @@ public typedef extern(C) GstFlowReturn  function (GstPad*, ulong, uint, GstBuffe
  *  TRUE if the pad could handle the event.
  */
 // gboolean (*GstPadEventFunction) (GstPad *pad,  GstEvent *event);
-public typedef extern(C) int  function (GstPad*, GstEvent*) GstPadEventFunction;
+public alias extern(C) int  function (GstPad*, GstEvent*) GstPadEventFunction;
 
 /*
  * Function signature to handle a new link on the pad.
@@ -4017,7 +4017,7 @@ public typedef extern(C) int  function (GstPad*, GstEvent*) GstPadEventFunction;
  *  the result of the link with the specified peer.
  */
 // GstPadLinkReturn (*GstPadLinkFunction) (GstPad *pad,  GstPad *peer);
-public typedef extern(C) GstPadLinkReturn  function (GstPad*, GstPad*) GstPadLinkFunction;
+public alias extern(C) GstPadLinkReturn  function (GstPad*, GstPad*) GstPadLinkFunction;
 
 /*
  * Function signature to handle a unlinking the pad prom its peer.
@@ -4025,7 +4025,7 @@ public typedef extern(C) GstPadLinkReturn  function (GstPad*, GstPad*) GstPadLin
  *  the GstPad that is linked.
  */
 // void (*GstPadUnlinkFunction) (GstPad *pad);
-public typedef extern(C) void  function (GstPad*) GstPadUnlinkFunction;
+public alias extern(C) void  function (GstPad*) GstPadUnlinkFunction;
 
 /*
  * Check if pad can accept caps. By default this function will see if caps
@@ -4039,7 +4039,7 @@ public typedef extern(C) void  function (GstPad*) GstPadUnlinkFunction;
  *  TRUE if the caps can be accepted by the pad.
  */
 // gboolean (*GstPadAcceptCapsFunction) (GstPad *pad,  GstCaps *caps);
-public typedef extern(C) int  function (GstPad*, GstCaps*) GstPadAcceptCapsFunction;
+public alias extern(C) int  function (GstPad*, GstCaps*) GstPadAcceptCapsFunction;
 
 /*
  * Returns a copy of the capabilities of the specified pad. By default this
@@ -4051,7 +4051,7 @@ public typedef extern(C) int  function (GstPad*, GstCaps*) GstPadAcceptCapsFunct
  *  a newly allocated copy GstCaps of the pad.
  */
 // GstCaps* (*GstPadGetCapsFunction) (GstPad *pad);
-public typedef extern(C) GstCaps*  function (GstPad*) GstPadGetCapsFunction;
+public alias extern(C) GstCaps*  function (GstPad*) GstPadGetCapsFunction;
 
 /*
  * Set caps on pad. By default this function updates the caps of the
@@ -4065,7 +4065,7 @@ public typedef extern(C) GstCaps*  function (GstPad*) GstPadGetCapsFunction;
  *  TRUE if the caps could be set on the pad.
  */
 // gboolean (*GstPadSetCapsFunction) (GstPad *pad,  GstCaps *caps);
-public typedef extern(C) int  function (GstPad*, GstCaps*) GstPadSetCapsFunction;
+public alias extern(C) int  function (GstPad*, GstCaps*) GstPadSetCapsFunction;
 
 /*
  * Given possibly unfixed caps caps, let pad use its default prefered
@@ -4078,7 +4078,7 @@ public typedef extern(C) int  function (GstPad*, GstCaps*) GstPadSetCapsFunction
  *  the GstCaps to fixate
  */
 // void (*GstPadFixateCapsFunction) (GstPad *pad,  GstCaps *caps);
-public typedef extern(C) void  function (GstPad*, GstCaps*) GstPadFixateCapsFunction;
+public alias extern(C) void  function (GstPad*, GstCaps*) GstPadFixateCapsFunction;
 
 /*
  * This function is called when the pad is activated during the element
@@ -4091,7 +4091,7 @@ public typedef extern(C) void  function (GstPad*, GstCaps*) GstPadFixateCapsFunc
  *  TRUE if the pad could be activated.
  */
 // gboolean (*GstPadActivateFunction) (GstPad *pad);
-public typedef extern(C) int  function (GstPad*) GstPadActivateFunction;
+public alias extern(C) int  function (GstPad*) GstPadActivateFunction;
 
 /*
  * The prototype of the push and pull activate functions.
@@ -4103,7 +4103,7 @@ public typedef extern(C) int  function (GstPad*) GstPadActivateFunction;
  *  TRUE if the pad could be activated or deactivated.
  */
 // gboolean (*GstPadActivateModeFunction) (GstPad *pad,  gboolean active);
-public typedef extern(C) int  function (GstPad*, int) GstPadActivateModeFunction;
+public alias extern(C) int  function (GstPad*, int) GstPadActivateModeFunction;
 
 /*
  * The signature of the query function.
@@ -4115,7 +4115,7 @@ public typedef extern(C) int  function (GstPad*, int) GstPadActivateModeFunction
  *  TRUE if the query could be performed.
  */
 // gboolean (*GstPadQueryFunction) (GstPad *pad,  GstQuery *query);
-public typedef extern(C) int  function (GstPad*, GstQuery*) GstPadQueryFunction;
+public alias extern(C) int  function (GstPad*, GstQuery*) GstPadQueryFunction;
 
 /*
  * The signature of the query types function.
@@ -4125,7 +4125,7 @@ public typedef extern(C) int  function (GstPad*, GstQuery*) GstPadQueryFunction;
  *  a constant array of query types
  */
 // const GstQueryType* (*GstPadQueryTypeFunction) (GstPad *pad);
-public typedef extern(C) GstQueryType*  function (GstPad*) GstPadQueryTypeFunction;
+public alias extern(C) GstQueryType*  function (GstPad*) GstPadQueryTypeFunction;
 
 /*
  * The signature of the internal pad link function.
@@ -4137,7 +4137,7 @@ public typedef extern(C) GstQueryType*  function (GstPad*) GstPadQueryTypeFuncti
  *  The caller must call g_list_free() on it after use.
  */
 // GList* (*GstPadIntLinkFunction) (GstPad *pad);
-public typedef extern(C) GList*  function (GstPad*) GstPadIntLinkFunction;
+public alias extern(C) GList*  function (GstPad*) GstPadIntLinkFunction;
 
 /*
  * A dispatcher function is called for all internally linked pads, see
@@ -4150,7 +4150,7 @@ public typedef extern(C) GList*  function (GstPad*) GstPadIntLinkFunction;
  *  TRUE if the dispatching procedure has to be stopped.
  */
 // gboolean (*GstPadDispatcherFunction) (GstPad *pad,  gpointer data);
-public typedef extern(C) int  function (GstPad*, void*) GstPadDispatcherFunction;
+public alias extern(C) int  function (GstPad*, void*) GstPadDispatcherFunction;
 
 /*
  * A plugin should provide a pointer to a function of this type in the
@@ -4162,7 +4162,7 @@ public typedef extern(C) int  function (GstPad*, void*) GstPadDispatcherFunction
  *  TRUE if plugin initialised successfully
  */
 // gboolean (*GstPluginInitFunc) (GstPlugin *plugin);
-public typedef extern(C) int  function (GstPlugin*) GstPluginInitFunc;
+public alias extern(C) int  function (GstPlugin*) GstPluginInitFunc;
 
 /*
  * A function that can be used with e.g. gst_registry_plugin_filter()
@@ -4175,7 +4175,7 @@ public typedef extern(C) int  function (GstPlugin*) GstPluginInitFunc;
  *  TRUE for a positive match, FALSE otherwise
  */
 // gboolean (*GstPluginFilter) (GstPlugin *plugin,  gpointer user_data);
-public typedef extern(C) int  function (GstPlugin*, void*) GstPluginFilter;
+public alias extern(C) int  function (GstPlugin*, void*) GstPluginFilter;
 
 /*
  * A function that can be used with e.g. gst_registry_feature_filter()
@@ -4189,7 +4189,7 @@ public typedef extern(C) int  function (GstPlugin*, void*) GstPluginFilter;
  *  TRUE for a positive match, FALSE otherwise
  */
 // gboolean (*GstPluginFeatureFilter) (GstPluginFeature *feature,  gpointer user_data);
-public typedef extern(C) int  function (GstPluginFeature*, void*) GstPluginFeatureFilter;
+public alias extern(C) int  function (GstPluginFeature*, void*) GstPluginFeatureFilter;
 
 /*
  * A function that will be called in gst_structure_foreach(). The function may
@@ -4205,7 +4205,7 @@ public typedef extern(C) int  function (GstPluginFeature*, void*) GstPluginFeatu
  * the foreach operation should stop with FALSE.
  */
 // gboolean (*GstStructureForeachFunc) (GQuark field_id,  const GValue *value,  gpointer user_data);
-public typedef extern(C) int  function (GQuark, GValue*, void*) GstStructureForeachFunc;
+public alias extern(C) int  function (GQuark, GValue*, void*) GstStructureForeachFunc;
 
 /*
  * A function that will be called in gst_structure_map_in_place(). The function
@@ -4221,7 +4221,7 @@ public typedef extern(C) int  function (GQuark, GValue*, void*) GstStructureFore
  * the map operation should stop with FALSE.
  */
 // gboolean (*GstStructureMapFunc) (GQuark field_id,  GValue *value,  gpointer user_data);
-public typedef extern(C) int  function (GQuark, GValue*, void*) GstStructureMapFunc;
+public alias extern(C) int  function (GQuark, GValue*, void*) GstStructureMapFunc;
 
 /*
  * A function that will be called in gst_tag_list_foreach(). The function may
@@ -4234,7 +4234,7 @@ public typedef extern(C) int  function (GQuark, GValue*, void*) GstStructureMapF
  *  user data
  */
 // void (*GstTagForeachFunc) (const GstTagList *list,  const gchar *tag,  gpointer user_data);
-public typedef extern(C) void  function (GstTagList*, char*, void*) GstTagForeachFunc;
+public alias extern(C) void  function (GstTagList*, char*, void*) GstTagForeachFunc;
 
 /*
  * A function for merging multiple values of a tag used when registering
@@ -4245,7 +4245,7 @@ public typedef extern(C) void  function (GstTagList*, char*, void*) GstTagForeac
  *  the source GValue
  */
 // void (*GstTagMergeFunc) (GValue *dest,  const GValue *src);
-public typedef extern(C) void  function (GValue*, GValue*) GstTagMergeFunc;
+public alias extern(C) void  function (GValue*, GValue*) GstTagMergeFunc;
 
 /*
  * A function that will repeadedly be called in the thread created by
@@ -4254,7 +4254,7 @@ public typedef extern(C) void  function (GValue*, GValue*) GstTagMergeFunc;
  *  user data passed to the function
  */
 // void (*GstTaskFunction) (void *data);
-public typedef extern(C) void  function (void*) GstTaskFunction;
+public alias extern(C) void  function (void*) GstTaskFunction;
 
 /*
  * A function that will be called by typefinding.
@@ -4264,4 +4264,4 @@ public typedef extern(C) void  function (void*) GstTaskFunction;
  *  optionnal data to pass to the function
  */
 // void (*GstTypeFindFunction) (GstTypeFind *find,  gpointer data);
-public typedef extern(C) void  function (GstTypeFind*, void*) GstTypeFindFunction;
+public alias extern(C) void  function (GstTypeFind*, void*) GstTypeFindFunction;

@@ -253,14 +253,14 @@ public struct GtkSourceStyleSchemeManager{}
  *  a newly-allocated string that is going to be shown as tooltip text.
  */
 // gchar * (*GtkSourceViewMarkTooltipFunc) (GtkSourceMark *mark,  gpointer user_data);
-public typedef extern(C) char *  function (GtkSourceMark*, void*) GtkSourceViewMarkTooltipFunc;
+public alias extern(C) char *  function (GtkSourceMark*, void*) GtkSourceViewMarkTooltipFunc;
 
 /*
  */
 // void (*GtkSourceGutterDataFunc) (GtkSourceGutter *gutter,  GtkCellRenderer *cell,  gint line_number,  gboolean current_line,  gpointer data);
-public typedef extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, int, int, void*) GtkSourceGutterDataFunc;
+public alias extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, int, int, void*) GtkSourceGutterDataFunc;
 
 /*
  */
 // void (*GtkSourceGutterSizeFunc) (GtkSourceGutter *gutter,  GtkCellRenderer *cell,  gpointer data);
-public typedef extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, void*) GtkSourceGutterSizeFunc;
+public alias extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, void*) GtkSourceGutterSizeFunc;

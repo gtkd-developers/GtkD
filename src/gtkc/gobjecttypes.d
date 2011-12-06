@@ -3065,7 +3065,7 @@ public struct GBinding{}
  * The GTypeClass structure to initialize.
  */
 // void (*GBaseInitFunc) (gpointer g_class);
-public typedef extern(C) void  function (void*) GBaseInitFunc;
+public alias extern(C) void  function (void*) GBaseInitFunc;
 
 /*
  * A callback function used by the type system to finalize those portions
@@ -3077,7 +3077,7 @@ public typedef extern(C) void  function (void*) GBaseInitFunc;
  * The GTypeClass structure to finalize.
  */
 // void (*GBaseFinalizeFunc) (gpointer g_class);
-public typedef extern(C) void  function (void*) GBaseFinalizeFunc;
+public alias extern(C) void  function (void*) GBaseFinalizeFunc;
 
 /*
  * A callback function used by the type system to initialize the class
@@ -3131,7 +3131,7 @@ public typedef extern(C) void  function (void*) GBaseFinalizeFunc;
  * The class_data member supplied via the GTypeInfo structure.
  */
 // void (*GClassInitFunc) (gpointer g_class,  gpointer class_data);
-public typedef extern(C) void  function (void*, void*) GClassInitFunc;
+public alias extern(C) void  function (void*, void*) GClassInitFunc;
 
 /*
  * A callback function used by the type system to finalize a class.
@@ -3147,7 +3147,7 @@ public typedef extern(C) void  function (void*, void*) GClassInitFunc;
  * The class_data member supplied via the GTypeInfo structure.
  */
 // void (*GClassFinalizeFunc) (gpointer g_class,  gpointer class_data);
-public typedef extern(C) void  function (void*, void*) GClassFinalizeFunc;
+public alias extern(C) void  function (void*, void*) GClassFinalizeFunc;
 
 /*
  * A callback function used by the type system to initialize a new
@@ -3163,7 +3163,7 @@ public typedef extern(C) void  function (void*, void*) GClassFinalizeFunc;
  * The class of the type the instance is created for.
  */
 // void (*GInstanceInitFunc) (GTypeInstance *instance,  gpointer g_class);
-public typedef extern(C) void  function (GTypeInstance*, void*) GInstanceInitFunc;
+public alias extern(C) void  function (GTypeInstance*, void*) GInstanceInitFunc;
 
 /*
  * A callback function used by the type system to initialize a new
@@ -3175,7 +3175,7 @@ public typedef extern(C) void  function (GTypeInstance*, void*) GInstanceInitFun
  * The interface_data supplied via the GInterfaceInfo structure.
  */
 // void (*GInterfaceInitFunc) (gpointer g_iface,  gpointer iface_data);
-public typedef extern(C) void  function (void*, void*) GInterfaceInitFunc;
+public alias extern(C) void  function (void*, void*) GInterfaceInitFunc;
 
 /*
  * A callback function used by the type system to finalize an interface.
@@ -3187,7 +3187,7 @@ public typedef extern(C) void  function (void*, void*) GInterfaceInitFunc;
  * The interface_data supplied via the GInterfaceInfo structure.
  */
 // void (*GInterfaceFinalizeFunc) (gpointer g_iface,  gpointer iface_data);
-public typedef extern(C) void  function (void*, void*) GInterfaceFinalizeFunc;
+public alias extern(C) void  function (void*, void*) GInterfaceFinalizeFunc;
 
 /*
  * A callback function which is called when the reference count of a class
@@ -3207,7 +3207,7 @@ public typedef extern(C) void  function (void*, void*) GInterfaceFinalizeFunc;
  *  called, FALSE to continue.
  */
 // gboolean (*GTypeClassCacheFunc) (gpointer cache_data,  GTypeClass *g_class);
-public typedef extern(C) int  function (void*, GTypeClass*) GTypeClassCacheFunc;
+public alias extern(C) int  function (void*, GTypeClass*) GTypeClassCacheFunc;
 
 /*
  * A callback called after an interface vtable is initialized.
@@ -3219,7 +3219,7 @@ public typedef extern(C) int  function (void*, GTypeClass*) GTypeClassCacheFunc;
  * Since 2.4
  */
 // void (*GTypeInterfaceCheckFunc) (gpointer check_data,  gpointer g_iface);
-public typedef extern(C) void  function (void*, void*) GTypeInterfaceCheckFunc;
+public alias extern(C) void  function (void*, void*) GTypeInterfaceCheckFunc;
 
 /*
  * The type of the use_plugin function of GTypePluginClass, which gets called
@@ -3228,7 +3228,7 @@ public typedef extern(C) void  function (void*, void*) GTypeInterfaceCheckFunc;
  * the GTypePlugin whose use count should be increased
  */
 // void (*GTypePluginUse) (GTypePlugin *plugin);
-public typedef extern(C) void  function (GTypePlugin*) GTypePluginUse;
+public alias extern(C) void  function (GTypePlugin*) GTypePluginUse;
 
 /*
  * The type of the unuse_plugin function of GTypePluginClass.
@@ -3236,7 +3236,7 @@ public typedef extern(C) void  function (GTypePlugin*) GTypePluginUse;
  * the GTypePlugin whose use count should be decreased
  */
 // void (*GTypePluginUnuse) (GTypePlugin *plugin);
-public typedef extern(C) void  function (GTypePlugin*) GTypePluginUnuse;
+public alias extern(C) void  function (GTypePlugin*) GTypePluginUnuse;
 
 /*
  * The type of the complete_type_info function of GTypePluginClass.
@@ -3250,7 +3250,7 @@ public typedef extern(C) void  function (GTypePlugin*) GTypePluginUnuse;
  * the GTypeValueTable to fill in
  */
 // void (*GTypePluginCompleteTypeInfo) (GTypePlugin *plugin,  GType g_type,  GTypeInfo *info,  GTypeValueTable *value_table);
-public typedef extern(C) void  function (GTypePlugin*, GType, GTypeInfo*, GTypeValueTable*) GTypePluginCompleteTypeInfo;
+public alias extern(C) void  function (GTypePlugin*, GType, GTypeInfo*, GTypeValueTable*) GTypePluginCompleteTypeInfo;
 
 /*
  * The type of the complete_interface_info function of GTypePluginClass.
@@ -3265,7 +3265,7 @@ public typedef extern(C) void  function (GTypePlugin*, GType, GTypeInfo*, GTypeV
  * the GInterfaceInfo to fill in
  */
 // void (*GTypePluginCompleteInterfaceInfo) (GTypePlugin *plugin,  GType instance_type,  GType interface_type,  GInterfaceInfo *info);
-public typedef extern(C) void  function (GTypePlugin*, GType, GType, GInterfaceInfo*) GTypePluginCompleteInterfaceInfo;
+public alias extern(C) void  function (GTypePlugin*, GType, GType, GInterfaceInfo*) GTypePluginCompleteInterfaceInfo;
 
 /*
  * The type of the get_property function of GObjectClass.
@@ -3280,7 +3280,7 @@ public typedef extern(C) void  function (GTypePlugin*, GType, GType, GInterfaceI
  * the GParamSpec describing the property
  */
 // void (*GObjectGetPropertyFunc) (GObject *object,  guint property_id,  GValue *value,  GParamSpec *pspec);
-public typedef extern(C) void  function (GObject*, uint, GValue*, GParamSpec*) GObjectGetPropertyFunc;
+public alias extern(C) void  function (GObject*, uint, GValue*, GParamSpec*) GObjectGetPropertyFunc;
 
 /*
  * The type of the set_property function of GObjectClass.
@@ -3295,7 +3295,7 @@ public typedef extern(C) void  function (GObject*, uint, GValue*, GParamSpec*) G
  * the GParamSpec describing the property
  */
 // void (*GObjectSetPropertyFunc) (GObject *object,  guint property_id,  const GValue *value,  GParamSpec *pspec);
-public typedef extern(C) void  function (GObject*, uint, GValue*, GParamSpec*) GObjectSetPropertyFunc;
+public alias extern(C) void  function (GObject*, uint, GValue*, GParamSpec*) GObjectSetPropertyFunc;
 
 /*
  * The type of the finalize function of GObjectClass.
@@ -3303,7 +3303,7 @@ public typedef extern(C) void  function (GObject*, uint, GValue*, GParamSpec*) G
  * the GObject being finalized
  */
 // void (*GObjectFinalizeFunc) (GObject *object);
-public typedef extern(C) void  function (GObject*) GObjectFinalizeFunc;
+public alias extern(C) void  function (GObject*) GObjectFinalizeFunc;
 
 /*
  * A GWeakNotify function can be added to an object as a callback that gets
@@ -3316,7 +3316,7 @@ public typedef extern(C) void  function (GObject*) GObjectFinalizeFunc;
  * the object being finalized
  */
 // void (*GWeakNotify) (gpointer data,  GObject *where_the_object_was);
-public typedef extern(C) void  function (void*, GObject*) GWeakNotify;
+public alias extern(C) void  function (void*, GObject*) GWeakNotify;
 
 /*
  * A callback function used for notification when the state
@@ -3332,7 +3332,7 @@ public typedef extern(C) void  function (void*, GObject*) GWeakNotify;
  *  references.
  */
 // void (*GToggleNotify) (gpointer data,  GObject *object,  gboolean is_last_ref);
-public typedef extern(C) void  function (void*, GObject*, int) GToggleNotify;
+public alias extern(C) void  function (void*, GObject*, int) GToggleNotify;
 
 /*
  * This function is provided by the user and should produce a copy of the passed
@@ -3343,7 +3343,7 @@ public typedef extern(C) void  function (void*, GObject*, int) GToggleNotify;
  *  The newly created copy of the boxed structure.
  */
 // gpointer (*GBoxedCopyFunc) (gpointer boxed);
-public typedef extern(C) void*  function (void*) GBoxedCopyFunc;
+public alias extern(C) void*  function (void*) GBoxedCopyFunc;
 
 /*
  * This function is provided by the user and should free the boxed
@@ -3352,7 +3352,7 @@ public typedef extern(C) void*  function (void*) GBoxedCopyFunc;
  * The boxed structure to be freed.
  */
 // void (*GBoxedFreeFunc) (gpointer boxed);
-public typedef extern(C) void  function (void*) GBoxedFreeFunc;
+public alias extern(C) void  function (void*) GBoxedFreeFunc;
 
 /*
  * The type of value transformation functions which can be registered with
@@ -3363,7 +3363,7 @@ public typedef extern(C) void  function (void*) GBoxedFreeFunc;
  * Target value.
  */
 // void (*GValueTransform) (const GValue *src_value,  GValue *dest_value);
-public typedef extern(C) void  function (GValue*, GValue*) GValueTransform;
+public alias extern(C) void  function (GValue*, GValue*) GValueTransform;
 
 /*
  * The signal accumulator is a special callback function that can be used
@@ -3387,7 +3387,7 @@ public typedef extern(C) void  function (GValue*, GValue*) GValueTransform;
  *  current emission and TRUE is returned for continuation.
  */
 // gboolean (*GSignalAccumulator) (GSignalInvocationHint *ihint,  GValue *return_accu,  const GValue *handler_return,  gpointer data);
-public typedef extern(C) int  function (GSignalInvocationHint*, GValue*, GValue*, void*) GSignalAccumulator;
+public alias extern(C) int  function (GSignalInvocationHint*, GValue*, GValue*, void*) GSignalAccumulator;
 
 /*
  * A simple function pointer to get invoked when the signal is emitted. This
@@ -3409,7 +3409,7 @@ public typedef extern(C) int  function (GSignalInvocationHint*, GValue*, GValue*
  *  hook is disconnected (and destroyed).
  */
 // gboolean (*GSignalEmissionHook) (GSignalInvocationHint *ihint,  guint n_param_values,  const GValue *param_values,  gpointer data);
-public typedef extern(C) int  function (GSignalInvocationHint*, uint, GValue*, void*) GSignalEmissionHook;
+public alias extern(C) int  function (GSignalInvocationHint*, uint, GValue*, void*) GSignalEmissionHook;
 
 /*
  * The type used for callback functions in structure definitions and function
@@ -3419,7 +3419,7 @@ public typedef extern(C) int  function (GSignalInvocationHint*, uint, GValue*, v
  * is connected). Use G_CALLBACK() to cast the callback function to a GCallback.
  */
 // void (*GCallback) (void);
-public typedef extern(C) void  function () GCallback;
+public alias extern(C) void  function () GCallback;
 
 /*
  * The type used for marshaller functions.
@@ -3441,7 +3441,7 @@ public typedef extern(C) void  function () GCallback;
  *  see g_closure_set_marshal() and g_closure_set_meta_marshal()
  */
 // void (*GClosureMarshal) (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-public typedef extern(C) void  function (GClosure*, GValue*, uint, GValue*, void*, void*) GClosureMarshal;
+public alias extern(C) void  function (GClosure*, GValue*, uint, GValue*, void*, void*) GClosureMarshal;
 
 /*
  * The type used for the various notification callbacks which can be registered
@@ -3452,7 +3452,7 @@ public typedef extern(C) void  function (GClosure*, GValue*, uint, GValue*, void
  * the GClosure on which the notification is emitted
  */
 // void (*GClosureNotify) (gpointer data,  GClosure *closure);
-public typedef extern(C) void  function (void*, GClosure*) GClosureNotify;
+public alias extern(C) void  function (void*, GClosure*) GClosureNotify;
 
 /*
  * A function to be called to transform the source property of source
@@ -3472,4 +3472,4 @@ public typedef extern(C) void  function (void*, GClosure*) GClosureNotify;
  * Since 2.26
  */
 // gboolean (*GBindingTransformFunc) (GBinding *binding,  const GValue *source_value,  GValue *target_value,  gpointer user_data);
-public typedef extern(C) int  function (GBinding*, GValue*, GValue*, void*) GBindingTransformFunc;
+public alias extern(C) int  function (GBinding*, GValue*, GValue*, void*) GBindingTransformFunc;

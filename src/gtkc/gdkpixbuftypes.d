@@ -242,13 +242,13 @@ public struct GdkPixbufAnimationIterClass
  * module  :
  */
 // void (*GdkPixbufModuleFillVtableFunc) (GdkPixbufModule *module);
-public typedef extern(C) void  function (GdkPixbufModule*) GdkPixbufModuleFillVtableFunc;
+public alias extern(C) void  function (GdkPixbufModule*) GdkPixbufModuleFillVtableFunc;
 
 /*
  * info  :
  */
 // void (*GdkPixbufModuleFillInfoFunc) (GdkPixbufFormat *info);
-public typedef extern(C) void  function (GdkPixbufFormat*) GdkPixbufModuleFillInfoFunc;
+public alias extern(C) void  function (GdkPixbufFormat*) GdkPixbufModuleFillInfoFunc;
 
 /*
  * width  :
@@ -256,7 +256,7 @@ public typedef extern(C) void  function (GdkPixbufFormat*) GdkPixbufModuleFillIn
  * user_data  :
  */
 // void (*GdkPixbufModuleSizeFunc) (gint *width,  gint *height,  gpointer user_data);
-public typedef extern(C) void  function (gint*, gint*, void*) GdkPixbufModuleSizeFunc;
+public alias extern(C) void  function (gint*, gint*, void*) GdkPixbufModuleSizeFunc;
 
 /*
  * pixbuf  :
@@ -264,7 +264,7 @@ public typedef extern(C) void  function (gint*, gint*, void*) GdkPixbufModuleSiz
  * user_data  :
  */
 // void (*GdkPixbufModulePreparedFunc) (GdkPixbuf *pixbuf,  GdkPixbufAnimation *anim,  gpointer user_data);
-public typedef extern(C) void  function (GdkPixbuf*, GdkPixbufAnimation*, void*) GdkPixbufModulePreparedFunc;
+public alias extern(C) void  function (GdkPixbuf*, GdkPixbufAnimation*, void*) GdkPixbufModulePreparedFunc;
 
 /*
  * pixbuf  :
@@ -275,4 +275,4 @@ public typedef extern(C) void  function (GdkPixbuf*, GdkPixbufAnimation*, void*)
  * user_data  :
  */
 // void (*GdkPixbufModuleUpdatedFunc) (GdkPixbuf *pixbuf,  int x,  int y,  int width,  int height,  gpointer user_data);
-public typedef extern(C) void  function (GdkPixbuf*, int, int, int, int, void*) GdkPixbufModuleUpdatedFunc;
+public alias extern(C) void  function (GdkPixbuf*, int, int, int, int, void*) GdkPixbufModuleUpdatedFunc;

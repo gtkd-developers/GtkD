@@ -4431,7 +4431,7 @@ public struct GVariantBuilder{}
  *  reported, or -1 if an error occurred.
  */
 // gint (*GPollFunc) (GPollFD *ufds,  guint nfsd,  gint timeout_);
-public typedef extern(C) int  function (GPollFD*, uint, int) GPollFunc;
+public alias extern(C) int  function (GPollFD*, uint, int) GPollFunc;
 
 /*
  * The type of functions to be called when a child exists.
@@ -4444,14 +4444,14 @@ public typedef extern(C) int  function (GPollFD*, uint, int) GPollFunc;
  * user data passed to g_child_watch_add()
  */
 // void (*GChildWatchFunc) (GPid pid,  gint status,  gpointer data);
-public typedef extern(C) void  function (GPid, int, void*) GChildWatchFunc;
+public alias extern(C) void  function (GPid, int, void*) GChildWatchFunc;
 
 /*
  * This is just a placeholder for GClosureMarshal, which cannot be used here
  * for dependency reasons.
  */
 // void (*GSourceDummyMarshal) (void);
-public typedef extern(C) void  function () GSourceDummyMarshal;
+public alias extern(C) void  function () GSourceDummyMarshal;
 
 /*
  * Specifies the type of function passed to g_timeout_add(), g_timeout_add_full(),
@@ -4463,7 +4463,7 @@ public typedef extern(C) void  function () GSourceDummyMarshal;
  * it should return FALSE if the source should be removed.
  */
 // gboolean (*GSourceFunc) (gpointer data);
-public typedef extern(C) int  function (void*) GSourceFunc;
+public alias extern(C) int  function (void*) GSourceFunc;
 
 /*
  * Specifies the type of the module initialization function.
@@ -4477,7 +4477,7 @@ public typedef extern(C) int  function (void*) GSourceFunc;
  * NULL on success, or a string describing the initialization error.
  */
 // const gchar * (*GModuleCheckInit) (GModule *module);
-public typedef extern(C) char *  function (GModule*) GModuleCheckInit;
+public alias extern(C) char *  function (GModule*) GModuleCheckInit;
 
 /*
  * Specifies the type of the module function called when it is unloaded.
@@ -4488,7 +4488,7 @@ public typedef extern(C) char *  function (GModule*) GModuleCheckInit;
  * the GModule about to be unloaded.
  */
 // void (*GModuleUnload) (GModule *module);
-public typedef extern(C) void  function (GModule*) GModuleUnload;
+public alias extern(C) void  function (GModule*) GModuleUnload;
 
 /*
  * Specifies the type of function passed to g_io_add_watch() or
@@ -4505,7 +4505,7 @@ public typedef extern(C) void  function (GModule*) GModuleUnload;
  *  should be removed
  */
 // gboolean (*GIOFunc) (GIOChannel *source,  GIOCondition condition,  gpointer data);
-public typedef extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFunc;
+public alias extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFunc;
 
 /*
  * Specifies the type of the print handler functions.
@@ -4514,7 +4514,7 @@ public typedef extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFun
  * the message to be output.
  */
 // void (*GPrintFunc) (const gchar *string);
-public typedef extern(C) void  function (char*) GPrintFunc;
+public alias extern(C) void  function (char*) GPrintFunc;
 
 /*
  * Specifies the prototype of log handler functions.
@@ -4529,14 +4529,14 @@ public typedef extern(C) void  function (char*) GPrintFunc;
  * user data, set in g_log_set_handler().
  */
 // void (*GLogFunc) (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *message,  gpointer user_data);
-public typedef extern(C) void  function (char*, GLogLevelFlags, char*, void*) GLogFunc;
+public alias extern(C) void  function (char*, GLogLevelFlags, char*, void*) GLogFunc;
 
 /*
  * Declares a type of function which takes no arguments and has no return value.
  * It is used to specify the type function passed to g_atexit().
  */
 // void (*GVoidFunc) (void);
-public typedef extern(C) void  function () GVoidFunc;
+public alias extern(C) void  function () GVoidFunc;
 
 /*
  * Declares a type of function which takes an arbitrary data pointer argument
@@ -4545,7 +4545,7 @@ public typedef extern(C) void  function () GVoidFunc;
  * a data pointer.
  */
 // void (*GFreeFunc) (gpointer data);
-public typedef extern(C) void  function (void*) GFreeFunc;
+public alias extern(C) void  function (void*) GFreeFunc;
 
 /*
  * Specifies the type of the message handler function.
@@ -4558,7 +4558,7 @@ public typedef extern(C) void  function (void*) GFreeFunc;
  *  signals a warning.
  */
 // void (*GScannerMsgFunc) (GScanner *scanner,  gchar *message,  gboolean error);
-public typedef extern(C) void  function (GScanner*, char*, int) GScannerMsgFunc;
+public alias extern(C) void  function (GScanner*, char*, int) GScannerMsgFunc;
 
 /*
  * Specifies the type of the function passed to g_completion_new(). It
@@ -4570,7 +4570,7 @@ public typedef extern(C) void  function (GScanner*, char*, int) GScannerMsgFunc;
  * the string corresponding to the item.
  */
 // gchar * (*GCompletionFunc) (gpointer Param1);
-public typedef extern(C) char *  function (void*) GCompletionFunc;
+public alias extern(C) char *  function (void*) GCompletionFunc;
 
 /*
  * Specifies the type of the function passed to
@@ -4589,7 +4589,7 @@ public typedef extern(C) char *  function (void*) GCompletionFunc;
  *  bytes of s2.
  */
 // gint (*GCompletionStrncmpFunc) (const gchar *s1,  const gchar *s2,  gsize n);
-public typedef extern(C) int  function (char*, char*, gsize) GCompletionStrncmpFunc;
+public alias extern(C) int  function (char*, char*, gsize) GCompletionStrncmpFunc;
 
 /*
  * Specifies the type of the setup function passed to g_spawn_async(),
@@ -4612,7 +4612,7 @@ public typedef extern(C) int  function (char*, char*, gsize) GCompletionStrncmpF
  * user data to pass to the function.
  */
 // void (*GSpawnChildSetupFunc) (gpointer user_data);
-public typedef extern(C) void  function (void*) GSpawnChildSetupFunc;
+public alias extern(C) void  function (void*) GSpawnChildSetupFunc;
 
 /*
  * The type of function to be passed as callback for G_OPTION_ARG_CALLBACK
@@ -4634,7 +4634,7 @@ public typedef extern(C) void  function (void*) GSpawnChildSetupFunc;
  *  occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionArgFunc) (const gchar *option_name,  const gchar *value,  gpointer data,  GError **error);
-public typedef extern(C) int  function (char*, char*, void*, GError**) GOptionArgFunc;
+public alias extern(C) int  function (char*, char*, void*, GError**) GOptionArgFunc;
 
 /*
  * The type of functions which are used to translate user-visible
@@ -4649,7 +4649,7 @@ public typedef extern(C) int  function (char*, char*, void*, GError**) GOptionAr
  *  The returned string is owned by GLib and must not be freed.
  */
 // const gchar * (*GTranslateFunc) (const gchar *str,  gpointer data);
-public typedef extern(C) char *  function (char*, void*) GTranslateFunc;
+public alias extern(C) char *  function (char*, void*) GTranslateFunc;
 
 /*
  * The type of function that can be called before and after parsing.
@@ -4667,7 +4667,7 @@ public typedef extern(C) char *  function (char*, void*) GTranslateFunc;
  *  occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionParseFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
-public typedef extern(C) int  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionParseFunc;
+public alias extern(C) int  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionParseFunc;
 
 /*
  * The type of function to be used as callback when a parse error occurs.
@@ -4682,7 +4682,7 @@ public typedef extern(C) int  function (GOptionContext*, GOptionGroup*, void*, G
  * The GError containing details about the parse error
  */
 // void (*GOptionErrorFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
-public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionErrorFunc;
+public alias extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionErrorFunc;
 
 /*
  * Specifies the type of the function passed to g_regex_replace_eval().
@@ -4702,7 +4702,7 @@ public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, 
  * Since 2.14
  */
 // gboolean (*GRegexEvalCallback) (const GMatchInfo *match_info,  GString *result,  gpointer user_data);
-public typedef extern(C) int  function (GMatchInfo*, GString*, void*) GRegexEvalCallback;
+public alias extern(C) int  function (GMatchInfo*, GString*, void*) GRegexEvalCallback;
 
 /*
  * Specifies the type of a comparison function used to compare two
@@ -4718,7 +4718,7 @@ public typedef extern(C) int  function (GMatchInfo*, GString*, void*) GRegexEval
  *  value if a > b.
  */
 // gint (*GCompareFunc) (gconstpointer a,  gconstpointer b);
-public typedef extern(C) int  function (void*, void*) GCompareFunc;
+public alias extern(C) int  function (void*, void*) GCompareFunc;
 
 /*
  * Specifies the type of a comparison function used to compare two
@@ -4736,7 +4736,7 @@ public typedef extern(C) int  function (void*, void*) GCompareFunc;
  *  value if a > b.
  */
 // gint (*GCompareDataFunc) (gconstpointer a,  gconstpointer b,  gpointer user_data);
-public typedef extern(C) int  function (void*, void*, void*) GCompareDataFunc;
+public alias extern(C) int  function (void*, void*, void*) GCompareDataFunc;
 
 /*
  * Specifies the type of functions passed to g_list_foreach() and
@@ -4748,7 +4748,7 @@ public typedef extern(C) int  function (void*, void*, void*) GCompareDataFunc;
  *  g_slist_foreach().
  */
 // void (*GFunc) (gpointer data,  gpointer user_data);
-public typedef extern(C) void  function (void*, void*) GFunc;
+public alias extern(C) void  function (void*, void*) GFunc;
 
 /*
  * A GSequenceIterCompareFunc is a function used to compare iterators.
@@ -4766,7 +4766,7 @@ public typedef extern(C) void  function (void*, void*) GFunc;
  *  a.
  */
 // gint (*GSequenceIterCompareFunc) (GSequenceIter *a,  GSequenceIter *b,  gpointer data);
-public typedef extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) GSequenceIterCompareFunc;
+public alias extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) GSequenceIterCompareFunc;
 
 /*
  * Specifies the type of the hash function which is passed to
@@ -4786,7 +4786,7 @@ public typedef extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) G
  * the hash value corresponding to the key.
  */
 // guint (*GHashFunc) (gconstpointer key);
-public typedef extern(C) uint  function (void*) GHashFunc;
+public alias extern(C) uint  function (void*) GHashFunc;
 
 /*
  * Specifies the type of a function used to test two values for
@@ -4800,7 +4800,7 @@ public typedef extern(C) uint  function (void*) GHashFunc;
  * TRUE if a = b; FALSE otherwise.
  */
 // gboolean (*GEqualFunc) (gconstpointer a,  gconstpointer b);
-public typedef extern(C) int  function (void*, void*) GEqualFunc;
+public alias extern(C) int  function (void*, void*) GEqualFunc;
 
 /*
  * Specifies the type of the function passed to g_hash_table_foreach().
@@ -4814,7 +4814,7 @@ public typedef extern(C) int  function (void*, void*) GEqualFunc;
  * user data passed to g_hash_table_foreach().
  */
 // void (*GHFunc) (gpointer key,  gpointer value,  gpointer user_data);
-public typedef extern(C) void  function (void*, void*, void*) GHFunc;
+public alias extern(C) void  function (void*, void*, void*) GHFunc;
 
 /*
  * Specifies the type of the function passed to
@@ -4833,7 +4833,7 @@ public typedef extern(C) void  function (void*, void*, void*) GHFunc;
  *  GHashTable.
  */
 // gboolean (*GHRFunc) (gpointer key,  gpointer value,  gpointer user_data);
-public typedef extern(C) int  function (void*, void*, void*) GHRFunc;
+public alias extern(C) int  function (void*, void*, void*) GHRFunc;
 
 /*
  * Specifies the type of function passed to g_tree_traverse(). It is
@@ -4850,7 +4850,7 @@ public typedef extern(C) int  function (void*, void*, void*) GHRFunc;
  * TRUE to stop the traversal.
  */
 // gboolean (*GTraverseFunc) (gpointer key,  gpointer value,  gpointer data);
-public typedef extern(C) int  function (void*, void*, void*) GTraverseFunc;
+public alias extern(C) int  function (void*, void*, void*) GTraverseFunc;
 
 /*
  * A function of this signature is used to copy the node data
@@ -4864,7 +4864,7 @@ public typedef extern(C) int  function (void*, void*, void*) GTraverseFunc;
  * Since 2.4
  */
 // gpointer (*GCopyFunc) (gconstpointer src,  gpointer data);
-public typedef extern(C) void*  function (void*, void*) GCopyFunc;
+public alias extern(C) void*  function (void*, void*) GCopyFunc;
 
 /*
  * Specifies the type of function passed to g_node_traverse(). The
@@ -4879,7 +4879,7 @@ public typedef extern(C) void*  function (void*, void*) GCopyFunc;
  * TRUE to stop the traversal.
  */
 // gboolean (*GNodeTraverseFunc) (GNode *node,  gpointer data);
-public typedef extern(C) int  function (GNode*, void*) GNodeTraverseFunc;
+public alias extern(C) int  function (GNode*, void*) GNodeTraverseFunc;
 
 /*
  * Specifies the type of function passed to g_node_children_foreach().
@@ -4891,7 +4891,7 @@ public typedef extern(C) int  function (GNode*, void*) GNodeTraverseFunc;
  * user data passed to g_node_children_foreach().
  */
 // void (*GNodeForeachFunc) (GNode *node,  gpointer data);
-public typedef extern(C) void  function (GNode*, void*) GNodeForeachFunc;
+public alias extern(C) void  function (GNode*, void*) GNodeForeachFunc;
 
 /*
  * Specifies the type of function which is called when a data element
@@ -4901,7 +4901,7 @@ public typedef extern(C) void  function (GNode*, void*) GNodeForeachFunc;
  * the data element.
  */
 // void (*GDestroyNotify) (gpointer data);
-public typedef extern(C) void  function (void*) GDestroyNotify;
+public alias extern(C) void  function (void*) GDestroyNotify;
 
 /*
  * Specifies the type of function passed to g_dataset_foreach(). It is
@@ -4915,7 +4915,7 @@ public typedef extern(C) void  function (void*) GDestroyNotify;
  * user data passed to g_dataset_foreach().
  */
 // void (*GDataForeachFunc) (GQuark key_id,  gpointer data,  gpointer user_data);
-public typedef extern(C) void  function (GQuark, void*, void*) GDataForeachFunc;
+public alias extern(C) void  function (GQuark, void*, void*) GDataForeachFunc;
 
 /*
  * Specifies the type of the value_destroy_func and key_destroy_func
@@ -4926,7 +4926,7 @@ public typedef extern(C) void  function (GQuark, void*, void*) GDataForeachFunc;
  * the GCache value to destroy.
  */
 // void (*GCacheDestroyFunc) (gpointer value);
-public typedef extern(C) void  function (void*) GCacheDestroyFunc;
+public alias extern(C) void  function (void*) GCacheDestroyFunc;
 
 /*
  * Specifies the type of the key_dup_func function passed to
@@ -4940,7 +4940,7 @@ public typedef extern(C) void  function (void*) GCacheDestroyFunc;
  * a copy of the GCache key.
  */
 // gpointer (*GCacheDupFunc) (gpointer value);
-public typedef extern(C) void*  function (void*) GCacheDupFunc;
+public alias extern(C) void*  function (void*) GCacheDupFunc;
 
 /*
  * Specifies the type of the value_new_func function passed to
@@ -4952,7 +4952,7 @@ public typedef extern(C) void*  function (void*) GCacheDupFunc;
  * a new GCache value corresponding to the key.
  */
 // gpointer (*GCacheNewFunc) (gpointer key);
-public typedef extern(C) void*  function (void*) GCacheNewFunc;
+public alias extern(C) void*  function (void*) GCacheNewFunc;
 public struct GTokenValue
 {
 	union

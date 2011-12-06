@@ -3282,14 +3282,14 @@ public struct GdkAppLaunchContext{}
  * the user data passed to gdk_region_spans_intersect_foreach().
  */
 // void (*GdkSpanFunc) (GdkSpan *span,  gpointer data);
-public typedef extern(C) void  function (GdkSpan*, void*) GdkSpanFunc;
+public alias extern(C) void  function (GdkSpan*, void*) GdkSpanFunc;
 
 /*
  * pixels  :
  * data  :
  */
 // void (*GdkPixbufDestroyNotify) (guchar *pixels,  gpointer data);
-public typedef extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
+public alias extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
 
 /*
  * buf  :
@@ -3299,7 +3299,7 @@ public typedef extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * Returns  :
  */
 // gboolean (*GdkPixbufSaveFunc) (const gchar *buf,  gsize count,  GError **error,  gpointer data);
-public typedef extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSaveFunc;
+public alias extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSaveFunc;
 
 /*
  * Specifies the type of function used to filter native events before they are
@@ -3319,7 +3319,7 @@ public typedef extern(C) int  function (char*, gsize, GError**, void*) GdkPixbuf
  * a GdkFilterReturn value.
  */
 // GdkFilterReturn (*GdkFilterFunc) (GdkXEvent *xevent,  GdkEvent *event,  gpointer data);
-public typedef extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*) GdkFilterFunc;
+public alias extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*) GdkFilterFunc;
 
 /*
  * Specifies the type of function passed to gdk_event_handler_set() to handle
@@ -3331,7 +3331,7 @@ public typedef extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*
  * gdk_event_handler_set().
  */
 // void (*GdkEventFunc) (GdkEvent *event,  gpointer data);
-public typedef extern(C) void  function (GdkEvent*, void*) GdkEventFunc;
+public alias extern(C) void  function (GdkEvent*, void*) GdkEventFunc;
 
 /*
  * A callback function that will be called when some condition
@@ -3344,7 +3344,7 @@ public typedef extern(C) void  function (GdkEvent*, void*) GdkEventFunc;
  * the triggering condition.
  */
 // void (*GdkInputFunction) (gpointer data,  gint source,  GdkInputCondition condition);
-public typedef extern(C) void  function (void*, int, GdkInputCondition) GdkInputFunction;
+public alias extern(C) void  function (void*, int, GdkInputCondition) GdkInputFunction;
 
 /*
  * Warning
@@ -3356,7 +3356,7 @@ public typedef extern(C) void  function (void*, int, GdkInputCondition) GdkInput
  * the user data.
  */
 // void (*GdkDestroyNotify) (gpointer data);
-public typedef extern(C) void  function (void*) GdkDestroyNotify;
+public alias extern(C) void  function (void*) GdkDestroyNotify;
 /**
  * The GdkEvent struct contains a union of all of the event structs,
  * and allows access to the data fields in a number of ways.
