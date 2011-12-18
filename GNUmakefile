@@ -62,7 +62,7 @@ AR=ar
 RANLIB=ranlib
 
 define make-lib
-    $(AR) rcs $@ $^
+    $(AR) rcs $@ $(subst $(LIBNAME_GTKD),,$^)
     $(RANLIB) $@
 endef
 
