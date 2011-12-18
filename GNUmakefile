@@ -188,11 +188,9 @@ $(SONAME_GTKDGSTREAMERD): $(PICOBJECTS_GTKDGSTREAMERD)
 
 test: $(BINNAME_DEMO)
 
-$(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
-ifneq (,$(wildcard libgtkd.so))
-    LDFLAGS+= $(LINKERFLAG)-rpath=./
-endif
+shared: LDFLAGS+= $(LINKERFLAG)-rpath=./
 
+$(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
 $(BINNAME_DEMO): $(LIBNAME_GTKD) $(OBJECTS_DEMO)
 	$(DC) $(OBJECTS_DEMO) $(output) $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd $(LDFLAGS)
 
