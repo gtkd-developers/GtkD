@@ -6597,6 +6597,25 @@ prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
+nocode: gtk_color_selection_dialog_get_color_selection
+code: start
+	/**
+	 * Retrieves the GtkColorSelection widget embedded in the dialog.
+	 * Since 2.14
+	 * Returns: the embedded GtkColorSelection
+	 */
+	public ColorSelection getColorSelection()
+	{
+		// GtkWidget* gtk_color_selection_dialog_get_color_selection  (GtkColorSelectionDialog *colorsel);
+		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ColorSelection(cast(GtkColorSelection*) p);
+	}
+code: end
 outFile: ColorSelectionDialog
 
 file: GtkFileChooser.html

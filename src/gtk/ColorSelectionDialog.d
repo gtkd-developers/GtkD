@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = ColorSelectionDialog
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_color_selection_dialog_get_color_selection
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -125,6 +126,22 @@ public class ColorSelectionDialog : Dialog
 	}
 	
 	/**
+	 * Retrieves the GtkColorSelection widget embedded in the dialog.
+	 * Since 2.14
+	 * Returns: the embedded GtkColorSelection
+	 */
+	public ColorSelection getColorSelection()
+	{
+		// GtkWidget* gtk_color_selection_dialog_get_color_selection  (GtkColorSelectionDialog *colorsel);
+		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ColorSelection(cast(GtkColorSelection*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -142,21 +159,5 @@ public class ColorSelectionDialog : Dialog
 			throw new ConstructionException("null returned by gtk_color_selection_dialog_new(Str.toStringz(title))");
 		}
 		this(cast(GtkColorSelectionDialog*) p);
-	}
-	
-	/**
-	 * Retrieves the GtkColorSelection widget embedded in the dialog.
-	 * Since 2.14
-	 * Returns: the embedded GtkColorSelection
-	 */
-	public Widget getColorSelection()
-	{
-		// GtkWidget* gtk_color_selection_dialog_get_color_selection  (GtkColorSelectionDialog *colorsel);
-		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
 	}
 }
