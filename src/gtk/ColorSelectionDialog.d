@@ -63,7 +63,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gtk.Widget;
-
+private import gtk.ColorSelection;
 
 
 private import gtk.Dialog;

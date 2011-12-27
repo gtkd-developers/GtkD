@@ -6596,6 +6596,7 @@ prefix: gtk_color_selection_dialog_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
+import: gtk.ColorSelection
 structWrap: GtkWidget* Widget
 
 nocode: gtk_color_selection_dialog_get_color_selection
