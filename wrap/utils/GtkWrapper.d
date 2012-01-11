@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
 
 module utils.GtkWrapper;
@@ -117,7 +117,7 @@ public class GtkWrapper : WrapperIF
 "\n * "
 "\n * You should have received a copy of the GNU Lesser General Public License"
 "\n * along with gtkD; if not, write to the Free Software"
-"\n * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+"\n * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA"
 "\n */"
 "\n"
 "\n// generated automatically - do not change"

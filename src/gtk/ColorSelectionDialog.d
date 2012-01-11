@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
  
 // generated automatically - do not change
@@ -46,6 +46,7 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- gtk.ColorSelection
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -64,6 +65,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.ColorSelection;
+
 
 
 private import gtk.Dialog;
