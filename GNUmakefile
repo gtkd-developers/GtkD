@@ -68,6 +68,8 @@ endef
 
 #######################################################################
 
+SO_VERSION=1.5.1
+
 LIBNAME_GTKD = libgtkd.a
 SONAME_GTKD = libgtkd.so
 SOURCES_GTKD = $(subst src/build/gtkD.d,,$(wildcard src/*/*.d))
@@ -238,44 +240,54 @@ install-gstreamer: gstreamer install-gtkd
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gtkd: shared-gtkd install-gtkd
-	install -m 644 $(SONAME_GTKD)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 644 $(SONAME_GTKD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	ln -s $(SONAME_GTKD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
 
 install-shared-gtkdgl: shared-gtkdgl install-gtkdgl
-	install -m 644 $(SONAME_GTKDGL)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 644 $(SONAME_GTKDGL).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	ln -s $(SONAME_GTKDGL).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
 
 install-shared-gtkdsv: shared-sv install-gtkdsv
-	install -m 644 $(SONAME_GTKDSV)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 644 $(SONAME_GTKDSV).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	ln -s $(SONAME_GTKDSV).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
 
 install-shared-gda: shared-gda install-gtkdsv
-	install -m 644 $(SONAME_GTKDGDA)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 644 $(SONAME_GTKDGDA).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	ln -s $(SONAME_GTKDGDA).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA)
 
 install-shared-gstreamer: shared-gstreamer install-gstreamer
-	install -m 644 $(SONAME_GTKDGDA)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 644 $(SONAME_GSTREAMERD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	ln -s $(SONAME_GSTREAMERD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(SO_VERSION)
 
 uninstall-gtkdgl:
 	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(SO_VERSION)
 
 uninstall-gtkdsv:
 	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(SO_VERSION)
 
 uninstall-gda:
 	$(foreach dir,$(shell ls srcgda), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGDA)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA).$(SO_VERSION)
 
 uninstall-gstreamer:
 	$(foreach dir,$(shell ls srcgstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
 
 clean:
 	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
@@ -283,6 +295,7 @@ clean:
 	-rm -f $(LIBNAME_GTKDSV)     $(SONAME_GTKDSV)     $(OBJECTS_GTKDSV)     $(PICOBJECTS_GTKDSV)
 	-rm -f $(LIBNAME_GTKDGDA)    $(SONAME_GTKDGDA)    $(OBJECTS_GTKDGDA)    $(PICOBJECTS_GTKDGDA)
 	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)
+	-rm -f $(SONAME_GTKD).$(SO_VERSION) $(SONAME_GTKDGL).$(SO_VERSION) $(SONAME_GTKDSV).$(SO_VERSION) $(SONAME_GTKDGDA).$(SO_VERSION) $(SONAME_GSTREAMERD).$(SO_VERSION)
 	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)
 	-rm -rf .pic 
 
