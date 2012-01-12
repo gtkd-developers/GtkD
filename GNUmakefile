@@ -164,23 +164,23 @@ $(LIBNAME_GSTREAMERD): $(LIBNAME_GTKD) $(OBJECTS_GSTREAMERD)
 
 $(SONAME_GTKD): IMPORTS=-Isrc
 $(SONAME_GTKD): $(PICOBJECTS_GTKD)
-	$(CC) -shared $^ -o $@
+	$(CC) -shared -Wl,-soname,$@.1 -o $@ $^ 
 
 $(SONAME_GTKDGL): IMPORTS=-Isrc -Isrcgl
 $(SONAME_GTKDGL): $(PICOBJECTS_GTKDGL)
-	$(CC) -shared $^ -o $@
+	$(CC) -shared -Wl,-soname,$@.1 -o $@ $^ 
 
 $(SONAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
 $(SONAME_GTKDSV): $(PICOBJECTS_GTKDSV)
-	$(CC) -shared $^ -o $@
+	$(CC) -shared -Wl,-soname,$@.1 -o $@ $^ 
 
 $(SONAME_GTKDGDA): IMPORTS=-Isrc -Isrcgda
 $(SONAME_GTKDGDA): $(PICOBJECTS_GTKDGDA)
-	$(CC) -shared $^ -o $@
+	$(CC) -shared -Wl,-soname,$@.1 -o $@ $^ 
 
 $(SONAME_GTKDGSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
 $(SONAME_GTKDGSTREAMERD): $(PICOBJECTS_GTKDGSTREAMERD)
-	$(CC) -shared $^ -o $@
+	$(CC) -shared -Wl,-soname,$@.1 -o $@ $^ 
 
 #######################################################################
 
