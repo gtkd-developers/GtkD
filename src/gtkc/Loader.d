@@ -289,12 +289,6 @@ else
 	{
 		void* handle = dlopen(cast(char*)toStringz(libraryName), flag);
 
-		if ( handle is null )
-		{
-			// non-dev libraries tend to be called xxxx.so.0
-			handle = dlopen(cast(char*)toStringz(libraryName ~".0"), flag);
-		}
-
 		// clear the error buffer
 		dlerror();
 
