@@ -240,23 +240,23 @@ install-gstreamer: gstreamer install-gtkd
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gtkd: shared-gtkd install-gtkd
-	install -m 644 $(SONAME_GTKD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 755 $(SONAME_GTKD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
 	ln -s $(SONAME_GTKD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
 
 install-shared-gtkdgl: shared-gtkdgl install-gtkdgl
-	install -m 644 $(SONAME_GTKDGL).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 755 $(SONAME_GTKDGL).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
 	ln -s $(SONAME_GTKDGL).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
 
 install-shared-gtkdsv: shared-sv install-gtkdsv
-	install -m 644 $(SONAME_GTKDSV).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 755 $(SONAME_GTKDSV).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
 	ln -s $(SONAME_GTKDSV).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
 
 install-shared-gda: shared-gda install-gtkdsv
-	install -m 644 $(SONAME_GTKDGDA).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 755 $(SONAME_GTKDGDA).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
 	ln -s $(SONAME_GTKDGDA).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA)
 
 install-shared-gstreamer: shared-gstreamer install-gstreamer
-	install -m 644 $(SONAME_GSTREAMERD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
+	install -m 755 $(SONAME_GSTREAMERD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
 	ln -s $(SONAME_GSTREAMERD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
