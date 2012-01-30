@@ -7,9 +7,9 @@ OS=$(shell uname || uname -s)
 ARCH=$(shell arch || uname -m)
 
 # make gtkD libs and test
-.DEFAULT_GOAL = default
+.DEFAULT_GOAL = default-goal
 
-default: libs test
+default-goal: libs test
 shared: shared-libs
 all: libs shared-libs gda gstreamer shared-gda shared-gstreamer test
 
@@ -238,16 +238,16 @@ install-shared-gtkd: $(SONAME_GTKD)
 	install -d $(DESTDIR)$(prefix)/$(libdir)
 	$(install-so)
 
-install-shared-gtkdgl: $(SONAME_GTKDGL)
+install-shared-gtkdgl: $(SONAME_GTKDGL) install-shared-gtkd
 	$(install-so)
 
-install-shared-gtkdsv: $(SONAME_GTKDSV)
+install-shared-gtkdsv: $(SONAME_GTKDSV) install-shared-gtkd
 	$(install-so)
 
-install-shared-gda: $(SONAME_GTKDGDA)
+install-shared-gda: $(SONAME_GTKDGDA) install-shared-gtkd
 	$(install-so)
 
-install-shared-gstreamer: $(SONAME_GSTREAMERD)
+install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
 	$(install-so)
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
