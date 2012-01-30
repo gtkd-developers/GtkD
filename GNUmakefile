@@ -7,8 +7,11 @@ OS=$(shell uname || uname -s)
 ARCH=$(shell arch || uname -m)
 
 # make gtkD libs and test
-all: libs test
-shared: shared-libs libs test
+.DEFAULT_GOAL = default
+
+default: libs test
+shared: shared-libs
+all: libs shared-libs gda gstreamer shared-gda shared-gstreamer test
 
 ifndef DC
     ifneq ($(strip $(shell which dmd 2>/dev/null)),)
@@ -61,11 +64,6 @@ endif
 AR=ar
 RANLIB=ranlib
 
-define make-lib
-    $(AR) rcs $@ $(subst $(LIBNAME_GTKD),,$^)
-    $(RANLIB) $@
-endef
-
 #######################################################################
 
 SO_VERSION=1.5.1
@@ -107,11 +105,6 @@ SOURCES_DEMO = $(shell find \
         demos/gtkD/TestWindow \
         -name '*.d' )
 OBJECTS_DEMO = $(shell echo $(SOURCES_DEMO) | sed -e 's/\.d/\.o/g') 
-
-# you can now run
-#./GtkDTests
-#./SimpleGL
-#./ShapesGL
 
 #######################################################################
 
@@ -161,28 +154,25 @@ $(LIBNAME_GSTREAMERD): $(LIBNAME_GTKD) $(OBJECTS_GSTREAMERD)
 
 #######################################################################
 
-# When we get a shared standard lib use:
-# $(DC) $(LINKERFLAG)-shared $^ $(output)
-
 $(SONAME_GTKD): IMPORTS=-Isrc
 $(SONAME_GTKD): $(PICOBJECTS_GTKD)
-	$(CC) -shared -Wl,-soname,$@.$(SO_VERSION) -o $@.$(SO_VERSION) $^
+	$(make-shared-lib)
 
 $(SONAME_GTKDGL): IMPORTS=-Isrc -Isrcgl
 $(SONAME_GTKDGL): $(PICOBJECTS_GTKDGL)
-	$(CC) -shared -Wl,-soname,$@.$(SO_VERSION) -o $@.$(SO_VERSION) $^
+	$(make-shared-lib)
 
 $(SONAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
 $(SONAME_GTKDSV): $(PICOBJECTS_GTKDSV)
-	$(CC) -shared -Wl,-soname,$@.$(SO_VERSION) -o $@.$(SO_VERSION) $^
+	$(make-shared-lib)
 
 $(SONAME_GTKDGDA): IMPORTS=-Isrc -Isrcgda
 $(SONAME_GTKDGDA): $(PICOBJECTS_GTKDGDA)
-	$(CC) -shared -Wl,-soname,$@.$(SO_VERSION) -o $@.$(SO_VERSION) $^
+	$(make-shared-lib)
 
 $(SONAME_GTKDGSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
 $(SONAME_GTKDGSTREAMERD): $(PICOBJECTS_GTKDGSTREAMERD)
-	$(CC) -shared -Wl,-soname,$@.$(SO_VERSION) -o $@.$(SO_VERSION) $^
+	$(make-shared-lib)
 
 #######################################################################
 
@@ -190,10 +180,18 @@ $(SONAME_GTKDGSTREAMERD): $(PICOBJECTS_GTKDGSTREAMERD)
 
 test: $(BINNAME_DEMO)
 
-shared: LDFLAGS+= $(LINKERFLAG)-rpath=./
+# Build libgtkd.a when neigther neither libgtkd.so and libgtkd.a are pressend.
+
+# Use -rpath for the demo so that the shard libs don't need to
+# be installed for it to run. 
+
+# Create a versioned symlink so the demo is able to load it.
 
 $(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
-$(BINNAME_DEMO): $(LIBNAME_GTKD) $(OBJECTS_DEMO)
+$(BINNAME_DEMO): $(OBJECTS_DEMO)
+	$(if $(wildcard libgtkd.so),,$(if $(wildcard libgtkd.a),,$(MAKE) $(LIBNAME_GTKD)))
+	$(if $(wildcard libgtkd.so),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
+	$(if $(wildcard libgtkd.so),$(shell ln -s $(SONAME_GTKD) $(SONAME_GTKD).$(call stripBugfix,$(SO_VERSION))))
 	$(DC) $(OBJECTS_DEMO) $(output) $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd $(LDFLAGS)
 
 #######################################################################
@@ -202,11 +200,8 @@ $(BINNAME_DEMO): $(LIBNAME_GTKD) $(OBJECTS_DEMO)
 	$(DC) $(DCFLAGS) $(IMPORTS) -c $< $(output)
 
 %.pic.o : %.d
-ifneq (,$(findstring ldc,$(DC)))
 	$(DC) $(DCFLAGS) $(FPIC) $(IMPORTS) -c $< $(output)
-else
-	$(error shared not suported with $(DC))
-endif
+
 #######################################################################
 
 ifeq ("$(OS)","Darwin")
@@ -239,25 +234,21 @@ install-gstreamer: gstreamer install-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
-install-shared-gtkd: shared-gtkd install-gtkd
-	install -m 755 $(SONAME_GTKD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
-	ln -s $(SONAME_GTKD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
+install-shared-gtkd: $(SONAME_GTKD)
+	install -d $(DESTDIR)$(prefix)/$(libdir)
+	$(install-so)
 
-install-shared-gtkdgl: shared-gtkdgl install-gtkdgl
-	install -m 755 $(SONAME_GTKDGL).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
-	ln -s $(SONAME_GTKDGL).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
+install-shared-gtkdgl: $(SONAME_GTKDGL)
+	$(install-so)
 
-install-shared-gtkdsv: shared-sv install-gtkdsv
-	install -m 755 $(SONAME_GTKDSV).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
-	ln -s $(SONAME_GTKDSV).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
+install-shared-gtkdsv: $(SONAME_GTKDSV)
+	$(install-so)
 
-install-shared-gda: shared-gda install-gtkdsv
-	install -m 755 $(SONAME_GTKDGDA).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
-	ln -s $(SONAME_GTKDGDA).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA)
+install-shared-gda: $(SONAME_GTKDGDA)
+	$(install-so)
 
-install-shared-gstreamer: shared-gstreamer install-gstreamer
-	install -m 755 $(SONAME_GSTREAMERD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)
-	ln -s $(SONAME_GSTREAMERD).$(SO_VERSION)   $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
+install-shared-gstreamer: $(SONAME_GSTREAMERD)
+	$(install-so)
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
@@ -295,6 +286,31 @@ clean:
 	-rm -f $(LIBNAME_GTKDSV)     $(SONAME_GTKDSV)     $(OBJECTS_GTKDSV)     $(PICOBJECTS_GTKDSV)
 	-rm -f $(LIBNAME_GTKDGDA)    $(SONAME_GTKDGDA)    $(OBJECTS_GTKDGDA)    $(PICOBJECTS_GTKDGDA)
 	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)
-	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)
-	-rm -rf .pic 
+	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)      $(SONAME_GTKD).$(call stripBugfix,$(SO_VERSION))
+	-rm -rf .pic
 
+#######################################################################
+
+space :=
+space +=
+
+stripBugfix = $(subst $(space),.,$(strip $(wordlist 1, 2, $(subst ., ,$(1)))))
+
+define make-lib
+    $(AR) rcs $@ $(subst $(LIBNAME_GTKD),,$^)
+    $(RANLIB) $@
+endef
+
+define make-shared-lib
+	# Combine all the object files into one file, since some d compilers
+	# don't support building a shared lib from multiple object files.
+    ld -r $^ -o $@.o
+    $(DC) -shared $(output) $(LINKERFLAG)-soname=$@.$(call stripBugfix,$(SO_VERSION)) $@.o
+    rm $@.o
+endef
+
+define install-so
+    install -m 755 $< $(DESTDIR)$(prefix)/$(libdir)/$<.$(SO_VERSION)
+    ln -s $<.$(call stripBugfix,$(SO_VERSION)) $(DESTDIR)$(prefix)/$(libdir)/$<
+    ln -s $<.$(SO_VERSION) $(DESTDIR)$(prefix)/$(libdir)/$<
+endef
