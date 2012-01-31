@@ -254,30 +254,35 @@ uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(call stripBugfix,$(SO_VERSION))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(SO_VERSION)
 
 uninstall-gtkdgl:
 	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(call stripBugfix,$(SO_VERSION))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(SO_VERSION)
 
 uninstall-gtkdsv:
 	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(call stripBugfix,$(SO_VERSION))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(SO_VERSION)
 
 uninstall-gda:
 	$(foreach dir,$(shell ls srcgda), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGDA)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA).$(call stripBugfix,$(SO_VERSION))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA).$(SO_VERSION)
 
 uninstall-gstreamer:
 	$(foreach dir,$(shell ls srcgstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
 
 clean:
