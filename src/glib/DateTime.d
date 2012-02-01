@@ -209,14 +209,29 @@ public class DateTime
 		this(cast(GDateTime*) p);
 	}
 	
-	override bool opEquals(Object rhs)
+	version(D_Version2)
 	{
-		DateTime date = cast(DateTime)rhs;
-		
-		if ( date is null )
-		return false;
-		
-		return equal(this, date) != 0;
+		override bool opEquals(Object rhs)
+		{
+			DateTime date = cast(DateTime)rhs;
+			
+			if ( date is null )
+			return false;
+			
+			return equal(this, date) != 0;
+		}
+	}
+	else
+	{
+		override int opEquals(Object rhs)
+		{
+			DateTime date = cast(DateTime)rhs;
+			
+			if ( date is null )
+			return false;
+			
+			return equal(this, date);
+		}
 	}
 	
 	override int opCmp(Object rhs)
