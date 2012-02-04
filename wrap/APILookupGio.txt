@@ -1505,18 +1505,8 @@ file: GProxyAddress.html
 struct: GProxyAddress
 ctorStruct: GSocketAddress
 class: ProxyAddress
-implements: SocketConnectableIF
 prefix: g_proxy_address_
 import: glib.Str
-
-#imports for SocketConnectable Interface.
-import: gio.SocketConnectableT
-import: gio.SocketConnectableIF
-
-code: start
-	// add the SocketConnectable capabilities
-	mixin SocketConnectableT!(GProxyAddress);
-code: end
 outFile: ProxyAddress
 
 ###########################################################
@@ -1694,6 +1684,7 @@ class: SocketConnectableT
 template: TStruct
 prefix: g_socket_connectable_
 noprefix: g_socket_address_enumerator_
+override: 
 import: gio.SocketAddressEnumerator
 structWrap: GSocketAddressEnumerator* SocketAddressEnumerator
 interface: SocketConnectableIF
