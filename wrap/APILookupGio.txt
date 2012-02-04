@@ -1684,7 +1684,6 @@ class: SocketConnectableT
 template: TStruct
 prefix: g_socket_connectable_
 noprefix: g_socket_address_enumerator_
-override: 
 import: gio.SocketAddressEnumerator
 structWrap: GSocketAddressEnumerator* SocketAddressEnumerator
 interface: SocketConnectableIF

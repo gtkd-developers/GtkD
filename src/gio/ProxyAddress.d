@@ -30,12 +30,11 @@
  * ctorStrct=GSocketAddress
  * clss    = ProxyAddress
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- SocketConnectableIF
  * prefixes:
  * 	- g_proxy_address_
  * omit structs:
@@ -44,8 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gio.SocketConnectableT
- * 	- gio.SocketConnectableIF
  * structWrap:
  * module aliases:
  * local aliases:
@@ -61,8 +58,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gio.SocketConnectableT;
-private import gio.SocketConnectableIF;
 
 
 
@@ -72,7 +67,7 @@ private import gio.InetSocketAddress;
  * Description
  * Support for proxied GInetSocketAddress.
  */
-public class ProxyAddress : InetSocketAddress, SocketConnectableIF
+public class ProxyAddress : InetSocketAddress
 {
 	
 	/** the main Gtk struct */
@@ -117,9 +112,6 @@ public class ProxyAddress : InetSocketAddress, SocketConnectableIF
 		super.setStruct(obj);
 		gProxyAddress = cast(GProxyAddress*)obj;
 	}
-	
-	// add the SocketConnectable capabilities
-	mixin SocketConnectableT!(GProxyAddress);
 	
 	/**
 	 */
