@@ -6,13 +6,6 @@ libdir=lib
 OS=$(shell uname || uname -s)
 ARCH=$(shell arch || uname -m)
 
-# make gtkD libs and test
-.DEFAULT_GOAL = default-goal
-
-default-goal: libs test
-shared: shared-libs
-all: libs shared-libs gda gstreamer shared-gda shared-gstreamer test
-
 ifndef DC
     ifneq ($(strip $(shell which dmd 2>/dev/null)),)
         DC=dmd
@@ -23,6 +16,18 @@ ifndef DC
     else
         DC=gdc
     endif
+endif
+
+# make gtkD libs and test
+.DEFAULT_GOAL = default-goal
+
+default-goal: libs test
+shared: shared-libs
+
+ifneq (,$(findstring ldc,$(DC)))
+    all: libs shared-libs gda gstreamer shared-gda shared-gstreamer test
+else
+    all: libs gda gstreamer test
 endif
 
 ifeq ("$(DC)","gdc")
@@ -206,32 +211,28 @@ $(BINNAME_DEMO): $(OBJECTS_DEMO)
 
 ifeq ("$(OS)","Darwin")
     install: install-gtkd
+    install-headers: install-headers-gtkd
     install-shared: install-shared-gtkd
 else
     install: install-gtkd install-gtkdgl install-gtkdsv
+    install-headers: install-headers-gtkd install-headers-gtkdgl install-headers-gtkdsv
     install-shared: install-shared-gtkd install-shared-gtkdgl install-shared-gtkdsv
 endif
 
-install-gtkd: gtkd
-	install -d $(DESTDIR)$(prefix)/include/d
-	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+install-gtkd: $(LIBNAME_GTKD) install-headers-gtkd
 	install -d $(DESTDIR)$(prefix)/$(libdir)
 	install -m 644 $(LIBNAME_GTKD)   $(DESTDIR)$(prefix)/$(libdir)
 
-install-gtkdgl: gtkdgl install-gtkd
-	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+install-gtkdgl: $(LIBNAME_GTKDGL) install-gtkd install-headers-gtkdgl
 	install -m 644 $(LIBNAME_GTKDGL) $(DESTDIR)$(prefix)/$(libdir)
 
-install-gtkdsv: sv install-gtkd
-	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+install-gtkdsv: $(LIBNAME_GTKDSV) install-gtkd install-headers-gtkdsv
 	install -m 644 $(LIBNAME_GTKDSV) $(DESTDIR)$(prefix)/$(libdir)
 
-install-gda: gda install-gtkd
-	(cd srcgda; echo $(SOURCES_GTKDGDA) | sed -e s,srcgda/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+install-gda: $(LIBNAME_GTKDGDA) install-gtkd install-headers-gda
 	install -m 644 $(LIBNAME_GTKDGDA) $(DESTDIR)$(prefix)/$(libdir)
 
-install-gstreamer: gstreamer install-gtkd
-	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+install-gstreamer: $(LIBNAME_GSTREAMERD) install-gtkd install-headers-gstreamer
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gtkd: $(SONAME_GTKD)
@@ -249,6 +250,22 @@ install-shared-gda: $(SONAME_GTKDGDA) install-shared-gtkd
 
 install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
 	$(install-so)
+
+install-headers-gtkd:
+	install -d $(DESTDIR)$(prefix)/include/d
+	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+
+install-headers-gtkdgl:
+	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+
+install-headers-gtkdsv:
+	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+
+install-headers-gda:
+	(cd srcgda; echo $(SOURCES_GTKDGDA) | sed -e s,srcgda/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+
+install-headers-gstreamer:
+	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar c) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
@@ -315,7 +332,7 @@ define make-shared-lib
 endef
 
 define install-so
-    install -m 755 $< $(DESTDIR)$(prefix)/$(libdir)/$<.$(SO_VERSION)
-    cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION) $<.$(call stripBugfix,$(SO_VERSION)) 
+    install -m 755 $< $(DESTDIR)$(prefix)/$(libdir)/$<.$(call stripBugfix,$(SO_VERSION))
+    cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(call stripBugfix,$(SO_VERSION)) $<.$(SO_VERSION) 
     cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION) $<
 endef
