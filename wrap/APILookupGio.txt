@@ -1428,6 +1428,7 @@ file: GCredentials.html
 struct: GCredentials
 class: Credentials
 prefix: g_credentials_
+override: toString
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException

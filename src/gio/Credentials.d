@@ -161,7 +161,7 @@ public class Credentials : ObjectG
 	 * Since 2.26
 	 * Returns: A string that should be freed with g_free().
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// gchar * g_credentials_to_string (GCredentials *credentials);
 		return Str.toString(g_credentials_to_string(gCredentials));
