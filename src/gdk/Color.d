@@ -226,9 +226,9 @@ public class Color
 	}
 	
 	/** */
-	uint getValue()
+	ulong getValue()
 	{
-		return (gdkColor.red <<32) | (gdkColor.green << 16) | (gdkColor.blue);
+		return (cast(ulong)gdkColor.red <<32) | (cast(ulong)gdkColor.green << 16) | (cast(ulong)gdkColor.blue);
 	}
 	
 	/** */
