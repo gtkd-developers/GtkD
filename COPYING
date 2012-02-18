@@ -1,5 +1,6 @@
-The GtkD library and included works are provided under the terms of the GNU Library General Public 
-License (LGPL) with the following exceptions:
+The GtkD library and included works are provided under the terms of the
+GNU Library General Public License (LGPL) version 3, or (at your option)
+any later version, with the following exceptions:
 
 1. Modifications to any of the works included within the GtkD library to support a specific 
 platform or application do not constitute a modified or derivative work.
