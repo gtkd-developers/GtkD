@@ -67,11 +67,6 @@ private import glib.ConstructionException;
  * that time. This is done somewhat differently on different platforms,
  * and can be tricky to get exactly right, so GTimer provides a
  * portable/convenient interface.
- * Note
- *  GTimer uses a higher-quality clock when thread support is available.
- *  Therefore, calling g_thread_init() while timers are running may lead to
- *  unreliable results. It is best to call g_thread_init() before starting any
- *  timers, if you are using threads at all.
  */
 public class Timer
 {
@@ -115,7 +110,7 @@ public class Timer
 	 */
 	public this ()
 	{
-		// GTimer* g_timer_new (void);
+		// GTimer * g_timer_new (void);
 		auto p = g_timer_new();
 		if(p is null)
 		{
@@ -170,8 +165,8 @@ public class Timer
 	 *  timer is running will cause invalid return values from this function.
 	 * Params:
 	 * microseconds = return location for the fractional part of seconds
-	 *  elapsed, in microseconds (that is, the total number
-	 *  of microseconds elapsed, modulo 1000000), or NULL
+	 * elapsed, in microseconds (that is, the total number
+	 * of microseconds elapsed, modulo 1000000), or NULL
 	 * Returns: seconds elapsed as a floating point value, including any fractional part.
 	 */
 	public double elapsed(out gulong microseconds)

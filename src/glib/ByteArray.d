@@ -113,7 +113,7 @@ public class ByteArray
 	 */
 	public this ()
 	{
-		// GByteArray* g_byte_array_new (void);
+		// GByteArray * g_byte_array_new (void);
 		auto p = g_byte_array_new();
 		if(p is null)
 		{
@@ -133,7 +133,7 @@ public class ByteArray
 	 */
 	public static ByteArray sizedNew(uint reservedSize)
 	{
-		// GByteArray* g_byte_array_sized_new (guint reserved_size);
+		// GByteArray * g_byte_array_sized_new (guint reserved_size);
 		auto p = g_byte_array_sized_new(reservedSize);
 		if(p is null)
 		{
@@ -181,7 +181,7 @@ public class ByteArray
 	 */
 	public ByteArray append(ubyte[] data)
 	{
-		// GByteArray* g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
+		// GByteArray * g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
 		auto p = g_byte_array_append(gByteArray, data.ptr, cast(int) data.length);
 		if(p is null)
 		{
@@ -199,7 +199,7 @@ public class ByteArray
 	 */
 	public ByteArray prepend(ubyte[] data)
 	{
-		// GByteArray* g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
+		// GByteArray * g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
 		auto p = g_byte_array_prepend(gByteArray, data.ptr, cast(int) data.length);
 		if(p is null)
 		{
@@ -217,7 +217,7 @@ public class ByteArray
 	 */
 	public ByteArray removeIndex(uint index)
 	{
-		// GByteArray* g_byte_array_remove_index (GByteArray *array,  guint index_);
+		// GByteArray * g_byte_array_remove_index (GByteArray *array,  guint index_);
 		auto p = g_byte_array_remove_index(gByteArray, index);
 		if(p is null)
 		{
@@ -237,7 +237,7 @@ public class ByteArray
 	 */
 	public ByteArray removeIndexFast(uint index)
 	{
-		// GByteArray* g_byte_array_remove_index_fast (GByteArray *array,  guint index_);
+		// GByteArray * g_byte_array_remove_index_fast (GByteArray *array,  guint index_);
 		auto p = g_byte_array_remove_index_fast(gByteArray, index);
 		if(p is null)
 		{
@@ -257,7 +257,7 @@ public class ByteArray
 	 */
 	public ByteArray removeRange(uint index, uint length)
 	{
-		// GByteArray* g_byte_array_remove_range (GByteArray *array,  guint index_,  guint length);
+		// GByteArray * g_byte_array_remove_range (GByteArray *array,  guint index_,  guint length);
 		auto p = g_byte_array_remove_range(gByteArray, index, length);
 		if(p is null)
 		{
@@ -303,7 +303,7 @@ public class ByteArray
 	 */
 	public ByteArray setSize(uint length)
 	{
-		// GByteArray* g_byte_array_set_size (GByteArray *array,  guint length);
+		// GByteArray * g_byte_array_set_size (GByteArray *array,  guint length);
 		auto p = g_byte_array_set_size(gByteArray, length);
 		if(p is null)
 		{
@@ -323,7 +323,7 @@ public class ByteArray
 	 */
 	public ubyte* free(int freeSegment)
 	{
-		// guint8* g_byte_array_free (GByteArray *array,  gboolean free_segment);
+		// guint8 * g_byte_array_free (GByteArray *array,  gboolean free_segment);
 		return g_byte_array_free(gByteArray, freeSegment);
 	}
 }

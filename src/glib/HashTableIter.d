@@ -163,7 +163,7 @@ public class HashTableIter
 	 */
 	public HashTable getHashTable()
 	{
-		// GHashTable* g_hash_table_iter_get_hash_table (GHashTableIter *iter);
+		// GHashTable * g_hash_table_iter_get_hash_table (GHashTableIter *iter);
 		auto p = g_hash_table_iter_get_hash_table(gHashTableIter);
 		if(p is null)
 		{

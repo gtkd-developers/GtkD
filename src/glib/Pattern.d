@@ -124,7 +124,7 @@ public class Pattern
 	 */
 	public this (string pattern)
 	{
-		// GPatternSpec* g_pattern_spec_new (const gchar *pattern);
+		// GPatternSpec * g_pattern_spec_new (const gchar *pattern);
 		auto p = g_pattern_spec_new(Str.toStringz(pattern));
 		if(p is null)
 		{
@@ -174,7 +174,7 @@ public class Pattern
 	 * strings.
 	 * Params:
 	 * stringLength = the length of string (in bytes, i.e. strlen(),
-	 *  not g_utf8_strlen())
+	 * not g_utf8_strlen())
 	 * string = the UTF-8 encoded string to match
 	 * stringReversed = the reverse of string or NULL
 	 * Returns: TRUE if string matches pspec

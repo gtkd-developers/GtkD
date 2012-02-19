@@ -108,8 +108,6 @@ version (Windows)
 		extern (C) FILE*  fdopen(int, char*);
 	}
 }
-
-alias void GStatBuf;
 addTypedefs: end
 
 addAliases: start
@@ -607,6 +605,28 @@ class: Module
 prefix: g_module_
 structWrap: GModule* Module
 import: glib.Str
+text: start
+g_module_open ()
+GModule* g_module_open (const gchar *file_name, GModuleFlags flags);
+Opens a module. If the module has already been opened, its reference
+count is incremented.
+First of all g_module_open() tries to open file_name as a module. If
+that fails and file_name has the ".la"-suffix (and is a libtool archive)
+it tries to open the corresponding module. If that fails and it doesn't
+have the proper module suffix for the platform (G_MODULE_SUFFIX), this
+suffix will be appended and the corresponding module will be opended. If
+that fails and file_name doesn't have the ".la"-suffix, this suffix is
+appended and g_module_open() tries to open the corresponding module. If
+eventually that fails as well, NULL is returned.
+file_name :
+the name of the file containing the module, or NULL to obtain
+a GModule representing the main program itself.
+flags :
+the flags used for opening the module.
+This can be the logical OR of any of the GModuleFlags.
+Returns :
+a GModule on success, or NULL on failure.
+text: end
 outFile: Module
 
 file: glib-Memory-Allocation.html
@@ -1165,6 +1185,7 @@ import: glib.Str
 structWrap: GTimeZone* TimeZone
 nocode: g_time_zone_new_local
 nocode: g_time_zone_new_utc
+inout: g_time_zone_adjust_time time
 outFile: TimeZone
 
 file: glib-GDateTime.html

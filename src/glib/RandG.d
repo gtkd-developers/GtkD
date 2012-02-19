@@ -72,7 +72,7 @@ private import glib.ConstructionException;
  * pseudo-random number generator (PRNG). It uses the Mersenne Twister
  * PRNG, which was originally developed by Makoto Matsumoto and Takuji
  * Nishimura. Further information can be found at
- * www.math.keio.ac.jp/~matumoto/emt.html.
+ * http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html.
  * If you just need a random number, you simply call the
  * g_random_* functions, which will create a
  * globally used GRand and use the according
@@ -143,7 +143,7 @@ public class RandG
 	 */
 	public this (uint seed)
 	{
-		// GRand* g_rand_new_with_seed (guint32 seed);
+		// GRand * g_rand_new_with_seed (guint32 seed);
 		auto p = g_rand_new_with_seed(seed);
 		if(p is null)
 		{
@@ -161,7 +161,7 @@ public class RandG
 	 */
 	public this (uint[] seed)
 	{
-		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
+		// GRand * g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
 		auto p = g_rand_new_with_seed_array(seed.ptr, cast(int) seed.length);
 		if(p is null)
 		{
@@ -178,7 +178,7 @@ public class RandG
 	 */
 	public this ()
 	{
-		// GRand* g_rand_new (void);
+		// GRand * g_rand_new (void);
 		auto p = g_rand_new();
 		if(p is null)
 		{
@@ -196,7 +196,7 @@ public class RandG
 	 */
 	public RandG copy()
 	{
-		// GRand* g_rand_copy (GRand *rand_);
+		// GRand * g_rand_copy (GRand *rand_);
 		auto p = g_rand_copy(gRand);
 		if(p is null)
 		{

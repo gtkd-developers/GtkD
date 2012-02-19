@@ -102,10 +102,7 @@ private import glib.Str;
  * It is very important to use the API to access the GDate
  * struct. Often only the day-month-year or only the Julian
  * representation is valid. Sometimes neither is valid. Use the API.
- * GLib doesn't contain any time-manipulation functions; however, there
- * is a GTime typedef and a GTimeVal struct which represents a more
- * precise time (with microseconds). You can request the current time as
- * a GTimeVal with g_get_current_time().
+ * GLib also features GDateTime which represents a precise time.
  */
 public class Date
 {
@@ -150,7 +147,7 @@ public class Date
 	 */
 	public this ()
 	{
-		// GDate* g_date_new (void);
+		// GDate * g_date_new (void);
 		auto p = g_date_new();
 		if(p is null)
 		{
@@ -171,7 +168,7 @@ public class Date
 	 */
 	public this (GDateDay day, GDateMonth month, GDateYear year)
 	{
-		// GDate* g_date_new_dmy (GDateDay day,  GDateMonth month,  GDateYear year);
+		// GDate * g_date_new_dmy (GDateDay day,  GDateMonth month,  GDateYear year);
 		auto p = g_date_new_dmy(day, month, year);
 		if(p is null)
 		{
@@ -190,7 +187,7 @@ public class Date
 	 */
 	public this (uint julianDay)
 	{
-		// GDate* g_date_new_julian (guint32 julian_day);
+		// GDate * g_date_new_julian (guint32 julian_day);
 		auto p = g_date_new_julian(julianDay);
 		if(p is null)
 		{

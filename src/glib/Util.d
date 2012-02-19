@@ -148,7 +148,7 @@ public class Util
 	 */
 	public static string getApplicationName()
 	{
-		// const gchar* g_get_application_name (void);
+		// const gchar * g_get_application_name (void);
 		return Str.toString(g_get_application_name());
 	}
 	
@@ -182,7 +182,7 @@ public class Util
 	 */
 	public static string getPrgname()
 	{
-		// gchar* g_get_prgname (void);
+		// gchar * g_get_prgname (void);
 		return Str.toString(g_get_prgname());
 	}
 	
@@ -200,56 +200,20 @@ public class Util
 	}
 	
 	/**
-	 * Returns the value of an environment variable. The name and value
-	 * are in the GLib file name encoding. On UNIX, this means the actual
-	 * bytes which might or might not be in some consistent character set
-	 * and encoding. On Windows, it is in UTF-8. On Windows, in case the
-	 * environment variable's value contains references to other
-	 * environment variables, they are expanded.
-	 * Params:
-	 * variable = the environment variable to get, in the GLib file name encoding.
-	 * Returns: the value of the environment variable, or NULL if the environment variable is not found. The returned string may be overwritten by the next call to g_getenv(), g_setenv() or g_unsetenv().
+	 * Gets the list of environment variables for the current process. The
+	 * list is NULL terminated and each item in the list is of the form
+	 * 'NAME=VALUE'.
+	 * This is equivalent to direct access to the 'environ' global variable,
+	 * except portable.
+	 * The return value is freshly allocated and it should be freed with
+	 * g_strfreev() when it is no longer needed.
+	 * Since 2.28
+	 * Returns: the list of environment variables
 	 */
-	public static string getenv(string variable)
+	public static string[] getEnviron()
 	{
-		// const gchar* g_getenv (const gchar *variable);
-		return Str.toString(g_getenv(Str.toStringz(variable)));
-	}
-	
-	/**
-	 * Sets an environment variable. Both the variable's name and value
-	 * should be in the GLib file name encoding. On UNIX, this means that
-	 * they can be any sequence of bytes. On Windows, they should be in
-	 * UTF-8.
-	 * Note that on some systems, when variables are overwritten, the memory
-	 * used for the previous variables and its value isn't reclaimed.
-	 * Since 2.4
-	 * Params:
-	 * variable = the environment variable to set, must not contain '='.
-	 * value = the value for to set the variable to.
-	 * overwrite = whether to change the variable if it already exists.
-	 * Returns: FALSE if the environment variable couldn't be set.
-	 */
-	public static int setenv(string variable, string value, int overwrite)
-	{
-		// gboolean g_setenv (const gchar *variable,  const gchar *value,  gboolean overwrite);
-		return g_setenv(Str.toStringz(variable), Str.toStringz(value), overwrite);
-	}
-	
-	/**
-	 * Removes an environment variable from the environment.
-	 * Note that on some systems, when variables are overwritten, the memory
-	 * used for the previous variables and its value isn't reclaimed.
-	 * Furthermore, this function can't be guaranteed to operate in a
-	 * threadsafe way.
-	 * Since 2.4
-	 * Params:
-	 * variable = the environment variable to remove, must not contain '='.
-	 */
-	public static void unsetenv(string variable)
-	{
-		// void g_unsetenv (const gchar *variable);
-		g_unsetenv(Str.toStringz(variable));
+		// gchar ** g_get_environ (void);
+		return Str.toStringArray(g_get_environ());
 	}
 	
 	/**
@@ -259,35 +223,8 @@ public class Util
 	 */
 	public static string[] listenv()
 	{
-		// gchar** g_listenv (void);
+		// gchar ** g_listenv (void);
 		return Str.toStringArray(g_listenv());
-	}
-	
-	/**
-	 * Gets the user name of the current user. The encoding of the returned
-	 * string is system-defined. On UNIX, it might be the preferred file name
-	 * encoding, or something else, and there is no guarantee that it is even
-	 * consistent on a machine. On Windows, it is always UTF-8.
-	 * Returns: the user name of the current user.
-	 */
-	public static string getUserName()
-	{
-		// const gchar* g_get_user_name (void);
-		return Str.toString(g_get_user_name());
-	}
-	
-	/**
-	 * Gets the real name of the user. This usually comes from the user's entry
-	 * in the passwd file. The encoding of the returned
-	 * string is system-defined. (On Windows, it is, however, always UTF-8.)
-	 * If the real user name cannot be determined, the string "Unknown" is
-	 * returned.
-	 * Returns: the user's real name.
-	 */
-	public static string getRealName()
-	{
-		// const gchar* g_get_real_name (void);
-		return Str.toString(g_get_real_name());
 	}
 	
 	/**
@@ -306,7 +243,7 @@ public class Util
 	 */
 	public static string getUserCacheDir()
 	{
-		// const gchar* g_get_user_cache_dir (void);
+		// const gchar * g_get_user_cache_dir (void);
 		return Str.toString(g_get_user_cache_dir());
 	}
 	
@@ -317,14 +254,16 @@ public class Util
 	 * the
 	 * XDG Base Directory Specification.
 	 * In this case the directory retrieved will be XDG_DATA_HOME.
-	 * On Windows is the virtual folder that represents the My Documents
-	 * desktop item. See documentation for CSIDL_PERSONAL.
+	 * On Windows this is the folder to use for local (as opposed to
+	 * roaming) application data. See documentation for
+	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
+	 * what g_get_user_config_dir() returns.
 	 * Since 2.6
 	 * Returns: a string owned by GLib that must not be modified or freed.
 	 */
 	public static string getUserDataDir()
 	{
-		// const gchar* g_get_user_data_dir (void);
+		// const gchar * g_get_user_data_dir (void);
 		return Str.toString(g_get_user_data_dir());
 	}
 	
@@ -335,17 +274,39 @@ public class Util
 	 * the
 	 * XDG Base Directory Specification.
 	 * In this case the directory retrieved will be XDG_CONFIG_HOME.
-	 * On Windows is the directory that serves as a common repository for
-	 * application-specific data. A typical path is
-	 * C:\Documents and Settings\username\Application. See documentation for
-	 * CSIDL_APPDATA.
+	 * On Windows this is the folder to use for local (as opposed to
+	 * roaming) application data. See documentation for
+	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
+	 * what g_get_user_data_dir() returns.
 	 * Since 2.6
 	 * Returns: a string owned by GLib that must not be modified or freed.
 	 */
 	public static string getUserConfigDir()
 	{
-		// const gchar* g_get_user_config_dir (void);
+		// const gchar * g_get_user_config_dir (void);
 		return Str.toString(g_get_user_config_dir());
+	}
+	
+	/**
+	 * Returns a directory that is unique to the current user on the local
+	 * system.
+	 * On UNIX platforms this is determined using the mechanisms described in
+	 * the
+	 * XDG Base Directory Specification. This is the directory
+	 * specified in the XDG_RUNTIME_DIR environment variable.
+	 * In the case that this variable is not set, GLib will issue a warning
+	 * message to stderr and return the value of g_get_user_cache_dir().
+	 * On Windows this is the folder to use for local (as opposed to
+	 * roaming) application data. See documentation for
+	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
+	 * what g_get_user_config_dir() returns.
+	 * Since 2.28
+	 * Returns: a string owned by GLib that must not be modified or freed.
+	 */
+	public static string getUserRuntimeDir()
+	{
+		// const gchar * g_get_user_runtime_dir (void);
+		return Str.toString(g_get_user_runtime_dir());
 	}
 	
 	/**
@@ -364,7 +325,7 @@ public class Util
 	 */
 	public static string getUserSpecialDir(GUserDirectory directory)
 	{
-		// const gchar* g_get_user_special_dir (GUserDirectory directory);
+		// const gchar * g_get_user_special_dir (GUserDirectory directory);
 		return Str.toString(g_get_user_special_dir(directory));
 	}
 	
@@ -397,7 +358,7 @@ public class Util
 	 */
 	public static string[] getSystemDataDirs()
 	{
-		// const gchar* const * g_get_system_data_dirs (void);
+		// const gchar * const * g_get_system_data_dirs (void);
 		return Str.toStringArray(g_get_system_data_dirs());
 	}
 	
@@ -419,7 +380,7 @@ public class Util
 	 */
 	public static string[] getSystemConfigDirs()
 	{
-		// const gchar* const * g_get_system_config_dirs (void);
+		// const gchar * const * g_get_system_config_dirs (void);
 		return Str.toStringArray(g_get_system_config_dirs());
 	}
 	
@@ -456,59 +417,8 @@ public class Util
 	 */
 	public static string getHostName()
 	{
-		// const gchar* g_get_host_name (void);
+		// const gchar * g_get_host_name (void);
 		return Str.toString(g_get_host_name());
-	}
-	
-	/**
-	 * Gets the current user's home directory as defined in the
-	 * password database.
-	 * Note that in contrast to traditional UNIX tools, this function
-	 * prefers passwd entries over the HOME
-	 * environment variable.
-	 * One of the reasons for this decision is that applications in many
-	 * cases need special handling to deal with the case where
-	 * HOME is
-	 * Not owned by the user
-	 * Not writeable
-	 * Not even readable
-	 * Since applications are in general not written
-	 * to deal with these situations it was considered better to make
-	 * g_get_home_dir() not pay attention to HOME and to
-	 * return the real home directory for the user. If applications
-	 * Returns: the current user's home directory
-	 */
-	public static string getHomeDir()
-	{
-		// const gchar* g_get_home_dir (void);
-		return Str.toString(g_get_home_dir());
-	}
-	
-	/**
-	 * Gets the directory to use for temporary files. This is found from
-	 * inspecting the environment variables TMPDIR,
-	 * TMP, and TEMP in that order. If none
-	 * of those are defined "/tmp" is returned on UNIX and "C:\" on Windows.
-	 * The encoding of the returned string is system-defined. On Windows,
-	 * it is always UTF-8. The return value is never NULL or the empty string.
-	 * Returns: the directory to use for temporary files.
-	 */
-	public static string getTmpDir()
-	{
-		// const gchar* g_get_tmp_dir (void);
-		return Str.toString(g_get_tmp_dir());
-	}
-	
-	/**
-	 * Gets the current directory.
-	 * The returned string should be freed when no longer needed. The encoding
-	 * of the returned string is system defined. On Windows, it is always UTF-8.
-	 * Returns: the current directory.
-	 */
-	public static string getCurrentDir()
-	{
-		// gchar* g_get_current_dir (void);
-		return Str.toString(g_get_current_dir());
 	}
 	
 	/**
@@ -524,17 +434,34 @@ public class Util
 	 */
 	public static string basename(string fileName)
 	{
-		// const gchar* g_basename (const gchar *file_name);
+		// const gchar * g_basename (const gchar *file_name);
 		return Str.toString(g_basename(Str.toStringz(fileName)));
 	}
 	
 	/**
-	 * Returns TRUE if the given file_name is an absolute file name,
-	 * i.e. it contains a full path from the root directory such as "/usr/local"
-	 * on UNIX or "C:\windows" on Windows systems.
+	 * Returns TRUE if the given file_name is an absolute file name.
+	 * Note that this is a somewhat vague concept on Windows.
+	 * On POSIX systems, an absolute file name is well-defined. It always
+	 * starts from the single root directory. For example "/usr/local".
+	 * On Windows, the concepts of current drive and drive-specific
+	 * current directory introduce vagueness. This function interprets as
+	 * an absolute file name one that either begins with a directory
+	 * separator such as "\Users\tml" or begins with the root on a drive,
+	 * for example "C:\Windows". The first case also includes UNC paths
+	 * such as "\\myserver\docs\foo". In all cases, either slashes or
+	 * backslashes are accepted.
+	 * Note that a file name relative to the current drive root does not
+	 * truly specify a file uniquely over time and across processes, as
+	 * the current drive is a per-process value and can be changed.
+	 * File names relative the current directory on some specific drive,
+	 * such as "D:foo/bar", are not interpreted as absolute by this
+	 * function, but they obviously are not relative to the normal current
+	 * directory as returned by getcwd() or g_get_current_dir()
+	 * either. Such paths should be avoided, or need to be handled using
+	 * Windows-specific code.
 	 * Params:
 	 * fileName = a file name.
-	 * Returns: TRUE if file_name is an absolute path.
+	 * Returns: TRUE if file_name is absolute.
 	 */
 	public static int pathIsAbsolute(string fileName)
 	{
@@ -552,7 +479,7 @@ public class Util
 	 */
 	public static string pathSkipRoot(string fileName)
 	{
-		// const gchar* g_path_skip_root (const gchar *file_name);
+		// const gchar * g_path_skip_root (const gchar *file_name);
 		return Str.toString(g_path_skip_root(Str.toStringz(fileName)));
 	}
 	
@@ -568,7 +495,7 @@ public class Util
 	 */
 	public static string pathGetBasename(string fileName)
 	{
-		// gchar* g_path_get_basename (const gchar *file_name);
+		// gchar * g_path_get_basename (const gchar *file_name);
 		return Str.toString(g_path_get_basename(Str.toStringz(fileName)));
 	}
 	
@@ -582,7 +509,7 @@ public class Util
 	 */
 	public static string pathGetDirname(string fileName)
 	{
-		// gchar* g_path_get_dirname (const gchar *file_name);
+		// gchar * g_path_get_dirname (const gchar *file_name);
 		return Str.toString(g_path_get_dirname(Str.toStringz(fileName)));
 	}
 	
@@ -633,32 +560,6 @@ public class Util
 	{
 		// char * g_format_size_for_display (goffset size);
 		return Str.toString(g_format_size_for_display(size));
-	}
-	
-	/**
-	 * Locates the first executable named program in the user's path, in the
-	 * same way that execvp() would locate it. Returns an allocated string
-	 * with the absolute path name, or NULL if the program is not found in
-	 * the path. If program is already an absolute path, returns a copy of
-	 * program if program exists and is executable, and NULL otherwise.
-	 * On Windows, if program does not have a file type suffix, tries
-	 * with the suffixes .exe, .cmd, .bat and .com, and the suffixes in
-	 * the PATHEXT environment variable.
-	 * On Windows, it looks for the file in the same way as CreateProcess()
-	 * would. This means first in the directory where the executing
-	 * program was loaded from, then in the current directory, then in the
-	 * Windows 32-bit system directory, then in the Windows directory, and
-	 * finally in the directories in the PATH environment
-	 * variable. If the program is found, the return value contains the
-	 * full name including the type suffix.
-	 * Params:
-	 * program = a program name in the GLib file name encoding
-	 * Returns: absolute path, or NULL
-	 */
-	public static string findProgramInPath(string program)
-	{
-		// gchar* g_find_program_in_path (const gchar *program);
-		return Str.toString(g_find_program_in_path(Str.toStringz(program)));
 	}
 	
 	/**
@@ -768,7 +669,7 @@ public class Util
 	 * string = a list of debug options separated by colons, spaces, or
 	 * commas, or NULL.
 	 * keys = pointer to an array of GDebugKey which associate
-	 *  strings with bit flags.
+	 * strings with bit flags.
 	 * nkeys = the number of GDebugKeys in the array.
 	 * Returns: the combined set of bit flags.
 	 */

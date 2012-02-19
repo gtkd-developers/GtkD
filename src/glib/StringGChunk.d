@@ -120,14 +120,14 @@ public class StringGChunk
 	 * Creates a new GStringChunk.
 	 * Params:
 	 * size = the default size of the blocks of memory which are
-	 *  allocated to store the strings. If a particular string
-	 *  is larger than this default size, a larger block of
-	 *  memory will be allocated for it.
+	 * allocated to store the strings. If a particular string
+	 * is larger than this default size, a larger block of
+	 * memory will be allocated for it.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (gsize size)
 	{
-		// GStringChunk* g_string_chunk_new (gsize size);
+		// GStringChunk * g_string_chunk_new (gsize size);
 		auto p = g_string_chunk_new(size);
 		if(p is null)
 		{
@@ -153,7 +153,7 @@ public class StringGChunk
 	 */
 	public string insert(string string)
 	{
-		// gchar* g_string_chunk_insert (GStringChunk *chunk,  const gchar *string);
+		// gchar *	 g_string_chunk_insert (GStringChunk *chunk,  const gchar *string);
 		return Str.toString(g_string_chunk_insert(gStringChunk, Str.toStringz(string)));
 	}
 	
@@ -175,7 +175,7 @@ public class StringGChunk
 	 */
 	public string insertConst(string string)
 	{
-		// gchar* g_string_chunk_insert_const (GStringChunk *chunk,  const gchar *string);
+		// gchar *	 g_string_chunk_insert_const (GStringChunk *chunk,  const gchar *string);
 		return Str.toString(g_string_chunk_insert_const(gStringChunk, Str.toStringz(string)));
 	}
 	
@@ -191,12 +191,12 @@ public class StringGChunk
 	 * Params:
 	 * string = bytes to insert
 	 * len = number of bytes of string to insert, or -1 to insert a
-	 *  nul-terminated string
+	 * nul-terminated string
 	 * Returns: a pointer to the copy of string within the GStringChunk
 	 */
 	public string insertLen(string string, gssize len)
 	{
-		// gchar* g_string_chunk_insert_len (GStringChunk *chunk,  const gchar *string,  gssize len);
+		// gchar *	 g_string_chunk_insert_len (GStringChunk *chunk,  const gchar *string,  gssize len);
 		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(string), len));
 	}
 	

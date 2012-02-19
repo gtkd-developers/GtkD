@@ -521,7 +521,7 @@ public class DateTime
 	 * Params:
 	 * dt1 = first GDateTime to compare
 	 * dt2 = second GDateTime to compare
-	 * Returns: 0 for equal, less than zero if dt1 is less than dt2, greater than zero if dt2 is greator than dt1.
+	 * Returns: -1, 0 or 1 if dt1 is less than, equal to or greater than dt2.
 	 */
 	public static int compare(DateTime dt1, DateTime dt2)
 	{
@@ -576,7 +576,7 @@ public class DateTime
 	 * Since 2.26
 	 * Params:
 	 * year = the return location for the gregorian year, or NULL. [out]
-	 * month = the return location for the monty of the year, or NULL. [out]
+	 * month = the return location for the month of the year, or NULL. [out]
 	 * day = the return location for the day of the month, or NULL. [out]
 	 */
 	public void getYmd(int* year, int* month, int* day)
@@ -885,7 +885,7 @@ public class DateTime
 	 * Since 2.26
 	 * Params:
 	 * format = a valid UTF-8 string, containing the format for the
-	 *  GDateTime
+	 * GDateTime
 	 * Returns: a newly allocated string formatted to the requested format or NULL in the case that there was an error. The string should be freed with g_free().
 	 */
 	public string format(string format)

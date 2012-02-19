@@ -73,6 +73,9 @@ private import glib.Str;
  * glib/gi18n-lib.h after defining
  * the GETTEXT_PACKAGE macro suitably for your library:
  * $(DDOC_COMMENT example)
+ * Note that you also have to call setlocale() and textdomain() (as well as
+ * bindtextdomain() and bind_textdomain_codeset()) early on in your main()
+ * to make gettext() work.
  * The gettext manual covers details of how to set up message extraction
  * with xgettext.
  */
@@ -98,7 +101,7 @@ public class Internationalization
 	 * Since 2.18
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 *  the domain set with textdomain()
+	 * the domain set with textdomain()
 	 * msgid = message to translate
 	 * Returns: The translated string
 	 */
@@ -116,7 +119,7 @@ public class Internationalization
 	 * Since 2.26
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 *  the domain set with textdomain(). [allow-none]
+	 * the domain set with textdomain(). [allow-none]
 	 * msgid = message to translate
 	 * category = a locale category
 	 * Returns: the translated string for the given locale category
@@ -136,7 +139,7 @@ public class Internationalization
 	 * Since 2.18
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 *  the domain set with textdomain()
+	 * the domain set with textdomain()
 	 * msgid = message to translate
 	 * msgidPlural = plural form of the message
 	 * n = the quantity for which translation is needed
@@ -163,9 +166,9 @@ public class Internationalization
 	 * Since 2.16
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 *  the domain set with textdomain()
+	 * the domain set with textdomain()
 	 * msgctxtid = a combined message context and message id, separated
-	 *  by a \004 character
+	 * by a \004 character
 	 * msgidoffset = the offset of the message id in msgctxid
 	 * Returns: The translated string
 	 */
@@ -187,7 +190,7 @@ public class Internationalization
 	 * Since 2.18
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 *  the domain set with textdomain()
+	 * the domain set with textdomain()
 	 * context = the message context
 	 * msgid = the message
 	 * Returns: The translated string
@@ -227,7 +230,27 @@ public class Internationalization
 	 */
 	public static string[] getLanguageNames()
 	{
-		// const gchar* const * g_get_language_names (void);
+		// const gchar * const * g_get_language_names (void);
 		return Str.toStringArray(g_get_language_names());
+	}
+	
+	/**
+	 * Returns a list of derived variants of locale, which can be used to
+	 * e.g. construct locale-dependent filenames or search paths. The returned
+	 * list is sorted from most desirable to least desirable.
+	 * This function handles territory, charset and extra locale modifiers.
+	 * For example, if locale is "fr_BE", then the returned list
+	 * is "fr_BE", "fr".
+	 * If you need the list of variants for the current locale,
+	 * use g_get_language_names().
+	 * Since 2.28
+	 * Params:
+	 * locale = a locale identifier
+	 * Returns: a newly allocated array of newly allocated strings with the locale variants. Free with g_strfreev(). [transfer full][array zero-terminated="1"][element-type utf8]
+	 */
+	public static string[] getLocaleVariants(string locale)
+	{
+		// gchar ** g_get_locale_variants (const gchar *locale);
+		return Str.toStringArray(g_get_locale_variants(Str.toStringz(locale)));
 	}
 }

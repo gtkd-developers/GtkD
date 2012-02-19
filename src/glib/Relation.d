@@ -171,7 +171,7 @@ public class Relation
 	 */
 	public this (int fields)
 	{
-		// GRelation* g_relation_new (gint fields);
+		// GRelation * g_relation_new (gint fields);
 		auto p = g_relation_new(fields);
 		if(p is null)
 		{
@@ -225,7 +225,7 @@ public class Relation
 	 */
 	public Tuples select(void* key, int field)
 	{
-		// GTuples* g_relation_select (GRelation *relation,  gconstpointer key,  gint field);
+		// GTuples * g_relation_select (GRelation *relation,  gconstpointer key,  gint field);
 		auto p = g_relation_select(gRelation, key, field);
 		if(p is null)
 		{

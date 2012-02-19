@@ -100,10 +100,7 @@ private import glib.Str;
  * It is very important to use the API to access the GDate
  * struct. Often only the day-month-year or only the Julian
  * representation is valid. Sometimes neither is valid. Use the API.
- * GLib doesn't contain any time-manipulation functions; however, there
- * is a GTime typedef and a GTimeVal struct which represents a more
- * precise time (with microseconds). You can request the current time as
- * a GTimeVal with g_get_current_time().
+ * GLib also features GDateTime which represents a precise time.
  */
 public class TimeVal
 {
@@ -142,6 +139,7 @@ public class TimeVal
 	
 	/**
 	 * Equivalent to the UNIX gettimeofday() function, but portable.
+	 * You may find g_get_real_time() to be more convenient.
 	 */
 	public void getCurrentTime()
 	{
@@ -199,7 +197,43 @@ public class TimeVal
 	 */
 	public string toIso8601()
 	{
-		// gchar* g_time_val_to_iso8601 (GTimeVal *time_);
+		// gchar * g_time_val_to_iso8601 (GTimeVal *time_);
 		return Str.toString(g_time_val_to_iso8601(gTimeVal));
+	}
+	
+	/**
+	 * Queries the system monotonic time, if available.
+	 * On POSIX systems with clock_gettime() and CLOCK_MONOTONIC this call
+	 * is a very shallow wrapper for that. Otherwise, we make a best effort
+	 * that probably involves returning the wall clock time (with at least
+	 * microsecond accuracy, subject to the limitations of the OS kernel).
+	 * Note that, on Windows, "limitations of the OS kernel" is a rather
+	 * substantial statement. Depending on the configuration of the system,
+	 * the wall clock time is updated as infrequently as 64 times a second
+	 * (which is approximately every 16ms).
+	 * Since 2.28
+	 * Returns: the monotonic time, in microseconds
+	 */
+	public static long getMonotonicTime()
+	{
+		// gint64 g_get_monotonic_time (void);
+		return g_get_monotonic_time();
+	}
+	
+	/**
+	 * Queries the system wall-clock time.
+	 * This call is functionally equivalent to g_get_current_time() except
+	 * that the return value is often more convenient than dealing with a
+	 * GTimeVal.
+	 * You should only use this call if you are actually interested in the real
+	 * wall-clock time. g_get_monotonic_time() is probably more useful for
+	 * measuring intervals.
+	 * Since 2.28
+	 * Returns: the number of microseconds since January 1, 1970 UTC.
+	 */
+	public static long getRealTime()
+	{
+		// gint64 g_get_real_time (void);
+		return g_get_real_time();
 	}
 }

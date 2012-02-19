@@ -129,7 +129,7 @@ public class Node
 	 */
 	public this (void* data)
 	{
-		// GNode* g_node_new (gpointer data);
+		// GNode *	 g_node_new (gpointer data);
 		auto p = g_node_new(data);
 		if(p is null)
 		{
@@ -145,7 +145,7 @@ public class Node
 	 */
 	public Node copy()
 	{
-		// GNode* g_node_copy (GNode *node);
+		// GNode * g_node_copy (GNode *node);
 		auto p = g_node_copy(gNode);
 		if(p is null)
 		{
@@ -159,13 +159,13 @@ public class Node
 	 * Since 2.4
 	 * Params:
 	 * copyFunc = the function which is called to copy the data inside each node,
-	 *  or NULL to use the original data.
+	 * or NULL to use the original data.
 	 * data = data to pass to copy_func
 	 * Returns: a new GNode containing copies of the data in node.
 	 */
 	public Node copyDeep(GCopyFunc copyFunc, void* data)
 	{
-		// GNode* g_node_copy_deep (GNode *node,  GCopyFunc copy_func,  gpointer data);
+		// GNode * g_node_copy_deep (GNode *node,  GCopyFunc copy_func,  gpointer data);
 		auto p = g_node_copy_deep(gNode, copyFunc, data);
 		if(p is null)
 		{
@@ -178,13 +178,13 @@ public class Node
 	 * Inserts a GNode beneath the parent at the given position.
 	 * Params:
 	 * position = the position to place node at, with respect to its siblings
-	 *  If position is -1, node is inserted as the last child of parent
+	 * If position is -1, node is inserted as the last child of parent
 	 * node = the GNode to insert
 	 * Returns: the inserted GNode
 	 */
 	public Node insert(int position, Node node)
 	{
-		// GNode* g_node_insert (GNode *parent,  gint position,  GNode *node);
+		// GNode *	 g_node_insert (GNode *parent,  gint position,  GNode *node);
 		auto p = g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
@@ -197,13 +197,13 @@ public class Node
 	 * Inserts a GNode beneath the parent before the given sibling.
 	 * Params:
 	 * sibling = the sibling GNode to place node before.
-	 *  If sibling is NULL, the node is inserted as the last child of parent.
+	 * If sibling is NULL, the node is inserted as the last child of parent.
 	 * node = the GNode to insert
 	 * Returns: the inserted GNode
 	 */
 	public Node insertBefore(Node sibling, Node node)
 	{
-		// GNode* g_node_insert_before (GNode *parent,  GNode *sibling,  GNode *node);
+		// GNode *	 g_node_insert_before (GNode *parent,  GNode *sibling,  GNode *node);
 		auto p = g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
@@ -216,13 +216,13 @@ public class Node
 	 * Inserts a GNode beneath the parent after the given sibling.
 	 * Params:
 	 * sibling = the sibling GNode to place node after.
-	 *  If sibling is NULL, the node is inserted as the first child of parent.
+	 * If sibling is NULL, the node is inserted as the first child of parent.
 	 * node = the GNode to insert
 	 * Returns: the inserted GNode
 	 */
 	public Node insertAfter(Node sibling, Node node)
 	{
-		// GNode* g_node_insert_after (GNode *parent,  GNode *sibling,  GNode *node);
+		// GNode * g_node_insert_after (GNode *parent,  GNode *sibling,  GNode *node);
 		auto p = g_node_insert_after(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
@@ -239,7 +239,7 @@ public class Node
 	 */
 	public Node prepend(Node node)
 	{
-		// GNode* g_node_prepend (GNode *parent,  GNode *node);
+		// GNode *	 g_node_prepend (GNode *parent,  GNode *node);
 		auto p = g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
@@ -264,13 +264,13 @@ public class Node
 	 * The traversal can be halted at any point by returning TRUE from func.
 	 * Params:
 	 * order = the order in which nodes are visited - G_IN_ORDER,
-	 *  G_PRE_ORDER, G_POST_ORDER, or G_LEVEL_ORDER.
+	 * G_PRE_ORDER, G_POST_ORDER, or G_LEVEL_ORDER.
 	 * flags = which types of children are to be visited, one of
-	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
 	 * maxDepth = the maximum depth of the traversal. Nodes below this
-	 *  depth will not be visited. If max_depth is -1 all nodes in
-	 *  the tree are visited. If depth is 1, only the root is visited.
-	 *  If depth is 2, the root and its children are visited. And so on.
+	 * depth will not be visited. If max_depth is -1 all nodes in
+	 * the tree are visited. If depth is 1, only the root is visited.
+	 * If depth is 2, the root and its children are visited. And so on.
 	 * func = the function to call for each visited GNode
 	 * data = user data to pass to the function
 	 */
@@ -285,7 +285,7 @@ public class Node
 	 * Note that it doesn't descend beneath the child nodes.
 	 * Params:
 	 * flags = which types of children are to be visited, one of
-	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
 	 * func = the function to call for each visited node
 	 * data = user data to pass to the function
 	 */
@@ -301,7 +301,7 @@ public class Node
 	 */
 	public Node getRoot()
 	{
-		// GNode* g_node_get_root (GNode *node);
+		// GNode *	 g_node_get_root (GNode *node);
 		auto p = g_node_get_root(gNode);
 		if(p is null)
 		{
@@ -314,15 +314,15 @@ public class Node
 	 * Finds a GNode in a tree.
 	 * Params:
 	 * order = the order in which nodes are visited - G_IN_ORDER,
-	 *  G_PRE_ORDER, G_POST_ORDER, or G_LEVEL_ORDER
+	 * G_PRE_ORDER, G_POST_ORDER, or G_LEVEL_ORDER
 	 * flags = which types of children are to be searched, one of
-	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
 	 * data = the data to find
 	 * Returns: the found GNode, or NULL if the data is not found
 	 */
 	public Node find(GTraverseType order, GTraverseFlags flags, void* data)
 	{
-		// GNode* g_node_find (GNode *root,  GTraverseType order,  GTraverseFlags flags,  gpointer data);
+		// GNode *	 g_node_find (GNode *root,  GTraverseType order,  GTraverseFlags flags,  gpointer data);
 		auto p = g_node_find(gNode, order, flags, data);
 		if(p is null)
 		{
@@ -335,13 +335,13 @@ public class Node
 	 * Finds the first child of a GNode with the given data.
 	 * Params:
 	 * flags = which types of children are to be searched, one of
-	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
 	 * data = the data to find
 	 * Returns: the found child GNode, or NULL if the data is not found
 	 */
 	public Node findChild(GTraverseFlags flags, void* data)
 	{
-		// GNode* g_node_find_child (GNode *node,  GTraverseFlags flags,  gpointer data);
+		// GNode *	 g_node_find_child (GNode *node,  GTraverseFlags flags,  gpointer data);
 		auto p = g_node_find_child(gNode, flags, data);
 		if(p is null)
 		{
@@ -383,7 +383,7 @@ public class Node
 	 */
 	public Node lastChild()
 	{
-		// GNode* g_node_last_child (GNode *node);
+		// GNode *	 g_node_last_child (GNode *node);
 		auto p = g_node_last_child(gNode);
 		if(p is null)
 		{
@@ -402,7 +402,7 @@ public class Node
 	 */
 	public Node nthChild(uint n)
 	{
-		// GNode* g_node_nth_child (GNode *node,  guint n);
+		// GNode *	 g_node_nth_child (GNode *node,  guint n);
 		auto p = g_node_nth_child(gNode, n);
 		if(p is null)
 		{
@@ -418,7 +418,7 @@ public class Node
 	 */
 	public Node firstSibling()
 	{
-		// GNode* g_node_first_sibling (GNode *node);
+		// GNode *	 g_node_first_sibling (GNode *node);
 		auto p = g_node_first_sibling(gNode);
 		if(p is null)
 		{
@@ -434,7 +434,7 @@ public class Node
 	 */
 	public Node lastSibling()
 	{
-		// GNode* g_node_last_sibling (GNode *node);
+		// GNode *	 g_node_last_sibling (GNode *node);
 		auto p = g_node_last_sibling(gNode);
 		if(p is null)
 		{
@@ -459,7 +459,7 @@ public class Node
 	 * Gets the number of nodes in a tree.
 	 * Params:
 	 * flags = which types of children are to be counted, one of
-	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
 	 * Returns: the number of nodes in the tree
 	 */
 	public uint nNodes(GTraverseFlags flags)

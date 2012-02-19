@@ -2,17 +2,15 @@
 mkdir gtkdocs
 cd gtkdocs
 
-#gstreamer
-curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.14.tar.gz | tar xvfz -
-ln -s gstreamer-0.10.14/docs/gst/html gstreamer
-curl http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.14.tar.gz | tar xvfz -
-ln -s gst-plugins-base-0.10.14/docs/libs/html gstinterfaces
-exit
-
 #GLIB
-curl http://developer.gnome.org/glib/glib-html-2.26.1.tar.gz | tar xvfz -
-ln -s glib-html-2.26.1 gthread
-ln -s glib-html-2.26.1 glib
+curl http://developer.gnome.org/glib/glib-html-2.28.7.tar.gz | tar xvfz -
+ln -s glib-html-2.28.7 gthread
+ln -s glib-html-2.28.7 glib
+#Missing params in 2.28
+cd glib
+rm glib-Spawning-Processes.html
+wget http://developer.gnome.org/glib/2.26/glib-Spawning-Processes.html
+cd ..
 #GOBJECT
 curl http://developer.gnome.org/gobject/gobject-html-2.26.1.tar.gz | tar xvfz -
 ln -s gobject-html-2.26.1 gobject

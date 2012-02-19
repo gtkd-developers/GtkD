@@ -130,6 +130,12 @@ alias GOnceStatus OnceStatus;
  * virtual function pointer for g_thread_exit()
  * thread_set_priority  ()
  * virtual function pointer for
+ * g_thread_set_priority()
+ * thread_self  ()
+ * virtual function pointer for g_thread_self()
+ * thread_equal  ()
+ * used internally by recursive mutex locks and by some
+ * assertion checks
  */
 public struct GThreadFunctions
 {
@@ -360,6 +366,8 @@ public struct GStaticPrivate{}
  * the status of the GOnce
  * volatile  gpointer  retval;
  * the value returned by the call to the function, if status
+ * is G_ONCE_STATUS_READY
+ * Since 2.4
  */
 public struct GOnce
 {
@@ -450,8 +458,8 @@ public struct GOnce
  * a GOnce structure
  * func  :
  * the GThreadFunc function associated to once. This function
- *  is called only once, regardless of the number of times it and
- *  its associated GOnce struct are passed to g_once().
+ * is called only once, regardless of the number of times it and
+ * its associated GOnce struct are passed to g_once().
  * arg  :
  * data to be passed to func
  * Since 2.4
@@ -466,7 +474,7 @@ public struct GOnce
  * data passed to the thread.
  * Returns  :
  * the return value of the thread, which will be returned by
- *  g_thread_join().
+ * g_thread_join().
  */
 // gpointer (*GThreadFunc) (gpointer data);
 public alias extern(C) void*  function (void*) GThreadFunc;

@@ -121,7 +121,7 @@ public class PtrArray
 	 */
 	public this ()
 	{
-		// GPtrArray* g_ptr_array_new (void);
+		// GPtrArray * g_ptr_array_new (void);
 		auto p = g_ptr_array_new();
 		if(p is null)
 		{
@@ -141,7 +141,7 @@ public class PtrArray
 	 */
 	public static PtrArray sizedNew(uint reservedSize)
 	{
-		// GPtrArray* g_ptr_array_sized_new (guint reserved_size);
+		// GPtrArray * g_ptr_array_sized_new (guint reserved_size);
 		auto p = g_ptr_array_sized_new(reservedSize);
 		if(p is null)
 		{
@@ -162,7 +162,7 @@ public class PtrArray
 	 */
 	public this (GDestroyNotify elementFreeFunc)
 	{
-		// GPtrArray* g_ptr_array_new_with_free_func (GDestroyNotify element_free_func);
+		// GPtrArray * g_ptr_array_new_with_free_func (GDestroyNotify element_free_func);
 		auto p = g_ptr_array_new_with_free_func(elementFreeFunc);
 		if(p is null)
 		{
@@ -193,7 +193,7 @@ public class PtrArray
 	 */
 	public PtrArray doref()
 	{
-		// GPtrArray* g_ptr_array_ref (GPtrArray *array);
+		// GPtrArray * g_ptr_array_ref (GPtrArray *array);
 		auto p = g_ptr_array_ref(gPtrArray);
 		if(p is null)
 		{
@@ -377,7 +377,7 @@ public class PtrArray
 	 */
 	public void** free(int freeSeg)
 	{
-		// gpointer* g_ptr_array_free (GPtrArray *array,  gboolean free_seg);
+		// gpointer * g_ptr_array_free (GPtrArray *array,  gboolean free_seg);
 		return g_ptr_array_free(gPtrArray, freeSeg);
 	}
 	

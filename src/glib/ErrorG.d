@@ -241,7 +241,7 @@ public class ErrorG
 	 */
 	public this (GQuark domain, int code, string message)
 	{
-		// GError* g_error_new_literal (GQuark domain,  gint code,  const gchar *message);
+		// GError * g_error_new_literal (GQuark domain,  gint code,  const gchar *message);
 		auto p = g_error_new_literal(domain, code, Str.toStringz(message));
 		if(p is null)
 		{
@@ -263,7 +263,7 @@ public class ErrorG
 	 */
 	public this (GQuark domain, int code, string format, void* args)
 	{
-		// GError* g_error_new_valist (GQuark domain,  gint code,  const gchar *format,  va_list args);
+		// GError * g_error_new_valist (GQuark domain,  gint code,  const gchar *format,  va_list args);
 		auto p = g_error_new_valist(domain, code, Str.toStringz(format), args);
 		if(p is null)
 		{
@@ -287,7 +287,7 @@ public class ErrorG
 	 */
 	public ErrorG copy()
 	{
-		// GError* g_error_copy (const GError *error);
+		// GError * g_error_copy (const GError *error);
 		auto p = g_error_copy(gError);
 		if(p is null)
 		{

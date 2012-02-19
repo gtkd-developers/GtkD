@@ -254,7 +254,7 @@ public class IOChannel
 	 */
 	public static IOChannel unixNew(int fd)
 	{
-		// GIOChannel* g_io_channel_unix_new (int fd);
+		// GIOChannel * g_io_channel_unix_new (int fd);
 		auto p = g_io_channel_unix_new(fd);
 		if(p is null)
 		{
@@ -301,7 +301,7 @@ public class IOChannel
 	 */
 	public static IOChannel win32_NewFd(int fd)
 	{
-		// GIOChannel* g_io_channel_win32_new_fd (gint fd);
+		// GIOChannel * g_io_channel_win32_new_fd (gint fd);
 		auto p = g_io_channel_win32_new_fd(fd);
 		if(p is null)
 		{
@@ -364,49 +364,16 @@ public class IOChannel
 	}
 	
 	/**
-	 * Open a file filename as a GIOChannel using mode mode. This
-	 * channel will be closed when the last reference to it is dropped,
-	 * so there is no need to call g_io_channel_close() (though doing
-	 * so will not cause problems, as long as no attempt is made to
-	 * access the channel after it is closed).
-	 * Params:
-	 * filename = A string containing the name of a file
-	 * mode = One of "r", "w", "a", "r+", "w+", "a+". These have
-	 *  the same meaning as in fopen()
-	 * Throws: GException on failure.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string filename, string mode)
-	{
-		// GIOChannel* g_io_channel_new_file (const gchar *filename,  const gchar *mode,  GError **error);
-		GError* err = null;
-		
-		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), &err)");
-		}
-		this(cast(GIOChannel*) p);
-	}
-	
-	/**
 	 * Replacement for g_io_channel_read() with the new API.
 	 * Params:
 	 * buf = a buffer to read data into
-	 * count = the size of the buffer. Note that the buffer may
-	 *  not be complelely filled even if there is data
-	 *  in the buffer if the remaining data is not a
-	 *  complete character.
-	 * bytesRead = The number of bytes read. This may be zero even on
-	 *  success if count < 6 and the channel's encoding is non-NULL.
-	 *  This indicates that the next UTF-8 character is too wide for
-	 *  the buffer.
+	 * count = the size of the buffer. Note that the buffer may not be
+	 * complelely filled even if there is data in the buffer if the
+	 * remaining data is not a complete character.
+	 * bytesRead = The number of bytes read. This may be
+	 * zero even on success if count < 6 and the channel's encoding
+	 * is non-NULL. This indicates that the next UTF-8 character is
+	 * too wide for the buffer. [allow-none]
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
@@ -452,8 +419,8 @@ public class IOChannel
 	 * Reads a line from a GIOChannel, using a GString as a buffer.
 	 * Params:
 	 * buffer = a GString into which the line will be written.
-	 *  If buffer already contains data, the old data will
-	 *  be overwritten.
+	 * If buffer already contains data, the old data will
+	 * be overwritten.
 	 * terminatorPos = location to store position of line terminator, or NULL
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
@@ -482,12 +449,12 @@ public class IOChannel
 	 * Params:
 	 * buf = a buffer to write data from
 	 * count = the size of the buffer. If -1, the buffer
-	 *  is taken to be a nul-terminated string.
+	 * is taken to be a nul-terminated string.
 	 * bytesWritten = The number of bytes written. This can be nonzero
-	 *  even if the return value is not G_IO_STATUS_NORMAL.
-	 *  If the return value is G_IO_STATUS_NORMAL and the
-	 *  channel is blocking, this will always be equal
-	 *  to count if count >= 0.
+	 * even if the return value is not G_IO_STATUS_NORMAL.
+	 * If the return value is G_IO_STATUS_NORMAL and the
+	 * channel is blocking, this will always be equal
+	 * to count if count >= 0.
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
@@ -554,9 +521,9 @@ public class IOChannel
 	 * Params:
 	 * offset = The offset in bytes from the position specified by type
 	 * type = a GSeekType. The type G_SEEK_CUR is only allowed in those
-	 *  cases where a call to g_io_channel_set_encoding()
-	 *  is allowed. See the documentation for
-	 *  g_io_channel_set_encoding() for details.
+	 * cases where a call to g_io_channel_set_encoding()
+	 * is allowed. See the documentation for
+	 * g_io_channel_set_encoding() for details.
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
@@ -777,7 +744,7 @@ public class IOChannel
 	 */
 	public string getLineTerm(out int length)
 	{
-		// const gchar* g_io_channel_get_line_term (GIOChannel *channel,  gint *length);
+		// const gchar * g_io_channel_get_line_term (GIOChannel *channel,  gint *length);
 		return Str.toString(g_io_channel_get_line_term(gIOChannel, &length));
 	}
 	
@@ -786,12 +753,12 @@ public class IOChannel
 	 * where in the file a line break occurs.
 	 * Params:
 	 * lineTerm = The line termination string. Use NULL for autodetect.
-	 *  Autodetection breaks on "\n", "\r\n", "\r", "\0", and
-	 *  the Unicode paragraph separator. Autodetection should
-	 *  not be used for anything other than file-based channels.
+	 * Autodetection breaks on "\n", "\r\n", "\r", "\0", and
+	 * the Unicode paragraph separator. Autodetection should
+	 * not be used for anything other than file-based channels.
 	 * length = The length of the termination string. If -1 is passed, the
-	 *  string is assumed to be nul-terminated. This option allows
-	 *  termination strings with embedded nuls.
+	 * string is assumed to be nul-terminated. This option allows
+	 * termination strings with embedded nuls.
 	 */
 	public void setLineTerm(string lineTerm, int length)
 	{
@@ -843,7 +810,7 @@ public class IOChannel
 	 */
 	public string getEncoding()
 	{
-		// const gchar* g_io_channel_get_encoding (GIOChannel *channel);
+		// const gchar * g_io_channel_get_encoding (GIOChannel *channel);
 		return Str.toString(g_io_channel_get_encoding(gIOChannel));
 	}
 	
@@ -891,9 +858,9 @@ public class IOChannel
 	 * can cause problems.
 	 * Params:
 	 * doClose = Whether to close the channel on the final unref of
-	 *  the GIOChannel data structure. The default value of
-	 *  this is TRUE for channels created by g_io_channel_new_file(),
-	 *  and FALSE for all other channels.
+	 * the GIOChannel data structure. The default value of
+	 * this is TRUE for channels created by g_io_channel_new_file(),
+	 * and FALSE for all other channels.
 	 */
 	public void setCloseOnUnref(int doClose)
 	{
@@ -907,7 +874,7 @@ public class IOChannel
 	 * Reads data from a GIOChannel.
 	 * Params:
 	 * buf = a buffer to read the data into (which should be at least
-	 *  count bytes long)
+	 * count bytes long)
 	 * count = the number of bytes to read from the GIOChannel
 	 * bytesRead = returns the number of bytes actually read
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
@@ -941,10 +908,10 @@ public class IOChannel
 	 * library function fseek().
 	 * Params:
 	 * offset = an offset, in bytes, which is added to the position specified
-	 *  by type
+	 * by type
 	 * type = the position in the file, which can be G_SEEK_CUR (the current
-	 *  position), G_SEEK_SET (the start of the file), or G_SEEK_END
-	 *  (the end of the file)
+	 * position), G_SEEK_SET (the start of the file), or G_SEEK_END
+	 * (the end of the file)
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
 	public GIOError seek(long offset, GSeekType type)

@@ -126,13 +126,13 @@ public class StringCompletion
 	 * Creates a new GCompletion.
 	 * Params:
 	 * func = the function to be called to return the string representing
-	 *  an item in the GCompletion, or NULL if strings are going to
-	 *  be used as the GCompletion items.
+	 * an item in the GCompletion, or NULL if strings are going to
+	 * be used as the GCompletion items.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompletionFunc func)
 	{
-		// GCompletion* g_completion_new (GCompletionFunc func);
+		// GCompletion * g_completion_new (GCompletionFunc func);
 		auto p = g_completion_new(func);
 		if(p is null)
 		{
@@ -185,16 +185,16 @@ public class StringCompletion
 	 * target items.
 	 * Params:
 	 * prefix = the prefix string, typically typed by the user, which is
-	 *  compared with each of the items.
+	 * compared with each of the items.
 	 * newPrefix = if non-NULL, returns the longest prefix which is
-	 *  common to all items that matched prefix, or NULL if
-	 *  no items matched prefix. This string should be freed
-	 *  when no longer needed.
+	 * common to all items that matched prefix, or NULL if
+	 * no items matched prefix. This string should be freed
+	 * when no longer needed.
 	 * Returns: the list of items whose strings begin with prefix. This should not be changed.
 	 */
 	public ListG complete(string prefix, out string newPrefix)
 	{
-		// GList* g_completion_complete (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
+		// GList * g_completion_complete (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
 		char* outnewPrefix = null;
 		
 		auto p = g_completion_complete(gCompletion, Str.toStringz(prefix), &outnewPrefix);
@@ -219,15 +219,15 @@ public class StringCompletion
 	 * Since 2.4
 	 * Params:
 	 * prefix = the prefix string, typically used by the user, which is compared
-	 *  with each of the items
+	 * with each of the items
 	 * newPrefix = if non-NULL, returns the longest prefix which is common to all
-	 *  items that matched prefix, or NULL if no items matched prefix.
-	 *  This string should be freed when no longer needed.
+	 * items that matched prefix, or NULL if no items matched prefix.
+	 * This string should be freed when no longer needed.
 	 * Returns: the list of items whose strings begin with prefix. This should not be changed.
 	 */
 	public ListG completeUtf8(string prefix, out string newPrefix)
 	{
-		// GList* g_completion_complete_utf8 (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
+		// GList * g_completion_complete_utf8 (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
 		char* outnewPrefix = null;
 		
 		auto p = g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), &outnewPrefix);

@@ -210,7 +210,7 @@ public class Child
 	 * Since 2.4
 	 * Params:
 	 * priority = the priority of the idle source. Typically this will be in the
-	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
+	 * range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
 	 * pid = process to watch. On POSIX the pid of a child process. On
 	 * Windows a handle for a process (which doesn't have to be a child).
 	 * data = data to pass to function

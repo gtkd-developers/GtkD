@@ -389,7 +389,7 @@ public class MainContext
 	 * for polling is determined by calling g_main_context_query().
 	 * Params:
 	 * priority = location to store priority of highest priority
-	 *  source already ready.
+	 * source already ready.
 	 * Returns: TRUE if some source is ready to be dispatched prior to polling.
 	 */
 	public int prepare(out int priority)
@@ -418,7 +418,7 @@ public class MainContext
 	 * Params:
 	 * maxPriority = the maximum numerical priority of sources to check
 	 * fds = array of GPollFD's that was passed to the last call to
-	 *  g_main_context_query()
+	 * g_main_context_query()
 	 * nFds = return value of g_main_context_query()
 	 * Returns: TRUE if some sources are ready to be dispatched.
 	 */
@@ -469,10 +469,10 @@ public class MainContext
 	 * a typical event source will use g_source_add_poll() instead.
 	 * Params:
 	 * fd = a GPollFD structure holding information about a file
-	 *  descriptor to watch.
+	 * descriptor to watch.
 	 * priority = the priority for this file descriptor which should be
-	 *  the same as the priority used for g_source_attach() to ensure that the
-	 *  file descriptor is polled whenever the results may be needed.
+	 * the same as the priority used for g_source_attach() to ensure that the
+	 * file descriptor is polled whenever the results may be needed.
 	 */
 	public void addPoll(GPollFD* fd, int priority)
 	{
@@ -490,6 +490,54 @@ public class MainContext
 	{
 		// void g_main_context_remove_poll (GMainContext *context,  GPollFD *fd);
 		g_main_context_remove_poll(gMainContext, fd);
+	}
+	
+	/**
+	 * Invokes a function in such a way that context is owned during the
+	 * invocation of function.
+	 * If context is NULL then the global default main context — as
+	 * returned by g_main_context_default() — is used.
+	 * If context is owned by the current thread, function is called
+	 * directly. Otherwise, if context is the thread-default main context
+	 * of the current thread and g_main_context_acquire() succeeds, then
+	 * function is called and g_main_context_release() is called
+	 * afterwards.
+	 * In any other case, an idle source is created to call function and
+	 * that source is attached to context (presumably to be run in another
+	 * thread). The idle source is attached with G_PRIORITY_DEFAULT
+	 * priority. If you want a different priority, use
+	 * g_main_context_invoke_full().
+	 * Note that, as with normal idle functions, function should probably
+	 * return FALSE. If it returns TRUE, it will be continuously run in a
+	 * loop (and may prevent this call from returning).
+	 * Since 2.28
+	 * Params:
+	 * data = data to pass to function
+	 */
+	public void invoke(GSourceFunc funct, void* data)
+	{
+		// void g_main_context_invoke (GMainContext *context,  GSourceFunc function,  gpointer data);
+		g_main_context_invoke(gMainContext, funct, data);
+	}
+	
+	/**
+	 * Invokes a function in such a way that context is owned during the
+	 * invocation of function.
+	 * This function is the same as g_main_context_invoke() except that it
+	 * lets you specify the priority incase function ends up being
+	 * scheduled as an idle and also lets you give a GDestroyNotify for data.
+	 * notify should not assume that it is called from any particular
+	 * thread or with any particular context acquired.
+	 * Since 2.28
+	 * Params:
+	 * priority = the priority at which to run function
+	 * data = data to pass to function
+	 * notify = a function to call when data is no longer in use, or NULL.
+	 */
+	public void invokeFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
+	{
+		// void g_main_context_invoke_full (GMainContext *context,  gint priority,  GSourceFunc function,  gpointer data,  GDestroyNotify notify);
+		g_main_context_invoke_full(gMainContext, priority, funct, data, notify);
 	}
 	
 	/**

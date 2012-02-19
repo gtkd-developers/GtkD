@@ -211,9 +211,9 @@ public class Sequence
 	 * Since 2.14
 	 * Params:
 	 * cmpFunc = the GCompareDataFunc used to sort seq. This function is
-	 *  passed two items of seq and should return 0 if they are equal,
-	 *  a negative value if the first comes before the second, and a
-	 *  positive value if the second comes before the first.
+	 * passed two items of seq and should return 0 if they are equal,
+	 * a negative value if the first comes before the second, and a
+	 * positive value if the second comes before the first.
 	 * cmpData = user data passed to cmp_func
 	 */
 	public void sort(GCompareDataFunc cmpFunc, void* cmpData)
@@ -228,10 +228,10 @@ public class Sequence
 	 * Since 2.14
 	 * Params:
 	 * cmpFunc = the GSequenceItercompare used to compare iterators in the
-	 *  sequence. It is called with two iterators pointing into seq. It should
-	 *  return 0 if the iterators are equal, a negative value if the first
-	 *  iterator comes before the second, and a positive value if the second
-	 *  iterator comes before the first.
+	 * sequence. It is called with two iterators pointing into seq. It should
+	 * return 0 if the iterators are equal, a negative value if the first
+	 * iterator comes before the second, and a positive value if the second
+	 * iterator comes before the first.
 	 * cmpData = user data passed to cmp_func
 	 */
 	public void sortIter(GSequenceIterCompareFunc cmpFunc, void* cmpData)
@@ -355,7 +355,7 @@ public class Sequence
 	 * Params:
 	 * src = a GSequenceIter pointing to the item to move
 	 * dest = a GSequenceIter pointing to the position to which
-	 *  the item is moved.
+	 * the item is moved.
 	 */
 	public static void move(SequenceIter src, SequenceIter dest)
 	{
@@ -385,10 +385,10 @@ public class Sequence
 	 * Params:
 	 * data = the data to insert
 	 * cmpFunc = the GCompareDataFunc used to compare items in the sequence. It
-	 *  is called with two items of the seq and user_data. It should
-	 *  return 0 if the items are equal, a negative value if the first
-	 *  item comes before the second, and a positive value if the second
-	 *  item comes before the first.
+	 * is called with two items of the seq and user_data. It should
+	 * return 0 if the items are equal, a negative value if the first
+	 * item comes before the second, and a positive value if the second
+	 * item comes before the first.
 	 * cmpData = user data passed to cmp_func.
 	 * Returns: a GSequenceIter pointing to the new item.
 	 */
@@ -411,10 +411,10 @@ public class Sequence
 	 * Params:
 	 * data = data for the new item
 	 * iterCmp = the GSequenceItercompare used to compare iterators in the
-	 *  sequence. It is called with two iterators pointing into seq. It should
-	 *  return 0 if the iterators are equal, a negative value if the first
-	 *  iterator comes before the second, and a positive value if the second
-	 *  iterator comes before the first.
+	 * sequence. It is called with two iterators pointing into seq. It should
+	 * return 0 if the iterators are equal, a negative value if the first
+	 * iterator comes before the second, and a positive value if the second
+	 * iterator comes before the first.
 	 * cmpData = user data passed to cmp_func
 	 * Returns: a GSequenceIter pointing to the new item
 	 */
@@ -438,10 +438,10 @@ public class Sequence
 	 * Params:
 	 * iter = A GSequenceIter
 	 * cmpFunc = the GCompareDataFunc used to compare items in the sequence. It
-	 *  is called with two items of the seq and user_data. It should
-	 *  return 0 if the items are equal, a negative value if the first
-	 *  item comes before the second, and a positive value if the second
-	 *  item comes before the first.
+	 * is called with two items of the seq and user_data. It should
+	 * return 0 if the items are equal, a negative value if the first
+	 * item comes before the second, and a positive value if the second
+	 * item comes before the first.
 	 * cmpData = user data passed to cmp_func.
 	 */
 	public static void sortChanged(SequenceIter iter, GCompareDataFunc cmpFunc, void* cmpData)
@@ -458,10 +458,10 @@ public class Sequence
 	 * Params:
 	 * iter = a GSequenceIter
 	 * iterCmp = the GSequenceItercompare used to compare iterators in the
-	 *  sequence. It is called with two iterators pointing into seq. It should
-	 *  return 0 if the iterators are equal, a negative value if the first
-	 *  iterator comes before the second, and a positive value if the second
-	 *  iterator comes before the first.
+	 * sequence. It is called with two iterators pointing into seq. It should
+	 * return 0 if the iterators are equal, a negative value if the first
+	 * iterator comes before the second, and a positive value if the second
+	 * iterator comes before the first.
 	 * cmpData = user data passed to cmp_func
 	 */
 	public static void sortChangedIter(SequenceIter iter, GSequenceIterCompareFunc iterCmp, void* cmpData)
@@ -523,14 +523,16 @@ public class Sequence
 	/**
 	 * Returns an iterator pointing to the position where data would
 	 * be inserted according to cmp_func and cmp_data.
+	 * If you are simply searching for an existing element of the sequence,
+	 * consider using g_sequence_lookup().
 	 * Since 2.14
 	 * Params:
 	 * data = data for the new item
 	 * cmpFunc = the GCompareDataFunc used to compare items in the sequence. It
-	 *  is called with two items of the seq and user_data. It should
-	 *  return 0 if the items are equal, a negative value if the first
-	 *  item comes before the second, and a positive value if the second
-	 *  item comes before the first.
+	 * is called with two items of the seq and user_data. It should
+	 * return 0 if the items are equal, a negative value if the first
+	 * item comes before the second, and a positive value if the second
+	 * item comes before the first.
 	 * cmpData = user data passed to cmp_func.
 	 * Returns: an GSequenceIter pointing to the position where data would have been inserted according to cmp_func and cmp_data.
 	 */
@@ -549,14 +551,16 @@ public class Sequence
 	 * Like g_sequence_search(), but uses
 	 * a GSequenceIterCompareFunc instead of a GCompareDataFunc as
 	 * the compare function.
+	 * If you are simply searching for an existing element of the sequence,
+	 * consider using g_sequence_lookup_iter().
 	 * Since 2.14
 	 * Params:
 	 * data = data for the new item
 	 * iterCmp = the GSequenceIterCompare function used to compare iterators
-	 *  in the sequence. It is called with two iterators pointing into seq.
-	 *  It should return 0 if the iterators are equal, a negative value if the
-	 *  first iterator comes before the second, and a positive value if the
-	 *  second iterator comes before the first.
+	 * in the sequence. It is called with two iterators pointing into seq.
+	 * It should return 0 if the iterators are equal, a negative value if the
+	 * first iterator comes before the second, and a positive value if the
+	 * second iterator comes before the first.
 	 * cmpData = user data passed to iter_cmp
 	 * Returns: a GSequenceIter pointing to the position in seq where data would have been inserted according to iter_cmp and cmp_data.
 	 */
@@ -564,6 +568,60 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_search_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
 		auto p = g_sequence_search_iter(gSequence, data, iterCmp, cmpData);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SequenceIter(cast(GSequenceIter*) p);
+	}
+	
+	/**
+	 * Returns an iterator pointing to the position of the first item found
+	 * equal to data according to cmp_func and cmp_data. If more than one item
+	 * is equal, it is not guaranteed that it is the first which is returned.
+	 * In that case, you can use g_sequence_iter_next() and g_sequence_iter_prev()
+	 * to get others.
+	 * Since 2.28
+	 * Params:
+	 * data = data to lookup
+	 * cmpFunc = the GCompareDataFunc used to compare items in the sequence. It
+	 * is called with two items of the seq and user_data. It should
+	 * return 0 if the items are equal, a negative value if the first
+	 * item comes before the second, and a positive value if the second
+	 * item comes before the first.
+	 * cmpData = user data passed to cmp_func.
+	 * Returns: an GSequenceIter pointing to the position of the first item found equal to data according to cmp_func and cmp_data.
+	 */
+	public SequenceIter lookup(void* data, GCompareDataFunc cmpFunc, void* cmpData)
+	{
+		// GSequenceIter * g_sequence_lookup (GSequence *seq,  gpointer data,  GCompareDataFunc cmp_func,  gpointer cmp_data);
+		auto p = g_sequence_lookup(gSequence, data, cmpFunc, cmpData);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SequenceIter(cast(GSequenceIter*) p);
+	}
+	
+	/**
+	 * Like g_sequence_lookup(), but uses
+	 * a GSequenceIterCompareFunc instead of a GCompareDataFunc as
+	 * the compare function.
+	 * Since 2.28
+	 * Params:
+	 * data = data to lookup
+	 * iterCmp = the GSequenceIterCompare function used to compare iterators
+	 * in the sequence. It is called with two iterators pointing into seq.
+	 * It should return 0 if the iterators are equal, a negative value if the
+	 * first iterator comes before the second, and a positive value if the
+	 * second iterator comes before the first.
+	 * cmpData = user data passed to iter_cmp
+	 * Returns: an GSequenceIter pointing to the position of the first item found equal to data according to cmp_func and cmp_data.
+	 */
+	public SequenceIter lookupIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
+	{
+		// GSequenceIter * g_sequence_lookup_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
+		auto p = g_sequence_lookup_iter(gSequence, data, iterCmp, cmpData);
 		if(p is null)
 		{
 			return null;

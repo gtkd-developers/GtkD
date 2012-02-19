@@ -103,9 +103,9 @@ public class Dataset
 	 * keyId = the GQuark id to identify the data element.
 	 * data = the data element.
 	 * destroyFunc = the function to call when the data element is
-	 *  removed. This function will be called with the data
-	 *  element and can be used to free any memory allocated
-	 *  for it.
+	 * removed. This function will be called with the data
+	 * element and can be used to free any memory allocated
+	 * for it.
 	 */
 	public static void idSetDataFull(void* datasetLocation, GQuark keyId, void* data, GDestroyNotify destroyFunc)
 	{

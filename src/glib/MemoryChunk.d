@@ -178,22 +178,22 @@ public class MemoryChunk
 	 * Creates a new GMemChunk.
 	 * Params:
 	 * name = a string to identify the GMemChunk. It is not copied so it
-	 *  should be valid for the lifetime of the GMemChunk. It is
-	 *  only used in g_mem_chunk_print(), which is used for debugging.
+	 * should be valid for the lifetime of the GMemChunk. It is
+	 * only used in g_mem_chunk_print(), which is used for debugging.
 	 * atomSize = the size, in bytes, of each element in the GMemChunk.
 	 * areaSize = the size, in bytes, of each block of memory allocated to
-	 *  contain the atoms.
+	 * contain the atoms.
 	 * type = the type of the GMemChunk. G_ALLOC_AND_FREE is used if the
-	 *  atoms will be freed individually. G_ALLOC_ONLY should be
-	 *  used if atoms will never be freed individually.
-	 *  G_ALLOC_ONLY is quicker, since it does not need to track
-	 *  free atoms, but it obviously wastes memory if you no longer
-	 *  need many of the atoms.
+	 * atoms will be freed individually. G_ALLOC_ONLY should be
+	 * used if atoms will never be freed individually.
+	 * G_ALLOC_ONLY is quicker, since it does not need to track
+	 * free atoms, but it obviously wastes memory if you no longer
+	 * need many of the atoms.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, int atomSize, gsize areaSize, int type)
 	{
-		// GMemChunk* g_mem_chunk_new (const gchar *name,  gint atom_size,  gsize area_size,  gint type);
+		// GMemChunk * g_mem_chunk_new (const gchar *name,  gint atom_size,  gsize area_size,  gint type);
 		auto p = g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type);
 		if(p is null)
 		{

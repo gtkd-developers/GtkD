@@ -244,7 +244,7 @@ public class BookmarkFile
 	 * Params:
 	 * file = a relative path to a filename to open and parse
 	 * fullPath = return location for a string containing the full path
-	 *  of the file, or NULL
+	 * of the file, or NULL
 	 * Returns: TRUE if a key file could be loaded, FALSE othewise
 	 * Throws: GException on failure.
 	 */
@@ -926,7 +926,7 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * name = the name of the application registering the bookmark
-	 *  or NULL
+	 * or NULL
 	 * exec = command line to be used to launch the bookmark or NULL
 	 */
 	public void addApplication(string uri, string name, string exec)

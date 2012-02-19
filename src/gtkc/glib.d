@@ -37,6 +37,7 @@ mixin( _shared ~ "static this()
 {
 	// glib.Version
 
+	Linker.link(glib_check_version, \"glib_check_version\", LIBRARY.GLIB);
 
 	// glib.Atomic
 
@@ -88,6 +89,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_main_context_get_poll_func, \"g_main_context_get_poll_func\", LIBRARY.GLIB);
 	Linker.link(g_main_context_add_poll, \"g_main_context_add_poll\", LIBRARY.GLIB);
 	Linker.link(g_main_context_remove_poll, \"g_main_context_remove_poll\", LIBRARY.GLIB);
+	Linker.link(g_main_context_invoke, \"g_main_context_invoke\", LIBRARY.GLIB);
+	Linker.link(g_main_context_invoke_full, \"g_main_context_invoke_full\", LIBRARY.GLIB);
 	Linker.link(g_main_context_get_thread_default, \"g_main_context_get_thread_default\", LIBRARY.GLIB);
 	Linker.link(g_main_context_push_thread_default, \"g_main_context_push_thread_default\", LIBRARY.GLIB);
 	Linker.link(g_main_context_pop_thread_default, \"g_main_context_pop_thread_default\", LIBRARY.GLIB);
@@ -136,6 +139,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_source_set_callback_indirect, \"g_source_set_callback_indirect\", LIBRARY.GLIB);
 	Linker.link(g_source_add_poll, \"g_source_add_poll\", LIBRARY.GLIB);
 	Linker.link(g_source_remove_poll, \"g_source_remove_poll\", LIBRARY.GLIB);
+	Linker.link(g_source_add_child_source, \"g_source_add_child_source\", LIBRARY.GLIB);
+	Linker.link(g_source_remove_child_source, \"g_source_remove_child_source\", LIBRARY.GLIB);
+	Linker.link(g_source_get_time, \"g_source_get_time\", LIBRARY.GLIB);
 	Linker.link(g_source_get_current_time, \"g_source_get_current_time\", LIBRARY.GLIB);
 	Linker.link(g_source_remove, \"g_source_remove\", LIBRARY.GLIB);
 	Linker.link(g_source_remove_by_funcs_user_data, \"g_source_remove_by_funcs_user_data\", LIBRARY.GLIB);
@@ -185,11 +191,10 @@ mixin( _shared ~ "static this()
 
 	// glib.Module
 
+	Linker.link(g_module_open, \"g_module_open\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_supported, \"g_module_supported\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_build_path, \"g_module_build_path\", LIBRARY.GLIB, LIBRARY.GMODULE);
-	Linker.link(g_module_open, \"g_module_open\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_symbol, \"g_module_symbol\", LIBRARY.GLIB, LIBRARY.GMODULE);
-	Linker.link(g_module_name, \"g_module_name\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_make_resident, \"g_module_make_resident\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_close, \"g_module_close\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_error, \"g_module_error\", LIBRARY.GLIB, LIBRARY.GMODULE);
@@ -222,7 +227,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_io_channel_win32_new_socket, \"g_io_channel_win32_new_socket\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_win32_new_messages, \"g_io_channel_win32_new_messages\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_init, \"g_io_channel_init\", LIBRARY.GLIB);
-	Linker.link(g_io_channel_new_file, \"g_io_channel_new_file\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_read_chars, \"g_io_channel_read_chars\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_read_unichar, \"g_io_channel_read_unichar\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_read_line, \"g_io_channel_read_line\", LIBRARY.GLIB);
@@ -378,8 +382,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_convert, \"g_convert\", LIBRARY.GLIB);
 	Linker.link(g_convert_with_fallback, \"g_convert_with_fallback\", LIBRARY.GLIB);
 	Linker.link(g_locale_to_utf8, \"g_locale_to_utf8\", LIBRARY.GLIB);
-	Linker.link(g_filename_to_utf8, \"g_filename_to_utf8\", LIBRARY.GLIB);
-	Linker.link(g_filename_from_utf8, \"g_filename_from_utf8\", LIBRARY.GLIB);
 	Linker.link(g_get_filename_charsets, \"g_get_filename_charsets\", LIBRARY.GLIB);
 	Linker.link(g_filename_display_name, \"g_filename_display_name\", LIBRARY.GLIB);
 	Linker.link(g_filename_display_basename, \"g_filename_display_basename\", LIBRARY.GLIB);
@@ -478,6 +480,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dpgettext2, \"g_dpgettext2\", LIBRARY.GLIB);
 	Linker.link(g_strip_context, \"g_strip_context\", LIBRARY.GLIB);
 	Linker.link(g_get_language_names, \"g_get_language_names\", LIBRARY.GLIB);
+	Linker.link(g_get_locale_variants, \"g_get_locale_variants\", LIBRARY.GLIB);
 
 	// glib.TimeVal
 
@@ -486,6 +489,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_time_val_add, \"g_time_val_add\", LIBRARY.GLIB);
 	Linker.link(g_time_val_from_iso8601, \"g_time_val_from_iso8601\", LIBRARY.GLIB);
 	Linker.link(g_time_val_to_iso8601, \"g_time_val_to_iso8601\", LIBRARY.GLIB);
+	Linker.link(g_get_monotonic_time, \"g_get_monotonic_time\", LIBRARY.GLIB);
+	Linker.link(g_get_real_time, \"g_get_real_time\", LIBRARY.GLIB);
 
 	// glib.Date
 
@@ -545,6 +550,11 @@ mixin( _shared ~ "static this()
 	Linker.link(g_time_zone_new, \"g_time_zone_new\", LIBRARY.GLIB);
 	Linker.link(g_time_zone_new_local, \"g_time_zone_new_local\", LIBRARY.GLIB);
 	Linker.link(g_time_zone_new_utc, \"g_time_zone_new_utc\", LIBRARY.GLIB);
+	Linker.link(g_time_zone_find_interval, \"g_time_zone_find_interval\", LIBRARY.GLIB);
+	Linker.link(g_time_zone_adjust_time, \"g_time_zone_adjust_time\", LIBRARY.GLIB);
+	Linker.link(g_time_zone_get_abbreviation, \"g_time_zone_get_abbreviation\", LIBRARY.GLIB);
+	Linker.link(g_time_zone_get_offset, \"g_time_zone_get_offset\", LIBRARY.GLIB);
+	Linker.link(g_time_zone_is_dst, \"g_time_zone_is_dst\", LIBRARY.GLIB);
 
 	// glib.DateTime
 
@@ -621,23 +631,17 @@ mixin( _shared ~ "static this()
 	Linker.link(g_set_application_name, \"g_set_application_name\", LIBRARY.GLIB);
 	Linker.link(g_get_prgname, \"g_get_prgname\", LIBRARY.GLIB);
 	Linker.link(g_set_prgname, \"g_set_prgname\", LIBRARY.GLIB);
-	Linker.link(g_getenv, \"g_getenv\", LIBRARY.GLIB);
-	Linker.link(g_setenv, \"g_setenv\", LIBRARY.GLIB);
-	Linker.link(g_unsetenv, \"g_unsetenv\", LIBRARY.GLIB);
+	Linker.link(g_get_environ, \"g_get_environ\", LIBRARY.GLIB);
 	Linker.link(g_listenv, \"g_listenv\", LIBRARY.GLIB);
-	Linker.link(g_get_user_name, \"g_get_user_name\", LIBRARY.GLIB);
-	Linker.link(g_get_real_name, \"g_get_real_name\", LIBRARY.GLIB);
 	Linker.link(g_get_user_cache_dir, \"g_get_user_cache_dir\", LIBRARY.GLIB);
 	Linker.link(g_get_user_data_dir, \"g_get_user_data_dir\", LIBRARY.GLIB);
 	Linker.link(g_get_user_config_dir, \"g_get_user_config_dir\", LIBRARY.GLIB);
+	Linker.link(g_get_user_runtime_dir, \"g_get_user_runtime_dir\", LIBRARY.GLIB);
 	Linker.link(g_get_user_special_dir, \"g_get_user_special_dir\", LIBRARY.GLIB);
 	Linker.link(g_get_system_data_dirs, \"g_get_system_data_dirs\", LIBRARY.GLIB);
 	Linker.link(g_get_system_config_dirs, \"g_get_system_config_dirs\", LIBRARY.GLIB);
 	Linker.link(g_reload_user_special_dirs_cache, \"g_reload_user_special_dirs_cache\", LIBRARY.GLIB);
 	Linker.link(g_get_host_name, \"g_get_host_name\", LIBRARY.GLIB);
-	Linker.link(g_get_home_dir, \"g_get_home_dir\", LIBRARY.GLIB);
-	Linker.link(g_get_tmp_dir, \"g_get_tmp_dir\", LIBRARY.GLIB);
-	Linker.link(g_get_current_dir, \"g_get_current_dir\", LIBRARY.GLIB);
 	Linker.link(g_basename, \"g_basename\", LIBRARY.GLIB);
 	Linker.link(g_path_is_absolute, \"g_path_is_absolute\", LIBRARY.GLIB);
 	Linker.link(g_path_skip_root, \"g_path_skip_root\", LIBRARY.GLIB);
@@ -648,7 +652,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_build_path, \"g_build_path\", LIBRARY.GLIB);
 	Linker.link(g_build_pathv, \"g_build_pathv\", LIBRARY.GLIB);
 	Linker.link(g_format_size_for_display, \"g_format_size_for_display\", LIBRARY.GLIB);
-	Linker.link(g_find_program_in_path, \"g_find_program_in_path\", LIBRARY.GLIB);
 	Linker.link(g_bit_nth_lsf, \"g_bit_nth_lsf\", LIBRARY.GLIB);
 	Linker.link(g_bit_nth_msf, \"g_bit_nth_msf\", LIBRARY.GLIB);
 	Linker.link(g_bit_storage, \"g_bit_storage\", LIBRARY.GLIB);
@@ -715,34 +718,17 @@ mixin( _shared ~ "static this()
 	// glib.FileUtils
 
 	Linker.link(g_file_error_from_errno, \"g_file_error_from_errno\", LIBRARY.GLIB);
-	Linker.link(g_file_get_contents, \"g_file_get_contents\", LIBRARY.GLIB);
 	Linker.link(g_file_set_contents, \"g_file_set_contents\", LIBRARY.GLIB);
-	Linker.link(g_file_test, \"g_file_test\", LIBRARY.GLIB);
-	Linker.link(g_mkstemp, \"g_mkstemp\", LIBRARY.GLIB);
 	Linker.link(g_mkstemp_full, \"g_mkstemp_full\", LIBRARY.GLIB);
-	Linker.link(g_file_open_tmp, \"g_file_open_tmp\", LIBRARY.GLIB);
 	Linker.link(g_file_read_link, \"g_file_read_link\", LIBRARY.GLIB);
 	Linker.link(g_mkdir_with_parents, \"g_mkdir_with_parents\", LIBRARY.GLIB);
-	Linker.link(g_open, \"g_open\", LIBRARY.GLIB);
-	Linker.link(g_rename, \"g_rename\", LIBRARY.GLIB);
-	Linker.link(g_mkdir, \"g_mkdir\", LIBRARY.GLIB);
-	Linker.link(g_stat, \"g_stat\", LIBRARY.GLIB);
-	Linker.link(g_lstat, \"g_lstat\", LIBRARY.GLIB);
 	Linker.link(g_unlink, \"g_unlink\", LIBRARY.GLIB);
-	Linker.link(g_remove, \"g_remove\", LIBRARY.GLIB);
 	Linker.link(g_rmdir, \"g_rmdir\", LIBRARY.GLIB);
-	Linker.link(g_fopen, \"g_fopen\", LIBRARY.GLIB);
-	Linker.link(g_freopen, \"g_freopen\", LIBRARY.GLIB);
-	Linker.link(g_chmod, \"g_chmod\", LIBRARY.GLIB);
 	Linker.link(g_access, \"g_access\", LIBRARY.GLIB);
-	Linker.link(g_creat, \"g_creat\", LIBRARY.GLIB);
 	Linker.link(g_chdir, \"g_chdir\", LIBRARY.GLIB);
-	Linker.link(g_utime, \"g_utime\", LIBRARY.GLIB);
 
 	// glib.Directory
 
-	Linker.link(g_dir_open, \"g_dir_open\", LIBRARY.GLIB);
-	Linker.link(g_dir_read_name, \"g_dir_read_name\", LIBRARY.GLIB);
 	Linker.link(g_dir_rewind, \"g_dir_rewind\", LIBRARY.GLIB);
 	Linker.link(g_dir_close, \"g_dir_close\", LIBRARY.GLIB);
 
@@ -762,8 +748,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_uri_unescape_string, \"g_uri_unescape_string\", LIBRARY.GLIB);
 	Linker.link(g_uri_unescape_segment, \"g_uri_unescape_segment\", LIBRARY.GLIB);
 	Linker.link(g_uri_list_extract_uris, \"g_uri_list_extract_uris\", LIBRARY.GLIB);
-	Linker.link(g_filename_from_uri, \"g_filename_from_uri\", LIBRARY.GLIB);
-	Linker.link(g_filename_to_uri, \"g_filename_to_uri\", LIBRARY.GLIB);
 
 	// glib.Hostname
 
@@ -970,9 +954,7 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_win32_error_message, \"g_win32_error_message\", LIBRARY.GLIB);
 	Linker.link(g_win32_getlocale, \"g_win32_getlocale\", LIBRARY.GLIB);
-	Linker.link(g_win32_get_package_installation_directory, \"g_win32_get_package_installation_directory\", LIBRARY.GLIB);
 	Linker.link(g_win32_get_package_installation_directory_of_module, \"g_win32_get_package_installation_directory_of_module\", LIBRARY.GLIB);
-	Linker.link(g_win32_get_package_installation_subdirectory, \"g_win32_get_package_installation_subdirectory\", LIBRARY.GLIB);
 	Linker.link(g_win32_get_windows_version, \"g_win32_get_windows_version\", LIBRARY.GLIB);
 	Linker.link(g_win32_locale_filename_from_utf8, \"g_win32_locale_filename_from_utf8\", LIBRARY.GLIB);
 
@@ -1009,6 +991,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_list_delete_link, \"g_list_delete_link\", LIBRARY.GLIB);
 	Linker.link(g_list_remove_all, \"g_list_remove_all\", LIBRARY.GLIB);
 	Linker.link(g_list_free, \"g_list_free\", LIBRARY.GLIB);
+	Linker.link(g_list_free_full, \"g_list_free_full\", LIBRARY.GLIB);
 	Linker.link(g_list_alloc, \"g_list_alloc\", LIBRARY.GLIB);
 	Linker.link(g_list_free_1, \"g_list_free_1\", LIBRARY.GLIB);
 	Linker.link(g_list_length, \"g_list_length\", LIBRARY.GLIB);
@@ -1044,6 +1027,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_slist_delete_link, \"g_slist_delete_link\", LIBRARY.GLIB);
 	Linker.link(g_slist_remove_all, \"g_slist_remove_all\", LIBRARY.GLIB);
 	Linker.link(g_slist_free, \"g_slist_free\", LIBRARY.GLIB);
+	Linker.link(g_slist_free_full, \"g_slist_free_full\", LIBRARY.GLIB);
 	Linker.link(g_slist_free_1, \"g_slist_free_1\", LIBRARY.GLIB);
 	Linker.link(g_slist_length, \"g_slist_length\", LIBRARY.GLIB);
 	Linker.link(g_slist_copy, \"g_slist_copy\", LIBRARY.GLIB);
@@ -1131,6 +1115,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_sequence_move_range, \"g_sequence_move_range\", LIBRARY.GLIB);
 	Linker.link(g_sequence_search, \"g_sequence_search\", LIBRARY.GLIB);
 	Linker.link(g_sequence_search_iter, \"g_sequence_search_iter\", LIBRARY.GLIB);
+	Linker.link(g_sequence_lookup, \"g_sequence_lookup\", LIBRARY.GLIB);
+	Linker.link(g_sequence_lookup_iter, \"g_sequence_lookup_iter\", LIBRARY.GLIB);
 	Linker.link(g_sequence_get, \"g_sequence_get\", LIBRARY.GLIB);
 	Linker.link(g_sequence_set, \"g_sequence_set\", LIBRARY.GLIB);
 	Linker.link(g_sequence_range_get_midpoint, \"g_sequence_range_get_midpoint\", LIBRARY.GLIB);
@@ -1496,6 +1482,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_variant_n_children, \"g_variant_n_children\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_child_value, \"g_variant_get_child_value\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_child, \"g_variant_get_child\", LIBRARY.GLIB);
+	Linker.link(g_variant_lookup_value, \"g_variant_lookup_value\", LIBRARY.GLIB);
+	Linker.link(g_variant_lookup, \"g_variant_lookup\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_fixed_array, \"g_variant_get_fixed_array\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_size, \"g_variant_get_size\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_data, \"g_variant_get_data\", LIBRARY.GLIB);
@@ -1543,6 +1531,7 @@ mixin( gshared ~"extern(C)
 	
 	// glib.Version
 	
+	gchar* function(guint requiredMajor, guint requiredMinor, guint requiredMicro) c_glib_check_version;
 	
 	// glib.Atomic
 	
@@ -1594,6 +1583,8 @@ mixin( gshared ~"extern(C)
 	GPollFunc function(GMainContext* context) c_g_main_context_get_poll_func;
 	void function(GMainContext* context, GPollFD* fd, gint priority) c_g_main_context_add_poll;
 	void function(GMainContext* context, GPollFD* fd) c_g_main_context_remove_poll;
+	void function(GMainContext* context, GSourceFunc funct, gpointer data) c_g_main_context_invoke;
+	void function(GMainContext* context, gint priority, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_g_main_context_invoke_full;
 	GMainContext* function() c_g_main_context_get_thread_default;
 	void function(GMainContext* context) c_g_main_context_push_thread_default;
 	void function(GMainContext* context) c_g_main_context_pop_thread_default;
@@ -1642,6 +1633,9 @@ mixin( gshared ~"extern(C)
 	void function(GSource* source, gpointer callbackData, GSourceCallbackFuncs* callbackFuncs) c_g_source_set_callback_indirect;
 	void function(GSource* source, GPollFD* fd) c_g_source_add_poll;
 	void function(GSource* source, GPollFD* fd) c_g_source_remove_poll;
+	void function(GSource* source, GSource* childSource) c_g_source_add_child_source;
+	void function(GSource* source, GSource* childSource) c_g_source_remove_child_source;
+	gint64 function(GSource* source) c_g_source_get_time;
 	void function(GSource* source, GTimeVal* timeval) c_g_source_get_current_time;
 	gboolean function(guint tag) c_g_source_remove;
 	gboolean function(GSourceFuncs* funcs, gpointer userData) c_g_source_remove_by_funcs_user_data;
@@ -1691,11 +1685,10 @@ mixin( gshared ~"extern(C)
 	
 	// glib.Module
 	
+	GModule* function(gchar* fileName, GModuleFlags flags) c_g_module_open;
 	gboolean function() c_g_module_supported;
 	gchar* function(gchar* directory, gchar* moduleName) c_g_module_build_path;
-	GModule* function(gchar* fileName, GModuleFlags flags) c_g_module_open;
 	gboolean function(GModule* modul, gchar* symbolName, gpointer* symbol) c_g_module_symbol;
-	gchar* function(GModule* modul) c_g_module_name;
 	void function(GModule* modul) c_g_module_make_resident;
 	gboolean function(GModule* modul) c_g_module_close;
 	gchar* function() c_g_module_error;
@@ -1728,7 +1721,6 @@ mixin( gshared ~"extern(C)
 	GIOChannel* function(gint socket) c_g_io_channel_win32_new_socket;
 	GIOChannel* function(gsize hwnd) c_g_io_channel_win32_new_messages;
 	void function(GIOChannel* channel) c_g_io_channel_init;
-	GIOChannel* function(gchar* filename, gchar* mode, GError** error) c_g_io_channel_new_file;
 	GIOStatus function(GIOChannel* channel, gchar* buf, gsize count, gsize* bytesRead, GError** error) c_g_io_channel_read_chars;
 	GIOStatus function(GIOChannel* channel, gunichar* thechar, GError** error) c_g_io_channel_read_unichar;
 	GIOStatus function(GIOChannel* channel, gchar** strReturn, gsize* length, gsize* terminatorPos, GError** error) c_g_io_channel_read_line;
@@ -1884,8 +1876,6 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* str, gssize len, gchar* toCodeset, gchar* fromCodeset, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_convert;
 	gchar* function(gchar* str, gssize len, gchar* toCodeset, gchar* fromCodeset, gchar* fallback, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_convert_with_fallback;
 	gchar* function(gchar* opsysstring, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_locale_to_utf8;
-	gchar* function(gchar* opsysstring, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_filename_to_utf8;
-	gchar* function(gchar* utf8string, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_filename_from_utf8;
 	gboolean function(gchar*** charsets) c_g_get_filename_charsets;
 	gchar* function(gchar* filename) c_g_filename_display_name;
 	gchar* function(gchar* filename) c_g_filename_display_basename;
@@ -1984,6 +1974,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* domain, gchar* context, gchar* msgid) c_g_dpgettext2;
 	gchar* function(gchar* msgid, gchar* msgval) c_g_strip_context;
 	gchar** function() c_g_get_language_names;
+	gchar** function(gchar* locale) c_g_get_locale_variants;
 	
 	// glib.TimeVal
 	
@@ -1992,6 +1983,8 @@ mixin( gshared ~"extern(C)
 	void function(GTimeVal* time, glong microseconds) c_g_time_val_add;
 	gboolean function(gchar* isoDate, GTimeVal* time) c_g_time_val_from_iso8601;
 	gchar* function(GTimeVal* time) c_g_time_val_to_iso8601;
+	gint64 function() c_g_get_monotonic_time;
+	gint64 function() c_g_get_real_time;
 	
 	// glib.Date
 	
@@ -2051,6 +2044,11 @@ mixin( gshared ~"extern(C)
 	GTimeZone* function(gchar* identifier) c_g_time_zone_new;
 	GTimeZone* function() c_g_time_zone_new_local;
 	GTimeZone* function() c_g_time_zone_new_utc;
+	gint function(GTimeZone* tz, GTimeType type, gint64 time) c_g_time_zone_find_interval;
+	gint function(GTimeZone* tz, GTimeType type, gint64* time) c_g_time_zone_adjust_time;
+	gchar* function(GTimeZone* tz, gint interval) c_g_time_zone_get_abbreviation;
+	gint32 function(GTimeZone* tz, gint interval) c_g_time_zone_get_offset;
+	gboolean function(GTimeZone* tz, gint interval) c_g_time_zone_is_dst;
 	
 	// glib.DateTime
 	
@@ -2127,23 +2125,17 @@ mixin( gshared ~"extern(C)
 	void function(gchar* applicationName) c_g_set_application_name;
 	gchar* function() c_g_get_prgname;
 	void function(gchar* prgname) c_g_set_prgname;
-	gchar* function(gchar* variable) c_g_getenv;
-	gboolean function(gchar* variable, gchar* value, gboolean overwrite) c_g_setenv;
-	void function(gchar* variable) c_g_unsetenv;
+	gchar** function() c_g_get_environ;
 	gchar** function() c_g_listenv;
-	gchar* function() c_g_get_user_name;
-	gchar* function() c_g_get_real_name;
 	gchar* function() c_g_get_user_cache_dir;
 	gchar* function() c_g_get_user_data_dir;
 	gchar* function() c_g_get_user_config_dir;
+	gchar* function() c_g_get_user_runtime_dir;
 	gchar* function(GUserDirectory directory) c_g_get_user_special_dir;
 	gchar** function() c_g_get_system_data_dirs;
 	gchar** function() c_g_get_system_config_dirs;
 	void function() c_g_reload_user_special_dirs_cache;
 	gchar* function() c_g_get_host_name;
-	gchar* function() c_g_get_home_dir;
-	gchar* function() c_g_get_tmp_dir;
-	gchar* function() c_g_get_current_dir;
 	gchar* function(gchar* fileName) c_g_basename;
 	gboolean function(gchar* fileName) c_g_path_is_absolute;
 	gchar* function(gchar* fileName) c_g_path_skip_root;
@@ -2154,7 +2146,6 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* separator, gchar* firstElement, ... ) c_g_build_path;
 	gchar* function(gchar* separator, gchar** args) c_g_build_pathv;
 	char* function(goffset size) c_g_format_size_for_display;
-	gchar* function(gchar* program) c_g_find_program_in_path;
 	gint function(gulong mask, gint nthBit) c_g_bit_nth_lsf;
 	gint function(gulong mask, gint nthBit) c_g_bit_nth_msf;
 	guint function(gulong number) c_g_bit_storage;
@@ -2221,34 +2212,17 @@ mixin( gshared ~"extern(C)
 	// glib.FileUtils
 	
 	GFileError function(gint errNo) c_g_file_error_from_errno;
-	gboolean function(gchar* filename, gchar** contents, gsize* length, GError** error) c_g_file_get_contents;
 	gboolean function(gchar* filename, gchar* contents, gssize length, GError** error) c_g_file_set_contents;
-	gboolean function(gchar* filename, GFileTest test) c_g_file_test;
-	gint function(gchar* tmpl) c_g_mkstemp;
 	gint function(gchar* tmpl, int flags, int mode) c_g_mkstemp_full;
-	gint function(gchar* tmpl, gchar** nameUsed, GError** error) c_g_file_open_tmp;
 	gchar* function(gchar* filename, GError** error) c_g_file_read_link;
 	int function(gchar* pathname, int mode) c_g_mkdir_with_parents;
-	int function(gchar* filename, int flags, int mode) c_g_open;
-	int function(gchar* oldfilename, gchar* newfilename) c_g_rename;
-	int function(gchar* filename, int mode) c_g_mkdir;
-	int function(gchar* filename, GStatBuf* buf) c_g_stat;
-	int function(gchar* filename, GStatBuf* buf) c_g_lstat;
 	int function(gchar* filename) c_g_unlink;
-	int function(gchar* filename) c_g_remove;
 	int function(gchar* filename) c_g_rmdir;
-	void* function(gchar* filename, gchar* mode) c_g_fopen;
-	void* function(gchar* filename, gchar* mode, void* stream) c_g_freopen;
-	int function(gchar* filename, int mode) c_g_chmod;
 	int function(gchar* filename, int mode) c_g_access;
-	int function(gchar* filename, int mode) c_g_creat;
 	int function(gchar* path) c_g_chdir;
-	int function(gchar* filename, void* utb) c_g_utime;
 	
 	// glib.Directory
 	
-	GDir* function(gchar* path, guint flags, GError** error) c_g_dir_open;
-	gchar* function(GDir* dir) c_g_dir_read_name;
 	void function(GDir* dir) c_g_dir_rewind;
 	void function(GDir* dir) c_g_dir_close;
 	
@@ -2268,8 +2242,6 @@ mixin( gshared ~"extern(C)
 	char* function(char* escapedString, char* illegalCharacters) c_g_uri_unescape_string;
 	char* function(char* escapedString, char* escapedStringEnd, char* illegalCharacters) c_g_uri_unescape_segment;
 	gchar** function(gchar* uriList) c_g_uri_list_extract_uris;
-	gchar* function(gchar* uri, gchar** hostname, GError** error) c_g_filename_from_uri;
-	gchar* function(gchar* filename, gchar* hostname, GError** error) c_g_filename_to_uri;
 	
 	// glib.Hostname
 	
@@ -2476,9 +2448,7 @@ mixin( gshared ~"extern(C)
 	
 	gchar* function(gint error) c_g_win32_error_message;
 	gchar* function() c_g_win32_getlocale;
-	gchar* function(gchar* p, gchar* dllName) c_g_win32_get_package_installation_directory;
 	gchar* function(gpointer hmodule) c_g_win32_get_package_installation_directory_of_module;
-	gchar* function(gchar* p, gchar* dllName, gchar* subdir) c_g_win32_get_package_installation_subdirectory;
 	guint function() c_g_win32_get_windows_version;
 	gchar* function(gchar* utf8filename) c_g_win32_locale_filename_from_utf8;
 	
@@ -2515,6 +2485,7 @@ mixin( gshared ~"extern(C)
 	GList* function(GList* list, GList* link) c_g_list_delete_link;
 	GList* function(GList* list, gconstpointer data) c_g_list_remove_all;
 	void function(GList* list) c_g_list_free;
+	void function(GList* list, GDestroyNotify freeFunc) c_g_list_free_full;
 	GList* function() c_g_list_alloc;
 	void function(GList* list) c_g_list_free_1;
 	guint function(GList* list) c_g_list_length;
@@ -2550,6 +2521,7 @@ mixin( gshared ~"extern(C)
 	GSList* function(GSList* list, GSList* link) c_g_slist_delete_link;
 	GSList* function(GSList* list, gconstpointer data) c_g_slist_remove_all;
 	void function(GSList* list) c_g_slist_free;
+	void function(GSList* list, GDestroyNotify freeFunc) c_g_slist_free_full;
 	void function(GSList* list) c_g_slist_free_1;
 	guint function(GSList* list) c_g_slist_length;
 	GSList* function(GSList* list) c_g_slist_copy;
@@ -2637,6 +2609,8 @@ mixin( gshared ~"extern(C)
 	void function(GSequenceIter* dest, GSequenceIter* begin, GSequenceIter* end) c_g_sequence_move_range;
 	GSequenceIter* function(GSequence* seq, gpointer data, GCompareDataFunc cmpFunc, gpointer cmpData) c_g_sequence_search;
 	GSequenceIter* function(GSequence* seq, gpointer data, GSequenceIterCompareFunc iterCmp, gpointer cmpData) c_g_sequence_search_iter;
+	GSequenceIter* function(GSequence* seq, gpointer data, GCompareDataFunc cmpFunc, gpointer cmpData) c_g_sequence_lookup;
+	GSequenceIter* function(GSequence* seq, gpointer data, GSequenceIterCompareFunc iterCmp, gpointer cmpData) c_g_sequence_lookup_iter;
 	gpointer function(GSequenceIter* iter) c_g_sequence_get;
 	void function(GSequenceIter* iter, gpointer data) c_g_sequence_set;
 	GSequenceIter* function(GSequenceIter* begin, GSequenceIter* end) c_g_sequence_range_get_midpoint;
@@ -2956,16 +2930,16 @@ mixin( gshared ~"extern(C)
 	void function(GVariant* value, gchar* formatString, gchar** endptr, va_list* app) c_g_variant_get_va;
 	GVariant* function(gchar* formatString, ... ) c_g_variant_new;
 	GVariant* function(gchar* formatString, gchar** endptr, va_list* app) c_g_variant_new_va;
-	GVariant* function(gboolean boolean) c_g_variant_new_boolean;
-	GVariant* function(guchar b) c_g_variant_new_byte;
-	GVariant* function(gint16 int16) c_g_variant_new_int16;
-	GVariant* function(guint16 uint16) c_g_variant_new_uint16;
-	GVariant* function(gint32 int32) c_g_variant_new_int32;
-	GVariant* function(guint32 uint32) c_g_variant_new_uint32;
-	GVariant* function(gint64 int64) c_g_variant_new_int64;
-	GVariant* function(guint64 uint64) c_g_variant_new_uint64;
-	GVariant* function(gint32 handle) c_g_variant_new_handle;
-	GVariant* function(gdouble floating) c_g_variant_new_double;
+	GVariant* function(gboolean value) c_g_variant_new_boolean;
+	GVariant* function(guchar value) c_g_variant_new_byte;
+	GVariant* function(gint16 value) c_g_variant_new_int16;
+	GVariant* function(guint16 value) c_g_variant_new_uint16;
+	GVariant* function(gint32 value) c_g_variant_new_int32;
+	GVariant* function(guint32 value) c_g_variant_new_uint32;
+	GVariant* function(gint64 value) c_g_variant_new_int64;
+	GVariant* function(guint64 value) c_g_variant_new_uint64;
+	GVariant* function(gint32 value) c_g_variant_new_handle;
+	GVariant* function(gdouble value) c_g_variant_new_double;
 	GVariant* function(gchar* string) c_g_variant_new_string;
 	GVariant* function(gchar* objectPath) c_g_variant_new_object_path;
 	gboolean function(gchar* string) c_g_variant_is_object_path;
@@ -3002,6 +2976,8 @@ mixin( gshared ~"extern(C)
 	gsize function(GVariant* value) c_g_variant_n_children;
 	GVariant* function(GVariant* value, gsize index) c_g_variant_get_child_value;
 	void function(GVariant* value, gsize index, gchar* formatString, ... ) c_g_variant_get_child;
+	GVariant* function(GVariant* dictionary, gchar* key, GVariantType* expectedType) c_g_variant_lookup_value;
+	gboolean function(GVariant* dictionary, gchar* key, gchar* formatString, ... ) c_g_variant_lookup;
 	gconstpointer function(GVariant* value, gsize* nElements, gsize elementSize) c_g_variant_get_fixed_array;
 	gsize function(GVariant* value) c_g_variant_get_size;
 	gconstpointer function(GVariant* value) c_g_variant_get_data;
@@ -3046,6 +3022,7 @@ mixin( gshared ~"extern(C)
 
 // glib.Version
 
+alias c_glib_check_version  glib_check_version;
 
 // glib.Atomic
 
@@ -3097,6 +3074,8 @@ alias c_g_main_context_set_poll_func  g_main_context_set_poll_func;
 alias c_g_main_context_get_poll_func  g_main_context_get_poll_func;
 alias c_g_main_context_add_poll  g_main_context_add_poll;
 alias c_g_main_context_remove_poll  g_main_context_remove_poll;
+alias c_g_main_context_invoke  g_main_context_invoke;
+alias c_g_main_context_invoke_full  g_main_context_invoke_full;
 alias c_g_main_context_get_thread_default  g_main_context_get_thread_default;
 alias c_g_main_context_push_thread_default  g_main_context_push_thread_default;
 alias c_g_main_context_pop_thread_default  g_main_context_pop_thread_default;
@@ -3145,6 +3124,9 @@ alias c_g_source_set_callback  g_source_set_callback;
 alias c_g_source_set_callback_indirect  g_source_set_callback_indirect;
 alias c_g_source_add_poll  g_source_add_poll;
 alias c_g_source_remove_poll  g_source_remove_poll;
+alias c_g_source_add_child_source  g_source_add_child_source;
+alias c_g_source_remove_child_source  g_source_remove_child_source;
+alias c_g_source_get_time  g_source_get_time;
 alias c_g_source_get_current_time  g_source_get_current_time;
 alias c_g_source_remove  g_source_remove;
 alias c_g_source_remove_by_funcs_user_data  g_source_remove_by_funcs_user_data;
@@ -3194,11 +3176,10 @@ alias c_g_async_queue_sort_unlocked  g_async_queue_sort_unlocked;
 
 // glib.Module
 
+alias c_g_module_open  g_module_open;
 alias c_g_module_supported  g_module_supported;
 alias c_g_module_build_path  g_module_build_path;
-alias c_g_module_open  g_module_open;
 alias c_g_module_symbol  g_module_symbol;
-alias c_g_module_name  g_module_name;
 alias c_g_module_make_resident  g_module_make_resident;
 alias c_g_module_close  g_module_close;
 alias c_g_module_error  g_module_error;
@@ -3231,7 +3212,6 @@ alias c_g_io_channel_win32_new_fd  g_io_channel_win32_new_fd;
 alias c_g_io_channel_win32_new_socket  g_io_channel_win32_new_socket;
 alias c_g_io_channel_win32_new_messages  g_io_channel_win32_new_messages;
 alias c_g_io_channel_init  g_io_channel_init;
-alias c_g_io_channel_new_file  g_io_channel_new_file;
 alias c_g_io_channel_read_chars  g_io_channel_read_chars;
 alias c_g_io_channel_read_unichar  g_io_channel_read_unichar;
 alias c_g_io_channel_read_line  g_io_channel_read_line;
@@ -3387,8 +3367,6 @@ alias c_g_strsignal  g_strsignal;
 alias c_g_convert  g_convert;
 alias c_g_convert_with_fallback  g_convert_with_fallback;
 alias c_g_locale_to_utf8  g_locale_to_utf8;
-alias c_g_filename_to_utf8  g_filename_to_utf8;
-alias c_g_filename_from_utf8  g_filename_from_utf8;
 alias c_g_get_filename_charsets  g_get_filename_charsets;
 alias c_g_filename_display_name  g_filename_display_name;
 alias c_g_filename_display_basename  g_filename_display_basename;
@@ -3487,6 +3465,7 @@ alias c_g_dpgettext  g_dpgettext;
 alias c_g_dpgettext2  g_dpgettext2;
 alias c_g_strip_context  g_strip_context;
 alias c_g_get_language_names  g_get_language_names;
+alias c_g_get_locale_variants  g_get_locale_variants;
 
 // glib.TimeVal
 
@@ -3495,6 +3474,8 @@ alias c_g_usleep  g_usleep;
 alias c_g_time_val_add  g_time_val_add;
 alias c_g_time_val_from_iso8601  g_time_val_from_iso8601;
 alias c_g_time_val_to_iso8601  g_time_val_to_iso8601;
+alias c_g_get_monotonic_time  g_get_monotonic_time;
+alias c_g_get_real_time  g_get_real_time;
 
 // glib.Date
 
@@ -3554,6 +3535,11 @@ alias c_g_time_zone_ref  g_time_zone_ref;
 alias c_g_time_zone_new  g_time_zone_new;
 alias c_g_time_zone_new_local  g_time_zone_new_local;
 alias c_g_time_zone_new_utc  g_time_zone_new_utc;
+alias c_g_time_zone_find_interval  g_time_zone_find_interval;
+alias c_g_time_zone_adjust_time  g_time_zone_adjust_time;
+alias c_g_time_zone_get_abbreviation  g_time_zone_get_abbreviation;
+alias c_g_time_zone_get_offset  g_time_zone_get_offset;
+alias c_g_time_zone_is_dst  g_time_zone_is_dst;
 
 // glib.DateTime
 
@@ -3630,23 +3616,17 @@ alias c_g_get_application_name  g_get_application_name;
 alias c_g_set_application_name  g_set_application_name;
 alias c_g_get_prgname  g_get_prgname;
 alias c_g_set_prgname  g_set_prgname;
-alias c_g_getenv  g_getenv;
-alias c_g_setenv  g_setenv;
-alias c_g_unsetenv  g_unsetenv;
+alias c_g_get_environ  g_get_environ;
 alias c_g_listenv  g_listenv;
-alias c_g_get_user_name  g_get_user_name;
-alias c_g_get_real_name  g_get_real_name;
 alias c_g_get_user_cache_dir  g_get_user_cache_dir;
 alias c_g_get_user_data_dir  g_get_user_data_dir;
 alias c_g_get_user_config_dir  g_get_user_config_dir;
+alias c_g_get_user_runtime_dir  g_get_user_runtime_dir;
 alias c_g_get_user_special_dir  g_get_user_special_dir;
 alias c_g_get_system_data_dirs  g_get_system_data_dirs;
 alias c_g_get_system_config_dirs  g_get_system_config_dirs;
 alias c_g_reload_user_special_dirs_cache  g_reload_user_special_dirs_cache;
 alias c_g_get_host_name  g_get_host_name;
-alias c_g_get_home_dir  g_get_home_dir;
-alias c_g_get_tmp_dir  g_get_tmp_dir;
-alias c_g_get_current_dir  g_get_current_dir;
 alias c_g_basename  g_basename;
 alias c_g_path_is_absolute  g_path_is_absolute;
 alias c_g_path_skip_root  g_path_skip_root;
@@ -3657,7 +3637,6 @@ alias c_g_build_filenamev  g_build_filenamev;
 alias c_g_build_path  g_build_path;
 alias c_g_build_pathv  g_build_pathv;
 alias c_g_format_size_for_display  g_format_size_for_display;
-alias c_g_find_program_in_path  g_find_program_in_path;
 alias c_g_bit_nth_lsf  g_bit_nth_lsf;
 alias c_g_bit_nth_msf  g_bit_nth_msf;
 alias c_g_bit_storage  g_bit_storage;
@@ -3724,34 +3703,17 @@ alias c_g_spawn_close_pid  g_spawn_close_pid;
 // glib.FileUtils
 
 alias c_g_file_error_from_errno  g_file_error_from_errno;
-alias c_g_file_get_contents  g_file_get_contents;
 alias c_g_file_set_contents  g_file_set_contents;
-alias c_g_file_test  g_file_test;
-alias c_g_mkstemp  g_mkstemp;
 alias c_g_mkstemp_full  g_mkstemp_full;
-alias c_g_file_open_tmp  g_file_open_tmp;
 alias c_g_file_read_link  g_file_read_link;
 alias c_g_mkdir_with_parents  g_mkdir_with_parents;
-alias c_g_open  g_open;
-alias c_g_rename  g_rename;
-alias c_g_mkdir  g_mkdir;
-alias c_g_stat  g_stat;
-alias c_g_lstat  g_lstat;
 alias c_g_unlink  g_unlink;
-alias c_g_remove  g_remove;
 alias c_g_rmdir  g_rmdir;
-alias c_g_fopen  g_fopen;
-alias c_g_freopen  g_freopen;
-alias c_g_chmod  g_chmod;
 alias c_g_access  g_access;
-alias c_g_creat  g_creat;
 alias c_g_chdir  g_chdir;
-alias c_g_utime  g_utime;
 
 // glib.Directory
 
-alias c_g_dir_open  g_dir_open;
-alias c_g_dir_read_name  g_dir_read_name;
 alias c_g_dir_rewind  g_dir_rewind;
 alias c_g_dir_close  g_dir_close;
 
@@ -3771,8 +3733,6 @@ alias c_g_uri_escape_string  g_uri_escape_string;
 alias c_g_uri_unescape_string  g_uri_unescape_string;
 alias c_g_uri_unescape_segment  g_uri_unescape_segment;
 alias c_g_uri_list_extract_uris  g_uri_list_extract_uris;
-alias c_g_filename_from_uri  g_filename_from_uri;
-alias c_g_filename_to_uri  g_filename_to_uri;
 
 // glib.Hostname
 
@@ -3979,9 +3939,7 @@ alias c_g_bookmark_file_move_item  g_bookmark_file_move_item;
 
 alias c_g_win32_error_message  g_win32_error_message;
 alias c_g_win32_getlocale  g_win32_getlocale;
-alias c_g_win32_get_package_installation_directory  g_win32_get_package_installation_directory;
 alias c_g_win32_get_package_installation_directory_of_module  g_win32_get_package_installation_directory_of_module;
-alias c_g_win32_get_package_installation_subdirectory  g_win32_get_package_installation_subdirectory;
 alias c_g_win32_get_windows_version  g_win32_get_windows_version;
 alias c_g_win32_locale_filename_from_utf8  g_win32_locale_filename_from_utf8;
 
@@ -4018,6 +3976,7 @@ alias c_g_list_remove_link  g_list_remove_link;
 alias c_g_list_delete_link  g_list_delete_link;
 alias c_g_list_remove_all  g_list_remove_all;
 alias c_g_list_free  g_list_free;
+alias c_g_list_free_full  g_list_free_full;
 alias c_g_list_alloc  g_list_alloc;
 alias c_g_list_free_1  g_list_free_1;
 alias c_g_list_length  g_list_length;
@@ -4053,6 +4012,7 @@ alias c_g_slist_remove_link  g_slist_remove_link;
 alias c_g_slist_delete_link  g_slist_delete_link;
 alias c_g_slist_remove_all  g_slist_remove_all;
 alias c_g_slist_free  g_slist_free;
+alias c_g_slist_free_full  g_slist_free_full;
 alias c_g_slist_free_1  g_slist_free_1;
 alias c_g_slist_length  g_slist_length;
 alias c_g_slist_copy  g_slist_copy;
@@ -4140,6 +4100,8 @@ alias c_g_sequence_remove_range  g_sequence_remove_range;
 alias c_g_sequence_move_range  g_sequence_move_range;
 alias c_g_sequence_search  g_sequence_search;
 alias c_g_sequence_search_iter  g_sequence_search_iter;
+alias c_g_sequence_lookup  g_sequence_lookup;
+alias c_g_sequence_lookup_iter  g_sequence_lookup_iter;
 alias c_g_sequence_get  g_sequence_get;
 alias c_g_sequence_set  g_sequence_set;
 alias c_g_sequence_range_get_midpoint  g_sequence_range_get_midpoint;
@@ -4505,6 +4467,8 @@ alias c_g_variant_get_maybe  g_variant_get_maybe;
 alias c_g_variant_n_children  g_variant_n_children;
 alias c_g_variant_get_child_value  g_variant_get_child_value;
 alias c_g_variant_get_child  g_variant_get_child;
+alias c_g_variant_lookup_value  g_variant_lookup_value;
+alias c_g_variant_lookup  g_variant_lookup;
 alias c_g_variant_get_fixed_array  g_variant_get_fixed_array;
 alias c_g_variant_get_size  g_variant_get_size;
 alias c_g_variant_get_data  g_variant_get_data;

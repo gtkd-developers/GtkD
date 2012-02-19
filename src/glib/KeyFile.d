@@ -290,7 +290,7 @@ public class KeyFile
 	 * Params:
 	 * file = a relative path to a filename to open and parse
 	 * fullPath = return location for a string containing the full path
-	 *  of the file, or NULL
+	 * of the file, or NULL
 	 * flags = flags from GKeyFileFlags
 	 * Returns: TRUE if a key file could be loaded, FALSE othewise
 	 * Throws: GException on failure.
@@ -319,7 +319,7 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * length = return location for the length of the
-	 *  returned string, or NULL
+	 * returned string, or NULL
 	 * Returns: a newly allocated string holding the contents of the GKeyFile
 	 * Throws: GException on failure.
 	 */

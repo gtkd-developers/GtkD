@@ -110,27 +110,27 @@ public class Cache
 	 * Creates a new GCache.
 	 * Params:
 	 * valueNewFunc = a function to create a new object given a key.
-	 *  This is called by g_cache_insert() if an object
-	 *  with the given key does not already exist.
+	 * This is called by g_cache_insert() if an object
+	 * with the given key does not already exist.
 	 * valueDestroyFunc = a function to destroy an object. It is called
-	 *  by g_cache_remove() when the object is no
-	 *  longer needed (i.e. its reference count drops
-	 *  to 0).
+	 * by g_cache_remove() when the object is no
+	 * longer needed (i.e. its reference count drops
+	 * to 0).
 	 * keyDupFunc = a function to copy a key. It is called by
-	 *  g_cache_insert() if the key does not already exist in
-	 *  the GCache.
+	 * g_cache_insert() if the key does not already exist in
+	 * the GCache.
 	 * keyDestroyFunc = a function to destroy a key. It is called by
-	 *  g_cache_remove() when the object is no longer
-	 *  needed (i.e. its reference count drops to 0).
+	 * g_cache_remove() when the object is no longer
+	 * needed (i.e. its reference count drops to 0).
 	 * hashKeyFunc = a function to create a hash value from a key.
 	 * hashValueFunc = a function to create a hash value from a value.
 	 * keyEqualFunc = a function to compare two keys. It should return
-	 *  TRUE if the two keys are equivalent.
+	 * TRUE if the two keys are equivalent.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCacheNewFunc valueNewFunc, GCacheDestroyFunc valueDestroyFunc, GCacheDupFunc keyDupFunc, GCacheDestroyFunc keyDestroyFunc, GHashFunc hashKeyFunc, GHashFunc hashValueFunc, GEqualFunc keyEqualFunc)
 	{
-		// GCache* g_cache_new (GCacheNewFunc value_new_func,  GCacheDestroyFunc value_destroy_func,  GCacheDupFunc key_dup_func,  GCacheDestroyFunc key_destroy_func,  GHashFunc hash_key_func,  GHashFunc hash_value_func,  GEqualFunc key_equal_func);
+		// GCache * g_cache_new (GCacheNewFunc value_new_func,  GCacheDestroyFunc value_destroy_func,  GCacheDupFunc key_dup_func,  GCacheDestroyFunc key_destroy_func,  GHashFunc hash_key_func,  GHashFunc hash_value_func,  GEqualFunc key_equal_func);
 		auto p = g_cache_new(valueNewFunc, valueDestroyFunc, keyDupFunc, keyDestroyFunc, hashKeyFunc, hashValueFunc, keyEqualFunc);
 		if(p is null)
 		{

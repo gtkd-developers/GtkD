@@ -143,7 +143,7 @@ public class AsyncQueue
 	 */
 	public this ()
 	{
-		// GAsyncQueue* g_async_queue_new (void);
+		// GAsyncQueue * g_async_queue_new (void);
 		auto p = g_async_queue_new();
 		if(p is null)
 		{
@@ -163,7 +163,7 @@ public class AsyncQueue
 	 */
 	public this (GDestroyNotify itemFreeFunc)
 	{
-		// GAsyncQueue* g_async_queue_new_full (GDestroyNotify item_free_func);
+		// GAsyncQueue * g_async_queue_new_full (GDestroyNotify item_free_func);
 		auto p = g_async_queue_new_full(itemFreeFunc);
 		if(p is null)
 		{
@@ -179,7 +179,7 @@ public class AsyncQueue
 	 */
 	public AsyncQueue doref()
 	{
-		// GAsyncQueue* g_async_queue_ref (GAsyncQueue *queue);
+		// GAsyncQueue * g_async_queue_ref (GAsyncQueue *queue);
 		auto p = g_async_queue_ref(gAsyncQueue);
 		if(p is null)
 		{
@@ -224,10 +224,10 @@ public class AsyncQueue
 	 * Params:
 	 * data = the data to push into the queue
 	 * func = the GCompareDataFunc is used to sort queue. This function
-	 *  is passed two elements of the queue. The function should return
-	 *  0 if they are equal, a negative value if the first element
-	 *  should be higher in the queue or a positive value if the first
-	 *  element should be lower in the queue than the second element.
+	 * is passed two elements of the queue. The function should return
+	 * 0 if they are equal, a negative value if the first element
+	 * should be higher in the queue or a positive value if the first
+	 * element should be lower in the queue than the second element.
 	 * userData = user data passed to func.
 	 */
 	public void pushSorted(void* data, GCompareDataFunc func, void* userData)
@@ -297,11 +297,11 @@ public class AsyncQueue
 	 * Since 2.10
 	 * Params:
 	 * func = the GCompareDataFunc is used to sort queue. This
-	 *  function is passed two elements of the queue. The function
-	 *  should return 0 if they are equal, a negative value if the
-	 *  first element should be higher in the queue or a positive
-	 *  value if the first element should be lower in the queue than
-	 *  the second element.
+	 * function is passed two elements of the queue. The function
+	 * should return 0 if they are equal, a negative value if the
+	 * first element should be higher in the queue or a positive
+	 * value if the first element should be lower in the queue than
+	 * the second element.
 	 * userData = user data passed to func
 	 */
 	public void sort(GCompareDataFunc func, void* userData)
@@ -384,10 +384,10 @@ public class AsyncQueue
 	 * Params:
 	 * data = the data to push into the queue
 	 * func = the GCompareDataFunc is used to sort queue. This function
-	 *  is passed two elements of the queue. The function should return
-	 *  0 if they are equal, a negative value if the first element
-	 *  should be higher in the queue or a positive value if the first
-	 *  element should be lower in the queue than the second element.
+	 * is passed two elements of the queue. The function should return
+	 * 0 if they are equal, a negative value if the first element
+	 * should be higher in the queue or a positive value if the first
+	 * element should be lower in the queue than the second element.
 	 * userData = user data passed to func.
 	 */
 	public void pushSortedUnlocked(void* data, GCompareDataFunc func, void* userData)
@@ -459,11 +459,11 @@ public class AsyncQueue
 	 * Since 2.10
 	 * Params:
 	 * func = the GCompareDataFunc is used to sort queue. This
-	 *  function is passed two elements of the queue. The function
-	 *  should return 0 if they are equal, a negative value if the
-	 *  first element should be higher in the queue or a positive
-	 *  value if the first element should be lower in the queue than
-	 *  the second element.
+	 * function is passed two elements of the queue. The function
+	 * should return 0 if they are equal, a negative value if the
+	 * first element should be higher in the queue or a positive
+	 * value if the first element should be lower in the queue than
+	 * the second element.
 	 * userData = user data passed to func
 	 */
 	public void sortUnlocked(GCompareDataFunc func, void* userData)

@@ -146,15 +146,15 @@ public class OptionGroup
 	 * Since 2.6
 	 * Params:
 	 * name = the name for the option group, this is used to provide
-	 *  help for the options in this group with --help-name
+	 * help for the options in this group with --help-name
 	 * description = a description for this group to be shown in
-	 *  --help. This string is translated using the translation
-	 *  domain or translation function of the group
+	 * --help. This string is translated using the translation
+	 * domain or translation function of the group
 	 * helpDescription = a description for the --help-name option.
-	 *  This string is translated using the translation domain or translation function
-	 *  of the group
+	 * This string is translated using the translation domain or translation function
+	 * of the group
 	 * userData = user data that will be passed to the pre- and post-parse hooks,
-	 *  the error hook and to callbacks of G_OPTION_ARG_CALLBACK options, or NULL
+	 * the error hook and to callbacks of G_OPTION_ARG_CALLBACK options, or NULL
 	 * destroy = a function that will be called to free user_data, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

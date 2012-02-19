@@ -87,8 +87,8 @@ private import glib.Variant;
  * files. It can perform nearly all deserialisation operations in a
  * small constant time, usually touching only a single memory page.
  * Serialised GVariant data can also be sent over the network.
- * GVariant is largely compatible with DBus. Almost all types of
- * GVariant instances can be sent over DBus. See GVariantType for
+ * GVariant is largely compatible with D-Bus. Almost all types of
+ * GVariant instances can be sent over D-Bus. See GVariantType for
  * exceptions.
  * For convenience to C programmers, GVariant features powerful
  * varargs-based value construction and destruction. This feature is
@@ -363,7 +363,7 @@ public class VariantIter
 	 */
 	public Variant nextValue()
 	{
-		// GVariant * g_variant_iter_next_value (GVariantIter *iter);
+		// GVariant * g_variant_iter_next_value  (GVariantIter *iter);
 		auto p = g_variant_iter_next_value(gVariantIter);
 		if(p is null)
 		{

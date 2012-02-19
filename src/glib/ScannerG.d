@@ -114,7 +114,7 @@ public class ScannerG
 	 */
 	public this (GScannerConfig* configTempl)
 	{
-		// GScanner* g_scanner_new (const GScannerConfig *config_templ);
+		// GScanner *	 g_scanner_new (const GScannerConfig *config_templ);
 		auto p = g_scanner_new(configTempl);
 		if(p is null)
 		{
@@ -351,18 +351,18 @@ public class ScannerG
 	 * Params:
 	 * expectedToken = the expected token.
 	 * identifierSpec = a string describing how the scanner's user refers to
-	 *  identifiers (NULL defaults to "identifier").
-	 *  This is used if expected_token is G_TOKEN_IDENTIFIER
-	 *  or G_TOKEN_IDENTIFIER_NULL.
+	 * identifiers (NULL defaults to "identifier").
+	 * This is used if expected_token is G_TOKEN_IDENTIFIER
+	 * or G_TOKEN_IDENTIFIER_NULL.
 	 * symbolSpec = a string describing how the scanner's user refers to
-	 *  symbols (NULL defaults to "symbol").
-	 *  This is used if expected_token is G_TOKEN_SYMBOL or
-	 *  any token value greater than G_TOKEN_LAST.
+	 * symbols (NULL defaults to "symbol").
+	 * This is used if expected_token is G_TOKEN_SYMBOL or
+	 * any token value greater than G_TOKEN_LAST.
 	 * symbolName = the name of the symbol, if the scanner's current token
-	 *  is a symbol.
+	 * is a symbol.
 	 * message = a message string to output at the end of the warning/error, or NULL.
 	 * isError = if TRUE it is output as an error. If FALSE it is output as a
-	 *  warning.
+	 * warning.
 	 */
 	public void unexpToken(GTokenType expectedToken, string identifierSpec, string symbolSpec, string symbolName, string message, int isError)
 	{

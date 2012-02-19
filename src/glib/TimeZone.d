@@ -69,6 +69,19 @@ private import glib.Str;
  * Description
  * GTimeZone is a structure that represents a time zone, at no
  * particular point in time. It is refcounted and immutable.
+ * A time zone contains a number of intervals. Each interval has
+ * an abbreviation to describe it, an offet to UTC and a flag indicating
+ * if the daylight savings time is in effect during that interval. A
+ * time zone always has at least one interval -- interval 0.
+ * Every UTC time is contained within exactly one interval, but a given
+ * local time may be contained within zero, one or two intervals (due to
+ * incontinuities associated with daylight savings time).
+ * An interval may refer to a specific period of time (eg: the duration
+ * of daylight savings time during 2010) or it may refer to many periods
+ * of time that share the same properties (eg: all periods of daylight
+ * savings time). It is also possible (usually for political reasons)
+ * that some properties (like the abbreviation) change between intervals
+ * without other properties changing.
  * GTimeZone is available since GLib 2.26.
  */
 public class TimeZone
@@ -171,5 +184,107 @@ public class TimeZone
 			throw new ConstructionException("null returned by g_time_zone_new(Str.toStringz(identifier))");
 		}
 		this(cast(GTimeZone*) p);
+	}
+	
+	/**
+	 * Finds an the interval within tz that corresponds to the given time.
+	 * The meaning of time depends on type.
+	 * If type is G_TIME_TYPE_UNIVERSAL then this function will always
+	 * succeed (since universal time is monotonic and continuous).
+	 * Otherwise time is treated is local time. The distinction between
+	 * G_TIME_TYPE_STANDARD and G_TIME_TYPE_DAYLIGHT is ignored except in
+	 * the case that the given time is ambiguous. In Toronto, for example,
+	 * 01:30 on November 7th 2010 occured twice (once inside of daylight
+	 * savings time and the next, an hour later, outside of daylight savings
+	 * time). In this case, the different value of type would result in a
+	 * different interval being returned.
+	 * It is still possible for this function to fail. In Toronto, for
+	 * example, 02:00 on March 14th 2010 does not exist (due to the leap
+	 * forward to begin daylight savings time). -1 is returned in that
+	 * case.
+	 * Since 2.26
+	 * Params:
+	 * type = the GTimeType of time
+	 * time = a number of seconds since January 1, 1970
+	 * Returns: the interval containing time, or -1 in case of failure
+	 */
+	public int findInterval(GTimeType type, long time)
+	{
+		// gint g_time_zone_find_interval (GTimeZone *tz,  GTimeType type,  gint64 time);
+		return g_time_zone_find_interval(gTimeZone, type, time);
+	}
+	
+	/**
+	 * Finds an interval within tz that corresponds to the given time,
+	 * possibly adjusting time if required to fit into an interval.
+	 * The meaning of time depends on type.
+	 * This function is similar to g_time_zone_find_interval(), with the
+	 * difference that it always succeeds (by making the adjustments
+	 * described below).
+	 * In any of the cases where g_time_zone_find_interval() succeeds then
+	 * this function returns the same value, without modifying time.
+	 * This function may, however, modify time in order to deal with
+	 * non-existent times. If the non-existent local time of 02:30 were
+	 * requested on March 13th 2010 in Toronto then this function would
+	 * adjust time to be 03:00 and return the interval containing the
+	 * adjusted time.
+	 * Since 2.26
+	 * Params:
+	 * type = the GTimeType of time
+	 * time = a pointer to a number of seconds since January 1, 1970
+	 * Returns: the interval containing time, never -1
+	 */
+	public int adjustTime(GTimeType type, ref long time)
+	{
+		// gint g_time_zone_adjust_time (GTimeZone *tz,  GTimeType type,  gint64 *time);
+		return g_time_zone_adjust_time(gTimeZone, type, &time);
+	}
+	
+	/**
+	 * Determines the time zone abbreviation to be used during a particular
+	 * interval of time in the time zone tz.
+	 * For example, in Toronto this is currently "EST" during the winter
+	 * months and "EDT" during the summer months when daylight savings time
+	 * is in effect.
+	 * Since 2.26
+	 * Params:
+	 * interval = an interval within the timezone
+	 * Returns: the time zone abbreviation, which belongs to tz
+	 */
+	public string getAbbreviation(int interval)
+	{
+		// const gchar * g_time_zone_get_abbreviation (GTimeZone *tz,  gint interval);
+		return Str.toString(g_time_zone_get_abbreviation(gTimeZone, interval));
+	}
+	
+	/**
+	 * Determines the offset to UTC in effect during a particular interval
+	 * of time in the time zone tz.
+	 * The offset is the number of seconds that you add to UTC time to
+	 * arrive at local time for tz (ie: negative numbers for time zones
+	 * west of GMT, positive numbers for east).
+	 * Since 2.26
+	 * Params:
+	 * interval = an interval within the timezone
+	 * Returns: the number of seconds that should be added to UTC to get the local time in tz
+	 */
+	public int getOffset(int interval)
+	{
+		// gint32 g_time_zone_get_offset (GTimeZone *tz,  gint interval);
+		return g_time_zone_get_offset(gTimeZone, interval);
+	}
+	
+	/**
+	 * Determines if daylight savings time is in effect during a particular
+	 * interval of time in the time zone tz.
+	 * Since 2.26
+	 * Params:
+	 * interval = an interval within the timezone
+	 * Returns: TRUE if daylight savings time is in effect
+	 */
+	public int isDst(int interval)
+	{
+		// gboolean g_time_zone_is_dst (GTimeZone *tz,  gint interval);
+		return g_time_zone_is_dst(gTimeZone, interval);
 	}
 }

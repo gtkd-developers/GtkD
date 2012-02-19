@@ -134,22 +134,22 @@ public class HashTable
 	 * Creates a new GHashTable with a reference count of 1.
 	 * Params:
 	 * hashFunc = a function to create a hash value from a key.
-	 *  Hash values are used to determine where keys are stored within the
-	 *  GHashTable data structure. The g_direct_hash(), g_int_hash(),
-	 *  g_int64_hash(), g_double_hash() and g_str_hash() functions are provided
-	 *  for some common types of keys.
-	 *  If hash_func is NULL, g_direct_hash() is used.
+	 * Hash values are used to determine where keys are stored within the
+	 * GHashTable data structure. The g_direct_hash(), g_int_hash(),
+	 * g_int64_hash(), g_double_hash() and g_str_hash() functions are provided
+	 * for some common types of keys.
+	 * If hash_func is NULL, g_direct_hash() is used.
 	 * keyEqualFunc = a function to check two keys for equality. This is
-	 *  used when looking up keys in the GHashTable. The g_direct_equal(),
-	 *  g_int_equal(), g_int64_equal(), g_double_equal() and g_str_equal()
-	 *  functions are provided for the most common types of keys.
-	 *  If key_equal_func is NULL, keys are compared directly in a similar
-	 *  fashion to g_direct_equal(), but without the overhead of a function call.
+	 * used when looking up keys in the GHashTable. The g_direct_equal(),
+	 * g_int_equal(), g_int64_equal(), g_double_equal() and g_str_equal()
+	 * functions are provided for the most common types of keys.
+	 * If key_equal_func is NULL, keys are compared directly in a similar
+	 * fashion to g_direct_equal(), but without the overhead of a function call.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc)
 	{
-		// GHashTable* g_hash_table_new (GHashFunc hash_func,  GEqualFunc key_equal_func);
+		// GHashTable * g_hash_table_new (GHashFunc hash_func,  GEqualFunc key_equal_func);
 		auto p = g_hash_table_new(hashFunc, keyEqualFunc);
 		if(p is null)
 		{
@@ -166,16 +166,16 @@ public class HashTable
 	 * hashFunc = a function to create a hash value from a key.
 	 * keyEqualFunc = a function to check two keys for equality.
 	 * keyDestroyFunc = a function to free the memory allocated for the key
-	 *  used when removing the entry from the GHashTable or NULL if you
-	 *  don't want to supply such a function.
+	 * used when removing the entry from the GHashTable or NULL if you
+	 * don't want to supply such a function.
 	 * valueDestroyFunc = a function to free the memory allocated for the
-	 *  value used when removing the entry from the GHashTable or NULL if
-	 *  you don't want to supply such a function.
+	 * value used when removing the entry from the GHashTable or NULL if
+	 * you don't want to supply such a function.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
-		// GHashTable* g_hash_table_new_full (GHashFunc hash_func,  GEqualFunc key_equal_func,  GDestroyNotify key_destroy_func,  GDestroyNotify value_destroy_func);
+		// GHashTable * g_hash_table_new_full (GHashFunc hash_func,  GEqualFunc key_equal_func,  GDestroyNotify key_destroy_func,  GDestroyNotify value_destroy_func);
 		auto p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
 		if(p is null)
 		{
@@ -249,7 +249,8 @@ public class HashTable
 	 * is useful if you need to free the memory allocated for the original key,
 	 * for example before calling g_hash_table_remove().
 	 * You can actually pass NULL for lookup_key to test
-	 * whether the NULL key exists.
+	 * whether the NULL key exists, provided the hash and equal functions
+	 * of hash_table are NULL-safe.
 	 * Params:
 	 * lookupKey = the key to look up
 	 * origKey = return location for the original key, or NULL
@@ -452,7 +453,7 @@ public class HashTable
 	 */
 	public HashTable doref()
 	{
-		// GHashTable* g_hash_table_ref (GHashTable *hash_table);
+		// GHashTable * g_hash_table_ref (GHashTable *hash_table);
 		auto p = g_hash_table_ref(gHashTable);
 		if(p is null)
 		{
@@ -617,8 +618,13 @@ public class HashTable
 	
 	/**
 	 * Converts a string to a hash value.
-	 * It can be passed to g_hash_table_new() as the hash_func
-	 * parameter, when using strings as keys in a GHashTable.
+	 * This function implements the widely used "djb" hash apparently posted
+	 * by Daniel Bernstein to comp.lang.c some time ago. The 32 bit
+	 * unsigned hash value starts at 5381 and for each byte 'c' in the
+	 * string, is updated: hash = hash * 33 + c. This
+	 * function uses the signed value of each byte.
+	 * It can be passed to g_hash_table_new() as the hash_func parameter,
+	 * when using strings as keys in a GHashTable.
 	 * Params:
 	 * v = a string key
 	 * Returns: a hash value corresponding to the key

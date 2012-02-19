@@ -114,7 +114,7 @@ public class StringG
 	 */
 	public this (string init)
 	{
-		// GString* g_string_new (const gchar *init);
+		// GString * g_string_new (const gchar *init);
 		auto p = g_string_new(Str.toStringz(init));
 		if(p is null)
 		{
@@ -137,7 +137,7 @@ public class StringG
 	 */
 	public this (string init, gssize len)
 	{
-		// GString* g_string_new_len (const gchar *init,  gssize len);
+		// GString * g_string_new_len (const gchar *init,  gssize len);
 		auto p = g_string_new_len(Str.toStringz(init), len);
 		if(p is null)
 		{
@@ -153,12 +153,12 @@ public class StringG
 	 * too often.
 	 * Params:
 	 * dflSize = the default size of the space allocated to
-	 *  hold the string
+	 * hold the string
 	 * Returns: the new GString
 	 */
 	public static StringG sizedNew(gsize dflSize)
 	{
-		// GString* g_string_sized_new (gsize dfl_size);
+		// GString * g_string_sized_new (gsize dfl_size);
 		auto p = g_string_sized_new(dflSize);
 		if(p is null)
 		{
@@ -174,13 +174,13 @@ public class StringG
 	 * have to worry about having enough space to copy the string.
 	 * Params:
 	 * string = the destination GString. Its current contents
-	 *  are destroyed.
+	 * are destroyed.
 	 * rval = the string to copy into string
 	 * Returns: string
 	 */
 	public StringG assign(string rval)
 	{
-		// GString* g_string_assign (GString *string,  const gchar *rval);
+		// GString * g_string_assign (GString *string,  const gchar *rval);
 		auto p = g_string_assign(gString, Str.toStringz(rval));
 		if(p is null)
 		{
@@ -232,7 +232,7 @@ public class StringG
 	 */
 	public StringG append(string val)
 	{
-		// GString* g_string_append (GString *string,  const gchar *val);
+		// GString * g_string_append (GString *string,  const gchar *val);
 		auto p = g_string_append(gString, Str.toStringz(val));
 		if(p is null)
 		{
@@ -250,7 +250,7 @@ public class StringG
 	 */
 	public StringG appendC(char c)
 	{
-		// GString* g_string_append_c (GString *string,  gchar c);
+		// GString * g_string_append_c (GString *string,  gchar c);
 		auto p = g_string_append_c(gString, c);
 		if(p is null)
 		{
@@ -268,7 +268,7 @@ public class StringG
 	 */
 	public StringG appendUnichar(gunichar wc)
 	{
-		// GString* g_string_append_unichar (GString *string,  gunichar wc);
+		// GString * g_string_append_unichar (GString *string,  gunichar wc);
 		auto p = g_string_append_unichar(gString, wc);
 		if(p is null)
 		{
@@ -292,7 +292,7 @@ public class StringG
 	 */
 	public StringG appendLen(string val, gssize len)
 	{
-		// GString* g_string_append_len (GString *string,  const gchar *val,  gssize len);
+		// GString * g_string_append_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_append_len(gString, Str.toStringz(val), len);
 		if(p is null)
 		{
@@ -333,7 +333,7 @@ public class StringG
 	 */
 	public StringG prepend(string val)
 	{
-		// GString* g_string_prepend (GString *string,  const gchar *val);
+		// GString * g_string_prepend (GString *string,  const gchar *val);
 		auto p = g_string_prepend(gString, Str.toStringz(val));
 		if(p is null)
 		{
@@ -351,7 +351,7 @@ public class StringG
 	 */
 	public StringG prependC(char c)
 	{
-		// GString* g_string_prepend_c (GString *string,  gchar c);
+		// GString * g_string_prepend_c (GString *string,  gchar c);
 		auto p = g_string_prepend_c(gString, c);
 		if(p is null)
 		{
@@ -369,7 +369,7 @@ public class StringG
 	 */
 	public StringG prependUnichar(gunichar wc)
 	{
-		// GString* g_string_prepend_unichar (GString *string,  gunichar wc);
+		// GString * g_string_prepend_unichar (GString *string,  gunichar wc);
 		auto p = g_string_prepend_unichar(gString, wc);
 		if(p is null)
 		{
@@ -393,7 +393,7 @@ public class StringG
 	 */
 	public StringG prependLen(string val, gssize len)
 	{
-		// GString* g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
+		// GString * g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
 		if(p is null)
 		{
@@ -413,7 +413,7 @@ public class StringG
 	 */
 	public StringG insert(gssize pos, string val)
 	{
-		// GString* g_string_insert (GString *string,  gssize pos,  const gchar *val);
+		// GString * g_string_insert (GString *string,  gssize pos,  const gchar *val);
 		auto p = g_string_insert(gString, pos, Str.toStringz(val));
 		if(p is null)
 		{
@@ -431,7 +431,7 @@ public class StringG
 	 */
 	public StringG insertC(gssize pos, char c)
 	{
-		// GString* g_string_insert_c (GString *string,  gssize pos,  gchar c);
+		// GString * g_string_insert_c (GString *string,  gssize pos,  gchar c);
 		auto p = g_string_insert_c(gString, pos, c);
 		if(p is null)
 		{
@@ -445,13 +445,13 @@ public class StringG
 	 * into the string at the given position.
 	 * Params:
 	 * pos = the position at which to insert character, or -1 to
-	 *  append at the end of the string
+	 * append at the end of the string
 	 * wc = a Unicode character
 	 * Returns: string
 	 */
 	public StringG insertUnichar(gssize pos, gunichar wc)
 	{
-		// GString* g_string_insert_unichar (GString *string,  gssize pos,  gunichar wc);
+		// GString * g_string_insert_unichar (GString *string,  gssize pos,  gunichar wc);
 		auto p = g_string_insert_unichar(gString, pos, wc);
 		if(p is null)
 		{
@@ -471,14 +471,14 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * pos = position in string where insertion should
-	 *  happen, or -1 for at the end
+	 * happen, or -1 for at the end
 	 * val = bytes to insert
 	 * len = number of bytes of val to insert
 	 * Returns: string
 	 */
 	public StringG insertLen(gssize pos, string val, gssize len)
 	{
-		// GString* g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
+		// GString * g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
 		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
 		if(p is null)
 		{
@@ -498,7 +498,7 @@ public class StringG
 	 */
 	public StringG overwrite(gsize pos, string val)
 	{
-		// GString* g_string_overwrite (GString *string,  gsize pos,  const gchar *val);
+		// GString * g_string_overwrite (GString *string,  gsize pos,  const gchar *val);
 		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
 		if(p is null)
 		{
@@ -520,7 +520,7 @@ public class StringG
 	 */
 	public StringG overwriteLen(gsize pos, string val, gssize len)
 	{
-		// GString* g_string_overwrite_len (GString *string,  gsize pos,  const gchar *val,  gssize len);
+		// GString * g_string_overwrite_len (GString *string,  gsize pos,  const gchar *val,  gssize len);
 		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
 		if(p is null)
 		{
@@ -535,12 +535,12 @@ public class StringG
 	 * Params:
 	 * pos = the position of the content to remove
 	 * len = the number of bytes to remove, or -1 to remove all
-	 *  following bytes
+	 * following bytes
 	 * Returns: string
 	 */
 	public StringG erase(gssize pos, gssize len)
 	{
-		// GString* g_string_erase (GString *string,  gssize pos,  gssize len);
+		// GString * g_string_erase (GString *string,  gssize pos,  gssize len);
 		auto p = g_string_erase(gString, pos, len);
 		if(p is null)
 		{
@@ -557,7 +557,7 @@ public class StringG
 	 */
 	public StringG truncate(gsize len)
 	{
-		// GString* g_string_truncate (GString *string,  gsize len);
+		// GString * g_string_truncate (GString *string,  gsize len);
 		auto p = g_string_truncate(gString, len);
 		if(p is null)
 		{
@@ -578,7 +578,7 @@ public class StringG
 	 */
 	public StringG setSize(gsize len)
 	{
-		// GString* g_string_set_size (GString *string,  gsize len);
+		// GString * g_string_set_size (GString *string,  gsize len);
 		auto p = g_string_set_size(gString, len);
 		if(p is null)
 		{
@@ -589,7 +589,9 @@ public class StringG
 	
 	/**
 	 * Frees the memory allocated for the GString.
-	 * If free_segment is TRUE it also frees the character data.
+	 * If free_segment is TRUE it also frees the character data. If
+	 * it's FALSE, the caller gains ownership of the buffer and must
+	 * free it after use with g_free().
 	 * Params:
 	 * string = a GString
 	 * freeSegment = if TRUE the actual character data is freed as well
@@ -597,7 +599,7 @@ public class StringG
 	 */
 	public string free(int freeSegment)
 	{
-		// gchar* g_string_free (GString *string,  gboolean free_segment);
+		// gchar *	 g_string_free (GString *string,  gboolean free_segment);
 		return Str.toString(g_string_free(gString, freeSegment));
 	}
 	
@@ -611,7 +613,7 @@ public class StringG
 	 */
 	public StringG up()
 	{
-		// GString* g_string_up (GString *string);
+		// GString * g_string_up (GString *string);
 		auto p = g_string_up(gString);
 		if(p is null)
 		{
@@ -630,7 +632,7 @@ public class StringG
 	 */
 	public StringG down()
 	{
-		// GString* g_string_down (GString *string);
+		// GString * g_string_down (GString *string);
 		auto p = g_string_down(gString);
 		if(p is null)
 		{

@@ -362,9 +362,9 @@ public class MatchInfo
 	 * Params:
 	 * matchNum = number of the sub expression
 	 * startPos = pointer to location where to store
-	 *  the start position, or NULL. [out][allow-none]
+	 * the start position, or NULL. [out][allow-none]
 	 * endPos = pointer to location where to store
-	 *  the end position, or NULL. [out][allow-none]
+	 * the end position, or NULL. [out][allow-none]
 	 * Returns: TRUE if the position was fetched, FALSE otherwise. If the position cannot be fetched, start_pos and end_pos are left unchanged
 	 */
 	public int fetchPos(int matchNum, out int startPos, out int endPos)
@@ -400,9 +400,9 @@ public class MatchInfo
 	 * Params:
 	 * name = name of the subexpression
 	 * startPos = pointer to location where to store
-	 *  the start position, or NULL. [out][allow-none]
+	 * the start position, or NULL. [out][allow-none]
 	 * endPos = pointer to location where to store
-	 *  the end position, or NULL. [out][allow-none]
+	 * the end position, or NULL. [out][allow-none]
 	 * Returns: TRUE if the position was fetched, FALSE otherwise. If the position cannot be fetched, start_pos and end_pos are left unchanged.
 	 */
 	public int fetchNamedPos(string name, out int startPos, out int endPos)

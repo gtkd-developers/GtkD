@@ -102,8 +102,8 @@ private import glib.VariantType;
  * files. It can perform nearly all deserialisation operations in a
  * small constant time, usually touching only a single memory page.
  * Serialised GVariant data can also be sent over the network.
- * GVariant is largely compatible with DBus. Almost all types of
- * GVariant instances can be sent over DBus. See GVariantType for
+ * GVariant is largely compatible with D-Bus. Almost all types of
+ * GVariant instances can be sent over D-Bus. See GVariantType for
  * exceptions.
  * For convenience to C programmers, GVariant features powerful
  * varargs-based value construction and destruction. This feature is
@@ -478,7 +478,7 @@ public class Variant
 	 */
 	public string getTypeString()
 	{
-		// const gchar * g_variant_get_type_string (GVariant *value);
+		// const gchar * g_variant_get_type_string  (GVariant *value);
 		return Str.toString(g_variant_get_type_string(gVariant));
 	}
 	
@@ -564,7 +564,7 @@ public class Variant
 	 * Params:
 	 * formatString = a string that is prefixed with a format string
 	 * endptr = location to store the end pointer,
-	 *  or NULL. [allow-none][default NULL]
+	 * or NULL. [allow-none][default NULL]
 	 * app = a pointer to a va_list
 	 */
 	public void getVa(string formatString, out string endptr, void** app)
@@ -608,7 +608,7 @@ public class Variant
 	 * Params:
 	 * formatString = a string that is prefixed with a format string
 	 * endptr = location to store the end pointer,
-	 *  or NULL. [allow-none][default NULL]
+	 * or NULL. [allow-none][default NULL]
 	 * app = a pointer to a va_list
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -630,15 +630,17 @@ public class Variant
 	/**
 	 * Creates a new byte GVariant instance.
 	 * Since 2.24
+	 * Params:
+	 * value = a guint8 value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char b)
+	public this (char value)
 	{
-		// GVariant * g_variant_new_byte (guchar byte);
-		auto p = g_variant_new_byte(b);
+		// GVariant * g_variant_new_byte (guchar value);
+		auto p = g_variant_new_byte(value);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_byte(b)");
+			throw new ConstructionException("null returned by g_variant_new_byte(value)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -647,16 +649,16 @@ public class Variant
 	 * Creates a new int16 GVariant instance.
 	 * Since 2.24
 	 * Params:
-	 * int16 = a gint16 value
+	 * value = a gint16 value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (short int16)
+	public this (short value)
 	{
-		// GVariant * g_variant_new_int16 (gint16 int16);
-		auto p = g_variant_new_int16(int16);
+		// GVariant * g_variant_new_int16 (gint16 value);
+		auto p = g_variant_new_int16(value);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_int16(int16)");
+			throw new ConstructionException("null returned by g_variant_new_int16(value)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -665,16 +667,16 @@ public class Variant
 	 * Creates a new uint16 GVariant instance.
 	 * Since 2.24
 	 * Params:
-	 * uint16 = a guint16 value
+	 * value = a guint16 value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (ushort uint16)
+	public this (ushort value)
 	{
-		// GVariant * g_variant_new_uint16 (guint16 uint16);
-		auto p = g_variant_new_uint16(uint16);
+		// GVariant * g_variant_new_uint16 (guint16 value);
+		auto p = g_variant_new_uint16(value);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_uint16(uint16)");
+			throw new ConstructionException("null returned by g_variant_new_uint16(value)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -683,16 +685,16 @@ public class Variant
 	 * Creates a new int32 GVariant instance.
 	 * Since 2.24
 	 * Params:
-	 * int32 = a gint32 value
+	 * value = a gint32 value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (int int32)
+	public this (int value)
 	{
-		// GVariant * g_variant_new_int32 (gint32 int32);
-		auto p = g_variant_new_int32(int32);
+		// GVariant * g_variant_new_int32 (gint32 value);
+		auto p = g_variant_new_int32(value);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_int32(int32)");
+			throw new ConstructionException("null returned by g_variant_new_int32(value)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -701,16 +703,16 @@ public class Variant
 	 * Creates a new uint32 GVariant instance.
 	 * Since 2.24
 	 * Params:
-	 * uint32 = a guint32 value
+	 * value = a guint32 value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (uint uint32)
+	public this (uint value)
 	{
-		// GVariant * g_variant_new_uint32 (guint32 uint32);
-		auto p = g_variant_new_uint32(uint32);
+		// GVariant * g_variant_new_uint32 (guint32 value);
+		auto p = g_variant_new_uint32(value);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_uint32(uint32)");
+			throw new ConstructionException("null returned by g_variant_new_uint32(value)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -719,16 +721,16 @@ public class Variant
 	 * Creates a new int64 GVariant instance.
 	 * Since 2.24
 	 * Params:
-	 * int64 = a gint64 value
+	 * value = a gint64 value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (long int64)
+	public this (long value)
 	{
-		// GVariant * g_variant_new_int64 (gint64 int64);
-		auto p = g_variant_new_int64(int64);
+		// GVariant * g_variant_new_int64 (gint64 value);
+		auto p = g_variant_new_int64(value);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_int64(int64)");
+			throw new ConstructionException("null returned by g_variant_new_int64(value)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -737,16 +739,16 @@ public class Variant
 	 * Creates a new uint64 GVariant instance.
 	 * Since 2.24
 	 * Params:
-	 * uint64 = a guint64 value
+	 * value = a guint64 value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (ulong uint64)
+	public this (ulong value)
 	{
-		// GVariant * g_variant_new_uint64 (guint64 uint64);
-		auto p = g_variant_new_uint64(uint64);
+		// GVariant * g_variant_new_uint64 (guint64 value);
+		auto p = g_variant_new_uint64(value);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_uint64(uint64)");
+			throw new ConstructionException("null returned by g_variant_new_uint64(value)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -755,16 +757,16 @@ public class Variant
 	 * Creates a new double GVariant instance.
 	 * Since 2.24
 	 * Params:
-	 * floating = a gdouble floating point value
+	 * value = a gdouble floating point value
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (double floating)
+	public this (double value)
 	{
-		// GVariant * g_variant_new_double (gdouble floating);
-		auto p = g_variant_new_double(floating);
+		// GVariant * g_variant_new_double (gdouble value);
+		auto p = g_variant_new_double(value);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_variant_new_double(floating)");
+			throw new ConstructionException("null returned by g_variant_new_double(value)");
 		}
 		this(cast(GVariant*) p);
 	}
@@ -789,8 +791,8 @@ public class Variant
 	}
 	
 	/**
-	 * Determines if a given string is a valid DBus object path. You
-	 * should ensure that a string is a valid DBus object path before
+	 * Determines if a given string is a valid D-Bus object path. You
+	 * should ensure that a string is a valid D-Bus object path before
 	 * passing it to g_variant_new_object_path().
 	 * A valid object path starts with '/' followed by zero or more
 	 * sequences of characters separated by '/' characters. Each sequence
@@ -799,7 +801,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * string = a normal C nul-terminated string
-	 * Returns: TRUE if string is a DBus object path
+	 * Returns: TRUE if string is a D-Bus object path
 	 */
 	public static int isObjectPath(string string)
 	{
@@ -808,15 +810,15 @@ public class Variant
 	}
 	
 	/**
-	 * Determines if a given string is a valid DBus type signature. You
-	 * should ensure that a string is a valid DBus type signature before
+	 * Determines if a given string is a valid D-Bus type signature. You
+	 * should ensure that a string is a valid D-Bus type signature before
 	 * passing it to g_variant_new_signature().
-	 * DBus type signatures consist of zero or more definite GVariantType
+	 * D-Bus type signatures consist of zero or more definite GVariantType
 	 * strings in sequence.
 	 * Since 2.24
 	 * Params:
 	 * string = a normal C nul-terminated string
-	 * Returns: TRUE if string is a DBus type signature
+	 * Returns: TRUE if string is a D-Bus type signature
 	 */
 	public static int isSignature(string string)
 	{
@@ -831,7 +833,7 @@ public class Variant
 	 * instance takes ownership of child.
 	 * Since 2.24
 	 * Params:
-	 * value = a GVariance instance
+	 * value = a GVariant instance
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Variant value)
@@ -974,8 +976,8 @@ public class Variant
 	 * It is an error to call this function with a value of any type other
 	 * than G_VARIANT_TYPE_HANDLE.
 	 * By convention, handles are indexes into an array of file descriptors
-	 * that are sent alongside a DBus message. If you're not interacting
-	 * with DBus, you probably don't need them.
+	 * that are sent alongside a D-Bus message. If you're not interacting
+	 * with D-Bus, you probably don't need them.
 	 * Since 2.24
 	 * Returns: a gint32
 	 */
@@ -1012,7 +1014,7 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * length = a pointer to a gsize,
-	 *  to store the length. [allow-none][default NULL][out NULL]
+	 * to store the length. [allow-none][default NULL][out]
 	 * Returns: the constant string, utf8 encoded
 	 */
 	public string getString(out gsize length)
@@ -1064,7 +1066,7 @@ public class Variant
 	 * For an empty array, length will be set to 0 and a pointer to a
 	 * NULL pointer will be returned.
 	 * Since 2.24
-	 * Returns: an array of constant strings. [array length=length][transfer container length=length]
+	 * Returns: an array of constant strings. [array length=length][transfer container]
 	 */
 	public string[] getStrv()
 	{
@@ -1125,7 +1127,7 @@ public class Variant
 	 */
 	public string getBytestring()
 	{
-		// const gchar * g_variant_get_bytestring (GVariant *value);
+		// const gchar * g_variant_get_bytestring  (GVariant *value);
 		return Str.toString(g_variant_get_bytestring(gVariant));
 	}
 	
@@ -1138,7 +1140,7 @@ public class Variant
 	 */
 	public string dupBytestring()
 	{
-		// gchar * g_variant_dup_bytestring (GVariant *value,  gsize *length);
+		// gchar * g_variant_dup_bytestring  (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_dup_bytestring(gVariant, &length);
 		return Str.toString(p, length);
@@ -1158,7 +1160,7 @@ public class Variant
 	 */
 	public string[] getBytestringArray()
 	{
-		// const gchar ** g_variant_get_bytestring_array (GVariant *value,  gsize *length);
+		// const gchar ** g_variant_get_bytestring_array  (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_get_bytestring_array(gVariant, &length);
 		
@@ -1185,7 +1187,7 @@ public class Variant
 	 */
 	public string[] dupBytestringArray()
 	{
-		// gchar ** g_variant_dup_bytestring_array (GVariant *value,  gsize *length);
+		// gchar ** g_variant_dup_bytestring_array  (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_dup_bytestring_array(gVariant, &length);
 		
@@ -1240,7 +1242,7 @@ public class Variant
 	 * Params:
 	 * childType = the element type of the new array. [allow-none]
 	 * children = an array of
-	 *  GVariant pointers, the children. [allow-none][array length=n_children]
+	 * GVariant pointers, the children. [allow-none][array length=n_children]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (VariantType childType, Variant[] children)
@@ -1305,7 +1307,7 @@ public class Variant
 	 */
 	public this (Variant key, Variant value)
 	{
-		// GVariant * g_variant_new_dict_entry (GVariant *key,  GVariant *value);
+		// GVariant * g_variant_new_dict_entry  (GVariant *key,  GVariant *value);
 		auto p = g_variant_new_dict_entry((key is null) ? null : key.getVariantStruct(), (value is null) ? null : value.getVariantStruct());
 		if(p is null)
 		{
@@ -1365,8 +1367,43 @@ public class Variant
 	 */
 	public Variant getChildValue(gsize index)
 	{
-		// GVariant * g_variant_get_child_value (GVariant *value,  gsize index_);
+		// GVariant * g_variant_get_child_value  (GVariant *value,  gsize index_);
 		auto p = g_variant_get_child_value(gVariant, index);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Looks up a value in a dictionary GVariant.
+	 * This function works with dictionaries of the type
+	 * a{s*} (and equally well with type
+	 * a{o*}, but we only further discuss the string case
+	 * for sake of clarity).
+	 * In the event that dictionary has the type a{sv},
+	 * the expected_type string specifies what type of value is expected to
+	 * be inside of the variant. If the value inside the variant has a
+	 * different type then NULL is returned. In the event that dictionary
+	 * has a value type other than v then expected_type
+	 * must directly match the key type and it is used to unpack the value
+	 * directly or an error occurs.
+	 * In either case, if key is not found in dictionary, NULL is
+	 * returned.
+	 * If the key is found and the value has the correct type, it is
+	 * returned. If expected_type was specified then any non-NULL return
+	 * value will have this type.
+	 * Since 2.28
+	 * Params:
+	 * key = the key to lookup in the dictionary
+	 * expectedType = a GVariantType, or NULL
+	 * Returns: the value of the dictionary key, or NULL
+	 */
+	public Variant lookupValue(string key, VariantType expectedType)
+	{
+		// GVariant * g_variant_lookup_value (GVariant *dictionary,  const gchar *key,  const GVariantType *expected_type);
+		auto p = g_variant_lookup_value(gVariant, Str.toStringz(key), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
 		if(p is null)
 		{
 			return null;
@@ -1445,7 +1482,7 @@ public class Variant
 	 * large enough. See g_variant_get_size().
 	 * The stored data is in machine native byte order but may not be in
 	 * fully-normalised form if read from an untrusted source. See
-	 * g_variant_normalise() for a solution.
+	 * g_variant_get_normal_form() for a solution.
 	 * This function is approximately O(n) in the size of data.
 	 * Since 2.24
 	 * Params:
@@ -1486,7 +1523,7 @@ public class Variant
 	 */
 	public this (VariantType type, void* data, gsize size, int trusted, GDestroyNotify notify, void* userData)
 	{
-		// GVariant * g_variant_new_from_data (const GVariantType *type,  gconstpointer data,  gsize size,  gboolean trusted,  GDestroyNotify notify,  gpointer user_data);
+		// GVariant * g_variant_new_from_data  (const GVariantType *type,  gconstpointer data,  gsize size,  gboolean trusted,  GDestroyNotify notify,  gpointer user_data);
 		auto p = g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data, size, trusted, notify, userData);
 		if(p is null)
 		{
@@ -1537,7 +1574,7 @@ public class Variant
 	 */
 	public Variant getNormalForm()
 	{
-		// GVariant * g_variant_get_normal_form (GVariant *value);
+		// GVariant * g_variant_get_normal_form  (GVariant *value);
 		auto p = g_variant_get_normal_form(gVariant);
 		if(p is null)
 		{
@@ -1550,7 +1587,7 @@ public class Variant
 	 * Checks if value is in normal form.
 	 * The main reason to do this is to detect if a given chunk of
 	 * serialised data is in normal form: load the data into a GVariant
-	 * using g_variant_create_from_data() and then use this function to
+	 * using g_variant_new_from_data() and then use this function to
 	 * check.
 	 * If value is found to be in normal form then it will be marked as
 	 * being trusted. If the value was already marked as being trusted then
@@ -1601,11 +1638,12 @@ public class Variant
 	
 	/**
 	 * Pretty-prints value in the format understood by g_variant_parse().
+	 * The format is described here.
 	 * If type_annotate is TRUE, then type information is included in
 	 * the output.
 	 * Params:
 	 * typeAnnotate = TRUE if type information should be included in
-	 *  the output
+	 * the output
 	 * Returns: a newly-allocated string holding the result.
 	 */
 	public string print(int typeAnnotate)
@@ -1622,7 +1660,7 @@ public class Variant
 	 * Params:
 	 * string = a GString, or NULL. [allow-none][default NULL]
 	 * typeAnnotate = TRUE if type information should be included in
-	 *  the output
+	 * the output
 	 * Returns: a GString containing the string
 	 */
 	public StringG printString(StringG string, int typeAnnotate)
@@ -1639,6 +1677,7 @@ public class Variant
 	/**
 	 * Parses a GVariant from a text representation.
 	 * A single GVariant is parsed from the content of text.
+	 * The format is described here.
 	 * The memory at limit will never be accessed and the parser behaves as
 	 * if the character at limit is the nul terminator. This has the
 	 * effect of bounding text.
@@ -1709,7 +1748,7 @@ public class Variant
 	 */
 	public this (string format, void** app)
 	{
-		// GVariant * g_variant_new_parsed_va (const gchar *format,  va_list *app);
+		// GVariant * g_variant_new_parsed_va  (const gchar *format,  va_list *app);
 		auto p = g_variant_new_parsed_va(Str.toStringz(format), app);
 		if(p is null)
 		{

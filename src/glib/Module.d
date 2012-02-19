@@ -124,6 +124,35 @@ public class Module
 	 */
 	
 	/**
+	 * Opens a module. If the module has already been opened, its reference
+	 * count is incremented.
+	 * First of all g_module_open() tries to open file_name as a module. If
+	 * that fails and file_name has the ".la"-suffix (and is a libtool archive)
+	 * it tries to open the corresponding module. If that fails and it doesn't
+	 * have the proper module suffix for the platform (G_MODULE_SUFFIX), this
+	 * suffix will be appended and the corresponding module will be opended. If
+	 * that fails and file_name doesn't have the ".la"-suffix, this suffix is
+	 * appended and g_module_open() tries to open the corresponding module. If
+	 * eventually that fails as well, NULL is returned.
+	 * Params:
+	 * fileName = the name of the file containing the module, or NULL to obtain
+	 * a GModule representing the main program itself.
+	 * flags = the flags used for opening the module.
+	 * This can be the logical OR of any of the GModuleFlags.
+	 * Returns: a GModule on success, or NULL on failure.
+	 */
+	public static Module open(string fileName, GModuleFlags flags)
+	{
+		// GModule* g_module_open (const gchar *file_name, GModuleFlags flags);
+		auto p = g_module_open(Str.toStringz(fileName), flags);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Module(cast(GModule*) p);
+	}
+	
+	/**
 	 * Checks if modules are supported on the current platform.
 	 * Returns: TRUE if modules are supported.
 	 */
@@ -155,37 +184,8 @@ public class Module
 	 */
 	public static string buildPath(string directory, string moduleName)
 	{
-		// gchar* g_module_build_path (const gchar *directory,  const gchar *module_name);
+		// gchar * g_module_build_path (const gchar *directory,  const gchar *module_name);
 		return Str.toString(g_module_build_path(Str.toStringz(directory), Str.toStringz(moduleName)));
-	}
-	
-	/**
-	 * Opens a module. If the module has already been opened, its reference
-	 * count is incremented.
-	 * First of all g_module_open() tries to open file_name as a module. If
-	 * that fails and file_name has the ".la"-suffix (and is a libtool archive)
-	 * it tries to open the corresponding module. If that fails and it doesn't
-	 * have the proper module suffix for the platform (G_MODULE_SUFFIX), this
-	 * suffix will be appended and the corresponding module will be opended. If
-	 * that fails and file_name doesn't have the ".la"-suffix, this suffix is
-	 * appended and g_module_open() tries to open the corresponding module. If
-	 * eventually that fails as well, NULL is returned.
-	 * Params:
-	 * fileName = the name of the file containing the module, or NULL to obtain
-	 *  a GModule representing the main program itself.
-	 * flags = the flags used for opening the module. This can be the logical
-	 * OR of any of the GModuleFlags.
-	 * Returns: a GModule on success, or NULL on failure.
-	 */
-	public static Module open(string fileName, GModuleFlags flags)
-	{
-		// GModule* g_module_open (const gchar *file_name,  GModuleFlags flags);
-		auto p = g_module_open(Str.toStringz(fileName), flags);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Module(cast(GModule*) p);
 	}
 	
 	/**
@@ -200,16 +200,6 @@ public class Module
 	{
 		// gboolean g_module_symbol (GModule *module,  const gchar *symbol_name,  gpointer *symbol);
 		return g_module_symbol(gModule, Str.toStringz(symbolName), symbol);
-	}
-	
-	/**
-	 * Gets the filename from a GModule.
-	 * Returns: the filename of the module, or "main" if the module is the main program itself.
-	 */
-	public string name()
-	{
-		// const gchar* g_module_name (GModule *module);
-		return Str.toString(g_module_name(gModule));
 	}
 	
 	/**
@@ -238,7 +228,7 @@ public class Module
 	 */
 	public static string error()
 	{
-		// const gchar* g_module_error (void);
+		// const gchar * g_module_error (void);
 		return Str.toString(g_module_error());
 	}
 }

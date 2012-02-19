@@ -123,7 +123,7 @@ public class ShellUtils
 	 */
 	public static string quote(string unquotedString)
 	{
-		// gchar* g_shell_quote (const gchar *unquoted_string);
+		// gchar * g_shell_quote (const gchar *unquoted_string);
 		return Str.toString(g_shell_quote(Str.toStringz(unquotedString)));
 	}
 	
@@ -155,7 +155,7 @@ public class ShellUtils
 	 */
 	public static string unquote(string quotedString)
 	{
-		// gchar* g_shell_unquote (const gchar *quoted_string,  GError **error);
+		// gchar * g_shell_unquote (const gchar *quoted_string,  GError **error);
 		GError* err = null;
 		
 		auto p = g_shell_unquote(Str.toStringz(quotedString), &err);

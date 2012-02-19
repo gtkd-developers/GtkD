@@ -68,19 +68,19 @@ private import glib.Str;
 /**
  * Description
  * This section introduces the GVariant type system. It is based, in
- * large part, on the DBus type system, with two major changes and some minor
+ * large part, on the D-Bus type system, with two major changes and some minor
  * lifting of restrictions. The DBus
  * specification, therefore, provides a significant amount of
  * information that is useful when working with GVariant.
- * The first major change with respect to the DBus type system is the
+ * The first major change with respect to the D-Bus type system is the
  * introduction of maybe (or "nullable") types. Any type in GVariant can be
  * converted to a maybe type, in which case, "nothing" (or "null") becomes a
  * valid value. Maybe types have been added by introducing the
  * character "m" to type strings.
  * The second major change is that the GVariant type system supports the
  * concept of "indefinite types" -- types that are less specific than
- * the normal types found in DBus. For example, it is possible to speak
- * of "an array of any type" in GVariant, where the DBus type system
+ * the normal types found in D-Bus. For example, it is possible to speak
+ * of "an array of any type" in GVariant, where the D-Bus type system
  * would require you to speak of "an array of integers" or "an array of
  * strings". Indefinite types have been added by introducing the
  * characters "*", "?" and
@@ -88,15 +88,15 @@ private import glib.Str;
  * Finally, all arbitrary restrictions relating to the complexity of
  * types are lifted along with the restriction that dictionary entries
  * may only appear nested inside of arrays.
- * Just as in DBus, GVariant types are described with strings ("type
+ * Just as in D-Bus, GVariant types are described with strings ("type
  * strings"). Subject to the differences mentioned above, these strings
- * are of the same form as those found in DBus. Note, however: DBus
+ * are of the same form as those found in DBus. Note, however: D-Bus
  * always works in terms of messages and therefore individual type
  * strings appear nowhere in its interface. Instead, "signatures"
  * are a concatenation of the strings of the type of each argument in a
  * message. GVariant deals with single values directly so GVariant type
  * strings always describe the type of exactly one value. This means
- * that a DBus signature string is generally not a valid GVariant type
+ * that a D-Bus signature string is generally not a valid GVariant type
  * string -- except in the case that it is the signature of a message
  * containing exactly one argument.
  * An indefinite type is similar in spirit to what may be called an
@@ -104,11 +104,12 @@ private import glib.Str;
  * indefinite type as its type, but values can exist that have types
  * that are subtypes of indefinite types. That is to say,
  * g_variant_get_type() will never return an indefinite type, but
- * calling g_variant_is_a() with an indefinite type may return TRUE.
- * For example, you can not have a value that represents "an array of no
- * particular type", but you can have an "array of integers" which
- * certainly matches the type of "an array of no particular type", since
- * "array of integers" is a subtype of "array of no particular type".
+ * calling g_variant_is_of_type() with an indefinite type may return
+ * TRUE. For example, you can not have a value that represents "an
+ * array of no particular type", but you can have an "array of integers"
+ * which certainly matches the type of "an array of no particular type",
+ * since "array of integers" is a subtype of "array of no particular
+ * type".
  * This is similar to how instances of abstract classes may not
  * directly exist in other type systems, but instances of their
  * non-abstract subtypes may. For example, in GTK, no object that has
@@ -172,7 +173,7 @@ private import glib.Str;
  *  h
  *  the type string of G_VARIANT_TYPE_HANDLE; a signed 32 bit
  *  value that, by convention, is used as an index into an array
- *  of file descriptors that are sent alongside a DBus message.
+ *  of file descriptors that are sent alongside a D-Bus message.
  *  d
  *  the type string of G_VARIANT_TYPE_DOUBLE; a double precision
  *  floating point value.
@@ -180,10 +181,10 @@ private import glib.Str;
  *  the type string of G_VARIANT_TYPE_STRING; a string.
  *  o
  *  the type string of G_VARIANT_TYPE_OBJECT_PATH; a string in
- *  the form of a DBus object path.
+ *  the form of a D-Bus object path.
  *  g
  *  the type string of G_VARIANT_TYPE_STRING; a string in the
- *  form of a DBus type signature.
+ *  form of a D-Bus type signature.
  *  ?
  *  the type string of G_VARIANT_TYPE_BASIC; an indefinite type
  *  that is a supertype of any of the basic types.
@@ -412,7 +413,7 @@ public class VariantType
 	 */
 	public string peekString()
 	{
-		// const gchar * g_variant_type_peek_string (const GVariantType *type);
+		// const gchar * g_variant_type_peek_string  (const GVariantType *type);
 		return Str.toString(g_variant_type_peek_string(gVariantType));
 	}
 	
@@ -425,7 +426,7 @@ public class VariantType
 	 */
 	public string dupString()
 	{
-		// gchar * g_variant_type_dup_string (const GVariantType *type);
+		// gchar * g_variant_type_dup_string  (const GVariantType *type);
 		return Str.toString(g_variant_type_dup_string(gVariantType));
 	}
 	
@@ -616,7 +617,7 @@ public class VariantType
 	 */
 	public this (VariantType element)
 	{
-		// GVariantType * g_variant_type_new_array (const GVariantType *element);
+		// GVariantType * g_variant_type_new_array  (const GVariantType *element);
 		auto p = g_variant_type_new_array((element is null) ? null : element.getVariantTypeStruct());
 		if(p is null)
 		{
@@ -637,7 +638,7 @@ public class VariantType
 	 */
 	public this (VariantType[] items)
 	{
-		// GVariantType * g_variant_type_new_tuple (const GVariantType * const *items,  gint length);
+		// GVariantType * g_variant_type_new_tuple  (const GVariantType * const *items,  gint length);
 		
 		GVariantType*[] itemsArray = new GVariantType*[items.length];
 		for ( int i = 0; i < items.length ; i++ )
@@ -665,7 +666,7 @@ public class VariantType
 	 */
 	public this (VariantType key, VariantType value)
 	{
-		// GVariantType * g_variant_type_new_dict_entry (const GVariantType *key,  const GVariantType *value);
+		// GVariantType * g_variant_type_new_dict_entry  (const GVariantType *key,  const GVariantType *value);
 		auto p = g_variant_type_new_dict_entry((key is null) ? null : key.getVariantTypeStruct(), (value is null) ? null : value.getVariantTypeStruct());
 		if(p is null)
 		{

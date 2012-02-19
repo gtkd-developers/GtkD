@@ -137,12 +137,12 @@ public class DataList
 	 * datalist = a datalist.
 	 * keyId = the GQuark to identify the data element.
 	 * data = the data element or NULL to remove any previous element
-	 *  corresponding to key_id.
+	 * corresponding to key_id.
 	 * destroyFunc = the function to call when the data element is
-	 *  removed. This function will be called with the data
-	 *  element and can be used to free any memory allocated
-	 *  for it. If data is NULL, then destroy_func must
-	 *  also be NULL.
+	 * removed. This function will be called with the data
+	 * element and can be used to free any memory allocated
+	 * for it. If data is NULL, then destroy_func must
+	 * also be NULL.
 	 */
 	public static void idSetDataFull(GData** datalist, GQuark keyId, void* data, GDestroyNotify destroyFunc)
 	{
@@ -218,10 +218,10 @@ public class DataList
 	 * Params:
 	 * datalist = pointer to the location that holds a list
 	 * flags = the flags to turn on. The values of the flags are
-	 *  restricted by G_DATALIST_FLAGS_MASK (currently
-	 *  3; giving two possible boolean flags).
-	 *  A value for flags that doesn't fit within the mask is
-	 *  an error.
+	 * restricted by G_DATALIST_FLAGS_MASK (currently
+	 * 3; giving two possible boolean flags).
+	 * A value for flags that doesn't fit within the mask is
+	 * an error.
 	 */
 	public static void setFlags(GData** datalist, uint flags)
 	{
@@ -235,10 +235,10 @@ public class DataList
 	 * Params:
 	 * datalist = pointer to the location that holds a list
 	 * flags = the flags to turn off. The values of the flags are
-	 *  restricted by G_DATALIST_FLAGS_MASK (currently
-	 *  3: giving two possible boolean flags).
-	 *  A value for flags that doesn't fit within the mask is
-	 *  an error.
+	 * restricted by G_DATALIST_FLAGS_MASK (currently
+	 * 3: giving two possible boolean flags).
+	 * A value for flags that doesn't fit within the mask is
+	 * an error.
 	 */
 	public static void unsetFlags(GData** datalist, uint flags)
 	{

@@ -181,7 +181,7 @@ public class StaticPrivate
 	 * Params:
 	 * data = the new pointer.
 	 * notify = a function to be called with the pointer whenever the
-	 *  current thread ends or sets this pointer again.
+	 * current thread ends or sets this pointer again.
 	 */
 	public void set(void* data, GDestroyNotify notify)
 	{

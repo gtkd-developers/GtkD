@@ -165,25 +165,25 @@ public class CharacterSet
 	 * Params:
 	 * str = the string to convert
 	 * len = the length of the string, or -1 if the string is
-	 *  nul-terminated[1].
+	 * nul-terminated[1].
 	 * toCodeset = name of character set into which to convert str
 	 * fromCodeset = character set of str.
 	 * bytesRead = location to store the number of bytes in the
-	 *  input string that were successfully converted, or NULL.
-	 *  Even if the conversion was successful, this may be
-	 *  less than len if there were partial characters
-	 *  at the end of the input. If the error
-	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *  stored will the byte offset after the last valid
-	 *  input sequence.
+	 * input string that were successfully converted, or NULL.
+	 * Even if the conversion was successful, this may be
+	 * less than len if there were partial characters
+	 * at the end of the input. If the error
+	 * G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 * stored will the byte offset after the last valid
+	 * input sequence.
 	 * bytesWritten = the number of bytes stored in the output buffer (not
-	 *  including the terminating nul).
+	 * including the terminating nul).
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
 	 * Throws: GException on failure.
 	 */
 	public static string convert(string str, gssize len, string toCodeset, string fromCodeset, out gsize bytesRead, out gsize bytesWritten)
 	{
-		// gchar* g_convert (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		// gchar * g_convert (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
 		auto p = g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), &bytesRead, &bytesWritten, &err);
@@ -209,27 +209,27 @@ public class CharacterSet
 	 * Params:
 	 * str = the string to convert
 	 * len = the length of the string, or -1 if the string is
-	 *  nul-terminated[1].
+	 * nul-terminated[1].
 	 * toCodeset = name of character set into which to convert str
 	 * fromCodeset = character set of str.
 	 * fallback = UTF-8 string to use in place of character not
-	 *  present in the target encoding. (The string must be
-	 *  representable in the target encoding).
-	 *  If NULL, characters not in the target encoding will
-	 *  be represented as Unicode escapes \uxxxx or \Uxxxxyyyy.
+	 * present in the target encoding. (The string must be
+	 * representable in the target encoding).
+	 * If NULL, characters not in the target encoding will
+	 * be represented as Unicode escapes \uxxxx or \Uxxxxyyyy.
 	 * bytesRead = location to store the number of bytes in the
-	 *  input string that were successfully converted, or NULL.
-	 *  Even if the conversion was successful, this may be
-	 *  less than len if there were partial characters
-	 *  at the end of the input.
+	 * input string that were successfully converted, or NULL.
+	 * Even if the conversion was successful, this may be
+	 * less than len if there were partial characters
+	 * at the end of the input.
 	 * bytesWritten = the number of bytes stored in the output buffer (not
-	 *  including the terminating nul).
+	 * including the terminating nul).
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
 	 * Throws: GException on failure.
 	 */
 	public static string convertWithFallback(string str, gssize len, string toCodeset, string fromCodeset, string fallback, out gsize bytesRead, out gsize bytesWritten)
 	{
-		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  const gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		// gchar * g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  const gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
 		auto p = g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), &bytesRead, &bytesWritten, &err);
@@ -249,102 +249,28 @@ public class CharacterSet
 	 * UTF-8 string.
 	 * Params:
 	 * opsysstring = a string in the encoding of the current locale. On Windows
-	 *  this means the system codepage.
+	 * this means the system codepage.
 	 * len = the length of the string, or -1 if the string is
-	 *  nul-terminated[1].
+	 * nul-terminated[1].
 	 * bytesRead = location to store the number of bytes in the
-	 *  input string that were successfully converted, or NULL.
-	 *  Even if the conversion was successful, this may be
-	 *  less than len if there were partial characters
-	 *  at the end of the input. If the error
-	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *  stored will the byte offset after the last valid
-	 *  input sequence.
+	 * input string that were successfully converted, or NULL.
+	 * Even if the conversion was successful, this may be
+	 * less than len if there were partial characters
+	 * at the end of the input. If the error
+	 * G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 * stored will the byte offset after the last valid
+	 * input sequence.
 	 * bytesWritten = the number of bytes stored in the output buffer (not
-	 *  including the terminating nul).
+	 * including the terminating nul).
 	 * Returns: The converted string, or NULL on an error.
 	 * Throws: GException on failure.
 	 */
 	public static string localeToUtf8(string opsysstring, gssize len, out gsize bytesRead, out gsize bytesWritten)
 	{
-		// gchar* g_locale_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		// gchar * g_locale_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
 		auto p = g_locale_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return Str.toString(p);
-	}
-	
-	/**
-	 * Converts a string which is in the encoding used by GLib for
-	 * filenames into a UTF-8 string. Note that on Windows GLib uses UTF-8
-	 * for filenames; on other platforms, this function indirectly depends on
-	 * the current locale.
-	 * Params:
-	 * opsysstring = a string in the encoding for filenames
-	 * len = the length of the string, or -1 if the string is
-	 *  nul-terminated[1].
-	 * bytesRead = location to store the number of bytes in the
-	 *  input string that were successfully converted, or NULL.
-	 *  Even if the conversion was successful, this may be
-	 *  less than len if there were partial characters
-	 *  at the end of the input. If the error
-	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *  stored will the byte offset after the last valid
-	 *  input sequence.
-	 * bytesWritten = the number of bytes stored in the output buffer (not
-	 *  including the terminating nul).
-	 * Returns: The converted string, or NULL on an error.
-	 * Throws: GException on failure.
-	 */
-	public static string filenameToUtf8(string opsysstring, gssize len, out gsize bytesRead, out gsize bytesWritten)
-	{
-		// gchar* g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		GError* err = null;
-		
-		auto p = g_filename_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return Str.toString(p);
-	}
-	
-	/**
-	 * Converts a string from UTF-8 to the encoding GLib uses for
-	 * filenames. Note that on Windows GLib uses UTF-8 for filenames;
-	 * on other platforms, this function indirectly depends on the
-	 * current locale.
-	 * Params:
-	 * utf8string = a UTF-8 encoded string.
-	 * len = the length of the string, or -1 if the string is
-	 *  nul-terminated.
-	 * bytesRead = location to store the number of bytes in the
-	 *  input string that were successfully converted, or NULL.
-	 *  Even if the conversion was successful, this may be
-	 *  less than len if there were partial characters
-	 *  at the end of the input. If the error
-	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *  stored will the byte offset after the last valid
-	 *  input sequence.
-	 * bytesWritten = the number of bytes stored in the output buffer (not
-	 *  including the terminating nul).
-	 * Returns: The converted string, or NULL on an error.
-	 * Throws: GException on failure.
-	 */
-	public static string filenameFromUtf8(string utf8string, gssize len, out gsize bytesRead, out gsize bytesWritten)
-	{
-		// gchar* g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		GError* err = null;
-		
-		auto p = g_filename_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
@@ -450,23 +376,23 @@ public class CharacterSet
 	 * Params:
 	 * utf8string = a UTF-8 encoded string
 	 * len = the length of the string, or -1 if the string is
-	 *  nul-terminated[1].
+	 * nul-terminated[1].
 	 * bytesRead = location to store the number of bytes in the
-	 *  input string that were successfully converted, or NULL.
-	 *  Even if the conversion was successful, this may be
-	 *  less than len if there were partial characters
-	 *  at the end of the input. If the error
-	 *  G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *  stored will the byte offset after the last valid
-	 *  input sequence.
+	 * input string that were successfully converted, or NULL.
+	 * Even if the conversion was successful, this may be
+	 * less than len if there were partial characters
+	 * at the end of the input. If the error
+	 * G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 * stored will the byte offset after the last valid
+	 * input sequence.
 	 * bytesWritten = the number of bytes stored in the output buffer (not
-	 *  including the terminating nul).
+	 * including the terminating nul).
 	 * Returns: The converted string, or NULL on an error.
 	 * Throws: GException on failure.
 	 */
 	public static string localeFromUtf8(string utf8string, gssize len, out gsize bytesRead, out gsize bytesWritten)
 	{
-		// gchar* g_locale_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		// gchar * g_locale_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
 		auto p = g_locale_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);

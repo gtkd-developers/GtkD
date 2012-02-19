@@ -167,7 +167,7 @@ public class ListG
 	 */
 	public ListG append(void* data)
 	{
-		// GList* g_list_append (GList *list,  gpointer data);
+		// GList * g_list_append (GList *list,  gpointer data);
 		auto p = g_list_append(gList, data);
 		if(p is null)
 		{
@@ -188,7 +188,7 @@ public class ListG
 	 */
 	public ListG prepend(void* data)
 	{
-		// GList* g_list_prepend (GList *list,  gpointer data);
+		// GList * g_list_prepend (GList *list,  gpointer data);
 		auto p = g_list_prepend(gList, data);
 		if(p is null)
 		{
@@ -202,13 +202,13 @@ public class ListG
 	 * Params:
 	 * data = the data for the new element
 	 * position = the position to insert the element. If this is
-	 *  negative, or is larger than the number of elements in the
-	 *  list, the new element is added on to the end of the list.
+	 * negative, or is larger than the number of elements in the
+	 * list, the new element is added on to the end of the list.
 	 * Returns: the new start of the GList
 	 */
 	public ListG insert(void* data, int position)
 	{
-		// GList* g_list_insert (GList *list,  gpointer data,  gint position);
+		// GList * g_list_insert (GList *list,  gpointer data,  gint position);
 		auto p = g_list_insert(gList, data, position);
 		if(p is null)
 		{
@@ -221,13 +221,13 @@ public class ListG
 	 * Inserts a new element into the list before the given position.
 	 * Params:
 	 * sibling = the list element before which the new element
-	 *  is inserted or NULL to insert at the end of the list
+	 * is inserted or NULL to insert at the end of the list
 	 * data = the data for the new element
 	 * Returns: the new start of the GList
 	 */
 	public ListG insertBefore(ListG sibling, void* data)
 	{
-		// GList* g_list_insert_before (GList *list,  GList *sibling,  gpointer data);
+		// GList * g_list_insert_before (GList *list,  GList *sibling,  gpointer data);
 		auto p = g_list_insert_before(gList, (sibling is null) ? null : sibling.getListGStruct(), data);
 		if(p is null)
 		{
@@ -242,13 +242,13 @@ public class ListG
 	 * Params:
 	 * data = the data for the new element
 	 * func = the function to compare elements in the list. It should
-	 *  return a number > 0 if the first parameter comes after the
-	 *  second parameter in the sort order.
+	 * return a number > 0 if the first parameter comes after the
+	 * second parameter in the sort order.
 	 * Returns: the new start of the GList
 	 */
 	public ListG insertSorted(void* data, GCompareFunc func)
 	{
-		// GList* g_list_insert_sorted (GList *list,  gpointer data,  GCompareFunc func);
+		// GList * g_list_insert_sorted (GList *list,  gpointer data,  GCompareFunc func);
 		auto p = g_list_insert_sorted(gList, data, func);
 		if(p is null)
 		{
@@ -267,7 +267,7 @@ public class ListG
 	 */
 	public ListG remove(void* data)
 	{
-		// GList* g_list_remove (GList *list,  gconstpointer data);
+		// GList * g_list_remove (GList *list,  gconstpointer data);
 		auto p = g_list_remove(gList, data);
 		if(p is null)
 		{
@@ -286,7 +286,7 @@ public class ListG
 	 */
 	public ListG removeLink(ListG llink)
 	{
-		// GList* g_list_remove_link (GList *list,  GList *llink);
+		// GList * g_list_remove_link (GList *list,  GList *llink);
 		auto p = g_list_remove_link(gList, (llink is null) ? null : llink.getListGStruct());
 		if(p is null)
 		{
@@ -305,7 +305,7 @@ public class ListG
 	 */
 	public ListG deleteLink(ListG link)
 	{
-		// GList* g_list_delete_link (GList *list,  GList *link_);
+		// GList * g_list_delete_link (GList *list,  GList *link_);
 		auto p = g_list_delete_link(gList, (link is null) ? null : link.getListGStruct());
 		if(p is null)
 		{
@@ -325,7 +325,7 @@ public class ListG
 	 */
 	public ListG removeAll(void* data)
 	{
-		// GList* g_list_remove_all (GList *list,  gconstpointer data);
+		// GList * g_list_remove_all (GList *list,  gconstpointer data);
 		auto p = g_list_remove_all(gList, data);
 		if(p is null)
 		{
@@ -339,12 +339,26 @@ public class ListG
 	 * The freed elements are returned to the slice allocator.
 	 * Note
 	 * If list elements contain dynamically-allocated memory,
-	 * they should be freed first.
+	 * you should either use g_list_free_full() or free them manually
+	 * first.
 	 */
 	public void free()
 	{
 		// void g_list_free (GList *list);
 		g_list_free(gList);
+	}
+	
+	/**
+	 * Convenience method, which frees all the memory used by a GList, and
+	 * calls the specified destroy function on every element's data.
+	 * Since 2.28
+	 * Params:
+	 * freeFunc = the function to be called to free each element's data
+	 */
+	public void freeFull(GDestroyNotify freeFunc)
+	{
+		// void g_list_free_full (GList *list,  GDestroyNotify free_func);
+		g_list_free_full(gList, freeFunc);
 	}
 	
 	/**
@@ -355,7 +369,7 @@ public class ListG
 	 */
 	public static ListG alloc()
 	{
-		// GList* g_list_alloc (void);
+		// GList * g_list_alloc (void);
 		auto p = g_list_alloc();
 		if(p is null)
 		{
@@ -397,7 +411,7 @@ public class ListG
 	 */
 	public ListG copy()
 	{
-		// GList* g_list_copy (GList *list);
+		// GList * g_list_copy (GList *list);
 		auto p = g_list_copy(gList);
 		if(p is null)
 		{
@@ -413,7 +427,7 @@ public class ListG
 	 */
 	public ListG reverse()
 	{
-		// GList* g_list_reverse (GList *list);
+		// GList * g_list_reverse (GList *list);
 		auto p = g_list_reverse(gList);
 		if(p is null)
 		{
@@ -426,15 +440,15 @@ public class ListG
 	 * Sorts a GList using the given comparison function.
 	 * Params:
 	 * compareFunc = the comparison function used to sort the GList.
-	 *  This function is passed the data from 2 elements of the GList
-	 *  and should return 0 if they are equal, a negative value if the
-	 *  first element comes before the second, or a positive value if
-	 *  the first element comes after the second.
+	 * This function is passed the data from 2 elements of the GList
+	 * and should return 0 if they are equal, a negative value if the
+	 * first element comes before the second, or a positive value if
+	 * the first element comes after the second.
 	 * Returns: the start of the sorted GList
 	 */
 	public ListG sort(GCompareFunc compareFunc)
 	{
-		// GList* g_list_sort (GList *list,  GCompareFunc compare_func);
+		// GList * g_list_sort (GList *list,  GCompareFunc compare_func);
 		auto p = g_list_sort(gList, compareFunc);
 		if(p is null)
 		{
@@ -450,14 +464,14 @@ public class ListG
 	 * Params:
 	 * data = the data for the new element
 	 * func = the function to compare elements in the list.
-	 *  It should return a number > 0 if the first parameter
-	 *  comes after the second parameter in the sort order.
+	 * It should return a number > 0 if the first parameter
+	 * comes after the second parameter in the sort order.
 	 * userData = user data to pass to comparison function.
 	 * Returns: the new start of the GList
 	 */
 	public ListG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
-		// GList* g_list_insert_sorted_with_data (GList *list,  gpointer data,  GCompareDataFunc func,  gpointer user_data);
+		// GList * g_list_insert_sorted_with_data (GList *list,  gpointer data,  GCompareDataFunc func,  gpointer user_data);
 		auto p = g_list_insert_sorted_with_data(gList, data, func, userData);
 		if(p is null)
 		{
@@ -476,7 +490,7 @@ public class ListG
 	 */
 	public ListG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
-		// GList* g_list_sort_with_data (GList *list,  GCompareDataFunc compare_func,  gpointer user_data);
+		// GList * g_list_sort_with_data (GList *list,  GCompareDataFunc compare_func,  gpointer user_data);
 		auto p = g_list_sort_with_data(gList, compareFunc, userData);
 		if(p is null)
 		{
@@ -495,7 +509,7 @@ public class ListG
 	 */
 	public ListG concat(ListG list2)
 	{
-		// GList* g_list_concat (GList *list1,  GList *list2);
+		// GList * g_list_concat (GList *list1,  GList *list2);
 		auto p = g_list_concat(gList, (list2 is null) ? null : list2.getListGStruct());
 		if(p is null)
 		{
@@ -522,7 +536,7 @@ public class ListG
 	 */
 	public ListG first()
 	{
-		// GList* g_list_first (GList *list);
+		// GList * g_list_first (GList *list);
 		auto p = g_list_first(gList);
 		if(p is null)
 		{
@@ -537,7 +551,7 @@ public class ListG
 	 */
 	public ListG last()
 	{
-		// GList* g_list_last (GList *list);
+		// GList * g_list_last (GList *list);
 		auto p = g_list_last(gList);
 		if(p is null)
 		{
@@ -554,7 +568,7 @@ public class ListG
 	 */
 	public ListG nth(uint n)
 	{
-		// GList* g_list_nth (GList *list,  guint n);
+		// GList * g_list_nth (GList *list,  guint n);
 		auto p = g_list_nth(gList, n);
 		if(p is null)
 		{
@@ -583,7 +597,7 @@ public class ListG
 	 */
 	public ListG nthPrev(uint n)
 	{
-		// GList* g_list_nth_prev (GList *list,  guint n);
+		// GList * g_list_nth_prev (GList *list,  guint n);
 		auto p = g_list_nth_prev(gList, n);
 		if(p is null)
 		{
@@ -601,7 +615,7 @@ public class ListG
 	 */
 	public ListG find(void* data)
 	{
-		// GList* g_list_find (GList *list,  gconstpointer data);
+		// GList * g_list_find (GList *list,  gconstpointer data);
 		auto p = g_list_find(gList, data);
 		if(p is null)
 		{
@@ -620,12 +634,12 @@ public class ListG
 	 * Params:
 	 * data = user data passed to the function
 	 * func = the function to call for each element.
-	 *  It should return 0 when the desired element is found
+	 * It should return 0 when the desired element is found
 	 * Returns: the found GList element, or NULL if it is not found
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
-		// GList* g_list_find_custom (GList *list,  gconstpointer data,  GCompareFunc func);
+		// GList * g_list_find_custom (GList *list,  gconstpointer data,  GCompareFunc func);
 		auto p = g_list_find_custom(gList, data, func);
 		if(p is null)
 		{

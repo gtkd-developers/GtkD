@@ -116,15 +116,15 @@ public class BBTree
 	 * Creates a new GTree.
 	 * Params:
 	 * keyCompareFunc = the function used to order the nodes in the GTree.
-	 *  It should return values similar to the standard strcmp() function -
-	 *  0 if the two arguments are equal, a negative value if the first argument
-	 *  comes before the second, or a positive value if the first argument comes
-	 *  after the second.
+	 * It should return values similar to the standard strcmp() function -
+	 * 0 if the two arguments are equal, a negative value if the first argument
+	 * comes before the second, or a positive value if the first argument comes
+	 * after the second.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompareFunc keyCompareFunc)
 	{
-		// GTree* g_tree_new (GCompareFunc key_compare_func);
+		// GTree * g_tree_new (GCompareFunc key_compare_func);
 		auto p = g_tree_new(keyCompareFunc);
 		if(p is null)
 		{
@@ -141,7 +141,7 @@ public class BBTree
 	 */
 	public BBTree doref()
 	{
-		// GTree* g_tree_ref (GTree *tree);
+		// GTree * g_tree_ref (GTree *tree);
 		auto p = g_tree_ref(gTree);
 		if(p is null)
 		{
@@ -174,7 +174,7 @@ public class BBTree
 	 */
 	public this (GCompareDataFunc keyCompareFunc, void* keyCompareData)
 	{
-		// GTree* g_tree_new_with_data (GCompareDataFunc key_compare_func,  gpointer key_compare_data);
+		// GTree * g_tree_new_with_data (GCompareDataFunc key_compare_func,  gpointer key_compare_data);
 		auto p = g_tree_new_with_data(keyCompareFunc, keyCompareData);
 		if(p is null)
 		{
@@ -191,16 +191,16 @@ public class BBTree
 	 * keyCompareFunc = qsort()-style comparison function.
 	 * keyCompareData = data to pass to comparison function.
 	 * keyDestroyFunc = a function to free the memory allocated for the key
-	 *  used when removing the entry from the GTree or NULL if you don't
-	 *  want to supply such a function.
+	 * used when removing the entry from the GTree or NULL if you don't
+	 * want to supply such a function.
 	 * valueDestroyFunc = a function to free the memory allocated for the
-	 *  value used when removing the entry from the GTree or NULL if you
-	 *  don't want to supply such a function.
+	 * value used when removing the entry from the GTree or NULL if you
+	 * don't want to supply such a function.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
-		// GTree* g_tree_new_full (GCompareDataFunc key_compare_func,  gpointer key_compare_data,  GDestroyNotify key_destroy_func,  GDestroyNotify value_destroy_func);
+		// GTree * g_tree_new_full (GCompareDataFunc key_compare_func,  gpointer key_compare_data,  GDestroyNotify key_destroy_func,  GDestroyNotify value_destroy_func);
 		auto p = g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc);
 		if(p is null)
 		{
@@ -310,7 +310,7 @@ public class BBTree
 	 * the tree, then walk the list and remove each item.
 	 * Params:
 	 * func = the function to call for each node visited. If this function
-	 *  returns TRUE, the traversal is stopped.
+	 * returns TRUE, the traversal is stopped.
 	 * userData = user data to pass to the function.
 	 */
 	public void foreac(GTraverseFunc func, void* userData)
@@ -328,9 +328,9 @@ public class BBTree
 	 * Calls the given function for each node in the GTree.
 	 * Params:
 	 * traverseFunc = the function to call for each node visited. If this
-	 *  function returns TRUE, the traversal is stopped.
+	 * function returns TRUE, the traversal is stopped.
 	 * traverseType = the order in which nodes are visited, one of G_IN_ORDER,
-	 *  G_PRE_ORDER and G_POST_ORDER.
+	 * G_PRE_ORDER and G_POST_ORDER.
 	 * userData = user data to pass to the function.
 	 */
 	public void traverse(GTraverseFunc traverseFunc, GTraverseType traverseType, void* userData)

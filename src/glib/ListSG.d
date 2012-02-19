@@ -150,7 +150,7 @@ public class ListSG
 	 */
 	public static ListSG alloc()
 	{
-		// GSList* g_slist_alloc (void);
+		// GSList * g_slist_alloc (void);
 		auto p = g_slist_alloc();
 		if(p is null)
 		{
@@ -176,7 +176,7 @@ public class ListSG
 	 */
 	public ListSG append(void* data)
 	{
-		// GSList* g_slist_append (GSList *list,  gpointer data);
+		// GSList * g_slist_append (GSList *list,  gpointer data);
 		auto p = g_slist_append(gSList, data);
 		if(p is null)
 		{
@@ -197,7 +197,7 @@ public class ListSG
 	 */
 	public ListSG prepend(void* data)
 	{
-		// GSList* g_slist_prepend (GSList *list,  gpointer data);
+		// GSList * g_slist_prepend (GSList *list,  gpointer data);
 		auto p = g_slist_prepend(gSList, data);
 		if(p is null)
 		{
@@ -211,14 +211,14 @@ public class ListSG
 	 * Params:
 	 * data = the data for the new element
 	 * position = the position to insert the element.
-	 *  If this is negative, or is larger than the number
-	 *  of elements in the list, the new element is added on
-	 *  to the end of the list.
+	 * If this is negative, or is larger than the number
+	 * of elements in the list, the new element is added on
+	 * to the end of the list.
 	 * Returns: the new start of the GSList
 	 */
 	public ListSG insert(void* data, int position)
 	{
-		// GSList* g_slist_insert (GSList *list,  gpointer data,  gint position);
+		// GSList * g_slist_insert (GSList *list,  gpointer data,  gint position);
 		auto p = g_slist_insert(gSList, data, position);
 		if(p is null)
 		{
@@ -236,7 +236,7 @@ public class ListSG
 	 */
 	public ListSG insertBefore(ListSG sibling, void* data)
 	{
-		// GSList* g_slist_insert_before (GSList *slist,  GSList *sibling,  gpointer data);
+		// GSList * g_slist_insert_before (GSList *slist,  GSList *sibling,  gpointer data);
 		auto p = g_slist_insert_before(gSList, (sibling is null) ? null : sibling.getListSGStruct(), data);
 		if(p is null)
 		{
@@ -251,13 +251,13 @@ public class ListSG
 	 * Params:
 	 * data = the data for the new element
 	 * func = the function to compare elements in the list.
-	 *  It should return a number > 0 if the first parameter
-	 *  comes after the second parameter in the sort order.
+	 * It should return a number > 0 if the first parameter
+	 * comes after the second parameter in the sort order.
 	 * Returns: the new start of the GSList
 	 */
 	public ListSG insertSorted(void* data, GCompareFunc func)
 	{
-		// GSList* g_slist_insert_sorted (GSList *list,  gpointer data,  GCompareFunc func);
+		// GSList * g_slist_insert_sorted (GSList *list,  gpointer data,  GCompareFunc func);
 		auto p = g_slist_insert_sorted(gSList, data, func);
 		if(p is null)
 		{
@@ -276,7 +276,7 @@ public class ListSG
 	 */
 	public ListSG remove(void* data)
 	{
-		// GSList* g_slist_remove (GSList *list,  gconstpointer data);
+		// GSList * g_slist_remove (GSList *list,  gconstpointer data);
 		auto p = g_slist_remove(gSList, data);
 		if(p is null)
 		{
@@ -296,7 +296,7 @@ public class ListSG
 	 */
 	public ListSG removeLink(ListSG link)
 	{
-		// GSList* g_slist_remove_link (GSList *list,  GSList *link_);
+		// GSList * g_slist_remove_link (GSList *list,  GSList *link_);
 		auto p = g_slist_remove_link(gSList, (link is null) ? null : link.getListSGStruct());
 		if(p is null)
 		{
@@ -315,7 +315,7 @@ public class ListSG
 	 */
 	public ListSG deleteLink(ListSG link)
 	{
-		// GSList* g_slist_delete_link (GSList *list,  GSList *link_);
+		// GSList * g_slist_delete_link (GSList *list,  GSList *link_);
 		auto p = g_slist_delete_link(gSList, (link is null) ? null : link.getListSGStruct());
 		if(p is null)
 		{
@@ -335,7 +335,7 @@ public class ListSG
 	 */
 	public ListSG removeAll(void* data)
 	{
-		// GSList* g_slist_remove_all (GSList *list,  gconstpointer data);
+		// GSList * g_slist_remove_all (GSList *list,  gconstpointer data);
 		auto p = g_slist_remove_all(gSList, data);
 		if(p is null)
 		{
@@ -347,11 +347,28 @@ public class ListSG
 	/**
 	 * Frees all of the memory used by a GSList.
 	 * The freed elements are returned to the slice allocator.
+	 * Note
+	 * If list elements contain dynamically-allocated memory,
+	 * you should either use g_slist_free_full() or free them manually
+	 * first.
 	 */
 	public void free()
 	{
 		// void g_slist_free (GSList *list);
 		g_slist_free(gSList);
+	}
+	
+	/**
+	 * Convenience method, which frees all the memory used by a GSList, and
+	 * calls the specified destroy function on every element's data.
+	 * Since 2.28
+	 * Params:
+	 * freeFunc = the function to be called to free each element's data
+	 */
+	public void freeFull(GDestroyNotify freeFunc)
+	{
+		// void g_slist_free_full (GSList *list,  GDestroyNotify free_func);
+		g_slist_free_full(gSList, freeFunc);
 	}
 	
 	/**
@@ -387,7 +404,7 @@ public class ListSG
 	 */
 	public ListSG copy()
 	{
-		// GSList* g_slist_copy (GSList *list);
+		// GSList * g_slist_copy (GSList *list);
 		auto p = g_slist_copy(gSList);
 		if(p is null)
 		{
@@ -402,7 +419,7 @@ public class ListSG
 	 */
 	public ListSG reverse()
 	{
-		// GSList* g_slist_reverse (GSList *list);
+		// GSList * g_slist_reverse (GSList *list);
 		auto p = g_slist_reverse(gSList);
 		if(p is null)
 		{
@@ -418,14 +435,14 @@ public class ListSG
 	 * Params:
 	 * data = the data for the new element
 	 * func = the function to compare elements in the list.
-	 *  It should return a number > 0 if the first parameter
-	 *  comes after the second parameter in the sort order.
+	 * It should return a number > 0 if the first parameter
+	 * comes after the second parameter in the sort order.
 	 * userData = data to pass to comparison function
 	 * Returns: the new start of the GSList
 	 */
 	public ListSG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
-		// GSList* g_slist_insert_sorted_with_data (GSList *list,  gpointer data,  GCompareDataFunc func,  gpointer user_data);
+		// GSList * g_slist_insert_sorted_with_data (GSList *list,  gpointer data,  GCompareDataFunc func,  gpointer user_data);
 		auto p = g_slist_insert_sorted_with_data(gSList, data, func, userData);
 		if(p is null)
 		{
@@ -438,15 +455,15 @@ public class ListSG
 	 * Sorts a GSList using the given comparison function.
 	 * Params:
 	 * compareFunc = the comparison function used to sort the GSList.
-	 *  This function is passed the data from 2 elements of the GSList
-	 *  and should return 0 if they are equal, a negative value if the
-	 *  first element comes before the second, or a positive value if
-	 *  the first element comes after the second.
+	 * This function is passed the data from 2 elements of the GSList
+	 * and should return 0 if they are equal, a negative value if the
+	 * first element comes before the second, or a positive value if
+	 * the first element comes after the second.
 	 * Returns: the start of the sorted GSList
 	 */
 	public ListSG sort(GCompareFunc compareFunc)
 	{
-		// GSList* g_slist_sort (GSList *list,  GCompareFunc compare_func);
+		// GSList * g_slist_sort (GSList *list,  GCompareFunc compare_func);
 		auto p = g_slist_sort(gSList, compareFunc);
 		if(p is null)
 		{
@@ -464,7 +481,7 @@ public class ListSG
 	 */
 	public ListSG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
-		// GSList* g_slist_sort_with_data (GSList *list,  GCompareDataFunc compare_func,  gpointer user_data);
+		// GSList * g_slist_sort_with_data (GSList *list,  GCompareDataFunc compare_func,  gpointer user_data);
 		auto p = g_slist_sort_with_data(gSList, compareFunc, userData);
 		if(p is null)
 		{
@@ -483,7 +500,7 @@ public class ListSG
 	 */
 	public ListSG concat(ListSG list2)
 	{
-		// GSList* g_slist_concat (GSList *list1,  GSList *list2);
+		// GSList * g_slist_concat (GSList *list1,  GSList *list2);
 		auto p = g_slist_concat(gSList, (list2 is null) ? null : list2.getListSGStruct());
 		if(p is null)
 		{
@@ -512,7 +529,7 @@ public class ListSG
 	 */
 	public ListSG last()
 	{
-		// GSList* g_slist_last (GSList *list);
+		// GSList * g_slist_last (GSList *list);
 		auto p = g_slist_last(gSList);
 		if(p is null)
 		{
@@ -529,7 +546,7 @@ public class ListSG
 	 */
 	public ListSG nth(uint n)
 	{
-		// GSList* g_slist_nth (GSList *list,  guint n);
+		// GSList * g_slist_nth (GSList *list,  guint n);
 		auto p = g_slist_nth(gSList, n);
 		if(p is null)
 		{
@@ -559,7 +576,7 @@ public class ListSG
 	 */
 	public ListSG find(void* data)
 	{
-		// GSList* g_slist_find (GSList *list,  gconstpointer data);
+		// GSList * g_slist_find (GSList *list,  gconstpointer data);
 		auto p = g_slist_find(gSList, data);
 		if(p is null)
 		{
@@ -578,12 +595,12 @@ public class ListSG
 	 * Params:
 	 * data = user data passed to the function
 	 * func = the function to call for each element.
-	 *  It should return 0 when the desired element is found
+	 * It should return 0 when the desired element is found
 	 * Returns: the found GSList element, or NULL if it is not found
 	 */
 	public ListSG findCustom(void* data, GCompareFunc func)
 	{
-		// GSList* g_slist_find_custom (GSList *list,  gconstpointer data,  GCompareFunc func);
+		// GSList * g_slist_find_custom (GSList *list,  gconstpointer data,  GCompareFunc func);
 		auto p = g_slist_find_custom(gSList, data, func);
 		if(p is null)
 		{

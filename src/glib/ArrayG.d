@@ -118,15 +118,15 @@ public class ArrayG
 	 * Creates a new GArray with a reference count of 1.
 	 * Params:
 	 * zeroTerminated = TRUE if the array should have an extra element at
-	 *  the end which is set to 0.
+	 * the end which is set to 0.
 	 * clear = TRUE if GArray elements should be automatically cleared
-	 *  to 0 when they are allocated.
+	 * to 0 when they are allocated.
 	 * elementSize = the size of each element in bytes.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int zeroTerminated, int clear, uint elementSize)
 	{
-		// GArray* g_array_new (gboolean zero_terminated,  gboolean clear_,  guint element_size);
+		// GArray * g_array_new (gboolean zero_terminated,  gboolean clear_,  guint element_size);
 		auto p = g_array_new(zeroTerminated, clear, elementSize);
 		if(p is null)
 		{
@@ -142,16 +142,16 @@ public class ArrayG
 	 * size of the array is still 0.
 	 * Params:
 	 * zeroTerminated = TRUE if the array should have an extra element at
-	 *  the end with all bits cleared.
+	 * the end with all bits cleared.
 	 * clear = TRUE if all bits in the array should be cleared to 0 on
-	 *  allocation.
+	 * allocation.
 	 * elementSize = size of each element in the array.
 	 * reservedSize = number of elements preallocated.
 	 * Returns: the new GArray.
 	 */
 	public static ArrayG sizedNew(int zeroTerminated, int clear, uint elementSize, uint reservedSize)
 	{
-		// GArray* g_array_sized_new (gboolean zero_terminated,  gboolean clear_,  guint element_size,  guint reserved_size);
+		// GArray * g_array_sized_new (gboolean zero_terminated,  gboolean clear_,  guint element_size,  guint reserved_size);
 		auto p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
 		if(p is null)
 		{
@@ -210,7 +210,7 @@ public class ArrayG
 	 */
 	public ArrayG appendVals(void* data, uint len)
 	{
-		// GArray* g_array_append_vals (GArray *array,  gconstpointer data,  guint len);
+		// GArray * g_array_append_vals (GArray *array,  gconstpointer data,  guint len);
 		auto p = g_array_append_vals(gArray, data, len);
 		if(p is null)
 		{
@@ -226,13 +226,13 @@ public class ArrayG
 	 * the new elements.
 	 * Params:
 	 * data = a pointer to the elements to prepend to the start of the
-	 *  array.
+	 * array.
 	 * len = the number of elements to prepend.
 	 * Returns: the GArray.
 	 */
 	public ArrayG prependVals(void* data, uint len)
 	{
-		// GArray* g_array_prepend_vals (GArray *array,  gconstpointer data,  guint len);
+		// GArray * g_array_prepend_vals (GArray *array,  gconstpointer data,  guint len);
 		auto p = g_array_prepend_vals(gArray, data, len);
 		if(p is null)
 		{
@@ -251,7 +251,7 @@ public class ArrayG
 	 */
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
-		// GArray* g_array_insert_vals (GArray *array,  guint index_,  gconstpointer data,  guint len);
+		// GArray * g_array_insert_vals (GArray *array,  guint index_,  gconstpointer data,  guint len);
 		auto p = g_array_insert_vals(gArray, index, data, len);
 		if(p is null)
 		{
@@ -269,7 +269,7 @@ public class ArrayG
 	 */
 	public ArrayG removeIndex(uint index)
 	{
-		// GArray* g_array_remove_index (GArray *array,  guint index_);
+		// GArray * g_array_remove_index (GArray *array,  guint index_);
 		auto p = g_array_remove_index(gArray, index);
 		if(p is null)
 		{
@@ -289,7 +289,7 @@ public class ArrayG
 	 */
 	public ArrayG removeIndexFast(uint index)
 	{
-		// GArray* g_array_remove_index_fast (GArray *array,  guint index_);
+		// GArray * g_array_remove_index_fast (GArray *array,  guint index_);
 		auto p = g_array_remove_index_fast(gArray, index);
 		if(p is null)
 		{
@@ -309,7 +309,7 @@ public class ArrayG
 	 */
 	public ArrayG removeRange(uint index, uint length)
 	{
-		// GArray* g_array_remove_range (GArray *array,  guint index_,  guint length);
+		// GArray * g_array_remove_range (GArray *array,  guint index_,  guint length);
 		auto p = g_array_remove_range(gArray, index, length);
 		if(p is null)
 		{
@@ -356,7 +356,7 @@ public class ArrayG
 	 */
 	public ArrayG setSize(uint length)
 	{
-		// GArray* g_array_set_size (GArray *array,  guint length);
+		// GArray * g_array_set_size (GArray *array,  guint length);
 		auto p = g_array_set_size(gArray, length);
 		if(p is null)
 		{
@@ -382,7 +382,7 @@ public class ArrayG
 	 */
 	public string free(int freeSegment)
 	{
-		// gchar* g_array_free (GArray *array,  gboolean free_segment);
+		// gchar * g_array_free (GArray *array,  gboolean free_segment);
 		return Str.toString(g_array_free(gArray, freeSegment));
 	}
 }

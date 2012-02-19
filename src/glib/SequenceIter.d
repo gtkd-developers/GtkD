@@ -207,7 +207,7 @@ public class SequenceIter
 	 * Since 2.14
 	 * Params:
 	 * delta = A positive or negative number indicating how many positions away
-	 *  from iter the returned GSequenceIter will be.
+	 * from iter the returned GSequenceIter will be.
 	 * Returns: a GSequenceIter which is delta positions away from iter.
 	 */
 	public SequenceIter move(int delta)

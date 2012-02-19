@@ -162,7 +162,7 @@ public class Private
 	 * called yet.
 	 * Params:
 	 * destructor = a function to destroy the data keyed to GPrivate when
-	 *  a thread ends.
+	 * a thread ends.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDestroyNotify destructor)

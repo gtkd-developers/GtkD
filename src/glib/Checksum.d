@@ -232,7 +232,7 @@ public class Checksum
 	 * Params:
 	 * buffer = output buffer
 	 * digestLen = an inout parameter. The caller initializes it to the size of buffer.
-	 *  After the call it contains the length of the digest.
+	 * After the call it contains the length of the digest.
 	 */
 	public void getDigest(ubyte* buffer, gsize* digestLen)
 	{

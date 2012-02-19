@@ -160,7 +160,7 @@ public class Quark
 	 */
 	public static string toString(GQuark quark)
 	{
-		// const gchar* g_quark_to_string (GQuark quark);
+		// const gchar * g_quark_to_string (GQuark quark);
 		return Str.toString(g_quark_to_string(quark));
 	}
 	
@@ -189,7 +189,7 @@ public class Quark
 	 */
 	public static string gInternString(string string)
 	{
-		// const gchar* g_intern_string (const gchar *string);
+		// const gchar * g_intern_string (const gchar *string);
 		return Str.toString(g_intern_string(Str.toStringz(string)));
 	}
 	
@@ -205,7 +205,7 @@ public class Quark
 	 */
 	public static string gInternStaticString(string string)
 	{
-		// const gchar* g_intern_static_string (const gchar *string);
+		// const gchar * g_intern_static_string (const gchar *string);
 		return Str.toString(g_intern_static_string(Str.toStringz(string)));
 	}
 }

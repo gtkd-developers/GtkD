@@ -176,7 +176,7 @@ public class Source
 	 * executed.
 	 * Params:
 	 * sourceFuncs = structure containing functions that implement
-	 *  the sources behavior.
+	 * the sources behavior.
 	 * structSize = size of the GSource structure to create.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -276,9 +276,10 @@ public class Source
 	}
 	
 	/**
-	 * Sets the priority of a source. While the main loop is being
-	 * run, a source will be dispatched if it is ready to be dispatched and no sources
-	 * at a higher (numerically smaller) priority are ready to be dispatched.
+	 * Sets the priority of a source. While the main loop is being run, a
+	 * source will be dispatched if it is ready to be dispatched and no
+	 * sources at a higher (numerically smaller) priority are ready to be
+	 * dispatched.
 	 * Params:
 	 * priority = the new priority.
 	 */
@@ -345,7 +346,7 @@ public class Source
 	 */
 	public string getName()
 	{
-		// const char* g_source_get_name (GSource *source);
+		// const char * g_source_get_name (GSource *source);
 		return Str.toString(g_source_get_name(gSource));
 	}
 	
@@ -429,7 +430,7 @@ public class Source
 	 * Params:
 	 * callbackData = pointer to callback data "object"
 	 * callbackFuncs = functions for reference counting callback_data
-	 *  and getting the callback and data
+	 * and getting the callback and data
 	 */
 	public void setCallbackIndirect(void* callbackData, GSourceCallbackFuncs* callbackFuncs)
 	{
@@ -445,7 +446,7 @@ public class Source
 	 * to be processed.
 	 * Params:
 	 * fd = a GPollFD structure holding information about a file
-	 *  descriptor to watch.
+	 * descriptor to watch.
 	 */
 	public void addPoll(GPollFD* fd)
 	{
@@ -466,6 +467,60 @@ public class Source
 	}
 	
 	/**
+	 * Adds child_source to source as a "polled" source; when source is
+	 * added to a GMainContext, child_source will be automatically added
+	 * with the same priority, when child_source is triggered, it will
+	 * cause source to dispatch (in addition to calling its own
+	 * callback), and when source is destroyed, it will destroy
+	 * child_source as well. (source will also still be dispatched if
+	 * its own prepare/check functions indicate that it is ready.)
+	 * If you don't need child_source to do anything on its own when it
+	 * triggers, you can call g_source_set_dummy_callback() on it to set a
+	 * callback that does nothing (except return TRUE if appropriate).
+	 * source will hold a reference on child_source while child_source
+	 * is attached to it.
+	 * Since 2.28
+	 * Params:
+	 * childSource = a second GSource that source should "poll"
+	 */
+	public void addChildSource(Source childSource)
+	{
+		// void g_source_add_child_source (GSource *source,  GSource *child_source);
+		g_source_add_child_source(gSource, (childSource is null) ? null : childSource.getSourceStruct());
+	}
+	
+	/**
+	 * Detaches child_source from source and destroys it.
+	 * Since 2.28
+	 * Params:
+	 * childSource = a GSource previously passed to
+	 * g_source_add_child_source().
+	 */
+	public void removeChildSource(Source childSource)
+	{
+		// void g_source_remove_child_source (GSource *source,  GSource *child_source);
+		g_source_remove_child_source(gSource, (childSource is null) ? null : childSource.getSourceStruct());
+	}
+	
+	/**
+	 * Gets the time to be used when checking this source. The advantage of
+	 * calling this function over calling g_get_monotonic_time() directly is
+	 * that when checking multiple sources, GLib can cache a single value
+	 * instead of having to repeatedly get the system monotonic time.
+	 * The time here is the system monotonic time, if available, or some
+	 * other reasonable alternative otherwise. See g_get_monotonic_time().
+	 * Since 2.28
+	 * Returns: the monotonic time in microseconds
+	 */
+	public long getTime()
+	{
+		// gint64 g_source_get_time (GSource *source);
+		return g_source_get_time(gSource);
+	}
+	
+	/**
+	 * Warning
+	 * g_source_get_current_time has been deprecated since version 2.28 and should not be used in newly-written code. use g_source_get_time() instead
 	 * Gets the "current time" to be used when checking
 	 * this source. The advantage of calling this function over
 	 * calling g_get_current_time() directly is that when

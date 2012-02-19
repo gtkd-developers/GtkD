@@ -345,7 +345,7 @@ public class Regex
 	 * string = the string to scan for matches
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store
-	 *  the GMatchInfo, or NULL if you do not need it. [out][allow-none]
+	 * the GMatchInfo, or NULL if you do not need it. [out][allow-none]
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 */
 	public int match(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -385,7 +385,7 @@ public class Regex
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store
-	 *  the GMatchInfo, or NULL if you do not need it. [out][allow-none]
+	 * the GMatchInfo, or NULL if you do not need it. [out][allow-none]
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
@@ -424,7 +424,7 @@ public class Regex
 	 * string = the string to scan for matches
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store
-	 *  the GMatchInfo, or NULL if you do not need it. [out][allow-none]
+	 * the GMatchInfo, or NULL if you do not need it. [out][allow-none]
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 */
 	public int matchAll(string string, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
@@ -476,7 +476,7 @@ public class Regex
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store
-	 *  the GMatchInfo, or NULL if you do not need it. [out][allow-none]
+	 * the GMatchInfo, or NULL if you do not need it. [out][allow-none]
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
@@ -589,7 +589,7 @@ public class Regex
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match time option flags
 	 * maxTokens = the maximum number of tokens to split string into.
-	 *  If this is less than 1, the string is split completely
+	 * If this is less than 1, the string is split completely
 	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
 	 * Throws: GException on failure.
 	 */
@@ -720,7 +720,7 @@ public class Regex
 	 * Params:
 	 * replacement = the replacement string
 	 * hasReferences = location to store information about
-	 *  references in replacement or NULL. [out][allow-none]
+	 * references in replacement or NULL. [out][allow-none]
 	 * Returns: whether replacement is a valid replacement string
 	 * Throws: GException on failure.
 	 */

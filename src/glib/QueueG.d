@@ -122,7 +122,7 @@ public class QueueG
 	 */
 	public this ()
 	{
-		// GQueue* g_queue_new (void);
+		// GQueue * g_queue_new (void);
 		auto p = g_queue_new();
 		if(p is null)
 		{
@@ -276,9 +276,9 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * compareFunc = the GCompareDataFunc used to sort queue. This function
-	 *  is passed two elements of the queue and should return 0 if they are
-	 *  equal, a negative value if the first comes before the second, and
-	 *  a positive value if the second comes before the first.
+	 * is passed two elements of the queue and should return 0 if they are
+	 * equal, a negative value if the first comes before the second, and
+	 * a positive value if the second comes before the first.
 	 * userData = user data passed to compare_func
 	 */
 	public void sort(GCompareDataFunc compareFunc, void* userData)
@@ -315,8 +315,8 @@ public class QueueG
 	 * Params:
 	 * data = the data for the new element
 	 * n = the position to insert the new element. If n is negative or
-	 *  larger than the number of elements in the queue, the element is
-	 *  added to the end of the queue.
+	 * larger than the number of elements in the queue, the element is
+	 * added to the end of the queue.
 	 */
 	public void pushNth(void* data, int n)
 	{
@@ -416,7 +416,7 @@ public class QueueG
 	}
 	
 	/**
-	 * Remove all elemeents in queue which contains data.
+	 * Remove all elements whose data equals data from queue.
 	 * Since 2.4
 	 * Params:
 	 * data = data to remove
@@ -461,10 +461,10 @@ public class QueueG
 	 * Params:
 	 * data = the data to insert
 	 * func = the GCompareDataFunc used to compare elements in the queue. It is
-	 *  called with two elements of the queue and user_data. It should
-	 *  return 0 if the elements are equal, a negative value if the first
-	 *  element comes before the second, and a positive value if the second
-	 *  element comes before the first.
+	 * called with two elements of the queue and user_data. It should
+	 * return 0 if the elements are equal, a negative value if the first
+	 * element comes before the second, and a positive value if the second
+	 * element comes before the first.
 	 * userData = user data passed to func.
 	 */
 	public void insertSorted(void* data, GCompareDataFunc func, void* userData)
@@ -477,7 +477,7 @@ public class QueueG
 	 * Adds a new element at the head of the queue.
 	 * Params:
 	 * link = a single GList element, not a list with
-	 *  more than one element.
+	 * more than one element.
 	 */
 	public void pushHeadLink(ListG link)
 	{
@@ -489,7 +489,7 @@ public class QueueG
 	 * Adds a new element at the tail of the queue.
 	 * Params:
 	 * link = a single GList element, not a list with
-	 *  more than one element.
+	 * more than one element.
 	 */
 	public void pushTailLink(ListG link)
 	{
@@ -502,8 +502,8 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * n = the position to insert the link. If this is negative or larger than
-	 *  the number of elements in queue, the link is added to the end of
-	 *  queue.
+	 * the number of elements in queue, the link is added to the end of
+	 * queue.
 	 * link = the link to add to queue
 	 */
 	public void pushNthLink(int n, ListG link)
@@ -518,7 +518,7 @@ public class QueueG
 	 */
 	public ListG popHeadLink()
 	{
-		// GList* g_queue_pop_head_link (GQueue *queue);
+		// GList * g_queue_pop_head_link (GQueue *queue);
 		auto p = g_queue_pop_head_link(gQueue);
 		if(p is null)
 		{
@@ -533,7 +533,7 @@ public class QueueG
 	 */
 	public ListG popTailLink()
 	{
-		// GList* g_queue_pop_tail_link (GQueue *queue);
+		// GList * g_queue_pop_tail_link (GQueue *queue);
 		auto p = g_queue_pop_tail_link(gQueue);
 		if(p is null)
 		{
@@ -551,7 +551,7 @@ public class QueueG
 	 */
 	public ListG popNthLink(uint n)
 	{
-		// GList* g_queue_pop_nth_link (GQueue *queue,  guint n);
+		// GList * g_queue_pop_nth_link (GQueue *queue,  guint n);
 		auto p = g_queue_pop_nth_link(gQueue, n);
 		if(p is null)
 		{
@@ -567,7 +567,7 @@ public class QueueG
 	 */
 	public ListG peekHeadLink()
 	{
-		// GList* g_queue_peek_head_link (GQueue *queue);
+		// GList * g_queue_peek_head_link (GQueue *queue);
 		auto p = g_queue_peek_head_link(gQueue);
 		if(p is null)
 		{
@@ -583,7 +583,7 @@ public class QueueG
 	 */
 	public ListG peekTailLink()
 	{
-		// GList* g_queue_peek_tail_link (GQueue *queue);
+		// GList * g_queue_peek_tail_link (GQueue *queue);
 		auto p = g_queue_peek_tail_link(gQueue);
 		if(p is null)
 		{
@@ -601,7 +601,7 @@ public class QueueG
 	 */
 	public ListG peekNthLink(uint n)
 	{
-		// GList* g_queue_peek_nth_link (GQueue *queue,  guint n);
+		// GList * g_queue_peek_nth_link (GQueue *queue,  guint n);
 		auto p = g_queue_peek_nth_link(gQueue, n);
 		if(p is null)
 		{

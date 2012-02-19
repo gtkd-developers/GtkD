@@ -124,53 +124,6 @@ public class Directory
 	 */
 	
 	/**
-	 * Opens a directory for reading. The names of the files in the
-	 * directory can then be retrieved using g_dir_read_name(). Note
-	 * that the ordering is not defined.
-	 * Params:
-	 * path = the path to the directory you are interested in. On Unix
-	 *  in the on-disk encoding. On Windows in UTF-8
-	 * flags = Currently must be set to 0. Reserved for future use.
-	 * Returns: a newly allocated GDir on success, NULL on failure. If non-NULL, you must free the result with g_dir_close() when you are finished with it.
-	 * Throws: GException on failure.
-	 */
-	public static Directory open(string path, uint flags)
-	{
-		// GDir * g_dir_open (const gchar *path,  guint flags,  GError **error);
-		GError* err = null;
-		
-		auto p = g_dir_open(Str.toStringz(path), flags, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		if(p is null)
-		{
-			return null;
-		}
-		return new Directory(cast(GDir*) p);
-	}
-	
-	/**
-	 * Retrieves the name of another entry in the directory, or NULL.
-	 * The order of entries returned from this function is not defined,
-	 * and may vary by file system or other operating-system dependent
-	 * factors.
-	 * On Unix, the '.' and '..' entries are omitted, and the returned
-	 * name is in the on-disk encoding.
-	 * On Windows, as is true of all GLib functions which operate on
-	 * filenames, the returned name is in UTF-8.
-	 * Returns: The entry's name or NULL if there are no more entries. The return value is owned by GLib and must not be modified or freed.
-	 */
-	public string readName()
-	{
-		// const gchar * g_dir_read_name (GDir *dir);
-		return Str.toString(g_dir_read_name(gDir));
-	}
-	
-	/**
 	 * Resets the given directory. The next call to g_dir_read_name()
 	 * will return the first entry again.
 	 */

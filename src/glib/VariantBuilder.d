@@ -90,8 +90,8 @@ private import glib.VariantType;
  * files. It can perform nearly all deserialisation operations in a
  * small constant time, usually touching only a single memory page.
  * Serialised GVariant data can also be sent over the network.
- * GVariant is largely compatible with DBus. Almost all types of
- * GVariant instances can be sent over DBus. See GVariantType for
+ * GVariant is largely compatible with D-Bus. Almost all types of
+ * GVariant instances can be sent over D-Bus. See GVariantType for
  * exceptions.
  * For convenience to C programmers, GVariant features powerful
  * varargs-based value construction and destruction. This feature is
@@ -365,7 +365,7 @@ public class VariantBuilder
 	 * through. This function need not be called if you call
 	 * g_variant_builder_end() and it also doesn't need to be called on
 	 * builders allocated with g_variant_builder_new (see
-	 * g_variant_builder_free() for that).
+	 * g_variant_builder_unref() for that).
 	 * This function leaves the GVariantBuilder structure set to all-zeros.
 	 * It is valid to call this function on either an initialised
 	 * GVariantBuilder or one that is set to all-zeros but it is not valid
@@ -385,6 +385,8 @@ public class VariantBuilder
 	 * putting different types of items into an array, putting the wrong
 	 * types or number of items in a tuple, putting more than one value into
 	 * a variant, etc.
+	 * If value is a floating reference (see g_variant_ref_sink()),
+	 * the builder instance takes ownership of value.
 	 * Since 2.24
 	 * Params:
 	 * value = a GVariant

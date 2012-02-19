@@ -348,7 +348,7 @@ public class Str
 	 */
 	public static string strdup(string str)
 	{
-		// gchar* g_strdup (const gchar *str);
+		// gchar *	 g_strdup (const gchar *str);
 		return Str.toString(g_strdup(Str.toStringz(str)));
 	}
 	
@@ -368,7 +368,7 @@ public class Str
 	 */
 	public static string strndup(string str, gsize n)
 	{
-		// gchar* g_strndup (const gchar *str,  gsize n);
+		// gchar *	 g_strndup (const gchar *str,  gsize n);
 		return Str.toString(g_strndup(Str.toStringz(str), n));
 	}
 	
@@ -383,7 +383,7 @@ public class Str
 	 */
 	public static string[] strdupv(string[] strArray)
 	{
-		// gchar** g_strdupv (gchar **str_array);
+		// gchar ** g_strdupv (gchar **str_array);
 		return Str.toStringArray(g_strdupv(Str.toStringzArray(strArray)));
 	}
 	
@@ -397,7 +397,7 @@ public class Str
 	 */
 	public static string strnfill(gsize length, char fillChar)
 	{
-		// gchar* g_strnfill (gsize length,  gchar fill_char);
+		// gchar *	 g_strnfill (gsize length,  gchar fill_char);
 		return Str.toString(g_strnfill(length, fillChar));
 	}
 	
@@ -413,7 +413,7 @@ public class Str
 	 */
 	public static string stpcpy(string dest, string src)
 	{
-		// gchar* g_stpcpy (gchar *dest,  const char *src);
+		// gchar * g_stpcpy (gchar *dest,  const char *src);
 		return Str.toString(g_stpcpy(Str.toStringz(dest), Str.toStringz(src)));
 	}
 	
@@ -553,7 +553,7 @@ public class Str
 	 * dest = destination buffer, already containing one nul-terminated string
 	 * src = source buffer
 	 * destSize = length of dest buffer in bytes (not length of existing string
-	 *  inside dest)
+	 * inside dest)
 	 * Returns: size of attempted result, which is MIN (dest_size, strlen (original dest)) + strlen (src), so if retval >= dest_size, truncation occurred.
 	 */
 	public static gsize strlcat(string dest, string src, gsize destSize)
@@ -571,13 +571,13 @@ public class Str
 	 * additionally returns the length of the allocated string.
 	 * Params:
 	 * format = a standard printf() format string, but notice
-	 *  string precision pitfalls
+	 * string precision pitfalls
 	 * args = the list of parameters to insert into the format string
 	 * Returns: a newly-allocated string holding the result
 	 */
 	public static string strdupVprintf(string format, void* args)
 	{
-		// gchar* g_strdup_vprintf (const gchar *format,  va_list args);
+		// gchar *	 g_strdup_vprintf (const gchar *format,  va_list args);
 		return Str.toString(g_strdup_vprintf(Str.toStringz(format), args));
 	}
 	
@@ -587,7 +587,7 @@ public class Str
 	 * Since 2.2
 	 * Params:
 	 * format = a standard printf() format string, but notice
-	 *  string precision pitfalls.
+	 * string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
 	 * Returns: the number of bytes printed.
 	 */
@@ -604,7 +604,7 @@ public class Str
 	 * Params:
 	 * file = the stream to write to.
 	 * format = a standard printf() format string, but notice
-	 *  string precision pitfalls.
+	 * string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
 	 * Returns: the number of bytes printed.
 	 */
@@ -621,7 +621,7 @@ public class Str
 	 * Params:
 	 * string = the buffer to hold the output.
 	 * format = a standard printf() format string, but notice
-	 *  string precision pitfalls.
+	 * string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
 	 * Returns: the number of bytes printed.
 	 */
@@ -648,9 +648,9 @@ public class Str
 	 * Params:
 	 * string = the buffer to hold the output.
 	 * n = the maximum number of bytes to produce (including the
-	 *  terminating nul character).
+	 * terminating nul character).
 	 * format = a standard printf() format string, but notice
-	 *  string precision pitfalls.
+	 * string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
 	 * Returns: the number of bytes which would be produced if the buffer was large enough.
 	 */
@@ -670,7 +670,7 @@ public class Str
 	 * Params:
 	 * string = the return location for the newly-allocated string.
 	 * format = a standard printf() format string, but notice
-	 *  string precision pitfalls.
+	 * string precision pitfalls.
 	 * args = the list of arguments to insert in the output.
 	 * Returns: the number of bytes printed.
 	 */
@@ -976,7 +976,7 @@ public class Str
 	 */
 	public static string asciiStrup(string str, gssize len)
 	{
-		// gchar* g_ascii_strup (const gchar *str,  gssize len);
+		// gchar * g_ascii_strup (const gchar *str,  gssize len);
 		return Str.toString(g_ascii_strup(Str.toStringz(str), len));
 	}
 	
@@ -989,7 +989,7 @@ public class Str
 	 */
 	public static string asciiStrdown(string str, gssize len)
 	{
-		// gchar* g_ascii_strdown (const gchar *str,  gssize len);
+		// gchar * g_ascii_strdown (const gchar *str,  gssize len);
 		return Str.toString(g_ascii_strdown(Str.toStringz(str), len));
 	}
 	
@@ -1039,7 +1039,7 @@ public class Str
 	 */
 	public static StringG stringAsciiUp(StringG string)
 	{
-		// GString* g_string_ascii_up (GString *string);
+		// GString * g_string_ascii_up (GString *string);
 		auto p = g_string_ascii_up((string is null) ? null : string.getStringGStruct());
 		if(p is null)
 		{
@@ -1056,7 +1056,7 @@ public class Str
 	 */
 	public static StringG stringAsciiDown(StringG string)
 	{
-		// GString* g_string_ascii_down (GString *string);
+		// GString * g_string_ascii_down (GString *string);
 		auto p = g_string_ascii_down((string is null) ? null : string.getStringGStruct());
 		if(p is null)
 		{
@@ -1076,7 +1076,7 @@ public class Str
 	 */
 	public static string strup(string string)
 	{
-		// gchar* g_strup (gchar *string);
+		// gchar *	 g_strup (gchar *string);
 		return Str.toString(g_strup(Str.toStringz(string)));
 	}
 	
@@ -1092,7 +1092,7 @@ public class Str
 	 */
 	public static string strdown(string string)
 	{
-		// gchar* g_strdown (gchar *string);
+		// gchar *	 g_strdown (gchar *string);
 		return Str.toString(g_strdown(Str.toStringz(string)));
 	}
 	
@@ -1156,7 +1156,7 @@ public class Str
 	 */
 	public static string strreverse(string string)
 	{
-		// gchar* g_strreverse (gchar *string);
+		// gchar *	 g_strreverse (gchar *string);
 		return Str.toString(g_strreverse(Str.toStringz(string)));
 	}
 	
@@ -1179,7 +1179,7 @@ public class Str
 	 * Params:
 	 * nptr = the string to convert to a numeric value.
 	 * endptr = if non-NULL, it returns the character after
-	 *  the last character used in the conversion.
+	 * the last character used in the conversion.
 	 * base = to be used for the conversion, 2..36 or 0
 	 * Returns: the gint64 value or zero on error.
 	 */
@@ -1213,7 +1213,7 @@ public class Str
 	 * Params:
 	 * nptr = the string to convert to a numeric value.
 	 * endptr = if non-NULL, it returns the character after
-	 *  the last character used in the conversion.
+	 * the last character used in the conversion.
 	 * base = to be used for the conversion, 2..36 or 0
 	 * Returns: the guint64 value or zero on error.
 	 */
@@ -1250,7 +1250,7 @@ public class Str
 	 * Params:
 	 * nptr = the string to convert to a numeric value.
 	 * endptr = if non-NULL, it returns the character after
-	 *  the last character used in the conversion.
+	 * the last character used in the conversion.
 	 * Returns: the gdouble value.
 	 */
 	public static double asciiStrtod(string nptr, out string endptr)
@@ -1295,7 +1295,7 @@ public class Str
 	 * buffer = A buffer to place the resulting string in
 	 * bufLen = The length of the buffer.
 	 * format = The printf()-style format to use for the
-	 *  code to use for converting.
+	 * code to use for converting.
 	 * d = The gdouble to convert
 	 * Returns: The pointer to the buffer with the converted string.
 	 */
@@ -1319,7 +1319,7 @@ public class Str
 	 * Params:
 	 * nptr = the string to convert to a numeric value.
 	 * endptr = if non-NULL, it returns the character after
-	 *  the last character used in the conversion.
+	 * the last character used in the conversion.
 	 * Returns: the gdouble value.
 	 */
 	public static double strtod(string nptr, out string endptr)
@@ -1345,7 +1345,7 @@ public class Str
 	 */
 	public static string strchug(string string)
 	{
-		// gchar* g_strchug (gchar *string);
+		// gchar * g_strchug (gchar *string);
 		return Str.toString(g_strchug(Str.toStringz(string)));
 	}
 	
@@ -1360,7 +1360,7 @@ public class Str
 	 */
 	public static string strchomp(string string)
 	{
-		// gchar* g_strchomp (gchar *string);
+		// gchar * g_strchomp (gchar *string);
 		return Str.toString(g_strchomp(Str.toStringz(string)));
 	}
 	
@@ -1379,7 +1379,7 @@ public class Str
 	 */
 	public static string strdelimit(string string, string delimiters, char newDelimiter)
 	{
-		// gchar* g_strdelimit (gchar *string,  const gchar *delimiters,  gchar new_delimiter);
+		// gchar *	 g_strdelimit (gchar *string,  const gchar *delimiters,  gchar new_delimiter);
 		return Str.toString(g_strdelimit(Str.toStringz(string), Str.toStringz(delimiters), newDelimiter));
 	}
 	
@@ -1398,7 +1398,7 @@ public class Str
 	 */
 	public static string strescape(string source, string exceptions)
 	{
-		// gchar* g_strescape (const gchar *source,  const gchar *exceptions);
+		// gchar * g_strescape (const gchar *source,  const gchar *exceptions);
 		return Str.toString(g_strescape(Str.toStringz(source), Str.toStringz(exceptions)));
 	}
 	
@@ -1411,7 +1411,7 @@ public class Str
 	 */
 	public static string strcompress(string source)
 	{
-		// gchar* g_strcompress (const gchar *source);
+		// gchar * g_strcompress (const gchar *source);
 		return Str.toString(g_strcompress(Str.toStringz(source)));
 	}
 	
@@ -1428,7 +1428,7 @@ public class Str
 	 */
 	public static string strcanon(string string, string validChars, char substitutor)
 	{
-		// gchar* g_strcanon (gchar *string,  const gchar *valid_chars,  gchar substitutor);
+		// gchar *	 g_strcanon (gchar *string,  const gchar *valid_chars,  gchar substitutor);
 		return Str.toString(g_strcanon(Str.toStringz(string), Str.toStringz(validChars), substitutor));
 	}
 	
@@ -1445,15 +1445,15 @@ public class Str
 	 * Params:
 	 * string = a string to split.
 	 * delimiter = a string which specifies the places at which to split the string.
-	 *  The delimiter is not included in any of the resulting strings, unless
-	 *  max_tokens is reached.
+	 * The delimiter is not included in any of the resulting strings, unless
+	 * max_tokens is reached.
 	 * maxTokens = the maximum number of pieces to split string into. If this is
-	 *  less than 1, the string is split completely.
+	 * less than 1, the string is split completely.
 	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public static string[] strsplit(string string, string delimiter, int maxTokens)
 	{
-		// gchar** g_strsplit (const gchar *string,  const gchar *delimiter,  gint max_tokens);
+		// gchar **	 g_strsplit (const gchar *string,  const gchar *delimiter,  gint max_tokens);
 		return Str.toStringArray(g_strsplit(Str.toStringz(string), Str.toStringz(delimiter), maxTokens));
 	}
 	
@@ -1479,14 +1479,14 @@ public class Str
 	 * Params:
 	 * string = The string to be tokenized
 	 * delimiters = A nul-terminated string containing bytes that are used
-	 *  to split the string.
+	 * to split the string.
 	 * maxTokens = The maximum number of tokens to split string into.
-	 *  If this is less than 1, the string is split completely
+	 * If this is less than 1, the string is split completely
 	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public static string[] strsplitSet(string string, string delimiters, int maxTokens)
 	{
-		// gchar ** g_strsplit_set (const gchar *string,  const gchar *delimiters,  gint max_tokens);
+		// gchar **	 g_strsplit_set (const gchar *string,  const gchar *delimiters,  gint max_tokens);
 		return Str.toStringArray(g_strsplit_set(Str.toStringz(string), Str.toStringz(delimiters), maxTokens));
 	}
 	
@@ -1513,7 +1513,7 @@ public class Str
 	 */
 	public static string strjoinv(string separator, string[] strArray)
 	{
-		// gchar* g_strjoinv (const gchar *separator,  gchar **str_array);
+		// gchar * g_strjoinv (const gchar *separator,  gchar **str_array);
 		return Str.toString(g_strjoinv(Str.toStringz(separator), Str.toStringzArray(strArray)));
 	}
 	
@@ -1538,12 +1538,12 @@ public class Str
 	 * not all platforms support the strerror() function.
 	 * Params:
 	 * errnum = the system error number. See the standard C errno
-	 *  documentation
+	 * documentation
 	 * Returns: a UTF-8 string describing the error code. If the error code is unknown, it returns "unknown error (<code>)". The string can only be used until the next call to g_strerror()
 	 */
 	public static string strerror(int errnum)
 	{
-		// const gchar* g_strerror (gint errnum);
+		// const gchar * g_strerror (gint errnum);
 		return Str.toString(g_strerror(errnum));
 	}
 	
@@ -1554,12 +1554,12 @@ public class Str
 	 * the strsignal() function.
 	 * Params:
 	 * signum = the signal number. See the signal
-	 *  documentation
+	 * documentation
 	 * Returns: a UTF-8 string describing the signal. If the signal is unknown, it returns "unknown signal (<signum>)". The string can only be used until the next call to g_strsignal()
 	 */
 	public static string strsignal(int signum)
 	{
-		// const gchar* g_strsignal (gint signum);
+		// const gchar * g_strsignal (gint signum);
 		return Str.toString(g_strsignal(signum));
 	}
 }

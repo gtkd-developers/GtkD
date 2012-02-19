@@ -149,16 +149,16 @@ public class ThreadPool
 	 * Params:
 	 * func = a function to execute in the threads of the new thread pool
 	 * userData = user data that is handed over to func every time it
-	 *  is called
+	 * is called
 	 * maxThreads = the maximal number of threads to execute concurrently in
-	 *  the new thread pool, -1 means no limit
+	 * the new thread pool, -1 means no limit
 	 * exclusive = should this thread pool be exclusive?
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GFunc func, void* userData, int maxThreads, int exclusive)
 	{
-		// GThreadPool* g_thread_pool_new (GFunc func,  gpointer user_data,  gint max_threads,  gboolean exclusive,  GError **error);
+		// GThreadPool * g_thread_pool_new (GFunc func,  gpointer user_data,  gint max_threads,  gboolean exclusive,  GError **error);
 		GError* err = null;
 		
 		auto p = g_thread_pool_new(func, userData, maxThreads, exclusive, &err);
@@ -343,11 +343,11 @@ public class ThreadPool
 	 * Since 2.10
 	 * Params:
 	 * func = the GCompareDataFunc used to sort the list of tasks.
-	 *  This function is passed two tasks. It should return
-	 *  0 if the order in which they are handled does not matter,
-	 *  a negative value if the first task should be processed before
-	 *  the second or a positive value if the second task should be
-	 *  processed first.
+	 * This function is passed two tasks. It should return
+	 * 0 if the order in which they are handled does not matter,
+	 * a negative value if the first task should be processed before
+	 * the second or a positive value if the second task should be
+	 * processed first.
 	 * userData = user data passed to func.
 	 */
 	public void setSortFunction(GCompareDataFunc func, void* userData)
@@ -368,7 +368,7 @@ public class ThreadPool
 	 * Since 2.10
 	 * Params:
 	 * interval = the maximum interval (1/1000ths of a second) a thread
-	 *  can be idle.
+	 * can be idle.
 	 */
 	public static void setMaxIdleTime(uint interval)
 	{

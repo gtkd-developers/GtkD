@@ -214,9 +214,9 @@ public class OptionContext
 	 * Since 2.6
 	 * Params:
 	 * parameterString = a string which is displayed in
-	 *  the first line of --help output, after the
-	 *  usage summary
-	 *  programname [OPTION...]
+	 * the first line of --help output, after the
+	 * usage summary
+	 * programname [OPTION...]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string parameterString)
@@ -240,7 +240,7 @@ public class OptionContext
 	 * Since 2.12
 	 * Params:
 	 * summary = a string to be shown in --help output
-	 *  before the list of options, or NULL
+	 * before the list of options, or NULL
 	 */
 	public void setSummary(string summary)
 	{
@@ -268,7 +268,7 @@ public class OptionContext
 	 * Since 2.12
 	 * Params:
 	 * description = a string to be shown in --help output
-	 *  after the list of options, or NULL
+	 * after the list of options, or NULL
 	 */
 	public void setDescription(string description)
 	{
@@ -374,7 +374,7 @@ public class OptionContext
 	 * Since 2.6
 	 * Params:
 	 * ignoreUnknown = TRUE to ignore unknown options, FALSE to produce
-	 *  an error when unknown options are met
+	 * an error when unknown options are met
 	 */
 	public void setIgnoreUnknownOptions(int ignoreUnknown)
 	{
@@ -421,8 +421,8 @@ public class OptionContext
 	 * Params:
 	 * entries = a NULL-terminated array of GOptionEntrys
 	 * translationDomain = a translation domain to use for translating
-	 *  the --help output for the options in entries
-	 *  with gettext(), or NULL
+	 * the --help output for the options in entries
+	 * with gettext(), or NULL
 	 */
 	public void addMainEntries(GOptionEntry* entries, string translationDomain)
 	{

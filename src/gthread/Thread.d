@@ -187,7 +187,7 @@ public class Thread
 	 * having to link with the thread libraries.
 	 * Params:
 	 * vtable = a function table of type GThreadFunctions, that provides
-	 *  the entry points to the thread system to be used.
+	 * the entry points to the thread system to be used.
 	 */
 	public static void init(GThreadFunctions* vtable)
 	{
@@ -296,7 +296,7 @@ public class Thread
 	 */
 	public static Thread createFull(GThreadFunc func, void* data, gulong stackSize, int joinable, int bound, GThreadPriority priority)
 	{
-		// GThread* g_thread_create_full (GThreadFunc func,  gpointer data,  gulong stack_size,  gboolean joinable,  gboolean bound,  GThreadPriority priority,  GError **error);
+		// GThread * g_thread_create_full (GThreadFunc func,  gpointer data,  gulong stack_size,  gboolean joinable,  gboolean bound,  GThreadPriority priority,  GError **error);
 		GError* err = null;
 		
 		auto p = g_thread_create_full(func, data, stackSize, joinable, bound, priority, &err);
@@ -320,7 +320,7 @@ public class Thread
 	 */
 	public static Thread self()
 	{
-		// GThread* g_thread_self (void);
+		// GThread * g_thread_self (void);
 		auto p = g_thread_self();
 		if(p is null)
 		{
@@ -427,7 +427,7 @@ public class Thread
 	 * Since 2.14
 	 * Params:
 	 * valueLocation = location of a static initializable variable
-	 *  containing 0.
+	 * containing 0.
 	 * Returns: TRUE if the initialization section should be entered, FALSE and blocks otherwise
 	 */
 	public static int onceInitEnter(out gsize valueLocation)
@@ -445,7 +445,7 @@ public class Thread
 	 * Since 2.14
 	 * Params:
 	 * valueLocation = location of a static initializable variable
-	 *  containing 0.
+	 * containing 0.
 	 * initializationValue = new non-0 value for *value_location.
 	 */
 	public static void onceInitLeave(out gsize valueLocation, gsize initializationValue)

@@ -138,7 +138,7 @@ public class Base64
 	 */
 	public static string encode(char* data, gsize len)
 	{
-		// gchar* g_base64_encode (const guchar *data,  gsize len);
+		// gchar * g_base64_encode (const guchar *data,  gsize len);
 		return Str.toString(g_base64_encode(data, len));
 	}
 	

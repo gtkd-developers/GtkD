@@ -209,7 +209,7 @@ public class StaticRecMutex
 	 * Works like calling g_static_rec_mutex_lock() for mutex depth times.
 	 * Params:
 	 * depth = number of times this mutex has to be unlocked to be
-	 *  completely unlocked.
+	 * completely unlocked.
 	 */
 	public void lockFull(uint depth)
 	{

@@ -556,7 +556,7 @@ public class Unicode
 	 * Params:
 	 * p = a pointer to Unicode character encoded as UTF-8
 	 * maxLen = the maximum number of bytes to read, or -1, for no maximum or
-	 *  if p is nul-terminated
+	 * if p is nul-terminated
 	 * Returns: the resulting character. If p points to a partial sequence at the end of a string that could begin a valid character (or if max_len is zero), returns (gunichar)-2; otherwise, if p does not point to a valid UTF-8 encoded Unicode character, returns (gunichar)-1.
 	 */
 	public static gunichar utf8_GetCharValidated(string p, gssize maxLen)
@@ -585,7 +585,7 @@ public class Unicode
 	 */
 	public static string utf8_OffsetToPointer(string str, glong offset)
 	{
-		// gchar* g_utf8_offset_to_pointer (const gchar *str,  glong offset);
+		// gchar * g_utf8_offset_to_pointer (const gchar *str,  glong offset);
 		return Str.toString(g_utf8_offset_to_pointer(Str.toStringz(str), offset));
 	}
 	
@@ -617,7 +617,7 @@ public class Unicode
 	 */
 	public static string utf8_PrevChar(string p)
 	{
-		// gchar* g_utf8_prev_char (const gchar *p);
+		// gchar * g_utf8_prev_char (const gchar *p);
 		return Str.toString(g_utf8_prev_char(Str.toStringz(p)));
 	}
 	
@@ -634,7 +634,7 @@ public class Unicode
 	 */
 	public static string utf8_FindNextChar(string p, string end)
 	{
-		// gchar* g_utf8_find_next_char (const gchar *p,  const gchar *end);
+		// gchar * g_utf8_find_next_char (const gchar *p,  const gchar *end);
 		return Str.toString(g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end)));
 	}
 	
@@ -652,7 +652,7 @@ public class Unicode
 	 */
 	public static string utf8_FindPrevChar(string str, string p)
 	{
-		// gchar* g_utf8_find_prev_char (const gchar *str,  const gchar *p);
+		// gchar * g_utf8_find_prev_char (const gchar *str,  const gchar *p);
 		return Str.toString(g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p)));
 	}
 	
@@ -662,9 +662,9 @@ public class Unicode
 	 * Params:
 	 * p = pointer to the start of a UTF-8 encoded string
 	 * max = the maximum number of bytes to examine. If max
-	 *  is less than 0, then the string is assumed to be
-	 *  nul-terminated. If max is 0, p will not be examined and
-	 *  may be NULL.
+	 * is less than 0, then the string is assumed to be
+	 * nul-terminated. If max is 0, p will not be examined and
+	 * may be NULL.
 	 * Returns: the length of the string in characters
 	 */
 	public static glong utf8_Strlen(string p, gssize max)
@@ -687,7 +687,7 @@ public class Unicode
 	 */
 	public static string utf8_Strncpy(string dest, string src, gsize n)
 	{
-		// gchar* g_utf8_strncpy (gchar *dest,  const gchar *src,  gsize n);
+		// gchar * g_utf8_strncpy (gchar *dest,  const gchar *src,  gsize n);
 		return Str.toString(g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n));
 	}
 	
@@ -703,7 +703,7 @@ public class Unicode
 	 */
 	public static string utf8_Strchr(string p, gssize len, gunichar c)
 	{
-		// gchar* g_utf8_strchr (const gchar *p,  gssize len,  gunichar c);
+		// gchar * g_utf8_strchr (const gchar *p,  gssize len,  gunichar c);
 		return Str.toString(g_utf8_strchr(Str.toStringz(p), len, c));
 	}
 	
@@ -719,7 +719,7 @@ public class Unicode
 	 */
 	public static string utf8_Strrchr(string p, gssize len, gunichar c)
 	{
-		// gchar* g_utf8_strrchr (const gchar *p,  gssize len,  gunichar c);
+		// gchar * g_utf8_strrchr (const gchar *p,  gssize len,  gunichar c);
 		return Str.toString(g_utf8_strrchr(Str.toStringz(p), len, c));
 	}
 	
@@ -739,12 +739,12 @@ public class Unicode
 	 * Params:
 	 * str = a UTF-8 encoded string
 	 * len = the maximum length of str to use, in bytes. If len < 0,
-	 *  then the string is nul-terminated.
+	 * then the string is nul-terminated.
 	 * Returns: a newly-allocated string which is the reverse of str.
 	 */
 	public static string utf8_Strreverse(string str, gssize len)
 	{
-		// gchar* g_utf8_strreverse (const gchar *str,  gssize len);
+		// gchar * g_utf8_strreverse (const gchar *str,  gssize len);
 		return Str.toString(g_utf8_strreverse(Str.toStringz(str), len));
 	}
 	
@@ -937,15 +937,15 @@ public class Unicode
 	 * Params:
 	 * str = a UTF-8 encoded string
 	 * len = the maximum length (number of bytes) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
+	 * If len < 0, then the string is nul-terminated.
 	 * itemsRead = location to store number of bytes read, or NULL.
-	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *  returned in case str contains a trailing partial
-	 *  character. If an error occurs then the index of the
-	 *  invalid input is stored here.
+	 * If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
+	 * returned in case str contains a trailing partial
+	 * character. If an error occurs then the index of the
+	 * invalid input is stored here.
 	 * itemsWritten = location to store number of gunichar2 written,
-	 *  or NULL.
-	 *  The value stored here does not include the trailing 0.
+	 * or NULL.
+	 * The value stored here does not include the trailing 0.
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -971,15 +971,15 @@ public class Unicode
 	 * Params:
 	 * str = a UTF-8 encoded string
 	 * len = the maximum length of str to use, in bytes. If len < 0,
-	 *  then the string is nul-terminated.
+	 * then the string is nul-terminated.
 	 * itemsRead = location to store number of bytes read, or NULL.
-	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *  returned in case str contains a trailing partial
-	 *  character. If an error occurs then the index of the
-	 *  invalid input is stored here.
+	 * If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
+	 * returned in case str contains a trailing partial
+	 * character. If an error occurs then the index of the
+	 * invalid input is stored here.
 	 * itemsWritten = location to store number of characters written or NULL.
-	 *  The value here stored does not include the trailing 0
-	 *  character.
+	 * The value here stored does not include the trailing 0
+	 * character.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -1006,9 +1006,9 @@ public class Unicode
 	 * Params:
 	 * str = a UTF-8 encoded string
 	 * len = the maximum length of str to use, in bytes. If len < 0,
-	 *  then the string is nul-terminated.
+	 * then the string is nul-terminated.
 	 * itemsWritten = location to store the number of characters in the
-	 *  result, or NULL.
+	 * result, or NULL.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free().
 	 */
 	public static gunichar* utf8_ToUcs4_Fast(string str, glong len, out glong itemsWritten)
@@ -1023,15 +1023,15 @@ public class Unicode
 	 * Params:
 	 * str = a UTF-16 encoded string
 	 * len = the maximum length (number of gunichar2) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
+	 * If len < 0, then the string is nul-terminated.
 	 * itemsRead = location to store number of words read, or NULL.
-	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *  returned in case str contains a trailing partial
-	 *  character. If an error occurs then the index of the
-	 *  invalid input is stored here.
+	 * If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
+	 * returned in case str contains a trailing partial
+	 * character. If an error occurs then the index of the
+	 * invalid input is stored here.
 	 * itemsWritten = location to store number of characters written, or NULL.
-	 *  The value stored here does not include the trailing
-	 *  0 character.
+	 * The value stored here does not include the trailing
+	 * 0 character.
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -1065,21 +1065,21 @@ public class Unicode
 	 * Params:
 	 * str = a UTF-16 encoded string
 	 * len = the maximum length (number of gunichar2) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
+	 * If len < 0, then the string is nul-terminated.
 	 * itemsRead = location to store number of words read, or NULL.
-	 *  If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *  returned in case str contains a trailing partial
-	 *  character. If an error occurs then the index of the
-	 *  invalid input is stored here.
+	 * If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
+	 * returned in case str contains a trailing partial
+	 * character. If an error occurs then the index of the
+	 * invalid input is stored here.
 	 * itemsWritten = location to store number of bytes written, or NULL.
-	 *  The value stored here does not include the trailing
-	 *  0 byte.
+	 * The value stored here does not include the trailing
+	 * 0 byte.
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
 	public static string utf16_ToUtf8(gunichar2* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
-		// gchar* g_utf16_to_utf8 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
+		// gchar * g_utf16_to_utf8 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
 		
 		auto p = g_utf16_to_utf8(str, len, &itemsRead, &itemsWritten, &err);
@@ -1098,13 +1098,13 @@ public class Unicode
 	 * Params:
 	 * str = a UCS-4 encoded string
 	 * len = the maximum length (number of characters) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
+	 * If len < 0, then the string is nul-terminated.
 	 * itemsRead = location to store number of bytes read, or NULL.
-	 *  If an error occurs then the index of the invalid input
-	 *  is stored here.
+	 * If an error occurs then the index of the invalid input
+	 * is stored here.
 	 * itemsWritten = location to store number of gunichar2
-	 *  written, or NULL. The value stored here does not
-	 *  include the trailing 0.
+	 * written, or NULL. The value stored here does not
+	 * include the trailing 0.
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -1129,17 +1129,17 @@ public class Unicode
 	 * Params:
 	 * str = a UCS-4 encoded string
 	 * len = the maximum length (number of characters) of str to use.
-	 *  If len < 0, then the string is nul-terminated.
+	 * If len < 0, then the string is nul-terminated.
 	 * itemsRead = location to store number of characters read, or NULL.
 	 * itemsWritten = location to store number of bytes written or NULL.
-	 *  The value here stored does not include the trailing 0
-	 *  byte.
+	 * The value here stored does not include the trailing 0
+	 * byte.
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set. In that case, items_read will be set to the position of the first invalid input character.
 	 * Throws: GException on failure.
 	 */
 	public static string ucs4_ToUtf8(gunichar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
-		// gchar* g_ucs4_to_utf8 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
+		// gchar * g_ucs4_to_utf8 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
 		GError* err = null;
 		
 		auto p = g_ucs4_to_utf8(str, len, &itemsRead, &itemsWritten, &err);
@@ -1157,8 +1157,8 @@ public class Unicode
 	 * Params:
 	 * c = a Unicode character code
 	 * outbuf = output buffer, must have at least 6 bytes of space.
-	 *  If NULL, the length will be computed and returned
-	 *  and nothing will be written to outbuf.
+	 * If NULL, the length will be computed and returned
+	 * and nothing will be written to outbuf.
 	 * Returns: number of bytes written
 	 */
 	public static int unicharToUtf8(gunichar c, string outbuf)
