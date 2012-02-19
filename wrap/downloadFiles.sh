@@ -15,8 +15,8 @@ cd ..
 curl http://developer.gnome.org/gobject/gobject-html-2.28.7.tar.gz | tar xvfz -
 ln -s gobject-html-2.28.7 gobject
 #GIO
-curl http://developer.gnome.org/gio/gio-html-2.26.1.tar.gz | tar xvfz -
-ln -s gio-html-2.26.1 gio
+curl http://developer.gnome.org/gio/gio-html-2.28.7.tar.gz | tar xvfz -
+ln -s gio-html-2.28.7 gio
 #ATK
 curl http://developer.gnome.org/atk/atk-html-1.32.0.tar.gz | tar xvfz -
 ln -s atk-html-1.32.0 atk
