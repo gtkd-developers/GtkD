@@ -186,6 +186,8 @@ import: gobject.ObjectG
 import: gobject.TypePlugin
 structWrap: GTypePlugin* TypePlugin
 
+nocode: GType
+
 out: g_type_query query
 array: g_type_children Return n_children
 array: g_type_interfaces Return n_interfaces
@@ -243,6 +245,9 @@ class: ObjectG
 nostruct: GObject
 nostruct: GObjectClass
 prefix: g_object_
+prefix: g_
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
 #import: gobject.ObjectClass
 #structWrap: GObjectClass* ObjectClass
 import: gobject.ParamSpec
@@ -262,6 +267,7 @@ array: g_object_class_list_properties Return n_properties
 array: g_object_interface_list_properties Return n_properties_p
 array: g_object_newv parameters n_parameters
 array: g_object_class_install_properties pspecs n_pspecs
+inout: g_clear_object object_ptr
 
 code: start
 	protected bool isGcRoot;

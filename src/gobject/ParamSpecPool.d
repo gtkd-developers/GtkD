@@ -125,7 +125,7 @@ public class ParamSpecPool
 	 */
 	public this (int typePrefixing)
 	{
-		// GParamSpecPool* g_param_spec_pool_new (gboolean type_prefixing);
+		// GParamSpecPool * g_param_spec_pool_new (gboolean type_prefixing);
 		auto p = g_param_spec_pool_new(typePrefixing);
 		if(p is null)
 		{
@@ -163,12 +163,12 @@ public class ParamSpecPool
 	 * paramName = the name to look for
 	 * ownerType = the owner to look for
 	 * walkAncestors = If TRUE, also try to find a GParamSpec with param_name
-	 *  owned by an ancestor of owner_type.
-	 * Returns: The found GParamSpec, or NULL if no matching GParamSpec was found.
+	 * owned by an ancestor of owner_type.
+	 * Returns: The found GParamSpec, or NULL if no matching GParamSpec was found. [transfer none]
 	 */
 	public ParamSpec lookup(string paramName, GType ownerType, int walkAncestors)
 	{
-		// GParamSpec* g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
+		// GParamSpec *	 g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
 		auto p = g_param_spec_pool_lookup(gParamSpecPool, Str.toStringz(paramName), ownerType, walkAncestors);
 		if(p is null)
 		{
@@ -182,11 +182,11 @@ public class ParamSpecPool
 	 * the pool.
 	 * Params:
 	 * ownerType = the owner to look for
-	 * Returns: a newly allocated array containing pointers to all GParamSpecs owned by owner_type in the pool
+	 * Returns: a newly allocated array containing pointers to all GParamSpecs owned by owner_type in the pool. [array length=n_pspecs_p][transfer container]
 	 */
 	public ParamSpec[] list(GType ownerType)
 	{
-		// GParamSpec** g_param_spec_pool_list (GParamSpecPool *pool,  GType owner_type,  guint *n_pspecs_p);
+		// GParamSpec **	 g_param_spec_pool_list (GParamSpecPool *pool,  GType owner_type,  guint *n_pspecs_p);
 		uint nPspecsP;
 		auto p = g_param_spec_pool_list(gParamSpecPool, ownerType, &nPspecsP);
 		if(p is null)
@@ -208,11 +208,11 @@ public class ParamSpecPool
 	 * the pool.
 	 * Params:
 	 * ownerType = the owner to look for
-	 * Returns: a GList of all GParamSpecs owned by owner_type in the poolGParamSpecs.
+	 * Returns: a GList of all GParamSpecs owned by owner_type in the poolGParamSpecs. [transfer container][element-type GObject.ParamSpec]
 	 */
 	public ListG listOwned(GType ownerType)
 	{
-		// GList* g_param_spec_pool_list_owned (GParamSpecPool *pool,  GType owner_type);
+		// GList *		 g_param_spec_pool_list_owned (GParamSpecPool *pool,  GType owner_type);
 		auto p = g_param_spec_pool_list_owned(gParamSpecPool, ownerType);
 		if(p is null)
 		{

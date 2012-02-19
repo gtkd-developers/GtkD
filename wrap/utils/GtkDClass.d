@@ -1424,6 +1424,9 @@ public class GtkDClass
 		int pos = 0;
 		char[][] tokens = std.string.split(until(pos, lines[1], ';'));
 
+		if ( convParms.omitCode(tokens[2]) )
+			return;
+
 		char[] alis = "public alias " ~ tokens[1] ~ ' ' ~ tokens[2] ~ ';';
 
 		collectedAliases ~= "";

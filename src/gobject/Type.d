@@ -43,6 +43,7 @@
  * 	- GTypeInterface
  * omit prefixes:
  * omit code:
+ * 	- GType
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -140,7 +141,7 @@ public class Type
 	 * Similar to g_type_init(), but additionally sets debug flags.
 	 * Params:
 	 * debugFlags = Bitwise combination of GTypeDebugFlags values for
-	 *  debugging purposes.
+	 * debugging purposes.
 	 */
 	public static void initWithDebugFlags(GTypeDebugFlags debugFlags)
 	{
@@ -160,7 +161,7 @@ public class Type
 	 */
 	public static string name(GType type)
 	{
-		// const gchar* g_type_name (GType type);
+		// const gchar * g_type_name (GType type);
 		return Str.toString(g_type_name(type));
 	}
 	
@@ -257,7 +258,7 @@ public class Type
 	 * exist already.
 	 * Params:
 	 * type = Type ID of a classed type.
-	 * Returns: The GTypeClass structure for the given type ID.
+	 * Returns: The GTypeClass structure for the given type ID. [type GObject.TypeClass][transfer none]
 	 */
 	public static void* classRef(GType type)
 	{
@@ -272,7 +273,7 @@ public class Type
 	 * exist (hasn't been referenced before).
 	 * Params:
 	 * type = Type ID of a classed type.
-	 * Returns: The GTypeClass structure for the given type ID or NULL if the class does not currently exist.
+	 * Returns: The GTypeClass structure for the given type ID or NULL if the class does not currently exist. [type GObject.TypeClass][transfer none]
 	 */
 	public static void* classPeek(GType type)
 	{
@@ -286,7 +287,7 @@ public class Type
 	 * Since 2.4
 	 * Params:
 	 * type = Type ID of a classed type.
-	 * Returns: The GTypeClass structure for the given type ID or NULL if the class does not currently exist or is dynamically loaded.
+	 * Returns: The GTypeClass structure for the given type ID or NULL if the class does not currently exist or is dynamically loaded. [type GObject.TypeClass][transfer none]
 	 */
 	public static void* classPeekStatic(GType type)
 	{
@@ -300,7 +301,8 @@ public class Type
 	 * may be finalized by the type system, so further dereferencing of a
 	 * class pointer after g_type_class_unref() are invalid.
 	 * Params:
-	 * gClass = The GTypeClass structure to unreference.
+	 * gClass = The GTypeClass structure to
+	 * unreference. [type GObject.TypeClass]
 	 */
 	public static void classUnref(void* gClass)
 	{
@@ -315,8 +317,9 @@ public class Type
 	 * their parent classes as long as they are instantiated, the returned
 	 * class will always exist. This function is essentially equivalent
 	 * Params:
-	 * gClass = The GTypeClass structure to retrieve the parent class for.
-	 * Returns: The parent class of g_class.
+	 * gClass = The GTypeClass structure to
+	 * retrieve the parent class for. [type GObject.TypeClass]
+	 * Returns: The parent class of g_class. [type GObject.TypeClass][transfer none]
 	 */
 	public static void* classPeekParent(void* gClass)
 	{
@@ -376,9 +379,9 @@ public class Type
 	 * Returns the GTypeInterface structure of an interface to which the
 	 * passed in class conforms.
 	 * Params:
-	 * instanceClass = A GTypeClass structure.
+	 * instanceClass = A GTypeClass structure. [type GObject.TypeClass]
 	 * ifaceType = An interface ID which this class conforms to.
-	 * Returns: The GTypeInterface structure of iface_type if implemented by instance_class, NULL otherwise
+	 * Returns: The GTypeInterface structure of iface_type if implemented by instance_class, NULL otherwise. [type GObject.TypeInterface][transfer none]
 	 */
 	public static void* interfacePeek(void* instanceClass, GType ifaceType)
 	{
@@ -392,8 +395,8 @@ public class Type
 	 * deriving the implementation of an interface from the parent type and
 	 * then possibly overriding some methods.
 	 * Params:
-	 * gIface = A GTypeInterface structure.
-	 * Returns: The corresponding GTypeInterface structure of the parent type of the instance type to which g_iface belongs, or NULL if the parent type doesn't conform to the interface.
+	 * gIface = A GTypeInterface structure. [type GObject.TypeInterface]
+	 * Returns: The corresponding GTypeInterface structure of the parent type of the instance type to which g_iface belongs, or NULL if the parent type doesn't conform to the interface. [transfer none][type GObject.TypeInterface]
 	 */
 	public static void* interfacePeekParent(void* gIface)
 	{
@@ -415,7 +418,7 @@ public class Type
 	 * Since 2.4
 	 * Params:
 	 * gType = an interface type
-	 * Returns: the default vtable for the interface; call g_type_default_interface_unref() when you are done using the interface.
+	 * Returns: the default vtable for the interface; call g_type_default_interface_unref() when you are done using the interface. [type GObject.TypeInterface][transfer none]
 	 */
 	public static void* defaultInterfaceRef(GType gType)
 	{
@@ -429,7 +432,7 @@ public class Type
 	 * Since 2.4
 	 * Params:
 	 * gType = an interface type
-	 * Returns: the default vtable for the interface, or NULL if the type is not currently in use.
+	 * Returns: the default vtable for the interface, or NULL if the type is not currently in use. [type GObject.TypeInterface][transfer none]
 	 */
 	public static void* defaultInterfacePeek(GType gType)
 	{
@@ -446,8 +449,9 @@ public class Type
 	 * GTypeInfo) will be called.
 	 * Since 2.4
 	 * Params:
-	 * gIface = the default vtable structure for a interface, as
-	 *  returned by g_type_default_interface_ref()
+	 * gIface = the default vtable
+	 * structure for a interface, as returned by
+	 * g_type_default_interface_ref(). [type GObject.TypeInterface]
 	 */
 	public static void defaultInterfaceUnref(void* gIface)
 	{
@@ -460,11 +464,11 @@ public class Type
 	 * child types of type. The return value has to be g_free()ed after use.
 	 * Params:
 	 * type = The parent type.
-	 * Returns: Newly allocated and 0-terminated array of child types.
+	 * Returns: Newly allocated and 0-terminated array of child types. [array length=n_children][transfer full]
 	 */
 	public static GType[] children(GType type)
 	{
-		// GType* g_type_children (GType type,  guint *n_children);
+		// GType * g_type_children (GType type,  guint *n_children);
 		uint nChildren;
 		auto p = g_type_children(type, &nChildren);
 		return p[0 .. nChildren];
@@ -476,11 +480,11 @@ public class Type
 	 * g_free()ed after use.
 	 * Params:
 	 * type = The type to list interface types for.
-	 * Returns: Newly allocated and 0-terminated array of interface types.
+	 * Returns: Newly allocated and 0-terminated array of interface types. [array length=n_interfaces][transfer full]
 	 */
 	public static GType[] interfaces(GType type)
 	{
-		// GType* g_type_interfaces (GType type,  guint *n_interfaces);
+		// GType * g_type_interfaces (GType type,  guint *n_interfaces);
 		uint nInterfaces;
 		auto p = g_type_interfaces(type, &nInterfaces);
 		return p[0 .. nInterfaces];
@@ -491,11 +495,11 @@ public class Type
 	 * Since 2.2
 	 * Params:
 	 * interfaceType = an interface type
-	 * Returns: a newly-allocated zero-terminated array of GType containing the prerequisites of interface_type
+	 * Returns: a newly-allocated zero-terminated array of GType containing the prerequisites of interface_type. [array length=n_prerequisites][transfer full]
 	 */
 	public static GType[] interfacePrerequisites(GType interfaceType)
 	{
-		// GType* g_type_interface_prerequisites (GType interface_type,  guint *n_prerequisites);
+		// GType * g_type_interface_prerequisites (GType interface_type,  guint *n_prerequisites);
 		uint nPrerequisites;
 		auto p = g_type_interface_prerequisites(interfaceType, &nPrerequisites);
 		return p[0 .. nPrerequisites];
@@ -517,10 +521,13 @@ public class Type
 	/**
 	 * Obtains data which has previously been attached to type
 	 * with g_type_set_qdata().
+	 * Note that this does not take subtyping into account; data
+	 * attached to one type with g_type_set_qdata() cannot
+	 * be retrieved from a subtype using g_type_get_qdata().
 	 * Params:
 	 * type = a GType
 	 * quark = a GQuark id to identify the data
-	 * Returns: the data, or NULL if no data was found
+	 * Returns: the data, or NULL if no data was found. [transfer none]
 	 */
 	public static void* getQdata(GType type, GQuark quark)
 	{
@@ -537,8 +544,8 @@ public class Type
 	 * left untouched.
 	 * Params:
 	 * type = the GType value of a static, classed type.
-	 * query = A user provided structure that is filled in with constant values
-	 *  upon success.
+	 * query = A user provided structure that is
+	 * filled in with constant values upon success. [out caller-allocates]
 	 */
 	public static void query(GType type, out GTypeQuery query)
 	{
@@ -635,7 +642,7 @@ public class Type
 	 * instanceType = GType value of an instantiable type.
 	 * interfaceType = GType value of an interface type.
 	 * info = The GInterfaceInfo structure for this
-	 *  (instance_type, interface_type) combination.
+	 * (instance_type, interface_type) combination.
 	 */
 	public static void addInterfaceStatic(GType instanceType, GType interfaceType, GInterfaceInfo* info)
 	{
@@ -679,11 +686,11 @@ public class Type
 	 * NULL if type does not have a GTypePlugin structure.
 	 * Params:
 	 * type = The GType to retrieve the plugin for.
-	 * Returns: The corresponding plugin if type is a dynamic type, NULL otherwise.
+	 * Returns: The corresponding plugin if type is a dynamic type, NULL otherwise. [transfer none]
 	 */
 	public static TypePlugin getPlugin(GType type)
 	{
-		// GTypePlugin* g_type_get_plugin (GType type);
+		// GTypePlugin *	 g_type_get_plugin (GType type);
 		auto p = g_type_get_plugin(type);
 		if(p is null)
 		{
@@ -700,11 +707,11 @@ public class Type
 	 * Params:
 	 * instanceType = the GType value of an instantiatable type.
 	 * interfaceType = the GType value of an interface type.
-	 * Returns: the GTypePlugin for the dynamic interface interface_type of instance_type.
+	 * Returns: the GTypePlugin for the dynamic interface interface_type of instance_type. [transfer none]
 	 */
 	public static TypePlugin interfaceGetPlugin(GType instanceType, GType interfaceType)
 	{
-		// GTypePlugin* g_type_interface_get_plugin (GType instance_type,  GType interface_type);
+		// GTypePlugin *	 g_type_interface_get_plugin (GType instance_type,  GType interface_type);
 		auto p = g_type_interface_get_plugin(instanceType, interfaceType);
 		if(p is null)
 		{
@@ -759,7 +766,7 @@ public class Type
 	 */
 	public static GTypeInstance* createInstance(GType type)
 	{
-		// GTypeInstance* g_type_create_instance (GType type);
+		// GTypeInstance * g_type_create_instance (GType type);
 		return g_type_create_instance(type);
 	}
 	
@@ -813,7 +820,8 @@ public class Type
 	 * of GTypeClassCacheFuncs, avoiding the recursion which would occur
 	 * otherwise.
 	 * Params:
-	 * gClass = The GTypeClass structure to unreference.
+	 * gClass = The GTypeClass structure to
+	 * unreference. [type GObject.TypeClass]
 	 */
 	public static void classUnrefUncached(void* gClass)
 	{
@@ -834,7 +842,7 @@ public class Type
 	 * Params:
 	 * checkData = data to pass to check_func
 	 * checkFunc = function to be called after each interface
-	 *  is initialized.
+	 * is initialized.
 	 */
 	public static void addInterfaceCheck(void* checkData, GTypeInterfaceCheckFunc checkFunc)
 	{
@@ -867,7 +875,7 @@ public class Type
 	 */
 	public static GTypeValueTable* valueTablePeek(GType type)
 	{
-		// GTypeValueTable* g_type_value_table_peek (GType type);
+		// GTypeValueTable * g_type_value_table_peek (GType type);
 		return g_type_value_table_peek(type);
 	}
 }

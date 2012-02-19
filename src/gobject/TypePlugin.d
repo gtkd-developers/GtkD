@@ -175,7 +175,7 @@ public class TypePlugin
 	 * function outside of the GObject type system itself.
 	 * Params:
 	 * instanceType = the GType of an instantiable type to which the interface
-	 *  is added
+	 * is added
 	 * interfaceType = the GType of the interface whose info is completed
 	 * info = the GInterfaceInfo to fill in
 	 */

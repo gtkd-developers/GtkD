@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- g_object_
+ * 	- g_
  * omit structs:
  * 	- GObject
  * 	- GObjectClass
@@ -44,6 +45,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gobject.ObjectG
  * 	- gobject.ParamSpec
  * 	- gobject.Value
  * 	- gobject.Closure
@@ -53,6 +55,7 @@
  * 	- gtkc.Loader
  * structWrap:
  * 	- GClosure* -> Closure
+ * 	- GObject* -> ObjectG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
  * module aliases:
@@ -70,6 +73,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;
 private import gobject.Closure;
@@ -363,7 +367,7 @@ public class ObjectG
 	 * Params:
 	 * oclass = a GObjectClass
 	 * pspecs = the GParamSpecs array
-	 *  defining the new properties. [array length=n_pspecs]
+	 * defining the new properties. [array length=n_pspecs]
 	 */
 	public static void classInstallProperties(GObjectClass* oclass, ParamSpec[] pspecs)
 	{
@@ -383,11 +387,11 @@ public class ObjectG
 	 * Params:
 	 * oclass = a GObjectClass
 	 * propertyName = the name of the property to look up
-	 * Returns: the GParamSpec for the property, or NULL if the class doesn't have a property of that name
+	 * Returns: the GParamSpec for the property, or NULL if the class doesn't have a property of that name. [transfer none]
 	 */
 	public static ParamSpec classFindProperty(GObjectClass* oclass, string propertyName)
 	{
-		// GParamSpec* g_object_class_find_property (GObjectClass *oclass,  const gchar *property_name);
+		// GParamSpec * g_object_class_find_property (GObjectClass *oclass,  const gchar *property_name);
 		auto p = g_object_class_find_property(oclass, Str.toStringz(propertyName));
 		if(p is null)
 		{
@@ -400,11 +404,11 @@ public class ObjectG
 	 * Get an array of GParamSpec* for all properties of a class.
 	 * Params:
 	 * oclass = a GObjectClass
-	 * Returns: an array of GParamSpec* which should be freed after use
+	 * Returns: an array of GParamSpec* which should be freed after use. [array length=n_properties][transfer container]
 	 */
 	public static ParamSpec[] classListProperties(GObjectClass* oclass)
 	{
-		// GParamSpec** g_object_class_list_properties (GObjectClass *oclass,  guint *n_properties);
+		// GParamSpec ** g_object_class_list_properties (GObjectClass *oclass,  guint *n_properties);
 		uint nProperties;
 		auto p = g_object_class_list_properties(oclass, &nProperties);
 		if(p is null)
@@ -443,7 +447,7 @@ public class ObjectG
 	 * oclass = a GObjectClass
 	 * propertyId = the new property ID
 	 * name = the name of a property registered in a parent class or
-	 *  in an interface of this class.
+	 * in an interface of this class.
 	 */
 	public static void classOverrideProperty(GObjectClass* oclass, uint propertyId, string name)
 	{
@@ -467,14 +471,14 @@ public class ObjectG
 	 * been called for any object types implementing this interface.
 	 * Since 2.4
 	 * Params:
-	 * gIface = any interface vtable for the interface, or the default
-	 *  vtable for the interface.
+	 * iface = any interface vtable for the interface, or the default
+	 * vtable for the interface.
 	 * pspec = the GParamSpec for the new property
 	 */
-	public static void interfaceInstallProperty(void* gIface, ParamSpec pspec)
+	public static void interfaceInstallProperty(void* iface, ParamSpec pspec)
 	{
 		// void g_object_interface_install_property (gpointer g_iface,  GParamSpec *pspec);
-		g_object_interface_install_property(gIface, (pspec is null) ? null : pspec.getParamSpecStruct());
+		g_object_interface_install_property(iface, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
 	/**
@@ -485,15 +489,15 @@ public class ObjectG
 	 * g_type_default_interface_peek().
 	 * Since 2.4
 	 * Params:
-	 * gIface = any interface vtable for the interface, or the default
-	 *  vtable for the interface
+	 * iface = any interface vtable for the interface, or the default
+	 * vtable for the interface
 	 * propertyName = name of a property to lookup.
-	 * Returns: the GParamSpec for the property of the interface with the name property_name, or NULL if no such property exists.
+	 * Returns: the GParamSpec for the property of the interface with the name property_name, or NULL if no such property exists. [transfer none]
 	 */
-	public static ParamSpec interfaceFindProperty(void* gIface, string propertyName)
+	public static ParamSpec interfaceFindProperty(void* iface, string propertyName)
 	{
-		// GParamSpec* g_object_interface_find_property (gpointer g_iface,  const gchar *property_name);
-		auto p = g_object_interface_find_property(gIface, Str.toStringz(propertyName));
+		// GParamSpec * g_object_interface_find_property (gpointer g_iface,  const gchar *property_name);
+		auto p = g_object_interface_find_property(iface, Str.toStringz(propertyName));
 		if(p is null)
 		{
 			return null;
@@ -508,15 +512,15 @@ public class ObjectG
 	 * already been loaded, g_type_default_interface_peek().
 	 * Since 2.4
 	 * Params:
-	 * gIface = any interface vtable for the interface, or the default
-	 *  vtable for the interface
-	 * Returns: a pointer to an array of pointers to GParamSpec structures. The paramspecs are owned by GLib, but the array should be freed with g_free() when you are done with it.
+	 * iface = any interface vtable for the interface, or the default
+	 * vtable for the interface
+	 * Returns: a pointer to an array of pointers to GParamSpec structures. The paramspecs are owned by GLib, but the array should be freed with g_free() when you are done with it. [array length=n_properties_p][transfer container]
 	 */
-	public static ParamSpec[] interfaceListProperties(void* gIface)
+	public static ParamSpec[] interfaceListProperties(void* iface)
 	{
-		// GParamSpec** g_object_interface_list_properties (gpointer g_iface,  guint *n_properties_p);
+		// GParamSpec ** g_object_interface_list_properties (gpointer g_iface,  guint *n_properties_p);
 		uint nPropertiesP;
-		auto p = g_object_interface_list_properties(gIface, &nPropertiesP);
+		auto p = g_object_interface_list_properties(iface, &nPropertiesP);
 		if(p is null)
 		{
 			return null;
@@ -535,9 +539,10 @@ public class ObjectG
 	 * Creates a new instance of a GObject subtype and sets its properties.
 	 * Construction parameters (see G_PARAM_CONSTRUCT, G_PARAM_CONSTRUCT_ONLY)
 	 * which are not explicitly specified are set to their default values.
+	 * Rename to: g_object_new
 	 * Params:
 	 * objectType = the type id of the GObject subtype to instantiate
-	 * parameters = an array of GParameter
+	 * parameters = an array of GParameter. [array length=n_parameters]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType objectType, GParameter[] parameters)
@@ -554,8 +559,8 @@ public class ObjectG
 	/**
 	 * Increases the reference count of object.
 	 * Params:
-	 * object = a GObject
-	 * Returns: the same object
+	 * object = a GObject. [type GObject.Object]
+	 * Returns: the same object. [type GObject.Object][transfer none]
 	 */
 	public static void* doref(void* object)
 	{
@@ -567,7 +572,7 @@ public class ObjectG
 	 * Decreases the reference count of object. When its reference count
 	 * drops to 0, the object is finalized (i.e. its memory is freed).
 	 * Params:
-	 * object = a GObject
+	 * object = a GObject. [type GObject.Object]
 	 */
 	public static void unref(void* object)
 	{
@@ -586,8 +591,8 @@ public class ObjectG
 	 * adds a new normal reference increasing the reference count by one.
 	 * Since 2.10
 	 * Params:
-	 * object = a GObject
-	 * Returns: object
+	 * object = a GObject. [type GObject.Object]
+	 * Returns: object. [type GObject.Object][transfer none]
 	 */
 	public static void* refSink(void* object)
 	{
@@ -596,11 +601,35 @@ public class ObjectG
 	}
 	
 	/**
-	 * Checks wether object has a floating
+	 * Clears a reference to a GObject.
+	 * object_ptr must not be NULL.
+	 * If the reference is NULL then this function does nothing.
+	 * Otherwise, the reference count of the object is decreased and the
+	 * pointer is set to NULL.
+	 * This function is threadsafe and modifies the pointer atomically,
+	 * using memory barriers where needed.
+	 * A macro is also included that allows this function to be used without
+	 * pointer casts.
+	 * Since 2.28
+	 * Params:
+	 * objectPtr = a pointer to a GObject reference
+	 */
+	public static void clearObject(ref ObjectG objectPtr)
+	{
+		// void g_clear_object (volatile GObject **object_ptr);
+		GObject* outobjectPtr = (objectPtr is null) ? null : objectPtr.getObjectGStruct();
+		
+		g_clear_object(&outobjectPtr);
+		
+		objectPtr = new ObjectG(outobjectPtr);
+	}
+	
+	/**
+	 * Checks whether object has a floating
 	 * reference.
 	 * Since 2.10
 	 * Params:
-	 * object = a GObject
+	 * object = a GObject. [type GObject.Object]
 	 * Returns: TRUE if object has a floating reference
 	 */
 	public static int isFloating(void* object)
@@ -612,7 +641,7 @@ public class ObjectG
 	/**
 	 * This function is intended for GObject implementations to re-enforce a
 	 * floating object reference.
-	 * Doing this is seldomly required, all
+	 * Doing this is seldomly required: all
 	 * GInitiallyUnowneds are created with a floating reference which
 	 * usually just needs to be sunken by calling g_object_ref_sink().
 	 * Since 2.10
@@ -657,7 +686,7 @@ public class ObjectG
 	 * the lifetime of object. When the object is finalized,
 	 * weak_pointer will be set to NULL.
 	 * Params:
-	 * weakPointerLocation = The memory address of a pointer.
+	 * weakPointerLocation = The memory address of a pointer. [inout]
 	 */
 	public void addWeakPointer(void** weakPointerLocation)
 	{
@@ -670,7 +699,7 @@ public class ObjectG
 	 * using g_object_add_weak_pointer(). The weak_pointer_location has
 	 * to match the one used with g_object_add_weak_pointer().
 	 * Params:
-	 * weakPointerLocation = The memory address of a pointer.
+	 * weakPointerLocation = The memory address of a pointer. [inout]
 	 */
 	public void removeWeakPointer(void** weakPointerLocation)
 	{
@@ -706,8 +735,8 @@ public class ObjectG
 	 * Since 2.8
 	 * Params:
 	 * notify = a function to call when this reference is the
-	 *  last reference to the object, or is no longer
-	 *  the last reference.
+	 * last reference to the object, or is no longer
+	 * the last reference.
 	 * data = data to pass to notify
 	 */
 	public void addToggleRef(GToggleNotify notify, void* data)
@@ -722,8 +751,8 @@ public class ObjectG
 	 * Since 2.8
 	 * Params:
 	 * notify = a function to call when this reference is the
-	 *  last reference to the object, or is no longer
-	 *  the last reference.
+	 * last reference to the object, or is no longer
+	 * the last reference.
 	 * data = data to pass to notify
 	 */
 	public void removeToggleRef(GToggleNotify notify, void* data)
@@ -793,7 +822,7 @@ public class ObjectG
 	 * Gets a named field from the objects table of associations (see g_object_set_data()).
 	 * Params:
 	 * key = name of the key for that association
-	 * Returns: the data if found, or NULL if no such data exists.
+	 * Returns: the data if found, or NULL if no such data exists. [transfer none]
 	 */
 	public void* getData(string key)
 	{
@@ -837,7 +866,7 @@ public class ObjectG
 	 * without invoking the association's destroy handler.
 	 * Params:
 	 * key = name of the key
-	 * Returns: the data if found, or NULL if no such data exists.
+	 * Returns: the data if found, or NULL if no such data exists. [transfer full]
 	 */
 	public void* stealData(string key)
 	{
@@ -850,7 +879,7 @@ public class ObjectG
 	 * g_object_set_qdata().
 	 * Params:
 	 * quark = A GQuark, naming the user data pointer
-	 * Returns: The user data pointer set, or NULL
+	 * Returns: The user data pointer set, or NULL. [transfer none]
 	 */
 	public void* getQdata(GQuark quark)
 	{
@@ -887,7 +916,7 @@ public class ObjectG
 	 * quark = A GQuark, naming the user data pointer
 	 * data = An opaque user data pointer
 	 * destroy = Function to invoke with data as argument, when data
-	 *  needs to be freed
+	 * needs to be freed
 	 */
 	public void setQdataFull(GQuark quark, void* data, GDestroyNotify destroy)
 	{
@@ -903,7 +932,7 @@ public class ObjectG
 	 * Usually, calling this function is only required to update
 	 * Params:
 	 * quark = A GQuark, naming the user data pointer
-	 * Returns: The user data pointer set, or NULL
+	 * Returns: The user data pointer set, or NULL. [transfer full]
 	 */
 	public void* stealQdata(GQuark quark)
 	{
@@ -924,7 +953,9 @@ public class ObjectG
 	}
 	
 	/**
-	 * Gets a property of an object.
+	 * Gets a property of an object. value must have been initialized to the
+	 * expected type of the property (or a type to which the expected type can be
+	 * transformed) using g_value_init().
 	 * In general, a copy is made of the property contents and the caller is
 	 * responsible for freeing the memory by calling g_value_unset().
 	 * Note that g_object_get_property() is really intended for language
@@ -947,12 +978,12 @@ public class ObjectG
 	 * objectType = the type id of the GObject subtype to instantiate
 	 * firstPropertyName = the name of the first property
 	 * varArgs = the value of the first property, followed optionally by more
-	 *  name/value pairs, followed by NULL
+	 * name/value pairs, followed by NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GType objectType, string firstPropertyName, void* varArgs)
 	{
-		// GObject* g_object_new_valist (GType object_type,  const gchar *first_property_name,  va_list var_args);
+		// GObject * g_object_new_valist (GType object_type,  const gchar *first_property_name,  va_list var_args);
 		auto p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
 		if(p is null)
 		{
@@ -966,7 +997,7 @@ public class ObjectG
 	 * Params:
 	 * firstPropertyName = name of the first property to set
 	 * varArgs = value for the first property, followed optionally by more
-	 *  name/value pairs, followed by NULL
+	 * name/value pairs, followed by NULL
 	 */
 	public void setValist(string firstPropertyName, void* varArgs)
 	{
@@ -983,7 +1014,7 @@ public class ObjectG
 	 * Params:
 	 * firstPropertyName = name of the first property to get
 	 * varArgs = return location for the first property, followed optionally by more
-	 *  name/return location pairs, followed by NULL
+	 * name/return location pairs, followed by NULL
 	 */
 	public void getValist(string firstPropertyName, void* varArgs)
 	{

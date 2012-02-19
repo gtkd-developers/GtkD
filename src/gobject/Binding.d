@@ -269,13 +269,13 @@ public class Binding : ObjectG
 	 * targetProperty = the property on target to bind
 	 * flags = flags to pass to GBinding
 	 * transformTo = the transformation function
-	 *  from the source to the target, or NULL to use the default. [scope notified][allow-none]
+	 * from the source to the target, or NULL to use the default. [scope notified][allow-none]
 	 * transformFrom = the transformation function
-	 *  from the target to the source, or NULL to use the default. [scope notified][allow-none]
+	 * from the target to the source, or NULL to use the default. [scope notified][allow-none]
 	 * userData = custom data to be passed to the transformation functions,
-	 *  or NULL
+	 * or NULL
 	 * notify = function to be called when disposing the binding, to free the
-	 *  resources used by the transformation functions
+	 * resources used by the transformation functions
 	 * Returns: the GBinding instance representing the binding between the two GObject instances. The binding is released whenever the GBinding reference count reaches zero. [transfer none]
 	 */
 	public static Binding gObjectBindPropertyFull(ObjectG source, string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, ObjectG userData, GDestroyNotify notify)
@@ -305,9 +305,9 @@ public class Binding : ObjectG
 	 * targetProperty = the property on target to bind
 	 * flags = flags to pass to GBinding
 	 * transformTo = a GClosure wrapping the transformation function
-	 *  from the source to the target, or NULL to use the default
+	 * from the source to the target, or NULL to use the default
 	 * transformFrom = a GClosure wrapping the transformation function
-	 *  from the target to the source, or NULL to use the default
+	 * from the target to the source, or NULL to use the default
 	 * Returns: the GBinding instance representing the binding between the two GObject instances. The binding is released whenever the GBinding reference count reaches zero. [transfer none]
 	 */
 	public static Binding gObjectBindPropertyWithClosures(ObjectG source, string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, Closure transformTo, Closure transformFrom)

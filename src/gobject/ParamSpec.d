@@ -121,7 +121,7 @@ public class ParamSpec
 	 */
 	public ParamSpec doref()
 	{
-		// GParamSpec* g_param_spec_ref (GParamSpec *pspec);
+		// GParamSpec *	 g_param_spec_ref (GParamSpec *pspec);
 		auto p = g_param_spec_ref(gParamSpec);
 		if(p is null)
 		{
@@ -161,7 +161,7 @@ public class ParamSpec
 	 */
 	public ParamSpec refSink()
 	{
-		// GParamSpec* g_param_spec_ref_sink (GParamSpec *pspec);
+		// GParamSpec *	 g_param_spec_ref_sink (GParamSpec *pspec);
 		auto p = g_param_spec_ref_sink(gParamSpec);
 		if(p is null)
 		{
@@ -251,7 +251,7 @@ public class ParamSpec
 	 */
 	public string getName()
 	{
-		// const gchar* g_param_spec_get_name (GParamSpec *pspec);
+		// const gchar *	 g_param_spec_get_name (GParamSpec *pspec);
 		return Str.toString(g_param_spec_get_name(gParamSpec));
 	}
 	
@@ -261,7 +261,7 @@ public class ParamSpec
 	 */
 	public string getNick()
 	{
-		// const gchar* g_param_spec_get_nick (GParamSpec *pspec);
+		// const gchar *	 g_param_spec_get_nick (GParamSpec *pspec);
 		return Str.toString(g_param_spec_get_nick(gParamSpec));
 	}
 	
@@ -271,7 +271,7 @@ public class ParamSpec
 	 */
 	public string getBlurb()
 	{
-		// const gchar* g_param_spec_get_blurb (GParamSpec *pspec);
+		// const gchar *	 g_param_spec_get_blurb (GParamSpec *pspec);
 		return Str.toString(g_param_spec_get_blurb(gParamSpec));
 	}
 	
@@ -279,7 +279,7 @@ public class ParamSpec
 	 * Gets back user data pointers stored via g_param_spec_set_qdata().
 	 * Params:
 	 * quark = a GQuark, naming the user data pointer
-	 * Returns: the user data pointer set, or NULL
+	 * Returns: the user data pointer set, or NULL. [transfer none]
 	 */
 	public void* getQdata(GQuark quark)
 	{
@@ -314,7 +314,7 @@ public class ParamSpec
 	 * quark = a GQuark, naming the user data pointer
 	 * data = an opaque user data pointer
 	 * destroy = function to invoke with data as argument, when data needs to
-	 *  be freed
+	 * be freed
 	 */
 	public void setQdataFull(GQuark quark, void* data, GDestroyNotify destroy)
 	{
@@ -329,7 +329,7 @@ public class ParamSpec
 	 * required to update user data pointers with a destroy notifier.
 	 * Params:
 	 * quark = a GQuark, naming the user data pointer
-	 * Returns: the user data pointer set, or NULL
+	 * Returns: the user data pointer set, or NULL. [transfer none]
 	 */
 	public void* stealQdata(GQuark quark)
 	{
@@ -346,11 +346,11 @@ public class ParamSpec
 	 * of type GParamSpecOverride. See g_object_class_override_property()
 	 * for an example of the use of this capability.
 	 * Since 2.4
-	 * Returns: paramspec to which requests on this paramspec should be redirected, or NULL if none.
+	 * Returns: paramspec to which requests on this paramspec should be redirected, or NULL if none. [transfer none]
 	 */
 	public ParamSpec getRedirectTarget()
 	{
-		// GParamSpec* g_param_spec_get_redirect_target (GParamSpec *pspec);
+		// GParamSpec * g_param_spec_get_redirect_target (GParamSpec *pspec);
 		auto p = g_param_spec_get_redirect_target(gParamSpec);
 		if(p is null)
 		{

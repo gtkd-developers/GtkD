@@ -124,7 +124,7 @@ public class Enums
 	 */
 	public static Enums getValue(GEnumClass* enumClass, int value)
 	{
-		// GEnumValue* g_enum_get_value (GEnumClass *enum_class,  gint value);
+		// GEnumValue *	 g_enum_get_value (GEnumClass *enum_class,  gint value);
 		auto p = g_enum_get_value(enumClass, value);
 		if(p is null)
 		{
@@ -142,7 +142,7 @@ public class Enums
 	 */
 	public static Enums getValueByName(GEnumClass* enumClass, string name)
 	{
-		// GEnumValue* g_enum_get_value_by_name (GEnumClass *enum_class,  const gchar *name);
+		// GEnumValue *	 g_enum_get_value_by_name (GEnumClass *enum_class,  const gchar *name);
 		auto p = g_enum_get_value_by_name(enumClass, Str.toStringz(name));
 		if(p is null)
 		{
@@ -160,7 +160,7 @@ public class Enums
 	 */
 	public static Enums getValueByNick(GEnumClass* enumClass, string nick)
 	{
-		// GEnumValue* g_enum_get_value_by_nick (GEnumClass *enum_class,  const gchar *nick);
+		// GEnumValue *	 g_enum_get_value_by_nick (GEnumClass *enum_class,  const gchar *nick);
 		auto p = g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
 		if(p is null)
 		{

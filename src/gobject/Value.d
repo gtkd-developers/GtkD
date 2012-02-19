@@ -265,10 +265,7 @@ public class Value
 	}
 	
 	/**
-	 * Return the value contents as pointer. This function asserts that
-	 * g_value_fits_pointer() returned TRUE for the passed in value.
-	 * This is an internal function introduced mainly for C marshallers.
-	 * Returns: TRUE if value will fit inside a pointer value.
+	 * Returns: the value contents as pointer. This function asserts that g_value_fits_pointer() returned TRUE for the passed in value. This is an internal function introduced mainly for C marshallers. [transfer none]
 	 */
 	public void* peekPointer()
 	{
@@ -330,7 +327,7 @@ public class Value
 	 * srcType = Source type.
 	 * destType = Target type.
 	 * transformFunc = a function which transforms values of type src_type
-	 *  into value of type dest_type
+	 * into value of type dest_type
 	 */
 	public static void registerTransformFunc(GType srcType, GType destType, GValueTransform transformFunc)
 	{
@@ -347,7 +344,7 @@ public class Value
 	 */
 	public string gStrdupValueContents()
 	{
-		// gchar* g_strdup_value_contents (const GValue *value);
+		// gchar * g_strdup_value_contents (const GValue *value);
 		return Str.toString(g_strdup_value_contents(gValue));
 	}
 	
@@ -365,7 +362,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecBoolean(string name, string nick, string blurb, int defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_boolean (const gchar *name,  const gchar *nick,  const gchar *blurb,  gboolean default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_boolean (const gchar *name,  const gchar *nick,  const gchar *blurb,  gboolean default_value,  GParamFlags flags);
 		auto p = g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
 		if(p is null)
 		{
@@ -409,7 +406,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecChar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_char (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint8 minimum,  gint8 maximum,  gint8 default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_char (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint8 minimum,  gint8 maximum,  gint8 default_value,  GParamFlags flags);
 		auto p = g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -453,7 +450,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUchar(string name, string nick, string blurb, ubyte minimum, ubyte maximum, ubyte defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_uchar (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint8 minimum,  guint8 maximum,  guint8 default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_uchar (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint8 minimum,  guint8 maximum,  guint8 default_value,  GParamFlags flags);
 		auto p = g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -498,7 +495,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecInt(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_int (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint minimum,  gint maximum,  gint default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_int (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint minimum,  gint maximum,  gint default_value,  GParamFlags flags);
 		auto p = g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -543,7 +540,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUint(string name, string nick, string blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_uint (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint minimum,  guint maximum,  guint default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_uint (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint minimum,  guint maximum,  guint default_value,  GParamFlags flags);
 		auto p = g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -588,7 +585,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecLong(string name, string nick, string blurb, glong minimum, glong maximum, glong defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_long (const gchar *name,  const gchar *nick,  const gchar *blurb,  glong minimum,  glong maximum,  glong default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_long (const gchar *name,  const gchar *nick,  const gchar *blurb,  glong minimum,  glong maximum,  glong default_value,  GParamFlags flags);
 		auto p = g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -634,7 +631,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUlong(string name, string nick, string blurb, gulong minimum, gulong maximum, gulong defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_ulong (const gchar *name,  const gchar *nick,  const gchar *blurb,  gulong minimum,  gulong maximum,  gulong default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_ulong (const gchar *name,  const gchar *nick,  const gchar *blurb,  gulong minimum,  gulong maximum,  gulong default_value,  GParamFlags flags);
 		auto p = g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -679,7 +676,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecInt64(string name, string nick, string blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_int64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint64 minimum,  gint64 maximum,  gint64 default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_int64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint64 minimum,  gint64 maximum,  gint64 default_value,  GParamFlags flags);
 		auto p = g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -725,7 +722,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUint64(string name, string nick, string blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_uint64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint64 minimum,  guint64 maximum,  guint64 default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_uint64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint64 minimum,  guint64 maximum,  guint64 default_value,  GParamFlags flags);
 		auto p = g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -770,7 +767,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecFloat(string name, string nick, string blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_float (const gchar *name,  const gchar *nick,  const gchar *blurb,  gfloat minimum,  gfloat maximum,  gfloat default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_float (const gchar *name,  const gchar *nick,  const gchar *blurb,  gfloat minimum,  gfloat maximum,  gfloat default_value,  GParamFlags flags);
 		auto p = g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -816,7 +813,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecDouble(string name, string nick, string blurb, double minimum, double maximum, double defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_double (const gchar *name,  const gchar *nick,  const gchar *blurb,  gdouble minimum,  gdouble maximum,  gdouble default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_double (const gchar *name,  const gchar *nick,  const gchar *blurb,  gdouble minimum,  gdouble maximum,  gdouble default_value,  GParamFlags flags);
 		auto p = g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -861,7 +858,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecEnum(string name, string nick, string blurb, GType enumType, int defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_enum (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType enum_type,  gint default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_enum (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType enum_type,  gint default_value,  GParamFlags flags);
 		auto p = g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags);
 		if(p is null)
 		{
@@ -906,7 +903,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecFlags(string name, string nick, string blurb, GType flagsType, uint defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_flags (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType flags_type,  guint default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_flags (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType flags_type,  guint default_value,  GParamFlags flags);
 		auto p = g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags);
 		if(p is null)
 		{
@@ -949,7 +946,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecString(string name, string nick, string blurb, string defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_string (const gchar *name,  const gchar *nick,  const gchar *blurb,  const gchar *default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_string (const gchar *name,  const gchar *nick,  const gchar *blurb,  const gchar *default_value,  GParamFlags flags);
 		auto p = g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags);
 		if(p is null)
 		{
@@ -1013,7 +1010,7 @@ public class Value
 	 */
 	public string getString()
 	{
-		// const gchar* g_value_get_string (const GValue *value);
+		// const gchar * g_value_get_string (const GValue *value);
 		return Str.toString(g_value_get_string(gValue));
 	}
 	
@@ -1023,7 +1020,7 @@ public class Value
 	 */
 	public string dupString()
 	{
-		// gchar* g_value_dup_string (const GValue *value);
+		// gchar *		 g_value_dup_string (const GValue *value);
 		return Str.toString(g_value_dup_string(gValue));
 	}
 	
@@ -1041,7 +1038,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecParam(string name, string nick, string blurb, GType paramType, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_param (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType param_type,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_param (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType param_type,  GParamFlags flags);
 		auto p = g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags);
 		if(p is null)
 		{
@@ -1090,11 +1087,11 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_PARAM GValue.
-	 * Returns: GParamSpec content of value
+	 * Returns: GParamSpec content of value. [transfer none]
 	 */
 	public ParamSpec getParam()
 	{
-		// GParamSpec* g_value_get_param (const GValue *value);
+		// GParamSpec * g_value_get_param (const GValue *value);
 		auto p = g_value_get_param(gValue);
 		if(p is null)
 		{
@@ -1110,7 +1107,7 @@ public class Value
 	 */
 	public ParamSpec dupParam()
 	{
-		// GParamSpec* g_value_dup_param (const GValue *value);
+		// GParamSpec * g_value_dup_param (const GValue *value);
 		auto p = g_value_dup_param(gValue);
 		if(p is null)
 		{
@@ -1133,7 +1130,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecBoxed(string name, string nick, string blurb, GType boxedType, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_boxed (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType boxed_type,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_boxed (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType boxed_type,  GParamFlags flags);
 		auto p = g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags);
 		if(p is null)
 		{
@@ -1195,7 +1192,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_BOXED derived GValue.
-	 * Returns: boxed contents of value
+	 * Returns: boxed contents of value. [transfer none]
 	 */
 	public void* getBoxed()
 	{
@@ -1228,7 +1225,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecPointer(string name, string nick, string blurb, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_pointer (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_pointer (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
 		auto p = g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
 		if(p is null)
 		{
@@ -1250,7 +1247,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a pointer GValue.
-	 * Returns: pointer contents of value
+	 * Returns: pointer contents of value. [transfer none]
 	 */
 	public void* getPointer()
 	{
@@ -1272,7 +1269,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_object (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType object_type,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_object (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType object_type,  GParamFlags flags);
 		auto p = g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
 		if(p is null)
 		{
@@ -1292,7 +1289,7 @@ public class Value
 	 * own, or one it has taken) to ensure that the object won't be destroyed while
 	 * the GValue still exists).
 	 * Params:
-	 * vObject = object value to be set
+	 * vObject = object value to be set. [type GObject.Object]
 	 */
 	public void setObject(void* vObject)
 	{
@@ -1332,7 +1329,7 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_OBJECT derived GValue.
-	 * Returns: object contents of value
+	 * Returns: object contents of value. [type GObject.Object][transfer none]
 	 */
 	public void* getObject()
 	{
@@ -1342,8 +1339,9 @@ public class Value
 	
 	/**
 	 * Get the contents of a G_TYPE_OBJECT derived GValue, increasing
-	 * its reference count.
-	 * Returns: object content of value, should be unreferenced when no longer needed.
+	 * its reference count. If the contents of the GValue are NULL, then
+	 * NULL will be returned.
+	 * Returns: object content of value, should be unreferenced when no longer needed. [type GObject.Object][transfer full]
 	 */
 	public void* dupObject()
 	{
@@ -1366,7 +1364,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUnichar(string name, string nick, string blurb, gunichar defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_unichar (const gchar *name,  const gchar *nick,  const gchar *blurb,  gunichar default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_unichar (const gchar *name,  const gchar *nick,  const gchar *blurb,  gunichar default_value,  GParamFlags flags);
 		auto p = g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
 		if(p is null)
 		{
@@ -1386,13 +1384,13 @@ public class Value
 	 * nick = nick name for the property specified
 	 * blurb = description of the property specified
 	 * elementSpec = a GParamSpec describing the elements contained in
-	 *  arrays of this property, may be NULL
+	 * arrays of this property, may be NULL
 	 * flags = flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecValueArray(string name, string nick, string blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_value_array (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamSpec *element_spec,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_value_array (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamSpec *element_spec,  GParamFlags flags);
 		auto p = g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags);
 		if(p is null)
 		{
@@ -1413,7 +1411,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecOverride(string name, ParamSpec overridden)
 	{
-		// GParamSpec* g_param_spec_override (const gchar *name,  GParamSpec *overridden);
+		// GParamSpec *	 g_param_spec_override (const gchar *name,  GParamSpec *overridden);
 		auto p = g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct());
 		if(p is null)
 		{
@@ -1432,13 +1430,13 @@ public class Value
 	 * nick = nick name for the property specified
 	 * blurb = description of the property specified
 	 * isAType = a GType whose subtypes are allowed as values
-	 *  of the property (use G_TYPE_NONE for any type)
+	 * of the property (use G_TYPE_NONE for any type)
 	 * flags = flags for the property specified
 	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec gParamSpecGtype(string name, string nick, string blurb, GType isAType, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
 		auto p = g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags);
 		if(p is null)
 		{
@@ -1482,13 +1480,13 @@ public class Value
 	 * blurb = description of the property specified
 	 * type = a GVariantType
 	 * defaultValue = a GVariant of type type to use as the
-	 *  default value, or NULL. [allow-none]
+	 * default value, or NULL. [allow-none]
 	 * flags = flags for the property specified
 	 * Returns: the newly created GParamSpec
 	 */
 	public static ParamSpec gParamSpecVariant(string name, string nick, string blurb, VariantType type, Variant defaultValue, GParamFlags flags)
 	{
-		// GParamSpec* g_param_spec_variant (const gchar *name,  const gchar *nick,  const gchar *blurb,  const GVariantType *type,  GVariant *default_value,  GParamFlags flags);
+		// GParamSpec *	 g_param_spec_variant (const gchar *name,  const gchar *nick,  const gchar *blurb,  const GVariantType *type,  GVariant *default_value,  GParamFlags flags);
 		auto p = g_param_spec_variant(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (type is null) ? null : type.getVariantTypeStruct(), (defaultValue is null) ? null : defaultValue.getVariantStruct(), flags);
 		if(p is null)
 		{
@@ -1504,7 +1502,7 @@ public class Value
 	 */
 	public Variant getVariant()
 	{
-		// GVariant* g_value_get_variant (const GValue *value);
+		// GVariant *	 g_value_get_variant (const GValue *value);
 		auto p = g_value_get_variant(gValue);
 		if(p is null)
 		{
@@ -1520,7 +1518,7 @@ public class Value
 	 */
 	public Variant dupVariant()
 	{
-		// GVariant* g_value_dup_variant (const GValue *value);
+		// GVariant *	 g_value_dup_variant (const GValue *value);
 		auto p = g_value_dup_variant(gValue);
 		if(p is null)
 		{

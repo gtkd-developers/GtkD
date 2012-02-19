@@ -441,6 +441,26 @@ struct GValue
  * Location of the base finalization function (optional).
  * GClassInitFunc  class_init;
  * Location of the class initialization function for
+ * classed and instantiatable types. Location of the default vtable
+ * inititalization function for interface types. (optional) This function
+ * is used both to fill in virtual functions in the class or default vtable,
+ * and to do type-specific setup such as registering signals and object
+ * properties.
+ * GClassFinalizeFunc  class_finalize;
+ * Location of the class finalization function for
+ * classed and instantiatable types. Location fo the default vtable
+ * finalization function for interface types. (optional)
+ * gconstpointer  class_data;
+ * User-supplied data passed to the class init/finalize functions.
+ * guint16  instance_size;
+ * Size of the instance (object) structure (required for instantiatable types only).
+ * guint16  n_preallocs;
+ * Prior to GLib 2.10, it specified the number of pre-allocated (cached) instances to reserve memory for (0 indicates no caching). Since GLib 2.10, it is ignored, since instances are allocated with the slice allocator now.
+ * GInstanceInitFunc  instance_init;
+ * Location of the instance initialization function (optional, for instantiatable types only).
+ * const  GTypeValueTable  *value_table;
+ * A GTypeValueTable function table for generic handling of GValues of this type (usually only
+ * useful for fundamental types).
  */
 public struct GTypeInfo
 {
@@ -496,6 +516,111 @@ public struct GInterfaceInfo
  * to serve as a container for values of a type.
  * value_init  ()
  * Default initialize values contents by poking values
+ * directly into the value->data array. The data array of
+ * the GValue passed into this function was zero-filled
+ * with memset(), so no care has to
+ * be taken to free any
+ * old contents. E.g. for the implementation of a string
+ * value that may never be NULL, the implementation might
+ * look like:
+ * $(DDOC_COMMENT example)
+ * value_free  ()
+ * Free any old contents that might be left in the
+ * data array of the passed in value. No resources may
+ * remain allocated through the GValue contents after
+ * this function returns. E.g. for our above string type:
+ * $(DDOC_COMMENT example)
+ * value_copy  ()
+ * dest_value is a GValue with zero-filled data section
+ * and src_value is a properly setup GValue of same or
+ * derived type.
+ * The purpose of this function is to copy the contents of
+ * src_value into dest_value in a way, that even after
+ * src_value has been freed, the contents of dest_value
+ * remain valid. String type example:
+ * $(DDOC_COMMENT example)
+ * value_peek_pointer  ()
+ * If the value contents fit into a pointer, such as objects
+ * or strings, return this pointer, so the caller can peek at
+ * the current contents. To extend on our above string example:
+ * $(DDOC_COMMENT example)
+ * gchar  *collect_format;
+ * A string format describing how to collect the contents of
+ * this value bit-by-bit. Each character in the format represents
+ * an argument to be collected, and the characters themselves indicate
+ * the type of the argument. Currently supported arguments are:
+ * 'i' - Integers. passed as collect_values[].v_int.
+ * 'l' - Longs. passed as collect_values[].v_long.
+ * 'd' - Doubles. passed as collect_values[].v_double.
+ * 'p' - Pointers. passed as collect_values[].v_pointer.
+ * It should be noted that for variable argument list construction,
+ * ANSI C promotes every type smaller than an integer to an int, and
+ * floats to doubles. So for collection of short int or char, 'i'
+ * needs to be used, and for collection of floats 'd'.
+ * collect_value  ()
+ * The collect_value() function is responsible for converting the
+ * values collected from a variable argument list into contents
+ * suitable for storage in a GValue. This function should setup
+ * value similar to value_init(); e.g. for a string value that
+ * does not allow NULL pointers, it needs to either spew an error,
+ * or do an implicit conversion by storing an empty string.
+ * The value passed in to this function has a zero-filled data
+ * array, so just like for value_init() it is guaranteed to not
+ * contain any old contents that might need freeing.
+ * n_collect_values is exactly the string length of collect_format,
+ * and collect_values is an array of unions GTypeCValue with
+ * length n_collect_values, containing the collected values
+ * according to collect_format.
+ * collect_flags is an argument provided as a hint by the caller.
+ * It may contain the flag G_VALUE_NOCOPY_CONTENTS indicating,
+ * that the collected value contents may be considered "static"
+ * for the duration of the value lifetime.
+ * Thus an extra copy of the contents stored in collect_values is
+ * not required for assignment to value.
+ * For our above string example, we continue with:
+ * $(DDOC_COMMENT example)
+ * It should be noted, that it is generally a bad idea to follow the
+ * G_VALUE_NOCOPY_CONTENTS hint for reference counted types. Due to
+ * reentrancy requirements and reference count assertions performed
+ * by the GSignal code, reference counts should always be incremented
+ * for reference counted contents stored in the value->data array.
+ * To deviate from our string example for a moment, and taking a look
+ * at an exemplary implementation for collect_value() of GObject:
+ * $(DDOC_COMMENT example)
+ * The reference count for valid objects is always incremented,
+ * regardless of collect_flags. For invalid objects, the example
+ * returns a newly allocated string without altering value.
+ * Upon success, collect_value() needs to return NULL. If, however,
+ * an error condition occurred, collect_value() may spew an
+ * error by returning a newly allocated non-NULL string, giving
+ * a suitable description of the error condition.
+ * The calling code makes no assumptions about the value
+ * contents being valid upon error returns, value
+ * is simply thrown away without further freeing. As such, it is
+ * a good idea to not allocate GValue contents, prior to returning
+ * an error, however, collect_values() is not obliged to return
+ * a correctly setup value for error returns, simply because
+ * any non-NULL return is considered a fatal condition so further
+ * program behaviour is undefined.
+ * gchar  *lcopy_format;
+ * Format description of the arguments to collect for lcopy_value,
+ * analogous to collect_format. Usually, lcopy_format string consists
+ * only of 'p's to provide lcopy_value() with pointers to storage locations.
+ * lcopy_value  ()
+ * This function is responsible for storing the value contents into
+ * arguments passed through a variable argument list which got
+ * collected into collect_values according to lcopy_format.
+ * n_collect_values equals the string length of lcopy_format,
+ * and collect_flags may contain G_VALUE_NOCOPY_CONTENTS.
+ * In contrast to collect_value(), lcopy_value() is obliged to
+ * always properly support G_VALUE_NOCOPY_CONTENTS.
+ * Similar to collect_value() the function may prematurely abort
+ * by returning a newly allocated string describing an error condition.
+ * To complete the string example:
+ * $(DDOC_COMMENT example)
+ * And an illustrative version of lcopy_value() for
+ * reference-counted types:
+ * $(DDOC_COMMENT example)
  */
 public struct GTypeValueTable
 {
@@ -550,6 +675,14 @@ public struct GTypePlugin{}
  * Decreases the use count of the plugin.
  * GTypePluginCompleteTypeInfo  complete_type_info;
  * Fills in the GTypeInfo and
+ * GTypeValueTable structs for the type. The structs are initialized
+ * with memset(s, 0, sizeof (s)) before calling
+ * this function.
+ * GTypePluginCompleteInterfaceInfo  complete_interface_info;
+ * Fills in missing parts of the GInterfaceInfo
+ * for the interface. The structs is initialized with
+ * memset(s, 0, sizeof (s)) before calling
+ * this function.
  */
 public struct GTypePluginClass
 {
@@ -580,6 +713,9 @@ public struct GTypeModule
  * the parent class
  * load  ()
  * loads the module and registers one or more types using
+ * g_type_module_register_type().
+ * unload  ()
+ * unloads the module
  */
 public struct GTypeModuleClass
 {
@@ -647,6 +783,7 @@ public struct GInitiallyUnownedClass{}
  * the number of possible values.
  * GEnumValue  *values;
  * an array of GEnumValue structs describing the
+ * individual values.
  */
 public struct GEnumClass
 {
@@ -669,6 +806,7 @@ public struct GEnumClass
  * the number of possible values.
  * GFlagsValue  *values;
  * an array of GFlagsValue structs describing the
+ * individual values.
  */
 public struct GFlagsClass
 {
@@ -902,6 +1040,7 @@ public struct GParamSpecUInt64
  * default value for the property specified
  * gfloat  epsilon;
  * values closer than epsilon will be considered identical
+ * by g_param_values_cmp(); the default value is 1e-30.
  */
 public struct GParamSpecFloat
 {
@@ -925,6 +1064,7 @@ public struct GParamSpecFloat
  * default value for the property specified
  * gdouble  epsilon;
  * values closer than epsilon will be considered identical
+ * by g_param_values_cmp(); the default value is 1e-90.
  */
 public struct GParamSpecDouble
 {
@@ -1161,6 +1301,18 @@ public struct GParamSpec
  * the GValue type for this parameter
  * finalize  ()
  * The instance finalization function (optional), should chain
+ * up to the finalize method of the parent class.
+ * value_set_default  ()
+ * Resets a value to the default value for this type
+ * (recommended, the default is g_value_reset()), see
+ * g_param_value_set_default().
+ * value_validate  ()
+ * Ensures that the contents of value comply with the
+ * specifications set out by this type (optional), see
+ * g_param_value_set_validate().
+ * values_cmp  ()
+ * Compares value1 with value2 according to this type
+ * (recommended, the default is memcmp()), see g_param_values_cmp().
  */
 public struct GParamSpecClass
 {
@@ -1194,6 +1346,15 @@ public struct GParamSpecClass
  * The instance finalization function (optional).
  * value_set_default  ()
  * Resets a value to the default value for pspec
+ * (recommended, the default is g_value_reset()), see
+ * g_param_value_set_default().
+ * value_validate  ()
+ * Ensures that the contents of value comply with the
+ * specifications set out by pspec (optional), see
+ * g_param_value_set_validate().
+ * values_cmp  ()
+ * Compares value1 with value2 according to pspec
+ * (recommended, the default is memcmp()), see g_param_values_cmp().
  */
 public struct GParamSpecTypeInfo
 {
@@ -1228,6 +1389,8 @@ public struct GParamSpecPool{}
  * The detail passed on for this emission
  * GSignalFlags  run_type;
  * The stage the signal emission is currently in, this
+ * field will contain one of G_SIGNAL_RUN_FIRST,
+ * G_SIGNAL_RUN_LAST or G_SIGNAL_RUN_CLEANUP.
  */
 public struct GSignalInvocationHint
 {
@@ -1242,6 +1405,23 @@ public struct GSignalInvocationHint
  * filled in by the g_signal_query() function.
  * guint  signal_id;
  * The signal id of the signal being queried, or 0 if the
+ * signal to be queried was unknown.
+ * const  gchar  *signal_name;
+ * The signal name.
+ * GType  itype;
+ * The interface/instance type that this signal can be emitted for.
+ * GSignalFlags  signal_flags;
+ * The signal flags as passed in to g_signal_new().
+ * GType  return_type;
+ * The return type for user callbacks.
+ * guint  n_params;
+ * The number of parameters that user callbacks take.
+ * const  GType  *param_types;
+ * The individual parameter types for user callbacks, note that the
+ * effective callback signature is:
+ * @return_type callback (gpointer data1,
+ * [param_types param_names,]
+ * gpointer data2);
  */
 public struct GSignalQuery
 {
@@ -1260,6 +1440,10 @@ public struct GSignalQuery
  * A GClosure represents a callback supplied by the programmer.
  * volatile              	guint  in_marshal  :  1;
  * Indicates whether the closure is currently being invoked with
+ * g_closure_invoke()
+ * volatile              	guint  is_invalid  :  1;
+ * Indicates whether the closure has been invalidated by
+ * g_closure_invalidate()
  */
 public struct GClosure
 {
@@ -1324,7 +1508,7 @@ public struct GBinding{}
  * x  :
  * the fundamental type number.
  * Returns  :
- *  the GType
+ * the GType
  */
 // TODO
 // #define  G_TYPE_MAKE_FUNDAMENTAL(x)  ((GType) ((x) << G_TYPE_FUNDAMENTAL_SHIFT))
@@ -1336,7 +1520,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_ABSTRACT(type) (g_type_test_flags ((type), G_TYPE_FLAG_ABSTRACT))
@@ -1348,7 +1532,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_DERIVED(type) ((type) > G_TYPE_FUNDAMENTAL_MAX)
@@ -1358,7 +1542,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_FUNDAMENTAL(type) ((type) <= G_TYPE_FUNDAMENTAL_MAX)
@@ -1368,7 +1552,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_VALUE_TYPE(type) (g_type_check_is_value_type (type))
@@ -1378,7 +1562,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_HAS_VALUE_TABLE(type) (g_type_value_table_peek (type) != NULL)
@@ -1388,7 +1572,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_CLASSED(type) (g_type_test_flags ((type), G_TYPE_FLAG_CLASSED))
@@ -1399,7 +1583,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_INSTANTIATABLE(type) (g_type_test_flags ((type), G_TYPE_FLAG_INSTANTIATABLE))
@@ -1410,7 +1594,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_DERIVABLE(type) (g_type_test_flags ((type), G_TYPE_FLAG_DERIVABLE))
@@ -1421,7 +1605,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_DEEP_DERIVABLE(type) (g_type_test_flags ((type), G_TYPE_FLAG_DEEP_DERIVABLE))
@@ -1437,7 +1621,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_INTERFACE(type) (G_TYPE_FUNDAMENTAL (type) == G_TYPE_INTERFACE)
@@ -1448,7 +1632,7 @@ public struct GBinding{}
  * instance  :
  * Location of a valid GTypeInstance structure.
  * Returns  :
- *  the GType
+ * the GType
  */
 // TODO
 // #define G_TYPE_FROM_INSTANCE(instance) (G_TYPE_FROM_CLASS (((GTypeInstance*) (instance))->g_class))
@@ -1459,7 +1643,7 @@ public struct GBinding{}
  * g_class  :
  * Location of a valid GTypeClass structure.
  * Returns  :
- *  the GType
+ * the GType
  */
 // TODO
 // #define G_TYPE_FROM_CLASS(g_class) (((GTypeClass*) (g_class))->g_type)
@@ -1470,7 +1654,7 @@ public struct GBinding{}
  * g_iface  :
  * Location of a valid GTypeInterface structure.
  * Returns  :
- *  the GType
+ * the GType
  */
 // TODO
 // #define G_TYPE_FROM_INTERFACE(g_iface) (((GTypeInterface*) (g_iface))->g_type)
@@ -1488,7 +1672,7 @@ public struct GBinding{}
  * c_type  :
  * The C type of the class structure.
  * Returns  :
- *  a pointer to the class structure
+ * a pointer to the class structure
  */
 // TODO
 // #define G_TYPE_INSTANCE_GET_CLASS(instance, g_type, c_type) (_G_TYPE_IGC ((instance), (g_type), c_type))
@@ -1503,7 +1687,7 @@ public struct GBinding{}
  * c_type  :
  * The C type of the interface structure.
  * Returns  :
- *  a pointer to the interface structure
+ * a pointer to the interface structure
  */
 // TODO
 // #define G_TYPE_INSTANCE_GET_INTERFACE(instance, g_type, c_type) (_G_TYPE_IGI ((instance), (g_type), c_type))
@@ -1520,7 +1704,7 @@ public struct GBinding{}
  * c_type  :
  * The C type for the private structure.
  * Returns  :
- *  a pointer to the private data structure.
+ * a pointer to the private data structure.
  * Since 2.4
  */
 // TODO
@@ -1538,7 +1722,7 @@ public struct GBinding{}
  * c_type  :
  * The C type for the private structure.
  * Returns  :
- *  a pointer to the private data structure.
+ * a pointer to the private data structure.
  * Since 2.24
  */
 // TODO
@@ -1551,7 +1735,7 @@ public struct GBinding{}
  * instance  :
  * Location of a GTypeInstance structure.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_INSTANCE(instance)				(_G_TYPE_CHI ((GTypeInstance*) (instance)))
@@ -1579,7 +1763,7 @@ public struct GBinding{}
  * g_type  :
  * The type to be checked
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_INSTANCE_TYPE(instance, g_type) (_G_TYPE_CIT ((instance), (g_type)))
@@ -1608,7 +1792,7 @@ public struct GBinding{}
  * g_type  :
  * The type to be checked.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_CLASS_TYPE(g_class, g_type) (_G_TYPE_CCT ((g_class), (g_type)))
@@ -1620,7 +1804,7 @@ public struct GBinding{}
  * value  :
  * a GValue
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_VALUE(value)				(_G_TYPE_CHV ((value)))
@@ -1634,7 +1818,7 @@ public struct GBinding{}
  * g_type  :
  * The type to be checked.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_CHECK_VALUE_TYPE(value, g_type)			(_G_TYPE_CVH ((value), (g_type)))
@@ -1648,7 +1832,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * t_n  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * T_P  :
  * The GType of the parent type.
  * Since 2.4
@@ -1682,7 +1866,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * t_n  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * T_P  :
  * The GType of the parent type.
  * Since 2.4
@@ -1699,7 +1883,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * t_n  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * T_P  :
  * The GType of the parent type.
  * _C_  :
@@ -1777,7 +1961,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * t_n  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * T_P  :
  * The GType of the parent type.
  * _f_  :
@@ -1796,7 +1980,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * type_name  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * copy_func  :
  * the GBoxedCopyFunc for the new type
  * free_func  :
@@ -1815,7 +1999,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * type_name  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * copy_func  :
  * the GBoxedCopyFunc for the new type
  * free_func  :
@@ -1834,7 +2018,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * type_name  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * Since 2.26
  */
 // TODO
@@ -1848,7 +2032,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * type_name  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * _C_  :
  * Custom code that gets inserted in the *_get_type() function.
  * Since 2.26
@@ -1869,7 +2053,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * t_n  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * T_P  :
  * The GType of the parent type.
  * Since 2.14
@@ -1887,7 +2071,7 @@ public struct GBinding{}
  * The name of the new type, in Camel case.
  * type_name  :
  * The name of the new type, in lowercase, with words
- *  separated by '_'.
+ * separated by '_'.
  * TYPE_PARENT  :
  * The GType of the parent type.
  * flags  :
@@ -1925,7 +2109,7 @@ public struct GBinding{}
  * type  :
  * Type id to check
  * Returns  :
- *  FALSE or TRUE, indicating whether type is a G_TYPE_OBJECT.
+ * FALSE or TRUE, indicating whether type is a G_TYPE_OBJECT.
  */
 // TODO
 // #define G_TYPE_IS_OBJECT(type) (G_TYPE_FUNDAMENTAL (type) == G_TYPE_OBJECT)
@@ -1970,7 +2154,7 @@ public struct GBinding{}
  * object  :
  * a GObject instance.
  * Returns  :
- *  pointer to object class structure.
+ * pointer to object class structure.
  */
 // TODO
 // #define G_OBJECT_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS ((object), G_TYPE_OBJECT, GObjectClass))
@@ -1980,7 +2164,7 @@ public struct GBinding{}
  * object  :
  * Object to return the type id for.
  * Returns  :
- *  Type id of object.
+ * Type id of object.
  */
 // TODO
 // #define G_OBJECT_TYPE(object) (G_TYPE_FROM_INSTANCE (object))
@@ -1990,8 +2174,8 @@ public struct GBinding{}
  * object  :
  * Object to return the type name for.
  * Returns  :
- *  Type name of object. The string is owned by the type system and
- *  should not be freed.
+ * Type name of object. The string is owned by the type system and
+ * should not be freed.
  */
 // TODO
 // #define G_OBJECT_TYPE_NAME(object) (g_type_name (G_OBJECT_TYPE (object)))
@@ -2001,7 +2185,7 @@ public struct GBinding{}
  * class  :
  * a valid GObjectClass
  * Returns  :
- *  Type id of class.
+ * Type id of class.
  */
 // TODO
 // #define G_OBJECT_CLASS_TYPE(class) (G_TYPE_FROM_CLASS (class))
@@ -2011,8 +2195,8 @@ public struct GBinding{}
  * class  :
  * a valid GObjectClass
  * Returns  :
- *  Type name of class. The string is owned by the type system and
- *  should not be freed.
+ * Type name of class. The string is owned by the type system and
+ * should not be freed.
  */
 // TODO
 // #define G_OBJECT_CLASS_NAME(class) (g_type_name (G_OBJECT_CLASS_TYPE (class)))
@@ -2030,7 +2214,7 @@ public struct GBinding{}
  * The "notify" signal
  * void user_function (GObject *gobject,
  *  GParamSpec *pspec,
- *  gpointer user_data) : Run First / No Recursion / Has Details / Action / No Hooks
+ *  gpointer user_data) : No Hooks
  * The notify signal is emitted on an object when one of its
  * properties has been changed. Note that getting this signal
  * doesn't guarantee that the value of the property has actually
@@ -2060,7 +2244,7 @@ public struct GBinding{}
  * class  :
  * a GEnumClass
  * Returns  :
- *  the GType
+ * the GType
  */
 // TODO
 // #define G_ENUM_CLASS_TYPE(class) (G_TYPE_FROM_CLASS (class))
@@ -2070,7 +2254,7 @@ public struct GBinding{}
  * class  :
  * a GEnumClass
  * Returns  :
- *  the type name.
+ * the type name.
  */
 // TODO
 // #define G_ENUM_CLASS_TYPE_NAME(class) (g_type_name (G_ENUM_CLASS_TYPE (class)))
@@ -2080,7 +2264,7 @@ public struct GBinding{}
  * type  :
  * a GType ID.
  * Returns  :
- *  TRUE if type "is a" G_TYPE_ENUM.
+ * TRUE if type "is a" G_TYPE_ENUM.
  */
 // TODO
 // #define G_TYPE_IS_ENUM(type)	 (G_TYPE_FUNDAMENTAL (type) == G_TYPE_ENUM)
@@ -2107,7 +2291,7 @@ public struct GBinding{}
  * type  :
  * a GType ID.
  * Returns  :
- *  TRUE if type "is a" G_TYPE_FLAGS.
+ * TRUE if type "is a" G_TYPE_FLAGS.
  */
 // TODO
 // #define G_TYPE_IS_FLAGS(type)	 (G_TYPE_FUNDAMENTAL (type) == G_TYPE_FLAGS)
@@ -2134,7 +2318,7 @@ public struct GBinding{}
  * class  :
  * a GFlagsClass
  * Returns  :
- *  the GType
+ * the GType
  */
 // TODO
 // #define G_FLAGS_CLASS_TYPE(class) (G_TYPE_FROM_CLASS (class))
@@ -2144,7 +2328,7 @@ public struct GBinding{}
  * class  :
  * a GFlagsClass
  * Returns  :
- *  the type name.
+ * the type name.
  */
 // TODO
 // #define G_FLAGS_CLASS_TYPE_NAME(class) (g_type_name (G_FLAGS_CLASS_TYPE (class)))
@@ -2158,7 +2342,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE if value holds the type.
+ * TRUE if value holds the type.
  */
 // TODO
 // #define G_VALUE_HOLDS(value,type)  (G_TYPE_CHECK_VALUE_TYPE ((value), (type)))
@@ -2168,7 +2352,7 @@ public struct GBinding{}
  * value  :
  * A GValue structure.
  * Returns  :
- *  the GType.
+ * the GType.
  */
 // TODO
 // #define  G_VALUE_TYPE(value)		(((GValue*) (value))->g_type)
@@ -2178,7 +2362,7 @@ public struct GBinding{}
  * value  :
  * A GValue structure.
  * Returns  :
- *  the type name.
+ * the type name.
  */
 // TODO
 // #define  G_VALUE_TYPE_NAME(value)  (g_type_name (G_VALUE_TYPE (value)))
@@ -2190,7 +2374,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  Whether type is suitable as a GValue type.
+ * Whether type is suitable as a GValue type.
  */
 // TODO
 // #define  G_TYPE_IS_VALUE(type)		(g_type_check_is_value_type (type))
@@ -2202,7 +2386,7 @@ public struct GBinding{}
  * type  :
  * A GType value.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_TYPE_IS_VALUE_ABSTRACT(type) (g_type_test_flags ((type), G_TYPE_FLAG_VALUE_ABSTRACT))
@@ -2212,7 +2396,7 @@ public struct GBinding{}
  * value  :
  * A GValue structure.
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define  G_IS_VALUE(value)		(G_TYPE_CHECK_VALUE (value))
@@ -2222,7 +2406,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_BOOLEAN(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_BOOLEAN))
@@ -2240,7 +2424,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_BOOLEAN(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_BOOLEAN))
@@ -2250,7 +2434,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_CHAR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_CHAR))
@@ -2268,7 +2452,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_CHAR(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_CHAR))
@@ -2278,7 +2462,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_UCHAR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_UCHAR))
@@ -2296,7 +2480,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_UCHAR(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_UCHAR))
@@ -2306,7 +2490,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_INT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_INT))
@@ -2324,7 +2508,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_INT(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_INT))
@@ -2334,7 +2518,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_UINT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_UINT))
@@ -2352,7 +2536,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_UINT(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_UINT))
@@ -2362,7 +2546,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_LONG(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_LONG))
@@ -2380,7 +2564,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_LONG(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_LONG))
@@ -2390,7 +2574,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_ULONG(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_ULONG))
@@ -2408,7 +2592,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_ULONG(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_ULONG))
@@ -2418,7 +2602,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_INT64(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_INT64))
@@ -2436,7 +2620,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_INT64(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_INT64))
@@ -2446,7 +2630,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_UINT64(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_UINT64))
@@ -2464,7 +2648,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_UINT64(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_UINT64))
@@ -2474,7 +2658,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_FLOAT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_FLOAT))
@@ -2492,7 +2676,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_FLOAT(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_FLOAT))
@@ -2502,7 +2686,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_DOUBLE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_DOUBLE))
@@ -2520,7 +2704,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_DOUBLE(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_DOUBLE))
@@ -2530,7 +2714,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_ENUM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_ENUM))
@@ -2548,7 +2732,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_ENUM(value) (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_ENUM))
@@ -2558,7 +2742,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_FLAGS(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_FLAGS))
@@ -2576,7 +2760,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_FLAGS(value) (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_FLAGS))
@@ -2586,7 +2770,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_STRING(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_STRING))
@@ -2604,7 +2788,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_STRING(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_STRING))
@@ -2614,7 +2798,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_PARAM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_PARAM))
@@ -2632,7 +2816,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_PARAM(value)  (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_PARAM))
@@ -2642,7 +2826,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_BOXED(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_BOXED))
@@ -2660,7 +2844,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_BOXED(value) (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_BOXED))
@@ -2670,7 +2854,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_POINTER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_POINTER))
@@ -2688,7 +2872,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_POINTER(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_POINTER))
@@ -2698,7 +2882,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_OBJECT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_OBJECT))
@@ -2716,7 +2900,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_VALUE_HOLDS_OBJECT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_OBJECT))
@@ -2726,7 +2910,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_UNICHAR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_UNICHAR))
@@ -2744,7 +2928,7 @@ public struct GBinding{}
  * pspec  :
  * a valid GParamSpec instance
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  */
 // TODO
 // #define G_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_VALUE_ARRAY))
@@ -2762,7 +2946,7 @@ public struct GBinding{}
  * pspec  :
  * a GParamSpec
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  * Since 2.4
  */
 // TODO
@@ -2782,7 +2966,7 @@ public struct GBinding{}
  * pspec  :
  * a GParamSpec
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  * Since 2.10
  */
 // TODO
@@ -2802,7 +2986,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  * Since 2.12
  */
 // TODO
@@ -2813,7 +2997,7 @@ public struct GBinding{}
  * pspec  :
  * a GParamSpec
  * Returns  :
- *  TRUE on success
+ * TRUE on success
  * Since 2.26
  */
 // TODO
@@ -2833,7 +3017,7 @@ public struct GBinding{}
  * value  :
  * a valid GValue structure
  * Returns  :
- *  TRUE on success.
+ * TRUE on success.
  * Since 2.26
  */
 // TODO
@@ -2926,7 +3110,7 @@ public struct GBinding{}
  * data  :
  * data to pass to c_handler calls.
  * Returns  :
- *  the handler id
+ * the handler id
  */
 // TODO
 // #define g_signal_connect(instance, detailed_signal, c_handler, data)
@@ -2943,7 +3127,7 @@ public struct GBinding{}
  * data  :
  * data to pass to c_handler calls.
  * Returns  :
- *  the handler id
+ * the handler id
  */
 // TODO
 // #define g_signal_connect_after(instance, detailed_signal, c_handler, data)
@@ -2961,7 +3145,7 @@ public struct GBinding{}
  * data  :
  * data to pass to c_handler calls.
  * Returns  :
- *  the handler id
+ * the handler id
  */
 // TODO
 // #define g_signal_connect_swapped(instance, detailed_signal, c_handler, data)
@@ -2975,7 +3159,7 @@ public struct GBinding{}
  * data  :
  * The closure data of the handlers' closures.
  * Returns  :
- *  The number of handlers that matched.
+ * The number of handlers that matched.
  */
 // TODO
 // #define g_signal_handlers_block_by_func(instance, func, data)
@@ -2989,7 +3173,7 @@ public struct GBinding{}
  * data  :
  * The closure data of the handlers' closures.
  * Returns  :
- *  The number of handlers that matched.
+ * The number of handlers that matched.
  */
 // TODO
 // #define g_signal_handlers_unblock_by_func(instance, func, data)
@@ -3003,7 +3187,7 @@ public struct GBinding{}
  * data  :
  * The closure data of the handlers' closures.
  * Returns  :
- *  The number of handlers that matched.
+ * The number of handlers that matched.
  */
 // TODO
 // #define g_signal_handlers_disconnect_by_func(instance, func, data)
@@ -3013,7 +3197,7 @@ public struct GBinding{}
  * closure  :
  * a GClosure
  * Returns  :
- *  TRUE if a GClosureMarshal marshaller has not yet been set on
+ * TRUE if a GClosureMarshal marshaller has not yet been set on
  * closure.
  */
 // TODO
@@ -3028,7 +3212,7 @@ public struct GBinding{}
  * cl  :
  * a GClosure
  * Returns  :
- *  number of notifiers
+ * number of notifiers
  */
 // TODO
 // #define G_CLOSURE_N_NOTIFIERS(cl)
@@ -3039,7 +3223,7 @@ public struct GBinding{}
  * cclosure  :
  * a GCClosure
  * Returns  :
- *  TRUE if data has to be swapped.
+ * TRUE if data has to be swapped.
  */
 // TODO
 // #define  G_CCLOSURE_SWAP_DATA(cclosure)	 (((GClosure*) (cclosure))->derivative_flag)
@@ -3203,8 +3387,8 @@ public alias extern(C) void  function (void*, void*) GInterfaceFinalizeFunc;
  * g_class  :
  * The GTypeClass structure which is unreferenced
  * Returns  :
- *  TRUE to stop further GTypeClassCacheFuncs from being
- *  called, FALSE to continue.
+ * TRUE to stop further GTypeClassCacheFuncs from being
+ * called, FALSE to continue.
  */
 // gboolean (*GTypeClassCacheFunc) (gpointer cache_data,  GTypeClass *g_class);
 public alias extern(C) int  function (void*, GTypeClass*) GTypeClassCacheFunc;
@@ -3258,7 +3442,7 @@ public alias extern(C) void  function (GTypePlugin*, GType, GTypeInfo*, GTypeVal
  * the GTypePlugin
  * instance_type  :
  * the GType of an instantiable type to which the interface
- *  is added
+ * is added
  * interface_type  :
  * the GType of the interface whose info is completed
  * info  :
@@ -3273,7 +3457,7 @@ public alias extern(C) void  function (GTypePlugin*, GType, GType, GInterfaceInf
  * a GObject
  * property_id  :
  * the numeric id under which the property was registered with
- *  g_object_class_install_property().
+ * g_object_class_install_property().
  * value  :
  * a GValue to return the property value in
  * pspec  :
@@ -3288,7 +3472,7 @@ public alias extern(C) void  function (GObject*, uint, GValue*, GParamSpec*) GOb
  * a GObject
  * property_id  :
  * the numeric id under which the property was registered with
- *  g_object_class_install_property().
+ * g_object_class_install_property().
  * value  :
  * the new value for the property
  * pspec  :
@@ -3327,9 +3511,9 @@ public alias extern(C) void  function (void*, GObject*) GWeakNotify;
  * The object on which g_object_add_toggle_ref() was called.
  * is_last_ref  :
  * TRUE if the toggle reference is now the
- *  last reference to the object. FALSE if the toggle
- *  reference was the last reference and there are now other
- *  references.
+ * last reference to the object. FALSE if the toggle
+ * reference was the last reference and there are now other
+ * references.
  */
 // void (*GToggleNotify) (gpointer data,  GObject *object,  gboolean is_last_ref);
 public alias extern(C) void  function (void*, GObject*, int) GToggleNotify;
@@ -3340,7 +3524,7 @@ public alias extern(C) void  function (void*, GObject*, int) GToggleNotify;
  * boxed  :
  * The boxed structure to be copied.
  * Returns  :
- *  The newly created copy of the boxed structure.
+ * The newly created copy of the boxed structure.
  */
 // gpointer (*GBoxedCopyFunc) (gpointer boxed);
 public alias extern(C) void*  function (void*) GBoxedCopyFunc;
@@ -3376,15 +3560,15 @@ public alias extern(C) void  function (GValue*, GValue*) GValueTransform;
  * Signal invocation hint, see GSignalInvocationHint.
  * return_accu  :
  * Accumulator to collect callback return values in, this
- *  is the return value of the current signal emission.
+ * is the return value of the current signal emission.
  * handler_return  :
  * A GValue holding the return value of the signal handler.
  * data  :
  * Callback data that was specified when creating the signal.
  * Returns  :
- *  The accumulator function returns whether the signal emission
- *  should be aborted. Returning FALSE means to abort the
- *  current emission and TRUE is returned for continuation.
+ * The accumulator function returns whether the signal emission
+ * should be aborted. Returning FALSE means to abort the
+ * current emission and TRUE is returned for continuation.
  */
 // gboolean (*GSignalAccumulator) (GSignalInvocationHint *ihint,  GValue *return_accu,  const GValue *handler_return,  gpointer data);
 public alias extern(C) int  function (GSignalInvocationHint*, GValue*, GValue*, void*) GSignalAccumulator;
@@ -3398,15 +3582,15 @@ public alias extern(C) int  function (GSignalInvocationHint*, GValue*, GValue*, 
  * Signal invocation hint, see GSignalInvocationHint.
  * n_param_values  :
  * the number of parameters to the function, including
- *  the instance on which the signal was emitted.
+ * the instance on which the signal was emitted.
  * param_values  :
  * the instance on which the signal was emitted, followed by the
- *  parameters of the emission.
+ * parameters of the emission.
  * data  :
  * user data associated with the hook.
  * Returns  :
- *  whether it wants to stay connected. If it returns FALSE, the signal
- *  hook is disconnected (and destroyed).
+ * whether it wants to stay connected. If it returns FALSE, the signal
+ * hook is disconnected (and destroyed).
  */
 // gboolean (*GSignalEmissionHook) (GSignalInvocationHint *ihint,  guint n_param_values,  const GValue *param_values,  gpointer data);
 public alias extern(C) int  function (GSignalInvocationHint*, uint, GValue*, void*) GSignalEmissionHook;
@@ -3427,18 +3611,18 @@ public alias extern(C) void  function () GCallback;
  * the GClosure to which the marshaller belongs
  * return_value  :
  * a GValue to store the return value. May be NULL if the
- *  callback of closure doesn't return a value.
+ * callback of closure doesn't return a value.
  * n_param_values  :
  * the length of the param_values array
  * param_values  :
  * an array of GValues holding the arguments on
- *  which to invoke the callback of closure
+ * which to invoke the callback of closure
  * invocation_hint  :
  * the invocation hint given as the last argument
- *  to g_closure_invoke()
+ * to g_closure_invoke()
  * marshal_data  :
  * additional data specified when registering the marshaller,
- *  see g_closure_set_marshal() and g_closure_set_meta_marshal()
+ * see g_closure_set_marshal() and g_closure_set_meta_marshal()
  */
 // void (*GClosureMarshal) (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
 public alias extern(C) void  function (GClosure*, GValue*, uint, GValue*, void*, void*) GClosureMarshal;
@@ -3467,8 +3651,8 @@ public alias extern(C) void  function (void*, GClosure*) GClosureNotify;
  * user_data  :
  * data passed to the transform function
  * Returns  :
- *  TRUE if the transformation was successful, and FALSE
- *  otherwise
+ * TRUE if the transformation was successful, and FALSE
+ * otherwise
  * Since 2.26
  */
 // gboolean (*GBindingTransformFunc) (GBinding *binding,  const GValue *source_value,  GValue *target_value,  gpointer user_data);

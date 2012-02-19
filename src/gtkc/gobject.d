@@ -115,6 +115,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_object_ref, \"g_object_ref\", LIBRARY.GOBJECT);
 	Linker.link(g_object_unref, \"g_object_unref\", LIBRARY.GOBJECT);
 	Linker.link(g_object_ref_sink, \"g_object_ref_sink\", LIBRARY.GOBJECT);
+	Linker.link(g_clear_object, \"g_clear_object\", LIBRARY.GOBJECT);
 	Linker.link(g_object_is_floating, \"g_object_is_floating\", LIBRARY.GOBJECT);
 	Linker.link(g_object_force_floating, \"g_object_force_floating\", LIBRARY.GOBJECT);
 	Linker.link(g_object_weak_ref, \"g_object_weak_ref\", LIBRARY.GOBJECT);
@@ -333,6 +334,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_signal_parse_name, \"g_signal_parse_name\", LIBRARY.GOBJECT);
 	Linker.link(g_signal_get_invocation_hint, \"g_signal_get_invocation_hint\", LIBRARY.GOBJECT);
 	Linker.link(g_signal_type_cclosure_new, \"g_signal_type_cclosure_new\", LIBRARY.GOBJECT);
+	Linker.link(g_signal_accumulator_first_wins, \"g_signal_accumulator_first_wins\", LIBRARY.GOBJECT);
 	Linker.link(g_signal_accumulator_true_handled, \"g_signal_accumulator_true_handled\", LIBRARY.GOBJECT);
 
 	// gobject.Closure
@@ -352,6 +354,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_closure_add_marshal_guards, \"g_closure_add_marshal_guards\", LIBRARY.GOBJECT);
 	Linker.link(g_closure_set_meta_marshal, \"g_closure_set_meta_marshal\", LIBRARY.GOBJECT);
 	Linker.link(g_source_set_closure, \"g_source_set_closure\", LIBRARY.GOBJECT);
+	Linker.link(g_source_set_dummy_callback, \"g_source_set_dummy_callback\", LIBRARY.GOBJECT);
 
 	// gobject.CClosure
 
@@ -482,14 +485,15 @@ mixin( gshared ~"extern(C)
 	GParamSpec* function(GObjectClass* oclass, gchar* propertyName) c_g_object_class_find_property;
 	GParamSpec** function(GObjectClass* oclass, guint* nProperties) c_g_object_class_list_properties;
 	void function(GObjectClass* oclass, guint propertyId, gchar* name) c_g_object_class_override_property;
-	void function(gpointer gIface, GParamSpec* pspec) c_g_object_interface_install_property;
-	GParamSpec* function(gpointer gIface, gchar* propertyName) c_g_object_interface_find_property;
-	GParamSpec** function(gpointer gIface, guint* nPropertiesP) c_g_object_interface_list_properties;
+	void function(gpointer iface, GParamSpec* pspec) c_g_object_interface_install_property;
+	GParamSpec* function(gpointer iface, gchar* propertyName) c_g_object_interface_find_property;
+	GParamSpec** function(gpointer iface, guint* nPropertiesP) c_g_object_interface_list_properties;
 	gpointer function(GType objectType, gchar* firstPropertyName, ... ) c_g_object_new;
 	gpointer function(GType objectType, guint nParameters, GParameter* parameters) c_g_object_newv;
 	gpointer function(gpointer object) c_g_object_ref;
 	void function(gpointer object) c_g_object_unref;
 	gpointer function(gpointer object) c_g_object_ref_sink;
+	void function(GObject** objectPtr) c_g_clear_object;
 	gboolean function(gpointer object) c_g_object_is_floating;
 	void function(GObject* object) c_g_object_force_floating;
 	void function(GObject* object, GWeakNotify notify, gpointer data) c_g_object_weak_ref;
@@ -708,6 +712,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(gchar* detailedSignal, GType itype, guint* signalIdP, GQuark* detailP, gboolean forceDetailQuark) c_g_signal_parse_name;
 	GSignalInvocationHint* function(gpointer instanc) c_g_signal_get_invocation_hint;
 	GClosure* function(GType itype, guint structOffset) c_g_signal_type_cclosure_new;
+	gboolean function(GSignalInvocationHint* ihint, GValue* returnAccu, GValue* handlerReturn, gpointer dummy) c_g_signal_accumulator_first_wins;
 	gboolean function(GSignalInvocationHint* ihint, GValue* returnAccu, GValue* handlerReturn, gpointer dummy) c_g_signal_accumulator_true_handled;
 	
 	// gobject.Closure
@@ -727,6 +732,7 @@ mixin( gshared ~"extern(C)
 	void function(GClosure* closure, gpointer preMarshalData, GClosureNotify preMarshalNotify, gpointer postMarshalData, GClosureNotify postMarshalNotify) c_g_closure_add_marshal_guards;
 	void function(GClosure* closure, gpointer marshalData, GClosureMarshal metaMarshal) c_g_closure_set_meta_marshal;
 	void function(GSource* source, GClosure* closure) c_g_source_set_closure;
+	void function(GSource* source) c_g_source_set_dummy_callback;
 	
 	// gobject.CClosure
 	
@@ -862,6 +868,7 @@ alias c_g_object_newv  g_object_newv;
 alias c_g_object_ref  g_object_ref;
 alias c_g_object_unref  g_object_unref;
 alias c_g_object_ref_sink  g_object_ref_sink;
+alias c_g_clear_object  g_clear_object;
 alias c_g_object_is_floating  g_object_is_floating;
 alias c_g_object_force_floating  g_object_force_floating;
 alias c_g_object_weak_ref  g_object_weak_ref;
@@ -1080,6 +1087,7 @@ alias c_g_signal_remove_emission_hook  g_signal_remove_emission_hook;
 alias c_g_signal_parse_name  g_signal_parse_name;
 alias c_g_signal_get_invocation_hint  g_signal_get_invocation_hint;
 alias c_g_signal_type_cclosure_new  g_signal_type_cclosure_new;
+alias c_g_signal_accumulator_first_wins  g_signal_accumulator_first_wins;
 alias c_g_signal_accumulator_true_handled  g_signal_accumulator_true_handled;
 
 // gobject.Closure
@@ -1099,6 +1107,7 @@ alias c_g_closure_set_marshal  g_closure_set_marshal;
 alias c_g_closure_add_marshal_guards  g_closure_add_marshal_guards;
 alias c_g_closure_set_meta_marshal  g_closure_set_meta_marshal;
 alias c_g_source_set_closure  g_source_set_closure;
+alias c_g_source_set_dummy_callback  g_source_set_dummy_callback;
 
 // gobject.CClosure
 

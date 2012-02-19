@@ -152,7 +152,7 @@ public class CClosure
 	 */
 	public static Closure newCClosure(GCallback callbackFunc, void* userData, GClosureNotify destroyData)
 	{
-		// GClosure* g_cclosure_new (GCallback callback_func,  gpointer user_data,  GClosureNotify destroy_data);
+		// GClosure * g_cclosure_new (GCallback callback_func,  gpointer user_data,  GClosureNotify destroy_data);
 		auto p = g_cclosure_new(callbackFunc, userData, destroyData);
 		if(p is null)
 		{
@@ -168,11 +168,11 @@ public class CClosure
 	 * callbackFunc = the function to invoke
 	 * userData = user data to pass to callback_func
 	 * destroyData = destroy notify to be called when user_data is no longer used
-	 * Returns: a new GCClosure
+	 * Returns: a new GCClosure. [transfer full]
 	 */
 	public static Closure newSwap(GCallback callbackFunc, void* userData, GClosureNotify destroyData)
 	{
-		// GClosure* g_cclosure_new_swap (GCallback callback_func,  gpointer user_data,  GClosureNotify destroy_data);
+		// GClosure * g_cclosure_new_swap (GCallback callback_func,  gpointer user_data,  GClosureNotify destroy_data);
 		auto p = g_cclosure_new_swap(callbackFunc, userData, destroyData);
 		if(p is null)
 		{
@@ -194,7 +194,7 @@ public class CClosure
 	 */
 	public static Closure newObject(GCallback callbackFunc, ObjectG object)
 	{
-		// GClosure* g_cclosure_new_object (GCallback callback_func,  GObject *object);
+		// GClosure * g_cclosure_new_object (GCallback callback_func,  GObject *object);
 		auto p = g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct());
 		if(p is null)
 		{
@@ -216,7 +216,7 @@ public class CClosure
 	 */
 	public static Closure newObjectSwap(GCallback callbackFunc, ObjectG object)
 	{
-		// GClosure* g_cclosure_new_object_swap (GCallback callback_func,  GObject *object);
+		// GClosure * g_cclosure_new_object_swap (GCallback callback_func,  GObject *object);
 		auto p = g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct());
 		if(p is null)
 		{
@@ -234,7 +234,7 @@ public class CClosure
 	 * nParamValues = 1
 	 * paramValues = a GValue array holding only the instance
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__VOID(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -252,7 +252,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gboolean parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__BOOLEAN(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -270,7 +270,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gchar parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__CHAR(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -288,7 +288,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the guchar parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__UCHAR(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -306,7 +306,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gint parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__INT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -324,7 +324,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the guint parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__UINT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -342,7 +342,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the glong parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__LONG(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -360,7 +360,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gulong parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__ULONG(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -378,7 +378,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the enumeration parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__ENUM(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -396,7 +396,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the flags parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__FLAGS(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -414,7 +414,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gfloat parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__FLOAT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -432,7 +432,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gdouble parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__DOUBLE(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -450,7 +450,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gchar* parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__STRING(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -468,7 +468,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the GParamSpec* parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__PARAM(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -486,7 +486,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the GBoxed* parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__BOXED(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -504,7 +504,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gpointer parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -522,7 +522,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the GObject* parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__OBJECT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -541,7 +541,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the GVariant* parameter
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__VARIANT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -559,7 +559,7 @@ public class CClosure
 	 * nParamValues = 3
 	 * paramValues = a GValue array holding instance, arg1 and arg2
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalSTRING__OBJECT_POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -577,7 +577,7 @@ public class CClosure
 	 * nParamValues = 3
 	 * paramValues = a GValue array holding instance, arg1 and arg2
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOID__UINT_POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
@@ -596,7 +596,7 @@ public class CClosure
 	 * nParamValues = 2
 	 * paramValues = a GValue array holding instance and arg1
 	 * invocationHint = the invocation hint given as the last argument
-	 *  to g_closure_invoke()
+	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalBOOLEAN__FLAGS(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)

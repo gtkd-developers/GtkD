@@ -150,14 +150,14 @@ public class Closure
 	 * when implementing new types of closures.
 	 * Params:
 	 * sizeofClosure = the size of the structure to allocate, must be at least
-	 *  sizeof (GClosure)
+	 * sizeof (GClosure)
 	 * object = a GObject pointer to store in the data field of the newly
-	 *  allocated GClosure
+	 * allocated GClosure
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint sizeofClosure, ObjectG object)
 	{
-		// GClosure* g_closure_new_object (guint sizeof_closure,  GObject *object);
+		// GClosure * g_closure_new_object (guint sizeof_closure,  GObject *object);
 		auto p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
 		if(p is null)
 		{
@@ -169,11 +169,11 @@ public class Closure
 	/**
 	 * Increments the reference count on a closure to force it staying
 	 * alive while the caller holds a pointer to it.
-	 * Returns: The closure passed in, for convenience
+	 * Returns: The closure passed in, for convenience. [transfer none]
 	 */
 	public Closure doref()
 	{
-		// GClosure* g_closure_ref (GClosure *closure);
+		// GClosure * g_closure_ref (GClosure *closure);
 		auto p = g_closure_ref(gClosure);
 		if(p is null)
 		{
@@ -212,10 +212,11 @@ public class Closure
 	 * Invokes the closure, i.e. executes the callback represented by the closure.
 	 * Params:
 	 * returnValue = a GValue to store the return value. May be NULL if the
-	 *  callback of closure doesn't return a value.
+	 * callback of closure doesn't return a value.
 	 * nParamValues = the length of the param_values array
-	 * paramValues = an array of GValues holding the arguments on
-	 *  which to invoke the callback of closure
+	 * paramValues = an array of
+	 * GValues holding the arguments on which to
+	 * invoke the callback of closure. [array length=n_param_values]
 	 * invocationHint = a context-dependent invocation hint
 	 */
 	public void invoke(Value returnValue, uint nParamValues, Value paramValues, void* invocationHint)
@@ -281,7 +282,7 @@ public class Closure
 	 * Notice that notifiers are automatically removed after they are run.
 	 * Params:
 	 * notifyData = data which was passed to g_closure_add_finalize_notifier()
-	 *  when registering notify_func
+	 * when registering notify_func
 	 * notifyFunc = the callback function to remove
 	 */
 	public void removeFinalizeNotifier(void* notifyData, GClosureNotify notifyFunc)
@@ -295,7 +296,7 @@ public class Closure
 	 * Notice that notifiers are automatically removed after they are run.
 	 * Params:
 	 * notifyData = data which was passed to g_closure_add_invalidate_notifier()
-	 *  when registering notify_func
+	 * when registering notify_func
 	 * notifyFunc = the callback function to remove
 	 */
 	public void removeInvalidateNotifier(void* notifyData, GClosureNotify notifyFunc)
@@ -311,13 +312,13 @@ public class Closure
 	 * $(DDOC_COMMENT example)
 	 * Params:
 	 * sizeofClosure = the size of the structure to allocate, must be at least
-	 *  sizeof (GClosure)
+	 * sizeof (GClosure)
 	 * data = data to store in the data field of the newly allocated GClosure
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint sizeofClosure, void* data)
 	{
-		// GClosure* g_closure_new_simple (guint sizeof_closure,  gpointer data);
+		// GClosure * g_closure_new_simple (guint sizeof_closure,  gpointer data);
 		auto p = g_closure_new_simple(sizeofClosure, data);
 		if(p is null)
 		{
@@ -396,5 +397,24 @@ public class Closure
 	{
 		// void g_source_set_closure (GSource *source,  GClosure *closure);
 		g_source_set_closure((source is null) ? null : source.getSourceStruct(), (closure is null) ? null : closure.getClosureStruct());
+	}
+	
+	/**
+	 * Sets a dummy callback for source. The callback will do nothing, and
+	 * if the source expects a gboolean return value, it will return TRUE.
+	 * (If the source expects any other type of return value, it will return
+	 * a 0/NULL value; whatever g_value_init() initializes a GValue to for
+	 * that type.)
+	 * If the source is not one of the standard GLib types, the
+	 * closure_callback and closure_marshal fields of the GSourceFuncs
+	 * structure must have been filled in with pointers to appropriate
+	 * functions.
+	 * Params:
+	 * source = the source
+	 */
+	public static void gSourceSetDummyCallback(Source source)
+	{
+		// void g_source_set_dummy_callback (GSource *source);
+		g_source_set_dummy_callback((source is null) ? null : source.getSourceStruct());
 	}
 }
