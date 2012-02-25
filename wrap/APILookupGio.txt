@@ -120,7 +120,7 @@ outFile: File
 file: gio-GFileAttribute.html
 struct: GFileAttributeInfoList
 class: FileAttributeInfoList
-prefix:  g_file_attribute_info_list_
+prefix: g_file_attribute_info_list_
 import: glib.Str
 structWrap: GFileAttributeInfoList* FileAttributeInfoList
 outFile: FileAttributeInfoList
@@ -128,7 +128,7 @@ outFile: FileAttributeInfoList
 file: GFileInfo.html
 struct: GFileInfo
 class: FileInfo
-extend; GObject
+extend: GObject
 prefix: g_file_info_
 noprefix: g_file_attribute_matcher_
 import: glib.Str

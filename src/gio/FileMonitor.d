@@ -34,7 +34,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- g_file_monitor_
@@ -65,6 +65,7 @@ private import gio.File;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -80,7 +81,7 @@ private import gio.File;
  * cause notifications to be blocked even if the thread-default
  * context is still running).
  */
-public class FileMonitor
+public class FileMonitor : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -94,7 +95,7 @@ public class FileMonitor
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gFileMonitor;
 	}
@@ -109,7 +110,21 @@ public class FileMonitor
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gFileMonitor);
+		if( ptr !is null )
+		{
+			this = cast(FileMonitor)ptr;
+			return;
+		}
+		super(cast(GObject*)gFileMonitor);
 		this.gFileMonitor = gFileMonitor;
+	}
+	
+	protected override void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gFileMonitor = cast(GFileMonitor*)obj;
 	}
 	
 	/**

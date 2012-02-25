@@ -34,7 +34,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- g_file_info_
@@ -78,6 +78,7 @@ private import gio.FileAttributeMatcher;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -101,7 +102,7 @@ private import gio.FileAttributeMatcher;
  * GFileAttributeMatcher allows for searching through a GFileInfo for
  * attributes.
  */
-public class FileInfo
+public class FileInfo : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -115,7 +116,7 @@ public class FileInfo
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gFileInfo;
 	}
@@ -130,7 +131,21 @@ public class FileInfo
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gFileInfo);
+		if( ptr !is null )
+		{
+			this = cast(FileInfo)ptr;
+			return;
+		}
+		super(cast(GObject*)gFileInfo);
 		this.gFileInfo = gFileInfo;
+	}
+	
+	protected override void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gFileInfo = cast(GFileInfo*)obj;
 	}
 	
 	/**

@@ -39,6 +39,7 @@
  * 	- AsyncResultIF
  * prefixes:
  * 	- g_simple_async_result_
+ * 	- g_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -458,7 +459,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * userData = user data passed to callback. [closure]
 	 * error = the GError to report
 	 */
-	public static void gSimpleAsyncReportGerrorInIdle(ObjectG object, GAsyncReadyCallback callback, void* userData, ErrorG error)
+	public static void simpleAsyncReportGerrorInIdle(ObjectG object, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{
 		// void g_simple_async_report_gerror_in_idle  (GObject *object,  GAsyncReadyCallback callback,  gpointer user_data,  const GError *error);
 		g_simple_async_report_gerror_in_idle((object is null) ? null : object.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
@@ -475,7 +476,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * userData = user data passed to callback.
 	 * error = the GError to report
 	 */
-	public static void gSimpleAsyncReportTakeGerrorInIdle(ObjectG object, GAsyncReadyCallback callback, void* userData, ErrorG error)
+	public static void simpleAsyncReportTakeGerrorInIdle(ObjectG object, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{
 		// void g_simple_async_report_take_gerror_in_idle  (GObject *object,  GAsyncReadyCallback callback,  gpointer user_data,  GError *error);
 		g_simple_async_report_take_gerror_in_idle((object is null) ? null : object.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
