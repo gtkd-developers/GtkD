@@ -139,9 +139,9 @@ public class PgLayoutLine
 	 * of the rectangles.
 	 * Params:
 	 * inkRect = rectangle used to store the extents of the glyph string
-	 *  as drawn, or NULL
+	 *  as drawn, or NULL. [out]
 	 * logicalRect = rectangle used to store the logical extents of the glyph
-	 *  string, or NULL
+	 *  string, or NULL. [out]
 	 */
 	public void getExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -157,9 +157,9 @@ public class PgLayoutLine
 	 * passes them as first argument to pango_extents_to_pixels()).
 	 * Params:
 	 * inkRect = rectangle used to store the extents of the glyph string
-	 *  as drawn, or NULL
-	 * logicalRect = rectangle used to store the logical extents of the glyph
-	 *  string, or NULL
+	 *  as drawn, or NULL. [out]
+	 * logicalRect = rectangle used to store the logical extents of the
+	 *  glyph string, or NULL. [out]
 	 */
 	public void getPixelExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -174,7 +174,7 @@ public class PgLayoutLine
 	 * trailing = an integer indicating the edge of the grapheme to retrieve
 	 *  the position of. If > 0, the trailing edge of the grapheme,
 	 *  if 0, the leading of the grapheme.
-	 * xPos = location to store the x_offset (in Pango unit)
+	 * xPos = location to store the x_offset (in Pango unit). [out]
 	 */
 	public void indexToX(int index, int trailing, out int xPos)
 	{
@@ -197,11 +197,11 @@ public class PgLayoutLine
 	 * xPos = the X offset (in Pango units)
 	 *  from the left edge of the line.
 	 * index = location to store calculated byte index for
-	 *  the grapheme in which the user clicked.
+	 *  the grapheme in which the user clicked. [out]
 	 * trailing = location to store an integer indicating where
 	 *  in the grapheme the user clicked. It will either
 	 *  be zero, or the number of characters in the
-	 *  grapheme. 0 represents the leading edge of the grapheme.
+	 *  grapheme. 0 represents the leading edge of the grapheme. [out]
 	 * Returns: FALSE if x_pos was outside the line, TRUE if inside
 	 */
 	public int xToIndex(int xPos, out int index, out int trailing)
@@ -227,7 +227,12 @@ public class PgLayoutLine
 	 *  the last range will extend all the way to the trailing
 	 *  edge of the layout. Otherwise, it will end at the
 	 *  trailing edge of the last character.
-	 * ranges = out): (array length=n_ranges): (transfer=full. out.
+	 * ranges = location to store a pointer to an array of ranges.
+	 *  The array will be of length 2*n_ranges,
+	 *  with each range starting at (*ranges)[2*n]
+	 *  and of width (*ranges)[2*n + 1] - (*ranges)[2*n].
+	 *  This array must be freed with g_free(). The coordinates are relative
+	 *  to the layout and are in Pango units. [out][array length=n_ranges][transfer=full]
 	 */
 	public void getXRanges(int startIndex, int endIndex, out int[] ranges)
 	{

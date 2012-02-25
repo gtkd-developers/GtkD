@@ -1411,6 +1411,231 @@ mixin( _shared ~ "static this()
 	Linker.link(g_bus_unwatch_name, \"g_bus_unwatch_name\", LIBRARY.GIO);
 	Linker.link(g_bus_watch_name_with_closures, \"g_bus_watch_name_with_closures\", LIBRARY.GIO);
 	Linker.link(g_bus_watch_name_on_connection_with_closures, \"g_bus_watch_name_on_connection_with_closures\", LIBRARY.GIO);
+
+	// gio.DBusProxy
+
+	Linker.link(g_dbus_proxy_new, \"g_dbus_proxy_new\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_finish, \"g_dbus_proxy_new_finish\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_sync, \"g_dbus_proxy_new_sync\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_for_bus, \"g_dbus_proxy_new_for_bus\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_for_bus_finish, \"g_dbus_proxy_new_for_bus_finish\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_new_for_bus_sync, \"g_dbus_proxy_new_for_bus_sync\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_flags, \"g_dbus_proxy_get_flags\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_connection, \"g_dbus_proxy_get_connection\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_name, \"g_dbus_proxy_get_name\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_name_owner, \"g_dbus_proxy_get_name_owner\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_object_path, \"g_dbus_proxy_get_object_path\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_interface_name, \"g_dbus_proxy_get_interface_name\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_default_timeout, \"g_dbus_proxy_get_default_timeout\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_set_default_timeout, \"g_dbus_proxy_set_default_timeout\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_cached_property, \"g_dbus_proxy_get_cached_property\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_set_cached_property, \"g_dbus_proxy_set_cached_property\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_cached_property_names, \"g_dbus_proxy_get_cached_property_names\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_set_interface_info, \"g_dbus_proxy_set_interface_info\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_interface_info, \"g_dbus_proxy_get_interface_info\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call, \"g_dbus_proxy_call\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call_finish, \"g_dbus_proxy_call_finish\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call_sync, \"g_dbus_proxy_call_sync\", LIBRARY.GIO);
+
+	// gio.FilenameCompleter
+
+	Linker.link(g_filename_completer_new, \"g_filename_completer_new\", LIBRARY.GIO);
+	Linker.link(g_filename_completer_get_completion_suffix, \"g_filename_completer_get_completion_suffix\", LIBRARY.GIO);
+	Linker.link(g_filename_completer_get_completions, \"g_filename_completer_get_completions\", LIBRARY.GIO);
+	Linker.link(g_filename_completer_set_dirs_only, \"g_filename_completer_set_dirs_only\", LIBRARY.GIO);
+
+	// gio.Settings
+
+	Linker.link(g_settings_new, \"g_settings_new\", LIBRARY.GIO);
+	Linker.link(g_settings_new_with_path, \"g_settings_new_with_path\", LIBRARY.GIO);
+	Linker.link(g_settings_new_with_backend, \"g_settings_new_with_backend\", LIBRARY.GIO);
+	Linker.link(g_settings_new_with_backend_and_path, \"g_settings_new_with_backend_and_path\", LIBRARY.GIO);
+	Linker.link(g_settings_sync, \"g_settings_sync\", LIBRARY.GIO);
+	Linker.link(g_settings_get_value, \"g_settings_get_value\", LIBRARY.GIO);
+	Linker.link(g_settings_set_value, \"g_settings_set_value\", LIBRARY.GIO);
+	Linker.link(g_settings_is_writable, \"g_settings_is_writable\", LIBRARY.GIO);
+	Linker.link(g_settings_delay, \"g_settings_delay\", LIBRARY.GIO);
+	Linker.link(g_settings_apply, \"g_settings_apply\", LIBRARY.GIO);
+	Linker.link(g_settings_revert, \"g_settings_revert\", LIBRARY.GIO);
+	Linker.link(g_settings_get_has_unapplied, \"g_settings_get_has_unapplied\", LIBRARY.GIO);
+	Linker.link(g_settings_get_child, \"g_settings_get_child\", LIBRARY.GIO);
+	Linker.link(g_settings_reset, \"g_settings_reset\", LIBRARY.GIO);
+	Linker.link(g_settings_list_schemas, \"g_settings_list_schemas\", LIBRARY.GIO);
+	Linker.link(g_settings_list_relocatable_schemas, \"g_settings_list_relocatable_schemas\", LIBRARY.GIO);
+	Linker.link(g_settings_list_keys, \"g_settings_list_keys\", LIBRARY.GIO);
+	Linker.link(g_settings_list_children, \"g_settings_list_children\", LIBRARY.GIO);
+	Linker.link(g_settings_get_range, \"g_settings_get_range\", LIBRARY.GIO);
+	Linker.link(g_settings_range_check, \"g_settings_range_check\", LIBRARY.GIO);
+	Linker.link(g_settings_get, \"g_settings_get\", LIBRARY.GIO);
+	Linker.link(g_settings_set, \"g_settings_set\", LIBRARY.GIO);
+	Linker.link(g_settings_get_boolean, \"g_settings_get_boolean\", LIBRARY.GIO);
+	Linker.link(g_settings_set_boolean, \"g_settings_set_boolean\", LIBRARY.GIO);
+	Linker.link(g_settings_get_int, \"g_settings_get_int\", LIBRARY.GIO);
+	Linker.link(g_settings_set_int, \"g_settings_set_int\", LIBRARY.GIO);
+	Linker.link(g_settings_get_double, \"g_settings_get_double\", LIBRARY.GIO);
+	Linker.link(g_settings_set_double, \"g_settings_set_double\", LIBRARY.GIO);
+	Linker.link(g_settings_get_string, \"g_settings_get_string\", LIBRARY.GIO);
+	Linker.link(g_settings_set_string, \"g_settings_set_string\", LIBRARY.GIO);
+	Linker.link(g_settings_get_strv, \"g_settings_get_strv\", LIBRARY.GIO);
+	Linker.link(g_settings_set_strv, \"g_settings_set_strv\", LIBRARY.GIO);
+	Linker.link(g_settings_get_enum, \"g_settings_get_enum\", LIBRARY.GIO);
+	Linker.link(g_settings_set_enum, \"g_settings_set_enum\", LIBRARY.GIO);
+	Linker.link(g_settings_get_flags, \"g_settings_get_flags\", LIBRARY.GIO);
+	Linker.link(g_settings_set_flags, \"g_settings_set_flags\", LIBRARY.GIO);
+	Linker.link(g_settings_get_mapped, \"g_settings_get_mapped\", LIBRARY.GIO);
+	Linker.link(g_settings_bind, \"g_settings_bind\", LIBRARY.GIO);
+	Linker.link(g_settings_bind_with_mapping, \"g_settings_bind_with_mapping\", LIBRARY.GIO);
+	Linker.link(g_settings_bind_writable, \"g_settings_bind_writable\", LIBRARY.GIO);
+	Linker.link(g_settings_unbind, \"g_settings_unbind\", LIBRARY.GIO);
+
+	// gio.SettingsBackend
+
+	Linker.link(g_settings_backend_get_default, \"g_settings_backend_get_default\", LIBRARY.GIO);
+	Linker.link(g_settings_backend_changed, \"g_settings_backend_changed\", LIBRARY.GIO);
+	Linker.link(g_settings_backend_path_changed, \"g_settings_backend_path_changed\", LIBRARY.GIO);
+	Linker.link(g_settings_backend_keys_changed, \"g_settings_backend_keys_changed\", LIBRARY.GIO);
+	Linker.link(g_settings_backend_path_writable_changed, \"g_settings_backend_path_writable_changed\", LIBRARY.GIO);
+	Linker.link(g_settings_backend_writable_changed, \"g_settings_backend_writable_changed\", LIBRARY.GIO);
+	Linker.link(g_settings_backend_changed_tree, \"g_settings_backend_changed_tree\", LIBRARY.GIO);
+	Linker.link(g_settings_backend_flatten_tree, \"g_settings_backend_flatten_tree\", LIBRARY.GIO);
+	Linker.link(g_keyfile_settings_backend_new, \"g_keyfile_settings_backend_new\", LIBRARY.GIO);
+	Linker.link(g_memory_settings_backend_new, \"g_memory_settings_backend_new\", LIBRARY.GIO);
+	Linker.link(g_null_settings_backend_new, \"g_null_settings_backend_new\", LIBRARY.GIO);
+
+	// gio.Permission
+
+	Linker.link(g_permission_get_allowed, \"g_permission_get_allowed\", LIBRARY.GIO);
+	Linker.link(g_permission_get_can_acquire, \"g_permission_get_can_acquire\", LIBRARY.GIO);
+	Linker.link(g_permission_get_can_release, \"g_permission_get_can_release\", LIBRARY.GIO);
+	Linker.link(g_permission_acquire, \"g_permission_acquire\", LIBRARY.GIO);
+	Linker.link(g_permission_acquire_async, \"g_permission_acquire_async\", LIBRARY.GIO);
+	Linker.link(g_permission_acquire_finish, \"g_permission_acquire_finish\", LIBRARY.GIO);
+	Linker.link(g_permission_release, \"g_permission_release\", LIBRARY.GIO);
+	Linker.link(g_permission_release_async, \"g_permission_release_async\", LIBRARY.GIO);
+	Linker.link(g_permission_release_finish, \"g_permission_release_finish\", LIBRARY.GIO);
+	Linker.link(g_permission_impl_update, \"g_permission_impl_update\", LIBRARY.GIO);
+
+	// gio.SimplePermission
+
+	Linker.link(g_simple_permission_new, \"g_simple_permission_new\", LIBRARY.GIO);
+
+	// gio.ActionGroupT
+
+
+	// gio.ActionGroupT
+
+	Linker.link(g_action_group_has_action, \"g_action_group_has_action\", LIBRARY.GIO);
+	Linker.link(g_action_group_list_actions, \"g_action_group_list_actions\", LIBRARY.GIO);
+	Linker.link(g_action_group_get_action_enabled, \"g_action_group_get_action_enabled\", LIBRARY.GIO);
+	Linker.link(g_action_group_get_action_parameter_type, \"g_action_group_get_action_parameter_type\", LIBRARY.GIO);
+	Linker.link(g_action_group_get_action_state_type, \"g_action_group_get_action_state_type\", LIBRARY.GIO);
+	Linker.link(g_action_group_get_action_state_hint, \"g_action_group_get_action_state_hint\", LIBRARY.GIO);
+	Linker.link(g_action_group_get_action_state, \"g_action_group_get_action_state\", LIBRARY.GIO);
+	Linker.link(g_action_group_change_action_state, \"g_action_group_change_action_state\", LIBRARY.GIO);
+	Linker.link(g_action_group_activate_action, \"g_action_group_activate_action\", LIBRARY.GIO);
+	Linker.link(g_action_group_action_added, \"g_action_group_action_added\", LIBRARY.GIO);
+	Linker.link(g_action_group_action_removed, \"g_action_group_action_removed\", LIBRARY.GIO);
+	Linker.link(g_action_group_action_enabled_changed, \"g_action_group_action_enabled_changed\", LIBRARY.GIO);
+	Linker.link(g_action_group_action_state_changed, \"g_action_group_action_state_changed\", LIBRARY.GIO);
+
+	// gio.SimpleActionGroup
+
+	Linker.link(g_simple_action_group_new, \"g_simple_action_group_new\", LIBRARY.GIO);
+	Linker.link(g_simple_action_group_lookup, \"g_simple_action_group_lookup\", LIBRARY.GIO);
+	Linker.link(g_simple_action_group_insert, \"g_simple_action_group_insert\", LIBRARY.GIO);
+	Linker.link(g_simple_action_group_remove, \"g_simple_action_group_remove\", LIBRARY.GIO);
+
+	// gio.ActionT
+
+
+	// gio.ActionT
+
+	Linker.link(g_action_get_name, \"g_action_get_name\", LIBRARY.GIO);
+	Linker.link(g_action_get_parameter_type, \"g_action_get_parameter_type\", LIBRARY.GIO);
+	Linker.link(g_action_get_state_type, \"g_action_get_state_type\", LIBRARY.GIO);
+	Linker.link(g_action_get_state_hint, \"g_action_get_state_hint\", LIBRARY.GIO);
+	Linker.link(g_action_get_enabled, \"g_action_get_enabled\", LIBRARY.GIO);
+	Linker.link(g_action_get_state, \"g_action_get_state\", LIBRARY.GIO);
+	Linker.link(g_action_set_state, \"g_action_set_state\", LIBRARY.GIO);
+	Linker.link(g_action_activate, \"g_action_activate\", LIBRARY.GIO);
+
+	// gio.Action
+
+
+	// gio.SimpleAction
+
+	Linker.link(g_simple_action_new, \"g_simple_action_new\", LIBRARY.GIO);
+	Linker.link(g_simple_action_new_stateful, \"g_simple_action_new_stateful\", LIBRARY.GIO);
+	Linker.link(g_simple_action_set_enabled, \"g_simple_action_set_enabled\", LIBRARY.GIO);
+
+	// gio.Application
+
+	Linker.link(g_application_id_is_valid, \"g_application_id_is_valid\", LIBRARY.GIO);
+	Linker.link(g_application_new, \"g_application_new\", LIBRARY.GIO);
+	Linker.link(g_application_get_application_id, \"g_application_get_application_id\", LIBRARY.GIO);
+	Linker.link(g_application_set_application_id, \"g_application_set_application_id\", LIBRARY.GIO);
+	Linker.link(g_application_get_inactivity_timeout, \"g_application_get_inactivity_timeout\", LIBRARY.GIO);
+	Linker.link(g_application_set_inactivity_timeout, \"g_application_set_inactivity_timeout\", LIBRARY.GIO);
+	Linker.link(g_application_get_flags, \"g_application_get_flags\", LIBRARY.GIO);
+	Linker.link(g_application_set_flags, \"g_application_set_flags\", LIBRARY.GIO);
+	Linker.link(g_application_set_action_group, \"g_application_set_action_group\", LIBRARY.GIO);
+	Linker.link(g_application_get_is_registered, \"g_application_get_is_registered\", LIBRARY.GIO);
+	Linker.link(g_application_get_is_remote, \"g_application_get_is_remote\", LIBRARY.GIO);
+	Linker.link(g_application_register, \"g_application_register\", LIBRARY.GIO);
+	Linker.link(g_application_hold, \"g_application_hold\", LIBRARY.GIO);
+	Linker.link(g_application_release, \"g_application_release\", LIBRARY.GIO);
+	Linker.link(g_application_activate, \"g_application_activate\", LIBRARY.GIO);
+	Linker.link(g_application_open, \"g_application_open\", LIBRARY.GIO);
+	Linker.link(g_application_run, \"g_application_run\", LIBRARY.GIO);
+
+	// gio.ApplicationCommandLine
+
+	Linker.link(g_application_command_line_get_arguments, \"g_application_command_line_get_arguments\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_cwd, \"g_application_command_line_get_cwd\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_environ, \"g_application_command_line_get_environ\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_getenv, \"g_application_command_line_getenv\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_is_remote, \"g_application_command_line_get_is_remote\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_platform_data, \"g_application_command_line_get_platform_data\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_set_exit_status, \"g_application_command_line_set_exit_status\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_exit_status, \"g_application_command_line_get_exit_status\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_print, \"g_application_command_line_print\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_printerr, \"g_application_command_line_printerr\", LIBRARY.GIO);
+
+	// gio.Vfs
+
+	Linker.link(g_vfs_get_file_for_path, \"g_vfs_get_file_for_path\", LIBRARY.GIO);
+	Linker.link(g_vfs_get_file_for_uri, \"g_vfs_get_file_for_uri\", LIBRARY.GIO);
+	Linker.link(g_vfs_parse_name, \"g_vfs_parse_name\", LIBRARY.GIO);
+	Linker.link(g_vfs_get_default, \"g_vfs_get_default\", LIBRARY.GIO);
+	Linker.link(g_vfs_get_local, \"g_vfs_get_local\", LIBRARY.GIO);
+	Linker.link(g_vfs_is_active, \"g_vfs_is_active\", LIBRARY.GIO);
+	Linker.link(g_vfs_get_supported_uri_schemes, \"g_vfs_get_supported_uri_schemes\", LIBRARY.GIO);
+
+	// gio.IOModule
+
+	Linker.link(g_io_module_new, \"g_io_module_new\", LIBRARY.GIO);
+	Linker.link(g_io_modules_load_all_in_directory, \"g_io_modules_load_all_in_directory\", LIBRARY.GIO);
+	Linker.link(g_io_modules_scan_all_in_directory, \"g_io_modules_scan_all_in_directory\", LIBRARY.GIO);
+	Linker.link(g_io_module_load, \"g_io_module_load\", LIBRARY.GIO);
+	Linker.link(g_io_module_unload, \"g_io_module_unload\", LIBRARY.GIO);
+	Linker.link(g_io_module_query, \"g_io_module_query\", LIBRARY.GIO);
+
+	// gio.IOExtension
+
+	Linker.link(g_io_extension_get_name, \"g_io_extension_get_name\", LIBRARY.GIO);
+	Linker.link(g_io_extension_get_priority, \"g_io_extension_get_priority\", LIBRARY.GIO);
+	Linker.link(g_io_extension_get_type, \"g_io_extension_get_type\", LIBRARY.GIO);
+	Linker.link(g_io_extension_ref_class, \"g_io_extension_ref_class\", LIBRARY.GIO);
+
+	// gio.IOExtensionPoint
+
+	Linker.link(g_io_extension_point_get_extension_by_name, \"g_io_extension_point_get_extension_by_name\", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_get_extensions, \"g_io_extension_point_get_extensions\", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_get_required_type, \"g_io_extension_point_get_required_type\", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_implement, \"g_io_extension_point_implement\", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_lookup, \"g_io_extension_point_lookup\", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_register, \"g_io_extension_point_register\", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_set_required_type, \"g_io_extension_point_set_required_type\", LIBRARY.GIO);
 }");
 
 mixin( gshared ~"extern(C)
@@ -2792,6 +3017,231 @@ mixin( gshared ~"extern(C)
 	void function(guint watcherId) c_g_bus_unwatch_name;
 	guint function(GBusType busType, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_with_closures;
 	guint function(GDBusConnection* connection, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_on_connection_with_closures;
+	
+	// gio.DBusProxy
+	
+	void function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_new;
+	GDBusProxy* function(GAsyncResult* res, GError** error) c_g_dbus_proxy_new_finish;
+	GDBusProxy* function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GError** error) c_g_dbus_proxy_new_sync;
+	void function(GBusType busType, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_new_for_bus;
+	GDBusProxy* function(GAsyncResult* res, GError** error) c_g_dbus_proxy_new_for_bus_finish;
+	GDBusProxy* function(GBusType busType, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GError** error) c_g_dbus_proxy_new_for_bus_sync;
+	GDBusProxyFlags function(GDBusProxy* proxy) c_g_dbus_proxy_get_flags;
+	GDBusConnection* function(GDBusProxy* proxy) c_g_dbus_proxy_get_connection;
+	gchar* function(GDBusProxy* proxy) c_g_dbus_proxy_get_name;
+	gchar* function(GDBusProxy* proxy) c_g_dbus_proxy_get_name_owner;
+	gchar* function(GDBusProxy* proxy) c_g_dbus_proxy_get_object_path;
+	gchar* function(GDBusProxy* proxy) c_g_dbus_proxy_get_interface_name;
+	gint function(GDBusProxy* proxy) c_g_dbus_proxy_get_default_timeout;
+	void function(GDBusProxy* proxy, gint timeoutMsec) c_g_dbus_proxy_set_default_timeout;
+	GVariant* function(GDBusProxy* proxy, gchar* propertyName) c_g_dbus_proxy_get_cached_property;
+	void function(GDBusProxy* proxy, gchar* propertyName, GVariant* value) c_g_dbus_proxy_set_cached_property;
+	gchar** function(GDBusProxy* proxy) c_g_dbus_proxy_get_cached_property_names;
+	void function(GDBusProxy* proxy, GDBusInterfaceInfo* info) c_g_dbus_proxy_set_interface_info;
+	GDBusInterfaceInfo* function(GDBusProxy* proxy) c_g_dbus_proxy_get_interface_info;
+	void function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_call;
+	GVariant* function(GDBusProxy* proxy, GAsyncResult* res, GError** error) c_g_dbus_proxy_call_finish;
+	GVariant* function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_proxy_call_sync;
+	
+	// gio.FilenameCompleter
+	
+	GFilenameCompleter* function() c_g_filename_completer_new;
+	char* function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completion_suffix;
+	char** function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completions;
+	void function(GFilenameCompleter* completer, gboolean dirsOnly) c_g_filename_completer_set_dirs_only;
+	
+	// gio.Settings
+	
+	GSettings* function(gchar* schema) c_g_settings_new;
+	GSettings* function(gchar* schema, gchar* path) c_g_settings_new_with_path;
+	GSettings* function(gchar* schema, GSettingsBackend* backend) c_g_settings_new_with_backend;
+	GSettings* function(gchar* schema, GSettingsBackend* backend, gchar* path) c_g_settings_new_with_backend_and_path;
+	void function() c_g_settings_sync;
+	GVariant* function(GSettings* settings, gchar* key) c_g_settings_get_value;
+	gboolean function(GSettings* settings, gchar* key, GVariant* value) c_g_settings_set_value;
+	gboolean function(GSettings* settings, gchar* name) c_g_settings_is_writable;
+	void function(GSettings* settings) c_g_settings_delay;
+	void function(GSettings* settings) c_g_settings_apply;
+	void function(GSettings* settings) c_g_settings_revert;
+	gboolean function(GSettings* settings) c_g_settings_get_has_unapplied;
+	GSettings* function(GSettings* settings, gchar* name) c_g_settings_get_child;
+	void function(GSettings* settings, gchar* key) c_g_settings_reset;
+	gchar** function() c_g_settings_list_schemas;
+	gchar** function() c_g_settings_list_relocatable_schemas;
+	gchar** function(GSettings* settings) c_g_settings_list_keys;
+	gchar** function(GSettings* settings) c_g_settings_list_children;
+	GVariant* function(GSettings* settings, gchar* key) c_g_settings_get_range;
+	gboolean function(GSettings* settings, gchar* key, GVariant* value) c_g_settings_range_check;
+	void function(GSettings* settings, gchar* key, gchar* format, ... ) c_g_settings_get;
+	gboolean function(GSettings* settings, gchar* key, gchar* format, ... ) c_g_settings_set;
+	gboolean function(GSettings* settings, gchar* key) c_g_settings_get_boolean;
+	gboolean function(GSettings* settings, gchar* key, gboolean value) c_g_settings_set_boolean;
+	gint function(GSettings* settings, gchar* key) c_g_settings_get_int;
+	gboolean function(GSettings* settings, gchar* key, gint value) c_g_settings_set_int;
+	gdouble function(GSettings* settings, gchar* key) c_g_settings_get_double;
+	gboolean function(GSettings* settings, gchar* key, gdouble value) c_g_settings_set_double;
+	gchar* function(GSettings* settings, gchar* key) c_g_settings_get_string;
+	gboolean function(GSettings* settings, gchar* key, gchar* value) c_g_settings_set_string;
+	gchar** function(GSettings* settings, gchar* key) c_g_settings_get_strv;
+	gboolean function(GSettings* settings, gchar* key, gchar** value) c_g_settings_set_strv;
+	gint function(GSettings* settings, gchar* key) c_g_settings_get_enum;
+	gboolean function(GSettings* settings, gchar* key, gint value) c_g_settings_set_enum;
+	guint function(GSettings* settings, gchar* key) c_g_settings_get_flags;
+	gboolean function(GSettings* settings, gchar* key, guint value) c_g_settings_set_flags;
+	gpointer function(GSettings* settings, gchar* key, GSettingsGetMapping mapping, gpointer userData) c_g_settings_get_mapped;
+	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, GSettingsBindFlags flags) c_g_settings_bind;
+	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, GSettingsBindFlags flags, GSettingsBindGetMapping getMapping, GSettingsBindSetMapping setMapping, gpointer userData, GDestroyNotify destroy) c_g_settings_bind_with_mapping;
+	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, gboolean inverted) c_g_settings_bind_writable;
+	void function(gpointer object, gchar* property) c_g_settings_unbind;
+	
+	// gio.SettingsBackend
+	
+	GSettingsBackend* function() c_g_settings_backend_get_default;
+	void function(GSettingsBackend* backend, gchar* key, gpointer originTag) c_g_settings_backend_changed;
+	void function(GSettingsBackend* backend, gchar* path, gpointer originTag) c_g_settings_backend_path_changed;
+	void function(GSettingsBackend* backend, gchar* path, gchar** items, gpointer originTag) c_g_settings_backend_keys_changed;
+	void function(GSettingsBackend* backend, gchar* path) c_g_settings_backend_path_writable_changed;
+	void function(GSettingsBackend* backend, gchar* key) c_g_settings_backend_writable_changed;
+	void function(GSettingsBackend* backend, GTree* tree, gpointer originTag) c_g_settings_backend_changed_tree;
+	void function(GTree* tree, gchar** path, gchar*** keys, GVariant*** values) c_g_settings_backend_flatten_tree;
+	GSettingsBackend* function(gchar* filename, gchar* rootPath, gchar* rootGroup) c_g_keyfile_settings_backend_new;
+	GSettingsBackend* function() c_g_memory_settings_backend_new;
+	GSettingsBackend* function() c_g_null_settings_backend_new;
+	
+	// gio.Permission
+	
+	gboolean function(GPermission* permission) c_g_permission_get_allowed;
+	gboolean function(GPermission* permission) c_g_permission_get_can_acquire;
+	gboolean function(GPermission* permission) c_g_permission_get_can_release;
+	gboolean function(GPermission* permission, GCancellable* cancellable, GError** error) c_g_permission_acquire;
+	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_permission_acquire_async;
+	gboolean function(GPermission* permission, GAsyncResult* result, GError** error) c_g_permission_acquire_finish;
+	gboolean function(GPermission* permission, GCancellable* cancellable, GError** error) c_g_permission_release;
+	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_permission_release_async;
+	gboolean function(GPermission* permission, GAsyncResult* result, GError** error) c_g_permission_release_finish;
+	void function(GPermission* permission, gboolean allowed, gboolean canAcquire, gboolean canRelease) c_g_permission_impl_update;
+	
+	// gio.SimplePermission
+	
+	GPermission* function(gboolean allowed) c_g_simple_permission_new;
+	
+	// gio.ActionGroupT
+	
+	
+	// gio.ActionGroupT
+	
+	gboolean function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_has_action;
+	gchar** function(GActionGroup* actionGroup) c_g_action_group_list_actions;
+	gboolean function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_enabled;
+	GVariantType* function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_parameter_type;
+	GVariantType* function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_state_type;
+	GVariant* function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_state_hint;
+	GVariant* function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_state;
+	void function(GActionGroup* actionGroup, gchar* actionName, GVariant* value) c_g_action_group_change_action_state;
+	void function(GActionGroup* actionGroup, gchar* actionName, GVariant* parameter) c_g_action_group_activate_action;
+	void function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_action_added;
+	void function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_action_removed;
+	void function(GActionGroup* actionGroup, gchar* actionName, gboolean enabled) c_g_action_group_action_enabled_changed;
+	void function(GActionGroup* actionGroup, gchar* actionName, GVariant* state) c_g_action_group_action_state_changed;
+	
+	// gio.SimpleActionGroup
+	
+	GSimpleActionGroup* function() c_g_simple_action_group_new;
+	GAction* function(GSimpleActionGroup* simple, gchar* actionName) c_g_simple_action_group_lookup;
+	void function(GSimpleActionGroup* simple, GAction* action) c_g_simple_action_group_insert;
+	void function(GSimpleActionGroup* simple, gchar* actionName) c_g_simple_action_group_remove;
+	
+	// gio.ActionT
+	
+	
+	// gio.ActionT
+	
+	gchar* function(GAction* action) c_g_action_get_name;
+	GVariantType* function(GAction* action) c_g_action_get_parameter_type;
+	GVariantType* function(GAction* action) c_g_action_get_state_type;
+	GVariant* function(GAction* action) c_g_action_get_state_hint;
+	gboolean function(GAction* action) c_g_action_get_enabled;
+	GVariant* function(GAction* action) c_g_action_get_state;
+	void function(GAction* action, GVariant* value) c_g_action_set_state;
+	void function(GAction* action, GVariant* parameter) c_g_action_activate;
+	
+	// gio.Action
+	
+	
+	// gio.SimpleAction
+	
+	GSimpleAction* function(gchar* name, GVariantType* parameterType) c_g_simple_action_new;
+	GSimpleAction* function(gchar* name, GVariantType* parameterType, GVariant* state) c_g_simple_action_new_stateful;
+	void function(GSimpleAction* simple, gboolean enabled) c_g_simple_action_set_enabled;
+	
+	// gio.Application
+	
+	gboolean function(gchar* applicationId) c_g_application_id_is_valid;
+	GApplication* function(gchar* applicationId, GApplicationFlags flags) c_g_application_new;
+	gchar* function(GApplication* application) c_g_application_get_application_id;
+	void function(GApplication* application, gchar* applicationId) c_g_application_set_application_id;
+	guint function(GApplication* application) c_g_application_get_inactivity_timeout;
+	void function(GApplication* application, guint inactivityTimeout) c_g_application_set_inactivity_timeout;
+	GApplicationFlags function(GApplication* application) c_g_application_get_flags;
+	void function(GApplication* application, GApplicationFlags flags) c_g_application_set_flags;
+	void function(GApplication* application, GActionGroup* actionGroup) c_g_application_set_action_group;
+	gboolean function(GApplication* application) c_g_application_get_is_registered;
+	gboolean function(GApplication* application) c_g_application_get_is_remote;
+	gboolean function(GApplication* application, GCancellable* cancellable, GError** error) c_g_application_register;
+	void function(GApplication* application) c_g_application_hold;
+	void function(GApplication* application) c_g_application_release;
+	void function(GApplication* application) c_g_application_activate;
+	void function(GApplication* application, GFile** files, gint nFiles, gchar* hint) c_g_application_open;
+	int function(GApplication* application, int argc, char** argv) c_g_application_run;
+	
+	// gio.ApplicationCommandLine
+	
+	gchar** function(GApplicationCommandLine* cmdline, int* argc) c_g_application_command_line_get_arguments;
+	gchar* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_cwd;
+	gchar** function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_environ;
+	gchar* function(GApplicationCommandLine* cmdline, gchar* name) c_g_application_command_line_getenv;
+	gboolean function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_is_remote;
+	GVariant* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_platform_data;
+	void function(GApplicationCommandLine* cmdline, int exitStatus) c_g_application_command_line_set_exit_status;
+	int function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_exit_status;
+	void function(GApplicationCommandLine* cmdline, gchar* format, ... ) c_g_application_command_line_print;
+	void function(GApplicationCommandLine* cmdline, gchar* format, ... ) c_g_application_command_line_printerr;
+	
+	// gio.Vfs
+	
+	GFile* function(GVfs* vfs, char* path) c_g_vfs_get_file_for_path;
+	GFile* function(GVfs* vfs, char* uri) c_g_vfs_get_file_for_uri;
+	GFile* function(GVfs* vfs, char* parseName) c_g_vfs_parse_name;
+	GVfs* function() c_g_vfs_get_default;
+	GVfs* function() c_g_vfs_get_local;
+	gboolean function(GVfs* vfs) c_g_vfs_is_active;
+	gchar** function(GVfs* vfs) c_g_vfs_get_supported_uri_schemes;
+	
+	// gio.IOModule
+	
+	GIOModule* function(gchar* filename) c_g_io_module_new;
+	GList* function(gchar* dirname) c_g_io_modules_load_all_in_directory;
+	void function(char* dirname) c_g_io_modules_scan_all_in_directory;
+	void function(GIOModule* modul) c_g_io_module_load;
+	void function(GIOModule* modul) c_g_io_module_unload;
+	char** function() c_g_io_module_query;
+	
+	// gio.IOExtension
+	
+	char* function(GIOExtension* extension) c_g_io_extension_get_name;
+	gint function(GIOExtension* extension) c_g_io_extension_get_priority;
+	GType function(GIOExtension* extension) c_g_io_extension_get_type;
+	GTypeClass* function(GIOExtension* extension) c_g_io_extension_ref_class;
+	
+	// gio.IOExtensionPoint
+	
+	GIOExtension* function(GIOExtensionPoint* extensionPoint, char* name) c_g_io_extension_point_get_extension_by_name;
+	GList* function(GIOExtensionPoint* extensionPoint) c_g_io_extension_point_get_extensions;
+	GType function(GIOExtensionPoint* extensionPoint) c_g_io_extension_point_get_required_type;
+	GIOExtension* function(char* extensionPointName, GType type, char* extensionName, gint priority) c_g_io_extension_point_implement;
+	GIOExtensionPoint* function(char* name) c_g_io_extension_point_lookup;
+	GIOExtensionPoint* function(char* name) c_g_io_extension_point_register;
+	void function(GIOExtensionPoint* extensionPoint, GType type) c_g_io_extension_point_set_required_type;
 }");
 
 // gio.File
@@ -4170,3 +4620,228 @@ alias c_g_bus_watch_name_on_connection  g_bus_watch_name_on_connection;
 alias c_g_bus_unwatch_name  g_bus_unwatch_name;
 alias c_g_bus_watch_name_with_closures  g_bus_watch_name_with_closures;
 alias c_g_bus_watch_name_on_connection_with_closures  g_bus_watch_name_on_connection_with_closures;
+
+// gio.DBusProxy
+
+alias c_g_dbus_proxy_new  g_dbus_proxy_new;
+alias c_g_dbus_proxy_new_finish  g_dbus_proxy_new_finish;
+alias c_g_dbus_proxy_new_sync  g_dbus_proxy_new_sync;
+alias c_g_dbus_proxy_new_for_bus  g_dbus_proxy_new_for_bus;
+alias c_g_dbus_proxy_new_for_bus_finish  g_dbus_proxy_new_for_bus_finish;
+alias c_g_dbus_proxy_new_for_bus_sync  g_dbus_proxy_new_for_bus_sync;
+alias c_g_dbus_proxy_get_flags  g_dbus_proxy_get_flags;
+alias c_g_dbus_proxy_get_connection  g_dbus_proxy_get_connection;
+alias c_g_dbus_proxy_get_name  g_dbus_proxy_get_name;
+alias c_g_dbus_proxy_get_name_owner  g_dbus_proxy_get_name_owner;
+alias c_g_dbus_proxy_get_object_path  g_dbus_proxy_get_object_path;
+alias c_g_dbus_proxy_get_interface_name  g_dbus_proxy_get_interface_name;
+alias c_g_dbus_proxy_get_default_timeout  g_dbus_proxy_get_default_timeout;
+alias c_g_dbus_proxy_set_default_timeout  g_dbus_proxy_set_default_timeout;
+alias c_g_dbus_proxy_get_cached_property  g_dbus_proxy_get_cached_property;
+alias c_g_dbus_proxy_set_cached_property  g_dbus_proxy_set_cached_property;
+alias c_g_dbus_proxy_get_cached_property_names  g_dbus_proxy_get_cached_property_names;
+alias c_g_dbus_proxy_set_interface_info  g_dbus_proxy_set_interface_info;
+alias c_g_dbus_proxy_get_interface_info  g_dbus_proxy_get_interface_info;
+alias c_g_dbus_proxy_call  g_dbus_proxy_call;
+alias c_g_dbus_proxy_call_finish  g_dbus_proxy_call_finish;
+alias c_g_dbus_proxy_call_sync  g_dbus_proxy_call_sync;
+
+// gio.FilenameCompleter
+
+alias c_g_filename_completer_new  g_filename_completer_new;
+alias c_g_filename_completer_get_completion_suffix  g_filename_completer_get_completion_suffix;
+alias c_g_filename_completer_get_completions  g_filename_completer_get_completions;
+alias c_g_filename_completer_set_dirs_only  g_filename_completer_set_dirs_only;
+
+// gio.Settings
+
+alias c_g_settings_new  g_settings_new;
+alias c_g_settings_new_with_path  g_settings_new_with_path;
+alias c_g_settings_new_with_backend  g_settings_new_with_backend;
+alias c_g_settings_new_with_backend_and_path  g_settings_new_with_backend_and_path;
+alias c_g_settings_sync  g_settings_sync;
+alias c_g_settings_get_value  g_settings_get_value;
+alias c_g_settings_set_value  g_settings_set_value;
+alias c_g_settings_is_writable  g_settings_is_writable;
+alias c_g_settings_delay  g_settings_delay;
+alias c_g_settings_apply  g_settings_apply;
+alias c_g_settings_revert  g_settings_revert;
+alias c_g_settings_get_has_unapplied  g_settings_get_has_unapplied;
+alias c_g_settings_get_child  g_settings_get_child;
+alias c_g_settings_reset  g_settings_reset;
+alias c_g_settings_list_schemas  g_settings_list_schemas;
+alias c_g_settings_list_relocatable_schemas  g_settings_list_relocatable_schemas;
+alias c_g_settings_list_keys  g_settings_list_keys;
+alias c_g_settings_list_children  g_settings_list_children;
+alias c_g_settings_get_range  g_settings_get_range;
+alias c_g_settings_range_check  g_settings_range_check;
+alias c_g_settings_get  g_settings_get;
+alias c_g_settings_set  g_settings_set;
+alias c_g_settings_get_boolean  g_settings_get_boolean;
+alias c_g_settings_set_boolean  g_settings_set_boolean;
+alias c_g_settings_get_int  g_settings_get_int;
+alias c_g_settings_set_int  g_settings_set_int;
+alias c_g_settings_get_double  g_settings_get_double;
+alias c_g_settings_set_double  g_settings_set_double;
+alias c_g_settings_get_string  g_settings_get_string;
+alias c_g_settings_set_string  g_settings_set_string;
+alias c_g_settings_get_strv  g_settings_get_strv;
+alias c_g_settings_set_strv  g_settings_set_strv;
+alias c_g_settings_get_enum  g_settings_get_enum;
+alias c_g_settings_set_enum  g_settings_set_enum;
+alias c_g_settings_get_flags  g_settings_get_flags;
+alias c_g_settings_set_flags  g_settings_set_flags;
+alias c_g_settings_get_mapped  g_settings_get_mapped;
+alias c_g_settings_bind  g_settings_bind;
+alias c_g_settings_bind_with_mapping  g_settings_bind_with_mapping;
+alias c_g_settings_bind_writable  g_settings_bind_writable;
+alias c_g_settings_unbind  g_settings_unbind;
+
+// gio.SettingsBackend
+
+alias c_g_settings_backend_get_default  g_settings_backend_get_default;
+alias c_g_settings_backend_changed  g_settings_backend_changed;
+alias c_g_settings_backend_path_changed  g_settings_backend_path_changed;
+alias c_g_settings_backend_keys_changed  g_settings_backend_keys_changed;
+alias c_g_settings_backend_path_writable_changed  g_settings_backend_path_writable_changed;
+alias c_g_settings_backend_writable_changed  g_settings_backend_writable_changed;
+alias c_g_settings_backend_changed_tree  g_settings_backend_changed_tree;
+alias c_g_settings_backend_flatten_tree  g_settings_backend_flatten_tree;
+alias c_g_keyfile_settings_backend_new  g_keyfile_settings_backend_new;
+alias c_g_memory_settings_backend_new  g_memory_settings_backend_new;
+alias c_g_null_settings_backend_new  g_null_settings_backend_new;
+
+// gio.Permission
+
+alias c_g_permission_get_allowed  g_permission_get_allowed;
+alias c_g_permission_get_can_acquire  g_permission_get_can_acquire;
+alias c_g_permission_get_can_release  g_permission_get_can_release;
+alias c_g_permission_acquire  g_permission_acquire;
+alias c_g_permission_acquire_async  g_permission_acquire_async;
+alias c_g_permission_acquire_finish  g_permission_acquire_finish;
+alias c_g_permission_release  g_permission_release;
+alias c_g_permission_release_async  g_permission_release_async;
+alias c_g_permission_release_finish  g_permission_release_finish;
+alias c_g_permission_impl_update  g_permission_impl_update;
+
+// gio.SimplePermission
+
+alias c_g_simple_permission_new  g_simple_permission_new;
+
+// gio.ActionGroupT
+
+
+// gio.ActionGroupT
+
+alias c_g_action_group_has_action  g_action_group_has_action;
+alias c_g_action_group_list_actions  g_action_group_list_actions;
+alias c_g_action_group_get_action_enabled  g_action_group_get_action_enabled;
+alias c_g_action_group_get_action_parameter_type  g_action_group_get_action_parameter_type;
+alias c_g_action_group_get_action_state_type  g_action_group_get_action_state_type;
+alias c_g_action_group_get_action_state_hint  g_action_group_get_action_state_hint;
+alias c_g_action_group_get_action_state  g_action_group_get_action_state;
+alias c_g_action_group_change_action_state  g_action_group_change_action_state;
+alias c_g_action_group_activate_action  g_action_group_activate_action;
+alias c_g_action_group_action_added  g_action_group_action_added;
+alias c_g_action_group_action_removed  g_action_group_action_removed;
+alias c_g_action_group_action_enabled_changed  g_action_group_action_enabled_changed;
+alias c_g_action_group_action_state_changed  g_action_group_action_state_changed;
+
+// gio.SimpleActionGroup
+
+alias c_g_simple_action_group_new  g_simple_action_group_new;
+alias c_g_simple_action_group_lookup  g_simple_action_group_lookup;
+alias c_g_simple_action_group_insert  g_simple_action_group_insert;
+alias c_g_simple_action_group_remove  g_simple_action_group_remove;
+
+// gio.ActionT
+
+
+// gio.ActionT
+
+alias c_g_action_get_name  g_action_get_name;
+alias c_g_action_get_parameter_type  g_action_get_parameter_type;
+alias c_g_action_get_state_type  g_action_get_state_type;
+alias c_g_action_get_state_hint  g_action_get_state_hint;
+alias c_g_action_get_enabled  g_action_get_enabled;
+alias c_g_action_get_state  g_action_get_state;
+alias c_g_action_set_state  g_action_set_state;
+alias c_g_action_activate  g_action_activate;
+
+// gio.Action
+
+
+// gio.SimpleAction
+
+alias c_g_simple_action_new  g_simple_action_new;
+alias c_g_simple_action_new_stateful  g_simple_action_new_stateful;
+alias c_g_simple_action_set_enabled  g_simple_action_set_enabled;
+
+// gio.Application
+
+alias c_g_application_id_is_valid  g_application_id_is_valid;
+alias c_g_application_new  g_application_new;
+alias c_g_application_get_application_id  g_application_get_application_id;
+alias c_g_application_set_application_id  g_application_set_application_id;
+alias c_g_application_get_inactivity_timeout  g_application_get_inactivity_timeout;
+alias c_g_application_set_inactivity_timeout  g_application_set_inactivity_timeout;
+alias c_g_application_get_flags  g_application_get_flags;
+alias c_g_application_set_flags  g_application_set_flags;
+alias c_g_application_set_action_group  g_application_set_action_group;
+alias c_g_application_get_is_registered  g_application_get_is_registered;
+alias c_g_application_get_is_remote  g_application_get_is_remote;
+alias c_g_application_register  g_application_register;
+alias c_g_application_hold  g_application_hold;
+alias c_g_application_release  g_application_release;
+alias c_g_application_activate  g_application_activate;
+alias c_g_application_open  g_application_open;
+alias c_g_application_run  g_application_run;
+
+// gio.ApplicationCommandLine
+
+alias c_g_application_command_line_get_arguments  g_application_command_line_get_arguments;
+alias c_g_application_command_line_get_cwd  g_application_command_line_get_cwd;
+alias c_g_application_command_line_get_environ  g_application_command_line_get_environ;
+alias c_g_application_command_line_getenv  g_application_command_line_getenv;
+alias c_g_application_command_line_get_is_remote  g_application_command_line_get_is_remote;
+alias c_g_application_command_line_get_platform_data  g_application_command_line_get_platform_data;
+alias c_g_application_command_line_set_exit_status  g_application_command_line_set_exit_status;
+alias c_g_application_command_line_get_exit_status  g_application_command_line_get_exit_status;
+alias c_g_application_command_line_print  g_application_command_line_print;
+alias c_g_application_command_line_printerr  g_application_command_line_printerr;
+
+// gio.Vfs
+
+alias c_g_vfs_get_file_for_path  g_vfs_get_file_for_path;
+alias c_g_vfs_get_file_for_uri  g_vfs_get_file_for_uri;
+alias c_g_vfs_parse_name  g_vfs_parse_name;
+alias c_g_vfs_get_default  g_vfs_get_default;
+alias c_g_vfs_get_local  g_vfs_get_local;
+alias c_g_vfs_is_active  g_vfs_is_active;
+alias c_g_vfs_get_supported_uri_schemes  g_vfs_get_supported_uri_schemes;
+
+// gio.IOModule
+
+alias c_g_io_module_new  g_io_module_new;
+alias c_g_io_modules_load_all_in_directory  g_io_modules_load_all_in_directory;
+alias c_g_io_modules_scan_all_in_directory  g_io_modules_scan_all_in_directory;
+alias c_g_io_module_load  g_io_module_load;
+alias c_g_io_module_unload  g_io_module_unload;
+alias c_g_io_module_query  g_io_module_query;
+
+// gio.IOExtension
+
+alias c_g_io_extension_get_name  g_io_extension_get_name;
+alias c_g_io_extension_get_priority  g_io_extension_get_priority;
+alias c_g_io_extension_get_type  g_io_extension_get_type;
+alias c_g_io_extension_ref_class  g_io_extension_ref_class;
+
+// gio.IOExtensionPoint
+
+alias c_g_io_extension_point_get_extension_by_name  g_io_extension_point_get_extension_by_name;
+alias c_g_io_extension_point_get_extensions  g_io_extension_point_get_extensions;
+alias c_g_io_extension_point_get_required_type  g_io_extension_point_get_required_type;
+alias c_g_io_extension_point_implement  g_io_extension_point_implement;
+alias c_g_io_extension_point_lookup  g_io_extension_point_lookup;
+alias c_g_io_extension_point_register  g_io_extension_point_register;
+alias c_g_io_extension_point_set_required_type  g_io_extension_point_set_required_type;

@@ -2194,7 +2194,7 @@ closeFile: DBusNames
 file: GDBusProxy.html
 struct: GDBusProxy
 class: DBusProxy
-extend; GObject
+extend: GObject
 prefix: g_dbus_proxy_
 import: glib.Str
 import: glib.ErrorG

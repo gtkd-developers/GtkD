@@ -567,7 +567,7 @@ public class PgFontDescription
 	 */
 	public string toFilename()
 	{
-		// char * pango_font_description_to_filename (const PangoFontDescription *desc);
+		// char * pango_font_description_to_filename  (const PangoFontDescription *desc);
 		return Str.toString(pango_font_description_to_filename(pangoFontDescription));
 	}
 }

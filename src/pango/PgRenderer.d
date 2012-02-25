@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = PangoRenderer.html
+ * inFile  = pango-pango-renderer.html
  * outPack = pango
  * outFile = PgRenderer
  * strct   = PangoRenderer

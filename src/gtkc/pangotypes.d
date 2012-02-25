@@ -86,21 +86,21 @@ public alias PangoGlyphItem PangoLayoutRun;
  * text and are no longer used; See PangoGravity for how
  * vertical text is handled in Pango.
  * PANGO_DIRECTION_LTR
- *  A strong left-to-right direction
+ * A strong left-to-right direction
  * PANGO_DIRECTION_RTL
- *  A strong right-to-left direction
+ * A strong right-to-left direction
  * PANGO_DIRECTION_TTB_LTR
- *  Deprecated value; treated the
+ * Deprecated value; treated the
  *  same as PANGO_DIRECTION_RTL.
  * PANGO_DIRECTION_TTB_RTL
- *  Deprecated value; treated the
+ * Deprecated value; treated the
  *  same as PANGO_DIRECTION_LTR
  * PANGO_DIRECTION_WEAK_LTR
- *  A weak left-to-right direction
+ * A weak left-to-right direction
  * PANGO_DIRECTION_WEAK_RTL
- *  A weak right-to-left direction
+ * A weak right-to-left direction
  * PANGO_DIRECTION_NEUTRAL
- *  No direction specified
+ * No direction specified
  */
 public enum PangoDirection
 {
@@ -117,43 +117,43 @@ public enum PangoDirection
  * type of a Unicode character as specified by the
  * Unicode bidirectional algorithm.
  * PANGO_BIDI_TYPE_L
- *  Left-to-Right
+ * Left-to-Right
  * PANGO_BIDI_TYPE_LRE
- *  Left-to-Right Embedding
+ * Left-to-Right Embedding
  * PANGO_BIDI_TYPE_LRO
- *  Left-to-Right Override
+ * Left-to-Right Override
  * PANGO_BIDI_TYPE_R
- *  Right-to-Left
+ * Right-to-Left
  * PANGO_BIDI_TYPE_AL
- *  Right-to-Left Arabic
+ * Right-to-Left Arabic
  * PANGO_BIDI_TYPE_RLE
- *  Right-to-Left Embedding
+ * Right-to-Left Embedding
  * PANGO_BIDI_TYPE_RLO
- *  Right-to-Left Override
+ * Right-to-Left Override
  * PANGO_BIDI_TYPE_PDF
- *  Pop Directional Format
+ * Pop Directional Format
  * PANGO_BIDI_TYPE_EN
- *  European Number
+ * European Number
  * PANGO_BIDI_TYPE_ES
- *  European Number Separator
+ * European Number Separator
  * PANGO_BIDI_TYPE_ET
- *  European Number Terminator
+ * European Number Terminator
  * PANGO_BIDI_TYPE_AN
- *  Arabic Number
+ * Arabic Number
  * PANGO_BIDI_TYPE_CS
- *  Common Number Separator
+ * Common Number Separator
  * PANGO_BIDI_TYPE_NSM
- *  Nonspacing Mark
+ * Nonspacing Mark
  * PANGO_BIDI_TYPE_BN
- *  Boundary Neutral
+ * Boundary Neutral
  * PANGO_BIDI_TYPE_B
- *  Paragraph Separator
+ * Paragraph Separator
  * PANGO_BIDI_TYPE_S
- *  Segment Separator
+ * Segment Separator
  * PANGO_BIDI_TYPE_WS
- *  Whitespace
+ * Whitespace
  * PANGO_BIDI_TYPE_ON
- *  Other Neutrals
+ * Other Neutrals
  * Since 1.22
  */
 public enum PangoBidiType
@@ -184,11 +184,11 @@ public enum PangoBidiType
 /**
  * An enumeration specifying the various slant styles possible for a font.
  * PANGO_STYLE_NORMAL
- *  the font is upright.
+ * the font is upright.
  * PANGO_STYLE_OBLIQUE
- *  the font is slanted, but in a roman style.
+ * the font is slanted, but in a roman style.
  * PANGO_STYLE_ITALIC
- *  the font is slanted in an italic style.
+ * the font is slanted in an italic style.
  */
 public enum PangoStyle
 {
@@ -463,13 +463,13 @@ public enum PangoWrapMode
  * text in order to make it fit to a given width and replaced
  * with an ellipsis.
  * PANGO_ELLIPSIZE_NONE
- *  No ellipsization
+ * No ellipsization
  * PANGO_ELLIPSIZE_START
- *  Omit characters at the start of the text
+ * Omit characters at the start of the text
  * PANGO_ELLIPSIZE_MIDDLE
- *  Omit characters in the middle of the text
+ * Omit characters in the middle of the text
  * PANGO_ELLIPSIZE_END
- *  Omit characters at the end of the text
+ * Omit characters at the end of the text
  */
 public enum PangoEllipsizeMode
 {
@@ -760,15 +760,15 @@ public enum PangoScript
  * pango_context_get_base_gravity().
  * See also: PangoGravityHint
  * PANGO_GRAVITY_SOUTH
- *  Glyphs stand upright (default)
+ * Glyphs stand upright (default)
  * PANGO_GRAVITY_EAST
- *  Glyphs are rotated 90 degrees clockwise
+ * Glyphs are rotated 90 degrees clockwise
  * PANGO_GRAVITY_NORTH
- *  Glyphs are upside-down
+ * Glyphs are upside-down
  * PANGO_GRAVITY_WEST
- *  Glyphs are rotated 90 degrees counter-clockwise
+ * Glyphs are rotated 90 degrees counter-clockwise
  * PANGO_GRAVITY_AUTO
- *  Gravity is resolved from the context matrix
+ * Gravity is resolved from the context matrix
  * Since 1.16
  */
 public enum PangoGravity
@@ -785,13 +785,13 @@ public enum PangoGravity
  * example.
  * See PangoGravity.
  * PANGO_GRAVITY_HINT_NATURAL
- *  scripts will take their natural gravity based
+ * scripts will take their natural gravity based
  * on the base gravity and the script. This is the default.
  * PANGO_GRAVITY_HINT_STRONG
- *  always use the base gravity set, regardless of
+ * always use the base gravity set, regardless of
  * the script.
  * PANGO_GRAVITY_HINT_LINE
- *  for scripts not in their natural direction (eg.
+ * for scripts not in their natural direction (eg.
  * Latin in East gravity), choose per-script gravity such that every script
  * respects the line progression. This means, Latin and Arabic will take
  * opposite gravities and both flow top-to-bottom for example.
@@ -807,13 +807,13 @@ public enum PangoGravityHint
  * PangoRenderPart defines different items to render for such
  * purposes as setting colors.
  * PANGO_RENDER_PART_FOREGROUND
- *  the text itself
+ * the text itself
  * PANGO_RENDER_PART_BACKGROUND
- *  the area behind the text
+ * the area behind the text
  * PANGO_RENDER_PART_UNDERLINE
- *  underlines
+ * underlines
  * PANGO_RENDER_PART_STRIKETHROUGH
- *  strikethrough lines
+ * strikethrough lines
  * Since 1.8
  */
 public enum PangoRenderPart
@@ -994,6 +994,18 @@ public struct PangoRectangle
  * x_device = x_user * matrix->xx + y_user * matrix->xy + matrix->x0;
  * y_device = x_user * matrix->yx + y_user * matrix->yy + matrix->y0;
  * double  xx;
+ * 1st component of the transformation matrix
+ * double  xy;
+ * 2nd component of the transformation matrix
+ * double  yx;
+ * 3rd component of the transformation matrix
+ * double  yy;
+ * 4th component of the transformation matrix
+ * double  x0;
+ * x translation
+ * double  y0;
+ * y translation
+ * Since 1.6
  */
 public struct PangoMatrix
 {
@@ -1597,6 +1609,7 @@ public struct PangoCairoFontMap{}
  * render Pango objects such as PangoGlyphString and
  * PangoLayout.
  * PangoMatrix  *matrix;
+ * the current transformation matrix for the Renderer; may
  */
 public struct PangoRenderer
 {
@@ -1607,6 +1620,15 @@ public struct PangoRenderer
 /**
  * Class structure for PangoRenderer.
  * draw_glyphs  ()
+ * draws a PangoGlyphString
+ * draw_rectangle  ()
+ * draws a rectangle
+ * draw_error_underline  ()
+ * draws a squiggly line that approximately
+ * covers the given rectangle in the style of an underline used to
+ * indicate a spelling error.
+ * draw_shape  ()
+ * draw content for a glyph shaped with PangoAttrShape.
  */
 public struct PangoRendererClass
 {
@@ -1715,6 +1737,12 @@ public struct PangoEngineLang{}
 /**
  * Class structure for PangoEngineLang
  * script_break  ()
+ * Provides a custom implementation of pango_break().
+ * If NULL, pango_default_break() is used instead. If not NULL, for
+ * Pango versions before 1.16 (module interface version before 1.6.0),
+ * this was called instead of pango_default_break(), but in newer versions,
+ * pango_default_break() is always called and this is called after that to
+ * allow tailoring the breaking results.
  */
 public struct PangoEngineLangClass
 {
@@ -1739,6 +1767,7 @@ public struct PangoEngineShape{}
 /**
  * Class structure for PangoEngineShape
  * script_shape  ()
+ * Given a font, a piece of text, and a PangoAnalysis
  */
 public struct PangoEngineShapeClass
 {
@@ -1939,7 +1968,7 @@ public struct PangoEngineShapeClass
 /*
  * Whether a PangoGravity represents vertical writing directions.
  * gravity  :
- *  the PangoGravity to check
+ * the PangoGravity to check
  * Returns  :
  *  TRUE if gravity is PANGO_GRAVITY_EAST or PANGO_GRAVITY_WEST,
  *  FALSE otherwise.
@@ -1960,13 +1989,13 @@ public struct PangoEngineShapeClass
  * function can create instances of the object as follows:
  * $(DDOC_COMMENT example)
  * name  :
- *  Name of the the type to register (for example:, ArabicEngineFc
+ * Name of the the type to register (for example:, ArabicEngineFc
  * prefix  :
- *  Prefix for symbols that will be defined (for example:, arabic_engine_fc
+ * Prefix for symbols that will be defined (for example:, arabic_engine_fc
  * class_init  :
- *  Class initialization function for the new type, or NULL
+ * Class initialization function for the new type, or NULL
  * instance_init  :
- *  Instance initialization function for the new type, or NULL
+ * Instance initialization function for the new type, or NULL
  */
 // TODO
 // #define PANGO_ENGINE_LANG_DEFINE_TYPE(name, prefix, class_init, instance_init)
@@ -1983,13 +2012,13 @@ public struct PangoEngineShapeClass
  * function can create instances of the object as follows:
  * $(DDOC_COMMENT example)
  * name  :
- *  Name of the the type to register (for example:, ArabicEngineFc
+ * Name of the the type to register (for example:, ArabicEngineFc
  * prefix  :
- *  Prefix for symbols that will be defined (for example:, arabic_engine_fc
+ * Prefix for symbols that will be defined (for example:, arabic_engine_fc
  * class_init  :
- *  Class initialization function for the new type, or NULL
+ * Class initialization function for the new type, or NULL
  * instance_init  :
- *  Instance initialization function for the new type, or NULL
+ * Instance initialization function for the new type, or NULL
  */
 // TODO
 // #define PANGO_ENGINE_SHAPE_DEFINE_TYPE(name, prefix, class_init, instance_init)
@@ -2025,11 +2054,11 @@ public struct PangoEngineShapeClass
  * A callback function used by pango_fontset_foreach() when enumerating
  * the fonts in a fontset.
  * fontset  :
- *  a PangoFontset
+ * a PangoFontset
  * font  :
- *  a font from fontset
+ * a font from fontset
  * data  :
- *  callback data
+ * callback data
  * Returns  :
  *  if TRUE, stop iteration and return immediately.
  * Since 1.4

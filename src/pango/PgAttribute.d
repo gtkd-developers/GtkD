@@ -142,9 +142,9 @@ public class PgAttribute
 	 * markupText = markup to parse (see markup format)
 	 * length = length of markup_text, or -1 if nul-terminated
 	 * accelMarker = character that precedes an accelerator, or 0 for none
-	 * attrList = address of return location for a PangoAttrList, or NULL
-	 * text = address of return location for text with tags stripped, or NULL
-	 * accelChar = address of return location for accelerator char, or NULL
+	 * attrList = address of return location for a PangoAttrList, or NULL. [out][allow-none]
+	 * text = address of return location for text with tags stripped, or NULL. [out][allow-none]
+	 * accelChar = address of return location for accelerator char, or NULL. [out][allow-none]
 	 * Returns: FALSE if error is set, otherwise TRUE
 	 * Throws: GException on failure.
 	 */

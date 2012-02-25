@@ -196,7 +196,7 @@ public class PgLayout : ObjectG
 	
 	/**
 	 * Retrieves the PangoContext used for this layout.
-	 * Returns: the PangoContext for the layout. This does not have an additional refcount added, so if you want to keep a copy of this around, you must reference it yourself.
+	 * Returns: the PangoContext for the layout. This does not have an additional refcount added, so if you want to keep a copy of this around, you must reference it yourself. [transfer none]
 	 */
 	public PgContext getContext()
 	{
@@ -645,7 +645,7 @@ public class PgLayout : ObjectG
 	 */
 	public PgTabArray getTabs()
 	{
-		// PangoTabArray* pango_layout_get_tabs (PangoLayout *layout);
+		// PangoTabArray * pango_layout_get_tabs (PangoLayout *layout);
 		auto p = pango_layout_get_tabs(pangoLayout);
 		if(p is null)
 		{
@@ -700,7 +700,7 @@ public class PgLayout : ObjectG
 	 * the layout.
 	 * Params:
 	 * attrs = location to store a pointer to an array of logical attributes
-	 *  This value must be freed with g_free().
+	 *  This value must be freed with g_free(). [out][array length=n_attrs][transfer container length=n_attrs]
 	 */
 	public void getLogAttrs(out PangoLogAttr[] attrs)
 	{
@@ -722,7 +722,7 @@ public class PgLayout : ObjectG
 	 * then pos->width will be negative.
 	 * Params:
 	 * index = byte index within layout
-	 * pos = rectangle in which to store the position of the grapheme
+	 * pos = rectangle in which to store the position of the grapheme. [out]
 	 */
 	public void indexToPos(int index, PangoRectangle* pos)
 	{
@@ -740,8 +740,8 @@ public class PgLayout : ObjectG
 	 *  the leading of the grapheme.
 	 * line = location to store resulting line index. (which will
 	 *  between 0 and pango_layout_get_line_count(layout) - 1)
-	 * xPos = location to store resulting position within line
-	 *  (PANGO_SCALE units per device unit)
+	 * x_pos (out): location to store resulting position within line
+	 *  (PANGO_SCALE units per device unit). [out]
 	 */
 	public void indexToLineX(int index, int trailing, out int line, out int xPos)
 	{
@@ -763,11 +763,11 @@ public class PgLayout : ObjectG
 	 *  from the left edge of the layout.
 	 * y = the Y offset (in Pango units)
 	 *  from the top edge of the layout
-	 * index = location to store calculated byte index
+	 * index = location to store calculated byte index. [out]
 	 * trailing = location to store a integer indicating where
 	 *  in the grapheme the user clicked. It will either
 	 *  be zero, or the number of characters in the
-	 *  grapheme. 0 represents the trailing edge of the grapheme.
+	 *  grapheme. 0 represents the trailing edge of the grapheme. [out]
 	 * Returns: TRUE if the coordinates were inside text, FALSE otherwise.
 	 */
 	public int xyToIndex(int x, int y, out int index, out int trailing)
@@ -787,8 +787,9 @@ public class PgLayout : ObjectG
 	 * direction of the layout are inserted.
 	 * Params:
 	 * index = the byte index of the cursor
-	 * strongPos = location to store the strong cursor position (may be NULL)
-	 * weakPos = location to store the weak cursor position (may be NULL)
+	 * strongPos = location to store the strong cursor position
+	 *  (may be NULL). [out]
+	 * weakPos = location to store the weak cursor position (may be NULL). [out]
 	 */
 	public void getCursorPos(int index, PangoRectangle* strongPos, PangoRectangle* weakPos)
 	{
@@ -824,7 +825,7 @@ public class PgLayout : ObjectG
 	 * newIndex = location to store the new cursor byte index. A value of -1
 	 *  indicates that the cursor has been moved off the beginning
 	 *  of the layout. A value of G_MAXINT indicates that
-	 *  the cursor has been moved off the end of the layout.
+	 *  the cursor has been moved off the end of the layout. [out]
 	 * newTrailing = number of characters to move forward from the location returned
 	 *  for new_index to get the position where the cursor should
 	 *  be displayed. This allows distinguishing the position at
@@ -849,9 +850,10 @@ public class PgLayout : ObjectG
 	 * coordinates begin at the top left corner of the layout.
 	 * Params:
 	 * inkRect = rectangle used to store the extents of the layout as drawn
-	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect = rectangle used to store the logical extents of the layout
-	 * 		 or NULL to indicate that the result is not needed.
+	 *  or NULL to indicate that the result is not needed. [out]
+	 * logicalRect = rectangle used to store the logical extents of the
+	 *  layout or NULL to indicate that the result is not
+	 *  needed. [out]
 	 */
 	public void getExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -867,9 +869,10 @@ public class PgLayout : ObjectG
 	 * passes them as first argument to pango_extents_to_pixels()).
 	 * Params:
 	 * inkRect = rectangle used to store the extents of the layout as drawn
-	 *  or NULL to indicate that the result is not needed.
+	 *  or NULL to indicate that the result is not needed. [out]
 	 * logicalRect = rectangle used to store the logical extents of the
-	 *  layout or NULL to indicate that the result is not needed.
+	 *  layout or NULL to indicate that the result is not
+	 *  needed. [out]
 	 */
 	public void getPixelExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -882,8 +885,8 @@ public class PgLayout : ObjectG
 	 * in Pango units (device units scaled by PANGO_SCALE). This
 	 * is simply a convenience function around pango_layout_get_extents().
 	 * Params:
-	 * width = location to store the logical width, or NULL
-	 * height = location to store the logical height, or NULL
+	 * width = location to store the logical width, or NULL. [out]
+	 * height = location to store the logical height, or NULL. [out]
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -898,8 +901,8 @@ public class PgLayout : ObjectG
 	 * is simply a convenience function around
 	 * pango_layout_get_pixel_extents().
 	 * Params:
-	 * width = location to store the logical width, or NULL
-	 * height = location to store the logical height, or NULL
+	 * width = location to store the logical width, or NULL. [out]
+	 * height = location to store the logical height, or NULL. [out]
 	 */
 	public void getPixelSize(out int width, out int height)
 	{
@@ -974,7 +977,7 @@ public class PgLayout : ObjectG
 	 * Returns the lines of the layout as a list.
 	 * Use the faster pango_layout_get_lines_readonly() if you do not plan
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
-	 * Returns: element-type Pango.LayoutLine): (transfer none. element-type Pango.LayoutLine): (transfer none.
+	 * Returns: a GSList containing the lines in the layout. This points to internal data of the PangoLayout and must be used with care. It will become invalid on any change to the layout's text or properties. [element-type Pango.LayoutLine][transfer none Pango.LayoutLine]
 	 */
 	public ListSG getLines()
 	{
@@ -993,7 +996,7 @@ public class PgLayout : ObjectG
 	 * but the user is not expected
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
 	 * Since 1.16
-	 * Returns: element-type Pango.LayoutLine): (transfer none. element-type Pango.LayoutLine): (transfer none.
+	 * Returns: a GSList containing the lines in the layout. This points to internal data of the PangoLayout and must be used with care. It will become invalid on any change to the layout's text or properties. No changes should be made to the lines. [element-type Pango.LayoutLine][transfer none Pango.LayoutLine]
 	 */
 	public ListSG getLinesReadonly()
 	{

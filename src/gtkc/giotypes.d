@@ -1492,6 +1492,105 @@ public enum GBusNameWatcherFlags
 }
 alias GBusNameWatcherFlags BusNameWatcherFlags;
 
+/**
+ * Flags used when constructing an instance of a GDBusProxy derived class.
+ * G_DBUS_PROXY_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES
+ * Don't load properties.
+ * G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS
+ * Don't connect to signals on the remote object.
+ * G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START
+ * If not set and the proxy if for a well-known name,
+ * then request the bus to launch an owner for the name if no-one owns the name. This flag can
+ * only be used in proxies for well-known names.
+ * Since 2.26
+ */
+public enum GDBusProxyFlags
+{
+	NONE = 0,
+	DO_NOT_LOAD_PROPERTIES = (1<<0),
+	DO_NOT_CONNECT_SIGNALS = (1<<1),
+	DO_NOT_AUTO_START = (1<<2)
+}
+alias GDBusProxyFlags DBusProxyFlags;
+
+/**
+ * Flags used when creating a binding. These flags determine in which
+ * direction the binding works. The default is to synchronize in both
+ * directions.
+ * G_SETTINGS_BIND_DEFAULT
+ * Equivalent to G_SETTINGS_BIND_GET|G_SETTINGS_BIND_SET
+ * G_SETTINGS_BIND_GET
+ * Update the GObject property when the setting changes.
+ *  It is an error to use this flag if the property is not writable.
+ * G_SETTINGS_BIND_SET
+ * Update the setting when the GObject property changes.
+ *  It is an error to use this flag if the property is not readable.
+ * G_SETTINGS_BIND_NO_SENSITIVITY
+ * Do not try to bind a "sensitivity" property to the writability of the setting
+ * G_SETTINGS_BIND_GET_NO_CHANGES
+ * When set in addition to G_SETTINGS_BIND_GET, set the GObject property
+ *  value initially from the setting, but do not listen for changes of the setting
+ * G_SETTINGS_BIND_INVERT_BOOLEAN
+ * When passed to g_settings_bind(), uses a pair of mapping functions that invert
+ *  the boolean value when mapping between the setting and the property. The setting and property must both
+ *  be booleans. You can not pass this flag to g_settings_bind_with_mapping().
+ */
+public enum GSettingsBindFlags
+{
+	DEFAULT,
+	GET = (1<<0),
+	SET = (1<<1),
+	NO_SENSITIVITY = (1<<2),
+	GET_NO_CHANGES = (1<<3),
+	INVERT_BOOLEAN = (1<<4)
+}
+alias GSettingsBindFlags SettingsBindFlags;
+
+/**
+ * Flags used to define the behaviour of a GApplication.
+ * G_APPLICATION_FLAGS_NONE
+ * Default
+ * G_APPLICATION_IS_SERVICE
+ * Run as a service. In this mode, registration
+ *  fails if the service is already running, and the application will
+ *  stay around for a while when the use count falls to zero.
+ * G_APPLICATION_IS_LAUNCHER
+ * Don't try to become the primary instance.
+ * G_APPLICATION_HANDLES_OPEN
+ * This application handles opening files (in
+ *  the primary instance). Note that this flag only affects the default
+ *  implementation of local_command_line(), and has no effect if
+ *  G_APPLICATION_HANDLES_COMMAND_LINE is given.
+ *  See g_application_run() for details.
+ * G_APPLICATION_HANDLES_COMMAND_LINE
+ * This application handles command line
+ *  arguments (in the primary instance). Note that this flag only affect
+ *  the default implementation of local_command_line().
+ *  See g_application_run() for details.
+ * G_APPLICATION_SEND_ENVIRONMENT
+ * Send the environment of the
+ *  launching process to the primary instance. Set this flag if your
+ *  application is expected to behave differently depending on certain
+ *  environment variables. For instance, an editor might be expected
+ *  to use the GIT_COMMITTER_NAME environment variable
+ *  when editing a git commit message. The environment is available
+ *  to the "command-line" signal handler, via
+ *  g_application_command_line_getenv().
+ * Since 2.28
+ */
+public enum GApplicationFlags
+{
+	NONE,
+	G_APPLICATION_IS_SERVICE = (1 << 0),
+	G_APPLICATION_IS_LAUNCHER = (1 << 1),
+	G_APPLICATION_HANDLES_OPEN = (1 << 2),
+	G_APPLICATION_HANDLES_COMMAND_LINE = (1 << 3),
+	G_APPLICATION_SEND_ENVIRONMENT = (1 << 4)
+}
+alias GApplicationFlags ApplicationFlags;
+
 
 /**
  * Main Gtk struct.
@@ -3449,6 +3548,227 @@ public struct GDBusServer{}
 public struct GDBusAuthObserver{}
 
 
+/**
+ * Main Gtk struct.
+ * The GDBusProxy structure contains only private data and
+ * should only be accessed using the provided API.
+ * Since 2.26
+ */
+public struct GDBusProxy{}
+
+
+/**
+ * Class structure for GDBusProxy.
+ * g_properties_changed  ()
+ * Signal class handler for the "g-properties-changed" signal.
+ * g_signal  ()
+ * Signal class handler for the "g-signal" signal.
+ * Since 2.26
+ */
+public struct GDBusProxyClass
+{
+	/+* Signals +/
+	extern(C) void  function(GDBusProxy *proxy,GVariant *changedProperties,char* *invalidatedProperties) gPropertiesChanged;
+	extern(C) void  function(GDBusProxy *proxy,char *senderName,char *signalName,GVariant *parameters) gSignal;
+}
+
+
+/**
+ * Main Gtk struct.
+ * Completes filenames based on files that exist within the file system.
+ */
+public struct GFilenameCompleter{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GSettings{}
+
+
+/**
+ * Main Gtk struct.
+ * An implementation of a settings storage repository.
+ */
+public struct GSettingsBackend{}
+
+
+public struct GSettingsBackendClass
+{
+	GObjectClass parentClass;
+	extern(C) GVariant *  function(GSettingsBackend *backend,char *key,GVariantType *expectedType,int defaultValue) read;
+	extern(C) int  function(GSettingsBackend *backend,char *key) getWritable;
+	extern(C) int  function(GSettingsBackend *backend,char *key,GVariant *value,void* originTag) write;
+	extern(C) int  function(GSettingsBackend *backend,GTree *tree,void* originTag) writeTree;
+	extern(C) void  function(GSettingsBackend *backend,char *key,void* originTag) reset;
+	extern(C) void  function(GSettingsBackend *backend,char *name) subscribe;
+	extern(C) void  function(GSettingsBackend *backend,char *name) unsubscribe;
+	extern(C) void  function(GSettingsBackend *backend) sync;
+	extern(C) GPermission *  function(GSettingsBackend *backend,char *path) getPermission;
+	void* padding[24];
+}
+
+
+/**
+ * Main Gtk struct.
+ * GPermission is an opaque data structure and can only be accessed
+ * using the following functions.
+ */
+public struct GPermission{}
+
+
+/**
+ * Main Gtk struct.
+ * GSimplePermission is an opaque data structure. There are no methods
+ * except for those defined by GPermission.
+ */
+public struct GSimplePermission{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GActionGroup{}
+
+
+/**
+ * Main Gtk struct.
+ * The GSimpleActionGroup structure contains private data and should only be accessed using the provided API.
+ * Since 2.28
+ */
+public struct GSimpleActionGroup{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GAction{}
+
+
+/**
+ * Main Gtk struct.
+ * The GSimpleAction structure contains private
+ * data and should only be accessed using the provided API
+ * Since 2.28
+ */
+public struct GSimpleAction{}
+
+
+/**
+ * GObjectClass  parent_class;
+ * activate  ()
+ * the class closure for the activate signal
+ * Since 2.28
+ */
+public struct GSimpleActionClass
+{
+	GObjectClass parentClass;
+	/+* signals +/
+	extern(C) void  function(GSimpleAction *simple,GVariant *parameter)  activate;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GApplication structure contains private
+ * data and should only be accessed using the provided API
+ * Since 2.28
+ */
+public struct GApplication{}
+
+
+/**
+ * startup  ()
+ * invoked on the primary instance immediately after registration
+ * activate  ()
+ * invoked on the primary instance when an activation occurs
+ * open  ()
+ * invoked on the primary instance when there are files to open
+ * command_line  ()
+ * invoked on the primary instance when a command-line is
+ * not handled locally
+ * local_command_line  ()
+ * invoked (locally) when the process has been invoked
+ * via commandline execution. The virtual function has the chance to
+ * inspect (and possibly replace) the list of command line arguments.
+ * See g_application_run() for more information.
+ * before_emit  ()
+ * invoked on the primary instance before 'activate', 'open',
+ * 'command-line' or any action invocation, gets the 'platform data' from
+ * the calling instance
+ * after_emit  ()
+ * invoked on the primary instance after 'activate', 'open',
+ * 'command-line' or any action invocation, gets the 'platform data' from
+ * the calling instance
+ * add_platform_data  ()
+ * invoked (locally) to add 'platform data' to be sent to
+ * the primary instance when activating, opening or invoking actions
+ * quit_mainloop  ()
+ * invoked on the primary instance when the use count of the
+ * application drops to zero (and after any inactivity timeout, if
+ * requested)
+ * run_mainloop  ()
+ * invoked on the primary instance from g_application_run()
+ * if the use-count is non-zero
+ * Since 2.28
+ */
+public struct GApplicationClass
+{
+	/+* signals +/
+	extern(C) void  function(GApplication *application)  startup;
+	extern(C) void  function(GApplication *application)  activate;
+	extern(C) void  function(GApplication *application,GFile **files,int nFiles,char *hint)  open;
+	extern(C) int  function(GApplication *application,GApplicationCommandLine *commandLine)  commandLine;
+	/+* vfuncs +/
+	extern(C) int  function(GApplication *application,char ***arguments,int *exitStatus)  localCommandLine;
+	extern(C) void  function(GApplication *application,GVariant *platformData)  beforeEmit;
+	extern(C) void  function(GApplication *application,GVariant *platformData)  afterEmit;
+	extern(C) void  function(GApplication *application,GVariantBuilder *builder)  addPlatformData;
+	extern(C) void  function(GApplication *application)  quitMainloop;
+	extern(C) void  function(GApplication *application)  runMainloop;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GApplicationCommandLine structure contains private
+ * data and should only be accessed using the provided API
+ * Since 2.28
+ */
+public struct GApplicationCommandLine{}
+
+
+/**
+ * The GApplicationCommandLineClass structure contains
+ * private data only
+ * Since 2.28
+ */
+public struct GApplicationCommandLineClass{}
+
+
+/**
+ * Main Gtk struct.
+ * Virtual File System object.
+ */
+public struct GVfs{}
+
+
+/**
+ * Main Gtk struct.
+ * Opaque module base class for extending GIO.
+ */
+public struct GIOModule{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GIOExtension{}
+
+
+public struct GIOExtensionPoint{}
+
+
 /*
  * When doing file operations that may take a while, such as moving
  * a file or copying a file, a progress callback is used to pass how
@@ -3861,3 +4181,61 @@ public alias extern(C) void  function (GDBusConnection*, char*, char*, void*) GB
  */
 // void (*GBusNameVanishedCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
 public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusNameVanishedCallback;
+
+/*
+ * The type of the function that is used to convert from a value stored
+ * in a GSettings to a value that is useful to the application.
+ * If the value is successfully mapped, the result should be stored at
+ * result and TRUE returned. If mapping fails (for example, if value
+ * is not in the right format) then FALSE should be returned.
+ * If value is NULL then it means that the mapping function is being
+ * given a "last chance" to successfully return a valid value. TRUE
+ * must be returned in this case.
+ * value  :
+ * the GVariant to map, or NULL
+ * result  :
+ * the result of the mapping. [out]
+ * user_data  :
+ * the user data that was passed to
+ * g_settings_get_mapped(). [closure]
+ * Returns  :
+ * TRUE if the conversion succeeded, FALSE in case of an error
+ */
+// gboolean (*GSettingsGetMapping) (GVariant *value,  gpointer *result,  gpointer user_data);
+public alias extern(C) int  function (GVariant*, gpointer*, void*) GSettingsGetMapping;
+
+/*
+ * The type for the function that is used to convert an object property
+ * value to a GVariant for storing it in GSettings.
+ * value  :
+ * a GValue containing the property value to map
+ * expected_type  :
+ * the GVariantType to create
+ * user_data  :
+ * user data that was specified when the binding was created
+ * Returns  :
+ * a new GVariant holding the data from value,
+ * or NULL in case of an error
+ */
+// GVariant * (*GSettingsBindSetMapping) (const GValue *value,  const GVariantType *expected_type,  gpointer user_data);
+public alias extern(C) GVariant *  function (GValue*, GVariantType*, void*) GSettingsBindSetMapping;
+
+/*
+ * The type for the function that is used to convert from GSettings to
+ * an object property. The value is already initialized to hold values
+ * of the appropriate type.
+ * value  :
+ * return location for the property value
+ * variant  :
+ * the GVariant
+ * user_data  :
+ * user data that was specified when the binding was created
+ * Returns  :
+ * TRUE if the conversion succeeded, FALSE in case of an error
+ * Property Details
+ * The "backend" property
+ *  "backend" GSettingsBackend* : Read / Write / Construct Only
+ * The GSettingsBackend for this settings object.
+ */
+// gboolean (*GSettingsBindGetMapping) (GValue *value,  GVariant *variant,  gpointer user_data);
+public alias extern(C) int  function (GValue*, GVariant*, void*) GSettingsBindGetMapping;

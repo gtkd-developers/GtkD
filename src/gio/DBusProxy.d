@@ -34,7 +34,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- g_dbus_proxy_
@@ -82,6 +82,7 @@ private import gio.DBusConnection;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -112,7 +113,7 @@ private import gio.DBusConnection;
  * See Example  19, “GDBusProxy subclass example” for an example.
  * $(DDOC_COMMENT example)
  */
-public class DBusProxy
+public class DBusProxy : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -126,7 +127,7 @@ public class DBusProxy
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gDBusProxy;
 	}
@@ -141,7 +142,21 @@ public class DBusProxy
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gDBusProxy);
+		if( ptr !is null )
+		{
+			this = cast(DBusProxy)ptr;
+			return;
+		}
+		super(cast(GObject*)gDBusProxy);
 		this.gDBusProxy = gDBusProxy;
+	}
+	
+	protected override void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gDBusProxy = cast(GDBusProxy*)obj;
 	}
 	
 	/**
