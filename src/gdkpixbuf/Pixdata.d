@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-pixbuf-inline.html
+ * inFile  = gdk-pixbuf-Inline-data.html
  * outPack = gdkpixbuf
  * outFile = Pixdata
  * strct   = GdkPixdata
@@ -75,6 +75,12 @@ private import glib.Str;
 
 /**
  * Description
+ * Using GdkPixdata, images can be compiled into an application,
+ * making it unnecessary to refer to external image files at runtime.
+ * gdk-pixbuf; includes a utility named gdk-pixbuf-csource, which
+ * can be used to convert image files into GdkPixdata structures suitable
+ * for inclusion in C sources. To convert the GdkPixdata structures back
+ * into GdkPixbufs, use gdk_pixbuf_from_pixdata.
  */
 public class Pixdata
 {
@@ -132,13 +138,13 @@ public class Pixdata
 	 * newly-allocated memory; otherwise it is reused.
 	 * Params:
 	 * copyPixels = whether to copy raw pixel data; run-length encoded
-	 *  pixel data is always copied.
+	 * pixel data is always copied.
 	 * Returns: a new GdkPixbuf.
 	 * Throws: GException on failure.
 	 */
 	public Pixbuf gdkPixbufFromPixdata(int copyPixels)
 	{
-		// GdkPixbuf* gdk_pixbuf_from_pixdata (const GdkPixdata *pixdata,  gboolean copy_pixels,  GError **error);
+		// GdkPixbuf * gdk_pixbuf_from_pixdata (const GdkPixdata *pixdata,  gboolean copy_pixels,  GError **error);
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_from_pixdata(gdkPixdata, copyPixels, &err);
@@ -164,7 +170,7 @@ public class Pixdata
 	 */
 	public ubyte[] serialize()
 	{
-		// guint8* gdk_pixdata_serialize (const GdkPixdata *pixdata,  guint *stream_length_p);
+		// guint8 * gdk_pixdata_serialize (const GdkPixdata *pixdata,  guint *stream_length_p);
 		uint streamLengthP;
 		auto p = gdk_pixdata_serialize(gdkPixdata, &streamLengthP);
 		return p[0 .. streamLengthP];
@@ -206,12 +212,12 @@ public class Pixdata
 	 * Params:
 	 * name = used for naming generated data structures or macros.
 	 * dumpType = a GdkPixdataDumpType determining the kind of C
-	 *  source to be generated.
+	 * source to be generated.
 	 * Returns: a newly-allocated string containing the C source form of pixdata.
 	 */
 	public StringG toCsource(string name, GdkPixdataDumpType dumpType)
 	{
-		// GString* gdk_pixdata_to_csource (GdkPixdata *pixdata,  const gchar *name,  GdkPixdataDumpType dump_type);
+		// GString * gdk_pixdata_to_csource (GdkPixdata *pixdata,  const gchar *name,  GdkPixdataDumpType dump_type);
 		auto p = gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType);
 		if(p is null)
 		{

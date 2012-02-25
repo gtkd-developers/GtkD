@@ -21,11 +21,19 @@ ln -s gio-html-2.28.7 gio
 curl http://developer.gnome.org/atk/atk-html-2.0.1.tar.gz | tar xvfz -
 ln -s atk-html-2.0.1 atk
 #PANGO
-curl http://library.gnome.org/devel/pango/pango-html-1.28.0.tar.gz | tar xvfz -
-ln -s pango-html-1.28.0 pango
+curl http://developer.gnome.org/pango/pango-html-1.28.4.tar.gz | tar xvfz -
+ln -s pango-html-1.28.4 pango
 #GDK-PIXBUF
-curl http://developer.gnome.org/gdk-pixbuf/gdk-pixbuf-html-2.22.1.tar.gz | tar xvfz -
-ln -s gdk-pixbuf-html-2.22.1 gdk-pixbuf
+curl http://developer.gnome.org/gdk-pixbuf/gdk-pixbuf-html-2.24.0.tar.gz | tar xvfz -
+ln -s gdk-pixbuf-html-2.24.0 gdk-pixbuf
+cd gdk-pixbuf
+rm gdk-pixbuf-File-Loading.html
+wget http://developer.gnome.org/gdk-pixbuf/2.24/gdk-pixbuf-File-Loading.html
+rm gdk-pixbuf-File-saving.html
+wget http://developer.gnome.org/gdk-pixbuf/2.24/gdk-pixbuf-File-saving.html
+rm gdk-pixbuf-Animations.html
+wget http://developer.gnome.org/gdk-pixbuf/2.24/gdk-pixbuf-Animations.html
+cd ..
 #GDK
 curl http://developer.gnome.org/gdk/gdk-html-2.22.1.tar.gz | tar xvfz -
 ln -s gdk-html-2.22.1 gdk

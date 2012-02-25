@@ -605,7 +605,7 @@ code: end
 
 openFile: Pixbuf
 
-file: ../gdk-pixbuf/gdk-pixbuf-creating.html
+file: ../gdk-pixbuf/gdk-pixbuf-Image-Data-in-Memory.html
 struct: GdkPixbuf
 array: gdk_pixbuf_new_from_xpm_data data
 array: gdk_pixbuf_new_from_inline data data_length
@@ -618,17 +618,17 @@ text: end
 
 mergeFile: Pixbuf
 
-file: ../gdk-pixbuf/gdk-pixbuf-gdk-pixbuf.html
+file: ../gdk-pixbuf/gdk-pixbuf-The-GdkPixbuf-Structure.html
 mergeFile:  Pixbuf
 
-file: ../gdk-pixbuf/gdk-pixbuf-refcounting.html
+file: ../gdk-pixbuf/gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html
 mergeFile:  Pixbuf
 
-file: ../gdk-pixbuf/gdk-pixbuf-file-loading.html
+file: ../gdk-pixbuf/gdk-pixbuf-File-Loading.html
 noprefix: gdk_pixbuf_get_file_info 
 mergeFile:  Pixbuf
 
-file: ../gdk-pixbuf/gdk-pixbuf-file-saving.html
+file: ../gdk-pixbuf/gdk-pixbuf-File-saving.html
 array: gdk_pixbuf_savev option_keys
 array: gdk_pixbuf_savev option_values
 array: gdk_pixbuf_save_to_callbackv option_keys
@@ -638,10 +638,10 @@ out: gdk_pixbuf_save_to_bufferv buffer
 nocode: gdk_pixbuf_save_to_bufferv
 mergeFile:  Pixbuf
 
-file: ../gdk-pixbuf/gdk-pixbuf-scaling.html
+file: ../gdk-pixbuf/gdk-pixbuf-Scaling.html
 mergeFile:  Pixbuf
 
-file: ../gdk-pixbuf/gdk-pixbuf-util.html
+file: ../gdk-pixbuf/gdk-pixbuf-Utilities.html
 closeFile:  Pixbuf
 
 file: gdk-Colormaps-and-Colors.html

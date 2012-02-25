@@ -83,6 +83,44 @@ private import gobject.ObjectG;
 
 /**
  * Description
+ * GdkPixbufLoader provides a way for applications to drive the
+ * process of loading an image, by letting them send the image data
+ * directly to the loader instead of having the loader read the data
+ * from a file. Applications can use this functionality instead of
+ * gdk_pixbuf_new_from_file() or gdk_pixbuf_animation_new_from_file()
+ * when they need to parse image data in
+ * small chunks. For example, it should be used when reading an
+ * image from a (potentially) slow network connection, or when
+ * loading an extremely large file.
+ * To use GdkPixbufLoader to load an image, just create a new one,
+ * and call gdk_pixbuf_loader_write() to send the data to it. When
+ * done, gdk_pixbuf_loader_close() should be called to end the stream
+ * and finalize everything. The loader will emit three important
+ * signals throughout the process. The first, "size_prepared",
+ * will be called as soon as the image has enough information to
+ * determine the size of the image to be used. If you want to scale
+ * the image while loading it, you can call gdk_pixbuf_loader_set_size()
+ * in response to this signal.
+ * The second signal, "area_prepared",
+ * will be called as soon as the pixbuf of the desired has been
+ * allocated. You can obtain it by calling gdk_pixbuf_loader_get_pixbuf().
+ * If you want to use it, simply ref it.
+ * In addition, no actual information will be passed in yet, so the
+ * pixbuf can be safely filled with any temporary graphics (or an
+ * initial color) as needed. You can also call
+ * gdk_pixbuf_loader_get_pixbuf() later and get the same pixbuf.
+ * The last signal, "area_updated" gets
+ * called every time a region is updated. This way you can update a
+ * partially completed image. Note that you do not know anything
+ * about the completeness of an image from the area updated. For
+ * example, in an interlaced image, you need to make several passes
+ * before the image is done loading.
+ * Loading an animation
+ * Loading an animation is almost as easy as loading an
+ * image. Once the first "area_prepared" signal
+ * has been emitted, you can call gdk_pixbuf_loader_get_animation()
+ * to get the GdkPixbufAnimation struct and gdk_pixbuf_animation_get_iter()
+ * to get an GdkPixbufAnimationIter for displaying it.
  */
 public class PixbufLoader : ObjectG
 {
@@ -271,6 +309,8 @@ public class PixbufLoader : ObjectG
 	 * of the image that it will create. Applications can call
 	 * gdk_pixbuf_loader_set_size() in response to this signal to set
 	 * the desired size to which the image should be scaled.
+	 * See Also
+	 * gdk_pixbuf_new_from_file(), gdk_pixbuf_animation_new_from_file()
 	 */
 	void addOnSizePrepared(void delegate(gint, gint, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -336,7 +376,7 @@ public class PixbufLoader : ObjectG
 	 * returned, error will be set to an error from the GDK_PIXBUF_ERROR
 	 * or G_FILE_ERROR domains.
 	 * Params:
-	 * buf = Pointer to image data.
+	 * buf = Pointer to image data. [array length=count]
 	 * Returns: TRUE if the write was successful, or FALSE if the loader cannot parse the buffer.
 	 * Throws: GException on failure.
 	 */

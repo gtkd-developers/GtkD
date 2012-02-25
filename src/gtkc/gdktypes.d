@@ -436,6 +436,24 @@ public enum GdkImageType
 }
 alias GdkImageType ImageType;
 
+/**
+ * An error code in the GDK_PIXBUF_ERROR domain. Many gdk-pixbuf;
+ * operations can cause errors in this domain, or in the G_FILE_ERROR
+ * domain.
+ * GDK_PIXBUF_ERROR_CORRUPT_IMAGE
+ * An image file was broken somehow.
+ * GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY
+ * Not enough memory.
+ * GDK_PIXBUF_ERROR_BAD_OPTION
+ * A bad option was passed to a pixbuf save module.
+ * GDK_PIXBUF_ERROR_UNKNOWN_TYPE
+ * Unknown image type.
+ * GDK_PIXBUF_ERROR_UNSUPPORTED_OPERATION
+ * Don't know how to perform the
+ *  given operation on the type of image at hand.
+ * GDK_PIXBUF_ERROR_FAILED
+ * Generic failure code, something went wrong.
+ */
 public enum GdkPixbufError
 {
 	/+* image data hosed +/
@@ -452,12 +470,36 @@ public enum GdkPixbufError
 }
 alias GdkPixbufError PixbufError;
 
+/**
+ * This enumeration defines the color spaces that are supported by
+ * the gdk-pixbuf; library. Currently only RGB is supported.
+ * GDK_COLORSPACE_RGB
+ * Indicates a red/green/blue additive color space.
+ */
 public enum GdkColorspace
 {
 	RGB
 }
 alias GdkColorspace Colorspace;
 
+/**
+ * These values can be passed to
+ * gdk_pixbuf_render_to_drawable_alpha() to control how the alpha
+ * channel of an image should be handled. This function can create a
+ * bilevel clipping mask (black and white) and use it while painting
+ * the image. In the future, when the X Window System gets an alpha
+ * channel extension, it will be possible to do full alpha
+ * compositing onto arbitrary drawables. For now both cases fall
+ * back to a bilevel clipping mask.
+ * GDK_PIXBUF_ALPHA_BILEVEL
+ * A bilevel clipping mask (black and white)
+ *  will be created and used to draw the image. Pixels below 0.5 opacity
+ *  will be considered fully transparent, and all others will be
+ *  considered fully opaque.
+ * GDK_PIXBUF_ALPHA_FULL
+ * For now falls back to GDK_PIXBUF_ALPHA_BILEVEL.
+ *  In the future it will do full alpha compositing.
+ */
 public enum GdkPixbufAlphaMode
 {
 	BILEVEL,
@@ -465,6 +507,38 @@ public enum GdkPixbufAlphaMode
 }
 alias GdkPixbufAlphaMode PixbufAlphaMode;
 
+/**
+ * This enumeration describes the different interpolation modes that
+ *  can be used with the scaling functions. GDK_INTERP_NEAREST is
+ *  the fastest scaling method, but has horrible quality when
+ *  scaling down. GDK_INTERP_BILINEAR is the best choice if you
+ *  aren't sure what to choose, it has a good speed/quality balance.
+ * Note
+ * 	Cubic filtering is missing from the list; hyperbolic
+ * 	interpolation is just as fast and results in higher quality.
+ * GDK_INTERP_NEAREST
+ * Nearest neighbor sampling; this is the fastest
+ *  and lowest quality mode. Quality is normally unacceptable when scaling
+ *  down, but may be OK when scaling up.
+ * GDK_INTERP_TILES
+ * This is an accurate simulation of the PostScript
+ *  image operator without any interpolation enabled. Each pixel is
+ *  rendered as a tiny parallelogram of solid color, the edges of which
+ *  are implemented with antialiasing. It resembles nearest neighbor for
+ *  enlargement, and bilinear for reduction.
+ * GDK_INTERP_BILINEAR
+ * Best quality/speed balance; use this mode by
+ *  default. Bilinear interpolation. For enlargement, it is
+ *  equivalent to point-sampling the ideal bilinear-interpolated image.
+ *  For reduction, it is equivalent to laying down small tiles and
+ *  integrating over the coverage area.
+ * GDK_INTERP_HYPER
+ * This is the slowest and highest quality
+ *  reconstruction function. It is derived from the hyperbolic filters in
+ *  Wolberg's "Digital Image Warping", and is formally defined as the
+ *  hyperbolic-filter sampling the ideal hyperbolic-filter interpolated
+ *  image (the filter is designed to be idempotent for 1:1 pixel mapping).
+ */
 public enum GdkInterpType
 {
 	NEAREST,
@@ -474,6 +548,18 @@ public enum GdkInterpType
 }
 alias GdkInterpType InterpType;
 
+/**
+ * The possible rotations which can be passed to gdk_pixbuf_rotate_simple().
+ * To make them easier to use, their numerical values are the actual degrees.
+ * GDK_PIXBUF_ROTATE_NONE
+ * No rotation.
+ * GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE
+ * Rotate by 90 degrees.
+ * GDK_PIXBUF_ROTATE_UPSIDEDOWN
+ * Rotate by 180 degrees.
+ * GDK_PIXBUF_ROTATE_CLOCKWISE
+ * Rotate by 270 degrees.
+ */
 public enum GdkPixbufRotation
 {
 	ROTATE_NONE = 0,
@@ -2001,6 +2087,11 @@ public struct GdkImage
 
 /**
  * Main Gtk struct.
+ * This is the main structure in the gdk-pixbuf; library. It is
+ * used to represent images. It contains information about the
+ * image's pixel data, its color space, bits per sample, width and
+ * height, and the rowstride (the number of bytes between the start of
+ * one row and the start of the next).
  */
 public struct GdkPixbuf{}
 
@@ -3286,18 +3377,40 @@ public struct GdkAppLaunchContext{}
 public alias extern(C) void  function (GdkSpan*, void*) GdkSpanFunc;
 
 /*
+ * A function of this type is responsible for freeing the pixel array
+ * of a pixbuf. The gdk_pixbuf_new_from_data() function lets you
+ * pass in a pre-allocated pixel array so that a pixbuf can be
+ * created from it; in this case you will need to pass in a function
+ * of GdkPixbufDestroyNotify so that the pixel data can be freed
+ * when the pixbuf is finalized.
  * pixels  :
+ * The pixel array of the pixbuf that is being finalized.
  * data  :
+ * User closure data.
+ * See Also
+ * GdkPixbuf, gdk_pixbuf_new_from_data().
  */
 // void (*GdkPixbufDestroyNotify) (guchar *pixels,  gpointer data);
 public alias extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
 
 /*
+ * Specifies the type of the function passed to
+ * gdk_pixbuf_save_to_callback(). It is called once for each block of
+ * bytes that is "written" by gdk_pixbuf_save_to_callback(). If
+ * successful it should return TRUE. If an error occurs it should set
+ * error and return FALSE, in which case gdk_pixbuf_save_to_callback()
+ * will fail with the same error.
  * buf  :
+ * bytes to be written.
  * count  :
+ * number of bytes in buf.
  * error  :
+ * A location to return an error. [out]
  * data  :
+ * user data passed to gdk_pixbuf_save_to_callback(). [closure]
  * Returns  :
+ * TRUE if successful, FALSE (with error set) if failed.
+ * Since 2.4
  */
 // gboolean (*GdkPixbufSaveFunc) (const gchar *buf,  gsize count,  GError **error,  gpointer data);
 public alias extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSaveFunc;

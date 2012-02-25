@@ -114,7 +114,7 @@ wrap: gdk-pixbuf
 #closeFile:  Pixbuf
 ############################
 
-file: gdk-pixbuf-inline.html
+file: gdk-pixbuf-Inline-data.html
 struct: GdkPixdata
 class: Pixdata
 prefix: gdk_pixdata_
@@ -145,7 +145,7 @@ outFile: Pixdata
 #prefix: 
 #outFile: 
 
-file: gdk-pixbuf-animation.html
+file: gdk-pixbuf-Animations.html
 struct: GdkPixbufAnimation
 class: PixbufAnimation
 prefix: gdk_pixbuf_animation_
@@ -280,7 +280,7 @@ structWrap: GSList* ListSG
 import: glib.Str
 openFile: PixbufFormat
 
-file: gdk-pixbuf-file-loading.html
+file: gdk-pixbuf-File-Loading.html
 prefix: gdk_pixbuf_
 out: gdk_pixbuf_get_file_info width
 out: gdk_pixbuf_get_file_info height

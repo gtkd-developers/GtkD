@@ -662,7 +662,7 @@ outFile: PgCairo
 ### Low Level Functionality ###############################
 ###########################################################
 
-file: PangoRenderer.html
+file: pango-pango-renderer.html
 struct: PangoRenderer
 class: PgRenderer
 prefix: pango_renderer_
