@@ -136,6 +136,7 @@ public class DBusAuthObserver : ObjectG
 	/**
 	 * Emitted to check if a peer that is successfully authenticated
 	 * is authorized.
+	 * TRUE if the peer is authorized, FALSE if not.
 	 * Since 2.26
 	 */
 	void addOnAuthorizeAuthenticatedPeer(bool delegate(IOStream, Credentials, DBusAuthObserver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

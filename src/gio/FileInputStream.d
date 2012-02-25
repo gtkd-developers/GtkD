@@ -153,8 +153,8 @@ public class FileInputStream : InputStream, SeekableIF
 	 * any other operations on the stream will fail with G_IO_ERROR_PENDING.
 	 * Params:
 	 * attributes = a file attribute query string.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GFileInfo, or NULL on error.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * Returns: a GFileInfo, or NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public FileInfo queryInfo(string attributes, Cancellable cancellable)
@@ -189,10 +189,10 @@ public class FileInputStream : InputStream, SeekableIF
 	 * Params:
 	 * attributes = a file attribute query string.
 	 * ioPriority = the I/O priority
-	 *  of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = callback to call when the request is satisfied
-	 * userData = the data to pass to callback function
+	 * of the request.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = callback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void queryInfoAsync(string attributes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -204,7 +204,7 @@ public class FileInputStream : InputStream, SeekableIF
 	 * Finishes an asynchronous info query operation.
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: GFileInfo.
+	 * Returns: GFileInfo. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public FileInfo queryInfoFinish(AsyncResultIF result)

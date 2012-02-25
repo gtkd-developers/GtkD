@@ -181,7 +181,7 @@ public class FilenameCompleter : ObjectG
 	 * Gets an array of completion strings for a given initial text.
 	 * Params:
 	 * initialText = text to be completed.
-	 * Returns: array of strings with possible completions for initial_text. This array must be freed by g_strfreev() when finished. [array zero-terminated=1][transfer full zero-terminated=1]
+	 * Returns: array of strings with possible completions for initial_text. This array must be freed by g_strfreev() when finished. [array zero-terminated=1][transfer full]
 	 */
 	public string[] getCompletions(string initialText)
 	{

@@ -34,7 +34,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- g_mount_operation_
@@ -196,7 +196,7 @@ public class MountOperation : ObjectG
 		}
 	}
 	
-	void delegate(string, GStrv*, MountOperation)[] onAskQuestionListeners;
+	void delegate(string, GStrv, MountOperation)[] onAskQuestionListeners;
 	/**
 	 * Emitted when asking the user a question and gives a list of
 	 * choices for the user to choose from.
@@ -204,7 +204,7 @@ public class MountOperation : ObjectG
 	 * presented as a heading. For example, it may be used as the
 	 * primary text in a GtkMessageDialog.
 	 */
-	void addOnAskQuestion(void delegate(string, GStrv*, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnAskQuestion(void delegate(string, GStrv, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("ask-question" in connectedSignals) )
 		{
@@ -219,9 +219,9 @@ public class MountOperation : ObjectG
 		}
 		onAskQuestionListeners ~= dlg;
 	}
-	extern(C) static void callBackAskQuestion(GMountOperation* opStruct, gchar* message, GStrv* choices, MountOperation mountOperation)
+	extern(C) static void callBackAskQuestion(GMountOperation* opStruct, gchar* message, GStrv choices, MountOperation mountOperation)
 	{
-		foreach ( void delegate(string, GStrv*, MountOperation) dlg ; mountOperation.onAskQuestionListeners )
+		foreach ( void delegate(string, GStrv, MountOperation) dlg ; mountOperation.onAskQuestionListeners )
 		{
 			dlg(Str.toString(message), choices, mountOperation);
 		}
@@ -254,7 +254,7 @@ public class MountOperation : ObjectG
 		}
 	}
 	
-	void delegate(string, ArrayG, GStrv*, MountOperation)[] onShowProcessesListeners;
+	void delegate(string, ArrayG, GStrv, MountOperation)[] onShowProcessesListeners;
 	/**
 	 * Emitted when one or more processes are blocking an operation
 	 * e.g. unmounting/ejecting a GMount or stopping a GDrive.
@@ -268,7 +268,7 @@ public class MountOperation : ObjectG
 	 * primary text in a GtkMessageDialog.
 	 * Since 2.22
 	 */
-	void addOnShowProcesses(void delegate(string, ArrayG, GStrv*, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnShowProcesses(void delegate(string, ArrayG, GStrv, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("show-processes" in connectedSignals) )
 		{
@@ -283,9 +283,9 @@ public class MountOperation : ObjectG
 		}
 		onShowProcessesListeners ~= dlg;
 	}
-	extern(C) static void callBackShowProcesses(GMountOperation* opStruct, gchar* message, GArray* processes, GStrv* choices, MountOperation mountOperation)
+	extern(C) static void callBackShowProcesses(GMountOperation* opStruct, gchar* message, GArray* processes, GStrv choices, MountOperation mountOperation)
 	{
-		foreach ( void delegate(string, ArrayG, GStrv*, MountOperation) dlg ; mountOperation.onShowProcessesListeners )
+		foreach ( void delegate(string, ArrayG, GStrv, MountOperation) dlg ; mountOperation.onShowProcessesListeners )
 		{
 			dlg(Str.toString(message), new ArrayG(processes), choices, mountOperation);
 		}

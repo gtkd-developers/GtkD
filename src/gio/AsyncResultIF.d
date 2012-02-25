@@ -113,13 +113,13 @@ public interface AsyncResultIF
 	
 	/**
 	 * Gets the user data from a GAsyncResult.
-	 * Returns: the user data for res.
+	 * Returns: the user data for res. [transfer full]
 	 */
 	public void* getUserData();
 	
 	/**
 	 * Gets the source object from a GAsyncResult.
-	 * Returns: a new reference to the source object for the res, or NULL if there is none.
+	 * Returns: a new reference to the source object for the res, or NULL if there is none. [transfer full]
 	 */
 	public ObjectG getSourceObject();
 }

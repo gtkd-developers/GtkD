@@ -293,7 +293,7 @@ public class DBusMessage : ObjectG
 	 * This operation can fail if e.g. message contains file descriptors
 	 * and the per-process or system-wide open files limit is reached.
 	 * Since 2.26
-	 * Returns: A new GDBusMessage or NULL if error is set. Free with g_object_unref().
+	 * Returns: A new GDBusMessage or NULL if error is set. Free with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public DBusMessage copy()
@@ -439,7 +439,7 @@ public class DBusMessage : ObjectG
 	 * Gets the UNIX file descriptors associated with message, if any.
 	 * This method is only available on UNIX.
 	 * Since 2.26
-	 * Returns: A GUnixFDList or NULL if no file descriptors are associated. Do not free, this object is owned by message.
+	 * Returns: A GUnixFDList or NULL if no file descriptors are associated. Do not free, this object is owned by message. [transfer none]
 	 */
 	public UnixFDList getUnixFdList()
 	{

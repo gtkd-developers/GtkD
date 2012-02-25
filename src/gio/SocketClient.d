@@ -201,8 +201,8 @@ public class SocketClient : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * connectable = a GSocketConnectable specifying the remote address.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GSocketConnection on success, NULL on error.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * Returns: a GSocketConnection on success, NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connect(SocketConnectableIF connectable, Cancellable cancellable)
@@ -232,9 +232,9 @@ public class SocketClient : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * connectable = a GSocketConnectable specifying the remote address.
-	 * cancellable = a GCancellable, or NULL
-	 * callback = a GAsyncReadyCallback
-	 * userData = user data for the callback
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data for the callback. [closure]
 	 */
 	public void connectAsync(SocketConnectableIF connectable, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -247,7 +247,7 @@ public class SocketClient : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: a GSocketConnection on success, NULL on error.
+	 * Returns: a GSocketConnection on success, NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connectFinish(AsyncResultIF result)
@@ -272,7 +272,7 @@ public class SocketClient : ObjectG
 	/**
 	 * This is a helper function for g_socket_client_connect().
 	 * Attempts to create a TCP connection to the named host.
-	 * host_and_port may be in any of a number of recognised formats: an IPv6
+	 * host_and_port may be in any of a number of recognised formats; an IPv6
 	 * address, an IPv4 address, or a domain name (in which case a DNS
 	 * lookup is performed). Quoting with [] is supported for all address
 	 * types. A port override may be specified in the usual way with a
@@ -297,13 +297,13 @@ public class SocketClient : ObjectG
 	 * Params:
 	 * hostAndPort = the name and optionally port of the host to connect to
 	 * defaultPort = the default port to connect to
-	 * cancellable = a GCancellable, or NULL
-	 * Returns: a GSocketConnection on success, NULL on error.
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * Returns: a GSocketConnection on success, NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connectToHost(string hostAndPort, ushort defaultPort, Cancellable cancellable)
 	{
-		// GSocketConnection * g_socket_client_connect_to_host (GSocketClient *client,  const gchar *host_and_port,  guint16 default_port,  GCancellable *cancellable,  GError **error);
+		// GSocketConnection * g_socket_client_connect_to_host  (GSocketClient *client,  const gchar *host_and_port,  guint16 default_port,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_socket_client_connect_to_host(gSocketClient, Str.toStringz(hostAndPort), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -329,9 +329,9 @@ public class SocketClient : ObjectG
 	 * Params:
 	 * hostAndPort = the name and optionally the port of the host to connect to
 	 * defaultPort = the default port to connect to
-	 * cancellable = a GCancellable, or NULL
-	 * callback = a GAsyncReadyCallback
-	 * userData = user data for the callback
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data for the callback. [closure]
 	 */
 	public void connectToHostAsync(string hostAndPort, ushort defaultPort, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -344,7 +344,7 @@ public class SocketClient : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: a GSocketConnection on success, NULL on error.
+	 * Returns: a GSocketConnection on success, NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connectToHostFinish(AsyncResultIF result)
@@ -381,13 +381,13 @@ public class SocketClient : ObjectG
 	 * Params:
 	 * domain = a domain name
 	 * service = the name of the service to connect to
-	 * cancellable = a GCancellable, or NULL
-	 * Returns: a GSocketConnection if successful, or NULL on error
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * Returns: a GSocketConnection if successful, or NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connectToService(string domain, string service, Cancellable cancellable)
 	{
-		// GSocketConnection * g_socket_client_connect_to_service (GSocketClient *client,  const gchar *domain,  const gchar *service,  GCancellable *cancellable,  GError **error);
+		// GSocketConnection * g_socket_client_connect_to_service  (GSocketClient *client,  const gchar *domain,  const gchar *service,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
 		auto p = g_socket_client_connect_to_service(gSocketClient, Str.toStringz(domain), Str.toStringz(service), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -411,9 +411,9 @@ public class SocketClient : ObjectG
 	 * Params:
 	 * domain = a domain name
 	 * service = the name of the service to connect to
-	 * cancellable = a GCancellable, or NULL
-	 * callback = a GAsyncReadyCallback
-	 * userData = user data for the callback
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data for the callback. [closure]
 	 */
 	public void connectToServiceAsync(string domain, string service, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -426,7 +426,7 @@ public class SocketClient : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: a GSocketConnection on success, NULL on error.
+	 * Returns: a GSocketConnection on success, NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connectToServiceFinish(AsyncResultIF result)
@@ -453,7 +453,9 @@ public class SocketClient : ObjectG
 	 * Attempts to create a TCP connection with a network URI.
 	 * uri may be any valid URI containing an "authority" (hostname/port)
 	 * component. If a port is not specified in the URI, default_port
-	 * will be used.
+	 * will be used. TLS will be negotiated if "tls" is TRUE.
+	 * (GSocketClient does not know to automatically assume TLS for
+	 * certain URI schemes.)
 	 * Using this rather than g_socket_client_connect() or
 	 * g_socket_client_connect_to_host() allows GSocketClient to
 	 * determine when to use application-specific proxy protocols.
@@ -467,8 +469,8 @@ public class SocketClient : ObjectG
 	 * Params:
 	 * uri = A network URI
 	 * defaultPort = the default port to connect to
-	 * cancellable = a GCancellable, or NULL
-	 * Returns: a GSocketConnection on success, NULL on error.
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * Returns: a GSocketConnection on success, NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connectToUri(string uri, ushort defaultPort, Cancellable cancellable)
@@ -499,9 +501,9 @@ public class SocketClient : ObjectG
 	 * Params:
 	 * uri = a network uri
 	 * defaultPort = the default port to connect to
-	 * cancellable = a GCancellable, or NULL
-	 * callback = a GAsyncReadyCallback
-	 * userData = user data for the callback
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data for the callback. [closure]
 	 */
 	public void connectToUriAsync(string uri, ushort defaultPort, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -514,7 +516,7 @@ public class SocketClient : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: a GSocketConnection on success, NULL on error.
+	 * Returns: a GSocketConnection on success, NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketConnection connectToUriFinish(AsyncResultIF result)
@@ -620,6 +622,54 @@ public class SocketClient : ObjectG
 	}
 	
 	/**
+	 * Sets whether or not client attempts to make connections via a
+	 * proxy server. When enabled (the default), GSocketClient will use a
+	 * GProxyResolver to determine if a proxy protocol such as SOCKS is
+	 * needed, and automatically do the necessary proxy negotiation.
+	 * Since 2.26
+	 * Params:
+	 * enable = whether to enable proxies
+	 */
+	public void setEnableProxy(int enable)
+	{
+		// void g_socket_client_set_enable_proxy (GSocketClient *client,  gboolean enable);
+		g_socket_client_set_enable_proxy(gSocketClient, enable);
+	}
+	
+	/**
+	 * Sets whether client creates TLS (aka SSL) connections. If tls is
+	 * TRUE, client will wrap its connections in a GTlsClientConnection
+	 * and perform a TLS handshake when connecting.
+	 * Note that since GSocketClient must return a GSocketConnection,
+	 * but GTlsClientConnection is not a GSocketConnection, this
+	 * actually wraps the resulting GTlsClientConnection in a
+	 * GTcpWrapperConnection when returning it. You can use
+	 * g_tcp_wrapper_connection_get_base_io_stream() on the return value
+	 * to extract the GTlsClientConnection.
+	 * Since 2.28
+	 * Params:
+	 * tls = whether to use TLS
+	 */
+	public void setTls(int tls)
+	{
+		// void g_socket_client_set_tls (GSocketClient *client,  gboolean tls);
+		g_socket_client_set_tls(gSocketClient, tls);
+	}
+	
+	/**
+	 * Sets the TLS validation flags used when creating TLS connections
+	 * via client. The default value is G_TLS_CERTIFICATE_VALIDATE_ALL.
+	 * Since 2.28
+	 * Params:
+	 * flags = the validation flags
+	 */
+	public void setTlsValidationFlags(GTlsCertificateFlags flags)
+	{
+		// void g_socket_client_set_tls_validation_flags  (GSocketClient *client,  GTlsCertificateFlags flags);
+		g_socket_client_set_tls_validation_flags(gSocketClient, flags);
+	}
+	
+	/**
 	 * Gets the socket family of the socket client.
 	 * See g_socket_client_set_family() for details.
 	 * Since 2.22
@@ -696,17 +746,26 @@ public class SocketClient : ObjectG
 	}
 	
 	/**
-	 * Sets whether or not client attempts to make connections via a
-	 * proxy server. When enabled (the default), GSocketClient will use a
-	 * GProxyResolver to determine if a proxy protocol such as SOCKS is
-	 * needed, and automatically do the necessary proxy negotiation.
-	 * Since 2.26
-	 * Params:
-	 * enable = whether to enable proxies
+	 * Gets whether client creates TLS connections. See
+	 * g_socket_client_set_tls() for details.
+	 * Since 2.28
+	 * Returns: whether client uses TLS
 	 */
-	public void setEnableProxy(int enable)
+	public int getTls()
 	{
-		// void g_socket_client_set_enable_proxy (GSocketClient *client,  gboolean enable);
-		g_socket_client_set_enable_proxy(gSocketClient, enable);
+		// gboolean g_socket_client_get_tls (GSocketClient *client);
+		return g_socket_client_get_tls(gSocketClient);
+	}
+	
+	/**
+	 * Gets the TLS validation flags used creating TLS connections via
+	 * client.
+	 * Since 2.28
+	 * Returns: the TLS validation flags
+	 */
+	public GTlsCertificateFlags getTlsValidationFlags()
+	{
+		// GTlsCertificateFlags g_socket_client_get_tls_validation_flags  (GSocketClient *client);
+		return g_socket_client_get_tls_validation_flags(gSocketClient);
 	}
 }

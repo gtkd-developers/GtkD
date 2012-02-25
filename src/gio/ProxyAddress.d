@@ -182,8 +182,10 @@ public class ProxyAddress : InetSocketAddress
 	 * protocol = The proxy protocol to support, in lower case (e.g. socks, http).
 	 * destHostname = The destination hostname the the proxy should tunnel to.
 	 * destPort = The destination port to tunnel to.
-	 * username = The username to authenticate to the proxy server (or NULL).
-	 * password = The password to authenticate to the proxy server (or NULL).
+	 * username = The username to authenticate to the proxy server
+	 * (or NULL). [allow-none]
+	 * password = The password to authenticate to the proxy server
+	 * (or NULL). [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GInetAddress* inetaddr, ushort port, string protocol, string destHostname, ushort destPort, string username, string password)

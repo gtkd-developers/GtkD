@@ -142,7 +142,7 @@ public class ConverterOutputStream : FilterOutputStream
 	/**
 	 * Gets the GConverter that is used by converter_stream.
 	 * Since 2.24
-	 * Returns: the converter of the converter output stream
+	 * Returns: the converter of the converter output stream. [transfer none]
 	 */
 	public ConverterIF getConverter()
 	{

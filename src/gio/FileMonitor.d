@@ -65,7 +65,6 @@ private import gio.File;
 
 
 
-private import gobject.ObjectG;
 
 /**
  * Description
@@ -81,7 +80,7 @@ private import gobject.ObjectG;
  * cause notifications to be blocked even if the thread-default
  * context is still running).
  */
-public class FileMonitor : ObjectG
+public class FileMonitor
 {
 	
 	/** the main Gtk struct */
@@ -95,7 +94,7 @@ public class FileMonitor : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected override void* getStruct()
+	protected void* getStruct()
 	{
 		return cast(void*)gFileMonitor;
 	}
@@ -110,21 +109,7 @@ public class FileMonitor : ObjectG
 			this = null;
 			return;
 		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFileMonitor);
-		if( ptr !is null )
-		{
-			this = cast(FileMonitor)ptr;
-			return;
-		}
-		super(cast(GObject*)gFileMonitor);
 		this.gFileMonitor = gFileMonitor;
-	}
-	
-	protected override void setStruct(GObject* obj)
-	{
-		super.setStruct(obj);
-		gFileMonitor = cast(GFileMonitor*)obj;
 	}
 	
 	/**
@@ -133,7 +118,11 @@ public class FileMonitor : ObjectG
 	
 	void delegate(File, File, GFileMonitorEvent, FileMonitor)[] onChangedListeners;
 	/**
-	 * Emitted when a file has been changed.
+	 * Emitted when file has been changed.
+	 * If using G_FILE_MONITOR_SEND_MOVED flag and event_type is
+	 * G_FILE_MONITOR_SEND_MOVED, file will be set to a GFile containing the
+	 * old path, and other_file will be set to a GFile containing the new path.
+	 * In all the other cases, other_file will be set to NULL.
 	 */
 	void addOnChanged(void delegate(File, File, GFileMonitorEvent, FileMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -183,12 +172,12 @@ public class FileMonitor : ObjectG
 	 * Sets the rate limit to which the monitor will report
 	 * consecutive change events to the same file.
 	 * Params:
-	 * limitMsecs = a integer with the limit in milliseconds to
-	 * poll for changes.
+	 * limitMsecs = a non-negative integer with the limit in milliseconds
+	 * to poll for changes
 	 */
 	public void setRateLimit(int limitMsecs)
 	{
-		// void g_file_monitor_set_rate_limit (GFileMonitor *monitor,  int limit_msecs);
+		// void g_file_monitor_set_rate_limit (GFileMonitor *monitor,  gint limit_msecs);
 		g_file_monitor_set_rate_limit(gFileMonitor, limitMsecs);
 	}
 	

@@ -164,7 +164,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 	/**
 	 * Gets the credentials stored in message.
 	 * Since 2.26
-	 * Returns: A GCredentials instance. Do not free, it is owned by message.
+	 * Returns: A GCredentials instance. Do not free, it is owned by message. [transfer none]
 	 */
 	public Credentials getCredentials()
 	{

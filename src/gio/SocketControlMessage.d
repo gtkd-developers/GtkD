@@ -143,8 +143,8 @@ public class SocketControlMessage : ObjectG
 	 * level = a socket level
 	 * type = a socket control message type for the given level
 	 * size = the size of the data in bytes
-	 * data = pointer to the message data
-	 * Returns: the deserialized message or NULL
+	 * data = pointer to the message data. [array length=size][element-type guint8]
+	 * Returns: the deserialized message or NULL. [transfer full]
 	 */
 	public static SocketControlMessage deserialize(int level, int type, gsize size, void* data)
 	{

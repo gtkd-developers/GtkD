@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gio-GSrvTarget.html
+ * inFile  = GSrvTarget.html
  * outPack = gio
  * outFile = SrvTarget
  * strct   = GSrvTarget
@@ -66,6 +66,7 @@ private import glib.ListG;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -83,7 +84,7 @@ private import glib.ListG;
  * GSocketConnectable interface and not need to worry about
  * GSrvTarget at all.
  */
-public class SrvTarget
+public class SrvTarget : Boxed
 {
 	
 	/** the main Gtk struct */
@@ -223,7 +224,7 @@ public class SrvTarget
 	 * Since 2.22
 	 * Params:
 	 * targets = a GList of GSrvTarget
-	 * Returns: the head of the sorted list.
+	 * Returns: the head of the sorted list. [transfer full]
 	 */
 	public static ListG listSort(ListG targets)
 	{

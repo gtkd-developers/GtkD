@@ -31,11 +31,12 @@
  * ctorStrct=GOutputStream
  * clss    = UnixOutputStream
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- PollableOutputStreamIF
  * prefixes:
  * 	- g_unix_output_stream_
  * omit structs:
@@ -43,6 +44,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gio.PollableOutputStreamT
+ * 	- gio.PollableOutputStreamIF
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +60,8 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
+private import gio.PollableOutputStreamT;
+private import gio.PollableOutputStreamIF;
 
 
 
@@ -71,7 +76,7 @@ private import gio.OutputStream;
  * to the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.
  */
-public class UnixOutputStream : OutputStream
+public class UnixOutputStream : OutputStream, PollableOutputStreamIF
 {
 	
 	/** the main Gtk struct */
@@ -116,6 +121,9 @@ public class UnixOutputStream : OutputStream
 		super.setStruct(obj);
 		gUnixOutputStream = cast(GUnixOutputStream*)obj;
 	}
+	
+	// add the PollableOutputStream capabilities
+	mixin PollableOutputStreamT!(GUnixOutputStream);
 	
 	/**
 	 */

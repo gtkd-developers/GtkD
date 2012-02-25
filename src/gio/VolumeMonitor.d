@@ -493,7 +493,7 @@ public class VolumeMonitor : ObjectG
 	 * Gets a list of drives connected to the system.
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
-	 * Returns: a GList of connected GDrive objects. [element-type GDrive][transfer full GDrive]
+	 * Returns: a GList of connected GDrive objects. [element-type GDrive][transfer full]
 	 */
 	public ListG getConnectedDrives()
 	{
@@ -510,7 +510,7 @@ public class VolumeMonitor : ObjectG
 	 * Gets a list of the volumes on the system.
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
-	 * Returns: a GList of GVolume objects. [element-type GVolume][transfer full GVolume]
+	 * Returns: a GList of GVolume objects. [element-type GVolume][transfer full]
 	 */
 	public ListG getVolumes()
 	{
@@ -527,7 +527,7 @@ public class VolumeMonitor : ObjectG
 	 * Gets a list of the mounts on the system.
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
-	 * Returns: a GList of GMount objects. [element-type GMount][transfer full GMount]
+	 * Returns: a GList of GMount objects. [element-type GMount][transfer full]
 	 */
 	public ListG getMounts()
 	{
@@ -572,7 +572,7 @@ public class VolumeMonitor : ObjectG
 	 * "favorite servers" list or similar.
 	 * Params:
 	 * mount = a GMount object to find a parent for
-	 * Returns: the GVolume object that is the parent for mount or NULL if no wants to adopt the GMount.
+	 * Returns: the GVolume object that is the parent for mount or NULL if no wants to adopt the GMount. [transfer full]
 	 */
 	public static VolumeIF adoptOrphanMount(MountIF mount)
 	{
@@ -589,7 +589,7 @@ public class VolumeMonitor : ObjectG
 	 * Finds a GMount object by its UUID (see g_mount_get_uuid())
 	 * Params:
 	 * uuid = the UUID to look for
-	 * Returns: a GMount or NULL if no such mount is available. Free the returned object with g_object_unref().
+	 * Returns: a GMount or NULL if no such mount is available. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public MountIF getMountForUuid(string uuid)
 	{
@@ -606,7 +606,7 @@ public class VolumeMonitor : ObjectG
 	 * Finds a GVolume object by its UUID (see g_volume_get_uuid())
 	 * Params:
 	 * uuid = the UUID to look for
-	 * Returns: a GVolume or NULL if no such volume is available. Free the returned object with g_object_unref(). Signal Details The "drive-changed" signal void user_function (GVolumeMonitor *volume_monitor, GDrive *drive, gpointer user_data) : Run Last Emitted when a drive changes.
+	 * Returns: a GVolume or NULL if no such volume is available. Free the returned object with g_object_unref(). [transfer full] Signal Details The "drive-changed" signal void user_function (GVolumeMonitor *volume_monitor, GDrive *drive, gpointer user_data) : Run Last Emitted when a drive changes.
 	 */
 	public VolumeIF getVolumeForUuid(string uuid)
 	{

@@ -34,7 +34,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * 	- InitableIF
  * 	- AsyncInitableIF
@@ -291,7 +291,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Since 2.26
 	 * Params:
 	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_bus_get().
-	 * Returns: A GDBusConnection or NULL if error is set. Free with g_object_unref().
+	 * Returns: A GDBusConnection or NULL if error is set. Free with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static DBusConnection gBusGetFinish(AsyncResultIF res)
@@ -331,7 +331,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Params:
 	 * busType = A GBusType.
 	 * cancellable = A GCancellable or NULL.
-	 * Returns: A GDBusConnection or NULL if error is set. Free with g_object_unref().
+	 * Returns: A GDBusConnection or NULL if error is set. Free with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static DBusConnection gBusGetSync(GBusType busType, Cancellable cancellable)
@@ -367,9 +367,9 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Since 2.26
 	 * Params:
 	 * stream = A GIOStream.
-	 * guid = The GUID to use if a authenticating as a server or NULL.
+	 * guid = The GUID to use if a authenticating as a server or NULL. [allow-none]
 	 * flags = Flags describing how to make the connection.
-	 * observer = A GDBusAuthObserver or NULL.
+	 * observer = A GDBusAuthObserver or NULL. [allow-none]
 	 * cancellable = A GCancellable or NULL.
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
 	 * userData = The data to pass to callback.
@@ -390,9 +390,9 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Since 2.26
 	 * Params:
 	 * stream = A GIOStream.
-	 * guid = The GUID to use if a authenticating as a server or NULL.
+	 * guid = The GUID to use if a authenticating as a server or NULL. [allow-none]
 	 * flags = Flags describing how to make the connection.
-	 * observer = A GDBusAuthObserver or NULL.
+	 * observer = A GDBusAuthObserver or NULL. [allow-none]
 	 * cancellable = A GCancellable or NULL.
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -437,7 +437,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Params:
 	 * address = A D-Bus address.
 	 * flags = Flags describing how to make the connection.
-	 * observer = A GDBusAuthObserver or NULL.
+	 * observer = A GDBusAuthObserver or NULL. [allow-none]
 	 * cancellable = A GCancellable or NULL.
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
 	 * userData = The data to pass to callback.
@@ -465,7 +465,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Params:
 	 * address = A D-Bus address.
 	 * flags = Flags describing how to make the connection.
-	 * observer = A GDBusAuthObserver or NULL.
+	 * observer = A GDBusAuthObserver or NULL. [allow-none]
 	 * cancellable = A GCancellable or NULL.
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -524,8 +524,8 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Since 2.26
 	 * Params:
 	 * cancellable = A GCancellable or NULL.
-	 * callback = A GAsyncReadyCallback to call when the request is satisfied or NULL if you don't
-	 * care about the result.
+	 * callback = A GAsyncReadyCallback to call when the request is
+	 * satisfied or NULL if you don't care about the result. [allow-none]
 	 * userData = The data to pass to callback.
 	 */
 	public void close(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -611,8 +611,8 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Since 2.26
 	 * Params:
 	 * cancellable = A GCancellable or NULL.
-	 * callback = A GAsyncReadyCallback to call when the request is satisfied or NULL if you don't
-	 * care about the result.
+	 * callback = A GAsyncReadyCallback to call when the request is
+	 * satisfied or NULL if you don't care about the result. [allow-none]
 	 * userData = The data to pass to callback.
 	 */
 	public void flush(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -687,6 +687,12 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Sets whether the process should be terminated when connection is
 	 * closed by the remote peer. See "exit-on-close" for
 	 * more details.
+	 * Note that this function should be used with care. Most modern UNIX
+	 * desktops tie the notion of a user session the session bus, and expect
+	 * all of a users applications to quit when their bus connection goes away.
+	 * If you are setting exit_on_close to FALSE for the shared session
+	 * bus connection, you should make sure that your application exits
+	 * when the user session ends.
 	 * Since 2.26
 	 * Params:
 	 * exitOnClose = Whether the process should be terminated
@@ -701,7 +707,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	/**
 	 * Gets the underlying stream used for IO.
 	 * Since 2.26
-	 * Returns: the stream used for IO
+	 * Returns: the stream used for IO. [transfer none]
 	 */
 	public IOStream getStream()
 	{
@@ -760,7 +766,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * each application is a client. So this method will always return
 	 * NULL for message bus clients.
 	 * Since 2.26
-	 * Returns: A GCredentials or NULL if not available. Do not free this object, it is owned by connection.
+	 * Returns: A GCredentials or NULL if not available. Do not free this object, it is owned by connection. [transfer none]
 	 */
 	public Credentials getPeerCredentials()
 	{
@@ -788,17 +794,21 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * If the parameters GVariant is floating, it is consumed. This allows
 	 * Since 2.26
 	 * Params:
-	 * busName = A unique or well-known bus name or NULL if connection is not a message bus connection.
+	 * busName = A unique or well-known bus name or NULL if
+	 * connection is not a message bus connection. [allow-none]
 	 * objectPath = Path of remote object.
 	 * interfaceName = D-Bus interface to invoke method on.
 	 * methodName = The name of the method to invoke.
-	 * parameters = A GVariant tuple with parameters for the method or NULL if not passing parameters.
-	 * replyType = The expected type of the reply, or NULL.
+	 * parameters = A GVariant tuple with parameters for the method
+	 * or NULL if not passing parameters. [allow-none]
+	 * replyType = The expected type of the reply, or NULL. [allow-none]
 	 * flags = Flags from the GDBusCallFlags enumeration.
-	 * timeoutMsec = The timeout in milliseconds or -1 to use the default timeout.
+	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
+	 * timeout or G_MAXINT for no timeout.
 	 * cancellable = A GCancellable or NULL.
-	 * callback = A GAsyncReadyCallback to call when the request is satisfied or NULL if you don't
-	 * care about the result of the method invocation.
+	 * callback = A GAsyncReadyCallback to call when the request is
+	 * satisfied or NULL if you don't * care about the result of the
+	 * method invocation. [allow-none]
 	 * userData = The data to pass to callback.
 	 */
 	public void call(string busName, string objectPath, string interfaceName, string methodName, Variant parameters, VariantType replyType, GDBusCallFlags flags, int timeoutMsec, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -854,10 +864,12 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * objectPath = Path of remote object.
 	 * interfaceName = D-Bus interface to invoke method on.
 	 * methodName = The name of the method to invoke.
-	 * parameters = A GVariant tuple with parameters for the method or NULL if not passing parameters.
-	 * replyType = The expected type of the reply, or NULL.
+	 * parameters = A GVariant tuple with parameters for the method
+	 * or NULL if not passing parameters. [allow-none]
+	 * replyType = The expected type of the reply, or NULL. [allow-none]
 	 * flags = Flags from the GDBusCallFlags enumeration.
-	 * timeoutMsec = The timeout in milliseconds or -1 to use the default timeout.
+	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
+	 * timeout or G_MAXINT for no timeout.
 	 * cancellable = A GCancellable or NULL.
 	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
 	 * Throws: GException on failure.
@@ -887,11 +899,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * This can only fail if parameters is not compatible with the D-Bus protocol.
 	 * Since 2.26
 	 * Params:
-	 * destinationBusName = The unique bus name for the destination for the signal or NULL to emit to all listeners.
+	 * destinationBusName = The unique bus name for the destination
+	 * for the signal or NULL to emit to all listeners. [allow-none]
 	 * objectPath = Path of remote object.
 	 * interfaceName = D-Bus interface to emit a signal on.
 	 * signalName = The name of the signal to emit.
-	 * parameters = A GVariant tuple with parameters for the signal or NULL if not passing parameters.
+	 * parameters = A GVariant tuple with parameters for the signal
+	 * or NULL if not passing parameters. [allow-none]
 	 * Returns: TRUE unless error is set.
 	 * Throws: GException on failure.
 	 */
@@ -925,11 +939,14 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * processing the received signal.
 	 * Since 2.26
 	 * Params:
-	 * sender = Sender name to match on (unique or well-known name) or NULL to listen from all senders.
-	 * interfaceName = D-Bus interface name to match on or NULL to match on all interfaces.
-	 * member = D-Bus signal name to match on or NULL to match on all signals.
-	 * objectPath = Object path to match on or NULL to match on all object paths.
-	 * arg0 = Contents of first string argument to match on or NULL to match on all kinds of arguments.
+	 * sender = Sender name to match on (unique or well-known name)
+	 * or NULL to listen from all senders. [allow-none]
+	 * interfaceName = D-Bus interface name to match on or NULL to
+	 * match on all interfaces. [allow-none]
+	 * member = D-Bus signal name to match on or NULL to match on all signals. [allow-none]
+	 * objectPath = Object path to match on or NULL to match on all object paths. [allow-none]
+	 * arg0 = Contents of first string argument to match on or NULL
+	 * to match on all kinds of arguments. [allow-none]
 	 * flags = Flags describing how to subscribe to the signal (currently unused).
 	 * callback = Callback to invoke when there is a signal matching the requested data.
 	 * userData = User data to pass to callback.
@@ -973,7 +990,8 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Params:
 	 * message = A GDBusMessage
 	 * flags = Flags affecting how the message is sent.
-	 * outSerial = Return location for serial number assigned to message when sending it or NULL.
+	 * outSerial = Return location for serial number assigned
+	 * to message when sending it or NULL. [out][allow-none]
 	 * Returns: TRUE if the message was well-formed and queued for transmission, FALSE if error is set.
 	 * Throws: GException on failure.
 	 */
@@ -1017,11 +1035,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Params:
 	 * message = A GDBusMessage.
 	 * flags = Flags affecting how the message is sent.
-	 * timeoutMsec = The timeout in milliseconds or -1 to use the default timeout.
-	 * outSerial = Return location for serial number assigned to message when sending it or NULL.
+	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
+	 * timeout or G_MAXINT for no timeout.
+	 * outSerial = Return location for serial number assigned
+	 * to message when sending it or NULL. [out][allow-none]
 	 * cancellable = A GCancellable or NULL.
-	 * callback = A GAsyncReadyCallback to call when the request is satisfied or NULL if you don't
-	 * care about the result.
+	 * callback = A GAsyncReadyCallback to call when the request is
+	 * satisfied or NULL if you don't care about the result. [allow-none]
 	 * userData = The data to pass to callback.
 	 */
 	public void sendMessageWithReply(DBusMessage message, GDBusSendMessageFlags flags, int timeoutMsec, out uint outSerial, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -1041,7 +1061,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Since 2.26
 	 * Params:
 	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_connection_send_message_with_reply().
-	 * Returns: A locked GDBusMessage or NULL if error is set.
+	 * Returns: A locked GDBusMessage or NULL if error is set. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public DBusMessage sendMessageWithReplyFinish(AsyncResultIF res)
@@ -1090,10 +1110,12 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Params:
 	 * message = A GDBusMessage.
 	 * flags = Flags affecting how the message is sent.
-	 * timeoutMsec = The timeout in milliseconds or -1 to use the default timeout.
-	 * outSerial = Return location for serial number assigned to message when sending it or NULL.
+	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
+	 * timeout or G_MAXINT for no timeout.
+	 * outSerial = Return location for serial number assigned
+	 * to message when sending it or NULL. [out][allow-none]
 	 * cancellable = A GCancellable or NULL.
-	 * Returns: A locked GDBusMessage that is the reply to message or NULL if error is set.
+	 * Returns: A locked GDBusMessage that is the reply to message or NULL if error is set. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public DBusMessage sendMessageWithReplySync(DBusMessage message, GDBusSendMessageFlags flags, int timeoutMsec, out uint outSerial, Cancellable cancellable)
@@ -1192,14 +1214,18 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * incremented by 1 (unless allocated statically, e.g. if the
 	 * reference count is -1, see g_dbus_interface_info_ref()) for as long
 	 * as the object is exported. Also note that vtable will be copied.
-	 * See Example  2, “D-Bus server example” for an example of how to use this method.
+	 * A NULL vtable can be used for
+	 * marker
+	 * interfaces.
+	 * See Example  2, “D-Bus server example” for an example of how to use this
+	 * method.
 	 * Since 2.26
 	 * Params:
-	 * objectPath = The object path to register at.
-	 * interfaceInfo = Introspection data for the interface.
-	 * vtable = A GDBusInterfaceVTable to call into or NULL.
-	 * userData = Data to pass to functions in vtable.
-	 * userDataFreeFunc = Function to call when the object path is unregistered.
+	 * objectPath = The object path to register at
+	 * interfaceInfo = Introspection data for the interface
+	 * vtable = A GDBusInterfaceVTable to call into, or NULL. [allow-none]
+	 * userData = Data to pass to functions in vtable
+	 * userDataFreeFunc = Function to call when the object path is unregistered
 	 * Returns: 0 if error is set, otherwise a registration id (never 0) that can be used with g_dbus_connection_unregister_object() .
 	 * Throws: GException on failure.
 	 */

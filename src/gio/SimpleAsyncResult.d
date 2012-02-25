@@ -105,7 +105,8 @@ private import gobject.ObjectG;
  * together correctly.
  * To create a new GSimpleAsyncResult, call g_simple_async_result_new().
  * If the result needs to be created for a GError, use
- * g_simple_async_result_new_from_error(). If a GError is not available
+ * g_simple_async_result_new_from_error() or
+ * g_simple_async_result_new_take_error(). If a GError is not available
  * (e.g. the asynchronous operation's doesn't take a GError argument),
  * but the result still needs to be created for an error condition, use
  * g_simple_async_result_new_error() (or g_simple_async_result_set_error_va()
@@ -197,10 +198,9 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Creates a GSimpleAsyncResult.
 	 * Params:
-	 * sourceObject = a GObject the asynchronous function was called with,
-	 * or NULL.
-	 * callback = a GAsyncReadyCallback.
-	 * userData = user data passed to callback.
+	 * sourceObject = a GObject, or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data passed to callback. [closure]
 	 * sourceTag = the asynchronous function.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -218,15 +218,15 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Creates a GSimpleAsyncResult from an error condition.
 	 * Params:
-	 * sourceObject = a GObject, or NULL.
-	 * callback = a GAsyncReadyCallback.
-	 * userData = user data passed to callback.
-	 * error = a GError location.
+	 * sourceObject = a GObject, or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data passed to callback. [closure]
+	 * error = a GError
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{
-		// GSimpleAsyncResult * g_simple_async_result_new_from_error  (GObject *source_object,  GAsyncReadyCallback callback,  gpointer user_data,  GError *error);
+		// GSimpleAsyncResult * g_simple_async_result_new_from_error  (GObject *source_object,  GAsyncReadyCallback callback,  gpointer user_data,  const GError *error);
 		auto p = g_simple_async_result_new_from_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
 		if(p is null)
 		{
@@ -322,6 +322,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * source_tag argument given to g_simple_async_result_new() (which, by
 	 * convention, is a pointer to the _async function corresponding to the
 	 * _finish function from which this function is called).
+	 * Since 2.20
 	 * Params:
 	 * result = the GAsyncResult passed to the _finish function.
 	 * source = the GObject passed to the _finish function.
@@ -380,7 +381,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Params:
 	 * func = a GSimpleAsyncThreadFunc.
 	 * ioPriority = the io priority of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 */
 	public void runInThread(GSimpleAsyncThreadFunc func, int ioPriority, Cancellable cancellable)
 	{
@@ -397,6 +398,19 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	{
 		// void g_simple_async_result_set_from_error  (GSimpleAsyncResult *simple,  const GError *error);
 		g_simple_async_result_set_from_error(gSimpleAsyncResult, (error is null) ? null : error.getErrorGStruct());
+	}
+	
+	/**
+	 * Sets the result from error, and takes over the caller's ownership
+	 * of error, so the caller does not need to free it any more.
+	 * Since 2.28
+	 * Params:
+	 * error = a GError
+	 */
+	public void takeError(ErrorG error)
+	{
+		// void g_simple_async_result_take_error (GSimpleAsyncResult *simple,  GError *error);
+		g_simple_async_result_take_error(gSimpleAsyncResult, (error is null) ? null : error.getErrorGStruct());
 	}
 	
 	/**
@@ -439,14 +453,31 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * g_simple_async_report_error_in_idle(), but takes a GError rather
 	 * than building a new one.
 	 * Params:
-	 * object = a GObject.
-	 * callback = a GAsyncReadyCallback.
-	 * userData = user data passed to callback.
+	 * object = a GObject, or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data passed to callback. [closure]
 	 * error = the GError to report
 	 */
 	public static void gSimpleAsyncReportGerrorInIdle(ObjectG object, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{
-		// void g_simple_async_report_gerror_in_idle  (GObject *object,  GAsyncReadyCallback callback,  gpointer user_data,  GError *error);
+		// void g_simple_async_report_gerror_in_idle  (GObject *object,  GAsyncReadyCallback callback,  gpointer user_data,  const GError *error);
 		g_simple_async_report_gerror_in_idle((object is null) ? null : object.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
+	}
+	
+	/**
+	 * Reports an error in an idle function. Similar to
+	 * g_simple_async_report_gerror_in_idle(), but takes over the caller's
+	 * ownership of error, so the caller does not have to free it any more.
+	 * Since 2.28
+	 * Params:
+	 * object = a GObject, or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback.
+	 * userData = user data passed to callback.
+	 * error = the GError to report
+	 */
+	public static void gSimpleAsyncReportTakeGerrorInIdle(ObjectG object, GAsyncReadyCallback callback, void* userData, ErrorG error)
+	{
+		// void g_simple_async_report_take_gerror_in_idle  (GObject *object,  GAsyncReadyCallback callback,  gpointer user_data,  GError *error);
+		g_simple_async_report_take_gerror_in_idle((object is null) ? null : object.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
 	}
 }

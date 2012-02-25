@@ -135,6 +135,7 @@ public class ThreadedSocketService : SocketService
 	 * incoming connection. This thread is dedicated to handling
 	 * connection and may perform blocking IO. The signal handler need
 	 * not return until the connection is closed.
+	 * TRUE to stope further signal handlers from being called
 	 * See Also
 	 * GSocketService.
 	 */
@@ -173,7 +174,7 @@ public class ThreadedSocketService : SocketService
 	 * Since 2.22
 	 * Params:
 	 * maxThreads = the maximal number of threads to execute concurrently
-	 *  handling incoming clients, -1 means no limit
+	 * handling incoming clients, -1 means no limit
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int maxThreads)

@@ -148,7 +148,7 @@ public class InputStream : ObjectG
 	 * Params:
 	 * buffer = a buffer to read data into (which should be at least count bytes long).
 	 * count = the number of bytes that will be read from the stream
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -181,8 +181,8 @@ public class InputStream : ObjectG
 	 * Params:
 	 * buffer = a buffer to read data into (which should be at least count bytes long).
 	 * count = the number of bytes that will be read from the stream
-	 * bytesRead = location to store the number of bytes that was read from the stream
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * bytesRead = location to store the number of bytes that was read from the stream. [out]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: TRUE on success, FALSE if there was an error
 	 * Throws: GException on failure.
 	 */
@@ -215,7 +215,7 @@ public class InputStream : ObjectG
 	 * partial result will be returned, without an error.
 	 * Params:
 	 * count = the number of bytes that will be skipped from the stream
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: Number of bytes skipped, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -254,7 +254,7 @@ public class InputStream : ObjectG
 	 * Cancelling a close will still leave the stream closed, but some streams
 	 * can use a faster close that doesn't block to e.g. check errors.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: TRUE on success, FALSE on failure
 	 * Throws: GException on failure.
 	 */
@@ -297,9 +297,9 @@ public class InputStream : ObjectG
 	 * count = the number of bytes that will be read from the stream
 	 * ioPriority = the I/O priority
 	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = callback to call when the request is satisfied
-	 * userData = the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = callback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void readAsync(void* buffer, gsize count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -352,9 +352,9 @@ public class InputStream : ObjectG
 	 * count = the number of bytes that will be skipped from the stream
 	 * ioPriority = the I/O priority
 	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = callback to call when the request is satisfied
-	 * userData = the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = callback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void skipAsync(gsize count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -396,9 +396,9 @@ public class InputStream : ObjectG
 	 * Params:
 	 * ioPriority = the I/O priority
 	 * of the request.
-	 * cancellable = optional cancellable object
-	 * callback = callback to call when the request is satisfied
-	 * userData = the data to pass to callback function
+	 * cancellable = optional cancellable object. [allow-none]
+	 * callback = callback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void closeAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{

@@ -327,7 +327,7 @@ public template VolumeT(TStruct)
 	 * implementations to find the underlying mount to shadow, see
 	 * g_mount_is_shadowed() for more details.
 	 * Since 2.18
-	 * Returns: the activation root of volume or NULL. Use g_object_unref() to free.
+	 * Returns: the activation root of volume or NULL. Use g_object_unref() to free. [transfer full]
 	 */
 	public File getActivationRoot()
 	{
@@ -344,11 +344,12 @@ public template VolumeT(TStruct)
 	 * Mounts a volume. This is an asynchronous operation, and is
 	 * finished by calling g_volume_mount_finish() with the volume
 	 * and GAsyncResult returned in the callback.
+	 * Virtual: mount_fn
 	 * Params:
 	 * flags = flags affecting the operation
 	 * mountOperation = a GMountOperation or NULL to avoid user interaction. [allow-none]
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data that gets passed to callback
 	 */
 	public void mount(GMountMountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -402,8 +403,8 @@ public template VolumeT(TStruct)
 	 * and GAsyncResult returned in the callback.
 	 * Params:
 	 * flags = flags affecting the unmount if required for eject
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data that gets passed to callback
 	 */
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -444,8 +445,9 @@ public template VolumeT(TStruct)
 	 * Since 2.22
 	 * Params:
 	 * flags = flags affecting the unmount if required for eject
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * mountOperation = a GMountOperation or NULL to
+	 * avoid user interaction. [allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * callback = a GAsyncReadyCallback, or NULL.
 	 * userData = user data passed to callback.
 	 */
@@ -483,7 +485,7 @@ public template VolumeT(TStruct)
 	 * Gets the kinds of identifiers
 	 * that volume has. Use g_volume_get_identifer() to obtain
 	 * the identifiers themselves.
-	 * Returns: a NULL-terminated array of strings containing kinds of identifiers. Use g_strfreev() to free.
+	 * Returns: a NULL-terminated array of strings containing kinds of identifiers. Use g_strfreev() to free. [array zero-terminated=1][transfer full]
 	 */
 	public string[] enumerateIdentifiers()
 	{

@@ -138,7 +138,7 @@ public template AsyncInitableT(TStruct)
 	 * Since 2.22
 	 * Params:
 	 * ioPriority = the I/O priority
-	 *  of the operation.
+	 * of the operation.
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * callback = a GAsyncReadyCallback to call when the request is satisfied
 	 * userData = the data to pass to callback function
@@ -179,7 +179,7 @@ public template AsyncInitableT(TStruct)
 	 * Since 2.22
 	 * Params:
 	 * res = the GAsyncResult.from the callback
-	 * Returns: a newly created GObject, or NULL on error. Free with g_object_unref().
+	 * Returns: a newly created GObject, or NULL on error. Free with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public ObjectG gAsyncInitableNewFinish(AsyncResultIF res)
@@ -215,10 +215,10 @@ public template AsyncInitableT(TStruct)
 	 * the value, and other property value pairs, and ended by NULL.
 	 * varArgs = The var args list generated from first_property_name.
 	 * ioPriority = the I/O priority
-	 *  of the operation.
+	 * of the operation.
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * callback = a GAsyncReadyCallback to call when the initialization is
-	 *  finished
+	 * finished
 	 * userData = the data to pass to callback function
 	 */
 	public static void gAsyncInitableNewValistAsync(GType objectType, string firstPropertyName, void* varArgs, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -238,10 +238,10 @@ public template AsyncInitableT(TStruct)
 	 * objectType = a GType supporting GAsyncInitable.
 	 * parameters = the parameters to use to construct the object
 	 * ioPriority = the I/O priority
-	 *  of the operation.
+	 * of the operation.
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * callback = a GAsyncReadyCallback to call when the initialization is
-	 *  finished
+	 * finished
 	 * userData = the data to pass to callback function
 	 */
 	public static void gAsyncInitableNewvAsync(GType objectType, GParameter[] parameters, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)

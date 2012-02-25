@@ -116,8 +116,8 @@ public template ProxyT(TStruct)
 	 * proxy = a GProxy
 	 * connection = a GIOStream
 	 * proxyAddress = a GProxyAddress
-	 * cancellable = a GCancellable
-	 * Returns: a GIOStream that will replace connection. This might be the same as connection, in which case a reference will be added.
+	 * cancellable = a GCancellable. [allow-none]
+	 * Returns: a GIOStream that will replace connection. This might be the same as connection, in which case a reference will be added. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public IOStream gProxyConnect(IOStream connection, ProxyAddress proxyAddress, Cancellable cancellable)
@@ -146,9 +146,9 @@ public template ProxyT(TStruct)
 	 * proxy = a GProxy
 	 * connection = a GIOStream
 	 * proxyAddress = a GProxyAddress
-	 * cancellable = a GCancellable
-	 * callback = a GAsyncReadyCallback
-	 * userData = callback data
+	 * cancellable = a GCancellable. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = callback data. [closure]
 	 */
 	public void gProxyConnectAsync(IOStream connection, ProxyAddress proxyAddress, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -161,7 +161,7 @@ public template ProxyT(TStruct)
 	 * Since 2.26
 	 * Params:
 	 * result = a GAsyncRetult
-	 * Returns: a GIOStream.
+	 * Returns: a GIOStream. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public IOStream gProxyConnectFinish(AsyncResultIF result)
@@ -189,7 +189,7 @@ public template ProxyT(TStruct)
 	 * Since 2.26
 	 * Params:
 	 * protocol = the proxy protocol name (e.g. http, socks, etc)
-	 * Returns: return a GProxy or NULL if protocol is not supported.
+	 * Returns: return a GProxy or NULL if protocol is not supported. [transfer full]
 	 */
 	public static ProxyIF gProxyGetDefaultForProtocol(string protocol)
 	{

@@ -199,8 +199,8 @@ public class UnixConnection : SocketConnection
 	 * GUnixCredentialsMessage type and g_socket_get_credentials() function.
 	 * Since 2.26
 	 * Params:
-	 * cancellable = A GCancellable or NULL.
-	 * Returns: Received credentials on success (free with g_object_unref()), NULL if error is set.
+	 * cancellable = A GCancellable or NULL. [allow-none]
+	 * Returns: Received credentials on success (free with g_object_unref()), NULL if error is set. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public Credentials receiveCredentials(Cancellable cancellable)
@@ -234,7 +234,7 @@ public class UnixConnection : SocketConnection
 	 * GUnixCredentialsMessage type and g_socket_get_credentials() function.
 	 * Since 2.26
 	 * Params:
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: TRUE on success, FALSE if error is set.
 	 * Throws: GException on failure.
 	 */

@@ -136,7 +136,7 @@ public class BufferedOutputStream : FilterOutputStream
 	 */
 	public this (OutputStream baseStream)
 	{
-		// GOutputStream* g_buffered_output_stream_new (GOutputStream *base_stream);
+		// GOutputStream * g_buffered_output_stream_new (GOutputStream *base_stream);
 		auto p = g_buffered_output_stream_new((baseStream is null) ? null : baseStream.getOutputStreamStruct());
 		if(p is null)
 		{
@@ -154,7 +154,7 @@ public class BufferedOutputStream : FilterOutputStream
 	 */
 	public this (OutputStream baseStream, gsize size)
 	{
-		// GOutputStream* g_buffered_output_stream_new_sized (GOutputStream *base_stream,  gsize size);
+		// GOutputStream * g_buffered_output_stream_new_sized (GOutputStream *base_stream,  gsize size);
 		auto p = g_buffered_output_stream_new_sized((baseStream is null) ? null : baseStream.getOutputStreamStruct(), size);
 		if(p is null)
 		{

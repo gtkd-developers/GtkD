@@ -148,7 +148,7 @@ public class IOModule : TypeModule
 	 * which allows delayed/lazy loading of modules.
 	 * Params:
 	 * dirname = pathname for a directory containing modules to load.
-	 * Returns: a list of GIOModules loaded from the directory, All the modules are loaded into memory, if you want to unload them (enabling on-demand loading) you must call g_type_module_unuse() on all the modules. Free the list with g_list_free().
+	 * Returns: a list of GIOModules loaded from the directory, All the modules are loaded into memory, if you want to unload them (enabling on-demand loading) you must call g_type_module_unuse() on all the modules. Free the list with g_list_free(). [element-type GIOModule][transfer full]
 	 */
 	public static ListG modulesLoadAllInDirectory(string dirname)
 	{
@@ -170,7 +170,7 @@ public class IOModule : TypeModule
 	 * g_io_extension_point_get_extensions() or
 	 * g_io_extension_point_get_extension_by_name().
 	 * If you need to guarantee that all types are loaded in all the modules,
-	 * use g_io_modules_scan_all_in_directory().
+	 * use g_io_modules_load_all_in_directory().
 	 * Since 2.24
 	 * Params:
 	 * dirname = pathname for a directory containing modules to scan.
@@ -222,7 +222,7 @@ public class IOModule : TypeModule
 	 * run gio-querymodules in order to build the cache files required for
 	 * lazy loading.
 	 * Since 2.24
-	 * Returns: A NULL-terminated array of strings, listing the supported extension points of the module. The array must be suitable for freeing with g_strfreev().
+	 * Returns: A NULL-terminated array of strings, listing the supported extension points of the module. The array must be suitable for freeing with g_strfreev(). [transfer full]
 	 */
 	public static string[] query()
 	{

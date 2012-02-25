@@ -136,7 +136,7 @@ public class IOExtensionPoint
 	 * Finds a GIOExtension for an extension point by name.
 	 * Params:
 	 * name = the name of the extension to get
-	 * Returns: the GIOExtension for extension_point that has the given name, or NULL if there is no extension with that name
+	 * Returns: the GIOExtension for extension_point that has the given name, or NULL if there is no extension with that name. [transfer none]
 	 */
 	public IOExtension getExtensionByName(string name)
 	{
@@ -152,7 +152,7 @@ public class IOExtensionPoint
 	/**
 	 * Gets a list of all extensions that implement this extension point.
 	 * The list is sorted by priority, beginning with the highest priority.
-	 * Returns: a GList of GIOExtensions. The list is owned by GIO and should not be modified. [element-type GIOExtension][transfer none GIOExtension]
+	 * Returns: a GList of GIOExtensions. The list is owned by GIO and should not be modified. [element-type GIOExtension][transfer none]
 	 */
 	public ListG getExtensions()
 	{

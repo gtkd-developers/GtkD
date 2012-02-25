@@ -94,7 +94,7 @@ public template SocketConnectableT(TStruct)
 	/**
 	 * Creates a GSocketAddressEnumerator for connectable.
 	 * Since 2.22
-	 * Returns: a new GSocketAddressEnumerator.
+	 * Returns: a new GSocketAddressEnumerator. [transfer full]
 	 */
 	public SocketAddressEnumerator enumerate()
 	{
@@ -115,7 +115,7 @@ public template SocketConnectableT(TStruct)
 	 * g_socket_connectable_proxy_enumerate(), this will fall back to
 	 * calling g_socket_connectable_enumerate().
 	 * Since 2.26
-	 * Returns: a new GSocketAddressEnumerator.
+	 * Returns: a new GSocketAddressEnumerator. [transfer full]
 	 */
 	public SocketAddressEnumerator proxyEnumerate()
 	{

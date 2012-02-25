@@ -78,7 +78,6 @@ private import gio.FileAttributeMatcher;
 
 
 
-private import gobject.ObjectG;
 
 /**
  * Description
@@ -102,7 +101,7 @@ private import gobject.ObjectG;
  * GFileAttributeMatcher allows for searching through a GFileInfo for
  * attributes.
  */
-public class FileInfo : ObjectG
+public class FileInfo
 {
 	
 	/** the main Gtk struct */
@@ -116,7 +115,7 @@ public class FileInfo : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected override void* getStruct()
+	protected void* getStruct()
 	{
 		return cast(void*)gFileInfo;
 	}
@@ -131,21 +130,7 @@ public class FileInfo : ObjectG
 			this = null;
 			return;
 		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFileInfo);
-		if( ptr !is null )
-		{
-			this = cast(FileInfo)ptr;
-			return;
-		}
-		super(cast(GObject*)gFileInfo);
 		this.gFileInfo = gFileInfo;
-	}
-	
-	protected override void setStruct(GObject* obj)
-	{
-		super.setStruct(obj);
-		gFileInfo = cast(GFileInfo*)obj;
 	}
 	
 	/**
@@ -168,7 +153,7 @@ public class FileInfo : ObjectG
 	
 	/**
 	 * Duplicates a file info structure.
-	 * Returns: a duplicate GFileInfo of other.
+	 * Returns: a duplicate GFileInfo of other. [transfer full]
 	 */
 	public FileInfo dup()
 	{
@@ -222,7 +207,7 @@ public class FileInfo : ObjectG
 	 * Lists the file info structure's attributes.
 	 * Params:
 	 * nameSpace = a file attribute key's namespace.
-	 * Returns: a null-terminated array of strings of all of the possible attribute types for the given name_space, or NULL on error. [array zero-terminated=1][transfer full zero-terminated=1]
+	 * Returns: a null-terminated array of strings of all of the possible attribute types for the given name_space, or NULL on error. [array zero-terminated=1][transfer full]
 	 */
 	public string[] listAttributes(string nameSpace)
 	{
@@ -313,7 +298,7 @@ public class FileInfo : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * attribute = a file attribute key.
-	 * Returns: the contents of the attribute value as a stringv, or NULL otherwise. Do not free.
+	 * Returns: the contents of the attribute value as a stringv, or NULL otherwise. Do not free. [transfer none]
 	 */
 	public string[] getAttributeStringv(string attribute)
 	{

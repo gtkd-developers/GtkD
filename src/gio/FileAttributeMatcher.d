@@ -63,6 +63,7 @@ private import glib.Str;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -86,7 +87,7 @@ private import glib.Str;
  * GFileAttributeMatcher allows for searching through a GFileInfo for
  * attributes.
  */
-public class FileAttributeMatcher
+public class FileAttributeMatcher : Boxed
 {
 	
 	/** the main Gtk struct */

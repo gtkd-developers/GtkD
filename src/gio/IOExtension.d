@@ -162,11 +162,11 @@ public class IOExtension
 	/**
 	 * Gets a reference to the class for the type that is
 	 * associated with extension.
-	 * Returns: the GTypeClass for the type of extension
+	 * Returns: the GTypeClass for the type of extension. [transfer full]
 	 */
 	public GTypeClass* refClass()
 	{
-		// GTypeClass* g_io_extension_ref_class (GIOExtension *extension);
+		// GTypeClass * g_io_extension_ref_class (GIOExtension *extension);
 		return g_io_extension_ref_class(gIOExtension);
 	}
 }

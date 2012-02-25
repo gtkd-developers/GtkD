@@ -52,6 +52,7 @@
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
+ * 	- GIOStream* -> IOStream
  * 	- GInputStream* -> InputStream
  * 	- GOutputStream* -> OutputStream
  * module aliases:
@@ -185,6 +186,51 @@ public class IOStream : ObjectG
 	}
 	
 	/**
+	 * Asyncronously splice the output stream of stream1 to the input stream of
+	 * stream2, and splice the output stream of stream2 to the input stream of
+	 * stream1.
+	 * When the operation is finished callback will be called.
+	 * You can then call g_io_stream_splice_finish() to get the
+	 * result of the operation.
+	 * Since 2.28
+	 * Params:
+	 * stream2 = a GIOStream.
+	 * flags = a set of GIOStreamSpliceFlags.
+	 * ioPriority = the io priority of the request.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data passed to callback. [closure]
+	 */
+	public void spliceAsync(IOStream stream2, GIOStreamSpliceFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_io_stream_splice_async (GIOStream *stream1,  GIOStream *stream2,  GIOStreamSpliceFlags flags,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_io_stream_splice_async(gIOStream, (stream2 is null) ? null : stream2.getIOStreamStruct(), flags, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous io stream splice operation.
+	 * Since 2.28
+	 * Params:
+	 * result = a GAsyncResult.
+	 * Returns: TRUE on success, FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public static int spliceFinish(AsyncResultIF result)
+	{
+		// gboolean g_io_stream_splice_finish (GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_io_stream_splice_finish((result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Closes the stream, releasing resources related to it. This will also
 	 * closes the individual input and output streams, if they are not already
 	 * closed.
@@ -213,7 +259,7 @@ public class IOStream : ObjectG
 	 * individual input/output streams.
 	 * Since 2.22
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: TRUE on success, FALSE on failure
 	 * Throws: GException on failure.
 	 */
@@ -244,9 +290,9 @@ public class IOStream : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * ioPriority = the io priority of the request
-	 * cancellable = optional cancellable object
-	 * callback = callback to call when the request is satisfied
-	 * userData = the data to pass to callback function
+	 * cancellable = optional cancellable object. [allow-none]
+	 * callback = callback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void closeAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{

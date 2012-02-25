@@ -149,7 +149,7 @@ public template AppInfoT(TStruct)
 	 * commandline = the commandline to use
 	 * applicationName = the application name, or NULL to use commandline. [allow-none]
 	 * flags = flags that can specify details of the created GAppInfo
-	 * Returns: new GAppInfo for given command.
+	 * Returns: new GAppInfo for given command. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static AppInfoIF createFromCommandline(string commandline, string applicationName, GAppInfoCreateFlags flags)
@@ -173,7 +173,7 @@ public template AppInfoT(TStruct)
 	
 	/**
 	 * Creates a duplicate of a GAppInfo.
-	 * Returns: a duplicate of appinfo.
+	 * Returns: a duplicate of appinfo. [transfer full]
 	 */
 	public AppInfoIF dup()
 	{
@@ -295,13 +295,13 @@ public template AppInfoT(TStruct)
 	 * unsupported uris with strange formats like mailto:), so if you have
 	 * a textual uri you want to pass in as argument, consider using
 	 * g_app_info_launch_uris() instead.
-	 * On UNIX, this function sets the <envvar>GIO_LAUNCHED_DESKTOP_FILE</envvar>
+	 * On UNIX, this function sets the GIO_LAUNCHED_DESKTOP_FILE
 	 * environment variable with the path of the launched desktop file and
-	 * <envvar>GIO_LAUNCHED_DESKTOP_FILE_PID</envvar> to the process
+	 * GIO_LAUNCHED_DESKTOP_FILE_PID to the process
 	 * id of the launched process. This can be used to ignore
-	 * <envvar>GIO_LAUNCHED_DESKTOP_FILE</envvar>, should it be inherited
-	 * by further processes. The <envvar>DISPLAY</envvar> and
-	 * <envvar>DESKTOP_STARTUP_ID</envvar> environment variables are also
+	 * GIO_LAUNCHED_DESKTOP_FILE, should it be inherited
+	 * by further processes. The DISPLAY and
+	 * DESKTOP_STARTUP_ID environment variables are also
 	 * set, based on information provided in launch_context.
 	 * Params:
 	 * files = a GList of GFile objects. [element-type GFile]
@@ -354,7 +354,7 @@ public template AppInfoT(TStruct)
 	 * can fail to start if it runs into problems during startup. There is
 	 * no way to detect this.
 	 * Params:
-	 * uris = a GList containing URIs to launch. [element-type char*]
+	 * uris = a GList containing URIs to launch. [element-type utf8]
 	 * launchContext = a GAppLaunchContext or NULL. [allow-none]
 	 * Returns: TRUE on successful launch, FALSE otherwise.
 	 * Throws: GException on failure.
@@ -402,6 +402,7 @@ public template AppInfoT(TStruct)
 	 * On some platforms, there may be a difference between user-defined
 	 * GAppInfos which can be deleted, and system-wide ones which
 	 * cannot. See g_app_info_can_delete().
+	 * Virtual: do_delete
 	 * Since 2.20
 	 * Returns: TRUE if appinfo has been deleted
 	 */
@@ -461,6 +462,31 @@ public template AppInfoT(TStruct)
 		GError* err = null;
 		
 		auto p = g_app_info_set_as_default_for_extension(getAppInfoTStruct(), Str.toStringz(extension), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Sets the application as the last used application for a given type.
+	 * This will make the application appear as first in the list returned by
+	 * g_app_info_get_recommended_for_type, regardless of the default application
+	 * for that content type.
+	 * Params:
+	 * contentType = the content type.
+	 * Returns: TRUE on success, FALSE on error.
+	 * Throws: GException on failure.
+	 */
+	public int setAsLastUsedForType(string contentType)
+	{
+		// gboolean g_app_info_set_as_last_used_for_type  (GAppInfo *appinfo,  const char *content_type,  GError **error);
+		GError* err = null;
+		
+		auto p = g_app_info_set_as_last_used_for_type(getAppInfoTStruct(), Str.toStringz(contentType), &err);
 		
 		if (err !is null)
 		{
@@ -534,7 +560,7 @@ public template AppInfoT(TStruct)
 	 * NotShowIn. See g_app_info_should_show().
 	 * The returned list does not include applications which have
 	 * the Hidden key set.
-	 * Returns: a newly allocated GList of references to GAppInfos. [element-type GAppInfo][transfer full GAppInfo]
+	 * Returns: a newly allocated GList of references to GAppInfos. [element-type GAppInfo][transfer full]
 	 */
 	public static ListG getAll()
 	{
@@ -551,7 +577,7 @@ public template AppInfoT(TStruct)
 	 * Gets a list of all GAppInfos for a given content type.
 	 * Params:
 	 * contentType = the content type to find a GAppInfo for
-	 * Returns: GList of GAppInfos for given content_type or NULL on error. [element-type GAppInfo][transfer full GAppInfo]
+	 * Returns: GList of GAppInfos for given content_type or NULL on error. [element-type GAppInfo][transfer full]
 	 */
 	public static ListG getAllForType(string contentType)
 	{
@@ -569,8 +595,8 @@ public template AppInfoT(TStruct)
 	 * Params:
 	 * contentType = the content type to find a GAppInfo for
 	 * mustSupportUris = if TRUE, the GAppInfo is expected to
-	 *  support URIs
-	 * Returns: GAppInfo for given content_type or NULL on error.
+	 * support URIs
+	 * Returns: GAppInfo for given content_type or NULL on error. [transfer full]
 	 */
 	public static AppInfoIF getDefaultForType(string contentType, int mustSupportUris)
 	{
@@ -590,7 +616,7 @@ public template AppInfoT(TStruct)
 	 * "ftp" or "sip".
 	 * Params:
 	 * uriScheme = a string containing a URI scheme.
-	 * Returns: GAppInfo for given uri_scheme or NULL on error.
+	 * Returns: GAppInfo for given uri_scheme or NULL on error. [transfer full]
 	 */
 	public static AppInfoIF getDefaultForUriScheme(string uriScheme)
 	{
@@ -604,13 +630,56 @@ public template AppInfoT(TStruct)
 	}
 	
 	/**
+	 * Gets a list of fallback GAppInfos for a given content type, i.e.
+	 * those applications which claim to support the given content type
+	 * by MIME type subclassing and not directly.
+	 * Since 2.28
+	 * Params:
+	 * contentType = the content type to find a GAppInfo for
+	 * Returns: GList of GAppInfos for given content_type or NULL on error. [element-type GAppInfo][transfer full]
+	 */
+	public static ListG getFallbackForType(string contentType)
+	{
+		// GList * g_app_info_get_fallback_for_type (const gchar *content_type);
+		auto p = g_app_info_get_fallback_for_type(Str.toStringz(contentType));
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Gets a list of recommended GAppInfos for a given content type, i.e.
+	 * those applications which claim to support the given content type exactly,
+	 * and not by MIME type subclassing.
+	 * Note that the first application of the list is the last used one, i.e.
+	 * the last one for which g_app_info_set_as_last_used_for_type has been
+	 * called.
+	 * Since 2.28
+	 * Params:
+	 * contentType = the content type to find a GAppInfo for
+	 * Returns: GList of GAppInfos for given content_type or NULL on error. [element-type GAppInfo][transfer full]
+	 */
+	public static ListG getRecommendedForType(string contentType)
+	{
+		// GList * g_app_info_get_recommended_for_type (const gchar *content_type);
+		auto p = g_app_info_get_recommended_for_type(Str.toStringz(contentType));
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
+	
+	/**
 	 * Utility function that launches the default application
 	 * registered to handle the specified uri. Synchronous I/O
 	 * is done on the uri to detect the type of the file if
 	 * required.
 	 * Params:
 	 * uri = the uri to show
-	 * launchContext = an optional GAppLaunchContext.
+	 * launchContext = an optional GAppLaunchContext. [allow-none]
 	 * Returns: TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */

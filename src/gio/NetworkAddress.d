@@ -242,7 +242,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 * Params:
 	 * uri = the hostname and optionally a port
 	 * defaultPort = The default port if none is found in the URI
-	 * Returns: the new GNetworkAddress, or NULL on error
+	 * Returns: the new GNetworkAddress, or NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static SocketConnectableIF parseUri(string uri, ushort defaultPort)

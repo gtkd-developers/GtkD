@@ -223,28 +223,4 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 		// void g_desktop_app_info_set_desktop_env (const char *desktop_env);
 		g_desktop_app_info_set_desktop_env(Str.toStringz(desktopEnv));
 	}
-	
-	/**
-	 * Gets the default application for launching applications
-	 * using this URI scheme for a particular GDesktopAppInfoLookup
-	 * implementation.
-	 * The GDesktopAppInfoLookup interface and this function is used
-	 * to implement g_app_info_get_default_for_uri_scheme() backends
-	 * in a GIO module. There is no reason for applications to use it
-	 * directly. Applications should use g_app_info_get_default_for_uri_scheme().
-	 * Params:
-	 * lookup = a GDesktopAppInfoLookup
-	 * uriScheme = a string containing a URI scheme.
-	 * Returns: GAppInfo for given uri_scheme or NULL on error.
-	 */
-	public static AppInfoIF lookupGetDefaultForUriScheme(GDesktopAppInfoLookup* lookup, string uriScheme)
-	{
-		// GAppInfo * g_desktop_app_info_lookup_get_default_for_uri_scheme  (GDesktopAppInfoLookup *lookup,  const char *uri_scheme);
-		auto p = g_desktop_app_info_lookup_get_default_for_uri_scheme(lookup, Str.toStringz(uriScheme));
-		if(p is null)
-		{
-			return null;
-		}
-		return new AppInfo(cast(GAppInfo*) p);
-	}
 }

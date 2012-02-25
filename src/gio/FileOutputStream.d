@@ -168,7 +168,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 * Params:
 	 * attributes = a file attribute query string.
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GFileInfo for the stream, or NULL on error.
+	 * Returns: a GFileInfo for the stream, or NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public FileInfo queryInfo(string attributes, Cancellable cancellable)
@@ -199,7 +199,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 * Params:
 	 * attributes = a file attribute query string.
 	 * ioPriority = the I/O priority
-	 *  of the request.
+	 * of the request.
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * callback = callback to call when the request is satisfied
 	 * userData = the data to pass to callback function
@@ -215,7 +215,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 * by g_file_output_stream_query_info_async().
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: A GFileInfo for the finished query.
+	 * Returns: A GFileInfo for the finished query. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public FileInfo queryInfoFinish(AsyncResultIF result)

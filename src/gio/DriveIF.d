@@ -161,7 +161,7 @@ public interface DriveIF
 	
 	/**
 	 * Gets the icon for drive.
-	 * Returns: GIcon for the drive. Free the returned object with g_object_unref().
+	 * Returns: GIcon for the drive. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public IconIF getIcon();
 	
@@ -175,7 +175,7 @@ public interface DriveIF
 	 * Get a list of mountable volumes for drive.
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
-	 * Returns: GList containing any GVolume objects on the given drive. [element-type GVolume][transfer full GVolume]
+	 * Returns: GList containing any GVolume objects on the given drive. [element-type GVolume][transfer full]
 	 */
 	public ListG getVolumes();
 	
@@ -225,8 +225,8 @@ public interface DriveIF
 	 * You can then call g_drive_poll_for_media_finish() to obtain the
 	 * result of the operation.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data to pass to callback
 	 */
 	public void pollForMedia(Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -269,8 +269,8 @@ public interface DriveIF
 	 * result of the operation.
 	 * Params:
 	 * flags = flags affecting the unmount if required for eject
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data to pass to callback
 	 */
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -293,9 +293,10 @@ public interface DriveIF
 	 * Since 2.22
 	 * Params:
 	 * flags = flags affecting the unmount if required for eject
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * mountOperation = a GMountOperation or NULL to avoid
+	 * user interaction. [allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data passed to callback.
 	 */
 	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -319,9 +320,10 @@ public interface DriveIF
 	 * Since 2.22
 	 * Params:
 	 * flags = flags affecting the start operation.
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * mountOperation = a GMountOperation or NULL to avoid
+	 * user interaction. [allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data to pass to callback
 	 */
 	public void start(GDriveStartFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -344,9 +346,10 @@ public interface DriveIF
 	 * Since 2.22
 	 * Params:
 	 * flags = flags affecting the unmount if required for stopping.
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * mountOperation = a GMountOperation or NULL to avoid
+	 * user interaction. [allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data to pass to callback
 	 */
 	public void stop(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -365,7 +368,7 @@ public interface DriveIF
 	 * Gets the kinds of identifiers that drive has.
 	 * Use g_drive_get_identifer() to obtain the identifiers
 	 * themselves.
-	 * Returns: a NULL-terminated array of strings containing kinds of identifiers. Use g_strfreev() to free.
+	 * Returns: a NULL-terminated array of strings containing kinds of identifiers. Use g_strfreev() to free. [transfer full][array zero-terminated=1]
 	 */
 	public string[] enumerateIdentifiers();
 	

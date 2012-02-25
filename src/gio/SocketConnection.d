@@ -140,7 +140,7 @@ public class SocketConnection : IOStream
 	/**
 	 * Try to get the local address of a socket connection.
 	 * Since 2.22
-	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref().
+	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketAddress getLocalAddress()
@@ -165,7 +165,7 @@ public class SocketConnection : IOStream
 	/**
 	 * Try to get the remote address of a socket connection.
 	 * Since 2.22
-	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref().
+	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketAddress getRemoteAddress()
@@ -211,7 +211,7 @@ public class SocketConnection : IOStream
 	 * Since 2.22
 	 * Params:
 	 * socket = a GSocket
-	 * Returns: a GSocketConnection
+	 * Returns: a GSocketConnection. [transfer full]
 	 */
 	public static SocketConnection factoryCreateConnection(Socket socket)
 	{

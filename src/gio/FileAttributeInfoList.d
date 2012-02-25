@@ -400,7 +400,7 @@ public class FileAttributeInfoList
 	 */
 	public this ()
 	{
-		// GFileAttributeInfoList * g_file_attribute_info_list_new (void);
+		// GFileAttributeInfoList * g_file_attribute_info_list_new  (void);
 		auto p = g_file_attribute_info_list_new();
 		if(p is null)
 		{
@@ -415,7 +415,7 @@ public class FileAttributeInfoList
 	 */
 	public FileAttributeInfoList doref()
 	{
-		// GFileAttributeInfoList * g_file_attribute_info_list_ref (GFileAttributeInfoList *list);
+		// GFileAttributeInfoList * g_file_attribute_info_list_ref  (GFileAttributeInfoList *list);
 		auto p = g_file_attribute_info_list_ref(gFileAttributeInfoList);
 		if(p is null)
 		{
@@ -440,7 +440,7 @@ public class FileAttributeInfoList
 	 */
 	public FileAttributeInfoList dup()
 	{
-		// GFileAttributeInfoList * g_file_attribute_info_list_dup (GFileAttributeInfoList *list);
+		// GFileAttributeInfoList * g_file_attribute_info_list_dup  (GFileAttributeInfoList *list);
 		auto p = g_file_attribute_info_list_dup(gFileAttributeInfoList);
 		if(p is null)
 		{

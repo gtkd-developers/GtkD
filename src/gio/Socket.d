@@ -331,8 +331,8 @@ public class Socket : ObjectG, InitableIF
 	 * To be notified of an incoming connection, wait for the G_IO_IN condition.
 	 * Since 2.22
 	 * Params:
-	 * cancellable = a GCancellable or NULL
-	 * Returns: a new GSocket, or NULL on error. Free the returned object with g_object_unref().
+	 * cancellable = a GCancellable or NULL. [allow-none]
+	 * Returns: a new GSocket, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public GSocket* accept(Cancellable cancellable)
@@ -367,7 +367,7 @@ public class Socket : ObjectG, InitableIF
 	 * Since 2.22
 	 * Params:
 	 * address = a GSocketAddress specifying the remote address.
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: TRUE if connected, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -431,9 +431,9 @@ public class Socket : ObjectG, InitableIF
 	 * Since 2.22
 	 * Params:
 	 * buffer = a buffer to read data into (which should be at least size
-	 *  bytes long).
+	 * bytes long).
 	 * size = the number of bytes you want to read from the socket
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -462,9 +462,9 @@ public class Socket : ObjectG, InitableIF
 	 * Params:
 	 * address = a pointer to a GSocketAddress pointer, or NULL
 	 * buffer = a buffer to read data into (which should be at least size
-	 *  bytes long).
+	 * bytes long).
 	 * size = the number of bytes you want to read from the socket
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -535,11 +535,11 @@ public class Socket : ObjectG, InitableIF
 	 * Since 2.22
 	 * Params:
 	 * address = a pointer to a GSocketAddress pointer, or NULL
-	 * vectors = an array of GInputVector structs
-	 * messages = a pointer which may be filled with an array of
-	 *  GSocketControlMessages, or NULL
+	 * vectors = an array of GInputVector structs. [array length=num_vectors]
+	 * messages = a pointer which
+	 * may be filled with an array of GSocketControlMessages, or NULL. [array length=num_messages][allow-none]
 	 * flags = a pointer to an int containing GSocketMsgFlags flags
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -582,10 +582,10 @@ public class Socket : ObjectG, InitableIF
 	 * Since 2.26
 	 * Params:
 	 * buffer = a buffer to read data into (which should be at least size
-	 *  bytes long).
+	 * bytes long).
 	 * size = the number of bytes you want to read from the socket
 	 * blocking = whether to do blocking or non-blocking I/O
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes read, or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -619,9 +619,9 @@ public class Socket : ObjectG, InitableIF
 	 * On error -1 is returned and error is set accordingly.
 	 * Since 2.22
 	 * Params:
-	 * buffer = the buffer containing the data to send.
+	 * buffer = the buffer containing the data to send. [array length=size]
 	 * size = the number of bytes to send
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes written (which may be less than size), or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -648,9 +648,9 @@ public class Socket : ObjectG, InitableIF
 	 * Since 2.22
 	 * Params:
 	 * address = a GSocketAddress, or NULL
-	 * buffer = the buffer containing the data to send.
+	 * buffer = the buffer containing the data to send. [array length=size]
 	 * size = the number of bytes to send
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes written (which may be less than size), or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -704,11 +704,11 @@ public class Socket : ObjectG, InitableIF
 	 * Since 2.22
 	 * Params:
 	 * address = a GSocketAddress, or NULL
-	 * vectors = an array of GOutputVector structs
-	 * messages = a pointer to an array of GSocketControlMessages, or
-	 *  NULL.
+	 * vectors = an array of GOutputVector structs. [array length=num_vectors]
+	 * messages = a pointer to an
+	 * array of GSocketControlMessages, or NULL. [array length=num_messages][allow-none]
 	 * flags = an int containing GSocketMsgFlags flags
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes written (which may be less than size), or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -736,10 +736,10 @@ public class Socket : ObjectG, InitableIF
 	 * the blocking argument rather than by socket's properties.
 	 * Since 2.26
 	 * Params:
-	 * buffer = the buffer containing the data to send.
+	 * buffer = the buffer containing the data to send. [array length=size]
 	 * size = the number of bytes to send
 	 * blocking = whether to do blocking or non-blocking I/O
-	 * cancellable = a GCancellable or NULL
+	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes written (which may be less than size), or -1 on error
 	 * Throws: GException on failure.
 	 */
@@ -877,8 +877,8 @@ public class Socket : ObjectG, InitableIF
 	 * Since 2.22
 	 * Params:
 	 * condition = a GIOCondition mask to monitor
-	 * cancellable = a GCancellable or NULL
-	 * Returns: a newly allocated GSource, free with g_source_unref().
+	 * cancellable = a GCancellable or NULL. [allow-none]
+	 * Returns: a newly allocated GSource, free with g_source_unref(). [transfer full]
 	 */
 	public Source createSource(GIOCondition condition, Cancellable cancellable)
 	{
@@ -928,7 +928,7 @@ public class Socket : ObjectG, InitableIF
 	 * Since 2.22
 	 * Params:
 	 * condition = a GIOCondition mask to wait for
-	 * cancellable = a GCancellable, or NULL
+	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * Returns: TRUE if the condition was met, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
@@ -1112,7 +1112,7 @@ public class Socket : ObjectG, InitableIF
 	 * useful if the socket has been bound to a local address,
 	 * either explicitly or implicitly when connecting.
 	 * Since 2.22
-	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref().
+	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketAddress getLocalAddress()
@@ -1150,7 +1150,7 @@ public class Socket : ObjectG, InitableIF
 	 * Try to get the remove address of a connected socket. This is only
 	 * useful for connection oriented sockets that have been connected.
 	 * Since 2.22
-	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref().
+	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public SocketAddress getRemoteAddress()
@@ -1212,7 +1212,7 @@ public class Socket : ObjectG, InitableIF
 	 * g_unix_connection_send_credentials() /
 	 * g_unix_connection_receive_credentials() functions.
 	 * Since 2.26
-	 * Returns: NULL if error is set, otherwise a GCredentials object that must be freed with g_object_unref().
+	 * Returns: NULL if error is set, otherwise a GCredentials object that must be freed with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public Credentials getCredentials()

@@ -192,7 +192,7 @@ public class DBusMethodInvocation : ObjectG
 	/**
 	 * Gets the GDBusConnection the method was invoked on.
 	 * Since 2.26
-	 * Returns: A GDBusConnection. Do not free, it is owned by invocation.
+	 * Returns: A GDBusConnection. Do not free, it is owned by invocation. [transfer none]
 	 */
 	public DBusConnection getConnection()
 	{
@@ -213,7 +213,7 @@ public class DBusMethodInvocation : ObjectG
 	 * See Example  2, “D-Bus server example” and Example  4, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Since 2.26
-	 * Returns: A GDBusMessage. Do not free, it is owned by invocation.
+	 * Returns: GDBusMessage. Do not free, it is owned by invocation. [transfer none]
 	 */
 	public DBusMessage getMessage()
 	{
@@ -227,9 +227,10 @@ public class DBusMethodInvocation : ObjectG
 	}
 	
 	/**
-	 * Gets the parameters of the method invocation.
+	 * Gets the parameters of the method invocation. If there are no input
+	 * parameters then this will return a GVariant with 0 children rather than NULL.
 	 * Since 2.26
-	 * Returns: A GVariant. Do not free, it is owned by invocation.
+	 * Returns: A GVariant tuple. Do not unref this because it is owned by invocation. [transfer none]
 	 */
 	public Variant getParameters()
 	{

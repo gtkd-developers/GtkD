@@ -38,6 +38,7 @@
  * implements:
  * prefixes:
  * 	- g_settings_backend_
+ * 	- g_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -47,6 +48,7 @@
  * 	- glib.BBTree
  * 	- glib.Variant
  * structWrap:
+ * 	- GSettingsBackend* -> SettingsBackend
  * 	- GTree* -> BBTree
  * 	- GVariant* -> Variant
  * module aliases:
@@ -144,10 +146,29 @@ public class SettingsBackend : ObjectG
 	 */
 	
 	/**
+	 * Returns the default GSettingsBackend. It is possible to override
+	 * the default by setting the GSETTINGS_BACKEND
+	 * environment variable to the name of a settings backend.
+	 * The user gets a reference to the backend.
+	 * Since 2.28
+	 * Returns: the default GSettingsBackend. [transfer full]
+	 */
+	public static SettingsBackend getDefault()
+	{
+		// GSettingsBackend * g_settings_backend_get_default (void);
+		auto p = g_settings_backend_get_default();
+		if(p is null)
+		{
+			return null;
+		}
+		return new SettingsBackend(cast(GSettingsBackend*) p);
+	}
+	
+	/**
 	 * Signals that a single key has possibly changed. Backend
 	 * implementations should call this if a key has possibly changed its
 	 * value.
-	 * key must be a valid key (ie: starting with a slash, not containing
+	 * key must be a valid key (ie starting with a slash, not containing
 	 * '//', and not ending with a slash).
 	 * The implementation must call this function during any call to
 	 * g_settings_backend_write(), before the call returns (except in the
@@ -177,7 +198,7 @@ public class SettingsBackend : ObjectG
 	 * Signals that all keys below a given path may have possibly changed.
 	 * Backend implementations should call this if an entire path of keys
 	 * have possibly changed their values.
-	 * path must be a valid path (ie: starting and ending with a slash and
+	 * path must be a valid path (ie starting and ending with a slash and
 	 * not containing '//').
 	 * The meaning of this signal is that any of the key which has a name
 	 * starting with path may have changed.
@@ -206,7 +227,7 @@ public class SettingsBackend : ObjectG
 	 * Signals that a list of keys have possibly changed. Backend
 	 * implementations should call this if keys have possibly changed their
 	 * values.
-	 * path must be a valid path (ie: starting and ending with a slash and
+	 * path must be a valid path (ie starting and ending with a slash and
 	 * not containing '//'). Each string in items must form a valid key
 	 * name when path is prefixed to it (ie: each item must not start or
 	 * end with '/' and must not contain '//').
@@ -223,7 +244,7 @@ public class SettingsBackend : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * path = the path containing the changes
-	 * items = the NULL-terminated list of changed keys
+	 * items = the NULL-terminated list of changed keys. [array zero-terminated=1]
 	 * originTag = the origin tag
 	 */
 	public void keysChanged(string path, char** items, void* originTag)
@@ -286,9 +307,10 @@ public class SettingsBackend : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * tree = a GTree containing the changes
-	 * path = the location to save the path
-	 * keys = the location to save the relative keys
-	 * values = the location to save the values, or NULL
+	 * path = the location to save the path. [out]
+	 * keys = the
+	 * location to save the relative keys. [out][transfer container][array zero-terminated=1]
+	 * values = the location to save the values, or NULL. [out][allow-none][transfer container][array zero-terminated=1]
 	 */
 	public static void flattenTree(BBTree tree, out string path, out string[] keys, out Variant[] values)
 	{
@@ -323,12 +345,54 @@ public class SettingsBackend : ObjectG
 	 * filename = the filename of the keyfile
 	 * rootPath = the path under which all settings keys appear
 	 * rootGroup = the group name corresponding to
-	 *  root_path, or NULL. [allow-none]
-	 * Returns: a keyfile-backed GSettingsBackend
+	 * root_path, or NULL. [allow-none]
+	 * Returns: a keyfile-backed GSettingsBackend. [transfer full]
 	 */
-	public static GSettingsBackend* gKeyfileSettingsBackendNew(string filename, string rootPath, string rootGroup)
+	public static SettingsBackend keyfileSettingsBackendNew(string filename, string rootPath, string rootGroup)
 	{
 		// GSettingsBackend * g_keyfile_settings_backend_new (const gchar *filename,  const gchar *root_path,  const gchar *root_group);
-		return g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
+		auto p = g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
+		if(p is null)
+		{
+			return null;
+		}
+		return new SettingsBackend(cast(GSettingsBackend*) p);
+	}
+	
+	/**
+	 * Creates a memory-backed GSettingsBackend.
+	 * This backend allows changes to settings, but does not write them
+	 * to any backing storage, so the next time you run your application,
+	 * the memory backend will start out with the default values again.
+	 * Since 2.28
+	 * Returns: a newly created GSettingsBackend. [transfer full]
+	 */
+	public static SettingsBackend memorySettingsBackendNew()
+	{
+		// GSettingsBackend * g_memory_settings_backend_new (void);
+		auto p = g_memory_settings_backend_new();
+		if(p is null)
+		{
+			return null;
+		}
+		return new SettingsBackend(cast(GSettingsBackend*) p);
+	}
+	
+	/**
+	 * Creates a readonly GSettingsBackend.
+	 * This backend does not allow changes to settings, so all settings
+	 * will always have their default values.
+	 * Since 2.28
+	 * Returns: a newly created GSettingsBackend. [transfer full]
+	 */
+	public static SettingsBackend nullSettingsBackendNew()
+	{
+		// GSettingsBackend * g_null_settings_backend_new (void);
+		auto p = g_null_settings_backend_new();
+		if(p is null)
+		{
+			return null;
+		}
+		return new SettingsBackend(cast(GSettingsBackend*) p);
 	}
 }

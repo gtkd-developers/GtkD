@@ -125,7 +125,7 @@ public class Vfs : ObjectG
 	 * Gets a GFile for path.
 	 * Params:
 	 * path = a string containing a VFS path.
-	 * Returns: a GFile. Free the returned object with g_object_unref().
+	 * Returns: a GFile. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public File getFileForPath(string path)
 	{
@@ -145,7 +145,7 @@ public class Vfs : ObjectG
 	 * is malformed or if the URI scheme is not supported.
 	 * Params:
 	 * uri = a string containing a URI
-	 * Returns: a GFile. Free the returned object with g_object_unref().
+	 * Returns: a GFile. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public File getFileForUri(string uri)
 	{
@@ -164,7 +164,7 @@ public class Vfs : ObjectG
 	 * be parsed by the GVfs module.
 	 * Params:
 	 * parseName = a string to be parsed by the VFS module.
-	 * Returns: a GFile for the given parse_name. Free the returned object with g_object_unref().
+	 * Returns: a GFile for the given parse_name. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public File parseName(string parseName)
 	{
@@ -179,7 +179,7 @@ public class Vfs : ObjectG
 	
 	/**
 	 * Gets the default GVfs for the system.
-	 * Returns: a GVfs.
+	 * Returns: a GVfs. [transfer none]
 	 */
 	public static Vfs getDefault()
 	{
@@ -194,7 +194,7 @@ public class Vfs : ObjectG
 	
 	/**
 	 * Gets the local GVfs for the system.
-	 * Returns: a GVfs.
+	 * Returns: a GVfs. [transfer none]
 	 */
 	public static Vfs getLocal()
 	{
@@ -219,11 +219,11 @@ public class Vfs : ObjectG
 	
 	/**
 	 * Gets a list of URI schemes supported by vfs.
-	 * Returns: a NULL-terminated array of strings. The returned array belongs to GIO and must not be freed or modified.
+	 * Returns: a NULL-terminated array of strings. The returned array belongs to GIO and must not be freed or modified. [transfer none]
 	 */
 	public string[] getSupportedUriSchemes()
 	{
-		// const gchar* const * g_vfs_get_supported_uri_schemes (GVfs *vfs);
+		// const gchar * const * g_vfs_get_supported_uri_schemes (GVfs *vfs);
 		return Str.toStringArray(g_vfs_get_supported_uri_schemes(gVfs));
 	}
 }

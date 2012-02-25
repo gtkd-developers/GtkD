@@ -141,7 +141,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	 * Since 2.18
 	 * Params:
 	 * icon = a GIcon
-	 * emblem = a GEmblem
+	 * emblem = a GEmblem, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (IconIF icon, Emblem emblem)
@@ -158,7 +158,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	/**
 	 * Gets the main icon for emblemed.
 	 * Since 2.18
-	 * Returns: a GIcon that is owned by emblemed
+	 * Returns: a GIcon that is owned by emblemed. [transfer none]
 	 */
 	public IconIF getIcon()
 	{
@@ -174,7 +174,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	/**
 	 * Gets the list of emblems for the icon.
 	 * Since 2.18
-	 * Returns: a GList of GEmblem s that is owned by emblemed
+	 * Returns: a GList of GEmblem s that is owned by emblemed. [element-type Gio.Emblem][transfer none]
 	 */
 	public ListG getEmblems()
 	{
@@ -197,5 +197,15 @@ public class EmblemedIcon : ObjectG, IconIF
 	{
 		// void g_emblemed_icon_add_emblem (GEmblemedIcon *emblemed,  GEmblem *emblem);
 		g_emblemed_icon_add_emblem(gEmblemedIcon, (emblem is null) ? null : emblem.getEmblemStruct());
+	}
+	
+	/**
+	 * Removes all the emblems from icon.
+	 * Since 2.28
+	 */
+	public void clearEmblems()
+	{
+		// void g_emblemed_icon_clear_emblems (GEmblemedIcon *emblemed);
+		g_emblemed_icon_clear_emblems(gEmblemedIcon);
 	}
 }

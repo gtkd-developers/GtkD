@@ -149,6 +149,8 @@ public interface MountIF
 	 * unmounted. If the recipient is holding references to the
 	 * object they should release them so the object can be
 	 * finalized.
+	 * See Also
+	 * GVolume, GUnixMount
 	 */
 	void addOnUnmounted(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
@@ -169,7 +171,7 @@ public interface MountIF
 	
 	/**
 	 * Gets the icon for mount.
-	 * Returns: a GIcon. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 * Returns: a GIcon. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */
 	public IconIF getIcon();
 	
@@ -177,19 +179,19 @@ public interface MountIF
 	 * Gets the drive for the mount.
 	 * This is a convenience method for getting the GVolume and then
 	 * using that object to get the GDrive.
-	 * Returns: a GDrive or NULL if mount is not associated with a volume or a drive. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 * Returns: a GDrive or NULL if mount is not associated with a volume or a drive. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */
 	public DriveIF getDrive();
 	
 	/**
 	 * Gets the root directory on mount.
-	 * Returns: a GFile. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 * Returns: a GFile. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */
 	public File getRoot();
 	
 	/**
 	 * Gets the volume for the mount.
-	 * Returns: a GVolume or NULL if mount is not associated with a volume. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 * Returns: a GVolume or NULL if mount is not associated with a volume. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */
 	public VolumeIF getVolume();
 	
@@ -197,7 +199,7 @@ public interface MountIF
 	 * Gets the default location of mount. The default location of the given
 	 * mount is a path that reflects the main entry point for the user (e.g.
 	 * the home directory, or the root of the volume).
-	 * Returns: a GFile. The returned object should be unreffed with g_object_unref() when no longer needed.
+	 * Returns: a GFile. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */
 	public File getDefaultLocation();
 	
@@ -218,8 +220,8 @@ public interface MountIF
 	 * Params:
 	 * mount = a GMount.
 	 * flags = flags affecting the operation
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data passed to callback.
 	 */
 	public void unmount(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -245,9 +247,10 @@ public interface MountIF
 	 * Params:
 	 * mount = a GMount.
 	 * flags = flags affecting the operation
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * mountOperation = a GMountOperation or NULL to avoid
+	 * user interaction. [allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data passed to callback.
 	 */
 	public void unmountWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -276,9 +279,10 @@ public interface MountIF
 	 * Params:
 	 * mount = a GMount.
 	 * flags = flags affecting the operation
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * mountOperation = a GMountOperation or NULL to avoid
+	 * user interaction. [allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data passed to callback.
 	 */
 	public void remount(GMountMountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -309,8 +313,8 @@ public interface MountIF
 	 * Params:
 	 * mount = a GMount.
 	 * flags = flags affecting the unmount if required for eject
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data passed to callback.
 	 */
 	public void eject(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -335,9 +339,10 @@ public interface MountIF
 	 * Params:
 	 * mount = a GMount.
 	 * flags = flags affecting the unmount if required for eject
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * mountOperation = a GMountOperation or NULL to avoid
+	 * user interaction. [allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data passed to callback.
 	 */
 	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
@@ -366,8 +371,8 @@ public interface MountIF
 	 * Since 2.18
 	 * Params:
 	 * forceRescan = Whether to force a rescan of the content.
-	 *  Otherwise a cached result will be used if available
-	 * cancellable = optional GCancellable object, NULL to ignore
+	 * Otherwise a cached result will be used if available
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * callback = a GAsyncReadyCallback
 	 * userData = user data passed to callback
 	 */
@@ -382,7 +387,7 @@ public interface MountIF
 	 * Since 2.18
 	 * Params:
 	 * result = a GAsyncResult
-	 * Returns: a NULL-terminated array of content types or NULL on error. Caller should free this array with g_strfreev() when done with it.
+	 * Returns: a NULL-terminated array of content types or NULL on error. Caller should free this array with g_strfreev() when done with it. [transfer full][element-type utf8]
 	 * Throws: GException on failure.
 	 */
 	public string[] guessContentTypeFinish(AsyncResultIF result);
@@ -398,9 +403,9 @@ public interface MountIF
 	 * Since 2.18
 	 * Params:
 	 * forceRescan = Whether to force a rescan of the content.
-	 *  Otherwise a cached result will be used if available
-	 * cancellable = optional GCancellable object, NULL to ignore
-	 * Returns: a NULL-terminated array of content types or NULL on error. Caller should free this array with g_strfreev() when done with it.
+	 * Otherwise a cached result will be used if available
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * Returns: a NULL-terminated array of content types or NULL on error. Caller should free this array with g_strfreev() when done with it. [transfer full][element-type utf8]
 	 * Throws: GException on failure.
 	 */
 	public string[] guessContentTypeSync(int forceRescan, Cancellable cancellable);

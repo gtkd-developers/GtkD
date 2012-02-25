@@ -135,7 +135,7 @@ public class UnixFDList : ObjectG
 	 * If n_fds is -1 then fds must be terminated with -1.
 	 * Since 2.24
 	 * Params:
-	 * fds = the initial list of file descriptors
+	 * fds = the initial list of file descriptors. [array length=n_fds]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int[] fds)
@@ -220,7 +220,7 @@ public class UnixFDList : ObjectG
 	 * This function never returns NULL. In case there are no file
 	 * descriptors contained in list, an empty array is returned.
 	 * Since 2.24
-	 * Returns: an array of file descriptors
+	 * Returns: an array of file descriptors. [array length=length][transfer none]
 	 */
 	public int[] peekFds()
 	{
@@ -246,7 +246,7 @@ public class UnixFDList : ObjectG
 	 * This function never returns NULL. In case there are no file
 	 * descriptors contained in list, an empty array is returned.
 	 * Since 2.24
-	 * Returns: an array of file descriptors
+	 * Returns: an array of file descriptors. [array length=length][transfer full]
 	 */
 	public int[] stealFds()
 	{

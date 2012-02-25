@@ -198,7 +198,7 @@ public class UnixMountPoint
 	
 	/**
 	 * Guesses the icon of a Unix mount point.
-	 * Returns: a GIcon
+	 * Returns: a GIcon. [transfer full]
 	 */
 	public IconIF guessIcon()
 	{

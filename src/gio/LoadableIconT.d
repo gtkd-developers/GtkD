@@ -103,9 +103,10 @@ public template LoadableIconT(TStruct)
 	 * see g_loadable_icon_load_async().
 	 * Params:
 	 * size = an integer.
-	 * type = a location to store the type of the loaded icon, NULL to ignore.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a GInputStream to read the icon from.
+	 * type = a location to store the type of the
+	 * loaded icon, NULL to ignore. [out][allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * Returns: a GInputStream to read the icon from. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public InputStream load(int size, out string type, Cancellable cancellable)
@@ -135,9 +136,10 @@ public template LoadableIconT(TStruct)
 	 * version of this function, see g_loadable_icon_load().
 	 * Params:
 	 * size = an integer.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied
-	 * userData = the data to pass to callback function
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the
+	 * request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void loadAsync(int size, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -150,7 +152,7 @@ public template LoadableIconT(TStruct)
 	 * Params:
 	 * res = a GAsyncResult.
 	 * type = a location to store the type of the loaded icon, NULL to ignore.
-	 * Returns: a GInputStream to read the icon from.
+	 * Returns: a GInputStream to read the icon from. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public InputStream loadFinish(AsyncResultIF res, out string type)

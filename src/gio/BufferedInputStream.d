@@ -147,7 +147,7 @@ public class BufferedInputStream : FilterInputStream
 	 */
 	public this (InputStream baseStream)
 	{
-		// GInputStream* g_buffered_input_stream_new (GInputStream *base_stream);
+		// GInputStream * g_buffered_input_stream_new (GInputStream *base_stream);
 		auto p = g_buffered_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct());
 		if(p is null)
 		{
@@ -166,7 +166,7 @@ public class BufferedInputStream : FilterInputStream
 	 */
 	public this (InputStream baseStream, gsize size)
 	{
-		// GInputStream* g_buffered_input_stream_new_sized (GInputStream *base_stream,  gsize size);
+		// GInputStream * g_buffered_input_stream_new_sized (GInputStream *base_stream,  gsize size);
 		auto p = g_buffered_input_stream_new_sized((baseStream is null) ? null : baseStream.getInputStreamStruct(), size);
 		if(p is null)
 		{
@@ -213,12 +213,12 @@ public class BufferedInputStream : FilterInputStream
 	 * buffer must not be modified and will become invalid when reading from
 	 * the stream or filling the buffer.
 	 * Params:
-	 * count = a gsize to get the number of bytes available in the buffer
-	 * Returns: read-only buffer
+	 * count = a gsize to get the number of bytes available in the buffer. [out]
+	 * Returns: read-only buffer. [array length=count][element-type guint8][transfer none]
 	 */
 	public void* peekBuffer(out gsize count)
 	{
-		// const void* g_buffered_input_stream_peek_buffer (GBufferedInputStream *stream,  gsize *count);
+		// const void * g_buffered_input_stream_peek_buffer (GBufferedInputStream *stream,  gsize *count);
 		return g_buffered_input_stream_peek_buffer(gBufferedInputStream, &count);
 	}
 	
@@ -258,7 +258,7 @@ public class BufferedInputStream : FilterInputStream
 	 * g_buffered_input_stream_fill_async().
 	 * Params:
 	 * count = the number of bytes that will be read from the stream
-	 * cancellable = optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: the number of bytes read into stream's buffer, up to count, or -1 on error.
 	 * Throws: GException on failure.
 	 */
@@ -286,10 +286,10 @@ public class BufferedInputStream : FilterInputStream
 	 * Params:
 	 * count = the number of bytes that will be read from the stream
 	 * ioPriority = the I/O priority
-	 *  of the request
-	 * cancellable = optional GCancellable object
-	 * callback = a GAsyncReadyCallback
-	 * userData = a gpointer
+	 * of the request
+	 * cancellable = optional GCancellable object. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = a gpointer. [closure]
 	 */
 	public void fillAsync(gssize count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
@@ -331,7 +331,7 @@ public class BufferedInputStream : FilterInputStream
 	 * partial result will be returned, without an error.
 	 * On error -1 is returned and error is set accordingly.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Returns: the byte read from the stream, or -1 on end of stream or error.
 	 * Throws: GException on failure.
 	 */

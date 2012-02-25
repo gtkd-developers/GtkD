@@ -86,7 +86,8 @@ private import gio.Cancellable;
  * in various ways. For C applications you generally just call
  * g_initable_new() directly, or indirectly via a foo_thing_new() wrapper.
  * This will call g_initable_init() under the cover, returning NULL and
- * setting a GError on failure.
+ * setting a GError on failure (at which point the instance is
+ * unreferenced).
  * For bindings in languages where the native constructor supports
  * exceptions the binding could check for objects implemention GInitable
  * during normal construction and automatically initialize them, throwing
@@ -141,7 +142,7 @@ public interface InitableIF
 	 * the value, and other property value pairs, and ended by NULL.
 	 * varArgs = The var args list generated from first_property_name.
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a newly allocated GObject, or NULL on error
+	 * Returns: a newly allocated GObject, or NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static ObjectG newValist(GType objectType, string firstPropertyName, void* varArgs, Cancellable cancellable);
@@ -155,7 +156,7 @@ public interface InitableIF
 	 * objectType = a GType supporting GInitable.
 	 * parameters = the parameters to use to construct the object
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a newly allocated GObject, or NULL on error
+	 * Returns: a newly allocated GObject, or NULL on error. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static void* newv(GType objectType, GParameter[] parameters, Cancellable cancellable);

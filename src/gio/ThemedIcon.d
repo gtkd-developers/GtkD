@@ -135,9 +135,9 @@ public class ThemedIcon : ObjectG, IconIF
 	/**
 	 * Creates a new themed icon for iconnames.
 	 * Params:
-	 * iconnames = an array of strings containing icon names.
+	 * iconnames = an array of strings containing icon names. [array length=len]
 	 * len = the length of the iconnames array, or -1 if iconnames is
-	 *  NULL-terminated
+	 * NULL-terminated
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string[] iconnames, int len)
@@ -202,11 +202,11 @@ public class ThemedIcon : ObjectG, IconIF
 	
 	/**
 	 * Gets the names of icons from within icon.
-	 * Returns: a list of icon names.
+	 * Returns: a list of icon names. [transfer none]
 	 */
 	public string[] getNames()
 	{
-		// const gchar* const * g_themed_icon_get_names (GThemedIcon *icon);
+		// const gchar * const * g_themed_icon_get_names (GThemedIcon *icon);
 		return Str.toStringArray(g_themed_icon_get_names(gThemedIcon));
 	}
 }

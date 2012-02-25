@@ -82,7 +82,6 @@ private import gio.DBusConnection;
 
 
 
-private import gobject.ObjectG;
 
 /**
  * Description
@@ -110,10 +109,10 @@ private import gobject.ObjectG;
  * signals are not very convenient to work with. Therefore, the recommended
  * way of working with proxies is to subclass GDBusProxy, and have
  * more natural properties and signals in your derived class.
- * See Example  14, “GDBusProxy subclass example” for an example.
+ * See Example  19, “GDBusProxy subclass example” for an example.
  * $(DDOC_COMMENT example)
  */
-public class DBusProxy : ObjectG
+public class DBusProxy
 {
 	
 	/** the main Gtk struct */
@@ -127,7 +126,7 @@ public class DBusProxy : ObjectG
 	
 	
 	/** the main Gtk struct as a void* */
-	protected override void* getStruct()
+	protected void* getStruct()
 	{
 		return cast(void*)gDBusProxy;
 	}
@@ -142,21 +141,7 @@ public class DBusProxy : ObjectG
 			this = null;
 			return;
 		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusProxy);
-		if( ptr !is null )
-		{
-			this = cast(DBusProxy)ptr;
-			return;
-		}
-		super(cast(GObject*)gDBusProxy);
 		this.gDBusProxy = gDBusProxy;
-	}
-	
-	protected override void setStruct(GObject* obj)
-	{
-		super.setStruct(obj);
-		gDBusProxy = cast(GDBusProxy*)obj;
 	}
 	
 	/**
@@ -200,7 +185,7 @@ public class DBusProxy : ObjectG
 	 */
 	int[char[]] connectedSignals;
 	
-	void delegate(GVariant, GStrv*, DBusProxy)[] onGPropertiesChangedListeners;
+	void delegate(Variant, GStrv, DBusProxy)[] onGPropertiesChangedListeners;
 	/**
 	 * Emitted when one or more D-Bus properties on proxy changes. The
 	 * local cache has already been updated when this signal fires. Note
@@ -211,7 +196,7 @@ public class DBusProxy : ObjectG
 	 * org.freedesktop.DBus.Properties interface.
 	 * Since 2.26
 	 */
-	void addOnGPropertiesChanged(void delegate(GVariant, GStrv*, DBusProxy) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnGPropertiesChanged(void delegate(Variant, GStrv, DBusProxy) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("g-properties-changed" in connectedSignals) )
 		{
@@ -226,20 +211,20 @@ public class DBusProxy : ObjectG
 		}
 		onGPropertiesChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackGPropertiesChanged(GDBusProxy* proxyStruct, GVariant changedProperties, GStrv* invalidatedProperties, DBusProxy dBusProxy)
+	extern(C) static void callBackGPropertiesChanged(GDBusProxy* proxyStruct, GVariant* changedProperties, GStrv invalidatedProperties, DBusProxy dBusProxy)
 	{
-		foreach ( void delegate(GVariant, GStrv*, DBusProxy) dlg ; dBusProxy.onGPropertiesChangedListeners )
+		foreach ( void delegate(Variant, GStrv, DBusProxy) dlg ; dBusProxy.onGPropertiesChangedListeners )
 		{
-			dlg(changedProperties, invalidatedProperties, dBusProxy);
+			dlg(new Variant(changedProperties), invalidatedProperties, dBusProxy);
 		}
 	}
 	
-	void delegate(string, string, GVariant, DBusProxy)[] onGSignalListeners;
+	void delegate(string, string, Variant, DBusProxy)[] onGSignalListeners;
 	/**
 	 * Emitted when a signal from the remote object and interface that proxy is for, has been received.
 	 * Since 2.26
 	 */
-	void addOnGSignal(void delegate(string, string, GVariant, DBusProxy) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnGSignal(void delegate(string, string, Variant, DBusProxy) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("g-signal" in connectedSignals) )
 		{
@@ -254,11 +239,11 @@ public class DBusProxy : ObjectG
 		}
 		onGSignalListeners ~= dlg;
 	}
-	extern(C) static void callBackGSignal(GDBusProxy* proxyStruct, gchar* senderName, gchar* signalName, GVariant parameters, DBusProxy dBusProxy)
+	extern(C) static void callBackGSignal(GDBusProxy* proxyStruct, gchar* senderName, gchar* signalName, GVariant* parameters, DBusProxy dBusProxy)
 	{
-		foreach ( void delegate(string, string, GVariant, DBusProxy) dlg ; dBusProxy.onGSignalListeners )
+		foreach ( void delegate(string, string, Variant, DBusProxy) dlg ; dBusProxy.onGSignalListeners )
 		{
-			dlg(Str.toString(senderName), Str.toString(signalName), parameters, dBusProxy);
+			dlg(Str.toString(senderName), Str.toString(signalName), new Variant(parameters), dBusProxy);
 		}
 	}
 	
@@ -286,8 +271,8 @@ public class DBusProxy : ObjectG
 	 * Params:
 	 * connection = A GDBusConnection.
 	 * flags = Flags used when constructing the proxy.
-	 * info = A GDBusInterfaceInfo specifying the minimal interface that proxy conforms to or NULL.
-	 * name = A bus name (well-known or unique) or NULL if connection is not a message bus connection.
+	 * info = A GDBusInterfaceInfo specifying the minimal interface that proxy conforms to or NULL. [allow-none]
+	 * name = A bus name (well-known or unique) or NULL if connection is not a message bus connection. [allow-none]
 	 * objectPath = An object path.
 	 * interfaceName = A D-Bus interface name.
 	 * cancellable = A GCancellable or NULL.
@@ -353,7 +338,7 @@ public class DBusProxy : ObjectG
 	 * Params:
 	 * busType = A GBusType.
 	 * flags = Flags used when constructing the proxy.
-	 * info = A GDBusInterfaceInfo specifying the minimal interface that proxy conforms to or NULL.
+	 * info = A GDBusInterfaceInfo specifying the minimal interface that proxy conforms to or NULL. [allow-none]
 	 * name = A bus name (well-known or unique).
 	 * objectPath = An object path.
 	 * interfaceName = A D-Bus interface name.
@@ -374,7 +359,8 @@ public class DBusProxy : ObjectG
 	 * Params:
 	 * busType = A GBusType.
 	 * flags = Flags used when constructing the proxy.
-	 * info = A GDBusInterfaceInfo specifying the minimal interface that proxy conforms to or NULL.
+	 * info = A GDBusInterfaceInfo specifying the minimal interface
+	 * that proxy conforms to or NULL. [allow-none]
 	 * name = A bus name (well-known or unique).
 	 * objectPath = An object path.
 	 * interfaceName = A D-Bus interface name.
@@ -415,7 +401,7 @@ public class DBusProxy : ObjectG
 	/**
 	 * Gets the connection proxy is for.
 	 * Since 2.26
-	 * Returns: A GDBusConnection owned by proxy. Do not free.
+	 * Returns: A GDBusConnection owned by proxy. Do not free. [transfer none]
 	 */
 	public DBusConnection getConnection()
 	{
@@ -553,7 +539,7 @@ public class DBusProxy : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * propertyName = Property name.
-	 * value = Value for the property or NULL to remove it from the cache.
+	 * value = Value for the property or NULL to remove it from the cache. [allow-none]
 	 */
 	public void setCachedProperty(string propertyName, Variant value)
 	{
@@ -581,7 +567,7 @@ public class DBusProxy : ObjectG
 	 * See the "g-interface-info" property for more details.
 	 * Since 2.26
 	 * Params:
-	 * info = Minimum interface this proxy conforms to or NULL to unset.
+	 * info = Minimum interface this proxy conforms to or NULL to unset. [allow-none]
 	 */
 	public void setInterfaceInfo(GDBusInterfaceInfo* info)
 	{
@@ -617,9 +603,10 @@ public class DBusProxy : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * methodName = Name of method to invoke.
-	 * parameters = A GVariant tuple with parameters for the signal or NULL if not passing parameters.
+	 * parameters = A GVariant tuple with parameters for the signal or NULL if not passing parameters. [allow-none]
 	 * flags = Flags from the GDBusCallFlags enumeration.
-	 * timeoutMsec = The timeout in milliseconds or -1 to use the proxy default timeout.
+	 * timeoutMsec = The timeout in milliseconds (with G_MAXINT meaning
+	 * "infinite") or -1 to use the proxy default timeout.
 	 * cancellable = A GCancellable or NULL.
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied or NULL if you don't
 	 * care about the result of the method invocation.
@@ -673,9 +660,11 @@ public class DBusProxy : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * methodName = Name of method to invoke.
-	 * parameters = A GVariant tuple with parameters for the signal or NULL if not passing parameters.
+	 * parameters = A GVariant tuple with parameters for the signal
+	 * or NULL if not passing parameters. [allow-none]
 	 * flags = Flags from the GDBusCallFlags enumeration.
-	 * timeoutMsec = The timeout in milliseconds or -1 to use the proxy default timeout.
+	 * timeoutMsec = The timeout in milliseconds (with G_MAXINT meaning
+	 * "infinite") or -1 to use the proxy default timeout.
 	 * cancellable = A GCancellable or NULL.
 	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
 	 * Throws: GException on failure.

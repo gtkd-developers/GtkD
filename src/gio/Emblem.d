@@ -170,7 +170,7 @@ public class Emblem : ObjectG, IconIF
 	/**
 	 * Gives back the icon from emblem.
 	 * Since 2.18
-	 * Returns: a GIcon. The returned object belongs to the emblem and should not be modified or freed.
+	 * Returns: a GIcon. The returned object belongs to the emblem and should not be modified or freed. [transfer none]
 	 */
 	public IconIF getIcon()
 	{
@@ -186,7 +186,7 @@ public class Emblem : ObjectG, IconIF
 	/**
 	 * Gets the origin of the emblem.
 	 * Since 2.18
-	 * Returns: the origin of the emblem
+	 * Returns: the origin of the emblem. [transfer none]
 	 */
 	public GEmblemOrigin getOrigin()
 	{

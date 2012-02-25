@@ -155,7 +155,7 @@ public class ContentType
 	 * Gets the icon for a content type.
 	 * Params:
 	 * type = a content type string
-	 * Returns: GIcon corresponding to the content type. Free the returned object with g_object_unref()
+	 * Returns: GIcon corresponding to the content type. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public static IconIF getIcon(string type)
 	{
@@ -203,7 +203,7 @@ public class ContentType
 	 * filename = a string, or NULL. [allow-none]
 	 * data = a stream of data, or NULL. [allow-none][array length=data_size]
 	 * resultUncertain = return location for the certainty
-	 *  of the result, or NULL. [allow-none][out]
+	 * of the result, or NULL. [allow-none][out]
 	 * Returns: a string indicating a guessed content type for the given data. Free with g_free()
 	 */
 	public static string guess(string filename, char[] data, out int resultUncertain)
@@ -225,7 +225,7 @@ public class ContentType
 	 * Since 2.18
 	 * Params:
 	 * root = the root of the tree to guess a type for
-	 * Returns: an NULL-terminated array of zero or more content types, or NULL. Free with g_strfreev()
+	 * Returns: an NULL-terminated array of zero or more content types, or NULL. Free with g_strfreev(). [transfer full][array zero-terminated=1]
 	 */
 	public static string[] guessForTree(File root)
 	{
@@ -238,7 +238,7 @@ public class ContentType
 	 * known to the system. The list and its data should be freed using
 	 * g_list_foreach (list, g_free, NULL);
 	 * g_list_free (list);
-	 * Returns: GList of the registered content types
+	 * Returns: GList of the registered content types. [element-type utf8][transfer full]
 	 */
 	public static ListG gContentTypesGetRegistered()
 	{

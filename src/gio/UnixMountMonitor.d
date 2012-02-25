@@ -200,7 +200,7 @@ public class UnixMountMonitor : ObjectG
 	 * Since 2.18
 	 * Params:
 	 * limitMsec = a integer with the limit in milliseconds to
-	 *  poll for changes.
+	 * poll for changes.
 	 */
 	public void setRateLimit(int limitMsec)
 	{

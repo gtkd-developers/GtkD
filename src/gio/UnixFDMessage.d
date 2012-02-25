@@ -172,7 +172,7 @@ public class UnixFDMessage : SocketControlMessage
 	 * return a reference to the caller, but the returned list is valid for
 	 * the lifetime of message.
 	 * Since 2.24
-	 * Returns: the GUnixFDList from message
+	 * Returns: the GUnixFDList from message. [transfer none]
 	 */
 	public UnixFDList getFdList()
 	{
@@ -228,7 +228,7 @@ public class UnixFDMessage : SocketControlMessage
 	 * This function never returns NULL. In case there are no file
 	 * descriptors contained in message, an empty array is returned.
 	 * Since 2.22
-	 * Returns: an array of file descriptors
+	 * Returns: an array of file descriptors. [array length=length][transfer full]
 	 */
 	public int[] stealFds()
 	{

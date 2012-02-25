@@ -597,7 +597,7 @@ public class GtkDClass
 					}
 					text ~= "";
 					text ~= "/** the main Gtk struct as a void* */";
-					if ( gtkDParentName.length > 0)
+					if ( gtkDParentName.length > 0 && gtkDParentName != "Boxed" )
 						text ~= "protected override void* getStruct()"~iFaceChar;
 					else
 						text ~= "protected void* getStruct()"~iFaceChar;
@@ -637,17 +637,17 @@ public class GtkDClass
 								"}" ];
 
 							text ~= checkIfNull;
-							if ( gtkDParentName.length > 0 && gtkDParentName != "Surface" )
+							if ( gtkDParentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed" )
 								text ~= checkObject;
 
-							if ( parentName.length > 0 )
+							if ( parentName.length > 0 && gtkDParentName != "Boxed" )
 							{
 								text ~= "super("~castToParent(var)~");";
 							}
 							text ~= "this."~var~" = "~var~";";
 							text ~= "}";
 
-							if ( parentName.length > 0 && gtkDParentName != "Surface" )
+							if ( parentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed" )
 							{
 								text ~= "";
 								text ~= "protected override void setStruct(GObject* obj)";
@@ -867,7 +867,7 @@ public class GtkDClass
 		prefix = std.string.tolower(prefix);
 
 		//TODO: better way to covert Gio names.
-		if( prefix == "g" && convParms.outPack == "gio" && conv != "ObjectG" && conv != "TypeModule" )
+		if( prefix == "g" && convParms.outPack == "gio" && conv != "ObjectG" && conv != "TypeModule" && conv != "Boxed" )
 			prefix = "gio";
 
 		if( prefix == "gst") prefix = "gstreamer";

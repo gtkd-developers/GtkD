@@ -159,6 +159,8 @@ public class DBusServer : ObjectG, InitableIF
 	 * before incoming messages on connection are processed. This means
 	 * that it's suitable to call g_dbus_connection_register_object() or
 	 * similar from the signal handler.
+	 * TRUE to claim connection, FALSE to let other handlers
+	 * run.
 	 * Since 2.26
 	 */
 	void addOnNewConnection(bool delegate(GDBusConnection*, DBusServer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -201,8 +203,7 @@ public class DBusServer : ObjectG, InitableIF
 	 * g_dbus_server_start().
 	 * See Example  6, “D-Bus peer-to-peer example” for how GDBusServer can
 	 * be used.
-	 * This is a synchronous failable constructor. See
-	 * g_dbus_server_new() for the asynchronous version.
+	 * This is a synchronous failable constructor.
 	 * Since 2.26
 	 * Params:
 	 * address = A D-Bus address.

@@ -83,6 +83,22 @@ private import gobject.ObjectG;
  * Description
  * The GSettings class provides a convenient API for storing and retrieving
  * application settings.
+ * Reads and writes can be considered to be non-blocking. Reading
+ * settings with GSettings is typically extremely fast: on
+ * approximately the same order of magnitude (but slower than) a
+ * GHashTable lookup. Writing settings is also extremely fast in terms
+ * of time to return to your application, but can be extremely expensive
+ * for other threads and other processes. Many settings backends
+ * (including dconf) have lazy initialisation which means in the common
+ * case of the user using their computer without modifying any settings
+ * a lot of work can be avoided. For dconf, the D-Bus service doesn't
+ * even need to be started in this case. For this reason, you should
+ * only ever modify GSettings keys in response to explicit user action.
+ * Particular care should be paid to ensure that modifications are not
+ * made during startup -- for example, when settings the initial value
+ * of preferences widgets. The built-in g_settings_bind() functionality
+ * is careful not to write settings in response to notify signals as a
+ * result of modifications that it makes to widgets.
  * When creating a GSettings instance, you have to specify a schema
  * that describes the keys in your settings and their types and default
  * values, as well as some other information.
@@ -110,11 +126,24 @@ private import gobject.ObjectG;
  * utility. The input is a schema description in an XML format that can be
  * described by the following DTD:
  * $(DDOC_COMMENT example)
+ * glib-compile-schemas expects schema files to have the extension .gschema.xml
  * At runtime, schemas are identified by their id (as specified
  * in the id attribute of the
  * <schema> element). The
  * convention for schema ids is to use a dotted name, similar in
- * style to a DBus bus name, e.g. "org.gnome.font-rendering".
+ * style to a D-Bus bus name, e.g. "org.gnome.SessionManager". In particular,
+ * if the settings are for a specific service that owns a D-Bus bus name,
+ * the D-Bus bus name and schema id should match. For schemas which deal
+ * with settings not associated with one named application, the id should
+ * not use StudlyCaps, e.g. "org.gnome.font-rendering".
+ * In addition to GVariant types, keys can have types that have enumerated
+ * types. These can be described by a <choice>,
+ * <enum> or <flags> element, see
+ *  Example  12, “Ranges, choices and enumerated types”. The underlying type of
+ * such a key is string, but you can use g_settings_get_enum(),
+ * g_settings_set_enum(), g_settings_get_flags(), g_settings_set_flags()
+ * access the numeric values corresponding to the string value of enum
+ * and flags keys.
  * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
  * Vendor overrides
@@ -128,7 +157,8 @@ private import gobject.ObjectG;
  *  The schema id serves as the group name in the key file, and the values
  *  are expected in serialized GVariant form, as in the following example:
  * $(DDOC_COMMENT example)
- * <hr>
+ *  glib-compile-schemas expects schema files to have the extension
+ *  .gschema.override
  * Binding
  *  A very convenient feature of GSettings lets you bind GObject properties
  *  directly to settings, using g_settings_bind(). Once a GObject property
@@ -209,7 +239,7 @@ public class Settings : ObjectG
 	 * for each affected key. If any other connected handler returns
 	 * TRUE then this default functionality will be supressed.
 	 * TRUE to stop other handlers from being invoked for the
-	 *  event. FALSE to propagate the event further.
+	 * event. FALSE to propagate the event further.
 	 */
 	void addOnChange(bool delegate(gpointer, gint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -290,7 +320,7 @@ public class Settings : ObjectG
 	 * connected handler returns TRUE then this default functionality
 	 * will be supressed.
 	 * TRUE to stop other handlers from being invoked for the
-	 *  event. FALSE to propagate the event further.
+	 * event. FALSE to propagate the event further.
 	 */
 	void addOnWritableChange(bool delegate(guint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -565,14 +595,14 @@ public class Settings : ObjectG
 	
 	/**
 	 * Creates a 'child' settings object which has a base path of
-	 * base-path/name", where
+	 * base-path/name, where
 	 * base-path is the base path of settings.
 	 * The schema for the child settings object must have been declared
 	 * in the schema of settings using a <child> element.
 	 * Since 2.26
 	 * Params:
 	 * name = the name of the 'child' schema
-	 * Returns: a 'child' settings object
+	 * Returns: a 'child' settings object. [transfer full]
 	 */
 	public Settings getChild(string name)
 	{
@@ -597,6 +627,149 @@ public class Settings : ObjectG
 	{
 		// void g_settings_reset (GSettings *settings,  const gchar *key);
 		g_settings_reset(gSettings, Str.toStringz(key));
+	}
+	
+	/**
+	 * Gets a list of the GSettings schemas installed on the system. The
+	 * returned list is exactly the list of schemas for which you may call
+	 * g_settings_new() without adverse effects.
+	 * This function does not list the schemas that do not provide their own
+	 * paths (ie: schemas for which you must use
+	 * g_settings_new_with_path()). See
+	 * g_settings_list_relocatable_schemas() for that.
+	 * Since 2.26
+	 * Returns: a list of GSettings schemas that are available. The list must not be modified or freed. [element-type utf8][transfer none]
+	 */
+	public static string[] listSchemas()
+	{
+		// const gchar * const * g_settings_list_schemas (void);
+		return Str.toStringArray(g_settings_list_schemas());
+	}
+	
+	/**
+	 * Gets a list of the relocatable GSettings schemas installed on the
+	 * system. These are schemas that do not provide their own path. It is
+	 * usual to instantiate these schemas directly, but if you want to you
+	 * can use g_settings_new_with_path() to specify the path.
+	 * The output of this function, tTaken together with the output of
+	 * g_settings_list_schemas() represents the complete list of all
+	 * installed schemas.
+	 * Since 2.28
+	 * Returns: a list of relocatable GSettings schemas that are available. The list must not be modified or freed. [element-type utf8][transfer none]
+	 */
+	public static string[] listRelocatableSchemas()
+	{
+		// const gchar * const * g_settings_list_relocatable_schemas  (void);
+		return Str.toStringArray(g_settings_list_relocatable_schemas());
+	}
+	
+	/**
+	 * Introspects the list of keys on settings.
+	 * You should probably not be calling this function from "normal" code
+	 * (since you should already know what keys are in your schema). This
+	 * function is intended for introspection reasons.
+	 * You should free the return value with g_strfreev() when you are done
+	 * with it.
+	 * Returns: a list of the keys on settings. [transfer full][element-type utf8]
+	 */
+	public string[] listKeys()
+	{
+		// gchar ** g_settings_list_keys (GSettings *settings);
+		return Str.toStringArray(g_settings_list_keys(gSettings));
+	}
+	
+	/**
+	 * Gets the list of children on settings.
+	 * The list is exactly the list of strings for which it is not an error
+	 * to call g_settings_get_child().
+	 * For GSettings objects that are lists, this value can change at any
+	 * time and you should connect to the "children-changed" signal to watch
+	 * for those changes. Note that there is a race condition here: you may
+	 * request a child after listing it only for it to have been destroyed
+	 * in the meantime. For this reason, g_settings_get_child() may return
+	 * NULL even for a child that was listed by this function.
+	 * For GSettings objects that are not lists, you should probably not be
+	 * calling this function from "normal" code (since you should already
+	 * know what children are in your schema). This function may still be
+	 * useful there for introspection reasons, however.
+	 * You should free the return value with g_strfreev() when you are done
+	 * with it.
+	 * Returns: a list of the children on settings. [transfer full][element-type utf8]
+	 */
+	public string[] listChildren()
+	{
+		// gchar ** g_settings_list_children (GSettings *settings);
+		return Str.toStringArray(g_settings_list_children(gSettings));
+	}
+	
+	/**
+	 * Queries the range of a key.
+	 * This function will return a GVariant that fully describes the range
+	 * of values that are valid for key.
+	 * The type of GVariant returned is (sv). The
+	 * string describes the type of range restriction in effect. The type
+	 * and meaning of the value contained in the variant depends on the
+	 * string.
+	 * If the string is 'type' then the variant contains
+	 * an empty array. The element type of that empty array is the expected
+	 * type of value and all values of that type are valid.
+	 * If the string is 'enum' then the variant contains
+	 * an array enumerating the possible values. Each item in the array is
+	 * a possible valid value and no other values are valid.
+	 * If the string is 'flags' then the variant contains
+	 * an array. Each item in the array is a value that may appear zero or
+	 * one times in an array to be used as the value for this key. For
+	 * example, if the variant contained the array ['x',
+	 * 'y'] then the valid values for the key would be
+	 * [], ['x'],
+	 * ['y'], ['x', 'y'] and
+	 * ['y', 'x'].
+	 * Finally, if the string is 'range' then the variant
+	 * contains a pair of like-typed values -- the minimum and maximum
+	 * permissible values for this key.
+	 * This information should not be used by normal programs. It is
+	 * considered to be a hint for introspection purposes. Normal programs
+	 * should already know what is permitted by their own schema. The
+	 * format may change in any way in the future -- but particularly, new
+	 * forms may be added to the possibilities described above.
+	 * It is a programmer error to give a key that isn't contained in the
+	 * schema for settings.
+	 * You should free the returned value with g_variant_unref() when it is
+	 * no longer needed.
+	 * Since 2.28
+	 * Params:
+	 * key = the key to query the range of
+	 * Returns: a GVariant describing the range
+	 */
+	public Variant getRange(string key)
+	{
+		// GVariant * g_settings_get_range (GSettings *settings,  const gchar *key);
+		auto p = g_settings_get_range(gSettings, Str.toStringz(key));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Checks if the given value is of the correct type and within the
+	 * permitted range for key.
+	 * This API is not intended to be used by normal programs -- they should
+	 * already know what is permitted by their own schemas. This API is
+	 * meant to be used by programs such as editors or commandline tools.
+	 * It is a programmer error to give a key that isn't contained in the
+	 * schema for settings.
+	 * Since 2.28
+	 * Params:
+	 * key = the key to check
+	 * value = the value to check
+	 * Returns: TRUE if value is valid for key
+	 */
+	public int rangeCheck(string key, Variant value)
+	{
+		// gboolean g_settings_range_check (GSettings *settings,  const gchar *key,  GVariant *value);
+		return g_settings_range_check(gSettings, Str.toStringz(key), (value is null) ? null : value.getVariantStruct());
 	}
 	
 	/**
@@ -732,14 +905,13 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * Gets the value that is stored at key in settings.
 	 * A convenience variant of g_settings_get() for string arrays.
 	 * It is a programmer error to give a key that isn't specified as
 	 * having an array of strings type in the schema for settings.
 	 * Since 2.26
 	 * Params:
 	 * key = the key to get the value for
-	 * Returns: a newly-allocated, NULL-terminated array of strings
+	 * Returns: a newly-allocated, NULL-terminated array of strings, the value that is stored at key in settings. [array zero-terminated=1][transfer full]
 	 */
 	public string[] getStrv(string key)
 	{
@@ -756,7 +928,7 @@ public class Settings : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * key = the name of the key to set
-	 * value = the value to set it to, or NULL. [allow-none]
+	 * value = the value to set it to, or NULL. [allow-none][array zero-terminated=1]
 	 * Returns: TRUE if setting the key succeeded, FALSE if the key was not writable
 	 */
 	public int setStrv(string key, string[] value)
@@ -873,10 +1045,10 @@ public class Settings : ObjectG
 	 * just as any other value would be.
 	 * Params:
 	 * key = the key to get the value for
-	 * mapping = the function to map the value in the settings database to
-	 *  the value used by the application
+	 * mapping = the function to map the value in the
+	 * settings database to the value used by the application. [scope call]
 	 * userData = user data for mapping
-	 * Returns: the result, which may be NULL
+	 * Returns: the result, which may be NULL. [transfer full]
 	 */
 	public void* getMapped(string key, GSettingsGetMapping mapping, void* userData)
 	{
@@ -905,7 +1077,7 @@ public class Settings : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * key = the key to bind
-	 * object = a GObject
+	 * object = a GObject. [type GObject.Object]
 	 * property = the name of the property to bind
 	 * flags = flags for the binding
 	 */
@@ -927,13 +1099,13 @@ public class Settings : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * key = the key to bind
-	 * object = a GObject
+	 * object = a GObject. [type GObject.Object]
 	 * property = the name of the property to bind
 	 * flags = flags for the binding
 	 * getMapping = a function that gets called to convert values
-	 *  from settings to object, or NULL to use the default GIO mapping
+	 * from settings to object, or NULL to use the default GIO mapping
 	 * setMapping = a function that gets called to convert values
-	 *  from object to settings, or NULL to use the default GIO mapping
+	 * from object to settings, or NULL to use the default GIO mapping
 	 * userData = data that gets passed to get_mapping and set_mapping
 	 * destroy = GDestroyNotify function for user_data
 	 */
@@ -962,7 +1134,7 @@ public class Settings : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * key = the key to bind
-	 * object = a GObject
+	 * object = a GObject. [type GObject.Object]
 	 * property = the name of a boolean property to bind
 	 * inverted = whether to 'invert' the value
 	 */

@@ -45,8 +45,10 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.Source
  * structWrap:
  * 	- GCancellable* -> Cancellable
+ * 	- GSource* -> Source
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,6 +66,7 @@ public  import gtkc.gdktypes;
 
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.Source;
 
 
 
@@ -290,8 +293,29 @@ public class Cancellable : ObjectG
 	}
 	
 	/**
+	 * Creates a source that triggers if cancellable is cancelled and
+	 * calls its callback of type GCancellableSourceFunc. This is
+	 * primarily useful for attaching to another (non-cancellable) source
+	 * with g_source_add_child_source() to add cancellability to it.
+	 * For convenience, you can call this with a NULL GCancellable,
+	 * in which case the source will never trigger.
+	 * Since 2.28
+	 * Returns: the new GSource. [transfer full]
+	 */
+	public Source sourceNew()
+	{
+		// GSource * g_cancellable_source_new (GCancellable *cancellable);
+		auto p = g_cancellable_source_new(gCancellable);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Source(cast(GSource*) p);
+	}
+	
+	/**
 	 * Gets the top cancellable from the stack.
-	 * Returns: a GCancellable from the top of the stack, or NULL if the stack is empty.
+	 * Returns: a GCancellable from the top of the stack, or NULL if the stack is empty. [transfer none]
 	 */
 	public static Cancellable getCurrent()
 	{
@@ -316,7 +340,7 @@ public class Cancellable : ObjectG
 	
 	/**
 	 * Pushes cancellable onto the cancellable stack. The current
-	 * cancllable can then be recieved using g_cancellable_get_current().
+	 * cancellable can then be recieved using g_cancellable_get_current().
 	 * This is useful when implementing cancellable operations in
 	 * code that does not allow you to pass down the cancellable object.
 	 * This is typically called automatically by e.g. GFile operations,

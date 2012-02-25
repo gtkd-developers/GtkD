@@ -135,9 +135,9 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * data = pointer to a chunk of memory to use, or NULL
 	 * size = the size of data
 	 * reallocFunction = a function with realloc() semantics (like g_realloc())
-	 *  to be called when data needs to be grown, or NULL
+	 * to be called when data needs to be grown, or NULL
 	 * destroyFunction = a function to be called on data when the stream is
-	 *  finalized, or NULL
+	 * finalized, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (void* data, gsize size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction)
@@ -155,7 +155,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * Gets any loaded data from the ostream.
 	 * Note that the returned pointer may become invalid on the next
 	 * write or truncate operation on the stream.
-	 * Returns: pointer to the stream's data
+	 * Returns: pointer to the stream's data. [transfer none]
 	 */
 	public void* getData()
 	{
@@ -164,7 +164,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	}
 	
 	/**
-	 * Gets the size of the currently allocated data area (availible from
+	 * Gets the size of the currently allocated data area (available from
 	 * g_memory_output_stream_get_data()). If the stream isn't
 	 * growable (no realloc was passed to g_memory_output_stream_new()) then
 	 * this is the maximum size of the stream and further writes

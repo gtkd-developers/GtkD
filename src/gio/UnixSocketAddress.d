@@ -154,7 +154,7 @@ public class UnixSocketAddress : SocketAddress
 	 * Creates a new G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED
 	 * GUnixSocketAddress for path.
 	 * Params:
-	 * path = the abstract name
+	 * path = the abstract name. [array length=path_len][element-type gchar]
 	 * pathLen = the length of path, or -1
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -196,7 +196,7 @@ public class UnixSocketAddress : SocketAddress
 	 * its listening socket.
 	 * Since 2.26
 	 * Params:
-	 * path = the name
+	 * path = the name. [array length=path_len][element-type gchar]
 	 * type = a GUnixSocketAddressType
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

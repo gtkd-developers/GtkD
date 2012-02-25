@@ -31,11 +31,12 @@
  * ctorStrct=GInputStream
  * clss    = UnixInputStream
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- PollableInputStreamIF
  * prefixes:
  * 	- g_unix_input_stream_
  * omit structs:
@@ -43,6 +44,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gio.PollableInputStreamT
+ * 	- gio.PollableInputStreamIF
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +60,8 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
+private import gio.PollableInputStreamT;
+private import gio.PollableInputStreamIF;
 
 
 
@@ -71,7 +76,7 @@ private import gio.InputStream;
  * to the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.
  */
-public class UnixInputStream : InputStream
+public class UnixInputStream : InputStream, PollableInputStreamIF
 {
 	
 	/** the main Gtk struct */
@@ -116,6 +121,9 @@ public class UnixInputStream : InputStream
 		super.setStruct(obj);
 		gUnixInputStream = cast(GUnixInputStream*)obj;
 	}
+	
+	// add the PollableInputStream capabilities
+	mixin PollableInputStreamT!(GUnixInputStream);
 	
 	/**
 	 */

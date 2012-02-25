@@ -143,6 +143,7 @@ public class SocketService : SocketListener
 	 * to service needs to be handled. The handler must initiate the
 	 * handling of connection, but may not block; in essence,
 	 * asynchronous operations must be used.
+	 * TRUE to stop other handlers from being called
 	 * Since 2.22
 	 * See Also
 	 * GThreadedSocketService, GSocketListener.

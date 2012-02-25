@@ -100,7 +100,7 @@ public interface ProxyResolverIF
 	/**
 	 * Gets the default GProxyResolver for the system.
 	 * Since 2.26
-	 * Returns: the default GProxyResolver.
+	 * Returns: the default GProxyResolver. [transfer none]
 	 */
 	public static ProxyResolverIF getDefault();
 	
@@ -130,8 +130,8 @@ public interface ProxyResolverIF
 	 * Since 2.26
 	 * Params:
 	 * uri = a URI representing the destination to connect to
-	 * cancellable = a GCancellable, or NULL
-	 * Returns: A NULL-terminated array of proxy URIs. Must be freed with g_strfreev().
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * Returns: A NULL-terminated array of proxy URIs. Must be freed with g_strfreev(). [transfer full][array zero-terminated=1]
 	 * Throws: GException on failure.
 	 */
 	public string[] lookup(string uri, Cancellable cancellable);
@@ -142,9 +142,9 @@ public interface ProxyResolverIF
 	 * Since 2.26
 	 * Params:
 	 * uri = a URI representing the destination to connect to
-	 * cancellable = a GCancellable, or NULL
-	 * callback = callback to call after resolution completes
-	 * userData = data for callback
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * callback = callback to call after resolution completes. [scope async]
+	 * userData = data for callback. [closure]
 	 */
 	public void lookupAsync(string uri, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 	
@@ -155,7 +155,7 @@ public interface ProxyResolverIF
 	 * Since 2.26
 	 * Params:
 	 * result = the result passed to your GAsyncReadyCallback
-	 * Returns: A NULL-terminated array of proxy URIs. Must be freed with g_strfreev().
+	 * Returns: A NULL-terminated array of proxy URIs. Must be freed with g_strfreev(). [transfer full][array zero-terminated=1]
 	 * Throws: GException on failure.
 	 */
 	public string[] lookupFinish(AsyncResultIF result);

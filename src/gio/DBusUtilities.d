@@ -248,7 +248,7 @@ public class DBusUtilities
 	 * Params:
 	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_address_get_stream().
 	 * outGuid = NULL or return location to store the GUID extracted from address, if any.
-	 * Returns: A GIOStream or NULL if error is set.
+	 * Returns: A GIOStream or NULL if error is set. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static IOStream addressGetStreamFinish(AsyncResultIF res, out string outGuid)
@@ -283,7 +283,7 @@ public class DBusUtilities
 	 * address = A valid D-Bus address.
 	 * outGuid = NULL or return location to store the GUID extracted from address, if any.
 	 * cancellable = A GCancellable or NULL.
-	 * Returns: A GIOStream or NULL if error is set.
+	 * Returns: A GIOStream or NULL if error is set. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static IOStream addressGetStreamSync(string address, out string outGuid, Cancellable cancellable)

@@ -194,7 +194,7 @@ public class UnixMountEntry
 	
 	/**
 	 * Guesses the icon of a Unix mount.
-	 * Returns: a GIcon
+	 * Returns: a GIcon. [transfer full]
 	 */
 	public IconIF guessIcon()
 	{
@@ -244,8 +244,8 @@ public class UnixMountEntry
 	 * allowing for checking if the mounts have changed with
 	 * g_unix_mounts_points_changed_since().
 	 * Params:
-	 * timeRead = guint64 to contain a timestamp. [allow-none]
-	 * Returns: a GList of the UNIX mountpoints.
+	 * timeRead = guint64 to contain a timestamp. [out][allow-none]
+	 * Returns: a GList of the UNIX mountpoints. [element-type GUnixMountPoint][transfer full]
 	 */
 	public static ListG pointsGet(ulong* timeRead)
 	{
@@ -264,8 +264,8 @@ public class UnixMountEntry
 	 * timestamp, allowing for checking if the mounts have changed
 	 * with g_unix_mounts_changed_since().
 	 * Params:
-	 * timeRead = guint64 to contain a timestamp, or NULL. [allow-none]
-	 * Returns: a GList of the UNIX mounts.
+	 * timeRead = guint64 to contain a timestamp, or NULL. [out][allow-none]
+	 * Returns: a GList of the UNIX mounts. [element-type GUnixMountEntry][transfer full]
 	 */
 	public static ListG mountsGet(ref ulong timeRead)
 	{
@@ -284,8 +284,8 @@ public class UnixMountEntry
 	 * if the mounts have changed since with g_unix_mounts_changed_since().
 	 * Params:
 	 * mountPath = path for a possible unix mount.
-	 * timeRead = guint64 to contain a timestamp.
-	 * Returns: a GUnixMount.
+	 * timeRead = guint64 to contain a timestamp. [out][allow-none]
+	 * Returns: a GUnixMountEntry. [transfer full]
 	 */
 	public static UnixMountEntry at(string mountPath, ref ulong timeRead)
 	{
@@ -329,7 +329,7 @@ public class UnixMountEntry
 	 * casual user.
 	 * Params:
 	 * mountPath = a mount path, e.g. /media/disk
-	 *  or /usr
+	 * or /usr
 	 * Returns: TRUE if mount_path is considered an implementation detail of the OS. Signal Details The "mountpoints-changed" signal void user_function (GUnixMountMonitor *monitor, gpointer user_data) : Run Last Emitted when the unix mount points have changed.
 	 */
 	public static int isMountPathSystemInternal(string mountPath)

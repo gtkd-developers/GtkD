@@ -104,6 +104,7 @@ public template IconT(TStruct)
 	
 	/**
 	 * Gets a hash for an icon.
+	 * Virtual: hash
 	 * Params:
 	 * icon = gconstpointer to an icon object.
 	 * Returns: a guint containing a hash for the icon, suitable for use in a GHashTable or similar data structure.
@@ -140,6 +141,7 @@ public template IconT(TStruct)
 	 *  (such as sftp://path/to/my%20icon.png).
 	 *  If icon is a GThemedIcon with exactly one name, the encoding is
 	 *  simply the name (such as network-server).
+	 * Virtual: to_tokens
 	 * Since 2.20
 	 * Returns: An allocated NUL-terminated UTF8 string or NULL if icon can't be serialized. Use g_free() to free.
 	 */
