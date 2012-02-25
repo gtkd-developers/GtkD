@@ -130,11 +130,11 @@ public class ObjectFactory : ObjectG
 	 * on behalf of obj
 	 * Params:
 	 * obj = a GObject
-	 * Returns: an AtkObject that implements an accessibility interface on behalf of obj
+	 * Returns: an AtkObject that implements an accessibility interface on behalf of obj. [transfer full]
 	 */
 	public ObjectAtk createAccessible(ObjectG obj)
 	{
-		// AtkObject* atk_object_factory_create_accessible  (AtkObjectFactory *factory,  GObject *obj);
+		// AtkObject * atk_object_factory_create_accessible  (AtkObjectFactory *factory,  GObject *obj);
 		auto p = atk_object_factory_create_accessible(atkObjectFactory, (obj is null) ? null : obj.getObjectGStruct());
 		if(p is null)
 		{

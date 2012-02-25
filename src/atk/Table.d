@@ -326,11 +326,11 @@ public class Table
 	 * Params:
 	 * row = a gint representing a row in table
 	 * column = a gint representing a column in table
-	 * Returns: a AtkObject* representing the referred to accessible
+	 * Returns: a AtkObject* representing the referred to accessible. [transfer full]
 	 */
 	public ObjectAtk refAt(int row, int column)
 	{
-		// AtkObject* atk_table_ref_at (AtkTable *table,  gint row,  gint column);
+		// AtkObject * atk_table_ref_at (AtkTable *table,  gint row,  gint column);
 		auto p = atk_table_ref_at(atkTable, row, column);
 		if(p is null)
 		{
@@ -426,7 +426,7 @@ public class Table
 	
 	/**
 	 * Gets the caption for the table.
-	 * Returns: a AtkObject* representing the table caption, or NULL if value does not implement this interface.
+	 * Returns: a AtkObject* representing the table caption, or NULL if value does not implement this interface. [transfer none]
 	 */
 	public ObjectAtk getCaption()
 	{
@@ -467,11 +467,11 @@ public class Table
 	 * Gets the column header of a specified column in an accessible table.
 	 * Params:
 	 * column = a gint representing a column in the table
-	 * Returns: a AtkObject* representing the specified column header, or NULL if value does not implement this interface.
+	 * Returns: a AtkObject* representing the specified column header, or NULL if value does not implement this interface. [transfer none]
 	 */
 	public ObjectAtk getColumnHeader(int column)
 	{
-		// AtkObject* atk_table_get_column_header (AtkTable *table,  gint column);
+		// AtkObject * atk_table_get_column_header (AtkTable *table,  gint column);
 		auto p = atk_table_get_column_header(atkTable, column);
 		if(p is null)
 		{
@@ -484,11 +484,11 @@ public class Table
 	 * Gets the row header of a specified row in an accessible table.
 	 * Params:
 	 * row = a gint representing a row in the table
-	 * Returns: a AtkObject* representing the specified row header, or NULL if value does not implement this interface.
+	 * Returns: a AtkObject* representing the specified row header, or NULL if value does not implement this interface. [transfer none]
 	 */
 	public ObjectAtk getRowHeader(int row)
 	{
-		// AtkObject* atk_table_get_row_header (AtkTable *table,  gint row);
+		// AtkObject * atk_table_get_row_header (AtkTable *table,  gint row);
 		auto p = atk_table_get_row_header(atkTable, row);
 		if(p is null)
 		{
@@ -499,11 +499,11 @@ public class Table
 	
 	/**
 	 * Gets the summary description of the table.
-	 * Returns: a AtkObject* representing a summary description of the table, or zero if value does not implement this interface.
+	 * Returns: a AtkObject* representing a summary description of the table, or zero if value does not implement this interface. [transfer full]
 	 */
 	public ObjectAtk getSummary()
 	{
-		// AtkObject* atk_table_get_summary (AtkTable *table);
+		// AtkObject * atk_table_get_summary (AtkTable *table);
 		auto p = atk_table_get_summary(atkTable);
 		if(p is null)
 		{

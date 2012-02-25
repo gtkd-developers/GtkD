@@ -154,7 +154,7 @@ public class Action
 	 */
 	public string getDescription(int i)
 	{
-		// const gchar* atk_action_get_description (AtkAction *action,  gint i);
+		// const gchar * atk_action_get_description (AtkAction *action,  gint i);
 		return Str.toString(atk_action_get_description(atkAction, i));
 	}
 	
@@ -178,7 +178,7 @@ public class Action
 	 */
 	public string getName(int i)
 	{
-		// const gchar* atk_action_get_name (AtkAction *action,  gint i);
+		// const gchar * atk_action_get_name (AtkAction *action,  gint i);
 		return Str.toString(atk_action_get_name(atkAction, i));
 	}
 	
@@ -190,7 +190,7 @@ public class Action
 	 */
 	public string getLocalizedName(int i)
 	{
-		// const gchar* atk_action_get_localized_name (AtkAction *action,  gint i);
+		// const gchar * atk_action_get_localized_name (AtkAction *action,  gint i);
 		return Str.toString(atk_action_get_localized_name(atkAction, i));
 	}
 	
@@ -212,7 +212,7 @@ public class Action
 	 */
 	public string getKeybinding(int i)
 	{
-		// const gchar* atk_action_get_keybinding (AtkAction *action,  gint i);
+		// const gchar * atk_action_get_keybinding (AtkAction *action,  gint i);
 		return Str.toString(atk_action_get_keybinding(atkAction, i));
 	}
 	

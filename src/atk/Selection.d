@@ -178,11 +178,11 @@ public class Selection
 	 * Params:
 	 * i = a gint specifying the index in the selection set. (e.g. the
 	 * ith selection as opposed to the ith child).
-	 * Returns: an AtkObject representing the selected accessible , or NULL if selection does not implement this interface.
+	 * Returns: an AtkObject representing the selected accessible , or NULL if selection does not implement this interface. [transfer full]
 	 */
 	public ObjectAtk refSelection(int i)
 	{
-		// AtkObject* atk_selection_ref_selection (AtkSelection *selection,  gint i);
+		// AtkObject * atk_selection_ref_selection (AtkSelection *selection,  gint i);
 		auto p = atk_selection_ref_selection(atkSelection, i);
 		if(p is null)
 		{

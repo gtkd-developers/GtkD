@@ -132,7 +132,7 @@ public class Image
 	 */
 	public string getImageDescription()
 	{
-		// const gchar* atk_image_get_image_description (AtkImage *image);
+		// const gchar * atk_image_get_image_description (AtkImage *image);
 		return Str.toString(atk_image_get_image_description(atkImage));
 	}
 	
@@ -168,7 +168,7 @@ public class Image
 	 */
 	public string getImageLocale()
 	{
-		// const gchar* atk_image_get_image_locale (AtkImage *image);
+		// const gchar * atk_image_get_image_locale (AtkImage *image);
 		return Str.toString(atk_image_get_image_locale(atkImage));
 	}
 }

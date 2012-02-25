@@ -125,7 +125,7 @@ public class StateSet : ObjectG
 	 */
 	public this ()
 	{
-		// AtkStateSet* atk_state_set_new (void);
+		// AtkStateSet * atk_state_set_new (void);
 		auto p = atk_state_set_new();
 		if(p is null)
 		{
@@ -219,11 +219,11 @@ public class StateSet : ObjectG
 	 * intersection is empty.
 	 * Params:
 	 * compareSet = another AtkStateSet
-	 * Returns: a new AtkStateSet which is the intersection of the two sets.
+	 * Returns: a new AtkStateSet which is the intersection of the two sets. [transfer full]
 	 */
 	public StateSet andSets(StateSet compareSet)
 	{
-		// AtkStateSet* atk_state_set_and_sets (AtkStateSet *set,  AtkStateSet *compare_set);
+		// AtkStateSet * atk_state_set_and_sets (AtkStateSet *set,  AtkStateSet *compare_set);
 		auto p = atk_state_set_and_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 		if(p is null)
 		{
@@ -236,11 +236,11 @@ public class StateSet : ObjectG
 	 * Constructs the union of the two sets.
 	 * Params:
 	 * compareSet = another AtkStateSet
-	 * Returns: a new AtkStateSet which is the union of the two sets, returning NULL is empty.
+	 * Returns: a new AtkStateSet which is the union of the two sets, returning NULL is empty. [transfer full]
 	 */
 	public StateSet orSets(StateSet compareSet)
 	{
-		// AtkStateSet* atk_state_set_or_sets (AtkStateSet *set,  AtkStateSet *compare_set);
+		// AtkStateSet * atk_state_set_or_sets (AtkStateSet *set,  AtkStateSet *compare_set);
 		auto p = atk_state_set_or_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 		if(p is null)
 		{
@@ -255,11 +255,11 @@ public class StateSet : ObjectG
 	 * one of the two sets.
 	 * Params:
 	 * compareSet = another AtkStateSet
-	 * Returns: a new AtkStateSet which contains the states which are in exactly one of the two sets.
+	 * Returns: a new AtkStateSet which contains the states which are in exactly one of the two sets. [transfer full]
 	 */
 	public StateSet xorSets(StateSet compareSet)
 	{
-		// AtkStateSet* atk_state_set_xor_sets (AtkStateSet *set,  AtkStateSet *compare_set);
+		// AtkStateSet * atk_state_set_xor_sets (AtkStateSet *set,  AtkStateSet *compare_set);
 		auto p = atk_state_set_xor_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 		if(p is null)
 		{

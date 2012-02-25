@@ -211,7 +211,7 @@ public class Document
 	 */
 	public string getDocumentType()
 	{
-		// const gchar* atk_document_get_document_type (AtkDocument *document);
+		// const gchar * atk_document_get_document_type (AtkDocument *document);
 		return Str.toString(atk_document_get_document_type(atkDocument));
 	}
 	
@@ -219,7 +219,7 @@ public class Document
 	 * Gets a gpointer that points to an instance of the DOM. It is
 	 * up to the caller to check atk_document_get_type to determine
 	 * how to cast this pointer.
-	 * Returns: a gpointer that points to an instance of the DOM.
+	 * Returns: a gpointer that points to an instance of the DOM. [transfer none]
 	 */
 	public void* getDocument()
 	{
@@ -231,12 +231,12 @@ public class Document
 	 * Since 1.12
 	 * Params:
 	 * attributeName = a character string representing the name of the attribute
-	 *  whose value is being queried.
+	 * whose value is being queried.
 	 * Returns: a string value associated with the named attribute for this document, or NULL if a value for attribute_name has not been specified for this document.
 	 */
 	public string getAttributeValue(string attributeName)
 	{
-		// const gchar* atk_document_get_attribute_value (AtkDocument *document,  const gchar *attribute_name);
+		// const gchar * atk_document_get_attribute_value (AtkDocument *document,  const gchar *attribute_name);
 		return Str.toString(atk_document_get_attribute_value(atkDocument, Str.toStringz(attributeName)));
 	}
 	
@@ -244,7 +244,7 @@ public class Document
 	 * Since 1.12
 	 * Params:
 	 * attributeName = a character string representing the name of the attribute
-	 *  whose value is being set.
+	 * whose value is being set.
 	 * attributeValue = a string value to be associated with attribute_name.
 	 * Returns: TRUE if value is successfully associated with attribute_name for this document, FALSE otherwise (e.g. if the document does not allow the attribute to be modified).
 	 */
@@ -258,11 +258,11 @@ public class Document
 	 * Gets an AtkAttributeSet which describes document-wide
 	 *  attributes as name-value pairs.
 	 * Since 1.12
-	 * Returns: An AtkAttributeSet containing the explicitly set name-value-pair attributes associated with this document as a whole.
+	 * Returns: An AtkAttributeSet containing the explicitly set name-value-pair attributes associated with this document as a whole. [transfer none]
 	 */
 	public AtkAttributeSet* getAttributes()
 	{
-		// AtkAttributeSet* atk_document_get_attributes (AtkDocument *document);
+		// AtkAttributeSet * atk_document_get_attributes (AtkDocument *document);
 		return atk_document_get_attributes(atkDocument);
 	}
 	
@@ -276,7 +276,7 @@ public class Document
 	 */
 	public string getLocale()
 	{
-		// const gchar* atk_document_get_locale (AtkDocument *document);
+		// const gchar * atk_document_get_locale (AtkDocument *document);
 		return Str.toString(atk_document_get_locale(atkDocument));
 	}
 }

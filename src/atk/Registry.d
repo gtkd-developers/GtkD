@@ -156,11 +156,11 @@ public class Registry : ObjectG
 	 * appropriate for type.
 	 * Params:
 	 * type = a GType with which to look up the associated AtkObjectFactory
-	 * Returns: an AtkObjectFactory appropriate for creating AtkObjects appropriate for type.
+	 * Returns: an AtkObjectFactory appropriate for creating AtkObjects appropriate for type. [transfer none]
 	 */
 	public ObjectFactory getFactory(GType type)
 	{
-		// AtkObjectFactory* atk_registry_get_factory (AtkRegistry *registry,  GType type);
+		// AtkObjectFactory * atk_registry_get_factory (AtkRegistry *registry,  GType type);
 		auto p = atk_registry_get_factory(atkRegistry, type);
 		if(p is null)
 		{
@@ -177,11 +177,11 @@ public class Registry : ObjectG
 	 * a call to this function, maintainers may call atk_registry_set_factory_type()
 	 * to associate an AtkObjectFactory subclass with the GType of objects
 	 * for whom accessibility information will be provided.
-	 * Returns: a default implementation of the AtkObjectFactory/type registry
+	 * Returns: a default implementation of the AtkObjectFactory/type registry. [transfer full]
 	 */
 	public static Registry atkGetDefaultRegistry()
 	{
-		// AtkRegistry* atk_get_default_registry (void);
+		// AtkRegistry * atk_get_default_registry (void);
 		auto p = atk_get_default_registry();
 		if(p is null)
 		{

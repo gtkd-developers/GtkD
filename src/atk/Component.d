@@ -254,11 +254,11 @@ public class Component
 	 * y = y coordinate
 	 * coordType = specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
-	 * Returns: a reference to the accessible child, if one exists
+	 * Returns: a reference to the accessible child, if one exists. [transfer full]
 	 */
 	public ObjectAtk refAccessibleAtPoint(int x, int y, AtkCoordType coordType)
 	{
-		// AtkObject* atk_component_ref_accessible_at_point  (AtkComponent *component,  gint x,  gint y,  AtkCoordType coord_type);
+		// AtkObject * atk_component_ref_accessible_at_point  (AtkComponent *component,  gint x,  gint y,  AtkCoordType coord_type);
 		auto p = atk_component_ref_accessible_at_point(atkComponent, x, y, coordType);
 		if(p is null)
 		{

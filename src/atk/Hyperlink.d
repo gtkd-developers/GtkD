@@ -165,7 +165,7 @@ public class Hyperlink : ObjectG
 	 */
 	public string getUri(int i)
 	{
-		// gchar* atk_hyperlink_get_uri (AtkHyperlink *link_,  gint i);
+		// gchar * atk_hyperlink_get_uri (AtkHyperlink *link_,  gint i);
 		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i));
 	}
 	
@@ -177,11 +177,11 @@ public class Hyperlink : ObjectG
 	 * Multiple anchors are primarily used by client-side image maps.
 	 * Params:
 	 * i = a (zero-index) integer specifying the desired anchor
-	 * Returns: an AtkObject associated with this hyperlinks i-th anchor
+	 * Returns: an AtkObject associated with this hyperlinks i-th anchor. [transfer none]
 	 */
 	public ObjectAtk getObject(int i)
 	{
-		// AtkObject* atk_hyperlink_get_object (AtkHyperlink *link_,  gint i);
+		// AtkObject * atk_hyperlink_get_object (AtkHyperlink *link_,  gint i);
 		auto p = atk_hyperlink_get_object(atkHyperlink, i);
 		if(p is null)
 		{

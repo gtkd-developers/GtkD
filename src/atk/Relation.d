@@ -145,7 +145,7 @@ public class Relation : ObjectG
 	 */
 	public static string typeGetName(AtkRelationType type)
 	{
-		// const gchar* atk_relation_type_get_name (AtkRelationType type);
+		// const gchar * atk_relation_type_get_name (AtkRelationType type);
 		return Str.toString(atk_relation_type_get_name(type));
 	}
 	
@@ -167,12 +167,12 @@ public class Relation : ObjectG
 	 * Params:
 	 * targets = an array of pointers to AtkObjects
 	 * relationship = an AtkRelationType with which to create the new
-	 *  AtkRelation
+	 * AtkRelation
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectAtk[] targets, AtkRelationType relationship)
 	{
-		// AtkRelation* atk_relation_new (AtkObject **targets,  gint n_targets,  AtkRelationType relationship);
+		// AtkRelation * atk_relation_new (AtkObject **targets,  gint n_targets,  AtkRelationType relationship);
 		
 		AtkObject*[] targetsArray = new AtkObject*[targets.length];
 		for ( int i = 0; i < targets.length ; i++ )
@@ -200,11 +200,11 @@ public class Relation : ObjectG
 	
 	/**
 	 * Gets the target list of relation
-	 * Returns: the target list of relation
+	 * Returns: the target list of relation. [transfer none]
 	 */
 	public PtrArray getTarget()
 	{
-		// GPtrArray* atk_relation_get_target (AtkRelation *relation);
+		// GPtrArray * atk_relation_get_target (AtkRelation *relation);
 		auto p = atk_relation_get_target(atkRelation);
 		if(p is null)
 		{
@@ -224,5 +224,17 @@ public class Relation : ObjectG
 	{
 		// void atk_relation_add_target (AtkRelation *relation,  AtkObject *target);
 		atk_relation_add_target(atkRelation, (target is null) ? null : target.getObjectAtkStruct());
+	}
+	
+	/**
+	 * Remove the specified AtkObject from the target for the relation.
+	 * Params:
+	 * target = an AtkObject
+	 * Returns: TRUE if the removal is successful.
+	 */
+	public int removeTarget(ObjectAtk target)
+	{
+		// gboolean atk_relation_remove_target (AtkRelation *relation,  AtkObject *target);
+		return atk_relation_remove_target(atkRelation, (target is null) ? null : target.getObjectAtkStruct());
 	}
 }

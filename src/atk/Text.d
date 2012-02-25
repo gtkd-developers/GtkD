@@ -206,6 +206,58 @@ public class Text
 		}
 	}
 	
+	void delegate(gint, gint, string, Text)[] onTextInsertListeners;
+	/**
+	 */
+	void addOnTextInsert(void delegate(gint, gint, string, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("text-insert" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"text-insert",
+			cast(GCallback)&callBackTextInsert,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["text-insert"] = 1;
+		}
+		onTextInsertListeners ~= dlg;
+	}
+	extern(C) static void callBackTextInsert(AtkText* atktextStruct, gint arg1, gint arg2, gchar* arg3, Text text)
+	{
+		foreach ( void delegate(gint, gint, string, Text) dlg ; text.onTextInsertListeners )
+		{
+			dlg(arg1, arg2, Str.toString(arg3), text);
+		}
+	}
+	
+	void delegate(gint, gint, string, Text)[] onTextRemoveListeners;
+	/**
+	 */
+	void addOnTextRemove(void delegate(gint, gint, string, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("text-remove" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"text-remove",
+			cast(GCallback)&callBackTextRemove,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["text-remove"] = 1;
+		}
+		onTextRemoveListeners ~= dlg;
+	}
+	extern(C) static void callBackTextRemove(AtkText* atktextStruct, gint arg1, gint arg2, gchar* arg3, Text text)
+	{
+		foreach ( void delegate(gint, gint, string, Text) dlg ; text.onTextRemoveListeners )
+		{
+			dlg(arg1, arg2, Str.toString(arg3), text);
+		}
+	}
+	
 	void delegate(Text)[] onTextSelectionChangedListeners;
 	/**
 	 * The "text-selection-changed" signal is emitted when the selected text of
@@ -234,17 +286,43 @@ public class Text
 		}
 	}
 	
+	void delegate(gint, gint, gint, string, Text)[] onTextUpdateListeners;
+	/**
+	 */
+	void addOnTextUpdate(void delegate(gint, gint, gint, string, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("text-update" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"text-update",
+			cast(GCallback)&callBackTextUpdate,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["text-update"] = 1;
+		}
+		onTextUpdateListeners ~= dlg;
+	}
+	extern(C) static void callBackTextUpdate(AtkText* atktextStruct, gint arg1, gint arg2, gint arg3, gchar* arg4, Text text)
+	{
+		foreach ( void delegate(gint, gint, gint, string, Text) dlg ; text.onTextUpdateListeners )
+		{
+			dlg(arg1, arg2, arg3, Str.toString(arg4), text);
+		}
+	}
+	
 	
 	/**
 	 * Gets the specified text.
 	 * Params:
 	 * startOffset = start position
 	 * endOffset = end position
-	 * Returns: the text from start_offset up to, but not including end_offset.
+	 * Returns: a newly allocated string containing the text from start_offset up to, but not including end_offset. Use g_free() to free the returned string.
 	 */
 	public string getText(int startOffset, int endOffset)
 	{
-		// gchar* atk_text_get_text (AtkText *text,  gint start_offset,  gint end_offset);
+		// gchar * atk_text_get_text (AtkText *text,  gint start_offset,  gint end_offset);
 		return Str.toString(atk_text_get_text(atkText, startOffset, endOffset));
 	}
 	
@@ -286,18 +364,18 @@ public class Text
 	 * If the boundary type is ATK_TEXT_BOUNDARY_LINE_START the returned
 	 * string is from the line start after the offset to the next line start.
 	 * If the boundary_type is ATK_TEXT_BOUNDARY_LINE_END the returned string
-	 * is from the line end at or after the offset to the next line start.
+	 * is from the line end at or after the offset to the next line end.
 	 * Params:
 	 * offset = position
 	 * boundaryType = An AtkTextBoundary
 	 * startOffset = the start offset of the returned string
 	 * endOffset = the offset of the first character after the
-	 *  returned substring
-	 * Returns: the text after offset bounded by the specified boundary_type.
+	 * returned substring
+	 * Returns: a newly allocated string containing the text after offset bounded by the specified boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
-		// gchar* atk_text_get_text_after_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
+		// gchar * atk_text_get_text_after_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
 		return Str.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, &startOffset, &endOffset));
 	}
 	
@@ -340,12 +418,12 @@ public class Text
 	 * boundaryType = An AtkTextBoundary
 	 * startOffset = the start offset of the returned string
 	 * endOffset = the offset of the first character after the
-	 *  returned substring
-	 * Returns: the text at offset bounded by the specified boundary_type.
+	 * returned substring
+	 * Returns: a newly allocated string containing the text at offset bounded by the specified boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
-		// gchar* atk_text_get_text_at_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
+		// gchar * atk_text_get_text_at_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
 		return Str.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, &startOffset, &endOffset));
 	}
 	
@@ -354,14 +432,14 @@ public class Text
 	 * If the boundary_type if ATK_TEXT_BOUNDARY_CHAR the character before the
 	 * offset is returned.
 	 * If the boundary_type is ATK_TEXT_BOUNDARY_WORD_START the returned string
-	 * is from the word start before the word start before the offset to
-	 * the word start before the offset.
+	 * is from the word start before the word start before or at the offset to
+	 * the word start before or at the offset.
 	 * The returned string will contain the word before the offset if the offset
 	 * is inside a word and will contain the word before the word before the
 	 * offset if the offset is not inside a word.
 	 * If the boundary_type is ATK_TEXT_BOUNDARY_WORD_END the returned string
-	 * is from the word end before the word end at or before the offset to the
-	 * word end at or before the offset.
+	 * is from the word end before the word end before the offset to the word
+	 * end before the offset.
 	 * The returned string will contain the word before the offset if the offset
 	 * is inside a word or if the offset is not inside a word.
 	 * If the boundary type is ATK_TEXT_BOUNDARY_SENTENCE_START the returned
@@ -386,12 +464,12 @@ public class Text
 	 * boundaryType = An AtkTextBoundary
 	 * startOffset = the start offset of the returned string
 	 * endOffset = the offset of the first character after the
-	 *  returned substring
-	 * Returns: the text before offset bounded by the specified boundary_type.
+	 * returned substring
+	 * Returns: a newly allocated string containing the text before offset bounded by the specified boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
-		// gchar* atk_text_get_text_before_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
+		// gchar * atk_text_get_text_before_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
 		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, &startOffset, &endOffset));
 	}
 	
@@ -435,11 +513,11 @@ public class Text
 	 * the character to be inserted at the caret location.
 	 * startOffset = the address to put the start offset of the range
 	 * endOffset = the address to put the end offset of the range
-	 * Returns: an AtkAttributeSet which contains the attributes explicitly set at offset. This AtkAttributeSet should be freed by a call to atk_attribute_set_free().
+	 * Returns: an AtkAttributeSet which contains the attributes explicitly set at offset. This AtkAttributeSet should be freed by a call to atk_attribute_set_free(). [transfer full]
 	 */
 	public AtkAttributeSet* getRunAttributes(int offset, out int startOffset, out int endOffset)
 	{
-		// AtkAttributeSet* atk_text_get_run_attributes (AtkText *text,  gint offset,  gint *start_offset,  gint *end_offset);
+		// AtkAttributeSet * atk_text_get_run_attributes (AtkText *text,  gint offset,  gint *start_offset,  gint *end_offset);
 		return atk_text_get_run_attributes(atkText, offset, &startOffset, &endOffset);
 	}
 	
@@ -448,11 +526,11 @@ public class Text
 	 * attributes for the text. See the enum AtkTextAttribute for types of text
 	 * attributes that can be returned. Note that other attributes may also be
 	 * returned.
-	 * Returns: an AtkAttributeSet which contains the default values of attributes. at offset. This AtkAttributeSet should be freed by a call to atk_attribute_set_free().
+	 * Returns: an AtkAttributeSet which contains the default values of attributes. at offset. this atkattributeset should be freed by a call to atk_attribute_set_free(). [transfer full]
 	 */
 	public AtkAttributeSet* getDefaultAttributes()
 	{
-		// AtkAttributeSet* atk_text_get_default_attributes (AtkText *text);
+		// AtkAttributeSet * atk_text_get_default_attributes (AtkText *text);
 		return atk_text_get_default_attributes(atkText);
 	}
 	
@@ -487,15 +565,15 @@ public class Text
 	 * Get the ranges of text in the specified bounding box.
 	 * Since 1.3
 	 * Params:
-	 * rect = An AtkTextRectagle giving the dimensions of the bounding box.
+	 * rect = An AtkTextRectangle giving the dimensions of the bounding box.
 	 * coordType = Specify whether coordinates are relative to the screen or widget window.
 	 * xClipType = Specify the horizontal clip type.
 	 * yClipType = Specify the vertical clip type.
-	 * Returns: Array of AtkTextRange. The last element of the array returned by this function will be NULL.
+	 * Returns: Array of AtkTextRange. The last element of the array returned by this function will be NULL. [array zero-terminated=1]
 	 */
 	public AtkTextRange** getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{
-		// AtkTextRange** atk_text_get_bounded_ranges (AtkText *text,  AtkTextRectangle *rect,  AtkCoordType coord_type,  AtkTextClipType x_clip_type,  AtkTextClipType y_clip_type);
+		// AtkTextRange ** atk_text_get_bounded_ranges (AtkText *text,  AtkTextRectangle *rect,  AtkCoordType coord_type,  AtkTextClipType x_clip_type,  AtkTextClipType y_clip_type);
 		return atk_text_get_bounded_ranges(atkText, rect, coordType, xClipType, yClipType);
 	}
 	
@@ -504,9 +582,9 @@ public class Text
 	 * Since 1.3
 	 * Params:
 	 * startOffset = The offset of the first text character for which boundary
-	 *  information is required.
+	 * information is required.
 	 * endOffset = The offset of the text character after the last character
-	 *  for which boundary information is required.
+	 * for which boundary information is required.
 	 * coordType = Specify whether coordinates are relative to the screen or widget window.
 	 * rect = A pointer to a AtkTextRectangle which is filled in by this function.
 	 */
@@ -551,11 +629,11 @@ public class Text
 	 * startOffset = passes back the start position of the selected region
 	 * endOffset = passes back the end position of (e.g. offset immediately past)
 	 * the selected region
-	 * Returns: the selected text.
+	 * Returns: a newly allocated string containing the selected text. Use g_free() to free the returned string.
 	 */
 	public string getSelection(int selectionNum, out int startOffset, out int endOffset)
 	{
-		// gchar* atk_text_get_selection (AtkText *text,  gint selection_num,  gint *start_offset,  gint *end_offset);
+		// gchar * atk_text_get_selection (AtkText *text,  gint selection_num,  gint *start_offset,  gint *end_offset);
 		return Str.toString(atk_text_get_selection(atkText, selectionNum, &startOffset, &endOffset));
 	}
 	
@@ -651,7 +729,7 @@ public class Text
 	 */
 	public static string attributeGetName(AtkTextAttribute attr)
 	{
-		// const gchar* atk_text_attribute_get_name (AtkTextAttribute attr);
+		// const gchar * atk_text_attribute_get_name (AtkTextAttribute attr);
 		return Str.toString(atk_text_attribute_get_name(attr));
 	}
 	
@@ -676,7 +754,7 @@ public class Text
 	 */
 	public static string attributeGetValue(AtkTextAttribute attr, int index)
 	{
-		// const gchar* atk_text_attribute_get_value (AtkTextAttribute attr,  gint index_);
+		// const gchar * atk_text_attribute_get_value (AtkTextAttribute attr,  gint index_);
 		return Str.toString(atk_text_attribute_get_value(attr, index));
 	}
 }

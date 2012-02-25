@@ -336,11 +336,11 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 * implementor = The GObject instance which should implement AtkImplementorIface
 	 * if a non-null return value is required.
-	 * Returns: a reference to an object's AtkObject implementation
+	 * Returns: a reference to an object's AtkObject implementation. [transfer full]
 	 */
 	public static ObjectAtk implementorRefAccessible(AtkImplementor* implementor)
 	{
-		// AtkObject* atk_implementor_ref_accessible (AtkImplementor *implementor);
+		// AtkObject * atk_implementor_ref_accessible (AtkImplementor *implementor);
 		auto p = atk_implementor_ref_accessible(implementor);
 		if(p is null)
 		{
@@ -355,7 +355,7 @@ public class ObjectAtk : ObjectG
 	 */
 	public string getName()
 	{
-		// const gchar* atk_object_get_name (AtkObject *accessible);
+		// const gchar * atk_object_get_name (AtkObject *accessible);
 		return Str.toString(atk_object_get_name(atkObject));
 	}
 	
@@ -365,17 +365,17 @@ public class ObjectAtk : ObjectG
 	 */
 	public string getDescription()
 	{
-		// const gchar* atk_object_get_description (AtkObject *accessible);
+		// const gchar * atk_object_get_description (AtkObject *accessible);
 		return Str.toString(atk_object_get_description(atkObject));
 	}
 	
 	/**
 	 * Gets the accessible parent of the accessible.
-	 * Returns: a AtkObject representing the accessible parent of the accessible
+	 * Returns: a AtkObject representing the accessible parent of the accessible. [transfer none]
 	 */
 	public ObjectAtk getParent()
 	{
-		// AtkObject* atk_object_get_parent (AtkObject *accessible);
+		// AtkObject * atk_object_get_parent (AtkObject *accessible);
 		auto p = atk_object_get_parent(atkObject);
 		if(p is null)
 		{
@@ -400,11 +400,11 @@ public class ObjectAtk : ObjectG
 	 * at index 0, the second at index 1 and so on.
 	 * Params:
 	 * i = a gint representing the position of the child, starting from 0
-	 * Returns: an AtkObject representing the specified accessible child of the accessible.
+	 * Returns: an AtkObject representing the specified accessible child of the accessible. [transfer full]
 	 */
 	public ObjectAtk refAccessibleChild(int i)
 	{
-		// AtkObject* atk_object_ref_accessible_child (AtkObject *accessible,  gint i);
+		// AtkObject * atk_object_ref_accessible_child (AtkObject *accessible,  gint i);
 		auto p = atk_object_ref_accessible_child(atkObject, i);
 		if(p is null)
 		{
@@ -415,11 +415,11 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the AtkRelationSet associated with the object.
-	 * Returns: an AtkRelationSet representing the relation set of the object.
+	 * Returns: an AtkRelationSet representing the relation set of the object. [transfer full]
 	 */
 	public RelationSet refRelationSet()
 	{
-		// AtkRelationSet* atk_object_ref_relation_set (AtkObject *accessible);
+		// AtkRelationSet * atk_object_ref_relation_set (AtkObject *accessible);
 		auto p = atk_object_ref_relation_set(atkObject);
 		if(p is null)
 		{
@@ -466,11 +466,11 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets a reference to the state set of the accessible; the caller must
 	 * unreference it when it is no longer needed.
-	 * Returns: a reference to an AtkStateSet which is the state set of the accessible
+	 * Returns: a reference to an AtkStateSet which is the state set of the accessible. [transfer full]
 	 */
 	public StateSet refStateSet()
 	{
-		// AtkStateSet* atk_object_ref_state_set (AtkObject *accessible);
+		// AtkStateSet * atk_object_ref_state_set (AtkObject *accessible);
 		auto p = atk_object_ref_state_set(atkObject);
 		if(p is null)
 		{
@@ -615,11 +615,11 @@ public class ObjectAtk : ObjectG
 	 * as distinct from strongly-typed object data available via other get/set methods.
 	 * Not all objects have explicit "name-value pair" AtkAttributeSet properties.
 	 * Since 1.12
-	 * Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it.
+	 * Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it. [transfer none]
 	 */
 	public AtkAttributeSet* getAttributes()
 	{
-		// AtkAttributeSet* atk_object_get_attributes (AtkObject *accessible);
+		// AtkAttributeSet * atk_object_get_attributes (AtkObject *accessible);
 		return atk_object_get_attributes(atkObject);
 	}
 	
@@ -631,7 +631,7 @@ public class ObjectAtk : ObjectG
 	 */
 	public static string roleGetName(AtkRole role)
 	{
-		// const gchar* atk_role_get_name (AtkRole role);
+		// const gchar * atk_role_get_name (AtkRole role);
 		return Str.toString(atk_role_get_name(role));
 	}
 	
@@ -643,7 +643,7 @@ public class ObjectAtk : ObjectG
 	 */
 	public static string roleGetLocalizedName(AtkRole role)
 	{
-		// const gchar* atk_role_get_localized_name (AtkRole role);
+		// const gchar * atk_role_get_localized_name (AtkRole role);
 		return Str.toString(atk_role_get_localized_name(role));
 	}
 	

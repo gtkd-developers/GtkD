@@ -135,7 +135,7 @@ public class RelationSet : ObjectG
 	 */
 	public static AtkRelationSet* atkRelationSetNew()
 	{
-		// AtkRelationSet* atk_relation_set_new (void);
+		// AtkRelationSet * atk_relation_set_new (void);
 		return atk_relation_set_new();
 	}
 	
@@ -194,11 +194,11 @@ public class RelationSet : ObjectG
 	 * Determines the relation at the specified position in the relation set.
 	 * Params:
 	 * i = a gint representing a position in the set, starting from 0.
-	 * Returns: a AtkRelation, which is the relation at position i in the set.
+	 * Returns: a AtkRelation, which is the relation at position i in the set. [transfer none]
 	 */
 	public Relation atkRelationSetGetRelation(int i)
 	{
-		// AtkRelation* atk_relation_set_get_relation (AtkRelationSet *set,  gint i);
+		// AtkRelation * atk_relation_set_get_relation (AtkRelationSet *set,  gint i);
 		auto p = atk_relation_set_get_relation(atkRelationSet, i);
 		if(p is null)
 		{
@@ -211,11 +211,11 @@ public class RelationSet : ObjectG
 	 * Finds a relation that matches the specified type.
 	 * Params:
 	 * relationship = an AtkRelationType
-	 * Returns: an AtkRelation, which is a relation matching the specified type.
+	 * Returns: an AtkRelation, which is a relation matching the specified type. [transfer none]
 	 */
 	public Relation atkRelationSetGetRelationByType(AtkRelationType relationship)
 	{
-		// AtkRelation* atk_relation_set_get_relation_by_type  (AtkRelationSet *set,  AtkRelationType relationship);
+		// AtkRelation * atk_relation_set_get_relation_by_type  (AtkRelationSet *set,  AtkRelationType relationship);
 		auto p = atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
 		if(p is null)
 		{

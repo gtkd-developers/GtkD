@@ -1060,6 +1060,88 @@ public struct AtkValue{}
 
 
 /*
+ * A convenience macro for type ATK implementations, which declares a class
+ * initialization function, an instance initialization function (see GTypeInfo
+ * for information about these) and a static variable named
+ * t_n _parent_class pointing to the parent class. Furthermore, it
+ * defines a _get_type() function.
+ * TN  :
+ * The name of the new type, in Camel case.
+ * t_n  :
+ * The name of the new type, in lowercase, with words separated by '_'.
+ * T_P  :
+ * The GType of the parent type.
+ * Since 1.22
+ */
+// TODO
+// #define ATK_DEFINE_TYPE(TN, t_n, T_P)			 ATK_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+
+/*
+ * The most general convenience macro for ATK type implementations, on which
+ * ATK_DEFINE_TYPE(), etc are based.
+ * TN  :
+ * The name of the new type, in Camel case.
+ * t_n  :
+ * The name of the new type, in lowercase, with words separated by '_'.
+ * T_P  :
+ * The GType of the parent type.
+ * _f_  :
+ * GTypeFlags to pass to g_type_register_static()
+ * _C_  :
+ * Custom code that gets inserted in the _get_type() function.
+ * Since 1.22
+ */
+// TODO
+// #define ATK_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_) _ATK_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _ATK_DEFINE_TYPE_EXTENDED_END()
+
+/*
+ * A convenience macro for ATK type implementations.
+ * Similar to ATK_DEFINE_TYPE(), but allows you to insert custom code into the
+ * _get_type() function, e.g. interface implementations via G_IMPLEMENT_INTERFACE().
+ * TN  :
+ * The name of the new type, in Camel case.
+ * t_n  :
+ * The name of the new type in lowercase, with words separated by '_'.
+ * T_P  :
+ * The GType of the parent type.
+ * _C_  :
+ * Custom code that gets inserted in the _get_type() function.
+ * Since 1.22
+ */
+// TODO
+// #define ATK_DEFINE_TYPE_WITH_CODE(TN, t_n, T_P, _C_)	 _ATK_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, 0) {_C_;} _ATK_DEFINE_TYPE_EXTENDED_END()
+
+/*
+ * A convenience macro for ATK type implementations.
+ * Similar to ATK_DEFINE_TYPE(), but defines an abstract type.
+ * TN  :
+ * The name of the new type, in Camel case.
+ * t_n  :
+ * The name of the new type, in lowercase, with words separated by '_'.
+ * T_P  :
+ * The GType of the parent type.
+ * Since 1.22
+ */
+// TODO
+// #define ATK_DEFINE_ABSTRACT_TYPE(TN, t_n, T_P)		 ATK_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT, {})
+
+/*
+ * A convenience macro for ATK type implementations.
+ * Similar to ATK_DEFINE_TYPE_WITH_CODE(), but defines an abstract type.
+ * TN  :
+ * The name of the new type, in Camel case.
+ * t_n  :
+ * The name of the new type, in lowercase, with words separated by '_'.
+ * T_P  :
+ * The GType of the parent type.
+ * _C_  :
+ * Custom code that gets inserted in the _get_type() function.
+ * Since 1.22
+ */
+// TODO
+// #define ATK_DEFINE_ABSTRACT_TYPE_WITH_CODE(TN, t_n, T_P, _C_) _ATK_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT) {_C_;} _ATK_DEFINE_TYPE_EXTENDED_END()
+
+/*
  * An AtkFunction is a function definition used for padding which has been added
  * to class and interface structures to allow for expansion in the future.
  * data  :
@@ -1074,9 +1156,9 @@ public alias extern(C) int  function (void*) AtkFunction;
  * An AtkPropertyChangeHandler is a function which is executed when an AtkObject's property changes value. It is specified in a call to
  * atk_object_connect_property_change_handler().
  * Param1  :
- *  an AtkObject
+ * an AtkObject
  * Param2  :
- *  an AtkPropertyValues
+ * an AtkPropertyValues
  */
 // void (*AtkPropertyChangeHandler) (AtkObject *Param1,  AtkPropertyValues *Param2);
 public alias extern(C) void  function (AtkObject*, AtkPropertyValues*) AtkPropertyChangeHandler;
@@ -1087,7 +1169,7 @@ public alias extern(C) void  function (AtkObject*, AtkPropertyValues*) AtkProper
  * Currently the only events for which object-specific handlers are
  * supported are events of type "focus:". Most clients of ATK will prefer to
  * attach signal handlers for the various ATK signals instead.
- * see: atk_add_focus_tracker.
+ * see atk_add_focus_tracker.
  * obj  :
  * An AtkObject instance for whom the callback will be called when
  * the specified event (e.g. 'focus:') takes place.
@@ -1099,7 +1181,7 @@ public alias extern(C) void  function (AtkObject*) AtkEventListener;
  * An AtkEventListenerInit function is a special function that is
  * called in order to initialize the per-object event registration system
  * used by AtkEventListener, if any preparation is required.
- * see: atk_focus_tracker_init.
+ * see atk_focus_tracker_init.
  */
 // void (*AtkEventListenerInit) (void);
 public alias extern(C) void  function () AtkEventListenerInit;
@@ -1114,10 +1196,10 @@ public alias extern(C) void  function () AtkEventListenerInit;
  * func_data  :
  * a block of data which will be passed to the event listener, on notification.
  * Returns  :
- *  TRUE (nonzero) if the event emission should be stopped and the event
+ * TRUE (nonzero) if the event emission should be stopped and the event
  * discarded without being passed to the normal GUI recipient; FALSE (zero) if the
  * event dispatch to the client application should proceed as normal.
- * see: atk_add_key_event_listener.
+ * see atk_add_key_event_listener.
  */
 // gint (*AtkKeySnoopFunc) (AtkKeyEventStruct *event,  gpointer func_data);
 public alias extern(C) int  function (AtkKeyEventStruct*, void*) AtkKeySnoopFunc;

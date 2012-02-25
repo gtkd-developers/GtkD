@@ -94,7 +94,7 @@ public class State
 	 */
 	public static string typeGetName(AtkStateType type)
 	{
-		// const gchar* atk_state_type_get_name (AtkStateType type);
+		// const gchar * atk_state_type_get_name (AtkStateType type);
 		return Str.toString(atk_state_type_get_name(type));
 	}
 	

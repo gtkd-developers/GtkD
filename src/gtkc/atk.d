@@ -171,6 +171,7 @@ mixin( _shared ~ "static this()
 	Linker.link(atk_relation_get_relation_type, \"atk_relation_get_relation_type\", LIBRARY.ATK);
 	Linker.link(atk_relation_get_target, \"atk_relation_get_target\", LIBRARY.ATK);
 	Linker.link(atk_relation_add_target, \"atk_relation_add_target\", LIBRARY.ATK);
+	Linker.link(atk_relation_remove_target, \"atk_relation_remove_target\", LIBRARY.ATK);
 
 	// atk.RelationSet
 
@@ -294,6 +295,7 @@ mixin( _shared ~ "static this()
 	Linker.link(atk_get_focus_object, \"atk_get_focus_object\", LIBRARY.ATK);
 	Linker.link(atk_get_toolkit_name, \"atk_get_toolkit_name\", LIBRARY.ATK);
 	Linker.link(atk_get_toolkit_version, \"atk_get_toolkit_version\", LIBRARY.ATK);
+	Linker.link(atk_get_version, \"atk_get_version\", LIBRARY.ATK);
 
 	// atk.ValueAtk
 
@@ -443,6 +445,7 @@ mixin( gshared ~"extern(C)
 	AtkRelationType function(AtkRelation* relation) c_atk_relation_get_relation_type;
 	GPtrArray* function(AtkRelation* relation) c_atk_relation_get_target;
 	void function(AtkRelation* relation, AtkObject* target) c_atk_relation_add_target;
+	gboolean function(AtkRelation* relation, AtkObject* target) c_atk_relation_remove_target;
 	
 	// atk.RelationSet
 	
@@ -566,6 +569,7 @@ mixin( gshared ~"extern(C)
 	AtkObject* function() c_atk_get_focus_object;
 	gchar* function() c_atk_get_toolkit_name;
 	gchar* function() c_atk_get_toolkit_version;
+	gchar* function() c_atk_get_version;
 	
 	// atk.ValueAtk
 	
@@ -712,6 +716,7 @@ alias c_atk_relation_new  atk_relation_new;
 alias c_atk_relation_get_relation_type  atk_relation_get_relation_type;
 alias c_atk_relation_get_target  atk_relation_get_target;
 alias c_atk_relation_add_target  atk_relation_add_target;
+alias c_atk_relation_remove_target  atk_relation_remove_target;
 
 // atk.RelationSet
 
@@ -835,6 +840,7 @@ alias c_atk_get_root  atk_get_root;
 alias c_atk_get_focus_object  atk_get_focus_object;
 alias c_atk_get_toolkit_name  atk_get_toolkit_name;
 alias c_atk_get_toolkit_version  atk_get_toolkit_version;
+alias c_atk_get_version  atk_get_version;
 
 // atk.ValueAtk
 

@@ -146,11 +146,11 @@ public class Hypertext
 	 * link_index
 	 * Params:
 	 * linkIndex = an integer specifying the desired link
-	 * Returns: the link in this hypertext document at index link_index
+	 * Returns: the link in this hypertext document at index link_index. [transfer none]
 	 */
 	public Hyperlink getLink(int linkIndex)
 	{
-		// AtkHyperlink* atk_hypertext_get_link (AtkHypertext *hypertext,  gint link_index);
+		// AtkHyperlink * atk_hypertext_get_link (AtkHypertext *hypertext,  gint link_index);
 		auto p = atk_hypertext_get_link(atkHypertext, linkIndex);
 		if(p is null)
 		{

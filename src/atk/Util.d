@@ -162,7 +162,7 @@ public class Util
 	 * Params:
 	 * listener = the listener to notify
 	 * data = a gpointer that points to a block of data that should be sent to the registered listeners,
-	 *  along with the event notification, when it occurs.
+	 * along with the event notification, when it occurs.
 	 * Returns: added event listener id, or 0 on failure.
 	 */
 	public static uint addKeyEventListener(AtkKeySnoopFunc listener, void* data)
@@ -184,11 +184,11 @@ public class Util
 	
 	/**
 	 * Gets the root accessible container for the current application.
-	 * Returns: the root accessible container for the current application
+	 * Returns: the root accessible container for the current application. [transfer none]
 	 */
 	public static ObjectAtk getRoot()
 	{
-		// AtkObject* atk_get_root (void);
+		// AtkObject * atk_get_root (void);
 		auto p = atk_get_root();
 		if(p is null)
 		{
@@ -200,11 +200,11 @@ public class Util
 	/**
 	 * Gets the currently focused object.
 	 * Since 1.6
-	 * Returns: the currently focused object for the current application
+	 * Returns: the currently focused object for the current application. [transfer none]
 	 */
 	public static ObjectAtk getFocusObject()
 	{
-		// AtkObject* atk_get_focus_object (void);
+		// AtkObject * atk_get_focus_object (void);
 		auto p = atk_get_focus_object();
 		if(p is null)
 		{
@@ -231,5 +231,16 @@ public class Util
 	{
 		// const gchar * atk_get_toolkit_version (void);
 		return Str.toString(atk_get_toolkit_version());
+	}
+	
+	/**
+	 * Gets the current version for ATK.
+	 * Since 1.20
+	 * Returns: version string for ATK
+	 */
+	public static string getVersion()
+	{
+		// const gchar * atk_get_version (void);
+		return Str.toString(atk_get_version());
 	}
 }

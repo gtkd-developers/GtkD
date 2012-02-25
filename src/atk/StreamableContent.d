@@ -135,7 +135,7 @@ public class StreamableContent
 	 */
 	public string getMimeType(int i)
 	{
-		// const gchar* atk_streamable_content_get_mime_type  (AtkStreamableContent *streamable,  gint i);
+		// const gchar * atk_streamable_content_get_mime_type  (AtkStreamableContent *streamable,  gint i);
 		return Str.toString(atk_streamable_content_get_mime_type(atkStreamableContent, i));
 	}
 	
@@ -143,11 +143,11 @@ public class StreamableContent
 	 * Gets the content in the specified mime type.
 	 * Params:
 	 * mimeType = a gchar* representing the mime type
-	 * Returns: A GIOChannel which contains the content in the specified mime type.
+	 * Returns: A GIOChannel which contains the content in the specified mime type. [transfer full]
 	 */
 	public IOChannel getStream(string mimeType)
 	{
-		// GIOChannel* atk_streamable_content_get_stream (AtkStreamableContent *streamable,  const gchar *mime_type);
+		// GIOChannel * atk_streamable_content_get_stream (AtkStreamableContent *streamable,  const gchar *mime_type);
 		auto p = atk_streamable_content_get_stream(atkStreamableContent, Str.toStringz(mimeType));
 		if(p is null)
 		{
@@ -172,7 +172,7 @@ public class StreamableContent
 	 */
 	public string getUri(string mimeType)
 	{
-		// gchar* atk_streamable_content_get_uri (AtkStreamableContent *streamable,  const gchar *mime_type);
+		// const gchar * atk_streamable_content_get_uri (AtkStreamableContent *streamable,  const gchar *mime_type);
 		return Str.toString(atk_streamable_content_get_uri(atkStreamableContent, Str.toStringz(mimeType)));
 	}
 }
