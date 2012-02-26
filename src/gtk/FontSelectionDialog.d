@@ -178,7 +178,7 @@ public class FontSelectionDialog : Dialog
 	 */
 	public Font getFont()
 	{
-		// GdkFont* gtk_font_selection_dialog_get_font (GtkFontSelectionDialog *fsd);
+		// GdkFont * gtk_font_selection_dialog_get_font (GtkFontSelectionDialog *fsd);
 		auto p = gtk_font_selection_dialog_get_font(gtkFontSelectionDialog);
 		if(p is null)
 		{
@@ -199,7 +199,7 @@ public class FontSelectionDialog : Dialog
 	 */
 	public string getFontName()
 	{
-		// gchar* gtk_font_selection_dialog_get_font_name  (GtkFontSelectionDialog *fsd);
+		// gchar * gtk_font_selection_dialog_get_font_name  (GtkFontSelectionDialog *fsd);
 		return Str.toString(gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog));
 	}
 	
@@ -257,7 +257,7 @@ public class FontSelectionDialog : Dialog
 	/**
 	 * Gets the 'Cancel' button.
 	 * Since 2.14
-	 * Returns: the GtkWidget used in the dialog for the 'Cancel' button.
+	 * Returns: the GtkWidget used in the dialog for the 'Cancel' button. [transfer none]
 	 */
 	public Widget getCancelButton()
 	{
@@ -273,7 +273,7 @@ public class FontSelectionDialog : Dialog
 	/**
 	 * Gets the 'OK' button.
 	 * Since 2.14
-	 * Returns: the GtkWidget used in the dialog for the 'OK' button.
+	 * Returns: the GtkWidget used in the dialog for the 'OK' button. [transfer none]
 	 */
 	public Widget getOkButton()
 	{

@@ -361,7 +361,7 @@ public class MenuItem : Item, ActivatableIF
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_menu_item_new (void);
+		// GtkWidget * gtk_menu_item_new (void);
 		auto p = gtk_menu_item_new();
 		if(p is null)
 		{
@@ -378,7 +378,7 @@ public class MenuItem : Item, ActivatableIF
 	 * or Arabic, right-justified-menu-items appear at the left.)
 	 * Params:
 	 * rightJustified = if TRUE the menu item will appear at the
-	 *  far right if added to a menu bar.
+	 * far right if added to a menu bar.
 	 */
 	public void setRightJustified(int rightJustified)
 	{
@@ -458,13 +458,13 @@ public class MenuItem : Item, ActivatableIF
 	}
 	
 	/**
-	 * Gets the submenu underneath this menu item, if any. See
-	 * gtk_menu_item_set_submenu().
-	 * Returns: submenu for this menu item, or NULL if none.
+	 * Gets the submenu underneath this menu item, if any.
+	 * See gtk_menu_item_set_submenu().
+	 * Returns: submenu for this menu item, or NULL if none. [transfer none]
 	 */
 	public Widget getSubmenu()
 	{
-		// GtkWidget* gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
+		// GtkWidget * gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
 		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
 		if(p is null)
 		{
@@ -504,7 +504,7 @@ public class MenuItem : Item, ActivatableIF
 	 * g_intern_static_string().
 	 * Params:
 	 * accelPath = accelerator path, corresponding to this menu item's
-	 *  functionality, or NULL to unset the current path. [allow-none]
+	 * functionality, or NULL to unset the current path. [allow-none]
 	 */
 	public void setAccelPath(string accelPath)
 	{
@@ -520,7 +520,7 @@ public class MenuItem : Item, ActivatableIF
 	 */
 	public string getAccelPath()
 	{
-		// const gchar* gtk_menu_item_get_accel_path (GtkMenuItem *menu_item);
+		// const gchar * gtk_menu_item_get_accel_path (GtkMenuItem *menu_item);
 		return Str.toString(gtk_menu_item_get_accel_path(gtkMenuItem));
 	}
 	

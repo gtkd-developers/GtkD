@@ -184,7 +184,7 @@ public template ToolShellT(TStruct)
 	 * call this function directly, but rely on gtk_tool_item_get_text_size_group()
 	 * instead.
 	 * Since 2.20
-	 * Returns: the current text size group of shell
+	 * Returns: the current text size group of shell. [transfer none]
 	 */
 	public SizeGroup getTextSizeGroup()
 	{

@@ -67,12 +67,10 @@ private import gtk.Ruler;
  * Description
  * Note
  *  This widget is considered too specialized/little-used for
- *  GTK+, and will in the future be moved to some other package. If
- *  your application needs this widget, feel free to use it, as the
- *  widget does work and is useful in some applications; it's just not
- *  of general interest. However, we are not accepting new features for
- *  the widget, and it will eventually move out of the GTK+
- *  distribution.
+ *  GTK+, and will be removed in GTK 3. If your application needs this widget,
+ *  feel free to use it, as the widget is useful in some applications; it's just
+ *  not of general interest. However, we are not accepting new features for the
+ *  widget, and it will move out of the GTK+ distribution.
  * The VRuler widget is a widget arranged vertically creating a ruler that is
  * utilized around other widgets such as a text widget. The ruler is used to show
  * the location of the mouse on the window and to show the size of the window in
@@ -129,12 +127,14 @@ public class VRuler : Ruler
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_vruler_new is deprecated and should not be used in newly-written code.
 	 * Creates a new vertical ruler
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_vruler_new (void);
+		// GtkWidget * gtk_vruler_new (void);
 		auto p = gtk_vruler_new();
 		if(p is null)
 		{

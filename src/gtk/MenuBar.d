@@ -148,7 +148,7 @@ public class MenuBar : MenuShell
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_menu_bar_new (void);
+		// GtkWidget * gtk_menu_bar_new (void);
 		auto p = gtk_menu_bar_new();
 		if(p is null)
 		{

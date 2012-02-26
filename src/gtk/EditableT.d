@@ -172,8 +172,8 @@ public template EditableT(TStruct)
 		}
 	}
 	
-	void delegate(string, gint, gint*, EditableIF)[] _onInsertTextListeners;
-	void delegate(string, gint, gint*, EditableIF)[] onInsertTextListeners()
+	void delegate(string, gint, gpointer, EditableIF)[] _onInsertTextListeners;
+	void delegate(string, gint, gpointer, EditableIF)[] onInsertTextListeners()
 	{
 		return  _onInsertTextListeners;
 	}
@@ -186,7 +186,7 @@ public template EditableT(TStruct)
 	 * is possible to modify the inserted text, or prevent
 	 * it from being inserted entirely.
 	 */
-	void addOnInsertText(void delegate(string, gint, gint*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertText(void delegate(string, gint, gpointer, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
 		{
@@ -201,9 +201,9 @@ public template EditableT(TStruct)
 		}
 		_onInsertTextListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gint* position, EditableIF editableIF)
+	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gpointer position, EditableIF editableIF)
 	{
-		foreach ( void delegate(string, gint, gint*, EditableIF) dlg ; editableIF.onInsertTextListeners )
+		foreach ( void delegate(string, gint, gpointer, EditableIF) dlg ; editableIF.onInsertTextListeners )
 		{
 			dlg(Str.toString(newText), newTextLength, position, editableIF);
 		}
@@ -251,7 +251,7 @@ public template EditableT(TStruct)
 	 * Params:
 	 * newText = the text to append
 	 * newTextLength = the length of the text in bytes, or -1
-	 * position = location of the position text will be inserted at. [in-out]
+	 * position = location of the position text will be inserted at. [inout]
 	 */
 	public void insertText(string newText, int newTextLength, ref int position)
 	{
@@ -288,7 +288,7 @@ public template EditableT(TStruct)
 	 */
 	public string getChars(int startPos, int endPos)
 	{
-		// gchar* gtk_editable_get_chars (GtkEditable *editable,  gint start_pos,  gint end_pos);
+		// gchar * gtk_editable_get_chars (GtkEditable *editable,  gint start_pos,  gint end_pos);
 		return Str.toString(gtk_editable_get_chars(getEditableTStruct(), startPos, endPos));
 	}
 	
@@ -365,7 +365,7 @@ public template EditableT(TStruct)
 	 * widget or not.
 	 * Params:
 	 * isEditable = TRUE if the user is allowed to edit the text
-	 *  in the widget
+	 * in the widget
 	 */
 	public void setEditable(int isEditable)
 	{

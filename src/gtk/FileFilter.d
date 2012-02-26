@@ -157,7 +157,7 @@ public class FileFilter : ObjectGtk
 	 * Since 2.4
 	 * Params:
 	 * name = the human-readable-name for the filter, or NULL
-	 *  to remove any existing name. [allow-none]
+	 * to remove any existing name. [allow-none]
 	 */
 	public void setName(string name)
 	{
@@ -220,9 +220,9 @@ public class FileFilter : ObjectGtk
 	 * Since 2.4
 	 * Params:
 	 * needed = bitfield of flags indicating the information that the custom
-	 *  filter function needs.
+	 * filter function needs.
 	 * func = callback function; if the function returns TRUE, then
-	 *  the file will be displayed.
+	 * the file will be displayed.
 	 * data = data to pass to func
 	 * notify = function to call to free data when it is no longer needed.
 	 */
@@ -258,7 +258,7 @@ public class FileFilter : ObjectGtk
 	 * Params:
 	 * filter = a GtkFileFilter
 	 * filterInfo = a GtkFileFilterInfo structure containing information
-	 *  about a file.
+	 * about a file.
 	 * Returns: TRUE if the file should be displayed
 	 */
 	public int filter(GtkFileFilterInfo* filterInfo)

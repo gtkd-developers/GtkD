@@ -175,7 +175,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 * Creates a new GtkTreeModel, with child_model as the child model.
 	 * Params:
 	 * childModel = A GtkTreeModel
-	 * Returns: A new GtkTreeModel.
+	 * Returns: A new GtkTreeModel. [transfer full]
 	 */
 	public static TreeModelIF newWithModel(TreeModelIF childModel)
 	{
@@ -190,7 +190,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	
 	/**
 	 * Returns the model the GtkTreeModelSort is sorting.
-	 * Returns: the "child model" being sorted
+	 * Returns: the "child model" being sorted. [transfer none]
 	 */
 	public TreeModelIF getModel()
 	{

@@ -297,7 +297,7 @@ public class TreePath
 	 * It also returns the number of elements in the array.
 	 * The array should not be freed.
 	 * Since 2.22
-	 * Returns: The current indices, or NULL. [array length=depth][transfer none length=depth]
+	 * Returns: The current indices, or NULL. [array length=depth][transfer none]
 	 */
 	public int[] getIndicesWithDepth()
 	{

@@ -72,12 +72,10 @@ private import gtk.Widget;
  * Description
  * Note
  *  This widget is considered too specialized/little-used for
- *  GTK+, and will in the future be moved to some other package. If
- *  your application needs this widget, feel free to use it, as the
- *  widget does work and is useful in some applications; it's just not
- *  of general interest. However, we are not accepting new features for
- *  the widget, and it will eventually move out of the GTK+
- *  distribution.
+ *  GTK+, and will be removed in GTK 3. If your application needs this widget,
+ *  feel free to use it, as the widget is useful in some applications; it's just
+ *  not of general interest. However, we are not accepting new features for the
+ *  widget, and it will move out of the GTK+ distribution.
  * The GTKRuler widget is a base class for horizontal and vertical rulers. Rulers
  * are used to show the mouse pointer's location in a window. The ruler can either
  * be horizontal or vertical on the window. Within the ruler a small triangle
@@ -138,6 +136,9 @@ public class Ruler : Widget, OrientableIF
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_ruler_set_metric has been deprecated since version 2.24 and should not be used in newly-written code. GtkRuler has been removed from GTK 3 for being
+	 *  unmaintained and too specialized. There is no replacement.
 	 * This calls the GTKMetricType to set the ruler to units defined. Available units
 	 * are GTK_PIXELS, GTK_INCHES, or GTK_CENTIMETERS. The default unit of measurement
 	 * is GTK_PIXELS.
@@ -151,7 +152,11 @@ public class Ruler : Widget, OrientableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ruler_set_range is deprecated and should not be used in newly-written code.
 	 * This sets the range of the ruler.
+	 * Deprecated: 2.24: GtkRuler has been removed from GTK 3 for being
+	 *  unmaintained and too specialized. There is no replacement.
 	 * Params:
 	 * lower = the lower limit of the ruler
 	 * upper = the upper limit of the ruler
@@ -166,8 +171,10 @@ public class Ruler : Widget, OrientableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ruler_get_metric is deprecated and should not be used in newly-written code.
 	 * Gets the units used for a GtkRuler. See gtk_ruler_set_metric().
-	 * Returns: the units currently used for ruler
+	 * Returns: the units currently used for ruler Deprecated: 2.24: GtkRuler has been removed from GTK 3 for being unmaintained and too specialized. There is no replacement.
 	 */
 	public GtkMetricType getMetric()
 	{
@@ -176,14 +183,18 @@ public class Ruler : Widget, OrientableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ruler_get_range is deprecated and should not be used in newly-written code.
 	 * Retrieves values indicating the range and current position of a GtkRuler.
 	 * See gtk_ruler_set_range().
+	 * Deprecated: 2.24: GtkRuler has been removed from GTK 3 for being
+	 *  unmaintained and too specialized. There is no replacement.
 	 * Params:
 	 * lower = location to store lower limit of the ruler, or NULL. [allow-none]
 	 * upper = location to store upper limit of the ruler, or NULL. [allow-none]
 	 * position = location to store the current position of the mark on the ruler, or NULL. [allow-none]
 	 * maxSize = location to store the maximum size of the ruler used when calculating
-	 *  the space to leave for the text, or NULL.
+	 * the space to leave for the text, or NULL.
 	 */
 	public void getRange(out double lower, out double upper, out double position, out double maxSize)
 	{

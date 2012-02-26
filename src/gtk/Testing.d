@@ -108,11 +108,11 @@ public class Testing
 	 * Params:
 	 * windowTitle = Title of the window to be displayed.
 	 * dialogText = Text inside the window to be displayed.
-	 * Returns: a widget pointer to the newly created GtkWindow.
+	 * Returns: a widget pointer to the newly created GtkWindow. [transfer none]
 	 */
 	public static Widget createSimpleWindow(string windowTitle, string dialogText)
 	{
-		// GtkWidget* gtk_test_create_simple_window (const gchar *window_title,  const gchar *dialog_text);
+		// GtkWidget * gtk_test_create_simple_window (const gchar *window_title,  const gchar *dialog_text);
 		auto p = gtk_test_create_simple_window(Str.toStringz(windowTitle), Str.toStringz(dialogText));
 		if(p is null)
 		{
@@ -133,11 +133,11 @@ public class Testing
 	 * Params:
 	 * widget = Valid label or container widget.
 	 * labelPattern = Shell-glob pattern to match a label string.
-	 * Returns: a GtkLabel widget if any is found.
+	 * Returns: a GtkLabel widget if any is found. [transfer none]
 	 */
 	public static Widget findLabel(Widget widget, string labelPattern)
 	{
-		// GtkWidget* gtk_test_find_label (GtkWidget *widget,  const gchar *label_pattern);
+		// GtkWidget * gtk_test_find_label (GtkWidget *widget,  const gchar *label_pattern);
 		auto p = gtk_test_find_label((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(labelPattern));
 		if(p is null)
 		{
@@ -158,11 +158,11 @@ public class Testing
 	 * Params:
 	 * baseWidget = Valid widget, part of a widget hierarchy
 	 * widgetType = Type of a aearched for sibling widget
-	 * Returns: a widget of type widget_type if any is found.
+	 * Returns: a widget of type widget_type if any is found. [transfer none]
 	 */
 	public static Widget findSibling(Widget baseWidget, GType widgetType)
 	{
-		// GtkWidget* gtk_test_find_sibling (GtkWidget *base_widget,  GType widget_type);
+		// GtkWidget * gtk_test_find_sibling (GtkWidget *base_widget,  GType widget_type);
 		auto p = gtk_test_find_sibling((baseWidget is null) ? null : baseWidget.getWidgetStruct(), widgetType);
 		if(p is null)
 		{
@@ -184,11 +184,11 @@ public class Testing
 	 * widget = Container widget, usually a GtkWindow.
 	 * labelPattern = Shell-glob pattern to match a label string.
 	 * widgetType = Type of a aearched for label sibling widget.
-	 * Returns: a valid widget if any is found or NULL.
+	 * Returns: a valid widget if any is found or NULL. [transfer none]
 	 */
 	public static Widget findWidget(Widget widget, string labelPattern, GType widgetType)
 	{
-		// GtkWidget* gtk_test_find_widget (GtkWidget *widget,  const gchar *label_pattern,  GType widget_type);
+		// GtkWidget * gtk_test_find_widget (GtkWidget *widget,  const gchar *label_pattern,  GType widget_type);
 		auto p = gtk_test_find_widget((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(labelPattern), widgetType);
 		if(p is null)
 		{
@@ -203,11 +203,11 @@ public class Testing
 	 * Since 2.14
 	 * Params:
 	 * nTypes = location to store number of types
-	 * Returns: 0-terminated array of type ids
+	 * Returns: 0-terminated array of type ids. [array length=n_types zero-terminated=1][transfer none]
 	 */
 	public static GType* listAllTypes(uint* nTypes)
 	{
-		// const GType* gtk_test_list_all_types (guint *n_types);
+		// const GType * gtk_test_list_all_types (guint *n_types);
 		return gtk_test_list_all_types(nTypes);
 	}
 	
@@ -284,7 +284,7 @@ public class Testing
 	 */
 	public static string textGet(Widget widget)
 	{
-		// gchar* gtk_test_text_get (GtkWidget *widget);
+		// gchar * gtk_test_text_get (GtkWidget *widget);
 		return Str.toString(gtk_test_text_get((widget is null) ? null : widget.getWidgetStruct()));
 	}
 	

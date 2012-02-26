@@ -217,7 +217,7 @@ public class FontButton : Button
 	 */
 	public string getFontName()
 	{
-		// const gchar* gtk_font_button_get_font_name (GtkFontButton *font_button);
+		// const gchar * gtk_font_button_get_font_name (GtkFontButton *font_button);
 		return Str.toString(gtk_font_button_get_font_name(gtkFontButton));
 	}
 	

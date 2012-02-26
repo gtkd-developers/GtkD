@@ -129,7 +129,7 @@ public class HSeparator : Separator
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_hseparator_new (void);
+		// GtkWidget * gtk_hseparator_new (void);
 		auto p = gtk_hseparator_new();
 		if(p is null)
 		{

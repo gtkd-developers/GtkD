@@ -193,7 +193,7 @@ public class ToolPalette : Container, OrientableIF
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_tool_palette_new (void);
+		// GtkWidget * gtk_tool_palette_new (void);
 		auto p = gtk_tool_palette_new();
 		if(p is null)
 		{
@@ -303,7 +303,7 @@ public class ToolPalette : Container, OrientableIF
 	 * Since 2.20
 	 * Params:
 	 * iconSize = the GtkIconSize that icons in the tool
-	 *  palette shall have. [type int]
+	 * palette shall have. [type int]
 	 */
 	public void setIconSize(GtkIconSize iconSize)
 	{
@@ -364,9 +364,9 @@ public class ToolPalette : Container, OrientableIF
 	 * Params:
 	 * widget = a GtkWidget which should be a drag destination for palette
 	 * flags = the flags that specify what actions GTK+ should take for drops
-	 *  on that widget
+	 * on that widget
 	 * targets = the GtkToolPaletteDragTargets which the widget
-	 *  should support
+	 * should support
 	 * actions = the GdkDragActions which the widget should suppport
 	 */
 	public void addDragDest(Widget widget, GtkDestDefaults flags, GtkToolPaletteDragTargets targets, GdkDragAction actions)
@@ -381,11 +381,11 @@ public class ToolPalette : Container, OrientableIF
 	 * Since 2.20
 	 * Params:
 	 * selection = a GtkSelectionData
-	 * Returns: the dragged item in selection
+	 * Returns: the dragged item in selection. [transfer none]
 	 */
 	public Widget getDragItem(GtkSelectionData* selection)
 	{
-		// GtkWidget* gtk_tool_palette_get_drag_item (GtkToolPalette *palette,  const GtkSelectionData *selection);
+		// GtkWidget * gtk_tool_palette_get_drag_item (GtkToolPalette *palette,  const GtkSelectionData *selection);
 		auto p = gtk_tool_palette_get_drag_item(gtkToolPalette, selection);
 		if(p is null)
 		{
@@ -397,22 +397,22 @@ public class ToolPalette : Container, OrientableIF
 	/**
 	 * Get the target entry for a dragged GtkToolItemGroup.
 	 * Since 2.20
-	 * Returns: the GtkTargetEntry for a dragged group
+	 * Returns: the GtkTargetEntry for a dragged group. [transfer none]
 	 */
 	public static GtkTargetEntry* getDragTargetGroup()
 	{
-		// const GtkTargetEntry* gtk_tool_palette_get_drag_target_group  (void);
+		// const GtkTargetEntry * gtk_tool_palette_get_drag_target_group  (void);
 		return gtk_tool_palette_get_drag_target_group();
 	}
 	
 	/**
 	 * Gets the target entry for a dragged GtkToolItem.
 	 * Since 2.20
-	 * Returns: the GtkTargetEntry for a dragged item.
+	 * Returns: the GtkTargetEntry for a dragged item. [transfer none]
 	 */
 	public static GtkTargetEntry* getDragTargetItem()
 	{
-		// const GtkTargetEntry* gtk_tool_palette_get_drag_target_item  (void);
+		// const GtkTargetEntry * gtk_tool_palette_get_drag_target_item  (void);
 		return gtk_tool_palette_get_drag_target_item();
 	}
 	
@@ -422,11 +422,11 @@ public class ToolPalette : Container, OrientableIF
 	 * Params:
 	 * x = the x position
 	 * y = the y position
-	 * Returns: the GtkToolItemGroup at position or NULL if there is no such group
+	 * Returns: the GtkToolItemGroup at position or NULL if there is no such group. [transfer none]
 	 */
 	public ToolItemGroup getDropGroup(int x, int y)
 	{
-		// GtkToolItemGroup* gtk_tool_palette_get_drop_group (GtkToolPalette *palette,  gint x,  gint y);
+		// GtkToolItemGroup * gtk_tool_palette_get_drop_group (GtkToolPalette *palette,  gint x,  gint y);
 		auto p = gtk_tool_palette_get_drop_group(gtkToolPalette, x, y);
 		if(p is null)
 		{
@@ -442,11 +442,11 @@ public class ToolPalette : Container, OrientableIF
 	 * Params:
 	 * x = the x position
 	 * y = the y position
-	 * Returns: the GtkToolItem at position or NULL if there is no such item
+	 * Returns: the GtkToolItem at position or NULL if there is no such item. [transfer none]
 	 */
 	public ToolItem getDropItem(int x, int y)
 	{
-		// GtkToolItem* gtk_tool_palette_get_drop_item (GtkToolPalette *palette,  gint x,  gint y);
+		// GtkToolItem * gtk_tool_palette_get_drop_item (GtkToolPalette *palette,  gint x,  gint y);
 		auto p = gtk_tool_palette_get_drop_item(gtkToolPalette, x, y);
 		if(p is null)
 		{
@@ -463,7 +463,7 @@ public class ToolPalette : Container, OrientableIF
 	 * Since 2.20
 	 * Params:
 	 * targets = the GtkToolPaletteDragTargets
-	 *  which the widget should support
+	 * which the widget should support
 	 */
 	public void setDragSource(GtkToolPaletteDragTargets targets)
 	{
@@ -474,11 +474,11 @@ public class ToolPalette : Container, OrientableIF
 	/**
 	 * Gets the horizontal adjustment of the tool palette.
 	 * Since 2.20
-	 * Returns: the horizontal adjustment of palette
+	 * Returns: the horizontal adjustment of palette. [transfer none]
 	 */
 	public Adjustment getHadjustment()
 	{
-		// GtkAdjustment* gtk_tool_palette_get_hadjustment (GtkToolPalette *palette);
+		// GtkAdjustment * gtk_tool_palette_get_hadjustment (GtkToolPalette *palette);
 		auto p = gtk_tool_palette_get_hadjustment(gtkToolPalette);
 		if(p is null)
 		{
@@ -490,11 +490,11 @@ public class ToolPalette : Container, OrientableIF
 	/**
 	 * Gets the vertical adjustment of the tool palette.
 	 * Since 2.20
-	 * Returns: the vertical adjustment of palette
+	 * Returns: the vertical adjustment of palette. [transfer none]
 	 */
 	public Adjustment getVadjustment()
 	{
-		// GtkAdjustment* gtk_tool_palette_get_vadjustment (GtkToolPalette *palette);
+		// GtkAdjustment * gtk_tool_palette_get_vadjustment (GtkToolPalette *palette);
 		auto p = gtk_tool_palette_get_vadjustment(gtkToolPalette);
 		if(p is null)
 		{

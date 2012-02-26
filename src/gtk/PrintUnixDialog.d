@@ -188,7 +188,7 @@ public class PrintUnixDialog : Dialog
 	/**
 	 * Gets the page setup that is used by the GtkPrintUnixDialog.
 	 * Since 2.10
-	 * Returns: the page setup of dialog.
+	 * Returns: the page setup of dialog. [transfer none]
 	 */
 	public PageSetup getPageSetup()
 	{
@@ -261,7 +261,7 @@ public class PrintUnixDialog : Dialog
 	/**
 	 * Gets the currently selected printer.
 	 * Since 2.10
-	 * Returns: the currently selected printer
+	 * Returns: the currently selected printer. [transfer none]
 	 */
 	public Printer getSelectedPrinter()
 	{

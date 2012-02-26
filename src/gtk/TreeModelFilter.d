@@ -207,7 +207,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 * modify function.
 	 * Since 2.4
 	 * Params:
-	 * types = The GTypes of the columns.
+	 * types = The GTypes of the columns. [array length=n_columns]
 	 * func = A GtkTreeModelFilterModifyFunc
 	 * data = User data to pass to the modify function, or NULL. [allow-none]
 	 * destroy = Destroy notifier of data, or NULL. [allow-none]
@@ -236,7 +236,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	/**
 	 * Returns a pointer to the child model of filter.
 	 * Since 2.4
-	 * Returns: A pointer to a GtkTreeModel.
+	 * Returns: A pointer to a GtkTreeModel. [transfer none]
 	 */
 	public TreeModelIF getModel()
 	{

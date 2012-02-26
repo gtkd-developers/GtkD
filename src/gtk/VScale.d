@@ -130,7 +130,7 @@ public class VScale : Scale
 	 */
 	public this (Adjustment adjustment)
 	{
-		// GtkWidget* gtk_vscale_new (GtkAdjustment *adjustment);
+		// GtkWidget * gtk_vscale_new (GtkAdjustment *adjustment);
 		auto p = gtk_vscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
@@ -155,7 +155,7 @@ public class VScale : Scale
 	 */
 	public this (double min, double max, double step)
 	{
-		// GtkWidget* gtk_vscale_new_with_range (gdouble min,  gdouble max,  gdouble step);
+		// GtkWidget * gtk_vscale_new_with_range (gdouble min,  gdouble max,  gdouble step);
 		auto p = gtk_vscale_new_with_range(min, max, step);
 		if(p is null)
 		{

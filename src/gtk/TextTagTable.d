@@ -76,6 +76,14 @@ private import gobject.ObjectG;
  * You may wish to begin by reading the text widget
  * conceptual overview which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
+ * GtkTextTagTables as GtkBuildable
+ * The GtkTextTagTable implementation of the GtkBuildable interface
+ * supports adding tags by specifying "tag" as the "type"
+ * attribute of a <child> element.
+ * $(DDOC_COMMENT example)
+ * You may wish to begin by reading the text widget
+ * conceptual overview which gives an overview of all the objects and data
+ * types related to the text widget and how they work together.
  */
 public class TextTagTable : ObjectG
 {
@@ -275,7 +283,7 @@ public class TextTagTable : ObjectG
 	 * over it (you can't add/remove tags).
 	 * Params:
 	 * table = a GtkTextTagTable
-	 * func = a function to call on each tag
+	 * func = a function to call on each tag. [scope call]
 	 * data = user data
 	 */
 	public void tableForeach(GtkTextTagTableForeach func, void* data)

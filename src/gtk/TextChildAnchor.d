@@ -640,7 +640,7 @@ public class TextChildAnchor
 	 */
 	public this ()
 	{
-		// GtkTextChildAnchor* gtk_text_child_anchor_new (void);
+		// GtkTextChildAnchor * gtk_text_child_anchor_new (void);
 		auto p = gtk_text_child_anchor_new();
 		if(p is null)
 		{
@@ -652,11 +652,11 @@ public class TextChildAnchor
 	/**
 	 * Gets a list of all widgets anchored at this child anchor.
 	 * The returned list should be freed with g_list_free().
-	 * Returns: list of widgets anchored at anchor. [element-type GtkWidget][transfer container GtkWidget]
+	 * Returns: list of widgets anchored at anchor. [element-type GtkWidget][transfer container]
 	 */
 	public ListG getWidgets()
 	{
-		// GList* gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor);
+		// GList * gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor);
 		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
 		if(p is null)
 		{

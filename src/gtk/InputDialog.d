@@ -197,11 +197,11 @@ public class InputDialog : Dialog
 		}
 		onDisableDeviceListeners ~= dlg;
 	}
-	extern(C) static void callBackDisableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* deviceid, InputDialog inputDialog)
+	extern(C) static void callBackDisableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* arg1, InputDialog inputDialog)
 	{
 		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; inputDialog.onDisableDeviceListeners )
 		{
-			dlg(deviceid, inputDialog);
+			dlg(arg1, inputDialog);
 		}
 	}
 	
@@ -226,11 +226,11 @@ public class InputDialog : Dialog
 		}
 		onEnableDeviceListeners ~= dlg;
 	}
-	extern(C) static void callBackEnableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* deviceid, InputDialog inputDialog)
+	extern(C) static void callBackEnableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* arg1, InputDialog inputDialog)
 	{
 		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; inputDialog.onEnableDeviceListeners )
 		{
-			dlg(deviceid, inputDialog);
+			dlg(arg1, inputDialog);
 		}
 	}
 	
@@ -243,7 +243,7 @@ public class InputDialog : Dialog
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_input_dialog_new (void);
+		// GtkWidget * gtk_input_dialog_new (void);
 		auto p = gtk_input_dialog_new();
 		if(p is null)
 		{

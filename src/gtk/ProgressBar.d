@@ -152,11 +152,12 @@ public class ProgressBar : Progress
 	
 	/**
 	 * Creates a new GtkProgressBar.
+	 * Creates a new GtkProgressBar.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_progress_bar_new (void);
+		// GtkWidget * gtk_progress_bar_new (void);
 		auto p = gtk_progress_bar_new();
 		if(p is null)
 		{
@@ -248,7 +249,7 @@ public class ProgressBar : Progress
 	 */
 	public string getText()
 	{
-		// const gchar* gtk_progress_bar_get_text (GtkProgressBar *pbar);
+		// const gchar * gtk_progress_bar_get_text (GtkProgressBar *pbar);
 		return Str.toString(gtk_progress_bar_get_text(gtkProgressBar));
 	}
 	
@@ -304,7 +305,7 @@ public class ProgressBar : Progress
 	 */
 	public this (Adjustment adjustment)
 	{
-		// GtkWidget* gtk_progress_bar_new_with_adjustment  (GtkAdjustment *adjustment);
+		// GtkWidget * gtk_progress_bar_new_with_adjustment  (GtkAdjustment *adjustment);
 		auto p = gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{

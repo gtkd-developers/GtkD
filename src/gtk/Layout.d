@@ -180,7 +180,7 @@ public class Layout : Container
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
-		// GtkWidget* gtk_layout_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
+		// GtkWidget * gtk_layout_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
 		auto p = gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 		if(p is null)
 		{
@@ -233,8 +233,10 @@ public class Layout : Container
 	 * the total extents of the layout's scrollbar area. See
 	 * gtk_layout_set_size().
 	 * Params:
-	 * width = location to store the width set on layout, or NULL. [allow-none]
-	 * height = location to store the height set on layout, or NULL. [allow-none]
+	 * width = location to store the width set on
+	 * layout, or NULL. [out][allow-none]
+	 * height = location to store the height set on
+	 * layout, or NULL. [out][allow-none]
 	 */
 	public void getSize(out uint width, out uint height)
 	{
@@ -270,11 +272,11 @@ public class Layout : Container
 	 * scrolling. It returns the GtkAdjustment used for communication
 	 * between the horizontal scrollbar and layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-	 * Returns: horizontal scroll adjustment
+	 * Returns: horizontal scroll adjustment. [transfer none]
 	 */
 	public Adjustment getHadjustment()
 	{
-		// GtkAdjustment* gtk_layout_get_hadjustment (GtkLayout *layout);
+		// GtkAdjustment * gtk_layout_get_hadjustment (GtkLayout *layout);
 		auto p = gtk_layout_get_hadjustment(gtkLayout);
 		if(p is null)
 		{
@@ -289,11 +291,11 @@ public class Layout : Container
 	 * scrolling. It returns the GtkAdjustment used for communication
 	 * between the vertical scrollbar and layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-	 * Returns: vertical scroll adjustment
+	 * Returns: vertical scroll adjustment. [transfer none]
 	 */
 	public Adjustment getVadjustment()
 	{
-		// GtkAdjustment* gtk_layout_get_vadjustment (GtkLayout *layout);
+		// GtkAdjustment * gtk_layout_get_vadjustment (GtkLayout *layout);
 		auto p = gtk_layout_get_vadjustment(gtkLayout);
 		if(p is null)
 		{
@@ -329,11 +331,11 @@ public class Layout : Container
 	/**
 	 * Retrieve the bin window of the layout used for drawing operations.
 	 * Since 2.14
-	 * Returns: a GdkWindow
+	 * Returns: a GdkWindow. [transfer none]
 	 */
 	public Window getBinWindow()
 	{
-		// GdkWindow* gtk_layout_get_bin_window (GtkLayout *layout);
+		// GdkWindow * gtk_layout_get_bin_window (GtkLayout *layout);
 		auto p = gtk_layout_get_bin_window(gtkLayout);
 		if(p is null)
 		{

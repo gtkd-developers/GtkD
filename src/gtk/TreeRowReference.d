@@ -253,7 +253,7 @@ public class TreeRowReference
 	/**
 	 * Returns the model that the row reference is monitoring.
 	 * Since 2.8
-	 * Returns: the model
+	 * Returns: the model. [transfer none]
 	 */
 	public TreeModelIF getModel()
 	{

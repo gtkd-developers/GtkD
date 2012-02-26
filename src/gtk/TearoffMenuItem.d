@@ -131,7 +131,7 @@ public class TearoffMenuItem : MenuItem
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_tearoff_menu_item_new (void);
+		// GtkWidget * gtk_tearoff_menu_item_new (void);
 		auto p = gtk_tearoff_menu_item_new();
 		if(p is null)
 		{

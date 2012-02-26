@@ -383,7 +383,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * actionName = the name of the action
-	 * Returns: the action, or NULL if no action by that name exists. [transfer-none]
+	 * Returns: the action, or NULL if no action by that name exists. [transfer none]
 	 */
 	public Action getAction(string actionName)
 	{
@@ -399,7 +399,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	/**
 	 * Lists the actions in the action group.
 	 * Since 2.4
-	 * Returns: an allocated list of the action objects in the action group. [element-type GtkAction][transfer container GtkAction]
+	 * Returns: an allocated list of the action objects in the action group. [element-type GtkAction][transfer container]
 	 */
 	public ListG listActions()
 	{
@@ -439,8 +439,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 * action = the action to add
 	 * accelerator = the accelerator for the action, in
-	 *  the format understood by gtk_accelerator_parse(), or "" for no accelerator, or
-	 *  NULL to use the stock accelerator. [allow-none]
+	 * the format understood by gtk_accelerator_parse(), or "" for no accelerator, or
+	 * NULL to use the stock accelerator. [allow-none]
 	 */
 	public void addActionWithAccel(Action action, string accelerator)
 	{
@@ -534,7 +534,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 * entries = an array of radio action descriptions
 	 * value = the value of the action to activate initially, or -1 if
-	 *  no action should be activated
+	 * no action should be activated
 	 * onChange = the callback to connect to the changed signal
 	 * userData = data to pass to the action callbacks
 	 */
@@ -551,7 +551,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 * entries = an array of radio action descriptions
 	 * value = the value of the action to activate initially, or -1 if
-	 *  no action should be activated
+	 * no action should be activated
 	 * onChange = the callback to connect to the changed signal
 	 * userData = data to pass to the action callbacks
 	 * destroy = destroy notification callback for user_data
@@ -572,7 +572,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * func = a GtkTranslateFunc
 	 * data = data to be passed to func and notify
 	 * notify = a GDestroyNotify function to be called when action_group is
-	 *  destroyed and when the translation function is changed again
+	 * destroyed and when the translation function is changed again
 	 */
 	public void setTranslateFunc(GtkTranslateFunc func, void* data, GDestroyNotify notify)
 	{

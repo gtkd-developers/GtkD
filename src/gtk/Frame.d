@@ -150,7 +150,7 @@ public class Frame : Bin
 	 */
 	public this (string label)
 	{
-		// GtkWidget* gtk_frame_new (const gchar *label);
+		// GtkWidget * gtk_frame_new (const gchar *label);
 		auto p = gtk_frame_new(Str.toStringz(label));
 		if(p is null)
 		{
@@ -189,12 +189,12 @@ public class Frame : Bin
 	 * default values for a newly created frame are 0.0 and 0.5.
 	 * Params:
 	 * xalign = The position of the label along the top edge
-	 *  of the widget. A value of 0.0 represents left alignment;
-	 *  1.0 represents right alignment.
+	 * of the widget. A value of 0.0 represents left alignment;
+	 * 1.0 represents right alignment.
 	 * yalign = The y alignment of the label. A value of 0.0 aligns under
-	 *  the frame; 1.0 aligns above the frame. If the values are exactly
-	 *  0.0 or 1.0 the gap in the frame won't be painted because the label
-	 *  will be completely above or below the frame.
+	 * the frame; 1.0 aligns above the frame. If the values are exactly
+	 * 0.0 or 1.0 the gap in the frame won't be painted because the label
+	 * will be completely above or below the frame.
 	 */
 	public void setLabelAlign(float xalign, float yalign)
 	{
@@ -230,8 +230,10 @@ public class Frame : Bin
 	 * Retrieves the X and Y alignment of the frame's label. See
 	 * gtk_frame_set_label_align().
 	 * Params:
-	 * xalign = location to store X alignment of frame's label, or NULL. [allow-none]
-	 * yalign = location to store X alignment of frame's label, or NULL. [allow-none]
+	 * xalign = location to store X alignment of
+	 * frame's label, or NULL. [out][allow-none]
+	 * yalign = location to store X alignment of
+	 * frame's label, or NULL. [out][allow-none]
 	 */
 	public void getLabelAlign(out float xalign, out float yalign)
 	{
@@ -242,7 +244,7 @@ public class Frame : Bin
 	/**
 	 * Retrieves the label widget for the frame. See
 	 * gtk_frame_set_label_widget().
-	 * Returns: the label widget, or NULL if there is none.
+	 * Returns: the label widget, or NULL if there is none. [transfer none]
 	 */
 	public Widget getLabelWidget()
 	{

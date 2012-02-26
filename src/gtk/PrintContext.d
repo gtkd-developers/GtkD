@@ -143,7 +143,7 @@ public class PrintContext : ObjectG
 	 * Obtains the cairo context that is associated with the
 	 * GtkPrintContext.
 	 * Since 2.10
-	 * Returns: the cairo context of context
+	 * Returns: the cairo context of context. [transfer none]
 	 */
 	public Context getCairoContext()
 	{
@@ -178,7 +178,7 @@ public class PrintContext : ObjectG
 	 * Obtains the GtkPageSetup that determines the page
 	 * dimensions of the GtkPrintContext.
 	 * Since 2.10
-	 * Returns: the page setup of context
+	 * Returns: the page setup of context. [transfer none]
 	 */
 	public PageSetup getPageSetup()
 	{
@@ -241,7 +241,7 @@ public class PrintContext : ObjectG
 	 * Returns a PangoFontMap that is suitable for use
 	 * with the GtkPrintContext.
 	 * Since 2.10
-	 * Returns: the font map of context
+	 * Returns: the font map of context. [transfer none]
 	 */
 	public PgFontMap getPangoFontmap()
 	{
@@ -258,7 +258,7 @@ public class PrintContext : ObjectG
 	 * Creates a new PangoContext that can be used with the
 	 * GtkPrintContext.
 	 * Since 2.10
-	 * Returns: a new Pango context for context
+	 * Returns: a new Pango context for context. [transfer full]
 	 */
 	public PgContext createPangoContext()
 	{
@@ -275,7 +275,7 @@ public class PrintContext : ObjectG
 	 * Creates a new PangoLayout that is suitable for use
 	 * with the GtkPrintContext.
 	 * Since 2.10
-	 * Returns: a new Pango layout for context
+	 * Returns: a new Pango layout for context. [transfer full]
 	 */
 	public PgLayout createPangoLayout()
 	{
@@ -292,10 +292,10 @@ public class PrintContext : ObjectG
 	 * Obtains the hardware printer margins of the GtkPrintContext, in units.
 	 * Since 2.20
 	 * Params:
-	 * top = top hardware printer margin
-	 * bottom = bottom hardware printer margin
-	 * left = left hardware printer margin
-	 * right = right hardware printer margin
+	 * top = top hardware printer margin. [out]
+	 * bottom = bottom hardware printer margin. [out]
+	 * left = left hardware printer margin. [out]
+	 * right = right hardware printer margin. [out]
 	 * Returns: TRUE if the hard margins were retrieved
 	 */
 	public int getHardMargins(out double top, out double bottom, out double left, out double right)

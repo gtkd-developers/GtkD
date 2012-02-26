@@ -65,6 +65,7 @@ private import gtk.TextBuffer;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -81,7 +82,7 @@ private import gtk.TextBuffer;
  * store a chunk of data along with the data type and other
  * associated information.
  */
-public class TargetList
+public class TargetList : Boxed
 {
 	
 	/** the main Gtk struct */
@@ -119,7 +120,7 @@ public class TargetList
 	/**
 	 * Creates a new GtkTargetList from an array of GtkTargetEntry.
 	 * Params:
-	 * targets = Pointer to an array of GtkTargetEntry
+	 * targets = Pointer to an array of GtkTargetEntry. [array length=ntargets]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkTargetEntry[] targets)
@@ -174,7 +175,7 @@ public class TargetList
 	/**
 	 * Prepends a table of GtkTargetEntry to a target list.
 	 * Params:
-	 * targets = the table of GtkTargetEntry
+	 * targets = the table of GtkTargetEntry. [array length=ntargets]
 	 */
 	public void addTable(GtkTargetEntry[] targets)
 	{
@@ -202,7 +203,7 @@ public class TargetList
 	 * Params:
 	 * info = an ID that will be passed back to the application
 	 * writable = whether to add only targets for which GTK+ knows
-	 *  how to convert a pixbuf into the format
+	 * how to convert a pixbuf into the format
 	 */
 	public void addImageTargets(uint info, int writable)
 	{
@@ -232,7 +233,7 @@ public class TargetList
 	 * Params:
 	 * info = an ID that will be passed back to the application
 	 * deserializable = if TRUE, then deserializable rich text formats
-	 *  will be added, serializable formats otherwise.
+	 * will be added, serializable formats otherwise.
 	 * buffer = a GtkTextBuffer.
 	 */
 	public void addRichTextTargets(uint info, int deserializable, TextBuffer buffer)
@@ -257,7 +258,7 @@ public class TargetList
 	 * Params:
 	 * target = an interned atom representing the target to search for
 	 * info = a pointer to the location to store application info for target,
-	 *  or NULL
+	 * or NULL
 	 * Returns: TRUE if the target was found, otherwise FALSE
 	 */
 	public int find(GdkAtom target, out uint info)
@@ -271,7 +272,7 @@ public class TargetList
 	 * gtk_target_table_new_from_list()
 	 * Since 2.10
 	 * Params:
-	 * targets = a GtkTargetEntry array
+	 * targets = a GtkTargetEntry array. [array length=n_targets]
 	 * nTargets = the number of entries in the array
 	 */
 	public static void gtkTargetTableFree(GtkTargetEntry[] targets, int nTargets)
@@ -286,7 +287,7 @@ public class TargetList
 	 * allocated and should be freed using gtk_target_table_free() when no
 	 * longer needed.
 	 * Since 2.10
-	 * Returns: the new table.
+	 * Returns: the new table. [array length=n_targets][transfer full]
 	 */
 	public GtkTargetEntry[] gtkTargetTableNewFromList()
 	{
@@ -301,9 +302,9 @@ public class TargetList
 	 * provide a GdkPixbuf.
 	 * Since 2.10
 	 * Params:
-	 * targets = an array of GdkAtoms
+	 * targets = an array of GdkAtoms. [array length=n_targets]
 	 * writable = whether to accept only targets for which GTK+ knows
-	 *  how to convert a pixbuf into the format
+	 * how to convert a pixbuf into the format
 	 * Returns: TRUE if targets include a suitable target for images, otherwise FALSE.
 	 */
 	public static int gtkTargetsIncludeImage(GdkAtom[] targets, int writable)
@@ -317,7 +318,7 @@ public class TargetList
 	 * provide text.
 	 * Since 2.10
 	 * Params:
-	 * targets = an array of GdkAtoms
+	 * targets = an array of GdkAtoms. [array length=n_targets]
 	 * Returns: TRUE if targets include a suitable target for text, otherwise FALSE.
 	 */
 	public static int gtkTargetsIncludeText(GdkAtom[] targets)
@@ -331,7 +332,7 @@ public class TargetList
 	 * provide an uri list.
 	 * Since 2.10
 	 * Params:
-	 * targets = an array of GdkAtoms
+	 * targets = an array of GdkAtoms. [array length=n_targets]
 	 * Returns: TRUE if targets include a suitable target for uri lists, otherwise FALSE.
 	 */
 	public static int gtkTargetsIncludeUri(GdkAtom[] targets)
@@ -345,7 +346,7 @@ public class TargetList
 	 * provide rich text.
 	 * Since 2.10
 	 * Params:
-	 * targets = an array of GdkAtoms
+	 * targets = an array of GdkAtoms. [array length=n_targets]
 	 * buffer = a GtkTextBuffer
 	 * Returns: TRUE if targets include a suitable target for rich text, otherwise FALSE.
 	 */

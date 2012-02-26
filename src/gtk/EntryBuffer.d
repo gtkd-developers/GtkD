@@ -195,7 +195,7 @@ public class EntryBuffer : ObjectG
 	 */
 	public this (char[] initialChars)
 	{
-		// GtkEntryBuffer* gtk_entry_buffer_new (const gchar *initial_chars,  gint n_initial_chars);
+		// GtkEntryBuffer * gtk_entry_buffer_new (const gchar *initial_chars,  gint n_initial_chars);
 		auto p = gtk_entry_buffer_new(initialChars.ptr, cast(int) initialChars.length);
 		if(p is null)
 		{
@@ -213,7 +213,7 @@ public class EntryBuffer : ObjectG
 	 */
 	public string getText()
 	{
-		// const gchar* gtk_entry_buffer_get_text (GtkEntryBuffer *buffer);
+		// const gchar * gtk_entry_buffer_get_text (GtkEntryBuffer *buffer);
 		return Str.toString(gtk_entry_buffer_get_text(gtkEntryBuffer));
 	}
 	
@@ -274,8 +274,8 @@ public class EntryBuffer : ObjectG
 	 * Since 2.18
 	 * Params:
 	 * maxLength = the maximum length of the entry buffer, or 0 for no maximum.
-	 *  (other than the maximum length of entries.) The value passed in will
-	 *  be clamped to the range 0-65536.
+	 * (other than the maximum length of entries.) The value passed in will
+	 * be clamped to the range 0-65536.
 	 */
 	public void setMaxLength(int maxLength)
 	{

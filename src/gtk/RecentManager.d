@@ -392,7 +392,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 * uri = the URI of a recently used resource
 	 * newUri = the new URI of the recently used resource, or NULL to
-	 *  remove the item pointed by uri in the list. [allow-none]
+	 * remove the item pointed by uri in the list. [allow-none]
 	 * Returns: TRUE on success.
 	 * Throws: GException on failure.
 	 */
@@ -448,7 +448,7 @@ public class RecentManager : ObjectG
 	/**
 	 * Gets the list of recently used resources.
 	 * Since 2.10
-	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free(). [element-type GtkRecentInfo][transfer full GtkRecentInfo]
+	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free(). [element-type GtkRecentInfo][transfer full]
 	 */
 	public ListG getItems()
 	{

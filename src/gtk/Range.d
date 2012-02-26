@@ -176,7 +176,7 @@ public class Range : Widget, OrientableIF
 	 * The value parameter is unrounded. An application that overrides
 	 * the ::change-value signal is responsible for clamping the value to
 	 * the desired number of decimal digits; the default GTK+ handler
-	 * clamps the value based on range->round_digits.
+	 * clamps the value based on "round_digits".
 	 * It is not possible to use delayed update policies in an overridden
 	 * ::change-value handler.
 	 * TRUE to prevent other handlers from being invoked for the
@@ -357,11 +357,11 @@ public class Range : Widget, OrientableIF
 	 * See gtk_range_set_adjustment() for details.
 	 * The return value does not have a reference added, so should not
 	 * be unreferenced.
-	 * Returns: a GtkAdjustment
+	 * Returns: a GtkAdjustment. [transfer none]
 	 */
 	public Adjustment getAdjustment()
 	{
-		// GtkAdjustment* gtk_range_get_adjustment (GtkRange *range);
+		// GtkAdjustment * gtk_range_get_adjustment (GtkRange *range);
 		auto p = gtk_range_get_adjustment(gtkRange);
 		if(p is null)
 		{
@@ -371,6 +371,9 @@ public class Range : Widget, OrientableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_range_set_update_policy has been deprecated since version 2.24 and should not be used in newly-written code. There is no replacement. If you require delayed
+	 *  updates, you need to code it yourself.
 	 * Sets the update policy for the range. GTK_UPDATE_CONTINUOUS means that
 	 * anytime the range slider is moved, the range value will change and the
 	 * value_changed signal will be emitted. GTK_UPDATE_DELAYED means that
@@ -430,6 +433,9 @@ public class Range : Widget, OrientableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_range_get_update_policy has been deprecated since version 2.24 and should not be used in newly-written code. There is no replacement. If you require delayed
+	 *  updates, you need to code it yourself.
 	 * Gets the update policy of range. See gtk_range_set_update_policy().
 	 * Returns: the current update policy
 	 */
@@ -437,16 +443,6 @@ public class Range : Widget, OrientableIF
 	{
 		// GtkUpdateType gtk_range_get_update_policy (GtkRange *range);
 		return gtk_range_get_update_policy(gtkRange);
-	}
-	
-	/**
-	 * Gets the current value of the range.
-	 * Returns: current value of the range.
-	 */
-	public double getValue()
-	{
-		// gdouble gtk_range_get_value (GtkRange *range);
-		return gtk_range_get_value(gtkRange);
 	}
 	
 	/**
@@ -479,6 +475,16 @@ public class Range : Widget, OrientableIF
 	}
 	
 	/**
+	 * Gets the current value of the range.
+	 * Returns: current value of the range.
+	 */
+	public double getValue()
+	{
+		// gdouble gtk_range_get_value (GtkRange *range);
+		return gtk_range_get_value(gtkRange);
+	}
+	
+	/**
 	 * Sets the current value of the range; if the value is outside the
 	 * minimum or maximum range values, it will be clamped to fit inside
 	 * them. The range emits the "value-changed" signal if the
@@ -490,6 +496,31 @@ public class Range : Widget, OrientableIF
 	{
 		// void gtk_range_set_value (GtkRange *range,  gdouble value);
 		gtk_range_set_value(gtkRange, value);
+	}
+	
+	/**
+	 * Gets the number of digits to round the value to when
+	 * it changes. See "change-value".
+	 * Since 2.24
+	 * Returns: the number of digits to round to
+	 */
+	public int getRoundDigits()
+	{
+		// gint gtk_range_get_round_digits (GtkRange *range);
+		return gtk_range_get_round_digits(gtkRange);
+	}
+	
+	/**
+	 * Sets the number of digits to round the value to when
+	 * it changes. See "change-value".
+	 * Since 2.24
+	 * Params:
+	 * roundDigits = the precision in digits, or -1
+	 */
+	public void setRoundDigits(int roundDigits)
+	{
+		// void gtk_range_set_round_digits (GtkRange *range,  gint round_digits);
+		gtk_range_set_round_digits(gtkRange, roundDigits);
 	}
 	
 	/**
@@ -586,7 +617,7 @@ public class Range : Widget, OrientableIF
 	 * Since 2.20
 	 * Params:
 	 * range = a GtkRange
-	 * rangeRect = return location for the range rectangle
+	 * rangeRect = return location for the range rectangle. [out]
 	 */
 	public void getRangeRect(Rectangle rangeRect)
 	{
@@ -600,8 +631,10 @@ public class Range : Widget, OrientableIF
 	 * This function is useful mainly for GtkRange subclasses.
 	 * Since 2.20
 	 * Params:
-	 * sliderStart = return location for the slider's start, or NULL. [allow-none]
-	 * sliderEnd = return location for the slider's end, or NULL. [allow-none]
+	 * sliderStart = return location for the slider's
+	 * start, or NULL. [out][allow-none]
+	 * sliderEnd = return location for the slider's
+	 * end, or NULL. [out][allow-none]
 	 */
 	public void getSliderRange(out int sliderStart, out int sliderEnd)
 	{

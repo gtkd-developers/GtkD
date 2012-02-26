@@ -346,7 +346,7 @@ public class Dialog : Window
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_dialog_new (void);
+		// GtkWidget * gtk_dialog_new (void);
 		auto p = gtk_dialog_new();
 		if(p is null)
 		{
@@ -405,11 +405,11 @@ public class Dialog : Window
 	 * Params:
 	 * buttonText = text of button, or stock ID
 	 * responseId = response ID for the button
-	 * Returns: the button widget that was added
+	 * Returns: the button widget that was added. [transfer none]
 	 */
 	public Widget addButton(string buttonText, int responseId)
 	{
-		// GtkWidget* gtk_dialog_add_button (GtkDialog *dialog,  const gchar *button_text,  gint response_id);
+		// GtkWidget * gtk_dialog_add_button (GtkDialog *dialog,  const gchar *button_text,  gint response_id);
 		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
 		if(p is null)
 		{
@@ -507,11 +507,11 @@ public class Dialog : Window
 	 * Since 2.20
 	 * Params:
 	 * responseId = the response ID used by the dialog widget
-	 * Returns: the widget button that uses the given response_id, or NULL.
+	 * Returns: the widget button that uses the given response_id, or NULL. [transfer none]
 	 */
 	public Widget getWidgetForResponse(int responseId)
 	{
-		// GtkWidget* gtk_dialog_get_widget_for_response (GtkDialog *dialog,  gint response_id);
+		// GtkWidget * gtk_dialog_get_widget_for_response (GtkDialog *dialog,  gint response_id);
 		auto p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
 		if(p is null)
 		{
@@ -549,7 +549,8 @@ public class Dialog : Window
 	 * This function is for use by language bindings.
 	 * Since 2.6
 	 * Params:
-	 * newOrder = an array of response ids of dialog's buttons
+	 * newOrder = an array of response ids of
+	 * dialog's buttons. [array length=n_params]
 	 */
 	public void setAlternativeButtonOrderFromArray(int[] newOrder)
 	{

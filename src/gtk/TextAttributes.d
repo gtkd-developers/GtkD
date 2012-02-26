@@ -118,6 +118,8 @@ public class TextAttributes
 	/**
 	 * The ::event signal is emitted when an event occurs on a region of the
 	 * buffer marked with this tag.
+	 * TRUE to stop other handlers from being invoked for the
+	 * event. FALSE to propagate the event further.
 	 */
 	void addOn(bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -155,7 +157,7 @@ public class TextAttributes
 	 */
 	public this ()
 	{
-		// GtkTextAttributes* gtk_text_attributes_new (void);
+		// GtkTextAttributes * gtk_text_attributes_new (void);
 		auto p = gtk_text_attributes_new();
 		if(p is null)
 		{
@@ -170,7 +172,7 @@ public class TextAttributes
 	 */
 	public TextAttributes copy()
 	{
-		// GtkTextAttributes* gtk_text_attributes_copy (GtkTextAttributes *src);
+		// GtkTextAttributes * gtk_text_attributes_copy (GtkTextAttributes *src);
 		auto p = gtk_text_attributes_copy(gtkTextAttributes);
 		if(p is null)
 		{

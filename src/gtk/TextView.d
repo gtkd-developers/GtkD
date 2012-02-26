@@ -815,7 +815,7 @@ public class TextView : Container
 	 * mark = a GtkTextMark
 	 * withinMargin = margin as a [0.0,0.5) fraction of screen size
 	 * useAlign = whether to use alignment arguments (if FALSE, just
-	 *  get the mark onscreen)
+	 * get the mark onscreen)
 	 * xalign = horizontal alignment of mark within visible area
 	 * yalign = vertical alignment of mark within visible area
 	 */
@@ -843,7 +843,7 @@ public class TextView : Container
 	 * iter = a GtkTextIter
 	 * withinMargin = margin as a [0.0,0.5) fraction of screen size
 	 * useAlign = whether to use alignment arguments (if FALSE,
-	 *  just get the mark onscreen)
+	 * just get the mark onscreen)
 	 * xalign = horizontal alignment of mark within visible area
 	 * yalign = vertical alignment of mark within visible area
 	 * Returns: TRUE if scrolling occurred
@@ -895,7 +895,7 @@ public class TextView : Container
 	 * region of the buffer, in buffer coordinates. Convert to window coordinates
 	 * with gtk_text_view_buffer_to_window_coords().
 	 * Params:
-	 * visibleRect = rectangle to fill
+	 * visibleRect = rectangle to fill. [out]
 	 */
 	public void getVisibleRect(Rectangle visibleRect)
 	{
@@ -981,9 +981,9 @@ public class TextView : Container
 	 * Params:
 	 * iter = a GtkTextIter. [out]
 	 * trailing = if non-NULL, location to store an integer indicating where
-	 *  in the grapheme the user clicked. It will either be
-	 *  zero, or the number of characters in the grapheme.
-	 *  0 represents the trailing edge of the grapheme. [out][allow-none]
+	 * in the grapheme the user clicked. It will either be
+	 * zero, or the number of characters in the grapheme.
+	 * 0 represents the trailing edge of the grapheme. [out][allow-none]
 	 * x = x position, in buffer coordinates
 	 * y = y position, in buffer coordinates
 	 */
@@ -1042,7 +1042,7 @@ public class TextView : Container
 	 */
 	public Window getWindow(GtkTextWindowType win)
 	{
-		// GdkWindow* gtk_text_view_get_window (GtkTextView *text_view,  GtkTextWindowType win);
+		// GdkWindow * gtk_text_view_get_window (GtkTextView *text_view,  GtkTextWindowType win);
 		auto p = gtk_text_view_get_window(gtkTextView, win);
 		if(p is null)
 		{
@@ -1201,7 +1201,7 @@ public class TextView : Container
 	 * Params:
 	 * iter = a GtkTextIter
 	 * count = number of characters to move (negative moves left,
-	 *  positive moves right)
+	 * positive moves right)
 	 * Returns: TRUE if iter moved and is not on the end iterator
 	 */
 	public int moveVisually(TextIter iter, int count)
@@ -1537,7 +1537,7 @@ public class TextView : Container
 	 */
 	public PgTabArray getTabs()
 	{
-		// PangoTabArray* gtk_text_view_get_tabs (GtkTextView *text_view);
+		// PangoTabArray * gtk_text_view_get_tabs (GtkTextView *text_view);
 		auto p = gtk_text_view_get_tabs(gtkTextView);
 		if(p is null)
 		{
@@ -1554,8 +1554,8 @@ public class TextView : Container
 	 * Since 2.4
 	 * Params:
 	 * acceptsTab = TRUE if pressing the Tab key should insert a tab
-	 *  character, FALSE, if pressing the Tab key should move the
-	 *  keyboard focus.
+	 * character, FALSE, if pressing the Tab key should move the
+	 * keyboard focus.
 	 */
 	public void setAcceptsTab(int acceptsTab)
 	{
@@ -1587,7 +1587,7 @@ public class TextView : Container
 	 */
 	public TextAttributes getDefaultAttributes()
 	{
-		// GtkTextAttributes* gtk_text_view_get_default_attributes  (GtkTextView *text_view);
+		// GtkTextAttributes * gtk_text_view_get_default_attributes  (GtkTextView *text_view);
 		auto p = gtk_text_view_get_default_attributes(gtkTextView);
 		if(p is null)
 		{
@@ -1636,7 +1636,7 @@ public class TextView : Container
 	 */
 	public Adjustment getHadjustment()
 	{
-		// GtkAdjustment* gtk_text_view_get_hadjustment (GtkTextView *text_view);
+		// GtkAdjustment * gtk_text_view_get_hadjustment (GtkTextView *text_view);
 		auto p = gtk_text_view_get_hadjustment(gtkTextView);
 		if(p is null)
 		{
@@ -1652,7 +1652,7 @@ public class TextView : Container
 	 */
 	public Adjustment getVadjustment()
 	{
-		// GtkAdjustment* gtk_text_view_get_vadjustment (GtkTextView *text_view);
+		// GtkAdjustment * gtk_text_view_get_vadjustment (GtkTextView *text_view);
 		auto p = gtk_text_view_get_vadjustment(gtkTextView);
 		if(p is null)
 		{

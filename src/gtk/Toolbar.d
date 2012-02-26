@@ -215,6 +215,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * A keybinding signal used internally by GTK+. This signal can't
 	 * be used in application code
 	 * TRUE if the first item should be focused
+	 * TRUE if the signal was handled, FALSE if not
 	 */
 	void addOnFocusHomeOrEnd(bool delegate(gboolean, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -386,7 +387,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * Since 2.4
 	 * Params:
 	 * n = A position on the toolbar
-	 * Returns: The n'th GtkToolItem on toolbar, or NULL if there isn't an n'th item.
+	 * Returns: The n'th GtkToolItem on toolbar, or NULL if there isn't an n'th item. [transfer none]
 	 */
 	public ToolItem getNthItem(int n)
 	{
@@ -529,7 +530,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public Widget appendItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
 	{
-		// GtkWidget* gtk_toolbar_append_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
+		// GtkWidget * gtk_toolbar_append_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_append_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
 		if(p is null)
 		{
@@ -555,7 +556,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public Widget prependItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
 	{
-		// GtkWidget* gtk_toolbar_prepend_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
+		// GtkWidget * gtk_toolbar_prepend_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_prepend_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
 		if(p is null)
 		{
@@ -583,7 +584,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public Widget insertItem(string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData, int position)
 	{
-		// GtkWidget* gtk_toolbar_insert_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data,  gint position);
+		// GtkWidget * gtk_toolbar_insert_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
 		if(p is null)
 		{
@@ -650,7 +651,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public Widget appendElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
 	{
-		// GtkWidget* gtk_toolbar_append_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
+		// GtkWidget * gtk_toolbar_append_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_append_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
 		if(p is null)
 		{
@@ -682,7 +683,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public Widget prependElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData)
 	{
-		// GtkWidget* gtk_toolbar_prepend_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
+		// GtkWidget * gtk_toolbar_prepend_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_prepend_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
 		if(p is null)
 		{
@@ -703,7 +704,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * arguments. Use G_CALLBACK() to cast the function to GCallback.
 	 * Params:
 	 * type = a value of type GtkToolbarChildType that determines what widget
-	 *  will be.
+	 * will be.
 	 * widget = a GtkWidget, or NULL. [allow-none]
 	 * text = the element's label.
 	 * tooltipText = the element's tooltip.
@@ -716,7 +717,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public Widget insertElement(GtkToolbarChildType type, Widget widget, string text, string tooltipText, string tooltipPrivateText, Widget icon, GCallback callback, void* userData, int position)
 	{
-		// GtkWidget* gtk_toolbar_insert_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data,  gint position);
+		// GtkWidget * gtk_toolbar_insert_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
 		if(p is null)
 		{
@@ -797,12 +798,12 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * callback = The callback called when the toolbar button is clicked.
 	 * userData = user data passed to callback
 	 * position = The position the button shall be inserted at.
-	 *  -1 means at the end.
+	 * -1 means at the end.
 	 * Returns: the inserted widget
 	 */
 	public Widget insertStock(string stockId, string tooltipText, string tooltipPrivateText, GCallback callback, void* userData, int position)
 	{
-		// GtkWidget* gtk_toolbar_insert_stock (GtkToolbar *toolbar,  const gchar *stock_id,  const char *tooltip_text,  const char *tooltip_private_text,  GCallback callback,  gpointer user_data,  gint position);
+		// GtkWidget * gtk_toolbar_insert_stock (GtkToolbar *toolbar,  const gchar *stock_id,  const char *tooltip_text,  const char *tooltip_private_text,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_stock(gtkToolbar, Str.toStringz(stockId), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), callback, userData, position);
 		if(p is null)
 		{
@@ -821,7 +822,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * size of icons.
 	 * Params:
 	 * iconSize = The GtkIconSize that stock icons in the
-	 *  toolbar shall have. [type int]
+	 * toolbar shall have. [type int]
 	 */
 	public void setIconSize(GtkIconSize iconSize)
 	{

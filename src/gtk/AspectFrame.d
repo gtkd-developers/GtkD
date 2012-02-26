@@ -129,19 +129,19 @@ public class AspectFrame : Frame
 	 * Params:
 	 * label = Label text.
 	 * xalign = Horizontal alignment of the child within the allocation of
-	 *  the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 *  to 1.0 (right aligned)
+	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
+	 * to 1.0 (right aligned)
 	 * yalign = Vertical alignment of the child within the allocation of
-	 *  the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 *  to 1.0 (right aligned)
+	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
+	 * to 1.0 (right aligned)
 	 * ratio = The desired aspect ratio.
 	 * obeyChild = If TRUE, ratio is ignored, and the aspect
-	 *  ratio is taken from the requistion of the child.
+	 * ratio is taken from the requistion of the child.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, float xalign, float yalign, float ratio, int obeyChild)
 	{
-		// GtkWidget* gtk_aspect_frame_new (const gchar *label,  gfloat xalign,  gfloat yalign,  gfloat ratio,  gboolean obey_child);
+		// GtkWidget * gtk_aspect_frame_new (const gchar *label,  gfloat xalign,  gfloat yalign,  gfloat ratio,  gboolean obey_child);
 		auto p = gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild);
 		if(p is null)
 		{
@@ -154,14 +154,14 @@ public class AspectFrame : Frame
 	 * Set parameters for an existing GtkAspectFrame.
 	 * Params:
 	 * xalign = Horizontal alignment of the child within the allocation of
-	 *  the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 *  to 1.0 (right aligned)
+	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
+	 * to 1.0 (right aligned)
 	 * yalign = Vertical alignment of the child within the allocation of
-	 *  the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 *  to 1.0 (right aligned)
+	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
+	 * to 1.0 (right aligned)
 	 * ratio = The desired aspect ratio.
 	 * obeyChild = If TRUE, ratio is ignored, and the aspect
-	 *  ratio is taken from the requistion of the child.
+	 * ratio is taken from the requistion of the child.
 	 */
 	public void set(float xalign, float yalign, float ratio, int obeyChild)
 	{

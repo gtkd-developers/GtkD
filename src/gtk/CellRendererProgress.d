@@ -128,7 +128,7 @@ public class CellRendererProgress : CellRenderer
 	 */
 	public this ()
 	{
-		// GtkCellRenderer* gtk_cell_renderer_progress_new (void);
+		// GtkCellRenderer * gtk_cell_renderer_progress_new (void);
 		auto p = gtk_cell_renderer_progress_new();
 		if(p is null)
 		{

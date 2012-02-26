@@ -346,7 +346,7 @@ public class Action : ObjectG, BuildableIF
 	 * label = the label displayed in menu items and on buttons, or NULL. [allow-none]
 	 * tooltip = a tooltip for the action, or NULL. [allow-none]
 	 * stockId = the stock icon to display in widgets representing the
-	 *  action, or NULL
+	 * action, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, string stockId)
@@ -367,7 +367,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_action_get_name (GtkAction *action);
+		// const gchar * gtk_action_get_name (GtkAction *action);
 		return Str.toString(gtk_action_get_name(gtkAction));
 	}
 	
@@ -500,7 +500,7 @@ public class Action : ObjectG, BuildableIF
 	 * Returns the proxy widgets for an action.
 	 * See also gtk_widget_get_action().
 	 * Since 2.4
-	 * Returns: a GSList of proxy widgets. The list is owned by GTK+ and must not be modified. [element-type GtkWidget][transfer none GtkWidget]
+	 * Returns: a GSList of proxy widgets. The list is owned by GTK+ and must not be modified. [element-type GtkWidget][transfer none]
 	 */
 	public ListSG getProxies()
 	{
@@ -658,7 +658,7 @@ public class Action : ObjectG, BuildableIF
 	/**
 	 * Returns the accel closure for this action.
 	 * Since 2.8
-	 * Returns: the accel closure for this action. The returned closure is owned by GTK+ and must not be unreffed or modified.
+	 * Returns: the accel closure for this action. The returned closure is owned by GTK+ and must not be unreffed or modified. [transfer none]
 	 */
 	public Closure getAccelClosure()
 	{
@@ -768,7 +768,7 @@ public class Action : ObjectG, BuildableIF
 	/**
 	 * Gets the gicon of action.
 	 * Since 2.16
-	 * Returns: The action's GIcon if one is set.
+	 * Returns: The action's GIcon if one is set. [transfer none]
 	 */
 	public IconIF getGicon()
 	{

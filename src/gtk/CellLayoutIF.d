@@ -135,7 +135,7 @@ public interface CellLayoutIF
 	/**
 	 * Returns the cell renderers which have been added to cell_layout.
 	 * Since 2.12
-	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed. [element-type GtkCellRenderer][transfer container GtkCellRenderer]
+	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed. [element-type GtkCellRenderer][transfer container]
 	 */
 	public ListG getCells();
 	

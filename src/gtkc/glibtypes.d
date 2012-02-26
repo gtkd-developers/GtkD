@@ -4079,11 +4079,6 @@ public struct GVariantBuilder{}
 // #define g_scanner_thaw_symbol_table(scanner)
 
 /*
- */
-// TODO
-// # define G_WIN32_DLLMAIN_FOR_DLL_NAME(static, dll_name) Warning G_WIN32_DLLMAIN_FOR_DLL_NAME is deprecated and should not be used in newly-written code. On Windows, this macro defines a DllMain() function that stores the actual DLL name that the code being compiled will be included in. On non-Windows platforms, expands to nothing. static  : empty or "static". dll_name  : the name of the (pointer to the) char array where the DLL name will be stored. If this is used, you must also include windows.h. If you need a more complex DLL entry point function, you cannot use this.
-
-/*
  * A convenience macro to allocate a block of memory from the slice allocator.
  * It calls g_slice_alloc() with sizeof (type) and casts
  * the returned pointer to a pointer of the given type, avoiding a type cast

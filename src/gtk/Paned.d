@@ -448,7 +448,7 @@ public class Paned : Container, OrientableIF
 	/**
 	 * Obtains the first child of the paned widget.
 	 * Since 2.4
-	 * Returns: first child, or NULL if it is not set.
+	 * Returns: first child, or NULL if it is not set. [transfer none]
 	 */
 	public Widget getChild1()
 	{
@@ -464,7 +464,7 @@ public class Paned : Container, OrientableIF
 	/**
 	 * Obtains the second child of the paned widget.
 	 * Since 2.4
-	 * Returns: second child, or NULL if it is not set.
+	 * Returns: second child, or NULL if it is not set. [transfer none]
 	 */
 	public Widget getChild2()
 	{
@@ -481,7 +481,7 @@ public class Paned : Container, OrientableIF
 	 * Sets the position of the divider between the two panes.
 	 * Params:
 	 * position = pixel position of divider, a negative value means that the position
-	 *  is unset.
+	 * is unset.
 	 */
 	public void setPosition(int position)
 	{
@@ -505,7 +505,7 @@ public class Paned : Container, OrientableIF
 	 * enables the callback to distinguish between the window
 	 * of the paned, a child and the handle.
 	 * Since 2.20
-	 * Returns: the paned's handle window.
+	 * Returns: the paned's handle window. [transfer none]
 	 */
 	public Window getHandleWindow()
 	{

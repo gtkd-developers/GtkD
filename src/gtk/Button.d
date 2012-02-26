@@ -449,7 +449,7 @@ public class Button : Bin, ActivatableIF
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_button_new (void);
+		// GtkWidget * gtk_button_new (void);
 		auto p = gtk_button_new();
 		if(p is null)
 		{
@@ -640,9 +640,9 @@ public class Button : Bin, ActivatableIF
 	 * Since 2.4
 	 * Params:
 	 * xalign = the horizontal position of the child, 0.0 is left aligned,
-	 *  1.0 is right aligned
+	 * 1.0 is right aligned
 	 * yalign = the vertical position of the child, 0.0 is top aligned,
-	 *  1.0 is bottom aligned
+	 * 1.0 is bottom aligned
 	 */
 	public void setAlignment(float xalign, float yalign)
 	{
@@ -654,8 +654,8 @@ public class Button : Bin, ActivatableIF
 	 * Gets the alignment of the child in the button.
 	 * Since 2.4
 	 * Params:
-	 * xalign = return location for horizontal alignment
-	 * yalign = return location for vertical alignment
+	 * xalign = return location for horizontal alignment. [out]
+	 * yalign = return location for vertical alignment. [out]
 	 */
 	public void getAlignment(out float xalign, out float yalign)
 	{
@@ -683,11 +683,11 @@ public class Button : Bin, ActivatableIF
 	 * This may have been explicitly set by gtk_button_set_image()
 	 * or constructed by gtk_button_new_from_stock().
 	 * Since 2.6
-	 * Returns: a GtkWidget or NULL in case there is no image
+	 * Returns: a GtkWidget or NULL in case there is no image. [transfer none]
 	 */
 	public Widget getImage()
 	{
-		// GtkWidget* gtk_button_get_image (GtkButton *button);
+		// GtkWidget * gtk_button_get_image (GtkButton *button);
 		auto p = gtk_button_get_image(gtkButton);
 		if(p is null)
 		{
@@ -729,7 +729,7 @@ public class Button : Bin, ActivatableIF
 	 */
 	public Window getEventWindow()
 	{
-		// GdkWindow* gtk_button_get_event_window (GtkButton *button);
+		// GdkWindow * gtk_button_get_event_window (GtkButton *button);
 		auto p = gtk_button_get_event_window(gtkButton);
 		if(p is null)
 		{

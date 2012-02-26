@@ -169,7 +169,7 @@ public class PageSetupUnixDialog : Dialog
 	/**
 	 * Gets the currently selected page setup from the dialog.
 	 * Since 2.10
-	 * Returns: the current page setup
+	 * Returns: the current page setup. [transfer none]
 	 */
 	public PageSetup getPageSetup()
 	{
@@ -198,7 +198,7 @@ public class PageSetupUnixDialog : Dialog
 	/**
 	 * Gets the current print settings from the dialog.
 	 * Since 2.10
-	 * Returns: the current print settings
+	 * Returns: the current print settings. [transfer none]
 	 */
 	public PrintSettings getPrintSettings()
 	{

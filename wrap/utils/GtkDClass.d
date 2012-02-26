@@ -1249,8 +1249,12 @@ public class GtkDClass
 
 		if ( convParms.text.length > 0 )
 		{
-			lines = convParms.text.dup;
-			convParms.text.length = 0;
+			lines = getUntil("<hr>", convParms.text);
+
+			if ( lines.length != convParms.text.length )
+				convParms.text = convParms.text[lines.length+1 .. $];
+			else
+				convParms.text.length = 0;
 		}
 		else
 		{
@@ -2680,6 +2684,39 @@ public class GtkDClass
 					block ~= inLines[currLine];
 				}
 				debug(getUntil) writefln("+[%s]%s",currLine,inLines[currLine]);
+			}
+			++currLine;
+		}
+		return block;
+	}
+
+	/**
+	 * Gets all the non empty lines until a marker line
+	 * Params:
+	 *    	endLine = 	the marker line
+	 * Returns:
+	 */
+	private char[][] getUntil(char[] endLine, char[][] lines)
+	{
+		bool end = false;
+		int currLine;
+
+		char[][] block;
+
+		while ( currLine < lines.length && !end )
+		{
+			if ( lines[currLine] == endLine )
+			{
+				end = true;
+				debug(getUntil) writefln("getBlock end at line %s",currLine,"\n");
+			}
+			else
+			{
+				if ( std.string.strip(lines[currLine]).length > 0 )
+				{
+					block ~= lines[currLine];
+				}
+				debug(getUntil) writefln("+[%s]%s",currLine,lines[currLine]);
 			}
 			++currLine;
 		}

@@ -249,11 +249,11 @@ public class Window : Bin
 		}
 		onFrameListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFrame(GtkWindow* windowStruct, GdkEvent* event, Window window)
+	extern(C) static gboolean callBackFrame(GtkWindow* windowStruct, GdkEvent* arg1, Window window)
 	{
 		foreach ( bool delegate(GdkEvent*, Window) dlg ; window.onFrameListeners )
 		{
-			if ( dlg(event, window) )
+			if ( dlg(arg1, window) )
 			{
 				return 1;
 			}
@@ -318,6 +318,57 @@ public class Window : Bin
 	
 	
 	/**
+	 * Sets an icon to be used as fallback for windows that haven't
+	 * had gtk_window_set_icon_list() called on them from a file
+	 * on disk. Warns on failure if err is NULL.
+	 * Since 2.2
+	 * Params:
+	 * filename = location of icon file
+	 * Returns: TRUE if setting the icon succeeded.
+	 * Throws: GException on failure.
+	 */
+	public static int setDefaultIconFromFile(string filename)
+	{
+		// gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
+		GError* err = null;
+		
+		auto p = gtk_window_set_default_icon_from_file(Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Sets the icon for window.
+	 * Warns on failure if err is NULL.
+	 * This function is equivalent to calling gtk_window_set_icon()
+	 * with a pixbuf created by loading the image from filename.
+	 * Since 2.2
+	 * Params:
+	 * filename = location of icon file
+	 * Returns: TRUE if setting the icon succeeded.
+	 * Throws: GException on failure.
+	 */
+	public int setIconFromFile(string filename)
+	{
+		// gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
+		GError* err = null;
+		
+		auto p = gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Creates a new GtkWindow, which is a toplevel window that can
 	 * contain other widgets. Nearly always, the type of the window should
 	 * be GTK_WINDOW_TOPLEVEL. If you're implementing something like a
@@ -334,7 +385,7 @@ public class Window : Bin
 	 */
 	public this (GtkWindowType type)
 	{
-		// GtkWidget* gtk_window_new (GtkWindowType type);
+		// GtkWidget * gtk_window_new (GtkWindowType type);
 		auto p = gtk_window_new(type);
 		if(p is null)
 		{
@@ -388,7 +439,7 @@ public class Window : Bin
 	 * allowShrink = whether the user can shrink the window below its size request
 	 * allowGrow = whether the user can grow the window larger than its size request
 	 * autoShrink = whether the window automatically snaps back to its size request
-	 *  if it's larger
+	 * if it's larger
 	 */
 	public void setPolicy(int allowShrink, int allowGrow, int autoShrink)
 	{
@@ -623,7 +674,7 @@ public class Window : Bin
 	 */
 	public override Screen getScreen()
 	{
-		// GdkScreen* gtk_window_get_screen (GtkWindow *window);
+		// GdkScreen * gtk_window_get_screen (GtkWindow *window);
 		auto p = gtk_window_get_screen(gtkWindow);
 		if(p is null)
 		{
@@ -669,11 +720,11 @@ public class Window : Bin
 	 * callbacks that might destroy the widgets, you must call
 	 * g_list_foreach (result, (GFunc)g_object_ref, NULL) first, and
 	 * then unref all the widgets afterwards.
-	 * Returns: list of toplevel widgets. [element-type GtkWidget][transfer container GtkWidget]
+	 * Returns: list of toplevel widgets. [element-type GtkWidget][transfer container]
 	 */
 	public static ListG listToplevels()
 	{
-		// GList* gtk_window_list_toplevels (void);
+		// GList * gtk_window_list_toplevels (void);
 		auto p = gtk_window_list_toplevels();
 		if(p is null)
 		{
@@ -780,7 +831,7 @@ public class Window : Bin
 	 * gtk_widget_grab_focus() instead of this function.
 	 * Params:
 	 * focus = widget to be the new focus widget, or NULL to unset
-	 *  any focus widget for the toplevel window. [allow-none]
+	 * any focus widget for the toplevel window. [allow-none]
 	 */
 	public void setFocus(Widget focus)
 	{
@@ -792,7 +843,7 @@ public class Window : Bin
 	 * Returns the default widget for window. See gtk_window_set_default()
 	 * for more details.
 	 * Since 2.14
-	 * Returns: the default widget, or NULL if there is none.
+	 * Returns: the default widget, or NULL if there is none. [transfer none]
 	 */
 	public Widget getDefaultWidget()
 	{
@@ -815,7 +866,7 @@ public class Window : Bin
 	 * widget you'd like to make the default using GTK_WIDGET_SET_FLAGS().
 	 * Params:
 	 * defaultWidget = widget to be the default, or NULL to unset the
-	 *  default widget for the toplevel. [allow-none]
+	 * default widget for the toplevel. [allow-none]
 	 */
 	public void setDefault(Widget defaultWidget)
 	{
@@ -851,7 +902,7 @@ public class Window : Bin
 	 * Since 2.8
 	 * Params:
 	 * timestamp = the timestamp of the user interaction (typically a
-	 *  button or key press event) which triggered this call
+	 * button or key press event) which triggered this call
 	 */
 	public void presentWithTime(uint timestamp)
 	{
@@ -1124,6 +1175,8 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_window_set_frame_dimensions has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * (Note: this is a special-purpose function intended for the framebuffer
 	 *  port; see gtk_window_set_has_frame(). It will have no effect on the
 	 *  window border drawn by the window manager, which is the normal
@@ -1143,6 +1196,8 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_window_set_has_frame has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * (Note: this is a special-purpose function for the framebuffer port,
 	 *  that causes GTK+ to draw its own window border. For most applications,
 	 *  you want gtk_window_set_decorated() instead, which tells the window
@@ -1167,7 +1222,7 @@ public class Window : Bin
 	 * Sets the mnemonic modifier for this window.
 	 * Params:
 	 * modifier = the modifier mask used to activate
-	 *  mnemonics on this window.
+	 * mnemonics on this window.
 	 */
 	public void setMnemonicModifier(GdkModifierType modifier)
 	{
@@ -1328,11 +1383,11 @@ public class Window : Bin
 	 * The list is a copy and should be freed with g_list_free(),
 	 * but the pixbufs in the list have not had their reference count
 	 * incremented.
-	 * Returns: copy of default icon list
+	 * Returns: copy of default icon list. [element-type GdkPixbuf][transfer container]
 	 */
 	public static ListG getDefaultIconList()
 	{
-		// GList* gtk_window_get_default_icon_list (void);
+		// GList * gtk_window_get_default_icon_list (void);
 		auto p = gtk_window_get_default_icon_list();
 		if(p is null)
 		{
@@ -1352,7 +1407,7 @@ public class Window : Bin
 	 */
 	public static string getDefaultIconName()
 	{
-		// gchar * gtk_window_get_default_icon_name (void);
+		// const gchar * gtk_window_get_default_icon_name (void);
 		return Str.toString(gtk_window_get_default_icon_name());
 	}
 	
@@ -1383,6 +1438,8 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_window_get_frame_dimensions has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * (Note: this is a special-purpose function intended for the
 	 *  framebuffer port; see gtk_window_set_has_frame(). It will not
 	 *  return the size of the window border drawn by the window manager, which is the normal
@@ -1404,6 +1461,8 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_window_get_has_frame has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3
 	 * Accessor for whether the window has a frame window exterior to
 	 * window->window. Gets the value set by gtk_window_set_has_frame().
 	 * Returns: TRUE if a frame has been added to the window via gtk_window_set_has_frame().
@@ -1422,7 +1481,7 @@ public class Window : Bin
 	 */
 	public Pixbuf getIcon()
 	{
-		// GdkPixbuf* gtk_window_get_icon (GtkWindow *window);
+		// GdkPixbuf * gtk_window_get_icon (GtkWindow *window);
 		auto p = gtk_window_get_icon(gtkWindow);
 		if(p is null)
 		{
@@ -1435,11 +1494,11 @@ public class Window : Bin
 	 * Retrieves the list of icons set by gtk_window_set_icon_list().
 	 * The list is copied, but the reference count on each
 	 * member won't be incremented.
-	 * Returns: copy of window's icon list. [element-type GdkPixbuf][transfer container GdkPixbuf]
+	 * Returns: copy of window's icon list. [element-type GdkPixbuf][transfer container]
 	 */
 	public ListG getIconList()
 	{
-		// GList* gtk_window_get_icon_list (GtkWindow *window);
+		// GList * gtk_window_get_icon_list (GtkWindow *window);
 		auto p = gtk_window_get_icon_list(gtkWindow);
 		if(p is null)
 		{
@@ -1456,7 +1515,7 @@ public class Window : Bin
 	 */
 	public string getIconName()
 	{
-		// gchar * gtk_window_get_icon_name (GtkWindow *window);
+		// const gchar * gtk_window_get_icon_name (GtkWindow *window);
 		return Str.toString(gtk_window_get_icon_name(gtkWindow));
 	}
 	
@@ -1514,8 +1573,8 @@ public class Window : Bin
 	 * "GnomeClient" object in the GNOME libraries for example) and allow
 	 * the window manager to save your window sizes and positions.
 	 * Params:
-	 * rootX = return location for X coordinate of gravity-determined reference point
-	 * rootY = return location for Y coordinate of gravity-determined reference point
+	 * rootX = return location for X coordinate of gravity-determined reference point. [out][allow-none]
+	 * rootY = return location for Y coordinate of gravity-determined reference point. [out][allow-none]
 	 */
 	public void getPosition(out int rootX, out int rootY)
 	{
@@ -1799,7 +1858,7 @@ public class Window : Bin
 	 * icon for all windows in your app at once.
 	 * See gtk_window_set_icon_list() for more details.
 	 * Params:
-	 * list = a list of GdkPixbuf. [element-type GdkPixbuf][transfer container GdkPixbuf]
+	 * list = a list of GdkPixbuf. [element-type GdkPixbuf][transfer container]
 	 */
 	public static void setDefaultIconList(ListG list)
 	{
@@ -1818,31 +1877,6 @@ public class Window : Bin
 	{
 		// void gtk_window_set_default_icon (GdkPixbuf *icon);
 		gtk_window_set_default_icon((icon is null) ? null : icon.getPixbufStruct());
-	}
-	
-	/**
-	 * Sets an icon to be used as fallback for windows that haven't
-	 * had gtk_window_set_icon_list() called on them from a file
-	 * on disk. Warns on failure if err is NULL.
-	 * Since 2.2
-	 * Params:
-	 * filename = location of icon file
-	 * Returns: TRUE if setting the icon succeeded.
-	 * Throws: GException on failure.
-	 */
-	public static int setDefaultIconFromFile(string filename)
-	{
-		// gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
-		GError* err = null;
-		
-		auto p = gtk_window_set_default_icon_from_file(Str.toStringz(filename), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
 	}
 	
 	/**
@@ -1913,32 +1947,6 @@ public class Window : Bin
 	}
 	
 	/**
-	 * Sets the icon for window.
-	 * Warns on failure if err is NULL.
-	 * This function is equivalent to calling gtk_window_set_icon()
-	 * with a pixbuf created by loading the image from filename.
-	 * Since 2.2
-	 * Params:
-	 * filename = location of icon file
-	 * Returns: TRUE if setting the icon succeeded.
-	 * Throws: GException on failure.
-	 */
-	public int setIconFromFile(string filename)
-	{
-		// gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
-		GError* err = null;
-		
-		auto p = gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
 	 * Sets the icon for the window from a named themed icon. See
 	 * the docs for GtkIconTheme for more details.
 	 * Note that this has nothing to do with the WM_ICON_NAME
@@ -2004,7 +2012,6 @@ public class Window : Bin
 	}
 	
 	/**
-	 * Returns:
 	 */
 	public int getMnemonicsVisible()
 	{

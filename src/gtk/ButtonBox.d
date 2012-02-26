@@ -298,7 +298,7 @@ public class ButtonBox : Box
 	 * Params:
 	 * child = a child of widget
 	 * isSecondary = if TRUE, the child appears in a secondary group of the
-	 *  button box.
+	 * button box.
 	 */
 	public void setChildSecondary(Widget child, int isSecondary)
 	{

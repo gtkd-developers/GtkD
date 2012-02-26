@@ -190,6 +190,7 @@ public class SpinButton : Entry
 	 * The ::output signal can be used to change to formatting
 	 * of the value that is displayed in the spin buttons entry.
 	 * $(DDOC_COMMENT example)
+	 * TRUE if the value has been displayed.
 	 */
 	void addOnOutput(bool delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -302,7 +303,7 @@ public class SpinButton : Entry
 	 */
 	public this (Adjustment adjustment, double climbRate, uint digits)
 	{
-		// GtkWidget* gtk_spin_button_new (GtkAdjustment *adjustment,  gdouble climb_rate,  guint digits);
+		// GtkWidget * gtk_spin_button_new (GtkAdjustment *adjustment,  gdouble climb_rate,  guint digits);
 		auto p = gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
 		if(p is null)
 		{
@@ -328,7 +329,7 @@ public class SpinButton : Entry
 	 */
 	public this (double min, double max, double step)
 	{
-		// GtkWidget* gtk_spin_button_new_with_range (gdouble min,  gdouble max,  gdouble step);
+		// GtkWidget * gtk_spin_button_new_with_range (gdouble min,  gdouble max,  gdouble step);
 		auto p = gtk_spin_button_new_with_range(min, max, step);
 		if(p is null)
 		{
@@ -350,11 +351,11 @@ public class SpinButton : Entry
 	
 	/**
 	 * Get the adjustment associated with a GtkSpinButton
-	 * Returns: the GtkAdjustment of spin_button
+	 * Returns: the GtkAdjustment of spin_button. [transfer none]
 	 */
 	public Adjustment getAdjustment()
 	{
-		// GtkAdjustment* gtk_spin_button_get_adjustment (GtkSpinButton *spin_button);
+		// GtkAdjustment * gtk_spin_button_get_adjustment (GtkSpinButton *spin_button);
 		auto p = gtk_spin_button_get_adjustment(gtkSpinButton);
 		if(p is null)
 		{
@@ -505,8 +506,8 @@ public class SpinButton : Entry
 	 * Gets the current step and page the increments used by spin_button. See
 	 * gtk_spin_button_set_increments().
 	 * Params:
-	 * step = location to store step increment, or NULL. [allow-none]
-	 * page = location to store page increment, or NULL. [allow-none]
+	 * step = location to store step increment, or NULL. [out][allow-none]
+	 * page = location to store page increment, or NULL. [out][allow-none]
 	 */
 	public void getIncrements(out double step, out double page)
 	{
@@ -529,8 +530,8 @@ public class SpinButton : Entry
 	 * Gets the range allowed for spin_button. See
 	 * gtk_spin_button_set_range().
 	 * Params:
-	 * min = location to store minimum allowed value, or NULL. [allow-none]
-	 * max = location to store maximum allowed value, or NULL. [allow-none]
+	 * min = location to store minimum allowed value, or NULL. [out][allow-none]
+	 * max = location to store maximum allowed value, or NULL. [out][allow-none]
 	 */
 	public void getRange(out double min, out double max)
 	{

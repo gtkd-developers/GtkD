@@ -205,6 +205,7 @@ public class IMContext : ObjectG
 	/**
 	 * The ::delete-surrounding signal is emitted when the input method
 	 * needs to delete all or part of the context surrounding the cursor.
+	 * TRUE if the signal was handled.
 	 */
 	void addOnDeleteSurrounding(bool delegate(gint, gint, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -326,6 +327,7 @@ public class IMContext : ObjectG
 	 * requires the context surrounding the cursor. The callback should set
 	 * the input method surrounding context by calling the
 	 * gtk_im_context_set_surrounding() method.
+	 * TRUE if the signal was handled.
 	 */
 	void addOnRetrieveSurrounding(bool delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -363,7 +365,7 @@ public class IMContext : ObjectG
 	 * also be used for purposes internal to the input method.
 	 * Params:
 	 * window = the client window. This may be NULL to indicate
-	 *  that the previous client window no longer exists. [allow-none]
+	 * that the previous client window no longer exists. [allow-none]
 	 */
 	public void setClientWindow(Window window)
 	{
@@ -377,13 +379,13 @@ public class IMContext : ObjectG
 	 * This string should be displayed inserted at the insertion
 	 * point.
 	 * Params:
-	 * str = location to store the retrieved string. The
-	 *  string retrieved must be freed with g_free().
-	 * attrs = location to store the retrieved attribute list.
-	 *  When you are done with this list, you must
-	 *  unreference it with pango_attr_list_unref().
+	 * str = location to store the retrieved
+	 * string. The string retrieved must be freed with g_free(). [out][transfer full]
+	 * attrs = location to store the retrieved
+	 * attribute list. When you are done with this list, you
+	 * must unreference it with pango_attr_list_unref(). [out][transfer full]
 	 * cursorPos = location to store position of cursor (in characters)
-	 *  within the preedit string.
+	 * within the preedit string. [out]
 	 */
 	public void getPreeditString(out string str, out PangoAttrList* attrs, out int cursorPos)
 	{
@@ -478,8 +480,8 @@ public class IMContext : ObjectG
 	 * effect if called at other times.
 	 * Params:
 	 * text = text surrounding the insertion point, as UTF-8.
-	 *  the preedit string should not be included within
-	 *  text.
+	 * the preedit string should not be included within
+	 * text.
 	 * len = the length of text, or -1 if text is nul-terminated
 	 * cursorIndex = the byte index of the insertion cursor within text.
 	 */
@@ -502,12 +504,12 @@ public class IMContext : ObjectG
 	 * for a widget to respond to the ::retrieve_surrounding signal, so input
 	 * methods must be prepared to function without context.
 	 * Params:
-	 * text = location to store a UTF-8 encoded string of text
-	 *  holding context around the insertion point.
-	 *  If the function returns TRUE, then you must free
-	 *  the result stored in this location with g_free().
-	 * cursorIndex = location to store byte index of the insertion cursor
-	 *  within text.
+	 * text = location to store a UTF-8 encoded
+	 * string of text holding context around the insertion point.
+	 * If the function returns TRUE, then you must free the result
+	 * stored in this location with g_free(). [out][transfer full]
+	 * cursorIndex = (out) location to store byte index of the insertion
+	 * cursor within text.
 	 * Returns: TRUE if surrounding text was provided; in this case you must free the result stored in *text.
 	 */
 	public int getSurrounding(out string text, out int cursorIndex)
@@ -538,7 +540,7 @@ public class IMContext : ObjectG
 	 * not useful for applications.
 	 * Params:
 	 * offset = offset from cursor position in chars;
-	 *  a negative value means start before the cursor.
+	 * a negative value means start before the cursor.
 	 * nChars = number of characters to delete.
 	 * Returns: TRUE if the signal was handled. Signal Details The "commit" signal void user_function (GtkIMContext *context, gchar *str, gpointer user_data) : Run Last The ::commit signal is emitted when a complete input sequence has been entered by the user. This can be a single character immediately after a key press or the final result of preediting.
 	 */

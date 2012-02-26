@@ -124,7 +124,7 @@ public class VSeparator : Separator
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_vseparator_new (void);
+		// GtkWidget * gtk_vseparator_new (void);
 		auto p = gtk_vseparator_new();
 		if(p is null)
 		{

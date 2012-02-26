@@ -324,7 +324,7 @@ public class Calendar : Widget
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_calendar_new (void);
+		// GtkWidget * gtk_calendar_new (void);
 		auto p = gtk_calendar_new();
 		if(p is null)
 		{
@@ -353,7 +353,7 @@ public class Calendar : Widget
 	 * Selects a day from the current month.
 	 * Params:
 	 * day = the day number between 1 and 31, or 0 to unselect
-	 *  the currently selected day.
+	 * the currently selected day.
 	 */
 	public void selectDay(uint day)
 	{
@@ -427,9 +427,12 @@ public class Calendar : Widget
 	/**
 	 * Obtains the selected date from a GtkCalendar.
 	 * Params:
-	 * year = location to store the year number, or NULL. [allow-none]
-	 * month = location to store the month number (between 0 and 11), or NULL. [allow-none]
-	 * day = location to store the day number (between 1 and 31), or NULL. [allow-none]
+	 * year = location to store the year as a decimal
+	 * number (e.g. 2011), or NULL. [out][allow-none]
+	 * month = location to store the month number
+	 * (between 0 and 11), or NULL. [out][allow-none]
+	 * day = location to store the day number (between
+	 * 1 and 31), or NULL. [out][allow-none]
 	 */
 	public void getDate(out uint year, out uint month, out uint day)
 	{

@@ -159,7 +159,7 @@ public class Progress : Widget
 	 * Sets a format string used to display text indicating the
 	 * Params:
 	 * format = a string used to display progress text, or NULL
-	 *  to restore to the default format.
+	 * to restore to the default format.
 	 */
 	public void setFormatString(string format)
 	{
@@ -249,7 +249,7 @@ public class Progress : Widget
 	 */
 	public string getCurrentText()
 	{
-		// gchar* gtk_progress_get_current_text (GtkProgress *progress);
+		// gchar * gtk_progress_get_current_text (GtkProgress *progress);
 		return Str.toString(gtk_progress_get_current_text(gtkProgress));
 	}
 	
@@ -264,7 +264,7 @@ public class Progress : Widget
 	 */
 	public string getTextFromValue(double value)
 	{
-		// gchar* gtk_progress_get_text_from_value (GtkProgress *progress,  gdouble value);
+		// gchar * gtk_progress_get_text_from_value (GtkProgress *progress,  gdouble value);
 		return Str.toString(gtk_progress_get_text_from_value(gtkProgress, value));
 	}
 	

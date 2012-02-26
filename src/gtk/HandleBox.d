@@ -200,7 +200,7 @@ public class HandleBox : Bin
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_handle_box_new (void);
+		// GtkWidget * gtk_handle_box_new (void);
 		auto p = gtk_handle_box_new();
 		if(p is null)
 		{

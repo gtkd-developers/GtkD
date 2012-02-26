@@ -738,7 +738,7 @@ public class Builder : ObjectG
 	 * require GModule to function correctly.
 	 * Since 2.12
 	 * Params:
-	 * func = the function used to connect the signals
+	 * func = the function used to connect the signals. [scope call]
 	 * userData = arbitrary data that will be passed to the connection function
 	 */
 	public void connectSignalsFull(GtkBuilderConnectFunc func, void* userData)
@@ -767,7 +767,7 @@ public class Builder : ObjectG
 	 */
 	public string getTranslationDomain()
 	{
-		// const gchar* gtk_builder_get_translation_domain (GtkBuilder *builder);
+		// const gchar * gtk_builder_get_translation_domain (GtkBuilder *builder);
 		return Str.toString(gtk_builder_get_translation_domain(gtkBuilder));
 	}
 	
@@ -800,7 +800,7 @@ public class Builder : ObjectG
 	 * Params:
 	 * pspec = the GParamSpec for the property
 	 * string = the string representation of the value
-	 * value = the GValue to store the result in
+	 * value = the GValue to store the result in. [out]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -830,7 +830,7 @@ public class Builder : ObjectG
 	 * Params:
 	 * type = the GType of the value
 	 * string = the string representation of the value
-	 * value = the GValue to store the result in
+	 * value = the GValue to store the result in. [out]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */

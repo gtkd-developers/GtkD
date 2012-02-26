@@ -293,9 +293,9 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * pageNum = index of the page to switch to, starting from 0.
-	 *  If negative, the last page will be used. If greater
-	 *  than the number of pages in the assistant, nothing
-	 *  will be done.
+	 * If negative, the last page will be used. If greater
+	 * than the number of pages in the assistant, nothing
+	 * will be done.
 	 */
 	public void setCurrentPage(int pageNum)
 	{
@@ -319,7 +319,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * pageNum = The index of a page in the assistant, or -1 to get the last page;
-	 * Returns: The child widget, or NULL if page_num is out of bounds.
+	 * Returns: The child widget, or NULL if page_num is out of bounds. [transfer none]
 	 */
 	public Widget getNthPage(int pageNum)
 	{
@@ -364,7 +364,7 @@ public class Assistant : Window
 	 * Params:
 	 * page = a GtkWidget
 	 * position = the index (starting at 0) at which to insert the page,
-	 *  or -1 to append the page to the assistant
+	 * or -1 to append the page to the assistant
 	 * Returns: the index (starting from 0) of the inserted page
 	 */
 	public int insertPage(Widget page, int position)
@@ -464,7 +464,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * Returns: the header image for page, or NULL if there's no header image for the page.
+	 * Returns: the header image for page, or NULL if there's no header image for the page. [transfer none]
 	 */
 	public Pixbuf getPageHeaderImage(Widget page)
 	{
@@ -496,7 +496,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * Returns: the side image for page, or NULL if there's no side image for the page.
+	 * Returns: the side image for page, or NULL if there's no side image for the page. [transfer none]
 	 */
 	public Pixbuf getPageSideImage(Widget page)
 	{

@@ -132,7 +132,7 @@ public class VolumeButton : ScaleButton
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_volume_button_new (void);
+		// GtkWidget * gtk_volume_button_new (void);
 		auto p = gtk_volume_button_new();
 		if(p is null)
 		{

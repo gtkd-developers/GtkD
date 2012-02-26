@@ -356,7 +356,7 @@ public interface RecentChooserIF
 	 * The return value of this function is affected by the "sort-type" and
 	 * "limit" properties of chooser.
 	 * Since 2.10
-	 * Returns: A newly allocated list of GtkRecentInfo objects. You should use gtk_recent_info_unref() on every item of the list, and then free the list itself using g_list_free(). [element-type GtkRecentInfo][transfer full GtkRecentInfo]
+	 * Returns: A newly allocated list of GtkRecentInfo objects. You should use gtk_recent_info_unref() on every item of the list, and then free the list itself using g_list_free(). [element-type GtkRecentInfo][transfer full]
 	 */
 	public ListG getItems();
 	
@@ -366,7 +366,7 @@ public interface RecentChooserIF
 	 * properties of chooser.
 	 * Since the returned array is NULL terminated, length may be NULL.
 	 * Since 2.10
-	 * Returns: A newly allocated, NULL terminated array of strings. Use g_strfreev() to free it.
+	 * Returns: A newly allocated, NULL-terminated array of strings. Use g_strfreev() to free it. [array length=length zero-terminated=1][transfer full]
 	 */
 	public string[] getUris();
 	
@@ -391,7 +391,7 @@ public interface RecentChooserIF
 	/**
 	 * Gets the GtkRecentFilter objects held by chooser.
 	 * Since 2.10
-	 * Returns: A singly linked list of GtkRecentFilter objects. You should just free the returned list using g_slist_free(). [element-type GtkRecentFilter][transfer container GtkRecentFilter]
+	 * Returns: A singly linked list of GtkRecentFilter objects. You should just free the returned list using g_slist_free(). [element-type GtkRecentFilter][transfer container]
 	 */
 	public ListSG listFilters();
 	
@@ -408,7 +408,7 @@ public interface RecentChooserIF
 	 * Gets the GtkRecentFilter object currently used by chooser to affect
 	 * the display of the recently used resources.
 	 * Since 2.10
-	 * Returns: a GtkRecentFilter object.
+	 * Returns: a GtkRecentFilter object. [transfer none]
 	 */
 	public RecentFilter getFilter();
 }

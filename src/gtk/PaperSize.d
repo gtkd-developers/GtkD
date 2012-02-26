@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-GtkPaperSize.html
+ * inFile  = GtkPaperSize.html
  * outPack = gtk
  * outFile = PaperSize
  * strct   = GtkPaperSize
@@ -74,6 +74,7 @@ private import glib.ListG;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -87,7 +88,7 @@ private import glib.ListG;
  * default print margins.
  * Printing support has been added in GTK+ 2.10.
  */
-public class PaperSize
+public class PaperSize : Boxed
 {
 	
 	/** the main Gtk struct */
@@ -236,8 +237,8 @@ public class PaperSize
 	 * Since 2.12
 	 * Params:
 	 * includeCustom = whether to include custom paper sizes
-	 *  as defined in the page setup dialog
-	 * Returns: a newly allocated list of newly allocated GtkPaperSize objects. [element-type GtkPaperSize][transfer full GtkPaperSize]
+	 * as defined in the page setup dialog
+	 * Returns: a newly allocated list of newly allocated GtkPaperSize objects. [element-type GtkPaperSize][transfer full]
 	 */
 	public static ListG getPaperSizes(int includeCustom)
 	{
@@ -407,7 +408,7 @@ public class PaperSize
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the papersize from
 	 * groupName = the name ofthe group in the key file to read,
-	 *  or NULL to read the first group
+	 * or NULL to read the first group
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

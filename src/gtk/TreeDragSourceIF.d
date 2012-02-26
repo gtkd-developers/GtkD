@@ -119,7 +119,8 @@ public interface TreeDragSourceIF
 	 * longer found in the model!
 	 * Params:
 	 * path = row that was dragged
-	 * selectionData = a GtkSelectionData to fill with data from the dragged row
+	 * selectionData = a GtkSelectionData to fill with data
+	 * from the dragged row. [out]
 	 * Returns: TRUE if data of the required type was provided
 	 */
 	public int dragDataGet(TreePath path, GtkSelectionData* selectionData);
@@ -157,8 +158,8 @@ public interface TreeDragSourceIF
 	 * gtk_tree_path_free().
 	 * Params:
 	 * selectionData = a GtkSelectionData
-	 * treeModel = a GtkTreeModel
-	 * path = row in tree_model
+	 * treeModel = a GtkTreeModel. [out]
+	 * path = row in tree_model. [out]
 	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
 	 */
 	public static int getRowDragData(GtkSelectionData* selectionData, out TreeModelIF treeModel, out TreePath path);

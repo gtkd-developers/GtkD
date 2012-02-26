@@ -158,7 +158,7 @@ public class AccelLabel : Label
 	 */
 	public this (string string)
 	{
-		// GtkWidget* gtk_accel_label_new (const gchar *string);
+		// GtkWidget * gtk_accel_label_new (const gchar *string);
 		auto p = gtk_accel_label_new(Str.toStringz(string));
 		if(p is null)
 		{
@@ -182,11 +182,11 @@ public class AccelLabel : Label
 	/**
 	 * Fetches the widget monitored by this accelerator label. See
 	 * gtk_accel_label_set_accel_widget().
-	 * Returns: the object monitored by the accelerator label, or NULL.
+	 * Returns: the object monitored by the accelerator label, or NULL. [transfer none]
 	 */
 	public Widget getAccelWidget()
 	{
-		// GtkWidget* gtk_accel_label_get_accel_widget (GtkAccelLabel *accel_label);
+		// GtkWidget * gtk_accel_label_get_accel_widget (GtkAccelLabel *accel_label);
 		auto p = gtk_accel_label_get_accel_widget(gtkAccelLabel);
 		if(p is null)
 		{

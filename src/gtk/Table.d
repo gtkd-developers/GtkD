@@ -369,9 +369,9 @@ public class Table : Container
 	 * Since 2.22
 	 * Params:
 	 * rows = return location for the number of
-	 *  rows, or NULL. [out][allow-none]
+	 * rows, or NULL. [out][allow-none]
 	 * columns = return location for the number
-	 *  of columns, or NULL. [out][allow-none]
+	 * of columns, or NULL. [out][allow-none]
 	 */
 	public void getSize(out uint rows, out uint columns)
 	{

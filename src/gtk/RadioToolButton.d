@@ -215,7 +215,7 @@ public class RadioToolButton : ToggleToolButton
 	/**
 	 * Returns the radio button group button belongs to.
 	 * Since 2.4
-	 * Returns: The group button belongs to.
+	 * Returns: The group button belongs to. [transfer none]
 	 */
 	public ListSG getGroup()
 	{

@@ -118,7 +118,7 @@ public interface ActivatableIF
 	/**
 	 * Gets the related GtkAction for activatable.
 	 * Since 2.16
-	 * Returns: the related GtkAction if one is set.
+	 * Returns: the related GtkAction if one is set. [transfer none]
 	 */
 	public Action getRelatedAction();
 	

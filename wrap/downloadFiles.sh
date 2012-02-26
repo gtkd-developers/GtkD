@@ -38,8 +38,28 @@ cd ..
 curl http://developer.gnome.org/gdk/gdk-html-2.24.10.tar.gz | tar xvfz -
 ln -s gdk-html-2.24.10 gdk
 #GTK
-curl http://developer.gnome.org/gtk/gtk-html-2.22.1.tar.gz | tar xvfz -
-ln -s gtk-html-2.22.1 gtk
+curl http://developer.gnome.org/gtk/gtk-html-2.24.10.tar.gz | tar xvfz -
+ln -s gtk-html-2.24.10 gtk
+cd gtk
+rm gtk-Accelerator-Maps.html
+wget http://developer.gnome.org/gtk/2.22/gtk-Accelerator-Maps.html
+rm GtkFileChooser.html
+wget http://developer.gnome.org/gtk/2.22/GtkFileChooser.html
+rm GtkFileSelection.html
+wget http://developer.gnome.org/gtk/2.22/GtkFileSelection.html
+rm GtkIconTheme.html
+wget http://developer.gnome.org/gtk/2.22/GtkIconTheme.html
+rm gtk-Themeable-Stock-Images.html
+wget http://developer.gnome.org/gtk/2.22/gtk-Themeable-Stock-Images.html
+rm GtkImage.html
+wget http://developer.gnome.org/gtk/2.22/GtkImage.html
+rm gtk-Resource-Files.html
+wget http://developer.gnome.org/gtk/2.22/gtk-Resource-Files.html
+rm GtkUIManager.html
+wget http://developer.gnome.org/gtk/2.22/GtkUIManager.html
+rm GtkWidget.html
+wget http://developer.gnome.org/gtk/2.22/GtkWidget.html
+cd ..
 #CAIRO
 curl http://cairographics.org/releases/cairo-1.10.2.tar.gz | tar xvfz -
 ln -s cairo-1.10.2/doc/public/html cairo

@@ -247,7 +247,7 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public this (ListSG group)
 	{
-		// GtkWidget* gtk_radio_menu_item_new (GSList *group);
+		// GtkWidget * gtk_radio_menu_item_new (GSList *group);
 		auto p = gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct());
 		if(p is null)
 		{
@@ -265,7 +265,7 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public this (RadioMenuItem group)
 	{
-		// GtkWidget* gtk_radio_menu_item_new_from_widget (GtkRadioMenuItem *group);
+		// GtkWidget * gtk_radio_menu_item_new_from_widget (GtkRadioMenuItem *group);
 		auto p = gtk_radio_menu_item_new_from_widget((group is null) ? null : group.getRadioMenuItemStruct());
 		if(p is null)
 		{
@@ -288,11 +288,13 @@ public class RadioMenuItem : CheckMenuItem
 	/**
 	 * Returns the group to which the radio menu item belongs, as a GList of
 	 * GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.
-	 * Returns: the group of radio_menu_item.
+	 * Returns the group to which the radio menu item belongs, as a GList of
+	 * GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.
+	 * Returns: the group of radio_menu_item. [transfer none]
 	 */
 	public ListSG getGroup()
 	{
-		// GSList* gtk_radio_menu_item_get_group (GtkRadioMenuItem *radio_menu_item);
+		// GSList * gtk_radio_menu_item_get_group (GtkRadioMenuItem *radio_menu_item);
 		auto p = gtk_radio_menu_item_get_group(gtkRadioMenuItem);
 		if(p is null)
 		{

@@ -98,7 +98,7 @@ public class GCs
 	 */
 	public static GC get(int depth, Colormap colormap, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
-		// GdkGC* gtk_gc_get (gint depth,  GdkColormap *colormap,  GdkGCValues *values,  GdkGCValuesMask values_mask);
+		// GdkGC * gtk_gc_get (gint depth,  GdkColormap *colormap,  GdkGCValues *values,  GdkGCValuesMask values_mask);
 		auto p = gtk_gc_get(depth, (colormap is null) ? null : colormap.getColormapStruct(), values, valuesMask);
 		if(p is null)
 		{

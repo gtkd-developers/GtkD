@@ -210,12 +210,9 @@ public interface TreeModelIF
 	 * This signal is emitted when a row has been deleted.
 	 * Note that no iterator is passed to the signal handler,
 	 * since the row is already deleted.
-	 * Implementations of GtkTreeModel must emit row-deleted
-	 * before removing the node from its
-	 * internal data structures. This is because models and
-	 * views which access and monitor this model might have
-	 * references on the node which need to be released in the
-	 * row-deleted handler.
+	 * This should be called by models after a row has been removed.
+	 * The location pointed to by path should be the location that
+	 * the row previously was at. It may not be a valid location anymore.
 	 */
 	void addOnRowDeleted(void delegate(TreePath, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowHasChildToggledListeners();
@@ -300,7 +297,7 @@ public interface TreeModelIF
 	 * Sets iter to point to the node following it at the current level. If there
 	 * is no next iter, FALSE is returned and iter is set to be invalid.
 	 * Params:
-	 * iter = The GtkTreeIter. [inout]
+	 * iter = The GtkTreeIter. [in]
 	 * Returns: TRUE if iter has been changed to the next node.
 	 */
 	public int iterNext(TreeIter iter);
@@ -413,7 +410,7 @@ public interface TreeModelIF
 	 * If func returns TRUE, then the tree ceases to be walked, and
 	 * gtk_tree_model_foreach() returns.
 	 * Params:
-	 * func = A function to be called on each row
+	 * func = A function to be called on each row. [scope call]
 	 * userData = User data to passed to func.
 	 */
 	public void foreac(GtkTreeModelForeachFunc func, void* userData);
@@ -458,12 +455,12 @@ public interface TreeModelIF
 	 * models when their rows have been reordered.
 	 * Params:
 	 * path = A GtkTreePath pointing to the tree node whose children have been
-	 *  reordered
+	 * reordered
 	 * iter = A valid GtkTreeIter pointing to the node whose children have been
-	 *  reordered, or NULL if the depth of path is 0.
+	 * reordered, or NULL if the depth of path is 0.
 	 * newOrder = an array of integers mapping the current position of each child
-	 *  to its old position before the re-ordering,
-	 *  i.e. new_order[newpos] = oldpos.
+	 * to its old position before the re-ordering,
+	 * i.e. new_order[newpos] = oldpos.
 	 * Signal Details
 	 * The "row-changed" signal
 	 * void user_function (GtkTreeModel *tree_model,

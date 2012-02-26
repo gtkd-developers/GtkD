@@ -199,7 +199,7 @@ public class PrintJob : ObjectG
 	/**
 	 * Gets the GtkPrintSettings of the print job.
 	 * Since 2.10
-	 * Returns: the settings of job
+	 * Returns: the settings of job. [transfer none]
 	 */
 	public PrintSettings getSettings()
 	{
@@ -215,7 +215,7 @@ public class PrintJob : ObjectG
 	/**
 	 * Gets the GtkPrinter of the print job.
 	 * Since 2.10
-	 * Returns: the printer of job
+	 * Returns: the printer of job. [transfer none]
 	 */
 	public Printer getPrinter()
 	{
@@ -281,7 +281,7 @@ public class PrintJob : ObjectG
 	 * Gets a cairo surface onto which the pages of
 	 * the print job should be rendered.
 	 * Since 2.10
-	 * Returns: the cairo surface of job
+	 * Returns: the cairo surface of job. [transfer none]
 	 * Throws: GException on failure.
 	 */
 	public Surface getSurface()

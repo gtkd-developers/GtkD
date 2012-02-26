@@ -171,7 +171,7 @@ public class CheckButton : ToggleButton
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_check_button_new (void);
+		// GtkWidget * gtk_check_button_new (void);
 		auto p = gtk_check_button_new();
 		if(p is null)
 		{

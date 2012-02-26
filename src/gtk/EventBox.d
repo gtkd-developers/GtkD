@@ -124,7 +124,7 @@ public class EventBox : Bin
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_event_box_new (void);
+		// GtkWidget * gtk_event_box_new (void);
 		auto p = gtk_event_box_new();
 		if(p is null)
 		{

@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-GtkTextIter.html
+ * inFile  = GtkTextIter.html
  * outPack = gtk
  * outFile = TextIter
  * strct   = GtkTextIter
@@ -86,6 +86,7 @@ private import pango.PgLanguage;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -93,7 +94,7 @@ private import pango.PgLanguage;
  * conceptual overview which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
  */
-public class TextIter
+public class TextIter : Boxed
 {
 	
 	/** the main Gtk struct */
@@ -345,7 +346,7 @@ public class TextIter
 	 */
 	public Pixbuf getPixbuf()
 	{
-		// GdkPixbuf* gtk_text_iter_get_pixbuf (const GtkTextIter *iter);
+		// GdkPixbuf * gtk_text_iter_get_pixbuf (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_pixbuf(gtkTextIter);
 		if(p is null)
 		{
@@ -360,7 +361,7 @@ public class TextIter
 	 * they are just marks in between iterable locations), multiple marks
 	 * can exist in the same place. The returned list is not in any
 	 * meaningful order.
-	 * Returns: list of GtkTextMark. [element-type GtkTextMark][transfer container GtkTextMark]
+	 * Returns: list of GtkTextMark. [element-type GtkTextMark][transfer container]
 	 */
 	public ListSG getMarks()
 	{
@@ -382,7 +383,7 @@ public class TextIter
 	 * does not have the tag applied to it.
 	 * Params:
 	 * toggledOn = TRUE to get toggled-on tags
-	 * Returns: tags toggled at this point. [element-type GtkTextTag][transfer container GtkTextTag]
+	 * Returns: tags toggled at this point. [element-type GtkTextTag][transfer container]
 	 */
 	public ListSG getToggledTags(int toggledOn)
 	{
@@ -399,11 +400,11 @@ public class TextIter
 	 * If the location at iter contains a child anchor, the
 	 * anchor is returned (with no new reference count added). Otherwise,
 	 * NULL is returned.
-	 * Returns: the anchor at iter
+	 * Returns: the anchor at iter. [transfer none]
 	 */
 	public TextChildAnchor getChildAnchor()
 	{
-		// GtkTextChildAnchor* gtk_text_iter_get_child_anchor (const GtkTextIter *iter);
+		// GtkTextChildAnchor * gtk_text_iter_get_child_anchor (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_child_anchor(gtkTextIter);
 		if(p is null)
 		{
@@ -477,7 +478,7 @@ public class TextIter
 	 * priority (highest-priority tags are last). The GtkTextTag in the
 	 * list don't have a reference added, but you have to free the list
 	 * itself.
-	 * Returns: list of GtkTextTag. [element-type GtkTextTag][transfer container GtkTextTag]
+	 * Returns: list of GtkTextTag. [element-type GtkTextTag][transfer container]
 	 */
 	public ListSG getTags()
 	{
@@ -681,7 +682,7 @@ public class TextIter
 	 * effects of any tags present at iter. If any tags affected values,
 	 * the function returns TRUE.
 	 * Params:
-	 * values = a GtkTextAttributes to be filled in
+	 * values = a GtkTextAttributes to be filled in. [out]
 	 * Returns: TRUE if values was modified
 	 */
 	public int getAttributes(TextAttributes values)
@@ -699,7 +700,7 @@ public class TextIter
 	 */
 	public PgLanguage getLanguage()
 	{
-		// PangoLanguage* gtk_text_iter_get_language (const GtkTextIter *iter);
+		// PangoLanguage * gtk_text_iter_get_language (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_language(gtkTextIter);
 		if(p is null)
 		{
@@ -1351,7 +1352,7 @@ public class TextIter
 	 * If pred never returns TRUE, iter is set to limit if
 	 * limit is non-NULL, otherwise to the end iterator.
 	 * Params:
-	 * pred = a function to be called on each character
+	 * pred = a function to be called on each character. [scope call]
 	 * userData = user data for pred
 	 * limit = search limit, or NULL for none. [allow-none]
 	 * Returns: whether a match was found
@@ -1365,7 +1366,7 @@ public class TextIter
 	/**
 	 * Same as gtk_text_iter_forward_find_char(), but goes backward from iter.
 	 * Params:
-	 * pred = function to be called on each character
+	 * pred = function to be called on each character. [scope call]
 	 * userData = user data for pred
 	 * limit = search limit, or NULL for none. [allow-none]
 	 * Returns: whether a match was found
@@ -1393,8 +1394,8 @@ public class TextIter
 	 * Params:
 	 * str = a search string
 	 * flags = flags affecting how the search is done
-	 * matchStart = return location for start of match, or NULL. [out caller-allocates][allow-none caller-allocates]
-	 * matchEnd = return location for end of match, or NULL. [out caller-allocates][allow-none caller-allocates]
+	 * matchStart = return location for start of match, or NULL. [out caller-allocates][allow-none]
+	 * matchEnd = return location for end of match, or NULL. [out caller-allocates][allow-none]
 	 * limit = bound for the search, or NULL for the end of the buffer. [allow-none]
 	 * Returns: whether a match was found
 	 */
@@ -1409,8 +1410,8 @@ public class TextIter
 	 * Params:
 	 * str = search string
 	 * flags = bitmask of flags affecting the search
-	 * matchStart = return location for start of match, or NULL. [out caller-allocates][allow-none caller-allocates]
-	 * matchEnd = return location for end of match, or NULL. [out caller-allocates][allow-none caller-allocates]
+	 * matchStart = return location for start of match, or NULL. [out caller-allocates][allow-none]
+	 * matchEnd = return location for end of match, or NULL. [out caller-allocates][allow-none]
 	 * limit = location of last possible match_start, or NULL for start of buffer. [allow-none]
 	 * Returns: whether a match was found
 	 */

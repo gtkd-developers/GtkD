@@ -153,7 +153,7 @@ public class Fixed : Container
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_fixed_new (void);
+		// GtkWidget * gtk_fixed_new (void);
 		auto p = gtk_fixed_new();
 		if(p is null)
 		{

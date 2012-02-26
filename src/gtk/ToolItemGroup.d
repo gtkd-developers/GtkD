@@ -164,11 +164,11 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Params:
 	 * x = the x position
 	 * y = the y position
-	 * Returns: the GtkToolItem at position (x, y)
+	 * Returns: the GtkToolItem at position (x, y). [transfer none]
 	 */
 	public ToolItem getDropItem(int x, int y)
 	{
-		// GtkToolItem* gtk_tool_item_group_get_drop_item (GtkToolItemGroup *group,  gint x,  gint y);
+		// GtkToolItem * gtk_tool_item_group_get_drop_item (GtkToolItemGroup *group,  gint x,  gint y);
 		auto p = gtk_tool_item_group_get_drop_item(gtkToolItemGroup, x, y);
 		if(p is null)
 		{
@@ -219,7 +219,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 */
 	public string getLabel()
 	{
-		// const gchar* gtk_tool_item_group_get_label (GtkToolItemGroup *group);
+		// const gchar * gtk_tool_item_group_get_label (GtkToolItemGroup *group);
 		return Str.toString(gtk_tool_item_group_get_label(gtkToolItemGroup));
 	}
 	
@@ -227,7 +227,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Gets the label widget of group.
 	 * See gtk_tool_item_group_set_label_widget().
 	 * Since 2.20
-	 * Returns: the label widget of group
+	 * Returns: the label widget of group. [transfer none]
 	 */
 	public Widget getLabelWidget()
 	{
@@ -245,11 +245,11 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Since 2.20
 	 * Params:
 	 * index = the index
-	 * Returns: the GtkToolItem at index
+	 * Returns: the GtkToolItem at index. [transfer none]
 	 */
 	public ToolItem getNthItem(uint index)
 	{
-		// GtkToolItem* gtk_tool_item_group_get_nth_item (GtkToolItemGroup *group,  guint index);
+		// GtkToolItem * gtk_tool_item_group_get_nth_item (GtkToolItemGroup *group,  guint index);
 		auto p = gtk_tool_item_group_get_nth_item(gtkToolItemGroup, index);
 		if(p is null)
 		{
@@ -275,7 +275,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Params:
 	 * item = the GtkToolItem to insert into group
 	 * position = the position of item in group, starting with 0.
-	 *  The position -1 means end of list.
+	 * The position -1 means end of list.
 	 */
 	public void insert(ToolItem item, int position)
 	{
@@ -292,7 +292,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 */
 	public this (string label)
 	{
-		// GtkWidget* gtk_tool_item_group_new (const gchar *label);
+		// GtkWidget * gtk_tool_item_group_new (const gchar *label);
 		auto p = gtk_tool_item_group_new(Str.toStringz(label));
 		if(p is null)
 		{
@@ -330,9 +330,9 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Since 2.20
 	 * Params:
 	 * item = the GtkToolItem to move to a new position, should
-	 *  be a child of group.
+	 * be a child of group.
 	 * position = the new position of item in group, starting with 0.
-	 *  The position -1 means end of list.
+	 * The position -1 means end of list.
 	 */
 	public void setItemPosition(ToolItem item, int position)
 	{

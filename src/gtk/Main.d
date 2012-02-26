@@ -158,6 +158,8 @@ public class Main
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_set_locale has been deprecated since version 2.24 and should not be used in newly-written code. Use setlocale() directly
 	 * Initializes internationalization support for GTK+. gtk_init()
 	 * automatically does this, so there is typically no point
 	 * in calling this function.
@@ -220,10 +222,11 @@ public class Main
 	 * to a display. (See gdk_display_open(), gdk_get_display_arg_name())
 	 * Any arguments used by GTK+ or GDK are removed from the array and
 	 * argc and argv are updated accordingly.
-	 * You shouldn't call this function explicitely if you are using
+	 * There is no need to call this function explicitely if you are using
 	 * gtk_init(), or gtk_init_check().
 	 * Params:
-	 * argv = a pointer to the array of command line arguments. [array][inout]
+	 * argv = a pointer to the array of
+	 * command line arguments. [array length=argc][inout]
 	 * Returns: TRUE if initialization succeeded, otherwise FALSE.
 	 */
 	public static int parseArgs(ref string[] argv)
@@ -245,30 +248,22 @@ public class Main
 	/**
 	 * Call this function before using any other GTK+ functions in your GUI
 	 * applications. It will initialize everything needed to operate the
-	 * toolkit and parses some standard command line options. argc and
-	 * argv are adjusted accordingly so your own code will
+	 * toolkit and parses some standard command line options.
+	 * argc and argv are adjusted accordingly so your own code will
 	 * never see those standard arguments.
-	 * Note that there are some alternative ways to initialize GTK+:
-	 * if you are calling gtk_parse_args(), gtk_init_check(),
-	 * gtk_init_with_args() or g_option_context_parse() with
-	 * the option group returned by gtk_get_option_group(), you
-	 * don't have to call gtk_init().
-	 * Note
-	 * This function will terminate your program if it was unable to initialize
-	 * the GUI for some reason. If you want your program to fall back to a
-	 * textual interface you want to call gtk_init_check() instead.
-	 * Note
 	 * Since 2.18, GTK+ calls signal (SIGPIPE, SIG_IGN)
 	 * during initialization, to ignore SIGPIPE signals, since these are
 	 * almost never wanted in graphical applications. If you do need to
 	 * handle SIGPIPE for some reason, reset the handler after gtk_init(),
 	 * but notice that other libraries (e.g. libdbus or gvfs) might do
 	 * similar things.
+	 * Note
 	 * Params:
-	 * argc = Address of the argc parameter of your
-	 *  main() function. Changed if any arguments were handled. [inout]
-	 * argv = Address of the argv parameter of main().
-	 *  Any parameters understood by gtk_init() are stripped before return. [array length=argc][inout length=argc][allow-none length=argc]
+	 * argc = Address of the argc parameter of
+	 * your main() function. Changed if any arguments were handled. [inout]
+	 * argv = Address of the
+	 * argv parameter of main(). Any options
+	 * understood by GTK+ are stripped before return. [array length=argc][inout][allow-none]
 	 */
 	public static void init(int* argc, char*** argv)
 	{
@@ -284,7 +279,7 @@ public class Main
 	 * with the user - for example a curses or command line interface.
 	 * Params:
 	 * argv = Address of the argv parameter of main().
-	 *  Any parameters understood by gtk_init() are stripped before return. [array length=argc][inout length=argc][allow-none length=argc]
+	 * Any parameters understood by gtk_init() are stripped before return. [array length=argc][inout][allow-none]
 	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
 	 */
 	public static int initCheck(ref string[] argv)
@@ -311,15 +306,16 @@ public class Main
 	 * be terminated after writing out the help output.
 	 * Since 2.6
 	 * Params:
-	 * argv = a pointer to the array of command line arguments.
+	 * argv = a pointer to the array of
+	 * command line arguments. [inout][array length=argc]
 	 * parameterString = a string which is displayed in
-	 *  the first line of --help output, after
-	 *  programname [OPTION...]
-	 * entries = a NULL-terminated array of GOptionEntrys
-	 *  describing the options of your program
+	 * the first line of --help output, after
+	 * programname [OPTION...]
+	 * entries = a NULL-terminated array
+	 * of GOptionEntrys describing the options of your program. [array zero-terminated=1]
 	 * translationDomain = a translation domain to use for translating
-	 *  the --help output for the options in entries
-	 *  with gettext(), or NULL
+	 * the --help output for the options in entries
+	 * with gettext(), or NULL
 	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -353,7 +349,7 @@ public class Main
 	 * Since 2.6
 	 * Params:
 	 * openDefaultDisplay = whether to open the default display
-	 *  when parsing the commandline arguments
+	 * when parsing the commandline arguments
 	 * Returns: a GOptionGroup for the commandline arguments recognized by GTK+
 	 */
 	public static GOptionGroup* getOptionGroup(int openDefaultDisplay)
@@ -479,11 +475,12 @@ public class Main
 	
 	/**
 	 * Queries the current grab of the default window group.
-	 * Returns: The widget which currently has the grab or NULL if no grab is active.
+	 * Queries the current grab of the default window group.
+	 * Returns: The widget which currently has the grab or NULL if no grab is active. [transfer none]
 	 */
 	public static Widget grabGetCurrent()
 	{
-		// GtkWidget* gtk_grab_get_current (void);
+		// GtkWidget * gtk_grab_get_current (void);
 		auto p = gtk_grab_get_current();
 		if(p is null)
 		{
@@ -506,6 +503,8 @@ public class Main
 	}
 	
 	/**
+	 * Warning
+	 * gtk_init_add is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
 	 * Registers a function to be called when the mainloop is started.
 	 * Params:
 	 * data = Data to pass to that function.
@@ -517,6 +516,8 @@ public class Main
 	}
 	
 	/**
+	 * Warning
+	 * gtk_quit_add_destroy is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
 	 * Trigger destruction of object in case the mainloop at level main_level
 	 * is quit.
 	 * Params:
@@ -530,11 +531,13 @@ public class Main
 	}
 	
 	/**
+	 * Warning
+	 * gtk_quit_add is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
 	 * Registers a function to be called when an instance of the mainloop is left.
 	 * Params:
 	 * mainLevel = Level at which termination the function shall be called. You
-	 *  can pass 0 here to have the function run at the termination of the current
-	 *  mainloop.
+	 * can pass 0 here to have the function run at the termination of the current
+	 * mainloop.
 	 * data = Pointer to pass when calling function.
 	 * Returns: A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
 	 */
@@ -545,6 +548,8 @@ public class Main
 	}
 	
 	/**
+	 * Warning
+	 * gtk_quit_add_full is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
 	 * Registers a function to be called when an instance of the mainloop is left.
 	 * In comparison to gtk_quit_add() this function adds the possibility to
 	 * pass a marshaller and a function to be called when the quit handler is freed.
@@ -554,10 +559,10 @@ public class Main
 	 * used by GTK+ wrappers for languages other than C.
 	 * Params:
 	 * mainLevel = Level at which termination the function shall be called. You
-	 *  can pass 0 here to have the function run at the termination of the current
-	 *  mainloop.
+	 * can pass 0 here to have the function run at the termination of the current
+	 * mainloop.
 	 * marshal = The marshaller to be used. If this is non-NULL, function is
-	 *  ignored.
+	 * ignored.
 	 * data = Pointer to pass when calling function.
 	 * destroy = Function to call to destruct data. Gets data as argument.
 	 * Returns: A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
@@ -569,6 +574,8 @@ public class Main
 	}
 	
 	/**
+	 * Warning
+	 * gtk_quit_remove is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
 	 * Removes a quit handler by its identifier.
 	 * Params:
 	 * quitHandlerId = Identifier for the handler returned when installing it.
@@ -580,6 +587,8 @@ public class Main
 	}
 	
 	/**
+	 * Warning
+	 * gtk_quit_remove_by_data is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
 	 * Removes a quit handler identified by its data field.
 	 * Params:
 	 * data = The pointer passed as data to gtk_quit_add() or gtk_quit_add_full().
@@ -601,7 +610,7 @@ public class Main
 	 * marshal = The marshaller to use instead of the function (if non-NULL).
 	 * data = callback data passed to function.
 	 * destroy = callback function to call with data when the input
-	 *  handler is removed, or NULL.
+	 * handler is removed, or NULL.
 	 * Returns: A unique id for the event source; to be used with gtk_input_remove().
 	 */
 	public static uint inputAddFull(int source, GdkInputCondition condition, GdkInputFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
@@ -654,11 +663,11 @@ public class Main
 	 * event will be the GdkEventButton that triggered the "clicked"
 	 * signal. The returned event must be freed with gdk_event_free().
 	 * If there is no current event, the function returns NULL.
-	 * Returns: a copy of the current event, or NULL if no current event.
+	 * Returns: a copy of the current event, or NULL if no current event. [transfer full]
 	 */
 	public static Event getCurrentEvent()
 	{
-		// GdkEvent* gtk_get_current_event (void);
+		// GdkEvent * gtk_get_current_event (void);
 		auto p = gtk_get_current_event();
 		if(p is null)
 		{
@@ -683,7 +692,7 @@ public class Main
 	 * that state field in state and return TRUE, otherwise return
 	 * FALSE.
 	 * Params:
-	 * state = a location to store the state of the current event
+	 * state = a location to store the state of the current event. [out]
 	 * Returns: TRUE if there was a current event and it had a state field
 	 */
 	public static int getCurrentEventState(out GdkModifierType state)
@@ -698,11 +707,11 @@ public class Main
 	 * originally.
 	 * Params:
 	 * event = a GdkEvent
-	 * Returns: the widget that originally received event, or NULL
+	 * Returns: the widget that originally received event, or NULL. [transfer none]
 	 */
 	public static Widget getEventWidget(Event event)
 	{
-		// GtkWidget* gtk_get_event_widget (GdkEvent *event);
+		// GtkWidget * gtk_get_event_widget (GdkEvent *event);
 		auto p = gtk_get_event_widget((event is null) ? null : event.getEventStruct());
 		if(p is null)
 		{

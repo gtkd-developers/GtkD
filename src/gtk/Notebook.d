@@ -440,14 +440,14 @@ public class Notebook : Container
 		return 0;
 	}
 	
-	void delegate(GtkNotebookPage*, guint, Notebook)[] onSwitchPageListeners;
+	void delegate(gpointer, guint, Notebook)[] onSwitchPageListeners;
 	/**
 	 * Emitted when the user or a function changes the current page.
 	 * See Also
 	 * GtkContainer
 	 * For functions that apply to every GtkContainer
 	 */
-	void addOnSwitchPage(void delegate(GtkNotebookPage*, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSwitchPage(void delegate(gpointer, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("switch-page" in connectedSignals) )
 		{
@@ -462,11 +462,11 @@ public class Notebook : Container
 		}
 		onSwitchPageListeners ~= dlg;
 	}
-	extern(C) static void callBackSwitchPage(GtkNotebook* notebookStruct, GtkNotebookPage* page, guint pageNum, Notebook notebook)
+	extern(C) static void callBackSwitchPage(GtkNotebook* notebookStruct, gpointer arg1, guint arg2, Notebook notebook)
 	{
-		foreach ( void delegate(GtkNotebookPage*, guint, Notebook) dlg ; notebook.onSwitchPageListeners )
+		foreach ( void delegate(gpointer, guint, Notebook) dlg ; notebook.onSwitchPageListeners )
 		{
-			dlg(page, pageNum, notebook);
+			dlg(arg1, arg2, notebook);
 		}
 	}
 	
@@ -491,7 +491,7 @@ public class Notebook : Container
 	 * Params:
 	 * child = the GtkWidget to use as the contents of the page.
 	 * tabLabel = the GtkWidget to be used as the label for the page,
-	 *  or NULL to use the default label, 'page N'. [allow-none]
+	 * or NULL to use the default label, 'page N'. [allow-none]
 	 * Returns: the index (starting from 0) of the appended page in the notebook, or -1 if function fails
 	 */
 	public int appendPage(Widget child, Widget tabLabel)
@@ -506,13 +506,13 @@ public class Notebook : Container
 	 * Params:
 	 * child = the GtkWidget to use as the contents of the page.
 	 * tabLabel = the GtkWidget to be used as the label for the page,
-	 *  or NULL to use the default label, 'page N'. [allow-none]
+	 * or NULL to use the default label, 'page N'. [allow-none]
 	 * menuLabel = the widget to use as a label for the page-switch
-	 *  menu, if that is enabled. If NULL, and tab_label
-	 *  is a GtkLabel or NULL, then the menu label will be
-	 *  a newly created label with the same text as tab_label;
-	 *  If tab_label is not a GtkLabel, menu_label must be
-	 *  specified if the page-switch menu is to be used. [allow-none]
+	 * menu, if that is enabled. If NULL, and tab_label
+	 * is a GtkLabel or NULL, then the menu label will be
+	 * a newly created label with the same text as tab_label;
+	 * If tab_label is not a GtkLabel, menu_label must be
+	 * specified if the page-switch menu is to be used. [allow-none]
 	 * Returns: the index (starting from 0) of the appended page in the notebook, or -1 if function fails
 	 */
 	public int appendPageMenu(Widget child, Widget tabLabel, Widget menuLabel)
@@ -526,7 +526,7 @@ public class Notebook : Container
 	 * Params:
 	 * child = the GtkWidget to use as the contents of the page.
 	 * tabLabel = the GtkWidget to be used as the label for the page,
-	 *  or NULL to use the default label, 'page N'. [allow-none]
+	 * or NULL to use the default label, 'page N'. [allow-none]
 	 * Returns: the index (starting from 0) of the prepended page in the notebook, or -1 if function fails
 	 */
 	public int prependPage(Widget child, Widget tabLabel)
@@ -541,13 +541,13 @@ public class Notebook : Container
 	 * Params:
 	 * child = the GtkWidget to use as the contents of the page.
 	 * tabLabel = the GtkWidget to be used as the label for the page,
-	 *  or NULL to use the default label, 'page N'. [allow-none]
+	 * or NULL to use the default label, 'page N'. [allow-none]
 	 * menuLabel = the widget to use as a label for the page-switch
-	 *  menu, if that is enabled. If NULL, and tab_label
-	 *  is a GtkLabel or NULL, then the menu label will be
-	 *  a newly created label with the same text as tab_label;
-	 *  If tab_label is not a GtkLabel, menu_label must be
-	 *  specified if the page-switch menu is to be used. [allow-none]
+	 * menu, if that is enabled. If NULL, and tab_label
+	 * is a GtkLabel or NULL, then the menu label will be
+	 * a newly created label with the same text as tab_label;
+	 * If tab_label is not a GtkLabel, menu_label must be
+	 * specified if the page-switch menu is to be used. [allow-none]
 	 * Returns: the index (starting from 0) of the prepended page in the notebook, or -1 if function fails
 	 */
 	public int prependPageMenu(Widget child, Widget tabLabel, Widget menuLabel)
@@ -561,9 +561,9 @@ public class Notebook : Container
 	 * Params:
 	 * child = the GtkWidget to use as the contents of the page.
 	 * tabLabel = the GtkWidget to be used as the label for the page,
-	 *  or NULL to use the default label, 'page N'. [allow-none]
+	 * or NULL to use the default label, 'page N'. [allow-none]
 	 * position = the index (starting at 0) at which to insert the page,
-	 *  or -1 to append the page after all other pages.
+	 * or -1 to append the page after all other pages.
 	 * Returns: the index (starting from 0) of the inserted page in the notebook, or -1 if function fails
 	 */
 	public int insertPage(Widget child, Widget tabLabel, int position)
@@ -578,15 +578,15 @@ public class Notebook : Container
 	 * Params:
 	 * child = the GtkWidget to use as the contents of the page.
 	 * tabLabel = the GtkWidget to be used as the label for the page,
-	 *  or NULL to use the default label, 'page N'. [allow-none]
+	 * or NULL to use the default label, 'page N'. [allow-none]
 	 * menuLabel = the widget to use as a label for the page-switch
-	 *  menu, if that is enabled. If NULL, and tab_label
-	 *  is a GtkLabel or NULL, then the menu label will be
-	 *  a newly created label with the same text as tab_label;
-	 *  If tab_label is not a GtkLabel, menu_label must be
-	 *  specified if the page-switch menu is to be used. [allow-none]
+	 * menu, if that is enabled. If NULL, and tab_label
+	 * is a GtkLabel or NULL, then the menu label will be
+	 * a newly created label with the same text as tab_label;
+	 * If tab_label is not a GtkLabel, menu_label must be
+	 * specified if the page-switch menu is to be used. [allow-none]
 	 * position = the index (starting at 0) at which to insert the page,
-	 *  or -1 to append the page after all other pages.
+	 * or -1 to append the page after all other pages.
 	 * Returns: the index (starting from 0) of the inserted page in the notebook
 	 */
 	public int insertPageMenu(Widget child, Widget tabLabel, Widget menuLabel, int position)
@@ -600,8 +600,8 @@ public class Notebook : Container
 	 * in the notebook.
 	 * Params:
 	 * pageNum = the index of a notebook page, starting
-	 *  from 0. If -1, the last page will
-	 *  be removed.
+	 * from 0. If -1, the last page will
+	 * be removed.
 	 */
 	public void removePage(int pageNum)
 	{
@@ -754,7 +754,7 @@ public class Notebook : Container
 	 * Retrieves the menu label widget of the page containing child.
 	 * Params:
 	 * child = a widget contained in a page of notebook
-	 * Returns: the menu label, or NULL if the notebook page does not have a menu label other than the default (the tab label).
+	 * Returns: the menu label, or NULL if the notebook page does not have a menu label other than the default (the tab label). [transfer none]
 	 */
 	public Widget getMenuLabel(Widget child)
 	{
@@ -771,12 +771,12 @@ public class Notebook : Container
 	 * Returns the child widget contained in page number page_num.
 	 * Params:
 	 * pageNum = the index of a page in the notebook, or -1
-	 *  to get the last page.
+	 * to get the last page.
 	 * Returns: the child widget, or NULL if page_num is out of bounds. [transfer none]
 	 */
 	public Widget getNthPage(int pageNum)
 	{
-		// GtkWidget* gtk_notebook_get_nth_page (GtkNotebook *notebook,  gint page_num);
+		// GtkWidget * gtk_notebook_get_nth_page (GtkNotebook *notebook,  gint page_num);
 		auto p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
 		if(p is null)
 		{
@@ -889,7 +889,7 @@ public class Notebook : Container
 	 * Params:
 	 * child = the page
 	 * tabLabel = the tab label widget to use, or NULL for default tab
-	 *  label. [allow-none]
+	 * label. [allow-none]
 	 */
 	public void setTabLabel(Widget child, Widget tabLabel)
 	{
@@ -1109,9 +1109,9 @@ public class Notebook : Container
 	 * adding them to a notebook.
 	 * Params:
 	 * pageNum = index of the page to switch to, starting from 0.
-	 *  If negative, the last page will be used. If greater
-	 *  than the number of pages in the notebook, nothing
-	 *  will be done.
+	 * If negative, the last page will be used. If greater
+	 * than the number of pages in the notebook, nothing
+	 * will be done.
 	 */
 	public void setCurrentPage(int pageNum)
 	{
@@ -1121,7 +1121,7 @@ public class Notebook : Container
 	
 	/**
 	 * Warning
-	 * gtk_notebook_set_group_id has been deprecated since version 2.12 and should not be used in newly-written code. use gtk_notebook_set_group() instead.
+	 * gtk_notebook_set_group_id has been deprecated since version 2.12 and should not be used in newly-written code. use gtk_notebook_set_group_name() instead.
 	 * Sets an group identificator for notebook, notebooks sharing
 	 * the same group identificator will be able to exchange tabs
 	 * via drag and drop. A notebook with group identificator -1 will
@@ -1138,7 +1138,7 @@ public class Notebook : Container
 	
 	/**
 	 * Warning
-	 * gtk_notebook_get_group_id has been deprecated since version 2.12 and should not be used in newly-written code. use gtk_notebook_get_group() instead.
+	 * gtk_notebook_get_group_id has been deprecated since version 2.12 and should not be used in newly-written code. use gtk_notebook_get_group_name() instead.
 	 * Gets the current group identificator for notebook.
 	 * Since 2.10
 	 * Returns: the group identificator, or -1 if none is set.
@@ -1150,6 +1150,8 @@ public class Notebook : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_notebook_set_group has been deprecated since version 2.24 and should not be used in newly-written code. Use gtk_notebook_set_group_name() instead
 	 * Sets a group identificator pointer for notebook, notebooks sharing
 	 * the same group identificator pointer will be able to exchange tabs
 	 * via drag and drop. A notebook with a NULL group identificator will
@@ -1165,14 +1167,43 @@ public class Notebook : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_notebook_get_group has been deprecated since version 2.24 and should not be used in newly-written code. Use gtk_notebook_get_group_name() instead
 	 * Gets the current group identificator pointer for notebook.
 	 * Since 2.12
-	 * Returns: the group identificator, or NULL if none is set.
+	 * Returns: the group identificator, or NULL if none is set. [transfer none]
 	 */
 	public void* getGroup()
 	{
 		// gpointer gtk_notebook_get_group (GtkNotebook *notebook);
 		return gtk_notebook_get_group(gtkNotebook);
+	}
+	
+	/**
+	 * Sets a group name for notebook.
+	 * Notebooks with the same name will be able to exchange tabs
+	 * via drag and drop. A notebook with a NULL group name will
+	 * not be able to exchange tabs with any other notebook.
+	 * Since 2.24
+	 */
+	public void setGroupName(string groupName)
+	{
+		// void gtk_notebook_set_group_name (GtkNotebook *notebook,  const gchar *group_name);
+		gtk_notebook_set_group_name(gtkNotebook, Str.toStringz(groupName));
+	}
+	
+	/**
+	 * Gets the current group name for notebook.
+	 * Note that this funtion can emphasis not be used
+	 * together with gtk_notebook_set_group() or
+	 * gtk_notebook_set_group_id().
+	 * Since 2.24
+	 * Returns: the group name, or NULL if none is set. [transfer none]
+	 */
+	public string getGroupName()
+	{
+		// const gchar * gtk_notebook_get_group_name (GtkNotebook *notebook);
+		return Str.toString(gtk_notebook_get_group_name(gtkNotebook));
 	}
 	
 	/**
@@ -1197,11 +1228,11 @@ public class Notebook : Container
 	 * Since 2.20
 	 * Params:
 	 * packType = pack type of the action widget to receive
-	 * Returns: The action widget with the given pack_type or NULL when this action widget has not been set
+	 * Returns: The action widget with the given pack_type or NULL when this action widget has not been set. [transfer none]
 	 */
 	public Widget getActionWidget(GtkPackType packType)
 	{
-		// GtkWidget* gtk_notebook_get_action_widget (GtkNotebook *notebook,  GtkPackType pack_type);
+		// GtkWidget * gtk_notebook_get_action_widget (GtkNotebook *notebook,  GtkPackType pack_type);
 		auto p = gtk_notebook_get_action_widget(gtkNotebook, packType);
 		if(p is null)
 		{
@@ -1211,6 +1242,8 @@ public class Notebook : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_notebook_set_window_creation_hook has been deprecated since version 2.24 and should not be used in newly-written code. Use the "create-window" signal instead
 	 * Installs a global function used to create a window
 	 * when a detached tab is dropped in an empty area.
 	 * Since 2.10

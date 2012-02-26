@@ -225,7 +225,7 @@ public class Menu : MenuShell
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_menu_new (void);
+		// GtkWidget * gtk_menu_new (void);
 		auto p = gtk_menu_new();
 		if(p is null)
 		{
@@ -239,7 +239,7 @@ public class Menu : MenuShell
 	 * Since 2.2
 	 * Params:
 	 * screen = a GdkScreen, or NULL if the screen should be
-	 *  determined by the widget the menu is attached to. [allow-none]
+	 * determined by the widget the menu is attached to. [allow-none]
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -326,13 +326,15 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Gets the GtkAccelGroup which holds global accelerators for the
+	 * menu. See gtk_menu_set_accel_group().
 	 * Gets the GtkAccelGroup which holds global accelerators for the menu.
 	 * See gtk_menu_set_accel_group().
-	 * Returns: the GtkAccelGroup associated with the menu.
+	 * Returns: the GtkAccelGroup associated with the menu. [transfer none]
 	 */
 	public AccelGroup getAccelGroup()
 	{
-		// GtkAccelGroup* gtk_menu_get_accel_group (GtkMenu *menu);
+		// GtkAccelGroup * gtk_menu_get_accel_group (GtkMenu *menu);
 		auto p = gtk_menu_get_accel_group(gtkMenu);
 		if(p is null)
 		{
@@ -368,7 +370,7 @@ public class Menu : MenuShell
 	 */
 	public string getAccelPath()
 	{
-		// const gchar* gtk_menu_get_accel_path (GtkMenu *menu);
+		// const gchar * gtk_menu_get_accel_path (GtkMenu *menu);
 		return Str.toString(gtk_menu_get_accel_path(gtkMenu));
 	}
 	
@@ -407,7 +409,7 @@ public class Menu : MenuShell
 	 * Since 2.4
 	 * Params:
 	 * monitorNum = the number of the monitor on which the menu should
-	 *  be popped up
+	 * be popped up
 	 */
 	public void setMonitor(int monitorNum)
 	{
@@ -483,11 +485,13 @@ public class Menu : MenuShell
 	/**
 	 * Returns the selected menu item from the menu. This is used by the
 	 * GtkOptionMenu.
-	 * Returns: the GtkMenuItem that was last selected in the menu. If a selection has not yet been made, the first menu item is selected.
+	 * Returns the selected menu item from the menu. This is used by the
+	 * GtkOptionMenu.
+	 * Returns: the GtkMenuItem that was last selected in the menu. If a selection has not yet been made, the first menu item is selected. [transfer none]
 	 */
 	public Widget getActive()
 	{
-		// GtkWidget* gtk_menu_get_active (GtkMenu *menu);
+		// GtkWidget * gtk_menu_get_active (GtkMenu *menu);
 		auto p = gtk_menu_get_active(gtkMenu);
 		if(p is null)
 		{
@@ -550,11 +554,12 @@ public class Menu : MenuShell
 	
 	/**
 	 * Returns the GtkWidget that the menu is attached to.
-	 * Returns: the GtkWidget that the menu is attached to.
+	 * Returns the GtkWidget that the menu is attached to.
+	 * Returns: the GtkWidget that the menu is attached to. [transfer none]
 	 */
 	public Widget getAttachWidget()
 	{
-		// GtkWidget* gtk_menu_get_attach_widget (GtkMenu *menu);
+		// GtkWidget * gtk_menu_get_attach_widget (GtkMenu *menu);
 		auto p = gtk_menu_get_attach_widget(gtkMenu);
 		if(p is null)
 		{
@@ -569,11 +574,11 @@ public class Menu : MenuShell
 	 * Since 2.6
 	 * Params:
 	 * widget = a GtkWidget
-	 * Returns: the list of menus attached to his widget. [element-type GtkWidget][transfer none GtkWidget]
+	 * Returns: the list of menus attached to his widget. [element-type GtkWidget][transfer none]
 	 */
 	public static ListG getForAttachWidget(Widget widget)
 	{
-		// GList* gtk_menu_get_for_attach_widget (GtkWidget *widget);
+		// GList * gtk_menu_get_for_attach_widget (GtkWidget *widget);
 		auto p = gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{

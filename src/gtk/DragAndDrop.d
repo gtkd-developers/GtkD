@@ -161,9 +161,9 @@ public class DragAndDrop
 	 * widget = a GtkWidget
 	 * flags = which types of default drag behavior to use
 	 * targets = a pointer to an array of GtkTargetEntrys
-	 *  indicating the drop types that this widget will accept, or NULL.
-	 *  Later you can access the list with gtk_drag_dest_get_target_list()
-	 *  and gtk_drag_dest_find_target(). [allow-none][array length=n_targets]
+	 * indicating the drop types that this widget will accept, or NULL.
+	 * Later you can access the list with gtk_drag_dest_get_target_list()
+	 * and gtk_drag_dest_find_target(). [allow-none][array length=n_targets]
 	 * nTargets = the number of entries in targets
 	 * actions = a bitmask of possible actions for a drop onto this widget.
 	 */
@@ -179,10 +179,10 @@ public class DragAndDrop
 	 * widget = a GtkWidget
 	 * proxyWindow = the window to which to forward drag events
 	 * protocol = the drag protocol which the proxy_window accepts
-	 *  (You can use gdk_drag_get_protocol() to determine this)
+	 * (You can use gdk_drag_get_protocol() to determine this)
 	 * useCoordinates = If TRUE, send the same coordinates to the
-	 *  destination, because it is an embedded
-	 *  subwindow.
+	 * destination, because it is an embedded
+	 * subwindow.
 	 */
 	public static void destSetProxy(Widget widget, Window proxyWindow, GdkDragProtocol protocol, int useCoordinates)
 	{
@@ -204,19 +204,19 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Looks for a match between context->targets and the
+	 * Params:
+	 * widget = drag destination widget
+	 * context = drag context
+	 * targetList = list of droppable targets, or NULL to use
+	 * gtk_drag_dest_get_target_list (widget).
+	 * Looks for a match between the supported targets of context and the
 	 * dest_target_list, returning the first matching target, otherwise
 	 * returning GDK_NONE. dest_target_list should usually be the return
 	 * value from gtk_drag_dest_get_target_list(), but some widgets may
 	 * have different valid targets for different parts of the widget; in
 	 * that case, they will have to implement a drag_motion handler that
-	 * passes the correct target list to this function.
-	 * Params:
-	 * widget = drag destination widget
-	 * context = drag context
-	 * targetList = list of droppable targets, or NULL to use
-	 *  gtk_drag_dest_get_target_list (widget). [allow-none]
-	 * Returns: first target that the source offers and the dest can accept, or GDK_NONE
+	 * passes the correct target list to this function. [allow-none]
+	 * Returns: first target that the source offers and the dest can accept, or GDK_NONE. [transfer none]
 	 */
 	public static GdkAtom destFindTarget(Widget widget, DragContext context, TargetList targetList)
 	{
@@ -229,11 +229,11 @@ public class DragAndDrop
 	 * drag-and-drop.
 	 * Params:
 	 * widget = a GtkWidget
-	 * Returns: the GtkTargetList, or NULL if none
+	 * Returns: the GtkTargetList, or NULL if none. [transfer none]
 	 */
 	public static TargetList destGetTargetList(Widget widget)
 	{
-		// GtkTargetList* gtk_drag_dest_get_target_list (GtkWidget *widget);
+		// GtkTargetList * gtk_drag_dest_get_target_list (GtkWidget *widget);
 		auto p = gtk_drag_dest_get_target_list((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{
@@ -341,7 +341,7 @@ public class DragAndDrop
 	 * Params:
 	 * success = a flag indicating whether the drop was successful
 	 * del = a flag indicating whether the source should delete the
-	 *  original data. (This should be TRUE for a move)
+	 * original data. (This should be TRUE for a move)
 	 * time = the timestamp from the "drag_data_drop" signal.
 	 */
 	public void finish(int success, int del, uint time)
@@ -361,12 +361,12 @@ public class DragAndDrop
 	 * drops.
 	 * Params:
 	 * widget = the widget that will receive the "drag_data_received"
-	 *  signal.
+	 * signal.
 	 * context = the drag context
 	 * target = the target (form of the data) to retrieve.
 	 * time = a timestamp for retrieving the data. This will
-	 *  generally be the time received in a "drag_data_motion"
-	 *  or "drag_data_drop" signal.
+	 * generally be the time received in a "drag_data_motion"
+	 * or "drag_data_drop" signal.
 	 */
 	public static void getData(Widget widget, DragContext context, GdkAtom target, uint time)
 	{
@@ -376,7 +376,8 @@ public class DragAndDrop
 	
 	/**
 	 * Determines the source widget for a drag.
-	 * Returns: if the drag is occurring within a single application, a pointer to the source widget. Otherwise, NULL.
+	 * Determines the source widget for a drag.
+	 * Returns: if the drag is occurring within a single application, a pointer to the source widget. Otherwise, NULL. [transfer none]
 	 */
 	public Widget getSourceWidget()
 	{
@@ -429,11 +430,11 @@ public class DragAndDrop
 	 * Params:
 	 * widget = the source widget.
 	 * targets = The targets (data formats) in which the
-	 *  source can provide the data.
+	 * source can provide the data.
 	 * actions = A bitmask of the allowed drag actions for this drag.
 	 * button = The button the user clicked to start the drag.
 	 * event = The event that triggered the start of the drag.
-	 * Returns: the context for this drag.
+	 * Returns: the context for this drag. [transfer none]
 	 */
 	public static DragContext begin(Widget widget, TargetList targets, GdkDragAction actions, int button, Event event)
 	{
@@ -470,7 +471,7 @@ public class DragAndDrop
 	 * Params:
 	 * colormap = the colormap of the icon
 	 * pixmap = the image data for the icon
-	 * mask = the transparency mask for the icon
+	 * mask = the transparency mask for the icon or NULL for none. [allow-none]
 	 * hotX = the X offset within pixmap of the hotspot.
 	 * hotY = the Y offset within pixmap of the hotspot.
 	 */
@@ -578,7 +579,7 @@ public class DragAndDrop
 	 * widget = a GtkWidget
 	 * startButtonMask = the bitmask of buttons that can start the drag
 	 * targets = the table of targets that the drag will support,
-	 *  may be NULL. [allow-none][array length=n_targets]
+	 * may be NULL. [allow-none][array length=n_targets]
 	 * nTargets = the number of items in targets
 	 * actions = the bitmask of possible actions for a drag from this widget
 	 */
@@ -678,11 +679,11 @@ public class DragAndDrop
 	 * Since 2.4
 	 * Params:
 	 * widget = a GtkWidget
-	 * Returns: the GtkTargetList, or NULL if none
+	 * Returns: the GtkTargetList, or NULL if none. [transfer none]
 	 */
 	public static TargetList sourceGetTargetList(Widget widget)
 	{
-		// GtkTargetList* gtk_drag_source_get_target_list (GtkWidget *widget);
+		// GtkTargetList * gtk_drag_source_get_target_list (GtkWidget *widget);
 		auto p = gtk_drag_source_get_target_list((widget is null) ? null : widget.getWidgetStruct());
 		if(p is null)
 		{

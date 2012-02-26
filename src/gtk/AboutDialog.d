@@ -64,6 +64,8 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 private import glib.ConstructionException;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Pixbuf;
@@ -159,6 +161,46 @@ public class AboutDialog : Dialog
 	
 	/**
 	 */
+	int[char[]] connectedSignals;
+	
+	bool delegate(string, AboutDialog)[] onActivateLinkListeners;
+	/**
+	 * The signal which gets emitted to activate a URI.
+	 * Applications may connect to it to override the default behaviour,
+	 * which is to call gtk_show_uri().
+	 * TRUE if the link has been activated
+	 * Since 2.24
+	 * See Also
+	 * GTK_STOCK_ABOUT
+	 */
+	void addOnActivateLink(bool delegate(string, AboutDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("activate-link" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"activate-link",
+			cast(GCallback)&callBackActivateLink,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["activate-link"] = 1;
+		}
+		onActivateLinkListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackActivateLink(GtkAboutDialog* labelStruct, gchar* uri, AboutDialog aboutDialog)
+	{
+		foreach ( bool delegate(string, AboutDialog) dlg ; aboutDialog.onActivateLinkListeners )
+		{
+			if ( dlg(Str.toString(uri), aboutDialog) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
 	
 	/**
 	 * Creates a new GtkAboutDialog.
@@ -400,11 +442,11 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the authors tab
 	 * of the secondary credits dialog.
 	 * Since 2.6
-	 * Returns: A NULL-terminated string array containing the authors. The array is owned by the about dialog and must not be modified.
+	 * Returns: A NULL-terminated string array containing the authors. The array is owned by the about dialog and must not be modified. [array zero-terminated=1][transfer none]
 	 */
 	public string[] getAuthors()
 	{
-		// const gchar* const * gtk_about_dialog_get_authors (GtkAboutDialog *about);
+		// const gchar * const * gtk_about_dialog_get_authors (GtkAboutDialog *about);
 		return Str.toStringArray(gtk_about_dialog_get_authors(gtkAboutDialog));
 	}
 	
@@ -425,11 +467,11 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the artists tab
 	 * of the secondary credits dialog.
 	 * Since 2.6
-	 * Returns: A NULL-terminated string array containing the artists. The array is owned by the about dialog and must not be modified.
+	 * Returns: A NULL-terminated string array containing the artists. The array is owned by the about dialog and must not be modified. [array zero-terminated=1][transfer none]
 	 */
 	public string[] getArtists()
 	{
-		// const gchar* const * gtk_about_dialog_get_artists (GtkAboutDialog *about);
+		// const gchar * const * gtk_about_dialog_get_artists (GtkAboutDialog *about);
 		return Str.toStringArray(gtk_about_dialog_get_artists(gtkAboutDialog));
 	}
 	
@@ -450,11 +492,11 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the documenters
 	 * tab of the secondary credits dialog.
 	 * Since 2.6
-	 * Returns: A NULL-terminated string array containing the documenters. The array is owned by the about dialog and must not be modified.
+	 * Returns: A NULL-terminated string array containing the documenters. The array is owned by the about dialog and must not be modified. [array zero-terminated=1][transfer none]
 	 */
 	public string[] getDocumenters()
 	{
-		// const gchar* const * gtk_about_dialog_get_documenters (GtkAboutDialog *about);
+		// const gchar * const * gtk_about_dialog_get_documenters (GtkAboutDialog *about);
 		return Str.toStringArray(gtk_about_dialog_get_documenters(gtkAboutDialog));
 	}
 	
@@ -502,7 +544,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the pixbuf displayed as logo in the about dialog.
 	 * Since 2.6
-	 * Returns: the pixbuf displayed as logo. The pixbuf is owned by the about dialog. If you want to keep a reference to it, you have to call g_object_ref() on it.
+	 * Returns: the pixbuf displayed as logo. The pixbuf is owned by the about dialog. If you want to keep a reference to it, you have to call g_object_ref() on it. [transfer none]
 	 */
 	public Pixbuf getLogo()
 	{
@@ -555,6 +597,8 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_about_dialog_set_email_hook has been deprecated since version 2.24 and should not be used in newly-written code. Use the "activate-link" signal
 	 * Installs a global function to be called whenever the user activates an
 	 * email link in an about dialog.
 	 * Since 2.18 there exists a default function which uses gtk_show_uri(). To
@@ -573,6 +617,8 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_about_dialog_set_url_hook has been deprecated since version 2.24 and should not be used in newly-written code. Use the "activate-link" signal
 	 * Installs a global function to be called whenever the user activates a
 	 * URL link in an about dialog.
 	 * Since 2.18 there exists a default function which uses gtk_show_uri(). To

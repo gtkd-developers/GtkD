@@ -201,7 +201,7 @@ public class Adjustment : ObjectGtk
 	 */
 	public this (double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
-		// GtkObject* gtk_adjustment_new (gdouble value,  gdouble lower,  gdouble upper,  gdouble step_increment,  gdouble page_increment,  gdouble page_size);
+		// GtkObject * gtk_adjustment_new (gdouble value,  gdouble lower,  gdouble upper,  gdouble step_increment,  gdouble page_increment,  gdouble page_size);
 		auto p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
 		if(p is null)
 		{

@@ -284,7 +284,7 @@ public class MessageDialog : Dialog
 	/**
 	 * Gets the dialog's image.
 	 * Since 2.14
-	 * Returns: the dialog's image
+	 * Returns: the dialog's image. [transfer none]
 	 */
 	public Widget getImage()
 	{

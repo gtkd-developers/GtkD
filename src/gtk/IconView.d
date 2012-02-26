@@ -509,7 +509,7 @@ public class IconView : Container, CellLayoutIF
 	 * Returns the model the GtkIconView is based on. Returns NULL if the
 	 * model is unset.
 	 * Since 2.6
-	 * Returns: A GtkTreeModel, or NULL if none is currently being used.
+	 * Returns: A GtkTreeModel, or NULL if none is currently being used. [transfer none]
 	 */
 	public TreeModelIF getModel()
 	{
@@ -632,7 +632,7 @@ public class IconView : Container, CellLayoutIF
 	 * y = The y position to be identified
 	 * path = Return location for the path, or NULL. [allow-none]
 	 * cell = Return location for the renderer responsible for the cell
-	 *  at (x, y), or NULL
+	 * at (x, y), or NULL
 	 * Returns: TRUE if an item exists at the specified position
 	 */
 	public int getItemAtPos(int x, int y, out TreePath path, out CellRenderer cell)
@@ -655,8 +655,8 @@ public class IconView : Container, CellLayoutIF
 	 * Params:
 	 * wx = X coordinate relative to the widget
 	 * wy = Y coordinate relative to the widget
-	 * bx = return location for bin_window X coordinate
-	 * by = return location for bin_window Y coordinate
+	 * bx = return location for bin_window X coordinate. [out]
+	 * by = return location for bin_window Y coordinate. [out]
 	 */
 	public void convertWidgetToBinWindowCoords(int wx, int wy, out int bx, out int by)
 	{
@@ -714,7 +714,7 @@ public class IconView : Container, CellLayoutIF
 	 * selection cannot be modified from within this function.
 	 * Since 2.6
 	 * Params:
-	 * func = The funcion to call for each selected icon.
+	 * func = The function to call for each selected icon. [scope call]
 	 * data = User data to pass to the function.
 	 */
 	public void selectedForeach(GtkIconViewForeachFunc func, void* data)
@@ -1017,7 +1017,7 @@ public class IconView : Container, CellLayoutIF
 	 * want to convert the returned list into a list of GtkTreeRowReferences.
 	 * To do this, you can use gtk_tree_row_reference_new().
 	 * Since 2.6
-	 * Returns: A GList containing a GtkTreePath for each selected row. [element-type GtkTreePath][transfer full GtkTreePath]
+	 * Returns: A GList containing a GtkTreePath for each selected row. [element-type GtkTreePath][transfer full]
 	 */
 	public ListG getSelectedItems()
 	{
@@ -1156,8 +1156,8 @@ public class IconView : Container, CellLayoutIF
 	 * to be relative to icon_view's bin_window if keyboard_tooltip is FALSE.
 	 * Since 2.12
 	 * Params:
-	 * x = the x coordinate (relative to widget coordinates)
-	 * y = the y coordinate (relative to widget coordinates)
+	 * x = the x coordinate (relative to widget coordinates). [inout]
+	 * y = the y coordinate (relative to widget coordinates). [inout]
 	 * keyboardTip = whether this is a keyboard tooltip or not
 	 * model = a pointer to receive a GtkTreeModel or NULL. [out][allow-none]
 	 * path = a pointer to receive a GtkTreePath or NULL. [out][allow-none]
@@ -1242,7 +1242,7 @@ public class IconView : Container, CellLayoutIF
 	 * startButtonMask = Mask of allowed buttons to start drag
 	 * targets = the table of targets that the drag will support
 	 * actions = the bitmask of possible actions for a drag from this
-	 *  widget
+	 * widget
 	 */
 	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry[] targets, GdkDragAction actions)
 	{
@@ -1257,7 +1257,7 @@ public class IconView : Container, CellLayoutIF
 	 * Params:
 	 * targets = the table of targets that the drag will support
 	 * actions = the bitmask of possible actions for a drag to this
-	 *  widget
+	 * widget
 	 */
 	public void enableModelDragDest(GtkTargetEntry[] targets, GdkDragAction actions)
 	{
@@ -1378,7 +1378,7 @@ public class IconView : Container, CellLayoutIF
 	 * Since 2.8
 	 * Params:
 	 * path = a GtkTreePath in icon_view
-	 * Returns: a newly-allocated pixmap of the drag icon.
+	 * Returns: a newly-allocated pixmap of the drag icon. [transfer full]
 	 */
 	public Pixmap createDragIcon(TreePath path)
 	{

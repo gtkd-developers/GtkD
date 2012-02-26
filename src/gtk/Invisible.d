@@ -129,7 +129,7 @@ public class Invisible : Widget
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_invisible_new (void);
+		// GtkWidget * gtk_invisible_new (void);
 		auto p = gtk_invisible_new();
 		if(p is null)
 		{
@@ -143,12 +143,12 @@ public class Invisible : Widget
 	 * Since 2.2
 	 * Params:
 	 * screen = a GdkScreen which identifies on which
-	 *  the new GtkInvisible will be created.
+	 * the new GtkInvisible will be created.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Screen screen)
 	{
-		// GtkWidget* gtk_invisible_new_for_screen (GdkScreen *screen);
+		// GtkWidget * gtk_invisible_new_for_screen (GdkScreen *screen);
 		auto p = gtk_invisible_new_for_screen((screen is null) ? null : screen.getScreenStruct());
 		if(p is null)
 		{
@@ -172,11 +172,11 @@ public class Invisible : Widget
 	/**
 	 * Returns the GdkScreen object associated with invisible
 	 * Since 2.2
-	 * Returns: the associated GdkScreen.
+	 * Returns: the associated GdkScreen. [transfer none]
 	 */
 	public override Screen getScreen()
 	{
-		// GdkScreen* gtk_invisible_get_screen (GtkInvisible *invisible);
+		// GdkScreen * gtk_invisible_get_screen (GtkInvisible *invisible);
 		auto p = gtk_invisible_get_screen(gtkInvisible);
 		if(p is null)
 		{

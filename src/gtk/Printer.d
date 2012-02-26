@@ -190,7 +190,7 @@ public class Printer : ObjectG
 	/**
 	 * Returns the backend of the printer.
 	 * Since 2.10
-	 * Returns: the backend of printer
+	 * Returns: the backend of printer. [transfer none]
 	 */
 	public GtkPrintBackend* getBackend()
 	{
@@ -354,7 +354,7 @@ public class Printer : ObjectG
 	 * This will return and empty list unless the printer's details are
 	 * available, see gtk_printer_has_details() and gtk_printer_request_details().
 	 * Since 2.12
-	 * Returns: a newly allocated list of newly allocated GtkPageSetup s. [element-type GtkPageSetup][transfer full GtkPageSetup]
+	 * Returns: a newly allocated list of newly allocated GtkPageSetup s. [element-type GtkPageSetup][transfer full]
 	 */
 	public ListG listPapers()
 	{
@@ -442,10 +442,10 @@ public class Printer : ObjectG
 	 * see gtk_printer_has_details() and gtk_printer_request_details().
 	 * Since 2.20
 	 * Params:
-	 * top = a location to store the top margin in
-	 * bottom = a location to store the bottom margin in
-	 * left = a location to store the left margin in
-	 * right = a location to store the right margin in
+	 * top = a location to store the top margin in. [out]
+	 * bottom = a location to store the bottom margin in. [out]
+	 * left = a location to store the left margin in. [out]
+	 * right = a location to store the right margin in. [out]
 	 * Returns: TRUE iff the hard margins were retrieved
 	 */
 	public int getHardMargins(out double top, out double bottom, out double left, out double right)
@@ -463,7 +463,7 @@ public class Printer : ObjectG
 	 * data = user data to pass to func
 	 * destroy = function to call if data is no longer needed
 	 * wait = if TRUE, wait in a recursive mainloop until
-	 *  all printers are enumerated; otherwise return early
+	 * all printers are enumerated; otherwise return early
 	 */
 	public static void enumeratePrinters(GtkPrinterFunc func, void* data, GDestroyNotify destroy, int wait)
 	{

@@ -155,7 +155,7 @@ public class ColorSelectionDialog : Dialog
 	 */
 	public this (string title)
 	{
-		// GtkWidget* gtk_color_selection_dialog_new (const gchar *title);
+		// GtkWidget * gtk_color_selection_dialog_new (const gchar *title);
 		auto p = gtk_color_selection_dialog_new(Str.toStringz(title));
 		if(p is null)
 		{

@@ -170,7 +170,7 @@ public class DrawingArea : Widget
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_drawing_area_new (void);
+		// GtkWidget * gtk_drawing_area_new (void);
 		auto p = gtk_drawing_area_new();
 		if(p is null)
 		{

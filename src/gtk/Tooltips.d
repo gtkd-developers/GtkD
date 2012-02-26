@@ -146,7 +146,7 @@ public class Tooltips : ObjectGtk
 	 */
 	public this ()
 	{
-		// GtkTooltips* gtk_tooltips_new (void);
+		// GtkTooltips * gtk_tooltips_new (void);
 		auto p = gtk_tooltips_new();
 		if(p is null)
 		{
@@ -215,7 +215,7 @@ public class Tooltips : ObjectGtk
 	 */
 	public static GtkTooltipsData* dataGet(Widget widget)
 	{
-		// GtkTooltipsData* gtk_tooltips_data_get (GtkWidget *widget);
+		// GtkTooltipsData * gtk_tooltips_data_get (GtkWidget *widget);
 		return gtk_tooltips_data_get((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
@@ -243,9 +243,9 @@ public class Tooltips : ObjectGtk
 	 * Params:
 	 * tipWindow = a GtkWindow
 	 * tooltips = the return location for the tooltips which are displayed
-	 *  in tip_window, or NULL
+	 * in tip_window, or NULL
 	 * currentWidget = the return location for the widget whose tooltips
-	 *  are displayed, or NULL
+	 * are displayed, or NULL
 	 * Returns: TRUE if tip_window is displaying tooltips, otherwise FALSE.
 	 */
 	public static int getInfoFromTipWindow(Window tipWindow, out GtkTooltips* tooltips, out Widget currentWidget)

@@ -134,7 +134,7 @@ public class Arrow : Misc
 	 */
 	public this (GtkArrowType arrowType, GtkShadowType shadowType)
 	{
-		// GtkWidget* gtk_arrow_new (GtkArrowType arrow_type,  GtkShadowType shadow_type);
+		// GtkWidget * gtk_arrow_new (GtkArrowType arrow_type,  GtkShadowType shadow_type);
 		auto p = gtk_arrow_new(arrowType, shadowType);
 		if(p is null)
 		{

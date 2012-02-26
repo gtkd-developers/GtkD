@@ -259,7 +259,7 @@ public class RecentInfo
 	 * appExec = return location for the string containing the command line. [transfer none][out]
 	 * count = return location for the number of times this item was registered. [out]
 	 * time = return location for the timestamp this item was last registered
-	 *  for this application. [out]
+	 * for this application. [out]
 	 * Returns: TRUE if an application with app_name has registered this resource inside the recently used list, or FALSE otherwise. The app_exec string is owned by the GtkRecentInfo and should not be modified or freed
 	 */
 	public int getApplicationInfo(string appName, out string appExec, out uint count, out uint time)
@@ -276,7 +276,7 @@ public class RecentInfo
 	/**
 	 * Retrieves the list of applications that have registered this resource.
 	 * Since 2.10
-	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it. [array length=length zero-terminated=1]
+	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it. [array length=length zero-terminated=1][transfer full]
 	 */
 	public string[] getApplications()
 	{
@@ -310,7 +310,7 @@ public class RecentInfo
 	 * array of returned group names will be NULL terminated, so length might
 	 * optionally be NULL.
 	 * Since 2.10
-	 * Returns: a newly allocated NULL terminated array of strings. Use g_strfreev() to free it. [array length=length zero-terminated=1]
+	 * Returns: a newly allocated NULL terminated array of strings. Use g_strfreev() to free it. [array length=length zero-terminated=1][transfer full]
 	 */
 	public string[] getGroups()
 	{
@@ -359,7 +359,7 @@ public class RecentInfo
 	 * Since 2.10
 	 * Params:
 	 * size = the size of the icon in pixels
-	 * Returns: a GdkPixbuf containing the icon, or NULL. Use g_object_unref() when finished using the icon.
+	 * Returns: a GdkPixbuf containing the icon, or NULL. Use g_object_unref() when finished using the icon. [transfer full]
 	 */
 	public Pixbuf getIcon(int size)
 	{

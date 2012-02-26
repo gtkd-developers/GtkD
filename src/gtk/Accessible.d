@@ -136,7 +136,7 @@ public class Accessible : ObjectAtk
 	 */
 	public Widget getWidget()
 	{
-		// GtkWidget* gtk_accessible_get_widget (GtkAccessible *accessible);
+		// GtkWidget * gtk_accessible_get_widget (GtkAccessible *accessible);
 		auto p = gtk_accessible_get_widget(gtkAccessible);
 		if(p is null)
 		{

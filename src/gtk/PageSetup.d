@@ -163,7 +163,7 @@ public class PageSetup : ObjectG
 	/**
 	 * Copies a GtkPageSetup.
 	 * Since 2.10
-	 * Returns: a copy of other
+	 * Returns: a copy of other. [transfer full]
 	 */
 	public PageSetup copy()
 	{
@@ -447,7 +447,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the page_setup from
 	 * groupName = the name of the group in the key_file to read, or NULL
-	 *  to use the default name "Page Setup". [allow-none]
+	 * to use the default name "Page Setup". [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -501,7 +501,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the page_setup from
 	 * groupName = the name of the group in the key_file to read, or NULL
-	 *  to use the default name "Page Setup". [allow-none]
+	 * to use the default name "Page Setup". [allow-none]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -549,7 +549,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to save the page setup to
 	 * groupName = the group to add the settings to in key_file,
-	 *  or NULL to use the default name "Page Setup"
+	 * or NULL to use the default name "Page Setup"
 	 */
 	public void toKeyFile(KeyFile keyFile, string groupName)
 	{

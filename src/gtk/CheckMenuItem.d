@@ -196,7 +196,7 @@ public class CheckMenuItem : MenuItem
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_check_menu_item_new (void);
+		// GtkWidget * gtk_check_menu_item_new (void);
 		auto p = gtk_check_menu_item_new();
 		if(p is null)
 		{

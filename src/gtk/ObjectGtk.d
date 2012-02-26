@@ -256,6 +256,8 @@ public class ObjectGtk : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_object_destroy has been deprecated since version 2.24 and should not be used in newly-written code. Use gtk_widget_destroy() instead (if object is a widget)
 	 * Emits the "destroy" signal notifying all reference holders that they should
 	 * release the GtkObject. See the overview documentation at the top of the
 	 * page for more details.

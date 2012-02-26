@@ -155,7 +155,7 @@ public class Settings : ObjectG
 	 */
 	public static Settings getDefault()
 	{
-		// GtkSettings* gtk_settings_get_default (void);
+		// GtkSettings * gtk_settings_get_default (void);
 		auto p = gtk_settings_get_default();
 		if(p is null)
 		{
@@ -169,11 +169,11 @@ public class Settings : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * screen = a GdkScreen.
-	 * Returns: a GtkSettings object.
+	 * Returns: a GtkSettings object. [transfer none]
 	 */
 	public static Settings getForScreen(Screen screen)
 	{
-		// GtkSettings* gtk_settings_get_for_screen (GdkScreen *screen);
+		// GtkSettings * gtk_settings_get_for_screen (GdkScreen *screen);
 		auto p = gtk_settings_get_for_screen((screen is null) ? null : screen.getScreenStruct());
 		if(p is null)
 		{
@@ -183,7 +183,6 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * Params:
 	 */
 	public static void installProperty(ParamSpec pspec)
 	{
@@ -192,7 +191,6 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * Params:
 	 */
 	public static void installPropertyParser(ParamSpec pspec, GtkRcPropertyParser parser)
 	{
@@ -292,7 +290,6 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * Params:
 	 */
 	public void setPropertyValue(string name, GtkSettingsValue* svalue)
 	{
@@ -301,7 +298,6 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * Params:
 	 */
 	public void setStringProperty(string name, string vString, string origin)
 	{
@@ -310,7 +306,6 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * Params:
 	 */
 	public void setLongProperty(string name, glong vLong, string origin)
 	{
@@ -319,7 +314,6 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * Params:
 	 */
 	public void setDoubleProperty(string name, double vDouble, string origin)
 	{

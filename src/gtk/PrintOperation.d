@@ -387,6 +387,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * If you don't need to do pagination in chunks, you can simply do
 	 * it all in the ::begin-print handler, and set the number of pages
 	 * from there.
+	 * TRUE if pagination is complete
 	 * Since 2.10
 	 */
 	void addOnPaginate(bool delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -432,6 +433,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * are selected for print and render them. The preview must be
 	 * finished by calling gtk_print_operation_preview_end_preview()
 	 * (typically in response to the user clicking a close button).
+	 * TRUE if the listener wants to take over control of the preview
 	 * Since 2.10
 	 */
 	void addOnPreview(bool delegate(GtkPrintOperationPreview*, PrintContext, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -624,7 +626,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Returns the default page setup, see
 	 * gtk_print_operation_set_default_page_setup().
 	 * Since 2.10
-	 * Returns: the default page setup
+	 * Returns: the default page setup. [transfer none]
 	 */
 	public PageSetup getDefaultPageSetup()
 	{
@@ -657,7 +659,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * gtk_print_operation_set_print_settings() or
 	 * gtk_print_operation_run() have been called.
 	 * Since 2.10
-	 * Returns: the current print settings of op.
+	 * Returns: the current print settings of op. [transfer none]
 	 */
 	public PrintSettings getPrintSettings()
 	{
@@ -1039,7 +1041,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * parent = transient parent. [allow-none]
 	 * pageSetup = an existing GtkPageSetup. [allow-none]
 	 * settings = a GtkPrintSettings
-	 * Returns: a new GtkPageSetup
+	 * Returns: a new GtkPageSetup. [transfer full]
 	 */
 	public static PageSetup gtkPrintRunPageSetupDialog(Window parent, PageSetup pageSetup, PrintSettings settings)
 	{

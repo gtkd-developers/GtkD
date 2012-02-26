@@ -385,7 +385,7 @@ class TestWindow : MainWindow
 		return notebook;
 	}
 
-	void onNotebookSwitchPage(GtkNotebookPage *notePage, uint pageNumber, Notebook notebook)
+	void onNotebookSwitchPage(void* notePage, uint pageNumber, Notebook notebook)
 	{
 		//writefln("Notebook switch to page %s", pageNumber);
 		// fullCollect helps finding objects that shouldn't have been collected

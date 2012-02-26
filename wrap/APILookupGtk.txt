@@ -1527,6 +1527,30 @@ code: start
 		move(cast(int)x, cast(int)y);
 	}
 code: end
+text: start
+gtk_window_set_default_icon_from_file ()
+gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
+Sets an icon to be used as fallback for windows that haven't
+had gtk_window_set_icon_list() called on them from a file
+on disk. Warns on failure if err is NULL.
+Since 2.2
+filename :
+location of icon file
+Returns :
+TRUE if setting the icon succeeded.
+<hr>
+gtk_window_set_icon_from_file()
+gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
+Sets the icon for window.
+Warns on failure if err is NULL.
+This function is equivalent to calling gtk_window_set_icon()
+with a pixbuf created by loading the image from filename.
+Since 2.2
+filename :
+location of icon file
+Returns :
+TRUE if setting the icon succeeded.
+text: end
 outFile: Window
 
 file: 
@@ -2654,7 +2678,7 @@ outFile: EditableT
 ### Multiline Text Editor #################################
 ###########################################################
 
-file: gtk-GtkTextIter.html
+file: GtkTextIter.html
 struct: GtkTextIter
 class: TextIter
 nostruct: GtkTextIter
@@ -7577,7 +7601,7 @@ import: glib.KeyFile
 structWrap: GKeyFile* KeyFile
 outFile: PageSetup
 
-file: gtk-GtkPaperSize.html
+file: GtkPaperSize.html
 struct: GtkPaperSize
 class: PaperSize
 prefix: gtk_paper_size_

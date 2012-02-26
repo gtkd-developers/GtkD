@@ -246,15 +246,17 @@ public class StatusIcon : ObjectG
 		}
 	}
 	
-	bool delegate(GdkEventButton*, StatusIcon)[] onButtonPressListeners;
+	bool delegate(GdkEvent*, StatusIcon)[] onButtonPressListeners;
 	/**
 	 * The ::button-press-event signal will be emitted when a button
 	 * (typically from a mouse) is pressed.
 	 * Whether this event is emitted is platform-dependent. Use the ::activate
 	 * and ::popup-menu signals in preference.
+	 * TRUE to stop other handlers from being invoked
+	 * for the event. FALSE to propagate the event further.
 	 * Since 2.14
 	 */
-	void addOnButtonPress(bool delegate(GdkEventButton*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnButtonPress(bool delegate(GdkEvent*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-press-event" in connectedSignals) )
 		{
@@ -269,9 +271,9 @@ public class StatusIcon : ObjectG
 		}
 		onButtonPressListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonPress(GtkStatusIcon* statusIconStruct, GdkEventButton* event, StatusIcon statusIcon)
+	extern(C) static gboolean callBackButtonPress(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon statusIcon)
 	{
-		foreach ( bool delegate(GdkEventButton*, StatusIcon) dlg ; statusIcon.onButtonPressListeners )
+		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; statusIcon.onButtonPressListeners )
 		{
 			if ( dlg(event, statusIcon) )
 			{
@@ -282,15 +284,17 @@ public class StatusIcon : ObjectG
 		return 0;
 	}
 	
-	bool delegate(GdkEventButton*, StatusIcon)[] onButtonReleaseListeners;
+	bool delegate(GdkEvent*, StatusIcon)[] onButtonReleaseListeners;
 	/**
 	 * The ::button-release-event signal will be emitted when a button
 	 * (typically from a mouse) is released.
 	 * Whether this event is emitted is platform-dependent. Use the ::activate
 	 * and ::popup-menu signals in preference.
+	 * TRUE to stop other handlers from being invoked
+	 * for the event. FALSE to propagate the event further.
 	 * Since 2.14
 	 */
-	void addOnButtonRelease(bool delegate(GdkEventButton*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnButtonRelease(bool delegate(GdkEvent*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-release-event" in connectedSignals) )
 		{
@@ -305,9 +309,9 @@ public class StatusIcon : ObjectG
 		}
 		onButtonReleaseListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonRelease(GtkStatusIcon* statusIconStruct, GdkEventButton* event, StatusIcon statusIcon)
+	extern(C) static gboolean callBackButtonRelease(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon statusIcon)
 	{
-		foreach ( bool delegate(GdkEventButton*, StatusIcon) dlg ; statusIcon.onButtonReleaseListeners )
+		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; statusIcon.onButtonReleaseListeners )
 		{
 			if ( dlg(event, statusIcon) )
 			{
@@ -367,6 +371,7 @@ public class StatusIcon : ObjectG
 	 * Whether this signal is emitted is platform-dependent.
 	 * For plain text tooltips, use "tooltip-text" in preference.
 	 * TRUE if the tooltip was trigged using the keyboard
+	 * TRUE if tooltip should be shown right now, FALSE otherwise.
 	 * Since 2.16
 	 */
 	void addOnQueryTooltip(bool delegate(gint, gint, gboolean, Tooltip, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -397,14 +402,16 @@ public class StatusIcon : ObjectG
 		return 0;
 	}
 	
-	bool delegate(GdkEventScroll*, StatusIcon)[] onScrollListeners;
+	bool delegate(GdkEvent*, StatusIcon)[] onScrollListeners;
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7
 	 * range is pressed. Wheel mice are usually configured to generate
 	 * button press events for buttons 4 and 5 when the wheel is turned.
 	 * Whether this event is emitted is platform-dependent.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnScroll(bool delegate(GdkEventScroll*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnScroll(bool delegate(GdkEvent*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("scroll-event" in connectedSignals) )
 		{
@@ -419,9 +426,9 @@ public class StatusIcon : ObjectG
 		}
 		onScrollListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackScroll(GtkStatusIcon* statusIconStruct, GdkEventScroll* event, StatusIcon statusIcon)
+	extern(C) static gboolean callBackScroll(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon statusIcon)
 	{
-		foreach ( bool delegate(GdkEventScroll*, StatusIcon) dlg ; statusIcon.onScrollListeners )
+		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; statusIcon.onScrollListeners )
 		{
 			if ( dlg(event, statusIcon) )
 			{
@@ -436,6 +443,8 @@ public class StatusIcon : ObjectG
 	/**
 	 * Gets emitted when the size available for the image
 	 * changes, e.g. because the notification area got resized.
+	 * TRUE if the icon was updated for the new
+	 * size. Otherwise, GTK+ will scale the icon as necessary.
 	 * Since 2.10
 	 */
 	void addOnSizeChanged(bool delegate(gint, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -608,7 +617,7 @@ public class StatusIcon : ObjectG
 	 * The caller of this function does not own a reference to the
 	 * returned pixbuf.
 	 * Since 2.10
-	 * Returns: the displayed pixbuf, or NULL if the image is empty.
+	 * Returns: the displayed pixbuf, or NULL if the image is empty. [transfer none]
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -659,7 +668,7 @@ public class StatusIcon : ObjectG
 	 * returned GIcon.
 	 * If this function fails, icon is left unchanged;
 	 * Since 2.14
-	 * Returns: the displayed icon, or NULL if the image is empty
+	 * Returns: the displayed icon, or NULL if the image is empty. [transfer none]
 	 */
 	public IconIF getGicon()
 	{
@@ -706,7 +715,7 @@ public class StatusIcon : ObjectG
 	/**
 	 * Returns the GdkScreen associated with status_icon.
 	 * Since 2.12
-	 * Returns: a GdkScreen.
+	 * Returns: a GdkScreen. [transfer none]
 	 */
 	public Screen getScreen()
 	{
@@ -933,7 +942,7 @@ public class StatusIcon : ObjectG
 	 * x = return location for the x position
 	 * y = return location for the y position
 	 * pushIn = whether the first menu item should be offset (pushed in) to be
-	 *  aligned with the menu popup position (only useful for GtkOptionMenu).
+	 * aligned with the menu popup position (only useful for GtkOptionMenu).
 	 * userData = the status icon to position the menu on
 	 */
 	public static void positionMenu(Menu menu, out int x, out int y, out int pushIn, void* userData)
@@ -956,13 +965,13 @@ public class StatusIcon : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * screen = return location for the screen, or NULL if the
-	 *  information is not needed. [out][transfer none][allow-none]
+	 * information is not needed. [out][transfer none][allow-none]
 	 * area = return location for the area occupied by the status
-	 *  icon, or NULL. [out][allow-none]
+	 * icon, or NULL. [out][allow-none]
 	 * orientation = return location for the orientation of the panel
-	 *  in which the status icon is embedded, or NULL. A panel
-	 *  at the top or bottom of the screen is horizontal, a panel
-	 *  at the left or right is vertical. [out][allow-none]
+	 * in which the status icon is embedded, or NULL. A panel
+	 * at the top or bottom of the screen is horizontal, a panel
+	 * at the left or right is vertical. [out][allow-none]
 	 * Returns: TRUE if the location information has been filled in
 	 */
 	public int getGeometry(out Screen screen, out GdkRectangle area, out GtkOrientation orientation)

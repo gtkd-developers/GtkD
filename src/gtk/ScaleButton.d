@@ -241,9 +241,10 @@ public class ScaleButton : Button, OrientableIF
 	 * min = the minimum value of the scale (usually 0)
 	 * max = the maximum value of the scale (usually 100)
 	 * step = the stepping of value when a scroll-wheel event,
-	 *  or up/down arrow event occurs (usually 2)
-	 * icons = a NULL-terminated array of icon names, or NULL if
-	 *  you want to set the list later with gtk_scale_button_set_icons(). [allow-none]
+	 * or up/down arrow event occurs (usually 2)
+	 * icons = a NULL-terminated
+	 * array of icon names, or NULL if you want to set the list
+	 * later with gtk_scale_button_set_icons(). [allow-none][array zero-terminated=1]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GtkIconSize size, double min, double max, double step, string[] icons)
@@ -276,7 +277,7 @@ public class ScaleButton : Button, OrientableIF
 	 * For details, see the "icons" property.
 	 * Since 2.12
 	 * Params:
-	 * icons = a NULL-terminated array of icon names
+	 * icons = a NULL-terminated array of icon names. [array zero-terminated=1]
 	 */
 	public void setIcons(string[] icons)
 	{
@@ -303,7 +304,7 @@ public class ScaleButton : Button, OrientableIF
 	 * Gets the GtkAdjustment associated with the GtkScaleButton's scale.
 	 * See gtk_range_get_adjustment() for details.
 	 * Since 2.12
-	 * Returns: the adjustment associated with the scale
+	 * Returns: the adjustment associated with the scale. [transfer none]
 	 */
 	public Adjustment getAdjustment()
 	{
@@ -330,7 +331,7 @@ public class ScaleButton : Button, OrientableIF
 	/**
 	 * Retrieves the popup of the GtkScaleButton.
 	 * Since 2.14
-	 * Returns: the popup of the GtkScaleButton
+	 * Returns: the popup of the GtkScaleButton. [transfer none]
 	 */
 	public Widget getPopup()
 	{
@@ -346,7 +347,7 @@ public class ScaleButton : Button, OrientableIF
 	/**
 	 * Retrieves the plus button of the GtkScaleButton.
 	 * Since 2.14
-	 * Returns: the plus button of the GtkScaleButton.
+	 * Returns: the plus button of the GtkScaleButton. [transfer none]
 	 */
 	public Widget getPlusButton()
 	{
@@ -362,7 +363,7 @@ public class ScaleButton : Button, OrientableIF
 	/**
 	 * Retrieves the minus button of the GtkScaleButton.
 	 * Since 2.14
-	 * Returns: the minus button of the GtkScaleButton.
+	 * Returns: the minus button of the GtkScaleButton. [transfer none]
 	 */
 	public Widget getMinusButton()
 	{

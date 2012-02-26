@@ -411,7 +411,7 @@ public class Container : Widget
 	 * "internal" child. Most applications should use
 	 * gtk_container_foreach(), rather than gtk_container_forall().
 	 * Params:
-	 * callback = a callback
+	 * callback = a callback. [scope call]
 	 * callbackData = callback user data
 	 */
 	public void foreac(GtkCallback callback, void* callbackData)
@@ -423,7 +423,6 @@ public class Container : Widget
 	/**
 	 * Warning
 	 * gtk_container_foreach_full is deprecated and should not be used in newly-written code. Use gtk_container_foreach() instead.
-	 * Params:
 	 */
 	public void foreachFull(GtkCallback callback, GtkCallbackMarshal marshal, void* callbackData, GDestroyNotify notify)
 	{
@@ -434,11 +433,11 @@ public class Container : Widget
 	/**
 	 * Returns the container's non-internal children. See
 	 * gtk_container_forall() for details on what constitutes an "internal" child.
-	 * Returns: a newly-allocated list of the container's non-internal children. [element-type GtkWidget][transfer container GtkWidget]
+	 * Returns: a newly-allocated list of the container's non-internal children. [element-type GtkWidget][transfer container]
 	 */
 	public ListG getChildren()
 	{
-		// GList* gtk_container_get_children (GtkContainer *container);
+		// GList * gtk_container_get_children (GtkContainer *container);
 		auto p = gtk_container_get_children(gtkContainer);
 		if(p is null)
 		{
@@ -465,7 +464,7 @@ public class Container : Widget
 	 * currently focused widget. That can be obtained by calling
 	 * gtk_window_get_focus().
 	 * Since 2.14
-	 * Returns: The child widget which will recieve the focus inside container when the conatiner is focussed, or NULL if none is set.
+	 * Returns: The child widget which will receive the focus inside container when the conatiner is focussed, or NULL if none is set. [transfer none]
 	 */
 	public Widget getFocusChild()
 	{
@@ -521,7 +520,7 @@ public class Container : Widget
 	 * system as the allocation for immediate children of the container.
 	 * Params:
 	 * adjustment = an adjustment which should be adjusted when the focus
-	 *  is moved among the descendents of container
+	 * is moved among the descendents of container
 	 */
 	public void setFocusVadjustment(Adjustment adjustment)
 	{
@@ -556,7 +555,7 @@ public class Container : Widget
 	 * system as the allocation for immediate children of the container.
 	 * Params:
 	 * adjustment = an adjustment which should be adjusted when the focus is
-	 *  moved among the descendents of container
+	 * moved among the descendents of container
 	 */
 	public void setFocusHadjustment(Adjustment adjustment)
 	{
@@ -617,7 +616,7 @@ public class Container : Widget
 	 * child = a widget which is a child of container
 	 * firstPropertyName = the name of the first property to get
 	 * varArgs = return location for the first property, followed
-	 *  optionally by more name/return location pairs, followed by NULL
+	 * optionally by more name/return location pairs, followed by NULL
 	 */
 	public void childGetValist(Widget child, string firstPropertyName, void* varArgs)
 	{
@@ -631,7 +630,7 @@ public class Container : Widget
 	 * child = a widget which is a child of container
 	 * firstPropertyName = the name of the first property to set
 	 * varArgs = a NULL-terminated list of property names and values, starting
-	 *  with first_prop_name
+	 * with first_prop_name
 	 */
 	public void childSetValist(Widget child, string firstPropertyName, void* varArgs)
 	{
@@ -679,7 +678,7 @@ public class Container : Widget
 	 * a spacer.
 	 * Params:
 	 * borderWidth = amount of blank space to leave outside
-	 *  the container. Valid values are in the range 0-65535 pixels.
+	 * the container. Valid values are in the range 0-65535 pixels.
 	 */
 	public void setBorderWidth(uint borderWidth)
 	{
@@ -699,6 +698,11 @@ public class Container : Widget
 	 * In most cases, a container can simply either simply inherit the
 	 * "expose" implementation from GtkContainer, or, do some drawing
 	 * and then chain to the ::expose implementation from GtkContainer.
+	 * Note that the ::expose-event signal has been replaced by a ::draw
+	 * signal in GTK+ 3, and consequently, gtk_container_propagate_expose()
+	 * has been replaced by gtk_container_propagate_draw().
+	 * The GTK+ 3 migration guide
+	 * for hints on how to port from ::expose-event to ::draw.
 	 * Params:
 	 * child = a child of container
 	 * event = a expose event sent to container
@@ -717,11 +721,11 @@ public class Container : Widget
 	 * focusable_widgets and returns FALSE.
 	 * Params:
 	 * focusableWidgets = location
-	 *  to store the focus chain of the
-	 *  container, or NULL. You should free this list
-	 *  using g_list_free() when you are done with it, however
-	 *  no additional reference count is added to the
-	 *  individual widgets in the focus chain. [element-type GtkWidget][out GtkWidget][transfer container GtkWidget]
+	 * to store the focus chain of the
+	 * container, or NULL. You should free this list
+	 * using g_list_free() when you are done with it, however
+	 * no additional reference count is added to the
+	 * individual widgets in the focus chain. [element-type GtkWidget][out][transfer container]
 	 * Returns: TRUE if the focus chain of the container has been set explicitly.
 	 */
 	public int getFocusChain(out ListG focusableWidgets)
@@ -763,13 +767,13 @@ public class Container : Widget
 	/**
 	 * Finds a child property of a container class by name.
 	 * Params:
-	 * cclass = a GtkContainerClass
+	 * cclass = a GtkContainerClass. [type GtkContainerClass]
 	 * propertyName = the name of the child property to find
-	 * Returns: the GParamSpec of the child property or NULL if class has no child property with that name. [allow-none]
+	 * Returns: the GParamSpec of the child property or NULL if class has no child property with that name. [transfer none]
 	 */
 	public static ParamSpec classFindChildProperty(GObjectClass* cclass, string propertyName)
 	{
-		// GParamSpec* gtk_container_class_find_child_property  (GObjectClass *cclass,  const gchar *property_name);
+		// GParamSpec * gtk_container_class_find_child_property  (GObjectClass *cclass,  const gchar *property_name);
 		auto p = gtk_container_class_find_child_property(cclass, Str.toStringz(propertyName));
 		if(p is null)
 		{
@@ -794,12 +798,12 @@ public class Container : Widget
 	/**
 	 * Returns all child properties of a container class.
 	 * Params:
-	 * cclass = a GtkContainerClass
-	 * Returns: a newly allocated NULL-terminated array of GParamSpec*. The array must be freed with g_free().
+	 * cclass = a GtkContainerClass. [type GtkContainerClass]
+	 * Returns: a newly allocated NULL-terminated array of GParamSpec*. The array must be freed with g_free(). [array length=n_properties][transfer container]
 	 */
 	public static ParamSpec[] classListChildProperties(GObjectClass* cclass)
 	{
-		// GParamSpec** gtk_container_class_list_child_properties  (GObjectClass *cclass,  guint *n_properties);
+		// GParamSpec ** gtk_container_class_list_child_properties  (GObjectClass *cclass,  guint *n_properties);
 		uint nProperties;
 		auto p = gtk_container_class_list_child_properties(cclass, &nProperties);
 		if(p is null)

@@ -236,7 +236,7 @@ public class CellView : Widget, CellLayoutIF
 	 * Returns the model for cell_view. If no model is used NULL is
 	 * returned.
 	 * Since 2.16
-	 * Returns: a GtkTreeModel used or NULL
+	 * Returns: a GtkTreeModel used or NULL. [transfer none]
 	 */
 	public TreeModelIF getModel()
 	{
@@ -290,7 +290,7 @@ public class CellView : Widget, CellLayoutIF
 	 * Since 2.6
 	 * Params:
 	 * path = a GtkTreePath
-	 * requisition = return location for the size
+	 * requisition = return location for the size. [out]
 	 * Returns: TRUE
 	 */
 	public int getSizeOfRow(TreePath path, out GtkRequisition requisition)

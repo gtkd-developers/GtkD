@@ -193,6 +193,8 @@ public class LinkButton : Button
 	}
 	
 	/**
+	 * Warning
+	 * gtk_link_button_set_uri_hook has been deprecated since version 2.24 and should not be used in newly-written code. Use the "clicked" signal instead
 	 * Sets func as the function that should be invoked every time a user clicks
 	 * a GtkLinkButton. This function is called before every callback registered
 	 * for the "clicked" signal.

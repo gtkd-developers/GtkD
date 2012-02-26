@@ -262,9 +262,9 @@ public class RecentFilter : ObjectGtk
 	 * Since 2.10
 	 * Params:
 	 * needed = bitfield of flags indicating the information that the custom
-	 *  filter function needs.
+	 * filter function needs.
 	 * func = callback function; if the function returns TRUE, then
-	 *  the file will be displayed.
+	 * the file will be displayed.
 	 * data = data to pass to func
 	 * dataDestroy = function to call to free data when it is no longer needed.
 	 */
@@ -300,7 +300,7 @@ public class RecentFilter : ObjectGtk
 	 * Params:
 	 * filter = a GtkRecentFilter
 	 * filterInfo = a GtkRecentFilterInfo structure containing information
-	 *  about a recently used resource
+	 * about a recently used resource
 	 * Returns: TRUE if the file should be displayed
 	 */
 	public int filter(GtkRecentFilterInfo* filterInfo)

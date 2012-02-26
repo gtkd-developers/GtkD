@@ -178,6 +178,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * how it will respond to this signal it must call gtk_tool_item_rebuild_menu()
 	 * to invalidate the cache and ensure that the toolbar rebuilds its overflow
 	 * menu.
+	 * TRUE if the signal was handled, FALSE if not
 	 */
 	void addOnCreateMenuProxy(bool delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -215,6 +216,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * This signal is emitted when the toolitem's tooltip changes.
 	 * Application developers can use gtk_tool_item_set_tooltip() to
 	 * set the item's tooltip.
+	 * TRUE if the signal was handled, FALSE if not
 	 */
 	void addOnSetTooltip(bool delegate(Tooltips, string, string, ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -623,14 +625,14 @@ public class ToolItem : Bin, ActivatableIF
 	/**
 	 * If menu_item_id matches the string passed to
 	 * gtk_tool_item_set_proxy_menu_item() return the corresponding GtkMenuItem.
-	 * Custom subclasses of GtkToolItem should use this function to update
-	 * their menu item when the GtkToolItem changes. That the
-	 * menu_item_ids must match ensures that a GtkToolItem will not
-	 * inadvertently change a menu item that they did not create.
+	 * Custom subclasses of GtkToolItem should use this function to
+	 * update their menu item when the GtkToolItem changes. That the
+	 * menu_item_ids must match ensures that a GtkToolItem
+	 * will not inadvertently change a menu item that they did not create.
 	 * Since 2.4
 	 * Params:
 	 * menuItemId = a string used to identify the menu item
-	 * Returns: The GtkMenuItem passed to gtk_tool_item_set_proxy_menu_item(), if the menu_item_ids match.
+	 * Returns: The GtkMenuItem passed to gtk_tool_item_set_proxy_menu_item(), if the menu_item_ids match. [transfer none]
 	 */
 	public Widget getProxyMenuItem(string menuItemId)
 	{
@@ -686,10 +688,11 @@ public class ToolItem : Bin, ActivatableIF
 	}
 	
 	/**
-	 * Returns the size group used for labels in tool_item. Custom subclasses of
-	 * GtkToolItem should call this function and use the size group for labels.
+	 * Returns the size group used for labels in tool_item.
+	 * Custom subclasses of GtkToolItem should call this function
+	 * and use the size group for labels.
 	 * Since 2.20
-	 * Returns: a GtkSizeGroup
+	 * Returns: a GtkSizeGroup. [transfer none]
 	 */
 	public SizeGroup getTextSizeGroup()
 	{

@@ -171,7 +171,7 @@ public template BuildableT(TStruct)
 	 * Params:
 	 * builder = GtkBuilder used to construct this object
 	 * name = name of child to construct
-	 * Returns: the constructed child
+	 * Returns: the constructed child. [transfer full]
 	 */
 	public ObjectG constructChild(Builder builder, string name)
 	{
@@ -191,9 +191,9 @@ public template BuildableT(TStruct)
 	 * builder = a GtkBuilder used to construct this object
 	 * child = child object or NULL for non-child tags. [allow-none]
 	 * tagname = name of tag
-	 * parser = a GMarkupParser structure to fill in
+	 * parser = a GMarkupParser structure to fill in. [out]
 	 * data = return location for user data that will be passed in
-	 *  to parser functions
+	 * to parser functions. [out]
 	 * Returns: TRUE if a object has a custom implementation, FALSE if it doesn't.
 	 */
 	public int customTagStart(Builder builder, ObjectG child, string tagname, GMarkupParser* parser, void** data)
@@ -210,7 +210,7 @@ public template BuildableT(TStruct)
 	 * builder = GtkBuilder used to construct this object
 	 * child = child object or NULL for non-child tags. [allow-none]
 	 * tagname = name of tag
-	 * data = user data that will be passed in to parser functions
+	 * data = user data that will be passed in to parser functions. [type gpointer]
 	 */
 	public void customTagEnd(Builder builder, ObjectG child, string tagname, void** data)
 	{
@@ -256,7 +256,7 @@ public template BuildableT(TStruct)
 	 * Params:
 	 * builder = a GtkBuilder
 	 * childname = name of child
-	 * Returns: the internal child of the buildable object
+	 * Returns: the internal child of the buildable object. [transfer none]
 	 */
 	public ObjectG getInternalChild(Builder builder, string childname)
 	{

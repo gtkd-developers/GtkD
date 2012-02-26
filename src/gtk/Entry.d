@@ -666,7 +666,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_entry_new (void);
+		// GtkWidget * gtk_entry_new (void);
 		auto p = gtk_entry_new();
 		if(p is null)
 		{
@@ -684,7 +684,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public this (EntryBuffer buffer)
 	{
-		// GtkWidget* gtk_entry_new_with_buffer (GtkEntryBuffer *buffer);
+		// GtkWidget * gtk_entry_new_with_buffer (GtkEntryBuffer *buffer);
 		auto p = gtk_entry_new_with_buffer((buffer is null) ? null : buffer.getEntryBufferStruct());
 		if(p is null)
 		{
@@ -699,13 +699,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Creates a new GtkEntry widget with the given maximum length.
 	 * Params:
 	 * max = the maximum length of the entry, or 0 for no maximum.
-	 *  (other than the maximum length of entries.) The value passed in will
-	 *  be clamped to the range 0-65536.
+	 * (other than the maximum length of entries.) The value passed in will
+	 * be clamped to the range 0-65536.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (int max)
 	{
-		// GtkWidget* gtk_entry_new_with_max_length (gint max);
+		// GtkWidget * gtk_entry_new_with_max_length (gint max);
 		auto p = gtk_entry_new_with_max_length(max);
 		if(p is null)
 		{
@@ -718,11 +718,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Get the GtkEntryBuffer object which holds the text for
 	 * this widget.
 	 * Since 2.18
-	 * Returns: A GtkEntryBuffer object.
+	 * Returns: A GtkEntryBuffer object. [transfer none]
 	 */
 	public EntryBuffer getBuffer()
 	{
-		// GtkEntryBuffer* gtk_entry_get_buffer (GtkEntry *entry);
+		// GtkEntryBuffer * gtk_entry_get_buffer (GtkEntry *entry);
 		auto p = gtk_entry_get_buffer(gtkEntry);
 		if(p is null)
 		{
@@ -790,7 +790,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public string getText()
 	{
-		// const gchar* gtk_entry_get_text (GtkEntry *entry);
+		// const gchar * gtk_entry_get_text (GtkEntry *entry);
 		return Str.toString(gtk_entry_get_text(gtkEntry));
 	}
 	
@@ -816,7 +816,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_set_invisible_char().
 	 * Params:
 	 * visible = TRUE if the contents of the entry are displayed
-	 *  as plaintext
+	 * as plaintext
 	 */
 	public void setVisibility(int visible)
 	{
@@ -859,8 +859,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * will be truncated to fit.
 	 * Params:
 	 * max = the maximum length of the entry, or 0 for no maximum.
-	 *  (other than the maximum length of entries.) The value passed in will
-	 *  be clamped to the range 0-65536.
+	 * (other than the maximum length of entries.) The value passed in will
+	 * be clamped to the range 0-65536.
 	 */
 	public void setMaxLength(int max)
 	{
@@ -896,7 +896,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public Border getInnerBorder()
 	{
-		// const GtkBorder* gtk_entry_get_inner_border (GtkEntry *entry);
+		// const GtkBorder * gtk_entry_get_inner_border (GtkEntry *entry);
 		auto p = gtk_entry_get_inner_border(gtkEntry);
 		if(p is null)
 		{
@@ -994,7 +994,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.4
 	 * Params:
 	 * xalign = The horizontal alignment, from 0 (left) to 1 (right).
-	 *  Reversed for RTL layouts
+	 * Reversed for RTL layouts
 	 */
 	public void setAlignment(float xalign)
 	{
@@ -1050,7 +1050,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public PgLayout getLayout()
 	{
-		// PangoLayout* gtk_entry_get_layout (GtkEntry *entry);
+		// PangoLayout * gtk_entry_get_layout (GtkEntry *entry);
 		auto p = gtk_entry_get_layout(gtkEntry);
 		if(p is null)
 		{
@@ -1077,8 +1077,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
 	 * Params:
-	 * x = location to store X offset of layout, or NULL. [allow-none]
-	 * y = location to store Y offset of layout, or NULL. [allow-none]
+	 * x = location to store X offset of layout, or NULL. [out][allow-none]
+	 * y = location to store Y offset of layout, or NULL. [out][allow-none]
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -1155,7 +1155,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	/**
 	 * Returns the auxiliary completion object currently in use by entry.
 	 * Since 2.4
-	 * Returns: The auxiliary completion object currently in use by entry.
+	 * Returns: The auxiliary completion object currently in use by entry. [transfer none]
 	 */
 	public EntryCompletion getCompletion()
 	{
@@ -1178,7 +1178,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.12
 	 * Params:
 	 * adjustment = an adjustment which should be adjusted when the cursor
-	 *  is moved, or NULL
+	 * is moved, or NULL
 	 */
 	public void setCursorHadjustment(Adjustment adjustment)
 	{
@@ -1194,7 +1194,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public Adjustment getCursorHadjustment()
 	{
-		// GtkAdjustment* gtk_entry_get_cursor_hadjustment (GtkEntry *entry);
+		// GtkAdjustment * gtk_entry_get_cursor_hadjustment (GtkEntry *entry);
 		auto p = gtk_entry_get_cursor_hadjustment(gtkEntry);
 		if(p is null)
 		{
@@ -1387,11 +1387,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = Icon position
-	 * Returns: A GdkPixbuf, or NULL if no icon is set for this position.
+	 * Returns: A GdkPixbuf, or NULL if no icon is set for this position. [transfer none]
 	 */
 	public Pixbuf getIconPixbuf(GtkEntryIconPosition iconPos)
 	{
-		// GdkPixbuf* gtk_entry_get_icon_pixbuf (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
+		// GdkPixbuf * gtk_entry_get_icon_pixbuf (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
 		auto p = gtk_entry_get_icon_pixbuf(gtkEntry, iconPos);
 		if(p is null)
 		{
@@ -1411,7 +1411,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public string getIconStock(GtkEntryIconPosition iconPos)
 	{
-		// const gchar* gtk_entry_get_icon_stock (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
+		// const gchar * gtk_entry_get_icon_stock (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
 		return Str.toString(gtk_entry_get_icon_stock(gtkEntry, iconPos));
 	}
 	
@@ -1426,7 +1426,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public string getIconName(GtkEntryIconPosition iconPos)
 	{
-		// const gchar* gtk_entry_get_icon_name (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
+		// const gchar * gtk_entry_get_icon_name (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
 		return Str.toString(gtk_entry_get_icon_name(gtkEntry, iconPos));
 	}
 	
@@ -1437,11 +1437,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Since 2.16
 	 * Params:
 	 * iconPos = Icon position
-	 * Returns: A GIcon, or NULL if no icon is set or if the icon is not a GIcon
+	 * Returns: A GIcon, or NULL if no icon is set or if the icon is not a GIcon. [transfer none]
 	 */
 	public IconIF getIconGicon(GtkEntryIconPosition iconPos)
 	{
-		// GIcon* gtk_entry_get_icon_gicon (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
+		// GIcon * gtk_entry_get_icon_gicon (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
 		auto p = gtk_entry_get_icon_gicon(gtkEntry, iconPos);
 		if(p is null)
 		{
@@ -1482,7 +1482,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * Params:
 	 * iconPos = Icon position
 	 * sensitive = Specifies whether the icon should appear
-	 *  sensitive or insensitive
+	 * sensitive or insensitive
 	 */
 	public void setIconSensitive(GtkEntryIconPosition iconPos, int sensitive)
 	{
@@ -1627,10 +1627,12 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * entry in an expose-event callback because it enables the callback
 	 * to distinguish between the text window and entry's icon windows.
 	 * See also gtk_entry_get_text_window().
+	 * Note that GTK+ 3 does not have this function anymore; it has
+	 * been replaced by gtk_entry_get_icon_area().
 	 * Since 2.20
 	 * Params:
 	 * iconPos = Icon position
-	 * Returns: the entry's icon window at icon_pos.
+	 * Returns: the entry's icon window at icon_pos. [transfer none]
 	 */
 	public Window getIconWindow(GtkEntryIconPosition iconPos)
 	{
@@ -1649,8 +1651,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * callback because it enables the callback to distinguish between
 	 * the text window and entry's icon windows.
 	 * See also gtk_entry_get_icon_window().
+	 * Note that GTK+ 3 does not have this function anymore; it has
+	 * been replaced by gtk_entry_get_text_area().
 	 * Since 2.20
-	 * Returns: the entry's text window.
+	 * Returns: the entry's text window. [transfer none]
 	 */
 	public Window getTextWindow()
 	{

@@ -294,6 +294,7 @@ public class Label : Misc
 	 * The signal which gets emitted to activate a URI.
 	 * Applications may connect to it to override the default behaviour,
 	 * which is to call gtk_show_uri().
+	 * TRUE if the link has been activated
 	 * Since 2.18
 	 */
 	void addOnActivateLink(bool delegate(string, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -635,8 +636,8 @@ public class Label : Misc
 	 * when using the PangoLayout functions you need to convert to
 	 * and from pixels using PANGO_PIXELS() or PANGO_SCALE.
 	 * Params:
-	 * x = location to store X offset of layout, or NULL. [allow-none]
-	 * y = location to store Y offset of layout, or NULL. [allow-none]
+	 * x = location to store X offset of layout, or NULL. [out][allow-none]
+	 * y = location to store Y offset of layout, or NULL. [out][allow-none]
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -674,7 +675,7 @@ public class Label : Misc
 	 */
 	public string getText()
 	{
-		// const gchar* gtk_label_get_text (GtkLabel *label);
+		// const gchar * gtk_label_get_text (GtkLabel *label);
 		return Str.toString(gtk_label_get_text(gtkLabel));
 	}
 	
@@ -750,7 +751,7 @@ public class Label : Misc
 	 * (see gtk_label_set_markup()). If you want to get the
 	 * effective attributes for the label, use
 	 * pango_layout_get_attribute (gtk_label_get_layout (label)).
-	 * Returns: the attribute list, or NULL if none was set.
+	 * Returns: the attribute list, or NULL if none was set. [transfer none]
 	 */
 	public PgAttributeList getAttributes()
 	{
@@ -864,7 +865,7 @@ public class Label : Misc
 	/**
 	 * Retrieves the target of the mnemonic (keyboard shortcut) of this
 	 * label. See gtk_label_set_mnemonic_widget().
-	 * Returns: the target of the label's mnemonic, or NULL if none has been set and the default algorithm will be used.
+	 * Returns: the target of the label's mnemonic, or NULL if none has been set and the default algorithm will be used. [transfer none]
 	 */
 	public Widget getMnemonicWidget()
 	{
@@ -881,8 +882,8 @@ public class Label : Misc
 	 * Gets the selected range of characters in the label, returning TRUE
 	 * if there's a selection.
 	 * Params:
-	 * start = return location for start of selection, as a character offset
-	 * end = return location for end of selection, as a character offset
+	 * start = return location for start of selection, as a character offset. [out]
+	 * end = return location for end of selection, as a character offset. [out]
 	 * Returns: TRUE if selection is non-empty
 	 */
 	public int getSelectionBounds(out int start, out int end)
@@ -995,7 +996,7 @@ public class Label : Misc
 	 * Since 2.6
 	 * Params:
 	 * angle = the angle that the baseline of the label makes with
-	 *  the horizontal, in degrees, measured counterclockwise
+	 * the horizontal, in degrees, measured counterclockwise
 	 */
 	public void setAngle(double angle)
 	{

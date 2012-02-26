@@ -180,6 +180,8 @@ public class ComboBoxEntry : ComboBox
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_entry_new_with_model has been deprecated since version 2.24 and should not be used in newly-written code. Use gtk_combo_box_new_with_model_and_entry() instead
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child and a list
 	 * of strings as popup. You can get the GtkEntry from a GtkComboBoxEntry
 	 * using GTK_ENTRY (GTK_BIN (combo_box_entry)->child). To add and remove
@@ -203,6 +205,8 @@ public class ComboBoxEntry : ComboBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_entry_set_text_column has been deprecated since version 2.24 and should not be used in newly-written code. Use gtk_combo_box_set_entry_text_column() instead
 	 * Sets the model column which entry_box should use to get strings from
 	 * to be text_column.
 	 * Since 2.4
@@ -216,6 +220,8 @@ public class ComboBoxEntry : ComboBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_entry_get_text_column has been deprecated since version 2.24 and should not be used in newly-written code. Use gtk_combo_box_get_entry_text_column() instead
 	 * Returns the column which entry_box is using to get the strings from.
 	 * Since 2.4
 	 * Returns: A column in the data source model of entry_box.

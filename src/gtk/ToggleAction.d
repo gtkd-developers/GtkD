@@ -177,7 +177,7 @@ public class ToggleAction : Action
 	 * label = The label displayed in menu items and on buttons, or NULL. [allow-none]
 	 * tooltip = A tooltip for the action, or NULL. [allow-none]
 	 * stockId = The stock icon to display in widgets representing the
-	 *  action, or NULL
+	 * action, or NULL
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, string stockId)
@@ -229,7 +229,7 @@ public class ToggleAction : Action
 	 * Since 2.4
 	 * Params:
 	 * drawAsRadio = whether the action should have proxies like a radio
-	 *  action
+	 * action
 	 */
 	public void setDrawAsRadio(int drawAsRadio)
 	{

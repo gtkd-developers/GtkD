@@ -192,6 +192,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * of the list.The default behaviour is to replace the contents
 	 * of the entry with the contents of the text column in the row
 	 * pointed to by iter.
+	 * TRUE if the signal has been handled
 	 * Since 2.12
 	 */
 	void addOnCursorOnMatch(bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -231,6 +232,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * smaller part of the prefix into the entry - e.g. the entry used in
 	 * the GtkFileChooser inserts only the part of the prefix up to the
 	 * next '/'.
+	 * TRUE if the signal has been handled
 	 * Since 2.6
 	 */
 	void addOnInsertPrefix(bool delegate(string, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -267,6 +269,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * The default behaviour is to replace the contents of the
 	 * entry with the contents of the text column in the row
 	 * pointed to by iter.
+	 * TRUE if the signal has been handled
 	 * Since 2.4
 	 */
 	void addOnMatchSelected(bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -317,7 +320,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	/**
 	 * Gets the entry completion has been attached to.
 	 * Since 2.4
-	 * Returns: The entry completion has been attached to.
+	 * Returns: The entry completion has been attached to. [transfer none]
 	 */
 	public Widget getEntry()
 	{
@@ -348,7 +351,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * Returns the model the GtkEntryCompletion is using as data source.
 	 * Returns NULL if the model is unset.
 	 * Since 2.4
-	 * Returns: A GtkTreeModel, or NULL if none is currently being used.
+	 * Returns: A GtkTreeModel, or NULL if none is currently being used. [transfer none]
 	 */
 	public TreeModelIF getModel()
 	{
@@ -612,7 +615,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * Since 2.8
 	 * Params:
 	 * popupSingleMatch = TRUE if the popup should appear even for a single
-	 *  match
+	 * match
 	 */
 	public void setPopupSingleMatch(int popupSingleMatch)
 	{

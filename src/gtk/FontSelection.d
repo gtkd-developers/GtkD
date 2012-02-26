@@ -161,7 +161,7 @@ public class FontSelection : VBox
 	 */
 	public Font getFont()
 	{
-		// GdkFont* gtk_font_selection_get_font (GtkFontSelection *fontsel);
+		// GdkFont * gtk_font_selection_get_font (GtkFontSelection *fontsel);
 		auto p = gtk_font_selection_get_font(gtkFontSelection);
 		if(p is null)
 		{
@@ -182,7 +182,7 @@ public class FontSelection : VBox
 	 */
 	public string getFontName()
 	{
-		// gchar* gtk_font_selection_get_font_name (GtkFontSelection *fontsel);
+		// gchar * gtk_font_selection_get_font_name (GtkFontSelection *fontsel);
 		return Str.toString(gtk_font_selection_get_font_name(gtkFontSelection));
 	}
 	
@@ -207,7 +207,7 @@ public class FontSelection : VBox
 	 */
 	public string getPreviewText()
 	{
-		// const gchar* gtk_font_selection_get_preview_text (GtkFontSelection *fontsel);
+		// const gchar * gtk_font_selection_get_preview_text (GtkFontSelection *fontsel);
 		return Str.toString(gtk_font_selection_get_preview_text(gtkFontSelection));
 	}
 	
@@ -227,7 +227,7 @@ public class FontSelection : VBox
 	 * Gets the PangoFontFace representing the selected font group
 	 * details (i.e. family, slant, weight, width, etc).
 	 * Since 2.14
-	 * Returns: A PangoFontFace representing the selected font group details. The returned object is owned by fontsel and must not be modified or freed.
+	 * Returns: A PangoFontFace representing the selected font group details. The returned object is owned by fontsel and must not be modified or freed. [transfer none]
 	 */
 	public PgFontFace getFace()
 	{
@@ -244,7 +244,7 @@ public class FontSelection : VBox
 	 * This returns the GtkTreeView which lists all styles available for
 	 * the selected font. For example, 'Regular', 'Bold', etc.
 	 * Since 2.14
-	 * Returns: A GtkWidget that is part of fontsel
+	 * Returns: A GtkWidget that is part of fontsel. [transfer none]
 	 */
 	public Widget getFaceList()
 	{
@@ -260,7 +260,7 @@ public class FontSelection : VBox
 	/**
 	 * Gets the PangoFontFamily representing the selected font family.
 	 * Since 2.14
-	 * Returns: A PangoFontFamily representing the selected font family. Font families are a collection of font faces. The returned object is owned by fontsel and must not be modified or freed.
+	 * Returns: A PangoFontFamily representing the selected font family. Font families are a collection of font faces. The returned object is owned by fontsel and must not be modified or freed. [transfer none]
 	 */
 	public PgFontFamily getFamily()
 	{
@@ -288,7 +288,7 @@ public class FontSelection : VBox
 	 * This returns the GtkTreeView that lists font families, for
 	 * example, 'Sans', 'Serif', etc.
 	 * Since 2.14
-	 * Returns: A GtkWidget that is part of fontsel
+	 * Returns: A GtkWidget that is part of fontsel. [transfer none]
 	 */
 	public Widget getFamilyList()
 	{
@@ -304,7 +304,7 @@ public class FontSelection : VBox
 	/**
 	 * This returns the GtkEntry used to display the font as a preview.
 	 * Since 2.14
-	 * Returns: A GtkWidget that is part of fontsel
+	 * Returns: A GtkWidget that is part of fontsel. [transfer none]
 	 */
 	public Widget getPreviewEntry()
 	{
@@ -321,7 +321,7 @@ public class FontSelection : VBox
 	 * This returns the GtkEntry used to allow the user to edit the font
 	 * number manually instead of selecting it from the list of font sizes.
 	 * Since 2.14
-	 * Returns: A GtkWidget that is part of fontsel
+	 * Returns: A GtkWidget that is part of fontsel. [transfer none]
 	 */
 	public Widget getSizeEntry()
 	{
@@ -337,7 +337,7 @@ public class FontSelection : VBox
 	/**
 	 * This returns the GtkTreeeView used to list font sizes.
 	 * Since 2.14
-	 * Returns: A GtkWidget that is part of fontsel
+	 * Returns: A GtkWidget that is part of fontsel. [transfer none]
 	 */
 	public Widget getSizeList()
 	{

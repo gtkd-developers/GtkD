@@ -145,7 +145,7 @@ public class IMContextSimple : IMContext
 	 * Params:
 	 * data = the table
 	 * maxSeqLen = Maximum length of a sequence in the table
-	 *  (cannot be greater than GTK_MAX_COMPOSE_LEN)
+	 * (cannot be greater than GTK_MAX_COMPOSE_LEN)
 	 */
 	public void addTable(ushort[] data, int maxSeqLen)
 	{

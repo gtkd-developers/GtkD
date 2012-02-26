@@ -211,7 +211,7 @@ public class BindingSet
 	 */
 	public this (string setName)
 	{
-		// GtkBindingSet* gtk_binding_set_new (const gchar *set_name);
+		// GtkBindingSet * gtk_binding_set_new (const gchar *set_name);
 		auto p = gtk_binding_set_new(Str.toStringz(setName));
 		if(p is null)
 		{
@@ -230,7 +230,7 @@ public class BindingSet
 	 */
 	public static BindingSet byClass(void* objectClass)
 	{
-		// GtkBindingSet* gtk_binding_set_by_class (gpointer object_class);
+		// GtkBindingSet * gtk_binding_set_by_class (gpointer object_class);
 		auto p = gtk_binding_set_by_class(objectClass);
 		if(p is null)
 		{
@@ -245,11 +245,11 @@ public class BindingSet
 	 * a class used in gtk_binding_set_by_class().
 	 * Params:
 	 * setName = unique binding set name
-	 * Returns: NULL or the specified binding set
+	 * Returns: NULL or the specified binding set. [transfer none]
 	 */
 	public static BindingSet find(string setName)
 	{
-		// GtkBindingSet* gtk_binding_set_find (const gchar *set_name);
+		// GtkBindingSet * gtk_binding_set_find (const gchar *set_name);
 		auto p = gtk_binding_set_find(Str.toStringz(setName));
 		if(p is null)
 		{

@@ -297,7 +297,7 @@ public class ColorSelection : VBox
 	/**
 	 * Fills color in with the original color value.
 	 * Params:
-	 * color = a GdkColor to fill in with the original color value.
+	 * color = a GdkColor to fill in with the original color value. [out]
 	 */
 	public void getPreviousColor(Color color)
 	{
@@ -334,7 +334,8 @@ public class ColorSelection : VBox
 	 * list of color names readable by gdk_color_parse().
 	 * Params:
 	 * str = a string encoding a color palette.
-	 * colors = return location for allocated array of GdkColor.
+	 * colors = return location for allocated
+	 * array of GdkColor. [out][array length=n_colors]
 	 * Returns: TRUE if a palette was successfully parsed.
 	 */
 	public static int paletteFromString(string str, out GdkColor[] colors)
@@ -352,13 +353,13 @@ public class ColorSelection : VBox
 	/**
 	 * Encodes a palette as a string, useful for persistent storage.
 	 * Params:
-	 * colors = an array of colors.
+	 * colors = an array of colors. [array length=n_colors]
 	 * nColors = length of the array.
 	 * Returns: allocated string encoding the palette.
 	 */
 	public static string paletteToString(Color colors, int nColors)
 	{
-		// gchar* gtk_color_selection_palette_to_string  (const GdkColor *colors,  gint n_colors);
+		// gchar * gtk_color_selection_palette_to_string  (const GdkColor *colors,  gint n_colors);
 		return Str.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors));
 	}
 	
@@ -403,7 +404,7 @@ public class ColorSelection : VBox
 	 * also set the original color to be color too.
 	 * Params:
 	 * color = an array of 4 doubles specifying the red, green, blue and opacity
-	 *  to set the current color to.
+	 * to set the current color to.
 	 */
 	public void setColor(double[] color)
 	{

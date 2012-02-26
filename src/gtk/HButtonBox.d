@@ -149,7 +149,7 @@ public class HButtonBox : ButtonBox
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_hbutton_box_new (void);
+		// GtkWidget * gtk_hbutton_box_new (void);
 		auto p = gtk_hbutton_box_new();
 		if(p is null)
 		{

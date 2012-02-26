@@ -187,7 +187,7 @@ public class MountOperation : GioMountOperation
 	/**
 	 * Gets the transient parent used by the GtkMountOperation
 	 * Since 2.14
-	 * Returns: the transient parent for windows shown by op
+	 * Returns: the transient parent for windows shown by op. [transfer none]
 	 */
 	public Window getParent()
 	{
@@ -216,7 +216,7 @@ public class MountOperation : GioMountOperation
 	 * Gets the screen on which windows of the GtkMountOperation
 	 * will be shown.
 	 * Since 2.14
-	 * Returns: the screen on which windows of op are shown
+	 * Returns: the screen on which windows of op are shown. [transfer none]
 	 */
 	public Screen getScreen()
 	{
@@ -231,8 +231,10 @@ public class MountOperation : GioMountOperation
 	
 	/**
 	 * This is a convenience function for launching the default application
-	 * to show the uri. The uri must be of a form understood by GIO. Typical
-	 * examples are
+	 * to show the uri. The uri must be of a form understood by GIO (i.e. you
+	 * need to install gvfs to get support for uri schemes such as http://
+	 * or ftp://, as only local files are handled by GIO itself).
+	 * Typical examples are
 	 * file:///home/gnome/pict.jpg
 	 * http://www.gnome.org
 	 * mailto:me@gnome.org

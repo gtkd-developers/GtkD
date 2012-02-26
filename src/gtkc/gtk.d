@@ -590,6 +590,8 @@ mixin( _shared ~ "static this()
 
 	// gtk.Window
 
+	Linker.link(gtk_window_set_default_icon_from_file, \"gtk_window_set_default_icon_from_file\", LIBRARY.GTK);
+	Linker.link(gtk_window_set_icon_from_file, \"gtk_window_set_icon_from_file\", LIBRARY.GTK);
 	Linker.link(gtk_window_new, \"gtk_window_new\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_title, \"gtk_window_set_title\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_wmclass, \"gtk_window_set_wmclass\", LIBRARY.GTK);
@@ -682,11 +684,9 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_window_resize, \"gtk_window_resize\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_default_icon_list, \"gtk_window_set_default_icon_list\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_default_icon, \"gtk_window_set_default_icon\", LIBRARY.GTK);
-	Linker.link(gtk_window_set_default_icon_from_file, \"gtk_window_set_default_icon_from_file\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_default_icon_name, \"gtk_window_set_default_icon_name\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_icon, \"gtk_window_set_icon\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_icon_list, \"gtk_window_set_icon_list\", LIBRARY.GTK);
-	Linker.link(gtk_window_set_icon_from_file, \"gtk_window_set_icon_from_file\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_icon_name, \"gtk_window_set_icon_name\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_auto_startup_notification, \"gtk_window_set_auto_startup_notification\", LIBRARY.GTK);
 	Linker.link(gtk_window_get_opacity, \"gtk_window_get_opacity\", LIBRARY.GTK);
@@ -2025,7 +2025,9 @@ mixin( _shared ~ "static this()
 	// gtk.ComboBox
 
 	Linker.link(gtk_combo_box_new, \"gtk_combo_box_new\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_new_with_entry, \"gtk_combo_box_new_with_entry\", LIBRARY.GTK);
 	Linker.link(gtk_combo_box_new_with_model, \"gtk_combo_box_new_with_model\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_new_with_model_and_entry, \"gtk_combo_box_new_with_model_and_entry\", LIBRARY.GTK);
 	Linker.link(gtk_combo_box_get_wrap_width, \"gtk_combo_box_get_wrap_width\", LIBRARY.GTK);
 	Linker.link(gtk_combo_box_set_wrap_width, \"gtk_combo_box_set_wrap_width\", LIBRARY.GTK);
 	Linker.link(gtk_combo_box_get_row_span_column, \"gtk_combo_box_get_row_span_column\", LIBRARY.GTK);
@@ -2057,6 +2059,9 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_combo_box_get_focus_on_click, \"gtk_combo_box_get_focus_on_click\", LIBRARY.GTK);
 	Linker.link(gtk_combo_box_set_button_sensitivity, \"gtk_combo_box_set_button_sensitivity\", LIBRARY.GTK);
 	Linker.link(gtk_combo_box_get_button_sensitivity, \"gtk_combo_box_get_button_sensitivity\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_get_has_entry, \"gtk_combo_box_get_has_entry\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_set_entry_text_column, \"gtk_combo_box_set_entry_text_column\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_get_entry_text_column, \"gtk_combo_box_get_entry_text_column\", LIBRARY.GTK);
 
 	// gtk.ComboBoxEntry
 
@@ -2787,6 +2792,8 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_notebook_get_group_id, \"gtk_notebook_get_group_id\", LIBRARY.GTK);
 	Linker.link(gtk_notebook_set_group, \"gtk_notebook_set_group\", LIBRARY.GTK);
 	Linker.link(gtk_notebook_get_group, \"gtk_notebook_get_group\", LIBRARY.GTK);
+	Linker.link(gtk_notebook_set_group_name, \"gtk_notebook_set_group_name\", LIBRARY.GTK);
+	Linker.link(gtk_notebook_get_group_name, \"gtk_notebook_get_group_name\", LIBRARY.GTK);
 	Linker.link(gtk_notebook_set_action_widget, \"gtk_notebook_set_action_widget\", LIBRARY.GTK);
 	Linker.link(gtk_notebook_get_action_widget, \"gtk_notebook_get_action_widget\", LIBRARY.GTK);
 	Linker.link(gtk_notebook_set_window_creation_hook, \"gtk_notebook_set_window_creation_hook\", LIBRARY.GTK);
@@ -3403,10 +3410,12 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_range_get_inverted, \"gtk_range_get_inverted\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_inverted, \"gtk_range_set_inverted\", LIBRARY.GTK);
 	Linker.link(gtk_range_get_update_policy, \"gtk_range_get_update_policy\", LIBRARY.GTK);
-	Linker.link(gtk_range_get_value, \"gtk_range_get_value\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_increments, \"gtk_range_set_increments\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_range, \"gtk_range_set_range\", LIBRARY.GTK);
+	Linker.link(gtk_range_get_value, \"gtk_range_get_value\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_value, \"gtk_range_set_value\", LIBRARY.GTK);
+	Linker.link(gtk_range_get_round_digits, \"gtk_range_get_round_digits\", LIBRARY.GTK);
+	Linker.link(gtk_range_set_round_digits, \"gtk_range_set_round_digits\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_lower_stepper_sensitivity, \"gtk_range_set_lower_stepper_sensitivity\", LIBRARY.GTK);
 	Linker.link(gtk_range_get_lower_stepper_sensitivity, \"gtk_range_get_lower_stepper_sensitivity\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_upper_stepper_sensitivity, \"gtk_range_set_upper_stepper_sensitivity\", LIBRARY.GTK);
@@ -4451,6 +4460,8 @@ mixin( gshared ~"extern(C)
 	
 	// gtk.Window
 	
+	gboolean function(gchar* filename, GError** err) c_gtk_window_set_default_icon_from_file;
+	gboolean function(GtkWindow* window, gchar* filename, GError** err) c_gtk_window_set_icon_from_file;
 	GtkWidget* function(GtkWindowType type) c_gtk_window_new;
 	void function(GtkWindow* window, gchar* title) c_gtk_window_set_title;
 	void function(GtkWindow* window, gchar* wmclassName, gchar* wmclassClass) c_gtk_window_set_wmclass;
@@ -4543,11 +4554,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkWindow* window, gint width, gint height) c_gtk_window_resize;
 	void function(GList* list) c_gtk_window_set_default_icon_list;
 	void function(GdkPixbuf* icon) c_gtk_window_set_default_icon;
-	gboolean function(gchar* filename, GError** err) c_gtk_window_set_default_icon_from_file;
 	void function(gchar* name) c_gtk_window_set_default_icon_name;
 	void function(GtkWindow* window, GdkPixbuf* icon) c_gtk_window_set_icon;
 	void function(GtkWindow* window, GList* list) c_gtk_window_set_icon_list;
-	gboolean function(GtkWindow* window, gchar* filename, GError** err) c_gtk_window_set_icon_from_file;
 	void function(GtkWindow* window, gchar* name) c_gtk_window_set_icon_name;
 	void function(gboolean setting) c_gtk_window_set_auto_startup_notification;
 	gdouble function(GtkWindow* window) c_gtk_window_get_opacity;
@@ -5886,7 +5895,9 @@ mixin( gshared ~"extern(C)
 	// gtk.ComboBox
 	
 	GtkWidget* function() c_gtk_combo_box_new;
+	GtkWidget* function() c_gtk_combo_box_new_with_entry;
 	GtkWidget* function(GtkTreeModel* model) c_gtk_combo_box_new_with_model;
+	GtkWidget* function(GtkTreeModel* model) c_gtk_combo_box_new_with_model_and_entry;
 	gint function(GtkComboBox* comboBox) c_gtk_combo_box_get_wrap_width;
 	void function(GtkComboBox* comboBox, gint width) c_gtk_combo_box_set_wrap_width;
 	gint function(GtkComboBox* comboBox) c_gtk_combo_box_get_row_span_column;
@@ -5918,6 +5929,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkComboBox* combo) c_gtk_combo_box_get_focus_on_click;
 	void function(GtkComboBox* comboBox, GtkSensitivityType sensitivity) c_gtk_combo_box_set_button_sensitivity;
 	GtkSensitivityType function(GtkComboBox* comboBox) c_gtk_combo_box_get_button_sensitivity;
+	gboolean function(GtkComboBox* comboBox) c_gtk_combo_box_get_has_entry;
+	void function(GtkComboBox* comboBox, gint textColumn) c_gtk_combo_box_set_entry_text_column;
+	gint function(GtkComboBox* comboBox) c_gtk_combo_box_get_entry_text_column;
 	
 	// gtk.ComboBoxEntry
 	
@@ -6648,6 +6662,8 @@ mixin( gshared ~"extern(C)
 	gint function(GtkNotebook* notebook) c_gtk_notebook_get_group_id;
 	void function(GtkNotebook* notebook, gpointer group) c_gtk_notebook_set_group;
 	gpointer function(GtkNotebook* notebook) c_gtk_notebook_get_group;
+	void function(GtkNotebook* notebook, gchar* groupName) c_gtk_notebook_set_group_name;
+	gchar* function(GtkNotebook* notebook) c_gtk_notebook_get_group_name;
 	void function(GtkNotebook* notebook, GtkWidget* widget, GtkPackType packType) c_gtk_notebook_set_action_widget;
 	GtkWidget* function(GtkNotebook* notebook, GtkPackType packType) c_gtk_notebook_get_action_widget;
 	void function(GtkNotebookWindowCreationFunc func, gpointer data, GDestroyNotify destroy) c_gtk_notebook_set_window_creation_hook;
@@ -7264,10 +7280,12 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkRange* range) c_gtk_range_get_inverted;
 	void function(GtkRange* range, gboolean setting) c_gtk_range_set_inverted;
 	GtkUpdateType function(GtkRange* range) c_gtk_range_get_update_policy;
-	gdouble function(GtkRange* range) c_gtk_range_get_value;
 	void function(GtkRange* range, gdouble step, gdouble page) c_gtk_range_set_increments;
 	void function(GtkRange* range, gdouble min, gdouble max) c_gtk_range_set_range;
+	gdouble function(GtkRange* range) c_gtk_range_get_value;
 	void function(GtkRange* range, gdouble value) c_gtk_range_set_value;
+	gint function(GtkRange* range) c_gtk_range_get_round_digits;
+	void function(GtkRange* range, gint roundDigits) c_gtk_range_set_round_digits;
 	void function(GtkRange* range, GtkSensitivityType sensitivity) c_gtk_range_set_lower_stepper_sensitivity;
 	GtkSensitivityType function(GtkRange* range) c_gtk_range_get_lower_stepper_sensitivity;
 	void function(GtkRange* range, GtkSensitivityType sensitivity) c_gtk_range_set_upper_stepper_sensitivity;
@@ -8309,6 +8327,8 @@ alias c_gtk_message_dialog_format_secondary_markup  gtk_message_dialog_format_se
 
 // gtk.Window
 
+alias c_gtk_window_set_default_icon_from_file  gtk_window_set_default_icon_from_file;
+alias c_gtk_window_set_icon_from_file  gtk_window_set_icon_from_file;
 alias c_gtk_window_new  gtk_window_new;
 alias c_gtk_window_set_title  gtk_window_set_title;
 alias c_gtk_window_set_wmclass  gtk_window_set_wmclass;
@@ -8401,11 +8421,9 @@ alias c_gtk_window_reshow_with_initial_size  gtk_window_reshow_with_initial_size
 alias c_gtk_window_resize  gtk_window_resize;
 alias c_gtk_window_set_default_icon_list  gtk_window_set_default_icon_list;
 alias c_gtk_window_set_default_icon  gtk_window_set_default_icon;
-alias c_gtk_window_set_default_icon_from_file  gtk_window_set_default_icon_from_file;
 alias c_gtk_window_set_default_icon_name  gtk_window_set_default_icon_name;
 alias c_gtk_window_set_icon  gtk_window_set_icon;
 alias c_gtk_window_set_icon_list  gtk_window_set_icon_list;
-alias c_gtk_window_set_icon_from_file  gtk_window_set_icon_from_file;
 alias c_gtk_window_set_icon_name  gtk_window_set_icon_name;
 alias c_gtk_window_set_auto_startup_notification  gtk_window_set_auto_startup_notification;
 alias c_gtk_window_get_opacity  gtk_window_get_opacity;
@@ -9744,7 +9762,9 @@ alias c_gtk_tree_store_move_after  gtk_tree_store_move_after;
 // gtk.ComboBox
 
 alias c_gtk_combo_box_new  gtk_combo_box_new;
+alias c_gtk_combo_box_new_with_entry  gtk_combo_box_new_with_entry;
 alias c_gtk_combo_box_new_with_model  gtk_combo_box_new_with_model;
+alias c_gtk_combo_box_new_with_model_and_entry  gtk_combo_box_new_with_model_and_entry;
 alias c_gtk_combo_box_get_wrap_width  gtk_combo_box_get_wrap_width;
 alias c_gtk_combo_box_set_wrap_width  gtk_combo_box_set_wrap_width;
 alias c_gtk_combo_box_get_row_span_column  gtk_combo_box_get_row_span_column;
@@ -9776,6 +9796,9 @@ alias c_gtk_combo_box_set_focus_on_click  gtk_combo_box_set_focus_on_click;
 alias c_gtk_combo_box_get_focus_on_click  gtk_combo_box_get_focus_on_click;
 alias c_gtk_combo_box_set_button_sensitivity  gtk_combo_box_set_button_sensitivity;
 alias c_gtk_combo_box_get_button_sensitivity  gtk_combo_box_get_button_sensitivity;
+alias c_gtk_combo_box_get_has_entry  gtk_combo_box_get_has_entry;
+alias c_gtk_combo_box_set_entry_text_column  gtk_combo_box_set_entry_text_column;
+alias c_gtk_combo_box_get_entry_text_column  gtk_combo_box_get_entry_text_column;
 
 // gtk.ComboBoxEntry
 
@@ -10506,6 +10529,8 @@ alias c_gtk_notebook_set_group_id  gtk_notebook_set_group_id;
 alias c_gtk_notebook_get_group_id  gtk_notebook_get_group_id;
 alias c_gtk_notebook_set_group  gtk_notebook_set_group;
 alias c_gtk_notebook_get_group  gtk_notebook_get_group;
+alias c_gtk_notebook_set_group_name  gtk_notebook_set_group_name;
+alias c_gtk_notebook_get_group_name  gtk_notebook_get_group_name;
 alias c_gtk_notebook_set_action_widget  gtk_notebook_set_action_widget;
 alias c_gtk_notebook_get_action_widget  gtk_notebook_get_action_widget;
 alias c_gtk_notebook_set_window_creation_hook  gtk_notebook_set_window_creation_hook;
@@ -11122,10 +11147,12 @@ alias c_gtk_range_set_adjustment  gtk_range_set_adjustment;
 alias c_gtk_range_get_inverted  gtk_range_get_inverted;
 alias c_gtk_range_set_inverted  gtk_range_set_inverted;
 alias c_gtk_range_get_update_policy  gtk_range_get_update_policy;
-alias c_gtk_range_get_value  gtk_range_get_value;
 alias c_gtk_range_set_increments  gtk_range_set_increments;
 alias c_gtk_range_set_range  gtk_range_set_range;
+alias c_gtk_range_get_value  gtk_range_get_value;
 alias c_gtk_range_set_value  gtk_range_set_value;
+alias c_gtk_range_get_round_digits  gtk_range_get_round_digits;
+alias c_gtk_range_set_round_digits  gtk_range_set_round_digits;
 alias c_gtk_range_set_lower_stepper_sensitivity  gtk_range_set_lower_stepper_sensitivity;
 alias c_gtk_range_get_lower_stepper_sensitivity  gtk_range_get_lower_stepper_sensitivity;
 alias c_gtk_range_set_upper_stepper_sensitivity  gtk_range_set_upper_stepper_sensitivity;

@@ -132,7 +132,7 @@ public class VScrollbar : Scrollbar
 	 */
 	public this (Adjustment adjustment)
 	{
-		// GtkWidget* gtk_vscrollbar_new (GtkAdjustment *adjustment);
+		// GtkWidget * gtk_vscrollbar_new (GtkAdjustment *adjustment);
 		auto p = gtk_vscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{

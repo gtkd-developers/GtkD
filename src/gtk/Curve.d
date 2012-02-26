@@ -169,7 +169,7 @@ public class Curve : DrawingArea
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_curve_new (void);
+		// GtkWidget * gtk_curve_new (void);
 		auto p = gtk_curve_new();
 		if(p is null)
 		{

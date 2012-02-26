@@ -177,7 +177,7 @@ public class Types
 	 */
 	public static GtkEnumValue* enumGetValues(GtkType enumType)
 	{
-		// GtkEnumValue* gtk_type_enum_get_values (GtkType enum_type);
+		// GtkEnumValue * gtk_type_enum_get_values (GtkType enum_type);
 		return gtk_type_enum_get_values(enumType);
 	}
 	
@@ -191,7 +191,7 @@ public class Types
 	 */
 	public static GtkFlagValue* flagsGetValues(GtkType flagsType)
 	{
-		// GtkFlagValue* gtk_type_flags_get_values (GtkType flags_type);
+		// GtkFlagValue * gtk_type_flags_get_values (GtkType flags_type);
 		return gtk_type_flags_get_values(flagsType);
 	}
 	
@@ -206,7 +206,7 @@ public class Types
 	 */
 	public static GtkEnumValue* enumFindValue(GtkType enumType, string valueName)
 	{
-		// GtkEnumValue* gtk_type_enum_find_value (GtkType enum_type,  const gchar *value_name);
+		// GtkEnumValue * gtk_type_enum_find_value (GtkType enum_type,  const gchar *value_name);
 		return gtk_type_enum_find_value(enumType, Str.toStringz(valueName));
 	}
 	
@@ -221,7 +221,7 @@ public class Types
 	 */
 	public static GtkFlagValue* flagsFindValue(GtkType flagsType, string valueName)
 	{
-		// GtkFlagValue* gtk_type_flags_find_value (GtkType flags_type,  const gchar *value_name);
+		// GtkFlagValue * gtk_type_flags_find_value (GtkType flags_type,  const gchar *value_name);
 		return gtk_type_flags_find_value(flagsType, Str.toStringz(valueName));
 	}
 }

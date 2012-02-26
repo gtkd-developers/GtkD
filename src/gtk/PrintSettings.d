@@ -157,7 +157,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Copies a GtkPrintSettings object.
 	 * Since 2.10
-	 * Returns: a newly allocated copy of other
+	 * Returns: a newly allocated copy of other. [transfer full]
 	 */
 	public PrintSettings copy()
 	{
@@ -226,7 +226,7 @@ public class PrintSettings : ObjectG
 	 * Calls func for each key-value pair of settings.
 	 * Since 2.10
 	 * Params:
-	 * func = (scope call) the function to call
+	 * func = the function to call. [scope call]
 	 * userData = user data for func
 	 */
 	public void foreac(GtkPrintSettingsFunc func, void* userData)
@@ -829,7 +829,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_PAGE_RANGES.
 	 * Since 2.10
-	 * Returns: an array of GtkPageRanges. Use g_free() to free the array when it is no longer needed.
+	 * Returns: an array of GtkPageRanges. Use g_free() to free the array when it is no longer needed. [array length=num_ranges][transfer full]
 	 */
 	public GtkPageRange[] getPageRanges()
 	{
@@ -843,7 +843,7 @@ public class PrintSettings : ObjectG
 	 * Sets the value of GTK_PRINT_SETTINGS_PAGE_RANGES.
 	 * Since 2.10
 	 * Params:
-	 * pageRanges = an array of GtkPageRanges
+	 * pageRanges = an array of GtkPageRanges. [array length=num_ranges]
 	 */
 	public void setPageRanges(GtkPageRange[] pageRanges)
 	{
@@ -1030,7 +1030,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the settings from
 	 * groupName = the name of the group to use, or NULL to use
-	 *  the default "Print Settings". [allow-none]
+	 * the default "Print Settings". [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -1086,7 +1086,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to retrieve the settings from
 	 * groupName = the name of the group to use, or NULL to use the default
-	 *  "Print Settings". [allow-none]
+	 * "Print Settings". [allow-none]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -1136,7 +1136,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 * keyFile = the GKeyFile to save the print settings to
 	 * groupName = the group to add the settings to in key_file, or
-	 *  NULL to use the default "Print Settings"
+	 * NULL to use the default "Print Settings"
 	 */
 	public void toKeyFile(KeyFile keyFile, string groupName)
 	{

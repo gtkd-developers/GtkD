@@ -208,7 +208,7 @@ public class ToggleButton : Button
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_toggle_button_new (void);
+		// GtkWidget * gtk_toggle_button_new (void);
 		auto p = gtk_toggle_button_new();
 		if(p is null)
 		{

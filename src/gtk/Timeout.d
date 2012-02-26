@@ -201,7 +201,7 @@ public class Timeout
 	 * point the timeout is destroyed and will not be called again.
 	 * Params:
 	 * interval = The time between calls to the function, in milliseconds
-	 * 	(1/1000ths of a second.)
+	 * (1/1000ths of a second.)
 	 * marshal = The marshaller to use instead of the function (if non-NULL).
 	 * data = The data to pass to the function.
 	 * destroy = Function to call when the timeout is destroyed or NULL.
@@ -221,7 +221,7 @@ public class Timeout
 	 * point the timeout is destroyed and will not be called again.
 	 * Params:
 	 * interval = The time between calls to the function, in milliseconds
-	 * 	(1/1000ths of a second.)
+	 * (1/1000ths of a second.)
 	 * data = The data to pass to the function.
 	 * Returns: A unique id for the event source.
 	 */

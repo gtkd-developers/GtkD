@@ -181,7 +181,7 @@ public class Plug : Window
 	 * Since 2.2
 	 * Params:
 	 * display = the GdkDisplay associated with socket_id's
-	 *  GtkSocket.
+	 * GtkSocket.
 	 * socketId = the XID of the socket's window.
 	 */
 	public void constructForDisplay(Display display, GdkNativeWindow socketId)
@@ -200,7 +200,7 @@ public class Plug : Window
 	 */
 	public this (GdkNativeWindow socketId)
 	{
-		// GtkWidget* gtk_plug_new (GdkNativeWindow socket_id);
+		// GtkWidget * gtk_plug_new (GdkNativeWindow socket_id);
 		auto p = gtk_plug_new(socketId);
 		if(p is null)
 		{
@@ -219,7 +219,7 @@ public class Plug : Window
 	 */
 	public this (Display display, GdkNativeWindow socketId)
 	{
-		// GtkWidget* gtk_plug_new_for_display (GdkDisplay *display,  GdkNativeWindow socket_id);
+		// GtkWidget * gtk_plug_new_for_display (GdkDisplay *display,  GdkNativeWindow socket_id);
 		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
 		if(p is null)
 		{
@@ -254,7 +254,7 @@ public class Plug : Window
 	/**
 	 * Retrieves the socket the plug is embedded in.
 	 * Since 2.14
-	 * Returns: the window of the socket, or NULL
+	 * Returns: the window of the socket, or NULL. [transfer none]
 	 */
 	public GdkWindow* getSocketWindow()
 	{

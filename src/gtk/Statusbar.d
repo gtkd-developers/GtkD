@@ -207,7 +207,7 @@ public class Statusbar : HBox
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_statusbar_new (void);
+		// GtkWidget * gtk_statusbar_new (void);
 		auto p = gtk_statusbar_new();
 		if(p is null)
 		{
@@ -222,7 +222,7 @@ public class Statusbar : HBox
 	 * not shown in the UI.
 	 * Params:
 	 * contextDescription = textual description of what context
-	 *  the new message is being used in
+	 * the new message is being used in
 	 * Returns: an integer id
 	 */
 	public uint getContextId(string contextDescription)
@@ -235,7 +235,7 @@ public class Statusbar : HBox
 	 * Pushes a new message onto a statusbar's stack.
 	 * Params:
 	 * contextId = the message's context id, as returned by
-	 *  gtk_statusbar_get_context_id()
+	 * gtk_statusbar_get_context_id()
 	 * text = the message to add to the statusbar
 	 * Returns: a message id that can be used with gtk_statusbar_remove().
 	 */
@@ -311,11 +311,11 @@ public class Statusbar : HBox
 	/**
 	 * Retrieves the box containing the label widget.
 	 * Since 2.20
-	 * Returns: a GtkBox
+	 * Returns: a GtkBox. [transfer none]
 	 */
 	public Widget getMessageArea()
 	{
-		// GtkWidget* gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
+		// GtkWidget * gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
 		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
 		if(p is null)
 		{

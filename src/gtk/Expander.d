@@ -380,7 +380,7 @@ public class Expander : Bin
 	 * Retrieves the label widget for the frame. See
 	 * gtk_expander_set_label_widget().
 	 * Since 2.4
-	 * Returns: the label widget, or NULL if there is none.
+	 * Returns: the label widget, or NULL if there is none. [transfer none]
 	 */
 	public Widget getLabelWidget()
 	{
@@ -399,7 +399,7 @@ public class Expander : Bin
 	 * Since 2.22
 	 * Params:
 	 * labelFill = TRUE if the label should should fill all available horizontal
-	 *  space
+	 * space
 	 */
 	public void setLabelFill(int labelFill)
 	{

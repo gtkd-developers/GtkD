@@ -173,15 +173,15 @@ public class Box : Container, OrientableIF
 	 * box. The extra space will be divided evenly between all children of
 	 * box that use this option
 	 * fill = TRUE if space given to child by the expand option is
-	 *  actually allocated to child, rather than just padding it. This
-	 *  parameter has no effect if expand is set to FALSE. A child is
-	 *  always allocated the full height of a GtkHBox and the full width
-	 *  of a GtkVBox. This option affects the other dimension
+	 * actually allocated to child, rather than just padding it. This
+	 * parameter has no effect if expand is set to FALSE. A child is
+	 * always allocated the full height of a GtkHBox and the full width
+	 * of a GtkVBox. This option affects the other dimension
 	 * padding = extra space in pixels to put between this child and its
-	 *  neighbors, over and above the global amount specified by
-	 *  "spacing" property. If child is a widget at one of the
-	 *  reference ends of box, then padding pixels are also put between
-	 *  child and the reference edge of box
+	 * neighbors, over and above the global amount specified by
+	 * "spacing" property. If child is a widget at one of the
+	 * reference ends of box, then padding pixels are also put between
+	 * child and the reference edge of box
 	 */
 	public void packStart(Widget child, int expand, int fill, uint padding)
 	{
@@ -196,18 +196,18 @@ public class Box : Container, OrientableIF
 	 * Params:
 	 * child = the GtkWidget to be added to box
 	 * expand = TRUE if the new child is to be given extra space allocated
-	 *  to box. The extra space will be divided evenly between all children
-	 *  of box that use this option
+	 * to box. The extra space will be divided evenly between all children
+	 * of box that use this option
 	 * fill = TRUE if space given to child by the expand option is
-	 *  actually allocated to child, rather than just padding it. This
-	 *  parameter has no effect if expand is set to FALSE. A child is
-	 *  always allocated the full height of a GtkHBox and the full width
-	 *  of a GtkVBox. This option affects the other dimension
+	 * actually allocated to child, rather than just padding it. This
+	 * parameter has no effect if expand is set to FALSE. A child is
+	 * always allocated the full height of a GtkHBox and the full width
+	 * of a GtkVBox. This option affects the other dimension
 	 * padding = extra space in pixels to put between this child and its
-	 *  neighbors, over and above the global amount specified by
-	 *  "spacing" property. If child is a widget at one of the
-	 *  reference ends of box, then padding pixels are also put between
-	 *  child and the reference edge of box
+	 * neighbors, over and above the global amount specified by
+	 * "spacing" property. If child is a widget at one of the
+	 * reference ends of box, then padding pixels are also put between
+	 * child and the reference edge of box
 	 */
 	public void packEnd(Widget child, int expand, int fill, uint padding)
 	{
@@ -268,7 +268,7 @@ public class Box : Container, OrientableIF
 	 * in the box.
 	 * Params:
 	 * homogeneous = a boolean value, TRUE to create equal allotments,
-	 *  FALSE for variable allotments
+	 * FALSE for variable allotments
 	 */
 	public void setHomogeneous(int homogeneous)
 	{
@@ -311,8 +311,8 @@ public class Box : Container, OrientableIF
 	 * Params:
 	 * child = the GtkWidget to move
 	 * position = the new position for child in the list of children
-	 *  of box, starting from 0. If negative, indicates the end of
-	 *  the list
+	 * of box, starting from 0. If negative, indicates the end of
+	 * the list
 	 */
 	public void reorderChild(Widget child, int position)
 	{

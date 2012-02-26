@@ -205,11 +205,11 @@ public class ImageMenuItem : MenuItem
 	/**
 	 * Gets the widget that is currently set as the image of image_menu_item.
 	 * See gtk_image_menu_item_set_image().
-	 * Returns: the widget set as image of image_menu_item.
+	 * Returns: the widget set as image of image_menu_item. [transfer none]
 	 */
 	public Widget getImage()
 	{
-		// GtkWidget* gtk_image_menu_item_get_image (GtkImageMenuItem *image_menu_item);
+		// GtkWidget * gtk_image_menu_item_get_image (GtkImageMenuItem *image_menu_item);
 		auto p = gtk_image_menu_item_get_image(gtkImageMenuItem);
 		if(p is null)
 		{
@@ -224,7 +224,7 @@ public class ImageMenuItem : MenuItem
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_image_menu_item_new (void);
+		// GtkWidget * gtk_image_menu_item_new (void);
 		auto p = gtk_image_menu_item_new();
 		if(p is null)
 		{

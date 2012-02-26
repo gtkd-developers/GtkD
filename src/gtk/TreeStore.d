@@ -478,8 +478,8 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	 * iter = An unset GtkTreeIter to set the new row, or NULL. [out][allow-none]
 	 * parent = A valid GtkTreeIter, or NULL. [allow-none]
 	 * position = position to insert the new row
-	 * columns = an array of column numbers
-	 * values = an array of GValues
+	 * columns = an array of column numbers. [array length=n_values]
+	 * values = an array of GValues. [array length=n_values]
 	 */
 	public void insertWithValuesv(TreeIter iter, TreeIter parent, int position, int[] columns, GValue[] values)
 	{
@@ -578,8 +578,8 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	 * Params:
 	 * parent = A GtkTreeIter.
 	 * newOrder = an array of integers mapping the new position of each child
-	 *  to its old position before the re-ordering,
-	 *  i.e. new_order[newpos] = oldpos.
+	 * to its old position before the re-ordering,
+	 * i.e. new_order[newpos] = oldpos. [array]
 	 */
 	public void reorder(TreeIter parent, int[] newOrder)
 	{

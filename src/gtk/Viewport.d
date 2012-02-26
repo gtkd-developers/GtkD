@@ -175,7 +175,7 @@ public class Viewport : Bin
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
-		// GtkWidget* gtk_viewport_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
+		// GtkWidget * gtk_viewport_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
 		auto p = gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 		if(p is null)
 		{
@@ -186,11 +186,11 @@ public class Viewport : Bin
 	
 	/**
 	 * Returns the horizontal adjustment of the viewport.
-	 * Returns: the horizontal adjustment of viewport.
+	 * Returns: the horizontal adjustment of viewport. [transfer none]
 	 */
 	public Adjustment getHadjustment()
 	{
-		// GtkAdjustment* gtk_viewport_get_hadjustment (GtkViewport *viewport);
+		// GtkAdjustment * gtk_viewport_get_hadjustment (GtkViewport *viewport);
 		auto p = gtk_viewport_get_hadjustment(gtkViewport);
 		if(p is null)
 		{
@@ -201,11 +201,11 @@ public class Viewport : Bin
 	
 	/**
 	 * Returns the vertical adjustment of the viewport.
-	 * Returns: the vertical adjustment of viewport.
+	 * Returns: the vertical adjustment of viewport. [transfer none]
 	 */
 	public Adjustment getVadjustment()
 	{
-		// GtkAdjustment* gtk_viewport_get_vadjustment (GtkViewport *viewport);
+		// GtkAdjustment * gtk_viewport_get_vadjustment (GtkViewport *viewport);
 		auto p = gtk_viewport_get_vadjustment(gtkViewport);
 		if(p is null)
 		{
@@ -261,11 +261,11 @@ public class Viewport : Bin
 	/**
 	 * Gets the bin window of the GtkViewport.
 	 * Since 2.20
-	 * Returns: a GdkWindow
+	 * Returns: a GdkWindow. [transfer none]
 	 */
 	public Window getBinWindow()
 	{
-		// GdkWindow* gtk_viewport_get_bin_window (GtkViewport *viewport);
+		// GdkWindow * gtk_viewport_get_bin_window (GtkViewport *viewport);
 		auto p = gtk_viewport_get_bin_window(gtkViewport);
 		if(p is null)
 		{
@@ -281,7 +281,7 @@ public class Viewport : Bin
 	 */
 	public Window getViewWindow()
 	{
-		// GdkWindow* gtk_viewport_get_view_window (GtkViewport *viewport);
+		// GdkWindow * gtk_viewport_get_view_window (GtkViewport *viewport);
 		auto p = gtk_viewport_get_view_window(gtkViewport);
 		if(p is null)
 		{

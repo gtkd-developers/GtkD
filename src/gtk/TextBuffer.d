@@ -920,7 +920,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextTagTable getTagTable()
 	{
-		// GtkTextTagTable* gtk_text_buffer_get_tag_table (GtkTextBuffer *buffer);
+		// GtkTextTagTable * gtk_text_buffer_get_tag_table (GtkTextBuffer *buffer);
 		auto p = gtk_text_buffer_get_tag_table(gtkTextBuffer);
 		if(p is null)
 		{
@@ -939,7 +939,7 @@ public class TextBuffer : ObjectG
 	 * inserted text.
 	 * Params:
 	 * iter = a position in the buffer
-	 * text = text in UTF-8 format. [array length=len][element-type uint8]
+	 * text = text in UTF-8 format
 	 * len = length of text in bytes, or -1
 	 */
 	public void insert(TextIter iter, string text, int len)
@@ -952,7 +952,7 @@ public class TextBuffer : ObjectG
 	 * Simply calls gtk_text_buffer_insert(), using the current
 	 * cursor position as the insertion point.
 	 * Params:
-	 * text = text in UTF-8 format. [array length=len][element-type uint8]
+	 * text = text in UTF-8 format
 	 * len = length of text, in bytes
 	 */
 	public void insertAtCursor(string text, int len)
@@ -1189,7 +1189,7 @@ public class TextBuffer : ObjectG
 	 * the caller of gtk_text_buffer_create_child_anchor().
 	 * Params:
 	 * iter = location in the buffer
-	 * Returns: the created child anchor
+	 * Returns: the created child anchor. [transfer none]
 	 */
 	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
@@ -1318,7 +1318,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getMark(string name)
 	{
-		// GtkTextMark* gtk_text_buffer_get_mark (GtkTextBuffer *buffer,  const gchar *name);
+		// GtkTextMark * gtk_text_buffer_get_mark (GtkTextBuffer *buffer,  const gchar *name);
 		auto p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
 		if(p is null)
 		{
@@ -1336,7 +1336,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getInsert()
 	{
-		// GtkTextMark* gtk_text_buffer_get_insert (GtkTextBuffer *buffer);
+		// GtkTextMark * gtk_text_buffer_get_insert (GtkTextBuffer *buffer);
 		auto p = gtk_text_buffer_get_insert(gtkTextBuffer);
 		if(p is null)
 		{
@@ -1360,7 +1360,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getSelectionBound()
 	{
-		// GtkTextMark* gtk_text_buffer_get_selection_bound (GtkTextBuffer *buffer);
+		// GtkTextMark * gtk_text_buffer_get_selection_bound (GtkTextBuffer *buffer);
 		auto p = gtk_text_buffer_get_selection_bound(gtkTextBuffer);
 		if(p is null)
 		{
@@ -1660,14 +1660,14 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
-	 * Pastes the contents of a clipboard at the insertion point, or at
-	 * override_location. (Note: pasting is asynchronous, that is, we'll
-	 * ask for the paste data and return, and at some point later after
-	 * the main loop runs, the paste data will be inserted.)
+	 * Pastes the contents of a clipboard at the insertion point, or
+	 * at override_location. (Note: pasting is asynchronous, that is,
+	 * we'll ask for the paste data and return, and at some point later
+	 * after the main loop runs, the paste data will be inserted.)
 	 * Params:
 	 * clipboard = the GtkClipboard to paste from
 	 * overrideLocation = location to insert pasted text, or NULL for
-	 *  at the cursor. [allow-none]
+	 * at the cursor. [allow-none]
 	 * defaultEditable = whether the buffer is editable by default
 	 */
 	public void pasteClipboard(Clipboard clipboard, TextIter overrideLocation, int defaultEditable)
@@ -1770,7 +1770,7 @@ public class TextBuffer : ObjectG
 	 * gtk_text_buffer_add_selection_clipboard().
 	 * Params:
 	 * clipboard = a GtkClipboard added to buffer by
-	 *  gtk_text_buffer_add_selection_clipboard()
+	 * gtk_text_buffer_add_selection_clipboard()
 	 */
 	public void removeSelectionClipboard(Clipboard clipboard)
 	{
@@ -1789,7 +1789,7 @@ public class TextBuffer : ObjectG
 	 * contentBuffer = the GtkTextBuffer to deserialize into
 	 * format = the rich text format to use for deserializing
 	 * iter = insertion point for the deserialized text
-	 * data = data to deserialize
+	 * data = data to deserialize. [array length=length]
 	 * Returns: TRUE on success, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1856,7 +1856,7 @@ public class TextBuffer : ObjectG
 	 * using gtk_target_list_add_rich_text_targets() and
 	 * gtk_target_list_add_text_targets().
 	 * Since 2.10
-	 * Returns: the GtkTargetList
+	 * Returns: the GtkTargetList. [transfer none]
 	 */
 	public TargetList getCopyTargetList()
 	{
@@ -1874,7 +1874,7 @@ public class TextBuffer : ObjectG
 	 * with buffer using gtk_text_buffer_register_deserialize_format() or
 	 * gtk_text_buffer_register_deserialize_tagset()
 	 * Since 2.10
-	 * Returns: an array of GdkAtoms representing the registered formats.
+	 * Returns: an array of GdkAtoms representing the registered formats. [array length=n_formats][transfer container]
 	 */
 	public GdkAtom[] getDeserializeFormats()
 	{
@@ -1891,7 +1891,7 @@ public class TextBuffer : ObjectG
 	 * using gtk_target_list_add_rich_text_targets() and
 	 * gtk_target_list_add_text_targets().
 	 * Since 2.10
-	 * Returns: the GtkTargetList
+	 * Returns: the GtkTargetList. [transfer none]
 	 */
 	public TargetList getPasteTargetList()
 	{
@@ -1909,7 +1909,7 @@ public class TextBuffer : ObjectG
 	 * with buffer using gtk_text_buffer_register_serialize_format() or
 	 * gtk_text_buffer_register_serialize_tagset()
 	 * Since 2.10
-	 * Returns: an array of GdkAtoms representing the registered formats.
+	 * Returns: an array of GdkAtoms representing the registered formats. [array length=n_formats][transfer container]
 	 */
 	public GdkAtom[] getSerializeFormats()
 	{
@@ -1927,7 +1927,7 @@ public class TextBuffer : ObjectG
 	 * mimeType = the format's mime-type
 	 * userData = function's user_data
 	 * userDataDestroy = a function to call when user_data is no longer needed
-	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
+	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type. [transfer none]
 	 */
 	public GdkAtom registerDeserializeFormat(string mimeType, GtkTextBufferDeserializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
 	{
@@ -1942,7 +1942,7 @@ public class TextBuffer : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * tagsetName = an optional tagset name, on NULL. [allow-none]
-	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
+	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type. [transfer none]
 	 */
 	public GdkAtom registerDeserializeTagset(string tagsetName)
 	{
@@ -1958,7 +1958,7 @@ public class TextBuffer : ObjectG
 	 * mimeType = the format's mime-type
 	 * userData = function's user_data
 	 * userDataDestroy = a function to call when user_data is no longer needed
-	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
+	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type. [transfer none]
 	 */
 	public GdkAtom registerSerializeFormat(string mimeType, GtkTextBufferSerializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
 	{
@@ -1985,7 +1985,7 @@ public class TextBuffer : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * tagsetName = an optional tagset name, on NULL. [allow-none]
-	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type.
+	 * Returns: the GdkAtom that corresponds to the newly registered format's mime-type. [transfer none]
 	 */
 	public GdkAtom registerSerializeTagset(string tagsetName)
 	{
@@ -2005,7 +2005,7 @@ public class TextBuffer : ObjectG
 	 * format = the rich text format to use for serializing
 	 * start = start of block of text to serialize
 	 * end = end of block of test to serialize
-	 * Returns: the serialized data, encoded as format
+	 * Returns: the serialized data, encoded as format. [array length=length][transfer full]
 	 */
 	public ubyte[] serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end)
 	{

@@ -311,11 +311,11 @@ public class TreeSelection : ObjectG
 	
 	/**
 	 * Returns the tree view associated with selection.
-	 * Returns: A GtkTreeView
+	 * Returns: A GtkTreeView. [transfer none]
 	 */
 	public TreeView getTreeView()
 	{
-		// GtkTreeView* gtk_tree_selection_get_tree_view (GtkTreeSelection *selection);
+		// GtkTreeView * gtk_tree_selection_get_tree_view (GtkTreeSelection *selection);
 		auto p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
 		if(p is null)
 		{
@@ -351,7 +351,7 @@ public class TreeSelection : ObjectG
 	 * the tree or selection from within this function. As a result,
 	 * gtk_tree_selection_get_selected_rows() might be more useful.
 	 * Params:
-	 * func = The function to call for each selected node.
+	 * func = The function to call for each selected node. [scope call]
 	 * data = user data to pass to the function.
 	 */
 	public void selectedForeach(GtkTreeSelectionForeachFunc func, void* data)

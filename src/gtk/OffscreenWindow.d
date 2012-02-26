@@ -163,7 +163,7 @@ public class OffscreenWindow : Window
 	 * a GdkPixmap. If you need to keep this around over window
 	 * resizes then you should add a reference to it.
 	 * Since 2.20
-	 * Returns: A GdkPixmap pointer to the offscreen pixmap, or NULL.
+	 * Returns: A GdkPixmap pointer to the offscreen pixmap, or NULL. [transfer none]
 	 */
 	public Pixmap getPixmap()
 	{
@@ -182,7 +182,7 @@ public class OffscreenWindow : Window
 	 * and the application should unreference it once it is no longer
 	 * needed.
 	 * Since 2.20
-	 * Returns: A GdkPixbuf pointer, or NULL.
+	 * Returns: A GdkPixbuf pointer, or NULL. [transfer full]
 	 */
 	public Pixbuf getPixbuf()
 	{

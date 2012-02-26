@@ -115,7 +115,7 @@ public interface EditableIF
 	 * gtk_editable_delete_text().
 	 */
 	void addOnDeleteText(void delegate(gint, gint, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(string, gint, gint*, EditableIF)[] onInsertTextListeners();
+	void delegate(string, gint, gpointer, EditableIF)[] onInsertTextListeners();
 	/**
 	 * This signal is emitted when text is inserted into
 	 * the widget by the user. The default handler for
@@ -125,7 +125,7 @@ public interface EditableIF
 	 * is possible to modify the inserted text, or prevent
 	 * it from being inserted entirely.
 	 */
-	void addOnInsertText(void delegate(string, gint, gint*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void addOnInsertText(void delegate(string, gint, gpointer, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
 	 * Selects a region of text. The characters that are selected are
@@ -160,7 +160,7 @@ public interface EditableIF
 	 * Params:
 	 * newText = the text to append
 	 * newTextLength = the length of the text in bytes, or -1
-	 * position = location of the position text will be inserted at. [in-out]
+	 * position = location of the position text will be inserted at. [inout]
 	 */
 	public void insertText(string newText, int newTextLength, ref int position);
 	
@@ -238,7 +238,7 @@ public interface EditableIF
 	 * widget or not.
 	 * Params:
 	 * isEditable = TRUE if the user is allowed to edit the text
-	 *  in the widget
+	 * in the widget
 	 */
 	public void setEditable(int isEditable);
 	

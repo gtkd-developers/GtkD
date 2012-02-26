@@ -215,7 +215,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 * Since 2.8
 	 * Params:
 	 * ignoreHidden = whether unmapped widgets should be ignored
-	 *  when calculating the size
+	 * when calculating the size
 	 */
 	public void setIgnoreHidden(int ignoreHidden)
 	{
@@ -265,7 +265,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Returns the list of widgets associated with size_group.
 	 * Since 2.10
-	 * Returns: a GSList of widgets. The list is owned by GTK+ and should not be modified. [element-type GtkWidget][transfer none GtkWidget]
+	 * Returns: a GSList of widgets. The list is owned by GTK+ and should not be modified. [element-type GtkWidget][transfer none]
 	 */
 	public ListSG getWidgets()
 	{

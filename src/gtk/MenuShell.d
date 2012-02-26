@@ -147,11 +147,11 @@ public class MenuShell : Container
 		}
 		onActivateCurrentListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, gboolean forceHide, MenuShell menuShell)
+	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, gboolean arg1, MenuShell menuShell)
 	{
 		foreach ( void delegate(gboolean, MenuShell) dlg ; menuShell.onActivateCurrentListeners )
 		{
-			dlg(forceHide, menuShell);
+			dlg(arg1, menuShell);
 		}
 	}
 	
@@ -256,11 +256,11 @@ public class MenuShell : Container
 		}
 		onMoveCurrentListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType direction, MenuShell menuShell)
+	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType arg1, MenuShell menuShell)
 	{
 		foreach ( void delegate(GtkMenuDirectionType, MenuShell) dlg ; menuShell.onMoveCurrentListeners )
 		{
-			dlg(direction, menuShell);
+			dlg(arg1, menuShell);
 		}
 	}
 	
@@ -268,6 +268,7 @@ public class MenuShell : Container
 	/**
 	 * The ::move-selected signal is emitted to move the selection to
 	 * another item.
+	 * TRUE to stop the signal emission, FALSE to continue
 	 * Since 2.12
 	 */
 	void addOnMoveSelected(bool delegate(gint, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -391,10 +392,10 @@ public class MenuShell : Container
 	 * Since 2.2
 	 * Params:
 	 * searchSensitive = if TRUE, search for the first selectable
-	 *  menu item, otherwise select nothing if
-	 *  the first item isn't sensitive. This
-	 *  should be FALSE if the menu is being
-	 *  popped up initially.
+	 * menu item, otherwise select nothing if
+	 * the first item isn't sensitive. This
+	 * should be FALSE if the menu is being
+	 * popped up initially.
 	 */
 	public void selectFirst(int searchSensitive)
 	{

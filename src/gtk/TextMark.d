@@ -211,7 +211,7 @@ public class TextMark : ObjectG
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_text_mark_get_name (GtkTextMark *mark);
+		// const gchar * gtk_text_mark_get_name (GtkTextMark *mark);
 		return Str.toString(gtk_text_mark_get_name(gtkTextMark));
 	}
 	
@@ -222,7 +222,7 @@ public class TextMark : ObjectG
 	 */
 	public TextBuffer getBuffer()
 	{
-		// GtkTextBuffer* gtk_text_mark_get_buffer (GtkTextMark *mark);
+		// GtkTextBuffer * gtk_text_mark_get_buffer (GtkTextMark *mark);
 		auto p = gtk_text_mark_get_buffer(gtkTextMark);
 		if(p is null)
 		{

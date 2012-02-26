@@ -375,10 +375,10 @@ public class ToolButton : ToolItem
 	}
 	
 	/**
-	 * Return the widget used as icon widget on button. See
-	 * gtk_tool_button_set_icon_widget().
+	 * Return the widget used as icon widget on button.
+	 * See gtk_tool_button_set_icon_widget().
 	 * Since 2.4
-	 * Returns: The widget used as icon on button, or NULL.
+	 * Returns: The widget used as icon on button, or NULL. [transfer none]
 	 */
 	public Widget getIconWidget()
 	{
@@ -408,10 +408,10 @@ public class ToolButton : ToolItem
 	}
 	
 	/**
-	 * Returns the widget used as label on button. See
-	 * gtk_tool_button_set_label_widget().
+	 * Returns the widget used as label on button.
+	 * See gtk_tool_button_set_label_widget().
 	 * Since 2.4
-	 * Returns: The widget used as label on button, or NULL.
+	 * Returns: The widget used as label on button, or NULL. [transfer none]
 	 */
 	public Widget getLabelWidget()
 	{

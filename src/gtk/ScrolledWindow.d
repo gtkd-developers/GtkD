@@ -280,11 +280,11 @@ public class ScrolledWindow : Bin
 	 * Returns the horizontal scrollbar's adjustment, used to connect the
 	 * horizontal scrollbar to the child widget's horizontal scroll
 	 * functionality.
-	 * Returns: the horizontal GtkAdjustment
+	 * Returns: the horizontal GtkAdjustment. [transfer none]
 	 */
 	public Adjustment getHadjustment()
 	{
-		// GtkAdjustment* gtk_scrolled_window_get_hadjustment (GtkScrolledWindow *scrolled_window);
+		// GtkAdjustment * gtk_scrolled_window_get_hadjustment (GtkScrolledWindow *scrolled_window);
 		auto p = gtk_scrolled_window_get_hadjustment(gtkScrolledWindow);
 		if(p is null)
 		{
@@ -295,13 +295,12 @@ public class ScrolledWindow : Bin
 	
 	/**
 	 * Returns the vertical scrollbar's adjustment, used to connect the
-	 * vertical scrollbar to the child widget's vertical scroll
-	 * functionality.
-	 * Returns: the vertical GtkAdjustment
+	 * vertical scrollbar to the child widget's vertical scroll functionality.
+	 * Returns: the vertical GtkAdjustment. [transfer none]
 	 */
 	public Adjustment getVadjustment()
 	{
-		// GtkAdjustment* gtk_scrolled_window_get_vadjustment (GtkScrolledWindow *scrolled_window);
+		// GtkAdjustment * gtk_scrolled_window_get_vadjustment (GtkScrolledWindow *scrolled_window);
 		auto p = gtk_scrolled_window_get_vadjustment(gtkScrolledWindow);
 		if(p is null)
 		{
@@ -313,11 +312,11 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns the horizontal scrollbar of scrolled_window.
 	 * Since 2.8
-	 * Returns: the horizontal scrollbar of the scrolled window, or NULL if it does not have one.
+	 * Returns: the horizontal scrollbar of the scrolled window, or NULL if it does not have one. [transfer none]
 	 */
 	public Widget getHscrollbar()
 	{
-		// GtkWidget* gtk_scrolled_window_get_hscrollbar (GtkScrolledWindow *scrolled_window);
+		// GtkWidget * gtk_scrolled_window_get_hscrollbar (GtkScrolledWindow *scrolled_window);
 		auto p = gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow);
 		if(p is null)
 		{
@@ -329,11 +328,11 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns the vertical scrollbar of scrolled_window.
 	 * Since 2.8
-	 * Returns: the vertical scrollbar of the scrolled window, or NULL if it does not have one.
+	 * Returns: the vertical scrollbar of the scrolled window, or NULL if it does not have one. [transfer none]
 	 */
 	public Widget getVscrollbar()
 	{
-		// GtkWidget* gtk_scrolled_window_get_vscrollbar (GtkScrolledWindow *scrolled_window);
+		// GtkWidget * gtk_scrolled_window_get_vscrollbar (GtkScrolledWindow *scrolled_window);
 		auto p = gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow);
 		if(p is null)
 		{
@@ -466,10 +465,10 @@ public class ScrolledWindow : Bin
 	 * Retrieves the current policy values for the horizontal and vertical
 	 * scrollbars. See gtk_scrolled_window_set_policy().
 	 * Params:
-	 * hscrollbarPolicy = location to store the policy for the horizontal
-	 *  scrollbar, or NULL.
-	 * vscrollbarPolicy = location to store the policy for the vertical
-	 *  scrollbar, or NULL.
+	 * hscrollbarPolicy = location to store the policy
+	 * for the horizontal scrollbar, or NULL. [out][allow-none]
+	 * vscrollbarPolicy = location to store the policy
+	 * for the vertical scrollbar, or NULL. [out][allow-none]
 	 */
 	public void getPolicy(out GtkPolicyType hscrollbarPolicy, out GtkPolicyType vscrollbarPolicy)
 	{

@@ -92,6 +92,26 @@ private import gtk.Bin;
 
 /**
  * Description
+ * A GtkComboBox is a widget that allows the user to choose from a list of
+ * valid choices. The GtkComboBox displays the selected choice. When
+ * activated, the GtkComboBox displays a popup which allows the user to
+ * make a new choice. The style in which the selected value is displayed,
+ * and the style of the popup is determined by the current theme. It may
+ * be similar to a Windows-style combo box.
+ * The GtkComboBox uses the model-view pattern; the list of valid choices
+ * is specified in the form of a tree model, and the display of the choices
+ * can be adapted to the data in the model by using cell renderers, as you
+ * would in a tree view. This is possible since GtkComboBox implements the
+ * GtkCellLayout interface. The tree model holding the valid choices is
+ * not restricted to a flat list, it can be a real tree, and the popup will
+ * reflect the tree structure.
+ * To allow the user to enter values not in the model, the 'has-entry'
+ * property allows the GtkComboBox to contain a GtkEntry. This entry
+ * can be accessed by calling gtk_bin_get_child() on the combo box.
+ * For a simple list of textual choices, the model-view API of GtkComboBox
+ * can be a bit overwhelming. In this case, GtkComboBoxText offers a
+ * simple alternative. Both GtkComboBox and GtkComboBoxText can contain
+ * an entry.
  * A GtkComboBox is a widget that allows the user to choose from a
  * list of valid choices. The GtkComboBox displays the selected
  * choice. When activated, the GtkComboBox displays a popup
@@ -379,7 +399,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * The default binding for this signal is Alt+Down.
 	 * Since 2.12
 	 * See Also
-	 * GtkComboBoxEntry, GtkTreeModel, GtkCellRenderer
+	 * GtkComboBoxText, GtkTreeModel, GtkCellRenderer
 	 */
 	void addOnPopup(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -404,6 +424,21 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 	}
 	
+	
+	/**
+	 * Creates a new empty GtkComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this ()
+	{
+		// GtkWidget * gtk_combo_box_new_with_entry (void);
+		auto p = gtk_combo_box_new_with_entry();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new_with_entry()");
+		}
+		this(cast(GtkComboBox*) p);
+	}
 	
 	/**
 	 * Creates a new GtkComboBox with the model initialized to model.
@@ -587,6 +622,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_append_text has been deprecated since version 2.24 and should not be used in newly-written code. Use GtkComboBoxText
 	 * Appends string to the list of strings stored in combo_box. Note that
 	 * you can only use this function with combo boxes constructed with
 	 * gtk_combo_box_new_text().
@@ -601,6 +638,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_insert_text has been deprecated since version 2.24 and should not be used in newly-written code. Use GtkComboBoxText
 	 * Inserts string at position in the list of strings stored in combo_box.
 	 * Note that you can only use this function with combo boxes constructed
 	 * with gtk_combo_box_new_text().
@@ -616,6 +655,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_prepend_text has been deprecated since version 2.24 and should not be used in newly-written code. Use GtkComboBoxText
 	 * Prepends string to the list of strings stored in combo_box. Note that
 	 * you can only use this function with combo boxes constructed with
 	 * gtk_combo_box_new_text().
@@ -630,6 +671,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_remove_text has been deprecated since version 2.24 and should not be used in newly-written code. Use GtkComboBoxText
 	 * Removes the string at position from combo_box. Note that you can only use
 	 * this function with combo boxes constructed with gtk_combo_box_new_text().
 	 * Since 2.4
@@ -643,6 +686,13 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_get_active_text has been deprecated since version 2.24 and should not be used in newly-written code. If you used this with a GtkComboBox constructed with
+	 * gtk_combo_box_new_text() then you should now use GtkComboBoxText and
+	 * gtk_combo_box_text_get_active_text() instead. Or if you used this with a
+	 * GtkComboBoxEntry then you should now use GtkComboBox with
+	 * "has-entry" as TRUE and use
+	 * gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (combobox))).
 	 * Returns the currently active string in combo_box or NULL if none
 	 * is selected. Note that you can only use this function with combo
 	 * boxes constructed with gtk_combo_box_new_text() and with
@@ -685,11 +735,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * This function is mostly intended for use by accessibility technologies;
 	 * applications should have little use for it.
 	 * Since 2.6
-	 * Returns: the accessible object corresponding to the combo box's popup.
+	 * Returns: the accessible object corresponding to the combo box's popup. [transfer none]
 	 */
 	public ObjectAtk getPopupAccessible()
 	{
-		// AtkObject* gtk_combo_box_get_popup_accessible (GtkComboBox *combo_box);
+		// AtkObject * gtk_combo_box_get_popup_accessible (GtkComboBox *combo_box);
 		auto p = gtk_combo_box_get_popup_accessible(gtkComboBox);
 		if(p is null)
 		{
@@ -780,7 +830,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * Since 2.6
 	 * Params:
 	 * focusOnClick = whether the combo box grabs focus when clicked
-	 *  with the mouse
+	 * with the mouse
 	 */
 	public void setFocusOnClick(int focusOnClick)
 	{
@@ -824,5 +874,45 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	{
 		// GtkSensitivityType gtk_combo_box_get_button_sensitivity  (GtkComboBox *combo_box);
 		return gtk_combo_box_get_button_sensitivity(gtkComboBox);
+	}
+	
+	/**
+	 * Returns whether the combo box has an entry.
+	 * Since 2.24
+	 * Returns: whether there is an entry in combo_box.
+	 */
+	public int getHasEntry()
+	{
+		// gboolean gtk_combo_box_get_has_entry (GtkComboBox *combo_box);
+		return gtk_combo_box_get_has_entry(gtkComboBox);
+	}
+	
+	/**
+	 * Sets the model column which combo_box should use to get strings from
+	 * to be text_column. The column text_column in the model of combo_box
+	 * must be of type G_TYPE_STRING.
+	 * This is only relevant if combo_box has been created with
+	 * "has-entry" as TRUE.
+	 * Since 2.24
+	 * Params:
+	 * textColumn = A column in model to get the strings from for
+	 * the internal entry
+	 */
+	public void setEntryTextColumn(int textColumn)
+	{
+		// void gtk_combo_box_set_entry_text_column (GtkComboBox *combo_box,  gint text_column);
+		gtk_combo_box_set_entry_text_column(gtkComboBox, textColumn);
+	}
+	
+	/**
+	 * Returns the column which combo_box is using to get the strings
+	 * from to display in the internal entry.
+	 * Since 2.24
+	 * Returns: A column in the data source model of combo_box.
+	 */
+	public int getEntryTextColumn()
+	{
+		// gint gtk_combo_box_get_entry_text_column (GtkComboBox *combo_box);
+		return gtk_combo_box_get_entry_text_column(gtkComboBox);
 	}
 }

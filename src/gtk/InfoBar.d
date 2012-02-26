@@ -337,7 +337,7 @@ public class InfoBar : HBox
 	 * Params:
 	 * buttonText = text of button, or stock ID
 	 * responseId = response ID for the button
-	 * Returns: the button widget that was added
+	 * Returns: the button widget that was added. [transfer none]
 	 */
 	public Widget addButton(string buttonText, int responseId)
 	{

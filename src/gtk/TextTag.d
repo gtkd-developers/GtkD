@@ -143,6 +143,8 @@ public class TextTag : ObjectG
 	/**
 	 * The ::event signal is emitted when an event occurs on a region of the
 	 * buffer marked with this tag.
+	 * TRUE to stop other handlers from being invoked for the
+	 * event. FALSE to propagate the event further.
 	 */
 	void addOn(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

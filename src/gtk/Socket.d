@@ -195,6 +195,7 @@ public class Socket : Container
 	 * This signal is emitted when a client is removed from the socket.
 	 * The default action is to destroy the GtkSocket widget, so if you
 	 * want to reuse it you must add a signal handler that returns TRUE.
+	 * TRUE to stop other handlers from being invoked.
 	 * See Also
 	 * GtkPlug, XEmbed
 	 */
@@ -233,7 +234,7 @@ public class Socket : Container
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_socket_new (void);
+		// GtkWidget * gtk_socket_new (void);
 		auto p = gtk_socket_new();
 		if(p is null)
 		{
@@ -304,11 +305,11 @@ public class Socket : Container
 	 *  gpointer user_data) : Run Last
 	 * This signal is emitted when a client is successfully
 	 * added to the socket.
-	 * Returns: the window of the plug if available, or NULL
+	 * Returns: the window of the plug if available, or NULL. [transfer none]
 	 */
 	public Window getPlugWindow()
 	{
-		// GdkWindow* gtk_socket_get_plug_window (GtkSocket *socket_);
+		// GdkWindow * gtk_socket_get_plug_window (GtkSocket *socket_);
 		auto p = gtk_socket_get_plug_window(gtkSocket);
 		if(p is null)
 		{

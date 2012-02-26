@@ -350,7 +350,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public GtkTreeViewColumnSizing getSizing()
 	{
-		// GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing  (GtkTreeViewColumn *tree_column);
+		// GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_sizing(gtkTreeViewColumn);
 	}
 	
@@ -531,9 +531,9 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	}
 	
 	/**
-	 * Returns the GtkWidget in the button on the column header. If a custom
-	 * widget has not been set then NULL is returned.
-	 * Returns: The GtkWidget in the column header, or NULL
+	 * Returns the GtkWidget in the button on the column header.
+	 * If a custom widget has not been set then NULL is returned.
+	 * Returns: The GtkWidget in the column header, or NULL. [transfer none]
 	 */
 	public Widget getWidget()
 	{
@@ -691,10 +691,10 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 * primarily by the GtkTreeView.
 	 * Params:
 	 * cellArea = The area a cell in the column will be allocated, or NULL. [allow-none]
-	 * xOffset = location to return x offset of a cell relative to cell_area, or NULL. [allow-none]
-	 * yOffset = location to return y offset of a cell relative to cell_area, or NULL. [allow-none]
-	 * width = location to return width needed to render a cell, or NULL. [allow-none]
-	 * height = location to return height needed to render a cell, or NULL. [allow-none]
+	 * xOffset = location to return x offset of a cell relative to cell_area, or NULL. [out][allow-none]
+	 * yOffset = location to return y offset of a cell relative to cell_area, or NULL. [out][allow-none]
+	 * width = location to return width needed to render a cell, or NULL. [out][allow-none]
+	 * height = location to return height needed to render a cell, or NULL. [out][allow-none]
 	 */
 	public void cellGetSize(Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
@@ -709,7 +709,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 * Params:
 	 * cellRenderer = a GtkCellRenderer
 	 * startPos = return location for the horizontal position of cell within
-	 *  tree_column, may be NULL
+	 * tree_column, may be NULL
 	 * width = return location for the width of cell, may be NULL
 	 * Returns: TRUE if cell belongs to tree_column.
 	 */
@@ -756,11 +756,11 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	}
 	
 	/**
-	 * Returns the GtkTreeView wherein tree_column has been inserted. If
-	 * column is currently not inserted in any tree view, NULL is
+	 * Returns the GtkTreeView wherein tree_column has been inserted.
+	 * If column is currently not inserted in any tree view, NULL is
 	 * returned.
 	 * Since 2.12
-	 * Returns: The tree view wherein column has been inserted if any, NULL otherwise.
+	 * Returns: The tree view wherein column has been inserted if any, NULL otherwise. [transfer none]
 	 */
 	public Widget getTreeView()
 	{

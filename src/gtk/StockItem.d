@@ -185,11 +185,11 @@ public class StockItem
 	 * Retrieves a list of all known stock IDs added to a GtkIconFactory
 	 * or registered with gtk_stock_add(). The list must be freed with g_slist_free(),
 	 * and each string in the list must be freed with g_free().
-	 * Returns: a list of known stock IDs. [element-type utf8][transfer full utf8]
+	 * Returns: a list of known stock IDs. [element-type utf8][transfer full]
 	 */
 	public static ListSG listIds()
 	{
-		// GSList* gtk_stock_list_ids (void);
+		// GSList * gtk_stock_list_ids (void);
 		auto p = gtk_stock_list_ids();
 		if(p is null)
 		{
@@ -203,7 +203,7 @@ public class StockItem
 	 * if stock_id was known.
 	 * Params:
 	 * stockId = a stock item name
-	 * item = stock item to initialize with values
+	 * item = stock item to initialize with values. [out]
 	 * Returns: TRUE if item was initialized
 	 */
 	public static int lookup(string stockId, StockItem item)
@@ -228,7 +228,7 @@ public class StockItem
 	 * func = a GtkTranslateFunc
 	 * data = data to pass to func
 	 * notify = a GDestroyNotify that is called when data is
-	 *  no longer needed
+	 * no longer needed
 	 */
 	public static void setTranslateFunc(string domain, GtkTranslateFunc func, void* data, GDestroyNotify notify)
 	{

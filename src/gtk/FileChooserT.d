@@ -219,7 +219,7 @@ public import gtk.FileFilter;
  *  frequently. You could then create an Alt+M
  *  shortcut by including the following in your
  *  .gtkrc-2.0:
- *  binding "misc-shortcut" {
+ *   binding "misc-shortcut" {
 	 *  bind "<Alt>M" {
 		 *  "location-popup" ("/home/username/misc")
 	 * 	 }

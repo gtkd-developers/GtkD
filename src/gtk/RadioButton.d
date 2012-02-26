@@ -285,13 +285,16 @@ public class RadioButton : CheckButton
 	/**
 	 * Creates a new GtkRadioButton. To be of any practical value, a widget should
 	 * then be packed into the radio button.
+	 * Creates a new GtkRadioButton. To be of any practical value, a widget should
+	 * then be packed into the radio button.
 	 * Params:
-	 * group = an existing radio button group, or NULL if you are creating a new group.
+	 * group = an existing radio button group, or NULL if you are
+	 * creating a new group. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group)
 	{
-		// GtkWidget* gtk_radio_button_new (GSList *group);
+		// GtkWidget * gtk_radio_button_new (GSList *group);
 		auto p = gtk_radio_button_new((group is null) ? null : group.getListSGStruct());
 		if(p is null)
 		{
@@ -301,15 +304,18 @@ public class RadioButton : CheckButton
 	}
 	
 	/**
+	 * Creates a new GtkRadioButton, adding it to the same group as
+	 * radio_group_member. As with gtk_radio_button_new(), a widget
+	 * should be packed into the radio button.
 	 * Creates a new GtkRadioButton, adding it to the same group as radio_group_member.
 	 * As with gtk_radio_button_new(), a widget should be packed into the radio button.
 	 * Params:
-	 * radioGroupMember = an existing GtkRadioButton.
+	 * radioGroupMember = an existing GtkRadioButton. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RadioButton radioGroupMember)
 	{
-		// GtkWidget* gtk_radio_button_new_from_widget (GtkRadioButton *radio_group_member);
+		// GtkWidget * gtk_radio_button_new_from_widget (GtkRadioButton *radio_group_member);
 		auto p = gtk_radio_button_new_from_widget((radioGroupMember is null) ? null : radioGroupMember.getRadioButtonStruct());
 		if(p is null)
 		{
@@ -329,7 +335,7 @@ public class RadioButton : CheckButton
 	 * changes.
 	 * Params:
 	 * group = an existing radio
-	 *  button group, such as one returned from gtk_radio_button_get_group(). [transfer none][element-type GtkRadioButton]
+	 * button group, such as one returned from gtk_radio_button_get_group(). [transfer none][element-type GtkRadioButton]
 	 */
 	public void setGroup(ListSG group)
 	{
@@ -339,11 +345,11 @@ public class RadioButton : CheckButton
 	
 	/**
 	 * Retrieves the group assigned to a radio button.
-	 * Returns: a linked list containing all the radio buttons in the same group as radio_button. The returned list is owned by the radio button and must not be modified or freed. [element-type GtkRadioButton][transfer none GtkRadioButton]
+	 * Returns: a linked list containing all the radio buttons in the same group as radio_button. The returned list is owned by the radio button and must not be modified or freed. [element-type GtkRadioButton][transfer none]
 	 */
 	public ListSG getGroup()
 	{
-		// GSList* gtk_radio_button_get_group (GtkRadioButton *radio_button);
+		// GSList * gtk_radio_button_get_group (GtkRadioButton *radio_button);
 		auto p = gtk_radio_button_get_group(gtkRadioButton);
 		if(p is null)
 		{
