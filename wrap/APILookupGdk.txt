@@ -1298,7 +1298,7 @@ nocode: gdk_cairo_set_source_pixmap
 nocode: gdk_cairo_rectangle
 nocode: gdk_cairo_region
 nocode: gdk_cairo_reset_clip
-nocode: void gdk_cairo_set_source_window
+nocode: gdk_cairo_set_source_window
 code: start
 
 	/**
