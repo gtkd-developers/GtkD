@@ -165,7 +165,7 @@ public class GC : ObjectG
 	 * Create a new graphics context with default values.
 	 * Params:
 	 * drawable = a GdkDrawable. The created GC must always be used
-	 *  with drawables of the same depth as this one.
+	 * with drawables of the same depth as this one.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Drawable drawable)
@@ -185,10 +185,10 @@ public class GC : ObjectG
 	 * Create a new GC with the given initial values.
 	 * Params:
 	 * drawable = a GdkDrawable. The created GC must always be used
-	 *  with drawables of the same depth as this one.
+	 * with drawables of the same depth as this one.
 	 * values = a structure containing initial values for the GC.
 	 * valuesMask = a bit mask indicating which fields in values
-	 *  are set.
+	 * are set.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Drawable drawable, GdkGCValues* values, GdkGCValuesMask valuesMask)

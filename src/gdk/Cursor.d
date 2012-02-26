@@ -137,7 +137,7 @@ public class Cursor
 	 */
 	public this (GdkCursorType cursorType)
 	{
-		// GdkCursor* gdk_cursor_new (GdkCursorType cursor_type);
+		// GdkCursor * gdk_cursor_new (GdkCursorType cursor_type);
 		auto p = gdk_cursor_new(cursorType);
 		if(p is null)
 		{
@@ -155,18 +155,18 @@ public class Cursor
 	 * Params:
 	 * source = the pixmap specifying the cursor.
 	 * mask = the pixmap specifying the mask, which must be the same size as
-	 *  source.
+	 * source.
 	 * fg = the foreground color, used for the bits in the source which are 1.
-	 *  The color does not have to be allocated first.
+	 * The color does not have to be allocated first.
 	 * bg = the background color, used for the bits in the source which are 0.
-	 *  The color does not have to be allocated first.
+	 * The color does not have to be allocated first.
 	 * x = the horizontal offset of the 'hotspot' of the cursor.
 	 * y = the vertical offset of the 'hotspot' of the cursor.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Pixmap source, Pixmap mask, Color fg, Color bg, int x, int y)
 	{
-		// GdkCursor* gdk_cursor_new_from_pixmap (GdkPixmap *source,  GdkPixmap *mask,  const GdkColor *fg,  const GdkColor *bg,  gint x,  gint y);
+		// GdkCursor * gdk_cursor_new_from_pixmap (GdkPixmap *source,  GdkPixmap *mask,  const GdkColor *fg,  const GdkColor *bg,  gint x,  gint y);
 		auto p = gdk_cursor_new_from_pixmap((source is null) ? null : source.getPixmapStruct(), (mask is null) ? null : mask.getPixmapStruct(), (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct(), x, y);
 		if(p is null)
 		{
@@ -185,6 +185,10 @@ public class Cursor
 	 * gdk_display_get_default_cursor_size() and
 	 * gdk_display_get_maximal_cursor_size() give information about
 	 * cursor sizes.
+	 * If x or y are -1, the pixbuf must have
+	 * options named "x_hot" and "y_hot", resp., containing
+	 * integer values between 0 and the width resp. height of
+	 * the pixbuf. (Since: 3.0)
 	 * On the X backend, support for RGBA cursors requires a
 	 * sufficently new version of the X Render extension.
 	 * Since 2.4
@@ -197,7 +201,7 @@ public class Cursor
 	 */
 	public this (Display display, Pixbuf pixbuf, int x, int y)
 	{
-		// GdkCursor* gdk_cursor_new_from_pixbuf (GdkDisplay *display,  GdkPixbuf *pixbuf,  gint x,  gint y);
+		// GdkCursor * gdk_cursor_new_from_pixbuf (GdkDisplay *display,  GdkPixbuf *pixbuf,  gint x,  gint y);
 		auto p = gdk_cursor_new_from_pixbuf((display is null) ? null : display.getDisplayStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y);
 		if(p is null)
 		{
@@ -217,7 +221,7 @@ public class Cursor
 	 */
 	public this (Display display, string name)
 	{
-		// GdkCursor* gdk_cursor_new_from_name (GdkDisplay *display,  const gchar *name);
+		// GdkCursor * gdk_cursor_new_from_name (GdkDisplay *display,  const gchar *name);
 		auto p = gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name));
 		if(p is null)
 		{
@@ -236,7 +240,7 @@ public class Cursor
 	 */
 	public this (Display display, GdkCursorType cursorType)
 	{
-		// GdkCursor* gdk_cursor_new_for_display (GdkDisplay *display,  GdkCursorType cursor_type);
+		// GdkCursor * gdk_cursor_new_for_display (GdkDisplay *display,  GdkCursorType cursor_type);
 		auto p = gdk_cursor_new_for_display((display is null) ? null : display.getDisplayStruct(), cursorType);
 		if(p is null)
 		{
@@ -252,7 +256,7 @@ public class Cursor
 	 */
 	public Display getDisplay()
 	{
-		// GdkDisplay* gdk_cursor_get_display (GdkCursor *cursor);
+		// GdkDisplay * gdk_cursor_get_display (GdkCursor *cursor);
 		auto p = gdk_cursor_get_display(gdkCursor);
 		if(p is null)
 		{
@@ -271,7 +275,7 @@ public class Cursor
 	 */
 	public Pixbuf getImage()
 	{
-		// GdkPixbuf* gdk_cursor_get_image (GdkCursor *cursor);
+		// GdkPixbuf * gdk_cursor_get_image (GdkCursor *cursor);
 		auto p = gdk_cursor_get_image(gdkCursor);
 		if(p is null)
 		{
@@ -293,11 +297,11 @@ public class Cursor
 	
 	/**
 	 * Adds a reference to cursor.
-	 * Returns: Same cursor that was passed in
+	 * Returns: Same cursor that was passed in. [transfer full]
 	 */
 	public Cursor doref()
 	{
-		// GdkCursor* gdk_cursor_ref (GdkCursor *cursor);
+		// GdkCursor * gdk_cursor_ref (GdkCursor *cursor);
 		auto p = gdk_cursor_ref(gdkCursor);
 		if(p is null)
 		{

@@ -136,7 +136,7 @@ public class Bitmap
 	 */
 	public static Bitmap createFromData(Drawable drawable, string data, int width, int height)
 	{
-		// GdkBitmap* gdk_bitmap_create_from_data (GdkDrawable *drawable,  const gchar *data,  gint width,  gint height);
+		// GdkBitmap * gdk_bitmap_create_from_data (GdkDrawable *drawable,  const gchar *data,  gint width,  gint height);
 		auto p = gdk_bitmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), Str.toStringz(data), width, height);
 		if(p is null)
 		{

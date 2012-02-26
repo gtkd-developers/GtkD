@@ -35,8 +35,8 @@ rm gdk-pixbuf-Animations.html
 wget http://developer.gnome.org/gdk-pixbuf/2.24/gdk-pixbuf-Animations.html
 cd ..
 #GDK
-curl http://developer.gnome.org/gdk/gdk-html-2.22.1.tar.gz | tar xvfz -
-ln -s gdk-html-2.22.1 gdk
+curl http://developer.gnome.org/gdk/gdk-html-2.24.10.tar.gz | tar xvfz -
+ln -s gdk-html-2.24.10 gdk
 #GTK
 curl http://developer.gnome.org/gtk/gtk-html-2.22.1.tar.gz | tar xvfz -
 ln -s gtk-html-2.22.1 gtk

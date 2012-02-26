@@ -84,6 +84,8 @@
  * 	- gdk_x11_get_xatom_by_name_for_display
  * 	- gdk_x11_get_xatom_name
  * 	- gdk_x11_get_xatom_name_for_display
+ * 	- gdk_x11_window_foreign_new_for_display
+ * 	- gdk_x11_window_lookup_for_display
  * omit code:
  * omit signals:
  * imports:
@@ -132,6 +134,8 @@ public class X11
 	 */
 	
 	/**
+	 * Warning
+	 * gdk_window_foreign_new is deprecated and should not be used in newly-written code.
 	 * Wraps a native window for the default display in a GdkWindow.
 	 * This may fail if the window has been destroyed.
 	 * For example in the X backend, a native window handle is an Xlib
@@ -142,7 +146,7 @@ public class X11
 	 */
 	public static Window gdkWindowForeignNew(GdkNativeWindow anid)
 	{
-		// GdkWindow* gdk_window_foreign_new (GdkNativeWindow anid);
+		// GdkWindow * gdk_window_foreign_new (GdkNativeWindow anid);
 		auto p = gdk_window_foreign_new(anid);
 		if(p is null)
 		{
@@ -152,6 +156,10 @@ public class X11
 	}
 	
 	/**
+	 * Warning
+	 * gdk_xid_table_lookup has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3.0. GTK+
+	 *  only stores windows in its X id table nowadays, so use
+	 *  gdk_x11_window_lookup_for_display() instead.
 	 * Returns the Gdk object associated with the given X id for the default
 	 * display.
 	 * Params:
@@ -165,6 +173,9 @@ public class X11
 	}
 	
 	/**
+	 * Warning
+	 * gdk_window_lookup has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_x11_window_lookup_for_display() or equivalent
+	 *  backend-specific functionality instead
 	 * Looks up the GdkWindow that wraps the given native window handle.
 	 * For example in the X backend, a native window handle is an Xlib
 	 * XID.
@@ -174,7 +185,7 @@ public class X11
 	 */
 	public static Window gdkWindowLookup(GdkNativeWindow anid)
 	{
-		// GdkWindow* gdk_window_lookup (GdkNativeWindow anid);
+		// GdkWindow * gdk_window_lookup (GdkNativeWindow anid);
 		auto p = gdk_window_lookup(anid);
 		if(p is null)
 		{
@@ -193,7 +204,7 @@ public class X11
 	 */
 	public static Pixmap gdkPixmapLookup(GdkNativeWindow anid)
 	{
-		// GdkPixmap* gdk_pixmap_lookup (GdkNativeWindow anid);
+		// GdkPixmap * gdk_pixmap_lookup (GdkNativeWindow anid);
 		auto p = gdk_pixmap_lookup(anid);
 		if(p is null)
 		{
@@ -206,8 +217,8 @@ public class X11
 	 * Routine to get the current X server time stamp.
 	 * Params:
 	 * window = a GdkWindow, used for communication with the server.
-	 *  The window must have GDK_PROPERTY_CHANGE_MASK in its
-	 *  events mask or a hang will result.
+	 * The window must have GDK_PROPERTY_CHANGE_MASK in its
+	 * events mask or a hang will result.
 	 * Returns: the time stamp.
 	 */
 	public static uint getServerTime(Window window)
@@ -356,5 +367,22 @@ public class X11
 	{
 		// void gdk_x11_ungrab_server (void);
 		gdk_x11_ungrab_server();
+	}
+	
+	/**
+	 * Sets the SM_CLIENT_ID property on the application's leader window so that
+	 * the window manager can save the application's state using the X11R6 ICCCM
+	 * session management protocol.
+	 * See the X Session Management Library documentation for more information on
+	 * session management and the Inter-Client Communication Conventions Manual
+	 * Since 2.24
+	 * Params:
+	 * smClientId = the client id assigned by the session manager when the
+	 * connection was opened, or NULL to remove the property.
+	 */
+	public static void setSmClientId(string smClientId)
+	{
+		// void gdk_x11_set_sm_client_id (const gchar *sm_client_id);
+		gdk_x11_set_sm_client_id(Str.toStringz(smClientId));
 	}
 }

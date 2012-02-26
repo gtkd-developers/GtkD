@@ -272,7 +272,7 @@ public class Keymap : ObjectG
 	 */
 	public static Keymap getDefault()
 	{
-		// GdkKeymap* gdk_keymap_get_default (void);
+		// GdkKeymap * gdk_keymap_get_default (void);
 		auto p = gdk_keymap_get_default();
 		if(p is null)
 		{
@@ -290,7 +290,7 @@ public class Keymap : ObjectG
 	 */
 	public static Keymap getForDisplay(Display display)
 	{
-		// GdkKeymap* gdk_keymap_get_for_display (GdkDisplay *display);
+		// GdkKeymap * gdk_keymap_get_for_display (GdkDisplay *display);
 		auto p = gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct());
 		if(p is null)
 		{
@@ -344,7 +344,7 @@ public class Keymap : ObjectG
 	 * effectiveGroup = return location for effective group, or NULL. [out][allow-none]
 	 * level = return location for level, or NULL. [out][allow-none]
 	 * consumedModifiers = return location for modifiers that were used to
-	 *  determine the group or level, or NULL. [out][allow-none]
+	 * determine the group or level, or NULL. [out][allow-none]
 	 * Returns: TRUE if there was a keyval bound to the keycode/state/group
 	 */
 	public int translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, out uint keyval, out int effectiveGroup, out int level, out GdkModifierType consumedModifiers)
@@ -411,6 +411,8 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns the direction of effective layout of the keymap.
+	 * Note that passing NULL for keymap is deprecated and will stop
+	 * to work in GTK+ 3.0. Use gdk_keymap_get_for_display() instead.
 	 * Returns the direction of the keymap.
 	 * Returns: PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL if it can determine the direction. PANGO_DIRECTION_NEUTRAL otherwise.
 	 */
@@ -423,6 +425,8 @@ public class Keymap : ObjectG
 	/**
 	 * Determines if keyboard layouts for both right-to-left and left-to-right
 	 * languages are in use.
+	 * Note that passing NULL for keymap is deprecated and will stop
+	 * to work in GTK+ 3.0. Use gdk_keymap_get_for_display() instead.
 	 * Since 2.12
 	 * Returns: TRUE if there are layouts in both directions, FALSE otherwise
 	 */
@@ -482,23 +486,31 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Converts a key value into a symbolic name.
+	 * The names are the same as those in the
+	 * <gdk/gdkkeysyms.h> header file
+	 * but without the leading "GDK_KEY_".
+	 * Converts a key value into a symbolic name.
 	 * The names are the same as those in the <gdk/gdkkeysyms.h> header file
 	 * but without the leading "GDK_".
 	 * Params:
-	 * keyval = a key value.
-	 * Returns: a string containing the name of the key, or NULL if keyval is not a valid key. The string should not be modified.
+	 * keyval = a key value
+	 * Returns: a string containing the name of the key, or NULL if keyval is not a valid key. The string should not be modified. [transfer none]
 	 */
 	public static string gdkKeyvalName(uint keyval)
 	{
-		// gchar* gdk_keyval_name (guint keyval);
+		// gchar * gdk_keyval_name (guint keyval);
 		return Str.toString(gdk_keyval_name(keyval));
 	}
 	
 	/**
 	 * Converts a key name to a key value.
+	 * The names are the same as those in the
+	 * <gdk/gdkkeysyms.h> header file
+	 * but without the leading "GDK_KEY_".
+	 * Converts a key name to a key value.
 	 * Params:
-	 * keyvalName = a key name.
-	 * Returns: the corresponding key value, or GDK_VoidSymbol if the key name is not a valid key.
+	 * keyvalName = a key name
+	 * Returns: the corresponding key value, or GDK_KEY_VoidSymbol if the key name is not a valid key
 	 */
 	public static uint gdkKeyvalFromName(string keyvalName)
 	{

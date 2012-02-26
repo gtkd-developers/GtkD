@@ -505,9 +505,9 @@ public class Pixbuf : ObjectG
 	 * to NULL.
 	 * Params:
 	 * pixmapReturn = Location to store a pointer to the created pixmap,
-	 *  or NULL if the pixmap is not needed.
+	 * or NULL if the pixmap is not needed.
 	 * maskReturn = Location to store a pointer to the created mask,
-	 *  or NULL if the mask is not needed.
+	 * or NULL if the mask is not needed.
 	 * alphaThreshold = Threshold value for opacity values.
 	 */
 	public void renderPixmapAndMask(out GdkPixmap* pixmapReturn, out Bitmap maskReturn, int alphaThreshold)
@@ -534,9 +534,9 @@ public class Pixbuf : ObjectG
 	 * Params:
 	 * colormap = A GdkColormap
 	 * pixmapReturn = Location to store a pointer to the created pixmap,
-	 *  or NULL if the pixmap is not needed.
+	 * or NULL if the pixmap is not needed.
 	 * maskReturn = Location to store a pointer to the created mask,
-	 *  or NULL if the mask is not needed.
+	 * or NULL if the mask is not needed.
 	 * alphaThreshold = Threshold value for opacity values.
 	 */
 	public void renderPixmapAndMaskForColormap(Colormap colormap, out GdkPixmap* pixmapReturn, out Bitmap maskReturn, int alphaThreshold)

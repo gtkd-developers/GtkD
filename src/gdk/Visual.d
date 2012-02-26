@@ -189,7 +189,7 @@ public class Visual
 	 */
 	public static ListG gdkListVisuals()
 	{
-		// GList* gdk_list_visuals (void);
+		// GList * gdk_list_visuals (void);
 		auto p = gdk_list_visuals();
 		if(p is null)
 		{
@@ -228,7 +228,7 @@ public class Visual
 	 */
 	public static Visual getSystem()
 	{
-		// GdkVisual* gdk_visual_get_system (void);
+		// GdkVisual * gdk_visual_get_system (void);
 		auto p = gdk_visual_get_system();
 		if(p is null)
 		{
@@ -244,7 +244,7 @@ public class Visual
 	 */
 	public static Visual getBest()
 	{
-		// GdkVisual* gdk_visual_get_best (void);
+		// GdkVisual * gdk_visual_get_best (void);
 		auto p = gdk_visual_get_best();
 		if(p is null)
 		{
@@ -264,7 +264,7 @@ public class Visual
 	 */
 	public static Visual getBestWithDepth(int depth)
 	{
-		// GdkVisual* gdk_visual_get_best_with_depth (gint depth);
+		// GdkVisual * gdk_visual_get_best_with_depth (gint depth);
 		auto p = gdk_visual_get_best_with_depth(depth);
 		if(p is null)
 		{
@@ -284,7 +284,7 @@ public class Visual
 	 */
 	public static Visual getBestWithType(GdkVisualType visualType)
 	{
-		// GdkVisual* gdk_visual_get_best_with_type (GdkVisualType visual_type);
+		// GdkVisual * gdk_visual_get_best_with_type (GdkVisualType visual_type);
 		auto p = gdk_visual_get_best_with_type(visualType);
 		if(p is null)
 		{
@@ -302,7 +302,7 @@ public class Visual
 	 */
 	public static Visual getBestWithBoth(int depth, GdkVisualType visualType)
 	{
-		// GdkVisual* gdk_visual_get_best_with_both (gint depth,  GdkVisualType visual_type);
+		// GdkVisual * gdk_visual_get_best_with_both (gint depth,  GdkVisualType visual_type);
 		auto p = gdk_visual_get_best_with_both(depth, visualType);
 		if(p is null)
 		{

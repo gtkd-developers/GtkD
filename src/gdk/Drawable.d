@@ -231,13 +231,15 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drawable_get_display has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_window_get_display() instead
 	 * Gets the GdkDisplay associated with a GdkDrawable.
 	 * Since 2.2
 	 * Returns: the GdkDisplay associated with drawable
 	 */
 	public Display getDisplay()
 	{
-		// GdkDisplay* gdk_drawable_get_display (GdkDrawable *drawable);
+		// GdkDisplay * gdk_drawable_get_display (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_display(gdkDrawable);
 		if(p is null)
 		{
@@ -247,13 +249,15 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drawable_get_screen has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_window_get_screen() instead
 	 * Gets the GdkScreen associated with a GdkDrawable.
 	 * Since 2.2
 	 * Returns: the GdkScreen associated with drawable
 	 */
 	public Screen getScreen()
 	{
-		// GdkScreen* gdk_drawable_get_screen (GdkDrawable *drawable);
+		// GdkScreen * gdk_drawable_get_screen (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_screen(gdkDrawable);
 		if(p is null)
 		{
@@ -263,12 +267,14 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drawable_get_visual has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_window_get_visual()
 	 * Gets the GdkVisual describing the pixel format of drawable.
 	 * Returns: a GdkVisual
 	 */
 	public Visual getVisual()
 	{
-		// GdkVisual* gdk_drawable_get_visual (GdkDrawable *drawable);
+		// GdkVisual * gdk_drawable_get_visual (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_visual(gdkDrawable);
 		if(p is null)
 		{
@@ -302,7 +308,7 @@ public class Drawable : ObjectG
 	 */
 	public Colormap getColormap()
 	{
-		// GdkColormap* gdk_drawable_get_colormap (GdkDrawable *drawable);
+		// GdkColormap * gdk_drawable_get_colormap (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_colormap(gdkDrawable);
 		if(p is null)
 		{
@@ -324,6 +330,9 @@ public class Drawable : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drawable_get_size has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_window_get_width() and gdk_window_get_height() for
+	 *  GdkWindows. Use gdk_pixmap_get_size() for GdkPixmaps.
 	 * Fills *width and *height with the size of drawable.
 	 * width or height can be NULL if you only want the other one.
 	 * On the X11 platform, if drawable is a GdkWindow, the returned
@@ -491,7 +500,7 @@ public class Drawable : ObjectG
 	 * Params:
 	 * gc = a GdkGC.
 	 * segs = an array of GdkSegment structures specifying the start and
-	 *  end points of the lines to be drawn.
+	 * end points of the lines to be drawn.
 	 */
 	public void drawSegments(GC gc, GdkSegment[] segs)
 	{
@@ -513,6 +522,7 @@ public class Drawable : ObjectG
 	 * gdk_draw_rectangle (window, gc, FALSE, 0, 0, 20, 20)
 	 * results in an outlined rectangle with corners at (0, 0), (0, 20), (20, 20),
 	 * and (20, 0), which makes it 21 pixels wide and 21 pixels high.
+	 * Note
 	 * Params:
 	 * gc = a GdkGC.
 	 * filled = TRUE if the rectangle should be filled.
@@ -543,9 +553,9 @@ public class Drawable : ObjectG
 	 * width = the width of the bounding rectangle.
 	 * height = the height of the bounding rectangle.
 	 * angle1 = the start angle of the arc, relative to the 3 o'clock position,
-	 *  counter-clockwise, in 1/64ths of a degree.
+	 * counter-clockwise, in 1/64ths of a degree.
 	 * angle2 = the end angle of the arc, relative to angle1, in 1/64ths
-	 *  of a degree.
+	 * of a degree.
 	 */
 	public void drawArc(GC gc, int filled, int x, int y, int width, int height, int angle1, int angle2)
 	{
@@ -561,10 +571,10 @@ public class Drawable : ObjectG
 	 * Params:
 	 * gc = a GdkGC.
 	 * filled = TRUE if the polygon should be filled. The polygon is closed
-	 *  automatically, connecting the last point to the first point if
-	 *  necessary.
+	 * automatically, connecting the last point to the first point if
+	 * necessary.
 	 * points = an array of GdkPoint structures specifying the points making
-	 *  up the polygon.
+	 * up the polygon.
 	 */
 	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
 	{
@@ -631,9 +641,9 @@ public class Drawable : ObjectG
 	 * matrix = a PangoMatrix, or NULL to use an identity transformation. [allow-none]
 	 * font = the font in which to draw the string
 	 * x = the x position of the start of the string (in Pango
-	 *  units in user space coordinates)
+	 * units in user space coordinates)
 	 * y = the y position of the baseline (in Pango units
-	 *  in user space coordinates)
+	 * in user space coordinates)
 	 * glyphs = the glyph string to draw
 	 */
 	public void drawGlyphsTransformed(GC gc, PgMatrix matrix, PgFont font, int x, int y, PgGlyphString glyphs)
@@ -834,9 +844,9 @@ public class Drawable : ObjectG
 	 * xdest = the x coordinate of the destination within drawable.
 	 * ydest = the y coordinate of the destination within drawable.
 	 * width = the width of the area to be copied, or -1 to make the area
-	 *  extend to the right edge of image.
+	 * extend to the right edge of image.
 	 * height = the height of the area to be copied, or -1 to make the area
-	 *  extend to the bottom edge of image.
+	 * extend to the bottom edge of image.
 	 */
 	public void drawImage(GC gc, ImageGdk image, int xsrc, int ysrc, int xdest, int ydest, int width, int height)
 	{
@@ -882,7 +892,7 @@ public class Drawable : ObjectG
 	 */
 	public ImageGdk getImage(int x, int y, int width, int height)
 	{
-		// GdkImage* gdk_drawable_get_image (GdkDrawable *drawable,  gint x,  gint y,  gint width,  gint height);
+		// GdkImage * gdk_drawable_get_image (GdkDrawable *drawable,  gint x,  gint y,  gint width,  gint height);
 		auto p = gdk_drawable_get_image(gdkDrawable, x, y, width, height);
 		if(p is null)
 		{

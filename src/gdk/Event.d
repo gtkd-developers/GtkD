@@ -150,7 +150,7 @@ public class Event
 	 */
 	public static Event peek()
 	{
-		// GdkEvent* gdk_event_peek (void);
+		// GdkEvent * gdk_event_peek (void);
 		auto p = gdk_event_peek();
 		if(p is null)
 		{
@@ -167,7 +167,7 @@ public class Event
 	 */
 	public static Event get()
 	{
-		// GdkEvent* gdk_event_get (void);
+		// GdkEvent * gdk_event_get (void);
 		auto p = gdk_event_get();
 		if(p is null)
 		{
@@ -188,7 +188,7 @@ public class Event
 	 */
 	public static Event getGraphicsExpose(Window window)
 	{
-		// GdkEvent* gdk_event_get_graphics_expose (GdkWindow *window);
+		// GdkEvent * gdk_event_get_graphics_expose (GdkWindow *window);
 		auto p = gdk_event_get_graphics_expose((window is null) ? null : window.getWindowStruct());
 		if(p is null)
 		{
@@ -217,7 +217,7 @@ public class Event
 	 */
 	public this (GdkEventType type)
 	{
-		// GdkEvent* gdk_event_new (GdkEventType type);
+		// GdkEvent * gdk_event_new (GdkEventType type);
 		auto p = gdk_event_new(type);
 		if(p is null)
 		{
@@ -233,7 +233,7 @@ public class Event
 	 */
 	public Event copy()
 	{
-		// GdkEvent* gdk_event_copy (const GdkEvent *event);
+		// GdkEvent * gdk_event_copy (const GdkEvent *event);
 		auto p = gdk_event_copy(gdkEvent);
 		if(p is null)
 		{
@@ -284,7 +284,7 @@ public class Event
 	 * Extract the axis value for a particular axis use from
 	 * an event structure.
 	 * Params:
-	 * axisUse = the axis use to look for. [out]
+	 * axisUse = the axis use to look for
 	 * value = location to store the value found. [out]
 	 * Returns: TRUE if the specified axis was found, otherwise FALSE
 	 */
@@ -346,7 +346,7 @@ public class Event
 	 * func = the function to call to handle events from GDK.
 	 * data = user data to pass to the function.
 	 * notify = the function to call when the handler function is removed, i.e. when
-	 *  gdk_event_handler_set() is called with another event handler.
+	 * gdk_event_handler_set() is called with another event handler.
 	 */
 	public static void handlerSet(GdkEventFunc func, void* data, GDestroyNotify notify)
 	{
@@ -408,8 +408,8 @@ public class Event
 	 * are received. See gdk_display_add_client_message_filter().
 	 * Params:
 	 * messageType = the type of ClientMessage events to receive. This will be
-	 *  checked against the message_type field of the
-	 *  XClientMessage event struct.
+	 * checked against the message_type field of the
+	 * XClientMessage event struct.
 	 * func = the function to call to process the event.
 	 * data = user data to pass to func.
 	 */

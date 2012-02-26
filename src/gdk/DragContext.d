@@ -157,6 +157,9 @@ public class DragContext
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drag_context_new has been deprecated since version 2.24 and should not be used in newly-written code. This function is not useful, you always
+	 *  obtain drag contexts by gdk_drag_begin() or similar.
 	 * Creates a new GdkDragContext.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -184,13 +187,15 @@ public class DragContext
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drag_find_window has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_drag_find_window_for_screen() instead.
 	 * Finds the destination window and DND protocol to use at the
 	 * given pointer position.
 	 * This function is called by the drag source to obtain the
 	 * dest_window and protocol parameters for gdk_drag_motion().
 	 * Params:
 	 * dragWindow = a window which may be at the pointer position, but
-	 *  should be ignored, since it is put up by the drag source as an icon.
+	 * should be ignored, since it is put up by the drag source as an icon.
 	 * xRoot = the x position of the pointer in root coordinates.
 	 * yRoot = the y position of the pointer in root coordinates.
 	 * destWindow = location to store the destination window in. [out]
@@ -314,7 +319,7 @@ public class DragContext
 	 * Params:
 	 * window = the source window for this drag.
 	 * targets = the offered targets,
-	 *  as list of GdkAtoms. [transfer none][element-type GdkAtom]
+	 * as list of GdkAtoms. [transfer none][element-type GdkAtom]
 	 * Returns: a newly created GdkDragContext.
 	 */
 	public static DragContext dragBegin(Window window, ListG targets)
@@ -334,7 +339,7 @@ public class DragContext
 	 * This function is called by the drag source.
 	 * Params:
 	 * destWindow = the new destination window, obtained by
-	 *  gdk_drag_find_window().
+	 * gdk_drag_find_window().
 	 * protocol = the DND protocol in use, obtained by gdk_drag_find_window().
 	 * xRoot = the x position of the pointer in root coordinates.
 	 * yRoot = the y position of the pointer in root coordinates.
@@ -363,6 +368,8 @@ public class DragContext
 	}
 	
 	/**
+	 * Warning
+	 * gdk_drag_get_protocol has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_drag_get_protocol_for_display() instead
 	 * Finds out the DND protocol supported by a window.
 	 * Params:
 	 * xid = the windowing system id of the destination window.
@@ -407,7 +414,7 @@ public class DragContext
 	 * gdk_drag_motion() called by the drag source.
 	 * Params:
 	 * action = the selected action which will be taken when a drop happens,
-	 *  or 0 to indicate that a drop will not be accepted.
+	 * or 0 to indicate that a drop will not be accepted.
 	 * time = the timestamp for this operation.
 	 */
 	public void dragStatus(GdkDragAction action, uint time)

@@ -303,7 +303,7 @@ public class Screen : ObjectG
 	 */
 	public Colormap getSystemColormap()
 	{
-		// GdkColormap* gdk_screen_get_system_colormap (GdkScreen *screen);
+		// GdkColormap * gdk_screen_get_system_colormap (GdkScreen *screen);
 		auto p = gdk_screen_get_system_colormap(gdkScreen);
 		if(p is null)
 		{
@@ -321,7 +321,7 @@ public class Screen : ObjectG
 	 */
 	public Visual getSystemVisual()
 	{
-		// GdkVisual* gdk_screen_get_system_visual (GdkScreen *screen);
+		// GdkVisual * gdk_screen_get_system_visual (GdkScreen *screen);
 		auto p = gdk_screen_get_system_visual(gdkScreen);
 		if(p is null)
 		{
@@ -751,7 +751,7 @@ public class Screen : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * options = a cairo_font_options_t, or NULL to unset any
-	 *  previously set default font options. [allow-none]
+	 * previously set default font options. [allow-none]
 	 */
 	public void setFontOptions(FontOption options)
 	{
@@ -779,7 +779,7 @@ public class Screen : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * dpi = the resolution in "dots per inch". (Physical inches aren't actually
-	 *  involved; the terminology is conventional.)
+	 * involved; the terminology is conventional.)
 	 */
 	public void setResolution(double dpi)
 	{
@@ -839,6 +839,9 @@ public class Screen : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_spawn_on_screen has been deprecated since version 2.24 and should not be used in newly-written code. This function is being removed in 3.0. Use
+	 *  either g_spawn_sync(), g_spawn_async(), or GdkAppLaunchContext instead.
 	 * Like g_spawn_async(), except the child process is spawned in such
 	 * an environment that on calling gdk_display_open() it would be
 	 * returned a GdkDisplay with screen as the default screen.
@@ -847,7 +850,7 @@ public class Screen : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * workingDirectory = child's current working directory, or NULL to
-	 *  inherit parent's
+	 * inherit parent's
 	 * argv = child's argument vector
 	 * envp = child's environment, or NULL to inherit parent's
 	 * flags = flags from GSpawnFlags
@@ -873,6 +876,9 @@ public class Screen : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_spawn_on_screen_with_pipes has been deprecated since version 2.24 and should not be used in newly-written code. This function is being removed in 3.0. Use
+	 *  either g_spawn_async_with_pipes() or GdkAppLaunchContext instead.
 	 * Like g_spawn_async_with_pipes(), except the child process is
 	 * spawned in such an environment that on calling gdk_display_open()
 	 * it would be returned a GdkDisplay with screen as the default
@@ -882,7 +888,7 @@ public class Screen : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * workingDirectory = child's current working directory, or NULL to
-	 *  inherit parent's
+	 * inherit parent's
 	 * argv = child's argument vector
 	 * envp = child's environment, or NULL to inherit parent's
 	 * flags = flags from GSpawnFlags
@@ -890,11 +896,11 @@ public class Screen : ObjectG
 	 * userData = user data for child_setup
 	 * childPid = return location for child process ID, or NULL
 	 * standardInput = return location for file descriptor to write to
-	 *  child's stdin, or NULL
+	 * child's stdin, or NULL
 	 * standardOutput = return location for file descriptor to read child's
-	 *  stdout, or NULL
+	 * stdout, or NULL
 	 * standardError = return location for file descriptor to read child's
-	 *  stderr, or NULL
+	 * stderr, or NULL
 	 * Returns: TRUE on success, FALSE if an error was set
 	 */
 	public int gdkSpawnOnScreenWithPipes(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out int childPid, out int standardInput, out int standardOutput, out int standardError)
@@ -913,6 +919,10 @@ public class Screen : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_spawn_command_line_on_screen has been deprecated since version 2.24 and should not be used in newly-written code. This function is being removed in 3.0. Use
+	 *  either g_spawn_command_line_sync(), g_spawn_command_line_async() or
+	 *  GdkAppLaunchContext instead.
 	 * Like g_spawn_command_line_async(), except the child process is
 	 * spawned in such an environment that on calling gdk_display_open()
 	 * it would be returned a GdkDisplay with screen as the default

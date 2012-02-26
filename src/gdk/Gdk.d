@@ -89,7 +89,7 @@ public class Gdk
 	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
 	 * by GTK+ applications.
 	 * Params:
-	 * argv = . [array length=argc][inout length=argc]
+	 * argv = . [array length=argc][inout]
 	 */
 	public static void init(ref string[] argv)
 	{
@@ -109,7 +109,7 @@ public class Gdk
 	/**
 	 * Initialize the library for use.
 	 * Params:
-	 * argv = . [array length=argc][inout length=argc]
+	 * argv = . [array length=argc][inout]
 	 * Returns: TRUE if initialization succeeded.
 	 */
 	public static int initCheck(ref string[] argv)
@@ -137,7 +137,7 @@ public class Gdk
 	 * gtk_init(), gtk_init_check(), gdk_init(), or gdk_init_check().
 	 * Since 2.2
 	 * Params:
-	 * argv = the array of command line arguments.
+	 * argv = the array of command line arguments. [inout][array length=argc]
 	 */
 	public static void parseArgs(ref string[] argv)
 	{
@@ -162,11 +162,13 @@ public class Gdk
 	 */
 	public static string getDisplayArgName()
 	{
-		// const gchar* gdk_get_display_arg_name (void);
+		// const gchar * gdk_get_display_arg_name (void);
 		return Str.toString(gdk_get_display_arg_name());
 	}
 	
 	/**
+	 * Warning
+	 * gdk_set_locale has been deprecated since version 2.24 and should not be used in newly-written code. Use setlocale() directly
 	 * Initializes the support for internationalization by calling the setlocale()
 	 * system call. This function is called by gtk_set_locale() and so GTK+
 	 * applications should use that instead.
@@ -175,11 +177,13 @@ public class Gdk
 	 */
 	public static string setLocale()
 	{
-		// gchar* gdk_set_locale (void);
+		// gchar * gdk_set_locale (void);
 		return Str.toString(gdk_set_locale());
 	}
 	
 	/**
+	 * Warning
+	 * gdk_set_sm_client_id has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_x11_set_sm_client_id() instead
 	 * Sets the SM_CLIENT_ID property on the application's leader window so that
 	 * the window manager can save the application's state using the X11R6 ICCCM
 	 * session management protocol.
@@ -189,7 +193,7 @@ public class Gdk
 	 * (Both documents are part of the X Window System distribution.)
 	 * Params:
 	 * smClientId = the client id assigned by the session manager when the
-	 *  connection was opened, or NULL to remove the property.
+	 * connection was opened, or NULL to remove the property.
 	 */
 	public static void setSmClientId(string smClientId)
 	{
@@ -240,7 +244,7 @@ public class Gdk
 	 * Since 2.12
 	 * Params:
 	 * startupId = a startup-notification identifier, for which notification
-	 *  process should be completed
+	 * process should be completed
 	 */
 	public static void notifyStartupCompleteWithId(string startupId)
 	{
@@ -281,7 +285,7 @@ public class Gdk
 	 */
 	public static string getDisplay()
 	{
-		// gchar* gdk_get_display (void);
+		// gchar * gdk_get_display (void);
 		return Str.toString(gdk_get_display());
 	}
 	
@@ -367,7 +371,7 @@ public class Gdk
 	 * event_mask. In either mode, unreported events are discarded.
 	 * eventMask = specifies the event mask, which is used in accordance with
 	 * owner_events. Note that only pointer events (i.e. button and motion events)
-	 *  may be selected.
+	 * may be selected.
 	 * confineTo = If non-NULL, the pointer will be confined to this
 	 * window during the grab. If the pointer is outside confine_to, it will
 	 * automatically be moved to the closest edge of confine_to and enter
@@ -391,7 +395,7 @@ public class Gdk
 	 * application.
 	 * Params:
 	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
-	 *  timestamp is available.
+	 * timestamp is available.
 	 */
 	public static void pointerUngrab(uint time)
 	{
@@ -456,7 +460,7 @@ public class Gdk
 	 * application.
 	 * Params:
 	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
-	 *  timestamp is available.
+	 * timestamp is available.
 	 */
 	public static void keyboardUngrab(uint time)
 	{

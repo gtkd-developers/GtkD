@@ -49,6 +49,7 @@
  * 	- gdk_cairo_rectangle
  * 	- gdk_cairo_region
  * 	- gdk_cairo_reset_clip
+ * 	- void gdk_cairo_set_source_window
  * omit signals:
  * imports:
  * 	- cairo.Context
@@ -59,6 +60,7 @@
  * 	- GdkPixmap* -> Pixmap
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
+ * 	- GdkWindow* -> Window
  * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
@@ -88,4 +90,24 @@ private import cairo.Context;
 
 /**
  */
+
+/**
+ * Sets the given window as the source pattern for the Cairo context.
+ * The pattern has an extend mode of CAIRO_EXTEND_NONE and is aligned
+ * so that the origin of window is x, y. The window contains all its
+ * subwindows when rendering.
+ * Note that the contents of window are undefined outside of the
+ * visible part of window, so use this function with care.
+ * Since 2.24
+ * Params:
+ * cr = a Cairo context
+ * window = a GdkWindow
+ * x = X coordinate of location to place upper left corner of window
+ * y = Y coordinate of location to place upper left corner of window
+ */
+public static void setSourceWindow(Context cr, Window window, double x, double y)
+{
+	// void gdk_cairo_set_source_window (cairo_t *cr,  GdkWindow *window,  double x,  double y);
+	gdk_cairo_set_source_window((cr is null) ? null : cr.getContextStruct(), (window is null) ? null : window.getWindowStruct(), x, y);
+}
 

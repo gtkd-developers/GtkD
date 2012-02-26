@@ -337,7 +337,7 @@ public class Color
 	 * Params:
 	 * colormap = a GdkColormap.
 	 * color = The color to allocate. On return, the
-	 *  pixel field will be filled in.
+	 * pixel field will be filled in.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
 	public static int alloc(Colormap colormap, out GdkColor color)

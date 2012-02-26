@@ -146,7 +146,7 @@ public class Colormap
 	 */
 	public this (Visual visual, int allocate)
 	{
-		// GdkColormap* gdk_colormap_new (GdkVisual *visual,  gboolean allocate);
+		// GdkColormap * gdk_colormap_new (GdkVisual *visual,  gboolean allocate);
 		auto p = gdk_colormap_new((visual is null) ? null : visual.getVisualStruct(), allocate);
 		if(p is null)
 		{
@@ -163,7 +163,7 @@ public class Colormap
 	 */
 	public Colormap doref()
 	{
-		// GdkColormap* gdk_colormap_ref (GdkColormap *cmap);
+		// GdkColormap * gdk_colormap_ref (GdkColormap *cmap);
 		auto p = gdk_colormap_ref(gdkColormap);
 		if(p is null)
 		{
@@ -190,7 +190,7 @@ public class Colormap
 	 */
 	public static Colormap getSystem()
 	{
-		// GdkColormap* gdk_colormap_get_system (void);
+		// GdkColormap * gdk_colormap_get_system (void);
 		auto p = gdk_colormap_get_system();
 		if(p is null)
 		{
@@ -233,15 +233,15 @@ public class Colormap
 	 * Allocates colors from a colormap.
 	 * Params:
 	 * colors = The color values to allocate. On return, the pixel
-	 *  values for allocated colors will be filled in.
+	 * values for allocated colors will be filled in.
 	 * writeable = If TRUE, the colors are allocated writeable
-	 *  (their values can later be changed using gdk_color_change()).
-	 *  Writeable colors cannot be shared between applications.
+	 * (their values can later be changed using gdk_color_change()).
+	 * Writeable colors cannot be shared between applications.
 	 * bestMatch = If TRUE, GDK will attempt to do matching against
-	 *  existing colors if the colors cannot be allocated as requested.
+	 * existing colors if the colors cannot be allocated as requested.
 	 * success = An array of length ncolors. On return, this
-	 *  indicates whether the corresponding color in colors was
-	 *  successfully allocated or not.
+	 * indicates whether the corresponding color in colors was
+	 * successfully allocated or not.
 	 * Returns: The number of colors that were not successfully allocated.
 	 */
 	public int allocColors(GdkColor[] colors, int writeable, int bestMatch, int[] success)
@@ -254,13 +254,13 @@ public class Colormap
 	 * Allocates a single color from a colormap.
 	 * Params:
 	 * color = the color to allocate. On return the
-	 *  pixel field will be
-	 *  filled in if allocation succeeds.
+	 * pixel field will be
+	 * filled in if allocation succeeds.
 	 * writeable = If TRUE, the color is allocated writeable
-	 *  (their values can later be changed using gdk_color_change()).
-	 *  Writeable colors cannot be shared between applications.
+	 * (their values can later be changed using gdk_color_change()).
+	 * Writeable colors cannot be shared between applications.
 	 * bestMatch = If TRUE, GDK will attempt to do matching against
-	 *  existing colors if the color cannot be allocated as requested.
+	 * existing colors if the color cannot be allocated as requested.
 	 * Returns: TRUE if the allocation succeeded.
 	 */
 	public int allocColor(out GdkColor color, int writeable, int bestMatch)
@@ -355,7 +355,7 @@ public class Colormap
 	 * the Xlib documentation for XAllocColorCells().
 	 * Params:
 	 * contiguous = if TRUE, the colors should be allocated
-	 *  in contiguous color cells.
+	 * in contiguous color cells.
 	 * planes = an array in which to store the plane masks.
 	 * pixels = an array into which to store allocated pixel values.
 	 * Returns: TRUE if the allocation was successful

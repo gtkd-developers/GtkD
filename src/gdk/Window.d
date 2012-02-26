@@ -53,6 +53,9 @@
  * 	- gdk.Color
  * 	- gdk.Pixmap
  * 	- gdk.Cursor
+ * 	- gdk.Display
+ * 	- gdk.Screen
+ * 	- gdk.Visual
  * 	- glib.ListG
  * 	- cairo.Pattern
  * structWrap:
@@ -60,10 +63,13 @@
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColor* -> Color
  * 	- GdkCursor* -> Cursor
+ * 	- GdkDisplay* -> Display
  * 	- GdkDrawable* -> Drawable
  * 	- GdkPixmap* -> Pixmap
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
+ * 	- GdkScreen* -> Screen
+ * 	- GdkVisual* -> Visual
  * 	- GdkWindow* -> Window
  * 	- cairo_pattern_t* -> Pattern
  * module aliases:
@@ -89,6 +95,9 @@ private import gdk.Bitmap;
 private import gdk.Color;
 private import gdk.Pixmap;
 private import gdk.Cursor;
+private import gdk.Display;
+private import gdk.Screen;
+private import gdk.Visual;
 private import glib.ListG;
 private import cairo.Pattern;
 
@@ -284,14 +293,14 @@ public class Window : Drawable
 	 * display, parent must be specified.
 	 * Params:
 	 * parent = a GdkWindow, or NULL to create the window as a child of
-	 *  the default root window for the default display. [allow-none]
+	 * the default root window for the default display. [allow-none]
 	 * attributes = attributes of the new window
 	 * attributesMask = mask indicating which fields in attributes are valid
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Window parent, GdkWindowAttr* attributes, int attributesMask)
 	{
-		// GdkWindow* gdk_window_new (GdkWindow *parent,  GdkWindowAttr *attributes,  gint attributes_mask);
+		// GdkWindow * gdk_window_new (GdkWindow *parent,  GdkWindowAttr *attributes,  gint attributes_mask);
 		auto p = gdk_window_new((parent is null) ? null : parent.getWindowStruct(), attributes, attributesMask);
 		if(p is null)
 		{
@@ -311,6 +320,81 @@ public class Window : Drawable
 	{
 		// void gdk_window_destroy (GdkWindow *window);
 		gdk_window_destroy(gdkWindow);
+	}
+	
+	/**
+	 * Gets the GdkDisplay associated with a GdkWindow.
+	 * Since 2.24
+	 * Returns: the GdkDisplay associated with window
+	 */
+	public Display getDisplay()
+	{
+		// GdkDisplay * gdk_window_get_display (GdkWindow *window);
+		auto p = gdk_window_get_display(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
+	}
+	
+	/**
+	 * Gets the GdkScreen associated with a GdkWindow.
+	 * Returns: the GdkScreen associated with window
+	 */
+	public Screen getScreen()
+	{
+		// GdkScreen * gdk_window_get_screen (GdkWindow *window);
+		auto p = gdk_window_get_screen(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
+	}
+	
+	/**
+	 * Gets the GdkVisual describing the pixel format of window.
+	 * Since 2.24
+	 * Returns: a GdkVisual
+	 */
+	public Visual getVisual()
+	{
+		// GdkVisual * gdk_window_get_visual (GdkWindow *window);
+		auto p = gdk_window_get_visual(gdkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
+	}
+	
+	/**
+	 * Returns the width of the given window.
+	 * On the X11 platform the returned size is the size reported in the
+	 * most-recently-processed configure event, rather than the current
+	 * size on the X server.
+	 * Since 2.24
+	 * Returns: The width of window
+	 */
+	public int getWidth()
+	{
+		// int gdk_window_get_width (GdkWindow *window);
+		return gdk_window_get_width(gdkWindow);
+	}
+	
+	/**
+	 * Returns the height of the given window.
+	 * On the X11 platform the returned size is the size reported in the
+	 * most-recently-processed configure event, rather than the current
+	 * size on the X server.
+	 * Since 2.24
+	 * Returns: The height of window
+	 */
+	public int getHeight()
+	{
+		// int gdk_window_get_height (GdkWindow *window);
+		return gdk_window_get_height(gdkWindow);
 	}
 	
 	/**
@@ -338,7 +422,7 @@ public class Window : Drawable
 	 */
 	public static Window atPointer(out int winX, out int winY)
 	{
-		// GdkWindow* gdk_window_at_pointer (gint *win_x,  gint *win_y);
+		// GdkWindow * gdk_window_at_pointer (gint *win_x,  gint *win_y);
 		auto p = gdk_window_at_pointer(&winX, &winY);
 		if(p is null)
 		{
@@ -992,8 +1076,8 @@ public class Window : Drawable
 	 * flags = a mask indicating what portions of geometry are set
 	 * width = desired width of window
 	 * height = desired height of the window
-	 * newWidth = location to store resulting width
-	 * newHeight = location to store resulting height
+	 * newWidth = location to store resulting width. [out]
+	 * newHeight = location to store resulting height. [out]
 	 */
 	public static void constrainSize(GdkGeometry* geometry, uint flags, int width, int height, out int newWidth, out int newHeight)
 	{
@@ -1092,7 +1176,7 @@ public class Window : Drawable
 	 * gdk_window_invalidate_region() for details.
 	 * Params:
 	 * rect = rectangle to invalidate or NULL to invalidate the whole
-	 *  window. [allow-none]
+	 * window. [allow-none]
 	 * invalidateChildren = whether to also invalidate child windows
 	 */
 	public void invalidateRect(Rectangle rect, int invalidateChildren)
@@ -1236,13 +1320,13 @@ public class Window : Drawable
 	 * likely to change in future releases of GDK.
 	 * Params:
 	 * realDrawable = location to store the drawable to which drawing should be
-	 *  done. [out]
+	 * done. [out]
 	 * xOffset = location to store the X offset between coordinates in window,
-	 *  and the underlying window system primitive coordinates for
-	 *  *real_drawable. [out]
+	 * and the underlying window system primitive coordinates for
+	 * *real_drawable. [out]
 	 * yOffset = location to store the Y offset between coordinates in window,
-	 *  and the underlying window system primitive coordinates for
-	 *  *real_drawable. [out]
+	 * and the underlying window system primitive coordinates for
+	 * *real_drawable. [out]
 	 */
 	public void getInternalPaintInfo(out Drawable realDrawable, out int xOffset, out int yOffset)
 	{
@@ -1623,7 +1707,7 @@ public class Window : Drawable
 	 * implementing a custom widget.)
 	 * The color must be allocated; gdk_rgb_find_color() is the best way
 	 * to allocate a color.
-	 * See also gdk_window_set_background_pixmap().
+	 * See also gdk_window_set_back_pixmap().
 	 * Params:
 	 * color = an allocated GdkColor
 	 */
@@ -1652,7 +1736,7 @@ public class Window : Drawable
 	 * Params:
 	 * pixmap = a GdkPixmap, or NULL. [allow-none]
 	 * parentRelative = whether the tiling origin is at the origin of
-	 *  window's parent
+	 * window's parent
 	 */
 	public void setBackPixmap(Pixmap pixmap, int parentRelative)
 	{
@@ -1665,7 +1749,7 @@ public class Window : Drawable
 	 * does not have its own background and reuses the parent's, NULL is
 	 * returned and you'll have to query it yourself.
 	 * Since 2.22
-	 * Returns: The pattern to use for the background or NULL to use the parent's background.
+	 * Returns: The pattern to use for the background or NULL to use the parent's background. [transfer none]
 	 */
 	public Pattern getBackgroundPattern()
 	{
@@ -1699,7 +1783,7 @@ public class Window : Drawable
 	 * there is no custom cursor set on the specified window, and it is
 	 * using the cursor for its parent window.
 	 * Since 2.18
-	 * Returns: a GdkCursor, or NULL. The returned object is owned by the GdkWindow and should not be unreferenced directly. Use gdk_window_set_cursor() to unset the cursor of the window
+	 * Returns: a GdkCursor, or NULL. The returned object is owned by the GdkWindow and should not be unreferenced directly. Use gdk_window_set_cursor() to unset the cursor of the window. [transfer none]
 	 */
 	public Cursor getCursor()
 	{
@@ -1716,7 +1800,7 @@ public class Window : Drawable
 	 * Retrieves the user data for window, which is normally the widget
 	 * that window belongs to. See gdk_window_set_user_data().
 	 * Params:
-	 * data = return location for user data
+	 * data = return location for user data. [out]
 	 */
 	public void getUserData(void** data)
 	{
@@ -1913,8 +1997,8 @@ public class Window : Drawable
 	 * received or processed.
 	 * The position coordinates are relative to the window's parent window.
 	 * Params:
-	 * x = X coordinate of window
-	 * y = Y coordinate of window
+	 * x = X coordinate of window. [out][allow-none]
+	 * y = Y coordinate of window. [out][allow-none]
 	 */
 	public void getPosition(out int x, out int y)
 	{
@@ -1994,8 +2078,8 @@ public class Window : Drawable
 	 * Params:
 	 * x = X coordinate in window
 	 * y = Y coordinate in window
-	 * rootX = return location for X coordinate
-	 * rootY = return location for Y coordinate
+	 * rootX = return location for X coordinate. [out]
+	 * rootY = return location for Y coordinate. [out]
 	 */
 	public void getRootCoords(int x, int y, out int rootX, out int rootY)
 	{
@@ -2065,16 +2149,16 @@ public class Window : Drawable
 	 * corner of window.
 	 * Params:
 	 * x = return location for X coordinate of pointer or NULL to not
-	 *  return the X coordinate. [out][allow-none]
+	 * return the X coordinate. [out][allow-none]
 	 * y = return location for Y coordinate of pointer or NULL to not
-	 *  return the Y coordinate. [out][allow-none]
+	 * return the Y coordinate. [out][allow-none]
 	 * mask = return location for modifier mask or NULL to not return the
-	 *  modifier mask. [out][allow-none]
+	 * modifier mask. [out][allow-none]
 	 * Returns: the window containing the pointer (as with gdk_window_at_pointer()), or NULL if the window containing the pointer isn't known to GDK. [transfer none]
 	 */
 	public Window getPointer(out int x, out int y, out GdkModifierType mask)
 	{
-		// GdkWindow* gdk_window_get_pointer (GdkWindow *window,  gint *x,  gint *y,  GdkModifierType *mask);
+		// GdkWindow * gdk_window_get_pointer (GdkWindow *window,  gint *x,  gint *y,  GdkModifierType *mask);
 		auto p = gdk_window_get_pointer(gdkWindow, &x, &y, &mask);
 		if(p is null)
 		{
@@ -2338,7 +2422,7 @@ public class Window : Drawable
 	 */
 	public Window getGroup()
 	{
-		// GdkWindow* gdk_window_get_group (GdkWindow *window);
+		// GdkWindow * gdk_window_get_group (GdkWindow *window);
 		auto p = gdk_window_get_group(gdkWindow);
 		if(p is null)
 		{
@@ -2441,6 +2525,8 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Warning
+	 * gdk_set_pointer_hooks has been deprecated since version 2.24 and should not be used in newly-written code. This function will go away in GTK 3 for lack of use cases.
 	 * This function allows for hooking into the operation
 	 * of getting the current location of the pointer. This
 	 * is only useful for such low-level tools as an
@@ -2450,8 +2536,8 @@ public class Window : Drawable
 	 * see gdk_display_set_pointer_hooks().
 	 * Params:
 	 * newHooks = a table of pointers to functions for getting
-	 *  quantities related to the current pointer position,
-	 *  or NULL to restore the default table.
+	 * quantities related to the current pointer position,
+	 * or NULL to restore the default table.
 	 * Returns: the previous pointer hook table
 	 */
 	public static GdkPointerHooks* setPointerHooks(GdkPointerHooks* newHooks)

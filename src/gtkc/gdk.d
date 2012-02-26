@@ -264,6 +264,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_pixmap_colormap_create_from_xpm, \"gdk_pixmap_colormap_create_from_xpm\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixmap_create_from_xpm_d, \"gdk_pixmap_create_from_xpm_d\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixmap_colormap_create_from_xpm_d, \"gdk_pixmap_colormap_create_from_xpm_d\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixmap_get_size, \"gdk_pixmap_get_size\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.Bitmap
 
@@ -467,6 +468,11 @@ mixin( _shared ~ "static this()
 
 	Linker.link(gdk_window_new, \"gdk_window_new\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_destroy, \"gdk_window_destroy\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_display, \"gdk_window_get_display\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_screen, \"gdk_window_get_screen\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_visual, \"gdk_window_get_visual\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_width, \"gdk_window_get_width\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_height, \"gdk_window_get_height\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_window_type, \"gdk_window_get_window_type\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_at_pointer, \"gdk_window_at_pointer\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_show, \"gdk_window_show\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -744,6 +750,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_x11_get_default_screen, \"gdk_x11_get_default_screen\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_grab_server, \"gdk_x11_grab_server\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_ungrab_server, \"gdk_x11_ungrab_server\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_set_sm_client_id, \"gdk_x11_set_sm_client_id\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.AppLaunchContext
 
@@ -768,6 +775,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_cairo_set_source_color, \"gdk_cairo_set_source_color\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_set_source_pixbuf, \"gdk_cairo_set_source_pixbuf\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_set_source_pixmap, \"gdk_cairo_set_source_pixmap\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_cairo_set_source_window, \"gdk_cairo_set_source_window\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_rectangle, \"gdk_cairo_rectangle\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_region, \"gdk_cairo_region\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_reset_clip, \"gdk_cairo_reset_clip\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -1004,6 +1012,7 @@ mixin( gshared ~"extern(C)
 	GdkPixmap* function(GdkDrawable* drawable, GdkColormap* colormap, GdkBitmap** mask, GdkColor* transparentColor, gchar* filename) c_gdk_pixmap_colormap_create_from_xpm;
 	GdkPixmap* function(GdkDrawable* drawable, GdkBitmap** mask, GdkColor* transparentColor, gchar** data) c_gdk_pixmap_create_from_xpm_d;
 	GdkPixmap* function(GdkDrawable* drawable, GdkColormap* colormap, GdkBitmap** mask, GdkColor* transparentColor, gchar** data) c_gdk_pixmap_colormap_create_from_xpm_d;
+	void function(GdkPixmap* pixmap, gint* width, gint* height) c_gdk_pixmap_get_size;
 	
 	// gdk.Bitmap
 	
@@ -1207,6 +1216,11 @@ mixin( gshared ~"extern(C)
 	
 	GdkWindow* function(GdkWindow* parent, GdkWindowAttr* attributes, gint attributesMask) c_gdk_window_new;
 	void function(GdkWindow* window) c_gdk_window_destroy;
+	GdkDisplay* function(GdkWindow* window) c_gdk_window_get_display;
+	GdkScreen* function(GdkWindow* window) c_gdk_window_get_screen;
+	GdkVisual* function(GdkWindow* window) c_gdk_window_get_visual;
+	int function(GdkWindow* window) c_gdk_window_get_width;
+	int function(GdkWindow* window) c_gdk_window_get_height;
 	GdkWindowType function(GdkWindow* window) c_gdk_window_get_window_type;
 	GdkWindow* function(gint* winX, gint* winY) c_gdk_window_at_pointer;
 	void function(GdkWindow* window) c_gdk_window_show;
@@ -1484,6 +1498,7 @@ mixin( gshared ~"extern(C)
 	gint function() c_gdk_x11_get_default_screen;
 	void function() c_gdk_x11_grab_server;
 	void function() c_gdk_x11_ungrab_server;
+	void function(gchar* smClientId) c_gdk_x11_set_sm_client_id;
 	
 	// gdk.AppLaunchContext
 	
@@ -1508,6 +1523,7 @@ mixin( gshared ~"extern(C)
 	void function(cairo_t* cr, GdkColor* color) c_gdk_cairo_set_source_color;
 	void function(cairo_t* cr, GdkPixbuf* pixbuf, double pixbufX, double pixbufY) c_gdk_cairo_set_source_pixbuf;
 	void function(cairo_t* cr, GdkPixmap* pixmap, double pixmapX, double pixmapY) c_gdk_cairo_set_source_pixmap;
+	void function(cairo_t* cr, GdkWindow* window, double x, double y) c_gdk_cairo_set_source_window;
 	void function(cairo_t* cr, GdkRectangle* rectangle) c_gdk_cairo_rectangle;
 	void function(cairo_t* cr, GdkRegion* region) c_gdk_cairo_region;
 	void function(cairo_t* cr, GdkDrawable* drawable) c_gdk_cairo_reset_clip;
@@ -1741,6 +1757,7 @@ alias c_gdk_pixmap_create_from_xpm  gdk_pixmap_create_from_xpm;
 alias c_gdk_pixmap_colormap_create_from_xpm  gdk_pixmap_colormap_create_from_xpm;
 alias c_gdk_pixmap_create_from_xpm_d  gdk_pixmap_create_from_xpm_d;
 alias c_gdk_pixmap_colormap_create_from_xpm_d  gdk_pixmap_colormap_create_from_xpm_d;
+alias c_gdk_pixmap_get_size  gdk_pixmap_get_size;
 
 // gdk.Bitmap
 
@@ -1944,6 +1961,11 @@ alias c_gdk_cursor_unref  gdk_cursor_unref;
 
 alias c_gdk_window_new  gdk_window_new;
 alias c_gdk_window_destroy  gdk_window_destroy;
+alias c_gdk_window_get_display  gdk_window_get_display;
+alias c_gdk_window_get_screen  gdk_window_get_screen;
+alias c_gdk_window_get_visual  gdk_window_get_visual;
+alias c_gdk_window_get_width  gdk_window_get_width;
+alias c_gdk_window_get_height  gdk_window_get_height;
 alias c_gdk_window_get_window_type  gdk_window_get_window_type;
 alias c_gdk_window_at_pointer  gdk_window_at_pointer;
 alias c_gdk_window_show  gdk_window_show;
@@ -2221,6 +2243,7 @@ alias c_gdk_x11_font_get_xfont  gdk_x11_font_get_xfont;
 alias c_gdk_x11_get_default_screen  gdk_x11_get_default_screen;
 alias c_gdk_x11_grab_server  gdk_x11_grab_server;
 alias c_gdk_x11_ungrab_server  gdk_x11_ungrab_server;
+alias c_gdk_x11_set_sm_client_id  gdk_x11_set_sm_client_id;
 
 // gdk.AppLaunchContext
 
@@ -2245,6 +2268,7 @@ alias c_gdk_cairo_create  gdk_cairo_create;
 alias c_gdk_cairo_set_source_color  gdk_cairo_set_source_color;
 alias c_gdk_cairo_set_source_pixbuf  gdk_cairo_set_source_pixbuf;
 alias c_gdk_cairo_set_source_pixmap  gdk_cairo_set_source_pixmap;
+alias c_gdk_cairo_set_source_window  gdk_cairo_set_source_window;
 alias c_gdk_cairo_rectangle  gdk_cairo_rectangle;
 alias c_gdk_cairo_region  gdk_cairo_region;
 alias c_gdk_cairo_reset_clip  gdk_cairo_reset_clip;

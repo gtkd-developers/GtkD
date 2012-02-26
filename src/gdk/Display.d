@@ -391,7 +391,7 @@ public class Display : ObjectG
 	 */
 	public Event getEvent()
 	{
-		// GdkEvent* gdk_display_get_event (GdkDisplay *display);
+		// GdkEvent * gdk_display_get_event (GdkDisplay *display);
 		auto p = gdk_display_get_event(gdkDisplay);
 		if(p is null)
 		{
@@ -410,7 +410,7 @@ public class Display : ObjectG
 	 */
 	public Event peekEvent()
 	{
-		// GdkEvent* gdk_display_peek_event (GdkDisplay *display);
+		// GdkEvent * gdk_display_peek_event (GdkDisplay *display);
 		auto p = gdk_display_peek_event(gdkDisplay);
 		if(p is null)
 		{
@@ -439,8 +439,8 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * messageType = the type of ClientMessage events to receive.
-	 *  This will be checked against the message_type field
-	 *  of the XClientMessage event struct.
+	 * This will be checked against the message_type field
+	 * of the XClientMessage event struct.
 	 * func = the function to call to process the event.
 	 * data = user data to pass to func.
 	 */
@@ -487,7 +487,7 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * screen = location to store the screen that the
-	 *  cursor is on, or NULL. [allow-none]
+	 * cursor is on, or NULL. [out][allow-none]
 	 * x = location to store root window X coordinate of pointer, or NULL. [out][allow-none]
 	 * y = location to store root window Y coordinate of pointer, or NULL. [out][allow-none]
 	 * mask = location to store current modifier mask, or NULL. [out][allow-none]
@@ -510,9 +510,9 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * winX = return location for x coordinate of the pointer location relative
-	 *  to the window origin, or NULL. [out][allow-none]
+	 * to the window origin, or NULL. [out][allow-none]
 	 * winY = return location for y coordinate of the pointer location relative
-	 *   to the window origin, or NULL. [out][allow-none]
+	 *  to the window origin, or NULL. [out][allow-none]
 	 * Returns: the window under the mouse pointer, or NULL. [transfer none]
 	 */
 	public Window getWindowAtPointer(out int winX, out int winY)
@@ -527,6 +527,8 @@ public class Display : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_display_set_pointer_hooks has been deprecated since version 2.24 and should not be used in newly-written code. This function will go away in GTK 3 for lack of use cases.
 	 * This function allows for hooking into the operation
 	 * of getting the current location of the pointer on a particular
 	 * display. This is only useful for such low-level tools as an
@@ -535,8 +537,8 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * newHooks = a table of pointers to functions for getting
-	 *  quantities related to the current pointer position,
-	 *  or NULL to restore the default table.
+	 * quantities related to the current pointer position,
+	 * or NULL to restore the default table.
 	 * Returns: the previous pointer hook table
 	 */
 	public GdkDisplayPointerHooks* setPointerHooks(GdkDisplayPointerHooks* newHooks)
@@ -654,7 +656,7 @@ public class Display : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * selection = the GdkAtom naming the selection for which
-	 *  ownership change notification is requested
+	 * ownership change notification is requested
 	 * Returns: whether GdkEventOwnerChange events will be sent.
 	 */
 	public int requestSelectionNotification(GdkAtom selection)
@@ -687,7 +689,7 @@ public class Display : ObjectG
 	 * clipboardWindow = a GdkWindow belonging to the clipboard owner
 	 * time = a timestamp
 	 * targets = an array of targets that should be saved, or NULL
-	 *  if all available targets should be saved.
+	 * if all available targets should be saved.
 	 */
 	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom[] targets)
 	{

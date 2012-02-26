@@ -36,7 +36,6 @@ public import gtkc.pangotypes;
 public import gtkc.gdkpixbuftypes;
 
 alias void* GdkAtom;
-alias void* GdkNativeWindow;
 
 const int GDK_MAX_TIMECOORD_AXES = 128;
 
@@ -384,6 +383,8 @@ array: gdk_pixmap_create_from_xpm_d data
 out: gdk_pixmap_colormap_create_from_xpm mask
 out: gdk_pixmap_colormap_create_from_xpm_d mask
 array: gdk_pixmap_colormap_create_from_xpm_d data
+out: gdk_pixmap_get_size width
+out: gdk_pixmap_get_size height
 
 outFile: Pixmap
 
@@ -941,6 +942,12 @@ import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
 import: gdk.Cursor
 structWrap: GdkCursor* Cursor
+import: gdk.Display
+structWrap: GdkDisplay* Display
+import: gdk.Screen
+structWrap: GdkScreen* Screen
+import: gdk.Visual
+structWrap: GdkVisual* Visual
 import: glib.ListG
 structWrap: GList* ListG
 import: cairo.Pattern
@@ -1243,6 +1250,8 @@ noprefix: gdk_x11_get_xatom_by_name
 noprefix: gdk_x11_get_xatom_by_name_for_display
 noprefix: gdk_x11_get_xatom_name
 noprefix: gdk_x11_get_xatom_name_for_display
+noprefix: gdk_x11_window_foreign_new_for_display
+noprefix: gdk_x11_window_lookup_for_display
 outFile: X11
 
 file: gdk-Application-launching.html
@@ -1279,6 +1288,7 @@ structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkPixmap* Pixmap
 structWrap: GdkRectangle* Rectangle
 structWrap: GdkRegion* Region
+structWrap: GdkWindow* Window
 
 nocode: gdk_window_create_similar_surface
 nocode: gdk_cairo_create
@@ -1288,7 +1298,7 @@ nocode: gdk_cairo_set_source_pixmap
 nocode: gdk_cairo_rectangle
 nocode: gdk_cairo_region
 nocode: gdk_cairo_reset_clip
-
+nocode: void gdk_cairo_set_source_window
 code: start
 
 	/**

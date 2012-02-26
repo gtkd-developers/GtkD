@@ -110,15 +110,15 @@ public class Selection
 	 * Sets the owner of the given selection.
 	 * Params:
 	 * owner = a GdkWindow or NULL to indicate that the
-	 *  the owner for the given should be unset.
+	 * the owner for the given should be unset.
 	 * selection = an atom identifying a selection.
 	 * time = timestamp to use when setting the selection.
-	 *  If this is older than the timestamp given last
-	 *  time the owner was set for the given selection, the
-	 *  request will be ignored.
+	 * If this is older than the timestamp given last
+	 * time the owner was set for the given selection, the
+	 * request will be ignored.
 	 * sendEvent = if TRUE, and the new owner is different
-	 *  from the current owner, the current owner
-	 *  will be sent a SelectionClear event.
+	 * from the current owner, the current owner
+	 * will be sent a SelectionClear event.
 	 * Returns: TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
 	 */
 	public static int ownerSet(Window owner, GdkAtom selection, uint time, int sendEvent)
@@ -133,13 +133,13 @@ public class Selection
 	 * Params:
 	 * display = the GdkDisplay.
 	 * owner = a GdkWindow or NULL to indicate that the owner for
-	 *  the given should be unset.
+	 * the given should be unset.
 	 * selection = an atom identifying a selection.
 	 * time = timestamp to use when setting the selection.
-	 *  If this is older than the timestamp given last time the owner was
-	 *  set for the given selection, the request will be ignored.
+	 * If this is older than the timestamp given last time the owner was
+	 * set for the given selection, the request will be ignored.
 	 * sendEvent = if TRUE, and the new owner is different from the current
-	 *  owner, the current owner will be sent a SelectionClear event.
+	 * owner, the current owner will be sent a SelectionClear event.
 	 * Returns: TRUE if the selection owner was successfully changed to owner, otherwise FALSE.
 	 */
 	public static int ownerSetForDisplay(Display display, Window owner, GdkAtom selection, uint time, int sendEvent)
@@ -156,7 +156,7 @@ public class Selection
 	 */
 	public static Window ownerGet(GdkAtom selection)
 	{
-		// GdkWindow* gdk_selection_owner_get (GdkAtom selection);
+		// GdkWindow * gdk_selection_owner_get (GdkAtom selection);
 		auto p = gdk_selection_owner_get(selection);
 		if(p is null)
 		{
@@ -193,12 +193,12 @@ public class Selection
 	 * Params:
 	 * requestor = a GdkWindow.
 	 * selection = an atom identifying the selection to get the
-	 *  contents of.
+	 * contents of.
 	 * target = the form in which to retrieve the selection.
 	 * time = the timestamp to use when retrieving the
-	 *  selection. The selection owner may refuse the
-	 *  request if it did not own the selection at
-	 *  the time indicated by the timestamp.
+	 * selection. The selection owner may refuse the
+	 * request if it did not own the selection at
+	 * the time indicated by the timestamp.
 	 */
 	public static void convert(Window requestor, GdkAtom selection, GdkAtom target, uint time)
 	{
@@ -214,12 +214,12 @@ public class Selection
 	 * Params:
 	 * requestor = the window on which the data is stored
 	 * data = location to store a pointer to the retrieved data.
-	 *  If the retrieval failed, NULL we be stored here, otherwise, it
-	 *  will be non-NULL and the returned data should be freed with g_free()
-	 *  when you are finished using it. The length of the
-	 *  allocated memory is one more than the length
-	 *  of the returned data, and the final byte will always
-	 *  be zero, to ensure nul-termination of strings.
+	 * If the retrieval failed, NULL we be stored here, otherwise, it
+	 * will be non-NULL and the returned data should be freed with g_free()
+	 * when you are finished using it. The length of the
+	 * allocated memory is one more than the length
+	 * of the returned data, and the final byte will always
+	 * be zero, to ensure nul-termination of strings.
 	 * propType = location to store the type of the property.
 	 * propFormat = location to store the format of the property.
 	 * Returns: the length of the retrieved data.
@@ -237,8 +237,8 @@ public class Selection
 	 * selection = selection that was requested.
 	 * target = target that was selected.
 	 * property = property in which the selection owner stored the
-	 *  data, or GDK_NONE to indicate that the request
-	 *  was rejected.
+	 * data, or GDK_NONE to indicate that the request
+	 * was rejected.
 	 * time = timestamp.
 	 */
 	public static void sendNotify(GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time)
@@ -256,7 +256,7 @@ public class Selection
 	 * selection = selection that was requested.
 	 * target = target that was selected.
 	 * property = property in which the selection owner stored the data,
-	 *  or GDK_NONE to indicate that the request was rejected.
+	 * or GDK_NONE to indicate that the request was rejected.
 	 * time = timestamp.
 	 */
 	public static void sendNotifyForDisplay(Display display, GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time)

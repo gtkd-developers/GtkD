@@ -261,7 +261,7 @@ public class Font
 	 */
 	public static Font load(string fontName)
 	{
-		// GdkFont* gdk_font_load (const gchar *font_name);
+		// GdkFont * gdk_font_load (const gchar *font_name);
 		auto p = gdk_font_load(Str.toStringz(fontName));
 		if(p is null)
 		{
@@ -301,12 +301,12 @@ public class Font
 	 * You should make no assumptions about the initial reference count.
 	 * Params:
 	 * fontsetName = a comma-separated list of XLFDs describing
-	 *  the component fonts of the fontset to load.
+	 * the component fonts of the fontset to load.
 	 * Returns: a GdkFont, or NULL if the fontset could not be loaded.
 	 */
 	public static Font fontsetLoad(string fontsetName)
 	{
-		// GdkFont* gdk_fontset_load (const gchar *fontset_name);
+		// GdkFont * gdk_fontset_load (const gchar *fontset_name);
 		auto p = gdk_fontset_load(Str.toStringz(fontsetName));
 		if(p is null)
 		{
@@ -325,7 +325,7 @@ public class Font
 	 * Params:
 	 * display = a GdkDisplay
 	 * fontsetName = a comma-separated list of XLFDs describing
-	 *  the component fonts of the fontset to load.
+	 * the component fonts of the fontset to load.
 	 * Returns: a GdkFont, or NULL if the fontset could not be loaded.
 	 */
 	public static Font fontsetLoadForDisplay(Display display, string fontsetName)
@@ -353,7 +353,7 @@ public class Font
 	 */
 	public static Font fromDescription(PgFontDescription fontDesc)
 	{
-		// GdkFont* gdk_font_from_description (PangoFontDescription *font_desc);
+		// GdkFont * gdk_font_from_description (PangoFontDescription *font_desc);
 		auto p = gdk_font_from_description((fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
@@ -413,7 +413,7 @@ public class Font
 	 */
 	public Font doref()
 	{
-		// GdkFont* gdk_font_ref (GdkFont *font);
+		// GdkFont * gdk_font_ref (GdkFont *font);
 		auto p = gdk_font_ref(gdkFont);
 		if(p is null)
 		{
@@ -487,8 +487,8 @@ public class Font
 	 * Params:
 	 * text = the text to measure
 	 * textLength = the length of the text in bytes. (If the
-	 *  font is a 16-bit font, this is twice the length
-	 *  of the text in characters.)
+	 * font is a 16-bit font, this is twice the length
+	 * of the text in characters.)
 	 * lbearing = the left bearing of the string.
 	 * rbearing = the right bearing of the string.
 	 * width = the width of the string.
