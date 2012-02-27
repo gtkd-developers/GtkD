@@ -58,6 +58,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- getSize
  */
 
 module gdk.Pixmap;
@@ -345,7 +346,7 @@ public class Pixmap : Drawable
 	 * width = location to store pixmap's width, or NULL. [out][allow-none]
 	 * height = location to store pixmap's height, or NULL. [out][allow-none]
 	 */
-	public void getSize(out int width, out int height)
+	public override void getSize(out int width, out int height)
 	{
 		// void gdk_pixmap_get_size (GdkPixmap *pixmap,  gint *width,  gint *height);
 		gdk_pixmap_get_size(gdkPixmap, &width, &height);

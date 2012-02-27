@@ -377,6 +377,8 @@ structWrap: GdkBitmap* Bitmap
 import: gdk.Colormap
 structWrap: GdkColormap* Colormap
 
+override: getSize
+
 out: gdk_pixmap_create_from_xpm mask
 out: gdk_pixmap_create_from_xpm_d mask
 array: gdk_pixmap_create_from_xpm_d data
@@ -958,6 +960,10 @@ structWrap: cairo_pattern_t* Pattern
 #structWrap: GdkWMDecoration* WMDecoration
 #import: gdk.PointerHooks
 #structWrap: GdkPointerHooks* PointerHooks
+
+override: getDisplay
+override: getScreen
+override: getVisual
 
 out: gdk_window_at_pointer win_x
 out: gdk_window_at_pointer win_y

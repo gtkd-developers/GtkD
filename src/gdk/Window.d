@@ -75,6 +75,9 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- getDisplay
+ * 	- getScreen
+ * 	- getVisual
  */
 
 module gdk.Window;
@@ -327,7 +330,7 @@ public class Window : Drawable
 	 * Since 2.24
 	 * Returns: the GdkDisplay associated with window
 	 */
-	public Display getDisplay()
+	public override Display getDisplay()
 	{
 		// GdkDisplay * gdk_window_get_display (GdkWindow *window);
 		auto p = gdk_window_get_display(gdkWindow);
@@ -342,7 +345,7 @@ public class Window : Drawable
 	 * Gets the GdkScreen associated with a GdkWindow.
 	 * Returns: the GdkScreen associated with window
 	 */
-	public Screen getScreen()
+	public override Screen getScreen()
 	{
 		// GdkScreen * gdk_window_get_screen (GdkWindow *window);
 		auto p = gdk_window_get_screen(gdkWindow);
@@ -358,7 +361,7 @@ public class Window : Drawable
 	 * Since 2.24
 	 * Returns: a GdkVisual
 	 */
-	public Visual getVisual()
+	public override Visual getVisual()
 	{
 		// GdkVisual * gdk_window_get_visual (GdkWindow *window);
 		auto p = gdk_window_get_visual(gdkWindow);
