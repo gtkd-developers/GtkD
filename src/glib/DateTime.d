@@ -49,6 +49,7 @@
  * 	- g_date_time_new_from_timeval_utc
  * 	- g_date_time_new_local
  * 	- g_date_time_new_utc
+ * 	- g_date_time_hash
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -248,6 +249,37 @@ public class DateTime
 	override hash_t toHash()
 	{
 		return hash(this);
+	}
+	
+	version(D_Version2)
+	{
+		/**
+		 * Hashes datetime into a guint, suitable for use within GHashTable.
+		 * Since 2.26
+		 * Params:
+		 * datetime = a GDateTime
+		 * Returns: a guint containing the hash
+		 */
+		mixin("public static @trusted uint hash(DateTime datetime)
+		{
+			// guint g_date_time_hash (gconstpointer datetime);
+			return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
+		}");
+	}
+	else
+	{
+		/**
+		 * Hashes datetime into a guint, suitable for use within GHashTable.
+		 * Since 2.26
+		 * Params:
+		 * datetime = a GDateTime
+		 * Returns: a guint containing the hash
+		 */
+		public static uint hash(DateTime datetime)
+		{
+			// guint g_date_time_hash (gconstpointer datetime);
+			return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
+		}
 	}
 	
 	/**
@@ -541,19 +573,6 @@ public class DateTime
 	{
 		// GTimeSpan g_date_time_difference (GDateTime *end,  GDateTime *begin);
 		return g_date_time_difference(gDateTime, (begin is null) ? null : begin.getDateTimeStruct());
-	}
-	
-	/**
-	 * Hashes datetime into a guint, suitable for use within GHashTable.
-	 * Since 2.26
-	 * Params:
-	 * datetime = a GDateTime
-	 * Returns: a guint containing the hash
-	 */
-	public static uint hash(DateTime datetime)
-	{
-		// guint g_date_time_hash (gconstpointer datetime);
-		return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
 	}
 	
 	/**
