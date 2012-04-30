@@ -104,8 +104,8 @@ public interface TreeSortableIF
 	 * GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
 	 * GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
 	 * Params:
-	 * sortColumnId = The sort column id to be filled in
-	 * order = The GtkSortType to be filled in
+	 * sortColumnId = The sort column id to be filled in. [out]
+	 * order = The GtkSortType to be filled in. [out]
 	 * Returns: TRUE if the sort column is not one of the special sort column ids.
 	 */
 	public int getSortColumnId(out int sortColumnId, out GtkSortType order);

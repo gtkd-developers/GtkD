@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Keyboard-Accelerators.html
+ * inFile  = gtk3-Keyboard-Accelerators.html
  * outPack = gtk
  * outFile = AccelGroup
  * strct   = GtkAccelGroup
@@ -84,9 +84,9 @@ private import gobject.ObjectG;
  * A GtkAccelGroup represents a group of keyboard accelerators,
  * typically attached to a toplevel GtkWindow (with
  * gtk_window_add_accel_group()). Usually you won't need to create a
- * GtkAccelGroup directly; instead, when using GtkItemFactory, GTK+
- * automatically sets up the accelerators for your menus in the item
- * factory's GtkAccelGroup.
+ * GtkAccelGroup directly; instead, when using GtkUIManager, GTK+
+ * automatically sets up the accelerators for your menus in the ui
+ * manager's GtkAccelGroup.
  * Note that accelerators are different from
  * mnemonics. Accelerators are shortcuts for
  * activating a menu item; they appear alongside the menu item they're a
@@ -306,7 +306,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * accelKey = key value of the accelerator
 	 * accelMods = modifier combination of the accelerator
-	 * Returns: an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is owned by GTK+ and must not be freed. [allow-none]
+	 * Returns: an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is owned by GTK+ and must not be freed. [transfer none][array length=n_entries]
 	 */
 	public GtkAccelGroupEntry[] query(uint accelKey, GdkModifierType accelMods)
 	{
@@ -438,7 +438,8 @@ public class AccelGroup : ObjectG
 	 * Finds the first entry in an accelerator group for which
 	 * find_func returns TRUE and returns its GtkAccelKey.
 	 * Params:
-	 * findFunc = a function to filter the entries of accel_group with
+	 * findFunc = a function to filter the entries
+	 * of accel_group with. [scope call]
 	 * data = data to pass to find_func
 	 * Returns: the key of the first entry passing find_func. The key is owned by GTK+ and must not be freed. [transfer none]
 	 */
@@ -450,9 +451,9 @@ public class AccelGroup : ObjectG
 	
 	/**
 	 * Determines whether a given keyval and modifier mask constitute
-	 * a valid keyboard accelerator. For example, the GDK_a keyval
+	 * a valid keyboard accelerator. For example, the GDK_KEY_a keyval
 	 * plus GDK_CONTROL_MASK is valid - this is a "Ctrl+a" accelerator.
-	 * But, you can't, for instance, use the GDK_Control_L keyval
+	 * But, you can't, for instance, use the GDK_KEY_Control_L keyval
 	 * as an accelerator.
 	 * Params:
 	 * keyval = a GDK keyval
@@ -478,8 +479,10 @@ public class AccelGroup : ObjectG
 	 * be set to 0 (zero).
 	 * Params:
 	 * accelerator = string representing an accelerator
-	 * acceleratorKey = return location for accelerator keyval. [out][allow-none]
-	 * acceleratorMods = return location for accelerator modifier mask. [out][allow-none]
+	 * acceleratorKey = return location for accelerator
+	 * keyval, or NULL. [out][allow-none]
+	 * acceleratorMods = return location for accelerator
+	 * modifier mask, NULL. [out][allow-none]
 	 */
 	public static void acceleratorParse(string accelerator, out uint acceleratorKey, out GdkModifierType acceleratorMods)
 	{
@@ -490,7 +493,7 @@ public class AccelGroup : ObjectG
 	/**
 	 * Converts an accelerator keyval and modifier mask
 	 * into a string parseable by gtk_accelerator_parse().
-	 * For example, if you pass in GDK_q and GDK_CONTROL_MASK,
+	 * For example, if you pass in GDK_KEY_q and GDK_CONTROL_MASK,
 	 * this function returns "<Control>q".
 	 * If you need to display accelerators in the user interface,
 	 * see gtk_accelerator_get_label().
@@ -544,9 +547,9 @@ public class AccelGroup : ObjectG
 	 * Gets the value set by gtk_accelerator_set_default_mod_mask().
 	 * Returns: the default accelerator modifier mask
 	 */
-	public static uint acceleratorGetDefaultModMask()
+	public static GdkModifierType acceleratorGetDefaultModMask()
 	{
-		// guint gtk_accelerator_get_default_mod_mask  (void);
+		// GdkModifierType gtk_accelerator_get_default_mod_mask  (void);
 		return gtk_accelerator_get_default_mod_mask();
 	}
 }

@@ -237,7 +237,7 @@ public class ScaleButton : Button, OrientableIF
 	 * a stepping of step.
 	 * Since 2.12
 	 * Params:
-	 * size = a stock icon size. [in]
+	 * size = a stock icon size. [type int]
 	 * min = the minimum value of the scale (usually 0)
 	 * max = the maximum value of the scale (usually 100)
 	 * step = the stepping of value when a scroll-wheel event,

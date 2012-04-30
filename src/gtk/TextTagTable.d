@@ -74,16 +74,13 @@ private import gobject.ObjectG;
 /**
  * Description
  * You may wish to begin by reading the text widget
- * conceptual overview which gives an overview of all the objects and data
- * types related to the text widget and how they work together.
+ * conceptual overview which gives an overview of all the objects and
+ * data types related to the text widget and how they work together.
  * GtkTextTagTables as GtkBuildable
  * The GtkTextTagTable implementation of the GtkBuildable interface
  * supports adding tags by specifying "tag" as the "type"
  * attribute of a <child> element.
  * $(DDOC_COMMENT example)
- * You may wish to begin by reading the text widget
- * conceptual overview which gives an overview of all the objects and data
- * types related to the text widget and how they work together.
  */
 public class TextTagTable : ObjectG
 {
@@ -153,11 +150,11 @@ public class TextTagTable : ObjectG
 		}
 		onTagAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* arg1, TextTagTable textTagTable)
+	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable textTagTable)
 	{
 		foreach ( void delegate(TextTag, TextTagTable) dlg ; textTagTable.onTagAddedListeners )
 		{
-			dlg(new TextTag(arg1), textTagTable);
+			dlg(new TextTag(tag), textTagTable);
 		}
 	}
 	
@@ -179,11 +176,11 @@ public class TextTagTable : ObjectG
 		}
 		onTagChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* arg1, gboolean arg2, TextTagTable textTagTable)
+	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, gboolean sizeChanged, TextTagTable textTagTable)
 	{
 		foreach ( void delegate(TextTag, gboolean, TextTagTable) dlg ; textTagTable.onTagChangedListeners )
 		{
-			dlg(new TextTag(arg1), arg2, textTagTable);
+			dlg(new TextTag(tag), sizeChanged, textTagTable);
 		}
 	}
 	
@@ -205,11 +202,11 @@ public class TextTagTable : ObjectG
 		}
 		onTagRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* arg1, TextTagTable textTagTable)
+	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable textTagTable)
 	{
 		foreach ( void delegate(TextTag, TextTagTable) dlg ; textTagTable.onTagRemovedListeners )
 		{
-			dlg(new TextTag(arg1), textTagTable);
+			dlg(new TextTag(tag), textTagTable);
 		}
 	}
 	
@@ -296,7 +293,7 @@ public class TextTagTable : ObjectG
 	 * Returns the size of the table (number of tags)
 	 * Params:
 	 * table = a GtkTextTagTable
-	 * Returns: number of tags in table Signal Details The "tag-added" signal void user_function (GtkTextTagTable *texttagtable, GtkTextTag *arg1, gpointer user_data) : Run Last
+	 * Returns: number of tags in table Signal Details The "tag-added" signal void user_function (GtkTextTagTable *texttagtable, GtkTextTag *tag, gpointer user_data) : Run Last
 	 */
 	public int tableGetSize()
 	{

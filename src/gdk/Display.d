@@ -44,12 +44,18 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Screen
  * 	- glib.ListG
+ * 	- gdk.AppLaunchContext
+ * 	- gdk.DeviceManager
+ * 	- gdk.Device
  * 	- gdk.Event
+ * 	- gdk.Screen
  * 	- gdk.Window
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GdkAppLaunchContext* -> AppLaunchContext
+ * 	- GdkDevice* -> Device
+ * 	- GdkDeviceManager* -> DeviceManager
  * 	- GdkDisplay* -> Display
  * 	- GdkEvent* -> Event
  * 	- GdkScreen* -> Screen
@@ -70,9 +76,12 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gdk.Screen;
 private import glib.ListG;
+private import gdk.AppLaunchContext;
+private import gdk.DeviceManager;
+private import gdk.Device;
 private import gdk.Event;
+private import gdk.Screen;
 private import gdk.Window;
 
 
@@ -82,15 +91,20 @@ private import gobject.ObjectG;
 /**
  * Description
  * GdkDisplay objects purpose are two fold:
- * To grab/ungrab keyboard focus and mouse pointer
- * To manage and provide information about the GdkScreen(s)
- * 		available for this GdkDisplay
- *  GdkDisplay objects are the GDK representation of the X Display which can be
- *  described as a workstation consisting of a keyboard a pointing
- *  device (such as a mouse) and one or more screens.
- *  It is used to open and keep track of various GdkScreen objects currently
- *  instanciated by the application. It is also used to grab and release the keyboard
- *  and the mouse pointer.
+ *  To manage and provide information about input devices (pointers
+ *  and keyboards)
+ *  To manage and provide information about the available GdkScreens
+ * GdkDisplay objects are the GDK representation of an X Display,
+ * which can be described as a workstation consisting of
+ * a keyboard, a pointing device (such as a mouse) and one or more
+ * screens.
+ * It is used to open and keep track of various GdkScreen objects
+ * currently instantiated by the application. It is also used to
+ * access the keyboard(s) and mouse pointer(s) of the display.
+ * Most of the input device handling has been factored out into
+ * the separate GdkDeviceManager object. Every display has a
+ * device manager, which you can obtain using
+ * gdk_display_get_device_manager().
  */
 public class Display : ObjectG
 {
@@ -172,13 +186,41 @@ public class Display : ObjectG
 		}
 	}
 	
+	void delegate(Display)[] onOpenedListeners;
+	/**
+	 * The ::opened signal is emitted when the connection to the windowing
+	 * system for display is opened.
+	 */
+	void addOnOpened(void delegate(Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("opened" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"opened",
+			cast(GCallback)&callBackOpened,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["opened"] = 1;
+		}
+		onOpenedListeners ~= dlg;
+	}
+	extern(C) static void callBackOpened(GdkDisplay* displayStruct, Display display)
+	{
+		foreach ( void delegate(Display) dlg ; display.onOpenedListeners )
+		{
+			dlg(display);
+		}
+	}
+	
 	
 	/**
 	 * Opens a display.
 	 * Since 2.2
 	 * Params:
 	 * displayName = the name of the display to open
-	 * Returns: a GdkDisplay, or NULL if the display could not be opened.
+	 * Returns: a GdkDisplay, or NULL if the display could not be opened. [transfer none]
 	 */
 	public static Display open(string displayName)
 	{
@@ -236,7 +278,7 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * screenNum = the screen number
-	 * Returns: the GdkScreen object
+	 * Returns: the GdkScreen object. [transfer none]
 	 */
 	public Screen getScreen(int screenNum)
 	{
@@ -252,7 +294,7 @@ public class Display : ObjectG
 	/**
 	 * Get the default GdkScreen for display.
 	 * Since 2.2
-	 * Returns: the default GdkScreen object for display
+	 * Returns: the default GdkScreen object for display. [transfer none]
 	 */
 	public Screen getDefaultScreen()
 	{
@@ -266,6 +308,24 @@ public class Display : ObjectG
 	}
 	
 	/**
+	 * Returns the GdkDeviceManager associated to display.
+	 * Returns: A GdkDeviceManager, or NULL. This memory is owned by GDK and must not be freed or unreferenced. [transfer none] Since 3.0
+	 */
+	public DeviceManager getDeviceManager()
+	{
+		// GdkDeviceManager * gdk_display_get_device_manager (GdkDisplay *display);
+		auto p = gdk_display_get_device_manager(gdkDisplay);
+		if(p is null)
+		{
+			return null;
+		}
+		return new DeviceManager(cast(GdkDeviceManager*) p);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_display_pointer_ungrab has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_ungrab(), together with gdk_device_grab()
+	 *  instead.
 	 * Release any pointer grab.
 	 * Since 2.2
 	 * Params:
@@ -278,6 +338,9 @@ public class Display : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_display_keyboard_ungrab has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_ungrab(), together with gdk_device_grab()
+	 *  instead.
 	 * Release any keyboard grab
 	 * Since 2.2
 	 * Params:
@@ -290,6 +353,8 @@ public class Display : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_display_pointer_is_grabbed has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_display_device_is_grabbed() instead.
 	 * Test if the pointer is grabbed.
 	 * Since 2.2
 	 * Returns: TRUE if an active X pointer grab is in effect
@@ -298,6 +363,18 @@ public class Display : ObjectG
 	{
 		// gboolean gdk_display_pointer_is_grabbed (GdkDisplay *display);
 		return gdk_display_pointer_is_grabbed(gdkDisplay);
+	}
+	
+	/**
+	 * Returns TRUE if there is an ongoing grab on device for display.
+	 * Params:
+	 * device = a GdkDevice
+	 * Returns: TRUE if there is a grab in effect for device.
+	 */
+	public int deviceIsGrabbed(Device device)
+	{
+		// gboolean gdk_display_device_is_grabbed (GdkDisplay *display,  GdkDevice *device);
+		return gdk_display_device_is_grabbed(gdkDisplay, (device is null) ? null : device.getDeviceStruct());
 	}
 	
 	/**
@@ -367,23 +444,6 @@ public class Display : ObjectG
 	}
 	
 	/**
-	 * Returns the list of available input devices attached to display.
-	 * The list is statically allocated and should not be freed.
-	 * Since 2.2
-	 * Returns: a list of GdkDevice
-	 */
-	public ListG listDevices()
-	{
-		// GList * gdk_display_list_devices (GdkDisplay *display);
-		auto p = gdk_display_list_devices(gdkDisplay);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ListG(cast(GList*) p);
-	}
-	
-	/**
 	 * Gets the next GdkEvent to be processed for display, fetching events from the
 	 * windowing system if necessary.
 	 * Since 2.2
@@ -433,21 +493,14 @@ public class Display : ObjectG
 	}
 	
 	/**
-	 * Adds a filter to be called when X ClientMessage events are received.
-	 * See gdk_window_add_filter() if you are interested in filtering other
-	 * types of events.
-	 * Since 2.2
-	 * Params:
-	 * messageType = the type of ClientMessage events to receive.
-	 * This will be checked against the message_type field
-	 * of the XClientMessage event struct.
-	 * func = the function to call to process the event.
-	 * data = user data to pass to func.
+	 * Returns whether the display has events that are waiting
+	 * to be processed.
+	 * Returns: TRUE if there are events ready to be processed. Since 3.0
 	 */
-	public void addClientMessageFilter(GdkAtom messageType, GdkFilterFunc func, void* data)
+	public int hasPending()
 	{
-		// void gdk_display_add_client_message_filter  (GdkDisplay *display,  GdkAtom message_type,  GdkFilterFunc func,  gpointer data);
-		gdk_display_add_client_message_filter(gdkDisplay, messageType, func, data);
+		// gboolean gdk_display_has_pending (GdkDisplay *display);
+		return gdk_display_has_pending(gdkDisplay);
 	}
 	
 	/**
@@ -482,6 +535,8 @@ public class Display : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_display_get_pointer has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_get_position() instead.
 	 * Gets the current location of the pointer and the current modifier
 	 * mask for a given display.
 	 * Since 2.2
@@ -503,6 +558,27 @@ public class Display : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_display_list_devices has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_manager_list_devices() instead.
+	 * Returns the list of available input devices attached to display.
+	 * The list is statically allocated and should not be freed.
+	 * Since 2.2
+	 * Returns: a list of GdkDevice. [transfer none][element-type GdkDevice]
+	 */
+	public ListG listDevices()
+	{
+		// GList * gdk_display_list_devices (GdkDisplay *display);
+		auto p = gdk_display_list_devices(gdkDisplay);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Warning
+	 * gdk_display_get_window_at_pointer has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_get_window_at_position() instead.
 	 * Obtains the window underneath the mouse pointer, returning the location
 	 * of the pointer in that window in win_x, win_y for screen. Returns NULL
 	 * if the window under the mouse pointer is not known to GDK (for example,
@@ -528,26 +604,7 @@ public class Display : ObjectG
 	
 	/**
 	 * Warning
-	 * gdk_display_set_pointer_hooks has been deprecated since version 2.24 and should not be used in newly-written code. This function will go away in GTK 3 for lack of use cases.
-	 * This function allows for hooking into the operation
-	 * of getting the current location of the pointer on a particular
-	 * display. This is only useful for such low-level tools as an
-	 * event recorder. Applications should never have any
-	 * reason to use this facility.
-	 * Since 2.2
-	 * Params:
-	 * newHooks = a table of pointers to functions for getting
-	 * quantities related to the current pointer position,
-	 * or NULL to restore the default table.
-	 * Returns: the previous pointer hook table
-	 */
-	public GdkDisplayPointerHooks* setPointerHooks(GdkDisplayPointerHooks* newHooks)
-	{
-		// GdkDisplayPointerHooks * gdk_display_set_pointer_hooks (GdkDisplay *display,  const GdkDisplayPointerHooks *new_hooks);
-		return gdk_display_set_pointer_hooks(gdkDisplay, newHooks);
-	}
-	
-	/**
+	 * gdk_display_warp_pointer has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_warp() instead.
 	 * Warps the pointer of display to the point x,y on
 	 * the screen screen, unless the pointer is confined
 	 * to a window by a grab, in which case it will be moved
@@ -611,8 +668,8 @@ public class Display : ObjectG
 	 * Gets the maximal size to use for cursors on display.
 	 * Since 2.4
 	 * Params:
-	 * width = the return location for the maximal cursor width
-	 * height = the return location for the maximal cursor height
+	 * width = the return location for the maximal cursor width. [out]
+	 * height = the return location for the maximal cursor height. [out]
 	 */
 	public void getMaximalCursorSize(out uint width, out uint height)
 	{
@@ -625,7 +682,7 @@ public class Display : ObjectG
 	 * on display. This window is implicitly created by GDK.
 	 * See gdk_window_set_group().
 	 * Since 2.4
-	 * Returns: The default group leader window for display
+	 * Returns: The default group leader window for display. [transfer none]
 	 */
 	public Window getDefaultGroup()
 	{
@@ -688,8 +745,9 @@ public class Display : ObjectG
 	 * Params:
 	 * clipboardWindow = a GdkWindow belonging to the clipboard owner
 	 * time = a timestamp
-	 * targets = an array of targets that should be saved, or NULL
-	 * if all available targets should be saved.
+	 * targets = an array of targets
+	 * that should be saved, or NULL
+	 * if all available targets should be saved. [array length=n_targets]
 	 */
 	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom[] targets)
 	{
@@ -727,6 +785,42 @@ public class Display : ObjectG
 	 * Currently this only works on X11 with XComposite and
 	 * XDamage extensions available.
 	 * Since 2.12
+	 * Returns: TRUE if windows may be composited.
+	 */
+	public int supportsComposite()
+	{
+		// gboolean gdk_display_supports_composite (GdkDisplay *display);
+		return gdk_display_supports_composite(gdkDisplay);
+	}
+	
+	/**
+	 * Returns a GdkAppLaunchContext suitable for launching
+	 * applications on the given display.
+	 * Returns: a new GdkAppLaunchContext for display. Free with g_object_unref() when done. [transfer full] Since 3.0
+	 */
+	public AppLaunchContext getAppLaunchContext()
+	{
+		// GdkAppLaunchContext * gdk_display_get_app_launch_context  (GdkDisplay *display);
+		auto p = gdk_display_get_app_launch_context(gdkDisplay);
+		if(p is null)
+		{
+			return null;
+		}
+		return new AppLaunchContext(cast(GdkAppLaunchContext*) p);
+	}
+	
+	/**
+	 * Indicates to the GUI environment that the application has
+	 * finished loading, using a given identifier.
+	 * GTK+ will call this function automatically for GtkWindow
+	 * with custom startup-notification identifier unless
+	 * gtk_window_set_auto_startup_notification() is called to
+	 * disable that feature.
+	 * Since 2.2
+	 * Params:
+	 * startupId = a startup-notification identifier, for which
+	 * notification process should be completed
+	 * Since 3.0
 	 * Signal Details
 	 * The "closed" signal
 	 * void user_function (GdkDisplay *display,
@@ -734,12 +828,10 @@ public class Display : ObjectG
 	 *  gpointer user_data) : Run Last
 	 * The ::closed signal is emitted when the connection to the windowing
 	 * system for display is closed.
-	 * Since 2.2
-	 * Returns: TRUE if windows may be composited.
 	 */
-	public int supportsComposite()
+	public void notifyStartupComplete(string startupId)
 	{
-		// gboolean gdk_display_supports_composite (GdkDisplay *display);
-		return gdk_display_supports_composite(gdkDisplay);
+		// void gdk_display_notify_startup_complete (GdkDisplay *display,  const gchar *startup_id);
+		gdk_display_notify_startup_complete(gdkDisplay, Str.toStringz(startupId));
 	}
 }

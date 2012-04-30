@@ -586,6 +586,8 @@ public class GtkDClass
 				{
 					if ( gtkDParentName == "GioMountOperation" )
 						text ~= "public "~gtkStruct~"* getGtk"~convParms.clss~"Struct()"~iFaceChar;
+					else if ( gtkDParentName == "GioAppLaunchContext" )
+						text ~= "public "~gtkStruct~"* getGdk"~convParms.clss~"Struct()"~iFaceChar;
 					else
 						text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
 					if ( !convParms.isInterface )

@@ -66,7 +66,7 @@ private import gtk.Adjustment;
 
 
 
-private import gtk.Progress;
+private import gtk.Widget;
 
 /**
  * Description
@@ -81,27 +81,16 @@ private import gtk.Progress;
  * been completed. In this mode, the application is required to call
  * gtk_progress_bar_set_fraction() periodically to update the progress bar.
  * When an application has no accurate way of knowing the amount of work
- * to do, it can use the GtkProgressBar in activity mode, which shows activity
- * by a block moving back and forth within the progress area. In this mode,
- * the application is required to call gtk_progress_bar_pulse() perodically
- * to update the progress bar.
+ * to do, it can use the GtkProgressBar in activity mode, which shows
+ * activity by a block moving back and forth within the progress area. In
+ * this mode, the application is required to call gtk_progress_bar_pulse()
+ * periodically to update the progress bar.
  * There is quite a bit of flexibility provided to control the appearance
  * of the GtkProgressBar. Functions are provided to control the
  * orientation of the bar, optional text can be displayed along with
  * the bar, and the step size used in activity mode can be set.
- * Note
- * The GtkProgressBar/GtkProgress API in GTK 1.2 was bloated, needlessly complex
- * and hard to use properly. Therefore GtkProgress has been deprecated
- * completely and the GtkProgressBar API has been reduced to the following 10
- * functions: gtk_progress_bar_new(), gtk_progress_bar_pulse(),
- * gtk_progress_bar_set_text(), gtk_progress_bar_set_fraction(),
- * gtk_progress_bar_set_pulse_step(), gtk_progress_bar_set_orientation(),
- * gtk_progress_bar_get_text(), gtk_progress_bar_get_fraction(),
- * gtk_progress_bar_get_pulse_step(), gtk_progress_bar_get_orientation().
- * These have been grouped at the beginning of this section, followed by
- * a large chunk of deprecated 1.2 compatibility functions.
  */
-public class ProgressBar : Progress
+public class ProgressBar : Widget
 {
 	
 	/** the main Gtk struct */
@@ -137,7 +126,7 @@ public class ProgressBar : Progress
 			this = cast(ProgressBar)ptr;
 			return;
 		}
-		super(cast(GtkProgress*)gtkProgressBar);
+		super(cast(GtkWidget*)gtkProgressBar);
 		this.gtkProgressBar = gtkProgressBar;
 	}
 	
@@ -151,7 +140,6 @@ public class ProgressBar : Progress
 	 */
 	
 	/**
-	 * Creates a new GtkProgressBar.
 	 * Creates a new GtkProgressBar.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -180,17 +168,6 @@ public class ProgressBar : Progress
 	}
 	
 	/**
-	 * Causes the given text to appear superimposed on the progress bar.
-	 * Params:
-	 * text = a UTF-8 string, or NULL. [allow-none]
-	 */
-	public void setText(string text)
-	{
-		// void gtk_progress_bar_set_text (GtkProgressBar *pbar,  const gchar *text);
-		gtk_progress_bar_set_text(gtkProgressBar, Str.toStringz(text));
-	}
-	
-	/**
 	 * Causes the progress bar to "fill in" the given fraction
 	 * of the bar. The fraction should be between 0.0 and 1.0,
 	 * inclusive.
@@ -204,40 +181,72 @@ public class ProgressBar : Progress
 	}
 	
 	/**
-	 * Sets the fraction of total progress bar length to move the
-	 * bouncing block for each call to gtk_progress_bar_pulse().
-	 * Params:
-	 * fraction = fraction between 0.0 and 1.0
+	 * Returns the current fraction of the task that's been completed.
+	 * Returns: a fraction from 0.0 to 1.0
 	 */
-	public void setPulseStep(double fraction)
+	public double getFraction()
 	{
-		// void gtk_progress_bar_set_pulse_step (GtkProgressBar *pbar,  gdouble fraction);
-		gtk_progress_bar_set_pulse_step(gtkProgressBar, fraction);
+		// gdouble gtk_progress_bar_get_fraction (GtkProgressBar *pbar);
+		return gtk_progress_bar_get_fraction(gtkProgressBar);
 	}
 	
 	/**
-	 * Causes the progress bar to switch to a different orientation
-	 * (left-to-right, right-to-left, top-to-bottom, or bottom-to-top).
+	 * Progress bars normally grow from top to bottom or left to right.
+	 * Inverted progress bars grow in the opposite direction.
 	 * Params:
-	 * orientation = orientation of the progress bar
+	 * inverted = TRUE to invert the progress bar
 	 */
-	public void setOrientation(GtkProgressBarOrientation orientation)
+	public void setInverted(int inverted)
 	{
-		// void gtk_progress_bar_set_orientation (GtkProgressBar *pbar,  GtkProgressBarOrientation orientation);
-		gtk_progress_bar_set_orientation(gtkProgressBar, orientation);
+		// void gtk_progress_bar_set_inverted (GtkProgressBar *pbar,  gboolean inverted);
+		gtk_progress_bar_set_inverted(gtkProgressBar, inverted);
 	}
 	
 	/**
-	 * Sets the mode used to ellipsize (add an ellipsis: "...") the text
-	 * if there is not enough space to render the entire string.
-	 * Since 2.6
-	 * Params:
-	 * mode = a PangoEllipsizeMode
+	 * Gets the value set by gtk_progress_bar_set_inverted()
+	 * Returns: TRUE if the progress bar is inverted
 	 */
-	public void setEllipsize(PangoEllipsizeMode mode)
+	public int getInverted()
 	{
-		// void gtk_progress_bar_set_ellipsize (GtkProgressBar *pbar,  PangoEllipsizeMode mode);
-		gtk_progress_bar_set_ellipsize(gtkProgressBar, mode);
+		// gboolean gtk_progress_bar_get_inverted (GtkProgressBar *pbar);
+		return gtk_progress_bar_get_inverted(gtkProgressBar);
+	}
+	
+	/**
+	 * Sets whether the progressbar will show text superimposed
+	 * over the bar. The shown text is either the value of
+	 * the "text" property or, if that is NULL,
+	 * the "fraction" value, as a percentage.
+	 * Params:
+	 * showText = whether to show superimposed text
+	 * Since 3.0
+	 */
+	public void setShowText(int showText)
+	{
+		// void gtk_progress_bar_set_show_text (GtkProgressBar *pbar,  gboolean show_text);
+		gtk_progress_bar_set_show_text(gtkProgressBar, showText);
+	}
+	
+	/**
+	 * Gets the value of the "show-text" property.
+	 * See gtk_progress_bar_set_show_text().
+	 * Returns: TRUE if text is shown in the progress bar Since 3.0
+	 */
+	public int getShowText()
+	{
+		// gboolean gtk_progress_bar_get_show_text (GtkProgressBar *pbar);
+		return gtk_progress_bar_get_show_text(gtkProgressBar);
+	}
+	
+	/**
+	 * Causes the given text to appear superimposed on the progress bar.
+	 * Params:
+	 * text = a UTF-8 string, or NULL. [allow-none]
+	 */
+	public void setText(string text)
+	{
+		// void gtk_progress_bar_set_text (GtkProgressBar *pbar,  const gchar *text);
+		gtk_progress_bar_set_text(gtkProgressBar, Str.toStringz(text));
 	}
 	
 	/**
@@ -254,33 +263,16 @@ public class ProgressBar : Progress
 	}
 	
 	/**
-	 * Returns the current fraction of the task that's been completed.
-	 * Returns: a fraction from 0.0 to 1.0
+	 * Sets the mode used to ellipsize (add an ellipsis: "...") the text
+	 * if there is not enough space to render the entire string.
+	 * Since 2.6
+	 * Params:
+	 * mode = a PangoEllipsizeMode
 	 */
-	public double getFraction()
+	public void setEllipsize(PangoEllipsizeMode mode)
 	{
-		// gdouble gtk_progress_bar_get_fraction (GtkProgressBar *pbar);
-		return gtk_progress_bar_get_fraction(gtkProgressBar);
-	}
-	
-	/**
-	 * Retrieves the pulse step set with gtk_progress_bar_set_pulse_step()
-	 * Returns: a fraction from 0.0 to 1.0
-	 */
-	public double getPulseStep()
-	{
-		// gdouble gtk_progress_bar_get_pulse_step (GtkProgressBar *pbar);
-		return gtk_progress_bar_get_pulse_step(gtkProgressBar);
-	}
-	
-	/**
-	 * Retrieves the current progress bar orientation.
-	 * Returns: orientation of the progress bar
-	 */
-	public GtkProgressBarOrientation getOrientation()
-	{
-		// GtkProgressBarOrientation gtk_progress_bar_get_orientation  (GtkProgressBar *pbar);
-		return gtk_progress_bar_get_orientation(gtkProgressBar);
+		// void gtk_progress_bar_set_ellipsize (GtkProgressBar *pbar,  PangoEllipsizeMode mode);
+		gtk_progress_bar_set_ellipsize(gtkProgressBar, mode);
 	}
 	
 	/**
@@ -296,93 +288,24 @@ public class ProgressBar : Progress
 	}
 	
 	/**
-	 * Warning
-	 * gtk_progress_bar_new_with_adjustment is deprecated and should not be used in newly-written code.
-	 * Creates a new GtkProgressBar with an associated GtkAdjustment.
+	 * Sets the fraction of total progress bar length to move the
+	 * bouncing block for each call to gtk_progress_bar_pulse().
 	 * Params:
-	 * adjustment = . [allow-none]
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 * fraction = fraction between 0.0 and 1.0
 	 */
-	public this (Adjustment adjustment)
+	public void setPulseStep(double fraction)
 	{
-		// GtkWidget * gtk_progress_bar_new_with_adjustment  (GtkAdjustment *adjustment);
-		auto p = gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct())");
-		}
-		this(cast(GtkProgressBar*) p);
+		// void gtk_progress_bar_set_pulse_step (GtkProgressBar *pbar,  gdouble fraction);
+		gtk_progress_bar_set_pulse_step(gtkProgressBar, fraction);
 	}
 	
 	/**
-	 * Warning
-	 * gtk_progress_bar_set_bar_style is deprecated and should not be used in newly-written code.
-	 * Sets the style of the GtkProgressBar. The default style is
-	 * GTK_PROGRESS_CONTINUOUS.
-	 * Params:
-	 * style = a GtkProgressBarStyle value indicating the desired style.
+	 * Retrieves the pulse step set with gtk_progress_bar_set_pulse_step()
+	 * Returns: a fraction from 0.0 to 1.0
 	 */
-	public void setBarStyle(GtkProgressBarStyle style)
+	public double getPulseStep()
 	{
-		// void gtk_progress_bar_set_bar_style (GtkProgressBar *pbar,  GtkProgressBarStyle style);
-		gtk_progress_bar_set_bar_style(gtkProgressBar, style);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_progress_bar_set_discrete_blocks is deprecated and should not be used in newly-written code.
-	 * Sets the number of blocks that the progress bar is divided into
-	 * when the style is GTK_PROGRESS_DISCRETE.
-	 * Params:
-	 * blocks = number of individual blocks making up the bar.
-	 */
-	public void setDiscreteBlocks(uint blocks)
-	{
-		// void gtk_progress_bar_set_discrete_blocks  (GtkProgressBar *pbar,  guint blocks);
-		gtk_progress_bar_set_discrete_blocks(gtkProgressBar, blocks);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_progress_bar_set_activity_step is deprecated and should not be used in newly-written code.
-	 * Sets the step value used when the progress bar is in activity
-	 * mode. The step is the amount by which the progress is incremented
-	 * each iteration.
-	 * Params:
-	 * step = the amount which the progress is incremented in activity
-	 * mode.
-	 */
-	public void setActivityStep(uint step)
-	{
-		// void gtk_progress_bar_set_activity_step (GtkProgressBar *pbar,  guint step);
-		gtk_progress_bar_set_activity_step(gtkProgressBar, step);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_progress_bar_set_activity_blocks is deprecated and should not be used in newly-written code.
-	 * Sets the number of blocks used when the progress bar is in activity
-	 * mode. Larger numbers make the visible block smaller.
-	 * Params:
-	 * blocks = number of blocks which can fit within the progress bar area.
-	 */
-	public void setActivityBlocks(uint blocks)
-	{
-		// void gtk_progress_bar_set_activity_blocks  (GtkProgressBar *pbar,  guint blocks);
-		gtk_progress_bar_set_activity_blocks(gtkProgressBar, blocks);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_progress_bar_update is deprecated and should not be used in newly-written code.
-	 * This function is deprecated. Please use gtk_progress_set_value() or
-	 * gtk_progress_set_percentage() instead.
-	 * Params:
-	 * percentage = the new percent complete value.
-	 */
-	public void update(double percentage)
-	{
-		// void gtk_progress_bar_update (GtkProgressBar *pbar,  gdouble percentage);
-		gtk_progress_bar_update(gtkProgressBar, percentage);
+		// gdouble gtk_progress_bar_get_pulse_step (GtkProgressBar *pbar);
+		return gtk_progress_bar_get_pulse_step(gtkProgressBar);
 	}
 }

@@ -77,16 +77,18 @@ private import gtk.Builder;
 
 /**
  * Description
- * In order to allow construction from a GtkBuilder
- * UI description, an object class must implement the
- * GtkBuildable interface. The interface includes methods for setting
- * names and properties of objects, parsing custom tags, constructing
- * child objects.
+ * GtkBuildable allows objects to extend and customize thier deserialization
+ * from GtkBuilder UI descriptions.
+ * The interface includes methods for setting names and properties of objects,
+ * parsing custom tags and constructing child objects.
  * The GtkBuildable interface is implemented by all widgets and
  * many of the non-widget objects that are provided by GTK+. The
- * main user of this interface is GtkBuilder, there should be
+ * main user of this interface is GtkBuilder. There should be
  * very little need for applications to call any
  * gtk_buildable_... functions.
+ * Note
+ * An object only needs to implement this interface if it needs
+ * to extend the GtkBuilder format or run any extra routines at deserialization time
  */
 public interface BuildableIF
 {

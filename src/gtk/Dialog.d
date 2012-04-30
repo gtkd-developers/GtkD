@@ -84,42 +84,45 @@ private import gtk.Window;
 
 /**
  * Description
- * Dialog boxes are a convenient way to prompt the user for a small amount of
- * input, e.g. to display a message, ask a question, or anything else that does
- * not require extensive effort on the user's part.
+ * Dialog boxes are a convenient way to prompt the user for a small amount
+ * of input, e.g. to display a message, ask a question, or anything else
+ * that does not require extensive effort on the user's part.
  * GTK+ treats a dialog as a window split vertically. The top section is a
  * GtkVBox, and is where widgets such as a GtkLabel or a GtkEntry should
  * be packed. The bottom area is known as the
  * action_area. This is generally used for
  * packing buttons into the dialog which may perform functions such as
- * cancel, ok, or apply. The two areas are separated by a GtkHSeparator.
+ * cancel, ok, or apply.
  * GtkDialog boxes are created with a call to gtk_dialog_new() or
- * gtk_dialog_new_with_buttons(). gtk_dialog_new_with_buttons() is recommended; it
- * allows you to set the dialog title, some convenient flags, and add simple
- * buttons.
- * If 'dialog' is a newly created dialog, the two primary areas of the window
- * can be accessed through gtk_dialog_get_content_area() and
- * gtk_dialog_get_action_area(), as can be seen from the example, below.
- * A 'modal' dialog (that is, one which freezes the rest of the application from
- * user input), can be created by calling gtk_window_set_modal() on the dialog. Use
- * the GTK_WINDOW() macro to cast the widget returned from gtk_dialog_new() into a
- * GtkWindow. When using gtk_dialog_new_with_buttons() you can also pass the
- * GTK_DIALOG_MODAL flag to make a dialog modal.
+ * gtk_dialog_new_with_buttons(). gtk_dialog_new_with_buttons() is
+ * recommended; it allows you to set the dialog title, some convenient flags,
+ * and add simple buttons.
+ * If 'dialog' is a newly created dialog, the two primary areas of the
+ * window can be accessed through gtk_dialog_get_content_area() and
+ * gtk_dialog_get_action_area(), as can be seen from the example below.
+ * A 'modal' dialog (that is, one which freezes the rest of the application
+ * from user input), can be created by calling gtk_window_set_modal() on the
+ * dialog. Use the GTK_WINDOW() macro to cast the widget returned from
+ * gtk_dialog_new() into a GtkWindow. When using gtk_dialog_new_with_buttons()
+ * you can also pass the GTK_DIALOG_MODAL flag to make a dialog modal.
  * If you add buttons to GtkDialog using gtk_dialog_new_with_buttons(),
  * gtk_dialog_add_button(), gtk_dialog_add_buttons(), or
- * gtk_dialog_add_action_widget(), clicking the button will emit a signal called
- * "response" with a response ID that you specified. GTK+ will never assign a
- * meaning to positive response IDs; these are entirely user-defined. But for
- * convenience, you can use the response IDs in the GtkResponseType enumeration
- * (these all have values less than zero). If a dialog receives a delete event,
- * the "response" signal will be emitted with a response ID of GTK_RESPONSE_DELETE_EVENT.
- * If you want to block waiting for a dialog to return before returning control
- * flow to your code, you can call gtk_dialog_run(). This function enters a
- * recursive main loop and waits for the user to respond to the dialog, returning the
- * response ID corresponding to the button the user clicked.
- * For the simple dialog in the following example, in reality you'd probably use
- * GtkMessageDialog to save yourself some effort. But you'd need to create the
- * dialog contents manually if you had more than a simple message in the dialog.
+ * gtk_dialog_add_action_widget(), clicking the button will emit a signal
+ * called "response" with a response ID that you specified. GTK+
+ * will never assign a meaning to positive response IDs; these are entirely
+ * user-defined. But for convenience, you can use the response IDs in the
+ * GtkResponseType enumeration (these all have values less than zero). If
+ * a dialog receives a delete event, the "response" signal will
+ * be emitted with a response ID of GTK_RESPONSE_DELETE_EVENT.
+ * If you want to block waiting for a dialog to return before returning
+ * control flow to your code, you can call gtk_dialog_run(). This function
+ * enters a recursive main loop and waits for the user to respond to the
+ * dialog, returning the response ID corresponding to the button the user
+ * clicked.
+ * For the simple dialog in the following example, in reality you'd probably
+ * use GtkMessageDialog to save yourself some effort. But you'd need to
+ * create the dialog contents manually if you had more than a simple message
+ * in the dialog.
  * $(DDOC_COMMENT example)
  * GtkDialog as GtkBuildable
  * The GtkDialog implementation of the GtkBuildable interface exposes the
@@ -307,13 +310,7 @@ public class Dialog : Window
 	 * On a delete event, the response ID is GTK_RESPONSE_DELETE_EVENT.
 	 * Otherwise, it depends on which action widget was clicked.
 	 * See Also
-	 * GtkVBox
-	 * Pack widgets vertically.
-	 * GtkWindow
-	 * Alter the properties of your dialog box.
-	 * GtkButton
-	 * Add them to the action_area to get a
-	 * response from the user.
+	 * GtkVBox, GtkWindow, GtkButton
 	 */
 	void addOnResponse(void delegate(gint, Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -340,7 +337,8 @@ public class Dialog : Window
 	
 	
 	/**
-	 * Creates a new dialog box. Widgets should not be packed into this GtkWindow
+	 * Creates a new dialog box.
+	 * Widgets should not be packed into this GtkWindow
 	 * directly, but into the vbox and action_area, as described above.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -405,7 +403,7 @@ public class Dialog : Window
 	 * Params:
 	 * buttonText = text of button, or stock ID
 	 * responseId = response ID for the button
-	 * Returns: the button widget that was added. [transfer none]
+	 * Returns: the GtkButton widget that was added. [transfer none]
 	 */
 	public Widget addButton(string buttonText, int responseId)
 	{
@@ -436,18 +434,6 @@ public class Dialog : Window
 	}
 	
 	/**
-	 * Warning
-	 * gtk_dialog_get_has_separator has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
-	 * Accessor for whether the dialog has a separator.
-	 * Returns: TRUE if the dialog has a separator
-	 */
-	public int getHasSeparator()
-	{
-		// gboolean gtk_dialog_get_has_separator (GtkDialog *dialog);
-		return gtk_dialog_get_has_separator(gtkDialog);
-	}
-	
-	/**
 	 * Sets the last widget in the dialog's action area with the given response_id
 	 * as the default widget for the dialog. Pressing "Enter" normally activates
 	 * the default widget.
@@ -458,19 +444,6 @@ public class Dialog : Window
 	{
 		// void gtk_dialog_set_default_response (GtkDialog *dialog,  gint response_id);
 		gtk_dialog_set_default_response(gtkDialog, responseId);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_dialog_set_has_separator has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
-	 * Sets whether the dialog has a separator above the buttons.
-	 * Params:
-	 * setting = TRUE to have a separator
-	 */
-	public void setHasSeparator(int setting)
-	{
-		// void gtk_dialog_set_has_separator (GtkDialog *dialog,  gboolean setting);
-		gtk_dialog_set_has_separator(gtkDialog, setting);
 	}
 	
 	/**
@@ -548,6 +521,12 @@ public class Dialog : Window
 	 * See gtk_dialog_set_alternative_button_order() for more information.
 	 * This function is for use by language bindings.
 	 * Since 2.6
+	 * Style Property Details
+	 * The "action-area-border" style property
+	 *  "action-area-border" gint : Read
+	 * Width of border around the button area at the bottom of the dialog.
+	 * Allowed values: >= 0
+	 * Default value: 5
 	 * Params:
 	 * newOrder = an array of response ids of
 	 * dialog's buttons. [array length=n_params]

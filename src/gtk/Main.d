@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-General.html
+ * inFile  = gtk3-General.html
  * outPack = gtk
  * outFile = Main
  * strct   = 
@@ -93,31 +93,29 @@ private import gdk.Threads;
 
 /**
  * Description
- * Before using GTK+, you need to initialize it; initialization connects
- * to the window system display, and parses some standard command line
- * arguments. The gtk_init() function initializes GTK+. gtk_init() exits
- * the application if errors occur; to avoid this, use gtk_init_check().
- * gtk_init_check() allows you to recover from a failed GTK+
- * initialization - you might start up your application in text mode instead.
- * Like all GUI toolkits, GTK+ uses an event-driven programming
- * model. When the user is doing nothing, GTK+ sits in the
- * main loop and waits for input. If the user
- * performs some action - say, a mouse click - then the main loop "wakes
- * up" and delivers an event to GTK+. GTK+ forwards the event to one or
- * more widgets.
+ * Before using GTK+, you need to initialize it; initialization connects to the
+ * window system display, and parses some standard command line arguments. The
+ * gtk_init() macro initializes GTK+. gtk_init() exits the application if errors
+ * occur; to avoid this, use gtk_init_check(). gtk_init_check() allows you to
+ * recover from a failed GTK+ initialization - you might start up your
+ * application in text mode instead.
+ * Like all GUI toolkits, GTK+ uses an event-driven programming model. When the
+ * user is doing nothing, GTK+ sits in the main loop and
+ * waits for input. If the user performs some action - say, a mouse click - then
+ * the main loop "wakes up" and delivers an event to GTK+. GTK+ forwards the
+ * event to one or more widgets.
  * When widgets receive an event, they frequently emit one or more
- * signals. Signals notify your program that
- * "something interesting happened" by invoking functions you've
- * connected to the signal with g_signal_connect(). Functions connected
- * to a signal are often termed callbacks.
- * When your callbacks are invoked, you would typically take some action
- * - for example, when an Open button is clicked you might display a
- * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
- * to the main loop and await more user input.
+ * signals. Signals notify your program that "something
+ * interesting happened" by invoking functions you've connected to the signal
+ * with g_signal_connect(). Functions connected to a signal are often termed
+ * callbacks.
+ * When your callbacks are invoked, you would typically take some action - for
+ * example, when an Open button is clicked you might display a
+ * GtkFileChooserDialog. After a callback finishes, GTK+ will return to the
+ * main loop and await more user input.
  * $(DDOC_COMMENT example)
- * It's OK to use the GLib main loop directly instead of gtk_main(),
- * though it involves slightly more typing. See GMainLoop in the GLib
- * documentation.
+ * It's OK to use the GLib main loop directly instead of gtk_main(), though it
+ * involves slightly more typing. See GMainLoop in the GLib documentation.
  */
 public class Main
 {
@@ -158,29 +156,6 @@ public class Main
 	 */
 	
 	/**
-	 * Warning
-	 * gtk_set_locale has been deprecated since version 2.24 and should not be used in newly-written code. Use setlocale() directly
-	 * Initializes internationalization support for GTK+. gtk_init()
-	 * automatically does this, so there is typically no point
-	 * in calling this function.
-	 * If you are calling this function because you changed the locale
-	 * after GTK+ is was initialized, then calling this function
-	 * may help a bit. (Note, however, that changing the locale
-	 * after GTK+ is initialized may produce inconsistent results and
-	 * is not really supported.)
-	 * In detail - sets the current locale according to the
-	 * program environment. This is the same as calling the C library function
-	 * setlocale (LC_ALL, "") but also takes care of the
-	 * locale specific setup of the windowing system used by GDK.
-	 * Returns: a string corresponding to the locale set, typically in the form lang_COUNTRY, where lang is an ISO-639 language code, and COUNTRY is an ISO-3166 country code. On Unix, this form matches the result of the setlocale(); it is also used on other machines, such as Windows, where the C library returns a different result. The string is owned by GTK+ and should not be modified or freed.
-	 */
-	public static string setLocale()
-	{
-		// gchar * gtk_set_locale (void);
-		return Str.toString(gtk_set_locale());
-	}
-	
-	/**
 	 * Prevents gtk_init(), gtk_init_check(), gtk_init_with_args() and
 	 * gtk_parse_args() from automatically
 	 * calling setlocale (LC_ALL, ""). You would
@@ -201,8 +176,8 @@ public class Main
 	 * application.) The default language is derived from the current
 	 * locale. It determines, for example, whether GTK+ uses the
 	 * right-to-left or left-to-right text direction.
-	 * This function is equivalent to pango_language_get_default(). See
-	 * that function for details.
+	 * This function is equivalent to pango_language_get_default().
+	 * See that function for details.
 	 * Returns: the default language as a PangoLanguage, must not be freed
 	 */
 	public static PgLanguage getDefaultLanguage()
@@ -227,7 +202,7 @@ public class Main
 	 * Params:
 	 * argv = a pointer to the array of
 	 * command line arguments. [array length=argc][inout]
-	 * Returns: TRUE if initialization succeeded, otherwise FALSE.
+	 * Returns: TRUE if initialization succeeded, otherwise FALSE
 	 */
 	public static int parseArgs(ref string[] argv)
 	{
@@ -249,6 +224,9 @@ public class Main
 	 * Call this function before using any other GTK+ functions in your GUI
 	 * applications. It will initialize everything needed to operate the
 	 * toolkit and parses some standard command line options.
+	 * Although you are expected to pass the argc, argv parameters from main() to
+	 * this function, it is possible to pass NULL if argv is not available or
+	 * commandline handling is not required.
 	 * argc and argv are adjusted accordingly so your own code will
 	 * never see those standard arguments.
 	 * Since 2.18, GTK+ calls signal (SIGPIPE, SIG_IGN)
@@ -257,12 +235,12 @@ public class Main
 	 * handle SIGPIPE for some reason, reset the handler after gtk_init(),
 	 * but notice that other libraries (e.g. libdbus or gvfs) might do
 	 * similar things.
-	 * Note
 	 * Params:
 	 * argc = Address of the argc parameter of
-	 * your main() function. Changed if any arguments were handled. [inout]
+	 * your main() function (or 0 if argv is NULL). This will be changed if
+	 * any arguments were handled. [inout]
 	 * argv = Address of the
-	 * argv parameter of main(). Any options
+	 * argv parameter of main(), or NULL. Any options
 	 * understood by GTK+ are stripped before return. [array length=argc][inout][allow-none]
 	 */
 	public static void init(int* argc, char*** argv)
@@ -272,15 +250,17 @@ public class Main
 	}
 	
 	/**
-	 * This function does the same work as gtk_init() with only
-	 * a single change: It does not terminate the program if the GUI can't be
-	 * initialized. Instead it returns FALSE on failure.
-	 * This way the application can fall back to some other means of communication
-	 * with the user - for example a curses or command line interface.
+	 * This function does the same work as gtk_init() with only a single
+	 * change: It does not terminate the program if the windowing system
+	 * can't be initialized. Instead it returns FALSE on failure.
+	 * This way the application can fall back to some other means of
+	 * communication with the user - for example a curses or command line
+	 * interface.
 	 * Params:
-	 * argv = Address of the argv parameter of main().
-	 * Any parameters understood by gtk_init() are stripped before return. [array length=argc][inout][allow-none]
-	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
+	 * argv = Address of the
+	 * argv parameter of main(), or NULL. Any options
+	 * understood by GTK+ are stripped before return. [array length=argc][inout][allow-none]
+	 * Returns: TRUE if the windowing system has been successfully initialized, FALSE otherwise
 	 */
 	public static int initCheck(ref string[] argv)
 	{
@@ -306,8 +286,9 @@ public class Main
 	 * be terminated after writing out the help output.
 	 * Since 2.6
 	 * Params:
-	 * argv = a pointer to the array of
-	 * command line arguments. [inout][array length=argc]
+	 * argv = Address of the
+	 * argv parameter of main(), or NULL. Any options
+	 * understood by GTK+ are stripped before return. [array length=argc][inout][allow-none]
 	 * parameterString = a string which is displayed in
 	 * the first line of --help output, after
 	 * programname [OPTION...]
@@ -315,13 +296,13 @@ public class Main
 	 * of GOptionEntrys describing the options of your program. [array zero-terminated=1]
 	 * translationDomain = a translation domain to use for translating
 	 * the --help output for the options in entries
-	 * with gettext(), or NULL
-	 * Returns: TRUE if the GUI has been successfully initialized, FALSE otherwise.
+	 * and the parameter_string with gettext(), or NULL
+	 * Returns: TRUE if the windowing system has been successfully initialized, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public static int initWithArgs(ref string[] argv, string parameterString, GOptionEntry[] entries, string translationDomain)
 	{
-		// gboolean gtk_init_with_args (int *argc,  char ***argv,  const char *parameter_string,  GOptionEntry *entries,  const char *translation_domain,  GError **error);
+		// gboolean gtk_init_with_args (gint *argc,  gchar ***argv,  const gchar *parameter_string,  const GOptionEntry *entries,  const gchar *translation_domain,  GError **error);
 		char** outargv = Str.toStringzArray(argv);
 		int argc = cast(int) argv.length;
 		GError* err = null;
@@ -343,7 +324,8 @@ public class Main
 	
 	/**
 	 * Returns a GOptionGroup for the commandline arguments recognized
-	 * by GTK+ and GDK. You should add this group to your GOptionContext
+	 * by GTK+ and GDK.
+	 * You should add this group to your GOptionContext
 	 * with g_option_context_add_group(), if you are using
 	 * g_option_context_parse() to parse your commandline arguments.
 	 * Since 2.6
@@ -359,26 +341,11 @@ public class Main
 	}
 	
 	/**
-	 * Warning
-	 * gtk_exit is deprecated and should not be used in newly-written code. Use the standard exit() function instead.
-	 * Terminates the program and returns the given exit code to the caller.
-	 * This function will shut down the GUI and free all resources allocated
-	 * for GTK+.
-	 * Params:
-	 * errorCode = Return value to pass to the caller. This is dependent on the
-	 * target system but at least on Unix systems 0 means success.
-	 */
-	public static void exit(int errorCode)
-	{
-		// void gtk_exit (gint error_code);
-		gtk_exit(errorCode);
-	}
-	
-	/**
-	 * Checks if any events are pending. This can be used to update the GUI
-	 * and invoke timeouts etc. while doing some time intensive computation.
+	 * Checks if any events are pending.
+	 * This can be used to update the UI and invoke timeouts etc.
+	 * while doing some time intensive computation.
 	 * $(DDOC_COMMENT example)
-	 * Returns: TRUE if any events are pending, FALSE otherwise.
+	 * Returns: TRUE if any events are pending, FALSE otherwise
 	 */
 	public static int eventsPending()
 	{
@@ -387,9 +354,9 @@ public class Main
 	}
 	
 	/**
-	 * Runs the main loop until gtk_main_quit() is called. You can nest calls to
-	 * gtk_main(). In that case gtk_main_quit() will make the innermost invocation
-	 * of the main loop return.
+	 * Runs the main loop until gtk_main_quit() is called.
+	 * You can nest calls to gtk_main(). In that case gtk_main_quit()
+	 * will make the innermost invocation of the main loop return.
 	 */
 	public static void run()
 	{
@@ -398,9 +365,8 @@ public class Main
 	}
 	
 	/**
-	 * Asks for the current nesting level of the main loop. This can be useful
-	 * when calling gtk_quit_add().
-	 * Returns: the nesting level of the current invocation of the main loop.
+	 * Asks for the current nesting level of the main loop.
+	 * Returns: the nesting level of the current invocation of the main loop
 	 */
 	public static uint level()
 	{
@@ -409,8 +375,8 @@ public class Main
 	}
 	
 	/**
-	 * Makes the innermost invocation of the main loop return when it regains
-	 * control.
+	 * Makes the innermost invocation of the main loop return
+	 * when it regains control.
 	 */
 	public static void quit()
 	{
@@ -419,11 +385,12 @@ public class Main
 	}
 	
 	/**
-	 * Runs a single iteration of the mainloop. If no events are waiting to be
-	 * processed GTK+ will block until the next event is noticed. If you don't
-	 * want to block look at gtk_main_iteration_do() or check if any events are
+	 * Runs a single iteration of the mainloop.
+	 * If no events are waiting to be processed GTK+ will block
+	 * until the next event is noticed. If you don't want to block
+	 * look at gtk_main_iteration_do() or check if any events are
 	 * pending with gtk_events_pending() first.
-	 * Returns: TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * Returns: TRUE if gtk_main_quit() has been called for the innermost mainloop
 	 */
 	public static int iteration()
 	{
@@ -432,11 +399,12 @@ public class Main
 	}
 	
 	/**
-	 * Runs a single iteration of the mainloop. If no events are available either
-	 * return or block dependent on the value of blocking.
+	 * Runs a single iteration of the mainloop.
+	 * If no events are available either return or block depending on
+	 * the value of blocking.
 	 * Params:
-	 * blocking = TRUE if you want GTK+ to block if no events are pending.
-	 * Returns: TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * blocking = TRUE if you want GTK+ to block if no events are pending
+	 * Returns: TRUE if gtk_main_quit() has been called for the innermost mainloop
 	 */
 	public static int iterationDo(int blocking)
 	{
@@ -445,12 +413,13 @@ public class Main
 	}
 	
 	/**
-	 * Processes a single GDK event. This is public only to allow filtering of events
-	 * between GDK and GTK+. You will not usually need to call this function directly.
-	 * While you should not call this function directly, you might want to know
-	 * how exactly events are handled. So here is what this function does with
+	 * Processes a single GDK event.
+	 * This is public only to allow filtering of events between GDK and GTK+.
+	 * You will not usually need to call this function directly.
+	 * While you should not call this function directly, you might want to
+	 * know how exactly events are handled. So here is what this function
 	 * Params:
-	 * event = An event to process (normally) passed by GDK.
+	 * event = An event to process (normally passed by GDK)
 	 */
 	public static void doEvent(Event event)
 	{
@@ -459,13 +428,14 @@ public class Main
 	}
 	
 	/**
-	 * Makes widget the current grabbed widget. This means that interaction with
-	 * other widgets in the same application is blocked and mouse as well as
-	 * keyboard events are delivered to this widget.
-	 * If widget is not sensitive, it is not set as the current grabbed
-	 * widget and this function does nothing.
+	 * Makes widget the current grabbed widget.
+	 * This means that interaction with other widgets in the same
+	 * application is blocked and mouse as well as keyboard events
+	 * are delivered to this widget.
+	 * If widget is not sensitive, it is not set as the current
+	 * grabbed widget and this function does nothing.
 	 * Params:
-	 * widget = The widget that grabs keyboard and pointer events.
+	 * widget = The widget that grabs keyboard and pointer events
 	 */
 	public static void grabAdd(Widget widget)
 	{
@@ -474,7 +444,6 @@ public class Main
 	}
 	
 	/**
-	 * Queries the current grab of the default window group.
 	 * Queries the current grab of the default window group.
 	 * Returns: The widget which currently has the grab or NULL if no grab is active. [transfer none]
 	 */
@@ -490,11 +459,11 @@ public class Main
 	}
 	
 	/**
-	 * Removes the grab from the given widget. You have to pair calls to gtk_grab_add()
-	 * and gtk_grab_remove().
+	 * Removes the grab from the given widget.
+	 * You have to pair calls to gtk_grab_add() and gtk_grab_remove().
 	 * If widget does not have the grab, this function does nothing.
 	 * Params:
-	 * widget = The widget which gives up the grab.
+	 * widget = The widget which gives up the grab
 	 */
 	public static void grabRemove(Widget widget)
 	{
@@ -503,141 +472,43 @@ public class Main
 	}
 	
 	/**
-	 * Warning
-	 * gtk_init_add is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
-	 * Registers a function to be called when the mainloop is started.
+	 * Adds a GTK+ grab on device, so all the events on device and its
+	 * associated pointer or keyboard (if any) are delivered to widget.
+	 * If the block_others parameter is TRUE, any other devices will be
+	 * unable to interact with widget during the grab.
 	 * Params:
-	 * data = Data to pass to that function.
+	 * widget = a GtkWidget
+	 * device = a GtkDevice to grab on.
+	 * blockOthers = TRUE to prevent other devices to interact with widget.
+	 * Since 3.0
 	 */
-	public static void initAdd(GtkFunction funct, void* data)
+	public static void deviceGrabAdd(Widget widget, GdkDevice* device, int blockOthers)
 	{
-		// void gtk_init_add (GtkFunction function,  gpointer data);
-		gtk_init_add(funct, data);
+		// void gtk_device_grab_add (GtkWidget *widget,  GdkDevice *device,  gboolean block_others);
+		gtk_device_grab_add((widget is null) ? null : widget.getWidgetStruct(), device, blockOthers);
 	}
 	
 	/**
-	 * Warning
-	 * gtk_quit_add_destroy is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
-	 * Trigger destruction of object in case the mainloop at level main_level
-	 * is quit.
+	 * Removes a device grab from the given widget.
+	 * You have to pair calls to gtk_device_grab_add() and
+	 * gtk_device_grab_remove().
 	 * Params:
-	 * mainLevel = Level of the mainloop which shall trigger the destruction.
-	 * object = Object to be destroyed.
+	 * widget = a GtkWidget
+	 * device = a GdkDevice
+	 * Since 3.0
 	 */
-	public static void quitAddDestroy(uint mainLevel, ObjectGtk object)
+	public static void deviceGrabRemove(Widget widget, GdkDevice* device)
 	{
-		// void gtk_quit_add_destroy (guint main_level,  GtkObject *object);
-		gtk_quit_add_destroy(mainLevel, (object is null) ? null : object.getObjectGtkStruct());
+		// void gtk_device_grab_remove (GtkWidget *widget,  GdkDevice *device);
+		gtk_device_grab_remove((widget is null) ? null : widget.getWidgetStruct(), device);
 	}
 	
 	/**
-	 * Warning
-	 * gtk_quit_add is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
-	 * Registers a function to be called when an instance of the mainloop is left.
+	 * Installs a key snooper function, which will get called on all
+	 * key events before delivering them normally.
 	 * Params:
-	 * mainLevel = Level at which termination the function shall be called. You
-	 * can pass 0 here to have the function run at the termination of the current
-	 * mainloop.
-	 * data = Pointer to pass when calling function.
-	 * Returns: A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
-	 */
-	public static uint quitAdd(uint mainLevel, GtkFunction funct, void* data)
-	{
-		// guint gtk_quit_add (guint main_level,  GtkFunction function,  gpointer data);
-		return gtk_quit_add(mainLevel, funct, data);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_quit_add_full is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
-	 * Registers a function to be called when an instance of the mainloop is left.
-	 * In comparison to gtk_quit_add() this function adds the possibility to
-	 * pass a marshaller and a function to be called when the quit handler is freed.
-	 * The former can be used to run interpreted code instead of a compiled function
-	 * while the latter can be used to free the information stored in data (while
-	 * you can do this in function as well)... So this function will mostly be
-	 * used by GTK+ wrappers for languages other than C.
-	 * Params:
-	 * mainLevel = Level at which termination the function shall be called. You
-	 * can pass 0 here to have the function run at the termination of the current
-	 * mainloop.
-	 * marshal = The marshaller to be used. If this is non-NULL, function is
-	 * ignored.
-	 * data = Pointer to pass when calling function.
-	 * destroy = Function to call to destruct data. Gets data as argument.
-	 * Returns: A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
-	 */
-	public static uint quitAddFull(uint mainLevel, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
-	{
-		// guint gtk_quit_add_full (guint main_level,  GtkFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GDestroyNotify destroy);
-		return gtk_quit_add_full(mainLevel, funct, marshal, data, destroy);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_quit_remove is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
-	 * Removes a quit handler by its identifier.
-	 * Params:
-	 * quitHandlerId = Identifier for the handler returned when installing it.
-	 */
-	public static void quitRemove(uint quitHandlerId)
-	{
-		// void gtk_quit_remove (guint quit_handler_id);
-		gtk_quit_remove(quitHandlerId);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_quit_remove_by_data is deprecated and should not be used in newly-written code. This function is going to be removed in GTK+ 3.0
-	 * Removes a quit handler identified by its data field.
-	 * Params:
-	 * data = The pointer passed as data to gtk_quit_add() or gtk_quit_add_full().
-	 */
-	public static void quitRemoveByData(void* data)
-	{
-		// void gtk_quit_remove_by_data (gpointer data);
-		gtk_quit_remove_by_data(data);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_input_add_full has been deprecated since version 2.4 and should not be used in newly-written code. Use g_io_add_watch_full() instead.
-	 * Registers a function to be called when a condition becomes true
-	 * on a file descriptor.
-	 * Params:
-	 * source = a file descriptor.
-	 * condition = the condition.
-	 * marshal = The marshaller to use instead of the function (if non-NULL).
-	 * data = callback data passed to function.
-	 * destroy = callback function to call with data when the input
-	 * handler is removed, or NULL.
-	 * Returns: A unique id for the event source; to be used with gtk_input_remove().
-	 */
-	public static uint inputAddFull(int source, GdkInputCondition condition, GdkInputFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
-	{
-		// guint gtk_input_add_full (gint source,  GdkInputCondition condition,  GdkInputFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GDestroyNotify destroy);
-		return gtk_input_add_full(source, condition, funct, marshal, data, destroy);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_input_remove has been deprecated since version 2.4 and should not be used in newly-written code. Use g_source_remove() instead.
-	 * Removes the function with the given id.
-	 * Params:
-	 * inputHandlerId = Identifies the function to remove.
-	 */
-	public static void inputRemove(uint inputHandlerId)
-	{
-		// void gtk_input_remove (guint input_handler_id);
-		gtk_input_remove(inputHandlerId);
-	}
-	
-	/**
-	 * Installs a key snooper function, which will get called on all key events
-	 * before delivering them normally.
-	 * Params:
-	 * snooper = a GtkKeySnoopFunc.
-	 * funcData = data to pass to snooper.
+	 * snooper = a GtkKeySnoopFunc
+	 * funcData = data to pass to snooper
 	 * Returns: a unique id for this key snooper for use with gtk_key_snooper_remove().
 	 */
 	public static uint keySnooperInstall(GtkKeySnoopFunc snooper, void* funcData)
@@ -649,7 +520,7 @@ public class Main
 	/**
 	 * Removes the key snooper function with the given id.
 	 * Params:
-	 * snooperHandlerId = Identifies the key snooper to remove.
+	 * snooperHandlerId = Identifies the key snooper to remove
 	 */
 	public static void keySnooperRemove(uint snooperHandlerId)
 	{
@@ -658,12 +529,11 @@ public class Main
 	}
 	
 	/**
-	 * Obtains a copy of the event currently being processed by GTK+. For
-	 * example, if you get a "clicked" signal from GtkButton, the current
-	 * event will be the GdkEventButton that triggered the "clicked"
-	 * signal. The returned event must be freed with gdk_event_free().
-	 * If there is no current event, the function returns NULL.
-	 * Returns: a copy of the current event, or NULL if no current event. [transfer full]
+	 * Obtains a copy of the event currently being processed by GTK+.
+	 * For example, if you are handling a "clicked" signal,
+	 * the current event will be the GdkEventButton that triggered
+	 * the ::clicked signal.
+	 * Returns: a copy of the current event, or NULL if there is no current event. The returned event must be freed with gdk_event_free(). [transfer full]
 	 */
 	public static Event getCurrentEvent()
 	{
@@ -677,8 +547,8 @@ public class Main
 	}
 	
 	/**
-	 * If there is a current event and it has a timestamp, return that
-	 * timestamp, otherwise return GDK_CURRENT_TIME.
+	 * If there is a current event and it has a timestamp,
+	 * return that timestamp, otherwise return GDK_CURRENT_TIME.
 	 * Returns: the timestamp from the current event, or GDK_CURRENT_TIME.
 	 */
 	public static uint getCurrentEventTime()
@@ -702,6 +572,17 @@ public class Main
 	}
 	
 	/**
+	 * If there is a current event and it has a device, return that
+	 * device, otherwise return NULL.
+	 * Returns: a GdkDevice, or NULL. [transfer none]
+	 */
+	public static GdkDevice* getCurrentEventDevice()
+	{
+		// GdkDevice * gtk_get_current_event_device (void);
+		return gtk_get_current_event_device();
+	}
+	
+	/**
 	 * If event is NULL or the event was not associated with any widget,
 	 * returns NULL, otherwise returns the widget that received the event
 	 * originally.
@@ -722,20 +603,20 @@ public class Main
 	
 	/**
 	 * Sends an event to a widget, propagating the event to parent widgets
-	 * if the event remains unhandled. Events received by GTK+ from GDK
-	 * normally begin in gtk_main_do_event(). Depending on the type of
-	 * event, existence of modal dialogs, grabs, etc., the event may be
-	 * propagated; if so, this function is used. gtk_propagate_event()
-	 * calls gtk_widget_event() on each widget it decides to send the
-	 * event to. So gtk_widget_event() is the lowest-level function; it
-	 * simply emits the "event" and possibly an event-specific signal on a
-	 * widget. gtk_propagate_event() is a bit higher-level, and
-	 * gtk_main_do_event() is the highest level.
+	 * if the event remains unhandled.
+	 * Events received by GTK+ from GDK normally begin in gtk_main_do_event().
+	 * Depending on the type of event, existence of modal dialogs, grabs, etc.,
+	 * the event may be propagated; if so, this function is used.
+	 * gtk_propagate_event() calls gtk_widget_event() on each widget it
+	 * decides to send the event to. So gtk_widget_event() is the lowest-level
+	 * function; it simply emits the "event" and possibly an
+	 * event-specific signal on a widget. gtk_propagate_event() is a bit
+	 * higher-level, and gtk_main_do_event() is the highest level.
 	 * All that said, you most likely don't want to use any of these
-	 * functions; synthesizing events is rarely needed. Consider asking on
-	 * the mailing list for better ways to achieve your goals. For
-	 * example, use gdk_window_invalidate_rect() or
-	 * gtk_widget_queue_draw() instead of making up expose events.
+	 * functions; synthesizing events is rarely needed. There are almost
+	 * certainly better ways to achieve your goals. For example, use
+	 * gdk_window_invalidate_rect() or gtk_widget_queue_draw() instead
+	 * of making up expose events.
 	 * Params:
 	 * widget = a GtkWidget
 	 * event = an event

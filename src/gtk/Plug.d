@@ -70,17 +70,25 @@ private import gtk.Window;
 
 /**
  * Description
- * Together with GtkSocket, GtkPlug provides the ability
- * to embed widgets from one process into another process
- * in a fashion that is transparent to the user. One
- * process creates a GtkSocket widget and passes the
- * ID of that widget's window to the other process,
- * which then creates a GtkPlug with that window ID.
- * Any widgets contained in the GtkPlug then will appear
- * inside the first application's window.
+ * Together with GtkSocket, GtkPlug provides the ability to embed
+ * widgets from one process into another process in a fashion that is
+ * transparent to the user. One process creates a GtkSocket widget
+ * and passes the ID of that widget's window to the other process,
+ * which then creates a GtkPlug with that window ID. Any widgets
+ * contained in the GtkPlug then will appear inside the first
+ * application's window.
+ * The communication between a GtkSocket and a GtkPlug follows the
+ * XEmbed
+ * protocol. This protocol has also been implemented in other toolkits,
+ * e.g. Qt, allowing the same level of
+ * integration when embedding a Qt widget
+ * in GTK+ or vice versa.
  * Note
- * The GtkPlug and GtkSocket widgets are currently not available
- * on all platforms supported by GTK+.
+ * The GtkPlug and GtkSocket widgets are only available when GTK+
+ * is compiled for the X11 platform and GDK_WINDOWING_X11 is defined.
+ * They can only be used on a GdkX11Display. To use GtkPlug and
+ * GtkSocket, you need to include the gtk/gtkx.h
+ * header.
  */
 public class Plug : Window
 {
@@ -168,9 +176,9 @@ public class Plug : Window
 	 * Params:
 	 * socketId = the XID of the socket's window.
 	 */
-	public void construct(GdkNativeWindow socketId)
+	public void construct(Window socketId)
 	{
-		// void gtk_plug_construct (GtkPlug *plug,  GdkNativeWindow socket_id);
+		// void gtk_plug_construct (GtkPlug *plug,  Window socket_id);
 		gtk_plug_construct(gtkPlug, socketId);
 	}
 	
@@ -184,9 +192,9 @@ public class Plug : Window
 	 * GtkSocket.
 	 * socketId = the XID of the socket's window.
 	 */
-	public void constructForDisplay(Display display, GdkNativeWindow socketId)
+	public void constructForDisplay(Display display, Window socketId)
 	{
-		// void gtk_plug_construct_for_display (GtkPlug *plug,  GdkDisplay *display,  GdkNativeWindow socket_id);
+		// void gtk_plug_construct_for_display (GtkPlug *plug,  GdkDisplay *display,  Window socket_id);
 		gtk_plug_construct_for_display(gtkPlug, (display is null) ? null : display.getDisplayStruct(), socketId);
 	}
 	
@@ -198,9 +206,9 @@ public class Plug : Window
 	 * socketId = the window ID of the socket, or 0.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GdkNativeWindow socketId)
+	public this (Window socketId)
 	{
-		// GtkWidget * gtk_plug_new (GdkNativeWindow socket_id);
+		// GtkWidget * gtk_plug_new (Window socket_id);
 		auto p = gtk_plug_new(socketId);
 		if(p is null)
 		{
@@ -217,9 +225,9 @@ public class Plug : Window
 	 * socketId = the XID of the socket's window.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (Display display, GdkNativeWindow socketId)
+	public this (Display display, Window socketId)
 	{
-		// GtkWidget * gtk_plug_new_for_display (GdkDisplay *display,  GdkNativeWindow socket_id);
+		// GtkWidget * gtk_plug_new_for_display (GdkDisplay *display,  Window socket_id);
 		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
 		if(p is null)
 		{
@@ -234,9 +242,9 @@ public class Plug : Window
 	 * instance with gtk_socket_add_id().
 	 * Returns: the window ID for the plug
 	 */
-	public GdkNativeWindow getId()
+	public Window getId()
 	{
-		// GdkNativeWindow gtk_plug_get_id (GtkPlug *plug);
+		// Window gtk_plug_get_id (GtkPlug *plug);
 		return gtk_plug_get_id(gtkPlug);
 	}
 	

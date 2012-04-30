@@ -18,7 +18,7 @@ import gtk.Widget;
 import gdk.Drawable;
 import gtk.DrawingArea;
 
-class CairoText : DrawingArea
+class CairoText : public DrawingArea
 {
 public:
 	this()

@@ -65,9 +65,9 @@ private import gtk.Bin;
 
 /**
  * Description
- * The GtkEventBox widget is a subclass of GtkBin which also has its own window.
- * It is useful since it allows you to catch events for widgets which do not
- * have their own window.
+ * The GtkEventBox widget is a subclass of GtkBin which also has its
+ * own window. It is useful since it allows you to catch events for widgets
+ * which do not have their own window.
  */
 public class EventBox : Bin
 {
@@ -134,15 +134,15 @@ public class EventBox : Bin
 	}
 	
 	/**
-	 * Set whether the event box window is positioned above the windows of its child,
-	 * as opposed to below it. If the window is above, all events inside the
-	 * event box will go to the event box. If the window is below, events
-	 * in windows of child widgets will first got to that widget, and then
-	 * to its parents.
+	 * Set whether the event box window is positioned above the windows
+	 * of its child, as opposed to below it. If the window is above, all
+	 * events inside the event box will go to the event box. If the window
+	 * is below, events in windows of child widgets will first got to that
+	 * widget, and then to its parents.
 	 * The default is to keep the window below the child.
 	 * Since 2.4
 	 * Params:
-	 * aboveChild = TRUE if the event box window is above the windows of its child
+	 * aboveChild = TRUE if the event box window is above its child
 	 */
 	public void setAboveChild(int aboveChild)
 	{
@@ -152,10 +152,10 @@ public class EventBox : Bin
 	
 	/**
 	 * Returns whether the event box window is above or below the
-	 * windows of its child. See gtk_event_box_set_above_child() for
-	 * details.
+	 * windows of its child. See gtk_event_box_set_above_child()
+	 * for details.
 	 * Since 2.4
-	 * Returns: TRUE if the event box window is above the window of its child.
+	 * Returns: TRUE if the event box window is above the window of its child
 	 */
 	public int getAboveChild()
 	{
@@ -194,7 +194,7 @@ public class EventBox : Bin
 	 * descendant windows, not just at the same place on the screen.
 	 * Since 2.4
 	 * Params:
-	 * visibleWindow = boolean value
+	 * visibleWindow = TRUE to make the event box have a visible window
 	 */
 	public void setVisibleWindow(int visibleWindow)
 	{

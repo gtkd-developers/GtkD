@@ -217,6 +217,7 @@ public template EditableT(TStruct)
 	 * characters selected are those characters from start_pos to
 	 * the end of the text.
 	 * Note that positions are specified in characters, not bytes.
+	 * Virtual: set_selection_bounds
 	 * Params:
 	 * startPos = start of region
 	 * endPos = end of region
@@ -248,6 +249,7 @@ public template EditableT(TStruct)
 	 * widget, at position position.
 	 * Note that the position is in characters, not in bytes.
 	 * The function updates position to point after the newly inserted text.
+	 * Virtual: do_insert_text
 	 * Params:
 	 * newText = the text to append
 	 * newTextLength = the length of the text in bytes, or -1
@@ -265,6 +267,7 @@ public template EditableT(TStruct)
 	 * end_pos. If end_pos is negative, then the the characters deleted
 	 * are those from start_pos to the end of the text.
 	 * Note that the positions are specified in characters, not bytes.
+	 * Virtual: do_delete_text
 	 * Params:
 	 * startPos = start position
 	 * endPos = end position

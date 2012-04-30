@@ -76,11 +76,12 @@ private import gtk.Range;
  * To use it, you'll probably want to investigate the methods on
  * its base class, GtkRange, in addition to the methods for GtkScale itself.
  * To set the value of a scale, you would normally use gtk_range_set_value().
- * To detect changes to the value, you would normally use the "value_changed"
- * signal.
- * The GtkScale widget is an abstract class, used only for deriving the
- * subclasses GtkHScale and GtkVScale. To create a scale widget,
- * call gtk_hscale_new_with_range() or gtk_vscale_new_with_range().
+ * To detect changes to the value, you would normally use the
+ * "value-changed" signal.
+ * Note that using the same upper and lower bounds for the GtkScale (through
+ * the GtkRange methods) will hide the slider itself. This is useful for
+ * applications that want to show an undeterminate value on the scale, without
+ * changing the layout of the application (such as movie or music players).
  * GtkScale as GtkBuildable
  * GtkScale supports a custom <marks> element, which
  * can contain multiple <mark> elements. The "value" and "position"
@@ -171,6 +172,52 @@ public class Scale : Range
 		}
 	}
 	
+	
+	/**
+	 * Creates a new GtkScale.
+	 * Params:
+	 * orientation = the scale's orientation.
+	 * adjustment = the GtkAdjustment which sets the range
+	 * of the scale, or NULL to create a new adjustment. [allow-none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkOrientation orientation, GtkAdjustment* adjustment)
+	{
+		// GtkWidget * gtk_scale_new (GtkOrientation orientation,  GtkAdjustment *adjustment);
+		auto p = gtk_scale_new(orientation, adjustment);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_scale_new(orientation, adjustment)");
+		}
+		this(cast(GtkScale*) p);
+	}
+	
+	/**
+	 * Creates a new scale widget with the given orientation that lets the
+	 * user input a number between min and max (including min and max)
+	 * with the increment step. step must be nonzero; it's the distance
+	 * the slider moves when using the arrow keys to adjust the scale
+	 * value.
+	 * Note that the way in which the precision is derived works best if step
+	 * is a power of ten. If the resulting precision is not suitable for your
+	 * needs, use gtk_scale_set_digits() to correct it.
+	 * Params:
+	 * orientation = the scale's orientation.
+	 * min = minimum value
+	 * max = maximum value
+	 * step = step increment (tick size) used with keyboard shortcuts
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkOrientation orientation, double min, double max, double step)
+	{
+		// GtkWidget * gtk_scale_new_with_range (GtkOrientation orientation,  gdouble min,  gdouble max,  gdouble step);
+		auto p = gtk_scale_new_with_range(orientation, min, max, step);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_scale_new_with_range(orientation, min, max, step)");
+		}
+		this(cast(GtkScale*) p);
+	}
 	
 	/**
 	 * Sets the number of decimal places that are displayed in the value.
@@ -288,9 +335,9 @@ public class Scale : Range
 	 * value = the value at which the mark is placed, must be between
 	 * the lower and upper limits of the scales' adjustment
 	 * position = where to draw the mark. For a horizontal scale, GTK_POS_TOP
-	 * is drawn above the scale, anything else below. For a vertical scale,
-	 * GTK_POS_LEFT is drawn to the left of the scale, anything else to the
-	 * right.
+	 * and GTK_POS_LEFT are drawn above the scale, anything else below.
+	 * For a vertical scale, GTK_POS_LEFT and GTK_POS_TOP are drawn to
+	 * the left of the scale, anything else to the right.
 	 * markup = Text to be shown at the mark, using Pango markup, or NULL. [allow-none]
 	 */
 	public void addMark(double value, GtkPositionType position, string markup)

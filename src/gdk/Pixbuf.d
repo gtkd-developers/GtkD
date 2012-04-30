@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-Pixbufs.html
+ * inFile  = gdk3-Pixbufs.html
  * outPack = gdk
  * outFile = Pixbuf
  * strct   = GdkPixbuf
@@ -40,33 +40,24 @@
  * 	- gdk_pixbuf_
  * omit structs:
  * omit prefixes:
- * 	- gdk_pixbuf_ref
- * 	- gdk_pixbuf_unref
  * omit code:
- * 	- gdk_pixbuf_get_from_drawable
  * omit signals:
  * imports:
+ * 	- cairo.Surface
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gdkpixbuf.PixbufFormat
- * 	- gdk.Drawable
- * 	- gdk.Bitmap
- * 	- gdk.GC
- * 	- gdk.Colormap
- * 	- gdk.ImageGdk
  * 	- gio.Cancellable
  * 	- gio.InputStream
+ * 	- gdk.Window
+ * 	- gdkpixbuf.PixbufFormat
  * structWrap:
  * 	- GCancellable* -> Cancellable
  * 	- GInputStream* -> InputStream
- * 	- GdkBitmap* -> Bitmap
- * 	- GdkColormap* -> Colormap
- * 	- GdkDrawable* -> Drawable
- * 	- GdkGC* -> GC
- * 	- GdkImage* -> ImageGdk
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufFormat* -> PixbufFormat
+ * 	- GdkWindow* -> Window
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -80,17 +71,14 @@ private import gtkc.gdk;
 private import glib.ConstructionException;
 
 
+private import cairo.Surface;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import gdkpixbuf.PixbufFormat;
-private import gdk.Drawable;
-private import gdk.Bitmap;
-private import gdk.GC;
-private import gdk.Colormap;
-private import gdk.ImageGdk;
 private import gio.Cancellable;
 private import gio.InputStream;
+private import gdk.Window;
+private import gdkpixbuf.PixbufFormat;
 
 
 
@@ -98,9 +86,10 @@ private import gobject.ObjectG;
 
 /**
  * Description
- * These functions allow to render pixbufs on drawables. Pixbufs are
- * client-side images. For details on how to create and manipulate
- * pixbufs, see the GdkPixbuf API documentation.
+ * Pixbufs are client-side images. For details on how to create
+ * and manipulate pixbufs, see the GdkPixbuf API documentation.
+ * The functions described here allow to obtain pixbufs from
+ * GdkWindows and cairo surfaces.
  */
 public class Pixbuf : ObjectG
 {
@@ -149,99 +138,6 @@ public class Pixbuf : ObjectG
 	}
 	
 	/**
-	 * Transfers image data from a GdkDrawable and converts it to an RGB(A)
-	 * representation inside a GdkPixbuf. In other words, copies
-	 * image data from a server-side drawable to a client-side RGB(A) buffer.
-	 * This allows you to efficiently read individual pixels on the client side.
-	 * If the drawable src has no colormap (gdk_drawable_get_colormap()
-	 * returns NULL), then a suitable colormap must be specified.
-	 * Typically a GdkWindow or a pixmap created by passing a GdkWindow
-	 * to gdk_pixmap_new() will already have a colormap associated with
-	 * it. If the drawable has a colormap, the cmap argument will be
-	 * ignored. If the drawable is a bitmap (1 bit per pixel pixmap),
-	 * then a colormap is not required; pixels with a value of 1 are
-	 * assumed to be white, and pixels with a value of 0 are assumed to be
-	 * black. For taking screenshots, gdk_colormap_get_system() returns
-	 * the correct colormap to use.
-	 * If the specified destination pixbuf dest is NULL, then this
-	 * function will create an RGB pixbuf with 8 bits per channel and no
-	 * alpha, with the same size specified by the width and height
-	 * arguments. In this case, the dest_x and dest_y arguments must be
-	 * specified as 0. If the specified destination pixbuf is not NULL
-	 * and it contains alpha information, then the filled pixels will be
-	 * set to full opacity (alpha = 255).
-	 * If the specified drawable is a pixmap, then the requested source
-	 * rectangle must be completely contained within the pixmap, otherwise
-	 * the function will return NULL. For pixmaps only (not for windows)
-	 * passing -1 for width or height is allowed to mean the full width
-	 * or height of the pixmap.
-	 * If the specified drawable is a window, and the window is off the
-	 * screen, then there is no image data in the obscured/offscreen
-	 * regions to be placed in the pixbuf. The contents of portions of the
-	 * pixbuf corresponding to the offscreen region are undefined.
-	 * If the window you're obtaining data from is partially obscured by
-	 * other windows, then the contents of the pixbuf areas corresponding
-	 * to the obscured regions are undefined.
-	 * If the target drawable is not mapped (typically because it's
-	 * iconified/minimized or not on the current workspace), then NULL
-	 * will be returned.
-	 * If memory can't be allocated for the return value, NULL will be returned
-	 * instead.
-	 * (In short, there are several ways this function can fail, and if it fails
-	 *  it returns NULL; so check the return value.)
-	 * This function calls gdk_drawable_get_image() internally and
-	 * converts the resulting image to a GdkPixbuf, so the
-	 * documentation for gdk_drawable_get_image() may also be relevant.
-	 * Params:
-	 * 	src = Source drawable.
-	 *  cmap = A colormap if src doesn't have one set.
-	 *  srcX = Source X coordinate within drawable.
-	 *  srcY = Source Y coordinate within drawable.
-	 *  destX = Destination X coordinate in pixbuf, or 0 if dest is NULL.
-	 *  destY = Destination Y coordinate in pixbuf, or 0 if dest is NULL.
-	 *  width = Width in pixels of region to get.
-	 *  height = Height in pixels of region to get.
-	 * Returns:
-	 *  The same pixbuf as dest if it was non-NULL, or a newly-created
-	 *  pixbuf with a reference count of 1 if no destination pixbuf was specified, or NULL on error
-	 */
-	public static Pixbuf getFromDrawable(Drawable src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
-	{
-		// GdkPixbuf* gdk_pixbuf_get_from_drawable (GdkPixbuf *dest,  GdkDrawable *src,  GdkColormap *cmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height);
-		return new Pixbuf( gdk_pixbuf_get_from_drawable(null, (src is null) ? null : src.getDrawableStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height) );
-	}
-	
-	/**
-	 * SetFromDrawable is different from GetFrom Drawable as it doesn't create a new pixbuf
-	 */
-	public void setFromDrawable(Drawable src, int srcX, int srcY, int width, int height)
-	{
-		gdk_pixbuf_get_from_drawable(
-		gdkPixbuf,	// gdkPixbuf
-		src.getDrawableStruct(),
-		null, // colormap
-		srcX, srcY,
-		0, 0,		// destination x and y
-		width, height);
-	}
-	
-	/**
-	 * Creates a new Pixbuf from a drawable.
-	 * this is a simplyfied GetFromDrawable
-	 */
-	this(Drawable src, int srcX, int srcY, int width, int height)
-	{
-		GdkPixbuf* pb = gdk_pixbuf_get_from_drawable(
-		null,	// gdkPixbuf
-		src.getDrawableStruct(),
-		null, // colormap
-		srcX, srcY,
-		0, 0,		// destination x and y
-		width, height);
-		this(pb);
-	}
-	
-	/**
 	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
 	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.
 	 * Since 2.4
@@ -253,7 +149,7 @@ public class Pixbuf : ObjectG
 	 * Returns: whether an error was set
 	 * Throws: GException on failure.
 	 */
-	public int saveToBufferv(out char[] buffer, string type, string[] optionKeys, string[] optionValues)
+	public int saveToBuffer(out ubyte[] buffer, string type, string[] optionKeys, string[] optionValues)
 	{
 		gchar* outbuffer = null;
 		gsize bufferSize;
@@ -267,7 +163,7 @@ public class Pixbuf : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		buffer = outbuffer[0 .. bufferSize];
+		buffer = (cast(ubyte*)outbuffer)[0 .. bufferSize];
 		return p;
 	}
 	
@@ -409,165 +305,63 @@ public class Pixbuf : ObjectG
 	 */
 	
 	/**
-	 * Takes the opacity values in a rectangular portion of a pixbuf and thresholds
-	 * them to produce a bi-level alpha mask that can be used as a clipping mask for
-	 * a drawable.
+	 * Transfers image data from a GdkWindow and converts it to an RGB(A)
+	 * representation inside a GdkPixbuf. In other words, copies
+	 * image data from a server-side drawable to a client-side RGB(A) buffer.
+	 * This allows you to efficiently read individual pixels on the client side.
+	 * This function will create an RGB pixbuf with 8 bits per channel with
+	 * the same size specified by the width and height arguments. The pixbuf
+	 * will contain an alpha channel if the window contains one.
+	 * If the window is off the screen, then there is no image data in the
+	 * obscured/offscreen regions to be placed in the pixbuf. The contents of
+	 * portions of the pixbuf corresponding to the offscreen region are undefined.
+	 * If the window you're obtaining data from is partially obscured by
+	 * other windows, then the contents of the pixbuf areas corresponding
+	 * to the obscured regions are undefined.
+	 * If the window is not mapped (typically because it's iconified/minimized
+	 * or not on the current workspace), then NULL will be returned.
+	 * If memory can't be allocated for the return value, NULL will be returned
+	 * instead.
+	 * (In short, there are several ways this function can fail, and if it fails
+	 *  it returns NULL; so check the return value.)
 	 * Params:
-	 * bitmap = Bitmap where the bilevel mask will be painted to.
-	 * srcX = Source X coordinate.
-	 * srcY = source Y coordinate.
-	 * destX = Destination X coordinate.
-	 * destY = Destination Y coordinate.
-	 * width = Width of region to threshold, or -1 to use pixbuf width
-	 * height = Height of region to threshold, or -1 to use pixbuf height
-	 * alphaThreshold = Opacity values below this will be painted as zero; all
-	 * other values will be painted as one.
+	 * window = Source window
+	 * srcX = Source X coordinate within window
+	 * srcY = Source Y coordinate within window
+	 * width = Width in pixels of region to get
+	 * height = Height in pixels of region to get
+	 * Returns: A newly-created pixbuf with a reference count of 1, or NULL on error. [transfer full]
 	 */
-	public void renderThresholdAlpha(Bitmap bitmap, int srcX, int srcY, int destX, int destY, int width, int height, int alphaThreshold)
+	public static Pixbuf getFromWindow(Window window, int srcX, int srcY, int width, int height)
 	{
-		// void gdk_pixbuf_render_threshold_alpha (GdkPixbuf *pixbuf,  GdkBitmap *bitmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height,  int alpha_threshold);
-		gdk_pixbuf_render_threshold_alpha(gdkPixbuf, (bitmap is null) ? null : bitmap.getBitmapStruct(), srcX, srcY, destX, destY, width, height, alphaThreshold);
+		// GdkPixbuf * gdk_pixbuf_get_from_window (GdkWindow *window,  gint src_x,  gint src_y,  gint width,  gint height);
+		auto p = gdk_pixbuf_get_from_window((window is null) ? null : window.getWindowStruct(), srcX, srcY, width, height);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
-	 * Warning
-	 * gdk_pixbuf_render_to_drawable has been deprecated since version 2.4 and should not be used in newly-written code. This function is obsolete. Use gdk_draw_pixbuf() instead.
-	 * Renders a rectangular portion of a pixbuf to a drawable while using the
-	 * specified GC. This is done using GdkRGB, so the specified drawable must have
-	 * the GdkRGB visual and colormap. Note that this function will ignore the
-	 * opacity information for images with an alpha channel; the GC must already
-	 * have the clipping mask set if you want transparent regions to show through.
-	 * For an explanation of dither offsets, see the GdkRGB documentation. In
-	 * brief, the dither offset is important when re-rendering partial regions of an
-	 * image to a rendered version of the full image, or for when the offsets to a
-	 * base position change, as in scrolling. The dither matrix has to be shifted
-	 * for consistent visual results. If you do not have any of these cases, the
-	 * dither offsets can be both zero.
+	 * Transfers image data from a cairo_surface_t and converts it to an RGB(A)
+	 * representation inside a GdkPixbuf. This allows you to efficiently read
+	 * individual pixels from cairo surfaces. For GdkWindows, use
+	 * gdk_pixbuf_get_from_window() instead.
+	 * This function will create an RGB pixbuf with 8 bits per channel.
+	 * The pixbuf will contain an alpha channel if the surface contains one.
 	 * Params:
-	 * drawable = Destination drawable.
-	 * gc = GC used for rendering.
-	 * srcX = Source X coordinate within pixbuf.
-	 * srcY = Source Y coordinate within pixbuf.
-	 * destX = Destination X coordinate within drawable.
-	 * destY = Destination Y coordinate within drawable.
-	 * width = Width of region to render, in pixels, or -1 to use pixbuf width
-	 * height = Height of region to render, in pixels, or -1 to use pixbuf height
-	 * dither = Dithering mode for GdkRGB.
-	 * xDither = X offset for dither.
-	 * yDither = Y offset for dither.
+	 * surface = surface to copy from
+	 * srcX = Source X coordinate within surface
+	 * srcY = Source Y coordinate within surface
+	 * width = Width in pixels of region to get
+	 * height = Height in pixels of region to get
+	 * Returns: A newly-created pixbuf with a reference count of 1, or NULL on error. [transfer full]
 	 */
-	public void renderToDrawable(Drawable drawable, GC gc, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)
+	public static Pixbuf getFromSurface(Surface surface, int srcX, int srcY, int width, int height)
 	{
-		// void gdk_pixbuf_render_to_drawable (GdkPixbuf *pixbuf,  GdkDrawable *drawable,  GdkGC *gc,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height,  GdkRgbDither dither,  int x_dither,  int y_dither);
-		gdk_pixbuf_render_to_drawable(gdkPixbuf, (drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), srcX, srcY, destX, destY, width, height, dither, xDither, yDither);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_pixbuf_render_to_drawable_alpha has been deprecated since version 2.4 and should not be used in newly-written code. This function is obsolete. Use gdk_draw_pixbuf() instead.
-	 * Renders a rectangular portion of a pixbuf to a drawable. The destination
-	 * drawable must have a colormap. All windows have a colormap, however, pixmaps
-	 * only have colormap by default if they were created with a non-NULL window argument.
-	 * Otherwise a colormap must be set on them with gdk_drawable_set_colormap.
-	 * On older X servers, rendering pixbufs with an alpha channel involves round trips
-	 * to the X server, and may be somewhat slow.
-	 * Params:
-	 * drawable = Destination drawable.
-	 * srcX = Source X coordinate within pixbuf.
-	 * srcY = Source Y coordinates within pixbuf.
-	 * destX = Destination X coordinate within drawable.
-	 * destY = Destination Y coordinate within drawable.
-	 * width = Width of region to render, in pixels, or -1 to use pixbuf width.
-	 * height = Height of region to render, in pixels, or -1 to use pixbuf height.
-	 * alphaMode = Ignored. Present for backwards compatibility.
-	 * alphaThreshold = Ignored. Present for backwards compatibility
-	 * dither = Dithering mode for GdkRGB.
-	 * xDither = X offset for dither.
-	 * yDither = Y offset for dither.
-	 */
-	public void renderToDrawableAlpha(Drawable drawable, int srcX, int srcY, int destX, int destY, int width, int height, GdkPixbufAlphaMode alphaMode, int alphaThreshold, GdkRgbDither dither, int xDither, int yDither)
-	{
-		// void gdk_pixbuf_render_to_drawable_alpha (GdkPixbuf *pixbuf,  GdkDrawable *drawable,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height,  GdkPixbufAlphaMode alpha_mode,  int alpha_threshold,  GdkRgbDither dither,  int x_dither,  int y_dither);
-		gdk_pixbuf_render_to_drawable_alpha(gdkPixbuf, (drawable is null) ? null : drawable.getDrawableStruct(), srcX, srcY, destX, destY, width, height, alphaMode, alphaThreshold, dither, xDither, yDither);
-	}
-	
-	/**
-	 * Creates a pixmap and a mask bitmap which are returned in the pixmap_return
-	 * and mask_return arguments, respectively, and renders a pixbuf and its
-	 * corresponding thresholded alpha mask to them. This is merely a convenience
-	 * function; applications that need to render pixbufs with dither offsets or to
-	 * given drawables should use gdk_draw_pixbuf() and gdk_pixbuf_render_threshold_alpha().
-	 * The pixmap that is created is created for the colormap returned
-	 * by gdk_rgb_get_colormap(). You normally will want to instead use
-	 * the actual colormap for a widget, and use
-	 * gdk_pixbuf_render_pixmap_and_mask_for_colormap().
-	 * If the pixbuf does not have an alpha channel, then *mask_return will be set
-	 * to NULL.
-	 * Params:
-	 * pixmapReturn = Location to store a pointer to the created pixmap,
-	 * or NULL if the pixmap is not needed.
-	 * maskReturn = Location to store a pointer to the created mask,
-	 * or NULL if the mask is not needed.
-	 * alphaThreshold = Threshold value for opacity values.
-	 */
-	public void renderPixmapAndMask(out GdkPixmap* pixmapReturn, out Bitmap maskReturn, int alphaThreshold)
-	{
-		// void gdk_pixbuf_render_pixmap_and_mask (GdkPixbuf *pixbuf,  GdkPixmap **pixmap_return,  GdkBitmap **mask_return,  int alpha_threshold);
-		GdkBitmap* outmaskReturn = null;
-		
-		gdk_pixbuf_render_pixmap_and_mask(gdkPixbuf, &pixmapReturn, &outmaskReturn, alphaThreshold);
-		
-		maskReturn = new Bitmap(outmaskReturn);
-	}
-	
-	/**
-	 * Creates a pixmap and a mask bitmap which are returned in the pixmap_return
-	 * and mask_return arguments, respectively, and renders a pixbuf and its
-	 * corresponding tresholded alpha mask to them. This is merely a convenience
-	 * function; applications that need to render pixbufs with dither offsets or to
-	 * given drawables should use gdk_draw_pixbuf(), and gdk_pixbuf_render_threshold_alpha().
-	 * The pixmap that is created uses the GdkColormap specified by colormap.
-	 * This colormap must match the colormap of the window where the pixmap
-	 * will eventually be used or an error will result.
-	 * If the pixbuf does not have an alpha channel, then *mask_return will be set
-	 * to NULL.
-	 * Params:
-	 * colormap = A GdkColormap
-	 * pixmapReturn = Location to store a pointer to the created pixmap,
-	 * or NULL if the pixmap is not needed.
-	 * maskReturn = Location to store a pointer to the created mask,
-	 * or NULL if the mask is not needed.
-	 * alphaThreshold = Threshold value for opacity values.
-	 */
-	public void renderPixmapAndMaskForColormap(Colormap colormap, out GdkPixmap* pixmapReturn, out Bitmap maskReturn, int alphaThreshold)
-	{
-		// void gdk_pixbuf_render_pixmap_and_mask_for_colormap  (GdkPixbuf *pixbuf,  GdkColormap *colormap,  GdkPixmap **pixmap_return,  GdkBitmap **mask_return,  int alpha_threshold);
-		GdkBitmap* outmaskReturn = null;
-		
-		gdk_pixbuf_render_pixmap_and_mask_for_colormap(gdkPixbuf, (colormap is null) ? null : colormap.getColormapStruct(), &pixmapReturn, &outmaskReturn, alphaThreshold);
-		
-		maskReturn = new Bitmap(outmaskReturn);
-	}
-	
-	/**
-	 * Same as gdk_pixbuf_get_from_drawable() but gets the pixbuf from
-	 * an image.
-	 * Params:
-	 * dest = Destination pixbuf, or NULL if a new pixbuf should be created. [allow-none]
-	 * src = Source GdkImage.
-	 * cmap = A colormap, or NULL to use the one for src. [allow-none]
-	 * srcX = Source X coordinate within drawable.
-	 * srcY = Source Y coordinate within drawable.
-	 * destX = Destination X coordinate in pixbuf, or 0 if dest is NULL.
-	 * destY = Destination Y coordinate in pixbuf, or 0 if dest is NULL.
-	 * width = Width in pixels of region to get.
-	 * height = Height in pixels of region to get.
-	 * Returns: dest, newly-created pixbuf if dest was NULL, NULL on error
-	 */
-	public Pixbuf getFromImage(ImageGdk src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
-	{
-		// GdkPixbuf * gdk_pixbuf_get_from_image (GdkPixbuf *dest,  GdkImage *src,  GdkColormap *cmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height);
-		auto p = gdk_pixbuf_get_from_image(gdkPixbuf, (src is null) ? null : src.getImageGdkStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height);
+		// GdkPixbuf * gdk_pixbuf_get_from_surface (cairo_surface_t *surface,  gint src_x,  gint src_y,  gint width,  gint height);
+		auto p = gdk_pixbuf_get_from_surface((surface is null) ? null : surface.getSurfaceStruct(), srcX, srcY, width, height);
 		if(p is null)
 		{
 			return null;
@@ -931,6 +725,26 @@ public class Pixbuf : ObjectG
 			throw new ConstructionException("null returned by gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, &err)");
 		}
 		this(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Parses an image file far enough to determine its format and size.
+	 * Since 2.4
+	 * Params:
+	 * filename = The name of the file to identify.
+	 * width = Return location for the width of the image, or NULL
+	 * height = Return location for the height of the image, or NULL
+	 * Returns: A GdkPixbufFormat describing the image format of the file or NULL if the image format wasn't recognized. The return value is owned by GdkPixbuf and should not be freed.
+	 */
+	public static PixbufFormat getFileInfo(string filename, out int width, out int height)
+	{
+		// GdkPixbufFormat * gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
+		auto p = gdk_pixbuf_get_file_info(Str.toStringz(filename), &width, &height);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PixbufFormat(cast(GdkPixbufFormat*) p);
 	}
 	
 	/**

@@ -800,6 +800,7 @@ outFile: AppInfo
 
 struct: GAppLaunchContext
 class: AppLaunchContext
+extend: GObject
 prefix: g_app_launch_context_
 strictPrefix: Y
 import: glib.Str

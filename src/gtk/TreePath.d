@@ -76,77 +76,81 @@ private import glib.Str;
 
 /**
  * Description
- * The GtkTreeModel interface defines a generic tree interface for use by
- * the GtkTreeView widget. It is an abstract interface, and is designed
- * to be usable with any appropriate data structure. The programmer just
- * has to implement this interface on their own data type for it to be
- * viewable by a GtkTreeView widget.
+ * The GtkTreeModel interface defines a generic tree interface for
+ * use by the GtkTreeView widget. It is an abstract interface, and
+ * is designed to be usable with any appropriate data structure. The
+ * programmer just has to implement this interface on their own data
+ * type for it to be viewable by a GtkTreeView widget.
  * The model is represented as a hierarchical tree of strongly-typed,
  * columned data. In other words, the model can be seen as a tree where
  * every node has different values depending on which column is being
- * queried. The type of data found in a column is determined by using the
- * GType system (ie. G_TYPE_INT, GTK_TYPE_BUTTON, G_TYPE_POINTER, etc.).
- * The types are homogeneous per column across all nodes. It is important
- * to note that this interface only provides a way of examining a model and
- * observing changes. The implementation of each individual model decides
- * how and if changes are made.
- * In order to make life simpler for programmers who do not need to write
- * their own specialized model, two generic models are provided — the
- * GtkTreeStore and the GtkListStore. To use these, the developer simply
- * pushes data into these models as necessary. These models provide the
- * data structure as well as all appropriate tree interfaces. As a result,
- * implementing drag and drop, sorting, and storing data is trivial. For
- * the vast majority of trees and lists, these two models are sufficient.
+ * queried. The type of data found in a column is determined by using
+ * the GType system (ie. G_TYPE_INT, GTK_TYPE_BUTTON, G_TYPE_POINTER,
+ * etc). The types are homogeneous per column across all nodes. It is
+ * important to note that this interface only provides a way of examining
+ * a model and observing changes. The implementation of each individual
+ * model decides how and if changes are made.
+ * In order to make life simpler for programmers who do not need to
+ * write their own specialized model, two generic models are provided
+ * — the GtkTreeStore and the GtkListStore. To use these, the
+ * developer simply pushes data into these models as necessary. These
+ * models provide the data structure as well as all appropriate tree
+ * interfaces. As a result, implementing drag and drop, sorting, and
+ * storing data is trivial. For the vast majority of trees and lists,
+ * these two models are sufficient.
  * Models are accessed on a node/column level of granularity. One can
- * query for the value of a model at a certain node and a certain column
- * on that node. There are two structures used to reference a particular
- * node in a model. They are the GtkTreePath and the GtkTreeIter
- * [4]
- * Most of the interface consists of operations on a GtkTreeIter.
+ * query for the value of a model at a certain node and a certain
+ * column on that node. There are two structures used to reference
+ * a particular node in a model. They are the GtkTreePath and the
+ * GtkTreeIter[4]. Most of the interface
+ * consists of operations on a GtkTreeIter.
  * A path is essentially a potential node. It is a location on a model
- * that may or may not actually correspond to a node on a specific model.
- * The GtkTreePath struct can be converted into either an array of
- * unsigned integers or a string. The string form is a list of numbers
- * separated by a colon. Each number refers to the offset at that level.
- * Thus, the path “0” refers to the root node and the path
- * “2:4” refers to the fifth child of the third node.
- * By contrast, a GtkTreeIter is a reference to a specific node on a
- * specific model. It is a generic struct with an integer and three
+ * that may or may not actually correspond to a node on a specific
+ * model. The GtkTreePath struct can be converted into either an
+ * array of unsigned integers or a string. The string form is a list
+ * of numbers separated by a colon. Each number refers to the offset
+ * at that level. Thus, the path “0” refers to the root
+ * node and the path “2:4” refers to the fifth child of
+ * the third node.
+ * By contrast, a GtkTreeIter is a reference to a specific node on
+ * a specific model. It is a generic struct with an integer and three
  * generic pointers. These are filled in by the model in a model-specific
  * way. One can convert a path to an iterator by calling
- * gtk_tree_model_get_iter(). These iterators are the primary way of
- * accessing a model and are similar to the iterators used by
- * GtkTextBuffer. They are generally statically allocated on the stack and
- * only used for a short time. The model interface defines a set of
- * operations using them for navigating the model.
- * It is expected that models fill in the iterator with private data. For
- * example, the GtkListStore model, which is internally a simple linked
- * list, stores a list node in one of the pointers. The GtkTreeModelSort
- * stores an array and an offset in two of the pointers. Additionally,
- * there is an integer field. This field is generally filled with a unique
- * stamp per model. This stamp is for catching errors resulting from using
- * invalid iterators with a model.
+ * gtk_tree_model_get_iter(). These iterators are the primary way
+ * of accessing a model and are similar to the iterators used by
+ * GtkTextBuffer. They are generally statically allocated on the
+ * stack and only used for a short time. The model interface defines
+ * a set of operations using them for navigating the model.
+ * It is expected that models fill in the iterator with private data.
+ * For example, the GtkListStore model, which is internally a simple
+ * linked list, stores a list node in one of the pointers. The
+ * GtkTreeModelSort stores an array and an offset in two of the
+ * pointers. Additionally, there is an integer field. This field is
+ * generally filled with a unique stamp per model. This stamp is for
+ * catching errors resulting from using invalid iterators with a model.
  * The lifecycle of an iterator can be a little confusing at first.
- * Iterators are expected to always be valid for as long as the model is
- * unchanged (and doesn't emit a signal). The model is considered to own
- * all outstanding iterators and nothing needs to be done to free them from
- * the user's point of view. Additionally, some models guarantee that an
- * iterator is valid for as long as the node it refers to is valid (most
- * notably the GtkTreeStore and GtkListStore). Although generally
- * uninteresting, as one always has to allow for the case where iterators
- * do not persist beyond a signal, some very important performance
- * enhancements were made in the sort model. As a result, the
- * GTK_TREE_MODEL_ITERS_PERSIST flag was added to indicate this behavior.
+ * Iterators are expected to always be valid for as long as the model
+ * is unchanged (and doesn't emit a signal). The model is considered
+ * to own all outstanding iterators and nothing needs to be done to
+ * free them from the user's point of view. Additionally, some models
+ * guarantee that an iterator is valid for as long as the node it refers
+ * to is valid (most notably the GtkTreeStore and GtkListStore).
+ * Although generally uninteresting, as one always has to allow for
+ * the case where iterators do not persist beyond a signal, some very
+ * important performance enhancements were made in the sort model.
+ * As a result, the GTK_TREE_MODEL_ITERS_PERSIST flag was added to
+ * indicate this behavior.
  * To help show some common operation of a model, some examples are
- * provided. The first example shows three ways of getting the iter at the
- * location “3:2:5”. While the first method shown is easier,
- * the second is much more common, as you often get paths from callbacks.
+ * provided. The first example shows three ways of getting the iter at
+ * the location “3:2:5”. While the first method shown is
+ * easier, the second is much more common, as you often get paths from
+ * callbacks.
  * $(DDOC_COMMENT example)
- * This second example shows a quick way of iterating through a list and
- * getting a string and an integer from each row. The
- * populate_model function used below is not shown, as
- * it is specific to the GtkListStore. For information on how to write
- * such a function, see the GtkListStore documentation.
+ * This second example shows a quick way of iterating through a list
+ * and getting a string and an integer from each row. The
+ * populate_model function used below is not
+ * shown, as it is specific to the GtkListStore. For information on
+ * how to write such a function, see the GtkListStore documentation.
  * $(DDOC_COMMENT example)
  */
 public class TreePath
@@ -214,13 +218,14 @@ public class TreePath
 	 */
 	
 	/**
-	 * Creates a new GtkTreePath initialized to path. path is expected to be a
-	 * colon separated list of numbers. For example, the string "10:4:0" would
-	 * create a path of depth 3 pointing to the 11th child of the root node, the 5th
-	 * child of that 11th child, and the 1st child of that 5th child. If an invalid
-	 * path string is passed in, NULL is returned.
+	 * Creates a new GtkTreePath initialized to path.
+	 * path is expected to be a colon separated list of numbers.
+	 * For example, the string "10:4:0" would create a path of depth
+	 * 3 pointing to the 11th child of the root node, the 5th
+	 * child of that 11th child, and the 1st child of that 5th child.
+	 * If an invalid path string is passed in, NULL is returned.
 	 * Params:
-	 * path = The string representation of a path.
+	 * path = The string representation of a path
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string path)
@@ -235,8 +240,10 @@ public class TreePath
 	}
 	
 	/**
-	 * Generates a string representation of the path. This string is a ':'
-	 * separated list of numbers. For example, "4:10:0:3" would be an acceptable return value for this string.
+	 * Generates a string representation of the path.
+	 * This string is a ':' separated list of numbers.
+	 * For example, "4:10:0:3" would be an acceptable
+	 * return value for this string.
 	 * Returns: A newly-allocated string. Must be freed with g_free().
 	 */
 	public override string toString()
@@ -246,10 +253,10 @@ public class TreePath
 	}
 	
 	/**
-	 * Appends a new index to a path. As a result, the depth of the path is
-	 * increased.
+	 * Appends a new index to a path.
+	 * As a result, the depth of the path is increased.
 	 * Params:
-	 * index = The index.
+	 * index = the index
 	 */
 	public void appendIndex(int index)
 	{
@@ -258,10 +265,10 @@ public class TreePath
 	}
 	
 	/**
-	 * Prepends a new index to a path. As a result, the depth of the path is
-	 * increased.
+	 * Prepends a new index to a path.
+	 * As a result, the depth of the path is increased.
 	 * Params:
-	 * index = The index.
+	 * index = the index
 	 */
 	public void prependIndex(int index)
 	{
@@ -280,9 +287,10 @@ public class TreePath
 	}
 	
 	/**
-	 * Returns the current indices of path. This is an array of integers, each
-	 * representing a node in a tree. This value should not be freed.
-	 * Returns: The current indices, or NULL.
+	 * Returns the current indices of path.
+	 * This is an array of integers, each representing a node in a tree.
+	 * This value should not be freed.
+	 * Returns: The current indices, or NULL
 	 */
 	public int[] getIndices()
 	{
@@ -296,8 +304,7 @@ public class TreePath
 	 * This is an array of integers, each representing a node in a tree.
 	 * It also returns the number of elements in the array.
 	 * The array should not be freed.
-	 * Since 2.22
-	 * Returns: The current indices, or NULL. [array length=depth][transfer none]
+	 * Returns: The current indices, or NULL. [array length=depth][transfer none] Since 3.0
 	 */
 	public int[] getIndicesWithDepth()
 	{
@@ -318,7 +325,7 @@ public class TreePath
 	
 	/**
 	 * Creates a new GtkTreePath as a copy of path.
-	 * Returns: A new GtkTreePath.
+	 * Returns: a new GtkTreePath
 	 */
 	public TreePath copy()
 	{
@@ -332,13 +339,14 @@ public class TreePath
 	}
 	
 	/**
-	 * Compares two paths. If a appears before b in a tree, then -1 is returned.
-	 * If b appears before a, then 1 is returned. If the two nodes are equal,
-	 * then 0 is returned.
+	 * Compares two paths.
+	 * If a appears before b in a tree, then -1 is returned.
+	 * If b appears before a, then 1 is returned.
+	 * If the two nodes are equal, then 0 is returned.
 	 * Params:
-	 * a = A GtkTreePath.
-	 * b = A GtkTreePath to compare with.
-	 * Returns: The relative positions of a and b
+	 * a = a GtkTreePath
+	 * b = a GtkTreePath to compare with
+	 * Returns: the relative positions of a and b
 	 */
 	public int compare(TreePath b)
 	{
@@ -356,9 +364,9 @@ public class TreePath
 	}
 	
 	/**
-	 * Moves the path to point to the previous node at the current depth,
-	 * if it exists.
-	 * Returns: TRUE if path has a previous node, and the move was made.
+	 * Moves the path to point to the previous node at the
+	 * current depth, if it exists.
+	 * Returns: TRUE if path has a previous node, and the move was made
 	 */
 	public int prev()
 	{
@@ -368,7 +376,7 @@ public class TreePath
 	
 	/**
 	 * Moves the path to point to its parent node, if it has a parent.
-	 * Returns: TRUE if path has a parent, and the move was made.
+	 * Returns: TRUE if path has a parent, and the move was made
 	 */
 	public int up()
 	{

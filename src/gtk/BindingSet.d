@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Bindings.html
+ * inFile  = gtk3-Bindings.html
  * outPack = gtk
  * outFile = BindingSet
  * strct   = GtkBindingSet
@@ -79,50 +79,56 @@ private import glib.ScannerG;
 
 /**
  * Description
- * GtkBinding provides a mechanism for configuring GTK+ key bindings through
- * RC files. This eases key binding adjustments for application developers as
- * well as users and provides GTK+ users or administrators with high key
- * binding configurability which requires no application or toolkit side changes.
+ * GtkBindingSet provides a mechanism for configuring GTK+ key bindings
+ * through CSS files. This eases key binding adjustments for application
+ * developers as well as users and provides GTK+ users or administrators
+ * with high key binding configurability which requires no application
+ * or toolkit side changes.
  * Installing a key binding
- * A resource file binding consists of a 'binding' definition and a match
- * statement to apply the binding to specific widget types. Details on the
- * matching mechanism are described under
- * Pathnames and patterns.
- * Inside the binding definition, key combinations are bound to specific signal
- * emissions on the target widget. Key combinations are strings consisting of
- * an optional GdkModifierType name and
- * key names such as those defined
- * in <gdk/gdkkeysyms.h> or returned from
- * gdk_keyval_name(), they have to be parsable by gtk_accelerator_parse().
- * Specifications of signal emissions consist of a string identifying the signal
- * name, and a list of signal specific arguments in parenthesis.
- * For example for binding Control and the left or right cursor keys of a
- * GtkEntry widget to the "move-cursor" signal, so movement occurs
- * in 3 letter steps, the following binding can be used:
+ * A CSS file binding consists of a 'binding-set' definition and a match
+ * statement to apply the binding set to specific widget types. Details
+ * on the matching mechanism are described under
+ * Selectors
+ * in the GtkCssProvider documentation. Inside the binding set definition,
+ * key combinations are bound to one or more specific signal emissions on
+ * the target widget. Key combinations are strings consisting of an optional
+ * GdkModifierType name and key names
+ * such as those defined in <gdk/gdkkeysyms.h>
+ * or returned from gdk_keyval_name(), they have to be parsable by
+ * gtk_accelerator_parse(). Specifications of signal emissions consist
+ * of a string identifying the signal name, and a list of signal specific
+ * arguments in parenthesis.
+ * For example for binding Control and the left or right cursor keys
+ * of a GtkEntry widget to the "move-cursor" signal (so movement
+ * occurs in 3-character steps), the following binding can be used:
  * $(DDOC_COMMENT example)
- * GTK+ already defines a number of useful bindings for the widgets it provides.
- * Because custom bindings set up in RC files take precedence over the default
- * bindings shipped with GTK+, overriding existing bindings as demonstrated in
+ * <hr>
+ * Unbinding existing key bindings
+ * GTK+ already defines a number of useful bindings for the widgets
+ * it provides. Because custom bindings set up in CSS files take
+ * precedence over the default bindings shipped with GTK+, overriding
+ * existing bindings as demonstrated in
  * Installing a key binding
- * works as expected. The same mechanism can not be used to "unbind" existing
- * bindings, however.
+ * works as expected. The same mechanism can not be used to "unbind"
+ * existing bindings, however.
  * $(DDOC_COMMENT example)
  * The above example will not have the desired effect of causing
- * "<Control>Right" and "<Control>Left" key presses to be ignored
- * by GTK+. Instead, it just causes any existing bindings from the bindings
- * set "MoveCursor3" to be deleted, so when "<Control>Right" or
- * "<Control>Left" are pressed, no binding for these keys is found in
- * binding set "MoveCursor3". GTK+ will thus continue to search for matching
- * key bindings, and will eventually lookup and find the default GTK+ bindings
- * for entries which implement word movement. To keep GTK+ from activating its
- * default bindings, the "unbind" keyword can be used like this:
+ * "<Control>Right" and "<Control>Left" key presses to
+ * be ignored by GTK+. Instead, it just causes any existing bindings
+ * from the bindings set "MoveCursor3" to be deleted, so when
+ * "<Control>Right" or "<Control>Left" are pressed, no
+ * binding for these keys is found in binding set "MoveCursor3".
+ * GTK+ will thus continue to search for matching key bindings, and will
+ * eventually lookup and find the default GTK+ bindings for entries which
+ * implement word movement. To keep GTK+ from activating its default
+ * bindings, the "unbind" keyword can be used like this:
  * $(DDOC_COMMENT example)
- * Now, GTK+ will find a match when looking up "<Control>Right" and
- * "<Control>Left" key presses before it resorts to its default
- * bindings, and the match instructs it to abort ("unbind") the search, so
- * the key presses are not consumed by this widget. As usual, further processing
- * of the key presses, e.g. by an entry's parent widget, is now possible.
- * The "unbind" functionality has been introduced in GTK+ 2.12.
+ * Now, GTK+ will find a match when looking up "<Control>Right"
+ * and "<Control>Left" key presses before it resorts to its default
+ * bindings, and the match instructs it to abort ("unbind") the search,
+ * so the key presses are not consumed by this widget. As usual, further
+ * processing of the key presses, e.g. by an entry's parent widget, is
+ * now possible.
  */
 public class BindingSet
 {
@@ -175,34 +181,6 @@ public class BindingSet
 	}
 	
 	/**
-	 * Warning
-	 * gtk_binding_entry_clear has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_binding_entry_remove() instead.
-	 * Clears a binding entry.
-	 * Params:
-	 * keyval = key value of binding to clear
-	 * modifiers = key modifier of binding to clear
-	 */
-	public void bindingEntryClear(uint keyval, GdkModifierType modifiers)
-	{
-		// void gtk_binding_entry_clear (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers);
-		gtk_binding_entry_clear(gtkBindingSet, keyval, modifiers);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_binding_parse_binding has been deprecated since version 2.12 and should not be used in newly-written code. There should be no need to call this function outside GTK+.
-	 * Parse a binding entry from a gtkrc file.
-	 * Params:
-	 * scanner = GtkRC scanner
-	 * Returns: expected token upon errors, G_TOKEN_NONE on success.
-	 */
-	public static uint bindingParseBinding(ScannerG scanner)
-	{
-		// guint gtk_binding_parse_binding (GScanner *scanner);
-		return gtk_binding_parse_binding((scanner is null) ? null : scanner.getScannerGStruct());
-	}
-	
-	/**
 	 * GTK+ maintains a global list of binding sets. Each binding set has
 	 * a unique name which needs to be specified upon creation.
 	 * Params:
@@ -225,8 +203,8 @@ public class BindingSet
 	 * the passed in class structure. New binding sets are created on
 	 * demand by this function.
 	 * Params:
-	 * objectClass = a valid GtkObject class
-	 * Returns: the binding set corresponding to object_class
+	 * objectClass = a valid GObject class
+	 * Returns: the binding set corresponding to object_class. [transfer full]
 	 */
 	public static BindingSet byClass(void* objectClass)
 	{
@@ -240,9 +218,9 @@ public class BindingSet
 	}
 	
 	/**
-	 * Find a binding set by its globally unique name. The set_name can
-	 * either be a name used for gtk_binding_set_new() or the type name of
-	 * a class used in gtk_binding_set_by_class().
+	 * Find a binding set by its globally unique name.
+	 * The set_name can either be a name used for gtk_binding_set_new()
+	 * or the type name of a class used in gtk_binding_set_by_class().
 	 * Params:
 	 * setName = unique binding set name
 	 * Returns: NULL or the specified binding set. [transfer none]
@@ -267,10 +245,10 @@ public class BindingSet
 	 * modifiers = key modifier of the binding
 	 * Returns: TRUE if a binding was found and activated
 	 */
-	public static int activate(ObjectGtk object, uint keyval, GdkModifierType modifiers)
+	public static int activate(GObject* object, uint keyval, GdkModifierType modifiers)
 	{
-		// gboolean gtk_bindings_activate (GtkObject *object,  guint keyval,  GdkModifierType modifiers);
-		return gtk_bindings_activate((object is null) ? null : object.getObjectGtkStruct(), keyval, modifiers);
+		// gboolean gtk_bindings_activate (GObject *object,  guint keyval,  GdkModifierType modifiers);
+		return gtk_bindings_activate(object, keyval, modifiers);
 	}
 	
 	/**
@@ -278,14 +256,14 @@ public class BindingSet
 	 * event, and if one was found, activate it.
 	 * Since 2.4
 	 * Params:
-	 * object = a GtkObject (generally must be a widget)
+	 * object = a GObject (generally must be a widget)
 	 * event = a GdkEventKey
 	 * Returns: TRUE if a matching key binding was found
 	 */
-	public static int activateEvent(ObjectGtk object, GdkEventKey* event)
+	public static int activateEvent(GObject* object, GdkEventKey* event)
 	{
-		// gboolean gtk_bindings_activate_event (GtkObject *object,  GdkEventKey *event);
-		return gtk_bindings_activate_event((object is null) ? null : object.getObjectGtkStruct(), event);
+		// gboolean gtk_bindings_activate_event (GObject *object,  GdkEventKey *event);
+		return gtk_bindings_activate_event(object, event);
 	}
 	
 	/**
@@ -297,10 +275,24 @@ public class BindingSet
 	 * object = object to activate when binding found
 	 * Returns: TRUE if a binding was found and activated
 	 */
-	public int activate(uint keyval, GdkModifierType modifiers, ObjectGtk object)
+	public int activate(uint keyval, GdkModifierType modifiers, GObject* object)
 	{
-		// gboolean gtk_binding_set_activate (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  GtkObject *object);
-		return gtk_binding_set_activate(gtkBindingSet, keyval, modifiers, (object is null) ? null : object.getObjectGtkStruct());
+		// gboolean gtk_binding_set_activate (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  GObject *object);
+		return gtk_binding_set_activate(gtkBindingSet, keyval, modifiers, object);
+	}
+	
+	/**
+	 * Parses a signal description from signal_desc and incorporates
+	 * it into binding_set.
+	 * Signal descriptions may either bind a key combination to
+	 * Params:
+	 * signalDesc = a signal description
+	 * Returns: G_TOKEN_NONE if the signal was successfully parsed and added, the expected token otherwise Since 3.0
+	 */
+	public GTokenType bindingEntryAddSignalFromString(string signalDesc)
+	{
+		// GTokenType gtk_binding_entry_add_signal_from_string  (GtkBindingSet *binding_set,  const gchar *signal_desc);
+		return gtk_binding_entry_add_signal_from_string(gtkBindingSet, Str.toStringz(signalDesc));
 	}
 	
 	/**
@@ -332,8 +324,11 @@ public class BindingSet
 	}
 	
 	/**
-	 * This function is used internally by the GtkRC parsing mechanism to
-	 * assign match patterns to GtkBindingSet structures.
+	 * Warning
+	 * gtk_binding_set_add_path is deprecated and should not be used in newly-written code. 3.0
+	 * This function was used internally by the GtkRC parsing mechanism
+	 * to assign match patterns to GtkBindingSet structures.
+	 * In GTK+ 3, these match patterns are unused.
 	 * Params:
 	 * pathType = path type the pattern applies to
 	 * pathPattern = the actual match pattern

@@ -77,6 +77,10 @@ private import gtk.Bin;
  * area. The values range from 0 (top or left) to 1 (bottom or right).
  * Of course, if the scale settings are both set to 1, the alignment settings
  * have no effect.
+ * Note
+ * Note that the desired effect can in most cases be achieved by using the
+ * "halign", "valign" and "margin" properties
+ * on the child widget, so GtkAlignment should not be used in new code.
  */
 public class Alignment : Bin
 {

@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-Cursors.html
+ * inFile  = gdk3-Cursors.html
  * outPack = gdk
  * outFile = Cursor
  * strct   = GdkCursor
@@ -41,19 +41,16 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gdk_cursor_ref
+ * 	- gdk_cursor_unref
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Pixmap
- * 	- gdk.Color
  * 	- gdk.Display
  * 	- gdk.Pixbuf
  * structWrap:
- * 	- GdkColor* -> Color
- * 	- GdkCursor* -> Cursor
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkPixmap* -> Pixmap
  * module aliases:
  * local aliases:
  * overrides:
@@ -68,21 +65,20 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gdk.Pixmap;
-private import gdk.Color;
 private import gdk.Display;
 private import gdk.Pixbuf;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  * These functions are used to create and destroy cursors.
  * There is a number of standard cursors, but it is also
- * possible to construct new cursors from pixmaps and
- * pixbufs. There may be limitations as to what kinds of
- * cursors can be constructed on a given display, see
+ * possible to construct new cursors from pixbufs. There
+ * may be limitations as to what kinds of cursors can be
+ * constructed on a given display, see
  * gdk_display_supports_cursor_alpha(),
  * gdk_display_supports_cursor_color(),
  * gdk_display_get_default_cursor_size() and
@@ -92,7 +88,7 @@ private import gdk.Pixbuf;
  * gdk_window_set_cursor() or by setting the cursor member of the
  * GdkWindowAttr struct passed to gdk_window_new().
  */
-public class Cursor
+public class Cursor : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -106,7 +102,7 @@ public class Cursor
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkCursor;
 	}
@@ -121,7 +117,21 @@ public class Cursor
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkCursor);
+		if( ptr !is null )
+		{
+			this = cast(Cursor)ptr;
+			return;
+		}
+		super(cast(GObject*)gdkCursor);
 		this.gdkCursor = gdkCursor;
+	}
+	
+	protected override void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkCursor = cast(GdkCursor*)obj;
 	}
 	
 	/**
@@ -142,35 +152,6 @@ public class Cursor
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gdk_cursor_new(cursorType)");
-		}
-		this(cast(GdkCursor*) p);
-	}
-	
-	/**
-	 * Creates a new cursor from a given pixmap and mask. Both the pixmap and mask
-	 * must have a depth of 1 (i.e. each pixel has only 2 values - on or off).
-	 * The standard cursor size is 16 by 16 pixels. You can create a bitmap
-	 * from inline data as in the below example.
-	 * $(DDOC_COMMENT example)
-	 * Params:
-	 * source = the pixmap specifying the cursor.
-	 * mask = the pixmap specifying the mask, which must be the same size as
-	 * source.
-	 * fg = the foreground color, used for the bits in the source which are 1.
-	 * The color does not have to be allocated first.
-	 * bg = the background color, used for the bits in the source which are 0.
-	 * The color does not have to be allocated first.
-	 * x = the horizontal offset of the 'hotspot' of the cursor.
-	 * y = the vertical offset of the 'hotspot' of the cursor.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Pixmap source, Pixmap mask, Color fg, Color bg, int x, int y)
-	{
-		// GdkCursor * gdk_cursor_new_from_pixmap (GdkPixmap *source,  GdkPixmap *mask,  const GdkColor *fg,  const GdkColor *bg,  gint x,  gint y);
-		auto p = gdk_cursor_new_from_pixmap((source is null) ? null : source.getPixmapStruct(), (mask is null) ? null : mask.getPixmapStruct(), (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct(), x, y);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gdk_cursor_new_from_pixmap((source is null) ? null : source.getPixmapStruct(), (mask is null) ? null : mask.getPixmapStruct(), (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct(), x, y)");
 		}
 		this(cast(GdkCursor*) p);
 	}
@@ -252,7 +233,7 @@ public class Cursor
 	/**
 	 * Returns the display on which the GdkCursor is defined.
 	 * Since 2.2
-	 * Returns: the GdkDisplay associated to cursor
+	 * Returns: the GdkDisplay associated to cursor. [transfer none]
 	 */
 	public Display getDisplay()
 	{
@@ -271,7 +252,7 @@ public class Cursor
 	 * on the cursor, GDK may not be able to obtain the image data. In this
 	 * case, NULL is returned.
 	 * Since 2.8
-	 * Returns: a GdkPixbuf representing cursor, or NULL
+	 * Returns: a GdkPixbuf representing cursor, or NULL. [transfer full]
 	 */
 	public Pixbuf getImage()
 	{
@@ -293,30 +274,5 @@ public class Cursor
 	{
 		// GdkCursorType gdk_cursor_get_cursor_type (GdkCursor *cursor);
 		return gdk_cursor_get_cursor_type(gdkCursor);
-	}
-	
-	/**
-	 * Adds a reference to cursor.
-	 * Returns: Same cursor that was passed in. [transfer full]
-	 */
-	public Cursor doref()
-	{
-		// GdkCursor * gdk_cursor_ref (GdkCursor *cursor);
-		auto p = gdk_cursor_ref(gdkCursor);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Cursor(cast(GdkCursor*) p);
-	}
-	
-	/**
-	 * Removes a reference from cursor, deallocating the cursor
-	 * if no references remain.
-	 */
-	public void unref()
-	{
-		// void gdk_cursor_unref (GdkCursor *cursor);
-		gdk_cursor_unref(gdkCursor);
 	}
 }

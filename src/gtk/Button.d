@@ -85,12 +85,12 @@ private import gtk.Bin;
 
 /**
  * Description
- * The GtkButton widget is generally used to attach a function to that
- * is called when the button is pressed. The various signals and how to use
- * them are outlined below.
- * The GtkButton widget can hold any valid child widget. That is it can
- * hold most any other standard GtkWidget. The most commonly used child is
- * the GtkLabel.
+ * The GtkButton widget is generally used to attach a function to that is
+ * called when the button is pressed. The various signals and how to use them
+ * are outlined below.
+ * The GtkButton widget can hold any valid child widget. That is it can hold
+ * most any other standard GtkWidget. The most commonly used child is the
+ * GtkLabel.
  */
 public class Button : Bin, ActivatableIF
 {
@@ -636,7 +636,7 @@ public class Button : Bin, ActivatableIF
 	
 	/**
 	 * Sets the alignment of the child. This property has no effect unless
-	 * the child is a GtkMisc or a GtkAligment.
+	 * the child is a GtkMisc or a GtkAlignment.
 	 * Since 2.4
 	 * Params:
 	 * xalign = the horizontal position of the child, 0.0 is left aligned,

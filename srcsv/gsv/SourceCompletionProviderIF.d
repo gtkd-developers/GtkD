@@ -102,24 +102,26 @@ public interface SourceCompletionProviderIF
 	 * Get the name of the provider. This should be a translatable name for
 	 * display to the user. For example: _("Document word completion provider"). The
 	 * returned string must be freed with g_free().
-	 * Returns: A new string containing the name of the provider.
+	 * Returns: a new string containing the name of the provider.
 	 */
 	public string gtkSourceCompletionProviderGetName();
 	
 	/**
 	 * Get the icon of the provider.
-	 * Returns: The icon to be used for the provider, or NULL if the provider does not have a special icon.
+	 * Returns: The icon to be used for the provider, or NULL if the provider does not have a special icon. [transfer none]
 	 */
 	public Pixbuf gtkSourceCompletionProviderGetIcon();
 	
 	/**
-	 * Populate context with proposals from provider
+	 * Populate context with proposals from provider.
 	 * Params:
-	 * context = The GtkSourceCompletionContext
+	 * context = a GtkSourceCompletionContext.
 	 */
 	public void gtkSourceCompletionProviderPopulate(SourceCompletionContext context);
 	
 	/**
+	 * Get with what kind of activation the provider should be activated.
+	 * Returns: a combination of GtkSourceCompletionActivation.
 	 */
 	public GtkSourceCompletionActivation gtkSourceCompletionProviderGetActivation();
 	
@@ -127,8 +129,8 @@ public interface SourceCompletionProviderIF
 	 * Get whether the provider match the context of completion detailed in
 	 * context.
 	 * Params:
-	 * context = The GtkSourceCompletionContext
-	 * Returns: TRUE if provider matches the completion context, FALSE otherwise
+	 * context = a GtkSourceCompletionContext.
+	 * Returns: TRUE if provider matches the completion context, FALSE otherwise.
 	 */
 	public int gtkSourceCompletionProviderMatch(SourceCompletionContext context);
 	
@@ -142,8 +144,8 @@ public interface SourceCompletionProviderIF
 	 * gtk_source_completion_proposal_get_info will be used to display extra
 	 * information about a GtkSourceCompletionProposal.
 	 * Params:
-	 * proposal = The currently selected GtkSourceCompletionProposal
-	 * Returns: a custom GtkWidget to show extra information about proposal.
+	 * proposal = a currently selected GtkSourceCompletionProposal.
+	 * Returns: a custom GtkWidget to show extra information about proposal. [transfer none]
 	 */
 	public Widget gtkSourceCompletionProviderGetInfoWidget(SourceCompletionProposalIF proposal);
 	
@@ -153,8 +155,8 @@ public interface SourceCompletionProviderIF
 	 * This function MUST be implemented when
 	 * gtk_source_completion_provider_get_info_widget is implemented.
 	 * Params:
-	 * proposal = A GtkSourceCompletionProposal
-	 * info = A GtkSourceCompletionInfo
+	 * proposal = a GtkSourceCompletionProposal.
+	 * info = a GtkSourceCompletionInfo.
 	 */
 	public void gtkSourceCompletionProviderUpdateInfo(SourceCompletionProposalIF proposal, SourceCompletionInfo info);
 	
@@ -164,10 +166,10 @@ public interface SourceCompletionProviderIF
 	 * completion window accordingly when a proposal is selected in the completion
 	 * window.
 	 * Params:
-	 * context = A GtkSourceCompletionContext
-	 * proposal = A GtkSourceCompletionProposal
-	 * iter = A GtkTextIter
-	 * Returns: TRUE if iter was set for proposal, FALSE otherwise
+	 * proposal = a GtkSourceCompletionProposal.
+	 * context = a GtkSourceCompletionContext.
+	 * iter = a GtkTextIter.
+	 * Returns: TRUE if iter was set for proposal, FALSE otherwise.
 	 */
 	public int gtkSourceCompletionProviderGetStartIter(SourceCompletionContext context, SourceCompletionProposalIF proposal, TextIter iter);
 	
@@ -176,17 +178,25 @@ public interface SourceCompletionProviderIF
 	 * activation of proposal will take place which replaces the word at iter
 	 * with the label of proposal.
 	 * Params:
-	 * proposal = A GtkSourceCompletionProposal
-	 * iter = A GtkTextIter
+	 * proposal = a GtkSourceCompletionProposal.
+	 * iter = a GtkTextIter.
 	 * Returns: TRUE to indicate that the proposal activation has been handled, FALSE otherwise.
 	 */
 	public int gtkSourceCompletionProviderActivateProposal(SourceCompletionProposalIF proposal, TextIter iter);
 	
 	/**
+	 * Get the delay in milliseconds before starting interactive completion for
+	 * this provider. A value of -1 indicates to use the default value as set
+	 * by "auto-complete-delay".
+	 * Returns: the interactive delay in milliseconds.
 	 */
 	public int gtkSourceCompletionProviderGetInteractiveDelay();
 	
 	/**
+	 * Get the provider priority. The priority determines the order in which
+	 * proposals appear in the completion popup. Higher priorities are sorted
+	 * before lower priorities. The default priority is 0.
+	 * Returns: the provider priority.
 	 */
 	public int gtkSourceCompletionProviderGetPriority();
 }

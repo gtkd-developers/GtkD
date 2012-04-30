@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Stock-Items.html
+ * inFile  = gtk3-Stock-Items.html
  * outPack = gtk
  * outFile = StockItem
  * strct   = GtkStockItem

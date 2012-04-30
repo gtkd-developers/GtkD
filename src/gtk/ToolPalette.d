@@ -69,8 +69,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 private import glib.ConstructionException;
 
-private import gobject.Signals;
-public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Adjustment;
@@ -152,39 +150,6 @@ public class ToolPalette : Container, OrientableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
-	
-	void delegate(Adjustment, Adjustment, ToolPalette)[] onSetScrollAdjustmentsListeners;
-	/**
-	 * Set the scroll adjustments for the viewport.
-	 * Usually scrolled containers like GtkScrolledWindow will emit this
-	 * signal to connect two instances of GtkScrollbar to the scroll
-	 * directions of the GtkToolpalette.
-	 * Since 2.20
-	 */
-	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, ToolPalette) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("set-scroll-adjustments" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"set-scroll-adjustments",
-			cast(GCallback)&callBackSetScrollAdjustments,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["set-scroll-adjustments"] = 1;
-		}
-		onSetScrollAdjustmentsListeners ~= dlg;
-	}
-	extern(C) static void callBackSetScrollAdjustments(GtkToolPalette* widgetStruct, GtkAdjustment* hadjustment, GtkAdjustment* vadjustment, ToolPalette toolPalette)
-	{
-		foreach ( void delegate(Adjustment, Adjustment, ToolPalette) dlg ; toolPalette.onSetScrollAdjustmentsListeners )
-		{
-			dlg(new Adjustment(hadjustment), new Adjustment(vadjustment), toolPalette);
-		}
-	}
-	
 	
 	/**
 	 * Creates a new tool palette.
@@ -472,6 +437,8 @@ public class ToolPalette : Container, OrientableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tool_palette_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
 	 * Gets the horizontal adjustment of the tool palette.
 	 * Since 2.20
 	 * Returns: the horizontal adjustment of palette. [transfer none]
@@ -488,6 +455,8 @@ public class ToolPalette : Container, OrientableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tool_palette_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
 	 * Gets the vertical adjustment of the tool palette.
 	 * Since 2.20
 	 * Returns: the vertical adjustment of palette. [transfer none]

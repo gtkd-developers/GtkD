@@ -100,7 +100,7 @@ public interface SourceCompletionProposalIF
 	 * plain text. If you need any markup (such as bold or italic text), you have
 	 * to implement gtk_source_completion_proposal_get_markup. The returned string
 	 * must be freed with g_free().
-	 * Returns: A new string containing the label of proposal.
+	 * Returns: a new string containing the label of proposal.
 	 */
 	public string getLabel();
 	
@@ -109,7 +109,7 @@ public interface SourceCompletionProposalIF
 	 * proposals and may contain markup. This will be used instead of
 	 * gtk_source_completion_proposal_get_label if implemented. The returned string
 	 * must be freed with g_free().
-	 * Returns: A new string containing the label of proposal with markup.
+	 * Returns: a new string containing the label of proposal with markup.
 	 */
 	public string getMarkup();
 	
@@ -118,13 +118,13 @@ public interface SourceCompletionProposalIF
 	 * the text buffer when the proposal is activated by the default activation.
 	 * You are free to implement a custom activation handler in the provider and
 	 * not implement this function. The returned string must be freed with g_free().
-	 * Returns: A new string containing the text of proposal.
+	 * Returns: a new string containing the text of proposal.
 	 */
 	public string getText();
 	
 	/**
 	 * Gets the icon of proposal.
-	 * Returns: The icon of proposal.
+	 * Returns: The icon of proposal. [transfer none]
 	 */
 	public Pixbuf getIcon();
 	
@@ -132,7 +132,7 @@ public interface SourceCompletionProposalIF
 	 * Gets extra information associated to the proposal. This information will be
 	 * used to present the user with extra, detailed information about the
 	 * selected proposal. The returned string must be freed with g_free().
-	 * Returns: A new string containing extra information of proposal or NULL if no extra information is associated to proposal.
+	 * Returns: a new string containing extra information of proposal or NULL if no extra information is associated to proposal.
 	 */
 	public string getInfo();
 	
@@ -147,7 +147,7 @@ public interface SourceCompletionProposalIF
 	 * Get the hash value of proposal. This is used to (together with
 	 * gtk_source_completion_proposal_equal) to match proposals in the completion
 	 * model. By default, it uses a direct hash (g_direct_hash).
-	 * Returns: The hash value of proposal
+	 * Returns: The hash value of proposal.
 	 */
 	public uint hash();
 	
@@ -156,8 +156,8 @@ public interface SourceCompletionProposalIF
 	 * with gtk_source_completion_proposal_hash) to match proposals in the
 	 * completion model. By default, it uses direct equality (g_direct_equal).
 	 * Params:
-	 * other = A GtkSourceCompletionProposal
-	 * Returns: TRUE if proposal and object are the same proposal Signal Details The "changed" signal void user_function (GtkSourceCompletionProposal *proposal, gpointer user_data) : Run Last / Action Emitted when the proposal has changed. The completion popup will react to this by updating the shown information.
+	 * other = a GtkSourceCompletionProposal.
+	 * Returns: TRUE if proposal and object are the same proposal Signal Details The "changed" signal void user_function (GtkSourceCompletionProposal *proposal, gpointer user_data) : Action Emitted when the proposal has changed. The completion popup will react to this by updating the shown information.
 	 */
 	public int equal(SourceCompletionProposalIF other);
 }

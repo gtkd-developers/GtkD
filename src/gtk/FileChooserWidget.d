@@ -151,29 +151,4 @@ public class FileChooserWidget : VBox
 		}
 		this(cast(GtkFileChooserWidget*) p);
 	}
-	
-	/**
-	 * Warning
-	 * gtk_file_chooser_widget_new_with_backend has been deprecated since version 2.14 and should not be used in newly-written code. Use gtk_file_chooser_widget_new() instead.
-	 * Creates a new GtkFileChooserWidget with a specified backend. This is
-	 * especially useful if you use gtk_file_chooser_set_local_only() to allow
-	 * non-local files. This is a file chooser widget that can be embedded in
-	 * custom windows and it is the same widget that is used by
-	 * GtkFileChooserDialog.
-	 * Since 2.4
-	 * Params:
-	 * action = Open or save mode for the widget
-	 * backend = The name of the specific filesystem backend to use.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GtkFileChooserAction action, string backend)
-	{
-		// GtkWidget * gtk_file_chooser_widget_new_with_backend  (GtkFileChooserAction action,  const gchar *backend);
-		auto p = gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend))");
-		}
-		this(cast(GtkFileChooserWidget*) p);
-	}
 }

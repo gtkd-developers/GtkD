@@ -124,11 +124,15 @@ private import gobject.ObjectG;
  * actions, which can be toggled between two states and radio actions, of which only one in a group
  * can be in the "active" state. Other actions can be implemented as GtkAction
  * subclasses.
- * Each action can have one or more proxy menu item, toolbar button or
- * other proxy widgets. Proxies mirror the state of the action (text
- * label, tooltip, icon, visible, sensitive, etc), and should change when
- * the action's state changes. When the proxy is activated, it should
- * activate its action.
+ * Each action can have one or more proxy widgets. To act as an action proxy,
+ * widget needs to implement GtkActivatable interface. Proxies mirror the state
+ * of the action and should change when the action's state changes. Properties
+ * that are always mirrored by proxies are "sensitive" and
+ * "visible". "gicon", "icon-name", "label",
+ * "short-label" and "stock-id" properties are only mirorred
+ * if proxy widget has "use-action-appearance" property set to
+ * TRUE.
+ * When the proxy is activated, it should activate its action.
  */
 public class Action : ObjectG, BuildableIF
 {
@@ -308,7 +312,7 @@ public class Action : ObjectG, BuildableIF
 	 * The "activate" signal is emitted when the action is activated.
 	 * Since 2.4
 	 * See Also
-	 * GtkActionGroup, GtkUIManager
+	 * GtkActionGroup, GtkUIManager, GtkActivatable
 	 */
 	void addOnActivate(void delegate(Action) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -343,10 +347,11 @@ public class Action : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * name = A unique name for the action
-	 * label = the label displayed in menu items and on buttons, or NULL. [allow-none]
+	 * label = the label displayed in menu items and on buttons,
+	 * or NULL. [allow-none]
 	 * tooltip = a tooltip for the action, or NULL. [allow-none]
-	 * stockId = the stock icon to display in widgets representing the
-	 * action, or NULL
+	 * stockId = the stock icon to display in widgets representing
+	 * the action, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, string stockId)
@@ -463,42 +468,8 @@ public class Action : ObjectG, BuildableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_action_connect_proxy has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_activatable_set_related_action() instead.
-	 * Connects a widget to an action object as a proxy. Synchronises
-	 * various properties of the action with the widget (such as label
-	 * text, icon, tooltip, etc), and attaches a callback so that the
-	 * action gets activated when the proxy widget does.
-	 * If the widget is already connected to an action, it is disconnected
-	 * first.
-	 * Since 2.4
-	 * Params:
-	 * proxy = the proxy widget
-	 */
-	public void connectProxy(Widget proxy)
-	{
-		// void gtk_action_connect_proxy (GtkAction *action,  GtkWidget *proxy);
-		gtk_action_connect_proxy(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_disconnect_proxy has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_activatable_set_related_action() instead.
-	 * Disconnects a proxy widget from an action.
-	 * Does not destroy the widget, however.
-	 * Since 2.4
-	 * Params:
-	 * proxy = the proxy widget
-	 */
-	public void disconnectProxy(Widget proxy)
-	{
-		// void gtk_action_disconnect_proxy (GtkAction *action,  GtkWidget *proxy);
-		gtk_action_disconnect_proxy(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
-	}
-	
-	/**
 	 * Returns the proxy widgets for an action.
-	 * See also gtk_widget_get_action().
+	 * See also gtk_activatable_get_related_action().
 	 * Since 2.4
 	 * Returns: a GSList of proxy widgets. The list is owned by GTK+ and must not be modified. [element-type GtkWidget][transfer none]
 	 */
@@ -561,42 +532,6 @@ public class Action : ObjectG, BuildableIF
 	{
 		// void gtk_action_unblock_activate (GtkAction *action);
 		gtk_action_unblock_activate(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_block_activate_from has been deprecated since version 2.16 and should not be used in newly-written code. activatables are now responsible for activating the
-	 * action directly so this doesnt apply anymore.
-	 * Disables calls to the gtk_action_activate()
-	 * function by signals on the given proxy widget. This is used to
-	 * break notification loops for things like check or radio actions.
-	 * This function is intended for use by action implementations.
-	 * Since 2.4
-	 * Params:
-	 * proxy = a proxy widget
-	 */
-	public void blockActivateFrom(Widget proxy)
-	{
-		// void gtk_action_block_activate_from (GtkAction *action,  GtkWidget *proxy);
-		gtk_action_block_activate_from(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_unblock_activate_from has been deprecated since version 2.16 and should not be used in newly-written code. activatables are now responsible for activating the
-	 * action directly so this doesnt apply anymore.
-	 * Re-enables calls to the gtk_action_activate()
-	 * function by signals on the given proxy widget. This undoes the
-	 * blocking done by gtk_action_block_activate_from().
-	 * This function is intended for use by action implementations.
-	 * Since 2.4
-	 * Params:
-	 * proxy = a proxy widget
-	 */
-	public void unblockActivateFrom(Widget proxy)
-	{
-		// void gtk_action_unblock_activate_from (GtkAction *action,  GtkWidget *proxy);
-		gtk_action_unblock_activate_from(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
 	}
 	
 	/**

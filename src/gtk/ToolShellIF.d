@@ -121,7 +121,7 @@ public interface ToolShellIF
 	
 	/**
 	 * Retrieves whether the tool shell has text, icons, or both. Tool items must
-	 * not call this function directly, but rely on gtk_tool_item_get_style()
+	 * not call this function directly, but rely on gtk_tool_item_get_toolbar_style()
 	 * instead.
 	 * Since 2.14
 	 * Returns: the current style of shell

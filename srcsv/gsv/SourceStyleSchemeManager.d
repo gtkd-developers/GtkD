@@ -140,7 +140,7 @@ public class SourceStyleSchemeManager : ObjectG
 	
 	/**
 	 * Returns the default GtkSourceStyleSchemeManager instance.
-	 * Returns: a GtkSourceStyleSchemeManager. Return value is owned by GtkSourceView library and must not be unref'ed.
+	 * Returns: a GtkSourceStyleSchemeManager. Return value is owned by GtkSourceView library and must not be unref'ed. [transfer none]
 	 */
 	public static SourceStyleSchemeManager getDefault()
 	{
@@ -156,9 +156,9 @@ public class SourceStyleSchemeManager : ObjectG
 	/**
 	 * Sets the list of directories where the manager looks for
 	 * style scheme files.
-	 * If dirs is NULL, the search path is reset to default.
+	 * If path is NULL, the search path is reset to default.
 	 * Params:
-	 * path = a NULL-terminated array of strings or NULL.
+	 * path = a NULL-terminated array of strings or NULL. [array zero-terminated=1][allow-none]
 	 */
 	public void setSearchPath(string[] path)
 	{
@@ -195,7 +195,7 @@ public class SourceStyleSchemeManager : ObjectG
 	/**
 	 * Returns the current search path for the manager.
 	 * See gtk_source_style_scheme_manager_set_search_path() for details.
-	 * Returns: a NULL-terminated array of string containing the search path. The array is owned by the manager and must not be modified.
+	 * Returns: a NULL-terminated array of string containing the search path. The array is owned by the manager and must not be modified. [array zero-terminated=1][transfer none]
 	 */
 	public string[] getSearchPath()
 	{
@@ -205,7 +205,7 @@ public class SourceStyleSchemeManager : ObjectG
 	
 	/**
 	 * Returns the ids of the available style schemes.
-	 * Returns: a NULL-terminated array of string containing the ids of the available style schemes or NULL if no style scheme is available. The array is owned by the manager and must not be modified.
+	 * Returns: a NULL-terminated array of string containing the ids of the available style schemes or NULL if no style scheme is available. The array is owned by the manager and must not be modified. [array zero-terminated=1][transfer none]
 	 */
 	public string[] getSchemeIds()
 	{
@@ -216,8 +216,8 @@ public class SourceStyleSchemeManager : ObjectG
 	/**
 	 * Looks up style scheme by id.
 	 * Params:
-	 * schemeId = style scheme id to find
-	 * Returns: a GtkSourceStyleScheme object. Returned value is owned by manager and must not be unref'ed.
+	 * schemeId = style scheme id to find.
+	 * Returns: a GtkSourceStyleScheme object. Returned value is owned by manager and must not be unref'ed. [transfer none]
 	 */
 	public SourceStyleScheme getScheme(string schemeId)
 	{

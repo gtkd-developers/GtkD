@@ -173,9 +173,6 @@ class CustomList : TreeModel
 			case CustomListColumn.YearBorn:
 				value.setUint(record.yearBorn);
 				break;
-
-			default:
-				break;
 		}
 
 		return value;

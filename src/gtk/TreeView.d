@@ -116,13 +116,14 @@ private import gtk.Container;
  * to the tree widget and how they work together.
  * Several different coordinate systems are exposed in the GtkTreeView API.
  * These are:
- * Widget coordinates -- coordinates relative to the widget
- *  (usually widget->window.
- * Bin window coordinates -- coordinates relative to the window
- *  that GtkTreeView renders to.
- * Tree coordinates -- coordinates relative to the entire scrollable
- *  area of GtkTreeView. These coordinates start at (0, 0) for row 0 of the
- *  tree.
+ * Coordinate systems in GtkTreeView API
+ * Widget coordinates
+ * Coordinates relative to the widget (usually widget->window).
+ * Bin window coordinates
+ * Coordinates relative to the window that GtkTreeView renders to.
+ * Tree coordinates
+ * Coordinates relative to the entire scrollable area of GtkTreeView. These
+ * coordinates start at (0, 0) for row 0 of the tree.
  * Several functions are available for converting between the different
  * coordinate systems. The most common translations are between widget and bin
  * window coordinates and between bin window and tree coordinates. For the
@@ -564,35 +565,6 @@ public class TreeView : Container
 		return 0;
 	}
 	
-	void delegate(Adjustment, Adjustment, TreeView)[] onSetScrollAdjustmentsListeners;
-	/**
-	 * Set the scroll adjustments for the tree view. Usually scrolled containers
-	 * like GtkScrolledWindow will emit this signal to connect two instances
-	 * of GtkScrollbar to the scroll directions of the GtkTreeView.
-	 */
-	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("set-scroll-adjustments" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"set-scroll-adjustments",
-			cast(GCallback)&callBackSetScrollAdjustments,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["set-scroll-adjustments"] = 1;
-		}
-		onSetScrollAdjustmentsListeners ~= dlg;
-	}
-	extern(C) static void callBackSetScrollAdjustments(GtkTreeView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TreeView treeView)
-	{
-		foreach ( void delegate(Adjustment, Adjustment, TreeView) dlg ; treeView.onSetScrollAdjustmentsListeners )
-		{
-			dlg(new Adjustment(vertical), new Adjustment(arg2), treeView);
-		}
-	}
-	
 	bool delegate(TreeView)[] onStartInteractiveSearchListeners;
 	/**
 	 */
@@ -726,7 +698,10 @@ public class TreeView : Container
 	bool delegate(TreeView)[] onUnselectAllListeners;
 	/**
 	 * See Also
-	 * GtkTreeViewColumn, GtkTreeSelection, GtkTreeDnd, GtkTreeMode, GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore, GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf, GtkCellRendererText, GtkCellRendererToggle
+	 * GtkTreeViewColumn, GtkTreeSelection, GtkTreeDnd, GtkTreeMode,
+	 *  GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore,
+	 *  GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf,
+	 *  GtkCellRendererText, GtkCellRendererToggle
 	 */
 	void addOnUnselectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -891,6 +866,8 @@ public class TreeView : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tree_view_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
 	 * Gets the GtkAdjustment currently being used for the horizontal aspect.
 	 * Returns: A GtkAdjustment object, or NULL if none is currently being used. [transfer none]
 	 */
@@ -906,6 +883,8 @@ public class TreeView : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tree_view_set_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
 	 * Sets the GtkAdjustment for the current horizontal aspect.
 	 * Params:
 	 * adjustment = The GtkAdjustment to set, or NULL. [allow-none]
@@ -917,6 +896,8 @@ public class TreeView : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tree_view_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
 	 * Gets the GtkAdjustment currently being used for the vertical aspect.
 	 * Returns: A GtkAdjustment object, or NULL if none is currently being used. [transfer none]
 	 */
@@ -932,6 +913,8 @@ public class TreeView : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tree_view_set_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
 	 * Sets the GtkAdjustment for the current vertical aspect.
 	 * Params:
 	 * adjustment = The GtkAdjustment to set, or NULL. [allow-none]
@@ -1470,6 +1453,36 @@ public class TreeView : Container
 	}
 	
 	/**
+	 * Determine whether the point (x, y) in tree_view is blank, that is no
+	 * cell content nor an expander arrow is drawn at the location. If so, the
+	 * location can be considered as the background. You might wish to take
+	 * special action on clicks on the background, such as clearing a current
+	 * selection, having a custom context menu or starting rubber banding.
+	 * The x and y coordinate that are provided must be relative to bin_window
+	 * coordinates. That is, x and y must come from an event on tree_view
+	 * where event->window == gtk_tree_view_get_bin_window ().
+	 * For converting widget coordinates (eg. the ones you get from
+	 * GtkWidget::query-tooltip), please see
+	 * gtk_tree_view_convert_widget_to_bin_window_coords().
+	 * The path, column, cell_x and cell_y arguments will be filled in
+	 * likewise as for gtk_tree_view_get_path_at_pos(). Please see
+	 * gtk_tree_view_get_path_at_pos() for more information.
+	 * Params:
+	 * x = The x position to be identified (relative to bin_window)
+	 * y = The y position to be identified (relative to bin_window)
+	 * path = A pointer to a GtkTreePath pointer to be filled in, or NULL. [out][allow-none]
+	 * column = A pointer to a GtkTreeViewColumn pointer to be filled in, or NULL. [out][allow-none]
+	 * cellX = A pointer where the X coordinate relative to the cell can be placed, or NULL. [out][allow-none]
+	 * cellY = A pointer where the Y coordinate relative to the cell can be placed, or NULL. [out][allow-none]
+	 * Returns: TRUE if the area at the given coordinates is blank, FALSE otherwise. Since 3.0
+	 */
+	public int isBlankAtPos(int x, int y, GtkTreePath** path, GtkTreeViewColumn** column, int* cellX, int* cellY)
+	{
+		// gboolean gtk_tree_view_is_blank_at_pos (GtkTreeView *tree_view,  gint x,  gint y,  GtkTreePath **path,  GtkTreeViewColumn **column,  gint *cell_x,  gint *cell_y);
+		return gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, path, column, cellX, cellY);
+	}
+	
+	/**
 	 * Fills the bounding rectangle in bin_window coordinates for the cell at the
 	 * row specified by path and the column specified by column. If path is
 	 * NULL, or points to a path not currently displayed, the y and height fields
@@ -1565,46 +1578,6 @@ public class TreeView : Container
 			return null;
 		}
 		return new Window(cast(GdkWindow*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_tree_view_widget_to_tree_coords has been deprecated since version 2.12 and should not be used in newly-written code. Due to historial reasons the name of this function is
-	 * incorrect. For converting coordinates relative to the widget to
-	 * bin_window coordinates, please see
-	 * gtk_tree_view_convert_widget_to_bin_window_coords().
-	 * Converts bin_window coordinates to coordinates for the
-	 * tree (the full scrollable area of the tree).
-	 * Params:
-	 * wx = X coordinate relative to bin_window
-	 * wy = Y coordinate relative to bin_window
-	 * tx = return location for tree X coordinate
-	 * ty = return location for tree Y coordinate
-	 */
-	public void widgetToTreeCoords(int wx, int wy, out int tx, out int ty)
-	{
-		// void gtk_tree_view_widget_to_tree_coords (GtkTreeView *tree_view,  gint wx,  gint wy,  gint *tx,  gint *ty);
-		gtk_tree_view_widget_to_tree_coords(gtkTreeView, wx, wy, &tx, &ty);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_tree_view_tree_to_widget_coords has been deprecated since version 2.12 and should not be used in newly-written code. Due to historial reasons the name of this function is
-	 * incorrect. For converting bin_window coordinates to coordinates relative
-	 * to bin_window, please see
-	 * gtk_tree_view_convert_bin_window_to_widget_coords().
-	 * Converts tree coordinates (coordinates in full scrollable area of the tree)
-	 * to bin_window coordinates.
-	 * Params:
-	 * tx = tree X coordinate
-	 * ty = tree Y coordinate
-	 * wx = return location for X coordinate relative to bin_window
-	 * wy = return location for Y coordinate relative to bin_window
-	 */
-	public void treeToWidgetCoords(int tx, int ty, out int wx, out int wy)
-	{
-		// void gtk_tree_view_tree_to_widget_coords (GtkTreeView *tree_view,  gint tx,  gint ty,  gint *wx,  gint *wy);
-		gtk_tree_view_tree_to_widget_coords(gtkTreeView, tx, ty, &wx, &wy);
 	}
 	
 	/**
@@ -1707,7 +1680,8 @@ public class TreeView : Container
 	 * Turns tree_view into a drop destination for automatic DND. Calling
 	 * this method sets "reorderable" to FALSE.
 	 * Params:
-	 * targets = the table of targets that the drag will support. [array length=n_targets]
+	 * targets = the table of targets that
+	 * the drag will support. [array length=n_targets]
 	 * actions = the bitmask of possible actions for a drag from this
 	 * widget
 	 */
@@ -1722,7 +1696,7 @@ public class TreeView : Container
 	 * method sets "reorderable" to FALSE.
 	 * Params:
 	 * startButtonMask = Mask of allowed buttons to start drag
-	 * targets = the table of targets that the drag will support. [array length=n_targets]
+	 * targets = the table of targets that the drag will support. [array]
 	 * actions = the bitmask of possible actions for a drag from this
 	 * widget
 	 */
@@ -1806,21 +1780,16 @@ public class TreeView : Container
 	}
 	
 	/**
-	 * Creates a GdkPixmap representation of the row at path.
+	 * Creates a cairo_surface_t representation of the row at path.
 	 * This image is used for a drag icon.
 	 * Params:
 	 * path = a GtkTreePath in tree_view
-	 * Returns: a newly-allocated pixmap of the drag icon. [transfer none]
+	 * Returns: a newly-allocated surface of the drag icon. [transfer full]
 	 */
-	public Pixmap createRowDragIcon(TreePath path)
+	public cairo_surface_t* createRowDragIcon(TreePath path)
 	{
-		// GdkPixmap * gtk_tree_view_create_row_drag_icon (GtkTreeView *tree_view,  GtkTreePath *path);
-		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
-		if(p is null)
-		{
-			return null;
-		}
-		return new Pixmap(cast(GdkPixmap*) p);
+		// cairo_surface_t * gtk_tree_view_create_row_drag_icon (GtkTreeView *tree_view,  GtkTreePath *path);
+		return gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -2070,7 +2039,7 @@ public class TreeView : Container
 	 * function is NULL, no separators are drawn. This is the default value.
 	 * Since 2.6
 	 * Params:
-	 * func = a GtkTreeViewRowSeparatorFunc
+	 * func = a GtkTreeViewRowSeparatorFunc. [allow-none]
 	 * data = user data to pass to func, or NULL. [allow-none]
 	 * destroy = destroy notifier for data, or NULL. [allow-none]
 	 */

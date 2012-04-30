@@ -203,11 +203,11 @@ public class IconFactory : ObjectG
 	 * function directly, so that themes are taken into account.
 	 * Params:
 	 * stockId = an icon name
-	 * Returns: icon set of stock_id.
+	 * Returns: icon set of stock_id. [transfer none]
 	 */
 	public IconSet lookup(string stockId)
 	{
-		// GtkIconSet* gtk_icon_factory_lookup (GtkIconFactory *factory,  const gchar *stock_id);
+		// GtkIconSet * gtk_icon_factory_lookup (GtkIconFactory *factory,  const gchar *stock_id);
 		auto p = gtk_icon_factory_lookup(gtkIconFactory, Str.toStringz(stockId));
 		if(p is null)
 		{
@@ -224,11 +224,11 @@ public class IconFactory : ObjectG
 	 * account.
 	 * Params:
 	 * stockId = an icon name
-	 * Returns: a GtkIconSet, or NULL
+	 * Returns: a GtkIconSet, or NULL. [transfer none]
 	 */
 	public static IconSet lookupDefault(string stockId)
 	{
-		// GtkIconSet* gtk_icon_factory_lookup_default (const gchar *stock_id);
+		// GtkIconSet * gtk_icon_factory_lookup_default (const gchar *stock_id);
 		auto p = gtk_icon_factory_lookup_default(Str.toStringz(stockId));
 		if(p is null)
 		{
@@ -255,7 +255,7 @@ public class IconFactory : ObjectG
 	 */
 	public this ()
 	{
-		// GtkIconFactory* gtk_icon_factory_new (void);
+		// GtkIconFactory * gtk_icon_factory_new (void);
 		auto p = gtk_icon_factory_new();
 		if(p is null)
 		{

@@ -89,9 +89,9 @@ private import gobject.ObjectG;
  * from the layout margins that a word processor uses; they are typically
  * used to determine the minimal size for the layout
  * margins.
- * To obtain a GtkPageSetup use gtk_page_setup_new()
- * to get the defaults, or use gtk_print_run_page_setup_dialog() to show
- * the page setup dialog and receive the resulting page setup.
+ * To obtain a GtkPageSetup use gtk_page_setup_new() to get the defaults,
+ * or use gtk_print_run_page_setup_dialog() to show the page setup dialog
+ * and receive the resulting page setup.
  * $(DDOC_COMMENT example)
  * Printing support was added in GTK+ 2.10.
  */
@@ -416,7 +416,7 @@ public class PageSetup : ObjectG
 	 * or NULL if an error occurred. See gtk_page_setup_to_file().
 	 * Since 2.12
 	 * Params:
-	 * fileName = the filename to read the page setup from
+	 * fileName = the filename to read the page setup from. [type filename]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -475,7 +475,7 @@ public class PageSetup : ObjectG
 	 * See gtk_page_setup_to_file().
 	 * Since 2.14
 	 * Params:
-	 * fileName = the filename to read the page setup from
+	 * fileName = the filename to read the page setup from. [type filename]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -524,7 +524,7 @@ public class PageSetup : ObjectG
 	 * This function saves the information from setup to file_name.
 	 * Since 2.12
 	 * Params:
-	 * fileName = the file to save to
+	 * fileName = the file to save to. [type filename]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */

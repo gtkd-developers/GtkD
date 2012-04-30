@@ -65,16 +65,19 @@ private import gtk.Range;
 
 /**
  * Description
- * The GtkScrollbar widget is an abstract base class for GtkHScrollbar and
- * GtkVScrollbar. It is not very useful in itself.
+ * The GtkScrollbar widget is the base class for GtkHScrollbar and
+ * GtkVScrollbar. It can be used in the same way as these, by setting
+ * the "orientation" property appropriately.
  * The position of the thumb in a scrollbar is controlled by the scroll
  * adjustments. See GtkAdjustment for the fields in an adjustment - for
- * GtkScrollbar, the "value" field represents the position of the
- * scrollbar, which must be between the "lower" field and "upper -
- * page_size." The "page_size" field represents the size of the visible
- * scrollable area. The "step_increment" and "page_increment" fields are
- * used when the user asks to step down (using the small stepper arrows)
- * or page down (using for example the PageDown key).
+ * GtkScrollbar, the GtkAdjustment.value field represents the position
+ * of the scrollbar, which must be between the GtkAdjustment.lower field
+ * and GtkAdjustment.upper - GtkAdjustment.page_size. The
+ * GtkAdjustment.page_size field represents the size of the visible
+ * scrollable area. The GtkAdjustment.step_increment and
+ * GtkAdjustment.page_increment fields are used when the user asks to
+ * step down (using the small stepper arrows) or page down (using for
+ * example the PageDown key).
  */
 public class Scrollbar : Range
 {
@@ -124,4 +127,22 @@ public class Scrollbar : Range
 	
 	/**
 	 */
+	
+	/**
+	 * Creates a new scrollbar with the given orientation.
+	 * Params:
+	 * orientation = the scrollbar's orientation.
+	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment. [allow-none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkOrientation orientation, GtkAdjustment* adjustment)
+	{
+		// GtkWidget * gtk_scrollbar_new (GtkOrientation orientation,  GtkAdjustment *adjustment);
+		auto p = gtk_scrollbar_new(orientation, adjustment);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_scrollbar_new(orientation, adjustment)");
+		}
+		this(cast(GtkScrollbar*) p);
+	}
 }

@@ -78,6 +78,15 @@ private import gtk.Window;
  * A GtkAssistant is a widget used to represent a generally complex
  * operation splitted in several steps, guiding the user through its pages
  * and controlling the page flow to collect the necessary data.
+ * The design of GtkAssistant is that it controls what buttons to show and
+ * to make sensitive, based on what it knows about the page sequence and
+ * the type of each page, in
+ * addition to state information like the page
+ * completion and
+ * committed status.
+ * If you have a case that doesn't quite fit in GtkAssistants way of
+ * handling buttons, you can use the GTK_ASSISTANT_PAGE_CUSTOM page type
+ * and handle buttons yourself.
  * GtkAssistant as GtkBuildable
  * The GtkAssistant implementation of the GtkBuildable interface exposes the
  * action_area as internal children with the name "action_area".
@@ -287,8 +296,9 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Switches the page to page_num. Note that this will only be necessary
-	 * in custom buttons, as the assistant flow can be set with
+	 * Switches the page to page_num.
+	 * Note that this will only be necessary in custom buttons,
+	 * as the assistant flow can be set with
 	 * gtk_assistant_set_forward_page_func().
 	 * Since 2.10
 	 * Params:
@@ -306,7 +316,7 @@ public class Assistant : Window
 	/**
 	 * Returns the number of pages in the assistant
 	 * Since 2.10
-	 * Returns: The number of pages in the assistant.
+	 * Returns: the number of pages in the assistant
 	 */
 	public int getNPages()
 	{
@@ -318,8 +328,9 @@ public class Assistant : Window
 	 * Returns the child widget contained in page number page_num.
 	 * Since 2.10
 	 * Params:
-	 * pageNum = The index of a page in the assistant, or -1 to get the last page;
-	 * Returns: The child widget, or NULL if page_num is out of bounds. [transfer none]
+	 * pageNum = the index of a page in the assistant,
+	 * or -1 to get the last page
+	 * Returns: the child widget, or NULL if page_num is out of bounds. [transfer none]
 	 */
 	public Widget getNthPage(int pageNum)
 	{
@@ -374,14 +385,16 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Sets the page forwarding function to be page_func, this function will
-	 * be used to determine what will be the next page when the user presses
-	 * the forward button. Setting page_func to NULL will make the assistant
-	 * to use the default forward function, which just goes to the next visible
-	 * page.
+	 * Sets the page forwarding function to be page_func.
+	 * This function will be used to determine what will be
+	 * the next page when the user presses the forward button.
+	 * Setting page_func to NULL will make the assistant to
+	 * use the default forward function, which just goes to the
+	 * next visible page.
 	 * Since 2.10
 	 * Params:
-	 * pageFunc = the GtkAssistantPageFunc, or NULL to use the default one. [allow-none]
+	 * pageFunc = the GtkAssistantPageFunc, or NULL
+	 * to use the default one. [allow-none]
 	 * data = user data for page_func
 	 * destroy = destroy notifier for data
 	 */
@@ -392,8 +405,8 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Sets the page type for page. The page type determines the page
-	 * behavior in the assistant.
+	 * Sets the page type for page.
+	 * The page type determines the page behavior in the assistant.
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
@@ -410,7 +423,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * Returns: the page type of page.
+	 * Returns: the page type of page
 	 */
 	public GtkAssistantPageType getPageType(Widget page)
 	{
@@ -419,8 +432,9 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Sets a title for page. The title is displayed in the header
-	 * area of the assistant when page is the current page.
+	 * Sets a title for page.
+	 * The title is displayed in the header area of the assistant
+	 * when page is the current page.
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
@@ -437,7 +451,7 @@ public class Assistant : Window
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * Returns: the title for page.
+	 * Returns: the title for page
 	 */
 	public string getPageTitle(Widget page)
 	{
@@ -446,8 +460,9 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Sets a header image for page. This image is displayed in the header
-	 * area of the assistant when page is the current page.
+	 * Sets a header image for page.
+	 * This image is displayed in the header area of the assistant
+	 * when page is the current page.
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
@@ -478,8 +493,9 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Sets a header image for page. This image is displayed in the side
-	 * area of the assistant when page is the current page.
+	 * Sets a header image for page.
+	 * This image is displayed in the side area of the assistant
+	 * when page is the current page.
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
@@ -510,8 +526,9 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Sets whether page contents are complete. This will make
-	 * assistant update the buttons state to be able to continue the task.
+	 * Sets whether page contents are complete.
+	 * This will make assistant update the buttons state
+	 * to be able to continue the task.
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
@@ -586,18 +603,37 @@ public class Assistant : Window
 	 * a long-running, unreversible operation after the user has
 	 * clicked apply on a confirmation page.
 	 * Since 2.22
-	 * Child Property Details
-	 * The "complete" child property
-	 *  "complete" gboolean : Read / Write
-	 * Setting the "complete" child property to TRUE marks a page as complete
-	 * (i.e.: all the required fields are filled out). GTK+ uses this information
-	 * to control the sensitivity of the navigation buttons.
-	 * Default value: FALSE
-	 * Since 2.10
 	 */
 	public void commit()
 	{
 		// void gtk_assistant_commit (GtkAssistant *assistant);
 		gtk_assistant_commit(gtkAssistant);
+	}
+	
+	/**
+	 * Navigate to the next page.
+	 * It is a programming error to call this function when
+	 * there is no next page.
+	 * This function is for use when creating pages of the
+	 * GTK_ASSISTANT_PAGE_CUSTOM type.
+	 */
+	public void nextPage()
+	{
+		// void gtk_assistant_next_page (GtkAssistant *assistant);
+		gtk_assistant_next_page(gtkAssistant);
+	}
+	
+	/**
+	 * Navigate to the previous visited page.
+	 * It is a programming error to call this function when
+	 * no previous page is available.
+	 * This function is for use when creating pages of the
+	 * GTK_ASSISTANT_PAGE_CUSTOM type.
+	 * Since 2.10
+	 */
+	public void previousPage()
+	{
+		// void gtk_assistant_previous_page (GtkAssistant *assistant);
+		gtk_assistant_previous_page(gtkAssistant);
 	}
 }

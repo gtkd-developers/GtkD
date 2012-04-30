@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Testing.html
+ * inFile  = gtk3-Testing.html
  * outPack = gtk
  * outFile = Testing
  * strct   = 
@@ -153,7 +153,7 @@ public class Testing
 	 * base_widget will be returned.
 	 * The general purpose of this function is to find the most likely "action"
 	 * widget, relative to another labeling widget. Such as finding a
-	 * button or text entry widget, given it's corresponding label widget.
+	 * button or text entry widget, given its corresponding label widget.
 	 * Since 2.14
 	 * Params:
 	 * baseWidget = Valid widget, part of a widget hierarchy
@@ -232,7 +232,7 @@ public class Testing
 	 * Since 2.14
 	 * Params:
 	 * widget = valid widget pointer.
-	 * Returns: adjustment->value for an adjustment belonging to widget.
+	 * Returns: gtk_adjustment_get_value (adjustment) for an adjustment belonging to widget.
 	 */
 	public static double sliderGetValue(Widget widget)
 	{

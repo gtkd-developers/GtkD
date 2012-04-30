@@ -260,17 +260,10 @@ public class DateTime
 		 * datetime = a GDateTime
 		 * Returns: a guint containing the hash
 		 */
-		mixin("public static nothrow @trusted uint hash(DateTime datetime)
+		mixin("public static @trusted uint hash(DateTime datetime)
 		{
-			try
-			{
-				// guint g_date_time_hash (gconstpointer datetime);
-				return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
-			}
-			catch
-			{
-				return 0;
-			}
+			// guint g_date_time_hash (gconstpointer datetime);
+			return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
 		}");
 	}
 	else

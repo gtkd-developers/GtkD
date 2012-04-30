@@ -86,6 +86,34 @@ private import gtk.Dialog;
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
  * $(DDOC_COMMENT example)
+ * Setting up a file chooser dialog
+ *  There are various cases in which you may need to use a
+ *  GtkFileChooserDialog:
+ *  To select a file for opening, as for a
+ *  File/Open command. Use
+ *  GTK_FILE_CHOOSER_ACTION_OPEN.
+ *  To save a file for the first time, as for a
+ *  File/Save command. Use
+ *  GTK_FILE_CHOOSER_ACTION_SAVE, and suggest a name such as
+ *  "Untitled" with gtk_file_chooser_set_current_name().
+ *  To save a file under a different name, as for a
+ *  File/Save As command. Use
+ *  GTK_FILE_CHOOSER_ACTION_SAVE, and set the existing filename
+ *  with gtk_file_chooser_set_filename().
+ *  To choose a folder instead of a file. Use
+ *  GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
+ * Note
+ *  Old versions of the file chooser's documentation suggested
+ *  using gtk_file_chooser_set_current_folder() in various
+ *  situations, with the intention of letting the application
+ *  suggest a reasonable default folder. This is no longer
+ *  considered to be a good policy, as now the file chooser is
+ *  able to make good suggestions on its own. In general, you
+ *  should only cause the file chooser to show a specific folder
+ *  when it is appropriate to use gtk_file_chooser_set_filename()
+ *  - i.e. when you are doing a File/Save
+ *  As command and you already
+ *  have a file saved somewhere.
  * Response Codes
  *  GtkFileChooserDialog inherits from GtkDialog, so buttons that
  *  go in its action area have response codes such as

@@ -154,23 +154,6 @@ public class FontSelection : VBox
 	}
 	
 	/**
-	 * Warning
-	 * gtk_font_selection_get_font has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_font_selection_get_font_name() instead.
-	 * Gets the currently-selected font.
-	 * Returns: A GdkFont.
-	 */
-	public Font getFont()
-	{
-		// GdkFont * gtk_font_selection_get_font (GtkFontSelection *fontsel);
-		auto p = gtk_font_selection_get_font(gtkFontSelection);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Font(cast(GdkFont*) p);
-	}
-	
-	/**
 	 * Gets the currently-selected font name.
 	 * Note that this can be a different string than what you set with
 	 * gtk_font_selection_set_font_name(), as the font selection widget may

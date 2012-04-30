@@ -146,6 +146,36 @@ public class SourceBuffer : TextBuffer
 	 */
 	int[char[]] connectedSignals;
 	
+	void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer)[] onBracketMatchedListeners;
+	/**
+	 * Sets iter to a valid iterator pointing to the matching bracket
+	 * if state is GTK_SOURCE_BRACKET_MATCH_FOUND. Otherwise iter is
+	 * meaningless.
+	 * Since 2.12
+	 */
+	void addOnBracketMatched(void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("bracket-matched" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"bracket-matched",
+			cast(GCallback)&callBackBracketMatched,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["bracket-matched"] = 1;
+		}
+		onBracketMatchedListeners ~= dlg;
+	}
+	extern(C) static void callBackBracketMatched(GtkSourceBuffer* bufferStruct, GtkTextIter* iter, GtkSourceBracketMatchType state, SourceBuffer sourceBuffer)
+	{
+		foreach ( void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg ; sourceBuffer.onBracketMatchedListeners )
+		{
+			dlg(new TextIter(iter), state, sourceBuffer);
+		}
+	}
+	
 	void delegate(TextIter, TextIter, SourceBuffer)[] onHighlightUpdatedListeners;
 	/**
 	 */
@@ -258,7 +288,7 @@ public class SourceBuffer : TextBuffer
 	/**
 	 * Creates a new source buffer.
 	 * Params:
-	 * table = a GtkTextTagTable, or NULL to create a new one.
+	 * table = a GtkTextTagTable, or NULL to create a new one. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TextTagTable table)
@@ -319,14 +349,14 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Associate a GtkSourceLanguage with the source buffer. If language is
+	 * Associate a GtkSourceLanguage with the buffer. If language is
 	 * not-NULL and syntax highlighting is enabled (see gtk_source_buffer_set_highlight_syntax()),
 	 * the syntax patterns defined in language will be used to highlight the text
 	 * contained in the buffer. If language is NULL, the text contained in the
 	 * buffer is not highlighted.
 	 * The buffer holds a reference to language.
 	 * Params:
-	 * language = a GtkSourceLanguage to set, or NULL.
+	 * language = a GtkSourceLanguage to set, or NULL. [allow-none]
 	 */
 	public void setLanguage(SourceLanguage language)
 	{
@@ -338,7 +368,7 @@ public class SourceBuffer : TextBuffer
 	 * Returns the GtkSourceLanguage associated with the buffer,
 	 * see gtk_source_buffer_set_language(). The returned object should not be
 	 * unreferenced by the user.
-	 * Returns: GtkSourceLanguage associated with the buffer, or NULL.
+	 * Returns: the GtkSourceLanguage associated with the buffer, or NULL. [transfer none]
 	 */
 	public SourceLanguage getLanguage()
 	{
@@ -382,7 +412,7 @@ public class SourceBuffer : TextBuffer
 	 * Sets style scheme used by the buffer. If scheme is NULL no
 	 * style scheme is used.
 	 * Params:
-	 * scheme = style scheme.
+	 * scheme = a GtkSourceStyleScheme or NULL. [allow-none]
 	 */
 	public void setStyleScheme(SourceStyleScheme scheme)
 	{
@@ -391,8 +421,10 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Returns the GtkSourceStyleScheme currently used in buffer.
-	 * Returns: the GtkSourceStyleScheme set by gtk_source_buffer_set_style_scheme(), or NULL.
+	 * Returns the GtkSourceStyleScheme associated with the buffer,
+	 * see gtk_source_buffer_set_style_scheme().
+	 * The returned object should not be unreferenced by the user.
+	 * Returns: the GtkSourceStyleScheme associated with the buffer, or NULL. [transfer none]
 	 */
 	public SourceStyleScheme getStyleScheme()
 	{
@@ -509,6 +541,22 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
+	 * Forces buffer to analyze and highlight the given area synchronously.
+	 * Note
+	 *  This is a potentially slow operation and should be used only
+	 *  when you need to make sure that some text not currently
+	 *  visible is highlighted, for instance before printing.
+	 * Params:
+	 * start = start of the area to highlight.
+	 * end = end of the area to highlight.
+	 */
+	public void ensureHighlight(TextIter start, TextIter end)
+	{
+		// void gtk_source_buffer_ensure_highlight (GtkSourceBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end);
+		gtk_source_buffer_ensure_highlight(gtkSourceBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
+	}
+	
+	/**
 	 * Creates a source mark in the buffer of category category. A source mark is
 	 * a GtkTextMark but organised into categories. Depending on the category
 	 * a pixbuf can be specified that will be displayed along the line of the mark.
@@ -521,10 +569,10 @@ public class SourceBuffer : TextBuffer
 	 * executing instruction indication in a source file, etc..
 	 * Since 2.2
 	 * Params:
-	 * name = the name of the mark, or NULL.
+	 * name = the name of the mark, or NULL. [allow-none]
 	 * category = a string defining the mark category.
 	 * where = location to place the mark.
-	 * Returns: a new GtkSourceMark, owned by the buffer.
+	 * Returns: a new GtkSourceMark, owned by the buffer. [transfer none]
 	 */
 	public SourceMark createSourceMark(string name, string category, TextIter where)
 	{
@@ -538,13 +586,45 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
+	 * Moves iter to the position of the next GtkSourceMark of the given
+	 * category. Returns TRUE if iter was moved. If category is NULL, the
+	 * next source mark can be of any category.
+	 * Since 2.2
+	 * Params:
+	 * iter = an iterator.
+	 * category = category to search for, or NULL. [allow-none]
+	 * Returns: whether iter was moved.
+	 */
+	public int forwardIterToSourceMark(TextIter iter, string category)
+	{
+		// gboolean gtk_source_buffer_forward_iter_to_source_mark  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
+		return gtk_source_buffer_forward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
+	}
+	
+	/**
+	 * Moves iter to the position of the previous GtkSourceMark of the given
+	 * category. Returns TRUE if iter was moved. If category is NULL, the
+	 * previous source mark can be of any category.
+	 * Since 2.2
+	 * Params:
+	 * iter = an iterator.
+	 * category = category to search for, or NULL. [allow-none]
+	 * Returns: whether iter was moved.
+	 */
+	public int backwardIterToSourceMark(TextIter iter, string category)
+	{
+		// gboolean gtk_source_buffer_backward_iter_to_source_mark  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
+		return gtk_source_buffer_backward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
+	}
+	
+	/**
 	 * Returns the list of marks of the given category at line.
 	 * If category is NULL, all marks at line are returned.
 	 * Since 2.2
 	 * Params:
 	 * line = a line number.
-	 * category = category to search for or NULL
-	 * Returns: a newly allocated GSList.
+	 * category = category to search for, or NULL. [allow-none]
+	 * Returns: a newly allocated GSList. [element-type GtkSource.Mark][transfer container]
 	 */
 	public ListSG getSourceMarksAtLine(int line, string category)
 	{
@@ -563,8 +643,8 @@ public class SourceBuffer : TextBuffer
 	 * Since 2.2
 	 * Params:
 	 * iter = an iterator.
-	 * category = category to search for or NULL
-	 * Returns: a newly allocated GSList.
+	 * category = category to search for, or NULL. [allow-none]
+	 * Returns: a newly allocated GSList. [element-type GtkSource.Mark][transfer container]
 	 */
 	public ListSG getSourceMarksAtIter(TextIter iter, string category)
 	{
@@ -582,9 +662,9 @@ public class SourceBuffer : TextBuffer
 	 * If category is NULL, all marks in the range will be removed.
 	 * Since 2.2
 	 * Params:
-	 * start = a GtkTextIter
-	 * end = a GtkTextIter
-	 * category = category to search for or NULL
+	 * start = a GtkTextIter.
+	 * end = a GtkTextIter.
+	 * category = category to search for, or NULL. [allow-none]
 	 */
 	public void removeSourceMarks(TextIter start, TextIter end, string category)
 	{
@@ -593,50 +673,88 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Moves iter to the position of the next GtkSourceMark of the given
-	 * category. Returns TRUE if iter was moved. If category is NULL, the
-	 * next source mark can be of any category.
-	 * Since 2.2
+	 * Check if the class context_klass is set on iter.
+	 * Since 2.10
 	 * Params:
-	 * iter = an iterator.
-	 * category = category to search for or NULL
-	 * Returns: whether iter moved.
+	 * iter = a GtkTextIter.
+	 * contextClass = class to search for.
 	 */
-	public int forwardIterToSourceMark(TextIter iter, string category)
+	public int iterHasContextClass(TextIter iter, string contextClass)
 	{
-		// gboolean gtk_source_buffer_forward_iter_to_source_mark  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
-		return gtk_source_buffer_forward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
+		// gboolean gtk_source_buffer_iter_has_context_class  (GtkSourceBuffer *buffer,  const GtkTextIter *iter,  const gchar *context_class);
+		return gtk_source_buffer_iter_has_context_class(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass));
 	}
 	
 	/**
-	 * Moves iter to the position of the previous GtkSourceMark of the given
-	 * category. Returns TRUE if iter was moved. If category is NULL, the
-	 * previous source mark can be of any category.
-	 * Since 2.2
+	 * Get all defined context classes at iter.
+	 * Since 2.10
 	 * Params:
-	 * iter = an iterator.
-	 * category = category to search for or NULL
-	 * Returns: whether iter moved.
+	 * iter = a GtkTextIter.
+	 * Returns: a new NULL terminated array of context class names. Use g_strfreev() to free the array if it is no longer needed. [array zero-terminated=1][transfer full]
 	 */
-	public int backwardIterToSourceMark(TextIter iter, string category)
+	public string[] getContextClassesAtIter(TextIter iter)
 	{
-		// gboolean gtk_source_buffer_backward_iter_to_source_mark  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
-		return gtk_source_buffer_backward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
+		// gchar ** gtk_source_buffer_get_context_classes_at_iter  (GtkSourceBuffer *buffer,  const GtkTextIter *iter);
+		return Str.toStringArray(gtk_source_buffer_get_context_classes_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct()));
 	}
 	
 	/**
-	 * Forces buffer to analyze and highlight the given area synchronously.
-	 * Note
-	 *  This is a potentially slow operation and should be used only
-	 *  when you need to make sure that some text not currently
-	 *  visible is highlighted, for instance before printing.
+	 * Moves forward to the next toggle (on or off) of the context class. If no
+	 * matching context class toggles are found, returns FALSE, otherwise TRUE.
+	 * Does not return toggles located at iter, only toggles after iter. Sets
+	 * iter to the location of the toggle, or to the end of the buffer if no
+	 * toggle is found.
+	 * Since 2.10
 	 * Params:
-	 * start = start of the area to highlight.
-	 * end = end of the area to highlight.
+	 * iter = a GtkTextIter.
+	 * contextClass = the context class.
+	 * Returns: whether we found a context class toggle after iter
 	 */
-	public void ensureHighlight(TextIter start, TextIter end)
+	public int iterForwardToContextClassToggle(TextIter iter, string contextClass)
 	{
-		// void gtk_source_buffer_ensure_highlight (GtkSourceBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_source_buffer_ensure_highlight(gtkSourceBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
+		// gboolean gtk_source_buffer_iter_forward_to_context_class_toggle  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *context_class);
+		return gtk_source_buffer_iter_forward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass));
+	}
+	
+	/**
+	 * Moves backward to the next toggle (on or off) of the context class. If no
+	 * matching context class toggles are found, returns FALSE, otherwise TRUE.
+	 * Does not return toggles located at iter, only toggles after iter. Sets
+	 * iter to the location of the toggle, or to the end of the buffer if no
+	 * toggle is found.
+	 * Since 2.10
+	 * Params:
+	 * iter = a GtkTextIter.
+	 * contextClass = the context class.
+	 * Returns: whether we found a context class toggle before iter
+	 */
+	public int iterBackwardToContextClassToggle(TextIter iter, string contextClass)
+	{
+		// gboolean gtk_source_buffer_iter_backward_to_context_class_toggle  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *context_class);
+		return gtk_source_buffer_iter_backward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass));
+	}
+	
+	/**
+	 * Returns the GtkSourceUndoManager associated with the buffer,
+	 * see gtk_source_buffer_set_undo_manager(). The returned object should not be
+	 * unreferenced by the user.
+	 * Returns: the GtkSourceUndoManager associated with the buffer, or NULL. [transfer none]
+	 */
+	public GtkSourceUndoManager* getUndoManager()
+	{
+		// GtkSourceUndoManager * gtk_source_buffer_get_undo_manager  (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_get_undo_manager(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Set the buffer undo manager. If manager is NULL the default undo manager
+	 * will be set.
+	 * Params:
+	 * manager = A GtkSourceUndoManager or NULL. [allow-none]
+	 */
+	public void setUndoManager(GtkSourceUndoManager* manager)
+	{
+		// void gtk_source_buffer_set_undo_manager (GtkSourceBuffer *buffer,  GtkSourceUndoManager *manager);
+		gtk_source_buffer_set_undo_manager(gtkSourceBuffer, manager);
 	}
 }

@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-GtkTreeView-drag-and-drop.html
+ * inFile  = gtk3-GtkTreeView-drag-and-drop.html
  * outPack = gtk
  * outFile = TreeDragSourceIF
  * strct   = GtkTreeDragSource

@@ -148,7 +148,7 @@ public class SourceStyleScheme : ObjectG
 	
 	/**
 	 * Since 2.0
-	 * Returns: scheme description (if defined) or NULL.
+	 * Returns: scheme description (if defined), or NULL.
 	 */
 	public string getDescription()
 	{
@@ -158,7 +158,7 @@ public class SourceStyleScheme : ObjectG
 	
 	/**
 	 * Since 2.0
-	 * Returns: a NULL-terminated array containing the scheme authors or NULL if no author is specified by the style scheme.
+	 * Returns: a NULL-terminated array containing the scheme authors or NULL if no author is specified by the style scheme. [array zero-terminated=1][transfer none]
 	 */
 	public string[] getAuthors()
 	{
@@ -180,7 +180,7 @@ public class SourceStyleScheme : ObjectG
 	 * Since 2.0
 	 * Params:
 	 * styleId = id of the style to retrieve.
-	 * Returns: style which corresponds to style_id in the scheme, or NULL when no style with this name found. It is owned by scheme and may not be unref'ed.
+	 * Returns: style which corresponds to style_id in the scheme, or NULL when no style with this name found. It is owned by scheme and may not be unref'ed. [transfer none]
 	 */
 	public SourceStyle getStyle(string styleId)
 	{

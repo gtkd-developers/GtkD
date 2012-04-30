@@ -67,18 +67,21 @@ private import gtk.Widget;
 
 /**
  * Description
- * GtkCalendar is a widget that displays a calendar, one month at a time.
- * It can be created with gtk_calendar_new().
+ * GtkCalendar is a widget that displays a Gregorian calendar, one month
+ * at a time. It can be created with gtk_calendar_new().
  * The month and year currently displayed can be altered with
- * gtk_calendar_select_month(). The exact day can be selected from the displayed
- * month using gtk_calendar_select_day().
+ * gtk_calendar_select_month(). The exact day can be selected from the
+ * displayed month using gtk_calendar_select_day().
  * To place a visual marker on a particular day, use gtk_calendar_mark_day()
- * and to remove the marker, gtk_calendar_unmark_day().
- * Alternative, all marks can be cleared with gtk_calendar_clear_marks().
+ * and to remove the marker, gtk_calendar_unmark_day(). Alternative, all
+ * marks can be cleared with gtk_calendar_clear_marks().
  * The way in which the calendar itself is displayed can be altered using
  * gtk_calendar_set_display_options().
  * The selected date can be retrieved from a GtkCalendar using
  * gtk_calendar_get_date().
+ * Users should be aware that, although the Gregorian calendar is the legal
+ * calendar in most countries, it was adopted progressively between 1582 and
+ * 1929. Display before these dates is likely to be historically incorrect.
  */
 public class Calendar : Widget
 {
@@ -159,6 +162,7 @@ public class Calendar : Widget
 	
 	void delegate(Calendar)[] onDaySelectedDoubleClickListeners;
 	/**
+	 * Emitted when the user double-clicks a day.
 	 */
 	void addOnDaySelectedDoubleClick(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -187,8 +191,6 @@ public class Calendar : Widget
 	/**
 	 * Emitted when the user clicks a button to change the selected month on a
 	 * calendar.
-	 * Emitted when the user clicks a button to change the selected month on a
-	 * calendar.
 	 */
 	void addOnMonthChanged(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -215,6 +217,7 @@ public class Calendar : Widget
 	
 	void delegate(Calendar)[] onNextMonthListeners;
 	/**
+	 * Emitted when the user switched to the next month.
 	 */
 	void addOnNextMonth(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -241,6 +244,7 @@ public class Calendar : Widget
 	
 	void delegate(Calendar)[] onNextYearListeners;
 	/**
+	 * Emitted when user switched to the next year.
 	 */
 	void addOnNextYear(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -267,6 +271,7 @@ public class Calendar : Widget
 	
 	void delegate(Calendar)[] onPrevMonthListeners;
 	/**
+	 * Emitted when the user switched to the previous month.
 	 */
 	void addOnPrevMonth(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -293,6 +298,7 @@ public class Calendar : Widget
 	
 	void delegate(Calendar)[] onPrevYearListeners;
 	/**
+	 * Emitted when user switched to the previous year.
 	 */
 	void addOnPrevYear(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -335,18 +341,14 @@ public class Calendar : Widget
 	
 	/**
 	 * Shifts the calendar to a different month.
-	 * Note that this function always returns TRUE, and you should
-	 * ignore the return value. In GTK+ 3, this function will not
-	 * return a value.
 	 * Params:
 	 * month = a month number between 0 and 11.
 	 * year = the year the month is in.
-	 * Returns: TRUE, always
 	 */
-	public int selectMonth(uint month, uint year)
+	public void selectMonth(uint month, uint year)
 	{
-		// gboolean gtk_calendar_select_month (GtkCalendar *calendar,  guint month,  guint year);
-		return gtk_calendar_select_month(gtkCalendar, month, year);
+		// void gtk_calendar_select_month (GtkCalendar *calendar,  guint month,  guint year);
+		gtk_calendar_select_month(gtkCalendar, month, year);
 	}
 	
 	/**
@@ -363,32 +365,36 @@ public class Calendar : Widget
 	
 	/**
 	 * Places a visual marker on a particular day.
-	 * Note that this function always returns TRUE, and you should
-	 * ignore the return value. In GTK+ 3, this function will not
-	 * return a value.
 	 * Params:
 	 * day = the day number to mark between 1 and 31.
-	 * Returns: TRUE, always
 	 */
-	public int markDay(uint day)
+	public void markDay(uint day)
 	{
-		// gboolean gtk_calendar_mark_day (GtkCalendar *calendar,  guint day);
-		return gtk_calendar_mark_day(gtkCalendar, day);
+		// void gtk_calendar_mark_day (GtkCalendar *calendar,  guint day);
+		gtk_calendar_mark_day(gtkCalendar, day);
 	}
 	
 	/**
 	 * Removes the visual marker from a particular day.
-	 * Note that this function always returns TRUE, and you should
-	 * ignore the return value. In GTK+ 3, this function will not
-	 * return a value.
 	 * Params:
 	 * day = the day number to unmark between 1 and 31.
-	 * Returns: TRUE, always
 	 */
-	public int unmarkDay(uint day)
+	public void unmarkDay(uint day)
 	{
-		// gboolean gtk_calendar_unmark_day (GtkCalendar *calendar,  guint day);
-		return gtk_calendar_unmark_day(gtkCalendar, day);
+		// void gtk_calendar_unmark_day (GtkCalendar *calendar,  guint day);
+		gtk_calendar_unmark_day(gtkCalendar, day);
+	}
+	
+	/**
+	 * Returns if the day of the calendar is already marked.
+	 * Params:
+	 * day = the day number between 1 and 31.
+	 * Returns: whether the day is marked. Since 3.0
+	 */
+	public int getDayIsMarked(uint day)
+	{
+		// gboolean gtk_calendar_get_day_is_marked (GtkCalendar *calendar,  guint day);
+		return gtk_calendar_get_day_is_marked(gtkCalendar, day);
 	}
 	
 	/**
@@ -510,42 +516,5 @@ public class Calendar : Widget
 	{
 		// void gtk_calendar_set_detail_height_rows (GtkCalendar *calendar,  gint rows);
 		gtk_calendar_set_detail_height_rows(gtkCalendar, rows);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_calendar_display_options has been deprecated since version 2.4 and should not be used in newly-written code. Use gtk_calendar_set_display_options() instead
-	 * Sets display options (whether to display the heading and the month headings).
-	 * Params:
-	 * flags = the display options to set.
-	 */
-	public void displayOptions(GtkCalendarDisplayOptions flags)
-	{
-		// void gtk_calendar_display_options (GtkCalendar *calendar,  GtkCalendarDisplayOptions flags);
-		gtk_calendar_display_options(gtkCalendar, flags);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_calendar_freeze has been deprecated since version 2.8 and should not be used in newly-written code.
-	 * Does nothing. Previously locked the display of the calendar until
-	 * it was thawed with gtk_calendar_thaw().
-	 */
-	public void freeze()
-	{
-		// void gtk_calendar_freeze (GtkCalendar *calendar);
-		gtk_calendar_freeze(gtkCalendar);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_calendar_thaw has been deprecated since version 2.8 and should not be used in newly-written code.
-	 * Does nothing. Previously defrosted a calendar; all the changes made
-	 * since the last gtk_calendar_freeze() were displayed.
-	 */
-	public void thaw()
-	{
-		// void gtk_calendar_thaw (GtkCalendar *calendar);
-		gtk_calendar_thaw(gtkCalendar);
 	}
 }

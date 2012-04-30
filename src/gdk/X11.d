@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-X-Window-System-Interaction.html
+ * inFile  = gdk3-X-Window-System-Interaction.html
  * outPack = gdk
  * outFile = X11
  * strct   = 
@@ -48,7 +48,7 @@
  * 	- gdk_window_foreign_new_for_display
  * 	- gdk_xid_table_lookup_for_display
  * 	- gdk_window_lookup_for_display
- * 	- gdk_pixmap_lookup_for_display
+ * 	- gdk_x11_window_get_xid
  * 	- gdk_x11_lookup_xdisplay
  * 	- gdk_net_wm_supports
  * 	- gdk_x11_screen_supports_net_wm_hint
@@ -90,16 +90,12 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Drawable
  * 	- gdk.Display
+ * 	- gdk.Screen
  * 	- gdk.Window
- * 	- gdk.Font
- * 	- gdk.Pixmap
  * structWrap:
  * 	- GdkDisplay* -> Display
- * 	- GdkDrawable* -> Drawable
- * 	- GdkFont* -> Font
- * 	- GdkPixmap* -> Pixmap
+ * 	- GdkScreen* -> Screen
  * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
@@ -115,103 +111,31 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gdk.Drawable;
 private import gdk.Display;
+private import gdk.Screen;
 private import gdk.Window;
-private import gdk.Font;
-private import gdk.Pixmap;
 
 
 
 
 /**
  * Description
+ * The functions in this section are specific to the GDK X11 backend.
+ * To use them, you need to include the <gdk/gdkx.h>
+ * header and use the X11-specific pkg-config files to build your
+ * application (either gdk-x11-3.0 or
+ * gtk+-x11-3.0).
+ * To make your code compile with other GDK backends, guard backend-specific
+ * calls by an ifdef as follows. Since GDK may be built with multiple
+ * backends, you should also check for the backend that is in use (e.g. by
+ * using the GDK_IS_X11_DISPLAY() macro).
+ * $(DDOC_COMMENT example)
  */
 public class X11
 {
 	
 	/**
 	 */
-	
-	/**
-	 * Warning
-	 * gdk_window_foreign_new is deprecated and should not be used in newly-written code.
-	 * Wraps a native window for the default display in a GdkWindow.
-	 * This may fail if the window has been destroyed.
-	 * For example in the X backend, a native window handle is an Xlib
-	 * XID.
-	 * Params:
-	 * anid = a native window handle.
-	 * Returns: the newly-created GdkWindow wrapper for the native window or NULL if the window has been destroyed.
-	 */
-	public static Window gdkWindowForeignNew(GdkNativeWindow anid)
-	{
-		// GdkWindow * gdk_window_foreign_new (GdkNativeWindow anid);
-		auto p = gdk_window_foreign_new(anid);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Window(cast(GdkWindow*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_xid_table_lookup has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3.0. GTK+
-	 *  only stores windows in its X id table nowadays, so use
-	 *  gdk_x11_window_lookup_for_display() instead.
-	 * Returns the Gdk object associated with the given X id for the default
-	 * display.
-	 * Params:
-	 * xid = an X id.
-	 * Returns: the associated Gdk object, which may be a GdkPixmap, a GdkWindow or a GdkFont or NULL if no object is associated with the X id.
-	 */
-	public static void* gdkXidTableLookup(uint xid)
-	{
-		// gpointer gdk_xid_table_lookup (XID xid);
-		return gdk_xid_table_lookup(xid);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_window_lookup has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_x11_window_lookup_for_display() or equivalent
-	 *  backend-specific functionality instead
-	 * Looks up the GdkWindow that wraps the given native window handle.
-	 * For example in the X backend, a native window handle is an Xlib
-	 * XID.
-	 * Params:
-	 * anid = a native window handle.
-	 * Returns: the GdkWindow wrapper for the native window, or NULL if there is none.
-	 */
-	public static Window gdkWindowLookup(GdkNativeWindow anid)
-	{
-		// GdkWindow * gdk_window_lookup (GdkNativeWindow anid);
-		auto p = gdk_window_lookup(anid);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Window(cast(GdkWindow*) p);
-	}
-	
-	/**
-	 * Looks up the GdkPixmap that wraps the given native pixmap handle.
-	 * For example in the X backend, a native pixmap handle is an Xlib
-	 * XID.
-	 * Params:
-	 * anid = a native pixmap handle.
-	 * Returns: the GdkPixmap wrapper for the native pixmap, or NULL if there is none.
-	 */
-	public static Pixmap gdkPixmapLookup(GdkNativeWindow anid)
-	{
-		// GdkPixmap * gdk_pixmap_lookup (GdkNativeWindow anid);
-		auto p = gdk_pixmap_lookup(anid);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Pixmap(cast(GdkPixmap*) p);
-	}
 	
 	/**
 	 * Routine to get the current X server time stamp.
@@ -228,6 +152,76 @@ public class X11
 	}
 	
 	/**
+	 * Gets the startup notification ID for a display.
+	 * Since 2.12
+	 * Params:
+	 * display = a GdkDisplay
+	 * Returns: the startup notification ID for display
+	 */
+	public static string displayGetStartupNotificationId(Display display)
+	{
+		// const gchar * gdk_x11_display_get_startup_notification_id  (GdkDisplay *display);
+		return Str.toString(gdk_x11_display_get_startup_notification_id((display is null) ? null : display.getDisplayStruct()));
+	}
+	
+	/**
+	 * Sets the startup notification ID for a display.
+	 * This is usually taken from the value of the DESKTOP_STARTUP_ID
+	 * environment variable, but in some cases (such as the application not
+	 * being launched using exec()) it can come from other sources.
+	 * If the ID contains the string "_TIME" then the portion following that
+	 * string is taken to be the X11 timestamp of the event that triggered
+	 * the application to be launched and the GDK current event time is set
+	 * accordingly.
+	 * The startup ID is also what is used to signal that the startup is
+	 * complete (for example, when opening a window or when calling
+	 * gdk_notify_startup_complete()).
+	 * Params:
+	 * display = a GdkDisplay
+	 * startupId = the startup notification ID (must be valid utf8)
+	 * Since 3.0
+	 */
+	public static void displaySetStartupNotificationId(Display display, string startupId)
+	{
+		// void gdk_x11_display_set_startup_notification_id  (GdkDisplay *display,  const gchar *startup_id);
+		gdk_x11_display_set_startup_notification_id((display is null) ? null : display.getDisplayStruct(), Str.toStringz(startupId));
+	}
+	
+	/**
+	 * Begins a range of X requests on display for which X error events
+	 * will be ignored. Unignored errors (when no trap is pushed) will abort
+	 * the application. Use gdk_x11_display_error_trap_pop() or
+	 * gdk_x11_display_error_trap_pop_ignored()to lift a trap pushed
+	 * with this function.
+	 * See also gdk_error_trap_push() to push a trap on all displays.
+	 * Params:
+	 * display = a GdkDisplay
+	 * Since 3.0
+	 */
+	public static void displayErrorTrapPush(Display display)
+	{
+		// void gdk_x11_display_error_trap_push (GdkDisplay *display);
+		gdk_x11_display_error_trap_push((display is null) ? null : display.getDisplayStruct());
+	}
+	
+	/**
+	 * Pops the error trap pushed by gdk_x11_display_error_trap_push().
+	 * Does not block to see if an error occurred; merely records the
+	 * range of requests to ignore errors for, and ignores those errors
+	 * if they arrive asynchronously.
+	 * See gdk_error_trap_pop_ignored() for the all-displays-at-once
+	 * equivalent.
+	 * Params:
+	 * display = the display
+	 * Since 3.0
+	 */
+	public static void displayErrorTrapPopIgnored(Display display)
+	{
+		// void gdk_x11_display_error_trap_pop_ignored  (GdkDisplay *display);
+		gdk_x11_display_error_trap_pop_ignored((display is null) ? null : display.getDisplayStruct());
+	}
+	
+	/**
 	 * Gets the XID of the specified output/monitor.
 	 * If the X server does not support version 1.2 of the RANDR
 	 * extension, 0 is returned.
@@ -237,10 +231,18 @@ public class X11
 	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 * Returns: the XID of the monitor
 	 */
-	public static uint screenGetMonitorOutput(GdkScreen* screen, int monitorNum)
+	public static uint screenGetMonitorOutput(Screen screen, int monitorNum)
 	{
 		// XID gdk_x11_screen_get_monitor_output (GdkScreen *screen,  gint monitor_num);
-		return gdk_x11_screen_get_monitor_output(screen, monitorNum);
+		return gdk_x11_screen_get_monitor_output((screen is null) ? null : screen.getScreenStruct(), monitorNum);
+	}
+	
+	/**
+	 */
+	public static void windowSetThemeVariantGtkOnly(Window window, string variant)
+	{
+		// void gdk_x11_window_set_theme_variant_gtk_only  (GdkWindow *window,  char *variant);
+		gdk_x11_window_set_theme_variant_gtk_only((window is null) ? null : window.getWindowStruct(), Str.toStringz(variant));
 	}
 	
 	/**
@@ -280,62 +282,6 @@ public class X11
 	{
 		// void gdk_x11_window_move_to_current_desktop  (GdkWindow *window);
 		gdk_x11_window_move_to_current_desktop((window is null) ? null : window.getWindowStruct());
-	}
-	
-	/**
-	 * Gets the startup notification ID for a display.
-	 * Since 2.12
-	 * Params:
-	 * display = a GdkDisplay
-	 * Returns: the startup notification ID for display
-	 */
-	public static string displayGetStartupNotificationId(Display display)
-	{
-		// const gchar * gdk_x11_display_get_startup_notification_id  (GdkDisplay *display);
-		return Str.toString(gdk_x11_display_get_startup_notification_id((display is null) ? null : display.getDisplayStruct()));
-	}
-	
-	/**
-	 * Returns the X resource (window or pixmap) belonging to a GdkDrawable.
-	 * Params:
-	 * drawable = a GdkDrawable.
-	 * Returns: the ID of drawable's X resource.
-	 */
-	public static uint drawableGetXid(Drawable drawable)
-	{
-		// XID gdk_x11_drawable_get_xid (GdkDrawable *drawable);
-		return gdk_x11_drawable_get_xid((drawable is null) ? null : drawable.getDrawableStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gdk_x11_font_get_name is deprecated and should not be used in newly-written code.
-	 * Return the X Logical Font Description (for font->type == GDK_FONT_FONT)
-	 * or comma separated list of XLFDs (for font->type == GDK_FONT_FONTSET)
-	 * that was used to load the font. If the same font was loaded
-	 * via multiple names, which name is returned is undefined.
-	 * Params:
-	 * font = a GdkFont.
-	 * Returns: the name of the font. This string is owned by GDK and must not be modified or freed.
-	 */
-	public static string fontGetName(Font font)
-	{
-		// const char * gdk_x11_font_get_name (GdkFont *font);
-		return Str.toString(gdk_x11_font_get_name((font is null) ? null : font.getFontStruct()));
-	}
-	
-	/**
-	 * Warning
-	 * gdk_x11_font_get_xfont is deprecated and should not be used in newly-written code.
-	 * Returns the X font belonging to a GdkFont.
-	 * Params:
-	 * font = a GdkFont.
-	 * Returns: an Xlib XFontStruct* or an XFontSet.
-	 */
-	public static void* fontGetXfont(Font font)
-	{
-		// gpointer gdk_x11_font_get_xfont (GdkFont *font);
-		return gdk_x11_font_get_xfont((font is null) ? null : font.getFontStruct());
 	}
 	
 	/**
@@ -384,5 +330,119 @@ public class X11
 	{
 		// void gdk_x11_set_sm_client_id (const gchar *sm_client_id);
 		gdk_x11_set_sm_client_id(Str.toStringz(smClientId));
+	}
+	
+	/**
+	 * Convert a text string from the encoding as it is stored
+	 * in a property into an array of strings in the encoding of
+	 * the current locale. (The elements of the array represent the
+	 * nul-separated elements of the original text string.)
+	 * Since 2.24
+	 * Params:
+	 * display = The GdkDisplay where the encoding is defined
+	 * encoding = an atom representing the encoding. The most
+	 * common values for this are STRING, or COMPOUND_TEXT.
+	 * This is value used as the type for the property
+	 * format = the format of the property
+	 * text = The text data
+	 * list = location to store an array of strings in
+	 * the encoding of the current locale. This array should be
+	 * freed using gdk_free_text_list().
+	 * Returns: the number of strings stored in list, or 0, if the conversion failed
+	 */
+	public static int displayTextPropertyToTextList(Display display, GdkAtom encoding, int format, char[] text, out string[] list)
+	{
+		// gint gdk_x11_display_text_property_to_text_list  (GdkDisplay *display,  GdkAtom encoding,  gint format,  const guchar *text,  gint length,  gchar ***list);
+		char** outlist = null;
+		int length;
+		
+		auto p = gdk_x11_display_text_property_to_text_list((display is null) ? null : display.getDisplayStruct(), encoding, format, text.ptr, length, &outlist);
+		
+		list = null;
+		foreach ( cstr; outlist[0 .. length] )
+		{
+			list ~= Str.toString(cstr);
+		}
+		return p;
+	}
+	
+	/**
+	 * Frees the array of strings created by
+	 * gdk_x11_display_text_property_to_text_list().
+	 * Since 2.24
+	 * Params:
+	 * list = the value stored in the list parameter by
+	 * a call to gdk_x11_display_text_property_to_text_list().
+	 */
+	public static void freeTextList(ref string list)
+	{
+		// void gdk_x11_free_text_list (gchar **list);
+		char* outlist = Str.toStringz(list);
+		
+		gdk_x11_free_text_list(&outlist);
+		
+		list = Str.toString(outlist);
+	}
+	
+	/**
+	 * Convert a string from the encoding of the current
+	 * locale into a form suitable for storing in a window property.
+	 * Since 2.24
+	 * Params:
+	 * display = the GdkDisplay where the encoding is defined
+	 * str = a nul-terminated string
+	 * encoding = location to store the encoding atom
+	 * (to be used as the type for the property). [out][transfer none]
+	 * format = location to store the format of the property. [out]
+	 * ctext = location to store newly
+	 * allocated data for the property. [out][array length=length]
+	 * Returns: 0 upon success, non-zero upon failure
+	 */
+	public static int displayStringToCompoundText(Display display, string str, out GdkAtom encoding, out int format, out char[] ctext)
+	{
+		// gint gdk_x11_display_string_to_compound_text  (GdkDisplay *display,  const gchar *str,  GdkAtom *encoding,  gint *format,  guchar **ctext,  gint *length);
+		guchar* outctext = null;
+		int length;
+		
+		auto p = gdk_x11_display_string_to_compound_text((display is null) ? null : display.getDisplayStruct(), Str.toStringz(str), &encoding, &format, &outctext, &length);
+		
+		ctext = outctext[0 .. length];
+		return p;
+	}
+	
+	/**
+	 * Converts from UTF-8 to compound text.
+	 * Since 2.24
+	 * Params:
+	 * display = a GdkDisplay
+	 * str = a UTF-8 string
+	 * encoding = location to store resulting encoding. [out]
+	 * format = location to store format of the result. [out]
+	 * ctext = location to store the data of the result. [out][array length=length]
+	 * Returns: TRUE if the conversion succeeded, otherwise FALSE
+	 */
+	public static int displayUtf8_ToCompoundText(Display display, string str, out GdkAtom encoding, out int format, out char[] ctext)
+	{
+		// gboolean gdk_x11_display_utf8_to_compound_text  (GdkDisplay *display,  const gchar *str,  GdkAtom *encoding,  gint *format,  guchar **ctext,  gint *length);
+		guchar* outctext = null;
+		int length;
+		
+		auto p = gdk_x11_display_utf8_to_compound_text((display is null) ? null : display.getDisplayStruct(), Str.toStringz(str), &encoding, &format, &outctext, &length);
+		
+		ctext = outctext[0 .. length];
+		return p;
+	}
+	
+	/**
+	 * Frees the data returned from gdk_x11_display_string_to_compound_text().
+	 * Since 2.24
+	 * Params:
+	 * ctext = The pointer stored in ctext from a call to
+	 * gdk_x11_display_string_to_compound_text().
+	 */
+	public static void freeCompoundText(ref char ctext)
+	{
+		// void gdk_x11_free_compound_text (guchar *ctext);
+		gdk_x11_free_compound_text(&ctext);
 	}
 }

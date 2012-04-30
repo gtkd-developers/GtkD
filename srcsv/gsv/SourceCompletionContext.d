@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtksourceview-2.0-completioncontext.html
+ * inFile  = gtksourceview-3.0-completioncontext.html
  * outPack = gsv
  * outFile = SourceCompletionContext
  * strct   = GtkSourceCompletionContext
@@ -179,7 +179,7 @@ public class SourceCompletionContext : ObjectG
 	 * Get the iter at which the completion was invoked. Providers can use this
 	 * to determine how and if to match proposals.
 	 * Params:
-	 * iter = A GtkTextIter
+	 * iter = a GtkTextIter. [out]
 	 */
 	public void getIter(TextIter iter)
 	{
@@ -188,6 +188,8 @@ public class SourceCompletionContext : ObjectG
 	}
 	
 	/**
+	 * Get the context activation.
+	 * Returns: The context activation.
 	 */
 	public GtkSourceCompletionActivation getActivation()
 	{

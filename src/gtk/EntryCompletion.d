@@ -91,19 +91,32 @@ private import gobject.ObjectG;
  * the current content of the entry, and displays a list of matches.
  * By default, the matching is done by comparing the entry text
  * case-insensitively against the text column of the model (see
- * gtk_entry_completion_set_text_column()), but this can be overridden with
- * a custom match function (see gtk_entry_completion_set_match_func()).
- * When the user selects a completion, the content of the entry is updated.
- * By default, the content of the entry is replaced by the text column of the
- * model, but this can be overridden by connecting to the ::match-selected signal
- * and updating the entry in the signal handler. Note that you should return
- * TRUE from the signal handler to suppress the default behaviour.
+ * gtk_entry_completion_set_text_column()), but this can be overridden
+ * with a custom match function (see gtk_entry_completion_set_match_func()).
+ * When the user selects a completion, the content of the entry is
+ * updated. By default, the content of the entry is replaced by the
+ * text column of the model, but this can be overridden by connecting
+ * to the "match-selected" signal and updating the
+ * entry in the signal handler. Note that you should return TRUE from
+ * the signal handler to suppress the default behaviour.
  * To add completion functionality to an entry, use gtk_entry_set_completion().
  * In addition to regular completion matches, which will be inserted into the
  * entry when they are selected, GtkEntryCompletion also allows to display
  * "actions" in the popup window. Their appearance is similar to menuitems,
  * to differentiate them clearly from completion strings. When an action is
- * selected, the ::action-activated signal is emitted.
+ * selected, the "action-activated" signal is emitted.
+ * GtkEntryCompletion uses a GtkTreeModelFilter model to represent the
+ * subset of the entire model that is currently matching. While the
+ * GtkEntryCompletion signals "match-selected" and
+ * "cursor-on-match" take the original model and an
+ * iter pointing to that model as arguments, other callbacks and signals
+ * (such as GtkCellLayoutDataFuncs or "apply-attributes")
+ * will generally take the filter model as argument. As long as you are
+ * only calling gtk_tree_model_get(), this will make no difference to
+ * you. If for some reason, you need the original model, use
+ * gtk_tree_model_filter_get_model(). Don't forget to use
+ * gtk_tree_model_filter_convert_iter_to_child_iter() to obtain a
+ * matching iter.
  */
 public class EntryCompletion : ObjectG, CellLayoutIF
 {
@@ -189,9 +202,11 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onCursorOnMatchListeners;
 	/**
 	 * Gets emitted when a match from the cursor is on a match
-	 * of the list.The default behaviour is to replace the contents
+	 * of the list. The default behaviour is to replace the contents
 	 * of the entry with the contents of the text column in the row
 	 * pointed to by iter.
+	 * Note that model is the model that was passed to
+	 * gtk_entry_completion_set_model().
 	 * TRUE if the signal has been handled
 	 * Since 2.12
 	 */
@@ -269,6 +284,8 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * The default behaviour is to replace the contents of the
 	 * entry with the contents of the text column in the row
 	 * pointed to by iter.
+	 * Note that model is the model that was passed to
+	 * gtk_entry_completion_set_model().
 	 * TRUE if the signal has been handled
 	 * Since 2.4
 	 */
@@ -318,6 +335,25 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	}
 	
 	/**
+	 * Creates a new GtkEntryCompletion object using the
+	 * specified area to layout cells in the underlying
+	 * GtkTreeViewColumn for the drop-down menu.
+	 * Params:
+	 * area = the GtkCellArea used to layout cells
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkCellArea* area)
+	{
+		// GtkEntryCompletion * gtk_entry_completion_new_with_area (GtkCellArea *area);
+		auto p = gtk_entry_completion_new_with_area(area);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_entry_completion_new_with_area(area)");
+		}
+		this(cast(GtkEntryCompletion*) p);
+	}
+	
+	/**
 	 * Gets the entry completion has been attached to.
 	 * Since 2.4
 	 * Returns: The entry completion has been attached to. [transfer none]
@@ -339,7 +375,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * If model is NULL, then it will unset the model.
 	 * Since 2.4
 	 * Params:
-	 * model = The GtkTreeModel. [allow-none]
+	 * model = the GtkTreeModel. [allow-none]
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -370,9 +406,9 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * list.
 	 * Since 2.4
 	 * Params:
-	 * func = The GtkEntryCompletionMatchFunc to use.
-	 * funcData = The user data for func.
-	 * funcNotify = Destroy notifier for func_data.
+	 * func = the GtkEntryCompletionMatchFunc to use
+	 * funcData = user data for func
+	 * funcNotify = destroy notify for func_data.
 	 */
 	public void setMatchFunc(GtkEntryCompletionMatchFunc func, void* funcData, GDestroyNotify funcNotify)
 	{
@@ -387,7 +423,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * (ie, a too large dataset).
 	 * Since 2.4
 	 * Params:
-	 * length = The minimum length of the key in order to start completing.
+	 * length = the minimum length of the key in order to start completing
 	 */
 	public void setMinimumKeyLength(int length)
 	{
@@ -398,7 +434,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	/**
 	 * Returns the minimum key length as set for completion.
 	 * Since 2.4
-	 * Returns: The currently used minimum key length.
+	 * Returns: The currently used minimum key length
 	 */
 	public int getMinimumKeyLength()
 	{
@@ -446,8 +482,8 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * gtk_entry_completion_insert_action_markup().
 	 * Since 2.4
 	 * Params:
-	 * index = The index of the item to insert.
-	 * text = Text of the item to insert.
+	 * index = the index of the item to insert
+	 * text = text of the item to insert
 	 */
 	public void insertActionText(int index, string text)
 	{
@@ -460,8 +496,8 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * with markup markup.
 	 * Since 2.4
 	 * Params:
-	 * index = The index of the item to insert.
-	 * markup = Markup of the item to insert.
+	 * index = the index of the item to insert
+	 * markup = markup of the item to insert
 	 */
 	public void insertActionMarkup(int index, string markup)
 	{
@@ -473,7 +509,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * Deletes the action at index_ from completion's action list.
 	 * Since 2.4
 	 * Params:
-	 * index = The index of the item to Delete.
+	 * index = the index of the item to delete
 	 */
 	public void deleteAction(int index)
 	{
@@ -488,10 +524,11 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * and to get those strings from column in the model of completion.
 	 * This functions creates and adds a GtkCellRendererText for the selected
 	 * column. If you need to set the text column, but don't want the cell
-	 * renderer, use g_object_set() to set the ::text_column property directly.
+	 * renderer, use g_object_set() to set the "text-column"
+	 * property directly.
 	 * Since 2.4
 	 * Params:
-	 * column = The column in the model of completion to get strings from.
+	 * column = the column in the model of completion to get strings from
 	 */
 	public void setTextColumn(int column)
 	{
@@ -627,7 +664,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * Returns whether the completion popup window will appear even if there is
 	 * only a single match.
 	 * Since 2.8
-	 * Returns: TRUE if the popup window will appear regardless of the number of matches.
+	 * Returns: TRUE if the popup window will appear regardless of the number of matches
 	 */
 	public int getPopupSingleMatch()
 	{

@@ -284,27 +284,8 @@ public class MenuToolButton : ToolButton
 	}
 	
 	/**
-	 * Warning
-	 * gtk_menu_tool_button_set_arrow_tooltip has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_menu_tool_button_set_arrow_tooltip_text()
-	 * instead.
-	 * Sets the GtkTooltips object to be used for arrow button which
-	 * pops up the menu. See gtk_tool_item_set_tooltip() for setting
-	 * a tooltip on the whole GtkMenuToolButton.
-	 * Since 2.6
-	 * Params:
-	 * tooltips = the GtkTooltips object to be used
-	 * tipText = text to be used as tooltip text for tool_item. [allow-none]
-	 * tipPrivate = text to be used as private tooltip text. [allow-none]
-	 */
-	public void setArrowTooltip(Tooltips tooltips, string tipText, string tipPrivate)
-	{
-		// void gtk_menu_tool_button_set_arrow_tooltip  (GtkMenuToolButton *button,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
-		gtk_menu_tool_button_set_arrow_tooltip(gtkMenuToolButton, (tooltips is null) ? null : tooltips.getTooltipsStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
-	}
-	
-	/**
 	 * Sets the tooltip text to be used as tooltip for the arrow button which
-	 * pops up the menu. See gtk_tool_item_set_tooltip() for setting a tooltip
+	 * pops up the menu. See gtk_tool_item_set_tooltip_text() for setting a tooltip
 	 * on the whole GtkMenuToolButton.
 	 * Since 2.12
 	 * Params:
@@ -318,7 +299,7 @@ public class MenuToolButton : ToolButton
 	
 	/**
 	 * Sets the tooltip markup text to be used as tooltip for the arrow button
-	 * which pops up the menu. See gtk_tool_item_set_tooltip() for setting a
+	 * which pops up the menu. See gtk_tool_item_set_tooltip_text() for setting a
 	 * tooltip on the whole GtkMenuToolButton.
 	 * Since 2.12
 	 * Params:

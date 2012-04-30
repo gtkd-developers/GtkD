@@ -61,8 +61,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 private import glib.ConstructionException;
 
-private import gobject.Signals;
-public  import gtkc.gdktypes;
 
 private import gdk.Window;
 private import gtk.Adjustment;
@@ -83,6 +81,8 @@ private import gtk.Bin;
  * widget to a GtkViewport, then add the viewport to the scrolled window.
  * The convenience function gtk_scrolled_window_add_with_viewport() does
  * exactly this, so you can ignore the presence of the viewport.
+ * The GtkViewport will start scrolling content only if allocated less
+ * than the child widget's minimum size in a given orientation.
  */
 public class Viewport : Bin
 {
@@ -132,39 +132,6 @@ public class Viewport : Bin
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
-	
-	void delegate(Adjustment, Adjustment, Viewport)[] onSetScrollAdjustmentsListeners;
-	/**
-	 * Set the scroll adjustments for the viewport. Usually scrolled containers
-	 * like GtkScrolledWindow will emit this signal to connect two instances
-	 * of GtkScrollbar to the scroll directions of the GtkViewport.
-	 * See Also
-	 * GtkScrolledWindow, GtkAdjustment
-	 */
-	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Viewport) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("set-scroll-adjustments" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"set-scroll-adjustments",
-			cast(GCallback)&callBackSetScrollAdjustments,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["set-scroll-adjustments"] = 1;
-		}
-		onSetScrollAdjustmentsListeners ~= dlg;
-	}
-	extern(C) static void callBackSetScrollAdjustments(GtkViewport* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, Viewport viewport)
-	{
-		foreach ( void delegate(Adjustment, Adjustment, Viewport) dlg ; viewport.onSetScrollAdjustmentsListeners )
-		{
-			dlg(new Adjustment(vertical), new Adjustment(arg2), viewport);
-		}
-	}
-	
 	
 	/**
 	 * Creates a new GtkViewport with the given adjustments.
@@ -185,6 +152,8 @@ public class Viewport : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_viewport_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
 	 * Returns the horizontal adjustment of the viewport.
 	 * Returns: the horizontal adjustment of viewport. [transfer none]
 	 */
@@ -200,6 +169,8 @@ public class Viewport : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_viewport_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
 	 * Returns the vertical adjustment of the viewport.
 	 * Returns: the vertical adjustment of viewport. [transfer none]
 	 */
@@ -215,6 +186,8 @@ public class Viewport : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_viewport_set_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
 	 * Sets the horizontal adjustment of the viewport.
 	 * Params:
 	 * adjustment = a GtkAdjustment. [allow-none]
@@ -226,6 +199,8 @@ public class Viewport : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_viewport_set_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
 	 * Sets the vertical adjustment of the viewport.
 	 * Params:
 	 * adjustment = a GtkAdjustment. [allow-none]

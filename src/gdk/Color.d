@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = 
+ * inFile  = gdk3-Colors.html
  * outPack = gdk
  * outFile = Color
  * strct   = GdkColor
@@ -44,14 +44,13 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Colormap
+ * 	- gtkc.paths;
+ * 	- gtkc.Loader;
  * structWrap:
  * 	- GdkColor* -> Color
- * 	- GdkColormap* -> Colormap
  * module aliases:
  * local aliases:
  * overrides:
- * 	- toString
  */
 
 module gdk.Color;
@@ -63,37 +62,17 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gdk.Colormap;
+private import gtkc.paths;;
+private import gtkc.Loader;;
 
 
 
 
 /**
  * Description
- * These functions are used to modify colormaps.
- * A colormap is an object that contains the mapping
- * between the color values stored in memory and
- * the RGB values that are used to display color
- * values. In general, colormaps only contain
- * significant information for pseudo-color visuals,
- * but even for other visual types, a colormap object
- * is required in some circumstances.
- * There are a couple of special colormaps that can
- * be retrieved. The system colormap (retrieved
- * with gdk_colormap_get_system()) is the default
- * colormap of the system. If you are using GdkRGB,
- * there is another colormap that is important - the
- * colormap in which GdkRGB works, retrieved with
- * gdk_rgb_get_colormap(). However, when using GdkRGB,
- * it is not generally necessary to allocate colors
- * directly.
- * In previous revisions of this interface, a number
- * of functions that take a GdkColormap parameter
- * were replaced with functions whose names began
- * with "gdk_colormap_". This process will probably
- * be extended somewhat in the future -
- * gdk_color_white(), gdk_color_black(), and
- * gdk_color_change() will probably become aliases.
+ * A GdkColor represents a color.
+ * When working with cairo, it is often more convenient
+ * to use a GdkRGBA instead.
  */
 public class Color
 {
@@ -127,131 +106,21 @@ public class Color
 		this.gdkColor = gdkColor;
 	}
 	
-	static Color _black;
-	static Color _white;
-	
-	/**
-	 * Creates a new Color
-	 */
-	this()
+	~this ()
 	{
-		this(new GdkColor);
-	}
-	
-	/** */
-	this(ubyte red, ubyte green, ubyte blue)
-	{
-		this();
-		set8(red, green, blue);
-	}
-	
-	/**
-	 * Creates a new Color with RGB values
-	 * Params:
-	 *  red =
-	 *  green =
-	 *  blue =
-	 */
-	this(guint16 red, guint16 green, guint16 blue)
-	{
-		this();
-		//printf("Color.this red , green , blue = %d %d %d\n", red, green, blue);
-		set(red,green,blue);
-	}
-	
-	/** */
-	this(uint rgb)
-	{
-		this();
-		//printf("Color.this uint %X\n",rgb);
-		set( cast(ushort)((rgb&0xFFFF)),cast(ushort)((rgb&0xFFFF00000000)>>32),cast(ushort)((rgb&0xFFFF0000)>>16));
-	}
-	
-	/** */
-	this(int rgb)
-	{
-		this();
-		//printf("Color.this int %X\n",rgb);
-		set8( cast(ubyte)((rgb&0xFF0000)>>16),cast(ubyte)((rgb&0x00FF00)>>8),cast(ubyte)(rgb&0xFF));
-	}
-	
-	/** */
-	static Color black()
-	{
-		if ( !_black )
+		if ( importLibs[LIBRARY.GDK] in Linker.loadedLibraries && gdkColor !is null )
 		{
-			_black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
+			gdk_color_free(gdkColor);
 		}
-		return _black;
 	}
-	
-	/** */
-	static Color white()
-	{
-		if ( !_white )
-		{
-			_white = new Color(cast(ubyte)255,cast(ubyte)255,cast(ubyte)255);
-		}
-		return _white;
-	}
-	
-	/**
-	 * Sets the Color with RGB values
-	 * Params:
-	 *  red =
-	 *  green =
-	 *  blue =
-	 */
-	void set(guint16 red, guint16 green, guint16 blue)
-	{
-		//printf("Color.set %X %X %X\n",red,green,blue);
-		gdkColor.red = red;
-		gdkColor.green = green;
-		gdkColor.blue = blue;
-		gdkColor.pixel = (red&0xFF00 << 8) | (green&0xFF00) | (blue >> 8) ;
-		//printf("Color.pixel %X \n",gdkColor.pixel);
-		//allocColor();
-		//printf("set pixel = %X\n", gdkColor.pixel);
-	}
-	
-	/** */
-	void set8(ubyte red, ubyte green, ubyte blue)
-	{
-		//printf("Color.set %X %X %X\n",red,green,blue);
-		
-		gdkColor.red = cast(ushort)(red * 257);
-		gdkColor.green = cast(ushort)(green * 257);
-		gdkColor.blue = cast(ushort)(blue * 257);
-		gdkColor.pixel = (red << 16) | (green << 8 ) | blue;
-		//printf("set8 pixel = %X\n", gdkColor.pixel);
-	}
-	
-	/** */
-	ulong getValue()
-	{
-		return (cast(ulong)gdkColor.red <<32) | (cast(ulong)gdkColor.green << 16) | (cast(ulong)gdkColor.blue);
-	}
-	
-	/** */
-	int getValue24()
-	{
-		return ((gdkColor.red&0xFF00)<<8 ) | ((gdkColor.green&0xFF00)) | ((gdkColor.blue&0xFF00) >>8);
-	}
-	
-	/** */
-	uint getPixelValue()
-	{
-		return gdkColor.pixel;
-	}
-	
 	
 	/**
 	 */
 	
 	/**
-	 * Makes a copy of a color structure. The result
-	 * must be freed using gdk_color_free().
-	 * Returns: a copy of color.
+	 * Makes a copy of a color structure.
+	 * The result must be freed using gdk_color_free().
+	 * Returns: a copy of color
 	 */
 	public Color copy()
 	{
@@ -265,8 +134,7 @@ public class Color
 	}
 	
 	/**
-	 * Frees a color structure created with
-	 * gdk_color_copy().
+	 * Frees a color structure created with gdk_color_copy().
 	 */
 	public void free()
 	{
@@ -275,102 +143,33 @@ public class Color
 	}
 	
 	/**
-	 * Warning
-	 * gdk_color_white is deprecated and should not be used in newly-written code.
-	 * Returns the white color for a given colormap. The resulting
-	 * value has already allocated been allocated.
-	 * Params:
-	 * colormap = a GdkColormap.
-	 * color = the location to store the color.
-	 * Returns: TRUE if the allocation succeeded.
-	 */
-	public static int white(Colormap colormap, out GdkColor color)
-	{
-		// gint gdk_color_white (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_white((colormap is null) ? null : colormap.getColormapStruct(), &color);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_color_black is deprecated and should not be used in newly-written code.
-	 * Returns the black color for a given colormap. The resulting
-	 * value has already been allocated.
-	 * Params:
-	 * colormap = a GdkColormap.
-	 * color = the location to store the color.
-	 * Returns: TRUE if the allocation succeeded.
-	 */
-	public static int black(Colormap colormap, out GdkColor color)
-	{
-		// gint gdk_color_black (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_black((colormap is null) ? null : colormap.getColormapStruct(), &color);
-	}
-	
-	/**
 	 * Parses a textual specification of a color and fill in the
 	 * red, green,
 	 * and blue fields of a GdkColor
-	 * structure. The color is not allocated, you
-	 * must call gdk_colormap_alloc_color() yourself. The string can
-	 * either one of a large set of standard names. (Taken from the X11
-	 * rgb.txt file), or it can be a hex value in the
-	 * form '#rgb' '#rrggbb' '#rrrgggbbb' or
-	 * '#rrrrggggbbbb' where 'r', 'g' and 'b' are hex digits of the
-	 * red, green, and blue components of the color, respectively. (White
-	 * in the four forms is '#fff' '#ffffff' '#fffffffff' and
-	 * '#ffffffffffff')
+	 * structure.
+	 * The string can either one of a large set of standard names
+	 * (taken from the X11 rgb.txt file), or
+	 * it can be a hex value in the form '#rgb' '#rrggbb'
+	 * '#rrrgggbbb' or '#rrrrggggbbbb' where 'r', 'g' and
+	 * 'b' are hex digits of the red, green, and blue components
+	 * of the color, respectively. (White in the four forms is
+	 * '#fff', '#ffffff', '#fffffffff' and
+	 * '#ffffffffffff').
 	 * Params:
-	 * spec = the string specifying the color.
+	 * spec = the string specifying the color
 	 * color = the GdkColor to fill in. [out]
-	 * Returns: TRUE if the parsing succeeded.
+	 * Returns: TRUE if the parsing succeeded
 	 */
-	public static int parse(string spec, out GdkColor color)
+	public static int parse(string spec, Color color)
 	{
 		// gboolean gdk_color_parse (const gchar *spec,  GdkColor *color);
-		return gdk_color_parse(Str.toStringz(spec), &color);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_color_alloc has been deprecated since version 2.2 and should not be used in newly-written code. Use gdk_colormap_alloc_color() instead.
-	 * Allocates a single color from a colormap.
-	 * Params:
-	 * colormap = a GdkColormap.
-	 * color = The color to allocate. On return, the
-	 * pixel field will be filled in.
-	 * Returns: TRUE if the allocation succeeded.
-	 */
-	public static int alloc(Colormap colormap, out GdkColor color)
-	{
-		// gint gdk_color_alloc (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_alloc((colormap is null) ? null : colormap.getColormapStruct(), &color);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_color_change is deprecated and should not be used in newly-written code.
-	 * Changes the value of a color that has already
-	 * been allocated. If colormap is not a private
-	 * colormap, then the color must have been allocated
-	 * using gdk_colormap_alloc_colors() with the
-	 * writeable set to TRUE.
-	 * Params:
-	 * colormap = a GdkColormap.
-	 * color = a GdkColor, with the color to change
-	 * in the pixel field,
-	 * and the new value in the remaining fields.
-	 * Returns: TRUE if the color was successfully changed.
-	 */
-	public static int change(Colormap colormap, Color color)
-	{
-		// gint gdk_color_change (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_change((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
+		return gdk_color_parse(Str.toStringz(spec), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
 	 * Compares two colors.
 	 * Params:
-	 * colorb = another GdkColor.
+	 * colorb = another GdkColor
 	 * Returns: TRUE if the two colors compare equal
 	 */
 	public int equal(Color colorb)
@@ -381,12 +180,12 @@ public class Color
 	
 	/**
 	 * A hash function suitable for using for a hash
-	 * table that stores GdkColor's.
-	 * Returns: The hash function applied to colora
+	 * table that stores GdkColors.
+	 * Returns: The hash function applied to color
 	 */
 	public uint hash()
 	{
-		// guint gdk_color_hash (const GdkColor *colora);
+		// guint gdk_color_hash (const GdkColor *color);
 		return gdk_color_hash(gdkColor);
 	}
 	
@@ -395,10 +194,11 @@ public class Color
 	 * #rrrrggggbbbb, where r,
 	 * g and b are hex digits
 	 * representing the red, green and blue components respectively.
+	 * The returned string can be parsed by gdk_color_parse().
 	 * Since 2.12
 	 * Returns: a newly-allocated text string
 	 */
-	public override string toString()
+	public string toString()
 	{
 		// gchar * gdk_color_to_string (const GdkColor *color);
 		return Str.toString(gdk_color_to_string(gdkColor));

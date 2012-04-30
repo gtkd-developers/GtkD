@@ -171,23 +171,6 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
-	 * Warning
-	 * gtk_font_selection_dialog_get_font has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_font_selection_dialog_get_font_name() instead.
-	 * Gets the currently-selected font.
-	 * Returns: the GdkFont from the GtkFontSelection for the currently selected font in the dialog, or NULL if no font is selected
-	 */
-	public Font getFont()
-	{
-		// GdkFont * gtk_font_selection_dialog_get_font (GtkFontSelectionDialog *fsd);
-		auto p = gtk_font_selection_dialog_get_font(gtkFontSelectionDialog);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Font(cast(GdkFont*) p);
-	}
-	
-	/**
 	 * Gets the currently-selected font name.
 	 * Note that this can be a different string than what you set with
 	 * gtk_font_selection_dialog_set_font_name(), as the font selection widget
@@ -234,24 +217,6 @@ public class FontSelectionDialog : Dialog
 	{
 		// void gtk_font_selection_dialog_set_preview_text  (GtkFontSelectionDialog *fsd,  const gchar *text);
 		gtk_font_selection_dialog_set_preview_text(gtkFontSelectionDialog, Str.toStringz(text));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_font_selection_dialog_get_apply_button has been deprecated since version 2.16 and should not be used in newly-written code. Don't use this function.
-	 * Obtains a button. The button doesn't have any function.
-	 * Since 2.14
-	 * Returns: a GtkWidget
-	 */
-	public Widget getApplyButton()
-	{
-		// GtkWidget * gtk_font_selection_dialog_get_apply_button  (GtkFontSelectionDialog *fsd);
-		auto p = gtk_font_selection_dialog_get_apply_button(gtkFontSelectionDialog);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

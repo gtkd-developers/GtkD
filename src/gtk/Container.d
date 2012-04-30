@@ -101,45 +101,92 @@ private import gtk.Widget;
  * sizes and positions to their children. For example, a GtkHBox arranges its
  * children in a horizontal row, and a GtkTable arranges the widgets it contains
  * in a two-dimensional grid.
- * To fulfill its task, a layout container must negotiate the size requirements
- * with its parent and its children. This negotiation is carried out in two
- * phases, size requisition and size
- * allocation.
- * Size Requisition
- * The size requisition of a widget is it's desired width and height.
- * This is represented by a GtkRequisition.
- * How a widget determines its desired size depends on the widget.
- * A GtkLabel, for example, requests enough space to display all its text.
- * Container widgets generally base their size request on the requisitions
- * of their children.
- * The size requisition phase of the widget layout process operates top-down.
- * It starts at a top-level widget, typically a GtkWindow. The top-level widget
- * asks its child for its size requisition by calling gtk_widget_size_request().
- * To determine its requisition, the child asks its own children for their
- * requisitions and so on. Finally, the top-level widget will get a requisition
- * back from its child.
- * <hr>
- * Size Allocation
- * When the top-level widget has determined how much space its child would like
- * to have, the second phase of the size negotiation, size allocation, begins.
- * Depending on its configuration (see gtk_window_set_resizable()), the top-level
- * widget may be able to expand in order to satisfy the size request or it may
- * have to ignore the size request and keep its fixed size. It then tells its
- * child widget how much space it gets by calling gtk_widget_size_allocate().
- * The child widget divides the space among its children and tells each child
- * how much space it got, and so on. Under normal circumstances, a GtkWindow
- * will always give its child the amount of space the child requested.
- * A child's size allocation is represented by a GtkAllocation. This struct
- * contains not only a width and height, but also a position (i.e. X and Y
- * coordinates), so that containers can tell their children not only how much
- * space they have gotten, but also where they are positioned inside the space
- * available to the container.
- * Widgets are required to honor the size allocation they receive; a size
- * request is only a request, and widgets must be able to cope with any size.
+ * Height for width geometry management
+ * GTK+ uses a height-for-width (and width-for-height) geometry management system.
+ * Height-for-width means that a widget can change how much vertical space it needs,
+ * depending on the amount of horizontal space that it is given (and similar for
+ * width-for-height).
+ * There are some things to keep in mind when implementing container widgets
+ * that make use of GTK+'s height for width geometry management system. First,
+ * it's important to note that a container must prioritize one of its
+ * dimensions, that is to say that a widget or container can only have a
+ * GtkSizeRequestMode that is GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH or
+ * GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT. However, every widget and container
+ * must be able to respond to the APIs for both dimensions, i.e. even if a
+ * widget has a request mode that is height-for-width, it is possible that
+ * its parent will request its sizes using the width-for-height APIs.
+ * To ensure that everything works properly, here are some guidelines to follow
+ * when implementing height-for-width (or width-for-height) containers.
+ * Each request mode involves 2 virtual methods. Height-for-width apis run
+ * through gtk_widget_get_preferred_width() and then through gtk_widget_get_preferred_height_for_width().
+ * When handling requests in the opposite GtkSizeRequestMode it is important that
+ * every widget request at least enough space to display all of its content at all times.
+ * When gtk_widget_get_preferred_height() is called on a container that is height-for-width,
+ * the container must return the height for its minimum width. This is easily achieved by
+ * simply calling the reverse apis implemented for itself as follows:
+ * static void
+ * foo_container_get_preferred_height (GtkWidget *widget, gint *min_height, gint *nat_height)
+ * {
+	 *  if (i_am_in_height_for_width_mode)
+	 *  {
+		 *  gint min_width;
+		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, NULL);
+		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_height_for_width (widget, min_width,
+		 *  min_height, nat_height);
+	 *  }
+	 *  else
+	 *  {
+		 *  ... many containers support both request modes, execute the real width-for-height
+		 *  request here by returning the collective heights of all widgets that are
+		 *  stacked vertically (or whatever is appropriate for this container) ...
+	 *  }
+ * }
+ * Similarly, when gtk_widget_get_preferred_width_for_height() is called for a container or widget
+ * that is height-for-width, it then only needs to return the base minimum width like so:
+ * static void
+ * foo_container_get_preferred_width_for_height (GtkWidget *widget, gint for_height,
+ *  gint *min_width, gint *nat_width)
+ * {
+	 *  if (i_am_in_height_for_width_mode)
+	 *  {
+		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, nat_width);
+	 *  }
+	 *  else
+	 *  {
+		 *  ... execute the real width-for-height request here based on the required width
+		 *  of the children collectively if the container were to be allocated the said height ...
+	 *  }
+ * }
+ * Height for width requests are generally implemented in terms of a virtual allocation
+ * of widgets in the input orientation. Assuming an height-for-width request mode, a container
+ * would implement the get_preferred_height_for_width() virtual function by first calling
+ * gtk_widget_get_preferred_width() for each of its children.
+ * For each potential group of children that are lined up horizontally, the values returned by
+ * gtk_widget_get_preferred_width() should be collected in an array of GtkRequestedSize structures.
+ * Any child spacing should be removed from the input for_width and then the collective size should be
+ * allocated using the gtk_distribute_natural_allocation() convenience function.
+ * The container will then move on to request the preferred height for each child by using
+ * gtk_widget_get_preferred_height_for_width() and using the sizes stored in the GtkRequestedSize array.
+ * To allocate a height-for-width container, it's again important
+ * to consider that a container must prioritize one dimension over the other. So if
+ * a container is a height-for-width container it must first allocate all widgets horizontally
+ * using a GtkRequestedSize array and gtk_distribute_natural_allocation() and then add any
+ * extra space (if and where appropriate) for the widget to expand.
+ * After adding all the expand space, the container assumes it was allocated sufficient
+ * height to fit all of its content. At this time, the container must use the total horizontal sizes
+ * of each widget to request the height-for-width of each of its children and store the requests in a
+ * GtkRequestedSize array for any widgets that stack vertically (for tabular containers this can
+ * be generalized into the heights and widths of rows and columns).
+ * The vertical space must then again be distributed using gtk_distribute_natural_allocation()
+ * while this time considering the allocated height of the widget minus any vertical spacing
+ * that the container adds. Then vertical expand space should be added where appropriate and available
+ * and the container should go on to actually allocating the child widgets.
+ * See GtkWidget's geometry management section
+ * to learn more about implementing height-for-width geometry management for widgets.
  * <hr>
  * Child properties
- * GtkContainer introduces child
- * properties - these are object properties that are not specific
+ * GtkContainer introduces child properties.
+ * These are object properties that are not specific
  * to either the container or the contained widget, but rather to their relation.
  * Typical examples of child properties are the position or pack-type of a widget
  * which is contained in a GtkBox.
@@ -421,16 +468,6 @@ public class Container : Widget
 	}
 	
 	/**
-	 * Warning
-	 * gtk_container_foreach_full is deprecated and should not be used in newly-written code. Use gtk_container_foreach() instead.
-	 */
-	public void foreachFull(GtkCallback callback, GtkCallbackMarshal marshal, void* callbackData, GDestroyNotify notify)
-	{
-		// void gtk_container_foreach_full (GtkContainer *container,  GtkCallback callback,  GtkCallbackMarshal marshal,  gpointer callback_data,  GDestroyNotify notify);
-		gtk_container_foreach_full(gtkContainer, callback, marshal, callbackData, notify);
-	}
-	
-	/**
 	 * Returns the container's non-internal children. See
 	 * gtk_container_forall() for details on what constitutes an "internal" child.
 	 * Returns: a newly-allocated list of the container's non-internal children. [element-type GtkWidget][transfer container]
@@ -444,6 +481,19 @@ public class Container : Widget
 			return null;
 		}
 		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Returns a newly created widget path representing all the widget hierarchy
+	 * from the toplevel down to child (this one not being included).
+	 * Params:
+	 * child = a child of container
+	 * Returns: A newly created GtkWidgetPath
+	 */
+	public GtkWidgetPath* getPathForChild(Widget child)
+	{
+		// GtkWidgetPath * gtk_container_get_path_for_child (GtkContainer *container,  GtkWidget *child);
+		return gtk_container_get_path_for_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	/**
@@ -646,7 +696,7 @@ public class Container : Widget
 	 * itself. Most applications should use gtk_container_foreach(),
 	 * rather than gtk_container_forall().
 	 * Params:
-	 * callback = a callback
+	 * callback = a callback. [scope call]
 	 * callbackData = callback user data
 	 */
 	public void forall(GtkCallback callback, void* callbackData)
@@ -687,30 +737,29 @@ public class Container : Widget
 	}
 	
 	/**
-	 * When a container receives an expose event, it must send synthetic
-	 * expose events to all children that don't have their own GdkWindows.
-	 * This function provides a convenient way of doing this. A container,
-	 * when it receives an expose event, calls gtk_container_propagate_expose()
-	 * once for each child, passing in the event the container received.
-	 * gtk_container_propagate_expose() takes care of deciding whether
-	 * an expose event needs to be sent to the child, intersecting
-	 * the event's area with the child area, and sending the event.
-	 * In most cases, a container can simply either simply inherit the
-	 * "expose" implementation from GtkContainer, or, do some drawing
-	 * and then chain to the ::expose implementation from GtkContainer.
-	 * Note that the ::expose-event signal has been replaced by a ::draw
-	 * signal in GTK+ 3, and consequently, gtk_container_propagate_expose()
-	 * has been replaced by gtk_container_propagate_draw().
-	 * The GTK+ 3 migration guide
-	 * for hints on how to port from ::expose-event to ::draw.
+	 * When a container receives a call to the draw function, it must send
+	 * synthetic "draw" calls to all children that don't have their
+	 * own GdkWindows. This function provides a convenient way of doing this.
+	 * A container, when it receives a call to its "draw" function,
+	 * calls gtk_container_propagate_draw() once for each child, passing in
+	 * the cr the container received.
+	 * gtk_container_propagate_draw() takes care of translating the origin of cr,
+	 * and deciding whether the draw needs to be sent to the child. It is a
+	 * convenient and optimized way of getting the same effect as calling
+	 * gtk_widget_draw() on the child directly.
+	 * In most cases, a container can simply either inherit the
+	 * "draw" implementation from GtkContainer, or do some drawing
+	 * and then chain to the ::draw implementation from GtkContainer.
 	 * Params:
 	 * child = a child of container
-	 * event = a expose event sent to container
+	 * cr = Cairo context as passed to the container. If you want to use cr
+	 * in container's draw function, consider using cairo_save() and
+	 * cairo_restore() before calling this function.
 	 */
-	public void propagateExpose(Widget child, GdkEventExpose* event)
+	public void propagateDraw(Widget child, cairo_t* cr)
 	{
-		// void gtk_container_propagate_expose (GtkContainer *container,  GtkWidget *child,  GdkEventExpose *event);
-		gtk_container_propagate_expose(gtkContainer, (child is null) ? null : child.getWidgetStruct(), event);
+		// void gtk_container_propagate_draw (GtkContainer *container,  GtkWidget *child,  cairo_t *cr);
+		gtk_container_propagate_draw(gtkContainer, (child is null) ? null : child.getWidgetStruct(), cr);
 	}
 	
 	/**
@@ -818,5 +867,24 @@ public class Container : Widget
 		}
 		
 		return arr;
+	}
+	
+	/**
+	 * Modifies a subclass of GtkContainerClass to automatically add and
+	 * remove the border-width setting on GtkContainer. This allows the
+	 * subclass to ignore the border width in its size request and
+	 * allocate methods. The intent is for a subclass to invoke this
+	 * in its class_init function.
+	 * gtk_container_class_handle_border_width() is necessary because it
+	 * would break API too badly to make this behavior the default. So
+	 * subclasses must "opt in" to the parent class handling border_width
+	 * for them.
+	 * Params:
+	 * klass = the class struct of a GtkContainer subclass
+	 */
+	public static void classHandleBorderWidth(Container klass)
+	{
+		// void gtk_container_class_handle_border_width  (GtkContainerClass *klass);
+		gtk_container_class_handle_border_width((klass is null) ? null : klass.getContainerStruct());
 	}
 }

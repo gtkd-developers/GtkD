@@ -73,13 +73,15 @@ private import gtk.Entry;
 
 /**
  * Description
- * A GtkSpinButton is an ideal way to allow the user to set the value of some
- * attribute. Rather than having to directly type a number into a GtkEntry,
- * GtkSpinButton allows the user to click on one of two arrows to increment or
- * decrement the displayed value. A value can still be typed in, with the bonus
- * that it can be checked to ensure it is in a given range.
- * The main properties of a GtkSpinButton are through a GtkAdjustment. See the
- * GtkAdjustment section for more details about an adjustment's properties.
+ * A GtkSpinButton is an ideal way to allow the user to set the value of
+ * some attribute. Rather than having to directly type a number into a
+ * GtkEntry, GtkSpinButton allows the user to click on one of two arrows
+ * to increment or decrement the displayed value. A value can still be
+ * typed in, with the bonus that it can be checked to ensure it is in a
+ * given range.
+ * The main properties of a GtkSpinButton are through an adjustment.
+ * See the GtkAdjustment section for more details about an adjustment's
+ * properties.
  * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
  */
@@ -161,6 +163,13 @@ public class SpinButton : Entry
 	
 	gint delegate(gpointer, SpinButton)[] onInputListeners;
 	/**
+	 * The ::input signal can be used to influence the conversion of
+	 * the users input into a double value. The signal handler is
+	 * expected to use gtk_entry_get_text() to retrieve the text of
+	 * the entry and set new_value to the new value.
+	 * The default conversion uses g_strtod().
+	 * TRUE for a successful conversion, FALSE if the input
+	 * was not handled, and GTK_INPUT_ERROR if the conversion failed.
 	 */
 	void addOnInput(gint delegate(gpointer, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -177,11 +186,11 @@ public class SpinButton : Entry
 		}
 		onInputListeners ~= dlg;
 	}
-	extern(C) static void callBackInput(GtkSpinButton* spinbuttonStruct, gpointer arg1, SpinButton spinButton)
+	extern(C) static void callBackInput(GtkSpinButton* spinButtonStruct, gpointer newValue, SpinButton spinButton)
 	{
 		foreach ( gint delegate(gpointer, SpinButton) dlg ; spinButton.onInputListeners )
 		{
-			dlg(arg1, spinButton);
+			dlg(newValue, spinButton);
 		}
 	}
 	
@@ -190,7 +199,7 @@ public class SpinButton : Entry
 	 * The ::output signal can be used to change to formatting
 	 * of the value that is displayed in the spin buttons entry.
 	 * $(DDOC_COMMENT example)
-	 * TRUE if the value has been displayed.
+	 * TRUE if the value has been displayed
 	 */
 	void addOnOutput(bool delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -253,7 +262,6 @@ public class SpinButton : Entry
 	 * Since 2.10
 	 * See Also
 	 * GtkEntry
-	 * retrieve text rather than numbers.
 	 */
 	void addOnWrapped(void delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -280,12 +288,13 @@ public class SpinButton : Entry
 	
 	
 	/**
-	 * Changes the properties of an existing spin button. The adjustment, climb rate,
-	 * and number of decimal places are all changed accordingly, after this function call.
+	 * Changes the properties of an existing spin button. The adjustment,
+	 * climb rate, and number of decimal places are all changed accordingly,
+	 * after this function call.
 	 * Params:
 	 * adjustment = a GtkAdjustment. [allow-none]
-	 * climbRate = the new climb rate.
-	 * digits = the number of decimal places to display in the spin button.
+	 * climbRate = the new climb rate
+	 * digits = the number of decimal places to display in the spin button
 	 */
 	public void configure(Adjustment adjustment, double climbRate, uint digits)
 	{
@@ -296,9 +305,11 @@ public class SpinButton : Entry
 	/**
 	 * Creates a new GtkSpinButton.
 	 * Params:
-	 * adjustment = the GtkAdjustment object that this spin button should use.
-	 * climbRate = specifies how much the spin button changes when an arrow is clicked on.
-	 * digits = the number of decimal places to display.
+	 * adjustment = the GtkAdjustment object that this spin
+	 * button should use, or NULL. [allow-none]
+	 * climbRate = specifies how much the spin button changes when an arrow
+	 * is clicked on
+	 * digits = the number of decimal places to display
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment adjustment, double climbRate, uint digits)
@@ -390,7 +401,7 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Sets the minimum and maximum allowable values for spin_button
+	 * Sets the minimum and maximum allowable values for spin_button.
 	 * Params:
 	 * min = minimum allowable value
 	 * max = maximum allowable value
@@ -412,7 +423,7 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Set the value of spin_button.
+	 * Sets the value of spin_button.
 	 * Params:
 	 * value = the new value
 	 */
@@ -423,8 +434,9 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Sets the update behavior of a spin button. This determines whether the
-	 * spin button is always updated or only when a valid value is set.
+	 * Sets the update behavior of a spin button.
+	 * This determines wether the spin button is always updated
+	 * or only when a valid value is set.
 	 * Params:
 	 * policy = a GtkSpinButtonUpdatePolicy value
 	 */
@@ -435,10 +447,10 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Sets the flag that determines if non-numeric text can be typed into
-	 * the spin button.
+	 * Sets the flag that determines if non-numeric text can be typed
+	 * into the spin button.
 	 * Params:
-	 * numeric = flag indicating if only numeric entry is allowed.
+	 * numeric = flag indicating if only numeric entry is allowed
 	 */
 	public void setNumeric(int numeric)
 	{
@@ -447,11 +459,11 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Increment or decrement a spin button's value in a specified direction
-	 * by a specified amount.
+	 * Increment or decrement a spin button's value in a specified
+	 * direction by a specified amount.
 	 * Params:
-	 * direction = a GtkSpinType indicating the direction to spin.
-	 * increment = step increment to apply in the specified direction.
+	 * direction = a GtkSpinType indicating the direction to spin
+	 * increment = step increment to apply in the specified direction
 	 */
 	public void spin(GtkSpinType direction, double increment)
 	{
@@ -460,10 +472,11 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Sets the flag that determines if a spin button value wraps around to the
-	 * opposite limit when the upper or lower limit of the range is exceeded.
+	 * Sets the flag that determines if a spin button value wraps
+	 * around to the opposite limit when the upper or lower limit
+	 * of the range is exceeded.
 	 * Params:
-	 * wrap = a flag indicating if wrapping behavior is performed.
+	 * wrap = a flag indicating if wrapping behavior is performed
 	 */
 	public void setWrap(int wrap)
 	{
@@ -472,10 +485,11 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Sets the policy as to whether values are corrected to the nearest step
-	 * increment when a spin button is activated after providing an invalid value.
+	 * Sets the policy as to whether values are corrected to the
+	 * nearest step increment when a spin button is activated after
+	 * providing an invalid value.
 	 * Params:
-	 * snapToTicks = a flag indicating if invalid values should be corrected.
+	 * snapToTicks = a flag indicating if invalid values should be corrected
 	 */
 	public void setSnapToTicks(int snapToTicks)
 	{
@@ -527,8 +541,8 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Gets the range allowed for spin_button. See
-	 * gtk_spin_button_set_range().
+	 * Gets the range allowed for spin_button.
+	 * See gtk_spin_button_set_range().
 	 * Params:
 	 * min = location to store minimum allowed value, or NULL. [out][allow-none]
 	 * max = location to store maximum allowed value, or NULL. [out][allow-none]
@@ -540,9 +554,9 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Returns whether the values are corrected to the nearest step. See
-	 * gtk_spin_button_set_snap_to_ticks().
-	 * Returns: TRUE if values are snapped to the nearest step.
+	 * Returns whether the values are corrected to the nearest step.
+	 * See gtk_spin_button_set_snap_to_ticks().
+	 * Returns: TRUE if values are snapped to the nearest step
 	 */
 	public int getSnapToTicks()
 	{
@@ -551,8 +565,8 @@ public class SpinButton : Entry
 	}
 	
 	/**
-	 * Gets the update behavior of a spin button. See
-	 * gtk_spin_button_set_update_policy().
+	 * Gets the update behavior of a spin button.
+	 * See gtk_spin_button_set_update_policy().
 	 * Returns: the current update policy
 	 */
 	public GtkSpinButtonUpdatePolicy getUpdatePolicy()

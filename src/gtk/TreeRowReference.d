@@ -85,77 +85,81 @@ private import gtk.TreeIter;
 
 /**
  * Description
- * The GtkTreeModel interface defines a generic tree interface for use by
- * the GtkTreeView widget. It is an abstract interface, and is designed
- * to be usable with any appropriate data structure. The programmer just
- * has to implement this interface on their own data type for it to be
- * viewable by a GtkTreeView widget.
+ * The GtkTreeModel interface defines a generic tree interface for
+ * use by the GtkTreeView widget. It is an abstract interface, and
+ * is designed to be usable with any appropriate data structure. The
+ * programmer just has to implement this interface on their own data
+ * type for it to be viewable by a GtkTreeView widget.
  * The model is represented as a hierarchical tree of strongly-typed,
  * columned data. In other words, the model can be seen as a tree where
  * every node has different values depending on which column is being
- * queried. The type of data found in a column is determined by using the
- * GType system (ie. G_TYPE_INT, GTK_TYPE_BUTTON, G_TYPE_POINTER, etc.).
- * The types are homogeneous per column across all nodes. It is important
- * to note that this interface only provides a way of examining a model and
- * observing changes. The implementation of each individual model decides
- * how and if changes are made.
- * In order to make life simpler for programmers who do not need to write
- * their own specialized model, two generic models are provided — the
- * GtkTreeStore and the GtkListStore. To use these, the developer simply
- * pushes data into these models as necessary. These models provide the
- * data structure as well as all appropriate tree interfaces. As a result,
- * implementing drag and drop, sorting, and storing data is trivial. For
- * the vast majority of trees and lists, these two models are sufficient.
+ * queried. The type of data found in a column is determined by using
+ * the GType system (ie. G_TYPE_INT, GTK_TYPE_BUTTON, G_TYPE_POINTER,
+ * etc). The types are homogeneous per column across all nodes. It is
+ * important to note that this interface only provides a way of examining
+ * a model and observing changes. The implementation of each individual
+ * model decides how and if changes are made.
+ * In order to make life simpler for programmers who do not need to
+ * write their own specialized model, two generic models are provided
+ * — the GtkTreeStore and the GtkListStore. To use these, the
+ * developer simply pushes data into these models as necessary. These
+ * models provide the data structure as well as all appropriate tree
+ * interfaces. As a result, implementing drag and drop, sorting, and
+ * storing data is trivial. For the vast majority of trees and lists,
+ * these two models are sufficient.
  * Models are accessed on a node/column level of granularity. One can
- * query for the value of a model at a certain node and a certain column
- * on that node. There are two structures used to reference a particular
- * node in a model. They are the GtkTreePath and the GtkTreeIter
- * [4]
- * Most of the interface consists of operations on a GtkTreeIter.
+ * query for the value of a model at a certain node and a certain
+ * column on that node. There are two structures used to reference
+ * a particular node in a model. They are the GtkTreePath and the
+ * GtkTreeIter[4]. Most of the interface
+ * consists of operations on a GtkTreeIter.
  * A path is essentially a potential node. It is a location on a model
- * that may or may not actually correspond to a node on a specific model.
- * The GtkTreePath struct can be converted into either an array of
- * unsigned integers or a string. The string form is a list of numbers
- * separated by a colon. Each number refers to the offset at that level.
- * Thus, the path “0” refers to the root node and the path
- * “2:4” refers to the fifth child of the third node.
- * By contrast, a GtkTreeIter is a reference to a specific node on a
- * specific model. It is a generic struct with an integer and three
+ * that may or may not actually correspond to a node on a specific
+ * model. The GtkTreePath struct can be converted into either an
+ * array of unsigned integers or a string. The string form is a list
+ * of numbers separated by a colon. Each number refers to the offset
+ * at that level. Thus, the path “0” refers to the root
+ * node and the path “2:4” refers to the fifth child of
+ * the third node.
+ * By contrast, a GtkTreeIter is a reference to a specific node on
+ * a specific model. It is a generic struct with an integer and three
  * generic pointers. These are filled in by the model in a model-specific
  * way. One can convert a path to an iterator by calling
- * gtk_tree_model_get_iter(). These iterators are the primary way of
- * accessing a model and are similar to the iterators used by
- * GtkTextBuffer. They are generally statically allocated on the stack and
- * only used for a short time. The model interface defines a set of
- * operations using them for navigating the model.
- * It is expected that models fill in the iterator with private data. For
- * example, the GtkListStore model, which is internally a simple linked
- * list, stores a list node in one of the pointers. The GtkTreeModelSort
- * stores an array and an offset in two of the pointers. Additionally,
- * there is an integer field. This field is generally filled with a unique
- * stamp per model. This stamp is for catching errors resulting from using
- * invalid iterators with a model.
+ * gtk_tree_model_get_iter(). These iterators are the primary way
+ * of accessing a model and are similar to the iterators used by
+ * GtkTextBuffer. They are generally statically allocated on the
+ * stack and only used for a short time. The model interface defines
+ * a set of operations using them for navigating the model.
+ * It is expected that models fill in the iterator with private data.
+ * For example, the GtkListStore model, which is internally a simple
+ * linked list, stores a list node in one of the pointers. The
+ * GtkTreeModelSort stores an array and an offset in two of the
+ * pointers. Additionally, there is an integer field. This field is
+ * generally filled with a unique stamp per model. This stamp is for
+ * catching errors resulting from using invalid iterators with a model.
  * The lifecycle of an iterator can be a little confusing at first.
- * Iterators are expected to always be valid for as long as the model is
- * unchanged (and doesn't emit a signal). The model is considered to own
- * all outstanding iterators and nothing needs to be done to free them from
- * the user's point of view. Additionally, some models guarantee that an
- * iterator is valid for as long as the node it refers to is valid (most
- * notably the GtkTreeStore and GtkListStore). Although generally
- * uninteresting, as one always has to allow for the case where iterators
- * do not persist beyond a signal, some very important performance
- * enhancements were made in the sort model. As a result, the
- * GTK_TREE_MODEL_ITERS_PERSIST flag was added to indicate this behavior.
+ * Iterators are expected to always be valid for as long as the model
+ * is unchanged (and doesn't emit a signal). The model is considered
+ * to own all outstanding iterators and nothing needs to be done to
+ * free them from the user's point of view. Additionally, some models
+ * guarantee that an iterator is valid for as long as the node it refers
+ * to is valid (most notably the GtkTreeStore and GtkListStore).
+ * Although generally uninteresting, as one always has to allow for
+ * the case where iterators do not persist beyond a signal, some very
+ * important performance enhancements were made in the sort model.
+ * As a result, the GTK_TREE_MODEL_ITERS_PERSIST flag was added to
+ * indicate this behavior.
  * To help show some common operation of a model, some examples are
- * provided. The first example shows three ways of getting the iter at the
- * location “3:2:5”. While the first method shown is easier,
- * the second is much more common, as you often get paths from callbacks.
+ * provided. The first example shows three ways of getting the iter at
+ * the location “3:2:5”. While the first method shown is
+ * easier, the second is much more common, as you often get paths from
+ * callbacks.
  * $(DDOC_COMMENT example)
- * This second example shows a quick way of iterating through a list and
- * getting a string and an integer from each row. The
- * populate_model function used below is not shown, as
- * it is specific to the GtkListStore. For information on how to write
- * such a function, see the GtkListStore documentation.
+ * This second example shows a quick way of iterating through a list
+ * and getting a string and an integer from each row. The
+ * populate_model function used below is not
+ * shown, as it is specific to the GtkListStore. For information on
+ * how to write such a function, see the GtkListStore documentation.
  * $(DDOC_COMMENT example)
  */
 public class TreeRowReference
@@ -194,13 +198,14 @@ public class TreeRowReference
 	 */
 	
 	/**
-	 * Creates a row reference based on path. This reference will keep pointing
-	 * to the node pointed to by path, so long as it exists. It listens to all
-	 * signals emitted by model, and updates its path appropriately. If path
-	 * isn't a valid path in model, then NULL is returned.
+	 * Creates a row reference based on path.
+	 * This reference will keep pointing to the node pointed to
+	 * by path, so long as it exists. It listens to all signals
+	 * emitted by model, and updates its path appropriately. If
+	 * path isn't a valid path in model, then NULL is returned.
 	 * Params:
-	 * model = A GtkTreeModel
-	 * path = A valid GtkTreePath to monitor
+	 * model = a GtkTreeModel
+	 * path = a valid GtkTreePath to monitor
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (TreeModelIF model, TreePath path)
@@ -215,12 +220,14 @@ public class TreeRowReference
 	}
 	
 	/**
-	 * You do not need to use this function. Creates a row reference based on
-	 * path. This reference will keep pointing to the node pointed to by path,
-	 * so long as it exists. If path isn't a valid path in model, then NULL is
-	 * returned. However, unlike references created with
-	 * gtk_tree_row_reference_new(), it does not listen to the model for changes.
-	 * The creator of the row reference must do this explicitly using
+	 * You do not need to use this function.
+	 * Creates a row reference based on path.
+	 * This reference will keep pointing to the node pointed to
+	 * by path, so long as it exists. If path isn't a valid
+	 * path in model, then NULL is returned. However, unlike
+	 * references created with gtk_tree_row_reference_new(), it
+	 * does not listen to the model for changes. The creator of
+	 * the row reference must do this explicitly using
 	 * gtk_tree_row_reference_inserted(), gtk_tree_row_reference_deleted(),
 	 * gtk_tree_row_reference_reordered().
 	 * These functions must be called exactly once per proxy when the
@@ -230,13 +237,13 @@ public class TreeRowReference
 	 * using them as the proxy object will produce unpredictable results.
 	 * Further more, passing the same object as model and proxy
 	 * doesn't work for reasons of internal implementation.
-	 * This type of row reference is primarily meant by structures that need to
-	 * carefully monitor exactly when a row reference updates itself, and is not
-	 * generally needed by most applications.
+	 * This type of row reference is primarily meant by structures that
+	 * need to carefully monitor exactly when a row reference updates
+	 * itself, and is not generally needed by most applications.
 	 * Params:
-	 * proxy = A proxy GObject
-	 * model = A GtkTreeModel
-	 * path = A valid GtkTreePath to monitor
+	 * proxy = a proxy GObject
+	 * model = a GtkTreeModel
+	 * path = a valid GtkTreePath to monitor
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ObjectG proxy, TreeModelIF model, TreePath path)
@@ -267,9 +274,9 @@ public class TreeRowReference
 	}
 	
 	/**
-	 * Returns a path that the row reference currently points to, or NULL if the
-	 * path pointed to is no longer valid.
-	 * Returns: A current path, or NULL.
+	 * Returns a path that the row reference currently points to,
+	 * or NULL if the path pointed to is no longer valid.
+	 * Returns: a current path, or NULL
 	 */
 	public TreePath getPath()
 	{
@@ -283,9 +290,9 @@ public class TreeRowReference
 	}
 	
 	/**
-	 * Returns TRUE if the reference is non-NULL and refers to a current valid
-	 * path.
-	 * Returns: TRUE if reference points to a valid path.
+	 * Returns TRUE if the reference is non-NULL and refers to
+	 * a current valid path.
+	 * Returns: TRUE if reference points to a valid path
 	 */
 	public int valid()
 	{
@@ -294,7 +301,7 @@ public class TreeRowReference
 	}
 	
 	/**
-	 * Free's reference. reference may be NULL.
+	 * Free's reference. reference may be NULL
 	 */
 	public void free()
 	{
@@ -305,7 +312,7 @@ public class TreeRowReference
 	/**
 	 * Copies a GtkTreeRowReference.
 	 * Since 2.2
-	 * Returns: a copy of reference.
+	 * Returns: a copy of reference
 	 */
 	public TreeRowReference copy()
 	{
@@ -319,11 +326,12 @@ public class TreeRowReference
 	}
 	
 	/**
-	 * Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
-	 * know that the model emitted the "row_inserted" signal.
+	 * Lets a set of row reference created by
+	 * gtk_tree_row_reference_new_proxy() know that the
+	 * model emitted the "row-inserted" signal.
 	 * Params:
-	 * proxy = A GObject
-	 * path = The row position that was inserted
+	 * proxy = a GObject
+	 * path = the row position that was inserted
 	 */
 	public static void inserted(ObjectG proxy, TreePath path)
 	{
@@ -332,11 +340,12 @@ public class TreeRowReference
 	}
 	
 	/**
-	 * Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
-	 * know that the model emitted the "row_deleted" signal.
+	 * Lets a set of row reference created by
+	 * gtk_tree_row_reference_new_proxy() know that the
+	 * model emitted the "row-deleted" signal.
 	 * Params:
-	 * proxy = A GObject
-	 * path = The path position that was deleted
+	 * proxy = a GObject
+	 * path = the path position that was deleted
 	 */
 	public static void deleted(ObjectG proxy, TreePath path)
 	{
@@ -345,13 +354,14 @@ public class TreeRowReference
 	}
 	
 	/**
-	 * Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
-	 * know that the model emitted the "rows_reordered" signal.
+	 * Lets a set of row reference created by
+	 * gtk_tree_row_reference_new_proxy() know that the
+	 * model emitted the "rows-reordered" signal.
 	 * Params:
-	 * proxy = A GObject
-	 * path = The parent path of the reordered signal
-	 * iter = The iter pointing to the parent of the reordered
-	 * newOrder = The new order of rows
+	 * proxy = a GObject
+	 * path = the parent path of the reordered signal
+	 * iter = the iter pointing to the parent of the reordered
+	 * newOrder = the new order of rows
 	 */
 	public static void reordered(ObjectG proxy, TreePath path, TreeIter iter, int[] newOrder)
 	{

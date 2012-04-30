@@ -153,6 +153,18 @@ private import gtk.Misc;
  * gtk_label_set_justify() sets how the lines in a label align
  * with one another. If you want to set how the label as a whole
  * aligns in its available space, see gtk_misc_set_alignment().
+ * The "width-chars" and "max-width-chars" properties
+ * can be used to control the size allocation of ellipsized or wrapped
+ * labels. For ellipsizing labels, if either is specified (and less
+ * than the actual text size), it is used as the minimum width, and the actual
+ * text size is used as the natural width of the label. For wrapping labels,
+ * width-chars is used as the minimum width, if specified, and max-width-chars
+ * is used as the natural width. Even if max-width-chars specified, wrapping
+ * labels will be rewrapped to use all of the available width.
+ * Note
+ * Note that the interpretation of "width-chars" and
+ * "max-width-chars" has changed a bit with the introduction of
+ * width-for-height geometry management and GtkExtendedLayout.
  * <hr>
  * Links
  * Since 2.18, GTK+ supports markup for clickable hyperlinks in addition
@@ -475,14 +487,16 @@ public class Label : Misc
 	}
 	
 	/**
-	 * Parses str which is marked up with the Pango text markup language,
+	 * Parses str which is marked up with the
+	 * Pango text markup language,
 	 * setting the label's text and attribute list based on the parse results.
 	 * If characters in str are preceded by an underscore, they are underlined
 	 * indicating that they represent a keyboard accelerator called a mnemonic.
 	 * The mnemonic key can be used to activate another widget, chosen
 	 * automatically, or explicitly using gtk_label_set_mnemonic_widget().
 	 * Params:
-	 * str = a markup string (see Pango markup format)
+	 * str = a markup string (see
+	 * Pango markup format)
 	 */
 	public void setMarkupWithMnemonic(string str)
 	{
@@ -555,43 +569,6 @@ public class Label : Misc
 	{
 		// void gtk_label_set_max_width_chars (GtkLabel *label,  gint n_chars);
 		gtk_label_set_max_width_chars(gtkLabel, nChars);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_label_get is deprecated and should not be used in newly-written code. Use gtk_label_get_text() instead.
-	 * Gets the current string of text within the GtkLabel and writes it to
-	 * the given str argument. It does not make a copy of this string so you
-	 * must not write to it.
-	 * Params:
-	 * str = The reference to the pointer you want to point to the text.
-	 */
-	public void get(out string str)
-	{
-		// void gtk_label_get (GtkLabel *label,  gchar **str);
-		char* outstr = null;
-		
-		gtk_label_get(gtkLabel, &outstr);
-		
-		str = Str.toString(outstr);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_label_parse_uline is deprecated and should not be used in newly-written code. Use gtk_label_set_use_underline() instead.
-	 * Parses the given string for underscores and converts the next
-	 * character to an underlined character. The last character that
-	 * was underlined will have its lower-cased accelerator keyval returned (i.e.
-	 * "_File" would return the keyval for "f". This is
-	 * probably only used within the GTK+ library itself for menu items and such.
-	 * Params:
-	 * string = The string you want to parse for underlines.
-	 * Returns: The lowercase keyval of the last character underlined.
-	 */
-	public uint parseUline(string string)
-	{
-		// guint gtk_label_parse_uline (GtkLabel *label,  const gchar *string);
-		return gtk_label_parse_uline(gtkLabel, Str.toStringz(string));
 	}
 	
 	/**
@@ -826,7 +803,8 @@ public class Label : Misc
 	 * The layout is useful to e.g. convert text positions to
 	 * pixel positions, in combination with gtk_label_get_layout_offsets().
 	 * The returned layout is owned by the label so need not be
-	 * freed by the caller.
+	 * freed by the caller. The label is free to recreate its layout at
+	 * any time, so it should be considered read-only.
 	 * Returns: the PangoLayout for this label. [transfer none]
 	 */
 	public PgLayout getLayout()

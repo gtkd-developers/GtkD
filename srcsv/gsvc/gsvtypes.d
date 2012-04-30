@@ -51,7 +51,10 @@ public enum GtkSourceSmartHomeEndType
 alias GtkSourceSmartHomeEndType SourceSmartHomeEndType;
 
 /**
- * GtkSourceDrawSpacesFlags determine what kind of spaces whould be drawn.
+ * GtkSourceDrawSpacesFlags determine what kind of spaces whould be drawn. If none
+ * of GTK_SOURCE_DRAW_SPACES_LEADING, GTK_SOURCE_DRAW_SPACES_TEXT or
+ * GTK_SOURCE_DRAW_SPACES_TRAILING is specified, whitespaces at any position in
+ * the line will be drawn (i.e. it has the same effect as specifying all of them).
  * GTK_SOURCE_DRAW_SPACES_SPACE
  * whether the space character should be drawn.
  * GTK_SOURCE_DRAW_SPACES_TAB
@@ -61,8 +64,11 @@ alias GtkSourceSmartHomeEndType SourceSmartHomeEndType;
  * GTK_SOURCE_DRAW_SPACES_NBSP
  * whether the non-breaking whitespaces should be drawn.
  * GTK_SOURCE_DRAW_SPACES_LEADING
+ * whether leading whitespaces should be drawn.
  * GTK_SOURCE_DRAW_SPACES_TEXT
+ * whether whitespaces inside text should be drawn.
  * GTK_SOURCE_DRAW_SPACES_TRAILING
+ * whether trailing whitespaces should be drawn.
  * GTK_SOURCE_DRAW_SPACES_ALL
  * wheter all kind of spaces should be drawn.
  */
@@ -100,6 +106,15 @@ public enum GtkSourceViewGutterPosition
 }
 alias GtkSourceViewGutterPosition SourceViewGutterPosition;
 
+/**
+ * GTK_SOURCE_COMPLETION_ACTIVATION_NONE
+ * none.
+ * GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE
+ * interactive activation
+ * GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED
+ * user requested activation
+ * (e.g. through a keyboard accelerator from the view)
+ */
 public enum GtkSourceCompletionActivation
 {
 	NONE = 0,
@@ -107,15 +122,6 @@ public enum GtkSourceCompletionActivation
 	USER_REQUESTED = 1 << 1
 }
 alias GtkSourceCompletionActivation SourceCompletionActivation;
-
-public enum GtkSourceSearchFlags
-{
-	VISIBLE_ONLY = 1 << 0,
-	TEXT_ONLY = 1 << 1,
-	CASE_INSENSITIVE = 1 << 2
-	/+* Possible future plans: SEARCH_REGEXP +/
-}
-alias GtkSourceSearchFlags SourceSearchFlags;
 
 public struct GtkTextViewClass{}
 
@@ -127,37 +133,10 @@ public struct GtkTextBufferClass{}
 public struct GtkSourceView{}
 
 
-public struct GtkSourceViewClass
-{
-	GtkTextViewClass parentClass;
-	extern(C) void  function(GtkSourceView *view) undo;
-	extern(C) void  function(GtkSourceView *view) redo;
-	extern(C) void  function(GtkSourceView *view, GtkTextIter *iter,GdkEvent *event) lineMarkActivated;
-	extern(C) void  function(GtkSourceView *view) showCompletion;
-	extern(C) void  function(GtkSourceView *view,int copy,int step) moveLines;
-	/+* Padding for future expansion +/
-	extern(C) void  function() _GtkSourceReserved1;
-}
-
-
 /**
  * Main Gtk struct.
  */
 public struct GtkSourceBuffer{}
-
-
-public struct GtkSourceBufferClass
-{
-	GtkTextBufferClass parentClass;
-	/+* Signals +/
-	extern(C) void  function(GtkSourceBuffer *buffer) undo;
-	extern(C) void  function(GtkSourceBuffer *buffer) redo;
-	/+* Padding for future expansion +/
-	extern(C) void  function() _GtkSourceReserved1;
-	extern(C) void  function() _GtkSourceReserved2;
-	extern(C) void  function() _GtkSourceReserved3;
-	extern(C) void  function() _GtkSourceReserved4;
-}
 
 
 /**
@@ -243,25 +222,3 @@ public struct GtkSourceStyleScheme{}
  */
 public struct GtkSourceStyleSchemeManager{}
 
-
-/*
- * Function type for setting up a tooltip for GtkSourceMark.
- * mark  :
- * the GtkSourceMark
- * user_data  :
- * user data pointer which was passed to gtk_source_view_set_mark_category_tooltip_func()
- * Returns  :
- *  a newly-allocated string that is going to be shown as tooltip text.
- */
-// gchar * (*GtkSourceViewMarkTooltipFunc) (GtkSourceMark *mark,  gpointer user_data);
-public alias extern(C) char *  function (GtkSourceMark*, void*) GtkSourceViewMarkTooltipFunc;
-
-/*
- */
-// void (*GtkSourceGutterDataFunc) (GtkSourceGutter *gutter,  GtkCellRenderer *cell,  gint line_number,  gboolean current_line,  gpointer data);
-public alias extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, int, int, void*) GtkSourceGutterDataFunc;
-
-/*
- */
-// void (*GtkSourceGutterSizeFunc) (GtkSourceGutter *gutter,  GtkCellRenderer *cell,  gpointer data);
-public alias extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, void*) GtkSourceGutterSizeFunc;

@@ -70,8 +70,8 @@ public import gdk.Event;
 
 /**
  * Description
- * The GtkCellEditable interface must be implemented for widgets
- * to be usable when editing the contents of a GtkTreeView cell.
+ * The GtkCellEditable interface must be implemented for widgets to be usable
+ * when editing the contents of a GtkTreeView cell.
  */
 public template CellEditableT(TStruct)
 {
@@ -102,7 +102,7 @@ public template CellEditableT(TStruct)
 	 * emitting this signal when they are done editing, e.g.
 	 * GtkEntry is emitting it when the user presses Enter.
 	 * gtk_cell_editable_editing_done() is a convenience method
-	 * for emitting GtkCellEditable::editing-done.
+	 * for emitting "editing-done".
 	 */
 	void addOnEditingDone(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -141,7 +141,9 @@ public template CellEditableT(TStruct)
 	 * to give the cell renderer a chance to update the cell's value
 	 * before the widget is removed.
 	 * gtk_cell_editable_remove_widget() is a convenience method
-	 * for emitting GtkCellEditable::remove-widget.
+	 * for emitting "remove-widget".
+	 * See Also
+	 * GtkEntry, GtkCellRenderer
 	 */
 	void addOnRemoveWidget(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

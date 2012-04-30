@@ -80,14 +80,12 @@ private import gobject.ObjectG;
 /**
  * Description
  * You may wish to begin by reading the text widget
- * conceptual overview which gives an overview of all the objects and data
- * types related to the text widget and how they work together.
+ * conceptual overview which gives an overview of all the objects and
+ * data types related to the text widget and how they work together.
  * Tags should be in the GtkTextTagTable for a given GtkTextBuffer
  * before using them with that buffer.
  * gtk_text_buffer_create_tag() is the best way to create tags.
- * See gtk-demo for numerous examples.
- * The "invisible" property was not implemented for GTK+ 2.0.
- * It is working (with minor issues) since 2.8.
+ * See gtk3-demo for numerous examples.
  */
 public class TextTag : ObjectG
 {

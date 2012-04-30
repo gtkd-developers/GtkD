@@ -73,7 +73,7 @@ private import gtk.Container;
 
 /**
  * Description
- * GtkBox is an abstract widget which encapsulates functionality for a
+ * GtkBox is an widget which encapsulates functionality for a
  * particular kind of container, one that organizes a variable number of
  * widgets into a rectangular area. GtkBox has a number of derived
  * classes, e.g. GtkHBox and GtkVBox.
@@ -82,8 +82,8 @@ private import gtk.Container;
  * of type GtkHBox or GtkVBox, respectively. Thus, all children of a
  * GtkBox are allocated one dimension in common, which is the height of a
  * row, or the width of a column.
- * GtkBox uses a notion of packing. Packing refers to
- * adding widgets with reference to a particular position in a
+ * GtkBox uses a notion of packing. Packing
+ * refers to adding widgets with reference to a particular position in a
  * GtkContainer. For a GtkBox, there are two reference positions: the
  * start and the end of the box.
  * For a GtkVBox, the start is defined as the top of the box and the end is
@@ -93,23 +93,25 @@ private import gtk.Container;
  * GtkBox from start to end. Use gtk_box_pack_end() to add widgets from
  * end to start. You may intersperse these calls and add widgets from
  * both ends of the same GtkBox.
- * Use gtk_box_pack_start_defaults() or gtk_box_pack_end_defaults()
- * to pack widgets into a GtkBox if you do not need to specify the
- * "expand", "fill", or "padding" child properties
- * for the child to be added.
  * Because GtkBox is a GtkContainer, you may also use
  * gtk_container_add() to insert widgets into the box, and they will be
- * packed as if with gtk_box_pack_start_defaults(). Use
- * gtk_container_remove() to remove widgets from the GtkBox.
+ * packed with the default values for "expand" and "fill".
+ * Use gtk_container_remove() to remove widgets from the GtkBox.
  * Use gtk_box_set_homogeneous() to specify whether or not all children
  * of the GtkBox are forced to get the same amount of space.
  * Use gtk_box_set_spacing() to determine how much space will be
- * minimally placed between all children in the GtkBox.
+ * minimally placed between all children in the GtkBox. Note that
+ * spacing is added between the children, while
+ * padding added by gtk_box_pack_start() or gtk_box_pack_end() is added
+ * on either side of the widget it belongs to.
  * Use gtk_box_reorder_child() to move a GtkBox child to a different
  * place in the box.
  * Use gtk_box_set_child_packing() to reset the "expand",
  * "fill" and "padding" child properties.
  * Use gtk_box_query_child_packing() to query these fields.
+ * Note
+ * Note that a single-row or single-column GtkGrid provides exactly the
+ * same functionality as GtkBox.
  */
 public class Box : Container, OrientableIF
 {
@@ -164,14 +166,32 @@ public class Box : Container, OrientableIF
 	 */
 	
 	/**
+	 * Creates a new GtkBox.
+	 * Params:
+	 * orientation = the box's orientation.
+	 * spacing = the number of pixels to place by default between children.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkOrientation orientation, int spacing)
+	{
+		// GtkWidget * gtk_box_new (GtkOrientation orientation,  gint spacing);
+		auto p = gtk_box_new(orientation, spacing);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_box_new(orientation, spacing)");
+		}
+		this(cast(GtkBox*) p);
+	}
+	
+	/**
 	 * Adds child to box, packed with reference to the start of box.
 	 * The child is packed after any other child packed with reference
 	 * to the start of box.
 	 * Params:
 	 * child = the GtkWidget to be added to box
-	 * expand = TRUE if the new child is to be given extra space allocated to
-	 * box. The extra space will be divided evenly between all children of
-	 * box that use this option
+	 * expand = TRUE if the new child is to be given extra space allocated
+	 * to box. The extra space will be divided evenly between all children
+	 * that use this option
 	 * fill = TRUE if space given to child by the expand option is
 	 * actually allocated to child, rather than just padding it. This
 	 * parameter has no effect if expand is set to FALSE. A child is
@@ -213,42 +233,6 @@ public class Box : Container, OrientableIF
 	{
 		// void gtk_box_pack_end (GtkBox *box,  GtkWidget *child,  gboolean expand,  gboolean fill,  guint padding);
 		gtk_box_pack_end(gtkBox, (child is null) ? null : child.getWidgetStruct(), expand, fill, padding);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_box_pack_start_defaults has been deprecated since version 2.14 and should not be used in newly-written code. Use gtk_box_pack_start()
-	 * Adds widget to box, packed with reference to the start of box.
-	 * The child is packed after any other child packed with reference
-	 * to the start of box.
-	 * Parameters for how to pack the child widget, "expand",
-	 * "fill" and "padding", are given their default
-	 * values, TRUE, TRUE, and 0, respectively.
-	 * Params:
-	 * widget = the GtkWidget to be added to box
-	 */
-	public void packStartDefaults(Widget widget)
-	{
-		// void gtk_box_pack_start_defaults (GtkBox *box,  GtkWidget *widget);
-		gtk_box_pack_start_defaults(gtkBox, (widget is null) ? null : widget.getWidgetStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_box_pack_end_defaults has been deprecated since version 2.14 and should not be used in newly-written code. Use gtk_box_pack_end()
-	 * Adds widget to box, packed with reference to the end of box.
-	 * The child is packed after any other child packed with reference
-	 * to the start of box.
-	 * Parameters for how to pack the child widget, "expand",
-	 * "fill" and "padding", are given their default
-	 * values, TRUE, TRUE, and 0, respectively.
-	 * Params:
-	 * widget = the GtkWidget to be added to box
-	 */
-	public void packEndDefaults(Widget widget)
-	{
-		// void gtk_box_pack_end_defaults (GtkBox *box,  GtkWidget *widget);
-		gtk_box_pack_end_defaults(gtkBox, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -324,10 +308,14 @@ public class Box : Container, OrientableIF
 	 * Obtains information about how child is packed into box.
 	 * Params:
 	 * child = the GtkWidget of the child to query
-	 * expand = pointer to return location for "expand" child property
-	 * fill = pointer to return location for "fill" child property
-	 * padding = pointer to return location for "padding" child property
-	 * packType = pointer to return location for "pack-type" child property
+	 * expand = pointer to return location for "expand" child
+	 * property. [out]
+	 * fill = pointer to return location for "fill" child
+	 * property. [out]
+	 * padding = pointer to return location for "padding"
+	 * child property. [out]
+	 * packType = pointer to return location for "pack-type"
+	 * child property. [out]
 	 */
 	public void queryChildPacking(Widget child, out int expand, out int fill, out uint padding, out GtkPackType packType)
 	{

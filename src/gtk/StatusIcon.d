@@ -410,6 +410,7 @@ public class StatusIcon : ObjectG
 	 * Whether this event is emitted is platform-dependent.
 	 * TRUE to stop other handlers from being invoked for the event.
 	 * FALSE to propagate the event further.
+	 * Since 2.16
 	 */
 	void addOnScroll(bool delegate(GdkEvent*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -549,7 +550,7 @@ public class StatusIcon : ObjectG
 	 * See gtk_status_icon_new_from_file() for details.
 	 * Since 2.10
 	 * Params:
-	 * filename = a filename
+	 * filename = a filename. [type filename]
 	 */
 	public void setFromFile(string filename)
 	{
@@ -729,20 +730,6 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
-	 * Warning
-	 * gtk_status_icon_set_tooltip has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_status_icon_set_tooltip_text() instead.
-	 * Sets the tooltip of the status icon.
-	 * Since 2.10
-	 * Params:
-	 * tooltipText = the tooltip text, or NULL. [allow-none]
-	 */
-	public void setTooltip(string tooltipText)
-	{
-		// void gtk_status_icon_set_tooltip (GtkStatusIcon *status_icon,  const gchar *tooltip_text);
-		gtk_status_icon_set_tooltip(gtkStatusIcon, Str.toStringz(tooltipText));
-	}
-	
-	/**
 	 * Sets text as the contents of the tooltip.
 	 * This function will take care of setting "has-tooltip" to
 	 * TRUE and of the default handler for the "query-tooltip"
@@ -891,37 +878,6 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
-	 * Warning
-	 * gtk_status_icon_set_blinking has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
-	 * Makes the status icon start or stop blinking.
-	 * Note that blinking user interface elements may be problematic
-	 * for some users, and thus may be turned off, in which case
-	 * this setting has no effect.
-	 * Since 2.10
-	 * Params:
-	 * blinking = TRUE to turn blinking on, FALSE to turn it off
-	 */
-	public void setBlinking(int blinking)
-	{
-		// void gtk_status_icon_set_blinking (GtkStatusIcon *status_icon,  gboolean blinking);
-		gtk_status_icon_set_blinking(gtkStatusIcon, blinking);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_status_icon_get_blinking has been deprecated since version 2.22 and should not be used in newly-written code. This function will be removed in GTK+ 3
-	 * Returns whether the icon is blinking, see
-	 * gtk_status_icon_set_blinking().
-	 * Since 2.10
-	 * Returns: TRUE if the icon is blinking
-	 */
-	public int getBlinking()
-	{
-		// gboolean gtk_status_icon_get_blinking (GtkStatusIcon *status_icon);
-		return gtk_status_icon_get_blinking(gtkStatusIcon);
-	}
-	
-	/**
 	 * Returns whether the status icon is embedded in a notification
 	 * area.
 	 * Since 2.10
@@ -939,11 +895,12 @@ public class StatusIcon : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * menu = the GtkMenu
-	 * x = return location for the x position
-	 * y = return location for the y position
-	 * pushIn = whether the first menu item should be offset (pushed in) to be
-	 * aligned with the menu popup position (only useful for GtkOptionMenu).
-	 * userData = the status icon to position the menu on
+	 * x = return location for the x position. [out]
+	 * y = return location for the y position. [out]
+	 * pushIn = whether the first menu item should be offset
+	 * (pushed in) to be aligned with the menu popup position
+	 * (only useful for GtkOptionMenu). [out]
+	 * userData = the status icon to position the menu on. [type GtkStatusIcon]
 	 */
 	public static void positionMenu(Menu menu, out int x, out int y, out int pushIn, void* userData)
 	{
@@ -964,17 +921,17 @@ public class StatusIcon : ObjectG
 	 * gtk_status_icon_is_embedded().
 	 * Since 2.10
 	 * Params:
-	 * screen = return location for the screen, or NULL if the
-	 * information is not needed. [out][transfer none][allow-none]
-	 * area = return location for the area occupied by the status
-	 * icon, or NULL. [out][allow-none]
-	 * orientation = return location for the orientation of the panel
-	 * in which the status icon is embedded, or NULL. A panel
-	 * at the top or bottom of the screen is horizontal, a panel
-	 * at the left or right is vertical. [out][allow-none]
+	 * screen = return location for
+	 * the screen, or NULL if the information is not needed. [out][transfer none][allow-none]
+	 * area = return location for the area occupied by
+	 * the status icon, or NULL. [out][allow-none]
+	 * orientation = return location for the
+	 * orientation of the panel in which the status icon is embedded,
+	 * or NULL. A panel at the top or bottom of the screen is
+	 * horizontal, a panel at the left or right is vertical. [out][allow-none]
 	 * Returns: TRUE if the location information has been filled in
 	 */
-	public int getGeometry(out Screen screen, out GdkRectangle area, out GtkOrientation orientation)
+	public int getGeometry(out Screen screen, out Rectangle area, out GtkOrientation orientation)
 	{
 		// gboolean gtk_status_icon_get_geometry (GtkStatusIcon *status_icon,  GdkScreen **screen,  GdkRectangle *area,  GtkOrientation *orientation);
 		GdkScreen* outscreen = null;

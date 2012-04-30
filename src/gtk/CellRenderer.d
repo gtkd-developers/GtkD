@@ -82,24 +82,24 @@ private import gtk.CellEditableIF;
 
 
 
-private import gtk.ObjectGtk;
+private import gobject.ObjectG;
 
 /**
  * Description
  * The GtkCellRenderer is a base class of a set of objects used for
- * rendering a cell to a GdkDrawable. These objects are used primarily by
+ * rendering a cell to a cairo_t. These objects are used primarily by
  * the GtkTreeView widget, though they aren't tied to them in any
  * specific way. It is worth noting that GtkCellRenderer is not a
  * GtkWidget and cannot be treated as such.
  * The primary use of a GtkCellRenderer is for drawing a certain graphical
- * elements on a GdkDrawable. Typically, one cell renderer is used to
+ * elements on a cairo_t. Typically, one cell renderer is used to
  * draw many cells on the screen. To this extent, it isn't expected that a
  * CellRenderer keep any permanent state around. Instead, any state is set
  * just prior to use using GObjects property system. Then, the
  * cell is measured using gtk_cell_renderer_get_size(). Finally, the cell
  * is rendered in the correct location using gtk_cell_renderer_render().
  * There are a number of rules that must be followed when writing a new
- * GtkCellRenderer. First and formost, it's important that a certain set
+ * GtkCellRenderer. First and formost, its important that a certain set
  * of properties will always yield a cell renderer of the same size,
  * barring a GtkStyle change. The GtkCellRenderer also has a number of
  * generic properties that are expected to be honored by all children.
@@ -110,10 +110,10 @@ private import gtk.ObjectGtk;
  * editable like GtkCellRendererText, which
  * allows the user to edit the text using a GtkEntry.
  * To make a cell renderer activatable or editable, you have to
- * implement the activate or start_editing virtual functions,
- * respectively.
+ * implement the GtkCellRendererClass.activate or
+ * GtkCellRendererClass.start_editing virtual functions, respectively.
  */
-public class CellRenderer : ObjectGtk
+public class CellRenderer : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -149,7 +149,7 @@ public class CellRenderer : ObjectGtk
 			this = cast(CellRenderer)ptr;
 			return;
 		}
-		super(cast(GtkObject*)gtkCellRenderer);
+		super(cast(GObject*)gtkCellRenderer);
 		this.gtkCellRenderer = gtkCellRenderer;
 	}
 	
@@ -206,7 +206,7 @@ public class CellRenderer : ObjectGtk
 	 * $(DDOC_COMMENT example)
 	 * Since 2.6
 	 * See Also
-	 * GtkCellRendererText,GtkCellRendererPixbuf,GtkCellRendererToggle
+	 * GtkCellRendererText, GtkCellRendererPixbuf, GtkCellRendererToggle
 	 */
 	void addOnEditingStarted(void delegate(CellEditableIF, string, CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -233,6 +233,26 @@ public class CellRenderer : ObjectGtk
 	
 	
 	/**
+	 * Gets the aligned area used by cell inside cell_area. Used for finding
+	 * the appropriate edit and focus rectangle.
+	 * Params:
+	 * cell = a GtkCellRenderer instance
+	 * widget = the GtkWidget this cell will be rendering to
+	 * flags = render flags
+	 * cellArea = cell area which would be passed to gtk_cell_renderer_render()
+	 * alignedArea = the return location for the space inside cell_area
+	 * that would acually be used to render. [out]
+	 * Since 3.0
+	 */
+	public void getAlignedArea(Widget widget, GtkCellRendererState flags, Rectangle cellArea, Rectangle alignedArea)
+	{
+		// void gtk_cell_renderer_get_aligned_area (GtkCellRenderer *cell,  GtkWidget *widget,  GtkCellRendererState flags,  const GdkRectangle *cell_area,  GdkRectangle *aligned_area);
+		gtk_cell_renderer_get_aligned_area(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), flags, (cellArea is null) ? null : cellArea.getRectangleStruct(), (alignedArea is null) ? null : alignedArea.getRectangleStruct());
+	}
+	
+	/**
+	 * Warning
+	 * gtk_cell_renderer_get_size has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_cell_renderer_get_preferred_size() instead.
 	 * Obtains the width and height needed to render the cell. Used by view
 	 * widgets to determine the appropriate size for the cell_area passed to
 	 * gtk_cell_renderer_render(). If cell_area is not NULL, fills in the
@@ -256,26 +276,25 @@ public class CellRenderer : ObjectGtk
 	
 	/**
 	 * Invokes the virtual render function of the GtkCellRenderer. The three
-	 * passed-in rectangles are areas of window. Most renderers will draw within
+	 * passed-in rectangles are areas in cr. Most renderers will draw within
 	 * cell_area; the xalign, yalign, xpad, and ypad fields of the GtkCellRenderer
 	 * should be honored with respect to cell_area. background_area includes the
 	 * blank space around the cell, and also the area containing the tree expander;
 	 * so the background_area rectangles for all cells tile to cover the entire
-	 * window. expose_area is a clip rectangle.
+	 * window.
 	 * Params:
 	 * cell = a GtkCellRenderer
-	 * window = a GdkDrawable to draw to
+	 * cr = a cairo context to draw to
 	 * widget = the widget owning window
 	 * backgroundArea = entire cell area (including tree expanders and maybe
 	 * padding on the sides)
 	 * cellArea = area normally rendered by a cell renderer
-	 * exposeArea = area that actually needs updating
 	 * flags = flags that affect rendering
 	 */
-	public void render(Window window, Widget widget, Rectangle backgroundArea, Rectangle cellArea, Rectangle exposeArea, GtkCellRendererState flags)
+	public void render(cairo_t* cr, Widget widget, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
 	{
-		// void gtk_cell_renderer_render (GtkCellRenderer *cell,  GdkWindow *window,  GtkWidget *widget,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  const GdkRectangle *expose_area,  GtkCellRendererState flags);
-		gtk_cell_renderer_render(gtkCellRenderer, (window is null) ? null : window.getWindowStruct(), (widget is null) ? null : widget.getWidgetStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), (exposeArea is null) ? null : exposeArea.getRectangleStruct(), flags);
+		// void gtk_cell_renderer_render (GtkCellRenderer *cell,  cairo_t *cr,  GtkWidget *widget,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  GtkCellRendererState flags);
+		gtk_cell_renderer_render(gtkCellRenderer, cr, (widget is null) ? null : widget.getWidgetStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
 	}
 	
 	/**
@@ -321,22 +340,6 @@ public class CellRenderer : ObjectGtk
 			return null;
 		}
 		return new CellEditable(cast(GtkCellEditable*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_cell_renderer_editing_canceled has been deprecated since version 2.6 and should not be used in newly-written code. Use gtk_cell_renderer_stop_editing() instead
-	 * Causes the cell renderer to emit the "editing-canceled"
-	 * signal.
-	 * This function is for use only by implementations of cell renderers that
-	 * need to notify the client program that an editing process was canceled
-	 * and the changes were not committed.
-	 * Since 2.4
-	 */
-	public void editingCanceled()
-	{
-		// void gtk_cell_renderer_editing_canceled (GtkCellRenderer *cell);
-		gtk_cell_renderer_editing_canceled(gtkCellRenderer);
 	}
 	
 	/**
@@ -476,5 +479,117 @@ public class CellRenderer : ObjectGtk
 	{
 		// void gtk_cell_renderer_set_padding (GtkCellRenderer *cell,  gint xpad,  gint ypad);
 		gtk_cell_renderer_set_padding(gtkCellRenderer, xpad, ypad);
+	}
+	
+	/**
+	 * Translates the cell renderer state to GtkStateFlags,
+	 * based on the cell renderer and widget sensitivity, and
+	 * the given GtkCellRendererState.
+	 * Params:
+	 * cell = a GtkCellRenderer, or NULL
+	 * widget = a GtkWidget, or NULL
+	 * cellState = cell renderer state
+	 * Returns: the widget state flags applying to cell Since 3.0
+	 */
+	public GtkStateFlags getState(Widget widget, GtkCellRendererState cellState)
+	{
+		// GtkStateFlags gtk_cell_renderer_get_state (GtkCellRenderer *cell,  GtkWidget *widget,  GtkCellRendererState cell_state);
+		return gtk_cell_renderer_get_state(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), cellState);
+	}
+	
+	/**
+	 * Checks whether the cell renderer can do something when activated.
+	 * Returns: TRUE if the cell renderer can do anything when activated Since 3.0
+	 */
+	public int isActivatable()
+	{
+		// gboolean gtk_cell_renderer_is_activatable (GtkCellRenderer *cell);
+		return gtk_cell_renderer_is_activatable(gtkCellRenderer);
+	}
+	
+	/**
+	 * Retreives a renderer's natural size when rendered to widget.
+	 * Params:
+	 * widget = the GtkWidget this cell will be rendering to
+	 * minimumSize = location to store the minimum size, or NULL. [out][allow-none]
+	 * naturalSize = location to store the natural size, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredHeight(Widget widget, int* minimumSize, int* naturalSize)
+	{
+		// void gtk_cell_renderer_get_preferred_height  (GtkCellRenderer *cell,  GtkWidget *widget,  gint *minimum_size,  gint *natural_size);
+		gtk_cell_renderer_get_preferred_height(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), minimumSize, naturalSize);
+	}
+	
+	/**
+	 * Retreives a cell renderers's minimum and natural height if it were rendered to
+	 * widget with the specified width.
+	 * Params:
+	 * widget = the GtkWidget this cell will be rendering to
+	 * width = the size which is available for allocation
+	 * minimumHeight = location for storing the minimum size, or NULL. [out][allow-none]
+	 * naturalHeight = location for storing the preferred size, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredHeightForWidth(Widget widget, int width, int* minimumHeight, int* naturalHeight)
+	{
+		// void gtk_cell_renderer_get_preferred_height_for_width  (GtkCellRenderer *cell,  GtkWidget *widget,  gint width,  gint *minimum_height,  gint *natural_height);
+		gtk_cell_renderer_get_preferred_height_for_width(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), width, minimumHeight, naturalHeight);
+	}
+	
+	/**
+	 * Retrieves the minimum and natural size of a cell taking
+	 * into account the widget's preference for height-for-width management.
+	 * Params:
+	 * widget = the GtkWidget this cell will be rendering to
+	 * minimumSize = location for storing the minimum size, or NULL. [out][allow-none]
+	 * naturalSize = location for storing the natural size, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredSize(Widget widget, GtkRequisition* minimumSize, GtkRequisition* naturalSize)
+	{
+		// void gtk_cell_renderer_get_preferred_size  (GtkCellRenderer *cell,  GtkWidget *widget,  GtkRequisition *minimum_size,  GtkRequisition *natural_size);
+		gtk_cell_renderer_get_preferred_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), minimumSize, naturalSize);
+	}
+	
+	/**
+	 * Retreives a renderer's natural size when rendered to widget.
+	 * Params:
+	 * widget = the GtkWidget this cell will be rendering to
+	 * minimumSize = location to store the minimum size, or NULL. [out][allow-none]
+	 * naturalSize = location to store the natural size, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredWidth(Widget widget, int* minimumSize, int* naturalSize)
+	{
+		// void gtk_cell_renderer_get_preferred_width  (GtkCellRenderer *cell,  GtkWidget *widget,  gint *minimum_size,  gint *natural_size);
+		gtk_cell_renderer_get_preferred_width(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), minimumSize, naturalSize);
+	}
+	
+	/**
+	 * Retreives a cell renderers's minimum and natural width if it were rendered to
+	 * widget with the specified height.
+	 * Params:
+	 * widget = the GtkWidget this cell will be rendering to
+	 * height = the size which is available for allocation
+	 * minimumWidth = location for storing the minimum size, or NULL. [out][allow-none]
+	 * naturalWidth = location for storing the preferred size, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredWidthForHeight(Widget widget, int height, int* minimumWidth, int* naturalWidth)
+	{
+		// void gtk_cell_renderer_get_preferred_width_for_height  (GtkCellRenderer *cell,  GtkWidget *widget,  gint height,  gint *minimum_width,  gint *natural_width);
+		gtk_cell_renderer_get_preferred_width_for_height(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), height, minimumWidth, naturalWidth);
+	}
+	
+	/**
+	 * Gets whether the cell renderer prefers a height-for-width layout
+	 * or a width-for-height layout.
+	 * Returns: The GtkSizeRequestMode preferred by this renderer. Since 3.0
+	 */
+	public GtkSizeRequestMode getRequestMode()
+	{
+		// GtkSizeRequestMode gtk_cell_renderer_get_request_mode (GtkCellRenderer *cell);
+		return gtk_cell_renderer_get_request_mode(gtkCellRenderer);
 	}
 }

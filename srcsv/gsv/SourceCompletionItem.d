@@ -132,10 +132,10 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 * extra information info. Both icon and info can be NULL in which case
 	 * there will be no icon shown and no extra information available.
 	 * Params:
-	 * label = The item label
-	 * text = The item text
-	 * icon = The item icon
-	 * info = The item extra information
+	 * label = The item label.
+	 * text = The item text.
+	 * icon = The item icon. [allow-none]
+	 * info = The item extra information. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, string text, Pixbuf icon, string info)
@@ -153,10 +153,10 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 * Creates a new GtkSourceCompletionItem from a stock item. If label is NULL,
 	 * the stock label will be used.
 	 * Params:
-	 * label = The item label
-	 * text = The item text
-	 * stock = The stock icon
-	 * info = The item extra information
+	 * label = The item label. [allow-none]
+	 * text = The item text.
+	 * stock = The stock icon.
+	 * info = The item extra information. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, string text, string stock, string info)

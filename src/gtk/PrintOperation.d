@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-High-level-Printing-API.html
+ * inFile  = gtk3-High-level-Printing-API.html
  * outPack = gtk
  * outFile = PrintOperation
  * strct   = GtkPrintOperation
@@ -95,31 +95,32 @@ private import gobject.ObjectG;
 
 /**
  * Description
- * GtkPrintOperation is the high-level, portable printing API. It looks
- * a bit different than other GTK+ dialogs such as the GtkFileChooser,
- * since some platforms don't expose enough infrastructure to implement
- * a good print dialog. On such platforms, GtkPrintOperation uses the
- * native print dialog. On platforms which do not provide a native
- * print dialog, GTK+ uses its own, see GtkPrintUnixDialog.
- * The typical way to use the high-level printing API is to create a
- * GtkPrintOperation object with gtk_print_operation_new() when the user
- * selects to print. Then you set some properties on it, e.g. the page size,
- * any GtkPrintSettings from previous print operations, the number of pages,
- * the current page, etc.
+ * GtkPrintOperation is the high-level, portable printing API.
+ * It looks a bit different than other GTK+ dialogs such as the
+ * GtkFileChooser, since some platforms don't expose enough
+ * infrastructure to implement a good print dialog. On such
+ * platforms, GtkPrintOperation uses the native print dialog.
+ * On platforms which do not provide a native print dialog, GTK+
+ * uses its own, see GtkPrintUnixDialog.
+ * The typical way to use the high-level printing API is to create
+ * a GtkPrintOperation object with gtk_print_operation_new() when
+ * the user selects to print. Then you set some properties on it,
+ * e.g. the page size, any GtkPrintSettings from previous print
+ * operations, the number of pages, the current page, etc.
  * Then you start the print operation by calling gtk_print_operation_run().
- * It will then show a dialog, let the user select a printer and options.
- * When the user finished the dialog various signals will be emitted on the
- * GtkPrintOperation, the main one being ::draw-page, which you are supposed
- * to catch and render the page on the provided GtkPrintContext using Cairo.
+ * It will then show a dialog, let the user select a printer and
+ * options. When the user finished the dialog various signals will
+ * be emitted on the GtkPrintOperation, the main one being
+ * "draw-page", which you are supposed to catch
+ * and render the page on the provided GtkPrintContext using Cairo.
  * $(DDOC_COMMENT example)
  * By default GtkPrintOperation uses an external application to do
  * print preview. To implement a custom print preview, an application
  * must connect to the preview signal. The functions
  * gtk_print_operation_print_preview_render_page(),
  * gtk_print_operation_preview_end_preview() and
- * gtk_print_operation_preview_is_selected() are useful
- * when implementing a print preview.
- * Printing support was added in GTK+ 2.10.
+ * gtk_print_operation_preview_is_selected()
+ * are useful when implementing a print preview.
  */
 public class PrintOperation : ObjectG, PrintOperationPreviewIF
 {
@@ -781,7 +782,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * of printers in the print dialog.
 	 * Since 2.10
 	 * Params:
-	 * filename = the filename for the exported file
+	 * filename = the filename for the exported file. [type filename]
 	 */
 	public void setExportFilename(string filename)
 	{
@@ -1064,7 +1065,8 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * parent = transient parent, or NULL. [allow-none]
 	 * pageSetup = an existing GtkPageSetup, or NULL. [allow-none]
 	 * settings = a GtkPrintSettings
-	 * doneCb = a function to call when the user saves the modified page setup
+	 * doneCb = a function to call when the user saves
+	 * the modified page setup. [scope async]
 	 * data = user data to pass to done_cb
 	 */
 	public static void gtkPrintRunPageSetupDialogAsync(Window parent, PageSetup pageSetup, PrintSettings settings, GtkPageSetupDoneFunc doneCb, void* data)

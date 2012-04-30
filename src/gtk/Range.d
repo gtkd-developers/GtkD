@@ -79,7 +79,7 @@ private import gtk.Widget;
 /**
  * Description
  * GtkRange is the common base class for widgets which visualize an
- * adjustment, e.g scales or scrollbars.
+ * adjustment, e.g GtkScale or GtkScrollbar.
  * Apart from signals for monitoring the parameters of the adjustment,
  * GtkRange provides properties and methods for influencing the sensitivity
  * of the "steppers". It also provides properties and methods for setting a
@@ -140,6 +140,8 @@ public class Range : Widget, OrientableIF
 	
 	void delegate(gdouble, Range)[] onAdjustBoundsListeners;
 	/**
+	 * Emitted before clamping a value, to give the application a
+	 * chance to adjust the bounds.
 	 */
 	void addOnAdjustBounds(void delegate(gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -156,17 +158,17 @@ public class Range : Widget, OrientableIF
 		}
 		onAdjustBoundsListeners ~= dlg;
 	}
-	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, gdouble arg1, Range range)
+	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, gdouble value, Range range)
 	{
 		foreach ( void delegate(gdouble, Range) dlg ; range.onAdjustBoundsListeners )
 		{
-			dlg(arg1, range);
+			dlg(value, range);
 		}
 	}
 	
 	bool delegate(GtkScrollType, gdouble, Range)[] onChangeValueListeners;
 	/**
-	 * The ::change-value signal is emitted when a scroll action is
+	 * The "change-value" signal is emitted when a scroll action is
 	 * performed on a range. It allows an application to determine the
 	 * type of scroll event that occurred and the resultant new value.
 	 * The application can handle the event itself and return TRUE to
@@ -174,11 +176,11 @@ public class Range : Widget, OrientableIF
 	 * the event to other handlers until the default GTK+ handler is
 	 * reached.
 	 * The value parameter is unrounded. An application that overrides
-	 * the ::change-value signal is responsible for clamping the value to
-	 * the desired number of decimal digits; the default GTK+ handler
-	 * clamps the value based on "round_digits".
+	 * the GtkRange::change-value signal is responsible for clamping the
+	 * value to the desired number of decimal digits; the default GTK+
+	 * handler clamps the value based on "round-digits".
 	 * It is not possible to use delayed update policies in an overridden
-	 * ::change-value handler.
+	 * "change-value" handler.
 	 * TRUE to prevent other handlers from being invoked for the
 	 * signal, FALSE to propagate the signal further
 	 * Since 2.6
@@ -371,27 +373,6 @@ public class Range : Widget, OrientableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_range_set_update_policy has been deprecated since version 2.24 and should not be used in newly-written code. There is no replacement. If you require delayed
-	 *  updates, you need to code it yourself.
-	 * Sets the update policy for the range. GTK_UPDATE_CONTINUOUS means that
-	 * anytime the range slider is moved, the range value will change and the
-	 * value_changed signal will be emitted. GTK_UPDATE_DELAYED means that
-	 * the value will be updated after a brief timeout where no slider motion
-	 * occurs, so updates are spaced by a short time rather than
-	 * continuous. GTK_UPDATE_DISCONTINUOUS means that the value will only
-	 * be updated when the user releases the button and ends the slider
-	 * drag operation.
-	 * Params:
-	 * policy = update policy
-	 */
-	public void setUpdatePolicy(GtkUpdateType policy)
-	{
-		// void gtk_range_set_update_policy (GtkRange *range,  GtkUpdateType policy);
-		gtk_range_set_update_policy(gtkRange, policy);
-	}
-	
-	/**
 	 * Sets the adjustment to be used as the "model" object for this range
 	 * widget. The adjustment indicates the current range value, the
 	 * minimum and maximum range values, the step/page increments used
@@ -433,16 +414,27 @@ public class Range : Widget, OrientableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_range_get_update_policy has been deprecated since version 2.24 and should not be used in newly-written code. There is no replacement. If you require delayed
-	 *  updates, you need to code it yourself.
-	 * Gets the update policy of range. See gtk_range_set_update_policy().
-	 * Returns: the current update policy
+	 * Gets the current value of the range.
+	 * Returns: current value of the range.
 	 */
-	public GtkUpdateType getUpdatePolicy()
+	public double getValue()
 	{
-		// GtkUpdateType gtk_range_get_update_policy (GtkRange *range);
-		return gtk_range_get_update_policy(gtkRange);
+		// gdouble gtk_range_get_value (GtkRange *range);
+		return gtk_range_get_value(gtkRange);
+	}
+	
+	/**
+	 * Sets the current value of the range; if the value is outside the
+	 * minimum or maximum range values, it will be clamped to fit inside
+	 * them. The range emits the "value-changed" signal if the
+	 * value changes.
+	 * Params:
+	 * value = new value of the range
+	 */
+	public void setValue(double value)
+	{
+		// void gtk_range_set_value (GtkRange *range,  gdouble value);
+		gtk_range_set_value(gtkRange, value);
 	}
 	
 	/**
@@ -472,30 +464,6 @@ public class Range : Widget, OrientableIF
 	{
 		// void gtk_range_set_range (GtkRange *range,  gdouble min,  gdouble max);
 		gtk_range_set_range(gtkRange, min, max);
-	}
-	
-	/**
-	 * Gets the current value of the range.
-	 * Returns: current value of the range.
-	 */
-	public double getValue()
-	{
-		// gdouble gtk_range_get_value (GtkRange *range);
-		return gtk_range_get_value(gtkRange);
-	}
-	
-	/**
-	 * Sets the current value of the range; if the value is outside the
-	 * minimum or maximum range values, it will be clamped to fit inside
-	 * them. The range emits the "value-changed" signal if the
-	 * value changes.
-	 * Params:
-	 * value = new value of the range
-	 */
-	public void setValue(double value)
-	{
-		// void gtk_range_set_value (GtkRange *range,  gdouble value);
-		gtk_range_set_value(gtkRange, value);
 	}
 	
 	/**
@@ -663,13 +631,13 @@ public class Range : Widget, OrientableIF
 	 */
 	public void setMinSliderSize(int minSize)
 	{
-		// void gtk_range_set_min_slider_size (GtkRange *range,  gboolean min_size);
+		// void gtk_range_set_min_slider_size (GtkRange *range,  gint min_size);
 		gtk_range_set_min_slider_size(gtkRange, minSize);
 	}
 	
 	/**
 	 * Sets whether the range's slider has a fixed size, or a size that
-	 * depends on it's adjustment's page size.
+	 * depends on its adjustment's page size.
 	 * This function is useful mainly for GtkRange subclasses.
 	 * Since 2.20
 	 * Params:

@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-General.html
+ * inFile  = gdk3-General.html
  * outPack = gdk
  * outFile = Gdk
  * strct   = 
@@ -44,8 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Window
  * 	- gdk.Cursor
+ * 	- gdk.Window
  * structWrap:
  * 	- GdkCursor* -> Cursor
  * 	- GdkWindow* -> Window
@@ -63,8 +63,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gdk.Window;
 private import gdk.Cursor;
+private import gdk.Window;
 
 
 
@@ -81,15 +81,15 @@ public class Gdk
 	 */
 	
 	/**
-	 * Initializes the GDK library and connects to the X server.
+	 * Initializes the GDK library and connects to the windowing system.
 	 * If initialization fails, a warning message is output and the application
 	 * terminates with a call to exit(1).
-	 * Any arguments used by GDK are removed from the array and argc and argv are
-	 * updated accordingly.
-	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
-	 * by GTK+ applications.
+	 * Any arguments used by GDK are removed from the array and argc and argv
+	 * are updated accordingly.
+	 * GTK+ initializes GDK in gtk_init() and so this function is not usually
+	 * needed by GTK+ applications.
 	 * Params:
-	 * argv = . [array length=argc][inout]
+	 * argv = the array of command line arguments. [array length=argc][inout]
 	 */
 	public static void init(ref string[] argv)
 	{
@@ -107,9 +107,14 @@ public class Gdk
 	}
 	
 	/**
-	 * Initialize the library for use.
+	 * Initializes the GDK library and connects to the windowing system,
+	 * returning TRUE on success.
+	 * Any arguments used by GDK are removed from the array and argc and argv
+	 * are updated accordingly.
+	 * GTK+ initializes GDK in gtk_init() and so this function is not usually
+	 * needed by GTK+ applications.
 	 * Params:
-	 * argv = . [array length=argc][inout]
+	 * argv = the array of command line arguments. [array length=argc][inout]
 	 * Returns: TRUE if initialization succeeded.
 	 */
 	public static int initCheck(ref string[] argv)
@@ -167,58 +172,6 @@ public class Gdk
 	}
 	
 	/**
-	 * Warning
-	 * gdk_set_locale has been deprecated since version 2.24 and should not be used in newly-written code. Use setlocale() directly
-	 * Initializes the support for internationalization by calling the setlocale()
-	 * system call. This function is called by gtk_set_locale() and so GTK+
-	 * applications should use that instead.
-	 * The locale to use is determined by the LANG environment variable,
-	 * Returns: the resulting locale.
-	 */
-	public static string setLocale()
-	{
-		// gchar * gdk_set_locale (void);
-		return Str.toString(gdk_set_locale());
-	}
-	
-	/**
-	 * Warning
-	 * gdk_set_sm_client_id has been deprecated since version 2.24 and should not be used in newly-written code. Use gdk_x11_set_sm_client_id() instead
-	 * Sets the SM_CLIENT_ID property on the application's leader window so that
-	 * the window manager can save the application's state using the X11R6 ICCCM
-	 * session management protocol.
-	 * See the X Session Management Library documentation for more information on
-	 * session management and the Inter-Client Communication Conventions Manual
-	 * (ICCCM) for information on the WM_CLIENT_LEADER property.
-	 * (Both documents are part of the X Window System distribution.)
-	 * Params:
-	 * smClientId = the client id assigned by the session manager when the
-	 * connection was opened, or NULL to remove the property.
-	 */
-	public static void setSmClientId(string smClientId)
-	{
-		// void gdk_set_sm_client_id (const gchar *sm_client_id);
-		gdk_set_sm_client_id(Str.toStringz(smClientId));
-	}
-	
-	/**
-	 * Warning
-	 * gdk_exit is deprecated and should not be used in newly-written code.
-	 * Exits the application using the exit() system call.
-	 * This routine is provided mainly for backwards compatibility, since it used to
-	 * perform tasks necessary to exit the application cleanly. Those tasks are now
-	 * performed in a function which is automatically called on exit (via the use
-	 * of g_atexit()).
-	 * Params:
-	 * errorCode = the error code to pass to the exit() call.
-	 */
-	public static void exit(int errorCode)
-	{
-		// void gdk_exit (gint error_code);
-		gdk_exit(errorCode);
-	}
-	
-	/**
 	 * Indicates to the GUI environment that the application has finished
 	 * loading. If the applications opens windows, this function is
 	 * normally called after opening the application's initial set of
@@ -235,16 +188,16 @@ public class Gdk
 	}
 	
 	/**
-	 * Indicates to the GUI environment that the application has finished
-	 * loading, using a given identifier.
-	 * GTK+ will call this function automatically for GtkWindow with custom
-	 * startup-notification identifier unless
-	 * gtk_window_set_auto_startup_notification() is called to disable
-	 * that feature.
+	 * Indicates to the GUI environment that the application has
+	 * finished loading, using a given identifier.
+	 * GTK+ will call this function automatically for GtkWindow
+	 * with custom startup-notification identifier unless
+	 * gtk_window_set_auto_startup_notification() is called to
+	 * disable that feature.
 	 * Since 2.12
 	 * Params:
-	 * startupId = a startup-notification identifier, for which notification
-	 * process should be completed
+	 * startupId = a startup-notification identifier, for which
+	 * notification process should be completed
 	 */
 	public static void notifyStartupCompleteWithId(string startupId)
 	{
@@ -261,7 +214,7 @@ public class Gdk
 	 */
 	public static string getProgramClass()
 	{
-		// const char * gdk_get_program_class (void);
+		// const gchar * gdk_get_program_class (void);
 		return Str.toString(gdk_get_program_class());
 	}
 	
@@ -274,13 +227,14 @@ public class Gdk
 	 */
 	public static void setProgramClass(string programClass)
 	{
-		// void gdk_set_program_class (const char *program_class);
+		// void gdk_set_program_class (const gchar *program_class);
 		gdk_set_program_class(Str.toStringz(programClass));
 	}
 	
 	/**
-	 * Gets the name of the display, which usually comes from the DISPLAY
-	 * environment variable or the --display command line option.
+	 * Gets the name of the display, which usually comes from the
+	 * DISPLAY environment variable or the
+	 * --display command line option.
 	 * Returns: the name of the display.
 	 */
 	public static string getDisplay()
@@ -290,9 +244,9 @@ public class Gdk
 	}
 	
 	/**
-	 * Flushes the X output buffer and waits until all requests have been processed
-	 * by the server. This is rarely needed by applications. It's main use is for
-	 * trapping X errors with gdk_error_trap_push() and gdk_error_trap_pop().
+	 * Flushes the output buffers of all display connections and waits
+	 * until all requests have been processed.
+	 * This is rarely needed by applications.
 	 */
 	public static void flush()
 	{
@@ -343,6 +297,8 @@ public class Gdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_pointer_grab has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_grab() instead.
 	 * Grabs the pointer (usually a mouse) so that all events are passed to this
 	 * application until the pointer is ungrabbed with gdk_pointer_ungrab(), or
 	 * the grab window becomes unviewable.
@@ -350,8 +306,7 @@ public class Gdk
 	 * Pointer grabs are used for operations which need complete control over mouse
 	 * events, even if the mouse leaves the application.
 	 * For example in GTK+ it is used for Drag and Drop, for dragging the handle in
-	 * the GtkHPaned and GtkVPaned widgets, and for resizing columns in GtkCList
-	 * widgets.
+	 * the GtkHPaned and GtkVPaned widgets.
 	 * Note that if the event mask of an X window has selected both button press and
 	 * button release events, then a button press event will cause an automatic
 	 * pointer grab until the button is released.
@@ -375,10 +330,10 @@ public class Gdk
 	 * confineTo = If non-NULL, the pointer will be confined to this
 	 * window during the grab. If the pointer is outside confine_to, it will
 	 * automatically be moved to the closest edge of confine_to and enter
-	 * and leave events will be generated as necessary.
+	 * and leave events will be generated as necessary. [allow-none]
 	 * cursor = the cursor to display while the grab is active. If this is NULL then
 	 * the normal cursors are used for window and its descendants, and the cursor
-	 * for window is used for all other windows.
+	 * for window is used for all other windows. [allow-none]
 	 * time = the timestamp of the event which led to this pointer grab. This usually
 	 * comes from a GdkEventButton struct, though GDK_CURRENT_TIME can be used if
 	 * the time isn't known.
@@ -391,6 +346,9 @@ public class Gdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_pointer_ungrab has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_ungrab(), together with gdk_device_grab()
+	 *  instead.
 	 * Ungrabs the pointer on the default display, if it is grabbed by this
 	 * application.
 	 * Params:
@@ -404,11 +362,13 @@ public class Gdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_pointer_is_grabbed has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_display_device_is_grabbed() instead.
 	 * Returns TRUE if the pointer on the default display is currently
 	 * grabbed by this application.
 	 * Note that this does not take the inmplicit pointer grab on button
 	 * presses into account.
-	 * Returns: TRUE if the pointer is currently grabbed by this application.*
+	 * Returns: TRUE if the pointer is currently grabbed by this application.
 	 */
 	public static int pointerIsGrabbed()
 	{
@@ -432,6 +392,8 @@ public class Gdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_keyboard_grab has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_grab() instead.
 	 * Grabs the keyboard so that all events are passed to this
 	 * application until the keyboard is ungrabbed with gdk_keyboard_ungrab().
 	 * This overrides any previous keyboard grab by this client.
@@ -441,10 +403,11 @@ public class Gdk
 	 * Params:
 	 * window = the GdkWindow which will own the grab (the grab window).
 	 * ownerEvents = if FALSE then all keyboard events are reported with respect to
-	 * window. If TRUE then keyboard events for this application are reported as
-	 * normal, but keyboard events outside this application are reported with respect
-	 * to window. Both key press and key release events are always reported,
-	 * independant of the event mask set by the application.
+	 * window. If TRUE then keyboard events for this application are
+	 * reported as normal, but keyboard events outside this application
+	 * are reported with respect to window. Both key press and key
+	 * release events are always reported, independant of the event mask
+	 * set by the application.
 	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 	 * available.
 	 * Returns: GDK_GRAB_SUCCESS if the grab was successful.
@@ -456,6 +419,9 @@ public class Gdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_keyboard_ungrab has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_device_ungrab(), together with gdk_device_grab()
+	 *  instead.
 	 * Ungrabs the keyboard on the default display, if it is grabbed by this
 	 * application.
 	 * Params:
@@ -478,42 +444,17 @@ public class Gdk
 	}
 	
 	/**
-	 * Warning
-	 * gdk_get_use_xshm is deprecated and should not be used in newly-written code.
-	 * Returns TRUE if GDK will attempt to use the MIT-SHM shared memory extension.
-	 * The shared memory extension is used for GdkImage, and consequently for
-	 * GdkRGB.
-	 * It enables much faster drawing by communicating with the X server through
-	 * SYSV shared memory calls. However, it can only be used if the X client and
-	 * server are on the same machine and the server supports it.
-	 * Returns: TRUE if use of the MIT shared memory extension will be attempted.
-	 */
-	public static int getUseXshm()
-	{
-		// gboolean gdk_get_use_xshm (void);
-		return gdk_get_use_xshm();
-	}
-	
-	/**
-	 * Warning
-	 * gdk_set_use_xshm is deprecated and should not be used in newly-written code.
-	 * Sets whether the use of the MIT shared memory extension should be attempted.
-	 * This function is mainly for internal use. It is only safe for an application
-	 * to set this to FALSE, since if it is set to TRUE and the server does not
-	 * support the extension it may cause warning messages to be output.
-	 * Params:
-	 * useXshm = TRUE if use of the MIT shared memory extension should be attempted.
-	 */
-	public static void setUseXshm(int useXshm)
-	{
-		// void gdk_set_use_xshm (gboolean use_xshm);
-		gdk_set_use_xshm(useXshm);
-	}
-	
-	/**
-	 * This function allows X errors to be trapped instead of the normal behavior
-	 * of exiting the application. It should only be used if it is not possible to
-	 * avoid the X error in any other way.
+	 * This function allows X errors to be trapped instead of the normal
+	 * behavior of exiting the application. It should only be used if it
+	 * is not possible to avoid the X error in any other way. Errors are
+	 * ignored on all GdkDisplay currently known to the
+	 * GdkDisplayManager. If you don't care which error happens and just
+	 * want to ignore everything, pop with gdk_error_trap_pop_ignored().
+	 * If you need the error code, use gdk_error_trap_pop() which may have
+	 * to block and wait for the error to arrive from the X server.
+	 * This API exists on all platforms but only does anything on X.
+	 * You can use gdk_x11_display_error_trap_push() to ignore errors
+	 * on only a single display.
 	 * $(DDOC_COMMENT example)
 	 */
 	public static void errorTrapPush()
@@ -523,12 +464,15 @@ public class Gdk
 	}
 	
 	/**
-	 * Removes the X error trap installed with gdk_error_trap_push().
-	 * Returns: the X error code, or 0 if no error occurred.
+	 * Removes an error trap pushed with gdk_error_trap_push(), but
+	 * without bothering to wait and see whether an error occurred. If an
+	 * error arrives later asynchronously that was triggered while the
+	 * trap was pushed, that error will be ignored.
+	 * Since 3.0
 	 */
-	public static int errorTrapPop()
+	public static void errorTrapPopIgnored()
 	{
-		// gint gdk_error_trap_pop (void);
-		return gdk_error_trap_pop();
+		// void gdk_error_trap_pop_ignored (void);
+		gdk_error_trap_pop_ignored();
 	}
 }

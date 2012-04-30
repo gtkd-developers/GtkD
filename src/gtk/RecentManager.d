@@ -91,16 +91,27 @@ private import gobject.ObjectG;
  * the same file, the mime type of the file and whether the file
  * should be displayed only by the applications that have
  * registered it.
+ * Note
+ * The recently used files list is per user.
  * The GtkRecentManager acts like a database of all the recently
  * used files. You can create new GtkRecentManager objects, but
- * it is more efficient to use the standard recent manager for
- * the GdkScreen so that informations about the recently used
- * files is shared with other people using them. In case the
- * default screen is being used, adding a new recently used
- * file is as simple as:
+ * it is more efficient to use the default manager created by GTK+.
+ * Adding a new recently used file is as simple as:
  * $(DDOC_COMMENT example)
- * While looking up a recently used file is as simple as:
+ * The GtkRecentManager will try to gather all the needed information
+ * from the file itself through GIO.
+ * Looking up the meta-data associated with a recently used file
+ * given its URI requires calling gtk_recent_manager_lookup_item():
  * $(DDOC_COMMENT example)
+ * In order to retrieve the list of recently used files, you can use
+ * gtk_recent_manager_get_items(), which returns a list of GtkRecentInfo
+ * structures.
+ * A GtkRecentManager is the model used to populate the contents of
+ * one, or more GtkRecentChooser implementations.
+ * Note
+ * The maximum age of the recently used files list is
+ * controllable through the "gtk-recent-files-max-age"
+ * property.
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentManager : ObjectG
@@ -156,8 +167,11 @@ public class RecentManager : ObjectG
 	void delegate(RecentManager)[] onChangedListeners;
 	/**
 	 * Emitted when the current recently used resources manager changes its
-	 * contents.
+	 * contents, either by calling gtk_recent_manager_add_item() or by another
+	 * application.
 	 * Since 2.10
+	 * See Also
+	 * GBookmarkFile, GtkSettings, GtkRecentChooser
 	 */
 	void addOnChanged(void delegate(RecentManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -206,8 +220,7 @@ public class RecentManager : ObjectG
 	
 	/**
 	 * Gets a unique instance of GtkRecentManager, that you can share
-	 * in your application without caring about memory management. The
-	 * returned instance will be freed when you application terminates.
+	 * in your application without caring about memory management.
 	 * Since 2.10
 	 * Returns: A unique GtkRecentManager. Do not ref or unref it. [transfer none]
 	 */
@@ -220,53 +233,6 @@ public class RecentManager : ObjectG
 			return null;
 		}
 		return new RecentManager(cast(GtkRecentManager*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_recent_manager_get_for_screen has been deprecated since version 2.12 and should not be used in newly-written code. This function has been deprecated and should
-	 *  not be used in newly written code. Calling this function is
-	 *  equivalent to calling gtk_recent_manager_get_default().
-	 * Gets the recent manager object associated with screen; if this
-	 * function has not previously been called for the given screen,
-	 * a new recent manager object will be created and associated with
-	 * the screen. Recent manager objects are fairly expensive to create,
-	 * so using this function is usually a better choice than calling
-	 * gtk_recent_manager_new() and setting the screen yourself; by using
-	 * this function a single recent manager object will be shared between
-	 * users.
-	 * Since 2.10
-	 * Params:
-	 * screen = a GdkScreen
-	 * Returns: A unique GtkRecentManager associated with the given screen. This recent manager is associated to the with the screen and can be used as long as the screen is open. Do not ref or unref it.
-	 */
-	public static RecentManager getForScreen(Screen screen)
-	{
-		// GtkRecentManager * gtk_recent_manager_get_for_screen (GdkScreen *screen);
-		auto p = gtk_recent_manager_get_for_screen((screen is null) ? null : screen.getScreenStruct());
-		if(p is null)
-		{
-			return null;
-		}
-		return new RecentManager(cast(GtkRecentManager*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_recent_manager_set_screen has been deprecated since version 2.12 and should not be used in newly-written code. This function has been deprecated and should
-	 *  not be used in newly written code. Calling this function has
-	 *  no effect.
-	 * Sets the screen for a recent manager; the screen is used to
-	 * track the user's currently configured recently used documents
-	 * storage.
-	 * Since 2.10
-	 * Params:
-	 * screen = a GdkScreen
-	 */
-	public void setScreen(Screen screen)
-	{
-		// void gtk_recent_manager_set_screen (GtkRecentManager *manager,  GdkScreen *screen);
-		gtk_recent_manager_set_screen(gtkRecentManager, (screen is null) ? null : screen.getScreenStruct());
 	}
 	
 	/**
@@ -409,40 +375,6 @@ public class RecentManager : ObjectG
 		}
 		
 		return p;
-	}
-	
-	/**
-	 * Warning
-	 * gtk_recent_manager_get_limit has been deprecated since version 2.22 and should not be used in newly-written code. The length of the list should be managed by the
-	 *  view (implementing GtkRecentChooser), and not by the model (the
-	 *  GtkRecentManager). See "limit".
-	 * Gets the maximum number of items that the gtk_recent_manager_get_items()
-	 * function should return.
-	 * Since 2.10
-	 * Returns: the number of items to return, or -1 for every item.
-	 */
-	public int getLimit()
-	{
-		// gint gtk_recent_manager_get_limit (GtkRecentManager *manager);
-		return gtk_recent_manager_get_limit(gtkRecentManager);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_recent_manager_set_limit has been deprecated since version 2.22 and should not be used in newly-written code. The length of the list should be managed by the
-	 *  view (implementing GtkRecentChooser), and not by the model (the
-	 *  GtkRecentManager). See "limit".
-	 * Sets the maximum number of item that the gtk_recent_manager_get_items()
-	 * function should return. If limit is set to -1, then return all the
-	 * items.
-	 * Since 2.10
-	 * Params:
-	 * limit = the maximum number of items to return, or -1.
-	 */
-	public void setLimit(int limit)
-	{
-		// void gtk_recent_manager_set_limit (GtkRecentManager *manager,  gint limit);
-		gtk_recent_manager_set_limit(gtkRecentManager, limit);
 	}
 	
 	/**

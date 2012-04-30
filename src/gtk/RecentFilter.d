@@ -63,7 +63,7 @@ private import glib.Str;
 
 
 
-private import gtk.ObjectGtk;
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -82,8 +82,16 @@ private import gtk.ObjectGtk;
  * see gtk_recent_chooser_add_filter(), but it is also possible to
  * manually use a filter on a file with gtk_recent_filter_filter().
  * Recently used files are supported since GTK+ 2.10.
+ * GtkRecentFilter as GtkBuildable
+ * The GtkRecentFilter implementation of the GtkBuildable interface
+ * supports adding rules using the <mime-typesgt, <patternsgt and
+ * <applicationsgt elements and listing the rules within. Specifying
+ * a <mime-typegt, <patterngt or <applicationgt is the same
+ * as calling gtk_recent_filter_add_mime_type(), gtk_recent_filter_add_pattern()
+ * or gtk_recent_filter_add_application().
+ * $(DDOC_COMMENT example)
  */
-public class RecentFilter : ObjectGtk
+public class RecentFilter : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -119,7 +127,7 @@ public class RecentFilter : ObjectGtk
 			this = cast(RecentFilter)ptr;
 			return;
 		}
-		super(cast(GtkObject*)gtkRecentFilter);
+		super(cast(GObject*)gtkRecentFilter);
 		this.gtkRecentFilter = gtkRecentFilter;
 	}
 	

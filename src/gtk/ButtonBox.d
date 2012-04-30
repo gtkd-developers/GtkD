@@ -74,20 +74,16 @@ private import gtk.Box;
 
 /**
  * Description
- * The primary purpose of this class is to keep track of the various properties
- * of GtkHButtonBox and GtkVButtonBox widgets.
- * gtk_button_box_get_child_size() retrieves the minimum width and height
- * for widgets in a given button box.
- * The internal padding of buttons can be retrieved and changed per button box using
- * gtk_button_box_get_child_ipadding() and gtk_button_box_set_child_ipadding()
- * respectively.
- * gtk_button_box_get_spacing() and gtk_button_box_set_spacing() retrieve and
- * change default number of pixels between buttons, respectively.
- * gtk_button_box_get_layout() and gtk_button_box_set_layout() retrieve and alter the method
- * used to spread the buttons in a button box across the container, respectively.
- * The main purpose of GtkButtonBox is to make sure the children have all the same size.
- * Therefore it ignores the homogeneous property which it inherited from GtkBox, and always
- * behaves as if homogeneous was TRUE.
+ * The primary purpose of this class is to keep track of the various
+ * properties of GtkHButtonBox and GtkVButtonBox widgets.
+ * gtk_button_box_get_layout() and gtk_button_box_set_layout() retrieve and
+ * alter the method used to spread the buttons in a button box across the
+ * container, respectively.
+ * The main purpose of GtkButtonBox is to make sure the children have all the
+ * same size. GtkButtonBox gives all children the same size, but it does allow
+ * 'outliers' to keep their own larger size. To force all children to be
+ * strictly the same size without exceptions, you can set the
+ * "homogeneous" property to TRUE.
  */
 public class ButtonBox : Box
 {
@@ -187,47 +183,30 @@ public class ButtonBox : Box
 	 */
 	
 	/**
+	 * Creates a new GtkButtonBox.
+	 * Params:
+	 * orientation = the box' orientation.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkOrientation orientation)
+	{
+		// GtkWidget * gtk_button_box_new (GtkOrientation orientation);
+		auto p = gtk_button_box_new(orientation);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_box_new(orientation)");
+		}
+		this(cast(GtkButtonBox*) p);
+	}
+	
+	/**
 	 * Retrieves the method being used to arrange the buttons in a button box.
-	 * Returns: the method used to layout buttons in widget.
+	 * Returns: the method used to lay out buttons in widget.
 	 */
 	public GtkButtonBoxStyle getLayout()
 	{
 		// GtkButtonBoxStyle gtk_button_box_get_layout (GtkButtonBox *widget);
 		return gtk_button_box_get_layout(gtkButtonBox);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_button_box_get_child_size is deprecated and should not be used in newly-written code. Use the style properties
-	 * "child-min-width/-height" instead.
-	 * Retrieves the current width and height of all child widgets in a button box.
-	 * min_width and min_height are filled with those values, respectively.
-	 * Params:
-	 * minWidth = the width of the buttons contained by widget.
-	 * minHeight = the height of the buttons contained by widget.
-	 */
-	public void getChildSize(out int minWidth, out int minHeight)
-	{
-		// void gtk_button_box_get_child_size (GtkButtonBox *widget,  gint *min_width,  gint *min_height);
-		gtk_button_box_get_child_size(gtkButtonBox, &minWidth, &minHeight);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_button_box_get_child_ipadding is deprecated and should not be used in newly-written code. Use the style properties
-	 *  "child-internal-pad-x"
-	 *  and
-	 *  "child-internal-pad-y"
-	 *  instead.
-	 * Gets the default number of pixels that pad the buttons in a given button box.
-	 * Params:
-	 * ipadX = the horizontal padding used by buttons in widget.
-	 * ipadY = the vertical padding used by buttons in widget.
-	 */
-	public void getChildIpadding(out int ipadX, out int ipadY)
-	{
-		// void gtk_button_box_get_child_ipadding (GtkButtonBox *widget,  gint *ipad_x,  gint *ipad_y);
-		gtk_button_box_get_child_ipadding(gtkButtonBox, &ipadX, &ipadY);
 	}
 	
 	/**
@@ -246,41 +225,12 @@ public class ButtonBox : Box
 	/**
 	 * Changes the way buttons are arranged in their container.
 	 * Params:
-	 * layoutStyle = the new layout style.
+	 * layoutStyle = the new layout style
 	 */
 	public void setLayout(GtkButtonBoxStyle layoutStyle)
 	{
 		// void gtk_button_box_set_layout (GtkButtonBox *widget,  GtkButtonBoxStyle layout_style);
 		gtk_button_box_set_layout(gtkButtonBox, layoutStyle);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_button_box_set_child_size is deprecated and should not be used in newly-written code. This is not supported anymore and can only be set through the theme
-	 * Params:
-	 * minWidth = a default width for buttons in widget
-	 * minHeight = a default height for buttons in widget
-	 */
-	public void setChildSize(int minWidth, int minHeight)
-	{
-		// void gtk_button_box_set_child_size (GtkButtonBox *widget,  gint min_width,  gint min_height);
-		gtk_button_box_set_child_size(gtkButtonBox, minWidth, minHeight);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_button_box_set_child_ipadding is deprecated and should not be used in newly-written code. Use the style properties
-	 * "child-internal-pad-x/-y" instead.
-	 * Changes the amount of internal padding used by all buttons in a given button
-	 * box.
-	 * Params:
-	 * ipadX = the horizontal padding that should be used by each button in widget.
-	 * ipadY = the vertical padding that should be used by each button in widget.
-	 */
-	public void setChildIpadding(int ipadX, int ipadY)
-	{
-		// void gtk_button_box_set_child_ipadding (GtkButtonBox *widget,  gint ipad_x,  gint ipad_y);
-		gtk_button_box_set_child_ipadding(gtkButtonBox, ipadX, ipadY);
 	}
 	
 	/**

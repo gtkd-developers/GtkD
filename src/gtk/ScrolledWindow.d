@@ -79,9 +79,7 @@ private import gtk.Bin;
  * to the child widget and optionally draws a beveled frame around the
  * child widget.
  * The scrolled window can work in two ways. Some widgets have native
- * scrolling support; these widgets have "slots" for GtkAdjustment
- * objects.
- * [5]
+ * scrolling support; these widgets implement the GtkScrollable interface.
  * Widgets with native scroll support include GtkTreeView, GtkTextView,
  * and GtkLayout.
  * For widgets that lack native scrolling support, the GtkViewport
@@ -210,6 +208,16 @@ public class ScrolledWindow : Bin
 	
 	void delegate(GtkDirectionType, ScrolledWindow)[] onMoveFocusOutListeners;
 	/**
+	 * The ::move-focus-out signal is a
+	 * keybinding signal
+	 * which gets emitted when focus is moved away from the scrolled
+	 * window by a keybinding.
+	 * The "move-focus" signal is emitted with direction_type
+	 * on this scrolled windows toplevel parent in the container hierarchy.
+	 * The default bindings for this signal are
+	 * Tab+Ctrl
+	 * and
+	 * Tab+Ctrl+Shift.
 	 */
 	void addOnMoveFocusOut(void delegate(GtkDirectionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -226,26 +234,23 @@ public class ScrolledWindow : Bin
 		}
 		onMoveFocusOutListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveFocusOut(GtkScrolledWindow* scrolledwindowStruct, GtkDirectionType arg1, ScrolledWindow scrolledWindow)
+	extern(C) static void callBackMoveFocusOut(GtkScrolledWindow* scrolledWindowStruct, GtkDirectionType directionType, ScrolledWindow scrolledWindow)
 	{
 		foreach ( void delegate(GtkDirectionType, ScrolledWindow) dlg ; scrolledWindow.onMoveFocusOutListeners )
 		{
-			dlg(arg1, scrolledWindow);
+			dlg(directionType, scrolledWindow);
 		}
 	}
 	
 	bool delegate(GtkScrollType, gboolean, ScrolledWindow)[] onScrollChildListeners;
 	/**
+	 * The ::scroll-child signal is a
+	 * keybinding signal
+	 * which gets emitted when a keybinding that scrolls is pressed.
+	 * The horizontal or vertical adjustment is updated which triggers a
+	 * signal that the scrolled windows child may listen to and scroll itself.
 	 * See Also
-	 * GtkViewport, GtkAdjustment, GtkWidgetClass
-	 * [5] The scrolled window installs GtkAdjustment objects in
-	 * the child window's slots using the set_scroll_adjustments_signal,
-	 * found in GtkWidgetClass. (Conceptually, these widgets implement a
-	 * "Scrollable" interface; because GTK+ 1.2 lacked interface support in
-	 * the object system, this interface is hackily implemented as a signal
-	 * in GtkWidgetClass. The GTK+ 2.0 object system would allow a clean
-	 * implementation, but it wasn't worth breaking the
-	 * API.)
+	 * GtkScrollable, GtkViewport, GtkAdjustment
 	 */
 	void addOnScrollChild(bool delegate(GtkScrollType, gboolean, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -262,11 +267,11 @@ public class ScrolledWindow : Bin
 		}
 		onScrollChildListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType arg1, gboolean arg2, ScrolledWindow scrolledWindow)
+	extern(C) static gboolean callBackScrollChild(GtkScrolledWindow* scrolledWindowStruct, GtkScrollType scroll, gboolean horizontal, ScrolledWindow scrolledWindow)
 	{
 		foreach ( bool delegate(GtkScrollType, gboolean, ScrolledWindow) dlg ; scrolledWindow.onScrollChildListeners )
 		{
-			if ( dlg(arg1, arg2, scrolledWindow) )
+			if ( dlg(scroll, horizontal, scrolledWindow) )
 			{
 				return 1;
 			}
@@ -372,9 +377,8 @@ public class ScrolledWindow : Bin
 	 * the whole widget will scroll, including the column headings. Thus,
 	 * widgets with native scrolling support should not be used with the
 	 * GtkViewport proxy.
-	 * A widget supports scrolling natively if the
-	 * set_scroll_adjustments_signal field in GtkWidgetClass is non-zero,
-	 * i.e. has been filled in with a valid signal identifier.
+	 * A widget supports scrolling natively if it implements the
+	 * GtkScrollable interface.
 	 * Params:
 	 * child = the widget you want to scroll
 	 */
@@ -485,5 +489,53 @@ public class ScrolledWindow : Bin
 	{
 		// GtkShadowType gtk_scrolled_window_get_shadow_type (GtkScrolledWindow *scrolled_window);
 		return gtk_scrolled_window_get_shadow_type(gtkScrolledWindow);
+	}
+	
+	/**
+	 * Gets the minimum content width of scrolled_window, or -1 if not set.
+	 * Returns: the minimum content width Since 3.0
+	 */
+	public int getMinContentWidth()
+	{
+		// gint gtk_scrolled_window_get_min_content_width  (GtkScrolledWindow *scrolled_window);
+		return gtk_scrolled_window_get_min_content_width(gtkScrolledWindow);
+	}
+	
+	/**
+	 * Sets the minimum width that scrolled_window should keep visible.
+	 * Note that this can and (usually will) be smaller than the minimum
+	 * size of the content.
+	 * Params:
+	 * width = the minimal content width
+	 * Since 3.0
+	 */
+	public void setMinContentWidth(int width)
+	{
+		// void gtk_scrolled_window_set_min_content_width  (GtkScrolledWindow *scrolled_window,  gint width);
+		gtk_scrolled_window_set_min_content_width(gtkScrolledWindow, width);
+	}
+	
+	/**
+	 * Gets the minimal content height of scrolled_window, or -1 if not set.
+	 * Returns: the minimal content height Since 3.0
+	 */
+	public int getMinContentHeight()
+	{
+		// gint gtk_scrolled_window_get_min_content_height  (GtkScrolledWindow *scrolled_window);
+		return gtk_scrolled_window_get_min_content_height(gtkScrolledWindow);
+	}
+	
+	/**
+	 * Sets the minimum height that scrolled_window should keep visible.
+	 * Note that this can and (usually will) be smaller than the minimum
+	 * size of the content.
+	 * Params:
+	 * height = the minimal content height
+	 * Since 3.0
+	 */
+	public void setMinContentHeight(int height)
+	{
+		// void gtk_scrolled_window_set_min_content_height  (GtkScrolledWindow *scrolled_window,  gint height);
+		gtk_scrolled_window_set_min_content_height(gtkScrolledWindow, height);
 	}
 }

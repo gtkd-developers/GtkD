@@ -998,7 +998,7 @@ public class PrintSettings : ObjectG
 	 * GKeyFileError. See gtk_print_settings_to_file().
 	 * Since 2.12
 	 * Params:
-	 * fileName = the filename to read the settings from
+	 * fileName = the filename to read the settings from. [type filename]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -1059,7 +1059,7 @@ public class PrintSettings : ObjectG
 	 * See gtk_print_settings_to_file().
 	 * Since 2.14
 	 * Params:
-	 * fileName = the filename to read the settings from
+	 * fileName = the filename to read the settings from. [type filename]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */
@@ -1111,7 +1111,7 @@ public class PrintSettings : ObjectG
 	 * GKeyFileError.
 	 * Since 2.12
 	 * Params:
-	 * fileName = the file to save to
+	 * fileName = the file to save to. [type filename]
 	 * Returns: TRUE on success
 	 * Throws: GException on failure.
 	 */

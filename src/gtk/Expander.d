@@ -85,29 +85,11 @@ private import gtk.Bin;
  * expanded widget yourself, such as when you want to actually create
  * the widget at expansion time. In this case, create a GtkExpander
  * but do not add a child to it. The expander widget has an
- * expanded property which can be used to monitor
+ * "expanded" property which can be used to monitor
  * its expansion state. You should watch this property with a signal
  * connection as follows:
- * expander = gtk_expander_new_with_mnemonic ("_More Options");
- * g_signal_connect (expander, "notify::expanded",
- *  G_CALLBACK (expander_callback), NULL);
- * ...
- * static void
- * expander_callback (GObject *object,
- *  GParamSpec *param_spec,
- *  gpointer user_data)
- * {
-	 *  GtkExpander *expander;
-	 *  expander = GTK_EXPANDER (object);
-	 *  if (gtk_expander_get_expanded (expander))
-	 *  {
-		 *  /+* Show or create widgets +/
-	 *  }
-	 *  else
-	 *  {
-		 *  /+* Hide or destroy widgets +/
-	 *  }
- * }
+ * $(DDOC_COMMENT example)
+ * <hr>
  * GtkExpander as GtkBuildable
  * The GtkExpander implementation of the GtkBuildable interface
  * supports placing a child in the label position by specifying
@@ -247,7 +229,7 @@ public class Expander : Bin
 	 * if the child widget is revealed.
 	 * See gtk_expander_set_expanded().
 	 * Since 2.4
-	 * Returns: the current state of the expander.
+	 * Returns: the current state of the expander
 	 */
 	public int getExpanded()
 	{
@@ -256,11 +238,11 @@ public class Expander : Bin
 	}
 	
 	/**
-	 * Sets the spacing field of expander, which is the number of pixels to
-	 * place between expander and the child.
+	 * Sets the spacing field of expander, which is the number of
+	 * pixels to place between expander and the child.
 	 * Since 2.4
 	 * Params:
-	 * spacing = distance between the expander and child in pixels.
+	 * spacing = distance between the expander and child in pixels
 	 */
 	public void setSpacing(int spacing)
 	{
@@ -271,7 +253,7 @@ public class Expander : Bin
 	/**
 	 * Gets the value set by gtk_expander_set_spacing().
 	 * Since 2.4
-	 * Returns: spacing between the expander and child.
+	 * Returns: spacing between the expander and child
 	 */
 	public int getSpacing()
 	{
@@ -326,10 +308,10 @@ public class Expander : Bin
 	}
 	
 	/**
-	 * Returns whether an embedded underline in the expander label indicates a
-	 * mnemonic. See gtk_expander_set_use_underline().
+	 * Returns whether an embedded underline in the expander label
+	 * indicates a mnemonic. See gtk_expander_set_use_underline().
 	 * Since 2.4
-	 * Returns: TRUE if an embedded underline in the expander label indicates the mnemonic accelerator keys.
+	 * Returns: TRUE if an embedded underline in the expander label indicates the mnemonic accelerator keys
 	 */
 	public int getUseUnderline()
 	{
@@ -394,12 +376,12 @@ public class Expander : Bin
 	}
 	
 	/**
-	 * Sets whether the label widget should fill all available horizontal space
-	 * allocated to expander.
+	 * Sets whether the label widget should fill all available
+	 * horizontal space allocated to expander.
 	 * Since 2.22
 	 * Params:
-	 * labelFill = TRUE if the label should should fill all available horizontal
-	 * space
+	 * labelFill = TRUE if the label should should fill
+	 * all available horizontal space
 	 */
 	public void setLabelFill(int labelFill)
 	{
@@ -408,8 +390,8 @@ public class Expander : Bin
 	}
 	
 	/**
-	 * Returns whether the label widget will fill all available horizontal
-	 * space allocated to expander.
+	 * Returns whether the label widget will fill all available
+	 * horizontal space allocated to expander.
 	 * Since 2.22
 	 * Returns: TRUE if the label widget will fill all available horizontal space
 	 */

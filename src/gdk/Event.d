@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-Events.html
+ * inFile  = gdk3-Events.html
  * outPack = gdk
  * outFile = Event
  * strct   = GdkEvent
@@ -38,22 +38,21 @@
  * implements:
  * prefixes:
  * 	- gdk_event_
+ * 	- gdk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Window
- * 	- gdk.Display
- * 	- gdk.Screen
  * 	- gobject.Value
+ * 	- gdk.Device
+ * 	- gdk.Screen
  * structWrap:
  * 	- GValue* -> Value
- * 	- GdkDisplay* -> Display
+ * 	- GdkDevice* -> Device
  * 	- GdkEvent* -> Event
  * 	- GdkScreen* -> Screen
- * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
  * overrides:
@@ -68,17 +67,17 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gdk.Window;
-private import gdk.Display;
-private import gdk.Screen;
 private import gobject.Value;
+private import gdk.Device;
+private import gdk.Screen;
 
 
 
 
 /**
  * Description
- * This section describes functions dealing with events from the window system.
+ * This section describes functions dealing with events from the window
+ * system.
  * In GTK+ applications the events are handled automatically in
  * gtk_main_do_event() and passed on to the appropriate widgets, so these
  * functions are rarely needed. Though some of the fields in the
@@ -131,13 +130,18 @@ public class Event
 	}
 	
 	/**
+	 * Description
+	 * The event structs contain data specific to each type of event in GDK.
+	 * Note
+	 * A common mistake is to forget to set the event mask of a widget so that
+	 * the required events are received. See gtk_widget_set_events().
 	 */
 	
 	/**
 	 * Checks if any events are ready to be processed for any display.
 	 * Returns: TRUE if any events are pending.
 	 */
-	public static int gdkEventsPending()
+	public static int eventsPending()
 	{
 		// gboolean gdk_events_pending (void);
 		return gdk_events_pending();
@@ -169,27 +173,6 @@ public class Event
 	{
 		// GdkEvent * gdk_event_get (void);
 		auto p = gdk_event_get();
-		if(p is null)
-		{
-			return null;
-		}
-		return new Event(cast(GdkEvent*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_event_get_graphics_expose has been deprecated since version 2.18 and should not be used in newly-written code.
-	 * Waits for a GraphicsExpose or NoExpose event from the X server.
-	 * This is used in the GtkText and GtkCList widgets in GTK+ to make sure any
-	 * GraphicsExpose events are handled before the widget is scrolled.
-	 * Params:
-	 * window = the GdkWindow to wait for the events for.
-	 * Returns: a GdkEventExpose if a GraphicsExpose was received, or NULL if a NoExpose event was received.
-	 */
-	public static Event getGraphicsExpose(Window window)
-	{
-		// GdkEvent * gdk_event_get_graphics_expose (GdkWindow *window);
-		auto p = gdk_event_get_graphics_expose((window is null) ? null : window.getWindowStruct());
 		if(p is null)
 		{
 			return null;
@@ -245,8 +228,8 @@ public class Event
 	/**
 	 * Frees a GdkEvent, freeing or decrementing any resources associated with it.
 	 * Note that this function should only be called with events returned from
-	 * functions such as gdk_event_peek(), gdk_event_get(),
-	 * gdk_event_get_graphics_expose() and gdk_event_copy() and gdk_event_new().
+	 * functions such as gdk_event_peek(), gdk_event_get(), gdk_event_copy()
+	 * and gdk_event_new().
 	 */
 	public void free()
 	{
@@ -337,6 +320,51 @@ public class Event
 	}
 	
 	/**
+	 * If both events contain X/Y information, this function will return TRUE
+	 * and return in angle the relative angle from event1 to event2. The rotation
+	 * direction for positive angles is from the positive X axis towards the positive
+	 * Y axis.
+	 * Params:
+	 * event2 = second GdkEvent
+	 * angle = return location for the relative angle between both events. [out]
+	 * Returns: TRUE if the angle could be calculated. Since 3.0
+	 */
+	public int eventsGetAngle(Event event2, out double angle)
+	{
+		// gboolean gdk_events_get_angle (GdkEvent *event1,  GdkEvent *event2,  gdouble *angle);
+		return gdk_events_get_angle(gdkEvent, (event2 is null) ? null : event2.getEventStruct(), &angle);
+	}
+	
+	/**
+	 * If both events contain X/Y information, the center of both coordinates
+	 * will be returned in x and y.
+	 * Params:
+	 * event2 = second GdkEvent
+	 * x = return location for the X coordinate of the center. [out]
+	 * y = return location for the Y coordinate of the center. [out]
+	 * Returns: TRUE if the center could be calculated. Since 3.0
+	 */
+	public int eventsGetCenter(Event event2, out double x, out double y)
+	{
+		// gboolean gdk_events_get_center (GdkEvent *event1,  GdkEvent *event2,  gdouble *x,  gdouble *y);
+		return gdk_events_get_center(gdkEvent, (event2 is null) ? null : event2.getEventStruct(), &x, &y);
+	}
+	
+	/**
+	 * If both events have X/Y information, the distance between both coordinates
+	 * (as in a straight line going from event1 to event2) will be returned.
+	 * Params:
+	 * event2 = second GdkEvent
+	 * distance = return location for the distance. [out]
+	 * Returns: TRUE if the distance could be calculated. Since 3.0
+	 */
+	public int eventsGetDistance(Event event2, out double distance)
+	{
+		// gboolean gdk_events_get_distance (GdkEvent *event1,  GdkEvent *event2,  gdouble *distance);
+		return gdk_events_get_distance(gdkEvent, (event2 is null) ? null : event2.getEventStruct(), &distance);
+	}
+	
+	/**
 	 * Sets the function to call to handle all events from GDK.
 	 * Note that GTK+ uses this to install its own event handler, so it is
 	 * usually not useful for GTK+ applications. (Although an application
@@ -355,75 +383,10 @@ public class Event
 	}
 	
 	/**
-	 * Sends an X ClientMessage event to a given window (which must be
-	 * on the default GdkDisplay.)
-	 * This could be used for communicating between different applications,
-	 * though the amount of data is limited to 20 bytes.
-	 * Params:
-	 * winid = the window to send the X ClientMessage event to.
-	 * Returns: non-zero on success.
-	 */
-	public int sendClientMessage(GdkNativeWindow winid)
-	{
-		// gboolean gdk_event_send_client_message (GdkEvent *event,  GdkNativeWindow winid);
-		return gdk_event_send_client_message(gdkEvent, winid);
-	}
-	
-	/**
-	 * On X11, sends an X ClientMessage event to a given window. On
-	 * Windows, sends a message registered with the name
-	 * GDK_WIN32_CLIENT_MESSAGE.
-	 * This could be used for communicating between different
-	 * applications, though the amount of data is limited to 20 bytes on
-	 * X11, and to just four bytes on Windows.
-	 * Since 2.2
-	 * Params:
-	 * display = the GdkDisplay for the window where the message is to be sent.
-	 * event = the GdkEvent to send, which should be a GdkEventClient.
-	 * winid = the window to send the client message to.
-	 * Returns: non-zero on success.
-	 */
-	public static int sendClientMessageForDisplay(Display display, Event event, GdkNativeWindow winid)
-	{
-		// gboolean gdk_event_send_client_message_for_display  (GdkDisplay *display,  GdkEvent *event,  GdkNativeWindow winid);
-		return gdk_event_send_client_message_for_display((display is null) ? null : display.getDisplayStruct(), (event is null) ? null : event.getEventStruct(), winid);
-	}
-	
-	/**
-	 * Sends an X ClientMessage event to all toplevel windows on the default
-	 * GdkScreen.
-	 * Toplevel windows are determined by checking for the WM_STATE property, as
-	 * described in the Inter-Client Communication Conventions Manual (ICCCM).
-	 * If no windows are found with the WM_STATE property set, the message is sent
-	 * to all children of the root window.
-	 */
-	public void sendClientmessageToall()
-	{
-		// void gdk_event_send_clientmessage_toall (GdkEvent *event);
-		gdk_event_send_clientmessage_toall(gdkEvent);
-	}
-	
-	/**
-	 * Adds a filter to the default display to be called when X ClientMessage events
-	 * are received. See gdk_display_add_client_message_filter().
-	 * Params:
-	 * messageType = the type of ClientMessage events to receive. This will be
-	 * checked against the message_type field of the
-	 * XClientMessage event struct.
-	 * func = the function to call to process the event.
-	 * data = user data to pass to func.
-	 */
-	public static void gdkAddClientMessageFilter(GdkAtom messageType, GdkFilterFunc func, void* data)
-	{
-		// void gdk_add_client_message_filter (GdkAtom message_type,  GdkFilterFunc func,  gpointer data);
-		gdk_add_client_message_filter(messageType, func, data);
-	}
-	
-	/**
 	 * Gets whether event debugging output is enabled.
 	 * Returns: TRUE if event debugging output is enabled.
 	 */
-	public static int gdkGetShowEvents()
+	public static int getShowEvents()
 	{
 		// gboolean gdk_get_show_events (void);
 		return gdk_get_show_events();
@@ -437,7 +400,7 @@ public class Event
 	 * Params:
 	 * showEvents = TRUE to output event debugging information.
 	 */
-	public static void gdkSetShowEvents(int showEvents)
+	public static void setShowEvents(int showEvents)
 	{
 		// void gdk_set_show_events (gboolean show_events);
 		gdk_set_show_events(showEvents);
@@ -466,7 +429,7 @@ public class Event
 	 * to which event->motion.x_root and
 	 * event->motion.y_root are relative.
 	 * Since 2.2
-	 * Returns: the screen for the event
+	 * Returns: the screen for the event. [transfer none]
 	 */
 	public Screen getScreen()
 	{
@@ -480,6 +443,72 @@ public class Event
 	}
 	
 	/**
+	 * If the event contains a "device" field, this function will return
+	 * it, else it will return NULL.
+	 * Returns: a GdkDevice, or NULL. [transfer none] Since 3.0
+	 */
+	public Device getDevice()
+	{
+		// GdkDevice * gdk_event_get_device (const GdkEvent *event);
+		auto p = gdk_event_get_device(gdkEvent);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Device(cast(GdkDevice*) p);
+	}
+	
+	/**
+	 * Sets the device for event to device. The event must
+	 * have been allocated by GTK+, for instance, by
+	 * gdk_event_copy().
+	 * Params:
+	 * device = a GdkDevice
+	 * Since 3.0
+	 */
+	public void setDevice(Device device)
+	{
+		// void gdk_event_set_device (GdkEvent *event,  GdkDevice *device);
+		gdk_event_set_device(gdkEvent, (device is null) ? null : device.getDeviceStruct());
+	}
+	
+	/**
+	 * This function returns the hardware (slave) GdkDevice that has
+	 * triggered the event, falling back to the virtual (master) device
+	 * (as in gdk_event_get_device()) if the event wasn't caused by
+	 * interaction with a hardware device. This may happen for example
+	 * in synthesized crossing events after a GdkWindow updates its
+	 * geometry or a grab is acquired/released.
+	 * If the event does not contain a device field, this function will
+	 * return NULL.
+	 * Returns: a GdkDevice, or NULL. [transfer none] Since 3.0
+	 */
+	public Device getSourceDevice()
+	{
+		// GdkDevice * gdk_event_get_source_device (const GdkEvent *event);
+		auto p = gdk_event_get_source_device(gdkEvent);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Device(cast(GdkDevice*) p);
+	}
+	
+	/**
+	 * Sets the slave device for event to device.
+	 * The event must have been allocated by GTK+,
+	 * for instance by gdk_event_copy().
+	 * Params:
+	 * device = a GdkDevice
+	 * Since 3.0
+	 */
+	public void setSourceDevice(Device device)
+	{
+		// void gdk_event_set_source_device (GdkEvent *event,  GdkDevice *device);
+		gdk_event_set_source_device(gdkEvent, (device is null) ? null : device.getDeviceStruct());
+	}
+	
+	/**
 	 * Obtains a desktop-wide setting, such as the double-click time,
 	 * for the default screen. See gdk_screen_get_setting().
 	 * Params:
@@ -487,7 +516,7 @@ public class Event
 	 * value = location to store the value of the setting.
 	 * Returns: TRUE if the setting existed and a value was stored in value, FALSE otherwise.
 	 */
-	public static int gdkSettingGet(string name, Value value)
+	public static int settingGet(string name, Value value)
 	{
 		// gboolean gdk_setting_get (const gchar *name,  GValue *value);
 		return gdk_setting_get(Str.toStringz(name), (value is null) ? null : value.getValueStruct());

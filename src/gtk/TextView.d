@@ -446,40 +446,6 @@ public class TextView : Container
 		}
 	}
 	
-	void delegate(gint, gboolean, TextView)[] onPageHorizontallyListeners;
-	/**
-	 * The ::page-horizontally signal is a
-	 * keybinding signal
-	 * which can be bound to key combinations to allow the user
-	 * to initiate horizontal cursor movement by pages.
-	 * This signal should not be used anymore, instead use the
-	 * "move-cursor" signal with the GTK_MOVEMENT_HORIZONTAL_PAGES
-	 * granularity.
-	 * TRUE if the move should extend the selection
-	 */
-	void addOnPageHorizontally(void delegate(gint, gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("page-horizontally" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"page-horizontally",
-			cast(GCallback)&callBackPageHorizontally,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["page-horizontally"] = 1;
-		}
-		onPageHorizontallyListeners ~= dlg;
-	}
-	extern(C) static void callBackPageHorizontally(GtkTextView* textViewStruct, gint count, gboolean extendSelection, TextView textView)
-	{
-		foreach ( void delegate(gint, gboolean, TextView) dlg ; textView.onPageHorizontallyListeners )
-		{
-			dlg(count, extendSelection, textView);
-		}
-	}
-	
 	void delegate(TextView)[] onPasteClipboardListeners;
 	/**
 	 * The ::paste-clipboard signal is a
@@ -639,35 +605,6 @@ public class TextView : Container
 		}
 	}
 	
-	void delegate(Adjustment, Adjustment, TextView)[] onSetScrollAdjustmentsListeners;
-	/**
-	 * Set the scroll adjustments for the text view. Usually scrolled containers
-	 * like GtkScrolledWindow will emit this signal to connect two instances
-	 * of GtkScrollbar to the scroll directions of the GtkTextView.
-	 */
-	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("set-scroll-adjustments" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"set-scroll-adjustments",
-			cast(GCallback)&callBackSetScrollAdjustments,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["set-scroll-adjustments"] = 1;
-		}
-		onSetScrollAdjustmentsListeners ~= dlg;
-	}
-	extern(C) static void callBackSetScrollAdjustments(GtkTextView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TextView textView)
-	{
-		foreach ( void delegate(Adjustment, Adjustment, TextView) dlg ; textView.onSetScrollAdjustmentsListeners )
-		{
-			dlg(new Adjustment(vertical), new Adjustment(arg2), textView);
-		}
-	}
-	
 	void delegate(TextView)[] onToggleCursorVisibleListeners;
 	/**
 	 * The ::toggle-cursor-visible signal is a
@@ -804,6 +741,42 @@ public class TextView : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_text_view_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
+	 * Gets the horizontal-scrolling GtkAdjustment.
+	 * Since 2.22
+	 * Returns: pointer to the horizontal GtkAdjustment. [transfer none]
+	 */
+	public Adjustment getHadjustment()
+	{
+		// GtkAdjustment * gtk_text_view_get_hadjustment (GtkTextView *text_view);
+		auto p = gtk_text_view_get_hadjustment(gtkTextView);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_text_view_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
+	 * Gets the vertical-scrolling GtkAdjustment.
+	 * Since 2.22
+	 * Returns: pointer to the vertical GtkAdjustment. [transfer none]
+	 */
+	public Adjustment getVadjustment()
+	{
+		// GtkAdjustment * gtk_text_view_get_vadjustment (GtkTextView *text_view);
+		auto p = gtk_text_view_get_vadjustment(gtkTextView);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
+	}
+	
+	/**
 	 * Scrolls text_view so that mark is on the screen in the position
 	 * indicated by xalign and yalign. An alignment of 0.0 indicates
 	 * left or top, 1.0 indicates right or bottom, 0.5 means center.
@@ -916,6 +889,37 @@ public class TextView : Container
 	{
 		// void gtk_text_view_get_iter_location (GtkTextView *text_view,  const GtkTextIter *iter,  GdkRectangle *location);
 		gtk_text_view_get_iter_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), (location is null) ? null : location.getRectangleStruct());
+	}
+	
+	/**
+	 * Given an iter within a text layout, determine the positions of the
+	 * strong and weak cursors if the insertion point is at that
+	 * iterator. The position of each cursor is stored as a zero-width
+	 * rectangle. The strong cursor location is the location where
+	 * characters of the directionality equal to the base direction of the
+	 * paragraph are inserted. The weak cursor location is the location
+	 * where characters of the directionality opposite to the base
+	 * direction of the paragraph are inserted.
+	 * If iter is NULL, the actual cursor position is used.
+	 * Note that if iter happens to be the actual cursor position, and
+	 * there is currently an IM preedit sequence being entered, the
+	 * returned locations will be adjusted to account for the preedit
+	 * cursor's offset within the preedit sequence.
+	 * The rectangle position is in buffer coordinates; use
+	 * gtk_text_view_buffer_to_window_coords() to convert these
+	 * coordinates to coordinates for one of the windows in the text view.
+	 * Params:
+	 * iter = a GtkTextIter. [allow-none]
+	 * strong = location to store the strong
+	 * cursor position (may be NULL). [out][allow-none]
+	 * weak = location to store the weak
+	 * cursor position (may be NULL). [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getCursorLocations(TextIter iter, Rectangle strong, Rectangle weak)
+	{
+		// void gtk_text_view_get_cursor_locations (GtkTextView *text_view,  const GtkTextIter *iter,  GdkRectangle *strong,  GdkRectangle *weak);
+		gtk_text_view_get_cursor_locations(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), (strong is null) ? null : strong.getRectangleStruct(), (weak is null) ? null : weak.getRectangleStruct());
 	}
 	
 	/**
@@ -1224,7 +1228,8 @@ public class TextView : Container
 	
 	/**
 	 * Adds a child at fixed coordinates in one of the text widget's
-	 * windows. The window must have nonzero size (see
+	 * windows.
+	 * The window must have nonzero size (see
 	 * gtk_text_view_set_border_window_size()). Note that the child
 	 * coordinates are given relative to the GdkWindow in question, and
 	 * that these coordinates have no sane relationship to scrolling. When
@@ -1234,11 +1239,7 @@ public class TextView : Container
 	 * text window), you'll need to compute the child's correct position
 	 * in buffer coordinates any time scrolling occurs or buffer changes
 	 * occur, and then call gtk_text_view_move_child() to update the
-	 * child's position. Unfortunately there's no good way to detect that
-	 * scrolling has occurred, using the current API; a possible hack
-	 * would be to update all child positions when the scroll adjustments
-	 * change or the text buffer changes. See bug 64518 on
-	 * bugzilla.gnome.org for status of fixing this issue.
+	 * child's position.
 	 * Params:
 	 * child = a GtkWidget
 	 * whichWindow = which window the child should appear in
@@ -1627,37 +1628,5 @@ public class TextView : Container
 	{
 		// void gtk_text_view_reset_im_context (GtkTextView *text_view);
 		gtk_text_view_reset_im_context(gtkTextView);
-	}
-	
-	/**
-	 * Gets the horizontal-scrolling GtkAdjustment.
-	 * Since 2.22
-	 * Returns: pointer to the horizontal GtkAdjustment. [transfer none]
-	 */
-	public Adjustment getHadjustment()
-	{
-		// GtkAdjustment * gtk_text_view_get_hadjustment (GtkTextView *text_view);
-		auto p = gtk_text_view_get_hadjustment(gtkTextView);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
-	
-	/**
-	 * Gets the vertical-scrolling GtkAdjustment.
-	 * Since 2.22
-	 * Returns: pointer to the vertical GtkAdjustment. [transfer none]
-	 */
-	public Adjustment getVadjustment()
-	{
-		// GtkAdjustment * gtk_text_view_get_vadjustment (GtkTextView *text_view);
-		auto p = gtk_text_view_get_vadjustment(gtkTextView);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 }

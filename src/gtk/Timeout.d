@@ -63,31 +63,29 @@ private import glib.ConstructionException;
 
 /**
  * Description
- * Before using GTK+, you need to initialize it; initialization connects
- * to the window system display, and parses some standard command line
- * arguments. The gtk_init() function initializes GTK+. gtk_init() exits
- * the application if errors occur; to avoid this, use gtk_init_check().
- * gtk_init_check() allows you to recover from a failed GTK+
- * initialization - you might start up your application in text mode instead.
- * Like all GUI toolkits, GTK+ uses an event-driven programming
- * model. When the user is doing nothing, GTK+ sits in the
- * main loop and waits for input. If the user
- * performs some action - say, a mouse click - then the main loop "wakes
- * up" and delivers an event to GTK+. GTK+ forwards the event to one or
- * more widgets.
+ * Before using GTK+, you need to initialize it; initialization connects to the
+ * window system display, and parses some standard command line arguments. The
+ * gtk_init() macro initializes GTK+. gtk_init() exits the application if errors
+ * occur; to avoid this, use gtk_init_check(). gtk_init_check() allows you to
+ * recover from a failed GTK+ initialization - you might start up your
+ * application in text mode instead.
+ * Like all GUI toolkits, GTK+ uses an event-driven programming model. When the
+ * user is doing nothing, GTK+ sits in the main loop and
+ * waits for input. If the user performs some action - say, a mouse click - then
+ * the main loop "wakes up" and delivers an event to GTK+. GTK+ forwards the
+ * event to one or more widgets.
  * When widgets receive an event, they frequently emit one or more
- * signals. Signals notify your program that
- * "something interesting happened" by invoking functions you've
- * connected to the signal with g_signal_connect(). Functions connected
- * to a signal are often termed callbacks.
- * When your callbacks are invoked, you would typically take some action
- * - for example, when an Open button is clicked you might display a
- * GtkFileSelectionDialog. After a callback finishes, GTK+ will return
- * to the main loop and await more user input.
+ * signals. Signals notify your program that "something
+ * interesting happened" by invoking functions you've connected to the signal
+ * with g_signal_connect(). Functions connected to a signal are often termed
+ * callbacks.
+ * When your callbacks are invoked, you would typically take some action - for
+ * example, when an Open button is clicked you might display a
+ * GtkFileChooserDialog. After a callback finishes, GTK+ will return to the
+ * main loop and await more user input.
  * $(DDOC_COMMENT example)
- * It's OK to use the GLib main loop directly instead of gtk_main(),
- * though it involves slightly more typing. See GMainLoop in the GLib
- * documentation.
+ * It's OK to use the GLib main loop directly instead of gtk_main(), though it
+ * involves slightly more typing. See GMainLoop in the GLib documentation.
  */
 public class Timeout
 {
@@ -192,55 +190,4 @@ public class Timeout
 	
 	/**
 	 */
-	
-	/**
-	 * Warning
-	 * gtk_timeout_add_full has been deprecated since version 2.4 and should not be used in newly-written code. Use g_timeout_add_full() instead.
-	 * Registers a function to be called periodically. The function will be called
-	 * repeatedly after interval milliseconds until it returns FALSE at which
-	 * point the timeout is destroyed and will not be called again.
-	 * Params:
-	 * interval = The time between calls to the function, in milliseconds
-	 * (1/1000ths of a second.)
-	 * marshal = The marshaller to use instead of the function (if non-NULL).
-	 * data = The data to pass to the function.
-	 * destroy = Function to call when the timeout is destroyed or NULL.
-	 * Returns: A unique id for the event source.
-	 */
-	public static uint addFull(uint interval, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GDestroyNotify destroy)
-	{
-		// guint gtk_timeout_add_full (guint32 interval,  GtkFunction function,  GtkCallbackMarshal marshal,  gpointer data,  GDestroyNotify destroy);
-		return gtk_timeout_add_full(interval, funct, marshal, data, destroy);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_timeout_add has been deprecated since version 2.4 and should not be used in newly-written code. Use g_timeout_add() instead.
-	 * Registers a function to be called periodically. The function will be called
-	 * repeatedly after interval milliseconds until it returns FALSE at which
-	 * point the timeout is destroyed and will not be called again.
-	 * Params:
-	 * interval = The time between calls to the function, in milliseconds
-	 * (1/1000ths of a second.)
-	 * data = The data to pass to the function.
-	 * Returns: A unique id for the event source.
-	 */
-	public static uint add(uint interval, GtkFunction funct, void* data)
-	{
-		// guint gtk_timeout_add (guint32 interval,  GtkFunction function,  gpointer data);
-		return gtk_timeout_add(interval, funct, data);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_timeout_remove has been deprecated since version 2.4 and should not be used in newly-written code. Use g_source_remove() instead.
-	 * Removes the given timeout destroying all information about it.
-	 * Params:
-	 * timeoutHandlerId = The identifier returned when installing the timeout.
-	 */
-	public static void remove(uint timeoutHandlerId)
-	{
-		// void gtk_timeout_remove (guint timeout_handler_id);
-		gtk_timeout_remove(timeoutHandlerId);
-	}
 }

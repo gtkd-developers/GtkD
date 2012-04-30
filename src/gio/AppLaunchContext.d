@@ -34,7 +34,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- g_app_launch_context_
@@ -68,10 +68,11 @@ private import gio.AppInfoIF;
 
 
 
+private import gobject.ObjectG;
 
 /**
  */
-public class AppLaunchContext
+public class AppLaunchContext : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -85,7 +86,7 @@ public class AppLaunchContext
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gAppLaunchContext;
 	}
@@ -100,7 +101,21 @@ public class AppLaunchContext
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gAppLaunchContext);
+		if( ptr !is null )
+		{
+			this = cast(AppLaunchContext)ptr;
+			return;
+		}
+		super(cast(GObject*)gAppLaunchContext);
 		this.gAppLaunchContext = gAppLaunchContext;
+	}
+	
+	protected override void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gAppLaunchContext = cast(GAppLaunchContext*)obj;
 	}
 	
 	/**

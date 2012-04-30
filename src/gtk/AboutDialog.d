@@ -84,22 +84,9 @@ private import gtk.Dialog;
  * opened when the user selects the About option from
  * the Help menu. All parts of the dialog are optional.
  * About dialog often contain links and email addresses. GtkAboutDialog
- * supports this by offering global hooks, which are called when the user
- * clicks on a link or email address, see gtk_about_dialog_set_email_hook()
- * and gtk_about_dialog_set_url_hook(). Email addresses in the
- * authors, documenters and artists properties are recognized by looking for
- * <user@host>, URLs are
- * recognized by looking for http://url, with
- * url extending to the next space, tab or line break.
- * Since 2.18 GtkAboutDialog provides default website and email hooks that
- * use gtk_show_uri().
- * If you want provide your own hooks overriding the default ones, it is
- * important to do so before setting the website and email URL properties,
- * like this:
- * $(DDOC_COMMENT example)
- * To disable the default hooks, you can pass NULL as the hook func. Then,
- * the GtkAboutDialog widget will not display the website or the
- * email addresses as clickable.
+ * displays these as clickable links. By default, it calls gtk_show_uri()
+ * when a user clicks one. The behaviour can be overridden with the
+ * "activate-link" signal.
  * To make constructing a GtkAboutDialog as convenient as possible, you can
  * use the function gtk_show_about_dialog() which constructs and shows a dialog
  * and keeps it around so that it can be shown again.
@@ -109,9 +96,6 @@ private import gtk.Dialog;
  * applications should set the title property explicitly when constructing
  * a GtkAboutDialog, as shown in the following example:
  * $(DDOC_COMMENT example)
- * Note that prior to GTK+ 2.12, the "program-name" property
- * was called "name". This was changed to avoid the conflict with the
- * "name" property.
  */
 public class AboutDialog : Dialog
 {
@@ -216,34 +200,6 @@ public class AboutDialog : Dialog
 			throw new ConstructionException("null returned by gtk_about_dialog_new()");
 		}
 		this(cast(GtkAboutDialog*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_about_dialog_get_name has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_about_dialog_get_program_name() instead.
-	 * Returns the program name displayed in the about dialog.
-	 * Since 2.6
-	 * Returns: The program name. The string is owned by the about dialog and must not be modified.
-	 */
-	public override string getName()
-	{
-		// const gchar * gtk_about_dialog_get_name (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_name(gtkAboutDialog));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_about_dialog_set_name has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_about_dialog_set_program_name() instead.
-	 * Sets the name to display in the about dialog.
-	 * If this is not set, it defaults to g_get_application_name().
-	 * Since 2.6
-	 * Params:
-	 * name = the program name. [allow-none]
-	 */
-	public override void setName(string name)
-	{
-		// void gtk_about_dialog_set_name (GtkAboutDialog *about,  const gchar *name);
-		gtk_about_dialog_set_name(gtkAboutDialog, Str.toStringz(name));
 	}
 	
 	/**
@@ -390,6 +346,31 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
+	 * Retrieves the license set using gtk_about_dialog_set_license_type()
+	 * Returns: a GtkLicense value Since 3.0
+	 */
+	public GtkLicense getLicenseType()
+	{
+		// GtkLicense gtk_about_dialog_get_license_type (GtkAboutDialog *about);
+		return gtk_about_dialog_get_license_type(gtkAboutDialog);
+	}
+	
+	/**
+	 * Sets the license of the application showing the about dialog from a
+	 * list of known licenses.
+	 * This function overrides the license set using
+	 * gtk_about_dialog_set_license().
+	 * Params:
+	 * licenseType = the type of license
+	 * Since 3.0
+	 */
+	public void setLicenseType(GtkLicense licenseType)
+	{
+		// void gtk_about_dialog_set_license_type (GtkAboutDialog *about,  GtkLicense license_type);
+		gtk_about_dialog_set_license_type(gtkAboutDialog, licenseType);
+	}
+	
+	/**
 	 * Returns the website URL.
 	 * Since 2.6
 	 * Returns: The website URL. The string is owned by the about dialog and must not be modified.
@@ -402,8 +383,6 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Sets the URL to use for the website link.
-	 * Note that that the hook functions need to be set up
-	 * before calling this function.
 	 * Since 2.6
 	 * Params:
 	 * website = a URL string starting with "http://". [allow-none]
@@ -427,7 +406,6 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Sets the label to be used for the website link.
-	 * It defaults to the website URL.
 	 * Since 2.6
 	 * Params:
 	 * websiteLabel = the label used for the website link
@@ -455,7 +433,7 @@ public class AboutDialog : Dialog
 	 * of the secondary credits dialog.
 	 * Since 2.6
 	 * Params:
-	 * authors = a NULL-terminated array of strings
+	 * authors = a NULL-terminated array of strings. [array zero-terminated=1]
 	 */
 	public void setAuthors(string[] authors)
 	{
@@ -480,7 +458,7 @@ public class AboutDialog : Dialog
 	 * of the secondary credits dialog.
 	 * Since 2.6
 	 * Params:
-	 * artists = a NULL-terminated array of strings
+	 * artists = a NULL-terminated array of strings. [array zero-terminated=1]
 	 */
 	public void setArtists(string[] artists)
 	{
@@ -505,7 +483,7 @@ public class AboutDialog : Dialog
 	 * of the secondary credits dialog.
 	 * Since 2.6
 	 * Params:
-	 * documenters = a NULL-terminated array of strings
+	 * documenters = a NULL-terminated array of strings. [array zero-terminated=1]
 	 */
 	public void setDocumenters(string[] documenters)
 	{
@@ -594,45 +572,5 @@ public class AboutDialog : Dialog
 	{
 		// void gtk_about_dialog_set_logo_icon_name (GtkAboutDialog *about,  const gchar *icon_name);
 		gtk_about_dialog_set_logo_icon_name(gtkAboutDialog, Str.toStringz(iconName));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_about_dialog_set_email_hook has been deprecated since version 2.24 and should not be used in newly-written code. Use the "activate-link" signal
-	 * Installs a global function to be called whenever the user activates an
-	 * email link in an about dialog.
-	 * Since 2.18 there exists a default function which uses gtk_show_uri(). To
-	 * deactivate it, you can pass NULL for func.
-	 * Since 2.6
-	 * Params:
-	 * func = a function to call when an email link is activated.
-	 * data = data to pass to func
-	 * destroy = GDestroyNotify for data
-	 * Returns: the previous email hook.
-	 */
-	public static GtkAboutDialogActivateLinkFunc setEmailHook(GtkAboutDialogActivateLinkFunc func, void* data, GDestroyNotify destroy)
-	{
-		// GtkAboutDialogActivateLinkFunc gtk_about_dialog_set_email_hook  (GtkAboutDialogActivateLinkFunc func,  gpointer data,  GDestroyNotify destroy);
-		return gtk_about_dialog_set_email_hook(func, data, destroy);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_about_dialog_set_url_hook has been deprecated since version 2.24 and should not be used in newly-written code. Use the "activate-link" signal
-	 * Installs a global function to be called whenever the user activates a
-	 * URL link in an about dialog.
-	 * Since 2.18 there exists a default function which uses gtk_show_uri(). To
-	 * deactivate it, you can pass NULL for func.
-	 * Since 2.6
-	 * Params:
-	 * func = a function to call when a URL link is activated.
-	 * data = data to pass to func
-	 * destroy = GDestroyNotify for data
-	 * Returns: the previous URL hook.
-	 */
-	public static GtkAboutDialogActivateLinkFunc setUrlHook(GtkAboutDialogActivateLinkFunc func, void* data, GDestroyNotify destroy)
-	{
-		// GtkAboutDialogActivateLinkFunc gtk_about_dialog_set_url_hook  (GtkAboutDialogActivateLinkFunc func,  gpointer data,  GDestroyNotify destroy);
-		return gtk_about_dialog_set_url_hook(func, data, destroy);
 	}
 }

@@ -122,8 +122,8 @@ public interface RecentChooserIF
 	 * explicitely calling functions to change the selection.
 	 * Since 2.10
 	 * See Also
-	 * GtkRecentManager, GtkRecentChooserDialog, GtkRecentChooserWidget,
-	 * GtkRecentChooserMenu
+	 * GtkRecentManager, GtkRecentChooserDialog,
+	 *  GtkRecentChooserWidget, GtkRecentChooserMenu
 	 */
 	void addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
@@ -243,26 +243,6 @@ public interface RecentChooserIF
 	 * Returns: TRUE if the recent chooser should show tooltips, FALSE otherwise.
 	 */
 	public int getShowTips();
-	
-	/**
-	 * Warning
-	 * gtk_recent_chooser_set_show_numbers has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_recent_chooser_menu_set_show_numbers() instead.
-	 * Whether to show recently used resources prepended by a unique number.
-	 * Since 2.10
-	 * Params:
-	 * showNumbers = TRUE to show numbers, FALSE otherwise
-	 */
-	public void recentChooserSetShowNumbers(int showNumbers);
-	
-	/**
-	 * Warning
-	 * gtk_recent_chooser_get_show_numbers has been deprecated since version 2.12 and should not be used in newly-written code. use gtk_recent_chooser_menu_get_show_numbers() instead.
-	 * Returns whether chooser should display recently used resources
-	 * prepended by a unique number.
-	 * Since 2.10
-	 * Returns: TRUE if the recent chooser should show display numbers, FALSE otherwise.
-	 */
-	public int recentChooserGetShowNumbers();
 	
 	/**
 	 * Changes the sorting order of the recently used resources list displayed by

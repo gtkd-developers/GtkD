@@ -226,7 +226,7 @@ wrap: gtk
 ###########################################################
 
 
-file: gtk-General.html
+file: gtk3-General.html
 
 #struct: 
 class: Main
@@ -513,7 +513,7 @@ code: end
 outFile: Idle
 
 
-file: gtk-Keyboard-Accelerators.html
+file: gtk3-Keyboard-Accelerators.html
 struct:  GtkAccelGroup
 class: AccelGroup
 prefix: gtk_accel_group_
@@ -540,7 +540,7 @@ out: gtk_accelerator_parse accelerator_mods
 
 outFile: AccelGroup
 
-file: gtk-Accelerator-Maps.html
+file: gtk3-Accelerator-Maps.html
 struct:  GtkAccelMap
 class: AccelMap
 prefix: gtk_accel_map_
@@ -555,7 +555,7 @@ structWrap: GtkAccelMap* AccelMap
 out: gtk_accel_map_lookup_entry key
 outFile: AccelMap
 
-file: gtk-Clipboards.html
+file: gtk3-Clipboards.html
 struct: GtkClipboard
 class: Clipboard
 prefix: gtk_clipboard_
@@ -583,7 +583,7 @@ array: gtk_clipboard_set_can_store targets n_targets
 
 outFile: Clipboard
 
-file: gtk-Drag-and-Drop.html
+file: gtk3-Drag-and-Drop.html
 struct: GdkDragContext
 class: DragAndDrop
 prefix: gtk_drag_
@@ -662,7 +662,7 @@ array: gtk_icon_info_get_attach_points points n_points
 
 outFile: IconInfo
 
-file: gtk-Stock-Items.html
+file: gtk3-Stock-Items.html
 struct: GtkStockItem
 class: StockItem
 prefix: gtk_stock_
@@ -674,7 +674,7 @@ import: glib.ListSG
 structWrap: GSList* ListSG
 outFile: StockItem
 
-file: gtk-Themeable-Stock-Images.html
+file: gtk3-Themeable-Stock-Images.html
 struct: GtkIconSource
 class: IconSource
 prefix: gtk_icon_source_
@@ -731,7 +731,7 @@ out: gtk_icon_size_lookup_for_settings height
 
 outFile: IconSize
 
-file: gtk-Resource-Files.html
+file: gtk3-Resource-Files.html
 struct: GtkRcStyle
 class: RcStyle
 prefix: gtk_rc_
@@ -779,7 +779,7 @@ structWrap: GValue* Value
 #structWrap: GtkSettingsValue* SettingsValue
 outFile: Settings
 
-file: gtk-Bindings.html
+file: gtk3-Bindings.html
 struct: GtkBindingSet
 class: BindingSet
 prefix: gtk_binding_set_
@@ -798,25 +798,12 @@ import: glib.ScannerG
 structWrap: GScanner* ScannerG
 outFile: BindingSet
 
-file: gtk-Standard-Enumerations.html
+file: gtk3-Standard-Enumerations.html
 #struct: 
 class: StandardEnumerations
 #prefix: 
 #prefix: gtk_
 outFile: StandardEnumerations
-
-file: gtk-Graphics-Contexts.html
-#struct: 
-class: GCs
-prefix: gtk_gc_
-prefix: gtk_
-import: gdk.GC
-structWrap: GdkGC* GC
-import: gdk.Colormap
-structWrap: GdkColormap* Colormap
-#import: gdk.GCValues
-#structWrap: GdkGCValues* GCValues
-outFile: GCs
 
 file: GtkStyle.html
 struct: GtkStyle
@@ -863,7 +850,7 @@ structWrap: GtkBorder* Border
 strictPrefix: Y
 outFile: Border
 
-file: gtk-Selections.html
+file: gtk3-Selections.html
 struct: GtkTargetList
 class: TargetList
 prefix: gtk_target_list_
@@ -912,7 +899,7 @@ array: gtk_selection_data_get_targets targets n_atoms
 
 outFile: Selections
 
-file: gtk-Feature-Test-Macros.html
+file: gtk3-Feature-Test-Macros.html
 #struct: 
 class: Version
 prefix: gtk_
@@ -983,40 +970,7 @@ code: start
 code: end
 outFile: Version
 
-file: gtk-Signals.html
-#struct: 
-class: Signals
-prefix: gtk_signal_
-prefix: gtk_
-import: glib.Str
-#import: gtk.Type
-#structWrap: GtkType* Type
-import: gtk.ObjectGtk
-structWrap: GtkObject* ObjectGtk
-#import: gtk.Arg
-#structWrap: GtkArg* Arg
-
-array: gtk_signal_newv args n_args
-array: gtk_signal_emitv args
-array: gtk_signal_emitv_by_name args
-
-outFile: Signals
-
-file: gtk-Types.html
-struct: GtkType
-class: Types
-prefix: gtk_type_
-prefix: gtk_
-import: glib.Str
-#import: gtk.TypeInfo
-#structWrap: GtkTypeInfo* TypeInfo
-#import: gtk.EnumValue
-#structWrap: GtkEnumValue* EnumValue
-#import: gtk.FlagValue
-#structWrap: GtkFlagValue* FlagValue
-outFile: Types
-
-file: gtk-Testing.html
+file: gtk3-Testing.html
 class: Testing
 prefix: gtk_test_
 import: glib.Str
@@ -1049,7 +1003,7 @@ code: start
 code: end
 outFile: Testing
 
-file: gtk-Filesystem-utilities.html
+file: gtk3-Filesystem-utilities.html
 struct: GtkMountOperation
 ctorStruct: GMountOperation
 class: MountOperation
@@ -4359,7 +4313,7 @@ code: end
 
 outFile: TreeView
 
-file: gtk-GtkTreeView-drag-and-drop.html
+file: gtk3-GtkTreeView-drag-and-drop.html
 struct: GtkTreeDragSource
 class: TreeDragSourceT
 template: TStruct
@@ -5319,60 +5273,6 @@ code: start
 code: end
 outFile: ComboBox
 
-file: GtkComboBoxEntry.html
-
-struct: GtkComboBoxEntry
-class: ComboBoxEntry
-prefix: gtk_combo_box_entry_
-#noprefix: gtk_combo_box_entry_new_text
-#noprefix: gtk_combo_box_append_text
-#noprefix: gtk_combo_box_insert_text
-#noprefix: gtk_combo_box_prepend_text
-#noprefix: gtk_combo_box_remove_text
-import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-
-nocode: gtk_combo_box_entry_new
-nocode: gtk_combo_box_entry_new_text
-
-code: start
-	/**
-	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child. After
-	 * construction, you should set a model using gtk_combo_box_set_model() and a
-	 * text_column * using gtk_combo_box_entry_set_text_column().
-	 * Since 2.4
-	 * Returns:
-	 *  A new GtkComboBoxEntry.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (bool text=true)
-	{
-		GtkComboBoxEntry* p;
-
-		if ( text )
-		{
-			// GtkWidget* gtk_combo_box_entry_new_text (void);
-			p = cast(GtkComboBoxEntry*)gtk_combo_box_entry_new_text();
-		}
-		else
-		{
-			// GtkWidget* gtk_combo_box_entry_new (void);
-			p = cast(GtkComboBoxEntry*)gtk_combo_box_entry_new();
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_combo_box_entry_new");
-		}
-
-		this(p);
-	}
-code: end
-outFile: ComboBoxEntry
-
-
 file: GtkMenu.html
 struct: GtkMenu
 class: Menu
@@ -5758,7 +5658,7 @@ code: start
 code: end
 outFile: RadioMenuItem
 
-file: gtk-gtkcheckmenuitem.html
+file: gtk3-gtkcheckmenuitem.html
 struct: GtkCheckMenuItem
 class: CheckMenuItem
 prefix: gtk_check_menu_item_
@@ -6822,7 +6722,7 @@ code: start
 cade: end
 outFile: FileChooserWidget
 
-file: gtk-gtkfilefilter.html
+file: GtkFileFilter.html
 struct:  GtkFileFilter
 class: FileFilter
 prefix: gtk_file_filter_
@@ -6884,58 +6784,6 @@ code: start
 	}
 code: end
 outFile: FontSelectionDialog
-
-file: GtkInputDialog.html
-struct: GtkInputDialog
-class: InputDialog
-prefix: gtk_input_dialog_
-prefix: gtk_
-import: gtk.Button
-
-code: start
-	Button getCloseButton()
-	{
-		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
-		//	184, 188, 192, 196, 200, 204, 208, 212, 216,
-		//	224];
-
-		//foreach(i; arr)
-		//{
-		//	int* pt2 =cast(int*)getStruct();
-		//	pt2+=i/4;
-		//	printf("*pt+%d=%X\n", i, *pt2);
-
-		//	Widget wg = new Widget(cast(GtkWidget*)(*pt2));
-		//	Stdout(wg.getName()).newline;
-		//}
-
-		int* pt =cast(int*)getStruct();
-		pt += 172/4;
-		return new Button(cast(GtkButton*)(*pt));
-	}
-
-	Button getSaveButton()
-	{
-		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
-		//	184, 188, 192, 196, 200, 204, 208, 212, 216,
-		//	224];
-
-		//foreach(i; arr)
-		//{
-		//	int* pt2 =cast(int*)getStruct();
-		//	pt2+=i/4;
-		//	printf("*pt+%d=%X\n", i, *pt2);
-
-		//	Widget wg = new Widget(cast(GtkWidget*)(*pt2));
-		//	Stdout(wg.getName()).newline;
-		//}
-
-		int* pt =cast(int*)getStruct();
-		pt += 176/4;
-		return new Button(cast(GtkButton*)(*pt));
-	}
-code: end
-outFile: InputDialog
 
 ###########################################################
 ### Layout Containers #####################################
@@ -7339,7 +7187,7 @@ code: end
 
 outFile: Expander
 
-file: gtk-Orientable.html
+file: gtk3-Orientable.html
 struct: GtkOrientable
 class: OrientableT
 template: TStruct
@@ -7485,7 +7333,7 @@ outFile: ScrolledWindow
 ### Printing ##############################################
 ###########################################################
 
-file: gtk-High-level-Printing-API.html
+file: gtk3-High-level-Printing-API.html
 struct: GtkPrintOperation
 class: PrintOperation
 implements: PrintOperationPreviewIF
@@ -7988,13 +7836,6 @@ code: start
 code: end
 outFile: Container
 
-file: GtkItem.html
-struct: GtkItem
-class: Item
-prefix: gtk_item_
-prefix: gtk_
-outFile: Item
-
 file: GtkMenuShell.html
 struct: GtkMenuShell
 class: MenuShell
@@ -8016,32 +7857,6 @@ out: gtk_misc_get_padding xpad
 out: gtk_misc_get_padding ypad
 
 outFile: Misc
-
-file: GtkObject.html
-struct: GtkObject
-class: ObjectGtk
-prefix: gtk_object_
-prefix: gtk_
-import: glib.Str
-import: gtk.ObjectGtk
-structWrap: GtkObject* ObjectGtk
-
-nocode: gtk_object_ref
-nocode: gtk_object_unref
-nocode: gtk_object_set_data
-nocode: gtk_object_get_data
-nocode: gtk_object_set_data_full
-nocode: gtk_object_remove_data
-
-code: star
-	/** */
-	public static string getId(StockID id)
-	{
-		return StockDesc[id];
-	}
-code: end
-
-outFile: ObjectGtk
 
 file: GtkPaned.html
 struct: GtkPaned
@@ -8624,62 +8439,6 @@ structWrap: GdkWindow* Window
 outFile: Socket
 
 ###########################################################
-### Special-purpose features ##############################
-###########################################################
-
-file: GtkCurve.html
-struct: GtkCurve
-class: Curve
-prefix: gtk_curve_
-prefix: gtk_
-array: gtk_curve_get_vector vector veclen
-array: gtk_curve_set_vector vector veclen
-outFile: Curve
-
-file: GtkGammaCurve.html
-struct: GtkGammaCurve
-class: GammaCurve
-prefix: gtk_gamma_curve_
-prefix: gtk_
-outFile: GammaCurve
-
-file: GtkRuler.html
-struct: GtkRuler
-class: Ruler
-implements: OrientableIF
-prefix: gtk_ruler_
-prefix: gtk_
-
-#imports for Orientable Interface.
-import: gtk.OrientableIF
-import: gtk.OrientableT
-
-out: gtk_ruler_get_range lower
-out: gtk_ruler_get_range upper
-out: gtk_ruler_get_range position
-out: gtk_ruler_get_range max_size
-
-code: start
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkRuler);
-code: end
-outFile: Ruler
-
-file: GtkHRuler.html
-struct: GtkHRuler
-class: HRuler
-prefix: gtk_hruler_
-prefix: gtk_
-outFile: HRuler
-
-file: GtkVRuler.html
-struct: GtkVRuler
-class: VRuler
-prefix: gtk_vruler_
-prefix: gtk_
-outFile: VRuler
-
-###########################################################
 ### Recently Used Documents ###############################
 ###########################################################
 
@@ -9202,150 +8961,3 @@ code: start
 	}
 code: end
 outFile: Builder
-
-###########################################################
-### Deprecated ############################################
-###########################################################
-
-#file: GtkCList.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkCTree.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkCombo.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-file: GtkFileSelection.html
-struct: GtkFileSelection
-class: FileSelection
-prefix: gtk_file_selection_
-prefix: gtk_
-import: glib.Str
-outFile: FileSelection
-
-file: GtkItemFactory.html
-struct: GtkItemFactory
-class: ItemFactory
-prefix: gtk_item_factory_
-prefix: gtk_
-noprefix: gtk_item_factory_create_menu_entries
-import: glib.Str
-import: gtk.AccelGroup
-structWrap: GtkAccelGroup* AccelGroup
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-structWrap: GtkItemFactory* ItemFactory
-#import: gtk.ItemFactoryEntry
-#structWrap: GtkItemFactoryEntry* ItemFactoryEntry
-outFile: ItemFactory
-
-#file: GtkList.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkListItem.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkOldEditable.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkOptionMenu.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkPixmap.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkPreview.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkText.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-file: GtkTooltips.html
-struct: GtkTooltips
-class: Tooltips
-prefix: gtk_tooltips_
-prefix: gtk_
-import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-#import: gtk.TooltipsData
-#structWrap: GtkTooltipsData* TooltipsData
-import: gtk.Window
-structWrap: GtkWindow* Window
-
-out: gtk_tooltips_get_info_from_tip_window tooltips
-out: gtk_tooltips_get_info_from_tip_window current_widget
-
-outFile: Tooltips
-
-#file: gtkTipsQuery.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkTree.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-#file: GtkTreeItem.html
-#struct: 
-#class: 
-#prefix: 
-#prefix: gtk_
-#outFile: 
-
-file: GtkProgress.html
-struct: GtkProgress
-class: Progress
-prefix: gtk_progress_
-prefix: gtk_
-import: glib.Str
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-outFile: Progress

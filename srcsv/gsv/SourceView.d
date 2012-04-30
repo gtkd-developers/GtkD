@@ -85,7 +85,7 @@ private import gtk.TextView;
 
 /**
  * Description
- * GtkSourceView is the main object of the gtksourceview library. It provides
+ * GtkSourceView is the main object of the GtkSourceView library. It provides
  * a text view which syntax highlighting, undo/redo and text marks. Use a
  * GtkSourceBuffer to display text with a GtkSourceView.
  */
@@ -185,6 +185,14 @@ public class SourceView : TextView
 	
 	void delegate(gboolean, gint, SourceView)[] onMoveLinesListeners;
 	/**
+	 * The ::move-lines signal is a keybinding which gets emitted
+	 * when the user initiates moving a line. The default binding key
+	 * is Alt+Up/Down arrow. And moves the currently selected lines,
+	 * or the current line by count. For the moment, only
+	 * count of -1 or 1 is valid.
+	 * TRUE if the line should be copied,
+	 * FALSE if it should be moved
+	 * Since 2.10
 	 */
 	void addOnMoveLines(void delegate(gboolean, gint, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -201,11 +209,42 @@ public class SourceView : TextView
 		}
 		onMoveLinesListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveLines(GtkSourceView* sourceviewStruct, gboolean arg1, gint arg2, SourceView sourceView)
+	extern(C) static void callBackMoveLines(GtkSourceView* viewStruct, gboolean copy, gint count, SourceView sourceView)
 	{
 		foreach ( void delegate(gboolean, gint, SourceView) dlg ; sourceView.onMoveLinesListeners )
 		{
-			dlg(arg1, arg2, sourceView);
+			dlg(copy, count, sourceView);
+		}
+	}
+	
+	void delegate(gint, SourceView)[] onMoveWordsListeners;
+	/**
+	 * The ::move-words signal is a keybinding which gets emitted
+	 * when the user initiates moving a word. The default binding key
+	 * is Alt+Left/Right Arrow and moves the current selection, or the current
+	 * word by one word.
+	 * Since 3.0
+	 */
+	void addOnMoveWords(void delegate(gint, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("move-words" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"move-words",
+			cast(GCallback)&callBackMoveWords,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["move-words"] = 1;
+		}
+		onMoveWordsListeners ~= dlg;
+	}
+	extern(C) static void callBackMoveWords(GtkSourceView* viewStruct, gint count, SourceView sourceView)
+	{
+		foreach ( void delegate(gint, SourceView) dlg ; sourceView.onMoveWordsListeners )
+		{
+			dlg(count, sourceView);
 		}
 	}
 	
@@ -263,6 +302,38 @@ public class SourceView : TextView
 		foreach ( void delegate(SourceView) dlg ; sourceView.onShowCompletionListeners )
 		{
 			dlg(sourceView);
+		}
+	}
+	
+	void delegate(TextIter, gint, SourceView)[] onSmartHomeEndListeners;
+	/**
+	 * Emitted when a the cursor was moved according to the smart home
+	 * end setting. The signal is emitted after the cursor is moved, but
+	 * during the GtkTextView::move-cursor action. This can be used to find
+	 * out whether the cursor was moved by a normal home/end or by a smart
+	 * home/end.
+	 * Since 3.0
+	 */
+	void addOnSmartHomeEnd(void delegate(TextIter, gint, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("smart-home-end" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"smart-home-end",
+			cast(GCallback)&callBackSmartHomeEnd,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["smart-home-end"] = 1;
+		}
+		onSmartHomeEndListeners ~= dlg;
+	}
+	extern(C) static void callBackSmartHomeEnd(GtkSourceView* viewStruct, GtkTextIter* iter, gint count, SourceView sourceView)
+	{
+		foreach ( void delegate(TextIter, gint, SourceView) dlg ; sourceView.onSmartHomeEndListeners )
+		{
+			dlg(new TextIter(iter), count, sourceView);
 		}
 	}
 	
@@ -448,189 +519,44 @@ public class SourceView : TextView
 	}
 	
 	/**
-	 * Set the priority for the given mark category. When there are
-	 * multiple marks on the same line, marks of categories with
-	 * higher priorities will be drawn on top.
-	 * Since 2.2
+	 * Sets attributes and priority for the category.
 	 * Params:
-	 * category = a mark category.
-	 * priority = the priority for the category
+	 * category = the category.
+	 * attributes = mark attributes.
+	 * priority = priority of the category.
 	 */
-	public void setMarkCategoryPriority(string category, int priority)
+	public void setMarkAttributes(string category, GtkSourceMarkAttributes* attributes, int priority)
 	{
-		// void gtk_source_view_set_mark_category_priority  (GtkSourceView *view,  const gchar *category,  gint priority);
-		gtk_source_view_set_mark_category_priority(gtkSourceView, Str.toStringz(category), priority);
+		// void gtk_source_view_set_mark_attributes (GtkSourceView *view,  const gchar *category,  GtkSourceMarkAttributes *attributes,  gint priority);
+		gtk_source_view_set_mark_attributes(gtkSourceView, Str.toStringz(category), attributes, priority);
 	}
 	
 	/**
-	 * Gets the priority which is associated with the given category.
-	 * Since 2.2
+	 * Gets attributes and priority for the category.
 	 * Params:
-	 * category = a mark category.
-	 * Returns: the priority or if category exists but no priority was set, it defaults to 0.
+	 * category = the category.
+	 * priority = place where priority of the category will be stored.
+	 * Returns: GtkSourceMarkAttributes for the category. The object belongs to view, so it must not be unreffed. [transfer none]
 	 */
-	public int getMarkCategoryPriority(string category)
+	public GtkSourceMarkAttributes* getMarkAttributes(string category, int* priority)
 	{
-		// gint gtk_source_view_get_mark_category_priority  (GtkSourceView *view,  const gchar *category);
-		return gtk_source_view_get_mark_category_priority(gtkSourceView, Str.toStringz(category));
+		// GtkSourceMarkAttributes * gtk_source_view_get_mark_attributes  (GtkSourceView *view,  const gchar *category,  gint *priority);
+		return gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
 	}
 	
 	/**
-	 * Warning
-	 * gtk_source_view_set_mark_category_pixbuf is deprecated and should not be used in newly-written code. Use gtk_source_view_set_mark_category_icon_from_pixbuf instead
-	 * Associates a given pixbuf with a given mark category.
-	 * If pixbuf is NULL, the pixbuf is unset.
-	 * Since 2.2
+	 * If hl is TRUE the current line is highlighted.
 	 * Params:
-	 * category = a mark category.
-	 * pixbuf = a GdkPixbuf or NULL.
+	 * hl = whether to highlight the current line.
 	 */
-	public void setMarkCategoryPixbuf(string category, Pixbuf pixbuf)
+	public void setHighlightCurrentLine(int hl)
 	{
-		// void gtk_source_view_set_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category,  GdkPixbuf *pixbuf);
-		gtk_source_view_set_mark_category_pixbuf(gtkSourceView, Str.toStringz(category), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		// void gtk_source_view_set_highlight_current_line  (GtkSourceView *view,  gboolean hl);
+		gtk_source_view_set_highlight_current_line(gtkSourceView, hl);
 	}
 	
 	/**
-	 * Warning
-	 * gtk_source_view_get_mark_category_pixbuf is deprecated and should not be used in newly-written code.
-	 * Gets the pixbuf which is associated with the given mark category.
-	 * Since 2.2
-	 * Params:
-	 * category = a mark category.
-	 * Returns: the associated GdkPixbuf, or NULL if not found.
-	 */
-	public Pixbuf getMarkCategoryPixbuf(string category)
-	{
-		// GdkPixbuf * gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
-		auto p = gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
-		if(p is null)
-		{
-			return null;
-		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
-	}
-	
-	/**
-	 * Sets the icon to be used for category to pixbuf.
-	 * If pixbuf is NULL, the icon is unset.
-	 * Since 2.8
-	 * Params:
-	 * category = a mark category.
-	 * pixbuf = a GdkPixbuf or NULL.
-	 */
-	public void setMarkCategoryIconFromPixbuf(string category, Pixbuf pixbuf)
-	{
-		// void gtk_source_view_set_mark_category_icon_from_pixbuf  (GtkSourceView *view,  const gchar *category,  GdkPixbuf *pixbuf);
-		gtk_source_view_set_mark_category_icon_from_pixbuf(gtkSourceView, Str.toStringz(category), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
-	}
-	
-	/**
-	 * Sets the icon to be used for category to the stock item stock_id.
-	 * If stock_id is NULL, the icon is unset.
-	 * Since 2.8
-	 * Params:
-	 * category = a mark category.
-	 * stockId = the stock id or NULL.
-	 */
-	public void setMarkCategoryIconFromStock(string category, string stockId)
-	{
-		// void gtk_source_view_set_mark_category_icon_from_stock  (GtkSourceView *view,  const gchar *category,  const gchar *stock_id);
-		gtk_source_view_set_mark_category_icon_from_stock(gtkSourceView, Str.toStringz(category), Str.toStringz(stockId));
-	}
-	
-	/**
-	 * Sets the icon to be used for category to the named theme item name.
-	 * If name is NULL, the icon is unset.
-	 * Since 2.8
-	 * Params:
-	 * category = a mark category.
-	 * name = the themed icon name or NULL.
-	 */
-	public void setMarkCategoryIconFromIconName(string category, string name)
-	{
-		// void gtk_source_view_set_mark_category_icon_from_icon_name  (GtkSourceView *view,  const gchar *category,  const gchar *name);
-		gtk_source_view_set_mark_category_icon_from_icon_name(gtkSourceView, Str.toStringz(category), Str.toStringz(name));
-	}
-	
-	/**
-	 * Gets the background color associated with given category.
-	 * Since 2.4
-	 * Params:
-	 * category = a mark category.
-	 * dest = destination GdkColor structure to fill in.
-	 * Returns: TRUE if background color for category was set and dest is set to a valid color, or FALSE otherwise.
-	 */
-	public int getMarkCategoryBackground(string category, Color dest)
-	{
-		// gboolean gtk_source_view_get_mark_category_background  (GtkSourceView *view,  const gchar *category,  GdkColor *dest);
-		return gtk_source_view_get_mark_category_background(gtkSourceView, Str.toStringz(category), (dest is null) ? null : dest.getColorStruct());
-	}
-	
-	/**
-	 * Sets given background color for mark category.
-	 * If color is NULL, the background color is unset.
-	 * Since 2.4
-	 * Params:
-	 * category = a mark category.
-	 * color = background color or NULL to unset it.
-	 */
-	public void setMarkCategoryBackground(string category, Color color)
-	{
-		// void gtk_source_view_set_mark_category_background  (GtkSourceView *view,  const gchar *category,  const GdkColor *color);
-		gtk_source_view_set_mark_category_background(gtkSourceView, Str.toStringz(category), (color is null) ? null : color.getColorStruct());
-	}
-	
-	/**
-	 * Set a GtkSourceViewMarkTooltipFunc used to set tooltip on marks from the
-	 * given mark category.
-	 * If you also specified a function with
-	 * gtk_source_view_set_mark_category_tooltip_markup_func() the markup
-	 * variant takes precedence.
-	 * $(DDOC_COMMENT example)
-	 * Since 2.8
-	 * Params:
-	 * category = a mark category.
-	 * func = a GtkSourceViewMarkTooltipFunc or NULL.
-	 * userData = user data which will be passed to func.
-	 * userDataNotify = a function to free the memory allocated for user_data
-	 * or NULL if you do not want to supply such a function.
-	 */
-	public void setMarkCategoryTooltipFunc(string category, GtkSourceViewMarkTooltipFunc func, void* userData, GDestroyNotify userDataNotify)
-	{
-		// void gtk_source_view_set_mark_category_tooltip_func  (GtkSourceView *view,  const gchar *category,  GtkSourceViewMarkTooltipFunc func,  gpointer user_data,  GDestroyNotify user_data_notify);
-		gtk_source_view_set_mark_category_tooltip_func(gtkSourceView, Str.toStringz(category), func, userData, userDataNotify);
-	}
-	
-	/**
-	 * See gtk_source_view_set_mark_category_tooltip_func() for more information.
-	 * Since 2.8
-	 * Params:
-	 * category = a mark category.
-	 * markupFunc = a GtkSourceViewMarkTooltipFunc or NULL.
-	 * userData = user data which will be passed to func.
-	 * userDataNotify = a function to free the memory allocated for user_data
-	 * or NULL if you do not want to supply such a function.
-	 */
-	public void setMarkCategoryTooltipMarkupFunc(string category, GtkSourceViewMarkTooltipFunc markupFunc, void* userData, GDestroyNotify userDataNotify)
-	{
-		// void gtk_source_view_set_mark_category_tooltip_markup_func  (GtkSourceView *view,  const gchar *category,  GtkSourceViewMarkTooltipFunc markup_func,  gpointer user_data,  GDestroyNotify user_data_notify);
-		gtk_source_view_set_mark_category_tooltip_markup_func(gtkSourceView, Str.toStringz(category), markupFunc, userData, userDataNotify);
-	}
-	
-	/**
-	 * If show is TRUE the current line is highlighted.
-	 * Params:
-	 * show = whether to highlight the current line
-	 */
-	public void setHighlightCurrentLine(int show)
-	{
-		// void gtk_source_view_set_highlight_current_line  (GtkSourceView *view,  gboolean show);
-		gtk_source_view_set_highlight_current_line(gtkSourceView, show);
-	}
-	
-	/**
-	 * Returns whether the current line is highlighted
+	 * Returns whether the current line is highlighted.
 	 * Returns: TRUE if the current line is highlighted.
 	 */
 	public int getHighlightCurrentLine()
@@ -684,7 +610,7 @@ public class SourceView : TextView
 	}
 	
 	/**
-	 * If TRUE a right margin is displayed
+	 * If TRUE a right margin is displayed.
 	 * Params:
 	 * show = whether to show a right margin.
 	 */
@@ -772,7 +698,7 @@ public class SourceView : TextView
 	
 	/**
 	 * Gets the GtkSourceCompletion associated with view.
-	 * Returns: the GtkSourceCompletion associated with view.
+	 * Returns: the GtkSourceCompletion associated with view. [type GtkSource.Completion][transfer none]
 	 */
 	public GtkSourceCompletion* getCompletion()
 	{
@@ -788,8 +714,8 @@ public class SourceView : TextView
 	 * GTK_TEXT_WINDOW_LEFT.
 	 * Since 2.8
 	 * Params:
-	 * windowType = the gutter window type
-	 * Returns: the GtkSourceGutter.
+	 * windowType = the gutter window type.
+	 * Returns: the GtkSourceGutter. [transfer none]
 	 */
 	public SourceGutter getGutter(GtkTextWindowType windowType)
 	{

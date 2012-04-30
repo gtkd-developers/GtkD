@@ -93,11 +93,20 @@ private import gtk.Bin;
 
 /**
  * Description
+ * A GtkWindow is a toplevel window which can contain other widgets.
+ * Windows normally have decorations that are under the control
+ * of the windowing system and allow the user to manipulate the window
+ * (resize it, move it, close it,...).
+ * GTK+ also allows windows to have a resize grip (a small area in the lower
+ * right or left corner) which can be clicked to reszie the window. To
+ * control whether a window has a resize grip, use
+ * gtk_window_set_has_resize_grip().
  * GtkWindow as GtkBuildable
  * The GtkWindow implementation of the GtkBuildable interface supports a
- * custom <accel-groups> element, which supports any number of <group>
- * elements representing the GtkAccelGroup objects you want to add to your
- * window (synonymous with gtk_window_add_accel_group().
+ * custom <accel-groups> element, which supports
+ * any number of <group> elements representing the
+ * GtkAccelGroup objects you want to add to your window (synonymous with
+ * gtk_window_add_accel_group().
  * $(DDOC_COMMENT example)
  */
 public class Window : Bin
@@ -229,37 +238,6 @@ public class Window : Bin
 		{
 			dlg(window);
 		}
-	}
-	
-	bool delegate(GdkEvent*, Window)[] onFrameListeners;
-	/**
-	 */
-	void addOnFrame(bool delegate(GdkEvent*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("frame-event" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"frame-event",
-			cast(GCallback)&callBackFrame,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["frame-event"] = 1;
-		}
-		onFrameListeners ~= dlg;
-	}
-	extern(C) static gboolean callBackFrame(GtkWindow* windowStruct, GdkEvent* arg1, Window window)
-	{
-		foreach ( bool delegate(GdkEvent*, Window) dlg ; window.onFrameListeners )
-		{
-			if ( dlg(arg1, window) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
 	}
 	
 	void delegate(Window)[] onKeysChangedListeners;
@@ -432,22 +410,6 @@ public class Window : Bin
 	}
 	
 	/**
-	 * Warning
-	 * gtk_window_set_policy is deprecated and should not be used in newly-written code. Use gtk_window_set_resizable() instead.
-	 * Changes how a toplevel window deals with its size request and user resize
-	 * Params:
-	 * allowShrink = whether the user can shrink the window below its size request
-	 * allowGrow = whether the user can grow the window larger than its size request
-	 * autoShrink = whether the window automatically snaps back to its size request
-	 * if it's larger
-	 */
-	public void setPolicy(int allowShrink, int allowGrow, int autoShrink)
-	{
-		// void gtk_window_set_policy (GtkWindow *window,  gint allow_shrink,  gint allow_grow,  gint auto_shrink);
-		gtk_window_set_policy(gtkWindow, allowShrink, allowGrow, autoShrink);
-	}
-	
-	/**
 	 * Sets whether the user can resize a window. Windows are user resizable
 	 * by default.
 	 * Params:
@@ -567,13 +529,28 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Like gtk_window_set_default_size(), but width and height are interpreted
+	 * in terms of the base size and increment set with
+	 * gtk_window_set_geometry_hints.
+	 * Params:
+	 * width = width in resize increments, or -1 to unset the default width
+	 * height = height in resize increments, or -1 to unset the default height
+	 * Since 3.0
+	 */
+	public void setDefaultGeometry(int width, int height)
+	{
+		// void gtk_window_set_default_geometry (GtkWindow *window,  gint width,  gint height);
+		gtk_window_set_default_geometry(gtkWindow, width, height);
+	}
+	
+	/**
 	 * This function sets up hints about how a window can be resized by
 	 * the user. You can set a minimum and maximum size; allowed resize
 	 * increments (e.g. for xterm, you can only resize by the size of a
 	 * character); aspect ratios; and more. See the GdkGeometry struct.
 	 * Params:
-	 * geometryWidget = widget the geometry hints will be applied to
-	 * geometry = struct containing geometry information
+	 * geometryWidget = widget the geometry hints will be applied to or NULL. [allow-none]
+	 * geometry = struct containing geometry information or NULL. [allow-none]
 	 * geomMask = mask indicating which struct fields should be paid attention to
 	 */
 	public void setGeometryHints(Widget geometryWidget, GdkGeometry* geometry, GdkWindowHints geomMask)
@@ -1142,7 +1119,7 @@ public class Window : Bin
 	 * using this function, GTK+ will do its best to convince the window
 	 * manager not to decorate the window. Depending on the system, this
 	 * function may not have any effect when called on a window that is
-	 * already visible, so you should call it before calling gtk_window_show().
+	 * already visible, so you should call it before calling gtk_widget_show().
 	 * On Windows, this function always works, since there's no window manager
 	 * policy involved.
 	 * Params:
@@ -1172,50 +1149,6 @@ public class Window : Bin
 	{
 		// void gtk_window_set_deletable (GtkWindow *window,  gboolean setting);
 		gtk_window_set_deletable(gtkWindow, setting);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_window_set_frame_dimensions has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3
-	 * (Note: this is a special-purpose function intended for the framebuffer
-	 *  port; see gtk_window_set_has_frame(). It will have no effect on the
-	 *  window border drawn by the window manager, which is the normal
-	 *  case when using the X Window system.)
-	 * For windows with frames (see gtk_window_set_has_frame()) this function
-	 * can be used to change the size of the frame border.
-	 * Params:
-	 * left = The width of the left border
-	 * top = The height of the top border
-	 * right = The width of the right border
-	 * bottom = The height of the bottom border
-	 */
-	public void setFrameDimensions(int left, int top, int right, int bottom)
-	{
-		// void gtk_window_set_frame_dimensions (GtkWindow *window,  gint left,  gint top,  gint right,  gint bottom);
-		gtk_window_set_frame_dimensions(gtkWindow, left, top, right, bottom);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_window_set_has_frame has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3
-	 * (Note: this is a special-purpose function for the framebuffer port,
-	 *  that causes GTK+ to draw its own window border. For most applications,
-	 *  you want gtk_window_set_decorated() instead, which tells the window
-	 *  manager whether to draw the window border.)
-	 * If this function is called on a window with setting of TRUE, before
-	 * it is realized or showed, it will have a "frame" window around
-	 * window->window, accessible in window->frame. Using the signal
-	 * frame_event you can receive all events targeted at the frame.
-	 * This function is used by the linux-fb port to implement managed
-	 * windows, but it could conceivably be used by X-programs that
-	 * want to do their own window decorations.
-	 * Params:
-	 * setting = a boolean
-	 */
-	public void setHasFrame(int setting)
-	{
-		// void gtk_window_set_has_frame (GtkWindow *window,  gboolean setting);
-		gtk_window_set_has_frame(gtkWindow, setting);
 	}
 	
 	/**
@@ -1407,7 +1340,7 @@ public class Window : Bin
 	 */
 	public static string getDefaultIconName()
 	{
-		// const gchar * gtk_window_get_default_icon_name (void);
+		// gchar * gtk_window_get_default_icon_name (void);
 		return Str.toString(gtk_window_get_default_icon_name());
 	}
 	
@@ -1417,8 +1350,8 @@ public class Window : Bin
 	 * for that dimension, so the "natural" size of the window will be
 	 * used.
 	 * Params:
-	 * width = location to store the default width, or NULL. [allow-none]
-	 * height = location to store the default height, or NULL. [allow-none]
+	 * width = location to store the default width, or NULL. [out][allow-none]
+	 * height = location to store the default height, or NULL. [out][allow-none]
 	 */
 	public void getDefaultSize(out int width, out int height)
 	{
@@ -1435,42 +1368,6 @@ public class Window : Bin
 	{
 		// gboolean gtk_window_get_destroy_with_parent (GtkWindow *window);
 		return gtk_window_get_destroy_with_parent(gtkWindow);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_window_get_frame_dimensions has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3
-	 * (Note: this is a special-purpose function intended for the
-	 *  framebuffer port; see gtk_window_set_has_frame(). It will not
-	 *  return the size of the window border drawn by the window manager, which is the normal
-	 *  case when using a windowing system. See
-	 *  gdk_window_get_frame_extents() to get the standard window border
-	 *  extents.)
-	 * Retrieves the dimensions of the frame window for this toplevel.
-	 * See gtk_window_set_has_frame(), gtk_window_set_frame_dimensions().
-	 * Params:
-	 * left = location to store the width of the frame at the left, or NULL. [out][allow-none]
-	 * top = location to store the height of the frame at the top, or NULL. [out][allow-none]
-	 * right = location to store the width of the frame at the returns, or NULL. [out][allow-none]
-	 * bottom = location to store the height of the frame at the bottom, or NULL. [out][allow-none]
-	 */
-	public void getFrameDimensions(out int left, out int top, out int right, out int bottom)
-	{
-		// void gtk_window_get_frame_dimensions (GtkWindow *window,  gint *left,  gint *top,  gint *right,  gint *bottom);
-		gtk_window_get_frame_dimensions(gtkWindow, &left, &top, &right, &bottom);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_window_get_has_frame has been deprecated since version 2.24 and should not be used in newly-written code. This function will be removed in GTK+ 3
-	 * Accessor for whether the window has a frame window exterior to
-	 * window->window. Gets the value set by gtk_window_set_has_frame().
-	 * Returns: TRUE if a frame has been added to the window via gtk_window_set_has_frame().
-	 */
-	public int getHasFrame()
-	{
-		// gboolean gtk_window_get_has_frame (GtkWindow *window);
-		return gtk_window_get_has_frame(gtkWindow);
 	}
 	
 	/**
@@ -1515,7 +1412,7 @@ public class Window : Bin
 	 */
 	public string getIconName()
 	{
-		// const gchar * gtk_window_get_icon_name (GtkWindow *window);
+		// gchar * gtk_window_get_icon_name (GtkWindow *window);
 		return Str.toString(gtk_window_get_icon_name(gtkWindow));
 	}
 	
@@ -1542,9 +1439,9 @@ public class Window : Bin
 	
 	/**
 	 * This function returns the position you need to pass to
-	 * gtk_window_move() to keep window in its current position. This
-	 * means that the meaning of the returned value varies with window
-	 * gravity. See gtk_window_move() for more details.
+	 * gtk_window_move() to keep window in its current position.
+	 * This means that the meaning of the returned value varies with
+	 * window gravity. See gtk_window_move() for more details.
 	 * If you haven't changed the window gravity, its gravity will be
 	 * GDK_GRAVITY_NORTH_WEST. This means that gtk_window_get_position()
 	 * gets the position of the top-left corner of the window manager
@@ -1573,8 +1470,10 @@ public class Window : Bin
 	 * "GnomeClient" object in the GNOME libraries for example) and allow
 	 * the window manager to save your window sizes and positions.
 	 * Params:
-	 * rootX = return location for X coordinate of gravity-determined reference point. [out][allow-none]
-	 * rootY = return location for Y coordinate of gravity-determined reference point. [out][allow-none]
+	 * rootX = eturn location for X coordinate of
+	 * gravity-determined reference point, or NULL. [out][allow-none]
+	 * rootY = return location for Y coordinate of
+	 * gravity-determined reference point, or NULL. [out][allow-none]
 	 */
 	public void getPosition(out int rootX, out int rootY)
 	{
@@ -1852,6 +1751,21 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Like gtk_window_resize(), but width and height are interpreted
+	 * in terms of the base size and increment set with
+	 * gtk_window_set_geometry_hints.
+	 * Params:
+	 * width = width in resize increments to resize the window to
+	 * height = height in resize increments to resize the window to
+	 * Since 3.0
+	 */
+	public void resizeToGeometry(int width, int height)
+	{
+		// void gtk_window_resize_to_geometry (GtkWindow *window,  gint width,  gint height);
+		gtk_window_resize_to_geometry(gtkWindow, width, height);
+	}
+	
+	/**
 	 * Sets an icon list to be used as fallback for windows that haven't
 	 * had gtk_window_set_icon_list() called on them to set up a
 	 * window-specific icon list. This function allows you to set up the
@@ -1938,7 +1852,7 @@ public class Window : Bin
 	 * icon from their transient parent. So there's no need to explicitly
 	 * set the icon on transient windows.
 	 * Params:
-	 * list = list of GdkPixbuf
+	 * list = list of GdkPixbuf. [element-type GdkPixbuf]
 	 */
 	public void setIconList(ListG list)
 	{
@@ -2012,6 +1926,9 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Gets the value of the "mnemonics-visible" property.
+	 * Since 2.20
+	 * Returns: TRUE if mnemonics are supposed to be visible in this window.
 	 */
 	public int getMnemonicsVisible()
 	{
@@ -2029,5 +1946,96 @@ public class Window : Bin
 	{
 		// void gtk_window_set_mnemonics_visible (GtkWindow *window,  gboolean setting);
 		gtk_window_set_mnemonics_visible(gtkWindow, setting);
+	}
+	
+	/**
+	 * Sets whether window has a corner resize grip.
+	 * Note that the resize grip is only shown if the window
+	 * is actually resizable and not maximized. Use
+	 * gtk_window_resize_grip_is_visible() to find out if the
+	 * resize grip is currently shown.
+	 * Params:
+	 * value = TRUE to allow a resize grip
+	 * Since 3.0
+	 */
+	public void setHasResizeGrip(int value)
+	{
+		// void gtk_window_set_has_resize_grip (GtkWindow *window,  gboolean value);
+		gtk_window_set_has_resize_grip(gtkWindow, value);
+	}
+	
+	/**
+	 * Determines whether the window may have a resize grip.
+	 * Returns: TRUE if the window has a resize grip Since 3.0
+	 */
+	public int getHasResizeGrip()
+	{
+		// gboolean gtk_window_get_has_resize_grip (GtkWindow *window);
+		return gtk_window_get_has_resize_grip(gtkWindow);
+	}
+	
+	/**
+	 * Determines whether a resize grip is visible for the specified window.
+	 * Returns: TRUE if a resize grip exists and is visible Since 3.0
+	 */
+	public int resizeGripIsVisible()
+	{
+		// gboolean gtk_window_resize_grip_is_visible (GtkWindow *window);
+		return gtk_window_resize_grip_is_visible(gtkWindow);
+	}
+	
+	/**
+	 * If a window has a resize grip, this will retrieve the grip
+	 * position, width and height into the specified GdkRectangle.
+	 * Params:
+	 * rect = a pointer to a GdkRectangle which we should store
+	 * the resize grip area. [out]
+	 * Returns: TRUE if the resize grip's area was retrieved Since 3.0
+	 */
+	public int getResizeGripArea(Rectangle* rect)
+	{
+		// gboolean gtk_window_get_resize_grip_area (GtkWindow *window,  GdkRectangle *rect);
+		return gtk_window_get_resize_grip_area(gtkWindow, rect);
+	}
+	
+	/**
+	 * Gets the GtkApplication associated with the window (if any).
+	 * Returns: a GtkApplication, or NULL. [transfer none] Since 3.0
+	 */
+	public GtkApplication* getApplication()
+	{
+		// GtkApplication * gtk_window_get_application (GtkWindow *window);
+		return gtk_window_get_application(gtkWindow);
+	}
+	
+	/**
+	 * Sets or unsets the GtkApplication associated with the window.
+	 * The application will be kept alive for at least as long as the window
+	 * is open.
+	 * Params:
+	 * application = a GtkApplication, or NULL. [allow-none]
+	 * Since 3.0
+	 */
+	public void setApplication(GtkApplication* application)
+	{
+		// void gtk_window_set_application (GtkWindow *window,  GtkApplication *application);
+		gtk_window_set_application(gtkWindow, application);
+	}
+	
+	/**
+	 * Tells GTK+ whether to drop its extra reference to the window
+	 * when gtk_window_destroy() is called.
+	 * This function is only exported for the benefit of language
+	 * bindings which may need to keep the window alive until their
+	 * wrapper object is garbage collected. There is no justification
+	 * for ever calling this function in an application.
+	 * Params:
+	 * setting = the new value
+	 * Since 3.0
+	 */
+	public void setHasUserRefCount(int setting)
+	{
+		// void gtk_window_set_has_user_ref_count (GtkWindow *window,  gboolean setting);
+		gtk_window_set_has_user_ref_count(gtkWindow, setting);
 	}
 }

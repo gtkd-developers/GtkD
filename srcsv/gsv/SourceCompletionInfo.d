@@ -175,8 +175,8 @@ public class SourceCompletionInfo : Window
 	 * of the info window and will ensure the line at iter is not occluded by
 	 * the window.
 	 * Params:
-	 * view = A GtkTextView on which the info window should be positioned
-	 * iter = A GtkTextIter
+	 * view = a GtkTextView on which the info window should be positioned.
+	 * iter = a GtkTextIter. [allow-none]
 	 */
 	public void moveToIter(TextView view, TextIter iter)
 	{
@@ -185,30 +185,11 @@ public class SourceCompletionInfo : Window
 	}
 	
 	/**
-	 * Set sizing information for the info window. If shrink_width or
-	 * shrink_height is TRUE, the info window will try to resize to fit the
-	 * window contents, with a maximum size given by width and height. Setting
-	 * width or height to -1 removes the maximum size of respectively the width
-	 * and height of the window.
-	 * Params:
-	 * width = The maximum/requested width of the window (-1 to default)
-	 * height = The maximum/requested height of the window (-1 to default)
-	 * shrinkWidth = Whether to shrink the width of the window to fit its contents
-	 * shrinkHeight = Whether to shrink the height of the window to fit its
-	 *  contents
-	 */
-	public void setSizing(int width, int height, int shrinkWidth, int shrinkHeight)
-	{
-		// void gtk_source_completion_info_set_sizing  (GtkSourceCompletionInfo *info,  gint width,  gint height,  gboolean shrink_width,  gboolean shrink_height);
-		gtk_source_completion_info_set_sizing(gtkSourceCompletionInfo, width, height, shrinkWidth, shrinkHeight);
-	}
-	
-	/**
 	 * Sets the content widget of the info window. If widget does not fit within
 	 * the size requirements of the window, a GtkScrolledWindow will automatically
 	 * be created and added to the window.
 	 * Params:
-	 * widget = A GtkWidget
+	 * widget = a GtkWidget. [allow-none]
 	 */
 	public void setWidget(Widget widget)
 	{
@@ -218,7 +199,7 @@ public class SourceCompletionInfo : Window
 	
 	/**
 	 * Get the current content widget.
-	 * Returns: The current content widget.
+	 * Returns: The current content widget. [transfer none] Signal Details The "before-show" signal void user_function (GtkSourceCompletionInfo *sourcecompletioninfo, gpointer user_data) : Action
 	 */
 	public Widget getWidget()
 	{
@@ -229,13 +210,5 @@ public class SourceCompletionInfo : Window
 			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
-	}
-	
-	/**
-	 */
-	public void processResize()
-	{
-		// void gtk_source_completion_info_process_resize  (GtkSourceCompletionInfo *info);
-		gtk_source_completion_info_process_resize(gtkSourceCompletionInfo);
 	}
 }

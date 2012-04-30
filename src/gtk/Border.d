@@ -66,6 +66,18 @@ public  import gtkc.gdktypes;
 
 /**
  * Description
+ * A GtkStyle object encapsulates the information that provides the look and
+ * feel for a widget.
+ * Warning
+ * In GTK+ 3.0, GtkStyle has been deprecated and replaced by GtkStyleContext.
+ * Each GtkWidget has an associated GtkStyle object that is used when
+ * rendering that widget. Also, a GtkStyle holds information for the five
+ * possible widget states though not every widget supports all five
+ * states; see GtkStateType.
+ * Usually the GtkStyle for a widget is the same as the default style that
+ * is set by GTK+ and modified the theme engine.
+ * Usually applications should not need to use or modify the GtkStyle of
+ * their widgets.
  */
 public class Border
 {
@@ -106,7 +118,7 @@ public class Border
 	void delegate(Border)[] onRealizeListeners;
 	/**
 	 * Emitted when the style has been initialized for a particular
-	 * colormap and depth. Connecting to this signal is probably seldom
+	 * visual. Connecting to this signal is probably seldom
 	 * useful since most of the time applications and widgets only
 	 * deal with styles that have been already realized.
 	 * Since 2.4
@@ -136,9 +148,9 @@ public class Border
 	
 	void delegate(Border)[] onUnrealizeListeners;
 	/**
-	 * Emitted when the aspects of the style specific to a particular colormap
-	 * and depth are being cleaned up. A connection to this signal can be useful
-	 * if a widget wants to cache objects like a GdkGC as object data on GtkStyle.
+	 * Emitted when the aspects of the style specific to a particular visual
+	 * is being cleaned up. A connection to this signal can be useful
+	 * if a widget wants to cache objects as object data on GtkStyle.
 	 * This signal provides a convenient place to free such cached objects.
 	 * Since 2.4
 	 */
@@ -165,44 +177,4 @@ public class Border
 		}
 	}
 	
-	
-	/**
-	 * Allocates a new GtkBorder structure and initializes its elements to zero.
-	 * Since 2.14
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GtkBorder * gtk_border_new (void);
-		auto p = gtk_border_new();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_border_new()");
-		}
-		this(cast(GtkBorder*) p);
-	}
-	
-	/**
-	 * Copies a GtkBorder structure.
-	 * Returns: a copy of border_.
-	 */
-	public Border copy()
-	{
-		// GtkBorder * gtk_border_copy (const GtkBorder *border_);
-		auto p = gtk_border_copy(gtkBorder);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Border(cast(GtkBorder*) p);
-	}
-	
-	/**
-	 * Frees a GtkBorder structure.
-	 */
-	public void free()
-	{
-		// void gtk_border_free (GtkBorder *border_);
-		gtk_border_free(gtkBorder);
-	}
 }

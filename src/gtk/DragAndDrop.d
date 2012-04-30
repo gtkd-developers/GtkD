@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Drag-and-Drop.html
+ * inFile  = gtk3-Drag-and-Drop.html
  * outPack = gtk
  * outFile = DragAndDrop
  * strct   = GdkDragContext
@@ -174,14 +174,14 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Set up this widget to proxy drags elsewhere.
 	 * Sets this widget as a proxy for drops to another window.
 	 * Params:
 	 * widget = a GtkWidget
-	 * proxyWindow = the window to which to forward drag events
-	 * protocol = the drag protocol which the proxy_window accepts
-	 * (You can use gdk_drag_get_protocol() to determine this)
-	 * useCoordinates = If TRUE, send the same coordinates to the
-	 * destination, because it is an embedded
+	 * proxyWindow = window to which forward drag events
+	 * protocol = Drag protocol which the dest widget accepts
+	 * useCoordinates = If true, send the same coordinates to the
+	 * destination, because it is a embedded
 	 * subwindow.
 	 */
 	public static void destSetProxy(Widget widget, Window proxyWindow, GdkDragProtocol protocol, int useCoordinates)
@@ -191,6 +191,7 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Unregister this widget as a drag target.
 	 * Clears information about a drop destination set with
 	 * gtk_drag_dest_set(). The widget will no longer receive
 	 * notification of drags.
@@ -204,18 +205,18 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Params:
-	 * widget = drag destination widget
-	 * context = drag context
-	 * targetList = list of droppable targets, or NULL to use
-	 * gtk_drag_dest_get_target_list (widget).
 	 * Looks for a match between the supported targets of context and the
 	 * dest_target_list, returning the first matching target, otherwise
 	 * returning GDK_NONE. dest_target_list should usually be the return
 	 * value from gtk_drag_dest_get_target_list(), but some widgets may
 	 * have different valid targets for different parts of the widget; in
 	 * that case, they will have to implement a drag_motion handler that
-	 * passes the correct target list to this function. [allow-none]
+	 * passes the correct target list to this function.
+	 * Params:
+	 * widget = drag destination widget
+	 * context = drag context
+	 * targetList = list of droppable targets, or NULL to use
+	 * gtk_drag_dest_get_target_list (widget). [allow-none]
 	 * Returns: first target that the source offers and the dest can accept, or GDK_NONE. [transfer none]
 	 */
 	public static GdkAtom destFindTarget(Widget widget, DragContext context, TargetList targetList)
@@ -351,6 +352,7 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Get the data for a drag or drop
 	 * Gets the data associated with a drag. When the data
 	 * is received or the retrieval fails, GTK+ will emit a
 	 * "drag_data_received" signal. Failure of the retrieval
@@ -360,13 +362,10 @@ public class DragAndDrop
 	 * then the widget will not receive notification of failed
 	 * drops.
 	 * Params:
-	 * widget = the widget that will receive the "drag_data_received"
-	 * signal.
-	 * context = the drag context
-	 * target = the target (form of the data) to retrieve.
-	 * time = a timestamp for retrieving the data. This will
-	 * generally be the time received in a "drag_data_motion"
-	 * or "drag_data_drop" signal.
+	 * widget = a GtkWidget
+	 * context = drag context
+	 * target = format to retrieve the data in.
+	 * time = timestamp of triggering event.
 	 */
 	public static void getData(Widget widget, DragContext context, GdkAtom target, uint time)
 	{
@@ -375,7 +374,6 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Determines the source widget for a drag.
 	 * Determines the source widget for a drag.
 	 * Returns: if the drag is occurring within a single application, a pointer to the source widget. Otherwise, NULL. [transfer none]
 	 */
@@ -391,12 +389,13 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Highlight the given widget in the default manner.
 	 * Draws a highlight around a widget. This will attach
 	 * handlers to "expose_event" and "draw", so the highlight
 	 * will continue to be displayed until gtk_drag_unhighlight()
 	 * is called.
 	 * Params:
-	 * widget = a widget to highlight
+	 * widget = a GtkWidget
 	 */
 	public static void highlight(Widget widget)
 	{
@@ -405,10 +404,11 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Refresh the given widget to remove the highlight.
 	 * Removes a highlight set by gtk_drag_highlight() from
 	 * a widget.
 	 * Params:
-	 * widget = a widget to remove the highlight from.
+	 * widget = a GtkWidget
 	 */
 	public static void unhighlight(Widget widget)
 	{
@@ -426,7 +426,7 @@ public class DragAndDrop
 	 * However, you should try to pass a real event in all cases, since that can be
 	 * used by GTK+ to get information about the start position of the drag, for
 	 * example if the event is a GDK_MOTION_NOTIFY.
-	 * Generally there are three cases when you want to start a drag by hand by calling
+	 * Generally there are three cases when you want to start a drag by hand by
 	 * Params:
 	 * widget = the source widget.
 	 * targets = The targets (data formats) in which the
@@ -464,24 +464,6 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Sets pixmap as the icon for a given drag. GTK+ retains
-	 * references for the arguments, and will release them when
-	 * they are no longer needed. In general, gtk_drag_set_icon_pixbuf()
-	 * will be more convenient to use.
-	 * Params:
-	 * colormap = the colormap of the icon
-	 * pixmap = the image data for the icon
-	 * mask = the transparency mask for the icon or NULL for none. [allow-none]
-	 * hotX = the X offset within pixmap of the hotspot.
-	 * hotY = the Y offset within pixmap of the hotspot.
-	 */
-	public void setIconPixmap(Colormap colormap, Pixmap pixmap, Bitmap mask, int hotX, int hotY)
-	{
-		// void gtk_drag_set_icon_pixmap (GdkDragContext *context,  GdkColormap *colormap,  GdkPixmap *pixmap,  GdkBitmap *mask,  gint hot_x,  gint hot_y);
-		gtk_drag_set_icon_pixmap(gdkDragContext, (colormap is null) ? null : colormap.getColormapStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct(), hotX, hotY);
-	}
-	
-	/**
 	 * Sets pixbuf as the icon for a given drag.
 	 * Params:
 	 * pixbuf = the GdkPixbuf to use as the drag icon.
@@ -505,6 +487,23 @@ public class DragAndDrop
 	{
 		// void gtk_drag_set_icon_stock (GdkDragContext *context,  const gchar *stock_id,  gint hot_x,  gint hot_y);
 		gtk_drag_set_icon_stock(gdkDragContext, Str.toStringz(stockId), hotX, hotY);
+	}
+	
+	/**
+	 * Sets surface as the icon for a given drag. GTK+ retains
+	 * references for the arguments, and will release them when
+	 * they are no longer needed.
+	 * To position the surface relative to the mouse, use
+	 * cairo_surface_set_device_offset() on surface. The mouse
+	 * cursor will be positioned at the (0,0) coordinate of the
+	 * surface.
+	 * Params:
+	 * surface = the surface to use as icon
+	 */
+	public void setIconSurface(cairo_surface_t* surface)
+	{
+		// void gtk_drag_set_icon_surface (GdkDragContext *context,  cairo_surface_t *surface);
+		gtk_drag_set_icon_surface(gdkDragContext, surface);
 	}
 	
 	/**
@@ -533,25 +532,6 @@ public class DragAndDrop
 	{
 		// void gtk_drag_set_icon_default (GdkDragContext *context);
 		gtk_drag_set_icon_default(gdkDragContext);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_drag_set_default_icon is deprecated and should not be used in newly-written code. Change the default drag icon via the stock system by
-	 *  changing the stock pixbuf for GTK_STOCK_DND instead.
-	 * Changes the default drag icon. GTK+ retains references for the
-	 * arguments, and will release them when they are no longer needed.
-	 * Params:
-	 * colormap = the colormap of the icon
-	 * pixmap = the image data for the icon
-	 * mask = the transparency mask for an image, or NULL. [allow-none]
-	 * hotX = The X offset within widget of the hotspot.
-	 * hotY = The Y offset within widget of the hotspot.
-	 */
-	public static void setDefaultIcon(Colormap colormap, Pixmap pixmap, Bitmap mask, int hotX, int hotY)
-	{
-		// void gtk_drag_set_default_icon (GdkColormap *colormap,  GdkPixmap *pixmap,  GdkBitmap *mask,  gint hot_x,  gint hot_y);
-		gtk_drag_set_default_icon((colormap is null) ? null : colormap.getColormapStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct(), hotX, hotY);
 	}
 	
 	/**
@@ -587,23 +567,6 @@ public class DragAndDrop
 	{
 		// void gtk_drag_source_set (GtkWidget *widget,  GdkModifierType start_button_mask,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
 		gtk_drag_source_set((widget is null) ? null : widget.getWidgetStruct(), startButtonMask, targets, nTargets, actions);
-	}
-	
-	/**
-	 * Sets the icon that will be used for drags from a particular widget
-	 * from a pixmap/mask. GTK+ retains references for the arguments, and
-	 * will release them when they are no longer needed.
-	 * Use gtk_drag_source_set_icon_pixbuf() instead.
-	 * Params:
-	 * widget = a GtkWidget
-	 * colormap = the colormap of the icon
-	 * pixmap = the image data for the icon
-	 * mask = the transparency mask for an image. [allow-none]
-	 */
-	public static void sourceSetIcon(Widget widget, Colormap colormap, Pixmap pixmap, Bitmap mask)
-	{
-		// void gtk_drag_source_set_icon (GtkWidget *widget,  GdkColormap *colormap,  GdkPixmap *pixmap,  GdkBitmap *mask);
-		gtk_drag_source_set_icon((widget is null) ? null : widget.getWidgetStruct(), (colormap is null) ? null : colormap.getColormapStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct());
 	}
 	
 	/**
@@ -648,6 +611,7 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Unregister this widget as a drag source.
 	 * Undoes the effects of gtk_drag_source_set().
 	 * Params:
 	 * widget = a GtkWidget

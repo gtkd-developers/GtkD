@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Themeable-Stock-Images.html
+ * inFile  = gtk3-Themeable-Stock-Images.html
  * outPack = gtk
  * outFile = IconSource
  * strct   = GtkIconSource
@@ -154,7 +154,7 @@ public class IconSource
 	 */
 	public IconSource copy()
 	{
-		// GtkIconSource* gtk_icon_source_copy (const GtkIconSource *source);
+		// GtkIconSource * gtk_icon_source_copy (const GtkIconSource *source);
 		auto p = gtk_icon_source_copy(gtkIconSource);
 		if(p is null)
 		{
@@ -199,11 +199,11 @@ public class IconSource
 	 * Retrieves the source filename, or NULL if none is set. The
 	 * filename is not a copy, and should not be modified or expected to
 	 * persist beyond the lifetime of the icon source.
-	 * Returns: image filename. This string must not be modified or freed.
+	 * Returns: image filename. This string must not be modified or freed. [type filename]
 	 */
 	public string getFilename()
 	{
-		// const gchar* gtk_icon_source_get_filename (const GtkIconSource *source);
+		// const gchar * gtk_icon_source_get_filename (const GtkIconSource *source);
 		return Str.toString(gtk_icon_source_get_filename(gtkIconSource));
 	}
 	
@@ -215,11 +215,11 @@ public class IconSource
 	 * for the GtkIconSource passed to the GtkStyle::render_icon()
 	 * virtual function. The reference count on the pixbuf is
 	 * not incremented.
-	 * Returns: source pixbuf
+	 * Returns: source pixbuf. [transfer none]
 	 */
 	public Pixbuf getPixbuf()
 	{
-		// GdkPixbuf* gtk_icon_source_get_pixbuf (const GtkIconSource *source);
+		// GdkPixbuf * gtk_icon_source_get_pixbuf (const GtkIconSource *source);
 		auto p = gtk_icon_source_get_pixbuf(gtkIconSource);
 		if(p is null)
 		{
@@ -236,7 +236,7 @@ public class IconSource
 	 */
 	public string getIconName()
 	{
-		// const gchar* gtk_icon_source_get_icon_name (const GtkIconSource *source);
+		// const gchar * gtk_icon_source_get_icon_name (const GtkIconSource *source);
 		return Str.toString(gtk_icon_source_get_icon_name(gtkIconSource));
 	}
 	
@@ -312,7 +312,7 @@ public class IconSource
 	 */
 	public this ()
 	{
-		// GtkIconSource* gtk_icon_source_new (void);
+		// GtkIconSource * gtk_icon_source_new (void);
 		auto p = gtk_icon_source_new();
 		if(p is null)
 		{
@@ -359,7 +359,7 @@ public class IconSource
 	 * Sets the name of an image file to use as a base image when creating
 	 * icon variants for GtkIconSet. The filename must be absolute.
 	 * Params:
-	 * filename = image file to use
+	 * filename = image file to use. [type filename]
 	 */
 	public void setFilename(string filename)
 	{

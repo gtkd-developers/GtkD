@@ -80,7 +80,7 @@ private import gtk.ActivatableIF;
 
 
 
-private import gtk.Item;
+private import gtk.Bin;
 
 /**
  * Description
@@ -95,7 +95,7 @@ private import gtk.Item;
  * attribute of a <child> element.
  * $(DDOC_COMMENT example)
  */
-public class MenuItem : Item, ActivatableIF
+public class MenuItem : Bin, ActivatableIF
 {
 	
 	/** the main Gtk struct */
@@ -131,7 +131,7 @@ public class MenuItem : Item, ActivatableIF
 			this = cast(MenuItem)ptr;
 			return;
 		}
-		super(cast(GtkItem*)gtkMenuItem);
+		super(cast(GtkBin*)gtkMenuItem);
 		this.gtkMenuItem = gtkMenuItem;
 	}
 	
@@ -295,6 +295,58 @@ public class MenuItem : Item, ActivatableIF
 		}
 	}
 	
+	void delegate(MenuItem)[] onDeselectListeners;
+	/**
+	 */
+	void addOnDeselect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("deselect" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"deselect",
+			cast(GCallback)&callBackDeselect,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["deselect"] = 1;
+		}
+		onDeselectListeners ~= dlg;
+	}
+	extern(C) static void callBackDeselect(GtkMenuItem* menuitemStruct, MenuItem menuItem)
+	{
+		foreach ( void delegate(MenuItem) dlg ; menuItem.onDeselectListeners )
+		{
+			dlg(menuItem);
+		}
+	}
+	
+	void delegate(MenuItem)[] onSelectListeners;
+	/**
+	 */
+	void addOnSelect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("select" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"select",
+			cast(GCallback)&callBackSelect,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["select"] = 1;
+		}
+		onSelectListeners ~= dlg;
+	}
+	extern(C) static void callBackSelect(GtkMenuItem* menuitemStruct, MenuItem menuItem)
+	{
+		foreach ( void delegate(MenuItem) dlg ; menuItem.onSelectListeners )
+		{
+			dlg(menuItem);
+		}
+	}
+	
 	void delegate(gint, MenuItem)[] onToggleSizeAllocateListeners;
 	/**
 	 */
@@ -372,13 +424,13 @@ public class MenuItem : Item, ActivatableIF
 	
 	/**
 	 * Sets whether the menu item appears justified at the right
-	 * side of a menu bar. This was traditionally done for "Help" menu
-	 * items, but is now considered a bad idea. (If the widget
+	 * side of a menu bar. This was traditionally done for "Help"
+	 * menu items, but is now considered a bad idea. (If the widget
 	 * layout is reversed for a right-to-left language like Hebrew
 	 * or Arabic, right-justified-menu-items appear at the left.)
 	 * Params:
 	 * rightJustified = if TRUE the menu item will appear at the
-	 * far right if added to a menu bar.
+	 * far right if added to a menu bar
 	 */
 	public void setRightJustified(int rightJustified)
 	{
@@ -421,8 +473,8 @@ public class MenuItem : Item, ActivatableIF
 	}
 	
 	/**
-	 * Checks if an underline in the text indicates the next character should be
-	 * used for the mnemonic accelerator key.
+	 * Checks if an underline in the text indicates the next character
+	 * should be used for the mnemonic accelerator key.
 	 * Since 2.16
 	 * Returns: TRUE if an embedded underline in the label indicates the mnemonic accelerator key.
 	 */
@@ -433,8 +485,8 @@ public class MenuItem : Item, ActivatableIF
 	}
 	
 	/**
-	 * If true, an underline in the text indicates the next character should be
-	 * used for the mnemonic accelerator key.
+	 * If true, an underline in the text indicates the next character
+	 * should be used for the mnemonic accelerator key.
 	 * Since 2.16
 	 * Params:
 	 * setting = TRUE if underlines in the text indicate mnemonics
@@ -474,37 +526,25 @@ public class MenuItem : Item, ActivatableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_menu_item_remove_submenu has been deprecated since version 2.12 and should not be used in newly-written code. gtk_menu_item_remove_submenu() is deprecated and
-	 *  should not be used in newly written code. Use
-	 *  gtk_menu_item_set_submenu() instead.
-	 * Removes the widget's submenu.
-	 */
-	public void removeSubmenu()
-	{
-		// void gtk_menu_item_remove_submenu (GtkMenuItem *menu_item);
-		gtk_menu_item_remove_submenu(gtkMenuItem);
-	}
-	
-	/**
-	 * Set the accelerator path on menu_item, through which runtime changes of the
-	 * menu item's accelerator caused by the user can be identified and saved to
-	 * persistant storage (see gtk_accel_map_save() on this).
-	 * To setup a default accelerator for this menu item, call
-	 * gtk_accel_map_add_entry() with the same accel_path.
-	 * See also gtk_accel_map_add_entry() on the specifics of accelerator paths,
-	 * and gtk_menu_set_accel_path() for a more convenient variant of this function.
-	 * This function is basically a convenience wrapper that handles calling
-	 * gtk_widget_set_accel_path() with the appropriate accelerator group for
-	 * the menu item.
+	 * Set the accelerator path on menu_item, through which runtime
+	 * changes of the menu item's accelerator caused by the user can be
+	 * identified and saved to persistent storage (see gtk_accel_map_save()
+	 * on this). To set up a default accelerator for this menu item, call
+	 * gtk_accel_map_add_entry() with the same accel_path. See also
+	 * gtk_accel_map_add_entry() on the specifics of accelerator paths,
+	 * and gtk_menu_set_accel_path() for a more convenient variant of
+	 * this function.
+	 * This function is basically a convenience wrapper that handles
+	 * calling gtk_widget_set_accel_path() with the appropriate accelerator
+	 * group for the menu item.
 	 * Note that you do need to set an accelerator on the parent menu with
 	 * gtk_menu_set_accel_group() for this to work.
-	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
-	 * pass a static string, you can save some memory by interning it first with
-	 * g_intern_static_string().
+	 * Note that accel_path string will be stored in a GQuark.
+	 * Therefore, if you pass a static string, you can save some memory
+	 * by interning it first with g_intern_static_string().
 	 * Params:
-	 * accelPath = accelerator path, corresponding to this menu item's
-	 * functionality, or NULL to unset the current path. [allow-none]
+	 * accelPath = accelerator path, corresponding to this menu
+	 * item's functionality, or NULL to unset the current path. [allow-none]
 	 */
 	public void setAccelPath(string accelPath)
 	{
@@ -573,5 +613,33 @@ public class MenuItem : Item, ActivatableIF
 	{
 		// void gtk_menu_item_toggle_size_allocate (GtkMenuItem *menu_item,  gint allocation);
 		gtk_menu_item_toggle_size_allocate(gtkMenuItem, allocation);
+	}
+	
+	/**
+	 * Returns whether the menu_item reserves space for
+	 * the submenu indicator, regardless if it has a submenu
+	 * or not.
+	 * Returns: TRUE if menu_item always reserves space for the submenu indicator Since 3.0
+	 */
+	public int getReserveIndicator()
+	{
+		// gboolean gtk_menu_item_get_reserve_indicator (GtkMenuItem *menu_item);
+		return gtk_menu_item_get_reserve_indicator(gtkMenuItem);
+	}
+	
+	/**
+	 * Sets whether the menu_item should reserve space for
+	 * the submenu indicator, regardless if it actually has
+	 * a submenu or not.
+	 * There should be little need for applications to call
+	 * this functions.
+	 * Params:
+	 * reserve = the new value
+	 * Since 3.0
+	 */
+	public void setReserveIndicator(int reserve)
+	{
+		// void gtk_menu_item_set_reserve_indicator (GtkMenuItem *menu_item,  gboolean reserve);
+		gtk_menu_item_set_reserve_indicator(gtkMenuItem, reserve);
 	}
 }

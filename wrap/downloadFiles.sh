@@ -35,31 +35,11 @@ rm gdk-pixbuf-Animations.html
 wget http://developer.gnome.org/gdk-pixbuf/2.24/gdk-pixbuf-Animations.html
 cd ..
 #GDK
-curl http://developer.gnome.org/gdk/gdk-html-2.24.10.tar.gz | tar xvfz -
-ln -s gdk-html-2.24.10 gdk
+curl http://developer.gnome.org/gdk3/gdk3-html-3.0.12.tar.gz | tar xvfz -
+ln -s gdk3-html-3.0.12 gdk
 #GTK
-curl http://developer.gnome.org/gtk/gtk-html-2.24.10.tar.gz | tar xvfz -
-ln -s gtk-html-2.24.10 gtk
-cd gtk
-rm gtk-Accelerator-Maps.html
-wget http://developer.gnome.org/gtk/2.22/gtk-Accelerator-Maps.html
-rm GtkFileChooser.html
-wget http://developer.gnome.org/gtk/2.22/GtkFileChooser.html
-rm GtkFileSelection.html
-wget http://developer.gnome.org/gtk/2.22/GtkFileSelection.html
-rm GtkIconTheme.html
-wget http://developer.gnome.org/gtk/2.22/GtkIconTheme.html
-rm gtk-Themeable-Stock-Images.html
-wget http://developer.gnome.org/gtk/2.22/gtk-Themeable-Stock-Images.html
-rm GtkImage.html
-wget http://developer.gnome.org/gtk/2.22/GtkImage.html
-rm gtk-Resource-Files.html
-wget http://developer.gnome.org/gtk/2.22/gtk-Resource-Files.html
-rm GtkUIManager.html
-wget http://developer.gnome.org/gtk/2.22/GtkUIManager.html
-rm GtkWidget.html
-wget http://developer.gnome.org/gtk/2.22/GtkWidget.html
-cd ..
+curl http://developer.gnome.org/gtk3/gtk3-html-3.0.12.tar.gz | tar xvfz -
+ln -s gtk3-html-3.0.12 gtk
 #CAIRO
 curl http://cairographics.org/releases/cairo-1.10.2.tar.gz | tar xvfz -
 ln -s cairo-1.10.2/doc/public/html cairo
@@ -80,8 +60,8 @@ curl http://library.gnome.org/devel/libglade/libglade-html-2.6.2.tar.gz | tar xv
 ln -s libglade-html-2.6.2 glade
 
 #gtkSourceView
-curl http://library.gnome.org/devel/gtksourceview/gtksourceview-html-2.10.3.tar.gz | tar xvfz -
-ln -s gtksourceview-html-2.10.3 sourceview
+curl http://developer.gnome.org/gtksourceview/gtksourceview-html-3.0.5.tar.gz | tar xvfz -
+ln -s gtksourceview-html-3.0.5 sourceview
 
 #gstreamer
 curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.14.tar.gz | tar xvfz -

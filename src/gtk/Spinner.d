@@ -60,7 +60,7 @@ private import glib.ConstructionException;
 
 
 
-private import gtk.DrawingArea;
+private import gtk.Widget;
 
 /**
  * Description
@@ -70,7 +70,7 @@ private import gtk.DrawingArea;
  * To start the animation, use gtk_spinner_start(), to stop it
  * use gtk_spinner_stop().
  */
-public class Spinner : DrawingArea
+public class Spinner : Widget
 {
 	
 	/** the main Gtk struct */
@@ -106,7 +106,7 @@ public class Spinner : DrawingArea
 			this = cast(Spinner)ptr;
 			return;
 		}
-		super(cast(GtkDrawingArea*)gtkSpinner);
+		super(cast(GtkWidget*)gtkSpinner);
 		this.gtkSpinner = gtkSpinner;
 	}
 	

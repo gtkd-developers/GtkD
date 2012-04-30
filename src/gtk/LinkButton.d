@@ -60,6 +60,8 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 private import glib.ConstructionException;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
@@ -78,9 +80,10 @@ private import gtk.Button;
  * to the constructor is used as a label for the widget.
  * The URI bound to a GtkLinkButton can be set specifically using
  * gtk_link_button_set_uri(), and retrieved using gtk_link_button_get_uri().
- * GtkLinkButton offers a global hook, which is called when the used clicks
- * on it: see gtk_link_button_set_uri_hook().
- * GtkLinkButton was added in GTK+ 2.10.
+ * By default, GtkLinkButton calls gtk_show_uri() when the button is
+ * clicked. This behaviour can be overridden by connecting to the
+ * "activate-link" signal and returning TRUE from the
+ * signal handler.
  */
 public class LinkButton : Button
 {
@@ -130,6 +133,48 @@ public class LinkButton : Button
 	
 	/**
 	 */
+	int[char[]] connectedSignals;
+	
+	bool delegate(LinkButton)[] onActivateLinkListeners;
+	/**
+	 * The ::activate-link signal is emitted each time the GtkLinkButton
+	 * has been clicked.
+	 * The default handler will call gtk_show_uri() with the URI stored inside
+	 * the "uri" property.
+	 * To override the default behavior, you can connect to the ::activate-link
+	 * signal and stop the propagation of the signal by returning TRUE from
+	 * your handler.
+	 * See Also
+	 * GtkButton
+	 */
+	void addOnActivateLink(bool delegate(LinkButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("activate-link" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"activate-link",
+			cast(GCallback)&callBackActivateLink,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["activate-link"] = 1;
+		}
+		onActivateLinkListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackActivateLink(GtkLinkButton* buttonStruct, LinkButton linkButton)
+	{
+		foreach ( bool delegate(LinkButton) dlg ; linkButton.onActivateLinkListeners )
+		{
+			if ( dlg(linkButton) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
 	
 	/**
 	 * Creates a new GtkLinkButton with the URI as its text.
@@ -190,26 +235,6 @@ public class LinkButton : Button
 	{
 		// void gtk_link_button_set_uri (GtkLinkButton *link_button,  const gchar *uri);
 		gtk_link_button_set_uri(gtkLinkButton, Str.toStringz(uri));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_link_button_set_uri_hook has been deprecated since version 2.24 and should not be used in newly-written code. Use the "clicked" signal instead
-	 * Sets func as the function that should be invoked every time a user clicks
-	 * a GtkLinkButton. This function is called before every callback registered
-	 * for the "clicked" signal.
-	 * If no uri hook has been set, GTK+ defaults to calling gtk_show_uri().
-	 * Since 2.10
-	 * Params:
-	 * func = a function called each time a GtkLinkButton is clicked, or NULL. [allow-none]
-	 * data = user data to be passed to func, or NULL. [allow-none]
-	 * destroy = a GDestroyNotify that gets called when data is no longer needed, or NULL. [allow-none]
-	 * Returns: the previously set hook function.
-	 */
-	public static GtkLinkButtonUriFunc setUriHook(GtkLinkButtonUriFunc func, void* data, GDestroyNotify destroy)
-	{
-		// GtkLinkButtonUriFunc gtk_link_button_set_uri_hook (GtkLinkButtonUriFunc func,  gpointer data,  GDestroyNotify destroy);
-		return gtk_link_button_set_uri_hook(func, data, destroy);
 	}
 	
 	/**

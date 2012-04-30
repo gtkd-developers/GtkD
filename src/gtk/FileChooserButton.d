@@ -88,7 +88,7 @@ private import gtk.HBox;
  * Important
  * The GtkFileChooserButton will ellipsize the label,
  * and thus will thus request little horizontal space. To give the button
- * more space, you should call gtk_widget_size_request(),
+ * more space, you should call gtk_widget_get_preferred_size(),
  * gtk_file_chooser_button_set_width_chars(), or pack the button in
  * such a way that other interface elements give space to the widget.
  */
@@ -193,28 +193,6 @@ public class FileChooserButton : HBox, FileChooserIF
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_file_chooser_button_new(Str.toStringz(title), action)");
-		}
-		this(cast(GtkFileChooserButton*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_file_chooser_button_new_with_backend has been deprecated since version 2.14 and should not be used in newly-written code. Use gtk_file_chooser_button_new() instead.
-	 * Creates a new file-selecting button widget using backend.
-	 * Since 2.6
-	 * Params:
-	 * title = the title of the browse dialog.
-	 * action = the open mode for the widget.
-	 * backend = the name of the GtkFileSystem backend to use.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string title, GtkFileChooserAction action, string backend)
-	{
-		// GtkWidget * gtk_file_chooser_button_new_with_backend  (const gchar *title,  GtkFileChooserAction action,  const gchar *backend);
-		auto p = gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend))");
 		}
 		this(cast(GtkFileChooserButton*) p);
 	}

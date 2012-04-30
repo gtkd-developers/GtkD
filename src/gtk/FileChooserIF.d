@@ -98,7 +98,7 @@ private import gtk.FileFilter;
  * interface.
  * GtkFileChooser allows for shortcuts to various places in the filesystem.
  * In the default implementation these are displayed in the left pane. It
- * may be a bit confusing at first taht these shortcuts come from various
+ * may be a bit confusing at first that these shortcuts come from various
  * sources and in various flavours, so lets explain the terminology here:
  * Bookmarks
  *  are created by the user, by dragging folders from the
@@ -173,7 +173,7 @@ private import gtk.FileFilter;
  * You can change these defaults to something else. For
  * example, to add a Shift modifier to a few
  * of the default bindings, you can include the following
- * fragment in your .gtkrc-2.0 file:
+ * fragment in your .gtkrc-3.0 file:
  * binding "my-own-gtkfilechooser-bindings" {
 	 * 	bind "<Alt><Shift>Up" {
 		 * 		"up-folder" ()
@@ -211,14 +211,14 @@ private import gtk.FileFilter;
  * 		user data set when the signal handler was connected.
  * Note
  *  You can create your own bindings for the
- *  GtkFileChooserDefault::location-popup signal with custom
+ *  "location-popup" signal with custom
  *  path strings, and have a crude form
  *  of easily-to-type bookmarks. For example, say you access
  *  the path /home/username/misc very
  *  frequently. You could then create an Alt+M
  *  shortcut by including the following in your
- *  .gtkrc-2.0:
- *   binding "misc-shortcut" {
+ *  .gtkrc-3.0:
+ *  binding "misc-shortcut" {
 	 *  bind "<Alt>M" {
 		 *  "location-popup" ("/home/username/misc")
 	 * 	 }
@@ -533,14 +533,15 @@ public interface FileChooserIF
 	 * Sets the current name in the file selector, as if entered
 	 * by the user. Note that the name passed in here is a UTF-8
 	 * string rather than a filename. This function is meant for
-	 * such uses as a suggested name in a "Save As..." dialog.
+	 * such uses as a suggested name in a "Save As..." dialog. You can
+	 * pass "Untitled.doc" or a similarly suitable suggestion for the name.
 	 * If you want to preselect a particular existing file, you should use
 	 * gtk_file_chooser_set_filename() or gtk_file_chooser_set_uri() instead.
 	 * Please see the documentation for those functions for an example of using
 	 * gtk_file_chooser_set_current_name() as well.
 	 * Since 2.4
 	 * Params:
-	 * name = the filename to use, as a UTF-8 string
+	 * name = the filename to use, as a UTF-8 string. [type filename]
 	 */
 	public void setCurrentName(string name);
 	
@@ -551,31 +552,28 @@ public interface FileChooserIF
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
 	 * Since 2.4
-	 * Returns: The currently selected filename, or NULL if no file is selected, or the selected file can't be represented with a local filename. Free with g_free().
+	 * Returns: The currently selected filename, or NULL if no file is selected, or the selected file can't be represented with a local filename. Free with g_free(). [type filename]
 	 */
 	public string getFilename();
 	
 	/**
-	 * Sets filename as the current filename for the file chooser, by changing
-	 * to the file's parent folder and actually selecting the file in list. If
-	 * the chooser is in GTK_FILE_CHOOSER_ACTION_SAVE mode, the file's base name
-	 * will also appear in the dialog's file name entry.
-	 * If the file name isn't in the current folder of chooser, then the current
-	 * folder of chooser will be changed to the folder containing filename. This
-	 * is equivalent to a sequence of gtk_file_chooser_unselect_all() followed by
-	 * gtk_file_chooser_select_filename().
+	 * Sets filename as the current filename for the file chooser, by changing to
+	 * the file's parent folder and actually selecting the file in list; all other
+	 * files will be unselected. If the chooser is in
+	 * GTK_FILE_CHOOSER_ACTION_SAVE mode, the file's base name will also appear in
+	 * the dialog's file name entry.
 	 * Note that the file must exist, or nothing will be done except
 	 * for the directory change.
-	 * If you are implementing a File/Save As... dialog,
-	 * you should use this function if you already have a file name to which the
-	 * user may save; for example, when the user opens an existing file and then
-	 * does File/Save As... on it. If you don't have
-	 * a file name already — for example, if the user just created a new
-	 * file and is saving it for the first time, do not call this function.
+	 * You should use this function only when implementing a File/Save
+	 * As... dialog for which you already have a file name to which
+	 * the user may save. For example, when the user opens an existing file and
+	 * then does File/Save As... on it to save a copy or
+	 * a modified version. If you don't have a file name already — for
+	 * example, if the user just created a new file and is saving it for the first
 	 * Since 2.4
 	 * Params:
-	 * filename = the filename to set as current
-	 * Returns: TRUE if both the folder could be changed and the file was selected successfully, FALSE otherwise.
+	 * filename = the filename to set as current. [type filename]
+	 * Returns: Not useful.
 	 */
 	public int setFilename(string filename);
 	
@@ -585,8 +583,8 @@ public interface FileChooserIF
 	 * be changed to the folder containing filename.
 	 * Since 2.4
 	 * Params:
-	 * filename = the filename to select
-	 * Returns: TRUE if both the folder could be changed and the file was selected successfully, FALSE otherwise.
+	 * filename = the filename to select. [type filename]
+	 * Returns: Not useful. See also: gtk_file_chooser_set_filename()
 	 */
 	public int selectFilename(string filename);
 	
@@ -596,7 +594,7 @@ public interface FileChooserIF
 	 * is otherwise not currently selected, does nothing.
 	 * Since 2.4
 	 * Params:
-	 * filename = the filename to unselect
+	 * filename = the filename to unselect. [type filename]
 	 */
 	public void unselectFilename(string filename);
 	
@@ -618,7 +616,7 @@ public interface FileChooserIF
 	 * folder cannot be represented as local filenames they will be ignored. (See
 	 * gtk_file_chooser_get_uris())
 	 * Since 2.4
-	 * Returns: a GSList containing the filenames of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type utf8][transfer full utf8]
+	 * Returns: a GSList containing the filenames of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type filename][transfer full]
 	 */
 	public ListSG getFilenames();
 	
@@ -626,10 +624,12 @@ public interface FileChooserIF
 	 * Sets the current folder for chooser from a local filename.
 	 * The user will be shown the full contents of the current folder,
 	 * plus user interface elements for navigating to other folders.
+	 * In general, you should not use this function. See the section on setting up a file
+	 * chooser dialog for the rationale behind this.
 	 * Since 2.4
 	 * Params:
-	 * filename = the full path of the new current folder
-	 * Returns: TRUE if the folder could be changed successfully, FALSE otherwise.
+	 * filename = the full path of the new current folder. [type filename]
+	 * Returns: Not useful.
 	 */
 	public int setCurrentFolder(string filename);
 	
@@ -639,12 +639,12 @@ public interface FileChooserIF
 	 * Note that this is the folder that the file chooser is currently displaying
 	 * (e.g. "/home/username/Documents"), which is not the same
 	 * as the currently-selected folder if the chooser is in
-	 * GTK_FILE_CHOOSER_SELECT_FOLDER mode
+	 * GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER mode
 	 * (e.g. "/home/username/Documents/selected-folder/". To get the
 	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
 	 * usual way to get the selection.
 	 * Since 2.4
-	 * Returns: the full path of the current folder, or NULL if the current path cannot be represented as a local filename. Free with g_free(). This function will also return NULL if the file chooser was unable to load the last folder that was requested from it; for example, as would be for calling gtk_file_chooser_set_current_folder() on a nonexistent folder.
+	 * Returns: the full path of the current folder, or NULL if the current path cannot be represented as a local filename. Free with g_free(). This function will also return NULL if the file chooser was unable to load the last folder that was requested from it; for example, as would be for calling gtk_file_chooser_set_current_folder() on a nonexistent folder. [type filename]
 	 */
 	public string getCurrentFolder();
 	
@@ -664,22 +664,18 @@ public interface FileChooserIF
 	 * by changing to the URI's parent folder and actually selecting the URI in the
 	 * list. If the chooser is GTK_FILE_CHOOSER_ACTION_SAVE mode, the URI's base
 	 * name will also appear in the dialog's file name entry.
-	 * If the URI isn't in the current folder of chooser, then the current folder
-	 * of chooser will be changed to the folder containing uri. This is equivalent
-	 * to a sequence of gtk_file_chooser_unselect_all() followed by
-	 * gtk_file_chooser_select_uri().
 	 * Note that the URI must exist, or nothing will be done except for the
 	 * directory change.
-	 * If you are implementing a File/Save As... dialog,
-	 * you should use this function if you already have a file name to which the
-	 * user may save; for example, when the user opens an existing file and then
-	 * does File/Save As... on it. If you don't have
-	 * a file name already — for example, if the user just created a new
-	 * file and is saving it for the first time, do not call this function.
+	 * You should use this function only when implementing a File/Save
+	 * As... dialog for which you already have a file name to which
+	 * the user may save. For example, whenthe user opens an existing file and then
+	 * does File/Save As... on it to save a copy or a
+	 * modified version. If you don't have a file name already — for example,
+	 * if the user just created a new file and is saving it for the first time, do
 	 * Since 2.4
 	 * Params:
 	 * uri = the URI to set as current
-	 * Returns: TRUE if both the folder could be changed and the URI was selected successfully, FALSE otherwise.
+	 * Returns: Not useful.
 	 */
 	public int setUri(string uri);
 	
@@ -690,7 +686,7 @@ public interface FileChooserIF
 	 * Since 2.4
 	 * Params:
 	 * uri = the URI to select
-	 * Returns: TRUE if both the folder could be changed and the URI was selected successfully, FALSE otherwise.
+	 * Returns: Not useful.
 	 */
 	public int selectUri(string uri);
 	
@@ -708,7 +704,7 @@ public interface FileChooserIF
 	 * Lists all the selected files and subfolders in the current folder of
 	 * chooser. The returned names are full absolute URIs.
 	 * Since 2.4
-	 * Returns: a GSList containing the URIs of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type utf8][transfer full utf8]
+	 * Returns: a GSList containing the URIs of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type utf8][transfer full]
 	 */
 	public ListSG getUris();
 	
@@ -716,6 +712,8 @@ public interface FileChooserIF
 	 * Sets the current folder for chooser from an URI.
 	 * The user will be shown the full contents of the current folder,
 	 * plus user interface elements for navigating to other folders.
+	 * In general, you should not use this function. See the section on setting up a file
+	 * chooser dialog for the rationale behind this.
 	 * Since 2.4
 	 * Params:
 	 * uri = the URI for the new current folder
@@ -729,7 +727,7 @@ public interface FileChooserIF
 	 * Note that this is the folder that the file chooser is currently displaying
 	 * (e.g. "file:///home/username/Documents"), which is not the same
 	 * as the currently-selected folder if the chooser is in
-	 * GTK_FILE_CHOOSER_SELECT_FOLDER mode
+	 * GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER mode
 	 * (e.g. "file:///home/username/Documents/selected-folder/". To get the
 	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
 	 * usual way to get the selection.
@@ -761,7 +759,7 @@ public interface FileChooserIF
 	 * Gets the current preview widget; see
 	 * gtk_file_chooser_set_preview_widget().
 	 * Since 2.4
-	 * Returns: the current preview widget, or NULL
+	 * Returns: the current preview widget, or NULL. [transfer none]
 	 */
 	public Widget getPreviewWidget();
 	
@@ -810,7 +808,7 @@ public interface FileChooserIF
 	 * Gets the filename that should be previewed in a custom preview
 	 * widget. See gtk_file_chooser_set_preview_widget().
 	 * Since 2.4
-	 * Returns: the filename to preview, or NULL if no file is selected, or if the selected file cannot be represented as a local filename. Free with g_free()
+	 * Returns: the filename to preview, or NULL if no file is selected, or if the selected file cannot be represented as a local filename. Free with g_free(). [type filename]
 	 */
 	public string getPreviewFilename();
 	
@@ -834,7 +832,7 @@ public interface FileChooserIF
 	 * Gets the current preview widget; see
 	 * gtk_file_chooser_set_extra_widget().
 	 * Since 2.4
-	 * Returns: the current extra widget, or NULL
+	 * Returns: the current extra widget, or NULL. [transfer none]
 	 */
 	public Widget getExtraWidget();
 	
@@ -862,7 +860,7 @@ public interface FileChooserIF
 	 * Lists the current set of user-selectable filters; see
 	 * gtk_file_chooser_add_filter(), gtk_file_chooser_remove_filter().
 	 * Since 2.4
-	 * Returns: a GSList containing the current set of user selectable filters. The contents of the list are owned by GTK+, but you must free the list itself with g_slist_free() when you are done with it. [element-type utf8][transfer container utf8]
+	 * Returns: a GSList containing the current set of user selectable filters. The contents of the list are owned by GTK+, but you must free the list itself with g_slist_free() when you are done with it. [element-type GtkFileFilter][transfer container]
 	 */
 	public ListSG listFilters();
 	
@@ -882,7 +880,7 @@ public interface FileChooserIF
 	/**
 	 * Gets the current filter; see gtk_file_chooser_set_filter().
 	 * Since 2.4
-	 * Returns: the current filter, or NULL
+	 * Returns: the current filter, or NULL. [transfer none]
 	 */
 	public FileFilter getFilter();
 	
@@ -893,7 +891,7 @@ public interface FileChooserIF
 	 * "/usr/share/mydrawprogram/Clipart" folder to the volume list.
 	 * Since 2.4
 	 * Params:
-	 * folder = filename of the folder to add
+	 * folder = filename of the folder to add. [type filename]
 	 * Returns: TRUE if the folder could be added successfully, FALSE otherwise. In the latter case, the error will be set as appropriate.
 	 * Throws: GException on failure.
 	 */
@@ -903,7 +901,7 @@ public interface FileChooserIF
 	 * Removes a folder from a file chooser's list of shortcut folders.
 	 * Since 2.4
 	 * Params:
-	 * folder = filename of the folder to remove
+	 * folder = filename of the folder to remove. [type filename]
 	 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate. See also: gtk_file_chooser_add_shortcut_folder()
 	 * Throws: GException on failure.
 	 */
@@ -913,7 +911,7 @@ public interface FileChooserIF
 	 * Queries the list of shortcut folders in the file chooser, as set by
 	 * gtk_file_chooser_add_shortcut_folder().
 	 * Since 2.4
-	 * Returns: A list of folder filenames, or NULL if there are no shortcut folders. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type utf8][transfer full utf8]
+	 * Returns: A list of folder filenames, or NULL if there are no shortcut folders. Free the returned list with g_slist_free(), and the filenames with g_free(). [element-type filename][transfer full]
 	 */
 	public ListSG listShortcutFolders();
 	
@@ -944,7 +942,7 @@ public interface FileChooserIF
 	 * Queries the list of shortcut folders in the file chooser, as set by
 	 * gtk_file_chooser_add_shortcut_folder_uri().
 	 * Since 2.4
-	 * Returns: A list of folder URIs, or NULL if there are no shortcut folders. Free the returned list with g_slist_free(), and the URIs with g_free(). [element-type utf8][transfer full utf8]
+	 * Returns: A list of folder URIs, or NULL if there are no shortcut folders. Free the returned list with g_slist_free(), and the URIs with g_free(). [element-type utf8][transfer full]
 	 */
 	public ListSG listShortcutFolderUris();
 	
@@ -952,7 +950,7 @@ public interface FileChooserIF
 	 * Gets the current folder of chooser as GFile.
 	 * See gtk_file_chooser_get_current_folder_uri().
 	 * Since 2.14
-	 * Returns: the GFile for the current folder.
+	 * Returns: the GFile for the current folder. [transfer full]
 	 */
 	public File getCurrentFolderFile();
 	
@@ -963,7 +961,7 @@ public interface FileChooserIF
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
 	 * Since 2.14
-	 * Returns: a selected GFile. You own the returned file; use g_object_unref() to release it.
+	 * Returns: a selected GFile. You own the returned file; use g_object_unref() to release it. [transfer full]
 	 */
 	public File getFile();
 	
@@ -971,7 +969,7 @@ public interface FileChooserIF
 	 * Lists all the selected files and subfolders in the current folder of chooser
 	 * as GFile. An internal function, see gtk_file_chooser_get_uris().
 	 * Since 2.14
-	 * Returns: a GSList containing a GFile for each selected file and subfolder in the current folder. Free the returned list with g_slist_free(), and the files with g_object_unref(). [element-type utf8][transfer full utf8]
+	 * Returns: a GSList containing a GFile for each selected file and subfolder in the current folder. Free the returned list with g_slist_free(), and the files with g_object_unref(). [element-type GFile][transfer full]
 	 */
 	public ListSG getFiles();
 	
@@ -979,7 +977,7 @@ public interface FileChooserIF
 	 * Gets the GFile that should be previewed in a custom preview
 	 * Internal function, see gtk_file_chooser_get_preview_uri().
 	 * Since 2.14
-	 * Returns: the GFile for the file to preview, or NULL if no file is selected. Free with g_object_unref().
+	 * Returns: the GFile for the file to preview, or NULL if no file is selected. Free with g_object_unref(). [transfer full]
 	 */
 	public File getPreviewFile();
 	
@@ -989,7 +987,7 @@ public interface FileChooserIF
 	 * Since 2.14
 	 * Params:
 	 * file = the file to select
-	 * Returns: TRUE if both the folder could be changed and the path was selected successfully, FALSE otherwise.
+	 * Returns: Not useful.
 	 * Throws: GException on failure.
 	 */
 	public int selectFile(File file);
@@ -1025,7 +1023,7 @@ public interface FileChooserIF
 	 * Since 2.14
 	 * Params:
 	 * file = the GFile to set as current
-	 * Returns: TRUE if both the folder could be changed and the file was selected successfully, FALSE otherwise.
+	 * Returns: Not useful.
 	 * Throws: GException on failure.
 	 */
 	public int setFile(File file);

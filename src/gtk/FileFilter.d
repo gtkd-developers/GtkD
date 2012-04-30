@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-gtkfilefilter.html
+ * inFile  = GtkFileFilter.html
  * outPack = gtk
  * outFile = FileFilter
  * strct   = GtkFileFilter
@@ -63,13 +63,13 @@ private import glib.Str;
 
 
 
-private import gtk.ObjectGtk;
+private import gobject.ObjectG;
 
 /**
  * Description
- * A GtkFileFilter can be used to restrict the files being shown
- * in a GtkFileChooser. Files can be filtered based on their name
- * (with gtk_file_filter_add_pattern()), on their mime type (with
+ * A GtkFileFilter can be used to restrict the files being shown in a
+ * GtkFileChooser. Files can be filtered based on their name (with
+ * gtk_file_filter_add_pattern()), on their mime type (with
  * gtk_file_filter_add_mime_type()), or by a custom filter function
  * (with gtk_file_filter_add_custom()).
  * Filtering by mime types handles aliasing and subclassing of mime
@@ -80,8 +80,16 @@ private import gtk.ObjectGtk;
  * Normally, filters are used by adding them to a GtkFileChooser,
  * see gtk_file_chooser_add_filter(), but it is also possible
  * to manually use a filter on a file with gtk_file_filter_filter().
+ * GtkFileFilter as GtkBuildable
+ * The GtkFileFilter implementation of the GtkBuildable interface
+ * supports adding rules using the <mime-typesgt, <patternsgt and
+ * <applicationsgt elements and listing the rules within. Specifying
+ * a <mime-typegt or <patterngt is the same
+ * as calling gtk_recent_filter_add_mime_type() or gtk_recent_filter_add_pattern()
+ * $(DDOC_COMMENT example)
+ * see_also: GtkFileChooser
  */
-public class FileFilter : ObjectGtk
+public class FileFilter : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -117,7 +125,7 @@ public class FileFilter : ObjectGtk
 			this = cast(FileFilter)ptr;
 			return;
 		}
-		super(cast(GtkObject*)gtkFileFilter);
+		super(cast(GObject*)gtkFileFilter);
 		this.gtkFileFilter = gtkFileFilter;
 	}
 	

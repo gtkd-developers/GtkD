@@ -63,8 +63,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 private import glib.ConstructionException;
 
-private import gobject.Signals;
-public  import gtkc.gdktypes;
 
 private import gdk.Window;
 private import gtk.Adjustment;
@@ -135,39 +133,6 @@ public class Layout : Container
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
-	
-	void delegate(Adjustment, Adjustment, Layout)[] onSetScrollAdjustmentsListeners;
-	/**
-	 * Set the scroll adjustments for the layout. Usually scrolled containers
-	 * like GtkScrolledWindow will emit this signal to connect two instances
-	 * of GtkScrollbar to the scroll directions of the GtkLayout.
-	 * See Also
-	 * GtkDrawingArea, GtkScrolledWindow
-	 */
-	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Layout) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("set-scroll-adjustments" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"set-scroll-adjustments",
-			cast(GCallback)&callBackSetScrollAdjustments,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["set-scroll-adjustments"] = 1;
-		}
-		onSetScrollAdjustmentsListeners ~= dlg;
-	}
-	extern(C) static void callBackSetScrollAdjustments(GtkLayout* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, Layout layout)
-	{
-		foreach ( void delegate(Adjustment, Adjustment, Layout) dlg ; layout.onSetScrollAdjustmentsListeners )
-		{
-			dlg(new Adjustment(vertical), new Adjustment(arg2), layout);
-		}
-	}
-	
 	
 	/**
 	 * Creates a new GtkLayout. Unless you have a specific adjustment
@@ -246,27 +211,7 @@ public class Layout : Container
 	
 	/**
 	 * Warning
-	 * gtk_layout_freeze is deprecated and should not be used in newly-written code.
-	 * This is a deprecated function, it doesn't do anything useful.
-	 */
-	public void freeze()
-	{
-		// void gtk_layout_freeze (GtkLayout *layout);
-		gtk_layout_freeze(gtkLayout);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_layout_thaw is deprecated and should not be used in newly-written code.
-	 * This is a deprecated function, it doesn't do anything useful.
-	 */
-	public void thaw()
-	{
-		// void gtk_layout_thaw (GtkLayout *layout);
-		gtk_layout_thaw(gtkLayout);
-	}
-	
-	/**
+	 * gtk_layout_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
 	 * This function should only be called after the layout has been
 	 * placed in a GtkScrolledWindow or otherwise configured for
 	 * scrolling. It returns the GtkAdjustment used for communication
@@ -286,6 +231,8 @@ public class Layout : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_layout_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
 	 * This function should only be called after the layout has been
 	 * placed in a GtkScrolledWindow or otherwise configured for
 	 * scrolling. It returns the GtkAdjustment used for communication
@@ -305,6 +252,8 @@ public class Layout : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_layout_set_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
 	 * Sets the horizontal scroll adjustment for the layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 	 * Params:
@@ -317,6 +266,8 @@ public class Layout : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_layout_set_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
 	 * Sets the vertical scroll adjustment for the layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 	 * Params:

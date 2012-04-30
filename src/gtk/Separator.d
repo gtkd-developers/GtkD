@@ -70,8 +70,9 @@ private import gtk.Widget;
 
 /**
  * Description
- * The GtkSeparator widget is an abstract class, used only for deriving the
- * subclasses GtkHSeparator and GtkVSeparator.
+ * The GtkSeparator widget is the base class for GtkHSeparator and
+ * GtkVSeparator. It can be used in the same way as these, by setting
+ * the "orientation" property suitably.
  */
 public class Separator : Widget, OrientableIF
 {
@@ -124,4 +125,16 @@ public class Separator : Widget, OrientableIF
 	
 	/**
 	 */
+	
+	/**
+	 * Creates a new GtkSeparator with the given orientation.
+	 * Params:
+	 * orientation = the separator's orientation.
+	 * Returns: a new GtkSeparator. Since 3.0
+	 */
+	public static GtkWidget* _New(GtkOrientation orientation)
+	{
+		// GtkWidget * gtk_separator_new (GtkOrientation orientation);
+		return gtk_separator_new(orientation);
+	}
 }

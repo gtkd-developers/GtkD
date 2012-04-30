@@ -173,12 +173,130 @@ version(Tango) {
 }
 
 
-private import gtk.ObjectGtk;
+private import gobject.ObjectG;
 
 /**
  * Description
  * GtkWidget is the base class all widgets in GTK+ derive from. It manages the
  * widget lifecycle, states and style.
+ * Height-for-width Geometry Management
+ * GTK+ uses a height-for-width (and width-for-height) geometry management
+ * system. Height-for-width means that a widget can change how much
+ * vertical space it needs, depending on the amount of horizontal space
+ * that it is given (and similar for width-for-height). The most common
+ * example is a label that reflows to fill up the available width, wraps
+ * to fewer lines, and therefore needs less height.
+ * Height-for-width geometry management is implemented in GTK+ by way
+ * of five virtual methods:
+ * GtkWidgetClass.get_request_mode()
+ * GtkWidgetClass.get_preferred_width()
+ * GtkWidgetClass.get_preferred_height()
+ * GtkWidgetClass.get_preferred_height_for_width()
+ * GtkWidgetClass.get_preferred_width_for_height()
+ * There are some important things to keep in mind when implementing
+ * height-for-width and when using it in container implementations.
+ * The geometry management system will query a widget hierarchy in
+ * only one orientation at a time. When widgets are initially queried
+ * for their minimum sizes it is generally done in two initial passes
+ * in the GtkSizeRequestMode chosen by the toplevel.
+ * For example, when queried in the normal
+ * GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH mode:
+ * First, the default minimum and natural width for each widget
+ * in the interface will be computed using gtk_widget_get_preferred_width().
+ * Because the preferred widths for each container depend on the preferred
+ * widths of their children, this information propagates up the hierarchy,
+ * and finally a minimum and natural width is determined for the entire
+ * toplevel. Next, the toplevel will use the minimum width to query for the
+ * minimum height contextual to that width using
+ * gtk_widget_get_preferred_height_for_width(), which will also be a highly
+ * recursive operation. The minimum height for the minimum width is normally
+ * used to set the minimum size constraint on the toplevel
+ * (unless gtk_window_set_geometry_hints() is explicitly used instead).
+ * After the toplevel window has initially requested its size in both
+ * dimensions it can go on to allocate itself a reasonable size (or a size
+ * previously specified with gtk_window_set_default_size()). During the
+ * recursive allocation process it's important to note that request cycles
+ * will be recursively executed while container widgets allocate their children.
+ * Each container widget, once allocated a size, will go on to first share the
+ * space in one orientation among its children and then request each child's
+ * height for its target allocated width or its width for allocated height,
+ * depending. In this way a GtkWidget will typically be requested its size
+ * a number of times before actually being allocated a size. The size a
+ * widget is finally allocated can of course differ from the size it has
+ * requested. For this reason, GtkWidget caches a small number of results
+ * to avoid re-querying for the same sizes in one allocation cycle.
+ * See GtkContainer's
+ * geometry management section
+ * to learn more about how height-for-width allocations are performed
+ * by container widgets.
+ * If a widget does move content around to intelligently use up the
+ * allocated size then it must support the request in both
+ * GtkSizeRequestModes even if the widget in question only
+ * trades sizes in a single orientation.
+ * For instance, a GtkLabel that does height-for-width word wrapping
+ * will not expect to have GtkWidgetClass.get_preferred_height() called
+ * because that call is specific to a width-for-height request. In this
+ * case the label must return the height required for its own minimum
+ * possible width. By following this rule any widget that handles
+ * height-for-width or width-for-height requests will always be allocated
+ * at least enough space to fit its own content.
+ * Here are some examples of how a GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH widget
+ * generally deals with width-for-height requests, for GtkWidgetClass.get_preferred_height()
+ * it will do:
+ * static void
+ * foo_widget_get_preferred_height (GtkWidget *widget, gint *min_height, gint *nat_height)
+ * {
+	 *  if (i_am_in_height_for_width_mode)
+	 *  {
+		 *  gint min_width;
+		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, NULL);
+		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_height_for_width (widget, min_width,
+		 *  min_height, nat_height);
+	 *  }
+	 *  else
+	 *  {
+		 *  ... some widgets do both. For instance, if a GtkLabel is rotated to 90 degrees
+		 *  it will return the minimum and natural height for the rotated label here.
+	 *  }
+ * }
+ * And in GtkWidgetClass.get_preferred_width_for_height() it will simply return
+ * the minimum and natural width:
+ * static void
+ * foo_widget_get_preferred_width_for_height (GtkWidget *widget, gint for_height,
+ *  gint *min_width, gint *nat_width)
+ * {
+	 *  if (i_am_in_height_for_width_mode)
+	 *  {
+		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, nat_width);
+	 *  }
+	 *  else
+	 *  {
+		 *  ... again if a widget is sometimes operating in width-for-height mode
+		 *  (like a rotated GtkLabel) it can go ahead and do its real width for
+		 *  height calculation here.
+	 *  }
+ * }
+ * Often a widget needs to get its own request during size request or
+ * allocation. For example, when computing height it may need to also
+ * compute width. Or when deciding how to use an allocation, the widget
+ * may need to know its natural size. In these cases, the widget should
+ * be careful to call its virtual methods directly, like this:
+ * $(DDOC_COMMENT example)
+ * It will not work to use the wrapper functions, such as
+ * gtk_widget_get_preferred_width() inside your own size request
+ * implementation. These return a request adjusted by GtkSizeGroup
+ * and by the GtkWidgetClass.adjust_size_request() virtual method. If a
+ * widget used the wrappers inside its virtual method implementations,
+ * then the adjustments (such as widget margins) would be applied
+ * twice. GTK+ therefore does not allow this and will warn if you try
+ * to do it.
+ * Of course if you are getting the size request for
+ * another widget, such as a child of a
+ * container, you must use the wrapper APIs.
+ * Otherwise, you would not properly consider widget margins,
+ * GtkSizeGroup, and so forth.
+ * <hr>
+ * Style Properties
  * GtkWidget introduces style
  * properties - these are basically object properties that are stored
  * not on the object, but in the style object associated to the widget. Style
@@ -202,8 +320,11 @@ private import gtk.ObjectGtk;
  * Properties on the accessible implementation of an object can be set by accessing the
  * internal child "accessible" of a GtkWidget.
  * $(DDOC_COMMENT example)
+ * Finally, GtkWidget allows style information such as style classes to
+ * be associated with widgets, using the custom <style> element:
+ * $(DDOC_COMMENT example)
  */
-public class Widget : ObjectGtk, BuildableIF
+public class Widget : ObjectG, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -239,7 +360,7 @@ public class Widget : ObjectGtk, BuildableIF
 			this = cast(Widget)ptr;
 			return;
 		}
-		super(cast(GtkObject*)gtkWidget);
+		super(cast(GObject*)gtkWidget);
 		this.gtkWidget = gtkWidget;
 	}
 	
@@ -614,15 +735,17 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventButton*, Widget)[] onButtonPressListeners;
+	bool delegate(Event, Widget)[] onButtonPressListeners;
 	/**
 	 * The ::button-press-event signal will be emitted when a button
 	 * (typically from a mouse) is pressed.
 	 * To receive this signal, the GdkWindow associated to the
 	 * widget needs to enable the GDK_BUTTON_PRESS_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnButtonPress(bool delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnButtonPress(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-press-event" in connectedSignals) )
 		{
@@ -638,11 +761,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onButtonPressListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
+	extern(C) static gboolean callBackButtonPress(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventButton*, Widget) dlg ; widget.onButtonPressListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onButtonPressListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -651,15 +774,17 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventButton*, Widget)[] onButtonReleaseListeners;
+	bool delegate(Event, Widget)[] onButtonReleaseListeners;
 	/**
 	 * The ::button-release-event signal will be emitted when a button
 	 * (typically from a mouse) is released.
 	 * To receive this signal, the GdkWindow associated to the
 	 * widget needs to enable the GDK_BUTTON_RELEASE_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnButtonRelease(bool delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnButtonRelease(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-release-event" in connectedSignals) )
 		{
@@ -676,11 +801,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onButtonReleaseListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
+	extern(C) static gboolean callBackButtonRelease(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventButton*, Widget) dlg ; widget.onButtonReleaseListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onButtonReleaseListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -696,6 +821,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * This signal is present to allow applications and derived
 	 * widgets to override the default GtkWidget handling
 	 * for determining whether an accelerator can be activated.
+	 * TRUE if the signal can be activated.
 	 */
 	void addOnCanActivateAccel(bool delegate(guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -754,40 +880,6 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventClient*, Widget)[] onClientListeners;
-	/**
-	 * The ::client-event will be emitted when the widget's window
-	 * receives a message (via a ClientMessage event) from another
-	 * application.
-	 */
-	void addOnClient(bool delegate(GdkEventClient*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("client-event" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"client-event",
-			cast(GCallback)&callBackClient,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["client-event"] = 1;
-		}
-		onClientListeners ~= dlg;
-	}
-	extern(C) static gboolean callBackClient(GtkWidget* widgetStruct, GdkEventClient* event, Widget widget)
-	{
-		foreach ( bool delegate(GdkEventClient*, Widget) dlg ; widget.onClientListeners )
-		{
-			if ( dlg(event, widget) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
-	}
-	
 	void delegate(Widget)[] onCompositedChangedListeners;
 	/**
 	 * The ::composited-changed signal is emitted when the composited
@@ -817,15 +909,17 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventConfigure*, Widget)[] onConfigureListeners;
+	bool delegate(Event, Widget)[] onConfigureListeners;
 	/**
 	 * The ::configure-event signal will be emitted when the size, position or
 	 * stacking of the widget's window has changed.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnConfigure(bool delegate(GdkEventConfigure*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnConfigure(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("configure-event" in connectedSignals) )
 		{
@@ -840,11 +934,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onConfigureListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackConfigure(GtkWidget* widgetStruct, GdkEventConfigure* event, Widget widget)
+	extern(C) static gboolean callBackConfigure(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventConfigure*, Widget) dlg ; widget.onConfigureListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onConfigureListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -858,6 +952,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Emitted when a redirected window belonging to widget gets drawn into.
 	 * The region/area members of the event shows what area of the redirected
 	 * drawable was drawn into.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 * Since 2.14
 	 */
 	void addOnDamage(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -895,6 +991,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * destroys the window. Connecting gtk_widget_hide_on_delete() to
 	 * this signal will cause the window to be hidden instead, so that
 	 * it can later be shown again without reconstructing it.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
 	void addOnDelete(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -924,6 +1022,35 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
+	void delegate(Widget)[] onDestroyListeners;
+	/**
+	 * Signals that all holders of a reference to the widget should release
+	 * the reference that they hold. May result in finalization of the widget
+	 * if all references are released.
+	 */
+	void addOnDestroy(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("destroy" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"destroy",
+			cast(GCallback)&callBackDestroy,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["destroy"] = 1;
+		}
+		onDestroyListeners ~= dlg;
+	}
+	extern(C) static void callBackDestroy(GtkWidget* objectStruct, Widget widget)
+	{
+		foreach ( void delegate(Widget) dlg ; widget.onDestroyListeners )
+		{
+			dlg(widget);
+		}
+	}
+	
 	bool delegate(Event, Widget)[] onDestroyListeners;
 	/**
 	 * The ::destroy-event signal is emitted when a GdkWindow is destroyed.
@@ -933,6 +1060,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
 	void addOnDestroy(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1198,6 +1327,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * operation based on the type of error, it returns TRUE is the failure has
 	 * been already handled (not showing the default "drag operation failed"
 	 * animation), otherwise it returns FALSE.
+	 * TRUE if the failed drag operation has been already handled.
 	 * Since 2.12
 	 */
 	void addOnDragFailed(bool delegate(GdkDragContext*, GtkDragResult, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1309,15 +1439,58 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventCrossing*, Widget)[] onEnterNotifyListeners;
+	bool delegate(CairoContext*, Widget)[] onDrawListeners;
+	/**
+	 * This signal is emitted when a widget is supposed to render itself.
+	 * The widget's top left corner must be painted at the origin of
+	 * the passed in context and be sized to the values returned by
+	 * gtk_widget_get_allocated_width() and
+	 * gtk_widget_get_allocated_height().
+	 * Signal handlers connected to this signal can modify the cairo
+	 * context passed as cr in any way they like and don't need to
+	 * restore it. The signal emission takes care of calling cairo_save()
+	 * before and cairo_restore() after invoking the handler.
+	 * Since 3.0
+	 */
+	void addOnDraw(bool delegate(CairoContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("draw" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"draw",
+			cast(GCallback)&callBackDraw,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["draw"] = 1;
+		}
+		onDrawListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackDraw(GtkWidget* widgetStruct, CairoContext* cr, Widget widget)
+	{
+		foreach ( bool delegate(CairoContext*, Widget) dlg ; widget.onDrawListeners )
+		{
+			if ( dlg(cr, widget) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
+	bool delegate(Event, Widget)[] onEnterNotifyListeners;
 	/**
 	 * The ::enter-notify-event will be emitted when the pointer enters
 	 * the widget's window.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_ENTER_NOTIFY_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnEnterNotify(bool delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnEnterNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("enter-notify-event" in connectedSignals) )
 		{
@@ -1332,11 +1505,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onEnterNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackEnterNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget widget)
+	extern(C) static gboolean callBackEnterNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventCrossing*, Widget) dlg ; widget.onEnterNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onEnterNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -1352,6 +1525,11 @@ public class Widget : ObjectGtk, BuildableIF
 	 * signal that matches the type of event delivered (e.g.
 	 * "key-press-event") and finally a generic
 	 * "event-after" signal.
+	 * TRUE to stop other handlers from being invoked for the event
+	 * and to cancel the emission of the second specific ::event signal.
+	 * FALSE to propagate the event further and to allow the emission of
+	 * the second signal. The ::event-after signal is emitted regardless of
+	 * the return value.
 	 */
 	void addOn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1410,45 +1588,9 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventExpose*, Widget)[] onExposeListeners;
-	/**
-	 * The ::expose-event signal is emitted when an area of a previously
-	 * obscured GdkWindow is made visible and needs to be redrawn.
-	 * GTK_NO_WINDOW widgets will get a synthesized event from their parent
-	 * widget.
-	 * To receive this signal, the GdkWindow associated to the widget needs
-	 * to enable the GDK_EXPOSURE_MASK mask.
-	 */
-	void addOnExpose(bool delegate(GdkEventExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("expose-event" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"expose-event",
-			cast(GCallback)&callBackExpose,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["expose-event"] = 1;
-		}
-		onExposeListeners ~= dlg;
-	}
-	extern(C) static gboolean callBackExpose(GtkWidget* widgetStruct, GdkEventExpose* event, Widget widget)
-	{
-		foreach ( bool delegate(GdkEventExpose*, Widget) dlg ; widget.onExposeListeners )
-		{
-			if ( dlg(event, widget) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
-	}
-	
 	bool delegate(GtkDirectionType, Widget)[] onFocusListeners;
 	/**
+	 * TRUE to stop other handlers from being invoked for the event. FALSE to propagate the event further.
 	 */
 	void addOnFocus(bool delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1478,14 +1620,16 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventFocus*, Widget)[] onFocusInListeners;
+	bool delegate(Event, Widget)[] onFocusInListeners;
 	/**
 	 * The ::focus-in-event signal will be emitted when the keyboard focus
 	 * enters the widget's window.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_FOCUS_CHANGE_MASK mask.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnFocusIn(bool delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFocusIn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-in-event" in connectedSignals) )
 		{
@@ -1500,11 +1644,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onFocusInListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusIn(GtkWidget* widgetStruct, GdkEventFocus* event, Widget widget)
+	extern(C) static gboolean callBackFocusIn(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusInListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onFocusInListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -1513,14 +1657,16 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventFocus*, Widget)[] onFocusOutListeners;
+	bool delegate(Event, Widget)[] onFocusOutListeners;
 	/**
 	 * The ::focus-out-event signal will be emitted when the keyboard focus
 	 * leaves the widget's window.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_FOCUS_CHANGE_MASK mask.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnFocusOut(bool delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFocusOut(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-out-event" in connectedSignals) )
 		{
@@ -1535,11 +1681,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onFocusOutListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusOut(GtkWidget* widgetStruct, GdkEventFocus* event, Widget widget)
+	extern(C) static gboolean callBackFocusOut(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusOutListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onFocusOutListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -1555,6 +1701,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * On X11, this happens when the grab window becomes unviewable
 	 * (i.e. it or one of its ancestors is unmapped), or if the same
 	 * application grabs the pointer or keyboard again.
+	 * TRUE to stop other handlers from being invoked for
+	 * the event. FALSE to propagate the event further.
 	 * Since 2.8
 	 */
 	void addOnGrabBroken(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1621,7 +1769,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * grab widget in the grab stack of its window group is not
 	 * its ancestor.
 	 * FALSE if the widget becomes shadowed, TRUE
-	 *  if it becomes unshadowed
+	 * if it becomes unshadowed
 	 */
 	void addOnGrabNotify(void delegate(gboolean, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1703,14 +1851,17 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventKey*, Widget)[] onKeyPressListeners;
+	bool delegate(Event, Widget)[] onKeyPressListeners;
 	/**
-	 * The ::key-press-event signal is emitted when a key is pressed.
+	 * The ::key-press-event signal is emitted when a key is pressed. The signal
+	 * emission will reoccur at the key-repeat rate when the key is kept pressed.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_KEY_PRESS_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnKeyPress(bool delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnKeyPress(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("key-press-event" in connectedSignals) )
 		{
@@ -1725,11 +1876,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onKeyPressListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackKeyPress(GtkWidget* widgetStruct, GdkEventKey* event, Widget widget)
+	extern(C) static gboolean callBackKeyPress(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventKey*, Widget) dlg ; widget.onKeyPressListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onKeyPressListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -1738,14 +1889,16 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventKey*, Widget)[] onKeyReleaseListeners;
+	bool delegate(Event, Widget)[] onKeyReleaseListeners;
 	/**
-	 * The ::key-release-event signal is emitted when a key is pressed.
+	 * The ::key-release-event signal is emitted when a key is released.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_KEY_RELEASE_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnKeyRelease(bool delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnKeyRelease(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("key-release-event" in connectedSignals) )
 		{
@@ -1760,11 +1913,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onKeyReleaseListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackKeyRelease(GtkWidget* widgetStruct, GdkEventKey* event, Widget widget)
+	extern(C) static gboolean callBackKeyRelease(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventKey*, Widget) dlg ; widget.onKeyReleaseListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onKeyReleaseListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -1777,6 +1930,9 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Gets emitted if keyboard navigation fails.
 	 * See gtk_widget_keynav_failed() for details.
+	 * TRUE if stopping keyboard navigation is fine, FALSE
+	 * if the emitting widget should try to handle the keyboard
+	 * navigation attempt in its parent container(s).
 	 * Since 2.12
 	 */
 	void addOnKeynavFailed(bool delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1807,15 +1963,17 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventCrossing*, Widget)[] onLeaveNotifyListeners;
+	bool delegate(Event, Widget)[] onLeaveNotifyListeners;
 	/**
 	 * The ::leave-notify-event will be emitted when the pointer leaves
 	 * the widget's window.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_LEAVE_NOTIFY_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnLeaveNotify(bool delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnLeaveNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("leave-notify-event" in connectedSignals) )
 		{
@@ -1830,11 +1988,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onLeaveNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackLeaveNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget widget)
+	extern(C) static gboolean callBackLeaveNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventCrossing*, Widget) dlg ; widget.onLeaveNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onLeaveNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -1876,6 +2034,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
 	void addOnMapEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1936,15 +2096,17 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventMotion*, Widget)[] onMotionNotifyListeners;
+	bool delegate(Event, Widget)[] onMotionNotifyListeners;
 	/**
 	 * The ::motion-notify-event signal is emitted when the pointer moves
 	 * over the widget's GdkWindow.
 	 * To receive this signal, the GdkWindow associated to the widget
 	 * needs to enable the GDK_POINTER_MOTION_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnMotionNotify(bool delegate(GdkEventMotion*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMotionNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("motion-notify-event" in connectedSignals) )
 		{
@@ -1960,11 +2122,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onMotionNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMotionNotify(GtkWidget* widgetStruct, GdkEventMotion* event, Widget widget)
+	extern(C) static gboolean callBackMotionNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventMotion*, Widget) dlg ; widget.onMotionNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onMotionNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -1999,48 +2161,12 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventNoExpose*, Widget)[] onNoExposeListeners;
-	/**
-	 * The ::no-expose-event will be emitted when the widget's window is
-	 * drawn as a copy of another GdkDrawable (with gdk_draw_drawable() or
-	 * gdk_window_copy_area()) which was completely unobscured. If the source
-	 * window was partially obscured GdkEventExpose events will be generated
-	 * for those areas.
-	 */
-	void addOnNoExpose(bool delegate(GdkEventNoExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("no-expose-event" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"no-expose-event",
-			cast(GCallback)&callBackNoExpose,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["no-expose-event"] = 1;
-		}
-		onNoExposeListeners ~= dlg;
-	}
-	extern(C) static gboolean callBackNoExpose(GtkWidget* widgetStruct, GdkEventNoExpose* event, Widget widget)
-	{
-		foreach ( bool delegate(GdkEventNoExpose*, Widget) dlg ; widget.onNoExposeListeners )
-		{
-			if ( dlg(event, widget) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
-	}
-	
-	void delegate(GtkObject*, Widget)[] onParentSetListeners;
+	void delegate(Widget, Widget)[] onParentSetListeners;
 	/**
 	 * The ::parent-set signal is emitted when a new parent
 	 * has been set on a widget.
 	 */
-	void addOnParentSet(void delegate(GtkObject*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnParentSet(void delegate(Widget, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("parent-set" in connectedSignals) )
 		{
@@ -2055,11 +2181,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onParentSetListeners ~= dlg;
 	}
-	extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkObject* oldParent, Widget widget)
+	extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkWidget* oldParent, Widget widget)
 	{
-		foreach ( void delegate(GtkObject*, Widget) dlg ; widget.onParentSetListeners )
+		foreach ( void delegate(Widget, Widget) dlg ; widget.onParentSetListeners )
 		{
-			dlg(oldParent, widget);
+			dlg(new Widget(oldParent), widget);
 		}
 	}
 	
@@ -2071,6 +2197,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * the widget to pop up a menu. For example, the GtkEntry widget creates
 	 * a menu with clipboard commands. See the section called “Implement GtkWidget::popup_menu”
 	 * for an example of how to use this signal.
+	 * TRUE if a menu was activated
 	 */
 	void addOnPopupMenu(bool delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2100,14 +2227,16 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventProperty*, Widget)[] onPropertyNotifyListeners;
+	bool delegate(Event, Widget)[] onPropertyNotifyListeners;
 	/**
 	 * The ::property-notify-event signal will be emitted when a property on
 	 * the widget's window has been changed or deleted.
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_PROPERTY_CHANGE_MASK mask.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnPropertyNotify(bool delegate(GdkEventProperty*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPropertyNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("property-notify-event" in connectedSignals) )
 		{
@@ -2122,11 +2251,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onPropertyNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPropertyNotify(GtkWidget* widgetStruct, GdkEventProperty* event, Widget widget)
+	extern(C) static gboolean callBackPropertyNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventProperty*, Widget) dlg ; widget.onPropertyNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onPropertyNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2135,13 +2264,15 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventProximity*, Widget)[] onProximityInListeners;
+	bool delegate(Event, Widget)[] onProximityInListeners;
 	/**
 	 * To receive this signal the GdkWindow associated to the widget needs
 	 * to enable the GDK_PROXIMITY_IN_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnProximityIn(bool delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnProximityIn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("proximity-in-event" in connectedSignals) )
 		{
@@ -2156,11 +2287,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onProximityInListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackProximityIn(GtkWidget* widgetStruct, GdkEventProximity* event, Widget widget)
+	extern(C) static gboolean callBackProximityIn(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityInListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onProximityInListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2169,13 +2300,15 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventProximity*, Widget)[] onProximityOutListeners;
+	bool delegate(Event, Widget)[] onProximityOutListeners;
 	/**
 	 * To receive this signal the GdkWindow associated to the widget needs
 	 * to enable the GDK_PROXIMITY_OUT_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnProximityOut(bool delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnProximityOut(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("proximity-out-event" in connectedSignals) )
 		{
@@ -2190,11 +2323,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onProximityOutListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackProximityOut(GtkWidget* widgetStruct, GdkEventProximity* event, Widget widget)
+	extern(C) static gboolean callBackProximityOut(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityOutListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onProximityOutListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2216,6 +2349,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * The signal handler is free to manipulate tooltip with the therefore
 	 * destined function calls.
 	 * TRUE if the tooltip was trigged using the keyboard
+	 * TRUE if tooltip should be shown right now, FALSE otherwise.
 	 * Since 2.12
 	 */
 	void addOnQueryTooltip(bool delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -2300,7 +2434,7 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventScroll*, Widget)[] onScrollListeners;
+	bool delegate(Event, Widget)[] onScrollListeners;
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7
 	 * range is pressed. Wheel mice are usually configured to generate
@@ -2308,8 +2442,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_BUTTON_PRESS_MASK mask.
 	 * This signal will be sent to the grab widget if there is one.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnScroll(bool delegate(GdkEventScroll*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnScroll(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("scroll-event" in connectedSignals) )
 		{
@@ -2324,11 +2460,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onScrollListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackScroll(GtkWidget* widgetStruct, GdkEventScroll* event, Widget widget)
+	extern(C) static gboolean callBackScroll(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventScroll*, Widget) dlg ; widget.onScrollListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onScrollListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2337,12 +2473,14 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventSelection*, Widget)[] onSelectionClearListeners;
+	bool delegate(Event, Widget)[] onSelectionClearListeners;
 	/**
 	 * The ::selection-clear-event signal will be emitted when the
 	 * the widget's window has lost ownership of a selection.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnSelectionClear(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectionClear(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-clear-event" in connectedSignals) )
 		{
@@ -2357,11 +2495,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSelectionClearListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionClear(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
+	extern(C) static gboolean callBackSelectionClear(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionClearListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onSelectionClearListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2396,10 +2534,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventSelection*, Widget)[] onSelectionNotifyListeners;
+	bool delegate(Event, Widget)[] onSelectionNotifyListeners;
 	/**
+	 * TRUE to stop other handlers from being invoked for the event. FALSE to propagate the event further.
 	 */
-	void addOnSelectionNotify(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectionNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-notify-event" in connectedSignals) )
 		{
@@ -2414,11 +2553,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSelectionNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionNotify(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
+	extern(C) static gboolean callBackSelectionNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onSelectionNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2453,13 +2592,15 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventSelection*, Widget)[] onSelectionRequestListeners;
+	bool delegate(Event, Widget)[] onSelectionRequestListeners;
 	/**
 	 * The ::selection-request-event signal will be emitted when
 	 * another client requests ownership of the selection owned by
 	 * the widget's window.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnSelectionRequest(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectionRequest(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-request-event" in connectedSignals) )
 		{
@@ -2474,11 +2615,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSelectionRequestListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionRequest(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
+	extern(C) static gboolean callBackSelectionRequest(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionRequestListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onSelectionRequestListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2544,10 +2685,10 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	void delegate(GtkAllocation*, Widget)[] onSizeAllocateListeners;
+	void delegate(Rectangle, Widget)[] onSizeAllocateListeners;
 	/**
 	 */
-	void addOnSizeAllocate(void delegate(GtkAllocation*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSizeAllocate(void delegate(Rectangle, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-allocate" in connectedSignals) )
 		{
@@ -2562,42 +2703,18 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSizeAllocateListeners ~= dlg;
 	}
-	extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, GtkAllocation* allocation, Widget widget)
+	extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, GdkRectangle* allocation, Widget widget)
 	{
-		foreach ( void delegate(GtkAllocation*, Widget) dlg ; widget.onSizeAllocateListeners )
+		foreach ( void delegate(Rectangle, Widget) dlg ; widget.onSizeAllocateListeners )
 		{
-			dlg(allocation, widget);
-		}
-	}
-	
-	void delegate(GtkRequisition*, Widget)[] onSizeRequestListeners;
-	/**
-	 */
-	void addOnSizeRequest(void delegate(GtkRequisition*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("size-request" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"size-request",
-			cast(GCallback)&callBackSizeRequest,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["size-request"] = 1;
-		}
-		onSizeRequestListeners ~= dlg;
-	}
-	extern(C) static void callBackSizeRequest(GtkWidget* widgetStruct, GtkRequisition* requisition, Widget widget)
-	{
-		foreach ( void delegate(GtkRequisition*, Widget) dlg ; widget.onSizeRequestListeners )
-		{
-			dlg(requisition, widget);
+			dlg(new Rectangle(allocation), widget);
 		}
 	}
 	
 	void delegate(GtkStateType, Widget)[] onStateChangedListeners;
 	/**
+	 * Warning
+	 * GtkWidget::state-changed is deprecated and should not be used in newly-written code. 3.0. Use "state-flags-changed" instead.
 	 * The ::state-changed signal is emitted when the widget state changes.
 	 * See gtk_widget_get_state().
 	 */
@@ -2624,11 +2741,45 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
+	void delegate(GtkStateFlags, Widget)[] onStateFlagsChangedListeners;
+	/**
+	 * The ::state-flags-changed signal is emitted when the widget state
+	 * changes, see gtk_widget_get_state_flags().
+	 * Since 3.0
+	 */
+	void addOnStateFlagsChanged(void delegate(GtkStateFlags, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("state-flags-changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"state-flags-changed",
+			cast(GCallback)&callBackStateFlagsChanged,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["state-flags-changed"] = 1;
+		}
+		onStateFlagsChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackStateFlagsChanged(GtkWidget* widgetStruct, GtkStateFlags flags, Widget widget)
+	{
+		foreach ( void delegate(GtkStateFlags, Widget) dlg ; widget.onStateFlagsChangedListeners )
+		{
+			dlg(flags, widget);
+		}
+	}
+	
 	void delegate(Style, Widget)[] onStyleSetListeners;
 	/**
+	 * Warning
+	 * GtkWidget::style-set has been deprecated since version 3.0 and should not be used in newly-written code. Use the "style-updated" signal
 	 * The ::style-set signal is emitted when a new style has been set
 	 * on a widget. Note that style-modifying functions like
 	 * gtk_widget_modify_base() also cause this signal to be emitted.
+	 * Note that this signal is emitted for changes to the deprecated
+	 * GtkStyle. To track changes to the GtkStyleContext associated
+	 * with a widget, use the "style-updated" signal.
 	 */
 	void addOnStyleSet(void delegate(Style, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2650,6 +2801,36 @@ public class Widget : ObjectGtk, BuildableIF
 		foreach ( void delegate(Style, Widget) dlg ; widget.onStyleSetListeners )
 		{
 			dlg(new Style(previousStyle), widget);
+		}
+	}
+	
+	void delegate(Widget)[] onStyleUpdatedListeners;
+	/**
+	 * The ::style-updated signal is emitted when the GtkStyleContext
+	 * of a widget is changed. Note that style-modifying functions like
+	 * gtk_widget_override_color() also cause this signal to be emitted.
+	 * Since 3.0
+	 */
+	void addOnStyleUpdated(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("style-updated" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"style-updated",
+			cast(GCallback)&callBackStyleUpdated,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["style-updated"] = 1;
+		}
+		onStyleUpdatedListeners ~= dlg;
+	}
+	extern(C) static void callBackStyleUpdated(GtkWidget* widgetStruct, Widget widget)
+	{
+		foreach ( void delegate(Widget) dlg ; widget.onStyleUpdatedListeners )
+		{
+			dlg(widget);
 		}
 	}
 	
@@ -2686,6 +2867,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * To receive this signal, the GdkWindow associated to the widget needs
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
 	void addOnUnmapEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2741,14 +2924,16 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 	}
 	
-	bool delegate(GdkEventVisibility*, Widget)[] onVisibilityNotifyListeners;
+	bool delegate(Event, Widget)[] onVisibilityNotifyListeners;
 	/**
 	 * The ::visibility-notify-event will be emitted when the widget's window
 	 * is obscured or unobscured.
 	 * To receive this signal the GdkWindow associated to the widget needs
 	 * to enable the GDK_VISIBILITY_NOTIFY_MASK mask.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
-	void addOnVisibilityNotify(bool delegate(GdkEventVisibility*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnVisibilityNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("visibility-notify-event" in connectedSignals) )
 		{
@@ -2763,11 +2948,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onVisibilityNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEventVisibility* event, Widget widget)
+	extern(C) static gboolean callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventVisibility*, Widget) dlg ; widget.onVisibilityNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onVisibilityNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2776,15 +2961,17 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(GdkEventWindowState*, Widget)[] onWindowStateListeners;
+	bool delegate(Event, Widget)[] onWindowStateListeners;
 	/**
 	 * The ::window-state-event will be emitted when the state of the
 	 * toplevel window associated to the widget changes.
 	 * To receive this signal the GdkWindow associated to the widget
 	 * needs to enable the GDK_STRUCTURE_MASK mask. GDK will enable
 	 * this mask automatically for all new windows.
+	 * TRUE to stop other handlers from being invoked for the
+	 * event. FALSE to propagate the event further.
 	 */
-	void addOnWindowState(bool delegate(GdkEventWindowState*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnWindowState(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("window-state-event" in connectedSignals) )
 		{
@@ -2799,11 +2986,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onWindowStateListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackWindowState(GtkWidget* widgetStruct, GdkEventWindowState* event, Widget widget)
+	extern(C) static gboolean callBackWindowState(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		foreach ( bool delegate(GdkEventWindowState*, Widget) dlg ; widget.onWindowStateListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; widget.onWindowStateListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(new Event(event), widget) )
 			{
 				return 1;
 			}
@@ -2814,19 +3001,8 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	
 	/**
-	 * Warning
-	 * gtk_widget_unref has been deprecated since version 2.12 and should not be used in newly-written code. Use g_object_unref() instead.
-	 * Inverse of gtk_widget_ref(). Equivalent to g_object_unref().
-	 */
-	public override void unref()
-	{
-		// void gtk_widget_unref (GtkWidget *widget);
-		gtk_widget_unref(gtkWidget);
-	}
-	
-	/**
-	 * Destroys a widget. Equivalent to gtk_object_destroy(), except that
-	 * you don't have to cast the widget to GtkObject. When a widget is
+	 * Destroys a widget.
+	 * When a widget is
 	 * destroyed, it will break any references it holds to other objects.
 	 * If the widget is inside a container, the widget will be removed
 	 * from the container. If the widget is a toplevel (derived from
@@ -2843,6 +3019,18 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// void gtk_widget_destroy (GtkWidget *widget);
 		gtk_widget_destroy(gtkWidget);
+	}
+	
+	/**
+	 * Returns whether the widget is currently being destroyed.
+	 * This information can sometimes be used to avoid doing
+	 * unnecessary work.
+	 * Returns: TRUE if widget is being destroyed
+	 */
+	public int inDestruction()
+	{
+		// gboolean gtk_widget_in_destruction (GtkWidget *widget);
+		return gtk_widget_in_destruction(gtkWidget);
 	}
 	
 	/**
@@ -2929,15 +3117,6 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Recursively hides a widget and any child widgets.
-	 */
-	public void hideAll()
-	{
-		// void gtk_widget_hide_all (GtkWidget *widget);
-		gtk_widget_hide_all(gtkWidget);
-	}
-	
-	/**
 	 * This function is only for use in widget implementations. Causes
 	 * a widget to be mapped if it isn't already.
 	 */
@@ -2972,8 +3151,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * isn't very useful otherwise. Many times when you think you might
 	 * need it, a better approach is to connect to a signal that will be
 	 * called after the widget is realized automatically, such as
-	 * GtkWidget::expose-event. Or simply g_signal_connect() to the
-	 * GtkWidget::realize signal.
+	 * "draw". Or simply g_signal_connect() to the
+	 * "realize" signal.
 	 */
 	public void realize()
 	{
@@ -2993,6 +3172,33 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Draws widget to cr. The top left corner of the widget will be
+	 * drawn to the currently set origin point of cr.
+	 * You should pass a cairo context as cr argument that is in an
+	 * original state. Otherwise the resulting drawing is undefined. For
+	 * example changing the operator using cairo_set_operator() or the
+	 * line width using cairo_set_line_width() might have unwanted side
+	 * effects.
+	 * You may however change the context's transform matrix - like with
+	 * cairo_scale(), cairo_translate() or cairo_set_matrix() and clip
+	 * region with cairo_clip() prior to calling this function. Also, it
+	 * is fine to modify the context with cairo_save() and
+	 * cairo_push_group() prior to calling this function.
+	 * Note
+	 * Special purpose widgets may contain special code for
+	 * rendering to the screen and might appear differently on screen
+	 * and when rendered using gtk_widget_draw().
+	 * Params:
+	 * cr = a cairo context to draw to
+	 * Since 3.0
+	 */
+	public void draw(cairo_t* cr)
+	{
+		// void gtk_widget_draw (GtkWidget *widget,  cairo_t *cr);
+		gtk_widget_draw(gtkWidget, cr);
+	}
+	
+	/**
 	 * Equivalent to calling gtk_widget_queue_draw_area() for the
 	 * entire area of a widget.
 	 */
@@ -3008,6 +3214,11 @@ public class Widget : ObjectGtk, BuildableIF
 	 * be called when a widget for some reason has a new size request.
 	 * For example, when you change the text in a GtkLabel, GtkLabel
 	 * queues a resize to ensure there's enough space for the new text.
+	 * Note
+	 * You cannot call gtk_widget_queue_resize() on a widget
+	 * from inside its implementation of the GtkWidgetClass::size_allocate
+	 * virtual method. Calls to gtk_widget_queue_resize() from inside
+	 * GtkWidgetClass::size_allocate will be silently ignored.
 	 */
 	public void queueResize()
 	{
@@ -3028,25 +3239,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Warning
-	 * gtk_widget_draw is deprecated and should not be used in newly-written code.
-	 * In GTK+ 1.2, this function would immediately render the
-	 * region area of a widget, by invoking the virtual draw method of a
-	 * widget. In GTK+ 2.0, the draw method is gone, and instead
-	 * gtk_widget_draw() simply invalidates the specified region of the
-	 * widget, then updates the invalid region of the widget immediately.
-	 * Usually you don't want to update the region immediately for
-	 * performance reasons, so in general gtk_widget_queue_draw_area() is
-	 * a better choice if you want to draw a region of a widget.
-	 * Params:
-	 * area = area to draw
-	 */
-	public void draw(Rectangle area)
-	{
-		// void gtk_widget_draw (GtkWidget *widget,  const GdkRectangle *area);
-		gtk_widget_draw(gtkWidget, (area is null) ? null : area.getRectangleStruct());
-	}
-	
-	/**
+	 * gtk_widget_size_request has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_get_preferred_size() instead.
 	 * This function is typically used when implementing a GtkContainer
 	 * subclass. Obtains the preferred size of a widget. The container
 	 * uses this information to arrange its child widgets and decide what
@@ -3057,9 +3250,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * needed. Multihead-aware applications should keep this in mind.
 	 * Also remember that the size request is not necessarily the size
 	 * a widget will actually be allocated.
-	 * See also gtk_widget_get_child_requisition().
 	 * Params:
-	 * requisition = a GtkRequisition to be filled in
+	 * requisition = a GtkRequisition to be filled in. [out]
 	 */
 	public void sizeRequest(out GtkRequisition requisition)
 	{
@@ -3068,6 +3260,8 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_get_child_requisition has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_get_preferred_size() instead.
 	 * This function is only for use in widget implementations. Obtains
 	 * widget->requisition, unless someone has forced a particular
 	 * geometry on the widget (e.g. with gtk_widget_set_size_request()),
@@ -3085,7 +3279,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * implementations have this information; applications should use
 	 * gtk_widget_size_request().
 	 * Params:
-	 * requisition = a GtkRequisition to be filled in
+	 * requisition = a GtkRequisition to be filled in. [out]
 	 */
 	public void getChildRequisition(out GtkRequisition requisition)
 	{
@@ -3096,6 +3290,11 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * This function is only used by GtkContainer subclasses, to assign a size
 	 * and position to their child widgets.
+	 * In this function, the allocation may be adjusted. It will be forced
+	 * to a 1x1 minimum size, and the adjust_size_allocation virtual
+	 * method on the child will be used to adjust the allocation. Standard
+	 * adjustments include removing the widget's margins, and applying the
+	 * widget's "halign" and "valign" properties.
 	 * Params:
 	 * allocation = position and size to be allocated to widget
 	 */
@@ -3182,7 +3381,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public ListG listAccelClosures()
 	{
-		// GList* gtk_widget_list_accel_closures (GtkWidget *widget);
+		// GList * gtk_widget_list_accel_closures (GtkWidget *widget);
 		auto p = gtk_widget_list_accel_closures(gtkWidget);
 		if(p is null)
 		{
@@ -3305,7 +3504,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * yourself by calling gtk_widget_set_can_default (widget,
 	 * TRUE). The default widget is activated when
 	 * the user presses Enter in a window. Default widgets must be
-	 * activatable, that is, gtk_widget_activate() should affect them.
+	 * activatable, that is, gtk_widget_activate() should affect them. Note
+	 * that GtkEntry widgets require the "activates-default" property
+	 * set to TRUE before they activate the default widget when Enter
+	 * is pressed and the GtkEntry is focused.
 	 */
 	public void grabDefault()
 	{
@@ -3315,11 +3517,14 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Widgets can be named, which allows you to refer to them from a
-	 * gtkrc file. You can apply a style to widgets with a particular name
-	 * in the gtkrc file. See the documentation for gtkrc files (on the
-	 * same page as the docs for GtkRcStyle).
-	 * Note that widget names are separated by periods in paths (see
-	 * gtk_widget_path()), so names with embedded periods may cause confusion.
+	 * CSS file. You can apply a style to widgets with a particular name
+	 * in the CSS file. See the documentation for the CSS syntax (on the
+	 * same page as the docs for GtkStyleContext).
+	 * Note that the CSS syntax has certain special characters to delimit
+	 * and represent elements in a selector (period, #, >, *...),
+	 * so using these will make your widget impossible to match by name.
+	 * Any combination of alphanumeric symbols, dashes and underscores will
+	 * suffice.
 	 * Params:
 	 * name = name for the widget
 	 */
@@ -3336,11 +3541,13 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public string getName()
 	{
-		// const gchar* gtk_widget_get_name (GtkWidget *widget);
+		// const gchar * gtk_widget_get_name (GtkWidget *widget);
 		return Str.toString(gtk_widget_get_name(gtkWidget));
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_set_state is deprecated and should not be used in newly-written code. 3.0. Use gtk_widget_set_state_flags() instead.
 	 * This function is for use in widget implementations. Sets the state
 	 * of a widget (insensitive, prelighted, etc.) Usually you should set
 	 * the state using wrapper functions such as gtk_widget_set_sensitive().
@@ -3385,6 +3592,12 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Sets a non default parent window for widget.
+	 * For GtkWindow classes, setting a parent_window effects whether
+	 * the window is a toplevel window or can be embedded into other
+	 * widgets.
+	 * Note
+	 * For GtkWindow classes, this needs to be called before the
+	 * window is realized.
 	 * Params:
 	 * parentWindow = the new parent window.
 	 */
@@ -3410,61 +3623,6 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_widget_set_uposition is deprecated and should not be used in newly-written code.
-	 * Sets the position of a widget. The funny "u" in the name comes from
-	 * the "user position" hint specified by the X Window System, and
-	 * exists for legacy reasons. This function doesn't work if a widget
-	 * is inside a container; it's only really useful on GtkWindow.
-	 * Don't use this function to center dialogs over the main application
-	 * window; most window managers will do the centering on your behalf
-	 * if you call gtk_window_set_transient_for(), and it's really not
-	 * possible to get the centering to work correctly in all cases from
-	 * application code. But if you insist, use gtk_window_set_position()
-	 * to set GTK_WIN_POS_CENTER_ON_PARENT, don't do the centering
-	 * manually.
-	 * Note that although x and y can be individually unset, the position
-	 * is not honoured unless both x and y are set.
-	 * Params:
-	 * x = x position; -1 to unset x; -2 to leave x unchanged
-	 * y = y position; -1 to unset y; -2 to leave y unchanged
-	 */
-	public void setUposition(int x, int y)
-	{
-		// void gtk_widget_set_uposition (GtkWidget *widget,  gint x,  gint y);
-		gtk_widget_set_uposition(gtkWidget, x, y);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_widget_set_usize has been deprecated since version 2.2 and should not be used in newly-written code. Use gtk_widget_set_size_request() instead.
-	 * Sets the minimum size of a widget; that is, the widget's size
-	 * request will be width by height. You can use this function to
-	 * force a widget to be either larger or smaller than it is. The
-	 * strange "usize" name dates from the early days of GTK+, and derives
-	 * from X Window System terminology. In many cases,
-	 * gtk_window_set_default_size() is a better choice for toplevel
-	 * windows than this function; setting the default size will still
-	 * allow users to shrink the window. Setting the usize will force them
-	 * to leave the window at least as large as the usize. When dealing
-	 * with window sizes, gtk_window_set_geometry_hints() can be a useful
-	 * function as well.
-	 * Note the inherent danger of setting any fixed size - themes,
-	 * translations into other languages, different fonts, and user action
-	 * can all change the appropriate size for a given widget. So, it's
-	 * basically impossible to hardcode a size that will always be
-	 * correct.
-	 * Params:
-	 * width = minimum width, or -1 to unset
-	 * height = minimum height, or -1 to unset
-	 */
-	public void setUsize(int width, int height)
-	{
-		// void gtk_widget_set_usize (GtkWidget *widget,  gint width,  gint height);
-		gtk_widget_set_usize(gtkWidget, width, height);
-	}
-	
-	/**
 	 * Sets the event mask (see GdkEventMask) for a widget. The event
 	 * mask determines which events a widget will receive. Keep in mind
 	 * that different widgets have different default event masks, and by
@@ -3485,6 +3643,18 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Returns the event mask for the widget (a bitfield containing flags
+	 * from the GdkEventMask enumeration). These are the events that the widget
+	 * will receive.
+	 * Returns: event mask for widget
+	 */
+	public int getEvents()
+	{
+		// gint gtk_widget_get_events (GtkWidget *widget);
+		return gtk_widget_get_events(gtkWidget);
+	}
+	
+	/**
 	 * Adds the events in the bitfield events to the event mask for
 	 * widget. See gtk_widget_set_events() for details.
 	 * Params:
@@ -3497,26 +3667,82 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Sets the extension events mask to mode. See GdkExtensionMode
-	 * and gdk_input_set_extension_events().
+	 * Sets the device event mask (see GdkEventMask) for a widget. The event
+	 * mask determines which events a widget will receive from device. Keep
+	 * in mind that different widgets have different default event masks, and by
+	 * changing the event mask you may disrupt a widget's functionality,
+	 * so be careful. This function must be called while a widget is
+	 * unrealized. Consider gtk_widget_add_device_events() for widgets that are
+	 * already realized, or if you want to preserve the existing event
+	 * mask. This function can't be used with GTK_NO_WINDOW widgets;
+	 * to get events on those widgets, place them inside a GtkEventBox
+	 * and receive events on the event box.
 	 * Params:
-	 * mode = bitfield of extension events to receive
+	 * device = a GdkDevice
+	 * events = event mask
+	 * Since 3.0
 	 */
-	public void setExtensionEvents(GdkExtensionMode mode)
+	public void setDeviceEvents(GdkDevice* device, GdkEventMask events)
 	{
-		// void gtk_widget_set_extension_events (GtkWidget *widget,  GdkExtensionMode mode);
-		gtk_widget_set_extension_events(gtkWidget, mode);
+		// void gtk_widget_set_device_events (GtkWidget *widget,  GdkDevice *device,  GdkEventMask events);
+		gtk_widget_set_device_events(gtkWidget, device, events);
 	}
 	
 	/**
-	 * Retrieves the extension events the widget will receive; see
-	 * gdk_input_set_extension_events().
-	 * Returns: extension events for widget
+	 * Returns the events mask for the widget corresponding to an specific device. These
+	 * are the events that the widget will receive when device operates on it.
+	 * Params:
+	 * device = a GdkDevice
+	 * Returns: device event mask for widget Since 3.0
 	 */
-	public GdkExtensionMode getExtensionEvents()
+	public GdkEventMask getDeviceEvents(GdkDevice* device)
 	{
-		// GdkExtensionMode gtk_widget_get_extension_events (GtkWidget *widget);
-		return gtk_widget_get_extension_events(gtkWidget);
+		// GdkEventMask gtk_widget_get_device_events (GtkWidget *widget,  GdkDevice *device);
+		return gtk_widget_get_device_events(gtkWidget, device);
+	}
+	
+	/**
+	 * Adds the device events in the bitfield events to the event mask for
+	 * widget. See gtk_widget_set_device_events() for details.
+	 * Params:
+	 * device = a GdkDevice
+	 * events = an event mask, see GdkEventMask
+	 * Since 3.0
+	 */
+	public void addDeviceEvents(GdkDevice* device, GdkEventMask events)
+	{
+		// void gtk_widget_add_device_events (GtkWidget *widget,  GdkDevice *device,  GdkEventMask events);
+		gtk_widget_add_device_events(gtkWidget, device, events);
+	}
+	
+	/**
+	 * Enables or disables a GdkDevice to interact with widget
+	 * and all its children.
+	 * It does so by descending through the GdkWindow hierarchy
+	 * and enabling the same mask that is has for core events
+	 * (i.e. the one that gdk_window_get_events() returns).
+	 * Params:
+	 * device = a GdkDevice
+	 * enabled = whether to enable the device
+	 * Since 3.0
+	 */
+	public void setDeviceEnabled(GdkDevice* device, int enabled)
+	{
+		// void gtk_widget_set_device_enabled (GtkWidget *widget,  GdkDevice *device,  gboolean enabled);
+		gtk_widget_set_device_enabled(gtkWidget, device, enabled);
+	}
+	
+	/**
+	 * Returns whether device can interact with widget and its
+	 * children. See gtk_widget_set_device_enabled().
+	 * Params:
+	 * device = a GdkDevice
+	 * Returns: TRUE is device is enabled for widget Since 3.0
+	 */
+	public int getDeviceEnabled(GdkDevice* device)
+	{
+		// gboolean gtk_widget_get_device_enabled (GtkWidget *widget,  GdkDevice *device);
+		return gtk_widget_get_device_enabled(gtkWidget, device);
 	}
 	
 	/**
@@ -3540,7 +3766,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Widget getToplevel()
 	{
-		// GtkWidget* gtk_widget_get_toplevel (GtkWidget *widget);
+		// GtkWidget * gtk_widget_get_toplevel (GtkWidget *widget);
 		auto p = gtk_widget_get_toplevel(gtkWidget);
 		if(p is null)
 		{
@@ -3565,7 +3791,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Widget getAncestor(GType widgetType)
 	{
-		// GtkWidget* gtk_widget_get_ancestor (GtkWidget *widget,  GType widget_type);
+		// GtkWidget * gtk_widget_get_ancestor (GtkWidget *widget,  GType widget_type);
 		auto p = gtk_widget_get_ancestor(gtkWidget, widgetType);
 		if(p is null)
 		{
@@ -3575,42 +3801,12 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Gets the colormap that will be used to render widget. No reference will
-	 * be added to the returned colormap; it should not be unreferenced.
-	 * Returns: the colormap used by widget. [transfer none]
-	 */
-	public Colormap getColormap()
-	{
-		// GdkColormap* gtk_widget_get_colormap (GtkWidget *widget);
-		auto p = gtk_widget_get_colormap(gtkWidget);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Colormap(cast(GdkColormap*) p);
-	}
-	
-	/**
-	 * Sets the colormap for the widget to the given value. Widget must not
-	 * have been previously realized. This probably should only be used
-	 * from an init() function (i.e. from the constructor
-	 * for the widget).
-	 * Params:
-	 * colormap = a colormap
-	 */
-	public void setColormap(Colormap colormap)
-	{
-		// void gtk_widget_set_colormap (GtkWidget *widget,  GdkColormap *colormap);
-		gtk_widget_set_colormap(gtkWidget, (colormap is null) ? null : colormap.getColormapStruct());
-	}
-	
-	/**
 	 * Gets the visual that will be used to render widget.
 	 * Returns: the visual for widget. [transfer none]
 	 */
 	public Visual getVisual()
 	{
-		// GdkVisual* gtk_widget_get_visual (GtkWidget *widget);
+		// GdkVisual * gtk_widget_get_visual (GtkWidget *widget);
 		auto p = gtk_widget_get_visual(gtkWidget);
 		if(p is null)
 		{
@@ -3620,15 +3816,19 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Returns the event mask for the widget (a bitfield containing flags
-	 * from the GdkEventMask enumeration). These are the events that the widget
-	 * will receive.
-	 * Returns: event mask for widget
+	 * Sets the visual that should be used for by widget and its children for
+	 * creating GdkWindows. The visual must be on the same GdkScreen as
+	 * returned by gdk_widget_get_screen(), so handling the
+	 * "screen-changed" signal is necessary.
+	 * Setting a new visual will not cause widget to recreate its windows,
+	 * so you should call this function before widget is realized.
+	 * Params:
+	 * visual = visual to be used or NULL to unset a previous one
 	 */
-	public int getEvents()
+	public void setVisual(Visual visual)
 	{
-		// gint gtk_widget_get_events (GtkWidget *widget);
-		return gtk_widget_get_events(gtkWidget);
+		// void gtk_widget_set_visual (GtkWidget *widget,  GdkVisual *visual);
+		gtk_widget_set_visual(gtkWidget, (visual is null) ? null : visual.getVisualStruct());
 	}
 	
 	/**
@@ -3696,13 +3896,14 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Sets the GtkStyle for a widget (widget->style). You probably don't
-	 * want to use this function; it interacts badly with themes, because
-	 * themes work by replacing the GtkStyle. Instead, use
-	 * gtk_widget_modify_style().
+	 * Warning
+	 * gtk_widget_set_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead
+	 * Used to set the GtkStyle for a widget (widget->style). Since
+	 * GTK 3, this function does nothing, the passed in style is ignored.
 	 * Params:
-	 * style = a GtkStyle, or NULL to remove the effect of a previous
-	 *  gtk_widget_set_style() and go back to the default style. [allow-none]
+	 * style = a GtkStyle, or NULL to remove the effect
+	 * of a previous call to gtk_widget_set_style() and go back to
+	 * the default style. [allow-none]
 	 */
 	public void setStyle(Style style)
 	{
@@ -3711,10 +3912,12 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Ensures that widget has a style (widget->style). Not a very useful
-	 * function; most of the time, if you want the style, the widget is
-	 * realized, and realized widgets are guaranteed to have a style
-	 * already.
+	 * Warning
+	 * gtk_widget_ensure_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead
+	 * Ensures that widget has a style (widget->style).
+	 * Not a very useful function; most of the time, if you
+	 * want the style, the widget is realized, and realized
+	 * widgets are guaranteed to have a style already.
 	 */
 	public void ensureStyle()
 	{
@@ -3723,6 +3926,8 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_get_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead
 	 * Simply an accessor function that returns widget->style.
 	 * Returns: the widget's GtkStyle. [transfer none]
 	 */
@@ -3738,6 +3943,8 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_reset_rc_styles has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead, and gtk_widget_reset_style()
 	 * Reset the styles of widget and all descendents, so when
 	 * they are looked up again, they get the correct values
 	 * for the currently loaded RC file settings.
@@ -3750,85 +3957,22 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Pushes cmap onto a global stack of colormaps; the topmost
-	 * colormap on the stack will be used to create all widgets.
-	 * Remove cmap with gtk_widget_pop_colormap(). There's little
-	 * reason to use this function.
-	 * Params:
-	 * cmap = a GdkColormap
-	 */
-	public static void pushColormap(Colormap cmap)
-	{
-		// void gtk_widget_push_colormap (GdkColormap *cmap);
-		gtk_widget_push_colormap((cmap is null) ? null : cmap.getColormapStruct());
-	}
-	
-	/**
-	 * Removes a colormap pushed with gtk_widget_push_colormap().
-	 */
-	public static void popColormap()
-	{
-		// void gtk_widget_pop_colormap (void);
-		gtk_widget_pop_colormap();
-	}
-	
-	/**
-	 * Sets the default colormap to use when creating widgets.
-	 * gtk_widget_push_colormap() is a better function to use if
-	 * you only want to affect a few widgets, rather than all widgets.
-	 * Params:
-	 * colormap = a GdkColormap
-	 */
-	public static void setDefaultColormap(Colormap colormap)
-	{
-		// void gtk_widget_set_default_colormap (GdkColormap *colormap);
-		gtk_widget_set_default_colormap((colormap is null) ? null : colormap.getColormapStruct());
-	}
-	
-	/**
+	 * Warning
+	 * gtk_widget_get_default_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead, and
+	 *  gtk_css_provider_get_default() to obtain a GtkStyleProvider
+	 *  with the default widget style information.
 	 * Returns the default style used by all widgets initially.
 	 * Returns: the default style. This GtkStyle object is owned by GTK+ and should not be modified or freed. [transfer none]
 	 */
 	public static Style getDefaultStyle()
 	{
-		// GtkStyle* gtk_widget_get_default_style (void);
+		// GtkStyle * gtk_widget_get_default_style (void);
 		auto p = gtk_widget_get_default_style();
 		if(p is null)
 		{
 			return null;
 		}
 		return new Style(cast(GtkStyle*) p);
-	}
-	
-	/**
-	 * Obtains the default colormap used to create widgets.
-	 * Returns: default widget colormap. [transfer none]
-	 */
-	public static Colormap getDefaultColormap()
-	{
-		// GdkColormap* gtk_widget_get_default_colormap (void);
-		auto p = gtk_widget_get_default_colormap();
-		if(p is null)
-		{
-			return null;
-		}
-		return new Colormap(cast(GdkColormap*) p);
-	}
-	
-	/**
-	 * Obtains the visual of the default colormap. Not really useful;
-	 * used to be useful before gdk_colormap_get_visual() existed.
-	 * Returns: visual of the default colormap. [transfer none]
-	 */
-	public static Visual getDefaultVisual()
-	{
-		// GdkVisual* gtk_widget_get_default_visual (void);
-		auto p = gtk_widget_get_default_visual();
-		if(p is null)
-		{
-			return null;
-		}
-		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -3868,7 +4012,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * direction has not been explicitly set by gtk_widget_set_direction().
 	 * Params:
 	 * dir = the new default direction. This cannot be
-	 *  GTK_TEXT_DIR_NONE.
+	 * GTK_TEXT_DIR_NONE.
 	 */
 	public static void setDefaultDirection(GtkTextDirection dir)
 	{
@@ -3889,36 +4033,35 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Sets a shape for this widget's GDK window. This allows for
-	 * transparent windows etc., see gdk_window_shape_combine_mask()
+	 * transparent windows etc., see gdk_window_shape_combine_region()
 	 * for more information.
 	 * Params:
-	 * shapeMask = shape to be added, or NULL to remove an existing shape. [allow-none]
-	 * offsetX = X position of shape mask with respect to window
-	 * offsetY = Y position of shape mask with respect to window
+	 * region = shape to be added, or NULL to remove an existing shape. [allow-none]
+	 * Since 3.0
 	 */
-	public void shapeCombineMask(Bitmap shapeMask, int offsetX, int offsetY)
+	public void shapeCombineRegion(cairo_region_t* region)
 	{
-		// void gtk_widget_shape_combine_mask (GtkWidget *widget,  GdkBitmap *shape_mask,  gint offset_x,  gint offset_y);
-		gtk_widget_shape_combine_mask(gtkWidget, (shapeMask is null) ? null : shapeMask.getBitmapStruct(), offsetX, offsetY);
+		// void gtk_widget_shape_combine_region (GtkWidget *widget,  cairo_region_t *region);
+		gtk_widget_shape_combine_region(gtkWidget, region);
 	}
 	
 	/**
 	 * Sets an input shape for this widget's GDK window. This allows for
 	 * windows which react to mouse click in a nonrectangular region, see
-	 * gdk_window_input_shape_combine_mask() for more information.
-	 * Since 2.10
+	 * gdk_window_input_shape_combine_region() for more information.
 	 * Params:
-	 * shapeMask = shape to be added, or NULL to remove an existing shape. [allow-none]
-	 * offsetX = X position of shape mask with respect to window
-	 * offsetY = Y position of shape mask with respect to window
+	 * region = shape to be added, or NULL to remove an existing shape. [allow-none]
+	 * Since 3.0
 	 */
-	public void inputShapeCombineMask(Bitmap shapeMask, int offsetX, int offsetY)
+	public void inputShapeCombineRegion(cairo_region_t* region)
 	{
-		// void gtk_widget_input_shape_combine_mask (GtkWidget *widget,  GdkBitmap *shape_mask,  gint offset_x,  gint offset_y);
-		gtk_widget_input_shape_combine_mask(gtkWidget, (shapeMask is null) ? null : shapeMask.getBitmapStruct(), offsetX, offsetY);
+		// void gtk_widget_input_shape_combine_region  (GtkWidget *widget,  cairo_region_t *region);
+		gtk_widget_input_shape_combine_region(gtkWidget, region);
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_path has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_get_path() instead
 	 * Obtains the full path to widget. The path is simply the name of a
 	 * widget and all its parents in the container hierarchy, separated by
 	 * periods. The name of a widget comes from
@@ -3932,9 +4075,12 @@ public class Widget : ObjectGtk, BuildableIF
 	 * i.e. starting with widget's name instead of starting with the name
 	 * of widget's outermost ancestor.
 	 * Params:
-	 * pathLength = location to store length of the path, or NULL. [out][allow-none]
-	 * path = location to store allocated path string, or NULL. [out][allow-none]
-	 * pathReversed = location to store allocated reverse path string, or NULL. [out][allow-none]
+	 * pathLength = location to store length of the path,
+	 * or NULL. [out][allow-none]
+	 * path = location to store allocated path string,
+	 * or NULL. [out][allow-none]
+	 * pathReversed = location to store allocated reverse
+	 * path string, or NULL. [out][allow-none]
 	 */
 	public void path(out uint pathLength, out string path, out string pathReversed)
 	{
@@ -3949,13 +4095,17 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_class_path has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_get_path() instead
 	 * Same as gtk_widget_path(), but always uses the name of a widget's type,
 	 * never uses a custom name set with gtk_widget_set_name().
 	 * Params:
-	 * pathLength = location to store the length of the class path, or NULL. [out][allow-none]
-	 * path = location to store the class path as an allocated string, or NULL. [out][allow-none]
-	 * pathReversed = location to store the reverse class path as an allocated
-	 *  string, or NULL. [out][allow-none]
+	 * pathLength = location to store the length of the
+	 * class path, or NULL. [out][allow-none]
+	 * path = location to store the class path as an
+	 * allocated string, or NULL. [out][allow-none]
+	 * pathReversed = location to store the reverse
+	 * class path as an allocated string, or NULL. [out][allow-none]
 	 */
 	public void classPath(out uint pathLength, out string path, out string pathReversed)
 	{
@@ -3975,18 +4125,122 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public string getCompositeName()
 	{
-		// gchar* gtk_widget_get_composite_name (GtkWidget *widget);
+		// gchar * gtk_widget_get_composite_name (GtkWidget *widget);
 		return Str.toString(gtk_widget_get_composite_name(gtkWidget));
 	}
 	
 	/**
-	 * Modifies style values on the widget. Modifications made using this
-	 * technique take precedence over style values set via an RC file,
-	 * however, they will be overriden if a style is explicitely set on
-	 * the widget using gtk_widget_set_style(). The GtkRcStyle structure
-	 * is designed so each field can either be set or unset, so it is
-	 * possible, using this function, to modify some style values and
-	 * leave the others unchanged.
+	 * Sets the background color to use for a widget.
+	 * All other style values are left untouched.
+	 * See gtk_widget_override_color().
+	 * Params:
+	 * state = the state for which to set the background color
+	 * color = the color to assign, or NULL to undo the effect
+	 * of previous calls to gtk_widget_override_background_color(). [allow-none]
+	 * Since 3.0
+	 */
+	public void overrideBackgroundColor(GtkStateFlags state, GdkRGBA* color)
+	{
+		// void gtk_widget_override_background_color  (GtkWidget *widget,  GtkStateFlags state,  const GdkRGBA *color);
+		gtk_widget_override_background_color(gtkWidget, state, color);
+	}
+	
+	/**
+	 * Sets the color to use for a widget.
+	 * All other style values are left untouched.
+	 * Note
+	 * This API is mostly meant as a quick way for applications to
+	 * change a widget appearance. If you are developing a widgets
+	 * library and intend this change to be themeable, it is better
+	 * done by setting meaningful CSS classes and regions in your
+	 * widget/container implementation through gtk_style_context_add_class()
+	 * and gtk_style_context_add_region().
+	 * This way, your widget library can install a GtkCssProvider
+	 * with the GTK_STYLE_PROVIDER_PRIORITY_FALLBACK priority in order
+	 * to provide a default styling for those widgets that need so, and
+	 * this theming may fully overridden by the user's theme.
+	 * Note
+	 * Note that for complex widgets this may bring in undesired
+	 * results (such as uniform background color everywhere), in
+	 * these cases it is better to fully style such widgets through a
+	 * GtkCssProvider with the GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
+	 * priority.
+	 * Params:
+	 * state = the state for which to set the color
+	 * color = the color to assign, or NULL to undo the effect
+	 * of previous calls to gtk_widget_override_color(). [allow-none]
+	 * Since 3.0
+	 */
+	public void overrideColor(GtkStateFlags state, GdkRGBA* color)
+	{
+		// void gtk_widget_override_color (GtkWidget *widget,  GtkStateFlags state,  const GdkRGBA *color);
+		gtk_widget_override_color(gtkWidget, state, color);
+	}
+	
+	/**
+	 * Sets the font to use for a widget. All other style values are
+	 * left untouched. See gtk_widget_override_color().
+	 * Params:
+	 * fontDesc = the font descriptiong to use, or NULL to undo
+	 * the effect of previous calls to gtk_widget_override_font(). [allow-none]
+	 * Since 3.0
+	 */
+	public void overrideFont(PgFontDescription fontDesc)
+	{
+		// void gtk_widget_override_font (GtkWidget *widget,  const PangoFontDescription *font_desc);
+		gtk_widget_override_font(gtkWidget, (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
+	}
+	
+	/**
+	 * Sets a symbolic color for a widget.
+	 * All other style values are left untouched.
+	 * See gtk_widget_override_color() for overriding the foreground
+	 * or background color.
+	 * Params:
+	 * name = the name of the symbolic color to modify
+	 * color = the color to assign (does not need
+	 * to be allocated), or NULL to undo the effect of previous
+	 * calls to gtk_widget_override_symbolic_color(). [allow-none]
+	 * Since 3.0
+	 */
+	public void overrideSymbolicColor(string name, GdkRGBA* color)
+	{
+		// void gtk_widget_override_symbolic_color (GtkWidget *widget,  const gchar *name,  const GdkRGBA *color);
+		gtk_widget_override_symbolic_color(gtkWidget, Str.toStringz(name), color);
+	}
+	
+	/**
+	 * Sets the cursor color to use in a widget, overriding the
+	 * "cursor-color" and "secondary-cursor-color"
+	 * style properties. All other style values are left untouched.
+	 * See also gtk_widget_modify_style().
+	 * Note that the underlying properties have the GdkColor type,
+	 * so the alpha value in primary and secondary will be ignored.
+	 * Params:
+	 * cursor = the color to use for primary cursor (does not need to be
+	 * allocated), or NULL to undo the effect of previous calls to
+	 * of gtk_widget_override_cursor(). [allow-none]
+	 * secondaryCursor = the color to use for secondary cursor (does not
+	 * need to be allocated), or NULL to undo the effect of previous
+	 * calls to of gtk_widget_override_cursor(). [allow-none]
+	 * Since 3.0
+	 */
+	public void overrideCursor(GdkRGBA* cursor, GdkRGBA* secondaryCursor)
+	{
+		// void gtk_widget_override_cursor (GtkWidget *widget,  const GdkRGBA *cursor,  const GdkRGBA *secondary_cursor);
+		gtk_widget_override_cursor(gtkWidget, cursor, secondaryCursor);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_widget_modify_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext with a custom GtkStyleProvider instead
+	 * Modifies style values on the widget.
+	 * Modifications made using this technique take precedence over
+	 * style values set via an RC file, however, they will be overridden
+	 * if a style is explicitely set on the widget using gtk_widget_set_style().
+	 * The GtkRcStyle structure is designed so each field can either be
+	 * set or unset, so it is possible, using this function, to modify some
+	 * style values and leave the others unchanged.
 	 * Note that modifications made with this function are not cumulative
 	 * with previous calls to gtk_widget_modify_style() or with such
 	 * functions as gtk_widget_modify_fg(). If you wish to retain
@@ -4006,6 +4260,8 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_get_modifier_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext with a custom GtkStyleProvider instead
 	 * Returns the current modifier style for the widget. (As set by
 	 * gtk_widget_modify_style().) If no style has previously set, a new
 	 * GtkRcStyle will be created with all values unset, and set as the
@@ -4031,14 +4287,16 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_modify_fg has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_override_color() instead
 	 * Sets the foreground color for a widget in a particular state.
-	 * All other style values are left untouched. See also
-	 * gtk_widget_modify_style().
+	 * All other style values are left untouched.
+	 * See also gtk_widget_modify_style().
 	 * Params:
 	 * state = the state for which to set the foreground color
 	 * color = the color to assign (does not need to be allocated),
-	 *  or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_fg(). [allow-none]
+	 * or NULL to undo the effect of previous calls to
+	 * of gtk_widget_modify_fg(). [allow-none]
 	 */
 	public void modifyFg(GtkStateType state, Color color)
 	{
@@ -4047,21 +4305,25 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_modify_bg has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_override_background_color() instead
 	 * Sets the background color for a widget in a particular state.
-	 * All other style values are left untouched. See also
-	 * gtk_widget_modify_style().
-	 * Note that "no window" widgets (which have the GTK_NO_WINDOW flag set)
-	 * draw on their parent container's window and thus may not draw any
-	 * background themselves. This is the case for e.g. GtkLabel. To modify
-	 * the background of such widgets, you have to set the background color
-	 * on their parent; if you want to set the background of a rectangular
-	 * area around a label, try placing the label in a GtkEventBox widget
-	 * and setting the background color on that.
+	 * All other style values are left untouched.
+	 * See also gtk_widget_modify_style().
+	 * Note
+	 * Note that "no window" widgets (which have the GTK_NO_WINDOW
+	 * flag set) draw on their parent container's window and thus may
+	 * not draw any background themselves. This is the case for e.g.
+	 * GtkLabel.
+	 * To modify the background of such widgets, you have to set the
+	 * background color on their parent; if you want to set the background
+	 * of a rectangular area around a label, try placing the label in
+	 * a GtkEventBox widget and setting the background color on that.
 	 * Params:
 	 * state = the state for which to set the background color
-	 * color = the color to assign (does not need to be allocated),
-	 *  or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_bg(). [allow-none]
+	 * color = the color to assign (does not need
+	 * to be allocated), or NULL to undo the effect of previous
+	 * calls to of gtk_widget_modify_bg(). [allow-none]
 	 */
 	public void modifyBg(GtkStateType state, Color color)
 	{
@@ -4070,16 +4332,19 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Sets the text color for a widget in a particular state. All other
-	 * style values are left untouched. The text color is the foreground
-	 * color used along with the base color (see gtk_widget_modify_base())
-	 * for widgets such as GtkEntry and GtkTextView. See also
-	 * gtk_widget_modify_style().
+	 * Warning
+	 * gtk_widget_modify_text has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_override_color() instead
+	 * Sets the text color for a widget in a particular state.
+	 * All other style values are left untouched.
+	 * The text color is the foreground color used along with the
+	 * base color (see gtk_widget_modify_base()) for widgets such
+	 * as GtkEntry and GtkTextView.
+	 * See also gtk_widget_modify_style().
 	 * Params:
 	 * state = the state for which to set the text color
-	 * color = the color to assign (does not need to be allocated),
-	 *  or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_text(). [allow-none]
+	 * color = the color to assign (does not need to
+	 * be allocated), or NULL to undo the effect of previous
+	 * calls to of gtk_widget_modify_text(). [allow-none]
 	 */
 	public void modifyText(GtkStateType state, Color color)
 	{
@@ -4088,23 +4353,27 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_modify_base has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_override_background_color() instead
 	 * Sets the base color for a widget in a particular state.
 	 * All other style values are left untouched. The base color
 	 * is the background color used along with the text color
 	 * (see gtk_widget_modify_text()) for widgets such as GtkEntry
 	 * and GtkTextView. See also gtk_widget_modify_style().
-	 * Note that "no window" widgets (which have the GTK_NO_WINDOW flag set)
-	 * draw on their parent container's window and thus may not draw any
-	 * background themselves. This is the case for e.g. GtkLabel. To modify
-	 * the background of such widgets, you have to set the base color on their
-	 * parent; if you want to set the background of a rectangular area around
-	 * a label, try placing the label in a GtkEventBox widget and setting
-	 * the base color on that.
+	 * Note
+	 * Note that "no window" widgets (which have the GTK_NO_WINDOW
+	 * flag set) draw on their parent container's window and thus may
+	 * not draw any background themselves. This is the case for e.g.
+	 * GtkLabel.
+	 * To modify the background of such widgets, you have to set the
+	 * base color on their parent; if you want to set the background
+	 * of a rectangular area around a label, try placing the label in
+	 * a GtkEventBox widget and setting the base color on that.
 	 * Params:
 	 * state = the state for which to set the base color
-	 * color = the color to assign (does not need to be allocated),
-	 *  or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_base(). [allow-none]
+	 * color = the color to assign (does not need to
+	 * be allocated), or NULL to undo the effect of previous
+	 * calls to of gtk_widget_modify_base(). [allow-none]
 	 */
 	public void modifyBase(GtkStateType state, Color color)
 	{
@@ -4113,11 +4382,14 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Sets the font to use for a widget. All other style values are left
-	 * untouched. See also gtk_widget_modify_style().
+	 * Warning
+	 * gtk_widget_modify_font has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_override_font() instead
+	 * Sets the font to use for a widget.
+	 * All other style values are left untouched.
+	 * See also gtk_widget_modify_style().
 	 * Params:
-	 * fontDesc = the font description to use, or NULL to undo
-	 *  the effect of previous calls to gtk_widget_modify_font(). [allow-none]
+	 * fontDesc = the font description to use, or NULL
+	 * to undo the effect of previous calls to gtk_widget_modify_font(). [allow-none]
 	 */
 	public void modifyFont(PgFontDescription fontDesc)
 	{
@@ -4126,18 +4398,21 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_modify_cursor is deprecated and should not be used in newly-written code. 3.0. Use gtk_widget_override_cursor() instead.
 	 * Sets the cursor color to use in a widget, overriding the
 	 * "cursor-color" and "secondary-cursor-color"
-	 * style properties. All other style values are left untouched.
+	 * style properties.
+	 * All other style values are left untouched.
 	 * See also gtk_widget_modify_style().
 	 * Since 2.12
 	 * Params:
 	 * primary = the color to use for primary cursor (does not need to be
-	 *  allocated), or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_cursor().
+	 * allocated), or NULL to undo the effect of previous calls to
+	 * of gtk_widget_modify_cursor().
 	 * secondary = the color to use for secondary cursor (does not need to be
-	 *  allocated), or NULL to undo the effect of previous calls to
-	 *  of gtk_widget_modify_cursor().
+	 * allocated), or NULL to undo the effect of previous calls to
+	 * of gtk_widget_modify_cursor().
 	 */
 	public void modifyCursor(Color primary, Color secondary)
 	{
@@ -4149,7 +4424,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Creates a new PangoContext with the appropriate font map,
 	 * font description, and base direction for drawing text for
 	 * this widget. See also gtk_widget_get_pango_context().
-	 * Returns: the new PangoContext
+	 * Returns: the new PangoContext. [transfer full]
 	 */
 	public PgContext createPangoContext()
 	{
@@ -4171,7 +4446,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * match any changes to the widget's attributes.
 	 * If you create and keep a PangoLayout using this context, you must
 	 * deal with changes to the context by calling pango_layout_context_changed()
-	 * on the layout in response to the "style-set" and
+	 * on the layout in response to the "style-updated" and
 	 * "direction-changed" signals for the widget.
 	 * Returns: the PangoContext for the widget. [transfer none]
 	 */
@@ -4193,11 +4468,11 @@ public class Widget : ObjectGtk, BuildableIF
 	 * If you keep a PangoLayout created in this way around, in order to
 	 * notify the layout of changes to the base direction or font of this
 	 * widget, you must call pango_layout_context_changed() in response to
-	 * the "style-set" and "direction-changed" signals
+	 * the "style-updated" and "direction-changed" signals
 	 * for the widget.
 	 * Params:
 	 * text = text to set on the layout (can be NULL)
-	 * Returns: the new PangoLayout
+	 * Returns: the new PangoLayout. [transfer full]
 	 */
 	public PgLayout createPangoLayout(string text)
 	{
@@ -4211,28 +4486,57 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * A convenience function that uses the theme engine and RC file
-	 * settings for widget to look up stock_id and render it to
-	 * a pixbuf. stock_id should be a stock icon ID such as
-	 * GTK_STOCK_OPEN or GTK_STOCK_OK. size should be a size
-	 * such as GTK_ICON_SIZE_MENU. detail should be a string that
-	 * identifies the widget or code doing the rendering, so that
-	 * theme engines can special-case rendering for that widget or code.
+	 * Warning
+	 * gtk_widget_render_icon has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_render_icon_pixbuf() instead.
+	 * A convenience function that uses the theme settings for widget
+	 * to look up stock_id and render it to a pixbuf. stock_id should
+	 * be a stock icon ID such as GTK_STOCK_OPEN or GTK_STOCK_OK. size
+	 * should be a size such as GTK_ICON_SIZE_MENU. detail should be a
+	 * string that identifies the widget or code doing the rendering, so
+	 * that theme engines can special-case rendering for that widget or
+	 * code.
 	 * The pixels in the returned GdkPixbuf are shared with the rest of
-	 * the application and should not be modified. The pixbuf should be freed
-	 * after use with g_object_unref().
+	 * the application and should not be modified. The pixbuf should be
+	 * freed after use with g_object_unref().
 	 * Params:
 	 * stockId = a stock ID
-	 * size = (type int) a stock size. A size of (GtkIconSize)-1 means
-	 *  render at the size of the source and don't scale (if there are
-	 *  multiple source sizes, GTK+ picks one of the available sizes).
+	 * size = a stock size. A size of (GtkIconSize)-1 means
+	 * render at the size of the source and don't scale (if there are
+	 * multiple source sizes, GTK+ picks one of the available sizes). [type int]
 	 * detail = render detail to pass to theme engine. [allow-none]
-	 * Returns: a new pixbuf, or NULL if the stock ID wasn't known
+	 * Returns: a new pixbuf, or NULL if the stock ID wasn't known. [transfer full]
 	 */
 	public Pixbuf renderIcon(string stockId, GtkIconSize size, string detail)
 	{
 		// GdkPixbuf * gtk_widget_render_icon (GtkWidget *widget,  const gchar *stock_id,  GtkIconSize size,  const gchar *detail);
 		auto p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * A convenience function that uses the theme engine and style
+	 * settings for widget to look up stock_id and render it to
+	 * a pixbuf. stock_id should be a stock icon ID such as
+	 * GTK_STOCK_OPEN or GTK_STOCK_OK. size should be a size
+	 * such as GTK_ICON_SIZE_MENU.
+	 * The pixels in the returned GdkPixbuf are shared with the rest of
+	 * the application and should not be modified. The pixbuf should be freed
+	 * after use with g_object_unref().
+	 * Params:
+	 * stockId = a stock ID
+	 * size = a stock size. A size of (GtkIconSize)-1 means
+	 * render at the size of the source and don't scale (if there are
+	 * multiple source sizes, GTK+ picks one of the available sizes). [type int]
+	 * Returns: a new pixbuf, or NULL if the stock ID wasn't known. [transfer full] Since 3.0
+	 */
+	public Pixbuf renderIconPixbuf(string stockId, GtkIconSize size)
+	{
+		// GdkPixbuf * gtk_widget_render_icon_pixbuf (GtkWidget *widget,  const gchar *stock_id,  GtkIconSize size);
+		auto p = gtk_widget_render_icon_pixbuf(gtkWidget, Str.toStringz(stockId), size);
 		if(p is null)
 		{
 			return null;
@@ -4265,56 +4569,13 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_widget_queue_clear has been deprecated since version 2.2 and should not be used in newly-written code. Use gtk_widget_queue_draw() instead.
-	 * This function does the same as gtk_widget_queue_draw().
-	 */
-	public void queueClear()
-	{
-		// void gtk_widget_queue_clear (GtkWidget *widget);
-		gtk_widget_queue_clear(gtkWidget);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_widget_queue_clear_area has been deprecated since version 2.2 and should not be used in newly-written code. Use gtk_widget_queue_draw_area() instead.
-	 * This function is no longer different from
-	 * gtk_widget_queue_draw_area(), though it once was. Now it just calls
-	 * gtk_widget_queue_draw_area(). Originally
-	 * gtk_widget_queue_clear_area() would force a redraw of the
-	 * background for GTK_NO_WINDOW widgets, and
-	 * gtk_widget_queue_draw_area() would not. Now both functions ensure
-	 * the background will be redrawn.
-	 * Params:
-	 * x = x coordinate of upper-left corner of rectangle to redraw
-	 * y = y coordinate of upper-left corner of rectangle to redraw
-	 * width = width of region to draw
-	 * height = height of region to draw
-	 */
-	public void queueClearArea(int x, int y, int width, int height)
-	{
-		// void gtk_widget_queue_clear_area (GtkWidget *widget,  gint x,  gint y,  gint width,  gint height);
-		gtk_widget_queue_clear_area(gtkWidget, x, y, width, height);
-	}
-	
-	/**
-	 * Invalidates the rectangular area of widget defined by x, y,
-	 * width and height by calling gdk_window_invalidate_rect() on the
-	 * widget's window and all its child windows. Once the main loop
-	 * becomes idle (after the current batch of events has been processed,
-	 * roughly), the window will receive expose events for the union of
-	 * all regions that have been invalidated.
-	 * Normally you would only use this function in widget
-	 * implementations. You might also use it, or
-	 * gdk_window_invalidate_rect() directly, to schedule a redraw of a
-	 * GtkDrawingArea or some portion thereof.
-	 * Frequently you can just call gdk_window_invalidate_rect() or
-	 * gdk_window_invalidate_region() instead of this function. Those
-	 * functions will invalidate only a single window, instead of the
-	 * widget and all its children.
-	 * The advantage of adding to the invalidated region compared to
-	 * simply drawing immediately is efficiency; using an invalid region
-	 * ensures that you only have to redraw one time.
+	 * Convenience function that calls gtk_widget_queue_draw_region() on
+	 * the region created from the given coordinates.
+	 * The region here is specified in widget coordinates.
+	 * Widget coordinates are a bit odd; for historical reasons, they are
+	 * defined as widget->window coordinates for widgets that are not
+	 * GTK_NO_WINDOW widgets, and are relative to widget->allocation.x,
+	 * widget->allocation.y for widgets that are GTK_NO_WINDOW widgets.
 	 * Params:
 	 * x = x coordinate of upper-left corner of rectangle to redraw
 	 * y = y coordinate of upper-left corner of rectangle to redraw
@@ -4328,17 +4589,28 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Recursively resets the shape on this widget and its descendants.
+	 * Invalidates the rectangular area of widget defined by region by
+	 * calling gdk_window_invalidate_region() on the widget's window and
+	 * all its child windows. Once the main loop becomes idle (after the
+	 * current batch of events has been processed, roughly), the window
+	 * will receive expose events for the union of all regions that have
+	 * been invalidated.
+	 * Normally you would only use this function in widget
+	 * implementations. You might also use it to schedule a redraw of a
+	 * GtkDrawingArea or some portion thereof.
+	 * Params:
+	 * region = region to draw
+	 * Since 3.0
 	 */
-	public void resetShapes()
+	public void queueDrawRegion(cairo_region_t* region)
 	{
-		// void gtk_widget_reset_shapes (GtkWidget *widget);
-		gtk_widget_reset_shapes(gtkWidget);
+		// void gtk_widget_queue_draw_region (GtkWidget *widget,  cairo_region_t *region);
+		gtk_widget_queue_draw_region(gtkWidget, region);
 	}
 	
 	/**
 	 * Sets whether the application intends to draw on the widget in
-	 * an "expose-event" handler.
+	 * an "draw" handler.
 	 * This is a hint to the widget and does not affect the behavior of
 	 * the GTK+ core; many widgets ignore this flag entirely. For widgets
 	 * that do pay attention to the flag, such as GtkEventBox and GtkWindow,
@@ -4346,7 +4618,6 @@ public class Widget : ObjectGtk, BuildableIF
 	 * background. (Children of the widget will still be drawn.) The application
 	 * is then entirely responsible for drawing the widget background.
 	 * Note that the background is still drawn when the widget is mapped.
-	 * If this is not suitable (e.g. because you want to make a transparent
 	 * Params:
 	 * appPaintable = TRUE if the application will paint on the widget
 	 */
@@ -4398,8 +4669,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * regions newly when the widget increases size.
 	 * Params:
 	 * redrawOnAllocate = if TRUE, the entire widget will be redrawn
-	 *  when it is allocated to a new size. Otherwise, only the
-	 *  new portion of the widget will be redrawn.
+	 * when it is allocated to a new size. Otherwise, only the
+	 * new portion of the widget will be redrawn.
 	 */
 	public void setRedrawOnAllocate(int redrawOnAllocate)
 	{
@@ -4417,23 +4688,6 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// void gtk_widget_set_composite_name (GtkWidget *widget,  const gchar *name);
 		gtk_widget_set_composite_name(gtkWidget, Str.toStringz(name));
-	}
-	
-	/**
-	 * For widgets that support scrolling, sets the scroll adjustments and
-	 * returns TRUE. For widgets that don't support scrolling, does
-	 * nothing and returns FALSE. Widgets that don't support scrolling
-	 * can be scrolled by placing them in a GtkViewport, which does
-	 * support scrolling.
-	 * Params:
-	 * hadjustment = an adjustment for horizontal scrolling, or NULL. [allow-none]
-	 * vadjustment = an adjustment for vertical scrolling, or NULL. [allow-none]
-	 * Returns: TRUE if the widget supports scrolling
-	 */
-	public int setScrollAdjustments(Adjustment hadjustment, Adjustment vadjustment)
-	{
-		// gboolean gtk_widget_set_scroll_adjustments (GtkWidget *widget,  GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		return gtk_widget_set_scroll_adjustments(gtkWidget, (hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -4483,11 +4737,11 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * klass = a GtkWidgetClass
 	 * propertyName = the name of the style property to find
-	 * Returns: the GParamSpec of the style property or NULL if class has no style property with that name. [allow-none]
+	 * Returns: the GParamSpec of the style property or NULL if class has no style property with that name. [transfer none]
 	 */
 	public static ParamSpec classFindStyleProperty(GtkWidgetClass* klass, string propertyName)
 	{
-		// GParamSpec* gtk_widget_class_find_style_property  (GtkWidgetClass *klass,  const gchar *property_name);
+		// GParamSpec * gtk_widget_class_find_style_property  (GtkWidgetClass *klass,  const gchar *property_name);
 		auto p = gtk_widget_class_find_style_property(klass, Str.toStringz(propertyName));
 		if(p is null)
 		{
@@ -4501,11 +4755,11 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Since 2.2
 	 * Params:
 	 * klass = a GtkWidgetClass
-	 * Returns: an newly allocated array of GParamSpec*. The array must be freed with g_free().
+	 * Returns: an newly allocated array of GParamSpec*. The array must be freed with g_free(). [array length=n_properties][transfer container]
 	 */
 	public static ParamSpec[] classListStyleProperties(GtkWidgetClass* klass)
 	{
-		// GParamSpec** gtk_widget_class_list_style_properties  (GtkWidgetClass *klass,  guint *n_properties);
+		// GParamSpec ** gtk_widget_class_list_style_properties  (GtkWidgetClass *klass,  guint *n_properties);
 		uint nProperties;
 		auto p = gtk_widget_class_list_style_properties(klass, &nProperties);
 		if(p is null)
@@ -4524,32 +4778,27 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Computes the intersection of a widget's area and region, returning
-	 * the intersection. The result may be empty, use gdk_region_empty() to
+	 * the intersection. The result may be empty, use cairo_region_is_empty() to
 	 * check.
 	 * Params:
-	 * region = a GdkRegion, in the same coordinate system as
-	 *  widget->allocation. That is, relative to widget->window
-	 *  for NO_WINDOW widgets; relative to the parent window
-	 *  of widget->window for widgets with their own window.
+	 * region = a cairo_region_t, in the same coordinate system as
+	 * widget->allocation. That is, relative to widget->window
+	 * for NO_WINDOW widgets; relative to the parent window
+	 * of widget->window for widgets with their own window.
 	 * Returns: A newly allocated region holding the intersection of widget and region. The coordinates of the return value are relative to widget->window for NO_WINDOW widgets, and relative to the parent window of widget->window for widgets with their own window.
 	 */
-	public Region regionIntersect(Region region)
+	public cairo_region_t* regionIntersect(cairo_region_t* region)
 	{
-		// GdkRegion * gtk_widget_region_intersect (GtkWidget *widget,  const GdkRegion *region);
-		auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
-		if(p is null)
-		{
-			return null;
-		}
-		return new Region(cast(GdkRegion*) p);
+		// cairo_region_t * gtk_widget_region_intersect (GtkWidget *widget,  const cairo_region_t *region);
+		return gtk_widget_region_intersect(gtkWidget, region);
 	}
 	
 	/**
 	 * Very rarely-used function. This function is used to emit
-	 * an expose event signals on a widget. This function is not
-	 * normally used directly. The only time it is used is when
-	 * propagating an expose event to a child NO_WINDOW widget, and
-	 * that is normally done using gtk_container_propagate_expose().
+	 * an expose event on a widget. This function is not normally used
+	 * directly. The only time it is used is when propagating an expose
+	 * event to a child NO_WINDOW widget, and that is normally done
+	 * using gtk_container_propagate_draw().
 	 * If you want to force an area of a window to be redrawn,
 	 * use gdk_window_invalidate_rect() or gdk_window_invalidate_region().
 	 * To cause the redraw to be done immediately, follow that call
@@ -4571,7 +4820,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to a widget that is semantically owned by the first widget even though
 	 * it's not a direct child - for instance, a search entry in a floating
 	 * window similar to the quick search in GtkTreeView.
-	 * Since 2.22
+	 * Since 2.20
 	 * Params:
 	 * event = a GdkEvent of type GDK_FOCUS_CHANGE
 	 * Returns: the return value from the event signal emission: TRUE if the event was handled, and FALSE otherwise
@@ -4600,8 +4849,8 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Params:
 	 * firstPropertyName = the name of the first property to get
 	 * varArgs = a va_list of pairs of property names and
-	 *  locations to return the property values, starting with the location
-	 *  for first_property_name.
+	 * locations to return the property values, starting with the location
+	 * for first_property_name.
 	 */
 	public void styleGetValist(string firstPropertyName, void* varArgs)
 	{
@@ -4610,6 +4859,8 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_style_attach is deprecated and should not be used in newly-written code. 3.0. This step is unnecessary with GtkStyleContext.
 	 * This function attaches the widget's GtkStyle to the widget's
 	 * GdkWindow. It is a replacement for
 	 * widget->style = gtk_style_attach (widget->style, widget->window);
@@ -4618,11 +4869,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * "realize" implementation, because one of the parent classes
 	 * (finally GtkWidget) would attach the style itself.
 	 * Since 2.20
-	 * Params:
 	 */
 	public void styleAttach()
 	{
-		// void gtk_widget_style_attach (GtkWidget *style);
+		// void gtk_widget_style_attach (GtkWidget *widget);
 		gtk_widget_style_attach(gtkWidget);
 	}
 	
@@ -4635,13 +4885,14 @@ public class Widget : ObjectGtk, BuildableIF
 	 * if no class-specific AtkObject implementation is available for the widget
 	 * instance in question, it will inherit an AtkObject implementation from the
 	 * first ancestor class for which such an implementation is defined.
-	 * The documentation of the ATK
+	 * The documentation of the
+	 * ATK
 	 * library contains more information about accessible objects and their uses.
 	 * Returns: the AtkObject associated with widget. [transfer none]
 	 */
 	public ObjectAtk getAccessible()
 	{
-		// AtkObject* gtk_widget_get_accessible (GtkWidget *widget);
+		// AtkObject * gtk_widget_get_accessible (GtkWidget *widget);
 		auto p = gtk_widget_get_accessible(gtkWidget);
 		if(p is null)
 		{
@@ -4668,11 +4919,6 @@ public class Widget : ObjectGtk, BuildableIF
 	 * outside the widget. If returning TRUE, widgets normally
 	 * call gtk_widget_grab_focus() to place the focus accordingly;
 	 * if returning FALSE, they don't modify the current focus location.
-	 * This function replaces gtk_container_focus() from GTK+ 1.2.
-	 * It was necessary to check that the child was visible, sensitive,
-	 * and focusable before calling gtk_container_focus().
-	 * gtk_widget_child_focus() returns FALSE if the widget is not
-	 * currently in a focusable state, so there's no need for those checks.
 	 * Params:
 	 * direction = direction of focus movement
 	 * Returns: TRUE if focus ended up inside widget
@@ -4690,7 +4936,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * This is the analogue of g_object_notify() for child properties.
 	 * Params:
 	 * childProperty = the name of a child property installed on the
-	 *  class of widget's parent
+	 * class of widget's parent
 	 */
 	public void childNotify(string childProperty)
 	{
@@ -4740,8 +4986,7 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Gets the settings object holding the settings (global property
-	 * settings, RC file information, etc) used for this widget.
+	 * Gets the settings object holding the settings used for this widget.
 	 * Note that this function can only be called when the GtkWidget
 	 * is attached to a toplevel, since the settings object is specific
 	 * to a particular GdkScreen.
@@ -4749,7 +4994,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public Settings getSettings()
 	{
-		// GtkSettings* gtk_widget_get_settings (GtkWidget *widget);
+		// GtkSettings * gtk_widget_get_settings (GtkWidget *widget);
 		auto p = gtk_widget_get_settings(gtkWidget);
 		if(p is null)
 		{
@@ -4766,10 +5011,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Since 2.2
 	 * Params:
 	 * selection = a GdkAtom which identifies the clipboard
-	 *  to use. GDK_SELECTION_CLIPBOARD gives the
-	 *  default clipboard. Another common value
-	 *  is GDK_SELECTION_PRIMARY, which gives
-	 *  the primary X selection.
+	 * to use. GDK_SELECTION_CLIPBOARD gives the
+	 * default clipboard. Another common value
+	 * is GDK_SELECTION_PRIMARY, which gives
+	 * the primary X selection.
 	 * Returns: the appropriate clipboard object. If no clipboard already exists, a new one will be created. Once a clipboard object has been created, it is persistent for all time. [transfer none]
 	 */
 	public Clipboard getClipboard(GdkAtom selection)
@@ -4868,7 +5113,7 @@ public class Widget : ObjectGtk, BuildableIF
 	 * height indicates that that dimension has not been set explicitly
 	 * and the natural requisition of the widget will be used intead. See
 	 * gtk_widget_set_size_request(). To get the size a widget will
-	 * actually use, call gtk_widget_size_request() instead of
+	 * actually request, call gtk_widget_get_preferred_size() instead of
 	 * this function.
 	 * Params:
 	 * width = return location for width, or NULL. [out][allow-none]
@@ -4929,6 +5174,10 @@ public class Widget : ObjectGtk, BuildableIF
 	 * the "natural" size request of the widget will be used instead.
 	 * Widgets can't actually be allocated a size less than 1 by 1, but
 	 * you can pass 0,0 to this function to mean "as small as possible."
+	 * The size request set here does not include any margin from the
+	 * GtkWidget properties margin-left, margin-right, margin-top, and
+	 * margin-bottom, but it does include pretty much all other padding
+	 * or border properties set by any subclass of GtkWidget.
 	 * Params:
 	 * width = width widget should request, or -1 to unset
 	 * height = height widget should request, or -1 to unset
@@ -4952,8 +5201,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Sets the "no-show-all" property, which determines whether
-	 * calls to gtk_widget_show_all() and gtk_widget_hide_all() will affect
-	 * this widget.
+	 * calls to gtk_widget_show_all() will affect this widget.
 	 * This is mostly for use in constructing widget hierarchies with externally
 	 * controlled visibility, see GtkUIManager.
 	 * Since 2.4
@@ -4967,9 +5215,9 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Returns the current value of the GtkWidget:no-show-all property,
-	 * which determines whether calls to gtk_widget_show_all() and
-	 * gtk_widget_hide_all() will affect this widget.
+	 * Returns the current value of the "no-show-all" property,
+	 * which determines whether calls to gtk_widget_show_all()
+	 * will affect this widget.
 	 * Since 2.4
 	 * Returns: the current value of the "no-show-all" property.
 	 */
@@ -4981,7 +5229,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Returns a newly allocated list of the widgets, normally labels, for
-	 * which this widget is a the target of a mnemonic (see for example,
+	 * which this widget is the target of a mnemonic (see for example,
 	 * gtk_label_set_mnemonic_widget()).
 	 * The widgets in the list are not individually referenced. If you
 	 * want to iterate through the list and perform actions involving
@@ -4990,11 +5238,11 @@ public class Widget : ObjectGtk, BuildableIF
 	 * (GFunc)g_object_ref, NULL) first, and then unref all the
 	 * widgets afterwards.
 	 * Since 2.4
-	 * Returns: the list of mnemonic labels; free this list with g_list_free() when you are done with it. [element-type GtkWidget][transfer container GtkWidget]
+	 * Returns: the list of mnemonic labels; free this list with g_list_free() when you are done with it. [element-type GtkWidget][transfer container]
 	 */
 	public ListG listMnemonicLabels()
 	{
-		// GList* gtk_widget_list_mnemonic_labels (GtkWidget *widget);
+		// GList * gtk_widget_list_mnemonic_labels (GtkWidget *widget);
 		auto p = gtk_widget_list_mnemonic_labels(gtkWidget);
 		if(p is null)
 		{
@@ -5028,31 +5276,12 @@ public class Widget : ObjectGtk, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * label = a GtkWidget that was previously set as a mnemnic label for
-	 *  widget with gtk_widget_add_mnemonic_label().
+	 * widget with gtk_widget_add_mnemonic_label().
 	 */
 	public void removeMnemonicLabel(Widget label)
 	{
 		// void gtk_widget_remove_mnemonic_label (GtkWidget *widget,  GtkWidget *label);
 		gtk_widget_remove_mnemonic_label(gtkWidget, (label is null) ? null : label.getWidgetStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_widget_get_action has been deprecated since version 2.16 and should not be used in newly-written code. Use gtk_activatable_get_related_action() instead.
-	 * Returns the GtkAction that widget is a proxy for.
-	 * See also gtk_action_get_proxies().
-	 * Since 2.10
-	 * Returns: the action that a widget is a proxy for, or NULL, if it is not attached to an action.
-	 */
-	public Action getAction()
-	{
-		// GtkAction * gtk_widget_get_action (GtkWidget *widget);
-		auto p = gtk_widget_get_action(gtkWidget);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Action(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -5116,9 +5345,9 @@ public class Widget : ObjectGtk, BuildableIF
 	/**
 	 * Sets markup as the contents of the tooltip, which is marked up with
 	 *  the Pango text markup language.
-	 * This function will take care of setting GtkWidget:has-tooltip to TRUE
-	 * and of the default handler for the GtkWidget::query-tooltip signal.
-	 * See also the GtkWidget:tooltip-markup property and
+	 * This function will take care of setting "has-tooltip" to TRUE
+	 * and of the default handler for the "query-tooltip" signal.
+	 * See also the "tooltip-markup" property and
 	 * gtk_tooltip_set_markup().
 	 * Since 2.12
 	 * Params:
@@ -5143,9 +5372,9 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Sets text as the contents of the tooltip. This function will take
-	 * care of setting GtkWidget:has-tooltip to TRUE and of the default
-	 * handler for the GtkWidget::query-tooltip signal.
-	 * See also the GtkWidget:tooltip-text property and gtk_tooltip_set_text().
+	 * care of setting "has-tooltip" to TRUE and of the default
+	 * handler for the "query-tooltip" signal.
+	 * See also the "tooltip-text" property and gtk_tooltip_set_text().
 	 * Since 2.12
 	 * Params:
 	 * text = the contents of the tooltip for widget
@@ -5189,7 +5418,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Returns the current value of the has-tooltip property. See
-	 * GtkWidget:has-tooltip for more information.
+	 * "has-tooltip" for more information.
 	 * Since 2.12
 	 * Returns: current value of has-tooltip on widget.
 	 */
@@ -5201,7 +5430,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 * Sets the has-tooltip property on widget to has_tooltip. See
-	 * GtkWidget:has-tooltip for more information.
+	 * "has-tooltip" for more information.
 	 * Since 2.12
 	 * Params:
 	 * hasTooltip = whether or not widget has a tooltip.
@@ -5225,444 +5454,1070 @@ public class Widget : ObjectGtk, BuildableIF
 	}
 	
 	/**
-	 * Create a GdkPixmap of the contents of the widget and its children.
-	 * Works even if the widget is obscured. The depth and visual of the
-	 * resulting pixmap is dependent on the widget being snapshot and likely
-	 * differs from those of a target widget displaying the pixmap.
-	 * The function gdk_pixbuf_get_from_drawable() can be used to convert
-	 * the pixmap to a visual independant representation.
-	 * The snapshot area used by this function is the widget's allocation plus
-	 * any extra space occupied by additional windows belonging to this widget
-	 * (such as the arrows of a spin button).
-	 * Thus, the resulting snapshot pixmap is possibly larger than the allocation.
-	 * If clip_rect is non-NULL, the resulting pixmap is shrunken to
-	 * match the specified clip_rect. The (x,y) coordinates of clip_rect are
-	 * interpreted widget relative. If width or height of clip_rect are 0 or
-	 * negative, the width or height of the resulting pixmap will be shrunken
-	 * by the respective amount.
-	 * For instance a clip_rect { +5, +5, -10, -10 } will
-	 * chop off 5 pixels at each side of the snapshot pixmap.
-	 * If non-NULL, clip_rect will contain the exact widget-relative snapshot
- * coordinates upon return. A clip_rect of { -1, -1, 0, 0 }
- * can be used to preserve the auto-grown snapshot area and use clip_rect
- * as a pure output parameter.
- * The returned pixmap can be NULL, if the resulting clip_area was empty.
- * Since 2.14
- * Params:
- * clipRect = a GdkRectangle or NULL. [allow-none]
- * Returns: GdkPixmap snapshot of the widget
- */
-public Pixmap getSnapshot(Rectangle clipRect)
-{
-	// GdkPixmap * gtk_widget_get_snapshot (GtkWidget *widget,  GdkRectangle *clip_rect);
-	auto p = gtk_widget_get_snapshot(gtkWidget, (clipRect is null) ? null : clipRect.getRectangleStruct());
-	if(p is null)
+	 * This function is supposed to be called in "draw"
+	 * implementations for widgets that support multiple windows.
+	 * cr must be untransformed from invoking of the draw function.
+	 * This function will return TRUE if the contents of the given
+	 * window are supposed to be drawn and FALSE otherwise. Note
+	 * that when the drawing was not initiated by the windowing
+	 * system this function will return TRUE for all windows, so
+	 * you need to draw the bottommost window first. Also, do not
+	 * use "else if" statements to check which window should be drawn.
+	 * Params:
+	 * cr = a cairo context
+	 * window = the window to check
+	 * Returns: TRUE if window should be drawn Since 3.0
+	 */
+	public static int cairoShouldDrawWindow(cairo_t* cr, Window window)
 	{
-		return null;
+		// gboolean gtk_cairo_should_draw_window (cairo_t *cr,  GdkWindow *window);
+		return gtk_cairo_should_draw_window(cr, (window is null) ? null : window.getWindowStruct());
 	}
-	return new Pixmap(cast(GdkPixmap*) p);
-}
-
-/**
- * Sets the widget's allocation. This should not be used
- * directly, but from within a widget's size_allocate method.
- * Since 2.18
- * Params:
- * allocation = a pointer to a GtkAllocation to copy from
- */
-public void setAllocation(ref GtkAllocation allocation)
-{
-	// void gtk_widget_set_allocation (GtkWidget *widget,  const GtkAllocation *allocation);
-	gtk_widget_set_allocation(gtkWidget, &allocation);
-}
-
-/**
- * Determines whether the application intends to draw on the widget in
- * an "expose-event" handler.
- * See gtk_widget_set_app_paintable()
- * Since 2.18
- * Returns: TRUE if the widget is app paintable
- */
-public int getAppPaintable()
-{
-	// gboolean gtk_widget_get_app_paintable (GtkWidget *widget);
-	return gtk_widget_get_app_paintable(gtkWidget);
-}
-
-/**
- * Determines whether widget can be a default widget. See
- * gtk_widget_set_can_default().
- * Since 2.18
- * Returns: TRUE if widget can be a default widget, FALSE otherwise
- */
-public int getCanDefault()
-{
-	// gboolean gtk_widget_get_can_default (GtkWidget *widget);
-	return gtk_widget_get_can_default(gtkWidget);
-}
-
-/**
- * Specifies whether widget can be a default widget. See
- * gtk_widget_grab_default() for details about the meaning of
- * "default".
- * Since 2.18
- * Params:
- * canDefault = whether or not widget can be a default widget.
- */
-public void setCanDefault(int canDefault)
-{
-	// void gtk_widget_set_can_default (GtkWidget *widget,  gboolean can_default);
-	gtk_widget_set_can_default(gtkWidget, canDefault);
-}
-
-/**
- * Determines whether widget can own the input focus. See
- * gtk_widget_set_can_focus().
- * Since 2.18
- * Returns: TRUE if widget can own the input focus, FALSE otherwise
- */
-public int getCanFocus()
-{
-	// gboolean gtk_widget_get_can_focus (GtkWidget *widget);
-	return gtk_widget_get_can_focus(gtkWidget);
-}
-
-/**
- * Specifies whether widget can own the input focus. See
- * gtk_widget_grab_focus() for actually setting the input focus on a
- * widget.
- * Since 2.18
- * Params:
- * canFocus = whether or not widget can own the input focus.
- */
-public void setCanFocus(int canFocus)
-{
-	// void gtk_widget_set_can_focus (GtkWidget *widget,  gboolean can_focus);
-	gtk_widget_set_can_focus(gtkWidget, canFocus);
-}
-
-/**
- * Determines whether the widget is double buffered.
- * See gtk_widget_set_double_buffered()
- * Since 2.18
- * Returns: TRUE if the widget is double buffered
- */
-public int getDoubleBuffered()
-{
-	// gboolean gtk_widget_get_double_buffered (GtkWidget *widget);
-	return gtk_widget_get_double_buffered(gtkWidget);
-}
-
-/**
- * Determines whether widget has a GdkWindow of its own. See
- * gtk_widget_set_has_window().
- * Since 2.18
- * Returns: TRUE if widget has a window, FALSE otherwise
- */
-public int getHasWindow()
-{
-	// gboolean gtk_widget_get_has_window (GtkWidget *widget);
-	return gtk_widget_get_has_window(gtkWidget);
-}
-
-/**
- * Specifies whether widget has a GdkWindow of its own. Note that
- * all realized widgets have a non-NULL "window" pointer
- * (gtk_widget_get_window() never returns a NULL window when a widget
- * is realized), but for many of them it's actually the GdkWindow of
- * one of its parent widgets. Widgets that do not create a window for
- * themselves in GtkWidget::realize() must announce this by
- * calling this function with has_window = FALSE.
- * This function should only be called by widget implementations,
- * and they should call it in their init() function.
- * Since 2.18
- * Params:
- * hasWindow = whether or not widget has a window.
- */
-public void setHasWindow(int hasWindow)
-{
-	// void gtk_widget_set_has_window (GtkWidget *widget,  gboolean has_window);
-	gtk_widget_set_has_window(gtkWidget, hasWindow);
-}
-
-/**
- * Returns the widget's sensitivity (in the sense of returning
- * the value that has been set using gtk_widget_set_sensitive()).
- * The effective sensitivity of a widget is however determined by both its
- * own and its parent widget's sensitivity. See gtk_widget_is_sensitive().
- * Since 2.18
- * Returns: TRUE if the widget is sensitive
- */
-public int getSensitive()
-{
-	// gboolean gtk_widget_get_sensitive (GtkWidget *widget);
-	return gtk_widget_get_sensitive(gtkWidget);
-}
-
-/**
- * Returns the widget's effective sensitivity, which means
- * it is sensitive itself and also its parent widget is sensntive
- * Since 2.18
- * Returns: TRUE if the widget is effectively sensitive
- */
-public int isSensitive()
-{
-	// gboolean gtk_widget_is_sensitive (GtkWidget *widget);
-	return gtk_widget_is_sensitive(gtkWidget);
-}
-
-/**
- * Returns the widget's state. See gtk_widget_set_state().
- * Since 2.18
- * Returns: the state of widget.
- */
-public GtkStateType getState()
-{
-	// GtkStateType gtk_widget_get_state (GtkWidget *widget);
-	return gtk_widget_get_state(gtkWidget);
-}
-
-/**
- * Determines whether the widget is visible. Note that this doesn't
- * take into account whether the widget's parent is also visible
- * or the widget is obscured in any way.
- * See gtk_widget_set_visible().
- * Since 2.18
- * Returns: TRUE if the widget is visible
- */
-public int getVisible()
-{
-	// gboolean gtk_widget_get_visible (GtkWidget *widget);
-	return gtk_widget_get_visible(gtkWidget);
-}
-
-/**
- * Sets the visibility state of widget. Note that setting this to
- * TRUE doesn't mean the widget is actually viewable, see
- * gtk_widget_get_visible().
- * This function simply calls gtk_widget_show() or gtk_widget_hide()
- * but is nicer to use when the visibility of the widget depends on
- * some condition.
- * Since 2.18
- * Params:
- * visible = whether the widget should be shown or not
- */
-public void setVisible(int visible)
-{
-	// void gtk_widget_set_visible (GtkWidget *widget,  gboolean visible);
-	gtk_widget_set_visible(gtkWidget, visible);
-}
-
-/**
- * Determines whether widget is the current default widget within its
- * toplevel. See gtk_widget_set_can_default().
- * Since 2.18
- * Returns: TRUE if widget is the current default widget within its toplevel, FALSE otherwise
- */
-public int hasDefault()
-{
-	// gboolean gtk_widget_has_default (GtkWidget *widget);
-	return gtk_widget_has_default(gtkWidget);
-}
-
-/**
- * Determines if the widget has the global input focus. See
- * gtk_widget_is_focus() for the difference between having the global
- * input focus, and only having the focus within a toplevel.
- * Since 2.18
- * Returns: TRUE if the widget has the global input focus.
- */
-public int hasFocus()
-{
-	// gboolean gtk_widget_has_focus (GtkWidget *widget);
-	return gtk_widget_has_focus(gtkWidget);
-}
-
-/**
- * Determines whether the widget is currently grabbing events, so it
- * is the only widget receiving input events (keyboard and mouse).
- * See also gtk_grab_add().
- * Since 2.18
- * Returns: TRUE if the widget is in the grab_widgets stack
- */
-public int hasGrab()
-{
-	// gboolean gtk_widget_has_grab (GtkWidget *widget);
-	return gtk_widget_has_grab(gtkWidget);
-}
-
-/**
- * Determines if the widget style has been looked up through the rc mechanism.
- * Since 2.20
- * Returns: TRUE if the widget has been looked up through the rc mechanism, FALSE otherwise.
- */
-public int hasRcStyle()
-{
-	// gboolean gtk_widget_has_rc_style (GtkWidget *widget);
-	return gtk_widget_has_rc_style(gtkWidget);
-}
-
-/**
- * Determines whether widget can be drawn to. A widget can be drawn
- * to if it is mapped and visible.
- * Since 2.18
- * Returns: TRUE if widget is drawable, FALSE otherwise
- */
-public int isDrawable()
-{
-	// gboolean gtk_widget_is_drawable (GtkWidget *widget);
-	return gtk_widget_is_drawable(gtkWidget);
-}
-
-/**
- * Determines whether widget is a toplevel widget. Currently only
- * GtkWindow and GtkInvisible are toplevel widgets. Toplevel
- * widgets have no parent widget.
- * Since 2.18
- * Returns: TRUE if widget is a toplevel, FALSE otherwise
- */
-public int isToplevel()
-{
-	// gboolean gtk_widget_is_toplevel (GtkWidget *widget);
-	return gtk_widget_is_toplevel(gtkWidget);
-}
-
-/**
- * Sets a widget's window. This function should only be used in a
- * widget's GtkWidget::realize() implementation. The window passed is
- * usually either new window created with gdk_window_new(), or the
- * window of its parent widget as returned by
- * gtk_widget_get_parent_window().
- * Widgets must indicate whether they will create their own GdkWindow
- * by calling gtk_widget_set_has_window(). This is usually done in the
- * widget's init() function.
- * Since 2.18
- * Params:
- * window = a GdkWindow
- */
-public void setWindow(Window window)
-{
-	// void gtk_widget_set_window (GtkWidget *widget,  GdkWindow *window);
-	gtk_widget_set_window(gtkWidget, (window is null) ? null : window.getWindowStruct());
-}
-
-/**
- * Specifies whether widget will be treated as the default widget
- * within its toplevel when it has the focus, even if another widget
- * is the default.
- * See gtk_widget_grab_default() for details about the meaning of
- * "default".
- * Since 2.18
- * Params:
- * receivesDefault = whether or not widget can be a default widget.
- */
-public void setReceivesDefault(int receivesDefault)
-{
-	// void gtk_widget_set_receives_default (GtkWidget *widget,  gboolean receives_default);
-	gtk_widget_set_receives_default(gtkWidget, receivesDefault);
-}
-
-/**
- * Determines whether widget is alyways treated as default widget
- * withing its toplevel when it has the focus, even if another widget
- * is the default.
- * See gtk_widget_set_receives_default().
- * Since 2.18
- * Returns: TRUE if widget acts as default widget when focussed, FALSE otherwise
- */
-public int getReceivesDefault()
-{
-	// gboolean gtk_widget_get_receives_default (GtkWidget *widget);
-	return gtk_widget_get_receives_default(gtkWidget);
-}
-
-/**
- * Marks the widget as being realized.
- * This function should only ever be called in a derived widget's
- * "realize" or "unrealize" implementation.
- * Since 2.20
- * Params:
- * realized = TRUE to mark the widget as realized
- */
-public void setRealized(int realized)
-{
-	// void gtk_widget_set_realized (GtkWidget *widget,  gboolean realized);
-	gtk_widget_set_realized(gtkWidget, realized);
-}
-
-/**
- * Determines whether widget is realized.
- * Since 2.20
- * Returns: TRUE if widget is realized, FALSE otherwise
- */
-public int getRealized()
-{
-	// gboolean gtk_widget_get_realized (GtkWidget *widget);
-	return gtk_widget_get_realized(gtkWidget);
-}
-
-/**
- * Marks the widget as being realized.
- * This function should only ever be called in a derived widget's
- * "map" or "unmap" implementation.
- * Since 2.20
- * Params:
- * mapped = TRUE to mark the widget as mapped
- */
-public void setMapped(int mapped)
-{
-	// void gtk_widget_set_mapped (GtkWidget *widget,  gboolean mapped);
-	gtk_widget_set_mapped(gtkWidget, mapped);
-}
-
-/**
- * Whether the widget is mapped.
- * Since 2.20
- * Returns: TRUE if the widget is mapped, FALSE otherwise.
- */
-public int getMapped()
-{
-	// gboolean gtk_widget_get_mapped (GtkWidget *widget);
-	return gtk_widget_get_mapped(gtkWidget);
-}
-
-/**
- * Retrieves the widget's requisition.
- * This function should only be used by widget implementations in
- * order to figure whether the widget's requisition has actually
- * changed after some internal state change (so that they can call
- * gtk_widget_queue_resize() instead of gtk_widget_queue_draw()).
- * Normally, gtk_widget_size_request() should be used.
- * Since 2.20
- * Params:
- * requisition = a pointer to a GtkRequisition to copy to. [out]
- */
-public void getRequisition(out GtkRequisition requisition)
-{
-	// void gtk_widget_get_requisition (GtkWidget *widget,  GtkRequisition *requisition);
-	gtk_widget_get_requisition(gtkWidget, &requisition);
-}
-
-/**
- * Copies a GtkRequisition.
- * Params:
- * requisition = a GtkRequisition
- * Returns: a copy of requisition
- */
-public static GtkRequisition* requisitionCopy(GtkRequisition* requisition)
-{
-	// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
-	return gtk_requisition_copy(requisition);
-}
-
-/**
- * Frees a GtkRequisition.
- * Params:
- * requisition = a GtkRequisition
- */
-public static void requisitionFree(GtkRequisition* requisition)
-{
-	// void gtk_requisition_free (GtkRequisition *requisition);
-	gtk_requisition_free(requisition);
-}
+	
+	/**
+	 * Transforms the given cairo context cr that from widget-relative
+	 * coordinates to window-relative coordinates.
+	 * If the widget's window is not an ancestor of window, no
+	 * modification will be applied.
+	 * This is the inverse to the transformation GTK applies when
+	 * preparing an expose event to be emitted with the "draw"
+	 * signal. It is intended to help porting multiwindow widgets from
+	 * GTK+ 2 to the rendering architecture of GTK+ 3.
+	 * Params:
+	 * cr = the cairo context to transform
+	 * widget = the widget the context is currently centered for
+	 * window = the window to transform the context to
+	 * Since 3.0
+	 */
+	public static void cairoTransformToWindow(cairo_t* cr, Widget widget, Window window)
+	{
+		// void gtk_cairo_transform_to_window (cairo_t *cr,  GtkWidget *widget,  GdkWindow *window);
+		gtk_cairo_transform_to_window(cr, (widget is null) ? null : widget.getWidgetStruct(), (window is null) ? null : window.getWindowStruct());
+	}
+	
+	/**
+	 * Returns the width that has currently been allocated to widget.
+	 * This function is intended to be used when implementing handlers
+	 * for the "draw" function.
+	 * Returns: the width of the widget
+	 */
+	public int getAllocatedWidth()
+	{
+		// int gtk_widget_get_allocated_width (GtkWidget *widget);
+		return gtk_widget_get_allocated_width(gtkWidget);
+	}
+	
+	/**
+	 * Returns the height that has currently been allocated to widget.
+	 * This function is intended to be used when implementing handlers
+	 * for the "draw" function.
+	 * Returns: the height of the widget
+	 */
+	public int getAllocatedHeight()
+	{
+		// int gtk_widget_get_allocated_height (GtkWidget *widget);
+		return gtk_widget_get_allocated_height(gtkWidget);
+	}
+	
+	/**
+	 * Sets the widget's allocation. This should not be used
+	 * directly, but from within a widget's size_allocate method.
+	 * The allocation set should be the "adjusted" or actual
+	 * allocation. If you're implementing a GtkContainer, you want to use
+	 * gtk_widget_size_allocate() instead of gtk_widget_set_allocation().
+	 * The GtkWidgetClass::adjust_size_allocation virtual method adjusts the
+	 * allocation inside gtk_widget_size_allocate() to create an adjusted
+	 * allocation.
+	 * Since 2.18
+	 * Params:
+	 * allocation = a pointer to a GtkAllocation to copy from
+	 */
+	public void setAllocation(ref GtkAllocation allocation)
+	{
+		// void gtk_widget_set_allocation (GtkWidget *widget,  const GtkAllocation *allocation);
+		gtk_widget_set_allocation(gtkWidget, &allocation);
+	}
+	
+	/**
+	 * Determines whether the application intends to draw on the widget in
+	 * an "draw" handler.
+	 * See gtk_widget_set_app_paintable()
+	 * Since 2.18
+	 * Returns: TRUE if the widget is app paintable
+	 */
+	public int getAppPaintable()
+	{
+		// gboolean gtk_widget_get_app_paintable (GtkWidget *widget);
+		return gtk_widget_get_app_paintable(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget can be a default widget. See
+	 * gtk_widget_set_can_default().
+	 * Since 2.18
+	 * Returns: TRUE if widget can be a default widget, FALSE otherwise
+	 */
+	public int getCanDefault()
+	{
+		// gboolean gtk_widget_get_can_default (GtkWidget *widget);
+		return gtk_widget_get_can_default(gtkWidget);
+	}
+	
+	/**
+	 * Specifies whether widget can be a default widget. See
+	 * gtk_widget_grab_default() for details about the meaning of
+	 * "default".
+	 * Since 2.18
+	 * Params:
+	 * canDefault = whether or not widget can be a default widget.
+	 */
+	public void setCanDefault(int canDefault)
+	{
+		// void gtk_widget_set_can_default (GtkWidget *widget,  gboolean can_default);
+		gtk_widget_set_can_default(gtkWidget, canDefault);
+	}
+	
+	/**
+	 * Determines whether widget can own the input focus. See
+	 * gtk_widget_set_can_focus().
+	 * Since 2.18
+	 * Returns: TRUE if widget can own the input focus, FALSE otherwise
+	 */
+	public int getCanFocus()
+	{
+		// gboolean gtk_widget_get_can_focus (GtkWidget *widget);
+		return gtk_widget_get_can_focus(gtkWidget);
+	}
+	
+	/**
+	 * Specifies whether widget can own the input focus. See
+	 * gtk_widget_grab_focus() for actually setting the input focus on a
+	 * widget.
+	 * Since 2.18
+	 * Params:
+	 * canFocus = whether or not widget can own the input focus.
+	 */
+	public void setCanFocus(int canFocus)
+	{
+		// void gtk_widget_set_can_focus (GtkWidget *widget,  gboolean can_focus);
+		gtk_widget_set_can_focus(gtkWidget, canFocus);
+	}
+	
+	/**
+	 * Determines whether the widget is double buffered.
+	 * See gtk_widget_set_double_buffered()
+	 * Since 2.18
+	 * Returns: TRUE if the widget is double buffered
+	 */
+	public int getDoubleBuffered()
+	{
+		// gboolean gtk_widget_get_double_buffered (GtkWidget *widget);
+		return gtk_widget_get_double_buffered(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget has a GdkWindow of its own. See
+	 * gtk_widget_set_has_window().
+	 * Since 2.18
+	 * Returns: TRUE if widget has a window, FALSE otherwise
+	 */
+	public int getHasWindow()
+	{
+		// gboolean gtk_widget_get_has_window (GtkWidget *widget);
+		return gtk_widget_get_has_window(gtkWidget);
+	}
+	
+	/**
+	 * Specifies whether widget has a GdkWindow of its own. Note that
+	 * all realized widgets have a non-NULL "window" pointer
+	 * (gtk_widget_get_window() never returns a NULL window when a widget
+	 * is realized), but for many of them it's actually the GdkWindow of
+	 * one of its parent widgets. Widgets that do not create a window for
+	 * themselves in "realize" must announce this by
+	 * calling this function with has_window = FALSE.
+	 * This function should only be called by widget implementations,
+	 * and they should call it in their init() function.
+	 * Since 2.18
+	 * Params:
+	 * hasWindow = whether or not widget has a window.
+	 */
+	public void setHasWindow(int hasWindow)
+	{
+		// void gtk_widget_set_has_window (GtkWidget *widget,  gboolean has_window);
+		gtk_widget_set_has_window(gtkWidget, hasWindow);
+	}
+	
+	/**
+	 * Returns the widget's sensitivity (in the sense of returning
+	 * the value that has been set using gtk_widget_set_sensitive()).
+	 * The effective sensitivity of a widget is however determined by both its
+	 * own and its parent widget's sensitivity. See gtk_widget_is_sensitive().
+	 * Since 2.18
+	 * Returns: TRUE if the widget is sensitive
+	 */
+	public int getSensitive()
+	{
+		// gboolean gtk_widget_get_sensitive (GtkWidget *widget);
+		return gtk_widget_get_sensitive(gtkWidget);
+	}
+	
+	/**
+	 * Returns the widget's effective sensitivity, which means
+	 * it is sensitive itself and also its parent widget is sensitive
+	 * Since 2.18
+	 * Returns: TRUE if the widget is effectively sensitive
+	 */
+	public int isSensitive()
+	{
+		// gboolean gtk_widget_is_sensitive (GtkWidget *widget);
+		return gtk_widget_is_sensitive(gtkWidget);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_widget_get_state is deprecated and should not be used in newly-written code. 3.0. Use gtk_widget_get_state_flags() instead.
+	 * Returns the widget's state. See gtk_widget_set_state().
+	 * Since 2.18
+	 * Returns: the state of widget.
+	 */
+	public GtkStateType getState()
+	{
+		// GtkStateType gtk_widget_get_state (GtkWidget *widget);
+		return gtk_widget_get_state(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether the widget is visible. Note that this doesn't
+	 * take into account whether the widget's parent is also visible
+	 * or the widget is obscured in any way.
+	 * See gtk_widget_set_visible().
+	 * Since 2.18
+	 * Returns: TRUE if the widget is visible
+	 */
+	public int getVisible()
+	{
+		// gboolean gtk_widget_get_visible (GtkWidget *widget);
+		return gtk_widget_get_visible(gtkWidget);
+	}
+	
+	/**
+	 * Sets the visibility state of widget. Note that setting this to
+	 * TRUE doesn't mean the widget is actually viewable, see
+	 * gtk_widget_get_visible().
+	 * This function simply calls gtk_widget_show() or gtk_widget_hide()
+	 * but is nicer to use when the visibility of the widget depends on
+	 * some condition.
+	 * Since 2.18
+	 * Params:
+	 * visible = whether the widget should be shown or not
+	 */
+	public void setVisible(int visible)
+	{
+		// void gtk_widget_set_visible (GtkWidget *widget,  gboolean visible);
+		gtk_widget_set_visible(gtkWidget, visible);
+	}
+	
+	/**
+	 * This function is for use in widget implementations. Turns on flag
+	 * values in the current widget state (insensitive, prelighted, etc.).
+	 * It is worth mentioning that any other state than GTK_STATE_FLAG_INSENSITIVE,
+	 * will be propagated down to all non-internal children if widget is a
+	 * GtkContainer, while GTK_STATE_FLAG_INSENSITIVE itself will be propagated
+	 * down to all GtkContainer children by different means than turning on the
+	 * state flag down the hierarchy, both gtk_widget_get_state_flags() and
+	 * gtk_widget_is_sensitive() will make use of these.
+	 * Params:
+	 * flags = State flags to turn on
+	 * clear = Whether to clear state before turning on flags
+	 * Since 3.0
+	 */
+	public void setStateFlags(GtkStateFlags flags, int clear)
+	{
+		// void gtk_widget_set_state_flags (GtkWidget *widget,  GtkStateFlags flags,  gboolean clear);
+		gtk_widget_set_state_flags(gtkWidget, flags, clear);
+	}
+	
+	/**
+	 * This function is for use in widget implementations. Turns off flag
+	 * values for the current widget state (insensitive, prelighted, etc.).
+	 * See gtk_widget_set_state_flags().
+	 * Params:
+	 * flags = State flags to turn off
+	 * Since 3.0
+	 */
+	public void unsetStateFlags(GtkStateFlags flags)
+	{
+		// void gtk_widget_unset_state_flags (GtkWidget *widget,  GtkStateFlags flags);
+		gtk_widget_unset_state_flags(gtkWidget, flags);
+	}
+	
+	/**
+	 * Returns the widget state as a flag set. It is worth mentioning
+	 * that the effective GTK_STATE_FLAG_INSENSITIVE state will be
+	 * returned, that is, also based on parent insensitivity, even if
+	 * widget itself is sensitive.
+	 * Returns: The state flags for widget Since 3.0
+	 */
+	public GtkStateFlags getStateFlags()
+	{
+		// GtkStateFlags gtk_widget_get_state_flags (GtkWidget *widget);
+		return gtk_widget_get_state_flags(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget is the current default widget within its
+	 * toplevel. See gtk_widget_set_can_default().
+	 * Since 2.18
+	 * Returns: TRUE if widget is the current default widget within its toplevel, FALSE otherwise
+	 */
+	public int hasDefault()
+	{
+		// gboolean gtk_widget_has_default (GtkWidget *widget);
+		return gtk_widget_has_default(gtkWidget);
+	}
+	
+	/**
+	 * Determines if the widget has the global input focus. See
+	 * gtk_widget_is_focus() for the difference between having the global
+	 * input focus, and only having the focus within a toplevel.
+	 * Since 2.18
+	 * Returns: TRUE if the widget has the global input focus.
+	 */
+	public int hasFocus()
+	{
+		// gboolean gtk_widget_has_focus (GtkWidget *widget);
+		return gtk_widget_has_focus(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether the widget is currently grabbing events, so it
+	 * is the only widget receiving input events (keyboard and mouse).
+	 * See also gtk_grab_add().
+	 * Since 2.18
+	 * Returns: TRUE if the widget is in the grab_widgets stack
+	 */
+	public int hasGrab()
+	{
+		// gboolean gtk_widget_has_grab (GtkWidget *widget);
+		return gtk_widget_has_grab(gtkWidget);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_widget_has_rc_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead
+	 * Determines if the widget style has been looked up through the rc mechanism.
+	 * Since 2.20
+	 * Returns: TRUE if the widget has been looked up through the rc mechanism, FALSE otherwise.
+	 */
+	public int hasRcStyle()
+	{
+		// gboolean gtk_widget_has_rc_style (GtkWidget *widget);
+		return gtk_widget_has_rc_style(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget can be drawn to. A widget can be drawn
+	 * to if it is mapped and visible.
+	 * Since 2.18
+	 * Returns: TRUE if widget is drawable, FALSE otherwise
+	 */
+	public int isDrawable()
+	{
+		// gboolean gtk_widget_is_drawable (GtkWidget *widget);
+		return gtk_widget_is_drawable(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget is a toplevel widget.
+	 * Currently only GtkWindow and GtkInvisible (and out-of-process
+	 * GtkPlugs) are toplevel widgets. Toplevel widgets have no parent
+	 * widget.
+	 * Since 2.18
+	 * Returns: TRUE if widget is a toplevel, FALSE otherwise
+	 */
+	public int isToplevel()
+	{
+		// gboolean gtk_widget_is_toplevel (GtkWidget *widget);
+		return gtk_widget_is_toplevel(gtkWidget);
+	}
+	
+	/**
+	 * Sets a widget's window. This function should only be used in a
+	 * widget's "realize" implementation. The window passed is
+	 * usually either new window created with gdk_window_new(), or the
+	 * window of its parent widget as returned by
+	 * gtk_widget_get_parent_window().
+	 * Widgets must indicate whether they will create their own GdkWindow
+	 * by calling gtk_widget_set_has_window(). This is usually done in the
+	 * widget's init() function.
+	 * Note
+	 * This function does not add any reference to window.
+	 * Since 2.18
+	 * Params:
+	 * window = a GdkWindow
+	 */
+	public void setWindow(Window window)
+	{
+		// void gtk_widget_set_window (GtkWidget *widget,  GdkWindow *window);
+		gtk_widget_set_window(gtkWidget, (window is null) ? null : window.getWindowStruct());
+	}
+	
+	/**
+	 * Specifies whether widget will be treated as the default widget
+	 * within its toplevel when it has the focus, even if another widget
+	 * is the default.
+	 * See gtk_widget_grab_default() for details about the meaning of
+	 * "default".
+	 * Since 2.18
+	 * Params:
+	 * receivesDefault = whether or not widget can be a default widget.
+	 */
+	public void setReceivesDefault(int receivesDefault)
+	{
+		// void gtk_widget_set_receives_default (GtkWidget *widget,  gboolean receives_default);
+		gtk_widget_set_receives_default(gtkWidget, receivesDefault);
+	}
+	
+	/**
+	 * Determines whether widget is alyways treated as default widget
+	 * withing its toplevel when it has the focus, even if another widget
+	 * is the default.
+	 * See gtk_widget_set_receives_default().
+	 * Since 2.18
+	 * Returns: TRUE if widget acts as default widget when focussed, FALSE otherwise
+	 */
+	public int getReceivesDefault()
+	{
+		// gboolean gtk_widget_get_receives_default (GtkWidget *widget);
+		return gtk_widget_get_receives_default(gtkWidget);
+	}
+	
+	/**
+	 * Enables or disables multiple pointer awareness. If this setting is TRUE,
+	 * widget will start receiving multiple, per device enter/leave events. Note
+	 * that if custom GdkWindows are created in "realize",
+	 * gdk_window_set_support_multidevice() will have to be called manually on them.
+	 * Params:
+	 * supportMultidevice = TRUE to support input from multiple devices.
+	 * Since 3.0
+	 */
+	public void setSupportMultidevice(int supportMultidevice)
+	{
+		// void gtk_widget_set_support_multidevice (GtkWidget *widget,  gboolean support_multidevice);
+		gtk_widget_set_support_multidevice(gtkWidget, supportMultidevice);
+	}
+	
+	/**
+	 * Returns TRUE if widget is multiple pointer aware. See
+	 * gtk_widget_set_support_multidevice() for more information.
+	 * Returns: TRUE if widget is multidevice aware.
+	 */
+	public int getSupportMultidevice()
+	{
+		// gboolean gtk_widget_get_support_multidevice (GtkWidget *widget);
+		return gtk_widget_get_support_multidevice(gtkWidget);
+	}
+	
+	/**
+	 * Marks the widget as being realized.
+	 * This function should only ever be called in a derived widget's
+	 * "realize" or "unrealize" implementation.
+	 * Since 2.20
+	 * Params:
+	 * realized = TRUE to mark the widget as realized
+	 */
+	public void setRealized(int realized)
+	{
+		// void gtk_widget_set_realized (GtkWidget *widget,  gboolean realized);
+		gtk_widget_set_realized(gtkWidget, realized);
+	}
+	
+	/**
+	 * Determines whether widget is realized.
+	 * Since 2.20
+	 * Returns: TRUE if widget is realized, FALSE otherwise
+	 */
+	public int getRealized()
+	{
+		// gboolean gtk_widget_get_realized (GtkWidget *widget);
+		return gtk_widget_get_realized(gtkWidget);
+	}
+	
+	/**
+	 * Marks the widget as being realized.
+	 * This function should only ever be called in a derived widget's
+	 * "map" or "unmap" implementation.
+	 * Since 2.20
+	 * Params:
+	 * mapped = TRUE to mark the widget as mapped
+	 */
+	public void setMapped(int mapped)
+	{
+		// void gtk_widget_set_mapped (GtkWidget *widget,  gboolean mapped);
+		gtk_widget_set_mapped(gtkWidget, mapped);
+	}
+	
+	/**
+	 * Whether the widget is mapped.
+	 * Since 2.20
+	 * Returns: TRUE if the widget is mapped, FALSE otherwise.
+	 */
+	public int getMapped()
+	{
+		// gboolean gtk_widget_get_mapped (GtkWidget *widget);
+		return gtk_widget_get_mapped(gtkWidget);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_widget_get_requisition has been deprecated since version 3.0 and should not be used in newly-written code. The GtkRequisition cache on the widget was
+	 * removed, If you need to cache sizes across requests and allocations,
+	 * add an explicit cache to the widget in question instead.
+	 * Retrieves the widget's requisition.
+	 * This function should only be used by widget implementations in
+	 * order to figure whether the widget's requisition has actually
+	 * changed after some internal state change (so that they can call
+	 * gtk_widget_queue_resize() instead of gtk_widget_queue_draw()).
+	 * Normally, gtk_widget_size_request() should be used.
+	 * Since 2.20
+	 * Params:
+	 * requisition = a pointer to a GtkRequisition to copy to. [out]
+	 */
+	public void getRequisition(out GtkRequisition requisition)
+	{
+		// void gtk_widget_get_requisition (GtkWidget *widget,  GtkRequisition *requisition);
+		gtk_widget_get_requisition(gtkWidget, &requisition);
+	}
+	
+	/**
+	 * Returns TRUE if device has been shadowed by a GTK+
+	 * device grab on another widget, so it would stop sending
+	 * events to widget. This may be used in the
+	 * "grab-notify" signal to check for specific
+	 * devices. See gtk_device_grab_add().
+	 * Params:
+	 * device = a GdkDevice
+	 * Returns: TRUE if there is an ongoing grab on device by another GtkWidget than widget. Since 3.0
+	 */
+	public int deviceIsShadowed(GdkDevice* device)
+	{
+		// gboolean gtk_widget_device_is_shadowed (GtkWidget *widget,  GdkDevice *device);
+		return gtk_widget_device_is_shadowed(gtkWidget, device);
+	}
+	
+	/**
+	 * Returns the GtkWidgetPath representing widget, if the widget
+	 * is not connected to a toplevel widget, a partial path will be
+	 * created.
+	 * Returns: The GtkWidgetPath representing widget. [transfer none]
+	 */
+	public GtkWidgetPath* getPath()
+	{
+		// GtkWidgetPath * gtk_widget_get_path (GtkWidget *widget);
+		return gtk_widget_get_path(gtkWidget);
+	}
+	
+	/**
+	 * Returns the style context associated to widget.
+	 * Returns: a GtkStyleContext. This memory is owned by widget and must not be freed. [transfer none]
+	 */
+	public GtkStyleContext* getStyleContext()
+	{
+		// GtkStyleContext * gtk_widget_get_style_context (GtkWidget *widget);
+		return gtk_widget_get_style_context(gtkWidget);
+	}
+	
+	/**
+	 * Updates the style context of widget and all descendents
+	 * by updating its widget path. GtkContainers may want
+	 * to use this on a child when reordering it in a way that a different
+	 * style might apply to it. See also gtk_container_get_path_for_child().
+	 */
+	public void resetStyle()
+	{
+		// void gtk_widget_reset_style (GtkWidget *widget);
+		gtk_widget_reset_style(gtkWidget);
+	}
+	
+	/**
+	 * Allocates a new GtkRequisition structure and initializes its elements to zero.
+	 * Returns: a new empty GtkRequisition. The newly allocated GtkRequisition should be freed with gtk_requisition_free(). Since 3.0
+	 */
+	public static GtkRequisition* requisitionNew()
+	{
+		// GtkRequisition * gtk_requisition_new (void);
+		return gtk_requisition_new();
+	}
+	
+	/**
+	 * Copies a GtkRequisition.
+	 * Params:
+	 * requisition = a GtkRequisition
+	 * Returns: a copy of requisition
+	 */
+	public static GtkRequisition* requisitionCopy(GtkRequisition* requisition)
+	{
+		// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
+		return gtk_requisition_copy(requisition);
+	}
+	
+	/**
+	 * Frees a GtkRequisition.
+	 * Params:
+	 * requisition = a GtkRequisition
+	 */
+	public static void requisitionFree(GtkRequisition* requisition)
+	{
+		// void gtk_requisition_free (GtkRequisition *requisition);
+		gtk_requisition_free(requisition);
+	}
+	
+	/**
+	 * Retrieves a widget's initial minimum and natural height.
+	 * Note
+	 * This call is specific to width-for-height requests.
+	 * The returned request will be modified by the
+	 * GtkWidgetClass::adjust_size_request virtual method and by any
+	 * GtkSizeGroups that have been applied. That is, the returned request
+	 * is the one that should be used for layout, not necessarily the one
+	 * returned by the widget itself.
+	 * Params:
+	 * minimumHeight = location to store the minimum height, or NULL. [out][allow-none]
+	 * naturalHeight = location to store the natural height, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredHeight(int* minimumHeight, int* naturalHeight)
+	{
+		// void gtk_widget_get_preferred_height (GtkWidget *widget,  gint *minimum_height,  gint *natural_height);
+		gtk_widget_get_preferred_height(gtkWidget, minimumHeight, naturalHeight);
+	}
+	
+	/**
+	 * Retrieves a widget's initial minimum and natural width.
+	 * Note
+	 * This call is specific to height-for-width
+	 * requests.
+	 * The returned request will be modified by the
+	 * GtkWidgetClass::adjust_size_request virtual method and by any
+	 * GtkSizeGroups that have been applied. That is, the returned request
+	 * is the one that should be used for layout, not necessarily the one
+	 * returned by the widget itself.
+	 * Params:
+	 * minimumWidth = location to store the minimum width, or NULL. [out][allow-none]
+	 * naturalWidth = location to store the natural width, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredWidth(int* minimumWidth, int* naturalWidth)
+	{
+		// void gtk_widget_get_preferred_width (GtkWidget *widget,  gint *minimum_width,  gint *natural_width);
+		gtk_widget_get_preferred_width(gtkWidget, minimumWidth, naturalWidth);
+	}
+	
+	/**
+	 * Retrieves a widget's minimum and natural height if it would be given
+	 * the specified width.
+	 * The returned request will be modified by the
+	 * GtkWidgetClass::adjust_size_request virtual method and by any
+	 * GtkSizeGroups that have been applied. That is, the returned request
+	 * is the one that should be used for layout, not necessarily the one
+	 * returned by the widget itself.
+	 * Params:
+	 * width = the width which is available for allocation
+	 * minimumHeight = location for storing the minimum height, or NULL. [out][allow-none]
+	 * naturalHeight = location for storing the natural height, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredHeightForWidth(int width, int* minimumHeight, int* naturalHeight)
+	{
+		// void gtk_widget_get_preferred_height_for_width  (GtkWidget *widget,  gint width,  gint *minimum_height,  gint *natural_height);
+		gtk_widget_get_preferred_height_for_width(gtkWidget, width, minimumHeight, naturalHeight);
+	}
+	
+	/**
+	 * Retrieves a widget's minimum and natural width if it would be given
+	 * the specified height.
+	 * The returned request will be modified by the
+	 * GtkWidgetClass::adjust_size_request virtual method and by any
+	 * GtkSizeGroups that have been applied. That is, the returned request
+	 * is the one that should be used for layout, not necessarily the one
+	 * returned by the widget itself.
+	 * Params:
+	 * height = the height which is available for allocation
+	 * minimumWidth = location for storing the minimum width, or NULL. [out][allow-none]
+	 * naturalWidth = location for storing the natural width, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredWidthForHeight(int height, int* minimumWidth, int* naturalWidth)
+	{
+		// void gtk_widget_get_preferred_width_for_height  (GtkWidget *widget,  gint height,  gint *minimum_width,  gint *natural_width);
+		gtk_widget_get_preferred_width_for_height(gtkWidget, height, minimumWidth, naturalWidth);
+	}
+	
+	/**
+	 * Gets whether the widget prefers a height-for-width layout
+	 * or a width-for-height layout.
+	 * Note
+	 * GtkBin widgets generally propagate the preference of
+	 * their child, container widgets need to request something either in
+	 * context of their children or in context of their allocation
+	 * capabilities.
+	 * Returns: The GtkSizeRequestMode preferred by widget. Since 3.0
+	 */
+	public GtkSizeRequestMode getRequestMode()
+	{
+		// GtkSizeRequestMode gtk_widget_get_request_mode (GtkWidget *widget);
+		return gtk_widget_get_request_mode(gtkWidget);
+	}
+	
+	/**
+	 * Retrieves the minimum and natural size of a widget, taking
+	 * into account the widget's preference for height-for-width management.
+	 * This is used to retrieve a suitable size by container widgets which do
+	 * not impose any restrictions on the child placement. It can be used
+	 * to deduce toplevel window and menu sizes as well as child widgets in
+	 * free-form containers such as GtkLayout.
+	 * Note
+	 * Handle with care. Note that the natural height of a height-for-width
+	 * widget will generally be a smaller size than the minimum height, since the required
+	 * height for the natural width is generally smaller than the required height for
+	 * the minimum width.
+	 * Params:
+	 * minimumSize = location for storing the minimum size, or NULL. [out][allow-none]
+	 * naturalSize = location for storing the natural size, or NULL. [out][allow-none]
+	 * Since 3.0
+	 */
+	public void getPreferredSize(GtkRequisition* minimumSize, GtkRequisition* naturalSize)
+	{
+		// void gtk_widget_get_preferred_size (GtkWidget *widget,  GtkRequisition *minimum_size,  GtkRequisition *natural_size);
+		gtk_widget_get_preferred_size(gtkWidget, minimumSize, naturalSize);
+	}
+	
+	/**
+	 * Distributes extra_space to child sizes by bringing smaller
+	 * children up to natural size first.
+	 * The remaining space will be added to the minimum_size member of the
+	 * GtkRequestedSize struct. If all sizes reach their natural size then
+	 * the remaining space is returned.
+	 * Params:
+	 * extraSpace = Extra space to redistribute among children after subtracting
+	 * minimum sizes and any child padding from the overall allocation
+	 * nRequestedSizes = Number of requests to fit into the allocation
+	 * sizes = An array of structs with a client pointer and a minimum/natural size
+	 * in the orientation of the allocation.
+	 * Returns: The remainder of extra_space after redistributing space to sizes.
+	 */
+	public static int distributeNaturalAllocation(int extraSpace, uint nRequestedSizes, GtkRequestedSize* sizes)
+	{
+		// gint gtk_distribute_natural_allocation (gint extra_space,  guint n_requested_sizes,  GtkRequestedSize *sizes);
+		return gtk_distribute_natural_allocation(extraSpace, nRequestedSizes, sizes);
+	}
+	
+	/**
+	 * Gets the value of the "halign" property.
+	 * Returns: the horizontal alignment of widget
+	 */
+	public GtkAlign getHalign()
+	{
+		// GtkAlign gtk_widget_get_halign (GtkWidget *widget);
+		return gtk_widget_get_halign(gtkWidget);
+	}
+	
+	/**
+	 * Sets the horizontal alignment of widget.
+	 * See the "halign" property.
+	 * Params:
+	 * align = the horizontal alignment
+	 */
+	public void setHalign(GtkAlign alig)
+	{
+		// void gtk_widget_set_halign (GtkWidget *widget,  GtkAlign align);
+		gtk_widget_set_halign(gtkWidget, alig);
+	}
+	
+	/**
+	 * Gets the value of the "valign" property.
+	 * Returns: the vertical alignment of widget
+	 */
+	public GtkAlign getValign()
+	{
+		// GtkAlign gtk_widget_get_valign (GtkWidget *widget);
+		return gtk_widget_get_valign(gtkWidget);
+	}
+	
+	/**
+	 * Sets the vertical alignment of widget.
+	 * See the "valign" property.
+	 * Params:
+	 * align = the vertical alignment
+	 */
+	public void setValign(GtkAlign alig)
+	{
+		// void gtk_widget_set_valign (GtkWidget *widget,  GtkAlign align);
+		gtk_widget_set_valign(gtkWidget, alig);
+	}
+	
+	/**
+	 * Gets the value of the "margin-left" property.
+	 * Returns: The left margin of widget Since 3.0
+	 */
+	public int getMarginLeft()
+	{
+		// gint gtk_widget_get_margin_left (GtkWidget *widget);
+		return gtk_widget_get_margin_left(gtkWidget);
+	}
+	
+	/**
+	 * Sets the left margin of widget.
+	 * See the "margin-left" property.
+	 * Params:
+	 * margin = the left margin
+	 * Since 3.0
+	 */
+	public void setMarginLeft(int margin)
+	{
+		// void gtk_widget_set_margin_left (GtkWidget *widget,  gint margin);
+		gtk_widget_set_margin_left(gtkWidget, margin);
+	}
+	
+	/**
+	 * Gets the value of the "margin-right" property.
+	 * Returns: The right margin of widget Since 3.0
+	 */
+	public int getMarginRight()
+	{
+		// gint gtk_widget_get_margin_right (GtkWidget *widget);
+		return gtk_widget_get_margin_right(gtkWidget);
+	}
+	
+	/**
+	 * Sets the right margin of widget.
+	 * See the "margin-right" property.
+	 * Params:
+	 * margin = the right margin
+	 * Since 3.0
+	 */
+	public void setMarginRight(int margin)
+	{
+		// void gtk_widget_set_margin_right (GtkWidget *widget,  gint margin);
+		gtk_widget_set_margin_right(gtkWidget, margin);
+	}
+	
+	/**
+	 * Gets the value of the "margin-top" property.
+	 * Returns: The top margin of widget Since 3.0
+	 */
+	public int getMarginTop()
+	{
+		// gint gtk_widget_get_margin_top (GtkWidget *widget);
+		return gtk_widget_get_margin_top(gtkWidget);
+	}
+	
+	/**
+	 * Sets the top margin of widget.
+	 * See the "margin-top" property.
+	 * Params:
+	 * margin = the top margin
+	 * Since 3.0
+	 */
+	public void setMarginTop(int margin)
+	{
+		// void gtk_widget_set_margin_top (GtkWidget *widget,  gint margin);
+		gtk_widget_set_margin_top(gtkWidget, margin);
+	}
+	
+	/**
+	 * Gets the value of the "margin-bottom" property.
+	 * Returns: The bottom margin of widget Since 3.0
+	 */
+	public int getMarginBottom()
+	{
+		// gint gtk_widget_get_margin_bottom (GtkWidget *widget);
+		return gtk_widget_get_margin_bottom(gtkWidget);
+	}
+	
+	/**
+	 * Sets the bottom margin of widget.
+	 * See the "margin-bottom" property.
+	 * Params:
+	 * margin = the bottom margin
+	 * Since 3.0
+	 */
+	public void setMarginBottom(int margin)
+	{
+		// void gtk_widget_set_margin_bottom (GtkWidget *widget,  gint margin);
+		gtk_widget_set_margin_bottom(gtkWidget, margin);
+	}
+	
+	/**
+	 * Gets whether the widget would like any available extra horizontal
+	 * space. When a user resizes a GtkWindow, widgets with expand=TRUE
+	 * generally receive the extra space. For example, a list or
+	 * scrollable area or document in your window would often be set to
+	 * expand.
+	 * Containers should use gtk_widget_compute_expand() rather than
+	 * this function, to see whether a widget, or any of its children,
+	 * has the expand flag set. If any child of a widget wants to
+	 * expand, the parent may ask to expand also.
+	 * This function only looks at the widget's own hexpand flag, rather
+	 * than computing whether the entire widget tree rooted at this widget
+	 * wants to expand.
+	 * Returns: whether hexpand flag is set
+	 */
+	public int getHexpand()
+	{
+		// gboolean gtk_widget_get_hexpand (GtkWidget *widget);
+		return gtk_widget_get_hexpand(gtkWidget);
+	}
+	
+	/**
+	 * Sets whether the widget would like any available extra horizontal
+	 * space. When a user resizes a GtkWindow, widgets with expand=TRUE
+	 * generally receive the extra space. For example, a list or
+	 * scrollable area or document in your window would often be set to
+	 * expand.
+	 * Call this function to set the expand flag if you would like your
+	 * widget to become larger horizontally when the window has extra
+	 * room.
+	 * By default, widgets automatically expand if any of their children
+	 * want to expand. (To see if a widget will automatically expand given
+	 * its current children and state, call gtk_widget_compute_expand(). A
+	 * container can decide how the expandability of children affects the
+	 * expansion of the container by overriding the compute_expand virtual
+	 * method on GtkWidget.).
+	 * Setting hexpand explicitly with this function will override the
+	 * automatic expand behavior.
+	 * This function forces the widget to expand or not to expand,
+	 * regardless of children. The override occurs because
+	 * gtk_widget_set_hexpand() sets the hexpand-set property (see
+	 * gtk_widget_set_hexpand_set()) which causes the widget's hexpand
+	 * value to be used, rather than looking at children and widget state.
+	 * Params:
+	 * expand = whether to expand
+	 */
+	public void setHexpand(int expand)
+	{
+		// void gtk_widget_set_hexpand (GtkWidget *widget,  gboolean expand);
+		gtk_widget_set_hexpand(gtkWidget, expand);
+	}
+	
+	/**
+	 * Gets whether gtk_widget_set_hexpand() has been used to
+	 * explicitly set the expand flag on this widget.
+	 * If hexpand is set, then it overrides any computed
+	 * expand value based on child widgets. If hexpand is not
+	 * set, then the expand value depends on whether any
+	 * children of the widget would like to expand.
+	 * There are few reasons to use this function, but it's here
+	 * for completeness and consistency.
+	 * Returns: whether hexpand has been explicitly set
+	 */
+	public int getHexpandSet()
+	{
+		// gboolean gtk_widget_get_hexpand_set (GtkWidget *widget);
+		return gtk_widget_get_hexpand_set(gtkWidget);
+	}
+	
+	/**
+	 * Sets whether the hexpand flag (see gtk_widget_get_hexpand()) will
+	 * be used.
+	 * The hexpand-set property will be set automatically when you call
+	 * gtk_widget_set_hexpand() to set hexpand, so the most likely
+	 * reason to use this function would be to unset an explicit expand
+	 * flag.
+	 * If hexpand is set, then it overrides any computed
+	 * expand value based on child widgets. If hexpand is not
+	 * set, then the expand value depends on whether any
+	 * children of the widget would like to expand.
+	 * There are few reasons to use this function, but it's here
+	 * for completeness and consistency.
+	 * Params:
+	 * set = value for hexpand-set property
+	 */
+	public void setHexpandSet(int set)
+	{
+		// void gtk_widget_set_hexpand_set (GtkWidget *widget,  gboolean set);
+		gtk_widget_set_hexpand_set(gtkWidget, set);
+	}
+	
+	/**
+	 * Gets whether the widget would like any available extra vertical
+	 * space.
+	 * See gtk_widget_get_hexpand() for more detail.
+	 * Returns: whether vexpand flag is set
+	 */
+	public int getVexpand()
+	{
+		// gboolean gtk_widget_get_vexpand (GtkWidget *widget);
+		return gtk_widget_get_vexpand(gtkWidget);
+	}
+	
+	/**
+	 * Sets whether the widget would like any available extra vertical
+	 * space.
+	 * See gtk_widget_set_hexpand() for more detail.
+	 * Params:
+	 * expand = whether to expand
+	 */
+	public void setVexpand(int expand)
+	{
+		// void gtk_widget_set_vexpand (GtkWidget *widget,  gboolean expand);
+		gtk_widget_set_vexpand(gtkWidget, expand);
+	}
+	
+	/**
+	 * Gets whether gtk_widget_set_vexpand() has been used to
+	 * explicitly set the expand flag on this widget.
+	 * See gtk_widget_get_hexpand_set() for more detail.
+	 * Returns: whether vexpand has been explicitly set
+	 */
+	public int getVexpandSet()
+	{
+		// gboolean gtk_widget_get_vexpand_set (GtkWidget *widget);
+		return gtk_widget_get_vexpand_set(gtkWidget);
+	}
+	
+	/**
+	 * Sets whether the vexpand flag (see gtk_widget_get_vexpand()) will
+	 * be used.
+	 * See gtk_widget_set_hexpand_set() for more detail.
+	 * Params:
+	 * set = value for vexpand-set property
+	 */
+	public void setVexpandSet(int set)
+	{
+		// void gtk_widget_set_vexpand_set (GtkWidget *widget,  gboolean set);
+		gtk_widget_set_vexpand_set(gtkWidget, set);
+	}
+	
+	/**
+	 * Mark widget as needing to recompute its expand flags. Call
+	 * this function when setting legacy expand child properties
+	 * on the child of a container.
+	 * See gtk_widget_compute_expand().
+	 */
+	public void queueComputeExpand()
+	{
+		// void gtk_widget_queue_compute_expand (GtkWidget *widget);
+		gtk_widget_queue_compute_expand(gtkWidget);
+	}
+	
+	/**
+	 * Computes whether a container should give this widget extra space
+	 * when possible. Containers should check this, rather than
+	 * looking at gtk_widget_get_hexpand() or gtk_widget_get_vexpand().
+	 * This function already checks whether the widget is visible, so
+	 * visibility does not need to be checked separately. Non-visible
+	 * widgets are not expanded.
+	 * The computed expand value uses either the expand setting explicitly
+	 * set on the widget itself, or, if none has been explicitly set,
+	 * the widget may expand if some of its children do.
+	 * Params:
+	 * orientation = expand direction
+	 * Returns: whether widget tree rooted here should be expanded
+	 */
+	public int computeExpand(GtkOrientation orientation)
+	{
+		// gboolean gtk_widget_compute_expand (GtkWidget *widget,  GtkOrientation orientation);
+		return gtk_widget_compute_expand(gtkWidget, orientation);
+	}
 }

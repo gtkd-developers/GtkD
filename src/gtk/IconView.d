@@ -95,12 +95,16 @@ private import gtk.Container;
 
 /**
  * Description
- * GtkIconView provides an alternative view on a list model.
+ * GtkIconView provides an alternative view on a GtkTreeModel.
  * It displays the model as a grid of icons with labels. Like
  * GtkTreeView, it allows to select one or multiple items
  * (depending on the selection mode, see gtk_icon_view_set_selection_mode()).
  * In addition to selection with the arrow keys, GtkIconView supports
  * rubberband selection, which is controlled by dragging the pointer.
+ * Note that if the tree model is backed by an actual tree store (as
+ * opposed to a flat list where the mapping to icons is obvious),
+ * GtkIconView will only display the first level of the tree and
+ * ignore the tree's branches.
  */
 public class IconView : Container, CellLayoutIF
 {
@@ -360,35 +364,6 @@ public class IconView : Container, CellLayoutIF
 		}
 	}
 	
-	void delegate(GtkAdjustment*, GtkAdjustment*, IconView)[] onSetScrollAdjustmentsListeners;
-	/**
-	 * Set the scroll adjustments for the icon view. Usually scrolled containers
-	 * like GtkScrolledWindow will emit this signal to connect two instances
-	 * of GtkScrollbar to the scroll directions of the GtkIconView.
-	 */
-	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("set-scroll-adjustments" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"set-scroll-adjustments",
-			cast(GCallback)&callBackSetScrollAdjustments,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["set-scroll-adjustments"] = 1;
-		}
-		onSetScrollAdjustmentsListeners ~= dlg;
-	}
-	extern(C) static void callBackSetScrollAdjustments(GtkIconView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, IconView iconView)
-	{
-		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg ; iconView.onSetScrollAdjustmentsListeners )
-		{
-			dlg(vertical, arg2, iconView);
-		}
-	}
-	
 	void delegate(IconView)[] onToggleCursorItemListeners;
 	/**
 	 * A keybinding signal
@@ -468,6 +443,24 @@ public class IconView : Container, CellLayoutIF
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_icon_view_new()");
+		}
+		this(cast(GtkIconView*) p);
+	}
+	
+	/**
+	 * Creates a new GtkIconView widget using the
+	 * specified area to layout cells inside the icons.
+	 * Params:
+	 * area = the GtkCellArea to use to layout cells
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkCellArea* area)
+	{
+		// GtkWidget * gtk_icon_view_new_with_area (GtkCellArea *area);
+		auto p = gtk_icon_view_new_with_area(area);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_icon_view_new_with_area(area)");
 		}
 		this(cast(GtkIconView*) p);
 	}
@@ -630,9 +623,9 @@ public class IconView : Container, CellLayoutIF
 	 * Params:
 	 * x = The x position to be identified
 	 * y = The y position to be identified
-	 * path = Return location for the path, or NULL. [allow-none]
-	 * cell = Return location for the renderer responsible for the cell
-	 * at (x, y), or NULL
+	 * path = Return location for the path, or NULL. [out][allow-none]
+	 * cell = Return location for the renderer
+	 * responsible for the cell at (x, y), or NULL. [out][allow-none]
 	 * Returns: TRUE if an item exists at the specified position
 	 */
 	public int getItemAtPos(int x, int y, out TreePath path, out CellRenderer cell)
@@ -692,8 +685,9 @@ public class IconView : Container, CellLayoutIF
 	 * The returned GtkTreePath must be freed with gtk_tree_path_free().
 	 * Since 2.8
 	 * Params:
-	 * path = Return location for the current cursor path, or NULL. [allow-none]
-	 * cell = Return location the current focus cell, or NULL. [allow-none]
+	 * path = Return location for the current cursor path,
+	 * or NULL. [out][allow-none]
+	 * cell = Return location the current focus cell, or NULL. [out][allow-none]
 	 * Returns: TRUE if the cursor is set.
 	 */
 	public int getCursor(out TreePath path, out CellRenderer cell)
@@ -747,38 +741,9 @@ public class IconView : Container, CellLayoutIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_icon_view_set_orientation has been deprecated since version 2.22 and should not be used in newly-written code. Use gtk_icon_view_set_item_orientation()
-	 * Sets the ::orientation property which determines whether the labels
+	 * Sets the ::item-orientation property which determines whether the labels
 	 * are drawn beside the icons instead of below.
 	 * Since 2.6
-	 * Params:
-	 * orientation = the relative position of texts and icons
-	 */
-	public void setOrientation(GtkOrientation orientation)
-	{
-		// void gtk_icon_view_set_orientation (GtkIconView *icon_view,  GtkOrientation orientation);
-		gtk_icon_view_set_orientation(gtkIconView, orientation);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_icon_view_get_orientation has been deprecated since version 2.22 and should not be used in newly-written code. Use gtk_icon_view_get_item_orientation()
-	 * Returns the value of the ::orientation property which determines
-	 * whether the labels are drawn beside the icons instead of below.
-	 * Since 2.6
-	 * Returns: the relative position of texts and icons
-	 */
-	public GtkOrientation getOrientation()
-	{
-		// GtkOrientation gtk_icon_view_get_orientation (GtkIconView *icon_view);
-		return gtk_icon_view_get_orientation(gtkIconView);
-	}
-	
-	/**
-	 * Sets the ::item-orientation property which determines whether
-	 * the labels are drawn beside the icons instead of below.
-	 * Since 2.22
 	 * Params:
 	 * orientation = the relative position of texts and icons
 	 */
@@ -791,7 +756,7 @@ public class IconView : Container, CellLayoutIF
 	/**
 	 * Returns the value of the ::item-orientation property which determines
 	 * whether the labels are drawn beside the icons instead of below.
-	 * Since 2.22
+	 * Since 2.6
 	 * Returns: the relative position of texts and icons
 	 */
 	public GtkOrientation getItemOrientation()
@@ -1095,8 +1060,9 @@ public class IconView : Container, CellLayoutIF
 	 * Both paths should be freed with gtk_tree_path_free() after use.
 	 * Since 2.8
 	 * Params:
-	 * startPath = Return location for start of region, or NULL. [allow-none]
-	 * endPath = Return location for end of region, or NULL. [allow-none]
+	 * startPath = Return location for start of region,
+	 * or NULL. [out][allow-none]
+	 * endPath = Return location for end of region, or NULL. [out][allow-none]
 	 * Returns: TRUE, if valid paths were placed in start_path and end_path
 	 */
 	public int getVisibleRange(out TreePath startPath, out TreePath endPath)
@@ -1184,6 +1150,8 @@ public class IconView : Container, CellLayoutIF
 	 * containing the tooltip texts, or -1 to disable this feature.
 	 * When enabled, "has-tooltip" will be set to TRUE and
 	 * icon_view will connect a "query-tooltip" signal handler.
+	 * Note that the signal handler sets the text with gtk_tooltip_set_markup(),
+	 * so , <, etc have to be escaped in the text.
 	 * Since 2.12
 	 * Params:
 	 * column = an integer, which is a valid column number for icon_view's model
@@ -1240,7 +1208,8 @@ public class IconView : Container, CellLayoutIF
 	 * Since 2.8
 	 * Params:
 	 * startButtonMask = Mask of allowed buttons to start drag
-	 * targets = the table of targets that the drag will support
+	 * targets = the table of targets that the drag will
+	 * support. [array length=n_targets]
 	 * actions = the bitmask of possible actions for a drag from this
 	 * widget
 	 */
@@ -1255,7 +1224,8 @@ public class IconView : Container, CellLayoutIF
 	 * method sets "reorderable" to FALSE.
 	 * Since 2.8
 	 * Params:
-	 * targets = the table of targets that the drag will support
+	 * targets = the table of targets that the drag will
+	 * support. [array length=n_targets]
 	 * actions = the bitmask of possible actions for a drag to this
 	 * widget
 	 */
@@ -1338,8 +1308,9 @@ public class IconView : Container, CellLayoutIF
 	 * Gets information about the item that is highlighted for feedback.
 	 * Since 2.8
 	 * Params:
-	 * path = Return location for the path of the highlighted item, or NULL. [allow-none]
-	 * pos = Return location for the drop position, or NULL. [allow-none]
+	 * path = Return location for the path of
+	 * the highlighted item, or NULL. [out][allow-none]
+	 * pos = Return location for the drop position, or NULL. [out][allow-none]
 	 */
 	public void getDragDestItem(out TreePath path, out GtkIconViewDropPosition pos)
 	{
@@ -1357,8 +1328,9 @@ public class IconView : Container, CellLayoutIF
 	 * Params:
 	 * dragX = the position to determine the destination item for
 	 * dragY = the position to determine the destination item for
-	 * path = Return location for the path of the item, or NULL. [allow-none]
-	 * pos = Return location for the drop position, or NULL. [allow-none]
+	 * path = Return location for the path of the item,
+	 * or NULL. [out][allow-none]
+	 * pos = Return location for the drop position, or NULL. [out][allow-none]
 	 * Returns: whether there is an item at the given position.
 	 */
 	public int getDestItemAtPos(int dragX, int dragY, out TreePath path, out GtkIconViewDropPosition pos)
@@ -1373,21 +1345,16 @@ public class IconView : Container, CellLayoutIF
 	}
 	
 	/**
-	 * Creates a GdkPixmap representation of the item at path.
+	 * Creates a cairo_surface_t representation of the item at path.
 	 * This image is used for a drag icon.
 	 * Since 2.8
 	 * Params:
 	 * path = a GtkTreePath in icon_view
-	 * Returns: a newly-allocated pixmap of the drag icon. [transfer full]
+	 * Returns: a newly-allocated surface of the drag icon. [transfer full]
 	 */
-	public Pixmap createDragIcon(TreePath path)
+	public cairo_surface_t* createDragIcon(TreePath path)
 	{
-		// GdkPixmap * gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
-		auto p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
-		if(p is null)
-		{
-			return null;
-		}
-		return new Pixmap(cast(GdkPixmap*) p);
+		// cairo_surface_t * gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
+		return gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
 	}
 }

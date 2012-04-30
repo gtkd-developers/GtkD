@@ -66,7 +66,7 @@ private import gtk.ObjectGtk;
 
 
 
-private import gtk.ObjectGtk;
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -82,7 +82,7 @@ private import gtk.ObjectGtk;
  * after changing the value and its bounds. This results in the emission of the
  * "value_changed" or "changed" signal respectively.
  */
-public class Adjustment : ObjectGtk
+public class Adjustment : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -118,7 +118,7 @@ public class Adjustment : ObjectGtk
 			this = cast(Adjustment)ptr;
 			return;
 		}
-		super(cast(GtkObject*)gtkAdjustment);
+		super(cast(GObject*)gtkAdjustment);
 		this.gtkAdjustment = gtkAdjustment;
 	}
 	
@@ -201,7 +201,7 @@ public class Adjustment : ObjectGtk
 	 */
 	public this (double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
-		// GtkObject * gtk_adjustment_new (gdouble value,  gdouble lower,  gdouble upper,  gdouble step_increment,  gdouble page_increment,  gdouble page_size);
+		// GtkAdjustment * gtk_adjustment_new (gdouble value,  gdouble lower,  gdouble upper,  gdouble step_increment,  gdouble page_increment,  gdouble page_size);
 		auto p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
 		if(p is null)
 		{
@@ -223,11 +223,10 @@ public class Adjustment : ObjectGtk
 	
 	/**
 	 * Sets the GtkAdjustment value. The value is clamped to lie between
-	 * adjustment->lower and
-	 * adjustment->upper.
+	 * GtkAdjustment.lower and GtkAdjustment.upper.
 	 * Note that for adjustments which are used in a GtkScrollbar, the effective
-	 * range of allowed values goes from adjustment->lower to
-	 * adjustment->upper - adjustment->page_size.
+	 * range of allowed values goes from GtkAdjustment.lower to
+	 * GtkAdjustment.upper - GtkAdjustment.page_size.
 	 * Params:
 	 * value = the new value.
 	 */
@@ -238,9 +237,9 @@ public class Adjustment : ObjectGtk
 	}
 	
 	/**
-	 * Updates the GtkAdjustment value to ensure that the range between lower
-	 * and upper is in the current page (i.e. between value and value +
-	 * page_size).
+	 * Updates the GtkAdjustment GtkAdjustment.value to ensure that the range
+	 * between lower and upper is in the current page (i.e. between
+	 * GtkAdjustment.value and GtkAdjustment.value + GtkAdjustment.page_size).
 	 * If the range is larger than the page size, then only the start of it will
 	 * be in the current page.
 	 * A "changed" signal will be emitted if the value is changed.

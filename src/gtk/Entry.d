@@ -631,10 +631,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * which gets emitted to toggle the overwrite mode of the entry.
 	 * The default bindings for this signal is Insert.
 	 * See Also
-	 * GtkTextView
-	 * a widget for handling multi-line text entry.
-	 * GtkEntryCompletion
-	 * adds completion functionality to GtkEntry.
+	 * GtkTextView, GtkEntryCompletion
 	 */
 	void addOnToggleOverwrite(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -694,27 +691,6 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_entry_new_with_max_length has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_entry_set_max_length() instead.
-	 * Creates a new GtkEntry widget with the given maximum length.
-	 * Params:
-	 * max = the maximum length of the entry, or 0 for no maximum.
-	 * (other than the maximum length of entries.) The value passed in will
-	 * be clamped to the range 0-65536.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (int max)
-	{
-		// GtkWidget * gtk_entry_new_with_max_length (gint max);
-		auto p = gtk_entry_new_with_max_length(max);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_entry_new_with_max_length(max)");
-		}
-		this(cast(GtkEntry*) p);
-	}
-	
-	/**
 	 * Get the GtkEntryBuffer object which holds the text for
 	 * this widget.
 	 * Since 2.18
@@ -758,32 +734,6 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_entry_append_text has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_insert_text() instead.
-	 * Appends the given text to the contents of the widget.
-	 * Params:
-	 * text = the text to append
-	 */
-	public void appendText(string text)
-	{
-		// void gtk_entry_append_text (GtkEntry *entry,  const gchar *text);
-		gtk_entry_append_text(gtkEntry, Str.toStringz(text));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_entry_prepend_text has been deprecated since version 2.0 and should not be used in newly-written code. Use gtk_editable_insert_text() instead.
-	 * Prepends the given text to the contents of the widget.
-	 * Params:
-	 * text = the text to prepend
-	 */
-	public void prependText(string text)
-	{
-		// void gtk_entry_prepend_text (GtkEntry *entry,  const gchar *text);
-		gtk_entry_prepend_text(gtkEntry, Str.toStringz(text));
-	}
-	
-	/**
 	 * Retrieves the contents of the entry widget.
 	 * See also gtk_editable_get_chars().
 	 * Returns: a pointer to the contents of the widget as a string. This string points to internally allocated storage in the widget and must not be freed, modified or stored.
@@ -804,6 +754,21 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// guint16 gtk_entry_get_text_length (GtkEntry *entry);
 		return gtk_entry_get_text_length(gtkEntry);
+	}
+	
+	/**
+	 * Gets the area where the entry's text is drawn. This function is
+	 * useful when drawing something to the entry in a draw callback.
+	 * If the entry is not realized, text_area is filled with zeros.
+	 * See also gtk_entry_get_icon_area().
+	 * Params:
+	 * textArea = Return location for the text area. [out]
+	 * Since 3.0
+	 */
+	public void getTextArea(Rectangle* textArea)
+	{
+		// void gtk_entry_get_text_area (GtkEntry *entry,  GdkRectangle *text_area);
+		gtk_entry_get_text_area(gtkEntry, textArea);
 	}
 	
 	/**
@@ -1280,7 +1245,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * See gtk_text_view_reset_im_context() for an example of use.
 	 * Since 2.22
 	 * Params:
-	 * event = the key event
+	 * event = the key event. [type Gdk.EventKey]
 	 * Returns: TRUE if the input method handled the key event.
 	 */
 	public int imContextFilterKeypress(GdkEventKey* event)
@@ -1504,13 +1469,14 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
-	 * Finds the icon at the given position and return its index.
+	 * Finds the icon at the given position and return its index. The
+	 * position's coordinates are relative to the entry's top left corner.
 	 * If x, y doesn't lie inside an icon, -1 is returned.
 	 * This function is intended for use in a "query-tooltip"
 	 * signal handler.
 	 * Since 2.16
 	 * Params:
-	 * x = the x coordinate of the position to find
+	 * x = the x coordinate of the position to fine
 	 * y = the y coordinate of the position to find
 	 * Returns: the index of the icon at the given position, or -1
 	 */
@@ -1622,48 +1588,20 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
-	 * Returns the GdkWindow which contains the entry's icon at
-	 * icon_pos. This function is useful when drawing something to the
-	 * entry in an expose-event callback because it enables the callback
-	 * to distinguish between the text window and entry's icon windows.
-	 * See also gtk_entry_get_text_window().
-	 * Note that GTK+ 3 does not have this function anymore; it has
-	 * been replaced by gtk_entry_get_icon_area().
-	 * Since 2.20
+	 * Gets the area where entry's icon at icon_pos is drawn.
+	 * This function is useful when drawing something to the
+	 * entry in a draw callback.
+	 * If the entry is not realized or has no icon at the given position,
+	 * icon_area is filled with zeros.
+	 * See also gtk_entry_get_text_area()
 	 * Params:
 	 * iconPos = Icon position
-	 * Returns: the entry's icon window at icon_pos. [transfer none]
+	 * iconArea = Return location for the icon's area. [out]
+	 * Since 3.0
 	 */
-	public Window getIconWindow(GtkEntryIconPosition iconPos)
+	public void getIconArea(GtkEntryIconPosition iconPos, Rectangle* iconArea)
 	{
-		// GdkWindow * gtk_entry_get_icon_window (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
-		auto p = gtk_entry_get_icon_window(gtkEntry, iconPos);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Window(cast(GdkWindow*) p);
-	}
-	
-	/**
-	 * Returns the GdkWindow which contains the text. This function is
-	 * useful when drawing something to the entry in an expose-event
-	 * callback because it enables the callback to distinguish between
-	 * the text window and entry's icon windows.
-	 * See also gtk_entry_get_icon_window().
-	 * Note that GTK+ 3 does not have this function anymore; it has
-	 * been replaced by gtk_entry_get_text_area().
-	 * Since 2.20
-	 * Returns: the entry's text window. [transfer none]
-	 */
-	public Window getTextWindow()
-	{
-		// GdkWindow * gtk_entry_get_text_window (GtkEntry *entry);
-		auto p = gtk_entry_get_text_window(gtkEntry);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Window(cast(GdkWindow*) p);
+		// void gtk_entry_get_icon_area (GtkEntry *entry,  GtkEntryIconPosition icon_pos,  GdkRectangle *icon_area);
+		gtk_entry_get_icon_area(gtkEntry, iconPos, iconArea);
 	}
 }

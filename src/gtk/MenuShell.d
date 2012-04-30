@@ -72,10 +72,10 @@ private import gtk.Container;
  * Description
  * A GtkMenuShell is the abstract base class used to derive the
  * GtkMenu and GtkMenuBar subclasses.
- * A GtkMenuShell is a container of GtkMenuItem objects arranged in a
- * list which can be navigated, selected, and activated by the user to perform
- * application functions. A GtkMenuItem can have a submenu associated with it,
- * allowing for nested hierarchical menus.
+ * A GtkMenuShell is a container of GtkMenuItem objects arranged
+ * in a list which can be navigated, selected, and activated by the
+ * user to perform application functions. A GtkMenuItem can have a
+ * submenu associated with it, allowing for nested hierarchical menus.
  */
 public class MenuShell : Container
 {
@@ -129,8 +129,8 @@ public class MenuShell : Container
 	
 	void delegate(gboolean, MenuShell)[] onActivateCurrentListeners;
 	/**
-	 * An action signal that activates the current menu item within the menu
-	 * shell.
+	 * An action signal that activates the current menu item within
+	 * the menu shell.
 	 */
 	void addOnActivateCurrent(void delegate(gboolean, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -147,18 +147,18 @@ public class MenuShell : Container
 		}
 		onActivateCurrentListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, gboolean arg1, MenuShell menuShell)
+	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, gboolean forceHide, MenuShell menuShell)
 	{
 		foreach ( void delegate(gboolean, MenuShell) dlg ; menuShell.onActivateCurrentListeners )
 		{
-			dlg(arg1, menuShell);
+			dlg(forceHide, menuShell);
 		}
 	}
 	
 	void delegate(MenuShell)[] onCancelListeners;
 	/**
 	 * An action signal which cancels the selection within the menu shell.
-	 * Causes the GtkMenuShell::selection-done signal to be emitted.
+	 * Causes the "selection-done" signal to be emitted.
 	 */
 	void addOnCancel(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -185,6 +185,8 @@ public class MenuShell : Container
 	
 	void delegate(GtkDirectionType, MenuShell)[] onCycleFocusListeners;
 	/**
+	 * A keybinding signal which moves the focus in the
+	 * given direction.
 	 */
 	void addOnCycleFocus(void delegate(GtkDirectionType, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -201,11 +203,11 @@ public class MenuShell : Container
 		}
 		onCycleFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackCycleFocus(GtkMenuShell* menushellStruct, GtkDirectionType arg1, MenuShell menuShell)
+	extern(C) static void callBackCycleFocus(GtkMenuShell* menushellStruct, GtkDirectionType direction, MenuShell menuShell)
 	{
 		foreach ( void delegate(GtkDirectionType, MenuShell) dlg ; menuShell.onCycleFocusListeners )
 		{
-			dlg(arg1, menuShell);
+			dlg(direction, menuShell);
 		}
 	}
 	
@@ -238,8 +240,8 @@ public class MenuShell : Container
 	
 	void delegate(GtkMenuDirectionType, MenuShell)[] onMoveCurrentListeners;
 	/**
-	 * An action signal which moves the current menu item in the direction
-	 * specified by direction.
+	 * An keybinding signal which moves the current menu item
+	 * in the direction specified by direction.
 	 */
 	void addOnMoveCurrent(void delegate(GtkMenuDirectionType, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -256,11 +258,11 @@ public class MenuShell : Container
 		}
 		onMoveCurrentListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType arg1, MenuShell menuShell)
+	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType direction, MenuShell menuShell)
 	{
 		foreach ( void delegate(GtkMenuDirectionType, MenuShell) dlg ; menuShell.onMoveCurrentListeners )
 		{
-			dlg(arg1, menuShell);
+			dlg(direction, menuShell);
 		}
 	}
 	
@@ -301,8 +303,8 @@ public class MenuShell : Container
 	
 	void delegate(MenuShell)[] onSelectionDoneListeners;
 	/**
-	 * This signal is emitted when a selection has been completed within a menu
-	 * shell.
+	 * This signal is emitted when a selection has been
+	 * completed within a menu shell.
 	 */
 	void addOnSelectionDone(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -329,9 +331,10 @@ public class MenuShell : Container
 	
 	
 	/**
-	 * Adds a new GtkMenuItem to the end of the menu shell's item list.
+	 * Adds a new GtkMenuItem to the end of the menu shell's
+	 * item list.
 	 * Params:
-	 * child = The GtkMenuItem to add.
+	 * child = The GtkMenuItem to add
 	 */
 	public void append(Widget child)
 	{
@@ -340,9 +343,10 @@ public class MenuShell : Container
 	}
 	
 	/**
-	 * Adds a new GtkMenuItem to the beginning of the menu shell's item list.
+	 * Adds a new GtkMenuItem to the beginning of the menu shell's
+	 * item list.
 	 * Params:
-	 * child = The GtkMenuItem to add.
+	 * child = The GtkMenuItem to add
 	 */
 	public void prepend(Widget child)
 	{
@@ -351,12 +355,12 @@ public class MenuShell : Container
 	}
 	
 	/**
-	 * Adds a new GtkMenuItem to the menu shell's item list at the position
-	 * indicated by position.
+	 * Adds a new GtkMenuItem to the menu shell's item list
+	 * at the position indicated by position.
 	 * Params:
-	 * child = The GtkMenuItem to add.
-	 * position = The position in the item list where child is added.
-	 * Positions are numbered from 0 to n-1.
+	 * child = The GtkMenuItem to add
+	 * position = The position in the item list where child
+	 * is added. Positions are numbered from 0 to n-1
 	 */
 	public void insert(Widget child, int position)
 	{
@@ -365,8 +369,9 @@ public class MenuShell : Container
 	}
 	
 	/**
-	 * Deactivates the menu shell. Typically this results in the menu shell
-	 * being erased from the screen.
+	 * Deactivates the menu shell.
+	 * Typically this results in the menu shell being erased
+	 * from the screen.
 	 */
 	public void deactivate()
 	{
@@ -377,7 +382,7 @@ public class MenuShell : Container
 	/**
 	 * Selects the menu item from the menu shell.
 	 * Params:
-	 * menuItem = The GtkMenuItem to select.
+	 * menuItem = The GtkMenuItem to select
 	 */
 	public void selectItem(Widget menuItem)
 	{
@@ -404,7 +409,8 @@ public class MenuShell : Container
 	}
 	
 	/**
-	 * Deselects the currently selected item from the menu shell, if any.
+	 * Deselects the currently selected item from the menu shell,
+	 * if any.
 	 */
 	public void deselect()
 	{
@@ -415,9 +421,9 @@ public class MenuShell : Container
 	/**
 	 * Activates the menu item within the menu shell.
 	 * Params:
-	 * menuItem = The GtkMenuItem to activate.
-	 * forceDeactivate = If TRUE, force the deactivation of the menu shell
-	 * after the menu item is activated.
+	 * menuItem = the GtkMenuItem to activate
+	 * forceDeactivate = if TRUE, force the deactivation of the
+	 * menu shell after the menu item is activated
 	 */
 	public void activateItem(Widget menuItem, int forceDeactivate)
 	{
@@ -436,20 +442,22 @@ public class MenuShell : Container
 	}
 	
 	/**
-	 * If take_focus is TRUE (the default) the menu shell will take the keyboard
-	 * focus so that it will receive all keyboard events which is needed to enable
-	 * keyboard navigation in menus.
+	 * If take_focus is TRUE (the default) the menu shell will take
+	 * the keyboard focus so that it will receive all keyboard events
+	 * which is needed to enable keyboard navigation in menus.
 	 * Setting take_focus to FALSE is useful only for special applications
 	 * like virtual keyboard implementations which should not take keyboard
 	 * focus.
-	 * The take_focus state of a menu or menu bar is automatically propagated
-	 * to submenus whenever a submenu is popped up, so you don't have to worry
-	 * about recursively setting it for your entire menu hierarchy. Only when
-	 * programmatically picking a submenu and popping it up manually, the
-	 * take_focus property of the submenu needs to be set explicitely.
+	 * The take_focus state of a menu or menu bar is automatically
+	 * propagated to submenus whenever a submenu is popped up, so you
+	 * don't have to worry about recursively setting it for your entire
+	 * menu hierarchy. Only when programmatically picking a submenu and
+	 * popping it up manually, the take_focus property of the submenu
+	 * needs to be set explicitely.
 	 * Since 2.8
 	 * Params:
-	 * takeFocus = TRUE if the menu shell should take the keyboard focus on popup.
+	 * takeFocus = TRUE if the menu shell should take the keyboard
+	 * focus on popup
 	 */
 	public void setTakeFocus(int takeFocus)
 	{
@@ -466,5 +474,37 @@ public class MenuShell : Container
 	{
 		// gboolean gtk_menu_shell_get_take_focus (GtkMenuShell *menu_shell);
 		return gtk_menu_shell_get_take_focus(gtkMenuShell);
+	}
+	
+	/**
+	 * Gets the currently selected item.
+	 * Returns: the currently selected item. [transfer none] Since 3.0
+	 */
+	public Widget getSelectedItem()
+	{
+		// GtkWidget * gtk_menu_shell_get_selected_item (GtkMenuShell *menu_shell);
+		auto p = gtk_menu_shell_get_selected_item(gtkMenuShell);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Gets the parent menu shell.
+	 * The parent menu shell of a submenu is the GtkMenu or GtkMenuBar
+	 * from which it was opened up.
+	 * Returns: the parent GtkMenuShell. [transfer none] Since 3.0
+	 */
+	public Widget getParentShell()
+	{
+		// GtkWidget * gtk_menu_shell_get_parent_shell (GtkMenuShell *menu_shell);
+		auto p = gtk_menu_shell_get_parent_shell(gtkMenuShell);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 }

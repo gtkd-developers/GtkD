@@ -84,12 +84,12 @@ private import gsv.SourceCompletionProviderIF;
 
 
 
-private import gtk.ObjectGtk;
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-public class SourceCompletion : ObjectGtk
+public class SourceCompletion : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -125,7 +125,7 @@ public class SourceCompletion : ObjectGtk
 			this = cast(SourceCompletion)ptr;
 			return;
 		}
-		super(cast(GtkObject*)gtkSourceCompletion);
+		super(cast(GObject*)gtkSourceCompletion);
 		this.gtkSourceCompletion = gtkSourceCompletion;
 	}
 	
@@ -323,7 +323,7 @@ public class SourceCompletion : ObjectGtk
 	 * add a reference provider, so make sure to unref your own copy when you
 	 * no longer need it.
 	 * Params:
-	 * provider = A GtkSourceCompletionProvider
+	 * provider = a GtkSourceCompletionProvider.
 	 * Returns: TRUE if provider was successfully added, otherwise if error is provided, it will be set with the error and FALSE is returned.
 	 * Throws: GException on failure.
 	 */
@@ -345,7 +345,7 @@ public class SourceCompletion : ObjectGtk
 	/**
 	 * Remove provider from the completion.
 	 * Params:
-	 * provider = A GtkSourceCompletionProvider
+	 * provider = a GtkSourceCompletionProvider.
 	 * Returns: TRUE if provider was successfully removed, otherwise if error is provided, it will be set with the error and FALSE is returned.
 	 * Throws: GException on failure.
 	 */
@@ -367,7 +367,7 @@ public class SourceCompletion : ObjectGtk
 	/**
 	 * Get list of providers registered on completion. The returned list is owned
 	 * by the completion and should not be freed.
-	 * Returns: list of GtkSourceCompletionProvider
+	 * Returns: list of GtkSourceCompletionProvider. [element-type GtkSource.CompletionProvider][transfer none]
 	 */
 	public ListG getProviders()
 	{
@@ -384,8 +384,9 @@ public class SourceCompletion : ObjectGtk
 	 * Starts a new completion with the specified GtkSourceCompletionContext and
 	 * a list of potential candidate providers for completion.
 	 * Params:
-	 * providers = A list of GtkSourceCompletionProvider or NULL
-	 * context = The GtkSourceCompletionContext with which to start the completion
+	 * providers = a list of GtkSourceCompletionProvider, or NULL. [element-type GtkSource.CompletionProvider][allow-none]
+	 * context = The GtkSourceCompletionContext
+	 * with which to start the completion. [transfer full]
 	 * Returns: TRUE if it was possible to the show completion window.
 	 */
 	public int show(ListG providers, SourceCompletionContext context)
@@ -406,7 +407,7 @@ public class SourceCompletion : ObjectGtk
 	/**
 	 * The info widget is the window where the completion displays optional extra
 	 * information of the proposal.
-	 * Returns: The GtkSourceCompletionInfo window.
+	 * Returns: The GtkSourceCompletionInfo window associated with completion. [transfer none]
 	 */
 	public SourceCompletionInfo getInfoWindow()
 	{
@@ -421,7 +422,7 @@ public class SourceCompletion : ObjectGtk
 	
 	/**
 	 * The GtkSourceView associated with completion.
-	 * Returns: The GtkSourceView associated with completion.
+	 * Returns: The GtkSourceView associated with completion. [type GtkSource.View][transfer none]
 	 */
 	public SourceView getView()
 	{
@@ -440,8 +441,8 @@ public class SourceCompletion : ObjectGtk
 	 * be provider by position. If position is NULL, the current cursor
 	 * position will be used.
 	 * Params:
-	 * position = A GtkTextIter
-	 * Returns: a new GtkSourceCompletionContext. The reference being returned is a 'floating' reference, so if you invoke gtk_source_completion_show with this context you don't need to unref it.
+	 * position = a GtkTextIter, or NULL. [allow-none]
+	 * Returns: a new GtkSourceCompletionContext. The reference being returned is a 'floating' reference, so if you invoke gtk_source_completion_show with this context you don't need to unref it. [transfer full]
 	 */
 	public SourceCompletionContext createContext(TextIter position)
 	{
@@ -457,7 +458,7 @@ public class SourceCompletion : ObjectGtk
 	/**
 	 * Move the completion window to a specific iter.
 	 * Params:
-	 * iter = A GtkTextIter
+	 * iter = a GtkTextIter.
 	 */
 	public void moveWindow(TextIter iter)
 	{
@@ -466,6 +467,10 @@ public class SourceCompletion : ObjectGtk
 	}
 	
 	/**
+	 * Block interactive completion. This can be used to disable interactive
+	 * completion when inserting or deleting text from the buffer associated with
+	 * the completion. Use gtk_source_completion_unblock_interactive to enable
+	 * interactive completion again.
 	 */
 	public void blockInteractive()
 	{
@@ -474,6 +479,9 @@ public class SourceCompletion : ObjectGtk
 	}
 	
 	/**
+	 * Unblock interactive completion. This can be used after using
+	 * gtk_source_completion_block_interactive to enable interactive completion
+	 * again.
 	 */
 	public void unblockInteractive()
 	{

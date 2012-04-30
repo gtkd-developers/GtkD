@@ -346,40 +346,6 @@ public class TextChildAnchor
 		}
 	}
 	
-	void delegate(gint, gboolean, TextChildAnchor)[] onPageHorizontallyListeners;
-	/**
-	 * The ::page-horizontally signal is a
-	 * keybinding signal
-	 * which can be bound to key combinations to allow the user
-	 * to initiate horizontal cursor movement by pages.
-	 * This signal should not be used anymore, instead use the
-	 * "move-cursor" signal with the GTK_MOVEMENT_HORIZONTAL_PAGES
-	 * granularity.
-	 * TRUE if the move should extend the selection
-	 */
-	void addOnPageHorizontally(void delegate(gint, gboolean, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("page-horizontally" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"page-horizontally",
-			cast(GCallback)&callBackPageHorizontally,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["page-horizontally"] = 1;
-		}
-		onPageHorizontallyListeners ~= dlg;
-	}
-	extern(C) static void callBackPageHorizontally(GtkTextView* textViewStruct, gint count, gboolean extendSelection, TextChildAnchor textChildAnchor)
-	{
-		foreach ( void delegate(gint, gboolean, TextChildAnchor) dlg ; textChildAnchor.onPageHorizontallyListeners )
-		{
-			dlg(count, extendSelection, textChildAnchor);
-		}
-	}
-	
 	void delegate(TextChildAnchor)[] onPasteClipboardListeners;
 	/**
 	 * The ::paste-clipboard signal is a
@@ -536,35 +502,6 @@ public class TextChildAnchor
 		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onSetAnchorListeners )
 		{
 			dlg(textChildAnchor);
-		}
-	}
-	
-	void delegate(GtkAdjustment*, GtkAdjustment*, TextChildAnchor)[] onSetScrollAdjustmentsListeners;
-	/**
-	 * Set the scroll adjustments for the text view. Usually scrolled containers
-	 * like GtkScrolledWindow will emit this signal to connect two instances
-	 * of GtkScrollbar to the scroll directions of the GtkTextView.
-	 */
-	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("set-scroll-adjustments" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"set-scroll-adjustments",
-			cast(GCallback)&callBackSetScrollAdjustments,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["set-scroll-adjustments"] = 1;
-		}
-		onSetScrollAdjustmentsListeners ~= dlg;
-	}
-	extern(C) static void callBackSetScrollAdjustments(GtkTextView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TextChildAnchor textChildAnchor)
-	{
-		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, TextChildAnchor) dlg ; textChildAnchor.onSetScrollAdjustmentsListeners )
-		{
-			dlg(vertical, arg2, textChildAnchor);
 		}
 	}
 	

@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Selections.html
+ * inFile  = gtk3-Selections.html
  * outPack = gtk
  * outFile = TargetList
  * strct   = GtkTargetList
@@ -116,6 +116,44 @@ public class TargetList : Boxed
 	
 	/**
 	 */
+	
+	/**
+	 * Makes a new GtkTargetEntry structure.
+	 * Params:
+	 * target = String identifier for target
+	 * flags = Set of flags, see GtkTargetFlags
+	 * info = an ID that will be passed back to the application
+	 * Returns: a pointer to a new GtkTargetEntry structure. Free with gtk_target_entry_free()
+	 */
+	public static GtkTargetEntry* gtkTargetEntryNew(string target, uint flags, uint info)
+	{
+		// GtkTargetEntry * gtk_target_entry_new (const gchar *target,  guint flags,  guint info);
+		return gtk_target_entry_new(Str.toStringz(target), flags, info);
+	}
+	
+	/**
+	 * Makes a copy of a GtkTargetEntry structure and its data.
+	 * Params:
+	 * data = a pointer to a GtkTargetEntry structure.
+	 * Returns: a pointer to a copy of data. Free with gtk_target_entry_free()
+	 */
+	public static GtkTargetEntry* gtkTargetEntryCopy(GtkTargetEntry* data)
+	{
+		// GtkTargetEntry * gtk_target_entry_copy (GtkTargetEntry *data);
+		return gtk_target_entry_copy(data);
+	}
+	
+	/**
+	 * Frees a GtkTargetEntry structure returned from
+	 * gtk_target_entry_new() or gtk_target_entry_copy().
+	 * Params:
+	 * data = a pointer to a GtkTargetEntry structure.
+	 */
+	public static void gtkTargetEntryFree(GtkTargetEntry* data)
+	{
+		// void gtk_target_entry_free (GtkTargetEntry *data);
+		gtk_target_entry_free(data);
+	}
 	
 	/**
 	 * Creates a new GtkTargetList from an array of GtkTargetEntry.

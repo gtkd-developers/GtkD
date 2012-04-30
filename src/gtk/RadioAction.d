@@ -184,10 +184,11 @@ public class RadioAction : ToggleAction
 	 * Since 2.4
 	 * Params:
 	 * name = A unique name for the action
-	 * label = The label displayed in menu items and on buttons, or NULL. [allow-none]
+	 * label = The label displayed in menu items and on buttons,
+	 * or NULL. [allow-none]
 	 * tooltip = A tooltip for this action, or NULL. [allow-none]
-	 * stockId = The stock icon to display in widgets representing this
-	 * action, or NULL
+	 * stockId = The stock icon to display in widgets representing
+	 * this action, or NULL. [allow-none]
 	 * value = The value which gtk_radio_action_get_current_value() should
 	 * return if this action is selected.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -208,7 +209,7 @@ public class RadioAction : ToggleAction
 	 * Note that the returned list is only valid until the next change
 	 * to the group.
 	 * Since 2.4
-	 * Returns: the list representing the radio group for this object. [element-type GtkAction][transfer none]
+	 * Returns: the list representing the radio group for this object. [element-type GtkRadioAction][transfer none]
 	 */
 	public ListSG getGroup()
 	{
@@ -225,12 +226,27 @@ public class RadioAction : ToggleAction
 	 * Sets the radio group for the radio action object.
 	 * Since 2.4
 	 * Params:
-	 * group = a list representing a radio group
+	 * group = a list representing a radio group. [element-type GtkRadioAction]
 	 */
 	public void setGroup(ListSG group)
 	{
 		// void gtk_radio_action_set_group (GtkRadioAction *action,  GSList *group);
 		gtk_radio_action_set_group(gtkRadioAction, (group is null) ? null : group.getListSGStruct());
+	}
+	
+	/**
+	 * Joins a radio action object to the group of another radio action object.
+	 * Use this in language bindings instead of the gtk_radio_action_get_group()
+	 * and gtk_radio_action_set_group() methods
+	 * Params:
+	 * groupSource = a radio action object whos group we are
+	 * joining, or NULL to remove the radio action from its group. [allow-none]
+	 * Since 3.0
+	 */
+	public void joinGroup(GtkRadioAction* groupSource)
+	{
+		// void gtk_radio_action_join_group (GtkRadioAction *action,  GtkRadioAction *group_source);
+		gtk_radio_action_join_group(gtkRadioAction, groupSource);
 	}
 	
 	/**

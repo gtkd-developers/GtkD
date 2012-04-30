@@ -144,7 +144,7 @@ import: gsv.SourceCompletionProviderIF
 structWrap: GtkSourceCompletionProvider* SourceCompletionProviderIF
 outFile: SourceCompletion
 
-file: gtksourceview-2.0-completioncontext.html
+file: gtksourceview-3.0-completioncontext.html
 struct: GtkSourceCompletionContext
 class: SourceCompletionContext
 prefix: gtk_source_completion_context_
@@ -239,15 +239,6 @@ import: gsv.SourceCompletionProposalIF
 structWrap: GtkSourceCompletionProposal* SourceCompletionProposalIF
 interface: SourceCompletionProviderIF
 outFile: SourceCompletionProviderT
-
-file: gtksourceview-2.0-Searching-in-a-GtkSourceBuffer.html
-#struct: 
-class: SourceSearch
-prefix: gtk_source_iter_
-structWrap: GtkTextIter* TextIter
-import: gtk.TextIter
-import: glib.Str
-outFile: SourceSearch
 
 file: GtkSourceGutter.html
 struct: GtkSourceGutter

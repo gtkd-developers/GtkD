@@ -23,13 +23,13 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-Points-Rectangles-and-Regions.html
+ * inFile  = gdk3-Points-Rectangles-and-Regions.html
  * outPack = gdk
  * outFile = Rectangle
- * strct   = GdkRectangle
+ * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = Rectangle
+ * clss    = 
  * interf  = 
  * class Code: No
  * interface Code: No
@@ -40,12 +40,10 @@
  * 	- gdk_rectangle_
  * omit structs:
  * omit prefixes:
- * 	- gdk_region_
  * omit code:
  * omit signals:
  * imports:
  * structWrap:
- * 	- GdkRectangle* -> Rectangle
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,86 +62,41 @@ private import glib.ConstructionException;
 
 
 /**
- * Description
- * GDK provides the GdkPoint, GdkRectangle, GdkRegion and GdkSpan data types
- * for representing pixels and sets of pixels on the screen.
- * GdkPoint is a simple structure containing an x and y coordinate of a point.
- * GdkRectangle is a structure holding the position and size of a rectangle.
- * The intersection of two rectangles can be computed with
- * gdk_rectangle_intersect(). To find the union of two rectangles use
- * gdk_rectangle_union().
- * GdkRegion is an opaque data type holding a set of arbitrary pixels, and is
- * usually used for clipping graphical operations (see gdk_gc_set_clip_region()).
- * GdkSpan is a structure holding a spanline. A spanline is a horizontal line that
- * is one pixel wide. It is mainly used when rasterizing other graphics primitives.
- * It can be intersected to regions by using gdk_region_spans_intersect_foreach().
  */
-public class Rectangle
+
+/**
+ * Calculates the intersection of two rectangles. It is allowed for
+ * dest to be the same as either src1 or src2. If the rectangles
+ * do not intersect, dest's width and height is set to 0 and its x
+ * and y values are undefined. If you are only interested in whether
+ * the rectangles intersect, but not in the intersecting area itself,
+ * pass NULL for dest.
+ * Params:
+ * src1 = a GdkRectangle
+ * src2 = a GdkRectangle
+ * dest = return location for the
+ * intersection of src1 and src2, or NULL. [out caller-allocates][allow-none]
+ * Returns: TRUE if the rectangles intersect.
+ */
+public static int intersect(ref Rectangle src1, ref Rectangle src2, out Rectangle dest)
 {
-	
-	/** the main Gtk struct */
-	protected GdkRectangle* gdkRectangle;
-	
-	
-	public GdkRectangle* getRectangleStruct()
-	{
-		return gdkRectangle;
-	}
-	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gdkRectangle;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GdkRectangle* gdkRectangle)
-	{
-		if(gdkRectangle is null)
-		{
-			this = null;
-			return;
-		}
-		this.gdkRectangle = gdkRectangle;
-	}
-	
-	/**
-	 */
-	
-	/**
-	 * Calculates the intersection of two rectangles. It is allowed for
-	 * dest to be the same as either src1 or src2. If the rectangles
-	 * do not intersect, dest's width and height is set to 0 and its x
-	 * and y values are undefined. If you are only interested in whether
-	 * the rectangles intersect, but not in the intersecting area itself,
-	 * pass NULL for dest.
-	 * Params:
-	 * src2 = a GdkRectangle
-	 * dest = return location for the
-	 * intersection of src1 and src2, or NULL. [out caller-allocates][allow-none]
-	 * Returns: TRUE if the rectangles intersect.
-	 */
-	public int intersect(Rectangle src2, Rectangle dest)
-	{
-		// gboolean gdk_rectangle_intersect (const GdkRectangle *src1,  const GdkRectangle *src2,  GdkRectangle *dest);
-		return gdk_rectangle_intersect(gdkRectangle, (src2 is null) ? null : src2.getRectangleStruct(), (dest is null) ? null : dest.getRectangleStruct());
-	}
-	
-	/**
-	 * Calculates the union of two rectangles.
-	 * The union of rectangles src1 and src2 is the smallest rectangle which
-	 * includes both src1 and src2 within it.
-	 * It is allowed for dest to be the same as either src1 or src2.
-	 * Params:
-	 * src2 = a GdkRectangle
-	 * dest = return location for the union of src1 and src2. [out]
-	 */
-	public void unio(Rectangle src2, Rectangle dest)
-	{
-		// void gdk_rectangle_union (const GdkRectangle *src1,  const GdkRectangle *src2,  GdkRectangle *dest);
-		gdk_rectangle_union(gdkRectangle, (src2 is null) ? null : src2.getRectangleStruct(), (dest is null) ? null : dest.getRectangleStruct());
-	}
+	// gboolean gdk_rectangle_intersect (const GdkRectangle *src1,  const GdkRectangle *src2,  GdkRectangle *dest);
+	return gdk_rectangle_intersect(&src1, &src2, &dest);
 }
+
+/**
+ * Calculates the union of two rectangles.
+ * The union of rectangles src1 and src2 is the smallest rectangle which
+ * includes both src1 and src2 within it.
+ * It is allowed for dest to be the same as either src1 or src2.
+ * Params:
+ * src1 = a GdkRectangle
+ * src2 = a GdkRectangle
+ * dest = return location for the union of src1 and src2. [out]
+ */
+public static void unio(ref Rectangle src1, ref Rectangle src2, out Rectangle dest)
+{
+	// void gdk_rectangle_union (const GdkRectangle *src1,  const GdkRectangle *src2,  GdkRectangle *dest);
+	gdk_rectangle_union(&src1, &src2, &dest);
+}
+

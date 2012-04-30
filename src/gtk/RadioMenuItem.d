@@ -288,9 +288,7 @@ public class RadioMenuItem : CheckMenuItem
 	/**
 	 * Returns the group to which the radio menu item belongs, as a GList of
 	 * GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.
-	 * Returns the group to which the radio menu item belongs, as a GList of
-	 * GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.
-	 * Returns: the group of radio_menu_item. [transfer none]
+	 * Returns: the group of radio_menu_item. [element-type GtkRadioMenuItem][transfer none]
 	 */
 	public ListSG getGroup()
 	{

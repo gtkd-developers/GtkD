@@ -80,16 +80,27 @@ private import gdk.Pixbuf;
  * the same file, the mime type of the file and whether the file
  * should be displayed only by the applications that have
  * registered it.
+ * Note
+ * The recently used files list is per user.
  * The GtkRecentManager acts like a database of all the recently
  * used files. You can create new GtkRecentManager objects, but
- * it is more efficient to use the standard recent manager for
- * the GdkScreen so that informations about the recently used
- * files is shared with other people using them. In case the
- * default screen is being used, adding a new recently used
- * file is as simple as:
+ * it is more efficient to use the default manager created by GTK+.
+ * Adding a new recently used file is as simple as:
  * $(DDOC_COMMENT example)
- * While looking up a recently used file is as simple as:
+ * The GtkRecentManager will try to gather all the needed information
+ * from the file itself through GIO.
+ * Looking up the meta-data associated with a recently used file
+ * given its URI requires calling gtk_recent_manager_lookup_item():
  * $(DDOC_COMMENT example)
+ * In order to retrieve the list of recently used files, you can use
+ * gtk_recent_manager_get_items(), which returns a list of GtkRecentInfo
+ * structures.
+ * A GtkRecentManager is the model used to populate the contents of
+ * one, or more GtkRecentChooser implementations.
+ * Note
+ * The maximum age of the recently used files list is
+ * controllable through the "gtk-recent-files-max-age"
+ * property.
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentInfo
@@ -306,6 +317,43 @@ public class RecentInfo
 	}
 	
 	/**
+	 * Checks whether an application registered this resource using app_name.
+	 * Since 2.10
+	 * Params:
+	 * appName = a string containing an application name
+	 * Returns: TRUE if an application with name app_name was found, FALSE otherwise.
+	 */
+	public int hasApplication(string appName)
+	{
+		// gboolean gtk_recent_info_has_application (GtkRecentInfo *info,  const gchar *app_name);
+		return gtk_recent_info_has_application(gtkRecentInfo, Str.toStringz(appName));
+	}
+	
+	/**
+	 * Creates a GAppInfo for the specified GtkRecentInfo
+	 * Params:
+	 * appName = the name of the application that should
+	 * be mapped to a GAppInfo; if NULL is used then the default
+	 * application for the MIME type is used. [allow-none]
+	 * Returns: the newly created GAppInfo, or NULL. In case of error, error will be set either with a GTK_RECENT_MANAGER_ERROR or a G_IO_ERROR. [transfer full]
+	 * Throws: GException on failure.
+	 */
+	public GAppInfo* createAppInfo(string appName)
+	{
+		// GAppInfo * gtk_recent_info_create_app_info (GtkRecentInfo *info,  const gchar *app_name,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_recent_info_create_app_info(gtkRecentInfo, Str.toStringz(appName), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Returns all groups registered for the recently used item info. The
 	 * array of returned group names will be NULL terminated, so length might
 	 * optionally be NULL.
@@ -342,19 +390,6 @@ public class RecentInfo
 	}
 	
 	/**
-	 * Checks whether an application registered this resource using app_name.
-	 * Since 2.10
-	 * Params:
-	 * appName = a string containing an application name
-	 * Returns: TRUE if an application with name app_name was found, FALSE otherwise.
-	 */
-	public int hasApplication(string appName)
-	{
-		// gboolean gtk_recent_info_has_application (GtkRecentInfo *info,  const gchar *app_name);
-		return gtk_recent_info_has_application(gtkRecentInfo, Str.toStringz(appName));
-	}
-	
-	/**
 	 * Retrieves the icon of size size associated to the resource MIME type.
 	 * Since 2.10
 	 * Params:
@@ -370,6 +405,17 @@ public class RecentInfo
 			return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Retrieves the icon associated to the resource MIME type.
+	 * Since 2.22
+	 * Returns: a GIcon containing the icon, or NULL. Use g_object_unref() when finished using the icon. [transfer full]
+	 */
+	public GIcon* getGicon()
+	{
+		// GIcon * gtk_recent_info_get_gicon (GtkRecentInfo *info);
+		return gtk_recent_info_get_gicon(gtkRecentInfo);
 	}
 	
 	/**

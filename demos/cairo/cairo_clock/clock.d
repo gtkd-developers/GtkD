@@ -22,20 +22,12 @@ else import std.stdio;
 
 version(Tango) import tango.math.Math;
 else import std.math;
-
 version(Tango)
 {
 	import tango.time.Time;
 	import tangoClock = tango.time.WallClock;
 }
-else version(D_Version2)
-{
-	import std.datetime;
-}
-else
-{
-	import std.date;
-}
+else import std.date;
 
 import gtk.Timeout;
 
@@ -49,7 +41,7 @@ import gdk.Rectangle;
 
 import gtk.DrawingArea;
 
-class Clock : DrawingArea
+class Clock : public DrawingArea
 {
 public:
 	this()
@@ -149,15 +141,6 @@ protected:
 			double hours = time.hours * PI / 6;
 			double seconds = time.seconds * PI / 30;
 		}
-		else version(D_Version2)
-		{
-			SysTime lNow = std.datetime.Clock.currTime();
-
-			// compute the angles of the indicators of our clock
-			double minutes = lNow.minute * PI / 30; 
-			double hours = lNow.hour * PI / 6; 
-			double seconds= lNow.second * PI / 30; 
-		}
 		else
 		{
 			d_time lNow;
@@ -176,6 +159,8 @@ protected:
 			double hours = timeinfo.hour * PI / 6;
 			double seconds= timeinfo.second * PI / 30;
 		}
+
+		//writefln(timeinfo.hour, ".", timeinfo.minute, ".", timeinfo.second);
 
 		cr.save();
 			cr.setLineCap(cairo_line_cap_t.ROUND);

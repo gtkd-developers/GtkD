@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Accelerator-Maps.html
+ * inFile  = gtk3-Accelerator-Maps.html
  * outPack = gtk
  * outFile = AccelMap
  * strct   = GtkAccelMap
@@ -75,6 +75,48 @@ private import gobject.ObjectG;
 
 /**
  * Description
+ * Accelerator maps are used to define runtime configurable accelerators.
+ * Functions for manipulating them are are usually used by higher level
+ * convenience mechanisms like GtkUIManager and are thus considered
+ * "low-level". You'll want to use them if you're manually creating menus that
+ * should have user-configurable accelerators.
+ * Accelerator is uniquely defined by:
+ * accelerator path
+ * accelerator key
+ * accelerator modifiers
+ * The accelerator path must consist of
+ * "<WINDOWTYPE>/Category1/Category2/.../Action", where WINDOWTYPE
+ * should be a unique application-specific identifier that corresponds to the
+ * kind of window the accelerator is being used in, e.g. "Gimp-Image",
+ * "Abiword-Document" or "Gnumeric-Settings".
+ * The "Category1/.../Action" portion is most appropriately chosen by the action
+ * the accelerator triggers, i.e. for accelerators on menu items, choose the
+ * item's menu path, e.g. "File/Save As", "Image/View/Zoom" or
+ * "Edit/Select All". So a full valid accelerator path may look like:
+ * "<Gimp-Toolbox>/File/Dialogs/Tool Options...".
+ * All accelerators are stored inside one global GtkAccelMap that can be
+ * obtained using gtk_accel_map_get(). See Monitoring changes for additional
+ * details.
+ * Manipulating accelerators
+ * New accelerators can be added using gtk_accel_map_add_entry(). To search for
+ * specific accelerator, use gtk_accel_map_lookup_entry(). Modifications of
+ * existing accelerators should be done using gtk_accel_map_change_entry().
+ * In order to avoid having some accelerators changed, they can be locked using
+ * gtk_accel_map_lock_path(). Unlocking is done using
+ * gtk_accel_map_unlock_path().
+ * <hr>
+ * Saving and loading accelerator maps
+ * Accelerator maps can be saved to and loaded from some external resource. For
+ * simple saving and loading from file, gtk_accel_map_save() and
+ * gtk_accel_map_load() are provided. Saving and loading can also be done by
+ * providing file descriptor to gtk_accel_map_save_fd() and
+ * gtk_accel_map_load_fd().
+ * <hr>
+ * Monitoring changes
+ * GtkAccelMap object is only useful for monitoring changes of accelerators. By
+ * connecting to "changed" signal, one can monitor changes of all
+ * accelerators. It is also possible to monitor only single accelerator path by
+ * using it as a detail of the "changed" signal.
  */
 public class AccelMap : ObjectG
 {
@@ -133,6 +175,8 @@ public class AccelMap : ObjectG
 	 * so it is possible to connect to
 	 * changed::accel_path.
 	 * Since 2.4
+	 * See Also
+	 * GtkAccelGroup, GtkAccelKey, GtkUIManager, gtk_widget_set_accel_path(), gtk_menu_item_set_accel_path(), "gtk-can-change-accels"
 	 */
 	void addOnChanged(void delegate(string, guint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -164,13 +208,9 @@ public class AccelMap : ObjectG
 	 * with the canonical accel_key and accel_mods for this path.
 	 * To change the accelerator during runtime programatically, use
 	 * gtk_accel_map_change_entry().
-	 * The accelerator path must consist of "<WINDOWTYPE>/Category1/Category2/.../Action",
-	 * where <WINDOWTYPE> should be a unique application-specific identifier, that
-	 * corresponds to the kind of window the accelerator is being used in, e.g. "Gimp-Image",
-	 * "Abiword-Document" or "Gnumeric-Settings".
-	 * The Category1/.../Action portion is most appropriately chosen by the action the
-	 * accelerator triggers, i.e. for accelerators on menu items, choose the item's menu path,
-	 * e.g. "File/Save As", "Image/View/Zoom" or "Edit/Select All".
+	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
+	 * pass a static string, you can save some memory by interning it first with
+	 * g_intern_static_string().
 	 * Params:
 	 * accelPath = valid accelerator path
 	 * accelKey = the accelerator key
@@ -186,7 +226,7 @@ public class AccelMap : ObjectG
 	 * Looks up the accelerator entry for accel_path and fills in key.
 	 * Params:
 	 * accelPath = a valid accelerator path
-	 * key = the accelerator key to be filled in (optional)
+	 * key = the accelerator key to be filled in (optional). [allow-none][out]
 	 * Returns: TRUE if accel_path is known, FALSE otherwise
 	 */
 	public static int lookupEntry(string accelPath, out GtkAccelKey key)
@@ -223,7 +263,7 @@ public class AccelMap : ObjectG
 	 * accelerator specifications, and propagates them accordingly.
 	 * Params:
 	 * fileName = a file containing accelerator specifications,
-	 *  in the GLib file name encoding
+	 * in the GLib file name encoding. [type filename]
 	 */
 	public static void load(string fileName)
 	{
@@ -237,8 +277,8 @@ public class AccelMap : ObjectG
 	 * The file is written in a format suitable to be read back in by
 	 * gtk_accel_map_load().
 	 * Params:
-	 * fileName = the name of the file to contain accelerator specifications,
-	 *  in the GLib file name encoding
+	 * fileName = the name of the file to contain
+	 * accelerator specifications, in the GLib file name encoding. [type filename]
 	 */
 	public static void save(string fileName)
 	{
@@ -254,9 +294,9 @@ public class AccelMap : ObjectG
 	 * this accelerator was changed during runtime (thus, would need
 	 * saving during an accelerator map dump).
 	 * Params:
-	 * data = data to be passed into foreach_func
-	 * foreachFunc = function to be executed for each accel map entry which
-	 *  is not filtered out
+	 * data = data to be passed into foreach_func. [allow-none]
+	 * foreachFunc = function to be executed for each accel
+	 * map entry which is not filtered out. [scope call]
 	 */
 	public static void foreac(void* data, GtkAccelMapForeach foreachFunc)
 	{
@@ -323,7 +363,8 @@ public class AccelMap : ObjectG
 	 * saving during an accelerator map dump).
 	 * Params:
 	 * data = data to be passed into foreach_func
-	 * foreachFunc = function to be executed for each accel map entry
+	 * foreachFunc = function to be executed for each accel
+	 * map entry. [scope call]
 	 */
 	public static void foreachUnfiltered(void* data, GtkAccelMapForeach foreachFunc)
 	{
@@ -337,7 +378,7 @@ public class AccelMap : ObjectG
 	 * map via the ::changed signal; it isn't a parameter to the
 	 * other accelerator map functions.
 	 * Since 2.4
-	 * Returns: the global GtkAccelMap object
+	 * Returns: the global GtkAccelMap object. [transfer none]
 	 */
 	public static AccelMap get()
 	{
@@ -384,7 +425,7 @@ public class AccelMap : ObjectG
 	 *  gchar *accel_path,
 	 *  guint accel_key,
 	 *  GdkModifierType accel_mods,
-	 *  gpointer user_data) : Run Last / Has Details
+	 *  gpointer user_data) : Has Details
 	 * Notifies of a change in the global accelerator map.
 	 * The path is also used as the detail for the signal,
 	 * so it is possible to connect to

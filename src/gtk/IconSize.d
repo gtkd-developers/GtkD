@@ -121,7 +121,7 @@ public class IconSize
 	 * (See gtk_icon_size_lookup_for_settings().)
 	 * Normally size would be
 	 * GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_BUTTON, etc. This function
-	 * isn't normally needed, gtk_widget_render_icon() is the usual
+	 * isn't normally needed, gtk_widget_render_icon_pixbuf() is the usual
 	 * way to get an icon for rendering, then just look at the size of
 	 * the rendered pixbuf. The rendered pixbuf may not even correspond to
 	 * the width/height returned by gtk_icon_size_lookup(), because themes
@@ -129,8 +129,8 @@ public class IconSize
 	 * the usual size.
 	 * Params:
 	 * size = an icon size. [type int]
-	 * width = location to store icon width
-	 * height = location to store icon height
+	 * width = location to store icon width. [out]
+	 * height = location to store icon height. [out]
 	 * Returns: TRUE if size was a valid size
 	 */
 	public static int lookup(GtkIconSize size, out int width, out int height)
@@ -144,7 +144,7 @@ public class IconSize
 	 * modified by user preferences for a particular
 	 * GtkSettings. Normally size would be
 	 * GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_BUTTON, etc. This function
-	 * isn't normally needed, gtk_widget_render_icon() is the usual
+	 * isn't normally needed, gtk_widget_render_icon_pixbuf() is the usual
 	 * way to get an icon for rendering, then just look at the size of
 	 * the rendered pixbuf. The rendered pixbuf may not even correspond to
 	 * the width/height returned by gtk_icon_size_lookup(), because themes
@@ -153,10 +153,10 @@ public class IconSize
 	 * Since 2.2
 	 * Params:
 	 * settings = a GtkSettings object, used to determine
-	 *  which set of user preferences to used.
+	 * which set of user preferences to used.
 	 * size = an icon size. [type int]
-	 * width = location to store icon width
-	 * height = location to store icon height
+	 * width = location to store icon width. [out]
+	 * height = location to store icon height. [out]
 	 * Returns: TRUE if size was a valid size
 	 */
 	public static int lookupForSettings(Settings settings, GtkIconSize size, out int width, out int height)
@@ -197,7 +197,7 @@ public class IconSize
 	 * Looks up the icon size associated with name.
 	 * Params:
 	 * name = the name to look up.
-	 * Returns: the icon size with the given name.
+	 * Returns: the icon size. [type int]
 	 */
 	public static GtkIconSize fromName(string name)
 	{
@@ -214,7 +214,7 @@ public class IconSize
 	 */
 	public static string getName(GtkIconSize size)
 	{
-		// const gchar* gtk_icon_size_get_name (GtkIconSize size);
+		// const gchar * gtk_icon_size_get_name (GtkIconSize size);
 		return Str.toString(gtk_icon_size_get_name(size));
 	}
 }

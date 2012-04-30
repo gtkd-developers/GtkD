@@ -1391,6 +1391,8 @@ public class TextIter : Boxed
 	 * pixbufs or child widgets mixed inside the matched range. If these
 	 * flags are not given, the match must be exact; the special 0xFFFC
 	 * character in str will match embedded pixbufs or child widgets.
+	 * If you specify the GTK_TEXT_SEARCH_CASE_INSENSITIVE flag, the text will
+	 * be matched regardless of what case it is in.
 	 * Params:
 	 * str = a search string
 	 * flags = flags affecting how the search is done

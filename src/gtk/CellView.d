@@ -91,10 +91,18 @@ private import gtk.Widget;
 
 /**
  * Description
- * A GtkCellView displays a single row of a GtkTreeModel, using
- * cell renderers just like GtkTreeView. GtkCellView doesn't support
- * some of the more complex features of GtkTreeView, like cell editing
- * and drag and drop.
+ * A GtkCellView displays a single row of a GtkTreeModel using a GtkCellArea
+ * and GtkCellAreaContext. A GtkCellAreaContext can be provided to the
+ * GtkCellView at construction time in order to keep the cellview in context
+ * of a group of cell views, this ensures that the renderers displayed will
+ * be properly aligned with eachother (like the aligned cells in the menus
+ * of GtkComboBox).
+ * GtkCellView is GtkOrientable in order to decide in which orientation
+ * the underlying GtkCellAreaContext should be allocated. Taking the GtkComboBox
+ * menu as an example, cellviews should be oriented horizontally if the menus are
+ * listed top-to-bottom and thus all share the same width but may have separate
+ * individual heights (left-to-right menus should be allocated vertically since
+ * they all share the same height but may have variable widths).
  */
 public class CellView : Widget, CellLayoutIF
 {
@@ -200,6 +208,30 @@ public class CellView : Widget, CellLayoutIF
 	}
 	
 	/**
+	 * Creates a new GtkCellView widget with a specific GtkCellArea
+	 * to layout cells and a specific GtkCellAreaContext.
+	 * Specifying the same context for a handfull of cells lets
+	 * the underlying area synchronize the geometry for those cells,
+	 * in this way alignments with cellviews for other rows are
+	 * possible.
+	 * Since 2.6
+	 * Params:
+	 * area = the GtkCellArea to layout cells
+	 * context = the GtkCellAreaContext in which to calculate cell geometry
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkCellArea* area, GtkCellAreaContext* context)
+	{
+		// GtkWidget * gtk_cell_view_new_with_context (GtkCellArea *area,  GtkCellAreaContext *context);
+		auto p = gtk_cell_view_new_with_context(area, context);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_cell_view_new_with_context(area, context)");
+		}
+		this(cast(GtkCellView*) p);
+	}
+	
+	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererPixbuf
 	 * to it, and makes its show pixbuf.
 	 * Since 2.6
@@ -285,6 +317,11 @@ public class CellView : Widget, CellLayoutIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_cell_view_get_size_of_row has been deprecated since version 3.0 and should not be used in newly-written code. Combo box formerly used this to calculate the
+	 * sizes for cellviews, now you can achieve this by either using
+	 * the "fit-model" property or by setting the currently
+	 * displayed row of the GtkCellView and using gtk_widget_get_preferred_size().
 	 * Sets requisition to the size needed by cell_view to display
 	 * the model row pointed to by path.
 	 * Since 2.6
@@ -312,20 +349,66 @@ public class CellView : Widget, CellLayoutIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_cell_view_get_cell_renderers has been deprecated since version 2.18 and should not be used in newly-written code. use gtk_cell_layout_get_cells() instead.
-	 * Returns the cell renderers which have been added to cell_view.
-	 * Since 2.6
-	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed.
+	 * Sets the background color of cell_view.
+	 * Params:
+	 * rgba = the new background color
+	 * Since 3.0
 	 */
-	public ListG getCellRenderers()
+	public void setBackgroundRgba(GdkRGBA* rgba)
 	{
-		// GList * gtk_cell_view_get_cell_renderers (GtkCellView *cell_view);
-		auto p = gtk_cell_view_get_cell_renderers(gtkCellView);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ListG(cast(GList*) p);
+		// void gtk_cell_view_set_background_rgba (GtkCellView *cell_view,  const GdkRGBA *rgba);
+		gtk_cell_view_set_background_rgba(gtkCellView, rgba);
+	}
+	
+	/**
+	 * Sets whether cell_view should draw all of its
+	 * cells in a sensitive state, this is used by GtkComboBox menus
+	 * to ensure that rows with insensitive cells that contain
+	 * children appear sensitive in the parent menu item.
+	 * Params:
+	 * drawSensitive = whether to draw all cells in a sensitive state.
+	 * Since 3.0
+	 */
+	public void setDrawSensitive(int drawSensitive)
+	{
+		// void gtk_cell_view_set_draw_sensitive (GtkCellView *cell_view,  gboolean draw_sensitive);
+		gtk_cell_view_set_draw_sensitive(gtkCellView, drawSensitive);
+	}
+	
+	/**
+	 * Gets whether cell_view is configured to draw all of its
+	 * cells in a sensitive state.
+	 * Returns: whether cell_view draws all of its cells in a sensitive state Since 3.0
+	 */
+	public int getDrawSensitive()
+	{
+		// gboolean gtk_cell_view_get_draw_sensitive (GtkCellView *cell_view);
+		return gtk_cell_view_get_draw_sensitive(gtkCellView);
+	}
+	
+	/**
+	 * Sets whether cell_view should request space to fit the entire GtkTreeModel.
+	 * This is used by GtkComboBox to ensure that the cell view displayed on
+	 * the combo box's button always gets enough space and does not resize
+	 * when selection changes.
+	 * Params:
+	 * fitModel = whether cell_view should request space for the whole model.
+	 * Since 3.0
+	 */
+	public void setFitModel(int fitModel)
+	{
+		// void gtk_cell_view_set_fit_model (GtkCellView *cell_view,  gboolean fit_model);
+		gtk_cell_view_set_fit_model(gtkCellView, fitModel);
+	}
+	
+	/**
+	 * Gets whether cell_view is configured to request space
+	 * to fit the entire GtkTreeModel.
+	 * Returns: whether cell_view requests space to fit the entire GtkTreeModel. Since 3.0
+	 */
+	public int getFitModel()
+	{
+		// gboolean gtk_cell_view_get_fit_model (GtkCellView *cell_view);
+		return gtk_cell_view_get_fit_model(gtkCellView);
 	}
 }

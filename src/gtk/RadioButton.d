@@ -81,9 +81,9 @@ private import gtk.CheckButton;
  * as its position in the object hierarchy reflects. It is only when multiple
  * radio buttons are grouped together that they become a different user
  * interface component in their own right.
- * Every radio button is a member of some group of radio buttons. When one is selected, all other
- * radio buttons in the same group are deselected. A GtkRadioButton is one way
- * of giving the user a choice from many options.
+ * Every radio button is a member of some group of radio buttons. When one is
+ * selected, all other radio buttons in the same group are deselected. A
+ * GtkRadioButton is one way of giving the user a choice from many options.
  * Radio button widgets are created with gtk_radio_button_new(), passing NULL
  * as the argument if this is the first radio button in a group. In subsequent
  * calls, the group you wish to add this button to should be passed as an
@@ -95,14 +95,16 @@ private import gtk.CheckButton;
  * gtk_radio_button_new_with_label_from_widget() is also provided.
  * To retrieve the group a GtkRadioButton is assigned to, use
  * gtk_radio_button_get_group().
- * To remove a GtkRadioButton from one group and make it part of a new one, use gtk_radio_button_set_group().
+ * To remove a GtkRadioButton from one group and make it part of a new one,
+ * use gtk_radio_button_set_group().
  * The group list does not need to be freed, as each GtkRadioButton will remove
  * itself and its list item when it is destroyed.
  * $(DDOC_COMMENT example)
  * When an unselected button in the group is clicked the clicked button
- * receives the "toggled" signal, as does the previously selected button.
- * Inside the "toggled" handler, gtk_toggle_button_get_active() can be used
- * to determine if the button has been selected or deselected.
+ * receives the "toggled" signal, as does the previously
+ * selected button.
+ * Inside the "toggled" handler, gtk_toggle_button_get_active()
+ * can be used to determine if the button has been selected or deselected.
  */
 public class RadioButton : CheckButton
 {
@@ -254,9 +256,7 @@ public class RadioButton : CheckButton
 	 * of the group that a button belongs to changes.
 	 * Since 2.4
 	 * See Also
-	 * GtkOptionMenu
-	 * Another way of offering the user a single choice from
-	 * many.
+	 * GtkComboBox
 	 */
 	void addOnGroupChanged(void delegate(RadioButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -273,7 +273,7 @@ public class RadioButton : CheckButton
 		}
 		onGroupChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackGroupChanged(GtkRadioButton* styleStruct, RadioButton radioButton)
+	extern(C) static void callBackGroupChanged(GtkRadioButton* buttonStruct, RadioButton radioButton)
 	{
 		foreach ( void delegate(RadioButton) dlg ; radioButton.onGroupChangedListeners )
 		{
@@ -285,11 +285,9 @@ public class RadioButton : CheckButton
 	/**
 	 * Creates a new GtkRadioButton. To be of any practical value, a widget should
 	 * then be packed into the radio button.
-	 * Creates a new GtkRadioButton. To be of any practical value, a widget should
-	 * then be packed into the radio button.
 	 * Params:
-	 * group = an existing radio button group, or NULL if you are
-	 * creating a new group. [allow-none]
+	 * group = an existing
+	 * radio button group, or NULL if you are creating a new group. [element-type GtkRadioButton][allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group)
@@ -307,8 +305,6 @@ public class RadioButton : CheckButton
 	 * Creates a new GtkRadioButton, adding it to the same group as
 	 * radio_group_member. As with gtk_radio_button_new(), a widget
 	 * should be packed into the radio button.
-	 * Creates a new GtkRadioButton, adding it to the same group as radio_group_member.
-	 * As with gtk_radio_button_new(), a widget should be packed into the radio button.
 	 * Params:
 	 * radioGroupMember = an existing GtkRadioButton. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -325,10 +321,6 @@ public class RadioButton : CheckButton
 	}
 	
 	/**
-	 * Sets a GtkRadioButton's group. It should be noted that this does not change
-	 * the layout of your interface in any way, so if you are changing the group,
-	 * it is likely you will need to re-arrange the user interface to reflect these
-	 * changes.
 	 * Sets a GtkRadioButton's group. It should be noted that this does not change
 	 * the layout of your interface in any way, so if you are changing the group,
 	 * it is likely you will need to re-arrange the user interface to reflect these
@@ -356,5 +348,20 @@ public class RadioButton : CheckButton
 			return null;
 		}
 		return new ListSG(cast(GSList*) p);
+	}
+	
+	/**
+	 * Joins a GtkRadioButton object to the group of another GtkRadioButton object
+	 * Use this in language bindings instead of the gtk_radio_button_get_group()
+	 * and gtk_radio_button_set_group() methods
+	 * Params:
+	 * groupSource = a radio button object whos group we are
+	 * joining, or NULL to remove the radio button from its group. [allow-none]
+	 * Since 3.0
+	 */
+	public void joinGroup(RadioButton groupSource)
+	{
+		// void gtk_radio_button_join_group (GtkRadioButton *radio_button,  GtkRadioButton *group_source);
+		gtk_radio_button_join_group(gtkRadioButton, (groupSource is null) ? null : groupSource.getRadioButtonStruct());
 	}
 }

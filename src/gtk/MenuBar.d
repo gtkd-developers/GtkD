@@ -74,7 +74,9 @@ private import gtk.MenuShell;
 
 /**
  * Description
- * The GtkMenuBar is a subclass of GtkMenuShell which contains one to many GtkMenuItem. The result is a standard menu bar which can hold many menu items. GtkMenuBar allows for a shadow type to be set for aesthetic purposes. The shadow types are defined in the gtk_menu_bar_set_shadow_type function.
+ * The GtkMenuBar is a subclass of GtkMenuShell which contains one or
+ * more GtkMenuItems. The result is a standard menu bar which can hold
+ * many menu items.
  */
 public class MenuBar : MenuShell
 {
@@ -143,7 +145,7 @@ public class MenuBar : MenuShell
 	 */
 	
 	/**
-	 * Creates the new GtkMenuBar
+	 * Creates a new GtkMenuBar
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()

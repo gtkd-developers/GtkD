@@ -49,17 +49,8 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_view_get_insert_spaces_instead_of_tabs, \"gtk_source_view_get_insert_spaces_instead_of_tabs\", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_smart_home_end, \"gtk_source_view_set_smart_home_end\", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_smart_home_end, \"gtk_source_view_get_smart_home_end\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_category_priority, \"gtk_source_view_set_mark_category_priority\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_mark_category_priority, \"gtk_source_view_get_mark_category_priority\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_category_pixbuf, \"gtk_source_view_set_mark_category_pixbuf\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_mark_category_pixbuf, \"gtk_source_view_get_mark_category_pixbuf\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_category_icon_from_pixbuf, \"gtk_source_view_set_mark_category_icon_from_pixbuf\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_category_icon_from_stock, \"gtk_source_view_set_mark_category_icon_from_stock\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_category_icon_from_icon_name, \"gtk_source_view_set_mark_category_icon_from_icon_name\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_mark_category_background, \"gtk_source_view_get_mark_category_background\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_category_background, \"gtk_source_view_set_mark_category_background\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_category_tooltip_func, \"gtk_source_view_set_mark_category_tooltip_func\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_category_tooltip_markup_func, \"gtk_source_view_set_mark_category_tooltip_markup_func\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_mark_attributes, \"gtk_source_view_set_mark_attributes\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_mark_attributes, \"gtk_source_view_get_mark_attributes\", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_highlight_current_line, \"gtk_source_view_set_highlight_current_line\", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_highlight_current_line, \"gtk_source_view_get_highlight_current_line\", LIBRARY.GSV);
 	Linker.link(gtk_source_view_set_show_line_marks, \"gtk_source_view_set_show_line_marks\", LIBRARY.GSV);
@@ -97,13 +88,19 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_buffer_can_undo, \"gtk_source_buffer_can_undo\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_begin_not_undoable_action, \"gtk_source_buffer_begin_not_undoable_action\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_end_not_undoable_action, \"gtk_source_buffer_end_not_undoable_action\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_ensure_highlight, \"gtk_source_buffer_ensure_highlight\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_create_source_mark, \"gtk_source_buffer_create_source_mark\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_forward_iter_to_source_mark, \"gtk_source_buffer_forward_iter_to_source_mark\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_backward_iter_to_source_mark, \"gtk_source_buffer_backward_iter_to_source_mark\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_get_source_marks_at_line, \"gtk_source_buffer_get_source_marks_at_line\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_get_source_marks_at_iter, \"gtk_source_buffer_get_source_marks_at_iter\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_remove_source_marks, \"gtk_source_buffer_remove_source_marks\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_forward_iter_to_source_mark, \"gtk_source_buffer_forward_iter_to_source_mark\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_backward_iter_to_source_mark, \"gtk_source_buffer_backward_iter_to_source_mark\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_ensure_highlight, \"gtk_source_buffer_ensure_highlight\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_iter_has_context_class, \"gtk_source_buffer_iter_has_context_class\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_get_context_classes_at_iter, \"gtk_source_buffer_get_context_classes_at_iter\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_iter_forward_to_context_class_toggle, \"gtk_source_buffer_iter_forward_to_context_class_toggle\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_iter_backward_to_context_class_toggle, \"gtk_source_buffer_iter_backward_to_context_class_toggle\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_get_undo_manager, \"gtk_source_buffer_get_undo_manager\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_set_undo_manager, \"gtk_source_buffer_set_undo_manager\", LIBRARY.GSV);
 
 	// gsv.SourceCompletion
 
@@ -129,10 +126,8 @@ mixin( _shared ~ "static this()
 
 	Linker.link(gtk_source_completion_info_new, \"gtk_source_completion_info_new\", LIBRARY.GSV);
 	Linker.link(gtk_source_completion_info_move_to_iter, \"gtk_source_completion_info_move_to_iter\", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_info_set_sizing, \"gtk_source_completion_info_set_sizing\", LIBRARY.GSV);
 	Linker.link(gtk_source_completion_info_set_widget, \"gtk_source_completion_info_set_widget\", LIBRARY.GSV);
 	Linker.link(gtk_source_completion_info_get_widget, \"gtk_source_completion_info_get_widget\", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_info_process_resize, \"gtk_source_completion_info_process_resize\", LIBRARY.GSV);
 
 	// gsv.SourceCompletionItem
 
@@ -171,19 +166,12 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_completion_provider_get_interactive_delay, \"gtk_source_completion_provider_get_interactive_delay\", LIBRARY.GSV);
 	Linker.link(gtk_source_completion_provider_get_priority, \"gtk_source_completion_provider_get_priority\", LIBRARY.GSV);
 
-	// gsv.SourceSearch
-
-	Linker.link(gtk_source_iter_backward_search, \"gtk_source_iter_backward_search\", LIBRARY.GSV);
-	Linker.link(gtk_source_iter_forward_search, \"gtk_source_iter_forward_search\", LIBRARY.GSV);
-
 	// gsv.SourceGutter
 
 	Linker.link(gtk_source_gutter_get_window, \"gtk_source_gutter_get_window\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_insert, \"gtk_source_gutter_insert\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_reorder, \"gtk_source_gutter_reorder\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_remove, \"gtk_source_gutter_remove\", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_set_cell_data_func, \"gtk_source_gutter_set_cell_data_func\", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_set_cell_size_func, \"gtk_source_gutter_set_cell_size_func\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_queue_draw, \"gtk_source_gutter_queue_draw\", LIBRARY.GSV);
 
 	// gsv.SourceMark
@@ -298,18 +286,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourceView* view) c_gtk_source_view_get_insert_spaces_instead_of_tabs;
 	void function(GtkSourceView* view, GtkSourceSmartHomeEndType smartHe) c_gtk_source_view_set_smart_home_end;
 	GtkSourceSmartHomeEndType function(GtkSourceView* view) c_gtk_source_view_get_smart_home_end;
-	void function(GtkSourceView* view, gchar* category, gint priority) c_gtk_source_view_set_mark_category_priority;
-	gint function(GtkSourceView* view, gchar* category) c_gtk_source_view_get_mark_category_priority;
-	void function(GtkSourceView* view, gchar* category, GdkPixbuf* pixbuf) c_gtk_source_view_set_mark_category_pixbuf;
-	GdkPixbuf* function(GtkSourceView* view, gchar* category) c_gtk_source_view_get_mark_category_pixbuf;
-	void function(GtkSourceView* view, gchar* category, GdkPixbuf* pixbuf) c_gtk_source_view_set_mark_category_icon_from_pixbuf;
-	void function(GtkSourceView* view, gchar* category, gchar* stockId) c_gtk_source_view_set_mark_category_icon_from_stock;
-	void function(GtkSourceView* view, gchar* category, gchar* name) c_gtk_source_view_set_mark_category_icon_from_icon_name;
-	gboolean function(GtkSourceView* view, gchar* category, GdkColor* dest) c_gtk_source_view_get_mark_category_background;
-	void function(GtkSourceView* view, gchar* category, GdkColor* color) c_gtk_source_view_set_mark_category_background;
-	void function(GtkSourceView* view, gchar* category, GtkSourceViewMarkTooltipFunc func, gpointer userData, GDestroyNotify userDataNotify) c_gtk_source_view_set_mark_category_tooltip_func;
-	void function(GtkSourceView* view, gchar* category, GtkSourceViewMarkTooltipFunc markupFunc, gpointer userData, GDestroyNotify userDataNotify) c_gtk_source_view_set_mark_category_tooltip_markup_func;
-	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_highlight_current_line;
+	void function(GtkSourceView* view, gchar* category, GtkSourceMarkAttributes* attributes, gint priority) c_gtk_source_view_set_mark_attributes;
+	GtkSourceMarkAttributes* function(GtkSourceView* view, gchar* category, gint* priority) c_gtk_source_view_get_mark_attributes;
+	void function(GtkSourceView* view, gboolean hl) c_gtk_source_view_set_highlight_current_line;
 	gboolean function(GtkSourceView* view) c_gtk_source_view_get_highlight_current_line;
 	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_line_marks;
 	gboolean function(GtkSourceView* view) c_gtk_source_view_get_show_line_marks;
@@ -346,13 +325,19 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourceBuffer* buffer) c_gtk_source_buffer_can_undo;
 	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_begin_not_undoable_action;
 	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_end_not_undoable_action;
+	void function(GtkSourceBuffer* buffer, GtkTextIter* start, GtkTextIter* end) c_gtk_source_buffer_ensure_highlight;
 	GtkSourceMark* function(GtkSourceBuffer* buffer, gchar* name, gchar* category, GtkTextIter* where) c_gtk_source_buffer_create_source_mark;
+	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_forward_iter_to_source_mark;
+	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_backward_iter_to_source_mark;
 	GSList* function(GtkSourceBuffer* buffer, gint line, gchar* category) c_gtk_source_buffer_get_source_marks_at_line;
 	GSList* function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_get_source_marks_at_iter;
 	void function(GtkSourceBuffer* buffer, GtkTextIter* start, GtkTextIter* end, gchar* category) c_gtk_source_buffer_remove_source_marks;
-	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_forward_iter_to_source_mark;
-	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_backward_iter_to_source_mark;
-	void function(GtkSourceBuffer* buffer, GtkTextIter* start, GtkTextIter* end) c_gtk_source_buffer_ensure_highlight;
+	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* contextClass) c_gtk_source_buffer_iter_has_context_class;
+	gchar** function(GtkSourceBuffer* buffer, GtkTextIter* iter) c_gtk_source_buffer_get_context_classes_at_iter;
+	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* contextClass) c_gtk_source_buffer_iter_forward_to_context_class_toggle;
+	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* contextClass) c_gtk_source_buffer_iter_backward_to_context_class_toggle;
+	GtkSourceUndoManager* function(GtkSourceBuffer* buffer) c_gtk_source_buffer_get_undo_manager;
+	void function(GtkSourceBuffer* buffer, GtkSourceUndoManager* manager) c_gtk_source_buffer_set_undo_manager;
 	
 	// gsv.SourceCompletion
 	
@@ -378,10 +363,8 @@ mixin( gshared ~"extern(C)
 	
 	GtkSourceCompletionInfo* function() c_gtk_source_completion_info_new;
 	void function(GtkSourceCompletionInfo* info, GtkTextView* view, GtkTextIter* iter) c_gtk_source_completion_info_move_to_iter;
-	void function(GtkSourceCompletionInfo* info, gint width, gint height, gboolean shrinkWidth, gboolean shrinkHeight) c_gtk_source_completion_info_set_sizing;
 	void function(GtkSourceCompletionInfo* info, GtkWidget* widget) c_gtk_source_completion_info_set_widget;
 	GtkWidget* function(GtkSourceCompletionInfo* info) c_gtk_source_completion_info_get_widget;
-	void function(GtkSourceCompletionInfo* info) c_gtk_source_completion_info_process_resize;
 	
 	// gsv.SourceCompletionItem
 	
@@ -420,19 +403,12 @@ mixin( gshared ~"extern(C)
 	gint function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_interactive_delay;
 	gint function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_priority;
 	
-	// gsv.SourceSearch
-	
-	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_backward_search;
-	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_forward_search;
-	
 	// gsv.SourceGutter
 	
 	GdkWindow* function(GtkSourceGutter* gutter) c_gtk_source_gutter_get_window;
-	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, gint position) c_gtk_source_gutter_insert;
-	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, gint position) c_gtk_source_gutter_reorder;
-	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer) c_gtk_source_gutter_remove;
-	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterDataFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_data_func;
-	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterSizeFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_size_func;
+	gboolean function(GtkSourceGutter* gutter, GtkSourceGutterRenderer* renderer, gint position) c_gtk_source_gutter_insert;
+	void function(GtkSourceGutter* gutter, GtkSourceGutterRenderer* renderer, gint position) c_gtk_source_gutter_reorder;
+	void function(GtkSourceGutter* gutter, GtkSourceGutterRenderer* renderer) c_gtk_source_gutter_remove;
 	void function(GtkSourceGutter* gutter) c_gtk_source_gutter_queue_draw;
 	
 	// gsv.SourceMark
@@ -544,17 +520,8 @@ alias c_gtk_source_view_set_insert_spaces_instead_of_tabs  gtk_source_view_set_i
 alias c_gtk_source_view_get_insert_spaces_instead_of_tabs  gtk_source_view_get_insert_spaces_instead_of_tabs;
 alias c_gtk_source_view_set_smart_home_end  gtk_source_view_set_smart_home_end;
 alias c_gtk_source_view_get_smart_home_end  gtk_source_view_get_smart_home_end;
-alias c_gtk_source_view_set_mark_category_priority  gtk_source_view_set_mark_category_priority;
-alias c_gtk_source_view_get_mark_category_priority  gtk_source_view_get_mark_category_priority;
-alias c_gtk_source_view_set_mark_category_pixbuf  gtk_source_view_set_mark_category_pixbuf;
-alias c_gtk_source_view_get_mark_category_pixbuf  gtk_source_view_get_mark_category_pixbuf;
-alias c_gtk_source_view_set_mark_category_icon_from_pixbuf  gtk_source_view_set_mark_category_icon_from_pixbuf;
-alias c_gtk_source_view_set_mark_category_icon_from_stock  gtk_source_view_set_mark_category_icon_from_stock;
-alias c_gtk_source_view_set_mark_category_icon_from_icon_name  gtk_source_view_set_mark_category_icon_from_icon_name;
-alias c_gtk_source_view_get_mark_category_background  gtk_source_view_get_mark_category_background;
-alias c_gtk_source_view_set_mark_category_background  gtk_source_view_set_mark_category_background;
-alias c_gtk_source_view_set_mark_category_tooltip_func  gtk_source_view_set_mark_category_tooltip_func;
-alias c_gtk_source_view_set_mark_category_tooltip_markup_func  gtk_source_view_set_mark_category_tooltip_markup_func;
+alias c_gtk_source_view_set_mark_attributes  gtk_source_view_set_mark_attributes;
+alias c_gtk_source_view_get_mark_attributes  gtk_source_view_get_mark_attributes;
 alias c_gtk_source_view_set_highlight_current_line  gtk_source_view_set_highlight_current_line;
 alias c_gtk_source_view_get_highlight_current_line  gtk_source_view_get_highlight_current_line;
 alias c_gtk_source_view_set_show_line_marks  gtk_source_view_set_show_line_marks;
@@ -592,13 +559,19 @@ alias c_gtk_source_buffer_can_redo  gtk_source_buffer_can_redo;
 alias c_gtk_source_buffer_can_undo  gtk_source_buffer_can_undo;
 alias c_gtk_source_buffer_begin_not_undoable_action  gtk_source_buffer_begin_not_undoable_action;
 alias c_gtk_source_buffer_end_not_undoable_action  gtk_source_buffer_end_not_undoable_action;
+alias c_gtk_source_buffer_ensure_highlight  gtk_source_buffer_ensure_highlight;
 alias c_gtk_source_buffer_create_source_mark  gtk_source_buffer_create_source_mark;
+alias c_gtk_source_buffer_forward_iter_to_source_mark  gtk_source_buffer_forward_iter_to_source_mark;
+alias c_gtk_source_buffer_backward_iter_to_source_mark  gtk_source_buffer_backward_iter_to_source_mark;
 alias c_gtk_source_buffer_get_source_marks_at_line  gtk_source_buffer_get_source_marks_at_line;
 alias c_gtk_source_buffer_get_source_marks_at_iter  gtk_source_buffer_get_source_marks_at_iter;
 alias c_gtk_source_buffer_remove_source_marks  gtk_source_buffer_remove_source_marks;
-alias c_gtk_source_buffer_forward_iter_to_source_mark  gtk_source_buffer_forward_iter_to_source_mark;
-alias c_gtk_source_buffer_backward_iter_to_source_mark  gtk_source_buffer_backward_iter_to_source_mark;
-alias c_gtk_source_buffer_ensure_highlight  gtk_source_buffer_ensure_highlight;
+alias c_gtk_source_buffer_iter_has_context_class  gtk_source_buffer_iter_has_context_class;
+alias c_gtk_source_buffer_get_context_classes_at_iter  gtk_source_buffer_get_context_classes_at_iter;
+alias c_gtk_source_buffer_iter_forward_to_context_class_toggle  gtk_source_buffer_iter_forward_to_context_class_toggle;
+alias c_gtk_source_buffer_iter_backward_to_context_class_toggle  gtk_source_buffer_iter_backward_to_context_class_toggle;
+alias c_gtk_source_buffer_get_undo_manager  gtk_source_buffer_get_undo_manager;
+alias c_gtk_source_buffer_set_undo_manager  gtk_source_buffer_set_undo_manager;
 
 // gsv.SourceCompletion
 
@@ -624,10 +597,8 @@ alias c_gtk_source_completion_context_get_activation  gtk_source_completion_cont
 
 alias c_gtk_source_completion_info_new  gtk_source_completion_info_new;
 alias c_gtk_source_completion_info_move_to_iter  gtk_source_completion_info_move_to_iter;
-alias c_gtk_source_completion_info_set_sizing  gtk_source_completion_info_set_sizing;
 alias c_gtk_source_completion_info_set_widget  gtk_source_completion_info_set_widget;
 alias c_gtk_source_completion_info_get_widget  gtk_source_completion_info_get_widget;
-alias c_gtk_source_completion_info_process_resize  gtk_source_completion_info_process_resize;
 
 // gsv.SourceCompletionItem
 
@@ -666,19 +637,12 @@ alias c_gtk_source_completion_provider_activate_proposal  gtk_source_completion_
 alias c_gtk_source_completion_provider_get_interactive_delay  gtk_source_completion_provider_get_interactive_delay;
 alias c_gtk_source_completion_provider_get_priority  gtk_source_completion_provider_get_priority;
 
-// gsv.SourceSearch
-
-alias c_gtk_source_iter_backward_search  gtk_source_iter_backward_search;
-alias c_gtk_source_iter_forward_search  gtk_source_iter_forward_search;
-
 // gsv.SourceGutter
 
 alias c_gtk_source_gutter_get_window  gtk_source_gutter_get_window;
 alias c_gtk_source_gutter_insert  gtk_source_gutter_insert;
 alias c_gtk_source_gutter_reorder  gtk_source_gutter_reorder;
 alias c_gtk_source_gutter_remove  gtk_source_gutter_remove;
-alias c_gtk_source_gutter_set_cell_data_func  gtk_source_gutter_set_cell_data_func;
-alias c_gtk_source_gutter_set_cell_size_func  gtk_source_gutter_set_cell_size_func;
 alias c_gtk_source_gutter_queue_draw  gtk_source_gutter_queue_draw;
 
 // gsv.SourceMark

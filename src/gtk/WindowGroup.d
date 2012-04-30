@@ -74,6 +74,13 @@ private import gobject.ObjectG;
 
 /**
  * Description
+ * GtkWindowGroup objects are referenced by each window in the group,
+ * so once you have added all windows to a GtkWindowGroup, you can drop
+ * the initial reference to the window group with g_object_unref(). If the
+ * windows in the window group are subsequently destroyed, then they will
+ * be removed from the window group and drop their references on the window
+ * group; when all window have been removed, the window group will be
+ * freed.
  */
 public class WindowGroup : ObjectG
 {
@@ -165,7 +172,7 @@ public class WindowGroup : ObjectG
 	/**
 	 * Returns a list of the GtkWindows that belong to window_group.
 	 * Since 2.14
-	 * Returns: A newly-allocated list of windows inside the group. [element-type GtkWidget][transfer container]
+	 * Returns: A newly-allocated list of windows inside the group. [element-type GtkWindow][transfer container]
 	 */
 	public ListG listWindows()
 	{
@@ -179,11 +186,32 @@ public class WindowGroup : ObjectG
 	}
 	
 	/**
+	 * Gets the current grab widget of the given group,
+	 * see gtk_grab_add().
+	 * Since 2.22
+	 * Returns: the current grab widget of the group. [transfer none]
 	 */
 	public Widget getCurrentGrab()
 	{
 		// GtkWidget * gtk_window_group_get_current_grab (GtkWindowGroup *window_group);
 		auto p = gtk_window_group_get_current_grab(gtkWindowGroup);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Returns the current grab widget for device, or NULL if none.
+	 * Params:
+	 * device = a GdkDevice
+	 * Returns: The grab widget, or NULL. [transfer none] Since 3.0
+	 */
+	public Widget getCurrentDeviceGrab(GdkDevice* device)
+	{
+		// GtkWidget * gtk_window_group_get_current_device_grab  (GtkWindowGroup *window_group,  GdkDevice *device);
+		auto p = gtk_window_group_get_current_device_grab(gtkWindowGroup, device);
 		if(p is null)
 		{
 			return null;

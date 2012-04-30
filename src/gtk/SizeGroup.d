@@ -105,6 +105,17 @@ private import gobject.ObjectG;
  * vertical size from the vertical requisition of all widgets that can be
  * reached from the widget by a chain of size groups of type
  * GTK_SIZE_GROUP_VERTICAL or GTK_SIZE_GROUP_BOTH.
+ * Note that only non-contextual sizes of every widget are ever consulted
+ * by size groups (since size groups have no knowledge of what size a widget
+ * will be allocated in one dimension, it cannot derive how much height
+ * a widget will receive for a given width). When grouping widgets that
+ * trade height for width in mode GTK_SIZE_GROUP_VERTICAL or GTK_SIZE_GROUP_BOTH:
+ * the height for the minimum width will be the requested height for all
+ * widgets in the group. The same is of course true when horizontally grouping
+ * width for height widgets.
+ * Widgets that trade height-for-width should set a reasonably large minimum width
+ * by way of GtkLabel:width-chars for instance. Widgets with static sizes as well
+ * as widgets that grow (such as ellipsizing text) need no such considerations.
  * GtkSizeGroup as GtkBuildable
  * Size groups can be specified in a UI definition by placing an
  * <object> element with class="GtkSizeGroup"
@@ -186,10 +197,10 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Sets the GtkSizeGroupMode of the size group. The mode of the size
 	 * group determines whether the widgets in the size group should
-	 * all have the same horizontal requisition (GTK_SIZE_GROUP_MODE_HORIZONTAL)
-	 * all have the same vertical requisition (GTK_SIZE_GROUP_MODE_VERTICAL),
+	 * all have the same horizontal requisition (GTK_SIZE_GROUP_HORIZONTAL)
+	 * all have the same vertical requisition (GTK_SIZE_GROUP_VERTICAL),
 	 * or should all have the same requisition in both directions
-	 * (GTK_SIZE_GROUP_MODE_BOTH).
+	 * (GTK_SIZE_GROUP_BOTH).
 	 * Params:
 	 * mode = the mode to set for the size group.
 	 */

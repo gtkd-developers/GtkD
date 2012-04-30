@@ -191,7 +191,7 @@ public class IconSet
 	 */
 	public IconSet copy()
 	{
-		// GtkIconSet* gtk_icon_set_copy (GtkIconSet *icon_set);
+		// GtkIconSet * gtk_icon_set_copy (GtkIconSet *icon_set);
 		auto p = gtk_icon_set_copy(gtkIconSet);
 		if(p is null)
 		{
@@ -205,7 +205,7 @@ public class IconSet
 	 * in various sizes and widget states. It can provide a GdkPixbuf
 	 * for a given size and state on request, and automatically caches
 	 * some of the rendered GdkPixbuf objects.
-	 * Normally you would use gtk_widget_render_icon() instead of
+	 * Normally you would use gtk_widget_render_icon_pixbuf() instead of
 	 * using GtkIconSet directly. The one case where you'd use
 	 * GtkIconSet is to create application-specific icon sets to place in
 	 * a GtkIconFactory.
@@ -213,7 +213,7 @@ public class IconSet
 	 */
 	public this ()
 	{
-		// GtkIconSet* gtk_icon_set_new (void);
+		// GtkIconSet * gtk_icon_set_new (void);
 		auto p = gtk_icon_set_new();
 		if(p is null)
 		{
@@ -234,7 +234,7 @@ public class IconSet
 	 */
 	public this (Pixbuf pixbuf)
 	{
-		// GtkIconSet* gtk_icon_set_new_from_pixbuf (GdkPixbuf *pixbuf);
+		// GtkIconSet * gtk_icon_set_new_from_pixbuf (GdkPixbuf *pixbuf);
 		auto p = gtk_icon_set_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 		if(p is null)
 		{
@@ -249,7 +249,7 @@ public class IconSet
 	 */
 	public IconSet doref()
 	{
-		// GtkIconSet* gtk_icon_set_ref (GtkIconSet *icon_set);
+		// GtkIconSet * gtk_icon_set_ref (GtkIconSet *icon_set);
 		auto p = gtk_icon_set_ref(gtkIconSet);
 		if(p is null)
 		{
@@ -259,6 +259,8 @@ public class IconSet
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_render_icon has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_icon_set_render_icon_pixbuf() instead
 	 * Renders an icon using gtk_style_render_icon(). In most cases,
 	 * gtk_widget_render_icon() is better, since it automatically provides
 	 * most of the arguments from the current widget settings. This
@@ -270,19 +272,43 @@ public class IconSet
 	 * direction = text direction
 	 * state = widget state
 	 * size = icon size. A size of (GtkIconSize)-1
-	 *  means render at the size of the source and don't scale. [type int]
+	 * means render at the size of the source and don't scale. [type int]
 	 * widget = widget that will display the icon, or NULL.
-	 *  The only use that is typically made of this
-	 *  is to determine the appropriate GdkScreen. [allow-none]
+	 * The only use that is typically made of this
+	 * is to determine the appropriate GdkScreen. [allow-none]
 	 * detail = detail to pass to the theme engine, or NULL.
-	 *  Note that passing a detail of anything but NULL
-	 *  will disable caching. [allow-none]
-	 * Returns: a GdkPixbuf to be displayed
+	 * Note that passing a detail of anything but NULL
+	 * will disable caching. [allow-none]
+	 * Returns: a GdkPixbuf to be displayed. [transfer full]
 	 */
 	public Pixbuf renderIcon(Style style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
 	{
-		// GdkPixbuf* gtk_icon_set_render_icon (GtkIconSet *icon_set,  GtkStyle *style,  GtkTextDirection direction,  GtkStateType state,  GtkIconSize size,  GtkWidget *widget,  const char *detail);
+		// GdkPixbuf * gtk_icon_set_render_icon (GtkIconSet *icon_set,  GtkStyle *style,  GtkTextDirection direction,  GtkStateType state,  GtkIconSize size,  GtkWidget *widget,  const gchar *detail);
 		auto p = gtk_icon_set_render_icon(gtkIconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Renders an icon using gtk_render_icon_pixbuf(). In most cases,
+	 * gtk_widget_render_icon_pixbuf() is better, since it automatically provides
+	 * most of the arguments from the current widget settings. This
+	 * function never returns NULL; if the icon can't be rendered
+	 * (perhaps because an image file fails to load), a default "missing
+	 * image" icon will be returned instead.
+	 * Params:
+	 * context = a GtkStyleContext
+	 * size = icon size. A size of (GtkIconSize)-1
+	 * means render at the size of the source and don't scale. [type int]
+	 * Returns: a GdkPixbuf to be displayed. [transfer full] Since 3.0
+	 */
+	public Pixbuf renderIconPixbuf(GtkStyleContext* context, GtkIconSize size)
+	{
+		// GdkPixbuf * gtk_icon_set_render_icon_pixbuf (GtkIconSet *icon_set,  GtkStyleContext *context,  GtkIconSize size);
+		auto p = gtk_icon_set_render_icon_pixbuf(gtkIconSet, context, size);
 		if(p is null)
 		{
 			return null;
@@ -305,7 +331,7 @@ public class IconSet
 	 * array must be freed with g_free().
 	 * Params:
 	 * sizes = return location
-	 *  for array of sizes. [array length=n_sizes][out length=n_sizes][type int]
+	 * for array of sizes. [array length=n_sizes][out][type int]
 	 */
 	public void getSizes(out GtkIconSize[] sizes)
 	{

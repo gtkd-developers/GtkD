@@ -306,7 +306,8 @@ public class IconTheme : ObjectG
 	 * rather than directly on the icon path.)
 	 * Since 2.4
 	 * Params:
-	 * path = array of directories that are searched for icon themes
+	 * path = array of
+	 * directories that are searched for icon themes. [array length=n_elements][element-type filename]
 	 */
 	public void setSearchPath(string[] path)
 	{
@@ -318,8 +319,8 @@ public class IconTheme : ObjectG
 	 * Gets the current search path. See gtk_icon_theme_set_search_path().
 	 * Since 2.4
 	 * Params:
-	 * path = location to store a list of icon theme path directories or NULL
-	 *  The stored value should be freed with g_strfreev(). [allow-none][out]
+	 * path = location to store a list of icon theme path directories or NULL.
+	 * The stored value should be freed with g_strfreev(). [allow-none][array length=n_elements][element-type filename][out]
 	 */
 	public void getSearchPath(out string[] path)
 	{
@@ -341,7 +342,7 @@ public class IconTheme : ObjectG
 	 * See gtk_icon_theme_set_search_path().
 	 * Since 2.4
 	 * Params:
-	 * path = directory name to append to the icon path
+	 * path = directory name to append to the icon path. [type filename]
 	 */
 	public void appendSearchPath(string path)
 	{
@@ -354,7 +355,7 @@ public class IconTheme : ObjectG
 	 * See gtk_icon_theme_set_search_path().
 	 * Since 2.4
 	 * Params:
-	 * path = directory name to prepend to the icon path
+	 * path = directory name to prepend to the icon path. [type filename]
 	 */
 	public void prependSearchPath(string path)
 	{
@@ -369,8 +370,8 @@ public class IconTheme : ObjectG
 	 * and gtk_icon_theme_get_for_screen().
 	 * Since 2.4
 	 * Params:
-	 * themeName = name of icon theme to use instead of configured theme,
-	 *  or NULL to unset a previously set custom theme
+	 * themeName = name of icon theme to use instead of
+	 * configured theme, or NULL to unset a previously set custom theme. [allow-none]
 	 */
 	public void setCustomTheme(string themeName)
 	{
@@ -427,7 +428,8 @@ public class IconTheme : ObjectG
 	 * inherited icon themes.
 	 * Since 2.12
 	 * Params:
-	 * iconNames = NULL-terminated array of icon names to lookup
+	 * iconNames = NULL-terminated array of
+	 * icon names to lookup. [array zero-terminated=1]
 	 * size = desired icon size
 	 * flags = flags modifying the behavior of the icon lookup
 	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Free with gtk_icon_info_free()
@@ -482,9 +484,9 @@ public class IconTheme : ObjectG
 	 * Params:
 	 * iconName = the name of the icon to lookup
 	 * size = the desired icon size. The resulting icon may not be
-	 *  exactly this size; see gtk_icon_info_load_icon().
+	 * exactly this size; see gtk_icon_info_load_icon().
 	 * flags = flags modifying the behavior of the icon lookup
-	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon. NULL if the icon isn't found.
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon. NULL if the icon isn't found. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public Pixbuf loadIcon(string iconName, int size, GtkIconLookupFlags flags)
@@ -510,7 +512,7 @@ public class IconTheme : ObjectG
 	 * Gets the list of contexts available within the current
 	 * hierarchy of icon themes
 	 * Since 2.12
-	 * Returns: a GList list holding the names of all the contexts in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). [element-type utf8][transfer full utf8]
+	 * Returns: a GList list holding the names of all the contexts in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). [element-type utf8][transfer full]
 	 */
 	public ListG listContexts()
 	{
@@ -531,9 +533,9 @@ public class IconTheme : ObjectG
 	 * "MimeTypes".
 	 * Since 2.4
 	 * Params:
-	 * context = a string identifying a particular type of icon,
-	 *  or NULL to list all icons.
-	 * Returns: a GList list holding the names of all the icons in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). [element-type utf8][transfer none utf8]
+	 * context = a string identifying a particular type of
+	 * icon, or NULL to list all icons. [allow-none]
+	 * Returns: a GList list holding the names of all the icons in the theme. You must first free each element in the list with g_free(), then free the list itself with g_list_free(). [element-type utf8][transfer full]
 	 */
 	public ListG listIcons(string context)
 	{
@@ -554,7 +556,7 @@ public class IconTheme : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * iconName = the name of an icon
-	 * Returns: An newly allocated array describing the sizes at which the icon is available. The array should be freed with g_free() when it is no longer needed.
+	 * Returns: An newly allocated array describing the sizes at which the icon is available. The array should be freed with g_free() when it is no longer needed. [array zero-terminated=1]
 	 */
 	public int* getIconSizes(string iconName)
 	{
@@ -604,10 +606,10 @@ public class IconTheme : ObjectG
 	 * Params:
 	 * iconName = the name of the icon to register
 	 * size = the size at which to register the icon (different
-	 *  images can be registered for the same icon name
-	 *  at different sizes.)
+	 * images can be registered for the same icon name
+	 * at different sizes.)
 	 * pixbuf = GdkPixbuf that contains the image to use
-	 *  for icon_name.
+	 * for icon_name.
 	 */
 	public static void addBuiltinIcon(string iconName, int size, Pixbuf pixbuf)
 	{

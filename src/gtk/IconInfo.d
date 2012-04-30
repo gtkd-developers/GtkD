@@ -260,7 +260,7 @@ public class IconInfo
 	 * no filename if a builtin icon is returned; in this
 	 * case, you should use gtk_icon_info_get_builtin_pixbuf().
 	 * Since 2.4
-	 * Returns: the filename for the icon, or NULL if gtk_icon_info_get_builtin_pixbuf() should be used instead. The return value is owned by GTK+ and should not be modified or freed.
+	 * Returns: the filename for the icon, or NULL if gtk_icon_info_get_builtin_pixbuf() should be used instead. The return value is owned by GTK+ and should not be modified or freed. [type filename]
 	 */
 	public string getFilename()
 	{
@@ -300,7 +300,7 @@ public class IconInfo
 	 * the GtkIconInfo. If this flag has been specified, the pixbuf
 	 * returned by this function will be scaled to the exact size.
 	 * Since 2.4
-	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon.
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public Pixbuf loadIcon()
@@ -309,6 +309,126 @@ public class IconInfo
 		GError* err = null;
 		
 		auto p = gtk_icon_info_load_icon(gtkIconInfo, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Loads an icon, modifying it to match the system colours for the foreground,
+	 * success, warning and error colors provided. If the icon is not a symbolic
+	 * one, the function will return the result from gtk_icon_info_load_icon().
+	 * This allows loading symbolic icons that will match the system theme.
+	 * Unless you are implementing a widget, you will want to use
+	 * g_themed_icon_new_with_default_fallbacks() to load the icon.
+	 * As implementation details, the icon loaded needs to be of SVG type,
+	 * contain the "symbolic" term as the last component of the icon name,
+	 * and use the 'fg', 'success', 'warning' and 'error' CSS styles in the
+	 * SVG file itself.
+	 * See the Symbolic Icons spec
+	 * for more information about symbolic icons.
+	 * Params:
+	 * fg = a GdkRGBA representing the foreground color of the icon
+	 * successColor = a GdkRGBA representing the warning color
+	 * of the icon or NULL to use the default color. [allow-none]
+	 * warningColor = a GdkRGBA representing the warning color
+	 * of the icon or NULL to use the default color. [allow-none]
+	 * errorColor = a GdkRGBA representing the error color
+	 * of the icon or NULL to use the default color (allow-none). [allow-none]
+	 * wasSymbolic = a gboolean, returns whether the
+	 * loaded icon was a symbolic one and whether the fg color was
+	 * applied to it. [out][allow-none]
+	 * error = location to store error information on failure,
+	 * or NULL. [allow-none]
+	 * Returns: a GdkPixbuf representing the loaded icon. [transfer full] Since 3.0
+	 * Throws: GException on failure.
+	 */
+	public Pixbuf loadSymbolic(GdkRGBA* fg, GdkRGBA* successColor, GdkRGBA* warningColor, GdkRGBA* errorColor, int* wasSymbolic)
+	{
+		// GdkPixbuf * gtk_icon_info_load_symbolic (GtkIconInfo *icon_info,  const GdkRGBA *fg,  const GdkRGBA *success_color,  const GdkRGBA *warning_color,  const GdkRGBA *error_color,  gboolean *was_symbolic,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_info_load_symbolic(gtkIconInfo, fg, successColor, warningColor, errorColor, wasSymbolic, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_icon_info_load_symbolic_for_style has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_icon_info_load_symbolic_for_context() instead
+	 * Loads an icon, modifying it to match the system colours for the foreground,
+	 * success, warning and error colors provided. If the icon is not a symbolic
+	 * one, the function will return the result from gtk_icon_info_load_icon().
+	 * This allows loading symbolic icons that will match the system theme.
+	 * See gtk_icon_info_load_symbolic() for more details.
+	 * Params:
+	 * style = a GtkStyle to take the colors from
+	 * state = the widget state to use for colors
+	 * wasSymbolic = a gboolean, returns whether the
+	 * loaded icon was a symbolic one and whether the fg color was
+	 * applied to it. [out][allow-none]
+	 * Returns: a GdkPixbuf representing the loaded icon. [transfer full] Since 3.0
+	 * Throws: GException on failure.
+	 */
+	public Pixbuf loadSymbolicForStyle(GtkStyle* style, GtkStateType state, int* wasSymbolic)
+	{
+		// GdkPixbuf * gtk_icon_info_load_symbolic_for_style  (GtkIconInfo *icon_info,  GtkStyle *style,  GtkStateType state,  gboolean *was_symbolic,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_info_load_symbolic_for_style(gtkIconInfo, style, state, wasSymbolic, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Loads an icon, modifying it to match the system colors for the foreground,
+	 * success, warning and error colors provided. If the icon is not a symbolic
+	 * one, the function will return the result from gtk_icon_info_load_icon().
+	 * This function uses the regular foreground color and the symbolic colors
+	 * with the names "success_color", "warning_color" and "error_color" from
+	 * the context.
+	 * This allows loading symbolic icons that will match the system theme.
+	 * See gtk_icon_info_load_symbolic() for more details.
+	 * Params:
+	 * context = a GtkStyleContext
+	 * wasSymbolic = a gboolean, returns whether the
+	 * loaded icon was a symbolic one and whether the fg color was
+	 * applied to it. [out][allow-none]
+	 * Returns: a GdkPixbuf representing the loaded icon. [transfer full] Since 3.0
+	 * Throws: GException on failure.
+	 */
+	public Pixbuf loadSymbolicForContext(GtkStyleContext* context, int* wasSymbolic)
+	{
+		// GdkPixbuf * gtk_icon_info_load_symbolic_for_context  (GtkIconInfo *icon_info,  GtkStyleContext *context,  gboolean *was_symbolic,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_info_load_symbolic_for_context(gtkIconInfo, context, wasSymbolic, &err);
 		
 		if (err !is null)
 		{
@@ -338,8 +458,8 @@ public class IconInfo
 	 * Since 2.4
 	 * Params:
 	 * rawCoordinates = whether the coordinates of embedded rectangles
-	 *  and attached points should be returned in their original
-	 *  (unscaled) form.
+	 * and attached points should be returned in their original
+	 * (unscaled) form.
 	 */
 	public void setRawCoordinates(int rawCoordinates)
 	{
@@ -356,11 +476,11 @@ public class IconInfo
 	 * Since 2.4
 	 * Params:
 	 * rectangle = GdkRectangle in which to store embedded
-	 *  rectangle coordinates; coordinates are only stored
-	 *  when this function returns TRUE.
+	 * rectangle coordinates; coordinates are only stored
+	 * when this function returns TRUE. [out]
 	 * Returns: TRUE if the icon has an embedded rectangle
 	 */
-	public int getEmbeddedRect(out GdkRectangle rectangle)
+	public int getEmbeddedRect(out Rectangle rectangle)
 	{
 		// gboolean gtk_icon_info_get_embedded_rect (GtkIconInfo *icon_info,  GdkRectangle *rectangle);
 		return gtk_icon_info_get_embedded_rect(gtkIconInfo, &rectangle);
@@ -373,7 +493,7 @@ public class IconInfo
 	 * Since 2.4
 	 * Params:
 	 * points = location to store pointer to an array of points, or NULL
-	 *  free the array of points with g_free(). [allow-none][out]
+	 * free the array of points with g_free(). [allow-none][array length=n_points][out]
 	 * Returns: TRUE if there are any attach points for the icon.
 	 */
 	public int getAttachPoints(out GdkPoint[] points)

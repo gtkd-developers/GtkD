@@ -155,9 +155,9 @@ public class SourceMark : TextMark
 	}
 	
 	/**
-	 * Returns the mark category
+	 * Returns the mark category.
 	 * Since 2.2
-	 * Returns: the category of the GtkSourceMark
+	 * Returns: the category of the GtkSourceMark.
 	 */
 	public string getCategory()
 	{
@@ -168,11 +168,11 @@ public class SourceMark : TextMark
 	/**
 	 * Returns the next GtkSourceMark in the buffer or NULL if the mark
 	 * was not added to a buffer. If there is no next mark, NULL will be returned.
-	 * If category is NULL, looks for marks of any category
+	 * If category is NULL, looks for marks of any category.
 	 * Since 2.2
 	 * Params:
-	 * category = a string specifying the mark category or NULL
-	 * Returns: the next GtkSourceMark or NULL
+	 * category = a string specifying the mark category, or NULL. [allow-none]
+	 * Returns: the next GtkSourceMark, or NULL. [transfer none]
 	 */
 	public SourceMark next(string category)
 	{
@@ -191,8 +191,8 @@ public class SourceMark : TextMark
 	 * If category is NULL, looks for marks of any category
 	 * Since 2.2
 	 * Params:
-	 * category = a string specifying the mark category or NULL
-	 * Returns: the previous GtkSourceMark or NULL
+	 * category = a string specifying the mark category, or NULL.
+	 * Returns: the previous GtkSourceMark, or NULL. [transfer none]
 	 */
 	public SourceMark prev(string category)
 	{

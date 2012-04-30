@@ -122,7 +122,9 @@ public class SourceLanguage : ObjectG
 	
 	/**
 	 * Returns the ID of the language. The ID is not locale-dependent.
-	 * Returns: the ID of language. The returned string is owned by language and should not be freed or modified.
+	 * The returned string is owned by language and should not be freed
+	 * or modified.
+	 * Returns: the ID of language.
 	 */
 	public string gtkSourceLanguageGetId()
 	{
@@ -132,7 +134,9 @@ public class SourceLanguage : ObjectG
 	
 	/**
 	 * Returns the localized name of the language.
-	 * Returns: the name of language. The returned string is owned by language and should not be freed or modified.
+	 * The returned string is owned by language and should not be freed
+	 * or modified.
+	 * Returns: the name of language.
 	 */
 	public string gtkSourceLanguageGetName()
 	{
@@ -144,7 +148,9 @@ public class SourceLanguage : ObjectG
 	 * Returns the localized section of the language.
 	 * Each language belong to a section (ex. HTML belogs to the
 	 * Markup section).
-	 * Returns: the section of language. The returned string is owned by language and should not be freed or modified.
+	 * The returned string is owned by language and should not be freed
+	 * or modified.
+	 * Returns: the section of language.
 	 */
 	public string gtkSourceLanguageGetSection()
 	{
@@ -178,7 +184,7 @@ public class SourceLanguage : ObjectG
 	 * an utility wrapper around gtk_source_language_get_metadata() to
 	 * retrieve the "mimetypes" metadata property and split it into an
 	 * array.
-	 * Returns: a newly-allocated NULL terminated array containing the mime types or NULL if no mime types are found. The returned array must be freed with g_strfreev().
+	 * Returns: a newly-allocated NULL terminated array containing the mime types or NULL if no mime types are found. The returned array must be freed with g_strfreev(). [array zero-terminated=1][transfer full]
 	 */
 	public string[] gtkSourceLanguageGetMimeTypes()
 	{
@@ -190,7 +196,7 @@ public class SourceLanguage : ObjectG
 	 * Returns the globs associated to this language. This is just
 	 * an utility wrapper around gtk_source_language_get_metadata() to
 	 * retrieve the "globs" metadata property and split it into an array.
-	 * Returns: a newly-allocated NULL terminated array containing the globs or NULL if no globs are found. The returned array must be freed with g_strfreev().
+	 * Returns: a newly-allocated NULL terminated array containing the globs or NULL if no globs are found. The returned array must be freed with g_strfreev(). [array zero-terminated=1][transfer full]
 	 */
 	public string[] gtkSourceLanguageGetGlobs()
 	{
@@ -201,7 +207,7 @@ public class SourceLanguage : ObjectG
 	/**
 	 * Returns the name of the style with ID style_id defined by this language.
 	 * Params:
-	 * styleId = a style ID
+	 * styleId = a style ID.
 	 * Returns: the name of the style with ID style_id defined by this language or NULL if the style has no name or there is no style with ID style_id defined by this language. The returned string is owned by the language and must not be modified.
 	 */
 	public string gtkSourceLanguageGetStyleName(string styleId)
@@ -212,7 +218,7 @@ public class SourceLanguage : ObjectG
 	
 	/**
 	 * Returns the ids of the styles defined by this language.
-	 * Returns: a NULL terminated array containing ids of the styles defined by this language or NULL if no style is defined. The returned array must be freed with g_strfreev().
+	 * Returns: a NULL terminated array containing ids of the styles defined by this language or NULL if no style is defined. The returned array must be freed with g_strfreev(). [array zero-terminated=1][transfer full]
 	 */
 	public string[] gtkSourceLanguageGetStyleIds()
 	{

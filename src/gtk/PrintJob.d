@@ -93,7 +93,6 @@ private import gobject.ObjectG;
  * to send the finished job to the printer. If you don't use cairo
  * GtkPrintJob also supports printing of manually generated postscript,
  * via gtk_print_job_set_source_file().
- * Printing support was added in GTK+ 2.10.
  */
 public class PrintJob : ObjectG
 {
@@ -258,7 +257,7 @@ public class PrintJob : ObjectG
 	 * gtk_printer_accepts_pdf() and gtk_printer_accepts_ps().
 	 * Since 2.10
 	 * Params:
-	 * filename = the file to be printed
+	 * filename = the file to be printed. [type filename]
 	 * Returns: FALSE if an error occurred
 	 * Throws: GException on failure.
 	 */
@@ -344,5 +343,229 @@ public class PrintJob : ObjectG
 	{
 		// gboolean gtk_print_job_get_track_print_status  (GtkPrintJob *job);
 		return gtk_print_job_get_track_print_status(gtkPrintJob);
+	}
+	
+	/**
+	 * Gets the GtkPrintPages setting for this job.
+	 * Returns: the GtkPrintPages setting Since 3.0
+	 */
+	public GtkPrintPages getPages()
+	{
+		// GtkPrintPages gtk_print_job_get_pages (GtkPrintJob *job);
+		return gtk_print_job_get_pages(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets the GtkPrintPages setting for this job.
+	 * Params:
+	 * pages = the GtkPrintPages setting
+	 * Since 3.0
+	 */
+	public void setPages(GtkPrintPages pages)
+	{
+		// void gtk_print_job_set_pages (GtkPrintJob *job,  GtkPrintPages pages);
+		gtk_print_job_set_pages(gtkPrintJob, pages);
+	}
+	
+	/**
+	 * Gets the page ranges for this job.
+	 * Params:
+	 * nRanges = return location for the number of ranges. [out]
+	 * Returns: a pointer to an array of GtkPageRange structs. [array length=n_ranges][transfer none] Since 3.0
+	 */
+	public GtkPageRange* getPageRanges(int* nRanges)
+	{
+		// GtkPageRange * gtk_print_job_get_page_ranges (GtkPrintJob *job,  gint *n_ranges);
+		return gtk_print_job_get_page_ranges(gtkPrintJob, nRanges);
+	}
+	
+	/**
+	 * Sets the page ranges for this job.
+	 * Params:
+	 * ranges = pointer to an array of
+	 * GtkPageRange structs. [array length=n_ranges]
+	 * nRanges = the length of the ranges array
+	 * Since 3.0
+	 */
+	public void setPageRanges(GtkPageRange* ranges, int nRanges)
+	{
+		// void gtk_print_job_set_page_ranges (GtkPrintJob *job,  GtkPageRange *ranges,  gint n_ranges);
+		gtk_print_job_set_page_ranges(gtkPrintJob, ranges, nRanges);
+	}
+	
+	/**
+	 * Gets the GtkPageSet setting for this job.
+	 * Returns: the GtkPageSet setting Since 3.0
+	 */
+	public GtkPageSet getPageSet()
+	{
+		// GtkPageSet gtk_print_job_get_page_set (GtkPrintJob *job);
+		return gtk_print_job_get_page_set(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets the GtkPageSet setting for this job.
+	 * Params:
+	 * pageSet = a GtkPageSet setting
+	 * Since 3.0
+	 */
+	public void setPageSet(GtkPageSet pageSet)
+	{
+		// void gtk_print_job_set_page_set (GtkPrintJob *job,  GtkPageSet page_set);
+		gtk_print_job_set_page_set(gtkPrintJob, pageSet);
+	}
+	
+	/**
+	 * Gets the number of copies of this job.
+	 * Returns: the number of copies Since 3.0
+	 */
+	public int getNumCopies()
+	{
+		// gint gtk_print_job_get_num_copies (GtkPrintJob *job);
+		return gtk_print_job_get_num_copies(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets the number of copies for this job.
+	 * Params:
+	 * numCopies = the number of copies
+	 * Since 3.0
+	 */
+	public void setNumCopies(int numCopies)
+	{
+		// void gtk_print_job_set_num_copies (GtkPrintJob *job,  gint num_copies);
+		gtk_print_job_set_num_copies(gtkPrintJob, numCopies);
+	}
+	
+	/**
+	 * Gets the scale for this job (where 1.0 means unscaled).
+	 * Returns: the scale Since 3.0
+	 */
+	public double getScale()
+	{
+		// gdouble gtk_print_job_get_scale (GtkPrintJob *job);
+		return gtk_print_job_get_scale(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets the scale for this job (where 1.0 means unscaled).
+	 * Params:
+	 * scale = the scale
+	 * Since 3.0
+	 */
+	public void setScale(double scale)
+	{
+		// void gtk_print_job_set_scale (GtkPrintJob *job,  gdouble scale);
+		gtk_print_job_set_scale(gtkPrintJob, scale);
+	}
+	
+	/**
+	 * Gets the n-up setting for this job.
+	 * Returns: the n-up setting Since 3.0
+	 */
+	public uint getNUp()
+	{
+		// guint gtk_print_job_get_n_up (GtkPrintJob *job);
+		return gtk_print_job_get_n_up(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets the n-up setting for this job.
+	 * Params:
+	 * nUp = the n-up value
+	 * Since 3.0
+	 */
+	public void setNUp(uint nUp)
+	{
+		// void gtk_print_job_set_n_up (GtkPrintJob *job,  guint n_up);
+		gtk_print_job_set_n_up(gtkPrintJob, nUp);
+	}
+	
+	/**
+	 * Gets the n-up layout setting for this job.
+	 * Returns: the n-up layout Since 3.0
+	 */
+	public GtkNumberUpLayout getNUpLayout()
+	{
+		// GtkNumberUpLayout gtk_print_job_get_n_up_layout (GtkPrintJob *job);
+		return gtk_print_job_get_n_up_layout(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets the n-up layout setting for this job.
+	 * Params:
+	 * layout = the n-up layout setting
+	 * Since 3.0
+	 */
+	public void setNUpLayout(GtkNumberUpLayout layout)
+	{
+		// void gtk_print_job_set_n_up_layout (GtkPrintJob *job,  GtkNumberUpLayout layout);
+		gtk_print_job_set_n_up_layout(gtkPrintJob, layout);
+	}
+	
+	/**
+	 * Gets whether the job is printed rotated.
+	 * Returns: whether the job is printed rotated Since 3.0
+	 */
+	public int getRotate()
+	{
+		// gboolean gtk_print_job_get_rotate (GtkPrintJob *job);
+		return gtk_print_job_get_rotate(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets whether this job is printed rotated.
+	 * Params:
+	 * rotate = whether to print rotated
+	 * Since 3.0
+	 */
+	public void setRotate(int rotate)
+	{
+		// void gtk_print_job_set_rotate (GtkPrintJob *job,  gboolean rotate);
+		gtk_print_job_set_rotate(gtkPrintJob, rotate);
+	}
+	
+	/**
+	 * Gets whether this job is printed collated.
+	 * Returns: whether the job is printed collated Since 3.0
+	 */
+	public int getCollate()
+	{
+		// gboolean gtk_print_job_get_collate (GtkPrintJob *job);
+		return gtk_print_job_get_collate(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets whether this job is printed collated.
+	 * Params:
+	 * collate = whether the job is printed collated
+	 * Since 3.0
+	 */
+	public void setCollate(int collate)
+	{
+		// void gtk_print_job_set_collate (GtkPrintJob *job,  gboolean collate);
+		gtk_print_job_set_collate(gtkPrintJob, collate);
+	}
+	
+	/**
+	 * Gets whether this job is printed reversed.
+	 * Returns: whether the job is printed reversed. Since 3.0
+	 */
+	public int getReverse()
+	{
+		// gboolean gtk_print_job_get_reverse (GtkPrintJob *job);
+		return gtk_print_job_get_reverse(gtkPrintJob);
+	}
+	
+	/**
+	 * Sets whether this job is printed reversed.
+	 * Params:
+	 * reverse = whether the job is printed reversed
+	 * Since 3.0
+	 */
+	public void setReverse(int reverse)
+	{
+		// void gtk_print_job_set_reverse (GtkPrintJob *job,  gboolean reverse);
+		gtk_print_job_set_reverse(gtkPrintJob, reverse);
 	}
 }

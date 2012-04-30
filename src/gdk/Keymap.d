@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-Keyboard-Handling.html
+ * inFile  = gdk3-Keyboard-Handling.html
  * outPack = gdk
  * outFile = Keymap
  * strct   = GdkKeymap
@@ -73,15 +73,14 @@ private import gobject.ObjectG;
 /**
  * Description
  * Key values are the codes which are sent whenever a key is pressed or released.
- * They appear in the keyval field of the
+ * They appear in the GdkEventKey.keyval field of the
  * GdkEventKey structure, which is passed to signal handlers for the
  * "key-press-event" and "key-release-event" signals.
- * The complete list of key values can be found in the <gdk/gdkkeysyms.h>
- * header file. <gdk/gdkkeysyms.h> is not included in <gdk/gdk.h>,
- * it must be included independently, because the file is quite large.
+ * The complete list of key values can be found in the
+ * <gdk/gdkkeysyms.h> header file.
  * Key values are regularly updated from the upstream X.org X11 implementation,
- * so new values are added regularly. They will be prefixed with GDK_ rather than
- * XF86XK_ or XK_ (for older symbols).
+ * so new values are added regularly. They will be prefixed with GDK_KEY_ rather
+ * than XF86XK_ or XK_ (for older symbols).
  * Key values can be converted into a string representation using
  * gdk_keyval_name(). The reverse function, converting a string to a key value,
  * is provided by gdk_keyval_from_name().
@@ -268,7 +267,7 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns the GdkKeymap attached to the default display.
-	 * Returns: the GdkKeymap attached to the default display.
+	 * Returns: the GdkKeymap attached to the default display. [transfer none]
 	 */
 	public static Keymap getDefault()
 	{
@@ -286,7 +285,7 @@ public class Keymap : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * display = the GdkDisplay.
-	 * Returns: the GdkKeymap attached to display.
+	 * Returns: the GdkKeymap attached to display. [transfer none]
 	 */
 	public static Keymap getForDisplay(Display display)
 	{
@@ -319,7 +318,8 @@ public class Keymap : ObjectG
 	 * Translates the contents of a GdkEventKey into a keyval, effective
 	 * group, and level. Modifiers that affected the translation and
 	 * are thus unavailable for application use are returned in
-	 * consumed_modifiers. See the section called “Description” for an explanation of
+	 * consumed_modifiers.
+	 * See the section called “Description” for an explanation of
 	 * groups and levels. The effective_group is the group that was
 	 * actually used for the translation; some keys such as Enter are not
 	 * affected by the active keyboard group. The level is derived from
@@ -341,10 +341,11 @@ public class Keymap : ObjectG
 	 * state = a modifier state
 	 * group = active keyboard group
 	 * keyval = return location for keyval, or NULL. [out][allow-none]
-	 * effectiveGroup = return location for effective group, or NULL. [out][allow-none]
+	 * effectiveGroup = return location for effective
+	 * group, or NULL. [out][allow-none]
 	 * level = return location for level, or NULL. [out][allow-none]
-	 * consumedModifiers = return location for modifiers that were used to
-	 * determine the group or level, or NULL. [out][allow-none]
+	 * consumedModifiers = return location for modifiers
+	 * that were used to determine the group or level, or NULL. [out][allow-none]
 	 * Returns: TRUE if there was a keyval bound to the keycode/state/group
 	 */
 	public int translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, out uint keyval, out int effectiveGroup, out int level, out GdkModifierType consumedModifiers)
@@ -367,7 +368,8 @@ public class Keymap : ObjectG
 	 * with g_free().
 	 * Params:
 	 * keyval = a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
-	 * keys = return location for an array of GdkKeymapKey
+	 * keys = return location
+	 * for an array of GdkKeymapKey. [out][array length=n_keys][transfer full]
 	 * Returns: TRUE if keys were found and returned
 	 */
 	public int getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
@@ -391,8 +393,10 @@ public class Keymap : ObjectG
 	 * keyboard group and level. See gdk_keymap_translate_keyboard_state().
 	 * Params:
 	 * hardwareKeycode = a keycode
-	 * keys = return location for array of GdkKeymapKey, or NULL
-	 * keyvals = return location for array of keyvals, or NULL
+	 * keys = return
+	 * location for array of GdkKeymapKey, or NULL. [out][array length=n_entries][transfer full]
+	 * keyvals = return
+	 * location for array of keyvals, or NULL. [out][array length=n_entries][transfer full]
 	 * Returns: TRUE if there were any entries
 	 */
 	public int getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, out uint[] keyvals)
@@ -410,11 +414,8 @@ public class Keymap : ObjectG
 	}
 	
 	/**
-	 * Returns the direction of effective layout of the keymap.
-	 * Note that passing NULL for keymap is deprecated and will stop
-	 * to work in GTK+ 3.0. Use gdk_keymap_get_for_display() instead.
 	 * Returns the direction of the keymap.
-	 * Returns: PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL if it can determine the direction. PANGO_DIRECTION_NEUTRAL otherwise.
+	 * Returns: the direction of the keymap, PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL.
 	 */
 	public PangoDirection getDirection()
 	{
@@ -425,8 +426,6 @@ public class Keymap : ObjectG
 	/**
 	 * Determines if keyboard layouts for both right-to-left and left-to-right
 	 * languages are in use.
-	 * Note that passing NULL for keymap is deprecated and will stop
-	 * to work in GTK+ 3.0. Use gdk_keymap_get_for_display() instead.
 	 * Since 2.12
 	 * Returns: TRUE if there are layouts in both directions, FALSE otherwise
 	 */
@@ -448,6 +447,16 @@ public class Keymap : ObjectG
 	}
 	
 	/**
+	 * Returns whether the Num Lock modifer is locked.
+	 * Returns: TRUE if Num Lock is on Since 3.0
+	 */
+	public int getNumLockState()
+	{
+		// gboolean gdk_keymap_get_num_lock_state (GdkKeymap *keymap);
+		return gdk_keymap_get_num_lock_state(gdkKeymap);
+	}
+	
+	/**
 	 * Adds virtual modifiers (i.e. Super, Hyper and Meta) which correspond
 	 * to the real modifiers (i.e Mod2, Mod3, ...) in modifiers.
 	 * are set in state to their non-virtual counterparts (i.e. Mod2,
@@ -459,7 +468,7 @@ public class Keymap : ObjectG
 	 * accelerators.
 	 * Since 2.20
 	 * Params:
-	 * state = pointer to the modifier mask to change
+	 * state = pointer to the modifier mask to change. [out]
 	 */
 	public void addVirtualModifiers(ref GdkModifierType state)
 	{
@@ -475,7 +484,7 @@ public class Keymap : ObjectG
 	 * accelerators.
 	 * Since 2.20
 	 * Params:
-	 * state = pointer to the modifier state to map
+	 * state = pointer to the modifier state to map. [out]
 	 * Returns: TRUE if no virtual modifiers were mapped to the same non-virtual modifier. Note that FALSE is also returned if a virtual modifier is mapped to a non-virtual modifier that was already set in state.
 	 */
 	public int mapVirtualModifiers(ref GdkModifierType state)
@@ -489,9 +498,6 @@ public class Keymap : ObjectG
 	 * The names are the same as those in the
 	 * <gdk/gdkkeysyms.h> header file
 	 * but without the leading "GDK_KEY_".
-	 * Converts a key value into a symbolic name.
-	 * The names are the same as those in the <gdk/gdkkeysyms.h> header file
-	 * but without the leading "GDK_".
 	 * Params:
 	 * keyval = a key value
 	 * Returns: a string containing the name of the key, or NULL if keyval is not a valid key. The string should not be modified. [transfer none]
@@ -504,13 +510,9 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Converts a key name to a key value.
-	 * The names are the same as those in the
-	 * <gdk/gdkkeysyms.h> header file
-	 * but without the leading "GDK_KEY_".
-	 * Converts a key name to a key value.
 	 * Params:
-	 * keyvalName = a key name
-	 * Returns: the corresponding key value, or GDK_KEY_VoidSymbol if the key name is not a valid key
+	 * keyvalName = a key name.
+	 * Returns: the corresponding key value, or GDK_VoidSymbol if the key name is not a valid key.
 	 */
 	public static uint gdkKeyvalFromName(string keyvalName)
 	{
@@ -520,7 +522,7 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Obtains the upper- and lower-case versions of the keyval symbol.
-	 * Examples of keyvals are GDK_a, GDK_Enter, GDK_F1, etc.
+	 * Examples of keyvals are GDK_KEY_a, GDK_KEY_Enter, GDK_KEY_F1, etc.
 	 * Params:
 	 * symbol = a keyval
 	 * lower = return location for lowercase version of symbol. [out]

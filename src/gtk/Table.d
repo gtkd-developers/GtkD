@@ -78,10 +78,17 @@ private import gtk.Container;
  * convenient (but slightly less flexible) gtk_table_attach_defaults().
  * To alter the space next to a specific row, use gtk_table_set_row_spacing(),
  * and for a column, gtk_table_set_col_spacing().
- * The gaps between all rows or columns can be changed by calling
- * gtk_table_set_row_spacings() or gtk_table_set_col_spacings() respectively.
+ * The gaps between all rows or columns can be changed by
+ * calling gtk_table_set_row_spacings() or gtk_table_set_col_spacings()
+ * respectively. Note that spacing is added between the
+ * children, while padding added by gtk_table_atach() is added on
+ * either side of the widget it belongs to.
  * gtk_table_set_homogeneous(), can be used to set whether all cells in the
  * table will resize themselves to the size of the largest widget in the table.
+ * Note
+ * Note that GtkGrid provides the same capabilities as GtkTable for arranging
+ * widgets in a rectangular grid, and additionally supports height-for-width
+ * geometry management.
  */
 public class Table : Container
 {
@@ -209,10 +216,28 @@ public class Table : Container
 	}
 	
 	/**
+	 * Gets the number of rows and columns in the table.
+	 * Since 2.22
+	 * Params:
+	 * rows = return location for the number of
+	 * rows, or NULL. [out][allow-none]
+	 * columns = return location for the number
+	 * of columns, or NULL. [out][allow-none]
+	 */
+	public void getSize(out uint rows, out uint columns)
+	{
+		// void gtk_table_get_size (GtkTable *table,  guint *rows,  guint *columns);
+		gtk_table_get_size(gtkTable, &rows, &columns);
+	}
+	
+	/**
 	 * Adds a widget to a table. The number of 'cells' that a widget will occupy is
 	 * specified by left_attach, right_attach, top_attach and bottom_attach.
 	 * These each represent the leftmost, rightmost, uppermost and lowest column
 	 * and row numbers of the table. (Columns and rows are indexed from zero).
+	 * To make a button occupy the lower right cell of a 2x2 table, use
+	 * $(DDOC_COMMENT example)
+	 * If you want to make the button span the entire bottom row, use left_attach == 0 and right_attach = 2 instead.
 	 * Params:
 	 * child = The widget to add.
 	 * leftAttach = the column number to attach the left side of a child widget to.
@@ -363,19 +388,5 @@ public class Table : Container
 	{
 		// guint gtk_table_get_default_col_spacing (GtkTable *table);
 		return gtk_table_get_default_col_spacing(gtkTable);
-	}
-	
-	/**
-	 * Since 2.22
-	 * Params:
-	 * rows = return location for the number of
-	 * rows, or NULL. [out][allow-none]
-	 * columns = return location for the number
-	 * of columns, or NULL. [out][allow-none]
-	 */
-	public void getSize(out uint rows, out uint columns)
-	{
-		// void gtk_table_get_size (GtkTable *table,  guint *rows,  guint *columns);
-		gtk_table_get_size(gtkTable, &rows, &columns);
 	}
 }

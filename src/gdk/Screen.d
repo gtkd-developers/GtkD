@@ -43,26 +43,17 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
  * 	- cairo.FontOption
- * 	- gdk.Screen
- * 	- gdk.Colormap
+ * 	- glib.ListG
+ * 	- glib.Str
+ * 	- gobject.Value
+ * 	- gdk.Display
  * 	- gdk.Visual
  * 	- gdk.Window
- * 	- gdk.Display
- * 	- glib.ListG
- * 	- gdk.Rectangle
- * 	- gdk.Event
- * 	- gobject.Value
  * structWrap:
  * 	- GList* -> ListG
  * 	- GValue* -> Value
- * 	- GdkColormap* -> Colormap
  * 	- GdkDisplay* -> Display
- * 	- GdkEvent* -> Event
- * 	- GdkRectangle* -> Rectangle
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
  * 	- GdkWindow* -> Window
@@ -82,19 +73,13 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
 private import cairo.FontOption;
-private import gdk.Screen;
-private import gdk.Colormap;
+private import glib.ListG;
+private import glib.Str;
+private import gobject.Value;
+private import gdk.Display;
 private import gdk.Visual;
 private import gdk.Window;
-private import gdk.Display;
-private import glib.ListG;
-private import gdk.Rectangle;
-private import gdk.Event;
-private import gobject.Value;
 
 
 
@@ -102,14 +87,16 @@ private import gobject.ObjectG;
 
 /**
  * Description
- *  GdkScreen objects are the GDK representation of a physical screen. It is used
- *  throughout GDK and GTK+ to specify which screen the top level windows
- *  are to be displayed on.
- *  It is also used to query the screen specification and default settings such as
- *  the default colormap (gdk_screen_get_default_colormap()),
- *  the screen width (gdk_screen_get_width()), etc.
- * Note that a screen may consist of multiple monitors which are merged to
- * form a large screen area.
+ * GdkScreen objects are the GDK representation of the screen on
+ * which windows can be displayed and on which the pointer moves.
+ * X originally identified screens with physical screens, but
+ * nowadays it is more common to have a single GdkScreen which
+ * combines several physical monitors (see gdk_screen_get_n_monitors()).
+ * GdkScreen is used throughout GDK and GTK+ to specify which screen
+ * the top level windows are to be displayed on. it is also used to
+ * query the screen specification and default settings such as
+ * the default visual (gdk_screen_get_system_visual()), the dimensions
+ * of the physical monitors (gdk_screen_get_monitor_geometry()), etc.
  */
 public class Screen : ObjectG
 {
@@ -269,50 +256,6 @@ public class Screen : ObjectG
 	}
 	
 	/**
-	 * Gets the default colormap for screen.
-	 * Since 2.2
-	 * Returns: the default GdkColormap. [transfer none]
-	 */
-	public Colormap getDefaultColormap()
-	{
-		// GdkColormap * gdk_screen_get_default_colormap (GdkScreen *screen);
-		auto p = gdk_screen_get_default_colormap(gdkScreen);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Colormap(cast(GdkColormap*) p);
-	}
-	
-	/**
-	 * Sets the default colormap for screen.
-	 * Since 2.2
-	 * Params:
-	 * colormap = a GdkColormap
-	 */
-	public void setDefaultColormap(Colormap colormap)
-	{
-		// void gdk_screen_set_default_colormap (GdkScreen *screen,  GdkColormap *colormap);
-		gdk_screen_set_default_colormap(gdkScreen, (colormap is null) ? null : colormap.getColormapStruct());
-	}
-	
-	/**
-	 * Gets the system's default colormap for screen
-	 * Since 2.2
-	 * Returns: the default colormap for screen. [transfer none]
-	 */
-	public Colormap getSystemColormap()
-	{
-		// GdkColormap * gdk_screen_get_system_colormap (GdkScreen *screen);
-		auto p = gdk_screen_get_system_colormap(gdkScreen);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Colormap(cast(GdkColormap*) p);
-	}
-	
-	/**
 	 * Get the system's default visual for screen.
 	 * This is the visual for the root window of the display.
 	 * The return value should not be freed.
@@ -331,53 +274,8 @@ public class Screen : ObjectG
 	}
 	
 	/**
-	 * Warning
-	 * gdk_screen_get_rgb_colormap has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_screen_get_system_colormap()
-	 * Gets the preferred colormap for rendering image data on screen.
-	 * Not a very useful function; historically, GDK could only render RGB
-	 * image data to one colormap and visual, but in the current version
-	 * it can render to any colormap and visual. So there's no need to
-	 * call this function.
-	 * Since 2.2
-	 * Returns: the preferred colormap. [transfer none]
-	 */
-	public Colormap getRgbColormap()
-	{
-		// GdkColormap * gdk_screen_get_rgb_colormap (GdkScreen *screen);
-		auto p = gdk_screen_get_rgb_colormap(gdkScreen);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Colormap(cast(GdkColormap*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_screen_get_rgb_visual has been deprecated since version 2.22 and should not be used in newly-written code. Use gdk_screen_get_system_visual()
-	 * Gets a "preferred visual" chosen by GdkRGB for rendering image data
-	 * on screen. In previous versions of
-	 * GDK, this was the only visual GdkRGB could use for rendering. In
-	 * current versions, it's simply the visual GdkRGB would have chosen as
-	 * the optimal one in those previous versions. GdkRGB can now render to
-	 * drawables with any visual.
-	 * Since 2.2
-	 * Returns: The GdkVisual chosen by GdkRGB. [transfer none]
-	 */
-	public Visual getRgbVisual()
-	{
-		// GdkVisual * gdk_screen_get_rgb_visual (GdkScreen *screen);
-		auto p = gdk_screen_get_rgb_visual(gdkScreen);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Visual(cast(GdkVisual*) p);
-	}
-	
-	/**
-	 * Gets a colormap to use for creating windows or pixmaps with an
-	 * alpha channel. The windowing system on which GTK+ is running
+	 * Gets a visual to use for creating windows with an alpha channel.
+	 * The windowing system on which GTK+ is running
 	 * may not support this capability, in which case NULL will
 	 * be returned. Even if a non-NULL value is returned, its
 	 * possible that the window's alpha channel won't be honored
@@ -387,24 +285,6 @@ public class Screen : ObjectG
 	 * This functionality is not implemented in the Windows backend.
 	 * For setting an overall opacity for a top-level window, see
 	 * gdk_window_set_opacity().
-	 * Since 2.8
-	 * Returns: a colormap to use for windows with an alpha channel or NULL if the capability is not available. [transfer none]
-	 */
-	public Colormap getRgbaColormap()
-	{
-		// GdkColormap * gdk_screen_get_rgba_colormap (GdkScreen *screen);
-		auto p = gdk_screen_get_rgba_colormap(gdkScreen);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Colormap(cast(GdkColormap*) p);
-	}
-	
-	/**
-	 * Gets a visual to use for creating windows or pixmaps with an
-	 * alpha channel. See the docs for gdk_screen_get_rgba_colormap()
-	 * for caveats.
 	 * Since 2.8
 	 * Returns: a visual to use for windows with an alpha channel or NULL if the capability is not available. [transfer none]
 	 */
@@ -453,7 +333,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the display to which the screen belongs.
 	 * Since 2.2
-	 * Returns: the display to which screen belongs
+	 * Returns: the display to which screen belongs. [transfer none]
 	 */
 	public Display getDisplay()
 	{
@@ -612,12 +492,12 @@ public class Screen : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * monitorNum = the monitor number, between 0 and gdk_screen_get_n_monitors (screen)
-	 * dest = a GdkRectangle to be filled with the monitor geometry
+	 * dest = a GdkRectangle to be filled with the monitor geometry. [out][allow-none]
 	 */
-	public void getMonitorGeometry(int monitorNum, Rectangle dest)
+	public void getMonitorGeometry(int monitorNum, out Rectangle dest)
 	{
 		// void gdk_screen_get_monitor_geometry (GdkScreen *screen,  gint monitor_num,  GdkRectangle *dest);
-		gdk_screen_get_monitor_geometry(gdkScreen, monitorNum, (dest is null) ? null : dest.getRectangleStruct());
+		gdk_screen_get_monitor_geometry(gdkScreen, monitorNum, &dest);
 	}
 	
 	/**
@@ -687,26 +567,6 @@ public class Screen : ObjectG
 	{
 		// gchar * gdk_screen_get_monitor_plug_name (GdkScreen *screen,  gint monitor_num);
 		return Str.toString(gdk_screen_get_monitor_plug_name(gdkScreen, monitorNum));
-	}
-	
-	/**
-	 * On X11, sends an X ClientMessage event to all toplevel windows on
-	 * screen.
-	 * Toplevel windows are determined by checking for the WM_STATE property,
-	 * as described in the Inter-Client Communication Conventions Manual (ICCCM).
-	 * If no windows are found with the WM_STATE property set, the message is
-	 * sent to all children of the root window.
-	 * On Windows, broadcasts a message registered with the name
-	 * GDK_WIN32_CLIENT_MESSAGE to all top-level windows. The amount of
-	 * data is limited to one long, i.e. four bytes.
-	 * Since 2.2
-	 * Params:
-	 * event = the GdkEvent.
-	 */
-	public void broadcastClientMessage(Event event)
-	{
-		// void gdk_screen_broadcast_client_message (GdkScreen *screen,  GdkEvent *event);
-		gdk_screen_broadcast_client_message(gdkScreen, (event is null) ? null : event.getEventStruct());
 	}
 	
 	/**
@@ -799,7 +659,7 @@ public class Screen : ObjectG
 	 * The returned window should be unrefed using g_object_unref() when
 	 * no longer needed.
 	 * Since 2.10
-	 * Returns: the currently active window, or NULL.
+	 * Returns: the currently active window, or NULL. [transfer full]
 	 */
 	public Window getActiveWindow()
 	{
@@ -836,117 +696,5 @@ public class Screen : ObjectG
 			return null;
 		}
 		return new ListG(cast(GList*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gdk_spawn_on_screen has been deprecated since version 2.24 and should not be used in newly-written code. This function is being removed in 3.0. Use
-	 *  either g_spawn_sync(), g_spawn_async(), or GdkAppLaunchContext instead.
-	 * Like g_spawn_async(), except the child process is spawned in such
-	 * an environment that on calling gdk_display_open() it would be
-	 * returned a GdkDisplay with screen as the default screen.
-	 * This is useful for applications which wish to launch an application
-	 * on a specific screen.
-	 * Since 2.4
-	 * Params:
-	 * workingDirectory = child's current working directory, or NULL to
-	 * inherit parent's
-	 * argv = child's argument vector
-	 * envp = child's environment, or NULL to inherit parent's
-	 * flags = flags from GSpawnFlags
-	 * childSetup = function to run in the child just before exec()
-	 * userData = user data for child_setup
-	 * childPid = return location for child process ID, or NULL
-	 * Returns: TRUE on success, FALSE if error is set
-	 * Throws: GException on failure.
-	 */
-	public int gdkSpawnOnScreen(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out int childPid)
-	{
-		// gboolean gdk_spawn_on_screen (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  GError **error);
-		GError* err = null;
-		
-		auto p = gdk_spawn_on_screen(gdkScreen, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Warning
-	 * gdk_spawn_on_screen_with_pipes has been deprecated since version 2.24 and should not be used in newly-written code. This function is being removed in 3.0. Use
-	 *  either g_spawn_async_with_pipes() or GdkAppLaunchContext instead.
-	 * Like g_spawn_async_with_pipes(), except the child process is
-	 * spawned in such an environment that on calling gdk_display_open()
-	 * it would be returned a GdkDisplay with screen as the default
-	 * screen.
-	 * This is useful for applications which wish to launch an application
-	 * on a specific screen.
-	 * Since 2.4
-	 * Params:
-	 * workingDirectory = child's current working directory, or NULL to
-	 * inherit parent's
-	 * argv = child's argument vector
-	 * envp = child's environment, or NULL to inherit parent's
-	 * flags = flags from GSpawnFlags
-	 * childSetup = function to run in the child just before exec()
-	 * userData = user data for child_setup
-	 * childPid = return location for child process ID, or NULL
-	 * standardInput = return location for file descriptor to write to
-	 * child's stdin, or NULL
-	 * standardOutput = return location for file descriptor to read child's
-	 * stdout, or NULL
-	 * standardError = return location for file descriptor to read child's
-	 * stderr, or NULL
-	 * Returns: TRUE on success, FALSE if an error was set
-	 */
-	public int gdkSpawnOnScreenWithPipes(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out int childPid, out int standardInput, out int standardOutput, out int standardError)
-	{
-		// gboolean gdk_spawn_on_screen_with_pipes (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  gint *standard_input,  gint *standard_output,  gint *standard_error,  GError **error);
-		GError* err = null;
-		
-		auto p = gdk_spawn_on_screen_with_pipes(gdkScreen, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &standardInput, &standardOutput, &standardError, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Warning
-	 * gdk_spawn_command_line_on_screen has been deprecated since version 2.24 and should not be used in newly-written code. This function is being removed in 3.0. Use
-	 *  either g_spawn_command_line_sync(), g_spawn_command_line_async() or
-	 *  GdkAppLaunchContext instead.
-	 * Like g_spawn_command_line_async(), except the child process is
-	 * spawned in such an environment that on calling gdk_display_open()
-	 * it would be returned a GdkDisplay with screen as the default
-	 * screen.
-	 * This is useful for applications which wish to launch an application
-	 * on a specific screen.
-	 * Since 2.4
-	 * Params:
-	 * commandLine = a command line
-	 * Returns: TRUE on success, FALSE if error is set.
-	 * Throws: GException on failure.
-	 */
-	public int gdkSpawnCommandLineOnScreen(string commandLine)
-	{
-		// gboolean gdk_spawn_command_line_on_screen (GdkScreen *screen,  const gchar *command_line,  GError **error);
-		GError* err = null;
-		
-		auto p = gdk_spawn_command_line_on_screen(gdkScreen, Str.toStringz(commandLine), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
 	}
 }

@@ -142,6 +142,8 @@ public class ToggleAction : Action
 	
 	void delegate(ToggleAction)[] onToggledListeners;
 	/**
+	 * Should be connected if you wish to perform an action
+	 * whenever the GtkToggleAction state is changed.
 	 */
 	void addOnToggled(void delegate(ToggleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -174,10 +176,11 @@ public class ToggleAction : Action
 	 * Since 2.4
 	 * Params:
 	 * name = A unique name for the action
-	 * label = The label displayed in menu items and on buttons, or NULL. [allow-none]
+	 * label = The label displayed in menu items and on buttons,
+	 * or NULL. [allow-none]
 	 * tooltip = A tooltip for the action, or NULL. [allow-none]
-	 * stockId = The stock icon to display in widgets representing the
-	 * action, or NULL
+	 * stockId = The stock icon to display in widgets representing
+	 * the action, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, string stockId)

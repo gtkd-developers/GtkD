@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Standard-Enumerations.html
+ * inFile  = gtk3-Standard-Enumerations.html
  * outPack = gtk
  * outFile = StandardEnumerations
  * strct   = 

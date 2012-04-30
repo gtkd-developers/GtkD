@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gdk-Application-launching.html
+ * inFile  = gdk3-Application-launching.html
  * outPack = gdk
  * outFile = AppLaunchContext
  * strct   = GdkAppLaunchContext
@@ -34,7 +34,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GioAppLaunchContext
  * implements:
  * prefixes:
  * 	- gdk_app_launch_context_
@@ -44,6 +44,7 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gio.AppLaunchContext : GioAppLaunchContext = AppLaunchContext
  * 	- gdk.Display
  * 	- gdk.Screen
  * 	- gio.IconIF
@@ -65,6 +66,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gio.AppLaunchContext : GioAppLaunchContext = AppLaunchContext;
 private import gdk.Display;
 private import gdk.Screen;
 private import gio.IconIF;
@@ -80,21 +82,21 @@ private import gio.IconIF;
  * screen or workspace.
  * $(DDOC_COMMENT example)
  */
-public class AppLaunchContext
+public class AppLaunchContext : GioAppLaunchContext
 {
 	
 	/** the main Gtk struct */
 	protected GdkAppLaunchContext* gdkAppLaunchContext;
 	
 	
-	public GdkAppLaunchContext* getAppLaunchContextStruct()
+	public GdkAppLaunchContext* getGdkAppLaunchContextStruct()
 	{
 		return gdkAppLaunchContext;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gdkAppLaunchContext;
 	}
@@ -109,13 +111,29 @@ public class AppLaunchContext
 			this = null;
 			return;
 		}
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gdkAppLaunchContext);
+		if( ptr !is null )
+		{
+			this = cast(AppLaunchContext)ptr;
+			return;
+		}
+		super(cast(GAppLaunchContext*)gdkAppLaunchContext);
 		this.gdkAppLaunchContext = gdkAppLaunchContext;
+	}
+	
+	protected override void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gdkAppLaunchContext = cast(GdkAppLaunchContext*)obj;
 	}
 	
 	/**
 	 */
 	
 	/**
+	 * Warning
+	 * gdk_app_launch_context_new has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_display_get_app_launch_context() instead
 	 * Creates a new GdkAppLaunchContext.
 	 * Since 2.14
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -132,6 +150,8 @@ public class AppLaunchContext
 	}
 	
 	/**
+	 * Warning
+	 * gdk_app_launch_context_set_display has been deprecated since version 3.0 and should not be used in newly-written code. Use gdk_display_get_app_launch_context() instead
 	 * Sets the display on which applications will be launched when
 	 * using this context. See also gdk_app_launch_context_set_screen().
 	 * Since 2.14

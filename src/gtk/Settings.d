@@ -82,17 +82,25 @@ private import gobject.ObjectG;
 
 /**
  * Description
- * GtkSettings provide a mechanism to share global settings between applications.
- * On the X window system, this sharing is realized by an XSettings
- * manager that is usually part of the desktop environment, along with utilities
- * that let the user change these settings. In the absence of an Xsettings manager,
- * settings can also be specified in RC files.
- * Applications can override system-wide settings with gtk_settings_set_string_property(),
- * gtk_settings_set_long_property(), etc. This should be restricted to special
- * cases though; GtkSettings are not meant as an application configuration
- * facility. When doing so, you need to be aware that settings that are specific
- * to individual widgets may not be available before the widget type has been
- * realized at least once. The following example demonstrates a way to do this:
+ * GtkSettings provide a mechanism to share global settings between
+ * applications.
+ * On the X window system, this sharing is realized by an
+ * XSettings
+ * manager that is usually part of the desktop environment, along with
+ * utilities that let the user change these settings. In the absence of
+ * an Xsettings manager, GTK+ reads default values for settings from
+ * settings.ini files in
+ * /etc/gtk-3.0 and $XDG_CONFIG_HOME/gtk-3.0. These files must be valid key files (see GKeyFile), and have
+ * a section called Settings. Themes can also provide default values
+ * for settings by installing a settings.ini file
+ * next to their gtk.css file.
+ * Applications can override system-wide settings with
+ * gtk_settings_set_string_property(), gtk_settings_set_long_property(),
+ * etc. This should be restricted to special cases though; GtkSettings are
+ * not meant as an application configuration facility. When doing so, you
+ * need to be aware that settings that are specific to individual widgets
+ * may not be available before the widget type has been realized at least
+ * once. The following example demonstrates a way to do this:
  * $(DDOC_COMMENT example)
  * There is one GtkSettings instance per screen. It can be obtained with
  * gtk_settings_get_for_screen(), but in many cases, it is more convenient
@@ -191,6 +199,8 @@ public class Settings : ObjectG
 	}
 	
 	/**
+	 * Params:
+	 * parser = . [scope call]
 	 */
 	public static void installPropertyParser(ParamSpec pspec, GtkRcPropertyParser parser)
 	{

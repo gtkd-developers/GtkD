@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-Clipboards.html
+ * inFile  = gtk3-Clipboards.html
  * outPack = gtk
  * outFile = Clipboard
  * strct   = GtkClipboard
@@ -303,11 +303,12 @@ public class Clipboard : ObjectG
 	 * a list of supported formats for the clipboard data and a function
 	 * to call to get the actual data when it is requested.
 	 * Params:
-	 * targets = array containing information about the available forms for the
-	 * clipboard data
-	 * getFunc = function to call to get the actual clipboard data
-	 * clearFunc = when the clipboard contents are set again, this function will
-	 * be called, and get_func will not be subsequently called.
+	 * targets = array containing information
+	 * about the available forms for the clipboard data. [array length=n_targets]
+	 * getFunc = function to call to get the actual clipboard data. [scope async]
+	 * clearFunc = when the clipboard contents are set again,
+	 * this function will be called, and get_func will not be subsequently
+	 * called. [scope async]
 	 * userData = user data to pass to get_func and clear_func.
 	 * Returns: TRUE if setting the clipboard data succeeded. If setting the clipboard data failed the provided callback functions will be ignored.
 	 */
@@ -325,13 +326,14 @@ public class Clipboard : ObjectG
 	 * is that instead of an generic user_data pointer, a GObject is passed
 	 * in.
 	 * Params:
-	 * targets = array containing information about the available forms for the
-	 * clipboard data
-	 * getFunc = function to call to get the actual clipboard data
-	 * clearFunc = when the clipboard contents are set again, this function will
-	 * be called, and get_func will not be subsequently called.
+	 * targets = array containing information
+	 * about the available forms for the clipboard data. [array length=n_targets]
+	 * getFunc = function to call to get the actual clipboard data. [scope async]
+	 * clearFunc = when the clipboard contents are set again,
+	 * this function will be called, and get_func will not be subsequently
+	 * called. [scope async]
 	 * owner = an object that "owns" the data. This object will be passed
-	 * to the callbacks when called.
+	 * to the callbacks when called
 	 * Returns: TRUE if setting the clipboard data succeeded. If setting the clipboard data failed the provided callback functions will be ignored.
 	 */
 	public int setWithOwner(GtkTargetEntry[] targets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, ObjectG owner)
@@ -410,9 +412,8 @@ public class Clipboard : ObjectG
 	 * target = an atom representing the form into which the clipboard
 	 * owner should convert the selection.
 	 * callback = A function to call when the results are received
-	 * (or the retrieval fails). If the retrieval fails
-	 * the length field of selection_data will be
-	 * negative.
+	 * (or the retrieval fails). If the retrieval fails the length field of
+	 * selection_data will be negative. [scope async]
 	 * userData = user data to pass to callback
 	 */
 	public void requestContents(GdkAtom target, GtkClipboardReceivedFunc callback, void* userData)
@@ -431,8 +432,7 @@ public class Clipboard : ObjectG
 	 * contents of the clipboard could not be converted into text form.
 	 * Params:
 	 * callback = a function to call when the text is received,
-	 * or the retrieval fails. (It will always be called
-	 * one way or the other.)
+	 * or the retrieval fails. (It will always be called one way or the other.). [scope async]
 	 * userData = user data to pass to callback.
 	 */
 	public void requestText(GtkClipboardTextReceivedFunc callback, void* userData)
@@ -453,8 +453,7 @@ public class Clipboard : ObjectG
 	 * Since 2.6
 	 * Params:
 	 * callback = a function to call when the image is received,
-	 * or the retrieval fails. (It will always be called
-	 * one way or the other.)
+	 * or the retrieval fails. (It will always be called one way or the other.). [scope async]
 	 * userData = user data to pass to callback.
 	 */
 	public void requestImage(GtkClipboardImageReceivedFunc callback, void* userData)
@@ -470,9 +469,9 @@ public class Clipboard : ObjectG
 	 * the request succeeded, or NULL if it failed.
 	 * Since 2.4
 	 * Params:
-	 * callback = a function to call when the targets are received,
-	 * or the retrieval fails. (It will always be called
-	 * one way or the other.)
+	 * callback = a function to call when the targets are
+	 * received, or the retrieval fails. (It will always be called
+	 * one way or the other.). [scope async]
 	 * userData = user data to pass to callback.
 	 */
 	public void requestTargets(GtkClipboardTargetsReceivedFunc callback, void* userData)
@@ -493,8 +492,7 @@ public class Clipboard : ObjectG
 	 * Params:
 	 * buffer = a GtkTextBuffer
 	 * callback = a function to call when the text is received,
-	 * or the retrieval fails. (It will always be called
-	 * one way or the other.)
+	 * or the retrieval fails. (It will always be called one way or the other.). [scope async]
 	 * userData = user data to pass to callback.
 	 */
 	public void requestRichText(TextBuffer buffer, GtkClipboardRichTextReceivedFunc callback, void* userData)
@@ -513,8 +511,7 @@ public class Clipboard : ObjectG
 	 * Since 2.14
 	 * Params:
 	 * callback = a function to call when the URIs are received,
-	 * or the retrieval fails. (It will always be called
-	 * one way or the other.)
+	 * or the retrieval fails. (It will always be called one way or the other.). [scope async]
 	 * userData = user data to pass to callback.
 	 */
 	public void requestUris(GtkClipboardURIReceivedFunc callback, void* userData)
@@ -577,7 +574,7 @@ public class Clipboard : ObjectG
 	 * Since 2.10
 	 * Params:
 	 * buffer = a GtkTextBuffer
-	 * format = return location for the format of the returned data
+	 * format = return location for the format of the returned data. [out]
 	 * Returns: a newly-allocated binary block of data which must be freed with g_free(), or NULL if retrieving the selection data failed. (This could happen for various reasons, in particular if the clipboard was empty or if the contents of the clipboard could not be converted into text form.). [array length=length][transfer full]
 	 */
 	public ubyte[] waitForRichText(TextBuffer buffer, out GdkAtom format)
@@ -682,8 +679,9 @@ public class Clipboard : ObjectG
 	 * loop, so events, timeouts, etc, may be dispatched during the wait.
 	 * Since 2.4
 	 * Params:
-	 * targets = location to store an array of targets. The result
-	 * stored here must be freed with g_free(). [out][array length=n_targets][transfer container]
+	 * targets = location
+	 * to store an array of targets. The result stored here must
+	 * be freed with g_free(). [out][array length=n_targets][transfer container]
 	 * Returns: TRUE if any targets are present on the clipboard, otherwise FALSE.
 	 */
 	public int waitForTargets(out GdkAtom[] targets)

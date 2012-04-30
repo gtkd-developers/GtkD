@@ -815,9 +815,9 @@ public struct Funct
 				if ( parmsType[i][0 .. $-2] == split(parmsWrap[i])[1][0 .. $-2] )
 				{
 					if (GtkDClass.startsWith(parmsWrap[i], "out") )
-						bd ~= parmsType[i].removechars("*") ~"* out"~ id ~ " = null;";
+						bd ~= split(parmsWrap[i])[1][0 .. $-2] ~"* out"~ id ~ " = null;";
 					else
-						bd ~= parmsType[i].removechars("*") ~"* out"~ id ~ " = "~ id ~".ptr;";
+						bd ~= split(parmsWrap[i])[1][0 .. $-2] ~"* out"~ id ~ " = "~ id ~".ptr;";
 				
 					gtkCall ~= "&out" ~ id;
 

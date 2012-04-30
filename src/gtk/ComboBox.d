@@ -112,26 +112,6 @@ private import gtk.Bin;
  * can be a bit overwhelming. In this case, GtkComboBoxText offers a
  * simple alternative. Both GtkComboBox and GtkComboBoxText can contain
  * an entry.
- * A GtkComboBox is a widget that allows the user to choose from a
- * list of valid choices. The GtkComboBox displays the selected
- * choice. When activated, the GtkComboBox displays a popup
- * which allows the user to make a new choice. The style in which
- * the selected value is displayed, and the style of the popup is
- * determined by the current theme. It may be similar to a GtkOptionMenu,
- * or similar to a Windows-style combo box.
- * Unlike its predecessors GtkCombo and GtkOptionMenu, the GtkComboBox
- * uses the model-view pattern; the list of valid choices is specified in the
- * form of a tree model, and the display of the choices can be adapted to
- * the data in the model by using cell renderers, as you would in a tree view.
- * This is possible since GtkComboBox implements the GtkCellLayout interface.
- * The tree model holding the valid choices is not restricted to a flat list,
- * it can be a real tree, and the popup will reflect the tree structure.
- * In addition to the model-view API, GtkComboBox offers a simple API which
- * is suitable for text-only combo boxes, and hides the complexity of managing
- * the data in a model. It consists of the functions gtk_combo_box_new_text(),
- * gtk_combo_box_append_text(), gtk_combo_box_insert_text(),
- * gtk_combo_box_prepend_text(), gtk_combo_box_remove_text() and
- * gtk_combo_box_get_active_text().
  */
 public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 {
@@ -298,8 +278,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * item is changed. The can be due to the user selecting
 	 * a different item from the list, or due to a
 	 * call to gtk_combo_box_set_active_iter().
-	 * It will also be emitted while typing into a GtkComboBoxEntry,
-	 * as well as when selecting an item from the GtkComboBoxEntry's list.
+	 * It will also be emitted while typing into the entry of a combo box
+	 * with an entry.
 	 * Since 2.4
 	 */
 	void addOnChanged(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -459,6 +439,23 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Creates a new empty GtkComboBox using area to layout cells.
+	 * Params:
+	 * area = the GtkCellArea to use to layout cell renderers
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GtkCellArea* area)
+	{
+		// GtkWidget * gtk_combo_box_new_with_area (GtkCellArea *area);
+		auto p = gtk_combo_box_new_with_area(area);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new_with_area(area)");
+		}
+		this(cast(GtkComboBox*) p);
+	}
+	
+	/**
 	 * Returns the wrap width which is used to determine the number of columns
 	 * for the popup menu. If the wrap width is larger than 1, the combo box
 	 * is in table mode.
@@ -590,6 +587,62 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Returns the column which combo_box is using to get string IDs
+	 * for values from.
+	 * Returns: A column in the data source model of combo_box. Since 3.0
+	 */
+	public int getIdColumn()
+	{
+		// gint gtk_combo_box_get_id_column (GtkComboBox *combo_box);
+		return gtk_combo_box_get_id_column(gtkComboBox);
+	}
+	
+	/**
+	 * Sets the model column which combo_box should use to get string IDs
+	 * for values from. The column id_column in the model of combo_box
+	 * must be of type G_TYPE_STRING.
+	 * Params:
+	 * idColumn = A column in model to get string IDs for values from
+	 * Since 3.0
+	 */
+	public void setIdColumn(int idColumn)
+	{
+		// void gtk_combo_box_set_id_column (GtkComboBox *combo_box,  gint id_column);
+		gtk_combo_box_set_id_column(gtkComboBox, idColumn);
+	}
+	
+	/**
+	 * Returns the ID of the active row of combo_box. This value is taken
+	 * from the active row and the column specified by the 'id-column'
+	 * property of combo_box (see gtk_combo_box_set_id_column()).
+	 * The returned value is an interned string which means that you can
+	 * compare the pointer by value to other interned strings and that you
+	 * must not free it.
+	 * If the 'id-column' property of combo_box is not set or if no row is
+	 * selected then NULL is returned.
+	 * Returns: the ID of the active row, or NULL Since 3.0
+	 */
+	public string getActiveId()
+	{
+		// const gchar * gtk_combo_box_get_active_id (GtkComboBox *combo_box);
+		return Str.toString(gtk_combo_box_get_active_id(gtkComboBox));
+	}
+	
+	/**
+	 * Changes the active row of combo_box to the one that has an ID equal to id.
+	 * If the 'id-column' property of combo_box is unset or if no row has
+	 * the given ID then nothing happens.
+	 * Params:
+	 * activeId = the ID of the row to select
+	 * Since 3.0
+	 */
+	public void setActiveId(string activeId)
+	{
+		// void gtk_combo_box_set_active_id (GtkComboBox *combo_box,  const gchar *active_id);
+		gtk_combo_box_set_active_id(gtkComboBox, Str.toStringz(activeId));
+	}
+	
+	/**
 	 * Returns the GtkTreeModel which is acting as data source for combo_box.
 	 * Since 2.4
 	 * Returns: A GtkTreeModel which was passed during construction. [transfer none]
@@ -622,88 +675,17 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_combo_box_append_text has been deprecated since version 2.24 and should not be used in newly-written code. Use GtkComboBoxText
-	 * Appends string to the list of strings stored in combo_box. Note that
-	 * you can only use this function with combo boxes constructed with
-	 * gtk_combo_box_new_text().
-	 * Since 2.4
+	 * Pops up the menu or dropdown list of combo_box, the popup window
+	 * will be grabbed so only device and its associated pointer/keyboard
+	 * are the only GdkDevices able to send events to it.
 	 * Params:
-	 * text = A string
+	 * device = a GdkDevice
+	 * Since 3.0
 	 */
-	public void appendText(string text)
+	public void popupForDevice(GdkDevice* device)
 	{
-		// void gtk_combo_box_append_text (GtkComboBox *combo_box,  const gchar *text);
-		gtk_combo_box_append_text(gtkComboBox, Str.toStringz(text));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_combo_box_insert_text has been deprecated since version 2.24 and should not be used in newly-written code. Use GtkComboBoxText
-	 * Inserts string at position in the list of strings stored in combo_box.
-	 * Note that you can only use this function with combo boxes constructed
-	 * with gtk_combo_box_new_text().
-	 * Since 2.4
-	 * Params:
-	 * position = An index to insert text
-	 * text = A string
-	 */
-	public void insertText(int position, string text)
-	{
-		// void gtk_combo_box_insert_text (GtkComboBox *combo_box,  gint position,  const gchar *text);
-		gtk_combo_box_insert_text(gtkComboBox, position, Str.toStringz(text));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_combo_box_prepend_text has been deprecated since version 2.24 and should not be used in newly-written code. Use GtkComboBoxText
-	 * Prepends string to the list of strings stored in combo_box. Note that
-	 * you can only use this function with combo boxes constructed with
-	 * gtk_combo_box_new_text().
-	 * Since 2.4
-	 * Params:
-	 * text = A string
-	 */
-	public void prependText(string text)
-	{
-		// void gtk_combo_box_prepend_text (GtkComboBox *combo_box,  const gchar *text);
-		gtk_combo_box_prepend_text(gtkComboBox, Str.toStringz(text));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_combo_box_remove_text has been deprecated since version 2.24 and should not be used in newly-written code. Use GtkComboBoxText
-	 * Removes the string at position from combo_box. Note that you can only use
-	 * this function with combo boxes constructed with gtk_combo_box_new_text().
-	 * Since 2.4
-	 * Params:
-	 * position = Index of the item to remove
-	 */
-	public void removeText(int position)
-	{
-		// void gtk_combo_box_remove_text (GtkComboBox *combo_box,  gint position);
-		gtk_combo_box_remove_text(gtkComboBox, position);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_combo_box_get_active_text has been deprecated since version 2.24 and should not be used in newly-written code. If you used this with a GtkComboBox constructed with
-	 * gtk_combo_box_new_text() then you should now use GtkComboBoxText and
-	 * gtk_combo_box_text_get_active_text() instead. Or if you used this with a
-	 * GtkComboBoxEntry then you should now use GtkComboBox with
-	 * "has-entry" as TRUE and use
-	 * gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (combobox))).
-	 * Returns the currently active string in combo_box or NULL if none
-	 * is selected. Note that you can only use this function with combo
-	 * boxes constructed with gtk_combo_box_new_text() and with
-	 * GtkComboBoxEntrys.
-	 * Since 2.6
-	 * Returns: a newly allocated string containing the currently active text. Must be freed with g_free().
-	 */
-	public string getActiveText()
-	{
-		// gchar * gtk_combo_box_get_active_text (GtkComboBox *combo_box);
-		return Str.toString(gtk_combo_box_get_active_text(gtkComboBox));
+		// void gtk_combo_box_popup_for_device (GtkComboBox *combo_box,  GdkDevice *device);
+		gtk_combo_box_popup_for_device(gtkComboBox, device);
 	}
 	
 	/**
@@ -914,5 +896,29 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	{
 		// gint gtk_combo_box_get_entry_text_column (GtkComboBox *combo_box);
 		return gtk_combo_box_get_entry_text_column(gtkComboBox);
+	}
+	
+	/**
+	 * Specifies whether the popup's width should be a fixed width
+	 * matching the allocated width of the combo box.
+	 * Params:
+	 * fixed = whether to use a fixed popup width
+	 * Since 3.0
+	 */
+	public void setPopupFixedWidth(int fixed)
+	{
+		// void gtk_combo_box_set_popup_fixed_width (GtkComboBox *combo_box,  gboolean fixed);
+		gtk_combo_box_set_popup_fixed_width(gtkComboBox, fixed);
+	}
+	
+	/**
+	 * Gets whether the popup uses a fixed width matching
+	 * the allocated width of the combo box.
+	 * Returns: TRUE if the popup uses a fixed width Since 3.0
+	 */
+	public int getPopupFixedWidth()
+	{
+		// gboolean gtk_combo_box_get_popup_fixed_width (GtkComboBox *combo_box);
+		return gtk_combo_box_get_popup_fixed_width(gtkComboBox);
 	}
 }

@@ -140,7 +140,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Creates a new print compositor that can be used to print buffer.
 	 * Since 2.2
 	 * Params:
-	 * buffer = the GtkSourceBuffer to print
+	 * buffer = the GtkSourceBuffer to print.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (SourceBuffer buffer)
@@ -183,7 +183,7 @@ public class SourcePrintCompositor : ObjectG
 	 * object reference is owned by the compositor object and
 	 * should not be unreferenced.
 	 * Since 2.2
-	 * Returns: the GtkSourceBuffer associated with the compositor.
+	 * Returns: the GtkSourceBuffer associated with the compositor. [transfer none]
 	 */
 	public SourceBuffer getBuffer()
 	{
@@ -346,7 +346,7 @@ public class SourcePrintCompositor : ObjectG
 	 * gtk_source_print_compositor_paginate() function.
 	 * Since 2.2
 	 * Params:
-	 * fontName = the name of the font for line numbers, or NULL.
+	 * fontName = the name of the font for line numbers, or NULL. [allow-none]
 	 */
 	public void setLineNumbersFontName(string fontName)
 	{
@@ -356,7 +356,7 @@ public class SourcePrintCompositor : ObjectG
 	
 	/**
 	 * Returns the name of the font used to print line numbers on the left margin.
-	 * The returned string must be freed with g_free())
+	 * The returned string must be freed with g_free().
 	 * Since 2.2
 	 * Returns: a new string containing the name of the font used to print line numbers on the left margin.
 	 */
@@ -378,7 +378,7 @@ public class SourcePrintCompositor : ObjectG
 	 * gtk_source_print_compositor_paginate() function.
 	 * Since 2.2
 	 * Params:
-	 * fontName = the name of the font for header text, or NULL.
+	 * fontName = the name of the font for header text, or NULL. [allow-none]
 	 */
 	public void setHeaderFontName(string fontName)
 	{
@@ -388,7 +388,7 @@ public class SourcePrintCompositor : ObjectG
 	
 	/**
 	 * Returns the name of the font used to print the page header.
-	 * The returned string must be freed with g_free())
+	 * The returned string must be freed with g_free().
 	 * Since 2.2
 	 * Returns: a new string containing the name of the font used to print the page header.
 	 */
@@ -410,7 +410,7 @@ public class SourcePrintCompositor : ObjectG
 	 * gtk_source_print_compositor_paginate() function.
 	 * Since 2.2
 	 * Params:
-	 * fontName = the name of the font for the footer text, or NULL.
+	 * fontName = the name of the font for the footer text, or NULL. [allow-none]
 	 */
 	public void setFooterFontName(string fontName)
 	{
@@ -420,7 +420,7 @@ public class SourcePrintCompositor : ObjectG
 	
 	/**
 	 * Returns the name of the font used to print the page footer.
-	 * The returned string must be freed with g_free())
+	 * The returned string must be freed with g_free().
 	 * Since 2.2
 	 * Returns: a new string containing the name of the font used to print the page footer.
 	 */
@@ -473,8 +473,8 @@ public class SourcePrintCompositor : ObjectG
 	 * Sets the bottom margin used by compositor.
 	 * Since 2.2
 	 * Params:
-	 * margin = the new bottom margin in units of unit
-	 * unit = the units for margin
+	 * margin = the new bottom margin in units of unit.
+	 * unit = the units for margin.
 	 */
 	public void setBottomMargin(double margin, GtkUnit unit)
 	{
@@ -499,8 +499,8 @@ public class SourcePrintCompositor : ObjectG
 	 * Sets the left margin used by compositor.
 	 * Since 2.2
 	 * Params:
-	 * margin = the new left margin in units of unit
-	 * unit = the units for margin
+	 * margin = the new left margin in units of unit.
+	 * unit = the units for margin.
 	 */
 	public void setLeftMargin(double margin, GtkUnit unit)
 	{
@@ -513,7 +513,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * unit = the unit for the return value.
-	 * Returns: the right margin
+	 * Returns: the right margin.
 	 */
 	public double getRightMargin(GtkUnit unit)
 	{
@@ -525,8 +525,8 @@ public class SourcePrintCompositor : ObjectG
 	 * Sets the right margin used by compositor.
 	 * Since 2.2
 	 * Params:
-	 * margin = the new right margin in units of unit
-	 * unit = the units for margin
+	 * margin = the new right margin in units of unit.
+	 * unit = the units for margin.
 	 */
 	public void setRightMargin(double margin, GtkUnit unit)
 	{
@@ -618,9 +618,9 @@ public class SourcePrintCompositor : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * separator = TRUE if you want a separator line to be printed.
-	 * left = a format string to print on the left of the header.
-	 * center = a format string to print on the center of the header.
-	 * right = a format string to print on the right of the header.
+	 * left = a format string to print on the left of the header. [allow-none]
+	 * center = a format string to print on the center of the header. [allow-none]
+	 * right = a format string to print on the right of the header. [allow-none]
 	 */
 	public void setHeaderFormat(int separator, string left, string center, string right)
 	{
@@ -646,9 +646,9 @@ public class SourcePrintCompositor : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * separator = TRUE if you want a separator line to be printed.
-	 * left = a format string to print on the left of the footer.
-	 * center = a format string to print on the center of the footer.
-	 * right = a format string to print on the right of the footer.
+	 * left = a format string to print on the left of the footer. [allow-none]
+	 * center = a format string to print on the center of the footer. [allow-none]
+	 * right = a format string to print on the right of the footer. [allow-none]
 	 */
 	public void setFooterFormat(int separator, string left, string center, string right)
 	{
@@ -691,7 +691,7 @@ public class SourcePrintCompositor : ObjectG
 	/**
 	 * Returns the current fraction of the document pagination that has been completed.
 	 * Since 2.2
-	 * Returns: a fraction from 0.0 to 1.0 inclusive
+	 * Returns: a fraction from 0.0 to 1.0 inclusive.
 	 */
 	public double getPaginationProgress()
 	{
@@ -704,7 +704,7 @@ public class SourcePrintCompositor : ObjectG
 	 * This method has been designed to be called in the handler of the "draw_page" signal
 	 * Params:
 	 * context = the GtkPrintContext encapsulating the context information that is required when
-	 *  drawing the page for printing.
+	 * drawing the page for printing.
 	 * pageNr = the number of the page to print.
 	 */
 	public void drawPage(PrintContext context, int pageNr)

@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk-gtkcheckmenuitem.html
+ * inFile  = gtk3-gtkcheckmenuitem.html
  * outPack = gtk
  * outFile = CheckMenuItem
  * strct   = GtkCheckMenuItem
@@ -163,8 +163,8 @@ public class CheckMenuItem : MenuItem
 	void delegate(CheckMenuItem)[] onToggledListeners;
 	/**
 	 * This signal is emitted when the state of the check box is changed.
-	 * A signal handler can examine the active
-	 * field of the GtkCheckMenuItem struct to discover the new state.
+	 * A signal handler can use gtk_check_menu_item_get_active()
+	 * to discover the new state.
 	 */
 	void addOnToggled(void delegate(CheckMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -225,21 +225,6 @@ public class CheckMenuItem : MenuItem
 	{
 		// void gtk_check_menu_item_set_active (GtkCheckMenuItem *check_menu_item,  gboolean is_active);
 		gtk_check_menu_item_set_active(gtkCheckMenuItem, isActive);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_check_menu_item_set_show_toggle is deprecated and should not be used in newly-written code.
-	 * Controls whether the check box is shown at all times.
-	 * Normally the check box is shown only when it is active or while the
-	 * menu item is selected.
-	 * Params:
-	 * always = boolean value indicating whether to always show the check box.
-	 */
-	public void setShowToggle(int always)
-	{
-		// void gtk_check_menu_item_set_show_toggle (GtkCheckMenuItem *menu_item,  gboolean always);
-		gtk_check_menu_item_set_show_toggle(gtkCheckMenuItem, always);
 	}
 	
 	/**

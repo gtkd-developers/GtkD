@@ -208,44 +208,6 @@ public class ToolItem : Bin, ActivatableIF
 		return 0;
 	}
 	
-	bool delegate(Tooltips, string, string, ToolItem)[] onSetTooltipListeners;
-	/**
-	 * Warning
-	 * GtkToolItem::set-tooltip has been deprecated since version 2.12 and should not be used in newly-written code. With the new tooltip API, there is no
-	 *  need to use this signal anymore.
-	 * This signal is emitted when the toolitem's tooltip changes.
-	 * Application developers can use gtk_tool_item_set_tooltip() to
-	 * set the item's tooltip.
-	 * TRUE if the signal was handled, FALSE if not
-	 */
-	void addOnSetTooltip(bool delegate(Tooltips, string, string, ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("set-tooltip" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"set-tooltip",
-			cast(GCallback)&callBackSetTooltip,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["set-tooltip"] = 1;
-		}
-		onSetTooltipListeners ~= dlg;
-	}
-	extern(C) static gboolean callBackSetTooltip(GtkToolItem* toolItemStruct, GtkTooltips* tooltips, gchar* tipText, gchar* tipPrivate, ToolItem toolItem)
-	{
-		foreach ( bool delegate(Tooltips, string, string, ToolItem) dlg ; toolItem.onSetTooltipListeners )
-		{
-			if ( dlg(new Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), toolItem) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
-	}
-	
 	void delegate(ToolItem)[] onToolbarReconfiguredListeners;
 	/**
 	 * This signal is emitted when some property of the toolbar that the
@@ -358,24 +320,6 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		// gboolean gtk_tool_item_get_expand (GtkToolItem *tool_item);
 		return gtk_tool_item_get_expand(gtkToolItem);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_tool_item_set_tooltip has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_tool_item_set_tooltip_text() instead.
-	 * Sets the GtkTooltips object to be used for tool_item, the
-	 * text to be displayed as tooltip on the item and the private text
-	 * to be used. See gtk_tooltips_set_tip().
-	 * Since 2.4
-	 * Params:
-	 * tooltips = The GtkTooltips object to be used
-	 * tipText = text to be used as tooltip text for tool_item. [allow-none]
-	 * tipPrivate = text to be used as private tooltip text. [allow-none]
-	 */
-	public void setTooltip(Tooltips tooltips, string tipText, string tipPrivate)
-	{
-		// void gtk_tool_item_set_tooltip (GtkToolItem *tool_item,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
-		gtk_tool_item_set_tooltip(gtkToolItem, (tooltips is null) ? null : tooltips.getTooltipsStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
 	}
 	
 	/**

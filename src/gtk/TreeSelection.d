@@ -105,11 +105,11 @@ private import gobject.ObjectG;
  * is not currently displayed by the view without expanding its parents
  * first.
  * One of the important things to remember when monitoring the selection of
- * a view is that the "changed" signal is mostly a hint. That is, it may
- * only emit one signal when a range of rows is selected. Additionally, it
- * may on occasion emit a ::changed signal when nothing has happened
- * (mostly as a result of programmers calling select_row on an already
- * selected row).
+ * a view is that the "changed" signal is mostly a hint.
+ * That is,it may only emit one signal when a range of rows is selected.
+ * Additionally, it may on occasion emit a "changed" signal
+ * when nothing has happened (mostly as a result of programmers calling
+ * select_row on an already selected row).
  */
 public class TreeSelection : ObjectG
 {
@@ -222,7 +222,10 @@ public class TreeSelection : ObjectG
 	 * of rows are selected, and it may occasionally be emitted when nothing
 	 * has happened.
 	 * See Also
-	 * GtkTreeView, GtkTreeViewColumn, GtkTreeDnd, GtkTreeMode, GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore, GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf, GtkCellRendererText, GtkCellRendererToggle
+	 * GtkTreeView, GtkTreeViewColumn, GtkTreeDnd, GtkTreeMode,
+	 *  GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore,
+	 *  GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf,
+	 *  GtkCellRendererText, GtkCellRendererToggle
 	 */
 	void addOnChanged(void delegate(TreeSelection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -273,14 +276,15 @@ public class TreeSelection : ObjectG
 	}
 	
 	/**
-	 * Sets the selection function. If set, this function is called before any node
-	 * is selected or unselected, giving some control over which nodes are selected.
-	 * The select function should return TRUE if the state of the node may be toggled,
-	 * and FALSE if the state of the node should be left unchanged.
+	 * Sets the selection function.
+	 * If set, this function is called before any node is selected or unselected,
+	 * giving some control over which nodes are selected. The select function
+	 * should return TRUE if the state of the node may be toggled, and FALSE
+	 * if the state of the node should be left unchanged.
 	 * Params:
-	 * func = The selection function.
-	 * data = The selection function's data.
-	 * destroy = The destroy function for user data. May be NULL.
+	 * func = The selection function. May be NULL
+	 * data = The selection function's data. May be NULL
+	 * destroy = The destroy function for user data. May be NULL
 	 */
 	public void setSelectFunction(GtkTreeSelectionFunc func, void* data, GDestroyNotify destroy)
 	{
