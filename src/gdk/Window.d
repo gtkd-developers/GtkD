@@ -208,7 +208,7 @@ public class Window : ObjectG
 	 * height = height of the new surface
 	 * Returns: a pointer to the newly allocated surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs.
 	 */
-	public Surface gdkWindowCreateSimilarSurface(CairoContent content, int width, int height)
+	public Surface createSimilarSurface(CairoContent content, int width, int height)
 	{
 		// cairo_surface_t * gdk_window_create_similar_surface (GdkWindow *window,  cairo_content_t content,  int width,  int height);
 		auto p = gdk_window_create_similar_surface(gdkWindow, content, width, height);
