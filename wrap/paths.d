@@ -59,14 +59,14 @@ const string[LIBRARY.max+1] importLibs =
 	[
 	LIBRARY.ATK:           "libatk-1.0-0.dll",
 	LIBRARY.CAIRO:         "libcairo-2.dll",
-	LIBRARY.GDK:           "libgdk-win32-3.0-0.dll",
+	LIBRARY.GDK:           "libgdk-3.0-0.dll",
 	LIBRARY.GDKPIXBUF:     "libgdk_pixbuf-2.0-0.dll",
 	LIBRARY.GLIB:          "libglib-2.0-0.dll",
 	LIBRARY.GMODULE:       "libgmodule-2.0-0.dll",
 	LIBRARY.GOBJECT:       "libgobject-2.0-0.dll",
 	LIBRARY.GIO:           "libgio-2.0-0.dll",
 	LIBRARY.GTHREAD:       "libgthread-2.0-0.dll",
-	LIBRARY.GTK:           "libgtk-win32-3.0-0.dll",
+	LIBRARY.GTK:           "libgtk-3.0-0.dll",
 	LIBRARY.PANGO:         "libpango-1.0-0.dll",
 	LIBRARY.PANGOCAIRO:    "libpangocairo-1.0-0.dll",
 	LIBRARY.GDA:           "libgda-4.0-4.dll",
@@ -77,77 +77,28 @@ const string[LIBRARY.max+1] importLibs =
 }
 else version(darwin)
 {
-/**
-* On OS X, currently there are (atleast) two places where
-* GTK+ might be installed. The default for gtkD is the native
-* Quartz port. The other one is the X11 version, which runs
-* under the separate X11 environment of OS X. You can
-* uncomment the version=darwinX11 in the gtkD toplevel dsss.conf file
-* to build gtkD for X11.
-* Currently gtkDgl (which uses gtkglext) is only available under X11,
-* because gtkglext is not yet ported to the Quartz backend.
-*/
+const string DIRECTORY = "/opt/local/lib/";
 
-version(darwinX11)
-{
-	//This version is for the non-native OS X, X11 port
-	//of GTK+. This directory is according to the Macports http://www.macports.org
-	//default installation location. There should be installation instructions
-	//in the gtkD wiki at DSource.
-	const string DIRECTORY = "/opt/local/lib/";
-	const string INTERFACE = "x11";
-
-	const string[LIBRARY.max+1] importLibs =
+const string[LIBRARY.max+1] importLibs =
 	[
-		LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
-		LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
-		LIBRARY.GDK:           DIRECTORY~"libgdk-"~INTERFACE~"-3.0.dylib",
-		LIBRARY.GDKPIXBUF:     DIRECTORY~"libgdk_pixbuf-2.0.dylib",
-		LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
-		LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
-		LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
-		LIBRARY.GIO:           DIRECTORY~"libgio-2.0.dylib",
-		LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
-		LIBRARY.GTK:           DIRECTORY~"libgtk-"~INTERFACE~"-3.0.dylib",
-		LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
-		LIBRARY.PANGOCAIRO:    DIRECTORY~"libpangocairo-1.0.dylib",
-		LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
-		LIBRARY.GSV:           DIRECTORY~"libgtksourceview-3.0.dylib",
-		LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
-		LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
+	LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
+	LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
+	LIBRARY.GDK:           DIRECTORY~"libgdk-3.0.dylib",
+	LIBRARY.GDKPIXBUF:     DIRECTORY~"libgdk_pixbuf-2.0.dylib",
+	LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
+	LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
+	LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
+	LIBRARY.GIO:           DIRECTORY~"libgio-2.0.dylib",
+	LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
+	LIBRARY.GTK:           DIRECTORY~"libgtk-3.0.dylib",
+	LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
+	LIBRARY.PANGOCAIRO:    DIRECTORY~"libpangocairo-1.0.dylib",
+	LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
+	LIBRARY.GSV:           DIRECTORY~"libgtksourceview-3.0.dylib",
+	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
+	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
 	];
 }
-else //default version (The Quartz GTK+):
-{
-	//This version is for the native Quartz port of GTK+
-	//which can be found from http://www.gtk-osx.org/
-	//The libraries in the /opt/ directory are not part of
-	//that package and need to be installed separately,
-	//possibly through Macports.
-
-	const string INTERFACE = "quartz";
-	const string DIRECTORY = "/opt/local/lib/";
-
-	const string[LIBRARY.max+1] importLibs =
-	[
-		LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
-		LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
-		LIBRARY.GDK:           DIRECTORY~"libgdk-"~INTERFACE~"-3.0.dylib",
-		LIBRARY.GDKPIXBUF:     DIRECTORY~"libgdk_pixbuf-2.0.dylib",
-		LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
-		LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
-		LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
-		LIBRARY.GIO:           DIRECTORY~"libgio-2.0.dylib",
-		LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
-		LIBRARY.GTK:           DIRECTORY~"libgtk-"~INTERFACE~"-3.0.dylib",
-		LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
-		LIBRARY.PANGOCAIRO:    DIRECTORY~"libpangocairo-1.0.dylib",
-		LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
-		LIBRARY.GSV:           DIRECTORY~"libgtksourceview-3.0.dylib",
-		LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
-		LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
-	];
-}}
 else
 {
 const string[LIBRARY.max+1] importLibs =
