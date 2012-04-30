@@ -43,21 +43,11 @@ ln -s gtk3-html-3.0.12 gtk
 #CAIRO
 curl http://cairographics.org/releases/cairo-1.10.2.tar.gz | tar xvfz -
 ln -s cairo-1.10.2/doc/public/html cairo
-#GTKGLEXT
-#wget http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2
-#tar xvfj gtkglext-1.2.0.tar.bz2
-curl -L http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2 | tar xvfj -
-ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgdk
-ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgtk
 
 #other libraries.
 #gda
 curl -L http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | tar xvfz -
 ln -s  libgda-1.2.4/doc/C/html gda
-
-#glade
-curl http://library.gnome.org/devel/libglade/libglade-html-2.6.2.tar.gz | tar xvfz -
-ln -s libglade-html-2.6.2 glade
 
 #gtkSourceView
 curl http://developer.gnome.org/gtksourceview/gtksourceview-html-3.0.5.tar.gz | tar xvfz -
