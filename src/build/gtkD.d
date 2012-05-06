@@ -382,7 +382,7 @@ private import gtk.Settings;
 private import gtk.BindingSet;
 private import gtk.TargetEntry;
 private import gtk.TargetList;
-private import gtk.SelectionsData;
+private import gtk.SelectionData;
 private import gtk.Testing;
 private import gtk.MountOperation;
 private import gtk.StyleContext;

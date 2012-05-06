@@ -25,13 +25,13 @@
  * Conversion parameters:
  * inFile  = 
  * outPack = gtk
- * outFile = SelectionsData
+ * outFile = SelectionData
  * strct   = GtkSelectionData
  * realStrct=
  * ctorStrct=
  * clss    = SelectionData
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -59,7 +59,7 @@
  * overrides:
  */
 
-module gtk.SelectionsData;
+module gtk.SelectionData;
 
 public  import gtkc.gtktypes;
 
@@ -121,6 +121,14 @@ public class SelectionData
 			return;
 		}
 		this.gtkSelectionData = gtkSelectionData;
+	}
+	
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkSelectionData !is null )
+		{
+			gtk_selection_data_free(gtkSelectionData);
+		}
 	}
 	
 	/**
