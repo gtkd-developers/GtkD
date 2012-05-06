@@ -391,6 +391,7 @@ outFile: DragAndDrop
 file: gtk3-Stock-Items.html
 struct: GtkStockItem
 class: StockItem
+prefix: gtk_stock_item_
 prefix: gtk_stock_
 import: glib.Str
 import: gtkc.paths
@@ -601,7 +602,7 @@ outFile: MountOperation
 file: GtkStyleContext.html
 struct: GtkStyleContext
 class: StyleContext
-prefix: gtk_mount_operation_
+prefix: gtk_style_context_
 prefix: gtk_
 noprefix: gtk_border_
 import: std.stdarg

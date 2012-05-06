@@ -37,6 +37,7 @@
  * extend  = 
  * implements:
  * prefixes:
+ * 	- gtk_stock_item_
  * 	- gtk_stock_
  * omit structs:
  * omit prefixes:
@@ -139,30 +140,32 @@ public class StockItem
 	 * any pointer into items and items can be freed. Use
 	 * gtk_stock_add_static() if items is persistent and GTK+ need not
 	 * copy the array.
+	 * Params:
+	 * items = a GtkStockItem or array of items. [array length=n_items]
 	 */
-	public void add()
+	public static void add(GtkStockItem[] items)
 	{
 		// void gtk_stock_add (const GtkStockItem *items,  guint n_items);
-		gtk_stock_add(gtkStockItem, cast(int) items.length);
+		gtk_stock_add(items.ptr, cast(int) items.length);
 	}
 	
 	/**
 	 * Same as gtk_stock_add(), but doesn't copy items, so
 	 * items must persist until application exit.
+	 * Params:
+	 * items = a GtkStockItem or array of GtkStockItem. [array length=n_items]
 	 */
-	public void addStatic()
+	public static void addStatic(GtkStockItem[] items)
 	{
 		// void gtk_stock_add_static (const GtkStockItem *items,  guint n_items);
-		gtk_stock_add_static(gtkStockItem, cast(int) items.length);
+		gtk_stock_add_static(items.ptr, cast(int) items.length);
 	}
 	
 	/**
 	 * Copies a stock item, mostly useful for language bindings and not in applications.
-	 * Params:
-	 * item = a GtkStockItem
 	 * Returns: a new GtkStockItem
 	 */
-	public StockItem itemCopy()
+	public StockItem copy()
 	{
 		// GtkStockItem * gtk_stock_item_copy (const GtkStockItem *item);
 		auto p = gtk_stock_item_copy(gtkStockItem);
@@ -177,10 +180,8 @@ public class StockItem
 	 * Frees a stock item allocated on the heap, such as one returned by
 	 * gtk_stock_item_copy(). Also frees the fields inside the stock item,
 	 * if they are not NULL.
-	 * Params:
-	 * item = a GtkStockItem
 	 */
-	public void itemFree()
+	public void free()
 	{
 		// void gtk_stock_item_free (GtkStockItem *item);
 		gtk_stock_item_free(gtkStockItem);

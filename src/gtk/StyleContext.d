@@ -37,7 +37,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- gtk_mount_operation_
+ * 	- gtk_style_context_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
@@ -385,12 +385,17 @@ public class StyleContext : ObjectG
 	 * separated from GTK+, if you are using GtkStyleContext to
 	 * theme GtkWidgets, use gtk_widget_get_style_context()
 	 * in order to get a style context ready to theme the widget.
-	 * Returns: A newly created GtkStyleContext.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static GtkStyleContext* styleContextNew()
+	public this ()
 	{
 		// GtkStyleContext * gtk_style_context_new (void);
-		return gtk_style_context_new();
+		auto p = gtk_style_context_new();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_style_context_new()");
+		}
+		this(cast(GtkStyleContext*) p);
 	}
 	
 	/**
@@ -408,7 +413,7 @@ public class StyleContext : ObjectG
 	 * GTK_STYLE_PROVIDER_PRIORITY_USER
 	 * Since 3.0
 	 */
-	public void styleContextAddProvider(StyleProviderIF provider, uint priority)
+	public void addProvider(StyleProviderIF provider, uint priority)
 	{
 		// void gtk_style_context_add_provider (GtkStyleContext *context,  GtkStyleProvider *provider,  guint priority);
 		gtk_style_context_add_provider(gtkStyleContext, (provider is null) ? null : provider.getStyleProviderTStruct(), priority);
@@ -434,7 +439,7 @@ public class StyleContext : ObjectG
 	 * GTK_STYLE_PROVIDER_PRIORITY_USER
 	 * Since 3.0
 	 */
-	public static void styleContextAddProviderForScreen(Screen screen, StyleProviderIF provider, uint priority)
+	public static void addProviderForScreen(Screen screen, StyleProviderIF provider, uint priority)
 	{
 		// void gtk_style_context_add_provider_for_screen  (GdkScreen *screen,  GtkStyleProvider *provider,  guint priority);
 		gtk_style_context_add_provider_for_screen((screen is null) ? null : screen.getScreenStruct(), (provider is null) ? null : provider.getStyleProviderTStruct(), priority);
@@ -444,7 +449,7 @@ public class StyleContext : ObjectG
 	 * Returns the widget direction used for rendering.
 	 * Returns: the widget direction Since 3.0
 	 */
-	public GtkTextDirection styleContextGetDirection()
+	public GtkTextDirection getDirection()
 	{
 		// GtkTextDirection gtk_style_context_get_direction (GtkStyleContext *context);
 		return gtk_style_context_get_direction(gtkStyleContext);
@@ -454,7 +459,7 @@ public class StyleContext : ObjectG
 	 * Returns the sides where rendered elements connect visually with others.
 	 * Returns: the junction sides Since 3.0
 	 */
-	public GtkJunctionSides styleContextGetJunctionSides()
+	public GtkJunctionSides getJunctionSides()
 	{
 		// GtkJunctionSides gtk_style_context_get_junction_sides  (GtkStyleContext *context);
 		return gtk_style_context_get_junction_sides(gtkStyleContext);
@@ -464,7 +469,7 @@ public class StyleContext : ObjectG
 	 * Returns the widget path used for style matching.
 	 * Returns: A GtkWidgetPath. [transfer none] Since 3.0
 	 */
-	public WidgetPath styleContextGetPath()
+	public WidgetPath getPath()
 	{
 		// const GtkWidgetPath * gtk_style_context_get_path (GtkStyleContext *context);
 		auto p = gtk_style_context_get_path(gtkStyleContext);
@@ -485,7 +490,7 @@ public class StyleContext : ObjectG
 	 * value = return location for the style property value. [out][transfer full]
 	 * Since 3.0
 	 */
-	public void styleContextGetProperty(string property, GtkStateFlags state, Value value)
+	public void getProperty(string property, GtkStateFlags state, Value value)
 	{
 		// void gtk_style_context_get_property (GtkStyleContext *context,  const gchar *property,  GtkStateFlags state,  GValue *value);
 		gtk_style_context_get_property(gtkStyleContext, Str.toStringz(property), state, (value is null) ? null : value.getValueStruct());
@@ -495,7 +500,7 @@ public class StyleContext : ObjectG
 	 * Returns the GdkScreen to which context is attached.
 	 * Returns: a GdkScreen. [transfer none]
 	 */
-	public Screen styleContextGetScreen()
+	public Screen getScreen()
 	{
 		// GdkScreen * gtk_style_context_get_screen (GtkStyleContext *context);
 		auto p = gtk_style_context_get_screen(gtkStyleContext);
@@ -510,7 +515,7 @@ public class StyleContext : ObjectG
 	 * Returns the state used when rendering.
 	 * Returns: the state flags Since 3.0
 	 */
-	public GtkStateFlags styleContextGetState()
+	public GtkStateFlags getState()
 	{
 		// GtkStateFlags gtk_style_context_get_state (GtkStyleContext *context);
 		return gtk_style_context_get_state(gtkStyleContext);
@@ -524,7 +529,7 @@ public class StyleContext : ObjectG
 	 * propertyName = the name of the widget style property
 	 * value = Return location for the property value
 	 */
-	public void styleContextGetStyleProperty(string propertyName, Value value)
+	public void getStyleProperty(string propertyName, Value value)
 	{
 		// void gtk_style_context_get_style_property  (GtkStyleContext *context,  const gchar *property_name,  GValue *value);
 		gtk_style_context_get_style_property(gtkStyleContext, Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
@@ -537,7 +542,7 @@ public class StyleContext : ObjectG
 	 * args = va_list of property name/return location pairs, followed by NULL
 	 * Since 3.0
 	 */
-	public void styleContextGetStyleValist(void* args)
+	public void getStyleValist(void* args)
 	{
 		// void gtk_style_context_get_style_valist (GtkStyleContext *context,  va_list args);
 		gtk_style_context_get_style_valist(gtkStyleContext, args);
@@ -550,7 +555,7 @@ public class StyleContext : ObjectG
 	 * args = va_list of property name/return location pairs, followed by NULL
 	 * Since 3.0
 	 */
-	public void styleContextGetValist(GtkStateFlags state, void* args)
+	public void getValist(GtkStateFlags state, void* args)
 	{
 		// void gtk_style_context_get_valist (GtkStyleContext *context,  GtkStateFlags state,  va_list args);
 		gtk_style_context_get_valist(gtkStyleContext, state, args);
@@ -563,7 +568,7 @@ public class StyleContext : ObjectG
 	 * color = return value for the foreground color. [out]
 	 * Since 3.0
 	 */
-	public void styleContextGetColor(GtkStateFlags state, RGBA color)
+	public void getColor(GtkStateFlags state, RGBA color)
 	{
 		// void gtk_style_context_get_color (GtkStyleContext *context,  GtkStateFlags state,  GdkRGBA *color);
 		gtk_style_context_get_color(gtkStyleContext, state, (color is null) ? null : color.getRGBAStruct());
@@ -576,7 +581,7 @@ public class StyleContext : ObjectG
 	 * color = return value for the background color. [out]
 	 * Since 3.0
 	 */
-	public void styleContextGetBackgroundColor(GtkStateFlags state, RGBA color)
+	public void getBackgroundColor(GtkStateFlags state, RGBA color)
 	{
 		// void gtk_style_context_get_background_color  (GtkStyleContext *context,  GtkStateFlags state,  GdkRGBA *color);
 		gtk_style_context_get_background_color(gtkStyleContext, state, (color is null) ? null : color.getRGBAStruct());
@@ -589,7 +594,7 @@ public class StyleContext : ObjectG
 	 * color = return value for the border color. [out]
 	 * Since 3.0
 	 */
-	public void styleContextGetBorderColor(GtkStateFlags state, RGBA color)
+	public void getBorderColor(GtkStateFlags state, RGBA color)
 	{
 		// void gtk_style_context_get_border_color (GtkStyleContext *context,  GtkStateFlags state,  GdkRGBA *color);
 		gtk_style_context_get_border_color(gtkStyleContext, state, (color is null) ? null : color.getRGBAStruct());
@@ -603,7 +608,7 @@ public class StyleContext : ObjectG
 	 * border = return value for the border settings. [out]
 	 * Since 3.0
 	 */
-	public void styleContextGetBorder(GtkStateFlags state, out GtkBorder border)
+	public void getBorder(GtkStateFlags state, out GtkBorder border)
 	{
 		// void gtk_style_context_get_border (GtkStyleContext *context,  GtkStateFlags state,  GtkBorder *border);
 		gtk_style_context_get_border(gtkStyleContext, state, &border);
@@ -617,7 +622,7 @@ public class StyleContext : ObjectG
 	 * padding = return value for the padding settings. [out]
 	 * Since 3.0
 	 */
-	public void styleContextGetPadding(GtkStateFlags state, out GtkBorder padding)
+	public void getPadding(GtkStateFlags state, out GtkBorder padding)
 	{
 		// void gtk_style_context_get_padding (GtkStyleContext *context,  GtkStateFlags state,  GtkBorder *padding);
 		gtk_style_context_get_padding(gtkStyleContext, state, &padding);
@@ -631,7 +636,7 @@ public class StyleContext : ObjectG
 	 * margin = return value for the margin settings. [out]
 	 * Since 3.0
 	 */
-	public void styleContextGetMargin(GtkStateFlags state, out GtkBorder margin)
+	public void getMargin(GtkStateFlags state, out GtkBorder margin)
 	{
 		// void gtk_style_context_get_margin (GtkStyleContext *context,  GtkStateFlags state,  GtkBorder *margin);
 		gtk_style_context_get_margin(gtkStyleContext, state, &margin);
@@ -645,7 +650,7 @@ public class StyleContext : ObjectG
 	 * state = state to retrieve the font for
 	 * Returns: the PangoFontDescription for the given state. This object is owned by GTK+ and should not be freed. [transfer none] Since 3.0
 	 */
-	public PgFontDescription styleContextGetFont(GtkStateFlags state)
+	public PgFontDescription getFont(GtkStateFlags state)
 	{
 		// const PangoFontDescription * gtk_style_context_get_font (GtkStyleContext *context,  GtkStateFlags state);
 		auto p = gtk_style_context_get_font(gtkStyleContext, state);
@@ -663,7 +668,7 @@ public class StyleContext : ObjectG
 	 * gtk_widget_get_style_context(), you do not need to
 	 * call this yourself.
 	 */
-	public void styleContextInvalidate()
+	public void invalidate()
 	{
 		// void gtk_style_context_invalidate (GtkStyleContext *context);
 		gtk_style_context_invalidate(gtkStyleContext);
@@ -682,7 +687,7 @@ public class StyleContext : ObjectG
 	 * progress = return location for the transition progress. [out]
 	 * Returns: TRUE if there is a running transition animation for state. Since 3.0
 	 */
-	public int styleContextStateIsRunning(GtkStateType state, out double progress)
+	public int stateIsRunning(GtkStateType state, out double progress)
 	{
 		// gboolean gtk_style_context_state_is_running (GtkStyleContext *context,  GtkStateType state,  gdouble *progress);
 		return gtk_style_context_state_is_running(gtkStyleContext, state, &progress);
@@ -695,7 +700,7 @@ public class StyleContext : ObjectG
 	 * color = Return location for the looked up color. [out]
 	 * Returns: TRUE if color_name was found and resolved, FALSE otherwise
 	 */
-	public int styleContextLookupColor(string colorName, RGBA color)
+	public int lookupColor(string colorName, RGBA color)
 	{
 		// gboolean gtk_style_context_lookup_color (GtkStyleContext *context,  const gchar *color_name,  GdkRGBA *color);
 		return gtk_style_context_lookup_color(gtkStyleContext, Str.toStringz(colorName), (color is null) ? null : color.getRGBAStruct());
@@ -709,7 +714,7 @@ public class StyleContext : ObjectG
 	 * stockId = an icon name
 	 * Returns: The looked up GtkIconSet, or NULL. [transfer none]
 	 */
-	public IconSet styleContextLookupIconSet(string stockId)
+	public IconSet lookupIconSet(string stockId)
 	{
 		// GtkIconSet * gtk_style_context_lookup_icon_set (GtkStyleContext *context,  const gchar *stock_id);
 		auto p = gtk_style_context_lookup_icon_set(gtkStyleContext, Str.toStringz(stockId));
@@ -740,7 +745,7 @@ public class StyleContext : ObjectG
 	 * FALSE if we are changing away from it
 	 * Since 3.0
 	 */
-	public void styleContextNotifyStateChange(Window window, void* regionId, GtkStateType state, int stateValue)
+	public void notifyStateChange(Window window, void* regionId, GtkStateType state, int stateValue)
 	{
 		// void gtk_style_context_notify_state_change  (GtkStyleContext *context,  GdkWindow *window,  gpointer region_id,  GtkStateType state,  gboolean state_value);
 		gtk_style_context_notify_state_change(gtkStyleContext, (window is null) ? null : window.getWindowStruct(), regionId, state, stateValue);
@@ -750,7 +755,7 @@ public class StyleContext : ObjectG
 	 * Pops an animatable region from context.
 	 * See gtk_style_context_push_animatable_region().
 	 */
-	public void styleContextPopAnimatableRegion()
+	public void popAnimatableRegion()
 	{
 		// void gtk_style_context_pop_animatable_region  (GtkStyleContext *context);
 		gtk_style_context_pop_animatable_region(gtkStyleContext);
@@ -769,7 +774,7 @@ public class StyleContext : ObjectG
 	 * regionId = unique identifier for the animatable region
 	 * Since 3.0
 	 */
-	public void styleContextPushAnimatableRegion(void* regionId)
+	public void pushAnimatableRegion(void* regionId)
 	{
 		// void gtk_style_context_push_animatable_region  (GtkStyleContext *context,  gpointer region_id);
 		gtk_style_context_push_animatable_region(gtkStyleContext, regionId);
@@ -789,7 +794,7 @@ public class StyleContext : ObjectG
 	 * See gtk_style_context_push_animatable_region(). [allow-none]
 	 * Since 3.0
 	 */
-	public void styleContextCancelAnimations(void* regionId)
+	public void cancelAnimations(void* regionId)
 	{
 		// void gtk_style_context_cancel_animations (GtkStyleContext *context,  gpointer region_id);
 		gtk_style_context_cancel_animations(gtkStyleContext, regionId);
@@ -807,7 +812,7 @@ public class StyleContext : ObjectG
 	 * dy = Amount to scroll in the Y axis
 	 * Since 3.0
 	 */
-	public void styleContextScrollAnimations(Window window, int dx, int dy)
+	public void scrollAnimations(Window window, int dx, int dy)
 	{
 		// void gtk_style_context_scroll_animations (GtkStyleContext *context,  GdkWindow *window,  gint dx,  gint dy);
 		gtk_style_context_scroll_animations(gtkStyleContext, (window is null) ? null : window.getWindowStruct(), dx, dy);
@@ -819,7 +824,7 @@ public class StyleContext : ObjectG
 	 * provider = a GtkStyleProvider
 	 * Since 3.0
 	 */
-	public void styleContextRemoveProvider(StyleProviderIF provider)
+	public void removeProvider(StyleProviderIF provider)
 	{
 		// void gtk_style_context_remove_provider (GtkStyleContext *context,  GtkStyleProvider *provider);
 		gtk_style_context_remove_provider(gtkStyleContext, (provider is null) ? null : provider.getStyleProviderTStruct());
@@ -832,7 +837,7 @@ public class StyleContext : ObjectG
 	 * provider = a GtkStyleProvider
 	 * Since 3.0
 	 */
-	public static void styleContextRemoveProviderForScreen(Screen screen, StyleProviderIF provider)
+	public static void removeProviderForScreen(Screen screen, StyleProviderIF provider)
 	{
 		// void gtk_style_context_remove_provider_for_screen  (GdkScreen *screen,  GtkStyleProvider *provider);
 		gtk_style_context_remove_provider_for_screen((screen is null) ? null : screen.getScreenStruct(), (provider is null) ? null : provider.getStyleProviderTStruct());
@@ -849,7 +854,7 @@ public class StyleContext : ObjectG
 	 * screen = a GdkScreen
 	 * Since 3.0
 	 */
-	public static void styleContextResetWidgets(Screen screen)
+	public static void resetWidgets(Screen screen)
 	{
 		// void gtk_style_context_reset_widgets (GdkScreen *screen);
 		gtk_style_context_reset_widgets((screen is null) ? null : screen.getScreenStruct());
@@ -862,7 +867,7 @@ public class StyleContext : ObjectG
 	 * window = a GdkWindow
 	 * Since 3.0
 	 */
-	public void styleContextSetBackground(Window window)
+	public void setBackground(Window window)
 	{
 		// void gtk_style_context_set_background (GtkStyleContext *context,  GdkWindow *window);
 		gtk_style_context_set_background(gtkStyleContext, (window is null) ? null : window.getWindowStruct());
@@ -872,7 +877,7 @@ public class StyleContext : ObjectG
 	 * Restores context state to a previous stage.
 	 * See gtk_style_context_save().
 	 */
-	public void styleContextRestore()
+	public void restore()
 	{
 		// void gtk_style_context_restore (GtkStyleContext *context);
 		gtk_style_context_restore(gtkStyleContext);
@@ -885,7 +890,7 @@ public class StyleContext : ObjectG
 	 * or gtk_style_context_set_junction_sides() can be reverted in one
 	 * go through gtk_style_context_restore().
 	 */
-	public void styleContextSave()
+	public void save()
 	{
 		// void gtk_style_context_save (GtkStyleContext *context);
 		gtk_style_context_save(gtkStyleContext);
@@ -900,7 +905,7 @@ public class StyleContext : ObjectG
 	 * direction = the new direction.
 	 * Since 3.0
 	 */
-	public void styleContextSetDirection(GtkTextDirection direction)
+	public void setDirection(GtkTextDirection direction)
 	{
 		// void gtk_style_context_set_direction (GtkStyleContext *context,  GtkTextDirection direction);
 		gtk_style_context_set_direction(gtkStyleContext, direction);
@@ -919,7 +924,7 @@ public class StyleContext : ObjectG
 	 * other elements
 	 * Since 3.0
 	 */
-	public void styleContextSetJunctionSides(GtkJunctionSides sides)
+	public void setJunctionSides(GtkJunctionSides sides)
 	{
 		// void gtk_style_context_set_junction_sides  (GtkStyleContext *context,  GtkJunctionSides sides);
 		gtk_style_context_set_junction_sides(gtkStyleContext, sides);
@@ -936,7 +941,7 @@ public class StyleContext : ObjectG
 	 * path = a GtkWidgetPath
 	 * Since 3.0
 	 */
-	public void styleContextSetPath(WidgetPath path)
+	public void setPath(WidgetPath path)
 	{
 		// void gtk_style_context_set_path (GtkStyleContext *context,  GtkWidgetPath *path);
 		gtk_style_context_set_path(gtkStyleContext, (path is null) ? null : path.getWidgetPathStruct());
@@ -951,7 +956,7 @@ public class StyleContext : ObjectG
 	 * className = class name to use in styling
 	 * Since 3.0
 	 */
-	public void styleContextAddClass(string className)
+	public void addClass(string className)
 	{
 		// void gtk_style_context_add_class (GtkStyleContext *context,  const gchar *class_name);
 		gtk_style_context_add_class(gtkStyleContext, Str.toStringz(className));
@@ -963,7 +968,7 @@ public class StyleContext : ObjectG
 	 * className = class name to remove
 	 * Since 3.0
 	 */
-	public void styleContextRemoveClass(string className)
+	public void removeClass(string className)
 	{
 		// void gtk_style_context_remove_class (GtkStyleContext *context,  const gchar *class_name);
 		gtk_style_context_remove_class(gtkStyleContext, Str.toStringz(className));
@@ -976,7 +981,7 @@ public class StyleContext : ObjectG
 	 * className = a class name
 	 * Returns: TRUE if context has class_name defined Since 3.0
 	 */
-	public int styleContextHasClass(string className)
+	public int hasClass(string className)
 	{
 		// gboolean gtk_style_context_has_class (GtkStyleContext *context,  const gchar *class_name);
 		return gtk_style_context_has_class(gtkStyleContext, Str.toStringz(className));
@@ -986,7 +991,7 @@ public class StyleContext : ObjectG
 	 * Returns the list of classes currently defined in context.
 	 * Returns: a GList of strings with the currently defined classes. The contents of the list are owned by GTK+, but you must free the list itself with g_list_free() when you are done with it. [transfer container][element-type utf8] Since 3.0
 	 */
-	public ListG styleContextListClasses()
+	public ListG listClasses()
 	{
 		// GList * gtk_style_context_list_classes (GtkStyleContext *context);
 		auto p = gtk_style_context_list_classes(gtkStyleContext);
@@ -1007,7 +1012,7 @@ public class StyleContext : ObjectG
 	 * flags = flags that apply to the region
 	 * Since 3.0
 	 */
-	public void styleContextAddRegion(string regionName, GtkRegionFlags flags)
+	public void addRegion(string regionName, GtkRegionFlags flags)
 	{
 		// void gtk_style_context_add_region (GtkStyleContext *context,  const gchar *region_name,  GtkRegionFlags flags);
 		gtk_style_context_add_region(gtkStyleContext, Str.toStringz(regionName), flags);
@@ -1019,7 +1024,7 @@ public class StyleContext : ObjectG
 	 * regionName = region name to unset
 	 * Since 3.0
 	 */
-	public void styleContextRemoveRegion(string regionName)
+	public void removeRegion(string regionName)
 	{
 		// void gtk_style_context_remove_region (GtkStyleContext *context,  const gchar *region_name);
 		gtk_style_context_remove_region(gtkStyleContext, Str.toStringz(regionName));
@@ -1034,7 +1039,7 @@ public class StyleContext : ObjectG
 	 * flagsReturn = return location for region flags. [out][allow-none]
 	 * Returns: TRUE if region is defined Since 3.0
 	 */
-	public int styleContextHasRegion(string regionName, GtkRegionFlags* flagsReturn)
+	public int hasRegion(string regionName, GtkRegionFlags* flagsReturn)
 	{
 		// gboolean gtk_style_context_has_region (GtkStyleContext *context,  const gchar *region_name,  GtkRegionFlags *flags_return);
 		return gtk_style_context_has_region(gtkStyleContext, Str.toStringz(regionName), flagsReturn);
@@ -1044,7 +1049,7 @@ public class StyleContext : ObjectG
 	 * Returns the list of regions currently defined in context.
 	 * Returns: a GList of strings with the currently defined regions. The contents of the list are owned by GTK+, but you must free the list itself with g_list_free() when you are done with it. [transfer container][element-type utf8] Since 3.0
 	 */
-	public ListG styleContextListRegions()
+	public ListG listRegions()
 	{
 		// GList * gtk_style_context_list_regions (GtkStyleContext *context);
 		auto p = gtk_style_context_list_regions(gtkStyleContext);
@@ -1066,7 +1071,7 @@ public class StyleContext : ObjectG
 	 * screen = a GdkScreen
 	 * Since 3.0
 	 */
-	public void styleContextSetScreen(Screen screen)
+	public void setScreen(Screen screen)
 	{
 		// void gtk_style_context_set_screen (GtkStyleContext *context,  GdkScreen *screen);
 		gtk_style_context_set_screen(gtkStyleContext, (screen is null) ? null : screen.getScreenStruct());
@@ -1079,7 +1084,7 @@ public class StyleContext : ObjectG
 	 * flags = state to represent
 	 * Since 3.0
 	 */
-	public void styleContextSetState(GtkStateFlags flags)
+	public void setState(GtkStateFlags flags)
 	{
 		// void gtk_style_context_set_state (GtkStyleContext *context,  GtkStateFlags flags);
 		gtk_style_context_set_state(gtkStyleContext, flags);

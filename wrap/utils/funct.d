@@ -514,7 +514,8 @@ public struct Funct
 			}
 			if ( convParms.strct.length>0 
 				&& parmsType.length > 0 
-				&& (parmsType[0] == strctPointer )
+				&& (parmsType[0] == strctPointer)
+				&& !( name in convParms.array && parms[0] in convParms.array[name] )
 				)
 			{
 				dec = "public "~overr~returnType~" "~convName~"(";
@@ -532,7 +533,7 @@ public struct Funct
 			if ( i == 0 )
 			{
 				debug(mainStrct)writefln("1st Parm %s ?= %s",parmsType[i], convParms.strct);
-				if ( !ctor && parmsType[i] == strctPointer )
+				if ( !ctor && parmsType[i] == strctPointer && !(name in convParms.array && parms[0] in convParms.array[name]) )
 				{
 					debug(mainStrct)writefln("\tSAME <<<<<<------");
 					--parmCount;
@@ -742,7 +743,7 @@ public struct Funct
 			if ( i > 0 )
 				gtkCall ~= ", ";
 
-			if ( !ctor && i == 0 && parmsType[0] == strctPointer )
+			if ( !ctor && i == 0 && parmsType[0] == strctPointer && !(name in convParms.array && parms[0] in convParms.array[name]) )
 			{
 				
 				if ( convParms.templ.length == 0 )
