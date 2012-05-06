@@ -2599,6 +2599,9 @@ public struct GtkStyleContext{}
 public struct GtkBorder{}
 
 
+/**
+ * Main Gtk struct.
+ */
 public struct GtkCssProvider{}
 
 

@@ -26,7 +26,7 @@
  * inFile  = GtkCssProvider.html
  * outPack = gtk
  * outFile = CssProvider
- * strct   = CssProvider
+ * strct   = GtkCssProvider
  * realStrct=
  * ctorStrct=
  * clss    = CssProvider
@@ -77,6 +77,7 @@ private import gtk.StyleProviderIF;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -392,36 +393,50 @@ private import gtk.StyleProviderIF;
  * way, using the widget class name for namespace.
  * $(DDOC_COMMENT example)
  */
-public class CssProvider : StyleProviderIF
+public class CssProvider : ObjectG, StyleProviderIF
 {
 	
 	/** the main Gtk struct */
-	protected CssProvider* cssProvider;
+	protected GtkCssProvider* gtkCssProvider;
 	
 	
-	public CssProvider* getCssProviderStruct()
+	public GtkCssProvider* getCssProviderStruct()
 	{
-		return cssProvider;
+		return gtkCssProvider;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
-		return cast(void*)cssProvider;
+		return cast(void*)gtkCssProvider;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (CssProvider* cssProvider)
+	public this (GtkCssProvider* gtkCssProvider)
 	{
-		if(cssProvider is null)
+		if(gtkCssProvider is null)
 		{
 			this = null;
 			return;
 		}
-		this.cssProvider = cssProvider;
+		//Check if there already is a D object for this gtk struct
+		void* ptr = getDObject(cast(GObject*)gtkCssProvider);
+		if( ptr !is null )
+		{
+			this = cast(CssProvider)ptr;
+			return;
+		}
+		super(cast(GObject*)gtkCssProvider);
+		this.gtkCssProvider = gtkCssProvider;
+	}
+	
+	protected override void setStruct(GObject* obj)
+	{
+		super.setStruct(obj);
+		gtkCssProvider = cast(GtkCssProvider*)obj;
 	}
 	
 	// add the StyleProvider capabilities
@@ -469,18 +484,17 @@ public class CssProvider : StyleProviderIF
 	 * Loads data into css_provider, making it clear any previously loaded
 	 * information.
 	 * Params:
-	 * cssProvider = a GtkCssProvider
 	 * data = CSS data loaded in memory
 	 * length = the length of data in bytes, or -1 for NUL terminated strings
 	 * Returns: TRUE if the data could be loaded.
 	 * Throws: GException on failure.
 	 */
-	public static int loadFromData(CssProvider cssProvider, string data, gssize length)
+	public int loadFromData(string data, gssize length)
 	{
 		// gboolean gtk_css_provider_load_from_data (GtkCssProvider *css_provider,  const gchar *data,  gssize length,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_css_provider_load_from_data((cssProvider is null) ? null : cssProvider.getCssProviderStruct(), Str.toStringz(data), length, &err);
+		auto p = gtk_css_provider_load_from_data(gtkCssProvider, Str.toStringz(data), length, &err);
 		
 		if (err !is null)
 		{
@@ -494,17 +508,16 @@ public class CssProvider : StyleProviderIF
 	 * Loads the data contained in file into css_provider, making it
 	 * clear any previously loaded information.
 	 * Params:
-	 * cssProvider = a GtkCssProvider
 	 * file = GFile pointing to a file to load
 	 * Returns: TRUE if the data could be loaded.
 	 * Throws: GException on failure.
 	 */
-	public static int loadFromFile(CssProvider cssProvider, File file)
+	public int loadFromFile(File file)
 	{
 		// gboolean gtk_css_provider_load_from_file (GtkCssProvider *css_provider,  GFile *file,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_css_provider_load_from_file((cssProvider is null) ? null : cssProvider.getCssProviderStruct(), (file is null) ? null : file.getFileStruct(), &err);
+		auto p = gtk_css_provider_load_from_file(gtkCssProvider, (file is null) ? null : file.getFileStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -518,17 +531,16 @@ public class CssProvider : StyleProviderIF
 	 * Loads the data contained in path into css_provider, making it clear
 	 * any previously loaded information.
 	 * Params:
-	 * cssProvider = a GtkCssProvider
 	 * path = the path of a filename to load, in the GLib filename encoding
 	 * Returns: TRUE if the data could be loaded.
 	 * Throws: GException on failure.
 	 */
-	public static int loadFromPath(CssProvider cssProvider, string path)
+	public int loadFromPath(string path)
 	{
 		// gboolean gtk_css_provider_load_from_path (GtkCssProvider *css_provider,  const gchar *path,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_css_provider_load_from_path((cssProvider is null) ? null : cssProvider.getCssProviderStruct(), Str.toStringz(path), &err);
+		auto p = gtk_css_provider_load_from_path(gtkCssProvider, Str.toStringz(path), &err);
 		
 		if (err !is null)
 		{
@@ -540,16 +552,16 @@ public class CssProvider : StyleProviderIF
 	
 	/**
 	 * Returns a newly created GtkCssProvider.
-	 * Returns: A new GtkCssProvider
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static CssProvider newCssProvider()
+	public this ()
 	{
 		// GtkCssProvider * gtk_css_provider_new (void);
 		auto p = gtk_css_provider_new();
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gtk_css_provider_new()");
 		}
-		return new CssProvider(cast(GtkCssProvider*) p);
+		this(cast(GtkCssProvider*) p);
 	}
 }

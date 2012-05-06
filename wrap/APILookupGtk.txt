@@ -415,6 +415,7 @@ outFile: StockItem
 file: GtkSettings.html
 struct: GtkSettings
 class: Settings
+implements: StyleProviderIF
 prefix: gtk_settings_
 prefix: gtk_
 import: glib.Str
@@ -428,7 +429,16 @@ structWrap: GString* StringG
 structWrap: GdkScreen* Screen
 structWrap: GtkSettings* Settings
 
+# imports for StyleProvider Interface
+import: gtk.StyleProviderT
+import: gtk.StyleProviderIF
+
 out: gtk_settings_set_property_value svalue
+
+code: start
+	// add the StyleProvider capabilities
+	mixin StyleProviderT!(GtkSettings);
+code: end
 outFile: Settings
 
 file: gtk3-Bindings.html
@@ -642,7 +652,7 @@ code: end
 outFile: Border
 
 file: GtkCssProvider.html
-struct: CssProvider
+struct: GtkCssProvider
 class: CssProvider
 implements: StyleProviderIF
 prefix: gtk_css_provider_

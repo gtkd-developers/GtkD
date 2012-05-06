@@ -31,11 +31,12 @@
  * ctorStrct=
  * clss    = Settings
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- StyleProviderIF
  * prefixes:
  * 	- gtk_settings_
  * 	- gtk_
@@ -49,6 +50,8 @@
  * 	- gobject.Value
  * 	- glib.StringG
  * 	- gdk.Screen
+ * 	- gtk.StyleProviderT
+ * 	- gtk.StyleProviderIF
  * structWrap:
  * 	- GParamSpec* -> ParamSpec
  * 	- GString* -> StringG
@@ -73,6 +76,8 @@ private import gobject.ParamSpec;
 private import gobject.Value;
 private import glib.StringG;
 private import gdk.Screen;
+private import gtk.StyleProviderT;
+private import gtk.StyleProviderIF;
 
 
 
@@ -105,7 +110,7 @@ private import gobject.ObjectG;
  * to use gtk_widget_get_settings(). gtk_settings_get_default() returns the
  * GtkSettings instance for the default screen.
  */
-public class Settings : ObjectG
+public class Settings : ObjectG, StyleProviderIF
 {
 	
 	/** the main Gtk struct */
@@ -150,6 +155,9 @@ public class Settings : ObjectG
 		super.setStruct(obj);
 		gtkSettings = cast(GtkSettings*)obj;
 	}
+	
+	// add the StyleProvider capabilities
+	mixin StyleProviderT!(GtkSettings);
 	
 	/**
 	 */
