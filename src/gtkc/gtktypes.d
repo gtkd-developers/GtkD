@@ -121,139 +121,6 @@ public enum GtkTargetFlags
 }
 alias GtkTargetFlags TargetFlags;
 
-/**
- * Used to specify options for gtk_icon_theme_lookup_icon()
- * GTK_ICON_LOOKUP_NO_SVG
- * Never return SVG icons, even if gdk-pixbuf
- *  supports them. Cannot be used together with GTK_ICON_LOOKUP_FORCE_SVG.
- * GTK_ICON_LOOKUP_FORCE_SVG
- * Return SVG icons, even if gdk-pixbuf
- *  doesn't support them.
- *  Cannot be used together with GTK_ICON_LOOKUP_NO_SVG.
- * GTK_ICON_LOOKUP_USE_BUILTIN
- * When passed to
- *  gtk_icon_theme_lookup_icon() includes builtin icons
- *  as well as files. For a builtin icon, gtk_icon_info_get_filename()
- *  returns NULL and you need to call gtk_icon_info_get_builtin_pixbuf().
- * GTK_ICON_LOOKUP_GENERIC_FALLBACK
- * Try to shorten icon name at '-'
- *  characters before looking at inherited themes. For more general
- *  fallback, see gtk_icon_theme_choose_icon(). Since 2.12.
- * GTK_ICON_LOOKUP_FORCE_SIZE
- * Always return the icon scaled to the
- *  requested size. Since 2.14.
- */
-public enum GtkIconLookupFlags
-{
-	NO_SVG = 1 << 0,
-	FORCE_SVG = 1 << 1,
-	USE_BUILTIN = 1 << 2,
-	GENERIC_FALLBACK = 1 << 3,
-	FORCE_SIZE = 1 << 4
-}
-alias GtkIconLookupFlags IconLookupFlags;
-
-/**
- * Error codes for GtkIconTheme operations.
- * GTK_ICON_THEME_NOT_FOUND
- * The icon specified does not exist in the theme
- * GTK_ICON_THEME_FAILED
- * An unspecified error occurred.
- */
-public enum GtkIconThemeError
-{
-	NOT_FOUND,
-	FAILED
-}
-alias GtkIconThemeError IconThemeError;
-
-public enum GtkIconSize
-{
-	INVALID,
-	MENU,
-	SMALL_TOOLBAR,
-	LARGE_TOOLBAR,
-	BUTTON,
-	DND,
-	DIALOG
-}
-alias GtkIconSize IconSize;
-
-/**
- * The GtkRcFlags enumeration is used as a bitmask
- * to specify which fields of a GtkRcStyle have been
- * set for each state.
- * GTK_RC_FG
- * If present, the foreground color has been set for this state.
- * GTK_RC_BG
- * If present, the background color has been set for this state.
- * GTK_RC_TEXT
- * If present, the text color has been set for this state.
- * GTK_RC_BASE
- * If present, the base color has been set for this state.
- */
-public enum GtkRcFlags
-{
-	FG = 1 << 0,
-	BG = 1 << 1,
-	TEXT = 1 << 2,
-	BASE = 1 << 3
-}
-alias GtkRcFlags RcFlags;
-
-/**
- * Warning
- * GtkRcTokenType is deprecated and should not be used in newly-written code.
- * The GtkRcTokenType enumeration represents the tokens
- * in the RC file. It is exposed so that theme engines
- * can reuse these tokens when parsing the theme-engine
- * specific portions of a RC file.
- */
-public enum GtkRcTokenType
-{
-	INVALID = TokenType.LAST,
-	INCLUDE,
-	NORMAL,
-	ACTIVE,
-	PRELIGHT,
-	SELECTED,
-	INSENSITIVE,
-	FG,
-	BG,
-	TEXT,
-	BASE,
-	XTHICKNESS,
-	YTHICKNESS,
-	FONT,
-	FONTSET,
-	FONT_NAME,
-	BG_PIXMAP,
-	PIXMAP_PATH,
-	STYLE,
-	BINDING,
-	BIND,
-	WIDGET,
-	WIDGET_CLASS,
-	CLASS,
-	LOWEST,
-	GTK,
-	APPLICATION,
-	THEME,
-	RC,
-	HIGHEST,
-	ENGINE,
-	MODULE_PATH,
-	IM_MODULE_PATH,
-	IM_MODULE_FILE,
-	STOCK,
-	LTR,
-	RTL,
-	COLOR,
-	UNBIND,
-	LAST
-}
-alias GtkRcTokenType RcTokenType;
-
 public enum GtkAccelFlags
 {
 	VISIBLE = 1 << 0, /+* display inn GtkAccelLabel? +/
@@ -961,6 +828,149 @@ public enum GtkRegionFlags
 	SORTED = 1 << 5
 }
 alias GtkRegionFlags RegionFlags;
+
+/**
+ * See Also
+ * GtkStyleContext, GtkStyleProvider
+ */
+public enum GtkCssProviderError
+{
+	FAILED
+}
+alias GtkCssProviderError CssProviderError;
+
+/**
+ * Used to specify options for gtk_icon_theme_lookup_icon()
+ * GTK_ICON_LOOKUP_NO_SVG
+ * Never return SVG icons, even if gdk-pixbuf
+ *  supports them. Cannot be used together with GTK_ICON_LOOKUP_FORCE_SVG.
+ * GTK_ICON_LOOKUP_FORCE_SVG
+ * Return SVG icons, even if gdk-pixbuf
+ *  doesn't support them.
+ *  Cannot be used together with GTK_ICON_LOOKUP_NO_SVG.
+ * GTK_ICON_LOOKUP_USE_BUILTIN
+ * When passed to
+ *  gtk_icon_theme_lookup_icon() includes builtin icons
+ *  as well as files. For a builtin icon, gtk_icon_info_get_filename()
+ *  returns NULL and you need to call gtk_icon_info_get_builtin_pixbuf().
+ * GTK_ICON_LOOKUP_GENERIC_FALLBACK
+ * Try to shorten icon name at '-'
+ *  characters before looking at inherited themes. For more general
+ *  fallback, see gtk_icon_theme_choose_icon(). Since 2.12.
+ * GTK_ICON_LOOKUP_FORCE_SIZE
+ * Always return the icon scaled to the
+ *  requested size. Since 2.14.
+ */
+public enum GtkIconLookupFlags
+{
+	NO_SVG = 1 << 0,
+	FORCE_SVG = 1 << 1,
+	USE_BUILTIN = 1 << 2,
+	GENERIC_FALLBACK = 1 << 3,
+	FORCE_SIZE = 1 << 4
+}
+alias GtkIconLookupFlags IconLookupFlags;
+
+/**
+ * Error codes for GtkIconTheme operations.
+ * GTK_ICON_THEME_NOT_FOUND
+ * The icon specified does not exist in the theme
+ * GTK_ICON_THEME_FAILED
+ * An unspecified error occurred.
+ */
+public enum GtkIconThemeError
+{
+	NOT_FOUND,
+	FAILED
+}
+alias GtkIconThemeError IconThemeError;
+
+public enum GtkIconSize
+{
+	INVALID,
+	MENU,
+	SMALL_TOOLBAR,
+	LARGE_TOOLBAR,
+	BUTTON,
+	DND,
+	DIALOG
+}
+alias GtkIconSize IconSize;
+
+/**
+ * The GtkRcFlags enumeration is used as a bitmask
+ * to specify which fields of a GtkRcStyle have been
+ * set for each state.
+ * GTK_RC_FG
+ * If present, the foreground color has been set for this state.
+ * GTK_RC_BG
+ * If present, the background color has been set for this state.
+ * GTK_RC_TEXT
+ * If present, the text color has been set for this state.
+ * GTK_RC_BASE
+ * If present, the base color has been set for this state.
+ */
+public enum GtkRcFlags
+{
+	FG = 1 << 0,
+	BG = 1 << 1,
+	TEXT = 1 << 2,
+	BASE = 1 << 3
+}
+alias GtkRcFlags RcFlags;
+
+/**
+ * Warning
+ * GtkRcTokenType is deprecated and should not be used in newly-written code.
+ * The GtkRcTokenType enumeration represents the tokens
+ * in the RC file. It is exposed so that theme engines
+ * can reuse these tokens when parsing the theme-engine
+ * specific portions of a RC file.
+ */
+public enum GtkRcTokenType
+{
+	INVALID = TokenType.LAST,
+	INCLUDE,
+	NORMAL,
+	ACTIVE,
+	PRELIGHT,
+	SELECTED,
+	INSENSITIVE,
+	FG,
+	BG,
+	TEXT,
+	BASE,
+	XTHICKNESS,
+	YTHICKNESS,
+	FONT,
+	FONTSET,
+	FONT_NAME,
+	BG_PIXMAP,
+	PIXMAP_PATH,
+	STYLE,
+	BINDING,
+	BIND,
+	WIDGET,
+	WIDGET_CLASS,
+	CLASS,
+	LOWEST,
+	GTK,
+	APPLICATION,
+	THEME,
+	RC,
+	HIGHEST,
+	ENGINE,
+	MODULE_PATH,
+	IM_MODULE_PATH,
+	IM_MODULE_FILE,
+	STOCK,
+	LTR,
+	RTL,
+	COLOR,
+	UNBIND,
+	LAST
+}
+alias GtkRcTokenType RcTokenType;
 
 /**
  * Flags used to influence dialog construction.
@@ -2205,115 +2215,132 @@ public enum GtkBuilderError
 alias GtkBuilderError BuilderError;
 
 
-struct GtkObjectClass
+struct GtkWidgetClass
 {
-	GObjectClass parentClass;
-	void function(GtkObject*, GtkArg*, uint) setArg;
-	void function(GtkObject*, GtkArg *, uint) getArg;
-	void function(GtkObject*) destroy;
-}
-
-public struct GtkWidgetClass
-{
-	/* The object class structure needs to be the first
-	 * element inn the widget class structure inn order for
-	 * the class mechanism to work correctly. This allows a
-	 * GtkWidgetClass pointer to be cast to a GtkObjectClass
-	 * pointer.
-	 */
-	GtkObjectClass parentClass;
-	/**/
-	uint activateSignal;
-	uint setScrollAdjustmentsSignal;
-	/**/
+	GObjectClass parent_class;
+	
+	guint activate_signal;
+	
 	/* seldomly overidden */
 	extern(C) void  function(GtkWidget *widget,uint nPspecs,GParamSpec **pspecs) dispatchChildPropertiesChanged;
+	
 	/* basics */
-	extern(C) void  function(GtkWidget *widget)  show;
-	extern(C) void  function(GtkWidget *widget)  showAll;
-	extern(C) void  function(GtkWidget *widget)  hide;
-	extern(C) void  function(GtkWidget *widget)  hideAll;
-	extern(C) void  function(GtkWidget *widget)  map;
-	extern(C) void  function(GtkWidget *widget)  unmap;
-	extern(C) void  function(GtkWidget *widget)  realize;
-	extern(C) void  function(GtkWidget *widget)  unrealize;
-	extern(C) void  function(GtkWidget *widget,GtkRequisition *requisition)  sizeRequest;
-	extern(C) void  function(GtkWidget *widget,GtkAllocation *allocation)  sizeAllocate;
-	extern(C) void  function(GtkWidget *widget,GtkStateType previousState)  stateChanged;
-	extern(C) void  function(GtkWidget *widget,GtkWidget *previousParent)  parentSet;
-	extern(C) void  function(GtkWidget *widget,GtkWidget *previousToplevel)  hierarchyChanged;
-	extern(C) void  function(GtkWidget *widget,GtkStyle *previousStyle)  styleSet;
-	extern(C) void  function(GtkWidget *widget,GtkTextDirection previousDirection)  directionChanged;
-	extern(C) void  function(GtkWidget *widget,int wasGrabbed)  grabNotify;
-	extern(C) void  function(GtkWidget *widget,GParamSpec *pspec)  childNotify;
+	extern(C) void function(GtkWidget* widget) destroy;
+	extern(C) void function(GtkWidget* widget) show;
+	extern(C) void function(GtkWidget* widget) show_all;
+	extern(C) void function(GtkWidget* widget) hide;
+	extern(C) void function(GtkWidget* widget) map;
+	extern(C) void function(GtkWidget* widget) unmap;
+	extern(C) void function(GtkWidget* widget) realize;
+	extern(C) void function(GtkWidget* widget) unrealize;
+	extern(C) void function(GtkWidget* widget, GtkAllocation* allocation) size_allocate;
+	extern(C) void function(GtkWidget* widget, GtkStateType previous_state) state_changed;
+	extern(C) void function(GtkWidget* widget, GtkStateFlags previous_state_flags) state_flags_changed;
+	extern(C) void function(GtkWidget* widget, GtkWidget* previous_parent) parent_set;
+	extern(C) void function(GtkWidget* widget, GtkWidget* previous_toplevel) hierarchy_changed;
+	extern(C) void function(GtkWidget* widget, GtkStyle* previous_style) style_set;
+	extern(C) void function(GtkWidget* widget, GtkTextDirection previous_direction) direction_changed;
+	extern(C) void function(GtkWidget* widget, gboolean was_grabbed) grab_notify;
+	extern(C) void function(GtkWidget* widget, GParamSpec* pspec) child_notify;
+	extern(C) gboolean function(GtkWidget* widget, cairo_t* cr) draw;
+	
+	/* size requests */
+	extern(C) GtkSizeRequestMode function(GtkWidget* widget) get_request_mode;
+	
+	extern(C) void function(GtkWidget* widget, gint* minimum_height, gint* natural_height) get_preferred_height;
+	extern(C) void function(GtkWidget* widget, gint height, gint* minimum_width, gint            *natural_width) get_preferred_width_for_height;
+	extern(C) void function(GtkWidget* widget, gint* minimum_width, gint* natural_width) get_preferred_width;
+	extern(C) void function(GtkWidget* widget, gint width, gint* minimum_height,gint            *natural_height) get_preferred_height_for_width;
+	
 	/* Mnemonics */
-	extern(C) int  function(GtkWidget *widget,int groupCycling)  mnemonicActivate;
+	extern(C) gboolean function(GtkWidget* widget, gboolean group_cycling) mnemonic_activate;
+	
 	/* explicit focus */
-	extern(C) void  function(GtkWidget *widget)  grabFocus;
-	extern(C) int  function(GtkWidget *widget,GtkDirectionType direction)  focus;
+	extern(C) void function(GtkWidget* widget) grab_focus;
+	extern(C) gboolean function(GtkWidget* widget, GtkDirectionType direction) focus;
+	
+	/* keyboard navigation */
+	extern(C) void function(GtkWidget* widget, GtkDirectionType direction) move_focus;
+	extern(C) gboolean function(GtkWidget* widget, GtkDirectionType direction) keynav_failed;
+	
 	/* events */
-	extern(C) int  function(GtkWidget *widget,GdkEvent *event)  event;
-	extern(C) int  function(GtkWidget *widget,GdkEventButton *event)  buttonPressEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventButton *event)  buttonReleaseEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventScroll *event)  scrollEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventMotion *event)  motionNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  deleteEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  destroyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventExpose *event)  exposeEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventKey *event)  keyPressEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventKey *event)  keyReleaseEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventCrossing *event)  enterNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventCrossing *event)  leaveNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventConfigure *event)  configureEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventFocus *event)  focusInEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventFocus *event)  focusOutEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  mapEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  unmapEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventProperty *event)  propertyNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionClearEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionRequestEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventProximity *event)  proximityInEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventProximity *event)  proximityOutEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventVisibility *event)  visibilityNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventClient *event)  clientEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  noExposeEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventWindowState *event)  windowStateEvent;
+	extern(C) gboolean function(GtkWidget* widget, GdkEvent* event) event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventButton* event) button_press_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventButton* event) button_release_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventScroll* event) scroll_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventMotion* event) motion_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventAny* event) delete_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventAny* event) destroy_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventKey* event) key_press_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventKey* event) key_release_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventCrossing* event) enter_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventCrossing* sevent) leave_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventConfigure* event) configure_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventFocus* event) focus_in_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventFocus* event) focus_out_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventAny* event) map_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventAny* event) unmap_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventProperty* event) property_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventSelection* event) selection_clear_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventSelection* event) selection_request_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventSelection* event) selection_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventProximity* event) proximity_in_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventProximity* event) proximity_out_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventVisibility* event) visibility_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventWindowState* event) window_state_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventExpose* event) damage_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventGrabBroken* event) grab_broken_event;
+	
 	/* selection */
-	extern(C) void  function(GtkWidget *widget,GtkSelectionData *selectionData,uint info,uint time)  selectionGet;
-	extern(C) void  function(GtkWidget *widget,GtkSelectionData *selectionData,uint time)  selectionReceived;
+	extern(C) void function(GtkWidget* widget, GtkSelectionData* selection_data, guint info, guint time_) selection_get;
+	extern(C) void function(GtkWidget* widget, GtkSelectionData* selection_data, guint time_) selection_received;
+	
 	/* Source side drag signals */
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragBegin;
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragEnd;
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,GtkSelectionData *selectionData,uint info,uint time)  dragDataGet;
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragDataDelete;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context) drag_begin;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context) drag_end;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data, guint info, guint time_) drag_data_get;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context) drag_data_delete;
+	
 	/* Target side drag signals */
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,uint time)  dragLeave;
-	extern(C) int  function(GtkWidget *widget,GdkDragContext *context,int x,int y,uint time)  dragMotion;
-	extern(C) int  function(GtkWidget *widget,GdkDragContext *context,int x,int y,uint time)  dragDrop;
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,int x,int y,GtkSelectionData *selectionData,uint info,uint time)  dragDataReceived;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context, guint time_) drag_leave;
+	extern(C) gboolean function(GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time_) drag_motion;
+	extern(C) gboolean function(GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time_) drag_drop;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context, gint x, gint y, GtkSelectionData* selection_data, guint info, guint time_) drag_data_received;
+	extern(C) gboolean function(GtkWidget* widget, GdkDragContext* context, GtkDragResult result) drag_failed;
+	
 	/* Signals used only for keybindings */
-	extern(C) int  function(GtkWidget *widget)  popupMenu;
+	extern(C) gboolean function(GtkWidget* widget) popup_menu;
+	
 	/* If a widget has multiple tooltips/whatsthis, it should show the
 	 * one for the current focus location, or if that doesn't make
 	 * sense, should cycle through them showing each tip alongside
 	 * whatever piece of the widget it applies to.
 	 */
-	extern(C) int  function(GtkWidget *widget,GtkWidgetHelpType helpType)  showHelp;
-	/* accessibility support
-	 */
-	extern(C) AtkObject*  function(GtkWidget *widget) getAccessible;
-	extern(C) void  function(GtkWidget *widget,GdkScreen *previousScreen) screenChanged;
-	extern(C) int  function(GtkWidget *widget,uint signalId) canActivateAccel;
-	/* Sent when a grab is broken. */
-	extern(C) int  function(GtkWidget *widget,GdkEventGrabBroken *event) grabBrokenEvent;
-	extern(C) void  function(GtkWidget *widget)  compositedChanged;
-	extern(C) int  function(GtkWidget *widget,int x,int y,int keyboardTooltip,GtkTooltip *tooltip)  queryTooltip;
+	extern(C) gboolean function(GtkWidget* widget, GtkWidgetHelpType help_type) show_help;
+	
+	/* accessibility support */
+	extern(C) AtkObject* function(GtkWidget* widget) get_accessible;
+	
+	extern(C) void function(GtkWidget* widget, GdkScreen* previous_screen) screen_changed;
+	extern(C) gboolean function(GtkWidget* widget, guint signal_id) can_activate_accel;
+	extern(C) void function(GtkWidget* widget) composited_changed;
+	extern(C) gboolean function(GtkWidget* widget, gint x, gint y, gboolean keyboard_tooltip, GtkTooltip* tooltip) query_tooltip;
+	extern(C) void function(GtkWidget* widget, gboolean* hexpand_p, gboolean* vexpand_p) compute_expand;
+	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, gint* minimum_size, gint* natural_size) adjust_size_request;
+	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, gint* minimum_size, gint* natural_size, gint* allocated_pos, gint* allocated_size) adjust_size_allocation;
+	extern(C) void function(GtkWidget* widget) style_updated;
+	
+	/*< private >*/
 	/* Padding for future expansion */
-	extern(C) void  function() _GtkReserved5;
-	extern(C) void  function() _GtkReserved6;
-	extern(C) void  function() _GtkReserved7;
-}
+	extern(C) void function() _gtk_reserved1;
+	extern(C) void function() _gtk_reserved2;
+	extern(C) void function() _gtk_reserved3;
+	extern(C) void function() _gtk_reserved4;
+	extern(C) void function() _gtk_reserved5;
+	extern(C) void function() _gtk_reserved6;
+	extern(C) void function() _gtk_reserved7;
+	extern(C) void function() _gtk_reserved8;
+};
 
 struct GtkTextIter
 {
@@ -2369,26 +2396,6 @@ public struct GtkClipboard{}
 
 
 /**
- * Contains information found when looking up an icon in
- * an icon theme.
- */
-public struct GtkIconInfo{}
-
-
-/**
- * Main Gtk struct.
- * Acts as a database of information about an icon theme.
- * Normally, you retrieve the icon theme for a particular
- * screen using gtk_icon_theme_get_for_screen() and it
- * will contain information about current icon theme for
- * that screen, but you can also create a new GtkIconTheme
- * object and set the icon theme name explicitely using
- * gtk_icon_theme_set_custom_theme().
- */
-public struct GtkIconTheme{}
-
-
-/**
  * Main Gtk struct.
  */
 public struct GtkStockItem
@@ -2398,40 +2405,6 @@ public struct GtkStockItem
 	GdkModifierType modifier;
 	uint keyval;
 	char *translationDomain;
-}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkIconSource{}
-
-
-public struct GtkIconFactory{}
-
-
-public struct GtkIconSet{}
-
-
-/**
- * Main Gtk struct.
- * The GtkRcStyle structure is used to represent a set
- * of information about the appearance of a widget.
- * This can later be composited together with other
- * GtkRcStyle structures to form a GtkStyle.
- */
-public struct GtkRcStyle
-{
-	char *name;
-	char *bgPixmapName[5];
-	PangoFontDescription *fontDesc;
-	GtkRcFlags colorFlags[5];
-	GdkColor fg[5];
-	GdkColor bg[5];
-	GdkColor text[5];
-	GdkColor base[5];
-	int xthickness;
-	int ythickness;
 }
 
 
@@ -2575,6 +2548,238 @@ public struct GtkBindingArg
 
 /**
  * Main Gtk struct.
+ * A GtkTargetEntry structure represents a single type of
+ * data than can be supplied for by a widget for a selection
+ * or for supplied or received during drag-and-drop.
+ * gchar  *target;
+ * a string representation of the target type
+ * guint  flags;
+ * GtkTargetFlags for DND
+ * guint  info;
+ * an application-assigned integer ID which will
+ * get passed as a parater to e.g the "selection-get"
+ * signal. It allows the application to identify the target
+ * type without extensive string compares.
+ */
+public struct GtkTargetEntry
+{
+	char *target;
+	uint flags;
+	uint info;
+}
+
+
+/**
+ * A GtkTargetList structure is a reference counted list
+ * of GtkTargetPair. It is used to represent the same
+ * information as a table of GtkTargetEntry, but in
+ * an efficient form. This structure should be treated as
+ * opaque.
+ */
+public struct GtkTargetList{}
+
+
+/**
+ * Main Gtk struct.
+ * This should not be accessed directly. Use the accessor functions below.
+ */
+public struct GtkMountOperation{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkStyleContext{}
+
+
+/**
+ * A struct that specifies a border around a rectangular area
+ * that can be of different width on each side.
+ */
+public struct GtkBorder{}
+
+
+public struct GtkCssProvider{}
+
+
+/**
+ * GTypeInterface  g_iface;
+ * get_style  ()
+ * Gets a set of style information that applies to a widget path.
+ * get_style_property  ()
+ * Gets the value of a widget style property that applies to a widget path.
+ * get_icon_factory  ()
+ * Gets the icon factory that applies to a widget path.
+ */
+public struct GtkStyleProviderIface
+{
+	GTypeInterface gIface;
+	extern(C) GtkStyleProperties *  function(GtkStyleProvider *provider,GtkWidgetPath *path)  getStyle;
+	extern(C) int  function(GtkStyleProvider *provider,GtkWidgetPath *path,GtkStateFlags state,GParamSpec *pspec,GValue *value)  getStyleProperty;
+	extern(C) GtkIconFactory *  function(GtkStyleProvider *provider,GtkWidgetPath *path)  getIconFactory;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkStyleProvider{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkStyleProperties
+{
+	GObject parentObject;
+	void* priv;
+}
+
+
+/**
+ * Base class for theming engines.
+ * GObjectClass  parent_class;
+ * The parent class.
+ * render_line  ()
+ * Renders a line between two points.
+ * render_background  ()
+ * Renders the background area of a widget region.
+ * render_frame  ()
+ * Renders the frame around a widget area.
+ * render_frame_gap  ()
+ * Renders the frame around a widget area with a gap in it.
+ * render_extension  ()
+ * Renders a extension to a box, usually a notebook tab.
+ * render_check  ()
+ * Renders a checkmark, as in GtkCheckButton.
+ * render_option  ()
+ * Renders an option, as in GtkRadioButton.
+ * render_arrow  ()
+ * Renders an arrow pointing to a certain direction.
+ * render_expander  ()
+ * Renders an element what will expose/expand part of
+ * the UI, as in GtkExpander.
+ * render_focus  ()
+ * Renders the focus indicator.
+ * render_layout  ()
+ * Renders a PangoLayout
+ * render_slider  ()
+ * Renders a slider control, as in GtkScale.
+ * render_handle  ()
+ * Renders a handle to drag UI elements, as in GtkPaned.
+ * render_activity  ()
+ * Renders an area displaying activity, such as in GtkSpinner,
+ * or GtkProgressBar.
+ * render_icon_pixbuf  ()
+ * Renders an icon as a GdkPixbuf.
+ */
+public struct GtkThemingEngineClass
+{
+	GObjectClass parentClass;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x0,double y0,double x1,double y1)  renderLine;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderBackground;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderFrame;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height,GtkPositionType gapSide,double xy0_Gap,double xy1_Gap)  renderFrameGap;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height,GtkPositionType gapSide)  renderExtension;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderCheck;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderOption;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double angle,double x,double y,double size)  renderArrow;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderExpander;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderFocus;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,PangoLayout *layout)  renderLayout;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height,GtkOrientation orientation)  renderSlider;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderHandle;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderActivity;
+	extern(C) GdkPixbuf *  function(GtkThemingEngine *engine,GtkIconSource *source,GtkIconSize size)  renderIconPixbuf;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkThemingEngine{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkWidgetPath{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSymbolicColor{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkGradient{}
+
+
+/**
+ * Contains information found when looking up an icon in
+ * an icon theme.
+ */
+public struct GtkIconInfo{}
+
+
+/**
+ * Main Gtk struct.
+ * Acts as a database of information about an icon theme.
+ * Normally, you retrieve the icon theme for a particular
+ * screen using gtk_icon_theme_get_for_screen() and it
+ * will contain information about current icon theme for
+ * that screen, but you can also create a new GtkIconTheme
+ * object and set the icon theme name explicitely using
+ * gtk_icon_theme_set_custom_theme().
+ */
+public struct GtkIconTheme{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkIconSource{}
+
+
+public struct GtkIconFactory{}
+
+
+public struct GtkIconSet{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkNumerableIcon{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkRcStyle structure is used to represent a set
+ * of information about the appearance of a widget.
+ * This can later be composited together with other
+ * GtkRcStyle structures to form a GtkStyle.
+ */
+public struct GtkRcStyle
+{
+	char *name;
+	char *bgPixmapName[5];
+	PangoFontDescription *fontDesc;
+	GtkRcFlags colorFlags[5];
+	GdkColor fg[5];
+	GdkColor bg[5];
+	GdkColor text[5];
+	GdkColor base[5];
+	int xthickness;
+	int ythickness;
+}
+
+
+/**
+ * Main Gtk struct.
  */
 public struct GtkStyle
 {
@@ -2604,46 +2809,6 @@ public struct GtkRcProperty
 	char *origin;
 	GValue value;
 }
-
-
-/**
- * A GtkTargetEntry structure represents a single type of
- * data than can be supplied for by a widget for a selection
- * or for supplied or received during drag-and-drop.
- * gchar  *target;
- * a string representation of the target type
- * guint  flags;
- * GtkTargetFlags for DND
- * guint  info;
- * an application-assigned integer ID which will
- * get passed as a parater to e.g the "selection-get"
- * signal. It allows the application to identify the target
- * type without extensive string compares.
- */
-public struct GtkTargetEntry
-{
-	char *target;
-	uint flags;
-	uint info;
-}
-
-
-/**
- * Main Gtk struct.
- * A GtkTargetList structure is a reference counted list
- * of GtkTargetPair. It is used to represent the same
- * information as a table of GtkTargetEntry, but in
- * an efficient form. This structure should be treated as
- * opaque.
- */
-public struct GtkTargetList{}
-
-
-/**
- * Main Gtk struct.
- * This should not be accessed directly. Use the accessor functions below.
- */
-public struct GtkMountOperation{}
 
 
 /**
@@ -4430,15 +4595,6 @@ public struct GtkBuilder{}
 
 
 /*
- * style  :
- * a GtkStyle.
- * Returns  :
- * whether the style is attached to a window.
- */
-// TODO
-// #define GTK_STYLE_ATTACHED(style)  (GTK_STYLE (style)->attach_count > 0)
-
-/*
  * major  :
  * major version (e.g. 1 for version 1.2.5)
  * minor  :
@@ -4451,6 +4607,15 @@ public struct GtkBuilder{}
  */
 // TODO
 // #define GTK_CHECK_VERSION(major,minor,micro)
+
+/*
+ * style  :
+ * a GtkStyle.
+ * Returns  :
+ * whether the style is attached to a window.
+ */
+// TODO
+// #define GTK_STYLE_ATTACHED(style)  (GTK_STYLE (style)->attach_count > 0)
 
 /*
  */
@@ -4657,6 +4822,11 @@ public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, uint, v
  */
 // void (*GtkClipboardClearFunc) (GtkClipboard *clipboard,  gpointer user_data_or_owner);
 public alias extern(C) void  function (GtkClipboard*, void*) GtkClipboardClearFunc;
+
+/*
+ */
+// gboolean (*GtkStylePropertyParser) (const gchar *string,  GValue *value,  GError **error);
+public alias extern(C) int  function (char*, GValue*, GError**) GtkStylePropertyParser;
 
 /*
  * Property Details

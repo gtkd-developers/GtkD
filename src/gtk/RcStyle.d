@@ -31,25 +31,24 @@
  * ctorStrct=
  * clss    = RcStyle
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
  * 	- gtk_rc_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ScannerG
  * 	- glib.Str
+ * 	- glib.ScannerG
+ * 	- gdk.Color
+ * 	- gtk.Settings
  * 	- gtk.Style
  * 	- gtk.Widget
- * 	- gtk.Settings
- * 	- gdk.Color
  * structWrap:
  * 	- GScanner* -> ScannerG
  * 	- GdkColor* -> Color
@@ -70,12 +69,12 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import glib.ScannerG;
 private import glib.Str;
+private import glib.ScannerG;
+private import gdk.Color;
+private import gtk.Settings;
 private import gtk.Style;
 private import gtk.Widget;
-private import gtk.Settings;
-private import gdk.Color;
 
 
 
@@ -506,6 +505,8 @@ public class RcStyle : ObjectG
 		super.setStruct(obj);
 		gtkRcStyle = cast(GtkRcStyle*)obj;
 	}
+	
+	deprecated:
 	
 	/**
 	 */

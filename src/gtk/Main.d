@@ -43,24 +43,23 @@
  * omit prefixes:
  * 	- gtk_true
  * 	- gtk_false
- * 	- gtk_timeout_
- * 	- gtk_idle_
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.OptionGroup
+ * 	- gdk.Device
  * 	- gdk.Event
- * 	- gtk.Widget
- * 	- gtk.ObjectGtk
- * 	- pango.PgLanguage
- * 	- glib.Str
- * 	- gtkc.gtk
- * 	- gthread.Thread
  * 	- gdk.Threads
+ * 	- gthread.Thread
+ * 	- gtk.Widget
+ * 	- pango.PgLanguage
  * structWrap:
+ * 	- GOptionGroup* -> OptionGroup
+ * 	- GdkDevice* -> Device
  * 	- GdkEvent* -> Event
- * 	- GtkObject* -> ObjectGtk
  * 	- GtkWidget* -> Widget
  * 	- PangoLanguage* -> PgLanguage
  * module aliases:
@@ -77,16 +76,16 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.OptionGroup;
+private import gdk.Device;
 private import gdk.Event;
-private import gtk.Widget;
-private import gtk.ObjectGtk;
-private import pango.PgLanguage;
-private import glib.Str;
-private import gtkc.gtk;
-private import gthread.Thread;
 private import gdk.Threads;
+private import gthread.Thread;
+private import gtk.Widget;
+private import pango.PgLanguage;
 
 
 
@@ -121,21 +120,6 @@ public class Main
 {
 	
 	/**
-	 * Call this function before using any other GTK+ functions in your GUI applications.
-	 */
-	public static void init(string[] args)
-	{
-		char** argv = (new char*[args.length]).ptr;
-		int argc = 0;
-		foreach (string p; args)
-		{
-			argv[argc++] = cast(char*)p;
-		}
-		
-		init(&argc,&argv);
-	}
-	
-	/**
 	 * This initiates GtkD to supports multi threaded programs.
 	 * read full documantation at http://gtk.org/faq/#AEN482
 	 * from the FAQ:
@@ -150,7 +134,6 @@ public class Main
 		gdkThreadsInit();
 		init(args);
 	}
-	
 	
 	/**
 	 */
@@ -236,17 +219,23 @@ public class Main
 	 * but notice that other libraries (e.g. libdbus or gvfs) might do
 	 * similar things.
 	 * Params:
-	 * argc = Address of the argc parameter of
-	 * your main() function (or 0 if argv is NULL). This will be changed if
-	 * any arguments were handled. [inout]
 	 * argv = Address of the
 	 * argv parameter of main(), or NULL. Any options
 	 * understood by GTK+ are stripped before return. [array length=argc][inout][allow-none]
 	 */
-	public static void init(int* argc, char*** argv)
+	public static void init(ref string[] argv)
 	{
 		// void gtk_init (int *argc,  char ***argv);
-		gtk_init(argc, argv);
+		char** outargv = Str.toStringzArray(argv);
+		int argc = cast(int) argv.length;
+		
+		gtk_init(&argc, &outargv);
+		
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
 	}
 	
 	/**
@@ -334,10 +323,15 @@ public class Main
 	 * when parsing the commandline arguments
 	 * Returns: a GOptionGroup for the commandline arguments recognized by GTK+
 	 */
-	public static GOptionGroup* getOptionGroup(int openDefaultDisplay)
+	public static OptionGroup getOptionGroup(int openDefaultDisplay)
 	{
 		// GOptionGroup * gtk_get_option_group (gboolean open_default_display);
-		return gtk_get_option_group(openDefaultDisplay);
+		auto p = gtk_get_option_group(openDefaultDisplay);
+		if(p is null)
+		{
+			return null;
+		}
+		return new OptionGroup(cast(GOptionGroup*) p);
 	}
 	
 	/**
@@ -482,10 +476,10 @@ public class Main
 	 * blockOthers = TRUE to prevent other devices to interact with widget.
 	 * Since 3.0
 	 */
-	public static void deviceGrabAdd(Widget widget, GdkDevice* device, int blockOthers)
+	public static void deviceGrabAdd(Widget widget, Device device, int blockOthers)
 	{
 		// void gtk_device_grab_add (GtkWidget *widget,  GdkDevice *device,  gboolean block_others);
-		gtk_device_grab_add((widget is null) ? null : widget.getWidgetStruct(), device, blockOthers);
+		gtk_device_grab_add((widget is null) ? null : widget.getWidgetStruct(), (device is null) ? null : device.getDeviceStruct(), blockOthers);
 	}
 	
 	/**
@@ -497,10 +491,10 @@ public class Main
 	 * device = a GdkDevice
 	 * Since 3.0
 	 */
-	public static void deviceGrabRemove(Widget widget, GdkDevice* device)
+	public static void deviceGrabRemove(Widget widget, Device device)
 	{
 		// void gtk_device_grab_remove (GtkWidget *widget,  GdkDevice *device);
-		gtk_device_grab_remove((widget is null) ? null : widget.getWidgetStruct(), device);
+		gtk_device_grab_remove((widget is null) ? null : widget.getWidgetStruct(), (device is null) ? null : device.getDeviceStruct());
 	}
 	
 	/**
@@ -576,10 +570,15 @@ public class Main
 	 * device, otherwise return NULL.
 	 * Returns: a GdkDevice, or NULL. [transfer none]
 	 */
-	public static GdkDevice* getCurrentEventDevice()
+	public static Device getCurrentEventDevice()
 	{
 		// GdkDevice * gtk_get_current_event_device (void);
-		return gtk_get_current_event_device();
+		auto p = gtk_get_current_event_device();
+		if(p is null)
+		{
+			return null;
+		}
+		return new Device(cast(GdkDevice*) p);
 	}
 	
 	/**

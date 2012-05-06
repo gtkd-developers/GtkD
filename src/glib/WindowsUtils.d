@@ -146,11 +146,44 @@ public class WindowsUtils
 	 * function. To summarize, the most significant bit is one on Win9x,
 	 * and zero on NT-based systems. Since version 2.14, GLib works only
 	 * on NT-based systems, so checking whether your are running on Win9x
-	 * in your own software is moot. The l
+	 * in your own software is moot. The least significant byte is 4 on
+	 * Windows NT 4, and 5 on Windows XP. Software that needs really
+	 * detailled version and feature information should use Win32 API like
+	 * GetVersionEx() and VerifyVersionInfo().
+	 * Since 2.6
+	 * Returns: The version information.
 	 */
 	public static uint getWindowsVersion()
 	{
 		// guint g_win32_get_windows_version (void);
 		return g_win32_get_windows_version();
+	}
+	
+	/**
+	 * Converts a filename from UTF-8 to the system codepage.
+	 * On NT-based Windows, on NTFS file systems, file names are in
+	 * Unicode. It is quite possible that Unicode file names contain
+	 * characters not representable in the system codepage. (For instance,
+	 * Greek or Cyrillic characters on Western European or US Windows
+	 * installations, or various less common CJK characters on CJK Windows
+	 * installations.)
+	 * In such a case, and if the filename refers to an existing file, and
+	 * the file system stores alternate short (8.3) names for directory
+	 * entries, the short form of the filename is returned. Note that the
+	 * "short" name might in fact be longer than the Unicode name if the
+	 * Unicode name has very short pathname components containing
+	 * non-ASCII characters. If no system codepage name for the file is
+	 * possible, NULL is returned.
+	 * The return value is dynamically allocated and should be freed with
+	 * g_free() when no longer needed.
+	 * Since 2.8
+	 * Params:
+	 * utf8filename = a UTF-8 encoded filename.
+	 * Returns: The converted filename, or NULL on conversion failure and lack of short names.
+	 */
+	public static string localeFilenameFromUtf8(string utf8filename)
+	{
+		// gchar * g_win32_locale_filename_from_utf8 (const gchar *utf8filename);
+		return Str.toString(g_win32_locale_filename_from_utf8(Str.toStringz(utf8filename)));
 	}
 }

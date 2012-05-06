@@ -47,9 +47,9 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gtk.Window
- * 	- gdk.Screen
  * 	- gio.MountOperation : GioMountOperation = MountOperation
+ * 	- gdk.Screen
+ * 	- gtk.Window
  * structWrap:
  * 	- GdkScreen* -> Screen
  * 	- GtkWindow* -> Window
@@ -69,9 +69,9 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import gtk.Window;
-private import gdk.Screen;
 private import gio.MountOperation : GioMountOperation = MountOperation;
+private import gdk.Screen;
+private import gtk.Window;
 
 
 

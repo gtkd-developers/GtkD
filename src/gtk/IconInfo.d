@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = IconInfo
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -46,13 +46,18 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gtk.IconInfo
- * 	- gtk.IconTheme
  * 	- gdk.Pixbuf
+ * 	- gdk.RGBA
+ * 	- gtk.IconTheme
+ * 	- gtk.Style
+ * 	- gtk.StyleContext
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkRGBA* -> RGBA
  * 	- GtkIconInfo* -> IconInfo
  * 	- GtkIconTheme* -> IconTheme
+ * 	- GtkStyle* -> Style
+ * 	- GtkStyleContext* -> StyleContext
  * module aliases:
  * local aliases:
  * overrides:
@@ -71,9 +76,11 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import gtk.IconInfo;
-private import gtk.IconTheme;
 private import gdk.Pixbuf;
+private import gdk.RGBA;
+private import gtk.IconTheme;
+private import gtk.Style;
+private import gtk.StyleContext;
 
 
 
@@ -154,6 +161,14 @@ public class IconInfo
 			return;
 		}
 		this.gtkIconInfo = gtkIconInfo;
+	}
+	
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconInfo !is null )
+		{
+			gtk_icon_info_free(gtkIconInfo);
+		}
 	}
 	
 	/**
@@ -351,12 +366,12 @@ public class IconInfo
 	 * Returns: a GdkPixbuf representing the loaded icon. [transfer full] Since 3.0
 	 * Throws: GException on failure.
 	 */
-	public Pixbuf loadSymbolic(GdkRGBA* fg, GdkRGBA* successColor, GdkRGBA* warningColor, GdkRGBA* errorColor, int* wasSymbolic)
+	public Pixbuf loadSymbolic(RGBA fg, RGBA successColor, RGBA warningColor, RGBA errorColor, out int wasSymbolic)
 	{
 		// GdkPixbuf * gtk_icon_info_load_symbolic (GtkIconInfo *icon_info,  const GdkRGBA *fg,  const GdkRGBA *success_color,  const GdkRGBA *warning_color,  const GdkRGBA *error_color,  gboolean *was_symbolic,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_icon_info_load_symbolic(gtkIconInfo, fg, successColor, warningColor, errorColor, wasSymbolic, &err);
+		auto p = gtk_icon_info_load_symbolic(gtkIconInfo, (fg is null) ? null : fg.getRGBAStruct(), (successColor is null) ? null : successColor.getRGBAStruct(), (warningColor is null) ? null : warningColor.getRGBAStruct(), (errorColor is null) ? null : errorColor.getRGBAStruct(), &wasSymbolic, &err);
 		
 		if (err !is null)
 		{
@@ -387,12 +402,12 @@ public class IconInfo
 	 * Returns: a GdkPixbuf representing the loaded icon. [transfer full] Since 3.0
 	 * Throws: GException on failure.
 	 */
-	public Pixbuf loadSymbolicForStyle(GtkStyle* style, GtkStateType state, int* wasSymbolic)
+	public Pixbuf loadSymbolicForStyle(Style style, GtkStateType state, out int wasSymbolic)
 	{
 		// GdkPixbuf * gtk_icon_info_load_symbolic_for_style  (GtkIconInfo *icon_info,  GtkStyle *style,  GtkStateType state,  gboolean *was_symbolic,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_icon_info_load_symbolic_for_style(gtkIconInfo, style, state, wasSymbolic, &err);
+		auto p = gtk_icon_info_load_symbolic_for_style(gtkIconInfo, (style is null) ? null : style.getStyleStruct(), state, &wasSymbolic, &err);
 		
 		if (err !is null)
 		{
@@ -423,12 +438,12 @@ public class IconInfo
 	 * Returns: a GdkPixbuf representing the loaded icon. [transfer full] Since 3.0
 	 * Throws: GException on failure.
 	 */
-	public Pixbuf loadSymbolicForContext(GtkStyleContext* context, int* wasSymbolic)
+	public Pixbuf loadSymbolicForContext(StyleContext context, int* wasSymbolic)
 	{
 		// GdkPixbuf * gtk_icon_info_load_symbolic_for_context  (GtkIconInfo *icon_info,  GtkStyleContext *context,  gboolean *was_symbolic,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_icon_info_load_symbolic_for_context(gtkIconInfo, context, wasSymbolic, &err);
+		auto p = gtk_icon_info_load_symbolic_for_context(gtkIconInfo, (context is null) ? null : context.getStyleContextStruct(), wasSymbolic, &err);
 		
 		if (err !is null)
 		{

@@ -52,12 +52,10 @@
  * 	- gtk.Tooltip
  * 	- gtk.TreeIter
  * 	- glib.ListG
- * 	- gdk.Pixmap
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * structWrap:
  * 	- GList* -> ListG
- * 	- GdkPixmap* -> Pixmap
  * 	- GtkCellRenderer* -> CellRenderer
  * 	- GtkTooltip* -> Tooltip
  * 	- GtkTreeIter* -> TreeIter
@@ -85,7 +83,6 @@ private import gtk.CellRenderer;
 private import gtk.Tooltip;
 private import gtk.TreeIter;
 private import glib.ListG;
-private import gdk.Pixmap;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 

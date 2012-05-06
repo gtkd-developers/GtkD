@@ -38,17 +38,16 @@
  * implements:
  * prefixes:
  * 	- gtk_clipboard_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Display
- * 	- gtk.TextBuffer
  * 	- gobject.ObjectG
+ * 	- gdk.Display
  * 	- gdk.Pixbuf
+ * 	- gtk.TextBuffer
  * structWrap:
  * 	- GObject* -> ObjectG
  * 	- GdkDisplay* -> Display
@@ -71,10 +70,10 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gdk.Display;
-private import gtk.TextBuffer;
 private import gobject.ObjectG;
+private import gdk.Display;
 private import gdk.Pixbuf;
+private import gtk.TextBuffer;
 
 
 
@@ -380,13 +379,11 @@ public class Clipboard : ObjectG
 	 * the requested format.
 	 * Params:
 	 * text = a UTF-8 string.
-	 * len = length of text, in bytes, or -1, in which case
-	 * the length will be determined with strlen().
 	 */
-	public void setText(string text, int len)
+	public void setText(char[] text)
 	{
 		// void gtk_clipboard_set_text (GtkClipboard *clipboard,  const gchar *text,  gint len);
-		gtk_clipboard_set_text(gtkClipboard, Str.toStringz(text), len);
+		gtk_clipboard_set_text(gtkClipboard, text.ptr, cast(int) text.length);
 	}
 	
 	/**

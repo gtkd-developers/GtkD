@@ -50,22 +50,13 @@
  * 	- gio.Icon
  * 	- gio.IconIF
  * 	- gtk.IconSet
- * 	- gdk.ImageGdk
- * 	- gdk.Bitmap
  * 	- gdk.Pixbuf
- * 	- gdk.Pixmap
  * 	- gdkpixbuf.PixbufAnimation
  * 	- gtk.IconSet
- * 	- gdk.ImageGdk
- * 	- gdk.Bitmap
- * 	- gdk.Pixmap
  * structWrap:
  * 	- GIcon* -> IconIF
- * 	- GdkBitmap* -> Bitmap
- * 	- GdkImage* -> ImageGdk
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
- * 	- GdkPixmap* -> Pixmap
  * 	- GtkIconSet* -> IconSet
  * module aliases:
  * local aliases:
@@ -84,15 +75,9 @@ private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
 private import gtk.IconSet;
-private import gdk.ImageGdk;
-private import gdk.Bitmap;
 private import gdk.Pixbuf;
-private import gdk.Pixmap;
 private import gdkpixbuf.PixbufAnimation;
 private import gtk.IconSet;
-private import gdk.ImageGdk;
-private import gdk.Bitmap;
-private import gdk.Pixmap;
 
 
 

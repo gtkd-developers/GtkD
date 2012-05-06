@@ -47,13 +47,11 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.SizeGroup
- * 	- gtk.Tooltips
  * 	- gtk.Widget
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
  * 	- GtkSizeGroup* -> SizeGroup
- * 	- GtkTooltips* -> Tooltips
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -74,7 +72,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.SizeGroup;
-private import gtk.Tooltips;
 private import gtk.Widget;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;

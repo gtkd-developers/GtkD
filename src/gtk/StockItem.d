@@ -31,21 +31,21 @@
  * ctorStrct=
  * clss    = StockItem
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
  * 	- gtk_stock_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.StockItem
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
@@ -64,7 +64,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.StockItem;
+private import gtkc.paths;
+private import gtkc.Loader;
 private import glib.ListSG;
 
 
@@ -120,6 +121,14 @@ public class StockItem
 		this.gtkStockItem = gtkStockItem;
 	}
 	
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkStockItem !is null )
+		{
+			gtk_stock_item_free(gtkStockItem);
+		}
+	}
+	
 	/**
 	 */
 	
@@ -130,25 +139,21 @@ public class StockItem
 	 * any pointer into items and items can be freed. Use
 	 * gtk_stock_add_static() if items is persistent and GTK+ need not
 	 * copy the array.
-	 * Params:
-	 * nItems = number of GtkStockItem in items
 	 */
-	public void add(uint nItems)
+	public void add()
 	{
 		// void gtk_stock_add (const GtkStockItem *items,  guint n_items);
-		gtk_stock_add(gtkStockItem, nItems);
+		gtk_stock_add(gtkStockItem, cast(int) items.length);
 	}
 	
 	/**
 	 * Same as gtk_stock_add(), but doesn't copy items, so
 	 * items must persist until application exit.
-	 * Params:
-	 * nItems = number of items
 	 */
-	public void addStatic(uint nItems)
+	public void addStatic()
 	{
 		// void gtk_stock_add_static (const GtkStockItem *items,  guint n_items);
-		gtk_stock_add_static(gtkStockItem, nItems);
+		gtk_stock_add_static(gtkStockItem, cast(int) items.length);
 	}
 	
 	/**

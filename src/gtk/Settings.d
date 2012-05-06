@@ -45,11 +45,10 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Settings
- * 	- gdk.Screen
  * 	- gobject.ParamSpec
- * 	- glib.StringG
  * 	- gobject.Value
+ * 	- glib.StringG
+ * 	- gdk.Screen
  * structWrap:
  * 	- GParamSpec* -> ParamSpec
  * 	- GString* -> StringG
@@ -70,11 +69,10 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Settings;
-private import gdk.Screen;
 private import gobject.ParamSpec;
-private import glib.StringG;
 private import gobject.Value;
+private import glib.StringG;
+private import gdk.Screen;
 
 
 
@@ -301,10 +299,10 @@ public class Settings : ObjectG
 	
 	/**
 	 */
-	public void setPropertyValue(string name, GtkSettingsValue* svalue)
+	public void setPropertyValue(string name, out GtkSettingsValue svalue)
 	{
 		// void gtk_settings_set_property_value (GtkSettings *settings,  const gchar *name,  const GtkSettingsValue *svalue);
-		gtk_settings_set_property_value(gtkSettings, Str.toStringz(name), svalue);
+		gtk_settings_set_property_value(gtkSettings, Str.toStringz(name), &svalue);
 	}
 	
 	/**

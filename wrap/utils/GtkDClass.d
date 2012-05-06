@@ -897,7 +897,7 @@ public class GtkDClass
 			}
 			else if ( count == 0 || parentName.length == 0)
 			{
-				impls ~= "/+implements+/ ";
+				impls ~= " : ";
 			}
 			impls ~= impl;
 		}

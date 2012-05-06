@@ -64,11 +64,9 @@
  * 	- gtk.TextChildAnchor
  * 	- gtk.TextMark
  * 	- gtk.Clipboard
- * 	- gdk.Bitmap
  * 	- gtk.TargetList
  * 	- std.stdarg
  * structWrap:
- * 	- GdkBitmap* -> Bitmap
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRectangle* -> Rectangle
  * 	- GtkClipboard* -> Clipboard
@@ -113,7 +111,6 @@ private import gdk.Pixbuf;
 private import gtk.TextChildAnchor;
 private import gtk.TextMark;
 private import gtk.Clipboard;
-private import gdk.Bitmap;
 private import gtk.TargetList;
 
 

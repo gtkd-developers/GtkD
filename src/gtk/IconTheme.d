@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_icon_theme_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * 	- gtk_icon_info_
@@ -46,13 +45,13 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gio.IconIF
- * 	- gdk.Screen
- * 	- gtk.IconInfo
- * 	- gdk.Pixbuf
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.ListG
+ * 	- gio.IconIF
+ * 	- gdk.Pixbuf
+ * 	- gdk.Screen
+ * 	- gtk.IconInfo
  * structWrap:
  * 	- GIcon* -> IconIF
  * 	- GList* -> ListG
@@ -76,13 +75,13 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gio.IconIF;
-private import gdk.Screen;
-private import gtk.IconInfo;
-private import gdk.Pixbuf;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
+private import gio.IconIF;
+private import gdk.Pixbuf;
+private import gdk.Screen;
+private import gtk.IconInfo;
 
 
 

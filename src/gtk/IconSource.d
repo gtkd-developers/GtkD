@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = IconSource
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -143,6 +143,14 @@ public class IconSource
 			return;
 		}
 		this.gtkIconSource = gtkIconSource;
+	}
+	
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconSource !is null )
+		{
+			gtk_icon_source_free(gtkIconSource);
+		}
 	}
 	
 	/**

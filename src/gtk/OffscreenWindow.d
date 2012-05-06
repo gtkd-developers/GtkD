@@ -43,12 +43,10 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gdk.Pixmap
  * 	- gdk.Pixbuf
  * 	- gtk.Widget
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkPixmap* -> Pixmap
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -63,7 +61,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gdk.Pixmap;
 private import gdk.Pixbuf;
 private import gtk.Widget;
 

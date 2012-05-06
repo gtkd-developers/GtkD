@@ -45,12 +45,10 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Font
  * 	- gtk.Widget
  * 	- pango.PgFontFace
  * 	- pango.PgFontFamily
  * structWrap:
- * 	- GdkFont* -> Font
  * 	- GtkWidget* -> Widget
  * 	- PangoFontFace* -> PgFontFace
  * 	- PangoFontFamily* -> PgFontFamily
@@ -68,7 +66,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gdk.Font;
 private import gtk.Widget;
 private import pango.PgFontFace;
 private import pango.PgFontFamily;

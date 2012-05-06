@@ -69,115 +69,132 @@ addEnums: end
 
 addStructs: start
 
-struct GtkObjectClass
+struct GtkWidgetClass
 {
-	GObjectClass parentClass;
-	void function(GtkObject*, GtkArg*, uint) setArg;
-	void function(GtkObject*, GtkArg *, uint) getArg;
-	void function(GtkObject*) destroy;
-}
+	GObjectClass parent_class;
 
-public struct GtkWidgetClass
-{
-	/* The object class structure needs to be the first
-	 * element inn the widget class structure inn order for
-	 * the class mechanism to work correctly. This allows a
-	 * GtkWidgetClass pointer to be cast to a GtkObjectClass
-	 * pointer.
-	 */
-	GtkObjectClass parentClass;
-	/**/
-	uint activateSignal;
-	uint setScrollAdjustmentsSignal;
-	/**/
+	guint activate_signal;
+
 	/* seldomly overidden */
 	extern(C) void  function(GtkWidget *widget,uint nPspecs,GParamSpec **pspecs) dispatchChildPropertiesChanged;
+
 	/* basics */
-	extern(C) void  function(GtkWidget *widget)  show;
-	extern(C) void  function(GtkWidget *widget)  showAll;
-	extern(C) void  function(GtkWidget *widget)  hide;
-	extern(C) void  function(GtkWidget *widget)  hideAll;
-	extern(C) void  function(GtkWidget *widget)  map;
-	extern(C) void  function(GtkWidget *widget)  unmap;
-	extern(C) void  function(GtkWidget *widget)  realize;
-	extern(C) void  function(GtkWidget *widget)  unrealize;
-	extern(C) void  function(GtkWidget *widget,GtkRequisition *requisition)  sizeRequest;
-	extern(C) void  function(GtkWidget *widget,GtkAllocation *allocation)  sizeAllocate;
-	extern(C) void  function(GtkWidget *widget,GtkStateType previousState)  stateChanged;
-	extern(C) void  function(GtkWidget *widget,GtkWidget *previousParent)  parentSet;
-	extern(C) void  function(GtkWidget *widget,GtkWidget *previousToplevel)  hierarchyChanged;
-	extern(C) void  function(GtkWidget *widget,GtkStyle *previousStyle)  styleSet;
-	extern(C) void  function(GtkWidget *widget,GtkTextDirection previousDirection)  directionChanged;
-	extern(C) void  function(GtkWidget *widget,int wasGrabbed)  grabNotify;
-	extern(C) void  function(GtkWidget *widget,GParamSpec *pspec)  childNotify;
+	extern(C) void function(GtkWidget* widget) destroy;
+	extern(C) void function(GtkWidget* widget) show;
+	extern(C) void function(GtkWidget* widget) show_all;
+	extern(C) void function(GtkWidget* widget) hide;
+	extern(C) void function(GtkWidget* widget) map;
+	extern(C) void function(GtkWidget* widget) unmap;
+	extern(C) void function(GtkWidget* widget) realize;
+	extern(C) void function(GtkWidget* widget) unrealize;
+	extern(C) void function(GtkWidget* widget, GtkAllocation* allocation) size_allocate;
+	extern(C) void function(GtkWidget* widget, GtkStateType previous_state) state_changed;
+	extern(C) void function(GtkWidget* widget, GtkStateFlags previous_state_flags) state_flags_changed;
+	extern(C) void function(GtkWidget* widget, GtkWidget* previous_parent) parent_set;
+	extern(C) void function(GtkWidget* widget, GtkWidget* previous_toplevel) hierarchy_changed;
+	extern(C) void function(GtkWidget* widget, GtkStyle* previous_style) style_set;
+	extern(C) void function(GtkWidget* widget, GtkTextDirection previous_direction) direction_changed;
+	extern(C) void function(GtkWidget* widget, gboolean was_grabbed) grab_notify;
+	extern(C) void function(GtkWidget* widget, GParamSpec* pspec) child_notify;
+	extern(C) gboolean function(GtkWidget* widget, cairo_t* cr) draw;
+
+	/* size requests */
+	extern(C) GtkSizeRequestMode function(GtkWidget* widget) get_request_mode;
+
+	extern(C) void function(GtkWidget* widget, gint* minimum_height, gint* natural_height) get_preferred_height;
+	extern(C) void function(GtkWidget* widget, gint height, gint* minimum_width, gint            *natural_width) get_preferred_width_for_height;
+	extern(C) void function(GtkWidget* widget, gint* minimum_width, gint* natural_width) get_preferred_width;
+	extern(C) void function(GtkWidget* widget, gint width, gint* minimum_height,gint            *natural_height) get_preferred_height_for_width;
+
 	/* Mnemonics */
-	extern(C) int  function(GtkWidget *widget,int groupCycling)  mnemonicActivate;
+	extern(C) gboolean function(GtkWidget* widget, gboolean group_cycling) mnemonic_activate;
+
 	/* explicit focus */
-	extern(C) void  function(GtkWidget *widget)  grabFocus;
-	extern(C) int  function(GtkWidget *widget,GtkDirectionType direction)  focus;
+	extern(C) void function(GtkWidget* widget) grab_focus;
+	extern(C) gboolean function(GtkWidget* widget, GtkDirectionType direction) focus;
+
+	/* keyboard navigation */
+	extern(C) void function(GtkWidget* widget, GtkDirectionType direction) move_focus;
+	extern(C) gboolean function(GtkWidget* widget, GtkDirectionType direction) keynav_failed;
+
 	/* events */
-	extern(C) int  function(GtkWidget *widget,GdkEvent *event)  event;
-	extern(C) int  function(GtkWidget *widget,GdkEventButton *event)  buttonPressEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventButton *event)  buttonReleaseEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventScroll *event)  scrollEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventMotion *event)  motionNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  deleteEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  destroyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventExpose *event)  exposeEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventKey *event)  keyPressEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventKey *event)  keyReleaseEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventCrossing *event)  enterNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventCrossing *event)  leaveNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventConfigure *event)  configureEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventFocus *event)  focusInEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventFocus *event)  focusOutEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  mapEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  unmapEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventProperty *event)  propertyNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionClearEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionRequestEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventSelection *event)  selectionNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventProximity *event)  proximityInEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventProximity *event)  proximityOutEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventVisibility *event)  visibilityNotifyEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventClient *event)  clientEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventAny *event)  noExposeEvent;
-	extern(C) int  function(GtkWidget *widget,GdkEventWindowState *event)  windowStateEvent;
+	extern(C) gboolean function(GtkWidget* widget, GdkEvent* event) event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventButton* event) button_press_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventButton* event) button_release_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventScroll* event) scroll_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventMotion* event) motion_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventAny* event) delete_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventAny* event) destroy_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventKey* event) key_press_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventKey* event) key_release_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventCrossing* event) enter_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventCrossing* sevent) leave_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventConfigure* event) configure_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventFocus* event) focus_in_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventFocus* event) focus_out_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventAny* event) map_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventAny* event) unmap_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventProperty* event) property_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventSelection* event) selection_clear_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventSelection* event) selection_request_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventSelection* event) selection_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventProximity* event) proximity_in_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventProximity* event) proximity_out_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventVisibility* event) visibility_notify_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventWindowState* event) window_state_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventExpose* event) damage_event;
+	extern(C) gboolean function(GtkWidget* widget, GdkEventGrabBroken* event) grab_broken_event;
+
 	/* selection */
-	extern(C) void  function(GtkWidget *widget,GtkSelectionData *selectionData,uint info,uint time)  selectionGet;
-	extern(C) void  function(GtkWidget *widget,GtkSelectionData *selectionData,uint time)  selectionReceived;
+	extern(C) void function(GtkWidget* widget, GtkSelectionData* selection_data, guint info, guint time_) selection_get;
+	extern(C) void function(GtkWidget* widget, GtkSelectionData* selection_data, guint time_) selection_received;
+
 	/* Source side drag signals */
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragBegin;
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragEnd;
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,GtkSelectionData *selectionData,uint info,uint time)  dragDataGet;
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context)  dragDataDelete;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context) drag_begin;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context) drag_end;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data, guint info, guint time_) drag_data_get;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context) drag_data_delete;
+
 	/* Target side drag signals */
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,uint time)  dragLeave;
-	extern(C) int  function(GtkWidget *widget,GdkDragContext *context,int x,int y,uint time)  dragMotion;
-	extern(C) int  function(GtkWidget *widget,GdkDragContext *context,int x,int y,uint time)  dragDrop;
-	extern(C) void  function(GtkWidget *widget,GdkDragContext *context,int x,int y,GtkSelectionData *selectionData,uint info,uint time)  dragDataReceived;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context, guint time_) drag_leave;
+	extern(C) gboolean function(GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time_) drag_motion;
+	extern(C) gboolean function(GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time_) drag_drop;
+	extern(C) void function(GtkWidget* widget, GdkDragContext* context, gint x, gint y, GtkSelectionData* selection_data, guint info, guint time_) drag_data_received;
+	extern(C) gboolean function(GtkWidget* widget, GdkDragContext* context, GtkDragResult result) drag_failed;
+
 	/* Signals used only for keybindings */
-	extern(C) int  function(GtkWidget *widget)  popupMenu;
+	extern(C) gboolean function(GtkWidget* widget) popup_menu;
+
 	/* If a widget has multiple tooltips/whatsthis, it should show the
-	 * one for the current focus location, or if that doesn't make
-	 * sense, should cycle through them showing each tip alongside
-	 * whatever piece of the widget it applies to.
+	* one for the current focus location, or if that doesn't make
+	* sense, should cycle through them showing each tip alongside
+	* whatever piece of the widget it applies to.
 	*/
-	extern(C) int  function(GtkWidget *widget,GtkWidgetHelpType helpType)  showHelp;
-	/* accessibility support
-	*/
-	extern(C) AtkObject*  function(GtkWidget *widget) getAccessible;
-	extern(C) void  function(GtkWidget *widget,GdkScreen *previousScreen) screenChanged;
-	extern(C) int  function(GtkWidget *widget,uint signalId) canActivateAccel;
-	/* Sent when a grab is broken. */
-	extern(C) int  function(GtkWidget *widget,GdkEventGrabBroken *event) grabBrokenEvent;
-	extern(C) void  function(GtkWidget *widget)  compositedChanged;
-	extern(C) int  function(GtkWidget *widget,int x,int y,int keyboardTooltip,GtkTooltip *tooltip)  queryTooltip;
+	extern(C) gboolean function(GtkWidget* widget, GtkWidgetHelpType help_type) show_help;
+
+	/* accessibility support */
+	extern(C) AtkObject* function(GtkWidget* widget) get_accessible;
+
+	extern(C) void function(GtkWidget* widget, GdkScreen* previous_screen) screen_changed;
+	extern(C) gboolean function(GtkWidget* widget, guint signal_id) can_activate_accel;
+	extern(C) void function(GtkWidget* widget) composited_changed;
+	extern(C) gboolean function(GtkWidget* widget, gint x, gint y, gboolean keyboard_tooltip, GtkTooltip* tooltip) query_tooltip;
+	extern(C) void function(GtkWidget* widget, gboolean* hexpand_p, gboolean* vexpand_p) compute_expand;
+	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, gint* minimum_size, gint* natural_size) adjust_size_request;
+	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, gint* minimum_size, gint* natural_size, gint* allocated_pos, gint* allocated_size) adjust_size_allocation;
+	extern(C) void function(GtkWidget* widget) style_updated;
+
+	/*< private >*/
 	/* Padding for future expansion */
-	extern(C) void  function() _GtkReserved5;
-	extern(C) void  function() _GtkReserved6;
-	extern(C) void  function() _GtkReserved7;
-}
+	extern(C) void function() _gtk_reserved1;
+	extern(C) void function() _gtk_reserved2;
+	extern(C) void function() _gtk_reserved3;
+	extern(C) void function() _gtk_reserved4;
+	extern(C) void function() _gtk_reserved5;
+	extern(C) void function() _gtk_reserved6;
+	extern(C) void function() _gtk_reserved7;
+	extern(C) void function() _gtk_reserved8;
+};
 
 struct GtkTextIter
 {
@@ -235,31 +252,26 @@ prefix: gtk_main_
 prefix: gtk_
 noprefix: gtk_true
 noprefix: gtk_false
-noprefix: gtk_timeout_
-noprefix: gtk_idle_
-#import: g.OptionEntry
-#structWrap: GOptionEntry* OptionEntry
+import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-#import: g.OptionGroup
-#structWrap: GOptionGroup* OptionGroup
+import: glib.OptionGroup
+import: gdk.Device
 import: gdk.Event
-structWrap: GdkEvent* Event
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gtk.ObjectGtk
-structWrap: GtkObject* ObjectGtk
-#import: gdk.ModifierType
-#structWrap: GdkModifierType* ModifierType
-import:  pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: glib.Str
-import: gtkc.gtk
-import: gthread.Thread
 import: gdk.Threads
+import: gthread.Thread
+import: gtk.Widget
+import:  pango.PgLanguage
+structWrap: GOptionGroup* OptionGroup
+structWrap: GdkDevice* Device
+structWrap: GdkEvent* Event
+structWrap: GtkWidget* Widget
+structWrap: PangoLanguage* PgLanguage
 
 inout: gtk_parse_args argv
 array: gtk_parse_args argv argc
+inout: gtk_init argv
+array: gtk_init argv argc
 inout: gtk_init_check argv
 array: gtk_init_check argv argc
 inout: gtk_init_with_args argv
@@ -270,22 +282,6 @@ out: gtk_get_current_event_state state
 alias: main run
 
 code: start
-
-	/**
-	 * Call this function before using any other GTK+ functions in your GUI applications.
-	 */
-	public static void init(string[] args)
-	{
-		char** argv = (new char*[args.length]).ptr;
-		int argc = 0;
-		foreach (string p; args)
-		{
-			argv[argc++] = cast(char*)p;
-		}
-		
-		init(&argc,&argv);
-	}
-	
 	/**
 	 * This initiates GtkD to supports multi threaded programs.
 	 * read full documantation at http://gtk.org/faq/#AEN482
@@ -301,217 +297,14 @@ code: start
 		gdkThreadsInit();
 		init(args);
 	}
-	
 code: end
 outFile: Main
 
-class: Timeout
-prefix: gtk_timeout_
-strictPrefix: Y
-code: start
-	/** Holds all timeout delegates */
-	bool delegate()[] timeoutListeners;
-	/** our gtk timeout ID */
-	uint timeoutID;
-
-	 
-	/**
-	 * Creates a new timeout cycle.
-	 * Params:
-	 *    	interval = 	the timeout in milieconds
-	 *    	delegate() = 	the delegate to be executed
-	 *    	fireNow = 	When true the delegate will be executed emmidiatly
-	 */
-	this(uint interval, bool delegate() dlg, bool fireNow=false)
-	{
-		timeoutListeners ~= dlg;
-		timeoutID = gtk_timeout_add(interval, cast(GtkFunction)&timeoutCallback, cast(void*)this);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				timeoutListeners.length = 0;
-			}
-		}
-	}
-
-	/** */
-	public void stop()
-	{
-		if ( timeoutID > 0 )
-		{
-			gtk_timeout_remove(timeoutID);
-		}
-		timeoutListeners.length = 0;
-	}
-	
-	/**
-	 * Removes the timeout from gtk
-	 */
-	~this()
-	{
-		stop();
-	}
-	
-	/**
-	 * Adds a new delegate to this timeout cycle
-	 * Params:
-	 *    	dlg = 	
-	 *    	fireNow = 	
-	 */
-	public void addListener(bool delegate() dlg, bool fireNow=false)
-	{
-		timeoutListeners ~= dlg;
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				timeoutListeners.length = timeoutListeners.length - 1;
-			}
-		}
-	}
-
-	/**
-	 * The callback execution from glib
-	 * Params:
-	 *    	timeout = 	
-	 * Returns: 
-	 */
-	extern(C) static bool timeoutCallback(Timeout timeout)
-	{
-		return timeout.callAllListeners();
-	}
-	
-	/**
-	 * Executes all delegates on the execution list
-	 * Returns: 
-	 */
-	private bool callAllListeners()
-	{
-		bool runAgain = false;
-		
-		int i = 0;
-		
-		while ( i<timeoutListeners.length )
-		{
-			if ( !timeoutListeners[i]() )
-			{
-				timeoutListeners = timeoutListeners[0..i] ~ timeoutListeners[i+1..timeoutListeners.length];
-			}
-			else
-			{
-				runAgain = true;
-				++i;
-			}
-		}
-		return runAgain;
-	}
-code: end
-outFile: Timeout
-
-class: Idle
-prefix: gtk_idle_
-strictPrefix: Y
-code: start
-	/** Holds all idle delegates */
-	bool delegate()[] idleListeners;
-	/** our gtk idle ID */
-	uint idleID;
-
-	/**
-	 * Creates a new idle cycle.
-	 * Params:
-	 *    	interval = the idle in milieconds
-	 *    	dlg = the delegate to be executed
-	 *    	fireNow = When true the delegate will be executed emmidiatly
-	 */
-	this(bool delegate() dlg, bool fireNow=false)
-	{
-		idleListeners ~= dlg;
-		idleID = gtk_idle_add(cast(GtkFunction)&idleCallback, cast(void*)this);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				idleListeners.length = 0;
-			}
-		}
-	}
-
-	/** */
-	public void stop()
-	{
-		if ( idleID > 0 )
-		{
-			gtk_idle_remove(idleID);
-		}
-		idleListeners.length = 0;
-	}
-	
-	/**
-	 * Removes the idle from gtk
-	 */
-	~this()
-	{
-		stop();
-	}
-	
-	/**
-	 * Adds a new delegate to this idle cycle
-	 * Params:
-	 *    	dlg = 	
-	 *    	fireNow = 	
-	 */
-	public void addListener(bool delegate() dlg, bool fireNow=false)
-	{
-		idleListeners ~= dlg;
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				idleListeners.length = idleListeners.length - 1;
-			}
-		}
-	}
-
-	/**
-	 * The callback execution from glib
-	 * Params:
-	 *    	idle = 	
-	 * Returns: 
-	 */
-	extern(C) static bool idleCallback(Idle idle)
-	{
-		return idle.callAllListeners();
-	}
-	
-	/**
-	 * Executes all delegates on the execution list
-	 * Returns: 
-	 */
-	private bool callAllListeners()
-	{
-		bool runAgain = false;
-		
-		int i = 0;
-		
-		while ( i<idleListeners.length )
-		{
-			if ( !idleListeners[i]() )
-			{
-				idleListeners = idleListeners[0..i] ~ idleListeners[i+1..idleListeners.length];
-			}
-			else
-			{
-				runAgain = true;
-				++i;
-			}
-		}
-		return runAgain;
-	}
-code: end
-outFile: Idle
-
+file: gtk3-Feature-Test-Macros.html
+class: Version
+prefix: gtk_
+import: glib.Str
+outFile: Version
 
 file: gtk3-Keyboard-Accelerators.html
 struct:  GtkAccelGroup
@@ -520,19 +313,12 @@ prefix: gtk_accel_group_
 prefix: gtk_
 import: glib.Str
 import: gobject.Closure
-structWrap: GClosure* Closure
-#import: gtk.AccelGroupEntry
-#structWrap: GtkAccelGroupEntry* AccelGroupEntry
 import: gobject.ObjectG
-structWrap: GObject* ObjectG
-import: gtk.AccelGroup
-structWrap: GtkAccelGroup* AccelGroup
 import: glib.ListSG
+structWrap: GClosure* Closure
+structWrap: GObject* ObjectG
 structWrap: GSList* ListSG
-#import: gtk.AccelKey
-#structWrap: GtkAccelKey* AccelKey
-#import: gdk.ModifierType
-#structWrap: GdkModifierType* ModifierType
+structWrap: GtkAccelGroup* AccelGroup
 
 array: gtk_accel_group_query Return n_entries
 out: gtk_accelerator_parse accelerator_key
@@ -544,13 +330,9 @@ file: gtk3-Accelerator-Maps.html
 struct:  GtkAccelMap
 class: AccelMap
 prefix: gtk_accel_map_
-prefix: gtk_
 import: glib.Str
-#import: gtk.AccelKey
-#structWrap: GtkAccelKey* AccelKey
 import: glib.ScannerG
 structWrap: GScanner* ScannerG
-import: gtk.AccelMap
 structWrap: GtkAccelMap* AccelMap
 out: gtk_accel_map_lookup_entry key
 outFile: AccelMap
@@ -559,22 +341,20 @@ file: gtk3-Clipboards.html
 struct: GtkClipboard
 class: Clipboard
 prefix: gtk_clipboard_
-prefix: gtk_
 import: glib.Str
-structWrap: GtkClipboard* Clipboard
-import: gdk.Display
-structWrap: GdkDisplay* Display
-import: gtk.TextBuffer
-structWrap: GtkTextBuffer* TextBuffer
 import: gobject.ObjectG
-structWrap: GObject* ObjectG
+import: gdk.Display
 import: gdk.Pixbuf
+import: gtk.TextBuffer
+structWrap: GObject* ObjectG
+structWrap: GdkDisplay* Display
 structWrap: GdkPixbuf* Pixbuf
-#import: gtk.SelectionData
-#structWrap: GtkSelectionData* SelectionData
+structWrap: GtkClipboard* Clipboard
+structWrap: GtkTextBuffer* TextBuffer
 
 array: gtk_clipboard_set_with_data targets n_targets
 array: gtk_clipboard_set_with_owner targets n_targets
+array: gtk_clipboard_set_text text len
 out: gtk_clipboard_wait_for_rich_text format
 array: gtk_clipboard_wait_for_rich_text Return length
 out: gtk_clipboard_wait_for_targets targets
@@ -589,175 +369,48 @@ class: DragAndDrop
 prefix: gtk_drag_
 prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-#import: gtk.TargetEntry
-#structWrap: GtkTargetEntry* TargetEntry
-import: gdk.Window
-structWrap: GdkWindow* Window
+import: cairo.Surface
 import: gdk.DragContext
-structWrap: GdkDragContext* DragContext
-import: gtk.TargetList
-structWrap: GtkTargetList* TargetList
 import: gdk.Event
-structWrap: GdkEvent* Event
-import: gdk.Colormap
-structWrap: GdkColormap* Colormap
-import: gdk.Pixmap
-structWrap: GdkPixmap* Pixmap
-import: gdk.Bitmap
-structWrap: GdkBitmap* Bitmap
 import: gdk.Pixbuf
+import: gdk.Window
+import: gtk.TargetList
+import: gtk.Widget
+structWrap: cairo_surface_t* Surface
+structWrap: GdkDragContext* DragContext
+structWrap: GdkEvent* Event
 structWrap: GdkPixbuf* Pixbuf
-outFile: DragAndDrop
+structWrap: GdkWindow* Window
+structWrap: GtkWidget* Widget
+structWrap: GtkTargetList* TargetList
 
 array: gtk_drag_dest_set targets n_targets
 array: gtk_drag_source_set targets n_targets
-
-file: GtkIconTheme.html
-
-struct: GtkIconTheme
-class: IconTheme
-prefix: gtk_icon_theme_
-noprefix: gtk_icon_info_
-prefix: gtk_
-import: glib.Str
-import: gio.IconIF
-structWrap: GIcon* IconIF
-structWrap: GtkIconTheme* IconTheme
-import: gdk.Screen
-structWrap: GdkScreen* Screen
-import: gtk.IconInfo
-structWrap: GtkIconInfo* IconInfo
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListG
-structWrap: GList* ListG
-
-array: gtk_icon_theme_set_search_path path n_elements
-out: gtk_icon_theme_get_search_path path
-array: gtk_icon_theme_get_search_path path n_elements
-array: gtk_icon_theme_choose_icon icon_names
-outFile: IconTheme
-
-struct: GtkIconInfo
-class: IconInfo
-prefix: gtk_icon_info_
-strictPrefix: Y
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gtk.IconInfo
-structWrap: GtkIconInfo* IconInfo
-import: gtk.IconTheme
-structWrap: GtkIconTheme* IconTheme
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-
-out: gtk_icon_info_get_embedded_rect rectangle
-out: gtk_icon_info_get_attach_points points
-array: gtk_icon_info_get_attach_points points n_points
-
-outFile: IconInfo
+outFile: DragAndDrop
 
 file: gtk3-Stock-Items.html
 struct: GtkStockItem
 class: StockItem
 prefix: gtk_stock_
-prefix: gtk_
 import: glib.Str
-import: gtk.StockItem
-structWrap: GtkStockItem* StockItem
+import: gtkc.paths
+import: gtkc.Loader
 import: glib.ListSG
 structWrap: GSList* ListSG
+structWrap: GtkStockItem* StockItem
+
+array: gtk_stock_add items n_items
+array: gtk_stock_add_static items n_items
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkStockItem !is null )
+		{
+			gtk_stock_item_free(gtkStockItem);
+		}
+	}
+code: end
 outFile: StockItem
-
-file: gtk3-Themeable-Stock-Images.html
-struct: GtkIconSource
-class: IconSource
-prefix: gtk_icon_source_
-#prefix: gtk_
-noprefix: gtk_icon_factory_
-noprefix: gtk_icon_set_
-noprefix: gtk_icon_size_
-
-import: glib.Str
-structWrap: GtkIconSource* IconSource
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-outFile: IconSource
-
-struct: GtkIconFactory
-class: IconFactory
-prefix: gtk_icon_factory_
-strictPrefix: Y
-import: glib.Str
-structWrap: GtkIconFactory* IconFactory
-import: gtk.IconSet
-structWrap: GtkIconSet* IconSet
-outFile: IconFactory
-
-struct: GtkIconSet
-class: IconSet
-prefix: gtk_icon_set_
-strictPrefix: Y
-import: glib.Str
-structWrap: GtkIconSet* IconSet
-import: gtk.IconSource
-structWrap: GtkIconSource* IconSource
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: gtk.Style
-structWrap: GtkStyle* Style
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-out: gtk_icon_set_get_sizes sizes
-array: gtk_icon_set_get_sizes sizes n_sizes
-outFile: IconSet
-
-class: IconSize
-prefix: gtk_icon_size_
-strictPrefix: Y
-import: glib.Str
-import: gtk.Settings
-structWrap: GtkSettings* Settings
-
-out: gtk_icon_size_lookup width
-out: gtk_icon_size_lookup height
-out: gtk_icon_size_lookup_for_settings width
-out: gtk_icon_size_lookup_for_settings height
-
-outFile: IconSize
-
-file: gtk3-Resource-Files.html
-struct: GtkRcStyle
-class: RcStyle
-prefix: gtk_rc_
-prefix: gtk_
-import: glib.ScannerG
-structWrap: GScanner* ScannerG
-import: glib.Str
-import: gtk.Style
-structWrap: GtkStyle* Style
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gtk.Settings
-structWrap: GtkSettings* Settings
-import: gdk.Color
-structWrap: GdkColor* Color
-#import: gtk.StateType
-#structWrap: GtkStateType* StateType
-#import: gtk.PathPriorityType
-#structWrap: GtkPathPriorityType* PathPriorityType
-structWrap: GtkRcStyle* RcStyle
-
-array: gtk_rc_set_default_files filenames
-out: gtk_rc_parse_state state
-out: gtk_rc_parse_priority priority
-
-outFile: RcStyle
 
 file: GtkSettings.html
 struct: GtkSettings
@@ -765,106 +418,77 @@ class: Settings
 prefix: gtk_settings_
 prefix: gtk_
 import: glib.Str
-import: gtk.Settings
-structWrap: GtkSettings* Settings
-import: gdk.Screen
-structWrap: GdkScreen* Screen
 import: gobject.ParamSpec
-structWrap: GParamSpec* ParamSpec
-import: glib.StringG
-structWrap: GString* StringG
 import: gobject.Value
+import: glib.StringG
+import: gdk.Screen
+structWrap: GParamSpec* ParamSpec
 structWrap: GValue* Value
-#import: gtk.SettingsValue
-#structWrap: GtkSettingsValue* SettingsValue
+structWrap: GString* StringG
+structWrap: GdkScreen* Screen
+structWrap: GtkSettings* Settings
+
+out: gtk_settings_set_property_value svalue
 outFile: Settings
 
 file: gtk3-Bindings.html
 struct: GtkBindingSet
 class: BindingSet
 prefix: gtk_binding_set_
+prefix: gtk_binding_
 prefix: gtk_bindings_
-prefix: gtk_
 import: glib.Str
-import: gtk.BindingSet
-structWrap: GtkBindingSet* BindingSet
-import: gtk.ObjectGtk
-structWrap: GtkObject* ObjectGtk
-#import: gdk.EventKey
-#structWrap: GdkEventKey* EventKey
 import: glib.ListSG
+import: gobject.ObjectG
 structWrap: GSList* ListSG
-import: glib.ScannerG
-structWrap: GScanner* ScannerG
-outFile: BindingSet
+structWrap: GObject* ObjectG
+structWrap: GtkBindingSet* BindingSet
+openFile: BindingSet
 
 file: gtk3-Standard-Enumerations.html
-#struct: 
-class: StandardEnumerations
-#prefix: 
-#prefix: gtk_
-outFile: StandardEnumerations
-
-file: GtkStyle.html
-struct: GtkStyle
-class: Style
-prefix: gtk_style_
-prefix: gtk_
-noprefix: gtk_border_
-import: glib.Str
-structWrap: GtkStyle* Style
-import: gdk.Color
-structWrap: GdkColor* Color
-import: gdk.Window
-structWrap: GdkWindow* Window
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
-import: gtk.IconSet
-structWrap: GtkIconSet* IconSet
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: gtk.IconSource
-structWrap: GtkIconSource* IconSource
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gdk.Font
-structWrap: GdkFont* Font
-import: gdk.Drawable
-structWrap: GdkDrawable* Drawable
-import: gobject.Value
-structWrap: GValue* Value
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-nocode: gtk_style_ref
-nocode: gtk_style_unref
-
-array: gtk_draw_polygon points npoints
-array: gtk_paint_polygon points npoints
-
-outFile: Style
-
-struct: GtkBorder
-class: Border
-prefix: gtk_border_
-structWrap: GtkBorder* Border
-strictPrefix: Y
-outFile: Border
+closeFile: BindingSet
 
 file: gtk3-Selections.html
+struct: GtkTargetEntry
+class: TargetEntry
+prefix: gtk_target_entry_
+prefix: gtk_
+noprefix: gtk_target_
+noprefix: gtk_targets_
+noprefix: gtk_target_list_
+noprefix: gtk_selection_
+import: glib.Str
+import: gtkc.paths
+import: gtkc.Loader
+array: gtk_target_table_new_from_list Return n_targets
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTargetEntry !is null )
+		{
+			gtk_target_entry_free(gtkTargetEntry);
+		}
+	}
+code: end
+outFile: TargetEntry
+
 struct: GtkTargetList
 class: TargetList
 prefix: gtk_target_list_
-noprefix: gtk_selection_
-#import: gdk.Atom
-#structWrap: GdkAtom* Atom
+prefix: gtk_targets_
+prefix: gtk_target_
+strictPrefix: Y
 import: gtk.TextBuffer
+import: gtk.TargetEntry
 structWrap: GtkTextBuffer* TextBuffer
+structWrap: GtkTargetEntry* TargetEntry
 structWrap: GtkTargetList* TargetList
 
 array: gtk_target_list_new targets ntargets
 array: gtk_target_list_add_table targets ntargets
 out: gtk_target_list_find info
-array: gtk_target_table_free targets ntargets
+array: gtk_target_table_free targets n_targets
 array: gtk_target_table_new_from_list Return n_targets
 array: gtk_targets_include_image targets n_targets
 array: gtk_targets_include_text targets n_targets
@@ -873,111 +497,42 @@ array: gtk_targets_include_rich_text targets n_targets
 
 outFile: TargetList
 
-#struct: 
-class: Selections
+struct: GtkSelectionData
+class: SelectionData
 prefix: gtk_selection_
 strictPrefix: Y
 import: glib.Str
 import: gdk.Display
-structWrap: GdkDisplay* Display
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gdk.Display
-structWrap: GdkDisplay* Display
-#import: gtk.SelectionData
-#structWrap: GtkSelectionData* SelectionData
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
 import: gtk.TextBuffer
+import: gtk.Widget
+structWrap: GdkDisplay* Display
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkSelectionData* SelectionData
 structWrap: GtkTextBuffer* TextBuffer
+structWrap: GtkWidget* Widget
 
 array: gtk_selection_add_targets targets ntargets
 array: gtk_selection_data_set data length
+array: gtk_selection_data_set_text str len
 array: gtk_selection_data_set_uris uris
 out: gtk_selection_data_get_targets targets
 array: gtk_selection_data_get_targets targets n_atoms
+array: gtk_selection_data_get_data_with_length Return length
 
-outFile: Selections
+outFile: SelectionsData
 
-file: gtk3-Feature-Test-Macros.html
-#struct: 
-class: Version
-prefix: gtk_
-import: glib.Str
-import: gtkc.Loader
-import: gtkc.paths
-
-code: start
-	/*
-	 * The major version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 2.)
-	 * This variable is in the library, so represents the GTK+ library you have linked against. 
-	 */
-	public static int major()
-	{
-		uint* vers;
-		
-		Linker.link(vers, "gtk_major_version", LIBRARY.GTK);
-		
-		if ( vers is null )
-		{
-			return -1;
-		}
-		else
-		{
-			return *vers;
-		}
-	}
-
-	/*
-	 * The minor version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 12.) 
-	 * This variable is in the library, so represents the GTK+ library you have linked against. 
-	 */
-	public static int minor()
-	{
-		uint* vers;
-		
-		Linker.link(vers, "gtk_minor_version", LIBRARY.GTK);
-		
-		if ( vers is null )
-		{
-			return -1;
-		}
-		else
-		{
-			return *vers;
-		}
-	}
-
-	/*
-	 * The micro version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 4.) 
-	 * This variable is in the library, so represents the GTK+ library you have linked against. 
-	 */
-	public static int micro()
-	{
-		uint* vers;
-		
-		Linker.link(vers, "gtk_micro_version", LIBRARY.GTK);
-		
-		if ( vers is null )
-		{
-			return -1;
-		}
-		else
-		{
-			return *vers;
-		}
-	}
-code: end
-outFile: Version
 
 file: gtk3-Testing.html
 class: Testing
 prefix: gtk_test_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.SpinButton
+import: gtk.Widget
 structWrap: GtkSpinButton* SpinButton
+structWrap: GtkWidget* Widget
+
+array: gtk_test_list_all_types Return n_types
 
 code: start
 	/**
@@ -1013,12 +568,471 @@ prefix: gtk_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: gtk.Window
-structWrap: GtkWindow* Window
-import: gdk.Screen
-structWrap: GdkScreen* Screen
 import: gio.MountOperation : GioMountOperation = MountOperation
+import: gdk.Screen
+import: gtk.Window
+structWrap: GdkScreen* Screen
+structWrap: GtkWindow* Window
 outFile: MountOperation
+
+###########################################################
+### Theming in GTK+ #######################################
+###########################################################
+
+file: GtkStyleContext.html
+struct: GtkStyleContext
+class: StyleContext
+prefix: gtk_mount_operation_
+prefix: gtk_
+noprefix: gtk_border_
+import: std.stdarg
+import: glib.Str
+import: cairo.Context
+import: gobject.Value
+import: glib.ListG
+import: gdk.Pixbuf
+import: gdk.RGBA
+import: gdk.Screen
+import: gdk.Window
+import: gtk.IconSet
+import: gtk.IconSource
+import: gtk.StyleProviderIF
+import: gtk.WidgetPath
+import: pango.PgFontDescription
+import: pango.PgLayout
+structWrap: cairo_t* Context
+structWrap: GValue* Value
+structWrap: GList* ListG
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkRGBA* RGBA
+structWrap: GdkScreen* Screen
+structWrap: GdkWindow* Window
+structWrap: GtkIconSet* IconSet
+structWrap: GtkIconSource* IconSource
+structWrap: GtkStyleProvider* StyleProviderIF
+structWrap: GtkWidgetPath* WidgetPath
+structWrap: PangoFontDescription* PgFontDescription
+structWrap: PangoLayout* PgLayout
+
+out: gtk_style_context_get_border border
+out: gtk_style_context_get_padding padding
+out: gtk_style_context_get_margin margin
+out: gtk_style_context_state_is_running progress
+
+outFile: StyleContext
+
+struct: GtkBorder
+class: Border
+extend: GBoxed
+prefix: gtk_border_
+strictPrefix: Y
+import: gtkc.paths
+import: gtkc.Loader
+structWrap: GtkBorder* Border
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkBorder !is null )
+		{
+			gtk_border_free(gtkBorder);
+		}
+	}
+code: end
+outFile: Border
+
+file: GtkCssProvider.html
+struct: CssProvider
+class: CssProvider
+implements: StyleProviderIF
+prefix: gtk_css_provider_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.File
+import: gtk.CssProvider
+structWrap: GFile* File
+structWrap: GtkCssProvider* CssProvider
+
+# imports for StyleProvider Interface
+import: gtk.StyleProviderT
+import: gtk.StyleProviderIF
+
+code: start
+	// add the StyleProvider capabilities
+	mixin StyleProviderT!(GtkCssProvider);
+code: end
+outFile: CssProvider
+
+file: GtkStyleProvider.html
+struct: GtkStyleProvider
+class: StyleProviderT
+template: TStruct
+prefix: gtk_style_provider_
+import: gobject.ParamSpec
+import: gobject.Value
+import: gtk.IconFactory
+import: gtk.StyleProperties
+import: gtk.WidgetPath
+structWrap: GParamSpec* ParamSpec
+structWrap: GValue* Value
+structWrap: GtkIconFactory* IconFactory
+structWrap: GtkStyleProperties* StyleProperties
+structWrap: GtkWidgetPath* WidgetPath
+interface: StyleProviderIF
+outFile: StyleProviderT
+
+file: gtk3-GtkStyleProperties.html
+struct: GtkStyleProperties
+class: StyleProperties
+extend: GObject
+prefix: gtk_style_properties_
+import: std.stdarg
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gobject.ParamSpec
+import: gobject.Value
+import: gtk.SymbolicColor
+structWrap: GParamSpec* ParamSpec
+structWrap: GValue* Value
+structWrap: GtkSymbolicColor* SymbolicColor
+structWrap: GtkStyleProperties* StyleProperties
+out: gtk_style_properties_lookup_property parse_func
+out: gtk_style_properties_lookup_property pspec
+outFile: StyleProperties
+
+file: GtkThemingEngine.html
+struct: GtkThemingEngine
+class: ThemingEngine
+prefix: gtk_theming_engine_
+import: std.stdarg
+import: glib.Str
+import: gobject.ParamSpec
+import: gobject.Value
+import: gdk.RGBA
+import: gdk.Screen
+import: gtk.WidgetPath
+import: pango.PgFontDescription
+structWrap: GParamSpec* ParamSpec
+structWrap: GValue* Value
+structWrap: GdkRGBA* RGBA
+structWrap: GdkScreen* Screen
+structWrap: GtkThemingEngine* ThemingEngine
+structWrap: GtkWidgetPath* WidgetPath
+structWrap: PangoFontDescription* PgFontDescription
+
+out: gtk_theming_engine_get_border border
+out: gtk_theming_engine_get_padding padding
+out: gtk_theming_engine_get_margin margin
+out: gtk_theming_engine_has_region flags
+out: gtk_theming_engine_state_is_running progress
+outFile: ThemingEngine
+
+file: gtk3-GtkWidgetPath.html
+struct: GtkWidgetPath
+class: WidgetPath
+prefix: gtk_widget_path_
+import: glib.Str
+import: glib.ListSG
+structWrap: GSList* ListSG
+structWrap: GtkWidgetPath* WidgetPath
+
+out: gtk_widget_path_iter_has_qregion flags
+out: gtk_widget_path_iter_has_region flags
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkWidgetPath !is null )
+		{
+			gtk_widget_path_free(gtkWidgetPath);
+		}
+	}
+code: end
+outFile: WidgetPath
+
+file: gtk3-GtkSymbolicColor.html
+struct: GtkSymbolicColor
+class: SymbolicColor
+prefix: gtk_symbolic_color_
+import: glib.Str
+import: gdk.RGBA
+import: gtk.StyleProperties
+structWrap: GdkRGBA* RGBA
+structWrap: GtkStyleProperties* StyleProperties
+structWrap: GtkSymbolicColor* SymbolicColor
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkSymbolicColor !is null )
+		{
+			gtk_symbolic_color_unref(gtkSymbolicColor);
+		}
+	}
+code: end
+outFile: SymbolicColor
+
+file: gtk3-GtkGradient.html
+struct: GtkGradient
+class: Gradient
+prefix: gtk_gradient_
+import: cairo.Pattern
+import: gtk.StyleProperties
+import: gtk.SymbolicColor
+structWrap: cairo_pattern_t* Pattern
+structWrap: GtkGradient* Gradient
+structWrap: GtkStyleProperties* StyleProperties
+structWrap: GtkSymbolicColor* SymbolicColor
+
+out: gtk_gradient_resolve resolved_gradient
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkGradient !is null )
+		{
+			gtk_gradient_unref(gtkGradient);
+		}
+	}
+code: end
+outFile: Gradient
+
+file: GtkIconTheme.html
+struct: GtkIconTheme
+class: IconTheme
+prefix: gtk_icon_theme_
+noprefix: gtk_icon_info_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: gio.IconIF
+import: gdk.Pixbuf
+import: gdk.Screen
+import: gtk.IconInfo
+structWrap: GList* ListG
+structWrap: GIcon* IconIF
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkScreen* Screen
+structWrap: GtkIconInfo* IconInfo
+structWrap: GtkIconTheme* IconTheme
+
+array: gtk_icon_theme_set_search_path path n_elements
+out: gtk_icon_theme_get_search_path path
+array: gtk_icon_theme_get_search_path path n_elements
+array: gtk_icon_theme_choose_icon icon_names
+outFile: IconTheme
+
+struct: GtkIconInfo
+class: IconInfo
+prefix: gtk_icon_info_
+strictPrefix: Y
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gdk.Pixbuf
+import: gdk.RGBA
+import: gtk.IconTheme
+import: gtk.Style
+import: gtk.StyleContext
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkRGBA* RGBA
+structWrap: GtkIconInfo* IconInfo
+structWrap: GtkIconTheme* IconTheme
+structWrap: GtkStyle* Style
+structWrap: GtkStyleContext* StyleContext
+
+out: gtk_icon_info_load_symbolic was_symbolic
+out: gtk_icon_info_load_symbolic_for_style was_symbolic
+out: gtk_icon_info_get_embedded_rect rectangle
+out: gtk_icon_info_get_attach_points points
+array: gtk_icon_info_get_attach_points points n_points
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconInfo !is null )
+		{
+			gtk_icon_info_free(gtkIconInfo);
+		}
+	}
+code: end
+outFile: IconInfo
+
+file: gtk3-Themeable-Stock-Images.html
+struct: GtkIconSource
+class: IconSource
+prefix: gtk_icon_source_
+noprefix: gtk_icon_factory_
+noprefix: gtk_icon_set_
+noprefix: gtk_icon_size_
+import: glib.Str
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkIconSource* IconSource
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconSource !is null )
+		{
+			gtk_icon_source_free(gtkIconSource);
+		}
+	}
+code: end
+outFile: IconSource
+
+struct: GtkIconFactory
+class: IconFactory
+implements: BuildableIF
+prefix: gtk_icon_factory_
+strictPrefix: Y
+import: glib.Str
+import: gtk.IconSet
+structWrap: GtkIconSet* IconSet
+
+# imports for Icon Interface
+import: gtk.BuildableT
+import: gtk.BuildableIF
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkIconFactory);
+code: end
+outFile: IconFactory
+
+struct: GtkIconSet
+class: IconSet
+extend: GBoxed
+prefix: gtk_icon_set_
+strictPrefix: Y
+import: glib.Str
+import: gdk.Pixbuf
+import: gtk.IconSource
+import: gtk.Style
+import: gtk.StyleContext
+import: gtk.Widget
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkIconSet* IconSet
+structWrap: GtkIconSource* IconSource
+structWrap: GtkStyle* Style
+structWrap: GtkStyleContext* StyleContext
+structWrap: GtkWidget* Widget
+
+out: gtk_icon_set_get_sizes sizes
+array: gtk_icon_set_get_sizes sizes n_sizes
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconSet !is null )
+		{
+			gtk_icon_set_unref(gtkIconSet);
+		}
+	}
+code: end
+outFile: IconSet
+
+class: IconSize
+prefix: gtk_icon_size_
+strictPrefix: Y
+import: glib.Str
+import: gtk.Settings
+structWrap: GtkSettings* Settings
+
+out: gtk_icon_size_lookup width
+out: gtk_icon_size_lookup height
+out: gtk_icon_size_lookup_for_settings width
+out: gtk_icon_size_lookup_for_settings height
+outFile: IconSize
+
+file: GtkNumerableIcon.html
+struct: GtkNumerableIcon
+class: NumerableIcon
+extend: GioEmblemedIcon
+implements: IconIF
+prefix: gtk_numerable_icon_
+import: glib.Str
+import: gio.EmblemedIcon : GioEmblemedIcon = EmblemedIcon
+import: gio.Icon
+import: gio.IconIF
+import: gtk.StyleContext
+structWrap: GIcon* IconIF
+structWrap: GtkStyleContext* StyleContext
+
+# imports for Icon Interface
+import: gio.IconT
+#import: gio.IconIF
+
+code: start
+	// add the Icon capabilities
+	mixin IconT!(GtkNumerableIcon);
+code: end
+outFile: NumerableIcon
+
+file: gtk3-Resource-Files.html
+struct: GtkRcStyle
+class: RcStyle
+prefix: gtk_rc_
+import: glib.Str
+import: glib.ScannerG
+import: gdk.Color
+import: gtk.Settings
+import: gtk.Style
+import: gtk.Widget
+structWrap: GScanner* ScannerG
+structWrap: GdkColor* Color
+structWrap: GtkRcStyle* RcStyle
+structWrap: GtkSettings* Settings
+structWrap: GtkStyle* Style
+structWrap: GtkWidget* Widget
+
+array: gtk_rc_set_default_files filenames
+out: gtk_rc_parse_state state
+out: gtk_rc_parse_priority priority
+
+code: start
+	deprecated:
+code: end
+outFile: RcStyle
+
+file: GtkStyle.html
+struct: GtkStyle
+class: Style
+prefix: gtk_style_
+prefix: gtk_
+import: std.stdarg
+import: glib.Str
+import: cairo.Context
+import: gobject.Value
+import: gdk.Color
+import: gdk.Pixbuf
+import: gdk.Window
+import: gtk.IconSet
+import: gtk.IconSource
+import: gtk.Widget
+import: pango.PgLayout
+structWrap: cairo_t* Context
+structWrap: GValue* Value
+structWrap: GdkColor* Color
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkWindow* Window
+structWrap: GtkIconSet* IconSet
+structWrap: GtkIconSource* IconSource
+structWrap: GtkStyle* Style
+structWrap: GtkWidget* Widget
+structWrap: PangoLayout* PgLayout
+
+array: gtk_draw_polygon points npoints
+array: gtk_paint_polygon points npoints
+inout: gtk_draw_insertion_cursor location
+
+code: start
+	deprecated:
+code: end
+outFile: Style
 
 ###########################################################
 ### Windows ###############################################
@@ -1617,8 +1631,6 @@ file: GtkOffscreenWindow.html
 struct: GtkOffscreenWindow
 class: OffscreenWindow
 prefix: gtk_offscreen_window_
-import: gdk.Pixmap
-structWrap: GdkPixmap* Pixmap
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Widget
@@ -1656,24 +1668,12 @@ import: gio.IconIF
 structWrap: GIcon* IconIF
 import: gtk.IconSet
 structWrap: GtkIconSet* IconSet
-import: gdk.ImageGdk
-structWrap: GdkImage* ImageGdk
-import: gdk.Bitmap
-structWrap: GdkBitmap* Bitmap
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: gdk.Pixmap
-structWrap: GdkPixmap* Pixmap
 import: gdkpixbuf.PixbufAnimation
 structWrap: GdkPixbufAnimation* PixbufAnimation
 import: gtk.IconSet
 structWrap: GtkIconSet* IconSet
-import: gdk.ImageGdk
-structWrap: GdkImage* ImageGdk
-import: gdk.Bitmap
-structWrap: GdkBitmap* Bitmap
-import: gdk.Pixmap
-structWrap: GdkPixmap* Pixmap
 
 out: gtk_image_get_icon_set icon_set
 out: gtk_image_get_icon_set size
@@ -2710,8 +2710,6 @@ import: gtk.TextMark
 structWrap: GtkTextMark* TextMark
 import: gtk.Clipboard
 structWrap: GtkClipboard* Clipboard
-import: gdk.Bitmap
-structWrap: GdkBitmap* Bitmap
 import: gtk.TargetList
 structWrap: GtkTargetList* TargetList
 import: std.stdarg
@@ -4186,8 +4184,6 @@ structWrap: GtkTooltip* Tooltip
 #structWrap: GtkTargetEntry* TargetEntry
 #import: gtk.TreeViewDropPosition
 #structWrap: GtkTreeViewDropPosition* TreeViewDropPosition
-import: gdk.Pixmap
-structWrap: GdkPixmap* Pixmap
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gtk.Entry
@@ -4477,8 +4473,6 @@ structWrap: GList* ListG
 #structWrap: GtkTargetEntry* TargetEntry
 #import: gtk.IconViewDropPosition
 #structWrap: GtkIconViewDropPosition* IconViewDropPosition
-import: gdk.Pixmap
-structWrap: GdkPixmap* Pixmap
 
 #imports for CellLayout Interface.
 import: gtk.CellLayoutIF
@@ -5837,8 +5831,6 @@ prefix: gtk_
 import: glib.Str
 import: gtk.SizeGroup
 structWrap: GtkSizeGroup* SizeGroup
-import: gtk.Tooltips
-structWrap: GtkTooltips* Tooltips
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
@@ -5993,8 +5985,6 @@ import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-import: gtk.Tooltips
-structWrap: GtkTooltips* Tooltips
 import: gtk.Menu
 
 
@@ -6744,8 +6734,6 @@ class: FontSelection
 prefix: gtk_font_selection_
 prefix: gtk_
 import: glib.Str
-import: gdk.Font
-structWrap: GdkFont* Font
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: pango.PgFontFace
@@ -6760,8 +6748,6 @@ class: FontSelectionDialog
 prefix: gtk_font_selection_dialog_
 prefix: gtk_
 import: glib.Str
-import: gdk.Font
-structWrap: GdkFont* Font
 import: gtk.FontSelection
 import: gtk.Widget
 structWrap: GtkWidget* Widget
@@ -7546,8 +7532,6 @@ struct: GtkAdjustment
 class: Adjustment
 prefix: gtk_adjustment_
 prefix: gtk_
-import: gtk.ObjectGtk
-structWrap: GtkObject* ObjectGtk
 outFile: Adjustment
 
 file: GtkArrow.html
@@ -7977,16 +7961,10 @@ import: gdk.Event
 structWrap: GdkEvent* Event
 import: gdk.Window
 structWrap: GdkWindow* Window
-import: gdk.Colormap
-structWrap: GdkColormap* Colormap
 import: gdk.Visual
 structWrap: GdkVisual* Visual
 import: gtk.Style
 structWrap: GtkStyle* Style
-import: gdk.Bitmap
-structWrap: GdkBitmap* Bitmap
-import: gdk.Pixmap
-structWrap: GdkPixmap* Pixmap
 import: gtk.RcStyle
 structWrap: GtkRcStyle* RcStyle
 import: gdk.Color
@@ -7999,8 +7977,6 @@ structWrap: GtkAdjustment* Adjustment
 #structWrap: GtkWidgetClass* WidgetClass
 import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
-import: gdk.Region
-structWrap: GdkRegion* Region
 import: gobject.Value
 structWrap: GValue* Value
 import: gtk.Settings
@@ -8020,8 +7996,6 @@ import: pango.PgContext
 structWrap: PangoContext* PgContext
 import: pango.PgFontDescription
 structWrap: PangoFontDescription* PgFontDescription
-import: gdk.Drawable
-import: gtk.Tooltips
 import: gobject.Type
 import: std.conv
 
@@ -8111,17 +8085,6 @@ code: start
 		allo.height = *pt;
 
 		return allo;
-	}
-
-	/**
-	 * Gets the drawable for this widget
-	 * Returns:
-	 * 		The drawable for this widget
-	 * Deprecated: use getWindow().
-	 */
-	deprecated Drawable getDrawable()
-	{
-		return getWindow();
 	}
 
 	/**
@@ -8220,19 +8183,6 @@ code: start
 	}
 	
 	
-	/**
-	 * Sets this widget tooltip
-	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
-	 * Params:
-	 *  tipText = the tooltip
-	 *  tipPrivate = a private text
-	 */
-	void setTooltip(string tipText, string tipPrivate)
-	{
-		Tooltips tt = new Tooltips();
-		tt.setTip(this, tipText, tipPrivate);
-	}
-
 	/** */
 	public bool onEvent(GdkEvent* event)
 	{

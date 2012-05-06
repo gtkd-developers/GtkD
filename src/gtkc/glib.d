@@ -957,6 +957,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_win32_getlocale, \"g_win32_getlocale\", LIBRARY.GLIB);
 	Linker.link(g_win32_get_package_installation_directory_of_module, \"g_win32_get_package_installation_directory_of_module\", LIBRARY.GLIB);
 	Linker.link(g_win32_get_windows_version, \"g_win32_get_windows_version\", LIBRARY.GLIB);
+	Linker.link(g_win32_locale_filename_from_utf8, \"g_win32_locale_filename_from_utf8\", LIBRARY.GLIB);
 
 	// glib.MemorySlice
 
@@ -2450,6 +2451,7 @@ mixin( gshared ~"extern(C)
 	gchar* function() c_g_win32_getlocale;
 	gchar* function(gpointer hmodule) c_g_win32_get_package_installation_directory_of_module;
 	guint function() c_g_win32_get_windows_version;
+	gchar* function(gchar* utf8filename) c_g_win32_locale_filename_from_utf8;
 	
 	// glib.MemorySlice
 	
@@ -3940,6 +3942,7 @@ alias c_g_win32_error_message  g_win32_error_message;
 alias c_g_win32_getlocale  g_win32_getlocale;
 alias c_g_win32_get_package_installation_directory_of_module  g_win32_get_package_installation_directory_of_module;
 alias c_g_win32_get_windows_version  g_win32_get_windows_version;
+alias c_g_win32_locale_filename_from_utf8  g_win32_locale_filename_from_utf8;
 
 // glib.MemorySlice
 

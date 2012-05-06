@@ -56,12 +56,10 @@
  * 	- gdk.Rectangle
  * 	- gdk.Window
  * 	- gtk.Tooltip
- * 	- gdk.Pixmap
  * 	- gtk.TreeIter
  * 	- gtk.Entry
  * structWrap:
  * 	- GList* -> ListG
- * 	- GdkPixmap* -> Pixmap
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
@@ -100,7 +98,6 @@ private import gtk.TreePath;
 private import gdk.Rectangle;
 private import gdk.Window;
 private import gtk.Tooltip;
-private import gdk.Pixmap;
 private import gtk.TreeIter;
 private import gtk.Entry;
 

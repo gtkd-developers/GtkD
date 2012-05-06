@@ -45,25 +45,21 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
- * 	- gdk.Window
+ * 	- cairo.Surface
  * 	- gdk.DragContext
- * 	- gtk.TargetList
  * 	- gdk.Event
- * 	- gdk.Colormap
- * 	- gdk.Pixmap
- * 	- gdk.Bitmap
  * 	- gdk.Pixbuf
+ * 	- gdk.Window
+ * 	- gtk.TargetList
+ * 	- gtk.Widget
  * structWrap:
- * 	- GdkBitmap* -> Bitmap
- * 	- GdkColormap* -> Colormap
  * 	- GdkDragContext* -> DragContext
  * 	- GdkEvent* -> Event
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkPixmap* -> Pixmap
  * 	- GdkWindow* -> Window
  * 	- GtkTargetList* -> TargetList
  * 	- GtkWidget* -> Widget
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -78,15 +74,13 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Widget;
-private import gdk.Window;
+private import cairo.Surface;
 private import gdk.DragContext;
-private import gtk.TargetList;
 private import gdk.Event;
-private import gdk.Colormap;
-private import gdk.Pixmap;
-private import gdk.Bitmap;
 private import gdk.Pixbuf;
+private import gdk.Window;
+private import gtk.TargetList;
+private import gtk.Widget;
 
 
 
@@ -164,13 +158,12 @@ public class DragAndDrop
 	 * indicating the drop types that this widget will accept, or NULL.
 	 * Later you can access the list with gtk_drag_dest_get_target_list()
 	 * and gtk_drag_dest_find_target(). [allow-none][array length=n_targets]
-	 * nTargets = the number of entries in targets
 	 * actions = a bitmask of possible actions for a drop onto this widget.
 	 */
-	public static void destSet(Widget widget, GtkDestDefaults flags, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
+	public static void destSet(Widget widget, GtkDestDefaults flags, GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_drag_dest_set (GtkWidget *widget,  GtkDestDefaults flags,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_drag_dest_set((widget is null) ? null : widget.getWidgetStruct(), flags, targets, nTargets, actions);
+		gtk_drag_dest_set((widget is null) ? null : widget.getWidgetStruct(), flags, targets.ptr, cast(int) targets.length, actions);
 	}
 	
 	/**
@@ -500,10 +493,10 @@ public class DragAndDrop
 	 * Params:
 	 * surface = the surface to use as icon
 	 */
-	public void setIconSurface(cairo_surface_t* surface)
+	public void setIconSurface(Surface surface)
 	{
 		// void gtk_drag_set_icon_surface (GdkDragContext *context,  cairo_surface_t *surface);
-		gtk_drag_set_icon_surface(gdkDragContext, surface);
+		gtk_drag_set_icon_surface(gdkDragContext, (surface is null) ? null : surface.getSurfaceStruct());
 	}
 	
 	/**
@@ -560,13 +553,12 @@ public class DragAndDrop
 	 * startButtonMask = the bitmask of buttons that can start the drag
 	 * targets = the table of targets that the drag will support,
 	 * may be NULL. [allow-none][array length=n_targets]
-	 * nTargets = the number of items in targets
 	 * actions = the bitmask of possible actions for a drag from this widget
 	 */
-	public static void sourceSet(Widget widget, GdkModifierType startButtonMask, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
+	public static void sourceSet(Widget widget, GdkModifierType startButtonMask, GtkTargetEntry[] targets, GdkDragAction actions)
 	{
 		// void gtk_drag_source_set (GtkWidget *widget,  GdkModifierType start_button_mask,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_drag_source_set((widget is null) ? null : widget.getWidgetStruct(), startButtonMask, targets, nTargets, actions);
+		gtk_drag_source_set((widget is null) ? null : widget.getWidgetStruct(), startButtonMask, targets.ptr, cast(int) targets.length, actions);
 	}
 	
 	/**

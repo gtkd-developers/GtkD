@@ -31,10 +31,10 @@
  * ctorStrct=
  * clss    = IconSet
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GBoxed
  * implements:
  * prefixes:
  * 	- gtk_icon_set_
@@ -44,15 +44,17 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.IconSource
  * 	- gdk.Pixbuf
+ * 	- gtk.IconSource
  * 	- gtk.Style
+ * 	- gtk.StyleContext
  * 	- gtk.Widget
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkIconSet* -> IconSet
  * 	- GtkIconSource* -> IconSource
  * 	- GtkStyle* -> Style
+ * 	- GtkStyleContext* -> StyleContext
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -68,13 +70,15 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.IconSource;
 private import gdk.Pixbuf;
+private import gtk.IconSource;
 private import gtk.Style;
+private import gtk.StyleContext;
 private import gtk.Widget;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -119,7 +123,7 @@ private import gtk.Widget;
  * This attribute is optional.
  * $(DDOC_COMMENT example)
  */
-public class IconSet
+public class IconSet : Boxed
 {
 	
 	/** the main Gtk struct */
@@ -149,6 +153,14 @@ public class IconSet
 			return;
 		}
 		this.gtkIconSet = gtkIconSet;
+	}
+	
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconSet !is null )
+		{
+			gtk_icon_set_unref(gtkIconSet);
+		}
 	}
 	
 	/**
@@ -305,10 +317,10 @@ public class IconSet
 	 * means render at the size of the source and don't scale. [type int]
 	 * Returns: a GdkPixbuf to be displayed. [transfer full] Since 3.0
 	 */
-	public Pixbuf renderIconPixbuf(GtkStyleContext* context, GtkIconSize size)
+	public Pixbuf renderIconPixbuf(StyleContext context, GtkIconSize size)
 	{
 		// GdkPixbuf * gtk_icon_set_render_icon_pixbuf (GtkIconSet *icon_set,  GtkStyleContext *context,  GtkIconSize size);
-		auto p = gtk_icon_set_render_icon_pixbuf(gtkIconSet, context, size);
+		auto p = gtk_icon_set_render_icon_pixbuf(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size);
 		if(p is null)
 		{
 			return null;

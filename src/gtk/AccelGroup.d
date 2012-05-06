@@ -47,7 +47,6 @@
  * 	- glib.Str
  * 	- gobject.Closure
  * 	- gobject.ObjectG
- * 	- gtk.AccelGroup
  * 	- glib.ListSG
  * structWrap:
  * 	- GClosure* -> Closure
@@ -72,7 +71,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gobject.Closure;
 private import gobject.ObjectG;
-private import gtk.AccelGroup;
 private import glib.ListSG;
 
 

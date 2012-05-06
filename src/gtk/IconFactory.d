@@ -31,11 +31,12 @@
  * ctorStrct=
  * clss    = IconFactory
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_icon_factory_
  * omit structs:
@@ -45,8 +46,9 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.IconSet
+ * 	- gtk.BuildableT
+ * 	- gtk.BuildableIF
  * structWrap:
- * 	- GtkIconFactory* -> IconFactory
  * 	- GtkIconSet* -> IconSet
  * module aliases:
  * local aliases:
@@ -63,6 +65,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gtk.IconSet;
+private import gtk.BuildableT;
+private import gtk.BuildableIF;
 
 
 
@@ -111,7 +115,7 @@ private import gobject.ObjectG;
  * This attribute is optional.
  * $(DDOC_COMMENT example)
  */
-public class IconFactory : ObjectG
+public class IconFactory : ObjectG, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -156,6 +160,9 @@ public class IconFactory : ObjectG
 		super.setStruct(obj);
 		gtkIconFactory = cast(GtkIconFactory*)obj;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkIconFactory);
 	
 	/**
 	 */

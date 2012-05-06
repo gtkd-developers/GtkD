@@ -46,11 +46,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Font
  * 	- gtk.FontSelection
  * 	- gtk.Widget
  * structWrap:
- * 	- GdkFont* -> Font
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -66,7 +64,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gdk.Font;
 private import gtk.FontSelection;
 private import gtk.Widget;
 

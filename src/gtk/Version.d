@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Version
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,8 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtkc.Loader
- * 	- gtkc.paths
  * structWrap:
  * module aliases:
  * local aliases:
@@ -61,8 +59,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtkc.Loader;
-private import gtkc.paths;
 
 
 
@@ -75,66 +71,6 @@ private import gtkc.paths;
  */
 public class Version
 {
-	
-	/*
-	 * The major version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 2.)
-	 * This variable is in the library, so represents the GTK+ library you have linked against.
-	 */
-	public static int major()
-	{
-		uint* vers;
-		
-		Linker.link(vers, "gtk_major_version", LIBRARY.GTK);
-		
-		if ( vers is null )
-		{
-			return -1;
-		}
-		else
-		{
-			return *vers;
-		}
-	}
-	
-	/*
-	 * The minor version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 12.)
-	 * This variable is in the library, so represents the GTK+ library you have linked against.
-	 */
-	public static int minor()
-	{
-		uint* vers;
-		
-		Linker.link(vers, "gtk_minor_version", LIBRARY.GTK);
-		
-		if ( vers is null )
-		{
-			return -1;
-		}
-		else
-		{
-			return *vers;
-		}
-	}
-	
-	/*
-	 * The micro version number of the GTK+ library. (e.g. in GTK+ version 2.12.4 this is 4.)
-	 * This variable is in the library, so represents the GTK+ library you have linked against.
-	 */
-	public static int micro()
-	{
-		uint* vers;
-		
-		Linker.link(vers, "gtk_micro_version", LIBRARY.GTK);
-		
-		if ( vers is null )
-		{
-			return -1;
-		}
-		else
-		{
-			return *vers;
-		}
-	}
 	
 	/**
 	 */

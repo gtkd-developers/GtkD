@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Style
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,37 +41,31 @@
  * 	- gtk_
  * omit structs:
  * omit prefixes:
- * 	- gtk_border_
  * omit code:
- * 	- gtk_style_ref
- * 	- gtk_style_unref
  * omit signals:
  * imports:
+ * 	- std.stdarg
  * 	- glib.Str
+ * 	- cairo.Context
+ * 	- gobject.Value
  * 	- gdk.Color
- * 	- gdk.Window
- * 	- gdk.Rectangle
- * 	- gtk.IconSet
  * 	- gdk.Pixbuf
+ * 	- gdk.Window
+ * 	- gtk.IconSet
  * 	- gtk.IconSource
  * 	- gtk.Widget
- * 	- gdk.Font
- * 	- gdk.Drawable
- * 	- gobject.Value
  * 	- pango.PgLayout
  * structWrap:
  * 	- GValue* -> Value
  * 	- GdkColor* -> Color
- * 	- GdkDrawable* -> Drawable
- * 	- GdkFont* -> Font
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
  * 	- GtkIconSet* -> IconSet
  * 	- GtkIconSource* -> IconSource
  * 	- GtkStyle* -> Style
  * 	- GtkWidget* -> Widget
  * 	- PangoLayout* -> PgLayout
+ * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
  * overrides:
@@ -88,18 +82,28 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import cairo.Context;
+private import gobject.Value;
 private import gdk.Color;
-private import gdk.Window;
-private import gdk.Rectangle;
-private import gtk.IconSet;
 private import gdk.Pixbuf;
+private import gdk.Window;
+private import gtk.IconSet;
 private import gtk.IconSource;
 private import gtk.Widget;
-private import gdk.Font;
-private import gdk.Drawable;
-private import gobject.Value;
 private import pango.PgLayout;
 
+
+version(Tango) {
+	private import tango.core.Vararg;
+
+	version = druntime;
+} else version(D_Version2) {
+	private import core.vararg;
+
+	version = druntime;
+} else {
+	private import std.stdarg;
+}
 
 
 private import gobject.ObjectG;
@@ -164,6 +168,8 @@ public class Style : ObjectG
 		super.setStruct(obj);
 		gtkStyle = cast(GtkStyle*)obj;
 	}
+	
+	deprecated:
 	
 	/**
 	 */
@@ -331,10 +337,10 @@ public class Style : ObjectG
 	 * Warning
 	 * gtk_style_apply_default_background has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead
 	 */
-	public void applyDefaultBackground(cairo_t* cr, Window window, GtkStateType stateType, int x, int y, int width, int height)
+	public void applyDefaultBackground(Context cr, Window window, GtkStateType stateType, int x, int y, int width, int height)
 	{
 		// void gtk_style_apply_default_background (GtkStyle *style,  cairo_t *cr,  GdkWindow *window,  GtkStateType state_type,  gint x,  gint y,  gint width,  gint height);
-		gtk_style_apply_default_background(gtkStyle, cr, (window is null) ? null : window.getWindowStruct(), stateType, x, y, width, height);
+		gtk_style_apply_default_background(gtkStyle, (cr is null) ? null : cr.getContextStruct(), (window is null) ? null : window.getWindowStruct(), stateType, x, y, width, height);
 	}
 	
 	/**
@@ -461,10 +467,10 @@ public class Style : ObjectG
 	 * width = width of the rectangle to draw the arrow in
 	 * height = height of the rectangle to draw the arrow in
 	 */
-	public void paintArrow(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, GtkArrowType arrowType, int fill, int x, int y, int width, int height)
+	public void paintArrow(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, GtkArrowType arrowType, int fill, int x, int y, int width, int height)
 	{
 		// void gtk_paint_arrow (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  GtkArrowType arrow_type,  gboolean fill,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_arrow(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), arrowType, fill, x, y, width, height);
+		gtk_paint_arrow(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), arrowType, fill, x, y, width, height);
 	}
 	
 	/**
@@ -482,10 +488,10 @@ public class Style : ObjectG
 	 * width = the width of the box
 	 * height = the height of the box
 	 */
-	public void paintBox(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
+	public void paintBox(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_box (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_box(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
+		gtk_paint_box(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
 	/**
@@ -507,10 +513,10 @@ public class Style : ObjectG
 	 * gapX = starting position of the gap
 	 * gapWidth = width of the gap
 	 */
-	public void paintBoxGap(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
+	public void paintBoxGap(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
 	{
 		// void gtk_paint_box_gap (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side,  gint gap_x,  gint gap_width);
-		gtk_paint_box_gap(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide, gapX, gapWidth);
+		gtk_paint_box_gap(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide, gapX, gapWidth);
 	}
 	
 	/**
@@ -529,10 +535,10 @@ public class Style : ObjectG
 	 * width = the width of the rectangle to draw the check in
 	 * height = the height of the rectangle to draw the check in
 	 */
-	public void paintCheck(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
+	public void paintCheck(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_check (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_check(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
+		gtk_paint_check(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
 	/**
@@ -551,10 +557,10 @@ public class Style : ObjectG
 	 * width = width of the rectangle to draw the diamond in
 	 * height = height of the rectangle to draw the diamond in
 	 */
-	public void paintDiamond(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
+	public void paintDiamond(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_diamond (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_diamond(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
+		gtk_paint_diamond(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
 	/**
@@ -573,10 +579,10 @@ public class Style : ObjectG
 	 * height = width of the extension
 	 * gapSide = the side on to which the extension is attached
 	 */
-	public void paintExtension(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide)
+	public void paintExtension(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide)
 	{
 		// void gtk_paint_extension (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side);
-		gtk_paint_extension(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide);
+		gtk_paint_extension(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide);
 	}
 	
 	/**
@@ -594,10 +600,10 @@ public class Style : ObjectG
 	 * width = the width of the box
 	 * height = the height of the box
 	 */
-	public void paintFlatBox(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
+	public void paintFlatBox(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_flat_box (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_flat_box(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
+		gtk_paint_flat_box(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
 	/**
@@ -615,10 +621,10 @@ public class Style : ObjectG
 	 * width = the width of the rectangle around which to draw a focus indicator
 	 * height = the height of the rectangle around which to draw a focus indicator
 	 */
-	public void paintFocus(cairo_t* cr, GtkStateType stateType, Widget widget, string detail, int x, int y, int width, int height)
+	public void paintFocus(Context cr, GtkStateType stateType, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_focus (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_focus(gtkStyle, cr, stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
+		gtk_paint_focus(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
 	/**
@@ -637,10 +643,10 @@ public class Style : ObjectG
 	 * height = height of the handle
 	 * orientation = the orientation of the handle
 	 */
-	public void paintHandle(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkOrientation orientation)
+	public void paintHandle(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkOrientation orientation)
 	{
 		// void gtk_paint_handle (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkOrientation orientation);
-		gtk_paint_handle(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, orientation);
+		gtk_paint_handle(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, orientation);
 	}
 	
 	/**
@@ -657,10 +663,10 @@ public class Style : ObjectG
 	 * x2 = the ending x coordinate
 	 * y = the y coordinate
 	 */
-	public void paintHline(cairo_t* cr, GtkStateType stateType, Widget widget, string detail, int x1, int x2, int y)
+	public void paintHline(Context cr, GtkStateType stateType, Widget widget, string detail, int x1, int x2, int y)
 	{
 		// void gtk_paint_hline (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkWidget *widget,  const gchar *detail,  gint x1,  gint x2,  gint y);
-		gtk_paint_hline(gtkStyle, cr, stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x1, x2, y);
+		gtk_paint_hline(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x1, x2, y);
 	}
 	
 	/**
@@ -679,10 +685,10 @@ public class Style : ObjectG
 	 * width = the width of the rectangle to draw the option in
 	 * height = the height of the rectangle to draw the option in
 	 */
-	public void paintOption(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
+	public void paintOption(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_option (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_option(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
+		gtk_paint_option(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
 	/**
@@ -701,10 +707,10 @@ public class Style : ObjectG
 	 * width = width of the rectangle
 	 * height = width of the rectangle
 	 */
-	public void paintShadow(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
+	public void paintShadow(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_shadow (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_shadow(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
+		gtk_paint_shadow(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
 	/**
@@ -727,10 +733,10 @@ public class Style : ObjectG
 	 * gapX = starting position of the gap
 	 * gapWidth = width of the gap
 	 */
-	public void paintShadowGap(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
+	public void paintShadowGap(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth)
 	{
 		// void gtk_paint_shadow_gap (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkPositionType gap_side,  gint gap_x,  gint gap_width);
-		gtk_paint_shadow_gap(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide, gapX, gapWidth);
+		gtk_paint_shadow_gap(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, gapSide, gapX, gapWidth);
 	}
 	
 	/**
@@ -750,10 +756,10 @@ public class Style : ObjectG
 	 * height = the height of the rectangle in which to draw a slider
 	 * orientation = the orientation to be used
 	 */
-	public void paintSlider(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkOrientation orientation)
+	public void paintSlider(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height, GtkOrientation orientation)
 	{
 		// void gtk_paint_slider (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height,  GtkOrientation orientation);
-		gtk_paint_slider(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, orientation);
+		gtk_paint_slider(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height, orientation);
 	}
 	
 	/**
@@ -771,10 +777,10 @@ public class Style : ObjectG
 	 * width = the width of the rectangle in which to draw the spinner
 	 * height = the height of the rectangle in which to draw the spinner
 	 */
-	public void paintSpinner(cairo_t* cr, GtkStateType stateType, Widget widget, string detail, uint step, int x, int y, int width, int height)
+	public void paintSpinner(Context cr, GtkStateType stateType, Widget widget, string detail, uint step, int x, int y, int width, int height)
 	{
 		// void gtk_paint_spinner (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkWidget *widget,  const gchar *detail,  guint step,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_spinner(gtkStyle, cr, stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), step, x, y, width, height);
+		gtk_paint_spinner(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), step, x, y, width, height);
 	}
 	
 	/**
@@ -793,10 +799,10 @@ public class Style : ObjectG
 	 * width = the width of the rectangle to draw the tab in
 	 * height = the height of the rectangle to draw the tab in
 	 */
-	public void paintTab(cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
+	public void paintTab(Context cr, GtkStateType stateType, GtkShadowType shadowType, Widget widget, string detail, int x, int y, int width, int height)
 	{
 		// void gtk_paint_tab (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkShadowType shadow_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_tab(gtkStyle, cr, stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
+		gtk_paint_tab(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, shadowType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, width, height);
 	}
 	
 	/**
@@ -813,10 +819,10 @@ public class Style : ObjectG
 	 * y2_ = the ending y coordinate
 	 * x = the x coordinate
 	 */
-	public void paintVline(cairo_t* cr, GtkStateType stateType, Widget widget, string detail, int y1_, int y2_, int x)
+	public void paintVline(Context cr, GtkStateType stateType, Widget widget, string detail, int y1_, int y2_, int x)
 	{
 		// void gtk_paint_vline (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkWidget *widget,  const gchar *detail,  gint y1_,  gint y2_,  gint x);
-		gtk_paint_vline(gtkStyle, cr, stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), y1_, y2_, x);
+		gtk_paint_vline(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), y1_, y2_, x);
 	}
 	
 	/**
@@ -842,10 +848,10 @@ public class Style : ObjectG
 	 * whether the expander is collapsed, expanded, or in an
 	 * intermediate state.
 	 */
-	public void paintExpander(cairo_t* cr, GtkStateType stateType, Widget widget, string detail, int x, int y, GtkExpanderStyle expanderStyle)
+	public void paintExpander(Context cr, GtkStateType stateType, Widget widget, string detail, int x, int y, GtkExpanderStyle expanderStyle)
 	{
 		// void gtk_paint_expander (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  GtkExpanderStyle expander_style);
-		gtk_paint_expander(gtkStyle, cr, stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, expanderStyle);
+		gtk_paint_expander(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, expanderStyle);
 	}
 	
 	/**
@@ -863,10 +869,10 @@ public class Style : ObjectG
 	 * y = y origin
 	 * layout = the layout to draw
 	 */
-	public void paintLayout(cairo_t* cr, GtkStateType stateType, int useText, Widget widget, string detail, int x, int y, PgLayout layout)
+	public void paintLayout(Context cr, GtkStateType stateType, int useText, Widget widget, string detail, int x, int y, PgLayout layout)
 	{
 		// void gtk_paint_layout (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  gboolean use_text,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  PangoLayout *layout);
-		gtk_paint_layout(gtkStyle, cr, stateType, useText, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, (layout is null) ? null : layout.getPgLayoutStruct());
+		gtk_paint_layout(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, useText, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, (layout is null) ? null : layout.getPgLayoutStruct());
 	}
 	
 	/**
@@ -885,10 +891,10 @@ public class Style : ObjectG
 	 * width = the width of the rectangle in which to draw the resize grip
 	 * height = the height of the rectangle in which to draw the resize grip
 	 */
-	public void paintResizeGrip(cairo_t* cr, GtkStateType stateType, Widget widget, string detail, GdkWindowEdge edge, int x, int y, int width, int height)
+	public void paintResizeGrip(Context cr, GtkStateType stateType, Widget widget, string detail, GdkWindowEdge edge, int x, int y, int width, int height)
 	{
 		// void gtk_paint_resize_grip (GtkStyle *style,  cairo_t *cr,  GtkStateType state_type,  GtkWidget *widget,  const gchar *detail,  GdkWindowEdge edge,  gint x,  gint y,  gint width,  gint height);
-		gtk_paint_resize_grip(gtkStyle, cr, stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), edge, x, y, width, height);
+		gtk_paint_resize_grip(gtkStyle, (cr is null) ? null : cr.getContextStruct(), stateType, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), edge, x, y, width, height);
 	}
 	
 	/**
@@ -905,9 +911,9 @@ public class Style : ObjectG
 	 * cursor. Should be FALSE unless the cursor is split.
 	 * Since 3.0
 	 */
-	public static void drawInsertionCursor(Widget widget, cairo_t* cr, Rectangle location, int isPrimary, GtkTextDirection direction, int drawArrow)
+	public static void drawInsertionCursor(Widget widget, Context cr, ref Rectangle location, int isPrimary, GtkTextDirection direction, int drawArrow)
 	{
 		// void gtk_draw_insertion_cursor (GtkWidget *widget,  cairo_t *cr,  const GdkRectangle *location,  gboolean is_primary,  GtkTextDirection direction,  gboolean draw_arrow);
-		gtk_draw_insertion_cursor((widget is null) ? null : widget.getWidgetStruct(), cr, (location is null) ? null : location.getRectangleStruct(), isPrimary, direction, drawArrow);
+		gtk_draw_insertion_cursor((widget is null) ? null : widget.getWidgetStruct(), (cr is null) ? null : cr.getContextStruct(), &location, isPrimary, direction, drawArrow);
 	}
 }

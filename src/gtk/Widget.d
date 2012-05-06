@@ -57,17 +57,13 @@
  * 	- glib.ListG
  * 	- gdk.Event
  * 	- gdk.Window
- * 	- gdk.Colormap
  * 	- gdk.Visual
  * 	- gtk.Style
- * 	- gdk.Bitmap
- * 	- gdk.Pixmap
  * 	- gtk.RcStyle
  * 	- gdk.Color
  * 	- gdk.Pixbuf
  * 	- gtk.Adjustment
  * 	- gobject.ParamSpec
- * 	- gdk.Region
  * 	- gobject.Value
  * 	- gtk.Settings
  * 	- gtk.Clipboard
@@ -78,8 +74,6 @@
  * 	- pango.PgLayout
  * 	- pango.PgContext
  * 	- pango.PgFontDescription
- * 	- gdk.Drawable
- * 	- gtk.Tooltips
  * 	- gobject.Type
  * 	- std.conv
  * 	- gtk.BuildableIF
@@ -89,15 +83,11 @@
  * 	- GList* -> ListG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
- * 	- GdkBitmap* -> Bitmap
  * 	- GdkColor* -> Color
- * 	- GdkColormap* -> Colormap
  * 	- GdkDisplay* -> Display
  * 	- GdkEvent* -> Event
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkPixmap* -> Pixmap
  * 	- GdkRectangle* -> Rectangle
- * 	- GdkRegion* -> Region
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
  * 	- GdkWindow* -> Window
@@ -138,17 +128,13 @@ private import gtk.AccelGroup;
 private import glib.ListG;
 private import gdk.Event;
 private import gdk.Window;
-private import gdk.Colormap;
 private import gdk.Visual;
 private import gtk.Style;
-private import gdk.Bitmap;
-private import gdk.Pixmap;
 private import gtk.RcStyle;
 private import gdk.Color;
 private import gdk.Pixbuf;
 private import gtk.Adjustment;
 private import gobject.ParamSpec;
-private import gdk.Region;
 private import gobject.Value;
 private import gtk.Settings;
 private import gtk.Clipboard;
@@ -159,8 +145,6 @@ private import gdk.Cursor;
 private import pango.PgLayout;
 private import pango.PgContext;
 private import pango.PgFontDescription;
-private import gdk.Drawable;
-private import gtk.Tooltips;
 private import gobject.Type;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
@@ -427,17 +411,6 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
-	 * Gets the drawable for this widget
-	 * Returns:
-	 * 		The drawable for this widget
-	 * Deprecated: use getWindow().
-	 */
-	deprecated Drawable getDrawable()
-	{
-		return getWindow();
-	}
-	
-	/**
 	 * Gets the Window for this widget
 	 * Returns:
 	 * 		The window for this widget
@@ -532,19 +505,6 @@ public class Widget : ObjectG, BuildableIF
 		}
 	}
 	
-	
-	/**
-	 * Sets this widget tooltip
-	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
-	 * Params:
-	 *  tipText = the tooltip
-	 *  tipPrivate = a private text
-	 */
-	void setTooltip(string tipText, string tipPrivate)
-	{
-		Tooltips tt = new Tooltips();
-		tt.setTip(this, tipText, tipPrivate);
-	}
 	
 	/** */
 	public bool onEvent(GdkEvent* event)

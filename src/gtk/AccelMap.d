@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_accel_map_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,7 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ScannerG
- * 	- gtk.AccelMap
  * structWrap:
  * 	- GScanner* -> ScannerG
  * 	- GtkAccelMap* -> AccelMap
@@ -67,7 +65,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ScannerG;
-private import gtk.AccelMap;
 
 
 

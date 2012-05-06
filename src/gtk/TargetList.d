@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk3-Selections.html
+ * inFile  = 
  * outPack = gtk
  * outFile = TargetList
  * strct   = GtkTargetList
@@ -38,14 +38,17 @@
  * implements:
  * prefixes:
  * 	- gtk_target_list_
+ * 	- gtk_targets_
+ * 	- gtk_target_
  * omit structs:
  * omit prefixes:
- * 	- gtk_selection_
  * omit code:
  * omit signals:
  * imports:
  * 	- gtk.TextBuffer
+ * 	- gtk.TargetEntry
  * structWrap:
+ * 	- GtkTargetEntry* -> TargetEntry
  * 	- GtkTargetList* -> TargetList
  * 	- GtkTextBuffer* -> TextBuffer
  * module aliases:
@@ -62,6 +65,7 @@ private import glib.ConstructionException;
 
 
 private import gtk.TextBuffer;
+private import gtk.TargetEntry;
 
 
 
@@ -125,10 +129,15 @@ public class TargetList : Boxed
 	 * info = an ID that will be passed back to the application
 	 * Returns: a pointer to a new GtkTargetEntry structure. Free with gtk_target_entry_free()
 	 */
-	public static GtkTargetEntry* gtkTargetEntryNew(string target, uint flags, uint info)
+	public static TargetEntry entryNew(string target, uint flags, uint info)
 	{
 		// GtkTargetEntry * gtk_target_entry_new (const gchar *target,  guint flags,  guint info);
-		return gtk_target_entry_new(Str.toStringz(target), flags, info);
+		auto p = gtk_target_entry_new(Str.toStringz(target), flags, info);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetEntry(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
@@ -137,10 +146,15 @@ public class TargetList : Boxed
 	 * data = a pointer to a GtkTargetEntry structure.
 	 * Returns: a pointer to a copy of data. Free with gtk_target_entry_free()
 	 */
-	public static GtkTargetEntry* gtkTargetEntryCopy(GtkTargetEntry* data)
+	public static TargetEntry entryCopy(TargetEntry data)
 	{
 		// GtkTargetEntry * gtk_target_entry_copy (GtkTargetEntry *data);
-		return gtk_target_entry_copy(data);
+		auto p = gtk_target_entry_copy((data is null) ? null : data.getTargetEntryStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetEntry(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
@@ -149,10 +163,10 @@ public class TargetList : Boxed
 	 * Params:
 	 * data = a pointer to a GtkTargetEntry structure.
 	 */
-	public static void gtkTargetEntryFree(GtkTargetEntry* data)
+	public static void entryFree(TargetEntry data)
 	{
 		// void gtk_target_entry_free (GtkTargetEntry *data);
-		gtk_target_entry_free(data);
+		gtk_target_entry_free((data is null) ? null : data.getTargetEntryStruct());
 	}
 	
 	/**
@@ -311,12 +325,11 @@ public class TargetList : Boxed
 	 * Since 2.10
 	 * Params:
 	 * targets = a GtkTargetEntry array. [array length=n_targets]
-	 * nTargets = the number of entries in the array
 	 */
-	public static void gtkTargetTableFree(GtkTargetEntry[] targets, int nTargets)
+	public static void tableFree(GtkTargetEntry[] targets)
 	{
 		// void gtk_target_table_free (GtkTargetEntry *targets,  gint n_targets);
-		gtk_target_table_free(targets.ptr, nTargets);
+		gtk_target_table_free(targets.ptr, cast(int) targets.length);
 	}
 	
 	/**
@@ -327,7 +340,7 @@ public class TargetList : Boxed
 	 * Since 2.10
 	 * Returns: the new table. [array length=n_targets][transfer full]
 	 */
-	public GtkTargetEntry[] gtkTargetTableNewFromList()
+	public GtkTargetEntry[] tableNewFromList()
 	{
 		// GtkTargetEntry * gtk_target_table_new_from_list (GtkTargetList *list,  gint *n_targets);
 		int nTargets;
@@ -345,7 +358,7 @@ public class TargetList : Boxed
 	 * how to convert a pixbuf into the format
 	 * Returns: TRUE if targets include a suitable target for images, otherwise FALSE.
 	 */
-	public static int gtkTargetsIncludeImage(GdkAtom[] targets, int writable)
+	public static int includeImage(GdkAtom[] targets, int writable)
 	{
 		// gboolean gtk_targets_include_image (GdkAtom *targets,  gint n_targets,  gboolean writable);
 		return gtk_targets_include_image(targets.ptr, cast(int) targets.length, writable);
@@ -359,7 +372,7 @@ public class TargetList : Boxed
 	 * targets = an array of GdkAtoms. [array length=n_targets]
 	 * Returns: TRUE if targets include a suitable target for text, otherwise FALSE.
 	 */
-	public static int gtkTargetsIncludeText(GdkAtom[] targets)
+	public static int includeText(GdkAtom[] targets)
 	{
 		// gboolean gtk_targets_include_text (GdkAtom *targets,  gint n_targets);
 		return gtk_targets_include_text(targets.ptr, cast(int) targets.length);
@@ -373,7 +386,7 @@ public class TargetList : Boxed
 	 * targets = an array of GdkAtoms. [array length=n_targets]
 	 * Returns: TRUE if targets include a suitable target for uri lists, otherwise FALSE.
 	 */
-	public static int gtkTargetsIncludeUri(GdkAtom[] targets)
+	public static int includeUri(GdkAtom[] targets)
 	{
 		// gboolean gtk_targets_include_uri (GdkAtom *targets,  gint n_targets);
 		return gtk_targets_include_uri(targets.ptr, cast(int) targets.length);
@@ -388,7 +401,7 @@ public class TargetList : Boxed
 	 * buffer = a GtkTextBuffer
 	 * Returns: TRUE if targets include a suitable target for rich text, otherwise FALSE.
 	 */
-	public static int gtkTargetsIncludeRichText(GdkAtom[] targets, TextBuffer buffer)
+	public static int includeRichText(GdkAtom[] targets, TextBuffer buffer)
 	{
 		// gboolean gtk_targets_include_rich_text (GdkAtom *targets,  gint n_targets,  GtkTextBuffer *buffer);
 		return gtk_targets_include_rich_text(targets.ptr, cast(int) targets.length, (buffer is null) ? null : buffer.getTextBufferStruct());

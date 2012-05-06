@@ -44,9 +44,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.ObjectGtk
  * structWrap:
- * 	- GtkObject* -> ObjectGtk
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,7 +60,6 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gtk.ObjectGtk;
 
 
 

@@ -44,8 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * 	- gtk.SpinButton
+ * 	- gtk.Widget
  * structWrap:
  * 	- GtkSpinButton* -> SpinButton
  * 	- GtkWidget* -> Widget
@@ -63,8 +63,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Widget;
 private import gtk.SpinButton;
+private import gtk.Widget;
 
 
 
@@ -201,14 +201,14 @@ public class Testing
 	 * Return the type ids that have been registered after
 	 * calling gtk_test_register_all_types().
 	 * Since 2.14
-	 * Params:
-	 * nTypes = location to store number of types
 	 * Returns: 0-terminated array of type ids. [array length=n_types zero-terminated=1][transfer none]
 	 */
-	public static GType* listAllTypes(uint* nTypes)
+	public static GType[] listAllTypes()
 	{
 		// const GType * gtk_test_list_all_types (guint *n_types);
-		return gtk_test_list_all_types(nTypes);
+		uint nTypes;
+		auto p = gtk_test_list_all_types(&nTypes);
+		return p[0 .. nTypes];
 	}
 	
 	/**

@@ -50,11 +50,9 @@
  * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- gtk.Widget
- * 	- gtk.Tooltips
  * 	- gtk.Menu
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
- * 	- GtkTooltips* -> Tooltips
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -74,7 +72,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
-private import gtk.Tooltips;
 private import gtk.Menu;
 
 

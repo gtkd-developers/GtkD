@@ -38,23 +38,20 @@
  * implements:
  * prefixes:
  * 	- gtk_binding_set_
+ * 	- gtk_binding_
  * 	- gtk_bindings_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.BindingSet
- * 	- gtk.ObjectGtk
  * 	- glib.ListSG
- * 	- glib.ScannerG
+ * 	- gobject.ObjectG
  * structWrap:
+ * 	- GObject* -> ObjectG
  * 	- GSList* -> ListSG
- * 	- GScanner* -> ScannerG
  * 	- GtkBindingSet* -> BindingSet
- * 	- GtkObject* -> ObjectGtk
  * module aliases:
  * local aliases:
  * overrides:
@@ -69,10 +66,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.BindingSet;
-private import gtk.ObjectGtk;
 private import glib.ListSG;
-private import glib.ScannerG;
+private import gobject.ObjectG;
 
 
 
@@ -163,6 +158,7 @@ public class BindingSet
 	}
 	
 	/**
+	 * Description
 	 */
 	
 	/**
@@ -174,7 +170,7 @@ public class BindingSet
 	 * signalName = signal name to be bound
 	 * bindingArgs = list of GtkBindingArg signal arguments. [transfer none][element-type GtkBindingArg]
 	 */
-	public void bindingEntryAddSignall(uint keyval, GdkModifierType modifiers, string signalName, ListSG bindingArgs)
+	public void entryAddSignall(uint keyval, GdkModifierType modifiers, string signalName, ListSG bindingArgs)
 	{
 		// void gtk_binding_entry_add_signall (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  const gchar *signal_name,  GSList *binding_args);
 		gtk_binding_entry_add_signall(gtkBindingSet, keyval, modifiers, Str.toStringz(signalName), (bindingArgs is null) ? null : bindingArgs.getListSGStruct());
@@ -245,10 +241,10 @@ public class BindingSet
 	 * modifiers = key modifier of the binding
 	 * Returns: TRUE if a binding was found and activated
 	 */
-	public static int activate(GObject* object, uint keyval, GdkModifierType modifiers)
+	public static int activate(ObjectG object, uint keyval, GdkModifierType modifiers)
 	{
 		// gboolean gtk_bindings_activate (GObject *object,  guint keyval,  GdkModifierType modifiers);
-		return gtk_bindings_activate(object, keyval, modifiers);
+		return gtk_bindings_activate((object is null) ? null : object.getObjectGStruct(), keyval, modifiers);
 	}
 	
 	/**
@@ -260,10 +256,10 @@ public class BindingSet
 	 * event = a GdkEventKey
 	 * Returns: TRUE if a matching key binding was found
 	 */
-	public static int activateEvent(GObject* object, GdkEventKey* event)
+	public static int activateEvent(ObjectG object, GdkEventKey* event)
 	{
 		// gboolean gtk_bindings_activate_event (GObject *object,  GdkEventKey *event);
-		return gtk_bindings_activate_event(object, event);
+		return gtk_bindings_activate_event((object is null) ? null : object.getObjectGStruct(), event);
 	}
 	
 	/**
@@ -275,10 +271,10 @@ public class BindingSet
 	 * object = object to activate when binding found
 	 * Returns: TRUE if a binding was found and activated
 	 */
-	public int activate(uint keyval, GdkModifierType modifiers, GObject* object)
+	public int activate(uint keyval, GdkModifierType modifiers, ObjectG object)
 	{
 		// gboolean gtk_binding_set_activate (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  GObject *object);
-		return gtk_binding_set_activate(gtkBindingSet, keyval, modifiers, object);
+		return gtk_binding_set_activate(gtkBindingSet, keyval, modifiers, (object is null) ? null : object.getObjectGStruct());
 	}
 	
 	/**
@@ -289,7 +285,7 @@ public class BindingSet
 	 * signalDesc = a signal description
 	 * Returns: G_TOKEN_NONE if the signal was successfully parsed and added, the expected token otherwise Since 3.0
 	 */
-	public GTokenType bindingEntryAddSignalFromString(string signalDesc)
+	public GTokenType entryAddSignalFromString(string signalDesc)
 	{
 		// GTokenType gtk_binding_entry_add_signal_from_string  (GtkBindingSet *binding_set,  const gchar *signal_desc);
 		return gtk_binding_entry_add_signal_from_string(gtkBindingSet, Str.toStringz(signalDesc));
@@ -304,7 +300,7 @@ public class BindingSet
 	 * keyval = key value of binding to skip
 	 * modifiers = key modifier of binding to skip
 	 */
-	public void bindingEntrySkip(uint keyval, GdkModifierType modifiers)
+	public void entrySkip(uint keyval, GdkModifierType modifiers)
 	{
 		// void gtk_binding_entry_skip (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers);
 		gtk_binding_entry_skip(gtkBindingSet, keyval, modifiers);
@@ -317,7 +313,7 @@ public class BindingSet
 	 * keyval = key value of binding to remove
 	 * modifiers = key modifier of binding to remove
 	 */
-	public void bindingEntryRemove(uint keyval, GdkModifierType modifiers)
+	public void entryRemove(uint keyval, GdkModifierType modifiers)
 	{
 		// void gtk_binding_entry_remove (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers);
 		gtk_binding_entry_remove(gtkBindingSet, keyval, modifiers);
