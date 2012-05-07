@@ -28,7 +28,7 @@
  * outFile = Spinner
  * strct   = GtkSpinner
  * realStrct=
- * ctorStrct=GtkWidget
+ * ctorStrct=
  * clss    = Spinner
  * interf  = 
  * class Code: No

@@ -1064,15 +1064,17 @@ class: Dialog
 prefix: gtk_dialog_
 prefix: gtk_
 import: glib.Str
-import: gtk.Window
-structWrap: GtkWindow* Window
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gdk.Screen
-structWrap: GdkScreen* Screen
+import: gtk.Button
+import: gtk.Widget
+import: gtk.Window
 import: gtk.HButtonBox
 import: gtk.VBox
+structWrap: GdkScreen* Screen
+structWrap: GtkWidget* Widget
+structWrap: GtkWindow* Window
 
+alias: setAlternativeButtonOrderFromArray setAlternativeButtonOrder
 array: gtk_dialog_set_alternative_button_order_from_array new_order n_params
 
 # Make these return the correct class.
@@ -1111,9 +1113,9 @@ code: start
 	}
 
 	/** */
-	public Widget addButton(StockID stockID, int responseId)
+	public Button addButton(StockID stockID, int responseId)
 	{
-		return addButton(StockDesc[stockID], responseId);
+		return new Button(cast(GtkButton*)gtk_dialog_add_button(gtkDialog, toStringz(StockDesc[stockID]), responseId));
 	}
 	
 	/** */
@@ -1177,22 +1179,19 @@ prefix: gtk_invisible_
 prefix: gtk_
 import: gdk.Screen
 structWrap: GdkScreen* Screen
-
 override: getScreen
-
 outFile: Invisible
 
 file: GtkMessageDialog.html
 struct: GtkMessageDialog
 class: MessageDialog
 prefix: gtk_message_dialog_
-prefix: gtk_
 import: glib.Str
 import: gtk.VBox
-import: gtk.Window
-structWrap: GtkWindow* Window
 import: gtk.Widget
+import: gtk.Window
 structWrap: GtkWidget* Widget
+structWrap: GtkWindow* Window
 
 nocode: gtk_message_dialog_new
 nocode: gtk_message_dialog_new_with_markup
@@ -1312,7 +1311,6 @@ code: start
 		return new VBox(cast(GtkVBox*) p);
 	}
 code: end
-
 outFile: MessageDialog
 
 file: 
@@ -1407,7 +1405,7 @@ code: start
 		MessageDialog d = new MessageDialog(
 				parent, cast(GtkDialogFlags)0,
 				MessageType.QUESTION,
-				ButtonsType.NONE ,
+				ButtonsType.NONE,
 				message);
 		d.setTitle(title);
 		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
@@ -1458,40 +1456,35 @@ file: GtkWindow.html
 struct: GtkWindow
 class: Window
 prefix: gtk_window_
-prefix: gtk_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: gtk.AccelGroup
-structWrap: GtkAccelGroup* AccelGroup
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-#import: gdk.Geometry
-#structWrap: GdkGeometry* Geometry
-structWrap: GtkWindow* Window
-import: gtk.WindowGroup
-structWrap: GtkWindowGroup* WindowGroup
-import: gdk.Screen
-structWrap: GdkScreen* Screen
 import: glib.ListG
-structWrap: GList* ListG
-#import: gdk.EventKey
-#structWrap: GdkEventKey* EventKey
 import: gdk.Pixbuf
+import: gdk.Screen
+import: gtk.AccelGroup
+import: gtk.Application
+import: gtk.Widget
+import: gtk.WindowGroup
+structWrap: GList* ListG
 structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkScreen* Screen
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkApplication* Application
+structWrap: GtkWidget* Widget
+structWrap: GtkWindow* Window
+structWrap: GtkWindowGroup* WindowGroup
 
 override: getScreen
 
-out: gtk_window_get_size width
-out: gtk_window_get_size height
+inout: gtk_window_set_geometry_hints geometry
 out: gtk_window_get_default_size width
 out: gtk_window_get_default_size height
-out: gtk_window_get_frame_dimensions left
-out: gtk_window_get_frame_dimensions top
-out: gtk_window_get_frame_dimensions right
-out: gtk_window_get_frame_dimensions bottom
 out: gtk_window_get_position root_x
 out: gtk_window_get_position root_y
+out: gtk_window_get_size width
+out: gtk_window_get_size height
+out: gtk_window_get_resize_grip_area rect
 
 code: start
 	/**
@@ -1515,30 +1508,6 @@ code: start
 		move(cast(int)x, cast(int)y);
 	}
 code: end
-text: start
-gtk_window_set_default_icon_from_file ()
-gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
-Sets an icon to be used as fallback for windows that haven't
-had gtk_window_set_icon_list() called on them from a file
-on disk. Warns on failure if err is NULL.
-Since 2.2
-filename :
-location of icon file
-Returns :
-TRUE if setting the icon succeeded.
-<hr>
-gtk_window_set_icon_from_file()
-gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
-Sets the icon for window.
-Warns on failure if err is NULL.
-This function is equivalent to calling gtk_window_set_icon()
-with a pixbuf created by loading the image from filename.
-Since 2.2
-filename :
-location of icon file
-Returns :
-TRUE if setting the icon succeeded.
-text: end
 outFile: Window
 
 file: 
@@ -1546,7 +1515,6 @@ import: gtk.Widget
 import: gtk.Window
 import: gtk.Main
 import: gdk.Event
-	
 
 code: start
 
@@ -1606,13 +1574,14 @@ file: GtkWindowGroup.html
 struct: GtkWindowGroup
 class: WindowGroup
 prefix: gtk_window_group_
-prefix: gtk_
 import: glib.ListG
-structWrap: GList* ListG
-import: gtk.Window
-structWrap: GtkWindow* Window
+import: gdk.Device
 import: gtk.Widget
+import: gtk.Window
+structWrap: GList* ListG
+structWrap: GdkDevice* Device
 structWrap: GtkWidget* Widget
+structWrap: GtkWindow* Window
 outFile: WindowGroup
 
 file: GtkAboutDialog.html
@@ -1622,8 +1591,8 @@ prefix: gtk_about_dialog_
 prefix: gtk_
 import: glib.Str
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
 import: gtk.Window
+structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkWindow* Window
 
 override: getName
@@ -1639,11 +1608,10 @@ file: GtkAssistant.html
 struct: GtkAssistant
 class: Assistant
 prefix: gtk_assistant_
-prefix: gtk_
 import: glib.Str
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
 import: gtk.Widget
+structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkWidget* Widget
 outFile: Assistant
 
@@ -1651,10 +1619,10 @@ file: GtkOffscreenWindow.html
 struct: GtkOffscreenWindow
 class: OffscreenWindow
 prefix: gtk_offscreen_window_
+import: cairo.Surface
 import: gdk.Pixbuf
+structWrap: cairo_surface_t* Surface
 structWrap: GdkPixbuf* Pixbuf
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 outFile: OffscreenWindow
 
 ###########################################################
@@ -1665,56 +1633,40 @@ file: GtkAccelLabel.html
 struct: GtkAccelLabel
 class: AccelLabel
 prefix: gtk_accel_label_
-prefix: gtk_
 import: glib.Str
 import: gobject.Closure
-structWrap: GClosure* Closure
 import: gtk.Widget
+structWrap: GClosure* Closure
 structWrap: GtkWidget* Widget
-import: pango.PgAttributeList
-structWrap: PangoAttrList* PgAttributeList
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
 outFile: AccelLabel
 
 file: GtkImage.html
 struct: GtkImage
 class: Image
 prefix: gtk_image_
-prefix: gtk_
 import: glib.Str
 import: gio.Icon
 import: gio.IconIF
-structWrap: GIcon* IconIF
-import: gtk.IconSet
-structWrap: GtkIconSet* IconSet
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
 import: gdkpixbuf.PixbufAnimation
-structWrap: GdkPixbufAnimation* PixbufAnimation
 import: gtk.IconSet
+structWrap: GIcon* IconIF
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkPixbufAnimation* PixbufAnimation
 structWrap: GtkIconSet* IconSet
 
 out: gtk_image_get_icon_set icon_set
 out: gtk_image_get_icon_set size
-out: gtk_image_get_image gdk_image
-out: gtk_image_get_image mask
-out: gtk_image_get_pixmap pixmap
-out: gtk_image_get_pixmap mask
 out: gtk_image_get_stock stock_id
 out: gtk_image_get_stock size
 out: gtk_image_get_icon_name icon_name
 out: gtk_image_get_icon_name size
 out: gtk_image_get_gicon gicon
 out: gtk_image_get_gicon size
-out: gtk_image_get val
-out: gtk_image_get mask
 
 nocode: gtk_image_new_from_stock
-nocode: gtk_image_new_from_icon_name
 
 code: start
-// this will be an enum 
 	/**
 	 * Creates a GtkImage displaying a stock icon. Sample stock icon
 	 * names are GTK_STOCK_OPEN, GTK_STOCK_EXIT. Sample stock sizes
@@ -1739,48 +1691,23 @@ code: start
 		}
 		this(cast(GtkImage*)p);
 	}
-	
-	/**
-	 * Creates a GtkImage displaying an icon from the current icon theme.
-	 * If the icon name isn't known, a "broken image" icon will be
-	 * displayed instead. If the current icon theme is changed, the icon
-	 * will be updated appropriately. Since 2.6
-	 * Params:
-	 *  iconName = an icon name
-	 *  size = a stock icon size
-	 * Returns:
-	 *  a new GtkImage displaying the themed icon
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string iconName, GtkIconSize size)
-	{
-		// GtkWidget* gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
-		auto p = gtk_image_new_from_icon_name(Str.toStringz(iconName), size);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_image_new_from_icon_name(Str.toStringz(iconName), size)");
-		}
-		this(cast(GtkImage*)p);
-	}
-	
 code: end
-
 outFile: Image
 
 file: GtkLabel.html
 struct: GtkLabel
 class: Label
 prefix: gtk_label_
-prefix: gtk_
 import: glib.Str
+import: gtk.Menu
 import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: pango.PgAttributeList
-structWrap: PangoAttrList* PgAttributeList
 import: pango.PgLayout
+structWrap: GtkMenu* Menu
+structWrap: GtkWidget* Widget
+structWrap: PangoAttrList* PgAttributeList
 structWrap: PangoLayout* PgLayout
 
-out: gtk_label_get str
 out: gtk_label_get_layout_offsets x
 out: gtk_label_get_layout_offsets y
 out: gtk_label_get_selection_bounds start
@@ -1788,6 +1715,7 @@ out: gtk_label_get_selection_bounds end
 
 nocode: gtk_label_new
 nocode: gtk_label_new_with_mnemonic
+
 code: start
 	/**
 	 * Creates a new GtkLabel, containing the text in str.
@@ -1838,10 +1766,7 @@ file: GtkProgressBar.html
 struct: GtkProgressBar
 class: ProgressBar
 prefix: gtk_progress_bar_
-prefix: gtk_
 import: glib.Str
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
 outFile: ProgressBar
 
 file: GtkStatusbar.html
@@ -1849,9 +1774,29 @@ struct: GtkStatusbar
 class: Statusbar
 import: glib.Str
 prefix: gtk_statusbar_
-prefix: gtk_
+import: gtk.Box
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
+nocode:  gtk_statusbar_get_message_area
+
+code: start
+	/**
+	 * Retrieves the box containing the label widget.
+	 * Since 2.20
+	 * Returns: a GtkBox. [transfer none]
+	 */
+	public Box getMessageArea()
+	{
+		// GtkWidget * gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
+		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Box(cast(GtkBox*) p);
+	}
+code: end
 outFile: Statusbar
 
 file: GtkInfoBar.html
@@ -1860,10 +1805,11 @@ ctorStruct: GtkWidget
 class: InfoBar
 import: glib.Str
 prefix:  gtk_info_bar_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
+import: gtk.Button
 import: gtk.HBox;
 import: gtk.VButtonBox
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 
 nocode: gtk_info_bar_get_action_area
 nocode: gtk_info_bar_get_content_area
@@ -1892,9 +1838,9 @@ code: start
 	}
 
 	/** */
-	public Widget addButton(StockID stockID, int responseId)
+	public Button addButton(StockID stockID, int responseId)
 	{
-		return addButton(StockDesc[stockID], responseId);
+		return new Button(cast(GtkButton*)gtk_info_bar_add_button(gtkInfoBar, toStringz(StockDesc[stockID]), responseId));
 	}
 	
 	/** */
@@ -1953,18 +1899,17 @@ file: GtkStatusIcon.html
 struct: GtkStatusIcon
 class: StatusIcon
 prefix: gtk_status_icon_
-prefix: gtk_
 import: glib.Str
 import: gio.Icon
 import: gio.IconIF
-structWrap: GIcon* IconIF
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
 import: gdk.Screen
-structWrap: GdkScreen* Screen
 import: gtk.Menu
-structWrap: GtkMenu* Menu
 import: gtk.Tooltip
+structWrap: GIcon* IconIF
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkScreen* Screen
+structWrap: GtkMenu* Menu
 structWrap: GtkTooltip* Tooltip
 
 out: gtk_status_icon_position_menu x
@@ -2042,7 +1987,6 @@ outFile: StatusIcon
 
 file: GtkSpinner.html
 struct: GtkSpinner
-ctorStruct: GtkWidget
 class: Spinner
 prefix: gtk_spinner_
 outFile: Spinner

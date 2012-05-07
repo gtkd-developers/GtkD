@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_window_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -47,17 +46,19 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gtk.AccelGroup
- * 	- gtk.Widget
- * 	- gtk.WindowGroup
- * 	- gdk.Screen
  * 	- glib.ListG
  * 	- gdk.Pixbuf
+ * 	- gdk.Screen
+ * 	- gtk.AccelGroup
+ * 	- gtk.Application
+ * 	- gtk.Widget
+ * 	- gtk.WindowGroup
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkScreen* -> Screen
  * 	- GtkAccelGroup* -> AccelGroup
+ * 	- GtkApplication* -> Application
  * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
  * 	- GtkWindowGroup* -> WindowGroup
@@ -80,12 +81,13 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import gtk.AccelGroup;
-private import gtk.Widget;
-private import gtk.WindowGroup;
-private import gdk.Screen;
 private import glib.ListG;
 private import gdk.Pixbuf;
+private import gdk.Screen;
+private import gtk.AccelGroup;
+private import gtk.Application;
+private import gtk.Widget;
+private import gtk.WindowGroup;
 
 
 
@@ -294,57 +296,6 @@ public class Window : Bin
 		}
 	}
 	
-	
-	/**
-	 * Sets an icon to be used as fallback for windows that haven't
-	 * had gtk_window_set_icon_list() called on them from a file
-	 * on disk. Warns on failure if err is NULL.
-	 * Since 2.2
-	 * Params:
-	 * filename = location of icon file
-	 * Returns: TRUE if setting the icon succeeded.
-	 * Throws: GException on failure.
-	 */
-	public static int setDefaultIconFromFile(string filename)
-	{
-		// gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
-		GError* err = null;
-		
-		auto p = gtk_window_set_default_icon_from_file(Str.toStringz(filename), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Sets the icon for window.
-	 * Warns on failure if err is NULL.
-	 * This function is equivalent to calling gtk_window_set_icon()
-	 * with a pixbuf created by loading the image from filename.
-	 * Since 2.2
-	 * Params:
-	 * filename = location of icon file
-	 * Returns: TRUE if setting the icon succeeded.
-	 * Throws: GException on failure.
-	 */
-	public int setIconFromFile(string filename)
-	{
-		// gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
-		GError* err = null;
-		
-		auto p = gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
 	
 	/**
 	 * Creates a new GtkWindow, which is a toplevel window that can
@@ -1795,6 +1746,31 @@ public class Window : Bin
 	
 	/**
 	 * Sets an icon to be used as fallback for windows that haven't
+	 * had gtk_window_set_icon_list() called on them from a file
+	 * on disk. Warns on failure if err is NULL.
+	 * Since 2.2
+	 * Params:
+	 * filename = location of icon file. [type filename]
+	 * Returns: TRUE if setting the icon succeeded.
+	 * Throws: GException on failure.
+	 */
+	public static int setDefaultIconFromFile(string filename)
+	{
+		// gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
+		GError* err = null;
+		
+		auto p = gtk_window_set_default_icon_from_file(Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Sets an icon to be used as fallback for windows that haven't
 	 * had gtk_window_set_icon_list() called on them from a named
 	 * themed icon, see gtk_window_set_icon_name().
 	 * Since 2.6
@@ -1858,6 +1834,32 @@ public class Window : Bin
 	{
 		// void gtk_window_set_icon_list (GtkWindow *window,  GList *list);
 		gtk_window_set_icon_list(gtkWindow, (list is null) ? null : list.getListGStruct());
+	}
+	
+	/**
+	 * Sets the icon for window.
+	 * Warns on failure if err is NULL.
+	 * This function is equivalent to calling gtk_window_set_icon()
+	 * with a pixbuf created by loading the image from filename.
+	 * Since 2.2
+	 * Params:
+	 * filename = location of icon file. [type filename]
+	 * Returns: TRUE if setting the icon succeeded.
+	 * Throws: GException on failure.
+	 */
+	public int setIconFromFile(string filename)
+	{
+		// gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
+		GError* err = null;
+		
+		auto p = gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -1992,20 +1994,25 @@ public class Window : Bin
 	 * the resize grip area. [out]
 	 * Returns: TRUE if the resize grip's area was retrieved Since 3.0
 	 */
-	public int getResizeGripArea(Rectangle* rect)
+	public int getResizeGripArea(out Rectangle rect)
 	{
 		// gboolean gtk_window_get_resize_grip_area (GtkWindow *window,  GdkRectangle *rect);
-		return gtk_window_get_resize_grip_area(gtkWindow, rect);
+		return gtk_window_get_resize_grip_area(gtkWindow, &rect);
 	}
 	
 	/**
 	 * Gets the GtkApplication associated with the window (if any).
 	 * Returns: a GtkApplication, or NULL. [transfer none] Since 3.0
 	 */
-	public GtkApplication* getApplication()
+	public Application getApplication()
 	{
 		// GtkApplication * gtk_window_get_application (GtkWindow *window);
-		return gtk_window_get_application(gtkWindow);
+		auto p = gtk_window_get_application(gtkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Application(cast(GtkApplication*) p);
 	}
 	
 	/**
@@ -2016,10 +2023,10 @@ public class Window : Bin
 	 * application = a GtkApplication, or NULL. [allow-none]
 	 * Since 3.0
 	 */
-	public void setApplication(GtkApplication* application)
+	public void setApplication(Application application)
 	{
 		// void gtk_window_set_application (GtkWindow *window,  GtkApplication *application);
-		gtk_window_set_application(gtkWindow, application);
+		gtk_window_set_application(gtkWindow, (application is null) ? null : application.getApplicationStruct());
 	}
 	
 	/**

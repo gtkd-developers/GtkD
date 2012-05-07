@@ -710,8 +710,6 @@ mixin( _shared ~ "static this()
 
 	// gtk.Window
 
-	Linker.link(gtk_window_set_default_icon_from_file, \"gtk_window_set_default_icon_from_file\", LIBRARY.GTK);
-	Linker.link(gtk_window_set_icon_from_file, \"gtk_window_set_icon_from_file\", LIBRARY.GTK);
 	Linker.link(gtk_window_new, \"gtk_window_new\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_title, \"gtk_window_set_title\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_wmclass, \"gtk_window_set_wmclass\", LIBRARY.GTK);
@@ -801,9 +799,11 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_window_resize_to_geometry, \"gtk_window_resize_to_geometry\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_default_icon_list, \"gtk_window_set_default_icon_list\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_default_icon, \"gtk_window_set_default_icon\", LIBRARY.GTK);
+	Linker.link(gtk_window_set_default_icon_from_file, \"gtk_window_set_default_icon_from_file\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_default_icon_name, \"gtk_window_set_default_icon_name\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_icon, \"gtk_window_set_icon\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_icon_list, \"gtk_window_set_icon_list\", LIBRARY.GTK);
+	Linker.link(gtk_window_set_icon_from_file, \"gtk_window_set_icon_from_file\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_icon_name, \"gtk_window_set_icon_name\", LIBRARY.GTK);
 	Linker.link(gtk_window_set_auto_startup_notification, \"gtk_window_set_auto_startup_notification\", LIBRARY.GTK);
 	Linker.link(gtk_window_get_opacity, \"gtk_window_get_opacity\", LIBRARY.GTK);
@@ -4568,8 +4568,6 @@ mixin( gshared ~"extern(C)
 	
 	// gtk.Window
 	
-	gboolean function(gchar* filename, GError** err) c_gtk_window_set_default_icon_from_file;
-	gboolean function(GtkWindow* window, gchar* filename, GError** err) c_gtk_window_set_icon_from_file;
 	GtkWidget* function(GtkWindowType type) c_gtk_window_new;
 	void function(GtkWindow* window, gchar* title) c_gtk_window_set_title;
 	void function(GtkWindow* window, gchar* wmclassName, gchar* wmclassClass) c_gtk_window_set_wmclass;
@@ -4659,9 +4657,11 @@ mixin( gshared ~"extern(C)
 	void function(GtkWindow* window, gint width, gint height) c_gtk_window_resize_to_geometry;
 	void function(GList* list) c_gtk_window_set_default_icon_list;
 	void function(GdkPixbuf* icon) c_gtk_window_set_default_icon;
+	gboolean function(gchar* filename, GError** err) c_gtk_window_set_default_icon_from_file;
 	void function(gchar* name) c_gtk_window_set_default_icon_name;
 	void function(GtkWindow* window, GdkPixbuf* icon) c_gtk_window_set_icon;
 	void function(GtkWindow* window, GList* list) c_gtk_window_set_icon_list;
+	gboolean function(GtkWindow* window, gchar* filename, GError** err) c_gtk_window_set_icon_from_file;
 	void function(GtkWindow* window, gchar* name) c_gtk_window_set_icon_name;
 	void function(gboolean setting) c_gtk_window_set_auto_startup_notification;
 	gdouble function(GtkWindow* window) c_gtk_window_get_opacity;
@@ -8423,8 +8423,6 @@ alias c_gtk_message_dialog_get_message_area  gtk_message_dialog_get_message_area
 
 // gtk.Window
 
-alias c_gtk_window_set_default_icon_from_file  gtk_window_set_default_icon_from_file;
-alias c_gtk_window_set_icon_from_file  gtk_window_set_icon_from_file;
 alias c_gtk_window_new  gtk_window_new;
 alias c_gtk_window_set_title  gtk_window_set_title;
 alias c_gtk_window_set_wmclass  gtk_window_set_wmclass;
@@ -8514,9 +8512,11 @@ alias c_gtk_window_resize  gtk_window_resize;
 alias c_gtk_window_resize_to_geometry  gtk_window_resize_to_geometry;
 alias c_gtk_window_set_default_icon_list  gtk_window_set_default_icon_list;
 alias c_gtk_window_set_default_icon  gtk_window_set_default_icon;
+alias c_gtk_window_set_default_icon_from_file  gtk_window_set_default_icon_from_file;
 alias c_gtk_window_set_default_icon_name  gtk_window_set_default_icon_name;
 alias c_gtk_window_set_icon  gtk_window_set_icon;
 alias c_gtk_window_set_icon_list  gtk_window_set_icon_list;
+alias c_gtk_window_set_icon_from_file  gtk_window_set_icon_from_file;
 alias c_gtk_window_set_icon_name  gtk_window_set_icon_name;
 alias c_gtk_window_set_auto_startup_notification  gtk_window_set_auto_startup_notification;
 alias c_gtk_window_get_opacity  gtk_window_get_opacity;

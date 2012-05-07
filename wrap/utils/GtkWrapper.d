@@ -34,21 +34,23 @@ struct WError
 
     int lineNumber;
     int code;
+	char[] filename;
     char[] message;
 
 
-    static WError* create(int lineNumber, int code, char[] message)
+    static WError* create(char[] filename, int lineNumber, int code, char[] message)
     {
         WError* error = new WError;
         error.lineNumber = lineNumber;
         error.code = code;
+		error.filename = filename;
         error.message = message;
         return error;
     }
 
     void print ()
     {
-        writefln("(line %s, code %s: %s)", lineNumber, code, message);
+        writefln("%s(%s), code %s: %s.", filename, lineNumber, code, message);
     }
 }
 
@@ -244,7 +246,7 @@ public class GtkWrapper : WrapperIF
         else
         {
             status = ERR_NO_LICENSE;
-            errors ~= WError.create(defReader.getLineNumber(), status, "Missing license as the first definition");
+            errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Missing license as the first definition");
         }
 
         if ( "includeComments" == defReader.next() )
@@ -279,7 +281,7 @@ public class GtkWrapper : WrapperIF
         else
         {
             status = ERR_NO_IN_ROOT;
-            errors ~= WError.create(defReader.getLineNumber(), status, "Cannot determine input root");
+            errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot determine input root");
         }
 
         if ( status==ERR_NONE && "outputRoot" == defReader.next() )
@@ -289,7 +291,7 @@ public class GtkWrapper : WrapperIF
         else
         {
             status = ERR_NO_OUT_ROOT;
-            errors ~= WError.create(defReader.getLineNumber(), status, "Cannot determine output root");
+            errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot determine output root");
         }
 
         char[] key = defReader.next();
@@ -437,7 +439,7 @@ public class GtkWrapper : WrapperIF
             status = ERR_INVALID_ALIAS;
             if ( errors !is null )
             {
-                errors ~= WError.create(defReader.getLineNumber(), status, "Invalid alias");
+                errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Invalid alias");
             }
         }
         return status;
@@ -468,7 +470,7 @@ public class GtkWrapper : WrapperIF
             status = ERR_INVALID_ALIAS;
             if ( errors !is null )
             {
-                errors ~= WError.create(defReader.getLineNumber(), status, "Invalid alias");
+                errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Invalid alias");
             }
         }
 		return status;
@@ -503,7 +505,7 @@ public class GtkWrapper : WrapperIF
             status = ERR_INVALID_ALIAS;
             if ( errors !is null )
             {
-                errors ~= WError.create(defReader.getLineNumber(), status, "Invalid alias");
+                errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Invalid alias");
             }
         }
 		return status;
@@ -565,7 +567,7 @@ public class GtkWrapper : WrapperIF
         catch ( Exception e)
         {
             status = ERR_COPY_FILE;
-            errors ~= WError.create(defReader.getLineNumber(), status, "Cannot copy  file "~fileName);
+            errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot copy  file "~fileName);
         }
 
         writefln("Wrappde %s", fileName);
@@ -679,6 +681,7 @@ public class GtkWrapper : WrapperIF
                     break;
                 case "file":
                     convParms.inFile = std.string.strip(defReader.getValue());
+
                     if ( convParms.inFile.length > 0 )
                     {
                         if ( GtkDClass.startsWith(convParms.inFile,"/") )
@@ -701,7 +704,7 @@ public class GtkWrapper : WrapperIF
                     break;
                 default:
                     status = ERR_FILE_DEFINITION;
-                    errors ~= WError.create(defReader.getLineNumber(), status, "Invalid file definition");
+                    errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Invalid file definition");
                     break;
             }
             key = defReader.next();
@@ -817,7 +820,7 @@ public class GtkWrapper : WrapperIF
             catch ( Exception e)
             {
                 //status = 4;
-                //errors ~= WError.create(defReader.getLineNumber(), status, "Cannot create src package: "~pack);
+                //errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot create src package: "~pack);
             }
             try
             {
@@ -827,13 +830,13 @@ public class GtkWrapper : WrapperIF
             catch ( Exception e)
             {
                 //status = 5;
-                //errors ~= WError.create(defReader.getLineNumber(), status, "Cannot create obj package: "~pack);
+                //errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot create obj package: "~pack);
             }
         }
 
         if ( status != ERR_NONE )
         {
-            errors ~= WError.create(defReader.getLineNumber(), status,
+            errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status,
                         "Invalid package/src definition (need in and out packages or lib name): "~packagevalue);
         }
 

@@ -138,7 +138,6 @@ package: atk atk
 package: gdk-pixbuf gdkpixbuf
 package: gdk gdk
 package: gtk gtk
-package: glade glade
 bind: gtkc
 
 srcdir: srcsv

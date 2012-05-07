@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_accel_label_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -47,13 +46,9 @@
  * 	- glib.Str
  * 	- gobject.Closure
  * 	- gtk.Widget
- * 	- pango.PgAttributeList
- * 	- pango.PgLayout
  * structWrap:
  * 	- GClosure* -> Closure
  * 	- GtkWidget* -> Widget
- * 	- PangoAttrList* -> PgAttributeList
- * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
  * overrides:
@@ -70,8 +65,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.Closure;
 private import gtk.Widget;
-private import pango.PgAttributeList;
-private import pango.PgLayout;
 
 
 

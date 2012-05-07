@@ -47,9 +47,10 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Window
- * 	- gtk.Widget
  * 	- gdk.Screen
+ * 	- gtk.Button
+ * 	- gtk.Widget
+ * 	- gtk.Window
  * 	- gtk.HButtonBox
  * 	- gtk.VBox
  * structWrap:
@@ -58,6 +59,7 @@
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
+ * 	- setAlternativeButtonOrderFromArray -> setAlternativeButtonOrder
  * overrides:
  */
 
@@ -72,9 +74,10 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Window;
-private import gtk.Widget;
 private import gdk.Screen;
+private import gtk.Button;
+private import gtk.Widget;
+private import gtk.Window;
 private import gtk.HButtonBox;
 private import gtk.VBox;
 
@@ -211,9 +214,9 @@ public class Dialog : Window
 	}
 	
 	/** */
-	public Widget addButton(StockID stockID, int responseId)
+	public Button addButton(StockID stockID, int responseId)
 	{
-		return addButton(StockDesc[stockID], responseId);
+		return new Button(cast(GtkButton*)gtk_dialog_add_button(gtkDialog, toStringz(StockDesc[stockID]), responseId));
 	}
 	
 	/** */
@@ -531,7 +534,7 @@ public class Dialog : Window
 	 * newOrder = an array of response ids of
 	 * dialog's buttons. [array length=n_params]
 	 */
-	public void setAlternativeButtonOrderFromArray(int[] newOrder)
+	public void setAlternativeButtonOrder(int[] newOrder)
 	{
 		// void gtk_dialog_set_alternative_button_order_from_array  (GtkDialog *dialog,  gint n_params,  gint *new_order);
 		gtk_dialog_set_alternative_button_order_from_array(gtkDialog, cast(int) newOrder.length, newOrder.ptr);

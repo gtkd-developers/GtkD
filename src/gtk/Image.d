@@ -38,18 +38,15 @@
  * implements:
  * prefixes:
  * 	- gtk_image_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * 	- gtk_image_new_from_stock
- * 	- gtk_image_new_from_icon_name
  * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gio.Icon
  * 	- gio.IconIF
- * 	- gtk.IconSet
  * 	- gdk.Pixbuf
  * 	- gdkpixbuf.PixbufAnimation
  * 	- gtk.IconSet
@@ -74,7 +71,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
-private import gtk.IconSet;
 private import gdk.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
 private import gtk.IconSet;
@@ -166,7 +162,6 @@ public class Image : Misc
 		gtkImage = cast(GtkImage*)obj;
 	}
 	
-	// this will be an enum
 	/**
 	 * Creates a GtkImage displaying a stock icon. Sample stock icon
 	 * names are GTK_STOCK_OPEN, GTK_STOCK_EXIT. Sample stock sizes
@@ -191,30 +186,6 @@ public class Image : Misc
 		}
 		this(cast(GtkImage*)p);
 	}
-	
-	/**
-	 * Creates a GtkImage displaying an icon from the current icon theme.
-	 * If the icon name isn't known, a "broken image" icon will be
-	 * displayed instead. If the current icon theme is changed, the icon
-	 * will be updated appropriately. Since 2.6
-	 * Params:
-	 *  iconName = an icon name
-	 *  size = a stock icon size
-	 * Returns:
-	 *  a new GtkImage displaying the themed icon
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string iconName, GtkIconSize size)
-	{
-		// GtkWidget* gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
-		auto p = gtk_image_new_from_icon_name(Str.toStringz(iconName), size);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_image_new_from_icon_name(Str.toStringz(iconName), size)");
-		}
-		this(cast(GtkImage*)p);
-	}
-	
 	
 	/**
 	 */
@@ -456,6 +427,28 @@ public class Image : Misc
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_image_new_from_animation((animation is null) ? null : animation.getPixbufAnimationStruct())");
+		}
+		this(cast(GtkImage*) p);
+	}
+	
+	/**
+	 * Creates a GtkImage displaying an icon from the current icon theme.
+	 * If the icon name isn't known, a "broken image" icon will be
+	 * displayed instead. If the current icon theme is changed, the icon
+	 * will be updated appropriately.
+	 * Since 2.6
+	 * Params:
+	 * iconName = an icon name
+	 * size = a stock icon size. [type int]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string iconName, GtkIconSize size)
+	{
+		// GtkWidget * gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
+		auto p = gtk_image_new_from_icon_name(Str.toStringz(iconName), size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_new_from_icon_name(Str.toStringz(iconName), size)");
 		}
 		this(cast(GtkImage*) p);
 	}

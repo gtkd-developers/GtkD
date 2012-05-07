@@ -43,11 +43,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- cairo.Surface
  * 	- gdk.Pixbuf
- * 	- gtk.Widget
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GtkWidget* -> Widget
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -61,8 +61,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import cairo.Surface;
 private import gdk.Pixbuf;
-private import gtk.Widget;
 
 
 
@@ -158,10 +158,15 @@ public class OffscreenWindow : Window
 	 * Since 2.20
 	 * Returns: A cairo_surface_t pointer to the offscreen surface, or NULL. [transfer none]
 	 */
-	public cairo_surface_t* getSurface()
+	public Surface getSurface()
 	{
 		// cairo_surface_t * gtk_offscreen_window_get_surface (GtkOffscreenWindow *offscreen);
-		return gtk_offscreen_window_get_surface(gtkOffscreenWindow);
+		auto p = gtk_offscreen_window_get_surface(gtkOffscreenWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
 	/**

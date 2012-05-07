@@ -31,20 +31,21 @@
  * ctorStrct=
  * clss    = Statusbar
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
  * 	- gtk_statusbar_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_statusbar_get_message_area
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Box
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -64,6 +65,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Box;
 private import gtk.Widget;
 
 
@@ -140,6 +142,22 @@ public class Statusbar : HBox
 	{
 		super.setStruct(obj);
 		gtkStatusbar = cast(GtkStatusbar*)obj;
+	}
+	
+	/**
+	 * Retrieves the box containing the label widget.
+	 * Since 2.20
+	 * Returns: a GtkBox. [transfer none]
+	 */
+	public Box getMessageArea()
+	{
+		// GtkWidget * gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
+		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Box(cast(GtkBox*) p);
 	}
 	
 	/**
@@ -284,33 +302,5 @@ public class Statusbar : HBox
 	{
 		// void gtk_statusbar_remove_all (GtkStatusbar *statusbar,  guint context_id);
 		gtk_statusbar_remove_all(gtkStatusbar, contextId);
-	}
-	
-	/**
-	 * Retrieves the box containing the label widget.
-	 * Since 2.20
-	 * Style Property Details
-	 * The "shadow-type" style property
-	 *  "shadow-type" GtkShadowType : Read
-	 * Style of bevel around the statusbar text.
-	 * Default value: GTK_SHADOW_IN
-	 * Signal Details
-	 * The "text-popped" signal
-	 * void user_function (GtkStatusbar *statusbar,
-	 *  guint context_id,
-	 *  gchar *text,
-	 *  gpointer user_data) : Run Last
-	 * Is emitted whenever a new message is popped off a statusbar's stack.
-	 * Returns: a GtkBox. [transfer none]
-	 */
-	public Widget getMessageArea()
-	{
-		// GtkWidget * gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
-		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
 	}
 }

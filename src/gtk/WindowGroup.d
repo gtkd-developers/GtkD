@@ -38,17 +38,18 @@
  * implements:
  * prefixes:
  * 	- gtk_window_group_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.ListG
- * 	- gtk.Window
+ * 	- gdk.Device
  * 	- gtk.Widget
+ * 	- gtk.Window
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GdkDevice* -> Device
  * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
  * module aliases:
@@ -65,8 +66,9 @@ private import glib.ConstructionException;
 
 
 private import glib.ListG;
-private import gtk.Window;
+private import gdk.Device;
 private import gtk.Widget;
+private import gtk.Window;
 
 
 
@@ -208,10 +210,10 @@ public class WindowGroup : ObjectG
 	 * device = a GdkDevice
 	 * Returns: The grab widget, or NULL. [transfer none] Since 3.0
 	 */
-	public Widget getCurrentDeviceGrab(GdkDevice* device)
+	public Widget getCurrentDeviceGrab(Device device)
 	{
 		// GtkWidget * gtk_window_group_get_current_device_grab  (GtkWindowGroup *window_group,  GdkDevice *device);
-		auto p = gtk_window_group_get_current_device_grab(gtkWindowGroup, device);
+		auto p = gtk_window_group_get_current_device_grab(gtkWindowGroup, (device is null) ? null : device.getDeviceStruct());
 		if(p is null)
 		{
 			return null;

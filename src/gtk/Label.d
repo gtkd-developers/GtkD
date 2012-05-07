@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_label_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -47,10 +46,12 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Menu
  * 	- gtk.Widget
  * 	- pango.PgAttributeList
  * 	- pango.PgLayout
  * structWrap:
+ * 	- GtkMenu* -> Menu
  * 	- GtkWidget* -> Widget
  * 	- PangoAttrList* -> PgAttributeList
  * 	- PangoLayout* -> PgLayout
@@ -70,6 +71,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Menu;
 private import gtk.Widget;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
@@ -409,7 +411,7 @@ public class Label : Misc
 		}
 	}
 	
-	void delegate(GtkMenu*, Label)[] onPopulatePopupListeners;
+	void delegate(Menu, Label)[] onPopulatePopupListeners;
 	/**
 	 * The ::populate-popup signal gets emitted before showing the
 	 * context menu of the label. Note that only selectable labels
@@ -417,7 +419,7 @@ public class Label : Misc
 	 * If you need to add items to the context menu, connect
 	 * to this signal and append your menuitems to the menu.
 	 */
-	void addOnPopulatePopup(void delegate(GtkMenu*, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPopulatePopup(void delegate(Menu, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
 		{
@@ -434,9 +436,9 @@ public class Label : Misc
 	}
 	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu, Label label)
 	{
-		foreach ( void delegate(GtkMenu*, Label) dlg ; label.onPopulatePopupListeners )
+		foreach ( void delegate(Menu, Label) dlg ; label.onPopulatePopupListeners )
 		{
-			dlg(menu, label);
+			dlg(new Menu(menu), label);
 		}
 	}
 	

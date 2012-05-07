@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_message_dialog_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -49,8 +48,8 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.VBox
- * 	- gtk.Window
  * 	- gtk.Widget
+ * 	- gtk.Window
  * structWrap:
  * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
@@ -69,8 +68,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gtk.VBox;
-private import gtk.Window;
 private import gtk.Widget;
+private import gtk.Window;
 
 
 

@@ -46,9 +46,10 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
+ * 	- gtk.Button
  * 	- gtk.HBox;
  * 	- gtk.VButtonBox
+ * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -67,9 +68,10 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Widget;
+private import gtk.Button;
 private import gtk.HBox;;
 private import gtk.VButtonBox;
+private import gtk.Widget;
 
 
 
@@ -171,9 +173,9 @@ public class InfoBar : HBox
 	}
 	
 	/** */
-	public Widget addButton(StockID stockID, int responseId)
+	public Button addButton(StockID stockID, int responseId)
 	{
-		return addButton(StockDesc[stockID], responseId);
+		return new Button(cast(GtkButton*)gtk_info_bar_add_button(gtkInfoBar, toStringz(StockDesc[stockID]), responseId));
 	}
 	
 	/** */

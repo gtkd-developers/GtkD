@@ -155,7 +155,7 @@ public class PopupBox
 		MessageDialog d = new MessageDialog(
 		parent, cast(GtkDialogFlags)0,
 		MessageType.QUESTION,
-		ButtonsType.NONE ,
+		ButtonsType.NONE,
 		message);
 		d.setTitle(title);
 		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);

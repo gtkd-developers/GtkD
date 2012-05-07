@@ -38,16 +38,13 @@
  * implements:
  * prefixes:
  * 	- gtk_progress_bar_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Adjustment
  * structWrap:
- * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,7 +59,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Adjustment;
 
 
 
