@@ -19,8 +19,8 @@ Who are you?
 If you want to write some wicked cool D and Gtk+ apps, grab the gtkD release 
 archive at dsource.org/projects/gtkd.
 
-If you want to tweak the automatic wrapper or help with it, use subversion...
-http://svn.dsource.org/projects/gtkd/trunk
+If you want to tweak the automatic wrapper or help with it, use git...
+https://github.com/gtkd-developers/GtkD
 
 Installation:
 -------------
