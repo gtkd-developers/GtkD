@@ -34,10 +34,10 @@ struct WError
 
     int lineNumber;
     int code;
-    char[] message;
+    string message;
 
 
-    static WError* create(int lineNumber, int code, char[] message)
+    static WError* create(int lineNumber, int code, string message)
     {
         WError* error = new WError;
         error.lineNumber = lineNumber;
@@ -69,15 +69,16 @@ Paths:
 
 */
 
-char[] joinRootDirFile(char[] root,char[] dir, char[]file)
+string joinRootDirFile(string root, string dir, string file)
 {
-  return std.path.join(std.path.join(root,dir),file);
+  return std.path.buildPath(std.path.buildPath(root,dir),file);
 }
 
 //Moved here because of dsss:
 private import utils.DefReader;
 private import utils.GtkDClass;
 private import utils.convparms;
+private import utils.IndentedStringBuilder;
 
 /**
  * converts and wrap the GTK libs
@@ -87,22 +88,23 @@ public class GtkWrapper : WrapperIF
     private import std.file;
     private import std.path;
     private import std.stdio;
-	private import std.string;
+    private import std.string;
+    private import std.array;
 
-    private char[] buildText;   /// to build the build.d
-    private char[] buildTextLibs;   /// to build the build.d libs
+    private string buildText;   /// to build the build.d
+    private string buildTextLibs;   /// to build the build.d libs
 
-    char[] srcOut = "src";      /// the src output directory
-    char[] srcDir;
-    char[] apiRoot;
-    char[] inputRoot;
-    char[] outputRoot;
-    char[] buildDir = "build";
-    char[] buildPath;
-    char[] buildFile =  "gtkD.d";
-    char[] bindingsDir;
+    string srcOut = "src";      /// the src output directory
+    string srcDir;
+    string apiRoot;
+    string inputRoot;
+    string outputRoot;
+    string buildDir = "build";
+    string buildPath;
+    string buildFile =  "gtkD.d";
+    string bindingsDir;
 
-    public static char[] license =
+    public static string license =
 "/*"
 "\n * This file is part of gtkD."
 "\n * "
@@ -141,48 +143,48 @@ public class GtkWrapper : WrapperIF
         ERR_CREATE_PACKAGE,
     }
 
-    char[][char[]] aliases;
+    string[string] aliases;
 
-    char[][char[]] enumTypes;
+    string[string] enumTypes;
 
     DefReader defReader;
 
 
-    char[][char[]] packages;
+    string[string] packages;
 
     WError*[] errors;
 
-    private char[][] externalDeclarations;  /// the information to build the loader tables
+    private string[] externalDeclarations;  /// the information to build the loader tables
 
-    private char[][] collectedAliases;  /// public, module level type aliases
-    private char[][] collectedEnums;    /// public, module level definitions of enums
-    private char[][] stockEnums;        /// special enums for StockID
-    private char[][] stockChars;        /// the char[] values for StockIDs
-    private char[][] gTypes;            /// special enums for G_TYPE_*
-    private char[][] collectedStructs;  /// public, module level definitions of structs
-    private char[][] collectedTypes;    /// public, module level definitions of other types
-    private char[][] collectedFuncts;   /// public, module level definitions of functions
-    private char[][] collectedUnions;   /// public, module level definitions of unions
-    private char[][] collectedConstants;/// public, module level type contants
+    private string[] collectedAliases;  /// public, module level type aliases
+    private string[] collectedEnums;    /// public, module level definitions of enums
+    private string[] stockEnums;        /// special enums for StockID
+    private string[] stockChars;        /// the string values for StockIDs
+    private string[] gTypes;            /// special enums for G_TYPE_*
+    private string[] collectedStructs;  /// public, module level definitions of structs
+    private string[] collectedTypes;    /// public, module level definitions of other types
+    private string[] collectedFuncts;   /// public, module level definitions of functions
+    private string[] collectedUnions;   /// public, module level definitions of unions
+    private string[] collectedConstants;/// public, module level type contants
 
-    private char[][] lookupTypedefs;    /// lookup file definitions to be included on the typedefs.d
-    private char[][] lookupAliases;     /// lookup file aliases definitions
-    private char[][] lookupEnums;       /// lookup file enum definitions
-    private char[][] lookupStructs;     /// lookup file struct definitions
-    private char[][] lookupTypes;       /// lookup file type definitions
-    private char[][] lookupFuncts;      /// lookup file functs definitions
-    private char[][] lookupUnions;      /// lookup file unions definitions
-    private char[][] lookupConstants;   /// lookup file constants definitions
+    private string[] lookupTypedefs;    /// lookup file definitions to be included on the typedefs.d
+    private string[] lookupAliases;     /// lookup file aliases definitions
+    private string[] lookupEnums;       /// lookup file enum definitions
+    private string[] lookupStructs;     /// lookup file struct definitions
+    private string[] lookupTypes;       /// lookup file type definitions
+    private string[] lookupFuncts;      /// lookup file functs definitions
+    private string[] lookupUnions;      /// lookup file unions definitions
+    private string[] lookupConstants;   /// lookup file constants definitions
 
     DefReader[] defReaders;
 
-    this(char[] apiRoot)
+    this(string apiRoot)
     {
         this.apiRoot = apiRoot;
         //srcOut = "src";
-        //if (!std.file.exists(std.path.join(outputRoot,srcOut)))
+        //if (!std.file.exists(std.path.buildPath(outputRoot,srcOut)))
         //{
-        //  std.file.mkdir(std.path.join(outputRoot,srcOut));
+        //  std.file.mkdir(std.path.buildPath(outputRoot,srcOut));
         //}
         
     }
@@ -215,27 +217,27 @@ public class GtkWrapper : WrapperIF
 
     public void writeBuildText()
     {
-	    char[] outfile;
+	    string outfile;
 
-        buildPath = std.path.join(std.path.join(outputRoot,srcDir),buildDir);
+        buildPath = std.path.buildPath(std.path.buildPath(outputRoot,srcDir),buildDir);
         if (!std.file.exists(buildPath))
         {
             std.file.mkdir(buildPath);
 
     	}
-        outfile = std.path.join(buildPath,buildFile);
+        outfile = std.path.buildPath(buildPath,buildFile);
         writefln("writeBuildText: %s",outfile);
 
         std.file.write(outfile, buildText~"\n\n"~buildTextLibs);
     }
 
-    int process(char[] apiLookupDefinition)
+    int process(string apiLookupDefinition)
     {
 
         startBuildText();
 
         int status = ERR_NONE;
-        defReader = new DefReader(std.path.join(apiRoot,apiLookupDefinition));
+        defReader = new DefReader(std.path.buildPath(apiRoot,apiLookupDefinition));
 
         if ( status==ERR_NONE && "license" == defReader.next() )
         {
@@ -268,7 +270,7 @@ public class GtkWrapper : WrapperIF
 
         debug(aliases) writefln("key after alias = ",defReader.getKey());
 
-        debug(aliases) foreach(char[] key ; aliases.keys.sort)
+        debug(aliases) foreach(string key ; aliases.keys.sort)
                         {
                             writefln("alias %s = %s",key, aliases[key]);
                         }
@@ -292,12 +294,12 @@ public class GtkWrapper : WrapperIF
             errors ~= WError.create(defReader.getLineNumber(), status, "Cannot determine output root");
         }
 
-        char[] key = defReader.next();
+        string key = defReader.next();
 
         while ( status==ERR_NONE && ( "srcdir" ==  key ))
         {
             srcDir = defReader.getValue();
-            char[] chkdir = std.path.join(outputRoot,srcDir);
+            string chkdir = std.path.buildPath(outputRoot,srcDir);
             if (!std.file.exists(chkdir))
             {
               std.file.mkdir(chkdir);
@@ -315,9 +317,9 @@ public class GtkWrapper : WrapperIF
 
         if ( status==ERR_NONE )
         {
-            char[] pack;
-            char[] outPack;
-            char[] prevPack;
+            string pack;
+            string outPack;
+            string prevPack;
             while ( status==ERR_NONE && defReader !is null
                     //&& ("wrap" == defReader.getKey() || "lookup" == defReader.getKey())
                   )
@@ -363,12 +365,12 @@ public class GtkWrapper : WrapperIF
                             buildLoaderTable(outPack, externalDeclarations);
                             externalDeclarations.length = 0;
                         }
-                        prevPack = outPack.dup;
+                        prevPack = outPack;
                         break;
 
                     case "lookup":
                         defReaders ~= defReader;
-                        defReader = new DefReader(std.path.join(apiRoot,defReader.getValue()));
+                        defReader = new DefReader(std.path.buildPath(apiRoot,defReader.getValue()));
                         defReader.next();
                         debug(lookup)writefln("lookup on file %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
                         break;
@@ -413,16 +415,16 @@ public class GtkWrapper : WrapperIF
     }
 
     /**
-     * Creates an entry on a char[][char[]] associative array
+     * Creates an entry on a string[string] associative array
      * Params:
      *      aa =
      *      defReader =
      * Returns:
      */
-    private static int loadAA(inout char[][char[]] aa, DefReader defReader, inout WError*[] errors = null)
+    private static int loadAA(string[string] aa, DefReader defReader, WError*[] errors = null)
     {
         int status = ERR_NONE;
-        char[][] vals = std.string.split(defReader.getValue());
+        string[] vals = std.string.split(defReader.getValue());
         if ( vals.length == 1 )
         {
             vals ~= "";
@@ -444,16 +446,16 @@ public class GtkWrapper : WrapperIF
     }
 
     /**
-     * Creates an entry on a char[][][char[]] associative array
+     * Creates an entry on a string[][string] associative array
      * Params:
      *      aa =
      *      defReader =
      * Returns:
      */
-    private static int loadAA(inout char[][][char[]] aa, DefReader defReader, inout WError*[] errors = null)
+    private static int loadAA(string[][string] aa, DefReader defReader, WError*[] errors = null)
     {
         int status = ERR_NONE;
-        char[][] vals = std.string.split(defReader.getValue());
+        string[] vals = std.string.split(defReader.getValue());
         if ( vals.length == 1 )
         {
             vals ~= "";
@@ -475,16 +477,16 @@ public class GtkWrapper : WrapperIF
     }
 
 /**
-     * Creates an entry on a char[][][char[]] associative array
+     * Creates an entry on a string[][string] associative array
      * Params:
      *      aa =
      *      defReader =
      * Returns:
      */
-    private static int loadAAA(inout char[][char[]][char[]] aa, DefReader defReader, inout WError*[] errors = null)
+    private static int loadAAA(string[string][string] aa, DefReader defReader, WError*[] errors = null)
     {
         int status = ERR_NONE;
-        char[][] vals = std.string.split(defReader.getValue());
+        string[] vals = std.string.split(defReader.getValue());
         if ( vals.length == 1 )
         {
             vals ~= "";
@@ -509,15 +511,15 @@ public class GtkWrapper : WrapperIF
 		return status;
     }
 
-    private char[] loadLicense()
+    private string loadLicense()
     {
         license = loadText("license");
         return license;
     }
 
-    private char[] loadText(char[] key)
+    private string loadText(string key)
     {
-        char[] text;
+        string text;
 
         while ( key!=defReader.next(false) && "end"!=defReader.getValue() )
         {
@@ -534,9 +536,9 @@ public class GtkWrapper : WrapperIF
         return text;
     }
 
-    private char[][] loadTextMultiLine(char[] key)
+    private string[] loadTextMultiLine(string key)
     {
-        char[][] text;
+        string[] text;
 
         while ( key!=defReader.next(false) && "end"!=defReader.getValue() )
         {
@@ -546,21 +548,21 @@ public class GtkWrapper : WrapperIF
         return text;
     }
 
-    private int copyFile(char[] fromDir, char[] toDir, char[] fileName)
+    private int copyFile(string fromDir, string toDir, string fileName)
     {
         debug(writeFile)writefln("GtkWrapper.copyFile %s", fileName);
         int status = ERR_NONE;
         debug(file)writefln("(1)GtkWrapper.copyFile %s %s", fromDir, fileName);
-        void[] text = std.file.read(std.path.join(fromDir, fileName));
+        void[] text = std.file.read(std.path.buildPath(fromDir, fileName));
         try
         {
             //debug(copyFile)
-            writefln("copying file [%s] to [%s]", std.path.join(fromDir, fileName), std.path.join(toDir, fileName));
+            writefln("copying file [%s] to [%s]", std.path.buildPath(fromDir, fileName), std.path.buildPath(toDir, fileName));
             if (!std.file.exists(toDir))
         {
             std.file.mkdir(toDir);
         }
-            std.file.write(std.path.join(toDir, fileName), text);
+            std.file.write(std.path.buildPath(toDir, fileName), text);
         }
         catch ( Exception e)
         {
@@ -573,7 +575,7 @@ public class GtkWrapper : WrapperIF
         return status;
     }
 
-    private int wrapFile(char[] pack, char[] outPack)
+    private int wrapFile(string pack, string outPack)
     {
         debug(file)writefln("GtkWrapper.wrapFile pack=%s outPack=%s", pack, outPack);
         int status = ERR_NONE;
@@ -582,27 +584,27 @@ public class GtkWrapper : WrapperIF
 
         ConvParms* convParms = new ConvParms;
 
-        char[] text;
+        string text;
 
-        char[] key = defReader.next();
+        string key = defReader.next();
 
-        char[] keys = " file text struct realStruct ctorStruct class template interface extend implements prefix strictPrefix"
+        string keys = " file text struct realStruct ctorStruct class template interface extend implements prefix strictPrefix"
                       " openFile mergeFile closeFile outFile"
                       " copy import import(tango) structWrap alias moduleAlias override"
                       " noprefix nostruct nocode nosignal"
                       " code interfaceCode"
                       " srcout out inout array"
                       ;
-        if (outPack == "lib") {char[] tmp = pack.dup; pack = outPack.dup; outPack = tmp;} //undo Bind hack...oupPack now holds bind dir.
+        if (outPack == "lib") {string tmp = pack; pack = outPack; outPack = tmp;} //undo Bind hack...oupPack now holds bind dir.
         convParms.outPack = outPack;
         convParms.bindDir = bindingsDir;
 
-        while ( std.string.find(keys, key) > 0 )
+        while ( std.string.indexOf(keys, key) > 0 )
         {
             debug(wrapParameter)writefln("wrapFile [%s] = %s", key, defReader.getValue());
             switch ( key )
             {
-                case "copy": status = copyFile(apiRoot,std.path.join(srcOut,outPack),defReader.getValue());
+                case "copy": status = copyFile(apiRoot,std.path.buildPath(srcOut,outPack),defReader.getValue());
                     buildTextLibs ~= "private import " ~outPack~ "." ~defReader.getValue()[0..$-2]~ ";\n";
                     break;
                 case "srcout": srcOut = defReader.getValue(); break;
@@ -655,8 +657,8 @@ public class GtkWrapper : WrapperIF
                     break;
                 case "interface":
                     convParms.interf = defReader.getValue();
-                    char[] saveClass = convParms.clss.dup;
-                    char[][] saveTempl = convParms.templ.dup;
+                    string saveClass = convParms.clss;
+                    string[] saveTempl = convParms.templ;
                     convParms.templ.length = 0;
                     convParms.outFile = convParms.interf;
                     convParms.isInterface = true;
@@ -686,12 +688,12 @@ public class GtkWrapper : WrapperIF
                             debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", convParms.toString());
                             debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", defReader.toString());
                             debug(file)writefln("(2)GtkWrapper.wrapFile %s", convParms.inFile);
-                            text = cast(char[]) std.file.read(convParms.inFile);
+                            text = cast(string) std.file.read(convParms.inFile);
                         }
                         else
                         {
                             debug(file)writefln("(3)GtkWrapper.wrapFile %s", convParms.inFile);
-                            text = cast(char[]) std.file.read(std.path.join(std.path.join(inputRoot,pack),convParms.inFile));
+                            text = cast(string) std.file.read(std.path.buildPath(std.path.buildPath(inputRoot,pack),convParms.inFile));
                         }
                     }
                     else
@@ -717,7 +719,7 @@ public class GtkWrapper : WrapperIF
      *      text =
      *      convParms =
      */
-    private void outFile(char[] outPack, char[] text, ConvParms* convParms)
+    private void outFile(string outPack, string text, ConvParms* convParms)
     {
         GtkDClass gtkDClass = openFile(outPack, text, convParms);
         closeFile("", gtkDClass, convParms);
@@ -731,7 +733,7 @@ public class GtkWrapper : WrapperIF
      *      convParms =
      * Returns:
      */
-    private GtkDClass openFile(char[] outPack, char[] text, ConvParms* convParms)
+    private GtkDClass openFile(string outPack, string text, ConvParms* convParms)
     {
         convParms.outFile = defReader.getValue();
         debug(wrapFile)writefln("######### gtkDClass for %s.%s (%s)
@@ -744,12 +746,12 @@ public class GtkWrapper : WrapperIF
         return gtkDClass;
     }
 
-    private void closeFile(char[] text, GtkDClass gtkDClass, ConvParms* convParms)
+    private void closeFile(string text, GtkDClass gtkDClass, ConvParms* convParms)
     {
         debug(writeFile)writefln("GtkWrapper.closeFile %s",
 			gtkDClass.getOutFile(outputRoot, srcDir));
-        char[] gtkDText = gtkDClass.closeGtkDClass(text, convParms);
-        char[] writeDir = std.path.join(outputRoot, srcDir);
+        string gtkDText = gtkDClass.closeGtkDClass(text, convParms);
+        string writeDir = std.path.buildPath(outputRoot, srcDir);
         if ( gtkDClass.getError() == 0 )
         {
             if (!std.file.exists(writeDir))
@@ -784,12 +786,12 @@ public class GtkWrapper : WrapperIF
      *      pack =
      * Returns:
      */
-    private int createPackage(char[] outputRoot, char[] packagevalue)
+    private int createPackage(string outputRoot, string packagevalue)
     {
         int status = ERR_NONE;
 
-        char[][] packages = std.string.split(packagevalue, " ");
-	char[] packageDir;
+        string[] packages = std.string.split(packagevalue, " ");
+	string packageDir;
 
         if ( packages.length == 1 && "bind" == defReader.getKey() )
         {
@@ -849,17 +851,17 @@ public class GtkWrapper : WrapperIF
         }
     }
 
-    public char[] getLicense()
+    public string getLicense()
     {
         return license;
     }
 
-    public char[][char[]] getAliases()
+    public string[string] getAliases()
     {
         return aliases;
     }
 
-    public char[][char[]] getEnumTypes()
+    public string[string] getEnumTypes()
     {
         return enumTypes;
     }
@@ -869,9 +871,9 @@ public class GtkWrapper : WrapperIF
         return currIncludeComments;
     }
 
-	void buildLoaderTable(char[] loaderTableName, char[][] declarations)
+	void buildLoaderTable(string loaderTableName, string[] declarations)
 	{
-		char[] externalText = license;
+		string externalText = license;
 
 		externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";\n"
 		                "\nversion(Tango)"
@@ -899,10 +901,10 @@ public class GtkWrapper : WrapperIF
 			                "\nmixin( _shared ~ \"static this()"
 			                "\n{";
 
-			char[] library = "LIBRARY."~ loaderTableName.toupper();
+			string library = "LIBRARY."~ toUpper(loaderTableName);
 
 			//Returns an array of libraries to try and link with.
-			char[] getLibrary(char[] funct)
+			string getLibrary(string funct)
 			{
 				if ( GtkDClass.startsWith(funct, "gdk") )
 					return library ~ ", LIBRARY.GDKPIXBUF";
@@ -915,10 +917,10 @@ public class GtkWrapper : WrapperIF
 			}
 
 			//Generate the static this, where the linking takes place
-			foreach ( char[] declaration; declarations )
+			foreach ( string declaration; declarations )
 			{
-				char[] dec = std.string.strip(declaration);
-				int pos = std.string.rfind(dec,')');
+				string dec = std.string.strip(declaration);
+				int pos = std.string.lastIndexOf(dec,')');
 
 				if ( GtkDClass.startsWith(dec, "//") )
 					externalText ~= "\n\t"~ dec ~"\n\n";
@@ -933,7 +935,7 @@ public class GtkWrapper : WrapperIF
 					}
 					else
 					{
-						char[] functName = std.string.strip(dec[pos+1..$]);
+						string functName = std.string.strip(dec[pos+1..$]);
 						if ( functName.length > 0 )
 						{
 							externalText ~= "Linker.link("~ functName ~", \\\""~ functName ~"\\\", "~ getLibrary(functName) ~");";
@@ -948,14 +950,14 @@ public class GtkWrapper : WrapperIF
 			                "{\n";
 
 			//Generate the functions.
-			foreach(char[] declaration ; declarations)
+			foreach(string declaration ; declarations)
 			{
-				char[] dec = std.string.strip(declaration);
+				string dec = std.string.strip(declaration);
 
 				if ( loaderTableName == "glib" || loaderTableName == "pango" ) 
-					dec = dec.replace("FILE*", "void*"); //Phobos workaround. 
+					dec = replace(dec, "FILE*", "void*"); //Phobos workaround.
 
-				int pos = std.string.rfind(dec,')') + 1;
+				int pos = std.string.lastIndexOf(dec,')') + 1;
 				externalText ~= '\t';
 
 				if ( dec.length > 0 && dec[0]=='#' )
@@ -972,10 +974,10 @@ public class GtkWrapper : WrapperIF
 			externalText ~= "}\");\n";
 
 			//Generate the aliases.
-			foreach ( char[] declaration; declarations )
+			foreach ( string declaration; declarations )
 			{
-				char[] dec = std.string.strip(declaration);
-				int pos = std.string.rfind(dec,')');
+				string dec = std.string.strip(declaration);
+				int pos = std.string.lastIndexOf(dec,')');
 
 				if ( GtkDClass.startsWith(dec, "//") )
 					externalText ~= '\n'~ dec ~"\n\n";
@@ -988,7 +990,7 @@ public class GtkWrapper : WrapperIF
 					}
 					else
 					{
-						char[] functName = std.string.strip(dec[pos+1..$]);
+						string functName = std.string.strip(dec[pos+1..$]);
 						if ( functName.length > 0 )
 						{
 							externalText ~= "alias c_"~ functName ~"  "~ functName ~";";
@@ -999,82 +1001,75 @@ public class GtkWrapper : WrapperIF
 			}
 		}
 
-		char[] pathname = joinRootDirFile(std.path.join(outputRoot,srcDir),bindingsDir,loaderTableName~".d");
+		string pathname = joinRootDirFile(std.path.buildPath(outputRoot,srcDir),bindingsDir,loaderTableName~".d");
 		std.file.write(pathname,externalText);
 	}
 
-    void buildTypedefs(char[] outPack)
+    void buildTypedefs(string outPack)
     {
 
-        char[] def = license;
+        string def = license;
         def ~= "module "~bindingsDir~"."~outPack~"types;\n\n";
 
-        char[] tabs = "";
+        auto indenter = new IndentedStringBuilder();
 
-        GtkDClass.append(def, lookupTypedefs, tabs);
-
-
+        def ~= indenter.format(lookupTypedefs);
 
         if ( gTypes.length > 0 )
         {
             def ~= "\n\n// G_TYPE_*";
             def ~= "\nenum GType : size_t";
             def ~= "\n{\n";
-            tabs ~= "\t";
-            GtkDClass.append(def, gTypes, tabs);
-            tabs = "";
+            indenter.setIndent("\t");
+            def ~= indenter.format(gTypes);
             def ~= "\n}\n\n";
         }
-        tabs = "";
+        indenter.setIndent("");
 
-        GtkDClass.append(def, lookupConstants, tabs);
+        def ~= indenter.format(lookupConstants);
+        def ~= indenter.format(lookupAliases);
+        def ~= indenter.format(collectedAliases);
 
-        GtkDClass.append(def, lookupAliases, tabs);
-        GtkDClass.append(def, collectedAliases, tabs);
-        tabs = "";
+        indenter.setIndent("");
+        def ~= indenter.format(lookupEnums);
+        def ~= indenter.format(collectedEnums);
 
-        GtkDClass.append(def, lookupEnums, tabs);
-        GtkDClass.append(def, collectedEnums, tabs);
-        tabs = "";
+        indenter.setIndent("");
+        def ~= indenter.format(lookupStructs);
+        def ~= indenter.format(collectedStructs);
 
-        GtkDClass.append(def, lookupStructs, tabs);
-        GtkDClass.append(def, collectedStructs, tabs);
-        tabs = "";
+        indenter.setIndent("");
+        def ~= indenter.format(lookupTypes);
+        def ~= indenter.format(collectedTypes);
 
-        GtkDClass.append(def, lookupTypes, tabs);
-        GtkDClass.append(def, collectedTypes, tabs);
-        tabs = "";
+        indenter.setIndent("");
+        def ~= indenter.format(lookupFuncts);
+        def ~= indenter.format(collectedFuncts);
 
-        GtkDClass.append(def, lookupFuncts, tabs);
-        GtkDClass.append(def, collectedFuncts, tabs);
-        tabs = "";
-
-        GtkDClass.append(def, lookupUnions, tabs);
-        GtkDClass.append(def, collectedUnions, tabs);
-        tabs = "";
+        indenter.setIndent("");
+        def ~= indenter.format(lookupUnions);
+        def ~= indenter.format(collectedUnions);
 
         if ( stockEnums.length > 0 )
         {
             def ~= "\n\n// StockIDs";
             def ~= "\nenum StockID";
             def ~= "\n{\n";
-            tabs ~= "\t";
-            GtkDClass.append(def, stockEnums, tabs);
-            tabs = "";
+            indenter.setIndent("\t");
+            def ~= indenter.format(stockEnums);
             def ~= "\n}";
             def ~= "\n\n// Stock strings";
             def ~= "\nstring[] StockDesc = ";
             def ~= "\n[";
-            tabs ~= "\t";
-            GtkDClass.append(def, stockChars, tabs);
-            tabs = "";
+            indenter.setIndent("\t");
+            def ~= indenter.format(stockChars);
             def ~= "\n];";
         }
-        GtkDClass.append(def, collectedConstants, tabs);
-        tabs = "";
+        indenter.setIndent("");
+        def ~= indenter.format(collectedConstants);
 
-        char[] pathname =
-		joinRootDirFile(std.path.join(outputRoot,srcDir), bindingsDir, outPack~"types.d");
+        string pathname =
+          joinRootDirFile(std.path.buildPath(outputRoot,srcDir), bindingsDir, outPack~"types.d");
         std.file.write(pathname,def);
 
         lookupTypedefs.length = 0;
@@ -1097,9 +1092,7 @@ public class GtkWrapper : WrapperIF
         stockEnums.length = 0;
         stockChars.length = 0;
         gTypes.length = 0;
-
     }
-
 }
 
 int main()

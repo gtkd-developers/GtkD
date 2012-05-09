@@ -31,6 +31,7 @@ public class HtmlStrip
 	
 	private import std.file;
 	private import std.stdio;
+	private import std.conv;
 	private import std.string;
 
 	public bool convertComment = true;
@@ -45,15 +46,15 @@ public class HtmlStrip
 		
 	}
 	
-	char[] strip(char[] htmlText, bool checkUTF=true)
+	string strip(string htmlText, bool checkUTF=true)
 	{
 		int markupCount = 0;
 		char[] stripped;
 		char pc = ' ';
-		char[] mark;
+		string mark;
 		bool inAmper = false;
 		bool inCode = false;
-		char[] amper;
+		string amper;
 
 		foreach ( char c ; htmlText )
 		{
@@ -180,13 +181,13 @@ public class HtmlStrip
 			cleanUTF(stripped);
 		}
 				
-		return stripped;
+		return to!(string)(stripped);
 	}
 	
-	char[] stripFile(char[] filename)
+	string stripFile(string filename)
 	{
 		debug(file)writefln("HtmlStrip.stripFile filename = %s", filename);
-		char[] text = cast(char[])std.file.read(filename);
+		string text = cast(string)std.file.read(filename);
 		
 		//writefln("Original html:\n%s", text);
 
@@ -195,7 +196,7 @@ public class HtmlStrip
 	
 	private import std.utf;
 	
-	public void cleanUTF(inout char[] str)
+	public void cleanUTF(char[] str)
 	{
 		//printf("before utfClean\n%s\nend before utfClean\n", (str~"\0").ptr);
 		size_t i = 0;
@@ -229,7 +230,7 @@ version (standAlone)
 	{
 
 		HtmlStrip strip = new HtmlStrip();
-		char[] stripped = strip.stripFile("/home/mike/D/gtkD/gtkD-2.20/wrap/gtkdocs/glib-html-2.24.0/glib-Lexical-Scanner.html");
+		string stripped = strip.stripFile("/home/mike/D/gtkD/gtkD-2.20/wrap/gtkdocs/glib-html-2.24.0/glib-Lexical-Scanner.html");
 	
 		writefln("Stripped html:\n%s", stripped);
 	

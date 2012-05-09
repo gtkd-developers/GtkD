@@ -33,17 +33,18 @@ public class DefReader
 	
 	private import std.file;
 	private import std.string;
+	private import std.conv;
 	
 	private import std.stdio;
 
 	private import utils.GtkDClass;
 	
-	char[] fileName;
-	char[][] lines;
+	string fileName;
+	string[] lines;
 	
-	char[] fullLine;
-	char[] key;
-	char[] value;
+	string fullLine;
+	string key;
+	string value;
 	
 	int currLine = 0;
 	
@@ -53,27 +54,27 @@ public class DefReader
 	 * Params:
 	 *    	fileName = 	The file name of the file containing the conversion definition
 	 */
-	this ( char[] fileName )
+	this ( string fileName )
 	{
 		this.fileName = fileName;
 		debug(file)writefln("DefReader.ctor fileName = %s", fileName);
-		lines = std.string.splitlines(cast(char[]) std.file.read(fileName));
+		lines = std.string.splitLines(cast(string) std.file.read(fileName));
 	}
 
-	public char[] toString()
+	public string toString()
 	{
-		char[] str;
+		string str;
 		str ~= "\n[DefReader]"
-				~ "\nfileName = "~fileName
-				~ "\ncurrLine = "~std.string.toString(currLine)
-				~ "\nfullLine = "~fullLine
-				~ "\nkey      = "~key
-				~ "\nvalue    + "~value
+				~ "\nfileName = " ~ fileName
+				~ "\ncurrLine = " ~ to!(string)(currLine)
+				~ "\nfullLine = " ~ fullLine
+				~ "\nkey      = " ~ key
+				~ "\nvalue    + " ~ value
 				;
 		return str;
 	}
 	
-	char[] getFileName()
+	string getFileName()
 	{
 		return fileName;
 	}
@@ -83,15 +84,15 @@ public class DefReader
 	 * both key and value a stripped of non visible start and ending chars
 	 * Returns: The key after read the next key/value pair
 	 */
-	char[] next(bool skipEmpty = true)
+	string next(bool skipEmpty = true)
 	{
 		key.length = 0;
 		value.length = 0;
-		char[] line;
+		string line;
 		if ( currLine < lines.length )
 		{
 			fullLine = lines[currLine++];
-			line = std.string.strip(fullLine.dup);
+			line = std.string.strip(fullLine);
 			int commentCount = 0;
 			while ( skipEmpty
 					&& (commentCount > 0  || line.length ==0 || line[0] == '#' || GtkDClass.startsWith(line, "#*") )
@@ -108,13 +109,13 @@ public class DefReader
 				}
 
 				fullLine = lines[currLine++];
-				line = std.string.strip(fullLine.dup);
+				line = std.string.strip(fullLine);
 			}
 		}
 		
 		if ( line.length > 0 )
 		{
-			int pos = std.string.find(line, ':');
+			int pos = std.string.indexOf(line, ':');
 			if ( pos > 0 )
 			{
 				key = std.string.strip(line[0 .. pos]);
@@ -136,7 +137,7 @@ public class DefReader
 	 * Gets the key of the current key/value pair
 	 * Returns: The current key
 	 */
-	char[] getKey()
+	string getKey()
 	{
 		return key;
 	}
@@ -145,7 +146,7 @@ public class DefReader
 	 * Gets the value of the current key/value pair
 	 * Returns: The current value
 	 */
-	char[] getValue()
+	string getValue()
 	{
 		return value;
 	}
@@ -153,10 +154,10 @@ public class DefReader
 	
 	bool getValueBit()
 	{
-		return std.string.find(" 1 ok OK Ok true TRUE True Y y yes YES Yes ", value) > 0;
+		return std.string.indexOf(" 1 ok OK Ok true TRUE True Y y yes YES Yes ", value) > 0;
 	}
 	
-	char[] getFullLine()
+	string getFullLine()
 	{
 		return fullLine;
 	}

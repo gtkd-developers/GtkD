@@ -28,8 +28,11 @@ import std.path;
 private import std.string;
 private import std.process;
 
-static char[] htod_location = "wrap/utils/htod.exe";
-static char[] wine_command = "wine";
+static string htod_location = "wrap/utils/htod.exe";
+static string wine_command = "wine";
+
+// there is no longer a 'bit' type
+alias bool bit;
 
 //debug = flow;
 //debug = processLine;
@@ -110,38 +113,36 @@ public class Ranges
  */
 public class HTODConvert
 {
-	
-	char[] dText;
-
+	string dText;
 	
 	DefReader defReader;
 
 	/** the library id on the system (for instance GL for libGL.so) */
-	char[] lib;
+	string lib;
 	/** the .h (or .h pos-processed) to convert to .d */
-	char[] preFile;
+	string preFile;
 	/** the package */
-	char[] pack;
-	char[] bindDir;
-	char[] outputRoot;
-	char[] inputRoot;
+	string pack;
+	string bindDir;
+	string outputRoot;
+	string inputRoot;
 	/** convert to dynamic loading */
 	bool dynLoad;
 	/** mark when the header was already added to the text */
 	bool dynLoadAlreadyOpen;
 	/** mar when the module and license where already added to the text */
 	bool headerAlreadyAdded;
-	char[][] functions;
-	char[][] comment;
+	string[] functions;
+	string[] comment;
 	
 	
-	this(char[] htodFilename)
+	this(string htodFilename)
 	{
 		defReader = new DefReader(htodFilename);
 		clearValues();
 		process();
 	}
-	this(char[] htodFilename, char[] _outputRoot, char[] _inputRoot)
+	this(string htodFilename, string _outputRoot, string _inputRoot)
 	{
 		inputRoot = _inputRoot;
 		outputRoot = _outputRoot;
@@ -208,59 +209,59 @@ public class HTODConvert
 		}
 	}
 
-	void processPreFile(char[] preFileName, char[] fileName)
+	void processPreFile(string preFileName, string fileName)
 	{
 		//debug(flow)
 		writefln("HTODConvert.processPreFile files: %s > %s", preFileName, fileName);
-		char[][] args;
+		string[] args;
 		args ~= htod_location;
 		args ~= htod_location;
 		args ~= preFileName;
-		args ~= std.path.join(inputRoot,fileName);
+		args ~= std.path.buildPath(inputRoot,fileName);
 		try
 		{
 			std.process.execvp(wine_command, args);
 		}
-		catch ( Object e)
+		catch (Throwable e)
 		{
 			// ignore - it always fail - most of the time produces the file
 		}
 	}
 
-	void processFile(char[] fileName)
+	void processFile(string fileName)
 	{
 		debug(flow)(writefln("HTODConvert.processFile"));
-		char[] hText = cast(char[])std.file.read(fileName);
-		char[][] hLines = std.string.splitlines(hText);
-		char[] line;
+		string hText = cast(string)std.file.read(fileName);
+		string[] hLines = std.string.splitLines(hText);
+		string line;
 
 		int i = 0;
 		while ( i < hLines.length )
 		{
 			line = hLines[i++];
-			if ( std.string.find(line,'(')>=0 )
+			if ( std.string.indexOf(line,'(')>=0 )
 			{
 				int openBrace = 1;
-				if ( std.string.find(line,')')>=0 ) --openBrace;
+				if ( std.string.indexOf(line,')')>=0 ) --openBrace;
 				while ( openBrace > 0
 					&&  i<hLines.length 
 					)
 				{
-					char[] l = hLines[i++];
-					if ( std.string.find(l,')') >=0) --openBrace;
+					string l = hLines[i++];
+					if ( std.string.indexOf(l,')') >=0) --openBrace;
 					line ~= " " ~ std.string.strip(l);
 				}
 			}
-			addLine(dText, line);
+			addLine(line);
 		}
 		
 		if ( dynLoad )
 		{
-			closeDynLoad(dText);
+			closeDynLoad();
 		}
 	}
 	
-	void addLine(inout char[] dText, char[] line)
+	void addLine(string line)
 	{
 		if ( !startsWith(line, "//C") 
 			&& line !="alias extern GLAPI;"
@@ -293,7 +294,7 @@ public class HTODConvert
 			
 			if ( dynLoad )
 			{
-				addLineDynLoad(dText, line);
+				addLineDynLoad(line);
 			}
 			else
 			{
@@ -311,7 +312,7 @@ public class HTODConvert
 	 *    	dText = 	
 	 *    	line = 	
 	 */
-	void addLineDynLoad(inout char[] dText, char[] line)
+	void addLineDynLoad(string line)
 	{
 		//debug(flow)(writefln("HTODConvert.addLineDynLoad"));
 		
@@ -319,7 +320,7 @@ public class HTODConvert
 			&& !dynLoadAlreadyOpen 
 			)
 		{
-			openDynLoad(dText);
+			openDynLoad();
 		}
 
 		if ( endsWith(line, ");") )
@@ -358,7 +359,7 @@ public class HTODConvert
 		}
 	}
 	
-	void openDynLoad(inout char[] dText)
+	void openDynLoad()
 	{
 		debug(flow)(writefln("HTODConvert.openDynLoad"));
 		dynLoadAlreadyOpen = true;
@@ -381,7 +382,7 @@ public class HTODConvert
 "\n"
 "static this()\n"
 "{\n"
-"	"~lib~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."~std.string.toupper(lib)~"] );\n"
+"	"~lib~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."~std.string.toUpper(lib)~"] );\n"
 "	"~lib~"_Linker.link("~lib~"Links);\n"
 "	debug writefln(\"* Finished static this(): "~lib~"\");\n"
 "}\n"
@@ -396,12 +397,11 @@ public class HTODConvert
 	
 	}
 	
-	void closeDynLoad(inout char[] dText)
+	void closeDynLoad()
 	{
-
 		debug(flow)(writefln("HTODConvert.closeDynLoad"));
 		dText ~= "\n\nextern(C)\n{\n";
-		foreach ( char[] line ; functions )
+		foreach ( string line ; functions )
 		{
 			dText ~= "\t" ~ line ~"\n";
 		}
@@ -410,7 +410,7 @@ public class HTODConvert
 		dText ~= "\n\nSymbol[] "~lib~"Links = \n";
 		dText ~= "[\n";
 		
-		foreach ( char[] line ; functions )
+		foreach ( string line ; functions )
 		{
 			if ( startsWith(line, "/*")
 				|| startsWith(line, " *")
@@ -422,7 +422,7 @@ public class HTODConvert
 			}
 			else
 			{
-				int end = std.string.find(line,'(');
+				int end = std.string.indexOf(line,'(');
 				
 				if ( end > 0 )
 				{
@@ -431,7 +431,7 @@ public class HTODConvert
 					{
 						--start;
 					}
-					char[] functionName = line[start+1..end];
+					string functionName = line[start+1..end];
 					if ( functionName.length>1)
 					{
 						dText ~= "\t{ \""
@@ -448,9 +448,6 @@ public class HTODConvert
 		
 		dText ~= "];\n\n";
 	}
-
-	
-	
 	
 	void clearValues()
 	{
@@ -467,32 +464,32 @@ public class HTODConvert
 	
 	}
 	
-	void writeFile(char[] fileName)
+	void writeFile(string fileName)
 	{
 		debug(flow)(writefln("HTODConvert.writeFile"));
 		debug(flow)(writefln("HTODConvert.writeFile fileName = %s", fileName));
-		std.file.write(std.path.join(outputRoot,fileName), dText);
+		std.file.write(std.path.buildPath(outputRoot,fileName), dText);
 	}
 	
-	public static bit startsWith(char[] str, char[] prefix)
+	public static bit startsWith(string str, string prefix)
 	{
 		return str.length >= prefix.length 
 				&& str[0..prefix.length] == prefix;
 	}
 	
-	public static bit startsWith(char[] str, char prefix)
+	public static bit startsWith(string str, char prefix)
 	{
 		return str.length > 0
 				&& str[0] == prefix;
 	}
 	
-	public static bit endsWith(char[] str, char[] prefix)
+	public static bit endsWith(string str, string prefix)
 	{
 		return str.length >= prefix.length 
 				&& str[str.length-prefix.length..str.length] == prefix;
 	}
 	
-	public static bit endsWith(char[] str, char suffix)
+	public static bit endsWith(string str, char suffix)
 	{
 		return str.length >= 1
 				&& str[str.length-1] == suffix;
