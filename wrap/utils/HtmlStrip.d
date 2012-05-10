@@ -49,14 +49,14 @@ public class HtmlStrip
 	string strip(string htmlText, bool checkUTF=true)
 	{
 		int markupCount = 0;
-		char[] stripped;
-		char pc = ' ';
+		dchar[] stripped;
+		dchar pc = ' ';
 		string mark;
 		bool inAmper = false;
 		bool inCode = false;
 		string amper;
 
-		foreach ( char c ; htmlText )
+		foreach ( dchar c ; htmlText )
 		{
 			switch ( c )
 			{
@@ -175,13 +175,13 @@ public class HtmlStrip
 			}
 			pc = c;
 		}
-		
+
 		if ( checkUTF )
 		{
 			cleanUTF(stripped);
 		}
-				
-		return to!(string)(stripped);
+
+		return to!string(stripped);
 	}
 	
 	string stripFile(string filename)
@@ -196,7 +196,7 @@ public class HtmlStrip
 	
 	private import std.utf;
 	
-	public void cleanUTF(char[] str)
+	public void cleanUTF(dchar[] str)
 	{
 		//printf("before utfClean\n%s\nend before utfClean\n", (str~"\0").ptr);
 		size_t i = 0;
@@ -206,7 +206,7 @@ public class HtmlStrip
 			{
 				std.utf.decode(str, i);
 			}
-			catch ( UtfException e )
+			catch ( UTFException e )
 			{
 				str[i] = ' ';
 				++i;
@@ -215,7 +215,6 @@ public class HtmlStrip
 		}
 		
 		//writefln("after utfClean\n%s\nend after utfClean", str);
-
 	}
 	
 }
