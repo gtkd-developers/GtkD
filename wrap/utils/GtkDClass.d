@@ -1709,7 +1709,6 @@ public class GtkDClass
 					++pos;
 				}
 			}
-
 			if ( pos < lines.length )
 			{
 				collectedStructs ~= "";
@@ -1777,11 +1776,6 @@ public class GtkDClass
 			// Remove GSEAL macro
 			if ( std.string.indexOf(structDef[i], "GSEAL (") > -1 )
 			{
-				string remove(string src, string rem)
-				{
-					return src[0 .. src.indexOf(rem)] ~ src[src.indexOf(rem) + rem.length .. $];
-				}
-
 				structDef[i] = std.array.replace(structDef[i], "GSEAL (", "");
 				structDef[i] = std.array.replace(structDef[i], ")", "");
 			}
@@ -1813,7 +1807,9 @@ public class GtkDClass
 					collectedStructs ~= "//" ~ elem;
 				}
 
-				bits += to!int(std.string.split(elem, ":")[1]);
+        auto b = split(elem, ":")[1];
+        b = b[0 .. b.indexOf(";")].strip;
+				bits += to!int(b);
 				if ( bits >= 32)
 				{
 					bitField = false;
