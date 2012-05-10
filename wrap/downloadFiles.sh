@@ -76,12 +76,12 @@ curl -L http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | 
 ln -s  libgda-1.2.4/doc/C/html gda
 
 #glade
-curl http://library.gnome.org/devel/libglade/libglade-html-2.6.2.tar.gz | tar xvfz -
-ln -s libglade-html-2.6.2 glade
+curl http://ftp.gnome.org/pub/GNOME/sources/libglade/2.6/libglade-2.6.2.tar.gz | tar xvfz -
+ln -s libglade-2.6.2/doc/html glade
 
 #gtkSourceView
-curl http://library.gnome.org/devel/gtksourceview/gtksourceview-html-2.10.3.tar.gz | tar xvfz -
-ln -s gtksourceview-html-2.10.3 sourceview
+curl http://napoleon.acc.umu.se/pub/GNOME/sources/gtksourceview/2.10/gtksourceview-2.10.3.tar.gz | tar xvfz -
+ln -s gtksourceview-2.10.3/docs/reference/html sourceview
 
 #gstreamer
 curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.14.tar.gz | tar xvfz -
