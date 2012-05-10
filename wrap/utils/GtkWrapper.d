@@ -421,7 +421,7 @@ public class GtkWrapper : WrapperIF
 	 *      defReader =
 	 * Returns:
 	 */
-	private static int loadAA(string[string] aa, DefReader defReader, WError*[] errors = null)
+	private static int loadAA(ref string[string] aa, DefReader defReader, WError*[] errors = null)
 	{
 		int status = ERR_NONE;
 		string[] vals = std.string.split(defReader.getValue());
@@ -452,7 +452,7 @@ public class GtkWrapper : WrapperIF
 	 *      defReader =
 	 * Returns:
 	 */
-	private static int loadAA(string[][string] aa, DefReader defReader, WError*[] errors = null)
+	private static int loadAA(ref string[][string] aa, DefReader defReader, WError*[] errors = null)
 	{
 		int status = ERR_NONE;
 		string[] vals = std.string.split(defReader.getValue());
@@ -483,7 +483,7 @@ public class GtkWrapper : WrapperIF
 	 *      defReader =
 	 * Returns:
 	 */
-	private static int loadAAA(string[string][string] aa, DefReader defReader, WError*[] errors = null)
+	private static int loadAAA(ref string[string][string] aa, DefReader defReader, WError*[] errors = null)
 	{
 		int status = ERR_NONE;
 		string[] vals = std.string.split(defReader.getValue());
