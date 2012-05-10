@@ -501,14 +501,12 @@ public class GtkDClass
 
 		string flipG(string inStr)
 		{
-			char[] flipped = inStr.dup;
-
-			if ( flipped[0] == 'G' )
+			if ( inStr[0] == 'G' )
 			{
-				flipped = flipped[1..flipped.length] ~ 'G';
+				return (inStr[1 .. $] ~ 'G');
 			}
 
-			return to!(string)(flipped);
+			return inStr;
 		}
 
 		if ( convParms.strct.length > 0 )
