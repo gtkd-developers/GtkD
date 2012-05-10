@@ -103,7 +103,7 @@ public class GtkDClass
 	private string[] styleProperties;
 	private string[] signals;
 	private string[] description;
-  private IndentedStringBuilder indenter;
+	private IndentedStringBuilder indenter;
 
 	string[] members;
 
@@ -118,7 +118,7 @@ public class GtkDClass
 	public this (WrapperIF wrapper )
 	{
 		this.wrapper = wrapper;
-    indenter = new IndentedStringBuilder();
+		indenter = new IndentedStringBuilder();
 	}
 
 	public string[] getExternalDeclarations()
@@ -224,7 +224,7 @@ public class GtkDClass
 
 		gtkDText = wrapper.getLicense();
 
-    gtkDText ~= convParms.toString();
+		gtkDText ~= convParms.toString();
 
 		gtkDText ~= "module "~convParms.outPack~".";
 		if ( convParms.clss.length > 0 )
@@ -381,7 +381,7 @@ public class GtkDClass
 
 		if ( wrapper.includeComments() )
 		{
-      gtkDText ~= indenter.format(description);
+			gtkDText ~= indenter.format(description);
 		}
 
 	}
@@ -390,10 +390,10 @@ public class GtkDClass
 	{
 		mergeGtkDClass(inAPI, convParms);
 
-    gtkDText ~= indenter.format(properties);
-    gtkDText ~= indenter.format(styleProperties);
-    gtkDText ~= indenter.format(signals);
-    gtkDText ~= indenter.format(members);
+		gtkDText ~= indenter.format(properties);
+		gtkDText ~= indenter.format(styleProperties);
+		gtkDText ~= indenter.format(signals);
+		gtkDText ~= indenter.format(members);
 		gtkDText ~= closeClass(convParms);
 
 		return gtkDText;
@@ -578,13 +578,13 @@ public class GtkDClass
 							text ~= "{";
 
 							string[] checkIfNull = [
-                            	"if("~var~" is null)",
-                                "{",
-                                "	this = null;",
+												    	"if("~var~" is null)",
+												        "{",
+												        "	this = null;",
 								"	return;",
 								"}" ];
 
-                            string[] checkObject = [
+												    string[] checkObject = [
 								""
 								"//Check if there already is a D object for this gtk struct",
 								"void* ptr = getDObject(cast(GObject*)"~var~");",
@@ -625,8 +625,8 @@ public class GtkDClass
 		return text;
 
 	}
-        
-        /* Deprecated */ /*
+				
+				/* Deprecated */ /*
 	string[] assertStructNotNull = [
 	]; 
 	
@@ -657,7 +657,7 @@ public class GtkDClass
 			;
 		return lines;
 	}
-        */
+				*/
 
 
 	/**
@@ -698,15 +698,15 @@ public class GtkDClass
 	 */
 	public static string toVar(string type)
 	{
-    if (type.length == 0)
-      return "";
+		if (type.length == 0)
+			return "";
 
-    string p = to!string(toLower(type[0]));
+		string p = to!string(toLower(type[0]));
 		if ( type.endsWith("_t") )
 		{
-      return p ~ type[1 .. $ - 2];
-    } else {
-      return p ~ type[1 .. $];
+			return p ~ type[1 .. $ - 2];
+		} else {
+			return p ~ type[1 .. $];
 		}
 	}
 
@@ -806,7 +806,7 @@ public class GtkDClass
 	private string convertClassName(string gName)
 	{
 		string conv;
-    string prefix;
+		string prefix;
 
 		if ( startsWith(gName, "Gtk") )		prefix = "Gtk";
 		else if ( startsWith(gName, "Gio") )	prefix = "";
@@ -836,7 +836,7 @@ public class GtkDClass
 		if( prefix == "pg" ) prefix = "pango";
 		if ( startsWith(gName, "Gio") ) parentName = "G"~ gName[3 .. $];
 
-    gtkDParentNamePrefix = prefix;
+		gtkDParentNamePrefix = prefix;
 		return conv;
 	}
 
@@ -1098,7 +1098,7 @@ public class GtkDClass
 
 	public static string getClassVar(ConvParms* convParms)
 	{
-    string cv;
+		string cv;
 		if ( convParms.interf.length > 0)
 		{
 			cv = convParms.interf;
@@ -1108,7 +1108,7 @@ public class GtkDClass
 			cv = convParms.clss;
 		}
 
-    return (cv is null) ? null : (toLower(cv[0 .. 1]) ~ cv[1 .. $]);
+		return (cv is null) ? null : (toLower(cv[0 .. 1]) ~ cv[1 .. $]);
 	}
 
 	private string signalNameToGtkD(string signalName)
@@ -1807,8 +1807,8 @@ public class GtkDClass
 					collectedStructs ~= "//" ~ elem;
 				}
 
-        auto b = split(elem, ":")[1];
-        b = b[0 .. b.indexOf(";")].strip;
+				auto b = split(elem, ":")[1];
+				b = b[0 .. b.indexOf(";")].strip;
 				bits += to!int(b);
 				if ( bits >= 32)
 				{
@@ -2193,7 +2193,7 @@ public class GtkDClass
 								description ~= ret;
 
 							if ( indexOf(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
-							   && indexOf(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
+								 && indexOf(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
 							{
 								description ~= "Throws: GException on failure.";
 							}
@@ -2241,7 +2241,7 @@ public class GtkDClass
 							
 							/* Don't add repeated declarations. */
 							bool addme = true;
-                                        
+												                
 							foreach(ref string declaration; externalDeclarations)
 							{
 								if(externalDeclaration == declaration){ addme = false; break; }
@@ -2302,12 +2302,12 @@ public class GtkDClass
 		if ( signature in functionSignatures )
 		{
 			writefln("######################## duplicated function %s", signature);
-                        return true;
+			return true;
 		}
 		else
 		{
 			functionSignatures[signature] = 1;
-                        return false;
+			return false;
 		}
 	}
 
@@ -2321,11 +2321,11 @@ public class GtkDClass
 	bool stilInParam(string comments)
 	{
 		return !(indexOf(comments, ":")  == comments.length-1 ||
-		         comments.chomp(":").strip() == "Returns" ||
-		         ( indexOf(comments, "Since 2.") == 0 || indexOf(comments, "Since 1.") == 0) ||
-		         indexOf(comments, "See Also") == 0 ||
-		         indexOf(comments, "Property Details") == 0 ||
-		         comments == "<hr>");
+						 comments.chomp(":").strip() == "Returns" ||
+						 ( indexOf(comments, "Since 2.") == 0 || indexOf(comments, "Since 1.") == 0) ||
+						 indexOf(comments, "See Also") == 0 ||
+						 indexOf(comments, "Property Details") == 0 ||
+						 comments == "<hr>");
 	}
 
 	/**
@@ -2880,7 +2880,7 @@ public class GtkDClass
 		while ( name.length > 0
 				&& (GtkDClass.startsWith(name,"const") || name[0] == '*'
 				|| GtkDClass.startsWith(name,"G_GNUC_MAY_ALIAS") )
-			  )
+				)
 		{
 			if ( name[0] == '*' )
 			{
@@ -2967,64 +2967,64 @@ public class GtkDClass
 	
 string removePrefix(string gToken, string prefix)
 {
-  if ( startsWith(gToken, prefix) )
-  {
-    return gToken[prefix.length..gToken.length];
-  }
-  return gToken;
+	if ( startsWith(gToken, prefix) )
+	{
+		return gToken[prefix.length..gToken.length];
+	}
+	return gToken;
 }
 
 string removePrefix(string gToken, ConvParms* convParms)
 {
-  //debug(tokenToGtkD) writefln("gToken.length > prefix.length %s",gToken.length > convParms.prefix.length);
-  string prefix = convParms.getPrefix(gToken);
-  if ( prefix.length > 0 )
-  {
-    return gToken[prefix.length..gToken.length];
-  }
+	//debug(tokenToGtkD) writefln("gToken.length > prefix.length %s",gToken.length > convParms.prefix.length);
+	string prefix = convParms.getPrefix(gToken);
+	if ( prefix.length > 0 )
+	{
+		return gToken[prefix.length..gToken.length];
+	}
 
-  return gToken;
+	return gToken;
 
 }
 
 string removeUnderscore(string gToken)
 {
-  string converted;
+	string converted;
 
-  char c = ' ';
-  char pc = ' ';
-  char ppc = ' ';
-  int pos = 0;
-  while ( pos < gToken.length )
-  {
-    c = gToken[pos];
-    if ( pc == '_' )
-    {
-      c = to!char(std.ascii.toUpper(c));
-    }
-    else if ( c == '_' && std.ascii.isLower(pc) )
-    {
-      pc = c;
-      c = '\0';
-    }
+	char c = ' ';
+	char pc = ' ';
+	char ppc = ' ';
+	int pos = 0;
+	while ( pos < gToken.length )
+	{
+		c = gToken[pos];
+		if ( pc == '_' )
+		{
+			c = to!char(std.ascii.toUpper(c));
+		}
+		else if ( c == '_' && std.ascii.isLower(pc) )
+		{
+			pc = c;
+			c = '\0';
+		}
 
-    if ( c > '\0' )
-    {
-      if ( ppc == '_'
-          && pc == 'g'
-          && c == 'l'
-          && gToken.length-1 > pos
-          && gToken[pos+1] == '_'
-         )
-      {
-        c = 'L';
-      }
-      ppc = pc;
-      pc = gToken[pos];
-      converted ~= c;
-    }
-    ++pos;
-  }
-  return converted;
+		if ( c > '\0' )
+		{
+			if ( ppc == '_'
+					&& pc == 'g'
+					&& c == 'l'
+					&& gToken.length-1 > pos
+					&& gToken[pos+1] == '_'
+				 )
+			{
+				c = 'L';
+			}
+			ppc = pc;
+			pc = gToken[pos];
+			converted ~= c;
+		}
+		++pos;
+	}
+	return converted;
 }
 
