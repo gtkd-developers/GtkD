@@ -966,10 +966,10 @@ public class GtkWrapper : WrapperIF
 				sizediff_t pos = std.string.lastIndexOf(dec,')') + 1;
 				externalText ~= '\t';
 
-				if ( dec.length > 0 && dec[0]=='#' )
+				if ( dec[0]=='#' )
 					externalText ~= "// ";
 
-				if ( dec.length > 0 && !GtkDClass.startsWith(dec, "//") && dec[0]!='#' )
+				if ( !GtkDClass.startsWith(dec, "//") && dec[0]!='#' )
 					externalText ~= dec[0..pos] ~" c_"~ dec[pos..$] ~';';
 				else
 					externalText ~= dec;
