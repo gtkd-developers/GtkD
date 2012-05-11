@@ -88,7 +88,7 @@ public class Ranges
 	{
 		bool incl = true;
 		Range* range;
-		size_t i=ranges.length;
+		size_t i = ranges.length;
 		while ( i > 0 )
 		{
 			range = ranges[--i];
@@ -422,11 +422,11 @@ public class HTODConvert
 			}
 			else
 			{
-				size_t end = std.string.indexOf(line,'(');
+				sizediff_t end = std.string.indexOf(line,'(');
 				
 				if ( end > 0 )
 				{
-					size_t start = end;
+					sizediff_t start = end;
 					while ( start > 0 && line[start] > ' ' )
 					{
 						--start;

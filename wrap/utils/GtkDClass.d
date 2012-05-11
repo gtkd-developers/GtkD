@@ -911,7 +911,7 @@ public class GtkDClass
 	{
 		debug(getSignal) writefln("\tgetSignal %s", lines[i]);
 		string[] text;
-		size_t endPos = std.string.lastIndexOf(lines[i], '"');
+		sizediff_t endPos = std.string.lastIndexOf(lines[i], '"');
 		if ( endPos > 5 )
 		{
 			string signalName = lines[i][5..endPos];
@@ -1313,10 +1313,10 @@ public class GtkDClass
 			&& std.string.indexOf(lines[defLine],"<<") < 0
 			)
 		{
-			size_t pos = std.string.indexOf(lines[defLine], "(");
+			sizediff_t pos = std.string.indexOf(lines[defLine], "(");
 			if ( pos > 0 )
 			{
-				size_t posf = std.string.indexOf(lines[defLine], ")");
+				sizediff_t posf = std.string.indexOf(lines[defLine], ")");
 				if ( posf>pos )
 				{
 					gTypes ~= lines[0][7..lines[0].length]
@@ -1341,7 +1341,7 @@ public class GtkDClass
 			string stockID;
 			string stockValue;
 
-			size_t pos = std.string.indexOf(line[12..line.length],' ')+12;
+			sizediff_t pos = std.string.indexOf(line[12..line.length],' ')+12;
 			debug(stockItems)writefln("pos=%s", pos);
 			if ( pos > 12 )
 			{
@@ -1535,7 +1535,6 @@ public class GtkDClass
 		if ( pos<lines.length && lines[pos][0] != '}' )
 		{
 			string enumPrefix = getEnumPrefix(enumName, std.string.strip(lines[pos]));
-			size_t prefixLength = enumPrefix.length;
 			while ( pos<lines.length && lines[pos][0] != '}' )
 			{
 				debug(enums)writefln("\tenum line %s", lines[pos]);
@@ -2730,7 +2729,7 @@ public class GtkDClass
 		debug(enumToGtkD)writefln("enumLine (%s) BEFORE %s", enumType, gToken);
 		string converted = stringToGtkD(gToken, convParms, wrapper.getAliases());
 
-		size_t pos = std.string.indexOf(converted, '=');
+		sizediff_t pos = std.string.indexOf(converted, '=');
 		debug(enumToGtkD)writefln("\t pos = %s", pos);
 		if ( pos > 0 )
 		{

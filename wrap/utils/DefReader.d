@@ -115,7 +115,7 @@ public class DefReader
 		
 		if ( line.length > 0 )
 		{
-			size_t pos = std.string.indexOf(line, ':');
+			sizediff_t pos = std.string.indexOf(line, ':');
 			if ( pos > 0 )
 			{
 				key = std.string.strip(line[0 .. pos]);

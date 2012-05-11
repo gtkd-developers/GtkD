@@ -920,7 +920,10 @@ public class GtkWrapper : WrapperIF
 			foreach ( string declaration; declarations )
 			{
 				string dec = std.string.strip(declaration);
-				size_t pos = std.string.lastIndexOf(dec,')');
+				sizediff_t pos = std.string.lastIndexOf(dec,')');
+
+				if (dec.length == 0)
+					continue;
 
 				if ( GtkDClass.startsWith(dec, "//") )
 					externalText ~= "\n\t"~ dec ~"\n\n";
@@ -954,10 +957,13 @@ public class GtkWrapper : WrapperIF
 			{
 				string dec = std.string.strip(declaration);
 
+				if (dec.length == 0)
+					continue;
+
 				if ( loaderTableName == "glib" || loaderTableName == "pango" ) 
 					dec = replace(dec, "FILE*", "void*"); //Phobos workaround.
 
-				size_t pos = std.string.lastIndexOf(dec,')') + 1;
+				sizediff_t pos = std.string.lastIndexOf(dec,')') + 1;
 				externalText ~= '\t';
 
 				if ( dec.length > 0 && dec[0]=='#' )
@@ -977,7 +983,10 @@ public class GtkWrapper : WrapperIF
 			foreach ( string declaration; declarations )
 			{
 				string dec = std.string.strip(declaration);
-				size_t pos = std.string.lastIndexOf(dec,')');
+				sizediff_t pos = std.string.lastIndexOf(dec,')');
+
+				if (dec.length == 0)
+					continue;
 
 				if ( GtkDClass.startsWith(dec, "//") )
 					externalText ~= '\n'~ dec ~"\n\n";
