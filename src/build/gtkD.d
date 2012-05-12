@@ -429,6 +429,7 @@ private import gtk.ToggleButton;
 private import gtk.LinkButton;
 private import gtk.ScaleButton;
 private import gtk.VolumeButton;
+private import gtk.Switch;
 private import gtk.Entry;
 private import gtk.EntryBuffer;
 private import gtk.EntryCompletion;

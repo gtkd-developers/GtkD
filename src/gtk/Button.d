@@ -39,7 +39,6 @@
  * 	- ActivatableIF
  * prefixes:
  * 	- gtk_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -49,9 +48,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Image
  * 	- gdk.Window
  * 	- gtk.Widget
- * 	- gtk.Image
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
@@ -73,9 +72,9 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Image;
 private import gdk.Window;
 private import gtk.Widget;
-private import gtk.Image;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
 
@@ -238,7 +237,6 @@ public class Button : Bin, ActivatableIF
 			
 			this(cast(GtkButton*) p);
 		}
-		
 	}
 	
 	/** */
@@ -262,7 +260,6 @@ public class Button : Bin, ActivatableIF
 		setActionName(action);
 		addOnClicked(dlg);
 	}
-	
 	
 	/**
 	 */

@@ -2000,13 +2000,12 @@ struct: GtkButton
 class: Button
 implements: ActivatableIF
 prefix: gtk_button_
-prefix: gtk_
 import: glib.Str
-import: gdk.Window
-structWrap: GdkWindow* Window
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.Image
+import: gdk.Window
+import: gtk.Widget
+structWrap: GdkWindow* Window
+structWrap: GtkWidget* Widget
 
 # imports for Activatable Interface
 import: gtk.ActivatableT
@@ -2120,7 +2119,6 @@ code: start
 
 			this(cast(GtkButton*) p);
 		}
-		
 	}
 	
 	/** */
@@ -2144,8 +2142,6 @@ code: start
 		setActionName(action);
 		addOnClicked(dlg);
 	}
-	
-
 code: end
 outFile: Button
 
@@ -2155,7 +2151,6 @@ class: CheckButton
 import: glib.Str
 import: gtk.Button
 prefix: gtk_check_button_
-prefix: gtk_
 
 nocode: gtk_check_button_new_with_label
 nocode: gtk_check_button_new_with_mnemonic
@@ -2203,14 +2198,12 @@ code: start
 	}
 	
 code: end
-
 outFile: CheckButton
 
 file: GtkRadioButton.html
 struct: GtkRadioButton
 class: RadioButton
 prefix: gtk_radio_button_
-prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
@@ -2318,7 +2311,6 @@ file: GtkToggleButton.html
 struct: GtkToggleButton
 class: ToggleButton
 prefix: gtk_toggle_button_
-prefix: gtk_
 import: glib.Str
 
 nocode: gtk_toggle_button_new_with_label
@@ -2357,7 +2349,6 @@ code: start
 		this(p);
 	}
 code: end
-
 outFile: ToggleButton
 
 file: GtkLinkButton.html
@@ -2366,8 +2357,6 @@ class: LinkButton
 prefix: gtk_link_button_
 prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 outFile: LinkButton
 
 file: GtkScaleButton.html
@@ -2375,12 +2364,11 @@ struct: GtkScaleButton
 class: ScaleButton
 implements: OrientableIF
 prefix: gtk_scale_button_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.Adjustment
+import: gtk.Widget
 structWrap: GtkAdjustment* Adjustment
+structWrap: GtkWidget* Widget
 
 #imports for Orientable Interface.
 import: gtk.OrientableIF
@@ -2402,11 +2390,24 @@ file: GtkVolumeButton.html
 struct: GtkVolumeButton
 class: VolumeButton
 prefix: gtk_volume_button_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 outFile: VolumeButton
+
+file: GtkSwitch.html
+struct: GtkSwitch
+class: Switch
+implements: ActivatableIF
+prefix: gtk_switch_
+
+# imports for Activatable Interface
+import: gtk.ActivatableT
+import: gtk.ActivatableIF
+
+code: start
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkSwitch);
+code: end
+outFile: Switch
 
 ###########################################################
 ### numeric/text Data Entry ###############################

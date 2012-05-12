@@ -45,9 +45,7 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * structWrap:
- * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,7 +62,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Widget;
 
 
 

@@ -2969,6 +2969,14 @@ public struct GtkVolumeButton{}
 
 /**
  * Main Gtk struct.
+ * The GtkSwitch structure contains private
+ * data and it should only be accessed using the provided API.
+ */
+public struct GtkSwitch{}
+
+
+/**
+ * Main Gtk struct.
  */
 public struct GtkEntry{}
 

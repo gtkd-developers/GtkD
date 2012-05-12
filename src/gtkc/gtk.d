@@ -1153,6 +1153,12 @@ mixin( _shared ~ "static this()
 
 	Linker.link(gtk_volume_button_new, \"gtk_volume_button_new\", LIBRARY.GTK);
 
+	// gtk.Switch
+
+	Linker.link(gtk_switch_new, \"gtk_switch_new\", LIBRARY.GTK);
+	Linker.link(gtk_switch_set_active, \"gtk_switch_set_active\", LIBRARY.GTK);
+	Linker.link(gtk_switch_get_active, \"gtk_switch_get_active\", LIBRARY.GTK);
+
 	// gtk.Entry
 
 	Linker.link(gtk_entry_new, \"gtk_entry_new\", LIBRARY.GTK);
@@ -5010,6 +5016,12 @@ mixin( gshared ~"extern(C)
 
 	GtkWidget* function() c_gtk_volume_button_new;
 
+	// gtk.Switch
+
+	GtkWidget* function() c_gtk_switch_new;
+	void function(GtkSwitch* sw, gboolean isActive) c_gtk_switch_set_active;
+	gboolean function(GtkSwitch* sw) c_gtk_switch_get_active;
+
 	// gtk.Entry
 
 	GtkWidget* function() c_gtk_entry_new;
@@ -8864,6 +8876,12 @@ alias c_gtk_scale_button_get_minus_button  gtk_scale_button_get_minus_button;
 // gtk.VolumeButton
 
 alias c_gtk_volume_button_new  gtk_volume_button_new;
+
+// gtk.Switch
+
+alias c_gtk_switch_new  gtk_switch_new;
+alias c_gtk_switch_set_active  gtk_switch_set_active;
+alias c_gtk_switch_get_active  gtk_switch_get_active;
 
 // gtk.Entry
 

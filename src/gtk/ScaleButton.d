@@ -39,7 +39,6 @@
  * 	- OrientableIF
  * prefixes:
  * 	- gtk_scale_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,8 +47,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * 	- gtk.Adjustment
+ * 	- gtk.Widget
  * 	- gtk.OrientableIF
  * 	- gtk.OrientableT
  * structWrap:
@@ -71,8 +70,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Widget;
 private import gtk.Adjustment;
+private import gtk.Widget;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 

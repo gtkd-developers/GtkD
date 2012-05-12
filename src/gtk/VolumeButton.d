@@ -38,16 +38,13 @@
  * implements:
  * prefixes:
  * 	- gtk_volume_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * structWrap:
- * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,7 +59,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Widget;
 
 
 
