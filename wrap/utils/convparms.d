@@ -26,6 +26,8 @@ module utils.convparms;
 private import utils.GtkDClass;
 private import std.stdio;
 private import std.string;
+private import std.algorithm;
+private import std.range;
 
 public struct ConvParms
 {
@@ -94,167 +96,101 @@ public struct ConvParms
 		classCode.length = 0;
 		interfaceCode.length = 0;
 		text.length = 0;
+	}
 
+	/* formatting of parameters for output */
+
+	public static string format(string x)
+	{
+		return "\n * \t- " ~ x;
+	}
+
+	public static string format(string[] xs)
+	{
+		return join(map!format(xs));
 	}
 	
+	public static string format(string[string] xs)
+	{
+		string text = "";
+		foreach ( string key ; xs.keys.sort )
+		{
+			text ~= format(key ~ " -> " ~ xs[key]);
+		}
+		return text;
+	}
+
+	public string section(T)(string header, T xs)
+	{
+		return "\n * " ~ header ~ ":" ~ format(xs);
+	}
+
+	public string entry(string key, string val)
+	{
+		string k = key.leftJustify(8, ' ');
+		return ("\n * " ~ k ~ "= " ~ val).stripRight;
+	}
+
+	public string entry(string key, bool val)
+	{
+		return "\n * " ~ key ~ ": " ~ (val ? "Yes" : "No");
+	}
+
 	public string toString()
 	{
 		string text;
 		text ~= "/*";
 		text ~= "\n * Conversion parameters:";
-		text ~= "\n * inFile  = "~inFile;
-		text ~= "\n * outPack = "~outPack;
-		text ~= "\n * outFile = "~outFile;
-		text ~= "\n * strct   = "~strct;
-		text ~= "\n * realStrct="~realStrct;
-		text ~= "\n * ctorStrct="~ctorStrct;
-		text ~= "\n * clss    = "~clss;
-		text ~= "\n * interf  = "~interf;
-		text ~= "\n * class Code: " ~ (classCode.length>0 ? "Yes" : "No");
-		text ~= "\n * interface Code: " ~ (interfaceCode.length>0 ? "Yes" : "No");
-		text ~= "\n * template for:";
-		foreach ( string tp ; templ )
-		{
-			text ~= "\n * \t- "~tp;
-		}
-		
-		text ~= "\n * extend  = "~extend;
-		
-		text ~= "\n * implements:";
-		foreach ( string ip ; impl )
-		{
-			text ~= "\n * \t- "~ip;
-		}
-
-		text ~= "\n * prefixes:";
-		foreach ( string prefix ; prefixes )
-		{
-			text ~= "\n * \t- "~prefix;
-		}
-		
-		text ~= "\n * omit structs:";
-		foreach ( string noStruct ; noStructs )
-		{
-			text ~= "\n * \t- "~noStruct;
-		}
-		
-		text ~= "\n * omit prefixes:";
-		foreach ( string noPrefix ; noPrefixes )
-		{
-			text ~= "\n * \t- "~noPrefix;
-		}
-		
-		text ~= "\n * omit code:";
-		foreach ( string ncode ; noCode )
-		{
-			text ~= "\n * \t- "~ncode;
-		}
-
-		text ~= "\n * omit signals:";
-		foreach ( string nsignal ; noSignals )
-		{
-			text ~= "\n * \t- "~nsignal;
-		}
-		
-		text ~= "\n * imports:";
-		foreach ( string imp ; imprts )
-		{
-			text ~= "\n * \t- "~imp;
-		}
-
-		text ~= "\n * structWrap:";
-		foreach ( string key ; structWrap.keys.sort )
-		{
-			text ~= "\n * \t- "~key~" -> "~structWrap[key];
-		}
-
-		text ~= "\n * module aliases:";
-		foreach ( string key ; mAliases.keys.sort )
-		{
-			text ~= "\n * \t- "~key~" -> "~mAliases[key];
-		}
-		text ~= "\n * local aliases:";
-		foreach ( string key ; aliases.keys.sort )
-		{
-			text ~= "\n * \t- "~key~" -> "~aliases[key];
-		}
-		text ~= "\n * overrides:";
-		foreach ( string over ; overrides )
-		{
-			text ~= "\n * \t- "~over;
-		}
+		text ~= entry("inFile", inFile);
+		text ~= entry("outPack", outPack);
+		text ~= entry("outFile", outFile);
+		text ~= entry("strct", strct);
+		text ~= entry("realStrct", realStrct);
+		text ~= entry("ctorStrct", ctorStrct);
+		text ~= entry("clss", clss);
+		text ~= entry("interf", interf);
+		text ~= entry("class Code", classCode.length > 0);
+		text ~= entry("interface Code", interfaceCode.length > 0);
+		text ~= section("template for", templ);
+		text ~= entry("extend", extend);
+		text ~= section("implements", impl);
+		text ~= section("prefixes", prefixes);
+		text ~= section("omit structs", noStructs);
+		text ~= section("omit prefixes", noPrefixes);
+		text ~= section("omit code", noCode);
+		text ~= section("omit signals", noSignals);
+		text ~= section("imports", imprts);
+		text ~= section("structWrap", structWrap);
+		text ~= section("module aliases", mAliases);
+		text ~= section("local aliases", aliases);
+		text ~= section("overrides", overrides);
 		text ~= "\n */\n\n";
 		return text;
 	}
-	
-	public bool containsPrefix(string prefix)
-	{
-		bool contains = false;
-		int i = 0;
-		while ( !contains && i<prefixes.length )
-		{
-			contains = prefix.startsWith(prefixes[i]);
-			++i;
-		}
-		return contains;
-	}	
 
-	public string getPrefix(string prefix)
+	public bool containsPrefix(string test)
 	{
-		string fundPrefix;
-		bool contains = false;
-		int i = 0;
-		while ( !contains && i<prefixes.length )
-		{
-			if ( prefix.startsWith(prefixes[i]) )
-			{
-				contains = true;
-				fundPrefix = prefixes[i];
-			}
-			++i;
-		}
-		return fundPrefix;
-	}	
+		return !(getPrefix(test) is null);
+	}
+
+	public string getPrefix(string test)
+	{
+		auto ps = find!"b.startsWith(a)"(prefixes, test);
+		return (ps.empty ? null : ps.front);
+	}
 
 	public bool needsOverride(string functionName)
 	{
-		bool needed = false;
-		int i=0;
-		while ( !needed && i<overrides.length )
-		{
-			needed = functionName == overrides[i];
-			debug(overrides)writefln("\t (%s) %s ?= %s", needed, functionName, overrides[i]);
-			++i;
-		}
-		debug(overrides)writefln("\t (%s) %s %s", i, (needed?"override >>>>>>>":"no override <<<<<"), functionName);
-		return needed;
+		return canFind(overrides, functionName);
 	}
 
 	public bool omitCode(string codeName)
 	{
-		bool omit = false;
-		int i=0;
-		while ( !omit && i<noCode.length )
-		{
-			omit = codeName == noCode[i];
-			debug(omitCode)writefln("\t (%s) %s ?= %s", omit, codeName, noCode[i]);
-			++i;
-		}
-		debug(omitCode)writefln("\t (%s) %s %s", i, (omit?"omited >>>>>>>":"included <<<<<"), codeName);
-		return omit;
+		return canFind(noCode, codeName);
 	}
 	
 	public bool omitSignal(string signalName)
 	{
-		bool omit = false;
-		int i=0;
-		while ( !omit && i<noSignals.length )
-		{
-			omit = signalName == noSignals[i];
-			debug(omitSignal)writefln("\t (%s) %s ?= %s", omit, signalName, noSignals[i]);
-			++i;
-		}
-		debug(omitSignal)writefln("\t (%s) %s %s", i, (omit?"omited >>>>>>>":"included <<<<<"), signalName);
-		return omit;
+		return canFind(noSignals, signalName);
 	}
 }
