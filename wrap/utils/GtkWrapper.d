@@ -925,8 +925,11 @@ public class GtkWrapper : WrapperIF
 				if (dec.length == 0)
 					continue;
 
-				if ( GtkDClass.startsWith(dec, "//") )
+				if ( dec.startsWith("//") )
+				{
 					externalText ~= "\n\t"~ dec ~"\n\n";
+					continue;
+				}
 
 				if ( pos > 0 )
 				{
@@ -960,7 +963,7 @@ public class GtkWrapper : WrapperIF
 				if (dec.length == 0)
 					continue;
 
-				if ( GtkDClass.startsWith(dec, "//") )
+				if ( dec.startsWith("//") )
 				{
 					externalText ~= "\n\t"~ dec ~"\n\n";
 					continue;
