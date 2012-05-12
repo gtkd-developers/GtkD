@@ -174,7 +174,7 @@ public class InputDialog : Dialog
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(GdkDevice*, InputDialog)[] onDisableDeviceListeners;
 	/**

@@ -117,26 +117,25 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gthread.Mutex
-	
+
 	GMutex* function() c_g_mutex_new;
 	void function(GMutex* mutex) c_g_mutex_lock;
 	gboolean function(GMutex* mutex) c_g_mutex_trylock;
 	void function(GMutex* mutex) c_g_mutex_unlock;
 	void function(GMutex* mutex) c_g_mutex_free;
-	
+
 	// gthread.StaticMutex
-	
+
 	void function(GStaticMutex* mutex) c_g_static_mutex_init;
 	void function(GStaticMutex* mutex) c_g_static_mutex_lock;
 	gboolean function(GStaticMutex* mutex) c_g_static_mutex_trylock;
 	void function(GStaticMutex* mutex) c_g_static_mutex_unlock;
 	GMutex* function(GStaticMutex* mutex) c_g_static_mutex_get_mutex;
 	void function(GStaticMutex* mutex) c_g_static_mutex_free;
-	
+
 	// gthread.StaticRecMutex
-	
+
 	void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_init;
 	void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_lock;
 	gboolean function(GStaticRecMutex* mutex) c_g_static_rec_mutex_trylock;
@@ -144,9 +143,9 @@ mixin( gshared ~"extern(C)
 	void function(GStaticRecMutex* mutex, guint depth) c_g_static_rec_mutex_lock_full;
 	guint function(GStaticRecMutex* mutex) c_g_static_rec_mutex_unlock_full;
 	void function(GStaticRecMutex* mutex) c_g_static_rec_mutex_free;
-	
+
 	// gthread.RWLock
-	
+
 	void function(GStaticRWLock* lock) c_g_static_rw_lock_init;
 	void function(GStaticRWLock* lock) c_g_static_rw_lock_reader_lock;
 	gboolean function(GStaticRWLock* lock) c_g_static_rw_lock_reader_trylock;
@@ -155,31 +154,31 @@ mixin( gshared ~"extern(C)
 	gboolean function(GStaticRWLock* lock) c_g_static_rw_lock_writer_trylock;
 	void function(GStaticRWLock* lock) c_g_static_rw_lock_writer_unlock;
 	void function(GStaticRWLock* lock) c_g_static_rw_lock_free;
-	
+
 	// gthread.Cond
-	
+
 	GCond* function() c_g_cond_new;
 	void function(GCond* cond) c_g_cond_signal;
 	void function(GCond* cond) c_g_cond_broadcast;
 	void function(GCond* cond, GMutex* mutex) c_g_cond_wait;
 	gboolean function(GCond* cond, GMutex* mutex, GTimeVal* absTime) c_g_cond_timed_wait;
 	void function(GCond* cond) c_g_cond_free;
-	
+
 	// gthread.Private
-	
+
 	GPrivate* function(GDestroyNotify destructor) c_g_private_new;
 	gpointer function(GPrivate* privateKey) c_g_private_get;
 	void function(GPrivate* privateKey, gpointer data) c_g_private_set;
-	
+
 	// gthread.StaticPrivate
-	
+
 	void function(GStaticPrivate* privateKey) c_g_static_private_init;
 	gpointer function(GStaticPrivate* privateKey) c_g_static_private_get;
 	void function(GStaticPrivate* privateKey, gpointer data, GDestroyNotify notify) c_g_static_private_set;
 	void function(GStaticPrivate* privateKey) c_g_static_private_free;
-	
+
 	// gthread.Thread
-	
+
 	void function(GThreadFunctions* vtable) c_g_thread_init;
 	gboolean function() c_g_thread_supported;
 	gboolean function() c_g_thread_get_initialized;

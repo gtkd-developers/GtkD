@@ -126,7 +126,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ColorSelection)[] onColorChangedListeners;
 	/**

@@ -205,7 +205,7 @@ public class RadioMenuItem : CheckMenuItem
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(RadioMenuItem)[] onGroupChangedListeners;
 	/**

@@ -125,7 +125,7 @@ public class CellRendererAccel : CellRendererText
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(string, CellRendererAccel)[] onAccelClearedListeners;
 	/**

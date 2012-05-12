@@ -101,7 +101,7 @@ public class Border
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Border)[] onRealizeListeners;
 	/**

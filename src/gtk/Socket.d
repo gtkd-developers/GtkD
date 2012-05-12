@@ -160,7 +160,7 @@ public class Socket : Container
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Socket)[] onPlugAddedListeners;
 	/**

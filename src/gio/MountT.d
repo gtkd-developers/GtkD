@@ -134,7 +134,7 @@ public template MountT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(MountIF)[] _onChangedListeners;
 	void delegate(MountIF)[] onChangedListeners()

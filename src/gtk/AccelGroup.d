@@ -144,7 +144,7 @@ public class AccelGroup : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(ObjectG, guint, GdkModifierType, AccelGroup)[] onAccelActivateListeners;
 	/**

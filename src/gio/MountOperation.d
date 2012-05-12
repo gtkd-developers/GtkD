@@ -133,7 +133,7 @@ public class MountOperation : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(MountOperation)[] onAbortedListeners;
 	/**

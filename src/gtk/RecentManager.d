@@ -151,7 +151,7 @@ public class RecentManager : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(RecentManager)[] onChangedListeners;
 	/**

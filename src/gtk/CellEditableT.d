@@ -88,7 +88,7 @@ public template CellEditableT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(CellEditableIF)[] _onEditingDoneListeners;
 	void delegate(CellEditableIF)[] onEditingDoneListeners()

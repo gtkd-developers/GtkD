@@ -125,7 +125,7 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Hyperlink)[] onLinkActivatedListeners;
 	/**

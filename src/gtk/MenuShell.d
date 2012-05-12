@@ -125,7 +125,7 @@ public class MenuShell : Container
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gboolean, MenuShell)[] onActivateCurrentListeners;
 	/**

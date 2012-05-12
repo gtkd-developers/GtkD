@@ -156,7 +156,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gint, EntryCompletion)[] onActionActivatedListeners;
 	/**

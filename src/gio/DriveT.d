@@ -129,7 +129,7 @@ public template DriveT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(DriveIF)[] _onChangedListeners;
 	void delegate(DriveIF)[] onChangedListeners()

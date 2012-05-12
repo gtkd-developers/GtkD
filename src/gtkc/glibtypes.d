@@ -2413,14 +2413,14 @@ public struct GMainContext{}
 
 
 /**
- * gint64  fd;
- * gint  fd;
- * gushort  events;
+ * gint64 fd;
+ * gint fd;
+ * gushort events;
  * a bitwise combination from GIOCondition, specifying which
  * events should be polled for. Typically for reading from a file
  * descriptor you would use G_IO_IN | G_IO_HUP | G_IO_ERR, and
  * for writing you would use G_IO_OUT | G_IO_ERR.
- * gushort  revents;
+ * gushort revents;
  * a bitwise combination of flags from GIOCondition, returned
  * from the poll() function to indicate which events occurred.
  */
@@ -2464,7 +2464,7 @@ public struct GSource{}
  * indicate that it doesn't mind how long the poll() call blocks. In the
  * check function, it tests the results of the poll() call to see if the
  * required condition has been met, and returns TRUE if so.
- * prepare  ()
+ * prepare ()
  * Called before all the file descriptors are polled. If the
  * source can determine that it is ready here (without waiting for the
  * results of the poll() call) it should return TRUE. It can also return
@@ -2472,12 +2472,12 @@ public struct GSource{}
  * which should be passed to the poll() call. The actual timeout used will
  * be -1 if all sources returned -1, or it will be the minimum of all the
  * timeout_ values returned which were >= 0.
- * check  ()
+ * check ()
  * Called after all the file descriptors are polled. The source
  * should return TRUE if it is ready to be dispatched. Note that some
  * time may have passed since the previous prepare function was called,
  * so the source should be checked again here.
- * dispatch  ()
+ * dispatch ()
  * Called to dispatch the event source, after it has returned
  * TRUE in either its prepare or its check function. The dispatch
  * function is passed in a callback function and data. The callback
@@ -2485,10 +2485,10 @@ public struct GSource{}
  * using g_source_set_callback(). The dispatch function should call the
  * callback function with user_data and whatever additional parameters
  * are needed for this type of event source.
- * finalize  ()
+ * finalize ()
  * Called when the source is finalized.
- * GSourceFunc  closure_callback;
- * GSourceDummyMarshal  closure_marshal;
+ * GSourceFunc closure_callback;
+ * GSourceDummyMarshal closure_marshal;
  */
 public struct GSourceFuncs
 {
@@ -2505,11 +2505,11 @@ public struct GSourceFuncs
 /**
  * The GSourceCallbackFuncs struct contains
  * functions for managing callback objects.
- * ref  ()
+ * ref ()
  * Called when a reference is added to the callback object
- * unref  ()
+ * unref ()
  * Called when a reference to the callback object is dropped
- * get  ()
+ * get ()
  * Called to extract the callback function and data from the
  * callback object.
  */
@@ -2526,11 +2526,11 @@ public struct GSourceCallbackFuncs
  * The GThreadPool struct represents a thread pool. It has three
  * public read-only members, but the underlying struct is bigger, so
  * you must not copy this struct.
- * GFunc  func;
+ * GFunc func;
  * the function to execute in the threads of this pool
- * gpointer  user_data;
+ * gpointer user_data;
  * the user data for the threads of this pool
- * gboolean  exclusive;
+ * gboolean exclusive;
  * are all threads exclusive to this pool
  */
 public struct GThreadPool
@@ -2563,17 +2563,17 @@ public struct GModule{}
  * A set of functions used to perform memory allocation. The same GMemVTable must
  * be used for all allocations in the same program; a call to g_mem_set_vtable(),
  * if it exists, should be prior to any use of GLib.
- * malloc  ()
+ * malloc ()
  * function to use for allocating memory.
- * realloc  ()
+ * realloc ()
  * function to use for reallocating memory.
- * free  ()
+ * free ()
  * function to use to free memory.
- * calloc  ()
+ * calloc ()
  * function to use for allocating zero-filled memory.
- * try_malloc  ()
+ * try_malloc ()
  * function to use for allocating memory without a default error handler.
- * try_realloc  ()
+ * try_realloc ()
  * function to use for reallocating memory without a default error handler.
  */
 public struct GMemVTable
@@ -2600,38 +2600,38 @@ public struct GIOChannel{}
 /**
  * A table of functions used to handle different types of GIOChannel
  * in a generic way.
- * io_read  ()
+ * io_read ()
  * reads raw bytes from the channel. This is called from
  * various functions such as g_io_channel_read_chars() to
  * read raw bytes from the channel. Encoding and buffering
  * issues are dealt with at a higher level.
- * io_write  ()
+ * io_write ()
  * writes raw bytes to the channel. This is called from
  * various functions such as g_io_channel_write_chars() to
  * write raw bytes to the channel. Encoding and buffering
  * issues are dealt with at a higher level.
- * io_seek  ()
+ * io_seek ()
  * (optional) seeks the channel. This is called from
  * g_io_channel_seek() on channels that support it.
- * io_close  ()
+ * io_close ()
  * closes the channel. This is called from
  * g_io_channel_close() after flushing the buffers.
- * io_create_watch  ()
+ * io_create_watch ()
  * creates a watch on the channel. This call
  * corresponds directly to g_io_create_watch().
- * io_free  ()
+ * io_free ()
  * called from g_io_channel_unref() when the channel needs to
  * be freed. This function must free the memory associated
  * with the channel, including freeing the GIOChannel
  * structure itself. The channel buffers have been flushed
  * and possibly io_close has been called by the time this
  * function is called.
- * io_set_flags  ()
+ * io_set_flags ()
  * sets the GIOFlags on the channel. This is called
  * from g_io_channel_set_flags() with all flags except
  * for G_IO_FLAG_APPEND and G_IO_FLAG_NONBLOCK masked
  * out.
- * io_get_flags  ()
+ * io_get_flags ()
  * gets the GIOFlags for the channel. This function
  * need only return the G_IO_FLAG_APPEND and
  * G_IO_FLAG_NONBLOCK flags; g_io_channel_get_flags()
@@ -2654,11 +2654,11 @@ public struct GIOFuncs
  * Main Gtk struct.
  * The GError structure contains
  * information about an error that has occurred.
- * GQuark  domain;
+ * GQuark domain;
  * error domain, e.g. G_FILE_ERROR.
- * gint  code;
+ * gint code;
  * error code, e.g. G_FILE_ERROR_NOENT.
- * gchar  *message;
+ * gchar *message;
  * human-readable informative error message.
  */
 public struct GError
@@ -2690,9 +2690,9 @@ public struct GChecksum{}
  * GLib is attempting to unify around the use of 64bit integers to
  * represent microsecond-precision time. As such, this type will be
  * removed from a future version of GLib.
- * glong  tv_sec;
+ * glong tv_sec;
  * seconds
- * glong  tv_usec;
+ * glong tv_usec;
  * microseconds
  */
 public struct GTimeVal
@@ -2712,19 +2712,19 @@ public struct GTimeVal
  * but sane. An invalid date doesn't represent a day, it's "empty." A
  * date becomes valid after you set it to a Julian day or you set a day,
  * month, and year.
- * guint  julian_days  :  32;
+ * guint julian_days : 32;
  * the Julian representation of the date
- * guint  julian  :  1;
+ * guint julian : 1;
  * this bit is set if julian_days is valid
- * guint  dmy  :  1;
+ * guint dmy : 1;
  * this is set if day, month and year are valid
- * guint  day  :  6;
+ * guint day : 6;
  * the day of the day-month-year representation of the date, as
  * a number between 1 and 31
- * guint  month  :  4;
+ * guint month : 4;
  * the day of the day-month-year representation of the date, as
  * a number between 1 and 12
- * guint  year  :  16;
+ * guint year : 16;
  * the day of the day-month-year representation of the date
  */
 public struct GDate
@@ -2775,9 +2775,9 @@ public struct GRand{}
 /**
  * Associates a string with a bit flag.
  * Used in g_parse_debug_string().
- * const  gchar  *key;
+ * const gchar *key;
  * the string
- * guint  value;
+ * guint value;
  * the flag
  */
 public struct GDebugKey
@@ -2800,35 +2800,35 @@ public struct GDebugKey
  * If you want to use your own message handler you can set the
  * msg_handler field. The type of the message
  * handler function is declared by GScannerMsgFunc.
- * gpointer  user_data;
- * guint  max_parse_errors;
- * guint  parse_errors;
- * const  gchar  *input_name;
- * GData  *qdata;
- * GScannerConfig  *config;
- * GTokenType  token;
+ * gpointer user_data;
+ * guint max_parse_errors;
+ * guint parse_errors;
+ * const gchar *input_name;
+ * GData *qdata;
+ * GScannerConfig *config;
+ * GTokenType token;
  * token parsed by the last g_scanner_get_next_token()
- * GTokenValue  value;
+ * GTokenValue value;
  * value of the last token from g_scanner_get_next_token()
- * guint  line;
+ * guint line;
  * line number of the last token from g_scanner_get_next_token()
- * guint  position;
+ * guint position;
  * char number of the last token from g_scanner_get_next_token()
- * GTokenType  next_token;
+ * GTokenType next_token;
  * token parsed by the last g_scanner_peek_next_token()
- * GTokenValue  next_value;
+ * GTokenValue next_value;
  * value of the last token from g_scanner_peek_next_token()
- * guint  next_line;
+ * guint next_line;
  * line number of the last token from g_scanner_peek_next_token()
- * guint  next_position;
+ * guint next_position;
  * char number of the last token from g_scanner_peek_next_token()
- * GHashTable  *symbol_table;
- * gint  input_fd;
- * const  gchar  *text;
- * const  gchar  *text_end;
- * gchar  *buffer;
- * guint  scope_id;
- * GScannerMsgFunc  msg_handler;
+ * GHashTable *symbol_table;
+ * gint input_fd;
+ * const gchar *text;
+ * const gchar *text_end;
+ * gchar *buffer;
+ * guint scope_id;
+ * GScannerMsgFunc msg_handler;
  * function to handle GScanner message output
  */
 public struct GScanner
@@ -2973,17 +2973,17 @@ public struct GScannerConfig
 /**
  * Main Gtk struct.
  * The data structure used for automatic completion.
- * GList  *items;
+ * GList *items;
  * list of target items (strings or data structures).
- * GCompletionFunc  func;
+ * GCompletionFunc func;
  * function which is called to get the string associated with a
  * target item. It is NULL if the target items are strings.
- * gchar  *prefix;
+ * gchar *prefix;
  * the last prefix passed to g_completion_complete() or
  * g_completion_complete_utf8().
- * GList  *cache;
+ * GList *cache;
  * the list of items which begin with prefix.
- * GCompletionStrncmpFunc  strncmp_func;
+ * GCompletionStrncmpFunc strncmp_func;
  * The function to use when comparing strings. Use
  * g_completion_set_compare() to modify this function.
  */
@@ -3039,23 +3039,23 @@ public struct GOptionContext{}
  * A GOptionEntry defines a single option.
  * To have an effect, they must be added to a GOptionGroup with
  * g_option_context_add_main_entries() or g_option_group_add_entries().
- * const  gchar  *long_name;
+ * const gchar *long_name;
  * The long name of an option can be used to specify it
  * in a commandline as --long_name. Every
  * option must have a long name. To resolve conflicts if multiple
  * option groups contain the same long name, it is also possible to
  * specify the option as
  * --groupname-long_name.
- * gchar  short_name;
+ * gchar short_name;
  * If an option has a short name, it can be specified
  * -short_name in a commandline. short_name must be
  * a printable ASCII character different from '-', or zero if the option has no
  * short name.
- * gint  flags;
+ * gint flags;
  * Flags from GOptionFlags.
- * GOptionArg  arg;
+ * GOptionArg arg;
  * The type of the option, as a GOptionArg.
- * gpointer  arg_data;
+ * gpointer arg_data;
  * If the arg type is G_OPTION_ARG_CALLBACK, then arg_data must
  * point to a GOptionArgFunc callback function, which will be called to handle
  * the extra argument. Otherwise, arg_data is a pointer to a location to store
@@ -3079,11 +3079,11 @@ public struct GOptionContext{}
  * needs to be freed by the callee using g_free(). Likewise if arg type is
  * G_OPTION_ARG_STRING_ARRAY or G_OPTION_ARG_FILENAME_ARRAY, the data should
  * be freed using g_strfreev().
- * const  gchar  *description;
+ * const gchar *description;
  * the description for the option in --help
  * output. The description is translated using the translate_func of the
  * group, see g_option_group_set_translation_domain().
- * const  gchar  *arg_description;
+ * const gchar *arg_description;
  * The placeholder to use for the extra argument parsed
  * by the option in --help
  * output. The arg_description is translated using the translate_func of the
@@ -3157,26 +3157,26 @@ public struct GMarkupParseContext{}
  * errors are intended to be set from these callbacks. If you set an error
  * from a callback, g_markup_parse_context_parse() will report that error
  * back to its caller.
- * start_element  ()
+ * start_element ()
  * Callback to invoke when the opening tag of an element
  * is seen.
- * end_element  ()
+ * end_element ()
  * Callback to invoke when the closing tag of an element
  * is seen. Note that this is also called for empty tags like
  * <empty/>.
- * text  ()
+ * text ()
  * Callback to invoke when some text is seen (text is always
  * inside an element). Note that the text of an element may be spread
  * over multiple calls of this function. If the
  * G_MARKUP_TREAT_CDATA_AS_TEXT flag is set, this function is also
  * called for the content of CDATA marked sections.
- * passthrough  ()
+ * passthrough ()
  * Callback to invoke for comments, processing instructions
  * and doctype declarations; if you're re-writing the parsed document,
  * write the passthrough text back out in the same position. If the
  * G_MARKUP_TREAT_CDATA_AS_TEXT flag is not set, this function is also
  * called for CDATA marked sections.
- * error  ()
+ * error ()
  * Callback to invoke when an error occurs.
  */
 public struct GMarkupParser
@@ -3231,13 +3231,13 @@ public struct GMemChunk{}
 /**
  * Main Gtk struct.
  * The GList struct is used for each element in a doubly-linked list.
- * gpointer  data;
+ * gpointer data;
  * holds the element's data, which can be a pointer to any kind
  * of data, or any integer value using the Type Conversion
  * Macros.
- * GList  *next;
+ * GList *next;
  * contains the link to the next element in the list.
- * GList  *prev;
+ * GList *prev;
  * contains the link to the previous element in the list.
  */
 public struct GList
@@ -3252,11 +3252,11 @@ public struct GList
  * Main Gtk struct.
  * The GSList struct is used for each element in the singly-linked
  * list.
- * gpointer  data;
+ * gpointer data;
  * holds the element's data, which can be a pointer to any kind
  * of data, or any integer value using the Type Conversion
  * Macros.
- * GSList  *next;
+ * GSList *next;
  * contains the link to the next element in the list.
  */
 public struct GSList
@@ -3269,11 +3269,11 @@ public struct GSList
 /**
  * Main Gtk struct.
  * Contains the public fields of a Queue.
- * GList  *head;
+ * GList *head;
  * a pointer to the first element of the queue.
- * GList  *tail;
+ * GList *tail;
  * a pointer to the last element of the queue.
- * guint  length;
+ * guint length;
  * the number of elements in the queue.
  */
 public struct GQueue
@@ -3303,7 +3303,7 @@ public struct GSequenceIter{}
  * Main Gtk struct.
  * Each piece of memory that is pushed onto the stack
  * is cast to a GTrashStack*.
- * GTrashStack  *next;
+ * GTrashStack *next;
  * pointer to the previous element of the stack,
  * gets stored in the first sizeof (gpointer)
  * bytes of the element.
@@ -3335,14 +3335,14 @@ public struct GHashTableIter{}
 /**
  * Main Gtk struct.
  * The GString struct contains the public fields of a GString.
- * gchar  *str;
+ * gchar *str;
  * points to the character data. It may move as text is added.
  * The str field is nul-terminated and so
  * can be used as an ordinary C string.
- * gsize  len;
+ * gsize len;
  * contains the length of the string, not including the
  * terminating nul byte.
- * gsize  allocated_len;
+ * gsize allocated_len;
  * the number of bytes that can be stored in the
  * string before it needs to be reallocated. May be larger than len.
  */
@@ -3365,10 +3365,10 @@ public struct GStringChunk{}
 /**
  * Main Gtk struct.
  * Contains the public fields of an Array.
- * gchar  *data;
+ * gchar *data;
  * a pointer to the element data. The data may be moved as
  * elements are added to the GArray.
- * guint  len;
+ * guint len;
  * the number of elements in the GArray not including the
  * possible terminating zero element.
  */
@@ -3382,10 +3382,10 @@ public struct GArray
 /**
  * Main Gtk struct.
  * Contains the public fields of a pointer array.
- * gpointer  *pdata;
+ * gpointer *pdata;
  * points to the array of pointers, which may be moved when the
  * array grows.
- * guint  len;
+ * guint len;
  * number of pointers in the array.
  */
 public struct GPtrArray
@@ -3399,10 +3399,10 @@ public struct GPtrArray
  * Main Gtk struct.
  * The GByteArray struct allows access to the
  * public fields of a GByteArray.
- * guint8  *data;
+ * guint8 *data;
  * a pointer to the element data. The data may be moved as
  * elements are added to the GByteArray.
- * guint  len;
+ * guint len;
  * the number of elements in the GByteArray.
  */
 public struct GByteArray
@@ -3425,17 +3425,17 @@ public struct GTree{}
  * Main Gtk struct.
  * The GNode struct represents one node in a
  * N-ary Tree. fields
- * gpointer  data;
+ * gpointer data;
  * contains the actual data of the node.
- * GNode  *next;
+ * GNode *next;
  * points to the node's next sibling (a sibling is another
  * GNode with the same parent).
- * GNode  *prev;
+ * GNode *prev;
  * points to the node's previous sibling.
- * GNode  *parent;
+ * GNode *parent;
  * points to the parent of the GNode, or is NULL if the
  * GNode is the root of the tree.
- * GNode  *children;
+ * GNode *children;
  * points to the first child of the GNode. The other
  * children are accessed by using the next pointer of each
  * child.
@@ -3472,7 +3472,7 @@ public struct GRelation{}
  * GRelation by g_relation_select(). It only contains one public
  * member - the number of records that matched. To access the matched
  * records, you must use g_tuples_index().
- * guint  len;
+ * guint len;
  * the number of records that matched.
  */
 public struct GTuples
@@ -3541,11 +3541,11 @@ public struct GVariantBuilder{}
  * Returns TRUE if the version of the GLib header files is the same
  * as or newer than the passed-in version.
  * $(DDOC_COMMENT example)
- * major  :
+ * major :
  * the major version number.
- * minor  :
+ * minor :
  * the minor version number.
- * micro  :
+ * micro :
  * the micro version number.
  */
 // TODO
@@ -3555,11 +3555,11 @@ public struct GVariantBuilder{}
  * Warning
  * g_main_new has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_new() instead
  * Creates a new GMainLoop for th default main context.
- * is_running  :
+ * is_running :
  * set to TRUE to indicate that the loop is running. This
  * is not very important since calling g_main_run() will set this
  * to TRUE anyway.
- * Returns  :
+ * Returns :
  * a new GMainLoop
  */
 // TODO
@@ -3569,7 +3569,7 @@ public struct GVariantBuilder{}
  * Warning
  * g_main_destroy has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_unref() instead
  * Frees the memory allocated for the GMainLoop.
- * loop  :
+ * loop :
  * a GMainLoop
  */
 // TODO
@@ -3579,7 +3579,7 @@ public struct GVariantBuilder{}
  * Warning
  * g_main_run has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_run() instead
  * Runs a main loop until it stops running.
- * loop  :
+ * loop :
  * a GMainLoop
  */
 // TODO
@@ -3590,7 +3590,7 @@ public struct GVariantBuilder{}
  * g_main_quit has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_quit() instead
  * Stops the GMainLoop.
  * If g_main_run() was called to run the GMainLoop, it will now return.
- * loop  :
+ * loop :
  * a GMainLoop
  */
 // TODO
@@ -3600,9 +3600,9 @@ public struct GVariantBuilder{}
  * Warning
  * g_main_is_running has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_loop_is_running() instead
  * Checks if the main loop is running.
- * loop  :
+ * loop :
  * a GMainLoop
- * Returns  :
+ * Returns :
  * TRUE if the main loop is running
  */
 // TODO
@@ -3612,12 +3612,12 @@ public struct GVariantBuilder{}
  * Warning
  * g_main_iteration has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_context_iteration() instead.
  * Runs a single iteration for the default GMainContext.
- * may_block  :
+ * may_block :
  * set to TRUE if it should block (i.e. wait) until an event
  * source becomes ready. It will return after an event source has been
  * processed. If set to FALSE it will return immediately if no event
  * source is ready to be processed.
- * Returns  :
+ * Returns :
  * TRUE if more events are pending.
  */
 // TODO
@@ -3628,7 +3628,7 @@ public struct GVariantBuilder{}
  * g_main_set_poll_func has been deprecated since version 2.2 and should not be used in newly-written code. Use g_main_context_set_poll_func() again
  * Sets the function to use for the handle polling of file descriptors
  * for the default main context.
- * func  :
+ * func :
  * the function to call to poll all file descriptors
  */
 // TODO
@@ -3642,11 +3642,11 @@ public struct GVariantBuilder{}
  * Since the returned pointer is already casted to the right type,
  * it is normally unnecessary to cast it explicitly, and doing
  * so might hide memory allocation errors.
- * struct_type  :
+ * struct_type :
  * the type of the elements to allocate
- * n_structs  :
+ * n_structs :
  * the number of elements to allocate
- * Returns  :
+ * Returns :
  * a pointer to the allocated memory, cast to a pointer to struct_type
  */
 // TODO
@@ -3660,11 +3660,11 @@ public struct GVariantBuilder{}
  * Since the returned pointer is already casted to the right type,
  * it is normally unnecessary to cast it explicitly, and doing
  * so might hide memory allocation errors.
- * struct_type  :
+ * struct_type :
  * the type of the elements to allocate.
- * n_structs  :
+ * n_structs :
  * the number of elements to allocate.
- * Returns  :
+ * Returns :
  * a pointer to the allocated memory, cast to a pointer to struct_type.
  */
 // TODO
@@ -3675,13 +3675,13 @@ public struct GVariantBuilder{}
  * n_structs elements of type struct_type. It returns the new address of
  * the memory, which may have been moved.
  * Care is taken to avoid overflow when calculating the size of the allocated block.
- * struct_type  :
+ * struct_type :
  * the type of the elements to allocate
- * mem  :
+ * mem :
  * the currently allocated memory
- * n_structs  :
+ * n_structs :
  * the number of elements to allocate
- * Returns  :
+ * Returns :
  * a pointer to the new allocated memory, cast to a pointer to struct_type
  */
 // TODO
@@ -3692,11 +3692,11 @@ public struct GVariantBuilder{}
  * NULL on failure. Contrast with g_new(), which aborts the program on failure.
  * The returned pointer is cast to a pointer to the given type.
  * The function returns NULL when n_structs is 0 of if an overflow occurs.
- * struct_type  :
+ * struct_type :
  * the type of the elements to allocate
- * n_structs  :
+ * n_structs :
  * the number of elements to allocate
- * Returns  :
+ * Returns :
  * a pointer to the allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
@@ -3709,11 +3709,11 @@ public struct GVariantBuilder{}
  * the program on failure.
  * The returned pointer is cast to a pointer to the given type.
  * The function returns NULL when n_structs is 0 of if an overflow occurs.
- * struct_type  :
+ * struct_type :
  * the type of the elements to allocate
- * n_structs  :
+ * n_structs :
  * the number of elements to allocate
- * Returns  :
+ * Returns :
  * a pointer to the allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
@@ -3726,13 +3726,13 @@ public struct GVariantBuilder{}
  * failure. Contrast with g_renew(), which aborts the program on failure.
  * It returns the new address of the memory, which may have been moved.
  * The function returns NULL if an overflow occurs.
- * struct_type  :
+ * struct_type :
  * the type of the elements to allocate
- * mem  :
+ * mem :
  * the currently allocated memory
- * n_structs  :
+ * n_structs :
  * the number of elements to allocate
- * Returns  :
+ * Returns :
  * a pointer to the new allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
@@ -3759,9 +3759,9 @@ public struct GVariantBuilder{}
  *  Stack space allocated with alloca() in the same scope as a variable sized array
  *  will be freed together with the variable sized array upon exit of that scope, and
  *  not upon exit of the enclosing function scope.
- * size  :
+ * size :
  * number of bytes to allocate.
- * Returns  :
+ * Returns :
  * space for size bytes, allocated on the stack
  */
 // TODO
@@ -3769,11 +3769,11 @@ public struct GVariantBuilder{}
 
 /*
  * Wraps g_alloca() in a more typesafe manner.
- * struct_type  :
+ * struct_type :
  * Type of memory chunks to be allocated
- * n_structs  :
+ * n_structs :
  * Number of chunks to be allocated
- * Returns  :
+ * Returns :
  * Pointer to stack space for n_structs chunks of type struct_type
  */
 // TODO
@@ -3786,11 +3786,11 @@ public struct GVariantBuilder{}
  * string.h yourself, because this macro will
  * typically simply resolve to memmove() and GLib does not include
  * string.h for you.
- * dest  :
+ * dest :
  * the destination address to copy the bytes to.
- * src  :
+ * src :
  * the source address to copy the bytes from.
- * len  :
+ * len :
  * the number of bytes to copy.
  */
 // TODO
@@ -3801,7 +3801,7 @@ public struct GVariantBuilder{}
  * If the expression evaluates to FALSE, a critical message is logged and
  * the function returns. This can only be used in functions which do not return
  * a value.
- * expr  :
+ * expr :
  * the expression to check.
  */
 // TODO
@@ -3812,9 +3812,9 @@ public struct GVariantBuilder{}
  * is not true.
  * If the expression evaluates to FALSE, a critical message is logged and
  * val is returned.
- * expr  :
+ * expr :
  * the expression to check.
- * val  :
+ * val :
  * the value to return from the current function if the expression is not
  * true.
  */
@@ -3823,7 +3823,7 @@ public struct GVariantBuilder{}
 
 /*
  * Logs a critical message and returns val.
- * val  :
+ * val :
  * the value to return from the current function.
  */
 // TODO
@@ -3831,7 +3831,7 @@ public struct GVariantBuilder{}
 
 /*
  * Logs a warning if the expression is not true.
- * expr  :
+ * expr :
  * the expression to check
  * Since 2.16
  */
@@ -3840,7 +3840,7 @@ public struct GVariantBuilder{}
 
 /*
  * A convenience function/macro to log a normal message.
- * ...  :
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  */
 // TODO
@@ -3850,7 +3850,7 @@ public struct GVariantBuilder{}
  * A convenience function/macro to log a warning message.
  * You can make warnings fatal at runtime by setting the G_DEBUG environment
  * variable (see Running GLib Applications).
- * ...  :
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  */
 // TODO
@@ -3865,7 +3865,7 @@ public struct GVariantBuilder{}
  * You can also make critical warnings fatal at runtime by setting
  * the G_DEBUG environment variable (see
  * Running GLib Applications).
- * ...  :
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  */
 // TODO
@@ -3878,7 +3878,7 @@ public struct GVariantBuilder{}
  * This function will result in a core dump; don't use it for errors you
  * expect. Using this function indicates a bug in your program, i.e. an
  * assertion failure.
- * ...  :
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  */
 // TODO
@@ -3886,7 +3886,7 @@ public struct GVariantBuilder{}
 
 /*
  * A convenience function/macro to log a debug message.
- * ...  :
+ * ... :
  * format string, followed by parameters to insert into the format string (as with printf())
  * Since 2.6
  */
@@ -3896,7 +3896,7 @@ public struct GVariantBuilder{}
 /*
  * Removes leading and trailing whitespace from a string. See g_strchomp() and
  * g_strchug().
- * string  :
+ * string :
  * a string to remove the leading and trailing whitespace from.
  */
 // TODO
@@ -3909,7 +3909,7 @@ public struct GVariantBuilder{}
  * character. The macro returns the start of the next UTF-8 character.
  * Before using this macro, use g_utf8_validate() to validate strings
  * that may contain invalid UTF-8.
- * p  :
+ * p :
  * Pointer to the start of a valid UTF-8 character.
  */
 // TODO
@@ -3918,7 +3918,7 @@ public struct GVariantBuilder{}
 /*
  * Marks a string for translation, gets replaced with the translated string
  * at runtime.
- * String  :
+ * String :
  * the string to be translated
  * Since 2.4
  */
@@ -3943,10 +3943,10 @@ public struct GVariantBuilder{}
  * If you are using GNU gettext >= 0.15, you can also use
  * --keyword=Q_:1g to let xgettext split the context
  * string off into a msgctxt line in the po file.
- * String  :
+ * String :
  * the string to be translated, with a '|'-separated prefix which
  * must not be translated
- * Returns  :
+ * Returns :
  * the translated message
  * Since 2.4
  */
@@ -3963,11 +3963,11 @@ public struct GVariantBuilder{}
  * If you are using the C_() macro, you need to make sure that you
  * pass --keyword=C_:1c,2 to xgettext when extracting
  * messages. Note that this only works with GNU gettext >= 0.15.
- * Context  :
+ * Context :
  * a message context, must be a string literal
- * String  :
+ * String :
  * a message id, must be a string literal
- * Returns  :
+ * Returns :
  * the translated message
  * Since 2.16
  */
@@ -3980,7 +3980,7 @@ public struct GVariantBuilder{}
  * be directly used, e.g. in string array initializers.
  * To get the translated string, call gettext() at runtime.
  * $(DDOC_COMMENT example)
- * String  :
+ * String :
  * the string to be translated
  * Since 2.4
  */
@@ -3998,9 +3998,9 @@ public struct GVariantBuilder{}
  * pass --keyword=NC_:1c,2 to xgettext when extracting
  * messages. Note that this only works with GNU gettext >= 0.15.
  * Intltool has support for the NC_() macro since version 0.40.1.
- * Context  :
+ * Context :
  * a message context, must be a string literal
- * String  :
+ * String :
  * a message id, must be a string literal
  * Since 2.18
  */
@@ -4010,9 +4010,9 @@ public struct GVariantBuilder{}
 /*
  * Returns a random gboolean from rand_. This corresponds to a
  * unbiased coin toss.
- * rand_  :
+ * rand_ :
  * a GRand.
- * Returns  :
+ * Returns :
  * a random gboolean.
  */
 // TODO
@@ -4022,11 +4022,11 @@ public struct GVariantBuilder{}
  * Warning
  * g_scanner_add_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_add_symbol() instead.
  * Adds a symbol to the default scope.
- * scanner  :
+ * scanner :
  * a GScanner.
- * symbol  :
+ * symbol :
  * the symbol to add.
- * value  :
+ * value :
  * the value of the symbol.
  */
 // TODO
@@ -4036,9 +4036,9 @@ public struct GVariantBuilder{}
  * Warning
  * g_scanner_remove_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_remove_symbol() instead.
  * Removes a symbol from the default scope.
- * scanner  :
+ * scanner :
  * a GScanner.
- * symbol  :
+ * symbol :
  * the symbol to remove.
  */
 // TODO
@@ -4048,11 +4048,11 @@ public struct GVariantBuilder{}
  * Warning
  * g_scanner_foreach_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_foreach_symbol() instead.
  * Calls a function for each symbol in the default scope.
- * scanner  :
+ * scanner :
  * a GScanner.
- * func  :
+ * func :
  * the function to call with each symbol.
- * data  :
+ * data :
  * data to pass to the function.
  */
 // TODO
@@ -4062,7 +4062,7 @@ public struct GVariantBuilder{}
  * Warning
  * g_scanner_freeze_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
  * There is no reason to use this macro, since it does nothing.
- * scanner  :
+ * scanner :
  * a GScanner.
  */
 // TODO
@@ -4072,11 +4072,16 @@ public struct GVariantBuilder{}
  * Warning
  * g_scanner_thaw_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
  * There is no reason to use this macro, since it does nothing.
- * scanner  :
+ * scanner :
  * a GScanner.
  */
 // TODO
 // #define g_scanner_thaw_symbol_table(scanner)
+
+/*
+ */
+// TODO
+// # define G_WIN32_DLLMAIN_FOR_DLL_NAME(static, dll_name) Warning G_WIN32_DLLMAIN_FOR_DLL_NAME is deprecated and should not be used in newly-written code. On Windows, this macro defines a DllMain() function that stores the actual DLL name that the code being compiled will be included in. On non-Windows platforms, expands to nothing. static : empty or "static". dll_name : the name of the (pointer to the) char array where the DLL name will be stored. If this is used, you must also include windows.h. If you need a more complex DLL entry point function, you cannot use this.
 
 /*
  * A convenience macro to allocate a block of memory from the slice allocator.
@@ -4086,9 +4091,9 @@ public struct GVariantBuilder{}
  * Note that the underlying slice allocation mechanism can
  * be changed with the G_SLICE=always-malloc
  * environment variable.
- * type  :
+ * type :
  * the type to allocate, typically a structure name
- * Returns  :
+ * Returns :
  * a pointer to the allocated block, cast to a pointer to type.
  * Since 2.10
  */
@@ -4103,9 +4108,9 @@ public struct GVariantBuilder{}
  * Note that the underlying slice allocation mechanism can
  * be changed with the G_SLICE=always-malloc
  * environment variable.
- * type  :
+ * type :
  * the type to allocate, typically a structure name
- * Returns  :
+ * Returns :
  * a pointer to the allocated block, cast to a pointer to type.
  * Since 2.10
  */
@@ -4120,11 +4125,11 @@ public struct GVariantBuilder{}
  * Note that the underlying slice allocation mechanism can
  * be changed with the G_SLICE=always-malloc
  * environment variable.
- * type  :
+ * type :
  * the type to duplicate, typically a structure name
- * mem  :
+ * mem :
  * the memory to copy into the allocated block
- * Returns  :
+ * Returns :
  * a pointer to the allocated block, cast to a pointer to type.
  * Since 2.14
  */
@@ -4138,9 +4143,9 @@ public struct GVariantBuilder{}
  * Note that the exact release behaviour can be changed with the
  * G_DEBUG=gc-friendly environment variable,
  * also see G_SLICE for related debugging options.
- * type  :
+ * type :
  * the type of the block to free, typically a structure name
- * mem  :
+ * mem :
  * a pointer to the block to free
  * Since 2.10
  */
@@ -4156,11 +4161,11 @@ public struct GVariantBuilder{}
  * Note that the exact release behaviour can be changed with the
  * G_DEBUG=gc-friendly environment variable,
  * also see G_SLICE for related debugging options.
- * type  :
+ * type :
  * the type of the mem_chain blocks
- * mem_chain  :
+ * mem_chain :
  * a pointer to the first block of the chain
- * next  :
+ * next :
  * the field name of the next pointer in type
  * Since 2.10
  * [6]
@@ -4181,18 +4186,18 @@ public struct GVariantBuilder{}
  * name. The atom size is determined using
  * sizeof(), and the area size is calculated by
  * multiplying the pre_alloc parameter with the atom size.
- * type  :
+ * type :
  * the type of the atoms, typically a structure name.
- * pre_alloc  :
+ * pre_alloc :
  * the number of atoms to store in each block of memory.
- * alloc_type  :
+ * alloc_type :
  * the type of the GMemChunk. G_ALLOC_AND_FREE is used
  * if the atoms will be freed individually. G_ALLOC_ONLY
  * should be used if atoms will never be freed
  * individually. G_ALLOC_ONLY is quicker, since it does
  * not need to track free atoms, but it obviously wastes
  * memory if you no longer need many of the atoms.
- * Returns  :
+ * Returns :
  * the new GMemChunk.
  */
 // TODO
@@ -4204,11 +4209,11 @@ public struct GVariantBuilder{}
  * A convenience macro to allocate an atom of memory from a GMemChunk.
  * It calls g_mem_chunk_alloc() and casts the returned atom to a
  * pointer to the given type, avoiding a type cast in the source code.
- * type  :
+ * type :
  * the type of the GMemChunk atoms, typically a structure name.
- * chunk  :
+ * chunk :
  * a GMemChunk.
- * Returns  :
+ * Returns :
  * a pointer to the allocated atom, cast to a pointer to
  * type.
  */
@@ -4221,11 +4226,11 @@ public struct GVariantBuilder{}
  * A convenience macro to allocate an atom of memory from a GMemChunk.
  * It calls g_mem_chunk_alloc0() and casts the returned atom to a
  * pointer to the given type, avoiding a type cast in the source code.
- * type  :
+ * type :
  * the type of the GMemChunk atoms, typically a structure name.
- * chunk  :
+ * chunk :
  * a GMemChunk.
- * Returns  :
+ * Returns :
  * a pointer to the allocated atom, cast to a pointer to
  * type.
  */
@@ -4239,9 +4244,9 @@ public struct GVariantBuilder{}
  * simply switches the arguments and calls g_mem_chunk_free() It is
  * included simply to complement the other convenience macros,
  * g_chunk_new() and g_chunk_new0().
- * mem  :
+ * mem :
  * a pointer to the atom to be freed.
- * mem_chunk  :
+ * mem_chunk :
  * a GMemChunk.
  */
 // TODO
@@ -4249,9 +4254,9 @@ public struct GVariantBuilder{}
 
 /*
  * A convenience macro to get the previous element in a GList.
- * list  :
+ * list :
  * an element in a GList.
- * Returns  :
+ * Returns :
  * the previous element, or NULL if there are no previous
  * elements.
  */
@@ -4260,9 +4265,9 @@ public struct GVariantBuilder{}
 
 /*
  * A convenience macro to get the next element in a GList.
- * list  :
+ * list :
  * an element in a GList.
- * Returns  :
+ * Returns :
  * the next element, or NULL if there are no more elements.
  */
 // TODO
@@ -4270,9 +4275,9 @@ public struct GVariantBuilder{}
 
 /*
  * A convenience macro to get the next element in a GSList.
- * slist  :
+ * slist :
  * an element in a GSList.
- * Returns  :
+ * Returns :
  * the next element, or NULL if there are no more elements.
  */
 // TODO
@@ -4283,7 +4288,7 @@ public struct GVariantBuilder{}
  * g_hash_table_freeze is deprecated and should not be used in newly-written code.
  * This function is deprecated and will be removed in the next major
  * release of GLib. It does nothing.
- * hash_table  :
+ * hash_table :
  * a GHashTable
  */
 // TODO
@@ -4294,7 +4299,7 @@ public struct GVariantBuilder{}
  * g_hash_table_thaw is deprecated and should not be used in newly-written code.
  * This function is deprecated and will be removed in the next major
  * release of GLib. It does nothing.
- * hash_table  :
+ * hash_table :
  * a GHashTable
  */
 // TODO
@@ -4307,11 +4312,11 @@ public struct GVariantBuilder{}
  * g_array_append_val() is a macro which uses a reference
  * to the value parameter v. This means that you cannot use it with
  * literal values such as "27". You must use variables.
- * a  :
+ * a :
  * a GArray.
- * v  :
+ * v :
  * the value to append to the GArray.
- * Returns  :
+ * Returns :
  * the GArray.
  */
 // TODO
@@ -4327,11 +4332,11 @@ public struct GVariantBuilder{}
  * g_array_prepend_val() is a macro which uses a reference
  * to the value parameter v. This means that you cannot use it with
  * literal values such as "27". You must use variables.
- * a  :
+ * a :
  * a GArray.
- * v  :
+ * v :
  * the value to prepend to the GArray.
- * Returns  :
+ * Returns :
  * the GArray.
  */
 // TODO
@@ -4343,13 +4348,13 @@ public struct GVariantBuilder{}
  * g_array_insert_val() is a macro which uses a reference
  * to the value parameter v. This means that you cannot use it with
  * literal values such as "27". You must use variables.
- * a  :
+ * a :
  * a GArray.
- * i  :
+ * i :
  * the index to place the element at.
- * v  :
+ * v :
  * the value to insert into the array.
- * Returns  :
+ * Returns :
  * the GArray.
  */
 // TODO
@@ -4359,13 +4364,13 @@ public struct GVariantBuilder{}
  * Returns the element of a GArray at the given index. The return
  * value is cast to the given type.
  * $(DDOC_COMMENT example)
- * a  :
+ * a :
  * a GArray.
- * t  :
+ * t :
  * the type of the elements.
- * i  :
+ * i :
  * the index of the element to return.
- * Returns  :
+ * Returns :
  * the element of the GArray at the index given by i.
  */
 // TODO
@@ -4373,11 +4378,11 @@ public struct GVariantBuilder{}
 
 /*
  * Returns the pointer at the given index of the pointer array.
- * array  :
+ * array :
  * a GPtrArray.
- * index_  :
+ * index_ :
  * the index of the pointer to return.
- * Returns  :
+ * Returns :
  * the pointer at the given index.
  */
 // TODO
@@ -4385,11 +4390,11 @@ public struct GVariantBuilder{}
 
 /*
  * Inserts a GNode as the last child of the given parent.
- * parent  :
+ * parent :
  * the GNode to place the new GNode under
- * node  :
+ * node :
  * the GNode to insert
- * Returns  :
+ * Returns :
  * the inserted GNode
  */
 // TODO
@@ -4397,14 +4402,14 @@ public struct GVariantBuilder{}
 
 /*
  * Inserts a new GNode at the given position.
- * parent  :
+ * parent :
  * the GNode to place the new GNode under
- * position  :
+ * position :
  * the position to place the new GNode at. If position is -1,
  * the new GNode is inserted as the last child of parent
- * data  :
+ * data :
  * the data for the new GNode
- * Returns  :
+ * Returns :
  * the new GNode
  */
 // TODO
@@ -4412,13 +4417,13 @@ public struct GVariantBuilder{}
 
 /*
  * Inserts a new GNode before the given sibling.
- * parent  :
+ * parent :
  * the GNode to place the new GNode under
- * sibling  :
+ * sibling :
  * the sibling GNode to place the new GNode before
- * data  :
+ * data :
  * the data for the new GNode
- * Returns  :
+ * Returns :
  * the new GNode
  */
 // TODO
@@ -4426,11 +4431,11 @@ public struct GVariantBuilder{}
 
 /*
  * Inserts a new GNode as the last child of the given parent.
- * parent  :
+ * parent :
  * the GNode to place the new GNode under
- * data  :
+ * data :
  * the data for the new GNode
- * Returns  :
+ * Returns :
  * the new GNode
  */
 // TODO
@@ -4438,11 +4443,11 @@ public struct GVariantBuilder{}
 
 /*
  * Inserts a new GNode as the first child of the given parent.
- * parent  :
+ * parent :
  * the GNode to place the new GNode under
- * data  :
+ * data :
  * the data for the new GNode
- * Returns  :
+ * Returns :
  * the new GNode
  */
 // TODO
@@ -4450,9 +4455,9 @@ public struct GVariantBuilder{}
 
 /*
  * Gets the first child of a GNode.
- * node  :
+ * node :
  * a GNode
- * Returns  :
+ * Returns :
  * the first child of node, or NULL if node is NULL
  * or has no children
  */
@@ -4461,9 +4466,9 @@ public struct GVariantBuilder{}
 
 /*
  * Gets the next sibling of a GNode.
- * node  :
+ * node :
  * a GNode
- * Returns  :
+ * Returns :
  * the next sibling of node, or NULL if node is the last node
  * or NULL
  */
@@ -4472,9 +4477,9 @@ public struct GVariantBuilder{}
 
 /*
  * Gets the previous sibling of a GNode.
- * node  :
+ * node :
  * a GNode
- * Returns  :
+ * Returns :
  * the previous sibling of node, or NULL if node is the first
  * node or NULL
  */
@@ -4483,20 +4488,20 @@ public struct GVariantBuilder{}
 
 /*
  * Returns TRUE if a GNode is a leaf node.
- * node  :
+ * node :
  * a GNode
- * Returns  :
+ * Returns :
  * TRUE if the GNode is a leaf node
  * (i.e. it has no children)
  */
 // TODO
-// #define	 G_NODE_IS_LEAF(node)  (((GNode*) (node))->children == NULL)
+// #define	 G_NODE_IS_LEAF(node) (((GNode*) (node))->children == NULL)
 
 /*
  * Returns TRUE if a GNode is the root of a tree.
- * node  :
+ * node :
  * a GNode
- * Returns  :
+ * Returns :
  * TRUE if the GNode is the root of a tree
  * (i.e. it has no parent or siblings)
  */
@@ -4507,11 +4512,11 @@ public struct GVariantBuilder{}
  * Sets the data corresponding to the given GQuark id. Any previous
  * data with the same key is removed, and its destroy function is
  * called.
- * dl  :
+ * dl :
  * a datalist.
- * q  :
+ * q :
  * the GQuark to identify the data element.
- * d  :
+ * d :
  * the data element, or NULL to remove any previous element
  * corresponding to q.
  */
@@ -4520,9 +4525,9 @@ public struct GVariantBuilder{}
 
 /*
  * Removes an element, using its GQuark identifier.
- * dl  :
+ * dl :
  * a datalist.
- * q  :
+ * q :
  * the GQuark identifying the data element.
  */
 // TODO
@@ -4530,11 +4535,11 @@ public struct GVariantBuilder{}
 
 /*
  * Sets the data element corresponding to the given string identifier.
- * dl  :
+ * dl :
  * a datalist.
- * k  :
+ * k :
  * the string to identify the data element.
- * d  :
+ * d :
  * the data element, or NULL to remove any previous element
  * corresponding to k.
  */
@@ -4544,14 +4549,14 @@ public struct GVariantBuilder{}
 /*
  * Sets the data element corresponding to the given string identifier,
  * and the function to be called when the data element is removed.
- * dl  :
+ * dl :
  * a datalist.
- * k  :
+ * k :
  * the string to identify the data element.
- * d  :
+ * d :
  * the data element, or NULL to remove any previous element
  * corresponding to k.
- * f  :
+ * f :
  * the function to call when the data element is removed. This
  * function will be called with the data element and can be used to
  * free any memory allocated for it. If d is NULL, then f must
@@ -4564,11 +4569,11 @@ public struct GVariantBuilder{}
  * Gets a data element, using its string identifer. This is slower than
  * g_datalist_id_get_data() because the string is first converted to a
  * GQuark.
- * dl  :
+ * dl :
  * a datalist.
- * k  :
+ * k :
  * the string identifying a data element.
- * Returns  :
+ * Returns :
  * the data element, or NULL if it is not found.
  */
 // TODO
@@ -4577,9 +4582,9 @@ public struct GVariantBuilder{}
 /*
  * Removes an element using its string identifier. The data element's
  * destroy function is called if it has been set.
- * dl  :
+ * dl :
  * a datalist.
- * k  :
+ * k :
  * the string identifying the data element.
  */
 // TODO
@@ -4587,9 +4592,9 @@ public struct GVariantBuilder{}
 
 /*
  * Removes an element, without calling its destroy notifier.
- * dl  :
+ * dl :
  * a datalist.
- * k  :
+ * k :
  * the string identifying the data element.
  */
 // TODO
@@ -4599,11 +4604,11 @@ public struct GVariantBuilder{}
  * Sets the data element associated with the given GQuark id. Any
  * previous data with the same key is removed, and its destroy function
  * is called.
- * l  :
+ * l :
  * the location identifying the dataset.
- * k  :
+ * k :
  * the GQuark id to identify the data element.
- * d  :
+ * d :
  * the data element.
  */
 // TODO
@@ -4612,9 +4617,9 @@ public struct GVariantBuilder{}
 /*
  * Removes a data element from a dataset. The data element's destroy
  * function is called if it has been set.
- * l  :
+ * l :
  * the location identifying the dataset.
- * k  :
+ * k :
  * the GQuark id identifying the data element.
  */
 // TODO
@@ -4622,11 +4627,11 @@ public struct GVariantBuilder{}
 
 /*
  * Sets the data corresponding to the given string identifier.
- * l  :
+ * l :
  * the location identifying the dataset.
- * k  :
+ * k :
  * the string to identify the data element.
- * d  :
+ * d :
  * the data element.
  */
 // TODO
@@ -4635,13 +4640,13 @@ public struct GVariantBuilder{}
 /*
  * Sets the data corresponding to the given string identifier, and the
  * function to call when the data element is destroyed.
- * l  :
+ * l :
  * the location identifying the dataset.
- * k  :
+ * k :
  * the string to identify the data element.
- * d  :
+ * d :
  * the data element.
- * f  :
+ * f :
  * the function to call when the data element is removed. This
  * function will be called with the data element and can be used to
  * free any memory allocated for it.
@@ -4651,11 +4656,11 @@ public struct GVariantBuilder{}
 
 /*
  * Gets the data element corresponding to a string.
- * l  :
+ * l :
  * the location identifying the dataset.
- * k  :
+ * k :
  * the string identifying the data element.
- * Returns  :
+ * Returns :
  * the data element corresponding to the string, or NULL if
  * it is not found.
  */
@@ -4665,9 +4670,9 @@ public struct GVariantBuilder{}
 /*
  * Removes a data element corresponding to a string. Its destroy
  * function is called if it has been set.
- * l  :
+ * l :
  * the location identifying the dataset.
- * k  :
+ * k :
  * the string identifying the data element.
  */
 // TODO
@@ -4675,9 +4680,9 @@ public struct GVariantBuilder{}
 
 /*
  * Removes an element, without calling its destroy notifier.
- * l  :
+ * l :
  * the location identifying the dataset.
- * k  :
+ * k :
  * the string identifying the data element.
  */
 // TODO
@@ -4686,19 +4691,19 @@ public struct GVariantBuilder{}
 /*
  */
 // TODO
-// # define G_VARIANT_TYPE(type_string) (g_variant_type_checked_ ((type_string))) Converts a string to a const GVariantType. Depending on the current debugging level, this function may perform a runtime check to ensure that string is a valid GVariant type string. It is always a programmer error to use this macro with an invalid type string. Since 2.24 type_string  : a well-formed GVariantType type string
+// # define G_VARIANT_TYPE(type_string) (g_variant_type_checked_ ((type_string))) Converts a string to a const GVariantType. Depending on the current debugging level, this function may perform a runtime check to ensure that string is a valid GVariant type string. It is always a programmer error to use this macro with an invalid type string. Since 2.24 type_string : a well-formed GVariantType type string
 
 /*
  * Specifies the type of function passed to g_main_context_set_poll_func().
  * The semantics of the function should match those of the poll() system call.
- * ufds  :
+ * ufds :
  * an array of GPollFD elements
- * nfsd  :
+ * nfsd :
  * the number of elements in ufds
- * timeout_  :
+ * timeout_ :
  * the maximum time to wait for an event of the file descriptors.
  * A negative value indicates an infinite timeout.
- * Returns  :
+ * Returns :
  * the number of GPollFD elements which have events or errors
  * reported, or -1 if an error occurred.
  */
@@ -4707,12 +4712,12 @@ public alias extern(C) int  function (GPollFD*, uint, int) GPollFunc;
 
 /*
  * The type of functions to be called when a child exists.
- * pid  :
+ * pid :
  * the process id of the child process
- * status  :
+ * status :
  * Status information about the child process,
  * see waitpid(2) for more information about this field
- * data  :
+ * data :
  * user data passed to g_child_watch_add()
  */
 // void (*GChildWatchFunc) (GPid pid,  gint status,  gpointer data);
@@ -4728,10 +4733,10 @@ public alias extern(C) void  function () GSourceDummyMarshal;
 /*
  * Specifies the type of function passed to g_timeout_add(), g_timeout_add_full(),
  * g_idle_add(), and g_idle_add_full().
- * data  :
+ * data :
  * data passed to the function, set when the source was created with one
  * of the above functions.
- * Returns  :
+ * Returns :
  * it should return FALSE if the source should be removed.
  */
 // gboolean (*GSourceFunc) (gpointer data);
@@ -4743,9 +4748,9 @@ public alias extern(C) int  function (void*) GSourceFunc;
  * automatically when the module is loaded. It is passed the GModule structure
  * and should return NULL on success or a string describing the initialization
  * error.
- * module  :
+ * module :
  * the GModule corresponding to the module which has just been loaded.
- * Returns  :
+ * Returns :
  * NULL on success, or a string describing the initialization error.
  */
 // const gchar * (*GModuleCheckInit) (GModule *module);
@@ -4756,7 +4761,7 @@ public alias extern(C) char *  function (GModule*) GModuleCheckInit;
  * If a module contains a function named g_module_unload() it is called
  * automatically when the module is unloaded.
  * It is passed the GModule structure.
- * module  :
+ * module :
  * the GModule about to be unloaded.
  */
 // void (*GModuleUnload) (GModule *module);
@@ -4766,13 +4771,13 @@ public alias extern(C) void  function (GModule*) GModuleUnload;
  * Specifies the type of function passed to g_io_add_watch() or
  * g_io_add_watch_full(), which is called when the requested condition
  * on a GIOChannel is satisfied.
- * source  :
+ * source :
  * the GIOChannel event source
- * condition  :
+ * condition :
  * the condition which has been satisfied
- * data  :
+ * data :
  * user data set in g_io_add_watch() or g_io_add_watch_full()
- * Returns  :
+ * Returns :
  * the function should return FALSE if the event source
  * should be removed
  */
@@ -4782,7 +4787,7 @@ public alias extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFunc;
 /*
  * Specifies the type of the print handler functions.
  * These are called with the complete formatted string to output.
- * string  :
+ * string :
  * the message to be output.
  */
 // void (*GPrintFunc) (const gchar *string);
@@ -4790,14 +4795,14 @@ public alias extern(C) void  function (char*) GPrintFunc;
 
 /*
  * Specifies the prototype of log handler functions.
- * log_domain  :
+ * log_domain :
  * the log domain of the message.
- * log_level  :
+ * log_level :
  * the log level of the message (including the fatal and recursion
  * flags).
- * message  :
+ * message :
  * the message to process.
- * user_data  :
+ * user_data :
  * user data, set in g_log_set_handler().
  */
 // void (*GLogFunc) (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *message,  gpointer user_data);
@@ -4813,7 +4818,7 @@ public alias extern(C) void  function () GVoidFunc;
 /*
  * Declares a type of function which takes an arbitrary data pointer argument
  * and has no return value. It is not currently used in GLib or GTK+.
- * data  :
+ * data :
  * a data pointer.
  */
 // void (*GFreeFunc) (gpointer data);
@@ -4821,11 +4826,11 @@ public alias extern(C) void  function (void*) GFreeFunc;
 
 /*
  * Specifies the type of the message handler function.
- * scanner  :
+ * scanner :
  * a GScanner.
- * message  :
+ * message :
  * the message.
- * error  :
+ * error :
  * TRUE if the message signals an error, FALSE if it
  * signals a warning.
  */
@@ -4836,9 +4841,9 @@ public alias extern(C) void  function (GScanner*, char*, int) GScannerMsgFunc;
  * Specifies the type of the function passed to g_completion_new(). It
  * should return the string corresponding to the given target item.
  * This is used when you use data structures as GCompletion items.
- * Param1  :
+ * Param1 :
  * the completion item.
- * Returns  :
+ * Returns :
  * the string corresponding to the item.
  */
 // gchar * (*GCompletionFunc) (gpointer Param1);
@@ -4848,13 +4853,13 @@ public alias extern(C) char *  function (void*) GCompletionFunc;
  * Specifies the type of the function passed to
  * g_completion_set_compare(). This is used when you use strings as
  * GCompletion items.
- * s1  :
+ * s1 :
  * string to compare with s2.
- * s2  :
+ * s2 :
  * string to compare with s1.
- * n  :
+ * n :
  * maximal number of bytes to compare.
- * Returns  :
+ * Returns :
  * an integer less than, equal to, or greater than zero if
  * the first n bytes of s1 is found, respectively, to be
  * less than, to match, or to be greater than the first n
@@ -4880,7 +4885,7 @@ public alias extern(C) int  function (char*, char*, gsize) GCompletionStrncmpFun
  * function in the parent can have ill effects, and you should be very
  * careful when porting software to Windows that uses child setup
  * functions.
- * user_data  :
+ * user_data :
  * user data to pass to the function.
  */
 // void (*GSpawnChildSetupFunc) (gpointer user_data);
@@ -4889,19 +4894,19 @@ public alias extern(C) void  function (void*) GSpawnChildSetupFunc;
 /*
  * The type of function to be passed as callback for G_OPTION_ARG_CALLBACK
  * options.
- * option_name  :
+ * option_name :
  * The name of the option being parsed. This will be either a
  * single dash followed by a single letter (for a short name) or two dashes
  * followed by a long option name.
- * value  :
+ * value :
  * The value to be parsed.
- * data  :
+ * data :
  * User data added to the GOptionGroup containing the option when it
  * was created with g_option_group_new()
- * error  :
+ * error :
  * A return location for errors. The error code G_OPTION_ERROR_FAILED
  * is intended to be used for errors in GOptionArgFunc callbacks.
- * Returns  :
+ * Returns :
  * TRUE if the option was successfully parsed, FALSE if an error
  * occurred, in which case error should be set with g_set_error()
  */
@@ -4911,12 +4916,12 @@ public alias extern(C) int  function (char*, char*, void*, GError**) GOptionArgF
 /*
  * The type of functions which are used to translate user-visible
  * strings, for --help output.
- * str  :
+ * str :
  * the untranslated string
- * data  :
+ * data :
  * user data specified when installing the function, e.g.
  * in g_option_group_set_translate_func()
- * Returns  :
+ * Returns :
  * a translation of the string for the current locale.
  * The returned string is owned by GLib and must not be freed.
  */
@@ -4925,16 +4930,16 @@ public alias extern(C) char *  function (char*, void*) GTranslateFunc;
 
 /*
  * The type of function that can be called before and after parsing.
- * context  :
+ * context :
  * The active GOptionContext
- * group  :
+ * group :
  * The group to which the function belongs
- * data  :
+ * data :
  * User data added to the GOptionGroup containing the option when it
  * was created with g_option_group_new()
- * error  :
+ * error :
  * A return location for error details
- * Returns  :
+ * Returns :
  * TRUE if the function completed successfully, FALSE if an error
  * occurred, in which case error should be set with g_set_error()
  */
@@ -4943,14 +4948,14 @@ public alias extern(C) int  function (GOptionContext*, GOptionGroup*, void*, GEr
 
 /*
  * The type of function to be used as callback when a parse error occurs.
- * context  :
+ * context :
  * The active GOptionContext
- * group  :
+ * group :
  * The group to which the function belongs
- * data  :
+ * data :
  * User data added to the GOptionGroup containing the option when it
  * was created with g_option_group_new()
- * error  :
+ * error :
  * The GError containing details about the parse error
  */
 // void (*GOptionErrorFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
@@ -4961,15 +4966,15 @@ public alias extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GE
  * It is called for each occurance of the pattern in the string passed
  * to g_regex_replace_eval(), and it should append the replacement to
  * result.
- * match_info  :
+ * match_info :
  * the GMatchInfo generated by the match.
  * Use g_match_info_get_regex() and g_match_info_get_string() if you
  * need the GRegex or the matched string.
- * result  :
+ * result :
  * a GString containing the new string
- * user_data  :
+ * user_data :
  * user data passed to g_regex_replace_eval()
- * Returns  :
+ * Returns :
  * FALSE to continue the replacement process, TRUE to stop it
  * Since 2.14
  */
@@ -4981,11 +4986,11 @@ public alias extern(C) int  function (GMatchInfo*, GString*, void*) GRegexEvalCa
  * values. The function should return a negative integer if the first
  * value comes before the second, 0 if they are equal, or a positive
  * integer if the first value comes after the second.
- * a  :
+ * a :
  * a value.
- * b  :
+ * b :
  * a value to compare with.
- * Returns  :
+ * Returns :
  * negative value if a < b; zero if a = b; positive
  * value if a > b.
  */
@@ -4997,13 +5002,13 @@ public alias extern(C) int  function (void*, void*) GCompareFunc;
  * values. The function should return a negative integer if the first
  * value comes before the second, 0 if they are equal, or a positive
  * integer if the first value comes after the second.
- * a  :
+ * a :
  * a value.
- * b  :
+ * b :
  * a value to compare with.
- * user_data  :
+ * user_data :
  * user data to pass to comparison function.
- * Returns  :
+ * Returns :
  * negative value if a < b; zero if a = b; positive
  * value if a > b.
  */
@@ -5013,9 +5018,9 @@ public alias extern(C) int  function (void*, void*, void*) GCompareDataFunc;
 /*
  * Specifies the type of functions passed to g_list_foreach() and
  * g_slist_foreach().
- * data  :
+ * data :
  * the element's data.
- * user_data  :
+ * user_data :
  * user data passed to g_list_foreach() or
  * g_slist_foreach().
  */
@@ -5026,13 +5031,13 @@ public alias extern(C) void  function (void*, void*) GFunc;
  * A GSequenceIterCompareFunc is a function used to compare iterators.
  * It must return zero if the iterators compare equal, a negative value
  * if a comes before b, and a positive value if b comes before a.
- * a  :
+ * a :
  * a GSequenceIter
- * b  :
+ * b :
  * a GSequenceIter
- * data  :
+ * data :
  * user data
- * Returns  :
+ * Returns :
  * zero if the iterators are equal, a negative value if a
  * comes before b, and a positive value if b comes before
  * a.
@@ -5052,9 +5057,9 @@ public alias extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) GSe
  * hash table size (a prime number) to find the 'bucket' to place each
  * key into. The function should also be very fast, since it is called
  * for each key lookup.
- * key  :
+ * key :
  * a key.
- * Returns  :
+ * Returns :
  * the hash value corresponding to the key.
  */
 // guint (*GHashFunc) (gconstpointer key);
@@ -5064,11 +5069,11 @@ public alias extern(C) uint  function (void*) GHashFunc;
  * Specifies the type of a function used to test two values for
  * equality. The function should return TRUE if both values are equal
  * and FALSE otherwise.
- * a  :
+ * a :
  * a value.
- * b  :
+ * b :
  * a value to compare with.
- * Returns  :
+ * Returns :
  * TRUE if a = b; FALSE otherwise.
  */
 // gboolean (*GEqualFunc) (gconstpointer a,  gconstpointer b);
@@ -5078,11 +5083,11 @@ public alias extern(C) int  function (void*, void*) GEqualFunc;
  * Specifies the type of the function passed to g_hash_table_foreach().
  * It is called with each key/value pair, together with the user_data
  * parameter which is passed to g_hash_table_foreach().
- * key  :
+ * key :
  * a key.
- * value  :
+ * value :
  * the value corresponding to the key.
- * user_data  :
+ * user_data :
  * user data passed to g_hash_table_foreach().
  */
 // void (*GHFunc) (gpointer key,  gpointer value,  gpointer user_data);
@@ -5094,13 +5099,13 @@ public alias extern(C) void  function (void*, void*, void*) GHFunc;
  * pair, together with the user_data parameter passed to
  * g_hash_table_foreach_remove(). It should return TRUE if the
  * key/value pair should be removed from the GHashTable.
- * key  :
+ * key :
  * a key.
- * value  :
+ * value :
  * the value associated with the key.
- * user_data  :
+ * user_data :
  * user data passed to g_hash_table_remove().
- * Returns  :
+ * Returns :
  * TRUE if the key/value pair should be removed from the
  * GHashTable.
  */
@@ -5112,13 +5117,13 @@ public alias extern(C) int  function (void*, void*, void*) GHRFunc;
  * passed the key and value of each node, together with the user_data
  * parameter passed to g_tree_traverse(). If the function returns
  * TRUE, the traversal is stopped.
- * key  :
+ * key :
  * a key of a GTree node.
- * value  :
+ * value :
  * the value corresponding to the key.
- * data  :
+ * data :
  * user data passed to g_tree_traverse().
- * Returns  :
+ * Returns :
  * TRUE to stop the traversal.
  */
 // gboolean (*GTraverseFunc) (gpointer key,  gpointer value,  gpointer data);
@@ -5127,11 +5132,11 @@ public alias extern(C) int  function (void*, void*, void*) GTraverseFunc;
 /*
  * A function of this signature is used to copy the node data
  * when doing a deep-copy of a tree.
- * src  :
+ * src :
  * A pointer to the data which should be copied
- * data  :
+ * data :
  * Additional data
- * Returns  :
+ * Returns :
  * A pointer to the copy
  * Since 2.4
  */
@@ -5143,11 +5148,11 @@ public alias extern(C) void*  function (void*, void*) GCopyFunc;
  * function is called with each of the nodes visited, together with the
  * user data passed to g_node_traverse(). If the function returns
  * TRUE, then the traversal is stopped.
- * node  :
+ * node :
  * a GNode.
- * data  :
+ * data :
  * user data passed to g_node_traverse().
- * Returns  :
+ * Returns :
  * TRUE to stop the traversal.
  */
 // gboolean (*GNodeTraverseFunc) (GNode *node,  gpointer data);
@@ -5157,9 +5162,9 @@ public alias extern(C) int  function (GNode*, void*) GNodeTraverseFunc;
  * Specifies the type of function passed to g_node_children_foreach().
  * The function is called with each child node, together with the user
  * data passed to g_node_children_foreach().
- * node  :
+ * node :
  * a GNode.
- * data  :
+ * data :
  * user data passed to g_node_children_foreach().
  */
 // void (*GNodeForeachFunc) (GNode *node,  gpointer data);
@@ -5169,7 +5174,7 @@ public alias extern(C) void  function (GNode*, void*) GNodeForeachFunc;
  * Specifies the type of function which is called when a data element
  * is destroyed. It is passed the pointer to the data element and
  * should free any memory and resources allocated for it.
- * data  :
+ * data :
  * the data element.
  */
 // void (*GDestroyNotify) (gpointer data);
@@ -5179,11 +5184,11 @@ public alias extern(C) void  function (void*) GDestroyNotify;
  * Specifies the type of function passed to g_dataset_foreach(). It is
  * called with each GQuark id and associated data element, together
  * with the user_data parameter supplied to g_dataset_foreach().
- * key_id  :
+ * key_id :
  * the GQuark id to identifying the data element.
- * data  :
+ * data :
  * the data element.
- * user_data  :
+ * user_data :
  * user data passed to g_dataset_foreach().
  */
 // void (*GDataForeachFunc) (GQuark key_id,  gpointer data,  gpointer user_data);
@@ -5194,7 +5199,7 @@ public alias extern(C) void  function (GQuark, void*, void*) GDataForeachFunc;
  * functions passed to g_cache_new(). The functions are passed a
  * pointer to the GCache key or GCache value and should free any
  * memory and other resources associated with it.
- * value  :
+ * value :
  * the GCache value to destroy.
  */
 // void (*GCacheDestroyFunc) (gpointer value);
@@ -5205,10 +5210,10 @@ public alias extern(C) void  function (void*) GCacheDestroyFunc;
  * g_cache_new(). The function is passed a key
  * (not a value as the prototype implies) and
  * should return a duplicate of the key.
- * value  :
+ * value :
  * the GCache key to destroy (not a
  * GCache value as it seems).
- * Returns  :
+ * Returns :
  * a copy of the GCache key.
  */
 // gpointer (*GCacheDupFunc) (gpointer value);
@@ -5218,9 +5223,9 @@ public alias extern(C) void*  function (void*) GCacheDupFunc;
  * Specifies the type of the value_new_func function passed to
  * g_cache_new(). It is passed a GCache key and should create the
  * value corresponding to the key.
- * key  :
+ * key :
  * a GCache key.
- * Returns  :
+ * Returns :
  * a new GCache value corresponding to the key.
  */
 // gpointer (*GCacheNewFunc) (gpointer key);

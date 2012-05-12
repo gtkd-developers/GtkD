@@ -357,7 +357,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	public void setValuesv(TreeIter iter, int[] columns, GValue[] values)
 	{
 		// void gtk_list_store_set_valuesv (GtkListStore *list_store,  GtkTreeIter *iter,  gint *columns,  GValue *values,  gint n_values);
-		gtk_list_store_set_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), columns.ptr, values.ptr, cast(int) values.length);
+		gtk_list_store_set_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), columns.ptr, values.ptr, cast(int) columns.length);
 	}
 	
 	/**
@@ -435,7 +435,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	public void insertWithValuesv(TreeIter iter, int position, int[] columns, GValue[] values)
 	{
 		// void gtk_list_store_insert_with_valuesv (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  gint *columns,  GValue *values,  gint n_values);
-		gtk_list_store_insert_with_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position, columns.ptr, values.ptr, cast(int) values.length);
+		gtk_list_store_insert_with_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position, columns.ptr, values.ptr, cast(int) columns.length);
 	}
 	
 	/**

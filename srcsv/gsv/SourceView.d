@@ -152,7 +152,7 @@ public class SourceView : TextView
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TextIter, GdkEvent*, SourceView)[] onLineMarkActivatedListeners;
 	/**

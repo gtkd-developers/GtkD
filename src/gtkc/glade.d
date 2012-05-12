@@ -57,9 +57,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// glade.Glade
-	
+
 	GladeXML* function(char* fname, char* root, char* domain) c_glade_xml_new;
 	GladeXML* function(char* buffer, int size, char* root, char* domain) c_glade_xml_new_from_buffer;
 	gboolean function(GladeXML* self, char* fname, char* root, char* domain) c_glade_xml_construct;

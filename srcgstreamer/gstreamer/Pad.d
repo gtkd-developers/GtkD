@@ -209,7 +209,7 @@ public class Pad : ObjectGst
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(MiniObject, Pad)[] onHaveDataListeners;
 	/**

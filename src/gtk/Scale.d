@@ -137,7 +137,7 @@ public class Scale : Range
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	string delegate(gdouble, Scale)[] onFormatValueListeners;
 	/**

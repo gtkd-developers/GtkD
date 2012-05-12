@@ -135,7 +135,7 @@ public class SocketService : SocketListener
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(GSocketConnection*, GObject*, SocketService)[] onIncomingListeners;
 	/**

@@ -125,7 +125,7 @@ public class CellRendererToggle : CellRenderer
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(string, CellRendererToggle)[] onToggledListeners;
 	/**

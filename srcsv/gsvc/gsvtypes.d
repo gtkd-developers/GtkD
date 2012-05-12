@@ -246,11 +246,11 @@ public struct GtkSourceStyleSchemeManager{}
 
 /*
  * Function type for setting up a tooltip for GtkSourceMark.
- * mark  :
+ * mark :
  * the GtkSourceMark
- * user_data  :
+ * user_data :
  * user data pointer which was passed to gtk_source_view_set_mark_category_tooltip_func()
- * Returns  :
+ * Returns :
  *  a newly-allocated string that is going to be shown as tooltip text.
  */
 // gchar * (*GtkSourceViewMarkTooltipFunc) (GtkSourceMark *mark,  gpointer user_data);

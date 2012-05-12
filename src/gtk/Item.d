@@ -119,7 +119,7 @@ public class Item : Bin
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Item)[] onDeselectListeners;
 	/**

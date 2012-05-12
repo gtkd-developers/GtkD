@@ -161,7 +161,7 @@ public class AboutDialog : Dialog
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(string, AboutDialog)[] onActivateLinkListeners;
 	/**

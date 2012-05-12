@@ -93,48 +93,48 @@ alias GOnceStatus OnceStatus;
  * Note
  * Do not use this struct unless you know what you are
  * doing.
- * mutex_new  ()
+ * mutex_new ()
  * virtual function pointer for g_mutex_new()
- * mutex_lock  ()
+ * mutex_lock ()
  * virtual function pointer for g_mutex_lock()
- * mutex_trylock  ()
+ * mutex_trylock ()
  * virtual function pointer for g_mutex_trylock()
- * mutex_unlock  ()
+ * mutex_unlock ()
  * virtual function pointer for g_mutex_unlock()
- * mutex_free  ()
+ * mutex_free ()
  * virtual function pointer for g_mutex_free()
- * cond_new  ()
+ * cond_new ()
  * virtual function pointer for g_cond_new()
- * cond_signal  ()
+ * cond_signal ()
  * virtual function pointer for g_cond_signal()
- * cond_broadcast  ()
+ * cond_broadcast ()
  * virtual function pointer for g_cond_broadcast()
- * cond_wait  ()
+ * cond_wait ()
  * virtual function pointer for g_cond_wait()
- * cond_timed_wait  ()
+ * cond_timed_wait ()
  * virtual function pointer for g_cond_timed_wait()
- * cond_free  ()
+ * cond_free ()
  * virtual function pointer for g_cond_free()
- * private_new  ()
+ * private_new ()
  * virtual function pointer for g_private_new()
- * private_get  ()
+ * private_get ()
  * virtual function pointer for g_private_get()
- * private_set  ()
+ * private_set ()
  * virtual function pointer for g_private_set()
- * thread_create  ()
+ * thread_create ()
  * virtual function pointer for g_thread_create()
- * thread_yield  ()
+ * thread_yield ()
  * virtual function pointer for g_thread_yield()
- * thread_join  ()
+ * thread_join ()
  * virtual function pointer for g_thread_join()
- * thread_exit  ()
+ * thread_exit ()
  * virtual function pointer for g_thread_exit()
- * thread_set_priority  ()
+ * thread_set_priority ()
  * virtual function pointer for
  * g_thread_set_priority()
- * thread_self  ()
+ * thread_self ()
  * virtual function pointer for g_thread_self()
- * thread_equal  ()
+ * thread_equal ()
  * used internally by recursive mutex locks and by some
  * assertion checks
  */
@@ -363,9 +363,9 @@ public struct GStaticPrivate{}
  * A GOnce struct controls a one-time initialization function. Any
  * one-time initialization function must have its own unique GOnce
  * struct.
- * volatile  GOnceStatus  status;
+ * volatile GOnceStatus status;
  * the status of the GOnce
- * volatile  gpointer  retval;
+ * volatile gpointer retval;
  * the value returned by the call to the function, if status
  * is G_ONCE_STATUS_READY
  * Since 2.4
@@ -390,7 +390,7 @@ public struct GOnce
  * give_me_next_number() example using the
  * G_LOCK_* macros:
  * $(DDOC_COMMENT example)
- * name  :
+ * name :
  * the name of the lock.
  */
 // TODO
@@ -398,7 +398,7 @@ public struct GOnce
 
 /*
  * This works like G_LOCK_DEFINE, but it creates a static object.
- * name  :
+ * name :
  * the name of the lock.
  */
 // TODO
@@ -407,7 +407,7 @@ public struct GOnce
 /*
  * This declares a lock, that is defined with G_LOCK_DEFINE in another
  * module.
- * name  :
+ * name :
  * the name of the lock.
  */
 // TODO
@@ -416,7 +416,7 @@ public struct GOnce
 /*
  * Works like g_mutex_lock(), but for a lock defined with
  * G_LOCK_DEFINE.
- * name  :
+ * name :
  * the name of the lock.
  */
 // TODO
@@ -425,9 +425,9 @@ public struct GOnce
 /*
  * Works like g_mutex_trylock(), but for a lock defined with
  * G_LOCK_DEFINE.
- * name  :
+ * name :
  * the name of the lock.
- * Returns  :
+ * Returns :
  * TRUE, if the lock could be locked.
  */
 // TODO
@@ -436,7 +436,7 @@ public struct GOnce
 /*
  * Works like g_mutex_unlock(), but for a lock defined with
  * G_LOCK_DEFINE.
- * name  :
+ * name :
  * the name of the lock.
  */
 // TODO
@@ -455,13 +455,13 @@ public struct GOnce
  * Calling g_once() recursively on the same GOnce struct in
  * func will lead to a deadlock.
  * $(DDOC_COMMENT example)
- * once  :
+ * once :
  * a GOnce structure
- * func  :
+ * func :
  * the GThreadFunc function associated to once. This function
  * is called only once, regardless of the number of times it and
  * its associated GOnce struct are passed to g_once().
- * arg  :
+ * arg :
  * data to be passed to func
  * Since 2.4
  */
@@ -471,9 +471,9 @@ public struct GOnce
 /*
  * Specifies the type of the func functions passed to
  * g_thread_create() or g_thread_create_full().
- * data  :
+ * data :
  * data passed to the thread.
- * Returns  :
+ * Returns :
  * the return value of the thread, which will be returned by
  * g_thread_join().
  */

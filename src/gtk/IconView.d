@@ -153,7 +153,7 @@ public class IconView : Container, CellLayoutIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(IconView)[] onActivateCursorItemListeners;
 	/**

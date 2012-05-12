@@ -165,7 +165,7 @@ public class Notebook : Container
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(gint, Notebook)[] onChangeCurrentPageListeners;
 	/**

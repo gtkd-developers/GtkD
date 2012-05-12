@@ -297,7 +297,7 @@ public class ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
 	/**

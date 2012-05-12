@@ -199,7 +199,7 @@ public class Expander : Bin
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Expander)[] onActivateListeners;
 	/**

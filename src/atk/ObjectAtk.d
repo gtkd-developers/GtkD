@@ -142,7 +142,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gpointer, ObjectAtk)[] onActiveDescendantChangedListeners;
 	/**

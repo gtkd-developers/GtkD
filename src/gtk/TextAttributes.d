@@ -112,7 +112,7 @@ public class TextAttributes
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes)[] onListeners;
 	/**

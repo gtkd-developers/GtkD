@@ -144,7 +144,7 @@ public class RadioAction : ToggleAction
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(GtkRadioAction*, RadioAction)[] onChangedListeners;
 	/**

@@ -162,7 +162,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Action, Widget, ActionGroup)[] onConnectProxyListeners;
 	/**

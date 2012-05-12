@@ -135,7 +135,7 @@ public class HandleBox : Bin
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(GtkWidget*, HandleBox)[] onChildAttachedListeners;
 	/**

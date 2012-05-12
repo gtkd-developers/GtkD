@@ -136,7 +136,7 @@ public class Range : Widget, OrientableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gdouble, Range)[] onAdjustBoundsListeners;
 	/**

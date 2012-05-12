@@ -130,7 +130,7 @@ public class Adjustment : ObjectGtk
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Adjustment)[] onChangedListeners;
 	/**

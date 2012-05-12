@@ -120,7 +120,7 @@ public class Table
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gint, gint, Table)[] onColumnDeletedListeners;
 	/**

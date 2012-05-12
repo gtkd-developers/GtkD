@@ -155,7 +155,7 @@ public class Style : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Style)[] onRealizeListeners;
 	/**

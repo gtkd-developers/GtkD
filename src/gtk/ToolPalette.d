@@ -152,7 +152,7 @@ public class ToolPalette : Container, OrientableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, ToolPalette)[] onSetScrollAdjustmentsListeners;
 	/**

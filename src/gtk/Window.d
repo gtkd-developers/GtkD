@@ -169,7 +169,7 @@ public class Window : Bin
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Window)[] onActivateDefaultListeners;
 	/**

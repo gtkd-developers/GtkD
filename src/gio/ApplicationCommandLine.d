@@ -80,7 +80,7 @@ private import gobject.ObjectG;
  * The GApplicationCommandLine object can provide the argc and argv
  * parameters for use with the GOptionContext command-line parsing API,
  * with the g_application_command_line_get_arguments() function. See
- *  Example  17, “Deferred commandline handling” for an example.
+ *  Example 17, “Deferred commandline handling” for an example.
  * The exit status of the originally-invoked process may be set and
  * messages can be printed to stdout or stderr of that process. The
  * lifecycle of the originally-invoked process is tied to the lifecycle

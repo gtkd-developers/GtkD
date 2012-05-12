@@ -136,7 +136,7 @@ public class CellRendererCombo : CellRendererText
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(string, TreeIter, CellRendererCombo)[] onChangedListeners;
 	/**

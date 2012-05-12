@@ -133,7 +133,7 @@ public class Printer : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gboolean, Printer)[] onDetailsAcquiredListeners;
 	/**
