@@ -257,29 +257,32 @@ public class GtkDClass
 			}	
 		}	
 		
-		// the use of phobs is limited, maybe we can get by with this...
+		// the use of phobos is limited, maybe we can get by with this...
 		
-		string[][string] tangoImportConvs;
-		tangoImportConvs["std.stdio"] = ["tango.io.Stdout"];
-		tangoImportConvs["std.thread"] = ["tango.core.Thread"];
-		tangoImportConvs["std.string"] = ["tango.text.Util", "tango.text.Unicode"];
-		tangoImportConvs["std.c.string"] = ["tango.stdc.string"];
-		tangoImportConvs["std.c.stdio"] = ["tango.stdc.stdio"];
-		tangoImportConvs["std.gc"] = ["tango.core.Memory"];
-		tangoImportConvs["std.stdarg"] = ["tango.core.Vararg"];
-		tangoImportConvs["std.conv"] = ["tango.text.convert.Integer"];
+		string[][string] tangoImportConvs = [
+			"std.stdio" : ["tango.io.Stdout"],
+			"std.thread" : ["tango.core.Thread"],
+			"std.string" : ["tango.text.Util", "tango.text.Unicode"],
+			"std.c.string" : ["tango.stdc.string"],
+			"std.c.stdio" : ["tango.stdc.stdio"],
+			"std.gc" : ["tango.core.Memory"],
+			"std.stdarg" : ["tango.core.Vararg"],
+			"std.conv" : ["tango.text.convert.Integer"]
+		];
 
-		string[][string] druntimeImportConvs;
-		druntimeImportConvs["std.thread"] = ["core.thread"];
-		druntimeImportConvs["std.c.string"] = ["core.stdc.string"];
-		druntimeImportConvs["std.gc"] = ["core.memory"];
-		druntimeImportConvs["std.stdarg"] = ["core.vararg"];
+		string[][string] druntimeImportConvs = [
+			"std.thread" : ["core.thread"],
+			"std.c.string" : ["core.stdc.string"],
+			"std.gc" : ["core.memory"],
+			"std.stdarg" : ["core.vararg"]
+		];
 
-		string[][string] phobos2ImportConvs;
-		phobos2ImportConvs["std.stdio"] = ["std.stdio"];
-		phobos2ImportConvs["std.c.stdio"] = ["std.c.stdio"];
-		phobos2ImportConvs["std.string"] = ["std.string"];
-		phobos2ImportConvs["std.conv"] = ["std.conv"];
+		string[][string] phobos2ImportConvs = [
+			"std.stdio" : ["std.stdio"],
+			"std.c.stdio" : ["std.c.stdio"],
+			"std.string" : ["std.string"],
+			"std.conv" : ["std.conv"]
+		];
 		
 		string importTango = "\nversion(Tango) {\n";
 		string importDruntime = "} else version(D_Version2) {\n";
@@ -363,7 +366,6 @@ public class GtkDClass
 		signals ~= getSignals();
 
 		members ~= getMembers(convParms);
-
 	}
 
 	public void mergeGtkDClass(string inAPI, ConvParms* convParms)
@@ -465,8 +467,7 @@ public class GtkDClass
 
 			if ( wrapper.includeComments() )
 			{
-				foreach(string line; description)
-					text ~= line;
+				text ~= description;
 			}
 
 			text ~= getClassHeader(convParms, gtkDParentName)
