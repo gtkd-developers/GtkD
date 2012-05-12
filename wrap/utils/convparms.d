@@ -23,12 +23,12 @@ module utils.convparms;
 //debug = omitSignal;
 //debug = overrides;
 
+private import utils.GtkDClass;
+private import std.stdio;
+private import std.string;
+
 public struct ConvParms
 {
-
-	private import utils.GtkDClass;
-	private import std.stdio;
-	
 	public string inFile;
 	public string outPack;
 	public string bindDir;
@@ -193,7 +193,7 @@ public struct ConvParms
 		int i = 0;
 		while ( !contains && i<prefixes.length )
 		{
-			contains = GtkDClass.startsWith(prefix, prefixes[i]);
+			contains = prefix.startsWith(prefixes[i]);
 			++i;
 		}
 		return contains;
@@ -206,7 +206,7 @@ public struct ConvParms
 		int i = 0;
 		while ( !contains && i<prefixes.length )
 		{
-			if ( GtkDClass.startsWith(prefix, prefixes[i]) )
+			if ( prefix.startsWith(prefixes[i]) )
 			{
 				contains = true;
 				fundPrefix = prefixes[i];

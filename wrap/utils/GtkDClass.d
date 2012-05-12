@@ -57,6 +57,7 @@ private import utils.WrapperIF;
 private import utils.IndentedStringBuilder;
 private import utils.convparms;
 private import utils.funct;
+private import utils.StringUtils;
 
 private import std.ascii;
 private import std.path;
@@ -1914,62 +1915,6 @@ public class GtkDClass
 		return (type in wrapper.getAliases()) !is null;
 	}
 
-	public static void skipBlank(ref int p, string text)
-	{
-		while( p<text.length && text[p]<=' ' )
-		{
-			++p;
-		}
-	}
-
-	public static void skip(ref int p, string text, char s)
-	{
-		while( p<text.length && text[p]==s)
-		{
-			++p;
-		}
-	}
-
-	public static string untilBlank(ref int p, string text)
-	{
-		int start=p;
-		while ( p<text.length && text[p]>' ')
-		{
-			++p;
-		}
-		return text[start..p];
-	}
-
-	public static string untilBlank(ref int p, string text, string s)
-	{
-		int start=p;
-		while ( p<text.length && text[p]>' ' && std.string.indexOf(s,text[p])<0 )
-		{
-			++p;
-		}
-		return text[start..p];
-	}
-
-	public static string until(ref int p, string text, char s)
-	{
-		int start=p;
-		while ( p<text.length && text[p]!=s)
-		{
-			++p;
-		}
-		return text[start..p];
-	}
-
-	public static string until(ref int p, string text, string s)
-	{
-		int start=p;
-		while ( p<text.length && std.string.indexOf(s,text[p])<0 )
-		{
-			++p;
-		}
-		return text[start..p];
-	}
-
 	private string getFunctionDeclaration(ref int line, string[] lines)
 	{
 		string funct;
@@ -2875,8 +2820,8 @@ public class GtkDClass
 		debug(name)writefln("name before %s", name);
 		name = std.string.strip(name);
 		while ( name.length > 0
-				&& (GtkDClass.startsWith(name,"const") || name[0] == '*'
-				|| GtkDClass.startsWith(name,"G_GNUC_MAY_ALIAS") )
+				&& (name.startsWith("const") || name[0] == '*'
+				|| name.startsWith("G_GNUC_MAY_ALIAS") )
 				)
 		{
 			if ( name[0] == '*' )
@@ -2884,7 +2829,7 @@ public class GtkDClass
 				type = type ~ '*';
 				name = std.string.strip(name[1..name.length]);
 			}
-			else if (GtkDClass.startsWith(name,"const"))
+			else if (name.startsWith("const"))
 			{
 				name = std.string.strip(name[5..name.length]);
 			}
@@ -2894,7 +2839,7 @@ public class GtkDClass
 			}
 			name = std.string.strip(name);
 		}
-		while ( GtkDClass.endsWith(name, "[]") )
+		while ( name.endsWith("[]") )
 		{
 			type ~= "*";
 			name = std.string.strip(name[0..name.length-2]);
@@ -2915,12 +2860,12 @@ public class GtkDClass
 	{
 		if ( type == "const" || type == "struct" )
 		{
-			GtkDClass.skipBlank(p, text);
+			skipBlank(p, text);
 			type = untilBlank(p, text);
 		}
 		if ( type == "unsigned" )
 		{
-			GtkDClass.skipBlank(p, text);
+			skipBlank(p, text);
 			type = "u" ~ untilBlank(p, text);
 		}
 		if ( startsWith(type, "_") )
@@ -2932,96 +2877,10 @@ public class GtkDClass
 //			type = "char";
 //		}
 	}
-
-
-
-
-	public static bool startsWith(string str, string prefix)
-	{
-		return str.length >= prefix.length
-				&& str[0..prefix.length] == prefix;
-	}
-
-	public static bool startsWith(string str, char prefix)
-	{
-		return str.length > 0
-				&& str[0] == prefix;
-	}
-
-	public static bool endsWith(string str, string suffix)
-	{
-		return str.length >= suffix.length
-				&& str[str.length-suffix.length..str.length] == suffix;
-	}
-
-	public static bool endsWith(string str, char suffix)
-	{
-		return str.length >= 1
-				&& str[str.length-1] == suffix;
-	}
-
 }
 	
-string removePrefix(string gToken, string prefix)
-{
-	if ( startsWith(gToken, prefix) )
-	{
-		return gToken[prefix.length..gToken.length];
-	}
-	return gToken;
-}
-
 string removePrefix(string gToken, ConvParms* convParms)
 {
-	//debug(tokenToGtkD) writefln("gToken.length > prefix.length %s",gToken.length > convParms.prefix.length);
 	string prefix = convParms.getPrefix(gToken);
-	if ( prefix.length > 0 )
-	{
-		return gToken[prefix.length..gToken.length];
-	}
-
-	return gToken;
-
+	return utils.StringUtils.removePrefix(gToken, prefix);
 }
-
-string removeUnderscore(string gToken)
-{
-	string converted;
-
-	char c = ' ';
-	char pc = ' ';
-	char ppc = ' ';
-	int pos = 0;
-	while ( pos < gToken.length )
-	{
-		c = gToken[pos];
-		if ( pc == '_' )
-		{
-			c = to!char(std.ascii.toUpper(c));
-		}
-		else if ( c == '_' && std.ascii.isLower(pc) )
-		{
-			pc = c;
-			c = '\0';
-		}
-
-		if ( c > '\0' )
-		{
-			if ( ppc == '_'
-					&& pc == 'g'
-					&& c == 'l'
-					&& gToken.length-1 > pos
-					&& gToken[pos+1] == '_'
-				 )
-			{
-				c = 'L';
-			}
-			ppc = pc;
-			pc = gToken[pos];
-			converted ~= c;
-		}
-		++pos;
-	}
-	return converted;
-}
-

@@ -28,17 +28,18 @@ module utils.DefReader;
  * - license text
  * - 
  */
+	
+private import std.file;
+private import std.string;
+private import std.array;
+private import std.conv;
+private import std.stdio;
+
+private import utils.StringUtils;
+private import utils.GtkDClass;
+	
 public class DefReader
 {
-	
-	private import std.file;
-	private import std.string;
-	private import std.conv;
-	
-	private import std.stdio;
-
-	private import utils.GtkDClass;
-	
 	string fileName;
 	string[] lines;
 	
@@ -95,15 +96,15 @@ public class DefReader
 			line = std.string.strip(fullLine);
 			int commentCount = 0;
 			while ( skipEmpty
-					&& (commentCount > 0  || line.length ==0 || line[0] == '#' || GtkDClass.startsWith(line, "#*") )
+					&& (commentCount > 0  || line.length ==0 || line[0] == '#' || line.startsWith("#*") )
 					&& currLine < lines.length
 					)
 			{
-				if ( GtkDClass.startsWith(line, "#*") )
+				if ( line.startsWith("#*") )
 				{
 					++commentCount;
 				}
-				else if ( GtkDClass.startsWith(line, "*#") )
+				else if ( line.startsWith("*#") )
 				{
 					--commentCount;
 				}

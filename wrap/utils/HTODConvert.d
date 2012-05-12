@@ -470,31 +470,4 @@ public class HTODConvert
 		debug(flow)(writefln("HTODConvert.writeFile fileName = %s", fileName));
 		std.file.write(std.path.buildPath(outputRoot,fileName), dText);
 	}
-	
-	public static bit startsWith(string str, string prefix)
-	{
-		return str.length >= prefix.length 
-				&& str[0..prefix.length] == prefix;
-	}
-	
-	public static bit startsWith(string str, char prefix)
-	{
-		return str.length > 0
-				&& str[0] == prefix;
-	}
-	
-	public static bit endsWith(string str, string prefix)
-	{
-		return str.length >= prefix.length 
-				&& str[str.length-prefix.length..str.length] == prefix;
-	}
-	
-	public static bit endsWith(string str, char suffix)
-	{
-		return str.length >= 1
-				&& str[str.length-1] == suffix;
-	}
-	
 }
-
-

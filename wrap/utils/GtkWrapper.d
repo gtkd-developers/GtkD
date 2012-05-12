@@ -55,7 +55,7 @@ struct WError
 
 private import utils.WrapperIF;
 private import utils.HTODConvert;
-
+private import std.string;
 
 /*
 Paths:
@@ -106,7 +106,7 @@ public class GtkWrapper : WrapperIF
 
 	public static string license =
 		"/*"
-		"\n * This file is part of gtkD."
+		"\n * This file is part of gtkD2."
 		"\n * "
 		"\n * gtkD is free software; you can redistribute it and/or modify"
 		"\n * it under the terms of the GNU Lesser General Public License as published by"
@@ -683,7 +683,7 @@ public class GtkWrapper : WrapperIF
 							  convParms.inFile = std.string.strip(defReader.getValue());
 							  if ( convParms.inFile.length > 0 )
 							  {
-								  if ( GtkDClass.startsWith(convParms.inFile,"/") )
+								  if ( convParms.inFile.startsWith("/") )
 								  {
 									  debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", convParms.toString());
 									  debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", defReader.toString());
@@ -906,11 +906,11 @@ public class GtkWrapper : WrapperIF
 			//Returns an array of libraries to try and link with.
 			string getLibrary(string funct)
 			{
-				if ( GtkDClass.startsWith(funct, "gdk") )
+				if ( funct.startsWith("gdk") )
 					return library ~ ", LIBRARY.GDKPIXBUF";
-				else if	( GtkDClass.startsWith(funct, "pango_cairo") )
+				else if	( funct.startsWith("pango_cairo") )
 					return library ~ ", LIBRARY.PANGOCAIRO";
-				else if	( GtkDClass.startsWith(funct, "g_module") )
+				else if	( funct.startsWith("g_module") )
 					return library ~ ", LIBRARY.GMODULE";
 				else
 					return library;
@@ -978,7 +978,7 @@ public class GtkWrapper : WrapperIF
 				if ( dec[0]=='#' )
 					externalText ~= "// ";
 
-				if ( !GtkDClass.startsWith(dec, "//") && dec[0]!='#' )
+				if ( !dec.startsWith("//") && dec[0]!='#' )
 					externalText ~= dec[0..pos] ~" c_"~ dec[pos..$] ~';';
 				else
 					externalText ~= dec;
@@ -997,7 +997,7 @@ public class GtkWrapper : WrapperIF
 				if (dec.length == 0)
 					continue;
 
-				if ( GtkDClass.startsWith(dec, "//") )
+				if ( dec.startsWith("//") )
 					externalText ~= '\n'~ dec ~"\n\n";
 
 				if ( pos > 0 )
