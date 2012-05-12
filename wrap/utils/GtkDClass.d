@@ -2846,9 +2846,9 @@ public class GtkDClass
 		{
 			converted = gToken.removePrefix(convParms).removeUnderscore();
 			// do it again after the gToken is converted
-			if ( (aliases !is null) && (gToken in aliases) )
+			if ( (aliases !is null) && (converted in aliases) )
 			{
-				converted = aliases[gToken];
+				converted = aliases[converted];
 			}
 		}
 		else
