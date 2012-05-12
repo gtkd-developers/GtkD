@@ -950,7 +950,7 @@ public class GtkWrapper : WrapperIF
 
 			externalText ~= "}\");\n\n"
 				"mixin( gshared ~\"extern(C)\n"
-				"{\n";
+				"{";
 
 			//Generate the functions.
 			foreach(string declaration ; declarations)
@@ -959,6 +959,12 @@ public class GtkWrapper : WrapperIF
 
 				if (dec.length == 0)
 					continue;
+
+				if ( dec.startsWith("//") )
+				{
+					externalText ~= "\n\t"~ dec ~"\n\n";
+					continue;
+				}
 
 				if ( loaderTableName == "glib" || loaderTableName == "pango" ) 
 					dec = replace(dec, "FILE*", "void*"); //Phobos workaround.
