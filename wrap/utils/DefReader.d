@@ -59,7 +59,7 @@ public class DefReader
 	{
 		this.fileName = fileName;
 		debug(file)writefln("DefReader.ctor fileName = %s", fileName);
-		lines = std.string.splitLines(cast(string) std.file.read(fileName));
+		lines = splitLines(cast(string) std.file.read(fileName));
 	}
 
 	public string toString()
@@ -93,7 +93,7 @@ public class DefReader
 		if ( currLine < lines.length )
 		{
 			fullLine = lines[currLine++];
-			line = std.string.strip(fullLine);
+			line = strip(fullLine);
 			int commentCount = 0;
 			while ( skipEmpty
 					&& (commentCount > 0  || line.length ==0 || line[0] == '#' || line.startsWith("#*") )
@@ -110,17 +110,17 @@ public class DefReader
 				}
 
 				fullLine = lines[currLine++];
-				line = std.string.strip(fullLine);
+				line = strip(fullLine);
 			}
 		}
 		
 		if ( line.length > 0 )
 		{
-			sizediff_t pos = std.string.indexOf(line, ':');
+			sizediff_t pos = indexOf(line, ':');
 			if ( pos > 0 )
 			{
-				key = std.string.strip(line[0 .. pos]);
-				value = std.string.strip(line[pos+1 .. line.length]);
+				key = strip(line[0 .. pos]);
+				value = strip(line[pos+1 .. line.length]);
 			}
 		}
 		else
@@ -155,7 +155,7 @@ public class DefReader
 	
 	bool getValueBit()
 	{
-		return std.string.indexOf(" 1 ok OK Ok true TRUE True Y y yes YES Yes ", value) > 0;
+		return indexOf(" 1 ok OK Ok true TRUE True Y y yes YES Yes ", value) > 0;
 	}
 	
 	string getFullLine()
