@@ -54,19 +54,22 @@ module utils.GtkDClass;
 //Moved here because of dsss:
 private import utils.HtmlStrip;
 private import utils.WrapperIF;
+private import utils.IndentedStringBuilder;
 private import utils.convparms;
 private import utils.funct;
 
-private import std.ctype;
+private import std.ascii;
 private import std.path;
 private import std.stdio;
+private import std.array;
 private import std.string;
+private import std.conv;
 
 public class GtkDClass
 {
 	private WrapperIF wrapper;
-	private char[] inAPI;
-	private char[][] inLines;
+	private string inAPI;
+	private string[] inLines;
 	int currLine;
 
 	private int status = 0;
@@ -74,96 +77,99 @@ public class GtkDClass
 
 	ConvParms* convParms;
 
-	char[] iFaceChar = "";
+	string iFaceChar = "";
 
-	private char[] parentName;				/// gtk parent struct
-	private char[] gtkDParentName;			/// gtkD parent name
-	private char[] gtkDParentNamePrefix;	/// gtkD parent name package
+	private string parentName;				/// gtk parent struct
+	private string gtkDParentName;			/// gtkD parent name
+	private string gtkDParentNamePrefix;	/// gtkD parent name package
 
-	private char[][] externalDeclarations;			/// the external definition to pass to  the wrapper
+	private string[] externalDeclarations;			/// the external definition to pass to  the wrapper
 
-	private char[][] collectedAliases;	/// public, module level type aliases
-	private char[][] collectedEnums;	/// public, module level definitions of enums
-	private char[][] stockEnums;		/// special enums for the SotckID
-	private char[][] gTypes;			/// special enums for G_TYPE_*
-	private char[][] stockChars;		/// the char[] value for the stockIDs
-	private char[][] collectedStructs;	/// public, module level definitions of structs
-	private char[][] collectedTypes;	/// public, module level definitions of other types
-	private char[][] collectedFuncts;	/// public, module level definitions of functions
-	private char[][] collectedUnions;	/// public, module level definitions of unions
-	private char[][] collectedConstants;/// public, module level constants
+	private string[] collectedAliases;	/// public, module level type aliases
+	private string[] collectedEnums;	/// public, module level definitions of enums
+	private string[] stockEnums;		/// special enums for the SotckID
+	private string[] gTypes;			/// special enums for G_TYPE_*
+	private string[] stockChars;		/// the string value for the stockIDs
+	private string[] collectedStructs;	/// public, module level definitions of structs
+	private string[] collectedTypes;	/// public, module level definitions of other types
+	private string[] collectedFuncts;	/// public, module level definitions of functions
+	private string[] collectedUnions;	/// public, module level definitions of unions
+	private string[] collectedConstants;/// public, module level constants
 
 
-	private char[] gtkDText;
+	private string gtkDText;
 
-	private char[][] properties;
-	private char[][] styleProperties;
-	private char[][] signals;
-	private char[][] description;
-	char[][] members;
+	private string[] properties;
+	private string[] styleProperties;
+	private string[] signals;
+	private string[] description;
+	private IndentedStringBuilder indenter;
 
-	int[char[]] functionSignatures;
-	int[char[]] gtkStructs;
+	string[] members;
+
+	int[string] functionSignatures;
+	int[string] gtkStructs;
 
 
 	private bool needSignalImports;
 
-	private char[] tabs;	/// used for simple indentation
+	private string tabs;	/// used for simple indentation
 
 	public this (WrapperIF wrapper )
 	{
 		this.wrapper = wrapper;
+		indenter = new IndentedStringBuilder();
 	}
 
-	public char[][] getExternalDeclarations()
+	public string[] getExternalDeclarations()
 	{
 		return externalDeclarations;
 	}
 
-	public char[][] getAliases()
+	public string[] getAliases()
 	{
 		return collectedAliases;
 	}
 
-	public char[][] getConstants()
+	public string[] getConstants()
 	{
 		return collectedConstants;
 	}
 
-	public char[][] getEnums()
+	public string[] getEnums()
 	{
 		return collectedEnums;
 	}
-	public char[][] getStockEnums()
+	public string[] getStockEnums()
 	{
 		return stockEnums;
 	}
-	public char[][] getStockChars()
+	public string[] getStockChars()
 	{
 		return stockChars;
 	}
 
-	public char[][] getGTypes()
+	public string[] getGTypes()
 	{
 		return gTypes;
 	}
 
-	public char[][] getStructs()
+	public string[] getStructs()
 	{
 		return collectedStructs;
 	}
 
-	public char[][] getTypes()
+	public string[] getTypes()
 	{
 		return collectedTypes;
 	}
 
-	public char[][] getFuncts()
+	public string[] getFuncts()
 	{
 		return collectedFuncts;
 	}
 
-	public char[][] getUnions()
+	public string[] getUnions()
 	{
 		return collectedUnions;
 	}
@@ -173,23 +179,23 @@ public class GtkDClass
 		return status;
 	}
 
-	private int[char[]] getCleanSigns()
+	private int[string] getCleanSigns()
 	{
-		int[char[]] cleanSignature;
+		int[string] cleanSignature;
 		return cleanSignature;
 	}
 
 	/** Construct the wrapped class according to all the collected
 	 *  information.
 	 */
-	public void openGtkDClass(char[] inAPI, ConvParms* convParms)
+	public void openGtkDClass(string inAPI, ConvParms* convParms)
 	{
 		//writefln("collectStructs %s", std.string.strip(inLines[currLine]));
 		this.inAPI = inAPI;
 		if ( convParms.isInterface ) iFaceChar = ";";
 		else iFaceChar = "";
 		HtmlStrip stripper = new HtmlStrip();
-		inLines = std.string.splitlines(stripper.strip(inAPI));
+		inLines = std.string.splitLines(stripper.strip(inAPI));
 		//writefln("new API\n%s",inAPI);
 
 		functionSignatures = getCleanSigns();
@@ -210,7 +216,7 @@ public class GtkDClass
 
 		needSignalImports = true;
 
-		char[] privPub = ( convParms.templ.length > 0 ) ? "public" : "private";
+		string privPub = ( convParms.templ.length > 0 ) ? "public" : "private";
 
 		externalDeclarations ~= "";
 		externalDeclarations ~= "// " ~ convParms.outPack ~ '.' ~ convParms.clss;
@@ -218,7 +224,7 @@ public class GtkDClass
 
 		gtkDText = wrapper.getLicense();
 
-		convParms.appendAsComment(gtkDText);
+		gtkDText ~= convParms.toString();
 
 		gtkDText ~= "module "~convParms.outPack~".";
 		if ( convParms.clss.length > 0 )
@@ -251,7 +257,7 @@ public class GtkDClass
 		
 		// the use of phobs is limited, maybe we can get by with this...
 		
-		char[][][char[]] tangoImportConvs;
+		string[][string] tangoImportConvs;
 		tangoImportConvs["std.stdio"] = ["tango.io.Stdout"];
 		tangoImportConvs["std.thread"] = ["tango.core.Thread"];
 		tangoImportConvs["std.string"] = ["tango.text.Util", "tango.text.Unicode"];
@@ -261,39 +267,39 @@ public class GtkDClass
 		tangoImportConvs["std.stdarg"] = ["tango.core.Vararg"];
 		tangoImportConvs["std.conv"] = ["tango.text.convert.Integer"];
 
-		char[][][char[]] druntimeImportConvs;
+		string[][string] druntimeImportConvs;
 		druntimeImportConvs["std.thread"] = ["core.thread"];
 		druntimeImportConvs["std.c.string"] = ["core.stdc.string"];
 		druntimeImportConvs["std.gc"] = ["core.memory"];
 		druntimeImportConvs["std.stdarg"] = ["core.vararg"];
 
-		char[][][char[]] phobos2ImportConvs;
+		string[][string] phobos2ImportConvs;
 		phobos2ImportConvs["std.stdio"] = ["std.stdio"];
 		phobos2ImportConvs["std.c.stdio"] = ["std.c.stdio"];
 		phobos2ImportConvs["std.string"] = ["std.string"];
 		phobos2ImportConvs["std.conv"] = ["std.conv"];
 		
-		char[] importTango = "\nversion(Tango) {\n";
-		char[] importDruntime = "} else version(D_Version2) {\n";
-		char[] importElse = "} else {\n";
-		char[] importCommon = "\n";
+		string importTango = "\nversion(Tango) {\n";
+		string importDruntime = "} else version(D_Version2) {\n";
+		string importElse = "} else {\n";
+		string importCommon = "\n";
 		
 		int countTango;
 		int countDruntime;
 		
-		foreach( char[] imprt ; convParms.imprts )
+		foreach( string imprt ; convParms.imprts )
 		{
 			if ( imprt in druntimeImportConvs )
 			{
 				++countDruntime;
-				foreach ( char[] d2Imp ; druntimeImportConvs[imprt] )
+				foreach ( string d2Imp ; druntimeImportConvs[imprt] )
 				{ 
 					importDruntime ~= "\t"~ privPub ~" import "~d2Imp~";\n";
 				}
 			}
 			if ( imprt in phobos2ImportConvs )
 			{
-				foreach ( char[] phobos2Imp ; phobos2ImportConvs[imprt] )
+				foreach ( string phobos2Imp ; phobos2ImportConvs[imprt] )
 				{ 
 					importDruntime ~= "\t"~ privPub ~" import "~phobos2Imp~";\n";
 				}
@@ -302,7 +308,7 @@ public class GtkDClass
 			if ( imprt in tangoImportConvs )
 			{
 				++countTango;
-				foreach ( char[] tangoImp ; tangoImportConvs[imprt] )
+				foreach ( string tangoImp ; tangoImportConvs[imprt] )
 				{ 
 					importTango ~= "\t"~ privPub ~" import "~tangoImp~";\n";
 				}
@@ -335,19 +341,9 @@ public class GtkDClass
 
 		readGtkDClass(convParms);
 
-		/*
-		// moved to GdkWrapper.d
-		append(text, collectedAliases, tabs);
-		append(text, collectedEnums, tabs);
-		append(text, collectedStructs, tabs);
-		append(text, collectedTypes, tabs);
-		append(text, collectedFuncts, tabs);
-		append(text, collectedUnions, tabs);
-		*/
-
 		gtkDText ~= "\n";
 
-		foreach ( char[] key ; convParms.mAliases.keys.sort )
+		foreach ( string key ; convParms.mAliases.keys.sort )
 		{
 			gtkDText ~= "public alias "~key~" "~convParms.mAliases[key]~";";
 		}
@@ -357,9 +353,8 @@ public class GtkDClass
 		parentName = null;
 		gtkDParentName = "";
 
-		char[][] classHead = openClass(convParms);
-		append(gtkDText, classHead, tabs);
-
+		string[] classHead = openClass(convParms);
+		gtkDText ~= indenter.format(classHead);
 	}
 
 	private void readGtkDClass(ConvParms* convParms)
@@ -373,11 +368,11 @@ public class GtkDClass
 
 	}
 
-	public void mergeGtkDClass(char[] inAPI, ConvParms* convParms)
+	public void mergeGtkDClass(string inAPI, ConvParms* convParms)
 	{
 		this.inAPI = inAPI;
 		HtmlStrip stripper = new HtmlStrip();
-		inLines = std.string.splitlines(stripper.strip(inAPI));
+		inLines = std.string.splitLines(stripper.strip(inAPI));
 		//writefln("new API\n%s",inAPI);
 
 		this.convParms = convParms;
@@ -386,21 +381,19 @@ public class GtkDClass
 
 		if ( wrapper.includeComments() )
 		{
-			append(gtkDText, description, tabs);
+			gtkDText ~= indenter.format(description);
 		}
 
 	}
 
-	public char[] closeGtkDClass(char[] inAPI, ConvParms* convParms)
+	public string closeGtkDClass(string inAPI, ConvParms* convParms)
 	{
 		mergeGtkDClass(inAPI, convParms);
 
-		append(gtkDText, properties, tabs);
-		append(gtkDText, styleProperties, tabs);
-		append(gtkDText, signals, tabs);
-
-		append(gtkDText, members, tabs);
-
+		gtkDText ~= indenter.format(properties);
+		gtkDText ~= indenter.format(styleProperties);
+		gtkDText ~= indenter.format(signals);
+		gtkDText ~= indenter.format(members);
 		gtkDText ~= closeClass(convParms);
 
 		return gtkDText;
@@ -412,49 +405,14 @@ public class GtkDClass
 	 *    	outputRoot =
 	 * Returns:
 	 */
-	public char[] getOutFile(char[] outputRoot, char[] srcOut)
+	public string getOutFile(string outputRoot, string srcOut)
 	{
-		char[] outF = std.path.join(outputRoot, srcOut);
-		outF = std.path.join(outF, convParms.outPack);
-		outF = std.path.join(outF, (convParms.clss.length>0 ? convParms.outFile : convParms.outFile));
+		string outF = std.path.buildPath(outputRoot, srcOut);
+		outF = std.path.buildPath(outF, convParms.outPack);
+		outF = std.path.buildPath(outF, (convParms.clss.length>0 ? convParms.outFile : convParms.outFile));
 		return outF~".d";
 	}
 
-	/**
-	 * Appends to the main text with the correct indentation
-	 * Params:
-	 *    	text = 	The main text
-	 *    	lines = The lines to append
-	 *    	tabs = 	The indentation to use
-	 */
-	public static void append(inout char[] text, char[][] lines, inout char[] tabs)
-	{
-		foreach(char[] line ; lines )
-		{
-			char[] ln = std.string.strip(line);
-			if ( endsWith(ln, '}')
-				|| endsWith(ln, "};")
-				|| startsWith(ln, "}")
-				|| startsWith(ln, "* }")
-				|| startsWith(ln, "// }")
-				)
-			{
-				if ( tabs.length > 0 ) tabs.length = tabs.length -1;
-			}
-			if ( startsWith(ln, '*') )
-			{
-				text ~= tabs ~" "~ ln ~ "\n";
-			}
-			else
-			{
-				text ~= tabs ~ ln ~ "\n";
-			}
-			if ( endsWith(ln,'{') )//&& !startsWith(line, " *") )
-			{
-				tabs ~= '\t';
-			}
-		}
-	}
 
 	/**
 	 * Checks if we are a template and if the parent name
@@ -462,9 +420,9 @@ public class GtkDClass
 	 *    	parentName =
 	 * Returns:
 	 */
-	private char[] getClassHeader(ConvParms* convParms, char[] parentName)
+	private string getClassHeader(ConvParms* convParms, string parentName)
 	{
-		char[] h;
+		string h;
 		if ( convParms.isInterface )
 		{
 			h = "public interface "~convParms.interf;
@@ -477,7 +435,7 @@ public class GtkDClass
 		{
 			h = "public template "~convParms.clss~"(";
 
-			foreach ( int count, char[] tp ; convParms.templ )
+			foreach ( int count, string tp ; convParms.templ )
 			{
 				if ( count > 0 )
 				{
@@ -501,9 +459,9 @@ public class GtkDClass
 	 *    	clss = 	The class Name
 	 * Returns:
 	 */
-	private char[][] openClass(ConvParms* convParms)
+	private string[] openClass(ConvParms* convParms)
 	{
-		char[][] text;
+		string[] text;
 
 		if ( convParms.clss.length > 0 )
 		{
@@ -517,13 +475,13 @@ public class GtkDClass
 
 			if ( wrapper.includeComments() )
 			{
-				foreach(char[] line; description)
+				foreach(string line; description)
 					text ~= line;
 			}
 
 			text ~= getClassHeader(convParms, gtkDParentName)
 					~ getImplements(convParms, gtkDParentName);
-//			char[] implements = getImplements(convParms, gtkDParentName);
+//			string implements = getImplements(convParms, gtkDParentName);
 //			if ( implements.length > 0 )
 //			{
 //				text ~= implements;
@@ -536,29 +494,27 @@ public class GtkDClass
 		//text ~= "private import lib."~convParms.outPack ~ ";\n\n";
 
 		// moved to module level - AND BACK AGAIN
-		//foreach( char[] imprt ; convParms.imprts )
+		//foreach( string imprt ; convParms.imprts )
 		//{
 		//	text ~= "private import "~imprt~";";
 		//}
 
-		char[] flipG(char[] inStr)
+		string flipG(string inStr)
 		{
-			char[] flipped = inStr.dup;
-
-			if ( flipped[0] == 'G' )
+			if ( inStr[0] == 'G' )
 			{
-				flipped = flipped[1..flipped.length] ~ 'G';
+				return (inStr[1 .. $] ~ 'G');
 			}
 
-			return flipped;
+			return inStr;
 		}
 
 		if ( convParms.strct.length > 0 )
 		{
-			char[] gtkStruct = convParms.realStrct.length > 0
+			string gtkStruct = convParms.realStrct.length > 0
 								? convParms.realStrct
 								: convParms.strct;
-			char[] var = toVar(gtkStruct.dup);
+			string var = toVar(gtkStruct);
 			text ~= "";
 			if ( !convParms.isInterface )
 			{
@@ -621,14 +577,14 @@ public class GtkDClass
 							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
 							text ~= "{";
 
-							char[][] checkIfNull = [
-                            	"if("~var~" is null)",
-                                "{",
-                                "	this = null;",
+							string[] checkIfNull = [
+												    	"if("~var~" is null)",
+												        "{",
+												        "	this = null;",
 								"	return;",
 								"}" ];
 
-                            char[][] checkObject = [
+												    string[] checkObject = [
 								""
 								"//Check if there already is a D object for this gtk struct",
 								"void* ptr = getDObject(cast(GObject*)"~var~");",
@@ -669,14 +625,14 @@ public class GtkDClass
 		return text;
 
 	}
-        
-        /* Deprecated */ /*
-	char[][] assertStructNotNull = [
+				
+				/* Deprecated */ /*
+	string[] assertStructNotNull = [
 	]; 
 	
-	private char[][] getAssertStructNotNull(char[] var)
+	private string[] getAssertStructNotNull(string var)
 	{
-		char[][] lines = [
+		string[] lines = [
 			"version(noAssert)",
 			"{",
 			"	if ( "~var~" is null )",
@@ -701,7 +657,7 @@ public class GtkDClass
 			;
 		return lines;
 	}
-        */
+				*/
 
 
 	/**
@@ -711,9 +667,9 @@ public class GtkDClass
 	 * Params:
 	 *    	convParms =
 	 */
-	private void addStaticClassCode(ConvParms* convParms, inout char[][] text)
+	private void addStaticClassCode(ConvParms* convParms, ref string[] text)
 	{
-		char[] code;
+		string code;
 
 		if ( convParms.isInterface ) code = convParms.interfaceCode;
 		else code = convParms.classCode;
@@ -721,14 +677,14 @@ public class GtkDClass
 		if ( code.length > 0 )
 		{
 			text ~= "";
-			foreach ( char[] line ; std.string.splitlines(code))
+			foreach ( string line ; std.string.splitLines(code))
 			{
 				text ~= std.string.strip(line);
 			}
 		}
 	}
 
-	private char[] castToParent(char[] var)
+	private string castToParent(string var)
 	{
 		return "cast("~parentName~"*)"~var;
 	}
@@ -740,17 +696,18 @@ public class GtkDClass
 	 *    	type =
 	 * Returns:
 	 */
-	public static char[] toVar(char[] type)
+	public static string toVar(string type)
 	{
-		if ( type.length > 0 )
-		{
-			type[0] = std.ctype.tolower(type[0]);
-		}
+		if (type.length == 0)
+			return "";
+
+		string p = to!string(toLower(type[0]));
 		if ( type.endsWith("_t") )
 		{
-			type = type[0..type.length-2];
+			return p ~ type[1 .. $ - 2];
+		} else {
+			return p ~ type[1 .. $];
 		}
-		return type;
 	}
 
 	/**
@@ -760,7 +717,7 @@ public class GtkDClass
 	 *    	clss = 	The class name
 	 * Returns:
 	 */
-	private char[] closeClass(ConvParms* convParms)
+	private string closeClass(ConvParms* convParms)
 	{
 		if ( tabs.length > 0 )
 		{
@@ -776,7 +733,7 @@ public class GtkDClass
 	 *    	clss =
 	 * Returns:
 	 */
-	private char[] getParent()
+	private string getParent()
 	{
 		debug(getParent) writefln("getParent for %s ", convParms.outFile);
 
@@ -784,8 +741,8 @@ public class GtkDClass
 		{
 			if ( convParms.extend.length > 0 )
 			{
-				parentName = convParms.extend.dup;
-				gtkDParentName = convertClassName(convParms.extend, gtkDParentNamePrefix);
+				parentName = convParms.extend;
+				gtkDParentName = convertClassName(convParms.extend);
 			}
 			else
 			{
@@ -805,9 +762,9 @@ public class GtkDClass
 					}
 					if ( i<inLines.length )	writefln("\t getParent first line = %s", inLines[i]);
 				}
-				char[] parent;
-				char[] current;
-				char[] next;
+				string parent;
+				string current;
+				string next;
 
 				if ( i < inLines.length )
 				{
@@ -817,7 +774,7 @@ public class GtkDClass
 						current = next;
 					}
 				}
-				char[] gtkStruct = convParms.strct;
+				string gtkStruct = convParms.strct;
 				if ( convParms.realStrct.length > 0 )
 				{
 					gtkStruct = convParms.realStrct;
@@ -831,24 +788,26 @@ public class GtkDClass
 					next = inLines[i][6..inLines[i].length];
 					if ( "GInitiallyUnowned" != next )
 					{
-						current = next.dup;
+						current = next;
 						debug(getParent) writefln("\t current = %s", current);
 					}
 					++i;
 				}
 				if ( gtkStruct ==  current && parent.length>0 )
 				{
-					parentName = parent.dup;
-					gtkDParentName = convertClassName(parentName, gtkDParentNamePrefix);
+					parentName = parent;
+					gtkDParentName = convertClassName(parentName);
 				}
 			}
 		}
 		return parentName;
 	}
 
-	private char[] convertClassName(char[] gName, inout char[] prefix)
+	private string convertClassName(string gName)
 	{
-		char[] conv;
+		string conv;
+		string prefix;
+
 		if ( startsWith(gName, "Gtk") )		prefix = "Gtk";
 		else if ( startsWith(gName, "Gio") )	prefix = "";
 		else if ( startsWith(gName, "Gdk") )	prefix = "Gdk";
@@ -863,10 +822,10 @@ public class GtkDClass
 
 		if ( conv == "Object" ) conv ~= prefix;
 		if ( prefix == "Pg" ) conv = "Pg" ~ gName[5..gName.length];
-		if ( prefix == "cairo") conv = std.string.toupper(gName[6..7]) ~ gName[7..gName.length - 2];
+		if ( prefix == "cairo") conv = std.string.toUpper(gName[6..7]) ~ gName[7..gName.length - 2];
 
 		debug(getParent)writefln("convertClassName %s >>> %s", gName, conv);
-		prefix = std.string.tolower(prefix);
+		prefix = std.string.toLower(prefix);
 
 		//TODO: better way to covert Gio names.
 		if( prefix == "g" && convParms.outPack == "gio" && conv != "ObjectG" && conv != "TypeModule" && conv != "Boxed" )
@@ -877,6 +836,7 @@ public class GtkDClass
 		if( prefix == "pg" ) prefix = "pango";
 		if ( startsWith(gName, "Gio") ) parentName = "G"~ gName[3 .. $];
 
+		gtkDParentNamePrefix = prefix;
 		return conv;
 	}
 
@@ -886,10 +846,10 @@ public class GtkDClass
 	 *    	clss =
 	 * Returns:
 	 */
-	private char[] getImplements(ConvParms* convParms, char[] parentName)
+	private string getImplements(ConvParms* convParms, string parentName)
 	{
-		char[] impls;
-		foreach ( int count, char[] impl ; convParms.impl )
+		string impls;
+		foreach ( int count, string impl ; convParms.impl )
 		{
 			if ( count > 0 || parentName.length > 0)
 			{
@@ -905,17 +865,17 @@ public class GtkDClass
 	}
 
 	/* TODO */
-	private char[][] getProperties()
+	private string[] getProperties()
 	{
-		char[][] text;
+		string[] text;
 
 		return text;
 	}
 
 	/* TODO */
-	private char[][] getStyleProperties()
+	private string[] getStyleProperties()
 	{
-		char[][] text;
+		string[] text;
 
 		return text;
 	}
@@ -925,9 +885,9 @@ public class GtkDClass
 	 * All the signals
 	 * Returns:
 	 */
-	private char[][] getSignals()
+	private string[] getSignals()
 	{
-		char[][] text;
+		string[] text;
 		debug(getSignal) writefln("\tgetSignals");
 
 		int i = moveToBlockStart("Signal Details", inLines);
@@ -949,21 +909,21 @@ public class GtkDClass
 		return text;
 	}
 
-	private char[][] getSignal(inout int i, char[][] lines)
+	private string[] getSignal(ref int i, string[] lines)
 	{
 		debug(getSignal) writefln("\tgetSignal %s", lines[i]);
-		char[][] text;
-		int endPos = std.string.rfind(lines[i], '"');
+		string[] text;
+		sizediff_t endPos = std.string.lastIndexOf(lines[i], '"');
 		if ( endPos > 5 )
 		{
-			char[] signalName = lines[i][5..endPos];
+			string signalName = lines[i][5..endPos];
 
 			++i;
-			char[] funct = getSignalFunctionDeclaration(i, lines);
+			string funct = getSignalFunctionDeclaration(i, lines);
 
 			if(!convParms.omitSignal(signalName))
 			{
-				char[][] comments;
+				string[] comments;
 				if ( wrapper.includeComments )
 				{
 					comments ~= "/**";
@@ -976,7 +936,7 @@ public class GtkDClass
 							//Skip empty lines.
 							++i;
 						}
-						else if(find(lines[i], ":") == lines[i].length-1)
+						else if(indexOf(lines[i], ":") == lines[i].length-1)
 						{
 							//Skip the parameters.
 							++i;
@@ -996,8 +956,8 @@ public class GtkDClass
 				Funct fun;
 				fun.init(funct, convParms);
 
-				char[] gtkDSignal = signalNameToGtkD(signalName);
-				char[] delegateDeclaration = fun.getDelegateDeclaration(convParms, 1);
+				string gtkDSignal = signalNameToGtkD(signalName);
+				string delegateDeclaration = fun.getDelegateDeclaration(convParms, 1);
 
 				// Removed function "addSignalImports" and replaced it 
 				// with simple "if" block to make sure class local imports
@@ -1007,7 +967,7 @@ public class GtkDClass
 				{
 					if ( !convParms.isInterface )
 					{
-						text ~= "int[char[]] connectedSignals;";
+						text ~= "int[string] connectedSignals;";
 					}
 					text ~= "";
 
@@ -1043,12 +1003,12 @@ public class GtkDClass
 
 	/*
 	 * Params:
-	 * text = the char[][] to append the function to.
+	 * text = the string[] to append the function to.
 	 * funct = the signal function
 	 * gtkDSignal = the GtkD name for the signal
 	 * dlg = the delegale for this signal
 	 */
-	void addExternCallback(inout char[][] text, Funct fun, char[] gtkDSignal, char[] dlg)
+	void addExternCallback(ref string[] text, Funct fun, string gtkDSignal, string dlg)
 	{
 		if ( !convParms.isInterface )
 		{
@@ -1061,7 +1021,7 @@ public class GtkDClass
 			else
 			{
 				text ~= "extern(C) static void callBack"~gtkDSignal~"("
-						~fun.getCallbackParameters(0, convParms, wrapper.getAliases()).replace("string", "str")
+						~ std.array.replace(fun.getCallbackParameters(0, convParms, wrapper.getAliases()), "string", "str")
 						~")";
 			}
 			text ~= "{";
@@ -1079,7 +1039,7 @@ public class GtkDClass
 			}
 			else
 			{
-				text ~= "		dlg("~fun.getCallbackVars(convParms, wrapper.getAliases()).replace("string", "str")~");";
+				text ~= "		dlg("~ std.array.replace(fun.getCallbackVars(convParms, wrapper.getAliases()), "string", "str")~");";
 				text ~= "	}";
 			}
 			text ~= "}";
@@ -1087,7 +1047,7 @@ public class GtkDClass
 		}
 	}
 
-	void addAddListener(inout char[][] text, char[] signalName, char[] gtkDSignalName, char[] dlg)
+	void addAddListener(ref string[] text, string signalName, string gtkDSignalName, string dlg)
 	{
 		text ~= "void addOn"~gtkDSignalName~"("~dlg~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)"~iFaceChar;
 		if ( !convParms.isInterface )
@@ -1136,34 +1096,31 @@ public class GtkDClass
 		}
 	}
 
-	public static char[] getClassVar(ConvParms* convParms)
+	public static string getClassVar(ConvParms* convParms)
 	{
-		char[] cv;
-
+		string cv;
 		if ( convParms.interf.length > 0)
 		{
-			cv = convParms.interf.dup;
-			cv[0] = std.ctype.tolower(cv[0]);
+			cv = convParms.interf;
 		}
 		else if ( convParms.clss.length > 0 )
 		{
-			cv = convParms.clss.dup;
-			cv[0] = std.ctype.tolower(cv[0]);
+			cv = convParms.clss;
 		}
 
-		return cv;
+		return (cv is null) ? null : (toLower(cv[0 .. 1]) ~ cv[1 .. $]);
 	}
 
-	private char[] signalNameToGtkD(char[] signalName)
+	private string signalNameToGtkD(string signalName)
 	{
-		char[] signalGtkD;
+		string signalGtkD;
 
 		char pc = ' ';
 		foreach ( int count, char c ; signalName )
 		{
 			if ( count == 0 )
 			{
-				signalGtkD ~= std.ctype.toupper(c);
+				signalGtkD ~= std.ascii.toUpper(c);
 			}
 			else
 			{
@@ -1171,7 +1128,7 @@ public class GtkDClass
 				{
 					if ( pc=='-' || pc=='_' )
 					{
-						signalGtkD ~= std.ctype.toupper(c);
+						signalGtkD ~= std.ascii.toUpper(c);
 					}
 					else
 					{
@@ -1195,12 +1152,12 @@ public class GtkDClass
 	}
 
 
-	private char[] getSignalFunctionDeclaration(inout int line, char[][] lines)
+	private string getSignalFunctionDeclaration(ref int line, string[] lines)
 	{
 		debug(signalFunction)writefln("getSignalFunctionDeclaration");
-		char[] funct;
+		string funct;
 		while ( line<lines.length
-				&& std.string.find(lines[line], ")")<0
+				&& std.string.indexOf(lines[line], ")")<0
 			)
 		{
 			funct ~= lines[line]~ " ";
@@ -1210,7 +1167,7 @@ public class GtkDClass
 										);
 			++line;
 		}
-		if ( line<lines.length && std.string.find(lines[line], ")")>0 )
+		if ( line<lines.length && std.string.indexOf(lines[line], ")")>0 )
 		{
 			funct ~= lines[line++];
 		}
@@ -1219,16 +1176,16 @@ public class GtkDClass
 
 
 
-	private char[][] getMembers(ConvParms* convParms)
+	private string[] getMembers(ConvParms* convParms)
 	{
 		currLine = 0;
 		getUntil("Details");
 
-		char[][] text;
+		string[] text;
 
 		while ( currLine < inLines.length )
 		{
-			char[][] member = getMember(convParms.prefixes);
+			string[] member = getMember(convParms.prefixes);
 
 			//Don't add empty members.
 			if(member.length > 1)
@@ -1244,10 +1201,10 @@ public class GtkDClass
 	 *   prefixes = a list of valid prefixes for new members 
 	 *              (gtk_xxx_).
 	 */
-	private char[][] getMember(char[][] prefixes)
+	private string[] getMember(string[] prefixes)
 	{
-		char[][] lines;
-		char[][] member;
+		string[] lines;
+		string[] member;
 
 		if ( convParms.text.length > 0 )
 		{
@@ -1273,7 +1230,7 @@ public class GtkDClass
 		debug(getMember)
 		{
 			writefln("getMember:");
-			foreach (char[] line ; lines )
+			foreach (string line ; lines )
 			{
 				writefln("\t%s", line);
 			}
@@ -1348,20 +1305,20 @@ public class GtkDClass
 	}
 
 
-	private void collectGTypes(char[][] lines, ConvParms* convParms)
+	private void collectGTypes(string[] lines, ConvParms* convParms)
 	{
 		debug(gTypes)writefln("gype lines\n\t%s\n\t%s\n\t%s",lines[0],lines[1],lines[2]);
 		int defLine = 1;
 		if ( lines.length > 0
-			&& std.string.find(lines[defLine],"G_TYPE_MAKE_FUNDAMENTAL")>=0
+			&& std.string.indexOf(lines[defLine],"G_TYPE_MAKE_FUNDAMENTAL")>=0
 			&& endsWith(lines[defLine],")")
-			&& std.string.find(lines[defLine],"<<") < 0
+			&& std.string.indexOf(lines[defLine],"<<") < 0
 			)
 		{
-			int pos = std.string.find(lines[defLine], "(");
+			sizediff_t pos = std.string.indexOf(lines[defLine], "(");
 			if ( pos > 0 )
 			{
-				int posf = std.string.find(lines[defLine], ")");
+				sizediff_t posf = std.string.indexOf(lines[defLine], ")");
 				if ( posf>pos )
 				{
 					gTypes ~= lines[0][7..lines[0].length]
@@ -1376,17 +1333,17 @@ public class GtkDClass
 	int stockCurrEnum;
 
 
-	private void collectStockItems(char[][] lines, ConvParms* convParms)
+	private void collectStockItems(string[] lines, ConvParms* convParms)
 	{
 		debug(stockItems)writefln("stock items lines\n\t%s\n\t%s\n\t%s",lines[0],lines[1],lines[2]);
 		int defLine = 1;
 		if ( lines.length > 0 && startsWith(lines[defLine],"#define GTK_") )
 		{
-			char[] line = lines[defLine];
-			char[] stockID;
-			char[] stockValue;
+			string line = lines[defLine];
+			string stockID;
+			string stockValue;
 
-			int pos = std.string.find(line[12..line.length],' ')+12;
+			sizediff_t pos = std.string.indexOf(line[12..line.length],' ')+12;
 			debug(stockItems)writefln("pos=%s", pos);
 			if ( pos > 12 )
 			{
@@ -1410,7 +1367,7 @@ public class GtkDClass
 						stockEnums ~= "/**";
 						while ( ln < lines.length && lines[ln][0] > ' ' )
 						{
-							stockEnums ~= " * "~lines[ln++].dup;
+							stockEnums ~= " * "~lines[ln++];
 						}
 						stockEnums ~= " */";
 						stockEnums ~= stockID~",";
@@ -1426,33 +1383,33 @@ public class GtkDClass
 
 	}
 
-	private void collectAliases(char[][] lines, ConvParms* convParms)
+	private void collectAliases(string[] lines, ConvParms* convParms)
 	{
 		int pos = 0;
-		char[][] tokens = std.string.split(until(pos, lines[1], ';'));
+		string[] tokens = std.string.split(until(pos, lines[1], ';'));
 
 		if ( convParms.omitCode(tokens[2]) )
 			return;
 
-		char[] alis = "public alias " ~ tokens[1] ~ ' ' ~ tokens[2] ~ ';';
+		string alis = "public alias " ~ tokens[1] ~ ' ' ~ tokens[2] ~ ';';
 
 		collectedAliases ~= "";
 		collectedAliases ~= "/**";
 		int ln = 1;
 		while ( ln < lines.length && lines[ln][0] > ' ' )
 		{
-			collectedAliases ~= " * "~lines[ln++].dup;
+			collectedAliases ~= " * "~lines[ln++];
 		}
 		collectedAliases ~= " */";
 		collectedAliases ~= stringToGtkD(alis, convParms, wrapper.getAliases());
 
 	}
 
-	private char[] getEnumPrefix(char[] enumName, char[] enumEntry)
+	private string getEnumPrefix(string enumName, string enumEntry)
 	{
 		debug(enumPrefix)writefln("%s.%s", enumName, enumEntry);
-		char[] prefix;
-		char[] upper = std.string.toupper(enumName.dup);
+		string prefix;
+		string upper = std.string.toUpper(enumName);
 		int n = 0;
 		int e = 0;
 
@@ -1525,12 +1482,12 @@ public class GtkDClass
 		return prefix;
 	}
 
-	private void collectEnums(char[][] lines, ConvParms* convParms)
+	private void collectEnums(string[] lines, ConvParms* convParms)
 	{
-		char[] enumName = lines[0][5..lines[0].length];
-		char[] gtkDEnumName;
+		string enumName = lines[0][5..lines[0].length];
+		string gtkDEnumName;
 
-		bool isGdkPrefix(char[] name)
+		bool isGdkPrefix(string name)
 		{
 			return
 				startsWith(enumName, "Gdk")
@@ -1561,9 +1518,9 @@ public class GtkDClass
 		{
 			gtkDEnumName = "C" ~ removeUnderscore(enumName[1 .. $-2]);
 		}
-		//char[] enumName = removeUnderscore(lines[0][5..lines[0].length]);
+		//string enumName = removeUnderscore(lines[0][5..lines[0].length]);
 		debug(enums)writefln("enum %s", enumName);
-		char[][] values;
+		string[] values;
 		// skipp until the start of the enumerations
 		int pos = 1;
 		while ( pos<lines.length
@@ -1579,18 +1536,17 @@ public class GtkDClass
 		bool invalidDEnum = false;
 		if ( pos<lines.length && lines[pos][0] != '}' )
 		{
-			char[] enumPrefix = getEnumPrefix(enumName, std.string.strip(lines[pos].dup));
-			int prefixLength = enumPrefix.length;
+			string enumPrefix = getEnumPrefix(enumName, std.string.strip(lines[pos]));
 			while ( pos<lines.length && lines[pos][0] != '}' )
 			{
 				debug(enums)writefln("\tenum line %s", lines[pos]);
 
-				char[] value = lines[pos++].dup.strip().chomp("\\");
+				string value = lines[pos++].strip().chomp("\\");
 				debug(enums)writefln("\traw       %s", value);
 				value = enumToGtkD(enumName, value, convParms, wrapper);
 				debug(enums)writefln("\tprocessed %s", value);
 
-				//if ( std.string.find(value, ":") >= 0 )
+				//if ( std.string.indexOf(value, ":") >= 0 )
 				//{
 				//	invalidDEnum = true;
 				//	debug(structs)writefln("- INVALID >>>%s<<<", value);
@@ -1603,40 +1559,8 @@ public class GtkDClass
 				}
 				else
 				{
-
-
-					char[] replace(char[] s, char[] from, char[] to)
-					{
-						char[] p;
-						if ( from.length == 0 )
-						{
-							p = s.dup;
-						}
-						else
-						{
-							int i;
-							int istart;
-
-							istart = 0;
-							while (istart < s.length)
-							{
-								i = std.string.find(s[istart .. s.length], from);
-								if (i == -1)
-								{
-									p ~= s[istart .. s.length];
-									break;
-								}
-								p ~= s[istart .. istart + i];
-								p ~= to;
-								istart += i + from.length;
-							}
-						}
-						return p;
-					}
-
-
 					debug(enumPrefix)writefln("\t\t%s", value);
-					char[] v = replace(value, enumPrefix, "");
+					string v = std.array.replace(value, enumPrefix, "");
 					if ( enumName == "cairo_ps_level_t" )
 					{
 						v = "LEVEL_"~v;
@@ -1660,16 +1584,6 @@ public class GtkDClass
 
 					values ~= v;
 
-					//debug(enumPrefix)writefln("-> %s", value[prefixLength..value.length]);
-//					if ( startsWith(value, enumPrefix) )
-//					{
-//						values ~= value[prefixLength..value.length];
-//					}
-//					else
-//					{
-//						values ~= value;
-//						debug(enumPrefix)writefln();
-//					}
 					debug(enums)writefln("+ ADDED   >>>%s<<<", v);
 				}
 			}
@@ -1680,7 +1594,7 @@ public class GtkDClass
 			collectedEnums ~= "/**";
 			while ( pos < lines.length && lines[pos] != "<hr>" )
 			{
-				collectedEnums ~= " * "~lines[pos++].dup;
+				collectedEnums ~= " * "~lines[pos++];
 			}
 			collectedEnums ~= " */";
 		}
@@ -1694,7 +1608,7 @@ public class GtkDClass
 			collectedEnums ~= "public enum "~enumName;
 			collectedEnums ~= "{";
 
-			foreach ( char[] value ; values )
+			foreach ( string value ; values )
 			{
 				debug(enums)writefln("\t\t%s", value);
 				collectedEnums ~= stringToGtkD(value, convParms, wrapper.getAliases());
@@ -1711,9 +1625,9 @@ public class GtkDClass
 		}
 	}
 
-	private void collectUnions(char[][] lines, ConvParms* convParms)
+	private void collectUnions(string[] lines, ConvParms* convParms)
 	{
-		char[] unionName = lines[0][6..lines[0].length];
+		string unionName = lines[0][6..lines[0].length];
 
 		foreach ( name; convParms.noStructs )
 		{
@@ -1729,12 +1643,12 @@ public class GtkDClass
 			return;
 		}
 		debug(unions)writefln("union %s", unionName);
-		char[][] values;
+		string[] values;
 		int pos = 3;
 		while ( pos<lines.length && lines[pos][0] != '}' )
 		{
 			debug(unions)writefln("\tunion line %s", lines[pos]);
-			char[] value = std.string.strip(lines[pos++].dup);
+			string value = std.string.strip(lines[pos++]);
 			debug(unions)writefln("\traw       %s", value);
 			value = stringToGtkD(value, convParms, wrapper.getAliases());
 			debug(unions)writefln("\tprocessed %s", value);
@@ -1746,7 +1660,7 @@ public class GtkDClass
 			collectedUnions ~= "/**";
 			while ( pos < lines.length && lines[pos][0] > ' ' )
 			{
-				collectedUnions ~= " * "~lines[pos++].dup;
+				collectedUnions ~= " * "~lines[pos++];
 			}
 			collectedUnions ~= " */";
 		}
@@ -1754,7 +1668,7 @@ public class GtkDClass
 		collectedUnions ~= "{";
 		collectedUnions ~= "union";
 		collectedUnions ~= "{";
-		foreach ( char[] value ; values )
+		foreach ( string value ; values )
 		{
 			debug(unions)writefln("\t\t%s", value);
 			collectedUnions ~= value;
@@ -1763,9 +1677,9 @@ public class GtkDClass
 		collectedUnions ~= "}";
 	}
 
-	private void collectStructs(char[][] lines, ConvParms* convParms)
+	private void collectStructs(string[] lines, ConvParms* convParms)
 	{
-		char[] structName = lines[0].dup;
+		string structName = lines[0];
 		if ( startsWith(structName, "struct ") )
 		{
 			structName = structName[7..structName.length];
@@ -1782,7 +1696,7 @@ public class GtkDClass
 
 		if ( includeStruct )
 		{
-			char[][] structDef;	/// all elements of the struct
+			string[] structDef;	/// all elements of the struct
 			int pos = 1;
 			if ( lines[1][lines[1].length-1] == '{' )
 			{
@@ -1790,17 +1704,16 @@ public class GtkDClass
 				debug(structs)writefln("collectStructs %s",std.string.strip(lines[pos]));
 				while ( pos < lines.length && lines[pos][0] != '}' )
 				{
-					structDef ~= lines[pos].dup;
+					structDef ~= lines[pos];
 					++pos;
 				}
 			}
-
 			if ( pos < lines.length )
 			{
 				collectedStructs ~= "";
-				char[] line = lines[pos];
+				string line = lines[pos];
 				++pos;
-				char[] gtkStruct = convParms.realStrct.length > 0
+				string gtkStruct = convParms.realStrct.length > 0
 					? convParms.realStrct
 					: convParms.strct;
 
@@ -1813,7 +1726,7 @@ public class GtkDClass
 					}
 					while ( pos < lines.length && lines[pos][0] > ' ' )
 					{
-						collectedStructs ~= " * "~lines[pos++].dup;
+						collectedStructs ~= " * "~lines[pos++];
 					}
 					collectedStructs ~= " */";
 				}
@@ -1839,16 +1752,16 @@ public class GtkDClass
 		}
 	}
 
-	void getStructInternals(char[][] structDef, ConvParms* convParms)
+	void getStructInternals(string[] structDef, ConvParms* convParms)
 	{
-		char[] getFunctionPointer(char[] def, inout int i)
+		string getFunctionPointer(string def, inout int i)
 		{
-			char[] funct = std.string.split(def, ";")[0];
-			char[] comment = std.string.split(def, ";")[1];
+			string funct = std.string.split(def, ";")[0];
+			string comment = std.string.split(def, ";")[1];
 
-			char[][] splitFunct = std.string.split(funct, "(");
+			string[] splitFunct = std.string.split(funct, "(");
 
-			char[] name = (splitFunct[1][1..$-2] == "ref") ? "doref" : splitFunct[1][1..$-2];
+			string name = (splitFunct[1][1..$-2] == "ref") ? "doref" : splitFunct[1][1..$-2];
 
 			return splitFunct[0] ~ " function(" ~ ((splitFunct[2][0..$-1] == "void") ? ")" : splitFunct[2]) ~" "~ name ~";"~ comment;
 		}
@@ -1860,35 +1773,31 @@ public class GtkDClass
 		for ( int i; i < structDef.length; i++ )
 		{
 			// Remove GSEAL macro
-			if ( std.string.find(structDef[i], "GSEAL (") > -1 )
+			if ( std.string.indexOf(structDef[i], "GSEAL (") > -1 )
 			{
-				char[] remove(char[] src, char[] rem)
-				{
-					return src[0 .. src.find(rem)] ~ src[src.find(rem) + rem.length .. $];
-				}
-
-				structDef[i] = structDef[i].remove("GSEAL (").remove(")");
+				structDef[i] = std.array.replace(structDef[i], "GSEAL (", "");
+				structDef[i] = std.array.replace(structDef[i], ")", "");
 			}
 
-			char[] elem = stringToGtkD(structDef[i], convParms, wrapper.getAliases());
+			string elem = stringToGtkD(structDef[i], convParms, wrapper.getAliases());
 
-			if ( startsWith(elem, "*") && std.string.find(elem, "+/") < elem.length - 2)
-				elem = std.string.replace(elem, "/", "\\"); //Some comments are broken
+			if ( startsWith(elem, "*") && std.string.indexOf(elem, "+/") < elem.length - 2)
+				elem = std.array.replace(elem, "/", "\\"); //Some comments are broken
 		
-			if ( std.string.find(elem, "unsigned long") == 0)
+			if ( std.string.indexOf(elem, "unsigned long") == 0)
 				elem = "ulong"~ elem[13..$];  //TODO: posibly use fixtype
 
-			if ( std.string.find(structDef[i], ":") >= 0 && (std.string.find(structDef[i], ":") <  std.string.find(structDef[i], "/+*") ||  std.string.find(structDef[i], "/+*") == -1) )
+			if ( std.string.indexOf(structDef[i], ":") >= 0 && (std.string.indexOf(structDef[i], ":") <  std.string.indexOf(structDef[i], "/+*") ||  std.string.indexOf(structDef[i], "/+*") == -1) )
 			//Bit fields.
 			{
 				if ( !bitField )
 				{
 					bitField = true;
-					collectedStructs ~= "\tuint bitfield"~ std.string.toString(bitFieldNr) ~";";
+					collectedStructs ~= "\tuint bitfield" ~ to!string(bitFieldNr) ~";";
 				}
-				if (std.string.find(elem, "/+*") > 0 && std.string.find(elem, "+/") < 0)
+				if (std.string.indexOf(elem, "/+*") > 0 && std.string.indexOf(elem, "+/") < 0)
 				{
-					char[][] parts = std.string.split(elem, "/+*");
+					string[] parts = std.string.split(elem, "/+*");
 					collectedStructs ~= "//" ~ parts[0];
 					collectedStructs ~= "/+*" ~ parts[1];
 				}
@@ -1897,7 +1806,9 @@ public class GtkDClass
 					collectedStructs ~= "//" ~ elem;
 				}
 
-				bits += std.string.atoi(std.string.split(elem, ":")[1]);
+				auto b = split(elem, ":")[1];
+				b = b[0 .. b.indexOf(";")].strip;
+				bits += to!int(b);
 				if ( bits >= 32)
 				{
 					bitField = false;
@@ -1905,65 +1816,65 @@ public class GtkDClass
 					bits = 0;
 				}
 			}
-			else if ( std.string.find(elem, "#") > -1 && std.string.find(elem, "#") < 2 )
+			else if ( std.string.indexOf(elem, "#") > -1 && std.string.indexOf(elem, "#") < 2 )
 			//Versions.
 			{
-				if ( std.string.find(elem, "#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8") > -1 )
+				if ( std.string.indexOf(elem, "#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8") > -1 )
 				{
 					//GLIB_SIZEOF_VOID_P == 8 means 64 bit. assuming WIN32 is an bad name for just windows.
 					collectedStructs ~= "version(Win64)";
 					collectedStructs ~= "{";
 				}
-				if ( std.string.find(elem, "#ifndef") == 0 )
+				if ( std.string.indexOf(elem, "#ifndef") == 0 )
 				{
 					collectedStructs ~= "version("~ elem[8..$] ~")";
 					collectedStructs ~= "{";
 				}
-				else if ( std.string.find(elem, "#else") == 0 )
+				else if ( std.string.indexOf(elem, "#else") == 0 )
 				{
 					collectedStructs ~= "}";
 					collectedStructs ~= "else";
 					collectedStructs ~= "{";
 				}
-				else if ( std.string.find(elem, "#endif") == 0 )
+				else if ( std.string.indexOf(elem, "#endif") == 0 )
 				{
 					collectedStructs ~= "}";
 				}
 			}
-			else if ( std.string.find(elem, "(") > 0 && !startsWith(elem, "* ") && !startsWith(elem, "/+*") )
+			else if ( std.string.indexOf(elem, "(") > 0 && !startsWith(elem, "* ") && !startsWith(elem, "/+*") )
 			//Function Pointers.
 			{
-				char[] funct;
+				string funct;
 				for ( ; i < structDef.length; i++ )
 				{
 					funct ~= stringToGtkD(structDef[i], convParms, wrapper.getAliases());
 
-					if ( std.string.find(structDef[i], ");") > 0 )
+					if ( std.string.indexOf(structDef[i], ");") > 0 )
 						break;
 				}
 
 				collectedStructs ~= "extern(C) " ~ getFunctionPointer(funct, i);
 			}
-			else if( std.string.find(elem, "{") > 0 )
+			else if( std.string.indexOf(elem, "{") > 0 )
 			//Nested Structs and unions.
 			{
-				char[] structUnion = std.string.split(structDef[i])[0];
+				string structUnion = std.string.split(structDef[i])[0];
 				int parentCount;
-				char[][] def;
+				string[] def;
 
 				for ( i++; i < structDef.length; i++ )
 				{
-					if ( std.string.find(structDef[i], "{") > -1 )
+					if ( std.string.indexOf(structDef[i], "{") > -1 )
 						parentCount++;
 
-					if ( std.string.find(structDef[i], "}") > -1 && parentCount-- == 0)
+					if ( std.string.indexOf(structDef[i], "}") > -1 && parentCount-- == 0)
 						break;
 
 					def ~= stringToGtkD(structDef[i], convParms, wrapper.getAliases());
 				}
 				
-				char[] varName = stringToGtkD(std.string.split(structDef[i])[1][0..$-1], convParms, wrapper.getAliases());
-				char[] structName = std.string.toupper(varName)[0..1] ~ varName[1..$];
+				string varName = stringToGtkD(std.string.split(structDef[i])[1][0..$-1], convParms, wrapper.getAliases());
+				string structName = std.string.toUpper(varName)[0..1] ~ varName[1..$];
 
 				collectedStructs ~= structUnion ~" "~ structName;
 				collectedStructs ~= "{";
@@ -1979,7 +1890,7 @@ public class GtkDClass
 	}
 
 	/// hack... we don't have all types (do we?)
-	bool isEnum(char[] type)
+	bool isEnum(string type)
 	{
 		if ( type == "GdkEventType" )
 		{
@@ -1988,11 +1899,11 @@ public class GtkDClass
 		return false;
 	}
 
-	bool primitiveType(char[] line)
+	bool primitiveType(string line)
 	{
 		int p=0;
 		skipBlank(p, line);
-		char[] type = untilBlank(p, line);
+		string type = untilBlank(p, line);
 		if ( isEnum(type) )
 		{
 			return true;
@@ -2005,7 +1916,7 @@ public class GtkDClass
 		return (type in wrapper.getAliases()) !is null;
 	}
 
-	public static void skipBlank(inout int p, char[] text)
+	public static void skipBlank(ref int p, string text)
 	{
 		while( p<text.length && text[p]<=' ' )
 		{
@@ -2013,7 +1924,7 @@ public class GtkDClass
 		}
 	}
 
-	public static void skip(inout int p, char[] text, char s)
+	public static void skip(ref int p, string text, char s)
 	{
 		while( p<text.length && text[p]==s)
 		{
@@ -2021,7 +1932,7 @@ public class GtkDClass
 		}
 	}
 
-	public static char[] untilBlank(inout int p, char[] text)
+	public static string untilBlank(ref int p, string text)
 	{
 		int start=p;
 		while ( p<text.length && text[p]>' ')
@@ -2031,17 +1942,17 @@ public class GtkDClass
 		return text[start..p];
 	}
 
-	public static char[] untilBlank(inout int p, char[] text, char[] s)
+	public static string untilBlank(ref int p, string text, string s)
 	{
 		int start=p;
-		while ( p<text.length && text[p]>' ' && std.string.find(s,text[p])<0 )
+		while ( p<text.length && text[p]>' ' && std.string.indexOf(s,text[p])<0 )
 		{
 			++p;
 		}
 		return text[start..p];
 	}
 
-	public static char[] until(inout int p, char[] text, char s)
+	public static string until(ref int p, string text, char s)
 	{
 		int start=p;
 		while ( p<text.length && text[p]!=s)
@@ -2051,19 +1962,19 @@ public class GtkDClass
 		return text[start..p];
 	}
 
-	public static char[] until(inout int p, char[] text, char[] s)
+	public static string until(ref int p, string text, string s)
 	{
 		int start=p;
-		while ( p<text.length && std.string.find(s,text[p])<0 )
+		while ( p<text.length && std.string.indexOf(s,text[p])<0 )
 		{
 			++p;
 		}
 		return text[start..p];
 	}
 
-	private char[] getFunctionDeclaration(inout int line, char[][] lines)
+	private string getFunctionDeclaration(ref int line, string[] lines)
 	{
-		char[] funct;
+		string funct;
 		while ( line<lines.length
 				&& (!endsWith(lines[line], ");")
 					&& !startsWith(funct, "#define"))
@@ -2091,13 +2002,13 @@ public class GtkDClass
 	 *			 function, extracted from the documentation.
 	 *	 prefixes = a list of prefixes to look for in 'lines' (gtk_xxx).
 	 */
-	private char[][] getFunction(char[][] lines, char[][] prefixes)
+	private string[] getFunction(string[] lines, string[] prefixes)
 	{
-		char[][] member;
+		string[] member;
 
 		int line = 1;
 
-		char[] funct = getFunctionDeclaration(line, lines);
+		string funct = getFunctionDeclaration(line, lines);
 
 		Funct fun;
 		fun.init(funct, convParms);
@@ -2199,21 +2110,21 @@ public class GtkDClass
 					// comment
 					void addComments()
 					{
-						char[][] phraseParams(char[][] comments)
+						string[] phraseParams(string[] comments)
 						{
-							char[][] description;
-							char[][] params;
-							char[] ret;
+							string[] description;
+							string[] params;
+							string ret;
 							
 							for(int i; i < comments.length; i++)
 							{
-								if(find(comments[i], ":") == comments[i].length-1 && comments[i].chomp(":").strip() != "Returns" )
+								if(indexOf(comments[i], ":") == comments[i].length-1 && comments[i].chomp(":").strip() != "Returns" )
 								{
 									//Get the GtkD name of the param
-									char[] param = strip( idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()) );
+									string param = strip( idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()) );
 
 									//If this param is not in the Gtkd Function Skip it.
-									if(find(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
+									if(indexOf(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
 									{
 										//Loop for multi line descriptons for this param.
 										while(i+1 < comments.length && stilInParam(comments[i+1]))
@@ -2231,7 +2142,7 @@ public class GtkDClass
 										i++;
 										if(firstRun)
 										{
-											params ~= param ~" = "~ stripl(comments[i]);
+											params ~= param ~" = "~ stripLeft(comments[i]);
 											firstRun = false;
 										}
 										else
@@ -2241,7 +2152,7 @@ public class GtkDClass
 								else if( comments[i].chomp(":").strip() == "Returns" )
 								{
 									//Skip return for Constructors.
-									if(find(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
+									if(indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
 									{
 										//Loop for multi line descriptons for this return.
 										while(i+1 < comments.length && stilInParam(comments[i+1]))
@@ -2259,7 +2170,7 @@ public class GtkDClass
 										ret ~= " " ~ comments[i].strip();
 									}
 								}
-								else if(find(comments[i], "See Also") == 0 || find(comments[i], "Property Details") == 0)
+								else if(indexOf(comments[i], "See Also") == 0 || indexOf(comments[i], "Property Details") == 0)
 								{
 									//These sections get included with the last function.
 									break;
@@ -2273,20 +2184,20 @@ public class GtkDClass
 
 							if(params.length > 0)
 							{
-								foreach(char[] line; params)
+								foreach(string line; params)
 									description ~= line;
 							}
 
 							if(ret.length > 0)
 								description ~= ret;
 
-							if ( find(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
-							   && find(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
+							if ( indexOf(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
+								 && indexOf(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
 							{
 								description ~= "Throws: GException on failure.";
 							}
 
-							if ( find(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1 )
+							if ( indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1 )
 							{
 								description ~= "Throws: ConstructionException GTK+ fails to create the object.";
 							}
@@ -2296,7 +2207,7 @@ public class GtkDClass
 
 						if ( wrapper.includeComments() )
 						{
-							char[][] comments;
+							string[] comments;
 							while ( line<lines.length )
 							{
 								//if ( !tooSoon )
@@ -2309,7 +2220,7 @@ public class GtkDClass
 							member ~= "/**";
 
 							comments = phraseParams(comments);
-							foreach(char[] line; comments)
+							foreach(string line; comments)
 								member ~= " * "~ line;
 
 							member ~= " */";
@@ -2325,12 +2236,12 @@ public class GtkDClass
 					{
 						if ( !convParms.isInterface )
 						{
-							char[] externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
+							string externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
 							
 							/* Don't add repeated declarations. */
 							bool addme = true;
-                                        
-							foreach(ref char[] declaration; externalDeclarations)
+												                
+							foreach(ref string declaration; externalDeclarations)
 							{
 								if(externalDeclaration == declaration){ addme = false; break; }
 							}
@@ -2338,10 +2249,10 @@ public class GtkDClass
 							if(addme) externalDeclarations ~= externalDeclaration;
 						}
 						// body
-						if ( !convParms.omitCode(fun.name) && find(fun.declaration(convParms,wrapper.getAliases()), "...") < 0 )
+						if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(convParms,wrapper.getAliases()), "...") < 0 )
 						{
-							char[] gtkDDeclaration = fun.declaration(convParms,wrapper.getAliases());
-							//char[] gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
+							string gtkDDeclaration = fun.declaration(convParms,wrapper.getAliases());
+							//string gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
 							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
 							addComments();
 							member ~= gtkDDeclaration~iFaceChar;
@@ -2362,7 +2273,7 @@ public class GtkDClass
 //											member ~= "return 0;";
 //											break;
 //
-//										case "char[]": member ~= "return "";"; break;
+//										case "string": member ~= "return "";"; break;
 //										default: member ~= "return null;"; break;
 //									}
 								}
@@ -2386,16 +2297,16 @@ public class GtkDClass
 
 	private bool checkIfDupFunction(Funct fun)
 	{
-		char[] signature = fun.convName~'('~fun.getWrapParametersType()~')';
+		string signature = fun.convName~'('~fun.getWrapParametersType()~')';
 		if ( signature in functionSignatures )
 		{
 			writefln("######################## duplicated function %s", signature);
-                        return true;
+			return true;
 		}
 		else
 		{
 			functionSignatures[signature] = 1;
-                        return false;
+			return false;
 		}
 	}
 
@@ -2406,14 +2317,14 @@ public class GtkDClass
 	 *  comments = Line to check.
 	 * Returns: true if we are still in the description of the param.
 	 */
-	bool stilInParam(char[] comments)
+	bool stilInParam(string comments)
 	{
-		return !(find(comments, ":")  == comments.length-1 ||
-		         comments.chomp(":").strip() == "Returns" ||
-		         ( find(comments, "Since 2.") == 0 || find(comments, "Since 1.") == 0) ||
-		         find(comments, "See Also") == 0 ||
-		         find(comments, "Property Details") == 0 ||
-		         comments == "<hr>");
+		return !(indexOf(comments, ":")  == comments.length-1 ||
+						 comments.chomp(":").strip() == "Returns" ||
+						 ( indexOf(comments, "Since 2.") == 0 || indexOf(comments, "Since 1.") == 0) ||
+						 indexOf(comments, "See Also") == 0 ||
+						 indexOf(comments, "Property Details") == 0 ||
+						 comments == "<hr>");
 	}
 
 	/**
@@ -2426,7 +2337,7 @@ public class GtkDClass
 	private void checkIfGtkStructs(Funct fun)
 	{
 		bool found = false;
-		void check(char[] type)
+		void check(string type)
 		{
 			if ( startsWith(type, 'G')
 					&& endsWith(type, '*')
@@ -2445,27 +2356,27 @@ public class GtkDClass
 					//		fun.convName~"("~fun.getWrapParametersType()~")"
 					//		);
 
-					char[] strct = type.dup;
-					char[] dName = "";
-					char[] pack = "";
+					string strct = type;
+					string dName = "";
+					string pack = "";
 					if ( startsWith(strct, "Gtk") )
 					{
 						pack = "gtk";
 						dName = strct[3..strct.length-1];
-						//dName[0] = std.ctype.tolower(dName[0]);
+						//dName[0] = std.ascii.toLower(dName[0]);
 					}
 					else if ( startsWith(strct, "Gdk") )
 					{
 						pack = "gdk";
 						dName = strct[3..strct.length-1];
-						//dName[0] = std.ctype.tolower(dName[0]);
+						//dName[0] = std.ascii.toLower(dName[0]);
 						if ( dName ==  "Pixbuf") pack = "gdkpixbuf";
 					}
 					else if ( startsWith(strct, "Gst") )
 					{
 						pack = "gstreamer";
 						dName = strct[3..strct.length-1];
-						//dName[0] = std.ctype.tolower(dName[0]);
+						//dName[0] = std.ascii.toLower(dName[0]);
 					}
 					else if ( startsWith(strct, "G") )
 					{
@@ -2524,7 +2435,7 @@ public class GtkDClass
 		{
 			check(fun.typeWrap);
 		}
-		foreach ( int count , char[] parm ; fun.parmsWrap )
+		foreach ( int count , string parm ; fun.parmsWrap )
 		{
 			if ( count > 0 || parm != convParms.strct~'*' )
 			{
@@ -2539,7 +2450,7 @@ public class GtkDClass
 	 *    	convParms = 	the Conversion parameters
 	 * Returns:
 	 */
-	private char[] getFunction(char[] line, ConvParms* convParms)
+	private string getFunction(string line, ConvParms* convParms)
 	{
 		debug(functionType) writefln("\ngetFunction line = %s", line);
 		// void (*GChildWatchFunc) (GPid pid,  gint status,  gpointer data);
@@ -2547,16 +2458,15 @@ public class GtkDClass
 
 
 
-		char[] f = "public alias extern(C) ";
+		string f = "public alias extern(C) ";
 		int pos = 0;
-		char[] type = until(pos, line, "(");
+		string type = until(pos, line, "(");
 		until(pos, line, "*");
 		skip(pos, line, '*');
-		char[] name = until(pos, line, ")");
+		string name = until(pos, line, ")");
 		if (convParms.omitCode(name)) {
 			return "";
 		}
-		//adjustTypeName(type, name);
 
 		f ~= stringToGtkD(type, convParms, wrapper.getAliases());
 		f ~= " function (";
@@ -2565,8 +2475,8 @@ public class GtkDClass
 		skip(pos, line, '(');
 		skipBlank(pos, line);
 
-		char[] sourceParms = std.string.strip(until(pos, line, ")"));
-		char[] parms;
+		string sourceParms = std.string.strip(until(pos, line, ")"));
+		string parms;
 
 		if ( sourceParms != "void" )
 		{
@@ -2581,10 +2491,10 @@ public class GtkDClass
 				{
 					parms ~= ", ";
 				}
-				char[] pType = untilBlank(sPos, sourceParms);
+				string pType = untilBlank(sPos, sourceParms);
 				fixType(pType, sPos, sourceParms);
 
-				char[] pName = until(sPos, sourceParms, ",)");
+				string pName = until(sPos, sourceParms, ",)");
 
 				debug(parmType)writefln("\tParameter type before = %s", pType);
 				debug(parmName)writefln("\tParameter name before = %s", pName);
@@ -2606,16 +2516,16 @@ public class GtkDClass
 	 * Wraps a set of lines in the block documentation comment
 	 * Returns: The comment formated for D block documentation comment
 	 */
-	private char[][] getDescription()
+	private string[] getDescription()
 	{
-		char[][] desc;
+		string[] desc;
 		desc ~= "";
 		desc ~= tabs ~ "/**";
-		char[][] block = getBlock ("Description", "Details");
-		foreach ( char[] line; block )
+		string[] block = getBlock ("Description", "Details");
+		foreach ( string line; block )
 		{
 			if( startsWith(line, "--") && endsWith(line, "--") )
-				line = replace(line, "-", "_");
+				line = std.array.replace(line, "-", "_");
 
 			desc ~= " * " ~ line;
 		}
@@ -2632,14 +2542,14 @@ public class GtkDClass
 	 *    	endLine = 		The end marker line
 	 * Returns: The block os lines
 	 */
-	private char[][] getBlock(char[] startLine, char[] endLine)
+	private string[] getBlock(string startLine, string endLine)
 	{
 		currLine = 0;
 
 		debug(getBlock) writefln("getBlock for ]%s,%s[", startLine, endLine);
 
 		// TODO use slicing instead of this array
-		char[][] block;
+		string[] block;
 
 		while ( currLine<inLines.length && inLines[currLine]!=startLine )
 		{
@@ -2650,7 +2560,7 @@ public class GtkDClass
 		return getUntil(endLine);
 	}
 
-	private int moveToBlockStart(char[] startLine, char[][] inLines)
+	private int moveToBlockStart(string startLine, string[] inLines)
 	{
 		int startPos = 0;
 		while ( startPos < inLines.length && inLines[startPos]!= startLine )
@@ -2666,11 +2576,11 @@ public class GtkDClass
 	 *    	endLine = 	the marker line
 	 * Returns:
 	 */
-	private char[][] getUntil(char[] endLine)
+	private string[] getUntil(string endLine)
 	{
 		bool end = false;
 
-		char[][] block;
+		string[] block;
 
 		while ( currLine < inLines.length && !end )
 		{
@@ -2698,12 +2608,12 @@ public class GtkDClass
 	 *    	endLine = 	the marker line
 	 * Returns:
 	 */
-	private char[][] getUntil(char[] endLine, char[][] lines)
+	private string[] getUntil(string endLine, string[] lines)
 	{
 		bool end = false;
 		int currLine;
 
-		char[][] block;
+		string[] block;
 
 		while ( currLine < lines.length && !end )
 		{
@@ -2732,12 +2642,12 @@ public class GtkDClass
 	 *    	gString =
 	 * Returns:
 	 */
-	public static char[] stringToGtkD(char[] gString, ConvParms* convParms, char[][char[]] aliases, bool caseConvert=true)
+	public static string stringToGtkD(string gString, ConvParms* convParms, string[string] aliases, bool caseConvert=true)
 	{
-		char[] converted;
+		string converted;
 
 		int pos = 0 ;
-		char[] seps = " \n\r\t\f\v()[]*,;";
+		string seps = " \n\r\t\f\v()[]*,;";
 
 		char c = ' ';
 		char pc;
@@ -2747,7 +2657,7 @@ public class GtkDClass
 		{
 			pc = c;
 			c = gString[pos];
-			if ( std.string.find(seps,c) >= 0 )
+			if ( std.string.indexOf(seps,c) >= 0 )
 			{
 				end = pos;
 				converted ~= tokenToGtkD(gString[start..end], convParms, aliases, caseConvert);
@@ -2785,9 +2695,9 @@ public class GtkDClass
 	}
 
 
-	public static char[] idsToGtkD(char[] gToken, ConvParms* convParms, char[][char[]] aliases, bool caseConvert=true)
+	public static string idsToGtkD(string gToken, ConvParms* convParms, string[string] aliases, bool caseConvert=true)
 	{
-		char[] converted = tokenToGtkD(gToken, convParms, aliases, caseConvert);
+		string converted = tokenToGtkD(gToken, convParms, aliases, caseConvert);
 		switch ( converted )
 		{
 			case "alias" : converted = "alia"; break;
@@ -2816,16 +2726,16 @@ public class GtkDClass
 	 *    	caseConvert =
 	 * Returns:
 	 */
-	public static char[] enumToGtkD(char[] enumType, char[] gToken, ConvParms* convParms, WrapperIF wrapper, bool caseConvert=true)
+	public static string enumToGtkD(string enumType, string gToken, ConvParms* convParms, WrapperIF wrapper, bool caseConvert=true)
 	{
 		debug(enumToGtkD)writefln("enumLine (%s) BEFORE %s", enumType, gToken);
-		char[] converted = stringToGtkD(gToken, convParms, wrapper.getAliases());
+		string converted = stringToGtkD(gToken, convParms, wrapper.getAliases());
 
-		int pos = std.string.find(converted, '=');
+		sizediff_t pos = std.string.indexOf(converted, '=');
 		debug(enumToGtkD)writefln("\t pos = %s", pos);
 		if ( pos > 0 )
 		{
-			char[] refValue = std.string.strip(converted.dup[pos+1..converted.length]);
+			string refValue = std.string.strip(converted[pos+1..converted.length]);
 			converted = converted[0..pos+1]~ " ";
 
 			debug(enumToGtkD)writefln("\t refValue = %s", refValue);
@@ -2840,15 +2750,15 @@ public class GtkDClass
 
 			debug(enumToGtkD)
 			{
-				foreach(char[] key ; wrapper.getEnumTypes().keys)
+				foreach(string key ; wrapper.getEnumTypes().keys)
 				{
 					writefln("\t\t [%s] = %s", key, wrapper.getEnumTypes()[key]);
 				}
 			}
 
-			if ( std.string.find(refValue, ' ') > 0 && std.string.find(refValue, '<') > 0 )
+			if ( std.string.indexOf(refValue, ' ') > 0 && std.string.indexOf(refValue, '<') > 0 )
 			{
-				char[][] parts = std.string.split(refValue);
+				string[] parts = std.string.split(refValue);
 
 				foreach ( part; parts )
 				{
@@ -2862,9 +2772,9 @@ public class GtkDClass
 					{
 						part = wrapper.getEnumTypes()[part] ~" ";
 					}
-					else if ( std.string.find(part, "<<") > 0 )
+					else if ( std.string.indexOf(part, "<<") > 0 )
 					{
-						char[][] values = std.string.split(part, "<<");
+						string[] values = std.string.split(part, "<<");
 
 						if ( values[0] in wrapper.getEnumTypes() )
 							values[0] = wrapper.getEnumTypes()[values[0]];
@@ -2886,7 +2796,7 @@ public class GtkDClass
 				converted ~= refValue;
 			}
 
-			converted = std.string.stripr(converted);
+			converted = std.string.stripRight(converted);
 
 			if (needComa)
 				converted ~= ",";
@@ -2904,9 +2814,9 @@ public class GtkDClass
 	 *    	gToken =
 	 * Returns:
 	 */
-	public static char[] tokenToGtkD(char[] gToken, ConvParms* convParms, char[][char[]] aliases, bool caseConvert=true)
+	public static string tokenToGtkD(string gToken, ConvParms* convParms, string[string] aliases, bool caseConvert=true)
 	{
-		char[] converted;
+		string converted;
 
 		debug(tokenToGtkD) writefln("gToken=>>>%s<<<", gToken);
 
@@ -2920,33 +2830,32 @@ public class GtkDClass
 		}
 		else if ( endsWith(gToken, "_t") && startsWith(gToken,"cairo_") )
 		{
-			converted = gToken.dup;
+			converted = gToken;
 		}
 		else if ( endsWith(gToken, "_t*") && startsWith(gToken,"cairo_") )
 		{
-			converted = gToken.dup;
+			converted = gToken;
 		}
 		else if ( endsWith(gToken, "_t**") && startsWith(gToken,"cairo_") )
 		{
-			converted = gToken.dup;
+			converted = gToken;
 		}
 		else if ( startsWith(gToken,"f_") && (endsWith(gToken,"_out") || endsWith(gToken,"_in") || endsWith(gToken,"_inout") ) )
 		{
-			converted = gToken.dup;
+			converted = gToken;
 		}
 		else if ( caseConvert )
 		{
-			removePrefix(gToken, convParms);
-			converted = removeUnderscore(gToken);
+			converted = gToken.removePrefix(convParms).removeUnderscore();
 			// do it again after the gToken is converted
-			if ( (aliases !is null) && (gToken in aliases) )
+			if ( (aliases !is null) && (converted in aliases) )
 			{
-				converted = aliases[gToken];
+				converted = aliases[converted];
 			}
 		}
 		else
 		{
-			converted = gToken.dup;
+			converted = gToken;
 		}
 
 		debug(tokenToGtkD) writefln("converted=>>>%s<<<\n", converted);
@@ -2955,70 +2864,6 @@ public class GtkDClass
 	}
 
 
-	public static char[] removePrefix(inout char[] gToken, char[] prefix)
-	{
-		if ( startsWith(gToken, prefix) )
-		{
-			gToken = gToken[prefix.length..gToken.length];
-		}
-		return gToken;
-	}
-
-	public static char[] removePrefix(inout char[] gToken, ConvParms* convParms)
-	{
-		//debug(tokenToGtkD) writefln("gToken.length > prefix.length %s",gToken.length > convParms.prefix.length);
-		char[] prefix = convParms.getPrefix(gToken);
-		if ( prefix.length > 0 )
-		{
-			gToken = gToken[prefix.length..gToken.length];
-		}
-		debug(tokenToGtkD) writefln("gToken after prefix = %s",gToken);
-
-		return gToken;
-
-	}
-
-	public static char[] removeUnderscore(char[] gToken)
-	{
-		char[] converted;
-
-		char c = ' ';
-		char pc = ' ';
-		char ppc = ' ';
-		int pos = 0;
-		while ( pos < gToken.length )
-		{
-			c = gToken[pos];
-			if ( pc == '_' )
-			{
-				c = std.ctype.toupper(c);
-			}
-			else if ( c == '_' && std.ctype.islower(pc) )
-			{
-				pc = c;
-				c = '\0';
-			}
-
-			if ( c > '\0' )
-			{
-				if ( ppc == '_'
-					 && pc == 'g'
-					 && c == 'l'
-					 && gToken.length-1 > pos
-					 && gToken[pos+1] == '_'
-					)
-				{
-						c = 'L';
-				}
-				ppc = pc;
-				pc = gToken[pos];
-				converted ~= c;
-			}
-			++pos;
-		}
-		return converted;
-	}
-
 
 	/**
 	 * Moves '*' and 'const' and trailing '[]' from the name to the type token
@@ -3026,7 +2871,7 @@ public class GtkDClass
 	 *    	type =
 	 *    	name =
 	 */
-	public static void adjustTypeName(inout char[] type, inout char[] name)
+	public static void adjustTypeName(ref string type, ref string name)
 	{
 		debug(type)writefln("type before %s", type);
 		debug(name)writefln("name before %s", name);
@@ -3034,11 +2879,11 @@ public class GtkDClass
 		while ( name.length > 0
 				&& (GtkDClass.startsWith(name,"const") || name[0] == '*'
 				|| GtkDClass.startsWith(name,"G_GNUC_MAY_ALIAS") )
-			  )
+				)
 		{
 			if ( name[0] == '*' )
 			{
-				type = type.dup ~ '*';
+				type = type ~ '*';
 				name = std.string.strip(name[1..name.length]);
 			}
 			else if (GtkDClass.startsWith(name,"const"))
@@ -3068,7 +2913,7 @@ public class GtkDClass
 	 *    	p =
 	 *    	text =
 	 */
-	public static void fixType(inout char[] type, inout int p, inout char[] text)
+	public static void fixType(ref string type, ref int p, ref string text)
 	{
 		if ( type == "const" || type == "struct" )
 		{
@@ -3093,28 +2938,92 @@ public class GtkDClass
 
 
 
-	public static bool startsWith(char[] str, char[] prefix)
+	public static bool startsWith(string str, string prefix)
 	{
 		return str.length >= prefix.length
 				&& str[0..prefix.length] == prefix;
 	}
 
-	public static bool startsWith(char[] str, char prefix)
+	public static bool startsWith(string str, char prefix)
 	{
 		return str.length > 0
 				&& str[0] == prefix;
 	}
 
-	public static bool endsWith(char[] str, char[] suffix)
+	public static bool endsWith(string str, string suffix)
 	{
 		return str.length >= suffix.length
 				&& str[str.length-suffix.length..str.length] == suffix;
 	}
 
-	public static bool endsWith(char[] str, char suffix)
+	public static bool endsWith(string str, char suffix)
 	{
 		return str.length >= 1
 				&& str[str.length-1] == suffix;
 	}
 
 }
+	
+string removePrefix(string gToken, string prefix)
+{
+	if ( startsWith(gToken, prefix) )
+	{
+		return gToken[prefix.length..gToken.length];
+	}
+	return gToken;
+}
+
+string removePrefix(string gToken, ConvParms* convParms)
+{
+	//debug(tokenToGtkD) writefln("gToken.length > prefix.length %s",gToken.length > convParms.prefix.length);
+	string prefix = convParms.getPrefix(gToken);
+	if ( prefix.length > 0 )
+	{
+		return gToken[prefix.length..gToken.length];
+	}
+
+	return gToken;
+
+}
+
+string removeUnderscore(string gToken)
+{
+	string converted;
+
+	char c = ' ';
+	char pc = ' ';
+	char ppc = ' ';
+	int pos = 0;
+	while ( pos < gToken.length )
+	{
+		c = gToken[pos];
+		if ( pc == '_' )
+		{
+			c = to!char(std.ascii.toUpper(c));
+		}
+		else if ( c == '_' && std.ascii.isLower(pc) )
+		{
+			pc = c;
+			c = '\0';
+		}
+
+		if ( c > '\0' )
+		{
+			if ( ppc == '_'
+					&& pc == 'g'
+					&& c == 'l'
+					&& gToken.length-1 > pos
+					&& gToken[pos+1] == '_'
+				 )
+			{
+				c = 'L';
+			}
+			ppc = pc;
+			pc = gToken[pos];
+			converted ~= c;
+		}
+		++pos;
+	}
+	return converted;
+}
+
