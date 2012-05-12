@@ -34,6 +34,7 @@ private import std.string;
 private import std.array;
 private import std.conv;
 private import std.stdio;
+private import std.range;
 
 private import utils.StringUtils;
 private import utils.GtkDClass;
@@ -75,11 +76,6 @@ public class DefReader
 		return str;
 	}
 	
-	string getFileName()
-	{
-		return fileName;
-	}
-	
 	/**
 	 * Gets the next key/value pair.
 	 * both key and value a stripped of non visible start and ending chars
@@ -93,10 +89,10 @@ public class DefReader
 		if ( currLine < lines.length )
 		{
 			fullLine = lines[currLine++];
-			line = strip(fullLine);
+			line = fullLine.strip;
 			int commentCount = 0;
 			while ( skipEmpty
-					&& (commentCount > 0  || line.length ==0 || line[0] == '#' || line.startsWith("#*") )
+					&& (commentCount > 0  || line.empty || line[0] == '#')
 					&& currLine < lines.length
 					)
 			{
@@ -110,7 +106,7 @@ public class DefReader
 				}
 
 				fullLine = lines[currLine++];
-				line = strip(fullLine);
+				line = fullLine.strip;
 			}
 		}
 		
@@ -119,8 +115,8 @@ public class DefReader
 			sizediff_t pos = indexOf(line, ':');
 			if ( pos > 0 )
 			{
-				key = strip(line[0 .. pos]);
-				value = strip(line[pos+1 .. line.length]);
+				key = line[0 .. pos].strip;
+				value = line[pos+1 .. line.length].strip;
 			}
 		}
 		else
