@@ -2734,7 +2734,7 @@ public class GtkDClass
 	}
 
 	/**
-	 * Converts a GTK token to a Dui token
+	 * Converts a GTK token to a gtkD token
 	 * This removes the "_" and capitalises the next letter and converts the basic types.
 	 * Doesn't do it if it's cairo name
 	 * Params:
@@ -2743,31 +2743,39 @@ public class GtkDClass
 	 */
 	public static string tokenToGtkD(string gToken, ConvParms* convParms, string[string] aliases, bool caseConvert=true)
 	{
+		bool match(string prefix, string suffix)
+		{
+			return gToken.startsWith(prefix) && gToken.endsWith(suffix);
+		}
+
+		bool isCairo()
+		{
+			return match("cairo_", "_t")
+				|| match("cairo_", "_t*")
+				|| match("cairo_", "_t**")
+				|| match("f_", "_in")
+				|| match("f_", "_out")
+				|| match("f_", "_inout");
+		}
+
+		bool checkAlias(string[string] a)
+		{
+			return ((a !is null) && (gToken in a));
+		}
+
 		string converted;
 
 		debug(tokenToGtkD) writefln("gToken=>>>%s<<<", gToken);
 
-		if ( (aliases !is null) && (gToken in aliases) )
+		if ( checkAlias(aliases) )
 		{
 			converted = aliases[gToken];
 		}
-		else if ( (convParms.aliases !is null) && (gToken in convParms.aliases) )
+		else if ( checkAlias(convParms.aliases) )
 		{
 			converted = convParms.aliases[gToken];
 		}
-		else if ( endsWith(gToken, "_t") && startsWith(gToken,"cairo_") )
-		{
-			converted = gToken;
-		}
-		else if ( endsWith(gToken, "_t*") && startsWith(gToken,"cairo_") )
-		{
-			converted = gToken;
-		}
-		else if ( endsWith(gToken, "_t**") && startsWith(gToken,"cairo_") )
-		{
-			converted = gToken;
-		}
-		else if ( startsWith(gToken,"f_") && (endsWith(gToken,"_out") || endsWith(gToken,"_in") || endsWith(gToken,"_inout") ) )
+		else if ( isCairo() )
 		{
 			converted = gToken;
 		}
