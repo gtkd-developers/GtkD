@@ -29,40 +29,40 @@ public struct ConvParms
 	private import utils.GtkDClass;
 	private import std.stdio;
 	
-	public char[] inFile;
-	public char[] outPack;
-	public char[] bindDir;
-	public char[] outFile;
-	public char[] strct;
-	public char[] realStrct;
-	public char[] ctorStrct;	/// the ToolItem derivates all retrun GtkToolItem
-	public char[] clss;
-	public char[] interf;
+	public string inFile;
+	public string outPack;
+	public string bindDir;
+	public string outFile;
+	public string strct;
+	public string realStrct;
+	public string ctorStrct;	/// the ToolItem derivates all retrun GtkToolItem
+	public string clss;
+	public string interf;
 	public bool isInterface;  ///Are we generating an interface.
-	public char[][] templ;
-	public char[] extend;
-	public char[][] impl;
-	public char[][] prefixes;
+	public string[] templ;
+	public string extend;
+	public string[] impl;
+	public string[] prefixes;
 	public bool strictPrefix;	/// include only function that match the prefix
-	public char[][] imprts;
-	public char[][char[]]  structWrap;
-	public char[][] noStructs;
-	public char[][] noPrefixes;
-	public char[][] noCode;		    /// insert the external declaration but not the wrapping code
-	public char[][] noSignals;		/// Don't generate Signals
-	public char[][char[]] aliases;
-	public char[][char[]] mAliases;
-	public char[][] overrides;		     /// list of functions that need override for gtkD to work with dmd 2
-	public char[][][char[]]  outParms;   /// list of params that should be treated as out parameters
-	public char[][][char[]]  inoutParms; /// list of params that should be treated as inout/ref parameters
-	public char[][char[]][char[]] array; /// array["funct":["param":["length param"]]
-	public char[] classCode;		     /// any valid D code to be copied to the final GtkD class
-	public char[] interfaceCode;	     /// any valid D code to be copied to the final GtkD interface
-	public char[][] text;		         /// text to be added to the text read from the file
+	public string[] imprts;
+	public string[string]  structWrap;
+	public string[] noStructs;
+	public string[] noPrefixes;
+	public string[] noCode;		    /// insert the external declaration but not the wrapping code
+	public string[] noSignals;		/// Don't generate Signals
+	public string[string] aliases;
+	public string[string] mAliases;
+	public string[] overrides;		     /// list of functions that need override for gtkD to work with dmd 2
+	public string[][string]  outParms;   /// list of params that should be treated as out parameters
+	public string[][string]  inoutParms; /// list of params that should be treated as inout/ref parameters
+	public string[string][string] array; /// array["funct":["param":["length param"]]
+	public string classCode;		     /// any valid D code to be copied to the final GtkD class
+	public string interfaceCode;	     /// any valid D code to be copied to the final GtkD interface
+	public string[] text;		         /// text to be added to the text read from the file
 
 	public void clearAll()
 	{
-		char[][char[]] clear(){char[][char[]] cc;return cc;};
+		string[string] clear(){string[string] cc;return cc;};
 		
 		inFile.length = 0;
 		//outPack.length = 0;
@@ -97,9 +97,9 @@ public struct ConvParms
 
 	}
 	
-	public char[] toString()
+	public string toString()
 	{
-		char[] text;
+		string text;
 		text ~= "/*";
 		text ~= "\n * Conversion parameters:";
 		text ~= "\n * inFile  = "~inFile;
@@ -113,7 +113,7 @@ public struct ConvParms
 		text ~= "\n * class Code: " ~ (classCode.length>0 ? "Yes" : "No");
 		text ~= "\n * interface Code: " ~ (interfaceCode.length>0 ? "Yes" : "No");
 		text ~= "\n * template for:";
-		foreach ( char[] tp ; templ )
+		foreach ( string tp ; templ )
 		{
 			text ~= "\n * \t- "~tp;
 		}
@@ -121,65 +121,65 @@ public struct ConvParms
 		text ~= "\n * extend  = "~extend;
 		
 		text ~= "\n * implements:";
-		foreach ( char[] ip ; impl )
+		foreach ( string ip ; impl )
 		{
 			text ~= "\n * \t- "~ip;
 		}
 
 		text ~= "\n * prefixes:";
-		foreach ( char[] prefix ; prefixes )
+		foreach ( string prefix ; prefixes )
 		{
 			text ~= "\n * \t- "~prefix;
 		}
 		
 		text ~= "\n * omit structs:";
-		foreach ( char[] noStruct ; noStructs )
+		foreach ( string noStruct ; noStructs )
 		{
 			text ~= "\n * \t- "~noStruct;
 		}
 		
 		text ~= "\n * omit prefixes:";
-		foreach ( char[] noPrefix ; noPrefixes )
+		foreach ( string noPrefix ; noPrefixes )
 		{
 			text ~= "\n * \t- "~noPrefix;
 		}
 		
 		text ~= "\n * omit code:";
-		foreach ( char[] ncode ; noCode )
+		foreach ( string ncode ; noCode )
 		{
 			text ~= "\n * \t- "~ncode;
 		}
 
 		text ~= "\n * omit signals:";
-		foreach ( char[] nsignal ; noSignals )
+		foreach ( string nsignal ; noSignals )
 		{
 			text ~= "\n * \t- "~nsignal;
 		}
 		
 		text ~= "\n * imports:";
-		foreach ( char[] imp ; imprts )
+		foreach ( string imp ; imprts )
 		{
 			text ~= "\n * \t- "~imp;
 		}
 
 		text ~= "\n * structWrap:";
-		foreach ( char[] key ; structWrap.keys.sort )
+		foreach ( string key ; structWrap.keys.sort )
 		{
 			text ~= "\n * \t- "~key~" -> "~structWrap[key];
 		}
 
 		text ~= "\n * module aliases:";
-		foreach ( char[] key ; mAliases.keys.sort )
+		foreach ( string key ; mAliases.keys.sort )
 		{
 			text ~= "\n * \t- "~key~" -> "~mAliases[key];
 		}
 		text ~= "\n * local aliases:";
-		foreach ( char[] key ; aliases.keys.sort )
+		foreach ( string key ; aliases.keys.sort )
 		{
 			text ~= "\n * \t- "~key~" -> "~aliases[key];
 		}
 		text ~= "\n * overrides:";
-		foreach ( char[] over ; overrides )
+		foreach ( string over ; overrides )
 		{
 			text ~= "\n * \t- "~over;
 		}
@@ -187,14 +187,7 @@ public struct ConvParms
 		return text;
 	}
 	
-
-	
-	public void appendAsComment(inout char[] text)
-	{
-		text ~= toString();
-	}
-
-	public bool containsPrefix(char[] prefix)
+	public bool containsPrefix(string prefix)
 	{
 		bool contains = false;
 		int i = 0;
@@ -206,9 +199,9 @@ public struct ConvParms
 		return contains;
 	}	
 
-	public char[] getPrefix(char[] prefix)
+	public string getPrefix(string prefix)
 	{
-		char[] fundPrefix;
+		string fundPrefix;
 		bool contains = false;
 		int i = 0;
 		while ( !contains && i<prefixes.length )
@@ -223,7 +216,7 @@ public struct ConvParms
 		return fundPrefix;
 	}	
 
-	public bool needsOverride(char[] functionName)
+	public bool needsOverride(string functionName)
 	{
 		bool needed = false;
 		int i=0;
@@ -237,7 +230,7 @@ public struct ConvParms
 		return needed;
 	}
 
-	public bool omitCode(char[] codeName)
+	public bool omitCode(string codeName)
 	{
 		bool omit = false;
 		int i=0;
@@ -251,7 +244,7 @@ public struct ConvParms
 		return omit;
 	}
 	
-	public bool omitSignal(char[] signalName)
+	public bool omitSignal(string signalName)
 	{
 		bool omit = false;
 		int i=0;
