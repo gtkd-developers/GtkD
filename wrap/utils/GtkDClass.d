@@ -63,7 +63,7 @@ private import std.ascii;
 private import std.path : buildPath;
 private import std.stdio;
 private import std.array;
-private import std.algorithm : map;
+private import std.algorithm : map, canFind, countUntil;
 private import std.string;
 private import std.conv;
 
@@ -805,8 +805,8 @@ public class GtkDClass
 		conv = gName[prefix.length..gName.length];
 
 		if ( conv == "Object" ) conv ~= prefix;
-		if ( prefix == "Pg" ) conv = "Pg" ~ gName[5..gName.length];
-		if ( prefix == "cairo") conv = gName[6..7].toUpper ~ gName[7..gName.length - 2];
+		if ( prefix == "Pg" ) conv = "Pg" ~ gName[5 .. $];
+		if ( prefix == "cairo") conv = gName[6..7].toUpper ~ gName[7 .. $ - 2];
 
 		debug(getParent)writefln("convertClassName %s >>> %s", gName, conv);
 		prefix = prefix.toLower;
@@ -1950,271 +1950,229 @@ public class GtkDClass
 		 */
 		bool includeFunction(ConvParms* convParms)
 		{
-			bool inc = true;
+			bool inc = !canFind!"startsWith(b, a)"(convParms.noPrefixes, fun.name);
 
-			int nPrefix = 0;
-			while ( inc && nPrefix<convParms.noPrefixes.length )
-			{
-				debug(noPrefixes)writefln("\ttest noPrefix %s ?= %s", fun.name, convParms.noPrefixes[nPrefix]);
-				inc = !startsWith(fun.name, convParms.noPrefixes[nPrefix++]);
-			}
-			if ( inc )
-			{
-				inc = false;
+			inc = inc &&
+				( convParms.containsPrefix(fun.name) ||
+					!( convParms.strictPrefix && convParms.prefixes.length>0 ));
 
-				if ( convParms.containsPrefix(fun.name) )
-				{
-					debug(noPrefixes)writefln("included  by name");
-					inc = true;
-				}
-				else if ( convParms.strictPrefix && convParms.prefixes.length>0 )
-				{
-					debug(noPrefixes) writefln("dropped by strictPrefix");
-					inc = false;
-				}
-				else
-				{
-					inc = true;
-					debug(noPrefixes)if ( !inc) writefln("dropped by noPrefixes");
-				}
-			}
-			//debug(noPrefixes)writefln("%s : %s (%s)", (inc?"included":"dropped"),fun.name, convParms.prefix);
 			return inc;
 		}
 
-		if ( includeFunction(convParms) )
+		if ( !includeFunction(convParms) )
+			return member;
+
+		if ( funct[0] == '#' )
 		{
-			if ( funct[0] == '#' )
+			if ( !convParms.strictPrefix )
 			{
-				if ( !convParms.strictPrefix )
+				collectedTypes ~= "";
+				debug(defines)writefln("it's define: %s",funct);
+				// comment
+				if ( wrapper.includeComments() )
 				{
-					collectedTypes ~= "";
-					debug(defines)writefln("it's define: %s",funct);
-					// comment
+					collectedTypes ~= "/*";
+					collectedTypes ~= array(lines[line .. $].map!q{" * " ~ a});
+					collectedTypes ~= " */";
+				}
+				collectedTypes ~= "// TODO";
+				// body
+				collectedTypes ~= "// "~funct;
+			}
+		}
+		else
+		{
+			debug(functName) writefln("funct name = %s", fun.name);
+			if ( fun.name.length==0 || fun.name[0] == '(' )
+			{
+				if ( !convParms.isInterface )
+				{
+					if ( !convParms.strictPrefix )
+					{
+						collectedFuncts ~= "";
+						// comment
+						if ( wrapper.includeComments() )
+						{
+							collectedFuncts ~= "/*";
+							while ( line<lines.length )
+							{
+								collectedFuncts ~= " * "~lines[line++];
+							}
+							collectedFuncts ~= " */";
+							collectedFuncts ~= "// "~funct;
+						}
+						// body
+						collectedFuncts ~= getFunction(funct, convParms);
+					}
+				}
+			}
+			else // the regular function
+			{
+				bool tooSoon = false;	// reject for 2.10
+				// comment
+				void addComments()
+				{
+					string[] phraseParams(string[] comments)
+					{
+						string[] description;
+						string[] params;
+						string ret;
+
+						for(int i; i < comments.length; i++)
+						{
+							if(indexOf(comments[i], ":") == comments[i].length-1 && comments[i].chomp(":").strip() != "Returns" )
+							{
+								//Get the GtkD name of the param
+								string param = strip( idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()) );
+
+								//If this param is not in the Gtkd Function Skip it.
+								if(indexOf(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
+								{
+									//Loop for multi line descriptons for this param.
+									while(i+1 < comments.length && stilInParam(comments[i+1]))
+										i++;
+									continue;
+								}
+
+								if(params.length == 0)
+									params ~= "Params:";
+
+								//Loop for multi line descriptons for this param.
+								bool firstRun = true;
+								while(i+1 < comments.length && stilInParam(comments[i+1]))
+								{
+									i++;
+									if(firstRun)
+									{
+										params ~= param ~" = "~ stripLeft(comments[i]);
+										firstRun = false;
+									}
+									else
+										params ~= comments[i];
+								}
+							}
+							else if( comments[i].chomp(":").strip() == "Returns" )
+							{
+								//Skip return for Constructors.
+								if(indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
+								{
+									//Loop for multi line descriptons for this return.
+									while(i+1 < comments.length && stilInParam(comments[i+1]))
+										i++;
+									continue;
+								}
+
+								ret ~= "Returns:";
+
+								//Loop for multi line descriptons for this return.
+								bool firstRun = true;
+								while(i+1 < comments.length && stilInParam(comments[i+1]))
+								{
+									i++;
+									ret ~= " " ~ comments[i].strip();
+								}
+							}
+							else if(indexOf(comments[i], "See Also") == 0 || indexOf(comments[i], "Property Details") == 0)
+							{
+								//These sections get included with the last function.
+								break;
+							}
+							else
+							{
+								//Add the rest to the description.
+								description ~= comments[i];
+							}
+						}
+
+						if(params.length > 0)
+						{
+							foreach(string line; params)
+								description ~= line;
+						}
+
+						if(ret.length > 0)
+							description ~= ret;
+
+						if ( indexOf(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
+								&& indexOf(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
+						{
+							description ~= "Throws: GException on failure.";
+						}
+
+						if ( indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1 )
+						{
+							description ~= "Throws: ConstructionException GTK+ fails to create the object.";
+						}
+
+						return description;
+					}
+
 					if ( wrapper.includeComments() )
 					{
-						collectedTypes ~= "/*";
-						while ( line<lines.length )
-						{
-							collectedTypes ~= " * "~lines[line++];
-						}
-						collectedTypes ~= " */";
+						string[] comments = lines[line .. $].dup;
+						comments = phraseParams(comments);
+
+						member ~= "/**";
+						member ~= array(map!q{" * " ~ a}(comments));
+						member ~= " */";
 					}
-					collectedTypes ~= "// TODO";
-					// body
-					collectedTypes ~= "// "~funct;
 				}
 
-			}
-			else
-			{
-				debug(functName) writefln("funct name = %s", fun.name);
-				if ( fun.name.length==0 || fun.name[0] == '(' )
+				if ( tooSoon )
+				{
+					addComments();
+					member ~= "// next release";
+				}
+				else
 				{
 					if ( !convParms.isInterface )
 					{
-						if ( !convParms.strictPrefix )
+						string externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
+
+						/* Don't add repeated declarations. */
+						if ( !canFind(externalDeclarations, externalDeclaration) )
 						{
-							collectedFuncts ~= "";
-							// comment
-							if ( wrapper.includeComments() )
-							{
-								collectedFuncts ~= "/*";
-								while ( line<lines.length )
-								{
-									collectedFuncts ~= " * "~lines[line++];
-								}
-								collectedFuncts ~= " */";
-								collectedFuncts ~= "// "~funct;
-							}
-							// body
-							collectedFuncts ~= getFunction(funct, convParms);
+							externalDeclarations ~= externalDeclaration;
 						}
 					}
-				}
-				else // the regular function
-				{
-					bool tooSoon = false;	// reject for 2.10
-					// comment
-					void addComments()
+					// body
+					if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(convParms,wrapper.getAliases()), "...") < 0 )
 					{
-						string[] phraseParams(string[] comments)
-						{
-							string[] description;
-							string[] params;
-							string ret;
-							
-							for(int i; i < comments.length; i++)
-							{
-								if(indexOf(comments[i], ":") == comments[i].length-1 && comments[i].chomp(":").strip() != "Returns" )
-								{
-									//Get the GtkD name of the param
-									string param = strip( idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()) );
-
-									//If this param is not in the Gtkd Function Skip it.
-									if(indexOf(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
-									{
-										//Loop for multi line descriptons for this param.
-										while(i+1 < comments.length && stilInParam(comments[i+1]))
-											i++;
-										continue;
-									}
-
-									if(params.length == 0)
-										params ~= "Params:";
-
-									//Loop for multi line descriptons for this param.
-									bool firstRun = true;
-									while(i+1 < comments.length && stilInParam(comments[i+1]))
-									{
-										i++;
-										if(firstRun)
-										{
-											params ~= param ~" = "~ stripLeft(comments[i]);
-											firstRun = false;
-										}
-										else
-											params ~= comments[i];
-									}
-								}
-								else if( comments[i].chomp(":").strip() == "Returns" )
-								{
-									//Skip return for Constructors.
-									if(indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
-									{
-										//Loop for multi line descriptons for this return.
-										while(i+1 < comments.length && stilInParam(comments[i+1]))
-											i++;
-										continue;
-									}
-
-									ret ~= "Returns:";
-
-									//Loop for multi line descriptons for this return.
-									bool firstRun = true;
-									while(i+1 < comments.length && stilInParam(comments[i+1]))
-									{
-										i++;
-										ret ~= " " ~ comments[i].strip();
-									}
-								}
-								else if(indexOf(comments[i], "See Also") == 0 || indexOf(comments[i], "Property Details") == 0)
-								{
-									//These sections get included with the last function.
-									break;
-								}
-								else
-								{
-									//Add the rest to the description.
-									description ~= comments[i];
-								}
-							}
-
-							if(params.length > 0)
-							{
-								foreach(string line; params)
-									description ~= line;
-							}
-
-							if(ret.length > 0)
-								description ~= ret;
-
-							if ( indexOf(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
-								 && indexOf(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
-							{
-								description ~= "Throws: GException on failure.";
-							}
-
-							if ( indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1 )
-							{
-								description ~= "Throws: ConstructionException GTK+ fails to create the object.";
-							}
-
-							return description;
-						}
-
-						if ( wrapper.includeComments() )
-						{
-							string[] comments;
-							while ( line<lines.length )
-							{
-								//if ( !tooSoon )
-								//{
-								//	tooSoon = lines[line]=="Since 2.10";
-								//}
-								comments ~= lines[line++];
-							}
-
-							member ~= "/**";
-
-							comments = phraseParams(comments);
-							foreach(string line; comments)
-								member ~= " * "~ line;
-
-							member ~= " */";
-						}
-					}
-
-					if ( tooSoon )
-					{
+						string gtkDDeclaration = fun.declaration(convParms,wrapper.getAliases());
+						//string gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
+						debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
 						addComments();
-						member ~= "// next release";
-					}
-					else
-					{
+						member ~= gtkDDeclaration~iFaceChar;
 						if ( !convParms.isInterface )
 						{
-							string externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
-							
-							/* Don't add repeated declarations. */
-							bool addme = true;
-												                
-							foreach(ref string declaration; externalDeclarations)
+							member ~= "{";
+							member ~= "// "~funct;
+							version( noGtkBody )
 							{
-								if(externalDeclaration == declaration){ addme = false; break; }
+								//									switch ( fun.typeWrap )
+								//									{
+								//										case "void": break;
+								//										case "int", "uint", "bool", "long", "ulong"
+								//											member ~= "return 0;";
+								//											break;
+								//
+								//										case "int", "uint", "bool", "long", "ulong"
+								//											member ~= "return 0;";
+								//											break;
+								//
+								//										case "string": member ~= "return "";"; break;
+								//										default: member ~= "return null;"; break;
+								//									}
 							}
-
-							if(addme) externalDeclarations ~= externalDeclaration;
-						}
-						// body
-						if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(convParms,wrapper.getAliases()), "...") < 0 )
-						{
-							string gtkDDeclaration = fun.declaration(convParms,wrapper.getAliases());
-							//string gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
-							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
-							addComments();
-							member ~= gtkDDeclaration~iFaceChar;
-							if ( !convParms.isInterface )
+							else
 							{
-								member ~= "{";
-								member ~= "// "~funct;
-								version( noGtkBody )
-								{
-//									switch ( fun.typeWrap )
-//									{
-//										case "void": break;
-//										case "int", "uint", "bool", "long", "ulong"
-//											member ~= "return 0;";
-//											break;
-//
-//										case "int", "uint", "bool", "long", "ulong"
-//											member ~= "return 0;";
-//											break;
-//
-//										case "string": member ~= "return "";"; break;
-//										default: member ~= "return null;"; break;
-//									}
-								}
-								else
-								{
-									member ~= fun.bod(convParms, wrapper.getAliases());
-								}
-								member ~= "}";
+								member ~= fun.bod(convParms, wrapper.getAliases());
 							}
-							/* Duplicated functions are omitted. */
-							if(checkIfDupFunction(fun)) member.length = 0;
-							checkIfGtkStructs(fun);
+							member ~= "}";
 						}
+						/* Duplicated functions are omitted. */
+						if(checkIfDupFunction(fun)) member.length = 0;
+						checkIfGtkStructs(fun);
 					}
 				}
 			}
@@ -2245,7 +2203,7 @@ public class GtkDClass
 	 *  comments = Line to check.
 	 * Returns: true if we are still in the description of the param.
 	 */
-	bool stilInParam(string comments)
+	static bool stilInParam(string comments)
 	{
 		return !(indexOf(comments, ":")  == comments.length-1 ||
 						 comments.chomp(":").strip() == "Returns" ||
