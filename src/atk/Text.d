@@ -118,7 +118,7 @@ public class Text
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Text)[] onTextAttributesChangedListeners;
 	/**

@@ -133,7 +133,7 @@ public class Assistant : Window
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Assistant)[] onApplyListeners;
 	/**

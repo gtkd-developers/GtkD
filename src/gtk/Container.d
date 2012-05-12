@@ -228,7 +228,7 @@ public class Container : Widget
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Widget, Container)[] onAddListeners;
 	/**

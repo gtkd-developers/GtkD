@@ -108,7 +108,7 @@ public template RecentChooserT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(RecentChooserIF)[] _onItemActivatedListeners;
 	void delegate(RecentChooserIF)[] onItemActivatedListeners()

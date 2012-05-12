@@ -144,7 +144,7 @@ public class Statusbar : HBox
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(guint, string, Statusbar)[] onTextPoppedListeners;
 	/**

@@ -133,7 +133,7 @@ public class TlsConnection : IOStream
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection)[] onAcceptCertificateListeners;
 	/**

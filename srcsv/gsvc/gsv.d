@@ -283,9 +283,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gsv.SourceView
-	
+
 	GtkWidget* function() c_gtk_source_view_new;
 	GtkWidget* function(GtkSourceBuffer* buffer) c_gtk_source_view_new_with_buffer;
 	void function(GtkSourceView* view, gboolean enable) c_gtk_source_view_set_auto_indent;
@@ -325,9 +324,9 @@ mixin( gshared ~"extern(C)
 	GtkSourceDrawSpacesFlags function(GtkSourceView* view) c_gtk_source_view_get_draw_spaces;
 	GtkSourceCompletion* function(GtkSourceView* view) c_gtk_source_view_get_completion;
 	GtkSourceGutter* function(GtkSourceView* view, GtkTextWindowType windowType) c_gtk_source_view_get_gutter;
-	
+
 	// gsv.SourceBuffer
-	
+
 	GtkSourceBuffer* function(GtkTextTagTable* table) c_gtk_source_buffer_new;
 	GtkSourceBuffer* function(GtkSourceLanguage* language) c_gtk_source_buffer_new_with_language;
 	void function(GtkSourceBuffer* buffer, gboolean highlight) c_gtk_source_buffer_set_highlight_syntax;
@@ -353,9 +352,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_forward_iter_to_source_mark;
 	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_backward_iter_to_source_mark;
 	void function(GtkSourceBuffer* buffer, GtkTextIter* start, GtkTextIter* end) c_gtk_source_buffer_ensure_highlight;
-	
+
 	// gsv.SourceCompletion
-	
+
 	gboolean function(GtkSourceCompletion* completion, GtkSourceCompletionProvider* provider, GError** error) c_gtk_source_completion_add_provider;
 	gboolean function(GtkSourceCompletion* completion, GtkSourceCompletionProvider* provider, GError** error) c_gtk_source_completion_remove_provider;
 	GList* function(GtkSourceCompletion* completion) c_gtk_source_completion_get_providers;
@@ -367,33 +366,33 @@ mixin( gshared ~"extern(C)
 	void function(GtkSourceCompletion* completion, GtkTextIter* iter) c_gtk_source_completion_move_window;
 	void function(GtkSourceCompletion* completion) c_gtk_source_completion_block_interactive;
 	void function(GtkSourceCompletion* completion) c_gtk_source_completion_unblock_interactive;
-	
+
 	// gsv.SourceCompletionContext
-	
+
 	void function(GtkSourceCompletionContext* context, void* provider, GList* proposals, gboolean finished) c_gtk_source_completion_context_add_proposals;
 	void function(GtkSourceCompletionContext* context, GtkTextIter* iter) c_gtk_source_completion_context_get_iter;
 	GtkSourceCompletionActivation function(GtkSourceCompletionContext* context) c_gtk_source_completion_context_get_activation;
-	
+
 	// gsv.SourceCompletionInfo
-	
+
 	GtkSourceCompletionInfo* function() c_gtk_source_completion_info_new;
 	void function(GtkSourceCompletionInfo* info, GtkTextView* view, GtkTextIter* iter) c_gtk_source_completion_info_move_to_iter;
 	void function(GtkSourceCompletionInfo* info, gint width, gint height, gboolean shrinkWidth, gboolean shrinkHeight) c_gtk_source_completion_info_set_sizing;
 	void function(GtkSourceCompletionInfo* info, GtkWidget* widget) c_gtk_source_completion_info_set_widget;
 	GtkWidget* function(GtkSourceCompletionInfo* info) c_gtk_source_completion_info_get_widget;
 	void function(GtkSourceCompletionInfo* info) c_gtk_source_completion_info_process_resize;
-	
+
 	// gsv.SourceCompletionItem
-	
+
 	GtkSourceCompletionItem* function(gchar* label, gchar* text, GdkPixbuf* icon, gchar* info) c_gtk_source_completion_item_new;
 	GtkSourceCompletionItem* function(gchar* markup, gchar* text, GdkPixbuf* icon, gchar* info) c_gtk_source_completion_item_new_with_markup;
 	GtkSourceCompletionItem* function(gchar* label, gchar* text, gchar* stock, gchar* info) c_gtk_source_completion_item_new_from_stock;
-	
+
 	// gsv.SourceCompletionProposalT
-	
-	
+
+
 	// gsv.SourceCompletionProposalT
-	
+
 	gchar* function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_get_label;
 	gchar* function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_get_markup;
 	gchar* function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_get_text;
@@ -402,12 +401,12 @@ mixin( gshared ~"extern(C)
 	void function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_changed;
 	guint function(GtkSourceCompletionProposal* proposal) c_gtk_source_completion_proposal_hash;
 	gboolean function(GtkSourceCompletionProposal* proposal, GtkSourceCompletionProposal* other) c_gtk_source_completion_proposal_equal;
-	
+
 	// gsv.SourceCompletionProviderT
-	
-	
+
+
 	// gsv.SourceCompletionProviderT
-	
+
 	gchar* function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_name;
 	GdkPixbuf* function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_icon;
 	void function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context) c_gtk_source_completion_provider_populate;
@@ -419,14 +418,14 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal, GtkTextIter* iter) c_gtk_source_completion_provider_activate_proposal;
 	gint function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_interactive_delay;
 	gint function(GtkSourceCompletionProvider* provider) c_gtk_source_completion_provider_get_priority;
-	
+
 	// gsv.SourceSearch
-	
+
 	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_backward_search;
 	gboolean function(GtkTextIter* iter, gchar* str, GtkSourceSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_source_iter_forward_search;
-	
+
 	// gsv.SourceGutter
-	
+
 	GdkWindow* function(GtkSourceGutter* gutter) c_gtk_source_gutter_get_window;
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, gint position) c_gtk_source_gutter_insert;
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, gint position) c_gtk_source_gutter_reorder;
@@ -434,16 +433,16 @@ mixin( gshared ~"extern(C)
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterDataFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_data_func;
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterSizeFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_size_func;
 	void function(GtkSourceGutter* gutter) c_gtk_source_gutter_queue_draw;
-	
+
 	// gsv.SourceMark
-	
+
 	GtkSourceMark* function(gchar* name, gchar* category) c_gtk_source_mark_new;
 	gchar* function(GtkSourceMark* mark) c_gtk_source_mark_get_category;
 	GtkSourceMark* function(GtkSourceMark* mark, gchar* category) c_gtk_source_mark_next;
 	GtkSourceMark* function(GtkSourceMark* mark, gchar* category) c_gtk_source_mark_prev;
-	
+
 	// gsv.SourceLanguage
-	
+
 	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_id;
 	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_name;
 	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_section;
@@ -453,9 +452,9 @@ mixin( gshared ~"extern(C)
 	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_globs;
 	gchar* function(GtkSourceLanguage* language, gchar* styleId) c_gtk_source_language_get_style_name;
 	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_style_ids;
-	
+
 	// gsv.SourceLanguageManager
-	
+
 	GtkSourceLanguageManager* function() c_gtk_source_language_manager_new;
 	GtkSourceLanguageManager* function() c_gtk_source_language_manager_get_default;
 	void function(GtkSourceLanguageManager* lm, gchar** dirs) c_gtk_source_language_manager_set_search_path;
@@ -463,9 +462,9 @@ mixin( gshared ~"extern(C)
 	gchar** function(GtkSourceLanguageManager* lm) c_gtk_source_language_manager_get_language_ids;
 	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* id) c_gtk_source_language_manager_get_language;
 	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* filename, gchar* contentType) c_gtk_source_language_manager_guess_language;
-	
+
 	// gsv.SourcePrintCompositor
-	
+
 	GtkSourcePrintCompositor* function(GtkSourceBuffer* buffer) c_gtk_source_print_compositor_new;
 	GtkSourcePrintCompositor* function(GtkSourceView* view) c_gtk_source_print_compositor_new_from_view;
 	GtkSourceBuffer* function(GtkSourcePrintCompositor* compositor) c_gtk_source_print_compositor_get_buffer;
@@ -503,22 +502,22 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourcePrintCompositor* compositor, GtkPrintContext* context) c_gtk_source_print_compositor_paginate;
 	gdouble function(GtkSourcePrintCompositor* compositor) c_gtk_source_print_compositor_get_pagination_progress;
 	void function(GtkSourcePrintCompositor* compositor, GtkPrintContext* context, gint pageNr) c_gtk_source_print_compositor_draw_page;
-	
+
 	// gsv.SourceStyle
-	
+
 	GtkSourceStyle* function(GtkSourceStyle* style) c_gtk_source_style_copy;
-	
+
 	// gsv.SourceStyleScheme
-	
+
 	gchar* function(GtkSourceStyleScheme* scheme) c_gtk_source_style_scheme_get_id;
 	gchar* function(GtkSourceStyleScheme* scheme) c_gtk_source_style_scheme_get_name;
 	gchar* function(GtkSourceStyleScheme* scheme) c_gtk_source_style_scheme_get_description;
 	gchar** function(GtkSourceStyleScheme* scheme) c_gtk_source_style_scheme_get_authors;
 	gchar* function(GtkSourceStyleScheme* scheme) c_gtk_source_style_scheme_get_filename;
 	GtkSourceStyle* function(GtkSourceStyleScheme* scheme, gchar* styleId) c_gtk_source_style_scheme_get_style;
-	
+
 	// gsv.SourceStyleSchemeManager
-	
+
 	GtkSourceStyleSchemeManager* function() c_gtk_source_style_scheme_manager_new;
 	GtkSourceStyleSchemeManager* function() c_gtk_source_style_scheme_manager_get_default;
 	void function(GtkSourceStyleSchemeManager* manager, gchar** path) c_gtk_source_style_scheme_manager_set_search_path;

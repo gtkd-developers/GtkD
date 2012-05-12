@@ -230,7 +230,7 @@ public template TreeModelT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowChangedListeners;
 	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowChangedListeners()

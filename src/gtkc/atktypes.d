@@ -874,11 +874,11 @@ public struct AtkImplementor{}
  * and the property change handler will be called for the object which
  * received the focus with the new_value containing the AtkState value
  * corresponding to focused.
- * const  gchar  *property_name;
+ * const gchar *property_name;
  * The name of the ATK property which is being presented or which has been changed.
- * GValue  old_value;
+ * GValue old_value;
  * The old property value, NULL; in some contexts this value is undefined (see note below).
- * GValue  new_value;
+ * GValue new_value;
  * The new value of the named property.
  */
 public struct AtkPropertyValues
@@ -953,13 +953,13 @@ public struct AtkText{}
 
 /**
  * A structure used to describe a text range.
- * AtkTextRectangle  bounds;
+ * AtkTextRectangle bounds;
  * A rectangle giving the bounds of the text range
- * gint  start_offset;
+ * gint start_offset;
  * The start offset of a AtkTextRange
- * gint  end_offset;
+ * gint end_offset;
  * The end offset of a AtkTextRange
- * gchar  *content;
+ * gchar *content;
  * The text in the text range
  */
 public struct AtkTextRange
@@ -973,13 +973,13 @@ public struct AtkTextRange
 
 /**
  * A structure used to store a rectangle used by AtkText.
- * gint  x;
+ * gint x;
  * The horizontal coordinate of a rectangle
- * gint  y;
+ * gint y;
  * The vertical coordinate of a rectangle
- * gint  width;
+ * gint width;
  * The width of a rectangle
- * gint  height;
+ * gint height;
  * The height of a rectangle
  */
 public struct AtkTextRectangle
@@ -993,9 +993,9 @@ public struct AtkTextRectangle
 
 /**
  * A string name/value pair representing a text attribute.
- * gchar  *name;
+ * gchar *name;
  * The attribute name. Call atk_text_attr_get_name()
- * gchar  *value;
+ * gchar *value;
  * the value of the attribute, represented as a string.
  * Call atk_text_attr_get_value() for those which are strings.
  * For values which are numbers, the string representation of the number
@@ -1016,26 +1016,26 @@ public struct AtkUtil{}
 
 /**
  * Encapsulates information about a key event.
- * gint  type;
+ * gint type;
  * An AtkKeyEventType, generally one of ATK_KEY_EVENT_PRESS or ATK_KEY_EVENT_RELEASE
- * guint  state;
+ * guint state;
  * A bitmask representing the state of the modifier keys immediately after the event takes place.
  * The meaning of the bits is currently defined to match the bitmask used by GDK in
  * GdkEventType.state, see
  * http://developer.gnome.org/doc/API/2.0/gdk/gdk-Event-Structures.htmlGdkEventKey
- * guint  keyval;
+ * guint keyval;
  * A guint representing a keysym value corresponding to those used by GDK and X11: see
  * /usr/X11/include/keysymdef.h.
- * gint  length;
+ * gint length;
  * The length of member string.
- * gchar  *string;
+ * gchar *string;
  * A string containing one of the following: either a string approximating the text that would
  * result from this keypress, if the key is a control or graphic character, or a symbolic name for this keypress.
  * Alphanumeric and printable keys will have the symbolic key name in this string member, for instance "A". "0",
  * "semicolon", "aacute". Keypad keys have the prefix "KP".
- * guint16  keycode;
+ * guint16 keycode;
  * The raw hardware code that generated the key event. This field is raraly useful.
- * guint32  timestamp;
+ * guint32 timestamp;
  * A timestamp in milliseconds indicating when the event occurred.
  * These timestamps are relative to a starting point which should be considered arbitrary,
  * and only used to compare the dispatch times of events to one another.
@@ -1065,11 +1065,11 @@ public struct AtkValue{}
  * for information about these) and a static variable named
  * t_n _parent_class pointing to the parent class. Furthermore, it
  * defines a _get_type() function.
- * TN  :
+ * TN :
  * The name of the new type, in Camel case.
- * t_n  :
+ * t_n :
  * The name of the new type, in lowercase, with words separated by '_'.
- * T_P  :
+ * T_P :
  * The GType of the parent type.
  * Since 1.22
  */
@@ -1079,15 +1079,15 @@ public struct AtkValue{}
 /*
  * The most general convenience macro for ATK type implementations, on which
  * ATK_DEFINE_TYPE(), etc are based.
- * TN  :
+ * TN :
  * The name of the new type, in Camel case.
- * t_n  :
+ * t_n :
  * The name of the new type, in lowercase, with words separated by '_'.
- * T_P  :
+ * T_P :
  * The GType of the parent type.
- * _f_  :
+ * _f_ :
  * GTypeFlags to pass to g_type_register_static()
- * _C_  :
+ * _C_ :
  * Custom code that gets inserted in the _get_type() function.
  * Since 1.22
  */
@@ -1098,13 +1098,13 @@ public struct AtkValue{}
  * A convenience macro for ATK type implementations.
  * Similar to ATK_DEFINE_TYPE(), but allows you to insert custom code into the
  * _get_type() function, e.g. interface implementations via G_IMPLEMENT_INTERFACE().
- * TN  :
+ * TN :
  * The name of the new type, in Camel case.
- * t_n  :
+ * t_n :
  * The name of the new type in lowercase, with words separated by '_'.
- * T_P  :
+ * T_P :
  * The GType of the parent type.
- * _C_  :
+ * _C_ :
  * Custom code that gets inserted in the _get_type() function.
  * Since 1.22
  */
@@ -1114,11 +1114,11 @@ public struct AtkValue{}
 /*
  * A convenience macro for ATK type implementations.
  * Similar to ATK_DEFINE_TYPE(), but defines an abstract type.
- * TN  :
+ * TN :
  * The name of the new type, in Camel case.
- * t_n  :
+ * t_n :
  * The name of the new type, in lowercase, with words separated by '_'.
- * T_P  :
+ * T_P :
  * The GType of the parent type.
  * Since 1.22
  */
@@ -1128,13 +1128,13 @@ public struct AtkValue{}
 /*
  * A convenience macro for ATK type implementations.
  * Similar to ATK_DEFINE_TYPE_WITH_CODE(), but defines an abstract type.
- * TN  :
+ * TN :
  * The name of the new type, in Camel case.
- * t_n  :
+ * t_n :
  * The name of the new type, in lowercase, with words separated by '_'.
- * T_P  :
+ * T_P :
  * The GType of the parent type.
- * _C_  :
+ * _C_ :
  * Custom code that gets inserted in the _get_type() function.
  * Since 1.22
  */
@@ -1144,9 +1144,9 @@ public struct AtkValue{}
 /*
  * An AtkFunction is a function definition used for padding which has been added
  * to class and interface structures to allow for expansion in the future.
- * data  :
+ * data :
  * a gpointer to parameter data.
- * Returns  :
+ * Returns :
  * Nothing useful, this is only a dummy prototype.
  */
 // gboolean (*AtkFunction) (gpointer data);
@@ -1155,9 +1155,9 @@ public alias extern(C) int  function (void*) AtkFunction;
 /*
  * An AtkPropertyChangeHandler is a function which is executed when an AtkObject's property changes value. It is specified in a call to
  * atk_object_connect_property_change_handler().
- * Param1  :
+ * Param1 :
  * an AtkObject
- * Param2  :
+ * Param2 :
  * an AtkPropertyValues
  */
 // void (*AtkPropertyChangeHandler) (AtkObject *Param1,  AtkPropertyValues *Param2);
@@ -1170,7 +1170,7 @@ public alias extern(C) void  function (AtkObject*, AtkPropertyValues*) AtkProper
  * supported are events of type "focus:". Most clients of ATK will prefer to
  * attach signal handlers for the various ATK signals instead.
  * see atk_add_focus_tracker.
- * obj  :
+ * obj :
  * An AtkObject instance for whom the callback will be called when
  * the specified event (e.g. 'focus:') takes place.
  */
@@ -1190,12 +1190,12 @@ public alias extern(C) void  function () AtkEventListenerInit;
  * An AtkKeySnoopFunc is a type of callback which is called whenever a key event occurs,
  * if registered via atk_add_key_event_listener. It allows for pre-emptive
  * interception of key events via the return code as described below.
- * event  :
+ * event :
  * an AtkKeyEventStruct containing information about the key event for which
  * notification is being given.
- * func_data  :
+ * func_data :
  * a block of data which will be passed to the event listener, on notification.
- * Returns  :
+ * Returns :
  * TRUE (nonzero) if the event emission should be stopped and the event
  * discarded without being passed to the normal GUI recipient; FALSE (zero) if the
  * event dispatch to the client application should proceed as normal.

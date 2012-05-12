@@ -124,7 +124,7 @@ public class Index : ObjectGst
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(GstIndexEntry*, Index)[] onEntryAddedListeners;
 	/**

@@ -135,7 +135,7 @@ public class Layout : Container
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Layout)[] onSetScrollAdjustmentsListeners;
 	/**

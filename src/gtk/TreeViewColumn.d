@@ -184,7 +184,7 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TreeViewColumn)[] onClickedListeners;
 	/**

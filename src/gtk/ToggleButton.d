@@ -164,7 +164,7 @@ public class ToggleButton : Button
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ToggleButton)[] onToggledListeners;
 	/**

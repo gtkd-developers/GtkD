@@ -112,7 +112,7 @@ public class Component
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(AtkRectangle*, Component)[] onBoundsChangedListeners;
 	/**

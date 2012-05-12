@@ -172,7 +172,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(PrintContext, PrintOperation)[] onBeginPrintListeners;
 	/**

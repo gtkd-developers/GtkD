@@ -74,7 +74,7 @@ private import glib.Str;
  * backward-compatibility with the old ASCII-only DNS, by defining an
  * ASCII-Compatible Encoding of any given Unicode name, which can be
  * used with non-IDN-aware applications and protocols. (For example,
- * "  αν語.org" maps to "xn--4wa8awb4637h.org".)
+ * "Παν語.org" maps to "xn--4wa8awb4637h.org".)
  */
 public class Hostname
 {

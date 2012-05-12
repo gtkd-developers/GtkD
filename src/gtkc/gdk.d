@@ -783,9 +783,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gdk.Gdk
-	
+
 	void function(gint* argc, gchar*** argv) c_gdk_init;
 	gboolean function(gint* argc, gchar*** argv) c_gdk_init_check;
 	void function(gint* argc, gchar*** argv) c_gdk_parse_args;
@@ -814,9 +813,9 @@ mixin( gshared ~"extern(C)
 	void function(gboolean useXshm) c_gdk_set_use_xshm;
 	void function() c_gdk_error_trap_push;
 	gint function() c_gdk_error_trap_pop;
-	
+
 	// gdk.Display
-	
+
 	GdkDisplay* function(gchar* displayName) c_gdk_display_open;
 	GdkDisplay* function() c_gdk_display_get_default;
 	gchar* function(GdkDisplay* display) c_gdk_display_get_name;
@@ -854,17 +853,17 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkDisplay* display) c_gdk_display_supports_shapes;
 	gboolean function(GdkDisplay* display) c_gdk_display_supports_input_shapes;
 	gboolean function(GdkDisplay* display) c_gdk_display_supports_composite;
-	
+
 	// gdk.DisplayManager
-	
+
 	GdkDisplayManager* function() c_gdk_display_manager_get;
 	GdkDisplay* function(GdkDisplayManager* displayManager) c_gdk_display_manager_get_default_display;
 	void function(GdkDisplayManager* displayManager, GdkDisplay* display) c_gdk_display_manager_set_default_display;
 	GSList* function(GdkDisplayManager* displayManager) c_gdk_display_manager_list_displays;
 	GdkDevice* function(GdkDisplay* display) c_gdk_display_get_core_pointer;
-	
+
 	// gdk.Screen
-	
+
 	GdkScreen* function() c_gdk_screen_get_default;
 	GdkColormap* function(GdkScreen* screen) c_gdk_screen_get_default_colormap;
 	void function(GdkScreen* screen, GdkColormap* colormap) c_gdk_screen_set_default_colormap;
@@ -904,14 +903,14 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkScreen* screen, gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, gpointer userData, gint* childPid, GError** error) c_gdk_spawn_on_screen;
 	gboolean function(GdkScreen* screen, gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, gpointer userData, gint* childPid, gint* standardInput, gint* standardOutput, gint* standardError, GError** error) c_gdk_spawn_on_screen_with_pipes;
 	gboolean function(GdkScreen* screen, gchar* commandLine, GError** error) c_gdk_spawn_command_line_on_screen;
-	
+
 	// gdk.Rectangle
-	
+
 	gboolean function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_intersect;
 	void function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_union;
-	
+
 	// gdk.Region
-	
+
 	GdkRegion* function() c_gdk_region_new;
 	GdkRegion* function(GdkPoint* points, gint nPoints, GdkFillRule fillRule) c_gdk_region_polygon;
 	GdkRegion* function(GdkRegion* region) c_gdk_region_copy;
@@ -932,9 +931,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkRegion* source1, GdkRegion* source2) c_gdk_region_subtract;
 	void function(GdkRegion* source1, GdkRegion* source2) c_gdk_region_xor;
 	void function(GdkRegion* region, GdkSpan* spans, int nSpans, gboolean sorted, GdkSpanFunc funct, gpointer data) c_gdk_region_spans_intersect_foreach;
-	
+
 	// gdk.GC
-	
+
 	GdkGC* function(GdkDrawable* drawable) c_gdk_gc_new;
 	GdkGC* function(GdkDrawable* drawable, GdkGCValues* values, GdkGCValuesMask valuesMask) c_gdk_gc_new_with_values;
 	GdkScreen* function(GdkGC* gc) c_gdk_gc_get_screen;
@@ -964,9 +963,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkGC* gc, GdkColormap* colormap) c_gdk_gc_set_colormap;
 	GdkColormap* function(GdkGC* gc) c_gdk_gc_get_colormap;
 	void function(GdkGC* gc, gint xOffset, gint yOffset) c_gdk_gc_offset;
-	
+
 	// gdk.Drawable
-	
+
 	GdkDrawable* function(GdkDrawable* drawable) c_gdk_drawable_ref;
 	void function(GdkDrawable* drawable) c_gdk_drawable_unref;
 	void function(GdkDrawable* drawable, gchar* key, gpointer data, GDestroyNotify destroyFunc) c_gdk_drawable_set_data;
@@ -1003,9 +1002,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkDrawable* drawable, GdkGC* gc, GdkImage* image, gint xsrc, gint ysrc, gint xdest, gint ydest, gint width, gint height) c_gdk_draw_image;
 	GdkImage* function(GdkDrawable* drawable, gint x, gint y, gint width, gint height) c_gdk_drawable_get_image;
 	GdkImage* function(GdkDrawable* drawable, GdkImage* image, gint srcX, gint srcY, gint destX, gint destY, gint width, gint height) c_gdk_drawable_copy_to_image;
-	
+
 	// gdk.Pixmap
-	
+
 	GdkPixmap* function(GdkDrawable* drawable, gint width, gint height, gint depth) c_gdk_pixmap_new;
 	GdkPixmap* function(GdkDrawable* drawable, gchar* data, gint width, gint height, gint depth, GdkColor* fg, GdkColor* bg) c_gdk_pixmap_create_from_data;
 	GdkPixmap* function(GdkDrawable* drawable, GdkBitmap** mask, GdkColor* transparentColor, gchar* filename) c_gdk_pixmap_create_from_xpm;
@@ -1013,13 +1012,13 @@ mixin( gshared ~"extern(C)
 	GdkPixmap* function(GdkDrawable* drawable, GdkBitmap** mask, GdkColor* transparentColor, gchar** data) c_gdk_pixmap_create_from_xpm_d;
 	GdkPixmap* function(GdkDrawable* drawable, GdkColormap* colormap, GdkBitmap** mask, GdkColor* transparentColor, gchar** data) c_gdk_pixmap_colormap_create_from_xpm_d;
 	void function(GdkPixmap* pixmap, gint* width, gint* height) c_gdk_pixmap_get_size;
-	
+
 	// gdk.Bitmap
-	
+
 	GdkBitmap* function(GdkDrawable* drawable, gchar* data, gint width, gint height) c_gdk_bitmap_create_from_data;
-	
+
 	// gdk.RGB
-	
+
 	void function() c_gdk_rgb_init;
 	void function(GdkDrawable* drawable, GdkGC* gc, gint x, gint y, gint width, gint height, GdkRgbDither dith, guchar* rgbBuf, gint rowstride) c_gdk_draw_rgb_image;
 	void function(GdkDrawable* drawable, GdkGC* gc, gint x, gint y, gint width, gint height, GdkRgbDither dith, guchar* rgbBuf, gint rowstride, gint xdith, gint ydith) c_gdk_draw_rgb_image_dithalign;
@@ -1038,14 +1037,14 @@ mixin( gshared ~"extern(C)
 	gboolean function() c_gdk_rgb_ditherable;
 	gboolean function(GdkColormap* cmap) c_gdk_rgb_colormap_ditherable;
 	void function(gboolean verbose) c_gdk_rgb_set_verbose;
-	
+
 	// gdk.RgbCmap
-	
+
 	GdkRgbCmap* function(guint32* colors, gint nColors) c_gdk_rgb_cmap_new;
 	void function(GdkRgbCmap* cmap) c_gdk_rgb_cmap_free;
-	
+
 	// gdk.ImageGdk
-	
+
 	GdkImage* function(GdkImageType type, GdkVisual* visual, gint width, gint height) c_gdk_image_new;
 	GdkImage* function(GdkVisual* visual, gpointer data, gint width, gint height) c_gdk_image_new_bitmap;
 	GdkImage* function(GdkDrawable* drawable, gint x, gint y, gint width, gint height) c_gdk_image_get;
@@ -1065,9 +1064,9 @@ mixin( gshared ~"extern(C)
 	gpointer function(GdkImage* image) c_gdk_image_get_pixels;
 	void function(GdkImage* image, gint x, gint y, guint32 pixel) c_gdk_image_put_pixel;
 	guint32 function(GdkImage* image, gint x, gint y) c_gdk_image_get_pixel;
-	
+
 	// gdk.Pixbuf
-	
+
 	void function(GdkPixbuf* pixbuf, GdkBitmap* bitmap, int srcX, int srcY, int destX, int destY, int width, int height, int alphaThreshold) c_gdk_pixbuf_render_threshold_alpha;
 	void function(GdkPixbuf* pixbuf, GdkDrawable* drawable, GdkGC* gc, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither) c_gdk_pixbuf_render_to_drawable;
 	void function(GdkPixbuf* pixbuf, GdkDrawable* drawable, int srcX, int srcY, int destX, int destY, int width, int height, GdkPixbufAlphaMode alphaMode, int alphaThreshold, GdkRgbDither dither, int xDither, int yDither) c_gdk_pixbuf_render_to_drawable_alpha;
@@ -1115,9 +1114,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkPixbuf* src, GdkPixbuf* dest, gfloat saturation, gboolean pixelate) c_gdk_pixbuf_saturate_and_pixelate;
 	GdkPixbuf* function(GdkPixbuf* src) c_gdk_pixbuf_apply_embedded_orientation;
 	void function(GdkPixbuf* pixbuf, guint32 pixel) c_gdk_pixbuf_fill;
-	
+
 	// gdk.Colormap
-	
+
 	GdkColormap* function(GdkVisual* visual, gboolean allocate) c_gdk_colormap_new;
 	GdkColormap* function(GdkColormap* cmap) c_gdk_colormap_ref;
 	void function(GdkColormap* cmap) c_gdk_colormap_unref;
@@ -1133,9 +1132,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkColormap* colormap, GdkColor* colors, gint ncolors) c_gdk_colors_store;
 	gint function(GdkColormap* colormap, gboolean contiguous, gulong* planes, gint nplanes, gulong* pixels, gint npixels) c_gdk_colors_alloc;
 	void function(GdkColormap* colormap, gulong* pixels, gint npixels, gulong planes) c_gdk_colors_free;
-	
+
 	// gdk.Color
-	
+
 	GdkColor* function(GdkColor* color) c_gdk_color_copy;
 	void function(GdkColor* color) c_gdk_color_free;
 	gint function(GdkColormap* colormap, GdkColor* color) c_gdk_color_white;
@@ -1146,9 +1145,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkColor* colora, GdkColor* colorb) c_gdk_color_equal;
 	guint function(GdkColor* colora) c_gdk_color_hash;
 	gchar* function(GdkColor* color) c_gdk_color_to_string;
-	
+
 	// gdk.Visual
-	
+
 	void function(gint** depths, gint* count) c_gdk_query_depths;
 	void function(GdkVisualType** visualTypes, gint* count) c_gdk_query_visual_types;
 	GList* function() c_gdk_list_visuals;
@@ -1168,9 +1167,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkVisual* visual, guint32* mask, gint* shift, gint* precision) c_gdk_visual_get_green_pixel_details;
 	void function(GdkVisual* visual, guint32* mask, gint* shift, gint* precision) c_gdk_visual_get_red_pixel_details;
 	GdkVisualType function(GdkVisual* visual) c_gdk_visual_get_visual_type;
-	
+
 	// gdk.Font
-	
+
 	GdkFont* function(gchar* fontName) c_gdk_font_load;
 	GdkFont* function(GdkDisplay* display, gchar* fontName) c_gdk_font_load_for_display;
 	GdkFont* function(gchar* fontsetName) c_gdk_fontset_load;
@@ -1198,9 +1197,9 @@ mixin( gshared ~"extern(C)
 	gint function(GdkFont* font, gchar character) c_gdk_char_height;
 	gchar* function(GdkWChar* src) c_gdk_wcstombs;
 	gint function(GdkWChar* dest, gchar* src, gint destMax) c_gdk_mbstowcs;
-	
+
 	// gdk.Cursor
-	
+
 	GdkCursor* function(GdkCursorType cursorType) c_gdk_cursor_new;
 	GdkCursor* function(GdkPixmap* source, GdkPixmap* mask, GdkColor* fg, GdkColor* bg, gint x, gint y) c_gdk_cursor_new_from_pixmap;
 	GdkCursor* function(GdkDisplay* display, GdkPixbuf* pixbuf, gint x, gint y) c_gdk_cursor_new_from_pixbuf;
@@ -1211,9 +1210,9 @@ mixin( gshared ~"extern(C)
 	GdkCursorType function(GdkCursor* cursor) c_gdk_cursor_get_cursor_type;
 	GdkCursor* function(GdkCursor* cursor) c_gdk_cursor_ref;
 	void function(GdkCursor* cursor) c_gdk_cursor_unref;
-	
+
 	// gdk.Window
-	
+
 	GdkWindow* function(GdkWindow* parent, GdkWindowAttr* attributes, gint attributesMask) c_gdk_window_new;
 	void function(GdkWindow* window) c_gdk_window_destroy;
 	GdkDisplay* function(GdkWindow* window) c_gdk_window_get_display;
@@ -1352,9 +1351,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkWindow* window) c_gdk_window_geometry_changed;
 	void function(GdkWindow* window, GdkDrawable* drawable, gint srcX, gint srcY, gint destX, gint destY, gint width, gint height) c_gdk_window_redirect_to_drawable;
 	void function(GdkWindow* window) c_gdk_window_remove_redirection;
-	
+
 	// gdk.Event
-	
+
 	gboolean function() c_gdk_events_pending;
 	GdkEvent* function() c_gdk_event_peek;
 	GdkEvent* function() c_gdk_event_get;
@@ -1379,12 +1378,12 @@ mixin( gshared ~"extern(C)
 	void function(GdkEvent* event, GdkScreen* screen) c_gdk_event_set_screen;
 	GdkScreen* function(GdkEvent* event) c_gdk_event_get_screen;
 	gboolean function(gchar* name, GValue* value) c_gdk_setting_get;
-	
+
 	// gdk.
-	
-	
+
+
 	// gdk.Keymap
-	
+
 	GdkKeymap* function() c_gdk_keymap_get_default;
 	GdkKeymap* function(GdkDisplay* display) c_gdk_keymap_get_for_display;
 	guint function(GdkKeymap* keymap, GdkKeymapKey* key) c_gdk_keymap_lookup_key;
@@ -1405,9 +1404,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(guint keyval) c_gdk_keyval_is_lower;
 	guint32 function(guint keyval) c_gdk_keyval_to_unicode;
 	guint function(guint32 wc) c_gdk_unicode_to_keyval;
-	
+
 	// gdk.Selection
-	
+
 	gboolean function(GdkWindow* owner, GdkAtom selection, guint32 time, gboolean sendEvent) c_gdk_selection_owner_set;
 	gboolean function(GdkDisplay* display, GdkWindow* owner, GdkAtom selection, guint32 time, gboolean sendEvent) c_gdk_selection_owner_set_for_display;
 	GdkWindow* function(GdkAtom selection) c_gdk_selection_owner_get;
@@ -1416,9 +1415,9 @@ mixin( gshared ~"extern(C)
 	gint function(GdkWindow* requestor, guchar** data, GdkAtom* propType, gint* propFormat) c_gdk_selection_property_get;
 	void function(GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, guint32 time) c_gdk_selection_send_notify;
 	void function(GdkDisplay* display, GdkNativeWindow requestor, GdkAtom selection, GdkAtom target, GdkAtom property, guint32 time) c_gdk_selection_send_notify_for_display;
-	
+
 	// gdk.DragContext
-	
+
 	GdkAtom function(GdkDragContext* context) c_gdk_drag_get_selection;
 	void function(GdkDragContext* context, guint32 time) c_gdk_drag_abort;
 	void function(GdkDragContext* context, gboolean ok, guint32 time) c_gdk_drop_reply;
@@ -1440,9 +1439,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkDragContext* context) c_gdk_drag_context_unref;
 	void function(GdkDragContext* context, GdkDragAction action, guint32 time) c_gdk_drag_status;
 	gboolean function(GdkDragContext* context) c_gdk_drag_drop_succeeded;
-	
+
 	// gdk.
-	
+
 	void function() c_gdk_threads_init;
 	void function() c_gdk_threads_enter;
 	void function() c_gdk_threads_leave;
@@ -1453,15 +1452,15 @@ mixin( gshared ~"extern(C)
 	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_gdk_threads_add_timeout_full;
 	guint function(guint interval, GSourceFunc funct, gpointer data) c_gdk_threads_add_timeout_seconds;
 	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_gdk_threads_add_timeout_seconds_full;
-	
+
 	// gdk.Input
-	
+
 	gint function(gint source, GdkInputCondition condition, GdkInputFunction funct, gpointer data, GDestroyNotify destroy) c_gdk_input_add_full;
 	gint function(gint source, GdkInputCondition condition, GdkInputFunction funct, gpointer data) c_gdk_input_add;
 	void function(gint tag) c_gdk_input_remove;
-	
+
 	// gdk.Device
-	
+
 	GList* function() c_gdk_devices_list;
 	gchar* function(GdkDevice* device) c_gdk_device_get_name;
 	void function(GdkDevice* device, GdkInputSource source) c_gdk_device_set_source;
@@ -1479,9 +1478,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkDevice* device, gdouble* axes, GdkAxisUse use, gdouble* value) c_gdk_device_get_axis;
 	gint function(GdkDevice* device) c_gdk_device_get_n_axes;
 	void function(GdkWindow* window, gint mask, GdkExtensionMode mode) c_gdk_input_set_extension_events;
-	
+
 	// gdk.X11
-	
+
 	GdkWindow* function(GdkNativeWindow anid) c_gdk_window_foreign_new;
 	gpointer function(XID xid) c_gdk_xid_table_lookup;
 	GdkWindow* function(GdkNativeWindow anid) c_gdk_window_lookup;
@@ -1499,9 +1498,9 @@ mixin( gshared ~"extern(C)
 	void function() c_gdk_x11_grab_server;
 	void function() c_gdk_x11_ungrab_server;
 	void function(gchar* smClientId) c_gdk_x11_set_sm_client_id;
-	
+
 	// gdk.AppLaunchContext
-	
+
 	GdkAppLaunchContext* function() c_gdk_app_launch_context_new;
 	void function(GdkAppLaunchContext* context, GdkDisplay* display) c_gdk_app_launch_context_set_display;
 	void function(GdkAppLaunchContext* context, GdkScreen* screen) c_gdk_app_launch_context_set_screen;
@@ -1509,15 +1508,15 @@ mixin( gshared ~"extern(C)
 	void function(GdkAppLaunchContext* context, guint32 timestamp) c_gdk_app_launch_context_set_timestamp;
 	void function(GdkAppLaunchContext* context, GIcon* icon) c_gdk_app_launch_context_set_icon;
 	void function(GdkAppLaunchContext* context, char* iconName) c_gdk_app_launch_context_set_icon_name;
-	
+
 	// gdk.Testing
-	
+
 	void function(GdkWindow* window) c_gdk_test_render_sync;
 	gboolean function(GdkWindow* window, gint x, gint y, guint button, GdkModifierType modifiers, GdkEventType buttonPressrelease) c_gdk_test_simulate_button;
 	gboolean function(GdkWindow* window, gint x, gint y, guint keyval, GdkModifierType modifiers, GdkEventType keyPressrelease) c_gdk_test_simulate_key;
-	
+
 	// gdk.
-	
+
 	cairo_surface_t* function(GdkWindow* window, cairo_content_t content, int width, int height) c_gdk_window_create_similar_surface;
 	cairo_t* function(GdkDrawable* drawable) c_gdk_cairo_create;
 	void function(cairo_t* cr, GdkColor* color) c_gdk_cairo_set_source_color;

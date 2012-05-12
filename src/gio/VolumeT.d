@@ -151,7 +151,7 @@ public template VolumeT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(VolumeIF)[] _onChangedListeners;
 	void delegate(VolumeIF)[] onChangedListeners()

@@ -59,27 +59,26 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// glgtk.GLtInit
-	
+
 	void function(int* argc, char*** argv) c_gtk_gl_init;
 	gboolean function(int* argc, char*** argv) c_gtk_gl_init_check;
 	gboolean function(int* argc, char*** argv) c_gtk_gl_parse_args;
-	
+
 	// glgtk.GLWidget
-	
+
 	gboolean function(GtkWidget* widget, GdkGLConfig* glconfig, GdkGLContext* shareList, gboolean direct, int renderType) c_gtk_widget_set_gl_capability;
 	gboolean function(GtkWidget* widget) c_gtk_widget_is_gl_capable;
 	GdkGLConfig* function(GtkWidget* widget) c_gtk_widget_get_gl_config;
 	GdkGLContext* function(GtkWidget* widget, GdkGLContext* shareList, gboolean direct, int renderType) c_gtk_widget_create_gl_context;
 	GdkGLContext* function(GtkWidget* widget) c_gtk_widget_get_gl_context;
 	GdkGLWindow* function(GtkWidget* widget) c_gtk_widget_get_gl_window;
-	
+
 	// glgtk.GLtVersion
-	
-	
+
+
 	// glgtk.
-	
+
 }");
 
 // glgtk.GLtInit

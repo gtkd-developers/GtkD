@@ -120,7 +120,7 @@ public class FilenameCompleter : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(FilenameCompleter)[] onGotCompletionDataListeners;
 	/**

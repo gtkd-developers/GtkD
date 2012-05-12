@@ -267,7 +267,7 @@ public class Dialog : Window
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Dialog)[] onCloseListeners;
 	/**

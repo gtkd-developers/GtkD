@@ -171,7 +171,7 @@ public class ObjectGst : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ObjectGst, ParamSpec, ObjectGst)[] onDeepNotifyListeners;
 	/**

@@ -1028,9 +1028,9 @@ alias GTlsRehandshakeMode TlsRehandshakeMode;
  *  gpointer user_data) : Run Last
  * Emitted when the resolver notices that the system resolver
  * configuration has changed.
- * resolver  :
+ * resolver :
  * a GResolver
- * user_data  :
+ * user_data :
  * user data set when the signal handler was connected.
  */
 public enum GResolverError
@@ -1603,207 +1603,207 @@ public struct GFile{}
 
 /**
  * An interface for writing VFS file handles.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * dup  ()
+ * dup ()
  * Duplicates a GFile.
- * hash  ()
+ * hash ()
  * Creates a hash of a GFile.
- * equal  ()
+ * equal ()
  * Checks equality of two given GFiles.
- * is_native  ()
+ * is_native ()
  * Checks to see if a file is native to the system.
- * has_uri_scheme  ()
+ * has_uri_scheme ()
  * Checks to see if a GFile has a given URI scheme.
- * get_uri_scheme  ()
+ * get_uri_scheme ()
  * Gets the URI scheme for a GFile.
- * get_basename  ()
+ * get_basename ()
  * Gets the basename for a given GFile.
- * get_path  ()
+ * get_path ()
  * Gets the current path within a GFile.
- * get_uri  ()
+ * get_uri ()
  * Gets a URI for the path within a GFile.
- * get_parse_name  ()
+ * get_parse_name ()
  * Gets the parsed name for the GFile.
- * get_parent  ()
+ * get_parent ()
  * Gets the parent directory for the GFile.
- * prefix_matches  ()
+ * prefix_matches ()
  * Checks whether a GFile contains a specified file.
- * get_relative_path  ()
+ * get_relative_path ()
  * Gets the path for a GFile relative to a given path.
- * resolve_relative_path  ()
+ * resolve_relative_path ()
  * Resolves a relative path for a GFile to an absolute path.
- * get_child_for_display_name  ()
+ * get_child_for_display_name ()
  * Gets the child GFile for a given display name.
- * enumerate_children  ()
+ * enumerate_children ()
  * Gets a GFileEnumerator with the children of a GFile.
- * enumerate_children_async  ()
+ * enumerate_children_async ()
  * Asynchronously gets a GFileEnumerator with the children of a GFile.
- * enumerate_children_finish  ()
+ * enumerate_children_finish ()
  * Finishes asynchronously enumerating the children.
- * query_info  ()
+ * query_info ()
  * Gets the GFileInfo for a GFile.
- * query_info_async  ()
+ * query_info_async ()
  * Asynchronously gets the GFileInfo for a GFile.
- * query_info_finish  ()
+ * query_info_finish ()
  * Finishes an asynchronous query info operation.
- * query_filesystem_info  ()
+ * query_filesystem_info ()
  * Gets a GFileInfo for the file system GFile is on.
- * query_filesystem_info_async  ()
+ * query_filesystem_info_async ()
  * Asynchronously gets a GFileInfo for the file system GFile is on.
- * query_filesystem_info_finish  ()
+ * query_filesystem_info_finish ()
  * Finishes asynchronously getting the file system info.
- * find_enclosing_mount  ()
+ * find_enclosing_mount ()
  * Gets a GMount for the GFile.
- * find_enclosing_mount_async  ()
+ * find_enclosing_mount_async ()
  * Asynchronously gets the GMount for a GFile.
- * find_enclosing_mount_finish  ()
+ * find_enclosing_mount_finish ()
  * Finishes asynchronously getting the volume.
- * set_display_name  ()
+ * set_display_name ()
  * Sets the display name for a GFile.
- * set_display_name_async  ()
+ * set_display_name_async ()
  * Asynchronously sets a GFile's display name.
- * set_display_name_finish  ()
+ * set_display_name_finish ()
  * Finishes asynchronously setting a GFile's display name.
- * query_settable_attributes  ()
+ * query_settable_attributes ()
  * Returns a list of GFileAttributes that can be set.
- * _query_settable_attributes_async  ()
+ * _query_settable_attributes_async ()
  * Asynchronously gets a list of GFileAttributes that can be set.
- * _query_settable_attributes_finish  ()
+ * _query_settable_attributes_finish ()
  * Finishes asynchronously querying settable attributes.
- * query_writable_namespaces  ()
+ * query_writable_namespaces ()
  * Returns a list of GFileAttribute namespaces that are writable.
- * _query_writable_namespaces_async  ()
+ * _query_writable_namespaces_async ()
  * Asynchronously gets a list of GFileAttribute namespaces that are writable.
- * _query_writable_namespaces_finish  ()
+ * _query_writable_namespaces_finish ()
  * Finishes asynchronously querying the writable namespaces.
- * set_attribute  ()
+ * set_attribute ()
  * Sets a GFileAttribute.
- * set_attributes_from_info  ()
+ * set_attributes_from_info ()
  * Sets a GFileAttribute with information from a GFileInfo.
- * set_attributes_async  ()
+ * set_attributes_async ()
  * Asynchronously sets a file's attributes.
- * set_attributes_finish  ()
+ * set_attributes_finish ()
  * Finishes setting a file's attributes asynchronously.
- * read_fn  ()
+ * read_fn ()
  * Reads a file asynchronously.
- * read_async  ()
+ * read_async ()
  * Asynchronously reads a file.
- * read_finish  ()
+ * read_finish ()
  * Finishes asynchronously reading a file.
- * append_to  ()
+ * append_to ()
  * Writes to the end of a file.
- * append_to_async  ()
+ * append_to_async ()
  * Asynchronously writes to the end of a file.
- * append_to_finish  ()
+ * append_to_finish ()
  * Finishes an asynchronous file append operation.
- * create  ()
+ * create ()
  * Creates a new file.
- * create_async  ()
+ * create_async ()
  * Asynchronously creates a file.
- * create_finish  ()
+ * create_finish ()
  * Finishes asynchronously creating a file.
- * replace  ()
+ * replace ()
  * Replaces the contents of a file.
- * replace_async  ()
+ * replace_async ()
  * Asynchronously replaces the contents of a file.
- * replace_finish  ()
+ * replace_finish ()
  * Finishes asynchronously replacing a file.
- * delete_file  ()
+ * delete_file ()
  * Deletes a file.
- * _delete_file_async  ()
+ * _delete_file_async ()
  * Asynchronously deletes a file.
- * _delete_file_finish  ()
+ * _delete_file_finish ()
  * Finishes an asynchronous delete.
- * trash  ()
+ * trash ()
  * Sends a GFile to the Trash location.
- * _trash_async  ()
+ * _trash_async ()
  * Asynchronously sends a GFile to the Trash location.
- * _trash_finish  ()
+ * _trash_finish ()
  * Finishes an asynchronous file trashing operation.
- * make_directory  ()
+ * make_directory ()
  * Makes a directory.
- * _make_directory_async  ()
+ * _make_directory_async ()
  * Asynchronously makes a directory.
- * _make_directory_finish  ()
+ * _make_directory_finish ()
  * Finishes making a directory asynchronously.
- * make_symbolic_link  ()
+ * make_symbolic_link ()
  * Makes a symbolic link.
- * _make_symbolic_link_async  ()
+ * _make_symbolic_link_async ()
  * Asynchronously makes a symbolic link
- * _make_symbolic_link_finish  ()
+ * _make_symbolic_link_finish ()
  * Finishes making a symbolic link asynchronously.
- * copy  ()
+ * copy ()
  * Copies a file.
- * copy_async  ()
+ * copy_async ()
  * Asynchronously copies a file.
- * copy_finish  ()
+ * copy_finish ()
  * Finishes an asynchronous copy operation.
- * move  ()
+ * move ()
  * Moves a file.
- * _move_async  ()
+ * _move_async ()
  * Asynchronously moves a file.
- * _move_finish  ()
+ * _move_finish ()
  * Finishes an asynchronous move operation.
- * mount_mountable  ()
+ * mount_mountable ()
  * Mounts a mountable object.
- * mount_mountable_finish  ()
+ * mount_mountable_finish ()
  * Finishes a mounting operation.
- * unmount_mountable  ()
+ * unmount_mountable ()
  * Unmounts a mountable object.
- * unmount_mountable_finish  ()
+ * unmount_mountable_finish ()
  * Finishes an unmount operation.
- * eject_mountable  ()
+ * eject_mountable ()
  * Ejects a mountable.
- * eject_mountable_finish  ()
+ * eject_mountable_finish ()
  * Finishes an eject operation.
- * mount_enclosing_volume  ()
+ * mount_enclosing_volume ()
  * Mounts a specified location.
- * mount_enclosing_volume_finish  ()
+ * mount_enclosing_volume_finish ()
  * Finishes mounting a specified location.
- * monitor_dir  ()
+ * monitor_dir ()
  * Creates a GFileMonitor for the location.
- * monitor_file  ()
+ * monitor_file ()
  * Creates a GFileMonitor for the location.
- * open_readwrite  ()
+ * open_readwrite ()
  * Open file read/write. Since 2.22.
- * open_readwrite_async  ()
+ * open_readwrite_async ()
  * Asynchronously opens file read/write. Since 2.22.
- * open_readwrite_finish  ()
+ * open_readwrite_finish ()
  * Finishes an asynchronous open read/write. Since 2.22.
- * create_readwrite  ()
+ * create_readwrite ()
  * Creates file read/write. Since 2.22.
- * create_readwrite_async  ()
+ * create_readwrite_async ()
  * Asynchronously creates file read/write. Since 2.22.
- * create_readwrite_finish  ()
+ * create_readwrite_finish ()
  * Finishes an asynchronous creates read/write. Since 2.22.
- * replace_readwrite  ()
+ * replace_readwrite ()
  * Replaces file read/write. Since 2.22.
- * replace_readwrite_async  ()
+ * replace_readwrite_async ()
  * Asynchronously replaces file read/write. Since 2.22.
- * replace_readwrite_finish  ()
+ * replace_readwrite_finish ()
  * Finishes an asynchronous replace read/write. Since 2.22.
- * start_mountable  ()
+ * start_mountable ()
  * Starts a mountable object. Since 2.22.
- * start_mountable_finish  ()
+ * start_mountable_finish ()
  * Finishes an start operation. Since 2.22.
- * stop_mountable  ()
+ * stop_mountable ()
  * Stops a mountable. Since 2.22.
- * stop_mountable_finish  ()
+ * stop_mountable_finish ()
  * Finishes an stop operation. Since 2.22.
- * gboolean  supports_thread_contexts;
+ * gboolean supports_thread_contexts;
  * a boolean that indicates whether the GFile implementation supports thread-default contexts. Since 2.22.
- * unmount_mountable_with_operation  ()
+ * unmount_mountable_with_operation ()
  * Unmounts a mountable object using a GMountOperation. Since 2.22.
- * unmount_mountable_with_operation_finish  ()
+ * unmount_mountable_with_operation_finish ()
  * Finishes an unmount operation using a GMountOperation. Since 2.22.
- * eject_mountable_with_operation  ()
+ * eject_mountable_with_operation ()
  * Ejects a mountable object using a GMountOperation. Since 2.22.
- * eject_mountable_with_operation_finish  ()
+ * eject_mountable_with_operation_finish ()
  * Finishes an eject operation using a GMountOperation. Since 2.22.
- * poll_mountable  ()
+ * poll_mountable ()
  * Polls a mountable object for media changes. Since 2.22.
- * poll_mountable_finish  ()
+ * poll_mountable_finish ()
  * Finishes an poll operation for media changes. Since 2.22.
  */
 public struct GFileIface
@@ -1915,11 +1915,11 @@ public struct GFileIface
 
 /**
  * Information about a specific attribute.
- * char  *name;
+ * char *name;
  * the name of the attribute.
- * GFileAttributeType  type;
+ * GFileAttributeType type;
  * the GFileAttributeType type of the attribute.
- * GFileAttributeInfoFlags  flags;
+ * GFileAttributeInfoFlags flags;
  * a set of GFileAttributeInfoFlags.
  */
 public struct GFileAttributeInfo
@@ -1934,9 +1934,9 @@ public struct GFileAttributeInfo
  * Main Gtk struct.
  * Acts as a lightweight registry for possible valid file attributes.
  * The registry stores Key-Value pair formats as GFileAttributeInfos.
- * GFileAttributeInfo  *infos;
+ * GFileAttributeInfo *infos;
  * an array of GFileAttributeInfos.
- * int  n_infos;
+ * int n_infos;
  * the number of values in the array.
  */
 public struct GFileAttributeInfoList
@@ -1998,11 +1998,11 @@ public struct GAsyncResult{}
 
 /**
  * Interface definition for GAsyncResult.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * get_user_data  ()
+ * get_user_data ()
  * Gets the user data passed to the callback.
- * get_source_object  ()
+ * get_source_object ()
  * Gets the source object that issued the asynchronous operation.
  */
 public struct GAsyncResultIface
@@ -2040,11 +2040,11 @@ public struct GConverter{}
  * Provides an interface for converting data from one type
  * to another type. The conversion can be stateful
  * and may fail at any place.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * convert  ()
+ * convert ()
  * Converts data.
- * reset  ()
+ * reset ()
  * Reverts the internal state of the converter to its initial state.
  * Since 2.24
  */
@@ -2087,17 +2087,17 @@ public struct GSeekable{}
 
 /**
  * Provides an interface for implementing seekable functionality on I/O Streams.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * tell  ()
+ * tell ()
  * Tells the current location within a stream.
- * can_seek  ()
+ * can_seek ()
  * Checks if seeking is supported by the stream.
- * seek  ()
+ * seek ()
  * Seeks to a location within a stream.
- * can_truncate  ()
+ * can_truncate ()
  * Chekcs if truncation is suppored by the stream.
- * truncate_fn  ()
+ * truncate_fn ()
  * Truncates a stream.
  */
 public struct GSeekableIface
@@ -2276,15 +2276,15 @@ public struct GPollableInputStream{}
  * to override it if it is possible that your is_readable
  * implementation may return TRUE when the stream is not actually
  * readable.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * can_poll  ()
+ * can_poll ()
  * Checks if the GPollableInputStream instance is actually pollable
- * is_readable  ()
+ * is_readable ()
  * Checks if the stream is readable
- * create_source  ()
+ * create_source ()
  * Creates a GSource to poll the stream
- * read_nonblocking  ()
+ * read_nonblocking ()
  * Does a non-blocking read or returns
  * G_IO_ERROR_WOULD_BLOCK
  * Since 2.28
@@ -2317,15 +2317,15 @@ public struct GPollableOutputStream{}
  * need to override it if it is possible that your is_writable
  * implementation may return TRUE when the stream is not actually
  * writable.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * can_poll  ()
+ * can_poll ()
  * Checks if the GPollableOutputStream instance is actually pollable
- * is_writable  ()
+ * is_writable ()
  * Checks if the stream is writable
- * create_source  ()
+ * create_source ()
  * Creates a GSource to poll the stream
- * write_nonblocking  ()
+ * write_nonblocking ()
  * Does a non-blocking write or returns
  * G_IO_ERROR_WOULD_BLOCK
  * Since 2.28
@@ -2351,52 +2351,52 @@ public struct GAppInfo{}
 
 /**
  * Application Information interface, for operating system portability.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * dup  ()
+ * dup ()
  * Copies a GAppInfo.
- * equal  ()
+ * equal ()
  * Checks two GAppInfos for equality.
- * get_id  ()
+ * get_id ()
  * Gets a string identifier for a GAppInfo.
- * get_name  ()
+ * get_name ()
  * Gets the name of the application for a GAppInfo.
- * get_description  ()
+ * get_description ()
  * Gets a short description for the application described by the GAppInfo.
- * get_executable  ()
+ * get_executable ()
  * Gets the executable name for the GAppInfo.
- * get_icon  ()
+ * get_icon ()
  * Gets the GIcon for the GAppInfo.
- * launch  ()
+ * launch ()
  * Launches an application specified by the GAppInfo.
- * supports_uris  ()
+ * supports_uris ()
  * Indicates whether the application specified supports launching URIs.
- * supports_files  ()
+ * supports_files ()
  * Indicates whether the application specified accepts filename arguments.
- * launch_uris  ()
+ * launch_uris ()
  * Launches an application with a list of URIs.
- * should_show  ()
+ * should_show ()
  * Returns whether an application should be shown (e.g. when getting a list of installed applications).
  * FreeDesktop.Org Startup Notification Specification.
- * set_as_default_for_type  ()
+ * set_as_default_for_type ()
  * Sets an application as default for a given content type.
- * set_as_default_for_extension  ()
+ * set_as_default_for_extension ()
  * Sets an application as default for a given file extension.
- * add_supports_type  ()
+ * add_supports_type ()
  * Adds to the GAppInfo information about supported file types.
- * can_remove_supports_type  ()
+ * can_remove_supports_type ()
  * Checks for support for removing supported file types from a GAppInfo.
- * remove_supports_type  ()
+ * remove_supports_type ()
  * Removes a supported application type from a GAppInfo.
- * can_delete  ()
+ * can_delete ()
  * Checks if a GAppInfo can be deleted. Since 2.20
- * do_delete  ()
+ * do_delete ()
  * Deletes a GAppInfo. Since 2.20
- * get_commandline  ()
+ * get_commandline ()
  * Gets the commandline for the GAppInfo. Since 2.20
- * get_display_name  ()
+ * get_display_name ()
  * Gets the display name for the GAppInfo. Since 2.24
- * set_as_last_used_for_type  ()
+ * set_as_last_used_for_type ()
  */
 public struct GAppInfoIface
 {
@@ -2459,51 +2459,51 @@ public struct GVolume{}
 
 /**
  * Interface for implementing operations for mountable volumes.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * changed  ()
+ * changed ()
  * Changed signal that is emitted when the volume's state has changed.
- * removed  ()
+ * removed ()
  * The removed signal that is emitted when the GVolume have been removed. If the recipient is holding references to the object they should release them so the object can be finalized.
- * get_name  ()
+ * get_name ()
  * Gets a string containing the name of the GVolume.
- * get_icon  ()
+ * get_icon ()
  * Gets a GIcon for the GVolume.
- * get_uuid  ()
+ * get_uuid ()
  * Gets the UUID for the GVolume. The reference is typically based on the file system UUID for the mount in question and should be considered an opaque string. Returns NULL if there is no UUID available.
- * get_drive  ()
+ * get_drive ()
  * Gets a GDrive the volume is located on. Returns NULL if the GVolume is not associated with a GDrive.
- * get_mount  ()
+ * get_mount ()
  * Gets a GMount representing the mounted volume. Returns NULL if the GVolume is not mounted.
- * can_mount  ()
+ * can_mount ()
  * Returns TRUE if the GVolume can be mounted.
- * can_eject  ()
+ * can_eject ()
  * Checks if a GVolume can be ejected.
- * mount_fn  ()
+ * mount_fn ()
  * Mounts a given GVolume.
  * GVolume implementations must emit the "aborted"
  * signal before completing a mount operation that is aborted while
  * awaiting input from the user through a GMountOperation instance.
- * mount_finish  ()
+ * mount_finish ()
  * Finishes a mount operation.
- * eject  ()
+ * eject ()
  * Ejects a given GVolume.
- * eject_finish  ()
+ * eject_finish ()
  * Finishes an eject operation.
- * get_identifier  ()
+ * get_identifier ()
  * Returns the identifier of the given kind, or NULL if
  * the GVolume doesn't have one.
- * enumerate_identifiers  ()
+ * enumerate_identifiers ()
  * Returns an array strings listing the kinds
  * of identifiers which the GVolume has.
- * should_automount  ()
+ * should_automount ()
  * Returns TRUE if the GVolume should be automatically mounted.
- * get_activation_root  ()
+ * get_activation_root ()
  * Returns the activation root for the GVolume if it is known in advance or NULL if
  * it is not known.
- * eject_with_operation  ()
+ * eject_with_operation ()
  * Starts ejecting a GVolume using a GMountOperation. Since 2.22.
- * eject_with_operation_finish  ()
+ * eject_with_operation_finish ()
  * Finishes an eject operation using a GMountOperation. Since 2.22.
  */
 public struct GVolumeIface
@@ -2542,59 +2542,59 @@ public struct GMount{}
 
 /**
  * Interface for implementing operations for mounts.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * changed  ()
+ * changed ()
  * Changed signal that is emitted when the mount's state has changed.
- * unmounted  ()
+ * unmounted ()
  * The unmounted signal that is emitted when the GMount have been unmounted. If the recipient is holding references to the object they should release them so the object can be finalized.
- * get_root  ()
+ * get_root ()
  * Gets a GFile to the root directory of the GMount.
- * get_name  ()
+ * get_name ()
  * Gets a string containing the name of the GMount.
- * get_icon  ()
+ * get_icon ()
  * Gets a GIcon for the GMount.
- * get_uuid  ()
+ * get_uuid ()
  * Gets the UUID for the GMount. The reference is typically based on the file system UUID for the mount in question and should be considered an opaque string. Returns NULL if there is no UUID available.
- * get_volume  ()
+ * get_volume ()
  * Gets a GVolume the mount is located on. Returns NULL if the GMount is not associated with a GVolume.
- * get_drive  ()
+ * get_drive ()
  * Gets a GDrive the volume of the mount is located on. Returns NULL if the GMount is not associated with a GDrive or a GVolume. This is convenience method for getting the GVolume and using that to get the GDrive.
- * can_unmount  ()
+ * can_unmount ()
  * Checks if a GMount can be unmounted.
- * can_eject  ()
+ * can_eject ()
  * Checks if a GMount can be ejected.
- * unmount  ()
+ * unmount ()
  * Starts unmounting a GMount.
- * unmount_finish  ()
+ * unmount_finish ()
  * Finishes an unmounting operation.
- * eject  ()
+ * eject ()
  * Starts ejecting a GMount.
- * eject_finish  ()
+ * eject_finish ()
  * Finishes an eject operation.
- * remount  ()
+ * remount ()
  * Starts remounting a GMount.
- * remount_finish  ()
+ * remount_finish ()
  * Finishes a remounting operation.
- * guess_content_type  ()
+ * guess_content_type ()
  * Starts guessing the type of the content of a GMount.
  * See g_mount_guess_content_type() for more information on content
  * type guessing. This operation was added in 2.18.
- * guess_content_type_finish  ()
+ * guess_content_type_finish ()
  * Finishes a contenet type guessing operation. Added in 2.18.
- * guess_content_type_sync  ()
+ * guess_content_type_sync ()
  * Synchronous variant of guess_content_type. Added in 2.18
- * pre_unmount  ()
+ * pre_unmount ()
  * The pre_unmout signal that is emitted when the GMount will soon be emitted. If the recipient is somehow holding the mount open by keeping an open file on it it should close the file.
- * unmount_with_operation  ()
+ * unmount_with_operation ()
  * Starts unmounting a GMount using a GMountOperation. Since 2.22.
- * unmount_with_operation_finish  ()
+ * unmount_with_operation_finish ()
  * Finishes an unmounting operation using a GMountOperation. Since 2.22.
- * eject_with_operation  ()
+ * eject_with_operation ()
  * Starts ejecting a GMount using a GMountOperation. Since 2.22.
- * eject_with_operation_finish  ()
+ * eject_with_operation_finish ()
  * Finishes an eject operation using a GMountOperation. Since 2.22.
- * get_default_location  ()
+ * get_default_location ()
  * Gets a GFile indication a start location that can be use as the entry point for this mount. Since 2.24.
  */
 public struct GMountIface
@@ -2640,67 +2640,67 @@ public struct GDrive{}
 
 /**
  * Interface for creating GDrive implementations.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * changed  ()
+ * changed ()
  * Signal emitted when the drive is changed.
- * disconnected  ()
+ * disconnected ()
  * The removed signal that is emitted when the GDrive have been disconnected. If the recipient is holding references to the object they should release them so the object can be finalized.
- * eject_button  ()
+ * eject_button ()
  * Signal emitted when the physical eject button (if any) of a drive have been pressed.
- * get_name  ()
+ * get_name ()
  * Returns the name for the given GDrive.
- * get_icon  ()
+ * get_icon ()
  * Returns a GIcon for the given GDrive.
- * has_volumes  ()
+ * has_volumes ()
  * Returns TRUE if the GDrive has mountable volumes.
- * get_volumes  ()
+ * get_volumes ()
  * Returns a list GList of GVolume for the GDrive.
- * is_media_removable  ()
+ * is_media_removable ()
  * Returns TRUE if the GDrive supports removal and insertion of media.
- * has_media  ()
+ * has_media ()
  * Returns TRUE if the GDrive has media inserted.
- * is_media_check_automatic  ()
+ * is_media_check_automatic ()
  * Returns TRUE if the GDrive is capabable of automatically detecting media changes.
- * can_eject  ()
+ * can_eject ()
  * Returns TRUE if the GDrive can eject media.
- * can_poll_for_media  ()
+ * can_poll_for_media ()
  * Returns TRUE if the GDrive is capable of manually polling for media change.
- * eject  ()
+ * eject ()
  * Ejects a GDrive.
- * eject_finish  ()
+ * eject_finish ()
  * Finishes an eject operation.
- * poll_for_media  ()
+ * poll_for_media ()
  * Poll for media insertion/removal on a GDrive.
- * poll_for_media_finish  ()
+ * poll_for_media_finish ()
  * Finishes a media poll operation.
- * get_identifier  ()
+ * get_identifier ()
  * Returns the identifier of the given kind, or NULL if
  * the GDrive doesn't have one.
- * enumerate_identifiers  ()
+ * enumerate_identifiers ()
  * Returns an array strings listing the kinds
  * of identifiers which the GDrive has.
- * get_start_stop_type  ()
+ * get_start_stop_type ()
  * Gets a GDriveStartStopType with details about starting/stopping the drive. Since 2.22.
- * can_start  ()
+ * can_start ()
  * Returns TRUE if a GDrive can be started. Since 2.22.
- * can_start_degraded  ()
+ * can_start_degraded ()
  * Returns TRUE if a GDrive can be started degraded. Since 2.22.
- * start  ()
+ * start ()
  * Starts a GDrive. Since 2.22.
- * start_finish  ()
+ * start_finish ()
  * Finishes a start operation. Since 2.22.
- * can_stop  ()
+ * can_stop ()
  * Returns TRUE if a GDrive can be stopped. Since 2.22.
- * stop  ()
+ * stop ()
  * Stops a GDrive. Since 2.22.
- * stop_finish  ()
+ * stop_finish ()
  * Finishes a stop operation. Since 2.22.
- * stop_button  ()
+ * stop_button ()
  * Signal emitted when the physical stop button (if any) of a drive have been pressed. Since 2.22.
- * eject_with_operation  ()
+ * eject_with_operation ()
  * Starts ejecting a GDrive using a GMountOperation. Since 2.22.
- * eject_with_operation_finish  ()
+ * eject_with_operation_finish ()
  * Finishes an eject operation using a GMountOperation. Since 2.22.
  */
 public struct GDriveIface
@@ -2773,17 +2773,17 @@ public struct GIcon{}
  * GIconIface is used to implement GIcon types for various
  * different systems. See GThemedIcon and GLoadableIcon for
  * examples of how to implement this interface.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * hash  ()
+ * hash ()
  * A hash for a given GIcon.
- * equal  ()
+ * equal ()
  * Checks if two GIcons are equal.
- * to_tokens  ()
+ * to_tokens ()
  * Serializes a GIcon into tokens. The tokens must not
  * contain any whitespace. Don't implement if the GIcon can't be
  * serialized (Since 2.20).
- * from_tokens  ()
+ * from_tokens ()
  * Constructs a GIcon from tokens. Set the GError if
  * the tokens are malformed. Don't implement if the GIcon can't be
  * serialized (Since 2.20).
@@ -2816,13 +2816,13 @@ public struct GLoadableIcon{}
 
 /**
  * Interface for icons that can be loaded as a stream.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * load  ()
+ * load ()
  * Loads an icon.
- * load_async  ()
+ * load_async ()
  * Loads an icon asynchronously.
- * load_finish  ()
+ * load_finish ()
  * Finishes an asynchronous icon load.
  */
 public struct GLoadableIconIface
@@ -2867,9 +2867,9 @@ public struct GInitable{}
 /**
  * Provides an interface for initializing object such that initialization
  * may fail.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * init  ()
+ * init ()
  * Initializes the object.
  * Since 2.22
  */
@@ -2892,11 +2892,11 @@ public struct GAsyncInitable{}
 /**
  * Provides an interface for asynchronous initializing object such that
  * initialization may fail.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * init_async  ()
+ * init_async ()
  * Starts initialization of the object.
- * init_finish  ()
+ * init_finish ()
  * Finishes initialization of the object.
  * Since 2.22
  */
@@ -2922,9 +2922,9 @@ public struct GSocket{}
  * You generally pass in an array of GInputVectors
  * and the operation will store the read data starting in the
  * first buffer, switching to the next as needed.
- * gpointer  buffer;
+ * gpointer buffer;
  * Pointer to a buffer where data will be written.
- * gsize  size;
+ * gsize size;
  * the available size in buffer.
  * Since 2.22
  */
@@ -2940,9 +2940,9 @@ public struct GInputVector
  * You generally pass in an array of GOutputVectors
  * and the operation will use all the buffers as if they were
  * one buffer.
- * gconstpointer  buffer;
+ * gconstpointer buffer;
  * Pointer to a buffer of data to read.
- * gsize  size;
+ * gsize size;
  * the size of buffer.
  * Since 2.22
  */
@@ -3042,16 +3042,16 @@ public struct GProxy{}
 
 /**
  * Provides an interface for handling proxy connection and payload.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * connect  ()
+ * connect ()
  * Connect to proxy server and wrap (if required) the connection
  * to handle payload.
- * connect_async  ()
+ * connect_async ()
  * Same has connect() but asynchronous.
- * connect_finish  ()
+ * connect_finish ()
  * Returns the result of connect_async()
- * supports_hostname  ()
+ * supports_hostname ()
  * Since 2.26
  */
 public struct GProxyInterface
@@ -3191,14 +3191,14 @@ public struct GTlsBackend{}
 
 /**
  * Provides an interface for describing TLS-related types.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * supports_tls  ()
- * get_certificate_type  ()
+ * supports_tls ()
+ * get_certificate_type ()
  * returns the GTlsCertificate implementation type
- * get_client_connection_type  ()
+ * get_client_connection_type ()
  * returns the GTlsClientConnection implementation type
- * get_server_connection_type  ()
+ * get_server_connection_type ()
  * returns the GTlsServerConnection implementation type
  * Since 2.28
  */
@@ -3250,11 +3250,11 @@ public struct GSocketConnectable{}
 /**
  * Provides an interface for returning a GSocketAddressEnumerator
  * and GProxyAddressEnumerator
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * The parent interface.
- * enumerate  ()
+ * enumerate ()
  * Creates a GSocketAddressEnumerator
- * proxy_enumerate  ()
+ * proxy_enumerate ()
  * Creates a GProxyAddressEnumerator
  */
 public struct GSocketConnectableIface
@@ -3308,13 +3308,13 @@ public struct GSrvTarget{}
 
 /**
  * Information about an annotation.
- * volatile  gint  ref_count;
+ * volatile gint ref_count;
  * The reference count or -1 if statically allocated.
- * gchar  *key;
+ * gchar *key;
  * The name of the annotation, e.g. "org.freedesktop.DBus.Deprecated".
- * gchar  *value;
+ * gchar *value;
  * The value of the annotation.
- * GDBusAnnotationInfo  **annotations;
+ * GDBusAnnotationInfo **annotations;
  * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
  * Since 2.26
  */
@@ -3329,13 +3329,13 @@ public struct GDBusAnnotationInfo
 
 /**
  * Information about an argument for a method or a signal.
- * volatile  gint  ref_count;
+ * volatile gint ref_count;
  * The reference count or -1 if statically allocated.
- * gchar  *name;
+ * gchar *name;
  * Name of the argument, e.g. unix_user_id.
- * gchar  *signature;
+ * gchar *signature;
  * D-Bus signature of the argument (a single complete type).
- * GDBusAnnotationInfo  **annotations;
+ * GDBusAnnotationInfo **annotations;
  * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
  * Since 2.26
  */
@@ -3350,15 +3350,15 @@ public struct GDBusArgInfo
 
 /**
  * Information about a method on an D-Bus interface.
- * volatile  gint  ref_count;
+ * volatile gint ref_count;
  * The reference count or -1 if statically allocated.
- * gchar  *name;
+ * gchar *name;
  * The name of the D-Bus method, e.g. RequestName.
- * GDBusArgInfo  **in_args;
+ * GDBusArgInfo **in_args;
  * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no in arguments.
- * GDBusArgInfo  **out_args;
+ * GDBusArgInfo **out_args;
  * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no out arguments.
- * GDBusAnnotationInfo  **annotations;
+ * GDBusAnnotationInfo **annotations;
  * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
  * Since 2.26
  */
@@ -3374,13 +3374,13 @@ public struct GDBusMethodInfo
 
 /**
  * Information about a signal on a D-Bus interface.
- * volatile  gint  ref_count;
+ * volatile gint ref_count;
  * The reference count or -1 if statically allocated.
- * gchar  *name;
+ * gchar *name;
  * The name of the D-Bus signal, e.g. "NameOwnerChanged".
- * GDBusArgInfo  **args;
+ * GDBusArgInfo **args;
  * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no arguments.
- * GDBusAnnotationInfo  **annotations;
+ * GDBusAnnotationInfo **annotations;
  * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
  * Since 2.26
  */
@@ -3395,15 +3395,15 @@ public struct GDBusSignalInfo
 
 /**
  * Information about a D-Bus property on a D-Bus interface.
- * volatile  gint  ref_count;
+ * volatile gint ref_count;
  * The reference count or -1 if statically allocated.
- * gchar  *name;
+ * gchar *name;
  * The name of the D-Bus property, e.g. "SupportedFilesystems".
- * gchar  *signature;
+ * gchar *signature;
  * The D-Bus signature of the property (a single complete type).
- * GDBusPropertyInfoFlags  flags;
+ * GDBusPropertyInfoFlags flags;
  * Access control flags for the property.
- * GDBusAnnotationInfo  **annotations;
+ * GDBusAnnotationInfo **annotations;
  * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
  * Since 2.26
  */
@@ -3426,15 +3426,15 @@ public struct GDBusInterfaceInfo{}
 
 /**
  * Information about nodes in a remote object hierarchy.
- * volatile  gint  ref_count;
+ * volatile gint ref_count;
  * The reference count or -1 if statically allocated.
- * gchar  *path;
+ * gchar *path;
  * The path of the node or NULL if omitted. Note that this may be a relative path. See the D-Bus specification for more details.
- * GDBusInterfaceInfo  **interfaces;
+ * GDBusInterfaceInfo **interfaces;
  * A pointer to a NULL-terminated array of pointers to GDBusInterfaceInfo structures or NULL if there are no interfaces.
- * GDBusNodeInfo  **nodes;
+ * GDBusNodeInfo **nodes;
  * A pointer to a NULL-terminated array of pointers to GDBusNodeInfo structures or NULL if there are no nodes.
- * GDBusAnnotationInfo  **annotations;
+ * GDBusAnnotationInfo **annotations;
  * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
  * Since 2.26
  */
@@ -3450,9 +3450,9 @@ public struct GDBusNodeInfo
 
 /**
  * Struct used in g_dbus_error_register_error_domain().
- * gint  error_code;
+ * gint error_code;
  * An error code.
- * const  gchar  *dbus_error_name;
+ * const gchar *dbus_error_name;
  * The D-Bus error name to associate with error_code.
  * Since 2.26
  */
@@ -3487,11 +3487,11 @@ public struct GDBusConnection{}
  * If you want to handle getting/setting D-Bus properties asynchronously, simply
  * register an object with the org.freedesktop.DBus.Properties
  * D-Bus interface using g_dbus_connection_register_object().
- * GDBusInterfaceMethodCallFunc  method_call;
+ * GDBusInterfaceMethodCallFunc method_call;
  * Function for handling incoming method calls.
- * GDBusInterfaceGetPropertyFunc  get_property;
+ * GDBusInterfaceGetPropertyFunc get_property;
  * Function for getting a property.
- * GDBusInterfaceSetPropertyFunc  set_property;
+ * GDBusInterfaceSetPropertyFunc set_property;
  * Function for setting a property.
  * Since 2.26
  */
@@ -3505,11 +3505,11 @@ public struct GDBusInterfaceVTable
 
 /**
  * Virtual table for handling subtrees registered with g_dbus_connection_register_subtree().
- * GDBusSubtreeEnumerateFunc  enumerate;
+ * GDBusSubtreeEnumerateFunc enumerate;
  * Function for enumerating child nodes.
- * GDBusSubtreeIntrospectFunc  introspect;
+ * GDBusSubtreeIntrospectFunc introspect;
  * Function for introspecting a child node.
- * GDBusSubtreeDispatchFunc  dispatch;
+ * GDBusSubtreeDispatchFunc dispatch;
  * Function for dispatching a remote call on a child node.
  * Since 2.26
  */
@@ -3559,9 +3559,9 @@ public struct GDBusProxy{}
 
 /**
  * Class structure for GDBusProxy.
- * g_properties_changed  ()
+ * g_properties_changed ()
  * Signal class handler for the "g-properties-changed" signal.
- * g_signal  ()
+ * g_signal ()
  * Signal class handler for the "g-signal" signal.
  * Since 2.26
  */
@@ -3655,8 +3655,8 @@ public struct GSimpleAction{}
 
 
 /**
- * GObjectClass  parent_class;
- * activate  ()
+ * GObjectClass parent_class;
+ * activate ()
  * the class closure for the activate signal
  * Since 2.28
  */
@@ -3678,36 +3678,36 @@ public struct GApplication{}
 
 
 /**
- * startup  ()
+ * startup ()
  * invoked on the primary instance immediately after registration
- * activate  ()
+ * activate ()
  * invoked on the primary instance when an activation occurs
- * open  ()
+ * open ()
  * invoked on the primary instance when there are files to open
- * command_line  ()
+ * command_line ()
  * invoked on the primary instance when a command-line is
  * not handled locally
- * local_command_line  ()
+ * local_command_line ()
  * invoked (locally) when the process has been invoked
  * via commandline execution. The virtual function has the chance to
  * inspect (and possibly replace) the list of command line arguments.
  * See g_application_run() for more information.
- * before_emit  ()
+ * before_emit ()
  * invoked on the primary instance before 'activate', 'open',
  * 'command-line' or any action invocation, gets the 'platform data' from
  * the calling instance
- * after_emit  ()
+ * after_emit ()
  * invoked on the primary instance after 'activate', 'open',
  * 'command-line' or any action invocation, gets the 'platform data' from
  * the calling instance
- * add_platform_data  ()
+ * add_platform_data ()
  * invoked (locally) to add 'platform data' to be sent to
  * the primary instance when activating, opening or invoking actions
- * quit_mainloop  ()
+ * quit_mainloop ()
  * invoked on the primary instance when the use count of the
  * application drops to zero (and after any inactivity timeout, if
  * requested)
- * run_mainloop  ()
+ * run_mainloop ()
  * invoked on the primary instance from g_application_run()
  * if the use-count is non-zero
  * Since 2.28
@@ -3773,11 +3773,11 @@ public struct GIOExtensionPoint{}
  * When doing file operations that may take a while, such as moving
  * a file or copying a file, a progress callback is used to pass how
  * far along that operation is to the application.
- * current_num_bytes  :
+ * current_num_bytes :
  * the current number of bytes in the operation.
- * total_num_bytes  :
+ * total_num_bytes :
  * the total number of bytes in the operation.
- * user_data  :
+ * user_data :
  * user data passed to the callback.
  */
 // void (*GFileProgressCallback) (goffset current_num_bytes,  goffset total_num_bytes,  gpointer user_data);
@@ -3788,13 +3788,13 @@ public alias extern(C) void  function (long, long, void*) GFileProgressCallback;
  * it may become necessary to determine if any more data from the file should be loaded.
  * A GFileReadMoreCallback function facilitates this by returning TRUE if more data
  * should be read, or FALSE otherwise.
- * file_contents  :
+ * file_contents :
  * the data as currently read.
- * file_size  :
+ * file_size :
  * the size of the data currently read.
- * callback_data  :
+ * callback_data :
  * data passed to the callback.
- * Returns  :
+ * Returns :
  * TRUE if more data should be read back. FALSE otherwise.
  */
 // gboolean (*GFileReadMoreCallback) (const char *file_contents,  goffset file_size,  gpointer callback_data);
@@ -3803,11 +3803,11 @@ public alias extern(C) int  function (char*, long, void*) GFileReadMoreCallback;
 /*
  * This is the function type of the callback used for the GSource
  * returned by g_cancellable_source_new().
- * cancellable  :
+ * cancellable :
  * the GCancellable
- * user_data  :
+ * user_data :
  * data passed in by the user.
- * Returns  :
+ * Returns :
  * it should return FALSE if the source should be removed.
  * Since 2.28
  */
@@ -3817,11 +3817,11 @@ public alias extern(C) int  function (GCancellable*, void*) GCancellableSourceFu
 /*
  * Type definition for a function that will be called back when an asynchronous
  * operation within GIO has been completed.
- * source_object  :
+ * source_object :
  * the object the asynchronous operation was started with.
- * res  :
+ * res :
  * a GAsyncResult.
- * user_data  :
+ * user_data :
  * user data passed to the callback.
  */
 // void (*GAsyncReadyCallback) (GObject *source_object,  GAsyncResult *res,  gpointer user_data);
@@ -3834,13 +3834,13 @@ public alias extern(C) void  function (GObject*, GAsyncResult*, void*) GAsyncRea
  * in the mainloop.
  * Long-running jobs should periodically check the cancellable
  * to see if they have been cancelled.
- * job  :
+ * job :
  * a GIOSchedulerJob.
- * cancellable  :
+ * cancellable :
  * optional GCancellable object, NULL to ignore.
- * user_data  :
+ * user_data :
  * the data to pass to callback function
- * Returns  :
+ * Returns :
  * TRUE if this function should be called again to
  * complete the job, FALSE if the job is complete (or cancelled)
  */
@@ -3850,11 +3850,11 @@ public alias extern(C) int  function (GIOSchedulerJob*, GCancellable*, void*) GI
 /*
  * Simple thread function that runs an asynchronous operation and
  * checks for cancellation.
- * res  :
+ * res :
  * a GSimpleAsyncResult.
- * object  :
+ * object :
  * a GObject.
- * cancellable  :
+ * cancellable :
  * optional GCancellable object, NULL to ignore.
  */
 // void (*GSimpleAsyncThreadFunc) (GSimpleAsyncResult *res,  GObject *object,  GCancellable *cancellable);
@@ -3864,11 +3864,11 @@ public alias extern(C) void  function (GSimpleAsyncResult*, GObject*, GCancellab
  * Changes the size of the memory block pointed to by data to
  * size bytes.
  * The function should have the same semantics as realloc().
- * data  :
+ * data :
  * memory block to reallocate
- * size  :
+ * size :
  * size to reallocate data to
- * Returns  :
+ * Returns :
  * a pointer to the reallocated memory
  */
 // gpointer (*GReallocFunc) (gpointer data,  gsize size);
@@ -3878,11 +3878,11 @@ public alias extern(C) void*  function (void*, gsize) GReallocFunc;
  * This is the function type of the callback used for the GSource
  * returned by g_pollable_input_stream_create_source() and
  * g_pollable_output_stream_create_source().
- * pollable_stream  :
+ * pollable_stream :
  * the GPollableInputStream or GPollableOutputStream
- * user_data  :
+ * user_data :
  * data passed in by the user.
- * Returns  :
+ * Returns :
  * it should return FALSE if the source should be removed.
  * Since 2.28
  */
@@ -3892,13 +3892,13 @@ public alias extern(C) int  function (GObject*, void*) GPollableSourceFunc;
 /*
  * This is the function type of the callback used for the GSource
  * returned by g_socket_create_source().
- * socket  :
+ * socket :
  * the GSocket
- * condition  :
+ * condition :
  * the current condition at the source fired.
- * user_data  :
+ * user_data :
  * data passed in by the user.
- * Returns  :
+ * Returns :
  * it should return FALSE if the source should be removed.
  * Since 2.22
  */
@@ -3907,19 +3907,19 @@ public alias extern(C) int  function (GSocket*, GIOCondition, void*) GSocketSour
 
 /*
  * Signature for callback function used in g_dbus_connection_signal_subscribe().
- * connection  :
+ * connection :
  * A GDBusConnection.
- * sender_name  :
+ * sender_name :
  * The unique bus name of the sender of the signal.
- * object_path  :
+ * object_path :
  * The object path that the signal was emitted on.
- * interface_name  :
+ * interface_name :
  * The name of the interface.
- * signal_name  :
+ * signal_name :
  * The name of the signal.
- * parameters  :
+ * parameters :
  * A GVariant tuple with parameters for the signal.
- * user_data  :
+ * user_data :
  * User data passed when subscribing to the signal.
  * Since 2.26
  */
@@ -3942,16 +3942,16 @@ public alias extern(C) void  function (GDBusConnection*, char*, char*, char*, ch
  * logged to standard error. Applications can
  * check this ahead of time using g_dbus_message_to_blob() passing a
  * GDBusCapabilityFlags value obtained from connection.
- * connection  :
+ * connection :
  * A GDBusConnection. [transfer none]
- * message  :
+ * message :
  * A locked GDBusMessage that the filter function takes ownership of. [transfer full]
- * incoming  :
+ * incoming :
  * TRUE if it is a message received from the other peer, FALSE if it is
  * a message to be sent to the other peer.
- * user_data  :
+ * user_data :
  * User data passed when adding the filter.
- * Returns  :
+ * Returns :
  * A GDBusMessage that will be freed with
  * g_object_unref() or NULL to drop the message. Passive filter
  * functions can simply return the passed message object. [transfer full][allow-none]
@@ -3962,21 +3962,21 @@ public alias extern(C) GDBusMessage *  function (GDBusConnection*, GDBusMessage*
 
 /*
  * The type of the method_call function in GDBusInterfaceVTable.
- * connection  :
+ * connection :
  * A GDBusConnection.
- * sender  :
+ * sender :
  * The unique bus name of the remote caller.
- * object_path  :
+ * object_path :
  * The object path that the method was invoked on.
- * interface_name  :
+ * interface_name :
  * The D-Bus interface name the method was invoked on.
- * method_name  :
+ * method_name :
  * The name of the method that was invoked.
- * parameters  :
+ * parameters :
  * A GVariant tuple with parameters.
- * invocation  :
+ * invocation :
  * A GDBusMethodInvocation object that can be used to return a value or error.
- * user_data  :
+ * user_data :
  * The user_data gpointer passed to g_dbus_connection_register_object().
  * Since 2.26
  */
@@ -3985,21 +3985,21 @@ public alias extern(C) void  function (GDBusConnection*, char*, char*, char*, ch
 
 /*
  * The type of the get_property function in GDBusInterfaceVTable.
- * connection  :
+ * connection :
  * A GDBusConnection.
- * sender  :
+ * sender :
  * The unique bus name of the remote caller.
- * object_path  :
+ * object_path :
  * The object path that the method was invoked on.
- * interface_name  :
+ * interface_name :
  * The D-Bus interface name for the property.
- * property_name  :
+ * property_name :
  * The name of the property to get the value of.
- * error  :
+ * error :
  * Return location for error.
- * user_data  :
+ * user_data :
  * The user_data gpointer passed to g_dbus_connection_register_object().
- * Returns  :
+ * Returns :
  * A GVariant with the value for property_name or NULL if
  * error is set. If the returned GVariant is floating, it is
  * consumed - otherwise its reference count is decreased by one.
@@ -4010,23 +4010,23 @@ public alias extern(C) GVariant *  function (GDBusConnection*, char*, char*, cha
 
 /*
  * The type of the set_property function in GDBusInterfaceVTable.
- * connection  :
+ * connection :
  * A GDBusConnection.
- * sender  :
+ * sender :
  * The unique bus name of the remote caller.
- * object_path  :
+ * object_path :
  * The object path that the method was invoked on.
- * interface_name  :
+ * interface_name :
  * The D-Bus interface name for the property.
- * property_name  :
+ * property_name :
  * The name of the property to get the value of.
- * value  :
+ * value :
  * The value to set the property to.
- * error  :
+ * error :
  * Return location for error.
- * user_data  :
+ * user_data :
  * The user_data gpointer passed to g_dbus_connection_register_object().
- * Returns  :
+ * Returns :
  * TRUE if the property was set to value, FALSE if error is set.
  * Since 2.26
  */
@@ -4042,15 +4042,15 @@ public alias extern(C) int  function (GDBusConnection*, char*, char*, char*, cha
  * Hierarchies are not supported; the items that you return should not
  * contain the '/' character.
  * The return value will be freed with g_strfreev().
- * connection  :
+ * connection :
  * A GDBusConnection.
- * sender  :
+ * sender :
  * The unique bus name of the remote caller.
- * object_path  :
+ * object_path :
  * The object path that was registered with g_dbus_connection_register_subtree().
- * user_data  :
+ * user_data :
  * The user_data gpointer passed to g_dbus_connection_register_subtree().
- * Returns  :
+ * Returns :
  * A newly allocated array of strings for node names that are children of object_path.
  * Since 2.26
  */
@@ -4072,17 +4072,17 @@ public alias extern(C) char **  function (GDBusConnection*, char*, char*, void*)
  * items is that the standard DBus interfaces will returned to the
  * remote introspector in the empty array case, but not in the NULL
  * case.
- * connection  :
+ * connection :
  * A GDBusConnection.
- * sender  :
+ * sender :
  * The unique bus name of the remote caller.
- * object_path  :
+ * object_path :
  * The object path that was registered with g_dbus_connection_register_subtree().
- * node  :
+ * node :
  * A node that is a child of object_path (relative to object_path) or NULL for the root of the subtree.
- * user_data  :
+ * user_data :
  * The user_data gpointer passed to g_dbus_connection_register_subtree().
- * Returns  :
+ * Returns :
  * A NULL-terminated array of pointers to GDBusInterfaceInfo, or NULL.
  * Since 2.26
  */
@@ -4093,21 +4093,21 @@ public alias extern(C) GDBusInterfaceInfo **  function (GDBusConnection*, char*,
  * The type of the dispatch function in GDBusSubtreeVTable.
  * Subtrees are flat. node, if non-NULL, is always exactly one
  * segment of the object path (ie: it never contains a slash).
- * connection  :
+ * connection :
  * A GDBusConnection.
- * sender  :
+ * sender :
  * The unique bus name of the remote caller.
- * object_path  :
+ * object_path :
  * The object path that was registered with g_dbus_connection_register_subtree().
- * interface_name  :
+ * interface_name :
  * The D-Bus interface name that the method call or property access is for.
- * node  :
+ * node :
  * A node that is a child of object_path (relative to object_path) or NULL for the root of the subtree.
- * out_user_data  :
+ * out_user_data :
  * Return location for user data to pass to functions in the returned GDBusInterfaceVTable (never NULL).
- * user_data  :
+ * user_data :
  * The user_data gpointer passed to g_dbus_connection_register_subtree().
- * Returns  :
+ * Returns :
  * A GDBusInterfaceVTable or NULL if you don't want to handle the methods.
  * Since 2.26
  */
@@ -4116,11 +4116,11 @@ public alias extern(C) GDBusInterfaceVTable *  function (GDBusConnection*, char*
 
 /*
  * Invoked when a connection to a message bus has been obtained.
- * connection  :
+ * connection :
  * The GDBusConnection to a message bus.
- * name  :
+ * name :
  * The name that is requested to be owned.
- * user_data  :
+ * user_data :
  * User data passed to g_bus_own_name().
  * Since 2.26
  */
@@ -4129,11 +4129,11 @@ public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusAcqui
 
 /*
  * Invoked when the name is acquired.
- * connection  :
+ * connection :
  * The GDBusConnection on which to acquired the name.
- * name  :
+ * name :
  * The name being owned.
- * user_data  :
+ * user_data :
  * User data passed to g_bus_own_name() or g_bus_own_name_on_connection().
  * Since 2.26
  */
@@ -4142,12 +4142,12 @@ public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusNameA
 
 /*
  * Invoked when the name is lost or connection has been closed.
- * connection  :
+ * connection :
  * The GDBusConnection on which to acquire the name or NULL if
  * the connection was disconnected.
- * name  :
+ * name :
  * The name being owned.
- * user_data  :
+ * user_data :
  * User data passed to g_bus_own_name() or g_bus_own_name_on_connection().
  * Since 2.26
  */
@@ -4156,13 +4156,13 @@ public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusNameL
 
 /*
  * Invoked when the name being watched is known to have to have a owner.
- * connection  :
+ * connection :
  * The GDBusConnection the name is being watched on.
- * name  :
+ * name :
  * The name being watched.
- * name_owner  :
+ * name_owner :
  * Unique name of the owner of the name being watched.
- * user_data  :
+ * user_data :
  * User data passed to g_bus_watch_name().
  * Since 2.26
  */
@@ -4171,11 +4171,11 @@ public alias extern(C) void  function (GDBusConnection*, char*, char*, void*) GB
 
 /*
  * Invoked when the name being watched is known not to have to have a owner.
- * connection  :
+ * connection :
  * The GDBusConnection the name is being watched on.
- * name  :
+ * name :
  * The name being watched.
- * user_data  :
+ * user_data :
  * User data passed to g_bus_watch_name().
  * Since 2.26
  */
@@ -4191,14 +4191,14 @@ public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusNameV
  * If value is NULL then it means that the mapping function is being
  * given a "last chance" to successfully return a valid value. TRUE
  * must be returned in this case.
- * value  :
+ * value :
  * the GVariant to map, or NULL
- * result  :
+ * result :
  * the result of the mapping. [out]
- * user_data  :
+ * user_data :
  * the user data that was passed to
  * g_settings_get_mapped(). [closure]
- * Returns  :
+ * Returns :
  * TRUE if the conversion succeeded, FALSE in case of an error
  */
 // gboolean (*GSettingsGetMapping) (GVariant *value,  gpointer *result,  gpointer user_data);
@@ -4207,13 +4207,13 @@ public alias extern(C) int  function (GVariant*, gpointer*, void*) GSettingsGetM
 /*
  * The type for the function that is used to convert an object property
  * value to a GVariant for storing it in GSettings.
- * value  :
+ * value :
  * a GValue containing the property value to map
- * expected_type  :
+ * expected_type :
  * the GVariantType to create
- * user_data  :
+ * user_data :
  * user data that was specified when the binding was created
- * Returns  :
+ * Returns :
  * a new GVariant holding the data from value,
  * or NULL in case of an error
  */
@@ -4224,13 +4224,13 @@ public alias extern(C) GVariant *  function (GValue*, GVariantType*, void*) GSet
  * The type for the function that is used to convert from GSettings to
  * an object property. The value is already initialized to hold values
  * of the appropriate type.
- * value  :
+ * value :
  * return location for the property value
- * variant  :
+ * variant :
  * the GVariant
- * user_data  :
+ * user_data :
  * user data that was specified when the binding was created
- * Returns  :
+ * Returns :
  * TRUE if the conversion succeeded, FALSE in case of an error
  * Property Details
  * The "backend" property

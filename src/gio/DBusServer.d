@@ -138,7 +138,7 @@ public class DBusServer : ObjectG, InitableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(GDBusConnection*, DBusServer)[] onNewConnectionListeners;
 	/**
@@ -201,7 +201,7 @@ public class DBusServer : ObjectG, InitableIF
 	 * incoming connections.
 	 * The returned GDBusServer isn't active - you have to start it with
 	 * g_dbus_server_start().
-	 * See Example  6, “D-Bus peer-to-peer example” for how GDBusServer can
+	 * See Example 6, “D-Bus peer-to-peer example” for how GDBusServer can
 	 * be used.
 	 * This is a synchronous failable constructor.
 	 * Since 2.26

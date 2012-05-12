@@ -108,7 +108,7 @@ public class Document
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Document)[] onLoadCompleteListeners;
 	/**

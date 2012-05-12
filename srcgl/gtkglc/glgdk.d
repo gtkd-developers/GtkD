@@ -143,24 +143,23 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// glgdk.GLdInit
-	
+
 	void function(int* argc, char*** argv) c_gdk_gl_init;
 	gboolean function(int* argc, char*** argv) c_gdk_gl_init_check;
 	gboolean function(int* argc, char*** argv) c_gdk_gl_parse_args;
-	
+
 	// glgdk.GLQuery
-	
+
 	gboolean function() c_gdk_gl_query_extension;
 	gboolean function(GdkDisplay* display) c_gdk_gl_query_extension_for_display;
 	gboolean function(int* major, int* minor) c_gdk_gl_query_version;
 	gboolean function(GdkDisplay* display, int* major, int* minor) c_gdk_gl_query_version_for_display;
 	gboolean function(char* extension) c_gdk_gl_query_gl_extension;
 	GdkGLProc function(char* procName) c_gdk_gl_get_proc_address;
-	
+
 	// glgdk.GLConfig
-	
+
 	GdkGLConfig* function(int* attribList) c_gdk_gl_config_new;
 	GdkGLConfig* function(GdkScreen* screen, int* attribList) c_gdk_gl_config_new_for_screen;
 	GdkGLConfig* function(GdkGLConfigMode mode) c_gdk_gl_config_new_by_mode;
@@ -180,9 +179,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkGLConfig* glconfig) c_gdk_gl_config_has_depth_buffer;
 	gboolean function(GdkGLConfig* glconfig) c_gdk_gl_config_has_stencil_buffer;
 	gboolean function(GdkGLConfig* glconfig) c_gdk_gl_config_has_accum_buffer;
-	
+
 	// glgdk.GLContext
-	
+
 	GdkGLContext* function(GdkGLDrawable* gldrawable, GdkGLContext* shareList, gboolean direct, int renderType) c_gdk_gl_context_new;
 	void function(GdkGLContext* glcontext) c_gdk_gl_context_destroy;
 	gboolean function(GdkGLContext* glcontext, GdkGLContext* src, ulong mask) c_gdk_gl_context_copy;
@@ -192,9 +191,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkGLContext* glcontext) c_gdk_gl_context_is_direct;
 	int function(GdkGLContext* glcontext) c_gdk_gl_context_get_render_type;
 	GdkGLContext* function() c_gdk_gl_context_get_current;
-	
+
 	// glgdk.GLDrawable
-	
+
 	gboolean function(GdkGLDrawable* gldrawable, GdkGLContext* glcontext) c_gdk_gl_drawable_make_current;
 	gboolean function(GdkGLDrawable* gldrawable) c_gdk_gl_drawable_is_double_buffered;
 	void function(GdkGLDrawable* gldrawable) c_gdk_gl_drawable_swap_buffers;
@@ -205,9 +204,9 @@ mixin( gshared ~"extern(C)
 	GdkGLConfig* function(GdkGLDrawable* gldrawable) c_gdk_gl_drawable_get_gl_config;
 	void function(GdkGLDrawable* gldrawable, gint* width, gint* height) c_gdk_gl_drawable_get_size;
 	GdkGLDrawable* function() c_gdk_gl_drawable_get_current;
-	
+
 	// glgdk.GLPixmap
-	
+
 	GdkGLPixmap* function(GdkGLConfig* glconfig, GdkPixmap* pixmap, int* attribList) c_gdk_gl_pixmap_new;
 	void function(GdkGLPixmap* glpixmap) c_gdk_gl_pixmap_destroy;
 	GdkPixmap* function(GdkGLPixmap* glpixmap) c_gdk_gl_pixmap_get_pixmap;
@@ -215,9 +214,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkPixmap* pixmap) c_gdk_pixmap_unset_gl_capability;
 	gboolean function(GdkPixmap* pixmap) c_gdk_pixmap_is_gl_capable;
 	GdkGLPixmap* function(GdkPixmap* pixmap) c_gdk_pixmap_get_gl_pixmap;
-	
+
 	// glgdk.GLWindow
-	
+
 	GdkGLWindow* function(GdkGLConfig* glconfig, GdkWindow* window, int* attribList) c_gdk_gl_window_new;
 	void function(GdkGLWindow* glwindow) c_gdk_gl_window_destroy;
 	GdkWindow* function(GdkGLWindow* glwindow) c_gdk_gl_window_get_window;
@@ -225,14 +224,14 @@ mixin( gshared ~"extern(C)
 	void function(GdkWindow* window) c_gdk_window_unset_gl_capability;
 	gboolean function(GdkWindow* window) c_gdk_window_is_gl_capable;
 	GdkGLWindow* function(GdkWindow* window) c_gdk_window_get_gl_window;
-	
+
 	// glgdk.GLFont
-	
+
 	PangoFont* function(PangoFontDescription* fontDesc, int first, int count, int listBase) c_gdk_gl_font_use_pango_font;
 	PangoFont* function(GdkDisplay* display, PangoFontDescription* fontDesc, int first, int count, int listBase) c_gdk_gl_font_use_pango_font_for_display;
-	
+
 	// glgdk.GLDraw
-	
+
 	void function(gboolean solid, double size) c_gdk_gl_draw_cube;
 	void function(gboolean solid, double radius, int slices, int stacks) c_gdk_gl_draw_sphere;
 	void function(gboolean solid, double base, double height, int slices, int stacks) c_gdk_gl_draw_cone;
@@ -242,12 +241,12 @@ mixin( gshared ~"extern(C)
 	void function(gboolean solid) c_gdk_gl_draw_dodecahedron;
 	void function(gboolean solid) c_gdk_gl_draw_icosahedron;
 	void function(gboolean solid, double scale) c_gdk_gl_draw_teapot;
-	
+
 	// glgdk.
-	
-	
+
+
 	// glgdk.
-	
+
 }");
 
 // glgdk.GLdInit

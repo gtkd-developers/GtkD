@@ -190,7 +190,7 @@ public class Menu : MenuShell
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(GtkScrollType, Menu)[] onMoveScrollListeners;
 	/**

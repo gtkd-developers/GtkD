@@ -127,7 +127,7 @@ public class ThreadedSocketService : SocketService
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(GSocketConnection*, GObject*, ThreadedSocketService)[] onRunListeners;
 	/**

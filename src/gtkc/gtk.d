@@ -3904,9 +3904,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gtk.Main
-	
+
 	gchar* function() c_gtk_set_locale;
 	void function() c_gtk_disable_setlocale;
 	PangoLanguage* function() c_gtk_get_default_language;
@@ -3941,23 +3940,23 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkModifierType* state) c_gtk_get_current_event_state;
 	GtkWidget* function(GdkEvent* event) c_gtk_get_event_widget;
 	void function(GtkWidget* widget, GdkEvent* event) c_gtk_propagate_event;
-	
+
 	// gtk.Timeout
-	
+
 	guint function(guint32 interval, GtkFunction funct, GtkCallbackMarshal marshal, gpointer data, GDestroyNotify destroy) c_gtk_timeout_add_full;
 	guint function(guint32 interval, GtkFunction funct, gpointer data) c_gtk_timeout_add;
 	void function(guint timeoutHandlerId) c_gtk_timeout_remove;
-	
+
 	// gtk.Idle
-	
+
 	guint function(GtkFunction funct, gpointer data) c_gtk_idle_add;
 	guint function(gint priority, GtkFunction funct, gpointer data) c_gtk_idle_add_priority;
 	guint function(gint priority, GtkFunction funct, GtkCallbackMarshal marshal, gpointer data, GDestroyNotify destroy) c_gtk_idle_add_full;
 	void function(guint idleHandlerId) c_gtk_idle_remove;
 	void function(gpointer data) c_gtk_idle_remove_by_data;
-	
+
 	// gtk.AccelGroup
-	
+
 	GtkAccelGroup* function() c_gtk_accel_group_new;
 	void function(GtkAccelGroup* accelGroup, guint accelKey, GdkModifierType accelMods, GtkAccelFlags accelFlags, GClosure* closure) c_gtk_accel_group_connect;
 	void function(GtkAccelGroup* accelGroup, gchar* accelPath, GClosure* closure) c_gtk_accel_group_connect_by_path;
@@ -3979,9 +3978,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(guint acceleratorKey, GdkModifierType acceleratorMods) c_gtk_accelerator_get_label;
 	void function(GdkModifierType defaultModMask) c_gtk_accelerator_set_default_mod_mask;
 	guint function() c_gtk_accelerator_get_default_mod_mask;
-	
+
 	// gtk.AccelMap
-	
+
 	void function(gchar* accelPath, guint accelKey, GdkModifierType accelMods) c_gtk_accel_map_add_entry;
 	gboolean function(gchar* accelPath, GtkAccelKey* key) c_gtk_accel_map_lookup_entry;
 	gboolean function(gchar* accelPath, guint accelKey, GdkModifierType accelMods, gboolean replace) c_gtk_accel_map_change_entry;
@@ -3996,9 +3995,9 @@ mixin( gshared ~"extern(C)
 	GtkAccelMap* function() c_gtk_accel_map_get;
 	void function(gchar* accelPath) c_gtk_accel_map_lock_path;
 	void function(gchar* accelPath) c_gtk_accel_map_unlock_path;
-	
+
 	// gtk.Clipboard
-	
+
 	GtkClipboard* function(GdkAtom selection) c_gtk_clipboard_get;
 	GtkClipboard* function(GdkDisplay* display, GdkAtom selection) c_gtk_clipboard_get_for_display;
 	GdkDisplay* function(GtkClipboard* clipboard) c_gtk_clipboard_get_display;
@@ -4027,9 +4026,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkClipboard* clipboard, GdkAtom target) c_gtk_clipboard_wait_is_target_available;
 	void function(GtkClipboard* clipboard, GtkTargetEntry* targets, gint nTargets) c_gtk_clipboard_set_can_store;
 	void function(GtkClipboard* clipboard) c_gtk_clipboard_store;
-	
+
 	// gtk.DragAndDrop
-	
+
 	void function(GtkWidget* widget, GtkDestDefaults flags, GtkTargetEntry* targets, gint nTargets, GdkDragAction actions) c_gtk_drag_dest_set;
 	void function(GtkWidget* widget, GdkWindow* proxyWindow, GdkDragProtocol protocol, gboolean useCoordinates) c_gtk_drag_dest_set_proxy;
 	void function(GtkWidget* widget) c_gtk_drag_dest_unset;
@@ -4066,9 +4065,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkWidget* widget) c_gtk_drag_source_add_text_targets;
 	void function(GtkWidget* widget) c_gtk_drag_source_add_image_targets;
 	void function(GtkWidget* widget) c_gtk_drag_source_add_uri_targets;
-	
+
 	// gtk.IconTheme
-	
+
 	GtkIconTheme* function() c_gtk_icon_theme_new;
 	GtkIconTheme* function() c_gtk_icon_theme_get_default;
 	GtkIconTheme* function(GdkScreen* screen) c_gtk_icon_theme_get_for_screen;
@@ -4089,9 +4088,9 @@ mixin( gshared ~"extern(C)
 	char* function(GtkIconTheme* iconTheme) c_gtk_icon_theme_get_example_icon_name;
 	gboolean function(GtkIconTheme* iconTheme) c_gtk_icon_theme_rescan_if_needed;
 	void function(gchar* iconName, gint size, GdkPixbuf* pixbuf) c_gtk_icon_theme_add_builtin_icon;
-	
+
 	// gtk.IconInfo
-	
+
 	GtkIconInfo* function(GtkIconInfo* iconInfo) c_gtk_icon_info_copy;
 	void function(GtkIconInfo* iconInfo) c_gtk_icon_info_free;
 	GtkIconInfo* function(GtkIconTheme* iconTheme, GdkPixbuf* pixbuf) c_gtk_icon_info_new_for_pixbuf;
@@ -4103,9 +4102,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkIconInfo* iconInfo, GdkRectangle* rectangle) c_gtk_icon_info_get_embedded_rect;
 	gboolean function(GtkIconInfo* iconInfo, GdkPoint** points, gint* nPoints) c_gtk_icon_info_get_attach_points;
 	gchar* function(GtkIconInfo* iconInfo) c_gtk_icon_info_get_display_name;
-	
+
 	// gtk.StockItem
-	
+
 	void function(GtkStockItem* items, guint nItems) c_gtk_stock_add;
 	void function(GtkStockItem* items, guint nItems) c_gtk_stock_add_static;
 	GtkStockItem* function(GtkStockItem* item) c_gtk_stock_item_copy;
@@ -4113,9 +4112,9 @@ mixin( gshared ~"extern(C)
 	GSList* function() c_gtk_stock_list_ids;
 	gboolean function(gchar* stockId, GtkStockItem* item) c_gtk_stock_lookup;
 	void function(gchar* domain, GtkTranslateFunc func, gpointer data, GDestroyNotify notify) c_gtk_stock_set_translate_func;
-	
+
 	// gtk.IconSource
-	
+
 	GtkIconSource* function(GtkIconSource* source) c_gtk_icon_source_copy;
 	void function(GtkIconSource* source) c_gtk_icon_source_free;
 	GtkTextDirection function(GtkIconSource* source) c_gtk_icon_source_get_direction;
@@ -4137,18 +4136,18 @@ mixin( gshared ~"extern(C)
 	void function(GtkIconSource* source, gboolean setting) c_gtk_icon_source_set_size_wildcarded;
 	void function(GtkIconSource* source, GtkStateType state) c_gtk_icon_source_set_state;
 	void function(GtkIconSource* source, gboolean setting) c_gtk_icon_source_set_state_wildcarded;
-	
+
 	// gtk.IconFactory
-	
+
 	void function(GtkIconFactory* factory, gchar* stockId, GtkIconSet* iconSet) c_gtk_icon_factory_add;
 	void function(GtkIconFactory* factory) c_gtk_icon_factory_add_default;
 	GtkIconSet* function(GtkIconFactory* factory, gchar* stockId) c_gtk_icon_factory_lookup;
 	GtkIconSet* function(gchar* stockId) c_gtk_icon_factory_lookup_default;
 	GtkIconFactory* function() c_gtk_icon_factory_new;
 	void function(GtkIconFactory* factory) c_gtk_icon_factory_remove_default;
-	
+
 	// gtk.IconSet
-	
+
 	void function(GtkIconSet* iconSet, GtkIconSource* source) c_gtk_icon_set_add_source;
 	GtkIconSet* function(GtkIconSet* iconSet) c_gtk_icon_set_copy;
 	GtkIconSet* function() c_gtk_icon_set_new;
@@ -4157,18 +4156,18 @@ mixin( gshared ~"extern(C)
 	GdkPixbuf* function(GtkIconSet* iconSet, GtkStyle* style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, GtkWidget* widget, char* detail) c_gtk_icon_set_render_icon;
 	void function(GtkIconSet* iconSet) c_gtk_icon_set_unref;
 	void function(GtkIconSet* iconSet, GtkIconSize** sizes, gint* nSizes) c_gtk_icon_set_get_sizes;
-	
+
 	// gtk.IconSize
-	
+
 	gboolean function(GtkIconSize size, gint* width, gint* height) c_gtk_icon_size_lookup;
 	gboolean function(GtkSettings* settings, GtkIconSize size, gint* width, gint* height) c_gtk_icon_size_lookup_for_settings;
 	GtkIconSize function(gchar* name, gint width, gint height) c_gtk_icon_size_register;
 	void function(gchar* alia, GtkIconSize target) c_gtk_icon_size_register_alias;
 	GtkIconSize function(gchar* name) c_gtk_icon_size_from_name;
 	gchar* function(GtkIconSize size) c_gtk_icon_size_get_name;
-	
+
 	// gtk.RcStyle
-	
+
 	GScanner* function() c_gtk_rc_scanner_new;
 	GtkStyle* function(GtkWidget* widget) c_gtk_rc_get_style;
 	GtkStyle* function(GtkSettings* settings, char* widgetPath, char* classPath, GType type) c_gtk_rc_get_style_by_paths;
@@ -4197,9 +4196,9 @@ mixin( gshared ~"extern(C)
 	GtkRcStyle* function(GtkRcStyle* orig) c_gtk_rc_style_copy;
 	void function(GtkRcStyle* rcStyle) c_gtk_rc_style_ref;
 	void function(GtkRcStyle* rcStyle) c_gtk_rc_style_unref;
-	
+
 	// gtk.Settings
-	
+
 	GtkSettings* function() c_gtk_settings_get_default;
 	GtkSettings* function(GdkScreen* screen) c_gtk_settings_get_for_screen;
 	void function(GParamSpec* pspec) c_gtk_settings_install_property;
@@ -4213,9 +4212,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkSettings* settings, gchar* name, gchar* vString, gchar* origin) c_gtk_settings_set_string_property;
 	void function(GtkSettings* settings, gchar* name, glong vLong, gchar* origin) c_gtk_settings_set_long_property;
 	void function(GtkSettings* settings, gchar* name, gdouble vDouble, gchar* origin) c_gtk_settings_set_double_property;
-	
+
 	// gtk.BindingSet
-	
+
 	void function(GtkBindingSet* bindingSet, guint keyval, GdkModifierType modifiers, gchar* signalName, GSList* bindingArgs) c_gtk_binding_entry_add_signall;
 	void function(GtkBindingSet* bindingSet, guint keyval, GdkModifierType modifiers) c_gtk_binding_entry_clear;
 	guint function(GScanner* scanner) c_gtk_binding_parse_binding;
@@ -4229,17 +4228,17 @@ mixin( gshared ~"extern(C)
 	void function(GtkBindingSet* bindingSet, guint keyval, GdkModifierType modifiers) c_gtk_binding_entry_skip;
 	void function(GtkBindingSet* bindingSet, guint keyval, GdkModifierType modifiers) c_gtk_binding_entry_remove;
 	void function(GtkBindingSet* bindingSet, GtkPathType pathType, gchar* pathPattern, GtkPathPriorityType priority) c_gtk_binding_set_add_path;
-	
+
 	// gtk.StandardEnumerations
-	
-	
+
+
 	// gtk.GCs
-	
+
 	GdkGC* function(gint depth, GdkColormap* colormap, GdkGCValues* values, GdkGCValuesMask valuesMask) c_gtk_gc_get;
 	void function(GdkGC* gc) c_gtk_gc_release;
-	
+
 	// gtk.Style
-	
+
 	GtkStyle* function() c_gtk_style_new;
 	GtkStyle* function(GtkStyle* style) c_gtk_style_copy;
 	GtkStyle* function(GtkStyle* style, GdkWindow* window) c_gtk_style_attach;
@@ -4300,15 +4299,15 @@ mixin( gshared ~"extern(C)
 	void function(GtkStyle* style, GdkWindow* window, GtkStateType stateType, gboolean useText, GdkRectangle* area, GtkWidget* widget, gchar* detail, gint x, gint y, PangoLayout* layout) c_gtk_paint_layout;
 	void function(GtkStyle* style, GdkWindow* window, GtkStateType stateType, GdkRectangle* area, GtkWidget* widget, gchar* detail, GdkWindowEdge edge, gint x, gint y, gint width, gint height) c_gtk_paint_resize_grip;
 	void function(GtkWidget* widget, GdkDrawable* drawable, GdkRectangle* area, GdkRectangle* location, gboolean isPrimary, GtkTextDirection direction, gboolean drawArrow) c_gtk_draw_insertion_cursor;
-	
+
 	// gtk.Border
-	
+
 	GtkBorder* function() c_gtk_border_new;
 	GtkBorder* function(GtkBorder* border) c_gtk_border_copy;
 	void function(GtkBorder* border) c_gtk_border_free;
-	
+
 	// gtk.TargetList
-	
+
 	GtkTargetList* function(GtkTargetEntry* targets, guint ntargets) c_gtk_target_list_new;
 	GtkTargetList* function(GtkTargetList* list) c_gtk_target_list_ref;
 	void function(GtkTargetList* list) c_gtk_target_list_unref;
@@ -4326,9 +4325,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkAtom* targets, gint nTargets) c_gtk_targets_include_text;
 	gboolean function(GdkAtom* targets, gint nTargets) c_gtk_targets_include_uri;
 	gboolean function(GdkAtom* targets, gint nTargets, GtkTextBuffer* buffer) c_gtk_targets_include_rich_text;
-	
+
 	// gtk.Selections
-	
+
 	gboolean function(GtkWidget* widget, GdkAtom selection, guint32 time) c_gtk_selection_owner_set;
 	gboolean function(GdkDisplay* display, GtkWidget* widget, GdkAtom selection, guint32 time) c_gtk_selection_owner_set_for_display;
 	void function(GtkWidget* widget, GdkAtom selection, GdkAtom target, guint info) c_gtk_selection_add_target;
@@ -4358,13 +4357,13 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkWidget* widget, GdkEventSelection* event) c_gtk_selection_clear;
 	GtkSelectionData* function(GtkSelectionData* data) c_gtk_selection_data_copy;
 	void function(GtkSelectionData* data) c_gtk_selection_data_free;
-	
+
 	// gtk.Version
-	
+
 	gchar* function(guint requiredMajor, guint requiredMinor, guint requiredMicro) c_gtk_check_version;
-	
+
 	// gtk.Signals
-	
+
 	guint function(gchar* name, GtkSignalRunType signalFlags, GType objectType, guint functionOffset, GSignalCMarshaller marshaller, GType returnVal, guint nArgs, ... ) c_gtk_signal_new;
 	guint function(gchar* name, GtkSignalRunType signalFlags, GType objectType, guint functionOffset, GSignalCMarshaller marshaller, GType returnVal, guint nArgs, GType* args) c_gtk_signal_newv;
 	void function(GtkObject* object, guint signalId, ... ) c_gtk_signal_emit;
@@ -4375,9 +4374,9 @@ mixin( gshared ~"extern(C)
 	gulong function(GtkObject* object, gchar* name, GCallback func, GtkCallbackMarshal unsupported, gpointer data, GDestroyNotify destroyFunc, gint objectSignal, gint after) c_gtk_signal_connect_full;
 	void function(GtkObject* object, gchar* name, GCallback func, gpointer funcData, GtkObject* aliveObject) c_gtk_signal_connect_while_alive;
 	void function(GtkObject* object, gchar* name, GCallback func, GtkObject* aliveObject) c_gtk_signal_connect_object_while_alive;
-	
+
 	// gtk.Types
-	
+
 	void function(GTypeDebugFlags debugFlags) c_gtk_type_init;
 	GtkType function(GtkType parentType, GtkTypeInfo* gtkinfo) c_gtk_type_unique;
 	gpointer function(GtkType type) c_gtk_type_class;
@@ -4386,9 +4385,9 @@ mixin( gshared ~"extern(C)
 	GtkFlagValue* function(GtkType flagsType) c_gtk_type_flags_get_values;
 	GtkEnumValue* function(GtkType enumType, gchar* valueName) c_gtk_type_enum_find_value;
 	GtkFlagValue* function(GtkType flagsType, gchar* valueName) c_gtk_type_flags_find_value;
-	
+
 	// gtk.Testing
-	
+
 	GtkWidget* function(gchar* windowTitle, gchar* dialogText) c_gtk_test_create_simple_window;
 	GtkWidget* function(GType widgetType, gchar* firstPropertyName, ... ) c_gtk_test_create_widget;
 	GtkWidget* function(gchar* windowTitle, gchar* dialogText, ... ) c_gtk_test_display_button_window;
@@ -4405,9 +4404,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkWidget* widget, gchar* string) c_gtk_test_text_set;
 	gboolean function(GtkWidget* widget, guint button, GdkModifierType modifiers) c_gtk_test_widget_click;
 	gboolean function(GtkWidget* widget, guint keyval, GdkModifierType modifiers) c_gtk_test_widget_send_key;
-	
+
 	// gtk.MountOperation
-	
+
 	GMountOperation* function(GtkWindow* parent) c_gtk_mount_operation_new;
 	gboolean function(GtkMountOperation* op) c_gtk_mount_operation_is_showing;
 	void function(GtkMountOperation* op, GtkWindow* parent) c_gtk_mount_operation_set_parent;
@@ -4415,9 +4414,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkMountOperation* op, GdkScreen* screen) c_gtk_mount_operation_set_screen;
 	GdkScreen* function(GtkMountOperation* op) c_gtk_mount_operation_get_screen;
 	gboolean function(GdkScreen* screen, gchar* uri, guint32 timestamp, GError** error) c_gtk_show_uri;
-	
+
 	// gtk.Dialog
-	
+
 	GtkWidget* function() c_gtk_dialog_new;
 	GtkWidget* function(gchar* title, GtkWindow* parent, GtkDialogFlags flags, gchar* firstButtonText, ... ) c_gtk_dialog_new_with_buttons;
 	gint function(GtkDialog* dialog) c_gtk_dialog_run;
@@ -4436,16 +4435,16 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkScreen* screen) c_gtk_alternative_dialog_button_order;
 	void function(GtkDialog* dialog, gint firstResponseId, ... ) c_gtk_dialog_set_alternative_button_order;
 	void function(GtkDialog* dialog, gint nParams, gint* newOrder) c_gtk_dialog_set_alternative_button_order_from_array;
-	
+
 	// gtk.Invisible
-	
+
 	GtkWidget* function() c_gtk_invisible_new;
 	GtkWidget* function(GdkScreen* screen) c_gtk_invisible_new_for_screen;
 	void function(GtkInvisible* invisible, GdkScreen* screen) c_gtk_invisible_set_screen;
 	GdkScreen* function(GtkInvisible* invisible) c_gtk_invisible_get_screen;
-	
+
 	// gtk.MessageDialog
-	
+
 	GtkWidget* function(GtkWindow* parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, gchar* messageFormat, ... ) c_gtk_message_dialog_new;
 	GtkWidget* function(GtkWindow* parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, gchar* messageFormat, ... ) c_gtk_message_dialog_new_with_markup;
 	void function(GtkMessageDialog* messageDialog, gchar* str) c_gtk_message_dialog_set_markup;
@@ -4454,12 +4453,12 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkMessageDialog* messageDialog) c_gtk_message_dialog_get_message_area;
 	void function(GtkMessageDialog* messageDialog, gchar* messageFormat, ... ) c_gtk_message_dialog_format_secondary_text;
 	void function(GtkMessageDialog* messageDialog, gchar* messageFormat, ... ) c_gtk_message_dialog_format_secondary_markup;
-	
+
 	// gtk.PopupBox
-	
-	
+
+
 	// gtk.Window
-	
+
 	gboolean function(gchar* filename, GError** err) c_gtk_window_set_default_icon_from_file;
 	gboolean function(GtkWindow* window, gchar* filename, GError** err) c_gtk_window_set_icon_from_file;
 	GtkWidget* function(GtkWindowType type) c_gtk_window_new;
@@ -4563,20 +4562,20 @@ mixin( gshared ~"extern(C)
 	void function(GtkWindow* window, gdouble opacity) c_gtk_window_set_opacity;
 	gboolean function(GtkWindow* window) c_gtk_window_get_mnemonics_visible;
 	void function(GtkWindow* window, gboolean setting) c_gtk_window_set_mnemonics_visible;
-	
+
 	// gtk.
-	
-	
+
+
 	// gtk.WindowGroup
-	
+
 	GtkWindowGroup* function() c_gtk_window_group_new;
 	void function(GtkWindowGroup* windowGroup, GtkWindow* window) c_gtk_window_group_add_window;
 	void function(GtkWindowGroup* windowGroup, GtkWindow* window) c_gtk_window_group_remove_window;
 	GList* function(GtkWindowGroup* windowGroup) c_gtk_window_group_list_windows;
 	GtkWidget* function(GtkWindowGroup* windowGroup) c_gtk_window_group_get_current_grab;
-	
+
 	// gtk.AboutDialog
-	
+
 	GtkWidget* function() c_gtk_about_dialog_new;
 	gchar* function(GtkAboutDialog* about) c_gtk_about_dialog_get_name;
 	void function(GtkAboutDialog* about, gchar* name) c_gtk_about_dialog_set_name;
@@ -4611,9 +4610,9 @@ mixin( gshared ~"extern(C)
 	GtkAboutDialogActivateLinkFunc function(GtkAboutDialogActivateLinkFunc func, gpointer data, GDestroyNotify destroy) c_gtk_about_dialog_set_email_hook;
 	GtkAboutDialogActivateLinkFunc function(GtkAboutDialogActivateLinkFunc func, gpointer data, GDestroyNotify destroy) c_gtk_about_dialog_set_url_hook;
 	void function(GtkWindow* parent, gchar* firstPropertyName, ... ) c_gtk_show_about_dialog;
-	
+
 	// gtk.Assistant
-	
+
 	GtkWidget* function() c_gtk_assistant_new;
 	gint function(GtkAssistant* assistant) c_gtk_assistant_get_current_page;
 	void function(GtkAssistant* assistant, gint pageNum) c_gtk_assistant_set_current_page;
@@ -4637,24 +4636,24 @@ mixin( gshared ~"extern(C)
 	void function(GtkAssistant* assistant, GtkWidget* child) c_gtk_assistant_remove_action_widget;
 	void function(GtkAssistant* assistant) c_gtk_assistant_update_buttons_state;
 	void function(GtkAssistant* assistant) c_gtk_assistant_commit;
-	
+
 	// gtk.OffscreenWindow
-	
+
 	GtkWidget* function() c_gtk_offscreen_window_new;
 	GdkPixmap* function(GtkOffscreenWindow* offscreen) c_gtk_offscreen_window_get_pixmap;
 	GdkPixbuf* function(GtkOffscreenWindow* offscreen) c_gtk_offscreen_window_get_pixbuf;
-	
+
 	// gtk.AccelLabel
-	
+
 	GtkWidget* function(gchar* string) c_gtk_accel_label_new;
 	void function(GtkAccelLabel* accelLabel, GClosure* accelClosure) c_gtk_accel_label_set_accel_closure;
 	GtkWidget* function(GtkAccelLabel* accelLabel) c_gtk_accel_label_get_accel_widget;
 	void function(GtkAccelLabel* accelLabel, GtkWidget* accelWidget) c_gtk_accel_label_set_accel_widget;
 	guint function(GtkAccelLabel* accelLabel) c_gtk_accel_label_get_accel_width;
 	gboolean function(GtkAccelLabel* accelLabel) c_gtk_accel_label_refetch;
-	
+
 	// gtk.Image
-	
+
 	void function(GtkImage* image, GtkIconSet** iconSet, GtkIconSize* size) c_gtk_image_get_icon_set;
 	void function(GtkImage* image, GdkImage** gdkImage, GdkBitmap** mask) c_gtk_image_get_image;
 	GdkPixbuf* function(GtkImage* image) c_gtk_image_get_pixbuf;
@@ -4688,9 +4687,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkImage* image, GdkImage** val, GdkBitmap** mask) c_gtk_image_get;
 	void function(GtkImage* image, gint pixelSize) c_gtk_image_set_pixel_size;
 	gint function(GtkImage* image) c_gtk_image_get_pixel_size;
-	
+
 	// gtk.Label
-	
+
 	GtkWidget* function(gchar* str) c_gtk_label_new;
 	void function(GtkLabel* label, gchar* str) c_gtk_label_set_text;
 	void function(GtkLabel* label, PangoAttrList* attrs) c_gtk_label_set_attributes;
@@ -4737,9 +4736,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(GtkLabel* label) c_gtk_label_get_current_uri;
 	void function(GtkLabel* label, gboolean trackLinks) c_gtk_label_set_track_visited_links;
 	gboolean function(GtkLabel* label) c_gtk_label_get_track_visited_links;
-	
+
 	// gtk.ProgressBar
-	
+
 	GtkWidget* function() c_gtk_progress_bar_new;
 	void function(GtkProgressBar* pbar) c_gtk_progress_bar_pulse;
 	void function(GtkProgressBar* pbar, gchar* text) c_gtk_progress_bar_set_text;
@@ -4758,9 +4757,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkProgressBar* pbar, guint step) c_gtk_progress_bar_set_activity_step;
 	void function(GtkProgressBar* pbar, guint blocks) c_gtk_progress_bar_set_activity_blocks;
 	void function(GtkProgressBar* pbar, gdouble percentage) c_gtk_progress_bar_update;
-	
+
 	// gtk.Statusbar
-	
+
 	GtkWidget* function() c_gtk_statusbar_new;
 	guint function(GtkStatusbar* statusbar, gchar* contextDescription) c_gtk_statusbar_get_context_id;
 	guint function(GtkStatusbar* statusbar, guint contextId, gchar* text) c_gtk_statusbar_push;
@@ -4770,9 +4769,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkStatusbar* statusbar, gboolean setting) c_gtk_statusbar_set_has_resize_grip;
 	gboolean function(GtkStatusbar* statusbar) c_gtk_statusbar_get_has_resize_grip;
 	GtkWidget* function(GtkStatusbar* statusbar) c_gtk_statusbar_get_message_area;
-	
+
 	// gtk.InfoBar
-	
+
 	GtkWidget* function() c_gtk_info_bar_new;
 	GtkWidget* function(gchar* firstButtonText, ... ) c_gtk_info_bar_new_with_buttons;
 	void function(GtkInfoBar* infoBar, GtkWidget* child, gint responseId) c_gtk_info_bar_add_action_widget;
@@ -4785,9 +4784,9 @@ mixin( gshared ~"extern(C)
 	GtkMessageType function(GtkInfoBar* infoBar) c_gtk_info_bar_get_message_type;
 	GtkWidget* function(GtkInfoBar* infoBar) c_gtk_info_bar_get_action_area;
 	GtkWidget* function(GtkInfoBar* infoBar) c_gtk_info_bar_get_content_area;
-	
+
 	// gtk.StatusIcon
-	
+
 	GtkStatusIcon* function() c_gtk_status_icon_new;
 	GtkStatusIcon* function(GdkPixbuf* pixbuf) c_gtk_status_icon_new_from_pixbuf;
 	GtkStatusIcon* function(gchar* filename) c_gtk_status_icon_new_from_file;
@@ -4825,15 +4824,15 @@ mixin( gshared ~"extern(C)
 	void function(GtkMenu* menu, gint* x, gint* y, gboolean* pushIn, gpointer userData) c_gtk_status_icon_position_menu;
 	gboolean function(GtkStatusIcon* statusIcon, GdkScreen** screen, GdkRectangle* area, GtkOrientation* orientation) c_gtk_status_icon_get_geometry;
 	guint32 function(GtkStatusIcon* statusIcon) c_gtk_status_icon_get_x11_window_id;
-	
+
 	// gtk.Spinner
-	
+
 	GtkWidget* function() c_gtk_spinner_new;
 	void function(GtkSpinner* spinner) c_gtk_spinner_start;
 	void function(GtkSpinner* spinner) c_gtk_spinner_stop;
-	
+
 	// gtk.Button
-	
+
 	GtkWidget* function() c_gtk_button_new;
 	GtkWidget* function(gchar* label) c_gtk_button_new_with_label;
 	GtkWidget* function(gchar* label) c_gtk_button_new_with_mnemonic;
@@ -4860,15 +4859,15 @@ mixin( gshared ~"extern(C)
 	void function(GtkButton* button, GtkPositionType position) c_gtk_button_set_image_position;
 	GtkPositionType function(GtkButton* button) c_gtk_button_get_image_position;
 	GdkWindow* function(GtkButton* button) c_gtk_button_get_event_window;
-	
+
 	// gtk.CheckButton
-	
+
 	GtkWidget* function() c_gtk_check_button_new;
 	GtkWidget* function(gchar* label) c_gtk_check_button_new_with_label;
 	GtkWidget* function(gchar* label) c_gtk_check_button_new_with_mnemonic;
-	
+
 	// gtk.RadioButton
-	
+
 	GtkWidget* function(GSList* group) c_gtk_radio_button_new;
 	GtkWidget* function(GtkRadioButton* radioGroupMember) c_gtk_radio_button_new_from_widget;
 	GtkWidget* function(GSList* group, gchar* label) c_gtk_radio_button_new_with_label;
@@ -4877,9 +4876,9 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkRadioButton* radioGroupMember, gchar* label) c_gtk_radio_button_new_with_mnemonic_from_widget;
 	void function(GtkRadioButton* radioButton, GSList* group) c_gtk_radio_button_set_group;
 	GSList* function(GtkRadioButton* radioButton) c_gtk_radio_button_get_group;
-	
+
 	// gtk.ToggleButton
-	
+
 	GtkWidget* function() c_gtk_toggle_button_new;
 	GtkWidget* function(gchar* label) c_gtk_toggle_button_new_with_label;
 	GtkWidget* function(gchar* label) c_gtk_toggle_button_new_with_mnemonic;
@@ -4890,9 +4889,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkToggleButton* toggleButton, gboolean isActive) c_gtk_toggle_button_set_active;
 	gboolean function(GtkToggleButton* toggleButton) c_gtk_toggle_button_get_inconsistent;
 	void function(GtkToggleButton* toggleButton, gboolean setting) c_gtk_toggle_button_set_inconsistent;
-	
+
 	// gtk.LinkButton
-	
+
 	GtkWidget* function(gchar* uri) c_gtk_link_button_new;
 	GtkWidget* function(gchar* uri, gchar* label) c_gtk_link_button_new_with_label;
 	gchar* function(GtkLinkButton* linkButton) c_gtk_link_button_get_uri;
@@ -4900,9 +4899,9 @@ mixin( gshared ~"extern(C)
 	GtkLinkButtonUriFunc function(GtkLinkButtonUriFunc func, gpointer data, GDestroyNotify destroy) c_gtk_link_button_set_uri_hook;
 	gboolean function(GtkLinkButton* linkButton) c_gtk_link_button_get_visited;
 	void function(GtkLinkButton* linkButton, gboolean visited) c_gtk_link_button_set_visited;
-	
+
 	// gtk.ScaleButton
-	
+
 	GtkWidget* function(GtkIconSize size, gdouble min, gdouble max, gdouble step, gchar** icons) c_gtk_scale_button_new;
 	void function(GtkScaleButton* button, GtkAdjustment* adjustment) c_gtk_scale_button_set_adjustment;
 	void function(GtkScaleButton* button, gchar** icons) c_gtk_scale_button_set_icons;
@@ -4914,13 +4913,13 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkScaleButton* button) c_gtk_scale_button_get_minus_button;
 	void function(GtkScaleButton* button, GtkOrientation orientation) c_gtk_scale_button_set_orientation;
 	GtkOrientation function(GtkScaleButton* button) c_gtk_scale_button_get_orientation;
-	
+
 	// gtk.VolumeButton
-	
+
 	GtkWidget* function() c_gtk_volume_button_new;
-	
+
 	// gtk.Entry
-	
+
 	GtkWidget* function() c_gtk_entry_new;
 	GtkWidget* function(GtkEntryBuffer* buffer) c_gtk_entry_new_with_buffer;
 	GtkWidget* function(gint max) c_gtk_entry_new_with_max_length;
@@ -4990,9 +4989,9 @@ mixin( gshared ~"extern(C)
 	gint function(GtkEntry* entry) c_gtk_entry_get_current_icon_drag_source;
 	GdkWindow* function(GtkEntry* entry, GtkEntryIconPosition iconPos) c_gtk_entry_get_icon_window;
 	GdkWindow* function(GtkEntry* entry) c_gtk_entry_get_text_window;
-	
+
 	// gtk.EntryBuffer
-	
+
 	GtkEntryBuffer* function(gchar* initialChars, gint nInitialChars) c_gtk_entry_buffer_new;
 	gchar* function(GtkEntryBuffer* buffer) c_gtk_entry_buffer_get_text;
 	void function(GtkEntryBuffer* buffer, gchar* chars, gint nChars) c_gtk_entry_buffer_set_text;
@@ -5004,9 +5003,9 @@ mixin( gshared ~"extern(C)
 	guint function(GtkEntryBuffer* buffer, guint position, gint nChars) c_gtk_entry_buffer_delete_text;
 	void function(GtkEntryBuffer* buffer, guint position, guint nChars) c_gtk_entry_buffer_emit_deleted_text;
 	void function(GtkEntryBuffer* buffer, guint position, gchar* chars, guint nChars) c_gtk_entry_buffer_emit_inserted_text;
-	
+
 	// gtk.EntryCompletion
-	
+
 	GtkEntryCompletion* function() c_gtk_entry_completion_new;
 	GtkWidget* function(GtkEntryCompletion* completion) c_gtk_entry_completion_get_entry;
 	void function(GtkEntryCompletion* completion, GtkTreeModel* model) c_gtk_entry_completion_set_model;
@@ -5032,19 +5031,19 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkEntryCompletion* completion) c_gtk_entry_completion_get_popup_set_width;
 	void function(GtkEntryCompletion* completion, gboolean popupSingleMatch) c_gtk_entry_completion_set_popup_single_match;
 	gboolean function(GtkEntryCompletion* completion) c_gtk_entry_completion_get_popup_single_match;
-	
+
 	// gtk.HScale
-	
+
 	GtkWidget* function(GtkAdjustment* adjustment) c_gtk_hscale_new;
 	GtkWidget* function(gdouble min, gdouble max, gdouble step) c_gtk_hscale_new_with_range;
-	
+
 	// gtk.VScale
-	
+
 	GtkWidget* function(GtkAdjustment* adjustment) c_gtk_vscale_new;
 	GtkWidget* function(gdouble min, gdouble max, gdouble step) c_gtk_vscale_new_with_range;
-	
+
 	// gtk.SpinButton
-	
+
 	void function(GtkSpinButton* spinButton, GtkAdjustment* adjustment, gdouble climbRate, guint digits) c_gtk_spin_button_configure;
 	GtkWidget* function(GtkAdjustment* adjustment, gdouble climbRate, guint digits) c_gtk_spin_button_new;
 	GtkWidget* function(gdouble min, gdouble max, gdouble step) c_gtk_spin_button_new_with_range;
@@ -5069,12 +5068,12 @@ mixin( gshared ~"extern(C)
 	GtkSpinButtonUpdatePolicy function(GtkSpinButton* spinButton) c_gtk_spin_button_get_update_policy;
 	gdouble function(GtkSpinButton* spinButton) c_gtk_spin_button_get_value;
 	gboolean function(GtkSpinButton* spinButton) c_gtk_spin_button_get_wrap;
-	
+
 	// gtk.EditableT
-	
-	
+
+
 	// gtk.EditableT
-	
+
 	void function(GtkEditable* editable, gint startPos, gint endPos) c_gtk_editable_select_region;
 	gboolean function(GtkEditable* editable, gint* startPos, gint* endPos) c_gtk_editable_get_selection_bounds;
 	void function(GtkEditable* editable, gchar* newText, gint newTextLength, gint* position) c_gtk_editable_insert_text;
@@ -5088,9 +5087,9 @@ mixin( gshared ~"extern(C)
 	gint function(GtkEditable* editable) c_gtk_editable_get_position;
 	void function(GtkEditable* editable, gboolean isEditable) c_gtk_editable_set_editable;
 	gboolean function(GtkEditable* editable) c_gtk_editable_get_editable;
-	
+
 	// gtk.TextIter
-	
+
 	GtkTextBuffer* function(GtkTextIter* iter) c_gtk_text_iter_get_buffer;
 	GtkTextIter* function(GtkTextIter* iter) c_gtk_text_iter_copy;
 	void function(GtkTextIter* iter) c_gtk_text_iter_free;
@@ -5181,9 +5180,9 @@ mixin( gshared ~"extern(C)
 	gint function(GtkTextIter* lhs, GtkTextIter* rhs) c_gtk_text_iter_compare;
 	gboolean function(GtkTextIter* iter, GtkTextIter* start, GtkTextIter* end) c_gtk_text_iter_in_range;
 	void function(GtkTextIter* first, GtkTextIter* second) c_gtk_text_iter_order;
-	
+
 	// gtk.TextMark
-	
+
 	GtkTextMark* function(gchar* name, gboolean leftGravity) c_gtk_text_mark_new;
 	void function(GtkTextMark* mark, gboolean setting) c_gtk_text_mark_set_visible;
 	gboolean function(GtkTextMark* mark) c_gtk_text_mark_get_visible;
@@ -5191,9 +5190,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(GtkTextMark* mark) c_gtk_text_mark_get_name;
 	GtkTextBuffer* function(GtkTextMark* mark) c_gtk_text_mark_get_buffer;
 	gboolean function(GtkTextMark* mark) c_gtk_text_mark_get_left_gravity;
-	
+
 	// gtk.TextBuffer
-	
+
 	GtkTextBuffer* function(GtkTextTagTable* table) c_gtk_text_buffer_new;
 	gint function(GtkTextBuffer* buffer) c_gtk_text_buffer_get_line_count;
 	gint function(GtkTextBuffer* buffer) c_gtk_text_buffer_get_char_count;
@@ -5267,33 +5266,33 @@ mixin( gshared ~"extern(C)
 	guint8* function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GdkAtom format, GtkTextIter* start, GtkTextIter* end, gsize* length) c_gtk_text_buffer_serialize;
 	void function(GtkTextBuffer* buffer, GdkAtom format) c_gtk_text_buffer_unregister_deserialize_format;
 	void function(GtkTextBuffer* buffer, GdkAtom format) c_gtk_text_buffer_unregister_serialize_format;
-	
+
 	// gtk.TextTag
-	
+
 	GtkTextTag* function(gchar* name) c_gtk_text_tag_new;
 	gint function(GtkTextTag* tag) c_gtk_text_tag_get_priority;
 	void function(GtkTextTag* tag, gint priority) c_gtk_text_tag_set_priority;
 	gboolean function(GtkTextTag* tag, GObject* eventObject, GdkEvent* event, GtkTextIter* iter) c_gtk_text_tag_event;
-	
+
 	// gtk.TextAttributes
-	
+
 	GtkTextAttributes* function() c_gtk_text_attributes_new;
 	GtkTextAttributes* function(GtkTextAttributes* src) c_gtk_text_attributes_copy;
 	void function(GtkTextAttributes* src, GtkTextAttributes* dest) c_gtk_text_attributes_copy_values;
 	void function(GtkTextAttributes* values) c_gtk_text_attributes_unref;
 	GtkTextAttributes* function(GtkTextAttributes* values) c_gtk_text_attributes_ref;
-	
+
 	// gtk.TextTagTable
-	
+
 	GtkTextTagTable* function() c_gtk_text_tag_table_new;
 	void function(GtkTextTagTable* table, GtkTextTag* tag) c_gtk_text_tag_table_add;
 	void function(GtkTextTagTable* table, GtkTextTag* tag) c_gtk_text_tag_table_remove;
 	GtkTextTag* function(GtkTextTagTable* table, gchar* name) c_gtk_text_tag_table_lookup;
 	void function(GtkTextTagTable* table, GtkTextTagTableForeach func, gpointer data) c_gtk_text_tag_table_foreach;
 	gint function(GtkTextTagTable* table) c_gtk_text_tag_table_get_size;
-	
+
 	// gtk.TextView
-	
+
 	GtkWidget* function() c_gtk_text_view_new;
 	GtkWidget* function(GtkTextBuffer* buffer) c_gtk_text_view_new_with_buffer;
 	void function(GtkTextView* textView, GtkTextBuffer* buffer) c_gtk_text_view_set_buffer;
@@ -5355,15 +5354,15 @@ mixin( gshared ~"extern(C)
 	void function(GtkTextView* textView) c_gtk_text_view_reset_im_context;
 	GtkAdjustment* function(GtkTextView* textView) c_gtk_text_view_get_hadjustment;
 	GtkAdjustment* function(GtkTextView* textView) c_gtk_text_view_get_vadjustment;
-	
+
 	// gtk.TextChildAnchor
-	
+
 	GtkTextChildAnchor* function() c_gtk_text_child_anchor_new;
 	GList* function(GtkTextChildAnchor* anchor) c_gtk_text_child_anchor_get_widgets;
 	gboolean function(GtkTextChildAnchor* anchor) c_gtk_text_child_anchor_get_deleted;
-	
+
 	// gtk.TreePath
-	
+
 	GtkTreePath* function() c_gtk_tree_path_new;
 	GtkTreePath* function(gchar* path) c_gtk_tree_path_new_from_string;
 	GtkTreePath* function(gint firstIndex, ... ) c_gtk_tree_path_new_from_indices;
@@ -5383,12 +5382,12 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreePath* path) c_gtk_tree_path_down;
 	gboolean function(GtkTreePath* path, GtkTreePath* descendant) c_gtk_tree_path_is_ancestor;
 	gboolean function(GtkTreePath* path, GtkTreePath* ancestor) c_gtk_tree_path_is_descendant;
-	
+
 	// gtk.TreeModelT
-	
-	
+
+
 	// gtk.TreeModelT
-	
+
 	GtkTreeModelFlags function(GtkTreeModel* treeModel) c_gtk_tree_model_get_flags;
 	gint function(GtkTreeModel* treeModel) c_gtk_tree_model_get_n_columns;
 	GType function(GtkTreeModel* treeModel, gint index) c_gtk_tree_model_get_column_type;
@@ -5414,14 +5413,14 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter) c_gtk_tree_model_row_has_child_toggled;
 	void function(GtkTreeModel* treeModel, GtkTreePath* path) c_gtk_tree_model_row_deleted;
 	void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, gint* newOrder) c_gtk_tree_model_rows_reordered;
-	
+
 	// gtk.TreeIter
-	
+
 	GtkTreeIter* function(GtkTreeIter* iter) c_gtk_tree_iter_copy;
 	void function(GtkTreeIter* iter) c_gtk_tree_iter_free;
-	
+
 	// gtk.TreeRowReference
-	
+
 	GtkTreeRowReference* function(GtkTreeModel* model, GtkTreePath* path) c_gtk_tree_row_reference_new;
 	GtkTreeRowReference* function(GObject* proxy, GtkTreeModel* model, GtkTreePath* path) c_gtk_tree_row_reference_new_proxy;
 	GtkTreeModel* function(GtkTreeRowReference* reference) c_gtk_tree_row_reference_get_model;
@@ -5432,15 +5431,15 @@ mixin( gshared ~"extern(C)
 	void function(GObject* proxy, GtkTreePath* path) c_gtk_tree_row_reference_inserted;
 	void function(GObject* proxy, GtkTreePath* path) c_gtk_tree_row_reference_deleted;
 	void function(GObject* proxy, GtkTreePath* path, GtkTreeIter* iter, gint* newOrder) c_gtk_tree_row_reference_reordered;
-	
+
 	// gtk.TreeIterError
-	
-	
+
+
 	// gtk.
-	
-	
+
+
 	// gtk.TreeSelection
-	
+
 	void function(GtkTreeSelection* selection, GtkSelectionMode type) c_gtk_tree_selection_set_mode;
 	GtkSelectionMode function(GtkTreeSelection* selection) c_gtk_tree_selection_get_mode;
 	void function(GtkTreeSelection* selection, GtkTreeSelectionFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_selection_set_select_function;
@@ -5461,9 +5460,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeSelection* selection) c_gtk_tree_selection_unselect_all;
 	void function(GtkTreeSelection* selection, GtkTreePath* startPath, GtkTreePath* endPath) c_gtk_tree_selection_select_range;
 	void function(GtkTreeSelection* selection, GtkTreePath* startPath, GtkTreePath* endPath) c_gtk_tree_selection_unselect_range;
-	
+
 	// gtk.TreeViewColumn
-	
+
 	GtkTreeViewColumn* function() c_gtk_tree_view_column_new;
 	GtkTreeViewColumn* function(gchar* title, GtkCellRenderer* cell, ... ) c_gtk_tree_view_column_new_with_attributes;
 	void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cell, gboolean expand) c_gtk_tree_view_column_pack_start;
@@ -5515,9 +5514,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cell) c_gtk_tree_view_column_focus_cell;
 	void function(GtkTreeViewColumn* treeColumn) c_gtk_tree_view_column_queue_resize;
 	GtkWidget* function(GtkTreeViewColumn* treeColumn) c_gtk_tree_view_column_get_tree_view;
-	
+
 	// gtk.TreeView
-	
+
 	GtkWidget* function() c_gtk_tree_view_new;
 	gint function(GtkTreeView* treeView) c_gtk_tree_view_get_level_indentation;
 	gboolean function(GtkTreeView* treeView) c_gtk_tree_view_get_show_expanders;
@@ -5617,28 +5616,28 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkTreeView* treeView, gint* x, gint* y, gboolean keyboardTip, GtkTreeModel** model, GtkTreePath** path, GtkTreeIter* iter) c_gtk_tree_view_get_tooltip_context;
 	gint function(GtkTreeView* treeView) c_gtk_tree_view_get_tooltip_column;
 	void function(GtkTreeView* treeView, gint column) c_gtk_tree_view_set_tooltip_column;
-	
+
 	// gtk.TreeDragSourceT
-	
-	
+
+
 	// gtk.TreeDragSourceT
-	
+
 	gboolean function(GtkTreeDragSource* dragSource, GtkTreePath* path) c_gtk_tree_drag_source_drag_data_delete;
 	gboolean function(GtkTreeDragSource* dragSource, GtkTreePath* path, GtkSelectionData* selectionData) c_gtk_tree_drag_source_drag_data_get;
 	gboolean function(GtkTreeDragSource* dragSource, GtkTreePath* path) c_gtk_tree_drag_source_row_draggable;
 	gboolean function(GtkSelectionData* selectionData, GtkTreeModel* treeModel, GtkTreePath* path) c_gtk_tree_set_row_drag_data;
 	gboolean function(GtkSelectionData* selectionData, GtkTreeModel** treeModel, GtkTreePath** path) c_gtk_tree_get_row_drag_data;
-	
+
 	// gtk.TreeDragDestT
-	
-	
+
+
 	// gtk.TreeDragDestT
-	
+
 	gboolean function(GtkTreeDragDest* dragDest, GtkTreePath* dest, GtkSelectionData* selectionData) c_gtk_tree_drag_dest_drag_data_received;
 	gboolean function(GtkTreeDragDest* dragDest, GtkTreePath* destPath, GtkSelectionData* selectionData) c_gtk_tree_drag_dest_row_drop_possible;
-	
+
 	// gtk.CellView
-	
+
 	GtkWidget* function() c_gtk_cell_view_new;
 	GtkWidget* function(gchar* text) c_gtk_cell_view_new_with_text;
 	GtkWidget* function(gchar* markup) c_gtk_cell_view_new_with_markup;
@@ -5650,9 +5649,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkCellView* cellView, GtkTreePath* path, GtkRequisition* requisition) c_gtk_cell_view_get_size_of_row;
 	void function(GtkCellView* cellView, GdkColor* color) c_gtk_cell_view_set_background_color;
 	GList* function(GtkCellView* cellView) c_gtk_cell_view_get_cell_renderers;
-	
+
 	// gtk.IconView
-	
+
 	GtkWidget* function() c_gtk_icon_view_new;
 	GtkWidget* function(GtkTreeModel* model) c_gtk_icon_view_new_with_model;
 	void function(GtkIconView* iconView, GtkTreeModel* model) c_gtk_icon_view_set_model;
@@ -5715,21 +5714,21 @@ mixin( gshared ~"extern(C)
 	void function(GtkIconView* iconView, GtkTreePath** path, GtkIconViewDropPosition* pos) c_gtk_icon_view_get_drag_dest_item;
 	gboolean function(GtkIconView* iconView, gint dragX, gint dragY, GtkTreePath** path, GtkIconViewDropPosition* pos) c_gtk_icon_view_get_dest_item_at_pos;
 	GdkPixmap* function(GtkIconView* iconView, GtkTreePath* path) c_gtk_icon_view_create_drag_icon;
-	
+
 	// gtk.TreeSortableT
-	
-	
+
+
 	// gtk.TreeSortableT
-	
+
 	void function(GtkTreeSortable* sortable) c_gtk_tree_sortable_sort_column_changed;
 	gboolean function(GtkTreeSortable* sortable, gint* sortColumnId, GtkSortType* order) c_gtk_tree_sortable_get_sort_column_id;
 	void function(GtkTreeSortable* sortable, gint sortColumnId, GtkSortType order) c_gtk_tree_sortable_set_sort_column_id;
 	void function(GtkTreeSortable* sortable, gint sortColumnId, GtkTreeIterCompareFunc sortFunc, gpointer userData, GDestroyNotify destroy) c_gtk_tree_sortable_set_sort_func;
 	void function(GtkTreeSortable* sortable, GtkTreeIterCompareFunc sortFunc, gpointer userData, GDestroyNotify destroy) c_gtk_tree_sortable_set_default_sort_func;
 	gboolean function(GtkTreeSortable* sortable) c_gtk_tree_sortable_has_default_sort_func;
-	
+
 	// gtk.TreeModelSort
-	
+
 	GtkTreeModel* function(GtkTreeModel* childModel) c_gtk_tree_model_sort_new_with_model;
 	GtkTreeModel* function(GtkTreeModelSort* treeModel) c_gtk_tree_model_sort_get_model;
 	GtkTreePath* function(GtkTreeModelSort* treeModelSort, GtkTreePath* childPath) c_gtk_tree_model_sort_convert_child_path_to_path;
@@ -5739,9 +5738,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeModelSort* treeModelSort) c_gtk_tree_model_sort_reset_default_sort_func;
 	void function(GtkTreeModelSort* treeModelSort) c_gtk_tree_model_sort_clear_cache;
 	gboolean function(GtkTreeModelSort* treeModelSort, GtkTreeIter* iter) c_gtk_tree_model_sort_iter_is_valid;
-	
+
 	// gtk.TreeModelFilter
-	
+
 	GtkTreeModel* function(GtkTreeModel* childModel, GtkTreePath* root) c_gtk_tree_model_filter_new;
 	void function(GtkTreeModelFilter* filter, GtkTreeModelFilterVisibleFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_model_filter_set_visible_func;
 	void function(GtkTreeModelFilter* filter, gint nColumns, GType* types, GtkTreeModelFilterModifyFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_model_filter_set_modify_func;
@@ -5753,12 +5752,12 @@ mixin( gshared ~"extern(C)
 	GtkTreePath* function(GtkTreeModelFilter* filter, GtkTreePath* filterPath) c_gtk_tree_model_filter_convert_path_to_child_path;
 	void function(GtkTreeModelFilter* filter) c_gtk_tree_model_filter_refilter;
 	void function(GtkTreeModelFilter* filter) c_gtk_tree_model_filter_clear_cache;
-	
+
 	// gtk.CellLayoutT
-	
-	
+
+
 	// gtk.CellLayoutT
-	
+
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gboolean expand) c_gtk_cell_layout_pack_start;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gboolean expand) c_gtk_cell_layout_pack_end;
 	GList* function(GtkCellLayout* cellLayout) c_gtk_cell_layout_get_cells;
@@ -5768,9 +5767,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gchar* attribute, gint column) c_gtk_cell_layout_add_attribute;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, GtkCellLayoutDataFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_cell_layout_set_cell_data_func;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell) c_gtk_cell_layout_clear_attributes;
-	
+
 	// gtk.CellRenderer
-	
+
 	void function(GtkCellRenderer* cell, GtkWidget* widget, GdkRectangle* cellArea, gint* xOffset, gint* yOffset, gint* width, gint* height) c_gtk_cell_renderer_get_size;
 	void function(GtkCellRenderer* cell, GdkWindow* window, GtkWidget* widget, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GdkRectangle* exposeArea, GtkCellRendererState flags) c_gtk_cell_renderer_render;
 	gboolean function(GtkCellRenderer* cell, GdkEvent* event, GtkWidget* widget, gchar* path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags) c_gtk_cell_renderer_activate;
@@ -5787,46 +5786,46 @@ mixin( gshared ~"extern(C)
 	void function(GtkCellRenderer* cell, gfloat xalign, gfloat yalign) c_gtk_cell_renderer_set_alignment;
 	void function(GtkCellRenderer* cell, gint* xpad, gint* ypad) c_gtk_cell_renderer_get_padding;
 	void function(GtkCellRenderer* cell, gint xpad, gint ypad) c_gtk_cell_renderer_set_padding;
-	
+
 	// gtk.CellEditableT
-	
-	
+
+
 	// gtk.CellEditableT
-	
+
 	void function(GtkCellEditable* cellEditable, GdkEvent* event) c_gtk_cell_editable_start_editing;
 	void function(GtkCellEditable* cellEditable) c_gtk_cell_editable_editing_done;
 	void function(GtkCellEditable* cellEditable) c_gtk_cell_editable_remove_widget;
-	
+
 	// gtk.CellEditable
-	
-	
+
+
 	// gtk.CellRendererAccel
-	
+
 	GtkCellRenderer* function() c_gtk_cell_renderer_accel_new;
-	
+
 	// gtk.CellRendererCombo
-	
+
 	GtkCellRenderer* function() c_gtk_cell_renderer_combo_new;
-	
+
 	// gtk.CellRendererPixbuf
-	
+
 	GtkCellRenderer* function() c_gtk_cell_renderer_pixbuf_new;
-	
+
 	// gtk.CellRendererProgress
-	
+
 	GtkCellRenderer* function() c_gtk_cell_renderer_progress_new;
-	
+
 	// gtk.CellRendererSpin
-	
+
 	GtkCellRenderer* function() c_gtk_cell_renderer_spin_new;
-	
+
 	// gtk.CellRendererText
-	
+
 	GtkCellRenderer* function() c_gtk_cell_renderer_text_new;
 	void function(GtkCellRendererText* renderer, gint numberOfRows) c_gtk_cell_renderer_text_set_fixed_height_from_font;
-	
+
 	// gtk.CellRendererToggle
-	
+
 	GtkCellRenderer* function() c_gtk_cell_renderer_toggle_new;
 	gboolean function(GtkCellRendererToggle* toggle) c_gtk_cell_renderer_toggle_get_radio;
 	void function(GtkCellRendererToggle* toggle, gboolean radio) c_gtk_cell_renderer_toggle_set_radio;
@@ -5834,16 +5833,16 @@ mixin( gshared ~"extern(C)
 	void function(GtkCellRendererToggle* toggle, gboolean setting) c_gtk_cell_renderer_toggle_set_active;
 	gboolean function(GtkCellRendererToggle* toggle) c_gtk_cell_renderer_toggle_get_activatable;
 	void function(GtkCellRendererToggle* toggle, gboolean setting) c_gtk_cell_renderer_toggle_set_activatable;
-	
+
 	// gtk.CellRendererSpinner
-	
+
 	GtkCellRenderer* function() c_gtk_cell_renderer_spinner_new;
-	
+
 	// gtk.
-	
-	
+
+
 	// gtk.ListStore
-	
+
 	GtkListStore* function(gint nColumns, ... ) c_gtk_list_store_new;
 	GtkListStore* function(gint nColumns, GType* types) c_gtk_list_store_newv;
 	void function(GtkListStore* listStore, gint nColumns, GType* types) c_gtk_list_store_set_column_types;
@@ -5865,9 +5864,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkListStore* store, GtkTreeIter* a, GtkTreeIter* b) c_gtk_list_store_swap;
 	void function(GtkListStore* store, GtkTreeIter* iter, GtkTreeIter* position) c_gtk_list_store_move_before;
 	void function(GtkListStore* store, GtkTreeIter* iter, GtkTreeIter* position) c_gtk_list_store_move_after;
-	
+
 	// gtk.TreeStore
-	
+
 	GtkTreeStore* function(gint nColumns, ... ) c_gtk_tree_store_new;
 	GtkTreeStore* function(gint nColumns, GType* types) c_gtk_tree_store_newv;
 	void function(GtkTreeStore* treeStore, gint nColumns, GType* types) c_gtk_tree_store_set_column_types;
@@ -5891,9 +5890,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeStore* treeStore, GtkTreeIter* a, GtkTreeIter* b) c_gtk_tree_store_swap;
 	void function(GtkTreeStore* treeStore, GtkTreeIter* iter, GtkTreeIter* position) c_gtk_tree_store_move_before;
 	void function(GtkTreeStore* treeStore, GtkTreeIter* iter, GtkTreeIter* position) c_gtk_tree_store_move_after;
-	
+
 	// gtk.ComboBox
-	
+
 	GtkWidget* function() c_gtk_combo_box_new;
 	GtkWidget* function() c_gtk_combo_box_new_with_entry;
 	GtkWidget* function(GtkTreeModel* model) c_gtk_combo_box_new_with_model;
@@ -5932,17 +5931,17 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkComboBox* comboBox) c_gtk_combo_box_get_has_entry;
 	void function(GtkComboBox* comboBox, gint textColumn) c_gtk_combo_box_set_entry_text_column;
 	gint function(GtkComboBox* comboBox) c_gtk_combo_box_get_entry_text_column;
-	
+
 	// gtk.ComboBoxEntry
-	
+
 	GtkWidget* function() c_gtk_combo_box_entry_new;
 	GtkWidget* function(GtkTreeModel* model, gint textColumn) c_gtk_combo_box_entry_new_with_model;
 	GtkWidget* function() c_gtk_combo_box_entry_new_text;
 	void function(GtkComboBoxEntry* entryBox, gint textColumn) c_gtk_combo_box_entry_set_text_column;
 	gint function(GtkComboBoxEntry* entryBox) c_gtk_combo_box_entry_get_text_column;
-	
+
 	// gtk.Menu
-	
+
 	GtkWidget* function() c_gtk_menu_new;
 	void function(GtkMenu* menu, GdkScreen* screen) c_gtk_menu_set_screen;
 	void function(GtkMenu* menu, GtkWidget* child, gint position) c_gtk_menu_reorder_child;
@@ -5968,17 +5967,17 @@ mixin( gshared ~"extern(C)
 	void function(GtkMenu* menu) c_gtk_menu_detach;
 	GtkWidget* function(GtkMenu* menu) c_gtk_menu_get_attach_widget;
 	GList* function(GtkWidget* widget) c_gtk_menu_get_for_attach_widget;
-	
+
 	// gtk.MenuBar
-	
+
 	GtkWidget* function() c_gtk_menu_bar_new;
 	void function(GtkMenuBar* menubar, GtkPackDirection packDir) c_gtk_menu_bar_set_pack_direction;
 	GtkPackDirection function(GtkMenuBar* menubar) c_gtk_menu_bar_get_pack_direction;
 	void function(GtkMenuBar* menubar, GtkPackDirection childPackDir) c_gtk_menu_bar_set_child_pack_direction;
 	GtkPackDirection function(GtkMenuBar* menubar) c_gtk_menu_bar_get_child_pack_direction;
-	
+
 	// gtk.MenuItem
-	
+
 	GtkWidget* function() c_gtk_menu_item_new;
 	GtkWidget* function(gchar* label) c_gtk_menu_item_new_with_label;
 	GtkWidget* function(gchar* label) c_gtk_menu_item_new_with_mnemonic;
@@ -5998,9 +5997,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkMenuItem* menuItem) c_gtk_menu_item_activate;
 	void function(GtkMenuItem* menuItem, gint* requisition) c_gtk_menu_item_toggle_size_request;
 	void function(GtkMenuItem* menuItem, gint allocation) c_gtk_menu_item_toggle_size_allocate;
-	
+
 	// gtk.ImageMenuItem
-	
+
 	void function(GtkImageMenuItem* imageMenuItem, GtkWidget* image) c_gtk_image_menu_item_set_image;
 	GtkWidget* function(GtkImageMenuItem* imageMenuItem) c_gtk_image_menu_item_get_image;
 	GtkWidget* function() c_gtk_image_menu_item_new;
@@ -6012,9 +6011,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkImageMenuItem* imageMenuItem) c_gtk_image_menu_item_get_always_show_image;
 	void function(GtkImageMenuItem* imageMenuItem, gboolean alwaysShow) c_gtk_image_menu_item_set_always_show_image;
 	void function(GtkImageMenuItem* imageMenuItem, GtkAccelGroup* accelGroup) c_gtk_image_menu_item_set_accel_group;
-	
+
 	// gtk.RadioMenuItem
-	
+
 	GtkWidget* function(GSList* group) c_gtk_radio_menu_item_new;
 	GtkWidget* function(GSList* group, gchar* label) c_gtk_radio_menu_item_new_with_label;
 	GtkWidget* function(GSList* group, gchar* label) c_gtk_radio_menu_item_new_with_mnemonic;
@@ -6023,9 +6022,9 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkRadioMenuItem* group, gchar* label) c_gtk_radio_menu_item_new_with_mnemonic_from_widget;
 	void function(GtkRadioMenuItem* radioMenuItem, GSList* group) c_gtk_radio_menu_item_set_group;
 	GSList* function(GtkRadioMenuItem* radioMenuItem) c_gtk_radio_menu_item_get_group;
-	
+
 	// gtk.CheckMenuItem
-	
+
 	GtkWidget* function() c_gtk_check_menu_item_new;
 	GtkWidget* function(gchar* label) c_gtk_check_menu_item_new_with_label;
 	GtkWidget* function(gchar* label) c_gtk_check_menu_item_new_with_mnemonic;
@@ -6037,20 +6036,20 @@ mixin( gshared ~"extern(C)
 	void function(GtkCheckMenuItem* checkMenuItem, gboolean setting) c_gtk_check_menu_item_set_inconsistent;
 	void function(GtkCheckMenuItem* checkMenuItem, gboolean drawAsRadio) c_gtk_check_menu_item_set_draw_as_radio;
 	gboolean function(GtkCheckMenuItem* checkMenuItem) c_gtk_check_menu_item_get_draw_as_radio;
-	
+
 	// gtk.SeparatorMenuItem
-	
+
 	GtkWidget* function() c_gtk_separator_menu_item_new;
-	
+
 	// gtk.TearoffMenuItem
-	
+
 	GtkWidget* function() c_gtk_tearoff_menu_item_new;
-	
+
 	// gtk.ToolShellT
-	
-	
+
+
 	// gtk.ToolShellT
-	
+
 	PangoEllipsizeMode function(GtkToolShell* shell) c_gtk_tool_shell_get_ellipsize_mode;
 	GtkIconSize function(GtkToolShell* shell) c_gtk_tool_shell_get_icon_size;
 	GtkOrientation function(GtkToolShell* shell) c_gtk_tool_shell_get_orientation;
@@ -6060,9 +6059,9 @@ mixin( gshared ~"extern(C)
 	GtkOrientation function(GtkToolShell* shell) c_gtk_tool_shell_get_text_orientation;
 	void function(GtkToolShell* shell) c_gtk_tool_shell_rebuild_menu;
 	GtkSizeGroup* function(GtkToolShell* shell) c_gtk_tool_shell_get_text_size_group;
-	
+
 	// gtk.Toolbar
-	
+
 	GtkWidget* function() c_gtk_toolbar_new;
 	void function(GtkToolbar* toolbar, GtkToolItem* item, gint pos) c_gtk_toolbar_insert;
 	gint function(GtkToolbar* toolbar, GtkToolItem* item) c_gtk_toolbar_get_item_index;
@@ -6097,9 +6096,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkToolbar* toolbar, GtkIconSize iconSize) c_gtk_toolbar_set_icon_size;
 	void function(GtkToolbar* toolbar, gint position) c_gtk_toolbar_remove_space;
 	void function(GtkToolbar* toolbar) c_gtk_toolbar_unset_style;
-	
+
 	// gtk.ToolItem
-	
+
 	GtkToolItem* function() c_gtk_tool_item_new;
 	void function(GtkToolItem* toolItem, gboolean homogeneous) c_gtk_tool_item_set_homogeneous;
 	gboolean function(GtkToolItem* toolItem) c_gtk_tool_item_get_homogeneous;
@@ -6129,9 +6128,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkToolItem* toolItem) c_gtk_tool_item_rebuild_menu;
 	void function(GtkToolItem* toolItem) c_gtk_tool_item_toolbar_reconfigured;
 	GtkSizeGroup* function(GtkToolItem* toolItem) c_gtk_tool_item_get_text_size_group;
-	
+
 	// gtk.ToolPalette
-	
+
 	GtkWidget* function() c_gtk_tool_palette_new;
 	gboolean function(GtkToolPalette* palette, GtkToolItemGroup* group) c_gtk_tool_palette_get_exclusive;
 	void function(GtkToolPalette* palette, GtkToolItemGroup* group, gboolean exclusive) c_gtk_tool_palette_set_exclusive;
@@ -6154,9 +6153,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkToolPalette* palette, GtkToolPaletteDragTargets targets) c_gtk_tool_palette_set_drag_source;
 	GtkAdjustment* function(GtkToolPalette* palette) c_gtk_tool_palette_get_hadjustment;
 	GtkAdjustment* function(GtkToolPalette* palette) c_gtk_tool_palette_get_vadjustment;
-	
+
 	// gtk.ToolItemGroup
-	
+
 	gboolean function(GtkToolItemGroup* group) c_gtk_tool_item_group_get_collapsed;
 	GtkToolItem* function(GtkToolItemGroup* group, gint x, gint y) c_gtk_tool_item_group_get_drop_item;
 	PangoEllipsizeMode function(GtkToolItemGroup* group) c_gtk_tool_item_group_get_ellipsize;
@@ -6174,15 +6173,15 @@ mixin( gshared ~"extern(C)
 	void function(GtkToolItemGroup* group, gchar* label) c_gtk_tool_item_group_set_label;
 	void function(GtkToolItemGroup* group, GtkWidget* labelWidget) c_gtk_tool_item_group_set_label_widget;
 	void function(GtkToolItemGroup* group, GtkReliefStyle style) c_gtk_tool_item_group_set_header_relief;
-	
+
 	// gtk.SeparatorToolItem
-	
+
 	GtkToolItem* function() c_gtk_separator_tool_item_new;
 	void function(GtkSeparatorToolItem* item, gboolean draw) c_gtk_separator_tool_item_set_draw;
 	gboolean function(GtkSeparatorToolItem* item) c_gtk_separator_tool_item_get_draw;
-	
+
 	// gtk.ToolButton
-	
+
 	GtkToolItem* function(GtkWidget* iconWidget, gchar* label) c_gtk_tool_button_new;
 	GtkToolItem* function(gchar* stockId) c_gtk_tool_button_new_from_stock;
 	void function(GtkToolButton* button, gchar* label) c_gtk_tool_button_set_label;
@@ -6197,9 +6196,9 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkToolButton* button) c_gtk_tool_button_get_icon_widget;
 	void function(GtkToolButton* button, GtkWidget* labelWidget) c_gtk_tool_button_set_label_widget;
 	GtkWidget* function(GtkToolButton* button) c_gtk_tool_button_get_label_widget;
-	
+
 	// gtk.MenuToolButton
-	
+
 	GtkToolItem* function(GtkWidget* iconWidget, gchar* label) c_gtk_menu_tool_button_new;
 	GtkToolItem* function(gchar* stockId) c_gtk_menu_tool_button_new_from_stock;
 	void function(GtkMenuToolButton* button, GtkWidget* menu) c_gtk_menu_tool_button_set_menu;
@@ -6207,25 +6206,25 @@ mixin( gshared ~"extern(C)
 	void function(GtkMenuToolButton* button, GtkTooltips* tooltips, gchar* tipText, gchar* tipPrivate) c_gtk_menu_tool_button_set_arrow_tooltip;
 	void function(GtkMenuToolButton* button, gchar* text) c_gtk_menu_tool_button_set_arrow_tooltip_text;
 	void function(GtkMenuToolButton* button, gchar* markup) c_gtk_menu_tool_button_set_arrow_tooltip_markup;
-	
+
 	// gtk.ToggleToolButton
-	
+
 	GtkToolItem* function() c_gtk_toggle_tool_button_new;
 	GtkToolItem* function(gchar* stockId) c_gtk_toggle_tool_button_new_from_stock;
 	void function(GtkToggleToolButton* button, gboolean isActive) c_gtk_toggle_tool_button_set_active;
 	gboolean function(GtkToggleToolButton* button) c_gtk_toggle_tool_button_get_active;
-	
+
 	// gtk.RadioToolButton
-	
+
 	GtkToolItem* function(GSList* group) c_gtk_radio_tool_button_new;
 	GtkToolItem* function(GSList* group, gchar* stockId) c_gtk_radio_tool_button_new_from_stock;
 	GtkToolItem* function(GtkRadioToolButton* group) c_gtk_radio_tool_button_new_from_widget;
 	GtkToolItem* function(GtkRadioToolButton* group, gchar* stockId) c_gtk_radio_tool_button_new_with_stock_from_widget;
 	GSList* function(GtkRadioToolButton* button) c_gtk_radio_tool_button_get_group;
 	void function(GtkRadioToolButton* button, GSList* group) c_gtk_radio_tool_button_set_group;
-	
+
 	// gtk.UIManager
-	
+
 	GtkUIManager* function() c_gtk_ui_manager_new;
 	void function(GtkUIManager* self, gboolean addTearoffs) c_gtk_ui_manager_set_add_tearoffs;
 	gboolean function(GtkUIManager* self) c_gtk_ui_manager_get_add_tearoffs;
@@ -6243,9 +6242,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkUIManager* self, guint mergeId) c_gtk_ui_manager_remove_ui;
 	gchar* function(GtkUIManager* self) c_gtk_ui_manager_get_ui;
 	void function(GtkUIManager* self) c_gtk_ui_manager_ensure_update;
-	
+
 	// gtk.ActionGroup
-	
+
 	GtkActionGroup* function(gchar* name) c_gtk_action_group_new;
 	gchar* function(GtkActionGroup* actionGroup) c_gtk_action_group_get_name;
 	gboolean function(GtkActionGroup* actionGroup) c_gtk_action_group_get_sensitive;
@@ -6266,9 +6265,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkActionGroup* actionGroup, GtkTranslateFunc func, gpointer data, GDestroyNotify notify) c_gtk_action_group_set_translate_func;
 	void function(GtkActionGroup* actionGroup, gchar* domain) c_gtk_action_group_set_translation_domain;
 	gchar* function(GtkActionGroup* actionGroup, gchar* string) c_gtk_action_group_translate_string;
-	
+
 	// gtk.Action
-	
+
 	GtkAction* function(gchar* name, gchar* label, gchar* tooltip, gchar* stockId) c_gtk_action_new;
 	gchar* function(GtkAction* action) c_gtk_action_get_name;
 	gboolean function(GtkAction* action) c_gtk_action_is_sensitive;
@@ -6315,45 +6314,45 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkAction* action) c_gtk_action_get_visible_vertical;
 	void function(GtkAction* action, gboolean isImportant) c_gtk_action_set_is_important;
 	gboolean function(GtkAction* action) c_gtk_action_get_is_important;
-	
+
 	// gtk.ToggleAction
-	
+
 	GtkToggleAction* function(gchar* name, gchar* label, gchar* tooltip, gchar* stockId) c_gtk_toggle_action_new;
 	void function(GtkToggleAction* action) c_gtk_toggle_action_toggled;
 	void function(GtkToggleAction* action, gboolean isActive) c_gtk_toggle_action_set_active;
 	gboolean function(GtkToggleAction* action) c_gtk_toggle_action_get_active;
 	void function(GtkToggleAction* action, gboolean drawAsRadio) c_gtk_toggle_action_set_draw_as_radio;
 	gboolean function(GtkToggleAction* action) c_gtk_toggle_action_get_draw_as_radio;
-	
+
 	// gtk.RadioAction
-	
+
 	GtkRadioAction* function(gchar* name, gchar* label, gchar* tooltip, gchar* stockId, gint value) c_gtk_radio_action_new;
 	GSList* function(GtkRadioAction* action) c_gtk_radio_action_get_group;
 	void function(GtkRadioAction* action, GSList* group) c_gtk_radio_action_set_group;
 	gint function(GtkRadioAction* action) c_gtk_radio_action_get_current_value;
 	void function(GtkRadioAction* action, gint currentValue) c_gtk_radio_action_set_current_value;
-	
+
 	// gtk.RecentAction
-	
+
 	GtkAction* function(gchar* name, gchar* label, gchar* tooltip, gchar* stockId) c_gtk_recent_action_new;
 	GtkAction* function(gchar* name, gchar* label, gchar* tooltip, gchar* stockId, GtkRecentManager* manager) c_gtk_recent_action_new_for_manager;
 	gboolean function(GtkRecentAction* action) c_gtk_recent_action_get_show_numbers;
 	void function(GtkRecentAction* action, gboolean showNumbers) c_gtk_recent_action_set_show_numbers;
-	
+
 	// gtk.ActivatableT
-	
-	
+
+
 	// gtk.ActivatableT
-	
+
 	void function(GtkActivatable* activatable, GtkAction* action) c_gtk_activatable_do_set_related_action;
 	GtkAction* function(GtkActivatable* activatable) c_gtk_activatable_get_related_action;
 	gboolean function(GtkActivatable* activatable) c_gtk_activatable_get_use_action_appearance;
 	void function(GtkActivatable* activatable, GtkAction* action) c_gtk_activatable_sync_action_properties;
 	void function(GtkActivatable* activatable, GtkAction* action) c_gtk_activatable_set_related_action;
 	void function(GtkActivatable* activatable, gboolean useAppearance) c_gtk_activatable_set_use_action_appearance;
-	
+
 	// gtk.ColorButton
-	
+
 	GtkWidget* function() c_gtk_color_button_new;
 	GtkWidget* function(GdkColor* color) c_gtk_color_button_new_with_color;
 	void function(GtkColorButton* colorButton, GdkColor* color) c_gtk_color_button_set_color;
@@ -6364,9 +6363,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkColorButton* colorButton) c_gtk_color_button_get_use_alpha;
 	void function(GtkColorButton* colorButton, gchar* title) c_gtk_color_button_set_title;
 	gchar* function(GtkColorButton* colorButton) c_gtk_color_button_get_title;
-	
+
 	// gtk.ColorSelection
-	
+
 	GtkWidget* function() c_gtk_color_selection_new;
 	void function(GtkColorSelection* colorsel, GtkUpdateType policy) c_gtk_color_selection_set_update_policy;
 	void function(GtkColorSelection* colorsel, gboolean hasOpacity) c_gtk_color_selection_set_has_opacity_control;
@@ -6388,17 +6387,17 @@ mixin( gshared ~"extern(C)
 	GtkColorSelectionChangePaletteWithScreenFunc function(GtkColorSelectionChangePaletteWithScreenFunc func) c_gtk_color_selection_set_change_palette_with_screen_hook;
 	void function(GtkColorSelection* colorsel, gdouble* color) c_gtk_color_selection_set_color;
 	void function(GtkColorSelection* colorsel, gdouble* color) c_gtk_color_selection_get_color;
-	
+
 	// gtk.ColorSelectionDialog
-	
+
 	GtkWidget* function(gchar* title) c_gtk_color_selection_dialog_new;
 	GtkWidget* function(GtkColorSelectionDialog* colorsel) c_gtk_color_selection_dialog_get_color_selection;
-	
+
 	// gtk.FileChooserT
-	
-	
+
+
 	// gtk.FileChooserT
-	
+
 	void function(GtkFileChooser* chooser, GtkFileChooserAction action) c_gtk_file_chooser_set_action;
 	GtkFileChooserAction function(GtkFileChooser* chooser) c_gtk_file_chooser_get_action;
 	void function(GtkFileChooser* chooser, gboolean localOnly) c_gtk_file_chooser_set_local_only;
@@ -6457,9 +6456,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkFileChooser* chooser, GFile* file, GError** error) c_gtk_file_chooser_set_current_folder_file;
 	gboolean function(GtkFileChooser* chooser, GFile* file, GError** error) c_gtk_file_chooser_set_file;
 	void function(GtkFileChooser* chooser, GFile* file) c_gtk_file_chooser_unselect_file;
-	
+
 	// gtk.FileChooserButton
-	
+
 	GtkWidget* function(gchar* title, GtkFileChooserAction action) c_gtk_file_chooser_button_new;
 	GtkWidget* function(gchar* title, GtkFileChooserAction action, gchar* backend) c_gtk_file_chooser_button_new_with_backend;
 	GtkWidget* function(GtkWidget* dialog) c_gtk_file_chooser_button_new_with_dialog;
@@ -6469,19 +6468,19 @@ mixin( gshared ~"extern(C)
 	void function(GtkFileChooserButton* button, gint nChars) c_gtk_file_chooser_button_set_width_chars;
 	gboolean function(GtkFileChooserButton* button) c_gtk_file_chooser_button_get_focus_on_click;
 	void function(GtkFileChooserButton* button, gboolean focusOnClick) c_gtk_file_chooser_button_set_focus_on_click;
-	
+
 	// gtk.FileChooserDialog
-	
+
 	GtkWidget* function(gchar* title, GtkWindow* parent, GtkFileChooserAction action, gchar* firstButtonText, ... ) c_gtk_file_chooser_dialog_new;
 	GtkWidget* function(gchar* title, GtkWindow* parent, GtkFileChooserAction action, gchar* backend, gchar* firstButtonText, ... ) c_gtk_file_chooser_dialog_new_with_backend;
-	
+
 	// gtk.FileChooserWidget
-	
+
 	GtkWidget* function(GtkFileChooserAction action) c_gtk_file_chooser_widget_new;
 	GtkWidget* function(GtkFileChooserAction action, gchar* backend) c_gtk_file_chooser_widget_new_with_backend;
-	
+
 	// gtk.FileFilter
-	
+
 	GtkFileFilter* function() c_gtk_file_filter_new;
 	void function(GtkFileFilter* filter, gchar* name) c_gtk_file_filter_set_name;
 	gchar* function(GtkFileFilter* filter) c_gtk_file_filter_get_name;
@@ -6491,9 +6490,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkFileFilter* filter, GtkFileFilterFlags needed, GtkFileFilterFunc func, gpointer data, GDestroyNotify notify) c_gtk_file_filter_add_custom;
 	GtkFileFilterFlags function(GtkFileFilter* filter) c_gtk_file_filter_get_needed;
 	gboolean function(GtkFileFilter* filter, GtkFileFilterInfo* filterInfo) c_gtk_file_filter_filter;
-	
+
 	// gtk.FontButton
-	
+
 	GtkWidget* function() c_gtk_font_button_new;
 	GtkWidget* function(gchar* fontname) c_gtk_font_button_new_with_font;
 	gboolean function(GtkFontButton* fontButton, gchar* fontname) c_gtk_font_button_set_font_name;
@@ -6508,9 +6507,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkFontButton* fontButton) c_gtk_font_button_get_use_size;
 	void function(GtkFontButton* fontButton, gchar* title) c_gtk_font_button_set_title;
 	gchar* function(GtkFontButton* fontButton) c_gtk_font_button_get_title;
-	
+
 	// gtk.FontSelection
-	
+
 	GtkWidget* function() c_gtk_font_selection_new;
 	GdkFont* function(GtkFontSelection* fontsel) c_gtk_font_selection_get_font;
 	gchar* function(GtkFontSelection* fontsel) c_gtk_font_selection_get_font_name;
@@ -6525,9 +6524,9 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkFontSelection* fontsel) c_gtk_font_selection_get_preview_entry;
 	GtkWidget* function(GtkFontSelection* fontsel) c_gtk_font_selection_get_size_entry;
 	GtkWidget* function(GtkFontSelection* fontsel) c_gtk_font_selection_get_size_list;
-	
+
 	// gtk.FontSelectionDialog
-	
+
 	GtkWidget* function(gchar* title) c_gtk_font_selection_dialog_new;
 	GdkFont* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_font;
 	gchar* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_font_name;
@@ -6538,65 +6537,65 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_cancel_button;
 	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_ok_button;
 	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_font_selection;
-	
+
 	// gtk.InputDialog
-	
+
 	GtkWidget* function() c_gtk_input_dialog_new;
-	
+
 	// gtk.Alignment
-	
+
 	GtkWidget* function(gfloat xalign, gfloat yalign, gfloat xscale, gfloat yscale) c_gtk_alignment_new;
 	void function(GtkAlignment* alignment, gfloat xalign, gfloat yalign, gfloat xscale, gfloat yscale) c_gtk_alignment_set;
 	void function(GtkAlignment* alignment, guint* paddingTop, guint* paddingBottom, guint* paddingLeft, guint* paddingRight) c_gtk_alignment_get_padding;
 	void function(GtkAlignment* alignment, guint paddingTop, guint paddingBottom, guint paddingLeft, guint paddingRight) c_gtk_alignment_set_padding;
-	
+
 	// gtk.AspectFrame
-	
+
 	GtkWidget* function(gchar* label, gfloat xalign, gfloat yalign, gfloat ratio, gboolean obeyChild) c_gtk_aspect_frame_new;
 	void function(GtkAspectFrame* aspectFrame, gfloat xalign, gfloat yalign, gfloat ratio, gboolean obeyChild) c_gtk_aspect_frame_set;
-	
+
 	// gtk.HBox
-	
+
 	GtkWidget* function(gboolean homogeneous, gint spacing) c_gtk_hbox_new;
-	
+
 	// gtk.VBox
-	
+
 	GtkWidget* function(gboolean homogeneous, gint spacing) c_gtk_vbox_new;
-	
+
 	// gtk.HButtonBox
-	
+
 	GtkWidget* function() c_gtk_hbutton_box_new;
 	gint function() c_gtk_hbutton_box_get_spacing_default;
 	GtkButtonBoxStyle function() c_gtk_hbutton_box_get_layout_default;
 	void function(gint spacing) c_gtk_hbutton_box_set_spacing_default;
 	void function(GtkButtonBoxStyle layout) c_gtk_hbutton_box_set_layout_default;
-	
+
 	// gtk.VButtonBox
-	
+
 	GtkWidget* function() c_gtk_vbutton_box_new;
 	gint function() c_gtk_vbutton_box_get_spacing_default;
 	void function(gint spacing) c_gtk_vbutton_box_set_spacing_default;
 	GtkButtonBoxStyle function() c_gtk_vbutton_box_get_layout_default;
 	void function(GtkButtonBoxStyle layout) c_gtk_vbutton_box_set_layout_default;
-	
+
 	// gtk.Fixed
-	
+
 	GtkWidget* function() c_gtk_fixed_new;
 	void function(GtkFixed* fixed, GtkWidget* widget, gint x, gint y) c_gtk_fixed_put;
 	void function(GtkFixed* fixed, GtkWidget* widget, gint x, gint y) c_gtk_fixed_move;
 	gboolean function(GtkFixed* fixed) c_gtk_fixed_get_has_window;
 	void function(GtkFixed* fixed, gboolean hasWindow) c_gtk_fixed_set_has_window;
-	
+
 	// gtk.HPaned
-	
+
 	GtkWidget* function() c_gtk_hpaned_new;
-	
+
 	// gtk.VPaned
-	
+
 	GtkWidget* function() c_gtk_vpaned_new;
-	
+
 	// gtk.Layout
-	
+
 	GtkWidget* function(GtkAdjustment* hadjustment, GtkAdjustment* vadjustment) c_gtk_layout_new;
 	void function(GtkLayout* layout, GtkWidget* childWidget, gint x, gint y) c_gtk_layout_put;
 	void function(GtkLayout* layout, GtkWidget* childWidget, gint x, gint y) c_gtk_layout_move;
@@ -6609,9 +6608,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkLayout* layout, GtkAdjustment* adjustment) c_gtk_layout_set_hadjustment;
 	void function(GtkLayout* layout, GtkAdjustment* adjustment) c_gtk_layout_set_vadjustment;
 	GdkWindow* function(GtkLayout* layout) c_gtk_layout_get_bin_window;
-	
+
 	// gtk.Notebook
-	
+
 	GtkWidget* function() c_gtk_notebook_new;
 	gint function(GtkNotebook* notebook, GtkWidget* child, GtkWidget* tabLabel) c_gtk_notebook_append_page;
 	gint function(GtkNotebook* notebook, GtkWidget* child, GtkWidget* tabLabel, GtkWidget* menuLabel) c_gtk_notebook_append_page_menu;
@@ -6667,9 +6666,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkNotebook* notebook, GtkWidget* widget, GtkPackType packType) c_gtk_notebook_set_action_widget;
 	GtkWidget* function(GtkNotebook* notebook, GtkPackType packType) c_gtk_notebook_get_action_widget;
 	void function(GtkNotebookWindowCreationFunc func, gpointer data, GDestroyNotify destroy) c_gtk_notebook_set_window_creation_hook;
-	
+
 	// gtk.Table
-	
+
 	GtkWidget* function(guint rows, guint columns, gboolean homogeneous) c_gtk_table_new;
 	void function(GtkTable* table, guint rows, guint columns) c_gtk_table_resize;
 	void function(GtkTable* table, GtkWidget* child, guint leftAttach, guint rightAttach, guint topAttach, guint bottomAttach, GtkAttachOptions xoptions, GtkAttachOptions yoptions, guint xpadding, guint ypadding) c_gtk_table_attach;
@@ -6685,9 +6684,9 @@ mixin( gshared ~"extern(C)
 	guint function(GtkTable* table, guint column) c_gtk_table_get_col_spacing;
 	guint function(GtkTable* table) c_gtk_table_get_default_col_spacing;
 	void function(GtkTable* table, guint* rows, guint* columns) c_gtk_table_get_size;
-	
+
 	// gtk.Expander
-	
+
 	GtkWidget* function(gchar* label) c_gtk_expander_new;
 	GtkWidget* function(gchar* label) c_gtk_expander_new_with_mnemonic;
 	void function(GtkExpander* expander, gboolean expanded) c_gtk_expander_set_expanded;
@@ -6704,17 +6703,17 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkExpander* expander) c_gtk_expander_get_label_widget;
 	void function(GtkExpander* expander, gboolean labelFill) c_gtk_expander_set_label_fill;
 	gboolean function(GtkExpander* expander) c_gtk_expander_get_label_fill;
-	
+
 	// gtk.OrientableT
-	
-	
+
+
 	// gtk.OrientableT
-	
+
 	GtkOrientation function(GtkOrientable* orientable) c_gtk_orientable_get_orientation;
 	void function(GtkOrientable* orientable, GtkOrientation orientation) c_gtk_orientable_set_orientation;
-	
+
 	// gtk.Frame
-	
+
 	GtkWidget* function(gchar* label) c_gtk_frame_new;
 	void function(GtkFrame* frame, gchar* label) c_gtk_frame_set_label;
 	void function(GtkFrame* frame, GtkWidget* labelWidget) c_gtk_frame_set_label_widget;
@@ -6724,25 +6723,25 @@ mixin( gshared ~"extern(C)
 	void function(GtkFrame* frame, gfloat* xalign, gfloat* yalign) c_gtk_frame_get_label_align;
 	GtkWidget* function(GtkFrame* frame) c_gtk_frame_get_label_widget;
 	GtkShadowType function(GtkFrame* frame) c_gtk_frame_get_shadow_type;
-	
+
 	// gtk.HSeparator
-	
+
 	GtkWidget* function() c_gtk_hseparator_new;
-	
+
 	// gtk.VSeparator
-	
+
 	GtkWidget* function() c_gtk_vseparator_new;
-	
+
 	// gtk.HScrollbar
-	
+
 	GtkWidget* function(GtkAdjustment* adjustment) c_gtk_hscrollbar_new;
-	
+
 	// gtk.VScrollbar
-	
+
 	GtkWidget* function(GtkAdjustment* adjustment) c_gtk_vscrollbar_new;
-	
+
 	// gtk.ScrolledWindow
-	
+
 	GtkWidget* function(GtkAdjustment* hadjustment, GtkAdjustment* vadjustment) c_gtk_scrolled_window_new;
 	GtkAdjustment* function(GtkScrolledWindow* scrolledWindow) c_gtk_scrolled_window_get_hadjustment;
 	GtkAdjustment* function(GtkScrolledWindow* scrolledWindow) c_gtk_scrolled_window_get_vadjustment;
@@ -6758,9 +6757,9 @@ mixin( gshared ~"extern(C)
 	GtkCornerType function(GtkScrolledWindow* scrolledWindow) c_gtk_scrolled_window_get_placement;
 	void function(GtkScrolledWindow* scrolledWindow, GtkPolicyType* hscrollbarPolicy, GtkPolicyType* vscrollbarPolicy) c_gtk_scrolled_window_get_policy;
 	GtkShadowType function(GtkScrolledWindow* scrolledWindow) c_gtk_scrolled_window_get_shadow_type;
-	
+
 	// gtk.PrintOperation
-	
+
 	GtkPrintOperation* function() c_gtk_print_operation_new;
 	void function(GtkPrintOperation* op, gboolean allowAsync) c_gtk_print_operation_set_allow_async;
 	void function(GtkPrintOperation* op, GError** error) c_gtk_print_operation_get_error;
@@ -6793,18 +6792,18 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkPrintOperation* op) c_gtk_print_operation_get_embed_page_setup;
 	GtkPageSetup* function(GtkWindow* parent, GtkPageSetup* pageSetup, GtkPrintSettings* settings) c_gtk_print_run_page_setup_dialog;
 	void function(GtkWindow* parent, GtkPageSetup* pageSetup, GtkPrintSettings* settings, GtkPageSetupDoneFunc doneCb, gpointer data) c_gtk_print_run_page_setup_dialog_async;
-	
+
 	// gtk.PrintOperationPreviewT
-	
-	
+
+
 	// gtk.PrintOperationPreviewT
-	
+
 	void function(GtkPrintOperationPreview* preview) c_gtk_print_operation_preview_end_preview;
 	gboolean function(GtkPrintOperationPreview* preview, gint pageNr) c_gtk_print_operation_preview_is_selected;
 	void function(GtkPrintOperationPreview* preview, gint pageNr) c_gtk_print_operation_preview_render_page;
-	
+
 	// gtk.PrintContext
-	
+
 	cairo_t* function(GtkPrintContext* context) c_gtk_print_context_get_cairo_context;
 	void function(GtkPrintContext* context, cairo_t* cr, double dpiX, double dpiY) c_gtk_print_context_set_cairo_context;
 	GtkPageSetup* function(GtkPrintContext* context) c_gtk_print_context_get_page_setup;
@@ -6816,9 +6815,9 @@ mixin( gshared ~"extern(C)
 	PangoContext* function(GtkPrintContext* context) c_gtk_print_context_create_pango_context;
 	PangoLayout* function(GtkPrintContext* context) c_gtk_print_context_create_pango_layout;
 	gboolean function(GtkPrintContext* context, gdouble* top, gdouble* bottom, gdouble* left, gdouble* right) c_gtk_print_context_get_hard_margins;
-	
+
 	// gtk.PrintSettings
-	
+
 	GtkPrintSettings* function() c_gtk_print_settings_new;
 	GtkPrintSettings* function(GtkPrintSettings* other) c_gtk_print_settings_copy;
 	gboolean function(GtkPrintSettings* settings, gchar* key) c_gtk_print_settings_has_key;
@@ -6893,9 +6892,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkPrintSettings* settings, GKeyFile* keyFile, gchar* groupName, GError** error) c_gtk_print_settings_load_key_file;
 	gboolean function(GtkPrintSettings* settings, gchar* fileName, GError** error) c_gtk_print_settings_to_file;
 	void function(GtkPrintSettings* settings, GKeyFile* keyFile, gchar* groupName) c_gtk_print_settings_to_key_file;
-	
+
 	// gtk.PageSetup
-	
+
 	GtkPageSetup* function() c_gtk_page_setup_new;
 	GtkPageSetup* function(GtkPageSetup* other) c_gtk_page_setup_copy;
 	GtkPageOrientation function(GtkPageSetup* setup) c_gtk_page_setup_get_orientation;
@@ -6921,9 +6920,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkPageSetup* setup, GKeyFile* keyFile, gchar* groupName, GError** error) c_gtk_page_setup_load_key_file;
 	gboolean function(GtkPageSetup* setup, char* fileName, GError** error) c_gtk_page_setup_to_file;
 	void function(GtkPageSetup* setup, GKeyFile* keyFile, gchar* groupName) c_gtk_page_setup_to_key_file;
-	
+
 	// gtk.PaperSize
-	
+
 	GtkPaperSize* function(gchar* name) c_gtk_paper_size_new;
 	GtkPaperSize* function(gchar* ppdName, gchar* ppdDisplayName, gdouble width, gdouble height) c_gtk_paper_size_new_from_ppd;
 	GtkPaperSize* function(gchar* name, gchar* displayName, gdouble width, gdouble height, GtkUnit unit) c_gtk_paper_size_new_custom;
@@ -6945,9 +6944,9 @@ mixin( gshared ~"extern(C)
 	gchar* function() c_gtk_paper_size_get_default;
 	GtkPaperSize* function(GKeyFile* keyFile, gchar* groupName, GError** error) c_gtk_paper_size_new_from_key_file;
 	void function(GtkPaperSize* size, GKeyFile* keyFile, gchar* groupName) c_gtk_paper_size_to_key_file;
-	
+
 	// gtk.Printer
-	
+
 	GtkPrinter* function(gchar* name, GtkPrintBackend* backend, gboolean virtual) c_gtk_printer_new;
 	GtkPrintBackend* function(GtkPrinter* printer) c_gtk_printer_get_backend;
 	gchar* function(GtkPrinter* printer) c_gtk_printer_get_name;
@@ -6971,9 +6970,9 @@ mixin( gshared ~"extern(C)
 	GtkPageSetup* function(GtkPrinter* printer) c_gtk_printer_get_default_page_size;
 	gboolean function(GtkPrinter* printer, gdouble* top, gdouble* bottom, gdouble* left, gdouble* right) c_gtk_printer_get_hard_margins;
 	void function(GtkPrinterFunc func, gpointer data, GDestroyNotify destroy, gboolean wait) c_gtk_enumerate_printers;
-	
+
 	// gtk.PrintJob
-	
+
 	GtkPrintJob* function(gchar* title, GtkPrinter* printer, GtkPrintSettings* settings, GtkPageSetup* pageSetup) c_gtk_print_job_new;
 	GtkPrintSettings* function(GtkPrintJob* job) c_gtk_print_job_get_settings;
 	GtkPrinter* function(GtkPrintJob* job) c_gtk_print_job_get_printer;
@@ -6984,9 +6983,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkPrintJob* job, GtkPrintJobCompleteFunc callback, gpointer userData, GDestroyNotify dnotify) c_gtk_print_job_send;
 	void function(GtkPrintJob* job, gboolean trackStatus) c_gtk_print_job_set_track_print_status;
 	gboolean function(GtkPrintJob* job) c_gtk_print_job_get_track_print_status;
-	
+
 	// gtk.PrintUnixDialog
-	
+
 	GtkWidget* function(gchar* title, GtkWindow* parent) c_gtk_print_unix_dialog_new;
 	void function(GtkPrintUnixDialog* dialog, GtkPageSetup* pageSetup) c_gtk_print_unix_dialog_set_page_setup;
 	GtkPageSetup* function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_page_setup;
@@ -7005,17 +7004,17 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_page_setup_set;
 	void function(GtkPrintUnixDialog* dialog, GtkPrintCapabilities capabilities) c_gtk_print_unix_dialog_set_manual_capabilities;
 	GtkPrintCapabilities function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_manual_capabilities;
-	
+
 	// gtk.PageSetupUnixDialog
-	
+
 	GtkWidget* function(gchar* title, GtkWindow* parent) c_gtk_page_setup_unix_dialog_new;
 	void function(GtkPageSetupUnixDialog* dialog, GtkPageSetup* pageSetup) c_gtk_page_setup_unix_dialog_set_page_setup;
 	GtkPageSetup* function(GtkPageSetupUnixDialog* dialog) c_gtk_page_setup_unix_dialog_get_page_setup;
 	void function(GtkPageSetupUnixDialog* dialog, GtkPrintSettings* printSettings) c_gtk_page_setup_unix_dialog_set_print_settings;
 	GtkPrintSettings* function(GtkPageSetupUnixDialog* dialog) c_gtk_page_setup_unix_dialog_get_print_settings;
-	
+
 	// gtk.Adjustment
-	
+
 	GtkObject* function(gdouble value, gdouble lower, gdouble upper, gdouble stepIncrement, gdouble pageIncrement, gdouble pageSize) c_gtk_adjustment_new;
 	gdouble function(GtkAdjustment* adjustment) c_gtk_adjustment_get_value;
 	void function(GtkAdjustment* adjustment, gdouble value) c_gtk_adjustment_set_value;
@@ -7033,14 +7032,14 @@ mixin( gshared ~"extern(C)
 	void function(GtkAdjustment* adjustment, gdouble pageSize) c_gtk_adjustment_set_page_size;
 	void function(GtkAdjustment* adjustment, gdouble stepIncrement) c_gtk_adjustment_set_step_increment;
 	void function(GtkAdjustment* adjustment, gdouble upper) c_gtk_adjustment_set_upper;
-	
+
 	// gtk.Arrow
-	
+
 	GtkWidget* function(GtkArrowType arrowType, GtkShadowType shadowType) c_gtk_arrow_new;
 	void function(GtkArrow* arrow, GtkArrowType arrowType, GtkShadowType shadowType) c_gtk_arrow_set;
-	
+
 	// gtk.Calendar
-	
+
 	GtkWidget* function() c_gtk_calendar_new;
 	gboolean function(GtkCalendar* calendar, guint month, guint year) c_gtk_calendar_select_month;
 	void function(GtkCalendar* calendar, guint day) c_gtk_calendar_select_day;
@@ -7058,22 +7057,22 @@ mixin( gshared ~"extern(C)
 	void function(GtkCalendar* calendar, GtkCalendarDisplayOptions flags) c_gtk_calendar_display_options;
 	void function(GtkCalendar* calendar) c_gtk_calendar_freeze;
 	void function(GtkCalendar* calendar) c_gtk_calendar_thaw;
-	
+
 	// gtk.DrawingArea
-	
+
 	GtkWidget* function() c_gtk_drawing_area_new;
 	void function(GtkDrawingArea* darea, gint width, gint height) c_gtk_drawing_area_size;
-	
+
 	// gtk.EventBox
-	
+
 	GtkWidget* function() c_gtk_event_box_new;
 	void function(GtkEventBox* eventBox, gboolean aboveChild) c_gtk_event_box_set_above_child;
 	gboolean function(GtkEventBox* eventBox) c_gtk_event_box_get_above_child;
 	void function(GtkEventBox* eventBox, gboolean visibleWindow) c_gtk_event_box_set_visible_window;
 	gboolean function(GtkEventBox* eventBox) c_gtk_event_box_get_visible_window;
-	
+
 	// gtk.HandleBox
-	
+
 	GtkWidget* function() c_gtk_handle_box_new;
 	void function(GtkHandleBox* handleBox, GtkShadowType type) c_gtk_handle_box_set_shadow_type;
 	void function(GtkHandleBox* handleBox, GtkPositionType position) c_gtk_handle_box_set_handle_position;
@@ -7082,21 +7081,21 @@ mixin( gshared ~"extern(C)
 	GtkShadowType function(GtkHandleBox* handleBox) c_gtk_handle_box_get_shadow_type;
 	GtkPositionType function(GtkHandleBox* handleBox) c_gtk_handle_box_get_snap_edge;
 	gboolean function(GtkHandleBox* handleBox) c_gtk_handle_box_get_child_detached;
-	
+
 	// gtk.IMContextSimple
-	
+
 	GtkIMContext* function() c_gtk_im_context_simple_new;
 	void function(GtkIMContextSimple* contextSimple, guint16* data, gint maxSeqLen, gint nSeqs) c_gtk_im_context_simple_add_table;
-	
+
 	// gtk.IMMulticontext
-	
+
 	GtkIMContext* function() c_gtk_im_multicontext_new;
 	void function(GtkIMMulticontext* context, GtkMenuShell* menushell) c_gtk_im_multicontext_append_menuitems;
 	char* function(GtkIMMulticontext* context) c_gtk_im_multicontext_get_context_id;
 	void function(GtkIMMulticontext* context, char* contextId) c_gtk_im_multicontext_set_context_id;
-	
+
 	// gtk.SizeGroup
-	
+
 	GtkSizeGroup* function(GtkSizeGroupMode mode) c_gtk_size_group_new;
 	void function(GtkSizeGroup* sizeGroup, GtkSizeGroupMode mode) c_gtk_size_group_set_mode;
 	GtkSizeGroupMode function(GtkSizeGroup* sizeGroup) c_gtk_size_group_get_mode;
@@ -7105,9 +7104,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkSizeGroup* sizeGroup, GtkWidget* widget) c_gtk_size_group_add_widget;
 	void function(GtkSizeGroup* sizeGroup, GtkWidget* widget) c_gtk_size_group_remove_widget;
 	GSList* function(GtkSizeGroup* sizeGroup) c_gtk_size_group_get_widgets;
-	
+
 	// gtk.Tooltip
-	
+
 	void function(GtkTooltip* tooltip, gchar* markup) c_gtk_tooltip_set_markup;
 	void function(GtkTooltip* tooltip, gchar* text) c_gtk_tooltip_set_text;
 	void function(GtkTooltip* tooltip, GdkPixbuf* pixbuf) c_gtk_tooltip_set_icon;
@@ -7117,9 +7116,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkTooltip* tooltip, GtkWidget* customWidget) c_gtk_tooltip_set_custom;
 	void function(GdkDisplay* display) c_gtk_tooltip_trigger_tooltip_query;
 	void function(GtkTooltip* tooltip, GdkRectangle* rect) c_gtk_tooltip_set_tip_area;
-	
+
 	// gtk.Viewport
-	
+
 	GtkWidget* function(GtkAdjustment* hadjustment, GtkAdjustment* vadjustment) c_gtk_viewport_new;
 	GtkAdjustment* function(GtkViewport* viewport) c_gtk_viewport_get_hadjustment;
 	GtkAdjustment* function(GtkViewport* viewport) c_gtk_viewport_get_vadjustment;
@@ -7129,19 +7128,19 @@ mixin( gshared ~"extern(C)
 	GtkShadowType function(GtkViewport* viewport) c_gtk_viewport_get_shadow_type;
 	GdkWindow* function(GtkViewport* viewport) c_gtk_viewport_get_bin_window;
 	GdkWindow* function(GtkViewport* viewport) c_gtk_viewport_get_view_window;
-	
+
 	// gtk.Accessible
-	
+
 	void function(GtkAccessible* accessible) c_gtk_accessible_connect_widget_destroyed;
 	GtkWidget* function(GtkAccessible* accessible) c_gtk_accessible_get_widget;
 	void function(GtkAccessible* accessible, GtkWidget* widget) c_gtk_accessible_set_widget;
-	
+
 	// gtk.Bin
-	
+
 	GtkWidget* function(GtkBin* bin) c_gtk_bin_get_child;
-	
+
 	// gtk.Box
-	
+
 	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding) c_gtk_box_pack_start;
 	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding) c_gtk_box_pack_end;
 	void function(GtkBox* box, GtkWidget* widget) c_gtk_box_pack_start_defaults;
@@ -7153,9 +7152,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkBox* box, GtkWidget* child, gint position) c_gtk_box_reorder_child;
 	void function(GtkBox* box, GtkWidget* child, gboolean* expand, gboolean* fill, guint* padding, GtkPackType* packType) c_gtk_box_query_child_packing;
 	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding, GtkPackType packType) c_gtk_box_set_child_packing;
-	
+
 	// gtk.ButtonBox
-	
+
 	GtkButtonBoxStyle function(GtkButtonBox* widget) c_gtk_button_box_get_layout;
 	void function(GtkButtonBox* widget, gint* minWidth, gint* minHeight) c_gtk_button_box_get_child_size;
 	void function(GtkButtonBox* widget, gint* ipadX, gint* ipadY) c_gtk_button_box_get_child_ipadding;
@@ -7164,9 +7163,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkButtonBox* widget, gint minWidth, gint minHeight) c_gtk_button_box_set_child_size;
 	void function(GtkButtonBox* widget, gint ipadX, gint ipadY) c_gtk_button_box_set_child_ipadding;
 	void function(GtkButtonBox* widget, GtkWidget* child, gboolean isSecondary) c_gtk_button_box_set_child_secondary;
-	
+
 	// gtk.Container
-	
+
 	void function(GtkContainer* container, GtkWidget* widget) c_gtk_container_add;
 	void function(GtkContainer* container, GtkWidget* widget) c_gtk_container_remove;
 	void function(GtkContainer* container, GtkWidget* widget, gchar* firstPropName, ... ) c_gtk_container_add_with_properties;
@@ -7201,15 +7200,15 @@ mixin( gshared ~"extern(C)
 	GParamSpec* function(GObjectClass* cclass, gchar* propertyName) c_gtk_container_class_find_child_property;
 	void function(GtkContainerClass* cclass, guint propertyId, GParamSpec* pspec) c_gtk_container_class_install_child_property;
 	GParamSpec** function(GObjectClass* cclass, guint* nProperties) c_gtk_container_class_list_child_properties;
-	
+
 	// gtk.Item
-	
+
 	void function(GtkItem* item) c_gtk_item_select;
 	void function(GtkItem* item) c_gtk_item_deselect;
 	void function(GtkItem* item) c_gtk_item_toggle;
-	
+
 	// gtk.MenuShell
-	
+
 	void function(GtkMenuShell* menuShell, GtkWidget* child) c_gtk_menu_shell_append;
 	void function(GtkMenuShell* menuShell, GtkWidget* child) c_gtk_menu_shell_prepend;
 	void function(GtkMenuShell* menuShell, GtkWidget* child, gint position) c_gtk_menu_shell_insert;
@@ -7221,16 +7220,16 @@ mixin( gshared ~"extern(C)
 	void function(GtkMenuShell* menuShell) c_gtk_menu_shell_cancel;
 	void function(GtkMenuShell* menuShell, gboolean takeFocus) c_gtk_menu_shell_set_take_focus;
 	gboolean function(GtkMenuShell* menuShell) c_gtk_menu_shell_get_take_focus;
-	
+
 	// gtk.Misc
-	
+
 	void function(GtkMisc* misc, gfloat xalign, gfloat yalign) c_gtk_misc_set_alignment;
 	void function(GtkMisc* misc, gint xpad, gint ypad) c_gtk_misc_set_padding;
 	void function(GtkMisc* misc, gfloat* xalign, gfloat* yalign) c_gtk_misc_get_alignment;
 	void function(GtkMisc* misc, gint* xpad, gint* ypad) c_gtk_misc_get_padding;
-	
+
 	// gtk.ObjectGtk
-	
+
 	GtkObject* function(GType type, gchar* firstPropertyName, ... ) c_gtk_object_new;
 	void function(GtkObject* object) c_gtk_object_sink;
 	GtkObject* function(GtkObject* object) c_gtk_object_ref;
@@ -7253,9 +7252,9 @@ mixin( gshared ~"extern(C)
 	gpointer function(GtkObject* object, GQuark dataId) c_gtk_object_get_data_by_id;
 	void function(GtkObject* object, GQuark dataId) c_gtk_object_remove_data_by_id;
 	void function(GtkObject* object, GQuark keyId) c_gtk_object_remove_no_notify_by_id;
-	
+
 	// gtk.Paned
-	
+
 	void function(GtkPaned* paned, GtkWidget* child) c_gtk_paned_add1;
 	void function(GtkPaned* paned, GtkWidget* child) c_gtk_paned_add2;
 	void function(GtkPaned* paned, GtkWidget* child, gboolean resize, gboolean shrink) c_gtk_paned_pack1;
@@ -7265,9 +7264,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkPaned* paned, gint position) c_gtk_paned_set_position;
 	gint function(GtkPaned* paned) c_gtk_paned_get_position;
 	GdkWindow* function(GtkPaned* paned) c_gtk_paned_get_handle_window;
-	
+
 	// gtk.Range
-	
+
 	gdouble function(GtkRange* range) c_gtk_range_get_fill_level;
 	gboolean function(GtkRange* range) c_gtk_range_get_restrict_to_fill_level;
 	gboolean function(GtkRange* range) c_gtk_range_get_show_fill_level;
@@ -7298,9 +7297,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkRange* range) c_gtk_range_get_slider_size_fixed;
 	void function(GtkRange* range, gboolean minSize) c_gtk_range_set_min_slider_size;
 	void function(GtkRange* range, gboolean sizeFixed) c_gtk_range_set_slider_size_fixed;
-	
+
 	// gtk.Scale
-	
+
 	void function(GtkScale* scale, gint digits) c_gtk_scale_set_digits;
 	void function(GtkScale* scale, gboolean drawValue) c_gtk_scale_set_draw_value;
 	void function(GtkScale* scale, GtkPositionType pos) c_gtk_scale_set_value_pos;
@@ -7311,15 +7310,15 @@ mixin( gshared ~"extern(C)
 	void function(GtkScale* scale, gint* x, gint* y) c_gtk_scale_get_layout_offsets;
 	void function(GtkScale* scale, gdouble value, GtkPositionType position, gchar* markup) c_gtk_scale_add_mark;
 	void function(GtkScale* scale) c_gtk_scale_clear_marks;
-	
+
 	// gtk.Scrollbar
-	
-	
+
+
 	// gtk.Separator
-	
-	
+
+
 	// gtk.Widget
-	
+
 	GtkWidget* function(GType type, gchar* firstPropertyName, ... ) c_gtk_widget_new;
 	void function(GtkWidget* widget) c_gtk_widget_unref;
 	void function(GtkWidget* widget) c_gtk_widget_destroy;
@@ -7498,9 +7497,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkWidget* widget, GtkRequisition* requisition) c_gtk_widget_get_requisition;
 	GtkRequisition* function(GtkRequisition* requisition) c_gtk_requisition_copy;
 	void function(GtkRequisition* requisition) c_gtk_requisition_free;
-	
+
 	// gtk.IMContext
-	
+
 	void function(GtkIMContext* context, GdkWindow* window) c_gtk_im_context_set_client_window;
 	void function(GtkIMContext* context, gchar** str, PangoAttrList** attrs, gint* cursorPos) c_gtk_im_context_get_preedit_string;
 	gboolean function(GtkIMContext* context, GdkEventKey* event) c_gtk_im_context_filter_keypress;
@@ -7512,9 +7511,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkIMContext* context, gchar* text, gint len, gint cursorIndex) c_gtk_im_context_set_surrounding;
 	gboolean function(GtkIMContext* context, gchar** text, gint* cursorIndex) c_gtk_im_context_get_surrounding;
 	gboolean function(GtkIMContext* context, gint offset, gint nChars) c_gtk_im_context_delete_surrounding;
-	
+
 	// gtk.Plug
-	
+
 	void function(GtkPlug* plug, GdkNativeWindow socketId) c_gtk_plug_construct;
 	void function(GtkPlug* plug, GdkDisplay* display, GdkNativeWindow socketId) c_gtk_plug_construct_for_display;
 	GtkWidget* function(GdkNativeWindow socketId) c_gtk_plug_new;
@@ -7522,17 +7521,17 @@ mixin( gshared ~"extern(C)
 	GdkNativeWindow function(GtkPlug* plug) c_gtk_plug_get_id;
 	gboolean function(GtkPlug* plug) c_gtk_plug_get_embedded;
 	GdkWindow* function(GtkPlug* plug) c_gtk_plug_get_socket_window;
-	
+
 	// gtk.Socket
-	
+
 	GtkWidget* function() c_gtk_socket_new;
 	void function(GtkSocket* socket, GdkNativeWindow wid) c_gtk_socket_steal;
 	void function(GtkSocket* socket, GdkNativeWindow windowId) c_gtk_socket_add_id;
 	GdkNativeWindow function(GtkSocket* socket) c_gtk_socket_get_id;
 	GdkWindow* function(GtkSocket* socket) c_gtk_socket_get_plug_window;
-	
+
 	// gtk.Curve
-	
+
 	GtkWidget* function() c_gtk_curve_new;
 	void function(GtkCurve* curve) c_gtk_curve_reset;
 	void function(GtkCurve* curve, gfloat gamma) c_gtk_curve_set_gamma;
@@ -7540,28 +7539,28 @@ mixin( gshared ~"extern(C)
 	void function(GtkCurve* curve, int veclen, gfloat* vector) c_gtk_curve_get_vector;
 	void function(GtkCurve* curve, int veclen, gfloat* vector) c_gtk_curve_set_vector;
 	void function(GtkCurve* curve, GtkCurveType type) c_gtk_curve_set_curve_type;
-	
+
 	// gtk.GammaCurve
-	
+
 	GtkWidget* function() c_gtk_gamma_curve_new;
-	
+
 	// gtk.Ruler
-	
+
 	void function(GtkRuler* ruler, GtkMetricType metric) c_gtk_ruler_set_metric;
 	void function(GtkRuler* ruler, gdouble lower, gdouble upper, gdouble position, gdouble maxSize) c_gtk_ruler_set_range;
 	GtkMetricType function(GtkRuler* ruler) c_gtk_ruler_get_metric;
 	void function(GtkRuler* ruler, gdouble* lower, gdouble* upper, gdouble* position, gdouble* maxSize) c_gtk_ruler_get_range;
-	
+
 	// gtk.HRuler
-	
+
 	GtkWidget* function() c_gtk_hruler_new;
-	
+
 	// gtk.VRuler
-	
+
 	GtkWidget* function() c_gtk_vruler_new;
-	
+
 	// gtk.RecentManager
-	
+
 	GtkRecentManager* function() c_gtk_recent_manager_new;
 	GtkRecentManager* function() c_gtk_recent_manager_get_default;
 	GtkRecentManager* function(GdkScreen* screen) c_gtk_recent_manager_get_for_screen;
@@ -7576,9 +7575,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkRecentManager* manager, gint limit) c_gtk_recent_manager_set_limit;
 	GList* function(GtkRecentManager* manager) c_gtk_recent_manager_get_items;
 	gint function(GtkRecentManager* manager, GError** error) c_gtk_recent_manager_purge_items;
-	
+
 	// gtk.RecentInfo
-	
+
 	GtkRecentInfo* function(GtkRecentInfo* info) c_gtk_recent_info_ref;
 	void function(GtkRecentInfo* info) c_gtk_recent_info_unref;
 	gchar* function(GtkRecentInfo* info) c_gtk_recent_info_get_uri;
@@ -7602,12 +7601,12 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkRecentInfo* info) c_gtk_recent_info_is_local;
 	gboolean function(GtkRecentInfo* info) c_gtk_recent_info_exists;
 	gboolean function(GtkRecentInfo* infoA, GtkRecentInfo* infoB) c_gtk_recent_info_match;
-	
+
 	// gtk.RecentChooserT
-	
-	
+
+
 	// gtk.RecentChooserT
-	
+
 	void function(GtkRecentChooser* chooser, gboolean showPrivate) c_gtk_recent_chooser_set_show_private;
 	gboolean function(GtkRecentChooser* chooser) c_gtk_recent_chooser_get_show_private;
 	void function(GtkRecentChooser* chooser, gboolean showNotFound) c_gtk_recent_chooser_set_show_not_found;
@@ -7641,26 +7640,26 @@ mixin( gshared ~"extern(C)
 	GSList* function(GtkRecentChooser* chooser) c_gtk_recent_chooser_list_filters;
 	void function(GtkRecentChooser* chooser, GtkRecentFilter* filter) c_gtk_recent_chooser_set_filter;
 	GtkRecentFilter* function(GtkRecentChooser* chooser) c_gtk_recent_chooser_get_filter;
-	
+
 	// gtk.RecentChooserDialog
-	
+
 	GtkWidget* function(gchar* title, GtkWindow* parent, gchar* firstButtonText, ... ) c_gtk_recent_chooser_dialog_new;
 	GtkWidget* function(gchar* title, GtkWindow* parent, GtkRecentManager* manager, gchar* firstButtonText, ... ) c_gtk_recent_chooser_dialog_new_for_manager;
-	
+
 	// gtk.RecentChooserMenu
-	
+
 	GtkWidget* function() c_gtk_recent_chooser_menu_new;
 	GtkWidget* function(GtkRecentManager* manager) c_gtk_recent_chooser_menu_new_for_manager;
 	gboolean function(GtkRecentChooserMenu* menu) c_gtk_recent_chooser_menu_get_show_numbers;
 	void function(GtkRecentChooserMenu* menu, gboolean showNumbers) c_gtk_recent_chooser_menu_set_show_numbers;
-	
+
 	// gtk.RecentChooserWidget
-	
+
 	GtkWidget* function() c_gtk_recent_chooser_widget_new;
 	GtkWidget* function(GtkRecentManager* manager) c_gtk_recent_chooser_widget_new_for_manager;
-	
+
 	// gtk.RecentFilter
-	
+
 	GtkRecentFilter* function() c_gtk_recent_filter_new;
 	gchar* function(GtkRecentFilter* filter) c_gtk_recent_filter_get_name;
 	void function(GtkRecentFilter* filter, gchar* name) c_gtk_recent_filter_set_name;
@@ -7673,12 +7672,12 @@ mixin( gshared ~"extern(C)
 	void function(GtkRecentFilter* filter, GtkRecentFilterFlags needed, GtkRecentFilterFunc func, gpointer data, GDestroyNotify dataDestroy) c_gtk_recent_filter_add_custom;
 	GtkRecentFilterFlags function(GtkRecentFilter* filter) c_gtk_recent_filter_get_needed;
 	gboolean function(GtkRecentFilter* filter, GtkRecentFilterInfo* filterInfo) c_gtk_recent_filter_filter;
-	
+
 	// gtk.BuildableT
-	
-	
+
+
 	// gtk.BuildableT
-	
+
 	void function(GtkBuildable* buildable, gchar* name) c_gtk_buildable_set_name;
 	gchar* function(GtkBuildable* buildable) c_gtk_buildable_get_name;
 	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* type) c_gtk_buildable_add_child;
@@ -7689,9 +7688,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, gpointer data) c_gtk_buildable_custom_finished;
 	void function(GtkBuildable* buildable, GtkBuilder* builder) c_gtk_buildable_parser_finished;
 	GObject* function(GtkBuildable* buildable, GtkBuilder* builder, gchar* childname) c_gtk_buildable_get_internal_child;
-	
+
 	// gtk.Builder
-	
+
 	GtkBuilder* function() c_gtk_builder_new;
 	guint function(GtkBuilder* builder, gchar* filename, GError** error) c_gtk_builder_add_from_file;
 	guint function(GtkBuilder* builder, gchar* buffer, gsize length, GError** error) c_gtk_builder_add_from_string;
@@ -7706,9 +7705,9 @@ mixin( gshared ~"extern(C)
 	GType function(GtkBuilder* builder, char* typeName) c_gtk_builder_get_type_from_name;
 	gboolean function(GtkBuilder* builder, GParamSpec* pspec, gchar* string, GValue* value, GError** error) c_gtk_builder_value_from_string;
 	gboolean function(GtkBuilder* builder, GType type, gchar* string, GValue* value, GError** error) c_gtk_builder_value_from_string_type;
-	
+
 	// gtk.FileSelection
-	
+
 	GtkWidget* function(gchar* title) c_gtk_file_selection_new;
 	void function(GtkFileSelection* filesel, gchar* filename) c_gtk_file_selection_set_filename;
 	gchar* function(GtkFileSelection* filesel) c_gtk_file_selection_get_filename;
@@ -7718,9 +7717,9 @@ mixin( gshared ~"extern(C)
 	gchar** function(GtkFileSelection* filesel) c_gtk_file_selection_get_selections;
 	void function(GtkFileSelection* filesel, gboolean selectMultiple) c_gtk_file_selection_set_select_multiple;
 	gboolean function(GtkFileSelection* filesel) c_gtk_file_selection_get_select_multiple;
-	
+
 	// gtk.ItemFactory
-	
+
 	GtkItemFactory* function(GType containerType, gchar* path, GtkAccelGroup* accelGroup) c_gtk_item_factory_new;
 	void function(GtkItemFactory* ifactory, GType containerType, gchar* path, GtkAccelGroup* accelGroup) c_gtk_item_factory_construct;
 	void function(GtkWidget* accelWidget, gchar* fullPath, GtkAccelGroup* accelGroup, guint keyval, GdkModifierType modifiers) c_gtk_item_factory_add_foreign;
@@ -7743,9 +7742,9 @@ mixin( gshared ~"extern(C)
 	GtkItemFactory* function(gchar* path) c_gtk_item_factory_from_path;
 	void function(gchar* ifactoryPath, gchar* path) c_gtk_item_factories_path_delete;
 	void function(GtkItemFactory* ifactory, GtkTranslateFunc func, gpointer data, GDestroyNotify notify) c_gtk_item_factory_set_translate_func;
-	
+
 	// gtk.Tooltips
-	
+
 	GtkTooltips* function() c_gtk_tooltips_new;
 	void function(GtkTooltips* tooltips) c_gtk_tooltips_enable;
 	void function(GtkTooltips* tooltips) c_gtk_tooltips_disable;
@@ -7754,9 +7753,9 @@ mixin( gshared ~"extern(C)
 	GtkTooltipsData* function(GtkWidget* widget) c_gtk_tooltips_data_get;
 	void function(GtkTooltips* tooltips) c_gtk_tooltips_force_window;
 	gboolean function(GtkWindow* tipWindow, GtkTooltips** tooltips, GtkWidget** currentWidget) c_gtk_tooltips_get_info_from_tip_window;
-	
+
 	// gtk.Progress
-	
+
 	void function(GtkProgress* progress, gboolean showText) c_gtk_progress_set_show_text;
 	void function(GtkProgress* progress, gfloat xAlign, gfloat yAlign) c_gtk_progress_set_text_alignment;
 	void function(GtkProgress* progress, gchar* format) c_gtk_progress_set_format_string;

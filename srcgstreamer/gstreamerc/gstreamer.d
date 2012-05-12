@@ -800,9 +800,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gstreamer.MiniObject
-	
+
 	GstMiniObject* function(GType type) c_gst_mini_object_new;
 	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_copy;
 	gboolean function(GstMiniObject* miniObject) c_gst_mini_object_is_writable;
@@ -814,9 +813,9 @@ mixin( gshared ~"extern(C)
 	void function(GValue* value, GstMiniObject* miniObject) c_gst_value_set_mini_object;
 	void function(GValue* value, GstMiniObject* miniObject) c_gst_value_take_mini_object;
 	GstMiniObject* function(GValue* value) c_gst_value_get_mini_object;
-	
+
 	// gstreamer.ObjectGst
-	
+
 	gboolean function(GstObject* object, gchar* name) c_gst_object_set_name;
 	gchar* function(GstObject* object) c_gst_object_get_name;
 	gboolean function(GstObject* object, GstObject* parent) c_gst_object_set_parent;
@@ -837,9 +836,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(GstObject* object) c_gst_object_get_path_string;
 	guint function(GstObjectClass* klass, gchar* name, gpointer func, gpointer funcData) c_gst_class_signal_connect;
 	void function(GstObject* object, gchar* name, GstXmlNodePtr self) c_gst_class_signal_emit_by_name;
-	
+
 	// gstreamer.Element
-	
+
 	void function(GstElementClass* klass, GstPadTemplate* templ) c_gst_element_class_add_pad_template;
 	GstPadTemplate* function(GstElementClass* elementClass, gchar* name) c_gst_element_class_get_pad_template;
 	GList* function(GstElementClass* elementClass) c_gst_element_class_get_pad_template_list;
@@ -903,9 +902,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstElement* element, GstEvent* event) c_gst_element_send_event;
 	gboolean function(GstElement* element, GstFormat format, GstSeekFlags seekFlags, gint64 seekPos) c_gst_element_seek_simple;
 	gboolean function(GstElement* element, gdouble rate, GstFormat format, GstSeekFlags flags, GstSeekType curType, gint64 cur, GstSeekType stopType, gint64 stop) c_gst_element_seek;
-	
+
 	// gstreamer.GStreamer
-	
+
 	void function(int* argc, char*** argv) c_gst_init;
 	gboolean function(int* argc, char*** argv, GError** err) c_gst_init_check;
 	GOptionGroup* function() c_gst_init_get_option_group;
@@ -917,9 +916,9 @@ mixin( gshared ~"extern(C)
 	gboolean function() c_gst_registry_fork_is_enabled;
 	void function(gboolean enabled) c_gst_registry_fork_set_enabled;
 	gboolean function() c_gst_update_registry;
-	
+
 	// gstreamer.Bin
-	
+
 	GstElement* function(gchar* name) c_gst_bin_new;
 	gboolean function(GstBin* bin, GstElement* element) c_gst_bin_add;
 	gboolean function(GstBin* bin, GstElement* element) c_gst_bin_remove;
@@ -935,9 +934,9 @@ mixin( gshared ~"extern(C)
 	void function(GstBin* bin, GstElement* element1, ... ) c_gst_bin_add_many;
 	void function(GstBin* bin, GstElement* element1, ... ) c_gst_bin_remove_many;
 	GstPad* function(GstBin* bin, GstPadDirection direction) c_gst_bin_find_unconnected_pad;
-	
+
 	// gstreamer.Buffer
-	
+
 	GstBuffer* function() c_gst_buffer_new;
 	GstBuffer* function(guint size) c_gst_buffer_new_and_alloc;
 	GstBuffer* function(guint size) c_gst_buffer_try_new_and_alloc;
@@ -953,9 +952,9 @@ mixin( gshared ~"extern(C)
 	void function(GstBuffer* dest, GstBuffer* src) c_gst_buffer_stamp;
 	GstBuffer* function(GstBuffer* buf1, GstBuffer* buf2) c_gst_buffer_join;
 	GstBuffer* function(GstBuffer* buf1, GstBuffer* buf2) c_gst_buffer_merge;
-	
+
 	// gstreamer.Bus
-	
+
 	GstBus* function() c_gst_bus_new;
 	gboolean function(GstBus* bus, GstMessage* message) c_gst_bus_post;
 	gboolean function(GstBus* bus) c_gst_bus_have_pending;
@@ -975,9 +974,9 @@ mixin( gshared ~"extern(C)
 	void function(GstBus* bus, gint priority) c_gst_bus_add_signal_watch_full;
 	void function(GstBus* bus) c_gst_bus_remove_signal_watch;
 	GstMessage* function(GstBus* bus, GstMessageType events, GstClockTimeDiff timeout) c_gst_bus_poll;
-	
+
 	// gstreamer.Caps
-	
+
 	GstCaps* function() c_gst_caps_new_empty;
 	GstCaps* function() c_gst_caps_new_any;
 	GstCaps* function(char* mediaType, char* fieldname, ... ) c_gst_caps_new_simple;
@@ -1016,9 +1015,9 @@ mixin( gshared ~"extern(C)
 	GstCaps* function(GstCaps* caps) c_gst_caps_ref;
 	void function(GstCaps* caps) c_gst_caps_truncate;
 	void function(GstCaps* caps) c_gst_caps_unref;
-	
+
 	// gstreamer.Clock
-	
+
 	gboolean function(GstClock* clock, GstClockTime slave, GstClockTime master, gdouble* rSquared) c_gst_clock_add_observation;
 	gboolean function(GstClock* clock, GstClock* master) c_gst_clock_set_master;
 	GstClock* function(GstClock* clock) c_gst_clock_get_master;
@@ -1039,9 +1038,9 @@ mixin( gshared ~"extern(C)
 	gint function(gconstpointer id1, gconstpointer id2) c_gst_clock_id_compare_func;
 	GstClockID function(GstClockID id) c_gst_clock_id_ref;
 	void function(GstClockID id) c_gst_clock_id_unref;
-	
+
 	// gstreamer.ElementFactory
-	
+
 	gboolean function(GstPlugin* plugin, gchar* name, guint rank, GType type) c_gst_element_register;
 	GstElementFactory* function(gchar* name) c_gst_element_factory_find;
 	GType function(GstElementFactory* factory) c_gst_element_factory_get_element_type;
@@ -1058,9 +1057,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstElementFactory* factory, GstCaps* caps) c_gst_element_factory_can_sink_caps;
 	gboolean function(GstElementFactory* factory, GstCaps* caps) c_gst_element_factory_can_src_caps;
 	GList* function(GstElementFactory* factory) c_gst_element_factory_get_static_pad_templates;
-	
+
 	// gstreamer.Event
-	
+
 	GstStructure* function(GstEvent* event) c_gst_event_get_structure;
 	GstEvent* function(GstFormat format, gint64 minsize, gint64 maxsize, gboolean async) c_gst_event_new_buffer_size;
 	GstEvent* function(GstEventType type, GstStructure* structure) c_gst_event_new_custom;
@@ -1085,9 +1084,9 @@ mixin( gshared ~"extern(C)
 	GstEventTypeFlags function(GstEventType type) c_gst_event_type_get_flags;
 	gchar* function(GstEventType type) c_gst_event_type_get_name;
 	GQuark function(GstEventType type) c_gst_event_type_to_quark;
-	
+
 	// gstreamer.
-	
+
 	gchar* function(GstFormat format) c_gst_format_get_name;
 	GQuark function(GstFormat format) c_gst_format_to_quark;
 	GstFormat function(gchar* nick, gchar* description) c_gst_format_register;
@@ -1095,28 +1094,28 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstFormat* formats, GstFormat format) c_gst_formats_contains;
 	GstFormatDefinition* function(GstFormat format) c_gst_format_get_details;
 	GstIterator* function() c_gst_format_iterate_definitions;
-	
+
 	// gstreamer.
-	
+
 	gchar* function(GQuark domain, gint code) c_gst_error_get_message;
-	
+
 	// gstreamer.GhostPad
-	
+
 	GstPad* function(gchar* name, GstPad* target) c_gst_ghost_pad_new;
 	GstPad* function(gchar* name, GstPadDirection dir) c_gst_ghost_pad_new_no_target;
 	GstPad* function(gchar* name, GstPad* target, GstPadTemplate* templ) c_gst_ghost_pad_new_from_template;
 	GstPad* function(gchar* name, GstPadTemplate* templ) c_gst_ghost_pad_new_no_target_from_template;
 	gboolean function(GstGhostPad* gpad, GstPad* newtarget) c_gst_ghost_pad_set_target;
 	GstPad* function(GstGhostPad* gpad) c_gst_ghost_pad_get_target;
-	
+
 	// gstreamer.ImplementsInterface
-	
+
 	gboolean function(GstElement* element, GType ifaceType) c_gst_element_implements_interface;
 	gpointer function(gpointer from, GType type) c_gst_implements_interface_cast;
 	gboolean function(gpointer from, GType type) c_gst_implements_interface_check;
-	
+
 	// gstreamer.Index
-	
+
 	GstIndex* function() c_gst_index_new;
 	void function(GstIndex* index, gint id) c_gst_index_commit;
 	gint function(GstIndex* index) c_gst_index_get_group;
@@ -1138,17 +1137,17 @@ mixin( gshared ~"extern(C)
 	GstIndexEntry* function(GstIndexEntry* entry) c_gst_index_entry_copy;
 	void function(GstIndexEntry* entry) c_gst_index_entry_free;
 	gboolean function(GstIndexEntry* entry, GstFormat format, gint64* value) c_gst_index_entry_assoc_map;
-	
+
 	// gstreamer.IndexFactory
-	
+
 	GstIndexFactory* function(gchar* name, gchar* longdesc, GType type) c_gst_index_factory_new;
 	void function(GstIndexFactory* factory) c_gst_index_factory_destroy;
 	GstIndexFactory* function(gchar* name) c_gst_index_factory_find;
 	GstIndex* function(GstIndexFactory* factory) c_gst_index_factory_create;
 	GstIndex* function(gchar* name) c_gst_index_factory_make;
-	
+
 	// gstreamer.Iterator
-	
+
 	GstIterator* function(guint size, GType type, GMutex* lock, guint32* masterCookie, GstIteratorNextFunction next, GstIteratorItemFunction item, GstIteratorResyncFunction resync, GstIteratorFreeFunction free) c_gst_iterator_new;
 	GstIterator* function(GType type, GMutex* lock, guint32* masterCookie, GList** list, gpointer owner, GstIteratorItemFunction item, GstIteratorDisposeFunction free) c_gst_iterator_new_list;
 	GstIteratorResult function(GstIterator* it, gpointer* elem) c_gst_iterator_next;
@@ -1159,9 +1158,9 @@ mixin( gshared ~"extern(C)
 	GstIteratorResult function(GstIterator* it, GstIteratorFoldFunction func, GValue* ret, gpointer userData) c_gst_iterator_fold;
 	GstIteratorResult function(GstIterator* it, GFunc func, gpointer userData) c_gst_iterator_foreach;
 	gpointer function(GstIterator* it, GCompareFunc func, gpointer userData) c_gst_iterator_find_custom;
-	
+
 	// gstreamer.Pad
-	
+
 	GstPadDirection function(GstPad* pad) c_gst_pad_get_direction;
 	GstElement* function(GstPad* pad) c_gst_pad_get_parent_element;
 	GstPadTemplate* function(GstPad* pad) c_gst_pad_get_pad_template;
@@ -1246,9 +1245,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstPad* pad) c_gst_pad_pause_task;
 	gboolean function(GstPad* pad) c_gst_pad_stop_task;
 	gboolean function(GstPad* pad, gboolean active) c_gst_pad_set_active;
-	
+
 	// gstreamer.Message
-	
+
 	GQuark function(GstMessageType type) c_gst_message_type_to_quark;
 	gchar* function(GstMessageType type) c_gst_message_type_get_name;
 	GstStructure* function(GstMessage* message) c_gst_message_get_structure;
@@ -1286,23 +1285,23 @@ mixin( gshared ~"extern(C)
 	void function(GstMessage* message, GstFormat* format, gint64* duration) c_gst_message_parse_duration;
 	void function(GstMessage* message, gboolean* newBaseTime) c_gst_message_parse_async_start;
 	GstMessage* function(GstMessage* msg) c_gst_message_ref;
-	
+
 	// gstreamer.PadTemplate
-	
+
 	GstPadTemplate* function(GstStaticPadTemplate* padTemplate) c_gst_static_pad_template_get;
 	GstCaps* function(GstStaticPadTemplate* templ) c_gst_static_pad_template_get_caps;
 	GstPadTemplate* function(gchar* nameTemplate, GstPadDirection direction, GstPadPresence presence, GstCaps* caps) c_gst_pad_template_new;
 	GstCaps* function(GstPadTemplate* templ) c_gst_pad_template_get_caps;
-	
+
 	// gstreamer.Parse
-	
+
 	GQuark function() c_gst_parse_error_quark;
 	GstElement* function(gchar* pipelineDescription, GError** error) c_gst_parse_launch;
 	GstElement* function(gchar** argv, GError** error) c_gst_parse_launchv;
 	GstElement* function(gchar* binDescription, gboolean ghostUnconnectedPads, GError** err) c_gst_parse_bin_from_description;
-	
+
 	// gstreamer.Pipeline
-	
+
 	GstElement* function(gchar* name) c_gst_pipeline_new;
 	GstBus* function(GstPipeline* pipeline) c_gst_pipeline_get_bus;
 	gboolean function(GstPipeline* pipeline, GstClock* clock) c_gst_pipeline_set_clock;
@@ -1315,9 +1314,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstPipeline* pipeline) c_gst_pipeline_get_auto_flush_bus;
 	void function(GstPipeline* pipeline, GstClockTime delay) c_gst_pipeline_set_delay;
 	GstClockTime function(GstPipeline* pipeline) c_gst_pipeline_get_delay;
-	
+
 	// gstreamer.Plugin
-	
+
 	GQuark function() c_gst_plugin_error_quark;
 	gchar* function(GstPlugin* plugin) c_gst_plugin_get_name;
 	gchar* function(GstPlugin* plugin) c_gst_plugin_get_description;
@@ -1334,9 +1333,9 @@ mixin( gshared ~"extern(C)
 	GstPlugin* function(GstPlugin* plugin) c_gst_plugin_load;
 	GstPlugin* function(gchar* name) c_gst_plugin_load_by_name;
 	void function(GList* list) c_gst_plugin_list_free;
-	
+
 	// gstreamer.PluginFeature
-	
+
 	gboolean function(GstPluginFeature* feature, GstTypeNameData* data) c_gst_plugin_feature_type_name_filter;
 	void function(GstPluginFeature* feature, guint rank) c_gst_plugin_feature_set_rank;
 	void function(GstPluginFeature* feature, gchar* name) c_gst_plugin_feature_set_name;
@@ -1345,9 +1344,9 @@ mixin( gshared ~"extern(C)
 	GstPluginFeature* function(GstPluginFeature* feature) c_gst_plugin_feature_load;
 	void function(GList* list) c_gst_plugin_feature_list_free;
 	gboolean function(GstPluginFeature* feature, guint minMajor, guint minMinor, guint minMicro) c_gst_plugin_feature_check_version;
-	
+
 	// gstreamer.Query
-	
+
 	gchar* function(GstQueryType query) c_gst_query_type_get_name;
 	GQuark function(GstQueryType query) c_gst_query_type_to_quark;
 	GstQueryType function(gchar* nick, gchar* description) c_gst_query_type_register;
@@ -1380,9 +1379,9 @@ mixin( gshared ~"extern(C)
 	GstQuery* function(GstFormat format) c_gst_query_new_segment;
 	void function(GstQuery* query, gdouble rate, GstFormat format, gint64 startValue, gint64 stopValue) c_gst_query_set_segment;
 	void function(GstQuery* query, gdouble* rate, GstFormat* format, gint64* startValue, gint64* stopValue) c_gst_query_parse_segment;
-	
+
 	// gstreamer.Registry
-	
+
 	GstRegistry* function() c_gst_registry_get_default;
 	GList* function(GstRegistry* registry, GType type) c_gst_registry_get_feature_list;
 	GList* function(GstRegistry* registry, gchar* name) c_gst_registry_get_feature_list_by_plugin;
@@ -1404,9 +1403,9 @@ mixin( gshared ~"extern(C)
 	void function(GstRegistry* registry, GstPluginFeature* feature) c_gst_registry_remove_feature;
 	gboolean function(GstRegistry* registry, GstPluginFeature* feature) c_gst_registry_add_feature;
 	gboolean function(gchar* featureName, guint minMajor, guint minMinor, guint minMicro) c_gst_default_registry_check_feature_version;
-	
+
 	// gstreamer.Segment
-	
+
 	gboolean function(GstSegment* segment, GstFormat format, gint64 start, gint64 stop, gint64* clipStart, gint64* clipStop) c_gst_segment_clip;
 	void function(GstSegment* segment, GstFormat format) c_gst_segment_init;
 	GstSegment* function() c_gst_segment_new;
@@ -1418,9 +1417,9 @@ mixin( gshared ~"extern(C)
 	void function(GstSegment* segment, gdouble rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, gint64 start, GstSeekType stopType, gint64 stop, gboolean* update) c_gst_segment_set_seek;
 	gint64 function(GstSegment* segment, GstFormat format, gint64 position) c_gst_segment_to_running_time;
 	gint64 function(GstSegment* segment, GstFormat format, gint64 position) c_gst_segment_to_stream_time;
-	
+
 	// gstreamer.Structure
-	
+
 	GstStructure* function(gchar* name) c_gst_structure_empty_new;
 	GstStructure* function(GQuark quark) c_gst_structure_id_empty_new;
 	GstStructure* function(gchar* name, gchar* firstfield, ... ) c_gst_structure_new;
@@ -1466,13 +1465,13 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstStructure* structure, char* fieldName, double target) c_gst_structure_fixate_field_nearest_double;
 	gboolean function(GstStructure* structure, char* fieldName, gint targetNumerator, gint targetDenominator) c_gst_structure_fixate_field_nearest_fraction;
 	gboolean function(GstStructure* structure, char* fieldName, gboolean target) c_gst_structure_fixate_field_boolean;
-	
+
 	// gstreamer.SystemClock
-	
+
 	GstClock* function() c_gst_system_clock_obtain;
-	
+
 	// gstreamer.TagList
-	
+
 	void function(gchar* name, GstTagFlag flag, GType type, gchar* nick, gchar* blurb, GstTagMergeFunc func) c_gst_tag_register;
 	void function(GValue* dest, GValue* src) c_gst_tag_merge_use_first;
 	void function(GValue* dest, GValue* src) c_gst_tag_merge_strings_with_comma;
@@ -1526,9 +1525,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstTagList* list, gchar* tag, guint index, gpointer* value) c_gst_tag_list_get_pointer_index;
 	gboolean function(GstTagList* list, gchar* tag, GDate** value) c_gst_tag_list_get_date;
 	gboolean function(GstTagList* list, gchar* tag, guint index, GDate** value) c_gst_tag_list_get_date_index;
-	
+
 	// gstreamer.TagSetter
-	
+
 	void function(GstTagSetter* setter, GstTagList* list, GstTagMergeMode mode) c_gst_tag_setter_merge_tags;
 	void function(GstTagSetter* setter, GstTagMergeMode mode, gchar* tag, ... ) c_gst_tag_setter_add_tags;
 	void function(GstTagSetter* setter, GstTagMergeMode mode, gchar* tag, ... ) c_gst_tag_setter_add_tag_values;
@@ -1537,9 +1536,9 @@ mixin( gshared ~"extern(C)
 	GstTagList* function(GstTagSetter* setter) c_gst_tag_setter_get_tag_list;
 	void function(GstTagSetter* setter, GstTagMergeMode mode) c_gst_tag_setter_set_tag_merge_mode;
 	GstTagMergeMode function(GstTagSetter* setter) c_gst_tag_setter_get_tag_merge_mode;
-	
+
 	// gstreamer.Task
-	
+
 	void function() c_gst_task_cleanup_all;
 	GstTask* function(GstTaskFunction func, gpointer data) c_gst_task_create;
 	GstTaskState function(GstTask* task) c_gst_task_get_state;
@@ -1548,16 +1547,16 @@ mixin( gshared ~"extern(C)
 	void function(GstTask* task, GStaticRecMutex* mutex) c_gst_task_set_lock;
 	gboolean function(GstTask* task) c_gst_task_start;
 	gboolean function(GstTask* task) c_gst_task_stop;
-	
+
 	// gstreamer.TypeFind
-	
+
 	guint8* function(GstTypeFind* find, gint64 offset, guint size) c_gst_type_find_peek;
 	void function(GstTypeFind* find, guint probability, GstCaps* caps) c_gst_type_find_suggest;
 	guint64 function(GstTypeFind* find) c_gst_type_find_get_length;
 	gboolean function(GstPlugin* plugin, gchar* name, guint rank, GstTypeFindFunction func, gchar** extensions, GstCaps* possibleCaps, gpointer data, GDestroyNotify dataNotify) c_gst_type_find_register;
-	
+
 	// gstreamer.TypeFindFactory
-	
+
 	GList* function() c_gst_type_find_factory_get_list;
 	gchar** function(GstTypeFindFactory* factory) c_gst_type_find_factory_get_extensions;
 	GstCaps* function(GstTypeFindFactory* factory) c_gst_type_find_factory_get_caps;

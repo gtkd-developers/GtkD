@@ -586,7 +586,7 @@ public class Widget : ObjectGtk, BuildableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Widget)[] onAccelClosuresChangedListeners;
 	/**

@@ -125,7 +125,7 @@ public class Curve : DrawingArea
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Curve)[] onCurveTypeChangedListeners;
 	/**

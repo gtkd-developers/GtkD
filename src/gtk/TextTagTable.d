@@ -133,7 +133,7 @@ public class TextTagTable : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TextTag, TextTagTable)[] onTagAddedListeners;
 	/**

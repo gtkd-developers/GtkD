@@ -103,7 +103,7 @@ public template ActionGroupT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(string, ActionGroupIF)[] _onActionAddedListeners;
 	void delegate(string, ActionGroupIF)[] onActionAddedListeners()

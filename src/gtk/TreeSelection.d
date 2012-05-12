@@ -213,7 +213,7 @@ public class TreeSelection : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TreeSelection)[] onChangedListeners;
 	/**

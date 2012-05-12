@@ -169,7 +169,7 @@ public class Registry : ObjectGst
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gpointer, Registry)[] onFeatureAddedListeners;
 	/**

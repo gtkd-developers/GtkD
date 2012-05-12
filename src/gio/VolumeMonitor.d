@@ -158,7 +158,7 @@ public class VolumeMonitor : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(DriveIF, VolumeMonitor)[] onDriveChangedListeners;
 	/**

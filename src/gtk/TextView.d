@@ -208,7 +208,7 @@ public class TextView : Container
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TextView)[] onBackspaceListeners;
 	/**

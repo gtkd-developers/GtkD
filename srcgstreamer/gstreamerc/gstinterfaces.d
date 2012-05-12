@@ -46,9 +46,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gstinterfaces.XOverlay
-	
+
 	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_set_xwindow_id;
 	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_got_xwindow_id;
 	void function(GstXOverlay* overlay) c_gst_x_overlay_prepare_xwindow_id;

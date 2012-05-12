@@ -132,7 +132,7 @@ public class Viewport : Bin
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Viewport)[] onSetScrollAdjustmentsListeners;
 	/**

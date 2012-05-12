@@ -161,7 +161,7 @@ public class CellRenderer : ObjectGtk
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(CellRenderer)[] onEditingCanceledListeners;
 	/**

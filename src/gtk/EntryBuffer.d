@@ -126,7 +126,7 @@ public class EntryBuffer : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(guint, guint, EntryBuffer)[] onDeletedTextListeners;
 	/**

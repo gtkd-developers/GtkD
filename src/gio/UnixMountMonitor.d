@@ -119,7 +119,7 @@ public class UnixMountMonitor : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(UnixMountMonitor)[] onMountpointsChangedListeners;
 	/**

@@ -412,9 +412,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gobject.Type
-	
+
 	void function() c_g_type_init;
 	void function(GTypeDebugFlags debugFlags) c_g_type_init_with_debug_flags;
 	gchar* function(GType type) c_g_type_name;
@@ -461,16 +460,16 @@ mixin( gshared ~"extern(C)
 	void function(gpointer checkData, GTypeInterfaceCheckFunc checkFunc) c_g_type_add_interface_check;
 	void function(gpointer checkData, GTypeInterfaceCheckFunc checkFunc) c_g_type_remove_interface_check;
 	GTypeValueTable* function(GType type) c_g_type_value_table_peek;
-	
+
 	// gobject.TypePlugin
-	
+
 	void function(GTypePlugin* plugin) c_g_type_plugin_use;
 	void function(GTypePlugin* plugin) c_g_type_plugin_unuse;
 	void function(GTypePlugin* plugin, GType gType, GTypeInfo* info, GTypeValueTable* valueTable) c_g_type_plugin_complete_type_info;
 	void function(GTypePlugin* plugin, GType instanceType, GType interfaceType, GInterfaceInfo* info) c_g_type_plugin_complete_interface_info;
-	
+
 	// gobject.TypeModule
-	
+
 	gboolean function(GTypeModule* modul) c_g_type_module_use;
 	void function(GTypeModule* modul) c_g_type_module_unuse;
 	void function(GTypeModule* modul, gchar* name) c_g_type_module_set_name;
@@ -478,9 +477,9 @@ mixin( gshared ~"extern(C)
 	void function(GTypeModule* modul, GType instanceType, GType interfaceType, GInterfaceInfo* interfaceInfo) c_g_type_module_add_interface;
 	GType function(GTypeModule* modul, gchar* name, GEnumValue* _StaticValues) c_g_type_module_register_enum;
 	GType function(GTypeModule* modul, gchar* name, GFlagsValue* _StaticValues) c_g_type_module_register_flags;
-	
+
 	// gobject.ObjectG
-	
+
 	void function(GObjectClass* oclass, guint propertyId, GParamSpec* pspec) c_g_object_class_install_property;
 	void function(GObjectClass* oclass, guint nPspecs, GParamSpec** pspecs) c_g_object_class_install_properties;
 	GParamSpec* function(GObjectClass* oclass, gchar* propertyName) c_g_object_class_find_property;
@@ -526,32 +525,32 @@ mixin( gshared ~"extern(C)
 	void function(GObject* object, gchar* firstPropertyName, va_list varArgs) c_g_object_get_valist;
 	void function(GObject* object, GClosure* closure) c_g_object_watch_closure;
 	void function(GObject* object) c_g_object_run_dispose;
-	
+
 	// gobject.Enums
-	
+
 	GEnumValue* function(GEnumClass* enumClass, gint value) c_g_enum_get_value;
 	GEnumValue* function(GEnumClass* enumClass, gchar* name) c_g_enum_get_value_by_name;
 	GEnumValue* function(GEnumClass* enumClass, gchar* nick) c_g_enum_get_value_by_nick;
 	GType function(gchar* name, GEnumValue* _StaticValues) c_g_enum_register_static;
 	void function(GType type, GTypeInfo* info, GEnumValue* _Values) c_g_enum_complete_type_info;
-	
+
 	// gobject.Flags
-	
+
 	GFlagsValue* function(GFlagsClass* flagsClass, guint value) c_g_flags_get_first_value;
 	GFlagsValue* function(GFlagsClass* flagsClass, gchar* name) c_g_flags_get_value_by_name;
 	GFlagsValue* function(GFlagsClass* flagsClass, gchar* nick) c_g_flags_get_value_by_nick;
 	GType function(gchar* name, GFlagsValue* _StaticValues) c_g_flags_register_static;
 	void function(GType type, GTypeInfo* info, GFlagsValue* _Values) c_g_flags_complete_type_info;
-	
+
 	// gobject.Boxed
-	
+
 	gpointer function(GType boxedType, gconstpointer srcBoxed) c_g_boxed_copy;
 	void function(GType boxedType, gpointer boxed) c_g_boxed_free;
 	GType function(gchar* name, GBoxedCopyFunc boxedCopy, GBoxedFreeFunc boxedFree) c_g_boxed_type_register_static;
 	GType function(gchar* name) c_g_pointer_type_register_static;
-	
+
 	// gobject.Value
-	
+
 	GValue* function(GValue* value, GType gType) c_g_value_init;
 	void function(GValue* srcValue, GValue* destValue) c_g_value_copy;
 	GValue* function(GValue* value) c_g_value_reset;
@@ -643,9 +642,9 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GValue* value) c_g_value_dup_variant;
 	void function(GValue* value, GVariant* variant) c_g_value_set_variant;
 	void function(GValue* value, GVariant* variant) c_g_value_take_variant;
-	
+
 	// gobject.ParamSpec
-	
+
 	GParamSpec* function(GParamSpec* pspec) c_g_param_spec_ref;
 	void function(GParamSpec* pspec) c_g_param_spec_unref;
 	void function(GParamSpec* pspec) c_g_param_spec_sink;
@@ -665,18 +664,18 @@ mixin( gshared ~"extern(C)
 	GParamSpec* function(GParamSpec* pspec) c_g_param_spec_get_redirect_target;
 	gpointer function(GType paramType, gchar* name, gchar* nick, gchar* blurb, GParamFlags flags) c_g_param_spec_internal;
 	GType function(gchar* name, GParamSpecTypeInfo* pspecInfo) c_g_param_type_register_static;
-	
+
 	// gobject.ParamSpecPool
-	
+
 	GParamSpecPool* function(gboolean typePrefixing) c_g_param_spec_pool_new;
 	void function(GParamSpecPool* pool, GParamSpec* pspec, GType ownerType) c_g_param_spec_pool_insert;
 	void function(GParamSpecPool* pool, GParamSpec* pspec) c_g_param_spec_pool_remove;
 	GParamSpec* function(GParamSpecPool* pool, gchar* paramName, GType ownerType, gboolean walkAncestors) c_g_param_spec_pool_lookup;
 	GParamSpec** function(GParamSpecPool* pool, GType ownerType, guint* nPspecsP) c_g_param_spec_pool_list;
 	GList* function(GParamSpecPool* pool, GType ownerType) c_g_param_spec_pool_list_owned;
-	
+
 	// gobject.Signals
-	
+
 	guint function(gchar* signalName, GType itype, GSignalFlags signalFlags, guint classOffset, GSignalAccumulator accumulator, gpointer accuData, GSignalCMarshaller cMarshaller, GType returnType, guint nParams, ... ) c_g_signal_new;
 	guint function(gchar* signalName, GType itype, GSignalFlags signalFlags, GClosure* classClosure, GSignalAccumulator accumulator, gpointer accuData, GSignalCMarshaller cMarshaller, GType returnType, guint nParams, GType* paramTypes) c_g_signal_newv;
 	guint function(gchar* signalName, GType itype, GSignalFlags signalFlags, GClosure* classClosure, GSignalAccumulator accumulator, gpointer accuData, GSignalCMarshaller cMarshaller, GType returnType, guint nParams, va_list args) c_g_signal_new_valist;
@@ -715,9 +714,9 @@ mixin( gshared ~"extern(C)
 	GClosure* function(GType itype, guint structOffset) c_g_signal_type_cclosure_new;
 	gboolean function(GSignalInvocationHint* ihint, GValue* returnAccu, GValue* handlerReturn, gpointer dummy) c_g_signal_accumulator_first_wins;
 	gboolean function(GSignalInvocationHint* ihint, GValue* returnAccu, GValue* handlerReturn, gpointer dummy) c_g_signal_accumulator_true_handled;
-	
+
 	// gobject.Closure
-	
+
 	GClosure* function(guint sizeofClosure, GObject* object) c_g_closure_new_object;
 	GClosure* function(GClosure* closure) c_g_closure_ref;
 	void function(GClosure* closure) c_g_closure_sink;
@@ -734,9 +733,9 @@ mixin( gshared ~"extern(C)
 	void function(GClosure* closure, gpointer marshalData, GClosureMarshal metaMarshal) c_g_closure_set_meta_marshal;
 	void function(GSource* source, GClosure* closure) c_g_source_set_closure;
 	void function(GSource* source) c_g_source_set_dummy_callback;
-	
+
 	// gobject.CClosure
-	
+
 	GClosure* function(GCallback callbackFunc, gpointer userData, GClosureNotify destroyData) c_g_cclosure_new;
 	GClosure* function(GCallback callbackFunc, gpointer userData, GClosureNotify destroyData) c_g_cclosure_new_swap;
 	GClosure* function(GCallback callbackFunc, GObject* object) c_g_cclosure_new_object;
@@ -762,9 +761,9 @@ mixin( gshared ~"extern(C)
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_STRING__OBJECT_POINTER;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__UINT_POINTER;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_BOOLEAN__FLAGS;
-	
+
 	// gobject.ValueArray
-	
+
 	GValue* function(GValueArray* valueArray, guint index) c_g_value_array_get_nth;
 	GValueArray* function(guint nPrealloced) c_g_value_array_new;
 	GValueArray* function(GValueArray* valueArray) c_g_value_array_copy;
@@ -775,9 +774,9 @@ mixin( gshared ~"extern(C)
 	GValueArray* function(GValueArray* valueArray, guint index) c_g_value_array_remove;
 	GValueArray* function(GValueArray* valueArray, GCompareFunc compareFunc) c_g_value_array_sort;
 	GValueArray* function(GValueArray* valueArray, GCompareDataFunc compareFunc, gpointer userData) c_g_value_array_sort_with_data;
-	
+
 	// gobject.Binding
-	
+
 	GObject* function(GBinding* binding) c_g_binding_get_source;
 	gchar* function(GBinding* binding) c_g_binding_get_source_property;
 	GObject* function(GBinding* binding) c_g_binding_get_target;

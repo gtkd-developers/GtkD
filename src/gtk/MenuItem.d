@@ -238,7 +238,7 @@ public class MenuItem : Item, ActivatableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(MenuItem)[] onActivateListeners;
 	/**
