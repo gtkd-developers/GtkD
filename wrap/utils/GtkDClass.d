@@ -291,34 +291,30 @@ public class GtkDClass
 		
 		foreach( string imprt ; convParms.imprts )
 		{
+			string format(string a) { return "\t" ~ privPub ~ " import " ~ a ~ ";\n"; }
+
+			string formats(string[] as) { return join(map!format(as)); }
+
 			if ( imprt in druntimeImportConvs )
 			{
 				++countDruntime;
-				foreach ( string d2Imp ; druntimeImportConvs[imprt] )
-				{ 
-					importDruntime ~= "\t"~ privPub ~" import "~d2Imp~";\n";
-				}
+				importDruntime ~= formats(druntimeImportConvs[imprt]);
 			}
+
 			if ( imprt in phobos2ImportConvs )
 			{
-				foreach ( string phobos2Imp ; phobos2ImportConvs[imprt] )
-				{ 
-					importDruntime ~= "\t"~ privPub ~" import "~phobos2Imp~";\n";
-				}
+				importDruntime ~= formats(phobos2ImportConvs[imprt]);
 			}
 
 			if ( imprt in tangoImportConvs )
 			{
 				++countTango;
-				foreach ( string tangoImp ; tangoImportConvs[imprt] )
-				{ 
-					importTango ~= "\t"~ privPub ~" import "~tangoImp~";\n";
-				}
-				importElse ~= "\t"~ privPub ~" import "~imprt~";\n";
+				importTango ~= formats(tangoImportConvs[imprt]);
+				importElse ~= format(imprt);
 			}
 			else
 			{
-				importCommon ~= privPub ~" import "~imprt~";\n";
+				importCommon ~= format(imprt).stripLeft;
 			}
 		}
 		
