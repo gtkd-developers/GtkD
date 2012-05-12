@@ -31,6 +31,7 @@ public class HtmlStrip
 	
 	private import std.file;
 	private import std.stdio;
+	private import std.conv;
 	private import std.string;
 
 	public bool convertComment = true;
@@ -45,17 +46,17 @@ public class HtmlStrip
 		
 	}
 	
-	char[] strip(char[] htmlText, bool checkUTF=true)
+	string strip(string htmlText, bool checkUTF=true)
 	{
 		int markupCount = 0;
-		char[] stripped;
-		char pc = ' ';
-		char[] mark;
+		dchar[] stripped;
+		dchar pc = ' ';
+		string mark;
 		bool inAmper = false;
 		bool inCode = false;
-		char[] amper;
+		string amper;
 
-		foreach ( char c ; htmlText )
+		foreach ( dchar c ; htmlText )
 		{
 			switch ( c )
 			{
@@ -174,19 +175,19 @@ public class HtmlStrip
 			}
 			pc = c;
 		}
-		
+
 		if ( checkUTF )
 		{
 			cleanUTF(stripped);
 		}
-				
-		return stripped;
+
+		return to!string(stripped);
 	}
 	
-	char[] stripFile(char[] filename)
+	string stripFile(string filename)
 	{
 		debug(file)writefln("HtmlStrip.stripFile filename = %s", filename);
-		char[] text = cast(char[])std.file.read(filename);
+		string text = cast(string)std.file.read(filename);
 		
 		//writefln("Original html:\n%s", text);
 
@@ -195,7 +196,7 @@ public class HtmlStrip
 	
 	private import std.utf;
 	
-	public void cleanUTF(inout char[] str)
+	public void cleanUTF(dchar[] str)
 	{
 		//printf("before utfClean\n%s\nend before utfClean\n", (str~"\0").ptr);
 		size_t i = 0;
@@ -205,7 +206,7 @@ public class HtmlStrip
 			{
 				std.utf.decode(str, i);
 			}
-			catch ( UtfException e )
+			catch ( UTFException e )
 			{
 				str[i] = ' ';
 				++i;
@@ -214,7 +215,6 @@ public class HtmlStrip
 		}
 		
 		//writefln("after utfClean\n%s\nend after utfClean", str);
-
 	}
 	
 }
@@ -229,7 +229,7 @@ version (standAlone)
 	{
 
 		HtmlStrip strip = new HtmlStrip();
-		char[] stripped = strip.stripFile("/home/mike/D/gtkD/gtkD-2.20/wrap/gtkdocs/glib-html-2.24.0/glib-Lexical-Scanner.html");
+		string stripped = strip.stripFile("/home/mike/D/gtkD/gtkD-2.20/wrap/gtkdocs/glib-html-2.24.0/glib-Lexical-Scanner.html");
 	
 		writefln("Stripped html:\n%s", stripped);
 	

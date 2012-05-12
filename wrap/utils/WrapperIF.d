@@ -22,13 +22,13 @@ module utils.WrapperIF;
 public interface WrapperIF
 {
 	/** the global license in of files */
-	char[] getLicense();
+	string getLicense();
 	
 	/** the simple token subsitution */
-	char[][char[]] getAliases();
+	string[string] getAliases();
 	
 	/** the referenced enum type table */
-	char[][char[]] getEnumTypes();
+	string[string] getEnumTypes();
 	
 	/** switch on or off the comments enbeded on the source */
 	bool includeComments();

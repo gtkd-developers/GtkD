@@ -37,23 +37,41 @@ private import std.stdio;
 private import utils.convparms;
 private import utils.GtkDClass;
 
+bool contains(string[] src, string elem)
+{
+  foreach( str; src)
+    if ( str == elem )
+      return true;
+
+  return false;
+}
+
+string contains(string[string] src, string elem)
+{
+  foreach( key, str; src)
+    if ( str == elem )
+      return key;
+
+  return null;
+}
+
 public struct Funct
 {
 	bool ctor;	/// when true this method was found to be a constructor
-	char[] type;
-	char[] typeWrap;
-	char[] name;
-	char[] convName;		/// name after convertion
+	string type;
+	string typeWrap;
+	string name;
+	string convName;		/// name after convertion
 	// TODO parms need to be a struct
-	char[][] parmsType;
-	char[][] parmsWrap;		/// this is the parameter wrapped type
-	char[][] parms;
-	char[][] parmsDesc;
+	string[] parmsType;
+	string[] parmsWrap;		/// this is the parameter wrapped type
+	string[] parms;
+	string[] parmsDesc;
 	bool[] parmConst;
 	bool[] parmPointer;
-	char[] typeDesc;
-	char[] strctVar;
-	char[] strctPointer;
+	string typeDesc;
+	string strctVar;
+	string strctPointer;
 	
 	
 	/**
@@ -61,11 +79,11 @@ public struct Funct
 	 * Params:
 	 *    	text = 	The Gtk API description of the function call
 	 */
-	void init(char[] text, ConvParms* convParms)
+	void init(string text, ConvParms* convParms)
 	{
 		strctVar = null;
 		getStrctVar(convParms);
-		strctPointer = convParms.strct.dup ~ '*';
+		strctPointer = convParms.strct ~ "*";
 
 		debug(Funct) writefln("init text=%s", text);
 
@@ -90,20 +108,20 @@ public struct Funct
 		}
 		else if ( name in convParms.array && "Return" in convParms.array[name] )
 		{
-			typeWrap = getWrappedType(type.dup[0 .. $-1], convParms) ~ "[]";
+			typeWrap = getWrappedType(type[0 .. $-1], convParms) ~ "[]";
 
 			if ( typeWrap == "char[]" || typeWrap == "gchar[]" )
 				typeWrap = "string";
 		}
 		else
 		{
-			typeWrap = getWrappedType(type.dup, convParms);
+			typeWrap = getWrappedType(type, convParms);
 		}
 
 		GtkDClass.skip(p, text,'(');
 		int countBrace = 0;
-		char[] currParmType;
-		char[] currParm;
+		string currParmType;
+		string currParm;
 		debug(parm)writef("%s:", name);
 		while ( countBrace==0 && p<text.length && text[p]!=')' )
 		{
@@ -114,7 +132,7 @@ public struct Funct
 			currParmType = GtkDClass.untilBlank(p, text, ",)");
 			GtkDClass.skipBlank(p, text);
 			debug(parm)writef("currParmType = %s", currParmType);
-			if ( std.string.find(" const volatile G_CONST_RETURN ", currParmType) > 0 )
+			if ( std.string.indexOf(" const volatile G_CONST_RETURN ", currParmType) > 0 )
 			{
 				currParmType = GtkDClass.untilBlank(p, text, ",)");
 				GtkDClass.skipBlank(p, text);
@@ -143,12 +161,12 @@ public struct Funct
 			}
 
 			GtkDClass.adjustTypeName(currParmType, currParm);
-			parmsType ~= currParmType.dup;
+			parmsType ~= currParmType;
 
 			if ( !getArrayType(currParm, currParmType,  convParms) && !getOutOrRefType(currParm, currParmType,  convParms) )
-				parmsWrap ~= getWrappedType(currParmType.dup, convParms);
+				parmsWrap ~= getWrappedType(currParmType, convParms);
 
-			parms ~= currParm.dup;
+			parms ~= currParm;
 			
 			if ( p<text.length && text[p]==',') ++p;
 		}
@@ -156,39 +174,39 @@ public struct Funct
 		GtkDClass.skip(p, text, ';');
 	}
 
-	bool getOutOrRefType(char[] currParm, char[] currParmType, ConvParms* convParms)
+	bool getOutOrRefType(string currParm, string currParmType, ConvParms* convParms)
 	{
 		if ( name in convParms.outParms && convParms.outParms[name].contains(currParm) )
 		{
-			parmsWrap ~= "out "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
+			parmsWrap ~= "out "~ getWrappedType(currParmType[0 .. $-1], convParms);
 			return true;
 		}
 		if ( name in convParms.inoutParms && convParms.inoutParms[name].contains(currParm) )
 		{
-			parmsWrap ~= "ref "~ getWrappedType(currParmType[0 .. $-1].dup, convParms);
+			parmsWrap ~= "ref "~ getWrappedType(currParmType[0 .. $-1], convParms);
 			return true;
 		}
 
 		return false;
 	}
 
-	bool getArrayType(char[] currParm, char[] currParmType, ConvParms* convParms)
+	bool getArrayType(string currParm, string currParmType, ConvParms* convParms)
 	{
 		if ( name in convParms.array && currParm in convParms.array[name])
 		{
 			if ( name in convParms.outParms && convParms.outParms[name].contains(currParm) )
 			{
-				parmsWrap ~= "out "~ getWrappedType(currParmType[0 .. $-2].dup, convParms) ~"[]";
+				parmsWrap ~= "out "~ getWrappedType(currParmType[0 .. $-2], convParms) ~"[]";
 				return true;
 			}
 			else if ( name in convParms.inoutParms && convParms.inoutParms[name].contains(currParm) )
 			{
-				parmsWrap ~= "ref "~ getWrappedType(currParmType[0 .. $-2].dup, convParms) ~"[]";
+				parmsWrap ~= "ref "~ getWrappedType(currParmType[0 .. $-2], convParms) ~"[]";
 				return true;
 			}
 			else
 			{
-				parmsWrap ~= getWrappedType(currParmType[0 .. $-1].dup, convParms) ~ "[]";
+				parmsWrap ~= getWrappedType(currParmType[0 .. $-1], convParms) ~ "[]";
 				return true;
 			}
 		}
@@ -196,31 +214,13 @@ public struct Funct
 		return false;
 	}
 
-	bool contains(char[][] src, char[] elem)
-	{
-		foreach( str; src)
-			if ( str == elem )
-				return true;
-
-		return false;
-	}
-
-	char[] contains(char[][char[]] src, char[] elem)
-	{
-		foreach( key, str; src)
-			if ( str == elem )
-				return key;
-
-		return null;
-	}
-
-	char[] getStrctVar(ConvParms* convParms)
+	string getStrctVar(ConvParms* convParms)
 	{
 		if ( strctVar.length == 0 )
 		{
 			if ( convParms.strct.length > 0 )
 			{
-				strctVar = GtkDClass.toVar(convParms.strct.dup);
+				strctVar = GtkDClass.toVar(convParms.strct);
 			}
 			else
 			{
@@ -234,9 +234,9 @@ public struct Funct
 	 * Checks the type against the strcutWrap table
 	 * Returns: 
 	 */
-	char[] getWrappedType(char[] currType, ConvParms* convParms)
+	string getWrappedType(string currType, ConvParms* convParms)
 	{
-		char[] wType;
+		string wType;
 		if ( currType == "gchar*" || currType == "char*" )
 		{
 			wType = "string";
@@ -267,7 +267,7 @@ public struct Funct
 	 *    	convParms = 	
 	 * Returns: 
 	 */
-	char[] getUnwrappedType(char[] currType, ConvParms* convParms)
+	string getUnwrappedType(string currType, ConvParms* convParms)
 	{
 		// TODO
 		return currType;
@@ -280,10 +280,10 @@ public struct Funct
 	 *    	aliases = 	
 	 * Returns: 
 	 */
-	char[] getExternal(ConvParms* convParms, char[][char[]] aliases)
+	string getExternal(ConvParms* convParms, string[string] aliases)
 	{
 		
-		char[] ext = type 
+		string ext = type 
 					~ " function(" 
 					~ getParameters(convParms, aliases)
 					~ ")" 
@@ -293,9 +293,9 @@ public struct Funct
 		return ext;
 	}
 	
-	char[] getParameters(ConvParms* convParms, char[][char[]] aliases)
+	string getParameters(ConvParms* convParms, string[string] aliases)
 	{
-		char[] parameters;
+		string parameters;
 		
 		int i=0;
 		while ( i<parmsType.length && i< parms.length )
@@ -323,9 +323,9 @@ public struct Funct
 	 *    	aliases = 	
 	 * Returns: 
 	 */
-	char[] getCallbackParameters(int firstParameter, ConvParms* convParms, char[][char[]] aliases)
+	string getCallbackParameters(int firstParameter, ConvParms* convParms, string[string] aliases)
 	{
-		char[] parameters;
+		string parameters;
 
 		debug(callback)writefln("getCallbackParameters "~convParms.clss);
 		debug(callback)writefln("\t %s", getExternal(convParms, aliases));
@@ -358,7 +358,7 @@ public struct Funct
 			++i;
 		}
 
-		return parameters.replace("-", "_");
+		return parameters.tr("-", "_");
 	}
 	
 	/**
@@ -370,9 +370,9 @@ public struct Funct
 	 *    	aliases = 	
 	 * Returns: 
 	 */
-	char[] getCallbackVars(ConvParms* convParms, char[][char[]] aliases)
+	string getCallbackVars(ConvParms* convParms, string[string] aliases)
 	{
-		char[] parameters;
+		string parameters;
 
 		debug(callback)writefln("getCallbackVars "~convParms.clss);
 		debug(callback)writefln("\t %s", getExternal(convParms, aliases));
@@ -403,10 +403,10 @@ public struct Funct
 			++i;
 		}
 
-		return parameters.replace("-", "_");
+		return parameters.tr("-", "_");
 	}
 
-	char[] getDelegateDeclaration(ConvParms* convParms, int firstParameter = 0)
+	string getDelegateDeclaration(ConvParms* convParms, int firstParameter = 0)
 	{
 		if ( GtkDClass.endsWith(typeWrap,"user_function") )
 		{
@@ -418,10 +418,10 @@ public struct Funct
 			typeWrap = "bool";
 		}
 
-		char[] decl = typeWrap ~ " delegate(";
+		string decl = typeWrap ~ " delegate(";
 		
 		int pCount = 0;
-		foreach(int count, char[] parm ; parmsWrap )
+		foreach(int count, string parm ; parmsWrap )
 		{
 			if ( count >= firstParameter )
 			{
@@ -462,12 +462,12 @@ public struct Funct
 	 *    	strct = 	
 	 * Returns: 
 	 */
-	char[] declaration(ConvParms* convParms, char[][char[]] aliases)
+	string declaration(ConvParms* convParms, string[string] aliases)
 	{
-		char[] dec;
-		char[] returnType;
+		string dec;
+		string returnType;
 
-		if ( find(typeWrap, "string") > -1 )
+		if ( indexOf(typeWrap, "string") > -1 )
 			returnType = typeWrap;
 		else
 			returnType = GtkDClass.stringToGtkD(typeWrap, convParms, aliases);
@@ -507,7 +507,7 @@ public struct Funct
 			{
 				convName ~= convParms.outFile;
 			}
-			char[] overr;
+			string overr;
 			if (convParms.needsOverride(convName) && !convParms.isInterface )
 			{
 				overr = "override ";
@@ -556,7 +556,7 @@ public struct Funct
 				&& (parmsType[i]!="void" || parms[i].length>0)
 				)
 			{
-				if ( find(parmsWrap[i], "string") > -1 )
+				if ( indexOf(parmsWrap[i], "string") > -1 )
 					dec ~= parmsWrap[i];
 				else
 					dec ~= GtkDClass.stringToGtkD(parmsWrap[i], convParms, aliases);
@@ -579,9 +579,9 @@ public struct Funct
 	 *    	i = 	
 	 * Returns: 
 	 */
-	char[] parameterToGtk(int i, ConvParms* convParms, char[][char[]] aliases)
+	string parameterToGtk(int i, ConvParms* convParms, string[string] aliases)
 	{
-		char[] parmToGtk;
+		string parmToGtk;
 
 		if ( parmsType[i] != parmsWrap[i] )
 		{
@@ -609,7 +609,7 @@ public struct Funct
 			else if ( GtkDClass.startsWith(parmsWrap[i], "out") ||
 				GtkDClass.startsWith(parmsWrap[i], "ref") )
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 				if ( parmsType[i][0 .. $-1] == split(parmsWrap[i])[1] )
 					parmToGtk = "&" ~ id;
 				else
@@ -617,13 +617,13 @@ public struct Funct
 			}
 			else if ( GtkDClass.endsWith(parmsWrap[i], "[]") )
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 
 				parmToGtk = id ~".ptr";
 			}
 			else
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 				if(GtkDClass.endsWith(parmsWrap[i], "IF"))
 					parmToGtk = "("~id~" is null) ? null : "~id~ ".get"~ parmsWrap[i][0..$-2] ~ "T" ~"Struct()";
 				else
@@ -636,7 +636,7 @@ public struct Funct
 			{
 				if ( name in convParms.outParms && convParms.outParms[name].contains(convParms.array[name].contains(parms[i])) )
 				{
-					char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+					string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 					if ( GtkDClass.endsWith(parmsType[i], "*") )
 						parmToGtk = "&"~ id;
 					else
@@ -644,7 +644,7 @@ public struct Funct
 				}
 				else if ( name in convParms.inoutParms && convParms.inoutParms[name].contains(convParms.array[name].contains(parms[i])) )
 				{
-					char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+					string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 					if ( GtkDClass.endsWith(parmsType[i], "*") )
 						parmToGtk = "&"~ id;
 					else
@@ -652,7 +652,7 @@ public struct Funct
 				}
 				else
 				{
-					char[] id = GtkDClass.idsToGtkD(convParms.array[name].contains(parms[i]), convParms, aliases);
+					string id = GtkDClass.idsToGtkD(convParms.array[name].contains(parms[i]), convParms, aliases);
 					parmToGtk = "cast(int) "~ id ~".length";
 				}
 			}
@@ -664,9 +664,9 @@ public struct Funct
 		return parmToGtk;
 	}
 	
-	char[] parameterToGtkD(int i, ConvParms* convParms, char[][char[]] aliases)
+	string parameterToGtkD(int i, ConvParms* convParms, string[string] aliases)
 	{
-		char[] parmToGtkD;
+		string parmToGtkD;
 		if ( parmsType[i] != parmsWrap[i] )
 		{
 			if ( parmsWrap[i] == "string" )
@@ -691,10 +691,10 @@ public struct Funct
 		return parmToGtkD;
 	}
 
-	char[] getWrapParametersType()
+	string getWrapParametersType()
 	{
-		char[] pw;
-		foreach ( int count, char[] typeW ; parmsWrap )
+		string pw;
+		foreach ( int count, string typeW ; parmsWrap )
 		{
 			if ( count > 0 )
 			{
@@ -711,11 +711,11 @@ public struct Funct
 	 * If the first parameter is a pointer to the struct make it implicit and use the internal struct
 	 * Returns: The text of the body of the function NOT including the braces
 	 */
-	char[][] bod(ConvParms* convParms, char[][char[]] aliases)
+	string[] bod(ConvParms* convParms, string[string] aliases)
 	{
-		char[][] bd; /* Return variable. */
-		char[] gtkCall;
-		char[][] end; //Code to be added to the end of the function to wrap ref/out parameters. 
+		string[] bd; /* Return variable. */
+		string gtkCall;
+		string[] end; //Code to be added to the end of the function to wrap ref/out parameters. 
 		bool wrapError = false;
 
 		void checkError()
@@ -747,7 +747,7 @@ public struct Funct
 				
 				if ( convParms.templ.length == 0 )
 				{
-					gtkCall ~= GtkDClass.toVar(convParms.strct.dup);
+					gtkCall ~= GtkDClass.toVar(convParms.strct);
 				}
 				else
 				{
@@ -764,7 +764,7 @@ public struct Funct
 			}
 			else if ( parmsWrap[i] == "out string" || parmsWrap[i] == "ref string" )
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 
 				if ( parmsWrap[i] == "out string" )
 					bd ~= "char* out"~ id ~" = null;";
@@ -776,8 +776,8 @@ public struct Funct
 			}
 			else if ( parmsWrap[i] == "out string[]" || parmsWrap[i] == "ref string[]" )
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
-				char[] lenid = GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string lenid = GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases);
 
 				if ( parmsWrap[i] == "out string[]" )
 					bd ~= "char** out"~ id ~" = null;";
@@ -809,8 +809,8 @@ public struct Funct
 				GtkDClass.startsWith(parmsWrap[i], "ref")) &&
 				GtkDClass.endsWith(parmsWrap[i], "[]") )
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
-				char[] lenid = GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string lenid = GtkDClass.idsToGtkD(convParms.array[name][parms[i]], convParms, aliases);
 
 				if ( parmsType[i][0 .. $-2] == split(parmsWrap[i])[1][0 .. $-2] )
 				{
@@ -887,7 +887,7 @@ public struct Funct
 				GtkDClass.startsWith(parmsWrap[i], "ref")) &&
 				parmsType[i][0 .. $-1] != split(parmsWrap[i])[1] )
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 
 				if (GtkDClass.startsWith(parmsWrap[i], "out") )
 				{
@@ -908,7 +908,7 @@ public struct Funct
 			else if ( GtkDClass.endsWith(parmsWrap[i], "[]") && parmsType[i][0 .. $-1] != parmsWrap[i][0 .. $-2] &&
 				 !GtkDClass.endsWith(parmsType[i], "[]") && parmsWrap[i] != "string[]" )
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 
 				bd ~= "";
 				bd ~= parmsType[i].removechars("*") ~ "*[] "~ id ~"Array = new "~ parmsType[i].removechars("*") ~"*["~ id ~".length];";
@@ -922,7 +922,7 @@ public struct Funct
 			}
 			else if ( name in convParms.array && "Return" == convParms.array[name].contains(parms[i]) )
 			{
-				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 
 				bd ~= GtkDClass.tokenToGtkD(parmsType[i].chomp("*"), convParms, aliases) ~" "~ id ~";";
 				gtkCall ~= "&"~ id;
@@ -974,19 +974,19 @@ public struct Funct
 			 * and pass the object to the wrapper's constructor. */
 			if(ctor)
 			{
-				/*char[] prepend = "this(cast(";
+				/*string prepend = "this(cast(";
 				if(convParms.realStrct.length > 0)
 					prepend ~= convParms.realStrct ~ "*)";
 				else
 					prepend ~= convParms.strct ~ "*)";
 				gtkCall = prepend ~ gtkCall*/
-				char[] strct = (convParms.realStrct.length > 0) ? convParms.realStrct : convParms.strct;
+				string strct = (convParms.realStrct.length > 0) ? convParms.realStrct : convParms.strct;
 				/* Do we need a cast? */
 				bd ~= "auto p = " ~ gtkCall ~ ";"; //GtkStruct* p = gtk_function(arg1...argN);
 				
 				checkError();
 
-				char[][] check = [	"if(p is null)",
+				string[] check = [	"if(p is null)",
 								  	"{",
 								  	"	throw new ConstructionException(\"null returned by " ~ gtkCall ~ "\");",
 									"}"	];
@@ -1047,7 +1047,7 @@ public struct Funct
 
 							if (name in convParms.array && "Return" in convParms.array[name])
 							{
-								char[] lenid = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
+								string lenid = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
 
 								bd ~= "return Str.toString(p, "~ lenid ~");";
 							}
@@ -1073,7 +1073,7 @@ public struct Funct
 
 							if (name in convParms.array && "Return" in convParms.array[name])
 							{
-								char[] lenid = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
+								string lenid = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
 
 								bd ~= "";
 								bd ~= "string[] strArray = null;"; 
@@ -1102,7 +1102,7 @@ public struct Funct
 						if ( end.length > 0 )
 							bd ~= end;
 
-						char[][] check = [	"if(p is null)",
+						string[] check = [	"if(p is null)",
 								  			"{",
 										  	"	return null;",
 											"}"	];
@@ -1112,7 +1112,7 @@ public struct Funct
 
 						if ( GtkDClass.endsWith(typeWrap, "[]") )
 						{
-							char[] id = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
+							string id = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);
 
 							if (type[0 .. $-1] == typeWrap[0 .. $-2])
 							{
