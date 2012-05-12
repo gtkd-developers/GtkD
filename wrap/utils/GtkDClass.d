@@ -192,7 +192,7 @@ public class GtkDClass
 	 */
 	public void openGtkDClass(string inAPI, ConvParms* convParms)
 	{
-		//writefln("collectStructs %s", std.string.strip(inLines[currLine]));
+		//writefln("collectStructs %s", inLines[currLine].strip);
 		this.inAPI = inAPI;
 		if ( convParms.isInterface ) iFaceChar = ";";
 		else iFaceChar = "";
@@ -374,7 +374,7 @@ public class GtkDClass
 	{
 		this.inAPI = inAPI;
 		HtmlStrip stripper = new HtmlStrip();
-		inLines = std.string.splitLines(stripper.strip(inAPI));
+		inLines = stripper.strip(inAPI).splitLines();
 		//writefln("new API\n%s",inAPI);
 
 		this.convParms = convParms;
@@ -735,7 +735,7 @@ public class GtkDClass
 			{
 				int i = moveToBlockStart("Object Hierarchy", inLines);
 				i += 2;
-				while ( i < inLines.length && !startsWith(std.string.strip(inLines[i]), "+----") )
+				while ( i < inLines.length && !startsWith(inLines[i].strip, "+----") )
 				{
 					debug(getParent)writefln("\t skip line %s", inLines[i]);
 					++i;
@@ -755,7 +755,7 @@ public class GtkDClass
 
 				if ( i < inLines.length )
 				{
-					next = std.string.strip(inLines[i-1]);	// many times "GObject"
+					next = inLines[i-1].strip;	// many times "GObject"
 					if ( next != "GInterface" )
 					{
 						current = next;
@@ -767,7 +767,7 @@ public class GtkDClass
 					gtkStruct = convParms.realStrct;
 				}
 				while ( i < inLines.length
-						&& startsWith(std.string.strip(inLines[i]), "+----")
+						&& startsWith(inLines[i].strip, "+----")
 						&& current != gtkStruct
 						)
 				{
@@ -809,10 +809,10 @@ public class GtkDClass
 
 		if ( conv == "Object" ) conv ~= prefix;
 		if ( prefix == "Pg" ) conv = "Pg" ~ gName[5..gName.length];
-		if ( prefix == "cairo") conv = std.string.toUpper(gName[6..7]) ~ gName[7..gName.length - 2];
+		if ( prefix == "cairo") conv = gName[6..7].toUpper ~ gName[7..gName.length - 2];
 
 		debug(getParent)writefln("convertClassName %s >>> %s", gName, conv);
-		prefix = std.string.toLower(prefix);
+		prefix = prefix.toLower;
 
 		//TODO: better way to covert Gio names.
 		if( prefix == "g" && convParms.outPack == "gio" && conv != "ObjectG" && conv != "TypeModule" && conv != "Boxed" )
@@ -1144,7 +1144,7 @@ public class GtkDClass
 		debug(signalFunction)writefln("getSignalFunctionDeclaration");
 		string funct;
 		while ( line<lines.length
-				&& std.string.indexOf(lines[line], ")")<0
+				&& indexOf(lines[line], ")")<0
 			)
 		{
 			funct ~= lines[line]~ " ";
@@ -1154,7 +1154,7 @@ public class GtkDClass
 										);
 			++line;
 		}
-		if ( line<lines.length && std.string.indexOf(lines[line], ")")>0 )
+		if ( line<lines.length && indexOf(lines[line], ")")>0 )
 		{
 			funct ~= lines[line++];
 		}
@@ -1297,15 +1297,15 @@ public class GtkDClass
 		debug(gTypes)writefln("gype lines\n\t%s\n\t%s\n\t%s",lines[0],lines[1],lines[2]);
 		int defLine = 1;
 		if ( lines.length > 0
-			&& std.string.indexOf(lines[defLine],"G_TYPE_MAKE_FUNDAMENTAL")>=0
+			&& indexOf(lines[defLine],"G_TYPE_MAKE_FUNDAMENTAL")>=0
 			&& endsWith(lines[defLine],")")
-			&& std.string.indexOf(lines[defLine],"<<") < 0
+			&& indexOf(lines[defLine],"<<") < 0
 			)
 		{
-			sizediff_t pos = std.string.indexOf(lines[defLine], "(");
+			sizediff_t pos = indexOf(lines[defLine], "(");
 			if ( pos > 0 )
 			{
-				sizediff_t posf = std.string.indexOf(lines[defLine], ")");
+				sizediff_t posf = indexOf(lines[defLine], ")");
 				if ( posf>pos )
 				{
 					gTypes ~= lines[0][7..lines[0].length]
@@ -1330,7 +1330,7 @@ public class GtkDClass
 			string stockID;
 			string stockValue;
 
-			sizediff_t pos = std.string.indexOf(line[12..line.length],' ')+12;
+			sizediff_t pos = indexOf(line[12..line.length],' ')+12;
 			debug(stockItems)writefln("pos=%s", pos);
 			if ( pos > 12 )
 			{
@@ -1342,7 +1342,7 @@ public class GtkDClass
 				debug(stockItems)writefln("\t\tstockID = %s", stockID);
 				if ( stockID.length>0 )
 				{
-					stockValue = std.string.strip(line[pos+1..line.length]);
+					stockValue = line[pos+1..line.length].strip;
 					debug(stockItems)writefln("\t\tstockValue = %s", stockValue);
 					if ( stockValue.length>2
 						&& stockValue[0] == '"'
@@ -1373,7 +1373,7 @@ public class GtkDClass
 	private void collectAliases(string[] lines, ConvParms* convParms)
 	{
 		int pos = 0;
-		string[] tokens = std.string.split(until(pos, lines[1], ';'));
+		string[] tokens = split(until(pos, lines[1], ';'));
 
 		if ( convParms.omitCode(tokens[2]) )
 			return;
@@ -1511,8 +1511,8 @@ public class GtkDClass
 		// skipp until the start of the enumerations
 		int pos = 1;
 		while ( pos<lines.length
-				&& !endsWith(std.string.strip(lines[pos]),'{')
-				&& !startsWith(std.string.strip(lines[pos]),'{')
+				&& !endsWith(lines[pos].strip,'{')
+				&& !startsWith(lines[pos].strip,'{')
 				&& !startsWith(lines[pos], "typedef enum {")
 				)
 		{
@@ -1523,7 +1523,7 @@ public class GtkDClass
 		bool invalidDEnum = false;
 		if ( pos<lines.length && lines[pos][0] != '}' )
 		{
-			string enumPrefix = getEnumPrefix(enumName, std.string.strip(lines[pos]));
+			string enumPrefix = getEnumPrefix(enumName, lines[pos].strip);
 			while ( pos<lines.length && lines[pos][0] != '}' )
 			{
 				debug(enums)writefln("\tenum line %s", lines[pos]);
@@ -1533,7 +1533,7 @@ public class GtkDClass
 				value = enumToGtkD(enumName, value, convParms, wrapper);
 				debug(enums)writefln("\tprocessed %s", value);
 
-				//if ( std.string.indexOf(value, ":") >= 0 )
+				//if ( indexOf(value, ":") >= 0 )
 				//{
 				//	invalidDEnum = true;
 				//	debug(structs)writefln("- INVALID >>>%s<<<", value);
@@ -1635,7 +1635,7 @@ public class GtkDClass
 		while ( pos<lines.length && lines[pos][0] != '}' )
 		{
 			debug(unions)writefln("\tunion line %s", lines[pos]);
-			string value = std.string.strip(lines[pos++]);
+			string value = lines[pos++].strip;
 			debug(unions)writefln("\traw       %s", value);
 			value = stringToGtkD(value, convParms, wrapper.getAliases());
 			debug(unions)writefln("\tprocessed %s", value);
@@ -1688,7 +1688,7 @@ public class GtkDClass
 			if ( lines[1][lines[1].length-1] == '{' )
 			{
 				++pos;
-				debug(structs)writefln("collectStructs %s",std.string.strip(lines[pos]));
+				debug(structs)writefln("collectStructs %s",lines[pos].strip);
 				while ( pos < lines.length && lines[pos][0] != '}' )
 				{
 					structDef ~= lines[pos];
@@ -1743,10 +1743,10 @@ public class GtkDClass
 	{
 		string getFunctionPointer(string def, inout int i)
 		{
-			string funct = std.string.split(def, ";")[0];
-			string comment = std.string.split(def, ";")[1];
+			string funct = split(def, ";")[0];
+			string comment = split(def, ";")[1];
 
-			string[] splitFunct = std.string.split(funct, "(");
+			string[] splitFunct = split(funct, "(");
 
 			string name = (splitFunct[1][1..$-2] == "ref") ? "doref" : splitFunct[1][1..$-2];
 
@@ -1760,7 +1760,7 @@ public class GtkDClass
 		for ( int i; i < structDef.length; i++ )
 		{
 			// Remove GSEAL macro
-			if ( std.string.indexOf(structDef[i], "GSEAL (") > -1 )
+			if ( indexOf(structDef[i], "GSEAL (") > -1 )
 			{
 				structDef[i] = std.array.replace(structDef[i], "GSEAL (", "");
 				structDef[i] = std.array.replace(structDef[i], ")", "");
@@ -1768,13 +1768,13 @@ public class GtkDClass
 
 			string elem = stringToGtkD(structDef[i], convParms, wrapper.getAliases());
 
-			if ( startsWith(elem, "*") && std.string.indexOf(elem, "+/") < elem.length - 2)
+			if ( startsWith(elem, "*") && indexOf(elem, "+/") < elem.length - 2)
 				elem = std.array.replace(elem, "/", "\\"); //Some comments are broken
 		
-			if ( std.string.indexOf(elem, "unsigned long") == 0)
+			if ( indexOf(elem, "unsigned long") == 0)
 				elem = "ulong"~ elem[13..$];  //TODO: posibly use fixtype
 
-			if ( std.string.indexOf(structDef[i], ":") >= 0 && (std.string.indexOf(structDef[i], ":") <  std.string.indexOf(structDef[i], "/+*") ||  std.string.indexOf(structDef[i], "/+*") == -1) )
+			if ( indexOf(structDef[i], ":") >= 0 && (indexOf(structDef[i], ":") <  indexOf(structDef[i], "/+*") ||  indexOf(structDef[i], "/+*") == -1) )
 			//Bit fields.
 			{
 				if ( !bitField )
@@ -1782,9 +1782,9 @@ public class GtkDClass
 					bitField = true;
 					collectedStructs ~= "\tuint bitfield" ~ to!string(bitFieldNr) ~";";
 				}
-				if (std.string.indexOf(elem, "/+*") > 0 && std.string.indexOf(elem, "+/") < 0)
+				if (indexOf(elem, "/+*") > 0 && indexOf(elem, "+/") < 0)
 				{
-					string[] parts = std.string.split(elem, "/+*");
+					string[] parts = split(elem, "/+*");
 					collectedStructs ~= "//" ~ parts[0];
 					collectedStructs ~= "/+*" ~ parts[1];
 				}
@@ -1803,32 +1803,32 @@ public class GtkDClass
 					bits = 0;
 				}
 			}
-			else if ( std.string.indexOf(elem, "#") > -1 && std.string.indexOf(elem, "#") < 2 )
+			else if ( indexOf(elem, "#") > -1 && indexOf(elem, "#") < 2 )
 			//Versions.
 			{
-				if ( std.string.indexOf(elem, "#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8") > -1 )
+				if ( indexOf(elem, "#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8") > -1 )
 				{
 					//GLIB_SIZEOF_VOID_P == 8 means 64 bit. assuming WIN32 is an bad name for just windows.
 					collectedStructs ~= "version(Win64)";
 					collectedStructs ~= "{";
 				}
-				if ( std.string.indexOf(elem, "#ifndef") == 0 )
+				if ( indexOf(elem, "#ifndef") == 0 )
 				{
 					collectedStructs ~= "version("~ elem[8..$] ~")";
 					collectedStructs ~= "{";
 				}
-				else if ( std.string.indexOf(elem, "#else") == 0 )
+				else if ( indexOf(elem, "#else") == 0 )
 				{
 					collectedStructs ~= "}";
 					collectedStructs ~= "else";
 					collectedStructs ~= "{";
 				}
-				else if ( std.string.indexOf(elem, "#endif") == 0 )
+				else if ( indexOf(elem, "#endif") == 0 )
 				{
 					collectedStructs ~= "}";
 				}
 			}
-			else if ( std.string.indexOf(elem, "(") > 0 && !startsWith(elem, "* ") && !startsWith(elem, "/+*") )
+			else if ( indexOf(elem, "(") > 0 && !startsWith(elem, "* ") && !startsWith(elem, "/+*") )
 			//Function Pointers.
 			{
 				string funct;
@@ -1836,31 +1836,31 @@ public class GtkDClass
 				{
 					funct ~= stringToGtkD(structDef[i], convParms, wrapper.getAliases());
 
-					if ( std.string.indexOf(structDef[i], ");") > 0 )
+					if ( indexOf(structDef[i], ");") > 0 )
 						break;
 				}
 
 				collectedStructs ~= "extern(C) " ~ getFunctionPointer(funct, i);
 			}
-			else if( std.string.indexOf(elem, "{") > 0 )
+			else if( indexOf(elem, "{") > 0 )
 			//Nested Structs and unions.
 			{
-				string structUnion = std.string.split(structDef[i])[0];
+				string structUnion = split(structDef[i])[0];
 				int parentCount;
 				string[] def;
 
 				for ( i++; i < structDef.length; i++ )
 				{
-					if ( std.string.indexOf(structDef[i], "{") > -1 )
+					if ( indexOf(structDef[i], "{") > -1 )
 						parentCount++;
 
-					if ( std.string.indexOf(structDef[i], "}") > -1 && parentCount-- == 0)
+					if ( indexOf(structDef[i], "}") > -1 && parentCount-- == 0)
 						break;
 
 					def ~= stringToGtkD(structDef[i], convParms, wrapper.getAliases());
 				}
 				
-				string varName = stringToGtkD(std.string.split(structDef[i])[1][0..$-1], convParms, wrapper.getAliases());
+				string varName = stringToGtkD(split(structDef[i])[1][0..$-1], convParms, wrapper.getAliases());
 				string structName = std.string.toUpper(varName)[0..1] ~ varName[1..$];
 
 				collectedStructs ~= structUnion ~" "~ structName;
@@ -2406,7 +2406,7 @@ public class GtkDClass
 		skip(pos, line, '(');
 		skipBlank(pos, line);
 
-		string sourceParms = std.string.strip(until(pos, line, ")"));
+		string sourceParms = until(pos, line, ")").strip;
 		string parms;
 
 		if ( sourceParms != "void" )
@@ -2522,7 +2522,7 @@ public class GtkDClass
 			}
 			else
 			{
-				if ( std.string.strip(inLines[currLine]).length > 0 )
+				if ( inLines[currLine].strip.length > 0 )
 				{
 					block ~= inLines[currLine];
 				}
@@ -2555,7 +2555,7 @@ public class GtkDClass
 			}
 			else
 			{
-				if ( std.string.strip(lines[currLine]).length > 0 )
+				if ( lines[currLine].strip.length > 0 )
 				{
 					block ~= lines[currLine];
 				}
@@ -2588,7 +2588,7 @@ public class GtkDClass
 		{
 			pc = c;
 			c = gString[pos];
-			if ( std.string.indexOf(seps,c) >= 0 )
+			if ( indexOf(seps,c) >= 0 )
 			{
 				end = pos;
 				converted ~= tokenToGtkD(gString[start..end], convParms, aliases, caseConvert);
@@ -2658,18 +2658,18 @@ public class GtkDClass
 		debug(enumToGtkD)writefln("enumLine (%s) BEFORE %s", enumType, gToken);
 		string converted = stringToGtkD(gToken, convParms, wrapper.getAliases());
 
-		sizediff_t pos = std.string.indexOf(converted, '=');
+		sizediff_t pos = indexOf(converted, '=');
 		debug(enumToGtkD)writefln("\t pos = %s", pos);
 		if ( pos > 0 )
 		{
-			string refValue = std.string.strip(converted[pos+1..converted.length]);
+			string refValue = converted[pos+1..converted.length].strip;
 			converted = converted[0..pos+1]~ " ";
 
 			debug(enumToGtkD)writefln("\t refValue = %s", refValue);
 			bool needComa = false;
 			if ( endsWith(refValue, ',') )
 			{
-				refValue = std.string.strip(refValue[0..refValue.length-1]);
+				refValue = refValue[0..refValue.length-1].strip;
 				needComa = true;
 			}
 
@@ -2683,9 +2683,9 @@ public class GtkDClass
 				}
 			}
 
-			if ( std.string.indexOf(refValue, ' ') > 0 && std.string.indexOf(refValue, '<') > 0 )
+			if ( indexOf(refValue, ' ') > 0 && indexOf(refValue, '<') > 0 )
 			{
-				string[] parts = std.string.split(refValue);
+				string[] parts = split(refValue);
 
 				foreach ( part; parts )
 				{
@@ -2699,9 +2699,9 @@ public class GtkDClass
 					{
 						part = wrapper.getEnumTypes()[part] ~" ";
 					}
-					else if ( std.string.indexOf(part, "<<") > 0 )
+					else if ( indexOf(part, "<<") > 0 )
 					{
-						string[] values = std.string.split(part, "<<");
+						string[] values = split(part, "<<");
 
 						if ( values[0] in wrapper.getEnumTypes() )
 							values[0] = wrapper.getEnumTypes()[values[0]];
@@ -2723,7 +2723,7 @@ public class GtkDClass
 				converted ~= refValue;
 			}
 
-			converted = std.string.stripRight(converted);
+			converted = converted.stripRight;
 
 			if (needComa)
 				converted ~= ",";
@@ -2802,7 +2802,7 @@ public class GtkDClass
 	{
 		debug(type)writefln("type before %s", type);
 		debug(name)writefln("name before %s", name);
-		name = std.string.strip(name);
+		name = name.strip;
 		while ( name.length > 0
 				&& (name.startsWith("const") || name[0] == '*'
 				|| name.startsWith("G_GNUC_MAY_ALIAS") )
@@ -2811,22 +2811,22 @@ public class GtkDClass
 			if ( name[0] == '*' )
 			{
 				type = type ~ '*';
-				name = std.string.strip(name[1..name.length]);
+				name = name[1 .. $];
 			}
 			else if (name.startsWith("const"))
 			{
-				name = std.string.strip(name[5..name.length]);
+				name = name[5 .. $];
 			}
 			else
 			{
-				name = std.string.strip(name[16..name.length]);
+				name = name[16 .. $];
 			}
-			name = std.string.strip(name);
+			name = name.strip;
 		}
 		while ( name.endsWith("[]") )
 		{
 			type ~= "*";
-			name = std.string.strip(name[0..name.length-2]);
+			name = name[0 .. $ - 2].strip;
 		}
 		debug(type)writefln("type after %s", type);
 		debug(name)writefln("name after %s", name);
