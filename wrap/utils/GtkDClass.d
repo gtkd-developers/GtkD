@@ -2800,29 +2800,25 @@ public class GtkDClass
 	 */
 	public static void adjustTypeName(ref string type, ref string name)
 	{
+		alias utils.StringUtils.removePrefix stripPrefix;
 		debug(type)writefln("type before %s", type);
 		debug(name)writefln("name before %s", name);
 		name = name.strip;
-		while ( name.length > 0
-				&& (name.startsWith("const") || name[0] == '*'
-				|| name.startsWith("G_GNUC_MAY_ALIAS") )
-				)
+		while ( name.length > 0 )
 		{
+			auto l = name.length;
+
 			if ( name[0] == '*' )
-			{
 				type = type ~ '*';
-				name = name[1 .. $];
-			}
-			else if (name.startsWith("const"))
-			{
-				name = name[5 .. $];
-			}
-			else
-			{
-				name = name[16 .. $];
-			}
+
+			name = stripPrefix(name, "*");
+			name = stripPrefix(name, "const");
+			name = stripPrefix(name, "G_GNUC_MAY_ALIAS");
 			name = name.strip;
+			if (l == name.length)
+				break;
 		}
+
 		while ( name.endsWith("[]") )
 		{
 			type ~= "*";
