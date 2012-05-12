@@ -239,7 +239,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Entry)[] onActivateListeners;
 	/**

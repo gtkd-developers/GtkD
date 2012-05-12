@@ -143,7 +143,7 @@ public class FileChooserButton : HBox, FileChooserIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(FileChooserButton)[] onFileSetListeners;
 	/**

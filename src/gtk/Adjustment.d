@@ -127,7 +127,7 @@ public class Adjustment : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Adjustment)[] onChangedListeners;
 	/**

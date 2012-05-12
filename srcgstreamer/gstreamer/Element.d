@@ -282,7 +282,7 @@ public class Element : ObjectGst
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Element)[] onNoMorePadsListeners;
 	/**

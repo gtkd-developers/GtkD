@@ -170,7 +170,7 @@ public class IMContext : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(string, IMContext)[] onCommitListeners;
 	/**

@@ -94,7 +94,7 @@ public template EditableT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(EditableIF)[] _onChangedListeners;
 	void delegate(EditableIF)[] onChangedListeners()

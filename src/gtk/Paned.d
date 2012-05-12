@@ -160,7 +160,7 @@ public class Paned : Container, OrientableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(Paned)[] onAcceptPositionListeners;
 	/**

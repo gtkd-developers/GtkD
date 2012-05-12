@@ -144,7 +144,7 @@ public class SourceBuffer : TextBuffer
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer)[] onBracketMatchedListeners;
 	/**

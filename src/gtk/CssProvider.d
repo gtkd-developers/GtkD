@@ -204,12 +204,12 @@ private import gobject.ObjectG;
  * rgb(r, g, b)
  * An opaque color; r, g, b can be either integers between
  *  0 and 255 or percentages
- * rgb(128,  10,  54)
- * rgb(20%,  30%,  0%)
+ * rgb(128, 10, 54)
+ * rgb(20%, 30%, 0%)
  * rgba(r, g, b, a)
  * A translucent color; r, g, b are as in the previous row,
  *  a is a floating point number between 0 and 1
- * rgba(255,  255,  0,  0.5)
+ * rgba(255, 255, 0, 0.5)
  * #xxyyzz
  * An opaque color; xx, yy, zz are hexadecimal numbers
  *  specifying r, g, b variants with between 1 and 4
@@ -223,7 +223,7 @@ private import gobject.ObjectG;
  * mix(color1, color2, f)
  * A linear combination of color1 and color2. f is a
  *  floating point number between 0 and 1.
- * mix(#ff1e0a,  @bg_color,  0.8)
+ * mix(#ff1e0a, @bg_color, 0.8)
  * shade(color, f)
  * A lighter or darker variant of color. f is a
  *  floating point number.
@@ -237,10 +237,10 @@ private import gobject.ObjectG;
  * Linear or radial Gradients can be used as background images.
  * A linear gradient along the line from (start_x, start_y) to
  * (end_x, end_y) is specified using the syntax
- * -gtk-gradient  (linear,
- *                             start_x  start_y,  end_x  end_y,
- *                             color-stop  (position,  color),
- *                             ...)
+ * -gtk-gradient (linear,
+ *  start_x start_y, end_x end_y,
+ *  color-stop (position, color),
+ *  ...)
  * where start_x and end_x can be either a floating point number between
  * 0 and 1 or one of the special values 'left', 'right' or 'center', start_y
  * and end_y can be either a floating point number between 0 and 1 or one
@@ -254,11 +254,11 @@ private import gobject.ObjectG;
  * A radial gradient along the two circles defined by (start_x, start_y,
  * start_radius) and (end_x, end_y, end_radius) is specified using the
  * syntax
- * -gtk-gradient  (radial,
- *                               start_x  start_y,  start_radius,
- *                               end_x  end_y,  end_radius,
- *                               color-stop  (position,  color),
- *                               ...)
+ * -gtk-gradient (radial,
+ *  start_x start_y, start_radius,
+ *  end_x end_y, end_radius,
+ *  color-stop (position, color),
+ *  ...)
  * where start_radius and end_radius are floating point numbers and
  * the other parameters are as before.
  * $(DDOC_COMMENT example)
@@ -268,7 +268,7 @@ private import gobject.ObjectG;
  * Images can be used in 'slices' for the purpose of creating scalable
  * borders.
  * The syntax for specifying border images of this kind is:
- * url(path)  top  right  bottom  left  [repeat|stretch]?  [repeat|stretch]?
+ * url(path) top right bottom left [repeat|stretch]? [repeat|stretch]?
  * The sizes of the 'cut off' portions are specified
  * with the top, right, bottom and left parameters.
  * The 'middle' sections can be repeated or stretched to create
@@ -283,17 +283,17 @@ private import gobject.ObjectG;
  * Styles can specify transitions that will be used to create a gradual
  * change in the appearance when a widget state changes. The following
  * syntax is used to specify transitions:
- * duration  [s|ms]  [linear|ease|ease-in|ease-out|ease-in-out]  [loop]?
+ * duration [s|ms] [linear|ease|ease-in|ease-out|ease-in-out] [loop]?
  * The duration is the amount of time that the animation will take for
  * a complete cycle from start to end. If the loop option is given, the
  * animation will be repated until the state changes again.
  * The option after the duration determines the transition function from a
  * small set of predefined functions.
- * Figure  3.  Linear transition
- * Figure  4.  Ease transition
- * Figure  5.  Ease-in-out transition
- * Figure  6.  Ease-in transition
- * Figure  7.  Ease-out transition
+ * Figure 3. Linear transition
+ * Figure 4. Ease transition
+ * Figure 5. Ease-in-out transition
+ * Figure 6. Ease-in transition
+ * Figure 7. Ease-out transition
  * <hr>
  * Supported properties
  * Properties are the part that differ the most to common CSS,
@@ -318,10 +318,10 @@ private import gobject.ObjectG;
  * background-color
  * color (see above)
  * GdkRGBA
- * background-color:  #fff;
- * color:  color1;
- * background-color:  shade  (color1,  0.5);
- * color:  mix  (color1,  #f0f,  0.8);
+ * background-color: #fff;
+ * color: color1;
+ * background-color: shade (color1, 0.5);
+ * color: mix (color1, #f0f, 0.8);
  * color
  * border-color
  * font
@@ -330,32 +330,32 @@ private import gobject.ObjectG;
  * font: Sans 15;
  * margin
  * width
- * vertical_width  horizontal_width
- * top_width  horizontal_width  bottom_width
- * top_width  right_width  bottom_width  left_width
+ * vertical_width horizontal_width
+ * top_width horizontal_width bottom_width
+ * top_width right_width bottom_width left_width
  * GtkBorder
- * margin:  5;
- * margin:  5  10;
- * margin:  5  10  3;
- * margin:  5  10  3  5;
+ * margin: 5;
+ * margin: 5 10;
+ * margin: 5 10 3;
+ * margin: 5 10 3 5;
  * padding
  * background-image
- * gradient  (see  above)  or
+ * gradient (see above) or
  * url(path)
  * cairo_pattern_t
- * -gtk-gradient  (linear,
- *                               left  top,  right  top,
- *                               from  (#fff),  to  (#000));
- * -gtk-gradient  (linear,  0.0  0.5,  0.5  1.0,
- *                               from  (#fff),
- *                               color-stop  (0.5,  #f00),
- *                               to  (#000));
- * -gtk-gradient  (radial,
- *                               center  center,  0.2,
- *                               center  center,  0.8,
- *                               color-stop  (0.0,  #fff),
- *                               color-stop  (1.0,  #000));
- * url  ('background.png');
+ * -gtk-gradient (linear,
+ *  left top, right top,
+ *  from (#fff), to (#000));
+ * -gtk-gradient (linear, 0.0 0.5, 0.5 1.0,
+ *  from (#fff),
+ *  color-stop (0.5, #f00),
+ *  to (#000));
+ * -gtk-gradient (radial,
+ *  center center, 0.2,
+ *  center center, 0.8,
+ *  color-stop (0.0, #fff),
+ *  color-stop (1.0, #000));
+ * url ('background.png');
  * border-width
  * integer
  * gint
@@ -369,19 +369,19 @@ private import gobject.ObjectG;
  * GtkBorderStyle
  * border-style: solid;
  * border-image
- * border  image  (see  above)
+ * border image (see above)
  * internal use only
- * border-image:  url("/path/to/image.png")  3  4  3  4  stretch;
- * border-image:  url("/path/to/image.png")  3  4  4  3  repeat  stretch;
+ * border-image: url("/path/to/image.png") 3 4 3 4 stretch;
+ * border-image: url("/path/to/image.png") 3 4 4 3 repeat stretch;
  * transition
  * transition (see above)
  * internal use only
- * transition:  150ms  ease-in-out;
- * transition:  1s  linear  loop;
+ * transition: 150ms ease-in-out;
+ * transition: 1s linear loop;
  * gtk-key-bindings
  * binding set name list
  * internal use only
- * gtk-bindings:  binding1,  binding2,  ...;
+ * gtk-bindings: binding1, binding2, ...;
  * GtkThemingEngines can register their own, engine-specific style properties
  * with the function gtk_theming_engine_register_property(). These properties
  * can be set in CSS like other properties, using a name of the form

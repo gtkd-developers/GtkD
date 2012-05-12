@@ -143,7 +143,7 @@ public class SourceCompletionContext : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(SourceCompletionContext)[] onCancelledListeners;
 	/**

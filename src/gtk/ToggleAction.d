@@ -138,7 +138,7 @@ public class ToggleAction : Action
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ToggleAction)[] onToggledListeners;
 	/**

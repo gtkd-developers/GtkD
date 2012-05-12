@@ -155,7 +155,7 @@ public class ToolItem : Bin, ActivatableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(ToolItem)[] onCreateMenuProxyListeners;
 	/**

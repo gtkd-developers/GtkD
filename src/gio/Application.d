@@ -208,7 +208,7 @@ public class Application : ObjectG, ActionGroupIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Application)[] onActivateListeners;
 	/**
@@ -609,7 +609,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * This function always runs on the local instance. It gets passed a pointer
 	 * to a NULL-terminated copy of argv and is expected to remove the arguments
 	 * that it handled (shifting up remaining arguments). See
-	 *  Example  16, “Split commandline handling” for an example of
+	 *  Example 16, “Split commandline handling” for an example of
 	 * parsing argv manually. Alternatively, you may use the GOptionContext API,
 	 * after setting argc = g_strv_length (argv);.
 	 * The last argument to local_command_line() is a pointer to the status
@@ -646,7 +646,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * and override local_command_line(). In this case, you most likely want
 	 * to return TRUE from your local_command_line() implementation to
 	 * suppress the default handling. See
-	 *  Example  16, “Split commandline handling” for an example.
+	 *  Example 16, “Split commandline handling” for an example.
 	 * If, after the above is done, the use count of the application is zero
 	 * then the exit status is returned immediately. If the use count is
 	 * non-zero then the mainloop is run until the use count falls to zero,

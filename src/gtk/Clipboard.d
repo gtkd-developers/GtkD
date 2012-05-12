@@ -183,7 +183,7 @@ public class Clipboard : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(GdkEvent*, Clipboard)[] onOwnerChangeListeners;
 	/**

@@ -444,7 +444,7 @@ public class TextBuffer : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onApplyTagListeners;
 	/**

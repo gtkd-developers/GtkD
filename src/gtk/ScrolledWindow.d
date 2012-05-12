@@ -204,7 +204,7 @@ public class ScrolledWindow : Bin
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(GtkDirectionType, ScrolledWindow)[] onMoveFocusOutListeners;
 	/**

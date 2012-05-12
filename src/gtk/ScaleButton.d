@@ -138,7 +138,7 @@ public class ScaleButton : Button, OrientableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ScaleButton)[] onPopdownListeners;
 	/**

@@ -119,7 +119,7 @@ private import pango.PgLayoutLine;
  * functions in Pango report results in integer Pango units. To get
  * to the floating point units used in Cairo divide by PANGO_SCALE.
  * $(DDOC_COMMENT example)
- * Figure  2.  Output of Example  1, “Using Pango with Cairo”
+ * Figure 2. Output of Example 1, “Using Pango with Cairo”
  */
 public class PgCairo
 {

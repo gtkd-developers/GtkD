@@ -207,7 +207,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(gboolean, Toolbar)[] onFocusHomeOrEndListeners;
 	/**

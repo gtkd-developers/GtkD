@@ -223,7 +223,7 @@ public class MenuToolButton : ToolButton
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(MenuToolButton)[] onShowMenuListeners;
 	/**

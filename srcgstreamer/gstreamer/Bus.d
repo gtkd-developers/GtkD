@@ -213,7 +213,7 @@ public class Bus : ObjectGst
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Message, Bus)[] onMessageListeners;
 	/**

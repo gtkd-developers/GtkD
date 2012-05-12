@@ -129,7 +129,7 @@ public class FileMonitor : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(File, File, GFileMonitorEvent, FileMonitor)[] onChangedListeners;
 	/**

@@ -974,7 +974,7 @@ public class Pixbuf : ObjectG
 	 * When the destination rectangle contains parts not in the source
 	 * image, the data at the edges of the source image is replicated
 	 * to infinity.
-	 * Figure  1.  Compositing of pixbufs
+	 * Figure 1. Compositing of pixbufs
 	 * Params:
 	 * dest = the GdkPixbuf into which to render the results
 	 * destX = the left coordinate for region to render

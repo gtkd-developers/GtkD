@@ -393,9 +393,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// cairo.Context
-	
+
 	cairo_t* function(cairo_surface_t* target) c_cairo_create;
 	cairo_t* function(cairo_t* cr) c_cairo_reference;
 	void function(cairo_t* cr) c_cairo_destroy;
@@ -512,9 +511,9 @@ mixin( gshared ~"extern(C)
 	void function(cairo_glyph_t* glyphs) c_cairo_glyph_free;
 	cairo_text_cluster_t* function(int numClusters) c_cairo_text_cluster_allocate;
 	void function(cairo_text_cluster_t* clusters) c_cairo_text_cluster_free;
-	
+
 	// cairo.Pattern
-	
+
 	void function(cairo_pattern_t* pattern, double offset, double red, double green, double blue) c_cairo_pattern_add_color_stop_rgb;
 	void function(cairo_pattern_t* pattern, double offset, double red, double green, double blue, double alpha) c_cairo_pattern_add_color_stop_rgba;
 	cairo_status_t function(cairo_pattern_t* pattern, int* count) c_cairo_pattern_get_color_stop_count;
@@ -541,9 +540,9 @@ mixin( gshared ~"extern(C)
 	uint function(cairo_pattern_t* pattern) c_cairo_pattern_get_reference_count;
 	cairo_status_t function(cairo_pattern_t* pattern, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy) c_cairo_pattern_set_user_data;
 	void* function(cairo_pattern_t* pattern, cairo_user_data_key_t* key) c_cairo_pattern_get_user_data;
-	
+
 	// cairo.Region
-	
+
 	cairo_region_t* function() c_cairo_region_create;
 	cairo_region_t* function(cairo_rectangle_int_t* rectangle) c_cairo_region_create_rectangle;
 	cairo_region_t* function(cairo_rectangle_int_t* rects, int count) c_cairo_region_create_rectangles;
@@ -567,9 +566,9 @@ mixin( gshared ~"extern(C)
 	cairo_status_t function(cairo_region_t* dst, cairo_rectangle_int_t* rectangle) c_cairo_region_union_rectangle;
 	cairo_status_t function(cairo_region_t* dst, cairo_region_t* other) c_cairo_region_xor;
 	cairo_status_t function(cairo_region_t* dst, cairo_rectangle_int_t* rectangle) c_cairo_region_xor_rectangle;
-	
+
 	// cairo.FontFace
-	
+
 	cairo_font_face_t* function(cairo_font_face_t* fontFace) c_cairo_font_face_reference;
 	void function(cairo_font_face_t* fontFace) c_cairo_font_face_destroy;
 	cairo_status_t function(cairo_font_face_t* fontFace) c_cairo_font_face_status;
@@ -577,9 +576,9 @@ mixin( gshared ~"extern(C)
 	uint function(cairo_font_face_t* fontFace) c_cairo_font_face_get_reference_count;
 	cairo_status_t function(cairo_font_face_t* fontFace, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy) c_cairo_font_face_set_user_data;
 	void* function(cairo_font_face_t* fontFace, cairo_user_data_key_t* key) c_cairo_font_face_get_user_data;
-	
+
 	// cairo.ScaledFont
-	
+
 	cairo_scaled_font_t* function(cairo_font_face_t* fontFace, cairo_matrix_t* fontMatrix, cairo_matrix_t* ctm, cairo_font_options_t* options) c_cairo_scaled_font_create;
 	cairo_scaled_font_t* function(cairo_scaled_font_t* scaledFont) c_cairo_scaled_font_reference;
 	void function(cairo_scaled_font_t* scaledFont) c_cairo_scaled_font_destroy;
@@ -597,9 +596,9 @@ mixin( gshared ~"extern(C)
 	uint function(cairo_scaled_font_t* scaledFont) c_cairo_scaled_font_get_reference_count;
 	cairo_status_t function(cairo_scaled_font_t* scaledFont, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy) c_cairo_scaled_font_set_user_data;
 	void* function(cairo_scaled_font_t* scaledFont, cairo_user_data_key_t* key) c_cairo_scaled_font_get_user_data;
-	
+
 	// cairo.FontOption
-	
+
 	cairo_font_options_t* function() c_cairo_font_options_create;
 	cairo_font_options_t* function(cairo_font_options_t* original) c_cairo_font_options_copy;
 	void function(cairo_font_options_t* options) c_cairo_font_options_destroy;
@@ -615,9 +614,9 @@ mixin( gshared ~"extern(C)
 	cairo_hint_style_t function(cairo_font_options_t* options) c_cairo_font_options_get_hint_style;
 	void function(cairo_font_options_t* options, cairo_hint_metrics_t hintMetrics) c_cairo_font_options_set_hint_metrics;
 	cairo_hint_metrics_t function(cairo_font_options_t* options) c_cairo_font_options_get_hint_metrics;
-	
+
 	// cairo.UserFontFace
-	
+
 	cairo_font_face_t* function() c_cairo_user_font_face_create;
 	void function(cairo_font_face_t* fontFace, cairo_user_scaled_font_init_func_t initFunc) c_cairo_user_font_face_set_init_func;
 	cairo_user_scaled_font_init_func_t function(cairo_font_face_t* fontFace) c_cairo_user_font_face_get_init_func;
@@ -627,9 +626,9 @@ mixin( gshared ~"extern(C)
 	cairo_user_scaled_font_unicode_to_glyph_func_t function(cairo_font_face_t* fontFace) c_cairo_user_font_face_get_unicode_to_glyph_func;
 	void function(cairo_font_face_t* fontFace, cairo_user_scaled_font_text_to_glyphs_func_t textToGlyphsFunc) c_cairo_user_font_face_set_text_to_glyphs_func;
 	cairo_user_scaled_font_text_to_glyphs_func_t function(cairo_font_face_t* fontFace) c_cairo_user_font_face_get_text_to_glyphs_func;
-	
+
 	// cairo.Device
-	
+
 	cairo_device_t* function(cairo_device_t* device) c_cairo_device_reference;
 	void function(cairo_device_t* device) c_cairo_device_destroy;
 	cairo_status_t function(cairo_device_t* device) c_cairo_device_status;
@@ -641,9 +640,9 @@ mixin( gshared ~"extern(C)
 	void* function(cairo_device_t* device, cairo_user_data_key_t* key) c_cairo_device_get_user_data;
 	cairo_status_t function(cairo_device_t* device) c_cairo_device_acquire;
 	void function(cairo_device_t* device) c_cairo_device_release;
-	
+
 	// cairo.Surface
-	
+
 	cairo_surface_t* function(cairo_surface_t* other, cairo_content_t content, int width, int height) c_cairo_surface_create_similar;
 	cairo_surface_t* function(cairo_surface_t* target, double x, double y, double width, double height) c_cairo_surface_create_for_rectangle;
 	cairo_surface_t* function(cairo_surface_t* surface) c_cairo_surface_reference;
@@ -669,9 +668,9 @@ mixin( gshared ~"extern(C)
 	cairo_bool_t function(cairo_surface_t* surface) c_cairo_surface_has_show_text_glyphs;
 	cairo_status_t function(cairo_surface_t* surface, char* mimeType, uchar* data, ulong length, cairo_destroy_func_t destroy, void* closure) c_cairo_surface_set_mime_data;
 	void function(cairo_surface_t* surface, char* mimeType, uchar** data, ulong* length) c_cairo_surface_get_mime_data;
-	
+
 	// cairo.ImageSurface
-	
+
 	int function(cairo_format_t format, int width) c_cairo_format_stride_for_width;
 	cairo_surface_t* function(cairo_format_t format, int width, int height) c_cairo_image_surface_create;
 	cairo_surface_t* function(uchar* data, cairo_format_t format, int width, int height, int stride) c_cairo_image_surface_create_for_data;
@@ -684,18 +683,18 @@ mixin( gshared ~"extern(C)
 	cairo_surface_t* function(cairo_read_func_t readFunc, void* closure) c_cairo_image_surface_create_from_png_stream;
 	cairo_status_t function(cairo_surface_t* surface, char* filename) c_cairo_surface_write_to_png;
 	cairo_status_t function(cairo_surface_t* surface, cairo_write_func_t writeFunc, void* closure) c_cairo_surface_write_to_png_stream;
-	
+
 	// cairo.PdfSurface
-	
+
 	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints) c_cairo_pdf_surface_create;
 	cairo_surface_t* function(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints) c_cairo_pdf_surface_create_for_stream;
 	void function(cairo_surface_t* surface, cairo_pdf_version_t versio) c_cairo_pdf_surface_restrict_to_version;
 	void function(cairo_pdf_version_t** versions, int* numVersions) c_cairo_pdf_get_versions;
 	char* function(cairo_pdf_version_t versio) c_cairo_pdf_version_to_string;
 	void function(cairo_surface_t* surface, double widthInPoints, double heightInPoints) c_cairo_pdf_surface_set_size;
-	
+
 	// cairo.PostScriptSurface
-	
+
 	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints) c_cairo_ps_surface_create;
 	cairo_surface_t* function(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints) c_cairo_ps_surface_create_for_stream;
 	void function(cairo_surface_t* surface, cairo_ps_level_t level) c_cairo_ps_surface_restrict_to_level;
@@ -707,22 +706,22 @@ mixin( gshared ~"extern(C)
 	void function(cairo_surface_t* surface) c_cairo_ps_surface_dsc_begin_setup;
 	void function(cairo_surface_t* surface) c_cairo_ps_surface_dsc_begin_page_setup;
 	void function(cairo_surface_t* surface, char* comment) c_cairo_ps_surface_dsc_comment;
-	
+
 	// cairo.RecordingSurface
-	
+
 	cairo_surface_t* function(cairo_content_t content, cairo_rectangle_t* extents) c_cairo_recording_surface_create;
 	void function(cairo_surface_t* surface, double* x0, double* y0, double* width, double* height) c_cairo_recording_surface_ink_extents;
-	
+
 	// cairo.SvgSurface
-	
+
 	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints) c_cairo_svg_surface_create;
 	cairo_surface_t* function(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints) c_cairo_svg_surface_create_for_stream;
 	void function(cairo_surface_t* surface, cairo_svg_version_t versio) c_cairo_svg_surface_restrict_to_version;
 	void function(cairo_svg_version_t** versions, int* numVersions) c_cairo_svg_get_versions;
 	char* function(cairo_svg_version_t versio) c_cairo_svg_version_to_string;
-	
+
 	// cairo.Matrix
-	
+
 	void function(cairo_matrix_t* matrix, double xx, double yx, double xy, double yy, double x0, double y0) c_cairo_matrix_init;
 	void function(cairo_matrix_t* matrix) c_cairo_matrix_init_identity;
 	void function(cairo_matrix_t* matrix, double tx, double ty) c_cairo_matrix_init_translate;
@@ -735,19 +734,19 @@ mixin( gshared ~"extern(C)
 	void function(cairo_matrix_t* result, cairo_matrix_t* a, cairo_matrix_t* b) c_cairo_matrix_multiply;
 	void function(cairo_matrix_t* matrix, double* dx, double* dy) c_cairo_matrix_transform_distance;
 	void function(cairo_matrix_t* matrix, double* x, double* y) c_cairo_matrix_transform_point;
-	
+
 	// cairo.Status
-	
+
 	char* function(cairo_status_t status) c_cairo_status_to_string;
 	void function() c_cairo_debug_reset_static_data;
-	
+
 	// cairo.Version
-	
+
 	int function() c_cairo_version;
 	char* function() c_cairo_version_string;
-	
+
 	// cairo.
-	
+
 }");
 
 // cairo.Context

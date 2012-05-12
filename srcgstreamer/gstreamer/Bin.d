@@ -218,7 +218,7 @@ public class Bin : Element
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Element, Bin)[] onElementAddedListeners;
 	/**

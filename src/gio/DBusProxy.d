@@ -110,7 +110,7 @@ private import gobject.ObjectG;
  * signals are not very convenient to work with. Therefore, the recommended
  * way of working with proxies is to subclass GDBusProxy, and have
  * more natural properties and signals in your derived class.
- * See Example  19, “GDBusProxy subclass example” for an example.
+ * See Example 19, “GDBusProxy subclass example” for an example.
  * $(DDOC_COMMENT example)
  */
 public class DBusProxy : ObjectG
@@ -198,7 +198,7 @@ public class DBusProxy : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Variant, GStrv, DBusProxy)[] onGPropertiesChangedListeners;
 	/**
@@ -281,7 +281,7 @@ public class DBusProxy : ObjectG
 	 * ready, callback will be invoked and you can use
 	 * g_dbus_proxy_new_finish() to get the result.
 	 * See g_dbus_proxy_new_sync() and for a synchronous version of this constructor.
-	 * See Example  10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
+	 * See Example 10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
 	 * Since 2.26
 	 * Params:
 	 * connection = A GDBusConnection.
@@ -314,7 +314,7 @@ public class DBusProxy : ObjectG
 	 * a name owner for the name.
 	 * This is a synchronous failable constructor. See g_dbus_proxy_new()
 	 * and g_dbus_proxy_new_finish() for the asynchronous version.
-	 * See Example  10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
+	 * See Example 10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
 	 * Since 2.26
 	 * Params:
 	 * connection = A GDBusConnection.
@@ -348,7 +348,7 @@ public class DBusProxy : ObjectG
 	
 	/**
 	 * Like g_dbus_proxy_new() but takes a GBusType instead of a GDBusConnection.
-	 * See Example  10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
+	 * See Example 10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
 	 * Since 2.26
 	 * Params:
 	 * busType = A GBusType.
@@ -369,7 +369,7 @@ public class DBusProxy : ObjectG
 	
 	/**
 	 * Like g_dbus_proxy_new_sync() but takes a GBusType instead of a GDBusConnection.
-	 * See Example  10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
+	 * See Example 10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
 	 * Since 2.26
 	 * Params:
 	 * busType = A GBusType.

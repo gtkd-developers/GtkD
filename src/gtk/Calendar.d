@@ -131,7 +131,7 @@ public class Calendar : Widget
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Calendar)[] onDaySelectedListeners;
 	/**

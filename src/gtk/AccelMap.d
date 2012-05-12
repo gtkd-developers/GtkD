@@ -163,7 +163,7 @@ public class AccelMap : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(string, guint, GdkModifierType, AccelMap)[] onChangedListeners;
 	/**

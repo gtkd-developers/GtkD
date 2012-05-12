@@ -133,7 +133,7 @@ public class LinkButton : Button
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(LinkButton)[] onActivateLinkListeners;
 	/**

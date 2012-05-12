@@ -119,10 +119,10 @@ private import glib.GException;
  * g_filename_from_utf8() to perform the necessary conversions. These
  * functions convert file names from the encoding specified in
  * G_FILENAME_ENCODING to UTF-8 and vice-versa.
- *  Figure  2, “Conversion between File Name Encodings” illustrates how
+ *  Figure 2, “Conversion between File Name Encodings” illustrates how
  * these functions are used to convert between UTF-8 and the
  * encoding for file names in the file system.
- * Figure  2.  Conversion between File Name Encodings
+ * Figure 2. Conversion between File Name Encodings
  * Checklist for Application Writers
  * This section is a practical summary of the detailed
  * description above. You can use this as a checklist of

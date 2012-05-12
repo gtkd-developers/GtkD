@@ -216,7 +216,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gboolean, GError*, DBusConnection)[] onClosedListeners;
 	/**
@@ -982,7 +982,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * If connection is closed then the operation will fail with
 	 * G_IO_ERROR_CLOSED. If message is not well-formed,
 	 * the operation fails with G_IO_ERROR_INVALID_ARGUMENT.
-	 * See Example  2, “D-Bus server example” and Example  4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Note that message must be unlocked, unless flags contain the
 	 * G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
@@ -1029,7 +1029,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * See g_dbus_connection_send_message_with_reply_sync() for the synchronous version.
 	 * Note that message must be unlocked, unless flags contain the
 	 * G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
-	 * See Example  2, “D-Bus server example” and Example  4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Since 2.26
 	 * Params:
@@ -1056,7 +1056,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * occured. That is to say that the returned GDBusMessage object may
 	 * be of type G_DBUS_MESSAGE_TYPE_ERROR. Use
 	 * g_dbus_message_to_gerror() to transcode this to a GError.
-	 * See Example  2, “D-Bus server example” and Example  4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Since 2.26
 	 * Params:
@@ -1102,7 +1102,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * occured. That is to say that the returned GDBusMessage object may
 	 * be of type G_DBUS_MESSAGE_TYPE_ERROR. Use
 	 * g_dbus_message_to_gerror() to transcode this to a GError.
-	 * See Example  2, “D-Bus server example” and Example  4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Note that message must be unlocked, unless flags contain the
 	 * G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
@@ -1217,7 +1217,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * A NULL vtable can be used for
 	 * marker
 	 * interfaces.
-	 * See Example  2, “D-Bus server example” for an example of how to use this
+	 * See Example 2, “D-Bus server example” for an example of how to use this
 	 * method.
 	 * Since 2.26
 	 * Params:
@@ -1283,7 +1283,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * or other bindings.
 	 * Note that vtable will be copied so you cannot change it after
 	 * registration.
-	 * See Example  3, “D-Bus subtree example” for an example of how to use this method.
+	 * See Example 3, “D-Bus subtree example” for an example of how to use this method.
 	 * Since 2.26
 	 * Params:
 	 * objectPath = The object path to register the subtree at.

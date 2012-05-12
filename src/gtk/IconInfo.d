@@ -173,7 +173,7 @@ public class IconInfo
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(IconInfo)[] onChangedListeners;
 	/**

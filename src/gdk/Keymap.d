@@ -174,7 +174,7 @@ public class Keymap : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Keymap)[] onDirectionChangedListeners;
 	/**

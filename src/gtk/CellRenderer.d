@@ -161,7 +161,7 @@ public class CellRenderer : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(CellRenderer)[] onEditingCanceledListeners;
 	/**

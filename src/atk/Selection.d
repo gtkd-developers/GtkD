@@ -111,7 +111,7 @@ public class Selection
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Selection)[] onSelectionChangedListeners;
 	/**

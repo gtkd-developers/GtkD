@@ -126,7 +126,7 @@ public class CellRendererText : CellRenderer
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(string, string, CellRendererText)[] onEditedListeners;
 	/**

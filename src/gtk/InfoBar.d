@@ -230,7 +230,7 @@ public class InfoBar : HBox
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(InfoBar)[] onCloseListeners;
 	/**

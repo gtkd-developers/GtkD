@@ -100,17 +100,16 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gdkpixbuf.Pixdata
-	
+
 	gpointer function(GdkPixdata* pixdata, GdkPixbuf* pixbuf, gboolean useRle) c_gdk_pixdata_from_pixbuf;
 	GdkPixbuf* function(GdkPixdata* pixdata, gboolean copyPixels, GError** error) c_gdk_pixbuf_from_pixdata;
 	guint8* function(GdkPixdata* pixdata, guint* streamLengthP) c_gdk_pixdata_serialize;
 	gboolean function(GdkPixdata* pixdata, guint streamLength, guint8* stream, GError** error) c_gdk_pixdata_deserialize;
 	GString* function(GdkPixdata* pixdata, gchar* name, GdkPixdataDumpType dumpType) c_gdk_pixdata_to_csource;
-	
+
 	// gdkpixbuf.PixbufAnimation
-	
+
 	GdkPixbufAnimation* function(char* filename, GError** error) c_gdk_pixbuf_animation_new_from_file;
 	GdkPixbufAnimation* function(GdkPixbufAnimation* animation) c_gdk_pixbuf_animation_ref;
 	void function(GdkPixbufAnimation* animation) c_gdk_pixbuf_animation_unref;
@@ -119,23 +118,23 @@ mixin( gshared ~"extern(C)
 	GdkPixbufAnimationIter* function(GdkPixbufAnimation* animation, GTimeVal* startTime) c_gdk_pixbuf_animation_get_iter;
 	gboolean function(GdkPixbufAnimation* animation) c_gdk_pixbuf_animation_is_static_image;
 	GdkPixbuf* function(GdkPixbufAnimation* animation) c_gdk_pixbuf_animation_get_static_image;
-	
+
 	// gdkpixbuf.PixbufAnimationIter
-	
+
 	gboolean function(GdkPixbufAnimationIter* iter, GTimeVal* currentTime) c_gdk_pixbuf_animation_iter_advance;
 	int function(GdkPixbufAnimationIter* iter) c_gdk_pixbuf_animation_iter_get_delay_time;
 	gboolean function(GdkPixbufAnimationIter* iter) c_gdk_pixbuf_animation_iter_on_currently_loading_frame;
 	GdkPixbuf* function(GdkPixbufAnimationIter* iter) c_gdk_pixbuf_animation_iter_get_pixbuf;
-	
+
 	// gdkpixbuf.PixbufSimpleAnimation
-	
+
 	GdkPixbufSimpleAnim* function(gint width, gint height, gfloat rate) c_gdk_pixbuf_simple_anim_new;
 	void function(GdkPixbufSimpleAnim* animation, GdkPixbuf* pixbuf) c_gdk_pixbuf_simple_anim_add_frame;
 	void function(GdkPixbufSimpleAnim* animation, gboolean loop) c_gdk_pixbuf_simple_anim_set_loop;
 	gboolean function(GdkPixbufSimpleAnim* animation) c_gdk_pixbuf_simple_anim_get_loop;
-	
+
 	// gdkpixbuf.PixbufLoader
-	
+
 	GdkPixbufLoader* function() c_gdk_pixbuf_loader_new;
 	GdkPixbufLoader* function(char* imageType, GError** error) c_gdk_pixbuf_loader_new_with_type;
 	GdkPixbufLoader* function(char* mimeType, GError** error) c_gdk_pixbuf_loader_new_with_mime_type;
@@ -145,9 +144,9 @@ mixin( gshared ~"extern(C)
 	GdkPixbuf* function(GdkPixbufLoader* loader) c_gdk_pixbuf_loader_get_pixbuf;
 	GdkPixbufAnimation* function(GdkPixbufLoader* loader) c_gdk_pixbuf_loader_get_animation;
 	gboolean function(GdkPixbufLoader* loader, GError** error) c_gdk_pixbuf_loader_close;
-	
+
 	// gdkpixbuf.PixbufFormat
-	
+
 	gboolean function(GdkPixbuf* pixbuf, gchar* key, gchar* value) c_gdk_pixbuf_set_option;
 	GSList* function() c_gdk_pixbuf_get_formats;
 	GdkPixbufFormat* function(GdkPixbufFormat* format) c_gdk_pixbuf_format_copy;

@@ -159,7 +159,7 @@ public class ToolButton : ToolItem
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ToolButton)[] onClickedListeners;
 	/**

@@ -1492,9 +1492,9 @@ public struct GdkDevice{}
 
 /**
  * The GdkTimeCoord structure stores a single event in a motion history.
- * guint32  time;
+ * guint32 time;
  * The timestamp for this event.
- * gdouble  axes[GDK_MAX_TIMECOORD_AXES];
+ * gdouble axes[GDK_MAX_TIMECOORD_AXES];
  * the values of the device's axes.
  */
 public struct GdkTimeCoord
@@ -1506,9 +1506,9 @@ public struct GdkTimeCoord
 
 /**
  * Defines the x and y coordinates of a point.
- * gint  x;
+ * gint x;
  * the x coordinate of the point.
- * gint  y;
+ * gint y;
  * the y coordinate of the point.
  */
 public struct GdkPoint
@@ -1533,16 +1533,16 @@ public struct GdkPixbuf{}
  * Main Gtk struct.
  * The GdkColor structure is used to describe a color,
  * similar to the XColor struct used in the X11 drawing API.
- * guint32  pixel;
+ * guint32 pixel;
  * For allocated colors, the pixel value used to
  * draw this color on the screen. Not used anymore.
- * guint16  red;
+ * guint16 red;
  * The red component of the color. This is
  * a value between 0 and 65535, with 65535 indicating
  * full intensitiy
- * guint16  green;
+ * guint16 green;
  * The green component of the color
- * guint16  blue;
+ * guint16 blue;
  * The blue component of the color
  */
 public struct GdkColor
@@ -1558,13 +1558,13 @@ public struct GdkColor
  * Main Gtk struct.
  * The GdkRGBA structure is used to represent a (possibly translucent)
  * color, in a way that is compatible with cairos notion of color.
- * gdouble  red;
+ * gdouble red;
  * The intensity of the red channel from 0.0 to 1.0 inclusive
- * gdouble  green;
+ * gdouble green;
  * The intensity of the green channel from 0.0 to 1.0 inclusive
- * gdouble  blue;
+ * gdouble blue;
  * The intensity of the blue channel from 0.0 to 1.0 inclusive
- * gdouble  alpha;
+ * gdouble alpha;
  * The opacity of the color from 0.0 for completely translucent to
  * 1.0 for opaque
  */
@@ -1633,33 +1633,33 @@ public struct GdkWindow{}
  * window. The most common use of these hints is probably to set min_aspect and
  * max_aspect to the same value, thus forcing the window to keep a constant
  * aspect ratio.
- * gint  min_width;
+ * gint min_width;
  * minimum width of window (or -1 to use requisition, with
  * GtkWindow only)
- * gint  min_height;
+ * gint min_height;
  * minimum height of window (or -1 to use requisition, with
  * GtkWindow only)
- * gint  max_width;
+ * gint max_width;
  * maximum width of window (or -1 to use requisition, with
  * GtkWindow only)
- * gint  max_height;
+ * gint max_height;
  * maximum height of window (or -1 to use requisition, with
  * GtkWindow only)
- * gint  base_width;
+ * gint base_width;
  * allowed window widths are base_width + width_inc * N where N
  * is any integer (-1 allowed with GtkWindow)
- * gint  base_height;
+ * gint base_height;
  * allowed window widths are base_height + height_inc * N where
  * N is any integer (-1 allowed with GtkWindow)
- * gint  width_inc;
+ * gint width_inc;
  * width resize increment
- * gint  height_inc;
+ * gint height_inc;
  * height resize increment
- * gdouble  min_aspect;
+ * gdouble min_aspect;
  * minimum width/height ratio
- * gdouble  max_aspect;
+ * gdouble max_aspect;
  * maximum width/height ratio
- * GdkGravity  win_gravity;
+ * GdkGravity win_gravity;
  * window gravity, see gtk_window_set_gravity()
  */
 public struct GdkGeometry
@@ -1680,34 +1680,34 @@ public struct GdkGeometry
 
 /**
  * Attributes to use for a newly-created window.
- * gchar  *title;
+ * gchar *title;
  * title of the window (for toplevel windows)
- * gint  event_mask;
+ * gint event_mask;
  * event mask (see gdk_window_set_events())
- * gint  x;
+ * gint x;
  * X coordinate relative to parent window (see gdk_window_move())
- * gint  y;
+ * gint y;
  * Y coordinate relative to parent window (see gdk_window_move())
- * gint  width;
+ * gint width;
  * width of window
- * gint  height;
+ * gint height;
  * height of window
- * GdkWindowWindowClass  wclass;
+ * GdkWindowWindowClass wclass;
  * GDK_INPUT_OUTPUT (normal window) or GDK_INPUT_ONLY (invisible
  * window that receives events)
- * GdkVisual  *visual;
+ * GdkVisual *visual;
  * GdkVisual for window
- * GdkWindowType  window_type;
+ * GdkWindowType window_type;
  * type of window
- * GdkCursor  *cursor;
+ * GdkCursor *cursor;
  * cursor for the window (see gdk_window_set_cursor())
- * gchar  *wmclass_name;
+ * gchar *wmclass_name;
  * don't use (see gtk_window_set_wmclass())
- * gchar  *wmclass_class;
+ * gchar *wmclass_class;
  * don't use (see gtk_window_set_wmclass())
- * gboolean  override_redirect;
+ * gboolean override_redirect;
  * TRUE to bypass the window manager
- * GdkWindowTypeHint  type_hint;
+ * GdkWindowTypeHint type_hint;
  * a hint of the function of the window
  */
 public struct GdkWindowAttr
@@ -1732,11 +1732,11 @@ public struct GdkWindowAttr
  * Contains the fields which are common to all event structs.
  * Any event pointer can safely be cast to a pointer to a GdkEventAny to
  * access these fields.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event.
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
  */
@@ -1750,26 +1750,26 @@ public struct GdkEventAny
 
 /**
  * Describes a key press or key release event.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_KEY_PRESS or GDK_KEY_RELEASE).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * guint  state;
+ * guint state;
  * a bit-mask representing the state of
  * the modifier keys (e.g. Control, Shift and Alt) and the pointer
  * buttons. See GdkModifierType. [type GdkModifierType]
- * guint  keyval;
+ * guint keyval;
  * the key that was pressed or released. See the
  * <gdk/gdkkeysyms.h> header file for a
  * complete list of GDK key codes.
- * gint  length;
+ * gint length;
  * the length of string.
- * gchar  *string;
+ * gchar *string;
  * a string containing the an approximation of the text that
  * would result from this keypress. The only correct way to handle text
  * input of text is using input methods (see GtkIMContext), so this
@@ -1781,11 +1781,11 @@ public struct GdkEventAny
  * In some cases, the translation of the key code will be a single
  * NUL byte, in which case looking at length is necessary to distinguish
  * it from the an empty translation.
- * guint16  hardware_keycode;
+ * guint16 hardware_keycode;
  * the raw code of the key that was pressed or released.
- * guint8  group;
+ * guint8 group;
  * the keyboard group.
- * guint  is_modifier  :  1;
+ * guint is_modifier : 1;
  * a flag that indicates if hardware_keycode is mapped to a
  * modifier. Since 2.10
  */
@@ -1834,38 +1834,38 @@ public struct GdkEventKey
  * For a double click to occur, the second button press must occur within
  * 1/4 of a second of the first. For a triple click to occur, the third
  * button press must also occur within 1/2 second of the first button press.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_BUTTON_PRESS, GDK_2BUTTON_PRESS,
  * GDK_3BUTTON_PRESS or GDK_BUTTON_RELEASE).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * gdouble  x;
+ * gdouble x;
  * the x coordinate of the pointer relative to the window.
- * gdouble  y;
+ * gdouble y;
  * the y coordinate of the pointer relative to the window.
- * gdouble  *axes;
+ * gdouble *axes;
  * x, y translated to the axes of device, or NULL if device is
  * the mouse.
- * guint  state;
+ * guint state;
  * a bit-mask representing the state of
  * the modifier keys (e.g. Control, Shift and Alt) and the pointer
  * buttons. See GdkModifierType. [type GdkModifierType]
- * guint  button;
+ * guint button;
  * the button which was pressed or released, numbered from 1 to 5.
  * Normally button 1 is the left mouse button, 2 is the middle button,
  * and 3 is the right button. On 2-button mice, the middle button can
  * often be simulated by pressing both mouse buttons together.
- * GdkDevice  *device;
+ * GdkDevice *device;
  * the device where the event originated.
- * gdouble  x_root;
+ * gdouble x_root;
  * the x coordinate of the pointer relative to the root of the
  * screen.
- * gdouble  y_root;
+ * gdouble y_root;
  * the y coordinate of the pointer relative to the root of the
  * screen.
  */
@@ -1889,32 +1889,32 @@ public struct GdkEventButton
  * Generated from button presses for the buttons 4 to 7. Wheel mice are
  * usually configured to generate button press events for buttons 4 and 5
  * when the wheel is turned.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_SCROLL).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * gdouble  x;
+ * gdouble x;
  * the x coordinate of the pointer relative to the window.
- * gdouble  y;
+ * gdouble y;
  * the y coordinate of the pointer relative to the window.
- * guint  state;
+ * guint state;
  * a bit-mask representing the state of
  * the modifier keys (e.g. Control, Shift and Alt) and the pointer
  * buttons. See GdkModifierType. [type GdkModifierType]
- * GdkScrollDirection  direction;
+ * GdkScrollDirection direction;
  * the direction to scroll to (one of GDK_SCROLL_UP,
  * GDK_SCROLL_DOWN, GDK_SCROLL_LEFT and GDK_SCROLL_RIGHT).
- * GdkDevice  *device;
+ * GdkDevice *device;
  * the device where the event originated.
- * gdouble  x_root;
+ * gdouble x_root;
  * the x coordinate of the pointer relative to the root of the
  * screen.
- * gdouble  y_root;
+ * gdouble y_root;
  * the y coordinate of the pointer relative to the root of the
  * screen.
  */
@@ -1935,35 +1935,35 @@ public struct GdkEventScroll
 
 /**
  * Generated when the pointer moves.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event.
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * gdouble  x;
+ * gdouble x;
  * the x coordinate of the pointer relative to the window.
- * gdouble  y;
+ * gdouble y;
  * the y coordinate of the pointer relative to the window.
- * gdouble  *axes;
+ * gdouble *axes;
  * x, y translated to the axes of device, or NULL if device is
  * the mouse.
- * guint  state;
+ * guint state;
  * a bit-mask representing the state of
  * the modifier keys (e.g. Control, Shift and Alt) and the pointer
  * buttons. See GdkModifierType. [type GdkModifierType]
- * gint16  is_hint;
+ * gint16 is_hint;
  * set to 1 if this event is just a hint, see the
  * GDK_POINTER_MOTION_HINT_MASK value of GdkEventMask.
- * GdkDevice  *device;
+ * GdkDevice *device;
  * the device where the event originated.
- * gdouble  x_root;
+ * gdouble x_root;
  * the x coordinate of the pointer relative to the root of the
  * screen.
- * gdouble  y_root;
+ * gdouble y_root;
  * the y coordinate of the pointer relative to the root of the
  * screen.
  */
@@ -1986,18 +1986,18 @@ public struct GdkEventMotion
 /**
  * Generated when all or part of a window becomes visible and needs to be
  * redrawn.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_EXPOSE or GDK_DAMAGE).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkRectangle  area;
+ * GdkRectangle area;
  * bounding box of region.
- * cairo_region_t  *region;
+ * cairo_region_t *region;
  * the region that needs to be redrawn.
- * gint  count;
+ * gint count;
  * the number of contiguous GDK_EXPOSE events following this one.
  * The only use for this is "exposure compression", i.e. handling all
  * contiguous GDK_EXPOSE events in one go, though GDK performs some
@@ -2016,14 +2016,14 @@ public struct GdkEventExpose
 
 /**
  * Generated when the window visibility status has changed.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_VISIBILITY_NOTIFY).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkVisibilityState  state;
+ * GdkVisibilityState state;
  * the new visibility state (GDK_VISIBILITY_FULLY_OBSCURED,
  * GDK_VISIBILITY_PARTIAL or GDK_VISIBILITY_UNOBSCURED).
  */
@@ -2038,38 +2038,38 @@ public struct GdkEventVisibility
 
 /**
  * Generated when the pointer enters or leaves a window.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_ENTER_NOTIFY or GDK_LEAVE_NOTIFY).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkWindow  *subwindow;
+ * GdkWindow *subwindow;
  * the window that was entered or left.
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * gdouble  x;
+ * gdouble x;
  * the x coordinate of the pointer relative to the window.
- * gdouble  y;
+ * gdouble y;
  * the y coordinate of the pointer relative to the window.
- * gdouble  x_root;
+ * gdouble x_root;
  * the x coordinate of the pointer relative to the root of the screen.
- * gdouble  y_root;
+ * gdouble y_root;
  * the y coordinate of the pointer relative to the root of the screen.
- * GdkCrossingMode  mode;
+ * GdkCrossingMode mode;
  * the crossing mode (GDK_CROSSING_NORMAL, GDK_CROSSING_GRAB,
  * GDK_CROSSING_UNGRAB, GDK_CROSSING_GTK_GRAB, GDK_CROSSING_GTK_UNGRAB or
  * GDK_CROSSING_STATE_CHANGED). GDK_CROSSING_GTK_GRAB, GDK_CROSSING_GTK_UNGRAB,
  * and GDK_CROSSING_STATE_CHANGED were added in 2.14 and are always synthesized,
  * never native.
- * GdkNotifyType  detail;
+ * GdkNotifyType detail;
  * the kind of crossing that happened (GDK_NOTIFY_INFERIOR,
  * GDK_NOTIFY_ANCESTOR, GDK_NOTIFY_VIRTUAL, GDK_NOTIFY_NONLINEAR or
  * GDK_NOTIFY_NONLINEAR_VIRTUAL).
- * gboolean  focus;
+ * gboolean focus;
  * TRUE if window is the focus window or an inferior.
- * guint  state;
+ * guint state;
  * a bit-mask representing the state of
  * the modifier keys (e.g. Control, Shift and Alt) and the pointer
  * buttons. See GdkModifierType. [type GdkModifierType]
@@ -2094,14 +2094,14 @@ public struct GdkEventCrossing
 
 /**
  * Describes a change of keyboard focus.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_FOCUS_CHANGE).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * gint16  in;
+ * gint16 in;
  * TRUE if the window has gained the keyboard focus, FALSE if
  * it has lost the focus.
  */
@@ -2116,20 +2116,20 @@ public struct GdkEventFocus
 
 /**
  * Generated when a window size or position has changed.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_CONFIGURE).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * gint  x;
+ * gint x;
  * the new x coordinate of the window, relative to its parent.
- * gint  y;
+ * gint y;
  * the new y coordinate of the window, relative to its parent.
- * gint  width;
+ * gint width;
  * the new width of the window.
- * gint  height;
+ * gint height;
  * the new height of the window.
  */
 public struct GdkEventConfigure
@@ -2145,18 +2145,18 @@ public struct GdkEventConfigure
 
 /**
  * Describes a property change on a window.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_PROPERTY_NOTIFY).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkAtom  atom;
+ * GdkAtom atom;
  * the property that was changed.
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * guint  state;
+ * guint state;
  * whether the property was changed (GDK_PROPERTY_NEW_VALUE) or
  * deleted (GDK_PROPERTY_DELETE).
  */
@@ -2174,23 +2174,23 @@ public struct GdkEventProperty
 /**
  * Generated when a selection is requested or ownership of a selection
  * is taken over by another client application.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_SELECTION_CLEAR,
  * GDK_SELECTION_NOTIFY or GDK_SELECTION_REQUEST).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkAtom  selection;
+ * GdkAtom selection;
  * the selection.
- * GdkAtom  target;
+ * GdkAtom target;
  * the target to which the selection should be converted.
- * GdkAtom  property;
+ * GdkAtom property;
  * the property in which to place the result of the conversion.
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * GdkWindow  *requestor;
+ * GdkWindow *requestor;
  * the window on which to place property or NULL if none.
  */
 public struct GdkEventSelection
@@ -2208,23 +2208,23 @@ public struct GdkEventSelection
 
 /**
  * Generated during DND operations.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_DRAG_ENTER, GDK_DRAG_LEAVE,
  * GDK_DRAG_MOTION, GDK_DRAG_STATUS, GDK_DROP_START or
  * GDK_DROP_FINISHED).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkDragContext  *context;
+ * GdkDragContext *context;
  * the GdkDragContext for the current DND operation.
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * gshort  x_root;
+ * gshort x_root;
  * the x coordinate of the pointer relative to the root of the
  * screen, only set for GDK_DRAG_MOTION and GDK_DROP_START.
- * gshort  y_root;
+ * gshort y_root;
  * the y coordinate of the pointer relative to the root of the
  * screen, only set for GDK_DRAG_MOTION and GDK_DROP_START.
  */
@@ -2248,15 +2248,15 @@ public struct GdkEventDND
  * in or out of contact with a touch screen.
  * This event type will be used pretty rarely. It only is important for
  * XInput aware programs that are drawing their own cursor.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_PROXIMITY_IN or GDK_PROXIMITY_OUT).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using XSendEvent).
- * guint32  time;
+ * guint32 time;
  * the time of the event in milliseconds.
- * GdkDevice  *device;
+ * GdkDevice *device;
  * the device where the event originated.
  */
 public struct GdkEventProximity
@@ -2271,16 +2271,16 @@ public struct GdkEventProximity
 
 /**
  * Generated when the state of a toplevel window changes.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_WINDOW_STATE).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkWindowState  changed_mask;
+ * GdkWindowState changed_mask;
  * mask specifying what flags have changed.
- * GdkWindowState  new_window_state;
+ * GdkWindowState new_window_state;
  * the new window state, a combination of
  * GdkWindowState bits.
  */
@@ -2296,17 +2296,17 @@ public struct GdkEventWindowState
 
 /**
  * Generated when a setting is modified.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_SETTING).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event.
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * GdkSettingAction  action;
+ * GdkSettingAction action;
  * what happened to the setting (GDK_SETTING_ACTION_NEW,
  * GDK_SETTING_ACTION_CHANGED or GDK_SETTING_ACTION_DELETED).
- * char  *name;
+ * char *name;
  * the name of the setting.
  */
 public struct GdkEventSetting
@@ -2323,22 +2323,22 @@ public struct GdkEventSetting
  * Generated when the owner of a selection changes. On X11, this
  * information is only available if the X server supports the XFIXES
  * extension.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_OWNER_CHANGE).
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent)
- * GdkWindow  *owner;
+ * GdkWindow *owner;
  * the new owner of the selection, or NULL if there is none
- * GdkOwnerChange  reason;
+ * GdkOwnerChange reason;
  * the reason for the ownership change as a GdkOwnerChange value
- * GdkAtom  selection;
+ * GdkAtom selection;
  * the atom identifying the selection
- * guint32  time;
+ * guint32 time;
  * the timestamp of the event
- * guint32  selection_time;
+ * guint32 selection_time;
  * the time at which the selection ownership was taken
  * over
  * Since 2.6
@@ -2362,20 +2362,20 @@ public struct GdkEventOwnerChange
  * is unmapped), or if the same application grabs the pointer or keyboard
  * again. Note that implicit grabs (which are initiated by button presses)
  * can also cause GdkEventGrabBroken events.
- * GdkEventType  type;
+ * GdkEventType type;
  * the type of the event (GDK_GRAB_BROKEN)
- * GdkWindow  *window;
+ * GdkWindow *window;
  * the window which received the event, i.e. the window
  * that previously owned the grab
- * gint8  send_event;
+ * gint8 send_event;
  * TRUE if the event was sent explicitly (e.g. using
  * XSendEvent).
- * gboolean  keyboard;
+ * gboolean keyboard;
  * TRUE if a keyboard grab was broken, FALSE if a pointer
  * grab was broken
- * gboolean  implicit;
+ * gboolean implicit;
  * TRUE if the broken grab was implicit
- * GdkWindow  *grab_window;
+ * GdkWindow *grab_window;
  * If this event is caused by another grab in the same
  * application, grab_window contains the new grab window. Otherwise
  * grab_window is NULL.
@@ -2406,15 +2406,15 @@ public struct GdkKeymap{}
 
 /**
  * A GdkKeymapKey is a hardware key that can be mapped to a keyval.
- * guint  keycode;
+ * guint keycode;
  * the hardware keycode. This is an identifying number for a
  * physical key.
- * gint  group;
+ * gint group;
  * indicates movement in a horizontal direction. Usually groups are used
  * for two different languages. In group 0, a key might have two English
  * characters, and in group 1 it might have two Hebrew characters. The Hebrew
  * characters will be printed on the key next to the English characters.
- * gint  level;
+ * gint level;
  * indicates which symbol on the key will be used, in a vertical direction.
  * So on a standard US keyboard, the key with the number "1" on it also has the
  * exclamation point ("!") character on it. The level indicates whether to use
@@ -2451,7 +2451,7 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Converts a GdkAtom into a pointer type.
- * atom  :
+ * atom :
  * a GdkAtom.
  */
 // TODO
@@ -2460,7 +2460,7 @@ public struct GdkAppLaunchContext{}
 /*
  * Extracts a GdkAtom from a pointer. The GdkAtom must have been
  * stored in the pointer with GDK_ATOM_TO_POINTER().
- * ptr  :
+ * ptr :
  * a pointer containing a GdkAtom.
  */
 // TODO
@@ -2468,9 +2468,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X window belonging to a GdkWindow.
- * win  :
+ * win :
  * a GdkWindow.
- * Returns  :
+ * Returns :
  * the Xlib Window of win.
  */
 // TODO
@@ -2483,9 +2483,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a X11 GdkScreen.
- * screen  :
+ * screen :
  * a GdkScreen
- * Returns  :
+ * Returns :
  * an Xlib Display*
  */
 // TODO
@@ -2493,9 +2493,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the index of a X11 GdkScreen.
- * screen  :
+ * screen :
  * a GdkScreen
- * Returns  :
+ * Returns :
  * the position of screen among the screens of its display
  */
 // TODO
@@ -2503,9 +2503,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the screen of a X11 GdkScreen.
- * screen  :
+ * screen :
  * a GdkScreen
- * Returns  :
+ * Returns :
  * an Xlib Screen*
  */
 // TODO
@@ -2513,9 +2513,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the X cursor belonging to a GdkCursor.
- * cursor  :
+ * cursor :
  * a GdkCursor.
- * Returns  :
+ * Returns :
  * an Xlib Cursor.
  */
 // TODO
@@ -2523,9 +2523,9 @@ public struct GdkAppLaunchContext{}
 
 /*
  * Returns the display of a GdkCursor.
- * cursor  :
+ * cursor :
  * a GdkCursor.
- * Returns  :
+ * Returns :
  * an Xlib Display*.
  */
 // TODO
@@ -2553,9 +2553,9 @@ public struct GdkAppLaunchContext{}
  * created from it; in this case you will need to pass in a function
  * of GdkPixbufDestroyNotify so that the pixel data can be freed
  * when the pixbuf is finalized.
- * pixels  :
+ * pixels :
  * The pixel array of the pixbuf that is being finalized.
- * data  :
+ * data :
  * User closure data.
  * See Also
  * GdkPixbuf, gdk_pixbuf_new_from_data().
@@ -2570,15 +2570,15 @@ public alias extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * successful it should return TRUE. If an error occurs it should set
  * error and return FALSE, in which case gdk_pixbuf_save_to_callback()
  * will fail with the same error.
- * buf  :
+ * buf :
  * bytes to be written.
- * count  :
+ * count :
  * number of bytes in buf.
- * error  :
+ * error :
  * A location to return an error. [out]
- * data  :
+ * data :
  * user data passed to gdk_pixbuf_save_to_callback(). [closure]
- * Returns  :
+ * Returns :
  * TRUE if successful, FALSE (with error set) if failed.
  * Since 2.4
  */
@@ -2589,11 +2589,11 @@ public alias extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSa
  * A function of this type is passed to gdk_window_invalidate_maybe_recurse().
  * It gets called for each child of the window to determine whether to
  * recursively invalidate it or now.
- * window  :
+ * window :
  * a GdkWindow
- * user_data  :
+ * user_data :
  * user data
- * Returns  :
+ * Returns :
  * TRUE to invalidate window recursively
  */
 // gboolean (*GdkWindowChildFunc) (GdkWindow *window,  gpointer user_data);
@@ -2607,13 +2607,13 @@ public alias extern(C) int  function (GdkWindow*, void*) GdkWindowChildFunc;
  * event to a GDK event and store the result in event, or handle it without
  * translation. If the filter translates the event and processing should
  * continue, it should return GDK_FILTER_TRANSLATE.
- * xevent  :
+ * xevent :
  * the native event to filter.
- * event  :
+ * event :
  * the GDK event to which the X event will be translated.
- * data  :
+ * data :
  * user data set when the filter was installed.
- * Returns  :
+ * Returns :
  * a GdkFilterReturn value.
  */
 // GdkFilterReturn (*GdkFilterFunc) (GdkXEvent *xevent,  GdkEvent *event,  gpointer data);
@@ -2622,9 +2622,9 @@ public alias extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*) 
 /*
  * Specifies the type of function passed to gdk_event_handler_set() to
  * handle all GDK events.
- * event  :
+ * event :
  * the GdkEvent to process.
- * data  :
+ * data :
  * user data set when the event handler was installed with
  * gdk_event_handler_set(). [closure]
  */

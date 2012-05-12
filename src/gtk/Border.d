@@ -290,7 +290,7 @@ public class Border : Boxed
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Border)[] onChangedListeners;
 	/**

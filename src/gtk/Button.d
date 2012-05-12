@@ -266,7 +266,7 @@ public class Button : Bin, ActivatableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Button)[] onActivateListeners;
 	/**

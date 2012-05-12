@@ -264,7 +264,7 @@ public class TreeView : Container
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TreeView)[] onColumnsChangedListeners;
 	/**

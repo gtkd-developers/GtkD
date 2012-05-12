@@ -141,7 +141,7 @@ public class DisplayManager : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Display, DisplayManager)[] onDisplayOpenedListeners;
 	/**

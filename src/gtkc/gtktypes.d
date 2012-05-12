@@ -1965,11 +1965,11 @@ alias GtkSizeGroupMode SizeGroupMode;
  *  gpointer user_data) : Action
  * An action signal that activates the current menu item within
  * the menu shell.
- * menushell  :
+ * menushell :
  * the object which received the signal
- * force_hide  :
+ * force_hide :
  * if TRUE, hide the menu after activating the menu item
- * user_data  :
+ * user_data :
  * user data set when the signal handler was connected.
  */
 public enum GtkMenuDirectionType
@@ -2435,21 +2435,21 @@ public struct GtkSettingsValue
  * in a widgets GtkWidgetPath. When a binding within a set is matched upon
  * activation, an action signal is emitted on the target widget to carry out
  * the actual activation.
- * gchar  *set_name;
+ * gchar *set_name;
  * unique name of this binding set
- * gint  priority;
+ * gint priority;
  * unused
- * GSList  *widget_path_pspecs;
+ * GSList *widget_path_pspecs;
  * unused
- * GSList  *widget_class_pspecs;
+ * GSList *widget_class_pspecs;
  * unused
- * GSList  *class_branch_pspecs;
+ * GSList *class_branch_pspecs;
  * unused
- * GtkBindingEntry  *entries;
+ * GtkBindingEntry *entries;
  * the key binding entries in this binding set
- * GtkBindingEntry  *current;
+ * GtkBindingEntry *current;
  * implementation detail
- * guint  parsed  :  1;
+ * guint parsed : 1;
  * whether this binding set stems from a CSS file and is reset upon theme changes
  */
 public struct GtkBindingSet
@@ -2469,23 +2469,23 @@ public struct GtkBindingSet
 /**
  * Each key binding element of a binding sets binding list is
  * represented by a GtkBindingEntry.
- * guint  keyval;
+ * guint keyval;
  * key value to match
- * GdkModifierType  modifiers;
+ * GdkModifierType modifiers;
  * key modifiers to match
- * GtkBindingSet  *binding_set;
+ * GtkBindingSet *binding_set;
  * binding set this entry belongs to
- * guint  destroyed  :  1;
+ * guint destroyed : 1;
  * implementation detail
- * guint  in_emission  :  1;
+ * guint in_emission : 1;
  * implementation detail
- * guint  marks_unbound  :  1;
+ * guint marks_unbound : 1;
  * implementation detail
- * GtkBindingEntry  *set_next;
+ * GtkBindingEntry *set_next;
  * linked list of entries maintained by binding set
- * GtkBindingEntry  *hash_next;
+ * GtkBindingEntry *hash_next;
  * implementation detail
- * GtkBindingSignal  *signals;
+ * GtkBindingSignal *signals;
  * action signals of this entry
  */
 public struct GtkBindingEntry
@@ -2508,13 +2508,13 @@ public struct GtkBindingEntry
  * A GtkBindingSignal stores the necessary information to
  * activate a widget in response to a key press via a signal
  * emission.
- * GtkBindingSignal  *next;
+ * GtkBindingSignal *next;
  * implementation detail
- * gchar  *signal_name;
+ * gchar *signal_name;
  * the action signal to be emitted
- * guint  n_args;
+ * guint n_args;
  * number of arguments specified for the signal
- * GtkBindingArg  *args;
+ * GtkBindingArg *args;
  * the arguments specified for the signal
  */
 public struct GtkBindingSignal
@@ -2530,7 +2530,7 @@ public struct GtkBindingSignal
  * A GtkBindingArg holds the data associated with
  * an argument for a key binding signal emission as
  * stored in GtkBindingSignal.
- * GType  arg_type;
+ * GType arg_type;
  * implementation detail
  */
 public struct GtkBindingArg
@@ -2551,11 +2551,11 @@ public struct GtkBindingArg
  * A GtkTargetEntry structure represents a single type of
  * data than can be supplied for by a widget for a selection
  * or for supplied or received during drag-and-drop.
- * gchar  *target;
+ * gchar *target;
  * a string representation of the target type
- * guint  flags;
+ * guint flags;
  * GtkTargetFlags for DND
- * guint  info;
+ * guint info;
  * an application-assigned integer ID which will
  * get passed as a parater to e.g the "selection-get"
  * signal. It allows the application to identify the target
@@ -2606,12 +2606,12 @@ public struct GtkCssProvider{}
 
 
 /**
- * GTypeInterface  g_iface;
- * get_style  ()
+ * GTypeInterface g_iface;
+ * get_style ()
  * Gets a set of style information that applies to a widget path.
- * get_style_property  ()
+ * get_style_property ()
  * Gets the value of a widget style property that applies to a widget path.
- * get_icon_factory  ()
+ * get_icon_factory ()
  * Gets the icon factory that applies to a widget path.
  */
 public struct GtkStyleProviderIface
@@ -2641,39 +2641,39 @@ public struct GtkStyleProperties
 
 /**
  * Base class for theming engines.
- * GObjectClass  parent_class;
+ * GObjectClass parent_class;
  * The parent class.
- * render_line  ()
+ * render_line ()
  * Renders a line between two points.
- * render_background  ()
+ * render_background ()
  * Renders the background area of a widget region.
- * render_frame  ()
+ * render_frame ()
  * Renders the frame around a widget area.
- * render_frame_gap  ()
+ * render_frame_gap ()
  * Renders the frame around a widget area with a gap in it.
- * render_extension  ()
+ * render_extension ()
  * Renders a extension to a box, usually a notebook tab.
- * render_check  ()
+ * render_check ()
  * Renders a checkmark, as in GtkCheckButton.
- * render_option  ()
+ * render_option ()
  * Renders an option, as in GtkRadioButton.
- * render_arrow  ()
+ * render_arrow ()
  * Renders an arrow pointing to a certain direction.
- * render_expander  ()
+ * render_expander ()
  * Renders an element what will expose/expand part of
  * the UI, as in GtkExpander.
- * render_focus  ()
+ * render_focus ()
  * Renders the focus indicator.
- * render_layout  ()
+ * render_layout ()
  * Renders a PangoLayout
- * render_slider  ()
+ * render_slider ()
  * Renders a slider control, as in GtkScale.
- * render_handle  ()
+ * render_handle ()
  * Renders a handle to drag UI elements, as in GtkPaned.
- * render_activity  ()
+ * render_activity ()
  * Renders an area displaying activity, such as in GtkSpinner,
  * or GtkProgressBar.
- * render_icon_pixbuf  ()
+ * render_icon_pixbuf ()
  * Renders an icon as a GdkPixbuf.
  */
 public struct GtkThemingEngineClass
@@ -3458,23 +3458,23 @@ public struct GtkToolShell{}
 
 /**
  * Virtual function table for the GtkToolShell interface.
- * get_icon_size  ()
+ * get_icon_size ()
  * mandatory implementation of gtk_tool_shell_get_icon_size().
- * get_orientation  ()
+ * get_orientation ()
  * mandatory implementation of gtk_tool_shell_get_orientation().
- * get_style  ()
+ * get_style ()
  * mandatory implementation of gtk_tool_shell_get_style().
- * get_relief_style  ()
+ * get_relief_style ()
  * optional implementation of gtk_tool_shell_get_relief_style().
- * rebuild_menu  ()
+ * rebuild_menu ()
  * optional implementation of gtk_tool_shell_rebuild_menu().
- * get_text_orientation  ()
+ * get_text_orientation ()
  * optional implementation of gtk_tool_shell_get_text_orientation().
- * get_text_alignment  ()
+ * get_text_alignment ()
  * optional implementation of gtk_tool_shell_get_text_alignment().
- * get_ellipsize_mode  ()
+ * get_ellipsize_mode ()
  * optional implementation of gtk_tool_shell_get_ellipsize_mode().
- * get_text_size_group  ()
+ * get_text_size_group ()
  * optional implementation of gtk_tool_shell_get_text_size_group().
  */
 public struct GtkToolShellIface
@@ -3568,22 +3568,22 @@ public struct GtkActionGroup{}
 /**
  * GtkActionEntry structs are used with gtk_action_group_add_actions() to
  * construct actions.
- * const  gchar  *name;
+ * const gchar *name;
  * The name of the action.
- * const  gchar  *stock_id;
+ * const gchar *stock_id;
  * The stock id for the action, or the name of an icon from the
  * icon theme.
- * const  gchar  *label;
+ * const gchar *label;
  * The label for the action. This field should typically be marked
  * for translation, see gtk_action_group_set_translation_domain(). If
  * label is NULL, the label of the stock item with id stock_id is used.
- * const  gchar  *accelerator;
+ * const gchar *accelerator;
  * The accelerator for the action, in the format understood by
  * gtk_accelerator_parse().
- * const  gchar  *tooltip;
+ * const gchar *tooltip;
  * The tooltip for the action. This field should typically be
  * marked for translation, see gtk_action_group_set_translation_domain().
- * GCallback  callback;
+ * GCallback callback;
  * The function to call when the action is activated.
  */
 public struct GtkActionEntry
@@ -3600,23 +3600,23 @@ public struct GtkActionEntry
 /**
  * GtkToggleActionEntry structs are used with
  * gtk_action_group_add_toggle_actions() to construct toggle actions.
- * const  gchar  *name;
+ * const gchar *name;
  * The name of the action.
- * const  gchar  *stock_id;
+ * const gchar *stock_id;
  * The stock id for the action, or the name of an icon from the
  * icon theme.
- * const  gchar  *label;
+ * const gchar *label;
  * The label for the action. This field should typically be marked
  * for translation, see gtk_action_group_set_translation_domain().
- * const  gchar  *accelerator;
+ * const gchar *accelerator;
  * The accelerator for the action, in the format understood by
  * gtk_accelerator_parse().
- * const  gchar  *tooltip;
+ * const gchar *tooltip;
  * The tooltip for the action. This field should typically be
  * marked for translation, see gtk_action_group_set_translation_domain().
- * GCallback  callback;
+ * GCallback callback;
  * The function to call when the action is activated.
- * gboolean  is_active;
+ * gboolean is_active;
  * The initial state of the toggle action.
  */
 public struct GtkToggleActionEntry
@@ -3634,21 +3634,21 @@ public struct GtkToggleActionEntry
 /**
  * GtkRadioActionEntry structs are used with
  * gtk_action_group_add_radio_actions() to construct groups of radio actions.
- * const  gchar  *name;
+ * const gchar *name;
  * The name of the action.
- * const  gchar  *stock_id;
+ * const gchar *stock_id;
  * The stock id for the action, or the name of an icon from the
  * icon theme.
- * const  gchar  *label;
+ * const gchar *label;
  * The label for the action. This field should typically be marked
  * for translation, see gtk_action_group_set_translation_domain().
- * const  gchar  *accelerator;
+ * const gchar *accelerator;
  * The accelerator for the action, in the format understood by
  * gtk_accelerator_parse().
- * const  gchar  *tooltip;
+ * const gchar *tooltip;
  * The tooltip for the action. This field should typically be
  * marked for translation, see gtk_action_group_set_translation_domain().
- * gint  value;
+ * gint value;
  * The value to set on the radio action. See
  * gtk_radio_action_get_current_value().
  */
@@ -3694,12 +3694,12 @@ public struct GtkActivatable{}
 
 
 /**
- * GTypeInterface  g_iface;
- * update  ()
+ * GTypeInterface g_iface;
+ * update ()
  * Called to update the activatable when its related action's properties change.
  * You must check the "use-action-appearance" property only apply action
  * properties that are meant to effect the appearance accordingly.
- * sync_action_properties  ()
+ * sync_action_properties ()
  * Called to update the activatable completely, this is called internally when
  * "related-action" property is set or unset and by the implementor when
  * "use-action-appearance" changes.
@@ -3787,17 +3787,17 @@ public struct GtkFileFilter{}
 /**
  * A GtkFileFilterInfo struct is used to pass information about the
  * tested file to gtk_file_filter_filter().
- * GtkFileFilterFlags  contains;
+ * GtkFileFilterFlags contains;
  * Flags indicating which of the following fields need
  * are filled
- * const  gchar  *filename;
+ * const gchar *filename;
  * the filename of the file being tested
- * const  gchar  *uri;
+ * const gchar *uri;
  * the URI for the file being tested
- * const  gchar  *display_name;
+ * const gchar *display_name;
  * the string that will be used to display the file
  * in the file chooser
- * const  gchar  *mime_type;
+ * const gchar *mime_type;
  * the mime type of the file
  */
 public struct GtkFileFilterInfo
@@ -4230,11 +4230,11 @@ public struct GtkWidgetAuxInfo
  * Represents a request of a screen object in a given orientation. These
  * are primarily used in container implementations when allocating a natural
  * size for children calling. See gtk_distribute_natural_allocation().
- * gpointer  data;
+ * gpointer data;
  * A client pointer
- * gint  minimum_size;
+ * gint minimum_size;
  * The minimum size needed for allocation in a given orientation
- * gint  natural_size;
+ * gint natural_size;
  * The natural size for allocation in a given orientation
  */
 public struct GtkRequestedSize
@@ -4252,33 +4252,33 @@ public struct GtkIMContext{}
 
 
 /**
- * preedit_start  ()
+ * preedit_start ()
  * Default handler of the "preedit-start" signal.
- * preedit_end  ()
+ * preedit_end ()
  * Default handler of the "preedit-end" signal.
- * preedit_changed  ()
+ * preedit_changed ()
  * Default handler of the "preedit-changed"
  * signal.
- * commit  ()
+ * commit ()
  * Default handler of the "commit" signal.
- * retrieve_surrounding  ()
+ * retrieve_surrounding ()
  * Default handler of the
  * "retrieve-surrounding" signal.
- * delete_surrounding  ()
+ * delete_surrounding ()
  * Default handler of the
  * "delete-surrounding" signal.
- * set_client_window  ()
+ * set_client_window ()
  * Called via gtk_im_context_set_client_window() when the
  * input window where the entered text will appear changes. Override this to
  * keep track of the current input window, for instance for the purpose of
  * positioning a status display of your input method.
- * get_preedit_string  ()
+ * get_preedit_string ()
  * Called via gtk_im_context_get_preedit_string() to
  * retrieve the text currently being preedited for display at the cursor
  * position. Any input method which composes complex characters or any
  * other compositions from multiple sequential key presses should override
  * this method to provide feedback.
- * filter_keypress  ()
+ * filter_keypress ()
  * Called via gtk_im_context_filter_keypress() on every
  * key press or release event. Every non-trivial input method needs to
  * override this in order to implement the mapping from key events to text.
@@ -4289,33 +4289,33 @@ public struct GtkIMContext{}
  * returned to indicate that the event wasn't handled by the input method.
  * If a builtin mapping exists for the key, it is used to produce a
  * character.
- * focus_in  ()
+ * focus_in ()
  * Called via gtk_im_context_focus_in() when the input widget
  * has gained focus. May be overridden to keep track of the current focus.
- * focus_out  ()
+ * focus_out ()
  * Called via gtk_im_context_focus_out() when the input widget
  * has lost focus. May be overridden to keep track of the current focus.
- * reset  ()
+ * reset ()
  * Called via gtk_im_context_reset() to signal a change such as a
  * change in cursor position. An input method that implements preediting
  * should override this method to clear the preedit state on reset.
- * set_cursor_location  ()
+ * set_cursor_location ()
  * Called via gtk_im_context_set_cursor_location()
  * to inform the input method of the current cursor location relative to
  * the client window. May be overridden to implement the display of popup
  * windows at the cursor position.
- * set_use_preedit  ()
+ * set_use_preedit ()
  * Called via gtk_im_context_set_use_preedit() to control
  * the use of the preedit string. Override this to display feedback by some
  * other means if turned off.
- * set_surrounding  ()
+ * set_surrounding ()
  * Called via gtk_im_context_set_surrounding() in response
  * to signal "retrieve-surrounding" to update the input
  * method's idea of the context around the cursor. It is not necessary to
  * override this method even with input methods which implement
  * context-dependent behavior. The base implementation is sufficient for
  * gtk_im_context_get_surrounding() to work.
- * get_surrounding  ()
+ * get_surrounding ()
  * Called via gtk_im_context_get_surrounding() to update
  * the context around the cursor location. It is not necessary to override
  * this method even with input methods which implement context-dependent
@@ -4348,15 +4348,15 @@ public struct GtkIMContextClass
 
 /**
  * Bookkeeping information about a loadable input method.
- * const  gchar  *context_id;
+ * const gchar *context_id;
  * The unique identification string of the input method.
- * const  gchar  *context_name;
+ * const gchar *context_name;
  * The human-readable name of the input method.
- * const  gchar  *domain;
+ * const gchar *domain;
  * Translation domain to be used with dgettext()
- * const  gchar  *domain_dirname;
+ * const gchar *domain_dirname;
  * Name of locale directory for use with bindtextdomain()
- * const  gchar  *default_locales;
+ * const gchar *default_locales;
  * A colon-separated list of locales where this input method
  * should be the default. The asterisk "*" sets the default for all locales.
  */
@@ -4404,25 +4404,25 @@ public struct GtkRecentInfo{}
 /**
  * Meta-data to be passed to gtk_recent_manager_add_full() when
  * registering a recently used resource.
- * gchar  *display_name;
+ * gchar *display_name;
  * a UTF-8 encoded string, containing the name of the recently
  * used resource to be displayed, or NULL;
- * gchar  *description;
+ * gchar *description;
  * a UTF-8 encoded string, containing a short description of
  * the resource, or NULL;
- * gchar  *mime_type;
+ * gchar *mime_type;
  * the MIME type of the resource;
- * gchar  *app_name;
+ * gchar *app_name;
  * the name of the application that is registering this recently
  * used resource;
- * gchar  *app_exec;
+ * gchar *app_exec;
  * command line used to launch this resource; may contain the
  * "%f" and "%u" escape characters which will be expanded
  * to the resource file path and URI respectively when the command line
  * is retrieved;
- * gchar  **groups;
+ * gchar **groups;
  * a vector of strings containing groups names;
- * gboolean  is_private;
+ * gboolean is_private;
  * whether this resource should be displayed only by the
  * applications that have registered it or not.
  */
@@ -4520,35 +4520,35 @@ public struct GtkBuildable{}
  * The GtkBuildableIface interface contains method that are
  * necessary to allow GtkBuilder to construct an object from
  * a GtkBuilder UI definition.
- * GTypeInterface  g_iface;
+ * GTypeInterface g_iface;
  * the parent class
- * set_name  ()
+ * set_name ()
  * Stores the name attribute given in the GtkBuilder UI definition.
  * GtkWidget stores the name as object data. Implement this method if your
  * object has some notion of "name" and it makes sense to map the XML name
  * attribute to it.
- * get_name  ()
+ * get_name ()
  * The getter corresponding to set_name. Implement this
  * if you implement set_name.
- * add_child  ()
+ * add_child ()
  * Adds a child. The type parameter can be used to
  * differentiate the kind of child. GtkContainer implements this
  * to add add a child widget to the container, GtkNotebook uses
  * the type to distinguish between page labels (of type "page-label")
  * and normal children.
- * set_buildable_property  ()
+ * set_buildable_property ()
  * Sets a property of a buildable object.
  * It is normally not necessary to implement this, g_object_set_property()
  * is used by default. GtkWindow implements this to delay showing itself
  * (i.e. setting the "visible" property) until the whole interface
  * is created.
- * construct_child  ()
+ * construct_child ()
  * Constructs a child of a buildable that has been
  * specified as "constructor" in the UI definition. GtkUIManager implements
  * this to reference to a widget created in a <ui> tag which is outside
  * of the normal GtkBuilder UI definition hierarchy. A reference to the
  * constructed object is returned and becomes owned by the caller.
- * custom_tag_start  ()
+ * custom_tag_start ()
  * Implement this if the buildable needs to parse
  * content below <child>. To handle an element, the implementation
  * must fill in the parser structure and user_data and return TRUE.
@@ -4556,18 +4556,18 @@ public struct GtkBuildable{}
  * in <accelerator> elements. GtkContainer implements it to map
  * properties defined via <packing> elements to child properties.
  * Note that user_data must be freed in custom_tag_end or custom_finished.
- * custom_tag_end  ()
+ * custom_tag_end ()
  * Called for the end tag of each custom element that is
  * handled by the buildable (see custom_tag_start).
- * custom_finished  ()
+ * custom_finished ()
  * Called for each custom tag handled by the buildable
  * when the builder finishes parsing (see custom_tag_start)
- * parser_finished  ()
+ * parser_finished ()
  * Called when a builder finishes the parsing
  * of a UI definition. It is normally not necessary to implement this,
  * unless you need to perform special cleanup actions. GtkWindow sets
  * the "visible" property here.
- * get_internal_child  ()
+ * get_internal_child ()
  * Returns an internal child of a buildable.
  * GtkDialog implements this to give access to its vbox, making
  * it possible to add children to the vbox in a UI definition.
@@ -4598,13 +4598,13 @@ public struct GtkBuilder{}
 
 
 /*
- * major  :
+ * major :
  * major version (e.g. 1 for version 1.2.5)
- * minor  :
+ * minor :
  * minor version (e.g. 2 for version 1.2.5)
- * micro  :
+ * micro :
  * micro version (e.g. 5 for version 1.2.5)
- * Returns  :
+ * Returns :
  * TRUE if the version of the GTK+ header files
  * is the same as or newer than the passed-in version.
  */
@@ -4612,13 +4612,13 @@ public struct GtkBuilder{}
 // #define GTK_CHECK_VERSION(major,minor,micro)
 
 /*
- * style  :
+ * style :
  * a GtkStyle.
- * Returns  :
+ * Returns :
  * whether the style is attached to a window.
  */
 // TODO
-// #define GTK_STYLE_ATTACHED(style)  (GTK_STYLE (style)->attach_count > 0)
+// #define GTK_STYLE_ATTACHED(style) (GTK_STYLE (style)->attach_count > 0)
 
 /*
  */
@@ -4628,12 +4628,12 @@ public struct GtkBuilder{}
 /*
  * This macro should be used to emit a standard warning about unexpected
  * properties in set_child_property() and get_child_property() implementations.
- * object  :
+ * object :
  * the GObject on which set_child_property() or get_child_property()
  * was called
- * property_id  :
+ * property_id :
  * the numeric id of the property
- * pspec  :
+ * pspec :
  * the GParamSpec of the property
  */
 // TODO
@@ -4642,9 +4642,9 @@ public struct GtkBuilder{}
 /*
  * This macro should be used to emit a warning about and unexpected type value
  * in a GtkBuildable add_child implementation.
- * object  :
+ * object :
  * the GtkBuildable on which the warning ocurred
- * type  :
+ * type :
  * the unexpected type value
  */
 // TODO
@@ -4654,9 +4654,9 @@ public struct GtkBuilder{}
  * Each GTK+ module must have a function gtk_module_init()
  * with this prototype. This function is called after loading
  * the module.
- * argc  :
+ * argc :
  * GTK+ always passes NULL for this argument
- * argv  :
+ * argv :
  * GTK+ always passes NULL for this argument
  */
 // void (*GtkModuleInitFunc) (gint *argc,  gchar ***argv);
@@ -4666,7 +4666,7 @@ public alias extern(C) void  function (gint*, gchar***) GtkModuleInitFunc;
  * A multihead-aware GTK+ module may have a gtk_module_display_init()
  * function with this prototype. GTK+ calls this function for each
  * opened display.
- * display  :
+ * display :
  * an open GdkDisplay
  * Since 2.2
  */
@@ -4676,13 +4676,13 @@ public alias extern(C) void  function (GdkDisplay*) GtkModuleDisplayInitFunc;
 /*
  * Key snooper functions are called before normal event delivery.
  * They can be used to implement custom key event handling.
- * grab_widget  :
+ * grab_widget :
  * the widget to which the event will be delivered
- * event  :
+ * event :
  * the key event
- * func_data  :
+ * func_data :
  * data supplied to gtk_key_snooper_install()
- * Returns  :
+ * Returns :
  * TRUE to stop further processing of event, FALSE to continue.
  */
 // gint (*GtkKeySnoopFunc) (GtkWidget *grab_widget,  GdkEventKey *event,  gpointer func_data);
@@ -4694,7 +4694,7 @@ public alias extern(C) int  function (GtkWidget*, GdkEventKey*, void*) GtkKeySno
 public alias extern(C) int  function (GtkAccelGroup*, GObject*, uint, GdkModifierType) GtkAccelGroupActivate;
 
 /*
- * data  :
+ * data :
  * . [closure]
  * Since 2.2
  */
@@ -4702,16 +4702,16 @@ public alias extern(C) int  function (GtkAccelGroup*, GObject*, uint, GdkModifie
 public alias extern(C) int  function (GtkAccelKey*, GClosure*, void*) GtkAccelGroupFindFunc;
 
 /*
- * data  :
+ * data :
  * User data passed to gtk_accel_map_foreach() or
  * gtk_accel_map_foreach_unfiltered()
- * accel_path  :
+ * accel_path :
  * Accel path of the current accelerator
- * accel_key  :
+ * accel_key :
  * Key of the current accelerator
- * accel_mods  :
+ * accel_mods :
  * Modifiers of the current accelerator
- * changed  :
+ * changed :
  * Changed flag of the accelerator (if TRUE, accelerator has changed
  * during runtime and would need to be saved during an accelerator dump)
  */
@@ -4721,13 +4721,13 @@ public alias extern(C) void  function (void*, char*, uint, GdkModifierType, int)
 /*
  *  A function to be called when the results of gtk_clipboard_request_contents()
  *  are received, or when the request fails.
- * clipboard  :
+ * clipboard :
  * the GtkClipboard
- * selection_data  :
+ * selection_data :
  * a GtkSelectionData containing the data was received.
  * If retrieving the data failed, then then length field
  * of selection_data will be negative.
- * data  :
+ * data :
  * the user_data supplied to gtk_clipboard_request_contents().
  */
 // void (*GtkClipboardReceivedFunc) (GtkClipboard *clipboard,  GtkSelectionData *selection_data,  gpointer data);
@@ -4736,12 +4736,12 @@ public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, void*) 
 /*
  *  A function to be called when the results of gtk_clipboard_request_text()
  *  are received, or when the request fails.
- * clipboard  :
+ * clipboard :
  * the GtkClipboard
- * text  :
+ * text :
  * the text received, as a UTF-8 encoded string, or NULL
  * if retrieving the data failed.
- * data  :
+ * data :
  * the user_data supplied to gtk_clipboard_request_text().
  */
 // void (*GtkClipboardTextReceivedFunc) (GtkClipboard *clipboard,  const gchar *text,  gpointer data);
@@ -4750,11 +4750,11 @@ public alias extern(C) void  function (GtkClipboard*, char*, void*) GtkClipboard
 /*
  *  A function to be called when the results of gtk_clipboard_request_image()
  *  are received, or when the request fails.
- * clipboard  :
+ * clipboard :
  * the GtkClipboard
- * pixbuf  :
+ * pixbuf :
  * the received image
- * data  :
+ * data :
  * the user_data supplied to gtk_clipboard_request_image().
  * Since 2.6
  */
@@ -4764,14 +4764,14 @@ public alias extern(C) void  function (GtkClipboard*, GdkPixbuf*, void*) GtkClip
 /*
  *  A function to be called when the results of gtk_clipboard_request_targets()
  *  are received, or when the request fails.
- * clipboard  :
+ * clipboard :
  * the GtkClipboard
- * atoms  :
+ * atoms :
  * the supported targets, as array of GdkAtom, or NULL
  * if retrieving the data failed.
- * n_atoms  :
+ * n_atoms :
  * the length of the atoms array.
- * data  :
+ * data :
  * the user_data supplied to gtk_clipboard_request_targets().
  * Since 2.4
  */
@@ -4797,16 +4797,16 @@ public alias extern(C) void  function (GtkClipboard*, gchar**, void*) GtkClipboa
  * calling gtk_selection_data_set() (or related functions such
  * as gtk_selection_data_set_text()). If no data is set, the requestor
  * will be informed that the attempt to get the data failed.
- * clipboard  :
+ * clipboard :
  * the GtkClipboard
- * selection_data  :
+ * selection_data :
  * a GtkSelectionData argument in which the requested
  * data should be stored.
- * info  :
+ * info :
  * the info field corresponding to the requested
  * target from the GtkTargetEntry array passed to
  * gtk_clipboard_set_with_data() or gtk_clipboard_set_with_owner().
- * user_data_or_owner  :
+ * user_data_or_owner :
  * the user_data argument passed to gtk_clipboard_set_with_data(), or
  * the owner argument passed to gtk_clipboard_set_with_owner()
  */
@@ -4817,9 +4817,9 @@ public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, uint, v
  * A function that will be called when the contents of the clipboard are changed
  * or cleared. Once this has called, the user_data_or_owner argument
  * will not be used again.
- * clipboard  :
+ * clipboard :
  * the GtkClipboard
- * user_data_or_owner  :
+ * user_data_or_owner :
  * the user_data argument passed to gtk_clipboard_set_with_data(), or
  * the owner argument passed to gtk_clipboard_set_with_owner()
  */
@@ -4844,9 +4844,9 @@ public alias extern(C) int  function (char*, GValue*, GError**) GtkStyleProperty
  * visual. Connecting to this signal is probably seldom
  * useful since most of the time applications and widgets only
  * deal with styles that have been already realized.
- * style  :
+ * style :
  * the object which received the signal
- * user_data  :
+ * user_data :
  * user data set when the signal handler was connected.
  * Since 2.4
  */
@@ -4858,11 +4858,11 @@ public alias extern(C) int  function (GParamSpec*, GString*, GValue*) GtkRcPrope
  * is the next page given a current one. It's called both for computing the
  * next page when the user presses the "forward" button and for handling
  * the behavior of the "last" button.
- * current_page  :
+ * current_page :
  * The page number used to calculate the next page.
- * data  :
+ * data :
  * user data. [closure]
- * Returns  :
+ * Returns :
  * The next page number.
  */
 // gint (*GtkAssistantPageFunc) (gint current_page,  gpointer data);
@@ -4875,15 +4875,15 @@ public alias extern(C) int  function (int, void*) GtkAssistantPageFunc;
  * and g_utf8_casefold()). If this is not appropriate, match functions
  * have access to the unmodified key via
  * gtk_entry_get_text (GTK_ENTRY (gtk_entry_completion_get_entry ())).
- * completion  :
+ * completion :
  * the GtkEntryCompletion
- * key  :
+ * key :
  * the string to match, normalized and case-folded
- * iter  :
+ * iter :
  * a GtkTreeIter indicating the row to match
- * user_data  :
+ * user_data :
  * user data given to gtk_entry_completion_set_match_func()
- * Returns  :
+ * Returns :
  * TRUE if iter should be displayed as a possible completion
  * for key
  */
@@ -4898,23 +4898,23 @@ public alias extern(C) int  function (gunichar, void*) GtkTextCharPredicate;
 /*
  * A function that is called to deserialize rich text that has been
  * serialized with gtk_text_buffer_serialize(), and insert it at iter.
- * register_buffer  :
+ * register_buffer :
  * the GtkTextBuffer the format is registered with
- * content_buffer  :
+ * content_buffer :
  * the GtkTextBuffer to deserialize into
- * iter  :
+ * iter :
  * insertion point for the deserialized text
- * data  :
+ * data :
  * data to deserialize
- * length  :
+ * length :
  * length of data
- * create_tags  :
+ * create_tags :
  * TRUE if deserializing may create tags
- * user_data  :
+ * user_data :
  * user data that was specified when registering the format
- * error  :
+ * error :
  * return location for a GError
- * Returns  :
+ * Returns :
  * TRUE on success, FALSE otherwise
  */
 // gboolean (*GtkTextBufferDeserializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GtkTextIter *iter,  const guint8 *data,  gsize length,  gboolean create_tags,  gpointer user_data,  GError **error);
@@ -4923,19 +4923,19 @@ public alias extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIte
 /*
  * A function that is called to serialize the content of a text buffer.
  * It must return the serialized form of the content.
- * register_buffer  :
+ * register_buffer :
  * the GtkTextBuffer for which the format is registered
- * content_buffer  :
+ * content_buffer :
  * the GtkTextBuffer to serialize
- * start  :
+ * start :
  * start of the block of text to serialize
- * end  :
+ * end :
  * end of the block of text to serialize
- * length  :
+ * length :
  * Return location for the length of the serialized data
- * user_data  :
+ * user_data :
  * user data that was specified when registering the format
- * Returns  :
+ * Returns :
  * a newly-allocated array of guint8 which contains the serialized
  * data, or NULL if an error occurred
  */
@@ -4950,15 +4950,15 @@ public alias extern(C) void  function (GtkTextTag*, void*) GtkTextTagTableForeac
 /*
  * Type of the callback passed to gtk_tree_model_foreach() to
  * iterate over the rows in a tree model.
- * model  :
+ * model :
  * the GtkTreeModel being iterated
- * path  :
+ * path :
  * the current GtkTreePath
- * iter  :
+ * iter :
  * the current GtkTreeIter
- * data  :
+ * data :
  * The user data passed to gtk_tree_model_foreach()
- * Returns  :
+ * Returns :
  * TRUE to stop iterating, FALSE to continue
  */
 // gboolean (*GtkTreeModelForeachFunc) (GtkTreeModel *model,  GtkTreePath *path,  GtkTreeIter *iter,  gpointer data);
@@ -4969,17 +4969,17 @@ public alias extern(C) int  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter*,
  * whether or not a row may be selected. It is called whenever a row's
  * state might change. A return value of TRUE indicates to selection
  * that it is okay to change the selection.
- * selection  :
+ * selection :
  * A GtkTreeSelection
- * model  :
+ * model :
  * A GtkTreeModel being viewed
- * path  :
+ * path :
  * The GtkTreePath of the row in question
- * path_currently_selected  :
+ * path_currently_selected :
  * TRUE, if the path is currently selected
- * data  :
+ * data :
  * user data. [closure]
- * Returns  :
+ * Returns :
  * TRUE, if the selection state of the row can be toggled
  */
 // gboolean (*GtkTreeSelectionFunc) (GtkTreeSelection *selection,  GtkTreeModel *model,  GtkTreePath *path,  gboolean path_currently_selected,  gpointer data);
@@ -4988,13 +4988,13 @@ public alias extern(C) int  function (GtkTreeSelection*, GtkTreeModel*, GtkTreeP
 /*
  * A function used by gtk_tree_selection_selected_foreach() to map all
  * selected rows. It will be called on every selected row in the view.
- * model  :
+ * model :
  * The GtkTreeModel being viewed
- * path  :
+ * path :
  * The GtkTreePath of a selected row
- * iter  :
+ * iter :
  * A GtkTreeIter pointing to a selected row
- * data  :
+ * data :
  * user data. [closure]
  */
 // void (*GtkTreeSelectionForeachFunc) (GtkTreeModel *model,  GtkTreePath *path,  GtkTreeIter *iter,  gpointer data);
@@ -5007,15 +5007,15 @@ public alias extern(C) void  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter*
  * integer from the tree_model, and render it to the "text" attribute of
  * "cell" by converting it to its written equivilent. This is set by
  * calling gtk_tree_view_column_set_cell_data_func()
- * tree_column  :
+ * tree_column :
  * A GtkTreeColumn
- * cell  :
+ * cell :
  * The GtkCellRenderer that is being rendered by tree_column
- * tree_model  :
+ * tree_model :
  * The GtkTreeModel being rendered
- * iter  :
+ * iter :
  * A GtkTreeIter of the current row rendered
- * data  :
+ * data :
  * user data
  */
 // void (*GtkTreeCellDataFunc) (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell,  GtkTreeModel *tree_model,  GtkTreeIter *iter,  gpointer data);
@@ -5030,17 +5030,17 @@ public alias extern(C) void  function (GtkTreeViewColumn*, GtkCellRenderer*, Gtk
  * spot. Please note that returning TRUE does not actually indicate that
  * the column drop was made, but is meant only to indicate a possible drop
  * spot to the user.
- * tree_view  :
+ * tree_view :
  * A GtkTreeView
- * column  :
+ * column :
  * The GtkTreeViewColumn being dragged
- * prev_column  :
+ * prev_column :
  * A GtkTreeViewColumn on one side of column
- * next_column  :
+ * next_column :
  * A GtkTreeViewColumn on the other side of column
- * data  :
+ * data :
  * user data. [closure]
- * Returns  :
+ * Returns :
  * TRUE, if column can be dropped in this spot
  */
 // gboolean (*GtkTreeViewColumnDropFunc) (GtkTreeView *tree_view,  GtkTreeViewColumn *column,  GtkTreeViewColumn *prev_column,  GtkTreeViewColumn *next_column,  gpointer data);
@@ -5048,11 +5048,11 @@ public alias extern(C) int  function (GtkTreeView*, GtkTreeViewColumn*, GtkTreeV
 
 /*
  * Function used for gtk_tree_view_map_expanded_rows().
- * tree_view  :
+ * tree_view :
  * A GtkTreeView
- * path  :
+ * path :
  * The path that's expanded
- * user_data  :
+ * user_data :
  * user data
  */
 // void (*GtkTreeViewMappingFunc) (GtkTreeView *tree_view,  GtkTreePath *path,  gpointer user_data);
@@ -5063,18 +5063,18 @@ public alias extern(C) void  function (GtkTreeView*, GtkTreePath*, void*) GtkTre
  * a search key string entered by the user. Note the return value
  * is reversed from what you would normally expect, though it
  * has some similarity to strcmp() returning 0 for equal strings.
- * model  :
+ * model :
  * the GtkTreeModel being searched
- * column  :
+ * column :
  * the search column set by gtk_tree_view_set_search_column()
- * key  :
+ * key :
  * the key string to compare with
- * iter  :
+ * iter :
  * a GtkTreeIter pointing the row of model that should be compared
  * with key.
- * search_data  :
+ * search_data :
  * user data from gtk_tree_view_set_search_equal_func(). [closure]
- * Returns  :
+ * Returns :
  * FALSE if the row matches, TRUE otherwise.
  */
 // gboolean (*GtkTreeViewSearchEqualFunc) (GtkTreeModel *model,  gint column,  const gchar *key,  GtkTreeIter *iter,  gpointer search_data);
@@ -5095,13 +5095,13 @@ public alias extern(C) void  function (GtkTreeView*, GtkTreePath*, int, void*) G
  * be rendered as a separator. A common way to implement this is to have a
  * boolean column in the model, whose values the GtkTreeViewRowSeparatorFunc
  * returns.
- * model  :
+ * model :
  * the GtkTreeModel
- * iter  :
+ * iter :
  * a GtkTreeIter pointing at a row in model
- * data  :
+ * data :
  * user data. [closure]
- * Returns  :
+ * Returns :
  * TRUE if the row is a separator
  */
 // gboolean (*GtkTreeViewRowSeparatorFunc) (GtkTreeModel *model,  GtkTreeIter *iter,  gpointer data);
@@ -5110,11 +5110,11 @@ public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkTre
 /*
  * A function used by gtk_icon_view_selected_foreach() to map all
  * selected rows. It will be called on every selected row in the view.
- * icon_view  :
+ * icon_view :
  * a GtkIconView
- * path  :
+ * path :
  * The GtkTreePath of a selected row
- * data  :
+ * data :
  * user data
  */
 // void (*GtkIconViewForeachFunc) (GtkIconView *icon_view,  GtkTreePath *path,  gpointer data);
@@ -5130,16 +5130,16 @@ public alias extern(C) void  function (GtkIconView*, GtkTreePath*, void*) GtkIco
  * For example, if model is a product catalogue, then a compare function
  * for the "price" column could be one which returns
  * price_of(a) - price_of(b).
- * model  :
+ * model :
  * The GtkTreeModel the comparison is within
- * a  :
+ * a :
  * A GtkTreeIter in model
- * b  :
+ * b :
  * Another GtkTreeIter in model
- * user_data  :
+ * user_data :
  * Data passed when the compare func is assigned e.g. by
  * gtk_tree_sortable_set_sort_func()
- * Returns  :
+ * Returns :
  * a negative integer, zero or a positive integer depending on whether
  * a sorts before, with or after b
  */
@@ -5148,14 +5148,14 @@ public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, GtkTreeIter*,
 
 /*
  * A function which decides whether the row indicated by iter is visible.
- * model  :
+ * model :
  * the child model of the GtkTreeModelFilter
- * iter  :
+ * iter :
  * a GtkTreeIter pointing to the row in model whose visibility
  * is determined
- * data  :
+ * data :
  * user data given to gtk_tree_model_filter_set_visible_func(). [closure]
- * Returns  :
+ * Returns :
  * Whether the row indicated by iter is visible.
  */
 // gboolean (*GtkTreeModelFilterVisibleFunc) (GtkTreeModel *model,  GtkTreeIter *iter,  gpointer data);
@@ -5167,16 +5167,16 @@ public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkTre
  * row indicated by iter.
  * Since this function is called for each data access, it's not a
  * particularly efficient operation.
- * model  :
+ * model :
  * the GtkTreeModelFilter
- * iter  :
+ * iter :
  * a GtkTreeIter pointing to the row whose display values are determined
- * value  :
+ * value :
  * A GValue which is already initialized for with the correct type for
  * the column column.
- * column  :
+ * column :
  * the column whose display value is determined
- * data  :
+ * data :
  * user data given to gtk_tree_model_filter_set_modify_func(). [closure]
  */
 // void (*GtkTreeModelFilterModifyFunc) (GtkTreeModel *model,  GtkTreeIter *iter,  GValue *value,  gint column,  gpointer data);
@@ -5185,15 +5185,15 @@ public alias extern(C) void  function (GtkTreeModel*, GtkTreeIter*, GValue*, int
 /*
  * A function which should set the value of cell_layout's cell renderer(s)
  * as appropriate.
- * cell_layout  :
+ * cell_layout :
  * a GtkCellLayout
- * cell  :
+ * cell :
  * the cell renderer whose value is to be set
- * tree_model  :
+ * tree_model :
  * the model
- * iter  :
+ * iter :
  * a GtkTreeIter indicating the row to set the value for
- * data  :
+ * data :
  * user data passed to gtk_cell_layout_set_cell_data_func()
  */
 // void (*GtkCellLayoutDataFunc) (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  GtkTreeModel *tree_model,  GtkTreeIter *iter,  gpointer data);
@@ -5206,15 +5206,15 @@ public alias extern(C) void  function (GtkCellLayout*, GtkCellRenderer*, GtkTree
  * menu is to be drawn. To make the menu appear on a different
  * monitor than the mouse pointer, gtk_menu_set_monitor() must be
  * called.
- * menu  :
+ * menu :
  * a GtkMenu.
- * x  :
+ * x :
  * address of the gint representing the horizontal
  * position where the menu shall be drawn. [out]
- * y  :
+ * y :
  * address of the gint representing the vertical position
  * where the menu shall be drawn. This is an output parameter. [out]
- * push_in  :
+ * push_in :
  * This parameter controls how menus placed outside
  * the monitor are handled. If this is set to TRUE and part of
  * the menu is outside the monitor then GTK+ pushes the window
@@ -5226,7 +5226,7 @@ public alias extern(C) void  function (GtkCellLayout*, GtkCellRenderer*, GtkTree
  * useful for combobox popups or option menus and cannot be used
  * to simply confine a menu to monitor boundaries. In that case,
  * changing the scroll offset is not desirable. [inout]
- * user_data  :
+ * user_data :
  * the data supplied by the user in the gtk_menu_popup()
  * data parameter.
  */
@@ -5236,9 +5236,9 @@ public alias extern(C) void  function (GtkMenu*, gint*, gint*, gboolean*, void*)
 /*
  * A user function supplied when calling gtk_menu_attach_to_widget() which
  * will be called when the menu is later detached from the widget.
- * attach_widget  :
+ * attach_widget :
  * the GtkWidget that the menu is being detached from.
- * menu  :
+ * menu :
  * the GtkMenu being detached.
  * Property Details
  * The "accel-group" property
@@ -5275,10 +5275,10 @@ public alias extern(C) void  function (GdkScreen*, GdkColor*, int) GtkColorSelec
  * The type of function that is used with custom filters, see
  * gtk_file_filter_add_custom().
  * Returns: TRUE if the file should be displayed
- * filter_info  :
+ * filter_info :
  * a GtkFileFilterInfo that is filled according
  * to the needed flags passed to gtk_file_filter_add_custom()
- * data  :
+ * data :
  * user data passed to gtk_file_filter_add_custom(). [closure]
  */
 // gboolean (*GtkFileFilterFunc) (const GtkFileFilterInfo *filter_info,  gpointer data);
@@ -5289,9 +5289,9 @@ public alias extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilterFu
  * gtk_print_run_page_setup_dialog_async().
  * This function will be called when the page setup dialog
  * is dismissed, and also serves as destroy notify for data.
- * page_setup  :
+ * page_setup :
  * the GtkPageSetup that has been
- * data  :
+ * data :
  * user data that has been passed to
  * gtk_print_run_page_setup_dialog_async(). [closure]
  */
@@ -5307,11 +5307,11 @@ public alias extern(C) void  function (char*, char*, void*) GtkPrintSettingsFunc
  * The type of function passed to gtk_enumerate_printers().
  * Note that you need to ref printer, if you want to keep
  * a reference to it after the function has returned.
- * printer  :
+ * printer :
  * a GtkPrinter
- * data  :
+ * data :
  * user data passed to gtk_enumerate_printers(). [closure]
- * Returns  :
+ * Returns :
  * TRUE to stop the enumeration, FALSE to continue
  * Since 2.10
  */
@@ -5321,11 +5321,11 @@ public alias extern(C) int  function (GtkPrinter*, void*) GtkPrinterFunc;
 /*
  * The type of callback that is passed to gtk_print_job_send().
  * It is called when the print job has been completely sent.
- * print_job  :
+ * print_job :
  * the GtkPrintJob
- * user_data  :
+ * user_data :
  * user data that has been passed to gtk_print_job_send()
- * error  :
+ * error :
  * a GError that contains error information if the sending
  * of the print job failed, otherwise NULL
  */
@@ -5336,17 +5336,17 @@ public alias extern(C) void  function (GtkPrintJob*, void*, GError*) GtkPrintJob
  * This kind of functions provide Pango markup with detail information for the
  * specified day. Examples for such details are holidays or appointments. The
  * function returns NULL when no information is available.
- * calendar  :
+ * calendar :
  * a GtkCalendar.
- * year  :
+ * year :
  * the year for which details are needed.
- * month  :
+ * month :
  * the month for which details are needed.
- * day  :
+ * day :
  * the day of month for which details are needed.
- * user_data  :
+ * user_data :
  * the data passed with gtk_calendar_set_detail_func().
- * Returns  :
+ * Returns :
  * Newly allocated string with Pango markup with details
  * for the specified day, or NULL.
  * Since 2.14
@@ -5357,9 +5357,9 @@ public alias extern(C) char *  function (GtkCalendar*, uint, uint, uint, void*) 
 /*
  * The type of the callback functions used for e.g. iterating over
  * the children of a container, see gtk_container_foreach().
- * widget  :
+ * widget :
  * the widget to operate on
- * data  :
+ * data :
  * user-supplied data
  */
 // void (*GtkCallback) (GtkWidget *widget,  gpointer data);
@@ -5373,12 +5373,12 @@ public alias extern(C) int  function (GtkRecentInfo*, GtkRecentInfo*, void*) Gtk
 /*
  * The type of function that is used with custom filters,
  * see gtk_recent_filter_add_custom().
- * filter_info  :
+ * filter_info :
  * a GtkRecentFilterInfo that is filled according
  * to the needed flags passed to gtk_recent_filter_add_custom()
- * user_data  :
+ * user_data :
  * user data passed to gtk_recent_filter_add_custom()
- * Returns  :
+ * Returns :
  * TRUE if the file should be displayed
  */
 // gboolean (*GtkRecentFilterFunc) (const GtkRecentFilterInfo *filter_info,  gpointer user_data);
@@ -5390,19 +5390,19 @@ public alias extern(C) int  function (GtkRecentFilterInfo*, void*) GtkRecentFilt
  * methods. It is mainly intended for interpreted language bindings, but
  * could be useful where the programmer wants more control over the signal
  * connection process.
- * builder  :
+ * builder :
  * a GtkBuilder
- * object  :
+ * object :
  * object to connect a signal to
- * signal_name  :
+ * signal_name :
  * name of the signal
- * handler_name  :
+ * handler_name :
  * name of the handler
- * connect_object  :
+ * connect_object :
  * a GObject, if non-NULL, use g_signal_connect_object()
- * flags  :
+ * flags :
  * GConnectFlags to use
- * user_data  :
+ * user_data :
  * user data
  * Since 2.12
  */

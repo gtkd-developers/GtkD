@@ -1640,9 +1640,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gio.File
-	
+
 	GFile* function(char* path) c_g_file_new_for_path;
 	GFile* function(char* uri) c_g_file_new_for_uri;
 	GFile* function(char* arg) c_g_file_new_for_commandline_arg;
@@ -1755,18 +1754,18 @@ mixin( gshared ~"extern(C)
 	void function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_replace_readwrite_async;
 	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_replace_readwrite_finish;
 	gboolean function(GFile* file) c_g_file_supports_thread_contexts;
-	
+
 	// gio.FileAttributeInfoList
-	
+
 	GFileAttributeInfoList* function() c_g_file_attribute_info_list_new;
 	GFileAttributeInfoList* function(GFileAttributeInfoList* list) c_g_file_attribute_info_list_ref;
 	void function(GFileAttributeInfoList* list) c_g_file_attribute_info_list_unref;
 	GFileAttributeInfoList* function(GFileAttributeInfoList* list) c_g_file_attribute_info_list_dup;
 	GFileAttributeInfo* function(GFileAttributeInfoList* list, char* name) c_g_file_attribute_info_list_lookup;
 	void function(GFileAttributeInfoList* list, char* name, GFileAttributeType type, GFileAttributeInfoFlags flags) c_g_file_attribute_info_list_add;
-	
+
 	// gio.FileInfo
-	
+
 	GFileInfo* function() c_g_file_info_new;
 	GFileInfo* function(GFileInfo* other) c_g_file_info_dup;
 	void function(GFileInfo* srcInfo, GFileInfo* destInfo) c_g_file_info_copy_into;
@@ -1827,9 +1826,9 @@ mixin( gshared ~"extern(C)
 	void function(GFileInfo* info, GTimeVal* mtime) c_g_file_info_set_modification_time;
 	void function(GFileInfo* info, char* symlinkTarget) c_g_file_info_set_symlink_target;
 	void function(GFileInfo* info, gint32 sortOrder) c_g_file_info_set_sort_order;
-	
+
 	// gio.FileAttributeMatcher
-	
+
 	GFileAttributeMatcher* function(char* attributes) c_g_file_attribute_matcher_new;
 	GFileAttributeMatcher* function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_ref;
 	void function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_unref;
@@ -1837,9 +1836,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GFileAttributeMatcher* matcher, char* attribute) c_g_file_attribute_matcher_matches_only;
 	gboolean function(GFileAttributeMatcher* matcher, char* ns) c_g_file_attribute_matcher_enumerate_namespace;
 	char* function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_enumerate_next;
-	
+
 	// gio.FileEnumerator
-	
+
 	GFileInfo* function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_file_enumerator_next_file;
 	gboolean function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_file_enumerator_close;
 	void function(GFileEnumerator* enumerator, int numFiles, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_enumerator_next_files_async;
@@ -1850,14 +1849,14 @@ mixin( gshared ~"extern(C)
 	gboolean function(GFileEnumerator* enumerator) c_g_file_enumerator_has_pending;
 	void function(GFileEnumerator* enumerator, gboolean pending) c_g_file_enumerator_set_pending;
 	GFile* function(GFileEnumerator* enumerator) c_g_file_enumerator_get_container;
-	
+
 	// gio.ErrorGIO
-	
+
 	GIOErrorEnum function(gint errNo) c_g_io_error_from_errno;
 	GIOErrorEnum function(gint errorCode) c_g_io_error_from_win32_error;
-	
+
 	// gio.MountOperation
-	
+
 	GMountOperation* function() c_g_mount_operation_new;
 	char* function(GMountOperation* op) c_g_mount_operation_get_username;
 	void function(GMountOperation* op, char* username) c_g_mount_operation_set_username;
@@ -1872,16 +1871,16 @@ mixin( gshared ~"extern(C)
 	int function(GMountOperation* op) c_g_mount_operation_get_choice;
 	void function(GMountOperation* op, int choice) c_g_mount_operation_set_choice;
 	void function(GMountOperation* op, GMountOperationResult result) c_g_mount_operation_reply;
-	
+
 	// gio.FileMonitor
-	
+
 	gboolean function(GFileMonitor* monitor) c_g_file_monitor_cancel;
 	gboolean function(GFileMonitor* monitor) c_g_file_monitor_is_cancelled;
 	void function(GFileMonitor* monitor, gint limitMsecs) c_g_file_monitor_set_rate_limit;
 	void function(GFileMonitor* monitor, GFile* child, GFile* otherFile, GFileMonitorEvent eventType) c_g_file_monitor_emit_event;
-	
+
 	// gio.Cancellable
-	
+
 	GCancellable* function() c_g_cancellable_new;
 	gboolean function(GCancellable* cancellable) c_g_cancellable_is_cancelled;
 	gboolean function(GCancellable* cancellable, GError** error) c_g_cancellable_set_error_if_cancelled;
@@ -1896,24 +1895,24 @@ mixin( gshared ~"extern(C)
 	gulong function(GCancellable* cancellable, GCallback callback, gpointer data, GDestroyNotify dataDestroyFunc) c_g_cancellable_connect;
 	void function(GCancellable* cancellable, gulong handlerId) c_g_cancellable_disconnect;
 	void function(GCancellable* cancellable) c_g_cancellable_cancel;
-	
+
 	// gio.AsyncResultT
-	
-	
+
+
 	// gio.AsyncResultT
-	
+
 	gpointer function(GAsyncResult* res) c_g_async_result_get_user_data;
 	GObject* function(GAsyncResult* res) c_g_async_result_get_source_object;
-	
+
 	// gio.IOSchedulerJob
-	
+
 	void function(GIOSchedulerJobFunc jobFunc, gpointer userData, GDestroyNotify notify, gint ioPriority, GCancellable* cancellable) c_g_io_scheduler_push_job;
 	void function() c_g_io_scheduler_cancel_all_jobs;
 	gboolean function(GIOSchedulerJob* job, GSourceFunc func, gpointer userData, GDestroyNotify notify) c_g_io_scheduler_job_send_to_mainloop;
 	void function(GIOSchedulerJob* job, GSourceFunc func, gpointer userData, GDestroyNotify notify) c_g_io_scheduler_job_send_to_mainloop_async;
-	
+
 	// gio.SimpleAsyncResult
-	
+
 	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, gpointer sourceTag) c_g_simple_async_result_new;
 	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_result_new_error;
 	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_result_new_from_error;
@@ -1938,49 +1937,49 @@ mixin( gshared ~"extern(C)
 	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_report_error_in_idle;
 	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_report_gerror_in_idle;
 	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_report_take_gerror_in_idle;
-	
+
 	// gio.ConverterT
-	
-	
+
+
 	// gio.ConverterT
-	
+
 	GConverterResult function(GConverter* converter, void* inbuf, gsize inbufSize, void* outbuf, gsize outbufSize, GConverterFlags flags, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_converter_convert;
 	void function(GConverter* converter) c_g_converter_reset;
-	
+
 	// gio.Converter
-	
-	
+
+
 	// gio.CharsetConverter
-	
+
 	GCharsetConverter* function(gchar* toCharset, gchar* fromCharset, GError** error) c_g_charset_converter_new;
 	void function(GCharsetConverter* converter, gboolean useFallback) c_g_charset_converter_set_use_fallback;
 	gboolean function(GCharsetConverter* converter) c_g_charset_converter_get_use_fallback;
 	guint function(GCharsetConverter* converter) c_g_charset_converter_get_num_fallbacks;
-	
+
 	// gio.ZlibCompressor
-	
+
 	GZlibCompressor* function(GZlibCompressorFormat format, int level) c_g_zlib_compressor_new;
 	GFileInfo* function(GZlibCompressor* compressor) c_g_zlib_compressor_get_file_info;
 	void function(GZlibCompressor* compressor, GFileInfo* fileInfo) c_g_zlib_compressor_set_file_info;
-	
+
 	// gio.ZlibDecompressor
-	
+
 	GZlibDecompressor* function(GZlibCompressorFormat format) c_g_zlib_decompressor_new;
 	GFileInfo* function(GZlibDecompressor* decompressor) c_g_zlib_decompressor_get_file_info;
-	
+
 	// gio.SeekableT
-	
-	
+
+
 	// gio.SeekableT
-	
+
 	goffset function(GSeekable* seekable) c_g_seekable_tell;
 	gboolean function(GSeekable* seekable) c_g_seekable_can_seek;
 	gboolean function(GSeekable* seekable, goffset offset, GSeekType type, GCancellable* cancellable, GError** error) c_g_seekable_seek;
 	gboolean function(GSeekable* seekable) c_g_seekable_can_truncate;
 	gboolean function(GSeekable* seekable, goffset offset, GCancellable* cancellable, GError** error) c_g_seekable_truncate;
-	
+
 	// gio.InputStream
-	
+
 	gssize function(GInputStream* stream, void* buffer, gsize count, GCancellable* cancellable, GError** error) c_g_input_stream_read;
 	gboolean function(GInputStream* stream, void* buffer, gsize count, gsize* bytesRead, GCancellable* cancellable, GError** error) c_g_input_stream_read_all;
 	gssize function(GInputStream* stream, gsize count, GCancellable* cancellable, GError** error) c_g_input_stream_skip;
@@ -1995,9 +1994,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GInputStream* stream) c_g_input_stream_has_pending;
 	gboolean function(GInputStream* stream, GError** error) c_g_input_stream_set_pending;
 	void function(GInputStream* stream) c_g_input_stream_clear_pending;
-	
+
 	// gio.OutputStream
-	
+
 	gssize function(GOutputStream* stream, void* buffer, gsize count, GCancellable* cancellable, GError** error) c_g_output_stream_write;
 	gboolean function(GOutputStream* stream, void* buffer, gsize count, gsize* bytesWritten, GCancellable* cancellable, GError** error) c_g_output_stream_write_all;
 	gssize function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, GCancellable* cancellable, GError** error) c_g_output_stream_splice;
@@ -2016,9 +2015,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GOutputStream* stream) c_g_output_stream_has_pending;
 	gboolean function(GOutputStream* stream, GError** error) c_g_output_stream_set_pending;
 	void function(GOutputStream* stream) c_g_output_stream_clear_pending;
-	
+
 	// gio.IOStream
-	
+
 	GInputStream* function(GIOStream* stream) c_g_io_stream_get_input_stream;
 	GOutputStream* function(GIOStream* stream) c_g_io_stream_get_output_stream;
 	void function(GIOStream* stream1, GIOStream* stream2, GIOStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_io_stream_splice_async;
@@ -2030,62 +2029,62 @@ mixin( gshared ~"extern(C)
 	gboolean function(GIOStream* stream) c_g_io_stream_has_pending;
 	gboolean function(GIOStream* stream, GError** error) c_g_io_stream_set_pending;
 	void function(GIOStream* stream) c_g_io_stream_clear_pending;
-	
+
 	// gio.FileInputStream
-	
+
 	GFileInfo* function(GFileInputStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_input_stream_query_info;
 	void function(GFileInputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_input_stream_query_info_async;
 	GFileInfo* function(GFileInputStream* stream, GAsyncResult* result, GError** error) c_g_file_input_stream_query_info_finish;
-	
+
 	// gio.FileOutputStream
-	
+
 	GFileInfo* function(GFileOutputStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_output_stream_query_info;
 	void function(GFileOutputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_output_stream_query_info_async;
 	GFileInfo* function(GFileOutputStream* stream, GAsyncResult* result, GError** error) c_g_file_output_stream_query_info_finish;
 	char* function(GFileOutputStream* stream) c_g_file_output_stream_get_etag;
-	
+
 	// gio.FileIOStream
-	
+
 	char* function(GFileIOStream* stream) c_g_file_io_stream_get_etag;
 	GFileInfo* function(GFileIOStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_io_stream_query_info;
 	void function(GFileIOStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_io_stream_query_info_async;
 	GFileInfo* function(GFileIOStream* stream, GAsyncResult* result, GError** error) c_g_file_io_stream_query_info_finish;
-	
+
 	// gio.FileDescriptorBasedT
-	
-	
+
+
 	// gio.FileDescriptorBasedT
-	
+
 	int function(GFileDescriptorBased* fdBased) c_g_file_descriptor_based_get_fd;
-	
+
 	// gio.FilterInputStream
-	
+
 	GInputStream* function(GFilterInputStream* stream) c_g_filter_input_stream_get_base_stream;
 	gboolean function(GFilterInputStream* stream) c_g_filter_input_stream_get_close_base_stream;
 	void function(GFilterInputStream* stream, gboolean closeBase) c_g_filter_input_stream_set_close_base_stream;
-	
+
 	// gio.FilterOutputStream
-	
+
 	GOutputStream* function(GFilterOutputStream* stream) c_g_filter_output_stream_get_base_stream;
 	gboolean function(GFilterOutputStream* stream) c_g_filter_output_stream_get_close_base_stream;
 	void function(GFilterOutputStream* stream, gboolean closeBase) c_g_filter_output_stream_set_close_base_stream;
-	
+
 	// gio.MemoryInputStream
-	
+
 	GInputStream* function() c_g_memory_input_stream_new;
 	GInputStream* function(void* data, gssize len, GDestroyNotify destroy) c_g_memory_input_stream_new_from_data;
 	void function(GMemoryInputStream* stream, void* data, gssize len, GDestroyNotify destroy) c_g_memory_input_stream_add_data;
-	
+
 	// gio.MemoryOutputStream
-	
+
 	GOutputStream* function(gpointer data, gsize size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction) c_g_memory_output_stream_new;
 	gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_size;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data_size;
 	gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_steal_data;
-	
+
 	// gio.BufferedInputStream
-	
+
 	GInputStream* function(GInputStream* baseStream) c_g_buffered_input_stream_new;
 	GInputStream* function(GInputStream* baseStream, gsize size) c_g_buffered_input_stream_new_sized;
 	gsize function(GBufferedInputStream* stream) c_g_buffered_input_stream_get_buffer_size;
@@ -2097,18 +2096,18 @@ mixin( gshared ~"extern(C)
 	void function(GBufferedInputStream* stream, gssize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_buffered_input_stream_fill_async;
 	gssize function(GBufferedInputStream* stream, GAsyncResult* result, GError** error) c_g_buffered_input_stream_fill_finish;
 	int function(GBufferedInputStream* stream, GCancellable* cancellable, GError** error) c_g_buffered_input_stream_read_byte;
-	
+
 	// gio.BufferedOutputStream
-	
+
 	GOutputStream* function(GOutputStream* baseStream) c_g_buffered_output_stream_new;
 	GOutputStream* function(GOutputStream* baseStream, gsize size) c_g_buffered_output_stream_new_sized;
 	gsize function(GBufferedOutputStream* stream) c_g_buffered_output_stream_get_buffer_size;
 	void function(GBufferedOutputStream* stream, gsize size) c_g_buffered_output_stream_set_buffer_size;
 	gboolean function(GBufferedOutputStream* stream) c_g_buffered_output_stream_get_auto_grow;
 	void function(GBufferedOutputStream* stream, gboolean autoGrow) c_g_buffered_output_stream_set_auto_grow;
-	
+
 	// gio.DataInputStream
-	
+
 	GDataInputStream* function(GInputStream* baseStream) c_g_data_input_stream_new;
 	void function(GDataInputStream* stream, GDataStreamByteOrder order) c_g_data_input_stream_set_byte_order;
 	GDataStreamByteOrder function(GDataInputStream* stream) c_g_data_input_stream_get_byte_order;
@@ -2130,9 +2129,9 @@ mixin( gshared ~"extern(C)
 	char* function(GDataInputStream* stream, gchar* stopChars, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_until;
 	void function(GDataInputStream* stream, gchar* stopChars, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_until_async;
 	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_until_finish;
-	
+
 	// gio.DataOutputStream
-	
+
 	GDataOutputStream* function(GOutputStream* baseStream) c_g_data_output_stream_new;
 	void function(GDataOutputStream* stream, GDataStreamByteOrder order) c_g_data_output_stream_set_byte_order;
 	GDataStreamByteOrder function(GDataOutputStream* stream) c_g_data_output_stream_get_byte_order;
@@ -2144,54 +2143,54 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDataOutputStream* stream, gint64 data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_int64;
 	gboolean function(GDataOutputStream* stream, guint64 data, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_uint64;
 	gboolean function(GDataOutputStream* stream, char* str, GCancellable* cancellable, GError** error) c_g_data_output_stream_put_string;
-	
+
 	// gio.UnixInputStream
-	
+
 	GInputStream* function(gint fd, gboolean closeFd) c_g_unix_input_stream_new;
 	void function(GUnixInputStream* stream, gboolean closeFd) c_g_unix_input_stream_set_close_fd;
 	gboolean function(GUnixInputStream* stream) c_g_unix_input_stream_get_close_fd;
 	gint function(GUnixInputStream* stream) c_g_unix_input_stream_get_fd;
-	
+
 	// gio.UnixOutputStream
-	
+
 	GOutputStream* function(gint fd, gboolean closeFd) c_g_unix_output_stream_new;
 	void function(GUnixOutputStream* stream, gboolean closeFd) c_g_unix_output_stream_set_close_fd;
 	gboolean function(GUnixOutputStream* stream) c_g_unix_output_stream_get_close_fd;
 	gint function(GUnixOutputStream* stream) c_g_unix_output_stream_get_fd;
-	
+
 	// gio.ConverterInputStream
-	
+
 	GInputStream* function(GInputStream* baseStream, GConverter* converter) c_g_converter_input_stream_new;
 	GConverter* function(GConverterInputStream* converterStream) c_g_converter_input_stream_get_converter;
-	
+
 	// gio.ConverterOutputStream
-	
+
 	GOutputStream* function(GOutputStream* baseStream, GConverter* converter) c_g_converter_output_stream_new;
 	GConverter* function(GConverterOutputStream* converterStream) c_g_converter_output_stream_get_converter;
-	
+
 	// gio.PollableInputStreamT
-	
-	
+
+
 	// gio.PollableInputStreamT
-	
+
 	gboolean function(GPollableInputStream* stream) c_g_pollable_input_stream_can_poll;
 	gboolean function(GPollableInputStream* stream) c_g_pollable_input_stream_is_readable;
 	GSource* function(GPollableInputStream* stream, GCancellable* cancellable) c_g_pollable_input_stream_create_source;
 	gssize function(GPollableInputStream* stream, void* buffer, gsize size, GCancellable* cancellable, GError** error) c_g_pollable_input_stream_read_nonblocking;
 	GSource* function(GObject* pollableStream) c_g_pollable_source_new;
-	
+
 	// gio.PollableOutputStreamT
-	
-	
+
+
 	// gio.PollableOutputStreamT
-	
+
 	gboolean function(GPollableOutputStream* stream) c_g_pollable_output_stream_can_poll;
 	gboolean function(GPollableOutputStream* stream) c_g_pollable_output_stream_is_writable;
 	GSource* function(GPollableOutputStream* stream, GCancellable* cancellable) c_g_pollable_output_stream_create_source;
 	gssize function(GPollableOutputStream* stream, void* buffer, gsize size, GCancellable* cancellable, GError** error) c_g_pollable_output_stream_write_nonblocking;
-	
+
 	// gio.ContentType
-	
+
 	gboolean function(gchar* type1, gchar* type2) c_g_content_type_equals;
 	gboolean function(gchar* type, gchar* supertype) c_g_content_type_is_a;
 	gboolean function(gchar* type) c_g_content_type_is_unknown;
@@ -2203,12 +2202,12 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* filename, guchar* data, gsize dataSize, gboolean* resultUncertain) c_g_content_type_guess;
 	gchar** function(GFile* root) c_g_content_type_guess_for_tree;
 	GList* function() c_g_content_types_get_registered;
-	
+
 	// gio.AppInfoT
-	
-	
+
+
 	// gio.AppInfoT
-	
+
 	GAppInfo* function(char* commandline, char* applicationName, GAppInfoCreateFlags flags, GError** error) c_g_app_info_create_from_commandline;
 	GAppInfo* function(GAppInfo* appinfo) c_g_app_info_dup;
 	gboolean function(GAppInfo* appinfo1, GAppInfo* appinfo2) c_g_app_info_equal;
@@ -2240,24 +2239,24 @@ mixin( gshared ~"extern(C)
 	GList* function(gchar* contentType) c_g_app_info_get_fallback_for_type;
 	GList* function(gchar* contentType) c_g_app_info_get_recommended_for_type;
 	gboolean function(char* uri, GAppLaunchContext* launchContext, GError** error) c_g_app_info_launch_default_for_uri;
-	
+
 	// gio.AppInfo
-	
-	
+
+
 	// gio.AppLaunchContext
-	
-	
+
+
 	// gio.DesktopAppInfo
-	
+
 	GDesktopAppInfo* function(char* filename) c_g_desktop_app_info_new_from_filename;
 	GDesktopAppInfo* function(GKeyFile* keyFile) c_g_desktop_app_info_new_from_keyfile;
 	GDesktopAppInfo* function(char* desktopId) c_g_desktop_app_info_new;
 	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_filename;
 	gboolean function(GDesktopAppInfo* info) c_g_desktop_app_info_get_is_hidden;
 	void function(char* desktopEnv) c_g_desktop_app_info_set_desktop_env;
-	
+
 	// gio.VolumeMonitor
-	
+
 	GVolumeMonitor* function() c_g_volume_monitor_get;
 	GList* function(GVolumeMonitor* volumeMonitor) c_g_volume_monitor_get_connected_drives;
 	GList* function(GVolumeMonitor* volumeMonitor) c_g_volume_monitor_get_volumes;
@@ -2265,12 +2264,12 @@ mixin( gshared ~"extern(C)
 	GVolume* function(GMount* mount) c_g_volume_monitor_adopt_orphan_mount;
 	GMount* function(GVolumeMonitor* volumeMonitor, char* uuid) c_g_volume_monitor_get_mount_for_uuid;
 	GVolume* function(GVolumeMonitor* volumeMonitor, char* uuid) c_g_volume_monitor_get_volume_for_uuid;
-	
+
 	// gio.VolumeT
-	
-	
+
+
 	// gio.VolumeT
-	
+
 	char* function(GVolume* volume) c_g_volume_get_name;
 	char* function(GVolume* volume) c_g_volume_get_uuid;
 	GIcon* function(GVolume* volume) c_g_volume_get_icon;
@@ -2288,15 +2287,15 @@ mixin( gshared ~"extern(C)
 	gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_eject_with_operation_finish;
 	char** function(GVolume* volume) c_g_volume_enumerate_identifiers;
 	char* function(GVolume* volume, char* kind) c_g_volume_get_identifier;
-	
+
 	// gio.Volume
-	
-	
+
+
 	// gio.MountT
-	
-	
+
+
 	// gio.MountT
-	
+
 	char* function(GMount* mount) c_g_mount_get_name;
 	char* function(GMount* mount) c_g_mount_get_uuid;
 	GIcon* function(GMount* mount) c_g_mount_get_icon;
@@ -2322,15 +2321,15 @@ mixin( gshared ~"extern(C)
 	gboolean function(GMount* mount) c_g_mount_is_shadowed;
 	void function(GMount* mount) c_g_mount_shadow;
 	void function(GMount* mount) c_g_mount_unshadow;
-	
+
 	// gio.Mount
-	
-	
+
+
 	// gio.DriveT
-	
-	
+
+
 	// gio.DriveT
-	
+
 	char* function(GDrive* drive) c_g_drive_get_name;
 	GIcon* function(GDrive* drive) c_g_drive_get_icon;
 	gboolean function(GDrive* drive) c_g_drive_has_volumes;
@@ -2356,12 +2355,12 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_stop_finish;
 	char** function(GDrive* drive) c_g_drive_enumerate_identifiers;
 	char* function(GDrive* drive, char* kind) c_g_drive_get_identifier;
-	
+
 	// gio.Drive
-	
-	
+
+
 	// gio.UnixMountEntry
-	
+
 	void function(GUnixMountEntry* mountEntry) c_g_unix_mount_free;
 	gint function(GUnixMountEntry* mount1, GUnixMountEntry* mount2) c_g_unix_mount_compare;
 	char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_mount_path;
@@ -2379,9 +2378,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(guint64 time) c_g_unix_mounts_changed_since;
 	gboolean function(guint64 time) c_g_unix_mount_points_changed_since;
 	gboolean function(char* mountPath) c_g_unix_is_mount_path_system_internal;
-	
+
 	// gio.UnixMountPoint
-	
+
 	void function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_free;
 	gint function(GUnixMountPoint* mount1, GUnixMountPoint* mount2) c_g_unix_mount_point_compare;
 	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_mount_path;
@@ -2393,87 +2392,87 @@ mixin( gshared ~"extern(C)
 	GIcon* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_icon;
 	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_name;
 	gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_can_eject;
-	
+
 	// gio.UnixMountMonitor
-	
+
 	GUnixMountMonitor* function() c_g_unix_mount_monitor_new;
 	void function(GUnixMountMonitor* mountMonitor, int limitMsec) c_g_unix_mount_monitor_set_rate_limit;
-	
+
 	// gio.IconT
-	
-	
+
+
 	// gio.IconT
-	
+
 	guint function(gconstpointer icon) c_g_icon_hash;
 	gboolean function(GIcon* icon1, GIcon* icon2) c_g_icon_equal;
 	gchar* function(GIcon* icon) c_g_icon_to_string;
 	GIcon* function(gchar* str, GError** error) c_g_icon_new_for_string;
-	
+
 	// gio.Icon
-	
-	
+
+
 	// gio.FileIcon
-	
+
 	GIcon* function(GFile* file) c_g_file_icon_new;
 	GFile* function(GFileIcon* icon) c_g_file_icon_get_file;
-	
+
 	// gio.LoadableIconT
-	
-	
+
+
 	// gio.LoadableIconT
-	
+
 	GInputStream* function(GLoadableIcon* icon, int size, char** type, GCancellable* cancellable, GError** error) c_g_loadable_icon_load;
 	void function(GLoadableIcon* icon, int size, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_loadable_icon_load_async;
 	GInputStream* function(GLoadableIcon* icon, GAsyncResult* res, char** type, GError** error) c_g_loadable_icon_load_finish;
-	
+
 	// gio.ThemedIcon
-	
+
 	GIcon* function(char* iconname) c_g_themed_icon_new;
 	GIcon* function(char** iconnames, int len) c_g_themed_icon_new_from_names;
 	GIcon* function(char* iconname) c_g_themed_icon_new_with_default_fallbacks;
 	void function(GThemedIcon* icon, char* iconname) c_g_themed_icon_prepend_name;
 	void function(GThemedIcon* icon, char* iconname) c_g_themed_icon_append_name;
 	gchar** function(GThemedIcon* icon) c_g_themed_icon_get_names;
-	
+
 	// gio.EmblemedIcon
-	
+
 	GIcon* function(GIcon* icon, GEmblem* emblem) c_g_emblemed_icon_new;
 	GIcon* function(GEmblemedIcon* emblemed) c_g_emblemed_icon_get_icon;
 	GList* function(GEmblemedIcon* emblemed) c_g_emblemed_icon_get_emblems;
 	void function(GEmblemedIcon* emblemed, GEmblem* emblem) c_g_emblemed_icon_add_emblem;
 	void function(GEmblemedIcon* emblemed) c_g_emblemed_icon_clear_emblems;
-	
+
 	// gio.Emblem
-	
+
 	GEmblem* function(GIcon* icon) c_g_emblem_new;
 	GEmblem* function(GIcon* icon, GEmblemOrigin origin) c_g_emblem_new_with_origin;
 	GIcon* function(GEmblem* emblem) c_g_emblem_get_icon;
 	GEmblemOrigin function(GEmblem* emblem) c_g_emblem_get_origin;
-	
+
 	// gio.InitableT
-	
-	
+
+
 	// gio.InitableT
-	
+
 	gboolean function(GInitable* initable, GCancellable* cancellable, GError** error) c_g_initable_init;
 	gpointer function(GType objectType, GCancellable* cancellable, GError** error, gchar* firstPropertyName, ... ) c_g_initable_new;
 	GObject* function(GType objectType, gchar* firstPropertyName, va_list varArgs, GCancellable* cancellable, GError** error) c_g_initable_new_valist;
 	gpointer function(GType objectType, guint nParameters, GParameter* parameters, GCancellable* cancellable, GError** error) c_g_initable_newv;
-	
+
 	// gio.AsyncInitableT
-	
-	
+
+
 	// gio.AsyncInitableT
-	
+
 	void function(GAsyncInitable* initable, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_init_async;
 	gboolean function(GAsyncInitable* initable, GAsyncResult* res, GError** error) c_g_async_initable_init_finish;
 	void function(GType objectType, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData, gchar* firstPropertyName, ... ) c_g_async_initable_new_async;
 	GObject* function(GAsyncInitable* initable, GAsyncResult* res, GError** error) c_g_async_initable_new_finish;
 	void function(GType objectType, gchar* firstPropertyName, va_list varArgs, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_new_valist_async;
 	void function(GType objectType, guint nParameters, GParameter* parameters, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_newv_async;
-	
+
 	// gio.Socket
-	
+
 	GSocket* function(GSocketFamily family, GSocketType type, GSocketProtocol protocol, GError** error) c_g_socket_new;
 	GSocket* function(gint fd, GError** error) c_g_socket_new_from_fd;
 	gboolean function(GSocket* socket, GSocketAddress* address, gboolean allowReuse, GError** error) c_g_socket_bind;
@@ -2512,9 +2511,9 @@ mixin( gshared ~"extern(C)
 	GSocketType function(GSocket* socket) c_g_socket_get_socket_type;
 	gboolean function(GSocket* socket) c_g_socket_speaks_ipv4;
 	GCredentials* function(GSocket* socket, GError** error) c_g_socket_get_credentials;
-	
+
 	// gio.InetAddress
-	
+
 	GInetAddress* function(gchar* string) c_g_inet_address_new_from_string;
 	GInetAddress* function(guint8* bytes, GSocketFamily family) c_g_inet_address_new_from_bytes;
 	GInetAddress* function(GSocketFamily family) c_g_inet_address_new_any;
@@ -2533,22 +2532,22 @@ mixin( gshared ~"extern(C)
 	gboolean function(GInetAddress* address) c_g_inet_address_get_is_mc_site_local;
 	gboolean function(GInetAddress* address) c_g_inet_address_get_is_mc_org_local;
 	gboolean function(GInetAddress* address) c_g_inet_address_get_is_mc_global;
-	
+
 	// gio.SocketAddress
-	
+
 	GSocketAddress* function(gpointer native, gsize len) c_g_socket_address_new_from_native;
 	GSocketFamily function(GSocketAddress* address) c_g_socket_address_get_family;
 	gboolean function(GSocketAddress* address, gpointer dest, gsize destlen, GError** error) c_g_socket_address_to_native;
 	gssize function(GSocketAddress* address) c_g_socket_address_get_native_size;
-	
+
 	// gio.InetSocketAddress
-	
+
 	GSocketAddress* function(GInetAddress* address, guint16 port) c_g_inet_socket_address_new;
 	GInetAddress* function(GInetSocketAddress* address) c_g_inet_socket_address_get_address;
 	guint16 function(GInetSocketAddress* address) c_g_inet_socket_address_get_port;
-	
+
 	// gio.UnixSocketAddress
-	
+
 	GSocketAddress* function(gchar* path) c_g_unix_socket_address_new;
 	GSocketAddress* function(gchar* path, gint pathLen) c_g_unix_socket_address_new_abstract;
 	GSocketAddress* function(gchar* path, gint pathLen, GUnixSocketAddressType type) c_g_unix_socket_address_new_with_type;
@@ -2557,17 +2556,17 @@ mixin( gshared ~"extern(C)
 	char* function(GUnixSocketAddress* address) c_g_unix_socket_address_get_path;
 	gsize function(GUnixSocketAddress* address) c_g_unix_socket_address_get_path_len;
 	gboolean function() c_g_unix_socket_address_abstract_names_supported;
-	
+
 	// gio.SocketControlMessage
-	
+
 	GSocketControlMessage* function(int level, int type, gsize size, gpointer data) c_g_socket_control_message_deserialize;
 	int function(GSocketControlMessage* message) c_g_socket_control_message_get_level;
 	int function(GSocketControlMessage* message) c_g_socket_control_message_get_msg_type;
 	gsize function(GSocketControlMessage* message) c_g_socket_control_message_get_size;
 	void function(GSocketControlMessage* message, gpointer data) c_g_socket_control_message_serialize;
-	
+
 	// gio.UnixFDList
-	
+
 	GUnixFDList* function(gint* fds, gint nFds) c_g_unix_fd_list_new_from_array;
 	GUnixFDList* function() c_g_unix_fd_list_new;
 	gint function(GUnixFDList* list) c_g_unix_fd_list_get_length;
@@ -2575,17 +2574,17 @@ mixin( gshared ~"extern(C)
 	gint* function(GUnixFDList* list, gint* length) c_g_unix_fd_list_peek_fds;
 	gint* function(GUnixFDList* list, gint* length) c_g_unix_fd_list_steal_fds;
 	gint function(GUnixFDList* list, gint fd, GError** error) c_g_unix_fd_list_append;
-	
+
 	// gio.UnixFDMessage
-	
+
 	GSocketControlMessage* function(GUnixFDList* fdList) c_g_unix_fd_message_new_with_fd_list;
 	GSocketControlMessage* function() c_g_unix_fd_message_new;
 	GUnixFDList* function(GUnixFDMessage* message) c_g_unix_fd_message_get_fd_list;
 	gboolean function(GUnixFDMessage* message, gint fd, GError** error) c_g_unix_fd_message_append_fd;
 	gint* function(GUnixFDMessage* message, gint* length) c_g_unix_fd_message_steal_fds;
-	
+
 	// gio.Credentials
-	
+
 	GCredentials* function() c_g_credentials_new;
 	gchar* function(GCredentials* credentials) c_g_credentials_to_string;
 	gpointer function(GCredentials* credentials, GCredentialsType nativeType) c_g_credentials_get_native;
@@ -2593,39 +2592,39 @@ mixin( gshared ~"extern(C)
 	gboolean function(GCredentials* credentials, GCredentials* otherCredentials, GError** error) c_g_credentials_is_same_user;
 	uid_t function(GCredentials* credentials, GError** error) c_g_credentials_get_unix_user;
 	gboolean function(GCredentials* credentials, uid_t uid, GError** error) c_g_credentials_set_unix_user;
-	
+
 	// gio.UnixCredentialsMessage
-	
+
 	GSocketControlMessage* function() c_g_unix_credentials_message_new;
 	GSocketControlMessage* function(GCredentials* credentials) c_g_unix_credentials_message_new_with_credentials;
 	GCredentials* function(GUnixCredentialsMessage* message) c_g_unix_credentials_message_get_credentials;
 	gboolean function() c_g_unix_credentials_message_is_supported;
-	
+
 	// gio.ProxyT
-	
-	
+
+
 	// gio.ProxyT
-	
+
 	GIOStream* function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GError** error) c_g_proxy_connect;
 	void function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_proxy_connect_async;
 	GIOStream* function(GProxy* proxy, GAsyncResult* result, GError** error) c_g_proxy_connect_finish;
 	GProxy* function(gchar* protocol) c_g_proxy_get_default_for_protocol;
 	gboolean function(GProxy* proxy) c_g_proxy_supports_hostname;
-	
+
 	// gio.Proxy
-	
-	
+
+
 	// gio.ProxyAddress
-	
+
 	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_destination_hostname;
 	guint16 function(GProxyAddress* proxy) c_g_proxy_address_get_destination_port;
 	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_password;
 	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_protocol;
 	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_username;
 	GSocketAddress* function(GInetAddress* inetaddr, guint16 port, gchar* protocol, gchar* destHostname, guint16 destPort, gchar* username, gchar* password) c_g_proxy_address_new;
-	
+
 	// gio.SocketClient
-	
+
 	void function(GSocketClient* client, gchar* protocol) c_g_socket_client_add_application_proxy;
 	GSocketClient* function() c_g_socket_client_new;
 	GSocketConnection* function(GSocketClient* client, GSocketConnectable* connectable, GCancellable* cancellable, GError** error) c_g_socket_client_connect;
@@ -2656,30 +2655,30 @@ mixin( gshared ~"extern(C)
 	gboolean function(GSocketClient* client) c_g_socket_client_get_enable_proxy;
 	gboolean function(GSocketClient* client) c_g_socket_client_get_tls;
 	GTlsCertificateFlags function(GSocketClient* client) c_g_socket_client_get_tls_validation_flags;
-	
+
 	// gio.SocketConnection
-	
+
 	GSocketAddress* function(GSocketConnection* connection, GError** error) c_g_socket_connection_get_local_address;
 	GSocketAddress* function(GSocketConnection* connection, GError** error) c_g_socket_connection_get_remote_address;
 	GSocket* function(GSocketConnection* connection) c_g_socket_connection_get_socket;
 	GSocketConnection* function(GSocket* socket) c_g_socket_connection_factory_create_connection;
 	GType function(GSocketFamily family, GSocketType type, gint protocolId) c_g_socket_connection_factory_lookup_type;
 	void function(GType gType, GSocketFamily family, GSocketType type, gint protocol) c_g_socket_connection_factory_register_type;
-	
+
 	// gio.UnixConnection
-	
+
 	gint function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_receive_fd;
 	gboolean function(GUnixConnection* connection, gint fd, GCancellable* cancellable, GError** error) c_g_unix_connection_send_fd;
 	GCredentials* function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_receive_credentials;
 	gboolean function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_send_credentials;
-	
+
 	// gio.TcpConnection
-	
+
 	void function(GTcpConnection* connection, gboolean gracefulDisconnect) c_g_tcp_connection_set_graceful_disconnect;
 	gboolean function(GTcpConnection* connection) c_g_tcp_connection_get_graceful_disconnect;
-	
+
 	// gio.SocketListener
-	
+
 	GSocketListener* function() c_g_socket_listener_new;
 	gboolean function(GSocketListener* listener, GSocket* socket, GObject* sourceObject, GError** error) c_g_socket_listener_add_socket;
 	gboolean function(GSocketListener* listener, GSocketAddress* address, GSocketType type, GSocketProtocol protocol, GObject* sourceObject, GSocketAddress** effectiveAddress, GError** error) c_g_socket_listener_add_address;
@@ -2693,29 +2692,29 @@ mixin( gshared ~"extern(C)
 	GSocket* function(GSocketListener* listener, GAsyncResult* result, GObject** sourceObject, GError** error) c_g_socket_listener_accept_socket_finish;
 	void function(GSocketListener* listener) c_g_socket_listener_close;
 	void function(GSocketListener* listener, int listenBacklog) c_g_socket_listener_set_backlog;
-	
+
 	// gio.SocketService
-	
+
 	GSocketService* function() c_g_socket_service_new;
 	void function(GSocketService* service) c_g_socket_service_start;
 	void function(GSocketService* service) c_g_socket_service_stop;
 	gboolean function(GSocketService* service) c_g_socket_service_is_active;
-	
+
 	// gio.ThreadedSocketService
-	
+
 	GSocketService* function(int maxThreads) c_g_threaded_socket_service_new;
-	
+
 	// gio.TlsCertificate
-	
+
 	GTlsCertificate* function(gchar* data, gssize length, GError** error) c_g_tls_certificate_new_from_pem;
 	GTlsCertificate* function(gchar* file, GError** error) c_g_tls_certificate_new_from_file;
 	GTlsCertificate* function(gchar* certFile, gchar* keyFile, GError** error) c_g_tls_certificate_new_from_files;
 	GList* function(gchar* file, GError** error) c_g_tls_certificate_list_new_from_file;
 	GTlsCertificate* function(GTlsCertificate* cert) c_g_tls_certificate_get_issuer;
 	GTlsCertificateFlags function(GTlsCertificate* cert, GSocketConnectable* identity, GTlsCertificate* trustedCa) c_g_tls_certificate_verify;
-	
+
 	// gio.TlsConnection
-	
+
 	void function(GTlsConnection* conn, GTlsCertificate* certificate) c_g_tls_connection_set_certificate;
 	GTlsCertificate* function(GTlsConnection* conn) c_g_tls_connection_get_certificate;
 	GTlsCertificate* function(GTlsConnection* conn) c_g_tls_connection_get_peer_certificate;
@@ -2730,9 +2729,9 @@ mixin( gshared ~"extern(C)
 	void function(GTlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_tls_connection_handshake_async;
 	gboolean function(GTlsConnection* conn, GAsyncResult* result, GError** error) c_g_tls_connection_handshake_finish;
 	gboolean function(GTlsConnection* conn, GTlsCertificate* peerCert, GTlsCertificateFlags errors) c_g_tls_connection_emit_accept_certificate;
-	
+
 	// gio.TlsClientConnection
-	
+
 	GIOStream* function(GIOStream* baseIoStream, GSocketConnectable* serverIdentity, GError** error) c_g_tls_client_connection_new;
 	void function(GTlsClientConnection* conn, GSocketConnectable* identity) c_g_tls_client_connection_set_server_identity;
 	GSocketConnectable* function(GTlsClientConnection* conn) c_g_tls_client_connection_get_server_identity;
@@ -2741,21 +2740,21 @@ mixin( gshared ~"extern(C)
 	void function(GTlsClientConnection* conn, gboolean useSsl3) c_g_tls_client_connection_set_use_ssl3;
 	gboolean function(GTlsClientConnection* conn) c_g_tls_client_connection_get_use_ssl3;
 	GList* function(GTlsClientConnection* conn) c_g_tls_client_connection_get_accepted_cas;
-	
+
 	// gio.TlsServerConnection
-	
+
 	GIOStream* function(GIOStream* baseIoStream, GTlsCertificate* certificate, GError** error) c_g_tls_server_connection_new;
-	
+
 	// gio.TlsBackend
-	
+
 	GTlsBackend* function() c_g_tls_backend_get_default;
 	gboolean function(GTlsBackend* backend) c_g_tls_backend_supports_tls;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_certificate_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_client_connection_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_server_connection_type;
-	
+
 	// gio.Resolver
-	
+
 	GResolver* function() c_g_resolver_get_default;
 	void function(GResolver* resolver) c_g_resolver_set_default;
 	GList* function(GResolver* resolver, gchar* hostname, GCancellable* cancellable, GError** error) c_g_resolver_lookup_by_name;
@@ -2769,55 +2768,55 @@ mixin( gshared ~"extern(C)
 	void function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_service_async;
 	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_service_finish;
 	void function(GList* targets) c_g_resolver_free_targets;
-	
+
 	// gio.ProxyResolverT
-	
-	
+
+
 	// gio.ProxyResolverT
-	
+
 	GProxyResolver* function() c_g_proxy_resolver_get_default;
 	gboolean function(GProxyResolver* resolver) c_g_proxy_resolver_is_supported;
 	gchar** function(GProxyResolver* resolver, gchar* uri, GCancellable* cancellable, GError** error) c_g_proxy_resolver_lookup;
 	void function(GProxyResolver* resolver, gchar* uri, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_proxy_resolver_lookup_async;
 	gchar** function(GProxyResolver* resolver, GAsyncResult* result, GError** error) c_g_proxy_resolver_lookup_finish;
-	
+
 	// gio.ProxyResolver
-	
-	
+
+
 	// gio.SocketConnectableT
-	
-	
+
+
 	// gio.SocketConnectableT
-	
+
 	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_enumerate;
 	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_proxy_enumerate;
-	
+
 	// gio.SocketConnectable
-	
-	
+
+
 	// gio.SocketAddressEnumerator
-	
-	
+
+
 	// gio.NetworkAddress
-	
+
 	GSocketConnectable* function(gchar* hostname, guint16 port) c_g_network_address_new;
 	gchar* function(GNetworkAddress* addr) c_g_network_address_get_hostname;
 	guint16 function(GNetworkAddress* addr) c_g_network_address_get_port;
 	gchar* function(GNetworkAddress* addr) c_g_network_address_get_scheme;
 	GSocketConnectable* function(gchar* hostAndPort, guint16 defaultPort, GError** error) c_g_network_address_parse;
 	GSocketConnectable* function(gchar* uri, guint16 defaultPort, GError** error) c_g_network_address_parse_uri;
-	
+
 	// gio.NetworkService
-	
+
 	GSocketConnectable* function(gchar* service, gchar* protocol, gchar* domain) c_g_network_service_new;
 	gchar* function(GNetworkService* srv) c_g_network_service_get_service;
 	gchar* function(GNetworkService* srv) c_g_network_service_get_protocol;
 	gchar* function(GNetworkService* srv) c_g_network_service_get_domain;
 	gchar* function(GNetworkService* srv) c_g_network_service_get_scheme;
 	void function(GNetworkService* srv, gchar* scheme) c_g_network_service_set_scheme;
-	
+
 	// gio.SrvTarget
-	
+
 	GSrvTarget* function(gchar* hostname, guint16 port, guint16 priority, guint16 weight) c_g_srv_target_new;
 	GSrvTarget* function(GSrvTarget* target) c_g_srv_target_copy;
 	void function(GSrvTarget* target) c_g_srv_target_free;
@@ -2826,9 +2825,9 @@ mixin( gshared ~"extern(C)
 	guint16 function(GSrvTarget* target) c_g_srv_target_get_priority;
 	guint16 function(GSrvTarget* target) c_g_srv_target_get_weight;
 	GList* function(GList* targets) c_g_srv_target_list_sort;
-	
+
 	// gio.DBusUtilities
-	
+
 	gchar* function() c_g_dbus_generate_guid;
 	gboolean function(gchar* string) c_g_dbus_is_guid;
 	gboolean function(gchar* string) c_g_dbus_is_name;
@@ -2863,9 +2862,9 @@ mixin( gshared ~"extern(C)
 	void function(GDBusPropertyInfo* info) c_g_dbus_property_info_unref;
 	void function(GDBusArgInfo* info) c_g_dbus_arg_info_unref;
 	void function(GDBusAnnotationInfo* info) c_g_dbus_annotation_info_unref;
-	
+
 	// gio.DBusError
-	
+
 	gboolean function(GError* error) c_g_dbus_error_is_remote_error;
 	gchar* function(GError* error) c_g_dbus_error_get_remote_error;
 	gboolean function(GError* error) c_g_dbus_error_strip_remote_error;
@@ -2876,9 +2875,9 @@ mixin( gshared ~"extern(C)
 	void function(GError** error, gchar* dbusErrorName, gchar* dbusErrorMessage, gchar* format, ... ) c_g_dbus_error_set_dbus_error;
 	void function(GError** error, gchar* dbusErrorName, gchar* dbusErrorMessage, gchar* format, va_list varArgs) c_g_dbus_error_set_dbus_error_valist;
 	gchar* function(GError* error) c_g_dbus_error_encode_gerror;
-	
+
 	// gio.DBusMessage
-	
+
 	GDBusMessage* function() c_g_dbus_message_new;
 	GDBusMessage* function(gchar* path, gchar* intrface, gchar* signal) c_g_dbus_message_new_signal;
 	GDBusMessage* function(gchar* name, gchar* path, gchar* intrface, gchar* method) c_g_dbus_message_new_method_call;
@@ -2928,9 +2927,9 @@ mixin( gshared ~"extern(C)
 	gssize function(guchar* blob, gsize blobLen, GError** error) c_g_dbus_message_bytes_needed;
 	GDBusMessage* function(guchar* blob, gsize blobLen, GDBusCapabilityFlags capabilities, GError** error) c_g_dbus_message_new_from_blob;
 	gboolean function(GDBusMessage* message, GError** error) c_g_dbus_message_to_gerror;
-	
+
 	// gio.DBusConnection
-	
+
 	void function(GBusType busType, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_bus_get;
 	GDBusConnection* function(GAsyncResult* res, GError** error) c_g_bus_get_finish;
 	GDBusConnection* function(GBusType busType, GCancellable* cancellable, GError** error) c_g_bus_get_sync;
@@ -2971,9 +2970,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDBusConnection* connection, guint registrationId) c_g_dbus_connection_unregister_object;
 	guint function(GDBusConnection* connection, gchar* objectPath, GDBusSubtreeVTable* vtable, GDBusSubtreeFlags flags, gpointer userData, GDestroyNotify userDataFreeFunc, GError** error) c_g_dbus_connection_register_subtree;
 	gboolean function(GDBusConnection* connection, guint registrationId) c_g_dbus_connection_unregister_subtree;
-	
+
 	// gio.DBusMethodInvocation
-	
+
 	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_sender;
 	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_object_path;
 	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_interface_name;
@@ -2989,9 +2988,9 @@ mixin( gshared ~"extern(C)
 	void function(GDBusMethodInvocation* invocation, GQuark domain, gint code, gchar* message) c_g_dbus_method_invocation_return_error_literal;
 	void function(GDBusMethodInvocation* invocation, GError* error) c_g_dbus_method_invocation_return_gerror;
 	void function(GDBusMethodInvocation* invocation, gchar* errorName, gchar* errorMessage) c_g_dbus_method_invocation_return_dbus_error;
-	
+
 	// gio.DBusServer
-	
+
 	GDBusServer* function(gchar* address, GDBusServerFlags flags, gchar* guid, GDBusAuthObserver* observer, GCancellable* cancellable, GError** error) c_g_dbus_server_new_sync;
 	void function(GDBusServer* server) c_g_dbus_server_start;
 	void function(GDBusServer* server) c_g_dbus_server_stop;
@@ -2999,14 +2998,14 @@ mixin( gshared ~"extern(C)
 	gchar* function(GDBusServer* server) c_g_dbus_server_get_guid;
 	GDBusServerFlags function(GDBusServer* server) c_g_dbus_server_get_flags;
 	gchar* function(GDBusServer* server) c_g_dbus_server_get_client_address;
-	
+
 	// gio.DBusAuthObserver
-	
+
 	GDBusAuthObserver* function() c_g_dbus_auth_observer_new;
 	gboolean function(GDBusAuthObserver* observer, GIOStream* stream, GCredentials* credentials) c_g_dbus_auth_observer_authorize_authenticated_peer;
-	
+
 	// gio.DBusNames
-	
+
 	guint function(GBusType busType, gchar* name, GBusNameOwnerFlags flags, GBusAcquiredCallback busAcquiredHandler, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_own_name;
 	guint function(GDBusConnection* connection, gchar* name, GBusNameOwnerFlags flags, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_own_name_on_connection;
 	void function(guint ownerId) c_g_bus_unown_name;
@@ -3017,9 +3016,9 @@ mixin( gshared ~"extern(C)
 	void function(guint watcherId) c_g_bus_unwatch_name;
 	guint function(GBusType busType, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_with_closures;
 	guint function(GDBusConnection* connection, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_on_connection_with_closures;
-	
+
 	// gio.DBusProxy
-	
+
 	void function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_new;
 	GDBusProxy* function(GAsyncResult* res, GError** error) c_g_dbus_proxy_new_finish;
 	GDBusProxy* function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GError** error) c_g_dbus_proxy_new_sync;
@@ -3042,16 +3041,16 @@ mixin( gshared ~"extern(C)
 	void function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_call;
 	GVariant* function(GDBusProxy* proxy, GAsyncResult* res, GError** error) c_g_dbus_proxy_call_finish;
 	GVariant* function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_proxy_call_sync;
-	
+
 	// gio.FilenameCompleter
-	
+
 	GFilenameCompleter* function() c_g_filename_completer_new;
 	char* function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completion_suffix;
 	char** function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completions;
 	void function(GFilenameCompleter* completer, gboolean dirsOnly) c_g_filename_completer_set_dirs_only;
-	
+
 	// gio.Settings
-	
+
 	GSettings* function(gchar* schema) c_g_settings_new;
 	GSettings* function(gchar* schema, gchar* path) c_g_settings_new_with_path;
 	GSettings* function(gchar* schema, GSettingsBackend* backend) c_g_settings_new_with_backend;
@@ -3093,9 +3092,9 @@ mixin( gshared ~"extern(C)
 	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, GSettingsBindFlags flags, GSettingsBindGetMapping getMapping, GSettingsBindSetMapping setMapping, gpointer userData, GDestroyNotify destroy) c_g_settings_bind_with_mapping;
 	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, gboolean inverted) c_g_settings_bind_writable;
 	void function(gpointer object, gchar* property) c_g_settings_unbind;
-	
+
 	// gio.SettingsBackend
-	
+
 	GSettingsBackend* function() c_g_settings_backend_get_default;
 	void function(GSettingsBackend* backend, gchar* key, gpointer originTag) c_g_settings_backend_changed;
 	void function(GSettingsBackend* backend, gchar* path, gpointer originTag) c_g_settings_backend_path_changed;
@@ -3107,9 +3106,9 @@ mixin( gshared ~"extern(C)
 	GSettingsBackend* function(gchar* filename, gchar* rootPath, gchar* rootGroup) c_g_keyfile_settings_backend_new;
 	GSettingsBackend* function() c_g_memory_settings_backend_new;
 	GSettingsBackend* function() c_g_null_settings_backend_new;
-	
+
 	// gio.Permission
-	
+
 	gboolean function(GPermission* permission) c_g_permission_get_allowed;
 	gboolean function(GPermission* permission) c_g_permission_get_can_acquire;
 	gboolean function(GPermission* permission) c_g_permission_get_can_release;
@@ -3120,16 +3119,16 @@ mixin( gshared ~"extern(C)
 	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_permission_release_async;
 	gboolean function(GPermission* permission, GAsyncResult* result, GError** error) c_g_permission_release_finish;
 	void function(GPermission* permission, gboolean allowed, gboolean canAcquire, gboolean canRelease) c_g_permission_impl_update;
-	
+
 	// gio.SimplePermission
-	
+
 	GPermission* function(gboolean allowed) c_g_simple_permission_new;
-	
+
 	// gio.ActionGroupT
-	
-	
+
+
 	// gio.ActionGroupT
-	
+
 	gboolean function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_has_action;
 	gchar** function(GActionGroup* actionGroup) c_g_action_group_list_actions;
 	gboolean function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_enabled;
@@ -3143,19 +3142,19 @@ mixin( gshared ~"extern(C)
 	void function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_action_removed;
 	void function(GActionGroup* actionGroup, gchar* actionName, gboolean enabled) c_g_action_group_action_enabled_changed;
 	void function(GActionGroup* actionGroup, gchar* actionName, GVariant* state) c_g_action_group_action_state_changed;
-	
+
 	// gio.SimpleActionGroup
-	
+
 	GSimpleActionGroup* function() c_g_simple_action_group_new;
 	GAction* function(GSimpleActionGroup* simple, gchar* actionName) c_g_simple_action_group_lookup;
 	void function(GSimpleActionGroup* simple, GAction* action) c_g_simple_action_group_insert;
 	void function(GSimpleActionGroup* simple, gchar* actionName) c_g_simple_action_group_remove;
-	
+
 	// gio.ActionT
-	
-	
+
+
 	// gio.ActionT
-	
+
 	gchar* function(GAction* action) c_g_action_get_name;
 	GVariantType* function(GAction* action) c_g_action_get_parameter_type;
 	GVariantType* function(GAction* action) c_g_action_get_state_type;
@@ -3164,18 +3163,18 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GAction* action) c_g_action_get_state;
 	void function(GAction* action, GVariant* value) c_g_action_set_state;
 	void function(GAction* action, GVariant* parameter) c_g_action_activate;
-	
+
 	// gio.Action
-	
-	
+
+
 	// gio.SimpleAction
-	
+
 	GSimpleAction* function(gchar* name, GVariantType* parameterType) c_g_simple_action_new;
 	GSimpleAction* function(gchar* name, GVariantType* parameterType, GVariant* state) c_g_simple_action_new_stateful;
 	void function(GSimpleAction* simple, gboolean enabled) c_g_simple_action_set_enabled;
-	
+
 	// gio.Application
-	
+
 	gboolean function(gchar* applicationId) c_g_application_id_is_valid;
 	GApplication* function(gchar* applicationId, GApplicationFlags flags) c_g_application_new;
 	gchar* function(GApplication* application) c_g_application_get_application_id;
@@ -3193,9 +3192,9 @@ mixin( gshared ~"extern(C)
 	void function(GApplication* application) c_g_application_activate;
 	void function(GApplication* application, GFile** files, gint nFiles, gchar* hint) c_g_application_open;
 	int function(GApplication* application, int argc, char** argv) c_g_application_run;
-	
+
 	// gio.ApplicationCommandLine
-	
+
 	gchar** function(GApplicationCommandLine* cmdline, int* argc) c_g_application_command_line_get_arguments;
 	gchar* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_cwd;
 	gchar** function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_environ;
@@ -3206,9 +3205,9 @@ mixin( gshared ~"extern(C)
 	int function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_exit_status;
 	void function(GApplicationCommandLine* cmdline, gchar* format, ... ) c_g_application_command_line_print;
 	void function(GApplicationCommandLine* cmdline, gchar* format, ... ) c_g_application_command_line_printerr;
-	
+
 	// gio.Vfs
-	
+
 	GFile* function(GVfs* vfs, char* path) c_g_vfs_get_file_for_path;
 	GFile* function(GVfs* vfs, char* uri) c_g_vfs_get_file_for_uri;
 	GFile* function(GVfs* vfs, char* parseName) c_g_vfs_parse_name;
@@ -3216,25 +3215,25 @@ mixin( gshared ~"extern(C)
 	GVfs* function() c_g_vfs_get_local;
 	gboolean function(GVfs* vfs) c_g_vfs_is_active;
 	gchar** function(GVfs* vfs) c_g_vfs_get_supported_uri_schemes;
-	
+
 	// gio.IOModule
-	
+
 	GIOModule* function(gchar* filename) c_g_io_module_new;
 	GList* function(gchar* dirname) c_g_io_modules_load_all_in_directory;
 	void function(char* dirname) c_g_io_modules_scan_all_in_directory;
 	void function(GIOModule* modul) c_g_io_module_load;
 	void function(GIOModule* modul) c_g_io_module_unload;
 	char** function() c_g_io_module_query;
-	
+
 	// gio.IOExtension
-	
+
 	char* function(GIOExtension* extension) c_g_io_extension_get_name;
 	gint function(GIOExtension* extension) c_g_io_extension_get_priority;
 	GType function(GIOExtension* extension) c_g_io_extension_get_type;
 	GTypeClass* function(GIOExtension* extension) c_g_io_extension_ref_class;
-	
+
 	// gio.IOExtensionPoint
-	
+
 	GIOExtension* function(GIOExtensionPoint* extensionPoint, char* name) c_g_io_extension_point_get_extension_by_name;
 	GList* function(GIOExtensionPoint* extensionPoint) c_g_io_extension_point_get_extensions;
 	GType function(GIOExtensionPoint* extensionPoint) c_g_io_extension_point_get_required_type;

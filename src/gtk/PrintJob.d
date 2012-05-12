@@ -142,7 +142,7 @@ public class PrintJob : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(PrintJob)[] onStatusChangedListeners;
 	/**

@@ -184,7 +184,7 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TreeViewColumn)[] onClickedListeners;
 	/**

@@ -971,13 +971,13 @@ public struct cairo_t{}
 
 /**
  * A data structure for holding a rectangle.
- * double  x;
+ * double x;
  * X coordinate of the left side of the rectangle
- * double  y;
+ * double y;
  * Y coordinate of the the top side of the rectangle
- * double  width;
+ * double width;
  * width of the rectangle
- * double  height;
+ * double height;
  * height of the rectangle
  * Since 1.4
  */
@@ -990,11 +990,11 @@ public struct cairo_rectangle_t
 /**
  * A data structure for holding a dynamically allocated
  * array of rectangles.
- * cairo_status_t  status;
+ * cairo_status_t status;
  * Error status of the rectangle list
- * cairo_rectangle_t  *rectangles;
+ * cairo_rectangle_t *rectangles;
  * Array containing the rectangles
- * int  num_rectangles;
+ * int num_rectangles;
  * Number of rectangles in this list
  * Since 1.4
  */
@@ -1017,11 +1017,11 @@ public struct cairo_rectangle_list_t
  * array. This number is larger than the number of independent path
  * portions (defined in cairo_path_data_type_t), since the data
  * includes both headers and coordinates for each portion.
- * cairo_status_t  status;
+ * cairo_status_t status;
  * the current error status
- * cairo_path_data_t  *data;
+ * cairo_path_data_t *data;
  * the elements in the path
- * int  num_data;
+ * int num_data;
  * the number of elements in the data array
  */
 public struct cairo_path_t
@@ -1046,7 +1046,7 @@ public struct cairo_path_t
  * Note that the offsets given by x and y are not cumulative. When
  * drawing or measuring text, each glyph is individually positioned
  * with respect to the overall origin
- * unsigned  long  index;
+ * unsigned long index;
  * glyph index in the font. The exact interpretation of the
  */
 public struct cairo_glyph_t
@@ -1068,9 +1068,9 @@ public struct cairo_glyph_t
  * ignore those clusters when PDF text is being selected.
  * See cairo_show_text_glyphs() for how clusters are used in advanced
  * text operations.
- * int  num_bytes;
+ * int num_bytes;
  * the number of bytes of UTF-8 text covered by cluster
- * int  num_glyphs;
+ * int num_glyphs;
  * the number of glyphs covered by cluster
  * Since 1.8
  */
@@ -1154,7 +1154,7 @@ public struct cairo_scaled_font_t{}
  * not be doubled. They will change slightly due to hinting (so you
  * can't assume that metrics are independent of the transformation
  * matrix), but otherwise will remain unchanged.
- * double  ascent;
+ * double ascent;
  * the distance that the font extends above the baseline.
  */
 public struct cairo_font_extents_t
@@ -1177,7 +1177,7 @@ public struct cairo_font_extents_t
  * doubled. They will change slightly due to hinting (so you can't
  * assume that metrics are independent of the transformation matrix),
  * but otherwise will remain unchanged.
- * double  x_bearing;
+ * double x_bearing;
  * the horizontal distance from the origin to the
  */
 public struct cairo_text_extents_t
@@ -1270,7 +1270,7 @@ public struct cairo_matrix_t
  * and there is no need to initialize the object; only the unique
  * address of a cairo_data_key_t object is used. Typically, you
  * would just use the address of a static cairo_data_key_t object.
- * int  unused;
+ * int unused;
  * not used; ignore.
  */
 public struct cairo_user_data_key_t
@@ -1281,13 +1281,13 @@ public struct cairo_user_data_key_t
 
 /**
  * A data structure for holding a rectangle with integer coordinates.
- * int  x;
+ * int x;
  * X coordinate of the left side of the rectangle
- * int  y;
+ * int y;
  * Y coordinate of the the top side of the rectangle
- * int  width;
+ * int width;
  * width of the rectangle
- * int  height;
+ * int height;
  * height of the rectangle
  * Since 1.10
  */
@@ -1304,11 +1304,11 @@ public struct cairo_rectangle_int_t
  * Two encoded version numbers can be compared as integers. The encoding ensures
  * that later versions compare greater than earlier versions.
  * Returns: the encoded version.
- * major  :
+ * major :
  * the major component of the version number
- * minor  :
+ * minor :
  * the minor component of the version number
- * micro  :
+ * micro :
  * the micro component of the version number
  */
 // TODO
@@ -1320,11 +1320,11 @@ public struct cairo_rectangle_int_t
  * The parameters to this macro must expand to numerical literals.
  * Returns: a string literal containing the version.
  * Since: 1.8
- * major  :
+ * major :
  * the major component of the version number
- * minor  :
+ * minor :
  * the minor component of the version number
- * micro  :
+ * micro :
  * the micro component of the version number
  */
 // TODO
@@ -1348,13 +1348,13 @@ public struct cairo_rectangle_int_t
  * Note that scaled_font is not fully initialized at this
  * point and trying to use it for text operations in the callback will result
  * in deadlock.
- * scaled_font  :
+ * scaled_font :
  * the scaled-font being created
- * cr  :
+ * cr :
  * a cairo context, in font space
- * extents  :
+ * extents :
  * font extents to fill in, in font space
- * Returns  :
+ * Returns :
  *  CAIRO_STATUS_SUCCESS upon success, or an error status on error.
  * Since 1.8
  */
@@ -1389,15 +1389,15 @@ public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, cairo_t*,
  * desired behavior is. However, if for any reason the callback sets the
  * extents, it must be ink extents, and include the extents of all drawing
  * done to cr in the callback.
- * scaled_font  :
+ * scaled_font :
  * user scaled-font
- * glyph  :
+ * glyph :
  * glyph code to render
- * cr  :
+ * cr :
  * cairo context to draw to, in font space
- * extents  :
+ * extents :
  * glyph extents to fill in, in font space
- * Returns  :
+ * Returns :
  *  CAIRO_STATUS_SUCCESS upon success, or
  * CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
  * Since 1.8
@@ -1445,24 +1445,24 @@ public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, ulong, ca
  * assume that glyph 0 is a special glyph-not-found glyph. User-fonts
  * are advised to use glyph 0 for such purposes and do not use that
  * glyph value for other purposes.
- * scaled_font  :
+ * scaled_font :
  * the scaled-font being created
- * utf8  :
+ * utf8 :
  * a string of text encoded in UTF-8
- * utf8_len  :
+ * utf8_len :
  * length of utf8 in bytes
- * glyphs  :
+ * glyphs :
  * pointer to array of glyphs to fill, in font space
- * num_glyphs  :
+ * num_glyphs :
  * pointer to number of glyphs
- * clusters  :
+ * clusters :
  * pointer to array of cluster mapping information to fill, or NULL
- * num_clusters  :
+ * num_clusters :
  * pointer to number of clusters
- * cluster_flags  :
+ * cluster_flags :
  * pointer to location to store cluster flags corresponding to the
  *  output clusters
- * Returns  :
+ * Returns :
  *  CAIRO_STATUS_SUCCESS upon success,
  * CAIRO_STATUS_USER_FONT_NOT_IMPLEMENTED if fallback options should be tried,
  * or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
@@ -1494,13 +1494,13 @@ public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, char*, in
  * assume that glyph 0 is a special glyph-not-found glyph. User-fonts
  * are advised to use glyph 0 for such purposes and do not use that
  * glyph value for other purposes.
- * scaled_font  :
+ * scaled_font :
  * the scaled-font being created
- * unicode  :
+ * unicode :
  * input unicode character code-point
- * glyph_index  :
+ * glyph_index :
  * output glyph index
- * Returns  :
+ * Returns :
  *  CAIRO_STATUS_SUCCESS upon success,
  * CAIRO_STATUS_USER_FONT_NOT_IMPLEMENTED if fallback options should be tried,
  * or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
@@ -1517,13 +1517,13 @@ public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, ulong, ul
  * length of the data in bytes. The read function should return
  * CAIRO_STATUS_SUCCESS if all the data was successfully read,
  * CAIRO_STATUS_READ_ERROR otherwise.
- * closure  :
+ * closure :
  * the input closure
- * data  :
+ * data :
  * the buffer into which to read the data
- * length  :
+ * length :
  * the amount of data to read
- * Returns  :
+ * Returns :
  *  the status code of the read operation
  */
 // cairo_status_t (*cairo_read_func_t) (void *closure,  unsigned char *data,  unsigned int length);
@@ -1537,13 +1537,13 @@ public alias extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_read
  * data in bytes. The write function should return
  * CAIRO_STATUS_SUCCESS if all the data was successfully written,
  * CAIRO_STATUS_WRITE_ERROR otherwise.
- * closure  :
+ * closure :
  * the output closure
- * data  :
+ * data :
  * the buffer containing the data to write
- * length  :
+ * length :
  * the amount of data to write
- * Returns  :
+ * Returns :
  *  the status code of the write operation
  */
 // cairo_status_t (*cairo_write_func_t) (void *closure,  unsigned char *data,  unsigned int length);
@@ -1553,7 +1553,7 @@ public alias extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_writ
  * cairo_destroy_func_t the type of function which is called when a
  * data element is destroyed. It is passed the pointer to the data
  * element and should free any memory and resources allocated for it.
- * data  :
+ * data :
  * The data element being destroyed.
  */
 // void (*cairo_destroy_func_t) (void *data);

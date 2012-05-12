@@ -308,9 +308,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// atk.Action
-	
+
 	gboolean function(AtkAction* action, gint i) c_atk_action_do_action;
 	gint function(AtkAction* action) c_atk_action_get_n_actions;
 	gchar* function(AtkAction* action, gint i) c_atk_action_get_description;
@@ -318,9 +317,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(AtkAction* action, gint i) c_atk_action_get_localized_name;
 	gchar* function(AtkAction* action, gint i) c_atk_action_get_keybinding;
 	gboolean function(AtkAction* action, gint i, gchar* desc) c_atk_action_set_description;
-	
+
 	// atk.Component
-	
+
 	guint function(AtkComponent* component, AtkFocusHandler handler) c_atk_component_add_focus_handler;
 	gboolean function(AtkComponent* component, gint x, gint y, AtkCoordType coordType) c_atk_component_contains;
 	void function(AtkComponent* component, gint* x, gint* y, gint* width, gint* height, AtkCoordType coordType) c_atk_component_get_extents;
@@ -335,18 +334,18 @@ mixin( gshared ~"extern(C)
 	gboolean function(AtkComponent* component, gint x, gint y, AtkCoordType coordType) c_atk_component_set_position;
 	gboolean function(AtkComponent* component, gint width, gint height) c_atk_component_set_size;
 	gdouble function(AtkComponent* component) c_atk_component_get_alpha;
-	
+
 	// atk.Document
-	
+
 	gchar* function(AtkDocument* document) c_atk_document_get_document_type;
 	gpointer function(AtkDocument* document) c_atk_document_get_document;
 	gchar* function(AtkDocument* document, gchar* attributeName) c_atk_document_get_attribute_value;
 	gboolean function(AtkDocument* document, gchar* attributeName, gchar* attributeValue) c_atk_document_set_attribute_value;
 	AtkAttributeSet* function(AtkDocument* document) c_atk_document_get_attributes;
 	gchar* function(AtkDocument* document) c_atk_document_get_locale;
-	
+
 	// atk.EditableText
-	
+
 	gboolean function(AtkEditableText* text, AtkAttributeSet* attribSet, gint startOffset, gint endOffset) c_atk_editable_text_set_run_attributes;
 	void function(AtkEditableText* text, gchar* string) c_atk_editable_text_set_text_contents;
 	void function(AtkEditableText* text, gchar* string, gint length, gint* position) c_atk_editable_text_insert_text;
@@ -354,14 +353,14 @@ mixin( gshared ~"extern(C)
 	void function(AtkEditableText* text, gint startPos, gint endPos) c_atk_editable_text_cut_text;
 	void function(AtkEditableText* text, gint startPos, gint endPos) c_atk_editable_text_delete_text;
 	void function(AtkEditableText* text, gint position) c_atk_editable_text_paste_text;
-	
+
 	// atk.GObjectAccessible
-	
+
 	AtkObject* function(GObject* obj) c_atk_gobject_accessible_for_object;
 	GObject* function(AtkGObjectAccessible* obj) c_atk_gobject_accessible_get_object;
-	
+
 	// atk.Hyperlink
-	
+
 	gchar* function(AtkHyperlink* link, gint i) c_atk_hyperlink_get_uri;
 	AtkObject* function(AtkHyperlink* link, gint i) c_atk_hyperlink_get_object;
 	gint function(AtkHyperlink* link) c_atk_hyperlink_get_end_index;
@@ -370,31 +369,31 @@ mixin( gshared ~"extern(C)
 	gboolean function(AtkHyperlink* link) c_atk_hyperlink_is_inline;
 	gint function(AtkHyperlink* link) c_atk_hyperlink_get_n_anchors;
 	gboolean function(AtkHyperlink* link) c_atk_hyperlink_is_selected_link;
-	
+
 	// atk.Hypertext
-	
+
 	AtkHyperlink* function(AtkHypertext* hypertext, gint linkIndex) c_atk_hypertext_get_link;
 	gint function(AtkHypertext* hypertext) c_atk_hypertext_get_n_links;
 	gint function(AtkHypertext* hypertext, gint charIndex) c_atk_hypertext_get_link_index;
-	
+
 	// atk.Image
-	
+
 	void function(AtkImage* image, gint* x, gint* y, AtkCoordType coordType) c_atk_image_get_image_position;
 	gchar* function(AtkImage* image) c_atk_image_get_image_description;
 	gboolean function(AtkImage* image, gchar* description) c_atk_image_set_image_description;
 	void function(AtkImage* image, gint* width, gint* height) c_atk_image_get_image_size;
 	gchar* function(AtkImage* image) c_atk_image_get_image_locale;
-	
+
 	// atk.NoOpObject
-	
+
 	AtkObject* function(GObject* obj) c_atk_no_op_object_new;
-	
+
 	// atk.NoOpObjectFactory
-	
+
 	AtkObjectFactory* function() c_atk_no_op_object_factory_new;
-	
+
 	// atk.ObjectAtk
-	
+
 	AtkRole function(gchar* name) c_atk_role_register;
 	AtkObject* function(AtkImplementor* implementor) c_atk_implementor_ref_accessible;
 	gchar* function(AtkObject* accessible) c_atk_object_get_name;
@@ -422,22 +421,22 @@ mixin( gshared ~"extern(C)
 	gchar* function(AtkRole role) c_atk_role_get_name;
 	gchar* function(AtkRole role) c_atk_role_get_localized_name;
 	AtkRole function(gchar* name) c_atk_role_for_name;
-	
+
 	// atk.ObjectFactory
-	
+
 	AtkObject* function(AtkObjectFactory* factory, GObject* obj) c_atk_object_factory_create_accessible;
 	GType function(AtkObjectFactory* factory) c_atk_object_factory_get_accessible_type;
 	void function(AtkObjectFactory* factory) c_atk_object_factory_invalidate;
-	
+
 	// atk.Registry
-	
+
 	void function(AtkRegistry* registry, GType type, GType factoryType) c_atk_registry_set_factory_type;
 	GType function(AtkRegistry* registry, GType type) c_atk_registry_get_factory_type;
 	AtkObjectFactory* function(AtkRegistry* registry, GType type) c_atk_registry_get_factory;
 	AtkRegistry* function() c_atk_get_default_registry;
-	
+
 	// atk.Relation
-	
+
 	AtkRelationType function(gchar* name) c_atk_relation_type_register;
 	gchar* function(AtkRelationType type) c_atk_relation_type_get_name;
 	AtkRelationType function(gchar* name) c_atk_relation_type_for_name;
@@ -446,9 +445,9 @@ mixin( gshared ~"extern(C)
 	GPtrArray* function(AtkRelation* relation) c_atk_relation_get_target;
 	void function(AtkRelation* relation, AtkObject* target) c_atk_relation_add_target;
 	gboolean function(AtkRelation* relation, AtkObject* target) c_atk_relation_remove_target;
-	
+
 	// atk.RelationSet
-	
+
 	AtkRelationSet* function() c_atk_relation_set_new;
 	gboolean function(AtkRelationSet* set, AtkRelationType relationship) c_atk_relation_set_contains;
 	void function(AtkRelationSet* set, AtkRelation* relation) c_atk_relation_set_remove;
@@ -457,9 +456,9 @@ mixin( gshared ~"extern(C)
 	AtkRelation* function(AtkRelationSet* set, gint i) c_atk_relation_set_get_relation;
 	AtkRelation* function(AtkRelationSet* set, AtkRelationType relationship) c_atk_relation_set_get_relation_by_type;
 	void function(AtkRelationSet* set, AtkRelationType relationship, AtkObject* target) c_atk_relation_set_add_relation_by_type;
-	
+
 	// atk.Selection
-	
+
 	gboolean function(AtkSelection* selection, gint i) c_atk_selection_add_selection;
 	gboolean function(AtkSelection* selection) c_atk_selection_clear_selection;
 	AtkObject* function(AtkSelection* selection, gint i) c_atk_selection_ref_selection;
@@ -467,15 +466,15 @@ mixin( gshared ~"extern(C)
 	gboolean function(AtkSelection* selection, gint i) c_atk_selection_is_child_selected;
 	gboolean function(AtkSelection* selection, gint i) c_atk_selection_remove_selection;
 	gboolean function(AtkSelection* selection) c_atk_selection_select_all_selection;
-	
+
 	// atk.State
-	
+
 	AtkStateType function(gchar* name) c_atk_state_type_register;
 	gchar* function(AtkStateType type) c_atk_state_type_get_name;
 	AtkStateType function(gchar* name) c_atk_state_type_for_name;
-	
+
 	// atk.StateSet
-	
+
 	AtkStateSet* function() c_atk_state_set_new;
 	gboolean function(AtkStateSet* set) c_atk_state_set_is_empty;
 	gboolean function(AtkStateSet* set, AtkStateType type) c_atk_state_set_add_state;
@@ -487,16 +486,16 @@ mixin( gshared ~"extern(C)
 	AtkStateSet* function(AtkStateSet* set, AtkStateSet* compareSet) c_atk_state_set_and_sets;
 	AtkStateSet* function(AtkStateSet* set, AtkStateSet* compareSet) c_atk_state_set_or_sets;
 	AtkStateSet* function(AtkStateSet* set, AtkStateSet* compareSet) c_atk_state_set_xor_sets;
-	
+
 	// atk.StreamableContent
-	
+
 	gint function(AtkStreamableContent* streamable) c_atk_streamable_content_get_n_mime_types;
 	gchar* function(AtkStreamableContent* streamable, gint i) c_atk_streamable_content_get_mime_type;
 	GIOChannel* function(AtkStreamableContent* streamable, gchar* mimeType) c_atk_streamable_content_get_stream;
 	gchar* function(AtkStreamableContent* streamable, gchar* mimeType) c_atk_streamable_content_get_uri;
-	
+
 	// atk.Table
-	
+
 	AtkObject* function(AtkTable* table, gint row, gint column) c_atk_table_ref_at;
 	gint function(AtkTable* table, gint row, gint column) c_atk_table_get_index_at;
 	gint function(AtkTable* table, gint index) c_atk_table_get_column_at_index;
@@ -526,9 +525,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(AtkTable* table, gint row) c_atk_table_add_row_selection;
 	gboolean function(AtkTable* table, gint column) c_atk_table_remove_column_selection;
 	gboolean function(AtkTable* table, gint row) c_atk_table_remove_row_selection;
-	
+
 	// atk.Text
-	
+
 	gchar* function(AtkText* text, gint startOffset, gint endOffset) c_atk_text_get_text;
 	gunichar function(AtkText* text, gint offset) c_atk_text_get_character_at_offset;
 	gchar* function(AtkText* text, gint offset, AtkTextBoundary boundaryType, gint* startOffset, gint* endOffset) c_atk_text_get_text_after_offset;
@@ -554,9 +553,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(AtkTextAttribute attr) c_atk_text_attribute_get_name;
 	AtkTextAttribute function(gchar* name) c_atk_text_attribute_for_name;
 	gchar* function(AtkTextAttribute attr, gint index) c_atk_text_attribute_get_value;
-	
+
 	// atk.Util
-	
+
 	guint function(AtkEventListener focusTracker) c_atk_add_focus_tracker;
 	void function(guint trackerId) c_atk_remove_focus_tracker;
 	void function(AtkEventListenerInit init) c_atk_focus_tracker_init;
@@ -570,9 +569,9 @@ mixin( gshared ~"extern(C)
 	gchar* function() c_atk_get_toolkit_name;
 	gchar* function() c_atk_get_toolkit_version;
 	gchar* function() c_atk_get_version;
-	
+
 	// atk.ValueAtk
-	
+
 	void function(AtkValue* obj, GValue* value) c_atk_value_get_current_value;
 	void function(AtkValue* obj, GValue* value) c_atk_value_get_maximum_value;
 	void function(AtkValue* obj, GValue* value) c_atk_value_get_minimum_value;

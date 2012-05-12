@@ -277,7 +277,7 @@ public class UIManager : ObjectG, BuildableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(UIManager)[] onActionsChangedListeners;
 	/**

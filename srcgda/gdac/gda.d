@@ -471,9 +471,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gda.Gda
-	
+
 	void function(gchar* appId, gchar* versio, gint nargs, gchar** args) c_gda_init;
 	void function(GdaInitFunc initFunc, gpointer userData) c_gda_main_run;
 	void function() c_gda_main_quit;
@@ -483,9 +482,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* sql, GdaParameterList* params) c_gda_sql_replace_placeholders;
 	gchar* function(gchar* filename) c_gda_file_load;
 	gboolean function(gchar* filename, gchar* buffer, gint len) c_gda_file_save;
-	
+
 	// gda.Blob
-	
+
 	gint function(GdaBlob* blob, GdaBlobMode mode) c_gda_blob_open;
 	gint function(GdaBlob* blob, gpointer buf, gint size, gint* bytesRead) c_gda_blob_read;
 	gint function(GdaBlob* blob, gpointer buf, gint size, gint* bytesWritten) c_gda_blob_write;
@@ -493,9 +492,9 @@ mixin( gshared ~"extern(C)
 	gint function(GdaBlob* blob) c_gda_blob_close;
 	gint function(GdaBlob* blob) c_gda_blob_remove;
 	void function(GdaBlob* blob) c_gda_blob_free_data;
-	
+
 	// gda.Client
-	
+
 	GdaClient* function() c_gda_client_new;
 	GdaConnection* function(GdaClient* client, gchar* dsn, gchar* username, gchar* password, GdaConnectionOptions options) c_gda_client_open_connection;
 	GdaConnection* function(GdaClient* client, gchar* providerId, gchar* cncString, GdaConnectionOptions options) c_gda_client_open_connection_from_string;
@@ -512,9 +511,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdaClient* client, GdaTransaction* xaction) c_gda_client_begin_transaction;
 	gboolean function(GdaClient* client, GdaTransaction* xaction) c_gda_client_commit_transaction;
 	gboolean function(GdaClient* client, GdaTransaction* xaction) c_gda_client_rollback_transaction;
-	
+
 	// gda.Command
-	
+
 	GType function() c_gda_command_get_type;
 	GdaCommand* function(gchar* text, GdaCommandType type, GdaCommandOptions options) c_gda_command_new;
 	void function(GdaCommand* cmd) c_gda_command_free;
@@ -527,9 +526,9 @@ mixin( gshared ~"extern(C)
 	void function(GdaCommand* cmd, GdaCommandOptions options) c_gda_command_set_options;
 	GdaTransaction* function(GdaCommand* cmd) c_gda_command_get_transaction;
 	void function(GdaCommand* cmd, GdaTransaction* xaction) c_gda_command_set_transaction;
-	
+
 	// gda.Config
-	
+
 	gchar* function(gchar* path) c_gda_config_get_string;
 	gint function(gchar* path) c_gda_config_get_int;
 	gdouble function(gchar* path) c_gda_config_get_float;
@@ -561,19 +560,19 @@ mixin( gshared ~"extern(C)
 	void function(gchar* name, gchar* provider, gchar* cncString, gchar* description, gchar* username, gchar* password) c_gda_config_save_data_source;
 	void function(GdaDataSourceInfo* dsnInfo) c_gda_config_save_data_source_info;
 	void function(gchar* name) c_gda_config_remove_data_source;
-	
+
 	// gda.ProviderInfo
-	
+
 	GType function() c_gda_provider_info_get_type;
 	GdaProviderInfo* function(GdaProviderInfo* src) c_gda_provider_info_copy;
 	void function(GdaProviderInfo* providerInfo) c_gda_provider_info_free;
-	
+
 	// gda.DataSourceInfo
-	
+
 	GType function() c_gda_data_source_info_get_type;
-	
+
 	// gda.Connection
-	
+
 	GdaConnection* function(GdaClient* client, GdaServerProvider* provider, gchar* dsn, gchar* username, gchar* password, GdaConnectionOptions options) c_gda_connection_new;
 	gboolean function(GdaConnection* cnc) c_gda_connection_close;
 	gboolean function(GdaConnection* cnc) c_gda_connection_is_open;
@@ -606,30 +605,30 @@ mixin( gshared ~"extern(C)
 	GList* function(GdaConnection* cnc) c_gda_connection_get_errors;
 	gboolean function(GdaConnection* cnc, GdaConnectionFeature feature) c_gda_connection_supports;
 	GdaDataModel* function(GdaConnection* cnc, GdaConnectionSchema schema, GdaParameterList* params) c_gda_connection_get_schema;
-	
+
 	// gda.DataModelArray
-	
+
 	GdaDataModel* function(gint cols) c_gda_data_model_array_new;
 	void function(GdaDataModelArray* model, gint cols) c_gda_data_model_array_set_n_columns;
 	void function(GdaDataModelArray* model) c_gda_data_model_array_clear;
-	
+
 	// gda.DataModelHash
-	
+
 	GdaDataModel* function(gint cols) c_gda_data_model_hash_new;
 	GdaValue* function(GdaDataModel* model, gint col, gint row) c_gda_data_model_hash_get_value_at;
 	void function(GdaDataModelHash* model) c_gda_data_model_hash_clear;
 	void function(GdaDataModelHash* model, gint cols) c_gda_data_model_hash_set_n_columns;
 	void function(GdaDataModelHash* model, gint rownum, GdaRow* row) c_gda_data_model_hash_insert_row;
 	GdaRow* function(GdaDataModel* model, gint row) c_gda_data_model_hash_get_row;
-	
+
 	// gda.DataModelList
-	
+
 	GdaDataModel* function() c_gda_data_model_list_new;
 	GdaDataModel* function(GList* list) c_gda_data_model_list_new_from_string_list;
 	GdaRow* function(GdaDataModelList* model, GdaValue* value) c_gda_data_model_list_append_value;
-	
+
 	// gda.DataModel
-	
+
 	void function(GdaDataModel* model) c_gda_data_model_changed;
 	void function(GdaDataModel* model, gint row) c_gda_data_model_row_inserted;
 	void function(GdaDataModel* model, gint row) c_gda_data_model_row_updated;
@@ -668,9 +667,9 @@ mixin( gshared ~"extern(C)
 	void function(GdaDataModel* model, gchar* txt) c_gda_data_model_set_command_text;
 	GdaCommandType function(GdaDataModel* model) c_gda_data_model_get_command_type;
 	void function(GdaDataModel* model, GdaCommandType type) c_gda_data_model_set_command_type;
-	
+
 	// gda.ErrorGda
-	
+
 	GdaError* function() c_gda_error_new;
 	void function(GdaError* error) c_gda_error_free;
 	GList* function(GList* errors) c_gda_error_list_copy;
@@ -683,9 +682,9 @@ mixin( gshared ~"extern(C)
 	void function(GdaError* error, gchar* source) c_gda_error_set_source;
 	gchar* function(GdaError* error) c_gda_error_get_sqlstate;
 	void function(GdaError* error, gchar* sqlstate) c_gda_error_set_sqlstate;
-	
+
 	// gda.Export
-	
+
 	GdaExport* function(GdaConnection* cnc) c_gda_export_new;
 	GList* function(GdaExport* exp) c_gda_export_get_tables;
 	GList* function(GdaExport* exp) c_gda_export_get_selected_tables;
@@ -696,9 +695,9 @@ mixin( gshared ~"extern(C)
 	void function(GdaExport* exp) c_gda_export_stop;
 	GdaConnection* function(GdaExport* exp) c_gda_export_get_connection;
 	void function(GdaExport* exp, GdaConnection* cnc) c_gda_export_set_connection;
-	
+
 	// gda.FieldAttributes
-	
+
 	GType function() c_gda_field_attributes_get_type;
 	GdaFieldAttributes* function() c_gda_field_attributes_new;
 	GdaFieldAttributes* function(GdaFieldAttributes* fa) c_gda_field_attributes_copy;
@@ -730,17 +729,17 @@ mixin( gshared ~"extern(C)
 	void function(GdaFieldAttributes* fa, gint position) c_gda_field_attributes_set_position;
 	GdaValue* function(GdaFieldAttributes* fa) c_gda_field_attributes_get_default_value;
 	void function(GdaFieldAttributes* fa, GdaValue* defaultValue) c_gda_field_attributes_set_default_value;
-	
+
 	// gda.Log
-	
+
 	void function() c_gda_log_enable;
 	void function() c_gda_log_disable;
 	gboolean function() c_gda_log_is_enabled;
 	void function(gchar* format, ... ) c_gda_log_message;
 	void function(gchar* format, ... ) c_gda_log_error;
-	
+
 	// gda.Parameter
-	
+
 	GType function() c_gda_parameter_get_type;
 	GdaParameter* function(gchar* name, GdaValue* value) c_gda_parameter_new_from_value;
 	GdaParameter* function(gchar* name, gboolean value) c_gda_parameter_new_boolean;
@@ -753,9 +752,9 @@ mixin( gshared ~"extern(C)
 	void function(GdaParameter* param, gchar* name) c_gda_parameter_set_name;
 	GdaValue* function(GdaParameter* param) c_gda_parameter_get_value;
 	void function(GdaParameter* param, GdaValue* value) c_gda_parameter_set_value;
-	
+
 	// gda.ParameterList
-	
+
 	GType function() c_gda_parameter_list_get_type;
 	GdaParameterList* function() c_gda_parameter_list_new;
 	void function(GdaParameterList* plist) c_gda_parameter_list_free;
@@ -765,9 +764,9 @@ mixin( gshared ~"extern(C)
 	GdaParameter* function(GdaParameterList* plist, gchar* name) c_gda_parameter_list_find;
 	void function(GdaParameterList* plist) c_gda_parameter_list_clear;
 	guint function(GdaParameterList* plist) c_gda_parameter_list_get_length;
-	
+
 	// gda.QuarkList
-	
+
 	GType function() c_gda_quark_list_get_type;
 	GdaQuarkList* function() c_gda_quark_list_new;
 	GdaQuarkList* function(gchar* string) c_gda_quark_list_new_from_string;
@@ -777,9 +776,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(GdaQuarkList* qlist, gchar* name) c_gda_quark_list_find;
 	void function(GdaQuarkList* qlist, gchar* name) c_gda_quark_list_remove;
 	void function(GdaQuarkList* qlist) c_gda_quark_list_clear;
-	
+
 	// gda.Row
-	
+
 	GType function() c_gda_row_get_type;
 	GdaRow* function(GdaDataModel* model, gint count) c_gda_row_new;
 	GdaRow* function(GdaDataModel* model, GList* values) c_gda_row_new_from_list;
@@ -792,33 +791,33 @@ mixin( gshared ~"extern(C)
 	void function(GdaRow* row, gchar* id) c_gda_row_set_id;
 	GdaValue* function(GdaRow* row, gint num) c_gda_row_get_value;
 	gint function(GdaRow* row) c_gda_row_get_length;
-	
+
 	// gda.Select
-	
+
 	GdaDataModel* function() c_gda_select_new;
 	void function(GdaSelect* sel, gchar* name, GdaDataModel* source) c_gda_select_add_source;
 	void function(GdaSelect* sel, gchar* sql) c_gda_select_set_sql;
 	gboolean function(GdaSelect* sel) c_gda_select_run;
-	
+
 	// gda.Table
-	
+
 	GdaTable* function(gchar* name) c_gda_table_new;
 	GdaTable* function(gchar* name, GdaDataModel* model, gboolean addData) c_gda_table_new_from_model;
 	gchar* function(GdaTable* table) c_gda_table_get_name;
 	void function(GdaTable* table, gchar* name) c_gda_table_set_name;
 	void function(GdaTable* table, GdaFieldAttributes* fa) c_gda_table_add_field;
 	void function(GdaTable* table, GdaDataModel* model) c_gda_table_add_data_from_model;
-	
+
 	// gda.Transaction
-	
+
 	GdaTransaction* function(gchar* name) c_gda_transaction_new;
 	GdaTransactionIsolation function(GdaTransaction* xaction) c_gda_transaction_get_isolation_level;
 	void function(GdaTransaction* xaction, GdaTransactionIsolation level) c_gda_transaction_set_isolation_level;
 	gchar* function(GdaTransaction* xaction) c_gda_transaction_get_name;
 	void function(GdaTransaction* xaction, gchar* name) c_gda_transaction_set_name;
-	
+
 	// gda.Value
-	
+
 	GType function() c_gda_value_get_gtype;
 	GdaValue* function() c_gda_value_new_null;
 	GdaValue* function(gint64 val) c_gda_value_new_bigint;

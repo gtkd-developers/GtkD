@@ -667,7 +667,7 @@ public class Widget : ObjectG, BuildableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Widget)[] onAccelClosuresChangedListeners;
 	/**

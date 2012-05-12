@@ -146,7 +146,7 @@ public class Screen : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Screen)[] onCompositedChangedListeners;
 	/**

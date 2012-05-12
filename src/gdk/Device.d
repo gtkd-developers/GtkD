@@ -138,7 +138,7 @@ public class Device : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Device)[] onChangedListeners;
 	/**

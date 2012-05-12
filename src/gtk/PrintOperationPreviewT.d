@@ -127,7 +127,7 @@ public template PrintOperationPreviewT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Widget, PageSetup, PrintSettings, PrintOperationPreviewIF)[] _onUpdateCustomWidgetListeners;
 	void delegate(Widget, PageSetup, PrintSettings, PrintOperationPreviewIF)[] onUpdateCustomWidgetListeners()

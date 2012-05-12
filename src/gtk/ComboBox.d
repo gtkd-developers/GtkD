@@ -270,7 +270,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ComboBox)[] onChangedListeners;
 	/**

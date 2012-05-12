@@ -180,7 +180,7 @@ public class Window : Bin
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Window)[] onActivateDefaultListeners;
 	/**
@@ -504,10 +504,10 @@ public class Window : Bin
 	 * geometry = struct containing geometry information or NULL. [allow-none]
 	 * geomMask = mask indicating which struct fields should be paid attention to
 	 */
-	public void setGeometryHints(Widget geometryWidget, GdkGeometry* geometry, GdkWindowHints geomMask)
+	public void setGeometryHints(Widget geometryWidget, ref GdkGeometry geometry, GdkWindowHints geomMask)
 	{
 		// void gtk_window_set_geometry_hints (GtkWindow *window,  GtkWidget *geometry_widget,  GdkGeometry *geometry,  GdkWindowHints geom_mask);
-		gtk_window_set_geometry_hints(gtkWindow, (geometryWidget is null) ? null : geometryWidget.getWidgetStruct(), geometry, geomMask);
+		gtk_window_set_geometry_hints(gtkWindow, (geometryWidget is null) ? null : geometryWidget.getWidgetStruct(), &geometry, geomMask);
 	}
 	
 	/**

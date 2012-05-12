@@ -124,7 +124,7 @@ public class ColorButton : Button
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ColorButton)[] onColorSetListeners;
 	/**

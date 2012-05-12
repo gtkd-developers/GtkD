@@ -347,7 +347,7 @@ public class StyleContext : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(StyleContext)[] onChangedListeners;
 	/**

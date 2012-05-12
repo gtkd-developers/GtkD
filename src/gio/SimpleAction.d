@@ -135,7 +135,7 @@ public class SimpleAction : ObjectG, ActionIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Variant, SimpleAction)[] onActivateListeners;
 	/**

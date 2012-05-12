@@ -212,7 +212,7 @@ public class StatusIcon : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(StatusIcon)[] onActivateListeners;
 	/**

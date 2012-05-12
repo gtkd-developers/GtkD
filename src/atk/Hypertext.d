@@ -108,7 +108,7 @@ public class Hypertext
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gint, Hypertext)[] onLinkSelectedListeners;
 	/**

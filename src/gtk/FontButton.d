@@ -120,7 +120,7 @@ public class FontButton : Button
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(FontButton)[] onFontSetListeners;
 	/**

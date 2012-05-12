@@ -119,7 +119,7 @@ private import gobject.ObjectG;
  * composited window it is the responsibility of the
  * application to render the window contents at the right spot.
  * $(DDOC_COMMENT example)
- * In the example Example  3, “Composited windows”, a button is
+ * In the example Example 3, “Composited windows”, a button is
  * placed inside of an event box inside of a window. The event box is set as
  * composited and therefore is no longer automatically drawn to the screen.
  * When the contents of the event box change, an expose event is generated on
@@ -221,7 +221,7 @@ public class Window : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	Surface delegate(gint, gint, Window)[] onCreateSurfaceListeners;
 	/**
@@ -776,7 +776,7 @@ public class Window : ObjectG
 	 * and an expose event is emitted on the parent of the composited
 	 * window. It is the responsibility of the parent's expose handler
 	 * to manually merge the off-screen content onto the screen in
-	 * whatever way it sees fit. See Example  3, “Composited windows”
+	 * whatever way it sees fit. See Example 3, “Composited windows”
 	 * for an example.
 	 * It only makes sense for child windows to be composited; see
 	 * gdk_window_set_opacity() if you need translucent toplevel

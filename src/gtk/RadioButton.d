@@ -244,7 +244,7 @@ public class RadioButton : CheckButton
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(RadioButton)[] onGroupChangedListeners;
 	/**

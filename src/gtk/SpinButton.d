@@ -133,7 +133,7 @@ public class SpinButton : Entry
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(GtkScrollType, SpinButton)[] onChangeValueListeners;
 	/**

@@ -126,7 +126,7 @@ public class ToggleToolButton : ToolButton
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(ToggleToolButton)[] onToggledListeners;
 	/**

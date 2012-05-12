@@ -137,7 +137,7 @@ public class SourceCompletion : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(SourceCompletion)[] onActivateProposalListeners;
 	/**

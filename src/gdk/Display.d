@@ -154,7 +154,7 @@ public class Display : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(gboolean, Display)[] onClosedListeners;
 	/**

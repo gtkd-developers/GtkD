@@ -204,11 +204,11 @@ public import gtk.FileFilter;
  * immediately type a path name. On Unix systems, this is bound to
  * ~ (tilde) with a path string
  * of "~" itself for access to home directories.
- * chooser  :
+ * chooser :
  * 		the object which received the signal.
- * path  :
+ * path :
  * 		default contents for the text entry for the file name
- * user_data  :
+ * user_data :
  * 		user data set when the signal handler was connected.
  * Note
  *  You can create your own bindings for the
@@ -233,9 +233,9 @@ public import gtk.FileFilter;
  * is bound to Backspace and
  * Alt+Up
  * (the Up key in the numeric keypad also works).
- * chooser  :
+ * chooser :
  * 		the object which received the signal.
- * user_data  :
+ * user_data :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::down-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -249,9 +249,9 @@ public import gtk.FileFilter;
  * default this is bound to
  * Alt+Down
  * (the Down key in the numeric keypad also works).
- * chooser  :
+ * chooser :
  * 		the object which received the signal.
- * user_data  :
+ * user_data :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::home-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -260,9 +260,9 @@ public import gtk.FileFilter;
  * folder in the file list. By default this is bound to
  * Alt+Home
  * (the Home key in the numeric keypad also works).
- * chooser  :
+ * chooser :
  * 		the object which received the signal.
- * user_data  :
+ * user_data :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::desktop-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -270,9 +270,9 @@ public import gtk.FileFilter;
  * This is used to make the file chooser show the user's Desktop
  * folder in the file list. By default this is bound to
  * Alt+D.
- * chooser  :
+ * chooser :
  * 		the object which received the signal.
- * user_data  :
+ * user_data :
  * 		user data set when the signal handler was connected.
  * The "GtkFileChooserDefault::quick-bookmark" signal
  *  void user_function (GtkFileChooserDefault *chooser,
@@ -292,11 +292,11 @@ public import gtk.FileFilter;
  * successively;
  * Alt+0 is
  * defined to switch to the bookmark at index 10.
- * chooser  :
+ * chooser :
  * 		the object which received the signal.
- * bookmark_indes  :
+ * bookmark_indes :
  * 		index of the bookmark to switch to; the indices start at 0.
- * user_data  :
+ * user_data :
  * 		user data set when the signal handler was connected.
  */
 public template FileChooserT(TStruct)
@@ -314,7 +314,7 @@ public template FileChooserT(TStruct)
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	GtkFileChooserConfirmation delegate(FileChooserIF)[] _onConfirmOverwriteListeners;
 	GtkFileChooserConfirmation delegate(FileChooserIF)[] onConfirmOverwriteListeners()

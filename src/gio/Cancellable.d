@@ -126,7 +126,7 @@ public class Cancellable : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Cancellable)[] onCancelledListeners;
 	/**

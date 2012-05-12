@@ -178,7 +178,7 @@ public class DeviceManager : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Device, DeviceManager)[] onDeviceAddedListeners;
 	/**

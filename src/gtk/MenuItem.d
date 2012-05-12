@@ -238,7 +238,7 @@ public class MenuItem : Bin, ActivatableIF
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(MenuItem)[] onActivateListeners;
 	/**

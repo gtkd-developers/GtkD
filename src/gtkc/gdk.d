@@ -593,9 +593,8 @@ mixin( _shared ~ "static this()
 
 mixin( gshared ~"extern(C)
 {
-	
 	// gdk.Gdk
-	
+
 	void function(gint* argc, gchar*** argv) c_gdk_init;
 	gboolean function(gint* argc, gchar*** argv) c_gdk_init_check;
 	void function(gint* argc, gchar*** argv) c_gdk_parse_args;
@@ -619,17 +618,17 @@ mixin( gshared ~"extern(C)
 	void function() c_gdk_beep;
 	void function() c_gdk_error_trap_push;
 	void function() c_gdk_error_trap_pop_ignored;
-	
+
 	// gdk.DisplayManager
-	
+
 	GdkDisplayManager* function() c_gdk_display_manager_get;
 	GdkDisplay* function(GdkDisplayManager* manager) c_gdk_display_manager_get_default_display;
 	void function(GdkDisplayManager* manager, GdkDisplay* display) c_gdk_display_manager_set_default_display;
 	GSList* function(GdkDisplayManager* manager) c_gdk_display_manager_list_displays;
 	GdkDisplay* function(GdkDisplayManager* manager, gchar* name) c_gdk_display_manager_open_display;
-	
+
 	// gdk.Display
-	
+
 	GdkDisplay* function(gchar* displayName) c_gdk_display_open;
 	GdkDisplay* function() c_gdk_display_get_default;
 	gchar* function(GdkDisplay* display) c_gdk_display_get_name;
@@ -670,9 +669,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkDisplay* display) c_gdk_display_supports_composite;
 	GdkAppLaunchContext* function(GdkDisplay* display) c_gdk_display_get_app_launch_context;
 	void function(GdkDisplay* display, gchar* startupId) c_gdk_display_notify_startup_complete;
-	
+
 	// gdk.Screen
-	
+
 	GdkScreen* function() c_gdk_screen_get_default;
 	GdkVisual* function(GdkScreen* screen) c_gdk_screen_get_system_visual;
 	GdkVisual* function(GdkScreen* screen) c_gdk_screen_get_rgba_visual;
@@ -702,16 +701,16 @@ mixin( gshared ~"extern(C)
 	void function(GdkScreen* screen, gdouble dpi) c_gdk_screen_set_resolution;
 	GdkWindow* function(GdkScreen* screen) c_gdk_screen_get_active_window;
 	GList* function(GdkScreen* screen) c_gdk_screen_get_window_stack;
-	
+
 	// gdk.DeviceManager
-	
+
 	void function() c_gdk_disable_multidevice;
 	GdkDisplay* function(GdkDeviceManager* deviceManager) c_gdk_device_manager_get_display;
 	GList* function(GdkDeviceManager* deviceManager, GdkDeviceType type) c_gdk_device_manager_list_devices;
 	GdkDevice* function(GdkDeviceManager* deviceManager) c_gdk_device_manager_get_client_pointer;
-	
+
 	// gdk.Device
-	
+
 	gchar* function(GdkDevice* device) c_gdk_device_get_name;
 	GdkInputSource function(GdkDevice* device) c_gdk_device_get_source;
 	gboolean function(GdkDevice* device, GdkInputMode mode) c_gdk_device_set_mode;
@@ -738,14 +737,14 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkDevice* device, gdouble* axes, GdkAxisUse use, gdouble* value) c_gdk_device_get_axis;
 	GList* function(GdkDevice* device) c_gdk_device_list_axes;
 	gboolean function(GdkDevice* device, gdouble* axes, GdkAtom axisLabel, gdouble* value) c_gdk_device_get_axis_value;
-	
+
 	// gdk.
-	
+
 	gboolean function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_intersect;
 	void function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_union;
-	
+
 	// gdk.Pixbuf
-	
+
 	GdkPixbuf* function(GdkWindow* window, gint srcX, gint srcY, gint width, gint height) c_gdk_pixbuf_get_from_window;
 	GdkPixbuf* function(cairo_surface_t* surface, gint srcX, gint srcY, gint width, gint height) c_gdk_pixbuf_get_from_surface;
 	GType function() c_gdk_pixbuf_get_type;
@@ -791,27 +790,27 @@ mixin( gshared ~"extern(C)
 	void function(GdkPixbuf* src, GdkPixbuf* dest, gfloat saturation, gboolean pixelate) c_gdk_pixbuf_saturate_and_pixelate;
 	GdkPixbuf* function(GdkPixbuf* src) c_gdk_pixbuf_apply_embedded_orientation;
 	void function(GdkPixbuf* pixbuf, guint32 pixel) c_gdk_pixbuf_fill;
-	
+
 	// gdk.Color
-	
+
 	GdkColor* function(GdkColor* color) c_gdk_color_copy;
 	void function(GdkColor* color) c_gdk_color_free;
 	gboolean function(gchar* spec, GdkColor* color) c_gdk_color_parse;
 	gboolean function(GdkColor* colora, GdkColor* colorb) c_gdk_color_equal;
 	guint function(GdkColor* color) c_gdk_color_hash;
 	gchar* function(GdkColor* color) c_gdk_color_to_string;
-	
+
 	// gdk.RGBA
-	
+
 	GdkRGBA* function(GdkRGBA* rgba) c_gdk_rgba_copy;
 	void function(GdkRGBA* rgba) c_gdk_rgba_free;
 	gboolean function(GdkRGBA* rgba, gchar* spec) c_gdk_rgba_parse;
 	gboolean function(gconstpointer p1, gconstpointer p2) c_gdk_rgba_equal;
 	guint function(gconstpointer p) c_gdk_rgba_hash;
 	gchar* function(GdkRGBA* rgba) c_gdk_rgba_to_string;
-	
+
 	// gdk.Visual
-	
+
 	void function(gint** depths, gint* count) c_gdk_query_depths;
 	void function(GdkVisualType** visualTypes, gint* count) c_gdk_query_visual_types;
 	GList* function() c_gdk_list_visuals;
@@ -831,9 +830,9 @@ mixin( gshared ~"extern(C)
 	GdkVisual* function(GdkVisualType visualType) c_gdk_visual_get_best_with_type;
 	GdkVisual* function(gint depth, GdkVisualType visualType) c_gdk_visual_get_best_with_both;
 	GdkScreen* function(GdkVisual* visual) c_gdk_visual_get_screen;
-	
+
 	// gdk.Cursor
-	
+
 	GdkCursor* function(GdkCursorType cursorType) c_gdk_cursor_new;
 	GdkCursor* function(GdkDisplay* display, GdkPixbuf* pixbuf, gint x, gint y) c_gdk_cursor_new_from_pixbuf;
 	GdkCursor* function(GdkDisplay* display, gchar* name) c_gdk_cursor_new_from_name;
@@ -843,9 +842,9 @@ mixin( gshared ~"extern(C)
 	GdkCursorType function(GdkCursor* cursor) c_gdk_cursor_get_cursor_type;
 	GdkCursor* function(GdkCursor* cursor) c_gdk_cursor_ref;
 	void function(GdkCursor* cursor) c_gdk_cursor_unref;
-	
+
 	// gdk.Window
-	
+
 	GdkWindow* function(GdkWindow* parent, GdkWindowAttr* attributes, gint attributesMask) c_gdk_window_new;
 	void function(GdkWindow* window) c_gdk_window_destroy;
 	GdkWindowType function(GdkWindow* window) c_gdk_window_get_window_type;
@@ -984,9 +983,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkWindow* window, gdouble x, gdouble y, gdouble* parentX, gdouble* parentY) c_gdk_window_coords_to_parent;
 	GdkWindow* function(GdkWindow* window) c_gdk_window_get_effective_parent;
 	GdkWindow* function(GdkWindow* window) c_gdk_window_get_effective_toplevel;
-	
+
 	// gdk.Event
-	
+
 	gboolean function() c_gdk_events_pending;
 	GdkEvent* function() c_gdk_event_peek;
 	GdkEvent* function() c_gdk_event_get;
@@ -1013,9 +1012,9 @@ mixin( gshared ~"extern(C)
 	GdkDevice* function(GdkEvent* event) c_gdk_event_get_source_device;
 	void function(GdkEvent* event, GdkDevice* device) c_gdk_event_set_source_device;
 	gboolean function(gchar* name, GValue* value) c_gdk_setting_get;
-	
+
 	// gdk.Keymap
-	
+
 	GdkKeymap* function() c_gdk_keymap_get_default;
 	GdkKeymap* function(GdkDisplay* display) c_gdk_keymap_get_for_display;
 	guint function(GdkKeymap* keymap, GdkKeymapKey* key) c_gdk_keymap_lookup_key;
@@ -1037,9 +1036,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(guint keyval) c_gdk_keyval_is_lower;
 	guint32 function(guint keyval) c_gdk_keyval_to_unicode;
 	guint function(guint32 wc) c_gdk_unicode_to_keyval;
-	
+
 	// gdk.Selection
-	
+
 	gboolean function(GdkWindow* owner, GdkAtom selection, guint32 time, gboolean sendEvent) c_gdk_selection_owner_set;
 	gboolean function(GdkDisplay* display, GdkWindow* owner, GdkAtom selection, guint32 time, gboolean sendEvent) c_gdk_selection_owner_set_for_display;
 	GdkWindow* function(GdkAtom selection) c_gdk_selection_owner_get;
@@ -1048,9 +1047,9 @@ mixin( gshared ~"extern(C)
 	gint function(GdkWindow* requestor, guchar** data, GdkAtom* propType, gint* propFormat) c_gdk_selection_property_get;
 	void function(GdkWindow* requestor, GdkAtom selection, GdkAtom target, GdkAtom property, guint32 time) c_gdk_selection_send_notify;
 	void function(GdkDisplay* display, GdkWindow* requestor, GdkAtom selection, GdkAtom target, GdkAtom property, guint32 time) c_gdk_selection_send_notify_for_display;
-	
+
 	// gdk.DragContext
-	
+
 	GdkAtom function(GdkDragContext* context) c_gdk_drag_get_selection;
 	void function(GdkDragContext* context, guint32 time) c_gdk_drag_abort;
 	void function(GdkDragContext* context, gboolean accepted, guint32 time) c_gdk_drop_reply;
@@ -1072,9 +1071,9 @@ mixin( gshared ~"extern(C)
 	GdkWindow* function(GdkDragContext* context) c_gdk_drag_context_get_source_window;
 	GdkWindow* function(GdkDragContext* context) c_gdk_drag_context_get_dest_window;
 	GdkDragProtocol function(GdkDragContext* context) c_gdk_drag_context_get_protocol;
-	
+
 	// gdk.
-	
+
 	gint function(GdkDisplay* display, GdkAtom encoding, gint format, guchar* text, gint length, gchar*** list) c_gdk_text_property_to_utf8_list_for_display;
 	gchar* function(gchar* str) c_gdk_utf8_to_string_target;
 	GdkAtom function(gchar* atomName, gboolean onlyIfExists) c_gdk_atom_intern;
@@ -1083,9 +1082,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkWindow* window, GdkAtom property, GdkAtom type, gulong offset, gulong length, gint pdelete, GdkAtom* actualPropertyType, gint* actualFormat, gint* actualLength, guchar** data) c_gdk_property_get;
 	void function(GdkWindow* window, GdkAtom property, GdkAtom type, gint format, GdkPropMode mode, guchar* data, gint nelements) c_gdk_property_change;
 	void function(GdkWindow* window, GdkAtom property) c_gdk_property_delete;
-	
+
 	// gdk.
-	
+
 	void function() c_gdk_threads_init;
 	void function() c_gdk_threads_enter;
 	void function() c_gdk_threads_leave;
@@ -1096,9 +1095,9 @@ mixin( gshared ~"extern(C)
 	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_gdk_threads_add_timeout_full;
 	guint function(guint interval, GSourceFunc funct, gpointer data) c_gdk_threads_add_timeout_seconds;
 	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_gdk_threads_add_timeout_seconds_full;
-	
+
 	// gdk.X11
-	
+
 	guint32 function(GdkWindow* window) c_gdk_x11_get_server_time;
 	void function(GdkDisplay* display, char* messageType, ... ) c_gdk_x11_display_broadcast_startup_message;
 	gchar* function(GdkDisplay* display) c_gdk_x11_display_get_startup_notification_id;
@@ -1118,9 +1117,9 @@ mixin( gshared ~"extern(C)
 	gint function(GdkDisplay* display, gchar* str, GdkAtom* encoding, gint* format, guchar** ctext, gint* length) c_gdk_x11_display_string_to_compound_text;
 	gboolean function(GdkDisplay* display, gchar* str, GdkAtom* encoding, gint* format, guchar** ctext, gint* length) c_gdk_x11_display_utf8_to_compound_text;
 	void function(guchar* ctext) c_gdk_x11_free_compound_text;
-	
+
 	// gdk.AppLaunchContext
-	
+
 	GdkAppLaunchContext* function() c_gdk_app_launch_context_new;
 	void function(GdkAppLaunchContext* context, GdkDisplay* display) c_gdk_app_launch_context_set_display;
 	void function(GdkAppLaunchContext* context, GdkScreen* screen) c_gdk_app_launch_context_set_screen;
@@ -1128,15 +1127,15 @@ mixin( gshared ~"extern(C)
 	void function(GdkAppLaunchContext* context, guint32 timestamp) c_gdk_app_launch_context_set_timestamp;
 	void function(GdkAppLaunchContext* context, GIcon* icon) c_gdk_app_launch_context_set_icon;
 	void function(GdkAppLaunchContext* context, char* iconName) c_gdk_app_launch_context_set_icon_name;
-	
+
 	// gdk.Testing
-	
+
 	void function(GdkWindow* window) c_gdk_test_render_sync;
 	gboolean function(GdkWindow* window, gint x, gint y, guint button, GdkModifierType modifiers, GdkEventType buttonPressrelease) c_gdk_test_simulate_button;
 	gboolean function(GdkWindow* window, gint x, gint y, guint keyval, GdkModifierType modifiers, GdkEventType keyPressrelease) c_gdk_test_simulate_key;
-	
+
 	// gdk.
-	
+
 	cairo_surface_t* function(GdkWindow* window, cairo_content_t content, int width, int height) c_gdk_window_create_similar_surface;
 	cairo_t* function(GdkWindow* window) c_gdk_cairo_create;
 	gboolean function(cairo_t* cr, GdkRectangle* rect) c_gdk_cairo_get_clip_rectangle;

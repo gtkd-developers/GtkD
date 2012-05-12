@@ -158,7 +158,7 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(CheckMenuItem)[] onToggledListeners;
 	/**

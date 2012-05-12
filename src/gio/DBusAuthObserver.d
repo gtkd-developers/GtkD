@@ -130,7 +130,7 @@ public class DBusAuthObserver : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(IOStream, Credentials, DBusAuthObserver)[] onAuthorizeAuthenticatedPeerListeners;
 	/**

@@ -108,7 +108,7 @@ public class TextChildAnchor
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(TextChildAnchor)[] onBackspaceListeners;
 	/**

@@ -153,7 +153,7 @@ public class PadTemplate : ObjectGst
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Pad, PadTemplate)[] onPadCreatedListeners;
 	/**

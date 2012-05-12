@@ -135,7 +135,7 @@ public class TextTag : ObjectG
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	bool delegate(ObjectG, Event, TextIter, TextTag)[] onListeners;
 	/**

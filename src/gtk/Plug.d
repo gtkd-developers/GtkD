@@ -138,7 +138,7 @@ public class Plug : Window
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Plug)[] onEmbeddedListeners;
 	/**

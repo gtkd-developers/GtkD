@@ -269,7 +269,7 @@ public class Label : Misc
 	
 	/**
 	 */
-	int[char[]] connectedSignals;
+	int[string] connectedSignals;
 	
 	void delegate(Label)[] onActivateCurrentLinkListeners;
 	/**

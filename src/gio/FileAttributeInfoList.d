@@ -83,7 +83,7 @@ private import glib.Str;
  * install default keys and values for their given file system, architecture,
  * and other possible implementation details (e.g., on a UNIX system, a file
  * attribute key will be registered for the user id for a given file).
- * Table  1.  GFileAttributes Default Namespaces
+ * Table 1. GFileAttributes Default Namespaces
  * Namspace
  * Description
  * "standard"
@@ -157,7 +157,7 @@ private import glib.Str;
  * Please note that these are not all of the possible namespaces.
  * More namespaces can be added from GIO modules or by individual applications.
  * For more information about writing GIO modules, see GIOModule.
- * Table  2.  GFileAttributes Built-in Keys and Value Types
+ * Table 2. GFileAttributes Built-in Keys and Value Types
  * Enum Value
  * Namespace:Key
  * Value Type
