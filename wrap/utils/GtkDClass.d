@@ -60,9 +60,10 @@ private import utils.funct;
 private import utils.StringUtils;
 
 private import std.ascii;
-private import std.path;
+private import std.path : buildPath;
 private import std.stdio;
 private import std.array;
+private import std.algorithm : map;
 private import std.string;
 private import std.conv;
 
@@ -196,7 +197,7 @@ public class GtkDClass
 		if ( convParms.isInterface ) iFaceChar = ";";
 		else iFaceChar = "";
 		HtmlStrip stripper = new HtmlStrip();
-		inLines = std.string.splitLines(stripper.strip(inAPI));
+		inLines = stripper.strip(inAPI).splitLines();
 		//writefln("new API\n%s",inAPI);
 
 		functionSignatures = getCleanSigns();
@@ -426,24 +427,16 @@ public class GtkDClass
 		string h;
 		if ( convParms.isInterface )
 		{
-			h = "public interface "~convParms.interf;
+			h = "public interface " ~ convParms.interf;
 		}
 		else if ( convParms.templ.length == 0 )
 		{
-			h = "public class "~convParms.clss;
+			h = "public class " ~ convParms.clss;
 		}
 		else
 		{
-			h = "public template "~convParms.clss~"(";
-
-			foreach ( int count, string tp ; convParms.templ )
-			{
-				if ( count > 0 )
-				{
-					h ~= ", ";
-				}
-				h ~= tp;
-			}
+			h = "public template " ~ convParms.clss ~ "(";
+			h ~= std.array.join(convParms.templ, ", ");
 			h ~= ")";
 		}
 		if ( parentName.length > 0 )
@@ -481,7 +474,7 @@ public class GtkDClass
 			}
 
 			text ~= getClassHeader(convParms, gtkDParentName)
-					~ getImplements(convParms, gtkDParentName);
+				~ getImplements(convParms, gtkDParentName);
 //			string implements = getImplements(convParms, gtkDParentName);
 //			if ( implements.length > 0 )
 //			{
@@ -668,18 +661,13 @@ public class GtkDClass
 	 */
 	private void addStaticClassCode(ConvParms* convParms, ref string[] text)
 	{
-		string code;
+		string code = convParms.isInterface ?
+			convParms.interfaceCode : convParms.classCode;
 
-		if ( convParms.isInterface ) code = convParms.interfaceCode;
-		else code = convParms.classCode;
-
-		if ( code.length > 0 )
+		if (!code.empty)
 		{
 			text ~= "";
-			foreach ( string line ; std.string.splitLines(code))
-			{
-				text ~= std.string.strip(line);
-			}
+			text ~= array(map!strip(code.splitLines()));
 		}
 	}
 
@@ -2640,23 +2628,19 @@ public class GtkDClass
 
 	public static string idsToGtkD(string gToken, ConvParms* convParms, string[string] aliases, bool caseConvert=true)
 	{
+		auto replace = [
+			"alias"     : "alia",
+			"class"     : "clss",
+			"debug"     : "dbug",
+			"in"        : "f_in",
+			"inout"     : "f_inout",
+			"interface" : "intrface",
+			"out"       : "f_out",
+			"version"   : "vrsion"
+				];
+
 		string converted = tokenToGtkD(gToken, convParms, aliases, caseConvert);
-		switch ( converted )
-		{
-			case "alias" : converted = "alia"; break;
-			case "class" : converted = "clss"; break;
-			case "interface" : converted = "intrface"; break;
-			case "debug" : converted = "dbug"; break;
-			case "version" : converted = "vrsion"; break;
-			case "out" : converted = "f_out"; break;
-			case "in" : converted = "f_in"; break;
-			case "inout" : converted = "f_inout"; break;
-			//case "ref" : converted = "doref"; break; // TODO why wasn't this converted from the alias on APILookup.txt
-			default:
-				// done
-				break;
-		}
-		return converted;
+		return replace.get(converted, converted);
 	}
 
 	/**
