@@ -56,6 +56,7 @@ struct WError
 private import utils.WrapperIF;
 private import utils.HTODConvert;
 private import std.string;
+private import std.range;
 
 /*
 Paths:
@@ -80,6 +81,7 @@ private import utils.GtkDClass;
 private import utils.convparms;
 private import utils.IndentedStringBuilder;
 private import utils.StringUtils;
+private import utils.StringTemplate;
 
 /**
  * converts and wrap the GTK libs
@@ -834,12 +836,11 @@ public class GtkWrapper : WrapperIF
 	{
 		string externalText = license;
 
-		externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";\n"
-			"\nversion(Tango)"
-			"\n	private import tango.stdc.stdio;"
-			"\nelse"
-			"\n	private import std.stdio;\n"
-			"\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
+		externalText ~= "\n";
+		static immutable string module_header = import("templates/module_header.txt");
+		string[] header = [];
+		mixin(formatTemplate("header", module_header));
+		externalText ~= header.join("\n");
 
 		if ( loaderTableName == "glib" )
 		{

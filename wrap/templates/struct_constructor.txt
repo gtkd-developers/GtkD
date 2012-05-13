@@ -1,0 +1,32 @@
+/**
+ * Sets our main struct and passes it to the parent class
+ */
+public this (%{gtkStruct}* %{var})%{iFaceChar}
+{
+	if(%{var} is null)
+	{
+		this = null;
+		return;
+	}
+<| if notBoxedOrSurface_D |>
+	//Check if there already is a D object for this gtk struct
+	void* ptr = getDObject(cast(GObject*)%{var});
+	if( ptr !is null )
+	{
+		this = cast(%{convParms.clss})ptr;
+		return;
+	}
+<| fi notBoxedOrSurface_D |>
+<| if notBoxed |>
+	super(%{castToParent(var)});
+<| fi notBoxed |>
+	this.%{var} = %{var};
+}
+<| if notBoxedOrSurface |>
+
+protected override void setStruct(GObject* obj)
+{
+	super.setStruct(obj);
+	%{var} = cast(%{gtkStruct}*)obj;
+}
+<| fi notBoxedOrSurface |>

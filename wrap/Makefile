@@ -1,6 +1,7 @@
 VPATH =  utils
 OBJS =  HTODConvert.o WrapperIF.o funct.o DefReader.o \
-	    GtkWrapper.o HtmlStrip.o IndentedStringBuilder.o convparms.o GtkDClass.o StringUtils.o
+	    GtkWrapper.o HtmlStrip.o IndentedStringBuilder.o convparms.o GtkDClass.o \
+			StringUtils.o StringTemplate.o
 
 DSRC := $(OBJS:%.o=%.d)
 DTARG = gtkwrap

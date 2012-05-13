@@ -58,6 +58,7 @@ private import utils.IndentedStringBuilder;
 private import utils.convparms;
 private import utils.funct;
 private import utils.StringUtils;
+private import utils.StringTemplate;
 
 private import std.ascii;
 private import std.path : buildPath;
@@ -472,32 +473,7 @@ public class GtkDClass
 
 			text ~= getClassHeader(convParms, gtkDParentName)
 				~ getImplements(convParms, gtkDParentName);
-//			string implements = getImplements(convParms, gtkDParentName);
-//			if ( implements.length > 0 )
-//			{
-//				text ~= implements;
-//			}
 			text ~= "{";
-		}
-
-		// moved from module level
-		//text ~= "private import "~convParms.outPack ~ "."~convParms.outPack~"types;\n\n";
-		//text ~= "private import lib."~convParms.outPack ~ ";\n\n";
-
-		// moved to module level - AND BACK AGAIN
-		//foreach( string imprt ; convParms.imprts )
-		//{
-		//	text ~= "private import "~imprt~";";
-		//}
-
-		string flipG(string inStr)
-		{
-			if ( inStr[0] == 'G' )
-			{
-				return (inStr[1 .. $] ~ 'G');
-			}
-
-			return inStr;
 		}
 
 		if ( convParms.strct.length > 0 )
@@ -506,106 +482,36 @@ public class GtkDClass
 								? convParms.realStrct
 								: convParms.strct;
 			string var = toVar(gtkStruct);
-			text ~= "";
-			if ( !convParms.isInterface )
+
+
+			string getPrefix =
+				gtkDParentName == "GioMountOperation" ? "getGtk" : "get";
+
+			string overrideGetStruct =
+					(gtkDParentName.length > 0 && gtkDParentName != "Boxed") ? "override " : "";
+
+			bool notIF = !convParms.isInterface;
+			bool hasClass = convParms.clss.length > 0;
+			bool hasTempl = convParms.templ.length > 0;
+
+			static immutable string tmplStruct = import("templates/struct.txt");
+			mixin(formatTemplate("text", tmplStruct));
+
+			// GObject has a specific constructor for the struct
+			if ( hasClass && !hasTempl &&
+					"GObject" != convParms.strct  &&
+					!convParms.isInterface )
 			{
-				text ~= "/** the main Gtk struct */";
-				text ~= "protected "~gtkStruct~"* "~var~";";
-				text ~= "";
-			}
+				// template section guards
+				bool notBoxed = parentName.length > 0 && gtkDParentName != "Boxed";
 
-			if ( convParms.clss.length > 0 )
-			{
-				text ~= "";
+				bool notBoxedOrSurface = notBoxed && gtkDParentName != "Surface";
 
-				if ( convParms.templ.length > 0 )
-				{
-					text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
-					if ( !convParms.isInterface )
-					{
-						text ~= "{";
-						text ~= "return cast("~gtkStruct~"*)getStruct();";
-						text ~= "}";
-					}
-					text ~= "";
-				}
-				else
-				{
-					if ( gtkDParentName == "GioMountOperation" )
-						text ~= "public "~gtkStruct~"* getGtk"~convParms.clss~"Struct()"~iFaceChar;
-					else
-						text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
-					if ( !convParms.isInterface )
-					{
-						text ~= "{";
-						text ~= "return " ~ var ~ ';';
-						text ~= "}";
-						text ~= "";
-					}
-					text ~= "";
-					text ~= "/** the main Gtk struct as a void* */";
-					if ( gtkDParentName.length > 0 && gtkDParentName != "Boxed" )
-						text ~= "protected override void* getStruct()"~iFaceChar;
-					else
-						text ~= "protected void* getStruct()"~iFaceChar;
-					if ( !convParms.isInterface )
-					{
-						text ~= "{";
-						text ~= "return cast(void*)" ~ var ~ ';';
-						text ~= "}";
-					}
-					text ~= "";
-					if ( "GObject" != convParms.strct )
-					{
-						// GObject has a specific constructor for the struct
-						if ( !convParms.isInterface )
-						{
-							text ~= "/**";
-							text ~= " * Sets our main struct and passes it to the parent class";
-							text ~= " */";
-							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
-							text ~= "{";
+				bool notBoxedOrSurface_D =
+					gtkDParentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed";
 
-							string[] checkIfNull = [
-												    	"if("~var~" is null)",
-												        "{",
-												        "	this = null;",
-								"	return;",
-								"}" ];
-
-												    string[] checkObject = [
-								""
-								"//Check if there already is a D object for this gtk struct",
-								"void* ptr = getDObject(cast(GObject*)"~var~");",
-								"if( ptr !is null )",
-								"{",
-								"	this = cast("~convParms.clss~")ptr;",
-								"	return;",
-								"}" ];
-
-							text ~= checkIfNull;
-							if ( gtkDParentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed" )
-								text ~= checkObject;
-
-							if ( parentName.length > 0 && gtkDParentName != "Boxed" )
-							{
-								text ~= "super("~castToParent(var)~");";
-							}
-							text ~= "this."~var~" = "~var~";";
-							text ~= "}";
-
-							if ( parentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed" )
-							{
-								text ~= "";
-								text ~= "protected override void setStruct(GObject* obj)";
-								text ~= "{";
-								text ~= "	super.setStruct(obj);";
-								text ~= "	"~var~" = cast("~gtkStruct~"*)obj;";
-								text ~= "}";
-							}
-						}
-					}
-				}
+				static immutable string tmpl = import("templates/struct_constructor.txt");
+				mixin(formatTemplate("text", tmpl));
 			}
 		}
 

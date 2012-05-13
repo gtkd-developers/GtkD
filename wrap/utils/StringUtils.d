@@ -2,6 +2,7 @@ module utils.StringUtils;
 
 private import std.conv;
 private import std.string;
+private import std.range;
 
 string removePrefix(string gToken, string prefix)
 {

@@ -1,0 +1,36 @@
+
+<| if notIF |>
+/** the main Gtk struct */
+protected %{gtkStruct}* %{var};
+
+<| fi notIF |>
+<| if hasClass |>
+
+<| if hasTempl |>
+public %{gtkStruct}* get%{convParms.clss}Struct()%{iFaceChar}
+<| if notIF |>
+{
+return cast(%{gtkStruct}*)getStruct();
+}
+<| fi notIF |>
+
+<| fi hasTempl |>
+<| if !hasTempl |>
+public %{gtkStruct}* %{getPrefix}%{convParms.clss}Struct()%{iFaceChar}
+<| if notIF |>
+{
+return %{var};
+}
+
+<| fi notIF |>
+
+/** the main Gtk struct as a void* */
+protected %{overrideGetStruct}void* getStruct()%{iFaceChar}
+<| if notIF |>
+{
+return cast(void*)%{var};
+}
+<| fi notIF |>
+
+<| fi !hasTempl |>
+<| fi hasClass |>
