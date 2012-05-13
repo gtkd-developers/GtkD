@@ -104,29 +104,7 @@ public class GtkWrapper : WrapperIF
 	string buildFile =  "gtkD.d";
 	string bindingsDir;
 
-	public static string license =
-		"/*"
-		"\n * This file is part of gtkD2."
-		"\n * "
-		"\n * gtkD is free software; you can redistribute it and/or modify"
-		"\n * it under the terms of the GNU Lesser General Public License as published by"
-		"\n * the Free Software Foundation; either version 3 of the License, or"
-		"\n * (at your option) any later version."
-		"\n * "
-		"\n * gtkD is distributed in the hope that it will be useful,"
-		"\n * but WITHOUT ANY WARRANTY; without even the implied warranty of"
-		"\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
-		"\n * GNU Lesser General Public License for more details."
-		"\n * "
-		"\n * You should have received a copy of the GNU Lesser General Public License"
-		"\n * along with gtkD; if not, write to the Free Software"
-		"\n * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA"
-		"\n */"
-		"\n"
-		"\n// generated automatically - do not change"
-		"\n"
-		"\n"
-		;
+	public static string license = import("templates/license.txt");
 
 	private bool currIncludeComments;
 
@@ -186,33 +164,13 @@ public class GtkWrapper : WrapperIF
 		//{
 		//  std.file.mkdir(std.path.buildPath(outputRoot,srcOut));
 		//}
-
 	}
 
 
 	private void startBuildText()
 	{
-		buildText =
-			"/*"
-			"\n * Automatically generated build imports from"
-			"\n * the initial version generouselly given by:"
-			"\n * John Reimer"
-			"\n */"
-			"\n"
-			"\nmodule build;"
-			"\n"
-			"\nversion( build )"
-			"\n{"
-			"\n pragma (nolink);"
-			"\n"
-			"\n version (Windows)     pragma (target, \"GtkD.lib\"  );"
-			"\n version (linux)   pragma (target, \"libgtkd.a\" );"
-			"\n}"
-			"\n"
-			;
-
+		buildText = import("templates/build.txt");
 		buildTextLibs.length = 0;
-
 	}
 
 	public void writeBuildText()

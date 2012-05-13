@@ -1,0 +1,15 @@
+/*
+ * Automatically generated build imports from
+ * the initial version generouselly given by:
+ * John Reimer
+ */
+
+module build;
+
+version( build )
+{
+ pragma (nolink);
+
+ version (Windows)     pragma (target, "GtkD.lib"  );
+ version (linux)   pragma (target, "libgtkd.a" );
+}

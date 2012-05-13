@@ -8,7 +8,7 @@ CC = gcc
 DC = dmd
 
 CFLAGS += $(PATH_INCLUDE) 
-DFLAGS += 
+DFLAGS += -J.
 
 default:$(DTARG) 
 
