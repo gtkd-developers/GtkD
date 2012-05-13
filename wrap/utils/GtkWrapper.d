@@ -79,6 +79,7 @@ private import utils.DefReader;
 private import utils.GtkDClass;
 private import utils.convparms;
 private import utils.IndentedStringBuilder;
+private import utils.StringUtils;
 
 /**
  * converts and wrap the GTK libs
@@ -859,19 +860,17 @@ public class GtkWrapper : WrapperIF
 				"\nmixin( _shared ~ \"static this()"
 				"\n{";
 
-			string library = "LIBRARY."~ toUpper(loaderTableName);
-
 			//Returns an array of libraries to try and link with.
 			string getLibrary(string funct)
 			{
-				if ( funct.startsWith("gdk") )
-					return library ~ ", LIBRARY.GDKPIXBUF";
-				else if	( funct.startsWith("pango_cairo") )
-					return library ~ ", LIBRARY.PANGOCAIRO";
-				else if	( funct.startsWith("g_module") )
-					return library ~ ", LIBRARY.GMODULE";
-				else
-					return library;
+				string library = "LIBRARY."~ loaderTableName.toUpper();
+				string p = matchPrefix([
+						"gdk": "GDKPIXBUF",
+						"pango_cairo": "PANGOCAIRO",
+						"g_module": "GMODULE"],
+						funct, "");
+
+				return (p.empty) ? library : (library ~ ", LIBRARY." ~ p);
 			}
 
 			//Generate the static this, where the linking takes place

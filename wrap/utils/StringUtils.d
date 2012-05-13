@@ -109,3 +109,15 @@ string until(ref int p, string text, string s)
 	return text[start..p];
 }
 
+string matchPrefix(string[string] prefixes, string input, string notfound)
+{
+	foreach (p; prefixes.keys)
+	{
+		if ( input.startsWith(p) )
+		{
+			return prefixes[p];
+		}
+	}
+
+	return notfound;
+}
