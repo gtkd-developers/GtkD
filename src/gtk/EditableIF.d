@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_editable_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -151,7 +150,7 @@ public interface EditableIF
 	 * endPos = location to store the end position, or NULL. [out][allow-none]
 	 * Returns: TRUE if an area is selected, FALSE otherwise
 	 */
-	public int getSelectionBounds(int* startPos, int* endPos);
+	public int getSelectionBounds(out int startPos, out int endPos);
 	
 	/**
 	 * Inserts new_text_length bytes of new_text into the contents of the
@@ -161,10 +160,9 @@ public interface EditableIF
 	 * Virtual: do_insert_text
 	 * Params:
 	 * newText = the text to append
-	 * newTextLength = the length of the text in bytes, or -1
 	 * position = location of the position text will be inserted at. [inout]
 	 */
-	public void insertText(string newText, int newTextLength, ref int position);
+	public void insertText(char[] newText, ref int position);
 	
 	/**
 	 * Deletes a sequence of characters. The characters that are deleted are

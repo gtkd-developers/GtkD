@@ -38,17 +38,14 @@
  * implements:
  * prefixes:
  * 	- gtk_spin_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.Widget
  * 	- gtk.Adjustment
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
- * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,7 +61,6 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gtk.Widget;
 private import gtk.Adjustment;
 
 

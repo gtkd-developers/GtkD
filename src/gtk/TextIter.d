@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_text_iter_
- * 	- gtk_
  * omit structs:
  * 	- GtkTextIter
  * omit prefixes:
@@ -46,12 +45,12 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.TextBuffer
- * 	- gdk.Pixbuf
  * 	- glib.ListSG
+ * 	- gdk.Pixbuf
+ * 	- gtk.TextAttributes
+ * 	- gtk.TextBuffer
  * 	- gtk.TextChildAnchor
  * 	- gtk.TextTag
- * 	- gtk.TextAttributes
  * 	- pango.PgLanguage
  * structWrap:
  * 	- GSList* -> ListSG
@@ -76,12 +75,12 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.TextBuffer;
-private import gdk.Pixbuf;
 private import glib.ListSG;
+private import gdk.Pixbuf;
+private import gtk.TextAttributes;
+private import gtk.TextBuffer;
 private import gtk.TextChildAnchor;
 private import gtk.TextTag;
-private import gtk.TextAttributes;
 private import pango.PgLanguage;
 
 
@@ -132,6 +131,13 @@ public class TextIter : Boxed
 		this(new GtkTextIter);
 	}
 	
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTextIter !is null )
+		{
+			gtk_text_iter_free(gtkTextIter);
+		}
+	}
 	
 	/**
 	 */

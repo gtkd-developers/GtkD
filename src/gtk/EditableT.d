@@ -39,7 +39,6 @@
  * implements:
  * prefixes:
  * 	- gtk_editable_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -238,10 +237,10 @@ public template EditableT(TStruct)
 	 * endPos = location to store the end position, or NULL. [out][allow-none]
 	 * Returns: TRUE if an area is selected, FALSE otherwise
 	 */
-	public int getSelectionBounds(int* startPos, int* endPos)
+	public int getSelectionBounds(out int startPos, out int endPos)
 	{
 		// gboolean gtk_editable_get_selection_bounds (GtkEditable *editable,  gint *start_pos,  gint *end_pos);
-		return gtk_editable_get_selection_bounds(getEditableTStruct(), startPos, endPos);
+		return gtk_editable_get_selection_bounds(getEditableTStruct(), &startPos, &endPos);
 	}
 	
 	/**
@@ -252,13 +251,12 @@ public template EditableT(TStruct)
 	 * Virtual: do_insert_text
 	 * Params:
 	 * newText = the text to append
-	 * newTextLength = the length of the text in bytes, or -1
 	 * position = location of the position text will be inserted at. [inout]
 	 */
-	public void insertText(string newText, int newTextLength, ref int position)
+	public void insertText(char[] newText, ref int position)
 	{
 		// void gtk_editable_insert_text (GtkEditable *editable,  const gchar *new_text,  gint new_text_length,  gint *position);
-		gtk_editable_insert_text(getEditableTStruct(), Str.toStringz(newText), newTextLength, &position);
+		gtk_editable_insert_text(getEditableTStruct(), newText.ptr, cast(int) newText.length, &position);
 	}
 	
 	/**

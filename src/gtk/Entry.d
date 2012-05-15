@@ -40,24 +40,20 @@
  * 	- CellEditableIF
  * prefixes:
  * 	- gtk_entry_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_entry_select_region
- * 	- gtk_entry_set_position
- * 	- gtk_entry_set_editable
  * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gio.Icon
  * 	- gio.IconIF
- * 	- gdk.Window
  * 	- gdk.Pixbuf
  * 	- gtk.Adjustment
  * 	- gtk.Border
  * 	- gtk.EntryBuffer
  * 	- gtk.EntryCompletion
+ * 	- gtk.TargetList
  * 	- pango.PgLayout
  * 	- gtk.EditableT
  * 	- gtk.EditableIF
@@ -66,11 +62,11 @@
  * structWrap:
  * 	- GIcon* -> IconIF
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkBorder* -> Border
  * 	- GtkEntryBuffer* -> EntryBuffer
  * 	- GtkEntryCompletion* -> EntryCompletion
+ * 	- GtkTargetList* -> TargetList
  * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
@@ -90,12 +86,12 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
-private import gdk.Window;
 private import gdk.Pixbuf;
 private import gtk.Adjustment;
 private import gtk.Border;
 private import gtk.EntryBuffer;
 private import gtk.EntryCompletion;
+private import gtk.TargetList;
 private import pango.PgLayout;
 private import gtk.EditableT;
 private import gtk.EditableIF;
@@ -765,10 +761,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * textArea = Return location for the text area. [out]
 	 * Since 3.0
 	 */
-	public void getTextArea(Rectangle* textArea)
+	public void getTextArea(out Rectangle textArea)
 	{
 		// void gtk_entry_get_text_area (GtkEntry *entry,  GdkRectangle *text_area);
-		gtk_entry_get_text_area(gtkEntry, textArea);
+		gtk_entry_get_text_area(gtkEntry, &textArea);
 	}
 	
 	/**
@@ -1567,10 +1563,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * targetList = the targets (data formats) in which the data can be provided
 	 * actions = a bitmask of the allowed drag actions
 	 */
-	public void setIconDragSource(GtkEntryIconPosition iconPos, GtkTargetList* targetList, GdkDragAction actions)
+	public void setIconDragSource(GtkEntryIconPosition iconPos, TargetList targetList, GdkDragAction actions)
 	{
 		// void gtk_entry_set_icon_drag_source (GtkEntry *entry,  GtkEntryIconPosition icon_pos,  GtkTargetList *target_list,  GdkDragAction actions);
-		gtk_entry_set_icon_drag_source(gtkEntry, iconPos, targetList, actions);
+		gtk_entry_set_icon_drag_source(gtkEntry, iconPos, (targetList is null) ? null : targetList.getTargetListStruct(), actions);
 	}
 	
 	/**
@@ -1599,9 +1595,9 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * iconArea = Return location for the icon's area. [out]
 	 * Since 3.0
 	 */
-	public void getIconArea(GtkEntryIconPosition iconPos, Rectangle* iconArea)
+	public void getIconArea(GtkEntryIconPosition iconPos, out Rectangle iconArea)
 	{
 		// void gtk_entry_get_icon_area (GtkEntry *entry,  GtkEntryIconPosition icon_pos,  GdkRectangle *icon_area);
-		gtk_entry_get_icon_area(gtkEntry, iconPos, iconArea);
+		gtk_entry_get_icon_area(gtkEntry, iconPos, &iconArea);
 	}
 }

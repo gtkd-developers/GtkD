@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = TextAttributes
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,8 +42,8 @@
  * omit prefixes:
  * omit code:
  * omit signals:
+ * 	- event
  * imports:
- * 	- gtk.TextAttributes
  * structWrap:
  * 	- GtkTextAttributes* -> TextAttributes
  * module aliases:
@@ -61,7 +61,6 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gtk.TextAttributes;
 
 
 
@@ -108,45 +107,18 @@ public class TextAttributes
 		this.gtkTextAttributes = gtkTextAttributes;
 	}
 	
-	/**
-	 */
-	int[string] connectedSignals;
-	
-	bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes)[] onListeners;
-	/**
-	 * The ::event signal is emitted when an event occurs on a region of the
-	 * buffer marked with this tag.
-	 * TRUE to stop other handlers from being invoked for the
-	 * event. FALSE to propagate the event further.
-	 */
-	void addOn(bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	~this ()
 	{
-		if ( !("event" in connectedSignals) )
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTextAttributes !is null )
 		{
-			Signals.connectData(
-			getStruct(),
-			"event",
-			cast(GCallback)&callBack,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["event"] = 1;
+			gtk_text_attributes_unref(gtkTextAttributes);
 		}
-		onListeners ~= dlg;
-	}
-	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextAttributes textAttributes)
-	{
-		foreach ( bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg ; textAttributes.onListeners )
-		{
-			if ( dlg(object, event, iter, textAttributes) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
 	}
 	
+	//TODO: properties ?
+	
+	/**
+	 */
 	
 	/**
 	 * Creates a GtkTextAttributes, which describes

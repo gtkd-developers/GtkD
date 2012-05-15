@@ -489,6 +489,7 @@ class: TargetList
 prefix: gtk_target_list_
 prefix: gtk_targets_
 prefix: gtk_target_
+noprefix: gtk_target_entry_
 strictPrefix: Y
 import: gtk.TextBuffer
 import: gtk.TargetEntry
@@ -506,6 +507,15 @@ array: gtk_targets_include_text targets n_targets
 array: gtk_targets_include_uri targets n_targets
 array: gtk_targets_include_rich_text targets n_targets
 
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTargetList !is null )
+		{
+			gtk_target_list_unref(gtkTargetList);
+		}
+	}
+code: end
 outFile: TargetList
 
 struct: GtkSelectionData
@@ -2419,29 +2429,24 @@ class: Entry
 implements: EditableIF
 implements: CellEditableIF
 prefix: gtk_entry_
-prefix: gtk_
 import: glib.Str
 import: gio.Icon
 import: gio.IconIF
-structWrap: GIcon* IconIF
-import: gdk.Window
-structWrap: GdkWindow* Window
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
 import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
 import: gtk.Border
-structWrap: GtkBorder* Border
 import: gtk.EntryBuffer
-structWrap: GtkEntryBuffer* EntryBuffer
 import: gtk.EntryCompletion
-structWrap: GtkEntryCompletion* EntryCompletion
+import: gtk.TargetList
 import: pango.PgLayout
+structWrap: GIcon* IconIF
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkAdjustment* Adjustment
+structWrap: GtkBorder* Border
+structWrap: GtkEntryBuffer* EntryBuffer
+structWrap: GtkEntryCompletion* EntryCompletion
+structWrap: GtkTargetList* TargetList
 structWrap: PangoLayout* PgLayout
-#Deprecated since 2.0 also shadowed setEditable in EditableIF
-nocode: gtk_entry_select_region
-nocode: gtk_entry_set_position
-nocode: gtk_entry_set_editable
 
 # imports for TreeModel Interface
 import: gtk.EditableT
@@ -2451,8 +2456,10 @@ import: gtk.EditableIF
 import: gtk.CellEditableT
 import: gtk.CellEditableIF
 
+out: gtk_entry_get_text_area text_area
 out: gtk_entry_get_layout_offsets x
 out: gtk_entry_get_layout_offsets y
+out: gtk_entry_get_icon_area icon_area
 
 code: start
 	// add the Editable capabilities
@@ -2506,7 +2513,6 @@ code: start
 		gtk_entry_set_icon_from_stock(gtkEntry, iconPos, Str.toStringz(StockDesc[stockId]));
 	}
 code: end
-
 outFile: Entry
 
 file: GtkEntryBuffer.html
@@ -2518,36 +2524,61 @@ array: gtk_entry_buffer_new initial_chars n_initial_chars
 array: gtk_entry_buffer_set_text chars n_chars
 array: gtk_entry_buffer_insert_text chars n_chars
 array: gtk_entry_buffer_emit_inserted_text chars n_chars
+array: gtk_entry_buffer_emit_inserted_text chars n_chars
 outFile: EntryBuffer
 
 file: GtkEntryCompletion.html
 struct: GtkEntryCompletion
 class: EntryCompletion
+implements: BuildableIF
 implements: CellLayoutIF
 prefix: gtk_entry_completion_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
+import: gtk.CellArea
+import: gtk.TreeIter
 import: gtk.TreeModel
 import: gtk.TreeModelIF
+import: gtk.Widget
+structWrap: GtkCellArea* CellArea
+structWrap: GtkTreeIter* TreeIter
 structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkWidget* Widget
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
 
 #imports for CellLayout Interface.
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
 code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkEntryCompletion);
+
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkEntryCompletion);
 code: end
 outFile: EntryCompletion
 
+file: GtkScale.html
+struct: GtkScale
+class: Scale
+prefix: gtk_scale_
+import: glib.Str
+import: gtk.Adjustment
+import: pango.PgLayout
+structWrap: GtkAdjustment* Adjustment
+structWrap: PangoLayout* PgLayout
+
+out: gtk_scale_get_layout_offsets x
+out: gtk_scale_get_layout_offsets y
+outFile: Scale
+
 file: GtkHScale.html
 struct: GtkHScale
 class: HScale
 prefix: gtk_hscale_
-prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 outFile: HScale
@@ -2556,7 +2587,6 @@ file: GtkVScale.html
 struct: GtkVScale
 class: VScale
 prefix: gtk_vscale_
-prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 outFile: VScale
@@ -2565,9 +2595,6 @@ file: GtkSpinButton.html
 struct: GtkSpinButton
 class: SpinButton
 prefix: gtk_spin_button_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 
@@ -2575,7 +2602,6 @@ out: gtk_spin_button_get_increments step
 out: gtk_spin_button_get_increments page
 out: gtk_spin_button_get_range min
 out: gtk_spin_button_get_range max
-
 outFile: SpinButton
 
 file: GtkEditable.html
@@ -2583,12 +2609,12 @@ struct: GtkEditable
 class: EditableT
 template: TStruct
 prefix: gtk_editable_
-prefix: gtk_
 import: glib.Str
 
+out: gtk_editable_get_selection_bounds start_pos
+out: gtk_editable_get_selection_bounds end_pos
+array: gtk_editable_insert_text new_text new_text_length
 inout: gtk_editable_insert_text position
-out: gtk_editable_get_selection_bounds start
-out: gtk_editable_get_selection_bounds end
 
 interface: EditableIF
 outFile: EditableT
@@ -2602,22 +2628,21 @@ struct: GtkTextIter
 class: TextIter
 nostruct: GtkTextIter
 prefix: gtk_text_iter_
-prefix: gtk_
 import: glib.Str
-import: gtk.TextBuffer
-structWrap: GtkTextBuffer* TextBuffer
-structWrap: GtkTextIter* TextIter
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
 import: glib.ListSG
-structWrap: GSList* ListSG
-import: gtk.TextChildAnchor
-structWrap: GtkTextChildAnchor* TextChildAnchor
-import: gtk.TextTag
-structWrap: GtkTextTag* TextTag
+import: gdk.Pixbuf
 import: gtk.TextAttributes
-structWrap: GtkTextAttributes* TextAttributes
+import: gtk.TextBuffer
+import: gtk.TextChildAnchor
+import: gtk.TextTag
 import: pango.PgLanguage
+structWrap: GSList* ListSG
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkTextAttributes* TextAttributes
+structWrap: GtkTextBuffer* TextBuffer
+structWrap: GtkTextChildAnchor* TextChildAnchor
+structWrap: GtkTextIter* TextIter
+structWrap: GtkTextTag* TextTag
 structWrap: PangoLanguage* PgLanguage
 
 code: start
@@ -2626,7 +2651,14 @@ code: start
 	{
 		this(new GtkTextIter);
 	}
-	
+
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTextIter !is null )
+		{
+			gtk_text_iter_free(gtkTextIter);
+		}
+	}
 code: end
 outFile: TextIter
 
@@ -2634,7 +2666,6 @@ file: GtkTextMark.html
 struct: GtkTextMark
 class: TextMark
 prefix: gtk_text_mark_
-prefix: gtk_
 import: glib.Str
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
@@ -2644,134 +2675,47 @@ file: GtkTextBuffer.html
 struct: GtkTextBuffer
 class: TextBuffer
 prefix: gtk_text_buffer_
-prefix: gtk_
+import: std.stdio
+import: std.stdarg
+import: gtkc.gobject;
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-structWrap: GtkTextBuffer* TextBuffer
-import: gtk.TextMark
-structWrap: GtkTextMark* TextMark
-import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: pango.PgTabArray
-structWrap: PangoTabArray* PgTabArray
-import: gtk.TextAttributes
-structWrap: GtkTextAttributes* TextAttributes
-import: gtk.TextTagTable
-structWrap: GtkTextTagTable* TextTagTable
-import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
-import: gtk.TextTag
-structWrap: GtkTextTag* TextTag
+import: gdk.Color
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: gtk.TextChildAnchor
-structWrap: GtkTextChildAnchor* TextChildAnchor
-import: gtk.TextMark
-structWrap: GtkTextMark* TextMark
 import: gtk.Clipboard
-structWrap: GtkClipboard* Clipboard
 import: gtk.TargetList
+import: gtk.TextChildAnchor
+import: gtk.TextIter
+import: gtk.TextMark
+import: gtk.TextTag
+import: gtk.TextTagTable
+import: pango.PgFontDescription
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkClipboard* Clipboard
 structWrap: GtkTargetList* TargetList
-import: std.stdarg
+structWrap: GtkTextBuffer* TextBuffer
+structWrap: GtkTextChildAnchor* TextChildAnchor
+structWrap: GtkTextIter* TextIter
+structWrap: GtkTextMark* TextMark
+structWrap: GtkTextTag* TextTag
+structWrap: GtkTextTagTable* TextTagTable
 
+array: gtk_text_buffer_insert text len
+array: gtk_text_buffer_insert_at_cursor text len
+array: gtk_text_buffer_insert_interactive text len
+array: gtk_text_buffer_insert_interactive_at_cursor text len
+array: gtk_text_buffer_set_text text len
 array: gtk_text_buffer_deserialize data length
 array: gtk_text_buffer_get_deserialize_formats Return n_formats
 array: gtk_text_buffer_get_serialize_formats Return n_formats
 array: gtk_text_buffer_serialize Return length
 
-nocode: gtk_text_buffer_set_text
 nocode: gtk_text_buffer_insert_with_tags
 nocode: gtk_text_buffer_insert_with_tags_by_name
 nocode: gtk_text_buffer_create_tag
 
-code: start
-
-	/**
-	 * Deletes current contents of buffer, and inserts text instead. If
-	 * len is -1, text must be nul-terminated. text must be valid UTF-8.
-	 * Params:
-	 *  text = UTF-8 text to insert
-	 */
-	public void setText(string text)
-	{
-		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), cast(int) text.length);
-	}
-	
-	/**
-	 * Inserts len bytes of text at position iter. If len is -1,
-	 * text must be nul-terminated and will be inserted in its
-	 * entirety. Emits the "insert_text" signal; insertion actually occurs
-	 * in the default handler for the signal. iter is invalidated when
-	 * insertion occurs (because the buffer contents change), but the
-	 * default signal handler revalidates it to point to the end of the
-	 * inserted text.
-	 * Params:
-	 *  iter = a position in the buffer
-	 *  text = UTF-8 format text to insert
-	 */
-	public void insert(TextIter iter, string text)
-	{
-		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length);
-	}
-	
-	/**
-	 * Simply calls gtk_text_buffer_insert(), using the current
-	 * cursor position as the insertion point.
-	 * Params:
-	 *  text = some text in UTF-8 format
-	 */
-	public void insertAtCursor(string text)
-	{
-		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int) text.length);
-	}
-	
-	/**
-	 * Like gtk_text_buffer_insert(), but the insertion will not occur if
-	 * iter is at a non-editable location in the buffer. Usually you
-	 * want to prevent insertions at ineditable locations if the insertion
-	 * results from a user action (is interactive).
-	 * default_editable indicates the editability of text that doesn't
-	 * have a tag affecting editability applied to it. Typically the
-	 * result of gtk_text_view_get_editable() is appropriate here.
-	 * Params:
-	 *  iter = a position in buffer
-	 *  text = some UTF-8 text
-	 *  defaultEditable = default editability of buffer
-	 * Returns:
-	 *  whether text was actually inserted
-	 */
-	public int insertInteractive(TextIter iter, string text, int defaultEditable)
-	{
-		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length, defaultEditable);
-	}
-	
-	/**
-	 * Calls gtk_text_buffer_insert_interactive() at the cursor
-	 * position.
-	 * default_editable indicates the editability of text that doesn't
-	 * have a tag affecting editability applied to it. Typically the
-	 * result of gtk_text_view_get_editable() is appropriate here.
-	 * Params:
-	 *  text = text in UTF-8 format
-	 *  defaultEditable = default editability of buffer
-	 * Returns:
-	 *  whether text was actually inserted
-	 */
-	public int insertInteractiveAtCursor(string text, int defaultEditable)
-	{
-		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int) text.length, defaultEditable);
-	}
-
+code: start	
 	/**
 	 * Inserts text into buffer at iter, applying the list of tags to
 	 * the newly-inserted text. The last tag specified must be NULL to
@@ -2781,16 +2725,23 @@ code: start
 	 * Params:
 	 *  iter = an iterator in buffer
 	 *  text = UTF-8 text
-	 *  ... = NULL-terminated list of tags to apply
+	 *  tags = list of tags to apply
 	 */
-	//version(Tango){} else -- still doesn't work on tango, but it compiles now
-	public void insertWithTags(TextIter iter, string text, ... )
+	public void insertWithTags(TextIter iter, string text, TextTag[] tags ... )
 	{
-		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
 		{
-			TextTag tag = va_arg!(TextTag)(_argptr);
-			// void gtk_text_buffer_insert_with_tags  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  GtkTextTag *first_tag,  ...);
-			gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length, (tag is null) ? null : tag.getTextTagStruct(), null);
+			applyTag(tag, start, iter);
 		}
 	}
 	
@@ -2800,175 +2751,129 @@ code: start
 	 * Params:
 	 *  iter = position in buffer
 	 *  text = UTF-8 text
-	 *  ... = more tag names
+	 *  tags = tag names
 	 */
- 	// version(Tango){} else  -- still doesn't work on tango, but it compiles now 
- 	public void insertWithTagsByName(TextIter iter, string text, ... )
+ 	public void insertWithTagsByName(TextIter iter, string text, string[] tags ... )
 	{
-		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(string)); i++)
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
 		{
-			string tagName = va_arg!(string)(_argptr);
-			// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
-			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length, Str.toStringz(tagName), null);
+			applyTagByName(tag, start, iter);
 		}
 	}
-	
-	/**
-	 * Create a new tag for this buffer
-	 * Params:
-	 *  tagName= can be null for no name
-	 *  propertyName=
-	 *  propertyValue=
-	 */ 
-	TextTag createTag(string tagName, string propertyName, int propertyValue, 
-									   string propertyName1, string propertyValue1)
-	{
-		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer,
-				Str.toStringz(tagName), 
-				Str.toStringz(propertyName),propertyValue,
-				Str.toStringz(propertyName1),
-				Str.toStringz(propertyValue1),
-					null)
-		);
-			
-	}
-	/**
-	 * Create a new tag for this buffer
-	 * Params:
-	 *  tagName= can be null for no name
-	 *  propertyName=
-	 *  propertyValue=
-	 */
-	TextTag createTag(string tagName, string propertyName, int propertyValue)
-	{
-		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, 
-				Str.toStringz(tagName),
-				Str.toStringz(propertyName),propertyValue,null)
-		);
-			
-	}
 
 	/**
-	 * Create a new tag for this buffer
+	 * Creates a tag and adds it to the tag table for buffer. Equivalent to
+	 * adding a new tag to the buffer's tag table.
+	 *
+	 * If tagName is null, the tag is anonymous.
+	 * 
+	 * If tagName is non-NULL, a tag called tagName must not already exist
+	 * in the tag table for this buffer.
+	 * 
 	 * Params:
-	 *  tagName= can be null for no name
-	 *  propertyName=
-	 *  propertyValue=
+	 *     tagName = the name for the new tag.
+	 *     ...     = A list of property names and there values.
 	 */
-	TextTag createTag(string tagName, string propertyName, double propertyValue)
+	TextTag createTagT(string tagName, ...)
 	{
-		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue,null)
-		);
-			
-	}
-	
-	/**
-	 * Create a new tag for this buffer
-	 * Params:
-	 *  tagName= can be null for no name
-	 *  propertyName=
-	 *  propertyValue=
-	 *  propertyName2=
-	 *  propertyValue2=
-	 */
-	TextTag createTag(string tagName, string propertyName, int propertyValue, string propertyName2, int propertyValue2)
-	{
-		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, null)
-		);
-	}
+		TextTag tag = new TextTag(gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), null, null));
 
-	/** Create a new tag for this buffer */
-	TextTag createTag(string tagName, string propertyName, int propertyValue, string propertyName2, int propertyValue2, string propertyName3, int propertyValue3, string propertyName4, int propertyValue4, string propertyName5, int propertyValue5)
-	{
-		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, Str.toStringz(propertyName3), propertyValue3, Str.toStringz(propertyName4), propertyValue4, Str.toStringz(propertyName5), propertyValue5, null)
-		);
-	}
+		for (size_t i = 0; i < _arguments.length; i+=2)
+		{
+			//TODO: Add a proper eception type for this.
+			if ( _arguments[i] != typeid(string) )
+				throw new Exception("TextBuffer.CreateTag: The property name must be a string.");
 
-	/**
-	 * Create a new tag for this buffer
-	 * Params:
-	 *  tagName= can be null for no name
-	 *  propertyName=
-	 *  propertyValue=
-	 */
-	TextTag createTag(string tagName, string propertyName, string propertyValue)
-	{
-		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),Str.toStringz(propertyValue),null)
-		);
-			
-	}
+			string name = va_arg!(string)(_argptr);
 
-	/**
-	 * Create a new tag for this buffer
-	 * Params:
-	 *  tagName = can be null for no name
-	 *  propertyName=
-	 *  propertyValue= 
-	 */
-	TextTag createTag(string tagName, string propertyName, Bitmap propertyValue)
-	{
-		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
-		);
-			
-	}
+			version(D_Version2)
+			{
+				mixin("if ( _arguments[i+1] == typeid(const(double)) )
+				{
+					g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+					continue;
+				}");
+			}
 
-	/**
-	 * Obtain the entire text 
-	 * Returns: The text string
-	 */
-	string getText()
-	{
-		TextIter start = new TextIter();
-		TextIter end = new TextIter();
-		getBounds(start,end);
-		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
-	}
+			writefln("%s %s %s", name, _arguments[i+1], i);
 
-	/**
-	 * Create a new tag for this buffer
-	 * Params:
-	 *  tagName= can be null for no name
-	 *  propertyName=
-	 *  propertyValue=
-	 *  propertyName2=
-	 *  propertyValue2=
-	 */
-	TextTag createTag(string tagName, 
-			string propertyName, string propertyValue, 
-			string propertyName2, int propertyValue2)
-	{
-		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), 
-			Str.toStringz(propertyName), Str.toStringz(propertyValue), 
-			Str.toStringz(propertyName2), propertyValue2, null)
-		);
-	}
-	
+			if ( _arguments[i+1] == typeid(bool) ||
+				_arguments[i+1] == typeid(int) ||
+				_arguments[i+1] == typeid(GtkJustification) ||
+				_arguments[i+1] == typeid(GtkTextDirection) ||
+				_arguments[i+1] == typeid(GtkWrapMode) ||
+				_arguments[i+1] == typeid(PangoStretch) ||
+				_arguments[i+1] == typeid(PangoStyle) ||
+				_arguments[i+1] == typeid(PangoUnderline) ||
+				_arguments[i+1] == typeid(PangoVariant) ||
+				_arguments[i+1] == typeid(PangoWeight) )
+			{
 
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(int)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(Bitmap) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(Bitmap)(_argptr).getBitmapStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(Color) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(Color)(_argptr).getColorStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(double) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgFontDescription) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgFontDescription)(_argptr).getPgFontDescriptionStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgTabArray) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgTabArray)(_argptr).getPgTabArrayStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(string) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), Str.toStringz(va_arg!(string)(_argptr)), null);
+			}
+			else
+			{
+				version(Tango)
+					Stderr.formatln("TextBuffer.CreateTag: Unsuported type: \"{}\" for property: \"{}\"",_arguments[i+1] , name);
+				else
+					stderr.writefln("TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
+
+				//TODO: throw segfaults, druntime bug?
+				throw new Exception("TextBuffer.CreateTag: Unsuported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
+
+			}
+		}
+
+		return tag;
+	}
 code: end
-
 outFile: TextBuffer
 
 file: GtkTextTag.html
-
 struct: GtkTextTag
 class: TextTag
 prefix: gtk_text_tag_
 noprefix: gtk_text_attributes_
-prefix: gtk_
 import: glib.Str
 import: gobject.ObjectG
-structWrap: GObject* ObjectG
 import: gdk.Event
-structWrap: GdkEvent* Event
 import: gtk.TextIter
+structWrap: GObject* ObjectG
+structWrap: GdkEvent* Event
 structWrap: GtkTextIter* TextIter
 outFile: TextTag
 
@@ -2976,52 +2881,61 @@ struct: GtkTextAttributes
 class: TextAttributes
 prefix: gtk_text_attributes_
 strictPrefix: Y
-import: gtk.TextAttributes
 structWrap: GtkTextAttributes* TextAttributes
+nosignal: event
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTextAttributes !is null )
+		{
+			gtk_text_attributes_unref(gtkTextAttributes);
+		}
+	}
+
+	//TODO: properties ?
+code: end
 outFile: TextAttributes
 
 file: GtkTextTagTable.html
 struct: GtkTextTagTable
 class: TextTagTable
-prefix: gtk_text_tag_
-prefix: gtk_
+prefix: gtk_text_tag_table_
 import: glib.Str
-structWrap: GtkTextTagTable* TextTagTable
 import: gtk.TextTag
 structWrap: GtkTextTag* TextTag
 outFile: TextTagTable
 
 file: GtkTextView.html
-
 struct: GtkTextView
 class: TextView
 prefix: gtk_text_view_
-prefix: gtk_
 noprefix: gtk_text_child_anchor_
 import: glib.Str
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-import: gtk.TextBuffer
-structWrap: GtkTextBuffer* TextBuffer
-import: gtk.TextMark
-structWrap: GtkTextMark* TextMark
-import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: pango.PgTabArray
-structWrap: PangoTabArray* PgTabArray
-import: gtk.TextAttributes
-structWrap: GtkTextAttributes* TextAttributes
-import: gdk.Window
-structWrap: GdkWindow* Window
-import: gtk.TextChildAnchor
-structWrap: GtkTextChildAnchor* TextChildAnchor
 import: glib.ListG
+import: gdk.Window
+import: gtk.Adjustment
+import: gtk.TextAttributes
+import: gtk.TextBuffer
+import: gtk.TextChildAnchor
+import: gtk.TextIter
+import: gtk.TextMark
+import: gtk.Widget
+import: pango.PgTabArray
 structWrap: GList* ListG
+structWrap: GdkWindow* Window
+structWrap: GtkAdjustment* Adjustment
+structWrap: GtkTextAttributes* TextAttributes
+structWrap: GtkTextBuffer* TextBuffer
+structWrap: GtkTextChildAnchor* TextChildAnchor
+structWrap: GtkTextIter* TextIter
+structWrap: GtkTextMark* TextMark
+structWrap: GtkWidget* Widget
+structWrap: PangoTabArray* PgTabArray
 
+out: gtk_text_view_get_visible_rect visible_rect
+out: gtk_text_view_get_iter_location location
+out: gtk_text_view_get_cursor_locations strong
+out: gtk_text_view_get_cursor_locations weak
 out: gtk_text_view_get_line_at_y line_top
 out: gtk_text_view_get_line_yrange y
 out: gtk_text_view_get_line_yrange height
@@ -3069,7 +2983,6 @@ code: start
 	 *  text = the text to append
 	 */
 	void appendText(string text, bool ensureVisible=true)
-	body
 	{
 		TextBuffer buf = getBuffer();
 		TextIter iter = new TextIter();
@@ -3084,17 +2997,29 @@ code: start
 			scrollToMark(buf.createMark("",iter,true), within_margin, use_align, xalign, yalign);
 		}
 	}
-
-
 code: end
-
 outFile: TextView
 
 struct: GtkTextChildAnchor
 class: TextChildAnchor
-import: glib.Str
 prefix: gtk_text_child_anchor_
 strictPrefix: Y
+
+nosignal: backspace
+nosignal: copy-clipboard
+nosignal: cut-clipboard
+nosignal: delete-from-cursor
+nosignal: insert-at-cursor
+nosignal: move-cursor
+nosignal: move-viewport
+nosignal: paste-clipboard
+nosignal: populate-popup
+nosignal: preedit-changed
+nosignal: select-all
+nosignal: set-anchor
+nosignal: toggle-cursor-visible
+nosignal: toggle-overwrite
+
 import: glib.ListG
 structWrap: GList* ListG
 outFile: TextChildAnchor
@@ -7858,20 +7783,6 @@ code: start
 	mixin OrientableT!(GtkRange);
 code: end
 outFile: Range
-
-file: GtkScale.html
-struct: GtkScale
-class: Scale
-prefix: gtk_scale_
-prefix: gtk_
-import: glib.Str
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-
-out: gtk_scale_get_layout_offsets x
-out: gtk_scale_get_layout_offsets y
-
-outFile: Scale
 
 file: GtkScrollbar.html
 struct: GtkScrollbar

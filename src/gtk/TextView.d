@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_text_view_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * 	- gtk_text_child_anchor_
@@ -46,20 +45,18 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ListG
+ * 	- gdk.Window
  * 	- gtk.Adjustment
+ * 	- gtk.TextAttributes
  * 	- gtk.TextBuffer
- * 	- gtk.TextMark
+ * 	- gtk.TextChildAnchor
  * 	- gtk.TextIter
- * 	- gdk.Rectangle
+ * 	- gtk.TextMark
  * 	- gtk.Widget
  * 	- pango.PgTabArray
- * 	- gtk.TextAttributes
- * 	- gdk.Window
- * 	- gtk.TextChildAnchor
- * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
- * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkTextAttributes* -> TextAttributes
@@ -85,17 +82,16 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ListG;
+private import gdk.Window;
 private import gtk.Adjustment;
+private import gtk.TextAttributes;
 private import gtk.TextBuffer;
-private import gtk.TextMark;
+private import gtk.TextChildAnchor;
 private import gtk.TextIter;
-private import gdk.Rectangle;
+private import gtk.TextMark;
 private import gtk.Widget;
 private import pango.PgTabArray;
-private import gtk.TextAttributes;
-private import gdk.Window;
-private import gtk.TextChildAnchor;
-private import glib.ListG;
 
 
 
@@ -189,7 +185,6 @@ public class TextView : Container
 	 *  text = the text to append
 	 */
 	void appendText(string text, bool ensureVisible=true)
-	body
 	{
 		TextBuffer buf = getBuffer();
 		TextIter iter = new TextIter();
@@ -204,7 +199,6 @@ public class TextView : Container
 			scrollToMark(buf.createMark("",iter,true), within_margin, use_align, xalign, yalign);
 		}
 	}
-	
 	
 	/**
 	 */
@@ -870,10 +864,10 @@ public class TextView : Container
 	 * Params:
 	 * visibleRect = rectangle to fill. [out]
 	 */
-	public void getVisibleRect(Rectangle visibleRect)
+	public void getVisibleRect(out Rectangle visibleRect)
 	{
 		// void gtk_text_view_get_visible_rect (GtkTextView *text_view,  GdkRectangle *visible_rect);
-		gtk_text_view_get_visible_rect(gtkTextView, (visibleRect is null) ? null : visibleRect.getRectangleStruct());
+		gtk_text_view_get_visible_rect(gtkTextView, &visibleRect);
 	}
 	
 	/**
@@ -885,10 +879,10 @@ public class TextView : Container
 	 * iter = a GtkTextIter
 	 * location = bounds of the character at iter. [out]
 	 */
-	public void getIterLocation(TextIter iter, Rectangle location)
+	public void getIterLocation(TextIter iter, out Rectangle location)
 	{
 		// void gtk_text_view_get_iter_location (GtkTextView *text_view,  const GtkTextIter *iter,  GdkRectangle *location);
-		gtk_text_view_get_iter_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), (location is null) ? null : location.getRectangleStruct());
+		gtk_text_view_get_iter_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &location);
 	}
 	
 	/**
@@ -916,10 +910,10 @@ public class TextView : Container
 	 * cursor position (may be NULL). [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getCursorLocations(TextIter iter, Rectangle strong, Rectangle weak)
+	public void getCursorLocations(TextIter iter, out Rectangle strong, out Rectangle weak)
 	{
 		// void gtk_text_view_get_cursor_locations (GtkTextView *text_view,  const GtkTextIter *iter,  GdkRectangle *strong,  GdkRectangle *weak);
-		gtk_text_view_get_cursor_locations(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), (strong is null) ? null : strong.getRectangleStruct(), (weak is null) ? null : weak.getRectangleStruct());
+		gtk_text_view_get_cursor_locations(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &strong, &weak);
 	}
 	
 	/**

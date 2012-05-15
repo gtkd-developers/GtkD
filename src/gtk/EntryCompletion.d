@@ -36,22 +36,28 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_entry_completion_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
+ * 	- gtk.CellArea
+ * 	- gtk.TreeIter
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
+ * 	- gtk.Widget
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * structWrap:
+ * 	- GtkCellArea* -> CellArea
+ * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -70,9 +76,13 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Widget;
+private import gtk.CellArea;
+private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
+private import gtk.Widget;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 
@@ -118,7 +128,7 @@ private import gobject.ObjectG;
  * gtk_tree_model_filter_convert_iter_to_child_iter() to obtain a
  * matching iter.
  */
-public class EntryCompletion : ObjectG, CellLayoutIF
+public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 {
 	
 	/** the main Gtk struct */
@@ -164,6 +174,9 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		gtkEntryCompletion = cast(GtkEntryCompletion*)obj;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkEntryCompletion);
+	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkEntryCompletion);
 	
@@ -199,7 +212,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		}
 	}
 	
-	bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onCursorOnMatchListeners;
+	bool delegate(TreeModelIF, TreeIter, EntryCompletion)[] onCursorOnMatchListeners;
 	/**
 	 * Gets emitted when a match from the cursor is on a match
 	 * of the list. The default behaviour is to replace the contents
@@ -210,7 +223,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * TRUE if the signal has been handled
 	 * Since 2.12
 	 */
-	void addOnCursorOnMatch(bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnCursorOnMatch(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cursor-on-match" in connectedSignals) )
 		{
@@ -227,9 +240,9 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	}
 	extern(C) static gboolean callBackCursorOnMatch(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
 	{
-		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
+		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
 		{
-			if ( dlg(new TreeModel(model), iter, entryCompletion) )
+			if ( dlg(new TreeModel(model), new TreeIter(iter), entryCompletion) )
 			{
 				return 1;
 			}
@@ -278,7 +291,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		return 0;
 	}
 	
-	bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion)[] onMatchSelectedListeners;
+	bool delegate(TreeModelIF, TreeIter, EntryCompletion)[] onMatchSelectedListeners;
 	/**
 	 * Gets emitted when a match from the list is selected.
 	 * The default behaviour is to replace the contents of the
@@ -289,7 +302,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * TRUE if the signal has been handled
 	 * Since 2.4
 	 */
-	void addOnMatchSelected(bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMatchSelected(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("match-selected" in connectedSignals) )
 		{
@@ -306,9 +319,9 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	}
 	extern(C) static gboolean callBackMatchSelected(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
 	{
-		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
+		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
 		{
-			if ( dlg(new TreeModel(model), iter, entryCompletion) )
+			if ( dlg(new TreeModel(model), new TreeIter(iter), entryCompletion) )
 			{
 				return 1;
 			}
@@ -342,13 +355,13 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 * area = the GtkCellArea used to layout cells
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkCellArea* area)
+	public this (CellArea area)
 	{
 		// GtkEntryCompletion * gtk_entry_completion_new_with_area (GtkCellArea *area);
-		auto p = gtk_entry_completion_new_with_area(area);
+		auto p = gtk_entry_completion_new_with_area((area is null) ? null : area.getCellAreaStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_entry_completion_new_with_area(area)");
+			throw new ConstructionException("null returned by gtk_entry_completion_new_with_area((area is null) ? null : area.getCellAreaStruct())");
 		}
 		this(cast(GtkEntryCompletion*) p);
 	}

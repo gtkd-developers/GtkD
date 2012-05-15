@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_text_tag_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * 	- gtk_text_attributes_

@@ -229,9 +229,6 @@ mixin( _shared ~ "static this()
 
 	// gtk.TargetList
 
-	Linker.link(gtk_target_entry_new, \"gtk_target_entry_new\", LIBRARY.GTK);
-	Linker.link(gtk_target_entry_copy, \"gtk_target_entry_copy\", LIBRARY.GTK);
-	Linker.link(gtk_target_entry_free, \"gtk_target_entry_free\", LIBRARY.GTK);
 	Linker.link(gtk_target_list_new, \"gtk_target_list_new\", LIBRARY.GTK);
 	Linker.link(gtk_target_list_ref, \"gtk_target_list_ref\", LIBRARY.GTK);
 	Linker.link(gtk_target_list_unref, \"gtk_target_list_unref\", LIBRARY.GTK);
@@ -1267,6 +1264,21 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_entry_completion_get_popup_set_width, \"gtk_entry_completion_get_popup_set_width\", LIBRARY.GTK);
 	Linker.link(gtk_entry_completion_set_popup_single_match, \"gtk_entry_completion_set_popup_single_match\", LIBRARY.GTK);
 	Linker.link(gtk_entry_completion_get_popup_single_match, \"gtk_entry_completion_get_popup_single_match\", LIBRARY.GTK);
+
+	// gtk.Scale
+
+	Linker.link(gtk_scale_new, \"gtk_scale_new\", LIBRARY.GTK);
+	Linker.link(gtk_scale_new_with_range, \"gtk_scale_new_with_range\", LIBRARY.GTK);
+	Linker.link(gtk_scale_set_digits, \"gtk_scale_set_digits\", LIBRARY.GTK);
+	Linker.link(gtk_scale_set_draw_value, \"gtk_scale_set_draw_value\", LIBRARY.GTK);
+	Linker.link(gtk_scale_set_value_pos, \"gtk_scale_set_value_pos\", LIBRARY.GTK);
+	Linker.link(gtk_scale_get_digits, \"gtk_scale_get_digits\", LIBRARY.GTK);
+	Linker.link(gtk_scale_get_draw_value, \"gtk_scale_get_draw_value\", LIBRARY.GTK);
+	Linker.link(gtk_scale_get_value_pos, \"gtk_scale_get_value_pos\", LIBRARY.GTK);
+	Linker.link(gtk_scale_get_layout, \"gtk_scale_get_layout\", LIBRARY.GTK);
+	Linker.link(gtk_scale_get_layout_offsets, \"gtk_scale_get_layout_offsets\", LIBRARY.GTK);
+	Linker.link(gtk_scale_add_mark, \"gtk_scale_add_mark\", LIBRARY.GTK);
+	Linker.link(gtk_scale_clear_marks, \"gtk_scale_clear_marks\", LIBRARY.GTK);
 
 	// gtk.HScale
 
@@ -3480,21 +3492,6 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_range_set_min_slider_size, \"gtk_range_set_min_slider_size\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_slider_size_fixed, \"gtk_range_set_slider_size_fixed\", LIBRARY.GTK);
 
-	// gtk.Scale
-
-	Linker.link(gtk_scale_new, \"gtk_scale_new\", LIBRARY.GTK);
-	Linker.link(gtk_scale_new_with_range, \"gtk_scale_new_with_range\", LIBRARY.GTK);
-	Linker.link(gtk_scale_set_digits, \"gtk_scale_set_digits\", LIBRARY.GTK);
-	Linker.link(gtk_scale_set_draw_value, \"gtk_scale_set_draw_value\", LIBRARY.GTK);
-	Linker.link(gtk_scale_set_value_pos, \"gtk_scale_set_value_pos\", LIBRARY.GTK);
-	Linker.link(gtk_scale_get_digits, \"gtk_scale_get_digits\", LIBRARY.GTK);
-	Linker.link(gtk_scale_get_draw_value, \"gtk_scale_get_draw_value\", LIBRARY.GTK);
-	Linker.link(gtk_scale_get_value_pos, \"gtk_scale_get_value_pos\", LIBRARY.GTK);
-	Linker.link(gtk_scale_get_layout, \"gtk_scale_get_layout\", LIBRARY.GTK);
-	Linker.link(gtk_scale_get_layout_offsets, \"gtk_scale_get_layout_offsets\", LIBRARY.GTK);
-	Linker.link(gtk_scale_add_mark, \"gtk_scale_add_mark\", LIBRARY.GTK);
-	Linker.link(gtk_scale_clear_marks, \"gtk_scale_clear_marks\", LIBRARY.GTK);
-
 	// gtk.Scrollbar
 
 	Linker.link(gtk_scrollbar_new, \"gtk_scrollbar_new\", LIBRARY.GTK);
@@ -4092,9 +4089,6 @@ mixin( gshared ~"extern(C)
 
 	// gtk.TargetList
 
-	GtkTargetEntry* function(gchar* target, guint flags, guint info) c_gtk_target_entry_new;
-	GtkTargetEntry* function(GtkTargetEntry* data) c_gtk_target_entry_copy;
-	void function(GtkTargetEntry* data) c_gtk_target_entry_free;
 	GtkTargetList* function(GtkTargetEntry* targets, guint ntargets) c_gtk_target_list_new;
 	GtkTargetList* function(GtkTargetList* list) c_gtk_target_list_ref;
 	void function(GtkTargetList* list) c_gtk_target_list_unref;
@@ -5130,6 +5124,21 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkEntryCompletion* completion) c_gtk_entry_completion_get_popup_set_width;
 	void function(GtkEntryCompletion* completion, gboolean popupSingleMatch) c_gtk_entry_completion_set_popup_single_match;
 	gboolean function(GtkEntryCompletion* completion) c_gtk_entry_completion_get_popup_single_match;
+
+	// gtk.Scale
+
+	GtkWidget* function(GtkOrientation orientation, GtkAdjustment* adjustment) c_gtk_scale_new;
+	GtkWidget* function(GtkOrientation orientation, gdouble min, gdouble max, gdouble step) c_gtk_scale_new_with_range;
+	void function(GtkScale* scale, gint digits) c_gtk_scale_set_digits;
+	void function(GtkScale* scale, gboolean drawValue) c_gtk_scale_set_draw_value;
+	void function(GtkScale* scale, GtkPositionType pos) c_gtk_scale_set_value_pos;
+	gint function(GtkScale* scale) c_gtk_scale_get_digits;
+	gboolean function(GtkScale* scale) c_gtk_scale_get_draw_value;
+	GtkPositionType function(GtkScale* scale) c_gtk_scale_get_value_pos;
+	PangoLayout* function(GtkScale* scale) c_gtk_scale_get_layout;
+	void function(GtkScale* scale, gint* x, gint* y) c_gtk_scale_get_layout_offsets;
+	void function(GtkScale* scale, gdouble value, GtkPositionType position, gchar* markup) c_gtk_scale_add_mark;
+	void function(GtkScale* scale) c_gtk_scale_clear_marks;
 
 	// gtk.HScale
 
@@ -7343,21 +7352,6 @@ mixin( gshared ~"extern(C)
 	void function(GtkRange* range, gint minSize) c_gtk_range_set_min_slider_size;
 	void function(GtkRange* range, gboolean sizeFixed) c_gtk_range_set_slider_size_fixed;
 
-	// gtk.Scale
-
-	GtkWidget* function(GtkOrientation orientation, GtkAdjustment* adjustment) c_gtk_scale_new;
-	GtkWidget* function(GtkOrientation orientation, gdouble min, gdouble max, gdouble step) c_gtk_scale_new_with_range;
-	void function(GtkScale* scale, gint digits) c_gtk_scale_set_digits;
-	void function(GtkScale* scale, gboolean drawValue) c_gtk_scale_set_draw_value;
-	void function(GtkScale* scale, GtkPositionType pos) c_gtk_scale_set_value_pos;
-	gint function(GtkScale* scale) c_gtk_scale_get_digits;
-	gboolean function(GtkScale* scale) c_gtk_scale_get_draw_value;
-	GtkPositionType function(GtkScale* scale) c_gtk_scale_get_value_pos;
-	PangoLayout* function(GtkScale* scale) c_gtk_scale_get_layout;
-	void function(GtkScale* scale, gint* x, gint* y) c_gtk_scale_get_layout_offsets;
-	void function(GtkScale* scale, gdouble value, GtkPositionType position, gchar* markup) c_gtk_scale_add_mark;
-	void function(GtkScale* scale) c_gtk_scale_clear_marks;
-
 	// gtk.Scrollbar
 
 	GtkWidget* function(GtkOrientation orientation, GtkAdjustment* adjustment) c_gtk_scrollbar_new;
@@ -7953,9 +7947,6 @@ alias c_gtk_binding_set_add_path  gtk_binding_set_add_path;
 
 // gtk.TargetList
 
-alias c_gtk_target_entry_new  gtk_target_entry_new;
-alias c_gtk_target_entry_copy  gtk_target_entry_copy;
-alias c_gtk_target_entry_free  gtk_target_entry_free;
 alias c_gtk_target_list_new  gtk_target_list_new;
 alias c_gtk_target_list_ref  gtk_target_list_ref;
 alias c_gtk_target_list_unref  gtk_target_list_unref;
@@ -8991,6 +8982,21 @@ alias c_gtk_entry_completion_set_popup_set_width  gtk_entry_completion_set_popup
 alias c_gtk_entry_completion_get_popup_set_width  gtk_entry_completion_get_popup_set_width;
 alias c_gtk_entry_completion_set_popup_single_match  gtk_entry_completion_set_popup_single_match;
 alias c_gtk_entry_completion_get_popup_single_match  gtk_entry_completion_get_popup_single_match;
+
+// gtk.Scale
+
+alias c_gtk_scale_new  gtk_scale_new;
+alias c_gtk_scale_new_with_range  gtk_scale_new_with_range;
+alias c_gtk_scale_set_digits  gtk_scale_set_digits;
+alias c_gtk_scale_set_draw_value  gtk_scale_set_draw_value;
+alias c_gtk_scale_set_value_pos  gtk_scale_set_value_pos;
+alias c_gtk_scale_get_digits  gtk_scale_get_digits;
+alias c_gtk_scale_get_draw_value  gtk_scale_get_draw_value;
+alias c_gtk_scale_get_value_pos  gtk_scale_get_value_pos;
+alias c_gtk_scale_get_layout  gtk_scale_get_layout;
+alias c_gtk_scale_get_layout_offsets  gtk_scale_get_layout_offsets;
+alias c_gtk_scale_add_mark  gtk_scale_add_mark;
+alias c_gtk_scale_clear_marks  gtk_scale_clear_marks;
 
 // gtk.HScale
 
@@ -11203,21 +11209,6 @@ alias c_gtk_range_get_slider_range  gtk_range_get_slider_range;
 alias c_gtk_range_get_slider_size_fixed  gtk_range_get_slider_size_fixed;
 alias c_gtk_range_set_min_slider_size  gtk_range_set_min_slider_size;
 alias c_gtk_range_set_slider_size_fixed  gtk_range_set_slider_size_fixed;
-
-// gtk.Scale
-
-alias c_gtk_scale_new  gtk_scale_new;
-alias c_gtk_scale_new_with_range  gtk_scale_new_with_range;
-alias c_gtk_scale_set_digits  gtk_scale_set_digits;
-alias c_gtk_scale_set_draw_value  gtk_scale_set_draw_value;
-alias c_gtk_scale_set_value_pos  gtk_scale_set_value_pos;
-alias c_gtk_scale_get_digits  gtk_scale_get_digits;
-alias c_gtk_scale_get_draw_value  gtk_scale_get_draw_value;
-alias c_gtk_scale_get_value_pos  gtk_scale_get_value_pos;
-alias c_gtk_scale_get_layout  gtk_scale_get_layout;
-alias c_gtk_scale_get_layout_offsets  gtk_scale_get_layout_offsets;
-alias c_gtk_scale_add_mark  gtk_scale_add_mark;
-alias c_gtk_scale_clear_marks  gtk_scale_clear_marks;
 
 // gtk.Scrollbar
 

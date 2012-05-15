@@ -341,10 +341,11 @@ public class EntryBuffer : ObjectG
 	 * Params:
 	 * position = position at which text was inserted
 	 * chars = text that was inserted
+	 * nChars = number of characters inserted
 	 */
-	public void emitInsertedText(uint position, char[] chars)
+	public void emitInsertedText(uint position, char[] chars, uint nChars)
 	{
 		// void gtk_entry_buffer_emit_inserted_text (GtkEntryBuffer *buffer,  guint position,  const gchar *chars,  guint n_chars);
-		gtk_entry_buffer_emit_inserted_text(gtkEntryBuffer, position, chars.ptr, cast(int) chars.length);
+		gtk_entry_buffer_emit_inserted_text(gtkEntryBuffer, position, chars.ptr, nChars);
 	}
 }

@@ -2995,6 +2995,12 @@ public struct GtkEntryCompletion{}
 
 /**
  * Main Gtk struct.
+ */
+public struct GtkScale{}
+
+
+/**
+ * Main Gtk struct.
  * The GtkHScale struct contains private data only, and
  * should be accessed using the functions below.
  */
@@ -4187,12 +4193,6 @@ public struct GtkPaned{}
  * Main Gtk struct.
  */
 public struct GtkRange{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkScale{}
 
 
 /**

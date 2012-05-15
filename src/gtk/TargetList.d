@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = TargetList
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,6 +42,7 @@
  * 	- gtk_target_
  * omit structs:
  * omit prefixes:
+ * 	- gtk_target_entry_
  * omit code:
  * omit signals:
  * imports:
@@ -118,56 +119,16 @@ public class TargetList : Boxed
 		this.gtkTargetList = gtkTargetList;
 	}
 	
-	/**
-	 */
-	
-	/**
-	 * Makes a new GtkTargetEntry structure.
-	 * Params:
-	 * target = String identifier for target
-	 * flags = Set of flags, see GtkTargetFlags
-	 * info = an ID that will be passed back to the application
-	 * Returns: a pointer to a new GtkTargetEntry structure. Free with gtk_target_entry_free()
-	 */
-	public static TargetEntry entryNew(string target, uint flags, uint info)
+	~this ()
 	{
-		// GtkTargetEntry * gtk_target_entry_new (const gchar *target,  guint flags,  guint info);
-		auto p = gtk_target_entry_new(Str.toStringz(target), flags, info);
-		if(p is null)
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTargetList !is null )
 		{
-			return null;
+			gtk_target_list_unref(gtkTargetList);
 		}
-		return new TargetEntry(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
-	 * Makes a copy of a GtkTargetEntry structure and its data.
-	 * Params:
-	 * data = a pointer to a GtkTargetEntry structure.
-	 * Returns: a pointer to a copy of data. Free with gtk_target_entry_free()
 	 */
-	public static TargetEntry entryCopy(TargetEntry data)
-	{
-		// GtkTargetEntry * gtk_target_entry_copy (GtkTargetEntry *data);
-		auto p = gtk_target_entry_copy((data is null) ? null : data.getTargetEntryStruct());
-		if(p is null)
-		{
-			return null;
-		}
-		return new TargetEntry(cast(GtkTargetEntry*) p);
-	}
-	
-	/**
-	 * Frees a GtkTargetEntry structure returned from
-	 * gtk_target_entry_new() or gtk_target_entry_copy().
-	 * Params:
-	 * data = a pointer to a GtkTargetEntry structure.
-	 */
-	public static void entryFree(TargetEntry data)
-	{
-		// void gtk_target_entry_free (GtkTargetEntry *data);
-		gtk_target_entry_free((data is null) ? null : data.getTargetEntryStruct());
-	}
 	
 	/**
 	 * Creates a new GtkTargetList from an array of GtkTargetEntry.

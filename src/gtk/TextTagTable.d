@@ -37,8 +37,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- gtk_text_tag_
- * 	- gtk_
+ * 	- gtk_text_tag_table_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,7 +47,6 @@
  * 	- gtk.TextTag
  * structWrap:
  * 	- GtkTextTag* -> TextTag
- * 	- GtkTextTagTable* -> TextTagTable
  * module aliases:
  * local aliases:
  * overrides:
@@ -214,17 +212,17 @@ public class TextTagTable : ObjectG
 	/**
 	 * Creates a new GtkTextTagTable. The table contains no tags by
 	 * default.
-	 * Returns: a new GtkTextTagTable
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static TextTagTable tableNew()
+	public this ()
 	{
 		// GtkTextTagTable * gtk_text_tag_table_new (void);
 		auto p = gtk_text_tag_table_new();
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gtk_text_tag_table_new()");
 		}
-		return new TextTagTable(cast(GtkTextTagTable*) p);
+		this(cast(GtkTextTagTable*) p);
 	}
 	
 	/**
@@ -233,10 +231,9 @@ public class TextTagTable : ObjectG
 	 * tag must not be in a tag table already, and may not have
 	 * the same name as an already-added tag.
 	 * Params:
-	 * table = a GtkTextTagTable
 	 * tag = a GtkTextTag
 	 */
-	public void tableAdd(TextTag tag)
+	public void add(TextTag tag)
 	{
 		// void gtk_text_tag_table_add (GtkTextTagTable *table,  GtkTextTag *tag);
 		gtk_text_tag_table_add(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
@@ -247,10 +244,9 @@ public class TextTagTable : ObjectG
 	 * reference to the tag, so be careful - the tag will end
 	 * up destroyed if you don't have a reference to it.
 	 * Params:
-	 * table = a GtkTextTagTable
 	 * tag = a GtkTextTag
 	 */
-	public void tableRemove(TextTag tag)
+	public void remove(TextTag tag)
 	{
 		// void gtk_text_tag_table_remove (GtkTextTagTable *table,  GtkTextTag *tag);
 		gtk_text_tag_table_remove(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
@@ -259,11 +255,10 @@ public class TextTagTable : ObjectG
 	/**
 	 * Look up a named tag.
 	 * Params:
-	 * table = a GtkTextTagTable
 	 * name = name of a tag
 	 * Returns: The tag, or NULL if none by that name is in the table. [transfer none]
 	 */
-	public TextTag tableLookup(string name)
+	public TextTag lookup(string name)
 	{
 		// GtkTextTag * gtk_text_tag_table_lookup (GtkTextTagTable *table,  const gchar *name);
 		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
@@ -279,11 +274,10 @@ public class TextTagTable : ObjectG
 	 * Note that the table may not be modified while iterating
 	 * over it (you can't add/remove tags).
 	 * Params:
-	 * table = a GtkTextTagTable
 	 * func = a function to call on each tag. [scope call]
 	 * data = user data
 	 */
-	public void tableForeach(GtkTextTagTableForeach func, void* data)
+	public void foreac(GtkTextTagTableForeach func, void* data)
 	{
 		// void gtk_text_tag_table_foreach (GtkTextTagTable *table,  GtkTextTagTableForeach func,  gpointer data);
 		gtk_text_tag_table_foreach(gtkTextTagTable, func, data);
@@ -291,11 +285,9 @@ public class TextTagTable : ObjectG
 	
 	/**
 	 * Returns the size of the table (number of tags)
-	 * Params:
-	 * table = a GtkTextTagTable
 	 * Returns: number of tags in table Signal Details The "tag-added" signal void user_function (GtkTextTagTable *texttagtable, GtkTextTag *tag, gpointer user_data) : Run Last
 	 */
-	public int tableGetSize()
+	public int getSize()
 	{
 		// gint gtk_text_tag_table_get_size (GtkTextTagTable *table);
 		return gtk_text_tag_table_get_size(gtkTextTagTable);

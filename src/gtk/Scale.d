@@ -38,15 +38,16 @@
  * implements:
  * prefixes:
  * 	- gtk_scale_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Adjustment
  * 	- pango.PgLayout
  * structWrap:
+ * 	- GtkAdjustment* -> Adjustment
  * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
@@ -64,6 +65,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Adjustment;
 private import pango.PgLayout;
 
 
@@ -181,13 +183,13 @@ public class Scale : Range
 	 * of the scale, or NULL to create a new adjustment. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkOrientation orientation, GtkAdjustment* adjustment)
+	public this (GtkOrientation orientation, Adjustment adjustment)
 	{
 		// GtkWidget * gtk_scale_new (GtkOrientation orientation,  GtkAdjustment *adjustment);
-		auto p = gtk_scale_new(orientation, adjustment);
+		auto p = gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_scale_new(orientation, adjustment)");
+			throw new ConstructionException("null returned by gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct())");
 		}
 		this(cast(GtkScale*) p);
 	}
