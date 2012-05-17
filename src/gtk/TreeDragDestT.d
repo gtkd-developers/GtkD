@@ -44,9 +44,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtk.SelectionData
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * structWrap:
+ * 	- GtkSelectionData* -> SelectionData
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
@@ -61,6 +63,7 @@ public import gtkc.gtk;
 public import glib.ConstructionException;
 
 
+public import gtk.SelectionData;
 public import gtk.TreeModelIF;
 public import gtk.TreePath;
 
@@ -111,10 +114,10 @@ public template TreeDragDestT(TStruct)
 	 * selectionData = data to drop
 	 * Returns: whether a new row was created before position dest
 	 */
-	public int dragDataReceived(TreePath dest, GtkSelectionData* selectionData)
+	public int dragDataReceived(TreePath dest, SelectionData selectionData)
 	{
 		// gboolean gtk_tree_drag_dest_drag_data_received  (GtkTreeDragDest *drag_dest,  GtkTreePath *dest,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_dest_drag_data_received(getTreeDragDestTStruct(), (dest is null) ? null : dest.getTreePathStruct(), selectionData);
+		return gtk_tree_drag_dest_drag_data_received(getTreeDragDestTStruct(), (dest is null) ? null : dest.getTreePathStruct(), (selectionData is null) ? null : selectionData.getSelectionDataStruct());
 	}
 	
 	/**
@@ -128,9 +131,9 @@ public template TreeDragDestT(TStruct)
 	 * selectionData = the data being dragged
 	 * Returns: TRUE if a drop is possible before dest_path
 	 */
-	public int rowDropPossible(TreePath destPath, GtkSelectionData* selectionData)
+	public int rowDropPossible(TreePath destPath, SelectionData selectionData)
 	{
 		// gboolean gtk_tree_drag_dest_row_drop_possible  (GtkTreeDragDest *drag_dest,  GtkTreePath *dest_path,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_dest_row_drop_possible(getTreeDragDestTStruct(), (destPath is null) ? null : destPath.getTreePathStruct(), selectionData);
+		return gtk_tree_drag_dest_row_drop_possible(getTreeDragDestTStruct(), (destPath is null) ? null : destPath.getTreePathStruct(), (selectionData is null) ? null : selectionData.getSelectionDataStruct());
 	}
 }

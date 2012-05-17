@@ -39,7 +39,6 @@
  * implements:
  * prefixes:
  * 	- gtk_tree_sortable_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

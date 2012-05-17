@@ -45,10 +45,12 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.TreePath
+ * 	- gtk.SelectionData
  * 	- gtk.TreeModelIF
  * 	- gtk.TreeModel
+ * 	- gtk.TreePath
  * structWrap:
+ * 	- GtkSelectionData* -> SelectionData
  * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * module aliases:
@@ -64,9 +66,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.TreePath;
+private import gtk.SelectionData;
 private import gtk.TreeModelIF;
 private import gtk.TreeModel;
+private import gtk.TreePath;
 
 
 
@@ -123,7 +126,7 @@ public interface TreeDragSourceIF
 	 * from the dragged row. [out]
 	 * Returns: TRUE if data of the required type was provided
 	 */
-	public int dragDataGet(TreePath path, GtkSelectionData* selectionData);
+	public int dragDataGet(TreePath path, SelectionData selectionData);
 	
 	/**
 	 * Asks the GtkTreeDragSource whether a particular row can be used as
@@ -144,7 +147,7 @@ public interface TreeDragSourceIF
 	 * path = a row in tree_model
 	 * Returns: TRUE if the GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
-	public static int setRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path);
+	public static int setRowDragData(SelectionData selectionData, TreeModelIF treeModel, TreePath path);
 	
 	/**
 	 * Obtains a tree_model and path from selection data of target type
@@ -162,5 +165,5 @@ public interface TreeDragSourceIF
 	 * path = row in tree_model. [out]
 	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
 	 */
-	public static int getRowDragData(GtkSelectionData* selectionData, out TreeModelIF treeModel, out TreePath path);
+	public static int getRowDragData(SelectionData selectionData, out TreeModelIF treeModel, out TreePath path);
 }

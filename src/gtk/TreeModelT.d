@@ -40,6 +40,7 @@
  * prefixes:
  * 	- gtk_tree_model_
  * omit structs:
+ * 	- GtkTreeIter
  * omit prefixes:
  * 	- gtk_tree_row_reference_
  * 	- gtk_tree_path_
@@ -50,9 +51,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.Value
  * 	- gtk.TreeIter
  * 	- gtk.TreePath
- * 	- gobject.Value
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -73,9 +74,9 @@ public import gobject.Signals;
 public  import gtkc.gdktypes;
 
 public import glib.Str;
+public import gobject.Value;
 public import gtk.TreeIter;
 public import gtk.TreePath;
-public import gobject.Value;
 
 
 
@@ -178,8 +179,7 @@ public template TreeModelT(TStruct)
 	 */
 	string getValueString(TreeIter iter, int column)
 	{
-		Value value = new Value();
-		getValue(iter, column, value);
+		Value value = getValue(iter, column);
 		return value.getString();
 	}
 	
@@ -189,8 +189,7 @@ public template TreeModelT(TStruct)
 	 */
 	int getValueInt(TreeIter iter, int column)
 	{
-		Value value = new Value();
-		getValue(iter, column, value);
+		Value value = getValue(iter, column);
 		return value.getInt();
 	}
 	

@@ -38,17 +38,18 @@
  * implements:
  * prefixes:
  * 	- gtk_cell_layout_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.CellRenderer
  * 	- glib.ListG
+ * 	- gtk.CellArea
+ * 	- gtk.CellRenderer
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GtkCellArea* -> CellArea
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
@@ -64,8 +65,9 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.CellRenderer;
 private import glib.ListG;
+private import gtk.CellArea;
+private import gtk.CellRenderer;
 
 
 
@@ -164,7 +166,7 @@ public interface CellLayoutIF
 	 * is used by cell_layout.
 	 * Returns: the cell area used by cell_layout. [transfer none] Since 3.0
 	 */
-	public GtkCellArea* getArea();
+	public CellArea getArea();
 	
 	/**
 	 * Returns the cell renderers which have been added to cell_layout.

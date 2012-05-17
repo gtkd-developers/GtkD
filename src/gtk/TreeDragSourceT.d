@@ -46,10 +46,12 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.TreePath
+ * 	- gtk.SelectionData
  * 	- gtk.TreeModelIF
  * 	- gtk.TreeModel
+ * 	- gtk.TreePath
  * structWrap:
+ * 	- GtkSelectionData* -> SelectionData
  * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * module aliases:
@@ -65,9 +67,10 @@ public import gtkc.gtk;
 public import glib.ConstructionException;
 
 
-public import gtk.TreePath;
+public import gtk.SelectionData;
 public import gtk.TreeModelIF;
 public import gtk.TreeModel;
+public import gtk.TreePath;
 
 
 
@@ -131,10 +134,10 @@ public template TreeDragSourceT(TStruct)
 	 * from the dragged row. [out]
 	 * Returns: TRUE if data of the required type was provided
 	 */
-	public int dragDataGet(TreePath path, GtkSelectionData* selectionData)
+	public int dragDataGet(TreePath path, SelectionData selectionData)
 	{
 		// gboolean gtk_tree_drag_source_drag_data_get (GtkTreeDragSource *drag_source,  GtkTreePath *path,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_source_drag_data_get(getTreeDragSourceTStruct(), (path is null) ? null : path.getTreePathStruct(), selectionData);
+		return gtk_tree_drag_source_drag_data_get(getTreeDragSourceTStruct(), (path is null) ? null : path.getTreePathStruct(), (selectionData is null) ? null : selectionData.getSelectionDataStruct());
 	}
 	
 	/**
@@ -160,10 +163,10 @@ public template TreeDragSourceT(TStruct)
 	 * path = a row in tree_model
 	 * Returns: TRUE if the GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
-	public static int setRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path)
+	public static int setRowDragData(SelectionData selectionData, TreeModelIF treeModel, TreePath path)
 	{
 		// gboolean gtk_tree_set_row_drag_data (GtkSelectionData *selection_data,  GtkTreeModel *tree_model,  GtkTreePath *path);
-		return gtk_tree_set_row_drag_data(selectionData, (treeModel is null) ? null : treeModel.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
+		return gtk_tree_set_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), (treeModel is null) ? null : treeModel.getTreeModelTStruct(), (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -182,13 +185,13 @@ public template TreeDragSourceT(TStruct)
 	 * path = row in tree_model. [out]
 	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
 	 */
-	public static int getRowDragData(GtkSelectionData* selectionData, out TreeModelIF treeModel, out TreePath path)
+	public static int getRowDragData(SelectionData selectionData, out TreeModelIF treeModel, out TreePath path)
 	{
 		// gboolean gtk_tree_get_row_drag_data (GtkSelectionData *selection_data,  GtkTreeModel **tree_model,  GtkTreePath **path);
 		GtkTreeModel* outtreeModel = null;
 		GtkTreePath* outpath = null;
 		
-		auto p = gtk_tree_get_row_drag_data(selectionData, &outtreeModel, &outpath);
+		auto p = gtk_tree_get_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), &outtreeModel, &outpath);
 		
 		treeModel = new TreeModel(outtreeModel);
 		path = new TreePath(outpath);

@@ -2366,6 +2366,19 @@ struct GtkTextIter
 	gpointer dummy14;
 }
 
+struct GtkTreeIter
+{
+	gint stamp;
+	gpointer user_data;
+	gpointer user_data2;
+	gpointer user_data3;
+}
+
+struct GtkRequisition
+{
+	gint width;
+	gint height;
+}
 
 /**
  * Main Gtk struct.
@@ -3135,16 +3148,6 @@ public struct GtkTextChildAnchor{}
 public struct GtkTreeModel{}
 
 
-/**
- * The GtkTreeIter is the primary structure
- * for accessing a GtkTreeModel. Models are expected to put a unique
- * integer in the stamp member, and put
- * model-specific data in the three user_data
- * members.
- */
-public struct GtkTreeIter{}
-
-
 public struct GtkTreePath{}
 
 
@@ -3293,6 +3296,168 @@ public struct GtkCellLayoutIface
 	extern(C) GList*  function(GtkCellLayout *cellLayout)  getCells;
 	extern(C) GtkCellArea * function(GtkCellLayout *cellLayout)  getArea;
 }
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkCellArea{}
+
+
+/**
+ * add ()
+ * adds a GtkCellRenderer to the area.
+ * remove ()
+ * removes a GtkCellRenderer from the area.
+ * foreach ()
+ * calls the GtkCellCallback function on every GtkCellRenderer in
+ * the area with the provided user data until the callback returns TRUE.
+ * foreach_alloc ()
+ * Calls the GtkCellAllocCallback function on every
+ * GtkCellRenderer in the area with the allocated area for the cell
+ * and the provided user data until the callback returns TRUE.
+ * event ()
+ * Handle an event in the area, this is generally used to activate
+ * a cell at the event location for button events but can also be used
+ * to generically pass events to GtkWidgets drawn onto the area.
+ * render ()
+ * Actually render the area's cells to the specified rectangle,
+ * background_area should be correctly distributed to the cells
+ * corresponding background areas.
+ * apply_attributes ()
+ * Apply the cell attributes to the cells. This is
+ * implemented as a signal and generally GtkCellArea subclasses don't
+ * need to implement it since it is handled by the base class.
+ * create_context ()
+ * Creates and returns a class specific GtkCellAreaContext
+ * to store cell alignment and allocation details for a said GtkCellArea
+ * class.
+ * copy_context ()
+ * Creates a new GtkCellAreaContext in the same state as
+ * the passed context with any cell alignment data and allocations intact.
+ * get_request_mode ()
+ * This allows an area to tell its layouting widget whether
+ * it prefers to be allocated in GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH or
+ * GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT mode.
+ * get_preferred_width ()
+ * Calculates the minimum and natural width of the
+ * areas cells with the current attributes applied while considering
+ * the particular layouting details of the said GtkCellArea. While
+ * requests are performed over a series of rows, alignments and overall
+ * minimum and natural sizes should be stored in the corresponding
+ * GtkCellAreaContext.
+ * get_preferred_height_for_width ()
+ * Calculates the minimum and natural height
+ * for the area if the passed context would be allocated the given width.
+ * When implementing this virtual method it is safe to assume that context
+ * has already stored the aligned cell widths for every GtkTreeModel row
+ * that context will be allocated for since this information was stored
+ * at GtkCellAreaClass.get_preferred_width() time. This virtual method
+ * should also store any necessary alignments of cell heights for the
+ * case that the context is allocated a height.
+ * get_preferred_height ()
+ * Calculates the minimum and natural height of the
+ * areas cells with the current attributes applied. Essentially this is
+ * the same as GtkCellAreaClass.get_preferred_width() only for areas
+ * that are being requested as GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT.
+ * get_preferred_width_for_height ()
+ * Calculates the minimum and natural width
+ * for the area if the passed context would be allocated the given
+ * height. The same as GtkCellAreaClass.get_preferred_height_for_width()
+ * only for handling requests in the GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT
+ * mode.
+ * set_cell_property ()
+ * This should be implemented to handle changes in child
+ * cell properties for a given GtkCellRenderer that were previously
+ * installed on the GtkCellAreaClass with gtk_cell_area_class_install_cell_property().
+ * get_cell_property ()
+ * This should be implemented to report the values of
+ * child cell properties for a given child GtkCellRenderer.
+ * focus ()
+ * This virtual method should be implemented to navigate focus from
+ * cell to cell inside the GtkCellArea. The GtkCellArea should move
+ * focus from cell to cell inside the area and return FALSE if focus
+ * logically leaves the area with the following exceptions: When the
+ * area contains no activatable cells, the entire area recieves focus.
+ * Focus should not be given to cells that are actually "focus siblings"
+ * of other sibling cells (see gtk_cell_area_get_focus_from_sibling()).
+ * Focus is set by calling gtk_cell_area_set_focus_cell().
+ * is_activatable ()
+ * Returns whether the GtkCellArea can respond to
+ * GtkCellAreaClass.activate(), usually this does not need to be
+ * implemented since the base class takes care of this however it can
+ * be enhanced if the GtkCellArea subclass can handle activation in
+ * other ways than activating its GtkCellRenderers.
+ * activate ()
+ * This is called when the layouting widget rendering the
+ * GtkCellArea activates the focus cell (see gtk_cell_area_get_focus_cell()).
+ */
+public struct GtkCellAreaClass
+{
+	/+* Basic methods +/
+	extern(C) void  function(GtkCellArea *area,GtkCellRenderer *renderer)  add;
+	extern(C) void  function(GtkCellArea *area,GtkCellRenderer *renderer)  remove;
+	extern(C) void  function(GtkCellArea *area,GtkCellCallback callback,void* callbackData)  foreac;
+	extern(C) void  function(GtkCellArea *area,GtkCellAreaContext *context,GtkWidget *widget,Rectangle *cellArea,Rectangle *backgroundArea,GtkCellAllocCallback callback,void* callbackData)  foreachAlloc;
+	extern(C) int  function(GtkCellArea *area,GtkCellAreaContext *context,GtkWidget *widget,GdkEvent *event,Rectangle *cellArea,GtkCellRendererState flags)  event;
+	extern(C) void  function(GtkCellArea *area,GtkCellAreaContext *context,GtkWidget *widget,cairo_t *cr,Rectangle *backgroundArea,Rectangle *cellArea,GtkCellRendererState flags,int paintFocus)  render;
+	extern(C) void  function(GtkCellArea *area,GtkTreeModel *treeModel,GtkTreeIter *iter,int isExpander,int isExpanded)  applyAttributes;
+	/+* Geometry +/
+	extern(C) GtkCellAreaContext * function(GtkCellArea *area)  createContext;
+	extern(C) GtkCellAreaContext * function(GtkCellArea *area,GtkCellAreaContext *context)  copyContext;
+	extern(C) GtkSizeRequestMode  function(GtkCellArea *area)  getRequestMode;
+	extern(C) void  function(GtkCellArea *area,GtkCellAreaContext *context,GtkWidget *widget,int *minimumWidth,int *naturalWidth)  getPreferredWidth;
+	extern(C) void  function(GtkCellArea *area,GtkCellAreaContext *context,GtkWidget *widget,int width,int *minimumHeight,int *naturalHeight)  getPreferredHeightForWidth;
+	extern(C) void  function(GtkCellArea *area,GtkCellAreaContext *context,GtkWidget *widget,int *minimumHeight,int *naturalHeight)  getPreferredHeight;
+	extern(C) void  function(GtkCellArea *area,GtkCellAreaContext *context,GtkWidget *widget,int height,int *minimumWidth,int *naturalWidth)  getPreferredWidthForHeight;
+	/+* Cell Properties +/
+	extern(C) void  function(GtkCellArea *area,GtkCellRenderer *renderer,uint propertyId,GValue *value,GParamSpec *pspec)  setCellProperty;
+	extern(C) void  function(GtkCellArea *area,GtkCellRenderer *renderer,uint propertyId,GValue *value,GParamSpec *pspec)  getCellProperty;
+	/+* Focus +/
+	extern(C) int  function(GtkCellArea *area,GtkDirectionType direction)  focus;
+	extern(C) int  function(GtkCellArea *area)  isActivatable;
+	extern(C) int  function(GtkCellArea *area,GtkCellAreaContext *context,GtkWidget *widget,Rectangle *cellArea,GtkCellRendererState flags,int editOnly)  activate;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkCellAreaBox{}
+
+
+public struct GtkCellAreaBoxClass{}
+
+
+/**
+ * allocate ()
+ * This tells the context that an allocation width or height
+ * (or both) have been decided for a group of rows. The context should
+ * store any allocations for internally aligned cells at this point so
+ * that they dont need to be recalculated at gtk_cell_area_render() time.
+ * reset ()
+ * Clear any previously stored information about requested and
+ * allocated sizes for the context.
+ * get_preferred_height_for_width ()
+ * Returns the aligned height for the given
+ * width that context must store while collecting sizes for it's rows.
+ * get_preferred_width_for_height ()
+ * Returns the aligned width for the given
+ * height that context must store while collecting sizes for it's rows.
+ */
+public struct GtkCellAreaContextClass
+{
+	extern(C) void  function(GtkCellAreaContext *context,int width,int height)  allocate;
+	extern(C) void  function(GtkCellAreaContext *context)  reset;
+	extern(C) void  function(GtkCellAreaContext *context,int width,int *minimumHeight,int *naturalHeight)  getPreferredHeightForWidth;
+	extern(C) void  function(GtkCellAreaContext *context,int height,int *minimumWidth,int *naturalWidth)  getPreferredWidthForHeight;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkCellAreaContext{}
 
 
 /**
@@ -4213,13 +4378,6 @@ public struct GtkSeparator{}
 public struct GtkWidget{}
 
 
-/**
- * A GtkRequisition represents the desired size of a widget. See
- * the section called “Height-for-width Geometry Management” for more information.
- */
-public struct GtkRequisition{}
-
-
 public struct GtkSelectionData{}
 
 
@@ -4627,6 +4785,20 @@ public struct GtkBuilder{}
  */
 // TODO
 // #define GTK_STYLE_ATTACHED(style) (GTK_STYLE (style)->attach_count > 0)
+
+/*
+ * This macro should be used to emit a standard warning about unexpected
+ * properties in set_cell_property() and get_cell_property() implementations.
+ * object :
+ * the GObject on which set_cell_property() or get_get_property()
+ * was called
+ * property_id :
+ * the numeric id of the property
+ * pspec :
+ * the GParamSpec of the property
+ */
+// TODO
+// #define GTK_CELL_AREA_WARN_INVALID_CELL_PROPERTY_ID(object, property_id, pspec)
 
 /*
  */
@@ -5206,6 +5378,39 @@ public alias extern(C) void  function (GtkTreeModel*, GtkTreeIter*, GValue*, int
  */
 // void (*GtkCellLayoutDataFunc) (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  GtkTreeModel *tree_model,  GtkTreeIter *iter,  gpointer data);
 public alias extern(C) void  function (GtkCellLayout*, GtkCellRenderer*, GtkTreeModel*, GtkTreeIter*, void*) GtkCellLayoutDataFunc;
+
+/*
+ * The type of the callback functions used for iterating over
+ * the cell renderers of a GtkCellArea, see gtk_cell_area_foreach().
+ * renderer :
+ * the cell renderer to operate on
+ * data :
+ * user-supplied data. [closure]
+ * Returns :
+ * TRUE to stop iterating over cells.
+ */
+// gboolean (*GtkCellCallback) (GtkCellRenderer *renderer,  gpointer data);
+public alias extern(C) int  function (GtkCellRenderer*, void*) GtkCellCallback;
+
+/*
+ * The type of the callback functions used for iterating over the
+ * cell renderers and their allocated areas inside a GtkCellArea,
+ * see gtk_cell_area_foreach_alloc().
+ * renderer :
+ * the cell renderer to operate on
+ * cell_area :
+ * the area allocated to renderer inside the rectangle
+ * provided to gtk_cell_area_foreach_alloc().
+ * cell_background :
+ * the background area for renderer inside the
+ * background area provided to gtk_cell_area_foreach_alloc().
+ * data :
+ * user-supplied data. [closure]
+ * Returns :
+ * TRUE to stop iterating over cells.
+ */
+// gboolean (*GtkCellAllocCallback) (GtkCellRenderer *renderer,  const GdkRectangle *cell_area,  const GdkRectangle *cell_background,  gpointer data);
+public alias extern(C) int  function (GtkCellRenderer*, GdkRectangle*, GdkRectangle*, void*) GtkCellAllocCallback;
 
 /*
  * A user function supplied when calling gtk_menu_popup() which

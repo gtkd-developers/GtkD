@@ -220,6 +220,19 @@ struct GtkTextIter
 	gpointer dummy14;
 }
 
+struct GtkTreeIter
+{
+	gint stamp;
+	gpointer user_data;
+	gpointer user_data2;
+	gpointer user_data3;
+}
+
+struct GtkRequisition
+{
+	gint width;
+	gint height;
+}
 addStructs: end
 
 addTypes: start
@@ -2524,7 +2537,6 @@ array: gtk_entry_buffer_new initial_chars n_initial_chars
 array: gtk_entry_buffer_set_text chars n_chars
 array: gtk_entry_buffer_insert_text chars n_chars
 array: gtk_entry_buffer_emit_inserted_text chars n_chars
-array: gtk_entry_buffer_emit_inserted_text chars n_chars
 outFile: EntryBuffer
 
 file: GtkEntryCompletion.html
@@ -2860,6 +2872,18 @@ code: start
 
 		return tag;
 	}
+
+	/**
+	 * Obtain the entire text
+	 * Returns: The text string
+	 */
+	string getText()
+	{
+		TextIter start = new TextIter();
+		TextIter end = new TextIter();
+		getBounds(start,end);
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
+	}
 code: end
 outFile: TextBuffer
 
@@ -2946,7 +2970,6 @@ out: gtk_text_view_window_to_buffer_coords buffer_x
 out: gtk_text_view_window_to_buffer_coords buffer_y
 
 code: start
-
 	/**
 	 * Get the text line at the pixel y
 	 */
@@ -3034,7 +3057,6 @@ struct: GtkTreePath
 class: TreePath
 strictPrefix: Y
 prefix: gtk_tree_path_
-#prefix: gtk_
 import: glib.Str
 structWrap: GtkTreePath* TreePath
 
@@ -3081,6 +3103,25 @@ code: start
 
 		this(p);
 	}
+
+	/**
+	 * Creates a new path with "indices" as indices.
+	 */
+	this (int[] indices ... )
+	{
+		this(false);
+
+		foreach( index; indices )
+			appendIndex(index);
+	}
+
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTreePath !is null )
+		{
+			gtk_tree_path_free(gtkTreePath);
+		}
+	}
 code: end
 outFile: TreePath
 
@@ -3091,17 +3132,19 @@ prefix: gtk_tree_model_
 noprefix: gtk_tree_row_reference_
 noprefix: gtk_tree_path_
 noprefix: gtk_tree_iter_
+nostruct: GtkTreeIter
 import: glib.Str
-import: gtk.TreeIter
-structWrap: GtkTreeIter* TreeIter
-import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
 import: gobject.Value
+import: gtk.TreeIter
+import: gtk.TreePath
 structWrap: GValue* Value
+structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreePath* TreePath
+
 nocode: gtk_tree_model_get_value
+nocode: gtk_tree_model_get_iter
 
 array: gtk_tree_model_rows_reordered new_order
-array: gtk_tree_path_get_indices_with_depth Return depth
 
 interfaceCode: start
 	/**
@@ -3138,8 +3181,6 @@ interfaceCode: start
 	public Value getValue(TreeIter iter, int column, Value value = null);
 interfaceCode: end
 
-nocode: gtk_tree_model_get_iter
-
 code: start
 	/**
 	 * Get the value of a column as a char array.
@@ -3147,8 +3188,7 @@ code: start
 	 */
 	string getValueString(TreeIter iter, int column)
 	{
-		Value value = new Value();
-		getValue(iter, column, value);
+		Value value = getValue(iter, column);
 		return value.getString();
 	}
 
@@ -3158,8 +3198,7 @@ code: start
 	 */
 	int getValueInt(TreeIter iter, int column)
 	{
-		Value value = new Value();
-		getValue(iter, column, value);
+		Value value = getValue(iter, column);
 		return value.getInt();
 	}
 
@@ -3205,18 +3244,19 @@ code: end
 interface: TreeModelIF
 outFile: TreeModelT
 
-
 struct: GtkTreeIter
 class: TreeIter
 strictPrefix: Y
 prefix: gtk_tree_iter_
-#prefix: gtk_
 import: glib.Str
-structWrap: GtkTreeIter* TreeIter
+import: gobject.Value
+import: gtk.TreeIterError
 import: gtk.TreeModelIF
 import: gtk.TreePath
-import: gtk.TreeIterError
-import: gobject.Value
+structWrap: GtkTreeIter* TreeIter
+
+nocode: gtk_tree_iter_copy
+nocode: gtk_tree_iter_free
 
 nosignal: row-changed
 nosignal: row-deleted
@@ -3273,6 +3313,17 @@ code: start
 	this()
 	{
 		this(new GtkTreeIter);
+	}
+
+	/**
+	 * Creates a dynamically allocated tree iterator as a copy of iter.
+	 */
+	TreeIter copy(TreeIter iter)
+	{
+		TreeIter cp = new TreeIter();
+		*(cp.gtkTreePath) = *(iter.gtkTreePath);
+
+		return cp;
 	}
 
 	/**
@@ -3576,16 +3627,15 @@ struct: GtkTreeRowReference
 class: TreeRowReference
 strictPrefix: Y
 prefix: gtk_tree_row_reference_
-#prefix: gtk_
+import: gobject.ObjectG
+import: gtk.TreeIter
 import: gtk.TreeModel
 import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
-import: gobject.ObjectG
 structWrap: GObject* ObjectG
-import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkTreePath* TreePath
 structWrap: GtkTreeRowReference* TreeRowReference
 
 array: gtk_tree_row_reference_reordered new_order
@@ -3595,7 +3645,6 @@ nosignal: row-deleted
 nosignal: row-has-child-toggled
 nosignal: row-inserted
 nosignal: rows-reordered
-
 outFile: TreeRowReference
 
 file:
@@ -3613,10 +3662,8 @@ code: start
 	{
 		super("TreeIter."~method~" : "~message);
 	}
-
 code: end
 outFile: TreeIterError
-
 
 
 file:
@@ -3882,25 +3929,23 @@ code: end
 outFile: TreeModel
 
 
-
 file: GtkTreeSelection.html
 struct: GtkTreeSelection
 class: TreeSelection
 prefix: gtk_tree_selection_
-prefix: gtk_
-import: gtk.TreeView
+
+structWrap: GList* ListG
+structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkTreePath* TreePath
 structWrap: GtkTreeView* TreeView
+
+import: gtk.TreeView
 import: gtk.TreeModel
 import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreeIter
-structWrap: GtkTreeIter* TreeIter
 import: glib.ListG
-structWrap: GList* ListG
 import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
-import: gtk.TreeModelIF
-import: gtk.TreeIter
 
 out: gtk_tree_selection_get_selected model
 nocode: gtk_tree_selection_get_selected_rows
@@ -3961,8 +4006,6 @@ code: start
 	}
 
 code: end
-
-
 outFile: TreeSelection
 
 file: GtkTreeViewColumn.html
@@ -3970,31 +4013,30 @@ struct: GtkTreeViewColumn
 class: TreeViewColumn
 implements: CellLayoutIF
 prefix: gtk_tree_view_column_
-prefix: gtk_
 import: glib.Str
+import: gtk.Button
+import: gtk.CellArea
 import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
-import: glib.ListG
-structWrap: GList* ListG
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreeIter
+import: gtk.TreeModelIF
+import: gtk.TreeView
+import: gtk.Widget
+structWrap: GtkCellArea* CellArea
+structWrap: GtkCellRenderer* CellRenderer
 structWrap: GtkTreeIter* TreeIter
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
-import: glib.Str
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkWidget* Widget
 
 #imports for CellLayout Interface.
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
 
+inout: gtk_tree_view_column_cell_get_size cell_area
 out: gtk_tree_view_column_cell_get_size x_offset
 out: gtk_tree_view_column_cell_get_size y_offset
 out: gtk_tree_view_column_cell_get_size width
 out: gtk_tree_view_column_cell_get_size height
-out: gtk_tree_view_column_cell_get_position start_pos
+out: gtk_tree_view_column_cell_get_position x_offset
 out: gtk_tree_view_column_cell_get_position width
 
 #These are also implemented in CellLayoutT
@@ -4004,6 +4046,8 @@ nocode: gtk_tree_view_column_clear
 nocode: gtk_tree_view_column_add_attribute
 nocode: gtk_tree_view_column_clear_attributes
 
+nocode: gtk_tree_view_column_get_button
+nocode: gtk_tree_view_column_get_tree_view
 nocode: gtk_tree_view_column_new_with_attributes
 
 code: start
@@ -4035,62 +4079,93 @@ code: start
 
 		this(p);
 	}
-code: end
 
+	/**
+	 * Returns the button used in the treeview column header
+	 * Returns: The button for the column header. [transfer none] Since 3.0
+	 */
+	public Button getButton()
+	{
+		// GtkWidget * gtk_tree_view_column_get_button (GtkTreeViewColumn *tree_column);
+		auto p = gtk_tree_view_column_get_button(gtkTreeViewColumn);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Button(cast(GtkButton*) p);
+	}
+
+	/**
+	 * Returns the GtkTreeView wherein tree_column has been inserted.
+	 * If column is currently not inserted in any tree view, NULL is
+	 * returned.
+	 * Since 2.12
+	 * Returns: The tree view wherein column has been inserted if any, NULL otherwise. [transfer none]
+	 */
+	public TreeView getTreeView()
+	{
+		// GtkWidget * gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
+		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TreeView(cast(GtkTreeView*) p);
+	}
+code: end
 outFile: TreeViewColumn
 
 file: GtkTreeView.html
 struct: GtkTreeView
 class: TreeView
+implements: ScrollableIF
 prefix: gtk_tree_view_
-prefix: gtk_
+import: cairo.Surface
 import: glib.Str
+import: glib.ListG
+import: gdk.Window
+import: gtk.Adjustment
+import: gtk.CellRenderer
+import: gtk.Entry
+import: gtk.Tooltip
+import: gtk.TreeIter
 import: gtk.TreeModel
 import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
-import: gtk.TreeSelection
-structWrap: GtkTreeSelection* TreeSelection
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-import: gtk.TreeViewColumn
-structWrap: GtkTreeViewColumn* TreeViewColumn
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
-import: glib.ListG
-structWrap: GList* ListG
 import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
-#import: gtk.TreePath*
-#structWrap: GtkTreePath** TreePath*
-#import: gtk.TreeViewColumn*
-#structWrap: GtkTreeViewColumn** TreeViewColumn*
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
-import: gdk.Window
+import: gtk.TreeSelection
+import: gtk.TreeViewColumn
+structWrap: cairo_surface_t* Surface
+structWrap: GList* ListG
 structWrap: GdkWindow* Window
-import: gtk.Tooltip
-structWrap: GtkTooltip* Tooltip
-#import: gtk.TargetEntry
-#structWrap: GtkTargetEntry* TargetEntry
-#import: gtk.TreeViewDropPosition
-#structWrap: GtkTreeViewDropPosition* TreeViewDropPosition
-import: gtk.TreeIter
-structWrap: GtkTreeIter* TreeIter
-import: gtk.Entry
+structWrap: GtkAdjustment* Adjustment
+structWrap: GtkCellRenderer* CellRenderer
 structWrap: GtkEntry* Entry
+structWrap: GtkTooltip* Tooltip
+structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkTreePath* TreePath
+structWrap: GtkTreeSelection* TreeSelection
+structWrap: GtkTreeViewColumn* TreeViewColumn
 
-inout: gtk_tree_view_get_path_at_pos path
-inout: gtk_tree_view_get_path_at_pos column
-out: gtk_tree_view_get_path_at_pos cell_x
-out: gtk_tree_view_get_path_at_pos cell_y
+#imports for Scrollable Interface.
+import: gtk.ScrollableT
+import: gtk.ScrollableIF
+
 out: gtk_tree_view_get_cursor path
 out: gtk_tree_view_get_cursor focus_column
+out: gtk_tree_view_get_path_at_pos path
+out: gtk_tree_view_get_path_at_pos column
+out: gtk_tree_view_get_path_at_pos cell_x
+out: gtk_tree_view_get_path_at_pos cell_y
+out: gtk_tree_view_is_blank_at_pos path
+out: gtk_tree_view_is_blank_at_pos column
+out: gtk_tree_view_is_blank_at_pos cell_x
+out: gtk_tree_view_is_blank_at_pos cell_y
+out: gtk_tree_view_get_cell_area rect
+out: gtk_tree_view_get_background_area rect
+out: gtk_tree_view_get_visible_rect visible_rect
 out: gtk_tree_view_get_visible_range start_path
 out: gtk_tree_view_get_visible_range end_path
-out: gtk_tree_view_widget_to_tree_coords tx
-out: gtk_tree_view_widget_to_tree_coords ty
-out: gtk_tree_view_tree_to_widget_coords wx
-out: gtk_tree_view_tree_to_widget_coords wy
 out: gtk_tree_view_convert_bin_window_to_tree_coords tx
 out: gtk_tree_view_convert_bin_window_to_tree_coords ty
 out: gtk_tree_view_convert_bin_window_to_widget_coords wx
@@ -4109,10 +4184,15 @@ out: gtk_tree_view_get_drag_dest_row path
 out: gtk_tree_view_get_drag_dest_row pos
 out: gtk_tree_view_get_dest_row_at_pos path
 out: gtk_tree_view_get_dest_row_at_pos pos
+inout: gtk_tree_view_get_tooltip_context x
+inout: gtk_tree_view_get_tooltip_context y 
 out: gtk_tree_view_get_tooltip_context model
 out: gtk_tree_view_get_tooltip_context path
 
 code: start
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkTreeView);
+
 	/**
 	 * Expands the row of the iter.
 	 * Params:
@@ -4153,9 +4233,6 @@ code: start
 		TreePath[] paths = selection.getSelectedRows(model);
 		foreach ( TreePath p; selection.getSelectedRows(model) )
 		{
-			//iters.length = iters.length+1;
-			//iters[iters.length-1] = model.getIter(iter,p);
-			// iters ~= model.getIter(iter,p); >>> compile error can only concatenate arrays ???
 			if ( model.getIter(iter,p) )
 			{
 				iters ~= iter;
@@ -4163,7 +4240,6 @@ code: start
 			}
 		}
 		
-		//printf("TreeView.getSelectedIters iters.lenght = %d\n", iters.length);
 		return iters;
 	}
 
@@ -4188,15 +4264,11 @@ code: start
 			position, 
 			Str.toStringz(title),
 			renderer.getCellRendererStruct(),
-			Str.toStringz("text"),position,//v1.getV(),
-			Str.toStringz("editable"),2,0);//v.getV(),0);
+			Str.toStringz("text"),position,
+			Str.toStringz("editable"),2,0);
 		return tot;
 	}
-
-
-	
 code: end
-
 outFile: TreeView
 
 file: gtk3-GtkTreeView-drag-and-drop.html
@@ -4206,13 +4278,13 @@ template: TStruct
 prefix: gtk_tree_drag_source_
 prefix: gtk_tree_
 noprefix: gtk_tree_drag_dest_
-import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
-#import: gtk.SelectionData
-#structWrap: GtkSelectionData* SelectionData
+import: gtk.SelectionData
 import: gtk.TreeModelIF
 import: gtk.TreeModel
+import: gtk.TreePath
+structWrap: GtkSelectionData* SelectionData
 structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkTreePath* TreePath
 
 out: gtk_tree_get_row_drag_data tree_model
 out: gtk_tree_get_row_drag_data path
@@ -4225,11 +4297,11 @@ class: TreeDragDestT
 template: TStruct
 prefix: gtk_tree_drag_dest_
 strictPrefix: Y
+import: gtk.SelectionData
 import: gtk.TreeModelIF
 import: gtk.TreePath
+structWrap: GtkSelectionData* SelectionData
 structWrap: GtkTreePath* TreePath
-#import: gtk.SelectionData
-#structWrap: GtkSelectionData* SelectionData
 
 interfaceCode: start
 	/**
@@ -4241,7 +4313,7 @@ interfaceCode: start
 	 * path =  a row in tree_model
 	 * Returns: TRUE if the GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
-	public static int setRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path);
+	public static int setRowDragData(SelectionData selectionData, TreeModelIF treeModel, TreePath path);
 	
 	/**
 	 * Obtains a tree_model and path from selection data of target type
@@ -4259,7 +4331,7 @@ interfaceCode: start
 	 * path =  row in tree_model
 	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
 	 */
-	public static int getRowDragData(GtkSelectionData* selectionData, GtkTreeModel** treeModel, GtkTreePath** path);
+	public static int getRowDragData(SelectionData selectionData, out TreeModelIF treeModel, out TreePath path);
 interfaceCode: end
 interface: TreeDragDestIF
 outFile: TreeDragDestT
@@ -4268,26 +4340,32 @@ file: GtkCellView.html
 struct: GtkCellView
 class: CellView
 implements: CellLayoutIF
+implements: OrientableIF
 prefix: gtk_cell_view_
-prefix: gtk_
 import: glib.Str
+import: gdk.Color
+import: gdk.RGBA
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
+import: gtk.CellArea
+import: gtk.CellAreaContext
 import: gtk.TreeModel
 import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
-#import: gtk.Requisition
-#structWrap: GtkRequisition* Requisition
-import: gdk.Color
 structWrap: GdkColor* Color
-import: glib.ListG
-structWrap: GList* ListG
+structWrap: GdkRGBA* RGBA
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkCellArea* CellArea
+structWrap: GtkCellAreaContext* CellAreaContext
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkTreePath* TreePath
 
 #imports for CellLayout Interface.
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
 
 out: gtk_cell_view_get_size_of_row requisition
 
@@ -4297,6 +4375,9 @@ nocode: gtk_cell_view_new_with_markup
 code: start
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkCellView);
+
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkCellView);
 
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererText
@@ -4333,40 +4414,39 @@ code: start
 		this(p);
 	}
 code: end
-
 outFile: CellView
 
 file: GtkIconView.html
 struct: GtkIconView
 class: IconView
 implements: CellLayoutIF
+implements: ScrollableIF
 prefix: gtk_icon_view_
-prefix: gtk_
+import: cairo.Surface
+import: glib.ListG
+import: gtk.CellArea
+import: gtk.CellRenderer
+import: gtk.Tooltip
+import: gtk.TreeIter
 import: gtk.TreeModel
 import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
-#import: gtk.TreePath*
-#structWrap: GtkTreePath** TreePath*
-#import: gtk.CellRenderer*
-#structWrap: GtkCellRenderer** CellRenderer*
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
-import: gtk.Tooltip
-structWrap: GtkTooltip* Tooltip
-import: gtk.TreeIter
-structWrap: GtkTreeIter* TreeIter
-import: glib.ListG
+structWrap: cairo_surface_t* Surface
 structWrap: GList* ListG
-#import: gtk.TargetEntry
-#structWrap: GtkTargetEntry* TargetEntry
-#import: gtk.IconViewDropPosition
-#structWrap: GtkIconViewDropPosition* IconViewDropPosition
+structWrap: GtkCellArea* CellArea
+structWrap: GtkCellRenderer* CellRenderer
+structWrap: GtkTooltip* Tooltip
+structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkTreePath* TreePath
 
 #imports for CellLayout Interface.
 import: gtk.CellLayoutIF
 import: gtk.CellLayoutT
+
+#imports for Scrollable Interface.
+import: gtk.ScrollableT
+import: gtk.ScrollableIF
 
 out: gtk_icon_view_get_item_at_pos path
 out: gtk_icon_view_get_item_at_pos cell
@@ -4376,6 +4456,8 @@ out: gtk_icon_view_get_cursor path
 out: gtk_icon_view_get_cursor cell
 out: gtk_icon_view_get_visible_range start_path
 out: gtk_icon_view_get_visible_range end_path
+inout: gtk_icon_view_get_tooltip_context x
+inout: gtk_icon_view_get_tooltip_context y
 out: gtk_icon_view_get_tooltip_context model
 out: gtk_icon_view_get_tooltip_context path
 array: gtk_icon_view_enable_model_drag_source targets n_targets
@@ -4388,6 +4470,9 @@ out: gtk_icon_view_get_dest_item_at_pos pos
 code: start
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkIconView);
+
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkIconView);
 code: end
 outFile: IconView
 
@@ -4396,32 +4481,26 @@ struct: GtkTreeSortable
 class: TreeSortableT
 template: TStruct
 prefix: gtk_tree_sortable_
-prefix: gtk_
-#import: gtk.SortType
-#structWrap: GtkSortType* SortType
-
 out: gtk_tree_sortable_get_sort_column_id sort_column_id
 out: gtk_tree_sortable_get_sort_column_id order
-
 interface: TreeSortableIF
 outFile: TreeSortableT
 
 file: GtkTreeModelSort.html
 struct: GtkTreeModelSort
+ctorStruct: GtkTreeModel
 class: TreeModelSort
 implements: TreeModelIF
 implements: TreeDragSourceIF
 implements: TreeSortableIF
 prefix: gtk_tree_model_sort_
-prefix: gtk_
-import: glib.Str
+import: gtk.TreeIter
 import: gtk.TreeModel
 import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
-import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkTreePath* TreePath
 
 # imports for TreeModel Interface
 import: gtk.TreeModelT
@@ -4454,14 +4533,13 @@ class: TreeModelFilter
 implements: TreeModelIF
 implements: TreeDragSourceIF
 prefix: gtk_tree_model_filter_
-prefix: gtk_
+import: gtk.TreeIter
 import: gtk.TreeModel
 import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
 import: gtk.TreePath
-structWrap: GtkTreePath* TreePath
-import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkTreePath* TreePath
 
 # imports for TreeModel Interface
 import: gtk.TreeModelT
@@ -4487,43 +4565,172 @@ struct: GtkCellLayout
 class: CellLayoutT
 template: TStruct
 prefix: gtk_cell_layout_
-prefix: gtk_
 import: glib.Str
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
 import: glib.ListG
+import: gtk.CellArea
+import: gtk.CellRenderer
 structWrap: GList* ListG
+structWrap: GtkCellArea* CellArea
+structWrap: GtkCellRenderer* CellRenderer
 interface: CellLayoutIF
 outFile: CellLayoutT
+
+file: GtkCellArea.html
+struct: GtkCellArea
+class: CellArea
+implements: BuildableIF
+implements: CellLayoutIF
+prefix:  gtk_cell_area_
+import: std.stdarg
+import: cairo.Context
+import: glib.Str
+import: glib.ListG
+import: gobject.ParamSpec
+import: gobject.Value
+import: gdk.Event
+import: gtk.CellAreaContext
+import: gtk.CellEditable
+import: gtk.CellEditableIF
+import: gtk.CellRenderer
+import: gtk.TreeIter
+import: gtk.TreeModelIF
+import: gtk.Widget
+structWrap: cairo_t* Context
+structWrap: GList* ListG
+structWrap: GParamSpec* ParamSpec
+structWrap: GValue* Value
+structWrap: GdkEvent* Event
+structWrap: GtkCellAreaContext* CellAreaContext
+structWrap: GtkCellEditable* CellEditableIF
+structWrap: GtkCellRenderer* CellRenderer
+structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeModel* TreeModelIF
+structWrap: GtkWidget* Widget
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
+
+#imports for CellLayout Interface.
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
+
+inout: gtk_cell_area_foreach_alloc cell_area
+inout: gtk_cell_area_foreach_alloc background_area
+inout: gtk_cell_area_event cell_area
+inout: gtk_cell_area_render cell_area
+inout: gtk_cell_area_render background_area
+inout: gtk_cell_area_get_cell_allocation cell_area
+out: gtk_cell_area_get_cell_allocation allocation
+inout: gtk_cell_area_get_cell_at_position cell_area
+out: gtk_cell_area_get_cell_at_position alloc_area
+out: gtk_cell_area_get_preferred_width minimum_width
+out: gtk_cell_area_get_preferred_width natural_width
+out: gtk_cell_area_get_preferred_height_for_width minimum_height
+out: gtk_cell_area_get_preferred_height_for_width natural_height
+out: gtk_cell_area_get_preferred_height minimum_height
+out: gtk_cell_area_get_preferred_height natural_height
+out: gtk_cell_area_get_preferred_width_for_height minimum_width
+out: gtk_cell_area_get_preferred_width_for_height natural_width
+array: gtk_cell_area_class_list_cell_properties Return n_properties
+inout: gtk_cell_area_activate cell_area
+inout: gtk_cell_area_activate_cell cell_area
+inout: gtk_cell_area_inner_cell_area cell_area
+out: gtk_cell_area_inner_cell_area inner_area
+out: gtk_cell_area_request_renderer minimum_size
+out: gtk_cell_area_request_renderer natural_size
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkCellArea);
+
+	// add the CellLayout capabilities
+	mixin CellLayoutT!(GtkCellArea);
+code: end
+outFile: CellArea
+
+file: GtkCellAreaBox.html
+struct: GtkCellAreaBox
+ctorStruct: GtkCellArea
+class: CellAreaBox
+implements: OrientableIF
+prefix: gtk_cell_area_box_
+import: gtk.CellRenderer
+structWrap: GtkCellRenderer* CellRenderer
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkCellAreaBox);
+code: end
+outFile: CellAreaBox
+
+file: GtkCellAreaContext.html
+struct: GtkCellAreaContext
+class: CellAreaContext
+prefix: gtk_cell_renderer_accel_
+import: gtk.CellArea
+structWrap: GtkCellArea* CellArea
+
+out: gtk_cell_area_context_get_preferred_width minimum_width
+out: gtk_cell_area_context_get_preferred_width natural_width
+out: gtk_cell_area_context_get_preferred_height minimum_height
+out: gtk_cell_area_context_get_preferred_height natural_height
+out: gtk_cell_area_context_get_preferred_height_for_width minimum_height
+out: gtk_cell_area_context_get_preferred_height_for_width natural_height
+out: gtk_cell_area_context_get_preferred_width_for_height minimum_width
+out: gtk_cell_area_context_get_preferred_width_for_height natural_width
+out: gtk_cell_area_context_get_allocation width
+out: gtk_cell_area_context_get_allocation height
+
+outFile: CellAreaContext
 
 file: GtkCellRenderer.html
 struct: GtkCellRenderer
 class: CellRenderer
 prefix: gtk_cell_renderer_
-prefix: gtk_
+import: cairo.Context
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
-import: gdk.Window
-structWrap: GdkWindow* Window
 import: gdk.Event
-structWrap: GdkEvent* Event
 import: gtk.CellEditable
 import: gtk.CellEditableIF
+import: gtk.Widget
+structWrap: cairo_t* Context
+structWrap: GdkEvent* Event
 structWrap: GtkCellEditable* CellEditableIF
+structWrap: GtkWidget* Widget
 
+inout: gtk_cell_renderer_get_aligned_area cell_area
+out: gtk_cell_renderer_get_aligned_area aligned_area
 out: gtk_cell_renderer_get_size x_offset
 out: gtk_cell_renderer_get_size y_offset
 out: gtk_cell_renderer_get_size width
 out: gtk_cell_renderer_get_size height
+inout: gtk_cell_renderer_render background_area
+inout: gtk_cell_renderer_render cell_area
+inout: gtk_cell_renderer_activate background_area
+inout: gtk_cell_renderer_activate cell_area
+inout: gtk_cell_renderer_start_editing background_area
+inout: gtk_cell_renderer_start_editing cell_area
 out: gtk_cell_renderer_get_fixed_size width
 out: gtk_cell_renderer_get_fixed_size height
 out: gtk_cell_renderer_get_alignment xalign
 out: gtk_cell_renderer_get_alignment yalign
 out: gtk_cell_renderer_get_padding xpad
 out: gtk_cell_renderer_get_padding ypad
+out: gtk_cell_renderer_get_preferred_height minimum_size
+out: gtk_cell_renderer_get_preferred_height natural_size
+out: gtk_cell_renderer_get_preferred_height_for_width minimum_height
+out: gtk_cell_renderer_get_preferred_height_for_width natural_height
+out: gtk_cell_renderer_get_preferred_size minimum_size
+out: gtk_cell_renderer_get_preferred_size natural_size
+out: gtk_cell_renderer_get_preferred_width minimum_size
+out: gtk_cell_renderer_get_preferred_width natural_size
+out: gtk_cell_renderer_get_preferred_width_for_height minimum_width
+out: gtk_cell_renderer_get_preferred_width_for_height natural_width
 
 outFile: CellRenderer
 
@@ -4532,7 +4739,6 @@ struct: GtkCellEditable
 class: CellEditableT
 template: TStruct
 prefix: gtk_cell_editable_
-prefix: gtk_
 import: gdk.Event
 structWrap: GdkEvent* Event
 interface: CellEditableIF
@@ -4540,9 +4746,8 @@ outFile: CellEditableT
 
 file:
 class: CellEditable
-extend: ObjectG
+extend: GObject
 implements: CellEditableIF
-import: gobject.ObjectG
 
 # imports for CellEditable Interface
 import: gtk.CellEditableT
@@ -4580,10 +4785,7 @@ struct: GtkCellRendererAccel
 ctorStruct: GtkCellRenderer
 class: CellRendererAccel
 prefix: gtk_cell_renderer_accel_
-prefix: gtk_
 import: glib.Str
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererAccel
 
 file: GtkCellRendererCombo.html
@@ -4591,10 +4793,7 @@ struct: GtkCellRendererCombo
 ctorStruct: GtkCellRenderer
 class: CellRendererCombo
 prefix: gtk_cell_renderer_combo_
-prefix: gtk_
 import: glib.Str
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 outFile: CellRendererCombo
@@ -4604,19 +4803,23 @@ struct: GtkCellRendererPixbuf
 ctorStruct: GtkCellRenderer
 class: CellRendererPixbuf
 prefix: gtk_cell_renderer_pixbuf_
-prefix: gtk_
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererPixbuf
 
 file: GtkCellRendererProgress.html
 struct:GtkCellRendererProgress
 ctorStruct: GtkCellRenderer
 class: CellRendererProgress
+implements: OrientableIF
 prefix: gtk_cell_renderer_progress_
-prefix: gtk_
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkCellRenderer);
+code: end
 outFile: CellRendererProgress
 
 file: GtkCellRendererSpin.html
@@ -4624,9 +4827,6 @@ struct: GtkCellRendererSpin
 ctorStruct: GtkCellRenderer
 class: CellRendererSpin
 prefix: gtk_cell_renderer_spin_
-prefix: gtk_
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererSpin
 
 file: GtkCellRendererText.html
@@ -4634,10 +4834,6 @@ struct: GtkCellRendererText
 ctorStruct: GtkCellRenderer
 class: CellRendererText
 prefix: gtk_cell_renderer_text_
-prefix: gtk_
-import: glib.Str
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererText
 
 file: GtkCellRendererToggle.html
@@ -4645,10 +4841,6 @@ struct: GtkCellRendererToggle
 ctorStruct: GtkCellRenderer
 class: CellRendererToggle
 prefix: gtk_cell_renderer_toggle_
-prefix: gtk_
-import: glib.Str
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererToggle
 
 file: GtkCellRendererSpinner.html
@@ -4680,13 +4872,12 @@ implements: TreeDragSourceIF
 implements: TreeDragDestIF
 implements: TreeSortableIF
 prefix: gtk_list_store_
-prefix: gtk_
-import: gtk.TreeModel
 import: glib.Str
-import: gtk.TreeIter
-structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
+import: gtk.TreeIter
+import: gtk.TreeModel
 structWrap: GValue* Value
+structWrap: GtkTreeIter* TreeIter
 
 #imports for Buildable Interface.
 import: gtk.BuildableIF
@@ -4715,8 +4906,6 @@ array: gtk_list_store_set_valuesv columns n_values
 array: gtk_list_store_insert_with_valuesv values n_values
 array: gtk_list_store_insert_with_valuesv columns n_values
 array: gtk_list_store_reorder new_order
-
-nocode: gtk_list_store_set
 
 code: start
 	// add the Buildable capabilities
@@ -4752,12 +4941,10 @@ code: start
 	 *  columns = an arrays with the columns to set
 	 *  values = an arrays with the values
 	 */
-	void set(TreeIter iter, int [] columns, char*[] values)
+	void set(TreeIter iter, int[] columns, char*[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
-			//Value v = new Value(values[i]);
-			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
 			gtk_list_store_set(
 					gtkListStore, 
 					iter.getTreeIterStruct(), 
@@ -4766,13 +4953,11 @@ code: start
 		}
 	}
 
-	/** */
-	void set(TreeIter iter, int [] columns, string[] values)
+	/** ditto */
+	void set(TreeIter iter, int[] columns, string[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
-			//Value v = new Value(values[i]);
-			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
 			gtk_list_store_set(
 					gtkListStore, 
 					iter.getTreeIterStruct(), 
@@ -4802,20 +4987,26 @@ outFile: ListStore
 file: GtkTreeStore.html
 struct: GtkTreeStore
 class: TreeStore
+implements: BuildableIF
 implements: TreeModelIF
 implements: TreeDragSourceIF
 implements: TreeDragDestIF
 implements: TreeSortableIF
 prefix: gtk_tree_store_
-prefix: gtk_
+
+structWrap: GValue* Value
+structWrap: GtkTreeIter* TreeIter
+
 import: glib.Str
 import: gtk.TreeIter
-structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
-structWrap: GValue* Value
 import: gtk.TreeNode
 import: gdk.Pixbuf;
 import: gobject.Value;
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
 
 # imports for TreeModel Interface
 import: gtk.TreeModelT
@@ -4844,6 +5035,9 @@ array: gtk_tree_store_reorder new_order
 nocode: gtk_tree_store_set
 
 code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkTreeStore);
+
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeStore);
 
@@ -4880,23 +5074,19 @@ code: start
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
 	}
 
-	/** */
+	/** ditto */
 	void setValue(TreeIter iter, int column, int value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, value, -1);
 	}
 
-
-	
-	/**
-	 * \todo confirm we need to destroy the Value instance
-	 */
+	/** ditto */
+	//TODO: confirm we need to destroy the Value instance
 	void setValue(TreeIter iter, int column, Pixbuf pixbuf)
 	{
 		Value v = new Value(pixbuf);
 		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, v.getValueStruct());
 	}
-
 
 	/**
 	 * sets the values for one row
@@ -4905,12 +5095,10 @@ code: start
 	 *  columns = an arrays with the columns to set
 	 *  values = an arrays with the values
 	 */
-	void set(TreeIter iter, int [] columns, char*[] values)
+	void set(TreeIter iter, int[] columns, char*[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
-			//Value v = new Value(values[i]);
-			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
 			gtk_tree_store_set(
 					gtkTreeStore, 
 					iter.getTreeIterStruct(), 
@@ -4919,13 +5107,11 @@ code: start
 		}
 	}
 
-	/** */
-	void set(TreeIter iter, int [] columns, string[] values)
+	/** ditto */
+	void set(TreeIter iter, int[] columns, string[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
-			//Value v = new Value(values[i]);
-			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
 			gtk_tree_store_set(
 					gtkTreeStore, 
 					iter.getTreeIterStruct(), 
@@ -5002,7 +5188,6 @@ code: start
 		return iter;
 	}
 code: end
-
 outFile: TreeStore
 
 
@@ -5011,7 +5196,6 @@ outFile: TreeStore
 ###########################################################
 
 file: GtkComboBox.html
-
 struct: GtkComboBox
 class: ComboBox
 implements: CellLayoutIF
@@ -7234,9 +7418,6 @@ import: glib.GException
 #imports for PrintOperationPreview Interface.
 import: gtk.PrintOperationPreviewT
 import: gtk.PrintOperationPreviewIF
-#import: gtk.Widget
-#import: gtk.PageSetup
-#import: gtk.PrintSettings
 
 code: start
 	// add the PrintOperationPreview capabilities
@@ -7811,6 +7992,7 @@ outFile: Separator
 file: GtkWidget.html
 struct: GtkWidget
 nostruct: GtkWidgetClass
+nostruct: GtkRequisition
 class: Widget
 implements: BuildableIF
 import: glib.Str

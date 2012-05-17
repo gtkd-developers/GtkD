@@ -38,25 +38,22 @@
  * implements:
  * prefixes:
  * 	- gtk_cell_renderer_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
+ * 	- cairo.Context
  * 	- glib.Str
- * 	- gtk.Widget
- * 	- gdk.Rectangle
- * 	- gdk.Window
  * 	- gdk.Event
  * 	- gtk.CellEditable
  * 	- gtk.CellEditableIF
+ * 	- gtk.Widget
  * structWrap:
  * 	- GdkEvent* -> Event
- * 	- GdkRectangle* -> Rectangle
- * 	- GdkWindow* -> Window
  * 	- GtkCellEditable* -> CellEditableIF
  * 	- GtkWidget* -> Widget
+ * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
  * overrides:
@@ -72,13 +69,12 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import cairo.Context;
 private import glib.Str;
-private import gtk.Widget;
-private import gdk.Rectangle;
-private import gdk.Window;
 private import gdk.Event;
 private import gtk.CellEditable;
 private import gtk.CellEditableIF;
+private import gtk.Widget;
 
 
 
@@ -244,10 +240,10 @@ public class CellRenderer : ObjectG
 	 * that would acually be used to render. [out]
 	 * Since 3.0
 	 */
-	public void getAlignedArea(Widget widget, GtkCellRendererState flags, Rectangle cellArea, Rectangle alignedArea)
+	public void getAlignedArea(Widget widget, GtkCellRendererState flags, ref Rectangle cellArea, out Rectangle alignedArea)
 	{
 		// void gtk_cell_renderer_get_aligned_area (GtkCellRenderer *cell,  GtkWidget *widget,  GtkCellRendererState flags,  const GdkRectangle *cell_area,  GdkRectangle *aligned_area);
-		gtk_cell_renderer_get_aligned_area(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), flags, (cellArea is null) ? null : cellArea.getRectangleStruct(), (alignedArea is null) ? null : alignedArea.getRectangleStruct());
+		gtk_cell_renderer_get_aligned_area(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), flags, &cellArea, &alignedArea);
 	}
 	
 	/**
@@ -268,10 +264,10 @@ public class CellRenderer : ObjectG
 	 * width = location to return width needed to render a cell, or NULL. [out][allow-none]
 	 * height = location to return height needed to render a cell, or NULL. [out][allow-none]
 	 */
-	public void getSize(Widget widget, Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
+	public void getSize(Widget widget, Rectangle* cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
 		// void gtk_cell_renderer_get_size (GtkCellRenderer *cell,  GtkWidget *widget,  const GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
-		gtk_cell_renderer_get_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), &xOffset, &yOffset, &width, &height);
+		gtk_cell_renderer_get_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), cellArea, &xOffset, &yOffset, &width, &height);
 	}
 	
 	/**
@@ -291,10 +287,10 @@ public class CellRenderer : ObjectG
 	 * cellArea = area normally rendered by a cell renderer
 	 * flags = flags that affect rendering
 	 */
-	public void render(cairo_t* cr, Widget widget, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
+	public void render(Context cr, Widget widget, ref Rectangle backgroundArea, ref Rectangle cellArea, GtkCellRendererState flags)
 	{
 		// void gtk_cell_renderer_render (GtkCellRenderer *cell,  cairo_t *cr,  GtkWidget *widget,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  GtkCellRendererState flags);
-		gtk_cell_renderer_render(gtkCellRenderer, cr, (widget is null) ? null : widget.getWidgetStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		gtk_cell_renderer_render(gtkCellRenderer, (cr is null) ? null : cr.getContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), &backgroundArea, &cellArea, flags);
 	}
 	
 	/**
@@ -312,10 +308,10 @@ public class CellRenderer : ObjectG
 	 * flags = render flags
 	 * Returns: TRUE if the event was consumed/handled
 	 */
-	public int activate(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
+	public int activate(Event event, Widget widget, string path, ref Rectangle backgroundArea, ref Rectangle cellArea, GtkCellRendererState flags)
 	{
 		// gboolean gtk_cell_renderer_activate (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  GtkCellRendererState flags);
-		return gtk_cell_renderer_activate(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		return gtk_cell_renderer_activate(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), &backgroundArea, &cellArea, flags);
 	}
 	
 	/**
@@ -331,10 +327,10 @@ public class CellRenderer : ObjectG
 	 * flags = render flags
 	 * Returns: A new GtkCellEditable, or NULL. [transfer none]
 	 */
-	public CellEditableIF startEditing(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
+	public CellEditableIF startEditing(Event event, Widget widget, string path, ref Rectangle backgroundArea, ref Rectangle cellArea, GtkCellRendererState flags)
 	{
 		// GtkCellEditable * gtk_cell_renderer_start_editing (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  GtkCellRendererState flags);
-		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), &backgroundArea, &cellArea, flags);
 		if(p is null)
 		{
 			return null;
@@ -515,10 +511,10 @@ public class CellRenderer : ObjectG
 	 * naturalSize = location to store the natural size, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredHeight(Widget widget, int* minimumSize, int* naturalSize)
+	public void getPreferredHeight(Widget widget, out int minimumSize, out int naturalSize)
 	{
 		// void gtk_cell_renderer_get_preferred_height  (GtkCellRenderer *cell,  GtkWidget *widget,  gint *minimum_size,  gint *natural_size);
-		gtk_cell_renderer_get_preferred_height(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), minimumSize, naturalSize);
+		gtk_cell_renderer_get_preferred_height(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), &minimumSize, &naturalSize);
 	}
 	
 	/**
@@ -531,10 +527,10 @@ public class CellRenderer : ObjectG
 	 * naturalHeight = location for storing the preferred size, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredHeightForWidth(Widget widget, int width, int* minimumHeight, int* naturalHeight)
+	public void getPreferredHeightForWidth(Widget widget, int width, out int minimumHeight, out int naturalHeight)
 	{
 		// void gtk_cell_renderer_get_preferred_height_for_width  (GtkCellRenderer *cell,  GtkWidget *widget,  gint width,  gint *minimum_height,  gint *natural_height);
-		gtk_cell_renderer_get_preferred_height_for_width(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), width, minimumHeight, naturalHeight);
+		gtk_cell_renderer_get_preferred_height_for_width(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), width, &minimumHeight, &naturalHeight);
 	}
 	
 	/**
@@ -546,10 +542,10 @@ public class CellRenderer : ObjectG
 	 * naturalSize = location for storing the natural size, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredSize(Widget widget, GtkRequisition* minimumSize, GtkRequisition* naturalSize)
+	public void getPreferredSize(Widget widget, out GtkRequisition minimumSize, out GtkRequisition naturalSize)
 	{
 		// void gtk_cell_renderer_get_preferred_size  (GtkCellRenderer *cell,  GtkWidget *widget,  GtkRequisition *minimum_size,  GtkRequisition *natural_size);
-		gtk_cell_renderer_get_preferred_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), minimumSize, naturalSize);
+		gtk_cell_renderer_get_preferred_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), &minimumSize, &naturalSize);
 	}
 	
 	/**
@@ -560,10 +556,10 @@ public class CellRenderer : ObjectG
 	 * naturalSize = location to store the natural size, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredWidth(Widget widget, int* minimumSize, int* naturalSize)
+	public void getPreferredWidth(Widget widget, out int minimumSize, out int naturalSize)
 	{
 		// void gtk_cell_renderer_get_preferred_width  (GtkCellRenderer *cell,  GtkWidget *widget,  gint *minimum_size,  gint *natural_size);
-		gtk_cell_renderer_get_preferred_width(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), minimumSize, naturalSize);
+		gtk_cell_renderer_get_preferred_width(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), &minimumSize, &naturalSize);
 	}
 	
 	/**
@@ -576,10 +572,10 @@ public class CellRenderer : ObjectG
 	 * naturalWidth = location for storing the preferred size, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredWidthForHeight(Widget widget, int height, int* minimumWidth, int* naturalWidth)
+	public void getPreferredWidthForHeight(Widget widget, int height, out int minimumWidth, out int naturalWidth)
 	{
 		// void gtk_cell_renderer_get_preferred_width_for_height  (GtkCellRenderer *cell,  GtkWidget *widget,  gint height,  gint *minimum_width,  gint *natural_width);
-		gtk_cell_renderer_get_preferred_width_for_height(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), height, minimumWidth, naturalWidth);
+		gtk_cell_renderer_get_preferred_width_for_height(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), height, &minimumWidth, &naturalWidth);
 	}
 	
 	/**

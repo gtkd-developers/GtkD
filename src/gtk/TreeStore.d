@@ -36,13 +36,13 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * 	- TreeModelIF
  * 	- TreeDragSourceIF
  * 	- TreeDragDestIF
  * 	- TreeSortableIF
  * prefixes:
  * 	- gtk_tree_store_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -55,6 +55,8 @@
  * 	- gtk.TreeNode
  * 	- gdk.Pixbuf;
  * 	- gobject.Value;
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * 	- gtk.TreeModelT
  * 	- gtk.TreeModelIF
  * 	- gtk.TreeDragSourceT
@@ -85,6 +87,8 @@ private import gobject.Value;
 private import gtk.TreeNode;
 private import gdk.Pixbuf;;
 private import gobject.Value;;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import gtk.TreeModelT;
 private import gtk.TreeModelIF;
 private import gtk.TreeDragSourceT;
@@ -113,7 +117,7 @@ private import gobject.ObjectG;
  * column. The "type" attribute specifies the data type for the column.
  * $(DDOC_COMMENT example)
  */
-public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF, TreeSortableIF
+public class TreeStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, TreeDragDestIF, TreeSortableIF
 {
 	
 	/** the main Gtk struct */
@@ -159,6 +163,9 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 		gtkTreeStore = cast(GtkTreeStore*)obj;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkTreeStore);
+	
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeStore);
 	
@@ -195,23 +202,19 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
 	}
 	
-	/** */
+	/** ditto */
 	void setValue(TreeIter iter, int column, int value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, value, -1);
 	}
 	
-	
-	
-	/**
-	 * \todo confirm we need to destroy the Value instance
-	 */
+	/** ditto */
+	//TODO: confirm we need to destroy the Value instance
 	void setValue(TreeIter iter, int column, Pixbuf pixbuf)
 	{
 		Value v = new Value(pixbuf);
 		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, v.getValueStruct());
 	}
-	
 	
 	/**
 	 * sets the values for one row
@@ -220,12 +223,10 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 	 *  columns = an arrays with the columns to set
 	 *  values = an arrays with the values
 	 */
-	void set(TreeIter iter, int [] columns, char*[] values)
+	void set(TreeIter iter, int[] columns, char*[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
-			//Value v = new Value(values[i]);
-			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
 			gtk_tree_store_set(
 			gtkTreeStore,
 			iter.getTreeIterStruct(),
@@ -234,13 +235,11 @@ public class TreeStore : ObjectG, TreeModelIF, TreeDragSourceIF, TreeDragDestIF,
 		}
 	}
 	
-	/** */
-	void set(TreeIter iter, int [] columns, string[] values)
+	/** ditto */
+	void set(TreeIter iter, int[] columns, string[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
-			//Value v = new Value(values[i]);
-			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
 			gtk_tree_store_set(
 			gtkTreeStore,
 			iter.getTreeIterStruct(),

@@ -28,7 +28,7 @@
  * outFile = TreeModelSort
  * strct   = GtkTreeModelSort
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GtkTreeModel
  * clss    = TreeModelSort
  * interf  = 
  * class Code: Yes
@@ -41,17 +41,15 @@
  * 	- TreeSortableIF
  * prefixes:
  * 	- gtk_tree_model_sort_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
+ * 	- gtk.TreeIter
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
- * 	- gtk.TreeIter
  * 	- gtk.TreeModelT
  * 	- gtk.TreeDragSourceT
  * 	- gtk.TreeDragSourceIF
@@ -74,11 +72,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import glib.Str;
+private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-private import gtk.TreeIter;
 private import gtk.TreeModelT;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeDragSourceIF;
@@ -175,17 +172,17 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	 * Creates a new GtkTreeModel, with child_model as the child model.
 	 * Params:
 	 * childModel = A GtkTreeModel
-	 * Returns: A new GtkTreeModel. [transfer full]
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static TreeModelIF newWithModel(TreeModelIF childModel)
+	public this (TreeModelIF childModel)
 	{
 		// GtkTreeModel * gtk_tree_model_sort_new_with_model (GtkTreeModel *child_model);
 		auto p = gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelTStruct());
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelTStruct())");
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		this(cast(GtkTreeModelSort*) p);
 	}
 	
 	/**

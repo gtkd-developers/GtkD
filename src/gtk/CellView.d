@@ -37,9 +37,9 @@
  * extend  = 
  * implements:
  * 	- CellLayoutIF
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_cell_view_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,18 +48,24 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gdk.Color
+ * 	- gdk.RGBA
  * 	- gdk.Pixbuf
+ * 	- gtk.CellArea
+ * 	- gtk.CellAreaContext
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
- * 	- gdk.Color
- * 	- glib.ListG
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
- * 	- GList* -> ListG
  * 	- GdkColor* -> Color
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkRGBA* -> RGBA
+ * 	- GtkCellArea* -> CellArea
+ * 	- GtkCellAreaContext* -> CellAreaContext
  * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
  * module aliases:
@@ -76,14 +82,18 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gdk.Color;
+private import gdk.RGBA;
 private import gdk.Pixbuf;
+private import gtk.CellArea;
+private import gtk.CellAreaContext;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-private import gdk.Color;
-private import glib.ListG;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -104,7 +114,7 @@ private import gtk.Widget;
  * individual heights (left-to-right menus should be allocated vertically since
  * they all share the same height but may have variable widths).
  */
-public class CellView : Widget, CellLayoutIF
+public class CellView : Widget, CellLayoutIF, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -152,6 +162,9 @@ public class CellView : Widget, CellLayoutIF
 	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkCellView);
+	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkCellView);
 	
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererText
@@ -220,13 +233,13 @@ public class CellView : Widget, CellLayoutIF
 	 * context = the GtkCellAreaContext in which to calculate cell geometry
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkCellArea* area, GtkCellAreaContext* context)
+	public this (CellArea area, CellAreaContext context)
 	{
 		// GtkWidget * gtk_cell_view_new_with_context (GtkCellArea *area,  GtkCellAreaContext *context);
-		auto p = gtk_cell_view_new_with_context(area, context);
+		auto p = gtk_cell_view_new_with_context((area is null) ? null : area.getCellAreaStruct(), (context is null) ? null : context.getCellAreaContextStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_cell_view_new_with_context(area, context)");
+			throw new ConstructionException("null returned by gtk_cell_view_new_with_context((area is null) ? null : area.getCellAreaStruct(), (context is null) ? null : context.getCellAreaContextStruct())");
 		}
 		this(cast(GtkCellView*) p);
 	}
@@ -354,10 +367,10 @@ public class CellView : Widget, CellLayoutIF
 	 * rgba = the new background color
 	 * Since 3.0
 	 */
-	public void setBackgroundRgba(GdkRGBA* rgba)
+	public void setBackgroundRgba(RGBA rgba)
 	{
 		// void gtk_cell_view_set_background_rgba (GtkCellView *cell_view,  const GdkRGBA *rgba);
-		gtk_cell_view_set_background_rgba(gtkCellView, rgba);
+		gtk_cell_view_set_background_rgba(gtkCellView, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**

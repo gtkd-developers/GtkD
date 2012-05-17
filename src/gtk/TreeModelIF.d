@@ -39,6 +39,7 @@
  * prefixes:
  * 	- gtk_tree_model_
  * omit structs:
+ * 	- GtkTreeIter
  * omit prefixes:
  * 	- gtk_tree_row_reference_
  * 	- gtk_tree_path_
@@ -49,9 +50,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.Value
  * 	- gtk.TreeIter
  * 	- gtk.TreePath
- * 	- gobject.Value
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -72,9 +73,9 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gobject.Value;
 private import gtk.TreeIter;
 private import gtk.TreePath;
-private import gobject.Value;
 
 
 

@@ -319,6 +319,18 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
+	 * Obtain the entire text
+	 * Returns: The text string
+	 */
+	string getText()
+	{
+		TextIter start = new TextIter();
+		TextIter end = new TextIter();
+		getBounds(start,end);
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
+	}
+	
+	/**
 	 */
 	int[string] connectedSignals;
 	

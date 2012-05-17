@@ -43,9 +43,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtk.SelectionData
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
  * structWrap:
+ * 	- GtkSelectionData* -> SelectionData
  * 	- GtkTreePath* -> TreePath
  * module aliases:
  * local aliases:
@@ -60,6 +62,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import gtk.SelectionData;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 
@@ -101,7 +104,7 @@ public interface TreeDragDestIF
 	 * path =  a row in tree_model
 	 * Returns: TRUE if the GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
-	public static int setRowDragData(GtkSelectionData* selectionData, TreeModelIF treeModel, TreePath path);
+	public static int setRowDragData(SelectionData selectionData, TreeModelIF treeModel, TreePath path);
 	
 	/**
 	 * Obtains a tree_model and path from selection data of target type
@@ -119,7 +122,7 @@ public interface TreeDragDestIF
 	 * path =  row in tree_model
 	 * Returns: TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is otherwise valid
 	 */
-	public static int getRowDragData(GtkSelectionData* selectionData, GtkTreeModel** treeModel, GtkTreePath** path);
+	public static int getRowDragData(SelectionData selectionData, out TreeModelIF treeModel, out TreePath path);
 	
 	/**
 	 */
@@ -136,7 +139,7 @@ public interface TreeDragDestIF
 	 * selectionData = data to drop
 	 * Returns: whether a new row was created before position dest
 	 */
-	public int dragDataReceived(TreePath dest, GtkSelectionData* selectionData);
+	public int dragDataReceived(TreePath dest, SelectionData selectionData);
 	
 	/**
 	 * Determines whether a drop is possible before the given dest_path,
@@ -149,5 +152,5 @@ public interface TreeDragDestIF
 	 * selectionData = the data being dragged
 	 * Returns: TRUE if a drop is possible before dest_path
 	 */
-	public int rowDropPossible(TreePath destPath, GtkSelectionData* selectionData);
+	public int rowDropPossible(TreePath destPath, SelectionData selectionData);
 }

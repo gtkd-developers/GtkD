@@ -39,17 +39,18 @@
  * implements:
  * prefixes:
  * 	- gtk_cell_layout_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.CellRenderer
  * 	- glib.ListG
+ * 	- gtk.CellArea
+ * 	- gtk.CellRenderer
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GtkCellArea* -> CellArea
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
@@ -65,8 +66,9 @@ public import glib.ConstructionException;
 
 
 public import glib.Str;
-public import gtk.CellRenderer;
 public import glib.ListG;
+public import gtk.CellArea;
+public import gtk.CellRenderer;
 
 
 
@@ -176,10 +178,15 @@ public template CellLayoutT(TStruct)
 	 * is used by cell_layout.
 	 * Returns: the cell area used by cell_layout. [transfer none] Since 3.0
 	 */
-	public GtkCellArea* getArea()
+	public CellArea getArea()
 	{
 		// GtkCellArea * gtk_cell_layout_get_area (GtkCellLayout *cell_layout);
-		return gtk_cell_layout_get_area(getCellLayoutTStruct());
+		auto p = gtk_cell_layout_get_area(getCellLayoutTStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new CellArea(cast(GtkCellArea*) p);
 	}
 	
 	/**

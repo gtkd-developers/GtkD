@@ -37,30 +37,36 @@
  * extend  = 
  * implements:
  * 	- CellLayoutIF
+ * 	- ScrollableIF
  * prefixes:
  * 	- gtk_icon_view_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.TreeModel
- * 	- gtk.TreeModelIF
- * 	- gtk.TreePath
+ * 	- cairo.Surface
+ * 	- glib.ListG
+ * 	- gtk.CellArea
  * 	- gtk.CellRenderer
  * 	- gtk.Tooltip
  * 	- gtk.TreeIter
- * 	- glib.ListG
+ * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
+ * 	- gtk.TreePath
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
+ * 	- gtk.ScrollableT
+ * 	- gtk.ScrollableIF
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GtkCellArea* -> CellArea
  * 	- GtkCellRenderer* -> CellRenderer
  * 	- GtkTooltip* -> Tooltip
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModelIF
  * 	- GtkTreePath* -> TreePath
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -76,15 +82,19 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gtk.TreeModel;
-private import gtk.TreeModelIF;
-private import gtk.TreePath;
+private import cairo.Surface;
+private import glib.ListG;
+private import gtk.CellArea;
 private import gtk.CellRenderer;
 private import gtk.Tooltip;
 private import gtk.TreeIter;
-private import glib.ListG;
+private import gtk.TreeModel;
+private import gtk.TreeModelIF;
+private import gtk.TreePath;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
+private import gtk.ScrollableT;
+private import gtk.ScrollableIF;
 
 
 
@@ -103,7 +113,7 @@ private import gtk.Container;
  * GtkIconView will only display the first level of the tree and
  * ignore the tree's branches.
  */
-public class IconView : Container, CellLayoutIF
+public class IconView : Container, CellLayoutIF, ScrollableIF
 {
 	
 	/** the main Gtk struct */
@@ -151,6 +161,9 @@ public class IconView : Container, CellLayoutIF
 	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkIconView);
+	
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkIconView);
 	
 	/**
 	 */
@@ -451,13 +464,13 @@ public class IconView : Container, CellLayoutIF
 	 * area = the GtkCellArea to use to layout cells
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkCellArea* area)
+	public this (CellArea area)
 	{
 		// GtkWidget * gtk_icon_view_new_with_area (GtkCellArea *area);
-		auto p = gtk_icon_view_new_with_area(area);
+		auto p = gtk_icon_view_new_with_area((area is null) ? null : area.getCellAreaStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_icon_view_new_with_area(area)");
+			throw new ConstructionException("null returned by gtk_icon_view_new_with_area((area is null) ? null : area.getCellAreaStruct())");
 		}
 		this(cast(GtkIconView*) p);
 	}
@@ -1127,13 +1140,13 @@ public class IconView : Container, CellLayoutIF
 	 * iter = a pointer to receive a GtkTreeIter or NULL. [out][allow-none]
 	 * Returns: whether or not the given tooltip context points to a item
 	 */
-	public int getTooltipContext(int* x, int* y, int keyboardTip, out TreeModelIF model, out TreePath path, TreeIter iter)
+	public int getTooltipContext(ref int x, ref int y, int keyboardTip, out TreeModelIF model, out TreePath path, TreeIter iter)
 	{
 		// gboolean gtk_icon_view_get_tooltip_context (GtkIconView *icon_view,  gint *x,  gint *y,  gboolean keyboard_tip,  GtkTreeModel **model,  GtkTreePath **path,  GtkTreeIter *iter);
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
 		
-		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, x, y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
+		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, &x, &y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
 		
 		model = new TreeModel(outmodel);
 		path = new TreePath(outpath);
@@ -1349,9 +1362,14 @@ public class IconView : Container, CellLayoutIF
 	 * path = a GtkTreePath in icon_view
 	 * Returns: a newly-allocated surface of the drag icon. [transfer full]
 	 */
-	public cairo_surface_t* createDragIcon(TreePath path)
+	public Surface createDragIcon(TreePath path)
 	{
 		// cairo_surface_t * gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
-		return gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
+		auto p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Surface(cast(cairo_surface_t*) p);
 	}
 }

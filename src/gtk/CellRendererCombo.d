@@ -38,17 +38,14 @@
  * implements:
  * prefixes:
  * 	- gtk_cell_renderer_combo_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.CellRenderer
  * 	- gtk.TreeIter
  * structWrap:
- * 	- GtkCellRenderer* -> CellRenderer
  * 	- GtkTreeIter* -> TreeIter
  * module aliases:
  * local aliases:
@@ -66,7 +63,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.CellRenderer;
 private import gtk.TreeIter;
 
 

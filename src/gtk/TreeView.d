@@ -36,31 +36,32 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- ScrollableIF
  * prefixes:
  * 	- gtk_tree_view_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
+ * 	- cairo.Surface
  * 	- glib.Str
- * 	- gtk.TreeModel
- * 	- gtk.TreeModelIF
- * 	- gtk.TreeSelection
- * 	- gtk.Adjustment
- * 	- gtk.TreeViewColumn
- * 	- gtk.CellRenderer
  * 	- glib.ListG
- * 	- gtk.TreePath
- * 	- gdk.Rectangle
  * 	- gdk.Window
+ * 	- gtk.Adjustment
+ * 	- gtk.CellRenderer
+ * 	- gtk.Entry
  * 	- gtk.Tooltip
  * 	- gtk.TreeIter
- * 	- gtk.Entry
+ * 	- gtk.TreeModel
+ * 	- gtk.TreeModelIF
+ * 	- gtk.TreePath
+ * 	- gtk.TreeSelection
+ * 	- gtk.TreeViewColumn
+ * 	- gtk.ScrollableT
+ * 	- gtk.ScrollableIF
  * structWrap:
  * 	- GList* -> ListG
- * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkCellRenderer* -> CellRenderer
@@ -71,6 +72,7 @@
  * 	- GtkTreePath* -> TreePath
  * 	- GtkTreeSelection* -> TreeSelection
  * 	- GtkTreeViewColumn* -> TreeViewColumn
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -86,20 +88,22 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import cairo.Surface;
 private import glib.Str;
-private import gtk.TreeModel;
-private import gtk.TreeModelIF;
-private import gtk.TreeSelection;
-private import gtk.Adjustment;
-private import gtk.TreeViewColumn;
-private import gtk.CellRenderer;
 private import glib.ListG;
-private import gtk.TreePath;
-private import gdk.Rectangle;
 private import gdk.Window;
+private import gtk.Adjustment;
+private import gtk.CellRenderer;
+private import gtk.Entry;
 private import gtk.Tooltip;
 private import gtk.TreeIter;
-private import gtk.Entry;
+private import gtk.TreeModel;
+private import gtk.TreeModelIF;
+private import gtk.TreePath;
+private import gtk.TreeSelection;
+private import gtk.TreeViewColumn;
+private import gtk.ScrollableT;
+private import gtk.ScrollableIF;
 
 
 
@@ -133,7 +137,7 @@ private import gtk.Container;
  * internal GtkTreeSelection in UI definitions.
  * $(DDOC_COMMENT example)
  */
-public class TreeView : Container
+public class TreeView : Container, ScrollableIF
 {
 	
 	/** the main Gtk struct */
@@ -179,6 +183,9 @@ public class TreeView : Container
 		gtkTreeView = cast(GtkTreeView*)obj;
 	}
 	
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkTreeView);
+	
 	/**
 	 * Expands the row of the iter.
 	 * Params:
@@ -219,9 +226,6 @@ public class TreeView : Container
 		TreePath[] paths = selection.getSelectedRows(model);
 		foreach ( TreePath p; selection.getSelectedRows(model) )
 		{
-			//iters.length = iters.length+1;
-			//iters[iters.length-1] = model.getIter(iter,p);
-			// iters ~= model.getIter(iter,p); >>> compile error can only concatenate arrays ???
 			if ( model.getIter(iter,p) )
 			{
 				iters ~= iter;
@@ -229,7 +233,6 @@ public class TreeView : Container
 			}
 		}
 		
-		//printf("TreeView.getSelectedIters iters.lenght = %d\n", iters.length);
 		return iters;
 	}
 	
@@ -254,13 +257,10 @@ public class TreeView : Container
 		position,
 		Str.toStringz(title),
 		renderer.getCellRendererStruct(),
-		Str.toStringz("text"),position,//v1.getV(),
-		Str.toStringz("editable"),2,0);//v.getV(),0);
+		Str.toStringz("text"),position,
+		Str.toStringz("editable"),2,0);
 		return tot;
 	}
-	
-	
-	
 	
 	/**
 	 */
@@ -1436,11 +1436,11 @@ public class TreeView : Container
 	 * cellY = A pointer where the Y coordinate relative to the cell can be placed, or NULL. [out][allow-none]
 	 * Returns: TRUE if a row exists at that coordinate.
 	 */
-	public int getPathAtPos(int x, int y, ref TreePath path, ref TreeViewColumn column, out int cellX, out int cellY)
+	public int getPathAtPos(int x, int y, out TreePath path, out TreeViewColumn column, out int cellX, out int cellY)
 	{
 		// gboolean gtk_tree_view_get_path_at_pos (GtkTreeView *tree_view,  gint x,  gint y,  GtkTreePath **path,  GtkTreeViewColumn **column,  gint *cell_x,  gint *cell_y);
-		GtkTreePath* outpath = (path is null) ? null : path.getTreePathStruct();
-		GtkTreeViewColumn* outcolumn = (column is null) ? null : column.getTreeViewColumnStruct();
+		GtkTreePath* outpath = null;
+		GtkTreeViewColumn* outcolumn = null;
 		
 		auto p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY);
 		
@@ -1473,10 +1473,17 @@ public class TreeView : Container
 	 * cellY = A pointer where the Y coordinate relative to the cell can be placed, or NULL. [out][allow-none]
 	 * Returns: TRUE if the area at the given coordinates is blank, FALSE otherwise. Since 3.0
 	 */
-	public int isBlankAtPos(int x, int y, GtkTreePath** path, GtkTreeViewColumn** column, int* cellX, int* cellY)
+	public int isBlankAtPos(int x, int y, out TreePath path, out TreeViewColumn column, out int cellX, out int cellY)
 	{
 		// gboolean gtk_tree_view_is_blank_at_pos (GtkTreeView *tree_view,  gint x,  gint y,  GtkTreePath **path,  GtkTreeViewColumn **column,  gint *cell_x,  gint *cell_y);
-		return gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, path, column, cellX, cellY);
+		GtkTreePath* outpath = null;
+		GtkTreeViewColumn* outcolumn = null;
+		
+		auto p = gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY);
+		
+		path = new TreePath(outpath);
+		column = new TreeViewColumn(outcolumn);
+		return p;
 	}
 	
 	/**
@@ -1494,10 +1501,10 @@ public class TreeView : Container
 	 * column = a GtkTreeViewColumn for the column, or NULL to get only vertical coordinates. [allow-none]
 	 * rect = rectangle to fill with cell rect. [out]
 	 */
-	public void getCellArea(TreePath path, TreeViewColumn column, Rectangle rect)
+	public void getCellArea(TreePath path, TreeViewColumn column, out Rectangle rect)
 	{
 		// void gtk_tree_view_get_cell_area (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewColumn *column,  GdkRectangle *rect);
-		gtk_tree_view_get_cell_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), (rect is null) ? null : rect.getRectangleStruct());
+		gtk_tree_view_get_cell_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), &rect);
 	}
 	
 	/**
@@ -1515,10 +1522,10 @@ public class TreeView : Container
 	 * column = a GtkTreeViewColumn for the column, or NULL to get only vertical coordiantes. [allow-none]
 	 * rect = rectangle to fill with cell background rect. [out]
 	 */
-	public void getBackgroundArea(TreePath path, TreeViewColumn column, Rectangle rect)
+	public void getBackgroundArea(TreePath path, TreeViewColumn column, out Rectangle rect)
 	{
 		// void gtk_tree_view_get_background_area (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewColumn *column,  GdkRectangle *rect);
-		gtk_tree_view_get_background_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), (rect is null) ? null : rect.getRectangleStruct());
+		gtk_tree_view_get_background_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), &rect);
 	}
 	
 	/**
@@ -1530,10 +1537,10 @@ public class TreeView : Container
 	 * Params:
 	 * visibleRect = rectangle to fill. [out]
 	 */
-	public void getVisibleRect(Rectangle visibleRect)
+	public void getVisibleRect(out Rectangle visibleRect)
 	{
 		// void gtk_tree_view_get_visible_rect (GtkTreeView *tree_view,  GdkRectangle *visible_rect);
-		gtk_tree_view_get_visible_rect(gtkTreeView, (visibleRect is null) ? null : visibleRect.getRectangleStruct());
+		gtk_tree_view_get_visible_rect(gtkTreeView, &visibleRect);
 	}
 	
 	/**
@@ -1783,10 +1790,15 @@ public class TreeView : Container
 	 * path = a GtkTreePath in tree_view
 	 * Returns: a newly-allocated surface of the drag icon. [transfer full]
 	 */
-	public cairo_surface_t* createRowDragIcon(TreePath path)
+	public Surface createRowDragIcon(TreePath path)
 	{
 		// cairo_surface_t * gtk_tree_view_create_row_drag_icon (GtkTreeView *tree_view,  GtkTreePath *path);
-		return gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
+		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -2192,13 +2204,13 @@ public class TreeView : Container
 	 * iter = a pointer to receive a GtkTreeIter or NULL. [out][allow-none]
 	 * Returns: whether or not the given tooltip context points to a row.
 	 */
-	public int getTooltipContext(int* x, int* y, int keyboardTip, out TreeModelIF model, out TreePath path, TreeIter iter)
+	public int getTooltipContext(ref int x, ref int y, int keyboardTip, out TreeModelIF model, out TreePath path, TreeIter iter)
 	{
 		// gboolean gtk_tree_view_get_tooltip_context (GtkTreeView *tree_view,  gint *x,  gint *y,  gboolean keyboard_tip,  GtkTreeModel **model,  GtkTreePath **path,  GtkTreeIter *iter);
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
 		
-		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
+		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, &x, &y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
 		
 		model = new TreeModel(outmodel);
 		path = new TreePath(outpath);

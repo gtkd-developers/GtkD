@@ -42,6 +42,7 @@
  * 	- gtk_
  * omit structs:
  * 	- GtkWidgetClass
+ * 	- GtkRequisition
  * omit prefixes:
  * 	- gtk_widget_ref
  * omit code:

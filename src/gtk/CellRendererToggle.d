@@ -38,16 +38,12 @@
  * implements:
  * prefixes:
  * 	- gtk_cell_renderer_toggle_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gtk.CellRenderer
  * structWrap:
- * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
  * overrides:
@@ -63,8 +59,6 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import gtk.CellRenderer;
 
 
 

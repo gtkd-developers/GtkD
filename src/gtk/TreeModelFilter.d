@@ -40,16 +40,15 @@
  * 	- TreeDragSourceIF
  * prefixes:
  * 	- gtk_tree_model_filter_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtk.TreeIter
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
- * 	- gtk.TreeIter
  * 	- gtk.TreeModelT
  * 	- gtk.TreeDragSourceT
  * 	- gtk.TreeDragSourceIF
@@ -70,10 +69,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-private import gtk.TreeIter;
 private import gtk.TreeModelT;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeDragSourceIF;

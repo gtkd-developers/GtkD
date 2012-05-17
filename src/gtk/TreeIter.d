@@ -41,6 +41,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_tree_iter_copy
+ * 	- gtk_tree_iter_free
  * omit signals:
  * 	- row-changed
  * 	- row-deleted
@@ -49,10 +51,10 @@
  * 	- rows-reordered
  * imports:
  * 	- glib.Str
+ * 	- gobject.Value
+ * 	- gtk.TreeIterError
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
- * 	- gtk.TreeIterError
- * 	- gobject.Value
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
  * module aliases:
@@ -71,10 +73,10 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gobject.Value;
+private import gtk.TreeIterError;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-private import gtk.TreeIterError;
-private import gobject.Value;
 
 
 
@@ -238,6 +240,17 @@ public class TreeIter
 	this()
 	{
 		this(new GtkTreeIter);
+	}
+	
+	/**
+	 * Creates a dynamically allocated tree iterator as a copy of iter.
+	 */
+	TreeIter copy(TreeIter iter)
+	{
+		TreeIter cp = new TreeIter();
+		 *(cp.gtkTreePath) = *(iter.gtkTreePath);
+		
+		return cp;
 	}
 	
 	/**
@@ -536,33 +549,4 @@ public class TreeIter
 	
 	/**
 	 */
-	
-	/**
-	 * Creates a dynamically allocated tree iterator as a copy of iter.
-	 * This function is not intended for use in applications,
-	 * because you can just copy the structs by value
-	 * (GtkTreeIter new_iter = iter;).
-	 * You must free this iter with gtk_tree_iter_free().
-	 * Returns: a newly-allocated copy of iter
-	 */
-	public TreeIter copy()
-	{
-		// GtkTreeIter * gtk_tree_iter_copy (GtkTreeIter *iter);
-		auto p = gtk_tree_iter_copy(gtkTreeIter);
-		if(p is null)
-		{
-			return null;
-		}
-		return new TreeIter(cast(GtkTreeIter*) p);
-	}
-	
-	/**
-	 * Frees an iterator that has been allocated by gtk_tree_iter_copy().
-	 * This function is mainly used for language bindings.
-	 */
-	public void free()
-	{
-		// void gtk_tree_iter_free (GtkTreeIter *iter);
-		gtk_tree_iter_free(gtkTreeIter);
-	}
 }

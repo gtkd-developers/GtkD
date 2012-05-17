@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_tree_selection_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -51,8 +50,6 @@
  * 	- gtk.TreeIter
  * 	- glib.ListG
  * 	- gtk.TreePath
- * 	- gtk.TreeModelIF
- * 	- gtk.TreeIter
  * structWrap:
  * 	- GList* -> ListG
  * 	- GtkTreeIter* -> TreeIter
@@ -80,8 +77,6 @@ private import gtk.TreeModelIF;
 private import gtk.TreeIter;
 private import glib.ListG;
 private import gtk.TreePath;
-private import gtk.TreeModelIF;
-private import gtk.TreeIter;
 
 
 

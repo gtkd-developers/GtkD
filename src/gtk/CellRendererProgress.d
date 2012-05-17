@@ -31,22 +31,22 @@
  * ctorStrct=GtkCellRenderer
  * clss    = CellRendererProgress
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- OrientableIF
  * prefixes:
  * 	- gtk_cell_renderer_progress_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.CellRenderer
+ * 	- gtk.OrientableIF
+ * 	- gtk.OrientableT
  * structWrap:
- * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,7 +60,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.CellRenderer;
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 
 
 
@@ -72,7 +73,7 @@ private import gtk.CellRenderer;
  * Additionally, it can display a text on top of the progress bar.
  * The GtkCellRendererProgress cell renderer was added in GTK+ 2.6.
  */
-public class CellRendererProgress : CellRenderer
+public class CellRendererProgress : CellRenderer, OrientableIF
 {
 	
 	/** the main Gtk struct */
@@ -117,6 +118,9 @@ public class CellRendererProgress : CellRenderer
 		super.setStruct(obj);
 		gtkCellRendererProgress = cast(GtkCellRendererProgress*)obj;
 	}
+	
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkCellRenderer);
 	
 	/**
 	 */

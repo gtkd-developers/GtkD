@@ -215,6 +215,25 @@ public class TreePath
 	}
 	
 	/**
+	 * Creates a new path with "indices" as indices.
+	 */
+	this (int[] indices ... )
+	{
+		this(false);
+		
+		foreach( index; indices )
+		appendIndex(index);
+	}
+	
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTreePath !is null )
+		{
+			gtk_tree_path_free(gtkTreePath);
+		}
+	}
+	
+	/**
 	 */
 	
 	/**

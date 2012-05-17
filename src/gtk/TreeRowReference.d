@@ -48,11 +48,11 @@
  * 	- row-inserted
  * 	- rows-reordered
  * imports:
+ * 	- gobject.ObjectG
+ * 	- gtk.TreeIter
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
  * 	- gtk.TreePath
- * 	- gobject.ObjectG
- * 	- gtk.TreeIter
  * structWrap:
  * 	- GObject* -> ObjectG
  * 	- GtkTreeIter* -> TreeIter
@@ -74,11 +74,11 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gobject.ObjectG;
+private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-private import gobject.ObjectG;
-private import gtk.TreeIter;
 
 
 

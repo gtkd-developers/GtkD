@@ -34,7 +34,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = ObjectG
+ * extend  = GObject
  * implements:
  * 	- CellEditableIF
  * prefixes:
@@ -43,7 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gobject.ObjectG
  * 	- gtk.CellEditableT
  * 	- gtk.CellEditableIF
  * structWrap:
@@ -60,12 +59,12 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gobject.ObjectG;
 private import gtk.CellEditableT;
 private import gtk.CellEditableIF;
 
 
 
+private import gobject.ObjectG;
 
 /**
  */

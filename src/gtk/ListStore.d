@@ -43,17 +43,15 @@
  * 	- TreeSortableIF
  * prefixes:
  * 	- gtk_list_store_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_list_store_set
  * omit signals:
  * imports:
- * 	- gtk.TreeModel
  * 	- glib.Str
- * 	- gtk.TreeIter
  * 	- gobject.Value
+ * 	- gtk.TreeIter
+ * 	- gtk.TreeModel
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * 	- gtk.TreeModelT
@@ -80,10 +78,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.TreeModel;
 private import glib.Str;
-private import gtk.TreeIter;
 private import gobject.Value;
+private import gtk.TreeIter;
+private import gtk.TreeModel;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TreeModelT;
@@ -236,12 +234,10 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 *  columns = an arrays with the columns to set
 	 *  values = an arrays with the values
 	 */
-	void set(TreeIter iter, int [] columns, char*[] values)
+	void set(TreeIter iter, int[] columns, char*[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
-			//Value v = new Value(values[i]);
-			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
 			gtk_list_store_set(
 			gtkListStore,
 			iter.getTreeIterStruct(),
@@ -250,13 +246,11 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 		}
 	}
 	
-	/** */
-	void set(TreeIter iter, int [] columns, string[] values)
+	/** ditto */
+	void set(TreeIter iter, int[] columns, string[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
-			//Value v = new Value(values[i]);
-			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
 			gtk_list_store_set(
 			gtkListStore,
 			iter.getTreeIterStruct(),

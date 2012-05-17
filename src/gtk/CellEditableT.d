@@ -39,7 +39,6 @@
  * implements:
  * prefixes:
  * 	- gtk_cell_editable_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

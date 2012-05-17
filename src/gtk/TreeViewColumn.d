@@ -39,7 +39,6 @@
  * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_tree_view_column_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,22 +47,23 @@
  * 	- gtk_tree_view_column_clear
  * 	- gtk_tree_view_column_add_attribute
  * 	- gtk_tree_view_column_clear_attributes
+ * 	- gtk_tree_view_column_get_button
+ * 	- gtk_tree_view_column_get_tree_view
  * 	- gtk_tree_view_column_new_with_attributes
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Button
+ * 	- gtk.CellArea
  * 	- gtk.CellRenderer
- * 	- glib.ListG
- * 	- gtk.Widget
- * 	- gtk.TreeModelIF
  * 	- gtk.TreeIter
- * 	- gdk.Rectangle
- * 	- glib.Str
+ * 	- gtk.TreeModelIF
+ * 	- gtk.TreeView
+ * 	- gtk.Widget
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * structWrap:
- * 	- GList* -> ListG
- * 	- GdkRectangle* -> Rectangle
+ * 	- GtkCellArea* -> CellArea
  * 	- GtkCellRenderer* -> CellRenderer
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModelIF
@@ -84,13 +84,13 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Button;
+private import gtk.CellArea;
 private import gtk.CellRenderer;
-private import glib.ListG;
-private import gtk.Widget;
-private import gtk.TreeModelIF;
 private import gtk.TreeIter;
-private import gdk.Rectangle;
-private import glib.Str;
+private import gtk.TreeModelIF;
+private import gtk.TreeView;
+private import gtk.Widget;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 
@@ -183,6 +183,39 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	}
 	
 	/**
+	 * Returns the button used in the treeview column header
+	 * Returns: The button for the column header. [transfer none] Since 3.0
+	 */
+	public Button getButton()
+	{
+		// GtkWidget * gtk_tree_view_column_get_button (GtkTreeViewColumn *tree_column);
+		auto p = gtk_tree_view_column_get_button(gtkTreeViewColumn);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Button(cast(GtkButton*) p);
+	}
+	
+	/**
+	 * Returns the GtkTreeView wherein tree_column has been inserted.
+	 * If column is currently not inserted in any tree view, NULL is
+	 * returned.
+	 * Since 2.12
+	 * Returns: The tree view wherein column has been inserted if any, NULL otherwise. [transfer none]
+	 */
+	public TreeView getTreeView()
+	{
+		// GtkWidget * gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
+		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TreeView(cast(GtkTreeView*) p);
+	}
+	
+	/**
 	 */
 	int[string] connectedSignals;
 	
@@ -238,13 +271,13 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	 * area = the GtkCellArea that the newly created column should use to layout cells.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkCellArea* area)
+	public this (CellArea area)
 	{
 		// GtkTreeViewColumn * gtk_tree_view_column_new_with_area (GtkCellArea *area);
-		auto p = gtk_tree_view_column_new_with_area(area);
+		auto p = gtk_tree_view_column_new_with_area((area is null) ? null : area.getCellAreaStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_area(area)");
+			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_area((area is null) ? null : area.getCellAreaStruct())");
 		}
 		this(cast(GtkTreeViewColumn*) p);
 	}
@@ -548,21 +581,6 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	}
 	
 	/**
-	 * Returns the button used in the treeview column header
-	 * Returns: The button for the column header. [transfer none] Since 3.0
-	 */
-	public Widget getButton()
-	{
-		// GtkWidget * gtk_tree_view_column_get_button (GtkTreeViewColumn *tree_column);
-		auto p = gtk_tree_view_column_get_button(gtkTreeViewColumn);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
-	}
-	
-	/**
 	 * Sets the alignment of the title or custom widget inside the column header.
 	 * The alignment determines its location inside the button -- 0.0 for left, 0.5
 	 * for center, 1.0 for right.
@@ -712,10 +730,10 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	 * width = location to return width needed to render a cell, or NULL. [out][allow-none]
 	 * height = location to return height needed to render a cell, or NULL. [out][allow-none]
 	 */
-	public void cellGetSize(Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
+	public void cellGetSize(ref Rectangle cellArea, out int xOffset, out int yOffset, out int width, out int height)
 	{
 		// void gtk_tree_view_column_cell_get_size (GtkTreeViewColumn *tree_column,  const GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
-		gtk_tree_view_column_cell_get_size(gtkTreeViewColumn, (cellArea is null) ? null : cellArea.getRectangleStruct(), &xOffset, &yOffset, &width, &height);
+		gtk_tree_view_column_cell_get_size(gtkTreeViewColumn, &cellArea, &xOffset, &yOffset, &width, &height);
 	}
 	
 	/**
@@ -730,10 +748,10 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	 * may be NULL. [out][allow-none]
 	 * Returns: TRUE if cell belongs to tree_column.
 	 */
-	public int cellGetPosition(CellRenderer cellRenderer, int* xOffset, out int width)
+	public int cellGetPosition(CellRenderer cellRenderer, out int xOffset, out int width)
 	{
 		// gboolean gtk_tree_view_column_cell_get_position  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  gint *x_offset,  gint *width);
-		return gtk_tree_view_column_cell_get_position(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), xOffset, &width);
+		return gtk_tree_view_column_cell_get_position(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), &xOffset, &width);
 	}
 	
 	/**
@@ -770,23 +788,5 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	{
 		// void gtk_tree_view_column_queue_resize (GtkTreeViewColumn *tree_column);
 		gtk_tree_view_column_queue_resize(gtkTreeViewColumn);
-	}
-	
-	/**
-	 * Returns the GtkTreeView wherein tree_column has been inserted.
-	 * If column is currently not inserted in any tree view, NULL is
-	 * returned.
-	 * Since 2.12
-	 * Returns: The tree view wherein column has been inserted if any, NULL otherwise. [transfer none]
-	 */
-	public Widget getTreeView()
-	{
-		// GtkWidget * gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
-		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Widget(cast(GtkWidget*) p);
 	}
 }
