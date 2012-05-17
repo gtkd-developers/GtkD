@@ -57,7 +57,7 @@ struct WError
 
 private import utils.WrapperIF;
 private import utils.HTODConvert;
-private import std.string;
+
 
 /*
 Paths:
@@ -106,29 +106,7 @@ public class GtkWrapper : WrapperIF
 	string buildFile =  "gtkD.d";
 	string bindingsDir;
 
-	public static string license =
-		"/*"
-		"\n * This file is part of gtkD2."
-		"\n * "
-		"\n * gtkD is free software; you can redistribute it and/or modify"
-		"\n * it under the terms of the GNU Lesser General Public License as published by"
-		"\n * the Free Software Foundation; either version 3 of the License, or"
-		"\n * (at your option) any later version."
-		"\n * "
-		"\n * gtkD is distributed in the hope that it will be useful,"
-		"\n * but WITHOUT ANY WARRANTY; without even the implied warranty of"
-		"\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
-		"\n * GNU Lesser General Public License for more details."
-		"\n * "
-		"\n * You should have received a copy of the GNU Lesser General Public License"
-		"\n * along with gtkD; if not, write to the Free Software"
-		"\n * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA"
-		"\n */"
-		"\n"
-		"\n// generated automatically - do not change"
-		"\n"
-		"\n"
-		;
+	public static string license;
 
 	private bool currIncludeComments;
 
@@ -908,11 +886,11 @@ public class GtkWrapper : WrapperIF
 			//Returns an array of libraries to try and link with.
 			string getLibrary(string funct)
 			{
-				if ( funct.startsWith("gdk") )
+				if ( GtkDClass.startsWith(funct, "gdk") )
 					return library ~ ", LIBRARY.GDKPIXBUF";
-				else if	( funct.startsWith("pango_cairo") )
+				else if	( GtkDClass.startsWith(funct, "pango_cairo") )
 					return library ~ ", LIBRARY.PANGOCAIRO";
-				else if	( funct.startsWith("g_module") )
+				else if	( GtkDClass.startsWith(funct, "g_module") )
 					return library ~ ", LIBRARY.GMODULE";
 				else
 					return library;
@@ -927,7 +905,7 @@ public class GtkWrapper : WrapperIF
 				if (dec.length == 0)
 					continue;
 
-				if ( dec.startsWith("//") )
+				if ( GtkDClass.startsWith(dec, "//") )
 					externalText ~= "\n\t"~ dec ~"\n\n";
 
 				if ( pos > 0 )
@@ -962,7 +940,7 @@ public class GtkWrapper : WrapperIF
 				if (dec.length == 0)
 					continue;
 
-				if ( dec.startsWith("//") )
+				if ( GtkDClass.startsWith(dec, "//") )
 				{
 					externalText ~= "\n\t"~ dec ~"\n\n";
 					continue;
@@ -977,7 +955,7 @@ public class GtkWrapper : WrapperIF
 				if ( dec[0]=='#' )
 					externalText ~= "// ";
 
-				if ( !dec.startsWith("//") && dec[0]!='#' )
+				if ( !GtkDClass.startsWith(dec, "//") && dec[0]!='#' )
 					externalText ~= dec[0..pos] ~" c_"~ dec[pos..$] ~';';
 				else
 					externalText ~= dec;
@@ -996,7 +974,7 @@ public class GtkWrapper : WrapperIF
 				if (dec.length == 0)
 					continue;
 
-				if ( dec.startsWith("//") )
+				if ( GtkDClass.startsWith(dec, "//") )
 					externalText ~= '\n'~ dec ~"\n\n";
 
 				if ( pos > 0 )
