@@ -39,7 +39,6 @@
  * 	- BuildableIF
  * prefixes:
  * 	- gtk_ui_manager_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,12 +47,12 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gtk.ActionGroup
  * 	- glib.ListG
- * 	- gtk.AccelGroup
- * 	- gtk.Widget
  * 	- glib.ListSG
  * 	- gtk.Action
+ * 	- gtk.ActionGroup
+ * 	- gtk.AccelGroup
+ * 	- gtk.Widget
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -81,12 +80,12 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import gtk.ActionGroup;
 private import glib.ListG;
-private import gtk.AccelGroup;
-private import gtk.Widget;
 private import glib.ListSG;
 private import gtk.Action;
+private import gtk.ActionGroup;
+private import gtk.AccelGroup;
+private import gtk.Widget;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -641,16 +640,15 @@ public class UIManager : ObjectG, BuildableIF
 	 * Since 2.4
 	 * Params:
 	 * buffer = the string to parse
-	 * length = the length of buffer (may be -1 if buffer is nul-terminated)
 	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
 	 * Throws: GException on failure.
 	 */
-	public uint addUiFromString(string buffer, gssize length)
+	public uint addUiFromString(char[] buffer)
 	{
 		// guint gtk_ui_manager_add_ui_from_string (GtkUIManager *manager,  const gchar *buffer,  gssize length,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, &err);
+		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, buffer.ptr, cast(int) buffer.length, &err);
 		
 		if (err !is null)
 		{

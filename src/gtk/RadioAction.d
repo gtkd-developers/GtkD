@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_radio_action_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

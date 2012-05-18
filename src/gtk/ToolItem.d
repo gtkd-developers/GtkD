@@ -39,7 +39,6 @@
  * 	- ActivatableIF
  * prefixes:
  * 	- gtk_tool_item_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -139,19 +138,6 @@ public class ToolItem : Bin, ActivatableIF
 	
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkToolItem);
-	
-	/**
-	 * Sets this widget tooltip
-	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
-	 * Params:
-	 *  tipText = the tooltip
-	 *  tipPrivate = a private text
-	 */
-	override void setTooltip(string tipText, string tipPrivate)
-	{
-		Tooltips tt = new Tooltips();
-		tt.setTip(this, tipText, tipPrivate);
-	}
 	
 	/**
 	 */

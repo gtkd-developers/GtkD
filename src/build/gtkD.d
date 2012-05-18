@@ -488,6 +488,7 @@ private import gtk.TreeNode;
 private import gtk.ListStore;
 private import gtk.TreeStore;
 private import gtk.ComboBox;
+private import gtk.ComboBoxText;
 private import gtk.Menu;
 private import gtk.MenuBar;
 private import gtk.MenuItem;

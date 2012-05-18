@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_check_menu_item_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

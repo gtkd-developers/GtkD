@@ -2268,6 +2268,20 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_combo_box_set_popup_fixed_width, \"gtk_combo_box_set_popup_fixed_width\", LIBRARY.GTK);
 	Linker.link(gtk_combo_box_get_popup_fixed_width, \"gtk_combo_box_get_popup_fixed_width\", LIBRARY.GTK);
 
+	// gtk.ComboBoxText
+
+	Linker.link(gtk_combo_box_text_new, \"gtk_combo_box_text_new\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_new_with_entry, \"gtk_combo_box_text_new_with_entry\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_append, \"gtk_combo_box_text_append\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_prepend, \"gtk_combo_box_text_prepend\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_insert, \"gtk_combo_box_text_insert\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_append_text, \"gtk_combo_box_text_append_text\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_prepend_text, \"gtk_combo_box_text_prepend_text\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_insert_text, \"gtk_combo_box_text_insert_text\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_remove, \"gtk_combo_box_text_remove\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_remove_all, \"gtk_combo_box_text_remove_all\", LIBRARY.GTK);
+	Linker.link(gtk_combo_box_text_get_active_text, \"gtk_combo_box_text_get_active_text\", LIBRARY.GTK);
+
 	// gtk.Menu
 
 	Linker.link(gtk_menu_new, \"gtk_menu_new\", LIBRARY.GTK);
@@ -6198,6 +6212,20 @@ mixin( gshared ~"extern(C)
 	void function(GtkComboBox* comboBox, gboolean fixed) c_gtk_combo_box_set_popup_fixed_width;
 	gboolean function(GtkComboBox* comboBox) c_gtk_combo_box_get_popup_fixed_width;
 
+	// gtk.ComboBoxText
+
+	GtkWidget* function() c_gtk_combo_box_text_new;
+	GtkWidget* function() c_gtk_combo_box_text_new_with_entry;
+	void function(GtkComboBoxText* comboBox, gchar* id, gchar* text) c_gtk_combo_box_text_append;
+	void function(GtkComboBoxText* comboBox, gchar* id, gchar* text) c_gtk_combo_box_text_prepend;
+	void function(GtkComboBoxText* comboBox, gint position, gchar* id, gchar* text) c_gtk_combo_box_text_insert;
+	void function(GtkComboBoxText* comboBox, gchar* text) c_gtk_combo_box_text_append_text;
+	void function(GtkComboBoxText* comboBox, gchar* text) c_gtk_combo_box_text_prepend_text;
+	void function(GtkComboBoxText* comboBox, gint position, gchar* text) c_gtk_combo_box_text_insert_text;
+	void function(GtkComboBoxText* comboBox, gint position) c_gtk_combo_box_text_remove;
+	void function(GtkComboBoxText* comboBox) c_gtk_combo_box_text_remove_all;
+	gchar* function(GtkComboBoxText* comboBox) c_gtk_combo_box_text_get_active_text;
+
 	// gtk.Menu
 
 	GtkWidget* function() c_gtk_menu_new;
@@ -10125,6 +10153,20 @@ alias c_gtk_combo_box_set_entry_text_column  gtk_combo_box_set_entry_text_column
 alias c_gtk_combo_box_get_entry_text_column  gtk_combo_box_get_entry_text_column;
 alias c_gtk_combo_box_set_popup_fixed_width  gtk_combo_box_set_popup_fixed_width;
 alias c_gtk_combo_box_get_popup_fixed_width  gtk_combo_box_get_popup_fixed_width;
+
+// gtk.ComboBoxText
+
+alias c_gtk_combo_box_text_new  gtk_combo_box_text_new;
+alias c_gtk_combo_box_text_new_with_entry  gtk_combo_box_text_new_with_entry;
+alias c_gtk_combo_box_text_append  gtk_combo_box_text_append;
+alias c_gtk_combo_box_text_prepend  gtk_combo_box_text_prepend;
+alias c_gtk_combo_box_text_insert  gtk_combo_box_text_insert;
+alias c_gtk_combo_box_text_append_text  gtk_combo_box_text_append_text;
+alias c_gtk_combo_box_text_prepend_text  gtk_combo_box_text_prepend_text;
+alias c_gtk_combo_box_text_insert_text  gtk_combo_box_text_insert_text;
+alias c_gtk_combo_box_text_remove  gtk_combo_box_text_remove;
+alias c_gtk_combo_box_text_remove_all  gtk_combo_box_text_remove_all;
+alias c_gtk_combo_box_text_get_active_text  gtk_combo_box_text_get_active_text;
 
 // gtk.Menu
 

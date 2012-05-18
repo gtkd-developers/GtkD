@@ -38,15 +38,12 @@
  * implements:
  * prefixes:
  * 	- gtk_separator_tool_item_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.ToolItem
  * structWrap:
- * 	- GtkToolItem* -> ToolItem
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,7 +57,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.ToolItem;
 
 
 

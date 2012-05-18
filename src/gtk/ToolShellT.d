@@ -50,7 +50,7 @@
  * 	- GtkSizeGroup* -> SizeGroup
  * module aliases:
  * local aliases:
- * 	- getStyle -> toolShellGetStyle
+ * 	- getStyle -> getToolBarStyle
  * overrides:
  */
 
@@ -133,7 +133,7 @@ public template ToolShellT(TStruct)
 	 * Since 2.14
 	 * Returns: the current style of shell
 	 */
-	public GtkToolbarStyle toolShellGetStyle()
+	public GtkToolbarStyle getToolBarStyle()
 	{
 		// GtkToolbarStyle gtk_tool_shell_get_style (GtkToolShell *shell);
 		return gtk_tool_shell_get_style(getToolShellTStruct());

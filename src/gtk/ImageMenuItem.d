@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_image_menu_item_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,8 +47,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * 	- gtk.AccelGroup
+ * 	- gtk.Widget
  * structWrap:
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
@@ -67,8 +66,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Widget;
 private import gtk.AccelGroup;
+private import gtk.Widget;
 
 
 
@@ -128,13 +127,11 @@ public class ImageMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkImageMenuItem containing a label.
-	 * If mnemonic it true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
+	 * If mnemonic it true the label will be created using
+	 * gtk_label_new_with_mnemonic(), so underscores
 	 * in label indicate the mnemonic for the menu item.
 	 * Params:
 	 *  label = the text of the menu item.
-	 * Returns:
-	 *  a new GtkImageMenuItem.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
@@ -162,17 +159,16 @@ public class ImageMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkImageMenuItem containing the image and text from a
-	 * stock item. Some stock ids have preprocessor macros like GTK_STOCK_OK
-	 * and GTK_STOCK_APPLY.
+	 * stock item.
 	 * If you want this menu item to have changeable accelerators, then pass in
-	 * NULL for accel_group. Next call gtk_menu_item_set_accel_path() with an
-	 * appropriate path for the menu item, use gtk_stock_lookup() to look up the
+	 * null for accelGroup. Next call setAccelPath() with an appropriate path
+	 * for the menu item, use gtk.StockItem.StockItem.lookup() to look up the
 	 * standard accelerator for the stock item, and if one is found, call
-	 * gtk_accel_map_add_entry() to register it.
+	 * gtk.AccelMap.AccelMap.addEntry() to register it.
 	 * Params:
-	 * StockID = the name of the stock item
-	 * accelGroup =  the GtkAccelGroup to add the menu items accelerator to,
-	 *  or NULL.
+	 *   StockID    = the name of the stock item
+	 *   accelGroup = the GtkAccelGroup to add the menu items accelerator to,
+	 *                or NULL.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID, AccelGroup accelGroup)

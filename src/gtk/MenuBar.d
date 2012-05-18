@@ -38,19 +38,14 @@
  * implements:
  * prefixes:
  * 	- gtk_menu_bar_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.Widget
  * 	- gtk.Menu;
  * 	- gtk.MenuItem;
  * structWrap:
- * 	- GtkMenu* -> Menu
- * 	- GtkMenuItem* -> MenuItem
- * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,7 +59,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.Widget;
 private import gtk.Menu;;
 private import gtk.MenuItem;;
 

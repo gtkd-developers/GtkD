@@ -37,6 +37,7 @@
  * extend  = 
  * implements:
  * 	- OrientableIF
+ * 	- ScrollableIF
  * prefixes:
  * 	- gtk_tool_palette_
  * omit structs:
@@ -46,13 +47,19 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Adjustment
+ * 	- gtk.SelectionData
+ * 	- gtk.TargetEntry
  * 	- gtk.ToolItem
  * 	- gtk.ToolItemGroup
  * 	- gtk.Widget
  * 	- gtk.OrientableIF
  * 	- gtk.OrientableT
+ * 	- gtk.ScrollableIF
+ * 	- gtk.ScrollableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
+ * 	- GtkSelectionData* -> SelectionData
+ * 	- GtkTargetEntry* -> TargetEntry
  * 	- GtkToolItem* -> ToolItem
  * 	- GtkToolItemGroup* -> ToolItemGroup
  * 	- GtkWidget* -> Widget
@@ -72,11 +79,15 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gtk.Adjustment;
+private import gtk.SelectionData;
+private import gtk.TargetEntry;
 private import gtk.ToolItem;
 private import gtk.ToolItemGroup;
 private import gtk.Widget;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
+private import gtk.ScrollableIF;
+private import gtk.ScrollableT;
 
 
 
@@ -99,7 +110,7 @@ private import gtk.Container;
  * signal handler of the drag target.
  * $(DDOC_COMMENT example)
  */
-public class ToolPalette : Container, OrientableIF
+public class ToolPalette : Container, OrientableIF, ScrollableIF
 {
 	
 	/** the main Gtk struct */
@@ -147,6 +158,9 @@ public class ToolPalette : Container, OrientableIF
 	
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkToolPalette);
+	
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkToolPalette);
 	
 	/**
 	 */
@@ -348,10 +362,10 @@ public class ToolPalette : Container, OrientableIF
 	 * selection = a GtkSelectionData
 	 * Returns: the dragged item in selection. [transfer none]
 	 */
-	public Widget getDragItem(GtkSelectionData* selection)
+	public Widget getDragItem(SelectionData selection)
 	{
 		// GtkWidget * gtk_tool_palette_get_drag_item (GtkToolPalette *palette,  const GtkSelectionData *selection);
-		auto p = gtk_tool_palette_get_drag_item(gtkToolPalette, selection);
+		auto p = gtk_tool_palette_get_drag_item(gtkToolPalette, (selection is null) ? null : selection.getSelectionDataStruct());
 		if(p is null)
 		{
 			return null;
@@ -364,10 +378,15 @@ public class ToolPalette : Container, OrientableIF
 	 * Since 2.20
 	 * Returns: the GtkTargetEntry for a dragged group. [transfer none]
 	 */
-	public static GtkTargetEntry* getDragTargetGroup()
+	public static TargetEntry getDragTargetGroup()
 	{
 		// const GtkTargetEntry * gtk_tool_palette_get_drag_target_group  (void);
-		return gtk_tool_palette_get_drag_target_group();
+		auto p = gtk_tool_palette_get_drag_target_group();
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetEntry(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
@@ -375,10 +394,15 @@ public class ToolPalette : Container, OrientableIF
 	 * Since 2.20
 	 * Returns: the GtkTargetEntry for a dragged item. [transfer none]
 	 */
-	public static GtkTargetEntry* getDragTargetItem()
+	public static TargetEntry getDragTargetItem()
 	{
 		// const GtkTargetEntry * gtk_tool_palette_get_drag_target_item  (void);
-		return gtk_tool_palette_get_drag_target_item();
+		auto p = gtk_tool_palette_get_drag_target_item();
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetEntry(cast(GtkTargetEntry*) p);
 	}
 	
 	/**

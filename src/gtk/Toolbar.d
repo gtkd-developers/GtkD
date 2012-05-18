@@ -40,7 +40,6 @@
  * 	- ToolShellIF
  * prefixes:
  * 	- gtk_toolbar_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -52,7 +51,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * 	- gtk.Button
  * 	- gtk.ToolItem
  * 	- gtk.OrientableIF
@@ -61,10 +59,9 @@
  * 	- gtk.ToolShellT
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
- * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
- * 	- getStyle -> toolbarGetStyle
+ * 	- getStyle -> getToolbarStyle
  * overrides:
  */
 
@@ -79,7 +76,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Widget;
 private import gtk.Button;
 private import gtk.ToolItem;
 private import gtk.OrientableIF;
@@ -165,7 +161,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * toolItem  = a GtkToolItem
 	 * pos = the position of the new item
 	 */
-	public void insert (ToolItem toolItem, int pos=-1)
+	public void insert(ToolItem toolItem, int pos=-1)
 	{
 		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
 	}
@@ -472,11 +468,9 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See
 	 * gtk_toolbar_set_style().
-	 * Params:
-	 * toolbar = a GtkToolbar
 	 * Returns: the current style of toolbar
 	 */
-	public GtkToolbarStyle toolbarGetStyle()
+	public GtkToolbarStyle getToolbarStyle()
 	{
 		// GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
 		return gtk_toolbar_get_style(gtkToolbar);

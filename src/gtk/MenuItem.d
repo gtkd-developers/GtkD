@@ -39,7 +39,6 @@
  * 	- ActivatableIF
  * prefixes:
  * 	- gtk_menu_item_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,8 +47,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * 	- gtk.AccelGroup
+ * 	- gtk.Widget
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
@@ -73,8 +72,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Widget;
 private import gtk.AccelGroup;
+private import gtk.Widget;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
 
@@ -168,8 +167,6 @@ public class MenuItem : Bin, ActivatableIF
 		addOnActivate(dlg);
 	}
 	
-	
-	
 	/**
 	 * Creates a new Item associated with a "activate" delegate and with a action code
 	 * and optionally accelGroup
@@ -190,8 +187,6 @@ public class MenuItem : Bin, ActivatableIF
 			addAccelerator("activate",accelGroup,accelKey,modifierType,accelFlags);
 		}
 	}
-	
-	
 	
 	/**
 	 * Creates a new Item associated with a "activate" delegate
@@ -598,10 +593,10 @@ public class MenuItem : Bin, ActivatableIF
 	 * Params:
 	 * requisition = the requisition to use as signal data.
 	 */
-	public void toggleSizeRequest(int* requisition)
+	public void toggleSizeRequest(ref int requisition)
 	{
 		// void gtk_menu_item_toggle_size_request (GtkMenuItem *menu_item,  gint *requisition);
-		gtk_menu_item_toggle_size_request(gtkMenuItem, requisition);
+		gtk_menu_item_toggle_size_request(gtkMenuItem, &requisition);
 	}
 	
 	/**

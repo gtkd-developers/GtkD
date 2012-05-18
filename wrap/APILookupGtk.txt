@@ -5200,21 +5200,19 @@ struct: GtkComboBox
 class: ComboBox
 implements: CellLayoutIF
 implements: CellEditableIF
-import: atk.ObjectAtk
-structWrap: AtkObject* ObjectAtk
 prefix: gtk_combo_box_
-prefix: gtk_
-#noprefix: gtk_combo_box_new_text
-#noprefix: gtk_combo_box_append_text
-#noprefix: gtk_combo_box_insert_text
-#noprefix: gtk_combo_box_prepend_text
-#noprefix: gtk_combo_box_remove_text
+import: atk.ObjectAtk
 import: glib.Str
+import: gdk.Device
+import: gtk.CellArea
+import: gtk.TreeIter
 import: gtk.TreeModel
 import: gtk.TreeModelIF
-structWrap: GtkTreeModel* TreeModelIF
-import: gtk.TreeIter
+structWrap: AtkObject* ObjectAtk
+structWrap: GdkDevice* Device
+structWrap: GtkCellArea* CellArea
 structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeModel* TreeModelIF
 
 #imports for CellLayout Interface.
 import: gtk.CellLayoutIF
@@ -5225,14 +5223,13 @@ import: gtk.CellEditableT
 import: gtk.CellEditableIF
 
 nocode: gtk_combo_box_new
-nocode: gtk_combo_box_new_text
+nocode: gtk_combo_box_new_with_entry
+nocode: gtk_combo_box_new_with_model
+nocode: gtk_combo_box_new_with_model_and_entry
+nocode: gtk_combo_box_new_with_area
+nocode: gtk_combo_box_new_with_area_and_entry
 
 code: start
-
-	private int count = 0;
-	public int maxCount = 0;
-	
-
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
 
@@ -5241,25 +5238,17 @@ code: start
 
 	/**
 	 * Creates a new empty GtkComboBox.
-	 * If text is true then
-	 * constructs a new text combo box, which is a
-	 * GtkComboBox just displaying strings. If you use this function to create
-	 * a text combo box, you should only manipulate its data source with the
-	 * following convenience functions: gtk_combo_box_append_text(),
-	 * gtk_combo_box_insert_text(), gtk_combo_box_prepend_text() and
-	 * gtk_combo_box_remove_text().
-	 * Since 2.4
-	 * Returns:
-	 *  A new GtkComboBox.
+	 * Params:
+	 *   entry = If true, create an empty ComboBox with an entry.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (bool text=true)
+	public this (bool entry=true)
 	{
 		GtkComboBox* p;
-		if ( text )
+		if ( entry )
 		{
 			// GtkWidget* gtk_combo_box_new_text (void);
-			p = cast(GtkComboBox*)gtk_combo_box_new_text();
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_entry();
 		}
 		else
 		{
@@ -5275,25 +5264,123 @@ code: start
 		this(p);
 	}
 
+	/**
+	 * Creates a new GtkComboBox with the model initialized to model.
+	 * Params:
+	 *   model = A GtkTreeModel.
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (TreeModelIF model, bool entry=true)
+	{
+		GtkComboBox* p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_new_with_model_and_entry (GtkTreeModel *model);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_model_and_entry((model is null) ? null : model.getTreeModelTStruct());
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new empty GtkComboBox using area to layout cells.
+	 * Params:
+	 *   area = the GtkCellArea to use to layout cell renderers.
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (CellArea area, bool entry=true)
+	{
+		GtkComboBox* p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_new_with_area_and_entry (GtkCellArea *area);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_area_and_entry((area is null) ? null : area.getCellAreaStruct());
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_new_with_area (GtkCellArea* area);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_area((area is null) ? null : area.getCellAreaStruct());
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(p);
+	}
+code: end
+outFile: ComboBox
+
+file: GtkComboBoxText.html
+struct: GtkComboBoxText
+class: ComboBoxText
+prefix: gtk_combo_box_text_
+import: glib.Str
+
+nocode: gtk_combo_box_text_new
+nocode: gtk_combo_box_text_new_with_entry
+
+code: start
+	/**
+	 * Creates a new ComboBoxText, which is a ComboBox just displaying strings.
+	 * Params:
+	 *   entry = If true, create an ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool entry=true)
+	{
+		GtkComboBox* p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_text_new_with_entry (void);
+			p = cast(GtkComboBox*)gtk_combo_box_text_new_with_entry();
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_text_new (void);
+			p = cast(GtkComboBox*)gtk_combo_box_text_new();
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(p);
+	}
+
 	/** */
 	public void setActiveText(string text, bool insert=false)
 	{
-            int active = 0;
-            setActive(0);
-            while ( getActive >= 0 ) // returns -1 if end of list if reached
-            {
-                if( text == getActiveText() ) return;
-                ++active;
-                setActive(active);
-            }
-            // was not found, the combo has now nothing selected
-            if ( insert )
-            {
-                appendText(text);
-                setActive(active);
-            }
+		int active = 0;
+		setActive(0);
+		while ( getActive >= 0 ) // returns -1 if end of list if reached
+		{
+			if( text == getActiveText() ) return;
+			++active;
+			setActive(active);
+		}
+		// was not found, the combo has now nothing selected
+		if ( insert )
+		{
+			appendText(text);
+			setActive(active);
+		}
 	}
-
+	
 	/** */
 	int getIndex(string text)
 	{
@@ -5321,7 +5408,7 @@ code: start
 		}
 		return end ? -1 : index;
 	}
-
+	
 	/** */
 	void prependOrReplaceText(string text)
 	{
@@ -5336,26 +5423,25 @@ code: start
 			prependText(text);
 		}
 	}
-
-
 code: end
-outFile: ComboBox
+outFile: ComboBoxText
 
 file: GtkMenu.html
 struct: GtkMenu
 class: Menu
 prefix: gtk_menu_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gdk.Screen
-structWrap: GdkScreen* Screen
-import: gtk.AccelGroup
-structWrap: GtkAccelGroup* AccelGroup
 import: glib.ListG
-structWrap: GList* ListG
+import: gdk.Device
+import: gdk.Screen
+import: gtk.AccelGroup
 import: gtk.MenuItem
+import: gtk.Widget
+structWrap: GList* ListG
+structWrap: GdkDevice* Device
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GdkScreen* Screen
+structWrap: GtkWidget* Widget
 
 code: start
 	/**
@@ -5409,13 +5495,9 @@ file: GtkMenuBar.html
 struct: GtkMenuBar
 class: MenuBar
 prefix: gtk_menu_bar_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.Menu;
 import: gtk.MenuItem;
-structWrap: GtkMenu* Menu
-structWrap: GtkMenuItem* MenuItem
+
 code: start
 	/** */
 	Menu append(string label, bool rightJustify=false)
@@ -5441,10 +5523,9 @@ struct: GtkMenuItem
 class: MenuItem
 implements: ActivatableIF
 prefix: gtk_menu_item_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
 import: gtk.AccelGroup
+import: gtk.Widget
 structWrap: GtkWidget* Widget
 
 # imports for Activatable Interface
@@ -5458,6 +5539,8 @@ alias: activate itemActivate
 
 override: select
 override: deselect
+
+inout: gtk_menu_item_toggle_size_request requisition
 
 code: start
 	/** store the action code passed in by the applcation */
@@ -5486,9 +5569,7 @@ code: start
 		this.actionLabel = action;
 		addOnActivate(dlg);
 	}
-	
 
-	
 	/**
 	 * Creates a new Item associated with a "activate" delegate and with a action code
 	 * and optionally accelGroup
@@ -5509,8 +5590,6 @@ code: start
 			addAccelerator("activate",accelGroup,accelKey,modifierType,accelFlags); 
 		}
 	}
-	
-	
 
 	/**
 	 * Creates a new Item associated with a "activate" delegate
@@ -5561,12 +5640,11 @@ file: GtkImageMenuItem.html
 struct: GtkImageMenuItem
 class: ImageMenuItem
 prefix: gtk_image_menu_item_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.AccelGroup
+import: gtk.Widget
 structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkWidget* Widget
 
 nocode: gtk_image_menu_item_new_with_label
 nocode: gtk_image_menu_item_new_with_mnemonic
@@ -5575,13 +5653,11 @@ nocode: gtk_image_menu_item_new_from_stock
 code: start
 	/**
 	 * Creates a new GtkImageMenuItem containing a label.
-	 * If mnemonic it true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
+	 * If mnemonic it true the label will be created using
+	 * gtk_label_new_with_mnemonic(), so underscores
 	 * in label indicate the mnemonic for the menu item.
 	 * Params:
 	 *  label = the text of the menu item.
-	 * Returns:
-	 *  a new GtkImageMenuItem.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label, bool mnemonic=true)
@@ -5609,17 +5685,16 @@ code: start
 
 	/**
 	 * Creates a new GtkImageMenuItem containing the image and text from a
-	 * stock item. Some stock ids have preprocessor macros like GTK_STOCK_OK
-	 * and GTK_STOCK_APPLY.
+	 * stock item.
 	 * If you want this menu item to have changeable accelerators, then pass in
-	 * NULL for accel_group. Next call gtk_menu_item_set_accel_path() with an
-	 * appropriate path for the menu item, use gtk_stock_lookup() to look up the
+	 * null for accelGroup. Next call setAccelPath() with an appropriate path
+	 * for the menu item, use gtk.StockItem.StockItem.lookup() to look up the
 	 * standard accelerator for the stock item, and if one is found, call
-	 * gtk_accel_map_add_entry() to register it.
+	 * gtk.AccelMap.AccelMap.addEntry() to register it.
 	 * Params:
-	 * StockID = the name of the stock item
-	 * accelGroup =  the GtkAccelGroup to add the menu items accelerator to,
-	 *  or NULL.
+	 *   StockID    = the name of the stock item
+	 *   accelGroup = the GtkAccelGroup to add the menu items accelerator to,
+	 *                or NULL.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (StockID stockID, AccelGroup accelGroup)
@@ -5633,14 +5708,12 @@ code: start
 		this(cast(GtkImageMenuItem*) p);
 	}
 code: end
-
 outFile: ImageMenuItem
 
 file: GtkRadioMenuItem.html
 struct: GtkRadioMenuItem
 class: RadioMenuItem
 prefix: gtk_radio_menu_item_
-prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
@@ -5730,7 +5803,6 @@ file: gtk3-gtkcheckmenuitem.html
 struct: GtkCheckMenuItem
 class: CheckMenuItem
 prefix: gtk_check_menu_item_
-prefix: gtk_
 import: glib.Str
 
 nocode: gtk_check_menu_item_new_with_label
@@ -5769,21 +5841,18 @@ code: start
 		this(p);
 	}
 code: end
-
 outFile: CheckMenuItem
 
 file: GtkSeparatorMenuItem.html
 struct: GtkSeparatorMenuItem
 class: SeparatorMenuItem
 prefix: gtk_separator_menu_item_
-prefix: gtk_
 outFile: SeparatorMenuItem
 
 file: GtkTearoffMenuItem.html
 struct: GtkTearoffMenuItem
 class: TearoffMenuItem
 prefix: gtk_tearoff_menu_item_
-prefix: gtk_
 outFile: TearoffMenuItem
 
 file: GtkToolShell.html
@@ -5793,7 +5862,7 @@ template: TStruct
 prefix: gtk_tool_shell_
 import: gtk.SizeGroup
 structWrap: GtkSizeGroup* SizeGroup
-alias: getStyle toolShellGetStyle
+alias: getStyle getToolBarStyle
 nocode: gtk_tool_shell_get_orientation
 interfaceCode: start
 	/**
@@ -5814,13 +5883,10 @@ class: Toolbar
 implements: OrientableIF
 implements: ToolShellIF
 prefix: gtk_toolbar_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
 import: gtk.Button
 import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
-structWrap: GtkWidget* Widget
 
 #imports for Orientable Interface.
 import: gtk.OrientableIF
@@ -5834,7 +5900,7 @@ import: gtk.ToolShellT
 nocode: gtk_toolbar_get_icon_size
 nocode: gtk_toolbar_get_relief_style
 
-alias: getStyle toolbarGetStyle
+alias: getStyle getToolbarStyle
 
 nocode: gtk_toolbar_insert
 
@@ -5853,7 +5919,7 @@ code: start
 	 * toolItem  = a GtkToolItem
 	 * pos = the position of the new item
 	 */
-	public void insert (ToolItem toolItem, int pos=-1)
+	public void insert(ToolItem toolItem, int pos=-1)
 	{
 		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
 	}
@@ -5892,7 +5958,6 @@ code: start
 			);
 		return button;
 	}
-
 code: end
 outFile: Toolbar
 
@@ -5901,11 +5966,10 @@ struct: GtkToolItem
 class: ToolItem
 implements: ActivatableIF
 prefix: gtk_tool_item_
-prefix: gtk_
 import: glib.Str
 import: gtk.SizeGroup
-structWrap: GtkSizeGroup* SizeGroup
 import: gtk.Widget
+structWrap: GtkSizeGroup* SizeGroup
 structWrap: GtkWidget* Widget
 
 # imports for Activatable Interface
@@ -5918,22 +5982,7 @@ override: setTooltipMarkup
 code: start
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkToolItem);
-
-	/**
-	 * Sets this widget tooltip
-	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
-	 * Params:
-	 *  tipText = the tooltip
-	 *  tipPrivate = a private text
-	 */
-	override void setTooltip(string tipText, string tipPrivate)
-	{
-		Tooltips tt = new Tooltips();
-		tt.setTip(this, tipText, tipPrivate);
-	}
-
 code: end
-
 outFile: ToolItem
 
 file: GtkToolPalette.html
@@ -5941,27 +5990,38 @@ struct: GtkToolPalette
 ctorStruct: GtkWidget
 class: ToolPalette
 implements: OrientableIF
+implements: ScrollableIF
 prefix: gtk_tool_palette_
-alias: getStyle getToolbarStyle
 import: glib.Str
 import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-#import: gtk.TargetEntry
-#structWrap: GtkTargetEntry* TargetEntry
+import: gtk.SelectionData
+import: gtk.TargetEntry
 import: gtk.ToolItem
-structWrap: GtkToolItem* ToolItem
 import: gtk.ToolItemGroup
-structWrap: GtkToolItemGroup* ToolItemGroup
 import: gtk.Widget
+structWrap: GtkAdjustment* Adjustment
+structWrap: GtkSelectionData* SelectionData
+structWrap: GtkTargetEntry* TargetEntry
+structWrap: GtkToolItem* ToolItem
+structWrap: GtkToolItemGroup* ToolItemGroup
 structWrap: GtkWidget* Widget
+
+alias: getStyle getToolbarStyle
 
 #imports for Orientable Interface.
 import: gtk.OrientableIF
 import: gtk.OrientableT
 
+#imports for Scrollable Interface.
+import: gtk.ScrollableIF
+import: gtk.ScrollableT
+
 code: start
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkToolPalette);
+
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkToolPalette);
 code: end
 outFile: ToolPalette
 
@@ -5971,11 +6031,10 @@ ctorStruct: GtkWidget
 class: ToolItemGroup
 implements: ToolShellIF
 prefix: gtk_tool_item_group_
-alias: getStyle getToolbarStyle
 import: glib.Str
 import: gtk.ToolItem
-structWrap: GtkToolItem* ToolItem
 import: gtk.Widget
+structWrap: GtkToolItem* ToolItem
 structWrap: GtkWidget* Widget
 
 #imports for ToolShell Interface.
@@ -6006,9 +6065,6 @@ struct: GtkSeparatorToolItem
 ctorStruct: GtkToolItem
 class: SeparatorToolItem
 prefix: gtk_separator_tool_item_
-prefix: gtk_
-import: gtk.ToolItem
-structWrap: GtkToolItem* ToolItem
 outFile: SeparatorToolItem
 
 file: GtkToolButton.html
@@ -6016,10 +6072,7 @@ struct: GtkToolButton
 ctorStruct: GtkToolItem
 class: ToolButton
 prefix: gtk_tool_button_
-prefix: gtk_
 import: glib.Str
-import: gtk.ToolItem
-#structWrap: GtkToolItem* ToolItem
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
@@ -6045,7 +6098,6 @@ code: start
 		this(StockDesc[stockID]);
 	}
 code: end
-
 outFile: ToolButton
 
 file: GtkMenuToolButton.html
@@ -6053,43 +6105,14 @@ struct: GtkMenuToolButton
 ctorStruct: GtkToolItem
 class: MenuToolButton
 prefix: gtk_menu_tool_button_
-prefix: gtk_
 import: glib.Str
-import: gtk.ToolItem
-structWrap: GtkToolItem* ToolItem
+import: gtk.Menu
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-import: gtk.Menu
 
-
-nocode: gtk_menu_tool_button_new
-nocode: gtk_menu_tool_button_new_from_stock
 nocode: gtk_menu_tool_button_get_menu
 
 code: start
-	/**
-	 * Creates a new GtkMenuToolButton using icon_widget as icon and
-	 * label as label.
-	 * Since 2.6
-	 * Params:
-	 *  iconWidget = a widget that will be used as icon widget, or NULL
-	 *  label = a string that will be used as label, or NULL
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(Widget iconWidget, string label)
-	{
-		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), 
-			Str.toStringz(label));
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_menu_tool_button_new");
-		}
-
-		this(cast(GtkMenuToolButton*) p);
-	}
-	
 	/**
 	 * Creates a new GtkMenuToolButton.
 	 * The new GtkMenuToolButton will contain an icon and label from
@@ -6101,16 +6124,7 @@ code: start
 	 */
 	public this(StockID stockId)
 	{
-		// GtkToolItem* gtk_menu_tool_button_new_from_stock  (const gchar *stock_id);
-		auto p = gtk_menu_tool_button_new_from_stock(
-			Str.toStringz(StockDesc[stockId]));
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_menu_tool_button_new_from_stock");
-		}
-
-		this(cast(GtkMenuToolButton*) p);
+		this(StockDesc[stockId]);
 	}
 
 	/**
@@ -6131,27 +6145,7 @@ code: start
 		}
 		return new Menu(cast(GtkMenu*)p);
 	}
-	
-	/**
-	 * Sets the toolTip for the arrow
-	 * Deprecated: Since 2.12 use Widget.setArrowTooltipText() or Widget.setArrowTooltipMarkup()
-	 * Params:
-	 *    	tipText = 	
-	 *    	tipPrivate = 	
-	 */
-	public void setArrowTooltip(string tipText, string tipPrivate)
-	{
-		Tooltips tooltips = new Tooltips();
-		gtk_menu_tool_button_set_arrow_tooltip(
-			gtkMenuToolButton, 
-			(tooltips is null) ? null : tooltips.getTooltipsStruct(), 
-			Str.toStringz(tipText), 
-			Str.toStringz(tipPrivate)
-			);
-	}
-
 code: end
-
 outFile: MenuToolButton
 
 file: GtkToggleToolButton.html
@@ -6159,10 +6153,18 @@ struct: GtkToggleToolButton
 ctorStruct: GtkToolItem
 class: ToggleToolButton
 prefix: gtk_toggle_tool_button_
-prefix: gtk_
 import: glib.Str
-import: gtk.ToolItem
-structWrap: GtkToolItem* ToolItem
+
+code: start
+	/**
+	 * Creates a new GtkToggleToolButton containing the image and text
+	 * from a stock item.
+	 */
+	public this(StockID stockId)
+	{
+		this(StockDesc[stockId]);
+	}
+code: end
 outFile: ToggleToolButton
 
 file: GtkRadioToolButton.html
@@ -6170,13 +6172,9 @@ struct: GtkRadioToolButton
 ctorStruct: GtkToolItem
 class: RadioToolButton
 prefix: gtk_radio_tool_button_
-prefix: gtk_
 import: glib.Str
-import: gtk.ToolItem
-structWrap: GtkToolItem* ToolItem
 import: glib.ListSG
 structWrap: GSList* ListSG
-structWrap: GtkRadioToolButton* RadioToolButton
 outFile: RadioToolButton
 
 ###########################################################
@@ -6188,26 +6186,27 @@ struct: GtkUIManager
 class: UIManager
 implements: BuildableIF
 prefix: gtk_ui_manager_
-prefix: gtk_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: gtk.ActionGroup
-structWrap: GtkActionGroup* ActionGroup
 import: glib.ListG
-structWrap: GList* ListG
-import: gtk.AccelGroup
-structWrap: GtkAccelGroup* AccelGroup
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: glib.ListSG
-structWrap: GSList* ListSG
 import: gtk.Action
+import: gtk.ActionGroup
+import: gtk.AccelGroup
+import: gtk.Widget
+structWrap: GList* ListG
+structWrap: GSList* ListSG
 structWrap: GtkAction* Action
+structWrap: GtkActionGroup* ActionGroup
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkWidget* Widget
 
 #imports for Buildable Interface.
 import: gtk.BuildableIF
 import: gtk.BuildableT
+
+array: gtk_ui_manager_add_ui_from_string buffer length
 
 code: start
 	// add the Buildable capabilities
@@ -6220,20 +6219,13 @@ struct: GtkActionGroup
 class: ActionGroup
 implements: BuildableIF
 prefix: gtk_action_group_
-prefix: gtk_
 import: glib.Str
-import: gtk.Action
-structWrap: GtkAction* Action
 import: glib.ListG
-structWrap: GList* ListG
+import: gtk.Action
 import: gtk.Widget
+structWrap: GList* ListG
+structWrap: GtkAction* Action
 structWrap: GtkWidget* Widget
-#import: gtk.ActionEntry
-#structWrap: GtkActionEntry* ActionEntry
-#import: gtk.ToggleActionEntry
-#structWrap: GtkToggleActionEntry* ToggleActionEntry
-#import: gtk.RadioActionEntry
-#structWrap: GtkRadioActionEntry* RadioActionEntry
 
 #imports for Buildable Interface.
 import: gtk.BuildableIF
@@ -6257,30 +6249,28 @@ struct: GtkAction
 class: Action
 implements: BuildableIF
 prefix: gtk_action_
-prefix: gtk_
 import: glib.Str
 import: gio.Icon
 import: gio.IconIF
-structWrap: GIcon* IconIF
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: glib.ListSG
-structWrap: GSList* ListSG
 import: gobject.Closure
-structWrap: GClosure* Closure
+import: glib.ListSG
 import: gtk.AccelGroup
-structWrap: GtkAccelGroup* AccelGroup
 import: gtk.Image
 import: gtk.Menu
 import: gtk.MenuItem
 import: gtk.ToolItem
+import: gtk.Widget
+structWrap: GIcon* IconIF
+structWrap: GClosure* Closure
+structWrap: GSList* ListSG
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkWidget* Widget
 
 #imports for Buildable Interface.
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
 nocode: gtk_action_get_stock_id
-nocode: gtk_action_set_stock_id
 nocode: gtk_action_create_icon
 nocode: gtk_action_create_menu_item
 nocode: gtk_action_create_tool_item
@@ -6337,8 +6327,7 @@ code: start
 	 */
 	public void setStockId(StockID stockId)
 	{
-		// void gtk_action_set_stock_id (GtkAction *action,  const gchar *stock_id);
-		gtk_action_set_stock_id(gtkAction, Str.toStringz(StockDesc[stockId]));
+		setStockID(StockDesc[stockId]);
 	}
 
 	/**
@@ -6416,7 +6405,6 @@ file: GtkToggleAction.html
 struct: GtkToggleAction
 class: ToggleAction
 prefix: gtk_toggle_action_
-prefix: gtk_
 import: glib.Str
 
 code: start
@@ -6444,7 +6432,6 @@ file: GtkRadioAction.html
 struct: GtkRadioAction
 class: RadioAction
 prefix: gtk_radio_action_
-prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
@@ -6482,9 +6469,6 @@ import: glib.Str
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
-nocode: gtk_recent_action_new
-nocode: gtk_recent_action_new_for_manager
-
 code: start
 	/**
 	 * Creates a new GtkRecentAction object. To add the action to
@@ -6501,13 +6485,7 @@ code: start
 	 */
 	public this (string name, string label, string tooltip, StockID stockID)
 	{
-		// GtkAction* gtk_recent_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
-		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_recent_action_new");
-		}
-		this(cast(GtkRecentAction*) p);
+		this(name, label, tooltip, StockDesc[stockID]);
 	}
 	
 	/**
@@ -6527,13 +6505,7 @@ code: start
 	 */
 	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
 	{
-		// GtkAction* gtk_recent_action_new_for_manager (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  GtkRecentManager *manager);
-		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]), (manager is null) ? null : manager.getRecentManagerStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_recent_action_new_for_manager");
-		}
-		this(cast(GtkRecentAction*) p);
+		this(name, label, tooltip, StockDesc[stockID], manager);
 	}
 code: end
 outFile: RecentAction

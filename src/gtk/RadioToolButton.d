@@ -38,19 +38,15 @@
  * implements:
  * prefixes:
  * 	- gtk_radio_tool_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.ToolItem
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
- * 	- GtkRadioToolButton* -> RadioToolButton
- * 	- GtkToolItem* -> ToolItem
  * module aliases:
  * local aliases:
  * overrides:
@@ -65,7 +61,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.ToolItem;
 private import glib.ListSG;
 
 
@@ -180,13 +175,13 @@ public class RadioToolButton : ToggleToolButton
 	 * group = An existing GtkRadioToolButton
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (RadioToolButton group)
+	public this (GtkRadioToolButton* group)
 	{
 		// GtkToolItem * gtk_radio_tool_button_new_from_widget  (GtkRadioToolButton *group);
-		auto p = gtk_radio_tool_button_new_from_widget((group is null) ? null : group.getRadioToolButtonStruct());
+		auto p = gtk_radio_tool_button_new_from_widget(group);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_radio_tool_button_new_from_widget((group is null) ? null : group.getRadioToolButtonStruct())");
+			throw new ConstructionException("null returned by gtk_radio_tool_button_new_from_widget(group)");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}
@@ -201,13 +196,13 @@ public class RadioToolButton : ToggleToolButton
 	 * stockId = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (RadioToolButton group, string stockId)
+	public this (GtkRadioToolButton* group, string stockId)
 	{
 		// GtkToolItem * gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
-		auto p = gtk_radio_tool_button_new_with_stock_from_widget((group is null) ? null : group.getRadioToolButtonStruct(), Str.toStringz(stockId));
+		auto p = gtk_radio_tool_button_new_with_stock_from_widget(group, Str.toStringz(stockId));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_radio_tool_button_new_with_stock_from_widget((group is null) ? null : group.getRadioToolButtonStruct(), Str.toStringz(stockId))");
+			throw new ConstructionException("null returned by gtk_radio_tool_button_new_with_stock_from_widget(group, Str.toStringz(stockId))");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}

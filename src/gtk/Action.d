@@ -39,12 +39,10 @@
  * 	- BuildableIF
  * prefixes:
  * 	- gtk_action_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * 	- gtk_action_get_stock_id
- * 	- gtk_action_set_stock_id
  * 	- gtk_action_create_icon
  * 	- gtk_action_create_menu_item
  * 	- gtk_action_create_tool_item
@@ -54,14 +52,14 @@
  * 	- glib.Str
  * 	- gio.Icon
  * 	- gio.IconIF
- * 	- gtk.Widget
- * 	- glib.ListSG
  * 	- gobject.Closure
+ * 	- glib.ListSG
  * 	- gtk.AccelGroup
  * 	- gtk.Image
  * 	- gtk.Menu
  * 	- gtk.MenuItem
  * 	- gtk.ToolItem
+ * 	- gtk.Widget
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -88,14 +86,14 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
-private import gtk.Widget;
-private import glib.ListSG;
 private import gobject.Closure;
+private import glib.ListSG;
 private import gtk.AccelGroup;
 private import gtk.Image;
 private import gtk.Menu;
 private import gtk.MenuItem;
 private import gtk.ToolItem;
+private import gtk.Widget;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -230,8 +228,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public void setStockId(StockID stockId)
 	{
-		// void gtk_action_set_stock_id (GtkAction *action,  const gchar *stock_id);
-		gtk_action_set_stock_id(gtkAction, Str.toStringz(StockDesc[stockId]));
+		setStockID(StockDesc[stockId]);
 	}
 	
 	/**
@@ -686,6 +683,18 @@ public class Action : ObjectG, BuildableIF
 	{
 		// const gchar * gtk_action_get_tooltip (GtkAction *action);
 		return Str.toString(gtk_action_get_tooltip(gtkAction));
+	}
+	
+	/**
+	 * Sets the stock id on action
+	 * Since 2.16
+	 * Params:
+	 * stockId = the stock id
+	 */
+	public void setStockId(string stockId)
+	{
+		// void gtk_action_set_stock_id (GtkAction *action,  const gchar *stock_id);
+		gtk_action_set_stock_id(gtkAction, Str.toStringz(stockId));
 	}
 	
 	/**

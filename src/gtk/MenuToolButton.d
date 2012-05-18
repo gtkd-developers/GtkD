@@ -38,21 +38,16 @@
  * implements:
  * prefixes:
  * 	- gtk_menu_tool_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_menu_tool_button_new
- * 	- gtk_menu_tool_button_new_from_stock
  * 	- gtk_menu_tool_button_get_menu
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.ToolItem
- * 	- gtk.Widget
  * 	- gtk.Menu
+ * 	- gtk.Widget
  * structWrap:
- * 	- GtkToolItem* -> ToolItem
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -70,9 +65,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.ToolItem;
-private import gtk.Widget;
 private import gtk.Menu;
+private import gtk.Widget;
 
 
 
@@ -139,29 +133,6 @@ public class MenuToolButton : ToolButton
 	}
 	
 	/**
-	 * Creates a new GtkMenuToolButton using icon_widget as icon and
-	 * label as label.
-	 * Since 2.6
-	 * Params:
-	 *  iconWidget = a widget that will be used as icon widget, or NULL
-	 *  label = a string that will be used as label, or NULL
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(Widget iconWidget, string label)
-	{
-		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(),
-		Str.toStringz(label));
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_menu_tool_button_new");
-		}
-		
-		this(cast(GtkMenuToolButton*) p);
-	}
-	
-	/**
 	 * Creates a new GtkMenuToolButton.
 	 * The new GtkMenuToolButton will contain an icon and label from
 	 * the stock item indicated by stockID.
@@ -172,16 +143,7 @@ public class MenuToolButton : ToolButton
 	 */
 	public this(StockID stockId)
 	{
-		// GtkToolItem* gtk_menu_tool_button_new_from_stock  (const gchar *stock_id);
-		auto p = gtk_menu_tool_button_new_from_stock(
-		Str.toStringz(StockDesc[stockId]));
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_menu_tool_button_new_from_stock");
-		}
-		
-		this(cast(GtkMenuToolButton*) p);
+		this(StockDesc[stockId]);
 	}
 	
 	/**
@@ -201,24 +163,6 @@ public class MenuToolButton : ToolButton
 			return null;
 		}
 		return new Menu(cast(GtkMenu*)p);
-	}
-	
-	/**
-	 * Sets the toolTip for the arrow
-	 * Deprecated: Since 2.12 use Widget.setArrowTooltipText() or Widget.setArrowTooltipMarkup()
-	 * Params:
-	 *    	tipText =
-	 *    	tipPrivate =
-	 */
-	public void setArrowTooltip(string tipText, string tipPrivate)
-	{
-		Tooltips tooltips = new Tooltips();
-		gtk_menu_tool_button_set_arrow_tooltip(
-		gtkMenuToolButton,
-		(tooltips is null) ? null : tooltips.getTooltipsStruct(),
-		Str.toStringz(tipText),
-		Str.toStringz(tipPrivate)
-		);
 	}
 	
 	/**
@@ -266,6 +210,46 @@ public class MenuToolButton : ToolButton
 		}
 	}
 	
+	
+	/**
+	 * Creates a new GtkMenuToolButton using icon_widget as icon and
+	 * label as label.
+	 * Since 2.6
+	 * Params:
+	 * iconWidget = a widget that will be used as icon widget, or NULL. [allow-none]
+	 * label = a string that will be used as label, or NULL. [allow-none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (Widget iconWidget, string label)
+	{
+		// GtkToolItem * gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
+		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label))");
+		}
+		this(cast(GtkMenuToolButton*) p);
+	}
+	
+	/**
+	 * Creates a new GtkMenuToolButton.
+	 * The new GtkMenuToolButton will contain an icon and label from
+	 * the stock item indicated by stock_id.
+	 * Since 2.6
+	 * Params:
+	 * stockId = the name of a stock item
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string stockId)
+	{
+		// GtkToolItem * gtk_menu_tool_button_new_from_stock (const gchar *stock_id);
+		auto p = gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId))");
+		}
+		this(cast(GtkMenuToolButton*) p);
+	}
 	
 	/**
 	 * Sets the GtkMenu that is popped up when the user clicks on the arrow.

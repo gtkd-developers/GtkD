@@ -39,15 +39,14 @@
  * 	- BuildableIF
  * prefixes:
  * 	- gtk_action_group_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Action
  * 	- glib.ListG
+ * 	- gtk.Action
  * 	- gtk.Widget
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
@@ -71,8 +70,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Action;
 private import glib.ListG;
+private import gtk.Action;
 private import gtk.Widget;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;

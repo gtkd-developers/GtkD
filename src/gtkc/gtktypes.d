@@ -3577,6 +3577,12 @@ public struct GtkComboBox{}
 /**
  * Main Gtk struct.
  */
+public struct GtkComboBoxText{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkMenu{}
 
 

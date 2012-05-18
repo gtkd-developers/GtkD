@@ -38,20 +38,21 @@
  * implements:
  * prefixes:
  * 	- gtk_menu_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
+ * 	- glib.ListG
+ * 	- gdk.Device
  * 	- gdk.Screen
  * 	- gtk.AccelGroup
- * 	- glib.ListG
  * 	- gtk.MenuItem
+ * 	- gtk.Widget
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GdkDevice* -> Device
  * 	- GdkScreen* -> Screen
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
@@ -71,11 +72,12 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Widget;
+private import glib.ListG;
+private import gdk.Device;
 private import gdk.Screen;
 private import gtk.AccelGroup;
-private import glib.ListG;
 private import gtk.MenuItem;
+private import gtk.Widget;
 
 
 
@@ -314,10 +316,10 @@ public class Menu : MenuShell
 	 * activateTime = the time at which the activation event occurred
 	 * Since 3.0
 	 */
-	public void popupForDevice(GdkDevice* device, Widget parentMenuShell, Widget parentMenuItem, GtkMenuPositionFunc func, void* data, GDestroyNotify destroy, uint button, uint activateTime)
+	public void popupForDevice(Device device, Widget parentMenuShell, Widget parentMenuItem, GtkMenuPositionFunc func, void* data, GDestroyNotify destroy, uint button, uint activateTime)
 	{
 		// void gtk_menu_popup_for_device (GtkMenu *menu,  GdkDevice *device,  GtkWidget *parent_menu_shell,  GtkWidget *parent_menu_item,  GtkMenuPositionFunc func,  gpointer data,  GDestroyNotify destroy,  guint button,  guint32 activate_time);
-		gtk_menu_popup_for_device(gtkMenu, device, (parentMenuShell is null) ? null : parentMenuShell.getWidgetStruct(), (parentMenuItem is null) ? null : parentMenuItem.getWidgetStruct(), func, data, destroy, button, activateTime);
+		gtk_menu_popup_for_device(gtkMenu, (device is null) ? null : device.getDeviceStruct(), (parentMenuShell is null) ? null : parentMenuShell.getWidgetStruct(), (parentMenuItem is null) ? null : parentMenuItem.getWidgetStruct(), func, data, destroy, button, activateTime);
 	}
 	
 	/**

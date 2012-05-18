@@ -38,14 +38,12 @@
  * implements:
  * prefixes:
  * 	- gtk_tool_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.ToolItem
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -65,7 +63,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.ToolItem;
 private import gtk.Widget;
 
 

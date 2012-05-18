@@ -31,23 +31,20 @@
  * ctorStrct=GtkToolItem
  * clss    = ToggleToolButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
  * 	- gtk_toggle_tool_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.ToolItem
  * structWrap:
- * 	- GtkToolItem* -> ToolItem
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,7 +61,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.ToolItem;
 
 
 
@@ -122,6 +118,15 @@ public class ToggleToolButton : ToolButton
 	{
 		super.setStruct(obj);
 		gtkToggleToolButton = cast(GtkToggleToolButton*)obj;
+	}
+	
+	/**
+	 * Creates a new GtkToggleToolButton containing the image and text
+	 * from a stock item.
+	 */
+	public this(StockID stockId)
+	{
+		this(StockDesc[stockId]);
 	}
 	
 	/**

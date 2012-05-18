@@ -54,7 +54,6 @@
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
- * 	- getStyle -> getToolbarStyle
  * overrides:
  */
 

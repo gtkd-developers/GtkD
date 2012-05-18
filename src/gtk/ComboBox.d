@@ -40,25 +40,32 @@
  * 	- CellEditableIF
  * prefixes:
  * 	- gtk_combo_box_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * 	- gtk_combo_box_new
- * 	- gtk_combo_box_new_text
+ * 	- gtk_combo_box_new_with_entry
+ * 	- gtk_combo_box_new_with_model
+ * 	- gtk_combo_box_new_with_model_and_entry
+ * 	- gtk_combo_box_new_with_area
+ * 	- gtk_combo_box_new_with_area_and_entry
  * omit signals:
  * imports:
  * 	- atk.ObjectAtk
  * 	- glib.Str
+ * 	- gdk.Device
+ * 	- gtk.CellArea
+ * 	- gtk.TreeIter
  * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
- * 	- gtk.TreeIter
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * 	- gtk.CellEditableT
  * 	- gtk.CellEditableIF
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
+ * 	- GdkDevice* -> Device
+ * 	- GtkCellArea* -> CellArea
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModelIF
  * module aliases:
@@ -78,9 +85,11 @@ public  import gtkc.gdktypes;
 
 private import atk.ObjectAtk;
 private import glib.Str;
+private import gdk.Device;
+private import gtk.CellArea;
+private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
-private import gtk.TreeIter;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.CellEditableT;
@@ -159,10 +168,6 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		gtkComboBox = cast(GtkComboBox*)obj;
 	}
 	
-	private int count = 0;
-	public int maxCount = 0;
-	
-	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
 	
@@ -171,25 +176,17 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	
 	/**
 	 * Creates a new empty GtkComboBox.
-	 * If text is true then
-	 * constructs a new text combo box, which is a
-	 * GtkComboBox just displaying strings. If you use this function to create
-	 * a text combo box, you should only manipulate its data source with the
-	 * following convenience functions: gtk_combo_box_append_text(),
-	 * gtk_combo_box_insert_text(), gtk_combo_box_prepend_text() and
-	 * gtk_combo_box_remove_text().
-	 * Since 2.4
-	 * Returns:
-	 *  A new GtkComboBox.
+	 * Params:
+	 *   entry = If true, create an empty ComboBox with an entry.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (bool text=true)
+	public this (bool entry=true)
 	{
 		GtkComboBox* p;
-		if ( text )
+		if ( entry )
 		{
 			// GtkWidget* gtk_combo_box_new_text (void);
-			p = cast(GtkComboBox*)gtk_combo_box_new_text();
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_entry();
 		}
 		else
 		{
@@ -205,68 +202,63 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		this(p);
 	}
 	
-	/** */
-	public void setActiveText(string text, bool insert=false)
+	/**
+	 * Creates a new GtkComboBox with the model initialized to model.
+	 * Params:
+	 *   model = A GtkTreeModel.
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (TreeModelIF model, bool entry=true)
 	{
-		int active = 0;
-		setActive(0);
-		while ( getActive >= 0 ) // returns -1 if end of list if reached
+		GtkComboBox* p;
+		if ( entry )
 		{
-			if( text == getActiveText() ) return;
-			++active;
-			setActive(active);
-		}
-		// was not found, the combo has now nothing selected
-		if ( insert )
-		{
-			appendText(text);
-			setActive(active);
-		}
-	}
-	
-	/** */
-	int getIndex(string text)
-	{
-		TreeIter iter = new TreeIter();
-		TreeModelIF model = getModel();
-		iter.setModel(model);
-		int index = 0;
-		bool found = false;
-		bool end = false;
-		if ( model.getIterFirst(iter) )
-		{
-			while ( !end && iter !is  null && !found )
-			{
-				found = iter.getValueString(0) == text;
-				if ( !found )
-				{
-					end = !model.iterNext(iter);
-					++index;
-				}
-			}
+			// GtkWidget* gtk_combo_box_new_with_model_and_entry (GtkTreeModel *model);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_model_and_entry((model is null) ? null : model.getTreeModelTStruct());
 		}
 		else
 		{
-			end = true;
+			// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
 		}
-		return end ? -1 : index;
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+		
+		this(p);
 	}
 	
-	/** */
-	void prependOrReplaceText(string text)
+	/**
+	 * Creates a new empty GtkComboBox using area to layout cells.
+	 * Params:
+	 *   area = the GtkCellArea to use to layout cell renderers.
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (CellArea area, bool entry=true)
 	{
-		int index = getIndex(text);
-		if ( index > 0 )
+		GtkComboBox* p;
+		if ( entry )
 		{
-			removeText(index);
-			prependText(text);
+			// GtkWidget* gtk_combo_box_new_with_area_and_entry (GtkCellArea *area);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_area_and_entry((area is null) ? null : area.getCellAreaStruct());
 		}
-		else if ( index == -1 )
+		else
 		{
-			prependText(text);
+			// GtkWidget* gtk_combo_box_new_with_area (GtkCellArea* area);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_area((area is null) ? null : area.getCellAreaStruct());
 		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+		
+		this(p);
 	}
-	
 	
 	/**
 	 */
@@ -404,56 +396,6 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 	}
 	
-	
-	/**
-	 * Creates a new empty GtkComboBox with an entry.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GtkWidget * gtk_combo_box_new_with_entry (void);
-		auto p = gtk_combo_box_new_with_entry();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_combo_box_new_with_entry()");
-		}
-		this(cast(GtkComboBox*) p);
-	}
-	
-	/**
-	 * Creates a new GtkComboBox with the model initialized to model.
-	 * Since 2.4
-	 * Params:
-	 * model = A GtkTreeModel.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (TreeModelIF model)
-	{
-		// GtkWidget * gtk_combo_box_new_with_model (GtkTreeModel *model);
-		auto p = gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct())");
-		}
-		this(cast(GtkComboBox*) p);
-	}
-	
-	/**
-	 * Creates a new empty GtkComboBox using area to layout cells.
-	 * Params:
-	 * area = the GtkCellArea to use to layout cell renderers
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GtkCellArea* area)
-	{
-		// GtkWidget * gtk_combo_box_new_with_area (GtkCellArea *area);
-		auto p = gtk_combo_box_new_with_area(area);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_combo_box_new_with_area(area)");
-		}
-		this(cast(GtkComboBox*) p);
-	}
 	
 	/**
 	 * Returns the wrap width which is used to determine the number of columns
@@ -682,10 +624,10 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 * device = a GdkDevice
 	 * Since 3.0
 	 */
-	public void popupForDevice(GdkDevice* device)
+	public void popupForDevice(Device device)
 	{
 		// void gtk_combo_box_popup_for_device (GtkComboBox *combo_box,  GdkDevice *device);
-		gtk_combo_box_popup_for_device(gtkComboBox, device);
+		gtk_combo_box_popup_for_device(gtkComboBox, (device is null) ? null : device.getDeviceStruct());
 	}
 	
 	/**
