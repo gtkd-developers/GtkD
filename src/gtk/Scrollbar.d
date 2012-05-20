@@ -38,13 +38,14 @@
  * implements:
  * prefixes:
  * 	- gtk_scrollbar_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtk.Adjustment
  * structWrap:
+ * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,6 +59,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import gtk.Adjustment;
 
 
 
@@ -135,13 +137,13 @@ public class Scrollbar : Range
 	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkOrientation orientation, GtkAdjustment* adjustment)
+	public this (GtkOrientation orientation, Adjustment adjustment)
 	{
 		// GtkWidget * gtk_scrollbar_new (GtkOrientation orientation,  GtkAdjustment *adjustment);
-		auto p = gtk_scrollbar_new(orientation, adjustment);
+		auto p = gtk_scrollbar_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_scrollbar_new(orientation, adjustment)");
+			throw new ConstructionException("null returned by gtk_scrollbar_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct())");
 		}
 		this(cast(GtkScrollbar*) p);
 	}

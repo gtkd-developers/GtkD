@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_color_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,8 +45,10 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Color
+ * 	- gdk.RGBA
  * structWrap:
  * 	- GdkColor* -> Color
+ * 	- GdkRGBA* -> RGBA
  * module aliases:
  * local aliases:
  * overrides:
@@ -65,6 +66,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Color;
+private import gdk.RGBA;
 
 
 
@@ -208,13 +210,13 @@ public class ColorButton : Button
 	 * rgba = A GdkRGBA to set the current color with
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GdkRGBA* rgba)
+	public this (RGBA rgba)
 	{
 		// GtkWidget * gtk_color_button_new_with_rgba (const GdkRGBA *rgba);
-		auto p = gtk_color_button_new_with_rgba(rgba);
+		auto p = gtk_color_button_new_with_rgba((rgba is null) ? null : rgba.getRGBAStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_color_button_new_with_rgba(rgba)");
+			throw new ConstructionException("null returned by gtk_color_button_new_with_rgba((rgba is null) ? null : rgba.getRGBAStruct())");
 		}
 		this(cast(GtkColorButton*) p);
 	}
@@ -272,10 +274,10 @@ public class ColorButton : Button
 	 * rgba = a GdkRGBA to set the current color with
 	 * Since 3.0
 	 */
-	public void setRgba(GdkRGBA* rgba)
+	public void setRgba(RGBA rgba)
 	{
 		// void gtk_color_button_set_rgba (GtkColorButton *color_button,  const GdkRGBA *rgba);
-		gtk_color_button_set_rgba(gtkColorButton, rgba);
+		gtk_color_button_set_rgba(gtkColorButton, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**
@@ -284,10 +286,10 @@ public class ColorButton : Button
 	 * rgba = a GdkRGBA to fill in with the current color. [out]
 	 * Since 3.0
 	 */
-	public void getRgba(GdkRGBA* rgba)
+	public void getRgba(RGBA rgba)
 	{
 		// void gtk_color_button_get_rgba (GtkColorButton *color_button,  GdkRGBA *rgba);
-		gtk_color_button_get_rgba(gtkColorButton, rgba);
+		gtk_color_button_get_rgba(gtkColorButton, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**

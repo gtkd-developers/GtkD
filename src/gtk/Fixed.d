@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_fixed_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -50,8 +49,6 @@
  * module aliases:
  * local aliases:
  * overrides:
- * 	- getHasWindow
- * 	- setHasWindow
  */
 
 module gtk.Fixed;

@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_hscrollbar_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

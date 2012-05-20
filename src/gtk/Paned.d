@@ -39,7 +39,6 @@
  * 	- OrientableIF
  * prefixes:
  * 	- gtk_paned_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

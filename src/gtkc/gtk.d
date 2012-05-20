@@ -2687,6 +2687,11 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_color_button_set_title, \"gtk_color_button_set_title\", LIBRARY.GTK);
 	Linker.link(gtk_color_button_get_title, \"gtk_color_button_get_title\", LIBRARY.GTK);
 
+	// gtk.ColorSelectionDialog
+
+	Linker.link(gtk_color_selection_dialog_new, \"gtk_color_selection_dialog_new\", LIBRARY.GTK);
+	Linker.link(gtk_color_selection_dialog_get_color_selection, \"gtk_color_selection_dialog_get_color_selection\", LIBRARY.GTK);
+
 	// gtk.ColorSelection
 
 	Linker.link(gtk_color_selection_new, \"gtk_color_selection_new\", LIBRARY.GTK);
@@ -2711,10 +2716,16 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_color_selection_palette_to_string, \"gtk_color_selection_palette_to_string\", LIBRARY.GTK);
 	Linker.link(gtk_color_selection_set_change_palette_with_screen_hook, \"gtk_color_selection_set_change_palette_with_screen_hook\", LIBRARY.GTK);
 
-	// gtk.ColorSelectionDialog
+	// gtk.HSV
 
-	Linker.link(gtk_color_selection_dialog_new, \"gtk_color_selection_dialog_new\", LIBRARY.GTK);
-	Linker.link(gtk_color_selection_dialog_get_color_selection, \"gtk_color_selection_dialog_get_color_selection\", LIBRARY.GTK);
+	Linker.link(gtk_hsv_new, \"gtk_hsv_new\", LIBRARY.GTK);
+	Linker.link(gtk_hsv_set_color, \"gtk_hsv_set_color\", LIBRARY.GTK);
+	Linker.link(gtk_hsv_get_color, \"gtk_hsv_get_color\", LIBRARY.GTK);
+	Linker.link(gtk_hsv_set_metrics, \"gtk_hsv_set_metrics\", LIBRARY.GTK);
+	Linker.link(gtk_hsv_get_metrics, \"gtk_hsv_get_metrics\", LIBRARY.GTK);
+	Linker.link(gtk_hsv_is_adjusting, \"gtk_hsv_is_adjusting\", LIBRARY.GTK);
+	Linker.link(gtk_hsv_to_rgb, \"gtk_hsv_to_rgb\", LIBRARY.GTK);
+	Linker.link(gtk_rgb_to_hsv, \"gtk_rgb_to_hsv\", LIBRARY.GTK);
 
 	// gtk.FileChooserT
 
@@ -2855,6 +2866,20 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_font_selection_dialog_get_ok_button, \"gtk_font_selection_dialog_get_ok_button\", LIBRARY.GTK);
 	Linker.link(gtk_font_selection_dialog_get_font_selection, \"gtk_font_selection_dialog_get_font_selection\", LIBRARY.GTK);
 
+	// gtk.Grid
+
+	Linker.link(gtk_grid_new, \"gtk_grid_new\", LIBRARY.GTK);
+	Linker.link(gtk_grid_attach, \"gtk_grid_attach\", LIBRARY.GTK);
+	Linker.link(gtk_grid_attach_next_to, \"gtk_grid_attach_next_to\", LIBRARY.GTK);
+	Linker.link(gtk_grid_set_row_homogeneous, \"gtk_grid_set_row_homogeneous\", LIBRARY.GTK);
+	Linker.link(gtk_grid_get_row_homogeneous, \"gtk_grid_get_row_homogeneous\", LIBRARY.GTK);
+	Linker.link(gtk_grid_set_row_spacing, \"gtk_grid_set_row_spacing\", LIBRARY.GTK);
+	Linker.link(gtk_grid_get_row_spacing, \"gtk_grid_get_row_spacing\", LIBRARY.GTK);
+	Linker.link(gtk_grid_set_column_homogeneous, \"gtk_grid_set_column_homogeneous\", LIBRARY.GTK);
+	Linker.link(gtk_grid_get_column_homogeneous, \"gtk_grid_get_column_homogeneous\", LIBRARY.GTK);
+	Linker.link(gtk_grid_set_column_spacing, \"gtk_grid_set_column_spacing\", LIBRARY.GTK);
+	Linker.link(gtk_grid_get_column_spacing, \"gtk_grid_get_column_spacing\", LIBRARY.GTK);
+
 	// gtk.Alignment
 
 	Linker.link(gtk_alignment_new, \"gtk_alignment_new\", LIBRARY.GTK);
@@ -2867,6 +2892,19 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_aspect_frame_new, \"gtk_aspect_frame_new\", LIBRARY.GTK);
 	Linker.link(gtk_aspect_frame_set, \"gtk_aspect_frame_set\", LIBRARY.GTK);
 
+	// gtk.Box
+
+	Linker.link(gtk_box_new, \"gtk_box_new\", LIBRARY.GTK);
+	Linker.link(gtk_box_pack_start, \"gtk_box_pack_start\", LIBRARY.GTK);
+	Linker.link(gtk_box_pack_end, \"gtk_box_pack_end\", LIBRARY.GTK);
+	Linker.link(gtk_box_get_homogeneous, \"gtk_box_get_homogeneous\", LIBRARY.GTK);
+	Linker.link(gtk_box_set_homogeneous, \"gtk_box_set_homogeneous\", LIBRARY.GTK);
+	Linker.link(gtk_box_get_spacing, \"gtk_box_get_spacing\", LIBRARY.GTK);
+	Linker.link(gtk_box_set_spacing, \"gtk_box_set_spacing\", LIBRARY.GTK);
+	Linker.link(gtk_box_reorder_child, \"gtk_box_reorder_child\", LIBRARY.GTK);
+	Linker.link(gtk_box_query_child_packing, \"gtk_box_query_child_packing\", LIBRARY.GTK);
+	Linker.link(gtk_box_set_child_packing, \"gtk_box_set_child_packing\", LIBRARY.GTK);
+
 	// gtk.HBox
 
 	Linker.link(gtk_hbox_new, \"gtk_hbox_new\", LIBRARY.GTK);
@@ -2874,6 +2912,14 @@ mixin( _shared ~ "static this()
 	// gtk.VBox
 
 	Linker.link(gtk_vbox_new, \"gtk_vbox_new\", LIBRARY.GTK);
+
+	// gtk.ButtonBox
+
+	Linker.link(gtk_button_box_new, \"gtk_button_box_new\", LIBRARY.GTK);
+	Linker.link(gtk_button_box_get_layout, \"gtk_button_box_get_layout\", LIBRARY.GTK);
+	Linker.link(gtk_button_box_get_child_secondary, \"gtk_button_box_get_child_secondary\", LIBRARY.GTK);
+	Linker.link(gtk_button_box_set_layout, \"gtk_button_box_set_layout\", LIBRARY.GTK);
+	Linker.link(gtk_button_box_set_child_secondary, \"gtk_button_box_set_child_secondary\", LIBRARY.GTK);
 
 	// gtk.HButtonBox
 
@@ -2888,6 +2934,19 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_fixed_new, \"gtk_fixed_new\", LIBRARY.GTK);
 	Linker.link(gtk_fixed_put, \"gtk_fixed_put\", LIBRARY.GTK);
 	Linker.link(gtk_fixed_move, \"gtk_fixed_move\", LIBRARY.GTK);
+
+	// gtk.Paned
+
+	Linker.link(gtk_paned_new, \"gtk_paned_new\", LIBRARY.GTK);
+	Linker.link(gtk_paned_add1, \"gtk_paned_add1\", LIBRARY.GTK);
+	Linker.link(gtk_paned_add2, \"gtk_paned_add2\", LIBRARY.GTK);
+	Linker.link(gtk_paned_pack1, \"gtk_paned_pack1\", LIBRARY.GTK);
+	Linker.link(gtk_paned_pack2, \"gtk_paned_pack2\", LIBRARY.GTK);
+	Linker.link(gtk_paned_get_child1, \"gtk_paned_get_child1\", LIBRARY.GTK);
+	Linker.link(gtk_paned_get_child2, \"gtk_paned_get_child2\", LIBRARY.GTK);
+	Linker.link(gtk_paned_set_position, \"gtk_paned_set_position\", LIBRARY.GTK);
+	Linker.link(gtk_paned_get_position, \"gtk_paned_get_position\", LIBRARY.GTK);
+	Linker.link(gtk_paned_get_handle_window, \"gtk_paned_get_handle_window\", LIBRARY.GTK);
 
 	// gtk.HPaned
 
@@ -3014,6 +3073,10 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_frame_get_label_widget, \"gtk_frame_get_label_widget\", LIBRARY.GTK);
 	Linker.link(gtk_frame_get_shadow_type, \"gtk_frame_get_shadow_type\", LIBRARY.GTK);
 
+	// gtk.Separator
+
+	Linker.link(gtk_separator_new, \"gtk_separator_new\", LIBRARY.GTK);
+
 	// gtk.HSeparator
 
 	Linker.link(gtk_hseparator_new, \"gtk_hseparator_new\", LIBRARY.GTK);
@@ -3021,6 +3084,10 @@ mixin( _shared ~ "static this()
 	// gtk.VSeparator
 
 	Linker.link(gtk_vseparator_new, \"gtk_vseparator_new\", LIBRARY.GTK);
+
+	// gtk.Scrollbar
+
+	Linker.link(gtk_scrollbar_new, \"gtk_scrollbar_new\", LIBRARY.GTK);
 
 	// gtk.HScrollbar
 
@@ -3051,6 +3118,20 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_scrolled_window_set_min_content_width, \"gtk_scrolled_window_set_min_content_width\", LIBRARY.GTK);
 	Linker.link(gtk_scrolled_window_get_min_content_height, \"gtk_scrolled_window_get_min_content_height\", LIBRARY.GTK);
 	Linker.link(gtk_scrolled_window_set_min_content_height, \"gtk_scrolled_window_set_min_content_height\", LIBRARY.GTK);
+
+	// gtk.ScrollableT
+
+
+	// gtk.ScrollableT
+
+	Linker.link(gtk_scrollable_get_hadjustment, \"gtk_scrollable_get_hadjustment\", LIBRARY.GTK);
+	Linker.link(gtk_scrollable_set_hadjustment, \"gtk_scrollable_set_hadjustment\", LIBRARY.GTK);
+	Linker.link(gtk_scrollable_get_vadjustment, \"gtk_scrollable_get_vadjustment\", LIBRARY.GTK);
+	Linker.link(gtk_scrollable_set_vadjustment, \"gtk_scrollable_set_vadjustment\", LIBRARY.GTK);
+	Linker.link(gtk_scrollable_get_hscroll_policy, \"gtk_scrollable_get_hscroll_policy\", LIBRARY.GTK);
+	Linker.link(gtk_scrollable_set_hscroll_policy, \"gtk_scrollable_set_hscroll_policy\", LIBRARY.GTK);
+	Linker.link(gtk_scrollable_get_vscroll_policy, \"gtk_scrollable_get_vscroll_policy\", LIBRARY.GTK);
+	Linker.link(gtk_scrollable_set_vscroll_policy, \"gtk_scrollable_set_vscroll_policy\", LIBRARY.GTK);
 
 	// gtk.PrintOperation
 
@@ -3450,27 +3531,6 @@ mixin( _shared ~ "static this()
 
 	Linker.link(gtk_bin_get_child, \"gtk_bin_get_child\", LIBRARY.GTK);
 
-	// gtk.Box
-
-	Linker.link(gtk_box_new, \"gtk_box_new\", LIBRARY.GTK);
-	Linker.link(gtk_box_pack_start, \"gtk_box_pack_start\", LIBRARY.GTK);
-	Linker.link(gtk_box_pack_end, \"gtk_box_pack_end\", LIBRARY.GTK);
-	Linker.link(gtk_box_get_homogeneous, \"gtk_box_get_homogeneous\", LIBRARY.GTK);
-	Linker.link(gtk_box_set_homogeneous, \"gtk_box_set_homogeneous\", LIBRARY.GTK);
-	Linker.link(gtk_box_get_spacing, \"gtk_box_get_spacing\", LIBRARY.GTK);
-	Linker.link(gtk_box_set_spacing, \"gtk_box_set_spacing\", LIBRARY.GTK);
-	Linker.link(gtk_box_reorder_child, \"gtk_box_reorder_child\", LIBRARY.GTK);
-	Linker.link(gtk_box_query_child_packing, \"gtk_box_query_child_packing\", LIBRARY.GTK);
-	Linker.link(gtk_box_set_child_packing, \"gtk_box_set_child_packing\", LIBRARY.GTK);
-
-	// gtk.ButtonBox
-
-	Linker.link(gtk_button_box_new, \"gtk_button_box_new\", LIBRARY.GTK);
-	Linker.link(gtk_button_box_get_layout, \"gtk_button_box_get_layout\", LIBRARY.GTK);
-	Linker.link(gtk_button_box_get_child_secondary, \"gtk_button_box_get_child_secondary\", LIBRARY.GTK);
-	Linker.link(gtk_button_box_set_layout, \"gtk_button_box_set_layout\", LIBRARY.GTK);
-	Linker.link(gtk_button_box_set_child_secondary, \"gtk_button_box_set_child_secondary\", LIBRARY.GTK);
-
 	// gtk.Container
 
 	Linker.link(gtk_container_add, \"gtk_container_add\", LIBRARY.GTK);
@@ -3532,19 +3592,6 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_misc_get_alignment, \"gtk_misc_get_alignment\", LIBRARY.GTK);
 	Linker.link(gtk_misc_get_padding, \"gtk_misc_get_padding\", LIBRARY.GTK);
 
-	// gtk.Paned
-
-	Linker.link(gtk_paned_new, \"gtk_paned_new\", LIBRARY.GTK);
-	Linker.link(gtk_paned_add1, \"gtk_paned_add1\", LIBRARY.GTK);
-	Linker.link(gtk_paned_add2, \"gtk_paned_add2\", LIBRARY.GTK);
-	Linker.link(gtk_paned_pack1, \"gtk_paned_pack1\", LIBRARY.GTK);
-	Linker.link(gtk_paned_pack2, \"gtk_paned_pack2\", LIBRARY.GTK);
-	Linker.link(gtk_paned_get_child1, \"gtk_paned_get_child1\", LIBRARY.GTK);
-	Linker.link(gtk_paned_get_child2, \"gtk_paned_get_child2\", LIBRARY.GTK);
-	Linker.link(gtk_paned_set_position, \"gtk_paned_set_position\", LIBRARY.GTK);
-	Linker.link(gtk_paned_get_position, \"gtk_paned_get_position\", LIBRARY.GTK);
-	Linker.link(gtk_paned_get_handle_window, \"gtk_paned_get_handle_window\", LIBRARY.GTK);
-
 	// gtk.Range
 
 	Linker.link(gtk_range_get_fill_level, \"gtk_range_get_fill_level\", LIBRARY.GTK);
@@ -3575,14 +3622,6 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_range_get_slider_size_fixed, \"gtk_range_get_slider_size_fixed\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_min_slider_size, \"gtk_range_set_min_slider_size\", LIBRARY.GTK);
 	Linker.link(gtk_range_set_slider_size_fixed, \"gtk_range_set_slider_size_fixed\", LIBRARY.GTK);
-
-	// gtk.Scrollbar
-
-	Linker.link(gtk_scrollbar_new, \"gtk_scrollbar_new\", LIBRARY.GTK);
-
-	// gtk.Separator
-
-	Linker.link(gtk_separator_new, \"gtk_separator_new\", LIBRARY.GTK);
 
 	// gtk.Widget
 
@@ -6631,6 +6670,11 @@ mixin( gshared ~"extern(C)
 	void function(GtkColorButton* colorButton, gchar* title) c_gtk_color_button_set_title;
 	gchar* function(GtkColorButton* colorButton) c_gtk_color_button_get_title;
 
+	// gtk.ColorSelectionDialog
+
+	GtkWidget* function(gchar* title) c_gtk_color_selection_dialog_new;
+	GtkWidget* function(GtkColorSelectionDialog* colorsel) c_gtk_color_selection_dialog_get_color_selection;
+
 	// gtk.ColorSelection
 
 	GtkWidget* function() c_gtk_color_selection_new;
@@ -6655,10 +6699,16 @@ mixin( gshared ~"extern(C)
 	gchar* function(GdkColor* colors, gint nColors) c_gtk_color_selection_palette_to_string;
 	GtkColorSelectionChangePaletteWithScreenFunc function(GtkColorSelectionChangePaletteWithScreenFunc func) c_gtk_color_selection_set_change_palette_with_screen_hook;
 
-	// gtk.ColorSelectionDialog
+	// gtk.HSV
 
-	GtkWidget* function(gchar* title) c_gtk_color_selection_dialog_new;
-	GtkWidget* function(GtkColorSelectionDialog* colorsel) c_gtk_color_selection_dialog_get_color_selection;
+	GtkWidget* function() c_gtk_hsv_new;
+	void function(GtkHSV* hsv, double h, double s, double v) c_gtk_hsv_set_color;
+	void function(GtkHSV* hsv, gdouble* h, gdouble* s, gdouble* v) c_gtk_hsv_get_color;
+	void function(GtkHSV* hsv, gint size, gint ringWidth) c_gtk_hsv_set_metrics;
+	void function(GtkHSV* hsv, gint* size, gint* ringWidth) c_gtk_hsv_get_metrics;
+	gboolean function(GtkHSV* hsv) c_gtk_hsv_is_adjusting;
+	void function(gdouble h, gdouble s, gdouble v, gdouble* r, gdouble* g, gdouble* b) c_gtk_hsv_to_rgb;
+	void function(gdouble r, gdouble g, gdouble b, gdouble* h, gdouble* s, gdouble* v) c_gtk_rgb_to_hsv;
 
 	// gtk.FileChooserT
 
@@ -6799,6 +6849,20 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_ok_button;
 	GtkWidget* function(GtkFontSelectionDialog* fsd) c_gtk_font_selection_dialog_get_font_selection;
 
+	// gtk.Grid
+
+	GtkWidget* function() c_gtk_grid_new;
+	void function(GtkGrid* grid, GtkWidget* child, gint left, gint top, gint width, gint height) c_gtk_grid_attach;
+	void function(GtkGrid* grid, GtkWidget* child, GtkWidget* sibling, GtkPositionType side, gint width, gint height) c_gtk_grid_attach_next_to;
+	void function(GtkGrid* grid, gboolean homogeneous) c_gtk_grid_set_row_homogeneous;
+	gboolean function(GtkGrid* grid) c_gtk_grid_get_row_homogeneous;
+	void function(GtkGrid* grid, guint spacing) c_gtk_grid_set_row_spacing;
+	guint function(GtkGrid* grid) c_gtk_grid_get_row_spacing;
+	void function(GtkGrid* grid, gboolean homogeneous) c_gtk_grid_set_column_homogeneous;
+	gboolean function(GtkGrid* grid) c_gtk_grid_get_column_homogeneous;
+	void function(GtkGrid* grid, guint spacing) c_gtk_grid_set_column_spacing;
+	guint function(GtkGrid* grid) c_gtk_grid_get_column_spacing;
+
 	// gtk.Alignment
 
 	GtkWidget* function(gfloat xalign, gfloat yalign, gfloat xscale, gfloat yscale) c_gtk_alignment_new;
@@ -6811,6 +6875,19 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(gchar* label, gfloat xalign, gfloat yalign, gfloat ratio, gboolean obeyChild) c_gtk_aspect_frame_new;
 	void function(GtkAspectFrame* aspectFrame, gfloat xalign, gfloat yalign, gfloat ratio, gboolean obeyChild) c_gtk_aspect_frame_set;
 
+	// gtk.Box
+
+	GtkWidget* function(GtkOrientation orientation, gint spacing) c_gtk_box_new;
+	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding) c_gtk_box_pack_start;
+	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding) c_gtk_box_pack_end;
+	gboolean function(GtkBox* box) c_gtk_box_get_homogeneous;
+	void function(GtkBox* box, gboolean homogeneous) c_gtk_box_set_homogeneous;
+	gint function(GtkBox* box) c_gtk_box_get_spacing;
+	void function(GtkBox* box, gint spacing) c_gtk_box_set_spacing;
+	void function(GtkBox* box, GtkWidget* child, gint position) c_gtk_box_reorder_child;
+	void function(GtkBox* box, GtkWidget* child, gboolean* expand, gboolean* fill, guint* padding, GtkPackType* packType) c_gtk_box_query_child_packing;
+	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding, GtkPackType packType) c_gtk_box_set_child_packing;
+
 	// gtk.HBox
 
 	GtkWidget* function(gboolean homogeneous, gint spacing) c_gtk_hbox_new;
@@ -6818,6 +6895,14 @@ mixin( gshared ~"extern(C)
 	// gtk.VBox
 
 	GtkWidget* function(gboolean homogeneous, gint spacing) c_gtk_vbox_new;
+
+	// gtk.ButtonBox
+
+	GtkWidget* function(GtkOrientation orientation) c_gtk_button_box_new;
+	GtkButtonBoxStyle function(GtkButtonBox* widget) c_gtk_button_box_get_layout;
+	gboolean function(GtkButtonBox* widget, GtkWidget* child) c_gtk_button_box_get_child_secondary;
+	void function(GtkButtonBox* widget, GtkButtonBoxStyle layoutStyle) c_gtk_button_box_set_layout;
+	void function(GtkButtonBox* widget, GtkWidget* child, gboolean isSecondary) c_gtk_button_box_set_child_secondary;
 
 	// gtk.HButtonBox
 
@@ -6832,6 +6917,19 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function() c_gtk_fixed_new;
 	void function(GtkFixed* fixed, GtkWidget* widget, gint x, gint y) c_gtk_fixed_put;
 	void function(GtkFixed* fixed, GtkWidget* widget, gint x, gint y) c_gtk_fixed_move;
+
+	// gtk.Paned
+
+	GtkWidget* function(GtkOrientation orientation) c_gtk_paned_new;
+	void function(GtkPaned* paned, GtkWidget* child) c_gtk_paned_add1;
+	void function(GtkPaned* paned, GtkWidget* child) c_gtk_paned_add2;
+	void function(GtkPaned* paned, GtkWidget* child, gboolean resize, gboolean shrink) c_gtk_paned_pack1;
+	void function(GtkPaned* paned, GtkWidget* child, gboolean resize, gboolean shrink) c_gtk_paned_pack2;
+	GtkWidget* function(GtkPaned* paned) c_gtk_paned_get_child1;
+	GtkWidget* function(GtkPaned* paned) c_gtk_paned_get_child2;
+	void function(GtkPaned* paned, gint position) c_gtk_paned_set_position;
+	gint function(GtkPaned* paned) c_gtk_paned_get_position;
+	GdkWindow* function(GtkPaned* paned) c_gtk_paned_get_handle_window;
 
 	// gtk.HPaned
 
@@ -6958,6 +7056,10 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkFrame* frame) c_gtk_frame_get_label_widget;
 	GtkShadowType function(GtkFrame* frame) c_gtk_frame_get_shadow_type;
 
+	// gtk.Separator
+
+	GtkWidget* function(GtkOrientation orientation) c_gtk_separator_new;
+
 	// gtk.HSeparator
 
 	GtkWidget* function() c_gtk_hseparator_new;
@@ -6965,6 +7067,10 @@ mixin( gshared ~"extern(C)
 	// gtk.VSeparator
 
 	GtkWidget* function() c_gtk_vseparator_new;
+
+	// gtk.Scrollbar
+
+	GtkWidget* function(GtkOrientation orientation, GtkAdjustment* adjustment) c_gtk_scrollbar_new;
 
 	// gtk.HScrollbar
 
@@ -6995,6 +7101,20 @@ mixin( gshared ~"extern(C)
 	void function(GtkScrolledWindow* scrolledWindow, gint width) c_gtk_scrolled_window_set_min_content_width;
 	gint function(GtkScrolledWindow* scrolledWindow) c_gtk_scrolled_window_get_min_content_height;
 	void function(GtkScrolledWindow* scrolledWindow, gint height) c_gtk_scrolled_window_set_min_content_height;
+
+	// gtk.ScrollableT
+
+
+	// gtk.ScrollableT
+
+	GtkAdjustment* function(GtkScrollable* scrollable) c_gtk_scrollable_get_hadjustment;
+	void function(GtkScrollable* scrollable, GtkAdjustment* hadjustment) c_gtk_scrollable_set_hadjustment;
+	GtkAdjustment* function(GtkScrollable* scrollable) c_gtk_scrollable_get_vadjustment;
+	void function(GtkScrollable* scrollable, GtkAdjustment* vadjustment) c_gtk_scrollable_set_vadjustment;
+	GtkScrollablePolicy function(GtkScrollable* scrollable) c_gtk_scrollable_get_hscroll_policy;
+	void function(GtkScrollable* scrollable, GtkScrollablePolicy policy) c_gtk_scrollable_set_hscroll_policy;
+	GtkScrollablePolicy function(GtkScrollable* scrollable) c_gtk_scrollable_get_vscroll_policy;
+	void function(GtkScrollable* scrollable, GtkScrollablePolicy policy) c_gtk_scrollable_set_vscroll_policy;
 
 	// gtk.PrintOperation
 
@@ -7394,27 +7514,6 @@ mixin( gshared ~"extern(C)
 
 	GtkWidget* function(GtkBin* bin) c_gtk_bin_get_child;
 
-	// gtk.Box
-
-	GtkWidget* function(GtkOrientation orientation, gint spacing) c_gtk_box_new;
-	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding) c_gtk_box_pack_start;
-	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding) c_gtk_box_pack_end;
-	gboolean function(GtkBox* box) c_gtk_box_get_homogeneous;
-	void function(GtkBox* box, gboolean homogeneous) c_gtk_box_set_homogeneous;
-	gint function(GtkBox* box) c_gtk_box_get_spacing;
-	void function(GtkBox* box, gint spacing) c_gtk_box_set_spacing;
-	void function(GtkBox* box, GtkWidget* child, gint position) c_gtk_box_reorder_child;
-	void function(GtkBox* box, GtkWidget* child, gboolean* expand, gboolean* fill, guint* padding, GtkPackType* packType) c_gtk_box_query_child_packing;
-	void function(GtkBox* box, GtkWidget* child, gboolean expand, gboolean fill, guint padding, GtkPackType packType) c_gtk_box_set_child_packing;
-
-	// gtk.ButtonBox
-
-	GtkWidget* function(GtkOrientation orientation) c_gtk_button_box_new;
-	GtkButtonBoxStyle function(GtkButtonBox* widget) c_gtk_button_box_get_layout;
-	gboolean function(GtkButtonBox* widget, GtkWidget* child) c_gtk_button_box_get_child_secondary;
-	void function(GtkButtonBox* widget, GtkButtonBoxStyle layoutStyle) c_gtk_button_box_set_layout;
-	void function(GtkButtonBox* widget, GtkWidget* child, gboolean isSecondary) c_gtk_button_box_set_child_secondary;
-
 	// gtk.Container
 
 	void function(GtkContainer* container, GtkWidget* widget) c_gtk_container_add;
@@ -7476,19 +7575,6 @@ mixin( gshared ~"extern(C)
 	void function(GtkMisc* misc, gfloat* xalign, gfloat* yalign) c_gtk_misc_get_alignment;
 	void function(GtkMisc* misc, gint* xpad, gint* ypad) c_gtk_misc_get_padding;
 
-	// gtk.Paned
-
-	GtkWidget* function(GtkOrientation orientation) c_gtk_paned_new;
-	void function(GtkPaned* paned, GtkWidget* child) c_gtk_paned_add1;
-	void function(GtkPaned* paned, GtkWidget* child) c_gtk_paned_add2;
-	void function(GtkPaned* paned, GtkWidget* child, gboolean resize, gboolean shrink) c_gtk_paned_pack1;
-	void function(GtkPaned* paned, GtkWidget* child, gboolean resize, gboolean shrink) c_gtk_paned_pack2;
-	GtkWidget* function(GtkPaned* paned) c_gtk_paned_get_child1;
-	GtkWidget* function(GtkPaned* paned) c_gtk_paned_get_child2;
-	void function(GtkPaned* paned, gint position) c_gtk_paned_set_position;
-	gint function(GtkPaned* paned) c_gtk_paned_get_position;
-	GdkWindow* function(GtkPaned* paned) c_gtk_paned_get_handle_window;
-
 	// gtk.Range
 
 	gdouble function(GtkRange* range) c_gtk_range_get_fill_level;
@@ -7519,14 +7605,6 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkRange* range) c_gtk_range_get_slider_size_fixed;
 	void function(GtkRange* range, gint minSize) c_gtk_range_set_min_slider_size;
 	void function(GtkRange* range, gboolean sizeFixed) c_gtk_range_set_slider_size_fixed;
-
-	// gtk.Scrollbar
-
-	GtkWidget* function(GtkOrientation orientation, GtkAdjustment* adjustment) c_gtk_scrollbar_new;
-
-	// gtk.Separator
-
-	GtkWidget* function(GtkOrientation orientation) c_gtk_separator_new;
 
 	// gtk.Widget
 
@@ -10573,6 +10651,11 @@ alias c_gtk_color_button_get_use_alpha  gtk_color_button_get_use_alpha;
 alias c_gtk_color_button_set_title  gtk_color_button_set_title;
 alias c_gtk_color_button_get_title  gtk_color_button_get_title;
 
+// gtk.ColorSelectionDialog
+
+alias c_gtk_color_selection_dialog_new  gtk_color_selection_dialog_new;
+alias c_gtk_color_selection_dialog_get_color_selection  gtk_color_selection_dialog_get_color_selection;
+
 // gtk.ColorSelection
 
 alias c_gtk_color_selection_new  gtk_color_selection_new;
@@ -10597,10 +10680,16 @@ alias c_gtk_color_selection_palette_from_string  gtk_color_selection_palette_fro
 alias c_gtk_color_selection_palette_to_string  gtk_color_selection_palette_to_string;
 alias c_gtk_color_selection_set_change_palette_with_screen_hook  gtk_color_selection_set_change_palette_with_screen_hook;
 
-// gtk.ColorSelectionDialog
+// gtk.HSV
 
-alias c_gtk_color_selection_dialog_new  gtk_color_selection_dialog_new;
-alias c_gtk_color_selection_dialog_get_color_selection  gtk_color_selection_dialog_get_color_selection;
+alias c_gtk_hsv_new  gtk_hsv_new;
+alias c_gtk_hsv_set_color  gtk_hsv_set_color;
+alias c_gtk_hsv_get_color  gtk_hsv_get_color;
+alias c_gtk_hsv_set_metrics  gtk_hsv_set_metrics;
+alias c_gtk_hsv_get_metrics  gtk_hsv_get_metrics;
+alias c_gtk_hsv_is_adjusting  gtk_hsv_is_adjusting;
+alias c_gtk_hsv_to_rgb  gtk_hsv_to_rgb;
+alias c_gtk_rgb_to_hsv  gtk_rgb_to_hsv;
 
 // gtk.FileChooserT
 
@@ -10741,6 +10830,20 @@ alias c_gtk_font_selection_dialog_get_cancel_button  gtk_font_selection_dialog_g
 alias c_gtk_font_selection_dialog_get_ok_button  gtk_font_selection_dialog_get_ok_button;
 alias c_gtk_font_selection_dialog_get_font_selection  gtk_font_selection_dialog_get_font_selection;
 
+// gtk.Grid
+
+alias c_gtk_grid_new  gtk_grid_new;
+alias c_gtk_grid_attach  gtk_grid_attach;
+alias c_gtk_grid_attach_next_to  gtk_grid_attach_next_to;
+alias c_gtk_grid_set_row_homogeneous  gtk_grid_set_row_homogeneous;
+alias c_gtk_grid_get_row_homogeneous  gtk_grid_get_row_homogeneous;
+alias c_gtk_grid_set_row_spacing  gtk_grid_set_row_spacing;
+alias c_gtk_grid_get_row_spacing  gtk_grid_get_row_spacing;
+alias c_gtk_grid_set_column_homogeneous  gtk_grid_set_column_homogeneous;
+alias c_gtk_grid_get_column_homogeneous  gtk_grid_get_column_homogeneous;
+alias c_gtk_grid_set_column_spacing  gtk_grid_set_column_spacing;
+alias c_gtk_grid_get_column_spacing  gtk_grid_get_column_spacing;
+
 // gtk.Alignment
 
 alias c_gtk_alignment_new  gtk_alignment_new;
@@ -10753,6 +10856,19 @@ alias c_gtk_alignment_set_padding  gtk_alignment_set_padding;
 alias c_gtk_aspect_frame_new  gtk_aspect_frame_new;
 alias c_gtk_aspect_frame_set  gtk_aspect_frame_set;
 
+// gtk.Box
+
+alias c_gtk_box_new  gtk_box_new;
+alias c_gtk_box_pack_start  gtk_box_pack_start;
+alias c_gtk_box_pack_end  gtk_box_pack_end;
+alias c_gtk_box_get_homogeneous  gtk_box_get_homogeneous;
+alias c_gtk_box_set_homogeneous  gtk_box_set_homogeneous;
+alias c_gtk_box_get_spacing  gtk_box_get_spacing;
+alias c_gtk_box_set_spacing  gtk_box_set_spacing;
+alias c_gtk_box_reorder_child  gtk_box_reorder_child;
+alias c_gtk_box_query_child_packing  gtk_box_query_child_packing;
+alias c_gtk_box_set_child_packing  gtk_box_set_child_packing;
+
 // gtk.HBox
 
 alias c_gtk_hbox_new  gtk_hbox_new;
@@ -10760,6 +10876,14 @@ alias c_gtk_hbox_new  gtk_hbox_new;
 // gtk.VBox
 
 alias c_gtk_vbox_new  gtk_vbox_new;
+
+// gtk.ButtonBox
+
+alias c_gtk_button_box_new  gtk_button_box_new;
+alias c_gtk_button_box_get_layout  gtk_button_box_get_layout;
+alias c_gtk_button_box_get_child_secondary  gtk_button_box_get_child_secondary;
+alias c_gtk_button_box_set_layout  gtk_button_box_set_layout;
+alias c_gtk_button_box_set_child_secondary  gtk_button_box_set_child_secondary;
 
 // gtk.HButtonBox
 
@@ -10774,6 +10898,19 @@ alias c_gtk_vbutton_box_new  gtk_vbutton_box_new;
 alias c_gtk_fixed_new  gtk_fixed_new;
 alias c_gtk_fixed_put  gtk_fixed_put;
 alias c_gtk_fixed_move  gtk_fixed_move;
+
+// gtk.Paned
+
+alias c_gtk_paned_new  gtk_paned_new;
+alias c_gtk_paned_add1  gtk_paned_add1;
+alias c_gtk_paned_add2  gtk_paned_add2;
+alias c_gtk_paned_pack1  gtk_paned_pack1;
+alias c_gtk_paned_pack2  gtk_paned_pack2;
+alias c_gtk_paned_get_child1  gtk_paned_get_child1;
+alias c_gtk_paned_get_child2  gtk_paned_get_child2;
+alias c_gtk_paned_set_position  gtk_paned_set_position;
+alias c_gtk_paned_get_position  gtk_paned_get_position;
+alias c_gtk_paned_get_handle_window  gtk_paned_get_handle_window;
 
 // gtk.HPaned
 
@@ -10900,6 +11037,10 @@ alias c_gtk_frame_get_label_align  gtk_frame_get_label_align;
 alias c_gtk_frame_get_label_widget  gtk_frame_get_label_widget;
 alias c_gtk_frame_get_shadow_type  gtk_frame_get_shadow_type;
 
+// gtk.Separator
+
+alias c_gtk_separator_new  gtk_separator_new;
+
 // gtk.HSeparator
 
 alias c_gtk_hseparator_new  gtk_hseparator_new;
@@ -10907,6 +11048,10 @@ alias c_gtk_hseparator_new  gtk_hseparator_new;
 // gtk.VSeparator
 
 alias c_gtk_vseparator_new  gtk_vseparator_new;
+
+// gtk.Scrollbar
+
+alias c_gtk_scrollbar_new  gtk_scrollbar_new;
 
 // gtk.HScrollbar
 
@@ -10937,6 +11082,20 @@ alias c_gtk_scrolled_window_get_min_content_width  gtk_scrolled_window_get_min_c
 alias c_gtk_scrolled_window_set_min_content_width  gtk_scrolled_window_set_min_content_width;
 alias c_gtk_scrolled_window_get_min_content_height  gtk_scrolled_window_get_min_content_height;
 alias c_gtk_scrolled_window_set_min_content_height  gtk_scrolled_window_set_min_content_height;
+
+// gtk.ScrollableT
+
+
+// gtk.ScrollableT
+
+alias c_gtk_scrollable_get_hadjustment  gtk_scrollable_get_hadjustment;
+alias c_gtk_scrollable_set_hadjustment  gtk_scrollable_set_hadjustment;
+alias c_gtk_scrollable_get_vadjustment  gtk_scrollable_get_vadjustment;
+alias c_gtk_scrollable_set_vadjustment  gtk_scrollable_set_vadjustment;
+alias c_gtk_scrollable_get_hscroll_policy  gtk_scrollable_get_hscroll_policy;
+alias c_gtk_scrollable_set_hscroll_policy  gtk_scrollable_set_hscroll_policy;
+alias c_gtk_scrollable_get_vscroll_policy  gtk_scrollable_get_vscroll_policy;
+alias c_gtk_scrollable_set_vscroll_policy  gtk_scrollable_set_vscroll_policy;
 
 // gtk.PrintOperation
 
@@ -11336,27 +11495,6 @@ alias c_gtk_accessible_set_widget  gtk_accessible_set_widget;
 
 alias c_gtk_bin_get_child  gtk_bin_get_child;
 
-// gtk.Box
-
-alias c_gtk_box_new  gtk_box_new;
-alias c_gtk_box_pack_start  gtk_box_pack_start;
-alias c_gtk_box_pack_end  gtk_box_pack_end;
-alias c_gtk_box_get_homogeneous  gtk_box_get_homogeneous;
-alias c_gtk_box_set_homogeneous  gtk_box_set_homogeneous;
-alias c_gtk_box_get_spacing  gtk_box_get_spacing;
-alias c_gtk_box_set_spacing  gtk_box_set_spacing;
-alias c_gtk_box_reorder_child  gtk_box_reorder_child;
-alias c_gtk_box_query_child_packing  gtk_box_query_child_packing;
-alias c_gtk_box_set_child_packing  gtk_box_set_child_packing;
-
-// gtk.ButtonBox
-
-alias c_gtk_button_box_new  gtk_button_box_new;
-alias c_gtk_button_box_get_layout  gtk_button_box_get_layout;
-alias c_gtk_button_box_get_child_secondary  gtk_button_box_get_child_secondary;
-alias c_gtk_button_box_set_layout  gtk_button_box_set_layout;
-alias c_gtk_button_box_set_child_secondary  gtk_button_box_set_child_secondary;
-
 // gtk.Container
 
 alias c_gtk_container_add  gtk_container_add;
@@ -11418,19 +11556,6 @@ alias c_gtk_misc_set_padding  gtk_misc_set_padding;
 alias c_gtk_misc_get_alignment  gtk_misc_get_alignment;
 alias c_gtk_misc_get_padding  gtk_misc_get_padding;
 
-// gtk.Paned
-
-alias c_gtk_paned_new  gtk_paned_new;
-alias c_gtk_paned_add1  gtk_paned_add1;
-alias c_gtk_paned_add2  gtk_paned_add2;
-alias c_gtk_paned_pack1  gtk_paned_pack1;
-alias c_gtk_paned_pack2  gtk_paned_pack2;
-alias c_gtk_paned_get_child1  gtk_paned_get_child1;
-alias c_gtk_paned_get_child2  gtk_paned_get_child2;
-alias c_gtk_paned_set_position  gtk_paned_set_position;
-alias c_gtk_paned_get_position  gtk_paned_get_position;
-alias c_gtk_paned_get_handle_window  gtk_paned_get_handle_window;
-
 // gtk.Range
 
 alias c_gtk_range_get_fill_level  gtk_range_get_fill_level;
@@ -11461,14 +11586,6 @@ alias c_gtk_range_get_slider_range  gtk_range_get_slider_range;
 alias c_gtk_range_get_slider_size_fixed  gtk_range_get_slider_size_fixed;
 alias c_gtk_range_set_min_slider_size  gtk_range_set_min_slider_size;
 alias c_gtk_range_set_slider_size_fixed  gtk_range_set_slider_size_fixed;
-
-// gtk.Scrollbar
-
-alias c_gtk_scrollbar_new  gtk_scrollbar_new;
-
-// gtk.Separator
-
-alias c_gtk_separator_new  gtk_separator_new;
 
 // gtk.Widget
 

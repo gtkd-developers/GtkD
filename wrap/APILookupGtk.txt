@@ -65,6 +65,13 @@ addAliases: start
 addAliases: end
 
 addEnums: start
+	/** The GtkNotebookTab is not documented */
+	public enum GtkNotebookTab
+	{
+		FIRST,
+		LAST
+	}
+	alias GtkNotebookTab NotebookTab;
 addEnums: end
 
 addStructs: start
@@ -6175,6 +6182,7 @@ prefix: gtk_radio_tool_button_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
+structWrap: GtkRadioToolButton* RadioToolButton
 outFile: RadioToolButton
 
 ###########################################################
@@ -6528,39 +6536,22 @@ file: GtkColorButton.html
 struct: GtkColorButton
 class: ColorButton
 prefix: gtk_color_button_
-prefix: gtk_
 import: glib.Str
 import: gdk.Color
+import: gdk.RGBA
 structWrap: GdkColor* Color
+structWrap: GdkRGBA* RGBA
 outFile: ColorButton
-
-file: GtkColorSelection.html
-struct: GtkColorSelection
-class: ColorSelection
-prefix: gtk_color_selection_
-prefix: gtk_
-import: glib.Str
-import: gdk.Color
-structWrap: GdkColor* Color
-
-out: gtk_color_selection_palette_from_string colors
-array: gtk_color_selection_palette_from_string colors n_colors
-array: gtk_color_selection_set_color color
-array: gtk_color_selection_get_color color
-
-outFile: ColorSelection
 
 file: GtkColorSelectionDialog.html
 struct: GtkColorSelectionDialog
 class: ColorSelectionDialog
 prefix: gtk_color_selection_dialog_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
 import: gtk.ColorSelection
-structWrap: GtkWidget* Widget
 
 nocode: gtk_color_selection_dialog_get_color_selection
+
 code: start
 	/**
 	 * Retrieves the GtkColorSelection widget embedded in the dialog.
@@ -6580,25 +6571,57 @@ code: start
 code: end
 outFile: ColorSelectionDialog
 
+file: GtkColorSelection.html
+struct: GtkColorSelection
+class: ColorSelection
+prefix: gtk_color_selection_
+import: glib.Str
+import: gdk.Color
+import: gdk.RGBA
+structWrap: GdkColor* Color
+structWrap: GdkRGBA* RGBA
+
+out: gtk_color_selection_palette_from_string colors
+array: gtk_color_selection_palette_from_string colors n_colors
+array: gtk_color_selection_palette_to_string colors n_colors
+outFile: ColorSelection
+
+file: GtkHSV.html
+struct: GtkHSV
+class: HSV
+prefix: gtk_hsv_
+prefix: gtk_
+
+out: gtk_hsv_get_color h
+out: gtk_hsv_get_color s
+out: gtk_hsv_get_color v
+out: gtk_hsv_get_metrics size
+out: gtk_hsv_get_metrics ring_width
+out: gtk_hsv_to_rgb r
+out: gtk_hsv_to_rgb g
+out: gtk_hsv_to_rgb b
+out: gtk_rgb_to_hsv h
+out: gtk_rgb_to_hsv s
+out: gtk_rgb_to_hsv v
+
+outFile: HSV
+
 file: GtkFileChooser.html
 struct: GtkFileChooser
 class: FileChooserT
 template: TStruct
 prefix: gtk_file_chooser_
-prefix: gtk_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 import: gio.File
-structWrap: GFile* File
-import: gtk.Window
-structWrap: GtkWindow* Window
 import: glib.ListSG
-structWrap: GSList* ListSG
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.FileFilter
+import: gtk.Widget
+structWrap: GFile* File
+structWrap: GSList* ListSG
 structWrap: GtkFileFilter* FileFilter
+structWrap: GtkWidget* Widget
 
 alias: setAction setFileChooserAction
 alias: getAction getFileChooserAction
@@ -6611,7 +6634,6 @@ struct: GtkFileChooserButton
 class: FileChooserButton
 implements: FileChooserIF
 prefix: gtk_file_chooser_button_
-prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
@@ -6631,7 +6653,6 @@ struct: GtkFileChooserDialog
 class: FileChooserDialog
 implements: FileChooserIF
 prefix: gtk_file_chooser_dialog_
-prefix: gtk_
 import: glib.Str
 import: gtk.Window
 
@@ -6640,7 +6661,6 @@ import: gtk.FileChooserT
 import: gtk.FileChooserIF
 
 nocode: gtk_file_chooser_dialog_new
-nocode: gtk_file_chooser_dialog_new_with_backend
 
 code: start
 	// add the FileChooser capabilities
@@ -6687,65 +6707,14 @@ code: start
 
 		addButtons(buttonsText, responses);
 	}
-
-	/**
-	 * Creates a new GtkFileChooserDialog with a specified backend. This is
-	 * especially useful if you use gtk_file_chooser_set_local_only() to allow
-	 * non-local files and you use a more expressive vfs, such as gnome-vfs,
-	 * to load files.
-	 * Since 2.4
-	 * Params:
-	 *  title = Title of the dialog, or NULL
-	 *  parent = Transient parent of the dialog, or NULL
-	 *  action = Open or save mode for the dialog
-	 *  backend = The name of the specific filesystem backend to use.
-	 *  buttonsText = text to go in the buttons
-	 *  responses = response ID's for the buttons
-	 * See_Also:
-	 *  GtkFileChooser, GtkDialog
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string title, Window parent, GtkFileChooserAction action, string backend,  string[] buttonsText=null, ResponseType[] responses=null)
-	{
-		// GtkWidget* gtk_file_chooser_dialog_new_with_backend  (const gchar *title,  GtkWindow *parent,  GtkFileChooserAction action,  const gchar *backend,  const gchar *first_button_text,  ...);
-		auto p = gtk_file_chooser_dialog_new_with_backend(
-				Str.toStringz(title), 
-				parent.getWindowStruct(), 
-				action, 
-				Str.toStringz(backend), 
-				null,
-				0
-				);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new_with_backend");
-		}
-
-		this(cast(GtkFileChooserDialog*) p);
-
-		if ( buttonsText  is  null )
-		{
-			buttonsText ~= "OK";
-			buttonsText ~= "Cancel";
-		}
-		if ( responses  is  null )
-		{
-			responses ~= ResponseType.GTK_RESPONSE_OK;
-			responses ~= ResponseType.GTK_RESPONSE_CANCEL;
-		}
-
-		addButtons(buttonsText, responses);
-	}
 code: end
 outFile: FileChooserDialog
 
 file: GtkFileChooserWidget.html
 struct: GtkFileChooserWidget
-ctorStruct: GtkWidget
 class: FileChooserWidget
+implements: FileChooserIF
 prefix: gtk_file_chooser_widget_
-prefix: gtk_
 import: glib.Str
 
 # imports for FileChooser Interface
@@ -6754,23 +6723,31 @@ import: gtk.FileChooserIF
 
 code: start
 	// add the FileChooser capabilities
-	mixin FileChooserT!(FileChooserWidget);
+	mixin FileChooserT!(GtkFileChooserWidget);
 cade: end
 outFile: FileChooserWidget
 
 file: GtkFileFilter.html
 struct:  GtkFileFilter
 class: FileFilter
+implements: BuildableIF
 prefix: gtk_file_filter_
-prefix: gtk_
 import: glib.Str
+
+# imports for Buildable Interface
+import: gtk.BuildableT
+import: gtk.BuildableIF
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFileFilter);
+cade: end
 outFile: FileFilter
 
 file: GtkFontButton.html
 struct: GtkFontButton
 class: FontButton
 prefix: gtk_font_button_
-prefix: gtk_
 import: glib.Str
 outFile: FontButton
 
@@ -6778,13 +6755,12 @@ file: GtkFontSelection.html
 struct: GtkFontSelection
 class: FontSelection
 prefix: gtk_font_selection_
-prefix: gtk_
 import: glib.Str
 import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: pango.PgFontFace
-structWrap: PangoFontFace* PgFontFace
 import:  pango.PgFontFamily
+structWrap: GtkWidget* Widget
+structWrap: PangoFontFace* PgFontFace
 structWrap: PangoFontFamily* PgFontFamily
 outFile: FontSelection
 
@@ -6792,12 +6768,13 @@ file: GtkFontSelectionDialog.html
 struct: GtkFontSelectionDialog
 class: FontSelectionDialog
 prefix: gtk_font_selection_dialog_
-prefix: gtk_
 import: glib.Str
 import: gtk.FontSelection
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
 nocode: gtk_font_selection_dialog_get_font_selection
+
 code: start
 	/**
 	 * Retrieves the GtkFontSelection widget embedded in the dialog.
@@ -6821,11 +6798,28 @@ outFile: FontSelectionDialog
 ### Layout Containers #####################################
 ###########################################################
 
+file: GtkGrid.html
+struct: GtkGrid
+class: Grid
+implements: OrientableIF
+prefix: gtk_grid_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkGrid);
+code: end
+outFile: Grid
+
 file: GtkAlignment.html
 struct: GtkAlignment
 class: Alignment
 prefix: gtk_alignment_
-prefix: gtk_
 import: gtk.Widget
 
 out: gtk_alignment_get_padding padding_top
@@ -6912,29 +6906,115 @@ file: GtkAspectFrame.html
 struct: GtkAspectFrame
 class: AspectFrame
 prefix: gtk_aspect_frame_
-prefix: gtk_
 import: glib.Str
 outFile: AspectFrame
+
+file: GtkBox.html
+struct: GtkBox
+class: Box
+implements: OrientableIF
+prefix: gtk_box_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+out: gtk_box_query_child_packing expand
+out: gtk_box_query_child_packing fill
+out: gtk_box_query_child_packing padding
+out: gtk_box_query_child_packing pack_type
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkBox);
+code: end
+outFile: Box
 
 file: GtkHBox.html
 struct: GtkHBox
 class: HBox
 prefix: gtk_hbox_
-prefix: gtk_
 outFile: HBox
 
 file: GtkVBox.html
 struct: GtkVBox
 class: VBox
 prefix: gtk_vbox_
-prefix: gtk_
 outFile: VBox
+
+file: GtkButtonBox.html
+struct: GtkButtonBox
+class: ButtonBox
+prefix: gtk_button_box_
+import: gtk.Button
+import: gtk.HButtonBox
+import: gtk.VButtonBox
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+out: gtk_button_box_get_child_size min_width
+out: gtk_button_box_get_child_size min_height
+out: gtk_button_box_get_child_ipadding ipad_x
+out: gtk_button_box_get_child_ipadding ipad_y
+
+code: start
+	/** */
+	static ButtonBox createActionBox(
+			void delegate(Button) onClicked, 
+			StockID[] stocks, 
+			string[] actions,
+			bool vertical=false
+		)
+	{
+		ButtonBox bBox;
+		if ( vertical )
+		{
+			bBox = VButtonBox.createActionBox();
+		}
+		else
+		{
+			bBox = HButtonBox.createActionBox();
+		}
+
+		Button button;
+		for( int i=0 ; i<stocks.length && i<actions.length ; i++)
+		{
+			button =  new Button(stocks[i]);
+			bBox.packEnd(button, false, false, 7);
+			button.setActionName(actions[i]);
+			button.addOnClicked(onClicked);
+		}
+		return bBox;
+	}
+
+	/** */
+	static ButtonBox createOkBox(void delegate(Button) onClicked)
+	{
+		static StockID[] stocks = [StockID.OK];
+		string[] actions;
+		actions ~= "action.ok";
+		return createActionBox(onClicked, stocks, actions);
+	}
+
+	/** */
+	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
+	{
+		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
+		string[] actions;
+		actions ~= "action.ok";
+		actions ~= "action.cancel";
+		return createActionBox(onClicked, stocks, actions);
+	}
+code: end
+outFile: ButtonBox
 
 file: GtkHButtonBox.html
 struct: GtkHButtonBox
 class: HButtonBox
 prefix: gtk_hbutton_box_
-prefix: gtk_
+
 code: start
 	/**
 	 * Creates a new HButtonBox and sets comon parameters
@@ -6947,7 +7027,6 @@ code: start
 		bBox.setSpacing(7);
 		return bBox;
 	}
-	
 code: end
 outFile: HButtonBox
 
@@ -6955,7 +7034,6 @@ file: GtkVButtonBox.html
 struct: GtkVButtonBox
 class: VButtonBox
 prefix: gtk_vbutton_box_
-prefix: gtk_
 code: start
     /**
      * Creates a new vertical button box and sets standart values for it's comon parameters
@@ -6976,19 +7054,41 @@ file: GtkFixed.html
 struct: GtkFixed
 class: Fixed
 prefix: gtk_fixed_
-prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-override: getHasWindow
-override: setHasWindow
 outFile: Fixed
+
+file: GtkPaned.html
+struct: GtkPaned
+class: Paned
+implements: OrientableIF
+prefix: gtk_paned_
+import: gdk.Window
+import: gtk.Widget
+structWrap: GdkWindow* Window
+structWrap: GtkWidget* Widget
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkPaned);
+
+	/** */
+	public void add(Widget child1, Widget child2)
+	{
+		add1(child1);
+		add2(child2);
+	}
+code: end
+outFile: Paned
 
 file: GtkHPaned.html
 struct: GtkHPaned
 class: HPaned
 prefix: gtk_hpaned_
-prefix: gtk_
-structWrap: GtkWidget* Widget
 import: gtk.Widget
 
 code: start
@@ -7012,7 +7112,6 @@ file: GtkVPaned.html
 struct: GtkVPaned
 class: VPaned
 prefix: gtk_vpaned_
-prefix: gtk_
 import: gtk.Widget
 
 code: start
@@ -7035,43 +7134,38 @@ outFile: VPaned
 file: GtkLayout.html
 struct: GtkLayout
 class: Layout
+implements: ScrollableIF
 prefix: gtk_layout_
-prefix: gtk_
 import: gdk.Window
-structWrap: GdkWindow* Window
 import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
 import: gtk.Widget
+structWrap: GdkWindow* Window
+structWrap: GtkAdjustment* Adjustment
 structWrap: GtkWidget* Widget
+
+#imports for Scrollable Interface.
+import: gtk.ScrollableIF
+import: gtk.ScrollableT
 
 out: gtk_layout_get_size width
 out: gtk_layout_get_size height
 
+code: start
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkLayout);
+code: end
 outFile: Layout
 
 file: GtkNotebook.html
 struct: GtkNotebook
 class: Notebook
 prefix: gtk_notebook_
-prefix: gtk_
 import: glib.Str
 import: gtk.Label
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
-out: gtk_notebook_query_tab_label_packing expand
-out: gtk_notebook_query_tab_label_packing fill
-out: gtk_notebook_query_tab_label_packing pack_type
-
 code: start
-/** The GtkNotebookTab is not documented */
-public enum GtkNotebookTab
-{
-  GTK_NOTEBOOK_TAB_FIRST,
-  GTK_NOTEBOOK_TAB_LAST
-}
-alias GtkNotebookTab NotebookTab;
-
 	/**
 	 * Append a page with a widget and a text for a label
 	 */
@@ -7091,17 +7185,16 @@ outFile: Notebook
 file: GtkTable.html
 struct: GtkTable
 class: Table
+prefix: gtk_table_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-prefix: gtk_table_
-prefix: gtk_
 
 out: gtk_table_get_size rows
 out: gtk_table_get_size columns
+
 nocode: gtk_table_new
 
 code: start
-
 	int row;
 	int col;
 	int maxRows;
@@ -7117,6 +7210,11 @@ code: start
 	{
 		super.removeAll();
 		resize(1,1);
+
+		row = 0;
+		col = 0;
+		maxRows = 1;
+		maxCols = 1;
 	}
 	
 	/**
@@ -7172,7 +7270,6 @@ file: GtkExpander.html
 struct: GtkExpander
 class: Expander
 prefix: gtk_expander_
-prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
@@ -7216,7 +7313,6 @@ code: start
 		this(p);
 	}
 code: end
-
 outFile: Expander
 
 file: gtk3-Orientable.html
@@ -7235,7 +7331,6 @@ file: GtkFrame.html
 struct: GtkFrame
 class: Frame
 prefix: gtk_frame_
-prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
@@ -7253,32 +7348,52 @@ code: start
 		add(widget);
 	}
 code: end
-
 outFile: Frame
+
+file: GtkSeparator.html
+struct: GtkSeparator
+class: Separator
+implements: OrientableIF
+prefix: gtk_separator
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkSeparator);
+code: end
+outFile: Separator
 
 file: GtkHSeparator.html
 struct: GtkHSeparator
 class: HSeparator
 prefix: gtk_hseparator_
-prefix: gtk_
 outFile: HSeparator
 
 file: GtkVSeparator.html
 struct: GtkVSeparator
 class: VSeparator
 prefix: gtk_vseparator_
-prefix: gtk_
 outFile: VSeparator
 
 ###########################################################
 ### Scrolling #############################################
 ###########################################################
 
+file: GtkScrollbar.html
+struct: GtkScrollbar
+class: Scrollbar
+prefix: gtk_scrollbar_
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+outFile: Scrollbar
+
 file: GtkHScrollbar.html
 struct: GtkHScrollbar
 class: HScrollbar
 prefix: gtk_hscrollbar_
-prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 outFile: HScrollbar
@@ -7287,7 +7402,6 @@ file: GtkVScrollbar.html
 struct: GtkVScrollbar
 class: VScrollbar
 prefix: gtk_vscrollbar_
-prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 outFile: VScrollbar
@@ -7296,16 +7410,13 @@ file: GtkScrolledWindow.html
 struct: GtkScrolledWindow
 class: ScrolledWindow
 prefix: gtk_scrolled_window_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.Adjustment
+import: gtk.Widget
 structWrap: GtkAdjustment* Adjustment
+structWrap: GtkWidget* Widget
 
 out: gtk_scrolled_window_get_policy hscrollbar_policy
 out: gtk_scrolled_window_get_policy vscrollbar_policy
-
-nocode: gtk_scrolled_window_new
 
 code: start
 	/** */
@@ -7322,32 +7433,6 @@ code: start
 	}
 	
 	/**
-	 * Creates a new scrolled window. The two arguments are the scrolled
-	 * window's adjustments; these will be shared with the scrollbars and the
-	 * child widget to keep the bars in sync with the child. Usually you want
-	 * to pass NULL for the adjustments, which will cause the scrolled window
-	 * to create them for you.
-	 * Params:
-	 *  hadjustment = Horizontal adjustment.
-	 *  vadjustment = Vertical adjustment.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Adjustment hadjustment, Adjustment vadjustment)
-	{
-		// GtkWidget* gtk_scrolled_window_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		auto p = gtk_scrolled_window_new(
-				hadjustment is null ? null : hadjustment.getAdjustmentStruct(), 
-				vadjustment is null ? null : vadjustment.getAdjustmentStruct());
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_scrolled_window_new");
-		}
-
-		this(cast(GtkScrolledWindow*) p);
-	}
-
-	/**
 	 * Creates a new Scrolled window and set the policy type
 	 * Params:
 	 *  hPolicy = the horizontal policy
@@ -7360,6 +7445,16 @@ code: start
 	}
 code: end
 outFile: ScrolledWindow
+
+file: GtkScrollable.html
+struct: GtkScrollable
+class: ScrollableT
+template: TStruct
+prefix: gtk_scrollable_
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+interface: ScrollableIF
+outFile: ScrollableT
 
 ###########################################################
 ### Printing ##############################################
@@ -7727,97 +7822,6 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 outFile: Bin
 
-file: GtkBox.html
-struct: GtkBox
-class: Box
-implements: OrientableIF
-prefix: gtk_box_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-#imports for Orientable Interface.
-import: gtk.OrientableIF
-import: gtk.OrientableT
-
-out: gtk_box_query_child_packing expand
-out: gtk_box_query_child_packing fill
-out: gtk_box_query_child_packing padding
-out: gtk_box_query_child_packing pack_type
-
-code: start
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkBox);
-code: end
-outFile: Box
-
-file: GtkButtonBox.html
-struct: GtkButtonBox
-class: ButtonBox
-prefix: gtk_button_box_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gtk.Button
-import: gtk.HButtonBox
-import: gtk.VButtonBox
-
-out: gtk_button_box_get_child_size min_width
-out: gtk_button_box_get_child_size min_height
-out: gtk_button_box_get_child_ipadding ipad_x
-out: gtk_button_box_get_child_ipadding ipad_y
-
-code: start
-	/** */
-	static ButtonBox createActionBox(
-			void delegate(Button) onClicked, 
-			StockID[] stocks, 
-			string[] actions,
-			bool vertical=false
-		)
-	{
-		ButtonBox bBox;
-		if ( vertical )
-		{
-			bBox = VButtonBox.createActionBox();
-		}
-		else
-		{
-			bBox = HButtonBox.createActionBox();
-		}
-
-		Button button;
-		for( int i=0 ; i<stocks.length && i<actions.length ; i++)
-		{
-			button =  new Button(stocks[i]);
-			bBox.packEnd(button, false, false, 7);
-			button.setActionName(actions[i]);
-			button.addOnClicked(onClicked);
-		}
-		return bBox;
-	}
-
-	/** */
-	static ButtonBox createOkBox(void delegate(Button) onClicked)
-	{
-		static StockID[] stocks = [StockID.OK];
-		string[] actions;
-		actions ~= "action.ok";
-		return createActionBox(onClicked, stocks, actions);
-	}
-
-	/** */
-	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
-	{
-		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
-		string[] actions;
-		actions ~= "action.ok";
-		actions ~= "action.cancel";
-		return createActionBox(onClicked, stocks, actions);
-	}
-code: end
-outFile: ButtonBox
-
 file: GtkContainer.html
 struct: GtkContainer
 class: Container
@@ -7885,34 +7889,6 @@ out: gtk_misc_get_padding ypad
 
 outFile: Misc
 
-file: GtkPaned.html
-struct: GtkPaned
-class: Paned
-implements: OrientableIF
-prefix: gtk_paned_
-prefix: gtk_
-import: gdk.Window
-structWrap: GdkWindow* Window
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-#imports for Orientable Interface.
-import: gtk.OrientableIF
-import: gtk.OrientableT
-
-code: start
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkPaned);
-
-	/** */
-	public void add(Widget child1, Widget child2)
-	{
-		add1(child1);
-		add2(child2);
-	}
-code: end
-outFile: Paned
-
 file: GtkRange.html
 struct: GtkRange
 class: Range
@@ -7936,30 +7912,6 @@ code: start
 	mixin OrientableT!(GtkRange);
 code: end
 outFile: Range
-
-file: GtkScrollbar.html
-struct: GtkScrollbar
-class: Scrollbar
-prefix: gtk_scrollbar_
-prefix: gtk_
-outFile: Scrollbar
-
-file: GtkSeparator.html
-struct: GtkSeparator
-class: Separator
-implements: OrientableIF
-prefix: gtk_separator
-prefix: gtk_
-
-#imports for Orientable Interface.
-import: gtk.OrientableIF
-import: gtk.OrientableT
-
-code: start
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkSeparator);
-code: end
-outFile: Separator
 
 file: GtkWidget.html
 struct: GtkWidget

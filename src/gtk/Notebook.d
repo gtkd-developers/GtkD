@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_notebook_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -140,14 +139,6 @@ public class Notebook : Container
 		super.setStruct(obj);
 		gtkNotebook = cast(GtkNotebook*)obj;
 	}
-	
-	/** The GtkNotebookTab is not documented */
-	public enum GtkNotebookTab
-	{
-		GTK_NOTEBOOK_TAB_FIRST,
-		GTK_NOTEBOOK_TAB_LAST
-	}
-	alias GtkNotebookTab NotebookTab;
 	
 	/**
 	 * Append a page with a widget and a text for a label

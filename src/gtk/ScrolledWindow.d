@@ -38,15 +38,13 @@
  * implements:
  * prefixes:
  * 	- gtk_scrolled_window_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_scrolled_window_new
  * omit signals:
  * imports:
- * 	- gtk.Widget
  * 	- gtk.Adjustment
+ * 	- gtk.Widget
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
@@ -65,8 +63,8 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gtk.Widget;
 private import gtk.Adjustment;
+private import gtk.Widget;
 
 
 
@@ -165,32 +163,6 @@ public class ScrolledWindow : Bin
 	}
 	
 	/**
-	 * Creates a new scrolled window. The two arguments are the scrolled
-	 * window's adjustments; these will be shared with the scrollbars and the
-	 * child widget to keep the bars in sync with the child. Usually you want
-	 * to pass NULL for the adjustments, which will cause the scrolled window
-	 * to create them for you.
-	 * Params:
-	 *  hadjustment = Horizontal adjustment.
-	 *  vadjustment = Vertical adjustment.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Adjustment hadjustment, Adjustment vadjustment)
-	{
-		// GtkWidget* gtk_scrolled_window_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		auto p = gtk_scrolled_window_new(
-		hadjustment is null ? null : hadjustment.getAdjustmentStruct(),
-		vadjustment is null ? null : vadjustment.getAdjustmentStruct());
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_scrolled_window_new");
-		}
-		
-		this(cast(GtkScrolledWindow*) p);
-	}
-	
-	/**
 	 * Creates a new Scrolled window and set the policy type
 	 * Params:
 	 *  hPolicy = the horizontal policy
@@ -280,6 +252,28 @@ public class ScrolledWindow : Bin
 		return 0;
 	}
 	
+	
+	/**
+	 * Creates a new scrolled window.
+	 * The two arguments are the scrolled window's adjustments; these will be
+	 * shared with the scrollbars and the child widget to keep the bars in sync
+	 * with the child. Usually you want to pass NULL for the adjustments, which
+	 * will cause the scrolled window to create them for you.
+	 * Params:
+	 * hadjustment = horizontal adjustment. [allow-none]
+	 * vadjustment = vertical adjustment. [allow-none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (Adjustment hadjustment, Adjustment vadjustment)
+	{
+		// GtkWidget * gtk_scrolled_window_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
+		auto p = gtk_scrolled_window_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_scrolled_window_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct())");
+		}
+		this(cast(GtkScrolledWindow*) p);
+	}
 	
 	/**
 	 * Returns the horizontal scrollbar's adjustment, used to connect the

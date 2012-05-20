@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_hbutton_box_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -138,7 +137,6 @@ public class HButtonBox : ButtonBox
 		bBox.setSpacing(7);
 		return bBox;
 	}
-	
 	
 	/**
 	 */

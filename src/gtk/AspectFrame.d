@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_aspect_frame_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

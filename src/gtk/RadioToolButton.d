@@ -47,6 +47,7 @@
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
+ * 	- GtkRadioToolButton* -> RadioToolButton
  * module aliases:
  * local aliases:
  * overrides:
@@ -175,13 +176,13 @@ public class RadioToolButton : ToggleToolButton
 	 * group = An existing GtkRadioToolButton
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkRadioToolButton* group)
+	public this (RadioToolButton group)
 	{
 		// GtkToolItem * gtk_radio_tool_button_new_from_widget  (GtkRadioToolButton *group);
-		auto p = gtk_radio_tool_button_new_from_widget(group);
+		auto p = gtk_radio_tool_button_new_from_widget((group is null) ? null : group.getRadioToolButtonStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_radio_tool_button_new_from_widget(group)");
+			throw new ConstructionException("null returned by gtk_radio_tool_button_new_from_widget((group is null) ? null : group.getRadioToolButtonStruct())");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}
@@ -196,13 +197,13 @@ public class RadioToolButton : ToggleToolButton
 	 * stockId = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkRadioToolButton* group, string stockId)
+	public this (RadioToolButton group, string stockId)
 	{
 		// GtkToolItem * gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
-		auto p = gtk_radio_tool_button_new_with_stock_from_widget(group, Str.toStringz(stockId));
+		auto p = gtk_radio_tool_button_new_with_stock_from_widget((group is null) ? null : group.getRadioToolButtonStruct(), Str.toStringz(stockId));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_radio_tool_button_new_with_stock_from_widget(group, Str.toStringz(stockId))");
+			throw new ConstructionException("null returned by gtk_radio_tool_button_new_with_stock_from_widget((group is null) ? null : group.getRadioToolButtonStruct(), Str.toStringz(stockId))");
 		}
 		this(cast(GtkRadioToolButton*) p);
 	}

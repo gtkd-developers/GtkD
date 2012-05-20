@@ -31,14 +31,14 @@
  * ctorStrct=
  * clss    = Layout
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- ScrollableIF
  * prefixes:
  * 	- gtk_layout_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -47,6 +47,8 @@
  * 	- gdk.Window
  * 	- gtk.Adjustment
  * 	- gtk.Widget
+ * 	- gtk.ScrollableIF
+ * 	- gtk.ScrollableT
  * structWrap:
  * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
@@ -67,6 +69,8 @@ private import glib.ConstructionException;
 private import gdk.Window;
 private import gtk.Adjustment;
 private import gtk.Widget;
+private import gtk.ScrollableIF;
+private import gtk.ScrollableT;
 
 
 
@@ -85,7 +89,7 @@ private import gtk.Container;
  * GTK_WIDGET (layout)->window, as you would for a drawing
  * area.
  */
-public class Layout : Container
+public class Layout : Container, ScrollableIF
 {
 	
 	/** the main Gtk struct */
@@ -130,6 +134,9 @@ public class Layout : Container
 		super.setStruct(obj);
 		gtkLayout = cast(GtkLayout*)obj;
 	}
+	
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkLayout);
 	
 	/**
 	 */

@@ -39,12 +39,10 @@
  * 	- FileChooserIF
  * prefixes:
  * 	- gtk_file_chooser_dialog_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * 	- gtk_file_chooser_dialog_new
- * 	- gtk_file_chooser_dialog_new_with_backend
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -234,56 +232,6 @@ public class FileChooserDialog : Dialog, FileChooserIF
 		}
 		
 		this(cast(GtkFileChooserDialog*) p);
-		
-		addButtons(buttonsText, responses);
-	}
-	
-	/**
-	 * Creates a new GtkFileChooserDialog with a specified backend. This is
-	 * especially useful if you use gtk_file_chooser_set_local_only() to allow
-	 * non-local files and you use a more expressive vfs, such as gnome-vfs,
-	 * to load files.
-	 * Since 2.4
-	 * Params:
-	 *  title = Title of the dialog, or NULL
-	 *  parent = Transient parent of the dialog, or NULL
-	 *  action = Open or save mode for the dialog
-	 *  backend = The name of the specific filesystem backend to use.
-	 *  buttonsText = text to go in the buttons
-	 *  responses = response ID's for the buttons
-	 * See_Also:
-	 *  GtkFileChooser, GtkDialog
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string title, Window parent, GtkFileChooserAction action, string backend,  string[] buttonsText=null, ResponseType[] responses=null)
-	{
-		// GtkWidget* gtk_file_chooser_dialog_new_with_backend  (const gchar *title,  GtkWindow *parent,  GtkFileChooserAction action,  const gchar *backend,  const gchar *first_button_text,  ...);
-		auto p = gtk_file_chooser_dialog_new_with_backend(
-		Str.toStringz(title),
-		parent.getWindowStruct(),
-		action,
-		Str.toStringz(backend),
-		null,
-		0
-		);
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new_with_backend");
-		}
-		
-		this(cast(GtkFileChooserDialog*) p);
-		
-		if ( buttonsText  is  null )
-		{
-			buttonsText ~= "OK";
-			buttonsText ~= "Cancel";
-		}
-		if ( responses  is  null )
-		{
-			responses ~= ResponseType.GTK_RESPONSE_OK;
-			responses ~= ResponseType.GTK_RESPONSE_CANCEL;
-		}
 		
 		addButtons(buttonsText, responses);
 	}

@@ -38,16 +38,15 @@
  * implements:
  * prefixes:
  * 	- gtk_button_box_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.Widget
  * 	- gtk.Button
  * 	- gtk.HButtonBox
  * 	- gtk.VButtonBox
+ * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -63,10 +62,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.Widget;
 private import gtk.Button;
 private import gtk.HButtonBox;
 private import gtk.VButtonBox;
+private import gtk.Widget;
 
 
 

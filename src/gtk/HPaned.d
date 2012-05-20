@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_hpaned_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,7 +45,6 @@
  * imports:
  * 	- gtk.Widget
  * structWrap:
- * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:

@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_color_selection_dialog_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,10 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * 	- gtk.ColorSelection
  * structWrap:
- * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,7 +61,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Widget;
 private import gtk.ColorSelection;
 
 

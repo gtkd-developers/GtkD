@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_color_selection_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,8 +45,10 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Color
+ * 	- gdk.RGBA
  * structWrap:
  * 	- GdkColor* -> Color
+ * 	- GdkRGBA* -> RGBA
  * module aliases:
  * local aliases:
  * overrides:
@@ -65,6 +66,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Color;
+private import gdk.RGBA;
 
 
 
@@ -316,10 +318,10 @@ public class ColorSelection : VBox
 	 * rgba = a GdkRGBA to fill in with the current color. [out]
 	 * Since 3.0
 	 */
-	public void getCurrentRgba(GdkRGBA* rgba)
+	public void getCurrentRgba(RGBA rgba)
 	{
 		// void gtk_color_selection_get_current_rgba  (GtkColorSelection *colorsel,  GdkRGBA *rgba);
-		gtk_color_selection_get_current_rgba(gtkColorSelection, rgba);
+		gtk_color_selection_get_current_rgba(gtkColorSelection, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**
@@ -330,10 +332,10 @@ public class ColorSelection : VBox
 	 * rgba = A GdkRGBA to set the current color with
 	 * Since 3.0
 	 */
-	public void setCurrentRgba(GdkRGBA* rgba)
+	public void setCurrentRgba(RGBA rgba)
 	{
 		// void gtk_color_selection_set_current_rgba  (GtkColorSelection *colorsel,  const GdkRGBA *rgba);
-		gtk_color_selection_set_current_rgba(gtkColorSelection, rgba);
+		gtk_color_selection_set_current_rgba(gtkColorSelection, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**
@@ -342,10 +344,10 @@ public class ColorSelection : VBox
 	 * rgba = a GdkRGBA to fill in with the original color value. [out]
 	 * Since 3.0
 	 */
-	public void getPreviousRgba(GdkRGBA* rgba)
+	public void getPreviousRgba(RGBA rgba)
 	{
 		// void gtk_color_selection_get_previous_rgba  (GtkColorSelection *colorsel,  GdkRGBA *rgba);
-		gtk_color_selection_get_previous_rgba(gtkColorSelection, rgba);
+		gtk_color_selection_get_previous_rgba(gtkColorSelection, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**
@@ -358,10 +360,10 @@ public class ColorSelection : VBox
 	 * rgba = a GdkRGBA to set the previous color with
 	 * Since 3.0
 	 */
-	public void setPreviousRgba(GdkRGBA* rgba)
+	public void setPreviousRgba(RGBA rgba)
 	{
 		// void gtk_color_selection_set_previous_rgba  (GtkColorSelection *colorsel,  const GdkRGBA *rgba);
-		gtk_color_selection_set_previous_rgba(gtkColorSelection, rgba);
+		gtk_color_selection_set_previous_rgba(gtkColorSelection, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**
@@ -399,13 +401,12 @@ public class ColorSelection : VBox
 	 * Encodes a palette as a string, useful for persistent storage.
 	 * Params:
 	 * colors = an array of colors. [array length=n_colors]
-	 * nColors = length of the array
 	 * Returns: allocated string encoding the palette
 	 */
-	public static string paletteToString(Color colors, int nColors)
+	public static string paletteToString(GdkColor[] colors)
 	{
 		// gchar * gtk_color_selection_palette_to_string  (const GdkColor *colors,  gint n_colors);
-		return Str.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors));
+		return Str.toString(gtk_color_selection_palette_to_string(colors.ptr, cast(int) colors.length));
 	}
 	
 	/**

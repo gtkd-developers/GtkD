@@ -39,7 +39,6 @@
  * 	- FileChooserIF
  * prefixes:
  * 	- gtk_file_chooser_button_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

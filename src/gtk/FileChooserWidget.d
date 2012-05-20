@@ -28,7 +28,7 @@
  * outFile = FileChooserWidget
  * strct   = GtkFileChooserWidget
  * realStrct=
- * ctorStrct=GtkWidget
+ * ctorStrct=
  * clss    = FileChooserWidget
  * interf  = 
  * class Code: Yes
@@ -36,9 +36,9 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- FileChooserIF
  * prefixes:
  * 	- gtk_file_chooser_widget_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -80,7 +80,7 @@ private import gtk.VBox;
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
  */
-public class FileChooserWidget : VBox
+public class FileChooserWidget : VBox, FileChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -127,7 +127,7 @@ public class FileChooserWidget : VBox
 	}
 	
 	// add the FileChooser capabilities
-	mixin FileChooserT!(FileChooserWidget);
+	mixin FileChooserT!(GtkFileChooserWidget);
 	
 	/**
 	 */

@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_table_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -151,6 +150,11 @@ public class Table : Container
 	{
 		super.removeAll();
 		resize(1,1);
+		
+		row = 0;
+		col = 0;
+		maxRows = 1;
+		maxCols = 1;
 	}
 	
 	/**

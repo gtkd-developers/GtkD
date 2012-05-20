@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_file_chooser_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,16 +47,14 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- gio.File
- * 	- gtk.Window
  * 	- glib.ListSG
- * 	- gtk.Widget
  * 	- gtk.FileFilter
+ * 	- gtk.Widget
  * structWrap:
  * 	- GFile* -> File
  * 	- GSList* -> ListSG
  * 	- GtkFileFilter* -> FileFilter
  * 	- GtkWidget* -> Widget
- * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
  * 	- getAction -> getFileChooserAction
@@ -79,10 +76,9 @@ private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import gio.File;
-private import gtk.Window;
 private import glib.ListSG;
-private import gtk.Widget;
 private import gtk.FileFilter;
+private import gtk.Widget;
 
 
 

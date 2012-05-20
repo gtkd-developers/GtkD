@@ -60,6 +60,13 @@ alias void GtkContainerClass;
  * more information.
  */
 public alias Rectangle GtkAllocation;
+/** The GtkNotebookTab is not documented */
+public enum GtkNotebookTab
+{
+	FIRST,
+	LAST
+}
+alias GtkNotebookTab NotebookTab;
 /**
  * The GtkDestDefaults enumeration specifies the various
  * types of action that will be taken on behalf
@@ -1662,6 +1669,21 @@ public enum GtkFileFilterFlags
 	MIME_TYPE = 1 << 3
 }
 alias GtkFileFilterFlags FileFilterFlags;
+
+/**
+ * Defines the policy to be used in a scrollable widget when updating
+ * the scrolled window adjustments in a given orientation.
+ * GTK_SCROLL_MINIMUM
+ * Scrollable adjustments are based on the minimum size
+ * GTK_SCROLL_NATURAL
+ * Scrollable adjustments are based on the natural size
+ */
+public enum GtkScrollablePolicy
+{
+	MINIMUM = 0,
+	NATURAL
+}
+alias GtkScrollablePolicy ScrollablePolicy;
 
 /**
  * The status gives a rough indication of the completion of a running
@@ -3910,12 +3932,6 @@ public struct GtkColorButton{}
 
 /**
  * Main Gtk struct.
- */
-public struct GtkColorSelection{}
-
-
-/**
- * Main Gtk struct.
  * The GtkColorSelectionDialog struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
@@ -3936,6 +3952,18 @@ public struct GtkColorSelection{}
  * Connect a handler for the clicked event.
  */
 public struct GtkColorSelectionDialog{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkColorSelection{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkHSV{}
 
 
 /**
@@ -4020,6 +4048,12 @@ public struct GtkFontSelectionDialog{}
 /**
  * Main Gtk struct.
  */
+public struct GtkGrid{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkAlignment{}
 
 
@@ -4032,6 +4066,12 @@ public struct GtkAspectFrame{}
 /**
  * Main Gtk struct.
  */
+public struct GtkBox{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkHBox{}
 
 
@@ -4039,6 +4079,12 @@ public struct GtkHBox{}
  * Main Gtk struct.
  */
 public struct GtkVBox{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkButtonBox{}
 
 
 /**
@@ -4058,6 +4104,12 @@ public struct GtkVButtonBox{}
  * Main Gtk struct.
  */
 public struct GtkFixed{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPaned{}
 
 
 /**
@@ -4113,6 +4165,12 @@ public struct GtkFrame{}
 
 /**
  * Main Gtk struct.
+ */
+public struct GtkSeparator{}
+
+
+/**
+ * Main Gtk struct.
  * The GtkHSeparator struct contains private data only, and
  * should be accessed using the functions below.
  */
@@ -4125,6 +4183,12 @@ public struct GtkHSeparator{}
  * should be accessed using the functions below.
  */
 public struct GtkVSeparator{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkScrollbar{}
 
 
 /**
@@ -4147,6 +4211,12 @@ public struct GtkVScrollbar{}
  * Main Gtk struct.
  */
 public struct GtkScrolledWindow{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkScrollable{}
 
 
 /**
@@ -4314,18 +4384,6 @@ public struct GtkBin{}
 /**
  * Main Gtk struct.
  */
-public struct GtkBox{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkButtonBox{}
-
-
-/**
- * Main Gtk struct.
- */
 public struct GtkContainer{}
 
 
@@ -4357,25 +4415,7 @@ public struct GtkMisc{}
 /**
  * Main Gtk struct.
  */
-public struct GtkPaned{}
-
-
-/**
- * Main Gtk struct.
- */
 public struct GtkRange{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkScrollbar{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkSeparator{}
 
 
 /**

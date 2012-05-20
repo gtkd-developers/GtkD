@@ -31,20 +31,22 @@
  * ctorStrct=
  * clss    = FileFilter
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_file_filter_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.BuildableT
+ * 	- gtk.BuildableIF
  * structWrap:
  * module aliases:
  * local aliases:
@@ -60,6 +62,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtk.BuildableT;
+private import gtk.BuildableIF;
 
 
 
@@ -89,7 +93,7 @@ private import gobject.ObjectG;
  * $(DDOC_COMMENT example)
  * see_also: GtkFileChooser
  */
-public class FileFilter : ObjectG
+public class FileFilter : ObjectG, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -134,6 +138,9 @@ public class FileFilter : ObjectG
 		super.setStruct(obj);
 		gtkFileFilter = cast(GtkFileFilter*)obj;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFileFilter);
 	
 	/**
 	 */
