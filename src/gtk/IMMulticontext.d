@@ -28,7 +28,7 @@
  * outFile = IMMulticontext
  * strct   = GtkIMMulticontext
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GtkIMContext
  * clss    = IMMulticontext
  * interf  = 
  * class Code: No
@@ -38,17 +38,14 @@
  * implements:
  * prefixes:
  * 	- gtk_im_multicontext_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.IMContext
  * 	- gtk.MenuShell
  * structWrap:
- * 	- GtkIMContext* -> IMContext
  * 	- GtkMenuShell* -> MenuShell
  * module aliases:
  * local aliases:
@@ -64,7 +61,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.IMContext;
 private import gtk.MenuShell;
 
 
@@ -125,17 +121,17 @@ public class IMMulticontext : IMContext
 	
 	/**
 	 * Creates a new GtkIMMulticontext.
-	 * Returns: a new GtkIMMulticontext.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static IMContext newIMMulticontext()
+	public this ()
 	{
 		// GtkIMContext * gtk_im_multicontext_new (void);
 		auto p = gtk_im_multicontext_new();
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gtk_im_multicontext_new()");
 		}
-		return new IMContext(cast(GtkIMContext*) p);
+		this(cast(GtkIMMulticontext*) p);
 	}
 	
 	/**

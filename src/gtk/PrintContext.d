@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_print_context_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,8 +45,8 @@
  * imports:
  * 	- cairo.Context
  * 	- pango.PgContext
- * 	- pango.PgFontMap
  * 	- pango.PgLayout
+ * 	- pango.PgFontMap
  * 	- gtk.PageSetup
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
@@ -70,8 +69,8 @@ private import glib.ConstructionException;
 
 private import cairo.Context;
 private import pango.PgContext;
-private import pango.PgFontMap;
 private import pango.PgLayout;
+private import pango.PgFontMap;
 private import gtk.PageSetup;
 
 

@@ -38,19 +38,18 @@
  * implements:
  * prefixes:
  * 	- gtk_print_job_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- cairo.Surface
- * 	- gtk.Printer
- * 	- gtk.PageSetup
- * 	- gtk.PrintSettings
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- cairo.Surface
+ * 	- gtk.PageSetup
+ * 	- gtk.Printer
+ * 	- gtk.PrintSettings
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrintSettings* -> PrintSettings
@@ -72,12 +71,12 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import cairo.Surface;
-private import gtk.Printer;
-private import gtk.PageSetup;
-private import gtk.PrintSettings;
 private import glib.ErrorG;
 private import glib.GException;
+private import cairo.Surface;
+private import gtk.PageSetup;
+private import gtk.Printer;
+private import gtk.PrintSettings;
 
 
 
@@ -369,14 +368,14 @@ public class PrintJob : ObjectG
 	
 	/**
 	 * Gets the page ranges for this job.
-	 * Params:
-	 * nRanges = return location for the number of ranges. [out]
 	 * Returns: a pointer to an array of GtkPageRange structs. [array length=n_ranges][transfer none] Since 3.0
 	 */
-	public GtkPageRange* getPageRanges(int* nRanges)
+	public GtkPageRange[] getPageRanges()
 	{
 		// GtkPageRange * gtk_print_job_get_page_ranges (GtkPrintJob *job,  gint *n_ranges);
-		return gtk_print_job_get_page_ranges(gtkPrintJob, nRanges);
+		int nRanges;
+		auto p = gtk_print_job_get_page_ranges(gtkPrintJob, &nRanges);
+		return p[0 .. nRanges];
 	}
 	
 	/**
@@ -384,13 +383,11 @@ public class PrintJob : ObjectG
 	 * Params:
 	 * ranges = pointer to an array of
 	 * GtkPageRange structs. [array length=n_ranges]
-	 * nRanges = the length of the ranges array
-	 * Since 3.0
 	 */
-	public void setPageRanges(GtkPageRange* ranges, int nRanges)
+	public void setPageRanges(GtkPageRange[] ranges)
 	{
 		// void gtk_print_job_set_page_ranges (GtkPrintJob *job,  GtkPageRange *ranges,  gint n_ranges);
-		gtk_print_job_set_page_ranges(gtkPrintJob, ranges, nRanges);
+		gtk_print_job_set_page_ranges(gtkPrintJob, ranges.ptr, cast(int) ranges.length);
 	}
 	
 	/**

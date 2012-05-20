@@ -48,13 +48,13 @@
  * 	- ready
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
- * 	- gtk.Window
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- gtk.PageSetup
  * 	- gtk.PrintContext
  * 	- gtk.PrintSettings
- * 	- glib.ErrorG
- * 	- glib.GException
+ * 	- gtk.Widget
+ * 	- gtk.Window
  * 	- gtk.PrintOperationPreviewT
  * 	- gtk.PrintOperationPreviewIF
  * structWrap:
@@ -79,13 +79,13 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.Widget;
-private import gtk.Window;
+private import glib.ErrorG;
+private import glib.GException;
 private import gtk.PageSetup;
 private import gtk.PrintContext;
 private import gtk.PrintSettings;
-private import glib.ErrorG;
-private import glib.GException;
+private import gtk.Widget;
+private import gtk.Window;
 private import gtk.PrintOperationPreviewT;
 private import gtk.PrintOperationPreviewIF;
 

@@ -53,14 +53,13 @@
  * 	- preview
  * 	- request-page-setup
  * 	- status-changed
+ * 	- update-custom-widget
  * imports:
- * 	- gtk.Widget
  * 	- gtk.PageSetup
- * 	- gtk.PrintSettings
+ * 	- gtk.PrintContext
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
- * 	- GtkPrintSettings* -> PrintSettings
- * 	- GtkWidget* -> Widget
+ * 	- GtkPrintContext* -> PrintContext
  * module aliases:
  * local aliases:
  * overrides:
@@ -76,9 +75,8 @@ public import glib.ConstructionException;
 public import gobject.Signals;
 public  import gtkc.gdktypes;
 
-public import gtk.Widget;
 public import gtk.PageSetup;
-public import gtk.PrintSettings;
+public import gtk.PrintContext;
 
 
 
@@ -129,42 +127,8 @@ public template PrintOperationPreviewT(TStruct)
 	 */
 	int[string] connectedSignals;
 	
-	void delegate(Widget, PageSetup, PrintSettings, PrintOperationPreviewIF)[] _onUpdateCustomWidgetListeners;
-	void delegate(Widget, PageSetup, PrintSettings, PrintOperationPreviewIF)[] onUpdateCustomWidgetListeners()
-	{
-		return  _onUpdateCustomWidgetListeners;
-	}
-	/**
-	 * Emitted after change of selected printer. The actual page setup and
-	 * print settings are passed to the custom widget, which can actualize
-	 * itself according to this change.
-	 * Since 2.18
-	 */
-	void addOnUpdateCustomWidget(void delegate(Widget, PageSetup, PrintSettings, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("update-custom-widget" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"update-custom-widget",
-			cast(GCallback)&callBackUpdateCustomWidget,
-			cast(void*)cast(PrintOperationPreviewIF)this,
-			null,
-			connectFlags);
-			connectedSignals["update-custom-widget"] = 1;
-		}
-		_onUpdateCustomWidgetListeners ~= dlg;
-	}
-	extern(C) static void callBackUpdateCustomWidget(GtkPrintOperation* operationStruct, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings, PrintOperationPreviewIF printOperationPreviewIF)
-	{
-		foreach ( void delegate(Widget, PageSetup, PrintSettings, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onUpdateCustomWidgetListeners )
-		{
-			dlg(new Widget(widget), new PageSetup(setup), new PrintSettings(settings), printOperationPreviewIF);
-		}
-	}
-	
-	void delegate(GtkPrintContext*, PageSetup, PrintOperationPreviewIF)[] _onGotPageSizeListeners;
-	void delegate(GtkPrintContext*, PageSetup, PrintOperationPreviewIF)[] onGotPageSizeListeners()
+	void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] _onGotPageSizeListeners;
+	void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] onGotPageSizeListeners()
 	{
 		return  _onGotPageSizeListeners;
 	}
@@ -175,7 +139,7 @@ public template PrintOperationPreviewT(TStruct)
 	 * according to page_setup and set up a suitable cairo
 	 * context, using gtk_print_context_set_cairo_context().
 	 */
-	void addOnGotPageSize(void delegate(GtkPrintContext*, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnGotPageSize(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("got-page-size" in connectedSignals) )
 		{
@@ -192,14 +156,14 @@ public template PrintOperationPreviewT(TStruct)
 	}
 	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* previewStruct, GtkPrintContext* context, GtkPageSetup* pageSetup, PrintOperationPreviewIF printOperationPreviewIF)
 	{
-		foreach ( void delegate(GtkPrintContext*, PageSetup, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onGotPageSizeListeners )
+		foreach ( void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onGotPageSizeListeners )
 		{
-			dlg(context, new PageSetup(pageSetup), printOperationPreviewIF);
+			dlg(new PrintContext(context), new PageSetup(pageSetup), printOperationPreviewIF);
 		}
 	}
 	
-	void delegate(GtkPrintContext*, PrintOperationPreviewIF)[] _onReadyListeners;
-	void delegate(GtkPrintContext*, PrintOperationPreviewIF)[] onReadyListeners()
+	void delegate(PrintContext, PrintOperationPreviewIF)[] _onReadyListeners;
+	void delegate(PrintContext, PrintOperationPreviewIF)[] onReadyListeners()
 	{
 		return  _onReadyListeners;
 	}
@@ -210,7 +174,7 @@ public template PrintOperationPreviewT(TStruct)
 	 * See Also
 	 * GtkPrintContext, GtkPrintUnixDialog
 	 */
-	void addOnReady(void delegate(GtkPrintContext*, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnReady(void delegate(PrintContext, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("ready" in connectedSignals) )
 		{
@@ -227,9 +191,9 @@ public template PrintOperationPreviewT(TStruct)
 	}
 	extern(C) static void callBackReady(GtkPrintOperationPreview* previewStruct, GtkPrintContext* context, PrintOperationPreviewIF printOperationPreviewIF)
 	{
-		foreach ( void delegate(GtkPrintContext*, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onReadyListeners )
+		foreach ( void delegate(PrintContext, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onReadyListeners )
 		{
-			dlg(context, printOperationPreviewIF);
+			dlg(new PrintContext(context), printOperationPreviewIF);
 		}
 	}
 	

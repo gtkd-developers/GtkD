@@ -28,7 +28,7 @@
  * outFile = IMContextSimple
  * strct   = GtkIMContextSimple
  * realStrct=
- * ctorStrct=
+ * ctorStrct=GtkIMContext
  * clss    = IMContextSimple
  * interf  = 
  * class Code: No
@@ -38,15 +38,12 @@
  * implements:
  * prefixes:
  * 	- gtk_im_context_simple_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.IMContext
  * structWrap:
- * 	- GtkIMContext* -> IMContext
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,7 +57,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.IMContext;
 
 
 
@@ -120,17 +116,17 @@ public class IMContextSimple : IMContext
 	
 	/**
 	 * Creates a new GtkIMContextSimple.
-	 * Returns: a new GtkIMContextSimple.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static IMContext newIMContextSimple()
+	public this ()
 	{
 		// GtkIMContext * gtk_im_context_simple_new (void);
 		auto p = gtk_im_context_simple_new();
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gtk_im_context_simple_new()");
 		}
-		return new IMContext(cast(GtkIMContext*) p);
+		this(cast(GtkIMContextSimple*) p);
 	}
 	
 	/**

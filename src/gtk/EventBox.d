@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_event_box_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

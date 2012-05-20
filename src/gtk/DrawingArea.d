@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_drawing_area_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -158,7 +157,6 @@ public class DrawingArea : Widget
 		this();
 		setSizeRequest(width, height);
 	}
-	
 	
 	/**
 	 */

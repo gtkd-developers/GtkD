@@ -39,14 +39,13 @@
  * 	- BuildableIF
  * prefixes:
  * 	- gtk_size_group_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.Widget
  * 	- glib.ListSG
+ * 	- gtk.Widget
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
@@ -65,8 +64,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.Widget;
 private import glib.ListSG;
+private import gtk.Widget;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 

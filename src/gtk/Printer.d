@@ -45,8 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.PageSetup
  * 	- glib.ListG
+ * 	- gtk.PageSetup
  * structWrap:
  * 	- GList* -> ListG
  * 	- GtkPageSetup* -> PageSetup
@@ -67,8 +67,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.PageSetup;
 private import glib.ListG;
+private import gtk.PageSetup;
 
 
 

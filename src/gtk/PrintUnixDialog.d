@@ -38,18 +38,17 @@
  * implements:
  * prefixes:
  * 	- gtk_print_unix_dialog_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.PageSetup
+ * 	- gtk.Printer
+ * 	- gtk.PrintSettings
  * 	- gtk.Widget
  * 	- gtk.Window
- * 	- gtk.Printer
- * 	- gtk.PageSetup
- * 	- gtk.PrintSettings
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrintSettings* -> PrintSettings
@@ -72,11 +71,11 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtk.PageSetup;
+private import gtk.Printer;
+private import gtk.PrintSettings;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtk.Printer;
-private import gtk.PageSetup;
-private import gtk.PrintSettings;
 
 
 

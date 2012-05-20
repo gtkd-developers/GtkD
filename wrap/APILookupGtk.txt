@@ -7469,18 +7469,18 @@ noprefix: gtk_print_operation_preview_
 nosignal: got-page-size 
 nosignal: ready
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gtk.Window
-structWrap: GtkWindow* Window
-import: gtk.PageSetup
-structWrap: GtkPageSetup* PageSetup
-import: gtk.PrintContext
-structWrap: GtkPrintContext* PrintContext
-import: gtk.PrintSettings
-structWrap: GtkPrintSettings* PrintSettings
 import: glib.ErrorG
 import: glib.GException
+import: gtk.PageSetup
+import: gtk.PrintContext
+import: gtk.PrintSettings
+import: gtk.Widget
+import: gtk.Window
+structWrap: GtkPageSetup* PageSetup
+structWrap: GtkPrintContext* PrintContext
+structWrap: GtkPrintSettings* PrintSettings
+structWrap: GtkWidget* Widget
+structWrap: GtkWindow* Window
 
 #imports for PrintOperationPreview Interface.
 import: gtk.PrintOperationPreviewT
@@ -7496,6 +7496,7 @@ struct: GtkPrintOperationPreview
 class: PrintOperationPreviewT
 template: TStruct
 strictPrefix: Y
+prefix: gtk_print_operation_preview_
 nosignal: begin-print
 nosignal: create-custom-widget
 nosignal: custom-widget-apply
@@ -7506,14 +7507,11 @@ nosignal: paginate
 nosignal: preview
 nosignal: request-page-setup 
 nosignal: status-changed
-prefix: gtk_print_operation_preview_
-#prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
+nosignal: update-custom-widget
 import: gtk.PageSetup
+import: gtk.PrintContext
 structWrap: GtkPageSetup* PageSetup
-import: gtk.PrintSettings
-structWrap: GtkPrintSettings* PrintSettings
+structWrap: GtkPrintContext* PrintContext
 interface: PrintOperationPreviewIF
 outFile: PrintOperationPreviewT
 
@@ -7521,17 +7519,16 @@ file: GtkPrintContext.html
 struct: GtkPrintContext
 class: PrintContext
 prefix: gtk_print_context_
-prefix: gtk_
 import: cairo.Context
-structWrap: cairo_t* Context
 import: pango.PgContext
-structWrap: PangoContext* PgContext
-import: pango.PgFontMap
-structWrap: PangoFontMap* PgFontMap
 import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
+import: pango.PgFontMap
 import: gtk.PageSetup
+structWrap: cairo_t* Context
 structWrap: GtkPageSetup* PageSetup
+structWrap: PangoContext* PgContext
+structWrap: PangoLayout* PgLayout
+structWrap: PangoFontMap* PgFontMap
 
 out: gtk_print_context_get_hard_margins top
 out: gtk_print_context_get_hard_margins bottom
@@ -7543,49 +7540,45 @@ file: GtkPrintSettings.html
 struct: GtkPrintSettings
 class: PrintSettings
 prefix: gtk_print_settings_
-prefix: gtk_
 import: glib.Str
-import: gtk.PaperSize
-structWrap: GtkPaperSize* PaperSize
-structWrap: GtkPrintSettings* PrintSettings
 import: glib.ErrorG
 import: glib.GException
 import: glib.KeyFile
+import: gtk.PaperSize
 structWrap: GKeyFile* KeyFile
+structWrap: GtkPaperSize* PaperSize
+structWrap: GtkPrintSettings* PrintSettings
 
 array: gtk_print_settings_get_page_ranges Return num_ranges
 array: gtk_print_settings_set_page_ranges page_ranges num_ranges
-
 outFile: PrintSettings
 
 file: GtkPageSetup.html
 struct: GtkPageSetup
 class: PageSetup
 prefix: gtk_page_setup_
-prefix: gtk_
 import: glib.Str
-import: gtk.PaperSize
-structWrap: GtkPaperSize* PaperSize
-structWrap: GtkPageSetup* PageSetup
 import: glib.ErrorG
 import: glib.GException
 import: glib.KeyFile
+import: gtk.PaperSize
 structWrap: GKeyFile* KeyFile
+structWrap: GtkPageSetup* PageSetup
+structWrap: GtkPaperSize* PaperSize
 outFile: PageSetup
 
 file: GtkPaperSize.html
 struct: GtkPaperSize
 class: PaperSize
 prefix: gtk_paper_size_
-prefix: gtk_
 import: glib.Str
-structWrap: GtkPaperSize* PaperSize
 import: glib.ErrorG
 import: glib.GException
-import: glib.KeyFile
-structWrap: GKeyFile* KeyFile
 import: glib.ListG
+import: glib.KeyFile
 structWrap: GList* ListG
+structWrap: GKeyFile* KeyFile
+structWrap: GtkPaperSize* PaperSize
 outFile: PaperSize
 
 file: GtkPrinter.html
@@ -7594,11 +7587,11 @@ class: Printer
 prefix: gtk_printer_
 prefix: gtk_
 import: glib.Str
-structWrap: GtkPrinter* Printer
-import: gtk.PageSetup
-structWrap: GtkPageSetup* PageSetup
 import: glib.ListG
+import: gtk.PageSetup
 structWrap: GList* ListG
+structWrap: GtkPageSetup* PageSetup
+structWrap: GtkPrinter* Printer
 
 out: gtk_printer_get_hard_margins top
 out: gtk_printer_get_hard_margins bottom
@@ -7610,36 +7603,37 @@ file: GtkPrintJob.html
 struct: GtkPrintJob
 class: PrintJob
 prefix: gtk_print_job_
-prefix: gtk_
 import: glib.Str
-import: cairo.Surface
-structWrap: cairo_surface_t* Surface
-import: gtk.Printer
-structWrap: GtkPrinter* Printer
-import: gtk.PageSetup
-structWrap: GtkPageSetup* PageSetup
-import: gtk.PrintSettings
-structWrap: GtkPrintSettings* PrintSettings
 import: glib.ErrorG
 import: glib.GException
+import: cairo.Surface
+import: gtk.PageSetup
+import: gtk.Printer
+import: gtk.PrintSettings
+structWrap: cairo_surface_t* Surface
+structWrap: GtkPageSetup* PageSetup
+structWrap: GtkPrinter* Printer
+structWrap: GtkPrintSettings* PrintSettings
+
+array: gtk_print_job_get_page_ranges Return n_ranges
+array: gtk_print_job_set_page_ranges ranges n_ranges
 outFile: PrintJob
 
 file: GtkPrintUnixDialog.html
 struct: GtkPrintUnixDialog
 class: PrintUnixDialog
 prefix: gtk_print_unix_dialog_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gtk.Window
-structWrap: GtkWindow* Window
-import: gtk.Printer
-structWrap: GtkPrinter* Printer
 import: gtk.PageSetup
-structWrap: GtkPageSetup* PageSetup
+import: gtk.Printer
 import: gtk.PrintSettings
+import: gtk.Widget
+import: gtk.Window
+structWrap: GtkPageSetup* PageSetup
+structWrap: GtkPrinter* Printer
 structWrap: GtkPrintSettings* PrintSettings
+structWrap: GtkWidget* Widget
+structWrap: GtkWindow* Window
 
 alias: setSettings setPrintSettings
 alias: getSettings getPrintSettings
@@ -7649,16 +7643,15 @@ file: GtkPageSetupUnixDialog.html
 struct: GtkPageSetupUnixDialog
 class: PageSetupUnixDialog
 prefix: gtk_page_setup_unix_dialog_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-import: gtk.Window
-structWrap: GtkWindow* Window
 import: gtk.PageSetup
-structWrap: GtkPageSetup* PageSetup
 import: gtk.PrintSettings
+import: gtk.Widget
+import: gtk.Window
+structWrap: GtkPageSetup* PageSetup
 structWrap: GtkPrintSettings* PrintSettings
+structWrap: GtkWidget* Widget
+structWrap: GtkWindow* Window
 outFile: PageSetupUnixDialog
 
 ###########################################################
@@ -7669,21 +7662,18 @@ file: GtkAdjustment.html
 struct: GtkAdjustment
 class: Adjustment
 prefix: gtk_adjustment_
-prefix: gtk_
 outFile: Adjustment
 
 file: GtkArrow.html
 struct: GtkArrow
 class: Arrow
 prefix: gtk_arrow_
-prefix: gtk_
 outFile: Arrow
 
 file: GtkCalendar.html
 struct: GtkCalendar
 class: Calendar
 prefix: gtk_calendar_
-prefix: gtk_
 
 out: gtk_calendar_get_date year
 out: gtk_calendar_get_date month
@@ -7695,7 +7685,6 @@ file: GtkDrawingArea.html
 struct: GtkDrawingArea
 class: DrawingArea
 prefix: gtk_drawing_area_
-prefix: gtk_
 
 code: start
 	/**
@@ -7709,43 +7698,35 @@ code: start
 		this();
 		setSizeRequest(width, height);
 	}
-	
 code: end
-
 outFile: DrawingArea
 
 file: GtkEventBox.html
 struct: GtkEventBox
 class: EventBox
 prefix: gtk_event_box_
-prefix: gtk_
 outFile: EventBox
 
 file: GtkHandleBox.html
 struct: GtkHandleBox
 class: HandleBox
 prefix: gtk_handle_box_
-prefix: gtk_
 outFile: HandleBox
 
 file: GtkIMContextSimple.html
 struct: GtkIMContextSimple
+ctorStruct: GtkIMContext
 class: IMContextSimple
 prefix: gtk_im_context_simple_
-prefix: gtk_
-import: gtk.IMContext
-structWrap: GtkIMContext* IMContext
 array: gtk_im_context_simple_add_table data n_seqs
 outFile: IMContextSimple
 
 file: GtkIMMulticontext.html
 struct: GtkIMMulticontext
+ctorStruct: GtkIMContext
 class: IMMulticontext
 prefix: gtk_im_multicontext_
-prefix: gtk_
 import: glib.Str
-import: gtk.IMContext
-structWrap: GtkIMContext* IMContext
 import: gtk.MenuShell
 structWrap: GtkMenuShell* MenuShell
 outFile: IMMulticontext
@@ -7755,11 +7736,10 @@ struct: GtkSizeGroup
 class: SizeGroup
 implements: BuildableIF
 prefix: gtk_size_group_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: glib.ListSG
+import: gtk.Widget
 structWrap: GSList* ListSG
+structWrap: GtkWidget* Widget
 
 #imports for Buildable Interface.
 import: gtk.BuildableIF
@@ -7775,36 +7755,54 @@ file: GtkTooltip.html
 struct: GtkTooltip
 class: Tooltip
 prefix: gtk_tooltip_
-prefix: gtk_
 import: glib.Str
 import: gio.IconIF
-structWrap: GIcon* IconIF
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
 import: gdk.Display
-structWrap: GdkDisplay* Display
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
+import: gdk.Pixbuf
 import: gtk.Widget
+structWrap: GIcon* IconIF
+structWrap: GdkDisplay* Display
+structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkWidget* Widget
+
+inout: gtk_tooltip_set_tip_area rect
+
+code: start
+	/**
+	 * Sets the icon of the tooltip (which is in front of the text) to be
+	 * the stock item indicated by stockID with the size indicated by size.
+	 */
+	void setIcon(StockID stockID, GtkIconSize size)
+	{
+		setIconFromStock(Str.toStringz(StockDesc[stockID]), size);
+	}
+code: end
 outFile: Tooltip
 
 file: GtkViewport.html
 struct: GtkViewport
 class: Viewport
+implements: ScrollableIF
 prefix: gtk_viewport_
-prefix: gtk_
 import: gdk.Window
-structWrap: GdkWindow* Window
 import: gtk.Adjustment
+structWrap: GdkWindow* Window
 structWrap: GtkAdjustment* Adjustment
+
+#imports for Scrollable Interface.
+import: gtk.ScrollableT
+import: gtk.ScrollableIF
+
+code: start
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkViewport);
+code: end
 outFile: Viewport
 
 file: GtkAccessible.html
 struct: GtkAccessible
 class: Accessible
 prefix: gtk_accessible_
-prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 outFile: Accessible

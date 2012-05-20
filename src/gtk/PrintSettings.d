@@ -38,17 +38,16 @@
  * implements:
  * prefixes:
  * 	- gtk_print_settings_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.PaperSize
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.KeyFile
+ * 	- gtk.PaperSize
  * structWrap:
  * 	- GKeyFile* -> KeyFile
  * 	- GtkPaperSize* -> PaperSize
@@ -67,10 +66,10 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.PaperSize;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.KeyFile;
+private import gtk.PaperSize;
 
 
 

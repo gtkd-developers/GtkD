@@ -31,14 +31,14 @@
  * ctorStrct=
  * clss    = Viewport
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- ScrollableIF
  * prefixes:
  * 	- gtk_viewport_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,6 +46,8 @@
  * imports:
  * 	- gdk.Window
  * 	- gtk.Adjustment
+ * 	- gtk.ScrollableT
+ * 	- gtk.ScrollableIF
  * structWrap:
  * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
@@ -64,6 +66,8 @@ private import glib.ConstructionException;
 
 private import gdk.Window;
 private import gtk.Adjustment;
+private import gtk.ScrollableT;
+private import gtk.ScrollableIF;
 
 
 
@@ -84,7 +88,7 @@ private import gtk.Bin;
  * The GtkViewport will start scrolling content only if allocated less
  * than the child widget's minimum size in a given orientation.
  */
-public class Viewport : Bin
+public class Viewport : Bin, ScrollableIF
 {
 	
 	/** the main Gtk struct */
@@ -129,6 +133,9 @@ public class Viewport : Bin
 		super.setStruct(obj);
 		gtkViewport = cast(GtkViewport*)obj;
 	}
+	
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkViewport);
 	
 	/**
 	 */

@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_paper_size_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -47,8 +46,8 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- glib.KeyFile
  * 	- glib.ListG
+ * 	- glib.KeyFile
  * structWrap:
  * 	- GKeyFile* -> KeyFile
  * 	- GList* -> ListG
@@ -69,8 +68,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import glib.KeyFile;
 private import glib.ListG;
+private import glib.KeyFile;
 
 
 

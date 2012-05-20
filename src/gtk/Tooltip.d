@@ -31,14 +31,13 @@
  * ctorStrct=
  * clss    = Tooltip
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
  * 	- gtk_tooltip_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,15 +45,13 @@
  * imports:
  * 	- glib.Str
  * 	- gio.IconIF
- * 	- gdk.Pixbuf
  * 	- gdk.Display
- * 	- gdk.Rectangle
+ * 	- gdk.Pixbuf
  * 	- gtk.Widget
  * structWrap:
  * 	- GIcon* -> IconIF
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkRectangle* -> Rectangle
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -71,9 +68,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gio.IconIF;
-private import gdk.Pixbuf;
 private import gdk.Display;
-private import gdk.Rectangle;
+private import gdk.Pixbuf;
 private import gtk.Widget;
 
 
@@ -155,6 +151,15 @@ public class Tooltip : ObjectG
 	{
 		super.setStruct(obj);
 		gtkTooltip = cast(GtkTooltip*)obj;
+	}
+	
+	/**
+	 * Sets the icon of the tooltip (which is in front of the text) to be
+	 * the stock item indicated by stockID with the size indicated by size.
+	 */
+	void setIcon(StockID stockID, GtkIconSize size)
+	{
+		setIconFromStock(Str.toStringz(StockDesc[stockID]), size);
 	}
 	
 	/**
@@ -289,9 +294,9 @@ public class Tooltip : ObjectG
 	 * Params:
 	 * rect = a GdkRectangle
 	 */
-	public void setTipArea(Rectangle rect)
+	public void setTipArea(ref Rectangle rect)
 	{
 		// void gtk_tooltip_set_tip_area (GtkTooltip *tooltip,  const GdkRectangle *rect);
-		gtk_tooltip_set_tip_area(gtkTooltip, (rect is null) ? null : rect.getRectangleStruct());
+		gtk_tooltip_set_tip_area(gtkTooltip, &rect);
 	}
 }
