@@ -8164,6 +8164,7 @@ struct: GtkRequisition
 class: Requisition
 prefix: gtk_requisition_
 strictPrefix: Y
+structWrap: GtkRequisition* Requisition
 
 nosignal: accel-closures-changed
 nosignal: button-press-event
@@ -8365,9 +8366,12 @@ file: GtkPlug.html
 struct: GtkPlug
 class: Plug
 prefix: gtk_plug_
-prefix: gtk_
 import: gdk.Display
+import: gdk.Window
 structWrap: GdkDisplay* Display
+structWrap: GdkWindow* Window
+structWrap: Window SomeText
+alias: SomeText size_t
 outFile: Plug
 
 file: GtkSocket.html
@@ -8377,6 +8381,8 @@ prefix: gtk_socket_
 prefix: gtk_
 import: gdk.Window
 structWrap: GdkWindow* Window
+structWrap: Window SomeText
+alias: SomeText size_t
 outFile: Socket
 
 ###########################################################
@@ -8387,18 +8393,15 @@ file: GtkRecentManager.html
 struct: GtkRecentManager
 class: RecentManager
 prefix: gtk_recent_manager_
-#prefix: gtk_
 noprefix: gtk_recent_info_
 import: glib.Str
-import: gdk.Screen
-structWrap: GdkScreen* Screen
-import: gtk.RecentInfo
-structWrap: GtkRecentInfo* RecentInfo
-structWrap: GtkRecentManager* RecentManager
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListG
+import: gtk.RecentInfo
 structWrap: GList* ListG
+structWrap: GtkRecentInfo* RecentInfo
+structWrap: GtkRecentManager* RecentManager
 outFile: RecentManager
 
 struct: GtkRecentInfo
@@ -8406,11 +8409,17 @@ class: RecentInfo
 strictPrefix: Y
 nosignal: changed
 prefix: gtk_recent_info_
-#prefix: gtk_
 import: glib.Str
-structWrap: GtkRecentInfo* RecentInfo
+import: glib.ErrorG
+import: glib.GException
+import: gio.AppInfo
+import: gio.Icon
+import: gio.IconIF
 import: gdk.Pixbuf
+structWrap: GAppInfo* AppInfo
+structWrap: GIcon* IconIF
 structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkRecentInfo* RecentInfo
 
 out: gtk_recent_info_get_application_info app_exec
 out: gtk_recent_info_get_application_info count
@@ -8418,6 +8427,15 @@ out: gtk_recent_info_get_application_info time_
 array: gtk_recent_info_get_applications Return length
 array: gtk_recent_info_get_groups Return length
 
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkRecentInfo !is null )
+		{
+			gtk_recent_info_unref(gtkRecentInfo);
+		}
+	}
+code: end
 outFile: RecentInfo
 
 file: GtkRecentChooser.html
@@ -8425,21 +8443,22 @@ struct: GtkRecentChooser
 class: RecentChooserT
 template: TStruct
 prefix: gtk_recent_chooser_
-prefix: gtk_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: gtk.RecentInfo
-structWrap: GtkRecentInfo* RecentInfo
-import: gtk.RecentFilter
-structWrap: GtkRecentFilter* RecentFilter
 import: glib.ListG
-structWrap: GList* ListG
 import: glib.ListSG
+import: gtk.RecentInfo
+import: gtk.RecentFilter
+structWrap: GList* ListG
 structWrap: GSList* ListSG
+structWrap: GtkRecentInfo* RecentInfo
+structWrap: GtkRecentFilter* RecentFilter
+
 alias: setShowNumbers recentChooserSetShowNumbers
 alias: getShowNumbers recentChooserGetShowNumbers
 array: gtk_recent_chooser_get_uris Return length
+
 interface: RecentChooserIF
 outFile: RecentChooserT
 
@@ -8448,14 +8467,9 @@ struct: GtkRecentChooserDialog
 class: RecentChooserDialog
 implements: RecentChooserIF
 prefix: gtk_recent_chooser_dialog_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.Window
-structWrap: GtkWindow* Window
 import: gtk.RecentManager
-structWrap: GtkRecentManager* RecentManager
 
 #imports for RecentChooser interface
 import: gtk.RecentChooserIF
@@ -8526,10 +8540,7 @@ class: RecentChooserMenu
 implements: ActivatableIF
 implements: RecentChooserIF
 prefix: gtk_recent_chooser_menu_
-prefix: gtk_
 import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
@@ -8555,9 +8566,6 @@ struct: GtkRecentChooserWidget
 class: RecentChooserWidget
 implements: RecentChooserIF
 prefix: gtk_recent_chooser_widget_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
@@ -8575,9 +8583,86 @@ file: GtkRecentFilter.html
 struct: GtkRecentFilter
 class: RecentFilter
 prefix: gtk_recent_filter_
-prefix: gtk_
 import: glib.Str
 outFile: RecentFilter
+
+###########################################################
+### Choosing from installed applications ##################
+###########################################################
+
+file: GtkAppChooser.html
+struct: GtkAppChooser
+class: AppChooserT
+template: TStruct
+prefix: gtk_app_chooser_
+import: glib.Str
+import: gio.AppInfo
+structWrap: GAppInfo* AppInfo
+interface: AppChooserIF
+outFile: AppChooserT
+
+file: GtkAppChooserButton.html
+struct: GtkAppChooserButton
+class: AppChooserButton
+implements: AppChooserIF
+prefix: gtk_app_chooser_button_
+import: glib.Str
+import: gio.IconIF
+structWrap: GIcon* IconIF
+
+#imports for AppChooser interface
+import: gtk.AppChooserIF
+import: gtk.AppChooserT
+
+code: start
+	// add the AppChooser capabilities
+	mixin AppChooserT!(GtkAppChooserButton);
+code: end
+outFile: AppChooserButton
+
+file: GtkAppChooserDialog.html
+struct: GtkAppChooserDialog
+class: AppChooserDialog
+implements: AppChooserIF
+prefix: gtk_app_chooser_dialog_
+import: glib.Str
+import: gio.File
+import: gtk.Widget
+import: gtk.Window
+structWrap: GFile* File
+structWrap: GtkWidget* Widget
+structWrap: GtkWindow* Window
+
+#imports for AppChooser interface
+import: gtk.AppChooserIF
+import: gtk.AppChooserT
+
+code: start
+	// add the AppChooser capabilities
+	mixin AppChooserT!(GtkAppChooserDialog);
+code: end
+outFile: AppChooserDialog
+
+file: GtkAppChooserWidget.html
+struct: GtkAppChooserWidget
+class: AppChooserWidget
+implements: AppChooserIF
+prefix: gtk_app_chooser_widget_
+import: glib.Str
+import: gio.AppInfo
+import: gtk.Menu
+structWrap: GAppInfo* AppInfo
+structWrap: GtkMenu* Menu
+
+#imports for AppChooser interface
+import: gtk.AppChooserIF
+import: gtk.AppChooserT
+
+code: start
+	// add the AppChooser capabilities
+	mixin AppChooserT!(GtkAppChooserWidget);
+code: end
+outFile: AppChooserWidget
 
 ###########################################################
 ### Interface builder #####################################
@@ -8588,16 +8673,13 @@ struct: GtkBuildable
 class: BuildableT
 template: TStruct
 prefix: gtk_buildable_
-prefix: gtk_
 import: glib.Str
 import: gobject.ObjectG
-structWrap: GObject* ObjectG
 import: gobject.Value
-structWrap: GValue* Value
 import: gtk.Builder
+structWrap: GObject* ObjectG
+structWrap: GValue* Value
 structWrap: GtkBuilder* Builder
-#import: glib.MarkupParser
-#structWrap: GMarkupParser* MarkupParser
 
 alias: setName buildableSetName
 alias: getName buildableGetName
@@ -8609,7 +8691,6 @@ file: GtkBuilder.html
 struct: GtkBuilder
 class: Builder
 prefix: gtk_builder_
-prefix: gtk_
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListSG
@@ -8902,3 +8983,20 @@ code: start
 	}
 code: end
 outFile: Builder
+
+###########################################################
+### Application support ###################################
+###########################################################
+
+file: GtkApplication.html
+struct: GtkApplication
+class: Application
+extend: GioApplication
+prefix: gtk_application_
+import: glib.Str
+import: glib.ListG
+import: gio.Application : GioApplication = Application
+import: gtk.Window
+structWrap: GList* ListG
+structWrap: GtkWindow* Window
+outFile: Application

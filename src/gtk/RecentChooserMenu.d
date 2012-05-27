@@ -40,14 +40,12 @@
  * 	- RecentChooserIF
  * prefixes:
  * 	- gtk_recent_chooser_menu_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * 	- gtk.RecentManager
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
@@ -55,7 +53,6 @@
  * 	- gtk.RecentChooserT
  * structWrap:
  * 	- GtkRecentManager* -> RecentManager
- * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -70,7 +67,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Widget;
 private import gtk.RecentManager;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;

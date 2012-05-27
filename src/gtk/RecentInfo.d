@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = RecentInfo
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -45,8 +45,15 @@
  * 	- changed
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
+ * 	- gio.AppInfo
+ * 	- gio.Icon
+ * 	- gio.IconIF
  * 	- gdk.Pixbuf
  * structWrap:
+ * 	- GAppInfo* -> AppInfo
+ * 	- GIcon* -> IconIF
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkRecentInfo* -> RecentInfo
  * module aliases:
@@ -65,6 +72,11 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
+private import gio.AppInfo;
+private import gio.Icon;
+private import gio.IconIF;
 private import gdk.Pixbuf;
 
 
@@ -133,6 +145,14 @@ public class RecentInfo
 			return;
 		}
 		this.gtkRecentInfo = gtkRecentInfo;
+	}
+	
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkRecentInfo !is null )
+		{
+			gtk_recent_info_unref(gtkRecentInfo);
+		}
 	}
 	
 	/**
@@ -338,7 +358,7 @@ public class RecentInfo
 	 * Returns: the newly created GAppInfo, or NULL. In case of error, error will be set either with a GTK_RECENT_MANAGER_ERROR or a G_IO_ERROR. [transfer full]
 	 * Throws: GException on failure.
 	 */
-	public GAppInfo* createAppInfo(string appName)
+	public AppInfo createAppInfo(string appName)
 	{
 		// GAppInfo * gtk_recent_info_create_app_info (GtkRecentInfo *info,  const gchar *app_name,  GError **error);
 		GError* err = null;
@@ -350,7 +370,11 @@ public class RecentInfo
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		if(p is null)
+		{
+			return null;
+		}
+		return new AppInfo(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -412,10 +436,15 @@ public class RecentInfo
 	 * Since 2.22
 	 * Returns: a GIcon containing the icon, or NULL. Use g_object_unref() when finished using the icon. [transfer full]
 	 */
-	public GIcon* getGicon()
+	public IconIF getGicon()
 	{
 		// GIcon * gtk_recent_info_get_gicon (GtkRecentInfo *info);
-		return gtk_recent_info_get_gicon(gtkRecentInfo);
+		auto p = gtk_recent_info_get_gicon(gtkRecentInfo);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
 	}
 	
 	/**

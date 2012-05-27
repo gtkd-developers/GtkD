@@ -599,9 +599,15 @@ private import gtk.RecentChooserDialog;
 private import gtk.RecentChooserMenu;
 private import gtk.RecentChooserWidget;
 private import gtk.RecentFilter;
+private import gtk.AppChooserIF;
+private import gtk.AppChooserT;
+private import gtk.AppChooserButton;
+private import gtk.AppChooserDialog;
+private import gtk.AppChooserWidget;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.Builder;
+private import gtk.Application;
 
 private import gsv.SourceView;
 private import gsv.SourceBuffer;

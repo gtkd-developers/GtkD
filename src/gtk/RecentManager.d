@@ -45,14 +45,12 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Screen
- * 	- gtk.RecentInfo
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.ListG
+ * 	- gtk.RecentInfo
  * structWrap:
  * 	- GList* -> ListG
- * 	- GdkScreen* -> Screen
  * 	- GtkRecentInfo* -> RecentInfo
  * 	- GtkRecentManager* -> RecentManager
  * module aliases:
@@ -71,11 +69,10 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gdk.Screen;
-private import gtk.RecentInfo;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
+private import gtk.RecentInfo;
 
 
 

@@ -39,7 +39,6 @@
  * 	- RecentChooserIF
  * prefixes:
  * 	- gtk_recent_chooser_dialog_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,15 +47,11 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Widget
  * 	- gtk.Window
  * 	- gtk.RecentManager
  * 	- gtk.RecentChooserIF
  * 	- gtk.RecentChooserT
  * structWrap:
- * 	- GtkRecentManager* -> RecentManager
- * 	- GtkWidget* -> Widget
- * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
  * overrides:
@@ -71,7 +66,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gtk.Widget;
 private import gtk.Window;
 private import gtk.RecentManager;
 private import gtk.RecentChooserIF;

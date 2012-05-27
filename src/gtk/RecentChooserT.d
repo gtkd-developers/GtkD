@@ -39,7 +39,6 @@
  * implements:
  * prefixes:
  * 	- gtk_recent_chooser_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -48,10 +47,10 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gtk.RecentInfo
- * 	- gtk.RecentFilter
  * 	- glib.ListG
  * 	- glib.ListSG
+ * 	- gtk.RecentInfo
+ * 	- gtk.RecentFilter
  * structWrap:
  * 	- GList* -> ListG
  * 	- GSList* -> ListSG
@@ -77,10 +76,10 @@ public  import gtkc.gdktypes;
 public import glib.Str;
 public import glib.ErrorG;
 public import glib.GException;
-public import gtk.RecentInfo;
-public import gtk.RecentFilter;
 public import glib.ListG;
 public import glib.ListSG;
+public import gtk.RecentInfo;
+public import gtk.RecentFilter;
 
 
 

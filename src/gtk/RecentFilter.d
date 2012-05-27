@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_recent_filter_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:

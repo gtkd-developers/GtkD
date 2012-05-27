@@ -47,8 +47,10 @@
  * 	- gdk.Window
  * structWrap:
  * 	- GdkWindow* -> Window
+ * 	- Window -> SomeText
  * module aliases:
  * local aliases:
+ * 	- SomeText -> size_t
  * overrides:
  */
 
@@ -252,10 +254,10 @@ public class Socket : Container
 	 * Params:
 	 * window = the Window of a client participating in the XEMBED protocol.
 	 */
-	public void addId(Window window)
+	public void addId(size_t window)
 	{
 		// void gtk_socket_add_id (GtkSocket *socket_,  Window window);
-		gtk_socket_add_id(gtkSocket, window);
+		gtk_socket_add_id(gtkSocket, (window is null) ? null : window.getSomeTextStruct());
 	}
 	
 	/**
@@ -266,10 +268,15 @@ public class Socket : Container
 	 * before you can make this call.
 	 * Returns: the window ID for the socket
 	 */
-	public Window getId()
+	public size_t getId()
 	{
 		// Window gtk_socket_get_id (GtkSocket *socket_);
-		return gtk_socket_get_id(gtkSocket);
+		auto p = gtk_socket_get_id(gtkSocket);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SomeText(cast(Window) p);
 	}
 	
 	/**

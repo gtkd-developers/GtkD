@@ -4725,6 +4725,30 @@ public struct GtkRecentFilterInfo
 /**
  * Main Gtk struct.
  */
+public struct GtkAppChooser{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkAppChooserButton{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkAppChooserDialog{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkAppChooserWidget{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkBuildable{}
 
 
@@ -4807,6 +4831,12 @@ public struct GtkBuildableIface
  * Main Gtk struct.
  */
 public struct GtkBuilder{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkApplication{}
 
 
 /*

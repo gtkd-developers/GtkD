@@ -3985,6 +3985,50 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_recent_filter_get_needed, \"gtk_recent_filter_get_needed\", LIBRARY.GTK);
 	Linker.link(gtk_recent_filter_filter, \"gtk_recent_filter_filter\", LIBRARY.GTK);
 
+	// gtk.AppChooserT
+
+
+	// gtk.AppChooserT
+
+	Linker.link(gtk_app_chooser_get_app_info, \"gtk_app_chooser_get_app_info\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_get_content_type, \"gtk_app_chooser_get_content_type\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_refresh, \"gtk_app_chooser_refresh\", LIBRARY.GTK);
+
+	// gtk.AppChooserButton
+
+	Linker.link(gtk_app_chooser_button_new, \"gtk_app_chooser_button_new\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_button_append_custom_item, \"gtk_app_chooser_button_append_custom_item\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_button_append_separator, \"gtk_app_chooser_button_append_separator\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_button_set_active_custom_item, \"gtk_app_chooser_button_set_active_custom_item\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_button_get_show_dialog_item, \"gtk_app_chooser_button_get_show_dialog_item\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_button_set_show_dialog_item, \"gtk_app_chooser_button_set_show_dialog_item\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_button_get_heading, \"gtk_app_chooser_button_get_heading\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_button_set_heading, \"gtk_app_chooser_button_set_heading\", LIBRARY.GTK);
+
+	// gtk.AppChooserDialog
+
+	Linker.link(gtk_app_chooser_dialog_new, \"gtk_app_chooser_dialog_new\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_dialog_new_for_content_type, \"gtk_app_chooser_dialog_new_for_content_type\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_dialog_get_widget, \"gtk_app_chooser_dialog_get_widget\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_dialog_set_heading, \"gtk_app_chooser_dialog_set_heading\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_dialog_get_heading, \"gtk_app_chooser_dialog_get_heading\", LIBRARY.GTK);
+
+	// gtk.AppChooserWidget
+
+	Linker.link(gtk_app_chooser_widget_new, \"gtk_app_chooser_widget_new\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_set_show_default, \"gtk_app_chooser_widget_set_show_default\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_get_show_default, \"gtk_app_chooser_widget_get_show_default\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_set_show_recommended, \"gtk_app_chooser_widget_set_show_recommended\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_get_show_recommended, \"gtk_app_chooser_widget_get_show_recommended\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_set_show_fallback, \"gtk_app_chooser_widget_set_show_fallback\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_get_show_fallback, \"gtk_app_chooser_widget_get_show_fallback\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_set_show_other, \"gtk_app_chooser_widget_set_show_other\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_get_show_other, \"gtk_app_chooser_widget_get_show_other\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_set_show_all, \"gtk_app_chooser_widget_set_show_all\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_get_show_all, \"gtk_app_chooser_widget_get_show_all\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_set_default_text, \"gtk_app_chooser_widget_set_default_text\", LIBRARY.GTK);
+	Linker.link(gtk_app_chooser_widget_get_default_text, \"gtk_app_chooser_widget_get_default_text\", LIBRARY.GTK);
+
 	// gtk.BuildableT
 
 
@@ -4017,6 +4061,13 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_builder_get_type_from_name, \"gtk_builder_get_type_from_name\", LIBRARY.GTK);
 	Linker.link(gtk_builder_value_from_string, \"gtk_builder_value_from_string\", LIBRARY.GTK);
 	Linker.link(gtk_builder_value_from_string_type, \"gtk_builder_value_from_string_type\", LIBRARY.GTK);
+
+	// gtk.Application
+
+	Linker.link(gtk_application_new, \"gtk_application_new\", LIBRARY.GTK);
+	Linker.link(gtk_application_add_window, \"gtk_application_add_window\", LIBRARY.GTK);
+	Linker.link(gtk_application_remove_window, \"gtk_application_remove_window\", LIBRARY.GTK);
+	Linker.link(gtk_application_get_windows, \"gtk_application_get_windows\", LIBRARY.GTK);
 }");
 
 mixin( gshared ~"extern(C)
@@ -7971,6 +8022,50 @@ mixin( gshared ~"extern(C)
 	GtkRecentFilterFlags function(GtkRecentFilter* filter) c_gtk_recent_filter_get_needed;
 	gboolean function(GtkRecentFilter* filter, GtkRecentFilterInfo* filterInfo) c_gtk_recent_filter_filter;
 
+	// gtk.AppChooserT
+
+
+	// gtk.AppChooserT
+
+	GAppInfo* function(GtkAppChooser* self) c_gtk_app_chooser_get_app_info;
+	gchar* function(GtkAppChooser* self) c_gtk_app_chooser_get_content_type;
+	void function(GtkAppChooser* self) c_gtk_app_chooser_refresh;
+
+	// gtk.AppChooserButton
+
+	GtkWidget* function(gchar* contentType) c_gtk_app_chooser_button_new;
+	void function(GtkAppChooserButton* self, gchar* name, gchar* label, GIcon* icon) c_gtk_app_chooser_button_append_custom_item;
+	void function(GtkAppChooserButton* self) c_gtk_app_chooser_button_append_separator;
+	void function(GtkAppChooserButton* self, gchar* name) c_gtk_app_chooser_button_set_active_custom_item;
+	gboolean function(GtkAppChooserButton* self) c_gtk_app_chooser_button_get_show_dialog_item;
+	void function(GtkAppChooserButton* self, gboolean setting) c_gtk_app_chooser_button_set_show_dialog_item;
+	gchar* function(GtkAppChooserButton* self) c_gtk_app_chooser_button_get_heading;
+	void function(GtkAppChooserButton* self, gchar* heading) c_gtk_app_chooser_button_set_heading;
+
+	// gtk.AppChooserDialog
+
+	GtkWidget* function(GtkWindow* parent, GtkDialogFlags flags, GFile* file) c_gtk_app_chooser_dialog_new;
+	GtkWidget* function(GtkWindow* parent, GtkDialogFlags flags, gchar* contentType) c_gtk_app_chooser_dialog_new_for_content_type;
+	GtkWidget* function(GtkAppChooserDialog* self) c_gtk_app_chooser_dialog_get_widget;
+	void function(GtkAppChooserDialog* self, gchar* heading) c_gtk_app_chooser_dialog_set_heading;
+	gchar* function(GtkAppChooserDialog* self) c_gtk_app_chooser_dialog_get_heading;
+
+	// gtk.AppChooserWidget
+
+	GtkWidget* function(gchar* contentType) c_gtk_app_chooser_widget_new;
+	void function(GtkAppChooserWidget* self, gboolean setting) c_gtk_app_chooser_widget_set_show_default;
+	gboolean function(GtkAppChooserWidget* self) c_gtk_app_chooser_widget_get_show_default;
+	void function(GtkAppChooserWidget* self, gboolean setting) c_gtk_app_chooser_widget_set_show_recommended;
+	gboolean function(GtkAppChooserWidget* self) c_gtk_app_chooser_widget_get_show_recommended;
+	void function(GtkAppChooserWidget* self, gboolean setting) c_gtk_app_chooser_widget_set_show_fallback;
+	gboolean function(GtkAppChooserWidget* self) c_gtk_app_chooser_widget_get_show_fallback;
+	void function(GtkAppChooserWidget* self, gboolean setting) c_gtk_app_chooser_widget_set_show_other;
+	gboolean function(GtkAppChooserWidget* self) c_gtk_app_chooser_widget_get_show_other;
+	void function(GtkAppChooserWidget* self, gboolean setting) c_gtk_app_chooser_widget_set_show_all;
+	gboolean function(GtkAppChooserWidget* self) c_gtk_app_chooser_widget_get_show_all;
+	void function(GtkAppChooserWidget* self, gchar* text) c_gtk_app_chooser_widget_set_default_text;
+	gchar* function(GtkAppChooserWidget* self) c_gtk_app_chooser_widget_get_default_text;
+
 	// gtk.BuildableT
 
 
@@ -8003,6 +8098,13 @@ mixin( gshared ~"extern(C)
 	GType function(GtkBuilder* builder, char* typeName) c_gtk_builder_get_type_from_name;
 	gboolean function(GtkBuilder* builder, GParamSpec* pspec, gchar* string, GValue* value, GError** error) c_gtk_builder_value_from_string;
 	gboolean function(GtkBuilder* builder, GType type, gchar* string, GValue* value, GError** error) c_gtk_builder_value_from_string_type;
+
+	// gtk.Application
+
+	GtkApplication* function(gchar* applicationId, GApplicationFlags flags) c_gtk_application_new;
+	void function(GtkApplication* application, GtkWindow* window) c_gtk_application_add_window;
+	void function(GtkApplication* application, GtkWindow* window) c_gtk_application_remove_window;
+	GList* function(GtkApplication* application) c_gtk_application_get_windows;
 }");
 
 // gtk.Main
@@ -11955,6 +12057,50 @@ alias c_gtk_recent_filter_add_custom  gtk_recent_filter_add_custom;
 alias c_gtk_recent_filter_get_needed  gtk_recent_filter_get_needed;
 alias c_gtk_recent_filter_filter  gtk_recent_filter_filter;
 
+// gtk.AppChooserT
+
+
+// gtk.AppChooserT
+
+alias c_gtk_app_chooser_get_app_info  gtk_app_chooser_get_app_info;
+alias c_gtk_app_chooser_get_content_type  gtk_app_chooser_get_content_type;
+alias c_gtk_app_chooser_refresh  gtk_app_chooser_refresh;
+
+// gtk.AppChooserButton
+
+alias c_gtk_app_chooser_button_new  gtk_app_chooser_button_new;
+alias c_gtk_app_chooser_button_append_custom_item  gtk_app_chooser_button_append_custom_item;
+alias c_gtk_app_chooser_button_append_separator  gtk_app_chooser_button_append_separator;
+alias c_gtk_app_chooser_button_set_active_custom_item  gtk_app_chooser_button_set_active_custom_item;
+alias c_gtk_app_chooser_button_get_show_dialog_item  gtk_app_chooser_button_get_show_dialog_item;
+alias c_gtk_app_chooser_button_set_show_dialog_item  gtk_app_chooser_button_set_show_dialog_item;
+alias c_gtk_app_chooser_button_get_heading  gtk_app_chooser_button_get_heading;
+alias c_gtk_app_chooser_button_set_heading  gtk_app_chooser_button_set_heading;
+
+// gtk.AppChooserDialog
+
+alias c_gtk_app_chooser_dialog_new  gtk_app_chooser_dialog_new;
+alias c_gtk_app_chooser_dialog_new_for_content_type  gtk_app_chooser_dialog_new_for_content_type;
+alias c_gtk_app_chooser_dialog_get_widget  gtk_app_chooser_dialog_get_widget;
+alias c_gtk_app_chooser_dialog_set_heading  gtk_app_chooser_dialog_set_heading;
+alias c_gtk_app_chooser_dialog_get_heading  gtk_app_chooser_dialog_get_heading;
+
+// gtk.AppChooserWidget
+
+alias c_gtk_app_chooser_widget_new  gtk_app_chooser_widget_new;
+alias c_gtk_app_chooser_widget_set_show_default  gtk_app_chooser_widget_set_show_default;
+alias c_gtk_app_chooser_widget_get_show_default  gtk_app_chooser_widget_get_show_default;
+alias c_gtk_app_chooser_widget_set_show_recommended  gtk_app_chooser_widget_set_show_recommended;
+alias c_gtk_app_chooser_widget_get_show_recommended  gtk_app_chooser_widget_get_show_recommended;
+alias c_gtk_app_chooser_widget_set_show_fallback  gtk_app_chooser_widget_set_show_fallback;
+alias c_gtk_app_chooser_widget_get_show_fallback  gtk_app_chooser_widget_get_show_fallback;
+alias c_gtk_app_chooser_widget_set_show_other  gtk_app_chooser_widget_set_show_other;
+alias c_gtk_app_chooser_widget_get_show_other  gtk_app_chooser_widget_get_show_other;
+alias c_gtk_app_chooser_widget_set_show_all  gtk_app_chooser_widget_set_show_all;
+alias c_gtk_app_chooser_widget_get_show_all  gtk_app_chooser_widget_get_show_all;
+alias c_gtk_app_chooser_widget_set_default_text  gtk_app_chooser_widget_set_default_text;
+alias c_gtk_app_chooser_widget_get_default_text  gtk_app_chooser_widget_get_default_text;
+
 // gtk.BuildableT
 
 
@@ -11987,3 +12133,10 @@ alias c_gtk_builder_get_translation_domain  gtk_builder_get_translation_domain;
 alias c_gtk_builder_get_type_from_name  gtk_builder_get_type_from_name;
 alias c_gtk_builder_value_from_string  gtk_builder_value_from_string;
 alias c_gtk_builder_value_from_string_type  gtk_builder_value_from_string_type;
+
+// gtk.Application
+
+alias c_gtk_application_new  gtk_application_new;
+alias c_gtk_application_add_window  gtk_application_add_window;
+alias c_gtk_application_remove_window  gtk_application_remove_window;
+alias c_gtk_application_get_windows  gtk_application_get_windows;

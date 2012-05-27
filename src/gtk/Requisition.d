@@ -112,6 +112,7 @@
  * 	- window-state-event
  * imports:
  * structWrap:
+ * 	- GtkRequisition* -> Requisition
  * module aliases:
  * local aliases:
  * overrides:
@@ -342,10 +343,15 @@ public class Requisition
 	 * Copies a GtkRequisition.
 	 * Returns: a copy of requisition
 	 */
-	public GtkRequisition* copy()
+	public Requisition copy()
 	{
 		// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
-		return gtk_requisition_copy(gtkRequisition);
+		auto p = gtk_requisition_copy(gtkRequisition);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Requisition(cast(GtkRequisition*) p);
 	}
 	
 	/**
