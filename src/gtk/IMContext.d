@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gtk_im_context_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,10 +45,10 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Window
- * 	- gdk.Rectangle
+ * 	- pango.PgAttributeList
  * structWrap:
- * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
+ * 	- PangoAttrList* -> PgAttributeList
  * module aliases:
  * local aliases:
  * overrides:
@@ -67,7 +66,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Window;
-private import gdk.Rectangle;
+private import pango.PgAttributeList;
 
 
 
@@ -387,14 +386,16 @@ public class IMContext : ObjectG
 	 * cursorPos = location to store position of cursor (in characters)
 	 * within the preedit string. [out]
 	 */
-	public void getPreeditString(out string str, out PangoAttrList* attrs, out int cursorPos)
+	public void getPreeditString(out string str, out PgAttributeList attrs, out int cursorPos)
 	{
 		// void gtk_im_context_get_preedit_string (GtkIMContext *context,  gchar **str,  PangoAttrList **attrs,  gint *cursor_pos);
 		char* outstr = null;
+		PangoAttrList* outattrs = null;
 		
-		gtk_im_context_get_preedit_string(gtkIMContext, &outstr, &attrs, &cursorPos);
+		gtk_im_context_get_preedit_string(gtkIMContext, &outstr, &outattrs, &cursorPos);
 		
 		str = Str.toString(outstr);
+		attrs = new PgAttributeList(outattrs);
 	}
 	
 	/**
@@ -453,10 +454,10 @@ public class IMContext : ObjectG
 	 * Params:
 	 * area = new location
 	 */
-	public void setCursorLocation(Rectangle area)
+	public void setCursorLocation(ref Rectangle area)
 	{
 		// void gtk_im_context_set_cursor_location (GtkIMContext *context,  const GdkRectangle *area);
-		gtk_im_context_set_cursor_location(gtkIMContext, (area is null) ? null : area.getRectangleStruct());
+		gtk_im_context_set_cursor_location(gtkIMContext, &area);
 	}
 	
 	/**
@@ -482,13 +483,12 @@ public class IMContext : ObjectG
 	 * text = text surrounding the insertion point, as UTF-8.
 	 * the preedit string should not be included within
 	 * text.
-	 * len = the length of text, or -1 if text is nul-terminated
 	 * cursorIndex = the byte index of the insertion cursor within text.
 	 */
-	public void setSurrounding(string text, int len, int cursorIndex)
+	public void setSurrounding(char[] text, int cursorIndex)
 	{
 		// void gtk_im_context_set_surrounding (GtkIMContext *context,  const gchar *text,  gint len,  gint cursor_index);
-		gtk_im_context_set_surrounding(gtkIMContext, Str.toStringz(text), len, cursorIndex);
+		gtk_im_context_set_surrounding(gtkIMContext, text.ptr, cast(int) text.length, cursorIndex);
 	}
 	
 	/**

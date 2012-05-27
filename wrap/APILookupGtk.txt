@@ -255,7 +255,6 @@ addConstants: start
 addConstants: end
 
 
-
 wrap: gtk
 
 ###########################################################
@@ -264,10 +263,7 @@ wrap: gtk
 
 
 file: gtk3-General.html
-
-#struct: 
 class: Main
-#prefix: 
 prefix: gtk_main_
 prefix: gtk_
 noprefix: gtk_true
@@ -7811,204 +7807,118 @@ outFile: Accessible
 ### Abstract Base Classes #################################
 ###########################################################
 
-file: GtkBin.html
-struct: GtkBin
-class: Bin
-prefix: gtk_bin_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-outFile: Bin
-
-file: GtkContainer.html
-struct: GtkContainer
-class: Container
-structWrap: GtkContainerClass* Container
-structWrap: GtkWidget* Widget
-import: glib.Str
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-prefix: gtk_container_
-prefix: gtk_
-import: glib.ListG
-structWrap: GList* ListG
-import: gobject.Value
-structWrap: GValue* Value
-#import: gdk.EventExpose
-#structWrap: GdkEventExpose* EventExpose
-import: gobject.ParamSpec
-structWrap: GParamSpec* ParamSpec
-#import: g.ObjectClass
-#structWrap: GObjectClass* ObjectClass
-
-out: gtk_container_get_focus_chain focusable_widgets
-array: gtk_container_class_list_child_properties Return n_properties
-
-code: start
-
-	/**
-	 * Removes all widgets from the container
-	 */
-	void removeAll()
-	{
-		GList* gList = gtk_container_get_children(getContainerStruct());
-		if ( gList !is null )
-		{
-			ListG children = new ListG(gList);
-			for ( int i=children.length()-1 ; i>=0 ; i-- )
-			{
-				gtk_container_remove(getContainerStruct(), cast(GtkWidget*)children.nthData(i));
-			}
-		}
-	}
-
-code: end
-outFile: Container
-
-file: GtkMenuShell.html
-struct: GtkMenuShell
-class: MenuShell
-prefix: gtk_menu_shell_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-outFile: MenuShell
-
-file: GtkMisc.html
-struct: GtkMisc
-class: Misc
-prefix: gtk_misc_
-prefix: gtk_
-
-out: gtk_misc_get_alignment xalign
-out: gtk_misc_get_alignment yalign
-out: gtk_misc_get_padding xpad
-out: gtk_misc_get_padding ypad
-
-outFile: Misc
-
-file: GtkRange.html
-struct: GtkRange
-class: Range
-implements: OrientableIF
-prefix: gtk_range_
-prefix: gtk_
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-
-out: gtk_range_get_slider_range slider_start
-out: gtk_range_get_slider_range slider_end
-
-#imports for Orientable Interface.
-import: gtk.OrientableIF
-import: gtk.OrientableT
-
-code: start
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkRange);
-code: end
-outFile: Range
-
 file: GtkWidget.html
 struct: GtkWidget
 nostruct: GtkWidgetClass
 nostruct: GtkRequisition
 class: Widget
 implements: BuildableIF
-import: glib.Str
-import: atk.ObjectAtk
-structWrap: AtkObject* ObjectAtk
 prefix: gtk_widget_
 prefix: gtk_
-# This function is exactly the same as calling g_object_ref(), and exists mostly for historical reasons.
-noprefix: gtk_widget_ref
-structWrap: GtkWidget* Widget
-import: gtk.Action
-structWrap: GtkAction* Action 
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
-#import: gtk.Requisition
-#structWrap: GtkRequisition* Requisition
-#import: gtk.Allocation
-#structWrap: GtkAllocation* Allocation
-import: gtk.AccelGroup
-structWrap: GtkAccelGroup* AccelGroup
-import: glib.ListG
-structWrap: GList* ListG
-import: gdk.Event
-structWrap: GdkEvent* Event
-import: gdk.Window
-structWrap: GdkWindow* Window
-import: gdk.Visual
-structWrap: GdkVisual* Visual
-import: gtk.Style
-structWrap: GtkStyle* Style
-import: gtk.RcStyle
-structWrap: GtkRcStyle* RcStyle
-import: gdk.Color
-structWrap: GdkColor* Color
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-#import: gtk.WidgetClass
-#structWrap: GtkWidgetClass* WidgetClass
-import: gobject.ParamSpec
-structWrap: GParamSpec* ParamSpec
-import: gobject.Value
-structWrap: GValue* Value
-import: gtk.Settings
-structWrap: GtkSettings* Settings
-import: gtk.Clipboard
-structWrap: GtkClipboard* Clipboard
-import: gdk.Display
-structWrap: GdkDisplay* Display
-import: gdk.Screen
-structWrap: GdkScreen* Screen
-import: gtkc.gdk
-import: gdk.Cursor
+noprefix: gtk_requisition_
 
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgContext
-structWrap: PangoContext* PgContext
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: gobject.Type
 import: std.conv
+import: atk.ObjectAtk
+import: cairo.Context
+import: cairo.Region
+import: glib.ListG
+import: glib.Str
+import: gobject.ParamSpec
+import: gobject.Type
+import: gobject.Value
+import: gdk.Color
+import: gdk.Cursor
+import: gdk.Device
+import: gdk.Display
+import: gdk.DragContext
+import: gdk.Event
+import: gdk.Pixbuf
+import: gdk.RGBA
+import: gdk.Screen
+import: gdk.Visual
+import: gdk.Window
+import: gtk.AccelGroup
+import: gtk.Clipboard
+import: gtk.RcStyle
+import: gtk.SelectionData
+import: gtk.Settings
+import: gtk.Style
+import: gtk.StyleContext
+import: gtk.Tooltip
+import: gtk.WidgetPath
+import: pango.PgContext
+import: pango.PgFontDescription
+import: pango.PgLayout
+structWrap: AtkObject* ObjectAtk
+structWrap: cairo_t* Context
+structWrap: CairoContext* Context
+structWrap: cairo_region_t* Region
+structWrap: GList* ListG
+structWrap: GParamSpec* ParamSpec
+structWrap: GValue* Value
+structWrap: GdkColor* Color
+structWrap: GdkDevice* Device
+structWrap: GdkDisplay* Display
+structWrap: GdkDragContext* DragContext
+structWrap: GdkEvent* Event
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkRGBA* RGBA
+structWrap: GdkScreen* Screen
+structWrap: GdkVisual* Visual
+structWrap: GdkWindow* Window
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkClipboard* Clipboard
+structWrap: GtkRcStyle* RcStyle
+structWrap: GtkSelectionData* SelectionData
+structWrap: GtkSettings* Settings
+structWrap: GtkStyle* Style
+structWrap: GtkStyleContext* StyleContext
+structWrap: GtkTooltip* Tooltip
+structWrap: GtkWidget* Widget
+structWrap: GtkWidgetPath* WidgetPath
+#TODO: conflicts with GdkWindow
+#structWrap: GtkWindow* Window
+structWrap: PangoContext* PgContext
+structWrap: PangoFontDescription* PgFontDescription
+structWrap: PangoLayout* PgLayout
 
 #imports for Buildable Interface.
 import: gtk.BuildableIF
 import: gtk.BuildableT
 
-# New in 2.14, keep using the manually added ones for backwards compatibility.
-nocode: gtk_widget_get_window
-nocode: gtk_widget_get_allocation
-
-override: unref
-override: destroy
-override: set
-
 inout: gtk_widget_destroyed widget_pointer
-out: gtk_widget_get_size_request width
-out: gtk_widget_get_size_request height
-out: gtk_widget_translate_coordinates dest_x
-out: gtk_widget_translate_coordinates dest_y
 out: gtk_widget_size_request requisition
 out: gtk_widget_get_child_requisition requisition
+inout: gtk_widget_size_allocate allocation
+inout: gtk_widget_intersect area
+out: gtk_widget_intersect intersection
 out: gtk_widget_get_pointer x
 out: gtk_widget_get_pointer y
-array: gtk_widget_class_list_style_properties Return n_properties
+out: gtk_widget_translate_coordinates dest_x
+out: gtk_widget_translate_coordinates dest_y
 out: gtk_widget_path path_length
 out: gtk_widget_path path
 out: gtk_widget_path path_reversed
 out: gtk_widget_class_path path_length
 out: gtk_widget_class_path path
 out: gtk_widget_class_path path_reversed
+array: gtk_widget_class_list_style_properties Return n_properties
+out: gtk_widget_get_size_request width
+out: gtk_widget_get_size_request height
+out: gtk_widget_get_allocation allocation
 inout: gtk_widget_set_allocation allocation
 out: gtk_widget_get_requisition requisition
+out: gtk_widget_get_preferred_height minimum_height
+out: gtk_widget_get_preferred_height natural_height
+out: gtk_widget_get_preferred_width minimum_width
+out: gtk_widget_get_preferred_width natural_width
+out: gtk_widget_get_preferred_height_for_width minimum_height
+out: gtk_widget_get_preferred_height_for_width natural_height
+out: gtk_widget_get_preferred_width_for_height minimum_width
+out: gtk_widget_get_preferred_width_for_height natural_width
+out: gtk_widget_get_preferred_size minimum_size
+out: gtk_widget_get_preferred_size natural_size
+array: gtk_distribute_natural_allocation sizes n_requested_sizes
 
 code: start
 	// add the Buildable capabilities
@@ -8033,77 +7943,6 @@ code: start
 		int height;
 		gtk_widget_get_size_request(gtkWidget, null, &height);
 		return height;
-	}
-
-	/**
-	 * The widget's allocated size.
-	 * Returns: the GtkAllocation for this widget
-	 */
-	public GtkAllocation getAllocation()
-	{
-		GtkAllocation allo;
-		int* pt = cast(int*)getStruct();
-
-		version (X86_64)
-		{
-			pt += 64/4; 
-		}
-		else
-		{ 
-			pt += 36/4;
-		} 
-
-		allo.x = *pt;
-
-		pt++;
-		allo.y = *pt;
-
-		pt++;
-		allo.width = *pt;
-
-		pt++;
-		allo.height = *pt;
-
-		return allo;
-	}
-
-	/**
-	 * Gets the Window for this widget
-	 * Returns:
-	 * 		The window for this widget
-	 */
-	Window getWindow()
-	{
-		
-		//		ubyte *p = cast(ubyte*)getStruct();
-		//
-		//		for ( int i=0 ; i<120 ; i+=4 )
-		//		{
-			//			printf("(%d) %X %x %x %x %x\n", i,p,*(p+0), *(p+1), *(p+2), *(p+3));
-			//			p+=4;
-		//		}
-		//
-		//		int* pt =cast(int*)getStruct();
-		//
-		//		printf("pt=%X strcut=%X\n", pt, getStruct());
-		//		printf("*pt=%X\n", *pt);
-		//		pt+=52/4;
-		//		printf("pt+52=%X strcut.window=%X\n", pt, getWidgetStruct().window);
-		//		printf("*pt+52=%X\n", *pt);
-		//
-		//		//return new Drawable(cast(GdkDrawable*)(getWidgetStruct().window));
-		int* pt =cast(int*)getStruct();
-
-		version (X86_64)
-		{
-			pt += 80/4; 
-		}
-		else
-		{ 
-			pt += 52/4; 
-		} 
-
-		return new Window(cast(GdkWindow*)(*pt));
 	}
 
 	/**
@@ -8318,31 +8157,203 @@ code: start
 	{
 		return getWidgetClass().windowStateEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
-
-	//get the addOnDestroy from ObjectGtk
-	alias ObjectGtk.addOnDestroy addOnDestroy;
 code: end
 outFile: Widget
+
+struct: GtkRequisition
+class: Requisition
+prefix: gtk_requisition_
+strictPrefix: Y
+
+nosignal: accel-closures-changed
+nosignal: button-press-event
+nosignal: button-release-event
+nosignal: can-activate-accel
+nosignal: child-notify
+nosignal: composited-changed
+nosignal: configure-event
+nosignal: damage-event
+nosignal: delete-event
+nosignal: destroy
+nosignal: destroy-event
+nosignal: direction-changed
+nosignal: drag-begin
+nosignal: drag-data-delete
+nosignal: drag-data-get
+nosignal: drag-data-received
+nosignal: drag-drop
+nosignal: drag-end
+nosignal: drag-failed
+nosignal: drag-leave
+nosignal: drag-motion
+nosignal: draw
+nosignal: enter-notify-event
+nosignal: event 
+nosignal: event-after
+nosignal: focus
+nosignal: focus-in-event
+nosignal: focus-out-event
+nosignal: grab-broken-event
+nosignal: grab-focus
+nosignal: grab-notify
+nosignal: hide
+nosignal: hierarchy-changed
+nosignal: key-press-event
+nosignal: key-release-event
+nosignal: keynav-failed
+nosignal: leave-notify-event
+nosignal: map
+nosignal: map-event
+nosignal: mnemonic-activate
+nosignal: motion-notify-event
+nosignal: move-focus
+nosignal: parent-set
+nosignal: popup-menu
+nosignal: property-notify-event
+nosignal: proximity-in-event
+nosignal: proximity-out-event
+nosignal: query-tooltip
+nosignal: realize
+nosignal: screen-changed
+nosignal: scroll-event
+nosignal: selection-clear-event
+nosignal: selection-get
+nosignal: selection-notify-event
+nosignal: selection-received
+nosignal: selection-request-event
+nosignal: show
+nosignal: show-help
+nosignal: size-allocate
+nosignal: state-changed
+nosignal: state-flags-changed
+nosignal: style-set
+nosignal: style-updated
+nosignal: unmap
+nosignal: unmap-event
+nosignal: unrealize
+nosignal: visibility-notify-event
+nosignal: window-state-event
+
+code: start
+	~this ()
+	{
+		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkRequisition !is null )
+		{
+			gtk_requisition_free(gtkRequisition);
+		}
+	}
+code: end
+outFile: Requisition
+
+file: GtkContainer.html
+struct: GtkContainer
+class: Container
+prefix: gtk_container_
+import: cairo.Context
+import: glib.Str
+import: glib.ListG
+import: gobject.ParamSpec
+import: gobject.Value
+import: gtk.Adjustment
+import: gtk.Widget
+import: gtk.WidgetPath
+structWrap: cairo_t* Context
+structWrap: GList* ListG
+structWrap: GParamSpec* ParamSpec
+structWrap: GValue* Value
+structWrap: GtkAdjustment* Adjustment
+structWrap: GtkWidget* Widget
+structWrap: GtkWidgetPath* WidgetPath
+
+out: gtk_container_get_focus_chain focusable_widgets
+array: gtk_container_class_list_child_properties Return n_properties
+
+code: start
+	/**
+	 * Removes all widgets from the container
+	 */
+	void removeAll()
+	{
+		GList* gList = gtk_container_get_children(getContainerStruct());
+		if ( gList !is null )
+		{
+			ListG children = new ListG(gList);
+			for ( int i=children.length()-1 ; i>=0 ; i-- )
+			{
+				gtk_container_remove(getContainerStruct(), cast(GtkWidget*)children.nthData(i));
+			}
+		}
+	}
+code: end
+outFile: Container
+
+file: GtkBin.html
+struct: GtkBin
+class: Bin
+prefix: gtk_bin_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: Bin
+
+file: GtkMenuShell.html
+struct: GtkMenuShell
+class: MenuShell
+prefix: gtk_menu_shell_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: MenuShell
+
+file: GtkMisc.html
+struct: GtkMisc
+class: Misc
+prefix: gtk_misc_
+
+out: gtk_misc_get_alignment xalign
+out: gtk_misc_get_alignment yalign
+out: gtk_misc_get_padding xpad
+out: gtk_misc_get_padding ypad
+
+outFile: Misc
+
+file: GtkRange.html
+struct: GtkRange
+class: Range
+implements: OrientableIF
+prefix: gtk_range_
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+out: gtk_range_get_range_rect range_rect
+out: gtk_range_get_slider_range slider_start
+out: gtk_range_get_slider_range slider_end
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkRange);
+code: end
+outFile: Range
 
 file: GtkIMContext.html
 struct: GtkIMContext
 class: IMContext
 prefix: gtk_im_context_
-prefix: gtk_
 import: glib.Str
 import: gdk.Window
+import: pango.PgAttributeList
 structWrap: GdkWindow* Window
-#import: gtk.EventKey
-#structWrap: GdkEventKey* EventKey
-import: gdk.Rectangle
-structWrap: GdkRectangle* Rectangle
+structWrap: PangoAttrList* PgAttributeList
 
 out: gtk_im_context_get_preedit_string str
 out: gtk_im_context_get_preedit_string attrs
 out: gtk_im_context_get_preedit_string cursor_pos
+inout: gtk_im_context_set_cursor_location area
+array: gtk_im_context_set_surrounding text len
 out: gtk_im_context_get_surrounding text
 out: gtk_im_context_get_surrounding cursor_index
-
 
 outFile: IMContext
 

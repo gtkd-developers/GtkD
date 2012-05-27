@@ -44,71 +44,78 @@
  * 	- GtkWidgetClass
  * 	- GtkRequisition
  * omit prefixes:
- * 	- gtk_widget_ref
+ * 	- gtk_requisition_
  * omit code:
- * 	- gtk_widget_get_window
- * 	- gtk_widget_get_allocation
  * omit signals:
  * imports:
- * 	- glib.Str
+ * 	- std.conv
  * 	- atk.ObjectAtk
- * 	- gtk.Action
- * 	- gdk.Rectangle
- * 	- gtk.AccelGroup
+ * 	- cairo.Context
+ * 	- cairo.Region
  * 	- glib.ListG
- * 	- gdk.Event
- * 	- gdk.Window
- * 	- gdk.Visual
- * 	- gtk.Style
- * 	- gtk.RcStyle
- * 	- gdk.Color
- * 	- gdk.Pixbuf
- * 	- gtk.Adjustment
+ * 	- glib.Str
  * 	- gobject.ParamSpec
+ * 	- gobject.Type
  * 	- gobject.Value
- * 	- gtk.Settings
- * 	- gtk.Clipboard
- * 	- gdk.Display
- * 	- gdk.Screen
- * 	- gtkc.gdk
+ * 	- gdk.Color
  * 	- gdk.Cursor
- * 	- pango.PgLayout
+ * 	- gdk.Device
+ * 	- gdk.Display
+ * 	- gdk.DragContext
+ * 	- gdk.Event
+ * 	- gdk.Pixbuf
+ * 	- gdk.RGBA
+ * 	- gdk.Screen
+ * 	- gdk.Visual
+ * 	- gdk.Window
+ * 	- gtk.AccelGroup
+ * 	- gtk.Clipboard
+ * 	- gtk.RcStyle
+ * 	- gtk.SelectionData
+ * 	- gtk.Settings
+ * 	- gtk.Style
+ * 	- gtk.StyleContext
+ * 	- gtk.Tooltip
+ * 	- gtk.WidgetPath
  * 	- pango.PgContext
  * 	- pango.PgFontDescription
- * 	- gobject.Type
- * 	- std.conv
+ * 	- pango.PgLayout
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
+ * 	- CairoContext* -> Context
  * 	- GList* -> ListG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
  * 	- GdkColor* -> Color
+ * 	- GdkDevice* -> Device
  * 	- GdkDisplay* -> Display
+ * 	- GdkDragContext* -> DragContext
  * 	- GdkEvent* -> Event
  * 	- GdkPixbuf* -> Pixbuf
- * 	- GdkRectangle* -> Rectangle
+ * 	- GdkRGBA* -> RGBA
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
  * 	- GdkWindow* -> Window
  * 	- GtkAccelGroup* -> AccelGroup
- * 	- GtkAction* -> Action
- * 	- GtkAdjustment* -> Adjustment
  * 	- GtkClipboard* -> Clipboard
  * 	- GtkRcStyle* -> RcStyle
+ * 	- GtkSelectionData* -> SelectionData
  * 	- GtkSettings* -> Settings
  * 	- GtkStyle* -> Style
+ * 	- GtkStyleContext* -> StyleContext
+ * 	- GtkTooltip* -> Tooltip
  * 	- GtkWidget* -> Widget
+ * 	- GtkWidgetPath* -> WidgetPath
  * 	- PangoContext* -> PgContext
  * 	- PangoFontDescription* -> PgFontDescription
  * 	- PangoLayout* -> PgLayout
+ * 	- cairo_region_t* -> Region
+ * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
  * overrides:
- * 	- unref
- * 	- destroy
- * 	- set
  */
 
 module gtk.Widget;
@@ -121,32 +128,37 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
 private import atk.ObjectAtk;
-private import gtk.Action;
-private import gdk.Rectangle;
-private import gtk.AccelGroup;
+private import cairo.Context;
+private import cairo.Region;
 private import glib.ListG;
-private import gdk.Event;
-private import gdk.Window;
-private import gdk.Visual;
-private import gtk.Style;
-private import gtk.RcStyle;
-private import gdk.Color;
-private import gdk.Pixbuf;
-private import gtk.Adjustment;
+private import glib.Str;
 private import gobject.ParamSpec;
+private import gobject.Type;
 private import gobject.Value;
-private import gtk.Settings;
-private import gtk.Clipboard;
-private import gdk.Display;
-private import gdk.Screen;
-private import gtkc.gdk;
+private import gdk.Color;
 private import gdk.Cursor;
-private import pango.PgLayout;
+private import gdk.Device;
+private import gdk.Display;
+private import gdk.DragContext;
+private import gdk.Event;
+private import gdk.Pixbuf;
+private import gdk.RGBA;
+private import gdk.Screen;
+private import gdk.Visual;
+private import gdk.Window;
+private import gtk.AccelGroup;
+private import gtk.Clipboard;
+private import gtk.RcStyle;
+private import gtk.SelectionData;
+private import gtk.Settings;
+private import gtk.Style;
+private import gtk.StyleContext;
+private import gtk.Tooltip;
+private import gtk.WidgetPath;
 private import pango.PgContext;
 private import pango.PgFontDescription;
-private import gobject.Type;
+private import pango.PgLayout;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 
@@ -380,77 +392,6 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
-	 * The widget's allocated size.
-	 * Returns: the GtkAllocation for this widget
-	 */
-	public GtkAllocation getAllocation()
-	{
-		GtkAllocation allo;
-		int* pt = cast(int*)getStruct();
-		
-		version (X86_64)
-		{
-			pt += 64/4;
-		}
-		else
-		{
-			pt += 36/4;
-		}
-		
-		allo.x = *pt;
-		
-		pt++;
-		allo.y = *pt;
-		
-		pt++;
-		allo.width = *pt;
-		
-		pt++;
-		allo.height = *pt;
-		
-		return allo;
-	}
-	
-	/**
-	 * Gets the Window for this widget
-	 * Returns:
-	 * 		The window for this widget
-	 */
-	Window getWindow()
-	{
-		
-		//		ubyte *p = cast(ubyte*)getStruct();
-		//
-		//		for ( int i=0 ; i<120 ; i+=4 )
-		//		{
-			//			printf("(%d) %X %x %x %x %x\n", i,p,*(p+0), *(p+1), *(p+2), *(p+3));
-			//			p+=4;
-		//		}
-		//
-		//		int* pt =cast(int*)getStruct();
-		//
-		//		printf("pt=%X strcut=%X\n", pt, getStruct());
-		//		printf("*pt=%X\n", *pt);
-		//		pt+=52/4;
-		//		printf("pt+52=%X strcut.window=%X\n", pt, getWidgetStruct().window);
-		//		printf("*pt+52=%X\n", *pt);
-		//
-		//		//return new Drawable(cast(GdkDrawable*)(getWidgetStruct().window));
-		int* pt =cast(int*)getStruct();
-		
-		version (X86_64)
-		{
-			pt += 80/4;
-		}
-		else
-		{
-			pt += 52/4;
-		}
-		
-		return new Window(cast(GdkWindow*)(*pt));
-	}
-	
-	/**
 	 * Sets  the cursor.
 	 * Params:
 	 *  cursor = the new cursor
@@ -662,9 +603,6 @@ public class Widget : ObjectG, BuildableIF
 	{
 		return getWidgetClass().windowStateEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
-	
-	//get the addOnDestroy from ObjectGtk
-	alias ObjectGtk.addOnDestroy addOnDestroy;
 	
 	/**
 	 */
@@ -1080,7 +1018,7 @@ public class Widget : ObjectG, BuildableIF
 		}
 	}
 	
-	void delegate(GdkDragContext*, Widget)[] onDragBeginListeners;
+	void delegate(DragContext, Widget)[] onDragBeginListeners;
 	/**
 	 * The ::drag-begin signal is emitted on the drag source when a drag is
 	 * started. A typical reason to connect to this signal is to set up a
@@ -1089,7 +1027,7 @@ public class Widget : ObjectG, BuildableIF
 	 * this signal, so you may have to use g_signal_connect_after() to
 	 * override what the default handler did.
 	 */
-	void addOnDragBegin(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragBegin(void delegate(DragContext, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-begin" in connectedSignals) )
 		{
@@ -1106,20 +1044,20 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
 	{
-		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragBeginListeners )
+		foreach ( void delegate(DragContext, Widget) dlg ; widget.onDragBeginListeners )
 		{
-			dlg(dragContext, widget);
+			dlg(new DragContext(dragContext), widget);
 		}
 	}
 	
-	void delegate(GdkDragContext*, Widget)[] onDragDataDeleteListeners;
+	void delegate(DragContext, Widget)[] onDragDataDeleteListeners;
 	/**
 	 * The ::drag-data-delete signal is emitted on the drag source when a drag
 	 * with the action GDK_ACTION_MOVE is successfully completed. The signal
 	 * handler is responsible for deleting the data that has been dropped. What
 	 * "delete" means depends on the context of the drag operation.
 	 */
-	void addOnDragDataDelete(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragDataDelete(void delegate(DragContext, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-delete" in connectedSignals) )
 		{
@@ -1136,13 +1074,13 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
 	{
-		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragDataDeleteListeners )
+		foreach ( void delegate(DragContext, Widget) dlg ; widget.onDragDataDeleteListeners )
 		{
-			dlg(dragContext, widget);
+			dlg(new DragContext(dragContext), widget);
 		}
 	}
 	
-	void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget)[] onDragDataGetListeners;
+	void delegate(DragContext, SelectionData, guint, guint, Widget)[] onDragDataGetListeners;
 	/**
 	 * The ::drag-data-get signal is emitted on the drag source when the drop
 	 * site requests the data which is dragged. It is the responsibility of
@@ -1150,7 +1088,7 @@ public class Widget : ObjectG, BuildableIF
 	 * is indicated by info. See gtk_selection_data_set() and
 	 * gtk_selection_data_set_text().
 	 */
-	void addOnDragDataGet(void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragDataGet(void delegate(DragContext, SelectionData, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-get" in connectedSignals) )
 		{
@@ -1167,13 +1105,13 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkSelectionData* data, guint info, guint time, Widget widget)
 	{
-		foreach ( void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget) dlg ; widget.onDragDataGetListeners )
+		foreach ( void delegate(DragContext, SelectionData, guint, guint, Widget) dlg ; widget.onDragDataGetListeners )
 		{
-			dlg(dragContext, data, info, time, widget);
+			dlg(new DragContext(dragContext), new SelectionData(data), info, time, widget);
 		}
 	}
 	
-	void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget)[] onDragDataReceivedListeners;
+	void delegate(DragContext, gint, gint, SelectionData, guint, guint, Widget)[] onDragDataReceivedListeners;
 	/**
 	 * The ::drag-data-received signal is emitted on the drop site when the
 	 * dragged data has been received. If the data was received in order to
@@ -1188,7 +1126,7 @@ public class Widget : ObjectG, BuildableIF
 	 * gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as shown in the
 	 * $(DDOC_COMMENT example)
 	 */
-	void addOnDragDataReceived(void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragDataReceived(void delegate(DragContext, gint, gint, SelectionData, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-received" in connectedSignals) )
 		{
@@ -1205,13 +1143,13 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data, guint info, guint time, Widget widget)
 	{
-		foreach ( void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg ; widget.onDragDataReceivedListeners )
+		foreach ( void delegate(DragContext, gint, gint, SelectionData, guint, guint, Widget) dlg ; widget.onDragDataReceivedListeners )
 		{
-			dlg(dragContext, x, y, data, info, time, widget);
+			dlg(new DragContext(dragContext), x, y, new SelectionData(data), info, time, widget);
 		}
 	}
 	
-	bool delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragDropListeners;
+	bool delegate(DragContext, gint, gint, guint, Widget)[] onDragDropListeners;
 	/**
 	 * The ::drag-drop signal is emitted on the drop site when the user drops
 	 * the data onto the widget. The signal handler must determine whether
@@ -1224,7 +1162,7 @@ public class Widget : ObjectG, BuildableIF
 	 * triggered by calling gtk_drag_get_data() to receive the data for one
 	 * or more of the supported targets.
 	 */
-	void addOnDragDrop(bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragDrop(bool delegate(DragContext, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-drop" in connectedSignals) )
 		{
@@ -1241,9 +1179,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static gboolean callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
 	{
-		foreach ( bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragDropListeners )
+		foreach ( bool delegate(DragContext, gint, gint, guint, Widget) dlg ; widget.onDragDropListeners )
 		{
-			if ( dlg(dragContext, x, y, time, widget) )
+			if ( dlg(new DragContext(dragContext), x, y, time, widget) )
 			{
 				return 1;
 			}
@@ -1252,13 +1190,13 @@ public class Widget : ObjectG, BuildableIF
 		return 0;
 	}
 	
-	void delegate(GdkDragContext*, Widget)[] onDragEndListeners;
+	void delegate(DragContext, Widget)[] onDragEndListeners;
 	/**
 	 * The ::drag-end signal is emitted on the drag source when a drag is
 	 * finished. A typical reason to connect to this signal is to undo
 	 * things done in "drag-begin".
 	 */
-	void addOnDragEnd(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragEnd(void delegate(DragContext, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-end" in connectedSignals) )
 		{
@@ -1275,13 +1213,13 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
 	{
-		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragEndListeners )
+		foreach ( void delegate(DragContext, Widget) dlg ; widget.onDragEndListeners )
 		{
-			dlg(dragContext, widget);
+			dlg(new DragContext(dragContext), widget);
 		}
 	}
 	
-	bool delegate(GdkDragContext*, GtkDragResult, Widget)[] onDragFailedListeners;
+	bool delegate(DragContext, GtkDragResult, Widget)[] onDragFailedListeners;
 	/**
 	 * The ::drag-failed signal is emitted on the drag source when a drag has
 	 * failed. The signal handler may hook custom code to handle a failed DND
@@ -1291,7 +1229,7 @@ public class Widget : ObjectG, BuildableIF
 	 * TRUE if the failed drag operation has been already handled.
 	 * Since 2.12
 	 */
-	void addOnDragFailed(bool delegate(GdkDragContext*, GtkDragResult, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragFailed(bool delegate(DragContext, GtkDragResult, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-failed" in connectedSignals) )
 		{
@@ -1308,9 +1246,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static gboolean callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget widget)
 	{
-		foreach ( bool delegate(GdkDragContext*, GtkDragResult, Widget) dlg ; widget.onDragFailedListeners )
+		foreach ( bool delegate(DragContext, GtkDragResult, Widget) dlg ; widget.onDragFailedListeners )
 		{
-			if ( dlg(dragContext, result, widget) )
+			if ( dlg(new DragContext(dragContext), result, widget) )
 			{
 				return 1;
 			}
@@ -1319,14 +1257,14 @@ public class Widget : ObjectG, BuildableIF
 		return 0;
 	}
 	
-	void delegate(GdkDragContext*, guint, Widget)[] onDragLeaveListeners;
+	void delegate(DragContext, guint, Widget)[] onDragLeaveListeners;
 	/**
 	 * The ::drag-leave signal is emitted on the drop site when the cursor
 	 * leaves the widget. A typical reason to connect to this signal is to
 	 * undo things done in "drag-motion", e.g. undo highlighting
 	 * with gtk_drag_unhighlight()
 	 */
-	void addOnDragLeave(void delegate(GdkDragContext*, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragLeave(void delegate(DragContext, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-leave" in connectedSignals) )
 		{
@@ -1343,13 +1281,13 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* dragContext, guint time, Widget widget)
 	{
-		foreach ( void delegate(GdkDragContext*, guint, Widget) dlg ; widget.onDragLeaveListeners )
+		foreach ( void delegate(DragContext, guint, Widget) dlg ; widget.onDragLeaveListeners )
 		{
-			dlg(dragContext, time, widget);
+			dlg(new DragContext(dragContext), time, widget);
 		}
 	}
 	
-	bool delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragMotionListeners;
+	bool delegate(DragContext, gint, gint, guint, Widget)[] onDragMotionListeners;
 	/**
 	 * The drag-motion signal is emitted on the drop site when the user
 	 * moves the cursor over the widget during a drag. The signal handler
@@ -1372,7 +1310,7 @@ public class Widget : ObjectG, BuildableIF
 	 * the drop site with gtk_drag_highlight().
 	 * $(DDOC_COMMENT example)
 	 */
-	void addOnDragMotion(bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDragMotion(bool delegate(DragContext, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-motion" in connectedSignals) )
 		{
@@ -1389,9 +1327,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static gboolean callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
 	{
-		foreach ( bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragMotionListeners )
+		foreach ( bool delegate(DragContext, gint, gint, guint, Widget) dlg ; widget.onDragMotionListeners )
 		{
-			if ( dlg(dragContext, x, y, time, widget) )
+			if ( dlg(new DragContext(dragContext), x, y, time, widget) )
 			{
 				return 1;
 			}
@@ -1400,7 +1338,7 @@ public class Widget : ObjectG, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(CairoContext*, Widget)[] onDrawListeners;
+	bool delegate(Context, Widget)[] onDrawListeners;
 	/**
 	 * This signal is emitted when a widget is supposed to render itself.
 	 * The widget's top left corner must be painted at the origin of
@@ -1413,7 +1351,7 @@ public class Widget : ObjectG, BuildableIF
 	 * before and cairo_restore() after invoking the handler.
 	 * Since 3.0
 	 */
-	void addOnDraw(bool delegate(CairoContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDraw(bool delegate(Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("draw" in connectedSignals) )
 		{
@@ -1430,9 +1368,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static gboolean callBackDraw(GtkWidget* widgetStruct, CairoContext* cr, Widget widget)
 	{
-		foreach ( bool delegate(CairoContext*, Widget) dlg ; widget.onDrawListeners )
+		foreach ( bool delegate(Context, Widget) dlg ; widget.onDrawListeners )
 		{
-			if ( dlg(cr, widget) )
+			if ( dlg(new Context(cr), widget) )
 			{
 				return 1;
 			}
@@ -2297,7 +2235,7 @@ public class Widget : ObjectG, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(gint, gint, gboolean, GtkTooltip*, Widget)[] onQueryTooltipListeners;
+	bool delegate(gint, gint, gboolean, Tooltip, Widget)[] onQueryTooltipListeners;
 	/**
 	 * Emitted when "has-tooltip" is TRUE and the "gtk-tooltip-timeout"
 	 * has expired with the cursor hovering "above" widget; or emitted when widget got
@@ -2313,7 +2251,7 @@ public class Widget : ObjectG, BuildableIF
 	 * TRUE if tooltip should be shown right now, FALSE otherwise.
 	 * Since 2.12
 	 */
-	void addOnQueryTooltip(bool delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnQueryTooltip(bool delegate(gint, gint, gboolean, Tooltip, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("query-tooltip" in connectedSignals) )
 		{
@@ -2330,9 +2268,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static gboolean callBackQueryTooltip(GtkWidget* widgetStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, Widget widget)
 	{
-		foreach ( bool delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg ; widget.onQueryTooltipListeners )
+		foreach ( bool delegate(gint, gint, gboolean, Tooltip, Widget) dlg ; widget.onQueryTooltipListeners )
 		{
-			if ( dlg(x, y, keyboardMode, tooltip, widget) )
+			if ( dlg(x, y, keyboardMode, new Tooltip(tooltip), widget) )
 			{
 				return 1;
 			}
@@ -2469,10 +2407,10 @@ public class Widget : ObjectG, BuildableIF
 		return 0;
 	}
 	
-	void delegate(GtkSelectionData*, guint, guint, Widget)[] onSelectionGetListeners;
+	void delegate(SelectionData, guint, guint, Widget)[] onSelectionGetListeners;
 	/**
 	 */
-	void addOnSelectionGet(void delegate(GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectionGet(void delegate(SelectionData, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-get" in connectedSignals) )
 		{
@@ -2489,9 +2427,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, guint info, guint time, Widget widget)
 	{
-		foreach ( void delegate(GtkSelectionData*, guint, guint, Widget) dlg ; widget.onSelectionGetListeners )
+		foreach ( void delegate(SelectionData, guint, guint, Widget) dlg ; widget.onSelectionGetListeners )
 		{
-			dlg(data, info, time, widget);
+			dlg(new SelectionData(data), info, time, widget);
 		}
 	}
 	
@@ -2527,10 +2465,10 @@ public class Widget : ObjectG, BuildableIF
 		return 0;
 	}
 	
-	void delegate(GtkSelectionData*, guint, Widget)[] onSelectionReceivedListeners;
+	void delegate(SelectionData, guint, Widget)[] onSelectionReceivedListeners;
 	/**
 	 */
-	void addOnSelectionReceived(void delegate(GtkSelectionData*, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSelectionReceived(void delegate(SelectionData, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-received" in connectedSignals) )
 		{
@@ -2547,9 +2485,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, guint time, Widget widget)
 	{
-		foreach ( void delegate(GtkSelectionData*, guint, Widget) dlg ; widget.onSelectionReceivedListeners )
+		foreach ( void delegate(SelectionData, guint, Widget) dlg ; widget.onSelectionReceivedListeners )
 		{
-			dlg(data, time, widget);
+			dlg(new SelectionData(data), time, widget);
 		}
 	}
 	
@@ -2646,10 +2584,10 @@ public class Widget : ObjectG, BuildableIF
 		return 0;
 	}
 	
-	void delegate(Rectangle, Widget)[] onSizeAllocateListeners;
+	void delegate(GdkRectangle*, Widget)[] onSizeAllocateListeners;
 	/**
 	 */
-	void addOnSizeAllocate(void delegate(Rectangle, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnSizeAllocate(void delegate(GdkRectangle*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-allocate" in connectedSignals) )
 		{
@@ -2666,9 +2604,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, GdkRectangle* allocation, Widget widget)
 	{
-		foreach ( void delegate(Rectangle, Widget) dlg ; widget.onSizeAllocateListeners )
+		foreach ( void delegate(GdkRectangle*, Widget) dlg ; widget.onSizeAllocateListeners )
 		{
-			dlg(new Rectangle(allocation), widget);
+			dlg(allocation, widget);
 		}
 	}
 	
@@ -2976,7 +2914,7 @@ public class Widget : ObjectG, BuildableIF
 	 * destruction, because when you destroy a toplevel its children will
 	 * be destroyed as well.
 	 */
-	public override void destroy()
+	public void destroy()
 	{
 		// void gtk_widget_destroy (GtkWidget *widget);
 		gtk_widget_destroy(gtkWidget);
@@ -3153,10 +3091,10 @@ public class Widget : ObjectG, BuildableIF
 	 * cr = a cairo context to draw to
 	 * Since 3.0
 	 */
-	public void draw(cairo_t* cr)
+	public void draw(Context cr)
 	{
 		// void gtk_widget_draw (GtkWidget *widget,  cairo_t *cr);
-		gtk_widget_draw(gtkWidget, cr);
+		gtk_widget_draw(gtkWidget, (cr is null) ? null : cr.getContextStruct());
 	}
 	
 	/**
@@ -3259,10 +3197,10 @@ public class Widget : ObjectG, BuildableIF
 	 * Params:
 	 * allocation = position and size to be allocated to widget
 	 */
-	public void sizeAllocate(GtkAllocation* allocation)
+	public void sizeAllocate(ref GtkAllocation allocation)
 	{
 		// void gtk_widget_size_allocate (GtkWidget *widget,  GtkAllocation *allocation);
-		gtk_widget_size_allocate(gtkWidget, allocation);
+		gtk_widget_size_allocate(gtkWidget, &allocation);
 	}
 	
 	/**
@@ -3424,10 +3362,10 @@ public class Widget : ObjectG, BuildableIF
 	 * intersection = rectangle to store intersection of widget and area
 	 * Returns: TRUE if there was an intersection
 	 */
-	public int intersect(Rectangle area, Rectangle intersection)
+	public int intersect(ref Rectangle area, out Rectangle intersection)
 	{
 		// gboolean gtk_widget_intersect (GtkWidget *widget,  const GdkRectangle *area,  GdkRectangle *intersection);
-		return gtk_widget_intersect(gtkWidget, (area is null) ? null : area.getRectangleStruct(), (intersection is null) ? null : intersection.getRectangleStruct());
+		return gtk_widget_intersect(gtkWidget, &area, &intersection);
 	}
 	
 	/**
@@ -3643,10 +3581,10 @@ public class Widget : ObjectG, BuildableIF
 	 * events = event mask
 	 * Since 3.0
 	 */
-	public void setDeviceEvents(GdkDevice* device, GdkEventMask events)
+	public void setDeviceEvents(Device device, GdkEventMask events)
 	{
 		// void gtk_widget_set_device_events (GtkWidget *widget,  GdkDevice *device,  GdkEventMask events);
-		gtk_widget_set_device_events(gtkWidget, device, events);
+		gtk_widget_set_device_events(gtkWidget, (device is null) ? null : device.getDeviceStruct(), events);
 	}
 	
 	/**
@@ -3656,10 +3594,10 @@ public class Widget : ObjectG, BuildableIF
 	 * device = a GdkDevice
 	 * Returns: device event mask for widget Since 3.0
 	 */
-	public GdkEventMask getDeviceEvents(GdkDevice* device)
+	public GdkEventMask getDeviceEvents(Device device)
 	{
 		// GdkEventMask gtk_widget_get_device_events (GtkWidget *widget,  GdkDevice *device);
-		return gtk_widget_get_device_events(gtkWidget, device);
+		return gtk_widget_get_device_events(gtkWidget, (device is null) ? null : device.getDeviceStruct());
 	}
 	
 	/**
@@ -3670,10 +3608,10 @@ public class Widget : ObjectG, BuildableIF
 	 * events = an event mask, see GdkEventMask
 	 * Since 3.0
 	 */
-	public void addDeviceEvents(GdkDevice* device, GdkEventMask events)
+	public void addDeviceEvents(Device device, GdkEventMask events)
 	{
 		// void gtk_widget_add_device_events (GtkWidget *widget,  GdkDevice *device,  GdkEventMask events);
-		gtk_widget_add_device_events(gtkWidget, device, events);
+		gtk_widget_add_device_events(gtkWidget, (device is null) ? null : device.getDeviceStruct(), events);
 	}
 	
 	/**
@@ -3687,10 +3625,10 @@ public class Widget : ObjectG, BuildableIF
 	 * enabled = whether to enable the device
 	 * Since 3.0
 	 */
-	public void setDeviceEnabled(GdkDevice* device, int enabled)
+	public void setDeviceEnabled(Device device, int enabled)
 	{
 		// void gtk_widget_set_device_enabled (GtkWidget *widget,  GdkDevice *device,  gboolean enabled);
-		gtk_widget_set_device_enabled(gtkWidget, device, enabled);
+		gtk_widget_set_device_enabled(gtkWidget, (device is null) ? null : device.getDeviceStruct(), enabled);
 	}
 	
 	/**
@@ -3700,10 +3638,10 @@ public class Widget : ObjectG, BuildableIF
 	 * device = a GdkDevice
 	 * Returns: TRUE is device is enabled for widget Since 3.0
 	 */
-	public int getDeviceEnabled(GdkDevice* device)
+	public int getDeviceEnabled(Device device)
 	{
 		// gboolean gtk_widget_get_device_enabled (GtkWidget *widget,  GdkDevice *device);
-		return gtk_widget_get_device_enabled(gtkWidget, device);
+		return gtk_widget_get_device_enabled(gtkWidget, (device is null) ? null : device.getDeviceStruct());
 	}
 	
 	/**
@@ -4000,10 +3938,10 @@ public class Widget : ObjectG, BuildableIF
 	 * region = shape to be added, or NULL to remove an existing shape. [allow-none]
 	 * Since 3.0
 	 */
-	public void shapeCombineRegion(cairo_region_t* region)
+	public void shapeCombineRegion(Region region)
 	{
 		// void gtk_widget_shape_combine_region (GtkWidget *widget,  cairo_region_t *region);
-		gtk_widget_shape_combine_region(gtkWidget, region);
+		gtk_widget_shape_combine_region(gtkWidget, (region is null) ? null : region.getRegionStruct());
 	}
 	
 	/**
@@ -4014,10 +3952,10 @@ public class Widget : ObjectG, BuildableIF
 	 * region = shape to be added, or NULL to remove an existing shape. [allow-none]
 	 * Since 3.0
 	 */
-	public void inputShapeCombineRegion(cairo_region_t* region)
+	public void inputShapeCombineRegion(Region region)
 	{
 		// void gtk_widget_input_shape_combine_region  (GtkWidget *widget,  cairo_region_t *region);
-		gtk_widget_input_shape_combine_region(gtkWidget, region);
+		gtk_widget_input_shape_combine_region(gtkWidget, (region is null) ? null : region.getRegionStruct());
 	}
 	
 	/**
@@ -4100,10 +4038,10 @@ public class Widget : ObjectG, BuildableIF
 	 * of previous calls to gtk_widget_override_background_color(). [allow-none]
 	 * Since 3.0
 	 */
-	public void overrideBackgroundColor(GtkStateFlags state, GdkRGBA* color)
+	public void overrideBackgroundColor(GtkStateFlags state, RGBA color)
 	{
 		// void gtk_widget_override_background_color  (GtkWidget *widget,  GtkStateFlags state,  const GdkRGBA *color);
-		gtk_widget_override_background_color(gtkWidget, state, color);
+		gtk_widget_override_background_color(gtkWidget, state, (color is null) ? null : color.getRGBAStruct());
 	}
 	
 	/**
@@ -4132,10 +4070,10 @@ public class Widget : ObjectG, BuildableIF
 	 * of previous calls to gtk_widget_override_color(). [allow-none]
 	 * Since 3.0
 	 */
-	public void overrideColor(GtkStateFlags state, GdkRGBA* color)
+	public void overrideColor(GtkStateFlags state, RGBA color)
 	{
 		// void gtk_widget_override_color (GtkWidget *widget,  GtkStateFlags state,  const GdkRGBA *color);
-		gtk_widget_override_color(gtkWidget, state, color);
+		gtk_widget_override_color(gtkWidget, state, (color is null) ? null : color.getRGBAStruct());
 	}
 	
 	/**
@@ -4164,10 +4102,10 @@ public class Widget : ObjectG, BuildableIF
 	 * calls to gtk_widget_override_symbolic_color(). [allow-none]
 	 * Since 3.0
 	 */
-	public void overrideSymbolicColor(string name, GdkRGBA* color)
+	public void overrideSymbolicColor(string name, RGBA color)
 	{
 		// void gtk_widget_override_symbolic_color (GtkWidget *widget,  const gchar *name,  const GdkRGBA *color);
-		gtk_widget_override_symbolic_color(gtkWidget, Str.toStringz(name), color);
+		gtk_widget_override_symbolic_color(gtkWidget, Str.toStringz(name), (color is null) ? null : color.getRGBAStruct());
 	}
 	
 	/**
@@ -4186,10 +4124,10 @@ public class Widget : ObjectG, BuildableIF
 	 * calls to of gtk_widget_override_cursor(). [allow-none]
 	 * Since 3.0
 	 */
-	public void overrideCursor(GdkRGBA* cursor, GdkRGBA* secondaryCursor)
+	public void overrideCursor(RGBA cursor, RGBA secondaryCursor)
 	{
 		// void gtk_widget_override_cursor (GtkWidget *widget,  const GdkRGBA *cursor,  const GdkRGBA *secondary_cursor);
-		gtk_widget_override_cursor(gtkWidget, cursor, secondaryCursor);
+		gtk_widget_override_cursor(gtkWidget, (cursor is null) ? null : cursor.getRGBAStruct(), (secondaryCursor is null) ? null : secondaryCursor.getRGBAStruct());
 	}
 	
 	/**
@@ -4563,10 +4501,10 @@ public class Widget : ObjectG, BuildableIF
 	 * region = region to draw
 	 * Since 3.0
 	 */
-	public void queueDrawRegion(cairo_region_t* region)
+	public void queueDrawRegion(Region region)
 	{
 		// void gtk_widget_queue_draw_region (GtkWidget *widget,  cairo_region_t *region);
-		gtk_widget_queue_draw_region(gtkWidget, region);
+		gtk_widget_queue_draw_region(gtkWidget, (region is null) ? null : region.getRegionStruct());
 	}
 	
 	/**
@@ -4748,10 +4686,15 @@ public class Widget : ObjectG, BuildableIF
 	 * of widget->window for widgets with their own window.
 	 * Returns: A newly allocated region holding the intersection of widget and region. The coordinates of the return value are relative to widget->window for NO_WINDOW widgets, and relative to the parent window of widget->window for widgets with their own window.
 	 */
-	public cairo_region_t* regionIntersect(cairo_region_t* region)
+	public Region regionIntersect(Region region)
 	{
 		// cairo_region_t * gtk_widget_region_intersect (GtkWidget *widget,  const cairo_region_t *region);
-		return gtk_widget_region_intersect(gtkWidget, region);
+		auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Region(cast(cairo_region_t*) p);
 	}
 	
 	/**
@@ -5415,6 +5358,22 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Returns the widget's window if it is realized, NULL otherwise
+	 * Since 2.14
+	 * Returns: widget's window. [transfer none]
+	 */
+	public Window getWindow()
+	{
+		// GdkWindow * gtk_widget_get_window (GtkWidget *widget);
+		auto p = gtk_widget_get_window(gtkWidget);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GdkWindow*) p);
+	}
+	
+	/**
 	 * This function is supposed to be called in "draw"
 	 * implementations for widgets that support multiple windows.
 	 * cr must be untransformed from invoking of the draw function.
@@ -5429,10 +5388,10 @@ public class Widget : ObjectG, BuildableIF
 	 * window = the window to check
 	 * Returns: TRUE if window should be drawn Since 3.0
 	 */
-	public static int cairoShouldDrawWindow(cairo_t* cr, Window window)
+	public static int cairoShouldDrawWindow(Context cr, Window window)
 	{
 		// gboolean gtk_cairo_should_draw_window (cairo_t *cr,  GdkWindow *window);
-		return gtk_cairo_should_draw_window(cr, (window is null) ? null : window.getWindowStruct());
+		return gtk_cairo_should_draw_window((cr is null) ? null : cr.getContextStruct(), (window is null) ? null : window.getWindowStruct());
 	}
 	
 	/**
@@ -5450,10 +5409,10 @@ public class Widget : ObjectG, BuildableIF
 	 * window = the window to transform the context to
 	 * Since 3.0
 	 */
-	public static void cairoTransformToWindow(cairo_t* cr, Widget widget, Window window)
+	public static void cairoTransformToWindow(Context cr, Widget widget, Window window)
 	{
 		// void gtk_cairo_transform_to_window (cairo_t *cr,  GtkWidget *widget,  GdkWindow *window);
-		gtk_cairo_transform_to_window(cr, (widget is null) ? null : widget.getWidgetStruct(), (window is null) ? null : window.getWindowStruct());
+		gtk_cairo_transform_to_window((cr is null) ? null : cr.getContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (window is null) ? null : window.getWindowStruct());
 	}
 	
 	/**
@@ -5478,6 +5437,32 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// int gtk_widget_get_allocated_height (GtkWidget *widget);
 		return gtk_widget_get_allocated_height(gtkWidget);
+	}
+	
+	/**
+	 * Retrieves the widget's allocation.
+	 * Note, when implementing a GtkContainer: a widget's allocation will
+	 * be its "adjusted" allocation, that is, the widget's parent
+	 * container typically calls gtk_widget_size_allocate() with an
+	 * allocation, and that allocation is then adjusted (to handle margin
+	 * and alignment for example) before assignment to the widget.
+	 * gtk_widget_get_allocation() returns the adjusted allocation that
+	 * was actually assigned to the widget. The adjusted allocation is
+	 * guaranteed to be completely contained within the
+	 * gtk_widget_size_allocate() allocation, however. So a GtkContainer
+	 * is guaranteed that its children stay inside the assigned bounds,
+	 * but not that they have exactly the bounds the container assigned.
+	 * There is no way to get the original allocation assigned by
+	 * gtk_widget_size_allocate(), since it isn't stored; if a container
+	 * implementation needs that information it will have to track it itself.
+	 * Since 2.18
+	 * Params:
+	 * allocation = a pointer to a GtkAllocation to copy to. [out]
+	 */
+	public void getAllocation(out GtkAllocation allocation)
+	{
+		// void gtk_widget_get_allocation (GtkWidget *widget,  GtkAllocation *allocation);
+		gtk_widget_get_allocation(gtkWidget, &allocation);
 	}
 	
 	/**
@@ -5960,10 +5945,10 @@ public class Widget : ObjectG, BuildableIF
 	 * device = a GdkDevice
 	 * Returns: TRUE if there is an ongoing grab on device by another GtkWidget than widget. Since 3.0
 	 */
-	public int deviceIsShadowed(GdkDevice* device)
+	public int deviceIsShadowed(Device device)
 	{
 		// gboolean gtk_widget_device_is_shadowed (GtkWidget *widget,  GdkDevice *device);
-		return gtk_widget_device_is_shadowed(gtkWidget, device);
+		return gtk_widget_device_is_shadowed(gtkWidget, (device is null) ? null : device.getDeviceStruct());
 	}
 	
 	/**
@@ -5972,20 +5957,30 @@ public class Widget : ObjectG, BuildableIF
 	 * created.
 	 * Returns: The GtkWidgetPath representing widget. [transfer none]
 	 */
-	public GtkWidgetPath* getPath()
+	public WidgetPath getPath()
 	{
 		// GtkWidgetPath * gtk_widget_get_path (GtkWidget *widget);
-		return gtk_widget_get_path(gtkWidget);
+		auto p = gtk_widget_get_path(gtkWidget);
+		if(p is null)
+		{
+			return null;
+		}
+		return new WidgetPath(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
 	 * Returns the style context associated to widget.
 	 * Returns: a GtkStyleContext. This memory is owned by widget and must not be freed. [transfer none]
 	 */
-	public GtkStyleContext* getStyleContext()
+	public StyleContext getStyleContext()
 	{
 		// GtkStyleContext * gtk_widget_get_style_context (GtkWidget *widget);
-		return gtk_widget_get_style_context(gtkWidget);
+		auto p = gtk_widget_get_style_context(gtkWidget);
+		if(p is null)
+		{
+			return null;
+		}
+		return new StyleContext(cast(GtkStyleContext*) p);
 	}
 	
 	/**
@@ -5998,39 +5993,6 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// void gtk_widget_reset_style (GtkWidget *widget);
 		gtk_widget_reset_style(gtkWidget);
-	}
-	
-	/**
-	 * Allocates a new GtkRequisition structure and initializes its elements to zero.
-	 * Returns: a new empty GtkRequisition. The newly allocated GtkRequisition should be freed with gtk_requisition_free(). Since 3.0
-	 */
-	public static GtkRequisition* requisitionNew()
-	{
-		// GtkRequisition * gtk_requisition_new (void);
-		return gtk_requisition_new();
-	}
-	
-	/**
-	 * Copies a GtkRequisition.
-	 * Params:
-	 * requisition = a GtkRequisition
-	 * Returns: a copy of requisition
-	 */
-	public static GtkRequisition* requisitionCopy(GtkRequisition* requisition)
-	{
-		// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
-		return gtk_requisition_copy(requisition);
-	}
-	
-	/**
-	 * Frees a GtkRequisition.
-	 * Params:
-	 * requisition = a GtkRequisition
-	 */
-	public static void requisitionFree(GtkRequisition* requisition)
-	{
-		// void gtk_requisition_free (GtkRequisition *requisition);
-		gtk_requisition_free(requisition);
 	}
 	
 	/**
@@ -6047,10 +6009,10 @@ public class Widget : ObjectG, BuildableIF
 	 * naturalHeight = location to store the natural height, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredHeight(int* minimumHeight, int* naturalHeight)
+	public void getPreferredHeight(out int minimumHeight, out int naturalHeight)
 	{
 		// void gtk_widget_get_preferred_height (GtkWidget *widget,  gint *minimum_height,  gint *natural_height);
-		gtk_widget_get_preferred_height(gtkWidget, minimumHeight, naturalHeight);
+		gtk_widget_get_preferred_height(gtkWidget, &minimumHeight, &naturalHeight);
 	}
 	
 	/**
@@ -6068,10 +6030,10 @@ public class Widget : ObjectG, BuildableIF
 	 * naturalWidth = location to store the natural width, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredWidth(int* minimumWidth, int* naturalWidth)
+	public void getPreferredWidth(out int minimumWidth, out int naturalWidth)
 	{
 		// void gtk_widget_get_preferred_width (GtkWidget *widget,  gint *minimum_width,  gint *natural_width);
-		gtk_widget_get_preferred_width(gtkWidget, minimumWidth, naturalWidth);
+		gtk_widget_get_preferred_width(gtkWidget, &minimumWidth, &naturalWidth);
 	}
 	
 	/**
@@ -6088,10 +6050,10 @@ public class Widget : ObjectG, BuildableIF
 	 * naturalHeight = location for storing the natural height, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredHeightForWidth(int width, int* minimumHeight, int* naturalHeight)
+	public void getPreferredHeightForWidth(int width, out int minimumHeight, out int naturalHeight)
 	{
 		// void gtk_widget_get_preferred_height_for_width  (GtkWidget *widget,  gint width,  gint *minimum_height,  gint *natural_height);
-		gtk_widget_get_preferred_height_for_width(gtkWidget, width, minimumHeight, naturalHeight);
+		gtk_widget_get_preferred_height_for_width(gtkWidget, width, &minimumHeight, &naturalHeight);
 	}
 	
 	/**
@@ -6108,10 +6070,10 @@ public class Widget : ObjectG, BuildableIF
 	 * naturalWidth = location for storing the natural width, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredWidthForHeight(int height, int* minimumWidth, int* naturalWidth)
+	public void getPreferredWidthForHeight(int height, out int minimumWidth, out int naturalWidth)
 	{
 		// void gtk_widget_get_preferred_width_for_height  (GtkWidget *widget,  gint height,  gint *minimum_width,  gint *natural_width);
-		gtk_widget_get_preferred_width_for_height(gtkWidget, height, minimumWidth, naturalWidth);
+		gtk_widget_get_preferred_width_for_height(gtkWidget, height, &minimumWidth, &naturalWidth);
 	}
 	
 	/**
@@ -6147,10 +6109,10 @@ public class Widget : ObjectG, BuildableIF
 	 * naturalSize = location for storing the natural size, or NULL. [out][allow-none]
 	 * Since 3.0
 	 */
-	public void getPreferredSize(GtkRequisition* minimumSize, GtkRequisition* naturalSize)
+	public void getPreferredSize(out GtkRequisition minimumSize, out GtkRequisition naturalSize)
 	{
 		// void gtk_widget_get_preferred_size (GtkWidget *widget,  GtkRequisition *minimum_size,  GtkRequisition *natural_size);
-		gtk_widget_get_preferred_size(gtkWidget, minimumSize, naturalSize);
+		gtk_widget_get_preferred_size(gtkWidget, &minimumSize, &naturalSize);
 	}
 	
 	/**
@@ -6162,15 +6124,14 @@ public class Widget : ObjectG, BuildableIF
 	 * Params:
 	 * extraSpace = Extra space to redistribute among children after subtracting
 	 * minimum sizes and any child padding from the overall allocation
-	 * nRequestedSizes = Number of requests to fit into the allocation
 	 * sizes = An array of structs with a client pointer and a minimum/natural size
 	 * in the orientation of the allocation.
 	 * Returns: The remainder of extra_space after redistributing space to sizes.
 	 */
-	public static int distributeNaturalAllocation(int extraSpace, uint nRequestedSizes, GtkRequestedSize* sizes)
+	public static int distributeNaturalAllocation(int extraSpace, GtkRequestedSize[] sizes)
 	{
 		// gint gtk_distribute_natural_allocation (gint extra_space,  guint n_requested_sizes,  GtkRequestedSize *sizes);
-		return gtk_distribute_natural_allocation(extraSpace, nRequestedSizes, sizes);
+		return gtk_distribute_natural_allocation(extraSpace, cast(int) sizes.length, sizes.ptr);
 	}
 	
 	/**

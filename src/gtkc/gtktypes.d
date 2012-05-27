@@ -1962,66 +1962,6 @@ public enum GtkSizeGroupMode
 }
 alias GtkSizeGroupMode SizeGroupMode;
 
-/**
- * An enumeration representing directional movements within a menu.
- * GTK_MENU_DIR_PARENT
- * To the parent menu shell
- * GTK_MENU_DIR_CHILD
- * To the submenu, if any, associated with the item
- * GTK_MENU_DIR_NEXT
- * To the next menu item
- * GTK_MENU_DIR_PREV
- * To the previous menu item
- * Property Details
- * The "take-focus" property
- *  "take-focus" gboolean : Read / Write
- * A boolean that determines whether the menu and its submenus grab the
- * keyboard focus. See gtk_menu_shell_set_take_focus() and
- * gtk_menu_shell_get_take_focus().
- * Default value: TRUE
- * Since 2.8
- * Signal Details
- * The "activate-current" signal
- * void user_function (GtkMenuShell *menushell,
- *  gboolean force_hide,
- *  gpointer user_data) : Action
- * An action signal that activates the current menu item within
- * the menu shell.
- * menushell :
- * the object which received the signal
- * force_hide :
- * if TRUE, hide the menu after activating the menu item
- * user_data :
- * user data set when the signal handler was connected.
- */
-public enum GtkMenuDirectionType
-{
-	PARENT,
-	CHILD,
-	NEXT,
-	PREV
-}
-alias GtkMenuDirectionType MenuDirectionType;
-
-/**
- * Determines how GTK+ handles the sensitivity of stepper arrows
- * at the end of range widgets.
- * GTK_SENSITIVITY_AUTO
- * The arrow is made insensitive if the
- *  thumb is at the end
- * GTK_SENSITIVITY_ON
- * The arrow is always sensitive
- * GTK_SENSITIVITY_OFF
- * The arrow is always insensitive
- */
-public enum GtkSensitivityType
-{
-	AUTO,
-	ON,
-	OFF
-}
-alias GtkSensitivityType SensitivityType;
-
 public enum GtkWidgetHelpType
 {
 	TOOLTIP,
@@ -2084,6 +2024,66 @@ public enum GtkAlign
 	CENTER
 }
 alias GtkAlign Align;
+
+/**
+ * An enumeration representing directional movements within a menu.
+ * GTK_MENU_DIR_PARENT
+ * To the parent menu shell
+ * GTK_MENU_DIR_CHILD
+ * To the submenu, if any, associated with the item
+ * GTK_MENU_DIR_NEXT
+ * To the next menu item
+ * GTK_MENU_DIR_PREV
+ * To the previous menu item
+ * Property Details
+ * The "take-focus" property
+ *  "take-focus" gboolean : Read / Write
+ * A boolean that determines whether the menu and its submenus grab the
+ * keyboard focus. See gtk_menu_shell_set_take_focus() and
+ * gtk_menu_shell_get_take_focus().
+ * Default value: TRUE
+ * Since 2.8
+ * Signal Details
+ * The "activate-current" signal
+ * void user_function (GtkMenuShell *menushell,
+ *  gboolean force_hide,
+ *  gpointer user_data) : Action
+ * An action signal that activates the current menu item within
+ * the menu shell.
+ * menushell :
+ * the object which received the signal
+ * force_hide :
+ * if TRUE, hide the menu after activating the menu item
+ * user_data :
+ * user data set when the signal handler was connected.
+ */
+public enum GtkMenuDirectionType
+{
+	PARENT,
+	CHILD,
+	NEXT,
+	PREV
+}
+alias GtkMenuDirectionType MenuDirectionType;
+
+/**
+ * Determines how GTK+ handles the sensitivity of stepper arrows
+ * at the end of range widgets.
+ * GTK_SENSITIVITY_AUTO
+ * The arrow is made insensitive if the
+ *  thumb is at the end
+ * GTK_SENSITIVITY_ON
+ * The arrow is always sensitive
+ * GTK_SENSITIVITY_OFF
+ * The arrow is always insensitive
+ */
+public enum GtkSensitivityType
+{
+	AUTO,
+	ON,
+	OFF
+}
+alias GtkSensitivityType SensitivityType;
 
 /**
  * Error codes for GtkRecentManager operations
@@ -4378,49 +4378,6 @@ public struct GtkAccessible{}
 /**
  * Main Gtk struct.
  */
-public struct GtkBin{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkContainer{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkMenuShell{}
-
-
-/**
- * Main Gtk struct.
- * The GtkMisc struct contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * gfloat xalign;
- * the horizontal alignment, from 0 (left) to 1 (right).
- * gfloat yalign;
- * the vertical alignment, from 0 (top) to 1 (bottom).
- * guint16 xpad;
- * the amount of space to add on the left and right of the widget,
- * in pixels.
- * guint16 ypad;
- * the amount of space to add on the top and bottom of the widget,
- * in pixels.
- */
-public struct GtkMisc{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkRange{}
-
-
-/**
- * Main Gtk struct.
- */
 public struct GtkWidget{}
 
 
@@ -4455,6 +4412,49 @@ public struct GtkRequestedSize
 	int minimumSize;
 	int naturalSize;
 }
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkContainer{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkBin{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkMenuShell{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkMisc struct contains the following fields.
+ * (These fields should be considered read-only. They should never be set by
+ * an application.)
+ * gfloat xalign;
+ * the horizontal alignment, from 0 (left) to 1 (right).
+ * gfloat yalign;
+ * the vertical alignment, from 0 (top) to 1 (bottom).
+ * guint16 xpad;
+ * the amount of space to add on the left and right of the widget,
+ * in pixels.
+ * guint16 ypad;
+ * the amount of space to add on the top and bottom of the widget,
+ * in pixels.
+ */
+public struct GtkMisc{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkRange{}
 
 
 /**

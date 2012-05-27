@@ -39,18 +39,15 @@
  * 	- OrientableIF
  * prefixes:
  * 	- gtk_range_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gdk.Rectangle
  * 	- gtk.Adjustment
  * 	- gtk.OrientableIF
  * 	- gtk.OrientableT
  * structWrap:
- * 	- GdkRectangle* -> Rectangle
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
  * local aliases:
@@ -67,7 +64,6 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gdk.Rectangle;
 private import gtk.Adjustment;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
@@ -587,10 +583,10 @@ public class Range : Widget, OrientableIF
 	 * range = a GtkRange
 	 * rangeRect = return location for the range rectangle. [out]
 	 */
-	public void getRangeRect(Rectangle rangeRect)
+	public void getRangeRect(out Rectangle rangeRect)
 	{
 		// void gtk_range_get_range_rect (GtkRange *range,  GdkRectangle *range_rect);
-		gtk_range_get_range_rect(gtkRange, (rangeRect is null) ? null : rangeRect.getRectangleStruct());
+		gtk_range_get_range_rect(gtkRange, &rangeRect);
 	}
 	
 	/**

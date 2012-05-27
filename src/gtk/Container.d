@@ -38,24 +38,27 @@
  * implements:
  * prefixes:
  * 	- gtk_container_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
+ * 	- cairo.Context
  * 	- glib.Str
- * 	- gtk.Adjustment
  * 	- glib.ListG
- * 	- gobject.Value
  * 	- gobject.ParamSpec
+ * 	- gobject.Value
+ * 	- gtk.Adjustment
+ * 	- gtk.Widget
+ * 	- gtk.WidgetPath
  * structWrap:
  * 	- GList* -> ListG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
  * 	- GtkAdjustment* -> Adjustment
- * 	- GtkContainerClass* -> Container
  * 	- GtkWidget* -> Widget
+ * 	- GtkWidgetPath* -> WidgetPath
+ * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
  * overrides:
@@ -71,11 +74,14 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import cairo.Context;
 private import glib.Str;
-private import gtk.Adjustment;
 private import glib.ListG;
-private import gobject.Value;
 private import gobject.ParamSpec;
+private import gobject.Value;
+private import gtk.Adjustment;
+private import gtk.Widget;
+private import gtk.WidgetPath;
 
 
 
@@ -490,10 +496,15 @@ public class Container : Widget
 	 * child = a child of container
 	 * Returns: A newly created GtkWidgetPath
 	 */
-	public GtkWidgetPath* getPathForChild(Widget child)
+	public WidgetPath getPathForChild(Widget child)
 	{
 		// GtkWidgetPath * gtk_container_get_path_for_child (GtkContainer *container,  GtkWidget *child);
-		return gtk_container_get_path_for_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
+		auto p = gtk_container_get_path_for_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new WidgetPath(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -756,10 +767,10 @@ public class Container : Widget
 	 * in container's draw function, consider using cairo_save() and
 	 * cairo_restore() before calling this function.
 	 */
-	public void propagateDraw(Widget child, cairo_t* cr)
+	public void propagateDraw(Widget child, Context cr)
 	{
 		// void gtk_container_propagate_draw (GtkContainer *container,  GtkWidget *child,  cairo_t *cr);
-		gtk_container_propagate_draw(gtkContainer, (child is null) ? null : child.getWidgetStruct(), cr);
+		gtk_container_propagate_draw(gtkContainer, (child is null) ? null : child.getWidgetStruct(), (cr is null) ? null : cr.getContextStruct());
 	}
 	
 	/**
@@ -838,10 +849,10 @@ public class Container : Widget
 	 * propertyId = the id for the property
 	 * pspec = the GParamSpec for the property
 	 */
-	public static void classInstallChildProperty(Container cclass, uint propertyId, ParamSpec pspec)
+	public static void classInstallChildProperty(GtkContainerClass* cclass, uint propertyId, ParamSpec pspec)
 	{
 		// void gtk_container_class_install_child_property  (GtkContainerClass *cclass,  guint property_id,  GParamSpec *pspec);
-		gtk_container_class_install_child_property((cclass is null) ? null : cclass.getContainerStruct(), propertyId, (pspec is null) ? null : pspec.getParamSpecStruct());
+		gtk_container_class_install_child_property(cclass, propertyId, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
 	/**
@@ -882,9 +893,9 @@ public class Container : Widget
 	 * Params:
 	 * klass = the class struct of a GtkContainer subclass
 	 */
-	public static void classHandleBorderWidth(Container klass)
+	public static void classHandleBorderWidth(GtkContainerClass* klass)
 	{
 		// void gtk_container_class_handle_border_width  (GtkContainerClass *klass);
-		gtk_container_class_handle_border_width((klass is null) ? null : klass.getContainerStruct());
+		gtk_container_class_handle_border_width(klass);
 	}
 }
