@@ -31,12 +31,11 @@
  * ctorStrct=
  * clss    = NumerableIcon
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = GioEmblemedIcon
  * implements:
- * 	- IconIF
  * prefixes:
  * 	- gtk_numerable_icon_
  * omit structs:
@@ -49,7 +48,6 @@
  * 	- gio.Icon
  * 	- gio.IconIF
  * 	- gtk.StyleContext
- * 	- gio.IconT
  * structWrap:
  * 	- GIcon* -> IconIF
  * 	- GtkStyleContext* -> StyleContext
@@ -71,6 +69,8 @@ private import gio.EmblemedIcon : GioEmblemedIcon = EmblemedIcon;
 private import gio.Icon;
 private import gio.IconIF;
 private import gtk.StyleContext;
+
+
 
 
 /**
@@ -128,7 +128,7 @@ public class NumerableIcon : GioEmblemedIcon
 		super.setStruct(obj);
 		gtkNumerableIcon = cast(GtkNumerableIcon*)obj;
 	}
-
+	
 	/**
 	 */
 	

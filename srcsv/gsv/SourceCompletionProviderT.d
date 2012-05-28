@@ -46,11 +46,11 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
- * 	- gtk.TextIter
- * 	- gtk.Widget
  * 	- gsv.SourceCompletionContext
  * 	- gsv.SourceCompletionInfo
  * 	- gsv.SourceCompletionProposalIF
+ * 	- gtk.TextIter
+ * 	- gtk.Widget
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkSourceCompletionContext* -> SourceCompletionContext
@@ -73,11 +73,11 @@ public import glib.ConstructionException;
 
 public import glib.Str;
 public import gdk.Pixbuf;
-public import gtk.TextIter;
-public import gtk.Widget;
 public import gsv.SourceCompletionContext;
 public import gsv.SourceCompletionInfo;
 public import gsv.SourceCompletionProposalIF;
+public import gtk.TextIter;
+public import gtk.Widget;
 
 
 

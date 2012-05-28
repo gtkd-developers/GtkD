@@ -45,7 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gsv.SourceLanguage
- * 	- gsv.SourceLanguageManager
  * structWrap:
  * 	- GtkSourceLanguage* -> SourceLanguage
  * 	- GtkSourceLanguageManager* -> SourceLanguageManager
@@ -64,7 +63,6 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gsv.SourceLanguage;
-private import gsv.SourceLanguageManager;
 
 
 

@@ -43,8 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gsv.SourceStyle
  * 	- glib.Str
+ * 	- gsv.SourceStyle
  * structWrap:
  * 	- GtkSourceStyle* -> SourceStyle
  * module aliases:
@@ -60,8 +60,8 @@ private import gsvc.gsv;
 private import glib.ConstructionException;
 
 
-private import gsv.SourceStyle;
 private import glib.Str;
+private import gsv.SourceStyle;
 
 
 

@@ -26,6 +26,57 @@ module gsvc.gsvtypes;
 
 public import gtkc.gtktypes;
 
+enum GtkSourceBracketMatchType
+{
+	NONE,
+	OUT_OF_RANGE,
+	NOT_FOUND,
+	FOUND
+}
+alias GtkSourceBracketMatchType SourceBracketMatchType;
+/**
+ * GTK_SOURCE_COMPLETION_ACTIVATION_NONE
+ * none.
+ * GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE
+ * interactive activation
+ * GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED
+ * user requested activation
+ * (e.g. through a keyboard accelerator from the view)
+ */
+public enum GtkSourceCompletionActivation
+{
+	NONE = 0,
+	INTERACTIVE = 1 << 0,
+	USER_REQUESTED = 1 << 1
+}
+alias GtkSourceCompletionActivation SourceCompletionActivation;
+
+/**
+ * GTK_SOURCE_GUTTER_RENDERER_STATE_NORMAL: normal state
+ * GTK_SOURCE_GUTTER_RENDERER_STATE_CURSOR: area in the renderer represents the
+ * line on which the insert cursor is currently positioned
+ * GTK_SOURCE_GUTTER_RENDERER_STATE_PRELIT: the mouse pointer is currently
+ * over the activatable area of the renderer
+ * GTK_SOURCE_GUTTER_RENDERER_STATE_SELECTED: area in the renderer represents
+ * a line in the buffer which contains part of the selection
+ */
+public enum GtkSourceGutterRendererState
+{
+	NORMAL = 0,
+	CURSOR = 1 << 0,
+	PRELIT = 1 << 1,
+	SELECTED = 1 << 2
+}
+alias GtkSourceGutterRendererState SourceGutterRendererState;
+
+public enum GtkSourceGutterRendererAlignmentMode
+{
+	MODE_CELL,
+	MODE_FIRST,
+	MODE_LAST
+}
+alias GtkSourceGutterRendererAlignmentMode SourceGutterRendererAlignmentMode;
+
 /**
  * GTK_SOURCE_SMART_HOME_END_DISABLED
  * smart-home-end disabled.
@@ -106,32 +157,9 @@ public enum GtkSourceViewGutterPosition
 }
 alias GtkSourceViewGutterPosition SourceViewGutterPosition;
 
-/**
- * GTK_SOURCE_COMPLETION_ACTIVATION_NONE
- * none.
- * GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE
- * interactive activation
- * GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED
- * user requested activation
- * (e.g. through a keyboard accelerator from the view)
- */
-public enum GtkSourceCompletionActivation
-{
-	NONE = 0,
-	INTERACTIVE = 1 << 0,
-	USER_REQUESTED = 1 << 1
-}
-alias GtkSourceCompletionActivation SourceCompletionActivation;
-
 public struct GtkTextViewClass{}
 
 public struct GtkTextBufferClass{}
-
-/**
- * Main Gtk struct.
- */
-public struct GtkSourceView{}
-
 
 /**
  * Main Gtk struct.
@@ -184,7 +212,40 @@ public struct GtkSourceGutter{}
 /**
  * Main Gtk struct.
  */
+public struct GtkSourceGutterRenderer
+{
+	GInitiallyUnowned parent;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceGutterRendererText{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceGutterRendererPixbuf{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkSourceMark{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceMarkAttributes{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceView{}
 
 
 /**
@@ -221,4 +282,10 @@ public struct GtkSourceStyleScheme{}
  * Main Gtk struct.
  */
 public struct GtkSourceStyleSchemeManager{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceUndoManager{}
 

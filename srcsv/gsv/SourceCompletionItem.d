@@ -42,6 +42,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_source_completion_item_new
+ * 	- gtk_source_completion_item_new_with_markup
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -125,9 +127,6 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	mixin SourceCompletionProposalT!(GtkSourceCompletionItem);
 	
 	/**
-	 */
-	
-	/**
 	 * Create a new GtkSourceCompletionItem with label label, icon icon and
 	 * extra information info. Both icon and info can be NULL in which case
 	 * there will be no icon shown and no extra information available.
@@ -136,18 +135,34 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 * text = The item text.
 	 * icon = The item icon. [allow-none]
 	 * info = The item extra information. [allow-none]
+	 * markup = If true label will be treated as markup. using gtk_source_completion_item_new_with_markup.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string label, string text, Pixbuf icon, string info)
+	public this (string label, string text, Pixbuf icon, string info, bool markup = false)
 	{
-		// GtkSourceCompletionItem * gtk_source_completion_item_new  (const gchar *label,  const gchar *text,  GdkPixbuf *icon,  const gchar *info);
-		auto p = gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
+		GtkSourceCompletionItem* p;
+		
+		if ( markup )
+		{
+			// GtkSourceCompletionItem * gtk_source_completion_item_new_with_markup  (const gchar *markup,  const gchar *text,  GdkPixbuf *icon,  const gchar *info);
+			p = gtk_source_completion_item_new_with_markup(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
+		}
+		else
+		{
+			// GtkSourceCompletionItem * gtk_source_completion_item_new  (const gchar *label,  const gchar *text,  GdkPixbuf *icon,  const gchar *info);
+			p = gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
+			
+		}
+		
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info))");
 		}
 		this(cast(GtkSourceCompletionItem*) p);
 	}
+	
+	/**
+	 */
 	
 	/**
 	 * Creates a new GtkSourceCompletionItem from a stock item. If label is NULL,

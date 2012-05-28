@@ -37,6 +37,14 @@ addAliases: start
 addAliases: end
 
 addEnums: start
+enum GtkSourceBracketMatchType
+{
+	NONE,
+	OUT_OF_RANGE,
+	NOT_FOUND,
+	FOUND
+}
+alias GtkSourceBracketMatchType SourceBracketMatchType;
 addEnums: end
 
 addStructs: start
@@ -66,62 +74,26 @@ wrap: sourceview
 ### GtkSourceView #########################################
 ###########################################################
 
-
-file: GtkSourceView.html
-struct: GtkSourceView
-class: SourceView
-prefix: gtk_source_view_
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: gdk.Color
-structWrap: GdkColor* Color
-import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
-import: gsv.SourceGutter
-structWrap: GtkSourceGutter* SourceGutter
-import: gsv.SourceBuffer
-structWrap: GtkSourceBuffer* SourceBuffer
-import: gtkc.gtk
-import: glib.Str
-
-code: start
-
-	/**
-	 * Returns the GtkSourceBuffer being displayed by this source view.
-	 * The reference count on the buffer is not incremented; the caller
-	 * of this function won't own a new reference.
-	 * Returns:
-	 *  a GtkSourceBuffer
-	 */
-	public override SourceBuffer getBuffer()
-	{
-		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
-		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
-	}
-	
-
-
-code: end
-
-outFile: SourceView
-
 file: GtkSourceBuffer.html
 struct: GtkSourceBuffer
 class: SourceBuffer
 prefix: gtk_source_buffer_
 import: glib.Str
-import: gtk.TextTagTable
-structWrap: GtkTextTagTable* TextTagTable
-import: gsv.SourceLanguage
-structWrap: GtkSourceLanguage* SourceLanguage
-import: gsv.SourceStyleScheme
-structWrap: GtkSourceStyleScheme* SourceStyleScheme
-import: gsv.SourceMark
-structWrap: GtkSourceMark* SourceMark
 import: glib.ListSG
-structWrap: GSList* ListSG
+import: gsv.SourceLanguage
+import: gsv.SourceMark
+import: gsv.SourceStyleScheme
+import: gsv.SourceUndoManager
+import: gsv.SourceUndoManagerIF
 import: gtk.TextIter
+import: gtk.TextTagTable
+structWrap: GSList* ListSG
+structWrap: GtkSourceLanguage* SourceLanguage
+structWrap: GtkSourceMark* SourceMark
+structWrap: GtkSourceStyleScheme* SourceStyleScheme
+structWrap: GtkSourceUndoManager* SourceUndoManagerIF
 structWrap: GtkTextIter* TextIter
+structWrap: GtkTextTagTable* TextTagTable
 outFile: SourceBuffer
 
 file: GtkSourceCompletion.html
@@ -131,30 +103,29 @@ prefix: gtk_source_completion_
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListG
-structWrap: GList* ListG
-import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
-import: gsv.SourceCompletionInfo
-structWrap: GtkSourceCompletionInfo* SourceCompletionInfo
-import: gsv.SourceView
-structWrap: GtkSourceView* SourceView
 import: gsv.SourceCompletionContext
-structWrap: GtkSourceCompletionContext* SourceCompletionContext
+import: gsv.SourceCompletionInfo
 import: gsv.SourceCompletionProviderIF
+import: gsv.SourceView
+import: gtk.TextIter
+structWrap: GList* ListG
+structWrap: GtkSourceCompletionContext* SourceCompletionContext
+structWrap: GtkSourceCompletionInfo* SourceCompletionInfo
 structWrap: GtkSourceCompletionProvider* SourceCompletionProviderIF
+structWrap: GtkSourceView* SourceView
+structWrap: GtkTextIter* TextIter
 outFile: SourceCompletion
 
 file: gtksourceview-3.0-completioncontext.html
 struct: GtkSourceCompletionContext
 class: SourceCompletionContext
 prefix: gtk_source_completion_context_
-import: glib.Str
 import: glib.ListG
-structWrap: GList* ListG
-import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
 import: gsv.SourceCompletionProviderIF
+import: gtk.TextIter
+structWrap: GList* ListG
 structWrap: GtkSourceCompletionProvider* SourceCompletionProviderIF
+structWrap: GtkTextIter* TextIter
 nocode: gtk_source_completion_context_add_proposals
 
 code: start
@@ -181,10 +152,10 @@ struct: GtkSourceCompletionInfo
 class: SourceCompletionInfo
 prefix: gtk_source_completion_info_
 import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
 import: gtk.TextView
-structWrap: GtkTextView* TextView
 import: gtk.Widget
+structWrap: GtkTextIter* TextIter
+structWrap: GtkTextView* TextView
 structWrap: GtkWidget* Widget
 outFile: SourceCompletionInfo
 
@@ -201,9 +172,47 @@ structWrap: GdkPixbuf* Pixbuf
 import: gsv.SourceCompletionProposalIF
 import: gsv.SourceCompletionProposalT
 
+nocode: gtk_source_completion_item_new
+nocode: gtk_source_completion_item_new_with_markup
+
 code: start
 	// add the SourceCompletionProposal capabilities
 	mixin SourceCompletionProposalT!(GtkSourceCompletionItem);
+
+	/**
+	 * Create a new GtkSourceCompletionItem with label label, icon icon and
+	 * extra information info. Both icon and info can be NULL in which case
+	 * there will be no icon shown and no extra information available.
+	 * Params:
+	 * label = The item label.
+	 * text = The item text.
+	 * icon = The item icon. [allow-none]
+	 * info = The item extra information. [allow-none]
+	 * markup = If true label will be treated as markup. using gtk_source_completion_item_new_with_markup.	
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, string text, Pixbuf icon, string info, bool markup = false)
+	{
+		GtkSourceCompletionItem* p;
+
+		if ( markup )
+		{
+			// GtkSourceCompletionItem * gtk_source_completion_item_new_with_markup  (const gchar *markup,  const gchar *text,  GdkPixbuf *icon,  const gchar *info);
+			p = gtk_source_completion_item_new_with_markup(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
+		}
+		else
+		{
+			// GtkSourceCompletionItem * gtk_source_completion_item_new  (const gchar *label,  const gchar *text,  GdkPixbuf *icon,  const gchar *info);
+			p = gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
+
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info))");
+		}
+		this(cast(GtkSourceCompletionItem*) p);
+	}
 code: end
 outFile: SourceCompletionItem
 
@@ -226,42 +235,202 @@ template: TStruct
 prefix: gtk_source_completion_proposal_
 import: glib.Str
 import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: gtk.TextIter
-structWrap: GtkTextIter* TextIter
-import: gtk.Widget
-structWrap: GtkWidget* Widget
 import: gsv.SourceCompletionContext
-structWrap: GtkSourceCompletionContext* SourceCompletionContext
 import: gsv.SourceCompletionInfo
-structWrap: GtkSourceCompletionInfo* SourceCompletionInfo
 import: gsv.SourceCompletionProposalIF
+import: gtk.TextIter
+import: gtk.Widget
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkSourceCompletionContext* SourceCompletionContext
+structWrap: GtkSourceCompletionInfo* SourceCompletionInfo
 structWrap: GtkSourceCompletionProposal* SourceCompletionProposalIF
+structWrap: GtkTextIter* TextIter
+structWrap: GtkWidget* Widget
 interface: SourceCompletionProviderIF
 outFile: SourceCompletionProviderT
+
+file:
+class: SourceCompletionProvider
+extend: GObject
+implements: SourceCompletionProviderIF
+
+# imports for SourceCompletionProvider Interface
+import: gsv.SourceCompletionProviderT
+import: gsv.SourceCompletionProviderIF
+
+code: start
+	// Minimal implementation.
+	mixin SourceCompletionProviderT!(GtkSourceCompletionProvider);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gtkSourceCompletionProvider;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GtkSourceCompletionProvider* gtkSourceCompletionProvider)
+	{
+		if(gtkSourceCompletionProvider is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gtkSourceCompletionProvider);
+		this.gtkSourceCompletionProvider = gtkSourceCompletionProvider;
+	}
+code: end
+outFile: SourceCompletionProvider
 
 file: GtkSourceGutter.html
 struct: GtkSourceGutter
 class: SourceGutter
-prefix:  gtk_source_gutter_
+prefix: gtk_source_gutter_
 import: gdk.Window
+import: gsv.SourceGutterRenderer
 structWrap: GdkWindow* Window
-import: gtk.CellRenderer
-structWrap: GtkCellRenderer* CellRenderer
+structWrap: GtkSourceGutterRenderer* SourceGutterRenderer
 outFile: SourceGutter
+
+file: gtksourceview-3.0-GtkSourceGutterRenderer.html
+struct: GtkSourceGutterRenderer
+class: SourceGutterRenderer
+extend: GObject
+prefix: gtk_source_gutter_renderer_
+import: cairo.Context
+import: gdk.Event
+import: gdk.RGBA
+import: gtk.TextIter
+import: gtk.TextView
+import: gtk.Tooltip
+structWrap: cairo_t* Context
+structWrap: GdkEvent* Event
+structWrap: GdkRGBA* RGBA
+structWrap: GtkTextIter* TextIter
+structWrap: GtkTextView* TextView
+structWrap: GtkTooltip* Tooltip
+
+inout: gtk_source_gutter_renderer_begin background_area
+inout: gtk_source_gutter_renderer_begin cell_area
+inout: gtk_source_gutter_renderer_draw background_area
+inout: gtk_source_gutter_renderer_draw cell_area
+out: gtk_source_gutter_renderer_get_padding xpad
+out: gtk_source_gutter_renderer_get_padding ypad
+out: gtk_source_gutter_renderer_get_alignment xalign
+out: gtk_source_gutter_renderer_get_alignment yalign
+inout: gtk_source_gutter_renderer_activate area
+inout: gtk_source_gutter_renderer_query_activatable area
+inout: gtk_source_gutter_renderer_query_tooltip area
+
+outFile: SourceGutterRenderer
+
+file: gtksourceview-3.0-GtkSourceGutterRendererText.html
+struct: GtkSourceGutterRendererText
+ctorStruct: GtkSourceGutterRenderer
+class: SourceGutterRendererText
+extend: GtkSourceGutterRenderer
+prefix: gtk_source_gutter_renderer_text_
+import: glib.Str
+outFile: SourceGutterRendererText
+
+file: gtksourceview-3.0-GtkSourceGutterRendererPixbuf.html
+struct: GtkSourceGutterRendererPixbuf
+ctorStruct: GtkSourceGutterRenderer
+class: SourceGutterRendererPixbuf
+extend: GtkSourceGutterRenderer
+prefix: gtk_source_gutter_renderer_pixbuf_
+import: glib.Str
+import: gio.Icon
+import: gio.IconIF
+import: gdk.Pixbuf
+structWrap: GIcon* IconIF
+structWrap: GdkPixbuf* Pixbuf
+
+code: start
+	/** */
+	public void setStockId(StockID stockId)
+	{
+		setStockId(StockDesc[stockId]);
+	}
+code: end
+outFile: SourceGutterRendererPixbuf
 
 file: GtkSourceMark.html
 struct: GtkSourceMark
 class: SourceMark
 prefix: gtk_source_mark_
-structWrap: GtkSourceMark* SourceMark
 import: glib.Str
+structWrap: GtkSourceMark* SourceMark
 outFile: SourceMark
+
+file: GtkSourceMarkAttributes.html
+struct: GtkSourceMarkAttributes
+class: SourceMarkAttributes
+prefix: gtk_source_mark_attributes_
+import: glib.Str
+import: gio.Icon
+import: gio.IconIF
+import: gdk.Pixbuf
+import: gdk.RGBA
+import: gsv.SourceMark
+import: gtk.Widget
+structWrap: GIcon* IconIF
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkRGBA* RGBA
+structWrap: GtkSourceMark* SourceMark
+structWrap: GtkWidget* Widget
+
+code: start
+	/** */
+	public void setStockId(StockID stockId)
+	{
+		setStockId(StockDesc[stockId]);
+	}
+code: end
+outFile: SourceMarkAttributes
+
+file: GtkSourceView.html
+struct: GtkSourceView
+class: SourceView
+prefix: gtk_source_view_
+import: glib.Str
+import: gdk.Event
+import: gsv.SourceBuffer
+import: gsv.SourceCompletion
+import: gsv.SourceGutter
+import: gsv.SourceMarkAttributes
+import: gtk.TextIter
+import: gtkc.gtk
+structWrap: GdkEvent* Event
+structWrap: GtkSourceBuffer* SourceBuffer
+structWrap: GtkSourceCompletion* SourceCompletion
+structWrap: GtkSourceGutter* SourceGutter
+structWrap: GtkSourceMarkAttributes* SourceMarkAttributes
+structWrap: GtkTextIter* TextIter
+
+code: start
+	/**
+	 * Returns the GtkSourceBuffer being displayed by this source view.
+	 * The reference count on the buffer is not incremented; the caller
+	 * of this function won't own a new reference.
+	 * Returns:
+	 *  a GtkSourceBuffer
+	 */
+	public override SourceBuffer getBuffer()
+	{
+		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
+		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
+	}
+code: end
+outFile: SourceView
 
 file: GtkSourceLanguage.html
 struct: GtkSourceLanguage
 class: SourceLanguage
-prefix: gtk_source_iter_
+prefix: gtk_source_language_
 import: glib.Str
 outFile: SourceLanguage
 
@@ -272,7 +441,6 @@ prefix: gtk_source_language_manager_
 import: glib.Str
 import: gsv.SourceLanguage
 structWrap: GtkSourceLanguage* SourceLanguage
-import: gsv.SourceLanguageManager
 structWrap: GtkSourceLanguageManager* SourceLanguageManager
 array: gtk_source_language_manager_set_search_path dirs
 outFile: SourceLanguageManager
@@ -281,13 +449,13 @@ file: GtkSourcePrintCompositor.html
 struct: GtkSourcePrintCompositor
 class: SourcePrintCompositor
 prefix: gtk_source_print_compositor_
-import: gsv.SourceBuffer
-structWrap: GtkSourceBuffer* SourceBuffer
-import: gsv.SourceView
-structWrap: GtkSourceView* SourceView
-import: gtk.PrintContext
-structWrap: GtkPrintContext* PrintContext
 import: glib.Str
+import: gtk.PrintContext
+import: gsv.SourceBuffer
+import: gsv.SourceView
+structWrap: GtkPrintContext* PrintContext
+structWrap: GtkSourceBuffer* SourceBuffer
+structWrap: GtkSourceView* SourceView
 outFile: SourcePrintCompositor
 
 file: GtkSourceStyle.html
@@ -301,20 +469,63 @@ file: GtkSourceStyleScheme.html
 struct: GtkSourceStyleScheme
 class: SourceStyleScheme
 prefix: gtk_source_style_scheme_
+import: glib.Str
 import: gsv.SourceStyle
 structWrap: GtkSourceStyle* SourceStyle
-import: glib.Str
 outFile: SourceStyleScheme
 
 file: GtkSourceStyleSchemeManager.html
 struct: GtkSourceStyleSchemeManager
 class: SourceStyleSchemeManager
 prefix: gtk_source_style_scheme_manager_
+import: glib.Str
 import: gsv.SourceStyleScheme
 structWrap: GtkSourceStyleScheme* SourceStyleScheme
-import: gsv.SourceStyleSchemeManager
 structWrap: GtkSourceStyleSchemeManager* SourceStyleSchemeManager
-import: glib.Str
 array: gtk_source_style_scheme_manager_set_search_path path
 outFile: SourceStyleSchemeManager
+
+file: GtkSourceUndoManager.html
+struct: GtkSourceUndoManager
+class: SourceUndoManagerT
+template: TStruct
+prefix: gtk_source_undo_manager_
+interface: SourceUndoManagerIF
+outFile: SourceUndoManagerT
+
+file:
+class: SourceUndoManager
+extend: GObject
+implements: SourceUndoManagerIF
+
+# imports for SourceUndoManager Interface
+import: gsv.SourceUndoManagerT
+import: gsv.SourceUndoManagerIF
+
+code: start
+	// Minimal implementation.
+	mixin SourceUndoManagerT!(GtkSourceUndoManager);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gtkSourceUndoManager;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GtkSourceUndoManager* gtkSourceUndoManager)
+	{
+		if(gtkSourceUndoManager is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gtkSourceUndoManager);
+		this.gtkSourceUndoManager = gtkSourceUndoManager;
+	}
+code: end
+outFile: SourceUndoManager
 

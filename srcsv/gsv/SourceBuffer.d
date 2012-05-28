@@ -44,17 +44,20 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.TextTagTable
- * 	- gsv.SourceLanguage
- * 	- gsv.SourceStyleScheme
- * 	- gsv.SourceMark
  * 	- glib.ListSG
+ * 	- gsv.SourceLanguage
+ * 	- gsv.SourceMark
+ * 	- gsv.SourceStyleScheme
+ * 	- gsv.SourceUndoManager
+ * 	- gsv.SourceUndoManagerIF
  * 	- gtk.TextIter
+ * 	- gtk.TextTagTable
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkSourceLanguage* -> SourceLanguage
  * 	- GtkSourceMark* -> SourceMark
  * 	- GtkSourceStyleScheme* -> SourceStyleScheme
+ * 	- GtkSourceUndoManager* -> SourceUndoManagerIF
  * 	- GtkTextIter* -> TextIter
  * 	- GtkTextTagTable* -> TextTagTable
  * module aliases:
@@ -73,12 +76,14 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.TextTagTable;
-private import gsv.SourceLanguage;
-private import gsv.SourceStyleScheme;
-private import gsv.SourceMark;
 private import glib.ListSG;
+private import gsv.SourceLanguage;
+private import gsv.SourceMark;
+private import gsv.SourceStyleScheme;
+private import gsv.SourceUndoManager;
+private import gsv.SourceUndoManagerIF;
 private import gtk.TextIter;
+private import gtk.TextTagTable;
 
 
 
@@ -740,10 +745,15 @@ public class SourceBuffer : TextBuffer
 	 * unreferenced by the user.
 	 * Returns: the GtkSourceUndoManager associated with the buffer, or NULL. [transfer none]
 	 */
-	public GtkSourceUndoManager* getUndoManager()
+	public SourceUndoManagerIF getUndoManager()
 	{
 		// GtkSourceUndoManager * gtk_source_buffer_get_undo_manager  (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_get_undo_manager(gtkSourceBuffer);
+		auto p = gtk_source_buffer_get_undo_manager(gtkSourceBuffer);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SourceUndoManager(cast(GtkSourceUndoManager*) p);
 	}
 	
 	/**
@@ -752,9 +762,9 @@ public class SourceBuffer : TextBuffer
 	 * Params:
 	 * manager = A GtkSourceUndoManager or NULL. [allow-none]
 	 */
-	public void setUndoManager(GtkSourceUndoManager* manager)
+	public void setUndoManager(SourceUndoManagerIF manager)
 	{
 		// void gtk_source_buffer_set_undo_manager (GtkSourceBuffer *buffer,  GtkSourceUndoManager *manager);
-		gtk_source_buffer_set_undo_manager(gtkSourceBuffer, manager);
+		gtk_source_buffer_set_undo_manager(gtkSourceBuffer, (manager is null) ? null : manager.getSourceUndoManagerTStruct());
 	}
 }

@@ -46,11 +46,11 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.ListG
- * 	- gtk.TextIter
- * 	- gsv.SourceCompletionInfo
- * 	- gsv.SourceView
  * 	- gsv.SourceCompletionContext
+ * 	- gsv.SourceCompletionInfo
  * 	- gsv.SourceCompletionProviderIF
+ * 	- gsv.SourceView
+ * 	- gtk.TextIter
  * structWrap:
  * 	- GList* -> ListG
  * 	- GtkSourceCompletionContext* -> SourceCompletionContext
@@ -76,11 +76,11 @@ public  import gtkc.gdktypes;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
-private import gtk.TextIter;
-private import gsv.SourceCompletionInfo;
-private import gsv.SourceView;
 private import gsv.SourceCompletionContext;
+private import gsv.SourceCompletionInfo;
 private import gsv.SourceCompletionProviderIF;
+private import gsv.SourceView;
+private import gtk.TextIter;
 
 
 

@@ -44,10 +44,10 @@
  * omit signals:
  * imports:
  * 	- gdk.Window
- * 	- gtk.CellRenderer
+ * 	- gsv.SourceGutterRenderer
  * structWrap:
  * 	- GdkWindow* -> Window
- * 	- GtkCellRenderer* -> CellRenderer
+ * 	- GtkSourceGutterRenderer* -> SourceGutterRenderer
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,7 +62,7 @@ private import glib.ConstructionException;
 
 
 private import gdk.Window;
-private import gtk.CellRenderer;
+private import gsv.SourceGutterRenderer;
 
 
 
@@ -157,10 +157,10 @@ public class SourceGutter : ObjectG
 	 * position = the renderer position.
 	 * Returns: TRUE if operation succeeded. Otherwise FALSE. Since 3.0
 	 */
-	public int insert(GtkSourceGutterRenderer* renderer, int position)
+	public int insert(SourceGutterRenderer renderer, int position)
 	{
 		// gboolean gtk_source_gutter_insert (GtkSourceGutter *gutter,  GtkSourceGutterRenderer *renderer,  gint position);
-		return gtk_source_gutter_insert(gtkSourceGutter, renderer, position);
+		return gtk_source_gutter_insert(gtkSourceGutter, (renderer is null) ? null : renderer.getSourceGutterRendererStruct(), position);
 	}
 	
 	/**
@@ -170,10 +170,10 @@ public class SourceGutter : ObjectG
 	 * renderer = a GtkCellRenderer.
 	 * position = the new renderer position.
 	 */
-	public void reorder(GtkSourceGutterRenderer* renderer, int position)
+	public void reorder(SourceGutterRenderer renderer, int position)
 	{
 		// void gtk_source_gutter_reorder (GtkSourceGutter *gutter,  GtkSourceGutterRenderer *renderer,  gint position);
-		gtk_source_gutter_reorder(gtkSourceGutter, renderer, position);
+		gtk_source_gutter_reorder(gtkSourceGutter, (renderer is null) ? null : renderer.getSourceGutterRendererStruct(), position);
 	}
 	
 	/**
@@ -182,10 +182,10 @@ public class SourceGutter : ObjectG
 	 * Params:
 	 * renderer = a GtkSourceGutterRenderer.
 	 */
-	public void remove(GtkSourceGutterRenderer* renderer)
+	public void remove(SourceGutterRenderer renderer)
 	{
 		// void gtk_source_gutter_remove (GtkSourceGutter *gutter,  GtkSourceGutterRenderer *renderer);
-		gtk_source_gutter_remove(gtkSourceGutter, renderer);
+		gtk_source_gutter_remove(gtkSourceGutter, (renderer is null) ? null : renderer.getSourceGutterRendererStruct());
 	}
 	
 	/**

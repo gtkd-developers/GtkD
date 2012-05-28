@@ -44,10 +44,9 @@
  * 	- gtk_source_completion_context_add_proposals
  * omit signals:
  * imports:
- * 	- glib.Str
  * 	- glib.ListG
- * 	- gtk.TextIter
  * 	- gsv.SourceCompletionProviderIF
+ * 	- gtk.TextIter
  * structWrap:
  * 	- GList* -> ListG
  * 	- GtkSourceCompletionProvider* -> SourceCompletionProviderIF
@@ -67,10 +66,9 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
 private import glib.ListG;
-private import gtk.TextIter;
 private import gsv.SourceCompletionProviderIF;
+private import gtk.TextIter;
 
 
 

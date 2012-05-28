@@ -43,9 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gsv.SourceStyleScheme
- * 	- gsv.SourceStyleSchemeManager
  * 	- glib.Str
+ * 	- gsv.SourceStyleScheme
  * structWrap:
  * 	- GtkSourceStyleScheme* -> SourceStyleScheme
  * 	- GtkSourceStyleSchemeManager* -> SourceStyleSchemeManager
@@ -62,9 +61,8 @@ private import gsvc.gsv;
 private import glib.ConstructionException;
 
 
-private import gsv.SourceStyleScheme;
-private import gsv.SourceStyleSchemeManager;
 private import glib.Str;
+private import gsv.SourceStyleScheme;
 
 
 

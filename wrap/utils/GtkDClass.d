@@ -808,15 +808,16 @@ public class GtkDClass
 		string conv;
 		string prefix;
 
-		if ( startsWith(gName, "Gtk") )		prefix = "Gtk";
-		else if ( startsWith(gName, "Gio") )	prefix = "";
-		else if ( startsWith(gName, "Gdk") )	prefix = "Gdk";
-		else if ( startsWith(gName, "Gst") )	prefix = "Gst";
-		else if ( startsWith(gName, "Gda") )	prefix = "Gda";
-		else if ( startsWith(gName, "Atk") )	prefix = "Atk";
-		else if ( startsWith(gName, "G") )	prefix = "G";
-		else if ( startsWith(gName, "Pango") )	prefix = "Pg";
-		else if ( startsWith(gName, "cairo") )	prefix = "cairo";
+		if ( startsWith(gName, "GtkSource") )   prefix = "Gsv";
+		else if ( startsWith(gName, "Gtk") )    prefix = "Gtk";
+		else if ( startsWith(gName, "Gio") )    prefix = "";
+		else if ( startsWith(gName, "Gdk") )    prefix = "Gdk";
+		else if ( startsWith(gName, "Gst") )    prefix = "Gst";
+		else if ( startsWith(gName, "Gda") )    prefix = "Gda";
+		else if ( startsWith(gName, "Atk") )    prefix = "Atk";
+		else if ( startsWith(gName, "G") )      prefix = "G";
+		else if ( startsWith(gName, "Pango") )  prefix = "Pg";
+		else if ( startsWith(gName, "cairo") )  prefix = "cairo";
 
 		conv = gName[prefix.length..gName.length];
 

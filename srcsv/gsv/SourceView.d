@@ -43,18 +43,20 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gdk.Pixbuf
- * 	- gdk.Color
- * 	- gtk.TextIter
- * 	- gsv.SourceGutter
- * 	- gsv.SourceBuffer
- * 	- gtkc.gtk
  * 	- glib.Str
+ * 	- gdk.Event
+ * 	- gsv.SourceBuffer
+ * 	- gsv.SourceCompletion
+ * 	- gsv.SourceGutter
+ * 	- gsv.SourceMarkAttributes
+ * 	- gtk.TextIter
+ * 	- gtkc.gtk
  * structWrap:
- * 	- GdkColor* -> Color
- * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkEvent* -> Event
  * 	- GtkSourceBuffer* -> SourceBuffer
+ * 	- GtkSourceCompletion* -> SourceCompletion
  * 	- GtkSourceGutter* -> SourceGutter
+ * 	- GtkSourceMarkAttributes* -> SourceMarkAttributes
  * 	- GtkTextIter* -> TextIter
  * module aliases:
  * local aliases:
@@ -71,13 +73,14 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gdk.Pixbuf;
-private import gdk.Color;
-private import gtk.TextIter;
-private import gsv.SourceGutter;
-private import gsv.SourceBuffer;
-private import gtkc.gtk;
 private import glib.Str;
+private import gdk.Event;
+private import gsv.SourceBuffer;
+private import gsv.SourceCompletion;
+private import gsv.SourceGutter;
+private import gsv.SourceMarkAttributes;
+private import gtk.TextIter;
+private import gtkc.gtk;
 
 
 
@@ -148,19 +151,17 @@ public class SourceView : TextView
 		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
 	}
 	
-	
-	
 	/**
 	 */
 	int[string] connectedSignals;
 	
-	void delegate(TextIter, GdkEvent*, SourceView)[] onLineMarkActivatedListeners;
+	void delegate(TextIter, Event, SourceView)[] onLineMarkActivatedListeners;
 	/**
 	 * Emitted when a line mark has been activated (for instance when there
 	 * was a button press in the line marks gutter). You can use iter to
 	 * determine on which line the activation took place.
 	 */
-	void addOnLineMarkActivated(void delegate(TextIter, GdkEvent*, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnLineMarkActivated(void delegate(TextIter, Event, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("line-mark-activated" in connectedSignals) )
 		{
@@ -177,9 +178,9 @@ public class SourceView : TextView
 	}
 	extern(C) static void callBackLineMarkActivated(GtkSourceView* viewStruct, GtkTextIter* iter, GdkEvent* event, SourceView _sourceView)
 	{
-		foreach ( void delegate(TextIter, GdkEvent*, SourceView) dlg ; _sourceView.onLineMarkActivatedListeners )
+		foreach ( void delegate(TextIter, Event, SourceView) dlg ; _sourceView.onLineMarkActivatedListeners )
 		{
-			dlg(new TextIter(iter), event, _sourceView);
+			dlg(new TextIter(iter), new Event(event), _sourceView);
 		}
 	}
 	
@@ -525,10 +526,10 @@ public class SourceView : TextView
 	 * attributes = mark attributes.
 	 * priority = priority of the category.
 	 */
-	public void setMarkAttributes(string category, GtkSourceMarkAttributes* attributes, int priority)
+	public void setMarkAttributes(string category, SourceMarkAttributes attributes, int priority)
 	{
 		// void gtk_source_view_set_mark_attributes (GtkSourceView *view,  const gchar *category,  GtkSourceMarkAttributes *attributes,  gint priority);
-		gtk_source_view_set_mark_attributes(gtkSourceView, Str.toStringz(category), attributes, priority);
+		gtk_source_view_set_mark_attributes(gtkSourceView, Str.toStringz(category), (attributes is null) ? null : attributes.getSourceMarkAttributesStruct(), priority);
 	}
 	
 	/**
@@ -538,10 +539,15 @@ public class SourceView : TextView
 	 * priority = place where priority of the category will be stored.
 	 * Returns: GtkSourceMarkAttributes for the category. The object belongs to view, so it must not be unreffed. [transfer none]
 	 */
-	public GtkSourceMarkAttributes* getMarkAttributes(string category, int* priority)
+	public SourceMarkAttributes getMarkAttributes(string category, int* priority)
 	{
 		// GtkSourceMarkAttributes * gtk_source_view_get_mark_attributes  (GtkSourceView *view,  const gchar *category,  gint *priority);
-		return gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
+		auto p = gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SourceMarkAttributes(cast(GtkSourceMarkAttributes*) p);
 	}
 	
 	/**
@@ -700,10 +706,15 @@ public class SourceView : TextView
 	 * Gets the GtkSourceCompletion associated with view.
 	 * Returns: the GtkSourceCompletion associated with view. [type GtkSource.Completion][transfer none]
 	 */
-	public GtkSourceCompletion* getCompletion()
+	public SourceCompletion getCompletion()
 	{
 		// GtkSourceCompletion * gtk_source_view_get_completion (GtkSourceView *view);
-		return gtk_source_view_get_completion(gtkSourceView);
+		auto p = gtk_source_view_get_completion(gtkSourceView);
+		if(p is null)
+		{
+			return null;
+		}
+		return new SourceCompletion(cast(GtkSourceCompletion*) p);
 	}
 	
 	/**

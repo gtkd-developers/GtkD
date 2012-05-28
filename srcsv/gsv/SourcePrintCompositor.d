@@ -43,10 +43,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gtk.PrintContext
  * 	- gsv.SourceBuffer
  * 	- gsv.SourceView
- * 	- gtk.PrintContext
- * 	- glib.Str
  * structWrap:
  * 	- GtkPrintContext* -> PrintContext
  * 	- GtkSourceBuffer* -> SourceBuffer
@@ -64,10 +64,10 @@ private import gsvc.gsv;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
+private import gtk.PrintContext;
 private import gsv.SourceBuffer;
 private import gsv.SourceView;
-private import gtk.PrintContext;
-private import glib.Str;
 
 
 

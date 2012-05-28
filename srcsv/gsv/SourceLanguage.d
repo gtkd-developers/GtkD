@@ -37,7 +37,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- gtk_source_iter_
+ * 	- gtk_source_language_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -126,7 +126,7 @@ public class SourceLanguage : ObjectG
 	 * or modified.
 	 * Returns: the ID of language.
 	 */
-	public string gtkSourceLanguageGetId()
+	public string getId()
 	{
 		// const gchar * gtk_source_language_get_id (GtkSourceLanguage *language);
 		return Str.toString(gtk_source_language_get_id(gtkSourceLanguage));
@@ -138,7 +138,7 @@ public class SourceLanguage : ObjectG
 	 * or modified.
 	 * Returns: the name of language.
 	 */
-	public string gtkSourceLanguageGetName()
+	public string getName()
 	{
 		// const gchar * gtk_source_language_get_name (GtkSourceLanguage *language);
 		return Str.toString(gtk_source_language_get_name(gtkSourceLanguage));
@@ -152,7 +152,7 @@ public class SourceLanguage : ObjectG
 	 * or modified.
 	 * Returns: the section of language.
 	 */
-	public string gtkSourceLanguageGetSection()
+	public string getSection()
 	{
 		// const gchar * gtk_source_language_get_section (GtkSourceLanguage *language);
 		return Str.toString(gtk_source_language_get_section(gtkSourceLanguage));
@@ -162,7 +162,7 @@ public class SourceLanguage : ObjectG
 	 * Returns whether the language should be hidden from the user.
 	 * Returns: TRUE if the language should be hidden, FALSE otherwise.
 	 */
-	public int gtkSourceLanguageGetHidden()
+	public int getHidden()
 	{
 		// gboolean gtk_source_language_get_hidden (GtkSourceLanguage *language);
 		return gtk_source_language_get_hidden(gtkSourceLanguage);
@@ -173,7 +173,7 @@ public class SourceLanguage : ObjectG
 	 * name = metadata property name.
 	 * Returns: value of property name stored in the metadata of language or NULL if language doesn't contain that metadata property. The returned string is owned by language and should not be freed or modified.
 	 */
-	public string gtkSourceLanguageGetMetadata(string name)
+	public string getMetadata(string name)
 	{
 		// const gchar * gtk_source_language_get_metadata (GtkSourceLanguage *language,  const gchar *name);
 		return Str.toString(gtk_source_language_get_metadata(gtkSourceLanguage, Str.toStringz(name)));
@@ -186,7 +186,7 @@ public class SourceLanguage : ObjectG
 	 * array.
 	 * Returns: a newly-allocated NULL terminated array containing the mime types or NULL if no mime types are found. The returned array must be freed with g_strfreev(). [array zero-terminated=1][transfer full]
 	 */
-	public string[] gtkSourceLanguageGetMimeTypes()
+	public string[] getMimeTypes()
 	{
 		// gchar ** gtk_source_language_get_mime_types (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_mime_types(gtkSourceLanguage));
@@ -198,7 +198,7 @@ public class SourceLanguage : ObjectG
 	 * retrieve the "globs" metadata property and split it into an array.
 	 * Returns: a newly-allocated NULL terminated array containing the globs or NULL if no globs are found. The returned array must be freed with g_strfreev(). [array zero-terminated=1][transfer full]
 	 */
-	public string[] gtkSourceLanguageGetGlobs()
+	public string[] getGlobs()
 	{
 		// gchar ** gtk_source_language_get_globs (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_globs(gtkSourceLanguage));
@@ -210,7 +210,7 @@ public class SourceLanguage : ObjectG
 	 * styleId = a style ID.
 	 * Returns: the name of the style with ID style_id defined by this language or NULL if the style has no name or there is no style with ID style_id defined by this language. The returned string is owned by the language and must not be modified.
 	 */
-	public string gtkSourceLanguageGetStyleName(string styleId)
+	public string getStyleName(string styleId)
 	{
 		// const gchar * gtk_source_language_get_style_name (GtkSourceLanguage *language,  const gchar *style_id);
 		return Str.toString(gtk_source_language_get_style_name(gtkSourceLanguage, Str.toStringz(styleId)));
@@ -220,7 +220,7 @@ public class SourceLanguage : ObjectG
 	 * Returns the ids of the styles defined by this language.
 	 * Returns: a NULL terminated array containing ids of the styles defined by this language or NULL if no style is defined. The returned array must be freed with g_strfreev(). [array zero-terminated=1][transfer full]
 	 */
-	public string[] gtkSourceLanguageGetStyleIds()
+	public string[] getStyleIds()
 	{
 		// gchar ** gtk_source_language_get_style_ids (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_style_ids(gtkSourceLanguage));

@@ -52,6 +52,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- removeAll
  */
 
 module gtk.ComboBoxText;
@@ -339,7 +340,7 @@ public class ComboBoxText : ComboBox
 	/**
 	 * Removes all the text entries from the combo box.
 	 */
-	override public void removeAll()
+	public override void removeAll()
 	{
 		// void gtk_combo_box_text_remove_all (GtkComboBoxText *combo_box);
 		gtk_combo_box_text_remove_all(gtkComboBoxText);
