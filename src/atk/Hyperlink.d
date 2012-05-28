@@ -146,11 +146,11 @@ public class Hyperlink : ObjectG
 		}
 		onLinkActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackLinkActivated(AtkHyperlink* atkhyperlinkStruct, Hyperlink hyperlink)
+	extern(C) static void callBackLinkActivated(AtkHyperlink* atkhyperlinkStruct, Hyperlink _hyperlink)
 	{
-		foreach ( void delegate(Hyperlink) dlg ; hyperlink.onLinkActivatedListeners )
+		foreach ( void delegate(Hyperlink) dlg ; _hyperlink.onLinkActivatedListeners )
 		{
-			dlg(hyperlink);
+			dlg(_hyperlink);
 		}
 	}
 	

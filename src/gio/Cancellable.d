@@ -170,11 +170,11 @@ public class Cancellable : ObjectG
 		}
 		onCancelledListeners ~= dlg;
 	}
-	extern(C) static void callBackCancelled(GCancellable* cancellableStruct, Cancellable cancellable)
+	extern(C) static void callBackCancelled(GCancellable* cancellableStruct, Cancellable _cancellable)
 	{
-		foreach ( void delegate(Cancellable) dlg ; cancellable.onCancelledListeners )
+		foreach ( void delegate(Cancellable) dlg ; _cancellable.onCancelledListeners )
 		{
-			dlg(cancellable);
+			dlg(_cancellable);
 		}
 	}
 	

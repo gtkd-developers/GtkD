@@ -213,11 +213,11 @@ public class Menu : MenuShell
 		}
 		onMoveScrollListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType scrollType, Menu menu)
+	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType scrollType, Menu _menu)
 	{
-		foreach ( void delegate(GtkScrollType, Menu) dlg ; menu.onMoveScrollListeners )
+		foreach ( void delegate(GtkScrollType, Menu) dlg ; _menu.onMoveScrollListeners )
 		{
-			dlg(scrollType, menu);
+			dlg(scrollType, _menu);
 		}
 	}
 	

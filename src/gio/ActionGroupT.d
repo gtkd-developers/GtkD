@@ -130,11 +130,11 @@ public template ActionGroupT(TStruct)
 		}
 		_onActionAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionAdded(GActionGroup* actionGroupStruct, gchar* actionName, ActionGroupIF actionGroupIF)
+	extern(C) static void callBackActionAdded(GActionGroup* actionGroupStruct, gchar* actionName, ActionGroupIF _actionGroupIF)
 	{
-		foreach ( void delegate(string, ActionGroupIF) dlg ; actionGroupIF.onActionAddedListeners )
+		foreach ( void delegate(string, ActionGroupIF) dlg ; _actionGroupIF.onActionAddedListeners )
 		{
-			dlg(Str.toString(actionName), actionGroupIF);
+			dlg(Str.toString(actionName), _actionGroupIF);
 		}
 	}
 	
@@ -162,11 +162,11 @@ public template ActionGroupT(TStruct)
 		}
 		_onActionEnabledChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionEnabledChanged(GActionGroup* actionGroupStruct, gchar* actionName, gboolean enabled, ActionGroupIF actionGroupIF)
+	extern(C) static void callBackActionEnabledChanged(GActionGroup* actionGroupStruct, gchar* actionName, gboolean enabled, ActionGroupIF _actionGroupIF)
 	{
-		foreach ( void delegate(string, gboolean, ActionGroupIF) dlg ; actionGroupIF.onActionEnabledChangedListeners )
+		foreach ( void delegate(string, gboolean, ActionGroupIF) dlg ; _actionGroupIF.onActionEnabledChangedListeners )
 		{
-			dlg(Str.toString(actionName), enabled, actionGroupIF);
+			dlg(Str.toString(actionName), enabled, _actionGroupIF);
 		}
 	}
 	
@@ -196,11 +196,11 @@ public template ActionGroupT(TStruct)
 		}
 		_onActionRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionRemoved(GActionGroup* actionGroupStruct, gchar* actionName, ActionGroupIF actionGroupIF)
+	extern(C) static void callBackActionRemoved(GActionGroup* actionGroupStruct, gchar* actionName, ActionGroupIF _actionGroupIF)
 	{
-		foreach ( void delegate(string, ActionGroupIF) dlg ; actionGroupIF.onActionRemovedListeners )
+		foreach ( void delegate(string, ActionGroupIF) dlg ; _actionGroupIF.onActionRemovedListeners )
 		{
-			dlg(Str.toString(actionName), actionGroupIF);
+			dlg(Str.toString(actionName), _actionGroupIF);
 		}
 	}
 	
@@ -228,11 +228,11 @@ public template ActionGroupT(TStruct)
 		}
 		_onActionStateChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionStateChanged(GActionGroup* actionGroupStruct, gchar* actionName, GVariant* value, ActionGroupIF actionGroupIF)
+	extern(C) static void callBackActionStateChanged(GActionGroup* actionGroupStruct, gchar* actionName, GVariant* value, ActionGroupIF _actionGroupIF)
 	{
-		foreach ( void delegate(string, Variant, ActionGroupIF) dlg ; actionGroupIF.onActionStateChangedListeners )
+		foreach ( void delegate(string, Variant, ActionGroupIF) dlg ; _actionGroupIF.onActionStateChangedListeners )
 		{
-			dlg(Str.toString(actionName), new Variant(value), actionGroupIF);
+			dlg(Str.toString(actionName), new Variant(value), _actionGroupIF);
 		}
 	}
 	

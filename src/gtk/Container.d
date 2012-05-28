@@ -301,11 +301,11 @@ public class Container : Widget
 		}
 		onAddListeners ~= dlg;
 	}
-	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* widget, Container container)
+	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* widget, Container _container)
 	{
-		foreach ( void delegate(Widget, Container) dlg ; container.onAddListeners )
+		foreach ( void delegate(Widget, Container) dlg ; _container.onAddListeners )
 		{
-			dlg(new Widget(widget), container);
+			dlg(new Widget(widget), _container);
 		}
 	}
 	
@@ -327,11 +327,11 @@ public class Container : Widget
 		}
 		onCheckResizeListeners ~= dlg;
 	}
-	extern(C) static void callBackCheckResize(GtkContainer* containerStruct, Container container)
+	extern(C) static void callBackCheckResize(GtkContainer* containerStruct, Container _container)
 	{
-		foreach ( void delegate(Container) dlg ; container.onCheckResizeListeners )
+		foreach ( void delegate(Container) dlg ; _container.onCheckResizeListeners )
 		{
-			dlg(container);
+			dlg(_container);
 		}
 	}
 	
@@ -353,11 +353,11 @@ public class Container : Widget
 		}
 		onRemoveListeners ~= dlg;
 	}
-	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* widget, Container container)
+	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* widget, Container _container)
 	{
-		foreach ( void delegate(Widget, Container) dlg ; container.onRemoveListeners )
+		foreach ( void delegate(Widget, Container) dlg ; _container.onRemoveListeners )
 		{
-			dlg(new Widget(widget), container);
+			dlg(new Widget(widget), _container);
 		}
 	}
 	
@@ -379,11 +379,11 @@ public class Container : Widget
 		}
 		onSetFocusChildListeners ~= dlg;
 	}
-	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* widget, Container container)
+	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* widget, Container _container)
 	{
-		foreach ( void delegate(Widget, Container) dlg ; container.onSetFocusChildListeners )
+		foreach ( void delegate(Widget, Container) dlg ; _container.onSetFocusChildListeners )
 		{
-			dlg(new Widget(widget), container);
+			dlg(new Widget(widget), _container);
 		}
 	}
 	

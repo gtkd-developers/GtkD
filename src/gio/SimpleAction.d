@@ -159,11 +159,11 @@ public class SimpleAction : ObjectG, ActionIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GSimpleAction* simpleStruct, GVariant* parameter, SimpleAction simpleAction)
+	extern(C) static void callBackActivate(GSimpleAction* simpleStruct, GVariant* parameter, SimpleAction _simpleAction)
 	{
-		foreach ( void delegate(Variant, SimpleAction) dlg ; simpleAction.onActivateListeners )
+		foreach ( void delegate(Variant, SimpleAction) dlg ; _simpleAction.onActivateListeners )
 		{
-			dlg(new Variant(parameter), simpleAction);
+			dlg(new Variant(parameter), _simpleAction);
 		}
 	}
 	

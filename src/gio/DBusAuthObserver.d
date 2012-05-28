@@ -154,11 +154,11 @@ public class DBusAuthObserver : ObjectG
 		}
 		onAuthorizeAuthenticatedPeerListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackAuthorizeAuthenticatedPeer(GDBusAuthObserver* observerStruct, GIOStream* stream, GCredentials* credentials, DBusAuthObserver dBusAuthObserver)
+	extern(C) static gboolean callBackAuthorizeAuthenticatedPeer(GDBusAuthObserver* observerStruct, GIOStream* stream, GCredentials* credentials, DBusAuthObserver _dBusAuthObserver)
 	{
-		foreach ( bool delegate(IOStream, Credentials, DBusAuthObserver) dlg ; dBusAuthObserver.onAuthorizeAuthenticatedPeerListeners )
+		foreach ( bool delegate(IOStream, Credentials, DBusAuthObserver) dlg ; _dBusAuthObserver.onAuthorizeAuthenticatedPeerListeners )
 		{
-			if ( dlg(new IOStream(stream), new Credentials(credentials), dBusAuthObserver) )
+			if ( dlg(new IOStream(stream), new Credentials(credentials), _dBusAuthObserver) )
 			{
 				return 1;
 			}

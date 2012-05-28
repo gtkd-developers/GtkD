@@ -158,11 +158,11 @@ public class PopupBox
 		ButtonsType.NONE,
 		message);
 		d.setTitle(title);
-		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
-		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
+		d.addButton("gtk-no",ResponseType.NO);
+		d.addButton("gtk-yes",ResponseType.YES);
 		int responce = d.run();
 		d.destroy();
-		return responce == ResponseType.GTK_RESPONSE_YES;
+		return responce == ResponseType.YES;
 	}
 	
 	
@@ -192,9 +192,9 @@ public class PopupBox
 		ButtonsType.NONE ,
 		message);
 		d.setTitle(title);
-		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
-		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
-		d.addButton("gtk-cancel",ResponseType.GTK_RESPONSE_CANCEL);
+		d.addButton("gtk-no",ResponseType.NO);
+		d.addButton("gtk-yes",ResponseType.YES);
+		d.addButton("gtk-cancel",ResponseType.CANCEL);
 		ResponseType responce = cast(ResponseType)d.run();
 		d.destroy();
 		return responce;

@@ -140,11 +140,11 @@ public class UnixMountMonitor : ObjectG
 		}
 		onMountpointsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackMountpointsChanged(GUnixMountMonitor* monitorStruct, UnixMountMonitor unixMountMonitor)
+	extern(C) static void callBackMountpointsChanged(GUnixMountMonitor* monitorStruct, UnixMountMonitor _unixMountMonitor)
 	{
-		foreach ( void delegate(UnixMountMonitor) dlg ; unixMountMonitor.onMountpointsChangedListeners )
+		foreach ( void delegate(UnixMountMonitor) dlg ; _unixMountMonitor.onMountpointsChangedListeners )
 		{
-			dlg(unixMountMonitor);
+			dlg(_unixMountMonitor);
 		}
 	}
 	
@@ -167,11 +167,11 @@ public class UnixMountMonitor : ObjectG
 		}
 		onMountsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackMountsChanged(GUnixMountMonitor* monitorStruct, UnixMountMonitor unixMountMonitor)
+	extern(C) static void callBackMountsChanged(GUnixMountMonitor* monitorStruct, UnixMountMonitor _unixMountMonitor)
 	{
-		foreach ( void delegate(UnixMountMonitor) dlg ; unixMountMonitor.onMountsChangedListeners )
+		foreach ( void delegate(UnixMountMonitor) dlg ; _unixMountMonitor.onMountsChangedListeners )
 		{
-			dlg(unixMountMonitor);
+			dlg(_unixMountMonitor);
 		}
 	}
 	

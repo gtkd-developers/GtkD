@@ -51,6 +51,8 @@
  * 	- gtk.TextBuffer
  * 	- gtk.TextChildAnchor
  * 	- gtk.TextTag
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * 	- pango.PgLanguage
  * structWrap:
  * 	- GSList* -> ListSG
@@ -81,6 +83,8 @@ private import gtk.TextAttributes;
 private import gtk.TextBuffer;
 private import gtk.TextChildAnchor;
 private import gtk.TextTag;
+private import gtkc.Loader;
+private import gtkc.paths;
 private import pango.PgLanguage;
 
 

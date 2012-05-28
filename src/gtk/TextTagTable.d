@@ -148,11 +148,11 @@ public class TextTagTable : ObjectG
 		}
 		onTagAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable textTagTable)
+	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable _textTagTable)
 	{
-		foreach ( void delegate(TextTag, TextTagTable) dlg ; textTagTable.onTagAddedListeners )
+		foreach ( void delegate(TextTag, TextTagTable) dlg ; _textTagTable.onTagAddedListeners )
 		{
-			dlg(new TextTag(tag), textTagTable);
+			dlg(new TextTag(tag), _textTagTable);
 		}
 	}
 	
@@ -174,11 +174,11 @@ public class TextTagTable : ObjectG
 		}
 		onTagChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, gboolean sizeChanged, TextTagTable textTagTable)
+	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, gboolean sizeChanged, TextTagTable _textTagTable)
 	{
-		foreach ( void delegate(TextTag, gboolean, TextTagTable) dlg ; textTagTable.onTagChangedListeners )
+		foreach ( void delegate(TextTag, gboolean, TextTagTable) dlg ; _textTagTable.onTagChangedListeners )
 		{
-			dlg(new TextTag(tag), sizeChanged, textTagTable);
+			dlg(new TextTag(tag), sizeChanged, _textTagTable);
 		}
 	}
 	
@@ -200,11 +200,11 @@ public class TextTagTable : ObjectG
 		}
 		onTagRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable textTagTable)
+	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable _textTagTable)
 	{
-		foreach ( void delegate(TextTag, TextTagTable) dlg ; textTagTable.onTagRemovedListeners )
+		foreach ( void delegate(TextTag, TextTagTable) dlg ; _textTagTable.onTagRemovedListeners )
 		{
-			dlg(new TextTag(tag), textTagTable);
+			dlg(new TextTag(tag), _textTagTable);
 		}
 	}
 	

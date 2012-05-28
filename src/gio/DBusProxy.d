@@ -226,11 +226,11 @@ public class DBusProxy : ObjectG
 		}
 		onGPropertiesChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackGPropertiesChanged(GDBusProxy* proxyStruct, GVariant* changedProperties, GStrv invalidatedProperties, DBusProxy dBusProxy)
+	extern(C) static void callBackGPropertiesChanged(GDBusProxy* proxyStruct, GVariant* changedProperties, GStrv invalidatedProperties, DBusProxy _dBusProxy)
 	{
-		foreach ( void delegate(Variant, GStrv, DBusProxy) dlg ; dBusProxy.onGPropertiesChangedListeners )
+		foreach ( void delegate(Variant, GStrv, DBusProxy) dlg ; _dBusProxy.onGPropertiesChangedListeners )
 		{
-			dlg(new Variant(changedProperties), invalidatedProperties, dBusProxy);
+			dlg(new Variant(changedProperties), invalidatedProperties, _dBusProxy);
 		}
 	}
 	
@@ -254,11 +254,11 @@ public class DBusProxy : ObjectG
 		}
 		onGSignalListeners ~= dlg;
 	}
-	extern(C) static void callBackGSignal(GDBusProxy* proxyStruct, gchar* senderName, gchar* signalName, GVariant* parameters, DBusProxy dBusProxy)
+	extern(C) static void callBackGSignal(GDBusProxy* proxyStruct, gchar* senderName, gchar* signalName, GVariant* parameters, DBusProxy _dBusProxy)
 	{
-		foreach ( void delegate(string, string, Variant, DBusProxy) dlg ; dBusProxy.onGSignalListeners )
+		foreach ( void delegate(string, string, Variant, DBusProxy) dlg ; _dBusProxy.onGSignalListeners )
 		{
-			dlg(Str.toString(senderName), Str.toString(signalName), new Variant(parameters), dBusProxy);
+			dlg(Str.toString(senderName), Str.toString(signalName), new Variant(parameters), _dBusProxy);
 		}
 	}
 	

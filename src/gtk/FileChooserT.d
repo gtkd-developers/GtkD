@@ -359,11 +359,11 @@ public template FileChooserT(TStruct)
 		}
 		_onConfirmOverwriteListeners ~= dlg;
 	}
-	extern(C) static void callBackConfirmOverwrite(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
+	extern(C) static void callBackConfirmOverwrite(GtkFileChooser* chooserStruct, FileChooserIF _fileChooserIF)
 	{
-		foreach ( GtkFileChooserConfirmation delegate(FileChooserIF) dlg ; fileChooserIF.onConfirmOverwriteListeners )
+		foreach ( GtkFileChooserConfirmation delegate(FileChooserIF) dlg ; _fileChooserIF.onConfirmOverwriteListeners )
 		{
-			dlg(fileChooserIF);
+			dlg(_fileChooserIF);
 		}
 	}
 	
@@ -400,11 +400,11 @@ public template FileChooserT(TStruct)
 		}
 		_onCurrentFolderChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
+	extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* chooserStruct, FileChooserIF _fileChooserIF)
 	{
-		foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onCurrentFolderChangedListeners )
+		foreach ( void delegate(FileChooserIF) dlg ; _fileChooserIF.onCurrentFolderChangedListeners )
 		{
-			dlg(fileChooserIF);
+			dlg(_fileChooserIF);
 		}
 	}
 	
@@ -439,11 +439,11 @@ public template FileChooserT(TStruct)
 		}
 		_onFileActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackFileActivated(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
+	extern(C) static void callBackFileActivated(GtkFileChooser* chooserStruct, FileChooserIF _fileChooserIF)
 	{
-		foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onFileActivatedListeners )
+		foreach ( void delegate(FileChooserIF) dlg ; _fileChooserIF.onFileActivatedListeners )
 		{
-			dlg(fileChooserIF);
+			dlg(_fileChooserIF);
 		}
 	}
 	
@@ -481,11 +481,11 @@ public template FileChooserT(TStruct)
 		}
 		_onSelectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionChanged(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
+	extern(C) static void callBackSelectionChanged(GtkFileChooser* chooserStruct, FileChooserIF _fileChooserIF)
 	{
-		foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onSelectionChangedListeners )
+		foreach ( void delegate(FileChooserIF) dlg ; _fileChooserIF.onSelectionChangedListeners )
 		{
-			dlg(fileChooserIF);
+			dlg(_fileChooserIF);
 		}
 	}
 	
@@ -531,11 +531,11 @@ public template FileChooserT(TStruct)
 		}
 		_onUpdatePreviewListeners ~= dlg;
 	}
-	extern(C) static void callBackUpdatePreview(GtkFileChooser* chooserStruct, FileChooserIF fileChooserIF)
+	extern(C) static void callBackUpdatePreview(GtkFileChooser* chooserStruct, FileChooserIF _fileChooserIF)
 	{
-		foreach ( void delegate(FileChooserIF) dlg ; fileChooserIF.onUpdatePreviewListeners )
+		foreach ( void delegate(FileChooserIF) dlg ; _fileChooserIF.onUpdatePreviewListeners )
 		{
-			dlg(fileChooserIF);
+			dlg(_fileChooserIF);
 		}
 	}
 	

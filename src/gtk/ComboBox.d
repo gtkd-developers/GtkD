@@ -289,11 +289,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkComboBox* widgetStruct, ComboBox comboBox)
+	extern(C) static void callBackChanged(GtkComboBox* widgetStruct, ComboBox _comboBox)
 	{
-		foreach ( void delegate(ComboBox) dlg ; comboBox.onChangedListeners )
+		foreach ( void delegate(ComboBox) dlg ; _comboBox.onChangedListeners )
 		{
-			dlg(comboBox);
+			dlg(_comboBox);
 		}
 	}
 	
@@ -319,11 +319,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onMoveActiveListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveActive(GtkComboBox* widgetStruct, GtkScrollType scrollType, ComboBox comboBox)
+	extern(C) static void callBackMoveActive(GtkComboBox* widgetStruct, GtkScrollType scrollType, ComboBox _comboBox)
 	{
-		foreach ( void delegate(GtkScrollType, ComboBox) dlg ; comboBox.onMoveActiveListeners )
+		foreach ( void delegate(GtkScrollType, ComboBox) dlg ; _comboBox.onMoveActiveListeners )
 		{
-			dlg(scrollType, comboBox);
+			dlg(scrollType, _comboBox);
 		}
 	}
 	
@@ -350,11 +350,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onPopdownListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPopdown(GtkComboBox* buttonStruct, ComboBox comboBox)
+	extern(C) static gboolean callBackPopdown(GtkComboBox* buttonStruct, ComboBox _comboBox)
 	{
-		foreach ( bool delegate(ComboBox) dlg ; comboBox.onPopdownListeners )
+		foreach ( bool delegate(ComboBox) dlg ; _comboBox.onPopdownListeners )
 		{
-			if ( dlg(comboBox) )
+			if ( dlg(_comboBox) )
 			{
 				return 1;
 			}
@@ -388,11 +388,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onPopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopup(GtkComboBox* widgetStruct, ComboBox comboBox)
+	extern(C) static void callBackPopup(GtkComboBox* widgetStruct, ComboBox _comboBox)
 	{
-		foreach ( void delegate(ComboBox) dlg ; comboBox.onPopupListeners )
+		foreach ( void delegate(ComboBox) dlg ; _comboBox.onPopupListeners )
 		{
-			dlg(comboBox);
+			dlg(_comboBox);
 		}
 	}
 	

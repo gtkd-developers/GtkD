@@ -151,11 +151,11 @@ public class Calendar : Widget
 		}
 		onDaySelectedListeners ~= dlg;
 	}
-	extern(C) static void callBackDaySelected(GtkCalendar* calendarStruct, Calendar calendar)
+	extern(C) static void callBackDaySelected(GtkCalendar* calendarStruct, Calendar _calendar)
 	{
-		foreach ( void delegate(Calendar) dlg ; calendar.onDaySelectedListeners )
+		foreach ( void delegate(Calendar) dlg ; _calendar.onDaySelectedListeners )
 		{
-			dlg(calendar);
+			dlg(_calendar);
 		}
 	}
 	
@@ -178,11 +178,11 @@ public class Calendar : Widget
 		}
 		onDaySelectedDoubleClickListeners ~= dlg;
 	}
-	extern(C) static void callBackDaySelectedDoubleClick(GtkCalendar* calendarStruct, Calendar calendar)
+	extern(C) static void callBackDaySelectedDoubleClick(GtkCalendar* calendarStruct, Calendar _calendar)
 	{
-		foreach ( void delegate(Calendar) dlg ; calendar.onDaySelectedDoubleClickListeners )
+		foreach ( void delegate(Calendar) dlg ; _calendar.onDaySelectedDoubleClickListeners )
 		{
-			dlg(calendar);
+			dlg(_calendar);
 		}
 	}
 	
@@ -206,11 +206,11 @@ public class Calendar : Widget
 		}
 		onMonthChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackMonthChanged(GtkCalendar* calendarStruct, Calendar calendar)
+	extern(C) static void callBackMonthChanged(GtkCalendar* calendarStruct, Calendar _calendar)
 	{
-		foreach ( void delegate(Calendar) dlg ; calendar.onMonthChangedListeners )
+		foreach ( void delegate(Calendar) dlg ; _calendar.onMonthChangedListeners )
 		{
-			dlg(calendar);
+			dlg(_calendar);
 		}
 	}
 	
@@ -233,11 +233,11 @@ public class Calendar : Widget
 		}
 		onNextMonthListeners ~= dlg;
 	}
-	extern(C) static void callBackNextMonth(GtkCalendar* calendarStruct, Calendar calendar)
+	extern(C) static void callBackNextMonth(GtkCalendar* calendarStruct, Calendar _calendar)
 	{
-		foreach ( void delegate(Calendar) dlg ; calendar.onNextMonthListeners )
+		foreach ( void delegate(Calendar) dlg ; _calendar.onNextMonthListeners )
 		{
-			dlg(calendar);
+			dlg(_calendar);
 		}
 	}
 	
@@ -260,11 +260,11 @@ public class Calendar : Widget
 		}
 		onNextYearListeners ~= dlg;
 	}
-	extern(C) static void callBackNextYear(GtkCalendar* calendarStruct, Calendar calendar)
+	extern(C) static void callBackNextYear(GtkCalendar* calendarStruct, Calendar _calendar)
 	{
-		foreach ( void delegate(Calendar) dlg ; calendar.onNextYearListeners )
+		foreach ( void delegate(Calendar) dlg ; _calendar.onNextYearListeners )
 		{
-			dlg(calendar);
+			dlg(_calendar);
 		}
 	}
 	
@@ -287,11 +287,11 @@ public class Calendar : Widget
 		}
 		onPrevMonthListeners ~= dlg;
 	}
-	extern(C) static void callBackPrevMonth(GtkCalendar* calendarStruct, Calendar calendar)
+	extern(C) static void callBackPrevMonth(GtkCalendar* calendarStruct, Calendar _calendar)
 	{
-		foreach ( void delegate(Calendar) dlg ; calendar.onPrevMonthListeners )
+		foreach ( void delegate(Calendar) dlg ; _calendar.onPrevMonthListeners )
 		{
-			dlg(calendar);
+			dlg(_calendar);
 		}
 	}
 	
@@ -314,11 +314,11 @@ public class Calendar : Widget
 		}
 		onPrevYearListeners ~= dlg;
 	}
-	extern(C) static void callBackPrevYear(GtkCalendar* calendarStruct, Calendar calendar)
+	extern(C) static void callBackPrevYear(GtkCalendar* calendarStruct, Calendar _calendar)
 	{
-		foreach ( void delegate(Calendar) dlg ; calendar.onPrevYearListeners )
+		foreach ( void delegate(Calendar) dlg ; _calendar.onPrevYearListeners )
 		{
-			dlg(calendar);
+			dlg(_calendar);
 		}
 	}
 	

@@ -194,11 +194,11 @@ public class ObjectGst : ObjectG
 		}
 		onDeepNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackDeepNotify(GstObject* gstobjectStruct, GstObject* propObject, GParamSpec* prop, ObjectGst objectGst)
+	extern(C) static void callBackDeepNotify(GstObject* gstobjectStruct, GstObject* propObject, GParamSpec* prop, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(ObjectGst, ParamSpec, ObjectGst) dlg ; objectGst.onDeepNotifyListeners )
+		foreach ( void delegate(ObjectGst, ParamSpec, ObjectGst) dlg ; _objectGst.onDeepNotifyListeners )
 		{
-			dlg(new ObjectGst(propObject), new ParamSpec(prop), objectGst);
+			dlg(new ObjectGst(propObject), new ParamSpec(prop), _objectGst);
 		}
 	}
 	
@@ -222,11 +222,11 @@ public class ObjectGst : ObjectG
 		}
 		onObjectSavedListeners ~= dlg;
 	}
-	extern(C) static void callBackObjectSaved(GstObject* gstobjectStruct, gpointer xmlNode, ObjectGst objectGst)
+	extern(C) static void callBackObjectSaved(GstObject* gstobjectStruct, gpointer xmlNode, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(gpointer, ObjectGst) dlg ; objectGst.onObjectSavedListeners )
+		foreach ( void delegate(gpointer, ObjectGst) dlg ; _objectGst.onObjectSavedListeners )
 		{
-			dlg(xmlNode, objectGst);
+			dlg(xmlNode, _objectGst);
 		}
 	}
 	
@@ -249,11 +249,11 @@ public class ObjectGst : ObjectG
 		}
 		onParentSetListeners ~= dlg;
 	}
-	extern(C) static void callBackParentSet(GstObject* gstobjectStruct, GObject* parent, ObjectGst objectGst)
+	extern(C) static void callBackParentSet(GstObject* gstobjectStruct, GObject* parent, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(ObjectG, ObjectGst) dlg ; objectGst.onParentSetListeners )
+		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentSetListeners )
 		{
-			dlg(new ObjectG(parent), objectGst);
+			dlg(new ObjectG(parent), _objectGst);
 		}
 	}
 	
@@ -276,11 +276,11 @@ public class ObjectGst : ObjectG
 		}
 		onParentUnsetListeners ~= dlg;
 	}
-	extern(C) static void callBackParentUnset(GstObject* gstobjectStruct, GObject* parent, ObjectGst objectGst)
+	extern(C) static void callBackParentUnset(GstObject* gstobjectStruct, GObject* parent, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(ObjectG, ObjectGst) dlg ; objectGst.onParentUnsetListeners )
+		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentUnsetListeners )
 		{
-			dlg(new ObjectG(parent), objectGst);
+			dlg(new ObjectG(parent), _objectGst);
 		}
 	}
 	

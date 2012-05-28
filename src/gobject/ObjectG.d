@@ -330,11 +330,11 @@ public class ObjectG
 		}
 		onNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* pspec, ObjectG objectG)
+	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* pspec, ObjectG _objectG)
 	{
-		foreach ( void delegate(ParamSpec, ObjectG) dlg ; objectG.onNotifyListeners )
+		foreach ( void delegate(ParamSpec, ObjectG) dlg ; _objectG.onNotifyListeners )
 		{
-			dlg(new ParamSpec(pspec), objectG);
+			dlg(new ParamSpec(pspec), _objectG);
 		}
 	}
 	

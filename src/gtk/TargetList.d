@@ -48,6 +48,8 @@
  * imports:
  * 	- gtk.TextBuffer
  * 	- gtk.TargetEntry
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GtkTargetEntry* -> TargetEntry
  * 	- GtkTargetList* -> TargetList
@@ -67,6 +69,8 @@ private import glib.ConstructionException;
 
 private import gtk.TextBuffer;
 private import gtk.TargetEntry;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 

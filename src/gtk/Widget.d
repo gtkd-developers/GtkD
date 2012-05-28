@@ -457,152 +457,154 @@ public class Widget : ObjectG, BuildableIF
 	/** */
 	public bool onButtonPressEvent(GdkEventButton* event)
 	{
-		return getWidgetClass().buttonPressEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().button_press_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onButtonReleaseEvent(GdkEventButton* event)
 	{
-		return getWidgetClass().buttonReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().button_release_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onScrollEvent(GdkEventScroll* event)
 	{
-		return getWidgetClass().scrollEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().scroll_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onMotionNotifyEvent(GdkEventMotion* event)
 	{
-		return getWidgetClass().motionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().motion_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onDeleteEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().deleteEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().delete_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
-	public bool onExposeEvent(GdkEventExpose* event)
+	public bool onDestroyEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().exposeEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().destroy_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onKeyPressEvent(GdkEventKey* event)
 	{
-		return getWidgetClass().keyPressEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().key_press_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onKeyReleaseEvent(GdkEventKey* event)
 	{
-		return getWidgetClass().keyReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().key_release_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onEnterNotifyEvent(GdkEventCrossing* event)
 	{
-		return getWidgetClass().enterNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().enter_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onLeaveNotifyEvent(GdkEventCrossing* event)
 	{
-		return getWidgetClass().leaveNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().leave_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onConfigureEvent(GdkEventConfigure* event)
 	{
-		return getWidgetClass().configureEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().configure_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onFocusInEvent(GdkEventFocus* event)
 	{
-		return getWidgetClass().focusInEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().focus_in_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onFocusOutEvent(GdkEventFocus* event)
 	{
-		return getWidgetClass().focusOutEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().focus_out_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onMapEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().mapEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().map_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onUnmapEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().unmapEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().unmap_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onPropertyNotifyEvent(GdkEventProperty* event)
 	{
-		return getWidgetClass().propertyNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().property_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onSelectionClearEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selectionClearEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selection_clear_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onSelectionRequestEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selectionRequestEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selection_request_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onSelectionNotifyEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selectionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selection_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onProximityInEvent(GdkEventProximity* event)
 	{
-		return getWidgetClass().proximityInEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().proximity_in_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onProximityOutEvent(GdkEventProximity* event)
 	{
-		return getWidgetClass().proximityOutEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().proximity_out_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onVisibilityNotifyEvent(GdkEventVisibility* event)
 	{
-		return getWidgetClass().visibilityNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
-	}
-	
-	/** */
-	public bool onClientEvent(GdkEventClient* event)
-	{
-		return getWidgetClass().clientEvent(getWidgetStruct(), event) == 0 ? false : true;
-	}
-	
-	/** */
-	public bool onNoExposeEvent(GdkEventAny* event)
-	{
-		return getWidgetClass().noExposeEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().visibility_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 	
 	/** */
 	public bool onWindowStateEvent(GdkEventWindowState* event)
 	{
-		return getWidgetClass().windowStateEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().window_state_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
+	
+	/** */
+	public bool onDamageEvent(GdkEventExpose* event)
+	{
+		return getWidgetClass().damage_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+	
+	/** */
+	public bool onGrabBrokenEvent(GdkEventGrabBroken* event)
+	{
+		return getWidgetClass().grab_broken_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+	
+	alias cairo_t CairoContext;
 	
 	/**
 	 */
@@ -626,11 +628,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onAccelClosuresChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackAccelClosuresChanged(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackAccelClosuresChanged(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onAccelClosuresChangedListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onAccelClosuresChangedListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -660,11 +662,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onButtonPressListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonPress(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackButtonPress(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onButtonPressListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onButtonPressListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -700,11 +702,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onButtonReleaseListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonRelease(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackButtonRelease(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onButtonReleaseListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onButtonReleaseListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -737,11 +739,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onCanActivateAccelListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCanActivateAccel(GtkWidget* widgetStruct, guint signalId, Widget widget)
+	extern(C) static gboolean callBackCanActivateAccel(GtkWidget* widgetStruct, guint signalId, Widget _widget)
 	{
-		foreach ( bool delegate(guint, Widget) dlg ; widget.onCanActivateAccelListeners )
+		foreach ( bool delegate(guint, Widget) dlg ; _widget.onCanActivateAccelListeners )
 		{
-			if ( dlg(signalId, widget) )
+			if ( dlg(signalId, _widget) )
 			{
 				return 1;
 			}
@@ -771,11 +773,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onChildNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* pspec, Widget widget)
+	extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* pspec, Widget _widget)
 	{
-		foreach ( void delegate(ParamSpec, Widget) dlg ; widget.onChildNotifyListeners )
+		foreach ( void delegate(ParamSpec, Widget) dlg ; _widget.onChildNotifyListeners )
 		{
-			dlg(new ParamSpec(pspec), widget);
+			dlg(new ParamSpec(pspec), _widget);
 		}
 	}
 	
@@ -800,11 +802,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onCompositedChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackCompositedChanged(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackCompositedChanged(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onCompositedChangedListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onCompositedChangedListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -833,11 +835,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onConfigureListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackConfigure(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackConfigure(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onConfigureListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onConfigureListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -870,11 +872,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDamageListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDamage(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackDamage(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onDamageListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDamageListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -908,11 +910,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDeleteListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDelete(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackDelete(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onDeleteListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDeleteListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -942,15 +944,15 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDestroyListeners ~= dlg;
 	}
-	extern(C) static void callBackDestroy(GtkWidget* objectStruct, Widget widget)
+	extern(C) static void callBackDestroy(GtkWidget* objectStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onDestroyListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onDestroyListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
-	bool delegate(Event, Widget)[] onDestroyListeners;
+	bool delegate(Event, Widget)[] onDestroyEventListeners;
 	/**
 	 * The ::destroy-event signal is emitted when a GdkWindow is destroyed.
 	 * You rarely get this signal, because most widgets disconnect themselves
@@ -962,26 +964,26 @@ public class Widget : ObjectG, BuildableIF
 	 * TRUE to stop other handlers from being invoked for the event.
 	 * FALSE to propagate the event further.
 	 */
-	void addOnDestroy(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDestroyEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("destroy-event" in connectedSignals) )
 		{
 			Signals.connectData(
 			getStruct(),
 			"destroy-event",
-			cast(GCallback)&callBackDestroy,
+			cast(GCallback)&callBackDestroyEvent,
 			cast(void*)this,
 			null,
 			connectFlags);
 			connectedSignals["destroy-event"] = 1;
 		}
-		onDestroyListeners ~= dlg;
+		onDestroyEventListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDestroy(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackDestroyEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onDestroyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDestroyEventListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1010,11 +1012,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDirectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackDirectionChanged(GtkWidget* widgetStruct, GtkTextDirection previousDirection, Widget widget)
+	extern(C) static void callBackDirectionChanged(GtkWidget* widgetStruct, GtkTextDirection previousDirection, Widget _widget)
 	{
-		foreach ( void delegate(GtkTextDirection, Widget) dlg ; widget.onDirectionChangedListeners )
+		foreach ( void delegate(GtkTextDirection, Widget) dlg ; _widget.onDirectionChangedListeners )
 		{
-			dlg(previousDirection, widget);
+			dlg(previousDirection, _widget);
 		}
 	}
 	
@@ -1042,11 +1044,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragBeginListeners ~= dlg;
 	}
-	extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
+	extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
 	{
-		foreach ( void delegate(DragContext, Widget) dlg ; widget.onDragBeginListeners )
+		foreach ( void delegate(DragContext, Widget) dlg ; _widget.onDragBeginListeners )
 		{
-			dlg(new DragContext(dragContext), widget);
+			dlg(new DragContext(dragContext), _widget);
 		}
 	}
 	
@@ -1072,11 +1074,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragDataDeleteListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
+	extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
 	{
-		foreach ( void delegate(DragContext, Widget) dlg ; widget.onDragDataDeleteListeners )
+		foreach ( void delegate(DragContext, Widget) dlg ; _widget.onDragDataDeleteListeners )
 		{
-			dlg(new DragContext(dragContext), widget);
+			dlg(new DragContext(dragContext), _widget);
 		}
 	}
 	
@@ -1103,11 +1105,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragDataGetListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkSelectionData* data, guint info, guint time, Widget widget)
+	extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkSelectionData* data, guint info, guint time, Widget _widget)
 	{
-		foreach ( void delegate(DragContext, SelectionData, guint, guint, Widget) dlg ; widget.onDragDataGetListeners )
+		foreach ( void delegate(DragContext, SelectionData, guint, guint, Widget) dlg ; _widget.onDragDataGetListeners )
 		{
-			dlg(new DragContext(dragContext), new SelectionData(data), info, time, widget);
+			dlg(new DragContext(dragContext), new SelectionData(data), info, time, _widget);
 		}
 	}
 	
@@ -1141,11 +1143,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragDataReceivedListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data, guint info, guint time, Widget widget)
+	extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data, guint info, guint time, Widget _widget)
 	{
-		foreach ( void delegate(DragContext, gint, gint, SelectionData, guint, guint, Widget) dlg ; widget.onDragDataReceivedListeners )
+		foreach ( void delegate(DragContext, gint, gint, SelectionData, guint, guint, Widget) dlg ; _widget.onDragDataReceivedListeners )
 		{
-			dlg(new DragContext(dragContext), x, y, new SelectionData(data), info, time, widget);
+			dlg(new DragContext(dragContext), x, y, new SelectionData(data), info, time, _widget);
 		}
 	}
 	
@@ -1177,11 +1179,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragDropListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
+	extern(C) static gboolean callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget _widget)
 	{
-		foreach ( bool delegate(DragContext, gint, gint, guint, Widget) dlg ; widget.onDragDropListeners )
+		foreach ( bool delegate(DragContext, gint, gint, guint, Widget) dlg ; _widget.onDragDropListeners )
 		{
-			if ( dlg(new DragContext(dragContext), x, y, time, widget) )
+			if ( dlg(new DragContext(dragContext), x, y, time, _widget) )
 			{
 				return 1;
 			}
@@ -1211,11 +1213,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragEndListeners ~= dlg;
 	}
-	extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
+	extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
 	{
-		foreach ( void delegate(DragContext, Widget) dlg ; widget.onDragEndListeners )
+		foreach ( void delegate(DragContext, Widget) dlg ; _widget.onDragEndListeners )
 		{
-			dlg(new DragContext(dragContext), widget);
+			dlg(new DragContext(dragContext), _widget);
 		}
 	}
 	
@@ -1244,11 +1246,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragFailedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget widget)
+	extern(C) static gboolean callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget _widget)
 	{
-		foreach ( bool delegate(DragContext, GtkDragResult, Widget) dlg ; widget.onDragFailedListeners )
+		foreach ( bool delegate(DragContext, GtkDragResult, Widget) dlg ; _widget.onDragFailedListeners )
 		{
-			if ( dlg(new DragContext(dragContext), result, widget) )
+			if ( dlg(new DragContext(dragContext), result, _widget) )
 			{
 				return 1;
 			}
@@ -1279,11 +1281,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragLeaveListeners ~= dlg;
 	}
-	extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* dragContext, guint time, Widget widget)
+	extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* dragContext, guint time, Widget _widget)
 	{
-		foreach ( void delegate(DragContext, guint, Widget) dlg ; widget.onDragLeaveListeners )
+		foreach ( void delegate(DragContext, guint, Widget) dlg ; _widget.onDragLeaveListeners )
 		{
-			dlg(new DragContext(dragContext), time, widget);
+			dlg(new DragContext(dragContext), time, _widget);
 		}
 	}
 	
@@ -1325,11 +1327,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragMotionListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
+	extern(C) static gboolean callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget _widget)
 	{
-		foreach ( bool delegate(DragContext, gint, gint, guint, Widget) dlg ; widget.onDragMotionListeners )
+		foreach ( bool delegate(DragContext, gint, gint, guint, Widget) dlg ; _widget.onDragMotionListeners )
 		{
-			if ( dlg(new DragContext(dragContext), x, y, time, widget) )
+			if ( dlg(new DragContext(dragContext), x, y, time, _widget) )
 			{
 				return 1;
 			}
@@ -1366,11 +1368,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDrawListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDraw(GtkWidget* widgetStruct, CairoContext* cr, Widget widget)
+	extern(C) static gboolean callBackDraw(GtkWidget* widgetStruct, CairoContext* cr, Widget _widget)
 	{
-		foreach ( bool delegate(Context, Widget) dlg ; widget.onDrawListeners )
+		foreach ( bool delegate(Context, Widget) dlg ; _widget.onDrawListeners )
 		{
-			if ( dlg(new Context(cr), widget) )
+			if ( dlg(new Context(cr), _widget) )
 			{
 				return 1;
 			}
@@ -1404,11 +1406,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onEnterNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackEnterNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackEnterNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onEnterNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onEnterNotifyListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1445,11 +1447,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onListeners ~= dlg;
 	}
-	extern(C) static gboolean callBack(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBack(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1479,11 +1481,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onEventAfterListeners ~= dlg;
 	}
-	extern(C) static void callBackEventAfter(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static void callBackEventAfter(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( void delegate(Event, Widget) dlg ; widget.onEventAfterListeners )
+		foreach ( void delegate(Event, Widget) dlg ; _widget.onEventAfterListeners )
 		{
-			dlg(new Event(event), widget);
+			dlg(new Event(event), _widget);
 		}
 	}
 	
@@ -1506,11 +1508,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onFocusListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocus(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
+	extern(C) static gboolean callBackFocus(GtkWidget* widgetStruct, GtkDirectionType direction, Widget _widget)
 	{
-		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; widget.onFocusListeners )
+		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; _widget.onFocusListeners )
 		{
-			if ( dlg(direction, widget) )
+			if ( dlg(direction, _widget) )
 			{
 				return 1;
 			}
@@ -1543,11 +1545,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onFocusInListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusIn(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackFocusIn(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onFocusInListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onFocusInListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1580,11 +1582,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onFocusOutListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusOut(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackFocusOut(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onFocusOutListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onFocusOutListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1619,11 +1621,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onGrabBrokenListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackGrabBroken(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackGrabBroken(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onGrabBrokenListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onGrabBrokenListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1650,11 +1652,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onGrabFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackGrabFocus(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackGrabFocus(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onGrabFocusListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onGrabFocusListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -1685,11 +1687,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onGrabNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackGrabNotify(GtkWidget* widgetStruct, gboolean wasGrabbed, Widget widget)
+	extern(C) static void callBackGrabNotify(GtkWidget* widgetStruct, gboolean wasGrabbed, Widget _widget)
 	{
-		foreach ( void delegate(gboolean, Widget) dlg ; widget.onGrabNotifyListeners )
+		foreach ( void delegate(gboolean, Widget) dlg ; _widget.onGrabNotifyListeners )
 		{
-			dlg(wasGrabbed, widget);
+			dlg(wasGrabbed, _widget);
 		}
 	}
 	
@@ -1711,11 +1713,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onHideListeners ~= dlg;
 	}
-	extern(C) static void callBackHide(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackHide(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onHideListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onHideListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -1742,11 +1744,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onHierarchyChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackHierarchyChanged(GtkWidget* widgetStruct, GtkWidget* previousToplevel, Widget widget)
+	extern(C) static void callBackHierarchyChanged(GtkWidget* widgetStruct, GtkWidget* previousToplevel, Widget _widget)
 	{
-		foreach ( void delegate(Widget, Widget) dlg ; widget.onHierarchyChangedListeners )
+		foreach ( void delegate(Widget, Widget) dlg ; _widget.onHierarchyChangedListeners )
 		{
-			dlg(new Widget(previousToplevel), widget);
+			dlg(new Widget(previousToplevel), _widget);
 		}
 	}
 	
@@ -1775,11 +1777,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onKeyPressListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackKeyPress(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackKeyPress(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onKeyPressListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onKeyPressListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1812,11 +1814,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onKeyReleaseListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackKeyRelease(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackKeyRelease(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onKeyReleaseListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onKeyReleaseListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1849,11 +1851,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onKeynavFailedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
+	extern(C) static gboolean callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, Widget _widget)
 	{
-		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; widget.onKeynavFailedListeners )
+		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; _widget.onKeynavFailedListeners )
 		{
-			if ( dlg(direction, widget) )
+			if ( dlg(direction, _widget) )
 			{
 				return 1;
 			}
@@ -1887,11 +1889,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onLeaveNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackLeaveNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackLeaveNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onLeaveNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onLeaveNotifyListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1918,11 +1920,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onMapListeners ~= dlg;
 	}
-	extern(C) static void callBackMap(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackMap(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onMapListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onMapListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -1951,11 +1953,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onMapEventListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackMapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onMapEventListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onMapEventListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1982,11 +1984,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onMnemonicActivateListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMnemonicActivate(GtkWidget* widgetStruct, gboolean arg1, Widget widget)
+	extern(C) static gboolean callBackMnemonicActivate(GtkWidget* widgetStruct, gboolean arg1, Widget _widget)
 	{
-		foreach ( bool delegate(gboolean, Widget) dlg ; widget.onMnemonicActivateListeners )
+		foreach ( bool delegate(gboolean, Widget) dlg ; _widget.onMnemonicActivateListeners )
 		{
-			if ( dlg(arg1, widget) )
+			if ( dlg(arg1, _widget) )
 			{
 				return 1;
 			}
@@ -2021,11 +2023,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onMotionNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMotionNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackMotionNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onMotionNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onMotionNotifyListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2052,11 +2054,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onMoveFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveFocus(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
+	extern(C) static void callBackMoveFocus(GtkWidget* widgetStruct, GtkDirectionType direction, Widget _widget)
 	{
-		foreach ( void delegate(GtkDirectionType, Widget) dlg ; widget.onMoveFocusListeners )
+		foreach ( void delegate(GtkDirectionType, Widget) dlg ; _widget.onMoveFocusListeners )
 		{
-			dlg(direction, widget);
+			dlg(direction, _widget);
 		}
 	}
 	
@@ -2080,11 +2082,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onParentSetListeners ~= dlg;
 	}
-	extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkWidget* oldParent, Widget widget)
+	extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkWidget* oldParent, Widget _widget)
 	{
-		foreach ( void delegate(Widget, Widget) dlg ; widget.onParentSetListeners )
+		foreach ( void delegate(Widget, Widget) dlg ; _widget.onParentSetListeners )
 		{
-			dlg(new Widget(oldParent), widget);
+			dlg(new Widget(oldParent), _widget);
 		}
 	}
 	
@@ -2113,11 +2115,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onPopupMenuListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPopupMenu(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static gboolean callBackPopupMenu(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( bool delegate(Widget) dlg ; widget.onPopupMenuListeners )
+		foreach ( bool delegate(Widget) dlg ; _widget.onPopupMenuListeners )
 		{
-			if ( dlg(widget) )
+			if ( dlg(_widget) )
 			{
 				return 1;
 			}
@@ -2150,11 +2152,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onPropertyNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPropertyNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackPropertyNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onPropertyNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onPropertyNotifyListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2186,11 +2188,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onProximityInListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackProximityIn(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackProximityIn(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onProximityInListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onProximityInListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2222,11 +2224,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onProximityOutListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackProximityOut(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackProximityOut(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onProximityOutListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onProximityOutListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2266,11 +2268,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onQueryTooltipListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackQueryTooltip(GtkWidget* widgetStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, Widget widget)
+	extern(C) static gboolean callBackQueryTooltip(GtkWidget* widgetStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, Widget _widget)
 	{
-		foreach ( bool delegate(gint, gint, gboolean, Tooltip, Widget) dlg ; widget.onQueryTooltipListeners )
+		foreach ( bool delegate(gint, gint, gboolean, Tooltip, Widget) dlg ; _widget.onQueryTooltipListeners )
 		{
-			if ( dlg(x, y, keyboardMode, new Tooltip(tooltip), widget) )
+			if ( dlg(x, y, keyboardMode, new Tooltip(tooltip), _widget) )
 			{
 				return 1;
 			}
@@ -2297,11 +2299,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onRealizeListeners ~= dlg;
 	}
-	extern(C) static void callBackRealize(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackRealize(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onRealizeListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onRealizeListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2325,11 +2327,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onScreenChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackScreenChanged(GtkWidget* widgetStruct, GdkScreen* previousScreen, Widget widget)
+	extern(C) static void callBackScreenChanged(GtkWidget* widgetStruct, GdkScreen* previousScreen, Widget _widget)
 	{
-		foreach ( void delegate(Screen, Widget) dlg ; widget.onScreenChangedListeners )
+		foreach ( void delegate(Screen, Widget) dlg ; _widget.onScreenChangedListeners )
 		{
-			dlg(new Screen(previousScreen), widget);
+			dlg(new Screen(previousScreen), _widget);
 		}
 	}
 	
@@ -2359,11 +2361,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onScrollListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackScroll(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackScroll(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onScrollListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onScrollListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2394,11 +2396,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onSelectionClearListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionClear(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackSelectionClear(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onSelectionClearListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onSelectionClearListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2425,11 +2427,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onSelectionGetListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, guint info, guint time, Widget widget)
+	extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, guint info, guint time, Widget _widget)
 	{
-		foreach ( void delegate(SelectionData, guint, guint, Widget) dlg ; widget.onSelectionGetListeners )
+		foreach ( void delegate(SelectionData, guint, guint, Widget) dlg ; _widget.onSelectionGetListeners )
 		{
-			dlg(new SelectionData(data), info, time, widget);
+			dlg(new SelectionData(data), info, time, _widget);
 		}
 	}
 	
@@ -2452,11 +2454,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onSelectionNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackSelectionNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onSelectionNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onSelectionNotifyListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2483,11 +2485,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onSelectionReceivedListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, guint time, Widget widget)
+	extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, guint time, Widget _widget)
 	{
-		foreach ( void delegate(SelectionData, guint, Widget) dlg ; widget.onSelectionReceivedListeners )
+		foreach ( void delegate(SelectionData, guint, Widget) dlg ; _widget.onSelectionReceivedListeners )
 		{
-			dlg(new SelectionData(data), time, widget);
+			dlg(new SelectionData(data), time, _widget);
 		}
 	}
 	
@@ -2514,11 +2516,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onSelectionRequestListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionRequest(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackSelectionRequest(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onSelectionRequestListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onSelectionRequestListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2545,11 +2547,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onShowListeners ~= dlg;
 	}
-	extern(C) static void callBackShow(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackShow(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onShowListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onShowListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2571,11 +2573,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onShowHelpListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType helpType, Widget widget)
+	extern(C) static gboolean callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType helpType, Widget _widget)
 	{
-		foreach ( bool delegate(GtkWidgetHelpType, Widget) dlg ; widget.onShowHelpListeners )
+		foreach ( bool delegate(GtkWidgetHelpType, Widget) dlg ; _widget.onShowHelpListeners )
 		{
-			if ( dlg(helpType, widget) )
+			if ( dlg(helpType, _widget) )
 			{
 				return 1;
 			}
@@ -2602,11 +2604,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onSizeAllocateListeners ~= dlg;
 	}
-	extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, GdkRectangle* allocation, Widget widget)
+	extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, GdkRectangle* allocation, Widget _widget)
 	{
-		foreach ( void delegate(GdkRectangle*, Widget) dlg ; widget.onSizeAllocateListeners )
+		foreach ( void delegate(GdkRectangle*, Widget) dlg ; _widget.onSizeAllocateListeners )
 		{
-			dlg(allocation, widget);
+			dlg(allocation, _widget);
 		}
 	}
 	
@@ -2632,11 +2634,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onStateChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStateChanged(GtkWidget* widgetStruct, GtkStateType state, Widget widget)
+	extern(C) static void callBackStateChanged(GtkWidget* widgetStruct, GtkStateType state, Widget _widget)
 	{
-		foreach ( void delegate(GtkStateType, Widget) dlg ; widget.onStateChangedListeners )
+		foreach ( void delegate(GtkStateType, Widget) dlg ; _widget.onStateChangedListeners )
 		{
-			dlg(state, widget);
+			dlg(state, _widget);
 		}
 	}
 	
@@ -2661,11 +2663,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onStateFlagsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStateFlagsChanged(GtkWidget* widgetStruct, GtkStateFlags flags, Widget widget)
+	extern(C) static void callBackStateFlagsChanged(GtkWidget* widgetStruct, GtkStateFlags flags, Widget _widget)
 	{
-		foreach ( void delegate(GtkStateFlags, Widget) dlg ; widget.onStateFlagsChangedListeners )
+		foreach ( void delegate(GtkStateFlags, Widget) dlg ; _widget.onStateFlagsChangedListeners )
 		{
-			dlg(flags, widget);
+			dlg(flags, _widget);
 		}
 	}
 	
@@ -2695,11 +2697,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onStyleSetListeners ~= dlg;
 	}
-	extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget widget)
+	extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget _widget)
 	{
-		foreach ( void delegate(Style, Widget) dlg ; widget.onStyleSetListeners )
+		foreach ( void delegate(Style, Widget) dlg ; _widget.onStyleSetListeners )
 		{
-			dlg(new Style(previousStyle), widget);
+			dlg(new Style(previousStyle), _widget);
 		}
 	}
 	
@@ -2725,11 +2727,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onStyleUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackStyleUpdated(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackStyleUpdated(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onStyleUpdatedListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onStyleUpdatedListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2751,11 +2753,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onUnmapListeners ~= dlg;
 	}
-	extern(C) static void callBackUnmap(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackUnmap(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onUnmapListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onUnmapListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2784,11 +2786,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onUnmapEventListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackUnmapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackUnmapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onUnmapEventListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onUnmapEventListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2815,11 +2817,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onUnrealizeListeners ~= dlg;
 	}
-	extern(C) static void callBackUnrealize(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackUnrealize(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onUnrealizeListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onUnrealizeListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2847,11 +2849,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onVisibilityNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onVisibilityNotifyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onVisibilityNotifyListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2885,11 +2887,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onWindowStateListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackWindowState(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackWindowState(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onWindowStateListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onWindowStateListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(new Event(event), _widget) )
 			{
 				return 1;
 			}

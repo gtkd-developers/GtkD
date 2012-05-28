@@ -51,6 +51,8 @@
  * 	- gio.Icon
  * 	- gio.IconIF
  * 	- gdk.Pixbuf
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GAppInfo* -> AppInfo
  * 	- GIcon* -> IconIF
@@ -78,6 +80,8 @@ private import gio.AppInfo;
 private import gio.Icon;
 private import gio.IconIF;
 private import gdk.Pixbuf;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 

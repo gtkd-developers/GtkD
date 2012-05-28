@@ -164,11 +164,11 @@ public class PrintJob : ObjectG
 		}
 		onStatusChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStatusChanged(GtkPrintJob* jobStruct, PrintJob printJob)
+	extern(C) static void callBackStatusChanged(GtkPrintJob* jobStruct, PrintJob _printJob)
 	{
-		foreach ( void delegate(PrintJob) dlg ; printJob.onStatusChangedListeners )
+		foreach ( void delegate(PrintJob) dlg ; _printJob.onStatusChangedListeners )
 		{
-			dlg(printJob);
+			dlg(_printJob);
 		}
 	}
 	

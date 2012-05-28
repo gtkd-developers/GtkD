@@ -192,11 +192,11 @@ public class ToggleButton : Button
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkToggleButton* togglebuttonStruct, ToggleButton toggleButton)
+	extern(C) static void callBackToggled(GtkToggleButton* togglebuttonStruct, ToggleButton _toggleButton)
 	{
-		foreach ( void delegate(ToggleButton) dlg ; toggleButton.onToggledListeners )
+		foreach ( void delegate(ToggleButton) dlg ; _toggleButton.onToggledListeners )
 		{
-			dlg(toggleButton);
+			dlg(_toggleButton);
 		}
 	}
 	

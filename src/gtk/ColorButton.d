@@ -156,11 +156,11 @@ public class ColorButton : Button
 		}
 		onColorSetListeners ~= dlg;
 	}
-	extern(C) static void callBackColorSet(GtkColorButton* widgetStruct, ColorButton colorButton)
+	extern(C) static void callBackColorSet(GtkColorButton* widgetStruct, ColorButton _colorButton)
 	{
-		foreach ( void delegate(ColorButton) dlg ; colorButton.onColorSetListeners )
+		foreach ( void delegate(ColorButton) dlg ; _colorButton.onColorSetListeners )
 		{
-			dlg(colorButton);
+			dlg(_colorButton);
 		}
 	}
 	

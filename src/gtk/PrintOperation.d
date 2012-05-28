@@ -199,11 +199,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onBeginPrintListeners ~= dlg;
 	}
-	extern(C) static void callBackBeginPrint(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
+	extern(C) static void callBackBeginPrint(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation _printOperation)
 	{
-		foreach ( void delegate(PrintContext, PrintOperation) dlg ; printOperation.onBeginPrintListeners )
+		foreach ( void delegate(PrintContext, PrintOperation) dlg ; _printOperation.onBeginPrintListeners )
 		{
-			dlg(new PrintContext(context), printOperation);
+			dlg(new PrintContext(context), _printOperation);
 		}
 	}
 	
@@ -235,11 +235,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onCreateCustomWidgetListeners ~= dlg;
 	}
-	extern(C) static void callBackCreateCustomWidget(GtkPrintOperation* operationStruct, PrintOperation printOperation)
+	extern(C) static void callBackCreateCustomWidget(GtkPrintOperation* operationStruct, PrintOperation _printOperation)
 	{
-		foreach ( GObject* delegate(PrintOperation) dlg ; printOperation.onCreateCustomWidgetListeners )
+		foreach ( GObject* delegate(PrintOperation) dlg ; _printOperation.onCreateCustomWidgetListeners )
 		{
-			dlg(printOperation);
+			dlg(_printOperation);
 		}
 	}
 	
@@ -267,11 +267,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onCustomWidgetApplyListeners ~= dlg;
 	}
-	extern(C) static void callBackCustomWidgetApply(GtkPrintOperation* operationStruct, GtkWidget* widget, PrintOperation printOperation)
+	extern(C) static void callBackCustomWidgetApply(GtkPrintOperation* operationStruct, GtkWidget* widget, PrintOperation _printOperation)
 	{
-		foreach ( void delegate(Widget, PrintOperation) dlg ; printOperation.onCustomWidgetApplyListeners )
+		foreach ( void delegate(Widget, PrintOperation) dlg ; _printOperation.onCustomWidgetApplyListeners )
 		{
-			dlg(new Widget(widget), printOperation);
+			dlg(new Widget(widget), _printOperation);
 		}
 	}
 	
@@ -302,11 +302,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onDoneListeners ~= dlg;
 	}
-	extern(C) static void callBackDone(GtkPrintOperation* operationStruct, GtkPrintOperationResult result, PrintOperation printOperation)
+	extern(C) static void callBackDone(GtkPrintOperation* operationStruct, GtkPrintOperationResult result, PrintOperation _printOperation)
 	{
-		foreach ( void delegate(GtkPrintOperationResult, PrintOperation) dlg ; printOperation.onDoneListeners )
+		foreach ( void delegate(GtkPrintOperationResult, PrintOperation) dlg ; _printOperation.onDoneListeners )
 		{
-			dlg(result, printOperation);
+			dlg(result, _printOperation);
 		}
 	}
 	
@@ -337,11 +337,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onDrawPageListeners ~= dlg;
 	}
-	extern(C) static void callBackDrawPage(GtkPrintOperation* operationStruct, GtkPrintContext* context, gint pageNr, PrintOperation printOperation)
+	extern(C) static void callBackDrawPage(GtkPrintOperation* operationStruct, GtkPrintContext* context, gint pageNr, PrintOperation _printOperation)
 	{
-		foreach ( void delegate(PrintContext, gint, PrintOperation) dlg ; printOperation.onDrawPageListeners )
+		foreach ( void delegate(PrintContext, gint, PrintOperation) dlg ; _printOperation.onDrawPageListeners )
 		{
-			dlg(new PrintContext(context), pageNr, printOperation);
+			dlg(new PrintContext(context), pageNr, _printOperation);
 		}
 	}
 	
@@ -367,11 +367,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onEndPrintListeners ~= dlg;
 	}
-	extern(C) static void callBackEndPrint(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
+	extern(C) static void callBackEndPrint(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation _printOperation)
 	{
-		foreach ( void delegate(PrintContext, PrintOperation) dlg ; printOperation.onEndPrintListeners )
+		foreach ( void delegate(PrintContext, PrintOperation) dlg ; _printOperation.onEndPrintListeners )
 		{
-			dlg(new PrintContext(context), printOperation);
+			dlg(new PrintContext(context), _printOperation);
 		}
 	}
 	
@@ -406,11 +406,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onPaginateListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPaginate(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation printOperation)
+	extern(C) static gboolean callBackPaginate(GtkPrintOperation* operationStruct, GtkPrintContext* context, PrintOperation _printOperation)
 	{
-		foreach ( bool delegate(PrintContext, PrintOperation) dlg ; printOperation.onPaginateListeners )
+		foreach ( bool delegate(PrintContext, PrintOperation) dlg ; _printOperation.onPaginateListeners )
 		{
-			if ( dlg(new PrintContext(context), printOperation) )
+			if ( dlg(new PrintContext(context), _printOperation) )
 			{
 				return 1;
 			}
@@ -452,11 +452,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onPreviewListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPreview(GtkPrintOperation* operationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, PrintOperation printOperation)
+	extern(C) static gboolean callBackPreview(GtkPrintOperation* operationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, PrintOperation _printOperation)
 	{
-		foreach ( bool delegate(GtkPrintOperationPreview*, PrintContext, Window, PrintOperation) dlg ; printOperation.onPreviewListeners )
+		foreach ( bool delegate(GtkPrintOperationPreview*, PrintContext, Window, PrintOperation) dlg ; _printOperation.onPreviewListeners )
 		{
-			if ( dlg(preview, new PrintContext(context), new Window(parent), printOperation) )
+			if ( dlg(preview, new PrintContext(context), new Window(parent), _printOperation) )
 			{
 				return 1;
 			}
@@ -487,11 +487,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onRequestPageSetupListeners ~= dlg;
 	}
-	extern(C) static void callBackRequestPageSetup(GtkPrintOperation* operationStruct, GtkPrintContext* context, gint pageNr, GtkPageSetup* setup, PrintOperation printOperation)
+	extern(C) static void callBackRequestPageSetup(GtkPrintOperation* operationStruct, GtkPrintContext* context, gint pageNr, GtkPageSetup* setup, PrintOperation _printOperation)
 	{
-		foreach ( void delegate(PrintContext, gint, PageSetup, PrintOperation) dlg ; printOperation.onRequestPageSetupListeners )
+		foreach ( void delegate(PrintContext, gint, PageSetup, PrintOperation) dlg ; _printOperation.onRequestPageSetupListeners )
 		{
-			dlg(new PrintContext(context), pageNr, new PageSetup(setup), printOperation);
+			dlg(new PrintContext(context), pageNr, new PageSetup(setup), _printOperation);
 		}
 	}
 	
@@ -518,11 +518,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onStatusChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStatusChanged(GtkPrintOperation* operationStruct, PrintOperation printOperation)
+	extern(C) static void callBackStatusChanged(GtkPrintOperation* operationStruct, PrintOperation _printOperation)
 	{
-		foreach ( void delegate(PrintOperation) dlg ; printOperation.onStatusChangedListeners )
+		foreach ( void delegate(PrintOperation) dlg ; _printOperation.onStatusChangedListeners )
 		{
-			dlg(printOperation);
+			dlg(_printOperation);
 		}
 	}
 	
@@ -548,11 +548,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		}
 		onUpdateCustomWidgetListeners ~= dlg;
 	}
-	extern(C) static void callBackUpdateCustomWidget(GtkPrintOperation* operationStruct, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings, PrintOperation printOperation)
+	extern(C) static void callBackUpdateCustomWidget(GtkPrintOperation* operationStruct, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings, PrintOperation _printOperation)
 	{
-		foreach ( void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg ; printOperation.onUpdateCustomWidgetListeners )
+		foreach ( void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg ; _printOperation.onUpdateCustomWidgetListeners )
 		{
-			dlg(new Widget(widget), new PageSetup(setup), new PrintSettings(settings), printOperation);
+			dlg(new Widget(widget), new PageSetup(setup), new PrintSettings(settings), _printOperation);
 		}
 	}
 	

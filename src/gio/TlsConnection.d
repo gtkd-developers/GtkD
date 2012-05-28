@@ -187,11 +187,11 @@ public class TlsConnection : IOStream
 		}
 		onAcceptCertificateListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackAcceptCertificate(GTlsConnection* connStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, TlsConnection tlsConnection)
+	extern(C) static gboolean callBackAcceptCertificate(GTlsConnection* connStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, TlsConnection _tlsConnection)
 	{
-		foreach ( bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg ; tlsConnection.onAcceptCertificateListeners )
+		foreach ( bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg ; _tlsConnection.onAcceptCertificateListeners )
 		{
-			if ( dlg(new TlsCertificate(peerCert), errors, tlsConnection) )
+			if ( dlg(new TlsCertificate(peerCert), errors, _tlsConnection) )
 			{
 				return 1;
 			}

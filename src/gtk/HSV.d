@@ -141,11 +141,11 @@ public class HSV : Widget
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkHSV* hsvStruct, HSV hSV)
+	extern(C) static void callBackChanged(GtkHSV* hsvStruct, HSV _hSV)
 	{
-		foreach ( void delegate(HSV) dlg ; hSV.onChangedListeners )
+		foreach ( void delegate(HSV) dlg ; _hSV.onChangedListeners )
 		{
-			dlg(hSV);
+			dlg(_hSV);
 		}
 	}
 	
@@ -172,11 +172,11 @@ public class HSV : Widget
 		}
 		onMoveListeners ~= dlg;
 	}
-	extern(C) static void callBackMove(GtkHSV* hsvStruct, GtkDirectionType arg1, HSV hSV)
+	extern(C) static void callBackMove(GtkHSV* hsvStruct, GtkDirectionType arg1, HSV _hSV)
 	{
-		foreach ( void delegate(GtkDirectionType, HSV) dlg ; hSV.onMoveListeners )
+		foreach ( void delegate(GtkDirectionType, HSV) dlg ; _hSV.onMoveListeners )
 		{
-			dlg(arg1, hSV);
+			dlg(arg1, _hSV);
 		}
 	}
 	

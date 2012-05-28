@@ -148,11 +148,11 @@ public class EntryBuffer : ObjectG
 		}
 		onDeletedTextListeners ~= dlg;
 	}
-	extern(C) static void callBackDeletedText(GtkEntryBuffer* bufferStruct, guint position, guint nChars, EntryBuffer entryBuffer)
+	extern(C) static void callBackDeletedText(GtkEntryBuffer* bufferStruct, guint position, guint nChars, EntryBuffer _entryBuffer)
 	{
-		foreach ( void delegate(guint, guint, EntryBuffer) dlg ; entryBuffer.onDeletedTextListeners )
+		foreach ( void delegate(guint, guint, EntryBuffer) dlg ; _entryBuffer.onDeletedTextListeners )
 		{
-			dlg(position, nChars, entryBuffer);
+			dlg(position, nChars, _entryBuffer);
 		}
 	}
 	
@@ -176,11 +176,11 @@ public class EntryBuffer : ObjectG
 		}
 		onInsertedTextListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertedText(GtkEntryBuffer* bufferStruct, guint position, gchar* chars, guint nChars, EntryBuffer entryBuffer)
+	extern(C) static void callBackInsertedText(GtkEntryBuffer* bufferStruct, guint position, gchar* chars, guint nChars, EntryBuffer _entryBuffer)
 	{
-		foreach ( void delegate(guint, string, guint, EntryBuffer) dlg ; entryBuffer.onInsertedTextListeners )
+		foreach ( void delegate(guint, string, guint, EntryBuffer) dlg ; _entryBuffer.onInsertedTextListeners )
 		{
-			dlg(position, Str.toString(chars), nChars, entryBuffer);
+			dlg(position, Str.toString(chars), nChars, _entryBuffer);
 		}
 	}
 	

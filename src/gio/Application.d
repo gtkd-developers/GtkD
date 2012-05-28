@@ -230,11 +230,11 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GApplication* applicationStruct, Application application)
+	extern(C) static void callBackActivate(GApplication* applicationStruct, Application _application)
 	{
-		foreach ( void delegate(Application) dlg ; application.onActivateListeners )
+		foreach ( void delegate(Application) dlg ; _application.onActivateListeners )
 		{
-			dlg(application);
+			dlg(_application);
 		}
 	}
 	
@@ -259,11 +259,11 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onCommandLineListeners ~= dlg;
 	}
-	extern(C) static void callBackCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application application)
+	extern(C) static void callBackCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application _application)
 	{
-		foreach ( gint delegate(GApplicationCommandLine*, Application) dlg ; application.onCommandLineListeners )
+		foreach ( gint delegate(GApplicationCommandLine*, Application) dlg ; _application.onCommandLineListeners )
 		{
-			dlg(commandLine, application);
+			dlg(commandLine, _application);
 		}
 	}
 	
@@ -287,11 +287,11 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onOpenListeners ~= dlg;
 	}
-	extern(C) static void callBackOpen(GApplication* applicationStruct, gpointer files, gint nFiles, gchar* hint, Application application)
+	extern(C) static void callBackOpen(GApplication* applicationStruct, gpointer files, gint nFiles, gchar* hint, Application _application)
 	{
-		foreach ( void delegate(gpointer, gint, string, Application) dlg ; application.onOpenListeners )
+		foreach ( void delegate(gpointer, gint, string, Application) dlg ; _application.onOpenListeners )
 		{
-			dlg(files, nFiles, Str.toString(hint), application);
+			dlg(files, nFiles, Str.toString(hint), _application);
 		}
 	}
 	
@@ -315,11 +315,11 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onStartupListeners ~= dlg;
 	}
-	extern(C) static void callBackStartup(GApplication* applicationStruct, Application application)
+	extern(C) static void callBackStartup(GApplication* applicationStruct, Application _application)
 	{
-		foreach ( void delegate(Application) dlg ; application.onStartupListeners )
+		foreach ( void delegate(Application) dlg ; _application.onStartupListeners )
 		{
-			dlg(application);
+			dlg(_application);
 		}
 	}
 	

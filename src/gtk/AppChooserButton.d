@@ -153,11 +153,11 @@ public class AppChooserButton : ComboBox, AppChooserIF
 		}
 		onCustomItemActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackCustomItemActivated(GtkAppChooserButton* selfStruct, gchar* itemName, AppChooserButton appChooserButton)
+	extern(C) static void callBackCustomItemActivated(GtkAppChooserButton* selfStruct, gchar* itemName, AppChooserButton _appChooserButton)
 	{
-		foreach ( void delegate(string, AppChooserButton) dlg ; appChooserButton.onCustomItemActivatedListeners )
+		foreach ( void delegate(string, AppChooserButton) dlg ; _appChooserButton.onCustomItemActivatedListeners )
 		{
-			dlg(Str.toString(itemName), appChooserButton);
+			dlg(Str.toString(itemName), _appChooserButton);
 		}
 	}
 	

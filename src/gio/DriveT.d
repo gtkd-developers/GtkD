@@ -154,11 +154,11 @@ public template DriveT(TStruct)
 		}
 		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GDrive* driveStruct, DriveIF driveIF)
+	extern(C) static void callBackChanged(GDrive* driveStruct, DriveIF _driveIF)
 	{
-		foreach ( void delegate(DriveIF) dlg ; driveIF.onChangedListeners )
+		foreach ( void delegate(DriveIF) dlg ; _driveIF.onChangedListeners )
 		{
-			dlg(driveIF);
+			dlg(_driveIF);
 		}
 	}
 	
@@ -188,11 +188,11 @@ public template DriveT(TStruct)
 		}
 		_onDisconnectedListeners ~= dlg;
 	}
-	extern(C) static void callBackDisconnected(GDrive* driveStruct, DriveIF driveIF)
+	extern(C) static void callBackDisconnected(GDrive* driveStruct, DriveIF _driveIF)
 	{
-		foreach ( void delegate(DriveIF) dlg ; driveIF.onDisconnectedListeners )
+		foreach ( void delegate(DriveIF) dlg ; _driveIF.onDisconnectedListeners )
 		{
-			dlg(driveIF);
+			dlg(_driveIF);
 		}
 	}
 	
@@ -220,11 +220,11 @@ public template DriveT(TStruct)
 		}
 		_onEjectButtonListeners ~= dlg;
 	}
-	extern(C) static void callBackEjectButton(GDrive* driveStruct, DriveIF driveIF)
+	extern(C) static void callBackEjectButton(GDrive* driveStruct, DriveIF _driveIF)
 	{
-		foreach ( void delegate(DriveIF) dlg ; driveIF.onEjectButtonListeners )
+		foreach ( void delegate(DriveIF) dlg ; _driveIF.onEjectButtonListeners )
 		{
-			dlg(driveIF);
+			dlg(_driveIF);
 		}
 	}
 	
@@ -253,11 +253,11 @@ public template DriveT(TStruct)
 		}
 		_onStopButtonListeners ~= dlg;
 	}
-	extern(C) static void callBackStopButton(GDrive* driveStruct, DriveIF driveIF)
+	extern(C) static void callBackStopButton(GDrive* driveStruct, DriveIF _driveIF)
 	{
-		foreach ( void delegate(DriveIF) dlg ; driveIF.onStopButtonListeners )
+		foreach ( void delegate(DriveIF) dlg ; _driveIF.onStopButtonListeners )
 		{
-			dlg(driveIF);
+			dlg(_driveIF);
 		}
 	}
 	

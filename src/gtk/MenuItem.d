@@ -57,8 +57,6 @@
  * local aliases:
  * 	- activate -> itemActivate
  * overrides:
- * 	- select
- * 	- deselect
  */
 
 module gtk.MenuItem;
@@ -254,11 +252,11 @@ public class MenuItem : Bin, ActivatableIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, MenuItem menuItem)
+	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, MenuItem _menuItem)
 	{
-		foreach ( void delegate(MenuItem) dlg ; menuItem.onActivateListeners )
+		foreach ( void delegate(MenuItem) dlg ; _menuItem.onActivateListeners )
 		{
-			dlg(menuItem);
+			dlg(_menuItem);
 		}
 	}
 	
@@ -282,11 +280,11 @@ public class MenuItem : Bin, ActivatableIF
 		}
 		onActivateItemListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, MenuItem menuItem)
+	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, MenuItem _menuItem)
 	{
-		foreach ( void delegate(MenuItem) dlg ; menuItem.onActivateItemListeners )
+		foreach ( void delegate(MenuItem) dlg ; _menuItem.onActivateItemListeners )
 		{
-			dlg(menuItem);
+			dlg(_menuItem);
 		}
 	}
 	
@@ -308,11 +306,11 @@ public class MenuItem : Bin, ActivatableIF
 		}
 		onDeselectListeners ~= dlg;
 	}
-	extern(C) static void callBackDeselect(GtkMenuItem* menuitemStruct, MenuItem menuItem)
+	extern(C) static void callBackDeselect(GtkMenuItem* menuitemStruct, MenuItem _menuItem)
 	{
-		foreach ( void delegate(MenuItem) dlg ; menuItem.onDeselectListeners )
+		foreach ( void delegate(MenuItem) dlg ; _menuItem.onDeselectListeners )
 		{
-			dlg(menuItem);
+			dlg(_menuItem);
 		}
 	}
 	
@@ -334,11 +332,11 @@ public class MenuItem : Bin, ActivatableIF
 		}
 		onSelectListeners ~= dlg;
 	}
-	extern(C) static void callBackSelect(GtkMenuItem* menuitemStruct, MenuItem menuItem)
+	extern(C) static void callBackSelect(GtkMenuItem* menuitemStruct, MenuItem _menuItem)
 	{
-		foreach ( void delegate(MenuItem) dlg ; menuItem.onSelectListeners )
+		foreach ( void delegate(MenuItem) dlg ; _menuItem.onSelectListeners )
 		{
-			dlg(menuItem);
+			dlg(_menuItem);
 		}
 	}
 	
@@ -360,11 +358,11 @@ public class MenuItem : Bin, ActivatableIF
 		}
 		onToggleSizeAllocateListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, gint arg1, MenuItem menuItem)
+	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, gint arg1, MenuItem _menuItem)
 	{
-		foreach ( void delegate(gint, MenuItem) dlg ; menuItem.onToggleSizeAllocateListeners )
+		foreach ( void delegate(gint, MenuItem) dlg ; _menuItem.onToggleSizeAllocateListeners )
 		{
-			dlg(arg1, menuItem);
+			dlg(arg1, _menuItem);
 		}
 	}
 	
@@ -393,11 +391,11 @@ public class MenuItem : Bin, ActivatableIF
 		}
 		onToggleSizeRequestListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, gpointer arg1, MenuItem menuItem)
+	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, gpointer arg1, MenuItem _menuItem)
 	{
-		foreach ( void delegate(gpointer, MenuItem) dlg ; menuItem.onToggleSizeRequestListeners )
+		foreach ( void delegate(gpointer, MenuItem) dlg ; _menuItem.onToggleSizeRequestListeners )
 		{
-			dlg(arg1, menuItem);
+			dlg(arg1, _menuItem);
 		}
 	}
 	
@@ -563,7 +561,7 @@ public class MenuItem : Bin, ActivatableIF
 	 * Emits the "select" signal on the given item. Behaves exactly like
 	 * gtk_item_select.
 	 */
-	public override void select()
+	public void select()
 	{
 		// void gtk_menu_item_select (GtkMenuItem *menu_item);
 		gtk_menu_item_select(gtkMenuItem);
@@ -573,7 +571,7 @@ public class MenuItem : Bin, ActivatableIF
 	 * Emits the "deselect" signal on the given item. Behaves exactly like
 	 * gtk_item_deselect.
 	 */
-	public override void deselect()
+	public void deselect()
 	{
 		// void gtk_menu_item_deselect (GtkMenuItem *menu_item);
 		gtk_menu_item_deselect(gtkMenuItem);

@@ -118,11 +118,11 @@ public template CellEditableT(TStruct)
 		}
 		_onEditingDoneListeners ~= dlg;
 	}
-	extern(C) static void callBackEditingDone(GtkCellEditable* cellEditableStruct, CellEditableIF cellEditableIF)
+	extern(C) static void callBackEditingDone(GtkCellEditable* cellEditableStruct, CellEditableIF _cellEditableIF)
 	{
-		foreach ( void delegate(CellEditableIF) dlg ; cellEditableIF.onEditingDoneListeners )
+		foreach ( void delegate(CellEditableIF) dlg ; _cellEditableIF.onEditingDoneListeners )
 		{
-			dlg(cellEditableIF);
+			dlg(_cellEditableIF);
 		}
 	}
 	
@@ -159,11 +159,11 @@ public template CellEditableT(TStruct)
 		}
 		_onRemoveWidgetListeners ~= dlg;
 	}
-	extern(C) static void callBackRemoveWidget(GtkCellEditable* cellEditableStruct, CellEditableIF cellEditableIF)
+	extern(C) static void callBackRemoveWidget(GtkCellEditable* cellEditableStruct, CellEditableIF _cellEditableIF)
 	{
-		foreach ( void delegate(CellEditableIF) dlg ; cellEditableIF.onRemoveWidgetListeners )
+		foreach ( void delegate(CellEditableIF) dlg ; _cellEditableIF.onRemoveWidgetListeners )
 		{
-			dlg(cellEditableIF);
+			dlg(_cellEditableIF);
 		}
 	}
 	

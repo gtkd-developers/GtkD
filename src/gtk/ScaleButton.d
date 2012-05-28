@@ -162,11 +162,11 @@ public class ScaleButton : Button, OrientableIF
 		}
 		onPopdownListeners ~= dlg;
 	}
-	extern(C) static void callBackPopdown(GtkScaleButton* buttonStruct, ScaleButton scaleButton)
+	extern(C) static void callBackPopdown(GtkScaleButton* buttonStruct, ScaleButton _scaleButton)
 	{
-		foreach ( void delegate(ScaleButton) dlg ; scaleButton.onPopdownListeners )
+		foreach ( void delegate(ScaleButton) dlg ; _scaleButton.onPopdownListeners )
 		{
-			dlg(scaleButton);
+			dlg(_scaleButton);
 		}
 	}
 	
@@ -193,11 +193,11 @@ public class ScaleButton : Button, OrientableIF
 		}
 		onPopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopup(GtkScaleButton* buttonStruct, ScaleButton scaleButton)
+	extern(C) static void callBackPopup(GtkScaleButton* buttonStruct, ScaleButton _scaleButton)
 	{
-		foreach ( void delegate(ScaleButton) dlg ; scaleButton.onPopupListeners )
+		foreach ( void delegate(ScaleButton) dlg ; _scaleButton.onPopupListeners )
 		{
-			dlg(scaleButton);
+			dlg(_scaleButton);
 		}
 	}
 	
@@ -222,11 +222,11 @@ public class ScaleButton : Button, OrientableIF
 		}
 		onValueChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackValueChanged(GtkScaleButton* buttonStruct, gdouble value, ScaleButton scaleButton)
+	extern(C) static void callBackValueChanged(GtkScaleButton* buttonStruct, gdouble value, ScaleButton _scaleButton)
 	{
-		foreach ( void delegate(gdouble, ScaleButton) dlg ; scaleButton.onValueChangedListeners )
+		foreach ( void delegate(gdouble, ScaleButton) dlg ; _scaleButton.onValueChangedListeners )
 		{
-			dlg(value, scaleButton);
+			dlg(value, _scaleButton);
 		}
 	}
 	

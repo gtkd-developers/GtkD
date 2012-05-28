@@ -163,11 +163,11 @@ public class DisplayManager : ObjectG
 		}
 		onDisplayOpenedListeners ~= dlg;
 	}
-	extern(C) static void callBackDisplayOpened(GdkDisplayManager* managerStruct, GdkDisplay* display, DisplayManager displayManager)
+	extern(C) static void callBackDisplayOpened(GdkDisplayManager* managerStruct, GdkDisplay* display, DisplayManager _displayManager)
 	{
-		foreach ( void delegate(Display, DisplayManager) dlg ; displayManager.onDisplayOpenedListeners )
+		foreach ( void delegate(Display, DisplayManager) dlg ; _displayManager.onDisplayOpenedListeners )
 		{
-			dlg(new Display(display), displayManager);
+			dlg(new Display(display), _displayManager);
 		}
 	}
 	

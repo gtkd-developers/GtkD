@@ -198,11 +198,11 @@ public class Style : ObjectG
 		}
 		onRealizeListeners ~= dlg;
 	}
-	extern(C) static void callBackRealize(GtkStyle* styleStruct, Style style)
+	extern(C) static void callBackRealize(GtkStyle* styleStruct, Style _style)
 	{
-		foreach ( void delegate(Style) dlg ; style.onRealizeListeners )
+		foreach ( void delegate(Style) dlg ; _style.onRealizeListeners )
 		{
-			dlg(style);
+			dlg(_style);
 		}
 	}
 	
@@ -229,11 +229,11 @@ public class Style : ObjectG
 		}
 		onUnrealizeListeners ~= dlg;
 	}
-	extern(C) static void callBackUnrealize(GtkStyle* styleStruct, Style style)
+	extern(C) static void callBackUnrealize(GtkStyle* styleStruct, Style _style)
 	{
-		foreach ( void delegate(Style) dlg ; style.onUnrealizeListeners )
+		foreach ( void delegate(Style) dlg ; _style.onUnrealizeListeners )
 		{
-			dlg(style);
+			dlg(_style);
 		}
 	}
 	

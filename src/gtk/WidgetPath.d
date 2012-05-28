@@ -45,6 +45,8 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListSG
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkWidgetPath* -> WidgetPath
@@ -63,6 +65,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.ListSG;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 

@@ -663,7 +663,7 @@ public class GtkWrapper : WrapperIF
 							  convParms.inFile = std.string.strip(defReader.getValue());
 							  if ( convParms.inFile.length > 0 )
 							  {
-								  if ( convParms.inFile.startsWith("/") )
+								  if ( startsWith(convParms.inFile, "/") )
 								  {
 									  debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", convParms.toString());
 									  debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", defReader.toString());

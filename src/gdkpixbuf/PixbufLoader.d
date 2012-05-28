@@ -233,11 +233,11 @@ public class PixbufLoader : ObjectG
 		}
 		onAreaPreparedListeners ~= dlg;
 	}
-	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* loaderStruct, PixbufLoader pixbufLoader)
+	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* loaderStruct, PixbufLoader _pixbufLoader)
 	{
-		foreach ( void delegate(PixbufLoader) dlg ; pixbufLoader.onAreaPreparedListeners )
+		foreach ( void delegate(PixbufLoader) dlg ; _pixbufLoader.onAreaPreparedListeners )
 		{
-			dlg(pixbufLoader);
+			dlg(_pixbufLoader);
 		}
 	}
 	
@@ -264,11 +264,11 @@ public class PixbufLoader : ObjectG
 		}
 		onAreaUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* loaderStruct, gint x, gint y, gint width, gint height, PixbufLoader pixbufLoader)
+	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* loaderStruct, gint x, gint y, gint width, gint height, PixbufLoader _pixbufLoader)
 	{
-		foreach ( void delegate(gint, gint, gint, gint, PixbufLoader) dlg ; pixbufLoader.onAreaUpdatedListeners )
+		foreach ( void delegate(gint, gint, gint, gint, PixbufLoader) dlg ; _pixbufLoader.onAreaUpdatedListeners )
 		{
-			dlg(x, y, width, height, pixbufLoader);
+			dlg(x, y, width, height, _pixbufLoader);
 		}
 	}
 	
@@ -294,11 +294,11 @@ public class PixbufLoader : ObjectG
 		}
 		onClosedListeners ~= dlg;
 	}
-	extern(C) static void callBackClosed(GdkPixbufLoader* loaderStruct, PixbufLoader pixbufLoader)
+	extern(C) static void callBackClosed(GdkPixbufLoader* loaderStruct, PixbufLoader _pixbufLoader)
 	{
-		foreach ( void delegate(PixbufLoader) dlg ; pixbufLoader.onClosedListeners )
+		foreach ( void delegate(PixbufLoader) dlg ; _pixbufLoader.onClosedListeners )
 		{
-			dlg(pixbufLoader);
+			dlg(_pixbufLoader);
 		}
 	}
 	
@@ -327,11 +327,11 @@ public class PixbufLoader : ObjectG
 		}
 		onSizePreparedListeners ~= dlg;
 	}
-	extern(C) static void callBackSizePrepared(GdkPixbufLoader* loaderStruct, gint width, gint height, PixbufLoader pixbufLoader)
+	extern(C) static void callBackSizePrepared(GdkPixbufLoader* loaderStruct, gint width, gint height, PixbufLoader _pixbufLoader)
 	{
-		foreach ( void delegate(gint, gint, PixbufLoader) dlg ; pixbufLoader.onSizePreparedListeners )
+		foreach ( void delegate(gint, gint, PixbufLoader) dlg ; _pixbufLoader.onSizePreparedListeners )
 		{
-			dlg(width, height, pixbufLoader);
+			dlg(width, height, _pixbufLoader);
 		}
 	}
 	

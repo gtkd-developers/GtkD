@@ -111,6 +111,8 @@
  * 	- visibility-notify-event
  * 	- window-state-event
  * imports:
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GtkRequisition* -> Requisition
  * module aliases:
@@ -128,6 +130,8 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 

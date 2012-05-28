@@ -152,11 +152,11 @@ public class Switch : Widget, ActivatableIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkSwitch* widgetStruct, Switch switch)
+	extern(C) static void callBackActivate(GtkSwitch* widgetStruct, Switch _switc)
 	{
-		foreach ( void delegate(Switch) dlg ; switch.onActivateListeners )
+		foreach ( void delegate(Switch) dlg ; _switc.onActivateListeners )
 		{
-			dlg(switch);
+			dlg(_switc);
 		}
 	}
 	

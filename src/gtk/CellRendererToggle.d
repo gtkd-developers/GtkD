@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
@@ -59,6 +60,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import glib.Str;
 
 
 
@@ -140,11 +142,11 @@ public class CellRendererToggle : CellRenderer
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkCellRendererToggle* cellRendererStruct, gchar* path, CellRendererToggle cellRendererToggle)
+	extern(C) static void callBackToggled(GtkCellRendererToggle* cellRendererStruct, gchar* path, CellRendererToggle _cellRendererToggle)
 	{
-		foreach ( void delegate(string, CellRendererToggle) dlg ; cellRendererToggle.onToggledListeners )
+		foreach ( void delegate(string, CellRendererToggle) dlg ; _cellRendererToggle.onToggledListeners )
 		{
-			dlg(Str.toString(path), cellRendererToggle);
+			dlg(Str.toString(path), _cellRendererToggle);
 		}
 	}
 	

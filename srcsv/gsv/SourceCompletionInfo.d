@@ -146,11 +146,11 @@ public class SourceCompletionInfo : Window
 		}
 		onBeforeShowListeners ~= dlg;
 	}
-	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct, SourceCompletionInfo sourceCompletionInfo)
+	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct, SourceCompletionInfo _sourceCompletionInfo)
 	{
-		foreach ( void delegate(SourceCompletionInfo) dlg ; sourceCompletionInfo.onBeforeShowListeners )
+		foreach ( void delegate(SourceCompletionInfo) dlg ; _sourceCompletionInfo.onBeforeShowListeners )
 		{
-			dlg(sourceCompletionInfo);
+			dlg(_sourceCompletionInfo);
 		}
 	}
 	

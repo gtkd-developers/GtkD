@@ -239,11 +239,11 @@ public class Bin : Element
 		}
 		onElementAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackElementAdded(GstBin* binStruct, GstElement* element, Bin bin)
+	extern(C) static void callBackElementAdded(GstBin* binStruct, GstElement* element, Bin _bin)
 	{
-		foreach ( void delegate(Element, Bin) dlg ; bin.onElementAddedListeners )
+		foreach ( void delegate(Element, Bin) dlg ; _bin.onElementAddedListeners )
 		{
-			dlg(new Element(element), bin);
+			dlg(new Element(element), _bin);
 		}
 	}
 	
@@ -266,11 +266,11 @@ public class Bin : Element
 		}
 		onElementRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackElementRemoved(GstBin* binStruct, GstElement* element, Bin bin)
+	extern(C) static void callBackElementRemoved(GstBin* binStruct, GstElement* element, Bin _bin)
 	{
-		foreach ( void delegate(Element, Bin) dlg ; bin.onElementRemovedListeners )
+		foreach ( void delegate(Element, Bin) dlg ; _bin.onElementRemovedListeners )
 		{
-			dlg(new Element(element), bin);
+			dlg(new Element(element), _bin);
 		}
 	}
 	

@@ -159,7 +159,7 @@ public class Tooltip : ObjectG
 	 */
 	void setIcon(StockID stockID, GtkIconSize size)
 	{
-		setIconFromStock(Str.toStringz(StockDesc[stockID]), size);
+		setIconFromStock(StockDesc[stockID], size);
 	}
 	
 	/**

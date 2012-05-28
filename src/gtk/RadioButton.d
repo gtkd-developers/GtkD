@@ -272,11 +272,11 @@ public class RadioButton : CheckButton
 		}
 		onGroupChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackGroupChanged(GtkRadioButton* buttonStruct, RadioButton radioButton)
+	extern(C) static void callBackGroupChanged(GtkRadioButton* buttonStruct, RadioButton _radioButton)
 	{
-		foreach ( void delegate(RadioButton) dlg ; radioButton.onGroupChangedListeners )
+		foreach ( void delegate(RadioButton) dlg ; _radioButton.onGroupChangedListeners )
 		{
-			dlg(radioButton);
+			dlg(_radioButton);
 		}
 	}
 	

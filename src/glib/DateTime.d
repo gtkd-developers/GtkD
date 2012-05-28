@@ -262,8 +262,15 @@ public class DateTime
 		 */
 		mixin("public static nothrow @trusted uint hash(DateTime datetime)
 		{
-			// guint g_date_time_hash (gconstpointer datetime);
-			return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
+			try
+			{
+				// guint g_date_time_hash (gconstpointer datetime);
+				return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
+			}
+			catch(Exception e)
+			{
+				return 0;
+			}
 		}");
 	}
 	else

@@ -194,11 +194,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		}
 		onActivateCursorItemListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static gboolean callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( bool delegate(IconView) dlg ; iconView.onActivateCursorItemListeners )
+		foreach ( bool delegate(IconView) dlg ; _iconView.onActivateCursorItemListeners )
 		{
-			if ( dlg(iconView) )
+			if ( dlg(_iconView) )
 			{
 				return 1;
 			}
@@ -230,11 +230,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		}
 		onItemActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* path, IconView iconView)
+	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* path, IconView _iconView)
 	{
-		foreach ( void delegate(TreePath, IconView) dlg ; iconView.onItemActivatedListeners )
+		foreach ( void delegate(TreePath, IconView) dlg ; _iconView.onItemActivatedListeners )
 		{
-			dlg(new TreePath(path), iconView);
+			dlg(new TreePath(path), _iconView);
 		}
 	}
 	
@@ -268,11 +268,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep step, gint count, IconView iconView)
+	extern(C) static gboolean callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep step, gint count, IconView _iconView)
 	{
-		foreach ( bool delegate(GtkMovementStep, gint, IconView) dlg ; iconView.onMoveCursorListeners )
+		foreach ( bool delegate(GtkMovementStep, gint, IconView) dlg ; _iconView.onMoveCursorListeners )
 		{
-			if ( dlg(step, count, iconView) )
+			if ( dlg(step, count, _iconView) )
 			{
 				return 1;
 			}
@@ -305,11 +305,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onSelectAllListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onSelectAllListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -338,11 +338,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		}
 		onSelectCursorItemListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onSelectCursorItemListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onSelectCursorItemListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -366,11 +366,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		}
 		onSelectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onSelectionChangedListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onSelectionChangedListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -400,11 +400,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		}
 		onToggleCursorItemListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onToggleCursorItemListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onToggleCursorItemListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -432,11 +432,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		}
 		onUnselectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onUnselectAllListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onUnselectAllListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	

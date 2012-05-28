@@ -41,7 +41,7 @@
  * 	- gtk_
  * omit structs:
  * omit prefixes:
- * 	- gtk_target_
+ * 	- gtk_target_table_
  * 	- gtk_targets_
  * 	- gtk_target_list_
  * 	- gtk_selection_
@@ -52,6 +52,7 @@
  * 	- gtkc.paths
  * 	- gtkc.Loader
  * structWrap:
+ * 	- GtkTargetEntry* -> TargetEntry
  * module aliases:
  * local aliases:
  * overrides:
@@ -129,4 +130,48 @@ public class TargetEntry
 	
 	/**
 	 */
+	
+	/**
+	 * Makes a new GtkTargetEntry structure.
+	 * Params:
+	 * target = String identifier for target
+	 * flags = Set of flags, see GtkTargetFlags
+	 * info = an ID that will be passed back to the application
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string target, uint flags, uint info)
+	{
+		// GtkTargetEntry * gtk_target_entry_new (const gchar *target,  guint flags,  guint info);
+		auto p = gtk_target_entry_new(Str.toStringz(target), flags, info);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_target_entry_new(Str.toStringz(target), flags, info)");
+		}
+		this(cast(GtkTargetEntry*) p);
+	}
+	
+	/**
+	 * Makes a copy of a GtkTargetEntry structure and its data.
+	 * Returns: a pointer to a copy of data. Free with gtk_target_entry_free()
+	 */
+	public TargetEntry copy()
+	{
+		// GtkTargetEntry * gtk_target_entry_copy (GtkTargetEntry *data);
+		auto p = gtk_target_entry_copy(gtkTargetEntry);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TargetEntry(cast(GtkTargetEntry*) p);
+	}
+	
+	/**
+	 * Frees a GtkTargetEntry structure returned from
+	 * gtk_target_entry_new() or gtk_target_entry_copy().
+	 */
+	public void free()
+	{
+		// void gtk_target_entry_free (GtkTargetEntry *data);
+		gtk_target_entry_free(gtkTargetEntry);
+	}
 }

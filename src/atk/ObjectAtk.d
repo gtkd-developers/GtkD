@@ -166,11 +166,11 @@ public class ObjectAtk : ObjectG
 		}
 		onActiveDescendantChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActiveDescendantChanged(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk objectAtk)
+	extern(C) static void callBackActiveDescendantChanged(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(gpointer, ObjectAtk) dlg ; objectAtk.onActiveDescendantChangedListeners )
+		foreach ( void delegate(gpointer, ObjectAtk) dlg ; _objectAtk.onActiveDescendantChangedListeners )
 		{
-			dlg(arg1, objectAtk);
+			dlg(arg1, _objectAtk);
 		}
 	}
 	
@@ -194,11 +194,11 @@ public class ObjectAtk : ObjectG
 		}
 		onChildrenChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChildrenChanged(AtkObject* atkobjectStruct, guint arg1, gpointer arg2, ObjectAtk objectAtk)
+	extern(C) static void callBackChildrenChanged(AtkObject* atkobjectStruct, guint arg1, gpointer arg2, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(guint, gpointer, ObjectAtk) dlg ; objectAtk.onChildrenChangedListeners )
+		foreach ( void delegate(guint, gpointer, ObjectAtk) dlg ; _objectAtk.onChildrenChangedListeners )
 		{
-			dlg(arg1, arg2, objectAtk);
+			dlg(arg1, arg2, _objectAtk);
 		}
 	}
 	
@@ -221,11 +221,11 @@ public class ObjectAtk : ObjectG
 		}
 		onFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackFocus(AtkObject* atkobjectStruct, gboolean arg1, ObjectAtk objectAtk)
+	extern(C) static void callBackFocus(AtkObject* atkobjectStruct, gboolean arg1, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(gboolean, ObjectAtk) dlg ; objectAtk.onFocusListeners )
+		foreach ( void delegate(gboolean, ObjectAtk) dlg ; _objectAtk.onFocusListeners )
 		{
-			dlg(arg1, objectAtk);
+			dlg(arg1, _objectAtk);
 		}
 	}
 	
@@ -250,11 +250,11 @@ public class ObjectAtk : ObjectG
 		}
 		onPropertyChangeListeners ~= dlg;
 	}
-	extern(C) static void callBackPropertyChange(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk objectAtk)
+	extern(C) static void callBackPropertyChange(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(gpointer, ObjectAtk) dlg ; objectAtk.onPropertyChangeListeners )
+		foreach ( void delegate(gpointer, ObjectAtk) dlg ; _objectAtk.onPropertyChangeListeners )
 		{
-			dlg(arg1, objectAtk);
+			dlg(arg1, _objectAtk);
 		}
 	}
 	
@@ -278,11 +278,11 @@ public class ObjectAtk : ObjectG
 		}
 		onStateChangeListeners ~= dlg;
 	}
-	extern(C) static void callBackStateChange(AtkObject* atkobjectStruct, gchar* arg1, gboolean arg2, ObjectAtk objectAtk)
+	extern(C) static void callBackStateChange(AtkObject* atkobjectStruct, gchar* arg1, gboolean arg2, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(string, gboolean, ObjectAtk) dlg ; objectAtk.onStateChangeListeners )
+		foreach ( void delegate(string, gboolean, ObjectAtk) dlg ; _objectAtk.onStateChangeListeners )
 		{
-			dlg(Str.toString(arg1), arg2, objectAtk);
+			dlg(Str.toString(arg1), arg2, _objectAtk);
 		}
 	}
 	
@@ -309,11 +309,11 @@ public class ObjectAtk : ObjectG
 		}
 		onVisibleDataChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackVisibleDataChanged(AtkObject* atkobjectStruct, ObjectAtk objectAtk)
+	extern(C) static void callBackVisibleDataChanged(AtkObject* atkobjectStruct, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(ObjectAtk) dlg ; objectAtk.onVisibleDataChangedListeners )
+		foreach ( void delegate(ObjectAtk) dlg ; _objectAtk.onVisibleDataChangedListeners )
 		{
-			dlg(objectAtk);
+			dlg(_objectAtk);
 		}
 	}
 	

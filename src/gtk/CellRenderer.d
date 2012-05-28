@@ -182,11 +182,11 @@ public class CellRenderer : ObjectG
 		}
 		onEditingCanceledListeners ~= dlg;
 	}
-	extern(C) static void callBackEditingCanceled(GtkCellRenderer* rendererStruct, CellRenderer cellRenderer)
+	extern(C) static void callBackEditingCanceled(GtkCellRenderer* rendererStruct, CellRenderer _cellRenderer)
 	{
-		foreach ( void delegate(CellRenderer) dlg ; cellRenderer.onEditingCanceledListeners )
+		foreach ( void delegate(CellRenderer) dlg ; _cellRenderer.onEditingCanceledListeners )
 		{
-			dlg(cellRenderer);
+			dlg(_cellRenderer);
 		}
 	}
 	
@@ -219,11 +219,11 @@ public class CellRenderer : ObjectG
 		}
 		onEditingStartedListeners ~= dlg;
 	}
-	extern(C) static void callBackEditingStarted(GtkCellRenderer* rendererStruct, GtkCellEditable* editable, gchar* path, CellRenderer cellRenderer)
+	extern(C) static void callBackEditingStarted(GtkCellRenderer* rendererStruct, GtkCellEditable* editable, gchar* path, CellRenderer _cellRenderer)
 	{
-		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg ; cellRenderer.onEditingStartedListeners )
+		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg ; _cellRenderer.onEditingStartedListeners )
 		{
-			dlg(new CellEditable(editable), Str.toString(path), cellRenderer);
+			dlg(new CellEditable(editable), Str.toString(path), _cellRenderer);
 		}
 	}
 	

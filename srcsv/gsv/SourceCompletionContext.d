@@ -166,11 +166,11 @@ public class SourceCompletionContext : ObjectG
 		}
 		onCancelledListeners ~= dlg;
 	}
-	extern(C) static void callBackCancelled(GtkSourceCompletionContext* arg0Struct, SourceCompletionContext sourceCompletionContext)
+	extern(C) static void callBackCancelled(GtkSourceCompletionContext* arg0Struct, SourceCompletionContext _sourceCompletionContext)
 	{
-		foreach ( void delegate(SourceCompletionContext) dlg ; sourceCompletionContext.onCancelledListeners )
+		foreach ( void delegate(SourceCompletionContext) dlg ; _sourceCompletionContext.onCancelledListeners )
 		{
-			dlg(sourceCompletionContext);
+			dlg(_sourceCompletionContext);
 		}
 	}
 	

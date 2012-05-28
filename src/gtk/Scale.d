@@ -166,11 +166,11 @@ public class Scale : Range
 		}
 		onFormatValueListeners ~= dlg;
 	}
-	extern(C) static void callBackFormatValue(GtkScale* scaleStruct, gdouble value, Scale scale)
+	extern(C) static void callBackFormatValue(GtkScale* scaleStruct, gdouble value, Scale _scale)
 	{
-		foreach ( string delegate(gdouble, Scale) dlg ; scale.onFormatValueListeners )
+		foreach ( string delegate(gdouble, Scale) dlg ; _scale.onFormatValueListeners )
 		{
-			dlg(value, scale);
+			dlg(value, _scale);
 		}
 	}
 	

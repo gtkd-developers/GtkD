@@ -154,11 +154,11 @@ public template PrintOperationPreviewT(TStruct)
 		}
 		_onGotPageSizeListeners ~= dlg;
 	}
-	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* previewStruct, GtkPrintContext* context, GtkPageSetup* pageSetup, PrintOperationPreviewIF printOperationPreviewIF)
+	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* previewStruct, GtkPrintContext* context, GtkPageSetup* pageSetup, PrintOperationPreviewIF _printOperationPreviewIF)
 	{
-		foreach ( void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onGotPageSizeListeners )
+		foreach ( void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg ; _printOperationPreviewIF.onGotPageSizeListeners )
 		{
-			dlg(new PrintContext(context), new PageSetup(pageSetup), printOperationPreviewIF);
+			dlg(new PrintContext(context), new PageSetup(pageSetup), _printOperationPreviewIF);
 		}
 	}
 	
@@ -189,11 +189,11 @@ public template PrintOperationPreviewT(TStruct)
 		}
 		_onReadyListeners ~= dlg;
 	}
-	extern(C) static void callBackReady(GtkPrintOperationPreview* previewStruct, GtkPrintContext* context, PrintOperationPreviewIF printOperationPreviewIF)
+	extern(C) static void callBackReady(GtkPrintOperationPreview* previewStruct, GtkPrintContext* context, PrintOperationPreviewIF _printOperationPreviewIF)
 	{
-		foreach ( void delegate(PrintContext, PrintOperationPreviewIF) dlg ; printOperationPreviewIF.onReadyListeners )
+		foreach ( void delegate(PrintContext, PrintOperationPreviewIF) dlg ; _printOperationPreviewIF.onReadyListeners )
 		{
-			dlg(new PrintContext(context), printOperationPreviewIF);
+			dlg(new PrintContext(context), _printOperationPreviewIF);
 		}
 	}
 	

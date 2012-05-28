@@ -190,11 +190,11 @@ public class AccelMap : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkAccelMap* objectStruct, gchar* accelPath, guint accelKey, GdkModifierType accelMods, AccelMap accelMap)
+	extern(C) static void callBackChanged(GtkAccelMap* objectStruct, gchar* accelPath, guint accelKey, GdkModifierType accelMods, AccelMap _accelMap)
 	{
-		foreach ( void delegate(string, guint, GdkModifierType, AccelMap) dlg ; accelMap.onChangedListeners )
+		foreach ( void delegate(string, guint, GdkModifierType, AccelMap) dlg ; _accelMap.onChangedListeners )
 		{
-			dlg(Str.toString(accelPath), accelKey, accelMods, accelMap);
+			dlg(Str.toString(accelPath), accelKey, accelMods, _accelMap);
 		}
 	}
 	

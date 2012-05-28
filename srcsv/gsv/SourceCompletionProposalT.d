@@ -117,11 +117,11 @@ public template SourceCompletionProposalT(TStruct)
 		}
 		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkSourceCompletionProposal* proposalStruct, SourceCompletionProposalIF sourceCompletionProposalIF)
+	extern(C) static void callBackChanged(GtkSourceCompletionProposal* proposalStruct, SourceCompletionProposalIF _sourceCompletionProposalIF)
 	{
-		foreach ( void delegate(SourceCompletionProposalIF) dlg ; sourceCompletionProposalIF.onChangedListeners )
+		foreach ( void delegate(SourceCompletionProposalIF) dlg ; _sourceCompletionProposalIF.onChangedListeners )
 		{
-			dlg(sourceCompletionProposalIF);
+			dlg(_sourceCompletionProposalIF);
 		}
 	}
 	

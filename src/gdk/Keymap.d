@@ -197,11 +197,11 @@ public class Keymap : ObjectG
 		}
 		onDirectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct, Keymap keymap)
+	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct, Keymap _keymap)
 	{
-		foreach ( void delegate(Keymap) dlg ; keymap.onDirectionChangedListeners )
+		foreach ( void delegate(Keymap) dlg ; _keymap.onDirectionChangedListeners )
 		{
-			dlg(keymap);
+			dlg(_keymap);
 		}
 	}
 	
@@ -226,11 +226,11 @@ public class Keymap : ObjectG
 		}
 		onKeysChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, Keymap keymap)
+	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, Keymap _keymap)
 	{
-		foreach ( void delegate(Keymap) dlg ; keymap.onKeysChangedListeners )
+		foreach ( void delegate(Keymap) dlg ; _keymap.onKeysChangedListeners )
 		{
-			dlg(keymap);
+			dlg(_keymap);
 		}
 	}
 	
@@ -256,11 +256,11 @@ public class Keymap : ObjectG
 		}
 		onStateChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStateChanged(GdkKeymap* keymapStruct, Keymap keymap)
+	extern(C) static void callBackStateChanged(GdkKeymap* keymapStruct, Keymap _keymap)
 	{
-		foreach ( void delegate(Keymap) dlg ; keymap.onStateChangedListeners )
+		foreach ( void delegate(Keymap) dlg ; _keymap.onStateChangedListeners )
 		{
-			dlg(keymap);
+			dlg(_keymap);
 		}
 	}
 	

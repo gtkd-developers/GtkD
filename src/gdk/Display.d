@@ -178,11 +178,11 @@ public class Display : ObjectG
 		}
 		onClosedListeners ~= dlg;
 	}
-	extern(C) static void callBackClosed(GdkDisplay* displayStruct, gboolean isError, Display display)
+	extern(C) static void callBackClosed(GdkDisplay* displayStruct, gboolean isError, Display _display)
 	{
-		foreach ( void delegate(gboolean, Display) dlg ; display.onClosedListeners )
+		foreach ( void delegate(gboolean, Display) dlg ; _display.onClosedListeners )
 		{
-			dlg(isError, display);
+			dlg(isError, _display);
 		}
 	}
 	
@@ -206,11 +206,11 @@ public class Display : ObjectG
 		}
 		onOpenedListeners ~= dlg;
 	}
-	extern(C) static void callBackOpened(GdkDisplay* displayStruct, Display display)
+	extern(C) static void callBackOpened(GdkDisplay* displayStruct, Display _display)
 	{
-		foreach ( void delegate(Display) dlg ; display.onOpenedListeners )
+		foreach ( void delegate(Display) dlg ; _display.onOpenedListeners )
 		{
-			dlg(display);
+			dlg(_display);
 		}
 	}
 	

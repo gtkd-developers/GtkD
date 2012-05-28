@@ -169,11 +169,11 @@ public class Screen : ObjectG
 		}
 		onCompositedChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackCompositedChanged(GdkScreen* screenStruct, Screen screen)
+	extern(C) static void callBackCompositedChanged(GdkScreen* screenStruct, Screen _screen)
 	{
-		foreach ( void delegate(Screen) dlg ; screen.onCompositedChangedListeners )
+		foreach ( void delegate(Screen) dlg ; _screen.onCompositedChangedListeners )
 		{
-			dlg(screen);
+			dlg(_screen);
 		}
 	}
 	
@@ -200,11 +200,11 @@ public class Screen : ObjectG
 		}
 		onMonitorsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackMonitorsChanged(GdkScreen* screenStruct, Screen screen)
+	extern(C) static void callBackMonitorsChanged(GdkScreen* screenStruct, Screen _screen)
 	{
-		foreach ( void delegate(Screen) dlg ; screen.onMonitorsChangedListeners )
+		foreach ( void delegate(Screen) dlg ; _screen.onMonitorsChangedListeners )
 		{
-			dlg(screen);
+			dlg(_screen);
 		}
 	}
 	
@@ -229,11 +229,11 @@ public class Screen : ObjectG
 		}
 		onSizeChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSizeChanged(GdkScreen* screenStruct, Screen screen)
+	extern(C) static void callBackSizeChanged(GdkScreen* screenStruct, Screen _screen)
 	{
-		foreach ( void delegate(Screen) dlg ; screen.onSizeChangedListeners )
+		foreach ( void delegate(Screen) dlg ; _screen.onSizeChangedListeners )
 		{
-			dlg(screen);
+			dlg(_screen);
 		}
 	}
 	

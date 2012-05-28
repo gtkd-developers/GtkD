@@ -46,6 +46,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.TreeIter
+ * 	- gtk.TreeModelIF
  * structWrap:
  * module aliases:
  * local aliases:
@@ -61,6 +63,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtk.TreeIter;
+private import gtk.TreeModelIF;
 
 
 
@@ -142,16 +146,16 @@ public class ComboBoxText : ComboBox
 	 */
 	public this (bool entry=true)
 	{
-		GtkComboBox* p;
+		GtkComboBoxText* p;
 		if ( entry )
 		{
 			// GtkWidget* gtk_combo_box_text_new_with_entry (void);
-			p = cast(GtkComboBox*)gtk_combo_box_text_new_with_entry();
+			p = cast(GtkComboBoxText*)gtk_combo_box_text_new_with_entry();
 		}
 		else
 		{
 			// GtkWidget* gtk_combo_box_text_new (void);
-			p = cast(GtkComboBox*)gtk_combo_box_text_new();
+			p = cast(GtkComboBoxText*)gtk_combo_box_text_new();
 		}
 		
 		if(p is null)
@@ -176,7 +180,7 @@ public class ComboBoxText : ComboBox
 		// was not found, the combo has now nothing selected
 		if ( insert )
 		{
-			appendText(text);
+			append("", text);
 			setActive(active);
 		}
 	}
@@ -215,12 +219,12 @@ public class ComboBoxText : ComboBox
 		int index = getIndex(text);
 		if ( index > 0 )
 		{
-			removeText(index);
-			prependText(text);
+			remove(index);
+			prepend("", text);
 		}
 		else if ( index == -1 )
 		{
-			prependText(text);
+			prepend("", text);
 		}
 	}
 	
@@ -335,7 +339,7 @@ public class ComboBoxText : ComboBox
 	/**
 	 * Removes all the text entries from the combo box.
 	 */
-	public void removeAll()
+	override public void removeAll()
 	{
 		// void gtk_combo_box_text_remove_all (GtkComboBoxText *combo_box);
 		gtk_combo_box_text_remove_all(gtkComboBoxText);

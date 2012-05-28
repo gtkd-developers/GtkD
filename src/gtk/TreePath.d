@@ -51,6 +51,8 @@
  * 	- rows-reordered
  * imports:
  * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GtkTreePath* -> TreePath
  * module aliases:
@@ -70,6 +72,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 

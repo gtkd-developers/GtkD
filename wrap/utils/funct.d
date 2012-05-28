@@ -283,8 +283,7 @@ public struct Funct
 	string getExternal(ConvParms* convParms, string[string] aliases)
 	{
 		
-		string ext = type 
-					~ " function(" 
+		string ext = (( type == "Window" ) ? "gulong" : type) ~ " function(" 
 					~ getParameters(convParms, aliases)
 					~ ")" 
 					~ name
@@ -306,7 +305,11 @@ public struct Funct
 				&& (parmsType[i]!="void" || parms[i].length>0)
 				)
 			{
-				parameters ~= parmsType[i] ~" "~GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				//Workaround for GtkPlug/GtkSocket.
+				if ( parmsType[i] == "Window" )
+					parameters ~= "gulong "~GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				else
+					parameters ~= parmsType[i] ~" "~GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 			}
 			++i;
 		}
@@ -338,9 +341,9 @@ public struct Funct
 			if ( i == parms.length-1 )
 			{
 				if(convParms.templ.length > 0)
-					parameters ~= convParms.interf~" "~GtkDClass.getClassVar(convParms);
+					parameters ~= convParms.interf~" _"~GtkDClass.idsToGtkD(GtkDClass.getClassVar(convParms), convParms, aliases);
 				else
-					parameters ~= convParms.clss~" "~GtkDClass.getClassVar(convParms);
+					parameters ~= convParms.clss~" _"~GtkDClass.idsToGtkD(GtkDClass.getClassVar(convParms), convParms, aliases);
 			}
 			else if ( i>=firstParameter
 				&& (parmsType[i]!="void" || parms[i].length>0)
@@ -384,7 +387,7 @@ public struct Funct
 			if ( i>1 ) parameters ~= ", ";
 			if ( i == parms.length-1 )
 			{
-				parameters ~= GtkDClass.getClassVar(convParms);
+				parameters ~= "_"~GtkDClass.idsToGtkD(GtkDClass.getClassVar(convParms), convParms, aliases);
 			}
 			else if ( i>=1 
 				&& (parmsType[i]!="void" || parms[i].length>0)
@@ -627,6 +630,8 @@ public struct Funct
 				string id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 				if(GtkDClass.endsWith(parmsWrap[i], "IF"))
 					parmToGtk = "("~id~" is null) ? null : "~id~ ".get"~ parmsWrap[i][0..$-2] ~ "T" ~"Struct()";
+				else if ( parmsWrap[i] == "Application" &&  parmsType[i] == "GtkApplication*" )
+					parmToGtk = "("~id~" is null) ? null : "~id~ ".getGtk"~ parmsWrap[i] ~"Struct()";
 				else
 					parmToGtk = "("~id~" is null) ? null : "~id~ ".get"~ parmsWrap[i] ~"Struct()";
 			}

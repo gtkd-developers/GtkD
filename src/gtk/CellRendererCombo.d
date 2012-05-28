@@ -163,11 +163,11 @@ public class CellRendererCombo : CellRendererText
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkCellRendererCombo* comboStruct, gchar* pathString, GtkTreeIter* newIter, CellRendererCombo cellRendererCombo)
+	extern(C) static void callBackChanged(GtkCellRendererCombo* comboStruct, gchar* pathString, GtkTreeIter* newIter, CellRendererCombo _cellRendererCombo)
 	{
-		foreach ( void delegate(string, TreeIter, CellRendererCombo) dlg ; cellRendererCombo.onChangedListeners )
+		foreach ( void delegate(string, TreeIter, CellRendererCombo) dlg ; _cellRendererCombo.onChangedListeners )
 		{
-			dlg(Str.toString(pathString), new TreeIter(newIter), cellRendererCombo);
+			dlg(Str.toString(pathString), new TreeIter(newIter), _cellRendererCombo);
 		}
 	}
 	

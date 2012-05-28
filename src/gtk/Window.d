@@ -204,11 +204,11 @@ public class Window : Bin
 		}
 		onActivateDefaultListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateDefault(GtkWindow* windowStruct, Window window)
+	extern(C) static void callBackActivateDefault(GtkWindow* windowStruct, Window _window)
 	{
-		foreach ( void delegate(Window) dlg ; window.onActivateDefaultListeners )
+		foreach ( void delegate(Window) dlg ; _window.onActivateDefaultListeners )
 		{
-			dlg(window);
+			dlg(_window);
 		}
 	}
 	
@@ -234,11 +234,11 @@ public class Window : Bin
 		}
 		onActivateFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateFocus(GtkWindow* windowStruct, Window window)
+	extern(C) static void callBackActivateFocus(GtkWindow* windowStruct, Window _window)
 	{
-		foreach ( void delegate(Window) dlg ; window.onActivateFocusListeners )
+		foreach ( void delegate(Window) dlg ; _window.onActivateFocusListeners )
 		{
-			dlg(window);
+			dlg(_window);
 		}
 	}
 	
@@ -262,11 +262,11 @@ public class Window : Bin
 		}
 		onKeysChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackKeysChanged(GtkWindow* windowStruct, Window window)
+	extern(C) static void callBackKeysChanged(GtkWindow* windowStruct, Window _window)
 	{
-		foreach ( void delegate(Window) dlg ; window.onKeysChangedListeners )
+		foreach ( void delegate(Window) dlg ; _window.onKeysChangedListeners )
 		{
-			dlg(window);
+			dlg(_window);
 		}
 	}
 	
@@ -288,11 +288,11 @@ public class Window : Bin
 		}
 		onSetFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackSetFocus(GtkWindow* windowStruct, GtkWidget* widget, Window window)
+	extern(C) static void callBackSetFocus(GtkWindow* windowStruct, GtkWidget* widget, Window _window)
 	{
-		foreach ( void delegate(Widget, Window) dlg ; window.onSetFocusListeners )
+		foreach ( void delegate(Widget, Window) dlg ; _window.onSetFocusListeners )
 		{
-			dlg(new Widget(widget), window);
+			dlg(new Widget(widget), _window);
 		}
 	}
 	
@@ -2026,7 +2026,7 @@ public class Window : Bin
 	public void setApplication(Application application)
 	{
 		// void gtk_window_set_application (GtkWindow *window,  GtkApplication *application);
-		gtk_window_set_application(gtkWindow, (application is null) ? null : application.getApplicationStruct());
+		gtk_window_set_application(gtkWindow, (application is null) ? null : application.getGtkApplicationStruct());
 	}
 	
 	/**

@@ -159,11 +159,11 @@ public template MountT(TStruct)
 		}
 		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GMount* mountStruct, MountIF mountIF)
+	extern(C) static void callBackChanged(GMount* mountStruct, MountIF _mountIF)
 	{
-		foreach ( void delegate(MountIF) dlg ; mountIF.onChangedListeners )
+		foreach ( void delegate(MountIF) dlg ; _mountIF.onChangedListeners )
 		{
-			dlg(mountIF);
+			dlg(_mountIF);
 		}
 	}
 	
@@ -192,11 +192,11 @@ public template MountT(TStruct)
 		}
 		_onPreUnmountListeners ~= dlg;
 	}
-	extern(C) static void callBackPreUnmount(GMount* mountStruct, MountIF mountIF)
+	extern(C) static void callBackPreUnmount(GMount* mountStruct, MountIF _mountIF)
 	{
-		foreach ( void delegate(MountIF) dlg ; mountIF.onPreUnmountListeners )
+		foreach ( void delegate(MountIF) dlg ; _mountIF.onPreUnmountListeners )
 		{
-			dlg(mountIF);
+			dlg(_mountIF);
 		}
 	}
 	
@@ -228,11 +228,11 @@ public template MountT(TStruct)
 		}
 		_onUnmountedListeners ~= dlg;
 	}
-	extern(C) static void callBackUnmounted(GMount* mountStruct, MountIF mountIF)
+	extern(C) static void callBackUnmounted(GMount* mountStruct, MountIF _mountIF)
 	{
-		foreach ( void delegate(MountIF) dlg ; mountIF.onUnmountedListeners )
+		foreach ( void delegate(MountIF) dlg ; _mountIF.onUnmountedListeners )
 		{
-			dlg(mountIF);
+			dlg(_mountIF);
 		}
 	}
 	

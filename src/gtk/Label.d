@@ -295,11 +295,11 @@ public class Label : Misc
 		}
 		onActivateCurrentLinkListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateCurrentLink(GtkLabel* labelStruct, Label label)
+	extern(C) static void callBackActivateCurrentLink(GtkLabel* labelStruct, Label _label)
 	{
-		foreach ( void delegate(Label) dlg ; label.onActivateCurrentLinkListeners )
+		foreach ( void delegate(Label) dlg ; _label.onActivateCurrentLinkListeners )
 		{
-			dlg(label);
+			dlg(_label);
 		}
 	}
 	
@@ -326,11 +326,11 @@ public class Label : Misc
 		}
 		onActivateLinkListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackActivateLink(GtkLabel* labelStruct, gchar* uri, Label label)
+	extern(C) static gboolean callBackActivateLink(GtkLabel* labelStruct, gchar* uri, Label _label)
 	{
-		foreach ( bool delegate(string, Label) dlg ; label.onActivateLinkListeners )
+		foreach ( bool delegate(string, Label) dlg ; _label.onActivateLinkListeners )
 		{
-			if ( dlg(Str.toString(uri), label) )
+			if ( dlg(Str.toString(uri), _label) )
 			{
 				return 1;
 			}
@@ -361,11 +361,11 @@ public class Label : Misc
 		}
 		onCopyClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct, Label label)
+	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct, Label _label)
 	{
-		foreach ( void delegate(Label) dlg ; label.onCopyClipboardListeners )
+		foreach ( void delegate(Label) dlg ; _label.onCopyClipboardListeners )
 		{
-			dlg(label);
+			dlg(_label);
 		}
 	}
 	
@@ -403,11 +403,11 @@ public class Label : Misc
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkLabel* entryStruct, GtkMovementStep step, gint count, gboolean extendSelection, Label label)
+	extern(C) static void callBackMoveCursor(GtkLabel* entryStruct, GtkMovementStep step, gint count, gboolean extendSelection, Label _label)
 	{
-		foreach ( void delegate(GtkMovementStep, gint, gboolean, Label) dlg ; label.onMoveCursorListeners )
+		foreach ( void delegate(GtkMovementStep, gint, gboolean, Label) dlg ; _label.onMoveCursorListeners )
 		{
-			dlg(step, count, extendSelection, label);
+			dlg(step, count, extendSelection, _label);
 		}
 	}
 	
@@ -434,11 +434,11 @@ public class Label : Misc
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu, Label label)
+	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu, Label _label)
 	{
-		foreach ( void delegate(Menu, Label) dlg ; label.onPopulatePopupListeners )
+		foreach ( void delegate(Menu, Label) dlg ; _label.onPopulatePopupListeners )
 		{
-			dlg(new Menu(menu), label);
+			dlg(new Menu(menu), _label);
 		}
 	}
 	

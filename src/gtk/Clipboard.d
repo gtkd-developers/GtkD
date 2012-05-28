@@ -213,11 +213,11 @@ public class Clipboard : ObjectG
 		}
 		onOwnerChangeListeners ~= dlg;
 	}
-	extern(C) static void callBackOwnerChange(GtkClipboard* clipboardStruct, GdkEvent* event, Clipboard clipboard)
+	extern(C) static void callBackOwnerChange(GtkClipboard* clipboardStruct, GdkEvent* event, Clipboard _clipboard)
 	{
-		foreach ( void delegate(GdkEvent*, Clipboard) dlg ; clipboard.onOwnerChangeListeners )
+		foreach ( void delegate(GdkEvent*, Clipboard) dlg ; _clipboard.onOwnerChangeListeners )
 		{
-			dlg(event, clipboard);
+			dlg(event, _clipboard);
 		}
 	}
 	

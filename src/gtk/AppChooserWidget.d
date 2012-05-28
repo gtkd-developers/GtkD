@@ -159,11 +159,11 @@ public class AppChooserWidget : Box, AppChooserIF
 		}
 		onApplicationActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackApplicationActivated(GtkAppChooserWidget* selfStruct, GAppInfo* application, AppChooserWidget appChooserWidget)
+	extern(C) static void callBackApplicationActivated(GtkAppChooserWidget* selfStruct, GAppInfo* application, AppChooserWidget _appChooserWidget)
 	{
-		foreach ( void delegate(AppInfo, AppChooserWidget) dlg ; appChooserWidget.onApplicationActivatedListeners )
+		foreach ( void delegate(AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onApplicationActivatedListeners )
 		{
-			dlg(new AppInfo(application), appChooserWidget);
+			dlg(new AppInfo(application), _appChooserWidget);
 		}
 	}
 	
@@ -186,11 +186,11 @@ public class AppChooserWidget : Box, AppChooserIF
 		}
 		onApplicationSelectedListeners ~= dlg;
 	}
-	extern(C) static void callBackApplicationSelected(GtkAppChooserWidget* selfStruct, GAppInfo* application, AppChooserWidget appChooserWidget)
+	extern(C) static void callBackApplicationSelected(GtkAppChooserWidget* selfStruct, GAppInfo* application, AppChooserWidget _appChooserWidget)
 	{
-		foreach ( void delegate(AppInfo, AppChooserWidget) dlg ; appChooserWidget.onApplicationSelectedListeners )
+		foreach ( void delegate(AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onApplicationSelectedListeners )
 		{
-			dlg(new AppInfo(application), appChooserWidget);
+			dlg(new AppInfo(application), _appChooserWidget);
 		}
 	}
 	
@@ -216,11 +216,11 @@ public class AppChooserWidget : Box, AppChooserIF
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkAppChooserWidget* selfStruct, GtkMenu* menu, GAppInfo* application, AppChooserWidget appChooserWidget)
+	extern(C) static void callBackPopulatePopup(GtkAppChooserWidget* selfStruct, GtkMenu* menu, GAppInfo* application, AppChooserWidget _appChooserWidget)
 	{
-		foreach ( void delegate(Menu, AppInfo, AppChooserWidget) dlg ; appChooserWidget.onPopulatePopupListeners )
+		foreach ( void delegate(Menu, AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onPopulatePopupListeners )
 		{
-			dlg(new Menu(menu), new AppInfo(application), appChooserWidget);
+			dlg(new Menu(menu), new AppInfo(application), _appChooserWidget);
 		}
 	}
 	

@@ -53,6 +53,7 @@
  * 	- glib.Str
  * 	- gtk.Button
  * 	- gtk.ToolItem
+ * 	- gtk.Widget
  * 	- gtk.OrientableIF
  * 	- gtk.OrientableT
  * 	- gtk.ToolShellIF
@@ -78,6 +79,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Button;
 private import gtk.ToolItem;
+private import gtk.Widget;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.ToolShellIF;
@@ -166,41 +168,6 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
 	}
 	
-	/** */
-	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, GCallback callback, void* userData, int position)
-	{
-		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
-	}
-	
-	/** */
-	public Widget insertStock(string stockId, string tooltipText, string tooltipPrivateText, int position)
-	{
-		return insertStock(stockId, tooltipText, tooltipPrivateText, null, null, position);
-	}
-	
-	/** */
-	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, int position)
-	{
-		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
-	}
-	
-	/** */
-	Button insertButton(StockID stockID,
-	string tooltipText, string tooltipPrivateText,
-	gint position)
-	{
-		Button button = new Button(
-		cast(GtkButton*)gtk_toolbar_insert_stock(
-		gtkToolbar,
-		Str.toStringz(StockDesc[stockID]),
-		Str.toStringz(tooltipText),
-		Str.toStringz(tooltipPrivateText),
-		null, null,
-		position)
-		);
-		return button;
-	}
-	
 	/**
 	 */
 	int[string] connectedSignals;
@@ -227,11 +194,11 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		}
 		onFocusHomeOrEndListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, gboolean focusHome, Toolbar toolbar)
+	extern(C) static gboolean callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, gboolean focusHome, Toolbar _toolbar)
 	{
-		foreach ( bool delegate(gboolean, Toolbar) dlg ; toolbar.onFocusHomeOrEndListeners )
+		foreach ( bool delegate(gboolean, Toolbar) dlg ; _toolbar.onFocusHomeOrEndListeners )
 		{
-			if ( dlg(focusHome, toolbar) )
+			if ( dlg(focusHome, _toolbar) )
 			{
 				return 1;
 			}
@@ -259,11 +226,11 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		}
 		onOrientationChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackOrientationChanged(GtkToolbar* toolbarStruct, GtkOrientation orientation, Toolbar toolbar)
+	extern(C) static void callBackOrientationChanged(GtkToolbar* toolbarStruct, GtkOrientation orientation, Toolbar _toolbar)
 	{
-		foreach ( void delegate(GtkOrientation, Toolbar) dlg ; toolbar.onOrientationChangedListeners )
+		foreach ( void delegate(GtkOrientation, Toolbar) dlg ; _toolbar.onOrientationChangedListeners )
 		{
-			dlg(orientation, toolbar);
+			dlg(orientation, _toolbar);
 		}
 	}
 	
@@ -292,11 +259,11 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		}
 		onPopupContextMenuListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPopupContextMenu(GtkToolbar* toolbarStruct, gint x, gint y, gint button, Toolbar toolbar)
+	extern(C) static gboolean callBackPopupContextMenu(GtkToolbar* toolbarStruct, gint x, gint y, gint button, Toolbar _toolbar)
 	{
-		foreach ( bool delegate(gint, gint, gint, Toolbar) dlg ; toolbar.onPopupContextMenuListeners )
+		foreach ( bool delegate(gint, gint, gint, Toolbar) dlg ; _toolbar.onPopupContextMenuListeners )
 		{
-			if ( dlg(x, y, button, toolbar) )
+			if ( dlg(x, y, button, _toolbar) )
 			{
 				return 1;
 			}
@@ -326,11 +293,11 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		}
 		onStyleChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStyleChanged(GtkToolbar* toolbarStruct, GtkToolbarStyle style, Toolbar toolbar)
+	extern(C) static void callBackStyleChanged(GtkToolbar* toolbarStruct, GtkToolbarStyle style, Toolbar _toolbar)
 	{
-		foreach ( void delegate(GtkToolbarStyle, Toolbar) dlg ; toolbar.onStyleChangedListeners )
+		foreach ( void delegate(GtkToolbarStyle, Toolbar) dlg ; _toolbar.onStyleChangedListeners )
 		{
-			dlg(style, toolbar);
+			dlg(style, _toolbar);
 		}
 	}
 	

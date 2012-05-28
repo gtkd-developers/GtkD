@@ -248,7 +248,7 @@ public class TreeIter
 	TreeIter copy(TreeIter iter)
 	{
 		TreeIter cp = new TreeIter();
-		 *(cp.gtkTreePath) = *(iter.gtkTreePath);
+		 *(cp.gtkTreeIter) = *(iter.gtkTreeIter);
 		
 		return cp;
 	}

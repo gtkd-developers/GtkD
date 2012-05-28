@@ -167,11 +167,11 @@ public class Device : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GdkDevice* deviceStruct, Device device)
+	extern(C) static void callBackChanged(GdkDevice* deviceStruct, Device _device)
 	{
-		foreach ( void delegate(Device) dlg ; device.onChangedListeners )
+		foreach ( void delegate(Device) dlg ; _device.onChangedListeners )
 		{
-			dlg(device);
+			dlg(_device);
 		}
 	}
 	

@@ -51,6 +51,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gdk.Color;
@@ -198,7 +199,7 @@ public class Color
 	 * Since 2.12
 	 * Returns: a newly-allocated text string
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// gchar * gdk_color_to_string (const GdkColor *color);
 		return Str.toString(gdk_color_to_string(gdkColor));

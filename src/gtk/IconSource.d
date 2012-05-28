@@ -48,6 +48,8 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkIconSource* -> IconSource
@@ -66,6 +68,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import gdk.Pixbuf;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 

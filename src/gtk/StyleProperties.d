@@ -57,6 +57,10 @@
  * 	- GtkSymbolicColor* -> SymbolicColor
  * module aliases:
  * local aliases:
+ * 	- getProperty -> getStyleProperty
+ * 	- getValist -> getStyleValist
+ * 	- setProperty -> setStyleProperty
+ * 	- setValist -> setStyleValist
  * overrides:
  */
 
@@ -171,7 +175,7 @@ public class StyleProperties : ObjectG
 	 * value = return location for the style property value. [out][transfer full]
 	 * Returns: TRUE if the property exists in props, FALSE otherwise Since 3.0
 	 */
-	public int getProperty(string property, GtkStateFlags state, Value value)
+	public int getStyleProperty(string property, GtkStateFlags state, Value value)
 	{
 		// gboolean gtk_style_properties_get_property (GtkStyleProperties *props,  const gchar *property,  GtkStateFlags state,  GValue *value);
 		return gtk_style_properties_get_property(gtkStyleProperties, Str.toStringz(property), state, (value is null) ? null : value.getValueStruct());
@@ -184,7 +188,7 @@ public class StyleProperties : ObjectG
 	 * args = va_list of property name/return location pairs, followed by NULL
 	 * Since 3.0
 	 */
-	public void getValist(GtkStateFlags state, void* args)
+	public void getStyleValist(GtkStateFlags state, void* args)
 	{
 		// void gtk_style_properties_get_valist (GtkStyleProperties *props,  GtkStateFlags state,  va_list args);
 		gtk_style_properties_get_valist(gtkStyleProperties, state, args);
@@ -299,7 +303,7 @@ public class StyleProperties : ObjectG
 	 * value = new value for the property
 	 * Since 3.0
 	 */
-	public void setProperty(string property, GtkStateFlags state, Value value)
+	public void setStyleProperty(string property, GtkStateFlags state, Value value)
 	{
 		// void gtk_style_properties_set_property (GtkStyleProperties *props,  const gchar *property,  GtkStateFlags state,  const GValue *value);
 		gtk_style_properties_set_property(gtkStyleProperties, Str.toStringz(property), state, (value is null) ? null : value.getValueStruct());
@@ -312,7 +316,7 @@ public class StyleProperties : ObjectG
 	 * args = va_list of property name/value pairs, followed by NULL
 	 * Since 3.0
 	 */
-	public void setValist(GtkStateFlags state, void* args)
+	public void setStyleValist(GtkStateFlags state, void* args)
 	{
 		// void gtk_style_properties_set_valist (GtkStyleProperties *props,  GtkStateFlags state,  va_list args);
 		gtk_style_properties_set_valist(gtkStyleProperties, state, args);

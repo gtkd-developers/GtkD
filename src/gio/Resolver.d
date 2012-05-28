@@ -160,11 +160,11 @@ public class Resolver : ObjectG
 		}
 		onReloadListeners ~= dlg;
 	}
-	extern(C) static void callBackReload(GResolver* resolverStruct, Resolver resolver)
+	extern(C) static void callBackReload(GResolver* resolverStruct, Resolver _resolver)
 	{
-		foreach ( void delegate(Resolver) dlg ; resolver.onReloadListeners )
+		foreach ( void delegate(Resolver) dlg ; _resolver.onReloadListeners )
 		{
-			dlg(resolver);
+			dlg(_resolver);
 		}
 	}
 	

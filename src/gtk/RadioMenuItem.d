@@ -229,11 +229,11 @@ public class RadioMenuItem : CheckMenuItem
 		}
 		onGroupChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackGroupChanged(GtkRadioMenuItem* radiomenuitemStruct, RadioMenuItem radioMenuItem)
+	extern(C) static void callBackGroupChanged(GtkRadioMenuItem* radiomenuitemStruct, RadioMenuItem _radioMenuItem)
 	{
-		foreach ( void delegate(RadioMenuItem) dlg ; radioMenuItem.onGroupChangedListeners )
+		foreach ( void delegate(RadioMenuItem) dlg ; _radioMenuItem.onGroupChangedListeners )
 		{
-			dlg(radioMenuItem);
+			dlg(_radioMenuItem);
 		}
 	}
 	

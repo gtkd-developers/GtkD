@@ -367,11 +367,11 @@ public class StyleContext : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkStyleContext* stylecontextStruct, StyleContext styleContext)
+	extern(C) static void callBackChanged(GtkStyleContext* stylecontextStruct, StyleContext _styleContext)
 	{
-		foreach ( void delegate(StyleContext) dlg ; styleContext.onChangedListeners )
+		foreach ( void delegate(StyleContext) dlg ; _styleContext.onChangedListeners )
 		{
-			dlg(styleContext);
+			dlg(_styleContext);
 		}
 	}
 	

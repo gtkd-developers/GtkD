@@ -163,11 +163,11 @@ public class SocketService : SocketListener
 		}
 		onIncomingListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackIncoming(GSocketService* serviceStruct, GSocketConnection* connection, GObject* sourceObject, SocketService socketService)
+	extern(C) static gboolean callBackIncoming(GSocketService* serviceStruct, GSocketConnection* connection, GObject* sourceObject, SocketService _socketService)
 	{
-		foreach ( bool delegate(GSocketConnection*, GObject*, SocketService) dlg ; socketService.onIncomingListeners )
+		foreach ( bool delegate(GSocketConnection*, GObject*, SocketService) dlg ; _socketService.onIncomingListeners )
 		{
-			if ( dlg(connection, sourceObject, socketService) )
+			if ( dlg(connection, sourceObject, _socketService) )
 			{
 				return 1;
 			}

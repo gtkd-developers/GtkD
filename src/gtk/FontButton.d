@@ -148,11 +148,11 @@ public class FontButton : Button
 		}
 		onFontSetListeners ~= dlg;
 	}
-	extern(C) static void callBackFontSet(GtkFontButton* widgetStruct, FontButton fontButton)
+	extern(C) static void callBackFontSet(GtkFontButton* widgetStruct, FontButton _fontButton)
 	{
-		foreach ( void delegate(FontButton) dlg ; fontButton.onFontSetListeners )
+		foreach ( void delegate(FontButton) dlg ; _fontButton.onFontSetListeners )
 		{
-			dlg(fontButton);
+			dlg(_fontButton);
 		}
 	}
 	

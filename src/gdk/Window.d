@@ -251,11 +251,11 @@ public class Window : ObjectG
 		}
 		onCreateSurfaceListeners ~= dlg;
 	}
-	extern(C) static void callBackCreateSurface(GdkWindow* windowStruct, gint width, gint height, Window window)
+	extern(C) static void callBackCreateSurface(GdkWindow* windowStruct, gint width, gint height, Window _window)
 	{
-		foreach ( Surface delegate(gint, gint, Window) dlg ; window.onCreateSurfaceListeners )
+		foreach ( Surface delegate(gint, gint, Window) dlg ; _window.onCreateSurfaceListeners )
 		{
-			dlg(width, height, window);
+			dlg(width, height, _window);
 		}
 	}
 	
@@ -281,11 +281,11 @@ public class Window : ObjectG
 		}
 		onFromEmbedderListeners ~= dlg;
 	}
-	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedder_x, gdouble embedder_y, gpointer offscreen_x, gpointer offscreen_y, Window window)
+	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedder_x, gdouble embedder_y, gpointer offscreen_x, gpointer offscreen_y, Window _window)
 	{
-		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; window.onFromEmbedderListeners )
+		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; _window.onFromEmbedderListeners )
 		{
-			dlg(embedder_x, embedder_y, offscreen_x, offscreen_y, window);
+			dlg(embedder_x, embedder_y, offscreen_x, offscreen_y, _window);
 		}
 	}
 	
@@ -310,11 +310,11 @@ public class Window : ObjectG
 		}
 		onPickEmbeddedChildListeners ~= dlg;
 	}
-	extern(C) static void callBackPickEmbeddedChild(GdkWindow* windowStruct, gdouble x, gdouble y, Window window)
+	extern(C) static void callBackPickEmbeddedChild(GdkWindow* windowStruct, gdouble x, gdouble y, Window _window)
 	{
-		foreach ( Window delegate(gdouble, gdouble, Window) dlg ; window.onPickEmbeddedChildListeners )
+		foreach ( Window delegate(gdouble, gdouble, Window) dlg ; _window.onPickEmbeddedChildListeners )
 		{
-			dlg(x, y, window);
+			dlg(x, y, _window);
 		}
 	}
 	
@@ -340,11 +340,11 @@ public class Window : ObjectG
 		}
 		onToEmbedderListeners ~= dlg;
 	}
-	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreen_x, gdouble offscreen_y, gpointer embedder_x, gpointer embedder_y, Window window)
+	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreen_x, gdouble offscreen_y, gpointer embedder_x, gpointer embedder_y, Window _window)
 	{
-		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; window.onToEmbedderListeners )
+		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; _window.onToEmbedderListeners )
 		{
-			dlg(offscreen_x, offscreen_y, embedder_x, embedder_y, window);
+			dlg(offscreen_x, offscreen_y, embedder_x, embedder_y, _window);
 		}
 	}
 	

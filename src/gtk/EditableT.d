@@ -124,11 +124,11 @@ public template EditableT(TStruct)
 		}
 		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkEditable* editableStruct, EditableIF editableIF)
+	extern(C) static void callBackChanged(GtkEditable* editableStruct, EditableIF _editableIF)
 	{
-		foreach ( void delegate(EditableIF) dlg ; editableIF.onChangedListeners )
+		foreach ( void delegate(EditableIF) dlg ; _editableIF.onChangedListeners )
 		{
-			dlg(editableIF);
+			dlg(_editableIF);
 		}
 	}
 	
@@ -163,11 +163,11 @@ public template EditableT(TStruct)
 		}
 		_onDeleteTextListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, gint startPos, gint endPos, EditableIF editableIF)
+	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, gint startPos, gint endPos, EditableIF _editableIF)
 	{
-		foreach ( void delegate(gint, gint, EditableIF) dlg ; editableIF.onDeleteTextListeners )
+		foreach ( void delegate(gint, gint, EditableIF) dlg ; _editableIF.onDeleteTextListeners )
 		{
-			dlg(startPos, endPos, editableIF);
+			dlg(startPos, endPos, _editableIF);
 		}
 	}
 	
@@ -200,11 +200,11 @@ public template EditableT(TStruct)
 		}
 		_onInsertTextListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gpointer position, EditableIF editableIF)
+	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gpointer position, EditableIF _editableIF)
 	{
-		foreach ( void delegate(string, gint, gpointer, EditableIF) dlg ; editableIF.onInsertTextListeners )
+		foreach ( void delegate(string, gint, gpointer, EditableIF) dlg ; _editableIF.onInsertTextListeners )
 		{
-			dlg(Str.toString(newText), newTextLength, position, editableIF);
+			dlg(Str.toString(newText), newTextLength, position, _editableIF);
 		}
 	}
 	

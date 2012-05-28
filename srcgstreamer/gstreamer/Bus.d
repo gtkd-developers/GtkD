@@ -236,11 +236,11 @@ public class Bus : ObjectGst
 		}
 		onMessageListeners ~= dlg;
 	}
-	extern(C) static void callBackMessage(GstBus* busStruct, GstMessage* message, Bus bus)
+	extern(C) static void callBackMessage(GstBus* busStruct, GstMessage* message, Bus _bus)
 	{
-		foreach ( void delegate(Message, Bus) dlg ; bus.onMessageListeners )
+		foreach ( void delegate(Message, Bus) dlg ; _bus.onMessageListeners )
 		{
-			dlg(new Message(message), bus);
+			dlg(new Message(message), _bus);
 		}
 	}
 	
@@ -269,11 +269,11 @@ public class Bus : ObjectGst
 		}
 		onSyncMessageListeners ~= dlg;
 	}
-	extern(C) static void callBackSyncMessage(GstBus* busStruct, GstMessage* message, Bus bus)
+	extern(C) static void callBackSyncMessage(GstBus* busStruct, GstMessage* message, Bus _bus)
 	{
-		foreach ( void delegate(Message, Bus) dlg ; bus.onSyncMessageListeners )
+		foreach ( void delegate(Message, Bus) dlg ; _bus.onSyncMessageListeners )
 		{
-			dlg(new Message(message), bus);
+			dlg(new Message(message), _bus);
 		}
 	}
 	

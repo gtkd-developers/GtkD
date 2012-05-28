@@ -140,11 +140,11 @@ public class Text
 		}
 		onTextAttributesChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackTextAttributesChanged(AtkText* atktextStruct, Text text)
+	extern(C) static void callBackTextAttributesChanged(AtkText* atktextStruct, Text _text)
 	{
-		foreach ( void delegate(Text) dlg ; text.onTextAttributesChangedListeners )
+		foreach ( void delegate(Text) dlg ; _text.onTextAttributesChangedListeners )
 		{
-			dlg(text);
+			dlg(_text);
 		}
 	}
 	
@@ -168,11 +168,11 @@ public class Text
 		}
 		onTextCaretMovedListeners ~= dlg;
 	}
-	extern(C) static void callBackTextCaretMoved(AtkText* atktextStruct, gint arg1, Text text)
+	extern(C) static void callBackTextCaretMoved(AtkText* atktextStruct, gint arg1, Text _text)
 	{
-		foreach ( void delegate(gint, Text) dlg ; text.onTextCaretMovedListeners )
+		foreach ( void delegate(gint, Text) dlg ; _text.onTextCaretMovedListeners )
 		{
-			dlg(arg1, text);
+			dlg(arg1, _text);
 		}
 	}
 	
@@ -198,11 +198,11 @@ public class Text
 		}
 		onTextChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackTextChanged(AtkText* atktextStruct, gint arg1, gint arg2, Text text)
+	extern(C) static void callBackTextChanged(AtkText* atktextStruct, gint arg1, gint arg2, Text _text)
 	{
-		foreach ( void delegate(gint, gint, Text) dlg ; text.onTextChangedListeners )
+		foreach ( void delegate(gint, gint, Text) dlg ; _text.onTextChangedListeners )
 		{
-			dlg(arg1, arg2, text);
+			dlg(arg1, arg2, _text);
 		}
 	}
 	
@@ -224,11 +224,11 @@ public class Text
 		}
 		onTextInsertListeners ~= dlg;
 	}
-	extern(C) static void callBackTextInsert(AtkText* atktextStruct, gint arg1, gint arg2, gchar* arg3, Text text)
+	extern(C) static void callBackTextInsert(AtkText* atktextStruct, gint arg1, gint arg2, gchar* arg3, Text _text)
 	{
-		foreach ( void delegate(gint, gint, string, Text) dlg ; text.onTextInsertListeners )
+		foreach ( void delegate(gint, gint, string, Text) dlg ; _text.onTextInsertListeners )
 		{
-			dlg(arg1, arg2, Str.toString(arg3), text);
+			dlg(arg1, arg2, Str.toString(arg3), _text);
 		}
 	}
 	
@@ -250,11 +250,11 @@ public class Text
 		}
 		onTextRemoveListeners ~= dlg;
 	}
-	extern(C) static void callBackTextRemove(AtkText* atktextStruct, gint arg1, gint arg2, gchar* arg3, Text text)
+	extern(C) static void callBackTextRemove(AtkText* atktextStruct, gint arg1, gint arg2, gchar* arg3, Text _text)
 	{
-		foreach ( void delegate(gint, gint, string, Text) dlg ; text.onTextRemoveListeners )
+		foreach ( void delegate(gint, gint, string, Text) dlg ; _text.onTextRemoveListeners )
 		{
-			dlg(arg1, arg2, Str.toString(arg3), text);
+			dlg(arg1, arg2, Str.toString(arg3), _text);
 		}
 	}
 	
@@ -278,11 +278,11 @@ public class Text
 		}
 		onTextSelectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackTextSelectionChanged(AtkText* atktextStruct, Text text)
+	extern(C) static void callBackTextSelectionChanged(AtkText* atktextStruct, Text _text)
 	{
-		foreach ( void delegate(Text) dlg ; text.onTextSelectionChangedListeners )
+		foreach ( void delegate(Text) dlg ; _text.onTextSelectionChangedListeners )
 		{
-			dlg(text);
+			dlg(_text);
 		}
 	}
 	
@@ -304,11 +304,11 @@ public class Text
 		}
 		onTextUpdateListeners ~= dlg;
 	}
-	extern(C) static void callBackTextUpdate(AtkText* atktextStruct, gint arg1, gint arg2, gint arg3, gchar* arg4, Text text)
+	extern(C) static void callBackTextUpdate(AtkText* atktextStruct, gint arg1, gint arg2, gint arg3, gchar* arg4, Text _text)
 	{
-		foreach ( void delegate(gint, gint, gint, string, Text) dlg ; text.onTextUpdateListeners )
+		foreach ( void delegate(gint, gint, gint, string, Text) dlg ; _text.onTextUpdateListeners )
 		{
-			dlg(arg1, arg2, arg3, Str.toString(arg4), text);
+			dlg(arg1, arg2, arg3, Str.toString(arg4), _text);
 		}
 	}
 	

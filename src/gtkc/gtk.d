@@ -226,6 +226,9 @@ mixin( _shared ~ "static this()
 
 	// gtk.TargetEntry
 
+	Linker.link(gtk_target_entry_new, \"gtk_target_entry_new\", LIBRARY.GTK);
+	Linker.link(gtk_target_entry_copy, \"gtk_target_entry_copy\", LIBRARY.GTK);
+	Linker.link(gtk_target_entry_free, \"gtk_target_entry_free\", LIBRARY.GTK);
 
 	// gtk.TargetList
 
@@ -4263,6 +4266,9 @@ mixin( gshared ~"extern(C)
 
 	// gtk.TargetEntry
 
+	GtkTargetEntry* function(gchar* target, guint flags, guint info) c_gtk_target_entry_new;
+	GtkTargetEntry* function(GtkTargetEntry* data) c_gtk_target_entry_copy;
+	void function(GtkTargetEntry* data) c_gtk_target_entry_free;
 
 	// gtk.TargetList
 
@@ -7897,19 +7903,19 @@ mixin( gshared ~"extern(C)
 
 	// gtk.Plug
 
-	void function(GtkPlug* plug, Window socketId) c_gtk_plug_construct;
-	void function(GtkPlug* plug, GdkDisplay* display, Window socketId) c_gtk_plug_construct_for_display;
-	GtkWidget* function(Window socketId) c_gtk_plug_new;
-	GtkWidget* function(GdkDisplay* display, Window socketId) c_gtk_plug_new_for_display;
-	Window function(GtkPlug* plug) c_gtk_plug_get_id;
+	void function(GtkPlug* plug, gulong socketId) c_gtk_plug_construct;
+	void function(GtkPlug* plug, GdkDisplay* display, gulong socketId) c_gtk_plug_construct_for_display;
+	GtkWidget* function(gulong socketId) c_gtk_plug_new;
+	GtkWidget* function(GdkDisplay* display, gulong socketId) c_gtk_plug_new_for_display;
+	gulong function(GtkPlug* plug) c_gtk_plug_get_id;
 	gboolean function(GtkPlug* plug) c_gtk_plug_get_embedded;
 	GdkWindow* function(GtkPlug* plug) c_gtk_plug_get_socket_window;
 
 	// gtk.Socket
 
 	GtkWidget* function() c_gtk_socket_new;
-	void function(GtkSocket* socket, Window window) c_gtk_socket_add_id;
-	Window function(GtkSocket* socket) c_gtk_socket_get_id;
+	void function(GtkSocket* socket, gulong window) c_gtk_socket_add_id;
+	gulong function(GtkSocket* socket) c_gtk_socket_get_id;
 	GdkWindow* function(GtkSocket* socket) c_gtk_socket_get_plug_window;
 
 	// gtk.RecentManager
@@ -8298,6 +8304,9 @@ alias c_gtk_binding_set_add_path  gtk_binding_set_add_path;
 
 // gtk.TargetEntry
 
+alias c_gtk_target_entry_new  gtk_target_entry_new;
+alias c_gtk_target_entry_copy  gtk_target_entry_copy;
+alias c_gtk_target_entry_free  gtk_target_entry_free;
 
 // gtk.TargetList
 

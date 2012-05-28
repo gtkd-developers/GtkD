@@ -89,7 +89,7 @@ public class Application : GioApplication
 	protected GtkApplication* gtkApplication;
 	
 	
-	public GtkApplication* getApplicationStruct()
+	public GtkApplication* getGtkApplicationStruct()
 	{
 		return gtkApplication;
 	}

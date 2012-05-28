@@ -237,11 +237,11 @@ public class TreeSelection : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkTreeSelection* treeselectionStruct, TreeSelection treeSelection)
+	extern(C) static void callBackChanged(GtkTreeSelection* treeselectionStruct, TreeSelection _treeSelection)
 	{
-		foreach ( void delegate(TreeSelection) dlg ; treeSelection.onChangedListeners )
+		foreach ( void delegate(TreeSelection) dlg ; _treeSelection.onChangedListeners )
 		{
-			dlg(treeSelection);
+			dlg(_treeSelection);
 		}
 	}
 	

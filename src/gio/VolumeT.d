@@ -176,11 +176,11 @@ public template VolumeT(TStruct)
 		}
 		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GVolume* arg0Struct, VolumeIF volumeIF)
+	extern(C) static void callBackChanged(GVolume* arg0Struct, VolumeIF _volumeIF)
 	{
-		foreach ( void delegate(VolumeIF) dlg ; volumeIF.onChangedListeners )
+		foreach ( void delegate(VolumeIF) dlg ; _volumeIF.onChangedListeners )
 		{
-			dlg(volumeIF);
+			dlg(_volumeIF);
 		}
 	}
 	
@@ -209,11 +209,11 @@ public template VolumeT(TStruct)
 		}
 		_onRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackRemoved(GVolume* arg0Struct, VolumeIF volumeIF)
+	extern(C) static void callBackRemoved(GVolume* arg0Struct, VolumeIF _volumeIF)
 	{
-		foreach ( void delegate(VolumeIF) dlg ; volumeIF.onRemovedListeners )
+		foreach ( void delegate(VolumeIF) dlg ; _volumeIF.onRemovedListeners )
 		{
-			dlg(volumeIF);
+			dlg(_volumeIF);
 		}
 	}
 	

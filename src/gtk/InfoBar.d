@@ -175,7 +175,7 @@ public class InfoBar : HBox
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		return new Button(cast(GtkButton*)gtk_info_bar_add_button(gtkInfoBar, toStringz(StockDesc[stockID]), responseId));
+		return new Button(cast(GtkButton*)gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(StockDesc[stockID]), responseId));
 	}
 	
 	/** */
@@ -256,11 +256,11 @@ public class InfoBar : HBox
 		}
 		onCloseListeners ~= dlg;
 	}
-	extern(C) static void callBackClose(GtkInfoBar* arg0Struct, InfoBar infoBar)
+	extern(C) static void callBackClose(GtkInfoBar* arg0Struct, InfoBar _infoBar)
 	{
-		foreach ( void delegate(InfoBar) dlg ; infoBar.onCloseListeners )
+		foreach ( void delegate(InfoBar) dlg ; _infoBar.onCloseListeners )
 		{
-			dlg(infoBar);
+			dlg(_infoBar);
 		}
 	}
 	
@@ -288,11 +288,11 @@ public class InfoBar : HBox
 		}
 		onResponseListeners ~= dlg;
 	}
-	extern(C) static void callBackResponse(GtkInfoBar* infoBarStruct, gint responseId, InfoBar infoBar)
+	extern(C) static void callBackResponse(GtkInfoBar* infoBarStruct, gint responseId, InfoBar _infoBar)
 	{
-		foreach ( void delegate(gint, InfoBar) dlg ; infoBar.onResponseListeners )
+		foreach ( void delegate(gint, InfoBar) dlg ; _infoBar.onResponseListeners )
 		{
-			dlg(responseId, infoBar);
+			dlg(responseId, _infoBar);
 		}
 	}
 	

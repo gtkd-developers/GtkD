@@ -228,7 +228,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public void setStockId(StockID stockId)
 	{
-		setStockID(StockDesc[stockId]);
+		setStockId(StockDesc[stockId]);
 	}
 	
 	/**
@@ -326,11 +326,11 @@ public class Action : ObjectG, BuildableIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkAction* actionStruct, Action action)
+	extern(C) static void callBackActivate(GtkAction* actionStruct, Action _action)
 	{
-		foreach ( void delegate(Action) dlg ; action.onActivateListeners )
+		foreach ( void delegate(Action) dlg ; _action.onActivateListeners )
 		{
-			dlg(action);
+			dlg(_action);
 		}
 	}
 	

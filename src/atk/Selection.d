@@ -135,11 +135,11 @@ public class Selection
 		}
 		onSelectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionChanged(AtkSelection* atkselectionStruct, Selection selection)
+	extern(C) static void callBackSelectionChanged(AtkSelection* atkselectionStruct, Selection _selection)
 	{
-		foreach ( void delegate(Selection) dlg ; selection.onSelectionChangedListeners )
+		foreach ( void delegate(Selection) dlg ; _selection.onSelectionChangedListeners )
 		{
-			dlg(selection);
+			dlg(_selection);
 		}
 	}
 	

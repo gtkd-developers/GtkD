@@ -258,11 +258,11 @@ public template TreeModelT(TStruct)
 		}
 		_onRowChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowChanged(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF treeModelIF)
+	extern(C) static void callBackRowChanged(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF _treeModelIF)
 	{
-		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; treeModelIF.onRowChangedListeners )
+		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; _treeModelIF.onRowChangedListeners )
 		{
-			dlg(new TreePath(path), new TreeIter(iter), treeModelIF);
+			dlg(new TreePath(path), new TreeIter(iter), _treeModelIF);
 		}
 	}
 	
@@ -294,11 +294,11 @@ public template TreeModelT(TStruct)
 		}
 		_onRowDeletedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowDeleted(GtkTreeModel* treeModelStruct, GtkTreePath* path, TreeModelIF treeModelIF)
+	extern(C) static void callBackRowDeleted(GtkTreeModel* treeModelStruct, GtkTreePath* path, TreeModelIF _treeModelIF)
 	{
-		foreach ( void delegate(TreePath, TreeModelIF) dlg ; treeModelIF.onRowDeletedListeners )
+		foreach ( void delegate(TreePath, TreeModelIF) dlg ; _treeModelIF.onRowDeletedListeners )
 		{
-			dlg(new TreePath(path), treeModelIF);
+			dlg(new TreePath(path), _treeModelIF);
 		}
 	}
 	
@@ -326,11 +326,11 @@ public template TreeModelT(TStruct)
 		}
 		_onRowHasChildToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF treeModelIF)
+	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF _treeModelIF)
 	{
-		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; treeModelIF.onRowHasChildToggledListeners )
+		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; _treeModelIF.onRowHasChildToggledListeners )
 		{
-			dlg(new TreePath(path), new TreeIter(iter), treeModelIF);
+			dlg(new TreePath(path), new TreeIter(iter), _treeModelIF);
 		}
 	}
 	
@@ -361,11 +361,11 @@ public template TreeModelT(TStruct)
 		}
 		_onRowInsertedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowInserted(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF treeModelIF)
+	extern(C) static void callBackRowInserted(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF _treeModelIF)
 	{
-		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; treeModelIF.onRowInsertedListeners )
+		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; _treeModelIF.onRowInsertedListeners )
 		{
-			dlg(new TreePath(path), new TreeIter(iter), treeModelIF);
+			dlg(new TreePath(path), new TreeIter(iter), _treeModelIF);
 		}
 	}
 	
@@ -402,11 +402,11 @@ public template TreeModelT(TStruct)
 		}
 		_onRowsReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer newOrder, TreeModelIF treeModelIF)
+	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer newOrder, TreeModelIF _treeModelIF)
 	{
-		foreach ( void delegate(TreePath, TreeIter, gpointer, TreeModelIF) dlg ; treeModelIF.onRowsReorderedListeners )
+		foreach ( void delegate(TreePath, TreeIter, gpointer, TreeModelIF) dlg ; _treeModelIF.onRowsReorderedListeners )
 		{
-			dlg(new TreePath(path), new TreeIter(iter), newOrder, treeModelIF);
+			dlg(new TreePath(path), new TreeIter(iter), newOrder, _treeModelIF);
 		}
 	}
 	

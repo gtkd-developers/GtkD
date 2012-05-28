@@ -170,11 +170,11 @@ public class Assistant : Window
 		}
 		onApplyListeners ~= dlg;
 	}
-	extern(C) static void callBackApply(GtkAssistant* assistantStruct, Assistant assistant)
+	extern(C) static void callBackApply(GtkAssistant* assistantStruct, Assistant _assistant)
 	{
-		foreach ( void delegate(Assistant) dlg ; assistant.onApplyListeners )
+		foreach ( void delegate(Assistant) dlg ; _assistant.onApplyListeners )
 		{
-			dlg(assistant);
+			dlg(_assistant);
 		}
 	}
 	
@@ -198,11 +198,11 @@ public class Assistant : Window
 		}
 		onCancelListeners ~= dlg;
 	}
-	extern(C) static void callBackCancel(GtkAssistant* assistantStruct, Assistant assistant)
+	extern(C) static void callBackCancel(GtkAssistant* assistantStruct, Assistant _assistant)
 	{
-		foreach ( void delegate(Assistant) dlg ; assistant.onCancelListeners )
+		foreach ( void delegate(Assistant) dlg ; _assistant.onCancelListeners )
 		{
-			dlg(assistant);
+			dlg(_assistant);
 		}
 	}
 	
@@ -228,11 +228,11 @@ public class Assistant : Window
 		}
 		onCloseListeners ~= dlg;
 	}
-	extern(C) static void callBackClose(GtkAssistant* assistantStruct, Assistant assistant)
+	extern(C) static void callBackClose(GtkAssistant* assistantStruct, Assistant _assistant)
 	{
-		foreach ( void delegate(Assistant) dlg ; assistant.onCloseListeners )
+		foreach ( void delegate(Assistant) dlg ; _assistant.onCloseListeners )
 		{
-			dlg(assistant);
+			dlg(_assistant);
 		}
 	}
 	
@@ -258,11 +258,11 @@ public class Assistant : Window
 		}
 		onPrepareListeners ~= dlg;
 	}
-	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page, Assistant assistant)
+	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page, Assistant _assistant)
 	{
-		foreach ( void delegate(Widget, Assistant) dlg ; assistant.onPrepareListeners )
+		foreach ( void delegate(Widget, Assistant) dlg ; _assistant.onPrepareListeners )
 		{
-			dlg(new Widget(page), assistant);
+			dlg(new Widget(page), _assistant);
 		}
 	}
 	

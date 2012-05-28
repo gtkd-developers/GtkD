@@ -176,11 +176,11 @@ public class PadTemplate : ObjectGst
 		}
 		onPadCreatedListeners ~= dlg;
 	}
-	extern(C) static void callBackPadCreated(GstPadTemplate* padTemplateStruct, GstPad* pad, PadTemplate padTemplate)
+	extern(C) static void callBackPadCreated(GstPadTemplate* padTemplateStruct, GstPad* pad, PadTemplate _padTemplate)
 	{
-		foreach ( void delegate(Pad, PadTemplate) dlg ; padTemplate.onPadCreatedListeners )
+		foreach ( void delegate(Pad, PadTemplate) dlg ; _padTemplate.onPadCreatedListeners )
 		{
-			dlg(new Pad(pad), padTemplate);
+			dlg(new Pad(pad), _padTemplate);
 		}
 	}
 	

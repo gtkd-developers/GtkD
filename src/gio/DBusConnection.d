@@ -251,11 +251,11 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 		}
 		onClosedListeners ~= dlg;
 	}
-	extern(C) static void callBackClosed(GDBusConnection* connectionStruct, gboolean remotePeerVanished, GError* error, DBusConnection dBusConnection)
+	extern(C) static void callBackClosed(GDBusConnection* connectionStruct, gboolean remotePeerVanished, GError* error, DBusConnection _dBusConnection)
 	{
-		foreach ( void delegate(gboolean, GError*, DBusConnection) dlg ; dBusConnection.onClosedListeners )
+		foreach ( void delegate(gboolean, GError*, DBusConnection) dlg ; _dBusConnection.onClosedListeners )
 		{
-			dlg(remotePeerVanished, error, dBusConnection);
+			dlg(remotePeerVanished, error, _dBusConnection);
 		}
 	}
 	

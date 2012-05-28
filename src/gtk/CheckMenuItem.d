@@ -180,11 +180,11 @@ public class CheckMenuItem : MenuItem
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem checkMenuItem)
+	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem _checkMenuItem)
 	{
-		foreach ( void delegate(CheckMenuItem) dlg ; checkMenuItem.onToggledListeners )
+		foreach ( void delegate(CheckMenuItem) dlg ; _checkMenuItem.onToggledListeners )
 		{
-			dlg(checkMenuItem);
+			dlg(_checkMenuItem);
 		}
 	}
 	

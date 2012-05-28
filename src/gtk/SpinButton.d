@@ -149,11 +149,11 @@ public class SpinButton : Entry
 		}
 		onChangeValueListeners ~= dlg;
 	}
-	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType arg1, SpinButton spinButton)
+	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType arg1, SpinButton _spinButton)
 	{
-		foreach ( void delegate(GtkScrollType, SpinButton) dlg ; spinButton.onChangeValueListeners )
+		foreach ( void delegate(GtkScrollType, SpinButton) dlg ; _spinButton.onChangeValueListeners )
 		{
-			dlg(arg1, spinButton);
+			dlg(arg1, _spinButton);
 		}
 	}
 	
@@ -182,11 +182,11 @@ public class SpinButton : Entry
 		}
 		onInputListeners ~= dlg;
 	}
-	extern(C) static void callBackInput(GtkSpinButton* spinButtonStruct, gpointer newValue, SpinButton spinButton)
+	extern(C) static void callBackInput(GtkSpinButton* spinButtonStruct, gpointer newValue, SpinButton _spinButton)
 	{
-		foreach ( gint delegate(gpointer, SpinButton) dlg ; spinButton.onInputListeners )
+		foreach ( gint delegate(gpointer, SpinButton) dlg ; _spinButton.onInputListeners )
 		{
-			dlg(newValue, spinButton);
+			dlg(newValue, _spinButton);
 		}
 	}
 	
@@ -212,11 +212,11 @@ public class SpinButton : Entry
 		}
 		onOutputListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackOutput(GtkSpinButton* spinButtonStruct, SpinButton spinButton)
+	extern(C) static gboolean callBackOutput(GtkSpinButton* spinButtonStruct, SpinButton _spinButton)
 	{
-		foreach ( bool delegate(SpinButton) dlg ; spinButton.onOutputListeners )
+		foreach ( bool delegate(SpinButton) dlg ; _spinButton.onOutputListeners )
 		{
-			if ( dlg(spinButton) )
+			if ( dlg(_spinButton) )
 			{
 				return 1;
 			}
@@ -243,11 +243,11 @@ public class SpinButton : Entry
 		}
 		onValueChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
+	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct, SpinButton _spinButton)
 	{
-		foreach ( void delegate(SpinButton) dlg ; spinButton.onValueChangedListeners )
+		foreach ( void delegate(SpinButton) dlg ; _spinButton.onValueChangedListeners )
 		{
-			dlg(spinButton);
+			dlg(_spinButton);
 		}
 	}
 	
@@ -274,11 +274,11 @@ public class SpinButton : Entry
 		}
 		onWrappedListeners ~= dlg;
 	}
-	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
+	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, SpinButton _spinButton)
 	{
-		foreach ( void delegate(SpinButton) dlg ; spinButton.onWrappedListeners )
+		foreach ( void delegate(SpinButton) dlg ; _spinButton.onWrappedListeners )
 		{
-			dlg(spinButton);
+			dlg(_spinButton);
 		}
 	}
 	

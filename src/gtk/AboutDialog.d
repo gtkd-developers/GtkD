@@ -172,11 +172,11 @@ public class AboutDialog : Dialog
 		}
 		onActivateLinkListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackActivateLink(GtkAboutDialog* labelStruct, gchar* uri, AboutDialog aboutDialog)
+	extern(C) static gboolean callBackActivateLink(GtkAboutDialog* labelStruct, gchar* uri, AboutDialog _aboutDialog)
 	{
-		foreach ( bool delegate(string, AboutDialog) dlg ; aboutDialog.onActivateLinkListeners )
+		foreach ( bool delegate(string, AboutDialog) dlg ; _aboutDialog.onActivateLinkListeners )
 		{
-			if ( dlg(Str.toString(uri), aboutDialog) )
+			if ( dlg(Str.toString(uri), _aboutDialog) )
 			{
 				return 1;
 			}

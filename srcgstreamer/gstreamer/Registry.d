@@ -191,11 +191,11 @@ public class Registry : ObjectGst
 		}
 		onFeatureAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackFeatureAdded(GstRegistry* registryStruct, gpointer feature, Registry registry)
+	extern(C) static void callBackFeatureAdded(GstRegistry* registryStruct, gpointer feature, Registry _registry)
 	{
-		foreach ( void delegate(gpointer, Registry) dlg ; registry.onFeatureAddedListeners )
+		foreach ( void delegate(gpointer, Registry) dlg ; _registry.onFeatureAddedListeners )
 		{
-			dlg(feature, registry);
+			dlg(feature, _registry);
 		}
 	}
 	
@@ -221,11 +221,11 @@ public class Registry : ObjectGst
 		}
 		onPluginAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackPluginAdded(GstRegistry* registryStruct, gpointer plugin, Registry registry)
+	extern(C) static void callBackPluginAdded(GstRegistry* registryStruct, gpointer plugin, Registry _registry)
 	{
-		foreach ( void delegate(gpointer, Registry) dlg ; registry.onPluginAddedListeners )
+		foreach ( void delegate(gpointer, Registry) dlg ; _registry.onPluginAddedListeners )
 		{
-			dlg(plugin, registry);
+			dlg(plugin, _registry);
 		}
 	}
 	

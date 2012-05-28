@@ -51,6 +51,8 @@
  * 	- gtk.IconTheme
  * 	- gtk.Style
  * 	- gtk.StyleContext
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRGBA* -> RGBA
@@ -81,6 +83,8 @@ private import gdk.RGBA;
 private import gtk.IconTheme;
 private import gtk.Style;
 private import gtk.StyleContext;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -196,11 +200,11 @@ public class IconInfo
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkIconTheme* iconThemeStruct, IconInfo iconInfo)
+	extern(C) static void callBackChanged(GtkIconTheme* iconThemeStruct, IconInfo _iconInfo)
 	{
-		foreach ( void delegate(IconInfo) dlg ; iconInfo.onChangedListeners )
+		foreach ( void delegate(IconInfo) dlg ; _iconInfo.onChangedListeners )
 		{
-			dlg(iconInfo);
+			dlg(_iconInfo);
 		}
 	}
 	

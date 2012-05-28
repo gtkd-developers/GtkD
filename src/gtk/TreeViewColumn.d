@@ -241,11 +241,11 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 		}
 		onClickedListeners ~= dlg;
 	}
-	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, TreeViewColumn treeViewColumn)
+	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, TreeViewColumn _treeViewColumn)
 	{
-		foreach ( void delegate(TreeViewColumn) dlg ; treeViewColumn.onClickedListeners )
+		foreach ( void delegate(TreeViewColumn) dlg ; _treeViewColumn.onClickedListeners )
 		{
-			dlg(treeViewColumn);
+			dlg(_treeViewColumn);
 		}
 	}
 	

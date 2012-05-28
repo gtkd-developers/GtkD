@@ -230,9 +230,9 @@ struct GtkTextIter
 struct GtkTreeIter
 {
 	gint stamp;
-	gpointer user_data;
-	gpointer user_data2;
-	gpointer user_data3;
+	gpointer userData;
+	gpointer userData2;
+	gpointer userData3;
 }
 
 struct GtkRequisition
@@ -310,7 +310,7 @@ code: start
 	public static void initMultiThread(string[] args)
 	{
 		Thread.init(null);
-		gdkThreadsInit();
+		threadsInit();
 		init(args);
 	}
 code: end
@@ -480,14 +480,14 @@ struct: GtkTargetEntry
 class: TargetEntry
 prefix: gtk_target_entry_
 prefix: gtk_
-noprefix: gtk_target_
+noprefix: gtk_target_table_
 noprefix: gtk_targets_
 noprefix: gtk_target_list_
 noprefix: gtk_selection_
 import: glib.Str
 import: gtkc.paths
 import: gtkc.Loader
-array: gtk_target_table_new_from_list Return n_targets
+structWrap: GtkTargetEntry* TargetEntry
 
 code: start
 	~this ()
@@ -509,6 +509,8 @@ noprefix: gtk_target_entry_
 strictPrefix: Y
 import: gtk.TextBuffer
 import: gtk.TargetEntry
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GtkTextBuffer* TextBuffer
 structWrap: GtkTargetEntry* TargetEntry
 structWrap: GtkTargetList* TargetList
@@ -543,6 +545,8 @@ import: gdk.Display
 import: gdk.Pixbuf
 import: gtk.TextBuffer
 import: gtk.Widget
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GdkDisplay* Display
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkSelectionData* SelectionData
@@ -746,6 +750,11 @@ structWrap: GtkSymbolicColor* SymbolicColor
 structWrap: GtkStyleProperties* StyleProperties
 out: gtk_style_properties_lookup_property parse_func
 out: gtk_style_properties_lookup_property pspec
+
+alias: setProperty setStyleProperty
+alias: setValist setStyleValist
+alias: getProperty getStyleProperty
+alias: getValist getStyleValist
 outFile: StyleProperties
 
 file: GtkThemingEngine.html
@@ -781,6 +790,8 @@ class: WidgetPath
 prefix: gtk_widget_path_
 import: glib.Str
 import: glib.ListSG
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GSList* ListSG
 structWrap: GtkWidgetPath* WidgetPath
 
@@ -805,6 +816,8 @@ prefix: gtk_symbolic_color_
 import: glib.Str
 import: gdk.RGBA
 import: gtk.StyleProperties
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GdkRGBA* RGBA
 structWrap: GtkStyleProperties* StyleProperties
 structWrap: GtkSymbolicColor* SymbolicColor
@@ -827,6 +840,8 @@ prefix: gtk_gradient_
 import: cairo.Pattern
 import: gtk.StyleProperties
 import: gtk.SymbolicColor
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: cairo_pattern_t* Pattern
 structWrap: GtkGradient* Gradient
 structWrap: GtkStyleProperties* StyleProperties
@@ -883,6 +898,8 @@ import: gdk.RGBA
 import: gtk.IconTheme
 import: gtk.Style
 import: gtk.StyleContext
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkRGBA* RGBA
 structWrap: GtkIconInfo* IconInfo
@@ -916,6 +933,8 @@ noprefix: gtk_icon_set_
 noprefix: gtk_icon_size_
 import: glib.Str
 import: gdk.Pixbuf
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkIconSource* IconSource
 
@@ -960,6 +979,8 @@ import: gtk.IconSource
 import: gtk.Style
 import: gtk.StyleContext
 import: gtk.Widget
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkIconSet* IconSet
 structWrap: GtkIconSource* IconSource
@@ -998,7 +1019,6 @@ file: GtkNumerableIcon.html
 struct: GtkNumerableIcon
 class: NumerableIcon
 extend: GioEmblemedIcon
-implements: IconIF
 prefix: gtk_numerable_icon_
 import: glib.Str
 import: gio.EmblemedIcon : GioEmblemedIcon = EmblemedIcon
@@ -1007,15 +1027,6 @@ import: gio.IconIF
 import: gtk.StyleContext
 structWrap: GIcon* IconIF
 structWrap: GtkStyleContext* StyleContext
-
-# imports for Icon Interface
-import: gio.IconT
-#import: gio.IconIF
-
-code: start
-	// add the Icon capabilities
-	mixin IconT!(GtkNumerableIcon);
-code: end
 outFile: NumerableIcon
 
 file: gtk3-Resource-Files.html
@@ -1141,7 +1152,7 @@ code: start
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		return new Button(cast(GtkButton*)gtk_dialog_add_button(gtkDialog, toStringz(StockDesc[stockID]), responseId));
+		return new Button(cast(GtkButton*)gtk_dialog_add_button(gtkDialog, Str.toStringz(StockDesc[stockID]), responseId));
 	}
 	
 	/** */
@@ -1434,11 +1445,11 @@ code: start
 				ButtonsType.NONE,
 				message);
 		d.setTitle(title);
-		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
-		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
+		d.addButton("gtk-no",ResponseType.NO);
+		d.addButton("gtk-yes",ResponseType.YES);
 		int responce = d.run();
 		d.destroy();
-		return responce == ResponseType.GTK_RESPONSE_YES;
+		return responce == ResponseType.YES;
 	}
 
 	
@@ -1468,9 +1479,9 @@ code: start
 				ButtonsType.NONE ,
 				message);
 		d.setTitle(title);
-		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
-		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
-		d.addButton("gtk-cancel",ResponseType.GTK_RESPONSE_CANCEL);
+		d.addButton("gtk-no",ResponseType.NO);
+		d.addButton("gtk-yes",ResponseType.YES);
+		d.addButton("gtk-cancel",ResponseType.CANCEL);
 		ResponseType responce = cast(ResponseType)d.run();
 		d.destroy();
 		return responce;
@@ -1866,7 +1877,7 @@ code: start
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		return new Button(cast(GtkButton*)gtk_info_bar_add_button(gtkInfoBar, toStringz(StockDesc[stockID]), responseId));
+		return new Button(cast(GtkButton*)gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(StockDesc[stockID]), responseId));
 	}
 	
 	/** */
@@ -2494,8 +2505,8 @@ code: start
 	/** */	
 	public this (string text, int max)
 	{
-		this(max);
-		setText(text);
+		this(text);
+		setMaxLength(max);
 	}
 
 	/**
@@ -2650,6 +2661,8 @@ import: gtk.TextAttributes
 import: gtk.TextBuffer
 import: gtk.TextChildAnchor
 import: gtk.TextTag
+import: gtkc.Loader
+import: gtkc.paths
 import: pango.PgLanguage
 structWrap: GSList* ListSG
 structWrap: GdkPixbuf* Pixbuf
@@ -2706,6 +2719,7 @@ import: gtk.TextMark
 import: gtk.TextTag
 import: gtk.TextTagTable
 import: pango.PgFontDescription
+import: pango.PgTabArray
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkClipboard* Clipboard
 structWrap: GtkTargetList* TargetList
@@ -2746,7 +2760,7 @@ code: start
 	{
 		int startOffset = iter.getOffset();
 
-		insert(iter, text);
+		insert(iter, cast(char[])text);
 
 		if ( tags.length == 0 )
 			return;
@@ -2772,7 +2786,7 @@ code: start
 	{
 		int startOffset = iter.getOffset();
 
-		insert(iter, text);
+		insert(iter, cast(char[])text);
 
 		if ( tags.length == 0 )
 			return;
@@ -2835,10 +2849,6 @@ code: start
 			{
 
 				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(int)(_argptr), null);
-			}
-			else if ( _arguments[i+1] == typeid(Bitmap) )
-			{
-				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(Bitmap)(_argptr).getBitmapStruct(), null);
 			}
 			else if ( _arguments[i+1] == typeid(Color) )
 			{
@@ -2908,6 +2918,8 @@ struct: GtkTextAttributes
 class: TextAttributes
 prefix: gtk_text_attributes_
 strictPrefix: Y
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GtkTextAttributes* TextAttributes
 nosignal: event
 code: start
@@ -3000,7 +3012,7 @@ code: start
 	void insertText(string text)
 	{
 		TextBuffer buf = getBuffer();
-		buf.insertAtCursor(text);
+		buf.insertAtCursor(cast(char[])text);
 	}
 
 	/**
@@ -3013,7 +3025,7 @@ code: start
 		TextBuffer buf = getBuffer();
 		TextIter iter = new TextIter();
 		buf.getEndIter(iter);
-		buf.insert(iter, text);
+		buf.insert(iter, cast(char[])text);
 		if ( ensureVisible )
 		{
 			gdouble within_margin = 0.0;
@@ -3061,6 +3073,8 @@ class: TreePath
 strictPrefix: Y
 prefix: gtk_tree_path_
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GtkTreePath* TreePath
 
 array: gtk_tree_path_get_indices Return getDepth()
@@ -3324,7 +3338,7 @@ code: start
 	TreeIter copy(TreeIter iter)
 	{
 		TreeIter cp = new TreeIter();
-		*(cp.gtkTreePath) = *(iter.gtkTreePath);
+		*(cp.gtkTreeIter) = *(iter.gtkTreeIter);
 
 		return cp;
 	}
@@ -4596,6 +4610,7 @@ import: gtk.CellEditable
 import: gtk.CellEditableIF
 import: gtk.CellRenderer
 import: gtk.TreeIter
+import: gtk.TreeModel
 import: gtk.TreeModelIF
 import: gtk.Widget
 structWrap: cairo_t* Context
@@ -4837,6 +4852,7 @@ struct: GtkCellRendererText
 ctorStruct: GtkCellRenderer
 class: CellRendererText
 prefix: gtk_cell_renderer_text_
+import: glib.Str
 outFile: CellRendererText
 
 file: GtkCellRendererToggle.html
@@ -4844,6 +4860,7 @@ struct: GtkCellRendererToggle
 ctorStruct: GtkCellRenderer
 class: CellRendererToggle
 prefix: gtk_cell_renderer_toggle_
+import: glib.Str
 outFile: CellRendererToggle
 
 file: GtkCellRendererSpinner.html
@@ -5332,6 +5349,10 @@ struct: GtkComboBoxText
 class: ComboBoxText
 prefix: gtk_combo_box_text_
 import: glib.Str
+import: gtk.TreeIter
+import: gtk.TreeModelIF
+
+override: removeAll
 
 nocode: gtk_combo_box_text_new
 nocode: gtk_combo_box_text_new_with_entry
@@ -5345,16 +5366,16 @@ code: start
 	 */
 	public this (bool entry=true)
 	{
-		GtkComboBox* p;
+		GtkComboBoxText* p;
 		if ( entry )
 		{
 			// GtkWidget* gtk_combo_box_text_new_with_entry (void);
-			p = cast(GtkComboBox*)gtk_combo_box_text_new_with_entry();
+			p = cast(GtkComboBoxText*)gtk_combo_box_text_new_with_entry();
 		}
 		else
 		{
 			// GtkWidget* gtk_combo_box_text_new (void);
-			p = cast(GtkComboBox*)gtk_combo_box_text_new();
+			p = cast(GtkComboBoxText*)gtk_combo_box_text_new();
 		}
 
 		if(p is null)
@@ -5379,7 +5400,7 @@ code: start
 		// was not found, the combo has now nothing selected
 		if ( insert )
 		{
-			appendText(text);
+			append("", text);
 			setActive(active);
 		}
 	}
@@ -5418,12 +5439,12 @@ code: start
 		int index = getIndex(text);
 		if ( index > 0 )
 		{
-			removeText(index);
-			prependText(text);
+			remove(index);
+			prepend("", text);
 		}
 		else if ( index == -1 )
 		{
-			prependText(text);
+			prepend("", text);
 		}
 	}
 code: end
@@ -5498,8 +5519,9 @@ file: GtkMenuBar.html
 struct: GtkMenuBar
 class: MenuBar
 prefix: gtk_menu_bar_
-import: gtk.Menu;
-import: gtk.MenuItem;
+import: gtk.Menu
+import: gtk.MenuItem
+import: gtk.Widget
 
 code: start
 	/** */
@@ -5539,9 +5561,6 @@ nocode: gtk_menu_item_new_with_label
 nocode: gtk_menu_item_new_with_mnemonic
 
 alias: activate itemActivate
-
-override: select
-override: deselect
 
 inout: gtk_menu_item_toggle_size_request requisition
 
@@ -5889,6 +5908,7 @@ prefix: gtk_toolbar_
 import: glib.Str
 import: gtk.Button
 import: gtk.ToolItem
+import: gtk.Widget
 structWrap: GtkToolItem* ToolItem
 
 #imports for Orientable Interface.
@@ -5925,41 +5945,6 @@ code: start
 	public void insert(ToolItem toolItem, int pos=-1)
 	{
 		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
-	}
-
-	/** */	
-	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, GCallback callback, void* userData, int position)
-	{
-		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
-	}
-
-	/** */
-	public Widget insertStock(string stockId, string tooltipText, string tooltipPrivateText, int position)
-	{
-		return insertStock(stockId, tooltipText, tooltipPrivateText, null, null, position);
-	}
-	
-	/** */
-	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, int position)
-	{
-		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
-	}
-
-	/** */
-	Button insertButton(StockID stockID,
-			string tooltipText, string tooltipPrivateText,
-			gint position)
-	{
-		Button button = new Button(
-				cast(GtkButton*)gtk_toolbar_insert_stock(
-					gtkToolbar,
-					Str.toStringz(StockDesc[stockID]),
-					Str.toStringz(tooltipText), 
-					Str.toStringz(tooltipPrivateText), 
-					null, null, 
-					position)
-			);
-		return button;
 	}
 code: end
 outFile: Toolbar
@@ -6331,7 +6316,7 @@ code: start
 	 */
 	public void setStockId(StockID stockId)
 	{
-		setStockID(StockDesc[stockId]);
+		setStockId(StockDesc[stockId]);
 	}
 
 	/**
@@ -6683,8 +6668,8 @@ code: start
 		}
 		if ( responses  is  null )
 		{
-			responses ~= ResponseType.GTK_RESPONSE_OK;
-			responses ~= ResponseType.GTK_RESPONSE_CANCEL;
+			responses ~= ResponseType.OK;
+			responses ~= ResponseType.CANCEL;
 		}
 
 		auto p = gtk_file_chooser_dialog_new(
@@ -7770,7 +7755,7 @@ code: start
 	 */
 	void setIcon(StockID stockID, GtkIconSize size)
 	{
-		setIconFromStock(Str.toStringz(StockDesc[stockID]), size);
+		setIconFromStock(StockDesc[stockID], size);
 	}
 code: end
 outFile: Tooltip
@@ -8011,152 +7996,154 @@ code: start
 	/** */
 	public bool onButtonPressEvent(GdkEventButton* event)
 	{
-		return getWidgetClass().buttonPressEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().button_press_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onButtonReleaseEvent(GdkEventButton* event)
 	{
-		return getWidgetClass().buttonReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().button_release_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onScrollEvent(GdkEventScroll* event)
 	{
-		return getWidgetClass().scrollEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().scroll_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onMotionNotifyEvent(GdkEventMotion* event)
 	{
-		return getWidgetClass().motionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().motion_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onDeleteEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().deleteEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().delete_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
-	public bool onExposeEvent(GdkEventExpose* event)
+	public bool onDestroyEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().exposeEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().destroy_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onKeyPressEvent(GdkEventKey* event)
 	{
-		return getWidgetClass().keyPressEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().key_press_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onKeyReleaseEvent(GdkEventKey* event)
 	{
-		return getWidgetClass().keyReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().key_release_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onEnterNotifyEvent(GdkEventCrossing* event)
 	{
-		return getWidgetClass().enterNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().enter_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onLeaveNotifyEvent(GdkEventCrossing* event)
 	{
-		return getWidgetClass().leaveNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().leave_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onConfigureEvent(GdkEventConfigure* event)
 	{
-		return getWidgetClass().configureEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().configure_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onFocusInEvent(GdkEventFocus* event)
 	{
-		return getWidgetClass().focusInEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().focus_in_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onFocusOutEvent(GdkEventFocus* event)
 	{
-		return getWidgetClass().focusOutEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().focus_out_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onMapEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().mapEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().map_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onUnmapEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().unmapEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().unmap_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onPropertyNotifyEvent(GdkEventProperty* event)
 	{
-		return getWidgetClass().propertyNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().property_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onSelectionClearEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selectionClearEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selection_clear_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onSelectionRequestEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selectionRequestEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selection_request_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onSelectionNotifyEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selectionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selection_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onProximityInEvent(GdkEventProximity* event)
 	{
-		return getWidgetClass().proximityInEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().proximity_in_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onProximityOutEvent(GdkEventProximity* event)
 	{
-		return getWidgetClass().proximityOutEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().proximity_out_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onVisibilityNotifyEvent(GdkEventVisibility* event)
 	{
-		return getWidgetClass().visibilityNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
-	}
-
-	/** */
-	public bool onClientEvent(GdkEventClient* event)
-	{
-		return getWidgetClass().clientEvent(getWidgetStruct(), event) == 0 ? false : true;
-	}
-
-	/** */
-	public bool onNoExposeEvent(GdkEventAny* event)
-	{
-		return getWidgetClass().noExposeEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().visibility_notify_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onWindowStateEvent(GdkEventWindowState* event)
 	{
-		return getWidgetClass().windowStateEvent(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().window_state_event(getWidgetStruct(), event) == 0 ? false : true;
 	}
+
+	/** */
+	public bool onDamageEvent(GdkEventExpose* event)
+	{
+		return getWidgetClass().damage_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onGrabBrokenEvent(GdkEventGrabBroken* event)
+	{
+		return getWidgetClass().grab_broken_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	alias cairo_t CairoContext;
 code: end
 outFile: Widget
 
@@ -8164,6 +8151,8 @@ struct: GtkRequisition
 class: Requisition
 prefix: gtk_requisition_
 strictPrefix: Y
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GtkRequisition* Requisition
 
 nosignal: accel-closures-changed
@@ -8367,22 +8356,19 @@ struct: GtkPlug
 class: Plug
 prefix: gtk_plug_
 import: gdk.Display
-import: gdk.Window
+#import: gdk.Window
 structWrap: GdkDisplay* Display
-structWrap: GdkWindow* Window
-structWrap: Window SomeText
-alias: SomeText size_t
+#structWrap: GdkWindow* Window
+alias: Window gulong
 outFile: Plug
 
 file: GtkSocket.html
 struct: GtkSocket
 class: Socket
 prefix: gtk_socket_
-prefix: gtk_
-import: gdk.Window
-structWrap: GdkWindow* Window
-structWrap: Window SomeText
-alias: SomeText size_t
+#import: gdk.Window
+#structWrap: GdkWindow* Window
+alias: Window gulong
 outFile: Socket
 
 ###########################################################
@@ -8416,6 +8402,8 @@ import: gio.AppInfo
 import: gio.Icon
 import: gio.IconIF
 import: gdk.Pixbuf
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GAppInfo* AppInfo
 structWrap: GIcon* IconIF
 structWrap: GdkPixbuf* Pixbuf

@@ -168,11 +168,11 @@ public class FileChooserButton : HBox, FileChooserIF
 		}
 		onFileSetListeners ~= dlg;
 	}
-	extern(C) static void callBackFileSet(GtkFileChooserButton* widgetStruct, FileChooserButton fileChooserButton)
+	extern(C) static void callBackFileSet(GtkFileChooserButton* widgetStruct, FileChooserButton _fileChooserButton)
 	{
-		foreach ( void delegate(FileChooserButton) dlg ; fileChooserButton.onFileSetListeners )
+		foreach ( void delegate(FileChooserButton) dlg ; _fileChooserButton.onFileSetListeners )
 		{
-			dlg(fileChooserButton);
+			dlg(_fileChooserButton);
 		}
 	}
 	

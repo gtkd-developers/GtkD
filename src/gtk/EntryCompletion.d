@@ -204,11 +204,11 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onActionActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionActivated(GtkEntryCompletion* widgetStruct, gint index, EntryCompletion entryCompletion)
+	extern(C) static void callBackActionActivated(GtkEntryCompletion* widgetStruct, gint index, EntryCompletion _entryCompletion)
 	{
-		foreach ( void delegate(gint, EntryCompletion) dlg ; entryCompletion.onActionActivatedListeners )
+		foreach ( void delegate(gint, EntryCompletion) dlg ; _entryCompletion.onActionActivatedListeners )
 		{
-			dlg(index, entryCompletion);
+			dlg(index, _entryCompletion);
 		}
 	}
 	
@@ -238,11 +238,11 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onCursorOnMatchListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCursorOnMatch(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
+	extern(C) static gboolean callBackCursorOnMatch(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion _entryCompletion)
 	{
-		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
+		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; _entryCompletion.onCursorOnMatchListeners )
 		{
-			if ( dlg(new TreeModel(model), new TreeIter(iter), entryCompletion) )
+			if ( dlg(new TreeModel(model), new TreeIter(iter), _entryCompletion) )
 			{
 				return 1;
 			}
@@ -278,11 +278,11 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onInsertPrefixListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackInsertPrefix(GtkEntryCompletion* widgetStruct, gchar* prefix, EntryCompletion entryCompletion)
+	extern(C) static gboolean callBackInsertPrefix(GtkEntryCompletion* widgetStruct, gchar* prefix, EntryCompletion _entryCompletion)
 	{
-		foreach ( bool delegate(string, EntryCompletion) dlg ; entryCompletion.onInsertPrefixListeners )
+		foreach ( bool delegate(string, EntryCompletion) dlg ; _entryCompletion.onInsertPrefixListeners )
 		{
-			if ( dlg(Str.toString(prefix), entryCompletion) )
+			if ( dlg(Str.toString(prefix), _entryCompletion) )
 			{
 				return 1;
 			}
@@ -317,11 +317,11 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onMatchSelectedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMatchSelected(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
+	extern(C) static gboolean callBackMatchSelected(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion _entryCompletion)
 	{
-		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
+		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; _entryCompletion.onMatchSelectedListeners )
 		{
-			if ( dlg(new TreeModel(model), new TreeIter(iter), entryCompletion) )
+			if ( dlg(new TreeModel(model), new TreeIter(iter), _entryCompletion) )
 			{
 				return 1;
 			}

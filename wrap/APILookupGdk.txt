@@ -356,6 +356,9 @@ import: glib.Str
 import: gtkc.paths;
 import: gtkc.Loader;
 structWrap: GdkColor* Color
+
+override: toString
+
 code: start
 	~this ()
 	{
@@ -375,6 +378,9 @@ import: glib.Str
 import: gtkc.paths;
 import: gtkc.Loader;
 structWrap: GdkRGBA* RGBA
+
+override: toString
+
 code: start
 	~this ()
 	{

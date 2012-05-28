@@ -216,7 +216,7 @@ public class Dialog : Window
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		return new Button(cast(GtkButton*)gtk_dialog_add_button(gtkDialog, toStringz(StockDesc[stockID]), responseId));
+		return new Button(cast(GtkButton*)gtk_dialog_add_button(gtkDialog, Str.toStringz(StockDesc[stockID]), responseId));
 	}
 	
 	/** */
@@ -298,11 +298,11 @@ public class Dialog : Window
 		}
 		onCloseListeners ~= dlg;
 	}
-	extern(C) static void callBackClose(GtkDialog* arg0Struct, Dialog dialog)
+	extern(C) static void callBackClose(GtkDialog* arg0Struct, Dialog _dialog)
 	{
-		foreach ( void delegate(Dialog) dlg ; dialog.onCloseListeners )
+		foreach ( void delegate(Dialog) dlg ; _dialog.onCloseListeners )
 		{
-			dlg(dialog);
+			dlg(_dialog);
 		}
 	}
 	
@@ -330,11 +330,11 @@ public class Dialog : Window
 		}
 		onResponseListeners ~= dlg;
 	}
-	extern(C) static void callBackResponse(GtkDialog* dialogStruct, gint responseId, Dialog dialog)
+	extern(C) static void callBackResponse(GtkDialog* dialogStruct, gint responseId, Dialog _dialog)
 	{
-		foreach ( void delegate(gint, Dialog) dlg ; dialog.onResponseListeners )
+		foreach ( void delegate(gint, Dialog) dlg ; _dialog.onResponseListeners )
 		{
-			dlg(responseId, dialog);
+			dlg(responseId, _dialog);
 		}
 	}
 	

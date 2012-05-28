@@ -202,11 +202,11 @@ public class MenuToolButton : ToolButton
 		}
 		onShowMenuListeners ~= dlg;
 	}
-	extern(C) static void callBackShowMenu(GtkMenuToolButton* buttonStruct, MenuToolButton menuToolButton)
+	extern(C) static void callBackShowMenu(GtkMenuToolButton* buttonStruct, MenuToolButton _menuToolButton)
 	{
-		foreach ( void delegate(MenuToolButton) dlg ; menuToolButton.onShowMenuListeners )
+		foreach ( void delegate(MenuToolButton) dlg ; _menuToolButton.onShowMenuListeners )
 		{
-			dlg(menuToolButton);
+			dlg(_menuToolButton);
 		}
 	}
 	

@@ -154,11 +154,11 @@ public class Range : Widget, OrientableIF
 		}
 		onAdjustBoundsListeners ~= dlg;
 	}
-	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, gdouble value, Range range)
+	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, gdouble value, Range _range)
 	{
-		foreach ( void delegate(gdouble, Range) dlg ; range.onAdjustBoundsListeners )
+		foreach ( void delegate(gdouble, Range) dlg ; _range.onAdjustBoundsListeners )
 		{
-			dlg(value, range);
+			dlg(value, _range);
 		}
 	}
 	
@@ -196,11 +196,11 @@ public class Range : Widget, OrientableIF
 		}
 		onChangeValueListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, gdouble value, Range range)
+	extern(C) static gboolean callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, gdouble value, Range _range)
 	{
-		foreach ( bool delegate(GtkScrollType, gdouble, Range) dlg ; range.onChangeValueListeners )
+		foreach ( bool delegate(GtkScrollType, gdouble, Range) dlg ; _range.onChangeValueListeners )
 		{
-			if ( dlg(scroll, value, range) )
+			if ( dlg(scroll, value, _range) )
 			{
 				return 1;
 			}
@@ -228,11 +228,11 @@ public class Range : Widget, OrientableIF
 		}
 		onMoveSliderListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType step, Range range)
+	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType step, Range _range)
 	{
-		foreach ( void delegate(GtkScrollType, Range) dlg ; range.onMoveSliderListeners )
+		foreach ( void delegate(GtkScrollType, Range) dlg ; _range.onMoveSliderListeners )
 		{
-			dlg(step, range);
+			dlg(step, _range);
 		}
 	}
 	
@@ -255,11 +255,11 @@ public class Range : Widget, OrientableIF
 		}
 		onValueChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackValueChanged(GtkRange* rangeStruct, Range range)
+	extern(C) static void callBackValueChanged(GtkRange* rangeStruct, Range _range)
 	{
-		foreach ( void delegate(Range) dlg ; range.onValueChangedListeners )
+		foreach ( void delegate(Range) dlg ; _range.onValueChangedListeners )
 		{
-			dlg(range);
+			dlg(_range);
 		}
 	}
 	

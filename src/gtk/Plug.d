@@ -44,14 +44,11 @@
  * omit signals:
  * imports:
  * 	- gdk.Display
- * 	- gdk.Window
  * structWrap:
  * 	- GdkDisplay* -> Display
- * 	- GdkWindow* -> Window
- * 	- Window -> SomeText
  * module aliases:
  * local aliases:
- * 	- SomeText -> size_t
+ * 	- Window -> gulong
  * overrides:
  */
 
@@ -66,7 +63,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gdk.Display;
-private import gdk.Window;
 
 
 
@@ -165,11 +161,11 @@ public class Plug : Window
 		}
 		onEmbeddedListeners ~= dlg;
 	}
-	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, Plug plug)
+	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, Plug _plug)
 	{
-		foreach ( void delegate(Plug) dlg ; plug.onEmbeddedListeners )
+		foreach ( void delegate(Plug) dlg ; _plug.onEmbeddedListeners )
 		{
-			dlg(plug);
+			dlg(_plug);
 		}
 	}
 	
@@ -180,10 +176,10 @@ public class Plug : Window
 	 * Params:
 	 * socketId = the XID of the socket's window.
 	 */
-	public void construct(size_t socketId)
+	public void construct(gulong socketId)
 	{
 		// void gtk_plug_construct (GtkPlug *plug,  Window socket_id);
-		gtk_plug_construct(gtkPlug, (socketId is null) ? null : socketId.getSomeTextStruct());
+		gtk_plug_construct(gtkPlug, socketId);
 	}
 	
 	/**
@@ -196,10 +192,10 @@ public class Plug : Window
 	 * GtkSocket.
 	 * socketId = the XID of the socket's window.
 	 */
-	public void constructForDisplay(Display display, size_t socketId)
+	public void constructForDisplay(Display display, gulong socketId)
 	{
 		// void gtk_plug_construct_for_display (GtkPlug *plug,  GdkDisplay *display,  Window socket_id);
-		gtk_plug_construct_for_display(gtkPlug, (display is null) ? null : display.getDisplayStruct(), (socketId is null) ? null : socketId.getSomeTextStruct());
+		gtk_plug_construct_for_display(gtkPlug, (display is null) ? null : display.getDisplayStruct(), socketId);
 	}
 	
 	/**
@@ -210,13 +206,13 @@ public class Plug : Window
 	 * socketId = the window ID of the socket, or 0.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (size_t socketId)
+	public this (gulong socketId)
 	{
 		// GtkWidget * gtk_plug_new (Window socket_id);
-		auto p = gtk_plug_new((socketId is null) ? null : socketId.getSomeTextStruct());
+		auto p = gtk_plug_new(socketId);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_plug_new((socketId is null) ? null : socketId.getSomeTextStruct())");
+			throw new ConstructionException("null returned by gtk_plug_new(socketId)");
 		}
 		this(cast(GtkPlug*) p);
 	}
@@ -229,13 +225,13 @@ public class Plug : Window
 	 * socketId = the XID of the socket's window.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (Display display, size_t socketId)
+	public this (Display display, gulong socketId)
 	{
 		// GtkWidget * gtk_plug_new_for_display (GdkDisplay *display,  Window socket_id);
-		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), (socketId is null) ? null : socketId.getSomeTextStruct());
+		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), (socketId is null) ? null : socketId.getSomeTextStruct())");
+			throw new ConstructionException("null returned by gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId)");
 		}
 		this(cast(GtkPlug*) p);
 	}
@@ -246,15 +242,10 @@ public class Plug : Window
 	 * instance with gtk_socket_add_id().
 	 * Returns: the window ID for the plug
 	 */
-	public size_t getId()
+	public gulong getId()
 	{
 		// Window gtk_plug_get_id (GtkPlug *plug);
-		auto p = gtk_plug_get_id(gtkPlug);
-		if(p is null)
-		{
-			return null;
-		}
-		return new SomeText(cast(Window) p);
+		return gtk_plug_get_id(gtkPlug);
 	}
 	
 	/**
@@ -273,14 +264,9 @@ public class Plug : Window
 	 * Since 2.14
 	 * Returns: the window of the socket, or NULL. [transfer none]
 	 */
-	public Window getSocketWindow()
+	public GdkWindow* getSocketWindow()
 	{
 		// GdkWindow * gtk_plug_get_socket_window (GtkPlug *plug);
-		auto p = gtk_plug_get_socket_window(gtkPlug);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Window(cast(GdkWindow*) p);
+		return gtk_plug_get_socket_window(gtkPlug);
 	}
 }

@@ -179,11 +179,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onDriveChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackDriveChanged(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackDriveChanged(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveChangedListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveChangedListeners )
 		{
-			dlg(new Drive(drive), volumeMonitor);
+			dlg(new Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -206,11 +206,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onDriveConnectedListeners ~= dlg;
 	}
-	extern(C) static void callBackDriveConnected(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackDriveConnected(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveConnectedListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveConnectedListeners )
 		{
-			dlg(new Drive(drive), volumeMonitor);
+			dlg(new Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -233,11 +233,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onDriveDisconnectedListeners ~= dlg;
 	}
-	extern(C) static void callBackDriveDisconnected(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackDriveDisconnected(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveDisconnectedListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveDisconnectedListeners )
 		{
-			dlg(new Drive(drive), volumeMonitor);
+			dlg(new Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -261,11 +261,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onDriveEjectButtonListeners ~= dlg;
 	}
-	extern(C) static void callBackDriveEjectButton(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackDriveEjectButton(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveEjectButtonListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveEjectButtonListeners )
 		{
-			dlg(new Drive(drive), volumeMonitor);
+			dlg(new Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -289,11 +289,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onDriveStopButtonListeners ~= dlg;
 	}
-	extern(C) static void callBackDriveStopButton(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackDriveStopButton(GVolumeMonitor* volumeMonitorStruct, GDrive* drive, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; volumeMonitor.onDriveStopButtonListeners )
+		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveStopButtonListeners )
 		{
-			dlg(new Drive(drive), volumeMonitor);
+			dlg(new Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -316,11 +316,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onMountAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackMountAdded(GVolumeMonitor* volumeMonitorStruct, GMount* mount, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackMountAdded(GVolumeMonitor* volumeMonitorStruct, GMount* mount, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; volumeMonitor.onMountAddedListeners )
+		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; _volumeMonitor.onMountAddedListeners )
 		{
-			dlg(new Mount(mount), volumeMonitor);
+			dlg(new Mount(mount), _volumeMonitor);
 		}
 	}
 	
@@ -343,11 +343,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onMountChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackMountChanged(GVolumeMonitor* volumeMonitorStruct, GMount* mount, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackMountChanged(GVolumeMonitor* volumeMonitorStruct, GMount* mount, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; volumeMonitor.onMountChangedListeners )
+		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; _volumeMonitor.onMountChangedListeners )
 		{
-			dlg(new Mount(mount), volumeMonitor);
+			dlg(new Mount(mount), _volumeMonitor);
 		}
 	}
 	
@@ -370,11 +370,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onMountPreUnmountListeners ~= dlg;
 	}
-	extern(C) static void callBackMountPreUnmount(GVolumeMonitor* volumeMonitorStruct, GMount* mount, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackMountPreUnmount(GVolumeMonitor* volumeMonitorStruct, GMount* mount, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; volumeMonitor.onMountPreUnmountListeners )
+		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; _volumeMonitor.onMountPreUnmountListeners )
 		{
-			dlg(new Mount(mount), volumeMonitor);
+			dlg(new Mount(mount), _volumeMonitor);
 		}
 	}
 	
@@ -397,11 +397,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onMountRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackMountRemoved(GVolumeMonitor* volumeMonitorStruct, GMount* mount, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackMountRemoved(GVolumeMonitor* volumeMonitorStruct, GMount* mount, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; volumeMonitor.onMountRemovedListeners )
+		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; _volumeMonitor.onMountRemovedListeners )
 		{
-			dlg(new Mount(mount), volumeMonitor);
+			dlg(new Mount(mount), _volumeMonitor);
 		}
 	}
 	
@@ -424,11 +424,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onVolumeAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackVolumeAdded(GVolumeMonitor* volumeMonitorStruct, GVolume* volume, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackVolumeAdded(GVolumeMonitor* volumeMonitorStruct, GVolume* volume, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; volumeMonitor.onVolumeAddedListeners )
+		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; _volumeMonitor.onVolumeAddedListeners )
 		{
-			dlg(new Volume(volume), volumeMonitor);
+			dlg(new Volume(volume), _volumeMonitor);
 		}
 	}
 	
@@ -451,11 +451,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onVolumeChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackVolumeChanged(GVolumeMonitor* volumeMonitorStruct, GVolume* volume, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackVolumeChanged(GVolumeMonitor* volumeMonitorStruct, GVolume* volume, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; volumeMonitor.onVolumeChangedListeners )
+		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; _volumeMonitor.onVolumeChangedListeners )
 		{
-			dlg(new Volume(volume), volumeMonitor);
+			dlg(new Volume(volume), _volumeMonitor);
 		}
 	}
 	
@@ -480,11 +480,11 @@ public class VolumeMonitor : ObjectG
 		}
 		onVolumeRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackVolumeRemoved(GVolumeMonitor* volumeMonitorStruct, GVolume* volume, VolumeMonitor volumeMonitor)
+	extern(C) static void callBackVolumeRemoved(GVolumeMonitor* volumeMonitorStruct, GVolume* volume, VolumeMonitor _volumeMonitor)
 	{
-		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; volumeMonitor.onVolumeRemovedListeners )
+		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; _volumeMonitor.onVolumeRemovedListeners )
 		{
-			dlg(new Volume(volume), volumeMonitor);
+			dlg(new Volume(volume), _volumeMonitor);
 		}
 	}
 	

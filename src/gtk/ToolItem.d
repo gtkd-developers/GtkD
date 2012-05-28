@@ -178,11 +178,11 @@ public class ToolItem : Bin, ActivatableIF
 		}
 		onCreateMenuProxyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCreateMenuProxy(GtkToolItem* toolItemStruct, ToolItem toolItem)
+	extern(C) static gboolean callBackCreateMenuProxy(GtkToolItem* toolItemStruct, ToolItem _toolItem)
 	{
-		foreach ( bool delegate(ToolItem) dlg ; toolItem.onCreateMenuProxyListeners )
+		foreach ( bool delegate(ToolItem) dlg ; _toolItem.onCreateMenuProxyListeners )
 		{
-			if ( dlg(toolItem) )
+			if ( dlg(_toolItem) )
 			{
 				return 1;
 			}
@@ -227,11 +227,11 @@ public class ToolItem : Bin, ActivatableIF
 		}
 		onToolbarReconfiguredListeners ~= dlg;
 	}
-	extern(C) static void callBackToolbarReconfigured(GtkToolItem* toolItemStruct, ToolItem toolItem)
+	extern(C) static void callBackToolbarReconfigured(GtkToolItem* toolItemStruct, ToolItem _toolItem)
 	{
-		foreach ( void delegate(ToolItem) dlg ; toolItem.onToolbarReconfiguredListeners )
+		foreach ( void delegate(ToolItem) dlg ; _toolItem.onToolbarReconfiguredListeners )
 		{
-			dlg(toolItem);
+			dlg(_toolItem);
 		}
 	}
 	

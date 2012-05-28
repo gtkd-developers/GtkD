@@ -256,11 +256,11 @@ public class Settings : ObjectG
 		}
 		onChangeListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackChange(GSettings* settingsStruct, gpointer keys, gint nKeys, Settings settings)
+	extern(C) static gboolean callBackChange(GSettings* settingsStruct, gpointer keys, gint nKeys, Settings _settings)
 	{
-		foreach ( bool delegate(gpointer, gint, Settings) dlg ; settings.onChangeListeners )
+		foreach ( bool delegate(gpointer, gint, Settings) dlg ; _settings.onChangeListeners )
 		{
-			if ( dlg(keys, nKeys, settings) )
+			if ( dlg(keys, nKeys, _settings) )
 			{
 				return 1;
 			}
@@ -293,11 +293,11 @@ public class Settings : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GSettings* settingsStruct, gchar* key, Settings settings)
+	extern(C) static void callBackChanged(GSettings* settingsStruct, gchar* key, Settings _settings)
 	{
-		foreach ( void delegate(string, Settings) dlg ; settings.onChangedListeners )
+		foreach ( void delegate(string, Settings) dlg ; _settings.onChangedListeners )
 		{
-			dlg(Str.toString(key), settings);
+			dlg(Str.toString(key), _settings);
 		}
 	}
 	
@@ -337,11 +337,11 @@ public class Settings : ObjectG
 		}
 		onWritableChangeListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackWritableChange(GSettings* settingsStruct, guint key, Settings settings)
+	extern(C) static gboolean callBackWritableChange(GSettings* settingsStruct, guint key, Settings _settings)
 	{
-		foreach ( bool delegate(guint, Settings) dlg ; settings.onWritableChangeListeners )
+		foreach ( bool delegate(guint, Settings) dlg ; _settings.onWritableChangeListeners )
 		{
-			if ( dlg(key, settings) )
+			if ( dlg(key, _settings) )
 			{
 				return 1;
 			}
@@ -374,11 +374,11 @@ public class Settings : ObjectG
 		}
 		onWritableChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, gchar* key, Settings settings)
+	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, gchar* key, Settings _settings)
 	{
-		foreach ( void delegate(string, Settings) dlg ; settings.onWritableChangedListeners )
+		foreach ( void delegate(string, Settings) dlg ; _settings.onWritableChangedListeners )
 		{
-			dlg(Str.toString(key), settings);
+			dlg(Str.toString(key), _settings);
 		}
 	}
 	

@@ -185,11 +185,11 @@ public class RecentManager : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkRecentManager* recentManagerStruct, RecentManager recentManager)
+	extern(C) static void callBackChanged(GtkRecentManager* recentManagerStruct, RecentManager _recentManager)
 	{
-		foreach ( void delegate(RecentManager) dlg ; recentManager.onChangedListeners )
+		foreach ( void delegate(RecentManager) dlg ; _recentManager.onChangedListeners )
 		{
-			dlg(recentManager);
+			dlg(_recentManager);
 		}
 	}
 	

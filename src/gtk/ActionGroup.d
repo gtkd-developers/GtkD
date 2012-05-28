@@ -193,11 +193,11 @@ public class ActionGroup : ObjectG, BuildableIF
 		}
 		onConnectProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackConnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
+	extern(C) static void callBackConnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup _actionGroup)
 	{
-		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; actionGroup.onConnectProxyListeners )
+		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; _actionGroup.onConnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), actionGroup);
+			dlg(new Action(action), new Widget(proxy), _actionGroup);
 		}
 	}
 	
@@ -225,11 +225,11 @@ public class ActionGroup : ObjectG, BuildableIF
 		}
 		onDisconnectProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
+	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup _actionGroup)
 	{
-		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; actionGroup.onDisconnectProxyListeners )
+		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; _actionGroup.onDisconnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), actionGroup);
+			dlg(new Action(action), new Widget(proxy), _actionGroup);
 		}
 	}
 	
@@ -256,11 +256,11 @@ public class ActionGroup : ObjectG, BuildableIF
 		}
 		onPostActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackPostActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup actionGroup)
+	extern(C) static void callBackPostActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup _actionGroup)
 	{
-		foreach ( void delegate(Action, ActionGroup) dlg ; actionGroup.onPostActivateListeners )
+		foreach ( void delegate(Action, ActionGroup) dlg ; _actionGroup.onPostActivateListeners )
 		{
-			dlg(new Action(action), actionGroup);
+			dlg(new Action(action), _actionGroup);
 		}
 	}
 	
@@ -287,11 +287,11 @@ public class ActionGroup : ObjectG, BuildableIF
 		}
 		onPreActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackPreActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup actionGroup)
+	extern(C) static void callBackPreActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup _actionGroup)
 	{
-		foreach ( void delegate(Action, ActionGroup) dlg ; actionGroup.onPreActivateListeners )
+		foreach ( void delegate(Action, ActionGroup) dlg ; _actionGroup.onPreActivateListeners )
 		{
-			dlg(new Action(action), actionGroup);
+			dlg(new Action(action), _actionGroup);
 		}
 	}
 	

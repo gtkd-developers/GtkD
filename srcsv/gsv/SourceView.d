@@ -175,11 +175,11 @@ public class SourceView : TextView
 		}
 		onLineMarkActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackLineMarkActivated(GtkSourceView* viewStruct, GtkTextIter* iter, GdkEvent* event, SourceView sourceView)
+	extern(C) static void callBackLineMarkActivated(GtkSourceView* viewStruct, GtkTextIter* iter, GdkEvent* event, SourceView _sourceView)
 	{
-		foreach ( void delegate(TextIter, GdkEvent*, SourceView) dlg ; sourceView.onLineMarkActivatedListeners )
+		foreach ( void delegate(TextIter, GdkEvent*, SourceView) dlg ; _sourceView.onLineMarkActivatedListeners )
 		{
-			dlg(new TextIter(iter), event, sourceView);
+			dlg(new TextIter(iter), event, _sourceView);
 		}
 	}
 	
@@ -209,11 +209,11 @@ public class SourceView : TextView
 		}
 		onMoveLinesListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveLines(GtkSourceView* viewStruct, gboolean copy, gint count, SourceView sourceView)
+	extern(C) static void callBackMoveLines(GtkSourceView* viewStruct, gboolean copy, gint count, SourceView _sourceView)
 	{
-		foreach ( void delegate(gboolean, gint, SourceView) dlg ; sourceView.onMoveLinesListeners )
+		foreach ( void delegate(gboolean, gint, SourceView) dlg ; _sourceView.onMoveLinesListeners )
 		{
-			dlg(copy, count, sourceView);
+			dlg(copy, count, _sourceView);
 		}
 	}
 	
@@ -240,11 +240,11 @@ public class SourceView : TextView
 		}
 		onMoveWordsListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveWords(GtkSourceView* viewStruct, gint count, SourceView sourceView)
+	extern(C) static void callBackMoveWords(GtkSourceView* viewStruct, gint count, SourceView _sourceView)
 	{
-		foreach ( void delegate(gint, SourceView) dlg ; sourceView.onMoveWordsListeners )
+		foreach ( void delegate(gint, SourceView) dlg ; _sourceView.onMoveWordsListeners )
 		{
-			dlg(count, sourceView);
+			dlg(count, _sourceView);
 		}
 	}
 	
@@ -266,11 +266,11 @@ public class SourceView : TextView
 		}
 		onRedoListeners ~= dlg;
 	}
-	extern(C) static void callBackRedo(GtkSourceView* sourceviewStruct, SourceView sourceView)
+	extern(C) static void callBackRedo(GtkSourceView* sourceviewStruct, SourceView _sourceView)
 	{
-		foreach ( void delegate(SourceView) dlg ; sourceView.onRedoListeners )
+		foreach ( void delegate(SourceView) dlg ; _sourceView.onRedoListeners )
 		{
-			dlg(sourceView);
+			dlg(_sourceView);
 		}
 	}
 	
@@ -297,11 +297,11 @@ public class SourceView : TextView
 		}
 		onShowCompletionListeners ~= dlg;
 	}
-	extern(C) static void callBackShowCompletion(GtkSourceView* viewStruct, SourceView sourceView)
+	extern(C) static void callBackShowCompletion(GtkSourceView* viewStruct, SourceView _sourceView)
 	{
-		foreach ( void delegate(SourceView) dlg ; sourceView.onShowCompletionListeners )
+		foreach ( void delegate(SourceView) dlg ; _sourceView.onShowCompletionListeners )
 		{
-			dlg(sourceView);
+			dlg(_sourceView);
 		}
 	}
 	
@@ -329,11 +329,11 @@ public class SourceView : TextView
 		}
 		onSmartHomeEndListeners ~= dlg;
 	}
-	extern(C) static void callBackSmartHomeEnd(GtkSourceView* viewStruct, GtkTextIter* iter, gint count, SourceView sourceView)
+	extern(C) static void callBackSmartHomeEnd(GtkSourceView* viewStruct, GtkTextIter* iter, gint count, SourceView _sourceView)
 	{
-		foreach ( void delegate(TextIter, gint, SourceView) dlg ; sourceView.onSmartHomeEndListeners )
+		foreach ( void delegate(TextIter, gint, SourceView) dlg ; _sourceView.onSmartHomeEndListeners )
 		{
-			dlg(new TextIter(iter), count, sourceView);
+			dlg(new TextIter(iter), count, _sourceView);
 		}
 	}
 	
@@ -357,11 +357,11 @@ public class SourceView : TextView
 		}
 		onUndoListeners ~= dlg;
 	}
-	extern(C) static void callBackUndo(GtkSourceView* sourceviewStruct, SourceView sourceView)
+	extern(C) static void callBackUndo(GtkSourceView* sourceviewStruct, SourceView _sourceView)
 	{
-		foreach ( void delegate(SourceView) dlg ; sourceView.onUndoListeners )
+		foreach ( void delegate(SourceView) dlg ; _sourceView.onUndoListeners )
 		{
-			dlg(sourceView);
+			dlg(_sourceView);
 		}
 	}
 	

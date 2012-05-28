@@ -57,6 +57,7 @@
  * 	- gtk.CellEditableIF
  * 	- gtk.CellRenderer
  * 	- gtk.TreeIter
+ * 	- gtk.TreeModel
  * 	- gtk.TreeModelIF
  * 	- gtk.Widget
  * 	- gtk.BuildableIF
@@ -101,6 +102,7 @@ private import gtk.CellEditable;
 private import gtk.CellEditableIF;
 private import gtk.CellRenderer;
 private import gtk.TreeIter;
+private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.Widget;
 private import gtk.BuildableIF;
@@ -356,11 +358,11 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onAddEditableListeners ~= dlg;
 	}
-	extern(C) static void callBackAddEditable(GtkCellArea* areaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, GdkRectangle* cellArea, gchar* path, CellArea cellArea)
+	extern(C) static void callBackAddEditable(GtkCellArea* areaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, GdkRectangle* cellArea, gchar* path, CellArea _cellArea)
 	{
-		foreach ( void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg ; cellArea.onAddEditableListeners )
+		foreach ( void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg ; _cellArea.onAddEditableListeners )
 		{
-			dlg(new CellRenderer(renderer), new CellEditable(editable), cellArea, Str.toString(path), cellArea);
+			dlg(new CellRenderer(renderer), new CellEditable(editable), cellArea, Str.toString(path), _cellArea);
 		}
 	}
 	
@@ -384,11 +386,11 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onApplyAttributesListeners ~= dlg;
 	}
-	extern(C) static void callBackApplyAttributes(GtkCellArea* areaStruct, GtkTreeModel* model, GtkTreeIter* iter, gboolean isExpander, gboolean isExpanded, CellArea cellArea)
+	extern(C) static void callBackApplyAttributes(GtkCellArea* areaStruct, GtkTreeModel* model, GtkTreeIter* iter, gboolean isExpander, gboolean isExpanded, CellArea _cellArea)
 	{
-		foreach ( void delegate(TreeModelIF, TreeIter, gboolean, gboolean, CellArea) dlg ; cellArea.onApplyAttributesListeners )
+		foreach ( void delegate(TreeModelIF, TreeIter, gboolean, gboolean, CellArea) dlg ; _cellArea.onApplyAttributesListeners )
 		{
-			dlg(new TreeModel(model), new TreeIter(iter), isExpander, isExpanded, cellArea);
+			dlg(new TreeModel(model), new TreeIter(iter), isExpander, isExpanded, _cellArea);
 		}
 	}
 	
@@ -418,11 +420,11 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onFocusChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackFocusChanged(GtkCellArea* areaStruct, GtkCellRenderer* renderer, gchar* path, CellArea cellArea)
+	extern(C) static void callBackFocusChanged(GtkCellArea* areaStruct, GtkCellRenderer* renderer, gchar* path, CellArea _cellArea)
 	{
-		foreach ( void delegate(CellRenderer, string, CellArea) dlg ; cellArea.onFocusChangedListeners )
+		foreach ( void delegate(CellRenderer, string, CellArea) dlg ; _cellArea.onFocusChangedListeners )
 		{
-			dlg(new CellRenderer(renderer), Str.toString(path), cellArea);
+			dlg(new CellRenderer(renderer), Str.toString(path), _cellArea);
 		}
 	}
 	
@@ -447,11 +449,11 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onRemoveEditableListeners ~= dlg;
 	}
-	extern(C) static void callBackRemoveEditable(GtkCellArea* areaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, CellArea cellArea)
+	extern(C) static void callBackRemoveEditable(GtkCellArea* areaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, CellArea _cellArea)
 	{
-		foreach ( void delegate(CellRenderer, CellEditableIF, CellArea) dlg ; cellArea.onRemoveEditableListeners )
+		foreach ( void delegate(CellRenderer, CellEditableIF, CellArea) dlg ; _cellArea.onRemoveEditableListeners )
 		{
-			dlg(new CellRenderer(renderer), new CellEditable(editable), cellArea);
+			dlg(new CellRenderer(renderer), new CellEditable(editable), _cellArea);
 		}
 	}
 	

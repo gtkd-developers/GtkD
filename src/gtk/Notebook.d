@@ -176,11 +176,11 @@ public class Notebook : Container
 		}
 		onChangeCurrentPageListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackChangeCurrentPage(GtkNotebook* notebookStruct, gint arg1, Notebook notebook)
+	extern(C) static gboolean callBackChangeCurrentPage(GtkNotebook* notebookStruct, gint arg1, Notebook _notebook)
 	{
-		foreach ( bool delegate(gint, Notebook) dlg ; notebook.onChangeCurrentPageListeners )
+		foreach ( bool delegate(gint, Notebook) dlg ; _notebook.onChangeCurrentPageListeners )
 		{
-			if ( dlg(arg1, notebook) )
+			if ( dlg(arg1, _notebook) )
 			{
 				return 1;
 			}
@@ -215,11 +215,11 @@ public class Notebook : Container
 		}
 		onCreateWindowListeners ~= dlg;
 	}
-	extern(C) static void callBackCreateWindow(GtkNotebook* notebookStruct, GtkWidget* page, gint x, gint y, Notebook notebook)
+	extern(C) static void callBackCreateWindow(GtkNotebook* notebookStruct, GtkWidget* page, gint x, gint y, Notebook _notebook)
 	{
-		foreach ( GtkNotebook* delegate(Widget, gint, gint, Notebook) dlg ; notebook.onCreateWindowListeners )
+		foreach ( GtkNotebook* delegate(Widget, gint, gint, Notebook) dlg ; _notebook.onCreateWindowListeners )
 		{
-			dlg(new Widget(page), x, y, notebook);
+			dlg(new Widget(page), x, y, _notebook);
 		}
 	}
 	
@@ -241,11 +241,11 @@ public class Notebook : Container
 		}
 		onFocusTabListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusTab(GtkNotebook* notebookStruct, GtkNotebookTab arg1, Notebook notebook)
+	extern(C) static gboolean callBackFocusTab(GtkNotebook* notebookStruct, GtkNotebookTab arg1, Notebook _notebook)
 	{
-		foreach ( bool delegate(GtkNotebookTab, Notebook) dlg ; notebook.onFocusTabListeners )
+		foreach ( bool delegate(GtkNotebookTab, Notebook) dlg ; _notebook.onFocusTabListeners )
 		{
-			if ( dlg(arg1, notebook) )
+			if ( dlg(arg1, _notebook) )
 			{
 				return 1;
 			}
@@ -272,11 +272,11 @@ public class Notebook : Container
 		}
 		onMoveFocusOutListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveFocusOut(GtkNotebook* notebookStruct, GtkDirectionType arg1, Notebook notebook)
+	extern(C) static void callBackMoveFocusOut(GtkNotebook* notebookStruct, GtkDirectionType arg1, Notebook _notebook)
 	{
-		foreach ( void delegate(GtkDirectionType, Notebook) dlg ; notebook.onMoveFocusOutListeners )
+		foreach ( void delegate(GtkDirectionType, Notebook) dlg ; _notebook.onMoveFocusOutListeners )
 		{
-			dlg(arg1, notebook);
+			dlg(arg1, _notebook);
 		}
 	}
 	
@@ -301,11 +301,11 @@ public class Notebook : Container
 		}
 		onPageAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackPageAdded(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook notebook)
+	extern(C) static void callBackPageAdded(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook _notebook)
 	{
-		foreach ( void delegate(Widget, guint, Notebook) dlg ; notebook.onPageAddedListeners )
+		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageAddedListeners )
 		{
-			dlg(new Widget(child), pageNum, notebook);
+			dlg(new Widget(child), pageNum, _notebook);
 		}
 	}
 	
@@ -330,11 +330,11 @@ public class Notebook : Container
 		}
 		onPageRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackPageRemoved(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook notebook)
+	extern(C) static void callBackPageRemoved(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook _notebook)
 	{
-		foreach ( void delegate(Widget, guint, Notebook) dlg ; notebook.onPageRemovedListeners )
+		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageRemovedListeners )
 		{
-			dlg(new Widget(child), pageNum, notebook);
+			dlg(new Widget(child), pageNum, _notebook);
 		}
 	}
 	
@@ -359,11 +359,11 @@ public class Notebook : Container
 		}
 		onPageReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackPageReordered(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook notebook)
+	extern(C) static void callBackPageReordered(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook _notebook)
 	{
-		foreach ( void delegate(Widget, guint, Notebook) dlg ; notebook.onPageReorderedListeners )
+		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageReorderedListeners )
 		{
-			dlg(new Widget(child), pageNum, notebook);
+			dlg(new Widget(child), pageNum, _notebook);
 		}
 	}
 	
@@ -385,11 +385,11 @@ public class Notebook : Container
 		}
 		onReorderTabListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackReorderTab(GtkNotebook* notebookStruct, GtkDirectionType arg1, gboolean arg2, Notebook notebook)
+	extern(C) static gboolean callBackReorderTab(GtkNotebook* notebookStruct, GtkDirectionType arg1, gboolean arg2, Notebook _notebook)
 	{
-		foreach ( bool delegate(GtkDirectionType, gboolean, Notebook) dlg ; notebook.onReorderTabListeners )
+		foreach ( bool delegate(GtkDirectionType, gboolean, Notebook) dlg ; _notebook.onReorderTabListeners )
 		{
-			if ( dlg(arg1, arg2, notebook) )
+			if ( dlg(arg1, arg2, _notebook) )
 			{
 				return 1;
 			}
@@ -416,11 +416,11 @@ public class Notebook : Container
 		}
 		onSelectPageListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectPage(GtkNotebook* notebookStruct, gboolean arg1, Notebook notebook)
+	extern(C) static gboolean callBackSelectPage(GtkNotebook* notebookStruct, gboolean arg1, Notebook _notebook)
 	{
-		foreach ( bool delegate(gboolean, Notebook) dlg ; notebook.onSelectPageListeners )
+		foreach ( bool delegate(gboolean, Notebook) dlg ; _notebook.onSelectPageListeners )
 		{
-			if ( dlg(arg1, notebook) )
+			if ( dlg(arg1, _notebook) )
 			{
 				return 1;
 			}
@@ -450,11 +450,11 @@ public class Notebook : Container
 		}
 		onSwitchPageListeners ~= dlg;
 	}
-	extern(C) static void callBackSwitchPage(GtkNotebook* notebookStruct, GtkWidget* page, guint pageNum, Notebook notebook)
+	extern(C) static void callBackSwitchPage(GtkNotebook* notebookStruct, GtkWidget* page, guint pageNum, Notebook _notebook)
 	{
-		foreach ( void delegate(Widget, guint, Notebook) dlg ; notebook.onSwitchPageListeners )
+		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onSwitchPageListeners )
 		{
-			dlg(new Widget(page), pageNum, notebook);
+			dlg(new Widget(page), pageNum, _notebook);
 		}
 	}
 	

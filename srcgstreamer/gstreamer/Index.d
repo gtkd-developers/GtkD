@@ -147,11 +147,11 @@ public class Index : ObjectGst
 		}
 		onEntryAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackEntryAdded(GstIndex* gstindexStruct, GstIndexEntry* arg1, Index index)
+	extern(C) static void callBackEntryAdded(GstIndex* gstindexStruct, GstIndexEntry* arg1, Index _index)
 	{
-		foreach ( void delegate(GstIndexEntry*, Index) dlg ; index.onEntryAddedListeners )
+		foreach ( void delegate(GstIndexEntry*, Index) dlg ; _index.onEntryAddedListeners )
 		{
-			dlg(arg1, index);
+			dlg(arg1, _index);
 		}
 	}
 	

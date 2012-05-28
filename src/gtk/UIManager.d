@@ -299,11 +299,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onActionsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionsChanged(GtkUIManager* managerStruct, UIManager uIManager)
+	extern(C) static void callBackActionsChanged(GtkUIManager* managerStruct, UIManager _uIManager)
 	{
-		foreach ( void delegate(UIManager) dlg ; uIManager.onActionsChangedListeners )
+		foreach ( void delegate(UIManager) dlg ; _uIManager.onActionsChangedListeners )
 		{
-			dlg(uIManager);
+			dlg(_uIManager);
 		}
 	}
 	
@@ -329,11 +329,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onAddWidgetListeners ~= dlg;
 	}
-	extern(C) static void callBackAddWidget(GtkUIManager* managerStruct, GtkWidget* widget, UIManager uIManager)
+	extern(C) static void callBackAddWidget(GtkUIManager* managerStruct, GtkWidget* widget, UIManager _uIManager)
 	{
-		foreach ( void delegate(Widget, UIManager) dlg ; uIManager.onAddWidgetListeners )
+		foreach ( void delegate(Widget, UIManager) dlg ; _uIManager.onAddWidgetListeners )
 		{
-			dlg(new Widget(widget), uIManager);
+			dlg(new Widget(widget), _uIManager);
 		}
 	}
 	
@@ -361,11 +361,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onConnectProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackConnectProxy(GtkUIManager* managerStruct, GtkAction* action, GtkWidget* proxy, UIManager uIManager)
+	extern(C) static void callBackConnectProxy(GtkUIManager* managerStruct, GtkAction* action, GtkWidget* proxy, UIManager _uIManager)
 	{
-		foreach ( void delegate(Action, Widget, UIManager) dlg ; uIManager.onConnectProxyListeners )
+		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onConnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), uIManager);
+			dlg(new Action(action), new Widget(proxy), _uIManager);
 		}
 	}
 	
@@ -390,11 +390,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onDisconnectProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackDisconnectProxy(GtkUIManager* managerStruct, GtkAction* action, GtkWidget* proxy, UIManager uIManager)
+	extern(C) static void callBackDisconnectProxy(GtkUIManager* managerStruct, GtkAction* action, GtkWidget* proxy, UIManager _uIManager)
 	{
-		foreach ( void delegate(Action, Widget, UIManager) dlg ; uIManager.onDisconnectProxyListeners )
+		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onDisconnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), uIManager);
+			dlg(new Action(action), new Widget(proxy), _uIManager);
 		}
 	}
 	
@@ -421,11 +421,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onPostActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackPostActivate(GtkUIManager* managerStruct, GtkAction* action, UIManager uIManager)
+	extern(C) static void callBackPostActivate(GtkUIManager* managerStruct, GtkAction* action, UIManager _uIManager)
 	{
-		foreach ( void delegate(Action, UIManager) dlg ; uIManager.onPostActivateListeners )
+		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPostActivateListeners )
 		{
-			dlg(new Action(action), uIManager);
+			dlg(new Action(action), _uIManager);
 		}
 	}
 	
@@ -454,11 +454,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onPreActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackPreActivate(GtkUIManager* managerStruct, GtkAction* action, UIManager uIManager)
+	extern(C) static void callBackPreActivate(GtkUIManager* managerStruct, GtkAction* action, UIManager _uIManager)
 	{
-		foreach ( void delegate(Action, UIManager) dlg ; uIManager.onPreActivateListeners )
+		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPreActivateListeners )
 		{
-			dlg(new Action(action), uIManager);
+			dlg(new Action(action), _uIManager);
 		}
 	}
 	

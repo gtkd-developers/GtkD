@@ -198,8 +198,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	/** */
 	public this (string text, int max)
 	{
-		this(max);
-		setText(text);
+		this(text);
+		setMaxLength(max);
 	}
 	
 	/**
@@ -261,11 +261,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkEntry* entryStruct, Entry entry)
+	extern(C) static void callBackActivate(GtkEntry* entryStruct, Entry _entry)
 	{
-		foreach ( void delegate(Entry) dlg ; entry.onActivateListeners )
+		foreach ( void delegate(Entry) dlg ; _entry.onActivateListeners )
 		{
-			dlg(entry);
+			dlg(_entry);
 		}
 	}
 	
@@ -292,11 +292,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onBackspaceListeners ~= dlg;
 	}
-	extern(C) static void callBackBackspace(GtkEntry* entryStruct, Entry entry)
+	extern(C) static void callBackBackspace(GtkEntry* entryStruct, Entry _entry)
 	{
-		foreach ( void delegate(Entry) dlg ; entry.onBackspaceListeners )
+		foreach ( void delegate(Entry) dlg ; _entry.onBackspaceListeners )
 		{
-			dlg(entry);
+			dlg(_entry);
 		}
 	}
 	
@@ -323,11 +323,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onCopyClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCopyClipboard(GtkEntry* entryStruct, Entry entry)
+	extern(C) static void callBackCopyClipboard(GtkEntry* entryStruct, Entry _entry)
 	{
-		foreach ( void delegate(Entry) dlg ; entry.onCopyClipboardListeners )
+		foreach ( void delegate(Entry) dlg ; _entry.onCopyClipboardListeners )
 		{
-			dlg(entry);
+			dlg(_entry);
 		}
 	}
 	
@@ -354,11 +354,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onCutClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCutClipboard(GtkEntry* entryStruct, Entry entry)
+	extern(C) static void callBackCutClipboard(GtkEntry* entryStruct, Entry _entry)
 	{
-		foreach ( void delegate(Entry) dlg ; entry.onCutClipboardListeners )
+		foreach ( void delegate(Entry) dlg ; _entry.onCutClipboardListeners )
 		{
-			dlg(entry);
+			dlg(_entry);
 		}
 	}
 	
@@ -389,11 +389,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onDeleteFromCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteFromCursor(GtkEntry* entryStruct, GtkDeleteType type, gint count, Entry entry)
+	extern(C) static void callBackDeleteFromCursor(GtkEntry* entryStruct, GtkDeleteType type, gint count, Entry _entry)
 	{
-		foreach ( void delegate(GtkDeleteType, gint, Entry) dlg ; entry.onDeleteFromCursorListeners )
+		foreach ( void delegate(GtkDeleteType, gint, Entry) dlg ; _entry.onDeleteFromCursorListeners )
 		{
-			dlg(type, count, entry);
+			dlg(type, count, _entry);
 		}
 	}
 	
@@ -418,11 +418,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onIconPressListeners ~= dlg;
 	}
-	extern(C) static void callBackIconPress(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event, Entry entry)
+	extern(C) static void callBackIconPress(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event, Entry _entry)
 	{
-		foreach ( void delegate(GtkEntryIconPosition, GdkEvent*, Entry) dlg ; entry.onIconPressListeners )
+		foreach ( void delegate(GtkEntryIconPosition, GdkEvent*, Entry) dlg ; _entry.onIconPressListeners )
 		{
-			dlg(iconPos, event, entry);
+			dlg(iconPos, event, _entry);
 		}
 	}
 	
@@ -447,11 +447,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onIconReleaseListeners ~= dlg;
 	}
-	extern(C) static void callBackIconRelease(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event, Entry entry)
+	extern(C) static void callBackIconRelease(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event, Entry _entry)
 	{
-		foreach ( void delegate(GtkEntryIconPosition, GdkEvent*, Entry) dlg ; entry.onIconReleaseListeners )
+		foreach ( void delegate(GtkEntryIconPosition, GdkEvent*, Entry) dlg ; _entry.onIconReleaseListeners )
 		{
-			dlg(iconPos, event, entry);
+			dlg(iconPos, event, _entry);
 		}
 	}
 	
@@ -478,11 +478,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onInsertAtCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertAtCursor(GtkEntry* entryStruct, gchar* str, Entry entry)
+	extern(C) static void callBackInsertAtCursor(GtkEntry* entryStruct, gchar* str, Entry _entry)
 	{
-		foreach ( void delegate(string, Entry) dlg ; entry.onInsertAtCursorListeners )
+		foreach ( void delegate(string, Entry) dlg ; _entry.onInsertAtCursorListeners )
 		{
-			dlg(Str.toString(str), entry);
+			dlg(Str.toString(str), _entry);
 		}
 	}
 	
@@ -520,11 +520,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkEntry* entryStruct, GtkMovementStep step, gint count, gboolean extendSelection, Entry entry)
+	extern(C) static void callBackMoveCursor(GtkEntry* entryStruct, GtkMovementStep step, gint count, gboolean extendSelection, Entry _entry)
 	{
-		foreach ( void delegate(GtkMovementStep, gint, gboolean, Entry) dlg ; entry.onMoveCursorListeners )
+		foreach ( void delegate(GtkMovementStep, gint, gboolean, Entry) dlg ; _entry.onMoveCursorListeners )
 		{
-			dlg(step, count, extendSelection, entry);
+			dlg(step, count, extendSelection, _entry);
 		}
 	}
 	
@@ -552,11 +552,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onPasteClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackPasteClipboard(GtkEntry* entryStruct, Entry entry)
+	extern(C) static void callBackPasteClipboard(GtkEntry* entryStruct, Entry _entry)
 	{
-		foreach ( void delegate(Entry) dlg ; entry.onPasteClipboardListeners )
+		foreach ( void delegate(Entry) dlg ; _entry.onPasteClipboardListeners )
 		{
-			dlg(entry);
+			dlg(_entry);
 		}
 	}
 	
@@ -582,11 +582,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkMenu* menu, Entry entry)
+	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkMenu* menu, Entry _entry)
 	{
-		foreach ( void delegate(GtkMenu*, Entry) dlg ; entry.onPopulatePopupListeners )
+		foreach ( void delegate(GtkMenu*, Entry) dlg ; _entry.onPopulatePopupListeners )
 		{
-			dlg(menu, entry);
+			dlg(menu, _entry);
 		}
 	}
 	
@@ -612,11 +612,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onPreeditChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackPreeditChanged(GtkEntry* entryStruct, gchar* preedit, Entry entry)
+	extern(C) static void callBackPreeditChanged(GtkEntry* entryStruct, gchar* preedit, Entry _entry)
 	{
-		foreach ( void delegate(string, Entry) dlg ; entry.onPreeditChangedListeners )
+		foreach ( void delegate(string, Entry) dlg ; _entry.onPreeditChangedListeners )
 		{
-			dlg(Str.toString(preedit), entry);
+			dlg(Str.toString(preedit), _entry);
 		}
 	}
 	
@@ -644,11 +644,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onToggleOverwriteListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleOverwrite(GtkEntry* entryStruct, Entry entry)
+	extern(C) static void callBackToggleOverwrite(GtkEntry* entryStruct, Entry _entry)
 	{
-		foreach ( void delegate(Entry) dlg ; entry.onToggleOverwriteListeners )
+		foreach ( void delegate(Entry) dlg ; _entry.onToggleOverwriteListeners )
 		{
-			dlg(entry);
+			dlg(_entry);
 		}
 	}
 	

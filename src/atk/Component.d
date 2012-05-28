@@ -134,11 +134,11 @@ public class Component
 		}
 		onBoundsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackBoundsChanged(AtkComponent* atkcomponentStruct, AtkRectangle* arg1, Component component)
+	extern(C) static void callBackBoundsChanged(AtkComponent* atkcomponentStruct, AtkRectangle* arg1, Component _component)
 	{
-		foreach ( void delegate(AtkRectangle*, Component) dlg ; component.onBoundsChangedListeners )
+		foreach ( void delegate(AtkRectangle*, Component) dlg ; _component.onBoundsChangedListeners )
 		{
-			dlg(arg1, component);
+			dlg(arg1, _component);
 		}
 	}
 	

@@ -310,11 +310,11 @@ public class Border : Boxed
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkStyleContext* stylecontextStruct, Border border)
+	extern(C) static void callBackChanged(GtkStyleContext* stylecontextStruct, Border _border)
 	{
-		foreach ( void delegate(Border) dlg ; border.onChangedListeners )
+		foreach ( void delegate(Border) dlg ; _border.onChangedListeners )
 		{
-			dlg(border);
+			dlg(_border);
 		}
 	}
 	

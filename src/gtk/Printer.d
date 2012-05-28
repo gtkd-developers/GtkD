@@ -158,11 +158,11 @@ public class Printer : ObjectG
 		}
 		onDetailsAcquiredListeners ~= dlg;
 	}
-	extern(C) static void callBackDetailsAcquired(GtkPrinter* printerStruct, gboolean success, Printer printer)
+	extern(C) static void callBackDetailsAcquired(GtkPrinter* printerStruct, gboolean success, Printer _printer)
 	{
-		foreach ( void delegate(gboolean, Printer) dlg ; printer.onDetailsAcquiredListeners )
+		foreach ( void delegate(gboolean, Printer) dlg ; _printer.onDetailsAcquiredListeners )
 		{
-			dlg(success, printer);
+			dlg(success, _printer);
 		}
 	}
 	

@@ -232,11 +232,11 @@ public class Pad : ObjectGst
 		}
 		onHaveDataListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackHaveData(GstPad* padStruct, GstMiniObject* miniObj, Pad pad)
+	extern(C) static gboolean callBackHaveData(GstPad* padStruct, GstMiniObject* miniObj, Pad _pad)
 	{
-		foreach ( bool delegate(MiniObject, Pad) dlg ; pad.onHaveDataListeners )
+		foreach ( bool delegate(MiniObject, Pad) dlg ; _pad.onHaveDataListeners )
 		{
-			if ( dlg(new MiniObject(miniObj), pad) )
+			if ( dlg(new MiniObject(miniObj), _pad) )
 			{
 				return 1;
 			}
@@ -264,11 +264,11 @@ public class Pad : ObjectGst
 		}
 		onLinkedListeners ~= dlg;
 	}
-	extern(C) static void callBackLinked(GstPad* padStruct, GstPad* peer, Pad pad)
+	extern(C) static void callBackLinked(GstPad* padStruct, GstPad* peer, Pad _pad)
 	{
-		foreach ( void delegate(Pad, Pad) dlg ; pad.onLinkedListeners )
+		foreach ( void delegate(Pad, Pad) dlg ; _pad.onLinkedListeners )
 		{
-			dlg(new Pad(peer), pad);
+			dlg(new Pad(peer), _pad);
 		}
 	}
 	
@@ -291,11 +291,11 @@ public class Pad : ObjectGst
 		}
 		onRequestLinkListeners ~= dlg;
 	}
-	extern(C) static void callBackRequestLink(GstPad* padStruct, Pad pad)
+	extern(C) static void callBackRequestLink(GstPad* padStruct, Pad _pad)
 	{
-		foreach ( void delegate(Pad) dlg ; pad.onRequestLinkListeners )
+		foreach ( void delegate(Pad) dlg ; _pad.onRequestLinkListeners )
 		{
-			dlg(pad);
+			dlg(_pad);
 		}
 	}
 	
@@ -320,11 +320,11 @@ public class Pad : ObjectGst
 		}
 		onUnlinkedListeners ~= dlg;
 	}
-	extern(C) static void callBackUnlinked(GstPad* padStruct, GstPad* peer, Pad pad)
+	extern(C) static void callBackUnlinked(GstPad* padStruct, GstPad* peer, Pad _pad)
 	{
-		foreach ( void delegate(Pad, Pad) dlg ; pad.onUnlinkedListeners )
+		foreach ( void delegate(Pad, Pad) dlg ; _pad.onUnlinkedListeners )
 		{
-			dlg(new Pad(peer), pad);
+			dlg(new Pad(peer), _pad);
 		}
 	}
 	

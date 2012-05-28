@@ -178,11 +178,11 @@ public class DBusServer : ObjectG, InitableIF
 		}
 		onNewConnectionListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackNewConnection(GDBusServer* serverStruct, GDBusConnection* connection, DBusServer dBusServer)
+	extern(C) static gboolean callBackNewConnection(GDBusServer* serverStruct, GDBusConnection* connection, DBusServer _dBusServer)
 	{
-		foreach ( bool delegate(GDBusConnection*, DBusServer) dlg ; dBusServer.onNewConnectionListeners )
+		foreach ( bool delegate(GDBusConnection*, DBusServer) dlg ; _dBusServer.onNewConnectionListeners )
 		{
-			if ( dlg(connection, dBusServer) )
+			if ( dlg(connection, _dBusServer) )
 			{
 				return 1;
 			}

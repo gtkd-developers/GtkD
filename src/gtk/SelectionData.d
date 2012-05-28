@@ -48,6 +48,8 @@
  * 	- gdk.Pixbuf
  * 	- gtk.TextBuffer
  * 	- gtk.Widget
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
@@ -72,6 +74,8 @@ private import gdk.Display;
 private import gdk.Pixbuf;
 private import gtk.TextBuffer;
 private import gtk.Widget;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 

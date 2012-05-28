@@ -162,11 +162,11 @@ public class SourceCompletion : ObjectG
 		}
 		onActivateProposalListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateProposal(GtkSourceCompletion* completionStruct, SourceCompletion sourceCompletion)
+	extern(C) static void callBackActivateProposal(GtkSourceCompletion* completionStruct, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(SourceCompletion) dlg ; sourceCompletion.onActivateProposalListeners )
+		foreach ( void delegate(SourceCompletion) dlg ; _sourceCompletion.onActivateProposalListeners )
 		{
-			dlg(sourceCompletion);
+			dlg(_sourceCompletion);
 		}
 	}
 	
@@ -190,11 +190,11 @@ public class SourceCompletion : ObjectG
 		}
 		onHideListeners ~= dlg;
 	}
-	extern(C) static void callBackHide(GtkSourceCompletion* completionStruct, SourceCompletion sourceCompletion)
+	extern(C) static void callBackHide(GtkSourceCompletion* completionStruct, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(SourceCompletion) dlg ; sourceCompletion.onHideListeners )
+		foreach ( void delegate(SourceCompletion) dlg ; _sourceCompletion.onHideListeners )
 		{
-			dlg(sourceCompletion);
+			dlg(_sourceCompletion);
 		}
 	}
 	
@@ -221,11 +221,11 @@ public class SourceCompletion : ObjectG
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkSourceCompletion* completionStruct, GtkScrollStep step, gint num, SourceCompletion sourceCompletion)
+	extern(C) static void callBackMoveCursor(GtkSourceCompletion* completionStruct, GtkScrollStep step, gint num, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(GtkScrollStep, gint, SourceCompletion) dlg ; sourceCompletion.onMoveCursorListeners )
+		foreach ( void delegate(GtkScrollStep, gint, SourceCompletion) dlg ; _sourceCompletion.onMoveCursorListeners )
 		{
-			dlg(step, num, sourceCompletion);
+			dlg(step, num, _sourceCompletion);
 		}
 	}
 	
@@ -253,11 +253,11 @@ public class SourceCompletion : ObjectG
 		}
 		onMovePageListeners ~= dlg;
 	}
-	extern(C) static void callBackMovePage(GtkSourceCompletion* completionStruct, GtkScrollStep step, gint num, SourceCompletion sourceCompletion)
+	extern(C) static void callBackMovePage(GtkSourceCompletion* completionStruct, GtkScrollStep step, gint num, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(GtkScrollStep, gint, SourceCompletion) dlg ; sourceCompletion.onMovePageListeners )
+		foreach ( void delegate(GtkScrollStep, gint, SourceCompletion) dlg ; _sourceCompletion.onMovePageListeners )
 		{
-			dlg(step, num, sourceCompletion);
+			dlg(step, num, _sourceCompletion);
 		}
 	}
 	
@@ -281,11 +281,11 @@ public class SourceCompletion : ObjectG
 		}
 		onPopulateContextListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulateContext(GtkSourceCompletion* completionStruct, GtkSourceCompletionContext* context, SourceCompletion sourceCompletion)
+	extern(C) static void callBackPopulateContext(GtkSourceCompletion* completionStruct, GtkSourceCompletionContext* context, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(SourceCompletionContext, SourceCompletion) dlg ; sourceCompletion.onPopulateContextListeners )
+		foreach ( void delegate(SourceCompletionContext, SourceCompletion) dlg ; _sourceCompletion.onPopulateContextListeners )
 		{
-			dlg(new SourceCompletionContext(context), sourceCompletion);
+			dlg(new SourceCompletionContext(context), _sourceCompletion);
 		}
 	}
 	
@@ -309,11 +309,11 @@ public class SourceCompletion : ObjectG
 		}
 		onShowListeners ~= dlg;
 	}
-	extern(C) static void callBackShow(GtkSourceCompletion* completionStruct, SourceCompletion sourceCompletion)
+	extern(C) static void callBackShow(GtkSourceCompletion* completionStruct, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(SourceCompletion) dlg ; sourceCompletion.onShowListeners )
+		foreach ( void delegate(SourceCompletion) dlg ; _sourceCompletion.onShowListeners )
 		{
-			dlg(sourceCompletion);
+			dlg(_sourceCompletion);
 		}
 	}
 	

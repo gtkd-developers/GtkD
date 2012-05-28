@@ -49,6 +49,8 @@
  * 	- gtk.Style
  * 	- gtk.StyleContext
  * 	- gtk.Widget
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkIconSet* -> IconSet
@@ -75,6 +77,8 @@ private import gtk.IconSource;
 private import gtk.Style;
 private import gtk.StyleContext;
 private import gtk.Widget;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 

@@ -159,11 +159,11 @@ public class ToggleAction : Action
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkToggleAction* toggleactionStruct, ToggleAction toggleAction)
+	extern(C) static void callBackToggled(GtkToggleAction* toggleactionStruct, ToggleAction _toggleAction)
 	{
-		foreach ( void delegate(ToggleAction) dlg ; toggleAction.onToggledListeners )
+		foreach ( void delegate(ToggleAction) dlg ; _toggleAction.onToggledListeners )
 		{
-			dlg(toggleAction);
+			dlg(_toggleAction);
 		}
 	}
 	

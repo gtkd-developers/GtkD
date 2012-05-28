@@ -51,6 +51,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gdk.RGBA;
@@ -202,7 +203,7 @@ public class RGBA
 	 * different representation.
 	 * Returns: A newly allocated text string Since 3.0
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// gchar * gdk_rgba_to_string (const GdkRGBA *rgba);
 		return Str.toString(gdk_rgba_to_string(gdkRGBA));

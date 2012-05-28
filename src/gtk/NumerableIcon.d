@@ -71,9 +71,6 @@ private import gio.EmblemedIcon : GioEmblemedIcon = EmblemedIcon;
 private import gio.Icon;
 private import gio.IconIF;
 private import gtk.StyleContext;
-private import gio.IconT;
-
-
 
 
 /**
@@ -86,7 +83,7 @@ private import gio.IconT;
  * gtk_numerable_icon_set_style_context().
  * $(DDOC_COMMENT example)
  */
-public class NumerableIcon : GioEmblemedIcon, IconIF
+public class NumerableIcon : GioEmblemedIcon
 {
 	
 	/** the main Gtk struct */
@@ -131,10 +128,7 @@ public class NumerableIcon : GioEmblemedIcon, IconIF
 		super.setStruct(obj);
 		gtkNumerableIcon = cast(GtkNumerableIcon*)obj;
 	}
-	
-	// add the Icon capabilities
-	mixin IconT!(GtkNumerableIcon);
-	
+
 	/**
 	 */
 	

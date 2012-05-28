@@ -154,11 +154,11 @@ public class FileMonitor : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GFileMonitor* monitorStruct, GFile* file, GFile* otherFile, GFileMonitorEvent eventType, FileMonitor fileMonitor)
+	extern(C) static void callBackChanged(GFileMonitor* monitorStruct, GFile* file, GFile* otherFile, GFileMonitorEvent eventType, FileMonitor _fileMonitor)
 	{
-		foreach ( void delegate(File, File, GFileMonitorEvent, FileMonitor) dlg ; fileMonitor.onChangedListeners )
+		foreach ( void delegate(File, File, GFileMonitorEvent, FileMonitor) dlg ; _fileMonitor.onChangedListeners )
 		{
-			dlg(new File(file), new File(otherFile), eventType, fileMonitor);
+			dlg(new File(file), new File(otherFile), eventType, _fileMonitor);
 		}
 	}
 	

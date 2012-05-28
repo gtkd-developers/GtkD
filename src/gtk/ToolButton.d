@@ -194,11 +194,11 @@ public class ToolButton : ToolItem
 		}
 		onClickedListeners ~= dlg;
 	}
-	extern(C) static void callBackClicked(GtkToolButton* toolbuttonStruct, ToolButton toolButton)
+	extern(C) static void callBackClicked(GtkToolButton* toolbuttonStruct, ToolButton _toolButton)
 	{
-		foreach ( void delegate(ToolButton) dlg ; toolButton.onClickedListeners )
+		foreach ( void delegate(ToolButton) dlg ; _toolButton.onClickedListeners )
 		{
-			dlg(toolButton);
+			dlg(_toolButton);
 		}
 	}
 	

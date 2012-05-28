@@ -287,11 +287,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkButton* widgetStruct, Button button)
+	extern(C) static void callBackActivate(GtkButton* widgetStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onActivateListeners )
+		foreach ( void delegate(Button) dlg ; _button.onActivateListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -314,11 +314,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onClickedListeners ~= dlg;
 	}
-	extern(C) static void callBackClicked(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackClicked(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onClickedListeners )
+		foreach ( void delegate(Button) dlg ; _button.onClickedListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -343,11 +343,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onEnterListeners ~= dlg;
 	}
-	extern(C) static void callBackEnter(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackEnter(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onEnterListeners )
+		foreach ( void delegate(Button) dlg ; _button.onEnterListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -372,11 +372,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onLeaveListeners ~= dlg;
 	}
-	extern(C) static void callBackLeave(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackLeave(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onLeaveListeners )
+		foreach ( void delegate(Button) dlg ; _button.onLeaveListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -401,11 +401,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onPressedListeners ~= dlg;
 	}
-	extern(C) static void callBackPressed(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackPressed(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onPressedListeners )
+		foreach ( void delegate(Button) dlg ; _button.onPressedListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -430,11 +430,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onReleasedListeners ~= dlg;
 	}
-	extern(C) static void callBackReleased(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackReleased(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onReleasedListeners )
+		foreach ( void delegate(Button) dlg ; _button.onReleasedListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	

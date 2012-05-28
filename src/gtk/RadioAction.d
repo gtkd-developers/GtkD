@@ -167,11 +167,11 @@ public class RadioAction : ToggleAction
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkRadioAction* actionStruct, GtkRadioAction* current, RadioAction radioAction)
+	extern(C) static void callBackChanged(GtkRadioAction* actionStruct, GtkRadioAction* current, RadioAction _radioAction)
 	{
-		foreach ( void delegate(GtkRadioAction*, RadioAction) dlg ; radioAction.onChangedListeners )
+		foreach ( void delegate(GtkRadioAction*, RadioAction) dlg ; _radioAction.onChangedListeners )
 		{
-			dlg(current, radioAction);
+			dlg(current, _radioAction);
 		}
 	}
 	

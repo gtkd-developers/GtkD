@@ -143,11 +143,11 @@ public class CellRendererAccel : CellRendererText
 		}
 		onAccelClearedListeners ~= dlg;
 	}
-	extern(C) static void callBackAccelCleared(GtkCellRendererAccel* accelStruct, gchar* pathString, CellRendererAccel cellRendererAccel)
+	extern(C) static void callBackAccelCleared(GtkCellRendererAccel* accelStruct, gchar* pathString, CellRendererAccel _cellRendererAccel)
 	{
-		foreach ( void delegate(string, CellRendererAccel) dlg ; cellRendererAccel.onAccelClearedListeners )
+		foreach ( void delegate(string, CellRendererAccel) dlg ; _cellRendererAccel.onAccelClearedListeners )
 		{
-			dlg(Str.toString(pathString), cellRendererAccel);
+			dlg(Str.toString(pathString), _cellRendererAccel);
 		}
 	}
 	
@@ -171,11 +171,11 @@ public class CellRendererAccel : CellRendererText
 		}
 		onAccelEditedListeners ~= dlg;
 	}
-	extern(C) static void callBackAccelEdited(GtkCellRendererAccel* accelStruct, gchar* pathString, guint accelKey, GdkModifierType accelMods, guint hardwareKeycode, CellRendererAccel cellRendererAccel)
+	extern(C) static void callBackAccelEdited(GtkCellRendererAccel* accelStruct, gchar* pathString, guint accelKey, GdkModifierType accelMods, guint hardwareKeycode, CellRendererAccel _cellRendererAccel)
 	{
-		foreach ( void delegate(string, guint, GdkModifierType, guint, CellRendererAccel) dlg ; cellRendererAccel.onAccelEditedListeners )
+		foreach ( void delegate(string, guint, GdkModifierType, guint, CellRendererAccel) dlg ; _cellRendererAccel.onAccelEditedListeners )
 		{
-			dlg(Str.toString(pathString), accelKey, accelMods, hardwareKeycode, cellRendererAccel);
+			dlg(Str.toString(pathString), accelKey, accelMods, hardwareKeycode, _cellRendererAccel);
 		}
 	}
 	

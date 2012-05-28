@@ -183,11 +183,11 @@ public class Statusbar : HBox
 		}
 		onTextPoppedListeners ~= dlg;
 	}
-	extern(C) static void callBackTextPopped(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar statusbar)
+	extern(C) static void callBackTextPopped(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar _statusbar)
 	{
-		foreach ( void delegate(guint, string, Statusbar) dlg ; statusbar.onTextPoppedListeners )
+		foreach ( void delegate(guint, string, Statusbar) dlg ; _statusbar.onTextPoppedListeners )
 		{
-			dlg(contextId, Str.toString(text), statusbar);
+			dlg(contextId, Str.toString(text), _statusbar);
 		}
 	}
 	
@@ -210,11 +210,11 @@ public class Statusbar : HBox
 		}
 		onTextPushedListeners ~= dlg;
 	}
-	extern(C) static void callBackTextPushed(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar statusbar)
+	extern(C) static void callBackTextPushed(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar _statusbar)
 	{
-		foreach ( void delegate(guint, string, Statusbar) dlg ; statusbar.onTextPushedListeners )
+		foreach ( void delegate(guint, string, Statusbar) dlg ; _statusbar.onTextPushedListeners )
 		{
-			dlg(contextId, Str.toString(text), statusbar);
+			dlg(contextId, Str.toString(text), _statusbar);
 		}
 	}
 	

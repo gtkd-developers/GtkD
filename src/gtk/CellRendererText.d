@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
@@ -59,6 +60,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import glib.Str;
 
 
 
@@ -143,11 +145,11 @@ public class CellRendererText : CellRenderer
 		}
 		onEditedListeners ~= dlg;
 	}
-	extern(C) static void callBackEdited(GtkCellRendererText* rendererStruct, gchar* path, gchar* newText, CellRendererText cellRendererText)
+	extern(C) static void callBackEdited(GtkCellRendererText* rendererStruct, gchar* path, gchar* newText, CellRendererText _cellRendererText)
 	{
-		foreach ( void delegate(string, string, CellRendererText) dlg ; cellRendererText.onEditedListeners )
+		foreach ( void delegate(string, string, CellRendererText) dlg ; _cellRendererText.onEditedListeners )
 		{
-			dlg(Str.toString(path), Str.toString(newText), cellRendererText);
+			dlg(Str.toString(path), Str.toString(newText), _cellRendererText);
 		}
 	}
 	

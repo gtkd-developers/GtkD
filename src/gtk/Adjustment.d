@@ -148,11 +148,11 @@ public class Adjustment : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, Adjustment adjustment)
+	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, Adjustment _adjustment)
 	{
-		foreach ( void delegate(Adjustment) dlg ; adjustment.onChangedListeners )
+		foreach ( void delegate(Adjustment) dlg ; _adjustment.onChangedListeners )
 		{
-			dlg(adjustment);
+			dlg(_adjustment);
 		}
 	}
 	
@@ -175,11 +175,11 @@ public class Adjustment : ObjectG
 		}
 		onValueChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, Adjustment adjustment)
+	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, Adjustment _adjustment)
 	{
-		foreach ( void delegate(Adjustment) dlg ; adjustment.onValueChangedListeners )
+		foreach ( void delegate(Adjustment) dlg ; _adjustment.onValueChangedListeners )
 		{
-			dlg(adjustment);
+			dlg(_adjustment);
 		}
 	}
 	

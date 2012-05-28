@@ -132,11 +132,11 @@ public class Hypertext
 		}
 		onLinkSelectedListeners ~= dlg;
 	}
-	extern(C) static void callBackLinkSelected(AtkHypertext* atkhypertextStruct, gint arg1, Hypertext hypertext)
+	extern(C) static void callBackLinkSelected(AtkHypertext* atkhypertextStruct, gint arg1, Hypertext _hypertext)
 	{
-		foreach ( void delegate(gint, Hypertext) dlg ; hypertext.onLinkSelectedListeners )
+		foreach ( void delegate(gint, Hypertext) dlg ; _hypertext.onLinkSelectedListeners )
 		{
-			dlg(arg1, hypertext);
+			dlg(arg1, _hypertext);
 		}
 	}
 	

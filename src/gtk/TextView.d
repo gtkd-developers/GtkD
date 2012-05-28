@@ -176,7 +176,7 @@ public class TextView : Container
 	void insertText(string text)
 	{
 		TextBuffer buf = getBuffer();
-		buf.insertAtCursor(text);
+		buf.insertAtCursor(cast(char[])text);
 	}
 	
 	/**
@@ -189,7 +189,7 @@ public class TextView : Container
 		TextBuffer buf = getBuffer();
 		TextIter iter = new TextIter();
 		buf.getEndIter(iter);
-		buf.insert(iter, text);
+		buf.insert(iter, cast(char[])text);
 		if ( ensureVisible )
 		{
 			gdouble within_margin = 0.0;
@@ -227,11 +227,11 @@ public class TextView : Container
 		}
 		onBackspaceListeners ~= dlg;
 	}
-	extern(C) static void callBackBackspace(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackBackspace(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onBackspaceListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onBackspaceListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -258,11 +258,11 @@ public class TextView : Container
 		}
 		onCopyClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCopyClipboard(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackCopyClipboard(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onCopyClipboardListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onCopyClipboardListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -289,11 +289,11 @@ public class TextView : Container
 		}
 		onCutClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCutClipboard(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackCutClipboard(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onCutClipboardListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onCutClipboardListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -325,11 +325,11 @@ public class TextView : Container
 		}
 		onDeleteFromCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteFromCursor(GtkTextView* textViewStruct, GtkDeleteType type, gint count, TextView textView)
+	extern(C) static void callBackDeleteFromCursor(GtkTextView* textViewStruct, GtkDeleteType type, gint count, TextView _textView)
 	{
-		foreach ( void delegate(GtkDeleteType, gint, TextView) dlg ; textView.onDeleteFromCursorListeners )
+		foreach ( void delegate(GtkDeleteType, gint, TextView) dlg ; _textView.onDeleteFromCursorListeners )
 		{
-			dlg(type, count, textView);
+			dlg(type, count, _textView);
 		}
 	}
 	
@@ -356,11 +356,11 @@ public class TextView : Container
 		}
 		onInsertAtCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertAtCursor(GtkTextView* textViewStruct, gchar* str, TextView textView)
+	extern(C) static void callBackInsertAtCursor(GtkTextView* textViewStruct, gchar* str, TextView _textView)
 	{
-		foreach ( void delegate(string, TextView) dlg ; textView.onInsertAtCursorListeners )
+		foreach ( void delegate(string, TextView) dlg ; _textView.onInsertAtCursorListeners )
 		{
-			dlg(Str.toString(str), textView);
+			dlg(Str.toString(str), _textView);
 		}
 	}
 	
@@ -400,11 +400,11 @@ public class TextView : Container
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkTextView* textViewStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextView textView)
+	extern(C) static void callBackMoveCursor(GtkTextView* textViewStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextView _textView)
 	{
-		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextView) dlg ; textView.onMoveCursorListeners )
+		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextView) dlg ; _textView.onMoveCursorListeners )
 		{
-			dlg(step, count, extendSelection, textView);
+			dlg(step, count, extendSelection, _textView);
 		}
 	}
 	
@@ -432,11 +432,11 @@ public class TextView : Container
 		}
 		onMoveViewportListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveViewport(GtkTextView* textViewStruct, GtkScrollStep step, gint count, TextView textView)
+	extern(C) static void callBackMoveViewport(GtkTextView* textViewStruct, GtkScrollStep step, gint count, TextView _textView)
 	{
-		foreach ( void delegate(GtkScrollStep, gint, TextView) dlg ; textView.onMoveViewportListeners )
+		foreach ( void delegate(GtkScrollStep, gint, TextView) dlg ; _textView.onMoveViewportListeners )
 		{
-			dlg(step, count, textView);
+			dlg(step, count, _textView);
 		}
 	}
 	
@@ -464,11 +464,11 @@ public class TextView : Container
 		}
 		onPasteClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackPasteClipboard(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackPasteClipboard(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onPasteClipboardListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onPasteClipboardListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -494,11 +494,11 @@ public class TextView : Container
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkTextView* entryStruct, GtkMenu* menu, TextView textView)
+	extern(C) static void callBackPopulatePopup(GtkTextView* entryStruct, GtkMenu* menu, TextView _textView)
 	{
-		foreach ( void delegate(GtkMenu*, TextView) dlg ; textView.onPopulatePopupListeners )
+		foreach ( void delegate(GtkMenu*, TextView) dlg ; _textView.onPopulatePopupListeners )
 		{
-			dlg(menu, textView);
+			dlg(menu, _textView);
 		}
 	}
 	
@@ -526,11 +526,11 @@ public class TextView : Container
 		}
 		onPreeditChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackPreeditChanged(GtkTextView* textViewStruct, gchar* preedit, TextView textView)
+	extern(C) static void callBackPreeditChanged(GtkTextView* textViewStruct, gchar* preedit, TextView _textView)
 	{
-		foreach ( void delegate(string, TextView) dlg ; textView.onPreeditChangedListeners )
+		foreach ( void delegate(string, TextView) dlg ; _textView.onPreeditChangedListeners )
 		{
-			dlg(Str.toString(preedit), textView);
+			dlg(Str.toString(preedit), _textView);
 		}
 	}
 	
@@ -559,11 +559,11 @@ public class TextView : Container
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectAll(GtkTextView* textViewStruct, gboolean select, TextView textView)
+	extern(C) static void callBackSelectAll(GtkTextView* textViewStruct, gboolean select, TextView _textView)
 	{
-		foreach ( void delegate(gboolean, TextView) dlg ; textView.onSelectAllListeners )
+		foreach ( void delegate(gboolean, TextView) dlg ; _textView.onSelectAllListeners )
 		{
-			dlg(select, textView);
+			dlg(select, _textView);
 		}
 	}
 	
@@ -591,11 +591,11 @@ public class TextView : Container
 		}
 		onSetAnchorListeners ~= dlg;
 	}
-	extern(C) static void callBackSetAnchor(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackSetAnchor(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onSetAnchorListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onSetAnchorListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -621,11 +621,11 @@ public class TextView : Container
 		}
 		onToggleCursorVisibleListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleCursorVisible(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackToggleCursorVisible(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onToggleCursorVisibleListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onToggleCursorVisibleListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -653,11 +653,11 @@ public class TextView : Container
 		}
 		onToggleOverwriteListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleOverwrite(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackToggleOverwrite(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onToggleOverwriteListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onToggleOverwriteListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	

@@ -46,6 +46,8 @@
  * 	- cairo.Pattern
  * 	- gtk.StyleProperties
  * 	- gtk.SymbolicColor
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GtkGradient* -> Gradient
  * 	- GtkStyleProperties* -> StyleProperties
@@ -67,6 +69,8 @@ private import glib.ConstructionException;
 private import cairo.Pattern;
 private import gtk.StyleProperties;
 private import gtk.SymbolicColor;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 

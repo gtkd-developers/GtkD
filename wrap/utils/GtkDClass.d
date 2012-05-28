@@ -540,7 +540,7 @@ public class GtkDClass
 				}
 				else
 				{
-					if ( gtkDParentName == "GioMountOperation" )
+					if ( gtkDParentName == "GioMountOperation" || gtkDParentName == "GioApplication" )
 						text ~= "public "~gtkStruct~"* getGtk"~convParms.clss~"Struct()"~iFaceChar;
 					else if ( gtkDParentName == "GioAppLaunchContext" )
 						text ~= "public "~gtkStruct~"* getGdk"~convParms.clss~"Struct()"~iFaceChar;
@@ -1025,7 +1025,7 @@ public class GtkDClass
 						~")";
 			}
 			text ~= "{";
-			text ~= "	foreach ( "~dlg~" dlg ; "~getClassVar(convParms)~".on"~gtkDSignal~"Listeners )";
+			text ~= "	foreach ( "~dlg~" dlg ; _"~idsToGtkD(getClassVar(convParms), convParms, wrapper.getAliases())~".on"~gtkDSignal~"Listeners )";
 			text ~= "	{";
 			if ( startsWith(dlg, "bool") )
 			{
@@ -1143,6 +1143,7 @@ public class GtkDClass
 
 		if ( "MapEvent" != signalGtkD
 			&& "UnmapEvent" != signalGtkD
+			&& "DestroyEvent" != signalGtkD
 			&& endsWith(signalGtkD, "Event") )
 		{
 			signalGtkD = signalGtkD[0..signalGtkD.length-5];

@@ -43,8 +43,9 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.Menu;
- * 	- gtk.MenuItem;
+ * 	- gtk.Menu
+ * 	- gtk.MenuItem
+ * 	- gtk.Widget
  * structWrap:
  * module aliases:
  * local aliases:
@@ -59,8 +60,9 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.Menu;;
-private import gtk.MenuItem;;
+private import gtk.Menu;
+private import gtk.MenuItem;
+private import gtk.Widget;
 
 
 

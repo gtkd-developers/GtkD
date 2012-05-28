@@ -168,11 +168,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onBracketMatchedListeners ~= dlg;
 	}
-	extern(C) static void callBackBracketMatched(GtkSourceBuffer* bufferStruct, GtkTextIter* iter, GtkSourceBracketMatchType state, SourceBuffer sourceBuffer)
+	extern(C) static void callBackBracketMatched(GtkSourceBuffer* bufferStruct, GtkTextIter* iter, GtkSourceBracketMatchType state, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg ; sourceBuffer.onBracketMatchedListeners )
+		foreach ( void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg ; _sourceBuffer.onBracketMatchedListeners )
 		{
-			dlg(new TextIter(iter), state, sourceBuffer);
+			dlg(new TextIter(iter), state, _sourceBuffer);
 		}
 	}
 	
@@ -194,11 +194,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onHighlightUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* arg1, GtkTextIter* arg2, SourceBuffer sourceBuffer)
+	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* arg1, GtkTextIter* arg2, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; sourceBuffer.onHighlightUpdatedListeners )
+		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; _sourceBuffer.onHighlightUpdatedListeners )
 		{
-			dlg(new TextIter(arg1), new TextIter(arg2), sourceBuffer);
+			dlg(new TextIter(arg1), new TextIter(arg2), _sourceBuffer);
 		}
 	}
 	
@@ -220,11 +220,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onRedoListeners ~= dlg;
 	}
-	extern(C) static void callBackRedo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer sourceBuffer)
+	extern(C) static void callBackRedo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(SourceBuffer) dlg ; sourceBuffer.onRedoListeners )
+		foreach ( void delegate(SourceBuffer) dlg ; _sourceBuffer.onRedoListeners )
 		{
-			dlg(sourceBuffer);
+			dlg(_sourceBuffer);
 		}
 	}
 	
@@ -248,11 +248,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onSourceMarkUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* bufferStruct, GtkTextMark* arg1, SourceBuffer sourceBuffer)
+	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* bufferStruct, GtkTextMark* arg1, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(GtkTextMark*, SourceBuffer) dlg ; sourceBuffer.onSourceMarkUpdatedListeners )
+		foreach ( void delegate(GtkTextMark*, SourceBuffer) dlg ; _sourceBuffer.onSourceMarkUpdatedListeners )
 		{
-			dlg(arg1, sourceBuffer);
+			dlg(arg1, _sourceBuffer);
 		}
 	}
 	
@@ -276,11 +276,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onUndoListeners ~= dlg;
 	}
-	extern(C) static void callBackUndo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer sourceBuffer)
+	extern(C) static void callBackUndo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(SourceBuffer) dlg ; sourceBuffer.onUndoListeners )
+		foreach ( void delegate(SourceBuffer) dlg ; _sourceBuffer.onUndoListeners )
 		{
-			dlg(sourceBuffer);
+			dlg(_sourceBuffer);
 		}
 	}
 	

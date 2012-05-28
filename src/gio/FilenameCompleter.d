@@ -141,11 +141,11 @@ public class FilenameCompleter : ObjectG
 		}
 		onGotCompletionDataListeners ~= dlg;
 	}
-	extern(C) static void callBackGotCompletionData(GFilenameCompleter* arg0Struct, FilenameCompleter filenameCompleter)
+	extern(C) static void callBackGotCompletionData(GFilenameCompleter* arg0Struct, FilenameCompleter _filenameCompleter)
 	{
-		foreach ( void delegate(FilenameCompleter) dlg ; filenameCompleter.onGotCompletionDataListeners )
+		foreach ( void delegate(FilenameCompleter) dlg ; _filenameCompleter.onGotCompletionDataListeners )
 		{
-			dlg(filenameCompleter);
+			dlg(_filenameCompleter);
 		}
 	}
 	

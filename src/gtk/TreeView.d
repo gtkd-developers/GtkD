@@ -285,11 +285,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onColumnsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackColumnsChanged(GtkTreeView* treeViewStruct, TreeView treeView)
+	extern(C) static void callBackColumnsChanged(GtkTreeView* treeViewStruct, TreeView _treeView)
 	{
-		foreach ( void delegate(TreeView) dlg ; treeView.onColumnsChangedListeners )
+		foreach ( void delegate(TreeView) dlg ; _treeView.onColumnsChangedListeners )
 		{
-			dlg(treeView);
+			dlg(_treeView);
 		}
 	}
 	
@@ -312,11 +312,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onCursorChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackCursorChanged(GtkTreeView* treeViewStruct, TreeView treeView)
+	extern(C) static void callBackCursorChanged(GtkTreeView* treeViewStruct, TreeView _treeView)
 	{
-		foreach ( void delegate(TreeView) dlg ; treeView.onCursorChangedListeners )
+		foreach ( void delegate(TreeView) dlg ; _treeView.onCursorChangedListeners )
 		{
-			dlg(treeView);
+			dlg(_treeView);
 		}
 	}
 	
@@ -338,11 +338,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onExpandCollapseCursorRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackExpandCollapseCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, gboolean arg2, gboolean arg3, TreeView treeView)
+	extern(C) static gboolean callBackExpandCollapseCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, gboolean arg2, gboolean arg3, TreeView _treeView)
 	{
-		foreach ( bool delegate(gboolean, gboolean, gboolean, TreeView) dlg ; treeView.onExpandCollapseCursorRowListeners )
+		foreach ( bool delegate(gboolean, gboolean, gboolean, TreeView) dlg ; _treeView.onExpandCollapseCursorRowListeners )
 		{
-			if ( dlg(arg1, arg2, arg3, treeView) )
+			if ( dlg(arg1, arg2, arg3, _treeView) )
 			{
 				return 1;
 			}
@@ -369,11 +369,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMoveCursor(GtkTreeView* treeviewStruct, GtkMovementStep arg1, gint arg2, TreeView treeView)
+	extern(C) static gboolean callBackMoveCursor(GtkTreeView* treeviewStruct, GtkMovementStep arg1, gint arg2, TreeView _treeView)
 	{
-		foreach ( bool delegate(GtkMovementStep, gint, TreeView) dlg ; treeView.onMoveCursorListeners )
+		foreach ( bool delegate(GtkMovementStep, gint, TreeView) dlg ; _treeView.onMoveCursorListeners )
 		{
-			if ( dlg(arg1, arg2, treeView) )
+			if ( dlg(arg1, arg2, _treeView) )
 			{
 				return 1;
 			}
@@ -407,11 +407,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onRowActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowActivated(GtkTreeView* treeViewStruct, GtkTreePath* path, GtkTreeViewColumn* column, TreeView treeView)
+	extern(C) static void callBackRowActivated(GtkTreeView* treeViewStruct, GtkTreePath* path, GtkTreeViewColumn* column, TreeView _treeView)
 	{
-		foreach ( void delegate(TreePath, TreeViewColumn, TreeView) dlg ; treeView.onRowActivatedListeners )
+		foreach ( void delegate(TreePath, TreeViewColumn, TreeView) dlg ; _treeView.onRowActivatedListeners )
 		{
-			dlg(new TreePath(path), new TreeViewColumn(column), treeView);
+			dlg(new TreePath(path), new TreeViewColumn(column), _treeView);
 		}
 	}
 	
@@ -434,11 +434,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onRowCollapsedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowCollapsed(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
+	extern(C) static void callBackRowCollapsed(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView _treeView)
 	{
-		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onRowCollapsedListeners )
+		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onRowCollapsedListeners )
 		{
-			dlg(new TreeIter(iter), new TreePath(path), treeView);
+			dlg(new TreeIter(iter), new TreePath(path), _treeView);
 		}
 	}
 	
@@ -461,11 +461,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onRowExpandedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowExpanded(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
+	extern(C) static void callBackRowExpanded(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView _treeView)
 	{
-		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onRowExpandedListeners )
+		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onRowExpandedListeners )
 		{
-			dlg(new TreeIter(iter), new TreePath(path), treeView);
+			dlg(new TreeIter(iter), new TreePath(path), _treeView);
 		}
 	}
 	
@@ -487,11 +487,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectAll(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackSelectAll(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onSelectAllListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onSelectAllListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -518,11 +518,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onSelectCursorParentListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectCursorParent(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackSelectCursorParent(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onSelectCursorParentListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onSelectCursorParentListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -549,11 +549,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onSelectCursorRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, TreeView treeView)
+	extern(C) static gboolean callBackSelectCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, TreeView _treeView)
 	{
-		foreach ( bool delegate(gboolean, TreeView) dlg ; treeView.onSelectCursorRowListeners )
+		foreach ( bool delegate(gboolean, TreeView) dlg ; _treeView.onSelectCursorRowListeners )
 		{
-			if ( dlg(arg1, treeView) )
+			if ( dlg(arg1, _treeView) )
 			{
 				return 1;
 			}
@@ -580,11 +580,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onStartInteractiveSearchListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackStartInteractiveSearch(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackStartInteractiveSearch(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onStartInteractiveSearchListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onStartInteractiveSearchListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -614,11 +614,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onTestCollapseRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackTestCollapseRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
+	extern(C) static gboolean callBackTestCollapseRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestCollapseRowListeners )
+		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onTestCollapseRowListeners )
 		{
-			if ( dlg(new TreeIter(iter), new TreePath(path), treeView) )
+			if ( dlg(new TreeIter(iter), new TreePath(path), _treeView) )
 			{
 				return 1;
 			}
@@ -648,11 +648,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onTestExpandRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackTestExpandRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
+	extern(C) static gboolean callBackTestExpandRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestExpandRowListeners )
+		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onTestExpandRowListeners )
 		{
-			if ( dlg(new TreeIter(iter), new TreePath(path), treeView) )
+			if ( dlg(new TreeIter(iter), new TreePath(path), _treeView) )
 			{
 				return 1;
 			}
@@ -679,11 +679,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onToggleCursorRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackToggleCursorRow(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackToggleCursorRow(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onToggleCursorRowListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onToggleCursorRowListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -715,11 +715,11 @@ public class TreeView : Container, ScrollableIF
 		}
 		onUnselectAllListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackUnselectAll(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackUnselectAll(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onUnselectAllListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onUnselectAllListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}

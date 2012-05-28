@@ -215,8 +215,8 @@ public class FileChooserDialog : Dialog, FileChooserIF
 		}
 		if ( responses  is  null )
 		{
-			responses ~= ResponseType.GTK_RESPONSE_OK;
-			responses ~= ResponseType.GTK_RESPONSE_CANCEL;
+			responses ~= ResponseType.OK;
+			responses ~= ResponseType.CANCEL;
 		}
 		
 		auto p = gtk_file_chooser_dialog_new(

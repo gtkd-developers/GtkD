@@ -204,11 +204,11 @@ public class IconTheme : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkIconTheme* iconThemeStruct, IconTheme iconTheme)
+	extern(C) static void callBackChanged(GtkIconTheme* iconThemeStruct, IconTheme _iconTheme)
 	{
-		foreach ( void delegate(IconTheme) dlg ; iconTheme.onChangedListeners )
+		foreach ( void delegate(IconTheme) dlg ; _iconTheme.onChangedListeners )
 		{
-			dlg(iconTheme);
+			dlg(_iconTheme);
 		}
 	}
 	

@@ -100,6 +100,7 @@ alias: version versio
 alias: in inn
 alias: continue continu
 alias: align alig
+alias: switch switc
 
 alias: GLIB_SYSDEF_POLLIN =1
 alias: GLIB_SYSDEF_POLLOUT =4

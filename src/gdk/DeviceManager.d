@@ -201,11 +201,11 @@ public class DeviceManager : ObjectG
 		}
 		onDeviceAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackDeviceAdded(GdkDeviceManager* deviceManagerStruct, GdkDevice* device, DeviceManager deviceManager)
+	extern(C) static void callBackDeviceAdded(GdkDeviceManager* deviceManagerStruct, GdkDevice* device, DeviceManager _deviceManager)
 	{
-		foreach ( void delegate(Device, DeviceManager) dlg ; deviceManager.onDeviceAddedListeners )
+		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceAddedListeners )
 		{
-			dlg(new Device(device), deviceManager);
+			dlg(new Device(device), _deviceManager);
 		}
 	}
 	
@@ -236,11 +236,11 @@ public class DeviceManager : ObjectG
 		}
 		onDeviceChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackDeviceChanged(GdkDeviceManager* deviceManagerStruct, GdkDevice* device, DeviceManager deviceManager)
+	extern(C) static void callBackDeviceChanged(GdkDeviceManager* deviceManagerStruct, GdkDevice* device, DeviceManager _deviceManager)
 	{
-		foreach ( void delegate(Device, DeviceManager) dlg ; deviceManager.onDeviceChangedListeners )
+		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceChangedListeners )
 		{
-			dlg(new Device(device), deviceManager);
+			dlg(new Device(device), _deviceManager);
 		}
 	}
 	
@@ -268,11 +268,11 @@ public class DeviceManager : ObjectG
 		}
 		onDeviceRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackDeviceRemoved(GdkDeviceManager* deviceManagerStruct, GdkDevice* device, DeviceManager deviceManager)
+	extern(C) static void callBackDeviceRemoved(GdkDeviceManager* deviceManagerStruct, GdkDevice* device, DeviceManager _deviceManager)
 	{
-		foreach ( void delegate(Device, DeviceManager) dlg ; deviceManager.onDeviceRemovedListeners )
+		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceRemovedListeners )
 		{
-			dlg(new Device(device), deviceManager);
+			dlg(new Device(device), _deviceManager);
 		}
 	}
 	

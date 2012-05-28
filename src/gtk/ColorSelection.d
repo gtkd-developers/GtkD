@@ -150,11 +150,11 @@ public class ColorSelection : VBox
 		}
 		onColorChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct, ColorSelection colorSelection)
+	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct, ColorSelection _colorSelection)
 	{
-		foreach ( void delegate(ColorSelection) dlg ; colorSelection.onColorChangedListeners )
+		foreach ( void delegate(ColorSelection) dlg ; _colorSelection.onColorChangedListeners )
 		{
-			dlg(colorSelection);
+			dlg(_colorSelection);
 		}
 	}
 	

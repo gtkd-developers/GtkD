@@ -164,11 +164,11 @@ public class ToggleToolButton : ToolButton
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkToggleToolButton* toggleToolButtonStruct, ToggleToolButton toggleToolButton)
+	extern(C) static void callBackToggled(GtkToggleToolButton* toggleToolButtonStruct, ToggleToolButton _toggleToolButton)
 	{
-		foreach ( void delegate(ToggleToolButton) dlg ; toggleToolButton.onToggledListeners )
+		foreach ( void delegate(ToggleToolButton) dlg ; _toggleToolButton.onToggledListeners )
 		{
-			dlg(toggleToolButton);
+			dlg(_toggleToolButton);
 		}
 	}
 	

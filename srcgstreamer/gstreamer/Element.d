@@ -303,11 +303,11 @@ public class Element : ObjectGst
 		}
 		onNoMorePadsListeners ~= dlg;
 	}
-	extern(C) static void callBackNoMorePads(GstElement* gstelementStruct, Element element)
+	extern(C) static void callBackNoMorePads(GstElement* gstelementStruct, Element _element)
 	{
-		foreach ( void delegate(Element) dlg ; element.onNoMorePadsListeners )
+		foreach ( void delegate(Element) dlg ; _element.onNoMorePadsListeners )
 		{
-			dlg(element);
+			dlg(_element);
 		}
 	}
 	
@@ -330,11 +330,11 @@ public class Element : ObjectGst
 		}
 		onPadAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GstPad* newPad, Element element)
+	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GstPad* newPad, Element _element)
 	{
-		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
+		foreach ( void delegate(Pad, Element) dlg ; _element.onPadAddedListeners )
 		{
-			dlg(new Pad(newPad), element);
+			dlg(new Pad(newPad), _element);
 		}
 	}
 	
@@ -359,11 +359,11 @@ public class Element : ObjectGst
 		}
 		onPadRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackPadRemoved(GstElement* gstelementStruct, GstPad* oldPad, Element element)
+	extern(C) static void callBackPadRemoved(GstElement* gstelementStruct, GstPad* oldPad, Element _element)
 	{
-		foreach ( void delegate(Pad, Element) dlg ; element.onPadRemovedListeners )
+		foreach ( void delegate(Pad, Element) dlg ; _element.onPadRemovedListeners )
 		{
-			dlg(new Pad(oldPad), element);
+			dlg(new Pad(oldPad), _element);
 		}
 	}
 	

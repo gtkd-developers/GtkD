@@ -159,11 +159,11 @@ public class LinkButton : Button
 		}
 		onActivateLinkListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackActivateLink(GtkLinkButton* buttonStruct, LinkButton linkButton)
+	extern(C) static gboolean callBackActivateLink(GtkLinkButton* buttonStruct, LinkButton _linkButton)
 	{
-		foreach ( bool delegate(LinkButton) dlg ; linkButton.onActivateLinkListeners )
+		foreach ( bool delegate(LinkButton) dlg ; _linkButton.onActivateLinkListeners )
 		{
-			if ( dlg(linkButton) )
+			if ( dlg(_linkButton) )
 			{
 				return 1;
 			}

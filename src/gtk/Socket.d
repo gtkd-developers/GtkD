@@ -38,19 +38,15 @@
  * implements:
  * prefixes:
  * 	- gtk_socket_
- * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gdk.Window
  * structWrap:
- * 	- GdkWindow* -> Window
- * 	- Window -> SomeText
  * module aliases:
  * local aliases:
- * 	- SomeText -> size_t
+ * 	- Window -> gulong
  * overrides:
  */
 
@@ -64,7 +60,6 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gdk.Window;
 
 
 
@@ -179,11 +174,11 @@ public class Socket : Container
 		}
 		onPlugAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, Socket socket)
+	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, Socket _socket)
 	{
-		foreach ( void delegate(Socket) dlg ; socket.onPlugAddedListeners )
+		foreach ( void delegate(Socket) dlg ; _socket.onPlugAddedListeners )
 		{
-			dlg(socket);
+			dlg(_socket);
 		}
 	}
 	
@@ -211,11 +206,11 @@ public class Socket : Container
 		}
 		onPlugRemovedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPlugRemoved(GtkSocket* socketStruct, Socket socket)
+	extern(C) static gboolean callBackPlugRemoved(GtkSocket* socketStruct, Socket _socket)
 	{
-		foreach ( bool delegate(Socket) dlg ; socket.onPlugRemovedListeners )
+		foreach ( bool delegate(Socket) dlg ; _socket.onPlugRemovedListeners )
 		{
-			if ( dlg(socket) )
+			if ( dlg(_socket) )
 			{
 				return 1;
 			}
@@ -254,10 +249,10 @@ public class Socket : Container
 	 * Params:
 	 * window = the Window of a client participating in the XEMBED protocol.
 	 */
-	public void addId(size_t window)
+	public void addId(gulong window)
 	{
 		// void gtk_socket_add_id (GtkSocket *socket_,  Window window);
-		gtk_socket_add_id(gtkSocket, (window is null) ? null : window.getSomeTextStruct());
+		gtk_socket_add_id(gtkSocket, window);
 	}
 	
 	/**
@@ -268,15 +263,10 @@ public class Socket : Container
 	 * before you can make this call.
 	 * Returns: the window ID for the socket
 	 */
-	public size_t getId()
+	public gulong getId()
 	{
 		// Window gtk_socket_get_id (GtkSocket *socket_);
-		auto p = gtk_socket_get_id(gtkSocket);
-		if(p is null)
-		{
-			return null;
-		}
-		return new SomeText(cast(Window) p);
+		return gtk_socket_get_id(gtkSocket);
 	}
 	
 	/**
@@ -291,14 +281,9 @@ public class Socket : Container
 	 * added to the socket.
 	 * Returns: the window of the plug if available, or NULL. [transfer none]
 	 */
-	public Window getPlugWindow()
+	public GdkWindow* getPlugWindow()
 	{
 		// GdkWindow * gtk_socket_get_plug_window (GtkSocket *socket_);
-		auto p = gtk_socket_get_plug_window(gtkSocket);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Window(cast(GdkWindow*) p);
+		return gtk_socket_get_plug_window(gtkSocket);
 	}
 }
