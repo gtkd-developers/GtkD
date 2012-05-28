@@ -142,16 +142,6 @@ public class PixbufFormat
 	}
 	
 	/**
-	 * Description
-	 * The gdk-pixbuf; library provides a simple mechanism for loading
-	 * an image from a file in synchronous fashion. This means that the
-	 * library takes control of the application while the file is being
-	 * loaded; from the user's point of view, the application will block
-	 * until the image is done loading.
-	 * This interface can be used by applications in which blocking is
-	 * acceptable while an image is being loaded. It can also be used to
-	 * load small images in general. Applications that need progressive
-	 * loading can use the GdkPixbufLoader functionality instead.
 	 */
 	
 	/**
@@ -324,25 +314,5 @@ public class PixbufFormat
 	{
 		// gchar * gdk_pixbuf_format_get_license (GdkPixbufFormat *format);
 		return Str.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat));
-	}
-	
-	/**
-	 * Parses an image file far enough to determine its format and size.
-	 * Since 2.4
-	 * Params:
-	 * filename = The name of the file to identify.
-	 * width = Return location for the width of the image, or NULL
-	 * height = Return location for the height of the image, or NULL
-	 * Returns: A GdkPixbufFormat describing the image format of the file or NULL if the image format wasn't recognized. The return value is owned by GdkPixbuf and should not be freed.
-	 */
-	public static PixbufFormat getFileInfo(string filename, out int width, out int height)
-	{
-		// GdkPixbufFormat * gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
-		auto p = gdk_pixbuf_get_file_info(Str.toStringz(filename), &width, &height);
-		if(p is null)
-		{
-			return null;
-		}
-		return new PixbufFormat(cast(GdkPixbufFormat*) p);
 	}
 }

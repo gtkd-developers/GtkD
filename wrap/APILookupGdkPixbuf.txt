@@ -278,18 +278,5 @@ structWrap: GdkPixbuf* Pixbuf
 import: glib.ListSG
 structWrap: GSList* ListSG
 import: glib.Str
-openFile: PixbufFormat
-
-file: gdk-pixbuf-File-Loading.html
-prefix: gdk_pixbuf_
-out: gdk_pixbuf_get_file_info width
-out: gdk_pixbuf_get_file_info height
-strictPrefix: Y
-
-noprefix: gdk_pixbuf_new_from_file
-noprefix: gdk_pixbuf_new_from_file_at_size
-noprefix: gdk_pixbuf_new_from_file_at_scale
-noprefix: gdk_pixbuf_new_from_stream
-noprefix: gdk_pixbuf_new_from_stream_at_scale
-closeFile:  PixbufFormat
+outFile: PixbufFormat
 

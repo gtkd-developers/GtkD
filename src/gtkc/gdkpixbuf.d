@@ -95,7 +95,6 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_pixbuf_format_is_disabled, \"gdk_pixbuf_format_is_disabled\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_set_disabled, \"gdk_pixbuf_format_set_disabled\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_get_license, \"gdk_pixbuf_format_get_license\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_get_file_info, \"gdk_pixbuf_get_file_info\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 }");
 
 mixin( gshared ~"extern(C)
@@ -160,7 +159,6 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkPixbufFormat* format) c_gdk_pixbuf_format_is_disabled;
 	void function(GdkPixbufFormat* format, gboolean disabled) c_gdk_pixbuf_format_set_disabled;
 	gchar* function(GdkPixbufFormat* format) c_gdk_pixbuf_format_get_license;
-	GdkPixbufFormat* function(gchar* filename, gint* width, gint* height) c_gdk_pixbuf_get_file_info;
 }");
 
 // gdkpixbuf.Pixdata
@@ -223,4 +221,3 @@ alias c_gdk_pixbuf_format_is_scalable  gdk_pixbuf_format_is_scalable;
 alias c_gdk_pixbuf_format_is_disabled  gdk_pixbuf_format_is_disabled;
 alias c_gdk_pixbuf_format_set_disabled  gdk_pixbuf_format_set_disabled;
 alias c_gdk_pixbuf_format_get_license  gdk_pixbuf_format_get_license;
-alias c_gdk_pixbuf_get_file_info  gdk_pixbuf_get_file_info;
