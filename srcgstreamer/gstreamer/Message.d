@@ -55,6 +55,7 @@
  * 	- gst_message_new_error
  * 	- gst_message_new_info
  * 	- gst_message_new_latency
+ * 	- gst_message_new_async_start
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -374,6 +375,21 @@ public class Message
 	}
 	
 	/**
+	 * This message is posted by elements when they start an ASYNC state change.
+	 * new_base_time is set to TRUE when the element lost its state when it was
+	 * PLAYING.
+	 * Params:
+	 * src = The object originating the message.
+	 * newBaseTime = if a new base_time should be set on the element
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newAsyncStart(ObjectGst src, int newBaseTime)
+	{
+		// GstMessage* gst_message_new_async_start (GstObject *src,  gboolean new_base_time);
+		return new Message(cast(GstMessage*)gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime));
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -577,26 +593,6 @@ public class Message
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_message_new_duration((src is null) ? null : src.getObjectGstStruct(), format, duration)");
-		}
-		this(cast(GstMessage*) p);
-	}
-	
-	/**
-	 * This message is posted by elements when they start an ASYNC state change.
-	 * new_base_time is set to TRUE when the element lost its state when it was
-	 * PLAYING.
-	 * Params:
-	 * src = The object originating the message.
-	 * newBaseTime = if a new base_time should be set on the element
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (ObjectGst src, int newBaseTime)
-	{
-		// GstMessage* gst_message_new_async_start (GstObject *src,  gboolean new_base_time);
-		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime)");
 		}
 		this(cast(GstMessage*) p);
 	}
