@@ -1031,6 +1031,7 @@ nocode: gst_message_new_eos
 nocode: gst_message_new_error
 nocode: gst_message_new_info
 nocode: gst_message_new_latency
+nocode: gst_message_new_async_start
 
 #This is a way to get the type of the message:
 code: start
@@ -1263,6 +1264,21 @@ code: start
 	{
 		// GstMessage* gst_message_new_latency (GstObject *src);
 		return new Message(cast(GstMessage*)gst_message_new_latency((src is null) ? null : src.getObjectGstStruct()) );
+	}
+
+	/**
+	 * This message is posted by elements when they start an ASYNC state change.
+	 * new_base_time is set to TRUE when the element lost its state when it was
+	 * PLAYING.
+	 * Params:
+	 * src = The object originating the message.
+	 * newBaseTime = if a new base_time should be set on the element
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newAsyncStart(ObjectGst src, int newBaseTime)
+	{
+		// GstMessage* gst_message_new_async_start (GstObject *src,  gboolean new_base_time);
+		return new Message(cast(GstMessage*)gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime));
 	}
 code: end
 outFile: Message
