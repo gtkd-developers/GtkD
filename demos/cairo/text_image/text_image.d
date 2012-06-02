@@ -15,7 +15,6 @@ import cairo.Surface;
 import cairo.ImageSurface;
 
 import gtk.Widget;
-import gdk.Drawable;
 import gtk.DrawingArea;
 
 class CairoText : DrawingArea
@@ -28,33 +27,14 @@ public:
 		image = ImageSurface.createFromPng("gtkD_logo.png");
 	
 		//Attach our expose callback, which will draw the window.
-		addOnExpose(&exposeCallback);
+		addOnDraw(&drawCallback);
 	}
 
 protected:
 	//Override default signal handler:
-	bool exposeCallback(GdkEventExpose* event, Widget widget)
+	bool drawCallback(Context cr, Widget widget)
 	{
 		// This is where we draw on the window
-
-		Drawable dr = getWindow();
-
-		int width;
-		int height;
-
-		dr.getSize(width, height);
-
-		auto cr = new Context (dr);
-
-		if (event)
-		{
-			// clip to the area indicated by the expose event so that we only redraw
-			// the portion of the window that needs to be redrawn
-			cr.rectangle(event.area.x, event.area.y,
-				event.area.width, event.area.height);
-			cr.clip();
-		}
-
 		cr.translate(10, 10);
 		cr.setLineWidth(m_lineWidth);
 
@@ -87,11 +67,10 @@ protected:
 		font_options.setAntialias(cairo_antialias_t.GRAY);
 
 		cr.setFontOptions(font_options);
-		
-		
+
 		//Text rendering
 		cr.save();
-		
+
 			cr.moveTo(75.0, 75.0);
 			cr.setSourceRgba(1.0, 1.0, 1.0, 0.5);
 			
@@ -133,9 +112,6 @@ protected:
 			cr.paint();
 			//delete image;
 		cr.restore();
-			
-			
-		delete cr;
 
 		return true;
 	}

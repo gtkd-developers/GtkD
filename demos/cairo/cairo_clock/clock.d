@@ -37,16 +37,12 @@ else
 	import std.date;
 }
 
-import gtk.Timeout;
+import glib.Timeout;
 
 import cairo.Context;
 import cairo.Surface;
 
 import gtk.Widget;
-import gdk.Drawable;
-import gdk.Window;
-import gdk.Rectangle;
-
 import gtk.DrawingArea;
 
 class Clock : DrawingArea
@@ -55,12 +51,12 @@ public:
 	this()
 	{
 		//Attach our expose callback, which will draw the window.
-		addOnExpose(&exposeCallback);
+		addOnDraw(&drawCallback);
 	}
 
 protected:
 	//Override default signal handler:
-	bool exposeCallback(GdkEventExpose* event, Widget widget)
+	bool drawCallback(Context cr, Widget widget)
 	{
 		if ( m_timeout is null )
 		{
@@ -70,27 +66,13 @@ protected:
 
 		// This is where we draw on the window
 
-		Drawable dr = getWindow();
+		GtkAllocation size;
 
-		int width;
-		int height;
-
-		dr.getSize(width, height);
-
-		auto cr = new Context (dr);
-
-		if (event)
-		{
-			// clip to the area indicated by the expose event so that we only redraw
-			// the portion of the window that needs to be redrawn
-			cr.rectangle(event.area.x, event.area.y,
-				event.area.width, event.area.height);
-			cr.clip();
-		}
+		getAllocation(size);
 
 		// scale to unit square and translate (0, 0) to be (0.5, 0.5), i.e. the
 		// center of the window
-		cr.scale(width, height);
+		cr.scale(size.width, size.height);
 		cr.translate(0.5, 0.5);
 		cr.setLineWidth(m_lineWidth);
 
@@ -210,49 +192,18 @@ protected:
 		cr.arc(0, 0, m_lineWidth / 3.0, 0, 2 * PI);
 		cr.fill();
 
-		delete cr;
-
 		return true;
 	}
 
 	bool onSecondElapsed()
 	{
 		//force our program to redraw the entire clock once per every second.
+		GtkAllocation area;
+		getAllocation(area);
 
-		Window win = getWindow();
-
-		if(win)
-		{
-
-			int width;
-			int height;
-
-			win.getSize(width, height);
-
-			//I think this should be also made possible:
-			//width = win.getWidth();
-			//height = win.getHeight();
-
-			//And there should be a constructor like: Rectangle( int x, int y, int width, int height );
-			//because at the moment we have to do this to use a Rectangle, and that it needed for
-			//invalidateRect. The easiest way would be a new invalidate( int x, int y, int width, int height)
-			//that would do everything that we're doing here. And maybe also invalidateAll();
-			GdkRectangle* grect = new GdkRectangle();
-
-			grect.x = 0;
-			grect.y = 0;
-			grect.width = width;
-			grect.height = height;
-
-			//Rectangle r = new Rectangle(0, 0, width, height);
-			Rectangle r = new Rectangle(grect);
-
-			win.invalidateRect(r, false);
-		}
-		//else writefln("The Gdk.Window doesn't exist. Something went wrong in clock.d onSecondsElapsed()");
-
+		queueDrawArea(area.x, area.y, area.width, area.height);
+		
 		return true;
-
 	}
 
 	double m_radius = 0.40;
