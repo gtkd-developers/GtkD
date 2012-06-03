@@ -8,6 +8,7 @@ import gtk.Label;
 import gtk.ImageMenuItem;
 import gtk.Widget;
 import gtk.AccelGroup;
+import gdk.Event;
 
 class ExampleWindow : MainWindow
 {
@@ -33,16 +34,21 @@ class ExampleWindow : MainWindow
 		showAll();
 	}
 
-	public bool onButtonPress(GdkEventButton* event, Widget widget)
+	public bool onButtonPress(Event event, Widget widget)
 	{
-		if(event.type == GdkEventType.BUTTON_PRESS && event.button == 3)
+		//TODO: Expand gdk.event to make this easyer.
+		if ( event.getEventStruct().type == GdkEventType.BUTTON_PRESS )
 		{
-			menu.showAll();
-			menu.popup(event.button, event.time);
+			GdkEventButton* buttonEvent = cast(GdkEventButton*)event.getEventStruct();
 
-			return true;
+			if ( buttonEvent.button == 3)
+			{
+				menu.showAll();
+				menu.popup(buttonEvent.button, buttonEvent.time);
+
+				return true;
+			}
 		}
-
 		return false;
 	}
 }

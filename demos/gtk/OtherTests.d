@@ -28,7 +28,7 @@ private import gtk.VBox;
 private import gtk.Main;
 private import gtk.Image;
 
-private import gtk.Timeout;
+private import glib.Timeout;
 private import gdk.Event;
 
 version(Tango){
@@ -42,6 +42,8 @@ version(Tango){
 else{
     import std.stdio;
 }
+
+import core.stdc.stdlib;
 
 public class OtherTests : Window
 {
@@ -120,7 +122,7 @@ public class OtherTests : Window
 
 	void onDialogResponse(int response, Dialog dlg)
 	{
-		if(response == GtkResponseType.GTK_RESPONSE_CANCEL)
+		if(response == ResponseType.CANCEL)
 			dlg.destroy();
 	}
 
@@ -128,7 +130,7 @@ public class OtherTests : Window
 	{
 		destroy();
 		writefln("Exit by request from HelloWorld");
-		Main.exit(0);
+		exit(0);
 		return false;
 	}
 

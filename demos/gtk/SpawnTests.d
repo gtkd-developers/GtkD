@@ -126,43 +126,17 @@ class SpawnWindow : MainWindow
 
 	private bool exec(Spawn spawn)
 	{
+		//TODO: These functions should accept a string.
+		viewOutput.getBuffer().setText(cast(char[])"");
+		viewError.getBuffer().setText(cast(char[])"");
 
-		viewOutput.getBuffer().setText("");
-		viewError.getBuffer().setText("");
-
-		//int result = spawn.execAsyncWithPipes();
-
-		//int outCount;
-		//int errCount;
-
-		//TextBuffer bufferOutput = viewOutput.getBuffer();
 		TextBuffer bufferError = viewError.getBuffer();
-		//TextIter iterOut = new TextIter();
 		TextIter iterError = new TextIter();
 
-                /* Apparently the following code is obsolete
-                 * and should not compile. Delegates and commandLineSync should
-                 * be used instead.
-                 */
-		/*while ( !spawn.endOfOutput() )
-		{
-			bufferOutput.getEndIter(iterOut);
-			//viewOutput.getBuffer().insert(iterOut, spawn.readLine()~"\n");
-                        viewOutput.getBuffer().insert(iterOut, spawn.getOutputString()~"\n");
-
-		}
-
-		while ( !spawn.endOfError() )
-		{
-			bufferError.getEndIter(iterError);
-			//viewError.getBuffer().insert(iterError, spawn.readLineError()~"\n");
-                        viewError.getBuffer().insert(iterError, spawn.getErrorString()~"\n");
-		}*/
-
-                int result = spawn.commandLineSync(&childEnded, &syncOutput, &syncError);
+        int result = spawn.commandLineSync(&childEnded, &syncOutput, &syncError);
 
 		bufferError.getEndIter(iterError);
-		viewError.getBuffer().insert(iterError, spawn.getLastError()~"\n");
+		viewError.getBuffer().insert(iterError, cast(char[])spawn.getLastError()~"\n");
 
 		writefln("exit loop");
 
@@ -174,7 +148,7 @@ class SpawnWindow : MainWindow
         {
             TextIter iter = new TextIter();
             viewOutput.getBuffer().getEndIter(iter);
-            viewOutput.getBuffer().insert(iter, line~"\n");
+            viewOutput.getBuffer().insert(iter, cast(char[])line~"\n");
             return true;
         }
 
@@ -182,7 +156,7 @@ class SpawnWindow : MainWindow
         {
             TextIter iter = new TextIter();
             viewError.getBuffer().getEndIter(iter);
-            viewError.getBuffer().insert(iter, line~"\n");
+            viewError.getBuffer().insert(iter, cast(char[])line~"\n");
             return true;
         }
 
@@ -195,12 +169,12 @@ class SpawnWindow : MainWindow
 			if ( count > 0 ) t ~= " ";
 			t ~= arg;
 		}
-		inBuffer.setText(t);
+		inBuffer.setText(cast(char[])t);
 	}
 
 	public void setInput(string arg)
 	{
-		viewInput.getBuffer().setText(arg);
+		viewInput.getBuffer().setText(cast(char[])arg);
 	}
 
 
