@@ -51,8 +51,8 @@ class SpawnWindow : MainWindow
 	TextView viewInput;
 	TextView viewOutput;
 	TextView viewError;
-        TextIter iterOut;
-        TextIter iterError;
+	TextIter iterOut;
+	TextIter iterError;
 
 	this()
 	{
@@ -82,12 +82,11 @@ class SpawnWindow : MainWindow
 
 	private void execInput(Button button)
 	{
-        version(Tango){
-          string[] args = split( viewInput.getBuffer().getText(), " " );
-        }
-        else{
-		  string[] args = std.string.split(viewInput.getBuffer().getText());
-        }
+		version(Tango)
+			string[] args = split( viewInput.getBuffer().getText(), " " );
+        else
+			string[] args = std.string.split(viewInput.getBuffer().getText());
+
 		exec(args);
 	}
 
@@ -98,8 +97,7 @@ class SpawnWindow : MainWindow
 			writefln("[%s] >%s<", i, arg);
 		}
 		Spawn spawn = new Spawn(args[0]);
-		//spawn.addChildWatch(&childEnded);
-                //spawn.commandLineSync(&childEnded, &syncOutput, &syncError);
+
 		if (args.length > 1 )
 		{
 			for( int i=1 ; i<args.length ; i++ )
@@ -108,21 +106,14 @@ class SpawnWindow : MainWindow
 				spawn.addParm(args[i]);
 			}
 		}
-		//spawn.addParm(null);
 		return exec(spawn);
 	}
 
-        /*
-	void childEnded(int process, int status)
+	bool childEnded(Spawn spawn)
 	{
-		writefln("process %s ended with status %s", process, status);
-	}*/
-        bool childEnded(Spawn spawn)
-        {
-
-                writefln("process %s ended with status %s", viewInput.getBuffer().getText(),spawn.getExitStatus());
-                return true; //gotta check this.
-        }
+		writefln("process %s ended with status %s", viewInput.getBuffer().getText(),spawn.getExitStatus());
+		return true; //gotta check this.
+	}
 
 	private bool exec(Spawn spawn)
 	{
@@ -144,21 +135,21 @@ class SpawnWindow : MainWindow
 		return true;
 	}
 
-        public bool syncOutput(string line)
-        {
-            TextIter iter = new TextIter();
-            viewOutput.getBuffer().getEndIter(iter);
-            viewOutput.getBuffer().insert(iter, cast(char[])line~"\n");
-            return true;
-        }
+	public bool syncOutput(string line)
+	{
+		TextIter iter = new TextIter();
+		viewOutput.getBuffer().getEndIter(iter);
+		viewOutput.getBuffer().insert(iter, cast(char[])line~"\n");
+		return true;
+	}
 
-        public bool syncError(string line)
-        {
-            TextIter iter = new TextIter();
-            viewError.getBuffer().getEndIter(iter);
-            viewError.getBuffer().insert(iter, cast(char[])line~"\n");
-            return true;
-        }
+	public bool syncError(string line)
+	{
+		TextIter iter = new TextIter();
+		viewError.getBuffer().getEndIter(iter);
+		viewError.getBuffer().insert(iter, cast(char[])line~"\n");
+		return true;
+	}
 
 	public void setInput(string[] args)
 	{
@@ -176,8 +167,6 @@ class SpawnWindow : MainWindow
 	{
 		viewInput.getBuffer().setText(cast(char[])arg);
 	}
-
-
 }
 
 void main(string[] args)

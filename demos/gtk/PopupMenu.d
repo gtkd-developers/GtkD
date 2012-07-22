@@ -36,10 +36,9 @@ class ExampleWindow : MainWindow
 
 	public bool onButtonPress(Event event, Widget widget)
 	{
-		//TODO: Expand gdk.event to make this easyer.
-		if ( event.getEventStruct().type == GdkEventType.BUTTON_PRESS )
+		if ( event.type == EventType.BUTTON_PRESS )
 		{
-			GdkEventButton* buttonEvent = cast(GdkEventButton*)event.getEventStruct();
+			GdkEventButton* buttonEvent = event.button;
 
 			if ( buttonEvent.button == 3)
 			{

@@ -115,6 +115,122 @@ public class Event
 		this.gdkEvent = gdkEvent;
 	}
 	
+	/**
+	 * Specifies the type of the event.
+	 */
+	public EventType type()
+	{
+		return gdkEvent.type;
+	}
+	
+	/** Get a specific event. */
+	public GdkEventAny* any()
+	{
+		return cast(GdkEventAny*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventExpose* expose()
+	{
+		return cast(GdkEventExpose*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventVisibility* visibility()
+	{
+		return cast(GdkEventVisibility*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventMotion* motion()
+	{
+		return cast(GdkEventMotion*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventButton* button()
+	{
+		return cast(GdkEventButton*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventScroll* scroll()
+	{
+		return cast(GdkEventScroll*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventKey* key()
+	{
+		return cast(GdkEventKey*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventCrossing* crossing()
+	{
+		return cast(GdkEventCrossing*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventFocus* focus()
+	{
+		return cast(GdkEventFocus*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventConfigure* configure()
+	{
+		return cast(GdkEventConfigure*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventProperty* property()
+	{
+		return cast(GdkEventProperty*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventSelection* selection()
+	{
+		return cast(GdkEventSelection*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventOwnerChange* ownerChange()
+	{
+		return cast(GdkEventOwnerChange*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventProximity* proximity()
+	{
+		return cast(GdkEventProximity*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventDND* dnd()
+	{
+		return cast(GdkEventDND*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventWindowState* windowState()
+	{
+		return cast(GdkEventWindowState*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventSetting* setting()
+	{
+		return cast(GdkEventSetting*)gdkEvent;
+	}
+	
+	/** ditto */
+	public GdkEventGrabBroken* grabBroken()
+	{
+		return cast(GdkEventGrabBroken*)gdkEvent;
+	}
+	
 	/** */
 	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
