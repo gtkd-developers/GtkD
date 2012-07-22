@@ -1,7 +1,5 @@
 module pangocairo;
 
-import gdk.Drawable;
-
 import gtk.DrawingArea;
 import gtk.Main;
 import gtk.MainWindow;
@@ -33,19 +31,10 @@ class PangoText : DrawingArea
 
 	public this()
 	{
-		addOnExpose(&exposeCallback);
+		addOnDraw(&drawText);
 	}
 
-	//Override default signal handler:
-	protected bool exposeCallback(GdkEventExpose* event, Widget widget)
-	{
-		// This is where we draw on the window
-		drawText( new Context( getWindow() ));
-
-		return true;
-	}
-
-	public void drawText (Context cr)
+	public bool drawText (Context cr, Widget widget)
 	{
 		PgLayout layout;
 		PgFontDescription desc;
@@ -85,6 +74,8 @@ class PangoText : DrawingArea
 
 			cr.restore();
 		}
+
+		return true;
 	}
 }
 
