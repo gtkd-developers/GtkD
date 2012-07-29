@@ -989,7 +989,7 @@ class TestWindow : MainWindow
 				{
 					if ( t.isRunning() )
 					{
-						t.sleep(100);
+						t.sleep(dur!("hnsecs")(100));
 					}
 				}
 				else switch( t.getState() )

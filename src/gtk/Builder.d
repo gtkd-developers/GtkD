@@ -471,12 +471,12 @@ public class Builder : ObjectG
 		}
 		
 		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
-		ClassInfo ci = findClassInfo(type);
+		ClassInfo ci = cast(ClassInfo)findClassInfo(type);
 		
 		//Gobject and Gio types both start with g, so try both.
 		if(ci is null && startsWith(type, "gobject"))
 		{
-			ci = findClassInfo("gio"~ type[7..$]);
+			ci = cast(ClassInfo)findClassInfo("gio"~ type[7..$]);
 		}
 		
 		if(ci is null)
