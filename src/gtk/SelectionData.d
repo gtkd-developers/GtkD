@@ -252,10 +252,10 @@ public class SelectionData
 	 * str = a UTF-8 string
 	 * Returns: TRUE if the selection was successfully set, otherwise FALSE.
 	 */
-	public int dataSetText(char[] str)
+	public int dataSetText(string str)
 	{
 		// gboolean gtk_selection_data_set_text (GtkSelectionData *selection_data,  const gchar *str,  gint len);
-		return gtk_selection_data_set_text(gtkSelectionData, str.ptr, cast(int) str.length);
+		return gtk_selection_data_set_text(gtkSelectionData, Str.toStringz(str), cast(int) str.length);
 	}
 	
 	/**

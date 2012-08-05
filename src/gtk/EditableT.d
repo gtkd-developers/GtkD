@@ -253,10 +253,10 @@ public template EditableT(TStruct)
 	 * newText = the text to append
 	 * position = location of the position text will be inserted at. [inout]
 	 */
-	public void insertText(char[] newText, ref int position)
+	public void insertText(string newText, ref int position)
 	{
 		// void gtk_editable_insert_text (GtkEditable *editable,  const gchar *new_text,  gint new_text_length,  gint *position);
-		gtk_editable_insert_text(getEditableTStruct(), newText.ptr, cast(int) newText.length, &position);
+		gtk_editable_insert_text(getEditableTStruct(), Str.toStringz(newText), cast(int) newText.length, &position);
 	}
 	
 	/**

@@ -165,12 +165,12 @@ public class TlsCertificate : ObjectG
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] data)
+	public this (string data)
 	{
 		// GTlsCertificate * g_tls_certificate_new_from_pem (const gchar *data,  gssize length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_tls_certificate_new_from_pem(data.ptr, cast(int) data.length, &err);
+		auto p = g_tls_certificate_new_from_pem(Str.toStringz(data), cast(int) data.length, &err);
 		
 		if (err !is null)
 		{
@@ -179,7 +179,7 @@ public class TlsCertificate : ObjectG
 		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_tls_certificate_new_from_pem(data.ptr, cast(int) data.length, &err)");
+			throw new ConstructionException("null returned by g_tls_certificate_new_from_pem(Str.toStringz(data), cast(int) data.length, &err)");
 		}
 		this(cast(GTlsCertificate*) p);
 	}

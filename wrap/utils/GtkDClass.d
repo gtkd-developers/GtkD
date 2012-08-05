@@ -954,11 +954,10 @@ public class GtkDClass
 					comments ~= "*/";
 				}
 
-				Funct fun;
-				fun.init(funct, convParms);
+				Funct fun = Funct(funct, convParms, wrapper.getAliases());
 
 				string gtkDSignal = signalNameToGtkD(signalName);
-				string delegateDeclaration = fun.getDelegateDeclaration(convParms, 1);
+				string delegateDeclaration = fun.getDelegateDeclaration(1);
 
 				// Removed function "addSignalImports" and replaced it 
 				// with simple "if" block to make sure class local imports
@@ -1016,13 +1015,13 @@ public class GtkDClass
 			if ( startsWith(dlg, "bool") )
 			{
 				text ~= "extern(C) static gboolean callBack"~gtkDSignal~"("
-						~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
+						~fun.getCallbackParameters()
 						~")";
 			}
 			else
 			{
 				text ~= "extern(C) static void callBack"~gtkDSignal~"("
-						~ std.array.replace(fun.getCallbackParameters(0, convParms, wrapper.getAliases()), "string", "str")
+						~ std.array.replace(fun.getCallbackParameters(), "string", "str")
 						~")";
 			}
 			text ~= "{";
@@ -1030,7 +1029,7 @@ public class GtkDClass
 			text ~= "	{";
 			if ( startsWith(dlg, "bool") )
 			{
-				text ~= "		if ( dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~") )";
+				text ~= "		if ( dlg("~fun.getCallbackVars()~") )";
 				text ~= "		{";
 				text ~= "			return 1;";
 				text ~= "		}";
@@ -1040,7 +1039,7 @@ public class GtkDClass
 			}
 			else
 			{
-				text ~= "		dlg("~ std.array.replace(fun.getCallbackVars(convParms, wrapper.getAliases()), "string", "str")~");";
+				text ~= "		dlg("~ std.array.replace(fun.getCallbackVars(), "string", "str")~");";
 				text ~= "	}";
 			}
 			text ~= "}";
@@ -2012,8 +2011,7 @@ public class GtkDClass
 
 		string funct = getFunctionDeclaration(line, lines);
 
-		Funct fun;
-		fun.init(funct, convParms);
+		Funct fun = Funct(funct, convParms, wrapper.getAliases());
 
 		/**
 		 * Checks restrictions on the functions to include
@@ -2126,7 +2124,7 @@ public class GtkDClass
 									string param = strip( idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()) );
 
 									//If this param is not in the Gtkd Function Skip it.
-									if(indexOf(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
+									if(indexOf(fun.declaration(), param) == -1)
 									{
 										//Loop for multi line descriptons for this param.
 										while(i+1 < comments.length && stilInParam(comments[i+1]))
@@ -2154,7 +2152,7 @@ public class GtkDClass
 								else if( comments[i].chomp(":").strip() == "Returns" )
 								{
 									//Skip return for Constructors.
-									if(indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
+									if(indexOf(fun.declaration(), "this (") > -1)
 									{
 										//Loop for multi line descriptons for this return.
 										while(i+1 < comments.length && stilInParam(comments[i+1]))
@@ -2193,13 +2191,13 @@ public class GtkDClass
 							if(ret.length > 0)
 								description ~= ret;
 
-							if ( indexOf(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
-								 && indexOf(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
+							if ( indexOf(fun.getExternal(), "GError**") > -1
+								 && indexOf(fun.declaration(), "Error") == -1 )
 							{
 								description ~= "Throws: GException on failure.";
 							}
 
-							if ( indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1 )
+							if ( indexOf(fun.declaration(), "this (") > -1 )
 							{
 								description ~= "Throws: ConstructionException GTK+ fails to create the object.";
 							}
@@ -2238,7 +2236,7 @@ public class GtkDClass
 					{
 						if ( !convParms.isInterface )
 						{
-							string externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
+							string externalDeclaration = fun.getExternal();
 							
 							/* Don't add repeated declarations. */
 							bool addme = true;
@@ -2251,9 +2249,9 @@ public class GtkDClass
 							if(addme) externalDeclarations ~= externalDeclaration;
 						}
 						// body
-						if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(convParms,wrapper.getAliases()), "...") < 0 )
+						if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(), "...") < 0 )
 						{
-							string gtkDDeclaration = fun.declaration(convParms,wrapper.getAliases());
+							string gtkDDeclaration = fun.declaration();
 							//string gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
 							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
 							addComments();
@@ -2262,27 +2260,7 @@ public class GtkDClass
 							{
 								member ~= "{";
 								member ~= "// "~funct;
-								version( noGtkBody )
-								{
-//									switch ( fun.typeWrap )
-//									{
-//										case "void": break;
-//										case "int", "uint", "bool", "long", "ulong"
-//											member ~= "return 0;";
-//											break;
-//
-//										case "int", "uint", "bool", "long", "ulong"
-//											member ~= "return 0;";
-//											break;
-//
-//										case "string": member ~= "return "";"; break;
-//										default: member ~= "return null;"; break;
-//									}
-								}
-								else
-								{
-									member ~= fun.bod(convParms, wrapper.getAliases());
-								}
+								member ~= fun.bod();
 								member ~= "}";
 							}
 							/* Duplicated functions are omitted. */
@@ -2437,11 +2415,11 @@ public class GtkDClass
 		{
 			check(fun.typeWrap);
 		}
-		foreach ( int count , string parm ; fun.parmsWrap )
+		foreach ( count , param ; fun.params )
 		{
-			if ( count > 0 || parm != convParms.strct~'*' )
+			if ( count > 0 || param.typeWrap != convParms.strct~'*' )
 			{
-				check(parm);
+				check(param.typeWrap);
 			}
 		}
 	}

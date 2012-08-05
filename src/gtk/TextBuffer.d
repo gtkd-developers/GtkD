@@ -190,7 +190,7 @@ public class TextBuffer : ObjectG
 	{
 		int startOffset = iter.getOffset();
 		
-		insert(iter, cast(char[])text);
+		insert(iter, text);
 		
 		if ( tags.length == 0 )
 		return;
@@ -216,7 +216,7 @@ public class TextBuffer : ObjectG
 	{
 		int startOffset = iter.getOffset();
 		
-		insert(iter, cast(char[])text);
+		insert(iter, text);
 		
 		if ( tags.length == 0 )
 		return;
@@ -824,10 +824,10 @@ public class TextBuffer : ObjectG
 	 * iter = a position in the buffer
 	 * text = text in UTF-8 format
 	 */
-	public void insert(TextIter iter, char[] text)
+	public void insert(TextIter iter, string text)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), text.ptr, cast(int) text.length);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length);
 	}
 	
 	/**
@@ -836,10 +836,10 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 * text = text in UTF-8 format
 	 */
-	public void insertAtCursor(char[] text)
+	public void insertAtCursor(string text)
 	{
 		// void gtk_text_buffer_insert_at_cursor (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, text.ptr, cast(int) text.length);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int) text.length);
 	}
 	
 	/**
@@ -856,10 +856,10 @@ public class TextBuffer : ObjectG
 	 * defaultEditable = default editability of buffer
 	 * Returns: whether text was actually inserted
 	 */
-	public int insertInteractive(TextIter iter, char[] text, int defaultEditable)
+	public int insertInteractive(TextIter iter, string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), text.ptr, cast(int) text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length, defaultEditable);
 	}
 	
 	/**
@@ -873,10 +873,10 @@ public class TextBuffer : ObjectG
 	 * defaultEditable = default editability of buffer
 	 * Returns: whether text was actually inserted
 	 */
-	public int insertInteractiveAtCursor(char[] text, int defaultEditable)
+	public int insertInteractiveAtCursor(string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, text.ptr, cast(int) text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int) text.length, defaultEditable);
 	}
 	
 	/**
@@ -982,10 +982,10 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 * text = UTF-8 text to insert
 	 */
-	public void setText(char[] text)
+	public void setText(string text)
 	{
 		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_set_text(gtkTextBuffer, text.ptr, cast(int) text.length);
+		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), cast(int) text.length);
 	}
 	
 	/**

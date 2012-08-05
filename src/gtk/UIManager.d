@@ -643,12 +643,12 @@ public class UIManager : ObjectG, BuildableIF
 	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
 	 * Throws: GException on failure.
 	 */
-	public uint addUiFromString(char[] buffer)
+	public uint addUiFromString(string buffer)
 	{
 		// guint gtk_ui_manager_add_ui_from_string (GtkUIManager *manager,  const gchar *buffer,  gssize length,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, buffer.ptr, cast(int) buffer.length, &err);
+		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), cast(int) buffer.length, &err);
 		
 		if (err !is null)
 		{

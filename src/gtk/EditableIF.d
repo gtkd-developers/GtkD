@@ -162,7 +162,7 @@ public interface EditableIF
 	 * newText = the text to append
 	 * position = location of the position text will be inserted at. [inout]
 	 */
-	public void insertText(char[] newText, ref int position);
+	public void insertText(string newText, ref int position);
 	
 	/**
 	 * Deletes a sequence of characters. The characters that are deleted are

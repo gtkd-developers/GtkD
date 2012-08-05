@@ -176,7 +176,7 @@ public class TextView : Container
 	void insertText(string text)
 	{
 		TextBuffer buf = getBuffer();
-		buf.insertAtCursor(cast(char[])text);
+		buf.insertAtCursor(text);
 	}
 	
 	/**
@@ -189,7 +189,7 @@ public class TextView : Container
 		TextBuffer buf = getBuffer();
 		TextIter iter = new TextIter();
 		buf.getEndIter(iter);
-		buf.insert(iter, cast(char[])text);
+		buf.insert(iter, text);
 		if ( ensureVisible )
 		{
 			gdouble within_margin = 0.0;
