@@ -118,8 +118,8 @@ class SpawnWindow : MainWindow
 	private bool exec(Spawn spawn)
 	{
 		//TODO: These functions should accept a string.
-		viewOutput.getBuffer().setText(cast(char[])"");
-		viewError.getBuffer().setText(cast(char[])"");
+		viewOutput.getBuffer().setText("");
+		viewError.getBuffer().setText("");
 
 		TextBuffer bufferError = viewError.getBuffer();
 		TextIter iterError = new TextIter();
@@ -127,7 +127,7 @@ class SpawnWindow : MainWindow
         int result = spawn.commandLineSync(&childEnded, &syncOutput, &syncError);
 
 		bufferError.getEndIter(iterError);
-		viewError.getBuffer().insert(iterError, cast(char[])spawn.getLastError()~"\n");
+		viewError.getBuffer().insert(iterError, spawn.getLastError()~"\n");
 
 		writefln("exit loop");
 
@@ -139,7 +139,7 @@ class SpawnWindow : MainWindow
 	{
 		TextIter iter = new TextIter();
 		viewOutput.getBuffer().getEndIter(iter);
-		viewOutput.getBuffer().insert(iter, cast(char[])line~"\n");
+		viewOutput.getBuffer().insert(iter, line~"\n");
 		return true;
 	}
 
@@ -147,7 +147,7 @@ class SpawnWindow : MainWindow
 	{
 		TextIter iter = new TextIter();
 		viewError.getBuffer().getEndIter(iter);
-		viewError.getBuffer().insert(iter, cast(char[])line~"\n");
+		viewError.getBuffer().insert(iter, line~"\n");
 		return true;
 	}
 
@@ -160,12 +160,12 @@ class SpawnWindow : MainWindow
 			if ( count > 0 ) t ~= " ";
 			t ~= arg;
 		}
-		inBuffer.setText(cast(char[])t);
+		inBuffer.setText(t);
 	}
 
 	public void setInput(string arg)
 	{
-		viewInput.getBuffer().setText(cast(char[])arg);
+		viewInput.getBuffer().setText(arg);
 	}
 }
 
