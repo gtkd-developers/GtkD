@@ -107,12 +107,98 @@ public class Color
 		this.gdkColor = gdkColor;
 	}
 	
+	/**
+	 * Creates a new Color
+	 */
+	this()
+	{
+		GdkColor color;
+		
+		this(gdk_color_copy(&color));
+	}
+	
+	/** ditto */
+	this(ubyte red, ubyte green, ubyte blue)
+	{
+		GdkColor color;
+		
+		color.red = cast(ushort)(red * 257);
+		color.green = cast(ushort)(green * 257);
+		color.blue = cast(ushort)(blue * 257);
+		
+		this(gdk_color_copy(&color));
+	}
+	
+	/** ditto */
+	this(ushort red, ushort green, ushort blue)
+	{
+		GdkColor color;
+		
+		color.red = red;
+		color.green = green;
+		color.blue = blue;
+		
+		this(gdk_color_copy(&color));
+	}
+	
 	~this ()
 	{
 		if ( importLibs[LIBRARY.GDK] in Linker.loadedLibraries && gdkColor !is null )
 		{
 			gdk_color_free(gdkColor);
 		}
+	}
+	
+	/**
+	 * The color values.
+	 */
+	ushort red()
+	{
+		return gdkColor.red;
+	}
+	
+	/** ditto */
+	void red(ushort value)
+	{
+		gdkColor.red = value;
+		updatePixel();
+	}
+	
+	/** ditto */
+	ushort green()
+	{
+		return gdkColor.green;
+	}
+	
+	/** ditto */
+	void green(ushort value)
+	{
+		gdkColor.green = value;
+		updatePixel();
+	}
+	
+	/** ditto */
+	ushort blue()
+	{
+		return gdkColor.blue;
+	}
+	
+	/** ditto */
+	void blue(ushort value)
+	{
+		gdkColor.blue = value;
+		updatePixel();
+	}
+	
+	/** ditto */
+	uint pixel()
+	{
+		return gdkColor.pixel;
+	}
+	
+	private void updatePixel()
+	{
+		gdkColor.pixel = (gdkColor.red&0xFF00 << 8) | (gdkColor.green&0xFF00) | (gdkColor.blue >> 8) ;
 	}
 	
 	/**

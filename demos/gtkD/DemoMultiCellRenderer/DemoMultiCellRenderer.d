@@ -53,8 +53,8 @@ enum {
     COLUMN_BOOL_VISIBLE
 }
 
-void main(){
-    Main.init(null);
+void main(string[] args){
+    Main.init(args);
     ListStore store = new ListStore( [
         GType.STRING,
         GType.STRING,

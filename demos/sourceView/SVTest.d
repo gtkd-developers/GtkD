@@ -132,7 +132,7 @@ class HelloWorld : MainWindow
 
 void main(string[] args)
 {
-	Main.init(null);
+	Main.init(args);
 	new HelloWorld();
 	Main.run();
 

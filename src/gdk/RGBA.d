@@ -110,12 +110,86 @@ public class RGBA
 		this.gdkRGBA = gdkRGBA;
 	}
 	
+	/**
+	 * Creates a new RGBA Color
+	 */
+	this()
+	{
+		GdkRGBA rgba;
+		
+		this(gdk_rgba_copy(&rgba));
+	}
+	
+	/** ditto */
+	this(double red, double green, double blue, double alpha = 1.0)
+	{
+		GdkRGBA rgba;
+		
+		rgba.red = red;
+		rgba.green = green;
+		rgba.blue = blue;
+		rgba.alpha = alpha;
+		
+		this(gdk_rgba_copy(&rgba));
+	}
+	
 	~this ()
 	{
 		if ( importLibs[LIBRARY.GDK] in Linker.loadedLibraries && gdkRGBA !is null )
 		{
 			gdk_rgba_free(gdkRGBA);
 		}
+	}
+	
+	/**
+	 * The color values.
+	 * All values are in the range from 0.0 to 1.0 inclusive.
+	 */
+	double red()
+	{
+		return gdkRGBA.red;
+	}
+	
+	/** ditto */
+	void red(double value)
+	{
+		gdkRGBA.red = value;
+	}
+	
+	/** ditto */
+	double green()
+	{
+		return gdkRGBA.green;
+	}
+	
+	/** ditto */
+	void green(double value)
+	{
+		gdkRGBA.green = value;
+	}
+	
+	/** ditto */
+	double blue()
+	{
+		return gdkRGBA.blue;
+	}
+	
+	/** ditto */
+	void blue(double value)
+	{
+		gdkRGBA.blue = value;
+	}
+	
+	/** ditto */
+	double alpha()
+	{
+		return gdkRGBA.alpha;
+	}
+	
+	/** ditto */
+	void alpha(double value)
+	{
+		gdkRGBA.alpha = value;
 	}
 	
 	/**

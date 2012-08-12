@@ -60,6 +60,7 @@
  * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
+ * 	- create -> createContext
  * overrides:
  */
 
@@ -128,7 +129,7 @@ public static Surface gdkWindowCreateSimilarSurface(Window window, cairo_content
  * window = a GdkWindow
  * Returns: A newly created Cairo context. Free with cairo_destroy() when you are done drawing.
  */
-public static Context create(Window window)
+public static Context createContext(Window window)
 {
 	// cairo_t * gdk_cairo_create (GdkWindow *window);
 	auto p = gdk_cairo_create((window is null) ? null : window.getWindowStruct());

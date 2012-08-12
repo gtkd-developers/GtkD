@@ -63,7 +63,7 @@ import gtkc.glib;
 import gtkc.gobject;
 
 
-class MonitorOverlay : public DrawingArea
+class MonitorOverlay : DrawingArea
 {
 public:
 	
@@ -114,7 +114,7 @@ public:
 }
 
 
-class GstMediaPlayer : public MainWindow
+class GstMediaPlayer : MainWindow
 {
 public:
 
