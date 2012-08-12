@@ -794,7 +794,7 @@ code: start
 	/** */
 	ulong getValue()
 	{
-		return (cast(ulong)gdkColor.red <<32) | (cast(ulong)gdkColor.green << 16) | (cast(ulong)gdkColor.blue);
+		return (cast(ulong)gdkColor.red <<16) | (cast(ulong)gdkColor.green << 8) | (cast(ulong)gdkColor.blue);
 	}
 	
 	/** */
