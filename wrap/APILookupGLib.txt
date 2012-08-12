@@ -63,7 +63,7 @@ version(Tango)
 {
 	//avoid some conflicts with other string aliases.
 	static if( !is(string) )
-		private alias char[] string;
+		alias char[] string;
 }
 
 version( Windows )
