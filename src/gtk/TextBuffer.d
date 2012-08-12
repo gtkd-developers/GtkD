@@ -243,7 +243,7 @@ public class TextBuffer : ObjectG
 	 *     tagName = the name for the new tag.
 	 *     ...     = A list of property names and there values.
 	 */
-	TextTag createTagT(string tagName, ...)
+	TextTag createTag(string tagName, ...)
 	{
 		TextTag tag = new TextTag(gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), null, null));
 		
@@ -263,8 +263,6 @@ public class TextBuffer : ObjectG
 					continue;
 				}");
 			}
-			
-			writefln("%s %s %s", name, _arguments[i+1], i);
 			
 			if ( _arguments[i+1] == typeid(bool) ||
 			_arguments[i+1] == typeid(int) ||
@@ -303,7 +301,7 @@ public class TextBuffer : ObjectG
 			else
 			{
 				version(Tango)
-				Stderr.formatln("TextBuffer.CreateTag: Unsuported type: \"{}\" for property: \"{}\"",_arguments[i+1] , name);
+				Stderr.formatln("TextBuffer.CreateTag: Unsuported type: \"{}\" for property: \"{}\"", _arguments[i+1], name);
 				else
 				stderr.writefln("TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
 				
