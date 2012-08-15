@@ -22,15 +22,14 @@ private import gtk.ScrolledWindow;
 
 private import gtk.Widget;
 private import gtk.Table;
-private import gtk.ObjectGtk;
 private import gtk.Button;
+private import gtk.Tooltip;
 
 private import gdk.Color;
 private import gdk.Cursor;
 
 private import gdk.Event;
 
-private import gtk.Tooltips;
 /**
  * This tests the gtkD the Stock images in button
  */
@@ -56,9 +55,8 @@ class TestStock : ScrolledWindow
 		for(StockID stockID=StockID.min ; stockID<=StockID.max ; stockID++)
 		{
 			Button button = new Button(stockID, true);
-			Tooltips tt = new Tooltips();
-			tt.setDelay(0);
-			tt.setTip(button, StockDesc[stockID], StockDesc[stockID]);
+			button.setTooltipText(StockDesc[stockID]);
+
 			//button.setCursor(CursorType.BASED_ARROW_DOWN);
 			//button.setBackground(color);
 			//Cursor cursor = new Cursor(CursorType.CLOCK);

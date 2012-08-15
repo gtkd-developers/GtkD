@@ -18,6 +18,8 @@
 
 module TTextView;
 
+private import cairo.ImageSurface;
+
 private import gtk.Window;
 
 private import gtk.Widget;
@@ -34,10 +36,9 @@ private import gtk.HScale;
 private import gtk.Image;
 private import gtk.Entry;
 
-private import gdk.Bitmap;
 private import gdk.Pixbuf;
 
-private import gtk.ComboBox;
+private import gtk.ComboBoxText;
 
 private import glib.GException;
 
@@ -128,8 +129,6 @@ class TTextView : Window
 	 */
 	void createTags(TextBuffer buffer)
 	{
-		Bitmap stipple;
-
 		/* Create a bunch of tags. Note that it's also possible to
 		* create tags with gtk_text_tag_new() then add them to the
 		* tag table for the buffer, gtk_text_buffer_create_tag() is
@@ -176,23 +175,6 @@ class TTextView : Window
 
 		buffer.createTag("red_background",
 			      "background", "red");
-
-enum {
-	gray50_width = 2,
-	gray50_height = 2
-}
-
-static string gray50_bits = [0x02, 0x01];
-
-    	stipple = Bitmap.createFromData(null,   // drawablw
-					 gray50_bits, gray50_width,
-					 gray50_height);
-
-		buffer.createTag("background_stipple",
-			      "background_stipple", stipple);
-
-		buffer.createTag("foreground_stipple",
-			      "foreground_stipple", stipple);
 
 		buffer.createTag("big_gap_before_line",
 			      "pixels_above_lines", 30);
@@ -315,17 +297,7 @@ static string gray50_bits = [0x02, 0x01];
 		buffer.insertWithTagsByName(iter, "a blue foreground", "blue_foreground");
 		buffer.insert(iter, " or ");
 		buffer.insertWithTagsByName(iter, "a red background", "red_background");
-		buffer.insert(iter, " or even ");
-		buffer.insertWithTagsByName(iter, "a stippled red background",
-									"red_background", "background_stipple");
-
-		buffer.insert(iter, " or ");
-		buffer.insertWithTagsByName(iter,
-			"a stippled blue foreground on solid red background",
-			"blue_foreground",
-			"red_background",
-			"foreground_stipple");
-		buffer.insert(iter, " (select that to read it) can be used.\n\n");
+		buffer.insert(iter, " can be used.\n\n");
 
 		buffer.insertWithTagsByName(iter, "Underline, strikethrough, and rise. ", "heading");
 
@@ -461,7 +433,7 @@ static string gray50_bits = [0x02, 0x01];
 			else if (i == 1)
         	{
 
-				ComboBox comboBox = new ComboBox();
+				ComboBoxText comboBox = new ComboBoxText();
 				comboBox.appendText("Option 1");
 				comboBox.appendText("Option 2");
 				comboBox.appendText("Option 3");

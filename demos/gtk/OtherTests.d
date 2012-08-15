@@ -43,7 +43,12 @@ else{
     import std.stdio;
 }
 
-import core.stdc.stdlib;
+version(Tango)
+	private import tango.stdc.stdlib : exit;
+else version(D_Version2)
+	private import core.stdc.stdlib : exit;
+else
+	private import std.c.stdlib : exit;
 
 public class OtherTests : Window
 {

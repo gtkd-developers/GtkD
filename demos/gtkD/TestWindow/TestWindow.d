@@ -29,6 +29,7 @@ private import gtk.Table;
 
 version(Tango)
 {
+	private import stdlib = tango.stdc.stdlib : exit;
 	private import tango.text.convert.Layout;
 	private import tango.io.Stdout;
 	private import tango.core.Thread;
@@ -38,6 +39,7 @@ version(Tango)
 }
 else version(D_Version2)
 {
+	private import stdlib = core.stdc.stdlib : exit;
 	private import core.thread;
 	private import std.random;
 
@@ -45,6 +47,7 @@ else version(D_Version2)
 }
 else
 {
+	private import stdlib = std.c.stdlib : exit;
 	private import std.thread;
 	private import std.random;
 }
@@ -77,17 +80,14 @@ private import gtk.MenuItem;
 private import gtk.Widget;
 private import gtk.MenuBar;
 private import gtk.Notebook;
-//private import gtk.ComboBoxTextEntry;
+private import gtk.ComboBoxText;
 private import gtk.FileChooserDialog;
-private import gtk.FileSelection;
 private import gtk.FontSelectionDialog;
 private import gtk.ColorSelectionDialog;
-private import gtk.InputDialog;
 private import gtk.Button;
 private import gtk.VBox;
 private import gtk.MessageDialog;
 private import gtk.Frame;
-private import gtk.ObjectGtk;
 private import gtk.HButtonBox;
 private import gtk.Statusbar;
 private import gtk.Menu;
@@ -130,7 +130,6 @@ private import glib.ListSG;
 private import glib.Str;
 private import gtk.Label;
 private import glib.ListG;
-private import gtk.ComboBoxEntry;
 private import gtk.Paned;
 private import gtk.HPaned;
 private import gtk.VPaned;
@@ -140,7 +139,6 @@ version(Tango) private import tango.io.Stdout;
 else private import std.stdio;
 private import gtk.VButtonBox;
 private import gtk.FileChooserButton;
-private import gdk.Drawable;
 
 private import gtk.AboutDialog;
 private import gtk.Dialog;
@@ -175,9 +173,9 @@ class TestWindow : MainWindow
 										ButtonsType.YES_NO,
 										"Are you sure you want' to exit these GtkDTests?");
 		int responce = d.run();
-		if ( responce == ResponseType.GTK_RESPONSE_YES )
+		if ( responce == ResponseType.YES )
 		{
-			Main.exit(0);
+			stdlib.exit(0);
 		}
 		d.destroy();
 		return true;
@@ -185,7 +183,7 @@ class TestWindow : MainWindow
 
 	void anyButtonExits(Button button)
 	{
-			Main.exit(0);
+			stdlib.exit(0);
 	}
 
 	this()
@@ -194,7 +192,7 @@ class TestWindow : MainWindow
 		setup();
 		showAll();
 
-		string versionCompare = Version.checkVersion(2,8,0);
+		string versionCompare = Version.checkVersion(3,0,0);
 
 		if ( versionCompare.length > 0 )
 		{
@@ -262,7 +260,6 @@ class TestWindow : MainWindow
 		notebook.appendPage(new TestScales,"Scales");
 			testSpinButton(notebook);
 
-		notebook.appendPage(new Label("Deprecated,\nuse TreeView\ninstead"),"Tree");
 		notebook.appendPage(new TestTreeView,"TreeView");
 		notebook.appendPage(new TestTreeView1,"TreeView 1");
 			testList(notebook);
@@ -272,7 +269,8 @@ class TestWindow : MainWindow
 			notebook.appendPage(new Frame(new TestDrawingArea,"Drawing Area"),"Drawing");
 			notebook.appendPage(new TestText,"Text");
 			notebook.appendPage(new TestImage(this),"Image");
-			notebook.appendPage(new TestThemes(this),"Themes");
+			//TestThemes seems to be unfinished.
+			//notebook.appendPage(new TestThemes(this),"Themes");
 			notebook.appendPage(new TestAspectFrame(),"Aspect Frame");
 			notebook.appendPage(new TestIdle(),"Idle");
 			version(cairo)notebook.appendPage(new Clock(), "Cairo");
@@ -357,7 +355,7 @@ class TestWindow : MainWindow
 
 	void onDialogResponse(int response, Dialog dlg)
 	{
-		if(response == GtkResponseType.GTK_RESPONSE_CANCEL)
+		if(response == GtkResponseType.CANCEL)
 			dlg.destroy();
 	}
 
@@ -385,7 +383,7 @@ class TestWindow : MainWindow
 		return notebook;
 	}
 
-	void onNotebookSwitchPage(void* notePage, uint pageNumber, Notebook notebook)
+	void onNotebookSwitchPage(Widget notePage, uint pageNumber, Notebook notebook)
 	{
 		//writefln("Notebook switch to page %s", pageNumber);
 		// fullCollect helps finding objects that shouldn't have been collected
@@ -522,7 +520,7 @@ class TestWindow : MainWindow
 		// comboBoxTextEntry from a list of strings
 		mainBox.packStart(new Label("String combo"),false,true,0);
 		static string[] cbList = ["item 1","item 2","item 3","item 4","item 5","item 6","item 7","item 8","item 9"];
-		comboText = new ComboBoxEntry();
+		comboText = new ComboBoxText();
 		string entry3 = "Combo box text entry 3";
 		comboText.appendText("Combo box text entry 1");
 		comboText.appendText("Combo box text entry 2");
@@ -591,7 +589,7 @@ class TestWindow : MainWindow
 
 		mainBox.packStart(new Frame(treeCombo,"Tree Combo box"),false,true,0);
 
-		simpleCombo = new ComboBox();
+		simpleCombo = new ComboBoxText();
 		simpleCombo.appendText("Top");
 		simpleCombo.appendText("Bottom");
 		simpleCombo.appendText("Left");
@@ -611,8 +609,8 @@ class TestWindow : MainWindow
 		notebook.appendPage(new Frame(mainBox,"Lists"),"Lists");
 
 	}
-	ComboBox simpleCombo;
-	ComboBoxEntry comboText;
+	ComboBoxText simpleCombo;
+	ComboBoxText comboText;
 
 	void showTextCombo(Button button)
 	{
@@ -777,10 +775,8 @@ class TestWindow : MainWindow
 	}
 
 	FileChooserDialog fcd;
-	FileSelection fs;
 	FontSelectionDialog f;
 	ColorSelectionDialog d;
-	InputDialog id;
 
 	void showFileChooser(Button button)
 	{
@@ -788,8 +784,8 @@ class TestWindow : MainWindow
 		ResponseType[] r;
 		a ~= "Lets go!";
 		a ~= "Please don't";
-		r ~= ResponseType.GTK_RESPONSE_OK;
-		r ~= ResponseType.GTK_RESPONSE_CANCEL;
+		r ~= ResponseType.OK;
+		r ~= ResponseType.CANCEL;
 		if ( fcd  is  null )
 		{
 			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.OPEN, a, r);
@@ -806,27 +802,6 @@ class TestWindow : MainWindow
 		fcd.hide();
 	}
 
-
-
-	void showFileSel(Button button)
-	{
-
-		if ( fs  is  null )
-		{
-			fs = new FileSelection("File Selection");
-		}
-		//fs.showAll();
-		//fs.setMultiple(true);
-		fs.run();
-		//printf("file selected = %.*s\n",fs.getFileName());
-//		string[] selections = fs.getSelections();
-//		for ( int i=0 ;i<selections.length ; i++)
-//		{
-//			printf("File(s) selected [%d] %.*s\n",i,selections[i]);
-//		}
-		fs.hide();
-	}
-
 	void showColor(Button button)
 	{
 		if ( d  is  null )
@@ -835,21 +810,6 @@ class TestWindow : MainWindow
 		}
 		d.run();
 		d.hide();
-	}
-
-	void showInput(Button button)
-	{
-		if ( id  is  null )
-		{
-			id = new InputDialog();
-			id.getCloseButton().addOnClicked(&CloseInputDialog);
-		}
-		id.run();
-	}
-
-	void CloseInputDialog(Button button)
-	{
-		id.hide();
 	}
 
 	void showCalendar(Button button)
@@ -888,18 +848,14 @@ class TestWindow : MainWindow
 		Button fileChooser = new Button("File Chooser", &showFileChooser);
 		FileChooserButton fcb = new FileChooserButton(fcd);
 
-		Button fileSel = new Button("File Selection", &showFileSel);
 		Button color = new Button("Color Dialog", &showColor);
-		Button input = new Button("Input Dialog", &showInput);
 		Button calendar = new Button("Calendar Dialog", &showCalendar);
 		fontButton = new Button("Font Dialog", &showFont);
 		//fontButton.modifyFont("[Newspaper][16]");
 
 		bBox.packStart(fileChooser,0,0,10);
 		bBox.packStart(fcb,0,0,10);
-		bBox.packStart(fileSel,0,0,10);
 		bBox.packStart(color,0,0,10);
-		bBox.packStart(input,0,0,10);
 		bBox.packStart(calendar,0,0,10);
 		bBox.packStart(fontButton,0,0,10);
 
@@ -943,11 +899,11 @@ class TestWindow : MainWindow
 				else size_t buttonNum = rand()%threadTestButtons.length;
 				Button button = threadTestButtons[buttonNum];
 
-				gdkThreadsEnter();
+				threadsEnter();
 				button.removeAll();
 				version(Tango) button.setLabel( (new Layout!(char))("{}", num));
 				else           button.setLabel(std.string.format("%s", num));
-				gdkThreadsLeave();
+				threadsLeave();
 				yield();
 			}
 			assert(0);

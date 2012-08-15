@@ -20,6 +20,8 @@ module TestIdle;
 
 //debug = trace
 
+private import cairo.Context;
+
 private import gtk.VBox;
 private import gtk.HBox;
 private import gtk.Box;
@@ -28,10 +30,10 @@ private import gtk.DrawingArea;
 private import gdk.Event;
 private import gtk.Widget;
 private import gtk.ComboBox;
+private import gtk.ComboBoxText;
 
 private import gdk.Color;
-private import gdk.Drawable;
-private import gdk.GC;
+private import gdk.Cairo;
 
 private import gtk.SpinButton;
 private import gtk.Adjustment;
@@ -40,8 +42,8 @@ version(Tango) private import tango.io.Stdout;
 version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 
-private import gtk.Idle;
-private import gtk.Timeout;
+private import glib.Idle;
+private import glib.Timeout;
 
 
 /**
@@ -64,27 +66,40 @@ class TestIdle : VBox
 
 		TestDrawing drawingArea = new TestDrawing();
 
-		ComboBox gcOptions = new ComboBox();
-		gcOptions.appendText("GC COPY");
-		gcOptions.appendText("GC INVERT");
-		gcOptions.appendText("GC XOR");
-		gcOptions.appendText("GC CLEAR");
-		gcOptions.appendText("GC AND");
-		gcOptions.appendText("GC AND_REVERSE");
-		gcOptions.appendText("GC AND_INVERT");
-		gcOptions.appendText("GC NOOP");
-		gcOptions.appendText("GC OR");
-		gcOptions.appendText("GC EQUIV");
-		gcOptions.appendText("GC OR_REVERSE");
-		gcOptions.appendText("GC COPY_INVERT");
-		gcOptions.appendText("GC OR_INVERT");
-		gcOptions.appendText("GC NAND");
-		gcOptions.appendText("GC NOR");
-		gcOptions.appendText("GC SET");
-		gcOptions.setActive(1);
-		gcOptions.addOnChanged(&drawingArea.onCGOptionsChanged);
+		ComboBoxText operators = new ComboBoxText();
+		operators.appendText("CLEAR");
+		operators.appendText("SOURCE");
+		operators.appendText("OVER");
+		operators.appendText("IN");
+		operators.appendText("OUT");
+		operators.appendText("ATOP");
+		operators.appendText("DEST");
+		operators.appendText("DEST_OVER");
+		operators.appendText("DEST_IN");
+		operators.appendText("DEST_OUT");
+		operators.appendText("DEST_ATOP");
+		operators.appendText("XOR");
+		operators.appendText("ADD");
+		operators.appendText("SATURATE");
+		operators.appendText("MULTIPLY");
+		operators.appendText("SCREEN");
+		operators.appendText("OVERLAY");
+		operators.appendText("DARKEN");
+		operators.appendText("LIGHTEN");
+		operators.appendText("COLOR_DODGE");
+		operators.appendText("COLOR_BURN");
+		operators.appendText("HARD_LIGHT");
+		operators.appendText("SOFT_LIGHT");
+		operators.appendText("DIFFERENCE");
+		operators.appendText("EXCLUSION");
+		operators.appendText("HSL_HUE");
+		operators.appendText("HSL_SATURATION");
+		operators.appendText("HSL_COLOR");
+		operators.appendText("HSL_LUMINOSITY");
+		operators.setActive(2);
+		operators.addOnChanged(&drawingArea.onOperatorChanged);
 
-		ComboBox callType = new ComboBox();
+		ComboBoxText callType = new ComboBoxText();
 		callType.appendText("Idle");
 		callType.appendText("Timeout");
 		callType.setActive(1);
@@ -94,7 +109,7 @@ class TestIdle : VBox
 		timeoutSpin.addOnValueChanged(&drawingArea.onTimeoutSpinValueChanged);
 		Box controlBox = new HBox(false, 7);
 
-		controlBox.packStart(gcOptions, false, false, 2);
+		controlBox.packStart(operators, false, false, 2);
 		controlBox.packStart(callType, false, false, 2);
 		controlBox.packStart(timeoutSpin, false, false, 2);
 
@@ -121,9 +136,7 @@ class TestIdle : VBox
 		int count = 0;
 		int width;
 		int height;
-		//Color color = new Color();
-		Drawable drawable;
-		GC gc;
+		Context context;
 
 		int callType = 1;	// ue 0 for Idle 1 for Timeout
 
@@ -135,23 +148,18 @@ class TestIdle : VBox
 			black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 
 			addOnRealize(&onRealize);
-			//addOnExpose(&exposeCallback);
 			addOnMap(&onMap);
 			addOnUnmap(&onUnmap);
-			//addOnMotionNotify(&onMotionNotify);
 			addOnSizeAllocate(&onSizeAllocate);
-			//addOnButtonPress(&onButtonPress);
-			//addOnButtonRelease(&onButtonRelease);
 
 		}
 
 		public void onRealize(Widget widget)
 		{
-			//printf("TestTimeout.realizeCallback\n");
-			drawable = getWindow();
-			gc = new GC(drawable);
-			gc.setFunction(GdkFunction.INVERT);
-			//return false;
+			context = getWindow().createContext;
+			context.moveTo(0, 0);
+			context.setOperator(CairoOperator.OVER);
+//			gc.setFunction(GdkFunction.INVERT);
 		}
 
 		public void onMap(Widget widget)
@@ -238,7 +246,8 @@ class TestIdle : VBox
 			if ( xf<yf ) yf=xf;
 
 			//writefln("%s %s -> %s %s (%s %s)\n",x,y,xf,yf,x+yf*xi, y+yf*yi);
-			drawable.drawLine(gc,x,y, x+yf*xi, y+yf*yi);
+			context.lineTo(x+yf*xi, y+yf*yi);
+			//drawable.drawLine(gc,x,y, x+yf*xi, y+yf*yi);
 
 			x += yf*xi;
 			y += yf*yi;
@@ -251,9 +260,11 @@ class TestIdle : VBox
 
 		void onCallTypeChanged(ComboBox comboBox)
 		{
-			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
-			else writefln("gcOptions = %s", comboBox.getActiveText());
-			switch ( comboBox.getActiveText() )
+			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
+
+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBoxText.getActiveText()).newline;
+			else writefln("gcOptions = %s", comboBoxText.getActiveText());
+			switch ( comboBoxText.getActiveText() )
 			{
 				case "Idle": callType = 0; break;
 				case "Timeout": callType = 1; break;
@@ -262,29 +273,44 @@ class TestIdle : VBox
 			resetCallType();
 		}
 
-		void onCGOptionsChanged(ComboBox comboBox)
+		void onOperatorChanged(ComboBox comboBox)
 		{
-			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
-			else writefln("gcOptions = %s", comboBox.getActiveText());
-			switch ( comboBox.getActiveText() )
+			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
+
+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBoxText.getActiveText()).newline;
+			else writefln("gcOptions = %s", comboBoxText.getActiveText());
+			switch ( comboBoxText.getActiveText() )
 			{
-				case "GC COPY":			gc.setFunction(GdkFunction.COPY);		break;
-				case "GC INVERT":		gc.setFunction(GdkFunction.INVERT);		break;
-				case "GC XOR":			gc.setFunction(GdkFunction.XOR);		break;
-				case "GC CLEAR":		gc.setFunction(GdkFunction.CLEAR);		break;
-				case "GC AND":			gc.setFunction(GdkFunction.AND);		break;
-				case "GC AND_REVERSE":	gc.setFunction(GdkFunction.AND_REVERSE);break;
-				case "GC AND_INVERT":	gc.setFunction(GdkFunction.AND_INVERT);	break;
-				case "GC NOOP":			gc.setFunction(GdkFunction.NOOP);		break;
-				case "GC OR":			gc.setFunction(GdkFunction.OR);			break;
-				case "GC EQUIV":		gc.setFunction(GdkFunction.EQUIV);		break;
-				case "GC OR_REVERSE":	gc.setFunction(GdkFunction.OR_REVERSE);	break;
-				case "GC COPY_INVERT":	gc.setFunction(GdkFunction.COPY_INVERT);break;
-				case "GC OR_INVERT":	gc.setFunction(GdkFunction.OR_INVERT);	break;
-				case "GC NAND":			gc.setFunction(GdkFunction.NAND);		break;
-				case "GC NOR":			gc.setFunction(GdkFunction.NOR);		break;
-				case "GC SET":			gc.setFunction(GdkFunction.SET);		break;
-				default:				gc.setFunction(GdkFunction.INVERT);		break;
+				case "CLEAR":          context.setOperator(CairoOperator.CLEAR);          break;
+				case "SOURCE":         context.setOperator(CairoOperator.SOURCE);         break;
+				case "OVER":           context.setOperator(CairoOperator.OVER);           break;
+				case "IN":             context.setOperator(CairoOperator.IN);             break;
+				case "OUT":            context.setOperator(CairoOperator.OUT);            break;
+				case "ATOP":           context.setOperator(CairoOperator.ATOP);           break;
+				case "DEST":           context.setOperator(CairoOperator.DEST);           break;
+				case "DEST_OVER":      context.setOperator(CairoOperator.DEST_OVER);      break;
+				case "DEST_IN":        context.setOperator(CairoOperator.DEST_IN);        break;
+				case "DEST_OUT":       context.setOperator(CairoOperator.DEST_OUT);       break;
+				case "DEST_ATOP":      context.setOperator(CairoOperator.DEST_ATOP);      break;
+				case "XOR":            context.setOperator(CairoOperator.XOR);            break;
+				case "ADD":            context.setOperator(CairoOperator.ADD);            break;
+				case "SATURATE":       context.setOperator(CairoOperator.SATURATE);       break;
+				case "MULTIPLY":       context.setOperator(CairoOperator.MULTIPLY);       break;
+				case "SCREEN":         context.setOperator(CairoOperator.SCREEN);         break;
+				case "OVERLAY":        context.setOperator(CairoOperator.OVERLAY);        break;
+				case "DARKEN":         context.setOperator(CairoOperator.DARKEN);         break;
+				case "LIGHTEN":        context.setOperator(CairoOperator.LIGHTEN);        break;
+				case "COLOR_DODGE":    context.setOperator(CairoOperator.COLOR_DODGE);    break;
+				case "COLOR_BURN":     context.setOperator(CairoOperator.COLOR_BURN);     break;
+				case "HARD_LIGHT":     context.setOperator(CairoOperator.HARD_LIGHT);     break;
+				case "SOFT_LIGHT":     context.setOperator(CairoOperator.SOFT_LIGHT);     break;
+				case "DIFFERENCE":     context.setOperator(CairoOperator.DIFFERENCE);     break;
+				case "EXCLUSION":      context.setOperator(CairoOperator.EXCLUSION);      break;
+				case "HSL_HUE":        context.setOperator(CairoOperator.HSL_HUE);        break;
+				case "HSL_SATURATION": context.setOperator(CairoOperator.HSL_SATURATION); break;
+				case "HSL_COLOR":      context.setOperator(CairoOperator.HSL_COLOR);      break;
+				case "HSL_LUMINOSITY": context.setOperator(CairoOperator.HSL_LUMINOSITY); break;
+				default:               context.setOperator(CairoOperator.OVER);           break;
 			}
 		}
 

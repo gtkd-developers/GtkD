@@ -21,10 +21,8 @@ module TestDrawingArea;
 //debug = trace;
 
 private import gtk.VBox;
-private import gdk.Font;
 private import pango.PgContext;
 private import pango.PgLayout;
-private import gdk.ImageGdk;
 
 version(Tango) private import tango.io.Stdout;
 version(Tango) private import tango.stdc.stdio;
@@ -40,21 +38,14 @@ private import gtk.Menu;
 private import gtk.Adjustment;
 private import gtk.HBox;
 private import gdk.Pixbuf;
-//private import gdk.Point;
 private import gdk.Color;
-private import gdk.Drawable;
-private import gdk.GC;
+private import gdk.Event;
+
 private import pango.PgFontDescription;
 
 private import gtk.DrawingArea;
 private import gtk.Image;
 private import gtk.SpinButton;
-
-private import gdk.Event;
-
-private import gdk.Color;
-
-//private import event.Event;
 
 
 /**
@@ -68,7 +59,7 @@ class TestDrawingArea : VBox
 		debug(Tango) Stdout("TestDrawingArea.this() 1").newline;
 		super(false,4);
 
-		debug(Tango) Stdout("TestDrawingArea.this() 2").newline;
+/+		debug(Tango) Stdout("TestDrawingArea.this() 2").newline;
 		TestDrawing drawingArea = new TestDrawing();
 
 		debug(Tango) Stdout("TestDrawingArea.this() 3").newline;
@@ -124,14 +115,12 @@ class TestDrawingArea : VBox
 		packStart(hbox, false, false, 0);
 
 		debug(Tango) Stdout("TestDrawingArea.this() END").newline;
-	}
++/	}
 
 
 	class TestDrawing : DrawingArea
 	{
-
-
-		GdkFunction gcFunction = GdkFunction.INVERT;
+/+		GdkFunction gcFunction = GdkFunction.INVERT;
 		Color paintColor;
 		Color black;
 
@@ -157,10 +146,10 @@ class TestDrawingArea : VBox
 			{-4,0},
 			{-1,1}
 			];
-
++/
 		this()
 		{
-			debug(Tango) Stdout("TestDrawing.this() 1").newline;
+/+			debug(Tango) Stdout("TestDrawing.this() 1").newline;
 
 			setSizeRequest(333,333);
 			width = getWidth();
@@ -196,18 +185,18 @@ class TestDrawingArea : VBox
 			addOnSizeAllocate(&onSizeAllocate);
 			addOnButtonPress(&onButtonPress);
 			addOnButtonRelease(&onButtonRelease);
-		}
++/		}
 
 		void onSizeAllocate(GtkAllocation* allocation, Widget widget)
 		{
-			width = allocation.width;
+/+			width = allocation.width;
 			height = allocation.height;
-		}
++/		}
 
 
 		public bool onButtonPress(GdkEventButton* event, Widget widget)
 		{
-			debug(trace) version(Tango) Stdout("button DOWN").newline;
+/+			debug(trace) version(Tango) Stdout("button DOWN").newline;
 			else writefln("button DOWN");
 			if ( event.button == 1 )
 			{
@@ -224,12 +213,12 @@ class TestDrawingArea : VBox
 				gc.setForeground(black);
 				gc.setFunction(GdkFunction.COPY);
 			}
-			return false;
++/			return false;
 		}
 
 		public bool onButtonRelease(GdkEventButton* event, Widget widget)
 		{
-			debug(trace) version(Tango) Stdout("button UP").newline;
+/+			debug(trace) version(Tango) Stdout("button UP").newline;
 			else writefln("button UP");
 			if ( event.button == 1 )
 			{
@@ -237,7 +226,7 @@ class TestDrawingArea : VBox
 				else writefln("Button 1 UP");
 				buttonIsDown = false;
 			}
-			return false;
++/			return false;
 		}
 
 
@@ -254,8 +243,8 @@ class TestDrawingArea : VBox
 		public bool exposeCallback(GdkEventExpose* event, Widget widget)
 		{
 			//printf("testWindow.exposed ----------------------------- \n");
-			drawPoints(getWindow());
-			return true;
+/+			drawPoints(getWindow());
++/			return true;
 		}
 		public bool noExposeCallback(Widget widget)
 		{
@@ -266,7 +255,7 @@ class TestDrawingArea : VBox
 
 		public bool onMotionNotify(GdkEventMotion* event, Widget widget)
 		{
-			//printf("testWindow.mouseMoved ----------------------------- \n");
+/+			//printf("testWindow.mouseMoved ----------------------------- \n");
 			if ( buttonIsDown )
 			{
 				Drawable d = getWindow();
@@ -282,7 +271,7 @@ class TestDrawingArea : VBox
 				gc.setForeground(black);
 				gc.setFunction(GdkFunction.COPY);
 			}
-			return true;
++/			return true;
 		}
 
 		public bool mouseButtonReleaseCallback(Widget widget, GdkEventButton event)
@@ -295,18 +284,18 @@ class TestDrawingArea : VBox
 
 		public void backSpinChanged(SpinButton spinButton)
 		{
-
+/+
 			debug(trace) version(Tango) Stdout.format("backSpinChanged - entry {}", ++backSpinCount).newline;
 			else writefln("backSpinChanged - entry %s", ++backSpinCount);
 			drawPoints(getWindow());
 			GC gc = new GC(getWindow());
 			debug(trace) version(Tango) Stdout("backSpinChanged - exit").newline;
 			else writefln("backSpinChanged - exit");
-		}
++/		}
 
 		public void sizeSpinChanged(SpinButton spinButton)
 		{
-			if ( !(scaledPixbuf is null))
+/+			if ( !(scaledPixbuf is null))
 			{
 				int width = spinButton.getValueAsInt();
 				scaledPixbuf = image.getPixbuf();
@@ -316,13 +305,13 @@ class TestDrawingArea : VBox
 
 				scaledPixbuf = scaledPixbuf.scaleSimple(cast(int)ww, cast(int)hh, GdkInterpType.HYPER);
 			}
-		}
++/		}
 
 
 
-		public void drawPrimitive(GC gc, Drawable d, int x, int y)
+		public void drawPrimitive(/+GC gc, Drawable d,+/ int x, int y)
 		{
-			int width = spin.getValueAsInt();
+/+			int width = spin.getValueAsInt();
 			int height = width * 3 / 4;
 			debug(trace) version(Tango) Stdout.format("primitiveType = {}", primitiveType).newline;
 			else writefln("primitiveType = %s", primitiveType);
@@ -401,11 +390,11 @@ class TestDrawingArea : VBox
 					d.drawArc(gc, true,x-2,y-2,4,4,0,64*360);
 					break;
 			}
-		}
++/		}
 
-		private void drawPoints(Drawable d)
+		private void drawPoints(/+Drawable d+/)
 		{
-			int square = backSpin.getValueAsInt();
+/+			int square = backSpin.getValueAsInt();
 			int totalcount = 0;
 			int count = 0;
 			Color color = new Color();
@@ -461,11 +450,11 @@ class TestDrawingArea : VBox
 			}
 			gc.setForeground(black);
 			delete color;
-		}
++/		}
 
 		void onCGOptionsChanged(ComboBox comboBox)
 		{
-			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
+/+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{
@@ -487,20 +476,21 @@ class TestDrawingArea : VBox
 				case "GC SET": gcFunction = GdkFunction.SET; break;
 				default: gcFunction = GdkFunction.INVERT; break;
 			}
-		}
++/		}
 
 		void onPrimOptionChanged(ComboBox comboBox)
 		{
-			primitiveType = comboBox.getActiveText();
-		}
+/+			primitiveType = comboBox.getActiveText();
++/		}
 
+/+
 //
 //		void primitive(MenuItem item)
 //		{
 //			printf("TestDrawing.primitive item command = %.*s\n", item.getActionCommand().toString());
 //			primitiveType.set(item.getActionCommand().dup);
 //		}
-
++/
 	}
 
 }

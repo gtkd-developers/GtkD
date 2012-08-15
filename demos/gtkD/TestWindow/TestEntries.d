@@ -71,7 +71,7 @@ class TestEntries : Table
 	void showEntry(Button button)
 	{
 		version(Tango) Stdout.format("text field contains '{}'\n",entry.getText()).newline;
-		else writef("text field contains '%s'\n",Str.toStringz(entry.getText()));
+		else writef("text field contains '%s'\n",entry.getText());
 	}
 
 	void entryEditable(CheckButton button)

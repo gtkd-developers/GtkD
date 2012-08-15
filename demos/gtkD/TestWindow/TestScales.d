@@ -25,11 +25,12 @@ private import gtk.HScale;
 private import gtk.MenuItem;
 private import gtk.Menu;
 private import gtk.CheckButton;
+private import gtk.ComboBox;
+private import gtk.ComboBoxText;
 private import gtk.Box;
 private import gtk.Button;
 private import gtk.Scrollbar;
 private import gtk.Separator;
-//private import gtk.OptionMenu;
 private import gtk.Label;
 private import gtk.Scale;
 private import gtk.Adjustment;
@@ -59,16 +60,14 @@ class TestScales : Table //, MenuItemListener
 
 		createRangeControls();
 	}
-private import gtk.ComboBox;
+
 	void createRangeControls()
 	{
-
 			Box box1,box2,box3;
 			Button button;
 			Scrollbar scrollbar;
 			Separator separator;
-			ComboBox positionSelection;
-			ComboBox updateSelection;
+			ComboBoxText positionSelection;
 
 			Label label;
 			Scale scale;
@@ -104,7 +103,6 @@ private import gtk.ComboBox;
 			scrollbar = new HScrollbar(adj1);
 			/* Notice how this causes the scales to always be updated
 			 * continuously when the scrollbar is moved */
-			scrollbar.setUpdatePolicy(UpdateType.CONTINUOUS);
 			box3.packStart(scrollbar,true,true,0);
 
 			box2 = new HBox(false,10);
@@ -124,7 +122,7 @@ private import gtk.ComboBox;
 			label = new Label("Scale Value Position:");
 			box2.packStart(label,false,false,0);
 
-			positionSelection = new ComboBox();
+			positionSelection = new ComboBoxText();
 			positionSelection.appendText("Top");
 			positionSelection.appendText("Bottom");
 			positionSelection.appendText("Left");
@@ -135,99 +133,13 @@ private import gtk.ComboBox;
 			box2.packStart(positionSelection,false,false,0);
 
 			box1.packStart(box2,false,false,0);
-
-			box2 = new HBox(false,10);
-			box2.setBorderWidth(10);
-
-			/* Yet another option menu, this time for the update policy of the scale widgets */
-			label = new Label("Scale Update Policy:");
-			box2.packStart(label,false,false,0);
-
-			updateSelection = new ComboBox();
-
-  			updateSelection.appendText("Continuous");
-  			updateSelection.appendText("Discontinuous");
-  			updateSelection.appendText("Delayed");
-			updateSelection.addOnChanged(&onUpdateSelectionChanged);
-			updateSelection.setActive(0);
-
-			box2.packStart(updateSelection,false,false,0);
-			box1.packStart(box2,false,false,0);
-
-
-			/**
-			 * Here is a bit a pure C GTK+ code.
-			 * This code would compile and execute in D,
-			 * we just need to define the functions as extern.
-			 */
-			/+
-			box2 = gtk_hbox_new (FALSE, 10);
-			gtk_container_set_border_width (GTK_CONTAINER (box2), 10);
-
-			/* An HScale widget for adjusting the number of digits on the
-			 * sample scales. */
-			label = gtk_label_new ("Scale Digits:");
-			gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
-			gtk_widget_show (label);
-
-			adj2 = gtk_adjustment_new (1.0, 0.0, 5.0, 1.0, 1.0, 0.0);
-			g_signal_connect (G_OBJECT (adj2), "value_changed",
-							  G_CALLBACK (cb_digits_scale), NULL);
-			scale = gtk_hscale_new (GTK_ADJUSTMENT (adj2));
-			gtk_scale_set_digits (GTK_SCALE (scale), 0);
-			gtk_box_pack_start (GTK_BOX (box2), scale, TRUE, TRUE, 0);
-			gtk_widget_show (scale);
-
-			gtk_box_pack_start (GTK_BOX (box1), box2, TRUE, TRUE, 0);
-			gtk_widget_show (box2);
-
-			box2 = gtk_hbox_new (FALSE, 10);
-			gtk_container_set_border_width (GTK_CONTAINER (box2), 10);
-
-			/* And, one last HScale widget for adjusting the page size of the
-			 * scrollbar. */
-			label = gtk_label_new ("Scrollbar Page Size:");
-			gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
-			gtk_widget_show (label);
-
-			adj2 = gtk_adjustment_new (1.0, 1.0, 101.0, 1.0, 1.0, 0.0);
-			g_signal_connect (G_OBJECT (adj2), "value_changed",
-							  G_CALLBACK (cb_page_size), (gpointer) adj1);
-			scale = gtk_hscale_new (GTK_ADJUSTMENT (adj2));
-			gtk_scale_set_digits (GTK_SCALE (scale), 0);
-			gtk_box_pack_start (GTK_BOX (box2), scale, TRUE, TRUE, 0);
-			gtk_widget_show (scale);
-
-			gtk_box_pack_start (GTK_BOX (box1), box2, TRUE, TRUE, 0);
-			gtk_widget_show (box2);
-
-			separator = gtk_hseparator_new ();
-			gtk_box_pack_start (GTK_BOX (box1), separator, FALSE, TRUE, 0);
-			gtk_widget_show (separator);
-
-			box2 = gtk_vbox_new (FALSE, 10);
-			gtk_container_set_border_width (GTK_CONTAINER (box2), 10);
-			gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, TRUE, 0);
-			gtk_widget_show (box2);
-
-			button = gtk_button_new_with_label ("Quit");
-			g_signal_connect_swapped (G_OBJECT (button), "clicked",
-									  G_CALLBACK (gtk_main_quit),
-									  NULL);
-			gtk_box_pack_start (GTK_BOX (box2), button, TRUE, TRUE, 0);
-			GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-			gtk_widget_grab_default (button);
-			gtk_widget_show (button);
-
-			gtk_widget_show (window);
-			+/
-
 	}
 
 	void onPositionSelectionChanged(ComboBox comboBox)
 	{
+		ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
 
-		switch ( comboBox.getActiveText() )
+		switch ( comboBoxText.getActiveText() )
 		{
 			case "Top":
 				vscale.setValuePos(PositionType.TOP);
@@ -251,80 +163,9 @@ private import gtk.ComboBox;
 		}
 	}
 
-	void onUpdateSelectionChanged(ComboBox comboBox)
-	{
-		switch ( comboBox.getActiveText() )
-		{
-  			case "Continuous":
-				vscale.setUpdatePolicy(UpdateType.CONTINUOUS);
-				hscale.setUpdatePolicy(UpdateType.CONTINUOUS);
-				break;
-  			case "Discontinuous":
-				vscale.setUpdatePolicy(UpdateType.DISCONTINUOUS);
-				hscale.setUpdatePolicy(UpdateType.DISCONTINUOUS);
-				break;
-  			case "Delayed":
-				vscale.setUpdatePolicy(UpdateType.DELAYED);
-				hscale.setUpdatePolicy(UpdateType.DELAYED);
-				break;
-			default:
-				break;
-		}
-	}
-
-
-
-	/*
-	void activateItemCallback(MenuItem menuItem, char [] action)
-	{
-	}
-
-	void activateCallback(MenuItem menuItem, char [] action)
-	{
-		switch ( action )
-		{
-			case "ValueTop":
-				vscale.setValuePos(Scale.TOP);
-				hscale.setValuePos(Scale.TOP);
-			break;
-			case "ValueBottom":
-				vscale.setValuePos(Scale.BOTTOM);
-				hscale.setValuePos(Scale.BOTTOM);
-			break;
-			case "ValueLeft":
-				vscale.setValuePos(Scale.LEFT);
-				hscale.setValuePos(Scale.LEFT);
-			break;
-			case "ValueRight":
-				vscale.setValuePos(Scale.RIGHT);
-				hscale.setValuePos(Scale.RIGHT);
-			break;
-			case "ScaleContinuous":
-				vscale.setUpdatePolicy(Scale.CONTINUOUS);
-				hscale.setUpdatePolicy(Scale.CONTINUOUS);
-			break;
-			case "ScaleDiscontinuous":
-				vscale.setUpdatePolicy(Scale.DISCONTINUOUS);
-				hscale.setUpdatePolicy(Scale.DISCONTINUOUS);
-			break;
-			case "ScaleDelayed":
-				vscale.setUpdatePolicy(Scale.DELAYED);
-				hscale.setUpdatePolicy(Scale.DELAYED);
-			break;
-			default:
-				printf("menuItem.action %.*s received\n",action);
-			break;
-
-		}
-	}
-	*/
 	void displayValues(Button checkButton)
 	{
-		//CheckButton cb = (CheckButton)button;
-		//printf("check button %X %X\n",button,(CheckButton)button);
-		//printf("button.toString %.*s\n",button.toString());
 		vscale.setDrawValue((cast(CheckButton)checkButton).getActive());
 		hscale.setDrawValue((cast(CheckButton)checkButton).getActive());
 	}
-
 }
