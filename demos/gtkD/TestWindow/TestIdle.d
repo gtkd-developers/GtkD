@@ -21,6 +21,7 @@ module TestIdle;
 //debug = trace
 
 private import cairo.Context;
+private import cairo.ImageSurface;
 
 private import gtk.VBox;
 private import gtk.HBox;
@@ -124,9 +125,7 @@ class TestIdle : VBox
 		Timeout mainTimeout;
 
 		bool continueIdleCallback;
-		int gcFunction = 0;
-		Color paintColor;
-		Color black;
+		CairoOperator operator = CairoOperator.OVER;
 
 		int x =0;
 		int y =0;
@@ -136,30 +135,18 @@ class TestIdle : VBox
 		int count = 0;
 		int width;
 		int height;
-		Context context;
+		ImageSurface surface;
 
-		int callType = 1;	// ue 0 for Idle 1 for Timeout
+		CallType callType = CallType.Timeout;
 
 		this()
 		{
 			setSizeRequest(333,334);
 
-			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
-			black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
-
-			addOnRealize(&onRealize);
 			addOnMap(&onMap);
 			addOnUnmap(&onUnmap);
 			addOnSizeAllocate(&onSizeAllocate);
-
-		}
-
-		public void onRealize(Widget widget)
-		{
-			context = getWindow().createContext;
-			context.moveTo(0, 0);
-			context.setOperator(CairoOperator.OVER);
-//			gc.setFunction(GdkFunction.INVERT);
+			addOnDraw(&onDraw);
 		}
 
 		public void onMap(Widget widget)
@@ -189,6 +176,8 @@ class TestIdle : VBox
 			y = 0;
 			xi = 1;
 			yi = 1;
+
+			surface = ImageSurface.create(CairoFormat.ARGB32, width, height);
 		}
 
 		void onTimeoutSpinValueChanged(SpinButton spin)
@@ -211,28 +200,26 @@ class TestIdle : VBox
 			}
 			switch ( callType )
 			{
-				case 0: mainIdle = new Idle(&idleCallback); break;
-				case 1: mainTimeout = new Timeout(timeoutSpin.getValueAsInt(),&idleCallback, true); break;
+				case CallType.Idle: mainIdle = new Idle(&idleCallback); break;
+				case CallType.Timeout: mainTimeout = new Timeout(timeoutSpin.getValueAsInt(),&idleCallback, true); break;
 				default: mainIdle = new Idle(&idleCallback); break;
 			}
 		}
 
-		/**
-		 * This will be called from the expose event call back.
-		 * \bug this is called on get or loose focus - review
-		 */
-//		public bit exposeCallback(Widget widget)
-//		{
-//			//printf("testWindow.exposed ----------------------------- \n");
-//			//drawPoins(widget.getDrawable());
-//			return false;
-//		}
+		bool onDraw(Context context, Widget widget)
+		{
+			//Fill the Widget with the surface we are drawing on.
+			context.setSourceSurface(surface, 0, 0);
+			context.paint();
+
+			return true;
+		}
 
 		bool idleCallback()
 		{
-
-			//printf("%d %d\n",width,height);
-			//drawable.drawPoint(gc,x,y);
+			Context context = Context.create(surface);
+			context.setLineWidth(1);
+			context.setOperator(operator);
 
 			int xf;
 			int yf;
@@ -246,14 +233,18 @@ class TestIdle : VBox
 			if ( xf<yf ) yf=xf;
 
 			//writefln("%s %s -> %s %s (%s %s)\n",x,y,xf,yf,x+yf*xi, y+yf*yi);
+			context.moveTo(x, y);
 			context.lineTo(x+yf*xi, y+yf*yi);
-			//drawable.drawLine(gc,x,y, x+yf*xi, y+yf*yi);
+			context.stroke();
 
 			x += yf*xi;
 			y += yf*yi;
 
 			if ( x>=width || x<=0 ) xi = -xi;
 			if ( y>=height || y<=0 ) yi = -yi;
+
+			//Redraw the Widget.
+			this.queueDraw();
 
 			return continueIdleCallback;
 		}
@@ -266,9 +257,9 @@ class TestIdle : VBox
 			else writefln("gcOptions = %s", comboBoxText.getActiveText());
 			switch ( comboBoxText.getActiveText() )
 			{
-				case "Idle": callType = 0; break;
-				case "Timeout": callType = 1; break;
-				default: callType = 0; break;
+				case "Idle":    callType = CallType.Idle;    break;
+				case "Timeout": callType = CallType.Timeout; break;
+				default:        callType = CallType.Timeout; break;
 			}
 			resetCallType();
 		}
@@ -277,43 +268,48 @@ class TestIdle : VBox
 		{
 			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
 
-			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBoxText.getActiveText()).newline;
-			else writefln("gcOptions = %s", comboBoxText.getActiveText());
+			debug(trace) version(Tango) Stdout.format("CairoOperator = {}", comboBoxText.getActiveText()).newline;
+			else writefln("CairoOperator = %s", comboBoxText.getActiveText());
 			switch ( comboBoxText.getActiveText() )
 			{
-				case "CLEAR":          context.setOperator(CairoOperator.CLEAR);          break;
-				case "SOURCE":         context.setOperator(CairoOperator.SOURCE);         break;
-				case "OVER":           context.setOperator(CairoOperator.OVER);           break;
-				case "IN":             context.setOperator(CairoOperator.IN);             break;
-				case "OUT":            context.setOperator(CairoOperator.OUT);            break;
-				case "ATOP":           context.setOperator(CairoOperator.ATOP);           break;
-				case "DEST":           context.setOperator(CairoOperator.DEST);           break;
-				case "DEST_OVER":      context.setOperator(CairoOperator.DEST_OVER);      break;
-				case "DEST_IN":        context.setOperator(CairoOperator.DEST_IN);        break;
-				case "DEST_OUT":       context.setOperator(CairoOperator.DEST_OUT);       break;
-				case "DEST_ATOP":      context.setOperator(CairoOperator.DEST_ATOP);      break;
-				case "XOR":            context.setOperator(CairoOperator.XOR);            break;
-				case "ADD":            context.setOperator(CairoOperator.ADD);            break;
-				case "SATURATE":       context.setOperator(CairoOperator.SATURATE);       break;
-				case "MULTIPLY":       context.setOperator(CairoOperator.MULTIPLY);       break;
-				case "SCREEN":         context.setOperator(CairoOperator.SCREEN);         break;
-				case "OVERLAY":        context.setOperator(CairoOperator.OVERLAY);        break;
-				case "DARKEN":         context.setOperator(CairoOperator.DARKEN);         break;
-				case "LIGHTEN":        context.setOperator(CairoOperator.LIGHTEN);        break;
-				case "COLOR_DODGE":    context.setOperator(CairoOperator.COLOR_DODGE);    break;
-				case "COLOR_BURN":     context.setOperator(CairoOperator.COLOR_BURN);     break;
-				case "HARD_LIGHT":     context.setOperator(CairoOperator.HARD_LIGHT);     break;
-				case "SOFT_LIGHT":     context.setOperator(CairoOperator.SOFT_LIGHT);     break;
-				case "DIFFERENCE":     context.setOperator(CairoOperator.DIFFERENCE);     break;
-				case "EXCLUSION":      context.setOperator(CairoOperator.EXCLUSION);      break;
-				case "HSL_HUE":        context.setOperator(CairoOperator.HSL_HUE);        break;
-				case "HSL_SATURATION": context.setOperator(CairoOperator.HSL_SATURATION); break;
-				case "HSL_COLOR":      context.setOperator(CairoOperator.HSL_COLOR);      break;
-				case "HSL_LUMINOSITY": context.setOperator(CairoOperator.HSL_LUMINOSITY); break;
-				default:               context.setOperator(CairoOperator.OVER);           break;
+				case "CLEAR":          operator = CairoOperator.CLEAR;          break;
+				case "SOURCE":         operator = CairoOperator.SOURCE;         break;
+				case "OVER":           operator = CairoOperator.OVER;           break;
+				case "IN":             operator = CairoOperator.IN;             break;
+				case "OUT":            operator = CairoOperator.OUT;            break;
+				case "ATOP":           operator = CairoOperator.ATOP;           break;
+				case "DEST":           operator = CairoOperator.DEST;           break;
+				case "DEST_OVER":      operator = CairoOperator.DEST_OVER;      break;
+				case "DEST_IN":        operator = CairoOperator.DEST_IN;        break;
+				case "DEST_OUT":       operator = CairoOperator.DEST_OUT;       break;
+				case "DEST_ATOP":      operator = CairoOperator.DEST_ATOP;      break;
+				case "XOR":            operator = CairoOperator.XOR;            break;
+				case "ADD":            operator = CairoOperator.ADD;            break;
+				case "SATURATE":       operator = CairoOperator.SATURATE;       break;
+				case "MULTIPLY":       operator = CairoOperator.MULTIPLY;       break;
+				case "SCREEN":         operator = CairoOperator.SCREEN;         break;
+				case "OVERLAY":        operator = CairoOperator.OVERLAY;        break;
+				case "DARKEN":         operator = CairoOperator.DARKEN;         break;
+				case "LIGHTEN":        operator = CairoOperator.LIGHTEN;        break;
+				case "COLOR_DODGE":    operator = CairoOperator.COLOR_DODGE;    break;
+				case "COLOR_BURN":     operator = CairoOperator.COLOR_BURN;     break;
+				case "HARD_LIGHT":     operator = CairoOperator.HARD_LIGHT;     break;
+				case "SOFT_LIGHT":     operator = CairoOperator.SOFT_LIGHT;     break;
+				case "DIFFERENCE":     operator = CairoOperator.DIFFERENCE;     break;
+				case "EXCLUSION":      operator = CairoOperator.EXCLUSION;      break;
+				case "HSL_HUE":        operator = CairoOperator.HSL_HUE;        break;
+				case "HSL_SATURATION": operator = CairoOperator.HSL_SATURATION; break;
+				case "HSL_COLOR":      operator = CairoOperator.HSL_COLOR;      break;
+				case "HSL_LUMINOSITY": operator = CairoOperator.HSL_LUMINOSITY; break;
+				default:               operator = CairoOperator.OVER;           break;
 			}
 		}
-
 	}
-
 }
+
+enum CallType
+{
+	Idle,
+	Timeout,
+}
+

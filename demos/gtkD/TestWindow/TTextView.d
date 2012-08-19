@@ -18,8 +18,6 @@
 
 module TTextView;
 
-private import cairo.ImageSurface;
-
 private import gtk.Window;
 
 private import gtk.Widget;
