@@ -110,7 +110,9 @@ nocode: cairo_destroy
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries && cairo !is null )
+		if ( Linker.isLoaded(LIBRARY.CAIRO) &&
+			cairo !is null &&
+			cairo_get_reference_count(cairo) > 0 )
 		{
 			cairo_destroy(cairo);
 		}

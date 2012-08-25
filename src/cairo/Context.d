@@ -132,7 +132,9 @@ public class Context
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries && cairo !is null )
+		if ( Linker.isLoaded(LIBRARY.CAIRO) &&
+			cairo !is null &&
+			cairo_get_reference_count(cairo) > 0 )
 		{
 			cairo_destroy(cairo);
 		}
@@ -187,7 +189,7 @@ public class Context
 	 */
 	public void destroy()
 	{
-		int refCount = *(cast(int*)cairo);
+		uint refCount = *(cast(uint*)cairo);
 		
 		// void cairo_destroy (cairo_t *cr);
 		cairo_destroy(cairo);
