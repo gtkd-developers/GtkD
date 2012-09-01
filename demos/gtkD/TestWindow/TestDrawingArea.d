@@ -359,7 +359,10 @@ class TestDrawingArea : VBox
 				case "Image":
 					if ( !(scaledPixbuf is null))
 					{
-						context.setSourcePixbuf(scaledPixbuf, x, y);
+						version(D_Version2)
+							context.setSourcePixbuf(scaledPixbuf, x, y);
+						else
+							setSourcePixbuf(context, scaledPixbuf, x, y);
 						context.paint();
 					}
 					break;

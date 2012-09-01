@@ -302,8 +302,10 @@ public class TextBuffer : ObjectG
 			{
 				version(Tango)
 				Stderr.formatln("TextBuffer.CreateTag: Unsuported type: \"{}\" for property: \"{}\"", _arguments[i+1], name);
-				else
+				else version(D_Version2)
 				stderr.writefln("TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
+				else
+				writefln(stderr, "TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
 				
 				//TODO: throw segfaults, druntime bug?
 				throw new Exception("TextBuffer.CreateTag: Unsuported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
