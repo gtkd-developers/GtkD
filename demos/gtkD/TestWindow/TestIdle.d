@@ -182,7 +182,7 @@ class TestIdle : VBox
 
 		void onTimeoutSpinValueChanged(SpinButton spin)
 		{
-			if ( callType == 1 )
+			if ( callType == CallType.Timeout )
 			{
 				resetCallType();
 			}

@@ -20,6 +20,9 @@ module TestDrawingArea;
 
 //debug = trace;
 
+private import cairo.Context;
+private import cairo.ImageSurface;
+
 private import gtk.VBox;
 private import pango.PgContext;
 private import pango.PgLayout;
@@ -34,13 +37,16 @@ else private import std.math;
 private import gtk.Widget;
 private import gtk.MenuItem;
 private import gtk.ComboBox;
+private import gtk.ComboBoxText;
 private import gtk.Menu;
 private import gtk.Adjustment;
 private import gtk.HBox;
 private import gdk.Pixbuf;
+private import gdk.Cairo;
 private import gdk.Color;
 private import gdk.Event;
 
+private import pango.PgCairo;
 private import pango.PgFontDescription;
 
 private import gtk.DrawingArea;
@@ -59,34 +65,47 @@ class TestDrawingArea : VBox
 		debug(Tango) Stdout("TestDrawingArea.this() 1").newline;
 		super(false,4);
 
-/+		debug(Tango) Stdout("TestDrawingArea.this() 2").newline;
+		debug(Tango) Stdout("TestDrawingArea.this() 2").newline;
 		TestDrawing drawingArea = new TestDrawing();
 
 		debug(Tango) Stdout("TestDrawingArea.this() 3").newline;
 
-		ComboBox gcOptions = new ComboBox();
-		gcOptions.appendText("GC COPY");
-		gcOptions.appendText("GC INVERT");
-		gcOptions.appendText("GC XOR");
-		gcOptions.appendText("GC CLEAR");
-		gcOptions.appendText("GC AND");
-		gcOptions.appendText("GC AND_REVERSE");
-		gcOptions.appendText("GC AND_INVERT");
-		gcOptions.appendText("GC NOOP");
-		gcOptions.appendText("GC OR");
-		gcOptions.appendText("GC EQUIV");
-		gcOptions.appendText("GC OR_REVERSE");
-		gcOptions.appendText("GC COPY_INVERT");
-		gcOptions.appendText("GC OR_INVERT");
-		gcOptions.appendText("GC NAND");
-		gcOptions.appendText("GC NOR");
-		gcOptions.appendText("GC SET");
-		gcOptions.setActive(1);
-		gcOptions.addOnChanged(&drawingArea.onCGOptionsChanged);
+		ComboBoxText operators = new ComboBoxText();
+		operators.appendText("CLEAR");
+		operators.appendText("SOURCE");
+		operators.appendText("OVER");
+		operators.appendText("IN");
+		operators.appendText("OUT");
+		operators.appendText("ATOP");
+		operators.appendText("DEST");
+		operators.appendText("DEST_OVER");
+		operators.appendText("DEST_IN");
+		operators.appendText("DEST_OUT");
+		operators.appendText("DEST_ATOP");
+		operators.appendText("XOR");
+		operators.appendText("ADD");
+		operators.appendText("SATURATE");
+		operators.appendText("MULTIPLY");
+		operators.appendText("SCREEN");
+		operators.appendText("OVERLAY");
+		operators.appendText("DARKEN");
+		operators.appendText("LIGHTEN");
+		operators.appendText("COLOR_DODGE");
+		operators.appendText("COLOR_BURN");
+		operators.appendText("HARD_LIGHT");
+		operators.appendText("SOFT_LIGHT");
+		operators.appendText("DIFFERENCE");
+		operators.appendText("EXCLUSION");
+		operators.appendText("HSL_HUE");
+		operators.appendText("HSL_SATURATION");
+		operators.appendText("HSL_COLOR");
+		operators.appendText("HSL_LUMINOSITY");
+		operators.setActive(1);
+		operators.addOnChanged(&drawingArea.onOperatorsChanged);
 
 		debug(Tango) Stdout("TestDrawingArea.this() 4").newline;
 
-		ComboBox primOption = new ComboBox();
+		ComboBoxText primOption = new ComboBoxText();
 		primOption.appendText("Filled Arc");
 		primOption.appendText("Arc");
 		primOption.appendText("Line");
@@ -105,7 +124,7 @@ class TestDrawingArea : VBox
 		packStart(drawingArea,true,true,0);
 
 		HBox hbox = new HBox(false,4);
-		hbox.packStart(gcOptions,false,false,2);
+		hbox.packStart(operators,false,false,2);
 		hbox.packStart(primOption,false,false,2);
 		hbox.packStart(drawingArea.spin,false,false,2);
 		hbox.packStart(drawingArea.backSpin,false,false,2);
@@ -115,12 +134,13 @@ class TestDrawingArea : VBox
 		packStart(hbox, false, false, 0);
 
 		debug(Tango) Stdout("TestDrawingArea.this() END").newline;
-+/	}
+	}
 
 
 	class TestDrawing : DrawingArea
 	{
-/+		GdkFunction gcFunction = GdkFunction.INVERT;
+		CairoOperator operator = CairoOperator.OVER;
+		ImageSurface surface;
 		Color paintColor;
 		Color black;
 
@@ -146,10 +166,10 @@ class TestDrawingArea : VBox
 			{-4,0},
 			{-1,1}
 			];
-+/
+
 		this()
 		{
-/+			debug(Tango) Stdout("TestDrawing.this() 1").newline;
+			debug(Tango) Stdout("TestDrawing.this() 1").newline;
 
 			setSizeRequest(333,333);
 			width = getWidth();
@@ -160,7 +180,7 @@ class TestDrawingArea : VBox
 			primitiveType = "Filled Arc";
 			font = PgFontDescription.fromString("Courier 48");
 
-			image = new Image("../../../images/gtkDlogo_a_small.png");
+			image = new Image("images/gtkDlogo_a_small.png");
 			scaledPixbuf = image.getPixbuf();
 			if (scaledPixbuf is null)
 			{
@@ -177,62 +197,47 @@ class TestDrawingArea : VBox
 			backSpin = new SpinButton(new Adjustment(5, 4, 100, 1, 10, 0),1,0);
 			backSpin.addOnValueChanged(&backSpinChanged);
 
-
-
-			addOnExpose(&exposeCallback);
-//			addOnMap(&mapCallback);
+			addOnDraw(&drawCallback);
 			addOnMotionNotify(&onMotionNotify);
 			addOnSizeAllocate(&onSizeAllocate);
 			addOnButtonPress(&onButtonPress);
 			addOnButtonRelease(&onButtonRelease);
-+/		}
+		}
 
 		void onSizeAllocate(GtkAllocation* allocation, Widget widget)
 		{
-/+			width = allocation.width;
+			width = allocation.width;
 			height = allocation.height;
-+/		}
 
+			surface = ImageSurface.create(CairoFormat.ARGB32, width, height);
+			drawPoints(Context.create(surface));
+		}
 
-		public bool onButtonPress(GdkEventButton* event, Widget widget)
+		public bool onButtonPress(Event event, Widget widget)
 		{
-/+			debug(trace) version(Tango) Stdout("button DOWN").newline;
+			debug(trace) version(Tango) Stdout("button DOWN").newline;
 			else writefln("button DOWN");
-			if ( event.button == 1 )
+			if ( event.type == EventType.BUTTON_PRESS && event.button.button == 1 )
 			{
 				debug(trace) version(Tango) Stdout("Button 1 down").newline;
 				else writefln("Button 1 down");
 				buttonIsDown = true;
-				Drawable d = getWindow();
-				GC gc = new GC(d);
-				gc.setForeground(new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0));
-				gc.setFunction(gcFunction);
 
-				drawPrimitive(gc, d, cast(int)event.x, cast(int)event.y); //event.getX(), event.getY());
-
-				gc.setForeground(black);
-				gc.setFunction(GdkFunction.COPY);
+				drawPrimitive(cast(int)event.button.x, cast(int)event.button.y);
 			}
-+/			return false;
+			return false;
 		}
 
-		public bool onButtonRelease(GdkEventButton* event, Widget widget)
+		public bool onButtonRelease(Event event, Widget widget)
 		{
-/+			debug(trace) version(Tango) Stdout("button UP").newline;
+			debug(trace) version(Tango) Stdout("button UP").newline;
 			else writefln("button UP");
-			if ( event.button == 1 )
+			if ( event.type == EventType.BUTTON_RELEASE && event.button.button == 1 )
 			{
 				debug(trace) version(Tango) Stdout("button 1 UP").newline;
 				else writefln("Button 1 UP");
 				buttonIsDown = false;
 			}
-+/			return false;
-		}
-
-
-		public bool mapCallback(Widget d, Event event)
-		{
-			//printf("MAP CALLBACK\n");
 			return false;
 		}
 
@@ -240,43 +245,23 @@ class TestDrawingArea : VBox
 		 * This will be called from the expose event call back.
 		 * \bug this is called on get or loose focus - review
 		 */
-		public bool exposeCallback(GdkEventExpose* event, Widget widget)
+		public bool drawCallback(Context context, Widget widget)
 		{
-			//printf("testWindow.exposed ----------------------------- \n");
-/+			drawPoints(getWindow());
-+/			return true;
-		}
-		public bool noExposeCallback(Widget widget)
-		{
-			//printf("testWindow.noExposed ----------------------------- \n");
+			//Fill the Widget with the surface we are drawing on.
+			context.setSourceSurface(surface, 0, 0);
+			context.paint();
+
 			return true;
 		}
 
-
-		public bool onMotionNotify(GdkEventMotion* event, Widget widget)
+		public bool onMotionNotify(Event event, Widget widget)
 		{
-/+			//printf("testWindow.mouseMoved ----------------------------- \n");
-			if ( buttonIsDown )
+			//printf("testWindow.mouseMoved ----------------------------- \n");
+			if ( buttonIsDown && event.type == EventType.MOTION_NOTIFY )
 			{
-				Drawable d = getWindow();
-				GC gc = new GC(d);
-				gc.setForeground(paintColor);
-				gc.setFunction(gcFunction);
-
-				drawPrimitive(gc, d, cast(int)event.x, cast(int)event.y);
-				//d.drawPoint(event.getX(),event.getY());
-				//d.drawArc(true,event.getX()-2,event.getY()-2,4,4,0,64*360);
-				//d.drawRectangle(true,event.getX()-2,event.getY()-2,4,4);
-
-				gc.setForeground(black);
-				gc.setFunction(GdkFunction.COPY);
+				drawPrimitive(cast(int)event.motion.x, cast(int)event.motion.y);
 			}
-+/			return true;
-		}
 
-		public bool mouseButtonReleaseCallback(Widget widget, GdkEventButton event)
-		{
-			//printf("testWindow.buttonReleased ----------------------------- \n");
 			return true;
 		}
 
@@ -284,18 +269,20 @@ class TestDrawingArea : VBox
 
 		public void backSpinChanged(SpinButton spinButton)
 		{
-/+
+
 			debug(trace) version(Tango) Stdout.format("backSpinChanged - entry {}", ++backSpinCount).newline;
 			else writefln("backSpinChanged - entry %s", ++backSpinCount);
-			drawPoints(getWindow());
-			GC gc = new GC(getWindow());
+
+			drawPoints(Context.create(surface));
+			this.queueDraw();
+
 			debug(trace) version(Tango) Stdout("backSpinChanged - exit").newline;
 			else writefln("backSpinChanged - exit");
-+/		}
+		}
 
 		public void sizeSpinChanged(SpinButton spinButton)
 		{
-/+			if ( !(scaledPixbuf is null))
+			if ( !(scaledPixbuf is null))
 			{
 				int width = spinButton.getValueAsInt();
 				scaledPixbuf = image.getPixbuf();
@@ -305,107 +292,115 @@ class TestDrawingArea : VBox
 
 				scaledPixbuf = scaledPixbuf.scaleSimple(cast(int)ww, cast(int)hh, GdkInterpType.HYPER);
 			}
-+/		}
+		}
 
-
-
-		public void drawPrimitive(/+GC gc, Drawable d,+/ int x, int y)
+		public void drawPrimitive(int x, int y)
 		{
-/+			int width = spin.getValueAsInt();
+			int width = spin.getValueAsInt();
 			int height = width * 3 / 4;
+
+			Context context = Context.create(surface);
+			context.setOperator(operator);
+
 			debug(trace) version(Tango) Stdout.format("primitiveType = {}", primitiveType).newline;
 			else writefln("primitiveType = %s", primitiveType);
+
 			switch ( primitiveType )
 			{
 				case "Arc":
-					d.drawArc(gc, false,x-width/2,y-width/2,width,width,0,64*360);
+					context.arc(x-width/2,y-width/2,width,0,2*PI);
+					context.stroke();
 					break;
 
 				case "Filled Arc":
-					d.drawArc(gc, true,x-width/4,y-width/4,width/2,width/2,0,64*360);
+					context.arc(x-width/4,y-width/4,width/2,0,2*PI);
+					context.fill();
 					break;
 
 				case "Line":
-					d.drawLine(gc, x, y, x+width, y);
+					context.moveTo(x, y);
+					context.lineTo(x+width, y);
+					context.stroke();
 					break;
 
 				case "Point":
-					d.drawPoint(gc, x, y);
+					context.rectangle(x, y, 1, 1);
+					context.fill();
 					break;
 
 				case "Rectangle":
-					d.drawRectangle(gc, false, x-width/2, y-width/4, width, height);
+					context.rectangle(x-width/2, y-width/4, width, height);
+					context.stroke();
 					break;
 
 				case "Filled Rectangle":
-					d.drawRectangle(gc, true, x-width/2, y-width/4, width, height);
+					context.rectangle(x-width/2, y-width/4, width, height);
+					context.fill();
 					break;
 
 				case "Text":
-					Font font = new Font("FreeMono 12");
-					debug(trace) version(Tango) Stdout.format("Text font = {}", font).newline;
-					else writefln("Text font = %s", font);
-					d.drawString( font, gc,x, y, "gtkD toolkit");
+					context.selectFontFace("FreeMono", CairoFontSlant.NORMAL, CairoFontWeight.NORMAL);
+					context.setFontSize(12);
+					context.moveTo(x, y);
+					context.showText("gtkD toolkit");
 					break;
 
 				case "Pango text":
-					//PgContext pc = getPangoContext();
-					//PgLayout l = new PgLayout(pc);
-					PgLayout l = createPangoLayout("GtkD with D");
-					//l.setText("GtkD with D");
-					//PgFontDescription fd = l.getFontDescription();
+					PgLayout l = PgCairo.createLayout(context);
 					PgFontDescription fd = new PgFontDescription("Sans", width);
+
+					l.setText("Gtk+ with D");
 					l.setFontDescription(fd);
 
-					d.drawLayout(gc, x,y,l);
+					context.moveTo(x, y);
+					PgCairo.showLayout(context, l);
 					break;
 
 				case "Image":
 					if ( !(scaledPixbuf is null))
 					{
-						scaledPixbuf.renderToDrawable( d, gc,
-						//d.getDrawableStruct(), gc.getGCStruct(),
-							0, 0, x, y,
-							scaledPixbuf.getWidth(), scaledPixbuf.getHeight(),
-							GdkRgbDither.NONE, 0, 0
-							);
+						context.setSourcePixbuf(scaledPixbuf, x, y);
+						context.paint();
 					}
 					break;
 
 				case "Polygon":
-					GdkPoint[] pol1;
-					pol1.length = polygonStar.length;
+					//TODO: Use Context.scale and transform ?
 					for ( int scale = 10 ; scale<= 300; scale+=15)
 					{
-						foreach(int i , ref GdkPoint p ; polygonStar)
+						context.save();
+						context.moveTo(polygonStar[0].x*scale/2+x, polygonStar[0].y*scale/2+y);
+
+						foreach(p; polygonStar[1 .. $])
 						{
-							pol1[i].x = p.x*scale/2+x;
-							pol1[i].y = p.y*scale/2+y;
+							context.lineTo(p.x*scale/2+x, p.y*scale/2+y);
 						}
-						d.drawPolygon(gc, true , pol1);
+						context.closePath();
+						context.stroke();
+						context.restore();
 					}
 					break;
 
 				default:
-					d.drawArc(gc, true,x-2,y-2,4,4,0,64*360);
+					context.arcNegative(x-2,y-2,4,0,6);
+					context.fill();
 					break;
 			}
-+/		}
 
-		private void drawPoints(/+Drawable d+/)
+			//Redraw the Widget.
+			this.queueDraw();
+		}
+
+		private void drawPoints(Context context)
 		{
-/+			int square = backSpin.getValueAsInt();
+			int square = backSpin.getValueAsInt();
 			int totalcount = 0;
 			int count = 0;
 			Color color = new Color();
-			GC gc = new GC(d);
 			int width = this.width;
 			int height = this.height;
 			int x = 0;
 			int y = 0;
-
-			debug(trace) version(Tango) Stdout.format("w,h = {} {}",width ,height).newline;
-			else writefln("w,h = %s %s",width ,height);
 
 			debug(trace) version(Tango) Stdout.format("w,h = {} {}",width ,height).newline;
 			else writefln("w,h = %s %s",width ,height);
@@ -416,22 +411,24 @@ class TestDrawingArea : VBox
 			float yy;
 			while ( x < width || y <height )
 			{
+				context.save();
+
 				xx = x * dx;
 				yy = y * dy;
-				color.set8(	cast(ubyte)xx,
-							cast(ubyte)yy,
-							cast(ubyte)(sqrt((xx*xx)+(yy*yy))));
-				gc.setForeground(color);
+				context.setSourceRgba( xx / 255,
+				                       yy / 255,
+				                       sqrt((xx*xx)+(yy*yy)) / 255,
+				                       1 );
+
 				if ( square > 1 )
 				{
-					//d.drawPoint(gc, x,y);
-					d.drawRectangle(gc, true,x,y,square,square);
-					//d.foo();
-					//d.drawArc(gc, 1, 10, 10, 100, 100, 45, 60);
+					context.rectangle(x, y, square, square);
+					context.fill();
 				}
 				else
 				{
-					d.drawPoint(gc, x,y);
+					context.moveTo(x, y);
+					context.stroke();
 				}
 				x +=square;
 				if  ( x > width)
@@ -447,51 +444,59 @@ class TestDrawingArea : VBox
 					}
 				}
 				++totalcount;
-			}
-			gc.setForeground(black);
-			delete color;
-+/		}
 
-		void onCGOptionsChanged(ComboBox comboBox)
-		{
-/+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
-			else writefln("gcOptions = %s", comboBox.getActiveText());
-			switch ( comboBox.getActiveText() )
-			{
-				case "GC COPY": gcFunction = GdkFunction.COPY; break;
-				case "GC INVERT": gcFunction = GdkFunction.INVERT; break;
-				case "GC XOR": gcFunction = GdkFunction.XOR; break;
-				case "GC CLEAR": gcFunction = GdkFunction.CLEAR; break;
-				case "GC AND": gcFunction = GdkFunction.AND; break;
-				case "GC AND_REVERSE": gcFunction = GdkFunction.AND_REVERSE; break;
-				case "GC AND_INVERT": gcFunction = GdkFunction.AND_INVERT; break;
-				case "GC NOOP": gcFunction = GdkFunction.NOOP; break;
-				case "GC OR": gcFunction = GdkFunction.OR; break;
-				case "GC EQUIV": gcFunction = GdkFunction.EQUIV; break;
-				case "GC OR_REVERSE": gcFunction = GdkFunction.OR_REVERSE; break;
-				case "GC COPY_INVERT": gcFunction = GdkFunction.COPY_INVERT; break;
-				case "GC OR_INVERT": gcFunction = GdkFunction.OR_INVERT; break;
-				case "GC NAND": gcFunction = GdkFunction.NAND; break;
-				case "GC NOR": gcFunction = GdkFunction.NOR; break;
-				case "GC SET": gcFunction = GdkFunction.SET; break;
-				default: gcFunction = GdkFunction.INVERT; break;
+				context.restore();
 			}
-+/		}
+			delete color;
+		}
+
+		void onOperatorsChanged(ComboBox comboBox)
+		{
+			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
+
+			debug(trace) version(Tango) Stdout.format("CairoOperator = {}", comboBoxText.getActiveText()).newline;
+			else writefln("CairoOperator = %s", comboBoxText.getActiveText());
+			switch ( comboBoxText.getActiveText() )
+			{
+				case "CLEAR":          operator = CairoOperator.CLEAR;          break;
+				case "SOURCE":         operator = CairoOperator.SOURCE;         break;
+				case "OVER":           operator = CairoOperator.OVER;           break;
+				case "IN":             operator = CairoOperator.IN;             break;
+				case "OUT":            operator = CairoOperator.OUT;            break;
+				case "ATOP":           operator = CairoOperator.ATOP;           break;
+				case "DEST":           operator = CairoOperator.DEST;           break;
+				case "DEST_OVER":      operator = CairoOperator.DEST_OVER;      break;
+				case "DEST_IN":        operator = CairoOperator.DEST_IN;        break;
+				case "DEST_OUT":       operator = CairoOperator.DEST_OUT;       break;
+				case "DEST_ATOP":      operator = CairoOperator.DEST_ATOP;      break;
+				case "XOR":            operator = CairoOperator.XOR;            break;
+				case "ADD":            operator = CairoOperator.ADD;            break;
+				case "SATURATE":       operator = CairoOperator.SATURATE;       break;
+				case "MULTIPLY":       operator = CairoOperator.MULTIPLY;       break;
+				case "SCREEN":         operator = CairoOperator.SCREEN;         break;
+				case "OVERLAY":        operator = CairoOperator.OVERLAY;        break;
+				case "DARKEN":         operator = CairoOperator.DARKEN;         break;
+				case "LIGHTEN":        operator = CairoOperator.LIGHTEN;        break;
+				case "COLOR_DODGE":    operator = CairoOperator.COLOR_DODGE;    break;
+				case "COLOR_BURN":     operator = CairoOperator.COLOR_BURN;     break;
+				case "HARD_LIGHT":     operator = CairoOperator.HARD_LIGHT;     break;
+				case "SOFT_LIGHT":     operator = CairoOperator.SOFT_LIGHT;     break;
+				case "DIFFERENCE":     operator = CairoOperator.DIFFERENCE;     break;
+				case "EXCLUSION":      operator = CairoOperator.EXCLUSION;      break;
+				case "HSL_HUE":        operator = CairoOperator.HSL_HUE;        break;
+				case "HSL_SATURATION": operator = CairoOperator.HSL_SATURATION; break;
+				case "HSL_COLOR":      operator = CairoOperator.HSL_COLOR;      break;
+				case "HSL_LUMINOSITY": operator = CairoOperator.HSL_LUMINOSITY; break;
+				default:               operator = CairoOperator.OVER;           break;
+			}
+		}
 
 		void onPrimOptionChanged(ComboBox comboBox)
 		{
-/+			primitiveType = comboBox.getActiveText();
-+/		}
+			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
 
-/+
-//
-//		void primitive(MenuItem item)
-//		{
-//			printf("TestDrawing.primitive item command = %.*s\n", item.getActionCommand().toString());
-//			primitiveType.set(item.getActionCommand().dup);
-//		}
-+/
+			primitiveType = comboBoxText.getActiveText();
+		}
 	}
-
 }
 
