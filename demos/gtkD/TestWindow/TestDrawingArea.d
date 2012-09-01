@@ -450,10 +450,8 @@ class TestDrawingArea : VBox
 			delete color;
 		}
 
-		void onOperatorsChanged(ComboBox comboBox)
+		void onOperatorsChanged(ComboBoxText comboBoxText)
 		{
-			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
-
 			debug(trace) version(Tango) Stdout.format("CairoOperator = {}", comboBoxText.getActiveText()).newline;
 			else writefln("CairoOperator = %s", comboBoxText.getActiveText());
 			switch ( comboBoxText.getActiveText() )
@@ -491,10 +489,8 @@ class TestDrawingArea : VBox
 			}
 		}
 
-		void onPrimOptionChanged(ComboBox comboBox)
+		void onPrimOptionChanged(ComboBoxText comboBoxText)
 		{
-			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
-
 			primitiveType = comboBoxText.getActiveText();
 		}
 	}

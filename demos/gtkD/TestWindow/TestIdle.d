@@ -249,10 +249,8 @@ class TestIdle : VBox
 			return continueIdleCallback;
 		}
 
-		void onCallTypeChanged(ComboBox comboBox)
+		void onCallTypeChanged(ComboBoxText comboBoxText)
 		{
-			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
-
 			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBoxText.getActiveText()).newline;
 			else writefln("gcOptions = %s", comboBoxText.getActiveText());
 			switch ( comboBoxText.getActiveText() )
@@ -264,10 +262,8 @@ class TestIdle : VBox
 			resetCallType();
 		}
 
-		void onOperatorChanged(ComboBox comboBox)
+		void onOperatorChanged(ComboBoxText comboBoxText)
 		{
-			ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
-
 			debug(trace) version(Tango) Stdout.format("CairoOperator = {}", comboBoxText.getActiveText()).newline;
 			else writefln("CairoOperator = %s", comboBoxText.getActiveText());
 			switch ( comboBoxText.getActiveText() )

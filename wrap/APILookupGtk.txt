@@ -5347,6 +5347,7 @@ struct: GtkComboBoxText
 class: ComboBoxText
 prefix: gtk_combo_box_text_
 import: glib.Str
+import: gobject.Signals
 import: gtk.TreeIter
 import: gtk.TreeModelIF
 
@@ -5446,7 +5447,12 @@ code: start
 		}
 	}
 code: end
-outFile: ComboBoxText
+openFile: ComboBoxText
+
+file: GtkComboBox.html
+strictPrefix: Y
+prefix: none
+closeFile: ComboBoxText
 
 file: GtkMenu.html
 struct: GtkMenu

@@ -135,10 +135,8 @@ class TestScales : Table //, MenuItemListener
 			box1.packStart(box2,false,false,0);
 	}
 
-	void onPositionSelectionChanged(ComboBox comboBox)
+	void onPositionSelectionChanged(ComboBoxText comboBoxText)
 	{
-		ComboBoxText comboBoxText = cast(ComboBoxText)comboBox;
-
 		switch ( comboBoxText.getActiveText() )
 		{
 			case "Top":

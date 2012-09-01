@@ -133,8 +133,8 @@ public class Context
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY.CAIRO) &&
-			cairo !is null &&
-			cairo_get_reference_count(cairo) > 0 )
+		cairo !is null &&
+		cairo_get_reference_count(cairo) > 0 )
 		{
 			cairo_destroy(cairo);
 		}
@@ -189,7 +189,7 @@ public class Context
 	 */
 	public void destroy()
 	{
-		uint refCount = *(cast(uint*)cairo);
+		uint refCount = cairo_get_reference_count(cairo);
 		
 		// void cairo_destroy (cairo_t *cr);
 		cairo_destroy(cairo);

@@ -167,7 +167,7 @@ code: start
 	 */
 	public void destroy()
 	{
-		int refCount = *(cast(int*)cairo);
+		uint refCount = cairo_get_reference_count(cairo);
 
 		// void cairo_destroy (cairo_t *cr);
 		cairo_destroy(cairo);
