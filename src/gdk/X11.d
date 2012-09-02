@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = X11
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -48,7 +48,6 @@
  * 	- gdk_window_foreign_new_for_display
  * 	- gdk_xid_table_lookup_for_display
  * 	- gdk_window_lookup_for_display
- * 	- gdk_x11_window_get_xid
  * 	- gdk_x11_lookup_xdisplay
  * 	- gdk_net_wm_supports
  * 	- gdk_x11_screen_supports_net_wm_hint
@@ -87,6 +86,7 @@
  * 	- gdk_x11_window_foreign_new_for_display
  * 	- gdk_x11_window_lookup_for_display
  * omit code:
+ * 	- gdk_x11_window_get_xid
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -133,6 +133,18 @@ private import gdk.Window;
  */
 public class X11
 {
+	
+	/**
+	 * Returns the X resource (window) belonging to a GdkWindow.
+	 * Params:
+	 * window = a native GdkWindow.
+	 * Returns: the ID of drawable's X resource.
+	 */
+	public static uint windowGetXid(Window window)
+	{
+		// Window gdk_x11_window_get_xid (GdkWindow *window);
+		return gdk_x11_window_get_xid((window is null) ? null : window.getWindowStruct());
+	}
 	
 	/**
 	 */

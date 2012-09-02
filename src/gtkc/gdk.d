@@ -548,6 +548,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_x11_display_error_trap_push, \"gdk_x11_display_error_trap_push\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_display_error_trap_pop_ignored, \"gdk_x11_display_error_trap_pop_ignored\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_screen_get_monitor_output, \"gdk_x11_screen_get_monitor_output\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_window_get_xid, \"gdk_x11_window_get_xid\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_set_theme_variant_gtk_only, \"gdk_x11_window_set_theme_variant_gtk_only\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_set_user_time, \"gdk_x11_window_set_user_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_move_to_current_desktop, \"gdk_x11_window_move_to_current_desktop\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -1105,6 +1106,7 @@ mixin( gshared ~"extern(C)
 	void function(GdkDisplay* display) c_gdk_x11_display_error_trap_push;
 	void function(GdkDisplay* display) c_gdk_x11_display_error_trap_pop_ignored;
 	XID function(GdkScreen* screen, gint monitorNum) c_gdk_x11_screen_get_monitor_output;
+	gulong function(GdkWindow* window) c_gdk_x11_window_get_xid;
 	void function(GdkWindow* window, char* variant) c_gdk_x11_window_set_theme_variant_gtk_only;
 	void function(GdkWindow* window, guint32 timestamp) c_gdk_x11_window_set_user_time;
 	void function(GdkWindow* window) c_gdk_x11_window_move_to_current_desktop;
@@ -1660,6 +1662,7 @@ alias c_gdk_x11_display_set_startup_notification_id  gdk_x11_display_set_startup
 alias c_gdk_x11_display_error_trap_push  gdk_x11_display_error_trap_push;
 alias c_gdk_x11_display_error_trap_pop_ignored  gdk_x11_display_error_trap_pop_ignored;
 alias c_gdk_x11_screen_get_monitor_output  gdk_x11_screen_get_monitor_output;
+alias c_gdk_x11_window_get_xid  gdk_x11_window_get_xid;
 alias c_gdk_x11_window_set_theme_variant_gtk_only  gdk_x11_window_set_theme_variant_gtk_only;
 alias c_gdk_x11_window_set_user_time  gdk_x11_window_set_user_time;
 alias c_gdk_x11_window_move_to_current_desktop  gdk_x11_window_move_to_current_desktop;

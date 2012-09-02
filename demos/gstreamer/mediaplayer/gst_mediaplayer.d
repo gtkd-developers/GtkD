@@ -20,7 +20,6 @@ import gtk.Main;
 import gtk.MainWindow;
 
 import gtk.Widget;
-import gdk.Drawable;
 import gdk.Window;
 import gdk.Event;
 import gtk.DrawingArea;
@@ -33,7 +32,7 @@ import gdk.X11;//Needed for XOverlay
 import gtk.VBox;
 import gtk.HBox;
 import gtk.Button;
-import gtk.ComboBox;
+import gtk.ComboBoxText;
 
 import gobject.Value;
 
@@ -103,9 +102,9 @@ public:
 		m_xoverlay = set;
 		
 		debug(MonitorOverlay) Trace.formatln("Monitor.xoverlay(set) xoverlay set. Now setting XwindowId.");
-		m_xoverlay.setXwindowId( X11.drawableGetXid( getWindow() ) );
+		m_xoverlay.setXwindowId( X11.windowGetXid( getWindow() ) );
 		
-		debug(MonitorOverlay) Trace.formatln("X11.drawableGetXid: {}", X11.drawableGetXid( getWindow() ) );
+		debug(MonitorOverlay) Trace.formatln("X11.drawableGetXid: {}", X11.windowGetXid( getWindow() ) );
 		
 		return m_xoverlay;
 	}
@@ -211,7 +210,7 @@ public:
 		playButton.addOnClicked( &onPlay );
 		buttonsHBox.packStart( playButton, false, false, 0 );
 		
-		aspectComboBox = new ComboBox(true);//Create a new text ComboBox.
+		aspectComboBox = new ComboBoxText();//Create a new text ComboBox.
 		aspectComboBox.appendText("16:9");
 		aspectComboBox.appendText("4:3");
 		aspectComboBox.setActiveText("16:9");
@@ -397,7 +396,7 @@ public:
 		Main.quit();
 	}
 	
-	void onAspectComboBoxChanged( ComboBox combo )
+	void onAspectComboBoxChanged( ComboBoxText combo )
 	{
 		char[] asp = combo.getActiveText();
 		if( asp == "16:9" )
@@ -413,14 +412,14 @@ public:
 		ResponseType[] r;
 		a ~= "Play file";
 		a ~= "Close";
-		r ~= ResponseType.GTK_RESPONSE_APPLY;//GTK_RESPONSE_OK;
-		r ~= ResponseType.GTK_RESPONSE_CANCEL;
+		r ~= ResponseType.APPLY;//GTK_RESPONSE_OK;
+		r ~= ResponseType.CANCEL;
 		if ( importMaterialFileChooserDialog  is  null )
 		{
 			importMaterialFileChooserDialog = new FileChooserDialog("Play mediafile", this, FileChooserAction.OPEN, a, r);
 		}
 		
-		if( importMaterialFileChooserDialog.run() != ResponseType.GTK_RESPONSE_CANCEL )
+		if( importMaterialFileChooserDialog.run() != ResponseType.CANCEL )
 		{
 			//mediaFileUri = importMaterialFileChooserDialog.getFilename();
 			mediaFileUri = importMaterialFileChooserDialog.getUri();
@@ -468,7 +467,7 @@ protected:
 	bool isPlaying() { return m_isPlaying; }
 	bool m_isPlaying = false;
 	
-	ComboBox aspectComboBox;
+	ComboBoxText aspectComboBox;
 	Button quitButton;
 	
 	MonitorOverlay monitorOverlay;

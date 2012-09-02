@@ -950,6 +950,21 @@ structWrap: GdkDisplay* Display
 structWrap: GdkScreen* Screen
 structWrap: GdkWindow* Window
 
+nocode: gdk_x11_window_get_xid
+code: start
+	/**
+	 * Returns the X resource (window) belonging to a GdkWindow.
+	 * Params:
+	 * window = a native GdkWindow.
+	 * Returns: the ID of drawable's X resource.
+	 */
+	public static uint windowGetXid(Window window)
+	{
+		// Window gdk_x11_window_get_xid (GdkWindow *window);
+		return gdk_x11_window_get_xid((window is null) ? null : window.getWindowStruct());
+	}
+code: end
+
 #more types should added here like atom, visual, image, etc...
 #for now we just disable all the stuff with X types in them
 #only thing left is XID which is just an uint.
@@ -962,7 +977,6 @@ noprefix: gdk_pixmap_foreign_new_for_screen
 noprefix: gdk_window_foreign_new_for_display
 noprefix: gdk_xid_table_lookup_for_display
 noprefix: gdk_window_lookup_for_display
-noprefix: gdk_x11_window_get_xid
 noprefix: gdk_x11_lookup_xdisplay
 noprefix: gdk_net_wm_supports
 noprefix: gdk_x11_screen_supports_net_wm_hint
