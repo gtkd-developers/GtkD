@@ -37,6 +37,7 @@ version(Tango)
 	private import tango.io.Stdout;
 	private import tango.text.Util;
 	private import tango.io.device.File;
+	private import tango.core.Vararg;
 
     void writefln( string frm, ... ){
         string frm2 = substitute( frm, "%s", "{}" );

@@ -34,6 +34,8 @@ private import gdk.Event;
 version(Tango){
     import tango.text.Util;
     import tango.io.Stdout;
+	import tango.core.Vararg;
+
     void writefln( string frm, ... ){
         string frm2 = substitute( frm, "%s", "{}" );
         Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;

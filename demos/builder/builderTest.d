@@ -13,6 +13,7 @@ version(Tango)
 	import tango.stdc.stdlib : exit;
 	import tango.io.Stdout;
 	import tango.text.Util;
+	import tango.core.Vararg;
 
 	void writefln( string frm, ... ){
 		string frm2 = substitute( frm, "%s", "{}" );
