@@ -267,7 +267,7 @@ public class TreeModel : ObjectG, TreeModelIF
 		{
 			auto tm = new TreeModel(tree_model);
 			
-			return tm.getIter(new TreeIter(iter), new TreePath(path));
+			return tm.getIter(new TreeIter(iter), new TreePath(gtk_tree_path_copy(path)));
 		}
 		
 		static GtkTreePath* customTreeModelGetPath(GtkTreeModel *tree_model, GtkTreeIter *iter)
@@ -275,7 +275,7 @@ public class TreeModel : ObjectG, TreeModelIF
 			auto tm = new TreeModel(tree_model);
 			TreePath path = tm.getPath(new TreeIter(iter));
 			
-			return (path is null) ? null : path.getTreePathStruct();
+			return (path is null) ? null : gtk_tree_path_copy(path.getTreePathStruct());
 		}
 		
 		static void customTreeModelGetValue(GtkTreeModel *tree_model, GtkTreeIter *iter, int column, GValue *value)
