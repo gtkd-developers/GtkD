@@ -131,8 +131,7 @@ class CustomList : TreeModel
 
 		record = cast(CustomRecord*) iter.userData;
 
-		path = new TreePath();
-		path.appendIndex(record.pos);
+		path = new TreePath(record.pos);
 
 		return path;
 	}
@@ -342,8 +341,7 @@ class CustomList : TreeModel
 		 *  (e.g. tree row references) that we have inserted
 		 *  a new row, and where it was inserted */
 
-		path = new TreePath();
-		path.appendIndex(pos);
+		path = new TreePath(pos);
 
 		iter = new TreeIter();
 		getIter(iter, path);
