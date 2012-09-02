@@ -46,8 +46,6 @@ public alias GST_SECOND SECOND;
 //#define GST_CLOCK_TIME_NONE		((GstClockTime) -1)
 const long GST_CLOCK_TIME_NONE = -1L;
 public alias GST_CLOCK_TIME_NONE CLOCK_TIME_NONE;
-align(1):
-
 alias void* GstXmlNodePtr;
 alias void* xmlNodePtr;
 
@@ -1415,7 +1413,7 @@ alias GstTypeFindProbability TypeFindProbability;
 
 struct GstBinPrivate{}
 
-align(1) public struct GstBuffer
+public struct GstBuffer
 {
 	GstMiniObject mini_object;
 	
@@ -1441,7 +1439,7 @@ align(1) public struct GstBuffer
 	gpointer _gst_reserved[GST_PADDING];
 }
 
-struct GstObjectClass {
+public struct GstObjectClass {
 	GObjectClass parent_class;
 	
 	gchar   *path_string_separator;
@@ -1464,7 +1462,7 @@ struct GstObjectClass {
 	gpointer _gst_reserved[GST_PADDING];
 }
 
-align(1) struct GstMessage
+struct GstMessage
 {
 	GstMiniObject mini_object;
 	
@@ -1483,7 +1481,7 @@ align(1) struct GstMessage
 	gpointer _gst_reserved[GST_PADDING];
 }
 
-align(1) public struct GstMiniObject
+public struct GstMiniObject
 {
 	GTypeInstance instanc;
 	//< public >// with COW

@@ -59,8 +59,6 @@ public import gtkc.gobjecttypes;
 addTypedefs: end
 
 addAliases: start
-	align(1):
-
 	alias void* GstXmlNodePtr;
 	alias void* xmlNodePtr;
 addAliases: end
@@ -118,7 +116,7 @@ addEnums: end
 addStructs: start
 	struct GstBinPrivate{}
 
-	align(1) public struct GstBuffer
+	public struct GstBuffer
 	{
 		GstMiniObject mini_object;
 	
@@ -144,7 +142,7 @@ addStructs: start
 		gpointer _gst_reserved[GST_PADDING];
 	}
 
-	struct GstObjectClass {
+	public struct GstObjectClass {
 		GObjectClass parent_class;
 
 		gchar   *path_string_separator;
@@ -167,7 +165,7 @@ addStructs: start
 		gpointer _gst_reserved[GST_PADDING];
 	}
 
-	align(1) struct GstMessage
+	struct GstMessage
 	{
 		GstMiniObject mini_object;
 
@@ -186,7 +184,7 @@ addStructs: start
 		gpointer _gst_reserved[GST_PADDING];
 	}
 
-	align(1) public struct GstMiniObject
+	public struct GstMiniObject
 	{
 		GTypeInstance instanc;
 		//< public >// with COW
