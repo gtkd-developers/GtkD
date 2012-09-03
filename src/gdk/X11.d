@@ -140,7 +140,7 @@ public class X11
 	 * window = a native GdkWindow.
 	 * Returns: the ID of drawable's X resource.
 	 */
-	public static uint windowGetXid(Window window)
+	public static gulong windowGetXid(Window window)
 	{
 		// Window gdk_x11_window_get_xid (GdkWindow *window);
 		return gdk_x11_window_get_xid((window is null) ? null : window.getWindowStruct());
