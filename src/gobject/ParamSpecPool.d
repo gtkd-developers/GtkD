@@ -169,7 +169,7 @@ public class ParamSpecPool
 	 */
 	public ParamSpec lookup(string paramName, GType ownerType, int walkAncestors)
 	{
-		// GParamSpec *	 g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
+		// GParamSpec * g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
 		auto p = g_param_spec_pool_lookup(gParamSpecPool, Str.toStringz(paramName), ownerType, walkAncestors);
 		if(p is null)
 		{
@@ -187,7 +187,7 @@ public class ParamSpecPool
 	 */
 	public ParamSpec[] list(GType ownerType)
 	{
-		// GParamSpec **	 g_param_spec_pool_list (GParamSpecPool *pool,  GType owner_type,  guint *n_pspecs_p);
+		// GParamSpec ** g_param_spec_pool_list (GParamSpecPool *pool,  GType owner_type,  guint *n_pspecs_p);
 		uint nPspecsP;
 		auto p = g_param_spec_pool_list(gParamSpecPool, ownerType, &nPspecsP);
 		if(p is null)
@@ -213,7 +213,7 @@ public class ParamSpecPool
 	 */
 	public ListG listOwned(GType ownerType)
 	{
-		// GList *		 g_param_spec_pool_list_owned (GParamSpecPool *pool,  GType owner_type);
+		// GList * g_param_spec_pool_list_owned (GParamSpecPool *pool,  GType owner_type);
 		auto p = g_param_spec_pool_list_owned(gParamSpecPool, ownerType);
 		if(p is null)
 		{

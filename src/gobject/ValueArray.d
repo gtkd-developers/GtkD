@@ -115,7 +115,7 @@ public class ValueArray
 	 */
 	public Value getNth(uint index)
 	{
-		// GValue *		 g_value_array_get_nth (GValueArray *value_array,  guint index_);
+		// GValue * g_value_array_get_nth (GValueArray *value_array,  guint index_);
 		auto p = g_value_array_get_nth(gValueArray, index);
 		if(p is null)
 		{
@@ -134,7 +134,7 @@ public class ValueArray
 	 */
 	public this (uint nPrealloced)
 	{
-		// GValueArray *	 g_value_array_new (guint n_prealloced);
+		// GValueArray * g_value_array_new (guint n_prealloced);
 		auto p = g_value_array_new(nPrealloced);
 		if(p is null)
 		{
@@ -150,7 +150,7 @@ public class ValueArray
 	 */
 	public ValueArray copy()
 	{
-		// GValueArray *	 g_value_array_copy (const GValueArray *value_array);
+		// GValueArray * g_value_array_copy (const GValueArray *value_array);
 		auto p = g_value_array_copy(gValueArray);
 		if(p is null)
 		{
@@ -177,7 +177,7 @@ public class ValueArray
 	 */
 	public ValueArray append(Value value)
 	{
-		// GValueArray *	 g_value_array_append (GValueArray *value_array,  const GValue *value);
+		// GValueArray * g_value_array_append (GValueArray *value_array,  const GValue *value);
 		auto p = g_value_array_append(gValueArray, (value is null) ? null : value.getValueStruct());
 		if(p is null)
 		{
@@ -195,7 +195,7 @@ public class ValueArray
 	 */
 	public ValueArray prepend(Value value)
 	{
-		// GValueArray *	 g_value_array_prepend (GValueArray *value_array,  const GValue *value);
+		// GValueArray * g_value_array_prepend (GValueArray *value_array,  const GValue *value);
 		auto p = g_value_array_prepend(gValueArray, (value is null) ? null : value.getValueStruct());
 		if(p is null)
 		{
@@ -214,7 +214,7 @@ public class ValueArray
 	 */
 	public ValueArray insert(uint index, Value value)
 	{
-		// GValueArray *	 g_value_array_insert (GValueArray *value_array,  guint index_,  const GValue *value);
+		// GValueArray * g_value_array_insert (GValueArray *value_array,  guint index_,  const GValue *value);
 		auto p = g_value_array_insert(gValueArray, index, (value is null) ? null : value.getValueStruct());
 		if(p is null)
 		{
@@ -232,7 +232,7 @@ public class ValueArray
 	 */
 	public ValueArray remove(uint index)
 	{
-		// GValueArray *	 g_value_array_remove (GValueArray *value_array,  guint index_);
+		// GValueArray * g_value_array_remove (GValueArray *value_array,  guint index_);
 		auto p = g_value_array_remove(gValueArray, index);
 		if(p is null)
 		{
@@ -242,7 +242,7 @@ public class ValueArray
 	}
 	
 	/**
-	 * Sort value_array using compare_func to compare the elements accoring to
+	 * Sort value_array using compare_func to compare the elements according to
 	 * the semantics of GCompareFunc.
 	 * The current implementation uses Quick-Sort as sorting algorithm.
 	 * Params:
@@ -251,7 +251,7 @@ public class ValueArray
 	 */
 	public ValueArray sort(GCompareFunc compareFunc)
 	{
-		// GValueArray *	 g_value_array_sort (GValueArray *value_array,  GCompareFunc compare_func);
+		// GValueArray * g_value_array_sort (GValueArray *value_array,  GCompareFunc compare_func);
 		auto p = g_value_array_sort(gValueArray, compareFunc);
 		if(p is null)
 		{
@@ -261,7 +261,7 @@ public class ValueArray
 	}
 	
 	/**
-	 * Sort value_array using compare_func to compare the elements accoring
+	 * Sort value_array using compare_func to compare the elements according
 	 * to the semantics of GCompareDataFunc.
 	 * The current implementation uses Quick-Sort as sorting algorithm.
 	 * Rename to: g_value_array_sort
@@ -272,7 +272,7 @@ public class ValueArray
 	 */
 	public ValueArray sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
-		// GValueArray *	 g_value_array_sort_with_data (GValueArray *value_array,  GCompareDataFunc compare_func,  gpointer user_data);
+		// GValueArray * g_value_array_sort_with_data (GValueArray *value_array,  GCompareDataFunc compare_func,  gpointer user_data);
 		auto p = g_value_array_sort_with_data(gValueArray, compareFunc, userData);
 		if(p is null)
 		{

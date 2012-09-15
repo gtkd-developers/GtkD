@@ -363,6 +363,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_cclosure_new_swap, \"g_cclosure_new_swap\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_new_object, \"g_cclosure_new_object\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_new_object_swap, \"g_cclosure_new_object_swap\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_generic, \"g_cclosure_marshal_generic\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_VOID__VOID, \"g_cclosure_marshal_VOID__VOID\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_VOID__BOOLEAN, \"g_cclosure_marshal_VOID__BOOLEAN\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_VOID__CHAR, \"g_cclosure_marshal_VOID__CHAR\", LIBRARY.GOBJECT);
@@ -384,6 +385,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_cclosure_marshal_STRING__OBJECT_POINTER, \"g_cclosure_marshal_STRING__OBJECT_POINTER\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_VOID__UINT_POINTER, \"g_cclosure_marshal_VOID__UINT_POINTER\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_BOOLEAN__FLAGS, \"g_cclosure_marshal_BOOLEAN__FLAGS\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_BOOLEAN__BOXED_BOXED, \"g_cclosure_marshal_BOOLEAN__BOXED_BOXED\", LIBRARY.GOBJECT);
 
 	// gobject.ValueArray
 
@@ -740,6 +742,7 @@ mixin( gshared ~"extern(C)
 	GClosure* function(GCallback callbackFunc, gpointer userData, GClosureNotify destroyData) c_g_cclosure_new_swap;
 	GClosure* function(GCallback callbackFunc, GObject* object) c_g_cclosure_new_object;
 	GClosure* function(GCallback callbackFunc, GObject* object) c_g_cclosure_new_object_swap;
+	void function(GClosure* closure, GValue* returnGvalue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_generic;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__VOID;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__BOOLEAN;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__CHAR;
@@ -761,6 +764,7 @@ mixin( gshared ~"extern(C)
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_STRING__OBJECT_POINTER;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_VOID__UINT_POINTER;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_BOOLEAN__FLAGS;
+	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, gpointer invocationHint, gpointer marshalData) c_g_cclosure_marshal_BOOLEAN__BOXED_BOXED;
 
 	// gobject.ValueArray
 
@@ -1115,6 +1119,7 @@ alias c_g_cclosure_new  g_cclosure_new;
 alias c_g_cclosure_new_swap  g_cclosure_new_swap;
 alias c_g_cclosure_new_object  g_cclosure_new_object;
 alias c_g_cclosure_new_object_swap  g_cclosure_new_object_swap;
+alias c_g_cclosure_marshal_generic  g_cclosure_marshal_generic;
 alias c_g_cclosure_marshal_VOID__VOID  g_cclosure_marshal_VOID__VOID;
 alias c_g_cclosure_marshal_VOID__BOOLEAN  g_cclosure_marshal_VOID__BOOLEAN;
 alias c_g_cclosure_marshal_VOID__CHAR  g_cclosure_marshal_VOID__CHAR;
@@ -1136,6 +1141,7 @@ alias c_g_cclosure_marshal_VOID__VARIANT  g_cclosure_marshal_VOID__VARIANT;
 alias c_g_cclosure_marshal_STRING__OBJECT_POINTER  g_cclosure_marshal_STRING__OBJECT_POINTER;
 alias c_g_cclosure_marshal_VOID__UINT_POINTER  g_cclosure_marshal_VOID__UINT_POINTER;
 alias c_g_cclosure_marshal_BOOLEAN__FLAGS  g_cclosure_marshal_BOOLEAN__FLAGS;
+alias c_g_cclosure_marshal_BOOLEAN__BOXED_BOXED  g_cclosure_marshal_BOOLEAN__BOXED_BOXED;
 
 // gobject.ValueArray
 

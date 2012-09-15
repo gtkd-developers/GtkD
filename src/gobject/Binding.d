@@ -239,9 +239,9 @@ public class Binding : ObjectG
 	 * on target. Whenever the source_property is changed the target_property is
 	 * Since 2.26
 	 * Params:
-	 * source = the source GObject
+	 * source = the source GObject. [type GObject.Object]
 	 * sourceProperty = the property on source to bind
-	 * target = the target GObject
+	 * target = the target GObject. [type GObject.Object]
 	 * targetProperty = the property on target to bind
 	 * flags = flags to pass to GBinding
 	 * Returns: the GBinding instance representing the binding between the two GObject instances. The binding is released whenever the GBinding reference count reaches zero. [transfer none]
@@ -264,9 +264,9 @@ public class Binding : ObjectG
 	 * the binding.
 	 * Since 2.26
 	 * Params:
-	 * source = the source GObject
+	 * source = the source GObject. [type GObject.Object]
 	 * sourceProperty = the property on source to bind
-	 * target = the target GObject
+	 * target = the target GObject. [type GObject.Object]
 	 * targetProperty = the property on target to bind
 	 * flags = flags to pass to GBinding
 	 * transformTo = the transformation function
@@ -300,9 +300,9 @@ public class Binding : ObjectG
 	 * Rename to: g_object_bind_property_full
 	 * Since 2.26
 	 * Params:
-	 * source = the source GObject
+	 * source = the source GObject. [type GObject.Object]
 	 * sourceProperty = the property on source to bind
-	 * target = the target GObject
+	 * target = the target GObject. [type GObject.Object]
 	 * targetProperty = the property on target to bind
 	 * flags = flags to pass to GBinding
 	 * transformTo = a GClosure wrapping the transformation function

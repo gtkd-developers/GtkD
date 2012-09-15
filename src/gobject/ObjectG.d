@@ -124,11 +124,11 @@ version(Tango) {
  * a new reference.
  * Since floating references are useful almost exclusively for C convenience,
  * language bindings that provide automated reference and memory ownership
- * maintenance (such as smart pointers or garbage collection) therefore don't
- * need to expose floating references in their API.
+ * maintenance (such as smart pointers or garbage collection) should not
+ * expose floating references in their API.
  * Some object implementations may need to save an objects floating state
- * across certain code portions (an example is GtkMenu), to achive this, the
- * following sequence can be used:
+ * across certain code portions (an example is GtkMenu), to achieve this,
+ * the following sequence can be used:
  * $(DDOC_COMMENT example)
  */
 public class ObjectG
@@ -642,7 +642,7 @@ public class ObjectG
 	/**
 	 * This function is intended for GObject implementations to re-enforce a
 	 * floating object reference.
-	 * Doing this is seldomly required: all
+	 * Doing this is seldom required: all
 	 * GInitiallyUnowneds are created with a floating reference which
 	 * usually just needs to be sunken by calling g_object_ref_sink().
 	 * Since 2.10
@@ -726,7 +726,7 @@ public class ObjectG
 	 * toggled from strong to weak (is_last_ref
 	 * true) or weak to strong (is_last_ref false).
 	 * Since a (normal) reference must be held to the object before
-	 * calling g_object_toggle_ref(), the initial state of the reverse
+	 * calling g_object_add_toggle_ref(), the initial state of the reverse
 	 * link is always strong.
 	 * Multiple toggle references may be added to the same gobject,
 	 * however if there are multiple toggle references to an object, none

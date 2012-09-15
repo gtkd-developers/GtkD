@@ -97,6 +97,12 @@ private import gobject.TypePlugin;
  * types called g_type_register_fundamental() which requires both a GTypeInfo
  * structure and a GTypeFundamentalInfo structure but it is seldom used
  * since most fundamental types are predefined rather than user-defined.
+ * Type instance and class structs are limited to a total of 64 KiB,
+ * including all parent types. Similarly, type instances' private data
+ * (as created by g_type_class_add_private()) are limited to a total of
+ * 64 KiB. If a type instance needs a large static buffer, allocate it
+ * separately (typically by using GArray or GPtrArray) and put a pointer
+ * to the buffer in the structure.
  * A final word about type names.
  * Such an identifier needs to be at least three characters long. There is no
  * upper length limit. The first character needs to be a letter (a-z or A-Z)
@@ -335,7 +341,7 @@ public class Type
 	 * sequentially in the same memory block as the public
 	 * structures.
 	 * Note that the accumulated size of the private structures of
-	 * a type and all its parent types cannot excced 64kB.
+	 * a type and all its parent types cannot excced 64 KiB.
 	 * This function should be called in the type's class_init() function.
 	 * The private structure can be retrieved using the
 	 * G_TYPE_INSTANCE_GET_PRIVATE() macro.
@@ -636,9 +642,9 @@ public class Type
 	}
 	
 	/**
-	 * Adds the static interface_type to instantiable_type. The information
-	 * contained in the GTypeInterfaceInfo structure pointed to by info
-	 * is used to manage the relationship.
+	 * Adds the static interface_type to instantiable_type. The
+	 * information contained in the GInterfaceInfo structure pointed to by
+	 * info is used to manage the relationship.
 	 * Params:
 	 * instanceType = GType value of an instantiable type.
 	 * interfaceType = GType value of an interface type.
@@ -691,7 +697,7 @@ public class Type
 	 */
 	public static TypePlugin getPlugin(GType type)
 	{
-		// GTypePlugin *	 g_type_get_plugin (GType type);
+		// GTypePlugin * g_type_get_plugin (GType type);
 		auto p = g_type_get_plugin(type);
 		if(p is null)
 		{
@@ -712,7 +718,7 @@ public class Type
 	 */
 	public static TypePlugin interfaceGetPlugin(GType instanceType, GType interfaceType)
 	{
-		// GTypePlugin *	 g_type_interface_get_plugin (GType instance_type,  GType interface_type);
+		// GTypePlugin * g_type_interface_get_plugin (GType instance_type,  GType interface_type);
 		auto p = g_type_interface_get_plugin(instanceType, interfaceType);
 		if(p is null)
 		{

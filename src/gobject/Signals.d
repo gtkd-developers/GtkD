@@ -132,6 +132,8 @@ public class Signals
 	/**
 	 * Creates a new signal. (This is usually done in the class initializer.)
 	 * See g_signal_new() for details on allowed signal names.
+	 * If c_marshaller is NULL g_cclosure_marshal_generic will be used as
+	 * the marshaller for this signal.
 	 * Params:
 	 * signalName = the name for the signal
 	 * itype = the type this signal pertains to. It will also pertain to
@@ -139,14 +141,17 @@ public class Signals
 	 * signalFlags = a combination of GSignalFlags specifying detail of when
 	 * the default handler is to be invoked. You should at least specify
 	 * G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST
-	 * classClosure = The closure to invoke on signal emission; may be NULL
-	 * accumulator = the accumulator for this signal; may be NULL
+	 * classClosure = The closure to invoke on signal emission;
+	 * may be NULL. [allow-none]
+	 * accumulator = the accumulator for this signal; may be NULL. [allow-none]
 	 * accuData = user data for the accumulator
-	 * cMarshaller = the function to translate arrays of parameter values to
-	 * signal emissions into C language callback invocations
+	 * cMarshaller = the function to translate arrays of
+	 * parameter values to signal emissions into C language callback
+	 * invocations or NULL. [allow-none]
 	 * returnType = the type of return value, or G_TYPE_NONE for a signal
 	 * without a return value
-	 * paramTypes = an array of types, one for each parameter
+	 * paramTypes = an array of types, one for
+	 * each parameter. [array length=n_params]
 	 * Returns: the signal id
 	 */
 	public static uint newv(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, GType[] paramTypes)
@@ -158,6 +163,8 @@ public class Signals
 	/**
 	 * Creates a new signal. (This is usually done in the class initializer.)
 	 * See g_signal_new() for details on allowed signal names.
+	 * If c_marshaller is NULL, g_cclosure_marshal_generic() will be used as
+	 * the marshaller for this signal.
 	 * Params:
 	 * signalName = the name for the signal
 	 * itype = the type this signal pertains to. It will also pertain to
@@ -168,8 +175,8 @@ public class Signals
 	 * classClosure = The closure to invoke on signal emission; may be NULL.
 	 * accumulator = the accumulator for this signal; may be NULL.
 	 * accuData = user data for the accumulator.
-	 * cMarshaller = the function to translate arrays of parameter values to
-	 * signal emissions into C language callback invocations.
+	 * cMarshaller = the function to translate arrays of parameter
+	 * values to signal emissions into C language callback invocations or NULL. [allow-none]
 	 * returnType = the type of return value, or G_TYPE_NONE for a signal
 	 * without a return value.
 	 * nParams = the number of parameter types in args.
@@ -191,8 +198,8 @@ public class Signals
 	 * be considered constant and have to be left untouched.
 	 * Params:
 	 * signalId = The signal id of the signal to query information for.
-	 * query = A user provided structure that is filled in with constant
-	 * values upon success.
+	 * query = A user provided structure that is
+	 * filled in with constant values upon success. [out caller-allocates]
 	 */
 	public static void query(uint signalId, GSignalQuery* query)
 	{
@@ -236,7 +243,7 @@ public class Signals
 	 * g_signal_query().
 	 * Params:
 	 * itype = Instance or interface type.
-	 * Returns: Newly allocated array of signal IDs.
+	 * Returns: Newly allocated array of signal IDs. [array length=n_ids]
 	 */
 	public static uint[] listIds(GType itype)
 	{
@@ -251,10 +258,9 @@ public class Signals
 	 * Note that g_signal_emitv() doesn't change return_value if no handlers are
 	 * connected, in contrast to g_signal_emit() and g_signal_emit_valist().
 	 * Params:
-	 * instanceAndParams = argument list for the signal emission. The first
-	 * element in the array is a GValue for the instance the signal is
-	 * being emitted on. The rest are any arguments to be passed to the
-	 * signal.
+	 * instanceAndParams = argument list for the signal emission.
+	 * The first element in the array is a GValue for the instance the signal
+	 * is being emitted on. The rest are any arguments to be passed to the signal. [array]
 	 * signalId = the signal id
 	 * detail = the detail
 	 * returnValue = Location to store the return value of the signal emission.
@@ -302,7 +308,7 @@ public class Signals
 	 * detailedSignal = a string of the form "signal-name::detail".
 	 * cHandler = the GCallback to connect.
 	 * gobject = the object to pass as data to c_handler.
-	 * connectFlags = a combination of GConnnectFlags.
+	 * connectFlags = a combination of GConnectFlags.
 	 * Returns: the handler id.
 	 */
 	public static gulong connectObject(void* instanc, string detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags)
@@ -427,7 +433,7 @@ public class Signals
 	 * and/or data the handler has to match.
 	 * signalId = Signal the handler has to be connected to.
 	 * detail = Signal detail the handler has to be connected to.
-	 * closure = The closure the handler will invoke.
+	 * closure = The closure the handler will invoke. [allow-none]
 	 * func = The C closure callback of the handler (useless for non-C closures).
 	 * data = The closure data of the handler's closure.
 	 * Returns: A valid non-0 signal handler id for a successful match.
@@ -451,7 +457,7 @@ public class Signals
 	 * and/or data the handlers have to match.
 	 * signalId = Signal the handlers have to be connected to.
 	 * detail = Signal detail the handlers have to be connected to.
-	 * closure = The closure the handlers will invoke.
+	 * closure = The closure the handlers will invoke. [allow-none]
 	 * func = The C closure callback of the handlers (useless for non-C closures).
 	 * data = The closure data of the handlers' closures.
 	 * Returns: The number of handlers that matched.
@@ -476,7 +482,7 @@ public class Signals
 	 * and/or data the handlers have to match.
 	 * signalId = Signal the handlers have to be connected to.
 	 * detail = Signal detail the handlers have to be connected to.
-	 * closure = The closure the handlers will invoke.
+	 * closure = The closure the handlers will invoke. [allow-none]
 	 * func = The C closure callback of the handlers (useless for non-C closures).
 	 * data = The closure data of the handlers' closures.
 	 * Returns: The number of handlers that matched.
@@ -501,7 +507,7 @@ public class Signals
 	 * and/or data the handlers have to match.
 	 * signalId = Signal the handlers have to be connected to.
 	 * detail = Signal detail the handlers have to be connected to.
-	 * closure = The closure the handlers will invoke.
+	 * closure = The closure the handlers will invoke. [allow-none]
 	 * func = The C closure callback of the handlers (useless for non-C closures).
 	 * data = The closure data of the handlers' closures.
 	 * Returns: The number of handlers that matched.
@@ -597,9 +603,9 @@ public class Signals
 	 * g_signal_override_class_closure() and
 	 * g_signal_override_class_handler().
 	 * Params:
-	 * instanceAndParams = the argument list of the signal emission. The first
-	 * element in the array is a GValue for the instance the signal is being
-	 * emitted on. The rest are any arguments to be passed to the signal.
+	 * instanceAndParams = (array) the argument list of the signal emission.
+	 * The first element in the array is a GValue for the instance the signal
+	 * is being emitted on. The rest are any arguments to be passed to the signal.
 	 * returnValue = Location for the return value.
 	 */
 	public static void chainFromOverridden(Value instanceAndParams, Value returnValue)
@@ -666,8 +672,8 @@ public class Signals
 	 * Params:
 	 * detailedSignal = a string of the form "signal-name::detail".
 	 * itype = The interface/instance type that introduced "signal-name".
-	 * signalIdP = Location to store the signal id.
-	 * detailP = Location to store the detail quark.
+	 * signalIdP = Location to store the signal id. [out]
+	 * detailP = Location to store the detail quark. [out]
 	 * forceDetailQuark = TRUE forces creation of a GQuark for the detail.
 	 * Returns: Whether the signal name could successfully be parsed and signal_id_p and detail_p contain valid return values.
 	 */
@@ -679,7 +685,7 @@ public class Signals
 	
 	/**
 	 * Returns the invocation hint of the innermost signal emission of instance.
-	 * Returns: the invocation hint of the innermost signal emission.
+	 * Returns: the invocation hint of the innermost signal emission. [transfer none]
 	 */
 	public static GSignalInvocationHint* getInvocationHint(void* instanc)
 	{

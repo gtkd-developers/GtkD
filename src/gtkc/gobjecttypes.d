@@ -223,6 +223,9 @@ alias GParamFlags ParamFlags;
  *  third-party code.
  * G_SIGNAL_NO_HOOKS
  * No emissions hooks are supported for this signal.
+ * G_SIGNAL_MUST_COLLECT
+ * Varargs signal emission will always collect the
+ *  arguments, even if there are no signal handlers connected. Since 2.30.
  */
 public enum GSignalFlags
 {
@@ -232,7 +235,8 @@ public enum GSignalFlags
 	NO_RECURSE = 1 << 3,
 	DETAILED = 1 << 4,
 	ACTION = 1 << 5,
-	NO_HOOKS = 1 << 6
+	NO_HOOKS = 1 << 6,
+	MUST_COLLECT = 1 << 7
 }
 alias GSignalFlags SignalFlags;
 
@@ -306,10 +310,11 @@ alias GConnectFlags ConnectFlags;
  */
 public enum GBindingFlags
 {
-	DEFAULT = 0,
-	BIDIRECTIONAL = 1 << 0,
-	SYNC_CREATE = 1 << 1,
-	INVERT_BOOLEAN = 1 << 2
+	/+*< prefix= G_BINDING >+/
+	G_BINDING_DEFAULT = 0,
+	G_BINDING_BIDIRECTIONAL = 1 << 0,
+	G_BINDING_SYNC_CREATE = 1 << 1,
+	G_BINDING_INVERT_BOOLEAN = 1 << 2
 }
 alias GBindingFlags BindingFlags;
 
@@ -583,10 +588,11 @@ public struct GInterfaceInfo
  * It should be noted, that it is generally a bad idea to follow the
  * G_VALUE_NOCOPY_CONTENTS hint for reference counted types. Due to
  * reentrancy requirements and reference count assertions performed
- * by the GSignal code, reference counts should always be incremented
- * for reference counted contents stored in the value->data array.
- * To deviate from our string example for a moment, and taking a look
- * at an exemplary implementation for collect_value() of GObject:
+ * by the signal emission code, reference counts should always be
+ * incremented for reference counted contents stored in the value->data
+ * array. To deviate from our string example for a moment, and taking
+ * a look at an exemplary implementation for collect_value() of
+ * GObject:
  * $(DDOC_COMMENT example)
  * The reference count for valid objects is always incremented,
  * regardless of collect_flags. For invalid objects, the example
@@ -1273,8 +1279,8 @@ public struct GParamSpecVariant
  * should not be used directly.
  * GTypeInstance g_type_instance;
  * private GTypeInstance portion
- * gchar *name;
- * name of this parameter
+ * const gchar *name;
+ * name of this parameter: always an interned string
  * GParamFlags flags;
  * GParamFlags flags for this parameter
  * GType value_type;
@@ -1285,7 +1291,7 @@ public struct GParamSpecVariant
 public struct GParamSpec
 {
 	GTypeInstance gTypeInstance;
-	char *name;
+	char *name; /+* interned string +/
 	GParamFlags flags;
 	GType valueType;
 	GType ownerType; /+* class or interface using this property +/
@@ -1310,7 +1316,7 @@ public struct GParamSpec
  * value_validate ()
  * Ensures that the contents of value comply with the
  * specifications set out by this type (optional), see
- * g_param_value_set_validate().
+ * g_param_value_validate().
  * values_cmp ()
  * Compares value1 with value2 according to this type
  * (recommended, the default is memcmp()), see g_param_values_cmp().
@@ -1352,7 +1358,7 @@ public struct GParamSpecClass
  * value_validate ()
  * Ensures that the contents of value comply with the
  * specifications set out by pspec (optional), see
- * g_param_value_set_validate().
+ * g_param_value_validate().
  * values_cmp ()
  * Compares value1 with value2 according to pspec
  * (recommended, the default is memcmp()), see g_param_values_cmp().
@@ -1515,7 +1521,7 @@ public struct GBinding{}
 // #define G_TYPE_MAKE_FUNDAMENTAL(x) ((GType) ((x) << G_TYPE_FUNDAMENTAL_SHIFT))
 
 /*
- * Checks if type is an abstract type. An abstract type can not be
+ * Checks if type is an abstract type. An abstract type cannot be
  * instantiated and is normally used as an abstract base class for
  * derived classes.
  * type :
@@ -1888,7 +1894,7 @@ public struct GBinding{}
  * T_P :
  * The GType of the parent type.
  * _C_ :
- * Custom code that gets inserted in the @type_name_get_type() function.
+ * Custom code that gets inserted in the type_name_get_type() function.
  * Since 2.4
  */
 // TODO
@@ -2841,7 +2847,8 @@ public struct GBinding{}
 // #define G_PARAM_SPEC_BOXED(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), G_TYPE_PARAM_BOXED, GParamSpecBoxed))
 
 /*
- * Checks whether the given GValue can hold values derived from type G_TYPE_BOXED.
+ * Checks whether the given GValue can hold values derived
+ * from type G_TYPE_BOXED.
  * value :
  * a valid GValue structure
  * Returns :
@@ -3494,7 +3501,7 @@ public alias extern(C) void  function (GObject*) GObjectFinalizeFunc;
  * A GWeakNotify function can be added to an object as a callback that gets
  * triggered when the object is finalized. Since the object is already being
  * finalized when the GWeakNotify is called, there's not much you could do
- * with the object, apart from e.g. using its adress as hash-index or the like.
+ * with the object, apart from e.g. using its address as hash-index or the like.
  * data :
  * data that was provided when the weak reference was established
  * where_the_object_was :
@@ -3520,8 +3527,8 @@ public alias extern(C) void  function (void*, GObject*) GWeakNotify;
 public alias extern(C) void  function (void*, GObject*, int) GToggleNotify;
 
 /*
- * This function is provided by the user and should produce a copy of the passed
- * in boxed structure.
+ * This function is provided by the user and should produce a copy
+ * of the passed in boxed structure.
  * boxed :
  * The boxed structure to be copied.
  * Returns :
@@ -3585,8 +3592,8 @@ public alias extern(C) int  function (GSignalInvocationHint*, GValue*, GValue*, 
  * the number of parameters to the function, including
  * the instance on which the signal was emitted.
  * param_values :
- * the instance on which the signal was emitted, followed by the
- * parameters of the emission.
+ * the instance on which
+ * the signal was emitted, followed by the parameters of the emission. [array length=n_param_values]
  * data :
  * user data associated with the hook.
  * Returns :
@@ -3611,19 +3618,22 @@ public alias extern(C) void  function () GCallback;
  * closure :
  * the GClosure to which the marshaller belongs
  * return_value :
- * a GValue to store the return value. May be NULL if the
- * callback of closure doesn't return a value.
+ * a GValue to store the return
+ * value. May be NULL if the callback of closure doesn't return a
+ * value. [allow-none]
  * n_param_values :
  * the length of the param_values array
  * param_values :
- * an array of GValues holding the arguments on
- * which to invoke the callback of closure
+ * an array of
+ * GValues holding the arguments on which to invoke the
+ * callback of closure. [array length=n_param_values]
  * invocation_hint :
- * the invocation hint given as the last argument
- * to g_closure_invoke()
+ * the invocation hint given as the
+ * last argument to g_closure_invoke(). [allow-none]
  * marshal_data :
- * additional data specified when registering the marshaller,
- * see g_closure_set_marshal() and g_closure_set_meta_marshal()
+ * additional data specified when
+ * registering the marshaller, see g_closure_set_marshal() and
+ * g_closure_set_meta_marshal(). [allow-none]
  */
 // void (*GClosureMarshal) (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
 public alias extern(C) void  function (GClosure*, GValue*, uint, GValue*, void*, void*) GClosureMarshal;

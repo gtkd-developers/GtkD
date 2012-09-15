@@ -648,6 +648,30 @@ import: gobject.ObjectG
 structWrap: GObject* ObjectG
 import: gobject.Value
 structWrap: GValue* Value
+
+array: g_cclosure_marshal_generic param_values n_param_values
+array: g_cclosure_marshal_VOID__VOID param_values n_param_values
+array: g_cclosure_marshal_VOID__BOOLEAN param_values n_param_values
+array: g_cclosure_marshal_VOID__CHAR param_values n_param_values
+array: g_cclosure_marshal_VOID__UCHAR param_values n_param_values
+array: g_cclosure_marshal_VOID__INT param_values n_param_values
+array: g_cclosure_marshal_VOID__UINT param_values n_param_values
+array: g_cclosure_marshal_VOID__LONG param_values n_param_values
+array: g_cclosure_marshal_VOID__ULONG param_values n_param_values
+array: g_cclosure_marshal_VOID__ENUM param_values n_param_values
+array: g_cclosure_marshal_VOID__FLAGS param_values n_param_values
+array: g_cclosure_marshal_VOID__FLOAT param_values n_param_values
+array: g_cclosure_marshal_VOID__DOUBLE param_values n_param_values
+array: g_cclosure_marshal_VOID__STRING param_values n_param_values
+array: g_cclosure_marshal_VOID__PARAM param_values n_param_values
+array: g_cclosure_marshal_VOID__BOXED param_values n_param_values
+array: g_cclosure_marshal_VOID__POINTER param_values n_param_values
+array: g_cclosure_marshal_VOID__OBJECT param_values n_param_values
+array: g_cclosure_marshal_VOID__VARIANT param_values n_param_values
+array: g_cclosure_marshal_STRING__OBJECT_POINTER param_values n_param_values
+array: g_cclosure_marshal_VOID__UINT_POINTER param_values n_param_values
+array: g_cclosure_marshal_BOOLEAN__FLAGS param_values n_param_values
+array: g_cclosure_marshal_BOOLEAN__BOXED_BOXED param_values n_param_values
 outFile: CClosure
 
 file: gobject-Value-arrays.html

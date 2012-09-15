@@ -122,7 +122,7 @@ public class ParamSpec
 	 */
 	public ParamSpec doref()
 	{
-		// GParamSpec *	 g_param_spec_ref (GParamSpec *pspec);
+		// GParamSpec * g_param_spec_ref (GParamSpec *pspec);
 		auto p = g_param_spec_ref(gParamSpec);
 		if(p is null)
 		{
@@ -162,7 +162,7 @@ public class ParamSpec
 	 */
 	public ParamSpec refSink()
 	{
-		// GParamSpec *	 g_param_spec_ref_sink (GParamSpec *pspec);
+		// GParamSpec * g_param_spec_ref_sink (GParamSpec *pspec);
 		auto p = g_param_spec_ref_sink(gParamSpec);
 		if(p is null)
 		{
@@ -248,11 +248,13 @@ public class ParamSpec
 	
 	/**
 	 * Get the name of a GParamSpec.
+	 * The name is always an "interned" string (as per g_intern_string()).
+	 * This allows for pointer-value comparisons.
 	 * Returns: the name of pspec.
 	 */
 	public string getName()
 	{
-		// const gchar *	 g_param_spec_get_name (GParamSpec *pspec);
+		// const gchar * g_param_spec_get_name (GParamSpec *pspec);
 		return Str.toString(g_param_spec_get_name(gParamSpec));
 	}
 	
@@ -262,7 +264,7 @@ public class ParamSpec
 	 */
 	public string getNick()
 	{
-		// const gchar *	 g_param_spec_get_nick (GParamSpec *pspec);
+		// const gchar * g_param_spec_get_nick (GParamSpec *pspec);
 		return Str.toString(g_param_spec_get_nick(gParamSpec));
 	}
 	
@@ -272,7 +274,7 @@ public class ParamSpec
 	 */
 	public string getBlurb()
 	{
-		// const gchar *	 g_param_spec_get_blurb (GParamSpec *pspec);
+		// const gchar * g_param_spec_get_blurb (GParamSpec *pspec);
 		return Str.toString(g_param_spec_get_blurb(gParamSpec));
 	}
 	

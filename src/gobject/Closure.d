@@ -190,7 +190,7 @@ public class Closure
 	 * g_closure_sink() checks to see if the object is still floating, and
 	 * if so, unsets the floating state and decreases the reference
 	 * count. If the closure is not floating, g_closure_sink() does
-	 * nothing. The reason for the existance of the floating state is to
+	 * nothing. The reason for the existence of the floating state is to
 	 */
 	public void sink()
 	{
@@ -212,13 +212,14 @@ public class Closure
 	/**
 	 * Invokes the closure, i.e. executes the callback represented by the closure.
 	 * Params:
-	 * returnValue = a GValue to store the return value. May be NULL if the
-	 * callback of closure doesn't return a value.
+	 * returnValue = a GValue to store the return
+	 * value. May be NULL if the callback of closure
+	 * doesn't return a value. [allow-none]
 	 * nParamValues = the length of the param_values array
 	 * paramValues = an array of
 	 * GValues holding the arguments on which to
 	 * invoke the callback of closure. [array length=n_param_values]
-	 * invocationHint = a context-dependent invocation hint
+	 * invocationHint = a context-dependent invocation hint. [allow-none]
 	 */
 	public void invoke(Value returnValue, uint nParamValues, Value paramValues, void* invocationHint)
 	{

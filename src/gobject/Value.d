@@ -363,7 +363,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecBoolean(string name, string nick, string blurb, int defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_boolean (const gchar *name,  const gchar *nick,  const gchar *blurb,  gboolean default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_boolean (const gchar *name,  const gchar *nick,  const gchar *blurb,  gboolean default_value,  GParamFlags flags);
 		auto p = g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
 		if(p is null)
 		{
@@ -407,7 +407,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecChar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_char (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint8 minimum,  gint8 maximum,  gint8 default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_char (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint8 minimum,  gint8 maximum,  gint8 default_value,  GParamFlags flags);
 		auto p = g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -451,7 +451,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUchar(string name, string nick, string blurb, ubyte minimum, ubyte maximum, ubyte defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_uchar (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint8 minimum,  guint8 maximum,  guint8 default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_uchar (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint8 minimum,  guint8 maximum,  guint8 default_value,  GParamFlags flags);
 		auto p = g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -496,7 +496,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecInt(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_int (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint minimum,  gint maximum,  gint default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_int (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint minimum,  gint maximum,  gint default_value,  GParamFlags flags);
 		auto p = g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -541,7 +541,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUint(string name, string nick, string blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_uint (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint minimum,  guint maximum,  guint default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_uint (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint minimum,  guint maximum,  guint default_value,  GParamFlags flags);
 		auto p = g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -586,7 +586,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecLong(string name, string nick, string blurb, glong minimum, glong maximum, glong defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_long (const gchar *name,  const gchar *nick,  const gchar *blurb,  glong minimum,  glong maximum,  glong default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_long (const gchar *name,  const gchar *nick,  const gchar *blurb,  glong minimum,  glong maximum,  glong default_value,  GParamFlags flags);
 		auto p = g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -632,7 +632,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUlong(string name, string nick, string blurb, gulong minimum, gulong maximum, gulong defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_ulong (const gchar *name,  const gchar *nick,  const gchar *blurb,  gulong minimum,  gulong maximum,  gulong default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_ulong (const gchar *name,  const gchar *nick,  const gchar *blurb,  gulong minimum,  gulong maximum,  gulong default_value,  GParamFlags flags);
 		auto p = g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -677,7 +677,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecInt64(string name, string nick, string blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_int64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint64 minimum,  gint64 maximum,  gint64 default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_int64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint64 minimum,  gint64 maximum,  gint64 default_value,  GParamFlags flags);
 		auto p = g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -723,7 +723,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUint64(string name, string nick, string blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_uint64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint64 minimum,  guint64 maximum,  guint64 default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_uint64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint64 minimum,  guint64 maximum,  guint64 default_value,  GParamFlags flags);
 		auto p = g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -768,7 +768,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecFloat(string name, string nick, string blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_float (const gchar *name,  const gchar *nick,  const gchar *blurb,  gfloat minimum,  gfloat maximum,  gfloat default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_float (const gchar *name,  const gchar *nick,  const gchar *blurb,  gfloat minimum,  gfloat maximum,  gfloat default_value,  GParamFlags flags);
 		auto p = g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -814,7 +814,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecDouble(string name, string nick, string blurb, double minimum, double maximum, double defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_double (const gchar *name,  const gchar *nick,  const gchar *blurb,  gdouble minimum,  gdouble maximum,  gdouble default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_double (const gchar *name,  const gchar *nick,  const gchar *blurb,  gdouble minimum,  gdouble maximum,  gdouble default_value,  GParamFlags flags);
 		auto p = g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 		if(p is null)
 		{
@@ -859,7 +859,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecEnum(string name, string nick, string blurb, GType enumType, int defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_enum (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType enum_type,  gint default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_enum (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType enum_type,  gint default_value,  GParamFlags flags);
 		auto p = g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags);
 		if(p is null)
 		{
@@ -904,7 +904,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecFlags(string name, string nick, string blurb, GType flagsType, uint defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_flags (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType flags_type,  guint default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_flags (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType flags_type,  guint default_value,  GParamFlags flags);
 		auto p = g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags);
 		if(p is null)
 		{
@@ -947,7 +947,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecString(string name, string nick, string blurb, string defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_string (const gchar *name,  const gchar *nick,  const gchar *blurb,  const gchar *default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_string (const gchar *name,  const gchar *nick,  const gchar *blurb,  const gchar *default_value,  GParamFlags flags);
 		auto p = g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags);
 		if(p is null)
 		{
@@ -959,7 +959,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_STRING GValue to v_string.
 	 * Params:
-	 * vString = caller-owned string to be duplicated for the GValue
+	 * vString = caller-owned string to be duplicated for the GValue. [allow-none]
 	 */
 	public void setString(string vString)
 	{
@@ -972,7 +972,7 @@ public class Value
 	 * The string is assumed to be static, and is thus not duplicated
 	 * when setting the GValue.
 	 * Params:
-	 * vString = static string to be set
+	 * vString = static string to be set. [allow-none]
 	 */
 	public void setStaticString(string vString)
 	{
@@ -984,7 +984,7 @@ public class Value
 	 * Sets the contents of a G_TYPE_STRING GValue to v_string.
 	 * Since 2.4
 	 * Params:
-	 * vString = string to take ownership of
+	 * vString = string to take ownership of. [allow-none]
 	 */
 	public void takeString(string vString)
 	{
@@ -997,7 +997,7 @@ public class Value
 	 * g_value_set_string_take_ownership has been deprecated since version 2.4 and should not be used in newly-written code. Use g_value_take_string() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Params:
-	 * vString = duplicated unowned string to be set
+	 * vString = duplicated unowned string to be set. [allow-none]
 	 */
 	public void setStringTakeOwnership(string vString)
 	{
@@ -1021,7 +1021,7 @@ public class Value
 	 */
 	public string dupString()
 	{
-		// gchar *		 g_value_dup_string (const GValue *value);
+		// gchar * g_value_dup_string (const GValue *value);
 		return Str.toString(g_value_dup_string(gValue));
 	}
 	
@@ -1039,7 +1039,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecParam(string name, string nick, string blurb, GType paramType, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_param (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType param_type,  GParamFlags flags);
+		// GParamSpec * g_param_spec_param (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType param_type,  GParamFlags flags);
 		auto p = g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags);
 		if(p is null)
 		{
@@ -1051,7 +1051,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_PARAM GValue to param.
 	 * Params:
-	 * param = the GParamSpec to be set
+	 * param = the GParamSpec to be set. [allow-none]
 	 */
 	public void setParam(ParamSpec param)
 	{
@@ -1065,7 +1065,7 @@ public class Value
 	 * doesn't have to unref it any more.
 	 * Since 2.4
 	 * Params:
-	 * param = the GParamSpec to be set
+	 * param = the GParamSpec to be set. [allow-none]
 	 */
 	public void takeParam(ParamSpec param)
 	{
@@ -1078,7 +1078,7 @@ public class Value
 	 * g_value_set_param_take_ownership has been deprecated since version 2.4 and should not be used in newly-written code. Use g_value_take_param() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Params:
-	 * param = the GParamSpec to be set
+	 * param = the GParamSpec to be set. [allow-none]
 	 */
 	public void setParamTakeOwnership(ParamSpec param)
 	{
@@ -1131,7 +1131,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecBoxed(string name, string nick, string blurb, GType boxedType, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_boxed (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType boxed_type,  GParamFlags flags);
+		// GParamSpec * g_param_spec_boxed (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType boxed_type,  GParamFlags flags);
 		auto p = g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags);
 		if(p is null)
 		{
@@ -1143,7 +1143,7 @@ public class Value
 	/**
 	 * Set the contents of a G_TYPE_BOXED derived GValue to v_boxed.
 	 * Params:
-	 * vBoxed = boxed value to be set
+	 * vBoxed = boxed value to be set. [allow-none]
 	 */
 	public void setBoxed(void* vBoxed)
 	{
@@ -1156,7 +1156,7 @@ public class Value
 	 * The boxed value is assumed to be static, and is thus not duplicated
 	 * when setting the GValue.
 	 * Params:
-	 * vBoxed = static boxed value to be set
+	 * vBoxed = static boxed value to be set. [allow-none]
 	 */
 	public void setStaticBoxed(void* vBoxed)
 	{
@@ -1170,7 +1170,7 @@ public class Value
 	 * the caller doesn't have to unref it any more.
 	 * Since 2.4
 	 * Params:
-	 * vBoxed = duplicated unowned boxed value to be set
+	 * vBoxed = duplicated unowned boxed value to be set. [allow-none]
 	 */
 	public void takeBoxed(void* vBoxed)
 	{
@@ -1183,7 +1183,7 @@ public class Value
 	 * g_value_set_boxed_take_ownership has been deprecated since version 2.4 and should not be used in newly-written code. Use g_value_take_boxed() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Params:
-	 * vBoxed = duplicated unowned boxed value to be set
+	 * vBoxed = duplicated unowned boxed value to be set. [allow-none]
 	 */
 	public void setBoxedTakeOwnership(void* vBoxed)
 	{
@@ -1215,7 +1215,7 @@ public class Value
 	}
 	
 	/**
-	 * Creates a new GParamSpecPoiner instance specifying a pointer property.
+	 * Creates a new GParamSpecPointer instance specifying a pointer property.
 	 * See g_param_spec_internal() for details on property names.
 	 * Params:
 	 * name = canonical name of the property specified
@@ -1226,7 +1226,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecPointer(string name, string nick, string blurb, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_pointer (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
+		// GParamSpec * g_param_spec_pointer (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
 		auto p = g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
 		if(p is null)
 		{
@@ -1270,7 +1270,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_object (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType object_type,  GParamFlags flags);
+		// GParamSpec * g_param_spec_object (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType object_type,  GParamFlags flags);
 		auto p = g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
 		if(p is null)
 		{
@@ -1290,7 +1290,7 @@ public class Value
 	 * own, or one it has taken) to ensure that the object won't be destroyed while
 	 * the GValue still exists).
 	 * Params:
-	 * vObject = object value to be set. [type GObject.Object]
+	 * vObject = object value to be set. [type GObject.Object][allow-none]
 	 */
 	public void setObject(void* vObject)
 	{
@@ -1307,7 +1307,7 @@ public class Value
 	 * g_value_set_object() instead.
 	 * Since 2.4
 	 * Params:
-	 * vObject = object value to be set
+	 * vObject = object value to be set. [allow-none]
 	 */
 	public void takeObject(void* vObject)
 	{
@@ -1320,7 +1320,7 @@ public class Value
 	 * g_value_set_object_take_ownership has been deprecated since version 2.4 and should not be used in newly-written code. Use g_value_take_object() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Params:
-	 * vObject = object value to be set
+	 * vObject = object value to be set. [allow-none]
 	 */
 	public void setObjectTakeOwnership(void* vObject)
 	{
@@ -1365,7 +1365,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecUnichar(string name, string nick, string blurb, gunichar defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_unichar (const gchar *name,  const gchar *nick,  const gchar *blurb,  gunichar default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_unichar (const gchar *name,  const gchar *nick,  const gchar *blurb,  gunichar default_value,  GParamFlags flags);
 		auto p = g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
 		if(p is null)
 		{
@@ -1391,7 +1391,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecValueArray(string name, string nick, string blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_value_array (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamSpec *element_spec,  GParamFlags flags);
+		// GParamSpec * g_param_spec_value_array (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamSpec *element_spec,  GParamFlags flags);
 		auto p = g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags);
 		if(p is null)
 		{
@@ -1412,7 +1412,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecOverride(string name, ParamSpec overridden)
 	{
-		// GParamSpec *	 g_param_spec_override (const gchar *name,  GParamSpec *overridden);
+		// GParamSpec * g_param_spec_override (const gchar *name,  GParamSpec *overridden);
 		auto p = g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct());
 		if(p is null)
 		{
@@ -1437,7 +1437,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecGtype(string name, string nick, string blurb, GType isAType, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
+		// GParamSpec * g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
 		auto p = g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags);
 		if(p is null)
 		{
@@ -1487,7 +1487,7 @@ public class Value
 	 */
 	public static ParamSpec gParamSpecVariant(string name, string nick, string blurb, VariantType type, Variant defaultValue, GParamFlags flags)
 	{
-		// GParamSpec *	 g_param_spec_variant (const gchar *name,  const gchar *nick,  const gchar *blurb,  const GVariantType *type,  GVariant *default_value,  GParamFlags flags);
+		// GParamSpec * g_param_spec_variant (const gchar *name,  const gchar *nick,  const gchar *blurb,  const GVariantType *type,  GVariant *default_value,  GParamFlags flags);
 		auto p = g_param_spec_variant(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (type is null) ? null : type.getVariantTypeStruct(), (defaultValue is null) ? null : defaultValue.getVariantStruct(), flags);
 		if(p is null)
 		{
@@ -1503,7 +1503,7 @@ public class Value
 	 */
 	public Variant getVariant()
 	{
-		// GVariant *	 g_value_get_variant (const GValue *value);
+		// GVariant * g_value_get_variant (const GValue *value);
 		auto p = g_value_get_variant(gValue);
 		if(p is null)
 		{
@@ -1519,7 +1519,7 @@ public class Value
 	 */
 	public Variant dupVariant()
 	{
-		// GVariant *	 g_value_dup_variant (const GValue *value);
+		// GVariant * g_value_dup_variant (const GValue *value);
 		auto p = g_value_dup_variant(gValue);
 		if(p is null)
 		{
@@ -1533,7 +1533,7 @@ public class Value
 	 * If the variant is floating, it is consumed.
 	 * Since 2.26
 	 * Params:
-	 * variant = a GVariant, or NULL
+	 * variant = a GVariant, or NULL. [allow-none]
 	 */
 	public void setVariant(Variant variant)
 	{
@@ -1546,16 +1546,14 @@ public class Value
 	 * the ownership of the caller's reference to variant;
 	 * the caller doesn't have to unref it any more (i.e. the reference
 	 * count of the variant is not increased).
-	 * It is a programmer error to pass a floating variant to this function.
-	 * In particular this means that callbacks in closures, and signal handlers
-	 * for signals of return type G_TYPE_VARIANT, must never return floating
-	 * variants.
+	 * If variant was floating then its floating reference is converted to
+	 * a hard reference.
 	 * If you want the GValue to hold its own reference to variant, use
 	 * g_value_set_variant() instead.
 	 * This is an internal function introduced mainly for C marshallers.
 	 * Since 2.26
 	 * Params:
-	 * variant = a GVariant, or NULL
+	 * variant = a GVariant, or NULL. [allow-none]
 	 */
 	public void takeVariant(Variant variant)
 	{

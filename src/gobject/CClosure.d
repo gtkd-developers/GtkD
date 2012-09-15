@@ -227,21 +227,41 @@ public class CClosure
 	}
 	
 	/**
+	 * A generic marshaller function implemented via libffi.
+	 * Since 2.30
+	 * Params:
+	 * closure = A GClosure.
+	 * returnGvalue = A GValue to store the return value. May be NULL
+	 * if the callback of closure doesn't return a value.
+	 * paramValues = An array of GValues holding the arguments
+	 * on which to invoke the callback of closure.
+	 * invocationHint = The invocation hint given as the last argument to
+	 * g_closure_invoke().
+	 * marshalData = Additional data specified when registering the
+	 * marshaller, see g_closure_set_marshal() and
+	 * g_closure_set_meta_marshal()
+	 */
+	public static void marshalGeneric(Closure closure, Value returnGvalue, GValue[] paramValues, void* invocationHint, void* marshalData)
+	{
+		// void g_cclosure_marshal_generic (GClosure *closure,  GValue *return_gvalue,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
+		g_cclosure_marshal_generic((closure is null) ? null : closure.getClosureStruct(), (returnGvalue is null) ? null : returnGvalue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
+	}
+	
+	/**
 	 * A marshaller for a GCClosure with a callback of type
 	 * void (*callback) (gpointer instance, gpointer user_data).
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 1
 	 * paramValues = a GValue array holding only the instance
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__VOID(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__VOID(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__VOID (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__VOID((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__VOID((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -250,16 +270,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gboolean parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__BOOLEAN(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__BOOLEAN(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__BOOLEAN (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__BOOLEAN((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__BOOLEAN((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -268,16 +287,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gchar parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__CHAR(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__CHAR(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__CHAR (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__CHAR((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__CHAR((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -286,16 +304,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the guchar parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__UCHAR(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__UCHAR(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__UCHAR (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__UCHAR((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__UCHAR((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -304,16 +321,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gint parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__INT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__INT(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__INT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__INT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__INT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -322,16 +338,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the guint parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__UINT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__UINT(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__UINT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__UINT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__UINT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -340,16 +355,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the glong parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__LONG(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__LONG(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__LONG (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__LONG((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__LONG((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -358,16 +372,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gulong parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__ULONG(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__ULONG(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__ULONG (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__ULONG((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__ULONG((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -376,16 +389,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the enumeration parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__ENUM(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__ENUM(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__ENUM (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__ENUM((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__ENUM((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -394,16 +406,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the flags parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__FLAGS(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__FLAGS(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__FLAGS (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__FLAGS((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__FLAGS((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -412,16 +423,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gfloat parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__FLOAT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__FLOAT(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__FLOAT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__FLOAT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__FLOAT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -430,16 +440,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gdouble parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__DOUBLE(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__DOUBLE(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__DOUBLE (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__DOUBLE((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__DOUBLE((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -448,16 +457,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gchar* parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__STRING(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__STRING(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__STRING (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__STRING((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__STRING((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -466,16 +474,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the GParamSpec* parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__PARAM(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__PARAM(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__PARAM (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__PARAM((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__PARAM((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -484,16 +491,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the GBoxed* parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__BOXED(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__BOXED(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__BOXED (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__BOXED((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__BOXED((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -502,16 +508,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the gpointer parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__POINTER(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__POINTER (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -520,16 +525,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the GObject* parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__OBJECT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__OBJECT(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__OBJECT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__OBJECT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__OBJECT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -539,16 +543,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding the instance and the GVariant* parameter
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__VARIANT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__VARIANT(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__VARIANT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__VARIANT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__VARIANT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -557,16 +560,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = a GValue, which can store the returned string
-	 * nParamValues = 3
 	 * paramValues = a GValue array holding instance, arg1 and arg2
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalSTRING__OBJECT_POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalSTRING__OBJECT_POINTER(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_STRING__OBJECT_POINTER  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_STRING__OBJECT_POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_STRING__OBJECT_POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -575,16 +577,15 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = ignored
-	 * nParamValues = 3
 	 * paramValues = a GValue array holding instance, arg1 and arg2
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalVOID__UINT_POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalVOID__UINT_POINTER(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__UINT_POINTER  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__UINT_POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__UINT_POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 	
 	/**
@@ -594,15 +595,22 @@ public class CClosure
 	 * Params:
 	 * closure = the GClosure to which the marshaller belongs
 	 * returnValue = a GValue which can store the returned gboolean
-	 * nParamValues = 2
 	 * paramValues = a GValue array holding instance and arg1
 	 * invocationHint = the invocation hint given as the last argument
 	 * to g_closure_invoke()
 	 * marshalData = additional data specified when registering the marshaller
 	 */
-	public static void marshalBOOLEAN__FLAGS(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
+	public static void marshalBOOLEAN__FLAGS(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_BOOLEAN__FLAGS (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_BOOLEAN__FLAGS((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_BOOLEAN__FLAGS((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
+	}
+	
+	/**
+	 */
+	public static void marshalBOOLEAN__BOXED_BOXED(Closure closure, Value returnValue, GValue[] paramValues, void* invocationHint, void* marshalData)
+	{
+		// void g_cclosure_marshal_BOOLEAN__BOXED_BOXED  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
+		g_cclosure_marshal_BOOLEAN__BOXED_BOXED((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
 }

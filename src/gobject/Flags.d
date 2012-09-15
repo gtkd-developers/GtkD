@@ -124,7 +124,7 @@ public class Flags
 	 */
 	public static Flags getFirstValue(GFlagsClass* flagsClass, uint value)
 	{
-		// GFlagsValue *	 g_flags_get_first_value (GFlagsClass *flags_class,  guint value);
+		// GFlagsValue * g_flags_get_first_value (GFlagsClass *flags_class,  guint value);
 		auto p = g_flags_get_first_value(flagsClass, value);
 		if(p is null)
 		{
@@ -142,7 +142,7 @@ public class Flags
 	 */
 	public static Flags getValueByName(GFlagsClass* flagsClass, string name)
 	{
-		// GFlagsValue *	 g_flags_get_value_by_name (GFlagsClass *flags_class,  const gchar *name);
+		// GFlagsValue * g_flags_get_value_by_name (GFlagsClass *flags_class,  const gchar *name);
 		auto p = g_flags_get_value_by_name(flagsClass, Str.toStringz(name));
 		if(p is null)
 		{
@@ -160,7 +160,7 @@ public class Flags
 	 */
 	public static Flags getValueByNick(GFlagsClass* flagsClass, string nick)
 	{
-		// GFlagsValue *	 g_flags_get_value_by_nick (GFlagsClass *flags_class,  const gchar *nick);
+		// GFlagsValue * g_flags_get_value_by_nick (GFlagsClass *flags_class,  const gchar *nick);
 		auto p = g_flags_get_value_by_nick(flagsClass, Str.toStringz(nick));
 		if(p is null)
 		{
