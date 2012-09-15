@@ -109,47 +109,47 @@ public class ProviderInfo
 		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data;
 	}
 	/** */
-string id() { return Str.toString(this.gdaProviderInfo.id); }
-/** */
-string location() { return Str.toString(this.gdaProviderInfo.location); }
-/** */
-string description() { return Str.toString(this.gdaProviderInfo.description); }
-/** */
-ListG gda_params() { return new ListG(this.gdaProviderInfo.gdaParams); }
-
-/**
- */
-
-/**
- * Returns:
- */
-public static GType infoGetType()
-{
-	// GType gda_provider_info_get_type (void);
-	return gda_provider_info_get_type();
-}
-
-/**
- * Creates a new GdaProviderInfo structure from an existing one.
- * Returns: a newly allocated GdaProviderInfo with contains a copy of information in src.
- */
-public ProviderInfo infoCopy()
-{
-	// GdaProviderInfo* gda_provider_info_copy (GdaProviderInfo *src);
-	auto p = gda_provider_info_copy(gdaProviderInfo);
-	if(p is null)
+	string id() { return Str.toString(this.gdaProviderInfo.id); }
+	/** */
+	string location() { return Str.toString(this.gdaProviderInfo.location); }
+	/** */
+	string description() { return Str.toString(this.gdaProviderInfo.description); }
+	/** */
+	ListG gda_params() { return new ListG(this.gdaProviderInfo.gdaParams); }
+	
+	/**
+	 */
+	
+	/**
+	 * Returns:
+	 */
+	public static GType infoGetType()
 	{
-		return null;
+		// GType gda_provider_info_get_type (void);
+		return gda_provider_info_get_type();
 	}
-	return new ProviderInfo(cast(GdaProviderInfo*) p);
-}
-
-/**
- * Deallocates all memory associated to the given GdaProviderInfo.
- */
-public void infoFree()
-{
-	// void gda_provider_info_free (GdaProviderInfo *provider_info);
-	gda_provider_info_free(gdaProviderInfo);
-}
+	
+	/**
+	 * Creates a new GdaProviderInfo structure from an existing one.
+	 * Returns: a newly allocated GdaProviderInfo with contains a copy of information in src.
+	 */
+	public ProviderInfo infoCopy()
+	{
+		// GdaProviderInfo* gda_provider_info_copy (GdaProviderInfo *src);
+		auto p = gda_provider_info_copy(gdaProviderInfo);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ProviderInfo(cast(GdaProviderInfo*) p);
+	}
+	
+	/**
+	 * Deallocates all memory associated to the given GdaProviderInfo.
+	 */
+	public void infoFree()
+	{
+		// void gda_provider_info_free (GdaProviderInfo *provider_info);
+		gda_provider_info_free(gdaProviderInfo);
+	}
 }

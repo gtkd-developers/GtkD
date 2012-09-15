@@ -19,23 +19,24 @@
 
 module utils.IndentedStringBuilder;
 
+import std.algorithm;
+import std.string;
+
 /* Keeps track of indentation level while building up a string */
 
 public class IndentedStringBuilder
 {
-  private import std.string;
+	string tabs;
 
-  string tabs;
+	this(string t)
+	{
+		tabs = t;
+	}
 
-  this(string t)
-  {
-    tabs = t;
-  }
-
-  this()
-  {
-    this("");
-  }
+	this()
+	{
+		this("");
+	}
 
 	/**
 	 * Formats the input lines while keeping track of indentation
@@ -44,7 +45,7 @@ public class IndentedStringBuilder
 	 */
 	public string format(string[] lines)
 	{
-    string text = "";
+		string text = "";
 		foreach(string line ; lines )
 		{
 			string ln = std.string.strip(line);
@@ -55,7 +56,7 @@ public class IndentedStringBuilder
 				|| startsWith(ln, "// }")
 				)
 			{
-				if ( tabs.length > 0 ) tabs.length = tabs.length -1;
+				if ( !canFind(ln, '{') && tabs.length > 0 ) tabs.length = tabs.length -1;
 			}
 			if ( startsWith(ln, '*') )
 			{
@@ -71,11 +72,11 @@ public class IndentedStringBuilder
 			}
 		}
 
-    return text;
+ 		return text;
 	}
 
-  public void setIndent(string t)
-  {
-    tabs = t;
-  }
+	public void setIndent(string t)
+	{
+		tabs = t;
+	}
 }
