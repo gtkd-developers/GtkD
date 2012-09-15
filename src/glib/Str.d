@@ -349,7 +349,7 @@ public class Str
 	 */
 	public static string strdup(string str)
 	{
-		// gchar *	 g_strdup (const gchar *str);
+		// gchar * g_strdup (const gchar *str);
 		return Str.toString(g_strdup(Str.toStringz(str)));
 	}
 	
@@ -369,7 +369,7 @@ public class Str
 	 */
 	public static string strndup(string str, gsize n)
 	{
-		// gchar *	 g_strndup (const gchar *str,  gsize n);
+		// gchar * g_strndup (const gchar *str,  gsize n);
 		return Str.toString(g_strndup(Str.toStringz(str), n));
 	}
 	
@@ -398,7 +398,7 @@ public class Str
 	 */
 	public static string strnfill(gsize length, char fillChar)
 	{
-		// gchar *	 g_strnfill (gsize length,  gchar fill_char);
+		// gchar * g_strnfill (gsize length,  gchar fill_char);
 		return Str.toString(g_strnfill(length, fillChar));
 	}
 	
@@ -578,7 +578,7 @@ public class Str
 	 */
 	public static string strdupVprintf(string format, void* args)
 	{
-		// gchar *	 g_strdup_vprintf (const gchar *format,  va_list args);
+		// gchar * g_strdup_vprintf (const gchar *format,  va_list args);
 		return Str.toString(g_strdup_vprintf(Str.toStringz(format), args));
 	}
 	
@@ -1077,7 +1077,7 @@ public class Str
 	 */
 	public static string strup(string string)
 	{
-		// gchar *	 g_strup (gchar *string);
+		// gchar * g_strup (gchar *string);
 		return Str.toString(g_strup(Str.toStringz(string)));
 	}
 	
@@ -1093,7 +1093,7 @@ public class Str
 	 */
 	public static string strdown(string string)
 	{
-		// gchar *	 g_strdown (gchar *string);
+		// gchar * g_strdown (gchar *string);
 		return Str.toString(g_strdown(Str.toStringz(string)));
 	}
 	
@@ -1157,7 +1157,7 @@ public class Str
 	 */
 	public static string strreverse(string string)
 	{
-		// gchar *	 g_strreverse (gchar *string);
+		// gchar * g_strreverse (gchar *string);
 		return Str.toString(g_strreverse(Str.toStringz(string)));
 	}
 	
@@ -1311,7 +1311,7 @@ public class Str
 	 * It calls the standard strtod() function to handle the conversion, but
 	 * if the string is not completely converted it attempts the conversion
 	 * again with g_ascii_strtod(), and returns the best match.
-	 * This function should seldomly be used. The normal situation when reading
+	 * This function should seldom be used. The normal situation when reading
 	 * numbers not for human consumption is to use g_ascii_strtod(). Only when
 	 * you know that you must expect both locale formatted and C formatted numbers
 	 * should you use this. Make sure that you don't pass strings such as comma
@@ -1380,7 +1380,7 @@ public class Str
 	 */
 	public static string strdelimit(string string, string delimiters, char newDelimiter)
 	{
-		// gchar *	 g_strdelimit (gchar *string,  const gchar *delimiters,  gchar new_delimiter);
+		// gchar * g_strdelimit (gchar *string,  const gchar *delimiters,  gchar new_delimiter);
 		return Str.toString(g_strdelimit(Str.toStringz(string), Str.toStringz(delimiters), newDelimiter));
 	}
 	
@@ -1429,7 +1429,7 @@ public class Str
 	 */
 	public static string strcanon(string string, string validChars, char substitutor)
 	{
-		// gchar *	 g_strcanon (gchar *string,  const gchar *valid_chars,  gchar substitutor);
+		// gchar * g_strcanon (gchar *string,  const gchar *valid_chars,  gchar substitutor);
 		return Str.toString(g_strcanon(Str.toStringz(string), Str.toStringz(validChars), substitutor));
 	}
 	
@@ -1454,7 +1454,7 @@ public class Str
 	 */
 	public static string[] strsplit(string string, string delimiter, int maxTokens)
 	{
-		// gchar **	 g_strsplit (const gchar *string,  const gchar *delimiter,  gint max_tokens);
+		// gchar ** g_strsplit (const gchar *string,  const gchar *delimiter,  gint max_tokens);
 		return Str.toStringArray(g_strsplit(Str.toStringz(string), Str.toStringz(delimiter), maxTokens));
 	}
 	
@@ -1487,7 +1487,7 @@ public class Str
 	 */
 	public static string[] strsplitSet(string string, string delimiters, int maxTokens)
 	{
-		// gchar **	 g_strsplit_set (const gchar *string,  const gchar *delimiters,  gint max_tokens);
+		// gchar ** g_strsplit_set (const gchar *string,  const gchar *delimiters,  gint max_tokens);
 		return Str.toStringArray(g_strsplit_set(Str.toStringz(string), Str.toStringz(delimiters), maxTokens));
 	}
 	

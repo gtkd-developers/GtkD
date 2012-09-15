@@ -130,7 +130,7 @@ public class Node
 	 */
 	public this (void* data)
 	{
-		// GNode *	 g_node_new (gpointer data);
+		// GNode * g_node_new (gpointer data);
 		auto p = g_node_new(data);
 		if(p is null)
 		{
@@ -185,7 +185,7 @@ public class Node
 	 */
 	public Node insert(int position, Node node)
 	{
-		// GNode *	 g_node_insert (GNode *parent,  gint position,  GNode *node);
+		// GNode * g_node_insert (GNode *parent,  gint position,  GNode *node);
 		auto p = g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
@@ -204,7 +204,7 @@ public class Node
 	 */
 	public Node insertBefore(Node sibling, Node node)
 	{
-		// GNode *	 g_node_insert_before (GNode *parent,  GNode *sibling,  GNode *node);
+		// GNode * g_node_insert_before (GNode *parent,  GNode *sibling,  GNode *node);
 		auto p = g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
@@ -240,7 +240,7 @@ public class Node
 	 */
 	public Node prepend(Node node)
 	{
-		// GNode *	 g_node_prepend (GNode *parent,  GNode *node);
+		// GNode * g_node_prepend (GNode *parent,  GNode *node);
 		auto p = g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct());
 		if(p is null)
 		{
@@ -302,7 +302,7 @@ public class Node
 	 */
 	public Node getRoot()
 	{
-		// GNode *	 g_node_get_root (GNode *node);
+		// GNode * g_node_get_root (GNode *node);
 		auto p = g_node_get_root(gNode);
 		if(p is null)
 		{
@@ -323,7 +323,7 @@ public class Node
 	 */
 	public Node find(GTraverseType order, GTraverseFlags flags, void* data)
 	{
-		// GNode *	 g_node_find (GNode *root,  GTraverseType order,  GTraverseFlags flags,  gpointer data);
+		// GNode * g_node_find (GNode *root,  GTraverseType order,  GTraverseFlags flags,  gpointer data);
 		auto p = g_node_find(gNode, order, flags, data);
 		if(p is null)
 		{
@@ -342,7 +342,7 @@ public class Node
 	 */
 	public Node findChild(GTraverseFlags flags, void* data)
 	{
-		// GNode *	 g_node_find_child (GNode *node,  GTraverseFlags flags,  gpointer data);
+		// GNode * g_node_find_child (GNode *node,  GTraverseFlags flags,  gpointer data);
 		auto p = g_node_find_child(gNode, flags, data);
 		if(p is null)
 		{
@@ -384,7 +384,7 @@ public class Node
 	 */
 	public Node lastChild()
 	{
-		// GNode *	 g_node_last_child (GNode *node);
+		// GNode * g_node_last_child (GNode *node);
 		auto p = g_node_last_child(gNode);
 		if(p is null)
 		{
@@ -403,7 +403,7 @@ public class Node
 	 */
 	public Node nthChild(uint n)
 	{
-		// GNode *	 g_node_nth_child (GNode *node,  guint n);
+		// GNode * g_node_nth_child (GNode *node,  guint n);
 		auto p = g_node_nth_child(gNode, n);
 		if(p is null)
 		{
@@ -419,7 +419,7 @@ public class Node
 	 */
 	public Node firstSibling()
 	{
-		// GNode *	 g_node_first_sibling (GNode *node);
+		// GNode * g_node_first_sibling (GNode *node);
 		auto p = g_node_first_sibling(gNode);
 		if(p is null)
 		{
@@ -435,7 +435,7 @@ public class Node
 	 */
 	public Node lastSibling()
 	{
-		// GNode *	 g_node_last_sibling (GNode *node);
+		// GNode * g_node_last_sibling (GNode *node);
 		auto p = g_node_last_sibling(gNode);
 		if(p is null)
 		{

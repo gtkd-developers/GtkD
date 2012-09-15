@@ -216,7 +216,7 @@ public class Child
 	 * Windows a handle for a process (which doesn't have to be a child).
 	 * data = data to pass to function
 	 * notify = function to call when the idle is removed, or NULL
-	 * Returns: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source. Rename to: g_child_watch_add
 	 */
 	public static uint watchAddFull(int priority, GPid pid, GChildWatchFunc funct, void* data, GDestroyNotify notify)
 	{

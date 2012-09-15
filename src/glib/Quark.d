@@ -80,7 +80,7 @@ private import glib.Str;
  * g_intern_static_string(). An interned string is a canonical
  * representation for a string. One important advantage of interned
  * strings is that they can be compared for equality by a simple
- * pointer comparision, rather than using strcmp().
+ * pointer comparison, rather than using strcmp().
  */
 public class Quark
 {
@@ -122,7 +122,7 @@ public class Quark
 	 * not currently have an associated GQuark, a new GQuark is created,
 	 * using a copy of the string.
 	 * Params:
-	 * string = a string.
+	 * string = a string. [allow-none]
 	 * Returns: the GQuark identifying the string, or 0 if string is NULL.
 	 */
 	public static GQuark fromString(string string)
@@ -144,7 +144,7 @@ public class Quark
 	 * expect to ever unload the module again (e.g. do not use this
 	 * function in GTK+ theme engines).
 	 * Params:
-	 * string = a string.
+	 * string = a string. [allow-none]
 	 * Returns: the GQuark identifying the string, or 0 if string is NULL.
 	 */
 	public static GQuark fromStaticString(string string)
@@ -171,7 +171,7 @@ public class Quark
 	 * If you want the GQuark to be created if it doesn't already exist,
 	 * use g_quark_from_string() or g_quark_from_static_string().
 	 * Params:
-	 * string = a string.
+	 * string = a string. [allow-none]
 	 * Returns: the GQuark associated with the string, or 0 if string is NULL or there is no GQuark associated with it.
 	 */
 	public static GQuark tryString(string string)
@@ -185,7 +185,7 @@ public class Quark
 	 * be compared for equality by comparing the pointers, instead of using strcmp().
 	 * Since 2.10
 	 * Params:
-	 * string = a string
+	 * string = a string. [allow-none]
 	 * Returns: a canonical representation for the string
 	 */
 	public static string gInternString(string string)
@@ -201,7 +201,7 @@ public class Quark
 	 * not be freed or modified.
 	 * Since 2.10
 	 * Params:
-	 * string = a static string
+	 * string = a static string. [allow-none]
 	 * Returns: a canonical representation for the string
 	 */
 	public static string gInternStaticString(string string)

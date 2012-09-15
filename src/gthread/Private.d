@@ -76,11 +76,14 @@ private import glib.ConstructionException;
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
  * (GMutex, GStaticMutex, G_LOCK_DEFINE, GStaticRecMutex and
- * GStaticRWLock). There are primitives for condition variables to
+ * GStaticRWLock). There is a facility to use individual bits for
+ * locks (g_bit_lock()). There are primitives for condition variables to
  * allow synchronization of threads (GCond). There are primitives for
  * thread-private data - data that every thread has a private instance
- * of (GPrivate, GStaticPrivate). Last but definitely not least there
- * are primitives to portably create and manage threads (GThread).
+ * of (GPrivate, GStaticPrivate). There are facilities for one-time
+ * initialization (GOnce, g_once_init_enter()). Last but definitely
+ * not least there are primitives to portably create and manage
+ * threads (GThread).
  * The threading system is initialized with g_thread_init(), which
  * takes an optional custom thread implementation or NULL for the
  * default implementation. If you want to call g_thread_init() with a
@@ -153,10 +156,12 @@ public class Private
 	 * non-NULL, the destructor is called with this pointer as the
 	 * argument.
 	 * Note
+	 * GStaticPrivate is a better choice for most uses.
+	 * Note
 	 * destructor is used quite differently from notify in
 	 * g_static_private_set().
 	 * Note
-	 * A GPrivate can not be freed. Reuse it instead, if you
+	 * A GPrivate cannot be freed. Reuse it instead, if you
 	 * can, to avoid shortage, or use GStaticPrivate.
 	 * Note
 	 * This function will abort if g_thread_init() has not been

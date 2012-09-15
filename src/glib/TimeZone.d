@@ -188,14 +188,14 @@ public class TimeZone
 	}
 	
 	/**
-	 * Finds an the interval within tz that corresponds to the given time.
-	 * The meaning of time depends on type.
+	 * Finds an the interval within tz that corresponds to the given time_.
+	 * The meaning of time_ depends on type.
 	 * If type is G_TIME_TYPE_UNIVERSAL then this function will always
 	 * succeed (since universal time is monotonic and continuous).
-	 * Otherwise time is treated is local time. The distinction between
+	 * Otherwise time_ is treated is local time. The distinction between
 	 * G_TIME_TYPE_STANDARD and G_TIME_TYPE_DAYLIGHT is ignored except in
-	 * the case that the given time is ambiguous. In Toronto, for example,
-	 * 01:30 on November 7th 2010 occured twice (once inside of daylight
+	 * the case that the given time_ is ambiguous. In Toronto, for example,
+	 * 01:30 on November 7th 2010 occurred twice (once inside of daylight
 	 * savings time and the next, an hour later, outside of daylight savings
 	 * time). In this case, the different value of type would result in a
 	 * different interval being returned.
@@ -205,40 +205,40 @@ public class TimeZone
 	 * case.
 	 * Since 2.26
 	 * Params:
-	 * type = the GTimeType of time
+	 * type = the GTimeType of time_
 	 * time = a number of seconds since January 1, 1970
-	 * Returns: the interval containing time, or -1 in case of failure
+	 * Returns: the interval containing time_, or -1 in case of failure
 	 */
 	public int findInterval(GTimeType type, long time)
 	{
-		// gint g_time_zone_find_interval (GTimeZone *tz,  GTimeType type,  gint64 time);
+		// gint g_time_zone_find_interval (GTimeZone *tz,  GTimeType type,  gint64 time_);
 		return g_time_zone_find_interval(gTimeZone, type, time);
 	}
 	
 	/**
-	 * Finds an interval within tz that corresponds to the given time,
-	 * possibly adjusting time if required to fit into an interval.
-	 * The meaning of time depends on type.
+	 * Finds an interval within tz that corresponds to the given time_,
+	 * possibly adjusting time_ if required to fit into an interval.
+	 * The meaning of time_ depends on type.
 	 * This function is similar to g_time_zone_find_interval(), with the
 	 * difference that it always succeeds (by making the adjustments
 	 * described below).
 	 * In any of the cases where g_time_zone_find_interval() succeeds then
-	 * this function returns the same value, without modifying time.
-	 * This function may, however, modify time in order to deal with
-	 * non-existent times. If the non-existent local time of 02:30 were
+	 * this function returns the same value, without modifying time_.
+	 * This function may, however, modify time_ in order to deal with
+	 * non-existent times. If the non-existent local time_ of 02:30 were
 	 * requested on March 13th 2010 in Toronto then this function would
-	 * adjust time to be 03:00 and return the interval containing the
+	 * adjust time_ to be 03:00 and return the interval containing the
 	 * adjusted time.
 	 * Since 2.26
 	 * Params:
-	 * type = the GTimeType of time
+	 * type = the GTimeType of time_
 	 * time = a pointer to a number of seconds since January 1, 1970
-	 * Returns: the interval containing time, never -1
+	 * Returns: the interval containing time_, never -1
 	 */
-	public int adjustTime(GTimeType type, ref long time)
+	public int adjustTime(GTimeType type, long* time)
 	{
-		// gint g_time_zone_adjust_time (GTimeZone *tz,  GTimeType type,  gint64 *time);
-		return g_time_zone_adjust_time(gTimeZone, type, &time);
+		// gint g_time_zone_adjust_time (GTimeZone *tz,  GTimeType type,  gint64 *time_);
+		return g_time_zone_adjust_time(gTimeZone, type, time);
 	}
 	
 	/**

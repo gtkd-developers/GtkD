@@ -90,11 +90,14 @@ private import glib.ListG;
  * g_hash_table_insert().
  * To lookup a value corresponding to a given key, use
  * g_hash_table_lookup() and g_hash_table_lookup_extended().
+ * g_hash_table_lookup_extended() can also be used to simply
+ * check if a key is present in the hash table.
  * To remove a key and value, use g_hash_table_remove().
  * To call a function for each key and value pair use
  * g_hash_table_foreach() or use a iterator to iterate over the
  * key/value pairs in the hash table, see GHashTableIter.
  * To destroy a GHashTable use g_hash_table_destroy().
+ * $(DDOC_COMMENT example)
  */
 public class HashTable
 {
@@ -300,7 +303,7 @@ public class HashTable
 	 * Params:
 	 * predicate = function to test the key/value pairs for a certain property.
 	 * userData = user data to pass to the function.
-	 * Returns: The value of the first key/value pair is returned, for which func evaluates to TRUE. If no pair with the requested property is found, NULL is returned.
+	 * Returns: The value of the first key/value pair is returned, for which predicate evaluates to TRUE. If no pair with the requested property is found, NULL is returned.
 	 */
 	public void* find(GHRFunc predicate, void* userData)
 	{

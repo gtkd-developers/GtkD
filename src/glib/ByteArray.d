@@ -273,7 +273,10 @@ public class ByteArray
 	 * arg is less than second arg, zero for equal, greater than zero if
 	 * first arg is greater than second arg).
 	 * If two array elements compare equal, their order in the sorted array
-	 * is undefined.
+	 * is undefined. If you want equal elements to keep their order 8211; i.e.
+	 * you want a stable sort 8211; you can write a comparison function that,
+	 * if two elements would otherwise compare equal, compares them by
+	 * their addresses.
 	 * Params:
 	 * compareFunc = comparison function.
 	 */

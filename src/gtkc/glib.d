@@ -44,14 +44,21 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_atomic_int_get, \"g_atomic_int_get\", LIBRARY.GLIB);
 	Linker.link(g_atomic_int_set, \"g_atomic_int_set\", LIBRARY.GLIB);
-	Linker.link(g_atomic_int_add, \"g_atomic_int_add\", LIBRARY.GLIB);
-	Linker.link(g_atomic_int_exchange_and_add, \"g_atomic_int_exchange_and_add\", LIBRARY.GLIB);
+	Linker.link(g_atomic_int_inc, \"g_atomic_int_inc\", LIBRARY.GLIB);
+	Linker.link(g_atomic_int_dec_and_test, \"g_atomic_int_dec_and_test\", LIBRARY.GLIB);
 	Linker.link(g_atomic_int_compare_and_exchange, \"g_atomic_int_compare_and_exchange\", LIBRARY.GLIB);
+	Linker.link(g_atomic_int_add, \"g_atomic_int_add\", LIBRARY.GLIB);
+	Linker.link(g_atomic_int_and, \"g_atomic_int_and\", LIBRARY.GLIB);
+	Linker.link(g_atomic_int_or, \"g_atomic_int_or\", LIBRARY.GLIB);
+	Linker.link(g_atomic_int_xor, \"g_atomic_int_xor\", LIBRARY.GLIB);
 	Linker.link(g_atomic_pointer_get, \"g_atomic_pointer_get\", LIBRARY.GLIB);
 	Linker.link(g_atomic_pointer_set, \"g_atomic_pointer_set\", LIBRARY.GLIB);
 	Linker.link(g_atomic_pointer_compare_and_exchange, \"g_atomic_pointer_compare_and_exchange\", LIBRARY.GLIB);
-	Linker.link(g_atomic_int_inc, \"g_atomic_int_inc\", LIBRARY.GLIB);
-	Linker.link(g_atomic_int_dec_and_test, \"g_atomic_int_dec_and_test\", LIBRARY.GLIB);
+	Linker.link(g_atomic_pointer_add, \"g_atomic_pointer_add\", LIBRARY.GLIB);
+	Linker.link(g_atomic_pointer_and, \"g_atomic_pointer_and\", LIBRARY.GLIB);
+	Linker.link(g_atomic_pointer_or, \"g_atomic_pointer_or\", LIBRARY.GLIB);
+	Linker.link(g_atomic_pointer_xor, \"g_atomic_pointer_xor\", LIBRARY.GLIB);
+	Linker.link(g_atomic_int_exchange_and_add, \"g_atomic_int_exchange_and_add\", LIBRARY.GLIB);
 
 	// glib.MainLoop
 
@@ -383,6 +390,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_convert, \"g_convert\", LIBRARY.GLIB);
 	Linker.link(g_convert_with_fallback, \"g_convert_with_fallback\", LIBRARY.GLIB);
 	Linker.link(g_locale_to_utf8, \"g_locale_to_utf8\", LIBRARY.GLIB);
+	Linker.link(g_filename_to_utf8, \"g_filename_to_utf8\", LIBRARY.GLIB);
+	Linker.link(g_filename_from_utf8, \"g_filename_from_utf8\", LIBRARY.GLIB);
 	Linker.link(g_get_filename_charsets, \"g_get_filename_charsets\", LIBRARY.GLIB);
 	Linker.link(g_filename_display_name, \"g_filename_display_name\", LIBRARY.GLIB);
 	Linker.link(g_filename_display_basename, \"g_filename_display_basename\", LIBRARY.GLIB);
@@ -414,6 +423,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_unichar_totitle, \"g_unichar_totitle\", LIBRARY.GLIB);
 	Linker.link(g_unichar_digit_value, \"g_unichar_digit_value\", LIBRARY.GLIB);
 	Linker.link(g_unichar_xdigit_value, \"g_unichar_xdigit_value\", LIBRARY.GLIB);
+	Linker.link(g_unichar_compose, \"g_unichar_compose\", LIBRARY.GLIB);
+	Linker.link(g_unichar_decompose, \"g_unichar_decompose\", LIBRARY.GLIB);
+	Linker.link(g_unichar_fully_decompose, \"g_unichar_fully_decompose\", LIBRARY.GLIB);
 	Linker.link(g_unichar_type, \"g_unichar_type\", LIBRARY.GLIB);
 	Linker.link(g_unichar_break_type, \"g_unichar_break_type\", LIBRARY.GLIB);
 	Linker.link(g_unichar_combining_class, \"g_unichar_combining_class\", LIBRARY.GLIB);
@@ -421,6 +433,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_unicode_canonical_decomposition, \"g_unicode_canonical_decomposition\", LIBRARY.GLIB);
 	Linker.link(g_unichar_get_mirror_char, \"g_unichar_get_mirror_char\", LIBRARY.GLIB);
 	Linker.link(g_unichar_get_script, \"g_unichar_get_script\", LIBRARY.GLIB);
+	Linker.link(g_unicode_script_from_iso15924, \"g_unicode_script_from_iso15924\", LIBRARY.GLIB);
+	Linker.link(g_unicode_script_to_iso15924, \"g_unicode_script_to_iso15924\", LIBRARY.GLIB);
 	Linker.link(g_utf8_get_char, \"g_utf8_get_char\", LIBRARY.GLIB);
 	Linker.link(g_utf8_get_char_validated, \"g_utf8_get_char_validated\", LIBRARY.GLIB);
 	Linker.link(g_utf8_offset_to_pointer, \"g_utf8_offset_to_pointer\", LIBRARY.GLIB);
@@ -433,6 +447,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_utf8_strchr, \"g_utf8_strchr\", LIBRARY.GLIB);
 	Linker.link(g_utf8_strrchr, \"g_utf8_strrchr\", LIBRARY.GLIB);
 	Linker.link(g_utf8_strreverse, \"g_utf8_strreverse\", LIBRARY.GLIB);
+	Linker.link(g_utf8_substring, \"g_utf8_substring\", LIBRARY.GLIB);
 	Linker.link(g_utf8_validate, \"g_utf8_validate\", LIBRARY.GLIB);
 	Linker.link(g_utf8_strup, \"g_utf8_strup\", LIBRARY.GLIB);
 	Linker.link(g_utf8_strdown, \"g_utf8_strdown\", LIBRARY.GLIB);
@@ -471,6 +486,18 @@ mixin( _shared ~ "static this()
 	Linker.link(g_checksum_get_digest, \"g_checksum_get_digest\", LIBRARY.GLIB);
 	Linker.link(g_compute_checksum_for_data, \"g_compute_checksum_for_data\", LIBRARY.GLIB);
 	Linker.link(g_compute_checksum_for_string, \"g_compute_checksum_for_string\", LIBRARY.GLIB);
+
+	// glib.Hmac
+
+	Linker.link(g_hmac_new, \"g_hmac_new\", LIBRARY.GLIB);
+	Linker.link(g_hmac_copy, \"g_hmac_copy\", LIBRARY.GLIB);
+	Linker.link(g_hmac_ref, \"g_hmac_ref\", LIBRARY.GLIB);
+	Linker.link(g_hmac_unref, \"g_hmac_unref\", LIBRARY.GLIB);
+	Linker.link(g_hmac_update, \"g_hmac_update\", LIBRARY.GLIB);
+	Linker.link(g_hmac_get_string, \"g_hmac_get_string\", LIBRARY.GLIB);
+	Linker.link(g_hmac_get_digest, \"g_hmac_get_digest\", LIBRARY.GLIB);
+	Linker.link(g_compute_hmac_for_data, \"g_compute_hmac_for_data\", LIBRARY.GLIB);
+	Linker.link(g_compute_hmac_for_string, \"g_compute_hmac_for_string\", LIBRARY.GLIB);
 
 	// glib.Internationalization
 
@@ -633,7 +660,12 @@ mixin( _shared ~ "static this()
 	Linker.link(g_get_prgname, \"g_get_prgname\", LIBRARY.GLIB);
 	Linker.link(g_set_prgname, \"g_set_prgname\", LIBRARY.GLIB);
 	Linker.link(g_get_environ, \"g_get_environ\", LIBRARY.GLIB);
+	Linker.link(g_getenv, \"g_getenv\", LIBRARY.GLIB);
+	Linker.link(g_setenv, \"g_setenv\", LIBRARY.GLIB);
+	Linker.link(g_unsetenv, \"g_unsetenv\", LIBRARY.GLIB);
 	Linker.link(g_listenv, \"g_listenv\", LIBRARY.GLIB);
+	Linker.link(g_get_user_name, \"g_get_user_name\", LIBRARY.GLIB);
+	Linker.link(g_get_real_name, \"g_get_real_name\", LIBRARY.GLIB);
 	Linker.link(g_get_user_cache_dir, \"g_get_user_cache_dir\", LIBRARY.GLIB);
 	Linker.link(g_get_user_data_dir, \"g_get_user_data_dir\", LIBRARY.GLIB);
 	Linker.link(g_get_user_config_dir, \"g_get_user_config_dir\", LIBRARY.GLIB);
@@ -643,6 +675,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_get_system_config_dirs, \"g_get_system_config_dirs\", LIBRARY.GLIB);
 	Linker.link(g_reload_user_special_dirs_cache, \"g_reload_user_special_dirs_cache\", LIBRARY.GLIB);
 	Linker.link(g_get_host_name, \"g_get_host_name\", LIBRARY.GLIB);
+	Linker.link(g_get_home_dir, \"g_get_home_dir\", LIBRARY.GLIB);
+	Linker.link(g_get_tmp_dir, \"g_get_tmp_dir\", LIBRARY.GLIB);
+	Linker.link(g_get_current_dir, \"g_get_current_dir\", LIBRARY.GLIB);
 	Linker.link(g_basename, \"g_basename\", LIBRARY.GLIB);
 	Linker.link(g_path_is_absolute, \"g_path_is_absolute\", LIBRARY.GLIB);
 	Linker.link(g_path_skip_root, \"g_path_skip_root\", LIBRARY.GLIB);
@@ -652,7 +687,10 @@ mixin( _shared ~ "static this()
 	Linker.link(g_build_filenamev, \"g_build_filenamev\", LIBRARY.GLIB);
 	Linker.link(g_build_path, \"g_build_path\", LIBRARY.GLIB);
 	Linker.link(g_build_pathv, \"g_build_pathv\", LIBRARY.GLIB);
+	Linker.link(g_format_size, \"g_format_size\", LIBRARY.GLIB);
+	Linker.link(g_format_size_full, \"g_format_size_full\", LIBRARY.GLIB);
 	Linker.link(g_format_size_for_display, \"g_format_size_for_display\", LIBRARY.GLIB);
+	Linker.link(g_find_program_in_path, \"g_find_program_in_path\", LIBRARY.GLIB);
 	Linker.link(g_bit_nth_lsf, \"g_bit_nth_lsf\", LIBRARY.GLIB);
 	Linker.link(g_bit_nth_msf, \"g_bit_nth_msf\", LIBRARY.GLIB);
 	Linker.link(g_bit_storage, \"g_bit_storage\", LIBRARY.GLIB);
@@ -719,17 +757,37 @@ mixin( _shared ~ "static this()
 	// glib.FileUtils
 
 	Linker.link(g_file_error_from_errno, \"g_file_error_from_errno\", LIBRARY.GLIB);
+	Linker.link(g_file_get_contents, \"g_file_get_contents\", LIBRARY.GLIB);
 	Linker.link(g_file_set_contents, \"g_file_set_contents\", LIBRARY.GLIB);
+	Linker.link(g_file_test, \"g_file_test\", LIBRARY.GLIB);
+	Linker.link(g_mkstemp, \"g_mkstemp\", LIBRARY.GLIB);
 	Linker.link(g_mkstemp_full, \"g_mkstemp_full\", LIBRARY.GLIB);
+	Linker.link(g_file_open_tmp, \"g_file_open_tmp\", LIBRARY.GLIB);
 	Linker.link(g_file_read_link, \"g_file_read_link\", LIBRARY.GLIB);
 	Linker.link(g_mkdir_with_parents, \"g_mkdir_with_parents\", LIBRARY.GLIB);
+	Linker.link(g_mkdtemp, \"g_mkdtemp\", LIBRARY.GLIB);
+	Linker.link(g_mkdtemp_full, \"g_mkdtemp_full\", LIBRARY.GLIB);
+	Linker.link(g_open, \"g_open\", LIBRARY.GLIB);
+	Linker.link(g_rename, \"g_rename\", LIBRARY.GLIB);
+	Linker.link(g_mkdir, \"g_mkdir\", LIBRARY.GLIB);
+	Linker.link(g_stat, \"g_stat\", LIBRARY.GLIB);
+	Linker.link(g_lstat, \"g_lstat\", LIBRARY.GLIB);
 	Linker.link(g_unlink, \"g_unlink\", LIBRARY.GLIB);
+	Linker.link(g_remove, \"g_remove\", LIBRARY.GLIB);
 	Linker.link(g_rmdir, \"g_rmdir\", LIBRARY.GLIB);
+	Linker.link(g_fopen, \"g_fopen\", LIBRARY.GLIB);
+	Linker.link(g_freopen, \"g_freopen\", LIBRARY.GLIB);
+	Linker.link(g_chmod, \"g_chmod\", LIBRARY.GLIB);
 	Linker.link(g_access, \"g_access\", LIBRARY.GLIB);
+	Linker.link(g_creat, \"g_creat\", LIBRARY.GLIB);
 	Linker.link(g_chdir, \"g_chdir\", LIBRARY.GLIB);
+	Linker.link(g_utime, \"g_utime\", LIBRARY.GLIB);
 
 	// glib.Directory
 
+	Linker.link(g_dir_make_tmp, \"g_dir_make_tmp\", LIBRARY.GLIB);
+	Linker.link(g_dir_open, \"g_dir_open\", LIBRARY.GLIB);
+	Linker.link(g_dir_read_name, \"g_dir_read_name\", LIBRARY.GLIB);
 	Linker.link(g_dir_rewind, \"g_dir_rewind\", LIBRARY.GLIB);
 	Linker.link(g_dir_close, \"g_dir_close\", LIBRARY.GLIB);
 
@@ -749,6 +807,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_uri_unescape_string, \"g_uri_unescape_string\", LIBRARY.GLIB);
 	Linker.link(g_uri_unescape_segment, \"g_uri_unescape_segment\", LIBRARY.GLIB);
 	Linker.link(g_uri_list_extract_uris, \"g_uri_list_extract_uris\", LIBRARY.GLIB);
+	Linker.link(g_filename_from_uri, \"g_filename_from_uri\", LIBRARY.GLIB);
+	Linker.link(g_filename_to_uri, \"g_filename_to_uri\", LIBRARY.GLIB);
 
 	// glib.Hostname
 
@@ -816,6 +876,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_regex_get_compile_flags, \"g_regex_get_compile_flags\", LIBRARY.GLIB);
 	Linker.link(g_regex_get_match_flags, \"g_regex_get_match_flags\", LIBRARY.GLIB);
 	Linker.link(g_regex_escape_string, \"g_regex_escape_string\", LIBRARY.GLIB);
+	Linker.link(g_regex_escape_nul, \"g_regex_escape_nul\", LIBRARY.GLIB);
 	Linker.link(g_regex_match_simple, \"g_regex_match_simple\", LIBRARY.GLIB);
 	Linker.link(g_regex_match, \"g_regex_match\", LIBRARY.GLIB);
 	Linker.link(g_regex_match_full, \"g_regex_match_full\", LIBRARY.GLIB);
@@ -833,6 +894,8 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_match_info_get_regex, \"g_match_info_get_regex\", LIBRARY.GLIB);
 	Linker.link(g_match_info_get_string, \"g_match_info_get_string\", LIBRARY.GLIB);
+	Linker.link(g_match_info_ref, \"g_match_info_ref\", LIBRARY.GLIB);
+	Linker.link(g_match_info_unref, \"g_match_info_unref\", LIBRARY.GLIB);
 	Linker.link(g_match_info_free, \"g_match_info_free\", LIBRARY.GLIB);
 	Linker.link(g_match_info_matches, \"g_match_info_matches\", LIBRARY.GLIB);
 	Linker.link(g_match_info_next, \"g_match_info_next\", LIBRARY.GLIB);
@@ -951,11 +1014,21 @@ mixin( _shared ~ "static this()
 	Linker.link(g_bookmark_file_remove_item, \"g_bookmark_file_remove_item\", LIBRARY.GLIB);
 	Linker.link(g_bookmark_file_move_item, \"g_bookmark_file_move_item\", LIBRARY.GLIB);
 
+	// glib.UnixUtils
+
+	Linker.link(g_unix_open_pipe, \"g_unix_open_pipe\", LIBRARY.GLIB);
+	Linker.link(g_unix_signal_add, \"g_unix_signal_add\", LIBRARY.GLIB);
+	Linker.link(g_unix_signal_add_full, \"g_unix_signal_add_full\", LIBRARY.GLIB);
+	Linker.link(g_unix_signal_source_new, \"g_unix_signal_source_new\", LIBRARY.GLIB);
+	Linker.link(g_unix_set_fd_nonblocking, \"g_unix_set_fd_nonblocking\", LIBRARY.GLIB);
+
 	// glib.WindowsUtils
 
 	Linker.link(g_win32_error_message, \"g_win32_error_message\", LIBRARY.GLIB);
 	Linker.link(g_win32_getlocale, \"g_win32_getlocale\", LIBRARY.GLIB);
+	Linker.link(g_win32_get_package_installation_directory, \"g_win32_get_package_installation_directory\", LIBRARY.GLIB);
 	Linker.link(g_win32_get_package_installation_directory_of_module, \"g_win32_get_package_installation_directory_of_module\", LIBRARY.GLIB);
+	Linker.link(g_win32_get_package_installation_subdirectory, \"g_win32_get_package_installation_subdirectory\", LIBRARY.GLIB);
 	Linker.link(g_win32_get_windows_version, \"g_win32_get_windows_version\", LIBRARY.GLIB);
 	Linker.link(g_win32_locale_filename_from_utf8, \"g_win32_locale_filename_from_utf8\", LIBRARY.GLIB);
 
@@ -1178,6 +1251,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_hash_table_iter_init, \"g_hash_table_iter_init\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_iter_next, \"g_hash_table_iter_next\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_iter_get_hash_table, \"g_hash_table_iter_get_hash_table\", LIBRARY.GLIB);
+	Linker.link(g_hash_table_iter_replace, \"g_hash_table_iter_replace\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_iter_remove, \"g_hash_table_iter_remove\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_iter_steal, \"g_hash_table_iter_steal\", LIBRARY.GLIB);
 
@@ -1247,6 +1321,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_ptr_array_new, \"g_ptr_array_new\", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_sized_new, \"g_ptr_array_sized_new\", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_new_with_free_func, \"g_ptr_array_new_with_free_func\", LIBRARY.GLIB);
+	Linker.link(g_ptr_array_new_full, \"g_ptr_array_new_full\", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_set_free_func, \"g_ptr_array_set_free_func\", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_ref, \"g_ptr_array_ref\", LIBRARY.GLIB);
 	Linker.link(g_ptr_array_unref, \"g_ptr_array_unref\", LIBRARY.GLIB);
@@ -1344,6 +1419,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_datalist_id_set_data_full, \"g_datalist_id_set_data_full\", LIBRARY.GLIB);
 	Linker.link(g_datalist_id_get_data, \"g_datalist_id_get_data\", LIBRARY.GLIB);
 	Linker.link(g_datalist_id_remove_no_notify, \"g_datalist_id_remove_no_notify\", LIBRARY.GLIB);
+	Linker.link(g_datalist_get_data, \"g_datalist_get_data\", LIBRARY.GLIB);
 	Linker.link(g_datalist_foreach, \"g_datalist_foreach\", LIBRARY.GLIB);
 	Linker.link(g_datalist_clear, \"g_datalist_clear\", LIBRARY.GLIB);
 	Linker.link(g_datalist_set_flags, \"g_datalist_set_flags\", LIBRARY.GLIB);
@@ -1427,6 +1503,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_variant_ref, \"g_variant_ref\", LIBRARY.GLIB);
 	Linker.link(g_variant_ref_sink, \"g_variant_ref_sink\", LIBRARY.GLIB);
 	Linker.link(g_variant_is_floating, \"g_variant_is_floating\", LIBRARY.GLIB);
+	Linker.link(g_variant_take_ref, \"g_variant_take_ref\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_type, \"g_variant_get_type\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_type_string, \"g_variant_get_type_string\", LIBRARY.GLIB);
 	Linker.link(g_variant_is_of_type, \"g_variant_is_of_type\", LIBRARY.GLIB);
@@ -1454,6 +1531,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_variant_is_signature, \"g_variant_is_signature\", LIBRARY.GLIB);
 	Linker.link(g_variant_new_variant, \"g_variant_new_variant\", LIBRARY.GLIB);
 	Linker.link(g_variant_new_strv, \"g_variant_new_strv\", LIBRARY.GLIB);
+	Linker.link(g_variant_new_objv, \"g_variant_new_objv\", LIBRARY.GLIB);
 	Linker.link(g_variant_new_bytestring, \"g_variant_new_bytestring\", LIBRARY.GLIB);
 	Linker.link(g_variant_new_bytestring_array, \"g_variant_new_bytestring_array\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_boolean, \"g_variant_get_boolean\", LIBRARY.GLIB);
@@ -1471,6 +1549,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_variant_get_variant, \"g_variant_get_variant\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_strv, \"g_variant_get_strv\", LIBRARY.GLIB);
 	Linker.link(g_variant_dup_strv, \"g_variant_dup_strv\", LIBRARY.GLIB);
+	Linker.link(g_variant_get_objv, \"g_variant_get_objv\", LIBRARY.GLIB);
+	Linker.link(g_variant_dup_objv, \"g_variant_dup_objv\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_bytestring, \"g_variant_get_bytestring\", LIBRARY.GLIB);
 	Linker.link(g_variant_dup_bytestring, \"g_variant_dup_bytestring\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_bytestring_array, \"g_variant_get_bytestring_array\", LIBRARY.GLIB);
@@ -1537,14 +1617,21 @@ mixin( gshared ~"extern(C)
 
 	gint function(gint* atomic) c_g_atomic_int_get;
 	void function(gint* atomic, gint newval) c_g_atomic_int_set;
-	void function(gint* atomic, gint val) c_g_atomic_int_add;
-	gint function(gint* atomic, gint val) c_g_atomic_int_exchange_and_add;
-	gboolean function(gint* atomic, gint oldval, gint newval) c_g_atomic_int_compare_and_exchange;
-	gpointer function(gpointer* atomic) c_g_atomic_pointer_get;
-	void function(gpointer* atomic, gpointer newval) c_g_atomic_pointer_set;
-	gboolean function(gpointer* atomic, gpointer oldval, gpointer newval) c_g_atomic_pointer_compare_and_exchange;
 	void function(gint* atomic) c_g_atomic_int_inc;
 	gboolean function(gint* atomic) c_g_atomic_int_dec_and_test;
+	gboolean function(gint* atomic, gint oldval, gint newval) c_g_atomic_int_compare_and_exchange;
+	gint function(gint* atomic, gint val) c_g_atomic_int_add;
+	guint function(guint* atomic, guint val) c_g_atomic_int_and;
+	guint function(guint* atomic, guint val) c_g_atomic_int_or;
+	guint function(guint* atomic, guint val) c_g_atomic_int_xor;
+	gpointer function(void* atomic) c_g_atomic_pointer_get;
+	void function(void* atomic, gpointer newval) c_g_atomic_pointer_set;
+	gboolean function(void* atomic, gpointer oldval, gpointer newval) c_g_atomic_pointer_compare_and_exchange;
+	gssize function(void* atomic, gssize val) c_g_atomic_pointer_add;
+	gsize function(void* atomic, gsize val) c_g_atomic_pointer_and;
+	gsize function(void* atomic, gsize val) c_g_atomic_pointer_or;
+	gsize function(void* atomic, gsize val) c_g_atomic_pointer_xor;
+	gint function(gint* atomic, gint val) c_g_atomic_int_exchange_and_add;
 
 	// glib.MainLoop
 
@@ -1876,6 +1963,8 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* str, gssize len, gchar* toCodeset, gchar* fromCodeset, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_convert;
 	gchar* function(gchar* str, gssize len, gchar* toCodeset, gchar* fromCodeset, gchar* fallback, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_convert_with_fallback;
 	gchar* function(gchar* opsysstring, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_locale_to_utf8;
+	gchar* function(gchar* opsysstring, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_filename_to_utf8;
+	gchar* function(gchar* utf8string, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_filename_from_utf8;
 	gboolean function(gchar*** charsets) c_g_get_filename_charsets;
 	gchar* function(gchar* filename) c_g_filename_display_name;
 	gchar* function(gchar* filename) c_g_filename_display_basename;
@@ -1907,6 +1996,9 @@ mixin( gshared ~"extern(C)
 	gunichar function(gunichar c) c_g_unichar_totitle;
 	gint function(gunichar c) c_g_unichar_digit_value;
 	gint function(gunichar c) c_g_unichar_xdigit_value;
+	gboolean function(gunichar a, gunichar b, gunichar* ch) c_g_unichar_compose;
+	gboolean function(gunichar ch, gunichar* a, gunichar* b) c_g_unichar_decompose;
+	gsize function(gunichar ch, gboolean compat, gunichar* result, gsize resultLen) c_g_unichar_fully_decompose;
 	GUnicodeType function(gunichar c) c_g_unichar_type;
 	GUnicodeBreakType function(gunichar c) c_g_unichar_break_type;
 	gint function(gunichar uc) c_g_unichar_combining_class;
@@ -1914,6 +2006,8 @@ mixin( gshared ~"extern(C)
 	gunichar* function(gunichar ch, gsize* resultLen) c_g_unicode_canonical_decomposition;
 	gboolean function(gunichar ch, gunichar* mirroredCh) c_g_unichar_get_mirror_char;
 	GUnicodeScript function(gunichar ch) c_g_unichar_get_script;
+	GUnicodeScript function(guint32 iso15924) c_g_unicode_script_from_iso15924;
+	guint32 function(GUnicodeScript script) c_g_unicode_script_to_iso15924;
 	gunichar function(gchar* p) c_g_utf8_get_char;
 	gunichar function(gchar* p, gssize maxLen) c_g_utf8_get_char_validated;
 	gchar* function(gchar* str, glong offset) c_g_utf8_offset_to_pointer;
@@ -1926,6 +2020,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* p, gssize len, gunichar c) c_g_utf8_strchr;
 	gchar* function(gchar* p, gssize len, gunichar c) c_g_utf8_strrchr;
 	gchar* function(gchar* str, gssize len) c_g_utf8_strreverse;
+	gchar* function(gchar* str, glong startPos, glong endPos) c_g_utf8_substring;
 	gboolean function(gchar* str, gssize maxLen, gchar** end) c_g_utf8_validate;
 	gchar* function(gchar* str, gssize len) c_g_utf8_strup;
 	gchar* function(gchar* str, gssize len) c_g_utf8_strdown;
@@ -1964,6 +2059,18 @@ mixin( gshared ~"extern(C)
 	void function(GChecksum* checksum, guint8* buffer, gsize* digestLen) c_g_checksum_get_digest;
 	gchar* function(GChecksumType checksumType, guchar* data, gsize length) c_g_compute_checksum_for_data;
 	gchar* function(GChecksumType checksumType, gchar* str, gssize length) c_g_compute_checksum_for_string;
+
+	// glib.Hmac
+
+	GHmac* function(GChecksumType digestType, guchar* key, gsize keyLen) c_g_hmac_new;
+	GHmac* function(GHmac* hmac) c_g_hmac_copy;
+	GHmac* function(GHmac* hmac) c_g_hmac_ref;
+	void function(GHmac* hmac) c_g_hmac_unref;
+	void function(GHmac* hmac, guchar* data, gssize length) c_g_hmac_update;
+	gchar* function(GHmac* hmac) c_g_hmac_get_string;
+	void function(GHmac* hmac, guint8* buffer, gsize* digestLen) c_g_hmac_get_digest;
+	gchar* function(GChecksumType digestType, guchar* key, gsize keyLen, guchar* data, gsize length) c_g_compute_hmac_for_data;
+	gchar* function(GChecksumType digestType, guchar* key, gsize keyLen, gchar* str, gssize length) c_g_compute_hmac_for_string;
 
 	// glib.Internationalization
 
@@ -2126,7 +2233,12 @@ mixin( gshared ~"extern(C)
 	gchar* function() c_g_get_prgname;
 	void function(gchar* prgname) c_g_set_prgname;
 	gchar** function() c_g_get_environ;
+	gchar* function(gchar* variable) c_g_getenv;
+	gboolean function(gchar* variable, gchar* value, gboolean overwrite) c_g_setenv;
+	void function(gchar* variable) c_g_unsetenv;
 	gchar** function() c_g_listenv;
+	gchar* function() c_g_get_user_name;
+	gchar* function() c_g_get_real_name;
 	gchar* function() c_g_get_user_cache_dir;
 	gchar* function() c_g_get_user_data_dir;
 	gchar* function() c_g_get_user_config_dir;
@@ -2136,6 +2248,9 @@ mixin( gshared ~"extern(C)
 	gchar** function() c_g_get_system_config_dirs;
 	void function() c_g_reload_user_special_dirs_cache;
 	gchar* function() c_g_get_host_name;
+	gchar* function() c_g_get_home_dir;
+	gchar* function() c_g_get_tmp_dir;
+	gchar* function() c_g_get_current_dir;
 	gchar* function(gchar* fileName) c_g_basename;
 	gboolean function(gchar* fileName) c_g_path_is_absolute;
 	gchar* function(gchar* fileName) c_g_path_skip_root;
@@ -2145,7 +2260,10 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar** args) c_g_build_filenamev;
 	gchar* function(gchar* separator, gchar* firstElement, ... ) c_g_build_path;
 	gchar* function(gchar* separator, gchar** args) c_g_build_pathv;
+	gchar* function(guint64 size) c_g_format_size;
+	gchar* function(guint64 size, GFormatSizeFlags flags) c_g_format_size_full;
 	char* function(goffset size) c_g_format_size_for_display;
+	gchar* function(gchar* program) c_g_find_program_in_path;
 	gint function(gulong mask, gint nthBit) c_g_bit_nth_lsf;
 	gint function(gulong mask, gint nthBit) c_g_bit_nth_msf;
 	guint function(gulong number) c_g_bit_storage;
@@ -2212,17 +2330,37 @@ mixin( gshared ~"extern(C)
 	// glib.FileUtils
 
 	GFileError function(gint errNo) c_g_file_error_from_errno;
+	gboolean function(gchar* filename, gchar** contents, gsize* length, GError** error) c_g_file_get_contents;
 	gboolean function(gchar* filename, gchar* contents, gssize length, GError** error) c_g_file_set_contents;
-	gint function(gchar* tmpl, int flags, int mode) c_g_mkstemp_full;
+	gboolean function(gchar* filename, GFileTest test) c_g_file_test;
+	gint function(gchar* tmpl) c_g_mkstemp;
+	gint function(gchar* tmpl, gint flags, gint mode) c_g_mkstemp_full;
+	gint function(gchar* tmpl, gchar** nameUsed, GError** error) c_g_file_open_tmp;
 	gchar* function(gchar* filename, GError** error) c_g_file_read_link;
 	int function(gchar* pathname, int mode) c_g_mkdir_with_parents;
+	gchar* function(gchar* tmpl) c_g_mkdtemp;
+	gchar* function(gchar* tmpl, gint mode) c_g_mkdtemp_full;
+	int function(gchar* filename, int flags, int mode) c_g_open;
+	int function(gchar* oldfilename, gchar* newfilename) c_g_rename;
+	int function(gchar* filename, int mode) c_g_mkdir;
+	int function(gchar* filename, GStatBuf* buf) c_g_stat;
+	int function(gchar* filename, GStatBuf* buf) c_g_lstat;
 	int function(gchar* filename) c_g_unlink;
+	int function(gchar* filename) c_g_remove;
 	int function(gchar* filename) c_g_rmdir;
+	void* function(gchar* filename, gchar* mode) c_g_fopen;
+	void* function(gchar* filename, gchar* mode, void* stream) c_g_freopen;
+	int function(gchar* filename, int mode) c_g_chmod;
 	int function(gchar* filename, int mode) c_g_access;
+	int function(gchar* filename, int mode) c_g_creat;
 	int function(gchar* path) c_g_chdir;
+	int function(gchar* filename, void* utb) c_g_utime;
 
 	// glib.Directory
 
+	gchar* function(gchar* tmpl, GError** error) c_g_dir_make_tmp;
+	GDir* function(gchar* path, guint flags, GError** error) c_g_dir_open;
+	gchar* function(GDir* dir) c_g_dir_read_name;
 	void function(GDir* dir) c_g_dir_rewind;
 	void function(GDir* dir) c_g_dir_close;
 
@@ -2242,6 +2380,8 @@ mixin( gshared ~"extern(C)
 	char* function(char* escapedString, char* illegalCharacters) c_g_uri_unescape_string;
 	char* function(char* escapedString, char* escapedStringEnd, char* illegalCharacters) c_g_uri_unescape_segment;
 	gchar** function(gchar* uriList) c_g_uri_list_extract_uris;
+	gchar* function(gchar* uri, gchar** hostname, GError** error) c_g_filename_from_uri;
+	gchar* function(gchar* filename, gchar* hostname, GError** error) c_g_filename_to_uri;
 
 	// glib.Hostname
 
@@ -2309,6 +2449,7 @@ mixin( gshared ~"extern(C)
 	GRegexCompileFlags function(GRegex* regex) c_g_regex_get_compile_flags;
 	GRegexMatchFlags function(GRegex* regex) c_g_regex_get_match_flags;
 	gchar* function(gchar* string, gint length) c_g_regex_escape_string;
+	gchar* function(gchar* string, gint length) c_g_regex_escape_nul;
 	gboolean function(gchar* pattern, gchar* string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions) c_g_regex_match_simple;
 	gboolean function(GRegex* regex, gchar* string, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo) c_g_regex_match;
 	gboolean function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo, GError** error) c_g_regex_match_full;
@@ -2326,6 +2467,8 @@ mixin( gshared ~"extern(C)
 
 	GRegex* function(GMatchInfo* matchInfo) c_g_match_info_get_regex;
 	gchar* function(GMatchInfo* matchInfo) c_g_match_info_get_string;
+	GMatchInfo* function(GMatchInfo* matchInfo) c_g_match_info_ref;
+	void function(GMatchInfo* matchInfo) c_g_match_info_unref;
 	void function(GMatchInfo* matchInfo) c_g_match_info_free;
 	gboolean function(GMatchInfo* matchInfo) c_g_match_info_matches;
 	gboolean function(GMatchInfo* matchInfo, GError** error) c_g_match_info_next;
@@ -2444,11 +2587,21 @@ mixin( gshared ~"extern(C)
 	gboolean function(GBookmarkFile* bookmark, gchar* uri, GError** error) c_g_bookmark_file_remove_item;
 	gboolean function(GBookmarkFile* bookmark, gchar* oldUri, gchar* newUri, GError** error) c_g_bookmark_file_move_item;
 
+	// glib.UnixUtils
+
+	gboolean function(gint* fds, gint flags, GError** error) c_g_unix_open_pipe;
+	guint function(gint signum, GSourceFunc handler, gpointer userData) c_g_unix_signal_add;
+	guint function(gint priority, gint signum, GSourceFunc handler, gpointer userData, GDestroyNotify notify) c_g_unix_signal_add_full;
+	GSource* function(gint signum) c_g_unix_signal_source_new;
+	gboolean function(gint fd, gboolean nonblock, GError** error) c_g_unix_set_fd_nonblocking;
+
 	// glib.WindowsUtils
 
 	gchar* function(gint error) c_g_win32_error_message;
 	gchar* function() c_g_win32_getlocale;
+	gchar* function(gchar* p, gchar* dllName) c_g_win32_get_package_installation_directory;
 	gchar* function(gpointer hmodule) c_g_win32_get_package_installation_directory_of_module;
+	gchar* function(gchar* p, gchar* dllName, gchar* subdir) c_g_win32_get_package_installation_subdirectory;
 	guint function() c_g_win32_get_windows_version;
 	gchar* function(gchar* utf8filename) c_g_win32_locale_filename_from_utf8;
 
@@ -2565,8 +2718,8 @@ mixin( gshared ~"extern(C)
 	gpointer function(GQueue* queue) c_g_queue_peek_tail;
 	gpointer function(GQueue* queue, guint n) c_g_queue_peek_nth;
 	gint function(GQueue* queue, gconstpointer data) c_g_queue_index;
-	void function(GQueue* queue, gconstpointer data) c_g_queue_remove;
-	void function(GQueue* queue, gconstpointer data) c_g_queue_remove_all;
+	gboolean function(GQueue* queue, gconstpointer data) c_g_queue_remove;
+	guint function(GQueue* queue, gconstpointer data) c_g_queue_remove_all;
 	void function(GQueue* queue, GList* sibling, gpointer data) c_g_queue_insert_before;
 	void function(GQueue* queue, GList* sibling, gpointer data) c_g_queue_insert_after;
 	void function(GQueue* queue, gpointer data, GCompareDataFunc func, gpointer userData) c_g_queue_insert_sorted;
@@ -2671,6 +2824,7 @@ mixin( gshared ~"extern(C)
 	void function(GHashTableIter* iter, GHashTable* hashTable) c_g_hash_table_iter_init;
 	gboolean function(GHashTableIter* iter, gpointer* key, gpointer* value) c_g_hash_table_iter_next;
 	GHashTable* function(GHashTableIter* iter) c_g_hash_table_iter_get_hash_table;
+	void function(GHashTableIter* iter, gpointer value) c_g_hash_table_iter_replace;
 	void function(GHashTableIter* iter) c_g_hash_table_iter_remove;
 	void function(GHashTableIter* iter) c_g_hash_table_iter_steal;
 
@@ -2740,6 +2894,7 @@ mixin( gshared ~"extern(C)
 	GPtrArray* function() c_g_ptr_array_new;
 	GPtrArray* function(guint reservedSize) c_g_ptr_array_sized_new;
 	GPtrArray* function(GDestroyNotify elementFreeFunc) c_g_ptr_array_new_with_free_func;
+	GPtrArray* function(guint reservedSize, GDestroyNotify elementFreeFunc) c_g_ptr_array_new_full;
 	void function(GPtrArray* array, GDestroyNotify elementFreeFunc) c_g_ptr_array_set_free_func;
 	GPtrArray* function(GPtrArray* array) c_g_ptr_array_ref;
 	void function(GPtrArray* array) c_g_ptr_array_unref;
@@ -2837,6 +2992,7 @@ mixin( gshared ~"extern(C)
 	void function(GData** datalist, GQuark keyId, gpointer data, GDestroyNotify destroyFunc) c_g_datalist_id_set_data_full;
 	gpointer function(GData** datalist, GQuark keyId) c_g_datalist_id_get_data;
 	gpointer function(GData** datalist, GQuark keyId) c_g_datalist_id_remove_no_notify;
+	gpointer function(GData** datalist, gchar* key) c_g_datalist_get_data;
 	void function(GData** datalist, GDataForeachFunc func, gpointer userData) c_g_datalist_foreach;
 	void function(GData** datalist) c_g_datalist_clear;
 	void function(GData** datalist, guint flags) c_g_datalist_set_flags;
@@ -2920,6 +3076,7 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GVariant* value) c_g_variant_ref;
 	GVariant* function(GVariant* value) c_g_variant_ref_sink;
 	gboolean function(GVariant* value) c_g_variant_is_floating;
+	GVariant* function(GVariant* value) c_g_variant_take_ref;
 	GVariantType* function(GVariant* value) c_g_variant_get_type;
 	gchar* function(GVariant* value) c_g_variant_get_type_string;
 	gboolean function(GVariant* value, GVariantType* type) c_g_variant_is_of_type;
@@ -2947,6 +3104,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(gchar* string) c_g_variant_is_signature;
 	GVariant* function(GVariant* value) c_g_variant_new_variant;
 	GVariant* function(gchar** strv, gssize length) c_g_variant_new_strv;
+	GVariant* function(gchar** strv, gssize length) c_g_variant_new_objv;
 	GVariant* function(gchar* string) c_g_variant_new_bytestring;
 	GVariant* function(gchar** strv, gssize length) c_g_variant_new_bytestring_array;
 	gboolean function(GVariant* value) c_g_variant_get_boolean;
@@ -2964,6 +3122,8 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GVariant* value) c_g_variant_get_variant;
 	gchar** function(GVariant* value, gsize* length) c_g_variant_get_strv;
 	gchar** function(GVariant* value, gsize* length) c_g_variant_dup_strv;
+	gchar** function(GVariant* value, gsize* length) c_g_variant_get_objv;
+	gchar** function(GVariant* value, gsize* length) c_g_variant_dup_objv;
 	gchar* function(GVariant* value) c_g_variant_get_bytestring;
 	gchar* function(GVariant* value, gsize* length) c_g_variant_dup_bytestring;
 	gchar** function(GVariant* value, gsize* length) c_g_variant_get_bytestring_array;
@@ -3028,14 +3188,21 @@ alias c_glib_check_version  glib_check_version;
 
 alias c_g_atomic_int_get  g_atomic_int_get;
 alias c_g_atomic_int_set  g_atomic_int_set;
-alias c_g_atomic_int_add  g_atomic_int_add;
-alias c_g_atomic_int_exchange_and_add  g_atomic_int_exchange_and_add;
+alias c_g_atomic_int_inc  g_atomic_int_inc;
+alias c_g_atomic_int_dec_and_test  g_atomic_int_dec_and_test;
 alias c_g_atomic_int_compare_and_exchange  g_atomic_int_compare_and_exchange;
+alias c_g_atomic_int_add  g_atomic_int_add;
+alias c_g_atomic_int_and  g_atomic_int_and;
+alias c_g_atomic_int_or  g_atomic_int_or;
+alias c_g_atomic_int_xor  g_atomic_int_xor;
 alias c_g_atomic_pointer_get  g_atomic_pointer_get;
 alias c_g_atomic_pointer_set  g_atomic_pointer_set;
 alias c_g_atomic_pointer_compare_and_exchange  g_atomic_pointer_compare_and_exchange;
-alias c_g_atomic_int_inc  g_atomic_int_inc;
-alias c_g_atomic_int_dec_and_test  g_atomic_int_dec_and_test;
+alias c_g_atomic_pointer_add  g_atomic_pointer_add;
+alias c_g_atomic_pointer_and  g_atomic_pointer_and;
+alias c_g_atomic_pointer_or  g_atomic_pointer_or;
+alias c_g_atomic_pointer_xor  g_atomic_pointer_xor;
+alias c_g_atomic_int_exchange_and_add  g_atomic_int_exchange_and_add;
 
 // glib.MainLoop
 
@@ -3367,6 +3534,8 @@ alias c_g_strsignal  g_strsignal;
 alias c_g_convert  g_convert;
 alias c_g_convert_with_fallback  g_convert_with_fallback;
 alias c_g_locale_to_utf8  g_locale_to_utf8;
+alias c_g_filename_to_utf8  g_filename_to_utf8;
+alias c_g_filename_from_utf8  g_filename_from_utf8;
 alias c_g_get_filename_charsets  g_get_filename_charsets;
 alias c_g_filename_display_name  g_filename_display_name;
 alias c_g_filename_display_basename  g_filename_display_basename;
@@ -3398,6 +3567,9 @@ alias c_g_unichar_tolower  g_unichar_tolower;
 alias c_g_unichar_totitle  g_unichar_totitle;
 alias c_g_unichar_digit_value  g_unichar_digit_value;
 alias c_g_unichar_xdigit_value  g_unichar_xdigit_value;
+alias c_g_unichar_compose  g_unichar_compose;
+alias c_g_unichar_decompose  g_unichar_decompose;
+alias c_g_unichar_fully_decompose  g_unichar_fully_decompose;
 alias c_g_unichar_type  g_unichar_type;
 alias c_g_unichar_break_type  g_unichar_break_type;
 alias c_g_unichar_combining_class  g_unichar_combining_class;
@@ -3405,6 +3577,8 @@ alias c_g_unicode_canonical_ordering  g_unicode_canonical_ordering;
 alias c_g_unicode_canonical_decomposition  g_unicode_canonical_decomposition;
 alias c_g_unichar_get_mirror_char  g_unichar_get_mirror_char;
 alias c_g_unichar_get_script  g_unichar_get_script;
+alias c_g_unicode_script_from_iso15924  g_unicode_script_from_iso15924;
+alias c_g_unicode_script_to_iso15924  g_unicode_script_to_iso15924;
 alias c_g_utf8_get_char  g_utf8_get_char;
 alias c_g_utf8_get_char_validated  g_utf8_get_char_validated;
 alias c_g_utf8_offset_to_pointer  g_utf8_offset_to_pointer;
@@ -3417,6 +3591,7 @@ alias c_g_utf8_strncpy  g_utf8_strncpy;
 alias c_g_utf8_strchr  g_utf8_strchr;
 alias c_g_utf8_strrchr  g_utf8_strrchr;
 alias c_g_utf8_strreverse  g_utf8_strreverse;
+alias c_g_utf8_substring  g_utf8_substring;
 alias c_g_utf8_validate  g_utf8_validate;
 alias c_g_utf8_strup  g_utf8_strup;
 alias c_g_utf8_strdown  g_utf8_strdown;
@@ -3455,6 +3630,18 @@ alias c_g_checksum_get_string  g_checksum_get_string;
 alias c_g_checksum_get_digest  g_checksum_get_digest;
 alias c_g_compute_checksum_for_data  g_compute_checksum_for_data;
 alias c_g_compute_checksum_for_string  g_compute_checksum_for_string;
+
+// glib.Hmac
+
+alias c_g_hmac_new  g_hmac_new;
+alias c_g_hmac_copy  g_hmac_copy;
+alias c_g_hmac_ref  g_hmac_ref;
+alias c_g_hmac_unref  g_hmac_unref;
+alias c_g_hmac_update  g_hmac_update;
+alias c_g_hmac_get_string  g_hmac_get_string;
+alias c_g_hmac_get_digest  g_hmac_get_digest;
+alias c_g_compute_hmac_for_data  g_compute_hmac_for_data;
+alias c_g_compute_hmac_for_string  g_compute_hmac_for_string;
 
 // glib.Internationalization
 
@@ -3617,7 +3804,12 @@ alias c_g_set_application_name  g_set_application_name;
 alias c_g_get_prgname  g_get_prgname;
 alias c_g_set_prgname  g_set_prgname;
 alias c_g_get_environ  g_get_environ;
+alias c_g_getenv  g_getenv;
+alias c_g_setenv  g_setenv;
+alias c_g_unsetenv  g_unsetenv;
 alias c_g_listenv  g_listenv;
+alias c_g_get_user_name  g_get_user_name;
+alias c_g_get_real_name  g_get_real_name;
 alias c_g_get_user_cache_dir  g_get_user_cache_dir;
 alias c_g_get_user_data_dir  g_get_user_data_dir;
 alias c_g_get_user_config_dir  g_get_user_config_dir;
@@ -3627,6 +3819,9 @@ alias c_g_get_system_data_dirs  g_get_system_data_dirs;
 alias c_g_get_system_config_dirs  g_get_system_config_dirs;
 alias c_g_reload_user_special_dirs_cache  g_reload_user_special_dirs_cache;
 alias c_g_get_host_name  g_get_host_name;
+alias c_g_get_home_dir  g_get_home_dir;
+alias c_g_get_tmp_dir  g_get_tmp_dir;
+alias c_g_get_current_dir  g_get_current_dir;
 alias c_g_basename  g_basename;
 alias c_g_path_is_absolute  g_path_is_absolute;
 alias c_g_path_skip_root  g_path_skip_root;
@@ -3636,7 +3831,10 @@ alias c_g_build_filename  g_build_filename;
 alias c_g_build_filenamev  g_build_filenamev;
 alias c_g_build_path  g_build_path;
 alias c_g_build_pathv  g_build_pathv;
+alias c_g_format_size  g_format_size;
+alias c_g_format_size_full  g_format_size_full;
 alias c_g_format_size_for_display  g_format_size_for_display;
+alias c_g_find_program_in_path  g_find_program_in_path;
 alias c_g_bit_nth_lsf  g_bit_nth_lsf;
 alias c_g_bit_nth_msf  g_bit_nth_msf;
 alias c_g_bit_storage  g_bit_storage;
@@ -3703,17 +3901,37 @@ alias c_g_spawn_close_pid  g_spawn_close_pid;
 // glib.FileUtils
 
 alias c_g_file_error_from_errno  g_file_error_from_errno;
+alias c_g_file_get_contents  g_file_get_contents;
 alias c_g_file_set_contents  g_file_set_contents;
+alias c_g_file_test  g_file_test;
+alias c_g_mkstemp  g_mkstemp;
 alias c_g_mkstemp_full  g_mkstemp_full;
+alias c_g_file_open_tmp  g_file_open_tmp;
 alias c_g_file_read_link  g_file_read_link;
 alias c_g_mkdir_with_parents  g_mkdir_with_parents;
+alias c_g_mkdtemp  g_mkdtemp;
+alias c_g_mkdtemp_full  g_mkdtemp_full;
+alias c_g_open  g_open;
+alias c_g_rename  g_rename;
+alias c_g_mkdir  g_mkdir;
+alias c_g_stat  g_stat;
+alias c_g_lstat  g_lstat;
 alias c_g_unlink  g_unlink;
+alias c_g_remove  g_remove;
 alias c_g_rmdir  g_rmdir;
+alias c_g_fopen  g_fopen;
+alias c_g_freopen  g_freopen;
+alias c_g_chmod  g_chmod;
 alias c_g_access  g_access;
+alias c_g_creat  g_creat;
 alias c_g_chdir  g_chdir;
+alias c_g_utime  g_utime;
 
 // glib.Directory
 
+alias c_g_dir_make_tmp  g_dir_make_tmp;
+alias c_g_dir_open  g_dir_open;
+alias c_g_dir_read_name  g_dir_read_name;
 alias c_g_dir_rewind  g_dir_rewind;
 alias c_g_dir_close  g_dir_close;
 
@@ -3733,6 +3951,8 @@ alias c_g_uri_escape_string  g_uri_escape_string;
 alias c_g_uri_unescape_string  g_uri_unescape_string;
 alias c_g_uri_unescape_segment  g_uri_unescape_segment;
 alias c_g_uri_list_extract_uris  g_uri_list_extract_uris;
+alias c_g_filename_from_uri  g_filename_from_uri;
+alias c_g_filename_to_uri  g_filename_to_uri;
 
 // glib.Hostname
 
@@ -3800,6 +4020,7 @@ alias c_g_regex_get_string_number  g_regex_get_string_number;
 alias c_g_regex_get_compile_flags  g_regex_get_compile_flags;
 alias c_g_regex_get_match_flags  g_regex_get_match_flags;
 alias c_g_regex_escape_string  g_regex_escape_string;
+alias c_g_regex_escape_nul  g_regex_escape_nul;
 alias c_g_regex_match_simple  g_regex_match_simple;
 alias c_g_regex_match  g_regex_match;
 alias c_g_regex_match_full  g_regex_match_full;
@@ -3817,6 +4038,8 @@ alias c_g_regex_check_replacement  g_regex_check_replacement;
 
 alias c_g_match_info_get_regex  g_match_info_get_regex;
 alias c_g_match_info_get_string  g_match_info_get_string;
+alias c_g_match_info_ref  g_match_info_ref;
+alias c_g_match_info_unref  g_match_info_unref;
 alias c_g_match_info_free  g_match_info_free;
 alias c_g_match_info_matches  g_match_info_matches;
 alias c_g_match_info_next  g_match_info_next;
@@ -3935,11 +4158,21 @@ alias c_g_bookmark_file_remove_application  g_bookmark_file_remove_application;
 alias c_g_bookmark_file_remove_item  g_bookmark_file_remove_item;
 alias c_g_bookmark_file_move_item  g_bookmark_file_move_item;
 
+// glib.UnixUtils
+
+alias c_g_unix_open_pipe  g_unix_open_pipe;
+alias c_g_unix_signal_add  g_unix_signal_add;
+alias c_g_unix_signal_add_full  g_unix_signal_add_full;
+alias c_g_unix_signal_source_new  g_unix_signal_source_new;
+alias c_g_unix_set_fd_nonblocking  g_unix_set_fd_nonblocking;
+
 // glib.WindowsUtils
 
 alias c_g_win32_error_message  g_win32_error_message;
 alias c_g_win32_getlocale  g_win32_getlocale;
+alias c_g_win32_get_package_installation_directory  g_win32_get_package_installation_directory;
 alias c_g_win32_get_package_installation_directory_of_module  g_win32_get_package_installation_directory_of_module;
+alias c_g_win32_get_package_installation_subdirectory  g_win32_get_package_installation_subdirectory;
 alias c_g_win32_get_windows_version  g_win32_get_windows_version;
 alias c_g_win32_locale_filename_from_utf8  g_win32_locale_filename_from_utf8;
 
@@ -4162,6 +4395,7 @@ alias c_g_str_hash  g_str_hash;
 alias c_g_hash_table_iter_init  g_hash_table_iter_init;
 alias c_g_hash_table_iter_next  g_hash_table_iter_next;
 alias c_g_hash_table_iter_get_hash_table  g_hash_table_iter_get_hash_table;
+alias c_g_hash_table_iter_replace  g_hash_table_iter_replace;
 alias c_g_hash_table_iter_remove  g_hash_table_iter_remove;
 alias c_g_hash_table_iter_steal  g_hash_table_iter_steal;
 
@@ -4231,6 +4465,7 @@ alias c_g_array_free  g_array_free;
 alias c_g_ptr_array_new  g_ptr_array_new;
 alias c_g_ptr_array_sized_new  g_ptr_array_sized_new;
 alias c_g_ptr_array_new_with_free_func  g_ptr_array_new_with_free_func;
+alias c_g_ptr_array_new_full  g_ptr_array_new_full;
 alias c_g_ptr_array_set_free_func  g_ptr_array_set_free_func;
 alias c_g_ptr_array_ref  g_ptr_array_ref;
 alias c_g_ptr_array_unref  g_ptr_array_unref;
@@ -4328,6 +4563,7 @@ alias c_g_datalist_init  g_datalist_init;
 alias c_g_datalist_id_set_data_full  g_datalist_id_set_data_full;
 alias c_g_datalist_id_get_data  g_datalist_id_get_data;
 alias c_g_datalist_id_remove_no_notify  g_datalist_id_remove_no_notify;
+alias c_g_datalist_get_data  g_datalist_get_data;
 alias c_g_datalist_foreach  g_datalist_foreach;
 alias c_g_datalist_clear  g_datalist_clear;
 alias c_g_datalist_set_flags  g_datalist_set_flags;
@@ -4411,6 +4647,7 @@ alias c_g_variant_unref  g_variant_unref;
 alias c_g_variant_ref  g_variant_ref;
 alias c_g_variant_ref_sink  g_variant_ref_sink;
 alias c_g_variant_is_floating  g_variant_is_floating;
+alias c_g_variant_take_ref  g_variant_take_ref;
 alias c_g_variant_get_type  g_variant_get_type;
 alias c_g_variant_get_type_string  g_variant_get_type_string;
 alias c_g_variant_is_of_type  g_variant_is_of_type;
@@ -4438,6 +4675,7 @@ alias c_g_variant_new_signature  g_variant_new_signature;
 alias c_g_variant_is_signature  g_variant_is_signature;
 alias c_g_variant_new_variant  g_variant_new_variant;
 alias c_g_variant_new_strv  g_variant_new_strv;
+alias c_g_variant_new_objv  g_variant_new_objv;
 alias c_g_variant_new_bytestring  g_variant_new_bytestring;
 alias c_g_variant_new_bytestring_array  g_variant_new_bytestring_array;
 alias c_g_variant_get_boolean  g_variant_get_boolean;
@@ -4455,6 +4693,8 @@ alias c_g_variant_dup_string  g_variant_dup_string;
 alias c_g_variant_get_variant  g_variant_get_variant;
 alias c_g_variant_get_strv  g_variant_get_strv;
 alias c_g_variant_dup_strv  g_variant_dup_strv;
+alias c_g_variant_get_objv  g_variant_get_objv;
+alias c_g_variant_dup_objv  g_variant_dup_objv;
 alias c_g_variant_get_bytestring  g_variant_get_bytestring;
 alias c_g_variant_dup_bytestring  g_variant_dup_bytestring;
 alias c_g_variant_get_bytestring_array  g_variant_get_bytestring_array;

@@ -118,20 +118,20 @@ public alias int GPid;
 
 /**
  * typedef guint32 gunichar;
- * A type which can hold any UTF-32 or UCS-4 character code, also known
- * as a Unicode code point.
+ * A type which can hold any UTF-32 or UCS-4 character code,
+ * also known as a Unicode code point.
  * If you want to produce the UTF-8 representation of a gunichar,
- * use g_ucs4_to_utf8(). See also g_utf8_to_ucs4() for the reverse process.
+ * use g_ucs4_to_utf8(). See also g_utf8_to_ucs4() for the reverse
+ * process.
  * To print/scan values of this type as integer, use
  * G_GINT32_MODIFIER and/or G_GUINT32_FORMAT.
- * The notation to express a Unicode code point in running text is as a
- * hexadecimal number with four to six digits and uppercase letters, prefixed
- * by the string "U+". Leading zeros are omitted, unless the code point would
- * have fewer than four hexadecimal digits.
- * For example, "U+0041 LATIN CAPITAL LETTER A".
- * To print a code point in the U+-notation, use the format string
- * "U+04"G_GINT32_FORMAT"X".
- * To scan, use the format string "U+06"G_GINT32_FORMAT"X".
+ * The notation to express a Unicode code point in running text is
+ * as a hexadecimal number with four to six digits and uppercase
+ * letters, prefixed by the string "U+". Leading zeros are omitted,
+ * unless the code point would have fewer than four hexadecimal digits.
+ * For example, "U+0041 LATIN CAPITAL LETTER A". To print a code point
+ * in the U+-notation, use the format string "U+%04"G_GINT32_FORMAT"X".
+ * To scan, use the format string "U+%06"G_GINT32_FORMAT"X".
  * $(DDOC_COMMENT example)
  */
 public alias uint gunichar;
@@ -149,7 +149,7 @@ public alias ushort gunichar2;
 
 /**
  * typedef gint32 GTime;
- * Simply a replacement for time_t. It has been deprected
+ * Simply a replacement for time_t. It has been deprecated
  * since it is not equivalent to time_t
  * on 64-bit platforms with a 64-bit time_t.
  * Unrelated to GTimer.
@@ -339,14 +339,14 @@ alias GIOCondition IOCondition;
  *  the UNIX open() syscall).
  * G_IO_FLAG_IS_READABLE
  * indicates that the io channel is readable.
- *  This flag can not be changed.
+ *  This flag cannot be changed.
  * G_IO_FLAG_IS_WRITEABLE
  * indicates that the io channel is writable.
- *  This flag can not be changed.
+ *  This flag cannot be changed.
  * G_IO_FLAG_IS_SEEKABLE
  * indicates that the io channel is seekable,
  *  i.e. that g_io_channel_seek_position() can
- *  be used on it. This flag can not be changed.
+ *  be used on it. This flag cannot be changed.
  * G_IO_FLAG_MASK
  * the mask that specifies all the valid flags.
  * G_IO_FLAG_GET_MASK
@@ -483,8 +483,8 @@ alias GConvertError ConvertError;
  * General category "Letter, Titlecase" (Lt)
  * G_UNICODE_UPPERCASE_LETTER
  * General category "Letter, Uppercase" (Lu)
- * G_UNICODE_COMBINING_MARK
- * General category "Mark, Spacing Combining" (Mc)
+ * G_UNICODE_SPACING_MARK
+ * General category "Mark, Spacing" (Mc)
  * G_UNICODE_ENCLOSING_MARK
  * General category "Mark, Enclosing" (Me)
  * G_UNICODE_NON_SPACING_MARK
@@ -536,7 +536,7 @@ public enum GUnicodeType
 	OTHER_LETTER,
 	TITLECASE_LETTER,
 	UPPERCASE_LETTER,
-	COMBINING_MARK,
+	SPACING_MARK,
 	ENCLOSING_MARK,
 	NON_SPACING_MARK,
 	DECIMAL_NUMBER,
@@ -693,168 +693,168 @@ alias GUnicodeBreakType UnicodeBreakType;
  * See Unicode Standard Annex
  * #24: Script names.
  * G_UNICODE_SCRIPT_INVALID_CODE
- * a value never returned from g_unichar_get_script()
+ *  a value never returned from g_unichar_get_script()
  * G_UNICODE_SCRIPT_COMMON
- *  a character used by multiple different scripts
+ * a character used by multiple different scripts
  * G_UNICODE_SCRIPT_INHERITED
- *  a mark glyph that takes its script from the
- *  base glyph to which it is attached
+ * a mark glyph that takes its script from the
+ * i base glyph to which it is attached
  * G_UNICODE_SCRIPT_ARABIC
- *  Arabic
+ * Arabic
  * G_UNICODE_SCRIPT_ARMENIAN
- *  Armenian
+ * Armenian
  * G_UNICODE_SCRIPT_BENGALI
- *  Bengali
+ * Bengali
  * G_UNICODE_SCRIPT_BOPOMOFO
- *  Bopomofo
+ * Bopomofo
  * G_UNICODE_SCRIPT_CHEROKEE
- *  Cherokee
+ * Cherokee
  * G_UNICODE_SCRIPT_COPTIC
- *  Coptic
+ * Coptic
  * G_UNICODE_SCRIPT_CYRILLIC
- *  Cyrillic
+ * Cyrillic
  * G_UNICODE_SCRIPT_DESERET
- *  Deseret
+ * Deseret
  * G_UNICODE_SCRIPT_DEVANAGARI
  * Devanagari
  * G_UNICODE_SCRIPT_ETHIOPIC
- *  Ethiopic
+ * Ethiopic
  * G_UNICODE_SCRIPT_GEORGIAN
- *  Georgian
+ * Georgian
  * G_UNICODE_SCRIPT_GOTHIC
- *  Gothic
+ * Gothic
  * G_UNICODE_SCRIPT_GREEK
- *  Greek
+ * Greek
  * G_UNICODE_SCRIPT_GUJARATI
- *  Gujarati
+ * Gujarati
  * G_UNICODE_SCRIPT_GURMUKHI
- *  Gurmukhi
+ * Gurmukhi
  * G_UNICODE_SCRIPT_HAN
- *  Han
+ * Han
  * G_UNICODE_SCRIPT_HANGUL
- *  Hangul
+ * Hangul
  * G_UNICODE_SCRIPT_HEBREW
- *  Hebrew
+ * Hebrew
  * G_UNICODE_SCRIPT_HIRAGANA
- *  Hiragana
+ * Hiragana
  * G_UNICODE_SCRIPT_KANNADA
- *  Kannada
+ * Kannada
  * G_UNICODE_SCRIPT_KATAKANA
- *  Katakana
+ * Katakana
  * G_UNICODE_SCRIPT_KHMER
- *  Khmer
+ * Khmer
  * G_UNICODE_SCRIPT_LAO
- *  Lao
+ * Lao
  * G_UNICODE_SCRIPT_LATIN
- *  Latin
+ * Latin
  * G_UNICODE_SCRIPT_MALAYALAM
- *  Malayalam
+ * Malayalam
  * G_UNICODE_SCRIPT_MONGOLIAN
- *  Mongolian
+ * Mongolian
  * G_UNICODE_SCRIPT_MYANMAR
- *  Myanmar
+ * Myanmar
  * G_UNICODE_SCRIPT_OGHAM
- *  Ogham
+ * Ogham
  * G_UNICODE_SCRIPT_OLD_ITALIC
  * Old Italic
  * G_UNICODE_SCRIPT_ORIYA
- *  Oriya
+ * Oriya
  * G_UNICODE_SCRIPT_RUNIC
- *  Runic
+ * Runic
  * G_UNICODE_SCRIPT_SINHALA
- *  Sinhala
+ * Sinhala
  * G_UNICODE_SCRIPT_SYRIAC
- *  Syriac
+ * Syriac
  * G_UNICODE_SCRIPT_TAMIL
- *  Tamil
+ * Tamil
  * G_UNICODE_SCRIPT_TELUGU
- *  Telugu
+ * Telugu
  * G_UNICODE_SCRIPT_THAANA
- *  Thaana
+ * Thaana
  * G_UNICODE_SCRIPT_THAI
- *  Thai
+ * Thai
  * G_UNICODE_SCRIPT_TIBETAN
- *  Tibetan
+ * Tibetan
  * G_UNICODE_SCRIPT_CANADIAN_ABORIGINAL
  *  Canadian Aboriginal
  * G_UNICODE_SCRIPT_YI
- *  Yi
+ * Yi
  * G_UNICODE_SCRIPT_TAGALOG
- *  Tagalog
+ * Tagalog
  * G_UNICODE_SCRIPT_HANUNOO
- *  Hanunoo
+ * Hanunoo
  * G_UNICODE_SCRIPT_BUHID
- *  Buhid
+ * Buhid
  * G_UNICODE_SCRIPT_TAGBANWA
- *  Tagbanwa
+ * Tagbanwa
  * G_UNICODE_SCRIPT_BRAILLE
- *  Braille
+ * Braille
  * G_UNICODE_SCRIPT_CYPRIOT
- *  Cypriot
+ * Cypriot
  * G_UNICODE_SCRIPT_LIMBU
- *  Limbu
+ * Limbu
  * G_UNICODE_SCRIPT_OSMANYA
- *  Osmanya
+ * Osmanya
  * G_UNICODE_SCRIPT_SHAVIAN
- *  Shavian
+ * Shavian
  * G_UNICODE_SCRIPT_LINEAR_B
- *  Linear B
+ * Linear B
  * G_UNICODE_SCRIPT_TAI_LE
- *  Tai Le
+ * Tai Le
  * G_UNICODE_SCRIPT_UGARITIC
- *  Ugaritic
+ * Ugaritic
  * G_UNICODE_SCRIPT_NEW_TAI_LUE
- * New Tai Lue
+ *  New Tai Lue
  * G_UNICODE_SCRIPT_BUGINESE
- *  Buginese
+ * Buginese
  * G_UNICODE_SCRIPT_GLAGOLITIC
  * Glagolitic
  * G_UNICODE_SCRIPT_TIFINAGH
- *  Tifinagh
+ * Tifinagh
  * G_UNICODE_SCRIPT_SYLOTI_NAGRI
- * Syloti Nagri
+ *  Syloti Nagri
  * G_UNICODE_SCRIPT_OLD_PERSIAN
- * Old Persian
+ *  Old Persian
  * G_UNICODE_SCRIPT_KHAROSHTHI
  * Kharoshthi
  * G_UNICODE_SCRIPT_UNKNOWN
- *  an unassigned code point
+ * an unassigned code point
  * G_UNICODE_SCRIPT_BALINESE
- *  Balinese
+ * Balinese
  * G_UNICODE_SCRIPT_CUNEIFORM
- *  Cuneiform
+ * Cuneiform
  * G_UNICODE_SCRIPT_PHOENICIAN
  * Phoenician
  * G_UNICODE_SCRIPT_PHAGS_PA
- *  Phags-pa
+ * Phags-pa
  * G_UNICODE_SCRIPT_NKO
- *  N'Ko
+ * N'Ko
  * G_UNICODE_SCRIPT_KAYAH_LI
- *  Kayah Li. Since 2.16.3
+ * Kayah Li. Since 2.16.3
  * G_UNICODE_SCRIPT_LEPCHA
- *  Lepcha. Since 2.16.3
+ * Lepcha. Since 2.16.3
  * G_UNICODE_SCRIPT_REJANG
- *  Rejang. Since 2.16.3
+ * Rejang. Since 2.16.3
  * G_UNICODE_SCRIPT_SUNDANESE
- *  Sundanese. Since 2.16.3
+ * Sundanese. Since 2.16.3
  * G_UNICODE_SCRIPT_SAURASHTRA
  * Saurashtra. Since 2.16.3
  * G_UNICODE_SCRIPT_CHAM
- *  Cham. Since 2.16.3
+ * Cham. Since 2.16.3
  * G_UNICODE_SCRIPT_OL_CHIKI
- *  Ol Chiki. Since 2.16.3
+ * Ol Chiki. Since 2.16.3
  * G_UNICODE_SCRIPT_VAI
- *  Vai. Since 2.16.3
+ * Vai. Since 2.16.3
  * G_UNICODE_SCRIPT_CARIAN
- *  Carian. Since 2.16.3
+ * Carian. Since 2.16.3
  * G_UNICODE_SCRIPT_LYCIAN
- *  Lycian. Since 2.16.3
+ * Lycian. Since 2.16.3
  * G_UNICODE_SCRIPT_LYDIAN
- *  Lydian. Since 2.16.3
+ * Lydian. Since 2.16.3
  * G_UNICODE_SCRIPT_AVESTAN
- *  Avestan. Since 2.26
+ * Avestan. Since 2.26
  * G_UNICODE_SCRIPT_BAMUM
- *  Bamum. Since 2.26
+ * Bamum. Since 2.26
  * G_UNICODE_SCRIPT_EGYPTIAN_HIEROGLYPHS
  *  Egyptian Hieroglpyhs. Since 2.26
  * G_UNICODE_SCRIPT_IMPERIAL_ARAMAIC
@@ -862,168 +862,170 @@ alias GUnicodeBreakType UnicodeBreakType;
  * G_UNICODE_SCRIPT_INSCRIPTIONAL_PAHLAVI
  *  Inscriptional Pahlavi. Since 2.26
  * G_UNICODE_SCRIPT_INSCRIPTIONAL_PARTHIAN
- * Inscriptional Parthian. Since 2.26
+ *  Inscriptional Parthian. Since 2.26
  * G_UNICODE_SCRIPT_JAVANESE
- *  Javanese. Since 2.26
+ * Javanese. Since 2.26
  * G_UNICODE_SCRIPT_KAITHI
- *  Kaithi. Since 2.26
+ * Kaithi. Since 2.26
  * G_UNICODE_SCRIPT_LISU
- *  Lisu. Since 2.26
+ * Lisu. Since 2.26
  * G_UNICODE_SCRIPT_MEETEI_MAYEK
  *  Meetei Mayek. Since 2.26
  * G_UNICODE_SCRIPT_OLD_SOUTH_ARABIAN
  *  Old South Arabian. Since 2.26
  * G_UNICODE_SCRIPT_OLD_TURKIC
- *  Old Turkic. Since 2.28
+ * Old Turkic. Since 2.28
  * G_UNICODE_SCRIPT_SAMARITAN
- *  Samaritan. Since 2.26
+ * Samaritan. Since 2.26
  * G_UNICODE_SCRIPT_TAI_THAM
- *  Tai Tham. Since 2.26
+ * Tai Tham. Since 2.26
  * G_UNICODE_SCRIPT_TAI_VIET
- *  Tai Viet. Since 2.26
+ * Tai Viet. Since 2.26
  * G_UNICODE_SCRIPT_BATAK
- *  Batak. Since 2.28
+ * Batak. Since 2.28
  * G_UNICODE_SCRIPT_BRAHMI
- *  Brahmi. Since 2.28
+ * Brahmi. Since 2.28
  * G_UNICODE_SCRIPT_MANDAIC
- *  Mandaic. Since 2.28
+ * Mandaic. Since 2.28
  */
 public enum GUnicodeScript
 {
-	INVALID_CODE = -1,
-	COMMON = 0, /+* Zyyy +/
-	INHERITED, /+* Qaai +/
-	ARABIC, /+* Arab +/
-	ARMENIAN, /+* Armn +/
-	BENGALI, /+* Beng +/
-	BOPOMOFO, /+* Bopo +/
-	CHEROKEE, /+* Cher +/
-	COPTIC, /+* Qaac +/
-	CYRILLIC, /+* Cyrl (Cyrs) +/
-	DESERET, /+* Dsrt +/
-	DEVANAGARI, /+* Deva +/
-	ETHIOPIC, /+* Ethi +/
-	GEORGIAN, /+* Geor (Geon, Geoa) +/
-	GOTHIC, /+* Goth +/
-	GREEK, /+* Grek +/
-	GUJARATI, /+* Gujr +/
-	GURMUKHI, /+* Guru +/
-	HAN, /+* Hani +/
-	HANGUL, /+* Hang +/
-	HEBREW, /+* Hebr +/
-	HIRAGANA, /+* Hira +/
-	KANNADA, /+* Knda +/
-	KATAKANA, /+* Kana +/
-	KHMER, /+* Khmr +/
-	LAO, /+* Laoo +/
-	LATIN, /+* Latn (Latf, Latg) +/
-	MALAYALAM, /+* Mlym +/
-	MONGOLIAN, /+* Mong +/
-	MYANMAR, /+* Mymr +/
-	OGHAM, /+* Ogam +/
-	OLD_ITALIC, /+* Ital +/
-	ORIYA, /+* Orya +/
-	RUNIC, /+* Runr +/
-	SINHALA, /+* Sinh +/
-	SYRIAC, /+* Syrc (Syrj, Syrn, Syre) +/
-	TAMIL, /+* Taml +/
-	TELUGU, /+* Telu +/
-	THAANA, /+* Thaa +/
-	THAI, /+* Thai +/
-	TIBETAN, /+* Tibt +/
-	CANADIAN_ABORIGINAL, /+* Cans +/
-	YI, /+* Yiii +/
-	TAGALOG, /+* Tglg +/
-	HANUNOO, /+* Hano +/
-	BUHID, /+* Buhd +/
-	TAGBANWA, /+* Tagb +/
+	/+* ISO 15924 code +/
+	G_UNICODE_SCRIPT_INVALID_CODE = -1,
+	G_UNICODE_SCRIPT_COMMON = 0, /+* Zyyy +/
+	G_UNICODE_SCRIPT_INHERITED, /+* Qaai +/
+	G_UNICODE_SCRIPT_ARABIC, /+* Arab +/
+	G_UNICODE_SCRIPT_ARMENIAN, /+* Armn +/
+	G_UNICODE_SCRIPT_BENGALI, /+* Beng +/
+	G_UNICODE_SCRIPT_BOPOMOFO, /+* Bopo +/
+	G_UNICODE_SCRIPT_CHEROKEE, /+* Cher +/
+	G_UNICODE_SCRIPT_COPTIC, /+* Qaac +/
+	G_UNICODE_SCRIPT_CYRILLIC, /+* Cyrl (Cyrs) +/
+	G_UNICODE_SCRIPT_DESERET, /+* Dsrt +/
+	G_UNICODE_SCRIPT_DEVANAGARI, /+* Deva +/
+	G_UNICODE_SCRIPT_ETHIOPIC, /+* Ethi +/
+	G_UNICODE_SCRIPT_GEORGIAN, /+* Geor (Geon, Geoa) +/
+	G_UNICODE_SCRIPT_GOTHIC, /+* Goth +/
+	G_UNICODE_SCRIPT_GREEK, /+* Grek +/
+	G_UNICODE_SCRIPT_GUJARATI, /+* Gujr +/
+	G_UNICODE_SCRIPT_GURMUKHI, /+* Guru +/
+	G_UNICODE_SCRIPT_HAN, /+* Hani +/
+	G_UNICODE_SCRIPT_HANGUL, /+* Hang +/
+	G_UNICODE_SCRIPT_HEBREW, /+* Hebr +/
+	G_UNICODE_SCRIPT_HIRAGANA, /+* Hira +/
+	G_UNICODE_SCRIPT_KANNADA, /+* Knda +/
+	G_UNICODE_SCRIPT_KATAKANA, /+* Kana +/
+	G_UNICODE_SCRIPT_KHMER, /+* Khmr +/
+	G_UNICODE_SCRIPT_LAO, /+* Laoo +/
+	G_UNICODE_SCRIPT_LATIN, /+* Latn (Latf, Latg) +/
+	G_UNICODE_SCRIPT_MALAYALAM, /+* Mlym +/
+	G_UNICODE_SCRIPT_MONGOLIAN, /+* Mong +/
+	G_UNICODE_SCRIPT_MYANMAR, /+* Mymr +/
+	G_UNICODE_SCRIPT_OGHAM, /+* Ogam +/
+	G_UNICODE_SCRIPT_OLD_ITALIC, /+* Ital +/
+	G_UNICODE_SCRIPT_ORIYA, /+* Orya +/
+	G_UNICODE_SCRIPT_RUNIC, /+* Runr +/
+	G_UNICODE_SCRIPT_SINHALA, /+* Sinh +/
+	G_UNICODE_SCRIPT_SYRIAC, /+* Syrc (Syrj, Syrn, Syre) +/
+	G_UNICODE_SCRIPT_TAMIL, /+* Taml +/
+	G_UNICODE_SCRIPT_TELUGU, /+* Telu +/
+	G_UNICODE_SCRIPT_THAANA, /+* Thaa +/
+	G_UNICODE_SCRIPT_THAI, /+* Thai +/
+	G_UNICODE_SCRIPT_TIBETAN, /+* Tibt +/
+	G_UNICODE_SCRIPT_CANADIAN_ABORIGINAL, /+* Cans +/
+	G_UNICODE_SCRIPT_YI, /+* Yiii +/
+	G_UNICODE_SCRIPT_TAGALOG, /+* Tglg +/
+	G_UNICODE_SCRIPT_HANUNOO, /+* Hano +/
+	G_UNICODE_SCRIPT_BUHID, /+* Buhd +/
+	G_UNICODE_SCRIPT_TAGBANWA, /+* Tagb +/
 	/+* Unicode-4.0 additions +/
-	BRAILLE, /+* Brai +/
-	CYPRIOT, /+* Cprt +/
-	LIMBU, /+* Limb +/
-	OSMANYA, /+* Osma +/
-	SHAVIAN, /+* Shaw +/
-	LINEAR_B, /+* Linb +/
-	TAI_LE, /+* Tale +/
-	UGARITIC, /+* Ugar +/
+	G_UNICODE_SCRIPT_BRAILLE, /+* Brai +/
+	G_UNICODE_SCRIPT_CYPRIOT, /+* Cprt +/
+	G_UNICODE_SCRIPT_LIMBU, /+* Limb +/
+	G_UNICODE_SCRIPT_OSMANYA, /+* Osma +/
+	G_UNICODE_SCRIPT_SHAVIAN, /+* Shaw +/
+	G_UNICODE_SCRIPT_LINEAR_B, /+* Linb +/
+	G_UNICODE_SCRIPT_TAI_LE, /+* Tale +/
+	G_UNICODE_SCRIPT_UGARITIC, /+* Ugar +/
 	/+* Unicode-4.1 additions +/
-	NEW_TAI_LUE, /+* Talu +/
-	BUGINESE, /+* Bugi +/
-	GLAGOLITIC, /+* Glag +/
-	TIFINAGH, /+* Tfng +/
-	SYLOTI_NAGRI, /+* Sylo +/
-	OLD_PERSIAN, /+* Xpeo +/
-	KHAROSHTHI, /+* Khar +/
+	G_UNICODE_SCRIPT_NEW_TAI_LUE, /+* Talu +/
+	G_UNICODE_SCRIPT_BUGINESE, /+* Bugi +/
+	G_UNICODE_SCRIPT_GLAGOLITIC, /+* Glag +/
+	G_UNICODE_SCRIPT_TIFINAGH, /+* Tfng +/
+	G_UNICODE_SCRIPT_SYLOTI_NAGRI, /+* Sylo +/
+	G_UNICODE_SCRIPT_OLD_PERSIAN, /+* Xpeo +/
+	G_UNICODE_SCRIPT_KHAROSHTHI, /+* Khar +/
 	/+* Unicode-5.0 additions +/
-	UNKNOWN, /+* Zzzz +/
-	BALINESE, /+* Bali +/
-	CUNEIFORM, /+* Xsux +/
-	PHOENICIAN, /+* Phnx +/
-	PHAGS_PA, /+* Phag +/
-	NKO, /+* Nkoo +/
+	G_UNICODE_SCRIPT_UNKNOWN, /+* Zzzz +/
+	G_UNICODE_SCRIPT_BALINESE, /+* Bali +/
+	G_UNICODE_SCRIPT_CUNEIFORM, /+* Xsux +/
+	G_UNICODE_SCRIPT_PHOENICIAN, /+* Phnx +/
+	G_UNICODE_SCRIPT_PHAGS_PA, /+* Phag +/
+	G_UNICODE_SCRIPT_NKO, /+* Nkoo +/
 	/+* Unicode-5.1 additions +/
-	KAYAH_LI, /+* Kali +/
-	LEPCHA, /+* Lepc +/
-	REJANG, /+* Rjng +/
-	SUNDANESE, /+* Sund +/
-	SAURASHTRA, /+* Saur +/
-	CHAM, /+* Cham +/
-	OL_CHIKI, /+* Olck +/
-	VAI, /+* Vaii +/
-	CARIAN, /+* Cari +/
-	LYCIAN, /+* Lyci +/
-	LYDIAN, /+* Lydi +/
+	G_UNICODE_SCRIPT_KAYAH_LI, /+* Kali +/
+	G_UNICODE_SCRIPT_LEPCHA, /+* Lepc +/
+	G_UNICODE_SCRIPT_REJANG, /+* Rjng +/
+	G_UNICODE_SCRIPT_SUNDANESE, /+* Sund +/
+	G_UNICODE_SCRIPT_SAURASHTRA, /+* Saur +/
+	G_UNICODE_SCRIPT_CHAM, /+* Cham +/
+	G_UNICODE_SCRIPT_OL_CHIKI, /+* Olck +/
+	G_UNICODE_SCRIPT_VAI, /+* Vaii +/
+	G_UNICODE_SCRIPT_CARIAN, /+* Cari +/
+	G_UNICODE_SCRIPT_LYCIAN, /+* Lyci +/
+	G_UNICODE_SCRIPT_LYDIAN, /+* Lydi +/
 	/+* Unicode-5.2 additions +/
-	AVESTAN, /+* Avst +/
-	BAMUM, /+* Bamu +/
-	EGYPTIAN_HIEROGLYPHS, /+* Egyp +/
-	IMPERIAL_ARAMAIC, /+* Armi +/
-	INSCRIPTIONAL_PAHLAVI, /+* Phli +/
-	INSCRIPTIONAL_PARTHIAN, /+* Prti +/
-	JAVANESE, /+* Java +/
-	KAITHI, /+* Kthi +/
-	LISU, /+* Lisu +/
-	MEETEI_MAYEK, /+* Mtei +/
-	OLD_SOUTH_ARABIAN, /+* Sarb +/
-	OLD_TURKIC, /+* Orkh +/
-	SAMARITAN, /+* Samr +/
-	TAI_THAM, /+* Lana +/
-	TAI_VIET, /+* Tavt +/
+	G_UNICODE_SCRIPT_AVESTAN, /+* Avst +/
+	G_UNICODE_SCRIPT_BAMUM, /+* Bamu +/
+	G_UNICODE_SCRIPT_EGYPTIAN_HIEROGLYPHS, /+* Egyp +/
+	G_UNICODE_SCRIPT_IMPERIAL_ARAMAIC, /+* Armi +/
+	G_UNICODE_SCRIPT_INSCRIPTIONAL_PAHLAVI, /+* Phli +/
+	G_UNICODE_SCRIPT_INSCRIPTIONAL_PARTHIAN, /+* Prti +/
+	G_UNICODE_SCRIPT_JAVANESE, /+* Java +/
+	G_UNICODE_SCRIPT_KAITHI, /+* Kthi +/
+	G_UNICODE_SCRIPT_LISU, /+* Lisu +/
+	G_UNICODE_SCRIPT_MEETEI_MAYEK, /+* Mtei +/
+	G_UNICODE_SCRIPT_OLD_SOUTH_ARABIAN, /+* Sarb +/
+	G_UNICODE_SCRIPT_OLD_TURKIC, /+* Orkh +/
+	G_UNICODE_SCRIPT_SAMARITAN, /+* Samr +/
+	G_UNICODE_SCRIPT_TAI_THAM, /+* Lana +/
+	G_UNICODE_SCRIPT_TAI_VIET, /+* Tavt +/
 	/+* Unicode-6.0 additions +/
-	BATAK, /+* Batk +/
-	BRAHMI, /+* Brah +/
-	MANDAIC /+* Mand +/
+	G_UNICODE_SCRIPT_BATAK, /+* Batk +/
+	G_UNICODE_SCRIPT_BRAHMI, /+* Brah +/
+	G_UNICODE_SCRIPT_MANDAIC /+* Mand +/
 }
 alias GUnicodeScript UnicodeScript;
 
 /**
  * Defines how a Unicode string is transformed in a canonical
- * form, standardizing such issues as whether a character with an accent is
- * represented as a base character and combining accent or as a single precomposed
- * character. Unicode strings should generally be normalized before comparing them.
+ * form, standardizing such issues as whether a character with
+ * an accent is represented as a base character and combining
+ * accent or as a single precomposed character. Unicode strings
+ * should generally be normalized before comparing them.
  * G_NORMALIZE_DEFAULT
  * standardize differences that do not affect the
- *  text content, such as the above-mentioned accent representation.
+ *  text content, such as the above-mentioned accent representation
  * G_NORMALIZE_NFD
- * another name for G_NORMALIZE_DEFAULT.
+ * another name for G_NORMALIZE_DEFAULT
  * G_NORMALIZE_DEFAULT_COMPOSE
- * like G_NORMALIZE_DEFAULT, but with composed
- *  forms rather than a maximally decomposed form.
+ * like G_NORMALIZE_DEFAULT, but with
+ *  composed forms rather than a maximally decomposed form
  * G_NORMALIZE_NFC
- * another name for G_NORMALIZE_DEFAULT_COMPOSE.
+ * another name for G_NORMALIZE_DEFAULT_COMPOSE
  * G_NORMALIZE_ALL
  * beyond G_NORMALIZE_DEFAULT also standardize the
- *  "compatibility" characters in Unicode, such as SUPERSCRIPT THREE to the
- *  standard forms (in this case DIGIT THREE). Formatting information may be
- *  lost but for most text operations such characters should be considered the
- *  same.
+ *  "compatibility" characters in Unicode, such as SUPERSCRIPT THREE
+ *  to the standard forms (in this case DIGIT THREE). Formatting
+ *  information may be lost but for most text operations such
+ *  characters should be considered the same
  * G_NORMALIZE_NFKD
- * another name for G_NORMALIZE_ALL.
+ * another name for G_NORMALIZE_ALL
  * G_NORMALIZE_ALL_COMPOSE
  * like G_NORMALIZE_ALL, but with composed
- *  forms rather than a maximally decomposed form.
+ *  forms rather than a maximally decomposed form
  * G_NORMALIZE_NFKC
- * another name for G_NORMALIZE_ALL_COMPOSE.
+ * another name for G_NORMALIZE_ALL_COMPOSE
  */
 public enum GNormalizeMode
 {
@@ -1222,11 +1224,37 @@ public enum GUserDirectory
 alias GUserDirectory UserDirectory;
 
 /**
+ * Flags to modify the format of the string returned by
+ * g_format_size_full().
+ * G_FORMAT_SIZE_DEFAULT
+ * behave the same as g_format_size()
+ * G_FORMAT_SIZE_LONG_FORMAT
+ * include the exact number of bytes as part
+ *  of the returned string. For example,
+ *  "45.6 kB (45,612 bytes)".
+ * G_FORMAT_SIZE_IEC_UNITS
+ * use IEC (base 1024) units with "KiB"-style
+ *  suffixes. IEC units should only be used
+ *  for reporting things with a strong "power
+ *  of 2" basis, like RAM sizes or RAID stripe
+ *  sizes. Network and storage sizes should
+ *  be reported in the normal SI units.
+ */
+public enum GFormatSizeFlags
+{
+	DEFAULT = 0,
+	LONG_FORMAT = 1 << 0,
+	IEC_UNITS = 1 << 1
+}
+alias GFormatSizeFlags FormatSizeFlags;
+
+/**
  * The possible types of token returned from each g_scanner_get_next_token() call.
  * G_TOKEN_EOF
  * the end of the file.
  * G_TOKEN_LEFT_PAREN
  * a '(' character.
+ * G_TOKEN_RIGHT_PAREN
  * G_TOKEN_LEFT_CURLY
  * a '{' character.
  * G_TOKEN_RIGHT_CURLY
@@ -1335,7 +1363,8 @@ alias GErrorType ErrorType;
  * G_SPAWN_ERROR_LIBBAD
  * execv() returned ELIBBAD.
  * G_SPAWN_ERROR_FAILED
- * Some other fatal failure, error->message should explain.
+ * Some other fatal failure,
+ *  error->message should explain.
  */
 public enum GSpawnError
 {
@@ -1445,8 +1474,8 @@ alias GSpawnFlags SpawnFlags;
  *  installed incorrectly, or that the physical device is missing or
  *  not correctly attached to the computer.
  * G_FILE_ERROR_NODEV
- * This file is of a type that doesn't support
- *  mapping.
+ * The underlying file system of the specified file
+ *  does not support memory mapping.
  * G_FILE_ERROR_ROFS
  * The directory containing the new link can't be
  *  modified because it's on a read-only file system.
@@ -2655,11 +2684,11 @@ public struct GIOFuncs
  * The GError structure contains
  * information about an error that has occurred.
  * GQuark domain;
- * error domain, e.g. G_FILE_ERROR.
+ * error domain, e.g. G_FILE_ERROR
  * gint code;
- * error code, e.g. G_FILE_ERROR_NOENT.
+ * error code, e.g. G_FILE_ERROR_NOENT
  * gchar *message;
- * human-readable informative error message.
+ * human-readable informative error message
  */
 public struct GError
 {
@@ -2680,6 +2709,16 @@ public struct GIConv{}
  * Since 2.16
  */
 public struct GChecksum{}
+
+
+/**
+ * Main Gtk struct.
+ * An opaque structure representing a HMAC operation.
+ * To create a new GHmac, use g_hmac_new(). To free
+ * a GHmac, use g_hmac_unref().
+ * Since 2.30
+ */
+public struct GHmac{}
 
 
 /**
@@ -3130,12 +3169,6 @@ public struct GPatternSpec{}
 public struct GRegex{}
 
 
-/**
- * GMatchInfo is used to retrieve information about the regular expression match
- * which created it.
- * This structure is opaque and its fields cannot be accessed directly.
- * Since 2.14
- */
 public struct GMatchInfo{}
 
 
@@ -3268,13 +3301,14 @@ public struct GSList
 
 /**
  * Main Gtk struct.
- * Contains the public fields of a Queue.
+ * Contains the public fields of a
+ * Queue.
  * GList *head;
- * a pointer to the first element of the queue.
+ * a pointer to the first element of the queue
  * GList *tail;
- * a pointer to the last element of the queue.
+ * a pointer to the last element of the queue
  * guint length;
- * the number of elements in the queue.
+ * the number of elements in the queue
  */
 public struct GQueue
 {
@@ -3335,9 +3369,10 @@ public struct GHashTableIter{}
 /**
  * Main Gtk struct.
  * The GString struct contains the public fields of a GString.
+ * The GString struct contains the public fields of a GString.
  * gchar *str;
  * points to the character data. It may move as text is added.
- * The str field is nul-terminated and so
+ * The str field is null-terminated and so
  * can be used as an ordinary C string.
  * gsize len;
  * contains the length of the string, not including the
@@ -3537,16 +3572,19 @@ public struct GVariantBuilder{}
 
 
 /*
- * Checks the version of the GLib library.
- * Returns TRUE if the version of the GLib header files is the same
- * as or newer than the passed-in version.
+ * Checks the version of the GLib library that is being compiled
+ * against.
  * $(DDOC_COMMENT example)
+ * See glib_check_version() for a runtime check.
  * major :
- * the major version number.
+ * the major version to check for
  * minor :
- * the minor version number.
+ * the minor version to check for
  * micro :
- * the micro version number.
+ * the micro version to check for
+ * Returns :
+ * TRUE if the version of the GLib header files
+ * is the same as or newer than the passed-in version.
  */
 // TODO
 // #define GLIB_CHECK_VERSION(major,minor,micro)
@@ -3797,26 +3835,29 @@ public struct GVariantBuilder{}
 // #define g_memmove(dest,src,len)
 
 /*
- * Returns from the current function if the expression is not true.
- * If the expression evaluates to FALSE, a critical message is logged and
- * the function returns. This can only be used in functions which do not return
- * a value.
+ * Verifies that the expression evaluates to TRUE. If the expression
+ * evaluates to FALSE, a critical message is logged and the current
+ * function returns. This can only be used in functions which do not
+ * return a value.
+ * If G_DISABLE_CHECKS is defined then the check is not performed. You
+ * should therefore not depend on any side effects of expr.
  * expr :
- * the expression to check.
+ * the expression to check
  */
 // TODO
 // #define g_return_if_fail(expr)
 
 /*
- * Returns from the current function, returning the value val, if the expression
- * is not true.
- * If the expression evaluates to FALSE, a critical message is logged and
- * val is returned.
+ * Verifies that the expression evaluates to TRUE. If the expression
+ * evaluates to FALSE, a critical message is logged and val is
+ * returned from the current function.
+ * If G_DISABLE_CHECKS is defined then the check is not performed. You
+ * should therefore not depend on any side effects of expr.
  * expr :
- * the expression to check.
+ * the expression to check
  * val :
- * the value to return from the current function if the expression is not
- * true.
+ * the value to return from the current function
+ * if the expression is not true
  */
 // TODO
 // #define g_return_val_if_fail(expr,val)
@@ -3824,7 +3865,7 @@ public struct GVariantBuilder{}
 /*
  * Logs a critical message and returns val.
  * val :
- * the value to return from the current function.
+ * the value to return from the current function
  */
 // TODO
 // #define g_return_val_if_reached(val)
@@ -3910,7 +3951,7 @@ public struct GVariantBuilder{}
  * Before using this macro, use g_utf8_validate() to validate strings
  * that may contain invalid UTF-8.
  * p :
- * Pointer to the start of a valid UTF-8 character.
+ * Pointer to the start of a valid UTF-8 character
  */
 // TODO
 // #define g_utf8_next_char(p)
@@ -4566,20 +4607,6 @@ public struct GVariantBuilder{}
 // #define g_datalist_set_data_full(dl, k, d, f)
 
 /*
- * Gets a data element, using its string identifer. This is slower than
- * g_datalist_id_get_data() because the string is first converted to a
- * GQuark.
- * dl :
- * a datalist.
- * k :
- * the string identifying a data element.
- * Returns :
- * the data element, or NULL if it is not found.
- */
-// TODO
-// #define g_datalist_get_data(dl, k)
-
-/*
  * Removes an element using its string identifier. The data element's
  * destroy function is called if it has been set.
  * dl :
@@ -4691,7 +4718,7 @@ public struct GVariantBuilder{}
 /*
  */
 // TODO
-// # define G_VARIANT_TYPE(type_string) (g_variant_type_checked_ ((type_string))) Converts a string to a const GVariantType. Depending on the current debugging level, this function may perform a runtime check to ensure that string is a valid GVariant type string. It is always a programmer error to use this macro with an invalid type string. Since 2.24 type_string : a well-formed GVariantType type string
+// # define G_VARIANT_TYPE(type_string) (g_variant_type_checked_ ((type_string))) Converts a string to a const GVariantType. Depending on the current debugging level, this function may perform a runtime check to ensure that string is a valid GVariant type string. It is always a programmer error to use this macro with an invalid type string. If in doubt, use g_variant_type_string_is_valid() to check if the string is valid. Since 2.24 type_string : a well-formed GVariantType type string
 
 /*
  * Specifies the type of function passed to g_main_context_set_poll_func().
@@ -4717,29 +4744,29 @@ public alias extern(C) int  function (GPollFD*, uint, int) GPollFunc;
  * status :
  * Status information about the child process,
  * see waitpid(2) for more information about this field
- * data :
+ * user_data :
  * user data passed to g_child_watch_add()
  */
-// void (*GChildWatchFunc) (GPid pid,  gint status,  gpointer data);
+// void (*GChildWatchFunc) (GPid pid,  gint status,  gpointer user_data);
 public alias extern(C) void  function (GPid, int, void*) GChildWatchFunc;
 
 /*
- * This is just a placeholder for GClosureMarshal, which cannot be used here
- * for dependency reasons.
+ * This is just a placeholder for GClosureMarshal,
+ * which cannot be used here for dependency reasons.
  */
 // void (*GSourceDummyMarshal) (void);
 public alias extern(C) void  function () GSourceDummyMarshal;
 
 /*
- * Specifies the type of function passed to g_timeout_add(), g_timeout_add_full(),
- * g_idle_add(), and g_idle_add_full().
- * data :
- * data passed to the function, set when the source was created with one
- * of the above functions.
+ * Specifies the type of function passed to g_timeout_add(),
+ * g_timeout_add_full(), g_idle_add(), and g_idle_add_full().
+ * user_data :
+ * data passed to the function, set when the source was
+ * created with one of the above functions
  * Returns :
- * it should return FALSE if the source should be removed.
+ * FALSE if the source should be removed
  */
-// gboolean (*GSourceFunc) (gpointer data);
+// gboolean (*GSourceFunc) (gpointer user_data);
 public alias extern(C) int  function (void*) GSourceFunc;
 
 /*
@@ -4788,7 +4815,7 @@ public alias extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFunc;
  * Specifies the type of the print handler functions.
  * These are called with the complete formatted string to output.
  * string :
- * the message to be output.
+ * the message to output
  */
 // void (*GPrintFunc) (const gchar *string);
 public alias extern(C) void  function (char*) GPrintFunc;
@@ -4809,17 +4836,19 @@ public alias extern(C) void  function (char*) GPrintFunc;
 public alias extern(C) void  function (char*, GLogLevelFlags, char*, void*) GLogFunc;
 
 /*
- * Declares a type of function which takes no arguments and has no return value.
- * It is used to specify the type function passed to g_atexit().
+ * Declares a type of function which takes no arguments
+ * and has no return value. It is used to specify the type
+ * function passed to g_atexit().
  */
 // void (*GVoidFunc) (void);
 public alias extern(C) void  function () GVoidFunc;
 
 /*
- * Declares a type of function which takes an arbitrary data pointer argument
- * and has no return value. It is not currently used in GLib or GTK+.
+ * Declares a type of function which takes an arbitrary
+ * data pointer argument and has no return value. It is
+ * not currently used in GLib or GTK+.
  * data :
- * a data pointer.
+ * a data pointer
  */
 // void (*GFreeFunc) (gpointer data);
 public alias extern(C) void  function (void*) GFreeFunc;
@@ -4963,7 +4992,7 @@ public alias extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GE
 
 /*
  * Specifies the type of the function passed to g_regex_replace_eval().
- * It is called for each occurance of the pattern in the string passed
+ * It is called for each occurrence of the pattern in the string passed
  * to g_regex_replace_eval(), and it should append the replacement to
  * result.
  * match_info :
@@ -5052,11 +5081,24 @@ public alias extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) GSe
  * The functions g_direct_hash(), g_int_hash() and g_str_hash() provide
  * hash functions which can be used when the key is a gpointer, gint,
  * and gchar* respectively.
- *  The hash values should be evenly
- * distributed over a fairly large range? The modulus is taken with the
- * hash table size (a prime number) to find the 'bucket' to place each
- * key into. The function should also be very fast, since it is called
- * for each key lookup.
+ * g_direct_hash() is also the appropriate hash function for keys
+ * of the form GINT_TO_POINTER (n) (or similar macros).
+ *  A good hash functions should produce
+ * hash values that are evenly distributed over a fairly large range.
+ * The modulus is taken with the hash table size (a prime number) to
+ * find the 'bucket' to place each key into. The function should also
+ * be very fast, since it is called for each key lookup.
+ * Note that the hash functions provided by GLib have these qualities,
+ * but are not particularly robust against manufactured keys that
+ * cause hash collisions. Therefore, you should consider choosing
+ * a more secure hash function when using a GHashTable with keys
+ * that originate in untrusted data (such as HTTP requests).
+ * Using g_str_hash() in that situation might make your application
+ * vulerable to Algorithmic Complexity Attacks.
+ * The key to choosing a good hash is unpredictability. Even
+ * cryptographic hashes are very easy to find collisions for when the
+ * remainder is taken modulo a somewhat predictable prime number. There
+ * must be an element of randomness that an attacker is unable to guess.
  * key :
  * a key.
  * Returns :

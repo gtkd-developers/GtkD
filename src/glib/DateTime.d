@@ -555,8 +555,8 @@ public class DateTime
 	}
 	
 	/**
-	 * GCompareFunc-compatible comparison for GDateTime's. Both
-	 * GDateTime<-- -->'s must be non-NULL.
+	 * A comparison function for GDateTimes that is suitable
+	 * as a GCompareFunc. Both GDateTimes must be non-NULL.
 	 * Since 2.26
 	 * Params:
 	 * dt1 = first GDateTime to compare
@@ -672,7 +672,7 @@ public class DateTime
 	 * the first Thursday of the year. Equivalently, this is the first week
 	 * that has more than 4 of its days falling within the calendar year.
 	 * The value 0 is never returned by this function. Days contained
-	 * within a year but occuring before the first ISO 8601 week of that
+	 * within a year but occurring before the first ISO 8601 week of that
 	 * year are considered as being contained in the last week of the
 	 * previous year. Similarly, the final days of a calendar year may be
 	 * considered as being part of the first ISO 8601 week of the next year
@@ -909,6 +909,15 @@ public class DateTime
 	
 	/**
 	 * Creates a newly allocated string representing the requested format.
+	 * The format strings understood by this function are a subset of the
+	 * strftime() format language as specified by C99. The %D, %U and %W
+	 * conversions are not supported, nor is the 'E' modifier. The GNU
+	 * extensions %k, %l, %s and %P are supported, however, as are the
+	 * '0', '_' and '-' modifiers.
+	 * In contrast to strftime(), this function always produces a UTF-8
+	 * string, regardless of the current locale. Note that the rendering of
+	 * many formats is locale-dependent and may not match the strftime()
+	 * output exactly.
 	 * Since 2.26
 	 * Params:
 	 * format = a valid UTF-8 string, containing the format for the

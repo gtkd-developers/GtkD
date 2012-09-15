@@ -846,9 +846,9 @@ public class BookmarkFile
 	 * and g_bookmark_file_remove_application() instead.
 	 * name can be any UTF-8 encoded string used to identify an
 	 * application.
-	 * exec can have one of these two modifiers: "f", which will
+	 * exec can have one of these two modifiers: "%f", which will
 	 * be expanded as the local file name retrieved from the bookmark's
-	 * URI; "u", which will be expanded as the bookmark's URI.
+	 * URI; "%u", which will be expanded as the bookmark's URI.
 	 * The expansion is done automatically when retrieving the stored
 	 * command line using the g_bookmark_file_get_app_info() function.
 	 * count is the number of times the application has registered the
@@ -916,7 +916,7 @@ public class BookmarkFile
 	 * If name is NULL, the name of the application will be the
 	 * same returned by g_get_application_name(); if exec is NULL, the
 	 * command line will be a composition of the program name as
-	 * returned by g_get_prgname() and the "u" modifier, which will be
+	 * returned by g_get_prgname() and the "%u" modifier, which will be
 	 * expanded to the bookmark's URI.
 	 * This function will automatically take care of updating the
 	 * registrations count and timestamping in case an application

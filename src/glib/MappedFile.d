@@ -134,6 +134,10 @@ public class MappedFile
 	 * of the GMappedFile. Therefore, mapping should only be used if the file
 	 * will not be modified, or if all modifications of the file are done
 	 * atomically (e.g. using g_file_set_contents()).
+	 * If filename is the name of an empty, regular file, the function
+	 * will successfully return an empty GMappedFile. In other cases of
+	 * size 0 (e.g. device files such as /dev/null), error will be set
+	 * to the GFileError value G_FILE_ERROR_INVAL.
 	 * Since 2.8
 	 * Params:
 	 * filename = The path of the file to load, in the GLib filename encoding

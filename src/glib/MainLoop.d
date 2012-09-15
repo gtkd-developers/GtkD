@@ -174,9 +174,9 @@ public class MainLoop
 	
 	~this()
 	{
-		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gMainLoop != null)
 		{
-			unref();
+			g_main_loop_unref(gMainLoop);
 		}
 	}
 	
@@ -186,7 +186,7 @@ public class MainLoop
 	/**
 	 * Creates a new GMainLoop structure.
 	 * Params:
-	 * context = a GMainContext (if NULL, the default context will be used).
+	 * context = a GMainContext (if NULL, the default context will be used). [allow-none]
 	 * isRunning = set to TRUE to indicate that the loop is running. This
 	 * is not very important since calling g_main_loop_run() will set this to
 	 * TRUE anyway.
@@ -264,7 +264,7 @@ public class MainLoop
 	
 	/**
 	 * Returns the GMainContext of loop.
-	 * Returns: the GMainContext of loop
+	 * Returns: the GMainContext of loop. [transfer none]
 	 */
 	public MainContext getContext()
 	{
@@ -283,7 +283,7 @@ public class MainLoop
 	 *  That is, when called from the toplevel, it gives 0. When
 	 * called from within a callback from g_main_context_iteration()
 	 * (or g_main_loop_run(), etc.) it returns 1. When called from within
-	 * a callback to a recursive call to g_main_context_iterate(),
+	 * a callback to a recursive call to g_main_context_iteration(),
 	 * it returns 2. And so forth.
 	 * Returns: The main loop recursion level in the current thread
 	 */
@@ -296,7 +296,7 @@ public class MainLoop
 	/**
 	 * Returns the currently firing source for this thread.
 	 * Since 2.12
-	 * Returns: The currently firing source or NULL.
+	 * Returns: The currently firing source or NULL. [transfer none]
 	 */
 	public static Source mainCurrentSource()
 	{

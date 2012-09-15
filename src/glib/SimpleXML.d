@@ -268,7 +268,7 @@ public class SimpleXML
 	 * g_markup_parse_context_new() or to the most recent call
 	 * of g_markup_parse_context_push().
 	 * Since 2.18
-	 * Returns: the provided user_data. The returned data belongs to the markup context and will be freed when g_markup_context_free() is called.
+	 * Returns: the provided user_data. The returned data belongs to the markup context and will be freed when g_markup_parse_context_free() is called.
 	 */
 	public void* getUserData()
 	{
@@ -348,7 +348,7 @@ public class SimpleXML
 	 * which is why g_markup_parse_context_pop() is provided to allow "one
 	 * last access" to the user_data provided to this function. In the
 	 * case of error, the user_data provided here is passed directly to
-	 * the error callback of the subparser and g_markup_parse_context()
+	 * the error callback of the subparser and g_markup_parse_context_pop()
 	 * should not be called. In either case, if user_data was allocated
 	 * then it ought to be freed from both of these locations.
 	 * This function is not intended to be directly called by users

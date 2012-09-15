@@ -125,6 +125,85 @@ public class Directory
 	 */
 	
 	/**
+	 * Creates a subdirectory in the preferred directory for temporary
+	 * files (as returned by g_get_tmp_dir()).
+	 * tmpl should be a string in the GLib file name encoding containing
+	 * a sequence of six 'X' characters, as the parameter to g_mkstemp().
+	 * However, unlike these functions, the template should only be a
+	 * basename, no directory components are allowed. If template is
+	 * NULL, a default template is used.
+	 * Note that in contrast to g_mkdtemp() (and mkdtemp()) tmpl is not
+	 * modified, and might thus be a read-only literal string.
+	 * Since 2.30
+	 * Params:
+	 * tmpl = Template for directory name,
+	 * as in g_mkdtemp(), basename only, or NULL for a default template. [type filename][allow-none]
+	 * Returns: The actual name used. This string should be freed with g_free() when not needed any longer and is is in the GLib file name encoding. In case of errors, NULL is returned and error will be set. [type filename]
+	 * Throws: GException on failure.
+	 */
+	public static string makeTmp(string tmpl)
+	{
+		// gchar * g_dir_make_tmp (const gchar *tmpl,  GError **error);
+		GError* err = null;
+		
+		auto p = g_dir_make_tmp(Str.toStringz(tmpl), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return Str.toString(p);
+	}
+	
+	/**
+	 * Opens a directory for reading. The names of the files in the
+	 * directory can then be retrieved using g_dir_read_name(). Note
+	 * that the ordering is not defined.
+	 * Params:
+	 * path = the path to the directory you are interested in. On Unix
+	 * in the on-disk encoding. On Windows in UTF-8
+	 * flags = Currently must be set to 0. Reserved for future use.
+	 * Returns: a newly allocated GDir on success, NULL on failure. If non-NULL, you must free the result with g_dir_close() when you are finished with it.
+	 * Throws: GException on failure.
+	 */
+	public static Directory open(string path, uint flags)
+	{
+		// GDir * g_dir_open (const gchar *path,  guint flags,  GError **error);
+		GError* err = null;
+		
+		auto p = g_dir_open(Str.toStringz(path), flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new Directory(cast(GDir*) p);
+	}
+	
+	/**
+	 * Retrieves the name of another entry in the directory, or NULL.
+	 * The order of entries returned from this function is not defined,
+	 * and may vary by file system or other operating-system dependent
+	 * factors.
+	 * On Unix, the '.' and '..' entries are omitted, and the returned
+	 * name is in the on-disk encoding.
+	 * On Windows, as is true of all GLib functions which operate on
+	 * filenames, the returned name is in UTF-8.
+	 * Returns: The entry's name or NULL if there are no more entries. The return value is owned by GLib and must not be modified or freed.
+	 */
+	public string readName()
+	{
+		// const gchar * g_dir_read_name (GDir *dir);
+		return Str.toString(g_dir_read_name(gDir));
+	}
+	
+	/**
 	 * Resets the given directory. The next call to g_dir_read_name()
 	 * will return the first entry again.
 	 */

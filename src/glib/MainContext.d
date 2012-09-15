@@ -213,7 +213,7 @@ public class MainContext
 	 * used for main loop functions when a main loop is not explicitly
 	 * specified, and corresponds to the "main" main loop. See also
 	 * g_main_context_get_thread_default().
-	 * Returns: the global default main context.
+	 * Returns: the global default main context. [transfer none]
 	 */
 	public static MainContext defaulx()
 	{
@@ -262,7 +262,7 @@ public class MainContext
 	 * Finds a GSource given a pair of context and ID.
 	 * Params:
 	 * sourceId = the source ID, as returned by g_source_get_id().
-	 * Returns: the GSource if found, otherwise, NULL
+	 * Returns: the GSource if found, otherwise, NULL. [transfer none]
 	 */
 	public Source findSourceById(uint sourceId)
 	{
@@ -281,7 +281,7 @@ public class MainContext
 	 * one found will be returned.
 	 * Params:
 	 * userData = the user_data for the callback.
-	 * Returns: the source, if one was found, otherwise NULL
+	 * Returns: the source, if one was found, otherwise NULL. [transfer none]
 	 */
 	public Source findSourceByUserData(void* userData)
 	{
@@ -301,7 +301,7 @@ public class MainContext
 	 * Params:
 	 * funcs = the source_funcs passed to g_source_new().
 	 * userData = the user data from the callback.
-	 * Returns: the source, if one was found, otherwise NULL
+	 * Returns: the source, if one was found, otherwise NULL. [transfer none]
 	 */
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
@@ -356,7 +356,7 @@ public class MainContext
 	
 	/**
 	 * Determines whether this thread holds the (recursive)
-	 * ownership of this GMaincontext. This is useful to
+	 * ownership of this GMainContext. This is useful to
 	 * know before waiting on another thread that may be
 	 * blocking to get ownership of context.
 	 * Since 2.10
@@ -403,8 +403,9 @@ public class MainContext
 	 * Determines information necessary to poll this main loop.
 	 * Params:
 	 * maxPriority = maximum priority source to check
-	 * timeout = location to store timeout to be used in polling
-	 * fds = location to store GPollFD records that need to be polled.
+	 * timeout = location to store timeout to be used in polling. [out]
+	 * fds = location to
+	 * store GPollFD records that need to be polled. [out caller-allocates][array length=n_fds]
 	 * nFds = length of fds.
 	 * Returns: the number of records actually stored in fds, or, if more than n_fds records need to be stored, the number of records that need to be stored.
 	 */
@@ -418,8 +419,8 @@ public class MainContext
 	 * Passes the results of polling back to the main loop.
 	 * Params:
 	 * maxPriority = the maximum numerical priority of sources to check
-	 * fds = array of GPollFD's that was passed to the last call to
-	 * g_main_context_query()
+	 * fds = array of GPollFD's that was passed to
+	 * the last call to g_main_context_query(). [array length=n_fds]
 	 * nFds = return value of g_main_context_query()
 	 * Returns: TRUE if some sources are ready to be dispatched.
 	 */
@@ -466,7 +467,7 @@ public class MainContext
 	
 	/**
 	 * Adds a file descriptor to the set of file descriptors polled for
-	 * this context. This will very seldomly be used directly. Instead
+	 * this context. This will very seldom be used directly. Instead
 	 * a typical event source will use g_source_add_poll() instead.
 	 * Params:
 	 * fd = a GPollFD structure holding information about a file
@@ -550,7 +551,7 @@ public class MainContext
 	 * non-default context, so it is not safe to assume that this will
 	 * always return NULL if threads are not initialized.)
 	 * Since 2.22
-	 * Returns: the thread-default GMainContext, or NULL if the thread-default context is the global default context.
+	 * Returns: the thread-default GMainContext, or NULL if the thread-default context is the global default context. [transfer none]
 	 */
 	public static MainContext getThreadDefault()
 	{

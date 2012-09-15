@@ -85,11 +85,14 @@ private import glib.HashTable;
  * g_hash_table_insert().
  * To lookup a value corresponding to a given key, use
  * g_hash_table_lookup() and g_hash_table_lookup_extended().
+ * g_hash_table_lookup_extended() can also be used to simply
+ * check if a key is present in the hash table.
  * To remove a key and value, use g_hash_table_remove().
  * To call a function for each key and value pair use
  * g_hash_table_foreach() or use a iterator to iterate over the
  * key/value pairs in the hash table, see GHashTableIter.
  * To destroy a GHashTable use g_hash_table_destroy().
+ * $(DDOC_COMMENT example)
  */
 public class HashTableIter
 {
@@ -171,6 +174,22 @@ public class HashTableIter
 			return null;
 		}
 		return new HashTable(cast(GHashTable*) p);
+	}
+	
+	/**
+	 * Replaces the value currently pointed to by the iterator
+	 * from its associated GHashTable. Can only be called after
+	 * g_hash_table_iter_next() returned TRUE.
+	 * If you supplied a value_destroy_func when creating the GHashTable,
+	 * the old value is freed using that function.
+	 * Since 2.29.9
+	 * Params:
+	 * value = the value to replace with
+	 */
+	public void replace(void* value)
+	{
+		// void g_hash_table_iter_replace (GHashTableIter *iter,  gpointer value);
+		g_hash_table_iter_replace(gHashTableIter, value);
 	}
 	
 	/**

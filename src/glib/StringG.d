@@ -600,7 +600,7 @@ public class StringG
 	 */
 	public string free(int freeSegment)
 	{
-		// gchar *	 g_string_free (GString *string,  gboolean free_segment);
+		// gchar * g_string_free (GString *string,  gboolean free_segment);
 		return Str.toString(g_string_free(gString, freeSegment));
 	}
 	

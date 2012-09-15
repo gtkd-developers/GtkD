@@ -181,7 +181,7 @@ public class TimeVal
 	 * Since 2.12
 	 * Params:
 	 * isoDate = an ISO 8601 encoded date string
-	 * time = a GTimeVal
+	 * time = a GTimeVal. [out]
 	 * Returns: TRUE if the conversion was successful.
 	 */
 	public static int fromIso8601(string isoDate, GTimeVal* time)
@@ -208,10 +208,12 @@ public class TimeVal
 	 * is a very shallow wrapper for that. Otherwise, we make a best effort
 	 * that probably involves returning the wall clock time (with at least
 	 * microsecond accuracy, subject to the limitations of the OS kernel).
-	 * Note that, on Windows, "limitations of the OS kernel" is a rather
-	 * substantial statement. Depending on the configuration of the system,
-	 * the wall clock time is updated as infrequently as 64 times a second
-	 * (which is approximately every 16ms).
+	 * It's important to note that POSIX CLOCK_MONOTONIC does not count
+	 * time spent while the machine is suspended.
+	 * On Windows, "limitations of the OS kernel" is a rather substantial
+	 * statement. Depending on the configuration of the system, the wall
+	 * clock time is updated as infrequently as 64 times a second (which
+	 * is approximately every 16ms).
 	 * Since 2.28
 	 * Returns: the monotonic time, in microseconds
 	 */

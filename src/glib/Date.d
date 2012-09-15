@@ -666,7 +666,7 @@ public class Date
 	 * string and stores a UTF-8 result.
 	 * This function does not provide any conversion specifiers in addition
 	 * to those implemented by the platform's C library. For example, don't
-	 * expect that using g_date_strftime() would make the F provided by the C99
+	 * expect that using g_date_strftime() would make the %F provided by the C99
 	 * strftime() work on Windows where the C library only complies to C89.
 	 * Params:
 	 * s = destination buffer

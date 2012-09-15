@@ -337,7 +337,7 @@ public class ThreadPool
 	 * tasks to be processed by a priority determined by func, and not
 	 * just in the order in which they were added to the pool.
 	 * Note, if the maximum number of threads is more than 1, the order
-	 * that threads are executed can not be guranteed 100%. Threads are
+	 * that threads are executed cannot be guaranteed 100%. Threads are
 	 * scheduled by the operating system and are executed at random. It
 	 * cannot be assumed that threads are executed in the order they are
 	 * created.

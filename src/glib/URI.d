@@ -167,4 +167,56 @@ public class URI
 		// gchar ** g_uri_list_extract_uris (const gchar *uri_list);
 		return Str.toStringArray(g_uri_list_extract_uris(Str.toStringz(uriList)));
 	}
+	
+	/**
+	 * Converts an escaped ASCII-encoded URI to a local filename in the
+	 * encoding used for filenames.
+	 * Params:
+	 * uri = a uri describing a filename (escaped, encoded in ASCII).
+	 * hostname = Location to store hostname for the URI, or NULL.
+	 * If there is no hostname in the URI, NULL will be
+	 * stored in this location.
+	 * Returns: a newly-allocated string holding the resulting filename, or NULL on an error.
+	 * Throws: GException on failure.
+	 */
+	public static string gFilenameFromUri(string uri, char** hostname)
+	{
+		// gchar * g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
+		GError* err = null;
+		
+		auto p = g_filename_from_uri(Str.toStringz(uri), hostname, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return Str.toString(p);
+	}
+	
+	/**
+	 * Converts an absolute filename to an escaped ASCII-encoded URI, with the path
+	 * component following Section 3.3. of RFC 2396.
+	 * Params:
+	 * filename = an absolute filename specified in the GLib file name encoding,
+	 * which is the on-disk file name bytes on Unix, and UTF-8 on
+	 * Windows
+	 * hostname = A UTF-8 encoded hostname, or NULL for none. [allow-none]
+	 * Returns: a newly-allocated string holding the resulting URI, or NULL on an error.
+	 * Throws: GException on failure.
+	 */
+	public static string gFilenameToUri(string filename, string hostname)
+	{
+		// gchar * g_filename_to_uri (const gchar *filename,  const gchar *hostname,  GError **error);
+		GError* err = null;
+		
+		auto p = g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return Str.toString(p);
+	}
 }

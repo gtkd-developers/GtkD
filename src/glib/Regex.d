@@ -304,6 +304,22 @@ public class Regex
 	}
 	
 	/**
+	 * Escapes the nul characters in string to "\x00". It can be used
+	 * to compile a regex with embedded nul characters.
+	 * For completeness, length can be -1 for a nul-terminated string.
+	 * In this case the output string will be of course equal to string.
+	 * Since 2.30
+	 * Params:
+	 * string = the string to escape
+	 * Returns: a newly-allocated escaped string
+	 */
+	public static string escapeNul(string string)
+	{
+		// gchar * g_regex_escape_nul (const gchar *string,  gint length);
+		return Str.toString(g_regex_escape_nul(Str.toStringz(string), cast(int) string.length));
+	}
+	
+	/**
 	 * Scans for a match in string for pattern.
 	 * This function is equivalent to g_regex_match() but it does not
 	 * require to compile the pattern with g_regex_new(), avoiding some
@@ -441,7 +457,7 @@ public class Regex
 	
 	/**
 	 * Using the standard algorithm for regular expression matching only
-	 * the longest match in the string is retrieved, it is not possibile
+	 * the longest match in the string is retrieved, it is not possible
 	 * to obtain all the available matches. For instance matching
 	 * "<a> <b> <c>" against the pattern "<.*>"
 	 * you get "<a> <b> <c>".

@@ -409,6 +409,13 @@ public class KeyFile
 	/**
 	 * Looks whether the key file has the key key in the group
 	 * group_name.
+	 * Note
+	 * This function does not follow the rules for GError strictly;
+	 * the return value both carries meaning and signals an error. To use
+	 * this function, you must pass a GError pointer in error, and check
+	 * whether it is not NULL to see if an error occurred.
+	 * Language bindings should use g_key_file_get_value() to test whether
+	 * or not a key exists.
 	 * Since 2.6
 	 * Params:
 	 * groupName = a group name
@@ -502,7 +509,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * locale = a locale identifier or NULL
+	 * locale = a locale identifier or NULL. [allow-none]
 	 * Returns: a newly allocated string or NULL if the specified key cannot be found.
 	 * Throws: GException on failure.
 	 */
@@ -671,7 +678,7 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * length = return location for the number of returned strings, or NULL
-	 * Returns: a NULL-terminated string array or NULL if the specified key cannot be found. The array should be freed with g_strfreev().
+	 * Returns: a NULL-terminated string array or NULL if the specified key cannot be found. The array should be freed with g_strfreev(). [array zero-terminated=1 length=length][element-type utf8][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public string[] getStringList(string groupName, string key, out gsize length)
@@ -703,9 +710,9 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * locale = a locale identifier or NULL
-	 * length = return location for the number of returned strings or NULL
-	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev().
+	 * locale = a locale identifier or NULL. [allow-none]
+	 * length = return location for the number of returned strings or NULL. [out]
+	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev(). [array zero-terminated=1 length=length][element-type utf8][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public string[] getLocaleStringList(string groupName, string key, string locale, out gsize length)
@@ -734,7 +741,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * Returns: the values associated with the key as a list of booleans, or NULL if the key was not found or could not be parsed.
+	 * Returns: the values associated with the key as a list of booleans, or NULL if the key was not found or could not be parsed. The returned list of booleans should be freed with g_free() when no longer needed. [array length=length][element-type gboolean][transfer container]
 	 * Throws: GException on failure.
 	 */
 	public int[] getBooleanList(string groupName, string key)
@@ -764,7 +771,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * Returns: the values associated with the key as a list of integers, or NULL if the key was not found or could not be parsed.
+	 * Returns: the values associated with the key as a list of integers, or NULL if the key was not found or could not be parsed. The returned list of integers should be freed with g_free() when no longer needed. [array length=length][element-type gint][transfer container]
 	 * Throws: GException on failure.
 	 */
 	public int[] getIntegerList(string groupName, string key)
@@ -794,7 +801,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * Returns: the values associated with the key as a list of doubles, or NULL if the key was not found or could not be parsed.
+	 * Returns: the values associated with the key as a list of doubles, or NULL if the key was not found or could not be parsed. The returned list of doubles should be freed with g_free() when no longer needed. [array length=length][element-type gdouble][transfer container]
 	 * Throws: GException on failure.
 	 */
 	public double[] getDoubleList(string groupName, string key)
@@ -975,7 +982,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * list = an array of string values
+	 * list = an array of string values. [array zero-terminated=1 length=length][element-type utf8]
 	 */
 	public void setStringList(string groupName, string key, string[] list)
 	{

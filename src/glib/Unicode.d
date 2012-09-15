@@ -80,7 +80,8 @@ private import glib.GException;
  * on the Unicode Character Data tables, which are available from
  * www.unicode.org.
  * GLib 2.8 supports Unicode 4.0, GLib 2.10 supports Unicode 4.1,
- * GLib 2.12 supports Unicode 5.0, GLib 2.16.3 supports Unicode 5.1.
+ * GLib 2.12 supports Unicode 5.0, GLib 2.16.3 supports Unicode 5.1,
+ * GLib 2.30 supports Unicode 6.0.
  */
 public class Unicode
 {
@@ -425,6 +426,92 @@ public class Unicode
 	}
 	
 	/**
+	 * Performs a single composition step of the
+	 * Unicode canonical composition algorithm.
+	 * This function does not perform algorithmic composition
+	 * for Hangul characters, and does not include compatibility
+	 * compositions. It does, however, include 'singleton'
+	 * compositions which replace a character by a single
+	 * other character. To obtain these, pass zero for b.
+	 * This function includes algorithmic Hangul Jamo composition.
+	 * If a and b do not compose a new character, ch is set to zero.
+	 * See UAX#15
+	 * for details.
+	 * Since 2.30
+	 * Params:
+	 * a = a Unicode character
+	 * b = a Unicode character
+	 * ch = return location for the composed character
+	 * Returns: TRUE if the characters could be composed
+	 */
+	public static int unicharCompose(gunichar a, gunichar b, out gunichar ch)
+	{
+		// gboolean g_unichar_compose (gunichar a,  gunichar b,  gunichar *ch);
+		return g_unichar_compose(a, b, &ch);
+	}
+	
+	/**
+	 * Performs a single decomposition step of the
+	 * Unicode canonical decomposition algorithm.
+	 * This function does not include compatibility
+	 * decompositions. It does, however, include algorithmic
+	 * Hangul Jamo decomposition, as well as 'singleton'
+	 * decompositions which replace a character by a single
+	 * other character. In the case of singletons *b will
+	 * be set to zero.
+	 * If ch is not decomposable, *a is set to ch and *b
+	 * is set to zero.
+	 * Note that the way Unicode decomposition pairs are
+	 * defined, it is guaranteed that b would not decompose
+	 * further, but a may itself decompose. To get the full
+	 * canonical decomposition for ch, one would need to
+	 * recursively call this function on a. Or use
+	 * g_unichar_fully_decompose().
+	 * See UAX#15
+	 * for details.
+	 * Since 2.30
+	 * Params:
+	 * ch = a Unicode character
+	 * a = return location for the first component of ch
+	 * b = return location for the second component of ch
+	 * Returns: TRUE if the character could be decomposed
+	 */
+	public static int unicharDecompose(gunichar ch, out gunichar a, out gunichar b)
+	{
+		// gboolean g_unichar_decompose (gunichar ch,  gunichar *a,  gunichar *b);
+		return g_unichar_decompose(ch, &a, &b);
+	}
+	
+	/**
+	 * Computes the canonical or compatibility decomposition of a
+	 * Unicode character. For compatibility decomposition,
+	 * pass TRUE for compat; for canonical decomposition
+	 * pass FALSE for compat.
+	 * The decomposed sequence is placed in result. Only up to
+	 * result_len characters are written into result. The length
+	 * of the full decomposition (irrespective of result_len) is
+	 * returned by the function. For canonical decomposition,
+	 * currently all decompositions are of length at most 4, but
+	 * this may change in the future (very unlikely though).
+	 * At any rate, Unicode does guarantee that a buffer of length
+	 * 18 is always enough for both compatibility and canonical
+	 * decompositions.
+	 * See UAX#15
+	 * for details.
+	 * Since 2.30
+	 * Params:
+	 * ch = a Unicode character.
+	 * compat = whether perform canonical or compatibility decomposition
+	 * result = location to store decomposed result, or NULL
+	 * Returns: the length of the full decomposition.
+	 */
+	public static gsize unicharFullyDecompose(gunichar ch, int compat, gunichar[] result)
+	{
+		// gsize g_unichar_fully_decompose (gunichar ch,  gboolean compat,  gunichar *result,  gsize result_len);
+		return g_unichar_fully_decompose(ch, compat, result.ptr, cast(int) result.length);
+	}
+	
+	/**
 	 * Classifies a Unicode character by type.
 	 * Params:
 	 * c = a Unicode character
@@ -482,6 +569,9 @@ public class Unicode
 	}
 	
 	/**
+	 * Warning
+	 * g_unicode_canonical_decomposition has been deprecated since version 2.30 and should not be used in newly-written code. Use the more flexible g_unichar_fully_decompose()
+	 *  instead.
 	 * Computes the canonical decomposition of a Unicode character.
 	 * Params:
 	 * ch = a Unicode character.
@@ -517,7 +607,7 @@ public class Unicode
 	
 	/**
 	 * Looks up the GUnicodeScript for a particular character (as defined
-	 * by Unicode Standard Annex 24). No check is made for ch being a
+	 * by Unicode Standard Annex #24). No check is made for ch being a
 	 * valid Unicode character; if you pass in invalid character, the
 	 * result is undefined.
 	 * This function is equivalent to pango_script_for_unichar() and the
@@ -531,6 +621,44 @@ public class Unicode
 	{
 		// GUnicodeScript g_unichar_get_script (gunichar ch);
 		return g_unichar_get_script(ch);
+	}
+	
+	/**
+	 * Looks up the Unicode script for iso15924. ISO 15924 assigns four-letter
+	 * codes to scripts. For example, the code for Arabic is 'Arab'.
+	 * This function accepts four letter codes encoded as a guint32 in a
+	 * big-endian fashion. That is, the code expected for Arabic is
+	 * 0x41726162 (0x41 is ASCII code for 'A', 0x72 is ASCII code for 'r', etc).
+	 * See Codes for the
+	 * representation of names of scripts for details.
+	 * Since 2.30
+	 * Params:
+	 * iso15924 = a Unicode script
+	 * Returns: the Unicode script for iso15924, or of G_UNICODE_SCRIPT_INVALID_CODE if iso15924 is zero and G_UNICODE_SCRIPT_UNKNOWN if iso15924 is unknown.
+	 */
+	public static GUnicodeScript unicodeScriptFromIso15924(uint iso15924)
+	{
+		// GUnicodeScript g_unicode_script_from_iso15924 (guint32 iso15924);
+		return g_unicode_script_from_iso15924(iso15924);
+	}
+	
+	/**
+	 * Looks up the ISO 15924 code for script. ISO 15924 assigns four-letter
+	 * codes to scripts. For example, the code for Arabic is 'Arab'. The
+	 * four letter codes are encoded as a guint32 by this function in a
+	 * big-endian fashion. That is, the code returned for Arabic is
+	 * 0x41726162 (0x41 is ASCII code for 'A', 0x72 is ASCII code for 'r', etc).
+	 * See Codes for the
+	 * representation of names of scripts for details.
+	 * Since 2.30
+	 * Params:
+	 * script = a Unicode script
+	 * Returns: the ISO 15924 code for script, encoded as an integer, of zero if script is G_UNICODE_SCRIPT_INVALID_CODE or ISO 15924 code 'Zzzz' (script code for UNKNOWN) if script is not understood.
+	 */
+	public static uint unicodeScriptToIso15924(GUnicodeScript script)
+	{
+		// guint32 g_unicode_script_to_iso15924 (GUnicodeScript script);
+		return g_unicode_script_to_iso15924(script);
 	}
 	
 	/**
@@ -750,6 +878,23 @@ public class Unicode
 	}
 	
 	/**
+	 * Copies a substring out of a UTF-8 encoded string.
+	 * The substring will contain end_pos - start_pos
+	 * characters.
+	 * Since 2.30
+	 * Params:
+	 * str = a UTF-8 encoded string
+	 * startPos = a character offset within str
+	 * endPos = another character offset within str
+	 * Returns: a newly allocated copy of the requested substring. Free with g_free() when no longer needed.
+	 */
+	public static string utf8_Substring(string str, glong startPos, glong endPos)
+	{
+		// gchar * g_utf8_substring (const gchar *str,  glong start_pos,  glong end_pos);
+		return Str.toString(g_utf8_substring(Str.toStringz(str), startPos, endPos));
+	}
+	
+	/**
 	 * Validates UTF-8 encoded text. str is the text to validate;
 	 * if str is nul-terminated, then max_len can be -1, otherwise
 	 * max_len should be the number of bytes to validate.
@@ -766,7 +911,7 @@ public class Unicode
 	 * Params:
 	 * str = a pointer to character data
 	 * maxLen = max bytes to validate, or -1 to go until NUL
-	 * end = return location for end of valid data
+	 * end = return location for end of valid data. [allow-none][out]
 	 * Returns: TRUE if the text was valid UTF-8
 	 */
 	public static int utf8_Validate(string str, gssize maxLen, out string end)
@@ -967,7 +1112,7 @@ public class Unicode
 	
 	/**
 	 * Convert a string from UTF-8 to a 32-bit fixed width
-	 * representation as UCS-4. A trailing 0 will be added to the
+	 * representation as UCS-4. A trailing 0 character will be added to the
 	 * string after the converted text.
 	 * Params:
 	 * str = a UTF-8 encoded string
@@ -1003,7 +1148,8 @@ public class Unicode
 	 * Convert a string from UTF-8 to a 32-bit fixed width
 	 * representation as UCS-4, assuming valid UTF-8 input.
 	 * This function is roughly twice as fast as g_utf8_to_ucs4()
-	 * but does no error checking on the input.
+	 * but does no error checking on the input. A trailing 0 character
+	 * will be added to the string after the converted text.
 	 * Params:
 	 * str = a UTF-8 encoded string
 	 * len = the maximum length of str to use, in bytes. If len < 0,

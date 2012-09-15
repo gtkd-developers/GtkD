@@ -447,13 +447,13 @@ public class Spawn
 	 * handle to the child process and not its identifier. Process handles
 	 * and process identifiers are different concepts on Windows.
 	 * Params:
-	 * workingDirectory = child's current working directory, or NULL to inherit parent's
-	 * argv = child's argument vector
-	 * envp = child's environment, or NULL to inherit parent's
+	 * workingDirectory = child's current working directory, or NULL to inherit parent's. [allow-none]
+	 * argv = child's argument vector. [array zero-terminated=1]
+	 * envp = child's environment, or NULL to inherit parent's. [array zero-terminated=1][allow-none]
 	 * flags = flags from GSpawnFlags
-	 * childSetup = function to run in the child just before exec()
-	 * userData = user data for child_setup
-	 * childPid = return location for child process reference, or NULL
+	 * childSetup = function to run in the child just before exec(). [scope async][allow-none]
+	 * userData = user data for child_setup. [closure]
+	 * childPid = return location for child process reference, or NULL. [out][allow-none]
 	 * Returns: TRUE on success, FALSE if error is set
 	 * Throws: GException on failure.
 	 */
@@ -489,15 +489,15 @@ public class Spawn
 	 * function for full details on the other parameters and details on
 	 * how these functions work on Windows.
 	 * Params:
-	 * workingDirectory = child's current working directory, or NULL to inherit parent's
-	 * argv = child's argument vector
-	 * envp = child's environment, or NULL to inherit parent's
+	 * workingDirectory = child's current working directory, or NULL to inherit parent's. [allow-none]
+	 * argv = child's argument vector. [array zero-terminated=1]
+	 * envp = child's environment, or NULL to inherit parent's. [array zero-terminated=1][allow-none]
 	 * flags = flags from GSpawnFlags
-	 * childSetup = function to run in the child just before exec()
-	 * userData = user data for child_setup
-	 * standardOutput = return location for child output, or NULL
-	 * standardError = return location for child error messages, or NULL
-	 * exitStatus = return location for child exit status, as returned by waitpid(), or NULL
+	 * childSetup = function to run in the child just before exec(). [scope async][allow-none]
+	 * userData = user data for child_setup. [closure]
+	 * standardOutput = return location for child output, or NULL. [out][array zero-terminated=1][element-type guint8][allow-none]
+	 * standardError = return location for child error messages, or NULL. [out][array zero-terminated=1][element-type guint8][allow-none]
+	 * exitStatus = return location for child exit status, as returned by waitpid(), or NULL. [out][allow-none]
 	 * Returns: TRUE on success, FALSE if an error was set.
 	 */
 	public static int sync(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out string standardOutput, out string standardError, out int exitStatus)
@@ -571,9 +571,9 @@ public class Spawn
 	 * "'c:\\program files\\app\\app.exe' 'e:\\folder\\argument.txt'".
 	 * Params:
 	 * commandLine = a command line
-	 * standardOutput = return location for child output
-	 * standardError = return location for child errors
-	 * exitStatus = return location for child exit status, as returned by waitpid()
+	 * standardOutput = return location for child output. [out][array zero-terminated=1][element-type guint8][allow-none]
+	 * standardError = return location for child errors. [out][array zero-terminated=1][element-type guint8][allow-none]
+	 * exitStatus = return location for child exit status, as returned by waitpid(). [out][allow-none]
 	 * Returns: TRUE on success, FALSE if an error was set
 	 */
 	public static int commandLineSync(string commandLine, out string standardOutput, out string standardError, out int exitStatus)

@@ -65,9 +65,9 @@ private import glib.Str;
 
 /**
  * Description
- * GLib provides version information, primarily useful in configure checks
- * for builds that have a configure script. Applications will not
- * typically use the features described here.
+ * GLib provides version information, primarily useful in configure
+ * checks for builds that have a configure script. Applications will
+ * not typically use the features described here.
  */
 public class Version
 {

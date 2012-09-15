@@ -300,7 +300,7 @@ public class Idle
 	 * range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
 	 * data = data to pass to function
 	 * notify = function to call when the idle is removed, or NULL
-	 * Returns: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source. Rename to: g_idle_add
 	 */
 	public static uint addFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{

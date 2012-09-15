@@ -3,14 +3,10 @@ mkdir gtkdocs
 cd gtkdocs
 
 #GLIB
-curl http://developer.gnome.org/glib/glib-html-2.28.7.tar.gz | tar xvfz -
-ln -s glib-html-2.28.7 gthread
-ln -s glib-html-2.28.7 glib
-#Missing params in 2.28
-cd glib
-rm glib-Spawning-Processes.html
-wget http://developer.gnome.org/glib/2.26/glib-Spawning-Processes.html
-cd ..
+curl http://developer.gnome.org/glib/glib-html-2.30.3.tar.gz | tar xvfz -
+ln -s glib-html-2.30.3 gthread
+ln -s glib-html-2.30.3 glib
+exit
 #GOBJECT
 curl http://developer.gnome.org/gobject/gobject-html-2.28.7.tar.gz | tar xvfz -
 ln -s gobject-html-2.28.7 gobject

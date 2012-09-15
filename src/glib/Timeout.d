@@ -303,6 +303,8 @@ public class Timeout
 	 * The source will not initially be associated with any GMainContext
 	 * and must be added to one with g_source_attach() before it will be
 	 * executed.
+	 * The interval given is in terms of monotonic time, not wall clock
+	 * time. See g_get_monotonic_time().
 	 * Params:
 	 * interval = the timeout interval in milliseconds.
 	 * Returns: the newly-created timeout source
@@ -325,6 +327,8 @@ public class Timeout
 	 * executed.
 	 * The scheduling granularity/accuracy of this timeout source will be
 	 * in seconds.
+	 * The interval given in terms of monotonic time, not wall clock time.
+	 * See g_get_monotonic_time().
 	 * Since 2.14
 	 * Params:
 	 * interval = the timeout interval in seconds
@@ -359,6 +363,8 @@ public class Timeout
 	 * This internally creates a main loop source using g_timeout_source_new()
 	 * and attaches it to the main loop context using g_source_attach(). You can
 	 * do these steps manually if you need greater control.
+	 * The interval given is in terms of monotonic time, not wall clock
+	 * time. See g_get_monotonic_time().
 	 * Params:
 	 * interval = the time between calls to the function, in milliseconds
 	 * (1/1000ths of a second)
@@ -386,6 +392,8 @@ public class Timeout
 	 * This internally creates a main loop source using g_timeout_source_new()
 	 * and attaches it to the main loop context using g_source_attach(). You can
 	 * do these steps manually if you need greater control.
+	 * The interval given in terms of monotonic time, not wall clock time.
+	 * See g_get_monotonic_time().
 	 * Params:
 	 * priority = the priority of the timeout source. Typically this will be in
 	 * the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
@@ -393,7 +401,7 @@ public class Timeout
 	 * (1/1000ths of a second)
 	 * data = data to pass to function
 	 * notify = function to call when the timeout is removed, or NULL
-	 * Returns: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source. Rename to: g_timeout_add
 	 */
 	public static uint addFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -409,10 +417,12 @@ public class Timeout
 	 * This internally creates a main loop source using
 	 * g_timeout_source_new_seconds() and attaches it to the main loop context
 	 * using g_source_attach(). You can do these steps manually if you need
-	 * greater control. Also see g_timout_add_seconds_full().
+	 * greater control. Also see g_timeout_add_seconds_full().
 	 * Note that the first call of the timer may not be precise for timeouts
 	 * of one second. If you need finer precision and have such a timeout,
 	 * you may want to use g_timeout_add() instead.
+	 * The interval given is in terms of monotonic time, not wall clock
+	 * time. See g_get_monotonic_time().
 	 * Since 2.14
 	 * Params:
 	 * interval = the time between calls to the function, in seconds
@@ -451,6 +461,8 @@ public class Timeout
 	 * g_timeout_source_new_seconds() and attaches it to the main loop context
 	 * using g_source_attach(). You can do these steps manually if you need
 	 * greater control.
+	 * The interval given is in terms of monotonic time, not wall clock
+	 * time. See g_get_monotonic_time().
 	 * Since 2.14
 	 * Params:
 	 * priority = the priority of the timeout source. Typically this will be in
@@ -458,7 +470,7 @@ public class Timeout
 	 * interval = the time between calls to the function, in seconds
 	 * data = data to pass to function
 	 * notify = function to call when the timeout is removed, or NULL
-	 * Returns: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source. Rename to: g_timeout_add_seconds
 	 */
 	public static uint addSecondsFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{

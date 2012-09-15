@@ -225,9 +225,9 @@ array: g_poll fds nfds
 code: start
 	~this()
 	{
-		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gMainLoop != null)
 		{
-			unref();
+			g_main_loop_unref(gMainLoop);
 		}
 	}
 code: end
@@ -1091,8 +1091,10 @@ out: g_convert_with_fallback bytes_read
 out: g_convert_with_fallback bytes_written
 out: g_locale_to_utf8 bytes_read
 out: g_locale_to_utf8 bytes_written
+array: g_filename_to_utf8 opsysstring len
 out: g_filename_to_utf8 bytes_read
 out: g_filename_to_utf8 bytes_written
+array: g_filename_from_utf8 utf8string len
 out: g_filename_from_utf8 bytes_read
 out: g_filename_from_utf8 bytes_written
 out: g_locale_from_utf8 bytes_read
@@ -1126,6 +1128,10 @@ out: g_ucs4_to_utf16 items_read
 out: g_ucs4_to_utf16 items_written
 out: g_ucs4_to_utf8 items_read
 out: g_ucs4_to_utf8 items_written
+out: g_unichar_compose ch
+out: g_unichar_decompose a
+out: g_unichar_decompose b
+array: g_unichar_fully_decompose result result_len
 
 outFile: Unicode
 
@@ -1152,6 +1158,57 @@ prefix: g_checksum_
 import: glib.Str
 structWrap: GChecksum* Checksum
 outFile: Checksum
+
+file: glib-Data-HMACs.html
+struct: GHmac
+class: Hmac
+prefix: g_hmac_
+prefix: g_
+import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: GHmac* Hmac
+
+array: g_hmac_new key key_len
+array: g_hmac_update data length
+inout: g_hmac_get_digest buffer
+array: g_hmac_get_digest buffer digest_len
+array: g_compute_hmac_for_data key key_len
+array: g_compute_hmac_for_data data length
+array: g_compute_hmac_for_string key key_len
+array: g_compute_hmac_for_string str length
+
+nocode: g_hmac_get_digest
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gHmac !is null )
+		{
+			g_hmac_unref(gHmac);
+		}
+	}
+
+	/**
+	 * Gets the digest from checksum as a raw binary array and places it
+	 * into buffer. The size of the digest depends on the type of checksum.
+	 * Once this function has been called, the GHmac is closed and can
+	 * no longer be updated with g_checksum_update().
+	 * Since 2.30
+	 * Params:
+	 * buffer = output buffer
+	 */
+	public void getDigest(ref ubyte[] buffer)
+	{
+		// void g_hmac_get_digest (GHmac *hmac,  guint8 *buffer,  gsize *digest_len);
+		size_t digestLen = buffer.length;
+		
+		g_hmac_get_digest(gHmac, buffer.ptr, &digestLen);
+
+		buffer = buffer[0 .. digestLen];
+	}
+code: end
+outFile: Hmac
 
 file: glib-I18N.html
 class: Internationalization
@@ -1867,9 +1924,47 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 
-out: g_file_get_contents contents
-out: g_file_get_contents length
+array: g_file_set_contents contents length
 out: g_file_open_tmp name_used
+
+nocode: g_file_get_contents
+
+code: start
+	/**
+	 * Reads an entire file into allocated memory, with good error
+	 * checking.
+	 * If the call was successful, it returns TRUE and sets contents to the file
+	 * contents and length to the length of the file contents in bytes. The string
+	 * stored in contents will be nul-terminated, so for text files you can pass
+	 * NULL for the length argument. If the call was not successful, it returns
+	 * FALSE and sets error. The error domain is G_FILE_ERROR. Possible error
+	 * codes are those in the GFileError enumeration. In the error case,
+	 * contents is set to NULL and length is set to zero.
+	 * Params:
+	 * filename = name of a file to read contents from, in the GLib file name encoding. [type filename]
+	 * contents = location to store an allocated string, use g_free() to free
+	 * the returned string. [out][array length=length][element-type guint8]
+	 * Returns: TRUE on success, FALSE if an error occurred
+	 * Throws: GException on failure.
+	 */
+	public static int fileGetContents(string filename, out char[] contents)
+	{
+		// gboolean g_file_get_contents (const gchar *filename,  gchar **contents,  gsize *length,  GError **error);
+		gchar* outcontents = null;
+		size_t length;
+		GError* err = null;
+		
+		auto p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		contents = outcontents[0 .. length];
+		return p;
+	}
+code: end
 outFile: FileUtils
 
 struct: GDir
@@ -2050,7 +2145,7 @@ out: g_regex_match_full match_info
 out: g_regex_match_all match_info
 out: g_regex_match_all_full match_info
 out: g_regex_check_replacement has_references
-
+array: g_regex_escape_nul string length
 outFile: Regex
 
 struct: GMatchInfo
@@ -2061,6 +2156,9 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 import: glib.Regex
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: GMatchInfo* MatchInfo
 structWrap: GRegex* Regex
 
 out: g_match_info_fetch_pos start_pos
@@ -2068,6 +2166,15 @@ out: g_match_info_fetch_pos end_pos
 out: g_match_info_fetch_named_pos start_pos
 out: g_match_info_fetch_named_pos end_pos
 
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gMatchInfo !is null )
+		{
+			g_match_info_free(gMatchInfo);
+		}
+	}
+code: end
 outFile: MatchInfo
 
 file: glib-Simple-XML-Subset-Parser.html
@@ -2191,6 +2298,18 @@ code: start
 	}
 code: end
 outFile: BookmarkFile
+
+file: glib-UNIX-specific-utilities-and-integration.html
+class: UnixUtils
+prefix: g_unix_
+import: glib.ErrorG
+import: glib.GException
+import: glib.Source
+structWrap: GSource* Source
+
+#length = 2
+array: g_unix_open_pipe fds
+outFile: UnixUtils
 
 file: glib-Windows-Compatibility-Functions.html
 class: WindowsUtils
@@ -2431,6 +2550,7 @@ file: glib-Keyed-Data-Lists.html
 struct: GData
 class: DataList
 prefix: g_datalist_
+import: glib.Str
 outFile: DataList
 
 file: glib-Datasets.html
@@ -2553,6 +2673,7 @@ nocode: g_variant_new_boolean
 nocode: g_variant_new_bytestring_array
 nocode: g_variant_new_object_path
 nocode: g_variant_new_signature
+nocode: g_variant_new_objv
 nocode: g_variant_new_bytestring
 
 array: g_variant_get_strv Return length
@@ -2569,6 +2690,9 @@ out: g_variant_parse endptr
 array: g_variant_dup_bytestring Return length
 array: g_variant_dup_bytestring_array Return length
 array: g_variant_get_bytestring_array Return length
+array: g_variant_get_objv Return length
+array: g_variant_dup_objv Return length
+array: g_variant_new_objv strv length
 
 code: start
 	/**
@@ -2646,13 +2770,36 @@ code: start
 	}	
 
 	/**
+	 * Constructs an array of object paths Variant from the given array
+	 * of strings.
+	 *
+	 * Each string must be a valid Variant object path.
+	 *
+	 * Since: 2.30
+	 * 
+	 * Params:
+	 *     strv   = an array of strings.
+	 * 
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromObjv(string[] strv)
+	{
+		// GVariant * g_variant_new_objv (const gchar * const *strv,  gssize length);
+		auto p = g_variant_new_objv(Str.toStringzArray(strv), strv.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_objv(strv, length)");
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+
+	/**
 	 * Constructs an array of bytestring GVariant from the given array of
 	 * strings. If length is -1 then strv is NULL-terminated.
 	 * Since 2.26
 	 * 
 	 * Params:
 	 *     strv   = an array of strings.
-	 *     length = the length of strv, or -1
 	 * 
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

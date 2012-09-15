@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = MatchInfo
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -47,7 +47,10 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.Regex
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
+ * 	- GMatchInfo* -> MatchInfo
  * 	- GRegex* -> Regex
  * module aliases:
  * local aliases:
@@ -66,6 +69,8 @@ private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Regex;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -151,6 +156,14 @@ public class MatchInfo
 		this.gMatchInfo = gMatchInfo;
 	}
 	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gMatchInfo !is null )
+		{
+			g_match_info_free(gMatchInfo);
+		}
+	}
+	
 	/**
 	 */
 	
@@ -186,7 +199,35 @@ public class MatchInfo
 	}
 	
 	/**
-	 * Frees all the memory associated with the GMatchInfo structure.
+	 * Increases reference count of match_info by 1.
+	 * Since 2.30
+	 * Returns: match_info
+	 */
+	public MatchInfo doref()
+	{
+		// GMatchInfo * g_match_info_ref (GMatchInfo *match_info);
+		auto p = g_match_info_ref(gMatchInfo);
+		if(p is null)
+		{
+			return null;
+		}
+		return new MatchInfo(cast(GMatchInfo*) p);
+	}
+	
+	/**
+	 * Decreases reference count of match_info by 1. When reference count drops
+	 * to zero, it frees all the memory associated with the match_info structure.
+	 * Since 2.30
+	 */
+	public void unref()
+	{
+		// void g_match_info_unref (GMatchInfo *match_info);
+		g_match_info_unref(gMatchInfo);
+	}
+	
+	/**
+	 * If match_info is not NULL, calls g_match_info_unref(); otherwise does
+	 * nothing.
 	 * Since 2.14
 	 */
 	public void free()

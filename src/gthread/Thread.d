@@ -89,11 +89,14 @@ private import glib.GException;
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
  * (GMutex, GStaticMutex, G_LOCK_DEFINE, GStaticRecMutex and
- * GStaticRWLock). There are primitives for condition variables to
+ * GStaticRWLock). There is a facility to use individual bits for
+ * locks (g_bit_lock()). There are primitives for condition variables to
  * allow synchronization of threads (GCond). There are primitives for
  * thread-private data - data that every thread has a private instance
- * of (GPrivate, GStaticPrivate). Last but definitely not least there
- * are primitives to portably create and manage threads (GThread).
+ * of (GPrivate, GStaticPrivate). There are facilities for one-time
+ * initialization (GOnce, g_once_init_enter()). Last but definitely
+ * not least there are primitives to portably create and manage
+ * threads (GThread).
  * The threading system is initialized with g_thread_init(), which
  * takes an optional custom thread implementation or NULL for the
  * default implementation. If you want to call g_thread_init() with a
@@ -515,5 +518,54 @@ public class Thread
 	{
 		// void g_bit_unlock (volatile gint *address,  gint lock_bit);
 		g_bit_unlock(&address, lockBit);
+	}
+	
+	/**
+	 * This is equivalent to g_bit_lock, but working on pointers (or other
+	 * pointer-sized values).
+	 * For portability reasons, you may only lock on the bottom 32 bits of
+	 * the pointer.
+	 * Since 2.30
+	 * Params:
+	 * address = a pointer to a gpointer-sized value
+	 * lockBit = a bit value between 0 and 31
+	 */
+	public static void pointerBitLock(void* address, int lockBit)
+	{
+		// void g_pointer_bit_lock (volatile void *address,  gint lock_bit);
+		g_pointer_bit_lock(address, lockBit);
+	}
+	
+	/**
+	 * This is equivalent to g_bit_trylock, but working on pointers (or
+	 * other pointer-sized values).
+	 * For portability reasons, you may only lock on the bottom 32 bits of
+	 * the pointer.
+	 * Since 2.30
+	 * Params:
+	 * address = a pointer to a gpointer-sized value
+	 * lockBit = a bit value between 0 and 31
+	 * Returns: TRUE if the lock was acquired
+	 */
+	public static int pointerBitTrylock(void* address, int lockBit)
+	{
+		// gboolean g_pointer_bit_trylock (volatile void *address,  gint lock_bit);
+		return g_pointer_bit_trylock(address, lockBit);
+	}
+	
+	/**
+	 * This is equivalent to g_bit_unlock, but working on pointers (or other
+	 * pointer-sized values).
+	 * For portability reasons, you may only lock on the bottom 32 bits of
+	 * the pointer.
+	 * Since 2.30
+	 * Params:
+	 * address = a pointer to a gpointer-sized value
+	 * lockBit = a bit value between 0 and 31
+	 */
+	public static void pointerBitUnlock(void* address, int lockBit)
+	{
+		// void g_pointer_bit_unlock (volatile void *address,  gint lock_bit);
+		g_pointer_bit_unlock(address, lockBit);
 	}
 }

@@ -47,6 +47,7 @@
  * 	- g_variant_new_bytestring_array
  * 	- g_variant_new_object_path
  * 	- g_variant_new_signature
+ * 	- g_variant_new_objv
  * 	- g_variant_new_bytestring
  * omit signals:
  * imports:
@@ -91,7 +92,7 @@ private import glib.VariantType;
  * GVariant instances always have a type and a value (which are given
  * at construction time). The type and value of a GVariant instance
  * can never change other than by the GVariant itself being
- * destroyed. A GVariant can not contain a pointer.
+ * destroyed. A GVariant cannot contain a pointer.
  * GVariant is reference counted using g_variant_ref() and
  * g_variant_unref(). GVariant also has floating reference counts --
  * see g_variant_ref_sink().
@@ -105,7 +106,16 @@ private import glib.VariantType;
  * Serialised GVariant data can also be sent over the network.
  * GVariant is largely compatible with D-Bus. Almost all types of
  * GVariant instances can be sent over D-Bus. See GVariantType for
- * exceptions.
+ * exceptions. (However, GVariant's serialisation format is not the same
+ * as the serialisation format of a D-Bus message body: use GDBusMessage,
+ * in the gio library, for those.)
+ * For space-efficiency, the GVariant serialisation format does not
+ * automatically include the variant's type or endianness, which must
+ * either be implied from context (such as knowledge that a particular
+ * file format always contains a little-endian G_VARIANT_TYPE_VARIANT)
+ * or supplied out-of-band (for instance, a type and/or endianness
+ * indicator could be placed at the beginning of a file, network message
+ * or network stream).
  * For convenience to C programmers, GVariant features powerful
  * varargs-based value construction and destruction. This feature is
  * designed to be embedded in other libraries.
@@ -223,7 +233,7 @@ private import glib.VariantType;
  *  then although there are 9 individual values that comprise the
  *  entire dictionary (two keys, two values, two variants containing
  *  the values, two dictionary entries, plus the dictionary itself),
- *  only 1 GVariant instance exists -- the one refering to the
+ *  only 1 GVariant instance exists -- the one referring to the
  *  dictionary.
  *  If calls are made to start accessing the other values then
  *  GVariant instances will exist for those values only for as long
@@ -351,13 +361,36 @@ public class Variant
 	}
 	
 	/**
+	 * Constructs an array of object paths Variant from the given array
+	 * of strings.
+	 *
+	 * Each string must be a valid Variant object path.
+	 *
+	 * Since: 2.30
+	 *
+	 * Params:
+	 *     strv   = an array of strings.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Variant fromObjv(string[] strv)
+	{
+		// GVariant * g_variant_new_objv (const gchar * const *strv,  gssize length);
+		auto p = g_variant_new_objv(Str.toStringzArray(strv), strv.length);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_objv(strv, length)");
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
 	 * Constructs an array of bytestring GVariant from the given array of
 	 * strings. If length is -1 then strv is NULL-terminated.
 	 * Since 2.26
 	 *
 	 * Params:
 	 *     strv   = an array of strings.
-	 *     length = the length of strv, or -1
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -440,7 +473,8 @@ public class Variant
 	 * Checks whether value has a floating reference count.
 	 * This function should only ever be used to assert that a given variant
 	 * is or is not floating, or for debug purposes. To acquire a reference
-	 * to a variant that might be floating, always use g_variant_ref_sink().
+	 * to a variant that might be floating, always use g_variant_ref_sink()
+	 * or g_variant_take_ref().
 	 * See g_variant_ref_sink() for more information about floating reference
 	 * counts.
 	 * Since 2.26
@@ -450,6 +484,47 @@ public class Variant
 	{
 		// gboolean g_variant_is_floating (GVariant *value);
 		return g_variant_is_floating(gVariant);
+	}
+	
+	/**
+	 * If value is floating, sink it. Otherwise, do nothing.
+	 * Typically you want to use g_variant_ref_sink() in order to
+	 * automatically do the correct thing with respect to floating or
+	 * non-floating references, but there is one specific scenario where
+	 * this function is helpful.
+	 * The situation where this function is helpful is when creating an API
+	 * that allows the user to provide a callback function that returns a
+	 * GVariant. We certainly want to allow the user the flexibility to
+	 * return a non-floating reference from this callback (for the case
+	 * where the value that is being returned already exists).
+	 * At the same time, the style of the GVariant API makes it likely that
+	 * for newly-created GVariant instances, the user can be saved some
+	 * typing if they are allowed to return a GVariant with a floating
+	 * reference.
+	 * Using this function on the return value of the user's callback allows
+	 * the user to do whichever is more convenient for them. The caller
+	 * will alway receives exactly one full reference to the value: either
+	 * the one that was returned in the first place, or a floating reference
+	 * that has been converted to a full reference.
+	 * This function has an odd interaction when combined with
+	 * g_variant_ref_sink() running at the same time in another thread on
+	 * the same GVariant instance. If g_variant_ref_sink() runs first then
+	 * the result will be that the floating reference is converted to a hard
+	 * reference. If g_variant_take_ref() runs first then the result will
+	 * be that the floating reference is converted to a hard reference and
+	 * an additional reference on top of that one is added. It is best to
+	 * avoid this situation.
+	 * Returns: the same value
+	 */
+	public Variant takeRef()
+	{
+		// GVariant * g_variant_take_ref (GVariant *value);
+		auto p = g_variant_take_ref(gVariant);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -479,7 +554,7 @@ public class Variant
 	 */
 	public string getTypeString()
 	{
-		// const gchar * g_variant_get_type_string  (GVariant *value);
+		// const gchar * g_variant_get_type_string (GVariant *value);
 		return Str.toString(g_variant_get_type_string(gVariant));
 	}
 	
@@ -516,7 +591,7 @@ public class Variant
 	 * ordered in the usual way. Strings are in ASCII lexographical order.
 	 * It is a programmer error to attempt to compare container values or
 	 * two values that have types that are not exactly equal. For example,
-	 * you can not compare a 32-bit signed integer with a 32-bit unsigned
+	 * you cannot compare a 32-bit signed integer with a 32-bit unsigned
 	 * integer. Also note that this function is not particularly
 	 * well-behaved when it comes to comparison of doubles; in particular,
 	 * the handling of incomparable values (ie: NaN) is undefined.
@@ -1015,8 +1090,8 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * length = a pointer to a gsize,
-	 * to store the length. [allow-none][default NULL][out]
-	 * Returns: the constant string, utf8 encoded
+	 * to store the length. [allow-none][default 0][out]
+	 * Returns: the constant string, utf8 encoded. [transfer none]
 	 */
 	public string getString(out gsize length)
 	{
@@ -1030,7 +1105,7 @@ public class Variant
 	 * The string will always be utf8 encoded.
 	 * The return value must be freed using g_free().
 	 * Since 2.24
-	 * Returns: a newly allocated string, utf8 encoded
+	 * Returns: a newly allocated string, utf8 encoded. [transfer full]
 	 */
 	public string dupString()
 	{
@@ -1044,7 +1119,7 @@ public class Variant
 	 * Unboxes value. The result is the GVariant instance that was
 	 * contained in value.
 	 * Since 2.24
-	 * Returns: the item contained in the variant
+	 * Returns: the item contained in the variant. [transfer full]
 	 */
 	public Variant getVariant()
 	{
@@ -1067,7 +1142,7 @@ public class Variant
 	 * For an empty array, length will be set to 0 and a pointer to a
 	 * NULL pointer will be returned.
 	 * Since 2.24
-	 * Returns: an array of constant strings. [array length=length][transfer container]
+	 * Returns: an array of constant strings. [array length=length zero-terminated=1][transfer container]
 	 */
 	public string[] getStrv()
 	{
@@ -1094,13 +1169,67 @@ public class Variant
 	 * For an empty array, length will be set to 0 and a pointer to a
 	 * NULL pointer will be returned.
 	 * Since 2.24
-	 * Returns: an array of strings. [array length=length]
+	 * Returns: an array of strings. [array length=length zero-terminated=1][transfer full]
 	 */
 	public string[] dupStrv()
 	{
 		// gchar ** g_variant_dup_strv (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_dup_strv(gVariant, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
+	}
+	
+	/**
+	 * Gets the contents of an array of object paths GVariant. This call
+	 * makes a shallow copy; the return result should be released with
+	 * g_free(), but the individual strings must not be modified.
+	 * If length is non-NULL then the number of elements in the result
+	 * is stored there. In any case, the resulting array will be
+	 * NULL-terminated.
+	 * For an empty array, length will be set to 0 and a pointer to a
+	 * NULL pointer will be returned.
+	 * Since 2.30
+	 * Returns: an array of constant strings. [array length=length zero-terminated=1][transfer container]
+	 */
+	public string[] getObjv()
+	{
+		// const gchar ** g_variant_get_objv (GVariant *value,  gsize *length);
+		gsize length;
+		auto p = g_variant_get_objv(gVariant, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
+	}
+	
+	/**
+	 * Gets the contents of an array of object paths GVariant. This call
+	 * makes a deep copy; the return result should be released with
+	 * g_strfreev().
+	 * If length is non-NULL then the number of elements in the result
+	 * is stored there. In any case, the resulting array will be
+	 * NULL-terminated.
+	 * For an empty array, length will be set to 0 and a pointer to a
+	 * NULL pointer will be returned.
+	 * Since 2.30
+	 * Returns: an array of strings. [array length=length zero-terminated=1][transfer full]
+	 */
+	public string[] dupObjv()
+	{
+		// gchar ** g_variant_dup_objv (GVariant *value,  gsize *length);
+		gsize length;
+		auto p = g_variant_dup_objv(gVariant, &length);
 		
 		string[] strArray = null;
 		foreach ( cstr; p[0 .. length] )
@@ -1124,11 +1253,11 @@ public class Variant
 	 * array of bytes.
 	 * The return value remains valid as long as value exists.
 	 * Since 2.26
-	 * Returns: the constant string
+	 * Returns: the constant string. [transfer none][array zero-terminated=1][element-type guint8]
 	 */
 	public string getBytestring()
 	{
-		// const gchar * g_variant_get_bytestring  (GVariant *value);
+		// const gchar * g_variant_get_bytestring (GVariant *value);
 		return Str.toString(g_variant_get_bytestring(gVariant));
 	}
 	
@@ -1137,11 +1266,11 @@ public class Variant
 	 * returning a constant string, the string is duplicated.
 	 * The return value must be freed using g_free().
 	 * Since 2.26
-	 * Returns: a newly allocated string
+	 * Returns: (transfer full) (array zero-terminated=1 length=length) (element-type guint8): a newly allocated string
 	 */
 	public string dupBytestring()
 	{
-		// gchar * g_variant_dup_bytestring  (GVariant *value,  gsize *length);
+		// gchar * g_variant_dup_bytestring (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_dup_bytestring(gVariant, &length);
 		return Str.toString(p, length);
@@ -1157,11 +1286,11 @@ public class Variant
 	 * For an empty array, length will be set to 0 and a pointer to a
 	 * NULL pointer will be returned.
 	 * Since 2.26
-	 * Returns: an array of constant strings. [array length=length]
+	 * Returns: an array of constant strings. [array length=length][transfer container]
 	 */
 	public string[] getBytestringArray()
 	{
-		// const gchar ** g_variant_get_bytestring_array  (GVariant *value,  gsize *length);
+		// const gchar ** g_variant_get_bytestring_array (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_get_bytestring_array(gVariant, &length);
 		
@@ -1184,11 +1313,11 @@ public class Variant
 	 * For an empty array, length will be set to 0 and a pointer to a
 	 * NULL pointer will be returned.
 	 * Since 2.26
-	 * Returns: an array of strings. [array length=length]
+	 * Returns: an array of strings. [array length=length][transfer full]
 	 */
 	public string[] dupBytestringArray()
 	{
-		// gchar ** g_variant_dup_bytestring_array  (GVariant *value,  gsize *length);
+		// gchar ** g_variant_dup_bytestring_array (GVariant *value,  gsize *length);
 		gsize length;
 		auto p = g_variant_dup_bytestring_array(gVariant, &length);
 		
@@ -1296,8 +1425,7 @@ public class Variant
 	
 	/**
 	 * Creates a new dictionary entry GVariant. key and value must be
-	 * non-NULL.
-	 * key must be a value of a basic type (ie: not a container).
+	 * non-NULL. key must be a value of a basic type (ie: not a container).
 	 * If the key or value are floating references (see g_variant_ref_sink()),
 	 * the new instance takes ownership of them as if via g_variant_ref_sink().
 	 * Since 2.24
@@ -1308,7 +1436,7 @@ public class Variant
 	 */
 	public this (Variant key, Variant value)
 	{
-		// GVariant * g_variant_new_dict_entry  (GVariant *key,  GVariant *value);
+		// GVariant * g_variant_new_dict_entry (GVariant *key,  GVariant *value);
 		auto p = g_variant_new_dict_entry((key is null) ? null : key.getVariantStruct(), (value is null) ? null : value.getVariantStruct());
 		if(p is null)
 		{
@@ -1321,7 +1449,7 @@ public class Variant
 	 * Given a maybe-typed GVariant instance, extract its value. If the
 	 * value is Nothing, then this function returns NULL.
 	 * Since 2.24
-	 * Returns: the contents of value, or NULL. [allow-none]
+	 * Returns: the contents of value, or NULL. [allow-none][transfer full]
 	 */
 	public Variant getMaybe()
 	{
@@ -1364,11 +1492,11 @@ public class Variant
 	 * Since 2.24
 	 * Params:
 	 * index = the index of the child to fetch
-	 * Returns: the child at the specified index
+	 * Returns: the child at the specified index. [transfer full]
 	 */
 	public Variant getChildValue(gsize index)
 	{
-		// GVariant * g_variant_get_child_value  (GVariant *value,  gsize index_);
+		// GVariant * g_variant_get_child_value (GVariant *value,  gsize index_);
 		auto p = g_variant_get_child_value(gVariant, index);
 		if(p is null)
 		{
@@ -1398,8 +1526,8 @@ public class Variant
 	 * Since 2.28
 	 * Params:
 	 * key = the key to lookup in the dictionary
-	 * expectedType = a GVariantType, or NULL
-	 * Returns: the value of the dictionary key, or NULL
+	 * expectedType = a GVariantType, or NULL. [allow-none]
+	 * Returns: the value of the dictionary key, or NULL. [transfer full]
 	 */
 	public Variant lookupValue(string key, VariantType expectedType)
 	{
@@ -1416,19 +1544,18 @@ public class Variant
 	 * Provides access to the serialised data for an array of fixed-sized
 	 * items.
 	 * value must be an array with fixed-sized elements. Numeric types are
-	 * fixed-size as are tuples containing only other fixed-sized types.
-	 * element_size must be the size of a single element in the array. For
-	 * example, if calling this function for an array of 32 bit integers,
-	 * you might say sizeof (gint32). This value isn't used
-	 * except for the purpose of a double-check that the form of the
-	 * seralised data matches the caller's expectation.
-	 * n_elements, which must be non-NULL is set equal to the number of
-	 * items in the array.
+	 * fixed-size, as are tuples containing only other fixed-sized types.
+	 * element_size must be the size of a single element in the array,
+	 * as given by the section on
+	 * Serialised Data
+	 * Memory.
+	 * In particular, arrays of these fixed-sized types can be interpreted
+	 * as an array of the given C type, with element_size set to
 	 * Since 2.24
 	 * Params:
-	 * nElements = a pointer to the location to store the number of items
+	 * nElements = a pointer to the location to store the number of items. [out]
 	 * elementSize = the size of each element
-	 * Returns: a pointer to the fixed array. [array length=n_elements]
+	 * Returns: a pointer to the fixed array. [array length=n_elements][transfer none]
 	 */
 	public void* getFixedArray(gsize* nElements, gsize elementSize)
 	{
@@ -1469,8 +1596,17 @@ public class Variant
 	 * is O(1). If the value is not already in serialised form,
 	 * serialisation occurs implicitly and is approximately O(n) in the size
 	 * of the result.
+	 * To deserialise the data returned by this function, in addition to the
+	 * serialised data, you must know the type of the GVariant, and (if the
+	 * machine might be different) the endianness of the machine that stored
+	 * it. As a result, file formats or network messages that incorporate
+	 * serialised GVariants must include this information either
+	 * implicitly (for instance "the file always contains a
+	 * G_VARIANT_TYPE_VARIANT and it is always in little-endian order") or
+	 * explicitly (by storing the type and/or endianness in addition to the
+	 * serialised data).
 	 * Since 2.24
-	 * Returns: the serialised form of value, or NULL
+	 * Returns: the serialised form of value, or NULL. [transfer none]
 	 */
 	public void* getData()
 	{
@@ -1484,6 +1620,9 @@ public class Variant
 	 * The stored data is in machine native byte order but may not be in
 	 * fully-normalised form if read from an untrusted source. See
 	 * g_variant_get_normal_form() for a solution.
+	 * As with g_variant_get_data(), to be able to deserialise the
+	 * serialised variant successfully, its type and (if the destination
+	 * machine might be different) its endianness must also be available.
 	 * This function is approximately O(n) in the size of data.
 	 * Since 2.24
 	 * Params:
@@ -1509,22 +1648,25 @@ public class Variant
 	 * as a file installed in /usr/lib alongside your application). You
 	 * should set trusted to FALSE if data is read from the network, a
 	 * file in the user's home directory, etc.
+	 * If data was not stored in this machine's native endianness, any multi-byte
+	 * numeric values in the returned variant will also be in non-native
+	 * endianness. g_variant_byteswap() can be used to recover the original values.
 	 * notify will be called with user_data when data is no longer
 	 * needed. The exact time of this call is unspecified and might even be
 	 * before this function returns.
 	 * Since 2.24
 	 * Params:
 	 * type = a definite GVariantType
-	 * data = the serialised data
+	 * data = the serialised data. [array length=size][element-type guint8]
 	 * size = the size of data
 	 * trusted = TRUE if data is definitely in normal form
-	 * notify = function to call when data is no longer needed
+	 * notify = function to call when data is no longer needed. [scope async]
 	 * userData = data for notify
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (VariantType type, void* data, gsize size, int trusted, GDestroyNotify notify, void* userData)
 	{
-		// GVariant * g_variant_new_from_data  (const GVariantType *type,  gconstpointer data,  gsize size,  gboolean trusted,  GDestroyNotify notify,  gpointer user_data);
+		// GVariant * g_variant_new_from_data (const GVariantType *type,  gconstpointer data,  gsize size,  gboolean trusted,  GDestroyNotify notify,  gpointer user_data);
 		auto p = g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data, size, trusted, notify, userData);
 		if(p is null)
 		{
@@ -1544,7 +1686,7 @@ public class Variant
 	 * bytes and containers containing only these things (recursively).
 	 * The returned value is always in normal form and is marked as trusted.
 	 * Since 2.24
-	 * Returns: the byteswapped form of value
+	 * Returns: the byteswapped form of value. [transfer full]
 	 */
 	public Variant byteswap()
 	{
@@ -1571,11 +1713,11 @@ public class Variant
 	 * data from untrusted sources and you want to ensure your serialised
 	 * output is definitely in normal form.
 	 * Since 2.24
-	 * Returns: a trusted GVariant
+	 * Returns: a trusted GVariant. [transfer full]
 	 */
 	public Variant getNormalForm()
 	{
-		// GVariant * g_variant_get_normal_form  (GVariant *value);
+		// GVariant * g_variant_get_normal_form (GVariant *value);
 		auto p = g_variant_get_normal_form(gVariant);
 		if(p is null)
 		{
@@ -1645,7 +1787,7 @@ public class Variant
 	 * Params:
 	 * typeAnnotate = TRUE if type information should be included in
 	 * the output
-	 * Returns: a newly-allocated string holding the result.
+	 * Returns: a newly-allocated string holding the result. [transfer full]
 	 */
 	public string print(int typeAnnotate)
 	{
@@ -1695,7 +1837,7 @@ public class Variant
 	 * In the event that the parsing is successful, the resulting GVariant
 	 * is returned.
 	 * In case of any error, NULL will be returned. If error is non-NULL
-	 * then it will be set to reflect the error that occured.
+	 * then it will be set to reflect the error that occurred.
 	 * Officially, the language understood by the parser is "any string
 	 * produced by g_variant_print()".
 	 * Params:
@@ -1749,7 +1891,7 @@ public class Variant
 	 */
 	public this (string format, void** app)
 	{
-		// GVariant * g_variant_new_parsed_va  (const gchar *format,  va_list *app);
+		// GVariant * g_variant_new_parsed_va (const gchar *format,  va_list *app);
 		auto p = g_variant_new_parsed_va(Str.toStringz(format), app);
 		if(p is null)
 		{

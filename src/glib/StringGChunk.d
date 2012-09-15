@@ -154,7 +154,7 @@ public class StringGChunk
 	 */
 	public string insert(string string)
 	{
-		// gchar *	 g_string_chunk_insert (GStringChunk *chunk,  const gchar *string);
+		// gchar * g_string_chunk_insert (GStringChunk *chunk,  const gchar *string);
 		return Str.toString(g_string_chunk_insert(gStringChunk, Str.toStringz(string)));
 	}
 	
@@ -176,7 +176,7 @@ public class StringGChunk
 	 */
 	public string insertConst(string string)
 	{
-		// gchar *	 g_string_chunk_insert_const (GStringChunk *chunk,  const gchar *string);
+		// gchar * g_string_chunk_insert_const (GStringChunk *chunk,  const gchar *string);
 		return Str.toString(g_string_chunk_insert_const(gStringChunk, Str.toStringz(string)));
 	}
 	
@@ -197,7 +197,7 @@ public class StringGChunk
 	 */
 	public string insertLen(string string, gssize len)
 	{
-		// gchar *	 g_string_chunk_insert_len (GStringChunk *chunk,  const gchar *string,  gssize len);
+		// gchar * g_string_chunk_insert_len (GStringChunk *chunk,  const gchar *string,  gssize len);
 		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(string), len));
 	}
 	

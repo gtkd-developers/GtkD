@@ -76,7 +76,7 @@ private import glib.Variant;
  * GVariant instances always have a type and a value (which are given
  * at construction time). The type and value of a GVariant instance
  * can never change other than by the GVariant itself being
- * destroyed. A GVariant can not contain a pointer.
+ * destroyed. A GVariant cannot contain a pointer.
  * GVariant is reference counted using g_variant_ref() and
  * g_variant_unref(). GVariant also has floating reference counts --
  * see g_variant_ref_sink().
@@ -90,7 +90,16 @@ private import glib.Variant;
  * Serialised GVariant data can also be sent over the network.
  * GVariant is largely compatible with D-Bus. Almost all types of
  * GVariant instances can be sent over D-Bus. See GVariantType for
- * exceptions.
+ * exceptions. (However, GVariant's serialisation format is not the same
+ * as the serialisation format of a D-Bus message body: use GDBusMessage,
+ * in the gio library, for those.)
+ * For space-efficiency, the GVariant serialisation format does not
+ * automatically include the variant's type or endianness, which must
+ * either be implied from context (such as knowledge that a particular
+ * file format always contains a little-endian G_VARIANT_TYPE_VARIANT)
+ * or supplied out-of-band (for instance, a type and/or endianness
+ * indicator could be placed at the beginning of a file, network message
+ * or network stream).
  * For convenience to C programmers, GVariant features powerful
  * varargs-based value construction and destruction. This feature is
  * designed to be embedded in other libraries.
@@ -208,7 +217,7 @@ private import glib.Variant;
  *  then although there are 9 individual values that comprise the
  *  entire dictionary (two keys, two values, two variants containing
  *  the values, two dictionary entries, plus the dictionary itself),
- *  only 1 GVariant instance exists -- the one refering to the
+ *  only 1 GVariant instance exists -- the one referring to the
  *  dictionary.
  *  If calls are made to start accessing the other values then
  *  GVariant instances will exist for those values only for as long
@@ -274,7 +283,7 @@ public class VariantIter
 	 * A reference is taken to the container that iter is iterating over
 	 * and will be releated only when g_variant_iter_free() is called.
 	 * Since 2.24
-	 * Returns: a new heap-allocated GVariantIter
+	 * Returns: a new heap-allocated GVariantIter. [transfer full]
 	 */
 	public VariantIter copy()
 	{
@@ -360,11 +369,11 @@ public class VariantIter
 	 * you no longer need it.
 	 * $(DDOC_COMMENT example)
 	 * Since 2.24
-	 * Returns: a GVariant, or NULL. [allow-none]
+	 * Returns: a GVariant, or NULL. [allow-none][transfer full]
 	 */
 	public Variant nextValue()
 	{
-		// GVariant * g_variant_iter_next_value  (GVariantIter *iter);
+		// GVariant * g_variant_iter_next_value (GVariantIter *iter);
 		auto p = g_variant_iter_next_value(gVariantIter);
 		if(p is null)
 		{

@@ -79,7 +79,7 @@ private import glib.VariantType;
  * GVariant instances always have a type and a value (which are given
  * at construction time). The type and value of a GVariant instance
  * can never change other than by the GVariant itself being
- * destroyed. A GVariant can not contain a pointer.
+ * destroyed. A GVariant cannot contain a pointer.
  * GVariant is reference counted using g_variant_ref() and
  * g_variant_unref(). GVariant also has floating reference counts --
  * see g_variant_ref_sink().
@@ -93,7 +93,16 @@ private import glib.VariantType;
  * Serialised GVariant data can also be sent over the network.
  * GVariant is largely compatible with D-Bus. Almost all types of
  * GVariant instances can be sent over D-Bus. See GVariantType for
- * exceptions.
+ * exceptions. (However, GVariant's serialisation format is not the same
+ * as the serialisation format of a D-Bus message body: use GDBusMessage,
+ * in the gio library, for those.)
+ * For space-efficiency, the GVariant serialisation format does not
+ * automatically include the variant's type or endianness, which must
+ * either be implied from context (such as knowledge that a particular
+ * file format always contains a little-endian G_VARIANT_TYPE_VARIANT)
+ * or supplied out-of-band (for instance, a type and/or endianness
+ * indicator could be placed at the beginning of a file, network message
+ * or network stream).
  * For convenience to C programmers, GVariant features powerful
  * varargs-based value construction and destruction. This feature is
  * designed to be embedded in other libraries.
@@ -211,7 +220,7 @@ private import glib.VariantType;
  *  then although there are 9 individual values that comprise the
  *  entire dictionary (two keys, two values, two variants containing
  *  the values, two dictionary entries, plus the dictionary itself),
- *  only 1 GVariant instance exists -- the one refering to the
+ *  only 1 GVariant instance exists -- the one referring to the
  *  dictionary.
  *  If calls are made to start accessing the other values then
  *  GVariant instances will exist for those values only for as long
@@ -286,7 +295,7 @@ public class VariantBuilder
 	 * Don't call this on stack-allocated GVariantBuilder instances or bad
 	 * things will happen.
 	 * Since 2.24
-	 * Returns: a new reference to builder
+	 * Returns: a new reference to builder. [transfer full]
 	 */
 	public VariantBuilder doref()
 	{

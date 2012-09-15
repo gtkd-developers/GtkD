@@ -115,7 +115,7 @@ public class ScannerG
 	 */
 	public this (GScannerConfig* configTempl)
 	{
-		// GScanner *	 g_scanner_new (const GScannerConfig *config_templ);
+		// GScanner * g_scanner_new (const GScannerConfig *config_templ);
 		auto p = g_scanner_new(configTempl);
 		if(p is null)
 		{

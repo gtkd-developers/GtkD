@@ -95,12 +95,12 @@ public class Base64
 	 * at least: (len / 3 + 1) * 4 + 4 bytes (+ 4 may be needed in case of
 	 * Since 2.12
 	 * Params:
-	 * in = the binary data to encode
+	 * in = the binary data to encode. [array length=len][element-type guint8]
 	 * len = the length of in
 	 * breakLines = whether to break long lines
-	 * out = pointer to destination buffer
-	 * state = Saved state between steps, initialize to 0
-	 * save = Saved state between steps, initialize to 0
+	 * out = pointer to destination buffer. [out][array][element-type guint8]
+	 * state = Saved state between steps, initialize to 0. [inout]
+	 * save = Saved state between steps, initialize to 0. [inout]
 	 * Returns: The number of bytes of output that was written
 	 */
 	public static gsize encodeStep(char* inn, gsize len, int breakLines, string f_out, ref int state, ref int save)
@@ -117,9 +117,9 @@ public class Base64
 	 * Since 2.12
 	 * Params:
 	 * breakLines = whether to break long lines
-	 * out = pointer to destination buffer
-	 * state = Saved state from g_base64_encode_step()
-	 * save = Saved state from g_base64_encode_step()
+	 * out = pointer to destination buffer. [out][array][element-type guint8]
+	 * state = Saved state from g_base64_encode_step(). [inout]
+	 * save = Saved state from g_base64_encode_step(). [inout]
 	 * Returns: The number of bytes of output that was written
 	 */
 	public static gsize encodeClose(int breakLines, string f_out, ref int state, ref int save)
@@ -133,9 +133,9 @@ public class Base64
 	 * representation.
 	 * Since 2.12
 	 * Params:
-	 * data = the binary data to encode
+	 * data = the binary data to encode. [array length=len][element-type guint8]
 	 * len = the length of data
-	 * Returns: a newly allocated, zero-terminated Base-64 encoded string representing data. The returned string must be freed with g_free().
+	 * Returns: a newly allocated, zero-terminated Base-64 encoded string representing data. The returned string must be freed with g_free(). [transfer full]
 	 */
 	public static string encode(char* data, gsize len)
 	{
@@ -153,11 +153,11 @@ public class Base64
 	 * state).
 	 * Since 2.12
 	 * Params:
-	 * in = binary input data
+	 * in = binary input data. [array length=len][element-type guint8]
 	 * len = max length of in data to decode
-	 * out = output buffer
-	 * state = Saved state between steps, initialize to 0
-	 * save = Saved state between steps, initialize to 0
+	 * out = output buffer. [out][array][element-type guint8]
+	 * state = Saved state between steps, initialize to 0. [inout]
+	 * save = Saved state between steps, initialize to 0. [inout]
 	 * Returns: The number of bytes of output that was written
 	 */
 	public static gsize decodeStep(string inn, gsize len, char* f_out, ref int state, ref uint save)
@@ -171,7 +171,7 @@ public class Base64
 	 * Since 2.12
 	 * Params:
 	 * text = zero-terminated string with base64 text to decode
-	 * Returns: a newly allocated buffer containing the binary data that text represents. The returned buffer must be freed with g_free().
+	 * Returns: newly allocated buffer containing the binary data that text represents. The returned buffer must be freed with g_free(). [transfer full][array length=out_len][element-type guint8]
 	 */
 	public static char[] decode(string text)
 	{
@@ -186,8 +186,9 @@ public class Base64
 	 * by overwriting the input data.
 	 * Since 2.20
 	 * Params:
-	 * text = zero-terminated string with base64 text to decode
-	 * Returns: The binary data that text responds. This pointer is the same as the input text.
+	 * text = zero-terminated
+	 * string with base64 text to decode. [inout][array length=out_len][element-type guint8]
+	 * Returns: The binary data that text responds. This pointer is the same as the input text. [transfer none]
 	 */
 	public static char[] decodeInplace(string text)
 	{

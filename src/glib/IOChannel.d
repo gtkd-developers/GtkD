@@ -104,7 +104,7 @@ private import gtkc.Loader;;
  * increment or decrement the reference count respectively. When the
  * reference count falls to 0, the GIOChannel is freed. (Though it
  * isn't closed automatically, unless it was created using
- * g_io_channel_new_from_file().) Using g_io_add_watch() or
+ * g_io_channel_new_file().) Using g_io_add_watch() or
  * g_io_add_watch_full() increments a channel's reference count.
  * The new functions g_io_channel_read_chars(),
  * g_io_channel_read_line(), g_io_channel_read_line_string(),
@@ -655,7 +655,7 @@ public class IOChannel
 	 * func = the function to call when the condition is satisfied
 	 * userData = user data to pass to func
 	 * notify = the function to call when the source is removed
-	 * Returns: the event source id
+	 * Returns: the event source id Rename to: g_io_add_watch
 	 */
 	public uint gIoAddWatchFull(int priority, GIOCondition condition, GIOFunc func, void* userData, GDestroyNotify notify)
 	{

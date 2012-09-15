@@ -209,7 +209,7 @@ public class Util
 	 * The return value is freshly allocated and it should be freed with
 	 * g_strfreev() when it is no longer needed.
 	 * Since 2.28
-	 * Returns: the list of environment variables
+	 * Returns: the list of environment variables. [array zero-terminated=1][transfer full]
 	 */
 	public static string[] getEnviron()
 	{
@@ -218,14 +218,94 @@ public class Util
 	}
 	
 	/**
+	 * Returns the value of an environment variable. The name and value
+	 * are in the GLib file name encoding. On UNIX, this means the actual
+	 * bytes which might or might not be in some consistent character set
+	 * and encoding. On Windows, it is in UTF-8. On Windows, in case the
+	 * environment variable's value contains references to other
+	 * environment variables, they are expanded.
+	 * Params:
+	 * variable = the environment variable to get, in the GLib file name encoding.
+	 * Returns: the value of the environment variable, or NULL if the environment variable is not found. The returned string may be overwritten by the next call to g_getenv(), g_setenv() or g_unsetenv().
+	 */
+	public static string getenv(string variable)
+	{
+		// const gchar * g_getenv (const gchar *variable);
+		return Str.toString(g_getenv(Str.toStringz(variable)));
+	}
+	
+	/**
+	 * Sets an environment variable. Both the variable's name and value
+	 * should be in the GLib file name encoding. On UNIX, this means that
+	 * they can be any sequence of bytes. On Windows, they should be in
+	 * UTF-8.
+	 * Note that on some systems, when variables are overwritten, the memory
+	 * used for the previous variables and its value isn't reclaimed.
+	 * Since 2.4
+	 * Params:
+	 * variable = the environment variable to set, must not contain '='.
+	 * value = the value for to set the variable to.
+	 * overwrite = whether to change the variable if it already exists.
+	 * Returns: FALSE if the environment variable couldn't be set.
+	 */
+	public static int setenv(string variable, string value, int overwrite)
+	{
+		// gboolean g_setenv (const gchar *variable,  const gchar *value,  gboolean overwrite);
+		return g_setenv(Str.toStringz(variable), Str.toStringz(value), overwrite);
+	}
+	
+	/**
+	 * Removes an environment variable from the environment.
+	 * Note that on some systems, when variables are overwritten, the memory
+	 * used for the previous variables and its value isn't reclaimed.
+	 * Furthermore, this function can't be guaranteed to operate in a
+	 * threadsafe way.
+	 * Since 2.4
+	 * Params:
+	 * variable = the environment variable to remove, must not contain '='.
+	 */
+	public static void unsetenv(string variable)
+	{
+		// void g_unsetenv (const gchar *variable);
+		g_unsetenv(Str.toStringz(variable));
+	}
+	
+	/**
 	 * Gets the names of all variables set in the environment.
 	 * Since 2.8
-	 * Returns: a NULL-terminated list of strings which must be freed with g_strfreev(). Programs that want to be portable to Windows should typically use this function and g_getenv() instead of using the environ array from the C library directly. On Windows, the strings in the environ array are in system codepage encoding, while in most of the typical use cases for environment variables in GLib-using programs you want the UTF-8 encoding that this function and g_getenv() provide.
+	 * Returns: a NULL-terminated list of strings which must be freed with g_strfreev(). Programs that want to be portable to Windows should typically use this function and g_getenv() instead of using the environ array from the C library directly. On Windows, the strings in the environ array are in system codepage encoding, while in most of the typical use cases for environment variables in GLib-using programs you want the UTF-8 encoding that this function and g_getenv() provide. [array zero-terminated=1][transfer full]
 	 */
 	public static string[] listenv()
 	{
 		// gchar ** g_listenv (void);
 		return Str.toStringArray(g_listenv());
+	}
+	
+	/**
+	 * Gets the user name of the current user. The encoding of the returned
+	 * string is system-defined. On UNIX, it might be the preferred file name
+	 * encoding, or something else, and there is no guarantee that it is even
+	 * consistent on a machine. On Windows, it is always UTF-8.
+	 * Returns: the user name of the current user.
+	 */
+	public static string getUserName()
+	{
+		// const gchar * g_get_user_name (void);
+		return Str.toString(g_get_user_name());
+	}
+	
+	/**
+	 * Gets the real name of the user. This usually comes from the user's entry
+	 * in the passwd file. The encoding of the returned
+	 * string is system-defined. (On Windows, it is, however, always UTF-8.)
+	 * If the real user name cannot be determined, the string "Unknown" is
+	 * returned.
+	 * Returns: the user's real name.
+	 */
+	public static string getRealName()
+	{
+		// const gchar * g_get_real_name (void);
+		return Str.toString(g_get_real_name());
 	}
 	
 	/**
@@ -355,7 +435,7 @@ public class Util
 	 * Note that on Windows the returned list can vary depending on where
 	 * this function is called.
 	 * Since 2.6
-	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed.
+	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed. [array zero-terminated=1][transfer none]
 	 */
 	public static string[] getSystemDataDirs()
 	{
@@ -377,7 +457,7 @@ public class Util
 	 * of clip art, or a log file in the CSIDL_COMMON_APPDATA folder.
 	 * This information will not roam and is available to anyone using the computer.
 	 * Since 2.6
-	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed.
+	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed. [array zero-terminated=1][transfer none]
 	 */
 	public static string[] getSystemConfigDirs()
 	{
@@ -420,6 +500,57 @@ public class Util
 	{
 		// const gchar * g_get_host_name (void);
 		return Str.toString(g_get_host_name());
+	}
+	
+	/**
+	 * Gets the current user's home directory as defined in the
+	 * password database.
+	 * Note that in contrast to traditional UNIX tools, this function
+	 * prefers passwd entries over the HOME
+	 * environment variable.
+	 * One of the reasons for this decision is that applications in many
+	 * cases need special handling to deal with the case where
+	 * HOME is
+	 * Not owned by the user
+	 * Not writeable
+	 * Not even readable
+	 * Since applications are in general not written
+	 * to deal with these situations it was considered better to make
+	 * g_get_home_dir() not pay attention to HOME and to
+	 * return the real home directory for the user. If applications
+	 * Returns: the current user's home directory
+	 */
+	public static string getHomeDir()
+	{
+		// const gchar * g_get_home_dir (void);
+		return Str.toString(g_get_home_dir());
+	}
+	
+	/**
+	 * Gets the directory to use for temporary files. This is found from
+	 * inspecting the environment variables TMPDIR,
+	 * TMP, and TEMP in that order. If none
+	 * of those are defined "/tmp" is returned on UNIX and "C:\" on Windows.
+	 * The encoding of the returned string is system-defined. On Windows,
+	 * it is always UTF-8. The return value is never NULL or the empty string.
+	 * Returns: the directory to use for temporary files.
+	 */
+	public static string getTmpDir()
+	{
+		// const gchar * g_get_tmp_dir (void);
+		return Str.toString(g_get_tmp_dir());
+	}
+	
+	/**
+	 * Gets the current directory.
+	 * The returned string should be freed when no longer needed. The encoding
+	 * of the returned string is system defined. On Windows, it is always UTF-8.
+	 * Returns: the current directory.
+	 */
+	public static string getCurrentDir()
+	{
+		// gchar * g_get_current_dir (void);
+		return Str.toString(g_get_current_dir());
 	}
 	
 	/**
@@ -520,7 +651,7 @@ public class Util
 	 * meant for language bindings.
 	 * Since 2.8
 	 * Params:
-	 * args = NULL-terminated array of strings containing the path elements.
+	 * args = NULL-terminated array of strings containing the path elements. [array zero-terminated=1]
 	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
 	public static string buildFilenamev(char** args)
@@ -536,7 +667,7 @@ public class Util
 	 * Since 2.8
 	 * Params:
 	 * separator = a string used to separator the elements of the path.
-	 * args = NULL-terminated array of strings containing the path elements.
+	 * args = NULL-terminated array of strings containing the path elements. [array zero-terminated=1]
 	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
 	public static string buildPathv(string separator, char** args)
@@ -546,6 +677,46 @@ public class Util
 	}
 	
 	/**
+	 * Formats a size (for example the size of a file) into a human readable
+	 * string. Sizes are rounded to the nearest size prefix (kB, MB, GB)
+	 * and are displayed rounded to the nearest tenth. E.g. the file size
+	 * 3292528 bytes will be converted into the string "3.2 MB".
+	 * The prefix units base is 1000 (i.e. 1 kB is 1000 bytes).
+	 * This string should be freed with g_free() when not needed any longer.
+	 * See g_format_size_full() for more options about how the size might be
+	 * formatted.
+	 * Since 2.30
+	 * Params:
+	 * size = a size in bytes
+	 * Returns: a newly-allocated formatted string containing a human readable file size.
+	 */
+	public static string formatSize(ulong size)
+	{
+		// gchar * g_format_size (guint64 size);
+		return Str.toString(g_format_size(size));
+	}
+	
+	/**
+	 * Formats a size.
+	 * This function is similar to g_format_size() but allows for flags that
+	 * modify the output. See GFormatSizeFlags.
+	 * Since 2.30
+	 * Params:
+	 * size = a size in bytes
+	 * flags = GFormatSizeFlags to modify the output
+	 * Returns: a newly-allocated formatted string containing a human readable file size.
+	 */
+	public static string formatSizeFull(ulong size, GFormatSizeFlags flags)
+	{
+		// gchar * g_format_size_full (guint64 size,  GFormatSizeFlags flags);
+		return Str.toString(g_format_size_full(size, flags));
+	}
+	
+	/**
+	 * Warning
+	 * g_format_size_for_display has been deprecated since version 2.30 and should not be used in newly-written code. This function is broken due to its use of SI
+	 *  suffixes to denote IEC units. Use g_format_size()
+	 *  instead.
 	 * Formats a size (for example the size of a file) into a human readable string.
 	 * Sizes are rounded to the nearest size prefix (KB, MB, GB) and are displayed
 	 * rounded to the nearest tenth. E.g. the file size 3292528 bytes will be
@@ -564,14 +735,40 @@ public class Util
 	}
 	
 	/**
-	 * Find the position of the first bit set in mask, searching from (but not
-	 * including) nth_bit upwards. Bits are numbered from 0 (least significant)
-	 * to sizeof(gulong) * 8 - 1 (31 or 63, usually). To start searching from the
-	 * 0th bit, set nth_bit to -1.
+	 * Locates the first executable named program in the user's path, in the
+	 * same way that execvp() would locate it. Returns an allocated string
+	 * with the absolute path name, or NULL if the program is not found in
+	 * the path. If program is already an absolute path, returns a copy of
+	 * program if program exists and is executable, and NULL otherwise.
+	 * On Windows, if program does not have a file type suffix, tries
+	 * with the suffixes .exe, .cmd, .bat and .com, and the suffixes in
+	 * the PATHEXT environment variable.
+	 * On Windows, it looks for the file in the same way as CreateProcess()
+	 * would. This means first in the directory where the executing
+	 * program was loaded from, then in the current directory, then in the
+	 * Windows 32-bit system directory, then in the Windows directory, and
+	 * finally in the directories in the PATH environment
+	 * variable. If the program is found, the return value contains the
+	 * full name including the type suffix.
 	 * Params:
-	 * mask = a gulong containing flags.
-	 * nthBit = the index of the bit to start the search from.
-	 * Returns: the index of the first bit set which is higher than nth_bit.
+	 * program = a program name in the GLib file name encoding
+	 * Returns: absolute path, or NULL
+	 */
+	public static string findProgramInPath(string program)
+	{
+		// gchar * g_find_program_in_path (const gchar *program);
+		return Str.toString(g_find_program_in_path(Str.toStringz(program)));
+	}
+	
+	/**
+	 * Find the position of the first bit set in mask, searching
+	 * from (but not including) nth_bit upwards. Bits are numbered
+	 * from 0 (least significant) to sizeof(gulong) * 8 - 1 (31 or 63,
+	 * usually). To start searching from the 0th bit, set nth_bit to -1.
+	 * Params:
+	 * mask = a gulong containing flags
+	 * nthBit = the index of the bit to start the search from
+	 * Returns: the index of the first bit set which is higher than nth_bit
 	 */
 	public static int bitNthLsf(gulong mask, int nthBit)
 	{
@@ -580,14 +777,15 @@ public class Util
 	}
 	
 	/**
-	 * Find the position of the first bit set in mask, searching from (but not
-	 * including) nth_bit downwards. Bits are numbered from 0 (least significant)
-	 * to sizeof(gulong) * 8 - 1 (31 or 63, usually). To start searching from the
-	 * last bit, set nth_bit to -1 or GLIB_SIZEOF_LONG * 8.
+	 * Find the position of the first bit set in mask, searching
+	 * from (but not including) nth_bit downwards. Bits are numbered
+	 * from 0 (least significant) to sizeof(gulong) * 8 - 1 (31 or 63,
+	 * usually). To start searching from the last bit, set nth_bit to
+	 * -1 or GLIB_SIZEOF_LONG * 8.
 	 * Params:
-	 * mask = a gulong containing flags.
-	 * nthBit = the index of the bit to start the search from.
-	 * Returns: the index of the first bit set which is lower than nth_bit.
+	 * mask = a gulong containing flags
+	 * nthBit = the index of the bit to start the search from
+	 * Returns: the index of the first bit set which is lower than nth_bit
 	 */
 	public static int bitNthMsf(gulong mask, int nthBit)
 	{
@@ -599,8 +797,8 @@ public class Util
 	 * Gets the number of bits used to hold number,
 	 * e.g. if number is 4, 3 bits are needed.
 	 * Params:
-	 * number = a guint.
-	 * Returns: the number of bits used to hold number.
+	 * number = a guint
+	 * Returns: the number of bits used to hold number
 	 */
 	public static uint bitStorage(gulong number)
 	{
@@ -615,8 +813,8 @@ public class Util
 	 * The built-in array of primes ranges from 11 to 13845163 such that
 	 * each prime is approximately 1.5-2 times the previous prime.
 	 * Params:
-	 * num = a guint.
-	 * Returns: the smallest prime number from a built-in array of primes which is larger than num.
+	 * num = a guint
+	 * Returns: the smallest prime number from a built-in array of primes which is larger than num
 	 */
 	public static uint spacedPrimesClosest(uint num)
 	{
@@ -650,7 +848,7 @@ public class Util
 	 * calling g_atexit() (or atexit()) except in the main executable of a
 	 * program.
 	 * Params:
-	 * func = the function to call on normal program termination.
+	 * func = the function to call on normal program termination. [scope async]
 	 */
 	public static void atexit(GVoidFunc func)
 	{
@@ -668,9 +866,9 @@ public class Util
 	 * out to standard error.
 	 * Params:
 	 * string = a list of debug options separated by colons, spaces, or
-	 * commas, or NULL.
+	 * commas, or NULL. [allow-none]
 	 * keys = pointer to an array of GDebugKey which associate
-	 * strings with bit flags.
+	 * strings with bit flags. [array length=nkeys]
 	 * nkeys = the number of GDebugKeys in the array.
 	 * Returns: the combined set of bit flags.
 	 */

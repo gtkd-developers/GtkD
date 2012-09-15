@@ -106,7 +106,7 @@ private import glib.Str;
  * that are subtypes of indefinite types. That is to say,
  * g_variant_get_type() will never return an indefinite type, but
  * calling g_variant_is_of_type() with an indefinite type may return
- * TRUE. For example, you can not have a value that represents "an
+ * TRUE. For example, you cannot have a value that represents "an
  * array of no particular type", but you can have an "array of integers"
  * which certainly matches the type of "an array of no particular type",
  * since "array of integers" is a subtype of "array of no particular
@@ -312,7 +312,7 @@ public class VariantType
 	 * Makes a copy of a GVariantType. It is appropriate to call
 	 * g_variant_type_free() on the return value. type may not be NULL.
 	 * Since 2.24
-	 * Returns: a new GVariantType
+	 * Returns: a new GVariantType. [transfer full]
 	 */
 	public VariantType copy()
 	{
@@ -376,8 +376,8 @@ public class VariantType
 	 * Since 2.24
 	 * Params:
 	 * string = a pointer to any string
-	 * limit = the end of string, or NULL
-	 * endptr = location to store the end pointer, or NULL
+	 * limit = the end of string, or NULL. [allow-none]
+	 * endptr = location to store the end pointer, or NULL. [out][allow-none]
 	 * Returns: TRUE if a valid type string was found
 	 */
 	public static int stringScan(string str, string limit, out string endptr)
@@ -414,7 +414,7 @@ public class VariantType
 	 */
 	public string peekString()
 	{
-		// const gchar * g_variant_type_peek_string  (const GVariantType *type);
+		// const gchar * g_variant_type_peek_string (const GVariantType *type);
 		return Str.toString(g_variant_type_peek_string(gVariantType));
 	}
 	
@@ -423,11 +423,11 @@ public class VariantType
 	 * type. The returned string is nul-terminated. It is appropriate to
 	 * call g_free() on the return value.
 	 * Since 2.24
-	 * Returns: the corresponding type string
+	 * Returns: the corresponding type string. [transfer full]
 	 */
 	public string dupString()
 	{
-		// gchar * g_variant_type_dup_string  (const GVariantType *type);
+		// gchar * g_variant_type_dup_string (const GVariantType *type);
 		return Str.toString(g_variant_type_dup_string(gVariantType));
 	}
 	
@@ -560,7 +560,7 @@ public class VariantType
 	 * GVariantType must be provided.
 	 * Since 2.24
 	 * Params:
-	 * type = a GVariantType
+	 * type = a GVariantType. [type GVariantType]
 	 * Returns: the hash value
 	 */
 	public static uint hash(void* type)
@@ -580,8 +580,8 @@ public class VariantType
 	 * both arguments, a valid GVariantType must be provided.
 	 * Since 2.24
 	 * Params:
-	 * type1 = a GVariantType
-	 * type2 = a GVariantType
+	 * type1 = a GVariantType. [type GVariantType]
+	 * type2 = a GVariantType. [type GVariantType]
 	 * Returns: TRUE if type1 and type2 are exactly equal
 	 */
 	public static int equal(void* type1, void* type2)
@@ -618,7 +618,7 @@ public class VariantType
 	 */
 	public this (VariantType element)
 	{
-		// GVariantType * g_variant_type_new_array  (const GVariantType *element);
+		// GVariantType * g_variant_type_new_array (const GVariantType *element);
 		auto p = g_variant_type_new_array((element is null) ? null : element.getVariantTypeStruct());
 		if(p is null)
 		{
@@ -634,12 +634,12 @@ public class VariantType
 	 * It is appropriate to call g_variant_type_free() on the return value.
 	 * Since 2.24
 	 * Params:
-	 * items = an array of GVariantTypes, one for each item
+	 * items = an array of GVariantTypes, one for each item. [array length=length]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (VariantType[] items)
 	{
-		// GVariantType * g_variant_type_new_tuple  (const GVariantType * const *items,  gint length);
+		// GVariantType * g_variant_type_new_tuple (const GVariantType * const *items,  gint length);
 		
 		GVariantType*[] itemsArray = new GVariantType*[items.length];
 		for ( int i = 0; i < items.length ; i++ )
@@ -667,7 +667,7 @@ public class VariantType
 	 */
 	public this (VariantType key, VariantType value)
 	{
-		// GVariantType * g_variant_type_new_dict_entry  (const GVariantType *key,  const GVariantType *value);
+		// GVariantType * g_variant_type_new_dict_entry (const GVariantType *key,  const GVariantType *value);
 		auto p = g_variant_type_new_dict_entry((key is null) ? null : key.getVariantTypeStruct(), (value is null) ? null : value.getVariantTypeStruct());
 		if(p is null)
 		{
@@ -680,7 +680,7 @@ public class VariantType
 	 * Determines the element type of an array or maybe type.
 	 * This function may only be used with array or maybe types.
 	 * Since 2.24
-	 * Returns: the element type of type
+	 * Returns: the element type of type. [transfer none]
 	 */
 	public VariantType element()
 	{
@@ -722,7 +722,7 @@ public class VariantType
 	 * This call, together with g_variant_type_next() provides an iterator
 	 * interface over tuple and dictionary entry types.
 	 * Since 2.24
-	 * Returns: the first item type of type, or NULL
+	 * Returns: the first item type of type, or NULL. [transfer none]
 	 */
 	public VariantType first()
 	{
@@ -745,7 +745,7 @@ public class VariantType
 	 * entry then this call returns NULL.
 	 * For tuples, NULL is returned when type is the last item in a tuple.
 	 * Since 2.24
-	 * Returns: the next GVariantType after type, or NULL
+	 * Returns: the next GVariantType after type, or NULL. [transfer none]
 	 */
 	public VariantType next()
 	{
@@ -764,7 +764,7 @@ public class VariantType
 	 * than the additional restriction, this call is equivalent to
 	 * g_variant_type_first().
 	 * Since 2.24
-	 * Returns: the key type of the dictionary entry
+	 * Returns: the key type of the dictionary entry. [transfer none]
 	 */
 	public VariantType key()
 	{
@@ -781,7 +781,7 @@ public class VariantType
 	 * Determines the value type of a dictionary entry type.
 	 * This function may only be used with a dictionary entry type.
 	 * Since 2.24
-	 * Returns: the value type of the dictionary entry
+	 * Returns: the value type of the dictionary entry. [transfer none]
 	 */
 	public VariantType value()
 	{

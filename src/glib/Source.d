@@ -389,7 +389,7 @@ public class Source
 	/**
 	 * Gets the GMainContext with which the source is associated.
 	 * Calling this function on a destroyed source is an error.
-	 * Returns: the GMainContext with which the source is associated, or NULL if the context has not yet been added to a source.
+	 * Returns: the GMainContext with which the source is associated, or NULL if the context has not yet been added to a source. [transfer none]
 	 */
 	public MainContext getContext()
 	{

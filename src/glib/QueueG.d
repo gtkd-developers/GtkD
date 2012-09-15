@@ -68,12 +68,11 @@ private import glib.ListG;
 /**
  * Description
  * The GQueue structure and its associated functions provide a standard
- * queue data structure. Internally, GQueue uses the same data structure as
- * GList to store elements.
- * The data contained in each element can be either integer values, by using one
- * of the
- * Type Conversion Macros,
- * or simply pointers to any type of data.
+ * queue data structure. Internally, GQueue uses the same data structure
+ * as GList to store elements.
+ * The data contained in each element can be either integer values, by
+ * using one of the Type
+ * Conversion Macros, or simply pointers to any type of data.
  * To create a new GQueue, use g_queue_new().
  * To initialize a statically-allocated GQueue, use G_QUEUE_INIT or
  * g_queue_init().
@@ -409,11 +408,12 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * data = data to remove.
+	 * Returns: TRUE if data was found and removed from queue
 	 */
-	public void remove(void* data)
+	public int remove(void* data)
 	{
-		// void g_queue_remove (GQueue *queue,  gconstpointer data);
-		g_queue_remove(gQueue, data);
+		// gboolean g_queue_remove (GQueue *queue,  gconstpointer data);
+		return g_queue_remove(gQueue, data);
 	}
 	
 	/**
@@ -421,11 +421,12 @@ public class QueueG
 	 * Since 2.4
 	 * Params:
 	 * data = data to remove
+	 * Returns: the number of elements removed from queue
 	 */
-	public void removeAll(void* data)
+	public uint removeAll(void* data)
 	{
-		// void g_queue_remove_all (GQueue *queue,  gconstpointer data);
-		g_queue_remove_all(gQueue, data);
+		// guint g_queue_remove_all (GQueue *queue,  gconstpointer data);
+		return g_queue_remove_all(gQueue, data);
 	}
 	
 	/**

@@ -227,7 +227,7 @@ public class Internationalization
 	 * LC_ALL, LC_MESSAGES and LANG
 	 * to find the list of locales specified by the user.
 	 * Since 2.6
-	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed.
+	 * Returns: a NULL-terminated array of strings owned by GLib that must not be modified or freed. [array zero-terminated=1][transfer none]
 	 */
 	public static string[] getLanguageNames()
 	{
@@ -247,7 +247,7 @@ public class Internationalization
 	 * Since 2.28
 	 * Params:
 	 * locale = a locale identifier
-	 * Returns: a newly allocated array of newly allocated strings with the locale variants. Free with g_strfreev(). [transfer full][array zero-terminated="1"][element-type utf8]
+	 * Returns: a newly allocated array of newly allocated strings with the locale variants. Free with g_strfreev(). [transfer full][array zero-terminated=1][element-type utf8]
 	 */
 	public static string[] getLocaleVariants(string locale)
 	{

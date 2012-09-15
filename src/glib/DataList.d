@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
@@ -57,6 +58,7 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 
 
 
@@ -179,6 +181,20 @@ public class DataList
 	}
 	
 	/**
+	 * Gets a data element, using its string identifer. This is slower than
+	 * g_datalist_id_get_data() because it compares strings.
+	 * Params:
+	 * datalist = a datalist.
+	 * key = the string identifying a data element.
+	 * Returns: the data element, or NULL if it is not found.
+	 */
+	public static void* getData(GData** datalist, string key)
+	{
+		// gpointer g_datalist_get_data (GData **datalist,  const gchar *key);
+		return g_datalist_get_data(datalist, Str.toStringz(key));
+	}
+	
+	/**
 	 * Calls the given function for each data element of the datalist. The
 	 * function is called with each data element's GQuark id and data,
 	 * together with the given user_data parameter. Note that this
@@ -197,8 +213,9 @@ public class DataList
 	}
 	
 	/**
-	 * Frees all the data elements of the datalist. The data elements'
-	 * destroy functions are called if they have been set.
+	 * Frees all the data elements of the datalist.
+	 * The data elements' destroy functions are called
+	 * if they have been set.
 	 * Params:
 	 * datalist = a datalist.
 	 */

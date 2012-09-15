@@ -192,7 +192,7 @@ public struct GThread{}
  * $(DDOC_COMMENT example)
  * GStaticMutex provides a simpler and safer way of doing this.
  * If you want to use a mutex, and your code should also work without
- * calling g_thread_init() first, then you can not use a GMutex, as
+ * calling g_thread_init() first, then you cannot use a GMutex, as
  * g_mutex_new() requires that the thread system be initialized. Use a
  * GStaticMutex instead.
  * A GMutex should only be accessed via the following functions.
@@ -324,6 +324,8 @@ public struct GCond{}
 
 
 /**
+ * Note
+ * GStaticPrivate is a better choice for most uses.
  * The GPrivate struct is an opaque data structure to represent a
  * thread private data key. Threads can thereby obtain and set a
  * pointer which is private to the current thread. Take our

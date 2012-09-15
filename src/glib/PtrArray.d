@@ -173,6 +173,31 @@ public class PtrArray
 	}
 	
 	/**
+	 * Creates a new GPtrArray with reserved_size pointers preallocated
+	 * and a reference count of 1. This avoids frequent reallocation, if
+	 * you are going to add many pointers to the array. Note however that
+	 * the size of the array is still 0. It also set element_free_func
+	 * for freeing each element when the array is destroyed either via
+	 * g_ptr_array_unref(), when g_ptr_array_free() is called with free_segment
+	 * set to TRUE or when removing elements.
+	 * Since 2.30
+	 * Params:
+	 * reservedSize = number of pointers preallocated.
+	 * elementFreeFunc = A function to free elements with destroy array or NULL.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (uint reservedSize, GDestroyNotify elementFreeFunc)
+	{
+		// GPtrArray * g_ptr_array_new_full (guint reserved_size,  GDestroyNotify element_free_func);
+		auto p = g_ptr_array_new_full(reservedSize, elementFreeFunc);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_ptr_array_new_full(reservedSize, elementFreeFunc)");
+		}
+		this(cast(GPtrArray*) p);
+	}
+	
+	/**
 	 * Sets a function for freeing each element when array is destroyed
 	 * either via g_ptr_array_unref(), when g_ptr_array_free() is called
 	 * with free_segment set to TRUE or when removing elements.
@@ -316,7 +341,10 @@ public class PtrArray
 	 * than second arg, zero for equal, greater than zero if irst arg is
 	 * greater than second arg).
 	 * If two array elements compare equal, their order in the sorted array
-	 * is undefined.
+	 * is undefined. If you want equal elements to keep their order 8211; i.e.
+	 * you want a stable sort 8211; you can write a comparison function that,
+	 * if two elements would otherwise compare equal, compares them by
+	 * their addresses.
 	 * Note
 	 * The comparison function for g_ptr_array_sort() doesn't
 	 * take the pointers from the array as arguments, it takes pointers to

@@ -176,9 +176,9 @@ public class CharacterSet
 	 * at the end of the input. If the error
 	 * G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
 	 * stored will the byte offset after the last valid
-	 * input sequence.
+	 * input sequence. [out]
 	 * bytesWritten = the number of bytes stored in the output buffer (not
-	 * including the terminating nul).
+	 * including the terminating nul). [out]
 	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
 	 * Throws: GException on failure.
 	 */
@@ -282,6 +282,80 @@ public class CharacterSet
 	}
 	
 	/**
+	 * Converts a string which is in the encoding used by GLib for
+	 * filenames into a UTF-8 string. Note that on Windows GLib uses UTF-8
+	 * for filenames; on other platforms, this function indirectly depends on
+	 * the current locale.
+	 * Params:
+	 * opsysstring = a string in the encoding for filenames
+	 * len = the length of the string, or -1 if the string is
+	 * nul-terminated[1].
+	 * bytesRead = location to store the number of bytes in the
+	 * input string that were successfully converted, or NULL.
+	 * Even if the conversion was successful, this may be
+	 * less than len if there were partial characters
+	 * at the end of the input. If the error
+	 * G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 * stored will the byte offset after the last valid
+	 * input sequence.
+	 * bytesWritten = the number of bytes stored in the output buffer (not
+	 * including the terminating nul).
+	 * Returns: The converted string, or NULL on an error.
+	 * Throws: GException on failure.
+	 */
+	public static string filenameToUtf8(string opsysstring, out gsize bytesRead, out gsize bytesWritten)
+	{
+		// gchar * g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		GError* err = null;
+		
+		auto p = g_filename_to_utf8(Str.toStringz(opsysstring), cast(int) opsysstring.length, &bytesRead, &bytesWritten, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return Str.toString(p);
+	}
+	
+	/**
+	 * Converts a string from UTF-8 to the encoding GLib uses for
+	 * filenames. Note that on Windows GLib uses UTF-8 for filenames;
+	 * on other platforms, this function indirectly depends on the
+	 * current locale.
+	 * Params:
+	 * utf8string = a UTF-8 encoded string.
+	 * len = the length of the string, or -1 if the string is
+	 * nul-terminated.
+	 * bytesRead = location to store the number of bytes in the
+	 * input string that were successfully converted, or NULL.
+	 * Even if the conversion was successful, this may be
+	 * less than len if there were partial characters
+	 * at the end of the input. If the error
+	 * G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 * stored will the byte offset after the last valid
+	 * input sequence.
+	 * bytesWritten = the number of bytes stored in the output buffer (not
+	 * including the terminating nul).
+	 * Returns: The converted string, or NULL on an error.
+	 * Throws: GException on failure.
+	 */
+	public static string filenameFromUtf8(string utf8string, out gsize bytesRead, out gsize bytesWritten)
+	{
+		// gchar * g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		GError* err = null;
+		
+		auto p = g_filename_from_utf8(Str.toStringz(utf8string), cast(int) utf8string.length, &bytesRead, &bytesWritten, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return Str.toString(p);
+	}
+	
+	/**
 	 * Determines the preferred character sets used for filenames.
 	 * The first character set from the charsets is the filename encoding, the
 	 * subsequent character sets are used when trying to generate a displayable
@@ -310,7 +384,7 @@ public class CharacterSet
 	 */
 	public static int getFilenameCharsets(out string[] charsets)
 	{
-		// gboolean g_get_filename_charsets (G_CONST_RETURN gchar ***charsets);
+		// gboolean g_get_filename_charsets (const gchar ***charsets);
 		char** outcharsets = null;
 		
 		auto p = g_get_filename_charsets(&outcharsets);
@@ -325,7 +399,7 @@ public class CharacterSet
 	 * and use the return value of this function only for display purposes.
 	 * Unlike g_filename_to_utf8(), the result is guaranteed to be non-NULL
 	 * even if the filename actually isn't in the GLib file name encoding.
-	 * If GLib can not make sense of the encoding of filename, as a last resort it
+	 * If GLib cannot make sense of the encoding of filename, as a last resort it
 	 * replaces unknown characters with U+FFFD, the Unicode replacement character.
 	 * You can search the result for the UTF-8 encoding of this character (which is
 	 * "\357\277\275" in octal notation) to find out if filename was in an invalid
@@ -349,7 +423,7 @@ public class CharacterSet
 	 * to be valid UTF-8. The display name might not be identical to the filename,
 	 * for instance there might be problems converting it to UTF-8, and some files
 	 * can be translated in the display.
-	 * If GLib can not make sense of the encoding of filename, as a last resort it
+	 * If GLib cannot make sense of the encoding of filename, as a last resort it
 	 * replaces unknown characters with U+FFFD, the Unicode replacement character.
 	 * You can search the result for the UTF-8 encoding of this character (which is
 	 * "\357\277\275" in octal notation) to find out if filename was in an invalid
@@ -427,7 +501,7 @@ public class CharacterSet
 	 */
 	public static int getCharset(out string charset)
 	{
-		// gboolean g_get_charset (G_CONST_RETURN char **charset);
+		// gboolean g_get_charset (const char **charset);
 		char* outcharset = null;
 		
 		auto p = g_get_charset(&outcharset);

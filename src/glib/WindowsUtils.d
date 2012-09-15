@@ -104,8 +104,56 @@ public class WindowsUtils
 	 */
 	public static string getlocale()
 	{
-		// gchar * 		 g_win32_getlocale (void);
+		// gchar * g_win32_getlocale (void);
 		return Str.toString(g_win32_getlocale());
+	}
+	
+	/**
+	 * Warning
+	 * g_win32_get_package_installation_directory has been deprecated since version 2.18 and should not be used in newly-written code. Pass the HMODULE of a DLL or EXE to
+	 * g_win32_get_package_installation_directory_of_module() instead.
+	 * Try to determine the installation directory for a software package.
+	 * This function is deprecated. Use
+	 * g_win32_get_package_installation_directory_of_module() instead.
+	 * The use of package is deprecated. You should always pass NULL. A
+	 * warning is printed if non-NULL is passed as package.
+	 * The original intended use of package was for a short identifier of
+	 * the package, typically the same identifier as used for
+	 * GETTEXT_PACKAGE in software configured using GNU
+	 * autotools. The function first looks in the Windows Registry for the
+	 * value #InstallationDirectory in the key
+	 * #HKLM\Software@package, and if that value
+	 * exists and is a string, returns that.
+	 * It is strongly recommended that packagers of GLib-using libraries
+	 * for Windows do not store installation paths in the Registry to be
+	 * used by this function as that interfers with having several
+	 * parallel installations of the library. Enabling multiple
+	 * installations of different versions of some GLib-using library, or
+	 * GLib itself, is desirable for various reasons.
+	 * For this reason it is recommeded to always pass NULL as
+	 * package to this function, to avoid the temptation to use the
+	 * Registry. In version 2.20 of GLib the package parameter
+	 * will be ignored and this function won't look in the Registry at all.
+	 * If package is NULL, or the above value isn't found in the
+	 * Registry, but dll_name is non-NULL, it should name a DLL loaded
+	 * into the current process. Typically that would be the name of the
+	 * DLL calling this function, looking for its installation
+	 * directory. The function then asks Windows what directory that DLL
+	 * was loaded from. If that directory's last component is "bin" or
+	 * "lib", the parent directory is returned, otherwise the directory
+	 * itself. If that DLL isn't loaded, the function proceeds as if
+	 * dll_name was NULL.
+	 * If both package and dll_name are NULL, the directory from where
+	 * the main executable of the process was loaded is used instead in
+	 * the same way as above.
+	 * Params:
+	 * dllName = The name of a DLL that a package provides in UTF-8, or NULL.
+	 * Returns: a string containing the installation directory for package. The string is in the GLib file name encoding, i.e. UTF-8. The return value should be freed with g_free() when not needed any longer. If the function fails NULL is returned.
+	 */
+	public static string getPackageInstallationDirectory(string p, string dllName)
+	{
+		// gchar * g_win32_get_package_installation_directory  (const gchar *package,  const gchar *dll_name);
+		return Str.toString(g_win32_get_package_installation_directory(Str.toStringz(p), Str.toStringz(dllName)));
 	}
 	
 	/**
@@ -141,6 +189,32 @@ public class WindowsUtils
 	}
 	
 	/**
+	 * Warning
+	 * g_win32_get_package_installation_subdirectory has been deprecated since version 2.18 and should not be used in newly-written code. Pass the HMODULE of a DLL or EXE to
+	 * g_win32_get_package_installation_directory_of_module() instead, and
+	 * then construct a subdirectory pathname with g_build_filename().
+	 * This function is deprecated. Use
+	 * g_win32_get_package_installation_directory_of_module() and
+	 * g_build_filename() instead.
+	 * Returns a newly-allocated string containing the path of the
+	 * subdirectory subdir in the return value from calling
+	 * g_win32_get_package_installation_directory() with the package and
+	 * dll_name parameters. See the documentation for
+	 * g_win32_get_package_installation_directory() for more details. In
+	 * particular, note that it is deprecated to pass anything except NULL
+	 * as package.
+	 * Params:
+	 * dllName = The name of a DLL that a package provides, in UTF-8, or NULL.
+	 * subdir = A subdirectory of the package installation directory, also in UTF-8
+	 * Returns: a string containing the complete path to subdir inside the installation directory of package. The returned string is in the GLib file name encoding, i.e. UTF-8. The return value should be freed with g_free() when no longer needed. If something goes wrong, NULL is returned.
+	 */
+	public static string getPackageInstallationSubdirectory(string p, string dllName, string subdir)
+	{
+		// gchar * g_win32_get_package_installation_subdirectory  (const gchar *package,  const gchar *dll_name,  const gchar *subdir);
+		return Str.toString(g_win32_get_package_installation_subdirectory(Str.toStringz(p), Str.toStringz(dllName), Str.toStringz(subdir)));
+	}
+	
+	/**
 	 * Returns version information for the Windows operating system the
 	 * code is running on. See MSDN documentation for the GetVersion()
 	 * function. To summarize, the most significant bit is one on Win9x,
@@ -148,7 +222,7 @@ public class WindowsUtils
 	 * on NT-based systems, so checking whether your are running on Win9x
 	 * in your own software is moot. The least significant byte is 4 on
 	 * Windows NT 4, and 5 on Windows XP. Software that needs really
-	 * detailled version and feature information should use Win32 API like
+	 * detailed version and feature information should use Win32 API like
 	 * GetVersionEx() and VerifyVersionInfo().
 	 * Since 2.6
 	 * Returns: The version information.
