@@ -1420,7 +1420,7 @@ public class Window : ObjectG
 	 * and the user data for the window is non-NULL, GTK+ will assume the
 	 * user data is a GtkWidget, and forward the event to that widget.
 	 * Params:
-	 * userData = user data. [allow-none]
+	 * userData = user data. [allow-none][type GObject.Object]
 	 */
 	public void setUserData(void* userData)
 	{
@@ -1508,8 +1508,9 @@ public class Window : ObjectG
 	 * easy to break GDK and/or GTK+, so you have to know what you're
 	 * doing. Pass NULL for window to get all events for all windows,
 	 * instead of events for a specific window.
-	 * See gdk_display_add_client_message_filter() if you are interested
-	 * in X ClientMessage events.
+	 * If you are interested in X GenericEvents, bear in mind that
+	 * XGetEventData() has been already called on the event, and
+	 * XFreeEventData() must not be called within function.
 	 * Params:
 	 * data = data to pass to filter callback
 	 */

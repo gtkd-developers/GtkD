@@ -542,7 +542,7 @@ public class Display : ObjectG
 	 * Since 2.2
 	 * Params:
 	 * screen = location to store the screen that the
-	 * cursor is on, or NULL. [out][allow-none]
+	 * cursor is on, or NULL. [out][allow-none][transfer none]
 	 * x = location to store root window X coordinate of pointer, or NULL. [out][allow-none]
 	 * y = location to store root window Y coordinate of pointer, or NULL. [out][allow-none]
 	 * mask = location to store current modifier mask, or NULL. [out][allow-none]

@@ -31,8 +31,8 @@ rm gdk-pixbuf-Animations.html
 wget http://developer.gnome.org/gdk-pixbuf/2.24/gdk-pixbuf-Animations.html
 cd ..
 #GDK
-curl http://developer.gnome.org/gdk3/gdk3-html-3.0.12.tar.gz | tar xvfz -
-ln -s gdk3-html-3.0.12 gdk
+curl http://developer.gnome.org/gdk3/gdk3-html-3.2.4.tar.gz | tar xvfz -
+ln -s gdk3-html-3.2.4 gdk
 #GTK
 curl http://developer.gnome.org/gtk3/gtk3-html-3.0.12.tar.gz | tar xvfz -
 ln -s gtk3-html-3.0.12 gtk

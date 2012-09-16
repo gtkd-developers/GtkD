@@ -713,6 +713,11 @@ out: gdk_events_get_angle angle
 out: gdk_events_get_center x
 out: gdk_events_get_center y
 out: gdk_events_get_distance distance
+out: gdk_event_get_button button
+out: gdk_event_get_click_count click_count
+out: gdk_event_get_keycode keycode
+out: gdk_event_get_keyval keyval
+out: gdk_event_get_scroll_direction direction
 
 code: start
 	/**
@@ -943,9 +948,13 @@ file: gdk3-X-Window-System-Interaction.html
 class: X11
 prefix: gdk_x11_
 import: glib.Str
+import: gdk.Device
+import: gdk.DeviceManager
 import: gdk.Display
 import: gdk.Screen
 import: gdk.Window
+structWrap: GdkDevice* Device
+structWrap: GdkDeviceManager* DeviceManager
 structWrap: GdkDisplay* Display
 structWrap: GdkScreen* Screen
 structWrap: GdkWindow* Window

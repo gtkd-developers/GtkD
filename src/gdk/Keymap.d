@@ -414,8 +414,8 @@ public class Keymap : ObjectG
 	}
 	
 	/**
-	 * Returns the direction of the keymap.
-	 * Returns: the direction of the keymap, PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL.
+	 * Returns the direction of effective layout of the keymap.
+	 * Returns: PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL if it can determine the direction. PANGO_DIRECTION_NEUTRAL otherwise.
 	 */
 	public PangoDirection getDirection()
 	{
@@ -510,9 +510,12 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Converts a key name to a key value.
+	 * The names are the same as those in the
+	 * <gdk/gdkkeysyms.h> header file
+	 * but without the leading "GDK_KEY_".
 	 * Params:
-	 * keyvalName = a key name.
-	 * Returns: the corresponding key value, or GDK_VoidSymbol if the key name is not a valid key.
+	 * keyvalName = a key name
+	 * Returns: the corresponding key value, or GDK_KEY_VoidSymbol if the key name is not a valid key
 	 */
 	public static uint gdkKeyvalFromName(string keyvalName)
 	{

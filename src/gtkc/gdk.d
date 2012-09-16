@@ -436,11 +436,16 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_event_new, \"gdk_event_new\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_copy, \"gdk_event_copy\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_free, \"gdk_event_free\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_event_get_time, \"gdk_event_get_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_event_get_state, \"gdk_event_get_state\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_get_axis, \"gdk_event_get_axis\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_button, \"gdk_event_get_button\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_click_count, \"gdk_event_get_click_count\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_get_coords, \"gdk_event_get_coords\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_keycode, \"gdk_event_get_keycode\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_keyval, \"gdk_event_get_keyval\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_get_root_coords, \"gdk_event_get_root_coords\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_scroll_direction, \"gdk_event_get_scroll_direction\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_state, \"gdk_event_get_state\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_time, \"gdk_event_get_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_request_motions, \"gdk_event_request_motions\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_events_get_angle, \"gdk_events_get_angle\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_events_get_center, \"gdk_events_get_center\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -542,6 +547,8 @@ mixin( _shared ~ "static this()
 	// gdk.X11
 
 	Linker.link(gdk_x11_get_server_time, \"gdk_x11_get_server_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_device_get_id, \"gdk_x11_device_get_id\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_device_manager_lookup, \"gdk_x11_device_manager_lookup\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_display_broadcast_startup_message, \"gdk_x11_display_broadcast_startup_message\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_display_get_startup_notification_id, \"gdk_x11_display_get_startup_notification_id\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_display_set_startup_notification_id, \"gdk_x11_display_set_startup_notification_id\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -549,7 +556,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_x11_display_error_trap_pop_ignored, \"gdk_x11_display_error_trap_pop_ignored\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_screen_get_monitor_output, \"gdk_x11_screen_get_monitor_output\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_get_xid, \"gdk_x11_window_get_xid\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_x11_window_set_theme_variant_gtk_only, \"gdk_x11_window_set_theme_variant_gtk_only\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_window_set_theme_variant, \"gdk_x11_window_set_theme_variant\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_set_user_time, \"gdk_x11_window_set_user_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_move_to_current_desktop, \"gdk_x11_window_move_to_current_desktop\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_get_default_screen, \"gdk_x11_get_default_screen\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -994,11 +1001,16 @@ mixin( gshared ~"extern(C)
 	GdkEvent* function(GdkEventType type) c_gdk_event_new;
 	GdkEvent* function(GdkEvent* event) c_gdk_event_copy;
 	void function(GdkEvent* event) c_gdk_event_free;
-	guint32 function(GdkEvent* event) c_gdk_event_get_time;
-	gboolean function(GdkEvent* event, GdkModifierType* state) c_gdk_event_get_state;
 	gboolean function(GdkEvent* event, GdkAxisUse axisUse, gdouble* value) c_gdk_event_get_axis;
+	gboolean function(GdkEvent* event, guint* button) c_gdk_event_get_button;
+	gboolean function(GdkEvent* event, guint* clickCount) c_gdk_event_get_click_count;
 	gboolean function(GdkEvent* event, gdouble* xWin, gdouble* yWin) c_gdk_event_get_coords;
+	gboolean function(GdkEvent* event, guint16* keycode) c_gdk_event_get_keycode;
+	gboolean function(GdkEvent* event, guint* keyval) c_gdk_event_get_keyval;
 	gboolean function(GdkEvent* event, gdouble* xRoot, gdouble* yRoot) c_gdk_event_get_root_coords;
+	gboolean function(GdkEvent* event, GdkScrollDirection* direction) c_gdk_event_get_scroll_direction;
+	gboolean function(GdkEvent* event, GdkModifierType* state) c_gdk_event_get_state;
+	guint32 function(GdkEvent* event) c_gdk_event_get_time;
 	void function(GdkEventMotion* event) c_gdk_event_request_motions;
 	gboolean function(GdkEvent* event1, GdkEvent* event2, gdouble* angle) c_gdk_events_get_angle;
 	gboolean function(GdkEvent* event1, GdkEvent* event2, gdouble* x, gdouble* y) c_gdk_events_get_center;
@@ -1100,6 +1112,8 @@ mixin( gshared ~"extern(C)
 	// gdk.X11
 
 	guint32 function(GdkWindow* window) c_gdk_x11_get_server_time;
+	gint function(GdkDevice* device) c_gdk_x11_device_get_id;
+	GdkDevice* function(GdkDeviceManager* deviceManager, gint deviceId) c_gdk_x11_device_manager_lookup;
 	void function(GdkDisplay* display, char* messageType, ... ) c_gdk_x11_display_broadcast_startup_message;
 	gchar* function(GdkDisplay* display) c_gdk_x11_display_get_startup_notification_id;
 	void function(GdkDisplay* display, gchar* startupId) c_gdk_x11_display_set_startup_notification_id;
@@ -1107,7 +1121,7 @@ mixin( gshared ~"extern(C)
 	void function(GdkDisplay* display) c_gdk_x11_display_error_trap_pop_ignored;
 	XID function(GdkScreen* screen, gint monitorNum) c_gdk_x11_screen_get_monitor_output;
 	gulong function(GdkWindow* window) c_gdk_x11_window_get_xid;
-	void function(GdkWindow* window, char* variant) c_gdk_x11_window_set_theme_variant_gtk_only;
+	void function(GdkWindow* window, char* variant) c_gdk_x11_window_set_theme_variant;
 	void function(GdkWindow* window, guint32 timestamp) c_gdk_x11_window_set_user_time;
 	void function(GdkWindow* window) c_gdk_x11_window_move_to_current_desktop;
 	gint function() c_gdk_x11_get_default_screen;
@@ -1550,11 +1564,16 @@ alias c_gdk_event_put  gdk_event_put;
 alias c_gdk_event_new  gdk_event_new;
 alias c_gdk_event_copy  gdk_event_copy;
 alias c_gdk_event_free  gdk_event_free;
-alias c_gdk_event_get_time  gdk_event_get_time;
-alias c_gdk_event_get_state  gdk_event_get_state;
 alias c_gdk_event_get_axis  gdk_event_get_axis;
+alias c_gdk_event_get_button  gdk_event_get_button;
+alias c_gdk_event_get_click_count  gdk_event_get_click_count;
 alias c_gdk_event_get_coords  gdk_event_get_coords;
+alias c_gdk_event_get_keycode  gdk_event_get_keycode;
+alias c_gdk_event_get_keyval  gdk_event_get_keyval;
 alias c_gdk_event_get_root_coords  gdk_event_get_root_coords;
+alias c_gdk_event_get_scroll_direction  gdk_event_get_scroll_direction;
+alias c_gdk_event_get_state  gdk_event_get_state;
+alias c_gdk_event_get_time  gdk_event_get_time;
 alias c_gdk_event_request_motions  gdk_event_request_motions;
 alias c_gdk_events_get_angle  gdk_events_get_angle;
 alias c_gdk_events_get_center  gdk_events_get_center;
@@ -1656,6 +1675,8 @@ alias c_gdk_threads_add_timeout_seconds_full  gdk_threads_add_timeout_seconds_fu
 // gdk.X11
 
 alias c_gdk_x11_get_server_time  gdk_x11_get_server_time;
+alias c_gdk_x11_device_get_id  gdk_x11_device_get_id;
+alias c_gdk_x11_device_manager_lookup  gdk_x11_device_manager_lookup;
 alias c_gdk_x11_display_broadcast_startup_message  gdk_x11_display_broadcast_startup_message;
 alias c_gdk_x11_display_get_startup_notification_id  gdk_x11_display_get_startup_notification_id;
 alias c_gdk_x11_display_set_startup_notification_id  gdk_x11_display_set_startup_notification_id;
@@ -1663,7 +1684,7 @@ alias c_gdk_x11_display_error_trap_push  gdk_x11_display_error_trap_push;
 alias c_gdk_x11_display_error_trap_pop_ignored  gdk_x11_display_error_trap_pop_ignored;
 alias c_gdk_x11_screen_get_monitor_output  gdk_x11_screen_get_monitor_output;
 alias c_gdk_x11_window_get_xid  gdk_x11_window_get_xid;
-alias c_gdk_x11_window_set_theme_variant_gtk_only  gdk_x11_window_set_theme_variant_gtk_only;
+alias c_gdk_x11_window_set_theme_variant  gdk_x11_window_set_theme_variant;
 alias c_gdk_x11_window_set_user_time  gdk_x11_window_set_user_time;
 alias c_gdk_x11_window_move_to_current_desktop  gdk_x11_window_move_to_current_desktop;
 alias c_gdk_x11_get_default_screen  gdk_x11_get_default_screen;

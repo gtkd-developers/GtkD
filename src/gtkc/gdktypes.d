@@ -846,6 +846,10 @@ alias GdkFilterReturn FilterReturn;
  * Since 2.10, GDK recognizes which of the Meta, Super or Hyper keys are mapped
  * to Mod2 - Mod5, and indicates this by setting GDK_SUPER_MASK,
  * GDK_HYPER_MASK or GDK_META_MASK in the state field of key events.
+ * Note that GDK may add internal values to events which include
+ * reserved values such as GDK_MODIFIER_RESERVED_13_MASK. Your code
+ * should preserve and ignore them. You can use GDK_MODIFIER_MASK to
+ * remove all reserved values.
  * GDK_SHIFT_MASK
  * the Shift key.
  * GDK_LOCK_MASK
@@ -879,12 +883,27 @@ alias GdkFilterReturn FilterReturn;
  * the fourth mouse button.
  * GDK_BUTTON5_MASK
  * the fifth mouse button.
+ * GDK_MODIFIER_RESERVED_13_MASK
+ * A reserved bit flag; do not use in your own code
+ * GDK_MODIFIER_RESERVED_14_MASK
+ * GDK_MODIFIER_RESERVED_15_MASK
+ * GDK_MODIFIER_RESERVED_16_MASK
+ * GDK_MODIFIER_RESERVED_17_MASK
+ * GDK_MODIFIER_RESERVED_18_MASK
+ * GDK_MODIFIER_RESERVED_19_MASK
+ * GDK_MODIFIER_RESERVED_20_MASK
+ * GDK_MODIFIER_RESERVED_21_MASK
+ * GDK_MODIFIER_RESERVED_22_MASK
+ * GDK_MODIFIER_RESERVED_23_MASK
+ * GDK_MODIFIER_RESERVED_24_MASK
+ * GDK_MODIFIER_RESERVED_25_MASK
  * GDK_SUPER_MASK
  * the Super modifier. Since 2.10
  * GDK_HYPER_MASK
  * the Hyper modifier. Since 2.10
  * GDK_META_MASK
  * the Meta modifier. Since 2.10
+ * GDK_MODIFIER_RESERVED_29_MASK
  * GDK_RELEASE_MASK
  * not used in GDK itself. GTK+ uses it to differentiate
  *  between (keyval, modifiers) pairs from key press and release events.
@@ -906,13 +925,29 @@ public enum GdkModifierType
 	BUTTON3_MASK = 1 << 10,
 	BUTTON4_MASK = 1 << 11,
 	BUTTON5_MASK = 1 << 12,
+	MODIFIER_RESERVED_13_MASK = 1 << 13,
+	MODIFIER_RESERVED_14_MASK = 1 << 14,
+	MODIFIER_RESERVED_15_MASK = 1 << 15,
+	MODIFIER_RESERVED_16_MASK = 1 << 16,
+	MODIFIER_RESERVED_17_MASK = 1 << 17,
+	MODIFIER_RESERVED_18_MASK = 1 << 18,
+	MODIFIER_RESERVED_19_MASK = 1 << 19,
+	MODIFIER_RESERVED_20_MASK = 1 << 20,
+	MODIFIER_RESERVED_21_MASK = 1 << 21,
+	MODIFIER_RESERVED_22_MASK = 1 << 22,
+	MODIFIER_RESERVED_23_MASK = 1 << 23,
+	MODIFIER_RESERVED_24_MASK = 1 << 24,
+	MODIFIER_RESERVED_25_MASK = 1 << 25,
 	/+* The next few modifiers are used by XKB, so we skip to the end.
 	 * Bits 15 - 25 are currently unused. Bit 29 is used internally.
 	+/
 	SUPER_MASK = 1 << 26,
 	HYPER_MASK = 1 << 27,
 	META_MASK = 1 << 28,
+	MODIFIER_RESERVED_29_MASK = 1 << 29,
 	RELEASE_MASK = 1 << 30,
+	/+* Combination of SHIFT_MASK..BUTTON5_MASK + SUPER_MASK
+	+ HYPER_MASK + META_MASK + RELEASE_MASK +/
 	MODIFIER_MASK = 0x5c001fff
 }
 alias GdkModifierType ModifierType;

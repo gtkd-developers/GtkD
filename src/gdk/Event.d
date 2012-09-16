@@ -354,14 +354,103 @@ public class Event
 	}
 	
 	/**
-	 * Returns the time stamp from event, if there is one; otherwise
-	 * returns GDK_CURRENT_TIME. If event is NULL, returns GDK_CURRENT_TIME.
-	 * Returns: time stamp field from event
+	 * Extract the axis value for a particular axis use from
+	 * an event structure.
+	 * Params:
+	 * axisUse = the axis use to look for
+	 * value = location to store the value found. [out]
+	 * Returns: TRUE if the specified axis was found, otherwise FALSE
 	 */
-	public uint getTime()
+	public int getAxis(GdkAxisUse axisUse, out double value)
 	{
-		// guint32 gdk_event_get_time (const GdkEvent *event);
-		return gdk_event_get_time(gdkEvent);
+		// gboolean gdk_event_get_axis (const GdkEvent *event,  GdkAxisUse axis_use,  gdouble *value);
+		return gdk_event_get_axis(gdkEvent, axisUse, &value);
+	}
+	
+	/**
+	 * Extract the button number from an event.
+	 * Params:
+	 * button = location to store mouse button number. [out]
+	 * Returns: TRUE if the event delivered a button number Since 3.2
+	 */
+	public int getButton(out uint button)
+	{
+		// gboolean gdk_event_get_button (const GdkEvent *event,  guint *button);
+		return gdk_event_get_button(gdkEvent, &button);
+	}
+	
+	/**
+	 * Extracts the click count from an event.
+	 * Params:
+	 * clickCount = location to store click count. [out]
+	 * Returns: TRUE if the event delivered a click count Since 3.2
+	 */
+	public int getClickCount(out uint clickCount)
+	{
+		// gboolean gdk_event_get_click_count (const GdkEvent *event,  guint *click_count);
+		return gdk_event_get_click_count(gdkEvent, &clickCount);
+	}
+	
+	/**
+	 * Extract the event window relative x/y coordinates from an event.
+	 * Params:
+	 * xWin = location to put event window x coordinate. [out]
+	 * yWin = location to put event window y coordinate. [out]
+	 * Returns: TRUE if the event delivered event window coordinates
+	 */
+	public int getCoords(out double xWin, out double yWin)
+	{
+		// gboolean gdk_event_get_coords (const GdkEvent *event,  gdouble *x_win,  gdouble *y_win);
+		return gdk_event_get_coords(gdkEvent, &xWin, &yWin);
+	}
+	
+	/**
+	 * Extracts the hardware keycode from an event.
+	 * Params:
+	 * keycode = location to store the keycode. [out]
+	 * Returns: TRUE if the event delivered a hardware keycode Since 3.2
+	 */
+	public int getKeycode(out ushort keycode)
+	{
+		// gboolean gdk_event_get_keycode (const GdkEvent *event,  guint16 *keycode);
+		return gdk_event_get_keycode(gdkEvent, &keycode);
+	}
+	
+	/**
+	 * Extracts the keyval from an event.
+	 * Params:
+	 * keyval = location to store the keyval. [out]
+	 * Returns: TRUE if the event delivered a key symbol Since 3.2
+	 */
+	public int getKeyval(out uint keyval)
+	{
+		// gboolean gdk_event_get_keyval (const GdkEvent *event,  guint *keyval);
+		return gdk_event_get_keyval(gdkEvent, &keyval);
+	}
+	
+	/**
+	 * Extract the root window relative x/y coordinates from an event.
+	 * Params:
+	 * xRoot = location to put root window x coordinate. [out]
+	 * yRoot = location to put root window y coordinate. [out]
+	 * Returns: TRUE if the event delivered root window coordinates
+	 */
+	public int getRootCoords(out double xRoot, out double yRoot)
+	{
+		// gboolean gdk_event_get_root_coords (const GdkEvent *event,  gdouble *x_root,  gdouble *y_root);
+		return gdk_event_get_root_coords(gdkEvent, &xRoot, &yRoot);
+	}
+	
+	/**
+	 * Extracts the scroll direction from an event.
+	 * Params:
+	 * direction = location to store the scroll direction. [out]
+	 * Returns: TRUE if the event delivered a scroll direction Since 3.2
+	 */
+	public int getScrollDirection(out GdkScrollDirection direction)
+	{
+		// gboolean gdk_event_get_scroll_direction (const GdkEvent *event,  GdkScrollDirection *direction);
+		return gdk_event_get_scroll_direction(gdkEvent, &direction);
 	}
 	
 	/**
@@ -380,43 +469,13 @@ public class Event
 	}
 	
 	/**
-	 * Extract the axis value for a particular axis use from
-	 * an event structure.
-	 * Params:
-	 * axisUse = the axis use to look for
-	 * value = location to store the value found. [out]
-	 * Returns: TRUE if the specified axis was found, otherwise FALSE
+	 * returns GDK_CURRENT_TIME. If event is NULL, returns GDK_CURRENT_TIME.
+	 * Returns: time stamp field from event
 	 */
-	public int getAxis(GdkAxisUse axisUse, out double value)
+	public uint getTime()
 	{
-		// gboolean gdk_event_get_axis (const GdkEvent *event,  GdkAxisUse axis_use,  gdouble *value);
-		return gdk_event_get_axis(gdkEvent, axisUse, &value);
-	}
-	
-	/**
-	 * Extract the event window relative x/y coordinates from an event.
-	 * Params:
-	 * xWin = location to put event window x coordinate. [out]
-	 * yWin = location to put event window y coordinate. [out]
-	 * Returns: TRUE if the event delivered event window coordinates
-	 */
-	public int getCoords(out double xWin, out double yWin)
-	{
-		// gboolean gdk_event_get_coords (const GdkEvent *event,  gdouble *x_win,  gdouble *y_win);
-		return gdk_event_get_coords(gdkEvent, &xWin, &yWin);
-	}
-	
-	/**
-	 * Extract the root window relative x/y coordinates from an event.
-	 * Params:
-	 * xRoot = location to put root window x coordinate. [out]
-	 * yRoot = location to put root window y coordinate. [out]
-	 * Returns: TRUE if the event delivered root window coordinates
-	 */
-	public int getRootCoords(out double xRoot, out double yRoot)
-	{
-		// gboolean gdk_event_get_root_coords (const GdkEvent *event,  gdouble *x_root,  gdouble *y_root);
-		return gdk_event_get_root_coords(gdkEvent, &xRoot, &yRoot);
+		// guint32 gdk_event_get_time (const GdkEvent *event);
+		return gdk_event_get_time(gdkEvent);
 	}
 	
 	/**

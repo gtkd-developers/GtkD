@@ -90,10 +90,14 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gdk.Device
+ * 	- gdk.DeviceManager
  * 	- gdk.Display
  * 	- gdk.Screen
  * 	- gdk.Window
  * structWrap:
+ * 	- GdkDevice* -> Device
+ * 	- GdkDeviceManager* -> DeviceManager
  * 	- GdkDisplay* -> Display
  * 	- GdkScreen* -> Screen
  * 	- GdkWindow* -> Window
@@ -111,6 +115,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gdk.Device;
+private import gdk.DeviceManager;
 private import gdk.Display;
 private import gdk.Screen;
 private import gdk.Window;
@@ -152,9 +158,10 @@ public class X11
 	/**
 	 * Routine to get the current X server time stamp.
 	 * Params:
-	 * window = a GdkWindow, used for communication with the server.
-	 * The window must have GDK_PROPERTY_CHANGE_MASK in its
-	 * events mask or a hang will result.
+	 * window = a GdkWindow, used for communication
+	 * with the server. The window must have
+	 * GDK_PROPERTY_CHANGE_MASK in its events mask or a hang will
+	 * result. [type GdkX11Window]
 	 * Returns: the time stamp.
 	 */
 	public static uint getServerTime(Window window)
@@ -164,10 +171,46 @@ public class X11
 	}
 	
 	/**
+	 * Returns the device ID as seen by XInput2.
+	 * Note
+	 *  If gdk_disable_multidevice() has been called, this function
+	 *  will respectively return 2/3 for the core pointer and keyboard,
+	 *  (matching the IDs for the Virtual Core Pointer and Keyboard in
+	 *  XInput 2), but calling this function on any slave devices (i.e.
+	 *  those managed via XInput 1.x), will return 0.
+	 * Params:
+	 * device = a GdkDevice
+	 * Returns: the XInput2 device ID. Since 3.2
+	 */
+	public static int deviceGetId(Device device)
+	{
+		// gint gdk_x11_device_get_id (GdkDevice *device);
+		return gdk_x11_device_get_id((device is null) ? null : device.getDeviceStruct());
+	}
+	
+	/**
+	 * Returns the GdkDevice that wraps the given device ID.
+	 * Params:
+	 * deviceManager = a GdkDeviceManager
+	 * deviceId = a device ID, as understood by the XInput2 protocol
+	 * Returns: (allow-none): The GdkDevice wrapping the device ID, or NULL if the given ID doesn't currently represent a device. [transfer none] Since 3.2
+	 */
+	public static Device deviceManagerLookup(DeviceManager deviceManager, int deviceId)
+	{
+		// GdkDevice * gdk_x11_device_manager_lookup (GdkDeviceManager *device_manager,  gint device_id);
+		auto p = gdk_x11_device_manager_lookup((deviceManager is null) ? null : deviceManager.getDeviceManagerStruct(), deviceId);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Device(cast(GdkDevice*) p);
+	}
+	
+	/**
 	 * Gets the startup notification ID for a display.
 	 * Since 2.12
 	 * Params:
-	 * display = a GdkDisplay
+	 * display = a GdkDisplay. [type GdkX11Display]
 	 * Returns: the startup notification ID for display
 	 */
 	public static string displayGetStartupNotificationId(Display display)
@@ -189,7 +232,7 @@ public class X11
 	 * complete (for example, when opening a window or when calling
 	 * gdk_notify_startup_complete()).
 	 * Params:
-	 * display = a GdkDisplay
+	 * display = a GdkDisplay. [type GdkX11Display]
 	 * startupId = the startup notification ID (must be valid utf8)
 	 * Since 3.0
 	 */
@@ -207,7 +250,7 @@ public class X11
 	 * with this function.
 	 * See also gdk_error_trap_push() to push a trap on all displays.
 	 * Params:
-	 * display = a GdkDisplay
+	 * display = a GdkDisplay. [type GdkX11Display]
 	 * Since 3.0
 	 */
 	public static void displayErrorTrapPush(Display display)
@@ -224,7 +267,7 @@ public class X11
 	 * See gdk_error_trap_pop_ignored() for the all-displays-at-once
 	 * equivalent.
 	 * Params:
-	 * display = the display
+	 * display = the display. [type GdkX11Display]
 	 * Since 3.0
 	 */
 	public static void displayErrorTrapPopIgnored(Display display)
@@ -239,7 +282,7 @@ public class X11
 	 * extension, 0 is returned.
 	 * Since 2.14
 	 * Params:
-	 * screen = a GdkScreen
+	 * screen = a GdkScreen. [type GdkX11Screen]
 	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 * Returns: the XID of the monitor
 	 */
@@ -250,11 +293,23 @@ public class X11
 	}
 	
 	/**
+	 * GTK+ applications can request a dark theme variant. In order to
+	 * make other applications - namely window managers using GTK+ for
+	 * themeing - aware of this choice, GTK+ uses this function to
+	 * export the requested theme variant as _GTK_THEME_VARIANT property
+	 * on toplevel windows.
+	 * Note that this property is automatically updated by GTK+, so this
+	 * function should only be used by applications which do not use GTK+
+	 * to create toplevel windows.
+	 * Params:
+	 * window = a GdkWindow. [type GdkX11Window]
+	 * variant = the theme variant to export
+	 * Since 3.2
 	 */
-	public static void windowSetThemeVariantGtkOnly(Window window, string variant)
+	public static void windowSetThemeVariant(Window window, string variant)
 	{
-		// void gdk_x11_window_set_theme_variant_gtk_only  (GdkWindow *window,  char *variant);
-		gdk_x11_window_set_theme_variant_gtk_only((window is null) ? null : window.getWindowStruct(), Str.toStringz(variant));
+		// void gdk_x11_window_set_theme_variant (GdkWindow *window,  char *variant);
+		gdk_x11_window_set_theme_variant((window is null) ? null : window.getWindowStruct(), Str.toStringz(variant));
 	}
 	
 	/**
@@ -271,7 +326,7 @@ public class X11
 	 * events bypassing GDK.
 	 * Since 2.6
 	 * Params:
-	 * window = A toplevel GdkWindow
+	 * window = A toplevel GdkWindow. [type GdkX11Window]
 	 * timestamp = An XServer timestamp to which the property should be set
 	 */
 	public static void windowSetUserTime(Window window, uint timestamp)
@@ -288,7 +343,7 @@ public class X11
 	 * window is already on all workspaces.
 	 * Since 2.8
 	 * Params:
-	 * window = a GdkWindow
+	 * window = a GdkWindow. [type GdkX11Window]
 	 */
 	public static void windowMoveToCurrentDesktop(Window window)
 	{
@@ -351,7 +406,7 @@ public class X11
 	 * nul-separated elements of the original text string.)
 	 * Since 2.24
 	 * Params:
-	 * display = The GdkDisplay where the encoding is defined
+	 * display = The GdkDisplay where the encoding is defined. [type GdkX11Display]
 	 * encoding = an atom representing the encoding. The most
 	 * common values for this are STRING, or COMPOUND_TEXT.
 	 * This is value used as the type for the property
@@ -401,7 +456,7 @@ public class X11
 	 * locale into a form suitable for storing in a window property.
 	 * Since 2.24
 	 * Params:
-	 * display = the GdkDisplay where the encoding is defined
+	 * display = the GdkDisplay where the encoding is defined. [type GdkX11Display]
 	 * str = a nul-terminated string
 	 * encoding = location to store the encoding atom
 	 * (to be used as the type for the property). [out][transfer none]
@@ -426,7 +481,7 @@ public class X11
 	 * Converts from UTF-8 to compound text.
 	 * Since 2.24
 	 * Params:
-	 * display = a GdkDisplay
+	 * display = a GdkDisplay. [type GdkX11Display]
 	 * str = a UTF-8 string
 	 * encoding = location to store resulting encoding. [out]
 	 * format = location to store format of the result. [out]
