@@ -71,7 +71,7 @@ private import glib.Str;
  * providers of UI information.
  * Exceptions: when the user interaction is already covered by
  * another appropriate interface such as AtkEditableText (insert/delete
- * test, etc.) or AtkValue (set value) then these actions should not be
+ * text, etc.) or AtkValue (set value) then these actions should not be
  * exposed by AtkAction as well.
  * Also note that the AtkAction API is limited in that parameters may not
  * be passed to the object being activated; thus the action must be

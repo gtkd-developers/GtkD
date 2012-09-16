@@ -132,7 +132,7 @@ public class Util
 	
 	/**
 	 * Adds the specified function to the list of functions to be called
-	 * when an event of type event_type occurs.
+	 * when an ATK event of type event_type occurs.
 	 * Params:
 	 * listener = the listener to notify
 	 * eventType = the type of event for which notification is requested

@@ -14,8 +14,8 @@ ln -s gobject-html-2.30.3 gobject
 curl http://developer.gnome.org/gio/gio-html-2.30.3.tar.gz | tar xvfz -
 ln -s gio-html-2.30.3 gio
 #ATK
-curl http://developer.gnome.org/atk/atk-html-2.0.1.tar.gz | tar xvfz -
-ln -s atk-html-2.0.1 atk
+curl http://developer.gnome.org/atk/atk-html-2.2.0.tar.gz | tar xvfz -
+ln -s atk-html-2.2.0 atk
 #PANGO
 curl http://developer.gnome.org/pango/pango-html-1.28.4.tar.gz | tar xvfz -
 ln -s pango-html-1.28.4 pango

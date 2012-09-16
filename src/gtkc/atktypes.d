@@ -80,7 +80,7 @@ public enum AtkHyperlinkStateFlags
  * ATK_ROLE_COLUMN_HEADER
  * The header for a column of data
  * ATK_ROLE_COMBO_BOX
- * A list of choices the user can select from
+ * A collapsible list of choices the user can select from
  * ATK_ROLE_DATE_EDITOR
  * An object whose purpose is to allow a user to edit a date
  * ATK_ROLE_DESKTOP_ICON
@@ -242,6 +242,32 @@ public enum AtkHyperlinkStateFlags
  * The object is a window or similar viewport
  * which is used to allow composition or input of a 'complex character',
  * in other words it is an "input method window." Since: ATK-1.12.1
+ * ATK_ROLE_TABLE_ROW
+ * A row in a table. Since: ATK-2.1.0
+ * ATK_ROLE_TREE_ITEM
+ * An object that represents an element of a tree. Since: ATK-2.1.0
+ * ATK_ROLE_DOCUMENT_SPREADSHEET
+ * A document frame which contains a spreadsheet. Since: ATK-2.1.0
+ * ATK_ROLE_DOCUMENT_PRESENTATION
+ * A document frame which contains a presentation or slide content. Since: ATK-2.1.0
+ * ATK_ROLE_DOCUMENT_TEXT
+ * A document frame which contains textual content, such as found in a word processing application. Since: ATK-2.1.0
+ * ATK_ROLE_DOCUMENT_WEB
+ * A document frame which contains HTML or other markup suitable for display in a web browser. Since: ATK-2.1.0
+ * ATK_ROLE_DOCUMENT_EMAIL
+ * A document frame which contains email content to be displayed or composed either in plain text or HTML. Since: ATK-2.1.0
+ * ATK_ROLE_COMMENT
+ * An object found within a document and designed to present a comment, note, or other annotation. In some cases, this object might not be visible until activated. Since: ATK-2.1.0
+ * ATK_ROLE_LIST_BOX
+ * A non-collapsible list of choices the user can select from. Since: ATK-2.1.0
+ * ATK_ROLE_GROUPING
+ * A group of related widgets. This group typically has a label. Since: ATK-2.1.0
+ * ATK_ROLE_IMAGE_MAP
+ * An image map object. Usually a graphic with multiple hotspots, where each hotspot can be activated resulting in the loading of another document or section of a document. Since: ATK-2.1.0
+ * ATK_ROLE_NOTIFICATION
+ * A transitory object designed to present a message to the user, typically at the desktop level rather than inside a particular application. Since: ATK-2.1.0
+ * ATK_ROLE_INFO_BAR
+ * An object designed to present a message to the user within an existing window. Since: ATK-2.1.0
  * ATK_ROLE_LAST_DEFINED
  * not a valid role, used for finding end of the enumeration
  */
@@ -335,6 +361,19 @@ public enum AtkRole
 	FORM,
 	LINK,
 	INPUT_METHOD_WINDOW,
+	TABLE_ROW,
+	TREE_ITEM,
+	DOCUMENT_SPREADSHEET,
+	DOCUMENT_PRESENTATION,
+	DOCUMENT_TEXT,
+	DOCUMENT_WEB,
+	DOCUMENT_EMAIL,
+	COMMENT,
+	LIST_BOX,
+	GROUPING,
+	IMAGE_MAP,
+	NOTIFICATION,
+	INFO_BAR,
 	LAST_DEFINED
 }
 /**
