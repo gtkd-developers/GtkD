@@ -212,7 +212,7 @@ public class OutputStream : ObjectG
 	 * source = a GInputStream.
 	 * flags = a set of GOutputStreamSpliceFlags.
 	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * Returns: a gssize containing the size of the data spliced, or -1 if an error occurred.
+	 * Returns: a gssize containing the size of the data spliced, or -1 if an error occurred. Note that if the number of bytes spliced is greater than G_MAXSSIZE, then that will be returned, and there is no way to determine the actual number of bytes spliced.
 	 * Throws: GException on failure.
 	 */
 	public gssize splice(InputStream source, GOutputStreamSpliceFlags flags, Cancellable cancellable)
@@ -386,7 +386,7 @@ public class OutputStream : ObjectG
 	 * Finishes an asynchronous stream splice operation.
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: a gssize of the number of bytes spliced.
+	 * Returns: a gssize of the number of bytes spliced. Note that if the number of bytes spliced is greater than G_MAXSSIZE, then that will be returned, and there is no way to determine the actual number of bytes spliced.
 	 * Throws: GException on failure.
 	 */
 	public gssize spliceFinish(AsyncResultIF result)
@@ -426,7 +426,7 @@ public class OutputStream : ObjectG
 	 * Finishes flushing an output stream.
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: TRUE if flush operation suceeded, FALSE otherwise.
+	 * Returns: TRUE if flush operation succeeded, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int flushFinish(AsyncResultIF result)

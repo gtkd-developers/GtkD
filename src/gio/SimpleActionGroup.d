@@ -193,4 +193,21 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF
 		// void g_simple_action_group_remove (GSimpleActionGroup *simple,  const gchar *action_name);
 		g_simple_action_group_remove(gSimpleActionGroup, Str.toStringz(actionName));
 	}
+	
+	/**
+	 * A convenience function for creating multiple GSimpleAction instances
+	 * and adding them to the action group.
+	 * Each action is constructed as per one GActionEntry.
+	 * $(DDOC_COMMENT example)
+	 * Since 2.30
+	 * Params:
+	 * entries = a pointer to the first item in an array of GActionEntry
+	 * structs
+	 * userData = the user data for signal connections
+	 */
+	public void addEntries(GActionEntry[] entries, void* userData)
+	{
+		// void g_simple_action_group_add_entries (GSimpleActionGroup *simple,  const GActionEntry *entries,  gint n_entries,  gpointer user_data);
+		g_simple_action_group_add_entries(gSimpleActionGroup, entries.ptr, cast(int) entries.length, userData);
+	}
 }

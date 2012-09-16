@@ -194,14 +194,14 @@ public class SocketListener : ObjectG
 	 * sockets from.
 	 * Note that adding an IPv6 address, depending on the platform,
 	 * may or may not result in a listener that also accepts IPv4
-	 * connections. For more determinstic behaviour, see
+	 * connections. For more deterministic behavior, see
 	 * g_socket_listener_add_inet_port().
 	 * source_object will be passed out in the various calls
 	 * to accept to identify this particular source, which is
 	 * useful if you're listening on multiple addresses and do
 	 * different things depending on what address is connected to.
 	 * If successful and effective_address is non-NULL then it will
-	 * be set to the address that the binding actually occured at. This
+	 * be set to the address that the binding actually occurred at. This
 	 * is helpful for determining the port number that was used for when
 	 * requesting a binding to port 0 (ie: "any port"). This address, if
 	 * requested, belongs to the caller and must be freed.
@@ -264,7 +264,7 @@ public class SocketListener : ObjectG
 	
 	/**
 	 * Listens for TCP connections on any available port number for both
-	 * IPv6 and IPv4 (if each are available).
+	 * IPv6 and IPv4 (if each is available).
 	 * This is useful if you need to have a socket for incoming connections
 	 * but don't care about the specific port number.
 	 * source_object will be passed out in the various calls
@@ -358,7 +358,7 @@ public class SocketListener : ObjectG
 	 */
 	public SocketConnection acceptFinish(AsyncResultIF result, ref ObjectG sourceObject)
 	{
-		// GSocketConnection * g_socket_listener_accept_finish  (GSocketListener *listener,  GAsyncResult *result,  GObject **source_object,  GError **error);
+		// GSocketConnection * g_socket_listener_accept_finish (GSocketListener *listener,  GAsyncResult *result,  GObject **source_object,  GError **error);
 		GObject* outsourceObject = (sourceObject is null) ? null : sourceObject.getObjectGStruct();
 		GError* err = null;
 		
@@ -398,7 +398,7 @@ public class SocketListener : ObjectG
 	 */
 	public Socket acceptSocket(out ObjectG sourceObject, Cancellable cancellable)
 	{
-		// GSocket * g_socket_listener_accept_socket  (GSocketListener *listener,  GObject **source_object,  GCancellable *cancellable,  GError **error);
+		// GSocket * g_socket_listener_accept_socket (GSocketListener *listener,  GObject **source_object,  GCancellable *cancellable,  GError **error);
 		GObject* outsourceObject = null;
 		GError* err = null;
 		

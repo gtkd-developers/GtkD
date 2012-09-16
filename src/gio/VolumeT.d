@@ -359,7 +359,7 @@ public template VolumeT(TStruct)
 	}
 	
 	/**
-	 * Finishes mounting a volume. If any errors occured during the operation,
+	 * Finishes mounting a volume. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * If the mount operation succeeded, g_volume_get_mount() on volume
 	 * is guaranteed to return the mount right after calling this
@@ -416,7 +416,7 @@ public template VolumeT(TStruct)
 	/**
 	 * Warning
 	 * g_volume_eject_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_volume_eject_with_operation_finish() instead.
-	 * Finishes ejecting a volume. If any errors occured during the operation,
+	 * Finishes ejecting a volume. If any errors occurred during the operation,
 	 * error will be set to contain the errors and FALSE will be returned.
 	 * Params:
 	 * result = a GAsyncResult.

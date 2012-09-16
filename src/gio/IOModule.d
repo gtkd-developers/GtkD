@@ -38,15 +38,18 @@
  * implements:
  * prefixes:
  * 	- g_io_module_
- * 	- g_io_
+ * 	- g_io_modules_
  * omit structs:
  * omit prefixes:
+ * 	- g_io_module_scope_
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
+ * 	- gio.IOModuleScope
  * structWrap:
+ * 	- GIOModuleScope* -> IOModuleScope
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
@@ -63,6 +66,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.ListG;
+private import gio.IOModuleScope;
 
 
 
@@ -150,10 +154,32 @@ public class IOModule : TypeModule
 	 * dirname = pathname for a directory containing modules to load.
 	 * Returns: a list of GIOModules loaded from the directory, All the modules are loaded into memory, if you want to unload them (enabling on-demand loading) you must call g_type_module_unuse() on all the modules. Free the list with g_list_free(). [element-type GIOModule][transfer full]
 	 */
-	public static ListG modulesLoadAllInDirectory(string dirname)
+	public static ListG loadAllInDirectory(string dirname)
 	{
 		// GList * g_io_modules_load_all_in_directory (const gchar *dirname);
 		auto p = g_io_modules_load_all_in_directory(Str.toStringz(dirname));
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Loads all the modules in the specified directory.
+	 * If don't require all modules to be initialized (and thus registering
+	 * all gtypes) then you can use g_io_modules_scan_all_in_directory()
+	 * which allows delayed/lazy loading of modules.
+	 * Since 2.30
+	 * Params:
+	 * dirname = pathname for a directory containing modules to load.
+	 * scope = a scope to use when scanning the modules.
+	 * Returns: a list of GIOModules loaded from the directory, All the modules are loaded into memory, if you want to unload them (enabling on-demand loading) you must call g_type_module_unuse() on all the modules. Free the list with g_list_free(). [element-type GIOModule][transfer full]
+	 */
+	public static ListG loadAllInDirectoryWithScope(string dirname, IOModuleScope scope)
+	{
+		// GList * g_io_modules_load_all_in_directory_with_scope  (const gchar *dirname,  GIOModuleScope *scope);
+		auto p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scope is null) ? null : scope.getIOModuleScopeStruct());
 		if(p is null)
 		{
 			return null;
@@ -175,10 +201,31 @@ public class IOModule : TypeModule
 	 * Params:
 	 * dirname = pathname for a directory containing modules to scan.
 	 */
-	public static void modulesScanAllInDirectory(string dirname)
+	public static void scanAllInDirectory(string dirname)
 	{
 		// void g_io_modules_scan_all_in_directory (const char *dirname);
 		g_io_modules_scan_all_in_directory(Str.toStringz(dirname));
+	}
+	
+	/**
+	 * Scans all the modules in the specified directory, ensuring that
+	 * any extension point implemented by a module is registered.
+	 * This may not actually load and initialize all the types in each
+	 * module, some modules may be lazily loaded and initialized when
+	 * an extension point it implementes is used with e.g.
+	 * g_io_extension_point_get_extensions() or
+	 * g_io_extension_point_get_extension_by_name().
+	 * If you need to guarantee that all types are loaded in all the modules,
+	 * use g_io_modules_load_all_in_directory().
+	 * Since 2.30
+	 * Params:
+	 * dirname = pathname for a directory containing modules to scan.
+	 * scope = a scope to use when scanning the modules
+	 */
+	public static void scanAllInDirectoryWithScope(string dirname, IOModuleScope scope)
+	{
+		// void g_io_modules_scan_all_in_directory_with_scope  (const gchar *dirname,  GIOModuleScope *scope);
+		g_io_modules_scan_all_in_directory_with_scope(Str.toStringz(dirname), (scope is null) ? null : scope.getIOModuleScopeStruct());
 	}
 	
 	/**
@@ -209,7 +256,7 @@ public class IOModule : TypeModule
 	 * implemented in this module.
 	 * This method will not be called in normal use, however it may be
 	 * called when probing existing modules and recording which extension
-	 * points that this modle is used for. This means we won't have to
+	 * points that this model is used for. This means we won't have to
 	 * load and initialze this module unless its needed.
 	 * If this function is not implemented by the module the module will
 	 * always be loaded, initialized and then unloaded on application startup

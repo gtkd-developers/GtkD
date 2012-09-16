@@ -91,6 +91,13 @@ private import glib.Str;
  *  see gio-querymodules.
  *  You are expected to run this command after installing a
  *  GIO module.
+ *  The GIO_EXTRA_MODULES environment variable can be
+ *  used to specify additional directories to automatically load modules
+ *  from. This environment variable has the same syntax as the
+ *  PATH. If two modules have the same base name in different
+ *  directories, then the latter one will be ignored. If additional
+ *  directories are specified GIO will load modules from the built-in
+ *  directory last.
  */
 public class IOExtension
 {

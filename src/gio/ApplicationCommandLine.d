@@ -80,7 +80,7 @@ private import gobject.ObjectG;
  * The GApplicationCommandLine object can provide the argc and argv
  * parameters for use with the GOptionContext command-line parsing API,
  * with the g_application_command_line_get_arguments() function. See
- *  Example 17, “Deferred commandline handling” for an example.
+ *  Example 19, “Deferred commandline handling” for an example.
  * The exit status of the originally-invoked process may be set and
  * messages can be printed to stdout or stderr of that process. The
  * lifecycle of the originally-invoked process is tied to the lifecycle
@@ -182,7 +182,7 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public string getCwd()
 	{
-		// const gchar * g_application_command_line_get_cwd  (GApplicationCommandLine *cmdline);
+		// const gchar * g_application_command_line_get_cwd (GApplicationCommandLine *cmdline);
 		return Str.toString(g_application_command_line_get_cwd(gApplicationCommandLine));
 	}
 	
@@ -225,7 +225,7 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public string getenv(string name)
 	{
-		// const gchar * g_application_command_line_getenv  (GApplicationCommandLine *cmdline,  const gchar *name);
+		// const gchar * g_application_command_line_getenv (GApplicationCommandLine *cmdline,  const gchar *name);
 		return Str.toString(g_application_command_line_getenv(gApplicationCommandLine, Str.toStringz(name)));
 	}
 	
@@ -243,7 +243,7 @@ public class ApplicationCommandLine : ObjectG
 	/**
 	 * Gets the platform data associated with the invocation of cmdline.
 	 * This is a GVariant dictionary containing information about the
-	 * context in which the invocation occured. It typically contains
+	 * context in which the invocation occurred. It typically contains
 	 * information like the current working directory and the startup
 	 * notification ID.
 	 * For local invocation, it will be NULL.

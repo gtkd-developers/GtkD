@@ -114,7 +114,7 @@ private import gobject.ObjectG;
  * object paths that you wish to register are registered before
  * GApplication attempts to acquire the bus name of your application
  * (which happens in g_application_register()). Unfortunately, this
- * means that you can not use g_application_get_is_remote() to decide if
+ * means that you cannot use g_application_get_is_remote() to decide if
  * you want to register object paths.
  * GApplication provides convenient life cycle management by maintaining
  * a use count for the primary application instance.
@@ -366,7 +366,7 @@ public class Application : ObjectG, ActionGroupIF
 	 */
 	public string getApplicationId()
 	{
-		// const gchar * g_application_get_application_id  (GApplication *application);
+		// const gchar * g_application_get_application_id (GApplication *application);
 		return Str.toString(g_application_get_application_id(gApplication));
 	}
 	
@@ -477,7 +477,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * application already exists (the 'primary' instance). Calls to
 	 * perform actions on application will result in the actions being
 	 * performed by the primary instance.
-	 * The value of this property can not be accessed before
+	 * The value of this property cannot be accessed before
 	 * g_application_register() has been called. See
 	 * g_application_get_is_registered().
 	 * Since 2.28
@@ -609,7 +609,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * This function always runs on the local instance. It gets passed a pointer
 	 * to a NULL-terminated copy of argv and is expected to remove the arguments
 	 * that it handled (shifting up remaining arguments). See
-	 *  Example 16, “Split commandline handling” for an example of
+	 *  Example 18, “Split commandline handling” for an example of
 	 * parsing argv manually. Alternatively, you may use the GOptionContext API,
 	 * after setting argc = g_strv_length (argv);.
 	 * The last argument to local_command_line() is a pointer to the status
@@ -646,7 +646,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * and override local_command_line(). In this case, you most likely want
 	 * to return TRUE from your local_command_line() implementation to
 	 * suppress the default handling. See
-	 *  Example 16, “Split commandline handling” for an example.
+	 *  Example 18, “Split commandline handling” for an example.
 	 * If, after the above is done, the use count of the application is zero
 	 * then the exit status is returned immediately. If the use count is
 	 * non-zero then the mainloop is run until the use count falls to zero,
@@ -656,7 +656,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * around to provide its service to others).
 	 * Since 2.28
 	 * Params:
-	 * argv = the argv from main(), or NULL. [array length=argc]
+	 * argv = the argv from main(), or NULL. [array length=argc][allow-none]
 	 * Returns: the exit status
 	 */
 	public int run(string[] argv)

@@ -299,7 +299,7 @@ public class FileInfo : ObjectG
 	 * not contain a string, NULL will be returned.
 	 * Params:
 	 * attribute = a file attribute key.
-	 * Returns: the contents of the attribute value as a string, or NULL otherwise.
+	 * Returns: the contents of the attribute value as a UTF-8 string, or NULL otherwise.
 	 */
 	public string getAttributeString(string attribute)
 	{
@@ -313,7 +313,7 @@ public class FileInfo : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * attribute = a file attribute key.
-	 * Returns: the contents of the attribute value as a stringv, or NULL otherwise. Do not free. [transfer none]
+	 * Returns: the contents of the attribute value as a stringv, or NULL otherwise. Do not free. These returned strings are UTF-8. [transfer none]
 	 */
 	public string[] getAttributeStringv(string attribute)
 	{
@@ -457,7 +457,7 @@ public class FileInfo : ObjectG
 	 * if possible.
 	 * Params:
 	 * attribute = a file attribute key.
-	 * attrValue = a string.
+	 * attrValue = a UTF-8 string.
 	 */
 	public void setAttributeString(string attribute, string attrValue)
 	{
@@ -470,8 +470,8 @@ public class FileInfo : ObjectG
 	 * if possible.
 	 * Sinze: 2.22
 	 * Params:
-	 * attribute = a file attribute key.
-	 * attrValue = a NULL terminated string array
+	 * attribute = a file attribute key
+	 * attrValue = a NULL terminated array of UTF-8 strings.
 	 */
 	public void setAttributeStringv(string attribute, string[] attrValue)
 	{
@@ -689,7 +689,7 @@ public class FileInfo : ObjectG
 	 * Gets the modification time of the current info and sets it
 	 * in result.
 	 * Params:
-	 * result = a GTimeVal.
+	 * result = a GTimeVal. [out caller-allocates]
 	 */
 	public void getModificationTime(TimeVal result)
 	{

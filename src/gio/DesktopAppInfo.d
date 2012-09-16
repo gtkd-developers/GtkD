@@ -45,14 +45,20 @@
  * 	- g_desktop_app_info_new_from_filename
  * omit signals:
  * imports:
+ * 	- glib.ErrorG
+ * 	- glib.GException
+ * 	- glib.ListG
  * 	- glib.KeyFile
  * 	- gio.AppInfo
  * 	- gio.AppInfoIF
+ * 	- gio.AppLaunchContext
  * 	- gio.AppInfoT
  * 	- gio.AppInfoIF
  * structWrap:
  * 	- GAppInfo* -> AppInfoIF
+ * 	- GAppLaunchContext* -> AppLaunchContext
  * 	- GKeyFile* -> KeyFile
+ * 	- GList* -> ListG
  * module aliases:
  * local aliases:
  * overrides:
@@ -66,9 +72,13 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
+private import glib.ErrorG;
+private import glib.GException;
+private import glib.ListG;
 private import glib.KeyFile;
 private import gio.AppInfo;
 private import gio.AppInfoIF;
+private import gio.AppLaunchContext;
 private import gio.AppInfoT;
 private import gio.AppInfoIF;
 
@@ -210,8 +220,61 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 	
 	/**
+	 * Gets the value of the NoDisplay key, which helps determine if the
+	 * application info should be shown in menus. See
+	 * G_KEY_FILE_DESKTOP_KEY_NO_DISPLAY and g_app_info_should_show().
+	 * Since 2.30
+	 * Returns: The value of the NoDisplay key
+	 */
+	public int getNodisplay()
+	{
+		// gboolean g_desktop_app_info_get_nodisplay (GDesktopAppInfo *info);
+		return g_desktop_app_info_get_nodisplay(gDesktopAppInfo);
+	}
+	
+	/**
+	 * Checks if the application info should be shown in menus that list available
+	 * applications for a specific name of the desktop, based on the
+	 * OnlyShowIn and NotShowIn keys.
+	 * If desktop_env is NULL, then the name of the desktop set with
+	 * g_desktop_app_info_set_desktop_env() is used.
+	 * Note that g_app_info_should_show() for info will include this check (with
+	 * NULL for desktop_env) as well as additional checks.
+	 * Since 2.30
+	 * Params:
+	 * desktopEnv = a string specifying a desktop name
+	 * Returns: TRUE if the info should be shown in desktop_env according to the OnlyShowIn and NotShowIn keys, FALSE otherwise.
+	 */
+	public int getShowIn(string desktopEnv)
+	{
+		// gboolean g_desktop_app_info_get_show_in (GDesktopAppInfo *info,  const gchar *desktop_env);
+		return g_desktop_app_info_get_show_in(gDesktopAppInfo, Str.toStringz(desktopEnv));
+	}
+	
+	/**
+	 * Gets the generic name from the destkop file.
+	 * Returns: The value of the GenericName key
+	 */
+	public string getGenericName()
+	{
+		// const char * g_desktop_app_info_get_generic_name (GDesktopAppInfo *info);
+		return Str.toString(g_desktop_app_info_get_generic_name(gDesktopAppInfo));
+	}
+	
+	/**
+	 * Gets the categories from the desktop file.
+	 * Returns: The unparsed Categories key from the desktop file; i.e. no attempt is made to split it by ';' or validate it.
+	 */
+	public string getCategories()
+	{
+		// const char * g_desktop_app_info_get_categories (GDesktopAppInfo *info);
+		return Str.toString(g_desktop_app_info_get_categories(gDesktopAppInfo));
+	}
+	
+	/**
 	 * Sets the name of the desktop that the application is running in.
-	 * This is used by g_app_info_should_show() to evaluate the
+	 * This is used by g_app_info_should_show() and
+	 * g_desktop_app_info_get_show_in() to evaluate the
 	 * OnlyShowIn and NotShowIn
 	 * desktop entry fields.
 	 * The Desktop
@@ -222,5 +285,47 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	{
 		// void g_desktop_app_info_set_desktop_env (const char *desktop_env);
 		g_desktop_app_info_set_desktop_env(Str.toStringz(desktopEnv));
+	}
+	
+	/**
+	 * Warning
+	 * g_desktop_app_info_launch_uris_as_manager is deprecated and should not be used in newly-written code.
+	 * This function performs the equivalent of g_app_info_launch_uris(),
+	 * but is intended primarily for operating system components that
+	 * launch applications. Ordinary applications should use
+	 * g_app_info_launch_uris().
+	 * In contrast to g_app_info_launch_uris(), all processes created will
+	 * always be run directly as children as if by the UNIX fork()/exec()
+	 * calls.
+	 * This guarantee allows additional control over the exact environment
+	 * of the child processes, which is provided via a setup function
+	 * setup, as well as the process identifier of each child process via
+	 * pid_callback. See g_spawn_async() for more information about the
+	 * semantics of the setup function.
+	 * Params:
+	 * uris = List of URIs. [element-type utf8]
+	 * launchContext = a GAppLaunchContext
+	 * spawnFlags = GSpawnFlags, used for each process
+	 * userSetup = a GSpawnChildSetupFunc, used once for
+	 * each process. [scope call]
+	 * userSetupData = User data for user_setup. [closure user_setup]
+	 * pidCallback = Callback for child processes. [scope call]
+	 * pidCallbackData = User data for callback. [closure pid_callback]
+	 * Returns: TRUE on successful launch, FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int launchUrisAsManager(ListG uris, AppLaunchContext launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData)
+	{
+		// gboolean g_desktop_app_info_launch_uris_as_manager  (GDesktopAppInfo *appinfo,  GList *uris,  GAppLaunchContext *launch_context,  GSpawnFlags spawn_flags,  GSpawnChildSetupFunc user_setup,  gpointer user_setup_data,  GDesktopAppLaunchCallback pid_callback,  gpointer pid_callback_data,  GError **error);
+		GError* err = null;
+		
+		auto p = g_desktop_app_info_launch_uris_as_manager(gDesktopAppInfo, (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), spawnFlags, userSetup, userSetupData, pidCallback, pidCallbackData, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 }

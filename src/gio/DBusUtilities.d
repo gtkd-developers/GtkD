@@ -46,11 +46,16 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- glib.StringG
+ * 	- gio.Value
+ * 	- gio.Variant
+ * 	- gio.VariantType
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.IOStream
  * structWrap:
+ * 	- GValue* -> Value
+ * 	- GVariant* -> Variant
+ * 	- GVariantType* -> VariantType
  * module aliases:
  * local aliases:
  * overrides:
@@ -67,7 +72,9 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import glib.StringG;
+private import gio.Value;
+private import gio.Variant;
+private import gio.VariantType;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.IOStream;
@@ -87,15 +94,6 @@ public class DBusUtilities
 	 * Routines for working with D-Bus addresses. A D-Bus address is a string
 	 * like "unix:tmpdir=/tmp/my-app-name". The exact format of addresses
 	 * is explained in detail in the D-Bus specification.
-	 */
-	
-	/**
-	 * Description
-	 * Various data structures and convenience routines to parse and
-	 * generate D-Bus introspection XML. Introspection information is
-	 * used when registering objects with g_dbus_connection_register_object().
-	 * The format of D-Bus introspection XML is specified in the
-	 * D-Bus specification.
 	 */
 	
 	/**
@@ -177,6 +175,42 @@ public class DBusUtilities
 	{
 		// gboolean g_dbus_is_interface_name (const gchar *string);
 		return g_dbus_is_interface_name(Str.toStringz(string));
+	}
+	
+	/**
+	 * Converts a GValue to a GVariant of the type indicated by the type parameter.
+	 * Since 2.30
+	 * Params:
+	 * gvalue = A GValue to convert to a GVariant.
+	 * type = A GVariantType.
+	 * Returns: A GVariant (never floating) of GVariantType type holding the data from gvalue or NULL in case of failure. Free with g_variant_unref().
+	 */
+	public static Variant gvalueToGvariant(Value gvalue, VariantType type)
+	{
+		// GVariant * g_dbus_gvalue_to_gvariant (const GValue *gvalue,  const GVariantType *type);
+		auto p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Converts a GVariant to a GValue. If value is floating, it is consumed.
+	 * The rules specified in the g_dbus_gvalue_to_gvariant() function are
+	 * used - this function is essentially its reverse form.
+	 * The conversion never fails - a valid GValue is always returned in
+	 * out_gvalue.
+	 * Since 2.30
+	 * Params:
+	 * value = A GVariant.
+	 * outGvalue = Return location pointing to a zero-filled (uninitialized) GValue.
+	 */
+	public static void gvariantToGvalue(Variant value, Value outGvalue)
+	{
+		// void g_dbus_gvariant_to_gvalue (GVariant *value,  GValue *out_gvalue);
+		g_dbus_gvariant_to_gvalue((value is null) ? null : value.getVariantStruct(), (outGvalue is null) ? null : outGvalue.getValueStruct());
 	}
 	
 	/**
@@ -331,333 +365,5 @@ public class DBusUtilities
 		}
 		
 		return Str.toString(p);
-	}
-	
-	/**
-	 * Looks up the value of an annotation.
-	 * This cost of this function is O(n) in number of annotations.
-	 * Since 2.26
-	 * Params:
-	 * annotations = A NULL-terminated array of annotations or NULL.
-	 * name = The name of the annotation to look up.
-	 * Returns: The value or NULL if not found. Do not free, it is owned by annotations.
-	 */
-	public static string annotationInfoLookup(GDBusAnnotationInfo** annotations, string name)
-	{
-		// const gchar * g_dbus_annotation_info_lookup (GDBusAnnotationInfo **annotations,  const gchar *name);
-		return Str.toString(g_dbus_annotation_info_lookup(annotations, Str.toStringz(name)));
-	}
-	
-	/**
-	 * Looks up information about a method.
-	 * This cost of this function is O(n) in number of methods.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusInterfaceInfo.
-	 * name = A D-Bus method name (typically in CamelCase)
-	 * Returns: A GDBusMethodInfo or NULL if not found. Do not free, it is owned by info.
-	 */
-	public static GDBusMethodInfo* interfaceInfoLookupMethod(GDBusInterfaceInfo* info, string name)
-	{
-		// GDBusMethodInfo * g_dbus_interface_info_lookup_method (GDBusInterfaceInfo *info,  const gchar *name);
-		return g_dbus_interface_info_lookup_method(info, Str.toStringz(name));
-	}
-	
-	/**
-	 * Looks up information about a signal.
-	 * This cost of this function is O(n) in number of signals.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusInterfaceInfo.
-	 * name = A D-Bus signal name (typically in CamelCase)
-	 * Returns: A GDBusSignalInfo or NULL if not found. Do not free, it is owned by info.
-	 */
-	public static GDBusSignalInfo* interfaceInfoLookupSignal(GDBusInterfaceInfo* info, string name)
-	{
-		// GDBusSignalInfo * g_dbus_interface_info_lookup_signal (GDBusInterfaceInfo *info,  const gchar *name);
-		return g_dbus_interface_info_lookup_signal(info, Str.toStringz(name));
-	}
-	
-	/**
-	 * Looks up information about a property.
-	 * This cost of this function is O(n) in number of properties.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusInterfaceInfo.
-	 * name = A D-Bus property name (typically in CamelCase).
-	 * Returns: A GDBusPropertyInfo or NULL if not found. Do not free, it is owned by info.
-	 */
-	public static GDBusPropertyInfo* interfaceInfoLookupProperty(GDBusInterfaceInfo* info, string name)
-	{
-		// GDBusPropertyInfo * g_dbus_interface_info_lookup_property  (GDBusInterfaceInfo *info,  const gchar *name);
-		return g_dbus_interface_info_lookup_property(info, Str.toStringz(name));
-	}
-	
-	/**
-	 * Appends an XML representation of info (and its children) to string_builder.
-	 * This function is typically used for generating introspection XML
-	 * documents at run-time for handling the
-	 * org.freedesktop.DBus.Introspectable.Introspect
-	 * method.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusNodeInfo
-	 * indent = Indentation level.
-	 * stringBuilder = A GString to to append XML data to.
-	 */
-	public static void interfaceInfoGenerateXml(GDBusInterfaceInfo* info, uint indent, StringG stringBuilder)
-	{
-		// void g_dbus_interface_info_generate_xml (GDBusInterfaceInfo *info,  guint indent,  GString *string_builder);
-		g_dbus_interface_info_generate_xml(info, indent, (stringBuilder is null) ? null : stringBuilder.getStringGStruct());
-	}
-	
-	/**
-	 * Parses xml_data and returns a GDBusNodeInfo representing the data.
-	 * Since 2.26
-	 * Params:
-	 * xmlData = Valid D-Bus introspection XML.
-	 * Returns: A GDBusNodeInfo structure or NULL if error is set. Free with g_dbus_node_info_unref().
-	 * Throws: GException on failure.
-	 */
-	public static GDBusNodeInfo* nodeInfoNewForXml(string xmlData)
-	{
-		// GDBusNodeInfo * g_dbus_node_info_new_for_xml (const gchar *xml_data,  GError **error);
-		GError* err = null;
-		
-		auto p = g_dbus_node_info_new_for_xml(Str.toStringz(xmlData), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Looks up information about an interface.
-	 * This cost of this function is O(n) in number of interfaces.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusNodeInfo.
-	 * name = A D-Bus interface name.
-	 * Returns: A GDBusInterfaceInfo or NULL if not found. Do not free, it is owned by info.
-	 */
-	public static GDBusInterfaceInfo* nodeInfoLookupInterface(GDBusNodeInfo* info, string name)
-	{
-		// GDBusInterfaceInfo * g_dbus_node_info_lookup_interface (GDBusNodeInfo *info,  const gchar *name);
-		return g_dbus_node_info_lookup_interface(info, Str.toStringz(name));
-	}
-	
-	/**
-	 * Appends an XML representation of info (and its children) to string_builder.
-	 * This function is typically used for generating introspection XML documents at run-time for
-	 * handling the org.freedesktop.DBus.Introspectable.Introspect method.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusNodeInfo.
-	 * indent = Indentation level.
-	 * stringBuilder = A GString to to append XML data to.
-	 */
-	public static void nodeInfoGenerateXml(GDBusNodeInfo* info, uint indent, StringG stringBuilder)
-	{
-		// void g_dbus_node_info_generate_xml (GDBusNodeInfo *info,  guint indent,  GString *string_builder);
-		g_dbus_node_info_generate_xml(info, indent, (stringBuilder is null) ? null : stringBuilder.getStringGStruct());
-	}
-	
-	/**
-	 * If info is statically allocated does nothing. Otherwise increases
-	 * the reference count.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusNodeInfo
-	 * Returns: The same info.
-	 */
-	public static GDBusNodeInfo* nodeInfoRef(GDBusNodeInfo* info)
-	{
-		// GDBusNodeInfo * g_dbus_node_info_ref (GDBusNodeInfo *info);
-		return g_dbus_node_info_ref(info);
-	}
-	
-	/**
-	 * If info is statically allocated does nothing. Otherwise increases
-	 * the reference count.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusInterfaceInfo
-	 * Returns: The same info.
-	 */
-	public static GDBusInterfaceInfo* interfaceInfoRef(GDBusInterfaceInfo* info)
-	{
-		// GDBusInterfaceInfo * g_dbus_interface_info_ref (GDBusInterfaceInfo *info);
-		return g_dbus_interface_info_ref(info);
-	}
-	
-	/**
-	 * If info is statically allocated does nothing. Otherwise increases
-	 * the reference count.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusMethodInfo
-	 * Returns: The same info.
-	 */
-	public static GDBusMethodInfo* methodInfoRef(GDBusMethodInfo* info)
-	{
-		// GDBusMethodInfo * g_dbus_method_info_ref (GDBusMethodInfo *info);
-		return g_dbus_method_info_ref(info);
-	}
-	
-	/**
-	 * If info is statically allocated does nothing. Otherwise increases
-	 * the reference count.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusSignalInfo
-	 * Returns: The same info.
-	 */
-	public static GDBusSignalInfo* signalInfoRef(GDBusSignalInfo* info)
-	{
-		// GDBusSignalInfo * g_dbus_signal_info_ref (GDBusSignalInfo *info);
-		return g_dbus_signal_info_ref(info);
-	}
-	
-	/**
-	 * If info is statically allocated does nothing. Otherwise increases
-	 * the reference count.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusPropertyInfo
-	 * Returns: The same info.
-	 */
-	public static GDBusPropertyInfo* propertyInfoRef(GDBusPropertyInfo* info)
-	{
-		// GDBusPropertyInfo * g_dbus_property_info_ref (GDBusPropertyInfo *info);
-		return g_dbus_property_info_ref(info);
-	}
-	
-	/**
-	 * If info is statically allocated does nothing. Otherwise increases
-	 * the reference count.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusArgInfo
-	 * Returns: The same info.
-	 */
-	public static GDBusArgInfo* argInfoRef(GDBusArgInfo* info)
-	{
-		// GDBusArgInfo * g_dbus_arg_info_ref (GDBusArgInfo *info);
-		return g_dbus_arg_info_ref(info);
-	}
-	
-	/**
-	 * If info is statically allocated does nothing. Otherwise increases
-	 * the reference count.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusNodeInfo
-	 * Returns: The same info.
-	 */
-	public static GDBusAnnotationInfo* annotationInfoRef(GDBusAnnotationInfo* info)
-	{
-		// GDBusAnnotationInfo * g_dbus_annotation_info_ref (GDBusAnnotationInfo *info);
-		return g_dbus_annotation_info_ref(info);
-	}
-	
-	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
-	 * the memory used is freed.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusNodeInfo.
-	 */
-	public static void nodeInfoUnref(GDBusNodeInfo* info)
-	{
-		// void g_dbus_node_info_unref (GDBusNodeInfo *info);
-		g_dbus_node_info_unref(info);
-	}
-	
-	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
-	 * the memory used is freed.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusInterfaceInfo.
-	 */
-	public static void interfaceInfoUnref(GDBusInterfaceInfo* info)
-	{
-		// void g_dbus_interface_info_unref (GDBusInterfaceInfo *info);
-		g_dbus_interface_info_unref(info);
-	}
-	
-	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
-	 * the memory used is freed.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusMethodInfo.
-	 */
-	public static void methodInfoUnref(GDBusMethodInfo* info)
-	{
-		// void g_dbus_method_info_unref (GDBusMethodInfo *info);
-		g_dbus_method_info_unref(info);
-	}
-	
-	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
-	 * the memory used is freed.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusSignalInfo.
-	 */
-	public static void signalInfoUnref(GDBusSignalInfo* info)
-	{
-		// void g_dbus_signal_info_unref (GDBusSignalInfo *info);
-		g_dbus_signal_info_unref(info);
-	}
-	
-	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
-	 * the memory used is freed.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusPropertyInfo.
-	 */
-	public static void propertyInfoUnref(GDBusPropertyInfo* info)
-	{
-		// void g_dbus_property_info_unref (GDBusPropertyInfo *info);
-		g_dbus_property_info_unref(info);
-	}
-	
-	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
-	 * the memory used is freed.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusArgInfo.
-	 */
-	public static void argInfoUnref(GDBusArgInfo* info)
-	{
-		// void g_dbus_arg_info_unref (GDBusArgInfo *info);
-		g_dbus_arg_info_unref(info);
-	}
-	
-	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
-	 * the memory used is freed.
-	 * Since 2.26
-	 * Params:
-	 * info = A GDBusAnnotationInfo.
-	 */
-	public static void annotationInfoUnref(GDBusAnnotationInfo* info)
-	{
-		// void g_dbus_annotation_info_unref (GDBusAnnotationInfo *info);
-		g_dbus_annotation_info_unref(info);
 	}
 }

@@ -211,9 +211,12 @@ public class Resolver : ObjectG
 	 * the textual form of an IP address (in which case this just becomes
 	 * a wrapper around g_inet_address_new_from_string()).
 	 * On success, g_resolver_lookup_by_name() will return a GList of
-	 * GInetAddress, sorted in order of preference. (That is, you should
-	 * attempt to connect to the first address first, then the second if
-	 * the first fails, etc.)
+	 * GInetAddress, sorted in order of preference and guaranteed to not
+	 * contain duplicates. That is, if using the result to connect to
+	 * hostname, you should attempt to connect to the first address
+	 * first, then the second if the first fails, etc. If you are using
+	 * the result to listen on a socket, it is appropriate to add each
+	 * result using e.g. g_socket_listener_add_address().
 	 * If the DNS resolution fails, error (if non-NULL) will be set to a
 	 * value from GResolverError.
 	 * If cancellable is non-NULL, it can be used to cancel the

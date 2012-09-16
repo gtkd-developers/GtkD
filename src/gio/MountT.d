@@ -612,7 +612,7 @@ public template MountT(TStruct)
 	}
 	
 	/**
-	 * Finishes guessing content types of mount. If any errors occured
+	 * Finishes guessing content types of mount. If any errors occurred
 	 * during the operation, error will be set to contain the errors and
 	 * FALSE will be returned. In particular, you may get an
 	 * G_IO_ERROR_NOT_SUPPORTED if the mount does not support content

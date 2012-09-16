@@ -269,7 +269,7 @@ public template AppInfoT(TStruct)
 	
 	/**
 	 * Gets the icon for the application.
-	 * Returns: the default GIcon for appinfo. [transfer none]
+	 * Returns: the default GIcon for appinfo or NULL if there is no default icon. [transfer none]
 	 */
 	public IconIF getIcon()
 	{
@@ -345,11 +345,11 @@ public template AppInfoT(TStruct)
 	}
 	
 	/**
-	 * Launches the application. Passes uris to the launched application
+	 * Launches the application. This passes the uris to the launched application
 	 * as arguments, using the optional launch_context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, error will be set accordingly.
-	 * To lauch the application without arguments pass a NULL uris list.
+	 * To launch the application without arguments pass a NULL uris list.
 	 * Note that even if the launch is successful the application launched
 	 * can fail to start if it runs into problems during startup. There is
 	 * no way to detect this.
@@ -473,9 +473,9 @@ public template AppInfoT(TStruct)
 	
 	/**
 	 * Sets the application as the last used application for a given type.
-	 * This will make the application appear as first in the list returned by
-	 * g_app_info_get_recommended_for_type, regardless of the default application
-	 * for that content type.
+	 * This will make the application appear as first in the list returned
+	 * by g_app_info_get_recommended_for_type(), regardless of the default
+	 * application for that content type.
 	 * Params:
 	 * contentType = the content type.
 	 * Returns: TRUE on success, FALSE on error.

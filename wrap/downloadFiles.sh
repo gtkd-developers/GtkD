@@ -11,8 +11,8 @@ exit
 curl http://developer.gnome.org/gobject/gobject-html-2.30.3.tar.gz | tar xvfz -
 ln -s gobject-html-2.30.3 gobject
 #GIO
-curl http://developer.gnome.org/gio/gio-html-2.28.7.tar.gz | tar xvfz -
-ln -s gio-html-2.28.7 gio
+curl http://developer.gnome.org/gio/gio-html-2.30.3.tar.gz | tar xvfz -
+ln -s gio-html-2.30.3 gio
 #ATK
 curl http://developer.gnome.org/atk/atk-html-2.0.1.tar.gz | tar xvfz -
 ln -s atk-html-2.0.1 atk

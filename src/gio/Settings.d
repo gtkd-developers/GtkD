@@ -95,7 +95,7 @@ private import gobject.ObjectG;
  * even need to be started in this case. For this reason, you should
  * only ever modify GSettings keys in response to explicit user action.
  * Particular care should be paid to ensure that modifications are not
- * made during startup -- for example, when settings the initial value
+ * made during startup -- for example, when setting the initial value
  * of preferences widgets. The built-in g_settings_bind() functionality
  * is careful not to write settings in response to notify signals as a
  * result of modifications that it makes to widgets.
@@ -112,8 +112,7 @@ private import gobject.ObjectG;
  * values as GVariant, and allows any GVariantType for keys. Key names
  * are restricted to lowercase characters, numbers and '-'. Furthermore,
  * the names must begin with a lowercase character, must not end
- * with a '-', and must not contain consecutive dashes. Key names can
- * be up to 32 characters long.
+ * with a '-', and must not contain consecutive dashes.
  * Similar to GConf, the default values in GSettings schemas can be
  * localized, but the localized values are stored in gettext catalogs
  * and looked up with the domain that is specified in the
@@ -237,7 +236,7 @@ public class Settings : ObjectG
 	 * be NULL and n_keys will be 0.
 	 * The default handler for this signal invokes the "changed" signal
 	 * for each affected key. If any other connected handler returns
-	 * TRUE then this default functionality will be supressed.
+	 * TRUE then this default functionality will be suppressed.
 	 * TRUE to stop other handlers from being invoked for the
 	 * event. FALSE to propagate the event further.
 	 */
@@ -318,7 +317,7 @@ public class Settings : ObjectG
 	 * changes in writability might also imply changes in value (if for
 	 * example, a new mandatory setting is introduced). If any other
 	 * connected handler returns TRUE then this default functionality
-	 * will be supressed.
+	 * will be suppressed.
 	 * TRUE to stop other handlers from being invoked for the
 	 * event. FALSE to propagate the event further.
 	 */
@@ -431,8 +430,8 @@ public class Settings : ObjectG
 	
 	/**
 	 * Creates a new GSettings object with a given schema and backend.
-	 * Creating settings objects with an different backend allows accessing settings
-	 * from a database other than the usual one. For example, it may make
+	 * Creating a GSettings object with a different backend allows accessing
+	 * settings from a database other than the usual one. For example, it may make
 	 * sense to pass a backend corresponding to the "defaults" settings database on
 	 * the system to get a settings object that modifies the system default
 	 * settings instead of the settings for this user.
@@ -840,6 +839,41 @@ public class Settings : ObjectG
 	
 	/**
 	 * Gets the value that is stored at key in settings.
+	 * A convenience variant of g_settings_get() for 32-bit unsigned
+	 * integers.
+	 * It is a programmer error to give a key that isn't specified as
+	 * having a uint32 type in the schema for settings.
+	 * Since 2.30
+	 * Params:
+	 * key = the key to get the value for
+	 * Returns: an unsigned integer
+	 */
+	public uint getUint(string key)
+	{
+		// guint g_settings_get_uint (GSettings *settings,  const gchar *key);
+		return g_settings_get_uint(gSettings, Str.toStringz(key));
+	}
+	
+	/**
+	 * Sets key in settings to value.
+	 * A convenience variant of g_settings_set() for 32-bit unsigned
+	 * integers.
+	 * It is a programmer error to give a key that isn't specified as
+	 * having a uint32 type in the schema for settings.
+	 * Since 2.30
+	 * Params:
+	 * key = the name of the key to set
+	 * value = the value to set it to
+	 * Returns: TRUE if setting the key succeeded, FALSE if the key was not writable
+	 */
+	public int setUint(string key, uint value)
+	{
+		// gboolean g_settings_set_uint (GSettings *settings,  const gchar *key,  guint value);
+		return g_settings_set_uint(gSettings, Str.toStringz(key), value);
+	}
+	
+	/**
+	 * Gets the value that is stored at key in settings.
 	 * A convenience variant of g_settings_get() for doubles.
 	 * It is a programmer error to give a key that isn't specified as
 	 * having a 'double' type in the schema for settings.
@@ -1001,7 +1035,7 @@ public class Settings : ObjectG
 	
 	/**
 	 * Looks up the flags type nicks for the bits specified by value, puts
-	 * them in an array of strings and writes the array to key, withing
+	 * them in an array of strings and writes the array to key, within
 	 * settings.
 	 * It is a programmer error to give a key that isn't contained in the
 	 * schema for settings or is not marked as a flags type, or for value

@@ -176,7 +176,7 @@ public class SettingsBackend : ObjectG
 	 * fact). It may not rely on the existence of a mainloop for
 	 * dispatching the signal later.
 	 * The implementation may call this function at any other time it likes
-	 * in response to other events (such as changes occuring outside of the
+	 * in response to other events (such as changes occurring outside of the
 	 * program). These calls may originate from a mainloop or may originate
 	 * in response to any other action (including from calls to
 	 * g_settings_backend_write()).

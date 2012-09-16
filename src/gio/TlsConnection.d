@@ -49,9 +49,13 @@
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.TlsCertificate
+ * 	- gio.TlsDatabase
+ * 	- gio.TlsInteraction
  * structWrap:
  * 	- GCancellable* -> Cancellable
  * 	- GTlsCertificate* -> TlsCertificate
+ * 	- GTlsDatabase* -> TlsDatabase
+ * 	- GTlsInteraction* -> TlsInteraction
  * module aliases:
  * local aliases:
  * overrides:
@@ -73,6 +77,8 @@ private import glib.GException;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.TlsCertificate;
+private import gio.TlsDatabase;
+private import gio.TlsInteraction;
 
 
 
@@ -354,7 +360,7 @@ public class TlsConnection : IOStream
 	
 	/**
 	 * Gets conn rehandshaking mode. See
-	 * g_tls_connection_set_rehandshake() for details.
+	 * g_tls_connection_set_rehandshake_mode() for details.
 	 * Since 2.28
 	 * Returns: conn's rehandshaking mode
 	 */
@@ -365,6 +371,8 @@ public class TlsConnection : IOStream
 	}
 	
 	/**
+	 * Warning
+	 * g_tls_connection_set_use_system_certdb has been deprecated since version 2.30 and should not be used in newly-written code. Use g_tls_connection_set_database() instead
 	 * Sets whether conn uses the system certificate database to verify
 	 * peer certificates. This is TRUE by default. If set to FALSE, then
 	 * peer certificate validation will always set the
@@ -372,7 +380,6 @@ public class TlsConnection : IOStream
 	 * "accept-certificate" will always be emitted on
 	 * client-side connections, unless that bit is not set in
 	 * "validation-flags").
-	 * Since 2.28
 	 * Params:
 	 * useSystemCertdb = whether to use the system certificate database
 	 */
@@ -383,15 +390,86 @@ public class TlsConnection : IOStream
 	}
 	
 	/**
+	 * Warning
+	 * g_tls_connection_get_use_system_certdb has been deprecated since version 2.30 and should not be used in newly-written code. Use g_tls_connection_get_database() instead
 	 * Gets whether conn uses the system certificate database to verify
 	 * peer certificates. See g_tls_connection_set_use_system_certdb().
-	 * Since 2.28
 	 * Returns: whether conn uses the system certificate database
 	 */
 	public int getUseSystemCertdb()
 	{
 		// gboolean g_tls_connection_get_use_system_certdb  (GTlsConnection *conn);
 		return g_tls_connection_get_use_system_certdb(gTlsConnection);
+	}
+	
+	/**
+	 * Gets the certificate database that conn uses to verify
+	 * peer certificates. See g_tls_connection_set_database().
+	 * Since 2.30
+	 * Returns: the certificate database that conn uses or NULL. [transfer none]
+	 */
+	public TlsDatabase getDatabase()
+	{
+		// GTlsDatabase * g_tls_connection_get_database (GTlsConnection *conn);
+		auto p = g_tls_connection_get_database(gTlsConnection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TlsDatabase(cast(GTlsDatabase*) p);
+	}
+	
+	/**
+	 * Sets the certificate database that is used to verify peer certificates.
+	 * This is set to the default database by default. See
+	 * g_tls_backend_get_default_database(). If set to NULL, then
+	 * peer certificate validation will always set the
+	 * G_TLS_CERTIFICATE_UNKNOWN_CA error (meaning
+	 * "accept-certificate" will always be emitted on
+	 * client-side connections, unless that bit is not set in
+	 * "validation-flags").
+	 * Since 2.30
+	 * Params:
+	 * database = a GTlsDatabase
+	 */
+	public void setDatabase(TlsDatabase database)
+	{
+		// void g_tls_connection_set_database (GTlsConnection *conn,  GTlsDatabase *database);
+		g_tls_connection_set_database(gTlsConnection, (database is null) ? null : database.getTlsDatabaseStruct());
+	}
+	
+	/**
+	 * Get the object that will be used to interact with the user. It will be used
+	 * for things like prompting the user for passwords. If NULL is returned, then
+	 * no user interaction will occur for this connection.
+	 * Since 2.30
+	 * Returns: The interaction object. [transfer none]
+	 */
+	public TlsInteraction getInteraction()
+	{
+		// GTlsInteraction * g_tls_connection_get_interaction (GTlsConnection *conn);
+		auto p = g_tls_connection_get_interaction(gTlsConnection);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TlsInteraction(cast(GTlsInteraction*) p);
+	}
+	
+	/**
+	 * Set the object that will be used to interact with the user. It will be used
+	 * for things like prompting the user for passwords.
+	 * The interaction argument will normally be a derived subclass of
+	 * GTlsInteraction. NULL can also be provided if no user interaction
+	 * should occur for this connection.
+	 * Since 2.30
+	 * Params:
+	 * interaction = an interaction object, or NULL. [allow-none]
+	 */
+	public void setInteraction(TlsInteraction interaction)
+	{
+		// void g_tls_connection_set_interaction (GTlsConnection *conn,  GTlsInteraction *interaction);
+		g_tls_connection_set_interaction(gTlsConnection, (interaction is null) ? null : interaction.getTlsInteractionStruct());
 	}
 	
 	/**

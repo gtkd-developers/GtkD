@@ -135,7 +135,7 @@ public interface ProxyIF
 	 * See g_proxy_connect().
 	 * Since 2.26
 	 * Params:
-	 * result = a GAsyncRetult
+	 * result = a GAsyncResult
 	 * Returns: a GIOStream. [transfer full]
 	 * Throws: GException on failure.
 	 */

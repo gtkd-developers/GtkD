@@ -83,12 +83,14 @@ private import gobject.ObjectG;
  * GUnixCredentialsMessage, g_unix_connection_send_credentials() and
  * g_unix_connection_receive_credentials() for details.
  * On Linux, the native credential type is a struct ucred
- * - see the
+ * see the
  * unix(7)
  * man page for details. This corresponds to
  * G_CREDENTIALS_TYPE_LINUX_UCRED.
  * On FreeBSD, the native credential type is a struct cmsgcred.
  * This corresponds to G_CREDENTIALS_TYPE_FREEBSD_CMSGCRED.
+ * On OpenBSD, the native credential type is a struct sockpeercred.
+ * This corresponds to G_CREDENTIALS_TYPE_OPENBSD_SOCKPEERCRED.
  */
 public class Credentials : ObjectG
 {

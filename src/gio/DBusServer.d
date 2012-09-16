@@ -84,7 +84,12 @@ private import gobject.ObjectG;
 /**
  * Description
  * GDBusServer is a helper for listening to and accepting D-Bus
- * connections.
+ * connections. This can be used to create a new D-Bus server, allowing two
+ * peers to use the D-Bus protocol for their own specialized communication.
+ * A server instance provided in this way will not perform message routing or
+ * implement the org.freedesktop.DBus interface.
+ * To just export an object on a well-known name on a message bus, such as the
+ * session or system bus, you should instead use g_bus_own_name().
  * $(DDOC_COMMENT example)
  */
 public class DBusServer : ObjectG, InitableIF
@@ -203,7 +208,8 @@ public class DBusServer : ObjectG, InitableIF
 	 * g_dbus_server_start().
 	 * See Example 6, “D-Bus peer-to-peer example” for how GDBusServer can
 	 * be used.
-	 * This is a synchronous failable constructor.
+	 * This is a synchronous failable constructor. See
+	 * g_dbus_server_new() for the asynchronous version.
 	 * Since 2.26
 	 * Params:
 	 * address = A D-Bus address.

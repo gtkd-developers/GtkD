@@ -68,12 +68,12 @@ private import gio.SocketService;
  * Description
  * A GThreadedSocketService is a simple subclass of GSocketService
  * that handles incoming connections by creating a worker thread and
- * dispatching the connection to it by emitting the ::run signal in
- * the new thread.
+ * dispatching the connection to it by emitting the
+ * "run" signal in the new thread.
  * The signal handler may perform blocking IO and need not return
  * until the connection is closed.
  * The service is implemented using a thread pool, so there is a
- * limited amount of threads availible to serve incomming requests.
+ * limited amount of threads available to serve incoming requests.
  * The service automatically stops the GSocketService from accepting
  * new connections when all threads are busy.
  * As with GSocketService, you may connect to "run",
@@ -135,7 +135,7 @@ public class ThreadedSocketService : SocketService
 	 * incoming connection. This thread is dedicated to handling
 	 * connection and may perform blocking IO. The signal handler need
 	 * not return until the connection is closed.
-	 * TRUE to stope further signal handlers from being called
+	 * TRUE to stop further signal handlers from being called
 	 * See Also
 	 * GSocketService.
 	 */
@@ -170,7 +170,7 @@ public class ThreadedSocketService : SocketService
 	
 	/**
 	 * Creates a new GThreadedSocketService with no listeners. Listeners
-	 * must be added with g_socket_service_add_listeners().
+	 * must be added with one of the GSocketListener "add" methods.
 	 * Since 2.22
 	 * Params:
 	 * maxThreads = the maximal number of threads to execute concurrently

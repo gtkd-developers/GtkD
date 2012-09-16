@@ -181,7 +181,7 @@ public class TlsClientConnection : TlsConnection
 	/**
 	 * Gets conn's expected server identity
 	 * Since 2.28
-	 * Returns: a GSocketConnectable describing the expected server identity, or NULL if the expected identity is not known.
+	 * Returns: a GSocketConnectable describing the expected server identity, or NULL if the expected identity is not known. [transfer none]
 	 */
 	public SocketConnectableIF getServerIdentity()
 	{

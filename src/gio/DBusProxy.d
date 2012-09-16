@@ -36,6 +36,9 @@
  * template for:
  * extend  = GObject
  * implements:
+ * 	- AsyncInitableIF
+ * 	- DBusInterfaceIF
+ * 	- InitableIF
  * prefixes:
  * 	- g_dbus_proxy_
  * omit structs:
@@ -52,10 +55,18 @@
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.DBusConnection
+ * 	- gio.UnixFDList
+ * 	- gio.AsyncInitableT
+ * 	- gio.AsyncInitableIF
+ * 	- gio.DBusInterfaceT
+ * 	- gio.DBusInterfaceIF
+ * 	- gio.InitableT
+ * 	- gio.InitableIF
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GDBusConnection* -> DBusConnection
+ * 	- GUnixFDList* -> UnixFDList
  * 	- GVariant* -> Variant
  * module aliases:
  * local aliases:
@@ -79,6 +90,13 @@ private import glib.Variant;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.DBusConnection;
+private import gio.UnixFDList;
+private import gio.AsyncInitableT;
+private import gio.AsyncInitableIF;
+private import gio.DBusInterfaceT;
+private import gio.DBusInterfaceIF;
+private import gio.InitableT;
+private import gio.InitableIF;
 
 
 
@@ -106,14 +124,22 @@ private import gobject.ObjectG;
  * then calls will be sent to the well-known name which may result in
  * the message bus launching an owner (unless
  * G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START is set).
- * The generic "g-properties-changed" and "g-signal"
- * signals are not very convenient to work with. Therefore, the recommended
- * way of working with proxies is to subclass GDBusProxy, and have
- * more natural properties and signals in your derived class.
- * See Example 19, “GDBusProxy subclass example” for an example.
+ * The generic "g-properties-changed" and
+ * "g-signal" signals are not very convenient to work
+ * with. Therefore, the recommended way of working with proxies is to
+ * subclass GDBusProxy, and have more natural properties and signals
+ * in your derived class. See the section called “Using gdbus-codegen”
+ * for how this can easily be done using the
+ * gdbus-codegen
+ * tool.
+ * A GDBusProxy instance can be used from multiple threads but note
+ * that all signals (e.g. "g-signal", "g-properties-changed"
+ * and "notify") are emitted in the
+ * thread-default main loop
+ * of the thread where the instance was constructed.
  * $(DDOC_COMMENT example)
  */
-public class DBusProxy : ObjectG
+public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 {
 	
 	/** the main Gtk struct */
@@ -158,6 +184,15 @@ public class DBusProxy : ObjectG
 		super.setStruct(obj);
 		gDBusProxy = cast(GDBusProxy*)obj;
 	}
+	
+	// add the DBusInterface capabilities
+	mixin AsyncInitableT!(GDBusProxy);
+	
+	// add the DBusInterface capabilities
+	mixin DBusInterfaceT!(GDBusProxy);
+	
+	// add the Initable capabilities
+	mixin InitableT!(GDBusProxy);
 	
 	/**
 	 * Finishes creating a GDBusProxy.
@@ -509,8 +544,8 @@ public class DBusProxy : ObjectG
 	 * Looks up the value for a property from the cache. This call does no
 	 * blocking IO.
 	 * If proxy has an expected interface (see
-	 * "g-interface-info"), then property_name (for existence)
-	 * is checked against it.
+	 * "g-interface-info") and property_name is referenced by
+	 * it, then value is checked against the type of the property.
 	 * Since 2.26
 	 * Params:
 	 * propertyName = Property name.
@@ -533,8 +568,8 @@ public class DBusProxy : ObjectG
 	 * If value is NULL, then the cached value is removed from the
 	 * property cache.
 	 * If proxy has an expected interface (see
-	 * "g-interface-info"), then property_name (for existence)
-	 * and value (for the type) is checked against it.
+	 * "g-interface-info") and property_name is referenced by
+	 * it, then value is checked against the type of the property.
 	 * If the value GVariant is floating, it is consumed. This allows
 	 * convenient 'inline' use of g_variant_new(), e.g.
 	 * $(DDOC_COMMENT example)
@@ -565,7 +600,7 @@ public class DBusProxy : ObjectG
 	/**
 	 * Gets the names of all cached properties on proxy.
 	 * Since 2.26
-	 * Returns: A NULL-terminated array of strings or NULL if proxy has no cached properties. Free the returned array with g_strfreev().
+	 * Returns: A NULL-terminated array of strings or NULL if proxy has no cached properties. Free the returned array with g_strfreev(). [transfer full]
 	 */
 	public string[] getCachedPropertyNames()
 	{
@@ -575,11 +610,8 @@ public class DBusProxy : ObjectG
 	
 	/**
 	 * Ensure that interactions with proxy conform to the given
-	 * interface. For example, when completing a method call, if the type
-	 * signature of the message isn't what's expected, the given GError
-	 * is set. Signals that have a type signature mismatch are simply
-	 * dropped.
-	 * See the "g-interface-info" property for more details.
+	 * interface. See the "g-interface-info" property for more
+	 * details.
 	 * Since 2.26
 	 * Params:
 	 * info = Minimum interface this proxy conforms to or NULL to unset. [allow-none]
@@ -591,9 +623,9 @@ public class DBusProxy : ObjectG
 	}
 	
 	/**
-	 * Returns the GDBusInterfaceInfo, if any, specifying the minimal
-	 * interface that proxy conforms to.
-	 * See the "g-interface-info" property for more details.
+	 * Returns the GDBusInterfaceInfo, if any, specifying the interface
+	 * that proxy conforms to. See the "g-interface-info"
+	 * property for more details.
 	 * Since 2.26
 	 * Returns: A GDBusInterfaceInfo or NULL. Do not unref the returned object, it is owned by proxy.
 	 */
@@ -696,6 +728,96 @@ public class DBusProxy : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Like g_dbus_proxy_call() but also takes a GUnixFDList object.
+	 * This method is only available on UNIX.
+	 * Since 2.30
+	 * Params:
+	 * methodName = Name of method to invoke.
+	 * parameters = A GVariant tuple with parameters for the signal or NULL if not passing parameters. [allow-none]
+	 * flags = Flags from the GDBusCallFlags enumeration.
+	 * timeoutMsec = The timeout in milliseconds (with G_MAXINT meaning
+	 * "infinite") or -1 to use the proxy default timeout.
+	 * fdList = A GUnixFDList or NULL. [allow-none]
+	 * cancellable = A GCancellable or NULL.
+	 * callback = A GAsyncReadyCallback to call when the request is satisfied or NULL if you don't
+	 * care about the result of the method invocation.
+	 * userData = The data to pass to callback.
+	 */
+	public void callWithUnixFdList(string methodName, Variant parameters, GDBusCallFlags flags, int timeoutMsec, UnixFDList fdList, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_dbus_proxy_call_with_unix_fd_list (GDBusProxy *proxy,  const gchar *method_name,  GVariant *parameters,  GDBusCallFlags flags,  gint timeout_msec,  GUnixFDList *fd_list,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_dbus_proxy_call_with_unix_fd_list(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an operation started with g_dbus_proxy_call_with_unix_fd_list().
+	 * Since 2.30
+	 * Params:
+	 * outFdList = Return location for a GUnixFDList or NULL. [out]
+	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_proxy_call_with_unix_fd_list().
+	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
+	 * Throws: GException on failure.
+	 */
+	public Variant callWithUnixFdListFinish(out UnixFDList outFdList, AsyncResultIF res)
+	{
+		// GVariant * g_dbus_proxy_call_with_unix_fd_list_finish  (GDBusProxy *proxy,  GUnixFDList **out_fd_list,  GAsyncResult *res,  GError **error);
+		GUnixFDList* outoutFdList = null;
+		GError* err = null;
+		
+		auto p = g_dbus_proxy_call_with_unix_fd_list_finish(gDBusProxy, &outoutFdList, (res is null) ? null : res.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		outFdList = new UnixFDList(outoutFdList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Like g_dbus_proxy_call_sync() but also takes and returns GUnixFDList objects.
+	 * This method is only available on UNIX.
+	 * Since 2.30
+	 * Params:
+	 * methodName = Name of method to invoke.
+	 * parameters = A GVariant tuple with parameters for the signal
+	 * or NULL if not passing parameters. [allow-none]
+	 * flags = Flags from the GDBusCallFlags enumeration.
+	 * timeoutMsec = The timeout in milliseconds (with G_MAXINT meaning
+	 * "infinite") or -1 to use the proxy default timeout.
+	 * fdList = A GUnixFDList or NULL. [allow-none]
+	 * outFdList = Return location for a GUnixFDList or NULL. [out]
+	 * cancellable = A GCancellable or NULL.
+	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
+	 * Throws: GException on failure.
+	 */
+	public Variant callWithUnixFdListSync(string methodName, Variant parameters, GDBusCallFlags flags, int timeoutMsec, UnixFDList fdList, out UnixFDList outFdList, Cancellable cancellable)
+	{
+		// GVariant * g_dbus_proxy_call_with_unix_fd_list_sync  (GDBusProxy *proxy,  const gchar *method_name,  GVariant *parameters,  GDBusCallFlags flags,  gint timeout_msec,  GUnixFDList *fd_list,  GUnixFDList **out_fd_list,  GCancellable *cancellable,  GError **error);
+		GUnixFDList* outoutFdList = null;
+		GError* err = null;
+		
+		auto p = g_dbus_proxy_call_with_unix_fd_list_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		outFdList = new UnixFDList(outoutFdList);
 		if(p is null)
 		{
 			return null;

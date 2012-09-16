@@ -43,6 +43,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_simple_async_result_new_take_error
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -363,7 +364,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	
 	/**
 	 * Completes an asynchronous function in an idle handler in the thread-default main
-	 * loop of the thread that simple was initially created in.
+	 * loop of the thread that simple was initially created in
+	 * (and re-pushes that context around the invocation of the callback).
 	 * Calling this function takes a reference to simple for as long as
 	 * is needed to complete the call.
 	 */

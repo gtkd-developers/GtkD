@@ -274,6 +274,13 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_monitor_set_rate_limit, \"g_file_monitor_set_rate_limit\", LIBRARY.GIO);
 	Linker.link(g_file_monitor_emit_event, \"g_file_monitor_emit_event\", LIBRARY.GIO);
 
+	// gio.FilenameCompleter
+
+	Linker.link(g_filename_completer_new, \"g_filename_completer_new\", LIBRARY.GIO);
+	Linker.link(g_filename_completer_get_completion_suffix, \"g_filename_completer_get_completion_suffix\", LIBRARY.GIO);
+	Linker.link(g_filename_completer_get_completions, \"g_filename_completer_get_completions\", LIBRARY.GIO);
+	Linker.link(g_filename_completer_set_dirs_only, \"g_filename_completer_set_dirs_only\", LIBRARY.GIO);
+
 	// gio.Cancellable
 
 	Linker.link(g_cancellable_new, \"g_cancellable_new\", LIBRARY.GIO);
@@ -516,8 +523,10 @@ mixin( _shared ~ "static this()
 	Linker.link(g_data_input_stream_read_int64, \"g_data_input_stream_read_int64\", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_uint64, \"g_data_input_stream_read_uint64\", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_line, \"g_data_input_stream_read_line\", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_line_utf8, \"g_data_input_stream_read_line_utf8\", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_line_async, \"g_data_input_stream_read_line_async\", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_line_finish, \"g_data_input_stream_read_line_finish\", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_read_line_finish_utf8, \"g_data_input_stream_read_line_finish_utf8\", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_upto, \"g_data_input_stream_read_upto\", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_upto_async, \"g_data_input_stream_read_upto_async\", LIBRARY.GIO);
 	Linker.link(g_data_input_stream_read_upto_finish, \"g_data_input_stream_read_upto_finish\", LIBRARY.GIO);
@@ -648,7 +657,12 @@ mixin( _shared ~ "static this()
 	Linker.link(g_desktop_app_info_new, \"g_desktop_app_info_new\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_get_filename, \"g_desktop_app_info_get_filename\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_get_is_hidden, \"g_desktop_app_info_get_is_hidden\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_nodisplay, \"g_desktop_app_info_get_nodisplay\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_show_in, \"g_desktop_app_info_get_show_in\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_generic_name, \"g_desktop_app_info_get_generic_name\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_categories, \"g_desktop_app_info_get_categories\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_set_desktop_env, \"g_desktop_app_info_set_desktop_env\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_launch_uris_as_manager, \"g_desktop_app_info_launch_uris_as_manager\", LIBRARY.GIO);
 
 	// gio.VolumeMonitor
 
@@ -913,6 +927,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_inet_address_new_from_bytes, \"g_inet_address_new_from_bytes\", LIBRARY.GIO);
 	Linker.link(g_inet_address_new_any, \"g_inet_address_new_any\", LIBRARY.GIO);
 	Linker.link(g_inet_address_new_loopback, \"g_inet_address_new_loopback\", LIBRARY.GIO);
+	Linker.link(g_inet_address_equal, \"g_inet_address_equal\", LIBRARY.GIO);
 	Linker.link(g_inet_address_to_bytes, \"g_inet_address_to_bytes\", LIBRARY.GIO);
 	Linker.link(g_inet_address_get_native_size, \"g_inet_address_get_native_size\", LIBRARY.GIO);
 	Linker.link(g_inet_address_to_string, \"g_inet_address_to_string\", LIBRARY.GIO);
@@ -1120,6 +1135,10 @@ mixin( _shared ~ "static this()
 	Linker.link(g_tls_connection_get_rehandshake_mode, \"g_tls_connection_get_rehandshake_mode\", LIBRARY.GIO);
 	Linker.link(g_tls_connection_set_use_system_certdb, \"g_tls_connection_set_use_system_certdb\", LIBRARY.GIO);
 	Linker.link(g_tls_connection_get_use_system_certdb, \"g_tls_connection_get_use_system_certdb\", LIBRARY.GIO);
+	Linker.link(g_tls_connection_get_database, \"g_tls_connection_get_database\", LIBRARY.GIO);
+	Linker.link(g_tls_connection_set_database, \"g_tls_connection_set_database\", LIBRARY.GIO);
+	Linker.link(g_tls_connection_get_interaction, \"g_tls_connection_get_interaction\", LIBRARY.GIO);
+	Linker.link(g_tls_connection_set_interaction, \"g_tls_connection_set_interaction\", LIBRARY.GIO);
 	Linker.link(g_tls_connection_handshake, \"g_tls_connection_handshake\", LIBRARY.GIO);
 	Linker.link(g_tls_connection_handshake_async, \"g_tls_connection_handshake_async\", LIBRARY.GIO);
 	Linker.link(g_tls_connection_handshake_finish, \"g_tls_connection_handshake_finish\", LIBRARY.GIO);
@@ -1144,9 +1163,50 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_tls_backend_get_default, \"g_tls_backend_get_default\", LIBRARY.GIO);
 	Linker.link(g_tls_backend_supports_tls, \"g_tls_backend_supports_tls\", LIBRARY.GIO);
+	Linker.link(g_tls_backend_get_default_database, \"g_tls_backend_get_default_database\", LIBRARY.GIO);
 	Linker.link(g_tls_backend_get_certificate_type, \"g_tls_backend_get_certificate_type\", LIBRARY.GIO);
 	Linker.link(g_tls_backend_get_client_connection_type, \"g_tls_backend_get_client_connection_type\", LIBRARY.GIO);
 	Linker.link(g_tls_backend_get_server_connection_type, \"g_tls_backend_get_server_connection_type\", LIBRARY.GIO);
+	Linker.link(g_tls_backend_get_file_database_type, \"g_tls_backend_get_file_database_type\", LIBRARY.GIO);
+
+	// gio.TlsDatabase
+
+	Linker.link(g_tls_database_verify_chain, \"g_tls_database_verify_chain\", LIBRARY.GIO);
+	Linker.link(g_tls_database_verify_chain_async, \"g_tls_database_verify_chain_async\", LIBRARY.GIO);
+	Linker.link(g_tls_database_verify_chain_finish, \"g_tls_database_verify_chain_finish\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificate_issuer, \"g_tls_database_lookup_certificate_issuer\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificate_issuer_async, \"g_tls_database_lookup_certificate_issuer_async\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificate_issuer_finish, \"g_tls_database_lookup_certificate_issuer_finish\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificates_issued_by, \"g_tls_database_lookup_certificates_issued_by\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificates_issued_by_async, \"g_tls_database_lookup_certificates_issued_by_async\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificates_issued_by_finish, \"g_tls_database_lookup_certificates_issued_by_finish\", LIBRARY.GIO);
+	Linker.link(g_tls_database_create_certificate_handle, \"g_tls_database_create_certificate_handle\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificate_for_handle, \"g_tls_database_lookup_certificate_for_handle\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificate_for_handle_async, \"g_tls_database_lookup_certificate_for_handle_async\", LIBRARY.GIO);
+	Linker.link(g_tls_database_lookup_certificate_for_handle_finish, \"g_tls_database_lookup_certificate_for_handle_finish\", LIBRARY.GIO);
+
+	// gio.TlsFileDatabase
+
+	Linker.link(g_tls_file_database_new, \"g_tls_file_database_new\", LIBRARY.GIO);
+
+	// gio.TlsInteraction
+
+	Linker.link(g_tls_interaction_ask_password, \"g_tls_interaction_ask_password\", LIBRARY.GIO);
+	Linker.link(g_tls_interaction_ask_password_async, \"g_tls_interaction_ask_password_async\", LIBRARY.GIO);
+	Linker.link(g_tls_interaction_ask_password_finish, \"g_tls_interaction_ask_password_finish\", LIBRARY.GIO);
+
+	// gio.TlsPassword
+
+	Linker.link(g_tls_password_new, \"g_tls_password_new\", LIBRARY.GIO);
+	Linker.link(g_tls_password_get_value, \"g_tls_password_get_value\", LIBRARY.GIO);
+	Linker.link(g_tls_password_set_value, \"g_tls_password_set_value\", LIBRARY.GIO);
+	Linker.link(g_tls_password_set_value_full, \"g_tls_password_set_value_full\", LIBRARY.GIO);
+	Linker.link(g_tls_password_get_description, \"g_tls_password_get_description\", LIBRARY.GIO);
+	Linker.link(g_tls_password_set_description, \"g_tls_password_set_description\", LIBRARY.GIO);
+	Linker.link(g_tls_password_get_flags, \"g_tls_password_get_flags\", LIBRARY.GIO);
+	Linker.link(g_tls_password_set_flags, \"g_tls_password_set_flags\", LIBRARY.GIO);
+	Linker.link(g_tls_password_get_warning, \"g_tls_password_get_warning\", LIBRARY.GIO);
+	Linker.link(g_tls_password_set_warning, \"g_tls_password_set_warning\", LIBRARY.GIO);
 
 	// gio.Resolver
 
@@ -1229,34 +1289,59 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_is_unique_name, \"g_dbus_is_unique_name\", LIBRARY.GIO);
 	Linker.link(g_dbus_is_member_name, \"g_dbus_is_member_name\", LIBRARY.GIO);
 	Linker.link(g_dbus_is_interface_name, \"g_dbus_is_interface_name\", LIBRARY.GIO);
+	Linker.link(g_dbus_gvalue_to_gvariant, \"g_dbus_gvalue_to_gvariant\", LIBRARY.GIO);
+	Linker.link(g_dbus_gvariant_to_gvalue, \"g_dbus_gvariant_to_gvalue\", LIBRARY.GIO);
 	Linker.link(g_dbus_is_address, \"g_dbus_is_address\", LIBRARY.GIO);
 	Linker.link(g_dbus_is_supported_address, \"g_dbus_is_supported_address\", LIBRARY.GIO);
 	Linker.link(g_dbus_address_get_stream, \"g_dbus_address_get_stream\", LIBRARY.GIO);
 	Linker.link(g_dbus_address_get_stream_finish, \"g_dbus_address_get_stream_finish\", LIBRARY.GIO);
 	Linker.link(g_dbus_address_get_stream_sync, \"g_dbus_address_get_stream_sync\", LIBRARY.GIO);
 	Linker.link(g_dbus_address_get_for_bus_sync, \"g_dbus_address_get_for_bus_sync\", LIBRARY.GIO);
+
+	// gio.DBusAnnotationInfo
+
 	Linker.link(g_dbus_annotation_info_lookup, \"g_dbus_annotation_info_lookup\", LIBRARY.GIO);
+	Linker.link(g_dbus_annotation_info_ref, \"g_dbus_annotation_info_ref\", LIBRARY.GIO);
+	Linker.link(g_dbus_annotation_info_unref, \"g_dbus_annotation_info_unref\", LIBRARY.GIO);
+
+	// gio.DBusArgInfo
+
+	Linker.link(g_dbus_arg_info_ref, \"g_dbus_arg_info_ref\", LIBRARY.GIO);
+	Linker.link(g_dbus_arg_info_unref, \"g_dbus_arg_info_unref\", LIBRARY.GIO);
+
+	// gio.DBusMethodInfo
+
+	Linker.link(g_dbus_method_info_ref, \"g_dbus_method_info_ref\", LIBRARY.GIO);
+	Linker.link(g_dbus_method_info_unref, \"g_dbus_method_info_unref\", LIBRARY.GIO);
+
+	// gio.DBusSignalInfo
+
+	Linker.link(g_dbus_signal_info_ref, \"g_dbus_signal_info_ref\", LIBRARY.GIO);
+	Linker.link(g_dbus_signal_info_unref, \"g_dbus_signal_info_unref\", LIBRARY.GIO);
+
+	// gio.DBusPropertyInfo
+
+	Linker.link(g_dbus_property_info_ref, \"g_dbus_property_info_ref\", LIBRARY.GIO);
+	Linker.link(g_dbus_property_info_unref, \"g_dbus_property_info_unref\", LIBRARY.GIO);
+
+	// gio.DBusInterfaceInfo
+
 	Linker.link(g_dbus_interface_info_lookup_method, \"g_dbus_interface_info_lookup_method\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_info_lookup_signal, \"g_dbus_interface_info_lookup_signal\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_info_lookup_property, \"g_dbus_interface_info_lookup_property\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_cache_build, \"g_dbus_interface_info_cache_build\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_cache_release, \"g_dbus_interface_info_cache_release\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_info_generate_xml, \"g_dbus_interface_info_generate_xml\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_ref, \"g_dbus_interface_info_ref\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_unref, \"g_dbus_interface_info_unref\", LIBRARY.GIO);
+
+	// gio.DBusNodeInfo
+
 	Linker.link(g_dbus_node_info_new_for_xml, \"g_dbus_node_info_new_for_xml\", LIBRARY.GIO);
 	Linker.link(g_dbus_node_info_lookup_interface, \"g_dbus_node_info_lookup_interface\", LIBRARY.GIO);
 	Linker.link(g_dbus_node_info_generate_xml, \"g_dbus_node_info_generate_xml\", LIBRARY.GIO);
 	Linker.link(g_dbus_node_info_ref, \"g_dbus_node_info_ref\", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_ref, \"g_dbus_interface_info_ref\", LIBRARY.GIO);
-	Linker.link(g_dbus_method_info_ref, \"g_dbus_method_info_ref\", LIBRARY.GIO);
-	Linker.link(g_dbus_signal_info_ref, \"g_dbus_signal_info_ref\", LIBRARY.GIO);
-	Linker.link(g_dbus_property_info_ref, \"g_dbus_property_info_ref\", LIBRARY.GIO);
-	Linker.link(g_dbus_arg_info_ref, \"g_dbus_arg_info_ref\", LIBRARY.GIO);
-	Linker.link(g_dbus_annotation_info_ref, \"g_dbus_annotation_info_ref\", LIBRARY.GIO);
 	Linker.link(g_dbus_node_info_unref, \"g_dbus_node_info_unref\", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_unref, \"g_dbus_interface_info_unref\", LIBRARY.GIO);
-	Linker.link(g_dbus_method_info_unref, \"g_dbus_method_info_unref\", LIBRARY.GIO);
-	Linker.link(g_dbus_signal_info_unref, \"g_dbus_signal_info_unref\", LIBRARY.GIO);
-	Linker.link(g_dbus_property_info_unref, \"g_dbus_property_info_unref\", LIBRARY.GIO);
-	Linker.link(g_dbus_arg_info_unref, \"g_dbus_arg_info_unref\", LIBRARY.GIO);
-	Linker.link(g_dbus_annotation_info_unref, \"g_dbus_annotation_info_unref\", LIBRARY.GIO);
 
 	// gio.DBusError
 
@@ -1352,6 +1437,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_connection_call, \"g_dbus_connection_call\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_call_finish, \"g_dbus_connection_call_finish\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_call_sync, \"g_dbus_connection_call_sync\", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_call_with_unix_fd_list, \"g_dbus_connection_call_with_unix_fd_list\", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_call_with_unix_fd_list_finish, \"g_dbus_connection_call_with_unix_fd_list_finish\", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_call_with_unix_fd_list_sync, \"g_dbus_connection_call_with_unix_fd_list_sync\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_emit_signal, \"g_dbus_connection_emit_signal\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_signal_subscribe, \"g_dbus_connection_signal_subscribe\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_signal_unsubscribe, \"g_dbus_connection_signal_unsubscribe\", LIBRARY.GIO);
@@ -1383,6 +1471,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_method_invocation_return_error_literal, \"g_dbus_method_invocation_return_error_literal\", LIBRARY.GIO);
 	Linker.link(g_dbus_method_invocation_return_gerror, \"g_dbus_method_invocation_return_gerror\", LIBRARY.GIO);
 	Linker.link(g_dbus_method_invocation_return_dbus_error, \"g_dbus_method_invocation_return_dbus_error\", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_take_error, \"g_dbus_method_invocation_take_error\", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_return_value_with_unix_fd_list, \"g_dbus_method_invocation_return_value_with_unix_fd_list\", LIBRARY.GIO);
 
 	// gio.DBusServer
 
@@ -1412,6 +1502,31 @@ mixin( _shared ~ "static this()
 	Linker.link(g_bus_watch_name_with_closures, \"g_bus_watch_name_with_closures\", LIBRARY.GIO);
 	Linker.link(g_bus_watch_name_on_connection_with_closures, \"g_bus_watch_name_on_connection_with_closures\", LIBRARY.GIO);
 
+	// gio.DBusInterfaceT
+
+
+	// gio.DBusInterfaceT
+
+	Linker.link(g_dbus_interface_get_info, \"g_dbus_interface_get_info\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_get_object, \"g_dbus_interface_get_object\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_set_object, \"g_dbus_interface_set_object\", LIBRARY.GIO);
+
+	// gio.DBusInterface
+
+
+	// gio.DBusInterfaceSkeleton
+
+	Linker.link(g_dbus_interface_skeleton_flush, \"g_dbus_interface_skeleton_flush\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_get_info, \"g_dbus_interface_skeleton_get_info\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_get_vtable, \"g_dbus_interface_skeleton_get_vtable\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_get_properties, \"g_dbus_interface_skeleton_get_properties\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_export, \"g_dbus_interface_skeleton_export\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_unexport, \"g_dbus_interface_skeleton_unexport\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_get_connection, \"g_dbus_interface_skeleton_get_connection\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_get_object_path, \"g_dbus_interface_skeleton_get_object_path\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_get_flags, \"g_dbus_interface_skeleton_get_flags\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_set_flags, \"g_dbus_interface_skeleton_set_flags\", LIBRARY.GIO);
+
 	// gio.DBusProxy
 
 	Linker.link(g_dbus_proxy_new, \"g_dbus_proxy_new\", LIBRARY.GIO);
@@ -1436,13 +1551,67 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_proxy_call, \"g_dbus_proxy_call\", LIBRARY.GIO);
 	Linker.link(g_dbus_proxy_call_finish, \"g_dbus_proxy_call_finish\", LIBRARY.GIO);
 	Linker.link(g_dbus_proxy_call_sync, \"g_dbus_proxy_call_sync\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call_with_unix_fd_list, \"g_dbus_proxy_call_with_unix_fd_list\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call_with_unix_fd_list_finish, \"g_dbus_proxy_call_with_unix_fd_list_finish\", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_call_with_unix_fd_list_sync, \"g_dbus_proxy_call_with_unix_fd_list_sync\", LIBRARY.GIO);
 
-	// gio.FilenameCompleter
+	// gio.DBusObjectT
 
-	Linker.link(g_filename_completer_new, \"g_filename_completer_new\", LIBRARY.GIO);
-	Linker.link(g_filename_completer_get_completion_suffix, \"g_filename_completer_get_completion_suffix\", LIBRARY.GIO);
-	Linker.link(g_filename_completer_get_completions, \"g_filename_completer_get_completions\", LIBRARY.GIO);
-	Linker.link(g_filename_completer_set_dirs_only, \"g_filename_completer_set_dirs_only\", LIBRARY.GIO);
+
+	// gio.DBusObjectT
+
+	Linker.link(g_dbus_object_get_object_path, \"g_dbus_object_get_object_path\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_get_interfaces, \"g_dbus_object_get_interfaces\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_get_interface, \"g_dbus_object_get_interface\", LIBRARY.GIO);
+
+	// gio.DBusObject
+
+
+	// gio.DBusObjectSkeleton
+
+	Linker.link(g_dbus_object_skeleton_new, \"g_dbus_object_skeleton_new\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_skeleton_flush, \"g_dbus_object_skeleton_flush\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_skeleton_add_interface, \"g_dbus_object_skeleton_add_interface\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_skeleton_remove_interface, \"g_dbus_object_skeleton_remove_interface\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_skeleton_remove_interface_by_name, \"g_dbus_object_skeleton_remove_interface_by_name\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_skeleton_set_object_path, \"g_dbus_object_skeleton_set_object_path\", LIBRARY.GIO);
+
+	// gio.DBusObjectProxy
+
+	Linker.link(g_dbus_object_proxy_new, \"g_dbus_object_proxy_new\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_proxy_get_connection, \"g_dbus_object_proxy_get_connection\", LIBRARY.GIO);
+
+	// gio.DBusObjectManagerT
+
+
+	// gio.DBusObjectManagerT
+
+	Linker.link(g_dbus_object_manager_get_object_path, \"g_dbus_object_manager_get_object_path\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_get_objects, \"g_dbus_object_manager_get_objects\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_get_object, \"g_dbus_object_manager_get_object\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_get_interface, \"g_dbus_object_manager_get_interface\", LIBRARY.GIO);
+
+	// gio.DBusObjectManagerServer
+
+	Linker.link(g_dbus_object_manager_server_new, \"g_dbus_object_manager_server_new\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_server_get_connection, \"g_dbus_object_manager_server_get_connection\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_server_set_connection, \"g_dbus_object_manager_server_set_connection\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_server_export, \"g_dbus_object_manager_server_export\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_server_export_uniquely, \"g_dbus_object_manager_server_export_uniquely\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_server_unexport, \"g_dbus_object_manager_server_unexport\", LIBRARY.GIO);
+
+	// gio.DBusObjectManagerClient
+
+	Linker.link(g_dbus_object_manager_client_new, \"g_dbus_object_manager_client_new\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_new_finish, \"g_dbus_object_manager_client_new_finish\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_new_sync, \"g_dbus_object_manager_client_new_sync\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_new_for_bus, \"g_dbus_object_manager_client_new_for_bus\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_new_for_bus_finish, \"g_dbus_object_manager_client_new_for_bus_finish\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_new_for_bus_sync, \"g_dbus_object_manager_client_new_for_bus_sync\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_get_connection, \"g_dbus_object_manager_client_get_connection\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_get_flags, \"g_dbus_object_manager_client_get_flags\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_get_name, \"g_dbus_object_manager_client_get_name\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_get_name_owner, \"g_dbus_object_manager_client_get_name_owner\", LIBRARY.GIO);
 
 	// gio.Settings
 
@@ -1472,6 +1641,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_settings_set_boolean, \"g_settings_set_boolean\", LIBRARY.GIO);
 	Linker.link(g_settings_get_int, \"g_settings_get_int\", LIBRARY.GIO);
 	Linker.link(g_settings_set_int, \"g_settings_set_int\", LIBRARY.GIO);
+	Linker.link(g_settings_get_uint, \"g_settings_get_uint\", LIBRARY.GIO);
+	Linker.link(g_settings_set_uint, \"g_settings_set_uint\", LIBRARY.GIO);
 	Linker.link(g_settings_get_double, \"g_settings_get_double\", LIBRARY.GIO);
 	Linker.link(g_settings_set_double, \"g_settings_set_double\", LIBRARY.GIO);
 	Linker.link(g_settings_get_string, \"g_settings_get_string\", LIBRARY.GIO);
@@ -1544,6 +1715,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_simple_action_group_lookup, \"g_simple_action_group_lookup\", LIBRARY.GIO);
 	Linker.link(g_simple_action_group_insert, \"g_simple_action_group_insert\", LIBRARY.GIO);
 	Linker.link(g_simple_action_group_remove, \"g_simple_action_group_remove\", LIBRARY.GIO);
+	Linker.link(g_simple_action_group_add_entries, \"g_simple_action_group_add_entries\", LIBRARY.GIO);
 
 	// gio.ActionT
 
@@ -1556,7 +1728,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_action_get_state_hint, \"g_action_get_state_hint\", LIBRARY.GIO);
 	Linker.link(g_action_get_enabled, \"g_action_get_enabled\", LIBRARY.GIO);
 	Linker.link(g_action_get_state, \"g_action_get_state\", LIBRARY.GIO);
-	Linker.link(g_action_set_state, \"g_action_set_state\", LIBRARY.GIO);
+	Linker.link(g_action_change_state, \"g_action_change_state\", LIBRARY.GIO);
 	Linker.link(g_action_activate, \"g_action_activate\", LIBRARY.GIO);
 
 	// gio.Action
@@ -1567,6 +1739,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_simple_action_new, \"g_simple_action_new\", LIBRARY.GIO);
 	Linker.link(g_simple_action_new_stateful, \"g_simple_action_new_stateful\", LIBRARY.GIO);
 	Linker.link(g_simple_action_set_enabled, \"g_simple_action_set_enabled\", LIBRARY.GIO);
+	Linker.link(g_simple_action_set_state, \"g_simple_action_set_state\", LIBRARY.GIO);
 
 	// gio.Application
 
@@ -1615,10 +1788,18 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_io_module_new, \"g_io_module_new\", LIBRARY.GIO);
 	Linker.link(g_io_modules_load_all_in_directory, \"g_io_modules_load_all_in_directory\", LIBRARY.GIO);
+	Linker.link(g_io_modules_load_all_in_directory_with_scope, \"g_io_modules_load_all_in_directory_with_scope\", LIBRARY.GIO);
 	Linker.link(g_io_modules_scan_all_in_directory, \"g_io_modules_scan_all_in_directory\", LIBRARY.GIO);
+	Linker.link(g_io_modules_scan_all_in_directory_with_scope, \"g_io_modules_scan_all_in_directory_with_scope\", LIBRARY.GIO);
 	Linker.link(g_io_module_load, \"g_io_module_load\", LIBRARY.GIO);
 	Linker.link(g_io_module_unload, \"g_io_module_unload\", LIBRARY.GIO);
 	Linker.link(g_io_module_query, \"g_io_module_query\", LIBRARY.GIO);
+
+	// gio.IOModuleScope
+
+	Linker.link(g_io_module_scope_block, \"g_io_module_scope_block\", LIBRARY.GIO);
+	Linker.link(g_io_module_scope_free, \"g_io_module_scope_free\", LIBRARY.GIO);
+	Linker.link(g_io_module_scope_new, \"g_io_module_scope_new\", LIBRARY.GIO);
 
 	// gio.IOExtension
 
@@ -1879,6 +2060,13 @@ mixin( gshared ~"extern(C)
 	void function(GFileMonitor* monitor, gint limitMsecs) c_g_file_monitor_set_rate_limit;
 	void function(GFileMonitor* monitor, GFile* child, GFile* otherFile, GFileMonitorEvent eventType) c_g_file_monitor_emit_event;
 
+	// gio.FilenameCompleter
+
+	GFilenameCompleter* function() c_g_filename_completer_new;
+	char* function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completion_suffix;
+	char** function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completions;
+	void function(GFilenameCompleter* completer, gboolean dirsOnly) c_g_filename_completer_set_dirs_only;
+
 	// gio.Cancellable
 
 	GCancellable* function() c_g_cancellable_new;
@@ -2121,8 +2309,10 @@ mixin( gshared ~"extern(C)
 	gint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_int64;
 	guint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_uint64;
 	char* function(GDataInputStream* stream, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_line;
+	char* function(GDataInputStream* stream, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_line_utf8;
 	void function(GDataInputStream* stream, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_line_async;
 	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_line_finish;
+	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_line_finish_utf8;
 	char* function(GDataInputStream* stream, gchar* stopChars, gssize stopCharsLen, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_upto;
 	void function(GDataInputStream* stream, gchar* stopChars, gssize stopCharsLen, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_upto_async;
 	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_upto_finish;
@@ -2253,7 +2443,12 @@ mixin( gshared ~"extern(C)
 	GDesktopAppInfo* function(char* desktopId) c_g_desktop_app_info_new;
 	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_filename;
 	gboolean function(GDesktopAppInfo* info) c_g_desktop_app_info_get_is_hidden;
+	gboolean function(GDesktopAppInfo* info) c_g_desktop_app_info_get_nodisplay;
+	gboolean function(GDesktopAppInfo* info, gchar* desktopEnv) c_g_desktop_app_info_get_show_in;
+	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_generic_name;
+	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_categories;
 	void function(char* desktopEnv) c_g_desktop_app_info_set_desktop_env;
+	gboolean function(GDesktopAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, gpointer userSetupData, GDesktopAppLaunchCallback pidCallback, gpointer pidCallbackData, GError** error) c_g_desktop_app_info_launch_uris_as_manager;
 
 	// gio.VolumeMonitor
 
@@ -2518,6 +2713,7 @@ mixin( gshared ~"extern(C)
 	GInetAddress* function(guint8* bytes, GSocketFamily family) c_g_inet_address_new_from_bytes;
 	GInetAddress* function(GSocketFamily family) c_g_inet_address_new_any;
 	GInetAddress* function(GSocketFamily family) c_g_inet_address_new_loopback;
+	gboolean function(GInetAddress* address, GInetAddress* otherAddress) c_g_inet_address_equal;
 	guint8* function(GInetAddress* address) c_g_inet_address_to_bytes;
 	gsize function(GInetAddress* address) c_g_inet_address_get_native_size;
 	gchar* function(GInetAddress* address) c_g_inet_address_to_string;
@@ -2725,6 +2921,10 @@ mixin( gshared ~"extern(C)
 	GTlsRehandshakeMode function(GTlsConnection* conn) c_g_tls_connection_get_rehandshake_mode;
 	void function(GTlsConnection* conn, gboolean useSystemCertdb) c_g_tls_connection_set_use_system_certdb;
 	gboolean function(GTlsConnection* conn) c_g_tls_connection_get_use_system_certdb;
+	GTlsDatabase* function(GTlsConnection* conn) c_g_tls_connection_get_database;
+	void function(GTlsConnection* conn, GTlsDatabase* database) c_g_tls_connection_set_database;
+	GTlsInteraction* function(GTlsConnection* conn) c_g_tls_connection_get_interaction;
+	void function(GTlsConnection* conn, GTlsInteraction* interaction) c_g_tls_connection_set_interaction;
 	gboolean function(GTlsConnection* conn, GCancellable* cancellable, GError** error) c_g_tls_connection_handshake;
 	void function(GTlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_tls_connection_handshake_async;
 	gboolean function(GTlsConnection* conn, GAsyncResult* result, GError** error) c_g_tls_connection_handshake_finish;
@@ -2749,9 +2949,50 @@ mixin( gshared ~"extern(C)
 
 	GTlsBackend* function() c_g_tls_backend_get_default;
 	gboolean function(GTlsBackend* backend) c_g_tls_backend_supports_tls;
+	GTlsDatabase* function(GTlsBackend* backend) c_g_tls_backend_get_default_database;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_certificate_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_client_connection_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_server_connection_type;
+	GType function(GTlsBackend* backend) c_g_tls_backend_get_file_database_type;
+
+	// gio.TlsDatabase
+
+	GTlsCertificateFlags function(GTlsDatabase* self, GTlsCertificate* chain, gchar* purpose, GSocketConnectable* identity, GTlsInteraction* interaction, GTlsDatabaseVerifyFlags flags, GCancellable* cancellable, GError** error) c_g_tls_database_verify_chain;
+	void function(GTlsDatabase* self, GTlsCertificate* chain, gchar* purpose, GSocketConnectable* identity, GTlsInteraction* interaction, GTlsDatabaseVerifyFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_tls_database_verify_chain_async;
+	GTlsCertificateFlags function(GTlsDatabase* self, GAsyncResult* result, GError** error) c_g_tls_database_verify_chain_finish;
+	GTlsCertificate* function(GTlsDatabase* self, GTlsCertificate* certificate, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** error) c_g_tls_database_lookup_certificate_issuer;
+	void function(GTlsDatabase* self, GTlsCertificate* certificate, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_tls_database_lookup_certificate_issuer_async;
+	GTlsCertificate* function(GTlsDatabase* self, GAsyncResult* result, GError** error) c_g_tls_database_lookup_certificate_issuer_finish;
+	GList* function(GTlsDatabase* self, GByteArray* issuerRawDn, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** error) c_g_tls_database_lookup_certificates_issued_by;
+	void function(GTlsDatabase* self, GByteArray* issuerRawDn, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_tls_database_lookup_certificates_issued_by_async;
+	GList* function(GTlsDatabase* self, GAsyncResult* result, GError** error) c_g_tls_database_lookup_certificates_issued_by_finish;
+	gchar* function(GTlsDatabase* self, GTlsCertificate* certificate) c_g_tls_database_create_certificate_handle;
+	GTlsCertificate* function(GTlsDatabase* self, gchar* handle, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** error) c_g_tls_database_lookup_certificate_for_handle;
+	void function(GTlsDatabase* self, gchar* handle, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_tls_database_lookup_certificate_for_handle_async;
+	GTlsCertificate* function(GTlsDatabase* self, GAsyncResult* result, GError** error) c_g_tls_database_lookup_certificate_for_handle_finish;
+
+	// gio.TlsFileDatabase
+
+	GTlsDatabase* function(gchar* anchors, GError** error) c_g_tls_file_database_new;
+
+	// gio.TlsInteraction
+
+	GTlsInteractionResult function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GError** error) c_g_tls_interaction_ask_password;
+	void function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_tls_interaction_ask_password_async;
+	GTlsInteractionResult function(GTlsInteraction* interaction, GAsyncResult* result, GError** error) c_g_tls_interaction_ask_password_finish;
+
+	// gio.TlsPassword
+
+	GTlsPassword* function(GTlsPasswordFlags flags, gchar* description) c_g_tls_password_new;
+	guchar* function(GTlsPassword* password, gsize* length) c_g_tls_password_get_value;
+	void function(GTlsPassword* password, guchar* value, gssize length) c_g_tls_password_set_value;
+	void function(GTlsPassword* password, guchar* value, gssize length, GDestroyNotify destroy) c_g_tls_password_set_value_full;
+	gchar* function(GTlsPassword* password) c_g_tls_password_get_description;
+	void function(GTlsPassword* password, gchar* description) c_g_tls_password_set_description;
+	GTlsPasswordFlags function(GTlsPassword* password) c_g_tls_password_get_flags;
+	void function(GTlsPassword* password, GTlsPasswordFlags flags) c_g_tls_password_set_flags;
+	gchar* function(GTlsPassword* password) c_g_tls_password_get_warning;
+	void function(GTlsPassword* password, gchar* warning) c_g_tls_password_set_warning;
 
 	// gio.Resolver
 
@@ -2834,34 +3075,59 @@ mixin( gshared ~"extern(C)
 	gboolean function(gchar* string) c_g_dbus_is_unique_name;
 	gboolean function(gchar* string) c_g_dbus_is_member_name;
 	gboolean function(gchar* string) c_g_dbus_is_interface_name;
+	GVariant* function(GValue* gvalue, GVariantType* type) c_g_dbus_gvalue_to_gvariant;
+	void function(GVariant* value, GValue* outGvalue) c_g_dbus_gvariant_to_gvalue;
 	gboolean function(gchar* string) c_g_dbus_is_address;
 	gboolean function(gchar* string, GError** error) c_g_dbus_is_supported_address;
 	void function(gchar* address, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_address_get_stream;
 	GIOStream* function(GAsyncResult* res, gchar** outGuid, GError** error) c_g_dbus_address_get_stream_finish;
 	GIOStream* function(gchar* address, gchar** outGuid, GCancellable* cancellable, GError** error) c_g_dbus_address_get_stream_sync;
 	gchar* function(GBusType busType, GCancellable* cancellable, GError** error) c_g_dbus_address_get_for_bus_sync;
+
+	// gio.DBusAnnotationInfo
+
 	gchar* function(GDBusAnnotationInfo** annotations, gchar* name) c_g_dbus_annotation_info_lookup;
+	GDBusAnnotationInfo* function(GDBusAnnotationInfo* info) c_g_dbus_annotation_info_ref;
+	void function(GDBusAnnotationInfo* info) c_g_dbus_annotation_info_unref;
+
+	// gio.DBusArgInfo
+
+	GDBusArgInfo* function(GDBusArgInfo* info) c_g_dbus_arg_info_ref;
+	void function(GDBusArgInfo* info) c_g_dbus_arg_info_unref;
+
+	// gio.DBusMethodInfo
+
+	GDBusMethodInfo* function(GDBusMethodInfo* info) c_g_dbus_method_info_ref;
+	void function(GDBusMethodInfo* info) c_g_dbus_method_info_unref;
+
+	// gio.DBusSignalInfo
+
+	GDBusSignalInfo* function(GDBusSignalInfo* info) c_g_dbus_signal_info_ref;
+	void function(GDBusSignalInfo* info) c_g_dbus_signal_info_unref;
+
+	// gio.DBusPropertyInfo
+
+	GDBusPropertyInfo* function(GDBusPropertyInfo* info) c_g_dbus_property_info_ref;
+	void function(GDBusPropertyInfo* info) c_g_dbus_property_info_unref;
+
+	// gio.DBusInterfaceInfo
+
 	GDBusMethodInfo* function(GDBusInterfaceInfo* info, gchar* name) c_g_dbus_interface_info_lookup_method;
 	GDBusSignalInfo* function(GDBusInterfaceInfo* info, gchar* name) c_g_dbus_interface_info_lookup_signal;
 	GDBusPropertyInfo* function(GDBusInterfaceInfo* info, gchar* name) c_g_dbus_interface_info_lookup_property;
+	void function(GDBusInterfaceInfo* info) c_g_dbus_interface_info_cache_build;
+	void function(GDBusInterfaceInfo* info) c_g_dbus_interface_info_cache_release;
 	void function(GDBusInterfaceInfo* info, guint indent, GString* stringBuilder) c_g_dbus_interface_info_generate_xml;
+	GDBusInterfaceInfo* function(GDBusInterfaceInfo* info) c_g_dbus_interface_info_ref;
+	void function(GDBusInterfaceInfo* info) c_g_dbus_interface_info_unref;
+
+	// gio.DBusNodeInfo
+
 	GDBusNodeInfo* function(gchar* xmlData, GError** error) c_g_dbus_node_info_new_for_xml;
 	GDBusInterfaceInfo* function(GDBusNodeInfo* info, gchar* name) c_g_dbus_node_info_lookup_interface;
 	void function(GDBusNodeInfo* info, guint indent, GString* stringBuilder) c_g_dbus_node_info_generate_xml;
 	GDBusNodeInfo* function(GDBusNodeInfo* info) c_g_dbus_node_info_ref;
-	GDBusInterfaceInfo* function(GDBusInterfaceInfo* info) c_g_dbus_interface_info_ref;
-	GDBusMethodInfo* function(GDBusMethodInfo* info) c_g_dbus_method_info_ref;
-	GDBusSignalInfo* function(GDBusSignalInfo* info) c_g_dbus_signal_info_ref;
-	GDBusPropertyInfo* function(GDBusPropertyInfo* info) c_g_dbus_property_info_ref;
-	GDBusArgInfo* function(GDBusArgInfo* info) c_g_dbus_arg_info_ref;
-	GDBusAnnotationInfo* function(GDBusAnnotationInfo* info) c_g_dbus_annotation_info_ref;
 	void function(GDBusNodeInfo* info) c_g_dbus_node_info_unref;
-	void function(GDBusInterfaceInfo* info) c_g_dbus_interface_info_unref;
-	void function(GDBusMethodInfo* info) c_g_dbus_method_info_unref;
-	void function(GDBusSignalInfo* info) c_g_dbus_signal_info_unref;
-	void function(GDBusPropertyInfo* info) c_g_dbus_property_info_unref;
-	void function(GDBusArgInfo* info) c_g_dbus_arg_info_unref;
-	void function(GDBusAnnotationInfo* info) c_g_dbus_annotation_info_unref;
 
 	// gio.DBusError
 
@@ -2957,6 +3223,9 @@ mixin( gshared ~"extern(C)
 	void function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_call;
 	GVariant* function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_call_finish;
 	GVariant* function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_connection_call_sync;
+	void function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GUnixFDList* fdList, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_call_with_unix_fd_list;
+	GVariant* function(GDBusConnection* connection, GUnixFDList** outFdList, GAsyncResult* res, GError** error) c_g_dbus_connection_call_with_unix_fd_list_finish;
+	GVariant* function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GUnixFDList* fdList, GUnixFDList** outFdList, GCancellable* cancellable, GError** error) c_g_dbus_connection_call_with_unix_fd_list_sync;
 	gboolean function(GDBusConnection* connection, gchar* destinationBusName, gchar* objectPath, gchar* interfaceName, gchar* signalName, GVariant* parameters, GError** error) c_g_dbus_connection_emit_signal;
 	guint function(GDBusConnection* connection, gchar* sender, gchar* interfaceName, gchar* member, gchar* objectPath, gchar* arg0, GDBusSignalFlags flags, GDBusSignalCallback callback, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_dbus_connection_signal_subscribe;
 	void function(GDBusConnection* connection, guint subscriptionId) c_g_dbus_connection_signal_unsubscribe;
@@ -2988,6 +3257,8 @@ mixin( gshared ~"extern(C)
 	void function(GDBusMethodInvocation* invocation, GQuark domain, gint code, gchar* message) c_g_dbus_method_invocation_return_error_literal;
 	void function(GDBusMethodInvocation* invocation, GError* error) c_g_dbus_method_invocation_return_gerror;
 	void function(GDBusMethodInvocation* invocation, gchar* errorName, gchar* errorMessage) c_g_dbus_method_invocation_return_dbus_error;
+	void function(GDBusMethodInvocation* invocation, GError* error) c_g_dbus_method_invocation_take_error;
+	void function(GDBusMethodInvocation* invocation, GVariant* parameters, GUnixFDList* fdList) c_g_dbus_method_invocation_return_value_with_unix_fd_list;
 
 	// gio.DBusServer
 
@@ -3017,6 +3288,31 @@ mixin( gshared ~"extern(C)
 	guint function(GBusType busType, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_with_closures;
 	guint function(GDBusConnection* connection, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_on_connection_with_closures;
 
+	// gio.DBusInterfaceT
+
+
+	// gio.DBusInterfaceT
+
+	GDBusInterfaceInfo* function(GDBusInterface* intrface) c_g_dbus_interface_get_info;
+	GDBusObject* function(GDBusInterface* intrface) c_g_dbus_interface_get_object;
+	void function(GDBusInterface* intrface, GDBusObject* object) c_g_dbus_interface_set_object;
+
+	// gio.DBusInterface
+
+
+	// gio.DBusInterfaceSkeleton
+
+	void function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_flush;
+	GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_info;
+	GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_vtable;
+	GVariant* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_properties;
+	gboolean function(GDBusInterfaceSkeleton* intrface, GDBusConnection* connection, gchar* objectPath, GError** error) c_g_dbus_interface_skeleton_export;
+	void function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_unexport;
+	GDBusConnection* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_connection;
+	gchar* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_object_path;
+	GDBusInterfaceSkeletonFlags function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_flags;
+	void function(GDBusInterfaceSkeleton* intrface, GDBusInterfaceSkeletonFlags flags) c_g_dbus_interface_skeleton_set_flags;
+
 	// gio.DBusProxy
 
 	void function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_new;
@@ -3041,13 +3337,67 @@ mixin( gshared ~"extern(C)
 	void function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_call;
 	GVariant* function(GDBusProxy* proxy, GAsyncResult* res, GError** error) c_g_dbus_proxy_call_finish;
 	GVariant* function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_proxy_call_sync;
+	void function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GUnixFDList* fdList, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_call_with_unix_fd_list;
+	GVariant* function(GDBusProxy* proxy, GUnixFDList** outFdList, GAsyncResult* res, GError** error) c_g_dbus_proxy_call_with_unix_fd_list_finish;
+	GVariant* function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GUnixFDList* fdList, GUnixFDList** outFdList, GCancellable* cancellable, GError** error) c_g_dbus_proxy_call_with_unix_fd_list_sync;
 
-	// gio.FilenameCompleter
+	// gio.DBusObjectT
 
-	GFilenameCompleter* function() c_g_filename_completer_new;
-	char* function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completion_suffix;
-	char** function(GFilenameCompleter* completer, char* initialText) c_g_filename_completer_get_completions;
-	void function(GFilenameCompleter* completer, gboolean dirsOnly) c_g_filename_completer_set_dirs_only;
+
+	// gio.DBusObjectT
+
+	gchar* function(GDBusObject* object) c_g_dbus_object_get_object_path;
+	GList* function(GDBusObject* object) c_g_dbus_object_get_interfaces;
+	GDBusInterface* function(GDBusObject* object, gchar* interfaceName) c_g_dbus_object_get_interface;
+
+	// gio.DBusObject
+
+
+	// gio.DBusObjectSkeleton
+
+	GDBusObjectSkeleton* function(gchar* objectPath) c_g_dbus_object_skeleton_new;
+	void function(GDBusObjectSkeleton* object) c_g_dbus_object_skeleton_flush;
+	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* intrface) c_g_dbus_object_skeleton_add_interface;
+	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* intrface) c_g_dbus_object_skeleton_remove_interface;
+	void function(GDBusObjectSkeleton* object, gchar* interfaceName) c_g_dbus_object_skeleton_remove_interface_by_name;
+	void function(GDBusObjectSkeleton* object, gchar* objectPath) c_g_dbus_object_skeleton_set_object_path;
+
+	// gio.DBusObjectProxy
+
+	GDBusObjectProxy* function(GDBusConnection* connection, gchar* objectPath) c_g_dbus_object_proxy_new;
+	GDBusConnection* function(GDBusObjectProxy* proxy) c_g_dbus_object_proxy_get_connection;
+
+	// gio.DBusObjectManagerT
+
+
+	// gio.DBusObjectManagerT
+
+	gchar* function(GDBusObjectManager* manager) c_g_dbus_object_manager_get_object_path;
+	GList* function(GDBusObjectManager* manager) c_g_dbus_object_manager_get_objects;
+	GDBusObject* function(GDBusObjectManager* manager, gchar* objectPath) c_g_dbus_object_manager_get_object;
+	GDBusInterface* function(GDBusObjectManager* manager, gchar* objectPath, gchar* interfaceName) c_g_dbus_object_manager_get_interface;
+
+	// gio.DBusObjectManagerServer
+
+	GDBusObjectManagerServer* function(gchar* objectPath) c_g_dbus_object_manager_server_new;
+	GDBusConnection* function(GDBusObjectManagerServer* manager) c_g_dbus_object_manager_server_get_connection;
+	void function(GDBusObjectManagerServer* manager, GDBusConnection* connection) c_g_dbus_object_manager_server_set_connection;
+	void function(GDBusObjectManagerServer* manager, GDBusObjectSkeleton* object) c_g_dbus_object_manager_server_export;
+	void function(GDBusObjectManagerServer* manager, GDBusObjectSkeleton* object) c_g_dbus_object_manager_server_export_uniquely;
+	gboolean function(GDBusObjectManagerServer* manager, gchar* objectPath) c_g_dbus_object_manager_server_unexport;
+
+	// gio.DBusObjectManagerClient
+
+	void function(GDBusConnection* connection, GDBusObjectManagerClientFlags flags, gchar* name, gchar* objectPath, GDBusProxyTypeFunc getProxyTypeFunc, gpointer getProxyTypeUserData, GDestroyNotify getProxyTypeDestroyNotify, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_object_manager_client_new;
+	GDBusObjectManager* function(GAsyncResult* res, GError** error) c_g_dbus_object_manager_client_new_finish;
+	GDBusObjectManager* function(GDBusConnection* connection, GDBusObjectManagerClientFlags flags, gchar* name, gchar* objectPath, GDBusProxyTypeFunc getProxyTypeFunc, gpointer getProxyTypeUserData, GDestroyNotify getProxyTypeDestroyNotify, GCancellable* cancellable, GError** error) c_g_dbus_object_manager_client_new_sync;
+	void function(GBusType busType, GDBusObjectManagerClientFlags flags, gchar* name, gchar* objectPath, GDBusProxyTypeFunc getProxyTypeFunc, gpointer getProxyTypeUserData, GDestroyNotify getProxyTypeDestroyNotify, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_object_manager_client_new_for_bus;
+	GDBusObjectManager* function(GAsyncResult* res, GError** error) c_g_dbus_object_manager_client_new_for_bus_finish;
+	GDBusObjectManager* function(GBusType busType, GDBusObjectManagerClientFlags flags, gchar* name, gchar* objectPath, GDBusProxyTypeFunc getProxyTypeFunc, gpointer getProxyTypeUserData, GDestroyNotify getProxyTypeDestroyNotify, GCancellable* cancellable, GError** error) c_g_dbus_object_manager_client_new_for_bus_sync;
+	GDBusConnection* function(GDBusObjectManagerClient* manager) c_g_dbus_object_manager_client_get_connection;
+	GDBusObjectManagerClientFlags function(GDBusObjectManagerClient* manager) c_g_dbus_object_manager_client_get_flags;
+	gchar* function(GDBusObjectManagerClient* manager) c_g_dbus_object_manager_client_get_name;
+	gchar* function(GDBusObjectManagerClient* manager) c_g_dbus_object_manager_client_get_name_owner;
 
 	// gio.Settings
 
@@ -3077,6 +3427,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GSettings* settings, gchar* key, gboolean value) c_g_settings_set_boolean;
 	gint function(GSettings* settings, gchar* key) c_g_settings_get_int;
 	gboolean function(GSettings* settings, gchar* key, gint value) c_g_settings_set_int;
+	guint function(GSettings* settings, gchar* key) c_g_settings_get_uint;
+	gboolean function(GSettings* settings, gchar* key, guint value) c_g_settings_set_uint;
 	gdouble function(GSettings* settings, gchar* key) c_g_settings_get_double;
 	gboolean function(GSettings* settings, gchar* key, gdouble value) c_g_settings_set_double;
 	gchar* function(GSettings* settings, gchar* key) c_g_settings_get_string;
@@ -3149,6 +3501,7 @@ mixin( gshared ~"extern(C)
 	GAction* function(GSimpleActionGroup* simple, gchar* actionName) c_g_simple_action_group_lookup;
 	void function(GSimpleActionGroup* simple, GAction* action) c_g_simple_action_group_insert;
 	void function(GSimpleActionGroup* simple, gchar* actionName) c_g_simple_action_group_remove;
+	void function(GSimpleActionGroup* simple, GActionEntry* entries, gint nEntries, gpointer userData) c_g_simple_action_group_add_entries;
 
 	// gio.ActionT
 
@@ -3161,7 +3514,7 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GAction* action) c_g_action_get_state_hint;
 	gboolean function(GAction* action) c_g_action_get_enabled;
 	GVariant* function(GAction* action) c_g_action_get_state;
-	void function(GAction* action, GVariant* value) c_g_action_set_state;
+	void function(GAction* action, GVariant* value) c_g_action_change_state;
 	void function(GAction* action, GVariant* parameter) c_g_action_activate;
 
 	// gio.Action
@@ -3172,6 +3525,7 @@ mixin( gshared ~"extern(C)
 	GSimpleAction* function(gchar* name, GVariantType* parameterType) c_g_simple_action_new;
 	GSimpleAction* function(gchar* name, GVariantType* parameterType, GVariant* state) c_g_simple_action_new_stateful;
 	void function(GSimpleAction* simple, gboolean enabled) c_g_simple_action_set_enabled;
+	void function(GSimpleAction* simple, GVariant* value) c_g_simple_action_set_state;
 
 	// gio.Application
 
@@ -3220,10 +3574,18 @@ mixin( gshared ~"extern(C)
 
 	GIOModule* function(gchar* filename) c_g_io_module_new;
 	GList* function(gchar* dirname) c_g_io_modules_load_all_in_directory;
+	GList* function(gchar* dirname, GIOModuleScope* scope) c_g_io_modules_load_all_in_directory_with_scope;
 	void function(char* dirname) c_g_io_modules_scan_all_in_directory;
+	void function(gchar* dirname, GIOModuleScope* scope) c_g_io_modules_scan_all_in_directory_with_scope;
 	void function(GIOModule* modul) c_g_io_module_load;
 	void function(GIOModule* modul) c_g_io_module_unload;
 	char** function() c_g_io_module_query;
+
+	// gio.IOModuleScope
+
+	void function(GIOModuleScope* scope, gchar* basename) c_g_io_module_scope_block;
+	void function(GIOModuleScope* scope) c_g_io_module_scope_free;
+	GIOModuleScope* function(GIOModuleScopeFlags flags) c_g_io_module_scope_new;
 
 	// gio.IOExtension
 
@@ -3482,6 +3844,13 @@ alias c_g_file_monitor_is_cancelled  g_file_monitor_is_cancelled;
 alias c_g_file_monitor_set_rate_limit  g_file_monitor_set_rate_limit;
 alias c_g_file_monitor_emit_event  g_file_monitor_emit_event;
 
+// gio.FilenameCompleter
+
+alias c_g_filename_completer_new  g_filename_completer_new;
+alias c_g_filename_completer_get_completion_suffix  g_filename_completer_get_completion_suffix;
+alias c_g_filename_completer_get_completions  g_filename_completer_get_completions;
+alias c_g_filename_completer_set_dirs_only  g_filename_completer_set_dirs_only;
+
 // gio.Cancellable
 
 alias c_g_cancellable_new  g_cancellable_new;
@@ -3724,8 +4093,10 @@ alias c_g_data_input_stream_read_uint32  g_data_input_stream_read_uint32;
 alias c_g_data_input_stream_read_int64  g_data_input_stream_read_int64;
 alias c_g_data_input_stream_read_uint64  g_data_input_stream_read_uint64;
 alias c_g_data_input_stream_read_line  g_data_input_stream_read_line;
+alias c_g_data_input_stream_read_line_utf8  g_data_input_stream_read_line_utf8;
 alias c_g_data_input_stream_read_line_async  g_data_input_stream_read_line_async;
 alias c_g_data_input_stream_read_line_finish  g_data_input_stream_read_line_finish;
+alias c_g_data_input_stream_read_line_finish_utf8  g_data_input_stream_read_line_finish_utf8;
 alias c_g_data_input_stream_read_upto  g_data_input_stream_read_upto;
 alias c_g_data_input_stream_read_upto_async  g_data_input_stream_read_upto_async;
 alias c_g_data_input_stream_read_upto_finish  g_data_input_stream_read_upto_finish;
@@ -3856,7 +4227,12 @@ alias c_g_desktop_app_info_new_from_keyfile  g_desktop_app_info_new_from_keyfile
 alias c_g_desktop_app_info_new  g_desktop_app_info_new;
 alias c_g_desktop_app_info_get_filename  g_desktop_app_info_get_filename;
 alias c_g_desktop_app_info_get_is_hidden  g_desktop_app_info_get_is_hidden;
+alias c_g_desktop_app_info_get_nodisplay  g_desktop_app_info_get_nodisplay;
+alias c_g_desktop_app_info_get_show_in  g_desktop_app_info_get_show_in;
+alias c_g_desktop_app_info_get_generic_name  g_desktop_app_info_get_generic_name;
+alias c_g_desktop_app_info_get_categories  g_desktop_app_info_get_categories;
 alias c_g_desktop_app_info_set_desktop_env  g_desktop_app_info_set_desktop_env;
+alias c_g_desktop_app_info_launch_uris_as_manager  g_desktop_app_info_launch_uris_as_manager;
 
 // gio.VolumeMonitor
 
@@ -4121,6 +4497,7 @@ alias c_g_inet_address_new_from_string  g_inet_address_new_from_string;
 alias c_g_inet_address_new_from_bytes  g_inet_address_new_from_bytes;
 alias c_g_inet_address_new_any  g_inet_address_new_any;
 alias c_g_inet_address_new_loopback  g_inet_address_new_loopback;
+alias c_g_inet_address_equal  g_inet_address_equal;
 alias c_g_inet_address_to_bytes  g_inet_address_to_bytes;
 alias c_g_inet_address_get_native_size  g_inet_address_get_native_size;
 alias c_g_inet_address_to_string  g_inet_address_to_string;
@@ -4328,6 +4705,10 @@ alias c_g_tls_connection_set_rehandshake_mode  g_tls_connection_set_rehandshake_
 alias c_g_tls_connection_get_rehandshake_mode  g_tls_connection_get_rehandshake_mode;
 alias c_g_tls_connection_set_use_system_certdb  g_tls_connection_set_use_system_certdb;
 alias c_g_tls_connection_get_use_system_certdb  g_tls_connection_get_use_system_certdb;
+alias c_g_tls_connection_get_database  g_tls_connection_get_database;
+alias c_g_tls_connection_set_database  g_tls_connection_set_database;
+alias c_g_tls_connection_get_interaction  g_tls_connection_get_interaction;
+alias c_g_tls_connection_set_interaction  g_tls_connection_set_interaction;
 alias c_g_tls_connection_handshake  g_tls_connection_handshake;
 alias c_g_tls_connection_handshake_async  g_tls_connection_handshake_async;
 alias c_g_tls_connection_handshake_finish  g_tls_connection_handshake_finish;
@@ -4352,9 +4733,50 @@ alias c_g_tls_server_connection_new  g_tls_server_connection_new;
 
 alias c_g_tls_backend_get_default  g_tls_backend_get_default;
 alias c_g_tls_backend_supports_tls  g_tls_backend_supports_tls;
+alias c_g_tls_backend_get_default_database  g_tls_backend_get_default_database;
 alias c_g_tls_backend_get_certificate_type  g_tls_backend_get_certificate_type;
 alias c_g_tls_backend_get_client_connection_type  g_tls_backend_get_client_connection_type;
 alias c_g_tls_backend_get_server_connection_type  g_tls_backend_get_server_connection_type;
+alias c_g_tls_backend_get_file_database_type  g_tls_backend_get_file_database_type;
+
+// gio.TlsDatabase
+
+alias c_g_tls_database_verify_chain  g_tls_database_verify_chain;
+alias c_g_tls_database_verify_chain_async  g_tls_database_verify_chain_async;
+alias c_g_tls_database_verify_chain_finish  g_tls_database_verify_chain_finish;
+alias c_g_tls_database_lookup_certificate_issuer  g_tls_database_lookup_certificate_issuer;
+alias c_g_tls_database_lookup_certificate_issuer_async  g_tls_database_lookup_certificate_issuer_async;
+alias c_g_tls_database_lookup_certificate_issuer_finish  g_tls_database_lookup_certificate_issuer_finish;
+alias c_g_tls_database_lookup_certificates_issued_by  g_tls_database_lookup_certificates_issued_by;
+alias c_g_tls_database_lookup_certificates_issued_by_async  g_tls_database_lookup_certificates_issued_by_async;
+alias c_g_tls_database_lookup_certificates_issued_by_finish  g_tls_database_lookup_certificates_issued_by_finish;
+alias c_g_tls_database_create_certificate_handle  g_tls_database_create_certificate_handle;
+alias c_g_tls_database_lookup_certificate_for_handle  g_tls_database_lookup_certificate_for_handle;
+alias c_g_tls_database_lookup_certificate_for_handle_async  g_tls_database_lookup_certificate_for_handle_async;
+alias c_g_tls_database_lookup_certificate_for_handle_finish  g_tls_database_lookup_certificate_for_handle_finish;
+
+// gio.TlsFileDatabase
+
+alias c_g_tls_file_database_new  g_tls_file_database_new;
+
+// gio.TlsInteraction
+
+alias c_g_tls_interaction_ask_password  g_tls_interaction_ask_password;
+alias c_g_tls_interaction_ask_password_async  g_tls_interaction_ask_password_async;
+alias c_g_tls_interaction_ask_password_finish  g_tls_interaction_ask_password_finish;
+
+// gio.TlsPassword
+
+alias c_g_tls_password_new  g_tls_password_new;
+alias c_g_tls_password_get_value  g_tls_password_get_value;
+alias c_g_tls_password_set_value  g_tls_password_set_value;
+alias c_g_tls_password_set_value_full  g_tls_password_set_value_full;
+alias c_g_tls_password_get_description  g_tls_password_get_description;
+alias c_g_tls_password_set_description  g_tls_password_set_description;
+alias c_g_tls_password_get_flags  g_tls_password_get_flags;
+alias c_g_tls_password_set_flags  g_tls_password_set_flags;
+alias c_g_tls_password_get_warning  g_tls_password_get_warning;
+alias c_g_tls_password_set_warning  g_tls_password_set_warning;
 
 // gio.Resolver
 
@@ -4437,34 +4859,59 @@ alias c_g_dbus_is_name  g_dbus_is_name;
 alias c_g_dbus_is_unique_name  g_dbus_is_unique_name;
 alias c_g_dbus_is_member_name  g_dbus_is_member_name;
 alias c_g_dbus_is_interface_name  g_dbus_is_interface_name;
+alias c_g_dbus_gvalue_to_gvariant  g_dbus_gvalue_to_gvariant;
+alias c_g_dbus_gvariant_to_gvalue  g_dbus_gvariant_to_gvalue;
 alias c_g_dbus_is_address  g_dbus_is_address;
 alias c_g_dbus_is_supported_address  g_dbus_is_supported_address;
 alias c_g_dbus_address_get_stream  g_dbus_address_get_stream;
 alias c_g_dbus_address_get_stream_finish  g_dbus_address_get_stream_finish;
 alias c_g_dbus_address_get_stream_sync  g_dbus_address_get_stream_sync;
 alias c_g_dbus_address_get_for_bus_sync  g_dbus_address_get_for_bus_sync;
+
+// gio.DBusAnnotationInfo
+
 alias c_g_dbus_annotation_info_lookup  g_dbus_annotation_info_lookup;
+alias c_g_dbus_annotation_info_ref  g_dbus_annotation_info_ref;
+alias c_g_dbus_annotation_info_unref  g_dbus_annotation_info_unref;
+
+// gio.DBusArgInfo
+
+alias c_g_dbus_arg_info_ref  g_dbus_arg_info_ref;
+alias c_g_dbus_arg_info_unref  g_dbus_arg_info_unref;
+
+// gio.DBusMethodInfo
+
+alias c_g_dbus_method_info_ref  g_dbus_method_info_ref;
+alias c_g_dbus_method_info_unref  g_dbus_method_info_unref;
+
+// gio.DBusSignalInfo
+
+alias c_g_dbus_signal_info_ref  g_dbus_signal_info_ref;
+alias c_g_dbus_signal_info_unref  g_dbus_signal_info_unref;
+
+// gio.DBusPropertyInfo
+
+alias c_g_dbus_property_info_ref  g_dbus_property_info_ref;
+alias c_g_dbus_property_info_unref  g_dbus_property_info_unref;
+
+// gio.DBusInterfaceInfo
+
 alias c_g_dbus_interface_info_lookup_method  g_dbus_interface_info_lookup_method;
 alias c_g_dbus_interface_info_lookup_signal  g_dbus_interface_info_lookup_signal;
 alias c_g_dbus_interface_info_lookup_property  g_dbus_interface_info_lookup_property;
+alias c_g_dbus_interface_info_cache_build  g_dbus_interface_info_cache_build;
+alias c_g_dbus_interface_info_cache_release  g_dbus_interface_info_cache_release;
 alias c_g_dbus_interface_info_generate_xml  g_dbus_interface_info_generate_xml;
+alias c_g_dbus_interface_info_ref  g_dbus_interface_info_ref;
+alias c_g_dbus_interface_info_unref  g_dbus_interface_info_unref;
+
+// gio.DBusNodeInfo
+
 alias c_g_dbus_node_info_new_for_xml  g_dbus_node_info_new_for_xml;
 alias c_g_dbus_node_info_lookup_interface  g_dbus_node_info_lookup_interface;
 alias c_g_dbus_node_info_generate_xml  g_dbus_node_info_generate_xml;
 alias c_g_dbus_node_info_ref  g_dbus_node_info_ref;
-alias c_g_dbus_interface_info_ref  g_dbus_interface_info_ref;
-alias c_g_dbus_method_info_ref  g_dbus_method_info_ref;
-alias c_g_dbus_signal_info_ref  g_dbus_signal_info_ref;
-alias c_g_dbus_property_info_ref  g_dbus_property_info_ref;
-alias c_g_dbus_arg_info_ref  g_dbus_arg_info_ref;
-alias c_g_dbus_annotation_info_ref  g_dbus_annotation_info_ref;
 alias c_g_dbus_node_info_unref  g_dbus_node_info_unref;
-alias c_g_dbus_interface_info_unref  g_dbus_interface_info_unref;
-alias c_g_dbus_method_info_unref  g_dbus_method_info_unref;
-alias c_g_dbus_signal_info_unref  g_dbus_signal_info_unref;
-alias c_g_dbus_property_info_unref  g_dbus_property_info_unref;
-alias c_g_dbus_arg_info_unref  g_dbus_arg_info_unref;
-alias c_g_dbus_annotation_info_unref  g_dbus_annotation_info_unref;
 
 // gio.DBusError
 
@@ -4560,6 +5007,9 @@ alias c_g_dbus_connection_get_peer_credentials  g_dbus_connection_get_peer_crede
 alias c_g_dbus_connection_call  g_dbus_connection_call;
 alias c_g_dbus_connection_call_finish  g_dbus_connection_call_finish;
 alias c_g_dbus_connection_call_sync  g_dbus_connection_call_sync;
+alias c_g_dbus_connection_call_with_unix_fd_list  g_dbus_connection_call_with_unix_fd_list;
+alias c_g_dbus_connection_call_with_unix_fd_list_finish  g_dbus_connection_call_with_unix_fd_list_finish;
+alias c_g_dbus_connection_call_with_unix_fd_list_sync  g_dbus_connection_call_with_unix_fd_list_sync;
 alias c_g_dbus_connection_emit_signal  g_dbus_connection_emit_signal;
 alias c_g_dbus_connection_signal_subscribe  g_dbus_connection_signal_subscribe;
 alias c_g_dbus_connection_signal_unsubscribe  g_dbus_connection_signal_unsubscribe;
@@ -4591,6 +5041,8 @@ alias c_g_dbus_method_invocation_return_error_valist  g_dbus_method_invocation_r
 alias c_g_dbus_method_invocation_return_error_literal  g_dbus_method_invocation_return_error_literal;
 alias c_g_dbus_method_invocation_return_gerror  g_dbus_method_invocation_return_gerror;
 alias c_g_dbus_method_invocation_return_dbus_error  g_dbus_method_invocation_return_dbus_error;
+alias c_g_dbus_method_invocation_take_error  g_dbus_method_invocation_take_error;
+alias c_g_dbus_method_invocation_return_value_with_unix_fd_list  g_dbus_method_invocation_return_value_with_unix_fd_list;
 
 // gio.DBusServer
 
@@ -4620,6 +5072,31 @@ alias c_g_bus_unwatch_name  g_bus_unwatch_name;
 alias c_g_bus_watch_name_with_closures  g_bus_watch_name_with_closures;
 alias c_g_bus_watch_name_on_connection_with_closures  g_bus_watch_name_on_connection_with_closures;
 
+// gio.DBusInterfaceT
+
+
+// gio.DBusInterfaceT
+
+alias c_g_dbus_interface_get_info  g_dbus_interface_get_info;
+alias c_g_dbus_interface_get_object  g_dbus_interface_get_object;
+alias c_g_dbus_interface_set_object  g_dbus_interface_set_object;
+
+// gio.DBusInterface
+
+
+// gio.DBusInterfaceSkeleton
+
+alias c_g_dbus_interface_skeleton_flush  g_dbus_interface_skeleton_flush;
+alias c_g_dbus_interface_skeleton_get_info  g_dbus_interface_skeleton_get_info;
+alias c_g_dbus_interface_skeleton_get_vtable  g_dbus_interface_skeleton_get_vtable;
+alias c_g_dbus_interface_skeleton_get_properties  g_dbus_interface_skeleton_get_properties;
+alias c_g_dbus_interface_skeleton_export  g_dbus_interface_skeleton_export;
+alias c_g_dbus_interface_skeleton_unexport  g_dbus_interface_skeleton_unexport;
+alias c_g_dbus_interface_skeleton_get_connection  g_dbus_interface_skeleton_get_connection;
+alias c_g_dbus_interface_skeleton_get_object_path  g_dbus_interface_skeleton_get_object_path;
+alias c_g_dbus_interface_skeleton_get_flags  g_dbus_interface_skeleton_get_flags;
+alias c_g_dbus_interface_skeleton_set_flags  g_dbus_interface_skeleton_set_flags;
+
 // gio.DBusProxy
 
 alias c_g_dbus_proxy_new  g_dbus_proxy_new;
@@ -4644,13 +5121,67 @@ alias c_g_dbus_proxy_get_interface_info  g_dbus_proxy_get_interface_info;
 alias c_g_dbus_proxy_call  g_dbus_proxy_call;
 alias c_g_dbus_proxy_call_finish  g_dbus_proxy_call_finish;
 alias c_g_dbus_proxy_call_sync  g_dbus_proxy_call_sync;
+alias c_g_dbus_proxy_call_with_unix_fd_list  g_dbus_proxy_call_with_unix_fd_list;
+alias c_g_dbus_proxy_call_with_unix_fd_list_finish  g_dbus_proxy_call_with_unix_fd_list_finish;
+alias c_g_dbus_proxy_call_with_unix_fd_list_sync  g_dbus_proxy_call_with_unix_fd_list_sync;
 
-// gio.FilenameCompleter
+// gio.DBusObjectT
 
-alias c_g_filename_completer_new  g_filename_completer_new;
-alias c_g_filename_completer_get_completion_suffix  g_filename_completer_get_completion_suffix;
-alias c_g_filename_completer_get_completions  g_filename_completer_get_completions;
-alias c_g_filename_completer_set_dirs_only  g_filename_completer_set_dirs_only;
+
+// gio.DBusObjectT
+
+alias c_g_dbus_object_get_object_path  g_dbus_object_get_object_path;
+alias c_g_dbus_object_get_interfaces  g_dbus_object_get_interfaces;
+alias c_g_dbus_object_get_interface  g_dbus_object_get_interface;
+
+// gio.DBusObject
+
+
+// gio.DBusObjectSkeleton
+
+alias c_g_dbus_object_skeleton_new  g_dbus_object_skeleton_new;
+alias c_g_dbus_object_skeleton_flush  g_dbus_object_skeleton_flush;
+alias c_g_dbus_object_skeleton_add_interface  g_dbus_object_skeleton_add_interface;
+alias c_g_dbus_object_skeleton_remove_interface  g_dbus_object_skeleton_remove_interface;
+alias c_g_dbus_object_skeleton_remove_interface_by_name  g_dbus_object_skeleton_remove_interface_by_name;
+alias c_g_dbus_object_skeleton_set_object_path  g_dbus_object_skeleton_set_object_path;
+
+// gio.DBusObjectProxy
+
+alias c_g_dbus_object_proxy_new  g_dbus_object_proxy_new;
+alias c_g_dbus_object_proxy_get_connection  g_dbus_object_proxy_get_connection;
+
+// gio.DBusObjectManagerT
+
+
+// gio.DBusObjectManagerT
+
+alias c_g_dbus_object_manager_get_object_path  g_dbus_object_manager_get_object_path;
+alias c_g_dbus_object_manager_get_objects  g_dbus_object_manager_get_objects;
+alias c_g_dbus_object_manager_get_object  g_dbus_object_manager_get_object;
+alias c_g_dbus_object_manager_get_interface  g_dbus_object_manager_get_interface;
+
+// gio.DBusObjectManagerServer
+
+alias c_g_dbus_object_manager_server_new  g_dbus_object_manager_server_new;
+alias c_g_dbus_object_manager_server_get_connection  g_dbus_object_manager_server_get_connection;
+alias c_g_dbus_object_manager_server_set_connection  g_dbus_object_manager_server_set_connection;
+alias c_g_dbus_object_manager_server_export  g_dbus_object_manager_server_export;
+alias c_g_dbus_object_manager_server_export_uniquely  g_dbus_object_manager_server_export_uniquely;
+alias c_g_dbus_object_manager_server_unexport  g_dbus_object_manager_server_unexport;
+
+// gio.DBusObjectManagerClient
+
+alias c_g_dbus_object_manager_client_new  g_dbus_object_manager_client_new;
+alias c_g_dbus_object_manager_client_new_finish  g_dbus_object_manager_client_new_finish;
+alias c_g_dbus_object_manager_client_new_sync  g_dbus_object_manager_client_new_sync;
+alias c_g_dbus_object_manager_client_new_for_bus  g_dbus_object_manager_client_new_for_bus;
+alias c_g_dbus_object_manager_client_new_for_bus_finish  g_dbus_object_manager_client_new_for_bus_finish;
+alias c_g_dbus_object_manager_client_new_for_bus_sync  g_dbus_object_manager_client_new_for_bus_sync;
+alias c_g_dbus_object_manager_client_get_connection  g_dbus_object_manager_client_get_connection;
+alias c_g_dbus_object_manager_client_get_flags  g_dbus_object_manager_client_get_flags;
+alias c_g_dbus_object_manager_client_get_name  g_dbus_object_manager_client_get_name;
+alias c_g_dbus_object_manager_client_get_name_owner  g_dbus_object_manager_client_get_name_owner;
 
 // gio.Settings
 
@@ -4680,6 +5211,8 @@ alias c_g_settings_get_boolean  g_settings_get_boolean;
 alias c_g_settings_set_boolean  g_settings_set_boolean;
 alias c_g_settings_get_int  g_settings_get_int;
 alias c_g_settings_set_int  g_settings_set_int;
+alias c_g_settings_get_uint  g_settings_get_uint;
+alias c_g_settings_set_uint  g_settings_set_uint;
 alias c_g_settings_get_double  g_settings_get_double;
 alias c_g_settings_set_double  g_settings_set_double;
 alias c_g_settings_get_string  g_settings_get_string;
@@ -4752,6 +5285,7 @@ alias c_g_simple_action_group_new  g_simple_action_group_new;
 alias c_g_simple_action_group_lookup  g_simple_action_group_lookup;
 alias c_g_simple_action_group_insert  g_simple_action_group_insert;
 alias c_g_simple_action_group_remove  g_simple_action_group_remove;
+alias c_g_simple_action_group_add_entries  g_simple_action_group_add_entries;
 
 // gio.ActionT
 
@@ -4764,7 +5298,7 @@ alias c_g_action_get_state_type  g_action_get_state_type;
 alias c_g_action_get_state_hint  g_action_get_state_hint;
 alias c_g_action_get_enabled  g_action_get_enabled;
 alias c_g_action_get_state  g_action_get_state;
-alias c_g_action_set_state  g_action_set_state;
+alias c_g_action_change_state  g_action_change_state;
 alias c_g_action_activate  g_action_activate;
 
 // gio.Action
@@ -4775,6 +5309,7 @@ alias c_g_action_activate  g_action_activate;
 alias c_g_simple_action_new  g_simple_action_new;
 alias c_g_simple_action_new_stateful  g_simple_action_new_stateful;
 alias c_g_simple_action_set_enabled  g_simple_action_set_enabled;
+alias c_g_simple_action_set_state  g_simple_action_set_state;
 
 // gio.Application
 
@@ -4823,10 +5358,18 @@ alias c_g_vfs_get_supported_uri_schemes  g_vfs_get_supported_uri_schemes;
 
 alias c_g_io_module_new  g_io_module_new;
 alias c_g_io_modules_load_all_in_directory  g_io_modules_load_all_in_directory;
+alias c_g_io_modules_load_all_in_directory_with_scope  g_io_modules_load_all_in_directory_with_scope;
 alias c_g_io_modules_scan_all_in_directory  g_io_modules_scan_all_in_directory;
+alias c_g_io_modules_scan_all_in_directory_with_scope  g_io_modules_scan_all_in_directory_with_scope;
 alias c_g_io_module_load  g_io_module_load;
 alias c_g_io_module_unload  g_io_module_unload;
 alias c_g_io_module_query  g_io_module_query;
+
+// gio.IOModuleScope
+
+alias c_g_io_module_scope_block  g_io_module_scope_block;
+alias c_g_io_module_scope_free  g_io_module_scope_free;
+alias c_g_io_module_scope_new  g_io_module_scope_new;
 
 // gio.IOExtension
 

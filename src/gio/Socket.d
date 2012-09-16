@@ -362,7 +362,7 @@ public class Socket : ObjectG, InitableIF
 	 * If the connect call needs to do network I/O it will block, unless
 	 * non-blocking I/O is enabled. Then G_IO_ERROR_PENDING is returned
 	 * and the user can be notified of the connection finishing by waiting
-	 * for the G_IO_OUT condition. The result of the connection can then be
+	 * for the G_IO_OUT condition. The result of the connection must then be
 	 * checked with g_socket_check_connect_result().
 	 * Since 2.22
 	 * Params:
@@ -422,10 +422,11 @@ public class Socket : ObjectG, InitableIF
 	 * number of bytes, up to size. If more than size bytes have been
 	 * received, the additional data will be returned in future calls to
 	 * g_socket_receive().
-	 * If the socket is in blocking mode the call will block until there is
-	 * some data to receive or there is an error. If there is no data available
-	 * and the socket is in non-blocking mode, a G_IO_ERROR_WOULD_BLOCK error
-	 * will be returned. To be notified when data is available, wait for the
+	 * If the socket is in blocking mode the call will block until there
+	 * is some data to receive, the connection is closed, or there is an
+	 * error. If there is no data available and the socket is in
+	 * non-blocking mode, a G_IO_ERROR_WOULD_BLOCK error will be
+	 * returned. To be notified when data is available, wait for the
 	 * G_IO_IN condition.
 	 * On error -1 is returned and error is set accordingly.
 	 * Since 2.22
@@ -434,7 +435,7 @@ public class Socket : ObjectG, InitableIF
 	 * bytes long).
 	 * size = the number of bytes you want to read from the socket
 	 * cancellable = a GCancellable or NULL. [allow-none]
-	 * Returns: Number of bytes read, or -1 on error
+	 * Returns: Number of bytes read, or 0 if the connection was closed by the peer, or -1 on error
 	 * Throws: GException on failure.
 	 */
 	public gssize receive(string buffer, gsize size, Cancellable cancellable)
@@ -465,7 +466,7 @@ public class Socket : ObjectG, InitableIF
 	 * bytes long).
 	 * size = the number of bytes you want to read from the socket
 	 * cancellable = a GCancellable or NULL. [allow-none]
-	 * Returns: Number of bytes read, or -1 on error
+	 * Returns: Number of bytes read, or 0 if the connection was closed by the peer, or -1 on error
 	 * Throws: GException on failure.
 	 */
 	public gssize receiveFrom(ref SocketAddress address, char[] buffer, Cancellable cancellable)
@@ -527,10 +528,11 @@ public class Socket : ObjectG, InitableIF
 	 * out the length of the message other than by reading it into a
 	 * sufficiently-large buffer.
 	 * If the socket is in blocking mode the call will block until there
-	 * is some data to receive or there is an error. If there is no data
-	 * available and the socket is in non-blocking mode, a
-	 * G_IO_ERROR_WOULD_BLOCK error will be returned. To be notified when
-	 * data is available, wait for the G_IO_IN condition.
+	 * is some data to receive, the connection is closed, or there is an
+	 * error. If there is no data available and the socket is in
+	 * non-blocking mode, a G_IO_ERROR_WOULD_BLOCK error will be
+	 * returned. To be notified when data is available, wait for the
+	 * G_IO_IN condition.
 	 * On error -1 is returned and error is set accordingly.
 	 * Since 2.22
 	 * Params:
@@ -540,7 +542,7 @@ public class Socket : ObjectG, InitableIF
 	 * may be filled with an array of GSocketControlMessages, or NULL. [array length=num_messages][allow-none]
 	 * flags = a pointer to an int containing GSocketMsgFlags flags
 	 * cancellable = a GCancellable or NULL. [allow-none]
-	 * Returns: Number of bytes read, or -1 on error
+	 * Returns: Number of bytes read, or 0 if the connection was closed by the peer, or -1 on error
 	 * Throws: GException on failure.
 	 */
 	public gssize receiveMessage(ref SocketAddress address, GInputVector[] vectors, ref SocketControlMessage[] messages, ref int flags, Cancellable cancellable)
@@ -586,7 +588,7 @@ public class Socket : ObjectG, InitableIF
 	 * size = the number of bytes you want to read from the socket
 	 * blocking = whether to do blocking or non-blocking I/O
 	 * cancellable = a GCancellable or NULL. [allow-none]
-	 * Returns: Number of bytes read, or -1 on error
+	 * Returns: Number of bytes read, or 0 if the connection was closed by the peer, or -1 on error
 	 * Throws: GException on failure.
 	 */
 	public gssize receiveWithBlocking(string buffer, gsize size, int blocking, Cancellable cancellable)
@@ -816,7 +818,7 @@ public class Socket : ObjectG, InitableIF
 	
 	/**
 	 * Shut down part of a full-duplex connection.
-	 * If shutdown_read is TRUE then the recieving side of the connection
+	 * If shutdown_read is TRUE then the receiving side of the connection
 	 * is shut down, and further reading is disallowed.
 	 * If shutdown_write is TRUE then the sending side of the connection
 	 * is shut down, and further writing is disallowed.

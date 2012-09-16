@@ -96,6 +96,13 @@ private import gio.IOExtension;
  *  see gio-querymodules.
  *  You are expected to run this command after installing a
  *  GIO module.
+ *  The GIO_EXTRA_MODULES environment variable can be
+ *  used to specify additional directories to automatically load modules
+ *  from. This environment variable has the same syntax as the
+ *  PATH. If two modules have the same base name in different
+ *  directories, then the latter one will be ignored. If additional
+ *  directories are specified GIO will load modules from the built-in
+ *  directory last.
  */
 public class IOExtensionPoint
 {
@@ -185,7 +192,7 @@ public class IOExtensionPoint
 	 * type = the GType to register as extension
 	 * extensionName = the name for the extension
 	 * priority = the priority for the extension
-	 * Returns: a GIOExtension object for GType
+	 * Returns: a GIOExtension object for GType. [transfer none]
 	 */
 	public static IOExtension implement(string extensionPointName, GType type, string extensionName, int priority)
 	{
@@ -202,7 +209,7 @@ public class IOExtensionPoint
 	 * Looks up an existing extension point.
 	 * Params:
 	 * name = the name of the extension point
-	 * Returns: the GIOExtensionPoint, or NULL if there is no registered extension point with the given name
+	 * Returns: the GIOExtensionPoint, or NULL if there is no registered extension point with the given name. [transfer none]
 	 */
 	public static IOExtensionPoint lookup(string name)
 	{
@@ -219,7 +226,7 @@ public class IOExtensionPoint
 	 * Registers an extension point.
 	 * Params:
 	 * name = The name of the extension point
-	 * Returns: the new GIOExtensionPoint. This object is owned by GIO and should not be freed
+	 * Returns: the new GIOExtensionPoint. This object is owned by GIO and should not be freed. [transfer none]
 	 */
 	public static IOExtensionPoint register(string name)
 	{

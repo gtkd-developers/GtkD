@@ -79,7 +79,7 @@ private import gobject.ObjectG;
 
 /**
  * Description
- * A GSimpleAction is the obvious simple implementation of the GSimpleAction
+ * A GSimpleAction is the obvious simple implementation of the GAction
  * interface. This is the easiest way to create an action for purposes of
  * adding it to a GSimpleActionGroup.
  * See also GtkAction.
@@ -167,6 +167,46 @@ public class SimpleAction : ObjectG, ActionIF
 		}
 	}
 	
+	void delegate(Variant, SimpleAction)[] onChangeStateListeners;
+	/**
+	 * Indicates that the action just received a request to change its
+	 * state.
+	 * value will always be of the correct state type. In the event that
+	 * an incorrect type was given, no signal will be emitted.
+	 * If no handler is connected to this signal then the default
+	 * behaviour is to call g_simple_action_set_state() to set the state
+	 * to the requested value. If you connect a signal handler then no
+	 * default action is taken. If the state should change then you must
+	 * call g_simple_action_set_state() from the handler.
+	 * $(DDOC_COMMENT example)
+	 *
+	 * The handler need not set the state to the requested value. It
+	 * could set it to any value at all, or take some other action.
+	 * Since 2.30
+	 */
+	void addOnChangeState(void delegate(Variant, SimpleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("change-state" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"change-state",
+			cast(GCallback)&callBackChangeState,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["change-state"] = 1;
+		}
+		onChangeStateListeners ~= dlg;
+	}
+	extern(C) static void callBackChangeState(GSimpleAction* simpleStruct, GVariant* value, SimpleAction _simpleAction)
+	{
+		foreach ( void delegate(Variant, SimpleAction) dlg ; _simpleAction.onChangeStateListeners )
+		{
+			dlg(new Variant(value), _simpleAction);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new action.
@@ -215,6 +255,8 @@ public class SimpleAction : ObjectG, ActionIF
 	 * Sets the action as enabled or not.
 	 * An action must be enabled in order to be activated or in order to
 	 * have its state changed from outside callers.
+	 * This should only be called by the implementor of the action. Users
+	 * of the action should not attempt to modify its enabled flag.
 	 * Since 2.28
 	 * Params:
 	 * enabled = whether the action is enabled
@@ -223,5 +265,22 @@ public class SimpleAction : ObjectG, ActionIF
 	{
 		// void g_simple_action_set_enabled (GSimpleAction *simple,  gboolean enabled);
 		g_simple_action_set_enabled(gSimpleAction, enabled);
+	}
+	
+	/**
+	 * Sets the state of the action.
+	 * This directly updates the 'state' property to the given value.
+	 * This should only be called by the implementor of the action. Users
+	 * of the action should not attempt to directly modify the 'state'
+	 * property. Instead, they should call g_action_change_state() to
+	 * request the change.
+	 * Since 2.30
+	 * Params:
+	 * value = the new GVariant for the state
+	 */
+	public void setState(Variant value)
+	{
+		// void g_simple_action_set_state (GSimpleAction *simple,  GVariant *value);
+		g_simple_action_set_state(gSimpleAction, (value is null) ? null : value.getVariantStruct());
 	}
 }

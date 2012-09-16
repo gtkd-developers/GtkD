@@ -285,7 +285,7 @@ public class File : ObjectG
 	 * This call does no blocking i/o.
 	 * Virtual: hash
 	 * Params:
-	 * file = gconstpointer to a GFile.
+	 * file = gconstpointer to a GFile. [type GFile]
 	 * Returns: 0 if file is not a valid GFile, otherwise an integer that can be used as hash value for the GFile. This function is intended for easily hashing a GFile to add to a GHashTable or similar data structure.
 	 */
 	public static uint hash(void* file)
@@ -440,7 +440,7 @@ public class File : ObjectG
 	 */
 	public File getChildForDisplayName(string displayName)
 	{
-		// GFile * g_file_get_child_for_display_name  (GFile *file,  const char *display_name,  GError **error);
+		// GFile * g_file_get_child_for_display_name (GFile *file,  const char *display_name,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_get_child_for_display_name(gFile, Str.toStringz(displayName), &err);
@@ -459,7 +459,7 @@ public class File : ObjectG
 	
 	/**
 	 * Checks whether file has the prefix specified by prefix. In other word,
-	 * if the names of inital elements of files pathname match prefix.
+	 * if the names of initial elements of files pathname match prefix.
 	 * Only full pathname elements are matched, so a path like /foo is not
 	 * considered a prefix of /foobar, only of /foo/bar.
 	 * This call does no i/o, as it works purely on names. As such it can
@@ -1075,8 +1075,8 @@ public class File : ObjectG
 	 * should be gathered. It is not an error if it's not possible to read a particular
 	 * requested attribute from a file - it just won't be set. attributes should
 	 * be a comma-separated list of attributes or attribute wildcards. The wildcard "*"
-	 * means all attributes, and a wildcard like "fs:*" means all attributes in the fs
-	 * namespace. The standard namespace for filesystem attributes is "fs".
+	 * means all attributes, and a wildcard like "filesystem::*" means all attributes in the
+	 * filesystem namespace. The standard namespace for filesystem attributes is "filesystem".
 	 * Common attributes of interest are G_FILE_ATTRIBUTE_FILESYSTEM_SIZE
 	 * (the total size of the filesystem in bytes), G_FILE_ATTRIBUTE_FILESYSTEM_FREE (number of
 	 * bytes available), and G_FILE_ATTRIBUTE_FILESYSTEM_TYPE (type of the filesystem).
@@ -1144,7 +1144,7 @@ public class File : ObjectG
 	 */
 	public FileInfo queryFilesystemInfoFinish(AsyncResultIF res)
 	{
-		// GFileInfo * g_file_query_filesystem_info_finish  (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileInfo * g_file_query_filesystem_info_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_query_filesystem_info_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -1252,7 +1252,7 @@ public class File : ObjectG
 	 */
 	public MountIF findEnclosingMountFinish(AsyncResultIF res)
 	{
-		// GMount * g_file_find_enclosing_mount_finish  (GFile *file,  GAsyncResult *res,  GError **error);
+		// GMount * g_file_find_enclosing_mount_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_find_enclosing_mount_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -1346,7 +1346,7 @@ public class File : ObjectG
 	 */
 	public FileEnumerator enumerateChildrenFinish(AsyncResultIF res)
 	{
-		// GFileEnumerator * g_file_enumerate_children_finish  (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileEnumerator * g_file_enumerate_children_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_enumerate_children_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);
@@ -1689,7 +1689,9 @@ public class File : ObjectG
 	/**
 	 * Creates a directory and any parent directories that may not exist similar to
 	 * 'mkdir -p'. If the file system does not support creating directories, this
-	 * function will fail, setting error to G_IO_ERROR_NOT_SUPPORTED.
+	 * function will fail, setting error to G_IO_ERROR_NOT_SUPPORTED. If the
+	 * directory itself already exists, this function will fail setting error
+	 * to G_IO_ERROR_EXISTS, unlike the similar g_mkdir_with_parents().
 	 * For a local GFile the newly created directories will have the default
 	 * (current) ownership and permissions of the current process.
 	 * If cancellable is not NULL, then the operation can be cancelled by
@@ -1809,6 +1811,8 @@ public class File : ObjectG
 	
 	/**
 	 * Sets an attribute in the file with attribute name attribute to value.
+	 * Some attributes can be unset by setting attribute to
+	 * G_FILE_ATTRIBUTE_TYPE_INVALID and value to NULL.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
@@ -3134,7 +3138,7 @@ public class File : ObjectG
 	 */
 	public FileIOStream replaceReadwriteFinish(AsyncResultIF res)
 	{
-		// GFileIOStream * g_file_replace_readwrite_finish  (GFile *file,  GAsyncResult *res,  GError **error);
+		// GFileIOStream * g_file_replace_readwrite_finish (GFile *file,  GAsyncResult *res,  GError **error);
 		GError* err = null;
 		
 		auto p = g_file_replace_readwrite_finish(gFile, (res is null) ? null : res.getAsyncResultTStruct(), &err);

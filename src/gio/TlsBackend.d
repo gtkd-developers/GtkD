@@ -43,8 +43,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gio.TlsDatabase
  * structWrap:
  * 	- GTlsBackend* -> TlsBackend
+ * 	- GTlsDatabase* -> TlsDatabase
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,6 +60,7 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 
 
+private import gio.TlsDatabase;
 
 
 
@@ -103,7 +106,7 @@ public class TlsBackend
 	/**
 	 * Gets the default GTlsBackend for the system.
 	 * Since 2.28
-	 * Returns: a GTlsBackend
+	 * Returns: a GTlsBackend. [transfer none]
 	 */
 	public static TlsBackend getDefault()
 	{
@@ -126,6 +129,22 @@ public class TlsBackend
 	{
 		// gboolean g_tls_backend_supports_tls (GTlsBackend *backend);
 		return g_tls_backend_supports_tls(gTlsBackend);
+	}
+	
+	/**
+	 * Gets the default GTlsDatabase used to verify TLS connections.
+	 * Since 2.30
+	 * Returns: the default database, which should be unreffed when done. [transfer full]
+	 */
+	public TlsDatabase getDefaultDatabase()
+	{
+		// GTlsDatabase * g_tls_backend_get_default_database (GTlsBackend *backend);
+		auto p = g_tls_backend_get_default_database(gTlsBackend);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TlsDatabase(cast(GTlsDatabase*) p);
 	}
 	
 	/**
@@ -159,5 +178,16 @@ public class TlsBackend
 	{
 		// GType g_tls_backend_get_server_connection_type  (GTlsBackend *backend);
 		return g_tls_backend_get_server_connection_type(gTlsBackend);
+	}
+	
+	/**
+	 * Gets the GTyep of backend's GTlsFileDatabase implementation.
+	 * Since 2.30
+	 * Returns: the GType of backend's GTlsFileDatabase implementation.
+	 */
+	public GType getFileDatabaseType()
+	{
+		// GType g_tls_backend_get_file_database_type  (GTlsBackend *backend);
+		return g_tls_backend_get_file_database_type(gTlsBackend);
 	}
 }

@@ -47,6 +47,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
+ * 	- GInetAddress* -> InetAddress
  * module aliases:
  * local aliases:
  * overrides:
@@ -194,6 +195,19 @@ public class InetAddress : ObjectG
 			throw new ConstructionException("null returned by g_inet_address_new_from_bytes(bytes.ptr, family)");
 		}
 		this(cast(GInetAddress*) p);
+	}
+	
+	/**
+	 * Checks if two GInetAddress instances are equal, e.g. the same address.
+	 * Since 2.30
+	 * Params:
+	 * otherAddress = Another GInetAddress.
+	 * Returns: TRUE if address and other_address are equal, FALSE otherwise.
+	 */
+	public int equal(InetAddress otherAddress)
+	{
+		// gboolean g_inet_address_equal (GInetAddress *address,  GInetAddress *other_address);
+		return g_inet_address_equal(gInetAddress, (otherAddress is null) ? null : otherAddress.getInetAddressStruct());
 	}
 	
 	/**

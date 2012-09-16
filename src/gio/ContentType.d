@@ -77,9 +77,10 @@ private import gio.IconIF;
 /**
  * Description
  * A content type is a platform specific string that defines the type
- * of a file. On unix it is a mime type, on win32 it is an extension string
- * like ".doc", ".txt" or a percieved string like "audio". Such strings
- * can be looked up in the registry at HKEY_CLASSES_ROOT.
+ * of a file. On UNIX it is a mime type like "text/plain" or "image/png".
+ * On Win32 it is an extension string like ".doc", ".txt" or a perceived
+ * string like "audio". Such strings can be looked up in the registry at
+ * HKEY_CLASSES_ROOT.
  */
 public class ContentType
 {

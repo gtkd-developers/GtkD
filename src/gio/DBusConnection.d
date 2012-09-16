@@ -60,6 +60,7 @@
  * 	- gio.DBusMessage
  * 	- gio.DBusMethodInvocation
  * 	- gio.IOStream
+ * 	- gio.UnixFDList
  * 	- gio.InitableT
  * 	- gio.InitableIF
  * 	- gio.AsyncInitableT
@@ -73,6 +74,7 @@
  * 	- GDBusMessage* -> DBusMessage
  * 	- GDBusMethodInvocation* -> DBusMethodInvocation
  * 	- GIOStream* -> IOStream
+ * 	- GUnixFDList* -> UnixFDList
  * 	- GVariant* -> Variant
  * 	- GVariantType* -> VariantType
  * module aliases:
@@ -102,6 +104,7 @@ private import gio.DBusAuthObserver;
 private import gio.DBusMessage;
 private import gio.DBusMethodInvocation;
 private import gio.IOStream;
+private import gio.UnixFDList;
 private import gio.InitableT;
 private import gio.InitableIF;
 private import gio.AsyncInitableT;
@@ -120,6 +123,20 @@ private import gobject.ObjectG;
  * This class is rarely used directly in D-Bus clients. If you are writing
  * an D-Bus client, it is often easier to use the g_bus_own_name(),
  * g_bus_watch_name() or g_dbus_proxy_new_for_bus() APIs.
+ * Most of the ways to obtain a GDBusConnection automatically initialize it
+ * (i.e. connect to D-Bus): for instance, g_dbus_connection_new() and
+ * g_bus_get(), and the synchronous versions of those methods, give you an
+ * initialized connection. Language bindings for GIO should use
+ * g_initable_new() or g_async_initable_new(), which also initialize the
+ * connection.
+ * If you construct an uninitialized GDBusConnection, such as via
+ * g_object_new(), you must initialize it via g_initable_init() or
+ * g_async_initable_init() before using its methods or properties. Calling
+ * methods or accessing properties on a GDBusConnection that has not completed
+ * initialization successfully is considered to be invalid, and leads to
+ * undefined behaviour. In particular, if initialization fails with a GError,
+ * the only valid thing you can do with that GDBusConnection is to free it
+ * with g_object_unref().
  * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
@@ -284,7 +301,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * The returned object is a singleton, that is, shared with other
 	 * callers of g_bus_get() and g_bus_get_sync() for bus_type. In the
 	 * event that you need a private message bus connection, use
-	 * g_dbus_address_get_for_bus() and
+	 * g_dbus_address_get_for_bus_sync() and
 	 * g_dbus_connection_new_for_address().
 	 * Note that the returned GDBusConnection object will (usually) have
 	 * the "exit-on-close" property set to TRUE.
@@ -356,6 +373,11 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	/**
 	 * Asynchronously sets up a D-Bus connection for exchanging D-Bus messages
 	 * with the end represented by stream.
+	 * If stream is a GSocketConnection, then the corresponding GSocket
+	 * will be put into non-blocking mode.
+	 * The D-Bus connection will interact with stream from a worker thread.
+	 * As a result, the caller should not interact with stream after this
+	 * method has been called, except by calling g_object_unref() on it.
 	 * If observer is not NULL it may be used to control the
 	 * authentication process.
 	 * When the operation is finished, callback will be invoked. You can
@@ -383,6 +405,11 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	/**
 	 * Synchronously sets up a D-Bus connection for exchanging D-Bus messages
 	 * with the end represented by stream.
+	 * If stream is a GSocketConnection, then the corresponding GSocket
+	 * will be put into non-blocking mode.
+	 * The D-Bus connection will interact with stream from a worker thread.
+	 * As a result, the caller should not interact with stream after this
+	 * method has been called, except by calling g_object_unref() on it.
 	 * If observer is not NULL it may be used to control the
 	 * authentication process.
 	 * This is a synchronous failable constructor. See
@@ -706,6 +733,9 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	
 	/**
 	 * Gets the underlying stream used for IO.
+	 * While the GDBusConnection is active, it will interact with this
+	 * stream from a worker thread, so it is not safe to interact with
+	 * the stream directly.
 	 * Since 2.26
 	 * Returns: the stream used for IO. [transfer none]
 	 */
@@ -752,7 +782,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 */
 	public GDBusCapabilityFlags getCapabilities()
 	{
-		// GDBusCapabilityFlags g_dbus_connection_get_capabilities  (GDBusConnection *connection);
+		// GDBusCapabilityFlags g_dbus_connection_get_capabilities (GDBusConnection *connection);
 		return g_dbus_connection_get_capabilities(gDBusConnection);
 	}
 	
@@ -894,6 +924,107 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	}
 	
 	/**
+	 * Like g_dbus_connection_call() but also takes a GUnixFDList object.
+	 * This method is only available on UNIX.
+	 * Since 2.30
+	 * Params:
+	 * busName = A unique or well-known bus name or NULL if
+	 * connection is not a message bus connection. [allow-none]
+	 * objectPath = Path of remote object.
+	 * interfaceName = D-Bus interface to invoke method on.
+	 * methodName = The name of the method to invoke.
+	 * parameters = A GVariant tuple with parameters for the method
+	 * or NULL if not passing parameters. [allow-none]
+	 * replyType = The expected type of the reply, or NULL. [allow-none]
+	 * flags = Flags from the GDBusCallFlags enumeration.
+	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
+	 * timeout or G_MAXINT for no timeout.
+	 * fdList = A GUnixFDList or NULL. [allow-none]
+	 * cancellable = A GCancellable or NULL.
+	 * callback = A GAsyncReadyCallback to call when the request is
+	 * satisfied or NULL if you don't * care about the result of the
+	 * method invocation. [allow-none]
+	 * userData = The data to pass to callback.
+	 */
+	public void callWithUnixFdList(string busName, string objectPath, string interfaceName, string methodName, Variant parameters, VariantType replyType, GDBusCallFlags flags, int timeoutMsec, UnixFDList fdList, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_dbus_connection_call_with_unix_fd_list  (GDBusConnection *connection,  const gchar *bus_name,  const gchar *object_path,  const gchar *interface_name,  const gchar *method_name,  GVariant *parameters,  const GVariantType *reply_type,  GDBusCallFlags flags,  gint timeout_msec,  GUnixFDList *fd_list,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_dbus_connection_call_with_unix_fd_list(gDBusConnection, Str.toStringz(busName), Str.toStringz(objectPath), Str.toStringz(interfaceName), Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), (replyType is null) ? null : replyType.getVariantTypeStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an operation started with g_dbus_connection_call_with_unix_fd_list().
+	 * Since 2.30
+	 * Params:
+	 * outFdList = Return location for a GUnixFDList or NULL. [out]
+	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_connection_call_with_unix_fd_list().
+	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
+	 * Throws: GException on failure.
+	 */
+	public Variant callWithUnixFdListFinish(out UnixFDList outFdList, AsyncResultIF res)
+	{
+		// GVariant * g_dbus_connection_call_with_unix_fd_list_finish  (GDBusConnection *connection,  GUnixFDList **out_fd_list,  GAsyncResult *res,  GError **error);
+		GUnixFDList* outoutFdList = null;
+		GError* err = null;
+		
+		auto p = g_dbus_connection_call_with_unix_fd_list_finish(gDBusConnection, &outoutFdList, (res is null) ? null : res.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		outFdList = new UnixFDList(outoutFdList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Like g_dbus_connection_call_sync() but also takes and returns GUnixFDList objects.
+	 * This method is only available on UNIX.
+	 * Since 2.30
+	 * Params:
+	 * busName = A unique or well-known bus name.
+	 * objectPath = Path of remote object.
+	 * interfaceName = D-Bus interface to invoke method on.
+	 * methodName = The name of the method to invoke.
+	 * parameters = A GVariant tuple with parameters for the method
+	 * or NULL if not passing parameters. [allow-none]
+	 * replyType = The expected type of the reply, or NULL. [allow-none]
+	 * flags = Flags from the GDBusCallFlags enumeration.
+	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
+	 * timeout or G_MAXINT for no timeout.
+	 * fdList = A GUnixFDList or NULL. [allow-none]
+	 * outFdList = Return location for a GUnixFDList or NULL. [out]
+	 * cancellable = A GCancellable or NULL.
+	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
+	 * Throws: GException on failure.
+	 */
+	public Variant callWithUnixFdListSync(string busName, string objectPath, string interfaceName, string methodName, Variant parameters, VariantType replyType, GDBusCallFlags flags, int timeoutMsec, UnixFDList fdList, out UnixFDList outFdList, Cancellable cancellable)
+	{
+		// GVariant * g_dbus_connection_call_with_unix_fd_list_sync  (GDBusConnection *connection,  const gchar *bus_name,  const gchar *object_path,  const gchar *interface_name,  const gchar *method_name,  GVariant *parameters,  const GVariantType *reply_type,  GDBusCallFlags flags,  gint timeout_msec,  GUnixFDList *fd_list,  GUnixFDList **out_fd_list,  GCancellable *cancellable,  GError **error);
+		GUnixFDList* outoutFdList = null;
+		GError* err = null;
+		
+		auto p = g_dbus_connection_call_with_unix_fd_list_sync(gDBusConnection, Str.toStringz(busName), Str.toStringz(objectPath), Str.toStringz(interfaceName), Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), (replyType is null) ? null : replyType.getVariantTypeStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		outFdList = new UnixFDList(outoutFdList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
 	 * Emits a signal.
 	 * If the parameters GVariant is floating, it is consumed.
 	 * This can only fail if parameters is not compatible with the D-Bus protocol.
@@ -950,7 +1081,8 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * flags = Flags describing how to subscribe to the signal (currently unused).
 	 * callback = Callback to invoke when there is a signal matching the requested data.
 	 * userData = User data to pass to callback.
-	 * userDataFreeFunc = Function to free user_data with when subscription is removed or NULL.
+	 * userDataFreeFunc = Function to free user_data with when
+	 * subscription is removed or NULL. [allow-none]
 	 * Returns: A subscription identifier that can be used with g_dbus_connection_signal_unsubscribe().
 	 */
 	public uint signalSubscribe(string sender, string interfaceName, string member, string objectPath, string arg0, GDBusSignalFlags flags, GDBusSignalCallback callback, void* userData, GDestroyNotify userDataFreeFunc)
@@ -1053,7 +1185,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	/**
 	 * Finishes an operation started with g_dbus_connection_send_message_with_reply().
 	 * Note that error is only set if a local in-process error
-	 * occured. That is to say that the returned GDBusMessage object may
+	 * occurred. That is to say that the returned GDBusMessage object may
 	 * be of type G_DBUS_MESSAGE_TYPE_ERROR. Use
 	 * g_dbus_message_to_gerror() to transcode this to a GError.
 	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
@@ -1099,7 +1231,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * fail with G_IO_ERROR_CANCELLED. If message is not well-formed,
 	 * the operation fails with G_IO_ERROR_INVALID_ARGUMENT.
 	 * Note that error is only set if a local in-process error
-	 * occured. That is to say that the returned GDBusMessage object may
+	 * occurred. That is to say that the returned GDBusMessage object may
 	 * be of type G_DBUS_MESSAGE_TYPE_ERROR. Use
 	 * g_dbus_message_to_gerror() to transcode this to a GError.
 	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
@@ -1144,14 +1276,12 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * added as a filter more than once, in which case it will be run more
 	 * than once. Filters added during a filter callback won't be run on
 	 * the message being processed. Filter functions are allowed to modify
-	 * and even drop messages - see the GDBusMessageFilterResult
-	 * enumeration for details.
+	 * and even drop messages.
 	 * Note that filters are run in a dedicated message handling thread so
 	 * they can't block and, generally, can't do anything but signal a
 	 * worker thread. Also note that filters are rarely needed - use API
 	 * such as g_dbus_connection_send_message_with_reply(),
-	 * g_dbus_connection_signal_subscribe() or
-	 * g_dbus_connection_call() instead.
+	 * g_dbus_connection_signal_subscribe() or g_dbus_connection_call() instead.
 	 * If a filter consumes an incoming message the message is not
 	 * dispatched anywhere else - not even the standard dispatch machinery
 	 * (that API such as g_dbus_connection_signal_subscribe() and
@@ -1214,18 +1344,14 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * incremented by 1 (unless allocated statically, e.g. if the
 	 * reference count is -1, see g_dbus_interface_info_ref()) for as long
 	 * as the object is exported. Also note that vtable will be copied.
-	 * A NULL vtable can be used for
-	 * marker
-	 * interfaces.
-	 * See Example 2, “D-Bus server example” for an example of how to use this
-	 * method.
+	 * See Example 2, “D-Bus server example” for an example of how to use this method.
 	 * Since 2.26
 	 * Params:
-	 * objectPath = The object path to register at
-	 * interfaceInfo = Introspection data for the interface
-	 * vtable = A GDBusInterfaceVTable to call into, or NULL. [allow-none]
-	 * userData = Data to pass to functions in vtable
-	 * userDataFreeFunc = Function to call when the object path is unregistered
+	 * objectPath = The object path to register at.
+	 * interfaceInfo = Introspection data for the interface.
+	 * vtable = A GDBusInterfaceVTable to call into or NULL. [allow-none]
+	 * userData = Data to pass to functions in vtable. [allow-none]
+	 * userDataFreeFunc = Function to call when the object path is unregistered.
 	 * Returns: 0 if error is set, otherwise a registration id (never 0) that can be used with g_dbus_connection_unregister_object() .
 	 * Throws: GException on failure.
 	 */

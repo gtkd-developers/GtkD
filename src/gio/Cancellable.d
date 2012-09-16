@@ -185,7 +185,7 @@ public class Cancellable : ObjectG
 	 * that should be cancellable should create a GCancellable
 	 * and pass it to the operations.
 	 * One GCancellable can be used in multiple consecutive
-	 * operations, but not in multiple concurrent operations.
+	 * operations or in multiple concurrent operations.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
@@ -212,7 +212,7 @@ public class Cancellable : ObjectG
 	/**
 	 * If the cancellable is cancelled, sets the error to notify
 	 * that the operation was cancelled.
-	 * Returns: TRUE if cancellable was cancelled, FALSE if it was not.
+	 * Returns: TRUE if cancellable was cancelled, FALSE if it was not
 	 */
 	public int setErrorIfCancelled()
 	{
@@ -340,7 +340,7 @@ public class Cancellable : ObjectG
 	
 	/**
 	 * Pushes cancellable onto the cancellable stack. The current
-	 * cancellable can then be recieved using g_cancellable_get_current().
+	 * cancellable can then be received using g_cancellable_get_current().
 	 * This is useful when implementing cancellable operations in
 	 * code that does not allow you to pass down the cancellable object.
 	 * This is typically called automatically by e.g. GFile operations,
@@ -354,6 +354,8 @@ public class Cancellable : ObjectG
 	
 	/**
 	 * Resets cancellable to its uncancelled state.
+	 * If cancellable is currently in use by any cancellable operation
+	 * then the behavior of this function is undefined.
 	 */
 	public void reset()
 	{

@@ -178,7 +178,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 	}
 	
 	/**
-	 * Checks if passing a GCredential on a GSocket is supported on this platform.
+	 * Checks if passing GCredentials on a GSocket is supported on this platform.
 	 * Since 2.26
 	 * Returns: TRUE if supported, FALSE otherwise
 	 */

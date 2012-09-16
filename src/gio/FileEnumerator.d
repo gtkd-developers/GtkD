@@ -336,7 +336,7 @@ public class FileEnumerator : ObjectG
 	/**
 	 * Get the GFile container which is being enumerated.
 	 * Since 2.18
-	 * Returns: the GFile which is being enumerated. [transfer full]
+	 * Returns: the GFile which is being enumerated. [transfer none]
 	 */
 	public File getContainer()
 	{

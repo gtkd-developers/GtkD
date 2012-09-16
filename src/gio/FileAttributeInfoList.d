@@ -77,7 +77,7 @@ private import glib.Str;
  * Upon creation of a GFileAttributeValue, the type will be set to
  * G_FILE_ATTRIBUTE_TYPE_INVALID.
  * The list of possible attributes for a filesystem (pointed to by a GFile) is
- * availible as a GFileAttributeInfoList. This list is queryable by key names
+ * available as a GFileAttributeInfoList. This list is queryable by key names
  * as indicated earlier.
  * Classes that implement GFileIface will create a GFileAttributeInfoList and
  * install default keys and values for their given file system, architecture,
@@ -128,7 +128,7 @@ private import glib.Str;
  * some backend specific data such as a unix UID.
  * "thumbnail"
  * The "Thumbnail" namespace. Includes
- * information about file thumbnails and their location within the file system. Exaples of
+ * information about file thumbnails and their location within the file system. Examples of
  * keys in this namespace include "path" to get the location of a thumbnail, and "failed"
  * to check if thumbnailing of the file failed.
  * "filesystem"
@@ -400,7 +400,7 @@ public class FileAttributeInfoList
 	 */
 	public this ()
 	{
-		// GFileAttributeInfoList * g_file_attribute_info_list_new  (void);
+		// GFileAttributeInfoList * g_file_attribute_info_list_new (void);
 		auto p = g_file_attribute_info_list_new();
 		if(p is null)
 		{
@@ -415,7 +415,7 @@ public class FileAttributeInfoList
 	 */
 	public FileAttributeInfoList doref()
 	{
-		// GFileAttributeInfoList * g_file_attribute_info_list_ref  (GFileAttributeInfoList *list);
+		// GFileAttributeInfoList * g_file_attribute_info_list_ref (GFileAttributeInfoList *list);
 		auto p = g_file_attribute_info_list_ref(gFileAttributeInfoList);
 		if(p is null)
 		{
@@ -440,7 +440,7 @@ public class FileAttributeInfoList
 	 */
 	public FileAttributeInfoList dup()
 	{
-		// GFileAttributeInfoList * g_file_attribute_info_list_dup  (GFileAttributeInfoList *list);
+		// GFileAttributeInfoList * g_file_attribute_info_list_dup (GFileAttributeInfoList *list);
 		auto p = g_file_attribute_info_list_dup(gFileAttributeInfoList);
 		if(p is null)
 		{

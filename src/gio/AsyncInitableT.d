@@ -174,11 +174,11 @@ public template AsyncInitableT(TStruct)
 	}
 	
 	/**
-	 * Finishes the async construction for the various g_async_initable_new calls,
-	 * returning the created object or NULL on error.
+	 * Finishes the async construction for the various g_async_initable_new
+	 * calls, returning the created object or NULL on error.
 	 * Since 2.22
 	 * Params:
-	 * res = the GAsyncResult.from the callback
+	 * res = the GAsyncResult from the callback
 	 * Returns: a newly created GObject, or NULL on error. Free with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -202,7 +202,7 @@ public template AsyncInitableT(TStruct)
 	}
 	
 	/**
-	 * Helper function for constructing GAsyncInitiable object. This is
+	 * Helper function for constructing GAsyncInitable object. This is
 	 * similar to g_object_new_valist() but also initializes the object
 	 * asynchronously.
 	 * When the initialization is finished, callback will be called. You can
@@ -228,7 +228,7 @@ public template AsyncInitableT(TStruct)
 	}
 	
 	/**
-	 * Helper function for constructing GAsyncInitiable object. This is
+	 * Helper function for constructing GAsyncInitable object. This is
 	 * similar to g_object_newv() but also initializes the object asynchronously.
 	 * When the initialization is finished, callback will be called. You can
 	 * then call g_async_initable_new_finish() to get the new object and check

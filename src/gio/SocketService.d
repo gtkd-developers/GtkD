@@ -66,13 +66,13 @@ private import gio.SocketListener;
 
 /**
  * Description
- * A GSocketService is an object that represents a service that is
- * provided to the network or over local sockets. When a new
+ * A GSocketService is an object that represents a service that
+ * is provided to the network or over local sockets. When a new
  * connection is made to the service the "incoming"
  * signal is emitted.
  * A GSocketService is a subclass of GSocketListener and you need
- * to add the addresses you want to accept connections on to the
- * with the GSocketListener APIs.
+ * to add the addresses you want to accept connections on with the
+ * GSocketListener APIs.
  * There are two options for implementing a network service based on
  * GSocketService. The first is to create the service using
  * g_socket_service_new() and to connect to the "incoming"
@@ -143,6 +143,8 @@ public class SocketService : SocketListener
 	 * to service needs to be handled. The handler must initiate the
 	 * handling of connection, but may not block; in essence,
 	 * asynchronous operations must be used.
+	 * connection will be unreffed once the signal handler returns,
+	 * so you need to ref it yourself if you are planning to use it.
 	 * TRUE to stop other handlers from being called
 	 * Since 2.22
 	 * See Also
@@ -199,7 +201,7 @@ public class SocketService : SocketListener
 	 * Starts the service, i.e. start accepting connections
 	 * from the added sockets when the mainloop runs.
 	 * This call is threadsafe, so it may be called from a thread
-	 * handling an incomming client request.
+	 * handling an incoming client request.
 	 * Since 2.22
 	 */
 	public void start()
@@ -212,7 +214,7 @@ public class SocketService : SocketListener
 	 * Stops the service, i.e. stops accepting connections
 	 * from the added sockets when the mainloop runs.
 	 * This call is threadsafe, so it may be called from a thread
-	 * handling an incomming client request.
+	 * handling an incoming client request.
 	 * Since 2.22
 	 */
 	public void stop()
@@ -237,6 +239,8 @@ public class SocketService : SocketListener
 	 * to service needs to be handled. The handler must initiate the
 	 * handling of connection, but may not block; in essence,
 	 * asynchronous operations must be used.
+	 * connection will be unreffed once the signal handler returns,
+	 * so you need to ref it yourself if you are planning to use it.
 	 * Since 2.22
 	 * Returns: TRUE if the service is active, FALSE otherwiseReturns: TRUE to stop other handlers from being called
 	 */

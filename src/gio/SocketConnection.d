@@ -83,7 +83,7 @@ private import gio.IOStream;
  * The type of the GSocketConnection object returned from these calls
  * depends on the type of the underlying socket that is in use. For
  * instance, for a TCP/IP connection it will be a GTcpConnection.
- * Chosing what type of object to construct is done with the socket
+ * Choosing what type of object to construct is done with the socket
  * connection factory, and it is possible for 3rd parties to register
  * custom socket connection types for specific combination of socket
  * family/type/protocol using g_socket_connection_factory_register_type().
@@ -226,7 +226,7 @@ public class SocketConnection : IOStream
 	
 	/**
 	 * Looks up the GType to be used when creating socket connections on
-	 * sockets with the specified family,type and protocol_id.
+	 * sockets with the specified family, type and protocol_id.
 	 * If no type is registered, the GSocketConnection base type is returned.
 	 * Since 2.22
 	 * Params:
@@ -243,7 +243,7 @@ public class SocketConnection : IOStream
 	
 	/**
 	 * Looks up the GType to be used when creating socket connections on
-	 * sockets with the specified family,type and protocol.
+	 * sockets with the specified family, type and protocol.
 	 * If no type is registered, the GSocketConnection base type is returned.
 	 * Since 2.22
 	 * Params:

@@ -79,7 +79,7 @@ public import glib.VariantType;
  * NULL). The correct type for the parameter is determined by a static
  * parameter type (which is given at construction time).
  * An action may optionally have a state, in which case the state may be
- * set with g_action_set_state(). This call takes a GVariant. The
+ * set with g_action_change_state(). This call takes a GVariant. The
  * correct type for the state is determined by a static state type
  * (which is given at construction time).
  * The state may have a hint associated with it, specifying its valid
@@ -91,8 +91,8 @@ public import glib.VariantType;
  * name of the action, the parameter type, the enabled state, the
  * optional state type and the state and emitting the appropriate
  * signals when these change. The implementor responsible for filtering
- * calls to g_action_activate() and g_action_set_state() for type safety
- * and for the state being enabled.
+ * calls to g_action_activate() and g_action_change_state() for type
+ * safety and for the state being enabled.
  * Probably the only useful thing to do with a GAction is to put it
  * inside of a GSimpleActionGroup.
  */
@@ -146,15 +146,15 @@ public template ActionT(TStruct)
 	
 	/**
 	 * Queries the type of the state of action.
-	 * If the action is stateful (ie: was created with
-	 * g_action_new_stateful()) then this function returns the GVariantType
-	 * of the state. This is the type of the initial value given as the
-	 * state. All calls to g_action_set_state() must give a GVariant of
-	 * this type and g_action_get_state() will return a GVariant of the
-	 * same type.
-	 * If the action is not stateful (ie: created with g_action_new()) then
-	 * this function will return NULL. In that case, g_action_get_state()
-	 * will return NULL and you must not call g_action_set_state().
+	 * If the action is stateful (e.g. created with
+	 * g_simple_action_new_stateful()) then this function returns the
+	 * GVariantType of the state. This is the type of the initial value
+	 * given as the state. All calls to g_action_change_state() must give a
+	 * GVariant of this type and g_action_get_state() will return a
+	 * GVariant of the same type.
+	 * If the action is not stateful (e.g. created with g_simple_action_new())
+	 * then this function will return NULL. In that case, g_action_get_state()
+	 * will return NULL and you must not call g_action_change_state().
 	 * Since 2.28
 	 * Returns: the state type, if the action is stateful. [allow-none]
 	 */
@@ -240,14 +240,14 @@ public template ActionT(TStruct)
 	 * its state or may change its state to something other than value.
 	 * See g_action_get_state_hint().
 	 * If the value GVariant is floating, it is consumed.
-	 * Since 2.28
+	 * Since 2.30
 	 * Params:
 	 * value = the new state
 	 */
-	public void setState(Variant value)
+	public void changeState(Variant value)
 	{
-		// void g_action_set_state (GAction *action,  GVariant *value);
-		g_action_set_state(getActionTStruct(), (value is null) ? null : value.getVariantStruct());
+		// void g_action_change_state (GAction *action,  GVariant *value);
+		g_action_change_state(getActionTStruct(), (value is null) ? null : value.getVariantStruct());
 	}
 	
 	/**

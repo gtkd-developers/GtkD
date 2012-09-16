@@ -45,13 +45,16 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.Variant
  * 	- gio.DBusConnection
  * 	- gio.DBusMessage
+ * 	- gio.UnixFDList
  * structWrap:
  * 	- GDBusConnection* -> DBusConnection
  * 	- GDBusMessage* -> DBusMessage
  * 	- GError* -> ErrorG
+ * 	- GUnixFDList* -> UnixFDList
  * 	- GVariant* -> Variant
  * module aliases:
  * local aliases:
@@ -68,9 +71,11 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.ErrorG;
+private import glib.GException;
 private import glib.Variant;
 private import gio.DBusConnection;
 private import gio.DBusMessage;
+private import gio.UnixFDList;
 
 
 
@@ -261,7 +266,7 @@ public class DBusMethodInvocation : ObjectG
 	 * This method will free invocation, you cannot use it afterwards.
 	 * Since 2.26
 	 * Params:
-	 * parameters = A GVariant tuple with out parameters for the method or NULL if not passing any parameters.
+	 * parameters = A GVariant tuple with out parameters for the method or NULL if not passing any parameters. [allow-none]
 	 */
 	public void returnValue(Variant parameters)
 	{
@@ -327,5 +332,34 @@ public class DBusMethodInvocation : ObjectG
 	{
 		// void g_dbus_method_invocation_return_dbus_error  (GDBusMethodInvocation *invocation,  const gchar *error_name,  const gchar *error_message);
 		g_dbus_method_invocation_return_dbus_error(gDBusMethodInvocation, Str.toStringz(errorName), Str.toStringz(errorMessage));
+	}
+	
+	/**
+	 * Like g_dbus_method_invocation_return_gerror() but takes ownership
+	 * of error so the caller does not need to free it.
+	 * This method will free invocation, you cannot use it afterwards.
+	 * Since 2.30
+	 * Params:
+	 * error = A GError. [transfer full]
+	 */
+	public void takeError(ErrorG error)
+	{
+		// void g_dbus_method_invocation_take_error (GDBusMethodInvocation *invocation,  GError *error);
+		g_dbus_method_invocation_take_error(gDBusMethodInvocation, (error is null) ? null : error.getErrorGStruct());
+	}
+	
+	/**
+	 * Like g_dbus_method_invocation_return_value() but also takes a GUnixFDList.
+	 * This method is only available on UNIX.
+	 * This method will free invocation, you cannot use it afterwards.
+	 * Since 2.30
+	 * Params:
+	 * parameters = A GVariant tuple with out parameters for the method or NULL if not passing any parameters. [allow-none]
+	 * fdList = A GUnixFDList or NULL. [allow-none]
+	 */
+	public void returnValueWithUnixFdList(Variant parameters, UnixFDList fdList)
+	{
+		// void g_dbus_method_invocation_return_value_with_unix_fd_list  (GDBusMethodInvocation *invocation,  GVariant *parameters,  GUnixFDList *fd_list);
+		g_dbus_method_invocation_return_value_with_unix_fd_list(gDBusMethodInvocation, (parameters is null) ? null : parameters.getVariantStruct(), (fdList is null) ? null : fdList.getUnixFDListStruct());
 	}
 }

@@ -66,7 +66,7 @@ private import gio.Permission;
  * Description
  * GSimplePermission is a trivial implementation of GPermission that
  * represents a permission that is either always or never allowed. The
- * value is given at constuction and doesn't change.
+ * value is given at construction and doesn't change.
  * Calling request or release will result in errors.
  */
 public class SimplePermission : Permission

@@ -160,8 +160,8 @@ public class UnixConnection : SocketConnection
 	}
 	
 	/**
-	 * Passes a file descriptor to the recieving side of the
-	 * connection. The recieving end has to call g_unix_connection_receive_fd()
+	 * Passes a file descriptor to the receiving side of the
+	 * connection. The receiving end has to call g_unix_connection_receive_fd()
 	 * to accept the file descriptor.
 	 * As well as sending the fd this also writes a single byte to the
 	 * stream, as this is required for fd passing to work on some
@@ -224,7 +224,7 @@ public class UnixConnection : SocketConnection
 	
 	/**
 	 * Passes the credentials of the current user the receiving side
-	 * of the connection. The recieving end has to call
+	 * of the connection. The receiving end has to call
 	 * g_unix_connection_receive_credentials() (or similar) to accept the
 	 * credentials.
 	 * As well as sending the credentials this also writes a single NUL

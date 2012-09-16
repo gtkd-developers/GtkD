@@ -882,13 +882,16 @@ alias GUnixSocketAddressType UnixSocketAddressType;
  * The native credentials type is a struct ucred.
  * G_CREDENTIALS_TYPE_FREEBSD_CMSGCRED
  * The native credentials type is a struct cmsgcred.
+ * G_CREDENTIALS_TYPE_OPENBSD_SOCKPEERCRED
+ * The native credentials type is a struct sockpeercred. Added in 2.30.
  * Since 2.26
  */
 public enum GCredentialsType
 {
 	TYPE_INVALID,
 	TYPE_LINUX_UCRED,
-	TYPE_FREEBSD_CMSGCRED
+	TYPE_FREEBSD_CMSGCRED,
+	TYPE_OPENBSD_SOCKPEERCRED
 }
 alias GCredentialsType CredentialsType;
 
@@ -966,7 +969,7 @@ alias GTlsAuthenticationMode TlsAuthenticationMode;
  * The certificate has expired
  * G_TLS_CERTIFICATE_REVOKED
  * The certificate has been revoked
- *  according to the GTlsContext's certificate revocation list.
+ *  according to the GTlsConnection's certificate revocation list.
  * G_TLS_CERTIFICATE_INSECURE
  * The certificate's algorithm is
  *  considered insecure.
@@ -1009,6 +1012,80 @@ public enum GTlsRehandshakeMode
 	UNSAFELY
 }
 alias GTlsRehandshakeMode TlsRehandshakeMode;
+
+/**
+ * Flags for g_tls_database_verify_chain().
+ * G_TLS_DATABASE_VERIFY_NONE
+ * No verification flags
+ * Since 2.30
+ */
+public enum GTlsDatabaseVerifyFlags
+{
+	NONE = 0
+}
+alias GTlsDatabaseVerifyFlags TlsDatabaseVerifyFlags;
+
+/**
+ * Flags for g_tls_database_lookup_handle(), g_tls_database_lookup_issuer(),
+ * and g_tls_database_lookup_issued().
+ * G_TLS_DATABASE_LOOKUP_NONE
+ * No lookup flags
+ * G_TLS_DATABASE_LOOKUP_KEYPAIR
+ * Restrict lookup to certificates that have
+ *  a private key.
+ * Since 2.30
+ */
+public enum GTlsDatabaseLookupFlags
+{
+	NONE = 0,
+	KEYPAIR = 1
+}
+alias GTlsDatabaseLookupFlags TlsDatabaseLookupFlags;
+
+/**
+ * GTlsInteractionResult is returned by various functions in GTlsInteraction
+ * when finishing an interaction request.
+ * G_TLS_INTERACTION_UNHANDLED
+ * The interaction was unhandled (i.e. not
+ *  implemented).
+ * G_TLS_INTERACTION_HANDLED
+ * The interaction completed, and resulting data
+ *  is available.
+ * G_TLS_INTERACTION_FAILED
+ * The interaction has failed, or was cancelled.
+ *  and the operation should be aborted.
+ * Since 2.30
+ */
+public enum GTlsInteractionResult
+{
+	UNHANDLED,
+	HANDLED,
+	FAILED
+}
+alias GTlsInteractionResult TlsInteractionResult;
+
+/**
+ * Various flags for the password.
+ * G_TLS_PASSWORD_NONE
+ * No flags
+ * G_TLS_PASSWORD_RETRY
+ * The password was wrong, and the user should retry.
+ * G_TLS_PASSWORD_MANY_TRIES
+ * Hint to the user that the password has been
+ *  wrong many times, and the user may not have many chances left.
+ * G_TLS_PASSWORD_FINAL_TRY
+ * Hint to the user that this is the last try to get
+ *  this password right.
+ * Since 2.30
+ */
+public enum GTlsPasswordFlags
+{
+	NONE = 0,
+	RETRY = 1 << 1,
+	MANY_TRIES = 1 << 2,
+	FINAL_TRY = 1 << 3
+}
+alias GTlsPasswordFlags TlsPasswordFlags;
 
 /**
  * An error code used with G_RESOLVER_ERROR in a GError returned
@@ -1493,6 +1570,24 @@ public enum GBusNameWatcherFlags
 alias GBusNameWatcherFlags BusNameWatcherFlags;
 
 /**
+ * Flags describing the behavior of a GDBusInterfaceSkeleton instance.
+ * G_DBUS_INTERFACE_SKELETON_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_INTERFACE_SKELETON_FLAGS_HANDLE_METHOD_INVOCATIONS_IN_THREAD
+ * Each method invocation is handled in
+ *  a thread dedicated to the invocation. This means that the method implementation can use blocking IO
+ *  without blocking any other part of the process. It also means that the method implementation must
+ *  use locking to access data structures used by other threads.
+ * Since 2.30
+ */
+public enum GDBusInterfaceSkeletonFlags
+{
+	NONE = 0,
+	HANDLE_METHOD_INVOCATIONS_IN_THREAD = (1<<0)
+}
+alias GDBusInterfaceSkeletonFlags DBusInterfaceSkeletonFlags;
+
+/**
  * Flags used when constructing an instance of a GDBusProxy derived class.
  * G_DBUS_PROXY_FLAGS_NONE
  * No flags set.
@@ -1516,6 +1611,24 @@ public enum GDBusProxyFlags
 alias GDBusProxyFlags DBusProxyFlags;
 
 /**
+ * Flags used when constructing a GDBusObjectManagerClient.
+ * G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_NONE
+ * No flags set.
+ * G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_DO_NOT_AUTO_START
+ * If not set and the
+ *  manager is for a well-known name, then request the bus to launch
+ *  an owner for the name if no-one owns the name. This flag can only
+ *  be used in managers for well-known names.
+ * Since 2.30
+ */
+public enum GDBusObjectManagerClientFlags
+{
+	NONE = 0,
+	DO_NOT_AUTO_START = (1<<0)
+}
+alias GDBusObjectManagerClientFlags DBusObjectManagerClientFlags;
+
+/**
  * Flags used when creating a binding. These flags determine in which
  * direction the binding works. The default is to synchronize in both
  * directions.
@@ -1535,7 +1648,7 @@ alias GDBusProxyFlags DBusProxyFlags;
  * G_SETTINGS_BIND_INVERT_BOOLEAN
  * When passed to g_settings_bind(), uses a pair of mapping functions that invert
  *  the boolean value when mapping between the setting and the property. The setting and property must both
- *  be booleans. You can not pass this flag to g_settings_bind_with_mapping().
+ *  be booleans. You cannot pass this flag to g_settings_bind_with_mapping().
  */
 public enum GSettingsBindFlags
 {
@@ -1578,6 +1691,12 @@ alias GSettingsBindFlags SettingsBindFlags;
  *  when editing a git commit message. The environment is available
  *  to the "command-line" signal handler, via
  *  g_application_command_line_getenv().
+ * G_APPLICATION_NON_UNIQUE
+ * Make no attempts to do any of the typical
+ *  single-instance application negotiation. The application neither
+ *  attempts to become the owner of the application ID nor does it
+ *  check if an existing owner already exists. Everything occurs in
+ *  the local process. Since: 2.30.
  * Since 2.28
  */
 public enum GApplicationFlags
@@ -1587,7 +1706,8 @@ public enum GApplicationFlags
 	G_APPLICATION_IS_LAUNCHER = (1 << 1),
 	G_APPLICATION_HANDLES_OPEN = (1 << 2),
 	G_APPLICATION_HANDLES_COMMAND_LINE = (1 << 3),
-	G_APPLICATION_SEND_ENVIRONMENT = (1 << 4)
+	G_APPLICATION_SEND_ENVIRONMENT = (1 << 4),
+	G_APPLICATION_NON_UNIQUE = (1 << 5)
 }
 alias GApplicationFlags ApplicationFlags;
 
@@ -1983,6 +2103,13 @@ public struct GFileMonitor{}
 
 /**
  * Main Gtk struct.
+ * Completes filenames based on files that exist within the file system.
+ */
+public struct GFilenameCompleter{}
+
+
+/**
+ * Main Gtk struct.
  * Allows actions to be cancelled.
  */
 public struct GCancellable{}
@@ -2016,7 +2143,7 @@ public struct GAsyncResultIface
 
 /**
  * Main Gtk struct.
- * Opaque class for definining and scheduling IO jobs.
+ * Opaque class for defining and scheduling IO jobs.
  */
 public struct GIOSchedulerJob{}
 
@@ -2397,6 +2524,7 @@ public struct GAppInfo{}
  * get_display_name ()
  * Gets the display name for the GAppInfo. Since 2.24
  * set_as_last_used_for_type ()
+ * Sets the application as the last used. See g_app_info_set_as_last_used_for_type().
  */
 public struct GAppInfoIface
 {
@@ -3152,8 +3280,8 @@ public struct GTlsConnection{}
 
 /**
  * Main Gtk struct.
- * TLS client-side connection; the client-side implementation of a
- * GTlsConnection
+ * Abstract base class for the backend-specific client connection
+ * type.
  * Since 2.28
  */
 public struct GTlsClientConnection{}
@@ -3182,8 +3310,9 @@ public struct GTlsServerConnectionInterface
 
 /**
  * Main Gtk struct.
- * Type implemented by TLS GIOModules to provide access to additional
- * TLS-related types.
+ * TLS (Transport Layer Security, aka SSL) backend. This is an
+ * internal type used to coordinate the different classes implemented
+ * by a TLS backend.
  * Since 2.28
  */
 public struct GTlsBackend{}
@@ -3194,12 +3323,17 @@ public struct GTlsBackend{}
  * GTypeInterface g_iface;
  * The parent interface.
  * supports_tls ()
+ * returns whether the backend supports TLS.
  * get_certificate_type ()
  * returns the GTlsCertificate implementation type
  * get_client_connection_type ()
  * returns the GTlsClientConnection implementation type
  * get_server_connection_type ()
  * returns the GTlsServerConnection implementation type
+ * get_file_database_type ()
+ * returns the GTlsFileDatabase implementation type.
+ * get_default_database ()
+ * returns a default GTlsDatabase instance.
  * Since 2.28
  */
 public struct GTlsBackendInterface
@@ -3210,6 +3344,64 @@ public struct GTlsBackendInterface
 	extern(C) GType  function() *getCertificateType;
 	extern(C) GType  function() *getClientConnectionType;
 	extern(C) GType  function() *getServerConnectionType;
+	extern(C) GType  function() *getFileDatabaseType;
+	extern(C) GTlsDatabase *  function(GTlsBackend *backend) *getDefaultDatabase;
+}
+
+
+/**
+ * Main Gtk struct.
+ * Abstract base class for the backend-specific database types.
+ * Since 2.30
+ */
+public struct GTlsDatabase{}
+
+
+/**
+ * Main Gtk struct.
+ * Implemented by a GTlsDatabase which allows you to load certificates
+ * from a file.
+ * Since 2.30
+ */
+public struct GTlsFileDatabase{}
+
+
+/**
+ * Provides an interface for GTlsFileDatabase implementations.
+ * GTypeInterface g_iface;
+ * The parent interface.
+ */
+public struct GTlsFileDatabaseInterface
+{
+	GTypeInterface gIface;
+}
+
+
+/**
+ * Main Gtk struct.
+ * An object representing interaction that the TLS connection and database
+ * might have with the user.
+ * Since 2.30
+ */
+public struct GTlsInteraction{}
+
+
+/**
+ * Main Gtk struct.
+ * An abstract interface representing a password used in TLS. Often used in
+ * user interaction such as unlocking a key storage token.
+ * Since 2.30
+ */
+public struct GTlsPassword{}
+
+
+public struct GTlsPasswordClass
+{
+	GObjectClass parentClass;
+	/+* methods +/
+	extern(C) char *  function(GTlsPassword *password,gsize *length) *getValue;
+	extern(C) void  function(GTlsPassword *password,char *value,gssize length,GDestroyNotify destroy) *setValue;
+	extern(C) char*  function(GTlsPassword *password) *getDefaultWarning;
 }
 
 
@@ -3223,7 +3415,7 @@ public struct GResolver{}
 
 /**
  * Main Gtk struct.
- * Interface that can be used to resolve proxy address.
+ * A helper class to enumerate proxies base on URI.
  * Since 2.26
  */
 public struct GProxyResolver{}
@@ -3307,6 +3499,7 @@ public struct GSrvTarget{}
 
 
 /**
+ * Main Gtk struct.
  * Information about an annotation.
  * volatile gint ref_count;
  * The reference count or -1 if statically allocated.
@@ -3315,7 +3508,7 @@ public struct GSrvTarget{}
  * gchar *value;
  * The value of the annotation.
  * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
  * Since 2.26
  */
 public struct GDBusAnnotationInfo
@@ -3336,7 +3529,7 @@ public struct GDBusAnnotationInfo
  * gchar *signature;
  * D-Bus signature of the argument (a single complete type).
  * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
  * Since 2.26
  */
 public struct GDBusArgInfo
@@ -3355,11 +3548,11 @@ public struct GDBusArgInfo
  * gchar *name;
  * The name of the D-Bus method, e.g. RequestName.
  * GDBusArgInfo **in_args;
- * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no in arguments.
+ * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no in arguments. [array zero-terminated=1]
  * GDBusArgInfo **out_args;
- * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no out arguments.
+ * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no out arguments. [array zero-terminated=1]
  * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
  * Since 2.26
  */
 public struct GDBusMethodInfo
@@ -3379,9 +3572,9 @@ public struct GDBusMethodInfo
  * gchar *name;
  * The name of the D-Bus signal, e.g. "NameOwnerChanged".
  * GDBusArgInfo **args;
- * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no arguments.
+ * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no arguments. [array zero-terminated=1]
  * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
  * Since 2.26
  */
 public struct GDBusSignalInfo
@@ -3404,7 +3597,7 @@ public struct GDBusSignalInfo
  * GDBusPropertyInfoFlags flags;
  * Access control flags for the property.
  * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
  * Since 2.26
  */
 public struct GDBusPropertyInfo
@@ -3419,9 +3612,29 @@ public struct GDBusPropertyInfo
 
 /**
  * Information about a D-Bus interface.
+ * volatile gint ref_count;
+ * The reference count or -1 if statically allocated.
+ * gchar *name;
+ * The name of the D-Bus interface, e.g. "org.freedesktop.DBus.Properties".
+ * GDBusMethodInfo **methods;
+ * A pointer to a NULL-terminated array of pointers to GDBusMethodInfo structures or NULL if there are no methods. [array zero-terminated=1]
+ * GDBusSignalInfo **signals;
+ * A pointer to a NULL-terminated array of pointers to GDBusSignalInfo structures or NULL if there are no signals. [array zero-terminated=1]
+ * GDBusPropertyInfo **properties;
+ * A pointer to a NULL-terminated array of pointers to GDBusPropertyInfo structures or NULL if there are no properties. [array zero-terminated=1]
+ * GDBusAnnotationInfo **annotations;
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
  * Since 2.26
  */
-public struct GDBusInterfaceInfo{}
+public struct GDBusInterfaceInfo
+{
+	int refCount;
+	char *name;
+	GDBusMethodInfo **methods;
+	GDBusSignalInfo **signals;
+	GDBusPropertyInfo **properties;
+	GDBusAnnotationInfo **annotations;
+}
 
 
 /**
@@ -3431,11 +3644,11 @@ public struct GDBusInterfaceInfo{}
  * gchar *path;
  * The path of the node or NULL if omitted. Note that this may be a relative path. See the D-Bus specification for more details.
  * GDBusInterfaceInfo **interfaces;
- * A pointer to a NULL-terminated array of pointers to GDBusInterfaceInfo structures or NULL if there are no interfaces.
+ * A pointer to a NULL-terminated array of pointers to GDBusInterfaceInfo structures or NULL if there are no interfaces. [array zero-terminated=1]
  * GDBusNodeInfo **nodes;
- * A pointer to a NULL-terminated array of pointers to GDBusNodeInfo structures or NULL if there are no nodes.
+ * A pointer to a NULL-terminated array of pointers to GDBusNodeInfo structures or NULL if there are no nodes. [array zero-terminated=1]
  * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations.
+ * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
  * Since 2.26
  */
 public struct GDBusNodeInfo
@@ -3550,6 +3763,74 @@ public struct GDBusAuthObserver{}
 
 /**
  * Main Gtk struct.
+ * Base type for D-Bus interfaces.
+ * Since 2.30
+ */
+public struct GDBusInterface{}
+
+
+/**
+ * Base type for D-Bus interfaces.
+ * GTypeInterface parent_iface;
+ * The parent interface.
+ * get_info ()
+ * Returns a GDBusInterfaceInfo. See g_dbus_interface_get_info().
+ * get_object ()
+ * Gets the enclosing GDBusObject. See g_dbus_interface_get_object().
+ * set_object ()
+ * Sets the enclosing GDBusObject. See g_dbus_interface_set_object().
+ * Since 2.30
+ */
+public struct GDBusInterfaceIface
+{
+	GTypeInterface parentIface;
+	/+* Virtual Functions +/
+	extern(C) GDBusInterfaceInfo * function(GDBusInterface *interface) getInfo;
+	extern(C) GDBusObject * function(GDBusInterface *interface) getObject;
+	extern(C) void  function(GDBusInterface *interface,GDBusObject *object) setObject;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusInterfaceSkeleton structure contains private data and should
+ * only be accessed using the provided API.
+ * Since 2.30
+ */
+public struct GDBusInterfaceSkeleton{}
+
+
+/**
+ * Class structure for GDBusInterfaceSkeleton.
+ * GObjectClass parent_class;
+ * The parent class.
+ * get_info ()
+ * Returns a GDBusInterfaceInfo. See g_dbus_interface_skeleton_get_info() for details.
+ * get_vtable ()
+ * Returns a GDBusInterfaceVTable. See g_dbus_interface_skeleton_get_vtable() for details.
+ * get_properties ()
+ * Returns a GVariant with all properties. See g_dbus_interface_skeleton_get_properties().
+ * flush ()
+ * Emits outstanding changes, if any. See g_dbus_interface_skeleton_flush().
+ * g_authorize_method ()
+ * Signal class handler for the "g-authorize-method" signal.
+ * Since 2.30
+ */
+public struct GDBusInterfaceSkeletonClass
+{
+	GObjectClass parentClass;
+	/+* Virtual Functions +/
+	extern(C) GDBusInterfaceInfo * function(GDBusInterfaceSkeleton *interface) getInfo;
+	extern(C) GDBusInterfaceVTable * function(GDBusInterfaceSkeleton *interface) getVtable;
+	extern(C) GVariant * function(GDBusInterfaceSkeleton *interface) getProperties;
+	extern(C) void  function(GDBusInterfaceSkeleton *interface) flush;
+	/+* Signals +/
+	extern(C) int  function(GDBusInterfaceSkeleton *interface,GDBusMethodInvocation *invocation) gAuthorizeMethod;
+}
+
+
+/**
+ * Main Gtk struct.
  * The GDBusProxy structure contains only private data and
  * should only be accessed using the provided API.
  * Since 2.26
@@ -3575,9 +3856,176 @@ public struct GDBusProxyClass
 
 /**
  * Main Gtk struct.
- * Completes filenames based on files that exist within the file system.
  */
-public struct GFilenameCompleter{}
+public struct GDBusObject{}
+
+
+/**
+ * Base object type for D-Bus objects.
+ * GTypeInterface parent_iface;
+ * The parent interface.
+ * get_object_path ()
+ * Returns the object path. See g_dbus_object_get_object_path().
+ * get_interfaces ()
+ * Returns all interfaces. See g_dbus_object_get_interfaces().
+ * get_interface ()
+ * Returns an interface by name. See g_dbus_object_get_interface().
+ * interface_added ()
+ * Signal handler for the "interface-added" signal.
+ * interface_removed ()
+ * Signal handler for the "interface-removed" signal.
+ * Since 2.30
+ */
+public struct GDBusObjectIface
+{
+	GTypeInterface parentIface;
+	/+* Virtual Functions +/
+	extern(C) char * function(GDBusObject *object) getObjectPath;
+	extern(C) GList * function(GDBusObject *object) getInterfaces;
+	extern(C) GDBusInterface * function(GDBusObject *object,char *interfaceName) getInterface;
+	/+* Signals +/
+	extern(C) void  function(GDBusObject *object,GDBusInterface *interface) interfaceAdded;
+	extern(C) void  function(GDBusObject *object,GDBusInterface *interface) interfaceRemoved;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusObjectSkeleton structure contains private data and should only be
+ * accessed using the provided API.
+ * Since 2.30
+ */
+public struct GDBusObjectSkeleton{}
+
+
+/**
+ * Class structure for GDBusObjectSkeleton.
+ * GObjectClass parent_class;
+ * The parent class.
+ * authorize_method ()
+ * Signal class handler for the "authorize-method" signal.
+ * Since 2.30
+ */
+public struct GDBusObjectSkeletonClass
+{
+	GObjectClass parentClass;
+	/+* Signals +/
+	extern(C) int  function(GDBusObjectSkeleton *object,GDBusInterfaceSkeleton *interface,GDBusMethodInvocation *invocation) authorizeMethod;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusObjectProxy structure contains private data and should
+ * only be accessed using the provided API.
+ * Since 2.30
+ */
+public struct GDBusObjectProxy{}
+
+
+/**
+ * Class structure for GDBusObjectProxy.
+ * GObjectClass parent_class;
+ * The parent class.
+ * Since 2.30
+ */
+public struct GDBusObjectProxyClass
+{
+	GObjectClass parentClass;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GDBusObjectManager{}
+
+
+/**
+ * Base type for D-Bus object managers.
+ * GTypeInterface parent_iface;
+ * The parent interface.
+ * get_object_path ()
+ * Virtual function for g_dbus_object_manager_get_object_path().
+ * get_objects ()
+ * Virtual function for g_dbus_object_manager_get_objects().
+ * get_object ()
+ * Virtual function for g_dbus_object_manager_get_object().
+ * get_interface ()
+ * Virtual function for g_dbus_object_manager_get_interface().
+ * object_added ()
+ * Signal handler for the "object-added" signal.
+ * object_removed ()
+ * Signal handler for the "object-removed" signal.
+ * interface_added ()
+ * Signal handler for the "interface-added" signal.
+ * interface_removed ()
+ * Signal handler for the "interface-removed" signal.
+ * Since 2.30
+ */
+public struct GDBusObjectManagerIface
+{
+	GTypeInterface parentIface;
+	/+* Virtual Functions +/
+	extern(C) char * function(GDBusObjectManager *manager) getObjectPath;
+	extern(C) GList * function(GDBusObjectManager *manager) getObjects;
+	extern(C) GDBusObject * function(GDBusObjectManager *manager,char *objectPath) getObject;
+	extern(C) GDBusInterface * function(GDBusObjectManager *manager,char *objectPath,char *interfaceName) getInterface;
+	/+* Signals +/
+	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object) objectAdded;
+	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object) objectRemoved;
+	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object,GDBusInterface *interface) interfaceAdded;
+	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object,GDBusInterface *interface) interfaceRemoved;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusObjectManagerServer structure contains private data and should
+ * only be accessed using the provided API.
+ * Since 2.30
+ */
+public struct GDBusObjectManagerServer{}
+
+
+/**
+ * Class structure for GDBusObjectManagerServer.
+ * GObjectClass parent_class;
+ * The parent class.
+ * Since 2.30
+ */
+public struct GDBusObjectManagerServerClass
+{
+	GObjectClass parentClass;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GDBusObjectManagerClient structure contains private data and should
+ * only be accessed using the provided API.
+ * Since 2.30
+ */
+public struct GDBusObjectManagerClient{}
+
+
+/**
+ * Class structure for GDBusObjectManagerClient.
+ * GObjectClass parent_class;
+ * The parent class.
+ * interface_proxy_signal ()
+ * Signal class handler for the "interface-proxy-signal" signal.
+ * interface_proxy_properties_changed ()
+ * Signal class handler for the "interface-proxy-properties-changed" signal.
+ * Since 2.30
+ */
+public struct GDBusObjectManagerClientClass
+{
+	GObjectClass parentClass;
+	/+* signals +/
+	extern(C) void  function(GDBusObjectManagerClient *manager,GDBusObjectProxy *objectProxy,GDBusProxy *interfaceProxy,char *senderName,char *signalName,GVariant *parameters) interfaceProxySignal;
+	extern(C) void  function(GDBusObjectManagerClient *manager,GDBusObjectProxy *objectProxy,GDBusProxy *interfaceProxy,GVariant *changedProperties,char* *invalidatedProperties) interfaceProxyPropertiesChanged;
+}
 
 
 /**
@@ -3640,6 +4088,43 @@ public struct GSimpleActionGroup{}
 
 
 /**
+ * This struct defines a single action. It is for use with
+ * g_simple_action_group_add_entries().
+ * The order of the items in the structure are intended to reflect
+ * frequency of use. It is permissible to use an incomplete initialiser
+ * in order to leave some of the later values as NULL. All values
+ * after name are optional. Additional optional fields may be added in
+ * the future.
+ * See g_simple_action_group_add_entries() for an example.
+ * const gchar *name;
+ * the name of the action
+ * activate ()
+ * the callback to connect to the "activate" signal of the
+ * action
+ * const gchar *parameter_type;
+ * the type of the parameter that must be passed to the
+ * activate function for this action, given as a single
+ * GVariant type string (or NULL for no parameter)
+ * const gchar *state;
+ * the initial state for this action, given in GVariant text
+ * format. The state is parsed with no extra type information,
+ * so type tags must be added to the string if they are
+ * necessary.
+ * change_state ()
+ * the callback to connect to the "change-state" signal
+ * of the action
+ */
+public struct GActionEntry
+{
+	char *name;
+	extern(C) void  function(GSimpleAction *action,GVariant *parameter,void* userData)  activate;
+	char *parameterType;
+	char *state;
+	extern(C) void  function(GSimpleAction *action,GVariant *value,void* userData)  changeState;
+}
+
+
+/**
  * Main Gtk struct.
  */
 public struct GAction{}
@@ -3647,25 +4132,8 @@ public struct GAction{}
 
 /**
  * Main Gtk struct.
- * The GSimpleAction structure contains private
- * data and should only be accessed using the provided API
- * Since 2.28
  */
 public struct GSimpleAction{}
-
-
-/**
- * GObjectClass parent_class;
- * activate ()
- * the class closure for the activate signal
- * Since 2.28
- */
-public struct GSimpleActionClass
-{
-	GObjectClass parentClass;
-	/+* signals +/
-	extern(C) void  function(GSimpleAction *simple,GVariant *parameter)  activate;
-}
 
 
 /**
@@ -3888,6 +4356,22 @@ public alias extern(C) void*  function (void*, gsize) GReallocFunc;
  */
 // gboolean (*GPollableSourceFunc) (GObject *pollable_stream,  gpointer user_data);
 public alias extern(C) int  function (GObject*, void*) GPollableSourceFunc;
+
+/*
+ * Warning
+ * GDesktopAppLaunchCallback is deprecated and should not be used in newly-written code.
+ * During invocation, g_desktop_app_info_launch_uris_as_manager() may
+ * create one or more child processes. This callback is invoked once
+ * for each, providing the process ID.
+ * appinfo :
+ * a GDesktopAppInfo
+ * pid :
+ * Process identifier
+ * user_data :
+ * User data
+ */
+// void (*GDesktopAppLaunchCallback) (GDesktopAppInfo *appinfo,  GPid pid,  gpointer user_data);
+public alias extern(C) void  function (GDesktopAppInfo*, GPid, void*) GDesktopAppLaunchCallback;
 
 /*
  * This is the function type of the callback used for the GSource
@@ -4181,6 +4665,30 @@ public alias extern(C) void  function (GDBusConnection*, char*, char*, void*) GB
  */
 // void (*GBusNameVanishedCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
 public alias extern(C) void  function (GDBusConnection*, char*, void*) GBusNameVanishedCallback;
+
+/*
+ * Function signature for a function used to determine the GType to
+ * use for an interface proxy (if interface_name is not NULL) or
+ * object proxy (if interface_name is NULL).
+ * This function is called in the
+ * thread-default main loop
+ * that manager was constructed in.
+ * manager :
+ * A GDBusObjectManagerClient.
+ * object_path :
+ * The object path of the remote object.
+ * interface_name :
+ * The interface name of the remote object or NULL if a GDBusObjectProxy GType is requested. [allow-none]
+ * user_data :
+ * User data.
+ * Returns :
+ * A GType to use for the remote object. The returned type
+ * must be a GDBusProxy- or GDBusObjectProxy-derived
+ * type.
+ * Since 2.30
+ */
+// GType (*GDBusProxyTypeFunc) (GDBusObjectManagerClient *manager,  const gchar *object_path,  const gchar *interface_name,  gpointer user_data);
+public alias extern(C) GType  function (GDBusObjectManagerClient*, char*, char*, void*) GDBusProxyTypeFunc;
 
 /*
  * The type of the function that is used to convert from a value stored

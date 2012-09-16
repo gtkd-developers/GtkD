@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = GDBusError.html
+ * inFile  = gio-GDBusError.html
  * outPack = gio
  * outFile = DBusError
  * strct   = GError

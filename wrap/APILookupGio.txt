@@ -205,6 +205,17 @@ structWrap: GFile* File
 outFile: FileMonitor
 
 ###########################################################
+### File-related Utilities ################################
+###########################################################
+
+file: GFilenameCompleter.html
+struct: GFilenameCompleter
+class: FilenameCompleter
+prefix: g_filename_completer_
+import: glib.Str
+outFile: FilenameCompleter
+
+###########################################################
 ### Asynchronous I/O ######################################
 ###########################################################
 
@@ -256,6 +267,8 @@ structWrap: GCancellable* Cancellable
 #imports for AsyncResult Interface.
 import: gio.AsyncResultIF
 import: gio.AsyncResultT
+
+nocode: g_simple_async_result_new_take_error
 
 code: start
 	// add the AsyncResult capabilities
@@ -602,8 +615,10 @@ prefix: g_data_input_stream_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: gio.AsyncResult
 import: gio.Cancellable
 import: gio.InputStream
+structWrap: GAsyncResult* AsyncResult
 structWrap: GCancellable* Cancellable
 structWrap: GInputStream* InputStream
 
@@ -618,6 +633,8 @@ array: g_data_input_stream_read_upto_async stop_chars stop_chars_len
 array: g_data_input_stream_read_upto_finish Return length
 array: g_data_input_stream_read_until Return length
 array: g_data_input_stream_read_until_finish Return length
+out: g_data_input_stream_read_line_finish_utf8 length
+out: g_data_input_stream_read_line_utf8 length
 
 nocode: g_data_input_stream_read_byte
 outFile: DataInputStream
@@ -815,11 +832,17 @@ struct: GDesktopAppInfo
 class: DesktopAppInfo
 implements: AppInfoIF
 prefix: g_desktop_app_info_
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
 import: glib.KeyFile
 import: gio.AppInfo
 import: gio.AppInfoIF
+import: gio.AppLaunchContext
+structWrap: GList* ListG
 structWrap: GKeyFile* KeyFile
 structWrap: GAppInfo* AppInfoIF
+structWrap: GAppLaunchContext* AppLaunchContext
 
 #imports for AppInfo Interface.
 import: gio.AppInfoT
@@ -1377,6 +1400,8 @@ class: InetAddress
 prefix: g_inet_address_
 import: glib.Str
 override: toString
+structWrap: GInetAddress* InetAddress
+
 array: g_inet_address_new_from_bytes bytes
 array: g_inet_address_to_bytes Return getNativeSize()
 
@@ -1701,8 +1726,12 @@ import: glib.GException
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.TlsCertificate
+import: gio.TlsDatabase
+import: gio.TlsInteraction
 structWrap: GCancellable* Cancellable
 structWrap: GTlsCertificate* TlsCertificate
+structWrap: GTlsDatabase* TlsDatabase
+structWrap: GTlsInteraction* TlsInteraction
 outFile: TlsConnection
 
 file: GTlsClientConnection.html
@@ -1741,8 +1770,70 @@ file: GTlsBackend.html
 struct: GTlsBackend
 class: TlsBackend
 prefix: g_tls_backend_
+import: gio.TlsDatabase
 structWrap: GTlsBackend* TlsBackend
+structWrap: GTlsDatabase* TlsDatabase
 outFile: TlsBackend
+
+file: GTlsDatabase.html
+struct: GTlsDatabase
+class: TlsDatabase
+prefix: g_tls_database_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ByteArray
+import: glib.ListG
+import: gio.AsyncResult
+import: gio.Cancellable
+import: gio.SocketConnectableIF
+import: gio.TlsCertificate
+import: gio.TlsInteraction
+structWrap: GByteArray* ByteArray
+structWrap: GList* ListG
+structWrap: GAsyncResult* AsyncResult
+structWrap: GCancellable* Cancellable
+structWrap: GSocketConnectable* SocketConnectableIF
+structWrap: GTlsCertificate* TlsCertificate
+structWrap: GTlsInteraction* TlsInteraction
+outFile: TlsDatabase
+
+# Interface ?
+file: GTlsFileDatabase.html
+struct: GTlsFileDatabase
+ctorStruct: GTlsDatabase
+class: TlsFileDatabase
+extend: TlsDatabase
+prefix: g_tls_file_database_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.TlsDatabase
+outFile: TlsDatabase
+
+file: GTlsInteraction.html
+struct: GTlsInteraction
+class: TlsInteraction
+prefix: g_tls_interaction_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResult
+import: gio.Cancellable
+import: gio.TlsPassword
+structWrap: GAsyncResult* AsyncResult
+structWrap: GCancellable* Cancellable
+structWrap: GTlsPassword* TlsPassword
+outFile: TlsInteraction
+
+file: GTlsPassword.html
+struct: GTlsPassword
+class: TlsPassword
+prefix: g_tls_password_
+import: glib.Str
+array: g_tls_password_get_value Return length
+array: g_tls_password_set_value value length
+array: g_tls_password_set_value_full value length
+outFile: TlsPassword
 
 ###########################################################
 ### DNS resolution ########################################
@@ -1985,10 +2076,15 @@ prefix: g_dbus_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: glib.StringG
+import: gio.Value
+import: gio.Variant
+import: gio.VariantType
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.IOStream
+structWrap: GValue* Value
+structWrap: GVariant* Variant
+structWrap: GVariantType* VariantType
 openFile: DBusUtilities
 
 file: gio-D-Bus-Addresses.html
@@ -1997,13 +2093,107 @@ structWrap: GCancellable* Cancellable
 structWrap: GIOStream* IOStream
 out: g_dbus_address_get_stream_finish out_guid
 out: g_dbus_address_get_stream_sync out_guid
-mergeFile: DBusUtilities
-
-file: gio-D-Bus-Introspection-Data.html
-structWrap: GString* StringG
 closeFile: DBusUtilities
 
-file: GDBusError.html
+file: gio-D-Bus-Introspection-Data.html
+struct: GDBusAnnotationInfo
+class: DBusAnnotationInfo
+prefix: g_dbus_annotation_info_
+noprefix: g_dbus_interface_info_
+noprefix: g_dbus_node_info_
+noprefix: g_dbus_method_info_
+noprefix: g_dbus_signal_info_
+noprefix: g_dbus_property_info_
+noprefix: g_dbus_arg_info_
+import: glib.Str
+structWrap: GDBusAnnotationInfo* DBusAnnotationInfo
+
+nocode: g_dbus_annotation_info_lookup
+code: start
+	/**
+	 * Looks up the value of an annotation.
+	 * This cost of this function is O(n) in number of annotations.
+	 * Since 2.26
+	 * Params:
+	 * annotations = A array of annotations or NULL.
+	 * name = The name of the annotation to look up.
+	 * Returns: The value or null if not found.
+	 */
+	public static string lookup(DBusAnnotationInfo[] annotations, string name)
+	{
+		// const gchar * g_dbus_annotation_info_lookup (GDBusAnnotationInfo **annotations,  const gchar *name);
+		
+		GDBusAnnotationInfo*[] annotationsArray = new GDBusAnnotationInfo*[annotations.length+1];
+		for ( int i = 0; i < annotations.length ; i++ )
+		{
+			annotationsArray[i] = annotations[i].getDBusAnnotationInfoStruct();
+		}
+		annotationsArray[$-1] = null;
+		
+		return Str.toString(g_dbus_annotation_info_lookup(annotationsArray.ptr, Str.toStringz(name)));
+	}
+code: end
+outFile: DBusAnnotationInfo
+
+struct: GDBusArgInfo
+class: DBusArgInfo
+strictPrefix: Y
+prefix: g_dbus_arg_info_
+structWrap: GDBusArgInfo* DBusArgInfo
+outFile: DBusArgInfo
+
+struct: GDBusMethodInfo
+class: DBusMethodInfo
+strictPrefix: Y
+prefix: g_dbus_method_info_
+structWrap: GDBusMethodInfo* DBusMethodInfo
+outFile: DBusMethodInfo
+
+struct: GDBusSignalInfo
+class: DBusSignalInfo
+strictPrefix: Y
+prefix: g_dbus_signal_info_
+structWrap: GDBusSignalInfo* DBusSignalInfo
+outFile: DBusSignalInfo
+
+struct: GDBusPropertyInfo
+class: DBusPropertyInfo
+strictPrefix: Y
+prefix: g_dbus_property_info_
+structWrap: GDBusPropertyInfo* DBusPropertyInfo
+outFile: DBusPropertyInfo
+
+struct: GDBusInterfaceInfo
+class: DBusInterfaceInfo
+strictPrefix: Y
+prefix: g_dbus_interface_info_
+import: glib.Str
+import: glib.StringG
+import: gio.DBusMethodInfo
+import: gio.DBusPropertyInfo
+import: gio.DBusSignalInfo
+structWrap: GString* Stringg
+structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
+structWrap: GDBusMethodInfo* DBusMethodInfo
+structWrap: GDBusPropertyInfo* DBusPropertyInfo
+structWrap: GDBusSignalInfo* DBusSignalInfo
+outFile: DBusInterfaceInfo
+
+struct: GDBusNodeInfo
+class: DBusNodeInfo
+strictPrefix: Y
+prefix: g_dbus_node_info_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.StringG
+import: gio.DBusInterfaceInfo
+structWrap: GString* Stringg
+structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
+structWrap: GDBusNodeInfo* DBusNodeInfo
+outFile: DBusNodeInfo
+
+file: gio-GDBusError.html
 struct: GError
 class: DBusError
 prefix: g_dbus_error_
@@ -2056,6 +2246,7 @@ import: gio.DBusAuthObserver
 import: gio.DBusMessage
 import: gio.DBusMethodInvocation
 import: gio.IOStream
+import: gio.UnixFDList
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
 structWrap: GAsyncResult* AsyncResultIF
@@ -2066,6 +2257,7 @@ structWrap: GDBusConnection* DBusConnection
 structWrap: GDBusMessage* DBusMessage
 structWrap: GDBusMethodInvocation* DBusMethodInvocation
 structWrap: GIOStream* IOStream
+structWrap: GUnixFDList* UnixFDList
 
 #imports for Initable Interface.
 import: gio.InitableT
@@ -2078,6 +2270,8 @@ import: gio.AsyncInitableIF
 out: g_dbus_connection_send_message out_serial
 out: g_dbus_connection_send_message_with_reply out_serial
 out: g_dbus_connection_send_message_with_reply_sync out_serial
+out: g_dbus_connection_call_with_unix_fd_list_finish out_fd_list
+out: g_dbus_connection_call_with_unix_fd_list_sync out_fd_list
 
 nocode: g_dbus_connection_new_finish
 nocode: g_dbus_connection_new_for_address_finish
@@ -2134,13 +2328,16 @@ class: DBusMethodInvocation
 prefix: g_dbus_method_invocation_
 import: glib.Str
 import: glib.ErrorG
+import: glib.GException
 import: glib.Variant
 import: gio.DBusConnection
 import: gio.DBusMessage
+import: gio.UnixFDList
 structWrap: GError* ErrorG
 structWrap: GVariant* Variant
 structWrap: GDBusConnection* DBusConnection
 structWrap: GDBusMessage* DBusMessage
+structWrap: GUnixFDList* UnixFDList
 outFile: DBusMethodInvocation
 
 file: GDBusServer.html
@@ -2195,10 +2392,90 @@ structWrap: GClosure* Closure
 structWrap: GDBusConnection* DBusConnection
 closeFile: DBusNames
 
+file: GDBusInterface.html
+struct: GDBusInterface
+class: DBusInterfaceT
+template: TStruct
+prefix: g_dbus_interface_
+import: gio.DBusInterfaceInfo
+import: gio.DBusObject
+import: gio.DBusObjectIF
+structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
+structWrap: GDBusObject* DBusObjectIF
+interface: DBusInterfaceIF
+outFile: DBusInterfaceT
+
+file:
+class: DBusInterface
+extend: ObjectG
+implements: DBusInterfaceIF
+import: gobject.ObjectG
+
+# imports for DBusInterface Interface
+import: gio.DBusInterfaceT
+import: gio.DBusInterfaceIF
+
+code: start
+	// Minimal implementation.
+	mixin DBusInterfaceT!(GDBusInterface);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gDBusInterface;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GDBusInterface* gDBusInterface)
+	{
+		if(gDBusInterface is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gDBusInterface);
+		this.gDBusInterface = gDBusInterface;
+	}
+code: end
+outFile: DBusInterface
+
+file: GDBusInterfaceSkeleton.html
+struct: GDBusInterfaceSkeleton
+class: DBusInterfaceSkeleton
+implements: DBusInterfaceIF
+prefix: g_dbus_interface_skeleton_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.Variant
+import: gio.DBusConnection
+import: gio.DBusInterfaceInfo
+import: gio.DBusInterfaceVTable
+structWrap: GVariant* Variant
+structWrap: GDBusConnection* DBusConnection
+structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
+structWrap: GDBusInterfaceVTable* DBusInterfaceVTable
+
+# imports for DBusInterface Interface
+import: gio.DBusInterfaceT
+import: gio.DBusInterfaceIF
+
+code: start
+	// add the DBusInterface capabilities
+	mixin DBusInterfaceT!(GDBusInterfaceSkeleton);
+code: end
+outFile: DBusInterfaceSkeleton
+
 file: GDBusProxy.html
 struct: GDBusProxy
 class: DBusProxy
 extend: GObject
+implements: AsyncInitableIF
+implements: DBusInterfaceIF
+implements: InitableIF
 prefix: g_dbus_proxy_
 import: glib.Str
 import: glib.ErrorG
@@ -2207,16 +2484,42 @@ import: glib.Variant
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.DBusConnection
+import: gio.UnixFDList
 structWrap: GVariant* Variant
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GDBusConnection* DBusConnection
+structWrap: GUnixFDList* UnixFDList
+
+out: g_dbus_proxy_call_with_unix_fd_list_finish out_fd_list
+out: g_dbus_proxy_call_with_unix_fd_list_sync out_fd_list
+
+# imports for AsyncInitable Interface
+import: gio.AsyncInitableT
+import: gio.AsyncInitableIF
+
+# imports for DBusInterface Interface
+import: gio.DBusInterfaceT
+import: gio.DBusInterfaceIF
+
+# imports for Initable Interface
+import: gio.InitableT
+import: gio.InitableIF
 
 nocode: g_dbus_proxy_new_finish
 nocode: g_dbus_proxy_new_for_bus_finish
 
 code: start
-/**
+	// add the DBusInterface capabilities
+	mixin AsyncInitableT!(GDBusProxy);
+
+	// add the DBusInterface capabilities
+	mixin DBusInterfaceT!(GDBusProxy);
+
+	// add the Initable capabilities
+	mixin InitableT!(GDBusProxy);
+
+	/**
 	 * Finishes creating a GDBusProxy.
 	 * Since 2.26
 	 * Params:
@@ -2255,16 +2558,212 @@ code: start
 code: end
 outFile: DBusProxy
 
-###########################################################
-### Utilities #############################################
-###########################################################
-
-file: GFilenameCompleter.html
-struct: GFilenameCompleter
-class: FilenameCompleter
-prefix: g_filename_completer_
+file: GDBusObject.html
+struct: GDBusObject
+class: DBusObjectT
+template: TStruct
+prefix: g_dbus_interface_
 import: glib.Str
-outFile: FilenameCompleter
+import: glib.ListG
+import: gio.DBusInterface
+import: gio.DBusInterfaceIF
+structWrap: GList* ListG
+structWrap: GDBusInterface* DBusInterfaceIF
+interface: DBusObjectIF
+outFile: DBusObjectT
+
+file:
+class: DBusObject
+extend: ObjectG
+implements: DBusObjectIF
+import: gobject.ObjectG
+
+# imports for DBusObject Interface
+import: gio.DBusObjectT
+import: gio.DBusObjectIF
+
+code: start
+	// Minimal implementation.
+	mixin DBusObjectT!(GDBusObject);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gDBusObject;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GDBusObject* gDBusObject)
+	{
+		if(gDBusObject is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gDBusObject);
+		this.gDBusObject = gDBusObject;
+	}
+code: end
+outFile: DBusObject
+
+file: GDBusObjectSkeleton.html
+struct: GDBusObjectSkeleton
+class: DBusObjectSkeleton
+implements: DBusObjectIF
+prefix: g_dbus_object_skeleton_
+import: glib.Str
+import: gio.DBusInterfaceSkeleton
+structWrap: GDBusInterfaceSkeleton* DBusInterfaceSkeleton
+
+# imports for DBusObject Interface
+import: gio.DBusObjectT
+import: gio.DBusObjectIF
+
+code: start
+	// add the DBusObject capabilities
+	mixin DBusObjectT!(GDBusObjectSkeleton);
+code: end
+outFile: DBusObjectSkeleton
+
+file: GDBusObjectProxy.html
+struct: GDBusObjectProxy
+class: DBusObjectProxy
+implements: DBusObjectIF
+prefix: g_dbus_object_proxy_
+import: glib.Str
+import: gio.DBusConnection
+structWrap: GDBusConnection* DBusConnection
+
+# imports for DBusObject Interface
+import: gio.DBusObjectT
+import: gio.DBusObjectIF
+
+code: start
+	// add the DBusObject capabilities
+	mixin DBusObjectT!(GDBusObjectProxy);
+code: end
+outFile: DBusObjectProxy
+
+file: GDBusObjectManager.html
+struct: GDBusObjectManager
+class: DBusObjectManagerT
+template: TStruct
+prefix: g_dbus_object_manager_
+import: glib.Str
+import: glib.ListG
+import: gio.DBusInterface
+import: gio.DBusInterfaceIF
+import: gio.DBusObject
+import: gio.DBusObjectIF
+structWrap: GList* ListG
+structWrap: GDBusInterface* DBusInterfaceIF
+structWrap: GDBusObject* DBusObjectIF
+interface: DBusObjectManagerIF
+outFile: DBusObjectManagerT
+
+file: GDBusObjectManagerServer.html
+struct: GDBusObjectManagerServer
+class: DBusObjectManagerServer
+implements: DBusObjectManagerIF
+prefix: g_dbus_object_manager_server_
+import: glib.Str
+import: gio.DBusConnection
+import: gio.DBusObjectSkeleton
+structWrap: GDBusConnection* DBusConnection
+structWrap: GDBusObjectSkeleton* DBusObjectSkeleton
+
+# imports for DBusObjectManager Interface
+import: gio.DBusObjectManagerT
+import: gio.DBusObjectManagerIF
+
+code: start
+	// add the DBusObjectManager capabilities
+	mixin DBusObjectManagerT!(GDBusObjectManagerServer);
+code: end
+outFile: DBusObjectManagerServer
+
+file: GDBusObjectManagerClient.html
+struct: GDBusObjectManagerClient
+ctorStruct: GDBusObjectManager
+class: DBusObjectManagerClient
+implements: AsyncInitableIF
+implements: DBusObjectManagerIF
+implements: InitableIF
+prefix: g_dbus_object_manager_client_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.DBusConnection
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GDBusConnection* DBusConnection
+
+# imports for AsyncInitable Interface
+import: gio.AsyncInitableT
+import: gio.AsyncInitableIF
+
+# imports for DBusObjectManager Interface
+import: gio.DBusObjectManagerT
+import: gio.DBusObjectManagerIF
+
+# imports for Initable Interface
+import: gio.InitableT
+import: gio.InitableIF
+
+nocode: g_dbus_object_manager_client_new_finish
+nocode: g_dbus_object_manager_client_new_for_bus_finish
+
+code: start
+	// add the AsyncInitable capabilities
+	mixin AsyncInitableT!(GDBusObjectManagerClient);
+
+	// add the DBusObjectManager capabilities
+	mixin DBusObjectManagerT!(GDBusObjectManagerClient);
+
+	// add the Initable capabilities
+	mixin InitableT!(GDBusObjectManagerClient);
+
+	/**
+	 * Finishes an operation started with g_dbus_object_manager_client_new().
+	 * Since 2.30
+	 * Params:
+	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_object_manager_client_new().
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (AsyncResultIF res, bool forBus = false)
+	{
+		// GDBusObjectManager * g_dbus_object_manager_client_new_finish  (GAsyncResult *res,  GError **error);
+		GError* err = null;
+		GDBusObjectManager* p;
+
+		if ( forBus )
+		{
+			p = g_dbus_object_manager_client_new_for_bus_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+		}
+		this(cast(GDBusObjectManagerClient*) p);
+	}
+code: end
+outFile: DBusObjectManagerClient
 
 ###########################################################
 ### Settings ##############################################
@@ -2359,6 +2858,8 @@ structWrap: GAction* ActionIF
 #imports for ActionGroup Interface.
 import: gio.ActionGroupIF
 import: gio.ActionGroupT
+
+array: g_simple_action_group_add_entries entries n_entries
 
 code: start
 	// add the ActionGroup capabilities
@@ -2491,11 +2992,32 @@ file: GIOModule.html
 struct: GIOModule
 class: IOModule
 prefix: g_io_module_
-prefix: g_io_
+prefix: g_io_modules_
+noprefix: g_io_module_scope_
 import: glib.Str
 import: glib.ListG
+import: gio.IOModuleScope
 structWrap: GList* ListG
+structWrap: GIOModuleScope* IOModuleScope
 outFile: IOModule
+
+struct: GIOModuleScope
+class: IOModuleScope
+prefix: g_io_module_scope_
+strictPrefix: Y
+import: glib.Str
+structWrap: GIOModuleScope* IOModuleScope
+
+code: start
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GIO) && gIOModuleScope != null)
+		{
+			g_io_module_scope_free(gIOModuleScope);
+		}
+	}
+code: end
+outFile: IOModuleScope
 
 file: gio-Extension-Points.html
 struct: GIOExtension
