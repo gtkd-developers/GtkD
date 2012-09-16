@@ -160,11 +160,11 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 		}
 		onAuthorizeMethodListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackAuthorizeMethod(GDBusObjectSkeleton* objectStruct, GDBusInterfaceSkeleton* intrface, GDBusMethodInvocation* invocation, DBusObjectSkeleton _dBusObjectSkeleton)
+	extern(C) static gboolean callBackAuthorizeMethod(GDBusObjectSkeleton* objectStruct, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation, DBusObjectSkeleton _dBusObjectSkeleton)
 	{
 		foreach ( bool delegate(DBusInterfaceSkeleton, GDBusMethodInvocation*, DBusObjectSkeleton) dlg ; _dBusObjectSkeleton.onAuthorizeMethodListeners )
 		{
-			if ( dlg(new DBusInterfaceSkeleton(intrface), invocation, _dBusObjectSkeleton) )
+			if ( dlg(new DBusInterfaceSkeleton(iface), invocation, _dBusObjectSkeleton) )
 			{
 				return 1;
 			}
@@ -212,20 +212,20 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 * it until removed.
 	 * Since 2.30
 	 */
-	public void addInterface(DBusInterfaceSkeleton intrface)
+	public void addInterface(DBusInterfaceSkeleton iface)
 	{
 		// void g_dbus_object_skeleton_add_interface  (GDBusObjectSkeleton *object,  GDBusInterfaceSkeleton *interface_);
-		g_dbus_object_skeleton_add_interface(gDBusObjectSkeleton, (intrface is null) ? null : intrface.getDBusInterfaceSkeletonStruct());
+		g_dbus_object_skeleton_add_interface(gDBusObjectSkeleton, (iface is null) ? null : iface.getDBusInterfaceSkeletonStruct());
 	}
 	
 	/**
 	 * Removes interface_ from object.
 	 * Since 2.30
 	 */
-	public void removeInterface(DBusInterfaceSkeleton intrface)
+	public void removeInterface(DBusInterfaceSkeleton iface)
 	{
 		// void g_dbus_object_skeleton_remove_interface  (GDBusObjectSkeleton *object,  GDBusInterfaceSkeleton *interface_);
-		g_dbus_object_skeleton_remove_interface(gDBusObjectSkeleton, (intrface is null) ? null : intrface.getDBusInterfaceSkeletonStruct());
+		g_dbus_object_skeleton_remove_interface(gDBusObjectSkeleton, (iface is null) ? null : iface.getDBusInterfaceSkeletonStruct());
 	}
 	
 	/**

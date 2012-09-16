@@ -3785,9 +3785,9 @@ public struct GDBusInterfaceIface
 {
 	GTypeInterface parentIface;
 	/+* Virtual Functions +/
-	extern(C) GDBusInterfaceInfo * function(GDBusInterface *interface) getInfo;
-	extern(C) GDBusObject * function(GDBusInterface *interface) getObject;
-	extern(C) void  function(GDBusInterface *interface,GDBusObject *object) setObject;
+	extern(C) GDBusInterfaceInfo * function(GDBusInterface *iface) getInfo;
+	extern(C) GDBusObject * function(GDBusInterface *iface) getObject;
+	extern(C) void  function(GDBusInterface *iface,GDBusObject *object) setObject;
 }
 
 
@@ -3820,12 +3820,12 @@ public struct GDBusInterfaceSkeletonClass
 {
 	GObjectClass parentClass;
 	/+* Virtual Functions +/
-	extern(C) GDBusInterfaceInfo * function(GDBusInterfaceSkeleton *interface) getInfo;
-	extern(C) GDBusInterfaceVTable * function(GDBusInterfaceSkeleton *interface) getVtable;
-	extern(C) GVariant * function(GDBusInterfaceSkeleton *interface) getProperties;
-	extern(C) void  function(GDBusInterfaceSkeleton *interface) flush;
+	extern(C) GDBusInterfaceInfo * function(GDBusInterfaceSkeleton *iface) getInfo;
+	extern(C) GDBusInterfaceVTable * function(GDBusInterfaceSkeleton *iface) getVtable;
+	extern(C) GVariant * function(GDBusInterfaceSkeleton *iface) getProperties;
+	extern(C) void  function(GDBusInterfaceSkeleton *iface) flush;
 	/+* Signals +/
-	extern(C) int  function(GDBusInterfaceSkeleton *interface,GDBusMethodInvocation *invocation) gAuthorizeMethod;
+	extern(C) int  function(GDBusInterfaceSkeleton *iface,GDBusMethodInvocation *invocation) gAuthorizeMethod;
 }
 
 
@@ -3884,8 +3884,8 @@ public struct GDBusObjectIface
 	extern(C) GList * function(GDBusObject *object) getInterfaces;
 	extern(C) GDBusInterface * function(GDBusObject *object,char *interfaceName) getInterface;
 	/+* Signals +/
-	extern(C) void  function(GDBusObject *object,GDBusInterface *interface) interfaceAdded;
-	extern(C) void  function(GDBusObject *object,GDBusInterface *interface) interfaceRemoved;
+	extern(C) void  function(GDBusObject *object,GDBusInterface *iface) interfaceAdded;
+	extern(C) void  function(GDBusObject *object,GDBusInterface *iface) interfaceRemoved;
 }
 
 
@@ -3910,7 +3910,7 @@ public struct GDBusObjectSkeletonClass
 {
 	GObjectClass parentClass;
 	/+* Signals +/
-	extern(C) int  function(GDBusObjectSkeleton *object,GDBusInterfaceSkeleton *interface,GDBusMethodInvocation *invocation) authorizeMethod;
+	extern(C) int  function(GDBusObjectSkeleton *object,GDBusInterfaceSkeleton *iface,GDBusMethodInvocation *invocation) authorizeMethod;
 }
 
 
@@ -3974,8 +3974,8 @@ public struct GDBusObjectManagerIface
 	/+* Signals +/
 	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object) objectAdded;
 	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object) objectRemoved;
-	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object,GDBusInterface *interface) interfaceAdded;
-	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object,GDBusInterface *interface) interfaceRemoved;
+	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object,GDBusInterface *iface) interfaceAdded;
+	extern(C) void  function(GDBusObjectManager *manager,GDBusObject *object,GDBusInterface *iface) interfaceRemoved;
 }
 
 

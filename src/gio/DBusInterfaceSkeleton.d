@@ -190,7 +190,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 		}
 		onGAuthorizeMethodListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackGAuthorizeMethod(GDBusInterfaceSkeleton* intrfaceStruct, GDBusMethodInvocation* invocation, DBusInterfaceSkeleton _dBusInterfaceSkeleton)
+	extern(C) static gboolean callBackGAuthorizeMethod(GDBusInterfaceSkeleton* ifaceStruct, GDBusMethodInvocation* invocation, DBusInterfaceSkeleton _dBusInterfaceSkeleton)
 	{
 		foreach ( bool delegate(GDBusMethodInvocation*, DBusInterfaceSkeleton) dlg ; _dBusInterfaceSkeleton.onGAuthorizeMethodListeners )
 		{

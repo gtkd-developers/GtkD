@@ -155,13 +155,13 @@ public class DBusMessage : ObjectG
 	 * signal = A valid signal name.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string path, string intrface, string signal)
+	public this (string path, string iface, string signal)
 	{
 		// GDBusMessage * g_dbus_message_new_signal (const gchar *path,  const gchar *interface_,  const gchar *signal);
-		auto p = g_dbus_message_new_signal(Str.toStringz(path), Str.toStringz(intrface), Str.toStringz(signal));
+		auto p = g_dbus_message_new_signal(Str.toStringz(path), Str.toStringz(iface), Str.toStringz(signal));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_dbus_message_new_signal(Str.toStringz(path), Str.toStringz(intrface), Str.toStringz(signal))");
+			throw new ConstructionException("null returned by g_dbus_message_new_signal(Str.toStringz(path), Str.toStringz(iface), Str.toStringz(signal))");
 		}
 		this(cast(GDBusMessage*) p);
 	}
@@ -175,13 +175,13 @@ public class DBusMessage : ObjectG
 	 * method = A valid method name.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, string path, string intrface, string method)
+	public this (string name, string path, string iface, string method)
 	{
 		// GDBusMessage * g_dbus_message_new_method_call (const gchar *name,  const gchar *path,  const gchar *interface_,  const gchar *method);
-		auto p = g_dbus_message_new_method_call(Str.toStringz(name), Str.toStringz(path), Str.toStringz(intrface), Str.toStringz(method));
+		auto p = g_dbus_message_new_method_call(Str.toStringz(name), Str.toStringz(path), Str.toStringz(iface), Str.toStringz(method));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_dbus_message_new_method_call(Str.toStringz(name), Str.toStringz(path), Str.toStringz(intrface), Str.toStringz(method))");
+			throw new ConstructionException("null returned by g_dbus_message_new_method_call(Str.toStringz(name), Str.toStringz(path), Str.toStringz(iface), Str.toStringz(method))");
 		}
 		this(cast(GDBusMessage*) p);
 	}

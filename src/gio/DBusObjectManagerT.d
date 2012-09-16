@@ -130,11 +130,11 @@ public template DBusObjectManagerT(TStruct)
 		}
 		_onInterfaceAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackInterfaceAdded(GDBusObjectManager* managerStruct, GDBusObject* object, GDBusInterface* intrface, DBusObjectManagerIF _dBusObjectManagerIF)
+	extern(C) static void callBackInterfaceAdded(GDBusObjectManager* managerStruct, GDBusObject* object, GDBusInterface* iface, DBusObjectManagerIF _dBusObjectManagerIF)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onInterfaceAddedListeners )
 		{
-			dlg(new DBusObject(object), new DBusInterface(intrface), _dBusObjectManagerIF);
+			dlg(new DBusObject(object), new DBusInterface(iface), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -164,11 +164,11 @@ public template DBusObjectManagerT(TStruct)
 		}
 		_onInterfaceRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackInterfaceRemoved(GDBusObjectManager* managerStruct, GDBusObject* object, GDBusInterface* intrface, DBusObjectManagerIF _dBusObjectManagerIF)
+	extern(C) static void callBackInterfaceRemoved(GDBusObjectManager* managerStruct, GDBusObject* object, GDBusInterface* iface, DBusObjectManagerIF _dBusObjectManagerIF)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onInterfaceRemovedListeners )
 		{
-			dlg(new DBusObject(object), new DBusInterface(intrface), _dBusObjectManagerIF);
+			dlg(new DBusObject(object), new DBusInterface(iface), _dBusObjectManagerIF);
 		}
 	}
 	

@@ -122,11 +122,11 @@ public template DBusObjectT(TStruct)
 		}
 		_onInterfaceAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackInterfaceAdded(GDBusObject* objectStruct, GDBusInterface* intrface, DBusObjectIF _dBusObjectIF)
+	extern(C) static void callBackInterfaceAdded(GDBusObject* objectStruct, GDBusInterface* iface, DBusObjectIF _dBusObjectIF)
 	{
 		foreach ( void delegate(DBusInterfaceIF, DBusObjectIF) dlg ; _dBusObjectIF.onInterfaceAddedListeners )
 		{
-			dlg(new DBusInterface(intrface), _dBusObjectIF);
+			dlg(new DBusInterface(iface), _dBusObjectIF);
 		}
 	}
 	
@@ -154,11 +154,11 @@ public template DBusObjectT(TStruct)
 		}
 		_onInterfaceRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackInterfaceRemoved(GDBusObject* objectStruct, GDBusInterface* intrface, DBusObjectIF _dBusObjectIF)
+	extern(C) static void callBackInterfaceRemoved(GDBusObject* objectStruct, GDBusInterface* iface, DBusObjectIF _dBusObjectIF)
 	{
 		foreach ( void delegate(DBusInterfaceIF, DBusObjectIF) dlg ; _dBusObjectIF.onInterfaceRemovedListeners )
 		{
-			dlg(new DBusInterface(intrface), _dBusObjectIF);
+			dlg(new DBusInterface(iface), _dBusObjectIF);
 		}
 	}
 	

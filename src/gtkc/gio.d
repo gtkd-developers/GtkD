@@ -3145,8 +3145,8 @@ mixin( gshared ~"extern(C)
 	// gio.DBusMessage
 
 	GDBusMessage* function() c_g_dbus_message_new;
-	GDBusMessage* function(gchar* path, gchar* intrface, gchar* signal) c_g_dbus_message_new_signal;
-	GDBusMessage* function(gchar* name, gchar* path, gchar* intrface, gchar* method) c_g_dbus_message_new_method_call;
+	GDBusMessage* function(gchar* path, gchar* iface, gchar* signal) c_g_dbus_message_new_signal;
+	GDBusMessage* function(gchar* name, gchar* path, gchar* iface, gchar* method) c_g_dbus_message_new_method_call;
 	GDBusMessage* function(GDBusMessage* methodCallMessage) c_g_dbus_message_new_method_reply;
 	GDBusMessage* function(GDBusMessage* methodCallMessage, gchar* errorName, gchar* errorMessageFormat, ... ) c_g_dbus_message_new_method_error;
 	GDBusMessage* function(GDBusMessage* methodCallMessage, gchar* errorName, gchar* errorMessageFormat, va_list varArgs) c_g_dbus_message_new_method_error_valist;
@@ -3293,25 +3293,25 @@ mixin( gshared ~"extern(C)
 
 	// gio.DBusInterfaceT
 
-	GDBusInterfaceInfo* function(GDBusInterface* intrface) c_g_dbus_interface_get_info;
-	GDBusObject* function(GDBusInterface* intrface) c_g_dbus_interface_get_object;
-	void function(GDBusInterface* intrface, GDBusObject* object) c_g_dbus_interface_set_object;
+	GDBusInterfaceInfo* function(GDBusInterface* iface) c_g_dbus_interface_get_info;
+	GDBusObject* function(GDBusInterface* iface) c_g_dbus_interface_get_object;
+	void function(GDBusInterface* iface, GDBusObject* object) c_g_dbus_interface_set_object;
 
 	// gio.DBusInterface
 
 
 	// gio.DBusInterfaceSkeleton
 
-	void function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_flush;
-	GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_info;
-	GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_vtable;
-	GVariant* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_properties;
-	gboolean function(GDBusInterfaceSkeleton* intrface, GDBusConnection* connection, gchar* objectPath, GError** error) c_g_dbus_interface_skeleton_export;
-	void function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_unexport;
-	GDBusConnection* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_connection;
-	gchar* function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_object_path;
-	GDBusInterfaceSkeletonFlags function(GDBusInterfaceSkeleton* intrface) c_g_dbus_interface_skeleton_get_flags;
-	void function(GDBusInterfaceSkeleton* intrface, GDBusInterfaceSkeletonFlags flags) c_g_dbus_interface_skeleton_set_flags;
+	void function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_flush;
+	GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_info;
+	GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_vtable;
+	GVariant* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_properties;
+	gboolean function(GDBusInterfaceSkeleton* iface, GDBusConnection* connection, gchar* objectPath, GError** error) c_g_dbus_interface_skeleton_export;
+	void function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_unexport;
+	GDBusConnection* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_connection;
+	gchar* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_object_path;
+	GDBusInterfaceSkeletonFlags function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_flags;
+	void function(GDBusInterfaceSkeleton* iface, GDBusInterfaceSkeletonFlags flags) c_g_dbus_interface_skeleton_set_flags;
 
 	// gio.DBusProxy
 
@@ -3357,8 +3357,8 @@ mixin( gshared ~"extern(C)
 
 	GDBusObjectSkeleton* function(gchar* objectPath) c_g_dbus_object_skeleton_new;
 	void function(GDBusObjectSkeleton* object) c_g_dbus_object_skeleton_flush;
-	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* intrface) c_g_dbus_object_skeleton_add_interface;
-	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* intrface) c_g_dbus_object_skeleton_remove_interface;
+	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* iface) c_g_dbus_object_skeleton_add_interface;
+	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* iface) c_g_dbus_object_skeleton_remove_interface;
 	void function(GDBusObjectSkeleton* object, gchar* interfaceName) c_g_dbus_object_skeleton_remove_interface_by_name;
 	void function(GDBusObjectSkeleton* object, gchar* objectPath) c_g_dbus_object_skeleton_set_object_path;
 

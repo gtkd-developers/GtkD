@@ -470,11 +470,11 @@ struct GValue
  */
 public struct GTypeInfo
 {
-	/+* interface types, classed types, instantiated types +/
+	/+* iface types, classed types, instantiated types +/
 	ushort classSize;
 	GBaseInitFunc baseInit;
 	GBaseFinalizeFunc baseFinalize;
-	/+* interface types, classed types, instantiated types +/
+	/+* iface types, classed types, instantiated types +/
 	GClassInitFunc classInit;
 	GClassFinalizeFunc classFinalize;
 	void* classData;
@@ -1294,7 +1294,7 @@ public struct GParamSpec
 	char *name; /+* interned string +/
 	GParamFlags flags;
 	GType valueType;
-	GType ownerType; /+* class or interface using this property +/
+	GType ownerType; /+* class or iface using this property +/
 }
 
 
