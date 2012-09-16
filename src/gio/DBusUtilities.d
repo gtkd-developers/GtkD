@@ -46,9 +46,9 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gio.Value
- * 	- gio.Variant
- * 	- gio.VariantType
+ * 	- glib.Variant
+ * 	- glib.VariantType
+ * 	- gobject.Value
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.IOStream
@@ -72,9 +72,9 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import gio.Value;
-private import gio.Variant;
-private import gio.VariantType;
+private import glib.Variant;
+private import glib.VariantType;
+private import gobject.Value;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.IOStream;

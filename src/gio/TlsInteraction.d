@@ -45,11 +45,11 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gio.AsyncResult
+ * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.TlsPassword
  * structWrap:
- * 	- GAsyncResult* -> AsyncResult
+ * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GTlsPassword* -> TlsPassword
  * module aliases:
@@ -67,7 +67,7 @@ private import glib.ConstructionException;
 
 private import glib.ErrorG;
 private import glib.GException;
-private import gio.AsyncResult;
+private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.TlsPassword;
 
@@ -217,12 +217,12 @@ public class TlsInteraction : ObjectG
 	 * Returns: The status of the ask password interaction.
 	 * Throws: GException on failure.
 	 */
-	public GTlsInteractionResult askPasswordFinish(AsyncResult result)
+	public GTlsInteractionResult askPasswordFinish(AsyncResultIF result)
 	{
 		// GTlsInteractionResult g_tls_interaction_ask_password_finish  (GTlsInteraction *interaction,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
-		auto p = g_tls_interaction_ask_password_finish(gTlsInteraction, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto p = g_tls_interaction_ask_password_finish(gTlsInteraction, (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{

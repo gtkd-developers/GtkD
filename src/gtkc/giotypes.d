@@ -27,6 +27,14 @@ module gtkc.giotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
+struct GIOModuleScope {}
+
+public enum GIOModuleScopeFlags
+{
+	NONE,
+	BLOCK_DUPLICATES
+}
+alias GIOModuleScopeFlags IOModuleScopeFlags;
 /**
  * Flags used when querying a GFileInfo.
  * G_FILE_QUERY_INFO_NONE

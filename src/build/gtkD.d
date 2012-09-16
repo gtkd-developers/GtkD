@@ -226,7 +226,7 @@ private import gio.TlsClientConnection;
 private import gio.TlsServerConnection;
 private import gio.TlsBackend;
 private import gio.TlsDatabase;
-private import gio.TlsDatabase;
+private import gio.TlsFileDatabase;
 private import gio.TlsInteraction;
 private import gio.TlsPassword;
 private import gio.Resolver;

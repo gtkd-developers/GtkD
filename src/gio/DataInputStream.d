@@ -47,11 +47,11 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- gio.AsyncResult
+ * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.InputStream
  * structWrap:
- * 	- GAsyncResult* -> AsyncResult
+ * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GInputStream* -> InputStream
  * module aliases:
@@ -70,7 +70,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import gio.AsyncResult;
+private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.InputStream;
 
@@ -463,12 +463,12 @@ public class DataInputStream : BufferedInputStream
 	 * Returns: a string with the line that was read in (without the newlines). Set length to a gsize to get the length of the read line. On an error, it will return NULL and error will be set. For UTF-8 conversion errors, the set error domain is G_CONVERT_ERROR. If there's no content to read, it will still return NULL, but error won't be set. [transfer full]
 	 * Throws: GException on failure.
 	 */
-	public string readLineFinishUtf8(AsyncResult result, out gsize length)
+	public string readLineFinishUtf8(AsyncResultIF result, out gsize length)
 	{
 		// char * g_data_input_stream_read_line_finish_utf8  (GDataInputStream *stream,  GAsyncResult *result,  gsize *length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_line_finish_utf8(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
+		auto p = g_data_input_stream_read_line_finish_utf8(gDataInputStream, (result is null) ? null : result.getAsyncResultTStruct(), &length, &err);
 		
 		if (err !is null)
 		{

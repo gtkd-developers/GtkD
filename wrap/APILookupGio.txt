@@ -32,12 +32,20 @@ addTypedefs: start
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
+struct GIOModuleScope {}
+
 addTypedefs: end
 
 addAliases: start
 addAliases: end
 
 addEnums: start
+	public enum GIOModuleScopeFlags
+	{
+		NONE,
+		BLOCK_DUPLICATES
+	}
+	alias GIOModuleScopeFlags IOModuleScopeFlags;
 addEnums: end
 
 addStructs: start
@@ -615,10 +623,10 @@ prefix: g_data_input_stream_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: gio.AsyncResult
+import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.InputStream
-structWrap: GAsyncResult* AsyncResult
+structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GInputStream* InputStream
 
@@ -1784,14 +1792,14 @@ import: glib.ErrorG
 import: glib.GException
 import: glib.ByteArray
 import: glib.ListG
-import: gio.AsyncResult
+import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.SocketConnectableIF
 import: gio.TlsCertificate
 import: gio.TlsInteraction
 structWrap: GByteArray* ByteArray
 structWrap: GList* ListG
-structWrap: GAsyncResult* AsyncResult
+structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GSocketConnectable* SocketConnectableIF
 structWrap: GTlsCertificate* TlsCertificate
@@ -1803,13 +1811,12 @@ file: GTlsFileDatabase.html
 struct: GTlsFileDatabase
 ctorStruct: GTlsDatabase
 class: TlsFileDatabase
-extend: TlsDatabase
+extend: GTlsDatabase
 prefix: g_tls_file_database_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: gio.TlsDatabase
-outFile: TlsDatabase
+outFile: TlsFileDatabase
 
 file: GTlsInteraction.html
 struct: GTlsInteraction
@@ -1817,10 +1824,10 @@ class: TlsInteraction
 prefix: g_tls_interaction_
 import: glib.ErrorG
 import: glib.GException
-import: gio.AsyncResult
+import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.TlsPassword
-structWrap: GAsyncResult* AsyncResult
+structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GTlsPassword* TlsPassword
 outFile: TlsInteraction
@@ -2076,15 +2083,15 @@ prefix: g_dbus_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: gio.Value
-import: gio.Variant
-import: gio.VariantType
+import: glib.Variant
+import: glib.VariantType
+import: gobject.Value
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.IOStream
-structWrap: GValue* Value
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
+structWrap: GValue* Value
 openFile: DBusUtilities
 
 file: gio-D-Bus-Addresses.html
@@ -2172,7 +2179,7 @@ import: glib.StringG
 import: gio.DBusMethodInfo
 import: gio.DBusPropertyInfo
 import: gio.DBusSignalInfo
-structWrap: GString* Stringg
+structWrap: GString* StringG
 structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
 structWrap: GDBusMethodInfo* DBusMethodInfo
 structWrap: GDBusPropertyInfo* DBusPropertyInfo
@@ -2188,7 +2195,7 @@ import: glib.ErrorG
 import: glib.GException
 import: glib.StringG
 import: gio.DBusInterfaceInfo
-structWrap: GString* Stringg
+structWrap: GString* StringG
 structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
 structWrap: GDBusNodeInfo* DBusNodeInfo
 outFile: DBusNodeInfo
@@ -2453,11 +2460,9 @@ import: glib.GException
 import: glib.Variant
 import: gio.DBusConnection
 import: gio.DBusInterfaceInfo
-import: gio.DBusInterfaceVTable
 structWrap: GVariant* Variant
 structWrap: GDBusConnection* DBusConnection
 structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
-structWrap: GDBusInterfaceVTable* DBusInterfaceVTable
 
 # imports for DBusInterface Interface
 import: gio.DBusInterfaceT
@@ -3006,6 +3011,8 @@ class: IOModuleScope
 prefix: g_io_module_scope_
 strictPrefix: Y
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GIOModuleScope* IOModuleScope
 
 code: start

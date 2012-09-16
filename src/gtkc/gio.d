@@ -3574,17 +3574,17 @@ mixin( gshared ~"extern(C)
 
 	GIOModule* function(gchar* filename) c_g_io_module_new;
 	GList* function(gchar* dirname) c_g_io_modules_load_all_in_directory;
-	GList* function(gchar* dirname, GIOModuleScope* scope) c_g_io_modules_load_all_in_directory_with_scope;
+	GList* function(gchar* dirname, GIOModuleScope* scop) c_g_io_modules_load_all_in_directory_with_scope;
 	void function(char* dirname) c_g_io_modules_scan_all_in_directory;
-	void function(gchar* dirname, GIOModuleScope* scope) c_g_io_modules_scan_all_in_directory_with_scope;
+	void function(gchar* dirname, GIOModuleScope* scop) c_g_io_modules_scan_all_in_directory_with_scope;
 	void function(GIOModule* modul) c_g_io_module_load;
 	void function(GIOModule* modul) c_g_io_module_unload;
 	char** function() c_g_io_module_query;
 
 	// gio.IOModuleScope
 
-	void function(GIOModuleScope* scope, gchar* basename) c_g_io_module_scope_block;
-	void function(GIOModuleScope* scope) c_g_io_module_scope_free;
+	void function(GIOModuleScope* scop, gchar* basename) c_g_io_module_scope_block;
+	void function(GIOModuleScope* scop) c_g_io_module_scope_free;
 	GIOModuleScope* function(GIOModuleScopeFlags flags) c_g_io_module_scope_new;
 
 	// gio.IOExtension

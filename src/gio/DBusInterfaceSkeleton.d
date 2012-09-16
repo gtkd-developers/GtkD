@@ -50,13 +50,11 @@
  * 	- glib.Variant
  * 	- gio.DBusConnection
  * 	- gio.DBusInterfaceInfo
- * 	- gio.DBusInterfaceVTable
  * 	- gio.DBusInterfaceT
  * 	- gio.DBusInterfaceIF
  * structWrap:
  * 	- GDBusConnection* -> DBusConnection
  * 	- GDBusInterfaceInfo* -> DBusInterfaceInfo
- * 	- GDBusInterfaceVTable* -> DBusInterfaceVTable
  * 	- GVariant* -> Variant
  * module aliases:
  * local aliases:
@@ -79,7 +77,6 @@ private import glib.GException;
 private import glib.Variant;
 private import gio.DBusConnection;
 private import gio.DBusInterfaceInfo;
-private import gio.DBusInterfaceVTable;
 private import gio.DBusInterfaceT;
 private import gio.DBusInterfaceIF;
 
@@ -244,15 +241,10 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 * Since 2.30
 	 * Returns: A GDBusInterfaceVTable (never NULL).
 	 */
-	public DBusInterfaceVTable getVtable()
+	public GDBusInterfaceVTable* getVtable()
 	{
 		// GDBusInterfaceVTable * g_dbus_interface_skeleton_get_vtable  (GDBusInterfaceSkeleton *interface_);
-		auto p = g_dbus_interface_skeleton_get_vtable(gDBusInterfaceSkeleton);
-		if(p is null)
-		{
-			return null;
-		}
-		return new DBusInterfaceVTable(cast(GDBusInterfaceVTable*) p);
+		return g_dbus_interface_skeleton_get_vtable(gDBusInterfaceSkeleton);
 	}
 	
 	/**
@@ -281,7 +273,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 * Returns: TRUE if the interface was exported, other FALSE with error set.
 	 * Throws: GException on failure.
 	 */
-	public int export(DBusConnection connection, string objectPath)
+	public int expor(DBusConnection connection, string objectPath)
 	{
 		// gboolean g_dbus_interface_skeleton_export (GDBusInterfaceSkeleton *interface_,  GDBusConnection *connection,  const gchar *object_path,  GError **error);
 		GError* err = null;

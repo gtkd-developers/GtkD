@@ -3003,7 +3003,7 @@ public struct GScannerConfig
 	//uint identifier2_String : 1;
 	//uint char2_Token : 1; /+* return G_TOKEN_CHAR? +/
 	//uint symbol2_Token : 1;
-	//uint scope0_Fallback : 1; /+* try scope 0 on lookups? +/
+	//uint scope0_Fallback : 1; /+* try scop 0 on lookups? +/
 	//uint storeInt64 : 1; /+* use value.vInt64 rather than vInt +/
 	uint paddingDummy;
 }

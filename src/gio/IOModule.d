@@ -173,13 +173,12 @@ public class IOModule : TypeModule
 	 * Since 2.30
 	 * Params:
 	 * dirname = pathname for a directory containing modules to load.
-	 * scope = a scope to use when scanning the modules.
 	 * Returns: a list of GIOModules loaded from the directory, All the modules are loaded into memory, if you want to unload them (enabling on-demand loading) you must call g_type_module_unuse() on all the modules. Free the list with g_list_free(). [element-type GIOModule][transfer full]
 	 */
-	public static ListG loadAllInDirectoryWithScope(string dirname, IOModuleScope scope)
+	public static ListG loadAllInDirectoryWithScope(string dirname, IOModuleScope scop)
 	{
 		// GList * g_io_modules_load_all_in_directory_with_scope  (const gchar *dirname,  GIOModuleScope *scope);
-		auto p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scope is null) ? null : scope.getIOModuleScopeStruct());
+		auto p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scop is null) ? null : scop.getIOModuleScopeStruct());
 		if(p is null)
 		{
 			return null;
@@ -220,12 +219,11 @@ public class IOModule : TypeModule
 	 * Since 2.30
 	 * Params:
 	 * dirname = pathname for a directory containing modules to scan.
-	 * scope = a scope to use when scanning the modules
 	 */
-	public static void scanAllInDirectoryWithScope(string dirname, IOModuleScope scope)
+	public static void scanAllInDirectoryWithScope(string dirname, IOModuleScope scop)
 	{
 		// void g_io_modules_scan_all_in_directory_with_scope  (const gchar *dirname,  GIOModuleScope *scope);
-		g_io_modules_scan_all_in_directory_with_scope(Str.toStringz(dirname), (scope is null) ? null : scope.getIOModuleScopeStruct());
+		g_io_modules_scan_all_in_directory_with_scope(Str.toStringz(dirname), (scop is null) ? null : scop.getIOModuleScopeStruct());
 	}
 	
 	/**

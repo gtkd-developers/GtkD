@@ -203,7 +203,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 * Params:
 	 * object = A GDBusObjectSkeleton.
 	 */
-	public void export(DBusObjectSkeleton object)
+	public void expor(DBusObjectSkeleton object)
 	{
 		// void g_dbus_object_manager_server_export (GDBusObjectManagerServer *manager,  GDBusObjectSkeleton *object);
 		g_dbus_object_manager_server_export(gDBusObjectManagerServer, (object is null) ? null : object.getDBusObjectSkeletonStruct());

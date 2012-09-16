@@ -51,7 +51,7 @@
  * structWrap:
  * 	- GDBusInterfaceInfo* -> DBusInterfaceInfo
  * 	- GDBusNodeInfo* -> DBusNodeInfo
- * 	- GString* -> Stringg
+ * 	- GString* -> StringG
  * module aliases:
  * local aliases:
  * overrides:
@@ -172,10 +172,10 @@ public class DBusNodeInfo
 	 * indent = Indentation level.
 	 * stringBuilder = A GString to to append XML data to. [out]
 	 */
-	public void generateXml(uint indent, Stringg stringBuilder)
+	public void generateXml(uint indent, StringG stringBuilder)
 	{
 		// void g_dbus_node_info_generate_xml (GDBusNodeInfo *info,  guint indent,  GString *string_builder);
-		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, (stringBuilder is null) ? null : stringBuilder.getStringgStruct());
+		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, (stringBuilder is null) ? null : stringBuilder.getStringGStruct());
 	}
 	
 	/**
