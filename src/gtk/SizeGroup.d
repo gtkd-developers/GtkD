@@ -113,7 +113,7 @@ private import gobject.ObjectG;
  * widgets in the group. The same is of course true when horizontally grouping
  * width for height widgets.
  * Widgets that trade height-for-width should set a reasonably large minimum width
- * by way of GtkLabel:width-chars for instance. Widgets with static sizes as well
+ * by way of "width-chars" for instance. Widgets with static sizes as well
  * as widgets that grow (such as ellipsizing text) need no such considerations.
  * GtkSizeGroup as GtkBuildable
  * Size groups can be specified in a UI definition by placing an

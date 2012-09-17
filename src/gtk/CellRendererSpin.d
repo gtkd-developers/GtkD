@@ -71,9 +71,9 @@ private import gtk.CellRendererText;
  * The range of the spinbutton is taken from the adjustment property of the
  * cell renderer, which can be set explicitly or mapped to a column in the
  * tree model, like all properties of cell renders. GtkCellRendererSpin
- * also has properties for the climb rate and the number of digits to
- * display. Other GtkSpinButton properties can be set in a handler for the
- * start-editing signal.
+ * also has properties for the "climb-rate" and the number
+ * of "digits" to display. Other GtkSpinButton properties
+ * can be set in a handler for the "editing-started" signal.
  * The GtkCellRendererSpin cell renderer was added in GTK+ 2.10.
  */
 public class CellRendererSpin : CellRendererText

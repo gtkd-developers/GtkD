@@ -278,8 +278,8 @@ public class HandleBox : Bin
 	}
 	
 	/**
-	 * Gets the edge used for determining reattachment of the handle box. See
-	 * gtk_handle_box_set_snap_edge().
+	 * Gets the edge used for determining reattachment of the handle box.
+	 * See gtk_handle_box_set_snap_edge().
 	 * Returns: the edge used for determining reattachment, or (GtkPositionType)-1 if this is determined (as per default) from the handle position.
 	 */
 	public GtkPositionType getSnapEdge()

@@ -125,7 +125,7 @@ public class TargetList : Boxed
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTargetList !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetList !is null )
 		{
 			gtk_target_list_unref(gtkTargetList);
 		}

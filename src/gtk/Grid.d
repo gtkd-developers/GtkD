@@ -172,10 +172,15 @@ public class Grid : Container, OrientableIF
 	/**
 	 * Adds a widget to the grid.
 	 * The widget is placed next to sibling, on the side determined by
-	 * side.
+	 * side. When sibling is NULL, the widget is placed in row (for
+	 * left or right placement) or column 0 (for top or bottom placement),
+	 * at the end indicated by side.
+	 * Attaching widgets labeled [1], [2], [3] with sibling == NULL and
+	 * side == GTK_POS_LEFT yields a layout of [3][2][1].
 	 * Params:
 	 * child = the widget to add
-	 * sibling = the child of grid that child will be placed next to
+	 * sibling (allow-none): the child of grid that child will be placed
+	 * next to, or NULL to place child at the beginning or end
 	 * side = the side of sibling that child is positioned next to
 	 * width = the number of columns that child will span
 	 * height = the number of rows that child will span
@@ -184,6 +189,73 @@ public class Grid : Container, OrientableIF
 	{
 		// void gtk_grid_attach_next_to (GtkGrid *grid,  GtkWidget *child,  GtkWidget *sibling,  GtkPositionType side,  gint width,  gint height);
 		gtk_grid_attach_next_to(gtkGrid, (child is null) ? null : child.getWidgetStruct(), (sibling is null) ? null : sibling.getWidgetStruct(), side, width, height);
+	}
+	
+	/**
+	 * Gets the child of grid whose area covers the grid
+	 * cell whose upper left corner is at left, top.
+	 * Params:
+	 * left = the left edge of the cell
+	 * top = the top edge of the cell
+	 * Returns: the child at the given position, or NULL Since 3.2
+	 */
+	public Widget getChildAt(int left, int top)
+	{
+		// GtkWidget * gtk_grid_get_child_at (GtkGrid *grid,  gint left,  gint top);
+		auto p = gtk_grid_get_child_at(gtkGrid, left, top);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Inserts a row at the specified position.
+	 * Children which are attached at or below this position
+	 * are moved one row down. Children which span across this
+	 * position are grown to span the new row.
+	 * Params:
+	 * position = the position to insert the row at
+	 * Since 3.2
+	 */
+	public void insertRow(int position)
+	{
+		// void gtk_grid_insert_row (GtkGrid *grid,  gint position);
+		gtk_grid_insert_row(gtkGrid, position);
+	}
+	
+	/**
+	 * Inserts a column at the specified position.
+	 * Children which are attached at or to the right of this position
+	 * are moved one column to the right. Children which span across this
+	 * position are grown to span the new column.
+	 * Params:
+	 * position = the position to insert the column at
+	 * Since 3.2
+	 */
+	public void insertColumn(int position)
+	{
+		// void gtk_grid_insert_column (GtkGrid *grid,  gint position);
+		gtk_grid_insert_column(gtkGrid, position);
+	}
+	
+	/**
+	 * Inserts a row or column at the specified position.
+	 * The new row or column is placed next to sibling, on the side
+	 * determined by side. If side is GTK_POS_TOP or GTK_POS_BOTTOM,
+	 * a row is inserted. If side is GTK_POS_LEFT of GTK_POS_RIGHT,
+	 * a column is inserted.
+	 * Params:
+	 * sibling = the child of grid that the new row or column will be
+	 * placed next to
+	 * side = the side of sibling that child is positioned next to
+	 * Since 3.2
+	 */
+	public void insertNextTo(Widget sibling, GtkPositionType side)
+	{
+		// void gtk_grid_insert_next_to (GtkGrid *grid,  GtkWidget *sibling,  GtkPositionType side);
+		gtk_grid_insert_next_to(gtkGrid, (sibling is null) ? null : sibling.getWidgetStruct(), side);
 	}
 	
 	/**

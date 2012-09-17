@@ -86,9 +86,9 @@ private import gobject.ObjectG;
  * to manually use a filter on a file with gtk_file_filter_filter().
  * GtkFileFilter as GtkBuildable
  * The GtkFileFilter implementation of the GtkBuildable interface
- * supports adding rules using the <mime-typesgt, <patternsgt and
- * <applicationsgt elements and listing the rules within. Specifying
- * a <mime-typegt or <patterngt is the same
+ * supports adding rules using the <mime-types>, <patterns> and
+ * <applications> elements and listing the rules within. Specifying
+ * a <mime-type> or <pattern> is the same
  * as calling gtk_recent_filter_add_mime_type() or gtk_recent_filter_add_pattern()
  * $(DDOC_COMMENT example)
  * see_also: GtkFileChooser

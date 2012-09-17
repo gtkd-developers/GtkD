@@ -68,7 +68,7 @@ private import gtk.RecentChooserT;
 
 
 
-private import gtk.VBox;
+private import gtk.Box;
 
 /**
  * Description
@@ -80,7 +80,7 @@ private import gtk.VBox;
  * Instead, you should use the functions that work on a GtkRecentChooser.
  * Recently used files are supported since GTK+ 2.10.
  */
-public class RecentChooserWidget : VBox, RecentChooserIF
+public class RecentChooserWidget : Box, RecentChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -116,7 +116,7 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 			this = cast(RecentChooserWidget)ptr;
 			return;
 		}
-		super(cast(GtkVBox*)gtkRecentChooserWidget);
+		super(cast(GtkBox*)gtkRecentChooserWidget);
 		this.gtkRecentChooserWidget = gtkRecentChooserWidget;
 	}
 	

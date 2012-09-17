@@ -169,19 +169,17 @@ private import gtk.Widget;
  * You can change these defaults to something else. For
  * example, to add a Shift modifier to a few
  * of the default bindings, you can include the following
- * fragment in your .gtkrc-3.0 file:
- * binding "my-own-gtkfilechooser-bindings" {
-	 * 	bind "<Alt><Shift>Up" {
-		 * 		"up-folder" ()
-	 * 	}
-	 * 	bind "<Alt><Shift>Down" {
-		 * 		"down-folder" ()
-	 * 	}
-	 * 	bind "<Alt><Shift>Home" {
-		 * 		"home-folder" ()
-	 * 	}
+ * fragment in your .config/gtk-3.0/gtk.css file:
+ * @binding-set MyOwnFilechooserBindings
+ * {
+	 *  bind "<Alt><Shift>Up" { "up-folder" () }
+	 *  bind "<Alt><Shift>Down" { "down-folder" () }
+	 *  bind "<Alt><Shift>Home" { "home-folder" () }
  * }
- * class "GtkFileChooserDefault" binding "my-own-gtkfilechooser-bindings"
+ * GtkFileChooserDefault
+ * {
+	 *  gtk-key-bindings: MyOwnFilechooserBindings
+ * }
  * The "GtkFileChooserDefault::location-popup" signal
  *  void user_function (GtkFileChooserDefault *chooser,
  *  const char *path,
@@ -213,13 +211,15 @@ private import gtk.Widget;
  *  the path /home/username/misc very
  *  frequently. You could then create an Alt+M
  *  shortcut by including the following in your
- *  .gtkrc-3.0:
- *  binding "misc-shortcut" {
-	 *  bind "<Alt>M" {
-		 *  "location-popup" ("/home/username/misc")
-	 * 	 }
+ *  .config/gtk-3.0/gtk.css:
+ *  @binding-set MiscShortcut
+ *  {
+	 *  bind "<Alt>M" { "location-popup" ("/home/username/misc") }
  *  }
- *  class "GtkFileChooserDefault" binding "misc-shortcut"
+ *  GtkFileChooserDefault
+ *  {
+	 *  gtk-key-bindings: MiscShortcut
+ *  }
  * The "GtkFileChooserDefault::up-folder" signal
  *  void user_function (GtkFileChooserDefault *chooser,
  *  gpointer user_data);

@@ -85,6 +85,8 @@ private import gtk.Dialog;
  * of its own. Instead, you should get the embedded GtkAppChooserWidget
  * using gtk_app_chooser_dialog_get_widget() and call its methods if
  * the generic GtkAppChooser interface is not sufficient for your needs.
+ * To set the heading that is shown above the GtkAppChooserWidget,
+ * use gtk_app_chooser_dialog_set_heading().
  */
 public class AppChooserDialog : Dialog, AppChooserIF
 {

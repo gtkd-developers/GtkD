@@ -74,12 +74,12 @@ private import gtk.ToggleToolButton;
  * that is, a button that is part of a group of toggle buttons where only
  * one button can be active at a time.
  * Use gtk_radio_tool_button_new() to create a new
- * GtkRadioToolButton. use gtk_radio_tool_button_new_from_widget() to
+ * GtkRadioToolButton. Use gtk_radio_tool_button_new_from_widget() to
  * create a new GtkRadioToolButton that is part of the same group as an
  * existing GtkRadioToolButton. Use
  * gtk_radio_tool_button_new_from_stock() or
- * gtk_radio_tool_button_new_from_widget_with_stock() to create a new
- * GtkRAdioToolButton containing a stock item.
+ * gtk_radio_tool_button_new_with_stock_from_widget() create a new
+ * GtkRadioToolButton containing a stock item.
  */
 public class RadioToolButton : ToggleToolButton
 {
@@ -134,7 +134,8 @@ public class RadioToolButton : ToggleToolButton
 	 * Creates a new GtkRadioToolButton, adding it to group.
 	 * Since 2.4
 	 * Params:
-	 * group = An existing radio button group, or NULL if you are creating a new group. [allow-none]
+	 * group = An
+	 * existing radio button group, or NULL if you are creating a new group. [allow-none][transfer none][element-type GtkRadioButton]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group)
@@ -154,7 +155,8 @@ public class RadioToolButton : ToggleToolButton
 	 * stock item indicated by stock_id.
 	 * Since 2.4
 	 * Params:
-	 * group = an existing radio button group, or NULL if you are creating a new group. [allow-none]
+	 * group = an existing radio button group, or NULL if you are
+	 * creating a new group. [allow-none]
 	 * stockId = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -173,7 +175,7 @@ public class RadioToolButton : ToggleToolButton
 	 * Creates a new GtkRadioToolButton adding it to the same group as gruup
 	 * Since 2.4
 	 * Params:
-	 * group = An existing GtkRadioToolButton
+	 * group = An existing GtkRadioToolButton, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (RadioToolButton group)
@@ -193,7 +195,7 @@ public class RadioToolButton : ToggleToolButton
 	 * stock item indicated by stock_id.
 	 * Since 2.4
 	 * Params:
-	 * group = An existing GtkRadioToolButton.
+	 * group = An existing GtkRadioToolButton. [allow-none]
 	 * stockId = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -211,7 +213,7 @@ public class RadioToolButton : ToggleToolButton
 	/**
 	 * Returns the radio button group button belongs to.
 	 * Since 2.4
-	 * Returns: The group button belongs to. [transfer none]
+	 * Returns: The group button belongs to. [transfer none][element-type GtkRadioButton]
 	 */
 	public ListSG getGroup()
 	{
@@ -228,7 +230,7 @@ public class RadioToolButton : ToggleToolButton
 	 * Adds button to group, removing it from the group it belonged to before.
 	 * Since 2.4
 	 * Params:
-	 * group = an existing radio button group
+	 * group = an existing radio button group. [transfer none][element-type GtkRadioButton]
 	 */
 	public void setGroup(ListSG group)
 	{

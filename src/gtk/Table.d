@@ -80,7 +80,7 @@ private import gtk.Container;
  * The gaps between all rows or columns can be changed by
  * calling gtk_table_set_row_spacings() or gtk_table_set_col_spacings()
  * respectively. Note that spacing is added between the
- * children, while padding added by gtk_table_atach() is added on
+ * children, while padding added by gtk_table_attach() is added on
  * either side of the widget it belongs to.
  * gtk_table_set_homogeneous(), can be used to set whether all cells in the
  * table will resize themselves to the size of the largest widget in the table.
@@ -208,7 +208,8 @@ public class Table : Container
 	 */
 	
 	/**
-	 * If you need to change a table's size after it has been created, this function allows you to do so.
+	 * If you need to change a table's size after
+	 * it has been created, this function allows you to do so.
 	 * Params:
 	 * rows = The new number of rows.
 	 * columns = The new number of columns.
@@ -260,7 +261,10 @@ public class Table : Container
 	}
 	
 	/**
-	 * As there are many options associated with gtk_table_attach(), this convenience function provides the programmer with a means to add children to a table with identical padding and expansion options. The values used for the GtkAttachOptions are GTK_EXPAND | GTK_FILL, and the padding is set to 0.
+	 * As there are many options associated with gtk_table_attach(), this convenience
+	 * function provides the programmer with a means to add children to a table with
+	 * identical padding and expansion options. The values used for the GtkAttachOptions
+	 * are GTK_EXPAND | GTK_FILL, and the padding is set to 0.
 	 * Params:
 	 * widget = The child widget to add.
 	 * leftAttach = The column number to attach the left side of the child widget to.
@@ -313,7 +317,8 @@ public class Table : Container
 	/**
 	 * Sets the space between every column in table equal to spacing.
 	 * Params:
-	 * spacing = the number of pixels of space to place between every column in the table.
+	 * spacing = the number of pixels of space to place between every column
+	 * in the table.
 	 */
 	public void setColSpacings(uint spacing)
 	{
@@ -322,7 +327,8 @@ public class Table : Container
 	}
 	
 	/**
-	 * Changes the homogenous property of table cells, ie. whether all cells are an equal size or not.
+	 * Changes the homogenous property of table cells, ie. whether all cells are
+	 * an equal size or not.
 	 * Params:
 	 * homogeneous = Set to TRUE to ensure all table cells are the same size. Set
 	 * to FALSE if this is not your desired behaviour.

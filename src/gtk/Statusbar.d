@@ -70,7 +70,7 @@ private import gtk.Widget;
 
 
 
-private import gtk.HBox;
+private import gtk.Box;
 
 /**
  * Description
@@ -98,7 +98,7 @@ private import gtk.HBox;
  * stack if its message id was recorded at the time it was added. This
  * is done using gtk_statusbar_remove().
  */
-public class Statusbar : HBox
+public class Statusbar : Box
 {
 	
 	/** the main Gtk struct */
@@ -134,7 +134,7 @@ public class Statusbar : HBox
 			this = cast(Statusbar)ptr;
 			return;
 		}
-		super(cast(GtkHBox*)gtkStatusbar);
+		super(cast(GtkBox*)gtkStatusbar);
 		this.gtkStatusbar = gtkStatusbar;
 	}
 	

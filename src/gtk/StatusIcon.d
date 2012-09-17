@@ -100,8 +100,9 @@ private import gobject.ObjectG;
  * visible (e.g. when the user doesn't have a notification area on his panel).
  * This can be checked with gtk_status_icon_is_embedded().
  * On X11, the implementation follows the freedesktop.org "System Tray"
- * specification. Implementations of the "tray" side of this specification can
- * be found e.g. in the GNOME and KDE panel applications.
+ * specification.
+ * Implementations of the "tray" side of this specification can
+ * be found e.g. in the GNOME 2 and KDE panel applications.
  * Note that a GtkStatusIcon is not a widget, but just
  * a GObject. Making it a widget would be impractical, since the system tray
  * on Win32 doesn't allow to embed arbitrary widgets.

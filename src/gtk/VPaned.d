@@ -70,6 +70,7 @@ private import gtk.Paned;
  * children arranged vertically. The division between
  * the two panes is adjustable by the user by dragging
  * a handle. See GtkPaned for details.
+ * GtkVPaned has been deprecated, use GtkPaned instead.
  */
 public class VPaned : Paned
 {
@@ -135,6 +136,8 @@ public class VPaned : Paned
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_vpaned_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_paned_new() with GTK_ORIENTATION_VERTICAL instead
 	 * Create a new GtkVPaned
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

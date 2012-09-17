@@ -83,6 +83,17 @@ private import gtk.Box;
  * It is the main building block for GtkAppChooserDialog. Most
  * applications only need to use the latter; but you can use
  * this widget as part of a larger widget if you have special needs.
+ * GtkAppChooserWidget offers detailed control over what applications
+ * are shown, using the
+ * "show-default",
+ * "show-recommended",
+ * "show-fallback",
+ * "show-other" and
+ * "show-all"
+ * properties. See the GtkAppChooser documentation for more information
+ * about these groups of applications.
+ * To keep track of the selected application, use the
+ * "application-selected" and "application-activated" signals.
  */
 public class AppChooserWidget : Box, AppChooserIF
 {
@@ -198,8 +209,8 @@ public class AppChooserWidget : Box, AppChooserIF
 	/**
 	 * Emitted when a context menu is about to popup over an application item.
 	 * Clients can insert menu items into the provided GtkMenu object in the
-	 * callback of this signal; the context menu will be shown over the item if
-	 * at least one item has been added to the menu.
+	 * callback of this signal; the context menu will be shown over the item
+	 * if at least one item has been added to the menu.
 	 */
 	void addOnPopulatePopup(void delegate(Menu, AppInfo, AppChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

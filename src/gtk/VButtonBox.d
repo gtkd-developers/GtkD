@@ -79,6 +79,7 @@ private import gtk.ButtonBox;
  * The spacing between buttons can be set with gtk_box_set_spacing(). The
  * arrangement and layout of the buttons can be changed with
  * gtk_button_box_set_layout().
+ * GtkVButtonBox has been deprecated, use GtkButtonBox instead.
  */
 public class VButtonBox : ButtonBox
 {
@@ -143,6 +144,8 @@ public class VButtonBox : ButtonBox
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_vbutton_box_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_button_box_new() with GTK_ORIENTATION_VERTICAL instead
 	 * Creates a new vertical button box.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

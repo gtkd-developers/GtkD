@@ -319,7 +319,7 @@ public class Requisition
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkRequisition !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRequisition !is null )
 		{
 			gtk_requisition_free(gtkRequisition);
 		}

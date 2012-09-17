@@ -263,7 +263,8 @@ public class MenuItem : Bin, ActivatableIF
 	void delegate(MenuItem)[] onActivateItemListeners;
 	/**
 	 * Emitted when the item is activated, but also if the menu item has a
-	 * submenu. For normal applications, the relevant signal is "activate".
+	 * submenu. For normal applications, the relevant signal is
+	 * "activate".
 	 */
 	void addOnActivateItem(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -369,12 +370,7 @@ public class MenuItem : Bin, ActivatableIF
 	void delegate(gpointer, MenuItem)[] onToggleSizeRequestListeners;
 	/**
 	 * See Also
-	 * GtkBin
-	 * for how to handle the child.
-	 * GtkItem
-	 * is the abstract class for all sorts of items.
-	 * GtkMenuShell
-	 * is always the parent of GtkMenuItem.
+	 * GtkBin, GtkMenuShell
 	 */
 	void addOnToggleSizeRequest(void delegate(gpointer, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -416,6 +412,9 @@ public class MenuItem : Bin, ActivatableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_menu_item_set_right_justified has been deprecated since version 3.2 and should not be used in newly-written code. If you insist on using it, use
+	 *  gtk_widget_set_hexpand() and gtk_widget_set_halign().
 	 * Sets whether the menu item appears justified at the right
 	 * side of a menu bar. This was traditionally done for "Help"
 	 * menu items, but is now considered a bad idea. (If the widget
@@ -432,6 +431,8 @@ public class MenuItem : Bin, ActivatableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_menu_item_get_right_justified has been deprecated since version 3.2 and should not be used in newly-written code. See gtk_menu_item_set_right_justified()
 	 * Gets whether the menu item appears justified at the right
 	 * side of the menu bar.
 	 * Returns: TRUE if the menu item will appear at the far right if added to a menu bar.
@@ -558,8 +559,8 @@ public class MenuItem : Bin, ActivatableIF
 	}
 	
 	/**
-	 * Emits the "select" signal on the given item. Behaves exactly like
-	 * gtk_item_select.
+	 * Emits the "select" signal on the given item. Behaves
+	 * exactly like gtk_item_select.
 	 */
 	public void select()
 	{
@@ -568,8 +569,8 @@ public class MenuItem : Bin, ActivatableIF
 	}
 	
 	/**
-	 * Emits the "deselect" signal on the given item. Behaves exactly like
-	 * gtk_item_deselect.
+	 * Emits the "deselect" signal on the given item. Behaves
+	 * exactly like gtk_item_deselect.
 	 */
 	public void deselect()
 	{
@@ -587,7 +588,7 @@ public class MenuItem : Bin, ActivatableIF
 	}
 	
 	/**
-	 * Emits the "toggle_size_request" signal on the given item.
+	 * Emits the "toggle-size-request" signal on the given item.
 	 * Params:
 	 * requisition = the requisition to use as signal data.
 	 */
@@ -598,7 +599,7 @@ public class MenuItem : Bin, ActivatableIF
 	}
 	
 	/**
-	 * Emits the "toggle_size_allocate" signal on the given item.
+	 * Emits the "toggle-size-allocate" signal on the given item.
 	 * Params:
 	 * allocation = the allocation to use as signal data.
 	 */

@@ -73,8 +73,10 @@ private import gtk.Box;
 
 /**
  * Description
- * The primary purpose of this class is to keep track of the various
- * properties of GtkHButtonBox and GtkVButtonBox widgets.
+ * A button box should be used to provide a consistent layout of buttons
+ * throughout your application. The layout/spacing can be altered by the
+ * programmer, or if desired, by the user to alter the 'feel' of a
+ * program to a small degree.
  * gtk_button_box_get_layout() and gtk_button_box_set_layout() retrieve and
  * alter the method used to spread the buttons in a button box across the
  * container, respectively.
@@ -83,6 +85,9 @@ private import gtk.Box;
  * 'outliers' to keep their own larger size. To force all children to be
  * strictly the same size without exceptions, you can set the
  * "homogeneous" property to TRUE.
+ * To excempt individual children from homogeneous sizing regardless of their
+ * 'outlier' status, you can set the "non-homogeneous" child
+ * property.
  */
 public class ButtonBox : Box
 {
@@ -222,6 +227,19 @@ public class ButtonBox : Box
 	}
 	
 	/**
+	 * Returns whether the child is exempted from homogenous
+	 * sizing.
+	 * Params:
+	 * child = a child of widget
+	 * Returns: TRUE if the child is not subject to homogenous sizing Since 3.2
+	 */
+	public int getChildNonHomogeneous(Widget child)
+	{
+		// gboolean gtk_button_box_get_child_non_homogeneous  (GtkButtonBox *widget,  GtkWidget *child);
+		return gtk_button_box_get_child_non_homogeneous(gtkButtonBox, (child is null) ? null : child.getWidgetStruct());
+	}
+	
+	/**
 	 * Changes the way buttons are arranged in their container.
 	 * Params:
 	 * layoutStyle = the new layout style
@@ -253,5 +271,18 @@ public class ButtonBox : Box
 	{
 		// void gtk_button_box_set_child_secondary (GtkButtonBox *widget,  GtkWidget *child,  gboolean is_secondary);
 		gtk_button_box_set_child_secondary(gtkButtonBox, (child is null) ? null : child.getWidgetStruct(), isSecondary);
+	}
+	
+	/**
+	 * Sets whether the child is exempted from homogeous sizing.
+	 * Params:
+	 * child = a child of widget
+	 * nonHomogeneous = the new value
+	 * Since 3.2
+	 */
+	public void setChildNonHomogeneous(Widget child, int nonHomogeneous)
+	{
+		// void gtk_button_box_set_child_non_homogeneous  (GtkButtonBox *widget,  GtkWidget *child,  gboolean non_homogeneous);
+		gtk_button_box_set_child_non_homogeneous(gtkButtonBox, (child is null) ? null : child.getWidgetStruct(), nonHomogeneous);
 	}
 }

@@ -72,6 +72,12 @@ private import gtk.Dialog;
  * The GtkColorSelectionDialog provides a standard dialog which
  * allows the user to select a color much like the GtkFileSelection
  * provides a standard dialog for file selection.
+ * Use gtk_color_selection_dialog_get_color_selection() to get the
+ * GtkColorSelection widget contained within the dialog. Use this widget
+ * and its gtk_color_selection_get_current_color()
+ * function to gain access to the selected color. Connect a handler
+ * for this widget's "color-changed" signal to be notified
+ * when the color changes.
  * GtkColorSelectionDialog as GtkBuildable
  * The GtkColorSelectionDialog implementation of the GtkBuildable interface
  * exposes the embedded GtkColorSelection as internal child with the

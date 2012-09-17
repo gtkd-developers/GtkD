@@ -555,13 +555,14 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	
 	/**
 	 * Returns the ID of the active row of combo_box. This value is taken
-	 * from the active row and the column specified by the 'id-column'
+	 * from the active row and the column specified by the "id-column"
 	 * property of combo_box (see gtk_combo_box_set_id_column()).
 	 * The returned value is an interned string which means that you can
 	 * compare the pointer by value to other interned strings and that you
 	 * must not free it.
-	 * If the 'id-column' property of combo_box is not set or if no row is
-	 * selected then NULL is returned.
+	 * If the "id-column" property of combo_box is not set, or if
+	 * no row is active, or if the active row has a NULL ID value, then NULL
+	 * is returned.
 	 * Returns: the ID of the active row, or NULL Since 3.0
 	 */
 	public string getActiveId()
@@ -571,17 +572,19 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
-	 * Changes the active row of combo_box to the one that has an ID equal to id.
-	 * If the 'id-column' property of combo_box is unset or if no row has
-	 * the given ID then nothing happens.
+	 * Changes the active row of combo_box to the one that has an ID equal to
+	 * active_id, or unsets the active row if active_id is NULL. Rows having
+	 * a NULL ID string cannot be made active by this function.
+	 * If the "id-column" property of combo_box is unset or if no
+	 * row has the given ID then the function does nothing and returns FALSE.
 	 * Params:
-	 * activeId = the ID of the row to select
-	 * Since 3.0
+	 * activeId = the ID of the row to select, or NULL. [allow-none]
+	 * Returns: TRUE if a row with a matching ID was found. If a NULL active_id was given to unset the active row, the function always returns TRUE. Since 3.0
 	 */
-	public void setActiveId(string activeId)
+	public int setActiveId(string activeId)
 	{
-		// void gtk_combo_box_set_active_id (GtkComboBox *combo_box,  const gchar *active_id);
-		gtk_combo_box_set_active_id(gtkComboBox, Str.toStringz(activeId));
+		// gboolean gtk_combo_box_set_active_id (GtkComboBox *combo_box,  const gchar *active_id);
+		return gtk_combo_box_set_active_id(gtkComboBox, Str.toStringz(activeId));
 	}
 	
 	/**

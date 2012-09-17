@@ -1032,8 +1032,8 @@ public class Window : Bin
 	 * system. Otherwise, GDK will try to emulate window resizing,
 	 * potentially not all that well, depending on the windowing system.
 	 * Params:
-	 * edge = position of the resize control
 	 * button = mouse button that initiated the drag
+	 * edge = position of the resize control
 	 * rootX = X position where the user clicked to initiate the drag, in root window coordinates
 	 * rootY = Y position where the user clicked to initiate the drag
 	 * timestamp = timestamp from the click event that initiated the drag
@@ -1291,7 +1291,7 @@ public class Window : Bin
 	 */
 	public static string getDefaultIconName()
 	{
-		// gchar * gtk_window_get_default_icon_name (void);
+		// const gchar * gtk_window_get_default_icon_name (void);
 		return Str.toString(gtk_window_get_default_icon_name());
 	}
 	
@@ -1363,7 +1363,7 @@ public class Window : Bin
 	 */
 	public string getIconName()
 	{
-		// gchar * gtk_window_get_icon_name (GtkWindow *window);
+		// const gchar * gtk_window_get_icon_name (GtkWindow *window);
 		return Str.toString(gtk_window_get_icon_name(gtkWindow));
 	}
 	
@@ -1948,6 +1948,28 @@ public class Window : Bin
 	{
 		// void gtk_window_set_mnemonics_visible (GtkWindow *window,  gboolean setting);
 		gtk_window_set_mnemonics_visible(gtkWindow, setting);
+	}
+	
+	/**
+	 * Gets the value of the "focus-visible" property.
+	 * Returns: TRUE if 'focus rectangles' are supposed to be visible in this window. Since 3.2
+	 */
+	public int getFocusVisible()
+	{
+		// gboolean gtk_window_get_focus_visible (GtkWindow *window);
+		return gtk_window_get_focus_visible(gtkWindow);
+	}
+	
+	/**
+	 * Sets the "focus-visible" property.
+	 * Params:
+	 * setting = the new value
+	 * Since 3.2
+	 */
+	public void setFocusVisible(int setting)
+	{
+		// void gtk_window_set_focus_visible (GtkWindow *window,  gboolean setting);
+		gtk_window_set_focus_visible(gtkWindow, setting);
 	}
 	
 	/**

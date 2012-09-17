@@ -237,6 +237,38 @@ public class MenuShell : Container
 		}
 	}
 	
+	void delegate(Widget, gint, MenuShell)[] onInsertListeners;
+	/**
+	 * The ::insert signal is emitted when a new GtkMenuItem is added to
+	 * a GtkMenuShell. A separate signal is used instead of
+	 * GtkContainer::add because of the need for an additional position
+	 * parameter.
+	 * The inverse of this signal is the GtkContainer::removed signal.
+	 * Since 3.2
+	 */
+	void addOnInsert(void delegate(Widget, gint, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("insert" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"insert",
+			cast(GCallback)&callBackInsert,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["insert"] = 1;
+		}
+		onInsertListeners ~= dlg;
+	}
+	extern(C) static void callBackInsert(GtkMenuShell* menuShellStruct, GtkWidget* child, gint position, MenuShell _menuShell)
+	{
+		foreach ( void delegate(Widget, gint, MenuShell) dlg ; _menuShell.onInsertListeners )
+		{
+			dlg(new Widget(child), position, _menuShell);
+		}
+	}
+	
 	void delegate(GtkMenuDirectionType, MenuShell)[] onMoveCurrentListeners;
 	/**
 	 * An keybinding signal which moves the current menu item

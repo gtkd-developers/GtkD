@@ -62,6 +62,8 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 private import glib.ConstructionException;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListG;
@@ -130,6 +132,67 @@ public class Application : GioApplication
 	
 	/**
 	 */
+	int[string] connectedSignals;
+	
+	void delegate(Window, Application)[] onWindowAddedListeners;
+	/**
+	 * Emitted when a GtkWindow is added to application through
+	 * gtk_application_add_wi!ndow().
+	 * Since 3.2
+	 */
+	void addOnWindowAdded(void delegate(Window, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("window-added" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"window-added",
+			cast(GCallback)&callBackWindowAdded,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["window-added"] = 1;
+		}
+		onWindowAddedListeners ~= dlg;
+	}
+	extern(C) static void callBackWindowAdded(GtkApplication* applicationStruct, GtkWindow* window, Application _application)
+	{
+		foreach ( void delegate(Window, Application) dlg ; _application.onWindowAddedListeners )
+		{
+			dlg(new Window(window), _application);
+		}
+	}
+	
+	void delegate(Window, Application)[] onWindowRemovedListeners;
+	/**
+	 * Emitted when a GtkWindow is removed from application,
+	 * either as a side-effect of being destroyed or explicitly
+	 * through gtk_application_remove_window().
+	 * Since 3.2
+	 */
+	void addOnWindowRemoved(void delegate(Window, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("window-removed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"window-removed",
+			cast(GCallback)&callBackWindowRemoved,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["window-removed"] = 1;
+		}
+		onWindowRemovedListeners ~= dlg;
+	}
+	extern(C) static void callBackWindowRemoved(GtkApplication* applicationStruct, GtkWindow* window, Application _application)
+	{
+		foreach ( void delegate(Window, Application) dlg ; _application.onWindowRemovedListeners )
+		{
+			dlg(new Window(window), _application);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new GtkApplication instance.
@@ -190,8 +253,13 @@ public class Application : GioApplication
 	
 	/**
 	 * Gets a list of the GtkWindows associated with application.
-	 * The list that is returned should not be modified in any way.
-	 * Returns: a GList of GtkWindow. [element-type GtkWindow][transfer none] Since 3.0
+	 * The list is sorted by most recently focused window, such that the first
+	 * element is the currently focused window. (Useful for choosing a parent
+	 * for a transient window.)
+	 * The list that is returned should not be modified in any way. It will
+	 * only remain valid until the next focus change or window creation or
+	 * deletion.
+	 * Returns: a GList of GtkWindow. [element-type GtkWindow][transfer none] Since 3.0 Signal Details The "window-added" signal void user_function (GtkApplication *application, GtkWindow *window, gpointer user_data) : Run First Emitted when a GtkWindow is added to application through gtk_application_add_wi!ndow().
 	 */
 	public ListG getWindows()
 	{

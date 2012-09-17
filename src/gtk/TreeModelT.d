@@ -159,6 +159,31 @@ public import gtk.TreePath;
  * shown, as it is specific to the GtkListStore. For information on
  * how to write such a function, see the GtkListStore documentation.
  * $(DDOC_COMMENT example)
+ * The GtkTreeModel interface contains two methods for reference
+ * counting: gtk_tree_model_ref_node() and gtk_tree_model_unref_node().
+ * These two methods are optional to implement. The reference counting
+ * is meant as a way for views to let models know when nodes are being
+ * displayed. GtkTreeView will take a reference on a node when it is
+ * visible, which means the node is either in the toplevel or expanded.
+ * Being displayed does not mean that the node is currently directly
+ * visible to the user in the viewport. Based on this reference counting
+ * scheme a caching model, for example, can decide whether or not to cache
+ * a node based on the reference count. A file-system based model would
+ * not want to keep the entire file hierarchy in memory, but just the
+ * folders that are currently expanded in every current view.
+ * When working with reference counting, the following rules must be taken
+ * into account:
+ * Never take a reference on a node without owning a
+ * reference on its parent. This means that all parent nodes of a referenced
+ * node must be referenced as well.
+ * Outstanding references on a deleted node are not released.
+ * This is not possible because the node has already been deleted by the
+ * time the row-deleted signal is received.
+ * Models are not obligated to emit a signal on rows of
+ * which none of its siblings are referenced. To phrase this differently,
+ * signals are only required for levels in which nodes are referenced. For
+ * the root level however, signals must be emitted at all times (however the
+ * root level is always referenced when any view is attached).
  */
 public template TreeModelT(TStruct)
 {
@@ -623,9 +648,11 @@ public template TreeModelT(TStruct)
 	 * primarily for performance reasons.
 	 * This function is primarily meant as a way for views to let
 	 * caching models know when nodes are being displayed (and hence,
-	 * whether or not to cache that node). For example, a file-system
-	 * based model would not want to keep the entire file-hierarchy in
-	 * memory, just the sections that are currently being displayed by
+	 * whether or not to cache that node). Being displayed means a node
+	 * is in an expanded branch, regardless of whether the node is currently
+	 * visible in the viewport. For example, a file-system based model
+	 * would not want to keep the entire file-hierarchy in memory,
+	 * just the sections that are currently being displayed by
 	 * every current view.
 	 * A model should be expected to be able to get an iter independent
 	 * of its reffed state.
@@ -724,6 +751,8 @@ public template TreeModelT(TStruct)
 	 * This should be called by models after a row has been removed.
 	 * The location pointed to by path should be the location that
 	 * the row previously was at. It may not be a valid location anymore.
+	 * Nodes that are deleted are not unreffed, this means that any
+	 * outstanding references on the deleted node should not be released.
 	 * Params:
 	 * path = a GtkTreePath pointing to the previous location of
 	 * the deleted row

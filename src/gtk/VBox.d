@@ -68,6 +68,17 @@ private import gtk.Box;
  * Use the GtkBox packing interface to determine the arrangement,
  * spacing, height, and alignment of GtkVBox children.
  * All children are allocated the same width.
+ * GtkVBox has been deprecated. You can use GtkBox instead, which is a
+ * very quick and easy change. If you have derived your own classes from
+ * GtkVBox, you can simply change the inheritance to derive directly
+ * from GtkBox, and set the "orientation" property to
+ * GTK_ORIENTATION_VERTICAL in your instance init function, with a
+ * call like:
+ * $(DDOC_COMMENT example)
+ * If you want your code to be future-proof, the recommendation is to
+ * switch to GtkGrid, since GtkBox is going to be deprecated in favor
+ * of the more flexible grid widget eventually. For more information
+ * about migrating to GtkGrid, see Migrating from other containers to GtkGrid.
  */
 public class VBox : Box
 {
@@ -119,6 +130,11 @@ public class VBox : Box
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_vbox_new has been deprecated since version 3.2 and should not be used in newly-written code. You can use gtk_box_new() with GTK_ORIENTATION_VERTICAL instead,
+	 *  wich is a very quick and easy change. But the recommendation is to switch to
+	 *  GtkGrid, since GtkBox is going to go away eventually.
+	 *  See Migrating from other containers to GtkGrid.
 	 * Creates a new GtkVBox.
 	 * Params:
 	 * homogeneous = TRUE if all children are to be given equal space allotments.

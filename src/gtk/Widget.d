@@ -4505,7 +4505,7 @@ public class Widget : ObjectG, BuildableIF
 	 */
 	public void queueDrawRegion(Region region)
 	{
-		// void gtk_widget_queue_draw_region (GtkWidget *widget,  cairo_region_t *region);
+		// void gtk_widget_queue_draw_region (GtkWidget *widget,  const cairo_region_t *region);
 		gtk_widget_queue_draw_region(gtkWidget, (region is null) ? null : region.getRegionStruct());
 	}
 	
@@ -4656,7 +4656,7 @@ public class Widget : ObjectG, BuildableIF
 	 * Since 2.2
 	 * Params:
 	 * klass = a GtkWidgetClass
-	 * Returns: an newly allocated array of GParamSpec*. The array must be freed with g_free(). [array length=n_properties][transfer container]
+	 * Returns: a newly allocated array of GParamSpec*. The array must be freed with g_free(). [array length=n_properties][transfer container]
 	 */
 	public static ParamSpec[] classListStyleProperties(GtkWidgetClass* klass)
 	{
@@ -4783,14 +4783,52 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Sets the type to be used for creating accessibles for widgets of
+	 * widget_class. The given type must be a subtype of the type used for
+	 * accessibles of the parent class.
+	 * This function should only be called from class init functions of widgets.
+	 * Params:
+	 * widgetClass = class to set the accessible type for
+	 * type = The object type that implements the accessible for widget_class
+	 * Since 3.2
+	 */
+	public static void classSetAccessibleType(GtkWidgetClass* widgetClass, GType type)
+	{
+		// void gtk_widget_class_set_accessible_type  (GtkWidgetClass *widget_class,  GType type);
+		gtk_widget_class_set_accessible_type(widgetClass, type);
+	}
+	
+	/**
+	 * Sets the default AtkRole to be set on accessibles created for
+	 * widgets of widget_class. Accessibles may decide to not honor this
+	 * setting if their role reporting is more refined. Calls to
+	 * gtk_widget_class_set_accessible_type() will reset this value.
+	 * In cases where you want more fine-grained control over the role of
+	 * accessibles created for widget_class, you should provide your own
+	 * accessible type and use gtk_widget_class_set_accessible_type()
+	 * instead.
+	 * If role is ATK_ROLE_INVALID, the default role will not be changed
+	 * and the accessible's default role will be used instead.
+	 * This function should only be called from class init functions of widgets.
+	 * Params:
+	 * widgetClass = class to set the accessible role for
+	 * role = The role to use for accessibles created for widget_class
+	 * Since 3.2
+	 */
+	public static void classSetAccessibleRole(GtkWidgetClass* widgetClass, AtkRole role)
+	{
+		// void gtk_widget_class_set_accessible_role  (GtkWidgetClass *widget_class,  AtkRole role);
+		gtk_widget_class_set_accessible_role(widgetClass, role);
+	}
+	
+	/**
 	 * Returns the accessible object that describes the widget to an
 	 * assistive technology.
-	 * If no accessibility library is loaded (i.e. no ATK implementation library is
-	 * loaded via GTK_MODULES or via another application library,
-	 * such as libgnome), then this AtkObject instance may be a no-op. Likewise,
-	 * if no class-specific AtkObject implementation is available for the widget
-	 * instance in question, it will inherit an AtkObject implementation from the
-	 * first ancestor class for which such an implementation is defined.
+	 * If accessibility support is not available, this AtkObject
+	 * instance may be a no-op. Likewise, if no class-specific AtkObject
+	 * implementation is available for the widget instance in question,
+	 * it will inherit an AtkObject implementation from the first ancestor
+	 * class for which such an implementation is defined.
 	 * The documentation of the
 	 * ATK
 	 * library contains more information about accessible objects and their uses.
@@ -4840,6 +4878,7 @@ public class Widget : ObjectG, BuildableIF
 	 * child property child_property
 	 * on widget.
 	 * This is the analogue of g_object_notify() for child properties.
+	 * Also see gtk_container_child_notify().
 	 * Params:
 	 * childProperty = the name of a child property installed on the
 	 * class of widget's parent
@@ -5387,7 +5426,8 @@ public class Widget : ObjectG, BuildableIF
 	 * use "else if" statements to check which window should be drawn.
 	 * Params:
 	 * cr = a cairo context
-	 * window = the window to check
+	 * window = the window to check. window may not be an input-only
+	 * window.
 	 * Returns: TRUE if window should be drawn Since 3.0
 	 */
 	public static int cairoShouldDrawWindow(Context cr, Window window)
@@ -5738,6 +5778,23 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Determines if the widget should show a visible indication that
+	 * it has the global input focus. This is a convenience function for
+	 * use in ::draw handlers that takes into account whether focus
+	 * indication should currently be shown in the toplevel window of
+	 * widget. See gtk_window_get_focus_visible() for more information
+	 * about focus indication.
+	 * To find out if the widget has the global input focus, use
+	 * gtk_widget_has_focus().
+	 * Returns: TRUE if the widget should display a 'focus rectangle' Since 3.2
+	 */
+	public int hasVisibleFocus()
+	{
+		// gboolean gtk_widget_has_visible_focus (GtkWidget *widget);
+		return gtk_widget_has_visible_focus(gtkWidget);
+	}
+	
+	/**
 	 * Determines whether the widget is currently grabbing events, so it
 	 * is the only widget receiving input events (keyboard and mouse).
 	 * See also gtk_grab_add().
@@ -5802,7 +5859,7 @@ public class Widget : ObjectG, BuildableIF
 	 * This function does not add any reference to window.
 	 * Since 2.18
 	 * Params:
-	 * window = a GdkWindow
+	 * window = a GdkWindow. [transfer full]
 	 */
 	public void setWindow(Window window)
 	{

@@ -96,6 +96,9 @@ private import gtk.Dialog;
  * applications should set the title property explicitly when constructing
  * a GtkAboutDialog, as shown in the following example:
  * $(DDOC_COMMENT example)
+ * It is also possible to show a GtkAboutDialog like any other GtkDialog,
+ * e.g. using gtk_dialog_run(). In this case, you might need to know that
+ * the 'Close' button returns the GTK_RESPONSE_CANCEL response id.
  */
 public class AboutDialog : Dialog
 {

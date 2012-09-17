@@ -122,7 +122,7 @@ public class SymbolicColor
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkSymbolicColor !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSymbolicColor !is null )
 		{
 			gtk_symbolic_color_unref(gtkSymbolicColor);
 		}
@@ -239,8 +239,9 @@ public class SymbolicColor
 	 * with the resolved color, and TRUE will be returned. Generally,
 	 * if color can't be resolved, it is due to it being defined on
 	 * top of a named color that doesn't exist in props.
-	 * props must be non-NULL if color was created using
-	 * gtk_symbolic_color_named_new(), but can be omitted in other cases.
+	 * When props is NULL, resolving of named colors will fail, so if
+	 * your color is or references such a color, this function will
+	 * return FALSE.
 	 * Params:
 	 * props = GtkStyleProperties to use when resolving
 	 * named colors, or NULL. [allow-none]
@@ -251,5 +252,19 @@ public class SymbolicColor
 	{
 		// gboolean gtk_symbolic_color_resolve (GtkSymbolicColor *color,  GtkStyleProperties *props,  GdkRGBA *resolved_color);
 		return gtk_symbolic_color_resolve(gtkSymbolicColor, (props is null) ? null : props.getStylePropertiesStruct(), (resolvedColor is null) ? null : resolvedColor.getRGBAStruct());
+	}
+	
+	/**
+	 * Converts the given color to a string representation. This is useful
+	 * both for debugging and for serialization of strings. The format of
+	 * the string may change between different versions of GTK, but it is
+	 * guaranteed that the GTK css parser is able to read the string and
+	 * create the same symbolic color from it.
+	 * Returns: a new string representing color
+	 */
+	public string toString()
+	{
+		// char * gtk_symbolic_color_to_string (GtkSymbolicColor *color);
+		return Str.toString(gtk_symbolic_color_to_string(gtkSymbolicColor));
 	}
 }

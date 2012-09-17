@@ -152,10 +152,7 @@ public class HSV : Widget
 	void delegate(GtkDirectionType, HSV)[] onMoveListeners;
 	/**
 	 * See Also
-	 * GtkColorSelection
-	 * a complete color selection widget
-	 * GtkColorSelectionDialog
-	 * a color selection dialog
+	 * GtkColorSelection, GtkColorSelectionDialog
 	 */
 	void addOnMove(void delegate(GtkDirectionType, HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

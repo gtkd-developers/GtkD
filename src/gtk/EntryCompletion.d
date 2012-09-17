@@ -397,7 +397,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	}
 	
 	/**
-	 * Returns the model the GtkEntryCompletion is using as data source.
 	 * Returns NULL if the model is unset.
 	 * Since 2.4
 	 * Returns: A GtkTreeModel, or NULL if none is currently being used. [transfer none]

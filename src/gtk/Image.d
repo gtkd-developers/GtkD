@@ -285,7 +285,7 @@ public class Image : Misc
 	 */
 	public void getIconName(out string iconName, out GtkIconSize size)
 	{
-		// void gtk_image_get_icon_name (GtkImage *image,  G_CONST_RETURN gchar **icon_name,  GtkIconSize *size);
+		// void gtk_image_get_icon_name (GtkImage *image,  const gchar **icon_name,  GtkIconSize *size);
 		char* outiconName = null;
 		
 		gtk_image_get_icon_name(gtkImage, &outiconName, &size);

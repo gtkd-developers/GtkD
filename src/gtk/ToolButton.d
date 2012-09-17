@@ -76,13 +76,15 @@ private import gtk.ToolItem;
  * gtk_tool_button_new_with_stock() to create a GtkToolButton
  * containing a stock item.
  * The label of a GtkToolButton is determined by the properties
- * "label-widget", "label", and "stock-id". If "label-widget" is
+ * "label-widget", "label", and
+ * "stock-id". If "label-widget" is
  * non-NULL, then that widget is used as the label. Otherwise, if
- * "label" is non-NULL, that string is used as the label. Otherwise, if
- * "stock-id" is non-NULL, the label is determined by the stock
- * item. Otherwise, the button does not have a label.
+ * "label" is non-NULL, that string is used as the label.
+ * Otherwise, if "stock-id" is non-NULL, the label is
+ * determined by the stock item. Otherwise, the button does not have a label.
  * The icon of a GtkToolButton is determined by the properties
- * "icon-widget" and "stock-id". If "icon-widget" is non-NULL, then
+ * "icon-widget" and "stock-id". If
+ * "icon-widget" is non-NULL, then
  * that widget is used as the icon. Otherwise, if "stock-id" is
  * non-NULL, the icon is determined by the stock item. Otherwise,
  * the button does not have a icon.
@@ -163,21 +165,8 @@ public class ToolButton : ToolItem
 	 * This signal is emitted when the tool button is clicked with the mouse
 	 * or activated with the keyboard.
 	 * See Also
-	 * GtkToolbar
-	 * The toolbar widget
-	 * GtkMenuToolButton
-	 * A subclass of GtkToolButton that displays on
-	 *  the toolbar a button with an additional dropdown
-	 *  menu
-	 * GtkToggleToolButton
-	 * A subclass of GtkToolButton that displays toggle
-	 *  buttons on the toolbar
-	 * GtkRadioToolButton
-	 * A subclass of GtkToolButton that displays radio
-	 *  buttons on the toolbar
-	 * GtkSeparatorToolItem
-	 * A subclass of GtkToolItem that separates groups of
-	 *  items on a toolbar
+	 * GtkToolbar, GtkMenuToolButton, GtkToggleToolButton,
+	 *  GtkRadioToolButton, GtkSeparatorToolItem
 	 */
 	void addOnClicked(void delegate(ToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -204,12 +193,12 @@ public class ToolButton : ToolItem
 	
 	
 	/**
-	 * Creates a new GtkToolButton using icon_widget as icon and label as
+	 * Creates a new GtkToolButton using icon_widget as contents and label as
 	 * label.
 	 * Since 2.4
 	 * Params:
-	 * iconWidget = a GtkMisc widget that will be used as icon widget, or NULL. [allow-none]
 	 * label = a string that will be used as label, or NULL. [allow-none]
+	 * iconWidget = a widget that will be used as the button contents, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Widget iconWidget, string label)

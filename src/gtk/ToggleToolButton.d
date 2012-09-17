@@ -68,11 +68,11 @@ private import gtk.ToolButton;
 
 /**
  * Description
- *  A GtkToggleToolButton is a GtkToolItem that contains a toggle
- *  button.
- *  Use gtk_toggle_tool_button_new() to create a new
- *  GtkToggleToolButton. Use gtk_toggle_tool_button_new_from_stock() to
- *  create a new GtkToggleToolButton containing a stock item.
+ * A GtkToggleToolButton is a GtkToolItem that contains a toggle
+ * button.
+ * Use gtk_toggle_tool_button_new() to create a new
+ * GtkToggleToolButton. Use gtk_toggle_tool_button_new_from_stock() to
+ * create a new GtkToggleToolButton containing a stock item.
  */
 public class ToggleToolButton : ToolButton
 {
@@ -137,17 +137,7 @@ public class ToggleToolButton : ToolButton
 	/**
 	 * Emitted whenever the toggle tool button changes state.
 	 * See Also
-	 *
 	 * GtkToolbar, GtkToolButton, GtkSeparatorToolItem
-	 * The toolbar widget
-	 *  The parent class of GtkToggleToolButton. The properties
-	 *  "label_widget", "label", "icon_widget", and "stock_id" on
-	 *  GtkToolButton determine the label and icon used on
-	 *  GtkToggleToolButtons.
-	 *
-	 * A subclass of GtkToolItem that separates groups of
-	 *  items on a toolbar.
-	 *
 	 */
 	void addOnToggled(void delegate(ToggleToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

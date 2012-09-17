@@ -137,7 +137,7 @@ public class TextIter : Boxed
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTextIter !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextIter !is null )
 		{
 			gtk_text_iter_free(gtkTextIter);
 		}
@@ -177,6 +177,21 @@ public class TextIter : Boxed
 			return null;
 		}
 		return new TextIter(cast(GtkTextIter*) p);
+	}
+	
+	/**
+	 * Assigns the value of other to iter. This function
+	 * is not useful in applications, because iterators can be assigned
+	 * with GtkTextIter i = j;. The
+	 * function is used by language bindings.
+	 * Params:
+	 * other = another GtkTextIter
+	 * Since 3.2
+	 */
+	public void assign(TextIter other)
+	{
+		// void gtk_text_iter_assign (GtkTextIter *iter,  const GtkTextIter *other);
+		gtk_text_iter_assign(gtkTextIter, (other is null) ? null : other.getTextIterStruct());
 	}
 	
 	/**
@@ -270,12 +285,6 @@ public class TextIter : Boxed
 	}
 	
 	/**
-	 * Returns the Unicode character at this iterator. (Equivalent to
-	 * operator* on a C++ iterator.) If the element at this iterator is a
-	 * non-character element, such as an image embedded in the buffer, the
-	 * Unicode "unknown" character 0xFFFC is returned. If invoked on
-	 * the end iterator, zero is returned; zero is not a valid Unicode character.
-	 * So you can write a loop which ends when gtk_text_iter_get_char()
 	 * returns 0.
 	 * Returns: a Unicode character, or 0 if iter is not dereferenceable
 	 */

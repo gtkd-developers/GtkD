@@ -36,6 +36,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- ScrollableIF
  * prefixes:
  * 	- gtk_text_view_
  * omit structs:
@@ -55,6 +56,8 @@
  * 	- gtk.TextMark
  * 	- gtk.Widget
  * 	- pango.PgTabArray
+ * 	- gtk.ScrollableIF
+ * 	- gtk.ScrollableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkWindow* -> Window
@@ -92,6 +95,8 @@ private import gtk.TextIter;
 private import gtk.TextMark;
 private import gtk.Widget;
 private import pango.PgTabArray;
+private import gtk.ScrollableIF;
+private import gtk.ScrollableT;
 
 
 
@@ -103,7 +108,7 @@ private import gtk.Container;
  * conceptual overview which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
  */
-public class TextView : Container
+public class TextView : Container, ScrollableIF
 {
 	
 	/** the main Gtk struct */
@@ -148,6 +153,9 @@ public class TextView : Container
 		super.setStruct(obj);
 		gtkTextView = cast(GtkTextView*)obj;
 	}
+	
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkTextView);
 	
 	/**
 	 * Get the text line at the pixel y

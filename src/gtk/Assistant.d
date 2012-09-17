@@ -145,14 +145,15 @@ public class Assistant : Window
 	
 	void delegate(Assistant)[] onApplyListeners;
 	/**
-	 * The ::apply signal is emitted when the apply button is clicked. The default
-	 * behavior of the GtkAssistant is to switch to the page after the current
-	 * page, unless the current page is the last one.
-	 * A handler for the ::apply signal should carry out the actions for which
-	 * the wizard has collected data. If the action takes a long time to complete,
-	 * you might consider putting a page of type GTK_ASSISTANT_PAGE_PROGRESS
-	 * after the confirmation page and handle this operation within the
-	 * "prepare" signal of the progress page.
+	 * The ::apply signal is emitted when the apply button is clicked.
+	 * The default behavior of the GtkAssistant is to switch to the page
+	 * after the current page, unless the current page is the last one.
+	 * A handler for the ::apply signal should carry out the actions for
+	 * which the wizard has collected data. If the action takes a long time
+	 * to complete, you might consider putting a page of type
+	 * GTK_ASSISTANT_PAGE_PROGRESS after the confirmation page and handle
+	 * this operation within the "prepare" signal of the progress
+	 * page.
 	 * Since 2.10
 	 */
 	void addOnApply(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -238,9 +239,10 @@ public class Assistant : Window
 	
 	void delegate(Widget, Assistant)[] onPrepareListeners;
 	/**
-	 * The ::prepare signal is emitted when a new page is set as the assistant's
-	 * current page, before making the new page visible. A handler for this signal
-	 * can do any preparation which are necessary before showing page.
+	 * The ::prepare signal is emitted when a new page is set as the
+	 * assistant's current page, before making the new page visible.
+	 * A handler for this signal can do any preparations which are
+	 * necessary before showing page.
 	 * Since 2.10
 	 */
 	void addOnPrepare(void delegate(Widget, Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -284,9 +286,9 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Returns the page number of the current page
+	 * Returns the page number of the current page.
 	 * Since 2.10
-	 * Returns: The index (starting from 0) of the current page in the assistant, if the assistant has no pages, -1 will be returned
+	 * Returns: The index (starting from 0) of the current page in the assistant, or -1 if the assistant has no pages, or no current page.
 	 */
 	public int getCurrentPage()
 	{
@@ -384,6 +386,19 @@ public class Assistant : Window
 	}
 	
 	/**
+	 * Removes the page_num's page from assistant.
+	 * Params:
+	 * pageNum = the index of a page in the assistant,
+	 * or -1 to remove the last page
+	 * Since 3.2
+	 */
+	public void removePage(int pageNum)
+	{
+		// void gtk_assistant_remove_page (GtkAssistant *assistant,  gint page_num);
+		gtk_assistant_remove_page(gtkAssistant, pageNum);
+	}
+	
+	/**
 	 * Sets the page forwarding function to be page_func.
 	 * This function will be used to determine what will be
 	 * the next page when the user presses the forward button.
@@ -459,9 +474,10 @@ public class Assistant : Window
 	}
 	
 	/**
+	 * Warning
+	 * gtk_assistant_set_page_header_image has been deprecated since version 3.2 and should not be used in newly-written code. Since GTK+ 3.2, a header is no longer shown;
+	 *  add your header decoration to the page content instead.
 	 * Sets a header image for page.
-	 * This image is displayed in the header area of the assistant
-	 * when page is the current page.
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
@@ -474,6 +490,9 @@ public class Assistant : Window
 	}
 	
 	/**
+	 * Warning
+	 * gtk_assistant_get_page_header_image has been deprecated since version 3.2 and should not be used in newly-written code. Since GTK+ 3.2, a header is no longer shown;
+	 *  add your header decoration to the page content instead.
 	 * Gets the header image for page.
 	 * Since 2.10
 	 * Params:
@@ -492,13 +511,16 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Sets a header image for page.
-	 * This image is displayed in the side area of the assistant
+	 * Warning
+	 * gtk_assistant_set_page_side_image has been deprecated since version 3.2 and should not be used in newly-written code. Since GTK+ 3.2, sidebar images are not
+	 *  shown anymore.
+	 * Sets a side image for page.
+	 * This image used to be displayed in the side area of the assistant
 	 * when page is the current page.
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant
-	 * pixbuf = the new header image page. [allow-none]
+	 * pixbuf = the new side image page. [allow-none]
 	 */
 	public void setPageSideImage(Widget page, Pixbuf pixbuf)
 	{
@@ -507,7 +529,10 @@ public class Assistant : Window
 	}
 	
 	/**
-	 * Gets the header image for page.
+	 * Warning
+	 * gtk_assistant_get_page_side_image has been deprecated since version 3.2 and should not be used in newly-written code. Since GTK+ 3.2, sidebar images are not
+	 *  shown anymore.
+	 * Gets the side image for page.
 	 * Since 2.10
 	 * Params:
 	 * page = a page of assistant

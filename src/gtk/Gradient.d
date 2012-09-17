@@ -65,7 +65,7 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 private import glib.ConstructionException;
 
-
+private import glib.Str;
 private import cairo.Pattern;
 private import gtk.StyleProperties;
 private import gtk.SymbolicColor;
@@ -122,7 +122,7 @@ public class Gradient
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkGradient !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkGradient !is null )
 		{
 			gtk_gradient_unref(gtkGradient);
 		}
@@ -234,5 +234,16 @@ public class Gradient
 		
 		resolvedGradient = new Pattern(outresolvedGradient);
 		return p;
+	}
+	
+	/**
+	 * Creates a string representation for gradient that is suitable
+	 * for using in GTK CSS files.
+	 * Returns: A string representation for gradient
+	 */
+	public string toString()
+	{
+		// char * gtk_gradient_to_string (GtkGradient *gradient);
+		return Str.toString(gtk_gradient_to_string(gtkGradient));
 	}
 }

@@ -706,7 +706,8 @@ public class Builder : ObjectG
 	 * It uses GModule's introspective features (by opening the module NULL)
 	 * to look at the application's symbol table. From here it tries to match
 	 * the signal handler names given in the interface description with
-	 * symbols in the application and connects the signals.
+	 * symbols in the application and connects the signals. Note that this
+	 * function can only be called once, subsequent calls will do nothing.
 	 * Note that this function will not work correctly if GModule is not
 	 * supported on the platform.
 	 * When compiling applications for Windows, you must declare signal callbacks
@@ -783,7 +784,7 @@ public class Builder : ObjectG
 	 * calls g_value_init() on the value argument, so it need not be
 	 * initialised beforehand.
 	 * This function can handle char, uchar, boolean, int, uint, long,
-	 * ulong, enum, flags, float, double, string, GdkColor and
+	 * ulong, enum, flags, float, double, string, GdkColor, GdkRGBA and
 	 * GtkAdjustment type values. Support for GtkWidget type values is
 	 * still to come.
 	 * Upon errors FALSE will be returned and error will be assigned a

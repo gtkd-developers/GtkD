@@ -72,6 +72,7 @@ private import gtk.Separator;
  * To create a separator in a menu create an empty GtkSeparatorMenuItem
  * widget using gtk_separator_menu_item_new() and add it to the menu with
  * gtk_menu_shell_append().
+ * GtkHSeparator has been deprecated, use GtkSeparator instead.
  */
 public class HSeparator : Separator
 {
@@ -123,6 +124,8 @@ public class HSeparator : Separator
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_hseparator_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_separator_new() with GTK_ORIENTATION_HORIZONTAL instead
 	 * Creates a new GtkHSeparator.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

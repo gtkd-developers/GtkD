@@ -103,7 +103,7 @@ private import gobject.ObjectG;
  * facility, and the distinction between the two may be a bit confusing.
  * A few things to keep in mind:
  * Stock images usually are used in conjunction with
- * Stock Items(3)., such as GTK_STOCK_OK or
+ * Stock Items(3), such as GTK_STOCK_OK or
  * GTK_STOCK_OPEN. Named icons are easier to set up and therefore
  * are more useful for new icons that an application wants to
  * add, such as application icons or window icons.

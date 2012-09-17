@@ -1826,6 +1826,11 @@ public class GtkDClass
 					collectedStructs ~= "version(Win64)";
 					collectedStructs ~= "{";
 				}
+				if ( std.string.indexOf(elem, "#if __SIZEOF_INT__ == __SIZEOF_POINTER__") > -1 )
+				{
+					collectedStructs ~= "static if (int.sizeof == ptrdiff_t.sizeof)";
+					collectedStructs ~= "{";
+				}
 				if ( std.string.indexOf(elem, "#ifndef") == 0 )
 				{
 					collectedStructs ~= "version("~ elem[8..$] ~")";

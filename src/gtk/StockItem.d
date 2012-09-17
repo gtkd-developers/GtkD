@@ -124,7 +124,7 @@ public class StockItem
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkStockItem !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkStockItem !is null )
 		{
 			gtk_stock_item_free(gtkStockItem);
 		}

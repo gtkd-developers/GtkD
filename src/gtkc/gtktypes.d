@@ -72,26 +72,23 @@ alias GtkNotebookTab NotebookTab;
  * types of action that will be taken on behalf
  * of the user for a drag destination site.
  * GTK_DEST_DEFAULT_MOTION
- *  If set for a widget, GTK+, during a drag over this
- *  widget will check if the drag matches this widget's
- *  list of possible targets and actions.
+ * If set for a widget, GTK+, during a drag over this
+ *  widget will check if the drag matches this widget's list of possible targets
+ *  and actions.
  *  GTK+ will then call gdk_drag_status() as appropriate.
  * GTK_DEST_DEFAULT_HIGHLIGHT
- *  If set for a widget, GTK+ will draw a highlight on
- *  this widget as long as a drag is over this widget
- *  and the widget drag format and action are acceptable.
+ * If set for a widget, GTK+ will draw a highlight on
+ *  this widget as long as a drag is over this widget and the widget drag format
+ *  and action are acceptable.
  * GTK_DEST_DEFAULT_DROP
- *  If set for a widget, when a drop occurs, GTK+ will
- *  will check if the drag matches this widget's
- *  list of possible targets and actions. If so,
- *  GTK+ will call gtk_drag_get_data() on behalf
- *  of the widget. Whether or not the drop is successful,
- *  GTK+ will call gtk_drag_finish(). If the action
- *  was a move, then if the drag was successful, then
- *  TRUE will be passed for the delete parameter
- *  to gtk_drag_finish().
+ * If set for a widget, when a drop occurs, GTK+ will
+ *  will check if the drag matches this widget's list of possible targets and
+ *  actions. If so, GTK+ will call gtk_drag_get_data() on behalf of the widget.
+ *  Whether or not the drop is successful, GTK+ will call gtk_drag_finish(). If
+ *  the action was a move, then if the drag was successful, then TRUE will be
+ *  passed for the delete parameter to gtk_drag_finish().
  * GTK_DEST_DEFAULT_ALL
- *  If set, specifies that all default actions should
+ * If set, specifies that all default actions should
  *  be taken.
  */
 public enum GtkDestDefaults
@@ -107,17 +104,17 @@ alias GtkDestDefaults DestDefaults;
  * The GtkTargetFlags enumeration is used to specify
  * constraints on an entry in a GtkTargetTable.
  * GTK_TARGET_SAME_APP
- *  If this is set, the target will only be selected
+ * If this is set, the target will only be selected
  *  for drags within a single application.
  * GTK_TARGET_SAME_WIDGET
- *  If this is set, the target will only be selected
+ * If this is set, the target will only be selected
  *  for drags within a single widget.
  * GTK_TARGET_OTHER_APP
- *  If this is set, the target will not be selected
- *  for drags within a single application. Since 2.12
+ * If this is set, the target will not be selected
+ *  for drags within a single application.
  * GTK_TARGET_OTHER_WIDGET
- *  If this is set, the target will not be selected
- *  for drags withing a single widget. Since 2.12
+ * If this is set, the target will not be selected
+ *  for drags withing a single widget.
  */
 public enum GtkTargetFlags
 {
@@ -528,17 +525,17 @@ alias GtkScrollType ScrollType;
  * GTK_SELECTION_SINGLE
  * Zero or one element may be selected.
  * GTK_SELECTION_BROWSE
- * Exactly one element is selected. In some circumstances,
- *  such as initially or during a search operation, it's possible for no element
- *  to be selected with GTK_SELECTION_BROWSE. What is really enforced is that
- *  the user can't deselect a currently selected element except by selecting
+ * Exactly one element is selected.
+ *  In some circumstances, such as initially or during a search
+ *  operation, it's possible for no element to be selected with
+ *  GTK_SELECTION_BROWSE. What is really enforced is that the user
+ *  can't deselect a currently selected element except by selecting
  *  another element.
  * GTK_SELECTION_MULTIPLE
  * Any number of elements may be selected.
- *  Clicks toggle the state of an item. Any number of elements may be selected.
- *  The Ctrl key may be used to enlarge the selection, and Shift key to select
- *  between the focus and the child pointed to. Some widgets may also allow
- *  Click-drag to select a range of elements.
+ *  The Ctrl key may be used to enlarge the selection, and Shift
+ *  key to select between the focus and the child pointed to.
+ *  Some widgets may also allow Click-drag to select a range of elements.
  */
 public enum GtkSelectionMode
 {
@@ -836,18 +833,31 @@ public enum GtkRegionFlags
 }
 alias GtkRegionFlags RegionFlags;
 
-/**
- * See Also
- * GtkStyleContext, GtkStyleProvider
- */
 public enum GtkCssProviderError
 {
-	FAILED
+	FAILED,
+	SYNTAX,
+	IMPORT,
+	NAME,
+	DEPRECATED,
+	UNKNOWN_VALUE
 }
 alias GtkCssProviderError CssProviderError;
 
+public enum GtkCssSectionType
+{
+	DOCUMENT,
+	IMPORT,
+	COLOR_DEFINITION,
+	BINDING_SET,
+	RULESET,
+	SELECTOR,
+	DECLARATION,
+	VALUE
+}
+alias GtkCssSectionType CssSectionType;
+
 /**
- * Used to specify options for gtk_icon_theme_lookup_icon()
  * GTK_ICON_LOOKUP_NO_SVG
  * Never return SVG icons, even if gdk-pixbuf
  *  supports them. Cannot be used together with GTK_ICON_LOOKUP_FORCE_SVG.
@@ -859,14 +869,8 @@ alias GtkCssProviderError CssProviderError;
  * When passed to
  *  gtk_icon_theme_lookup_icon() includes builtin icons
  *  as well as files. For a builtin icon, gtk_icon_info_get_filename()
- *  returns NULL and you need to call gtk_icon_info_get_builtin_pixbuf().
  * GTK_ICON_LOOKUP_GENERIC_FALLBACK
- * Try to shorten icon name at '-'
- *  characters before looking at inherited themes. For more general
- *  fallback, see gtk_icon_theme_choose_icon(). Since 2.12.
  * GTK_ICON_LOOKUP_FORCE_SIZE
- * Always return the icon scaled to the
- *  requested size. Since 2.14.
  */
 public enum GtkIconLookupFlags
 {
@@ -904,19 +908,6 @@ public enum GtkIconSize
 }
 alias GtkIconSize IconSize;
 
-/**
- * The GtkRcFlags enumeration is used as a bitmask
- * to specify which fields of a GtkRcStyle have been
- * set for each state.
- * GTK_RC_FG
- * If present, the foreground color has been set for this state.
- * GTK_RC_BG
- * If present, the background color has been set for this state.
- * GTK_RC_TEXT
- * If present, the text color has been set for this state.
- * GTK_RC_BASE
- * If present, the base color has been set for this state.
- */
 public enum GtkRcFlags
 {
 	FG = 1 << 0,
@@ -928,7 +919,7 @@ alias GtkRcFlags RcFlags;
 
 /**
  * Warning
- * GtkRcTokenType is deprecated and should not be used in newly-written code.
+ * GtkRcTokenType has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
  * The GtkRcTokenType enumeration represents the tokens
  * in the RC file. It is exposed so that theme engines
  * can reuse these tokens when parsing the theme-engine
@@ -1517,7 +1508,6 @@ public enum GtkToolbarSpaceStyle
 alias GtkToolbarSpaceStyle ToolbarSpaceStyle;
 
 /**
- * GtkToolPaletteDragTargets;
  * Flags used to specify the supported drag targets.
  * GTK_TOOL_PALETTE_DRAG_ITEMS
  * Support drag of items.
@@ -1555,7 +1545,8 @@ alias GtkToolPaletteDragTargets ToolPaletteDragTargets;
  * GTK_UI_MANAGER_ACCELERATOR
  * Install an accelerator.
  * GTK_UI_MANAGER_POPUP_WITH_ACCELS
- * Same as GTK_UI_MANAGER_POPUP, but the actions' accelerators are shown.
+ * Same as GTK_UI_MANAGER_POPUP, but the
+ *  actions' accelerators are shown.
  */
 public enum GtkUIManagerItemType
 {
@@ -1984,11 +1975,14 @@ alias GtkTextDirection TextDirection;
  * Prefer height-for-width geometry management
  * GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT
  * Prefer width-for-height geometry management
+ * GTK_SIZE_REQUEST_CONSTANT_SIZE
+ * Dont trade height-for-width or width-for-height
  */
 public enum GtkSizeRequestMode
 {
 	HEIGHT_FOR_WIDTH = 0,
-	WIDTH_FOR_HEIGHT
+	WIDTH_FOR_HEIGHT,
+	CONSTANT_SIZE
 }
 alias GtkSizeRequestMode SizeRequestMode;
 
@@ -2403,6 +2397,27 @@ struct GtkRequisition
 }
 
 /**
+ * A GtkTargetList structure is a reference counted list
+ * of GtkTargetPair. It is used to represent the same
+ * information as a table of GtkTargetEntry, but in
+ * an efficient form. This structure should be treated as
+ * opaque.
+ */
+public struct GtkTargetList
+{
+	GList *list;
+	uint refCount;
+}
+
+public struct GtkTargetPair
+{
+	GdkAtom target;
+	uint flags;
+	uint info;
+}
+
+
+/**
  * Main Gtk struct.
  * An object representing and maintaining a group of accelerators.
  */
@@ -2605,16 +2620,6 @@ public struct GtkTargetEntry
 
 
 /**
- * A GtkTargetList structure is a reference counted list
- * of GtkTargetPair. It is used to represent the same
- * information as a table of GtkTargetEntry, but in
- * an efficient form. This structure should be treated as
- * opaque.
- */
-public struct GtkTargetList{}
-
-
-/**
  * Main Gtk struct.
  * This should not be accessed directly. Use the accessor functions below.
  */
@@ -2630,14 +2635,40 @@ public struct GtkStyleContext{}
 /**
  * A struct that specifies a border around a rectangular area
  * that can be of different width on each side.
+ * gint16 left;
+ * The width of the left border
+ * gint16 right;
+ * The width of the right border
+ * gint16 top;
+ * The width of the top border
+ * gint16 bottom;
+ * The width of the bottom border
  */
-public struct GtkBorder{}
+public struct GtkBorder
+{
+	short left;
+	short right;
+	short top;
+	short bottom;
+}
 
 
 /**
  * Main Gtk struct.
  */
 public struct GtkCssProvider{}
+
+
+/**
+ * The different types of sections indicate parts of a CSS document as
+ * parsed by GTK's CSS parser. They are oriented towards the CSS grammar
+ * CSS grammer,
+ * but may contain extensions.
+ * More types might be added in the future as the parser incorporates
+ * more features.
+ * Since 3.2
+ */
+public struct GtkCssSection{}
 
 
 /**
@@ -2710,6 +2741,8 @@ public struct GtkStyleProperties
  * or GtkProgressBar.
  * render_icon_pixbuf ()
  * Renders an icon as a GdkPixbuf.
+ * render_icon ()
+ * Renders an icon given as a GdkPixbuf.
  */
 public struct GtkThemingEngineClass
 {
@@ -2729,6 +2762,7 @@ public struct GtkThemingEngineClass
 	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderHandle;
 	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,double x,double y,double width,double height)  renderActivity;
 	extern(C) GdkPixbuf *  function(GtkThemingEngine *engine,GtkIconSource *source,GtkIconSize size)  renderIconPixbuf;
+	extern(C) void  function(GtkThemingEngine *engine,cairo_t *cr,GdkPixbuf *pixbuf,double x,double y)  renderIcon;
 }
 
 
@@ -2859,7 +2893,6 @@ public struct GtkDialog{}
 
 /**
  * Main Gtk struct.
- * The GtkInvisible struct contains no public fields.
  */
 public struct GtkInvisible{}
 
@@ -2920,8 +2953,6 @@ public struct GtkImage{}
 
 /**
  * Main Gtk struct.
- * This should not be accessed directly. Use the accessor functions as
- * described below.
  */
 public struct GtkLabel{}
 
@@ -2964,7 +2995,6 @@ public struct GtkButton{}
 
 /**
  * Main Gtk struct.
- * toggle_button is a GtkToggleButton representing the actual toggle button that composes the check button.
  */
 public struct GtkCheckButton{}
 
@@ -2977,7 +3007,6 @@ public struct GtkRadioButton{}
 
 /**
  * Main Gtk struct.
- * The GtkToggleButton struct contains private data only, and should be manipulated using the functions below.
  */
 public struct GtkToggleButton{}
 
@@ -3013,6 +3042,12 @@ public struct GtkSwitch{}
 /**
  * Main Gtk struct.
  */
+public struct GtkLockButton{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkEntry{}
 
 
@@ -3036,14 +3071,16 @@ public struct GtkScale{}
 
 /**
  * Main Gtk struct.
- * The GtkHScale struct contains private data only, and
- * should be accessed using the functions below.
+ * Warning
+ * GtkHScale is deprecated and should not be used in newly-written code.
  */
 public struct GtkHScale{}
 
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkVScale is deprecated and should not be used in newly-written code.
  * The GtkVScale struct contains private data only, and
  * should be accessed using the functions below.
  */
@@ -3141,6 +3178,12 @@ public struct GtkTextAppearance
 	+/
 	//uint insideSelection : 1;
 	//uint isText : 1;
+	GdkRGBA *rgba[2];
+	static if (int.sizeof == ptrdiff_t.sizeof)
+	{
+		/+* unusable, just for ABI compat +/
+		uint padding[2];
+	}
 }
 
 
@@ -3287,7 +3330,6 @@ public struct GtkTreeSortableIface
 
 /**
  * Main Gtk struct.
- * This should not be accessed directly. Use the accessor functions below.
  */
 public struct GtkTreeModelSort{}
 
@@ -3628,16 +3670,12 @@ public struct GtkImageMenuItem{}
 
 /**
  * Main Gtk struct.
- * The structure contains only private data that must be accessed through
- * the interface functions.
  */
 public struct GtkRadioMenuItem{}
 
 
 /**
  * Main Gtk struct.
- * The GtkCheckMenuItem struct contains only private fields that
- * should not be directly accessed.
  */
 public struct GtkCheckMenuItem{}
 
@@ -3650,8 +3688,6 @@ public struct GtkSeparatorMenuItem{}
 
 /**
  * Main Gtk struct.
- * The GtkTearoffMenuItem struct contains private data only, and
- * should be accessed using the functions below.
  */
 public struct GtkTearoffMenuItem{}
 
@@ -3734,8 +3770,6 @@ public struct GtkSeparatorToolItem{}
 
 /**
  * Main Gtk struct.
- * The GtkToolButton struct contains only private. It should only be
- * accessed with the function described below.
  */
 public struct GtkToolButton{}
 
@@ -3760,8 +3794,6 @@ public struct GtkRadioToolButton{}
 
 /**
  * Main Gtk struct.
- * The GtkUIManager struct contains only private
- * members and should not be accessed directly.
  */
 public struct GtkUIManager{}
 
@@ -3932,24 +3964,6 @@ public struct GtkColorButton{}
 
 /**
  * Main Gtk struct.
- * The GtkColorSelectionDialog struct contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * GtkWidget *colorsel;
- * The GtkColorSelection widget contained within the
- * dialog. Use this widget and its gtk_color_selection_get_current_color()
- * function to gain access to the selected color. Connect a handler
- * for this widget's color_changed signal to be notified when the
- * color changes.
- * GtkWidget *ok_button;
- * The OK button widget contained within the dialog.
- * Connect a handler for the clicked event.
- * GtkWidget *cancel_button;
- * The cancel button widget contained within the dialog.
- * Connect a handler for the clicked event.
- * GtkWidget *help_button;
- * The help button widget contained within the dialog.
- * Connect a handler for the clicked event.
  */
 public struct GtkColorSelectionDialog{}
 
@@ -3974,7 +3988,6 @@ public struct GtkFileChooser{}
 
 /**
  * Main Gtk struct.
- * This should not be accessed directly. Use the accessor functions below.
  */
 public struct GtkFileChooserButton{}
 
@@ -4025,22 +4038,40 @@ public struct GtkFileFilterInfo
 
 /**
  * Main Gtk struct.
- * The GtkFontButton struct has only private members and should not be used
- * directly.
+ */
+public struct GtkFontChooser{}
+
+
+/**
+ * Main Gtk struct.
  */
 public struct GtkFontButton{}
 
 
 /**
  * Main Gtk struct.
- * The GtkFontSelection struct contains private data only, and should
- * only be accessed using the functions below.
+ */
+public struct GtkFontChooserWidget{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkFontChooserDialog{}
+
+
+/**
+ * Main Gtk struct.
+ * Warning
+ * GtkFontSelection is deprecated and should not be used in newly-written code.
  */
 public struct GtkFontSelection{}
 
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkFontSelectionDialog is deprecated and should not be used in newly-written code.
  */
 public struct GtkFontSelectionDialog{}
 
@@ -4071,12 +4102,16 @@ public struct GtkBox{}
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkHBox is deprecated and should not be used in newly-written code.
  */
 public struct GtkHBox{}
 
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkVBox is deprecated and should not be used in newly-written code.
  */
 public struct GtkVBox{}
 
@@ -4089,13 +4124,16 @@ public struct GtkButtonBox{}
 
 /**
  * Main Gtk struct.
- * GtkHButtonBox does not contain any public fields.
+ * Warning
+ * GtkHButtonBox is deprecated and should not be used in newly-written code.
  */
 public struct GtkHButtonBox{}
 
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkVButtonBox is deprecated and should not be used in newly-written code.
  */
 public struct GtkVButtonBox{}
 
@@ -4114,12 +4152,16 @@ public struct GtkPaned{}
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkHPaned is deprecated and should not be used in newly-written code.
  */
 public struct GtkHPaned{}
 
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkVPaned is deprecated and should not be used in newly-written code.
  */
 public struct GtkVPaned{}
 
@@ -4138,9 +4180,6 @@ public struct GtkNotebook{}
 
 /**
  * Main Gtk struct.
- * The GtkTable structure holds the data for the actual table itself.
- * children is a GList of all the widgets the table contains. rows and columns are pointers to GtkTableRowCol structures, which contain the default spacing and expansion details for the GtkTable's rows and columns, respectively.
- * nrows and ncols are 16bit integers storing the number of rows and columns the table has.
  */
 public struct GtkTable{}
 
@@ -4149,6 +4188,12 @@ public struct GtkTable{}
  * Main Gtk struct.
  */
 public struct GtkExpander{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkOverlay{}
 
 
 /**
@@ -4171,14 +4216,16 @@ public struct GtkSeparator{}
 
 /**
  * Main Gtk struct.
- * The GtkHSeparator struct contains private data only, and
- * should be accessed using the functions below.
+ * Warning
+ * GtkHSeparator is deprecated and should not be used in newly-written code.
  */
 public struct GtkHSeparator{}
 
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkVSeparator is deprecated and should not be used in newly-written code.
  * The GtkVSeparator struct contains private data only, and
  * should be accessed using the functions below.
  */
@@ -4193,14 +4240,16 @@ public struct GtkScrollbar{}
 
 /**
  * Main Gtk struct.
- * The GtkHScrollbar struct contains private data and should be accessed
- * using the functions below.
+ * Warning
+ * GtkHScrollbar is deprecated and should not be used in newly-written code.
  */
 public struct GtkHScrollbar{}
 
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkVScrollbar is deprecated and should not be used in newly-written code.
  * The GtkVScrollbar struct contains private data and should be accessed
  * using the functions below.
  */
@@ -4320,21 +4369,6 @@ public struct GtkEventBox{}
 
 /**
  * Main Gtk struct.
- * The GtkHandleBox struct contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * GtkShadowType shadow_type;
- * The shadow type for the entry. (See gtk_handle_box_set_shadow_type()).
- * GtkPositionType handle_position;
- * The position of the handlebox's handle with respect
- * to the child. (See gtk_handle_box_set_handle_position())
- * gint snap_edge;
- * A value of type GtkPosition type indicating snap edge for the widget.
- * (See gtk_handle_box_set_snap_edge). The value of -1 indicates
- * that this value has not been set.
- * gboolean child_detached;
- * A boolean value indicating whether the handlebox's
- * child is attached or detached.
  */
 public struct GtkHandleBox{}
 
@@ -4381,7 +4415,16 @@ public struct GtkAccessible{}
 public struct GtkWidget{}
 
 
-public struct GtkSelectionData{}
+public struct GtkSelectionData
+{
+	GdkAtom selection;
+	GdkAtom target;
+	GdkAtom type;
+	int format;
+	char *data;
+	int length;
+	GdkDisplay *display;
+}
 
 
 public struct GtkWidgetAuxInfo
@@ -4434,19 +4477,6 @@ public struct GtkMenuShell{}
 
 /**
  * Main Gtk struct.
- * The GtkMisc struct contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * gfloat xalign;
- * the horizontal alignment, from 0 (left) to 1 (right).
- * gfloat yalign;
- * the vertical alignment, from 0 (top) to 1 (bottom).
- * guint16 xpad;
- * the amount of space to add on the left and right of the widget,
- * in pixels.
- * guint16 ypad;
- * the amount of space to add on the top and bottom of the widget,
- * in pixels.
  */
 public struct GtkMisc{}
 
@@ -4911,9 +4941,9 @@ public struct GtkApplication{}
  * with this prototype. This function is called after loading
  * the module.
  * argc :
- * GTK+ always passes NULL for this argument
+ * GTK+ always passes NULL for this argument. [allow-none]
  * argv :
- * GTK+ always passes NULL for this argument
+ * GTK+ always passes NULL for this argument. [allow-none][array length=argc]
  */
 // void (*GtkModuleInitFunc) (gint *argc,  gchar ***argv);
 public alias extern(C) void  function (gint*, gchar***) GtkModuleInitFunc;
@@ -4975,8 +5005,8 @@ public alias extern(C) int  function (GtkAccelKey*, GClosure*, void*) GtkAccelGr
 public alias extern(C) void  function (void*, char*, uint, GdkModifierType, int) GtkAccelMapForeach;
 
 /*
- *  A function to be called when the results of gtk_clipboard_request_contents()
- *  are received, or when the request fails.
+ * A function to be called when the results of gtk_clipboard_request_contents()
+ * are received, or when the request fails.
  * clipboard :
  * the GtkClipboard
  * selection_data :
@@ -4990,8 +5020,8 @@ public alias extern(C) void  function (void*, char*, uint, GdkModifierType, int)
 public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, void*) GtkClipboardReceivedFunc;
 
 /*
- *  A function to be called when the results of gtk_clipboard_request_text()
- *  are received, or when the request fails.
+ * A function to be called when the results of gtk_clipboard_request_text()
+ * are received, or when the request fails.
  * clipboard :
  * the GtkClipboard
  * text :
@@ -5004,8 +5034,8 @@ public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, void*) 
 public alias extern(C) void  function (GtkClipboard*, char*, void*) GtkClipboardTextReceivedFunc;
 
 /*
- *  A function to be called when the results of gtk_clipboard_request_image()
- *  are received, or when the request fails.
+ * A function to be called when the results of gtk_clipboard_request_image()
+ * are received, or when the request fails.
  * clipboard :
  * the GtkClipboard
  * pixbuf :
@@ -5018,8 +5048,8 @@ public alias extern(C) void  function (GtkClipboard*, char*, void*) GtkClipboard
 public alias extern(C) void  function (GtkClipboard*, GdkPixbuf*, void*) GtkClipboardImageReceivedFunc;
 
 /*
- *  A function to be called when the results of gtk_clipboard_request_targets()
- *  are received, or when the request fails.
+ * A function to be called when the results of gtk_clipboard_request_targets()
+ * are received, or when the request fails.
  * clipboard :
  * the GtkClipboard
  * atoms :
@@ -5059,12 +5089,13 @@ public alias extern(C) void  function (GtkClipboard*, gchar**, void*) GtkClipboa
  * a GtkSelectionData argument in which the requested
  * data should be stored.
  * info :
- * the info field corresponding to the requested
- * target from the GtkTargetEntry array passed to
- * gtk_clipboard_set_with_data() or gtk_clipboard_set_with_owner().
+ * the info field corresponding to the requested target from the
+ * GtkTargetEntry array passed to gtk_clipboard_set_with_data() or
+ * gtk_clipboard_set_with_owner().
  * user_data_or_owner :
- * the user_data argument passed to gtk_clipboard_set_with_data(), or
- * the owner argument passed to gtk_clipboard_set_with_owner()
+ * the user_data argument passed to
+ * gtk_clipboard_set_with_data(), or the owner argument passed to
+ * gtk_clipboard_set_with_owner()
  */
 // void (*GtkClipboardGetFunc) (GtkClipboard *clipboard,  GtkSelectionData *selection_data,  guint info,  gpointer user_data_or_owner);
 public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, uint, void*) GtkClipboardGetFunc;
@@ -5076,8 +5107,8 @@ public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, uint, v
  * clipboard :
  * the GtkClipboard
  * user_data_or_owner :
- * the user_data argument passed to gtk_clipboard_set_with_data(), or
- * the owner argument passed to gtk_clipboard_set_with_owner()
+ * the user_data argument passed to gtk_clipboard_set_with_data(),
+ * or the owner argument passed to gtk_clipboard_set_with_owner()
  */
 // void (*GtkClipboardClearFunc) (GtkClipboard *clipboard,  gpointer user_data_or_owner);
 public alias extern(C) void  function (GtkClipboard*, void*) GtkClipboardClearFunc;
@@ -5514,7 +5545,7 @@ public alias extern(C) int  function (GtkCellRenderer*, GdkRectangle*, GdkRectan
  * been without resizing. In practice, this behavior is only
  * useful for combobox popups or option menus and cannot be used
  * to simply confine a menu to monitor boundaries. In that case,
- * changing the scroll offset is not desirable. [inout]
+ * changing the scroll offset is not desirable. [out]
  * user_data :
  * the data supplied by the user in the gtk_menu_popup()
  * data parameter.
@@ -5572,6 +5603,21 @@ public alias extern(C) void  function (GdkScreen*, GdkColor*, int) GtkColorSelec
  */
 // gboolean (*GtkFileFilterFunc) (const GtkFileFilterInfo *filter_info,  gpointer data);
 public alias extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilterFunc;
+
+/*
+ * The type of function that is used for deciding what fonts get
+ * shown in a GtkFontChooser. See gtk_font_chooser_set_filter_func().
+ * family :
+ * a PangoFontFamily
+ * face :
+ * a PangoFontFace belonging to family
+ * data :
+ * user data passed to gtk_font_chooser_set_filter_func(). [closure]
+ * Returns :
+ * TRUE if the font should be displayed
+ */
+// gboolean (*GtkFontFilterFunc) (const PangoFontFamily *family,  const PangoFontFace *face,  gpointer data);
+public alias extern(C) int  function (PangoFontFamily*, PangoFontFace*, void*) GtkFontFilterFunc;
 
 /*
  * The type of function that is passed to
@@ -5678,7 +5724,8 @@ public alias extern(C) int  function (GtkRecentFilterInfo*, void*) GtkRecentFilt
  * by the gtk_builder_connect_signals() and gtk_builder_connect_signals_full()
  * methods. It is mainly intended for interpreted language bindings, but
  * could be useful where the programmer wants more control over the signal
- * connection process.
+ * connection process. Note that this function can only be called once,
+ * subsequent calls will do nothing.
  * builder :
  * a GtkBuilder
  * object :

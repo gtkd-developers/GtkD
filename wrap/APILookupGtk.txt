@@ -240,6 +240,27 @@ struct GtkRequisition
 	gint width;
 	gint height;
 }
+
+/**
+ * A GtkTargetList structure is a reference counted list
+ * of GtkTargetPair. It is used to represent the same
+ * information as a table of GtkTargetEntry, but in
+ * an efficient form. This structure should be treated as
+ * opaque.
+ */
+public struct GtkTargetList
+{
+		GList *list;
+		uint refCount;
+}
+
+public struct GtkTargetPair
+{
+	GdkAtom target;
+	uint flags;
+	uint info;
+}
+
 addStructs: end
 
 addTypes: start
@@ -390,6 +411,7 @@ import: gdk.DragContext
 import: gdk.Event
 import: gdk.Pixbuf
 import: gdk.Window
+import: gio.IconIF
 import: gtk.TargetList
 import: gtk.Widget
 structWrap: cairo_surface_t* Surface
@@ -397,6 +419,7 @@ structWrap: GdkDragContext* DragContext
 structWrap: GdkEvent* Event
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkWindow* Window
+structWrap: GIcon* IconIF
 structWrap: GtkWidget* Widget
 structWrap: GtkTargetList* TargetList
 
@@ -421,7 +444,7 @@ array: gtk_stock_add_static items n_items
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkStockItem !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkStockItem !is null )
 		{
 			gtk_stock_item_free(gtkStockItem);
 		}
@@ -477,6 +500,7 @@ closeFile: BindingSet
 
 file: gtk3-Selections.html
 struct: GtkTargetEntry
+nostruct: GtkTargetList
 class: TargetEntry
 prefix: gtk_target_entry_
 prefix: gtk_
@@ -492,7 +516,7 @@ structWrap: GtkTargetEntry* TargetEntry
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTargetEntry !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetEntry !is null )
 		{
 			gtk_target_entry_free(gtkTargetEntry);
 		}
@@ -528,7 +552,7 @@ array: gtk_targets_include_rich_text targets n_targets
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTargetList !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetList !is null )
 		{
 			gtk_target_list_unref(gtkTargetList);
 		}
@@ -564,7 +588,7 @@ array: gtk_selection_data_get_data_with_length Return length
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkSelectionData !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSelectionData !is null )
 		{
 			gtk_selection_data_free(gtkSelectionData);
 		}
@@ -683,7 +707,7 @@ structWrap: GtkBorder* Border
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkBorder !is null )
+		if ( Linker.isLoaded(LIBRARY.GTK) && gtkBorder !is null )
 		{
 			gtk_border_free(gtkBorder);
 		}
@@ -696,12 +720,15 @@ struct: GtkCssProvider
 class: CssProvider
 implements: StyleProviderIF
 prefix: gtk_css_provider_
+noprefix: gtk_css_section_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 import: gio.File
-import: gtk.CssProvider
+import: gtk.CssSection
+structWrap: GError* ErrorG
 structWrap: GFile* File
+structWrap: GtkCssSection* CssSection
 structWrap: GtkCssProvider* CssProvider
 
 # imports for StyleProvider Interface
@@ -713,6 +740,30 @@ code: start
 	mixin StyleProviderT!(GtkCssProvider);
 code: end
 outFile: CssProvider
+
+struct: GtkCssSection
+class: CssSection
+extend: GBoxed
+prefix: gtk_css_section_
+strictPrefix: Y
+import: gtkc.paths
+import: gtkc.Loader
+import: gio.File
+structWrap: GFile* File
+structWrap: GtkCssSection* CssSection
+
+nosignal: parsing-error
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GTK) && gtkCssSection !is null )
+		{
+			gtk_css_section_unref(gtkCssSection);
+		}
+	}
+code: end
+outFile: CssSection
 
 file: GtkStyleProvider.html
 struct: GtkStyleProvider
@@ -790,9 +841,11 @@ class: WidgetPath
 prefix: gtk_widget_path_
 import: glib.Str
 import: glib.ListSG
+import: gtk.Widget
 import: gtkc.Loader
 import: gtkc.paths
 structWrap: GSList* ListSG
+structWrap: GtkWidget* Widget
 structWrap: GtkWidgetPath* WidgetPath
 
 out: gtk_widget_path_iter_has_qregion flags
@@ -801,7 +854,7 @@ out: gtk_widget_path_iter_has_region flags
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkWidgetPath !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkWidgetPath !is null )
 		{
 			gtk_widget_path_free(gtkWidgetPath);
 		}
@@ -825,7 +878,7 @@ structWrap: GtkSymbolicColor* SymbolicColor
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkSymbolicColor !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSymbolicColor !is null )
 		{
 			gtk_symbolic_color_unref(gtkSymbolicColor);
 		}
@@ -837,6 +890,7 @@ file: gtk3-GtkGradient.html
 struct: GtkGradient
 class: Gradient
 prefix: gtk_gradient_
+import: glib.Str
 import: cairo.Pattern
 import: gtk.StyleProperties
 import: gtk.SymbolicColor
@@ -852,7 +906,7 @@ out: gtk_gradient_resolve resolved_gradient
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkGradient !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkGradient !is null )
 		{
 			gtk_gradient_unref(gtkGradient);
 		}
@@ -916,7 +970,7 @@ array: gtk_icon_info_get_attach_points points n_points
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconInfo !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconInfo !is null )
 		{
 			gtk_icon_info_free(gtkIconInfo);
 		}
@@ -941,7 +995,7 @@ structWrap: GtkIconSource* IconSource
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconSource !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconSource !is null )
 		{
 			gtk_icon_source_free(gtkIconSource);
 		}
@@ -994,7 +1048,7 @@ array: gtk_icon_set_get_sizes sizes n_sizes
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkIconSet !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconSet !is null )
 		{
 			gtk_icon_set_unref(gtkIconSet);
 		}
@@ -2446,6 +2500,14 @@ code: start
 code: end
 outFile: Switch
 
+file: GtkLockButton.html
+struct: GtkLockButton
+class: LockButton
+prefix: gtk_switch_
+import: gio.Permission
+structWrap: GPermission* Permission
+outFile: LockButton
+
 ###########################################################
 ### numeric/text Data Entry ###############################
 ###########################################################
@@ -2682,7 +2744,7 @@ code: start
 
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTextIter !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextIter !is null )
 		{
 			gtk_text_iter_free(gtkTextIter);
 		}
@@ -2925,7 +2987,7 @@ nosignal: event
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTextAttributes !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextAttributes !is null )
 		{
 			gtk_text_attributes_unref(gtkTextAttributes);
 		}
@@ -2947,6 +3009,7 @@ outFile: TextTagTable
 file: GtkTextView.html
 struct: GtkTextView
 class: TextView
+implements: ScrollableIF
 prefix: gtk_text_view_
 noprefix: gtk_text_child_anchor_
 import: glib.Str
@@ -2971,6 +3034,10 @@ structWrap: GtkTextMark* TextMark
 structWrap: GtkWidget* Widget
 structWrap: PangoTabArray* PgTabArray
 
+#imports for Scrollable Interface.
+import: gtk.ScrollableIF
+import: gtk.ScrollableT
+
 out: gtk_text_view_get_visible_rect visible_rect
 out: gtk_text_view_get_iter_location location
 out: gtk_text_view_get_cursor_locations strong
@@ -2985,6 +3052,9 @@ out: gtk_text_view_window_to_buffer_coords buffer_x
 out: gtk_text_view_window_to_buffer_coords buffer_y
 
 code: start
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkTextView);
+
 	/**
 	 * Get the text line at the pixel y
 	 */
@@ -3134,7 +3204,7 @@ code: start
 
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTreePath !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTreePath !is null )
 		{
 			gtk_tree_path_free(gtkTreePath);
 		}
@@ -5827,7 +5897,7 @@ code: start
 code: end
 outFile: RadioMenuItem
 
-file: gtk3-gtkcheckmenuitem.html
+file: GtkCheckMenuItem.html
 struct: GtkCheckMenuItem
 class: CheckMenuItem
 prefix: gtk_check_menu_item_
@@ -6731,12 +6801,71 @@ code: start
 cade: end
 outFile: FileFilter
 
+file: GtkFontChooser.html
+struct: GtkFontChooser
+class: FontChooserT
+template: TStruct
+prefix: gtk_font_chooser_
+import: glib.Str
+import: pango.PgFontDescription
+import: pango.PgFontFace
+import: pango.PgFontFamily
+structWrap: PangoFontDescription* PgFontDescription
+structWrap: PangoFontFace* PgFontFace
+structWrap: PangoFontFamily* PgFontFamily
+interface: FontChooserIF
+outFile: FontChooserT
+
 file: GtkFontButton.html
 struct: GtkFontButton
 class: FontButton
+implements: FontChooserIF
 prefix: gtk_font_button_
 import: glib.Str
+
+# imports for FontChooser Interface
+import: gtk.FontChooserT
+import: gtk.FontChooserIF
+
+code: start
+	// add the FontChooser capabilities
+	mixin FontChooserT!(GtkFontButton);
+cade: end
 outFile: FontButton
+
+file: GtkFontChooserWidget.html
+struct: GtkFontChooserWidget
+class: FontChooserWidget
+implements: FontChooserIF
+prefix: gtk_font_chooser_widget_
+import: glib.Str
+
+# imports for FontChooser Interface
+import: gtk.FontChooserT
+import: gtk.FontChooserIF
+
+code: start
+	// add the FontChooser capabilities
+	mixin FontChooserT!(GtkFontChooserWidget);
+cade: end
+outFile: FontChooserWidget
+
+file: GtkFontChooserDialog.html
+struct: GtkFontChooserDialog
+class: FontChooserDialog
+implements: FontChooserIF
+prefix: gtk_font_chooser_dialog_
+import: glib.Str
+
+# imports for FontChooser Interface
+import: gtk.FontChooserT
+import: gtk.FontChooserIF
+
+code: start
+	// add the FontChooser capabilities
+	mixin FontChooserT!(GtkFontChooserDialog);
+cade: end
+outFile: FontChooserDialog
 
 file: GtkFontSelection.html
 struct: GtkFontSelection
@@ -7302,6 +7431,14 @@ code: start
 code: end
 outFile: Expander
 
+file: GtkOverlay.html
+struct: GtkOverlay
+class: Overlay
+prefix: gtk_overlay_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: Overlay
+
 file: gtk3-Orientable.html
 struct: GtkOrientable
 class: OrientableT
@@ -7341,7 +7478,7 @@ file: GtkSeparator.html
 struct: GtkSeparator
 class: Separator
 implements: OrientableIF
-prefix: gtk_separator
+prefix: gtk_separator_
 
 #imports for Orientable Interface.
 import: gtk.OrientableIF
@@ -8233,7 +8370,7 @@ nosignal: window-state-event
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkRequisition !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRequisition !is null )
 		{
 			gtk_requisition_free(gtkRequisition);
 		}
@@ -8424,7 +8561,7 @@ array: gtk_recent_info_get_groups Return length
 code: start
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkRecentInfo !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRecentInfo !is null )
 		{
 			gtk_recent_info_unref(gtkRecentInfo);
 		}

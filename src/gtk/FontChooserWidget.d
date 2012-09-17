@@ -23,36 +23,37 @@
 
 /*
  * Conversion parameters:
- * inFile  = GtkSeparator.html
+ * inFile  = GtkFontChooserWidget.html
  * outPack = gtk
- * outFile = Separator
- * strct   = GtkSeparator
+ * outFile = FontChooserWidget
+ * strct   = GtkFontChooserWidget
  * realStrct=
  * ctorStrct=
- * clss    = Separator
+ * clss    = FontChooserWidget
  * interf  = 
  * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- OrientableIF
+ * 	- FontChooserIF
  * prefixes:
- * 	- gtk_separator_
+ * 	- gtk_font_chooser_widget_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gtk.OrientableIF
- * 	- gtk.OrientableT
+ * 	- glib.Str
+ * 	- gtk.FontChooserT
+ * 	- gtk.FontChooserIF
  * structWrap:
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gtk.Separator;
+module gtk.FontChooserWidget;
 
 public  import gtkc.gtktypes;
 
@@ -60,86 +61,91 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gtk.OrientableIF;
-private import gtk.OrientableT;
+private import glib.Str;
+private import gtk.FontChooserT;
+private import gtk.FontChooserIF;
 
 
 
-private import gtk.Widget;
+private import gtk.Box;
 
 /**
  * Description
- * GtkSeparator is a horizontal or vertical separator widget, depending on the
- * value of the "orientation" property, used to group the widgets within a
- * window. It displays a line with a shadow to make it appear sunken into the
- * interface.
+ * The GtkFontChooserWidget widget lists the available fonts,
+ * styles and sizes, allowing the user to select a font. It is
+ * used in the GtkFontChooserDialog widget to provide a
+ * dialog box for selecting fonts.
+ * To set the font which is initially selected, use
+ * gtk_font_chooser_set_font() or gtk_font_chooser_set_font_desc().
+ * To get the selected font use gtk_font_chooser_get_font() or
+ * gtk_font_chooser_get_font_desc().
+ * To change the text which is shown in the preview area, use
+ * gtk_font_chooser_set_preview_text().
  */
-public class Separator : Widget, OrientableIF
+public class FontChooserWidget : Box, FontChooserIF
 {
 	
 	/** the main Gtk struct */
-	protected GtkSeparator* gtkSeparator;
+	protected GtkFontChooserWidget* gtkFontChooserWidget;
 	
 	
-	public GtkSeparator* getSeparatorStruct()
+	public GtkFontChooserWidget* getFontChooserWidgetStruct()
 	{
-		return gtkSeparator;
+		return gtkFontChooserWidget;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)gtkSeparator;
+		return cast(void*)gtkFontChooserWidget;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GtkSeparator* gtkSeparator)
+	public this (GtkFontChooserWidget* gtkFontChooserWidget)
 	{
-		if(gtkSeparator is null)
+		if(gtkFontChooserWidget is null)
 		{
 			this = null;
 			return;
 		}
 		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSeparator);
+		void* ptr = getDObject(cast(GObject*)gtkFontChooserWidget);
 		if( ptr !is null )
 		{
-			this = cast(Separator)ptr;
+			this = cast(FontChooserWidget)ptr;
 			return;
 		}
-		super(cast(GtkWidget*)gtkSeparator);
-		this.gtkSeparator = gtkSeparator;
+		super(cast(GtkBox*)gtkFontChooserWidget);
+		this.gtkFontChooserWidget = gtkFontChooserWidget;
 	}
 	
 	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
-		gtkSeparator = cast(GtkSeparator*)obj;
+		gtkFontChooserWidget = cast(GtkFontChooserWidget*)obj;
 	}
 	
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkSeparator);
+	// add the FontChooser capabilities
+	mixin FontChooserT!(GtkFontChooserWidget);
 	
 	/**
 	 */
 	
 	/**
-	 * Creates a new GtkSeparator with the given orientation.
-	 * Params:
-	 * orientation = the separator's orientation.
+	 * Creates a new GtkFontChooserWidget.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GtkOrientation orientation)
+	public this ()
 	{
-		// GtkWidget * gtk_separator_new (GtkOrientation orientation);
-		auto p = gtk_separator_new(orientation);
+		// GtkWidget * gtk_font_chooser_widget_new (void);
+		auto p = gtk_font_chooser_widget_new();
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_separator_new(orientation)");
+			throw new ConstructionException("null returned by gtk_font_chooser_widget_new()");
 		}
-		this(cast(GtkSeparator*) p);
+		this(cast(GtkFontChooserWidget*) p);
 	}
 }

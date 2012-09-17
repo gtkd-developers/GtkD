@@ -40,6 +40,7 @@
  * 	- gtk_target_entry_
  * 	- gtk_
  * omit structs:
+ * 	- GtkTargetList
  * omit prefixes:
  * 	- gtk_target_table_
  * 	- gtk_targets_
@@ -122,7 +123,7 @@ public class TargetEntry
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTargetEntry !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetEntry !is null )
 		{
 			gtk_target_entry_free(gtkTargetEntry);
 		}

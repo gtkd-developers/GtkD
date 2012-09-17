@@ -83,9 +83,9 @@ private import gobject.ObjectG;
  * Recently used files are supported since GTK+ 2.10.
  * GtkRecentFilter as GtkBuildable
  * The GtkRecentFilter implementation of the GtkBuildable interface
- * supports adding rules using the <mime-typesgt, <patternsgt and
- * <applicationsgt elements and listing the rules within. Specifying
- * a <mime-typegt, <patterngt or <applicationgt is the same
+ * supports adding rules using the <mime-types>, <patterns> and
+ * <applications> elements and listing the rules within. Specifying
+ * a <mime-type>, <pattern> or <application> is the same
  * as calling gtk_recent_filter_add_mime_type(), gtk_recent_filter_add_pattern()
  * or gtk_recent_filter_add_application().
  * $(DDOC_COMMENT example)

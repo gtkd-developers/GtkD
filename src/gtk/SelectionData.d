@@ -129,7 +129,7 @@ public class SelectionData
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkSelectionData !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSelectionData !is null )
 		{
 			gtk_selection_data_free(gtkSelectionData);
 		}

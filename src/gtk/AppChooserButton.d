@@ -78,6 +78,22 @@ private import gtk.ComboBox;
  * Description
  * The GtkAppChooserButton is a widget that lets the user select
  * an application. It implements the GtkAppChooser interface.
+ * Initially, a GtkAppChooserButton selects the first application
+ * in its list, which will either be the most-recently used application
+ * or, if "show-default-item" is TRUE, the
+ * default application.
+ * The list of applications shown in a GtkAppChooserButton includes
+ * the recommended applications for the given content type. When
+ * "show-default-item" is set, the default application
+ * is also included. To let the user chooser other applications,
+ * you can set the "show-dialog-item" property,
+ * which allows to open a full GtkAppChooserDialog.
+ * It is possible to add custom items to the list, using
+ * gtk_app_chooser_button_append_custom_item(). These items cause
+ * the "custom-item-activated" signal to be
+ * emitted when they are selected.
+ * To track changes in the selected application, use the
+ * "changed" signal.
  */
 public class AppChooserButton : ComboBox, AppChooserIF
 {
@@ -183,9 +199,9 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	/**
 	 * Appends a custom item to the list of applications that is shown
 	 * in the popup; the item name must be unique per-widget.
-	 * Clients can use the provided name as a detail for the ::custom-item-activated
-	 * signal, to add a callback for the activation of a particular
-	 * custom item in the list.
+	 * Clients can use the provided name as a detail for the
+	 * "custom-item-activated" signal, to add a
+	 * callback for the activation of a particular custom item in the list.
 	 * See also gtk_app_chooser_button_append_separator().
 	 * Params:
 	 * name = the name of the custom item
@@ -222,6 +238,30 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	{
 		// void gtk_app_chooser_button_set_active_custom_item  (GtkAppChooserButton *self,  const gchar *name);
 		gtk_app_chooser_button_set_active_custom_item(gtkAppChooserButton, Str.toStringz(name));
+	}
+	
+	/**
+	 * Returns the current value of the "show-default-item"
+	 * property.
+	 * Returns: the value of "show-default-item" Since 3.2
+	 */
+	public int getShowDefaultItem()
+	{
+		// gboolean gtk_app_chooser_button_get_show_default_item  (GtkAppChooserButton *self);
+		return gtk_app_chooser_button_get_show_default_item(gtkAppChooserButton);
+	}
+	
+	/**
+	 * Sets whether the dropdown menu of this button should show the
+	 * default application for the given content type at top.
+	 * Params:
+	 * setting = the new value for "show-default-item"
+	 * Since 3.2
+	 */
+	public void setShowDefaultItem(int setting)
+	{
+		// void gtk_app_chooser_button_set_show_default_item  (GtkAppChooserButton *self,  gboolean setting);
+		gtk_app_chooser_button_set_show_default_item(gtkAppChooserButton, setting);
 	}
 	
 	/**

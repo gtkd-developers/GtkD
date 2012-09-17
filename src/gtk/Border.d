@@ -124,90 +124,51 @@ private import gobject.Boxed;
  * Widgets can add style classes to their context, which can be used
  * to associate different styles by class (see the section called “Selectors”). Theme engines can also use style classes to vary their
  * rendering. GTK+ has a number of predefined style classes:
- * Style class
- * Macro
- * Used by
- * button
- * GTK_STYLE_CLASS_BUTTON
- * GtkButton, GtkToggleButton, GtkRadioButton, GtkCheckButton
- * default
- * GTK_STYLE_CLASS_DEFAULT
- * GtkButton
- * check
- * GTK_STYLE_CLASS_CHECK
- * GtkCheckButton, GtkCheckMenuItem, GtkCellRendererToggle
- * radio
- * GTK_STYLE_CLASS_RADIO
- * GtkRadioButton, GtkRadioMenuItem, GtkCellRendererToggle
- * arrow
- * GTK_STYLE_CLASS_ARROW
- * GtkArrow
- * calendar
- * GTK_STYLE_CLASS_CALENDAR
- * GtkCalendar
- * entry
- * GTK_STYLE_CLASS_ENTRY
- * GtkEntry
- * cell
- * GTK_STYLE_CLASS_CELL
- * GtkCellRendererToggle
- * menu
- * GTK_STYLE_CLASS_MENU
- * GtkMenu, GtkMenuItem, GtkCheckMenuItem, GtkRadioMenuItem
- * expander
- * GTK_STYLE_CLASS_EXPANDER
- * GtkExpander
- * tooltip
- * GTK_STYLE_CLASS_TOOLTIP
- * GtkTooltip
- * frame
- * GTK_STYLE_CLASS_FRAME
- * GtkFrame
- * scrolled-window
- * GtkScrolledWindow
- * viewport
- * GtkViewport
- * trough
- * GTK_STYLE_CLASS_TROUGH
- * GtkScrollbar, GtkProgressBar, GtkScale
- * progressbar
- * GTK_STYLE_CLASS_PROGRESSBAR
- * GtkProgressBar, GtkCellRendererProgress
- * slider
- * GTK_STYLE_CLASS_SLIDER
- * GtkScrollbar, GtkScale
- * menuitem
- * GTK_STYLE_CLASS_MENUITEM
- * GtkMenuItem
- * popup
- * GtkMenu
- * accelerator
- * GTK_STYLE_CLASS_ACCELERATOR
- * GtkAccelLabel
- * menubar
- * GTK_STYLE_CLASS_MENUBAR
- * GtkMenuBar
- * toolbar
- * GTK_STYLE_CLASS_TOOLBAR
- * GtkToolbar
- * dock
- * GTK_STYLE_CLASS_DOCK
- * GtkHandleBox
- * notebook
- * GtkNotebook
- * background
- * GTK_STYLE_CLASS_BACKGROUND
- * GtkWindow
- * rubberband
- * GTK_STYLE_CLASS_RUBBERBAND
- * header
- * GTK_STYLE_CLASS_HEADER
- * grip
- * GTK_STYLE_CLASS_GRIP
- * GtkWindow
- * spinner
- * GTK_STYLE_CLASS_SPINNER
- * GtkSpinner
+ * GTK_STYLE_CLASS_CELL,
+ * GTK_STYLE_CLASS_ENTRY,
+ * GTK_STYLE_CLASS_BUTTON,
+ * GTK_STYLE_CLASS_COMBOBOX_ENTRY,
+ * GTK_STYLE_CLASS_CALENDAR,
+ * GTK_STYLE_CLASS_SLIDER,
+ * GTK_STYLE_CLASS_BACKGROUND,
+ * GTK_STYLE_CLASS_RUBBERBAND,
+ * GTK_STYLE_CLASS_TOOLTIP,
+ * GTK_STYLE_CLASS_MENU,
+ * GTK_STYLE_CLASS_MENUBAR,
+ * GTK_STYLE_CLASS_MENUITEM,
+ * GTK_STYLE_CLASS_TOOLBAR,
+ * GTK_STYLE_CLASS_PRIMARY_TOOLBAR,
+ * GTK_STYLE_CLASS_INLINE_TOOLBAR,
+ * GTK_STYLE_CLASS_RADIO,
+ * GTK_STYLE_CLASS_CHECK,
+ * GTK_STYLE_CLASS_TROUGH,
+ * GTK_STYLE_CLASS_SCROLLBAR,
+ * GTK_STYLE_CLASS_SCALE,
+ * GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE,
+ * GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW,
+ * GTK_STYLE_CLASS_HEADER,
+ * GTK_STYLE_CLASS_ACCELERATOR,
+ * GTK_STYLE_CLASS_GRIP,
+ * GTK_STYLE_CLASS_DOCK,
+ * GTK_STYLE_CLASS_PROGRESSBAR,
+ * GTK_STYLE_CLASS_SPINNER,
+ * GTK_STYLE_CLASS_EXPANDER,
+ * GTK_STYLE_CLASS_SPINBUTTON,
+ * GTK_STYLE_CLASS_NOTEBOOK,
+ * GTK_STYLE_CLASS_VIEW,
+ * GTK_STYLE_CLASS_SIDEBAR,
+ * GTK_STYLE_CLASS_IMAGE,
+ * GTK_STYLE_CLASS_HIGHLIGHT,
+ * GTK_STYLE_CLASS_FRAME,
+ * GTK_STYLE_CLASS_DND,
+ * GTK_STYLE_CLASS_PANE_SEPARATOR,
+ * GTK_STYLE_CLASS_SEPARATOR,
+ * GTK_STYLE_CLASS_INFO,
+ * GTK_STYLE_CLASS_WARNING,
+ * GTK_STYLE_CLASS_QUESTION,
+ * GTK_STYLE_CLASS_ERROR,
+ * GTK_STYLE_CLASS_HORIZONTAL,
+ * GTK_STYLE_CLASS_VERTICAL.
  * Widgets can also add regions with flags to their context.
  * The regions used by GTK+ widgets are:
  * Region
@@ -282,7 +243,7 @@ public class Border : Boxed
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkBorder !is null )
+		if ( Linker.isLoaded(LIBRARY.GTK) && gtkBorder !is null )
 		{
 			gtk_border_free(gtkBorder);
 		}

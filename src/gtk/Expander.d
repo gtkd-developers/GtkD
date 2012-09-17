@@ -399,4 +399,28 @@ public class Expander : Bin
 		// gboolean gtk_expander_get_label_fill (GtkExpander *expander);
 		return gtk_expander_get_label_fill(gtkExpander);
 	}
+	
+	/**
+	 * Sets whether the expander will resize the toplevel widget
+	 * containing the expander upon resizing and collpasing.
+	 * Params:
+	 * resizeToplevel = whether to resize the toplevel
+	 * Since 3.2
+	 */
+	public void setResizeToplevel(int resizeToplevel)
+	{
+		// void gtk_expander_set_resize_toplevel (GtkExpander *expander,  gboolean resize_toplevel);
+		gtk_expander_set_resize_toplevel(gtkExpander, resizeToplevel);
+	}
+	
+	/**
+	 * Returns whether the expander will resize the toplevel widget
+	 * containing the expander upon resizing and collpasing.
+	 * Returns: the "resize toplevel" setting. Since 3.2
+	 */
+	public int getResizeToplevel()
+	{
+		// gboolean gtk_expander_get_resize_toplevel (GtkExpander *expander);
+		return gtk_expander_get_resize_toplevel(gtkExpander);
+	}
 }

@@ -113,7 +113,7 @@ public class TextAttributes
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTextAttributes !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextAttributes !is null )
 		{
 			gtk_text_attributes_unref(gtkTextAttributes);
 		}
@@ -142,7 +142,7 @@ public class TextAttributes
 	
 	/**
 	 * Copies src and returns a new GtkTextAttributes.
-	 * Returns: a copy of src
+	 * Returns: a copy of src, free with gtk_text_attributes_unref()
 	 */
 	public TextAttributes copy()
 	{
@@ -156,8 +156,8 @@ public class TextAttributes
 	}
 	
 	/**
-	 * Copies the values from src to dest so that dest has the same values
-	 * as src. Frees existing values in dest.
+	 * Copies the values from src to dest so that dest has
+	 * the same values as src. Frees existing values in dest.
 	 * Params:
 	 * dest = another GtkTextAttributes
 	 */

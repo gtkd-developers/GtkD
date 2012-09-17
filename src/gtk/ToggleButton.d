@@ -80,7 +80,7 @@ private import gtk.Button;
  * The state of a GtkToggleButton can be set specifically using
  * gtk_toggle_button_set_active(), and retrieved using
  * gtk_toggle_button_get_active().
- * To simply switch the state of a toggle button, use gtk_toggle_button_toggled.
+ * To simply switch the state of a toggle button, use gtk_toggle_button_toggled().
  * $(DDOC_COMMENT example)
  */
 public class ToggleButton : Button
@@ -170,12 +170,7 @@ public class ToggleButton : Button
 	 * Should be connected if you wish to perform an action whenever the
 	 * GtkToggleButton's state is changed.
 	 * See Also
-	 * GtkButton
-	 * a more general button.
-	 * GtkCheckButton
-	 * another way of presenting a toggle option.
-	 * GtkCheckMenuItem
-	 * a GtkToggleButton as a menu item.
+	 * GtkButton, GtkCheckButton, GtkCheckMenuItem
 	 */
 	void addOnToggled(void delegate(ToggleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -245,8 +240,8 @@ public class ToggleButton : Button
 	}
 	
 	/**
-	 * Emits the toggled
-	 * signal on the GtkToggleButton. There is no good reason for an
+	 * Emits the "toggled" signal on the
+	 * GtkToggleButton. There is no good reason for an
 	 * application ever to call this function.
 	 */
 	public void toggled()

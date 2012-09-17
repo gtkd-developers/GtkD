@@ -71,6 +71,7 @@ private import gtk.Scale;
  * a horizontal slider. To create one, use gtk_hscale_new_with_range().
  * The position to show the current value, and the number of decimal places
  * shown can be set using the parent GtkScale class's functions.
+ * GtkHScale has been deprecated, use GtkScale instead.
  */
 public class HScale : Scale
 {
@@ -122,6 +123,8 @@ public class HScale : Scale
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_hscale_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_scale_new() with GTK_ORIENTATION_HORIZONTAL instead
 	 * Creates a new GtkHScale.
 	 * Params:
 	 * adjustment = the GtkAdjustment which sets the range of the scale.
@@ -139,6 +142,8 @@ public class HScale : Scale
 	}
 	
 	/**
+	 * Warning
+	 * gtk_hscale_new_with_range has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_scale_new_with_range() with GTK_ORIENTATION_HORIZONTAL instead
 	 * Creates a new horizontal scale widget that lets the user input a
 	 * number between min and max (including min and max) with the
 	 * increment step. step must be nonzero; it's the distance the

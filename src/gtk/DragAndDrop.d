@@ -50,9 +50,11 @@
  * 	- gdk.Event
  * 	- gdk.Pixbuf
  * 	- gdk.Window
+ * 	- gio.IconIF
  * 	- gtk.TargetList
  * 	- gtk.Widget
  * structWrap:
+ * 	- GIcon* -> IconIF
  * 	- GdkDragContext* -> DragContext
  * 	- GdkEvent* -> Event
  * 	- GdkPixbuf* -> Pixbuf
@@ -79,6 +81,7 @@ private import gdk.DragContext;
 private import gdk.Event;
 private import gdk.Pixbuf;
 private import gdk.Window;
+private import gio.IconIF;
 private import gtk.TargetList;
 private import gtk.Widget;
 
@@ -167,14 +170,14 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Set up this widget to proxy drags elsewhere.
 	 * Sets this widget as a proxy for drops to another window.
 	 * Params:
 	 * widget = a GtkWidget
-	 * proxyWindow = window to which forward drag events
-	 * protocol = Drag protocol which the dest widget accepts
-	 * useCoordinates = If true, send the same coordinates to the
-	 * destination, because it is a embedded
+	 * proxyWindow = the window to which to forward drag events
+	 * protocol = the drag protocol which the proxy_window accepts
+	 * (You can use gdk_drag_get_protocol() to determine this)
+	 * useCoordinates = If TRUE, send the same coordinates to the
+	 * destination, because it is an embedded
 	 * subwindow.
 	 */
 	public static void destSetProxy(Widget widget, Window proxyWindow, GdkDragProtocol protocol, int useCoordinates)
@@ -184,7 +187,6 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Unregister this widget as a drag target.
 	 * Clears information about a drop destination set with
 	 * gtk_drag_dest_set(). The widget will no longer receive
 	 * notification of drags.
@@ -299,9 +301,9 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Tells the widget to emit ::drag-motion and ::drag-leave
-	 * events regardless of the targets and the GTK_DEST_DEFAULT_MOTION
-	 * flag.
+	 * Tells the widget to emit "drag-motion" and
+	 * "drag-leave" events regardless of the targets and the
+	 * GTK_DEST_DEFAULT_MOTION flag.
 	 * This may be used when a widget wants to do generic
 	 * actions regardless of the targets that the source offers.
 	 * Since 2.10
@@ -317,11 +319,11 @@ public class DragAndDrop
 	
 	/**
 	 * Returns whether the widget has been configured to always
-	 * emit ::drag-motion signals.
+	 * emit "drag-motion" signals.
 	 * Since 2.10
 	 * Params:
 	 * widget = a GtkWidget that's a drag destination
-	 * Returns: TRUE if the widget always emits ::drag-motion events
+	 * Returns: TRUE if the widget always emits "drag-motion" events
 	 */
 	public static int destGetTrackMotion(Widget widget)
 	{
@@ -336,7 +338,7 @@ public class DragAndDrop
 	 * success = a flag indicating whether the drop was successful
 	 * del = a flag indicating whether the source should delete the
 	 * original data. (This should be TRUE for a move)
-	 * time = the timestamp from the "drag_data_drop" signal.
+	 * time = the timestamp from the "drag-drop" signal.
 	 */
 	public void finish(int success, int del, uint time)
 	{
@@ -345,20 +347,22 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Get the data for a drag or drop
 	 * Gets the data associated with a drag. When the data
 	 * is received or the retrieval fails, GTK+ will emit a
-	 * "drag_data_received" signal. Failure of the retrieval
+	 * "drag-data-received" signal. Failure of the retrieval
 	 * is indicated by the length field of the selection_data
 	 * signal parameter being negative. However, when gtk_drag_get_data()
 	 * is called implicitely because the GTK_DEST_DEFAULT_DROP was set,
 	 * then the widget will not receive notification of failed
 	 * drops.
 	 * Params:
-	 * widget = a GtkWidget
-	 * context = drag context
-	 * target = format to retrieve the data in.
-	 * time = timestamp of triggering event.
+	 * widget = the widget that will receive the
+	 * "drag-data-received" signal.
+	 * context = the drag context
+	 * target = the target (form of the data) to retrieve.
+	 * time = a timestamp for retrieving the data. This will
+	 * generally be the time received in a "drag-motion""
+	 * or "drag-drop"" signal.
 	 */
 	public static void getData(Widget widget, DragContext context, GdkAtom target, uint time)
 	{
@@ -382,13 +386,12 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Highlight the given widget in the default manner.
 	 * Draws a highlight around a widget. This will attach
-	 * handlers to "expose_event" and "draw", so the highlight
+	 * handlers to "draw", so the highlight
 	 * will continue to be displayed until gtk_drag_unhighlight()
 	 * is called.
 	 * Params:
-	 * widget = a GtkWidget
+	 * widget = a widget to highlight
 	 */
 	public static void highlight(Widget widget)
 	{
@@ -397,11 +400,10 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Refresh the given widget to remove the highlight.
 	 * Removes a highlight set by gtk_drag_highlight() from
 	 * a widget.
 	 * Params:
-	 * widget = a GtkWidget
+	 * widget = a widget to remove the highlight from.
 	 */
 	public static void unhighlight(Widget widget)
 	{
@@ -518,6 +520,22 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Sets the icon for a given drag from the given icon. See the
+	 * documentation for gtk_drag_set_icon_name() for more details about
+	 * using icons in drag and drop.
+	 * Params:
+	 * icon = a GIcon
+	 * hotX = the X offset of the hotspot within the icon
+	 * hotY = the Y offset of the hotspot within the icon
+	 * Since 3.2
+	 */
+	public void setIconGicon(IconIF icon, int hotX, int hotY)
+	{
+		// void gtk_drag_set_icon_gicon (GdkDragContext *context,  GIcon *icon,  gint hot_x,  gint hot_y);
+		gtk_drag_set_icon_gicon(gdkDragContext, (icon is null) ? null : icon.getIconTStruct(), hotX, hotY);
+	}
+	
+	/**
 	 * Sets the icon for a particular drag to the default
 	 * icon.
 	 */
@@ -603,7 +621,20 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Unregister this widget as a drag source.
+	 * Sets the icon that will be used for drags from a particular source
+	 * to icon. See the docs for GtkIconTheme for more details.
+	 * Params:
+	 * widget = a GtkWidget
+	 * icon = A GIcon
+	 * Since 3.2
+	 */
+	public static void sourceSetIconGicon(Widget widget, IconIF icon)
+	{
+		// void gtk_drag_source_set_icon_gicon (GtkWidget *widget,  GIcon *icon);
+		gtk_drag_source_set_icon_gicon((widget is null) ? null : widget.getWidgetStruct(), (icon is null) ? null : icon.getIconTStruct());
+	}
+	
+	/**
 	 * Undoes the effects of gtk_drag_source_set().
 	 * Params:
 	 * widget = a GtkWidget

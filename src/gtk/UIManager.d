@@ -101,6 +101,7 @@ private import gobject.ObjectG;
  * UI Definitions
  * The UI definitions are specified in an XML format which can be
  * roughly described by the following DTD.
+ * Note
  * Do not confuse the GtkUIManager UI Definitions described here with
  * the similarly named GtkBuilder UI
  * Definitions.
@@ -114,30 +115,30 @@ private import gobject.ObjectG;
  * <!ELEMENT toolitem (menu?) >
  * <!ELEMENT separator EMPTY >
  * <!ELEMENT accelerator EMPTY >
- * <!ATTLIST menubar name num;IMPLIED
- *  action num;IMPLIED >
- * <!ATTLIST toolbar name num;IMPLIED
- *  action num;IMPLIED >
- * <!ATTLIST popup name num;IMPLIED
- *  action num;IMPLIED
- *  accelerators (true|false) num;IMPLIED >
- * <!ATTLIST placeholder name num;IMPLIED
- *  action num;IMPLIED >
- * <!ATTLIST separator name num;IMPLIED
- *  action num;IMPLIED
- *  expand (true|false) num;IMPLIED >
- * <!ATTLIST menu name num;IMPLIED
- *  action num;REQUIRED
- *  position (top|bot) num;IMPLIED >
- * <!ATTLIST menuitem name num;IMPLIED
- *  action num;REQUIRED
- *  position (top|bot) num;IMPLIED
- *  always-show-image (true|false) num;IMPLIED >
- * <!ATTLIST toolitem name num;IMPLIED
- *  action num;REQUIRED
- *  position (top|bot) num;IMPLIED >
- * <!ATTLIST accelerator name num;IMPLIED
- *  action num;REQUIRED >
+ * <!ATTLIST menubar name #IMPLIED
+ *  action #IMPLIED >
+ * <!ATTLIST toolbar name #IMPLIED
+ *  action #IMPLIED >
+ * <!ATTLIST popup name #IMPLIED
+ *  action #IMPLIED
+ *  accelerators (true|false) #IMPLIED >
+ * <!ATTLIST placeholder name #IMPLIED
+ *  action #IMPLIED >
+ * <!ATTLIST separator name #IMPLIED
+ *  action #IMPLIED
+ *  expand (true|false) #IMPLIED >
+ * <!ATTLIST menu name #IMPLIED
+ *  action #REQUIRED
+ *  position (top|bot) #IMPLIED >
+ * <!ATTLIST menuitem name #IMPLIED
+ *  action #REQUIRED
+ *  position (top|bot) #IMPLIED
+ *  always-show-image (true|false) #IMPLIED >
+ * <!ATTLIST toolitem name #IMPLIED
+ *  action #REQUIRED
+ *  position (top|bot) #IMPLIED >
+ * <!ATTLIST accelerator name #IMPLIED
+ *  action #REQUIRED >
  * There are some additional restrictions beyond those specified in the
  * DTD, e.g. every toolitem must have a toolbar in its anchestry and
  * every menuitem must have a menubar or popup in its anchestry. Since
@@ -148,7 +149,7 @@ private import gobject.ObjectG;
  * attributes must not contain '/' characters after parsing (since that
  * would mess up path lookup) and must be usable as XML attributes when
  * enclosed in doublequotes, thus they must not '"' characters or references
- * to the quot; entity.
+ * to the " entity.
  * $(DDOC_COMMENT example)
  * The constructed widget hierarchy is very similar to the element tree
  * of the XML, with the exception that placeholders are merged into their

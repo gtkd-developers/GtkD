@@ -358,9 +358,9 @@ private import gobject.ObjectG;
  *  been set insensitive with gtk_widget_set_sensitive().
  * Colors can be specified as a string containing a color name (GTK+ knows
  * all names from the X color database /usr/lib/X11/rgb.txt),
- * in one of the hexadecimal forms #rrrrggggbbbb,
- * #rrrgggbbb, #rrggbb,
- * or #rgb, where r,
+ * in one of the hexadecimal forms rrrrggggbbbb,
+ * rrrgggbbb, rrggbb,
+ * or rgb, where r,
  * g and b are
  * hex digits, or they can be specified as a triplet
  * { r, g,
@@ -581,7 +581,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_parse is deprecated and should not be used in newly-written code.
+	 * gtk_rc_parse has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Parses a given resource file.
 	 * Params:
 	 * filename = the filename of a file to parse. If filename is not absolute, it
@@ -595,7 +595,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_parse_string is deprecated and should not be used in newly-written code.
+	 * gtk_rc_parse_string has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Parses resource information directly from a string.
 	 * Params:
 	 * rcString = a string to parse.
@@ -608,7 +608,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_reparse_all is deprecated and should not be used in newly-written code.
+	 * gtk_rc_reparse_all has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * If the modification time on any previously read file for the
 	 * default GtkSettings has changed, discard all style information
 	 * and then reread all previously read RC files.
@@ -622,7 +622,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_reparse_all_for_settings is deprecated and should not be used in newly-written code.
+	 * gtk_rc_reparse_all_for_settings has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * If the modification time on any previously read file
 	 * for the given GtkSettings has changed, discard all style information
 	 * and then reread all previously read RC files.
@@ -639,7 +639,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_reset_styles is deprecated and should not be used in newly-written code.
+	 * gtk_rc_reset_styles has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * This function recomputes the styles for all widgets that use a
 	 * particular GtkSettings object. (There is one GtkSettings object
 	 * per GdkScreen, see gtk_settings_get_for_screen()); It is useful
@@ -748,7 +748,9 @@ public class RcStyle : ObjectG
 	 * Parses a GtkStateType variable from the format expected
 	 * in a RC file.
 	 * Params:
-	 * state = . [out]
+	 * scanner = a GtkScanner (must be initialized for parsing an RC file)
+	 * state = A pointer to a GtkStateType variable in which to
+	 * store the result. [out]
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found.
 	 */
 	public static uint parseState(ScannerG scanner, out GtkStateType state)
@@ -763,7 +765,9 @@ public class RcStyle : ObjectG
 	 * Parses a GtkPathPriorityType variable from the format expected
 	 * in a RC file.
 	 * Params:
-	 * priority = . [out]
+	 * scanner = a GtkScanner (must be initialized for parsing an RC file)
+	 * priority = A pointer to GtkPathPriorityType variable in which
+	 * to store the result.
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found.
 	 */
 	public static uint parsePriority(ScannerG scanner, out GtkPathPriorityType priority)
@@ -774,7 +778,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_find_module_in_path is deprecated and should not be used in newly-written code.
+	 * gtk_rc_find_module_in_path has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Searches for a theme engine in the GTK+ search path. This function
 	 * is not useful for applications and should not be used.
 	 * Params:
@@ -789,7 +793,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_find_pixmap_in_path is deprecated and should not be used in newly-written code.
+	 * gtk_rc_find_pixmap_in_path has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Looks up a file in pixmap path for the specified GtkSettings.
 	 * If the file is not found, it outputs a warning message using
 	 * g_warning() and returns NULL.
@@ -808,7 +812,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_get_module_dir is deprecated and should not be used in newly-written code.
+	 * gtk_rc_get_module_dir has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Returns a directory in which GTK+ looks for theme engines.
 	 * For full information about the search for theme engines,
 	 * see the docs for GTK_PATH in
@@ -823,7 +827,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_get_im_module_path is deprecated and should not be used in newly-written code.
+	 * gtk_rc_get_im_module_path has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Obtains the path in which to look for IM modules. See the documentation
 	 * of the GTK_PATH
 	 * environment variable for more details about looking up modules. This
@@ -839,7 +843,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_get_im_module_file is deprecated and should not be used in newly-written code.
+	 * gtk_rc_get_im_module_file has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Obtains the path to the IM modules file. See the documentation
 	 * of the GTK_IM_MODULE_FILE
 	 * environment variable for more details.
@@ -853,7 +857,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_get_theme_dir is deprecated and should not be used in newly-written code.
+	 * gtk_rc_get_theme_dir has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Returns the standard directory in which themes should
 	 * be installed. (GTK+ does not actually use this directory
 	 * itself.)
@@ -867,7 +871,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_style_new is deprecated and should not be used in newly-written code.
+	 * gtk_rc_style_new has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Creates a new GtkRcStyle with no fields set and
 	 * a reference count of 1.
 	 * Returns: the newly-created GtkRcStyle
@@ -885,7 +889,7 @@ public class RcStyle : ObjectG
 	
 	/**
 	 * Warning
-	 * gtk_rc_style_copy is deprecated and should not be used in newly-written code.
+	 * gtk_rc_style_copy has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
 	 * Makes a copy of the specified GtkRcStyle. This function
 	 * will correctly copy an RC style that is a member of a class
 	 * derived from GtkRcStyle.

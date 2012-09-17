@@ -78,6 +78,8 @@ private import gtk.Dialog;
  * To get the selected font use gtk_font_selection_dialog_get_font_name().
  * To change the text which is shown in the preview area, use
  * gtk_font_selection_dialog_set_preview_text().
+ * In GTK+ 3.2, GtkFontSelectionDialog has been deprecated in favor of
+ * GtkFontChooserDialog.
  * GtkFontSelectionDialog as GtkBuildable
  * The GtkFontSelectionDialog implementation of the GtkBuildable interface
  * exposes the embedded GtkFontSelection as internal child with the
@@ -150,6 +152,8 @@ public class FontSelectionDialog : Dialog
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_dialog_new has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
 	 * Creates a new GtkFontSelectionDialog.
 	 * Params:
 	 * title = the title of the dialog window
@@ -167,6 +171,8 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_dialog_get_font_name has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
 	 * Gets the currently-selected font name.
 	 * Note that this can be a different string than what you set with
 	 * gtk_font_selection_dialog_set_font_name(), as the font selection widget
@@ -183,6 +189,8 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_dialog_set_font_name has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
 	 * Sets the currently selected font.
 	 * Params:
 	 * fontname = a font name like "Helvetica 12" or "Times Bold 18"
@@ -195,6 +203,8 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_dialog_get_preview_text has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
 	 * Gets the text displayed in the preview area.
 	 * Returns: the text displayed in the preview area. This string is owned by the widget and should not be modified or freed
 	 */
@@ -205,6 +215,8 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_dialog_set_preview_text has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
 	 * Sets the text displayed in the preview area.
 	 * Params:
 	 * text = the text to display in the preview area
@@ -216,6 +228,8 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_dialog_get_cancel_button has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
 	 * Gets the 'Cancel' button.
 	 * Since 2.14
 	 * Returns: the GtkWidget used in the dialog for the 'Cancel' button. [transfer none]
@@ -232,6 +246,8 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_dialog_get_ok_button has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
 	 * Gets the 'OK' button.
 	 * Since 2.14
 	 * Returns: the GtkWidget used in the dialog for the 'OK' button. [transfer none]

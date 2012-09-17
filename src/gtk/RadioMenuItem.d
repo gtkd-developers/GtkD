@@ -209,10 +209,7 @@ public class RadioMenuItem : CheckMenuItem
 	void delegate(RadioMenuItem)[] onGroupChangedListeners;
 	/**
 	 * See Also
-	 * GtkMenuItem
-	 * because a radio menu item is a menu item.
-	 * GtkCheckMenuItem
-	 * to know how to handle the check.
+	 * GtkMenuItem, GtkCheckMenuItem
 	 */
 	void addOnGroupChanged(void delegate(RadioMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

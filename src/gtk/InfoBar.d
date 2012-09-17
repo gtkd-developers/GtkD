@@ -75,7 +75,7 @@ private import gtk.Widget;
 
 
 
-private import gtk.HBox;
+private import gtk.Box;
 
 /**
  * Description
@@ -104,7 +104,7 @@ private import gtk.HBox;
  * attribute specifies a numeric response, and the content of the element
  * is the id of widget (which should be a child of the dialogs action_area).
  */
-public class InfoBar : HBox
+public class InfoBar : Box
 {
 	
 	/** the main Gtk struct */
@@ -140,7 +140,7 @@ public class InfoBar : HBox
 			this = cast(InfoBar)ptr;
 			return;
 		}
-		super(cast(GtkHBox*)gtkInfoBar);
+		super(cast(GtkBox*)gtkInfoBar);
 		this.gtkInfoBar = gtkInfoBar;
 	}
 	

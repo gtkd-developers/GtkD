@@ -67,6 +67,7 @@ private import gtk.Separator;
  * The GtkVSeparator widget is a vertical separator, used to group the
  * widgets within a window. It displays a vertical line with a shadow to
  * make it appear sunken into the interface.
+ * GtkVSeparator has been deprecated, use GtkSeparator instead.
  */
 public class VSeparator : Separator
 {
@@ -118,6 +119,8 @@ public class VSeparator : Separator
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_vseparator_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_separator_new() with GTK_ORIENTATION_VERTICAL instead
 	 * Creates a new GtkVSeparator.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

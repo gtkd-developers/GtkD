@@ -153,7 +153,7 @@ public class RecentInfo
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkRecentInfo !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRecentInfo !is null )
 		{
 			gtk_recent_info_unref(gtkRecentInfo);
 		}

@@ -31,11 +31,12 @@
  * ctorStrct=
  * clss    = FontButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- FontChooserIF
  * prefixes:
  * 	- gtk_font_button_
  * omit structs:
@@ -44,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.FontChooserT
+ * 	- gtk.FontChooserIF
  * structWrap:
  * module aliases:
  * local aliases:
@@ -61,6 +64,8 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.FontChooserT;
+private import gtk.FontChooserIF;
 
 
 
@@ -68,10 +73,11 @@ private import gtk.Button;
 
 /**
  * Description
- * The GtkFontButton is a button which displays the currently selected font an allows to open a font selection
- * dialog to change the font. It is suitable widget for selecting a font in a preference dialog.
+ * The GtkFontButton is a button which displays the currently selected
+ * font an allows to open a font chooser dialog to change the font.
+ * It is suitable widget for selecting a font in a preference dialog.
  */
-public class FontButton : Button
+public class FontButton : Button, FontChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -117,6 +123,9 @@ public class FontButton : Button
 		gtkFontButton = cast(GtkFontButton*)obj;
 	}
 	
+	// add the FontChooser capabilities
+	mixin FontChooserT!(GtkFontButton);
+	
 	/**
 	 */
 	int[string] connectedSignals;
@@ -131,7 +140,7 @@ public class FontButton : Button
 	 * as well, use the notify::font-name signal.
 	 * Since 2.4
 	 * See Also
-	 * GtkFontSelectionDialog, GtkColorButton.
+	 * GtkFontChooserDialog, GtkColorButton.
 	 */
 	void addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -177,7 +186,7 @@ public class FontButton : Button
 	 * Creates a new font picker widget.
 	 * Since 2.4
 	 * Params:
-	 * fontname = Name of font to display in font selection dialog
+	 * fontname = Name of font to display in font chooser dialog
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string fontname)
@@ -195,8 +204,8 @@ public class FontButton : Button
 	 * Sets or updates the currently-displayed font in font picker dialog.
 	 * Since 2.4
 	 * Params:
-	 * fontname = Name of font to display in font selection dialog
-	 * Returns: Return value of gtk_font_selection_dialog_set_font_name() if the font selection dialog exists, otherwise FALSE.
+	 * fontname = Name of font to display in font chooser dialog
+	 * Returns: TRUE
 	 */
 	public int setFontName(string fontname)
 	{
@@ -313,10 +322,10 @@ public class FontButton : Button
 	}
 	
 	/**
-	 * Sets the title for the font selection dialog.
+	 * Sets the title for the font chooser dialog.
 	 * Since 2.4
 	 * Params:
-	 * title = a string containing the font selection dialog title
+	 * title = a string containing the font chooser dialog title
 	 */
 	public void setTitle(string title)
 	{
@@ -325,7 +334,7 @@ public class FontButton : Button
 	}
 	
 	/**
-	 * Retrieves the title of the font selection dialog.
+	 * Retrieves the title of the font chooser dialog.
 	 * Since 2.4
 	 * Returns: an internal copy of the title string which must not be freed.
 	 */

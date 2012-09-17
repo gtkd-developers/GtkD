@@ -69,9 +69,9 @@ private import gtk.CellRenderer;
 /**
  * Description
  * GtkCellRendererToggle renders a toggle button in a cell. The
- * button is drawn as a radio- or checkbutton, depending on the
- * radio
- * property. When activated, it emits the toggled signal.
+ * button is drawn as a radio or a checkbutton, depending on the
+ * "radio" property.
+ * When activated, it emits the "toggled" signal.
  */
 public class CellRendererToggle : CellRenderer
 {

@@ -86,7 +86,8 @@ private import gtk.Dialog;
  * GtkPrintUnixDialog implements a print dialog for platforms
  * which don't provide a native print dialog, like Unix. It can
  * be used very much like any other GTK+ dialog, at the cost of
- * the portability offered by the high-level printing API
+ * the portability offered by the
+ * high-level printing API
  * In order to print something with GtkPrintUnixDialog, you need
  * to use gtk_print_unix_dialog_get_selected_printer() to obtain
  * a GtkPrinter object and use it to construct a GtkPrintJob using

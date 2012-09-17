@@ -73,6 +73,7 @@ private import gtk.Scrollbar;
  * adjustment of the scrollbar or it may be left NULL in which case one
  * will be created for you. See GtkScrollbar for a description of what the
  * fields in an adjustment represent for a scrollbar.
+ * GtkVScrollbar has been deprecated, use GtkScrollbar instead.
  */
 public class VScrollbar : Scrollbar
 {
@@ -124,6 +125,8 @@ public class VScrollbar : Scrollbar
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_vscrollbar_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_scrollbar_new() with GTK_ORIENTATION_VERTICAL instead
 	 * Creates a new vertical scrollbar.
 	 * Params:
 	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment. [allow-none]

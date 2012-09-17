@@ -77,8 +77,11 @@ private import gtk.Container;
 
 /**
  * Description
- * GtkPaned is the base class for widgets with two panes, arranged either
- * horizontally (GtkHPaned) or vertically (GtkVPaned). Child widgets are
+ * GtkPaned has two panes, arranged either
+ * horizontally or vertically. The division between
+ * the two panes is adjustable by the user by dragging
+ * a handle.
+ * Child widgets are
  * added to the panes of the widget with gtk_paned_pack1() and
  * gtk_paned_pack2(). The division between the two children is set by default
  * from the size requests of the children, but it can be adjusted by the

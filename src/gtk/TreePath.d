@@ -156,6 +156,31 @@ private import gtkc.paths;
  * shown, as it is specific to the GtkListStore. For information on
  * how to write such a function, see the GtkListStore documentation.
  * $(DDOC_COMMENT example)
+ * The GtkTreeModel interface contains two methods for reference
+ * counting: gtk_tree_model_ref_node() and gtk_tree_model_unref_node().
+ * These two methods are optional to implement. The reference counting
+ * is meant as a way for views to let models know when nodes are being
+ * displayed. GtkTreeView will take a reference on a node when it is
+ * visible, which means the node is either in the toplevel or expanded.
+ * Being displayed does not mean that the node is currently directly
+ * visible to the user in the viewport. Based on this reference counting
+ * scheme a caching model, for example, can decide whether or not to cache
+ * a node based on the reference count. A file-system based model would
+ * not want to keep the entire file hierarchy in memory, but just the
+ * folders that are currently expanded in every current view.
+ * When working with reference counting, the following rules must be taken
+ * into account:
+ * Never take a reference on a node without owning a
+ * reference on its parent. This means that all parent nodes of a referenced
+ * node must be referenced as well.
+ * Outstanding references on a deleted node are not released.
+ * This is not possible because the node has already been deleted by the
+ * time the row-deleted signal is received.
+ * Models are not obligated to emit a signal on rows of
+ * which none of its siblings are referenced. To phrase this differently,
+ * signals are only required for levels in which nodes are referenced. For
+ * the root level however, signals must be emitted at all times (however the
+ * root level is always referenced when any view is attached).
  */
 public class TreePath
 {
@@ -231,7 +256,7 @@ public class TreePath
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkTreePath !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTreePath !is null )
 		{
 			gtk_tree_path_free(gtkTreePath);
 		}
@@ -313,6 +338,7 @@ public class TreePath
 	 * Returns the current indices of path.
 	 * This is an array of integers, each representing a node in a tree.
 	 * This value should not be freed.
+	 * The length of the array can be obtained with gtk_tree_path_get_depth().
 	 * Returns: The current indices, or NULL
 	 */
 	public int[] getIndices()

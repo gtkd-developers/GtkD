@@ -23,46 +23,39 @@
 
 /*
  * Conversion parameters:
- * inFile  = GtkCssProvider.html
+ * inFile  = 
  * outPack = gtk
- * outFile = CssProvider
- * strct   = GtkCssProvider
+ * outFile = CssSection
+ * strct   = GtkCssSection
  * realStrct=
  * ctorStrct=
- * clss    = CssProvider
+ * clss    = CssSection
  * interf  = 
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GBoxed
  * implements:
- * 	- StyleProviderIF
  * prefixes:
- * 	- gtk_css_provider_
+ * 	- gtk_css_section_
  * omit structs:
  * omit prefixes:
- * 	- gtk_css_section_
  * omit code:
  * omit signals:
+ * 	- parsing-error
  * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * 	- gio.File
- * 	- gtk.CssSection
- * 	- gtk.StyleProviderT
- * 	- gtk.StyleProviderIF
  * structWrap:
- * 	- GError* -> ErrorG
  * 	- GFile* -> File
- * 	- GtkCssProvider* -> CssProvider
  * 	- GtkCssSection* -> CssSection
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gtk.CssProvider;
+module gtk.CssSection;
 
 public  import gtkc.gtktypes;
 
@@ -72,17 +65,13 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
+private import gtkc.paths;
+private import gtkc.Loader;
 private import gio.File;
-private import gtk.CssSection;
-private import gtk.StyleProviderT;
-private import gtk.StyleProviderIF;
 
 
 
-private import gobject.ObjectG;
+private import gobject.Boxed;
 
 /**
  * Description
@@ -539,231 +528,182 @@ private import gobject.ObjectG;
  * way, using the widget class name for namespace.
  * $(DDOC_COMMENT example)
  */
-public class CssProvider : ObjectG, StyleProviderIF
+public class CssSection : Boxed
 {
 	
 	/** the main Gtk struct */
-	protected GtkCssProvider* gtkCssProvider;
+	protected GtkCssSection* gtkCssSection;
 	
 	
-	public GtkCssProvider* getCssProviderStruct()
+	public GtkCssSection* getCssSectionStruct()
 	{
-		return gtkCssProvider;
+		return gtkCssSection;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
-	protected override void* getStruct()
+	protected void* getStruct()
 	{
-		return cast(void*)gtkCssProvider;
+		return cast(void*)gtkCssSection;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GtkCssProvider* gtkCssProvider)
+	public this (GtkCssSection* gtkCssSection)
 	{
-		if(gtkCssProvider is null)
+		if(gtkCssSection is null)
 		{
 			this = null;
 			return;
 		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCssProvider);
-		if( ptr !is null )
-		{
-			this = cast(CssProvider)ptr;
-			return;
-		}
-		super(cast(GObject*)gtkCssProvider);
-		this.gtkCssProvider = gtkCssProvider;
+		this.gtkCssSection = gtkCssSection;
 	}
 	
-	protected override void setStruct(GObject* obj)
+	~this ()
 	{
-		super.setStruct(obj);
-		gtkCssProvider = cast(GtkCssProvider*)obj;
-	}
-	
-	// add the StyleProvider capabilities
-	mixin StyleProviderT!(GtkCssProvider);
-	
-	/**
-	 */
-	int[string] connectedSignals;
-	
-	void delegate(CssSection, ErrorG, CssProvider)[] onParsingErrorListeners;
-	/**
-	 * Signals that a parsing error occured. the path, line and position
-	 * describe the actual location of the error as accurately as possible.
-	 * Parsing errors are never fatal, so the parsing will resume after
-	 * the error. Errors may however cause parts of the given
-	 * data or even all of it to not be parsed at all. So it is a useful idea
-	 * to check that the parsing succeeds by connecting to this signal.
-	 * Note that this signal may be emitted at any time as the css provider
-	 * may opt to defer parsing parts or all of the input to a later time
-	 * than when a loading function was called.
-	 * See Also
-	 * GtkStyleContext, GtkStyleProvider
-	 */
-	void addOnParsingError(void delegate(CssSection, ErrorG, CssProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("parsing-error" in connectedSignals) )
+		if ( Linker.isLoaded(LIBRARY.GTK) && gtkCssSection !is null )
 		{
-			Signals.connectData(
-			getStruct(),
-			"parsing-error",
-			cast(GCallback)&callBackParsingError,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["parsing-error"] = 1;
-		}
-		onParsingErrorListeners ~= dlg;
-	}
-	extern(C) static void callBackParsingError(GtkCssProvider* providerStruct, GtkCssSection* section, GError* error, CssProvider _cssProvider)
-	{
-		foreach ( void delegate(CssSection, ErrorG, CssProvider) dlg ; _cssProvider.onParsingErrorListeners )
-		{
-			dlg(new CssSection(section), new ErrorG(error), _cssProvider);
+			gtk_css_section_unref(gtkCssSection);
 		}
 	}
 	
+	/**
+	 */
 	
 	/**
-	 * Returns the provider containing the style settings used as a
-	 * fallback for all widgets.
-	 * Returns: The provider used for fallback styling. This memory is owned by GTK+, and you must not free it. [transfer none]
+	 * Returns the line in the CSS document where this section end.
+	 * The line number is 0-indexed, so the first line of the document
+	 * will return 0.
+	 * This value may change in future invocations of this function if
+	 * section is not yet parsed completely. This will for example
+	 * happen in the GtkCssProvider::parsing-error signal.
+	 * The end position and line may be identical to the start
+	 * position and line for sections which failed to parse anything
+	 * successfully.
+	 * Returns: the line number Since 3.2
 	 */
-	public static CssProvider getDefault()
+	public uint getEndLine()
 	{
-		// GtkCssProvider * gtk_css_provider_get_default (void);
-		auto p = gtk_css_provider_get_default();
+		// guint gtk_css_section_get_end_line (const GtkCssSection *section);
+		return gtk_css_section_get_end_line(gtkCssSection);
+	}
+	
+	/**
+	 */
+	public uint getEndPosition()
+	{
+		// guint gtk_css_section_get_end_position (const GtkCssSection *section);
+		return gtk_css_section_get_end_position(gtkCssSection);
+	}
+	
+	/**
+	 * Gets the file that section was parsed from. If no such file exists,
+	 * for example because the CSS was loaded via
+	 * gtk_css_provider_load_from_data(), then NULL is returned.
+	 * Returns: the GFile that section was parsed from or NULL if section was parsed from other data. Since 3.2
+	 */
+	public File getFile()
+	{
+		// GFile * gtk_css_section_get_file (const GtkCssSection *section);
+		auto p = gtk_css_section_get_file(gtkCssSection);
 		if(p is null)
 		{
 			return null;
 		}
-		return new CssProvider(cast(GtkCssProvider*) p);
+		return new File(cast(GFile*) p);
 	}
 	
 	/**
-	 * Loads a theme from the usual theme paths
-	 * Params:
-	 * name = A theme name
-	 * variant = variant to load, for example, "dark", or
-	 * NULL for the default. [allow-none]
-	 * Returns: a GtkCssProvider with the theme loaded. This memory is owned by GTK+, and you must not free it. [transfer none]
+	 * Gets the parent section for the given section. The parent section is
+	 * the section that contains this section. A special case are sections of
+	 * type GTK_CSS_SECTION_TYPE_DOCUMENT. Their parent will either be NULL
+	 * if they are the original CSS document that was loaded by
+	 * gtk_css_provider_load_from_file() or a section of type
+	 * GTK_CSS_SECTION_TYPE_IMPORT if it was loaded with an import rule from
+	 * a different file.
+	 * Returns: the parent section or NULL if none Since 3.2
 	 */
-	public static CssProvider getNamed(string name, string variant)
+	public CssSection getParent()
 	{
-		// GtkCssProvider * gtk_css_provider_get_named (const gchar *name,  const gchar *variant);
-		auto p = gtk_css_provider_get_named(Str.toStringz(name), Str.toStringz(variant));
+		// GtkCssSection * gtk_css_section_get_parent (const GtkCssSection *section);
+		auto p = gtk_css_section_get_parent(gtkCssSection);
 		if(p is null)
 		{
 			return null;
 		}
-		return new CssProvider(cast(GtkCssProvider*) p);
+		return new CssSection(cast(GtkCssSection*) p);
 	}
 	
 	/**
-	 * Loads data into css_provider, making it clear any previously loaded
-	 * information.
-	 * Params:
-	 * data = CSS data loaded in memory. [array length=length][element-type guint8]
-	 * length = the length of data in bytes, or -1 for NUL terminated strings. If
-	 * length is not -1, the code will assume it is not NUL terminated and will
-	 * potentially do a copy.
-	 * Returns: TRUE if the data could be loaded.
-	 * Throws: GException on failure.
+	 * Gets the type of information that section describes.
+	 * Returns: the type of section Since 3.2
 	 */
-	public int loadFromData(string data, gssize length)
+	public GtkCssSectionType getSectionType()
 	{
-		// gboolean gtk_css_provider_load_from_data (GtkCssProvider *css_provider,  const gchar *data,  gssize length,  GError **error);
-		GError* err = null;
-		
-		auto p = gtk_css_provider_load_from_data(gtkCssProvider, Str.toStringz(data), length, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
+		// GtkCssSectionType gtk_css_section_get_section_type (const GtkCssSection *section);
+		return gtk_css_section_get_section_type(gtkCssSection);
 	}
 	
 	/**
-	 * Loads the data contained in file into css_provider, making it
-	 * clear any previously loaded information.
-	 * Params:
-	 * file = GFile pointing to a file to load
-	 * Returns: TRUE if the data could be loaded.
-	 * Throws: GException on failure.
+	 * Returns the line in the CSS document where this section starts.
+	 * The line number is 0-indexed, so the first line of the document
+	 * will return 0.
+	 * Returns: the line number Since 3.2
 	 */
-	public int loadFromFile(File file)
+	public uint getStartLine()
 	{
-		// gboolean gtk_css_provider_load_from_file (GtkCssProvider *css_provider,  GFile *file,  GError **error);
-		GError* err = null;
-		
-		auto p = gtk_css_provider_load_from_file(gtkCssProvider, (file is null) ? null : file.getFileStruct(), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
+		// guint gtk_css_section_get_start_line (const GtkCssSection *section);
+		return gtk_css_section_get_start_line(gtkCssSection);
 	}
 	
 	/**
-	 * Loads the data contained in path into css_provider, making it clear
-	 * any previously loaded information.
-	 * Params:
-	 * path = the path of a filename to load, in the GLib filename encoding
-	 * Returns: TRUE if the data could be loaded.
-	 * Throws: GException on failure.
+	 * Returns the offset in bytes from the start of the current line
+	 * returned via gtk_css_section_get_end_line().
+	 * This value may change in future invocations of this function if
+	 * section is not yet parsed completely. This will for example
+	 * happen in the GtkCssProvider::parsing-error signal.
+	 * The end position and line may be identical to the start
+	 * position and line for sections which failed to parse anything
+	 * successfully.
+	 * Returns: the offset in bytes from the start of the line. Since 3.2
 	 */
-	public int loadFromPath(string path)
+	public uint getStartPosition()
 	{
-		// gboolean gtk_css_provider_load_from_path (GtkCssProvider *css_provider,  const gchar *path,  GError **error);
-		GError* err = null;
-		
-		auto p = gtk_css_provider_load_from_path(gtkCssProvider, Str.toStringz(path), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
+		// guint gtk_css_section_get_start_position (const GtkCssSection *section);
+		return gtk_css_section_get_start_position(gtkCssSection);
 	}
 	
 	/**
-	 * Returns a newly created GtkCssProvider.
-	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public static GType getType()
 	{
-		// GtkCssProvider * gtk_css_provider_new (void);
-		auto p = gtk_css_provider_new();
+		// GType gtk_css_section_get_type (void);
+		return gtk_css_section_get_type();
+	}
+	
+	/**
+	 * Increments the reference count on section.
+	 * Returns: section itself. Since 3.2
+	 */
+	public CssSection doref()
+	{
+		// GtkCssSection * gtk_css_section_ref (GtkCssSection *section);
+		auto p = gtk_css_section_ref(gtkCssSection);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_css_provider_new()");
+			return null;
 		}
-		this(cast(GtkCssProvider*) p);
+		return new CssSection(cast(GtkCssSection*) p);
 	}
 	
 	/**
-	 * Convertes the provider into a string representation in CSS
-	 * format.
-	 * Using gtk_css_provider_load_from_data() with the return value
-	 * from this function on a new provider created with
-	 * gtk_css_provider_new() will basicallu create a duplicate of
-	 * this provider.
-	 * Returns: a new string representing the provider.
+	 * Decrements the reference count on section, freeing the
+	 * structure if the reference count reaches 0.
 	 */
-	public string toString()
+	public void unref()
 	{
-		// char * gtk_css_provider_to_string (GtkCssProvider *provider);
-		return Str.toString(gtk_css_provider_to_string(gtkCssProvider));
+		// void gtk_css_section_unref (GtkCssSection *section);
+		gtk_css_section_unref(gtkCssSection);
 	}
 }

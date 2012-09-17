@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtk3-gtkcheckmenuitem.html
+ * inFile  = GtkCheckMenuItem.html
  * outPack = gtk
  * outFile = CheckMenuItem
  * strct   = GtkCheckMenuItem
@@ -71,7 +71,7 @@ private import gtk.MenuItem;
 /**
  * Description
  * A GtkCheckMenuItem is a menu item that maintains the state of a boolean
- * value in addition to a GtkMenuItem's usual role in activating application
+ * value in addition to a GtkMenuItem usual role in activating application
  * code.
  * A check box indicating the state of the boolean value is displayed
  * at the left side of the GtkMenuItem. Activating the GtkMenuItem
@@ -227,7 +227,7 @@ public class CheckMenuItem : MenuItem
 	}
 	
 	/**
-	 * Emits the GtkCheckMenuItem::toggled signal.
+	 * Emits the "toggled" signal.
 	 */
 	public void toggled()
 	{

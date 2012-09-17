@@ -1145,10 +1145,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	}
 	
 	/**
-	 * Explicitly stops the editing of the currently
-	 * edited cell (see gtk_cell_area_get_edited_cell()).
-	 * If canceled is TRUE, the cell renderer will emit
-	 * the ::editing-canceled signal.
+	 * Explicitly stops the editing of the currently edited cell.
+	 * If canceled is TRUE, the currently edited cell renderer
+	 * will emit the ::editing-canceled signal, otherwise the
+	 * the ::editing-done signal will be emitted on the current
+	 * edit widget.
+	 * See gtk_cell_area_get_edited_cell() and gtk_cell_area_get_edit_widget().
 	 * Params:
 	 * canceled = whether editing was canceled.
 	 * Since 3.0

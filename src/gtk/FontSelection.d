@@ -71,7 +71,7 @@ private import pango.PgFontFamily;
 
 
 
-private import gtk.VBox;
+private import gtk.Box;
 
 /**
  * Description
@@ -84,8 +84,10 @@ private import gtk.VBox;
  * To get the selected font use gtk_font_selection_get_font_name().
  * To change the text which is shown in the preview area, use
  * gtk_font_selection_set_preview_text().
+ * In GTK+ 3.2, GtkFontSelection has been deprecated in favor of
+ * GtkFontChooser.
  */
-public class FontSelection : VBox
+public class FontSelection : Box
 {
 	
 	/** the main Gtk struct */
@@ -121,7 +123,7 @@ public class FontSelection : VBox
 			this = cast(FontSelection)ptr;
 			return;
 		}
-		super(cast(GtkVBox*)gtkFontSelection);
+		super(cast(GtkBox*)gtkFontSelection);
 		this.gtkFontSelection = gtkFontSelection;
 	}
 	
@@ -135,6 +137,8 @@ public class FontSelection : VBox
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_new is deprecated and should not be used in newly-written code.
 	 * Creates a new GtkFontSelection.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -150,6 +154,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_font_name has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * Gets the currently-selected font name.
 	 * Note that this can be a different string than what you set with
 	 * gtk_font_selection_set_font_name(), as the font selection widget may
@@ -166,6 +172,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_set_font_name has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * Sets the currently-selected font.
 	 * Note that the fontsel needs to know the screen in which it will appear
 	 * for this to work; this can be guaranteed by simply making sure that the
@@ -181,6 +189,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_preview_text has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * Gets the text displayed in the preview area.
 	 * Returns: the text displayed in the preview area. This string is owned by the widget and should not be modified or freed
 	 */
@@ -191,6 +201,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_set_preview_text has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * Sets the text displayed in the preview area.
 	 * The text is used to show how the selected font looks.
 	 * Params:
@@ -203,6 +215,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_face has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * Gets the PangoFontFace representing the selected font group
 	 * details (i.e. family, slant, weight, width, etc).
 	 * Since 2.14
@@ -220,6 +234,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_face_list has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * This returns the GtkTreeView which lists all styles available for
 	 * the selected font. For example, 'Regular', 'Bold', etc.
 	 * Since 2.14
@@ -237,6 +253,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_family has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * Gets the PangoFontFamily representing the selected font family.
 	 * Since 2.14
 	 * Returns: A PangoFontFamily representing the selected font family. Font families are a collection of font faces. The returned object is owned by fontsel and must not be modified or freed. [transfer none]
@@ -253,6 +271,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_size has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * The selected font size.
 	 * Since 2.14
 	 * Returns: A n integer representing the selected font size, or -1 if no font size is selected.
@@ -264,6 +284,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_family_list has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * This returns the GtkTreeView that lists font families, for
 	 * example, 'Sans', 'Serif', etc.
 	 * Since 2.14
@@ -281,6 +303,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_preview_entry has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * This returns the GtkEntry used to display the font as a preview.
 	 * Since 2.14
 	 * Returns: A GtkWidget that is part of fontsel. [transfer none]
@@ -297,6 +321,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_size_entry has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * This returns the GtkEntry used to allow the user to edit the font
 	 * number manually instead of selecting it from the list of font sizes.
 	 * Since 2.14
@@ -314,6 +340,8 @@ public class FontSelection : VBox
 	}
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_get_size_list has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
 	 * This returns the GtkTreeeView used to list font sizes.
 	 * Since 2.14
 	 * Returns: A GtkWidget that is part of fontsel. [transfer none]

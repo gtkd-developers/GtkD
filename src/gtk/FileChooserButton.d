@@ -72,7 +72,7 @@ private import gtk.FileChooserIF;
 
 
 
-private import gtk.HBox;
+private import gtk.Box;
 
 /**
  * Description
@@ -80,10 +80,11 @@ private import gtk.HBox;
  * file. It implements the GtkFileChooser interface. Visually, it is a
  * file name with a button to bring up a GtkFileChooserDialog.
  * The user can then use that dialog to change the file associated with
- * that button. This widget does not support setting the "select-multiple"
- * property to TRUE.
+ * that button. This widget does not support setting the
+ * "select-multiple" property to TRUE.
  * $(DDOC_COMMENT example)
- * The GtkFileChooserButton supports the GtkFileChooserActions GTK_FILE_CHOOSER_ACTION_OPEN and GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
+ * The GtkFileChooserButton supports the GtkFileChooserActions
+ * GTK_FILE_CHOOSER_ACTION_OPEN and GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
  * Important
  * The GtkFileChooserButton will ellipsize the label,
  * and thus will thus request little horizontal space. To give the button
@@ -91,7 +92,7 @@ private import gtk.HBox;
  * gtk_file_chooser_button_set_width_chars(), or pack the button in
  * such a way that other interface elements give space to the widget.
  */
-public class FileChooserButton : HBox, FileChooserIF
+public class FileChooserButton : Box, FileChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -127,7 +128,7 @@ public class FileChooserButton : HBox, FileChooserIF
 			this = cast(FileChooserButton)ptr;
 			return;
 		}
-		super(cast(GtkHBox*)gtkFileChooserButton);
+		super(cast(GtkBox*)gtkFileChooserButton);
 		this.gtkFileChooserButton = gtkFileChooserButton;
 	}
 	

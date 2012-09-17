@@ -491,7 +491,7 @@ public class Container : Widget
 	
 	/**
 	 * Returns a newly created widget path representing all the widget hierarchy
-	 * from the toplevel down to child (this one not being included).
+	 * from the toplevel down to and including child.
 	 * Params:
 	 * child = a child of container
 	 * Returns: A newly created GtkWidgetPath
@@ -700,14 +700,33 @@ public class Container : Widget
 	}
 	
 	/**
+	 * Emits a "child-notify" signal for the
+	 * child property
+	 * child_property on widget.
+	 * This is an analogue of g_object_notify() for child properties.
+	 * Also see gtk_widget_child_notify().
+	 * Params:
+	 * child = the child widget
+	 * childProperty = the name of a child property installed on
+	 * the class of container
+	 * Since 3.2
+	 */
+	public void childNotify(Widget child, string childProperty)
+	{
+		// void gtk_container_child_notify (GtkContainer *container,  GtkWidget *child,  const gchar *child_property);
+		gtk_container_child_notify(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(childProperty));
+	}
+	
+	/**
 	 * Invokes callback on each child of container, including children
 	 * that are considered "internal" (implementation details of the
 	 * container). "Internal" children generally weren't added by the user
 	 * of the container, but were added by the container implementation
 	 * itself. Most applications should use gtk_container_foreach(),
 	 * rather than gtk_container_forall().
+	 * Virtual: forall
 	 * Params:
-	 * callback = a callback. [scope call]
+	 * callback = a callback. [scope call][closure callback_data]
 	 * callbackData = callback user data
 	 */
 	public void forall(GtkCallback callback, void* callbackData)

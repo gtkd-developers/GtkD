@@ -143,8 +143,8 @@ public class Viewport : Bin, ScrollableIF
 	/**
 	 * Creates a new GtkViewport with the given adjustments.
 	 * Params:
-	 * hadjustment = horizontal adjustment.
-	 * vadjustment = vertical adjustment.
+	 * hadjustment = horizontal adjustment
+	 * vadjustment = vertical adjustment
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)

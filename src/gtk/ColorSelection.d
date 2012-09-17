@@ -70,7 +70,7 @@ private import gdk.RGBA;
 
 
 
-private import gtk.VBox;
+private import gtk.Box;
 
 /**
  * Description
@@ -80,7 +80,7 @@ private import gtk.VBox;
  * value, red, green, blue, and opacity. It is found on the standard
  * color selection dialog box GtkColorSelectionDialog.
  */
-public class ColorSelection : VBox
+public class ColorSelection : Box
 {
 	
 	/** the main Gtk struct */
@@ -116,7 +116,7 @@ public class ColorSelection : VBox
 			this = cast(ColorSelection)ptr;
 			return;
 		}
-		super(cast(GtkVBox*)gtkColorSelection);
+		super(cast(GtkBox*)gtkColorSelection);
 		this.gtkColorSelection = gtkColorSelection;
 	}
 	

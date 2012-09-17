@@ -126,8 +126,8 @@ private import gtk.Misc;
  * (See complete documentation of available
  * tags in the Pango manual.)
  * The markup passed to gtk_label_set_markup() must be valid; for example,
- * literal </>/ characters must be escaped as lt;,
- * gt;, and amp;. If you pass text obtained from the user, file,
+ * literal <, > and  characters must be escaped as \<,
+ * \gt;, and \. If you pass text obtained from the user, file,
  * or a network to gtk_label_set_markup(), you'll want to escape it with
  * g_markup_escape_text() or g_markup_printf_escaped().
  * Markup strings are just a convenient way to set the PangoAttrList on
@@ -166,7 +166,7 @@ private import gtk.Misc;
  * Note
  * Note that the interpretation of "width-chars" and
  * "max-width-chars" has changed a bit with the introduction of
- * width-for-height geometry management and GtkExtendedLayout.
+ * width-for-height geometry management.
  * <hr>
  * Links
  * Since 2.18, GTK+ supports markup for clickable hyperlinks in addition

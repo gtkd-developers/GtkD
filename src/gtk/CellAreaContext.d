@@ -203,7 +203,7 @@ public class CellAreaContext : ObjectG
 	 * Gets the accumulative preferred width for all rows which have been
 	 * requested with this context.
 	 * After gtk_cell_area_context_reset() is called and/or before ever
-	 * requesting the size of a GtkCellArea, the returned values are -1.
+	 * requesting the size of a GtkCellArea, the returned values are 0.
 	 * Params:
 	 * minimumWidth = location to store the minimum width,
 	 * or NULL. [out][allow-none]
@@ -221,7 +221,7 @@ public class CellAreaContext : ObjectG
 	 * Gets the accumulative preferred height for all rows which have been
 	 * requested with this context.
 	 * After gtk_cell_area_context_reset() is called and/or before ever
-	 * requesting the size of a GtkCellArea, the returned values are -1.
+	 * requesting the size of a GtkCellArea, the returned values are 0.
 	 * Params:
 	 * minimumHeight = location to store the minimum height,
 	 * or NULL. [out][allow-none]

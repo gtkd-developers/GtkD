@@ -229,13 +229,13 @@ public class AccelGroup : ObjectG
 	}
 	
 	/**
-	 * Installs an accelerator in this group. When accel_group is being activated
-	 * in response to a call to gtk_accel_groups_activate(), closure will be
-	 * invoked if the accel_key and accel_mods from gtk_accel_groups_activate()
-	 * match those of this connection.
+	 * Installs an accelerator in this group. When accel_group is being
+	 * activated in response to a call to gtk_accel_groups_activate(),
+	 * closure will be invoked if the accel_key and accel_mods from
+	 * gtk_accel_groups_activate() match those of this connection.
 	 * The signature used for the closure is that of GtkAccelGroupActivate.
-	 * Note that, due to implementation details, a single closure can only be
-	 * connected to one accelerator group.
+	 * Note that, due to implementation details, a single closure can
+	 * only be connected to one accelerator group.
 	 * Params:
 	 * accelKey = key value of the accelerator
 	 * accelMods = modifier combination of the accelerator
@@ -249,18 +249,18 @@ public class AccelGroup : ObjectG
 	}
 	
 	/**
-	 * Installs an accelerator in this group, using an accelerator path to look
-	 * up the appropriate key and modifiers (see gtk_accel_map_add_entry()).
-	 * When accel_group is being activated in response to a call to
-	 * gtk_accel_groups_activate(), closure will be invoked if the accel_key and
-	 * accel_mods from gtk_accel_groups_activate() match the key and modifiers
-	 * for the path.
+	 * Installs an accelerator in this group, using an accelerator path
+	 * to look up the appropriate key and modifiers (see
+	 * gtk_accel_map_add_entry()). When accel_group is being activated
+	 * in response to a call to gtk_accel_groups_activate(), closure will
+	 * be invoked if the accel_key and accel_mods from
+	 * gtk_accel_groups_activate() match the key and modifiers for the path.
 	 * The signature used for the closure is that of GtkAccelGroupActivate.
-	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
-	 * pass a static string, you can save some memory by interning it first with
-	 * g_intern_static_string().
+	 * Note that accel_path string will be stored in a GQuark. Therefore,
+	 * if you pass a static string, you can save some memory by interning it
+	 * first with g_intern_static_string().
 	 * Params:
-	 * accelPath = path used for determining key and modifiers.
+	 * accelPath = path used for determining key and modifiers
 	 * closure = closure to be executed upon accelerator activation
 	 */
 	public void connectByPath(string accelPath, Closure closure)
@@ -274,8 +274,8 @@ public class AccelGroup : ObjectG
 	 * gtk_accel_group_connect().
 	 * Since 2.20 closure can be NULL.
 	 * Params:
-	 * closure = the closure to remove from this accelerator group, or NULL
-	 * to remove all closures. [allow-none]
+	 * closure = the closure to remove from this accelerator
+	 * group, or NULL to remove all closures. [allow-none]
 	 * Returns: TRUE if the closure was found and got disconnected
 	 */
 	public int disconnect(Closure closure)
@@ -299,8 +299,8 @@ public class AccelGroup : ObjectG
 	}
 	
 	/**
-	 * Queries an accelerator group for all entries matching accel_key and
-	 * accel_mods.
+	 * Queries an accelerator group for all entries matching accel_key
+	 * and accel_mods.
 	 * Params:
 	 * accelKey = key value of the accelerator
 	 * accelMods = modifier combination of the accelerator
@@ -315,13 +315,12 @@ public class AccelGroup : ObjectG
 	}
 	
 	/**
-	 * Finds the first accelerator in accel_group
-	 * that matches accel_key and accel_mods, and
-	 * activates it.
+	 * Finds the first accelerator in accel_group that matches
+	 * accel_key and accel_mods, and activates it.
 	 * Params:
 	 * accelQuark = the quark for the accelerator name
 	 * acceleratable = the GObject, usually a GtkWindow, on which
-	 * to activate the accelerator.
+	 * to activate the accelerator
 	 * accelKey = accelerator keyval from a key event
 	 * accelMods = keyboard state mask from a key event
 	 * Returns: TRUE if an accelerator was activated and handled this keypress
@@ -404,7 +403,7 @@ public class AccelGroup : ObjectG
 	 * activates that accelerator.
 	 * Params:
 	 * object = the GObject, usually a GtkWindow, on which
-	 * to activate the accelerator.
+	 * to activate the accelerator
 	 * accelKey = accelerator keyval from a key event
 	 * accelMods = keyboard state mask from a key event
 	 * Returns: TRUE if an accelerator was activated and handled this keypress
@@ -466,13 +465,13 @@ public class AccelGroup : ObjectG
 	
 	/**
 	 * Parses a string representing an accelerator. The
-	 * format looks like "<Control>a" or "<Shift><Alt>F1" or
-	 * "<Release>z" (the last one is for key release).
+	 * format looks like "<Control>a" or "<Shift><Alt>F1"
+	 * or "<Release>z" (the last one is for key release).
 	 * The parser is fairly liberal and allows lower or upper case,
 	 * and also abbreviations such as "<Ctl>" and "<Ctrl>".
-	 * Key names are parsed using gdk_keyval_from_name(). For character keys the
-	 * name is not the symbol, but the lowercase name, e.g. one would use
-	 * "<Ctrl>minus" instead of "<Ctrl>-".
+	 * Key names are parsed using gdk_keyval_from_name(). For character
+	 * keys the name is not the symbol, but the lowercase name, e.g. one
+	 * would use "<Ctrl>minus" instead of "<Ctrl>-".
 	 * If the parse fails, accelerator_key and accelerator_mods will
 	 * be set to 0 (zero).
 	 * Params:

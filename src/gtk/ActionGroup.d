@@ -589,7 +589,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * gtk_action_group_set_translate_func().
 	 * Since 2.4
 	 * Params:
-	 * domain = the translation domain to use for g_dgettext() calls
+	 * domain = the translation domain to use for g_dgettext()
+	 * calls, or NULL to use the domain set with textdomain(). [allow-none]
 	 */
 	public void setTranslationDomain(string domain)
 	{

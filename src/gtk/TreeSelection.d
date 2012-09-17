@@ -475,14 +475,6 @@ public class TreeSelection : ObjectG
 	 * Unselects a range of nodes, determined by start_path and end_path
 	 * inclusive.
 	 * Since 2.2
-	 * Signal Details
-	 * The "changed" signal
-	 * void user_function (GtkTreeSelection *treeselection,
-	 *  gpointer user_data) : Run First
-	 * Emitted whenever the selection has (possibly) changed. Please note that
-	 * this signal is mostly a hint. It may only be emitted once when a range
-	 * of rows are selected, and it may occasionally be emitted when nothing
-	 * has happened.
 	 * Params:
 	 * startPath = The initial node of the range.
 	 * endPath = The initial node of the range.

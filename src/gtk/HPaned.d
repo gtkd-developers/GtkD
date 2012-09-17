@@ -70,6 +70,7 @@ private import gtk.Paned;
  * children arranged horizontally. The division between
  * the two panes is adjustable by the user by dragging
  * a handle. See GtkPaned for details.
+ * GtkHPaned has been deprecated, use GtkPaned instead.
  */
 public class HPaned : Paned
 {
@@ -135,6 +136,8 @@ public class HPaned : Paned
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_hpaned_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_paned_new() with GTK_ORIENTATION_HORIZONTAL instead
 	 * Create a new GtkHPaned
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

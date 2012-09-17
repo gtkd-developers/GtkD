@@ -111,7 +111,7 @@ private import gobject.ObjectG;
  * accept GObjects are handled a little differently. The
  * GtkListStore will keep a reference to the object instead of copying the
  * value. As a result, if the object is modified, it is up to the
- * application writer to call gtk_tree_model_row_changed to emit the
+ * application writer to call gtk_tree_model_row_changed() to emit the
  * "row_changed" signal. This most commonly affects lists with
  * GdkPixbufs stored.
  * $(DDOC_COMMENT example)
@@ -123,6 +123,8 @@ private import gobject.ObjectG;
  * that GtkTreeIters can be cached while the row exists. Thus, if
  * access to a particular row is needed often and your code is expected to
  * run on older versions of GTK+, it is worth keeping the iter around.
+ * <hr>
+ * Atomic Operations
  * It is important to note that only the methods
  * gtk_list_store_insert_with_values() and gtk_list_store_insert_with_valuesv()
  * are atomic, in the sense that the row is being appended to the store and the

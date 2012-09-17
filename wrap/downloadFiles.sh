@@ -34,8 +34,11 @@ cd ..
 curl http://developer.gnome.org/gdk3/gdk3-html-3.2.4.tar.gz | tar xvfz -
 ln -s gdk3-html-3.2.4 gdk
 #GTK
-curl http://developer.gnome.org/gtk3/gtk3-html-3.0.12.tar.gz | tar xvfz -
-ln -s gtk3-html-3.0.12 gtk
+curl http://developer.gnome.org/gtk3/gtk3-html-3.2.4.tar.gz | tar xvfz -
+ln -s gtk3-html-3.2.4 gtk
+cd gtk
+wget http://developer.gnome.org/gtk3/stable/GtkFontChooserWidget.html
+cd ..
 #CAIRO
 curl http://cairographics.org/releases/cairo-1.10.2.tar.gz | tar xvfz -
 ln -s cairo-1.10.2/doc/public/html cairo

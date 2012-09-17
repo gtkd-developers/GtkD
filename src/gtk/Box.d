@@ -72,30 +72,26 @@ private import gtk.Container;
 
 /**
  * Description
- * GtkBox is an widget which encapsulates functionality for a
- * particular kind of container, one that organizes a variable number of
- * widgets into a rectangular area. GtkBox has a number of derived
- * classes, e.g. GtkHBox and GtkVBox.
+ * The GtkBox widget organizes child widgets into a rectangular area.
  * The rectangular area of a GtkBox is organized into either a single row
- * or a single column of child widgets depending upon whether the box is
- * of type GtkHBox or GtkVBox, respectively. Thus, all children of a
- * GtkBox are allocated one dimension in common, which is the height of a
- * row, or the width of a column.
- * GtkBox uses a notion of packing. Packing
- * refers to adding widgets with reference to a particular position in a
+ * or a single column of child widgets depending upon the orientation.
+ * Thus, all children of a GtkBox are allocated one dimension in common,
+ * which is the height of a row, or the width of a column.
+ * GtkBox uses a notion of packing. Packing refers
+ * to adding widgets with reference to a particular position in a
  * GtkContainer. For a GtkBox, there are two reference positions: the
  * start and the end of the box.
- * For a GtkVBox, the start is defined as the top of the box and the end is
- * defined as the bottom. For a GtkHBox the start is defined as the
- * left side and the end is defined as the right side.
+ * For a vertical GtkBox, the start is defined as the top of the box and
+ * the end is defined as the bottom. For a horizontal GtkBox the start
+ * is defined as the left side and the end is defined as the right side.
  * Use repeated calls to gtk_box_pack_start() to pack widgets into a
  * GtkBox from start to end. Use gtk_box_pack_end() to add widgets from
  * end to start. You may intersperse these calls and add widgets from
  * both ends of the same GtkBox.
- * Because GtkBox is a GtkContainer, you may also use
- * gtk_container_add() to insert widgets into the box, and they will be
- * packed with the default values for "expand" and "fill".
- * Use gtk_container_remove() to remove widgets from the GtkBox.
+ * Because GtkBox is a GtkContainer, you may also use gtk_container_add()
+ * to insert widgets into the box, and they will be packed with the default
+ * values for "expand" and "fill". Use gtk_container_remove()
+ * to remove widgets from the GtkBox.
  * Use gtk_box_set_homogeneous() to specify whether or not all children
  * of the GtkBox are forced to get the same amount of space.
  * Use gtk_box_set_spacing() to determine how much space will be
@@ -109,8 +105,8 @@ private import gtk.Container;
  * "fill" and "padding" child properties.
  * Use gtk_box_query_child_packing() to query these fields.
  * Note
- * Note that a single-row or single-column GtkGrid provides exactly the
- * same functionality as GtkBox.
+ * Note that a single-row or single-column GtkGrid provides exactly
+ * the same functionality as GtkBox.
  */
 public class Box : Container, OrientableIF
 {
@@ -194,8 +190,8 @@ public class Box : Container, OrientableIF
 	 * fill = TRUE if space given to child by the expand option is
 	 * actually allocated to child, rather than just padding it. This
 	 * parameter has no effect if expand is set to FALSE. A child is
-	 * always allocated the full height of a GtkHBox and the full width
-	 * of a GtkVBox. This option affects the other dimension
+	 * always allocated the full height of a horizontal GtkBox and the full width
+	 * of a vertical GtkBox. This option affects the other dimension
 	 * padding = extra space in pixels to put between this child and its
 	 * neighbors, over and above the global amount specified by
 	 * "spacing" property. If child is a widget at one of the
@@ -220,8 +216,8 @@ public class Box : Container, OrientableIF
 	 * fill = TRUE if space given to child by the expand option is
 	 * actually allocated to child, rather than just padding it. This
 	 * parameter has no effect if expand is set to FALSE. A child is
-	 * always allocated the full height of a GtkHBox and the full width
-	 * of a GtkVBox. This option affects the other dimension
+	 * always allocated the full height of a horizontal GtkBox and the full width
+	 * of a vertical GtkBox. This option affects the other dimension
 	 * padding = extra space in pixels to put between this child and its
 	 * neighbors, over and above the global amount specified by
 	 * "spacing" property. If child is a widget at one of the

@@ -1379,8 +1379,8 @@ public class TreeView : Container, ScrollableIF
 	
 	/**
 	 * This function is a convenience function to allow you to reorder
-	 * models that support the GtkDragSourceIface and the
-	 * GtkDragDestIface. Both GtkTreeStore and GtkListStore support
+	 * models that support the GtkTreeDragSourceIface and the
+	 * GtkTreeDragDestIface. Both GtkTreeStore and GtkListStore support
 	 * these. If reorderable is TRUE, then the user can reorder the
 	 * model by dragging and dropping rows. The developer can listen to
 	 * these changes by connecting to the model's row_inserted and
@@ -1700,7 +1700,7 @@ public class TreeView : Container, ScrollableIF
 	 * method sets "reorderable" to FALSE.
 	 * Params:
 	 * startButtonMask = Mask of allowed buttons to start drag
-	 * targets = the table of targets that the drag will support. [array]
+	 * targets = the table of targets that the drag will support. [array length=n_targets]
 	 * actions = the bitmask of possible actions for a drag from this
 	 * widget
 	 */
@@ -1734,6 +1734,7 @@ public class TreeView : Container, ScrollableIF
 	
 	/**
 	 * Sets the row that is highlighted for feedback.
+	 * If path is NULL, an existing highlight is removed.
 	 * Params:
 	 * path = The path of the row to highlight, or NULL. [allow-none]
 	 * pos = Specifies whether to drop before, after or into the row
@@ -2199,7 +2200,8 @@ public class TreeView : Container, ScrollableIF
 	 * x = the x coordinate (relative to widget coordinates). [inout]
 	 * y = the y coordinate (relative to widget coordinates). [inout]
 	 * keyboardTip = whether this is a keyboard tooltip or not
-	 * model = a pointer to receive a GtkTreeModel or NULL. [out][allow-none]
+	 * model = a pointer to receive a
+	 * GtkTreeModel or NULL. [out][allow-none][transfer none]
 	 * path = a pointer to receive a GtkTreePath or NULL. [out][allow-none]
 	 * iter = a pointer to receive a GtkTreeIter or NULL. [out][allow-none]
 	 * Returns: whether or not the given tooltip context points to a row.

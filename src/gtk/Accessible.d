@@ -67,6 +67,16 @@ private import atk.ObjectAtk;
 
 /**
  * Description
+ * The GtkAccessible class is the base class for accessible
+ * implementations for GtkWidget subclasses. It is a thin
+ * wrapper around AtkObject, which adds facilities for associating
+ * a widget with its accessible object.
+ * An accessible implementation for a third-party widget should
+ * derive from GtkAccessible and implement the suitable interfaces
+ * from ATK, such as AtkText or AtkSelection. To establish
+ * the connection between the widget class and its corresponding
+ * acccessible implementation, override the get_accessible vfunc
+ * in GtkWidgetClass.
  */
 public class Accessible : ObjectAtk
 {
@@ -118,8 +128,8 @@ public class Accessible : ObjectAtk
 	 */
 	
 	/**
-	 * This function specifies the callback function to be called when the widget
-	 * corresponding to a GtkAccessible is destroyed.
+	 * This function specifies the callback function to be called
+	 * when the widget corresponding to a GtkAccessible is destroyed.
 	 */
 	public void connectWidgetDestroyed()
 	{
@@ -128,8 +138,9 @@ public class Accessible : ObjectAtk
 	}
 	
 	/**
-	 * Gets the GtkWidget corresponding to the GtkAccessible. The returned widget
-	 * does not have a reference added, so you do not need to unref it.
+	 * Gets the GtkWidget corresponding to the GtkAccessible.
+	 * The returned widget does not have a reference added, so
+	 * you do not need to unref it.
 	 * Since 2.22
 	 * Returns: pointer to the GtkWidget corresponding to the GtkAccessible, or NULL. [transfer none]
 	 */

@@ -336,6 +336,16 @@ public class Adjustment : ObjectG
 	}
 	
 	/**
+	 * Gets the smaller of step increment and page increment.
+	 * Returns: the minimum increment of adjustment Since 3.2
+	 */
+	public double getMinimumIncrement()
+	{
+		// gdouble gtk_adjustment_get_minimum_increment  (GtkAdjustment *adjustment);
+		return gtk_adjustment_get_minimum_increment(gtkAdjustment);
+	}
+	
+	/**
 	 * Retrieves the maximum value of the adjustment.
 	 * Since 2.14
 	 * Returns: The current maximum value of the adjustment.

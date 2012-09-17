@@ -45,10 +45,12 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListSG
+ * 	- gtk.Widget
  * 	- gtkc.Loader
  * 	- gtkc.paths
  * structWrap:
  * 	- GSList* -> ListSG
+ * 	- GtkWidget* -> Widget
  * 	- GtkWidgetPath* -> WidgetPath
  * module aliases:
  * local aliases:
@@ -65,6 +67,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.ListSG;
+private import gtk.Widget;
 private import gtkc.Loader;
 private import gtkc.paths;
 
@@ -124,7 +127,7 @@ public class WidgetPath
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GTK] in Linker.loadedLibraries && gtkWidgetPath !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkWidgetPath !is null )
 		{
 			gtk_widget_path_free(gtkWidgetPath);
 		}
@@ -134,7 +137,7 @@ public class WidgetPath
 	 */
 	
 	/**
-	 * Appends a widget type to the widget hierachy represented by path.
+	 * Appends a widget type to the widget hierarchy represented by path.
 	 * Params:
 	 * type = widget type to append
 	 * Returns: the position where the element was inserted Since 3.0
@@ -143,6 +146,43 @@ public class WidgetPath
 	{
 		// gint gtk_widget_path_append_type (GtkWidgetPath *path,  GType type);
 		return gtk_widget_path_append_type(gtkWidgetPath, type);
+	}
+	
+	/**
+	 * Appends a widget type with all its siblings to the widget hierarchy
+	 * represented by path. Using this function instead of
+	 * gtk_widget_path_append_type() will allow the CSS theming to use
+	 * sibling matches in selectors and apply :nth-child() pseudo classes.
+	 * In turn, it requires a lot more care in widget implementations as
+	 * widgets need to make sure to call gtk_widget_reset_style() on all
+	 * involved widgets when the siblings path changes.
+	 * Params:
+	 * siblings = a widget path describing a list of siblings. This path
+	 * may not contain any siblings itself and it must not be modified
+	 * afterwards.
+	 * siblingIndex = index into siblings for where the added element is
+	 * positioned.
+	 * Returns: the position where the element was inserted. Since 3.2
+	 */
+	public int appendWithSiblings(WidgetPath siblings, uint siblingIndex)
+	{
+		// gint gtk_widget_path_append_with_siblings  (GtkWidgetPath *path,  GtkWidgetPath *siblings,  guint sibling_index);
+		return gtk_widget_path_append_with_siblings(gtkWidgetPath, (siblings is null) ? null : siblings.getWidgetPathStruct(), siblingIndex);
+	}
+	
+	/**
+	 * Appends the data from widget to the widget hierarchy represented
+	 * by path. This function is a shortcut for adding information from
+	 * widget to the given path. This includes setting the name or
+	 * adding the style classes from widget.
+	 * Params:
+	 * widget = the widget to append to the widget path
+	 * Returns: the position where the data was inserted Since 3.2
+	 */
+	public int appendForWidget(Widget widget)
+	{
+		// gint gtk_widget_path_append_for_widget (GtkWidgetPath *path,  GtkWidget *widget);
+		return gtk_widget_path_append_for_widget(gtkWidgetPath, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -161,7 +201,33 @@ public class WidgetPath
 	}
 	
 	/**
-	 * Frees a GtkWidgetPath.
+	 * Increments the reference count on path.
+	 * Returns: path itself. Since 3.2
+	 */
+	public WidgetPath doref()
+	{
+		// GtkWidgetPath * gtk_widget_path_ref (GtkWidgetPath *path);
+		auto p = gtk_widget_path_ref(gtkWidgetPath);
+		if(p is null)
+		{
+			return null;
+		}
+		return new WidgetPath(cast(GtkWidgetPath*) p);
+	}
+	
+	/**
+	 * Decrements the reference count on path, freeing the structure
+	 * if the reference count reaches 0.
+	 */
+	public void unref()
+	{
+		// void gtk_widget_path_unref (GtkWidgetPath *path);
+		gtk_widget_path_unref(gtkWidgetPath);
+	}
+	
+	/**
+	 * Decrements the reference count on path, freeing the structure
+	 * if the reference count reaches 0.
 	 */
 	public void free()
 	{
@@ -291,6 +357,39 @@ public class WidgetPath
 	{
 		// GType gtk_widget_path_iter_get_object_type  (const GtkWidgetPath *path,  gint pos);
 		return gtk_widget_path_iter_get_object_type(gtkWidgetPath, pos);
+	}
+	
+	/**
+	 * Returns the list of siblings for the element at pos. If the element
+	 * was not added with siblings, NULL is returned.
+	 * Params:
+	 * pos = position to get the siblings for, -1 for the path head
+	 * Returns: NULL or the list of siblings for the element at pos.
+	 */
+	public WidgetPath iterGetSiblings(int pos)
+	{
+		// const GtkWidgetPath * gtk_widget_path_iter_get_siblings (const GtkWidgetPath *path,  gint pos);
+		auto p = gtk_widget_path_iter_get_siblings(gtkWidgetPath, pos);
+		if(p is null)
+		{
+			return null;
+		}
+		return new WidgetPath(cast(GtkWidgetPath*) p);
+	}
+	
+	/**
+	 * Returns the index into the list of siblings for the element at pos as
+	 * returned by gtk_widget_path_iter_get_siblings(). If that function would
+	 * return NULL because the element at pos has no siblings, this function
+	 * will return 0.
+	 * Params:
+	 * pos = position to get the sibling index for, -1 for the path head
+	 * Returns: 0 or the index into the list of siblings for the element at pos.
+	 */
+	public uint iterGetSiblingIndex(int pos)
+	{
+		// guint gtk_widget_path_iter_get_sibling_index  (const GtkWidgetPath *path,  gint pos);
+		return gtk_widget_path_iter_get_sibling_index(gtkWidgetPath, pos);
 	}
 	
 	/**
@@ -507,5 +606,19 @@ public class WidgetPath
 	{
 		// void gtk_widget_path_prepend_type (GtkWidgetPath *path,  GType type);
 		gtk_widget_path_prepend_type(gtkWidgetPath, type);
+	}
+	
+	/**
+	 * Dumps the widget path into a string representation. It tries to match
+	 * the CSS style as closely as possible (Note that there might be paths
+	 * that cannot be represented in CSS).
+	 * The main use of this code is for debugging purposes, so that you can
+	 * g_print() the path or dump it in a gdb session.
+	 * Returns: A new string describing path. Since 3.2
+	 */
+	public string toString()
+	{
+		// char * gtk_widget_path_to_string (const GtkWidgetPath *path);
+		return Str.toString(gtk_widget_path_to_string(gtkWidgetPath));
 	}
 }

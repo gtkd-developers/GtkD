@@ -975,6 +975,35 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Sets text to be displayed in entry when it is empty and unfocused.
+	 * This can be used to give a visual hint of the expected contents of
+	 * the GtkEntry.
+	 * Note that since the placeholder text gets removed when the entry
+	 * received focus, using this feature is a bit problematic if the entry
+	 * is given the initial focus in a window. Sometimes this can be
+	 * worked around by delaying the initial focus setting until the
+	 * first key event arrives.
+	 * Params:
+	 * text = a string to be displayed when entry is empty an unfocused, or NULL
+	 * Since 3.2
+	 */
+	public void setPlaceholderText(string text)
+	{
+		// void gtk_entry_set_placeholder_text (GtkEntry *entry,  const gchar *text);
+		gtk_entry_set_placeholder_text(gtkEntry, Str.toStringz(text));
+	}
+	
+	/**
+	 * Retrieves the text that will be displayed when entry is empty and unfocused
+	 * Returns: a pointer to the placeholder text as a string. This string points to internally allocated storage in the widget and must not be freed, modified or stored. Since 3.2
+	 */
+	public string getPlaceholderText()
+	{
+		// const gchar * gtk_entry_get_placeholder_text (GtkEntry *entry);
+		return Str.toString(gtk_entry_get_placeholder_text(gtkEntry));
+	}
+	
+	/**
 	 * Sets whether the text is overwritten when typing in the GtkEntry.
 	 * Since 2.14
 	 * Params:
@@ -1472,7 +1501,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * signal handler.
 	 * Since 2.16
 	 * Params:
-	 * x = the x coordinate of the position to fine
+	 * x = the x coordinate of the position to find
 	 * y = the y coordinate of the position to find
 	 * Returns: the index of the icon at the given position, or -1
 	 */

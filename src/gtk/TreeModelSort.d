@@ -105,9 +105,9 @@ private import gobject.ObjectG;
  * $(DDOC_COMMENT example)
  * To demonstrate how to access the underlying child model from the sort
  * model, the next example will be a callback for the GtkTreeSelection
- * "changed" signal. In this callback, we get a string from COLUMN_1 of
- * the model. We then modify the string, find the same selected row on the
- * child model, and change the row there.
+ * "changed" signal. In this callback, we get a string
+ * from COLUMN_1 of the model. We then modify the string, find the same
+ * selected row on the child model, and change the row there.
  * $(DDOC_COMMENT example)
  */
 public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortableIF

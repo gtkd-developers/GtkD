@@ -789,4 +789,14 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 		// void gtk_tree_view_column_queue_resize (GtkTreeViewColumn *tree_column);
 		gtk_tree_view_column_queue_resize(gtkTreeViewColumn);
 	}
+	
+	/**
+	 * Returns the current X offset of tree_column in pixels.
+	 * Returns: The current X offset of tree_column. Since 3.2
+	 */
+	public int getXOffset()
+	{
+		// gint gtk_tree_view_column_get_x_offset (GtkTreeViewColumn *tree_column);
+		return gtk_tree_view_column_get_x_offset(gtkTreeViewColumn);
+	}
 }

@@ -213,6 +213,9 @@ public class ProgressBar : Widget
 	 * over the bar. The shown text is either the value of
 	 * the "text" property or, if that is NULL,
 	 * the "fraction" value, as a percentage.
+	 * To make a progress bar that is styled and sized suitably for containing
+	 * text (even if the actual text is blank), set "show-text" to
+	 * TRUE and "text" to the empty string (not NULL).
 	 * Params:
 	 * showText = whether to show superimposed text
 	 * Since 3.0
@@ -236,6 +239,12 @@ public class ProgressBar : Widget
 	
 	/**
 	 * Causes the given text to appear superimposed on the progress bar.
+	 * If text is NULL and "show-text" is TRUE, the current
+	 * value of "fraction" will be displayed as a percentage.
+	 * If text is non-NULL and "show-text" is TRUE, the text will
+	 * be displayed. In this case, it will not display the progress percentage.
+	 * If text is the empty string, the progress bar will still be styled and sized
+	 * suitably for containing text, as long as "show-text" is TRUE.
 	 * Params:
 	 * text = a UTF-8 string, or NULL. [allow-none]
 	 */
