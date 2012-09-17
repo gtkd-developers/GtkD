@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- cairo.Pattern
  * 	- gtk.StyleProperties
  * 	- gtk.SymbolicColor
@@ -64,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+
 
 private import glib.Str;
 private import cairo.Pattern;

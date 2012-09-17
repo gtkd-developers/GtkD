@@ -168,7 +168,7 @@ public interface SourceCompletionProviderIF
 	 * Params:
 	 * proposal = a GtkSourceCompletionProposal.
 	 * context = a GtkSourceCompletionContext.
-	 * iter = a GtkTextIter.
+	 * iter = a GtkTextIter. [out]
 	 * Returns: TRUE if iter was set for proposal, FALSE otherwise.
 	 */
 	public int gtkSourceCompletionProviderGetStartIter(SourceCompletionContext context, SourceCompletionProposalIF proposal, TextIter iter);

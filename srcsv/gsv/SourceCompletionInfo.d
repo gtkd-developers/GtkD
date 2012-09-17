@@ -187,7 +187,9 @@ public class SourceCompletionInfo : Window
 	/**
 	 * Sets the content widget of the info window. If widget does not fit within
 	 * the size requirements of the window, a GtkScrolledWindow will automatically
-	 * be created and added to the window.
+	 * be created and added to the window. See that the previous widget will lose
+	 * a reference and it can be destroyed, so if you do not want this to happen
+	 * you must g_object_ref() before calling this method.
 	 * Params:
 	 * widget = a GtkWidget. [allow-none]
 	 */
