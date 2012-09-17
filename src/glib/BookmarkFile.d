@@ -245,8 +245,8 @@ public class BookmarkFile
 	 * Params:
 	 * file = a relative path to a filename to open and parse
 	 * fullPath = return location for a string containing the full path
-	 * of the file, or NULL
-	 * Returns: TRUE if a key file could be loaded, FALSE othewise
+	 * of the file, or NULL. [allow-none]
+	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
 	public int loadFromDataDirs(string file, out string fullPath)
@@ -270,7 +270,7 @@ public class BookmarkFile
 	 * This function outputs bookmark as a string.
 	 * Since 2.12
 	 * Params:
-	 * length = return location for the length of the returned string, or NULL
+	 * length = return location for the length of the returned string, or NULL. [allow-none]
 	 * Returns: a newly allocated string holding the contents of the GBookmarkFile
 	 * Throws: GException on failure.
 	 */
@@ -397,7 +397,7 @@ public class BookmarkFile
 	 * optionally be NULL.
 	 * Since 2.12
 	 * Params:
-	 * length = return location for the number of returned URIs, or NULL
+	 * length = return location for the number of returned URIs, or NULL. [allow-none]
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public string[] getUris(out gsize length)
@@ -413,7 +413,7 @@ public class BookmarkFile
 	 * error is set to G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * Since 2.12
 	 * Params:
-	 * uri = a valid URI or NULL
+	 * uri = a valid URI or NULL. [allow-none]
 	 * Returns: a newly allocated string or NULL if the specified URI cannot be found.
 	 * Throws: GException on failure.
 	 */
@@ -518,8 +518,8 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * href = return location for the icon's location or NULL
-	 * mimeType = return location for the icon's MIME type or NULL
+	 * href = return location for the icon's location or NULL. [allow-none]
+	 * mimeType = return location for the icon's MIME type or NULL. [allow-none]
 	 * Returns: TRUE if the icon for the bookmark for the URI was found. You should free the returned strings.
 	 * Throws: GException on failure.
 	 */
@@ -626,7 +626,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * length = return location for the length of the returned string, or NULL
+	 * length = return location for the length of the returned string, or NULL. [allow-none]
 	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
@@ -653,7 +653,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * length = return location of the length of the returned list, or NULL
+	 * length = return location of the length of the returned list, or NULL. [allow-none]
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
@@ -688,9 +688,9 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * name = an application's name
-	 * exec = location for the command line of the application, or NULL
-	 * count = return location for the registration count, or NULL
-	 * stamp = return location for the last registration time, or NULL
+	 * exec = location for the command line of the application, or NULL. [allow-none]
+	 * count = return location for the registration count, or NULL. [allow-none]
+	 * stamp = return location for the last registration time, or NULL. [allow-none]
 	 * Returns: TRUE on success.
 	 * Throws: GException on failure.
 	 */
@@ -718,7 +718,7 @@ public class BookmarkFile
 	 * If a bookmark for uri cannot be found then it is created.
 	 * Since 2.12
 	 * Params:
-	 * uri = a valid URI or NULL
+	 * uri = a valid URI or NULL. [allow-none]
 	 * title = a UTF-8 encoded string
 	 */
 	public void setTitle(string uri, string title)
@@ -733,7 +733,7 @@ public class BookmarkFile
 	 * If a bookmark for uri cannot be found then it is created.
 	 * Since 2.12
 	 * Params:
-	 * uri = a valid URI or NULL
+	 * uri = a valid URI or NULL. [allow-none]
 	 * description = a string
 	 */
 	public void setDescription(string uri, string description)
@@ -778,7 +778,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * href = the URI of the icon for the bookmark, or NULL
+	 * href = the URI of the icon for the bookmark, or NULL. [allow-none]
 	 * mimeType = the MIME type of the icon for the bookmark
 	 */
 	public void setIcon(string uri, string href, string mimeType)
@@ -927,8 +927,8 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * name = the name of the application registering the bookmark
-	 * or NULL
-	 * exec = command line to be used to launch the bookmark or NULL
+	 * or NULL. [allow-none]
+	 * exec = command line to be used to launch the bookmark or NULL. [allow-none]
 	 */
 	public void addApplication(string uri, string name, string exec)
 	{
@@ -1027,7 +1027,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * oldUri = a valid URI
-	 * newUri = a valid URI, or NULL
+	 * newUri = a valid URI, or NULL. [allow-none]
 	 * Returns: TRUE if the URI was successfully changed
 	 * Throws: GException on failure.
 	 */

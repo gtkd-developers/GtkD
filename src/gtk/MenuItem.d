@@ -367,12 +367,12 @@ public class MenuItem : Bin, ActivatableIF
 		}
 	}
 	
-	void delegate(gpointer, MenuItem)[] onToggleSizeRequestListeners;
+	void delegate(void*, MenuItem)[] onToggleSizeRequestListeners;
 	/**
 	 * See Also
 	 * GtkBin, GtkMenuShell
 	 */
-	void addOnToggleSizeRequest(void delegate(gpointer, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnToggleSizeRequest(void delegate(void*, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-size-request" in connectedSignals) )
 		{
@@ -387,9 +387,9 @@ public class MenuItem : Bin, ActivatableIF
 		}
 		onToggleSizeRequestListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, gpointer arg1, MenuItem _menuItem)
+	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, void* arg1, MenuItem _menuItem)
 	{
-		foreach ( void delegate(gpointer, MenuItem) dlg ; _menuItem.onToggleSizeRequestListeners )
+		foreach ( void delegate(void*, MenuItem) dlg ; _menuItem.onToggleSizeRequestListeners )
 		{
 			dlg(arg1, _menuItem);
 		}

@@ -635,38 +635,4 @@ public class ListSG
 		// gint g_slist_index (GSList *list,  gconstpointer data);
 		return g_slist_index(gSList, data);
 	}
-	
-	/**
-	 * Warning
-	 * g_slist_push_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GSList has been converted
-	 *  to the slice
-	 *  allocator
-	 * Sets the allocator to use to allocate GSList elements. Use
-	 * g_slist_pop_allocator() to restore the previous allocator.
-	 * Note that this function is not available if GLib has been compiled
-	 * with --disable-mem-pools
-	 * Params:
-	 * dummy = the GAllocator to use when allocating GSList elements.
-	 */
-	public static void pushAllocator(void* dummy)
-	{
-		// void g_slist_push_allocator (gpointer dummy);
-		g_slist_push_allocator(dummy);
-	}
-	
-	/**
-	 * Warning
-	 * g_slist_pop_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GSList has been converted
-	 *  to the slice
-	 *  allocator
-	 * Restores the previous GAllocator, used when allocating GSList
-	 * elements.
-	 * Note that this function is not available if GLib has been compiled
-	 * with --disable-mem-pools
-	 */
-	public static void popAllocator()
-	{
-		// void g_slist_pop_allocator (void);
-		g_slist_pop_allocator();
-	}
 }

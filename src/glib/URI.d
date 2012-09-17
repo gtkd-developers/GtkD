@@ -142,10 +142,10 @@ public class URI
 	 * handling.
 	 * Since 2.16
 	 * Params:
-	 * escapedString = a string.
-	 * escapedStringEnd = a string.
-	 * illegalCharacters = an optional string of illegal characters not to be allowed.
-	 * Returns: an unescaped version of escaped_string or NULL on error. The returned string should be freed when no longer needed.
+	 * escapedString = A string, may be NULL. [allow-none]
+	 * escapedStringEnd = Pointer to end of escaped_string, may be NULL. [allow-none]
+	 * illegalCharacters = An optional string of illegal characters not to be allowed, may be NULL. [allow-none]
+	 * Returns: an unescaped version of escaped_string or NULL on error. The returned string should be freed when no longer needed. As a special case if NULL is given for escaped_string, this function will return NULL.
 	 */
 	public static string unescapeSegment(string escapedString, string escapedStringEnd, string illegalCharacters)
 	{
@@ -175,7 +175,7 @@ public class URI
 	 * uri = a uri describing a filename (escaped, encoded in ASCII).
 	 * hostname = Location to store hostname for the URI, or NULL.
 	 * If there is no hostname in the URI, NULL will be
-	 * stored in this location.
+	 * stored in this location. [allow-none]
 	 * Returns: a newly-allocated string holding the resulting filename, or NULL on an error.
 	 * Throws: GException on failure.
 	 */

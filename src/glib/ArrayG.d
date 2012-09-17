@@ -324,11 +324,7 @@ public class ArrayG
 	 * comparison function (returns less than zero for first arg is less
 	 * than second arg, zero for equal, greater zero if first arg is
 	 * greater than second arg).
-	 * If two array elements compare equal, their order in the sorted array
-	 * is undefined. If you want equal elements to keep their order 8211; i.e.
-	 * you want a stable sort 8211; you can write a comparison function that,
-	 * if two elements would otherwise compare equal, compares them by
-	 * their addresses.
+	 * This is guaranteed to be a stable sort since version 2.32.
 	 * Params:
 	 * compareFunc = comparison function.
 	 */
@@ -341,6 +337,10 @@ public class ArrayG
 	/**
 	 * Like g_array_sort(), but the comparison function receives an extra
 	 * user data argument.
+	 * This is guaranteed to be a stable sort since version 2.32.
+	 * There used to be a comment here about making the sort stable by
+	 * using the addresses of the elements in the comparison function.
+	 * This did not actually work, so any such code should be removed.
 	 * Params:
 	 * compareFunc = comparison function.
 	 * userData = data to pass to compare_func.
@@ -367,6 +367,24 @@ public class ArrayG
 			return null;
 		}
 		return new ArrayG(cast(GArray*) p);
+	}
+	
+	/**
+	 * Sets a function to clear an element of array.
+	 * The clear_func will be called when an element in the array
+	 * data segment is removed and when the array is freed and data
+	 * segment is deallocated as well.
+	 * Note that in contrast with other uses of GDestroyNotify
+	 * functions, clear_func is expected to clear the contents of
+	 * the array element it is given, but not free the element itself.
+	 * Since 2.32
+	 * Params:
+	 * clearFunc = a function to clear an element of array
+	 */
+	public void setClearFunc(GDestroyNotify clearFunc)
+	{
+		// void g_array_set_clear_func (GArray *array,  GDestroyNotify clear_func);
+		g_array_set_clear_func(gArray, clearFunc);
 	}
 	
 	/**

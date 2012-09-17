@@ -26,18 +26,18 @@
  * inFile  = 
  * outPack = gthread
  * outFile = RWLock
- * strct   = GStaticRWLock
+ * strct   = GRWLock
  * realStrct=
  * ctorStrct=
  * clss    = RWLock
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
- * 	- g_static_rw_lock_
+ * 	- g_rw_lock_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -72,207 +72,205 @@ private import glib.ConstructionException;
  * assumptions on the order of execution of code running in different
  * threads can be made, unless order is explicitly forced by the
  * programmer through synchronization primitives.
- * The aim of the thread related functions in GLib is to provide a
+ * The aim of the thread-related functions in GLib is to provide a
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
- * (GMutex, GStaticMutex, G_LOCK_DEFINE, GStaticRecMutex and
- * GStaticRWLock). There is a facility to use individual bits for
- * locks (g_bit_lock()). There are primitives for condition variables to
- * allow synchronization of threads (GCond). There are primitives for
- * thread-private data - data that every thread has a private instance
- * of (GPrivate, GStaticPrivate). There are facilities for one-time
- * initialization (GOnce, g_once_init_enter()). Last but definitely
- * not least there are primitives to portably create and manage
- * threads (GThread).
- * The threading system is initialized with g_thread_init(), which
- * takes an optional custom thread implementation or NULL for the
- * default implementation. If you want to call g_thread_init() with a
- * non-NULL argument this must be done before executing any other GLib
- * functions (except g_mem_set_vtable()). This is a requirement even if
- * no threads are in fact ever created by the process.
- * Calling g_thread_init() with a NULL argument is somewhat more
- * relaxed. You may call any other glib functions in the main thread
- * before g_thread_init() as long as g_thread_init() is not called from
- * a glib callback, or with any locks held. However, many libraries
- * above glib does not support late initialization of threads, so doing
- * this should be avoided if possible.
- * Please note that since version 2.24 the GObject initialization
- * function g_type_init() initializes threads (with a NULL argument),
- * so most applications, including those using Gtk+ will run with
- * threads enabled. If you want a special thread implementation, make
- * sure you call g_thread_init() before g_type_init() is called.
- * After calling g_thread_init(), GLib is completely thread safe (all
- * global data is automatically locked), but individual data structure
- * instances are not automatically locked for performance reasons. So,
- * for example you must coordinate accesses to the same GHashTable
- * from multiple threads. The two notable exceptions from this rule
- * are GMainLoop and GAsyncQueue, which are
- * threadsafe and need no further application-level locking to be
- * accessed from multiple threads.
- * To help debugging problems in multithreaded applications, GLib
- * supports error-checking mutexes that will give you helpful error
- * messages on common problems. To use error-checking mutexes, define
- * the symbol G_ERRORCHECK_MUTEXES when compiling the application.
+ * (GMutex, GRecMutex and GRWLock). There is a facility to use
+ * individual bits for locks (g_bit_lock()). There are primitives
+ * for condition variables to allow synchronization of threads (GCond).
+ * There are primitives for thread-private data - data that every
+ * thread has a private instance of (GPrivate). There are facilities
+ * for one-time initialization (GOnce, g_once_init_enter()). Finally,
+ * there are primitives to create and manage threads (GThread).
+ * The GLib threading system used to be initialized with g_thread_init().
+ * This is no longer necessary. Since version 2.32, the GLib threading
+ * system is automatically initialized at the start of your program,
+ * and all thread-creation functions and synchronization primitives
+ * are available right away.
+ * Note that it is not safe to assume that your program has no threads
+ * even if you don't call g_thread_new() yourself. GLib and GIO can
+ * and will create threads for their own purposes in some cases, such
+ * as when using g_unix_signal_source_new() or when using GDBus.
+ * Originally, UNIX did not have threads, and therefore some traditional
+ * UNIX APIs are problematic in threaded programs. Some notable examples
+ * are
+ *  C library functions that return data in statically allocated
+ *  buffers, such as strtok() or strerror(). For many of these,
+ *  there are thread-safe variants with a _r suffix, or you can
+ *  look at corresponding GLib APIs (like g_strsplit() or g_strerror()).
+ * setenv() and unsetenv() manipulate the process environment in
+ *  a not thread-safe way, and may interfere with getenv() calls
+ *  in other threads. Note that getenv() calls may be
+ *  “hidden” behind other APIs. For example, GNU gettext()
+ *  calls getenv() under the covers. In general, it is best to treat
+ *  the environment as readonly. If you absolutely have to modify the
+ *  environment, do it early in main(), when no other threads are around yet.
+ * setlocale() changes the locale for the entire process, affecting
+ *  all threads. Temporary changes to the locale are often made to
+ *  change the behavior of string scanning or formatting functions
+ *  like scanf() or printf(). GLib offers a number of string APIs
+ *  (like g_ascii_formatd() or g_ascii_strtod()) that can often be
+ *  used as an alternative. Or you can use the uselocale() function
+ *  to change the locale only for the current thread.
+ * fork() only takes the calling thread into the child's copy of the
+ *  process image. If other threads were executing in critical
+ *  sections they could have left mutexes locked which could easily
+ *  cause deadlocks in the new child. For this reason, you should
+ *  call exit() or exec() as soon as possible in the child and only
+ *  make signal-safe library calls before that.
+ * daemon() uses fork() in a way contrary to what is described
+ *  above. It should not be used with GLib programs.
+ * GLib itself is internally completely thread-safe (all global data is
+ * automatically locked), but individual data structure instances are
+ * not automatically locked for performance reasons. For example,
+ * you must coordinate accesses to the same GHashTable from multiple
+ * threads. The two notable exceptions from this rule are GMainLoop
+ * and GAsyncQueue, which are thread-safe and
+ * need no further application-level locking to be accessed from
+ * multiple threads. Most refcounting functions such as g_object_ref()
+ * are also thread-safe.
  */
 public class RWLock
 {
 	
 	/** the main Gtk struct */
-	protected GStaticRWLock* gStaticRWLock;
+	protected GRWLock* gRWLock;
 	
 	
-	public GStaticRWLock* getRWLockStruct()
+	public GRWLock* getRWLockStruct()
 	{
-		return gStaticRWLock;
+		return gRWLock;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
-		return cast(void*)gStaticRWLock;
+		return cast(void*)gRWLock;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GStaticRWLock* gStaticRWLock)
+	public this (GRWLock* gRWLock)
 	{
-		if(gStaticRWLock is null)
+		if(gRWLock is null)
 		{
 			this = null;
 			return;
 		}
-		this.gStaticRWLock = gStaticRWLock;
-	}
-	
-	/**
-	 * Creates a new initialized RWLock.
-	 */
-	public this ()
-	{
-		this(new GStaticRWLock);
-		
-		init();
+		this.gRWLock = gRWLock;
 	}
 	
 	/**
 	 */
 	
 	/**
-	 * A GStaticRWLock must be initialized with this function before it
-	 * can be used. Alternatively you can initialize it with
-	 * G_STATIC_RW_LOCK_INIT.
+	 * Initializes a GRWLock so that it can be used.
+	 * This function is useful to initialize a lock that has been
+	 * allocated on the stack, or as part of a larger structure. It is not
+	 * necessary to initialise a reader-writer lock that has been statically
+	 * allocated.
+	 * $(DDOC_COMMENT example)
+	 * To undo the effect of g_rw_lock_init() when a lock is no longer
+	 * needed, use g_rw_lock_clear().
+	 * Calling g_rw_lock_init() on an already initialized GRWLock leads
+	 * to undefined behaviour.
+	 * Since 2.32
 	 */
 	public void init()
 	{
-		// void g_static_rw_lock_init (GStaticRWLock *lock);
-		g_static_rw_lock_init(gStaticRWLock);
+		// void g_rw_lock_init (GRWLock *rw_lock);
+		g_rw_lock_init(gRWLock);
 	}
 	
 	/**
-	 * Locks lock for reading. There may be unlimited concurrent locks for
-	 * reading of a GStaticRWLock at the same time. If lock is already
-	 * locked for writing by another thread or if another thread is already
-	 * waiting to lock lock for writing, this function will block until
-	 * lock is unlocked by the other writing thread and no other writing
-	 * threads want to lock lock. This lock has to be unlocked by
-	 * g_static_rw_lock_reader_unlock().
-	 * GStaticRWLock is not recursive. It might seem to be possible to
-	 * recursively lock for reading, but that can result in a deadlock, due
-	 * to writer preference.
+	 * Frees the resources allocated to a lock with g_rw_lock_init().
+	 * This function should not be used with a GRWLock that has been
+	 * statically allocated.
+	 * Calling g_rw_lock_clear() when any thread holds the lock
+	 * leads to undefined behaviour.
+	 * Sine: 2.32
 	 */
-	public void readerLock()
+	public void clear()
 	{
-		// void g_static_rw_lock_reader_lock (GStaticRWLock *lock);
-		g_static_rw_lock_reader_lock(gStaticRWLock);
+		// void g_rw_lock_clear (GRWLock *rw_lock);
+		g_rw_lock_clear(gRWLock);
 	}
 	
 	/**
-	 * Tries to lock lock for reading. If lock is already locked for
-	 * writing by another thread or if another thread is already waiting to
-	 * lock lock for writing, immediately returns FALSE. Otherwise locks
-	 * lock for reading and returns TRUE. This lock has to be unlocked by
-	 * g_static_rw_lock_reader_unlock().
-	 * Params:
-	 * lock = a GStaticRWLock to lock for reading.
-	 * Returns: TRUE, if lock could be locked for reading.
-	 */
-	public int readerTrylock()
-	{
-		// gboolean g_static_rw_lock_reader_trylock (GStaticRWLock *lock);
-		return g_static_rw_lock_reader_trylock(gStaticRWLock);
-	}
-	
-	/**
-	 * Unlocks lock. If a thread waits to lock lock for writing and all
-	 * locks for reading have been unlocked, the waiting thread is woken up
-	 * and can lock lock for writing.
-	 * Params:
-	 * lock = a GStaticRWLock to unlock after reading.
-	 */
-	public void readerUnlock()
-	{
-		// void g_static_rw_lock_reader_unlock (GStaticRWLock *lock);
-		g_static_rw_lock_reader_unlock(gStaticRWLock);
-	}
-	
-	/**
-	 * Locks lock for writing. If lock is already locked for writing or
-	 * reading by other threads, this function will block until lock is
-	 * completely unlocked and then lock lock for writing. While this
-	 * functions waits to lock lock, no other thread can lock lock for
-	 * reading. When lock is locked for writing, no other thread can lock
-	 * lock (neither for reading nor writing). This lock has to be
-	 * unlocked by g_static_rw_lock_writer_unlock().
+	 * Obtain a write lock on rw_lock. If any thread already holds
+	 * a read or write lock on rw_lock, the current thread will block
+	 * until all other threads have dropped their locks on rw_lock.
+	 * Since 2.32
 	 */
 	public void writerLock()
 	{
-		// void g_static_rw_lock_writer_lock (GStaticRWLock *lock);
-		g_static_rw_lock_writer_lock(gStaticRWLock);
+		// void g_rw_lock_writer_lock (GRWLock *rw_lock);
+		g_rw_lock_writer_lock(gRWLock);
 	}
 	
 	/**
-	 * Tries to lock lock for writing. If lock is already locked (for
-	 * either reading or writing) by another thread, it immediately returns
-	 * FALSE. Otherwise it locks lock for writing and returns TRUE. This
-	 * lock has to be unlocked by g_static_rw_lock_writer_unlock().
-	 * Params:
-	 * lock = a GStaticRWLock to lock for writing.
-	 * Returns: TRUE, if lock could be locked for writing.
+	 * Tries to obtain a write lock on rw_lock. If any other thread holds
+	 * a read or write lock on rw_lock, it immediately returns FALSE.
+	 * Otherwise it locks rw_lock and returns TRUE.
+	 * Since 2.32
+	 * Returns: TRUE if rw_lock could be locked
 	 */
 	public int writerTrylock()
 	{
-		// gboolean g_static_rw_lock_writer_trylock (GStaticRWLock *lock);
-		return g_static_rw_lock_writer_trylock(gStaticRWLock);
+		// gboolean g_rw_lock_writer_trylock (GRWLock *rw_lock);
+		return g_rw_lock_writer_trylock(gRWLock);
 	}
 	
 	/**
-	 * Unlocks lock. If a thread is waiting to lock lock for writing and
-	 * all locks for reading have been unlocked, the waiting thread is
-	 * woken up and can lock lock for writing. If no thread is waiting to
-	 * lock lock for writing, and some thread or threads are waiting to
-	 * lock lock for reading, the waiting threads are woken up and can
-	 * lock lock for reading.
-	 * Params:
-	 * lock = a GStaticRWLock to unlock after writing.
+	 * Release a write lock on rw_lock.
+	 * Calling g_rw_lock_writer_unlock() on a lock that is not held
+	 * by the current thread leads to undefined behaviour.
+	 * Since 2.32
 	 */
 	public void writerUnlock()
 	{
-		// void g_static_rw_lock_writer_unlock (GStaticRWLock *lock);
-		g_static_rw_lock_writer_unlock(gStaticRWLock);
+		// void g_rw_lock_writer_unlock (GRWLock *rw_lock);
+		g_rw_lock_writer_unlock(gRWLock);
 	}
 	
 	/**
-	 * Releases all resources allocated to lock.
-	 * You don't have to call this functions for a GStaticRWLock with an
-	 * unbounded lifetime, i.e. objects declared 'static', but if you have
-	 * a GStaticRWLock as a member of a structure, and the structure is
-	 * freed, you should also free the GStaticRWLock.
+	 * Obtain a read lock on rw_lock. If another thread currently holds
+	 * the write lock on rw_lock or blocks waiting for it, the current
+	 * thread will block. Read locks can be taken recursively.
+	 * It is implementation-defined how many threads are allowed to
+	 * hold read locks on the same lock simultaneously.
+	 * Since 2.32
 	 */
-	public void free()
+	public void readerLock()
 	{
-		// void g_static_rw_lock_free (GStaticRWLock *lock);
-		g_static_rw_lock_free(gStaticRWLock);
+		// void g_rw_lock_reader_lock (GRWLock *rw_lock);
+		g_rw_lock_reader_lock(gRWLock);
+	}
+	
+	/**
+	 * Tries to obtain a read lock on rw_lock and returns TRUE if
+	 * the read lock was successfully obtained. Otherwise it
+	 * returns FALSE.
+	 * Since 2.32
+	 * Returns: TRUE if rw_lock could be locked
+	 */
+	public int readerTrylock()
+	{
+		// gboolean g_rw_lock_reader_trylock (GRWLock *rw_lock);
+		return g_rw_lock_reader_trylock(gRWLock);
+	}
+	
+	/**
+	 * Release a read lock on rw_lock.
+	 * Calling g_rw_lock_reader_unlock() on a lock that is not held
+	 * by the current thread leads to undefined behaviour.
+	 * Since 2.32
+	 */
+	public void readerUnlock()
+	{
+		// void g_rw_lock_reader_unlock (GRWLock *rw_lock);
+		g_rw_lock_reader_unlock(gRWLock);
 	}
 }

@@ -177,7 +177,7 @@ public class Pattern
 	 * stringLength = the length of string (in bytes, i.e. strlen(),
 	 * not g_utf8_strlen())
 	 * string = the UTF-8 encoded string to match
-	 * stringReversed = the reverse of string or NULL
+	 * stringReversed = the reverse of string or NULL. [allow-none]
 	 * Returns: TRUE if string matches pspec
 	 */
 	public int match(uint stringLength, string string, string stringReversed)

@@ -1570,7 +1570,7 @@ public class GtkDClass
 					{
 						switch (v[0..3])
 						{
-							case "2BI": v = "TOO_"~v[1..v.length]; break;
+							case "2BI": v = ""; break;
 							case "2BU": v = "DOUBLE_"~v[1..v.length]; break;
 							case "3BU": v = "TRIPLE_"~v[1..v.length]; break;
 							case "1_1": v = "VERSION_"~v; break;
@@ -1614,6 +1614,11 @@ public class GtkDClass
 				debug(enums)writefln("\t\t%s", value);
 				collectedEnums ~= stringToGtkD(value, convParms, wrapper.getAliases());
 			}
+			
+			//Private value in GTokenType.
+			if ( enumName == "GTokenType")
+				collectedEnums ~= "LAST";
+			
 			collectedEnums ~= "}";
 			if ( gtkDEnumName.length > 0
 				&& !startsWith(gtkDEnumName, "Gdk")

@@ -201,9 +201,9 @@ public class Util
 	}
 	
 	/**
-	 * Gets the list of environment variables for the current process. The
-	 * list is NULL terminated and each item in the list is of the form
-	 * 'NAME=VALUE'.
+	 * Gets the list of environment variables for the current process.
+	 * The list is NULL terminated and each item in the list is of the
+	 * form 'NAME=VALUE'.
 	 * This is equivalent to direct access to the 'environ' global variable,
 	 * except portable.
 	 * The return value is freshly allocated and it should be freed with
@@ -218,14 +218,78 @@ public class Util
 	}
 	
 	/**
-	 * Returns the value of an environment variable. The name and value
-	 * are in the GLib file name encoding. On UNIX, this means the actual
-	 * bytes which might or might not be in some consistent character set
-	 * and encoding. On Windows, it is in UTF-8. On Windows, in case the
-	 * environment variable's value contains references to other
-	 * environment variables, they are expanded.
+	 * Returns the value of the environment variable variable in the
+	 * provided list envp.
+	 * The name and value are in the GLib file name encoding.
+	 * On UNIX, this means the actual bytes which might or might not
+	 * be in some consistent character set and encoding. On Windows,
+	 * it is in UTF-8. On Windows, in case the environment variable's
+	 * value contains references to other environment variables, they
+	 * are expanded.
+	 * Since 2.32
 	 * Params:
-	 * variable = the environment variable to get, in the GLib file name encoding.
+	 * envp = an environment
+	 * list (eg, as returned from g_get_environ()), or NULL
+	 * for an empty environment list. [allow-none][array zero-terminated=1][transfer none]
+	 * variable = the environment variable to get, in the GLib file name
+	 * encoding
+	 * Returns: the value of the environment variable, or NULL if the environment variable is not set in envp. The returned string is owned by envp, and will be freed if variable is set or unset again.
+	 */
+	public static string environGetenv(string[] envp, string variable)
+	{
+		// const gchar * g_environ_getenv (gchar **envp,  const gchar *variable);
+		return Str.toString(g_environ_getenv(Str.toStringzArray(envp), Str.toStringz(variable)));
+	}
+	
+	/**
+	 * Sets the environment variable variable in the provided list
+	 * envp to value.
+	 * Both the variable's name and value should be in the GLib
+	 * file name encoding. On UNIX, this means that they can be
+	 * arbitrary byte strings. On Windows, they should be in UTF-8.
+	 * Since 2.32
+	 * Params:
+	 * envp = an environment
+	 * list that can be freed using g_strfreev() (e.g., as returned from g_get_environ()), or NULL
+	 * for an empty environment list. [allow-none][array zero-terminated=1][transfer full]
+	 * variable = the environment variable to set, must not contain '='
+	 * value = the value for to set the variable to
+	 * overwrite = whether to change the variable if it already exists
+	 * Returns: the updated environment list. Free it using g_strfreev(). [array zero-terminated=1][transfer full]
+	 */
+	public static string[] environSetenv(string[] envp, string variable, string value, int overwrite)
+	{
+		// gchar ** g_environ_setenv (gchar **envp,  const gchar *variable,  const gchar *value,  gboolean overwrite);
+		return Str.toStringArray(g_environ_setenv(Str.toStringzArray(envp), Str.toStringz(variable), Str.toStringz(value), overwrite));
+	}
+	
+	/**
+	 * Removes the environment variable variable from the provided
+	 * environment envp.
+	 * Since 2.32
+	 * Params:
+	 * envp = an environment
+	 * list that can be freed using g_strfreev() (e.g., as returned from g_get_environ()),
+	 * or NULL for an empty environment list. [allow-none][array zero-terminated=1][transfer full]
+	 * variable = the environment variable to remove, must not contain '='
+	 * Returns: the updated environment list. Free it using g_strfreev(). [array zero-terminated=1][transfer full]
+	 */
+	public static string[] environUnsetenv(string[] envp, string variable)
+	{
+		// gchar ** g_environ_unsetenv (gchar **envp,  const gchar *variable);
+		return Str.toStringArray(g_environ_unsetenv(Str.toStringzArray(envp), Str.toStringz(variable)));
+	}
+	
+	/**
+	 * Returns the value of an environment variable.
+	 * The name and value are in the GLib file name encoding. On UNIX,
+	 * this means the actual bytes which might or might not be in some
+	 * consistent character set and encoding. On Windows, it is in UTF-8.
+	 * On Windows, in case the environment variable's value contains
+	 * references to other environment variables, they are expanded.
+	 * Params:
+	 * variable = the environment variable to get, in the GLib file name
+	 * encoding
 	 * Returns: the value of the environment variable, or NULL if the environment variable is not found. The returned string may be overwritten by the next call to g_getenv(), g_setenv() or g_unsetenv().
 	 */
 	public static string getenv(string variable)
@@ -237,10 +301,22 @@ public class Util
 	/**
 	 * Sets an environment variable. Both the variable's name and value
 	 * should be in the GLib file name encoding. On UNIX, this means that
-	 * they can be any sequence of bytes. On Windows, they should be in
+	 * they can be arbitrary byte strings. On Windows, they should be in
 	 * UTF-8.
 	 * Note that on some systems, when variables are overwritten, the memory
 	 * used for the previous variables and its value isn't reclaimed.
+	 * Warning
+	 * Environment variable handling in UNIX is not thread-safe, and your
+	 * program may crash if one thread calls g_setenv() while another
+	 * thread is calling getenv(). (And note that many functions, such as
+	 * gettext(), call getenv() internally.) This function is only safe to
+	 * use at the very start of your program, before creating any other
+	 * threads (or creating objects that create worker threads of their
+	 * own).
+	 * If you need to set up the environment for a child process, you can
+	 * use g_get_environ() to get an environment array, modify that with
+	 * g_environ_setenv() and g_environ_unsetenv(), and then pass that
+	 * array directly to execvpe(), g_spawn_async(), or the like.
 	 * Since 2.4
 	 * Params:
 	 * variable = the environment variable to set, must not contain '='.
@@ -256,13 +332,23 @@ public class Util
 	
 	/**
 	 * Removes an environment variable from the environment.
-	 * Note that on some systems, when variables are overwritten, the memory
-	 * used for the previous variables and its value isn't reclaimed.
-	 * Furthermore, this function can't be guaranteed to operate in a
-	 * threadsafe way.
+	 * Note that on some systems, when variables are overwritten, the
+	 * memory used for the previous variables and its value isn't reclaimed.
+	 * Warning
+	 * Environment variable handling in UNIX is not thread-safe, and your
+	 * program may crash if one thread calls g_unsetenv() while another
+	 * thread is calling getenv(). (And note that many functions, such as
+	 * gettext(), call getenv() internally.) This function is only safe
+	 * to use at the very start of your program, before creating any other
+	 * threads (or creating objects that create worker threads of their
+	 * own).
+	 * If you need to set up the environment for a child process, you can
+	 * use g_get_environ() to get an environment array, modify that with
+	 * g_environ_setenv() and g_environ_unsetenv(), and then pass that
+	 * array directly to execvpe(), g_spawn_async(), or the like.
 	 * Since 2.4
 	 * Params:
-	 * variable = the environment variable to remove, must not contain '='.
+	 * variable = the environment variable to remove, must not contain '='
 	 */
 	public static void unsetenv(string variable)
 	{
@@ -272,8 +358,14 @@ public class Util
 	
 	/**
 	 * Gets the names of all variables set in the environment.
+	 * Programs that want to be portable to Windows should typically use
+	 * this function and g_getenv() instead of using the environ array
+	 * from the C library directly. On Windows, the strings in the environ
+	 * array are in system codepage encoding, while in most of the typical
+	 * use cases for environment variables in GLib-using programs you want
+	 * the UTF-8 encoding that this function and g_getenv() provide.
 	 * Since 2.8
-	 * Returns: a NULL-terminated list of strings which must be freed with g_strfreev(). Programs that want to be portable to Windows should typically use this function and g_getenv() instead of using the environ array from the C library directly. On Windows, the strings in the environ array are in system codepage encoding, while in most of the typical use cases for environment variables in GLib-using programs you want the UTF-8 encoding that this function and g_getenv() provide. [array zero-terminated=1][transfer full]
+	 * Returns: a NULL-terminated list of strings which must be freed with g_strfreev(). [array zero-terminated=1][transfer full]
 	 */
 	public static string[] listenv()
 	{
@@ -543,9 +635,10 @@ public class Util
 	
 	/**
 	 * Gets the current directory.
-	 * The returned string should be freed when no longer needed. The encoding
-	 * of the returned string is system defined. On Windows, it is always UTF-8.
-	 * Returns: the current directory.
+	 * The returned string should be freed when no longer needed.
+	 * The encoding of the returned string is system defined.
+	 * On Windows, it is always UTF-8.
+	 * Returns: the current directory
 	 */
 	public static string getCurrentDir()
 	{
@@ -555,14 +648,16 @@ public class Util
 	
 	/**
 	 * Warning
-	 * g_basename has been deprecated since version 2.2 and should not be used in newly-written code. Use g_path_get_basename() instead, but notice that
-	 * g_path_get_basename() allocates new memory for the returned string, unlike
-	 * this function which returns a pointer into the argument.
-	 * Gets the name of the file without any leading directory components.
-	 * It returns a pointer into the given file name string.
+	 * g_basename has been deprecated since version 2.2 and should not be used in newly-written code. Use g_path_get_basename() instead, but notice
+	 *  that g_path_get_basename() allocates new memory for the
+	 *  returned string, unlike this function which returns a pointer
+	 *  into the argument.
+	 * Gets the name of the file without any leading directory
+	 * components. It returns a pointer into the given file name
+	 * string.
 	 * Params:
-	 * fileName = the name of the file.
-	 * Returns: the name of the file without any leading directory components.
+	 * fileName = the name of the file
+	 * Returns: the name of the file without any leading directory components
 	 */
 	public static string basename(string fileName)
 	{
@@ -592,8 +687,8 @@ public class Util
 	 * either. Such paths should be avoided, or need to be handled using
 	 * Windows-specific code.
 	 * Params:
-	 * fileName = a file name.
-	 * Returns: TRUE if file_name is absolute.
+	 * fileName = a file name
+	 * Returns: TRUE if file_name is absolute
 	 */
 	public static int pathIsAbsolute(string fileName)
 	{
@@ -602,12 +697,12 @@ public class Util
 	}
 	
 	/**
-	 * Returns a pointer into file_name after the root component, i.e. after
-	 * the "/" in UNIX or "C:\" under Windows. If file_name is not an absolute
-	 * path it returns NULL.
+	 * Returns a pointer into file_name after the root component,
+	 * i.e. after the "/" in UNIX or "C:\" under Windows. If file_name
+	 * is not an absolute path it returns NULL.
 	 * Params:
-	 * fileName = a file name.
-	 * Returns: a pointer into file_name after the root component.
+	 * fileName = a file name
+	 * Returns: a pointer into file_name after the root component
 	 */
 	public static string pathSkipRoot(string fileName)
 	{
@@ -616,14 +711,14 @@ public class Util
 	}
 	
 	/**
-	 * Gets the last component of the filename. If file_name ends with a
-	 * directory separator it gets the component before the last slash. If
-	 * file_name consists only of directory separators (and on Windows,
-	 * possibly a drive letter), a single separator is returned. If
-	 * file_name is empty, it gets ".".
+	 * Gets the last component of the filename.
+	 * If file_name ends with a directory separator it gets the component
+	 * before the last slash. If file_name consists only of directory
+	 * separators (and on Windows, possibly a drive letter), a single
+	 * separator is returned. If file_name is empty, it gets ".".
 	 * Params:
-	 * fileName = the name of the file.
-	 * Returns: a newly allocated string containing the last component of the filename.
+	 * fileName = the name of the file
+	 * Returns: a newly allocated string containing the last component of the filename
 	 */
 	public static string pathGetBasename(string fileName)
 	{
@@ -632,12 +727,12 @@ public class Util
 	}
 	
 	/**
-	 * Gets the directory components of a file name. If the file name has no
-	 * directory components "." is returned. The returned string should be
-	 * freed when no longer needed.
+	 * Gets the directory components of a file name.
+	 * If the file name has no directory components "." is returned.
+	 * The returned string should be freed when no longer needed.
 	 * Params:
-	 * fileName = the name of the file.
-	 * Returns: the directory components of the file.
+	 * fileName = the name of the file
+	 * Returns: the directory components of the file
 	 */
 	public static string pathGetDirname(string fileName)
 	{
@@ -688,7 +783,7 @@ public class Util
 	 * Since 2.30
 	 * Params:
 	 * size = a size in bytes
-	 * Returns: a newly-allocated formatted string containing a human readable file size.
+	 * Returns: a newly-allocated formatted string containing a human readable file size
 	 */
 	public static string formatSize(ulong size)
 	{
@@ -698,13 +793,13 @@ public class Util
 	
 	/**
 	 * Formats a size.
-	 * This function is similar to g_format_size() but allows for flags that
-	 * modify the output. See GFormatSizeFlags.
+	 * This function is similar to g_format_size() but allows for flags
+	 * that modify the output. See GFormatSizeFlags.
 	 * Since 2.30
 	 * Params:
 	 * size = a size in bytes
 	 * flags = GFormatSizeFlags to modify the output
-	 * Returns: a newly-allocated formatted string containing a human readable file size.
+	 * Returns: a newly-allocated formatted string containing a human readable file size
 	 */
 	public static string formatSizeFull(ulong size, GFormatSizeFlags flags)
 	{
@@ -715,22 +810,22 @@ public class Util
 	/**
 	 * Warning
 	 * g_format_size_for_display has been deprecated since version 2.30 and should not be used in newly-written code. This function is broken due to its use of SI
-	 *  suffixes to denote IEC units. Use g_format_size()
-	 *  instead.
-	 * Formats a size (for example the size of a file) into a human readable string.
-	 * Sizes are rounded to the nearest size prefix (KB, MB, GB) and are displayed
-	 * rounded to the nearest tenth. E.g. the file size 3292528 bytes will be
-	 * converted into the string "3.1 MB".
+	 *  suffixes to denote IEC units. Use g_format_size() instead.
+	 * Formats a size (for example the size of a file) into a human
+	 * readable string. Sizes are rounded to the nearest size prefix
+	 * (KB, MB, GB) and are displayed rounded to the nearest tenth.
+	 * E.g. the file size 3292528 bytes will be converted into the
+	 * string "3.1 MB".
 	 * The prefix units base is 1024 (i.e. 1 KB is 1024 bytes).
 	 * This string should be freed with g_free() when not needed any longer.
 	 * Since 2.16
 	 * Params:
-	 * size = a size in bytes.
-	 * Returns: a newly-allocated formatted string containing a human readable file size.
+	 * size = a size in bytes
+	 * Returns: a newly-allocated formatted string containing a human readable file size
 	 */
 	public static string formatSizeForDisplay(long size)
 	{
-		// char * g_format_size_for_display (goffset size);
+		// gchar * g_format_size_for_display (goffset size);
 		return Str.toString(g_format_size_for_display(size));
 	}
 	
@@ -752,7 +847,7 @@ public class Util
 	 * full name including the type suffix.
 	 * Params:
 	 * program = a program name in the GLib file name encoding
-	 * Returns: absolute path, or NULL
+	 * Returns: a newly-allocated string with the absolute path, or NULL
 	 */
 	public static string findProgramInPath(string program)
 	{
@@ -823,6 +918,8 @@ public class Util
 	}
 	
 	/**
+	 * Warning
+	 * g_atexit has been deprecated since version 2.32 and should not be used in newly-written code. It is best to avoid g_atexit().
 	 * Specifies a function to be called at normal program termination.
 	 * Since GLib 2.8.2, on Windows g_atexit() actually is a preprocessor
 	 * macro that maps to a call to the atexit() function in the C
@@ -861,9 +958,12 @@ public class Util
 	 * into a guint containing bit flags. This is used
 	 * within GDK and GTK+ to parse the debug options passed on the
 	 * command line or through environment variables.
-	 * If string is equal to "all", all flags are set. If string
-	 * is equal to "help", all the available keys in keys are printed
-	 * out to standard error.
+	 * If string is equal to "all", all flags are set. Any flags
+	 * specified along with "all" in string are inverted; thus,
+	 * "all,foo,bar" or "foo,bar,all" sets all flags
+	 * except those corresponding to "foo" and "bar".
+	 * If string is equal to "help", all the available keys in keys
+	 * are printed out to standard error.
 	 * Params:
 	 * string = a list of debug options separated by colons, spaces, or
 	 * commas, or NULL. [allow-none]
@@ -881,6 +981,7 @@ public class Util
 	/**
 	 * This is just like the standard C qsort() function, but
 	 * the comparison routine accepts a user data argument.
+	 * This is guaranteed to be a stable sort since version 2.32.
 	 * Params:
 	 * pbase = start of array to sort
 	 * totalElems = elements in the array

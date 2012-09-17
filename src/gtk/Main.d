@@ -130,7 +130,6 @@ public class Main
 	 */
 	public static void initMultiThread(string[] args)
 	{
-		Thread.init(null);
 		threadsInit();
 		init(args);
 	}

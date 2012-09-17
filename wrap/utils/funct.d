@@ -133,6 +133,9 @@ public struct Funct
 		}
 		else if ( name in convParms.array && "Return" in convParms.array[name] )
 		{
+			if ( type == "gpointer" || type == "gconstpointer" )
+				type = "void*";
+				
 			typeWrap = getWrappedType(type[0 .. $-1]) ~ "[]";
 
 			if ( typeWrap == "char[]" || typeWrap == "gchar[]" )
@@ -172,6 +175,15 @@ public struct Funct
 				GtkDClass.skipBlank(p, text);
 				GtkDClass.untilBlank(p, text, ",)");
 				param.type = "void";
+			}
+			else if ( param.type == "gpointer" )
+			{
+				param.type = "void*";
+			}
+			else if ( param.type == "gconstpointer" )
+			{
+				param.type = "void*";
+				param.constParam = true;		
 			}
 			else
 			{

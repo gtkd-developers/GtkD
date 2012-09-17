@@ -66,11 +66,12 @@ private import glib.Str;
 
 /**
  * Description
- * A GString is an object that handles the memory management of a C string
- * for you. You can think of it as similar to a Java StringBuffer.
- * In addition to the string itself, GString stores the length of the string,
- * so can be used for binary data with embedded nul bytes. To access the C
- * string managed by the GString string, simply use string->str.
+ * A GString is an object that handles the memory management
+ * of a C string for you. You can think of it as similar to a
+ * Java StringBuffer. In addition to the string itself, GString
+ * stores the length of the string, so can be used for binary
+ * data with embedded nul bytes. To access the C string managed
+ * by the GString string, simply use string->str.
  */
 public class StringG
 {
@@ -309,13 +310,14 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * unescaped = a string
-	 * reservedCharsAllowed = a string of reserved characters allowed to be used, or NULL
+	 * reservedCharsAllowed = a string of reserved characters allowed
+	 * to be used, or NULL
 	 * allowUtf8 = set TRUE if the escaped string may include UTF8 characters
 	 * Returns: string
 	 */
 	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, int allowUtf8)
 	{
-		// GString * g_string_append_uri_escaped (GString *string,  const char *unescaped,  const char *reserved_chars_allowed,  gboolean allow_utf8);
+		// GString * g_string_append_uri_escaped (GString *string,  const gchar *unescaped,  const gchar *reserved_chars_allowed,  gboolean allow_utf8);
 		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
 		if(p is null)
 		{
@@ -445,8 +447,8 @@ public class StringG
 	 * Converts a Unicode character into UTF-8, and insert it
 	 * into the string at the given position.
 	 * Params:
-	 * pos = the position at which to insert character, or -1 to
-	 * append at the end of the string
+	 * pos = the position at which to insert character, or -1
+	 * to append at the end of the string
 	 * wc = a Unicode character
 	 * Returns: string
 	 */
@@ -595,7 +597,7 @@ public class StringG
 	 * free it after use with g_free().
 	 * Params:
 	 * string = a GString
-	 * freeSegment = if TRUE the actual character data is freed as well
+	 * freeSegment = if TRUE, the actual character data is freed as well
 	 * Returns: the character data of string (i.e. NULL if free_segment is TRUE)
 	 */
 	public string free(int freeSegment)
@@ -629,7 +631,7 @@ public class StringG
 	 *  tolower() function, which is almost never the right thing.
 	 *  Use g_string_ascii_down() or g_utf8_strdown() instead.
 	 * Converts a GString to lowercase.
-	 * Returns: the GString.
+	 * Returns: the GString
 	 */
 	public StringG down()
 	{

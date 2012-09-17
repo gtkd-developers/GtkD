@@ -85,24 +85,27 @@ version(Tango) {
  * Description
  * This section describes a number of utility functions for creating,
  * duplicating, and manipulating strings.
- * Note that the functions g_printf(), g_fprintf(), g_sprintf(), g_snprintf(),
- * g_vprintf(), g_vfprintf(), g_vsprintf() and g_vsnprintf() are declared in
- * the header gprintf.h which is not
- * included in glib.h (otherwise using
- * glib.h would drag in stdio.h), so
- * you'll have to explicitly include <glib/gprintf.h>
- * in order to use the GLib printf() functions.
- * While you may use the printf() functions to format UTF-8 strings, notice that
- * the precision of a %Ns parameter is interpreted as the
- * number of bytes, not characters to print.
- * On top of that, the GNU libc implementation of the printf() functions has the "feature"
- * that it checks that the string given for the %Ns parameter
- * consists of a whole number of characters in the current encoding. So, unless you
- * are sure you are always going to be in an UTF-8 locale or your know your text is restricted
- * to ASCII, avoid using %Ns.
- * If your intention is to format strings for a certain number of columns, then
- * %Ns is not a correct solution anyway, since it fails to take
- * wide characters (see g_unichar_iswide()) into account.
+ * Note that the functions g_printf(), g_fprintf(), g_sprintf(),
+ * g_snprintf(), g_vprintf(), g_vfprintf(), g_vsprintf() and g_vsnprintf()
+ * are declared in the header gprintf.h which is
+ * not included in glib.h
+ * (otherwise using glib.h would drag in
+ * stdio.h), so you'll have to explicitly include
+ * <glib/gprintf.h> in order to use the GLib
+ * printf() functions.
+ * While you may use the printf() functions
+ * to format UTF-8 strings, notice that the precision of a
+ * %Ns parameter is interpreted as the
+ * number of bytes, not characters
+ * to print. On top of that, the GNU libc implementation of the printf()
+ * functions has the "feature" that it checks that the string given for
+ * the %Ns parameter consists of a whole number
+ * of characters in the current encoding. So, unless you are sure you are
+ * always going to be in an UTF-8 locale or your know your text is restricted
+ * to ASCII, avoid using %Ns. If your intention is
+ * to format strings for a certain number of columns, then
+ * %Ns is not a correct solution anyway, since it
+ * fails to take wide characters (see g_unichar_iswide()) into account.
  */
 public class Str
 {
@@ -379,7 +382,7 @@ public class Str
 	 * the array itself. g_strfreev() does this for you. If called
 	 * on a NULL value, g_strdupv() simply returns NULL.
 	 * Params:
-	 * strArray = NULL-terminated array of strings.
+	 * strArray = a NULL-terminated array of strings
 	 * Returns: a new NULL-terminated array of strings.
 	 */
 	public static string[] strdupv(string[] strArray)
@@ -423,11 +426,11 @@ public class Str
 	 * of the string needle, limiting the length of the search
 	 * to haystack_len.
 	 * Params:
-	 * haystack = a string.
+	 * haystack = a string
 	 * haystackLen = the maximum length of haystack. Note that -1 is
 	 * a valid length, if haystack is nul-terminated, meaning it will
 	 * search through the whole string.
-	 * needle = the string to search for.
+	 * needle = the string to search for
 	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
 	public static string strstrLen(string haystack, gssize haystackLen, string needle)
@@ -440,8 +443,8 @@ public class Str
 	 * Searches the string haystack for the last occurrence
 	 * of the string needle.
 	 * Params:
-	 * haystack = a nul-terminated string.
-	 * needle = the nul-terminated string to search for.
+	 * haystack = a nul-terminated string
+	 * needle = the nul-terminated string to search for
 	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
 	public static string strrstr(string haystack, string needle)
@@ -455,9 +458,9 @@ public class Str
 	 * of the string needle, limiting the length of the search
 	 * to haystack_len.
 	 * Params:
-	 * haystack = a nul-terminated string.
-	 * haystackLen = the maximum length of haystack.
-	 * needle = the nul-terminated string to search for.
+	 * haystack = a nul-terminated string
+	 * haystackLen = the maximum length of haystack
+	 * needle = the nul-terminated string to search for
 	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
 	public static string strrstrLen(string haystack, gssize haystackLen, string needle)
@@ -470,8 +473,8 @@ public class Str
 	 * Looks whether the string str begins with prefix.
 	 * Since 2.2
 	 * Params:
-	 * str = a nul-terminated string.
-	 * prefix = the nul-terminated prefix to look for.
+	 * str = a nul-terminated string
+	 * prefix = the nul-terminated prefix to look for
 	 * Returns: TRUE if str begins with prefix, FALSE otherwise.
 	 */
 	public static int strHasPrefix(string str, string prefix)
@@ -484,8 +487,8 @@ public class Str
 	 * Looks whether the string str ends with suffix.
 	 * Since 2.2
 	 * Params:
-	 * str = a nul-terminated string.
-	 * suffix = the nul-terminated suffix to look for.
+	 * str = a nul-terminated string
+	 * suffix = the nul-terminated suffix to look for
 	 * Returns: TRUE if str end with suffix, FALSE otherwise.
 	 */
 	public static int strHasSuffix(string str, string suffix)
@@ -500,8 +503,8 @@ public class Str
 	 * Comparing two NULL pointers returns 0.
 	 * Since 2.16
 	 * Params:
-	 * str1 = a C string or NULL
-	 * str2 = another C string or NULL
+	 * str1 = a C string or NULL. [allow-none]
+	 * str2 = another C string or NULL. [allow-none]
 	 * Returns: -1, 0 or 1, if str1 is <, == or > than str2.
 	 */
 	public static int strcmp0(string str1, string str2)
@@ -687,12 +690,12 @@ public class Str
 	}
 	
 	/**
-	 * Calculates the maximum space needed to store the output of the sprintf()
-	 * function.
+	 * Calculates the maximum space needed to store the output
+	 * of the sprintf() function.
 	 * Params:
-	 * format = the format string. See the printf() documentation.
-	 * args = the parameters to be inserted into the format string.
-	 * Returns: the maximum space needed to store the formatted string.
+	 * format = the format string. See the printf() documentation
+	 * args = the parameters to be inserted into the format string
+	 * Returns: the maximum space needed to store the formatted string
 	 */
 	public static gsize printfStringUpperBound(string format, void* args)
 	{
@@ -703,11 +706,11 @@ public class Str
 	/**
 	 * Determines whether a character is alphanumeric.
 	 * Unlike the standard C library isalnum() function, this only
-	 * recognizes standard ASCII letters and ignores the locale, returning
-	 * FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to cast to guchar before passing a
-	 * possibly non-ASCII character in.
+	 * recognizes standard ASCII letters and ignores the locale,
+	 * returning FALSE for all non-ASCII characters. Also, unlike
+	 * the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need to
+	 * cast to guchar before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII alphanumeric character
@@ -721,11 +724,11 @@ public class Str
 	/**
 	 * Determines whether a character is alphabetic (i.e. a letter).
 	 * Unlike the standard C library isalpha() function, this only
-	 * recognizes standard ASCII letters and ignores the locale, returning
-	 * FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to cast to guchar before passing a
-	 * possibly non-ASCII character in.
+	 * recognizes standard ASCII letters and ignores the locale,
+	 * returning FALSE for all non-ASCII characters. Also, unlike
+	 * the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need to
+	 * cast to guchar before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII alphabetic character
@@ -739,11 +742,11 @@ public class Str
 	/**
 	 * Determines whether a character is a control character.
 	 * Unlike the standard C library iscntrl() function, this only
-	 * recognizes standard ASCII control characters and ignores the locale,
-	 * returning FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to cast to guchar before passing a
-	 * possibly non-ASCII character in.
+	 * recognizes standard ASCII control characters and ignores the
+	 * locale, returning FALSE for all non-ASCII characters. Also,
+	 * unlike the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need to
+	 * cast to guchar before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII control character.
@@ -756,9 +759,9 @@ public class Str
 	
 	/**
 	 * Determines whether a character is digit (0-9).
-	 * Unlike the standard C library isdigit() function,
-	 * this takes a char, not an int, so don't call it
-	 * on EOF but no need to cast to guchar before passing a possibly
+	 * Unlike the standard C library isdigit() function, this takes
+	 * a char, not an int, so don't call it
+	 * on EOF, but no need to cast to guchar before passing a possibly
 	 * non-ASCII character in.
 	 * Params:
 	 * c = any character
@@ -772,12 +775,12 @@ public class Str
 	
 	/**
 	 * Determines whether a character is a printing character and not a space.
-	 * Unlike the standard C library isgraph() function,
-	 * this only recognizes standard ASCII characters and ignores the locale,
-	 * returning FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to cast to guchar before passing a
-	 * possibly non-ASCII character in.
+	 * Unlike the standard C library isgraph() function, this only
+	 * recognizes standard ASCII characters and ignores the locale,
+	 * returning FALSE for all non-ASCII characters. Also, unlike
+	 * the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need
+	 * to cast to guchar before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII printing character other than space.
@@ -790,12 +793,13 @@ public class Str
 	
 	/**
 	 * Determines whether a character is an ASCII lower case letter.
-	 * Unlike the standard C library islower() function,
-	 * this only recognizes standard ASCII letters and ignores the locale,
-	 * returning FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to worry about casting to guchar
-	 * before passing a possibly non-ASCII character in.
+	 * Unlike the standard C library islower() function, this only
+	 * recognizes standard ASCII letters and ignores the locale,
+	 * returning FALSE for all non-ASCII characters. Also, unlike
+	 * the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need
+	 * to worry about casting to guchar before passing a possibly
+	 * non-ASCII character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII lower case letter
@@ -808,12 +812,12 @@ public class Str
 	
 	/**
 	 * Determines whether a character is a printing character.
-	 * Unlike the standard C library isprint() function,
-	 * this only recognizes standard ASCII characters and ignores the locale,
-	 * returning FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to cast to guchar before passing a
-	 * possibly non-ASCII character in.
+	 * Unlike the standard C library isprint() function, this only
+	 * recognizes standard ASCII characters and ignores the locale,
+	 * returning FALSE for all non-ASCII characters. Also, unlike
+	 * the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need
+	 * to cast to guchar before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII printing character.
@@ -826,12 +830,12 @@ public class Str
 	
 	/**
 	 * Determines whether a character is a punctuation character.
-	 * Unlike the standard C library ispunct() function,
-	 * this only recognizes standard ASCII letters and ignores the locale,
-	 * returning FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to cast to guchar before passing a
-	 * possibly non-ASCII character in.
+	 * Unlike the standard C library ispunct() function, this only
+	 * recognizes standard ASCII letters and ignores the locale,
+	 * returning FALSE for all non-ASCII characters. Also, unlike
+	 * the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need to
+	 * cast to guchar before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII punctuation character.
@@ -844,12 +848,12 @@ public class Str
 	
 	/**
 	 * Determines whether a character is a white-space character.
-	 * Unlike the standard C library isspace() function,
-	 * this only recognizes standard ASCII white-space and ignores the locale,
-	 * returning FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to cast to guchar before passing a
-	 * possibly non-ASCII character in.
+	 * Unlike the standard C library isspace() function, this only
+	 * recognizes standard ASCII white-space and ignores the locale,
+	 * returning FALSE for all non-ASCII characters. Also, unlike
+	 * the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need to
+	 * cast to guchar before passing a possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII white-space character
@@ -862,12 +866,13 @@ public class Str
 	
 	/**
 	 * Determines whether a character is an ASCII upper case letter.
-	 * Unlike the standard C library isupper() function,
-	 * this only recognizes standard ASCII letters and ignores the locale,
-	 * returning FALSE for all non-ASCII characters. Also unlike the standard
-	 * library function, this takes a char, not an int,
-	 * so don't call it on EOF but no need to worry about casting to guchar
-	 * before passing a possibly non-ASCII character in.
+	 * Unlike the standard C library isupper() function, this only
+	 * recognizes standard ASCII letters and ignores the locale,
+	 * returning FALSE for all non-ASCII characters. Also, unlike
+	 * the standard library function, this takes a char,
+	 * not an int, so don't call it on EOF, but no need to
+	 * worry about casting to guchar before passing a possibly non-ASCII
+	 * character in.
 	 * Params:
 	 * c = any character
 	 * Returns: TRUE if c is an ASCII upper case letter
@@ -880,9 +885,9 @@ public class Str
 	
 	/**
 	 * Determines whether a character is a hexadecimal-digit character.
-	 * Unlike the standard C library isxdigit() function,
-	 * this takes a char, not an int, so
-	 * don't call it on EOF but no need to cast to guchar before passing a
+	 * Unlike the standard C library isxdigit() function, this takes
+	 * a char, not an int, so don't call it
+	 * on EOF, but no need to cast to guchar before passing a
 	 * possibly non-ASCII character in.
 	 * Params:
 	 * c = any character
@@ -1033,10 +1038,10 @@ public class Str
 	}
 	
 	/**
-	 * Converts all lower case ASCII letters to upper case ASCII letters.
+	 * Converts all lowercase ASCII letters to uppercase ASCII letters.
 	 * Params:
 	 * string = a GString
-	 * Returns: passed-in string pointer, with all the lower case characters converted to upper case in place, with semantics that exactly match g_ascii_toupper().
+	 * Returns: passed-in string pointer, with all the lowercase characters converted to uppercase in place, with semantics that exactly match g_ascii_toupper().
 	 */
 	public static StringG stringAsciiUp(StringG string)
 	{
@@ -1050,10 +1055,10 @@ public class Str
 	}
 	
 	/**
-	 * Converts all upper case ASCII letters to lower case ASCII letters.
+	 * Converts all uppercase ASCII letters to lowercase ASCII letters.
 	 * Params:
 	 * string = a GString
-	 * Returns: passed-in string pointer, with all the upper case characters converted to lower case in place, with semantics that exactly match g_ascii_tolower().
+	 * Returns: passed-in string pointer, with all the uppercase characters converted to lowercase in place, with semantics that exactly match g_ascii_tolower().
 	 */
 	public static StringG stringAsciiDown(StringG string)
 	{
@@ -1172,10 +1177,11 @@ public class Str
 	 * To handle input from the user you should normally use the
 	 * locale-sensitive system strtoll() function.
 	 * If the correct value would cause overflow, G_MAXINT64 or G_MININT64
-	 * is returned, and ERANGE is stored in errno. If the base is
-	 * outside the valid range, zero is returned, and EINVAL is stored
-	 * in errno. If the string conversion fails, zero is returned, and
-	 * endptr returns nptr (if endptr is non-NULL).
+	 * is returned, and ERANGE is stored in errno.
+	 * If the base is outside the valid range, zero is returned, and
+	 * EINVAL is stored in errno. If the
+	 * string conversion fails, zero is returned, and endptr returns nptr
+	 * (if endptr is non-NULL).
 	 * Since 2.12
 	 * Params:
 	 * nptr = the string to convert to a numeric value.
@@ -1206,10 +1212,11 @@ public class Str
 	 * To handle input from the user you should normally use the
 	 * locale-sensitive system strtoull() function.
 	 * If the correct value would cause overflow, G_MAXUINT64
-	 * is returned, and ERANGE is stored in errno. If the base is
-	 * outside the valid range, zero is returned, and EINVAL is stored
-	 * in errno. If the string conversion fails, zero is returned, and
-	 * endptr returns nptr (if endptr is non-NULL).
+	 * is returned, and ERANGE is stored in errno.
+	 * If the base is outside the valid range, zero is returned, and
+	 * EINVAL is stored in errno.
+	 * If the string conversion fails, zero is returned, and endptr returns
+	 * nptr (if endptr is non-NULL).
 	 * Since 2.2
 	 * Params:
 	 * nptr = the string to convert to a numeric value.
@@ -1335,14 +1342,15 @@ public class Str
 	}
 	
 	/**
-	 * Removes leading whitespace from a string, by moving the rest of the
-	 * characters forward.
-	 * This function doesn't allocate or reallocate any memory; it modifies string
-	 * in place. The pointer to string is returned to allow the nesting of functions.
+	 * Removes leading whitespace from a string, by moving the rest
+	 * of the characters forward.
+	 * This function doesn't allocate or reallocate any memory;
+	 * it modifies string in place. The pointer to string is
+	 * returned to allow the nesting of functions.
 	 * Also see g_strchomp() and g_strstrip().
 	 * Params:
-	 * string = a string to remove the leading whitespace from.
-	 * Returns: string.
+	 * string = a string to remove the leading whitespace from
+	 * Returns: string
 	 */
 	public static string strchug(string string)
 	{
@@ -1352,11 +1360,12 @@ public class Str
 	
 	/**
 	 * Removes trailing whitespace from a string.
-	 * This function doesn't allocate or reallocate any memory; it modifies string in
-	 * place. The pointer to string is returned to allow the nesting of functions.
+	 * This function doesn't allocate or reallocate any memory;
+	 * it modifies string in place. The pointer to string is
+	 * returned to allow the nesting of functions.
 	 * Also see g_strchug() and g_strstrip().
 	 * Params:
-	 * string = a string to remove the trailing whitespace from.
+	 * string = a string to remove the trailing whitespace from
 	 * Returns: string.
 	 */
 	public static string strchomp(string string)
@@ -1367,16 +1376,17 @@ public class Str
 	
 	/**
 	 * Converts any delimiter characters in string to new_delimiter.
-	 * Any characters in string which are found in delimiters are changed
-	 * to the new_delimiter character. Modifies string in place, and returns
-	 * string itself, not a copy. The return value is to allow nesting such as
-	 * g_ascii_strup (g_strdelimit (str, "abc", '?')).
+	 * Any characters in string which are found in delimiters are
+	 * changed to the new_delimiter character. Modifies string in place,
+	 * and returns string itself, not a copy. The return value is to
+	 * allow nesting such as
+	 * $(DDOC_COMMENT example)
 	 * Params:
-	 * string = the string to convert.
-	 * delimiters = a string containing the current delimiters, or NULL to use the
-	 * standard delimiters defined in G_STR_DELIMITERS.
-	 * newDelimiter = the new delimiter character.
-	 * Returns: string.
+	 * string = the string to convert
+	 * delimiters = a string containing the current delimiters, or NULL
+	 * to use the standard delimiters defined in G_STR_DELIMITERS. [allow-none]
+	 * newDelimiter = the new delimiter character
+	 * Returns: string
 	 */
 	public static string strdelimit(string string, string delimiters, char newDelimiter)
 	{
@@ -1385,16 +1395,16 @@ public class Str
 	}
 	
 	/**
-	 * Escapes the special characters '\b', '\f', '\n', '\r', '\t', '\' and
-	 * '"' in the string source by inserting a '\' before
+	 * Escapes the special characters '\b', '\f', '\n', '\r', '\t', '\v', '\'
+	 * and '"' in the string source by inserting a '\' before
 	 * them. Additionally all characters in the range 0x01-0x1F (everything
 	 * below SPACE) and in the range 0x7F-0xFF (all non-ASCII chars) are
-	 * replaced with a '\' followed by their octal representation. Characters
-	 * supplied in exceptions are not escaped.
+	 * replaced with a '\' followed by their octal representation.
+	 * Characters supplied in exceptions are not escaped.
 	 * g_strcompress() does the reverse conversion.
 	 * Params:
-	 * source = a string to escape.
-	 * exceptions = a string of characters not to escape in source.
+	 * source = a string to escape
+	 * exceptions = a string of characters not to escape in source
 	 * Returns: a newly-allocated copy of source with certain characters escaped. See above.
 	 */
 	public static string strescape(string source, string exceptions)
@@ -1404,11 +1414,11 @@ public class Str
 	}
 	
 	/**
-	 * Replaces all escaped characters with their one byte equivalent. It
-	 * does the reverse conversion of g_strescape().
+	 * Replaces all escaped characters with their one byte equivalent.
+	 * This function does the reverse conversion of g_strescape().
 	 * Params:
-	 * source = a string to compress.
-	 * Returns: a newly-allocated copy of source with all escaped character compressed.
+	 * source = a string to compress
+	 * Returns: a newly-allocated copy of source with all escaped character compressed
 	 */
 	public static string strcompress(string source)
 	{
@@ -1417,15 +1427,16 @@ public class Str
 	}
 	
 	/**
-	 * For each character in string, if the character is not in valid_chars,
-	 * replaces the character with substitutor. Modifies string in place,
-	 * and return string itself, not a copy. The return value is to allow
-	 * nesting such as g_ascii_strup (g_strcanon (str, "abc", '?')).
+	 * For each character in string, if the character is not in
+	 * valid_chars, replaces the character with substitutor.
+	 * Modifies string in place, and return string itself, not
+	 * a copy. The return value is to allow nesting such as
+	 * $(DDOC_COMMENT example)
 	 * Params:
-	 * string = a nul-terminated array of bytes.
-	 * validChars = bytes permitted in string.
-	 * substitutor = replacement character for disallowed bytes.
-	 * Returns: string.
+	 * string = a nul-terminated array of bytes
+	 * validChars = bytes permitted in string
+	 * substitutor = replacement character for disallowed bytes
+	 * Returns: string
 	 */
 	public static string strcanon(string string, string validChars, char substitutor)
 	{
@@ -1435,8 +1446,8 @@ public class Str
 	
 	/**
 	 * Splits a string into a maximum of max_tokens pieces, using the given
-	 * delimiter. If max_tokens is reached, the remainder of string is appended
-	 * to the last token.
+	 * delimiter. If max_tokens is reached, the remainder of string is
+	 * appended to the last token.
 	 * As a special case, the result of splitting the empty string "" is an empty
 	 * vector, not a vector containing a single string. The reason for this
 	 * special case is that being able to represent a empty vector is typically
@@ -1444,12 +1455,12 @@ public class Str
 	 * to represent empty elements, you'll need to check for the empty string
 	 * before calling g_strsplit().
 	 * Params:
-	 * string = a string to split.
-	 * delimiter = a string which specifies the places at which to split the string.
-	 * The delimiter is not included in any of the resulting strings, unless
-	 * max_tokens is reached.
-	 * maxTokens = the maximum number of pieces to split string into. If this is
-	 * less than 1, the string is split completely.
+	 * string = a string to split
+	 * delimiter = a string which specifies the places at which to split
+	 * the string. The delimiter is not included in any of the resulting
+	 * strings, unless max_tokens is reached.
+	 * maxTokens = the maximum number of pieces to split string into.
+	 * If this is less than 1, the string is split completely.
 	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public static string[] strsplit(string string, string delimiter, int maxTokens)
@@ -1495,7 +1506,7 @@ public class Str
 	 * Frees a NULL-terminated array of strings, and the array itself.
 	 * If called on a NULL value, g_strfreev() simply returns.
 	 * Params:
-	 * strArray = a NULL-terminated array of strings to free.
+	 * strArray = a NULL-terminated array of strings to free
 	 */
 	public static void strfreev(string[] strArray)
 	{
@@ -1508,7 +1519,7 @@ public class Str
 	 * optional separator inserted between each of them. The returned string
 	 * should be freed with g_free().
 	 * Params:
-	 * separator = a string to insert between each of the strings, or NULL
+	 * separator = a string to insert between each of the strings, or NULL. [allow-none]
 	 * strArray = a NULL-terminated array of strings to join
 	 * Returns: a newly-allocated string containing all of the strings joined together, with separator between them
 	 */
@@ -1523,7 +1534,7 @@ public class Str
 	 * string array str_array.
 	 * Since 2.6
 	 * Params:
-	 * strArray = a NULL-terminated array of strings.
+	 * strArray = a NULL-terminated array of strings
 	 * Returns: length of str_array.
 	 */
 	public static uint strvLength(string[] strArray)
@@ -1540,7 +1551,7 @@ public class Str
 	 * Params:
 	 * errnum = the system error number. See the standard C errno
 	 * documentation
-	 * Returns: a UTF-8 string describing the error code. If the error code is unknown, it returns "unknown error (<code>)". The string can only be used until the next call to g_strerror()
+	 * Returns: a UTF-8 string describing the error code. If the error code is unknown, it returns "unknown error (<code>)".
 	 */
 	public static string strerror(int errnum)
 	{
@@ -1556,7 +1567,7 @@ public class Str
 	 * Params:
 	 * signum = the signal number. See the signal
 	 * documentation
-	 * Returns: a UTF-8 string describing the signal. If the signal is unknown, it returns "unknown signal (<signum>)". The string can only be used until the next call to g_strsignal()
+	 * Returns: a UTF-8 string describing the signal. If the signal is unknown, it returns "unknown signal (<signum>)".
 	 */
 	public static string strsignal(int signum)
 	{

@@ -4181,7 +4181,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkWidget* widget) c_gtk_grab_remove;
 	void function(GtkWidget* widget, GdkDevice* device, gboolean blockOthers) c_gtk_device_grab_add;
 	void function(GtkWidget* widget, GdkDevice* device) c_gtk_device_grab_remove;
-	guint function(GtkKeySnoopFunc snooper, gpointer funcData) c_gtk_key_snooper_install;
+	guint function(GtkKeySnoopFunc snooper, void* funcData) c_gtk_key_snooper_install;
 	void function(guint snooperHandlerId) c_gtk_key_snooper_remove;
 	GdkEvent* function() c_gtk_get_current_event;
 	guint32 function() c_gtk_get_current_event_time;
@@ -4215,7 +4215,7 @@ mixin( gshared ~"extern(C)
 	GdkModifierType function(GtkAccelGroup* accelGroup) c_gtk_accel_group_get_modifier_mask;
 	gboolean function(GObject* object, guint accelKey, GdkModifierType accelMods) c_gtk_accel_groups_activate;
 	GSList* function(GObject* object) c_gtk_accel_groups_from_object;
-	GtkAccelKey* function(GtkAccelGroup* accelGroup, GtkAccelGroupFindFunc findFunc, gpointer data) c_gtk_accel_group_find;
+	GtkAccelKey* function(GtkAccelGroup* accelGroup, GtkAccelGroupFindFunc findFunc, void* data) c_gtk_accel_group_find;
 	gboolean function(guint keyval, GdkModifierType modifiers) c_gtk_accelerator_valid;
 	void function(gchar* accelerator, guint* acceleratorKey, GdkModifierType* acceleratorMods) c_gtk_accelerator_parse;
 	gchar* function(guint acceleratorKey, GdkModifierType acceleratorMods) c_gtk_accelerator_name;
@@ -4230,12 +4230,12 @@ mixin( gshared ~"extern(C)
 	gboolean function(gchar* accelPath, guint accelKey, GdkModifierType accelMods, gboolean replace) c_gtk_accel_map_change_entry;
 	void function(gchar* fileName) c_gtk_accel_map_load;
 	void function(gchar* fileName) c_gtk_accel_map_save;
-	void function(gpointer data, GtkAccelMapForeach foreachFunc) c_gtk_accel_map_foreach;
+	void function(void* data, GtkAccelMapForeach foreachFunc) c_gtk_accel_map_foreach;
 	void function(gint fd) c_gtk_accel_map_load_fd;
 	void function(gint fd) c_gtk_accel_map_save_fd;
 	void function(GScanner* scanner) c_gtk_accel_map_load_scanner;
 	void function(gchar* filterPattern) c_gtk_accel_map_add_filter;
-	void function(gpointer data, GtkAccelMapForeach foreachFunc) c_gtk_accel_map_foreach_unfiltered;
+	void function(void* data, GtkAccelMapForeach foreachFunc) c_gtk_accel_map_foreach_unfiltered;
 	GtkAccelMap* function() c_gtk_accel_map_get;
 	void function(gchar* accelPath) c_gtk_accel_map_lock_path;
 	void function(gchar* accelPath) c_gtk_accel_map_unlock_path;
@@ -4245,18 +4245,18 @@ mixin( gshared ~"extern(C)
 	GtkClipboard* function(GdkAtom selection) c_gtk_clipboard_get;
 	GtkClipboard* function(GdkDisplay* display, GdkAtom selection) c_gtk_clipboard_get_for_display;
 	GdkDisplay* function(GtkClipboard* clipboard) c_gtk_clipboard_get_display;
-	gboolean function(GtkClipboard* clipboard, GtkTargetEntry* targets, guint nTargets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, gpointer userData) c_gtk_clipboard_set_with_data;
+	gboolean function(GtkClipboard* clipboard, GtkTargetEntry* targets, guint nTargets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, void* userData) c_gtk_clipboard_set_with_data;
 	gboolean function(GtkClipboard* clipboard, GtkTargetEntry* targets, guint nTargets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, GObject* owner) c_gtk_clipboard_set_with_owner;
 	GObject* function(GtkClipboard* clipboard) c_gtk_clipboard_get_owner;
 	void function(GtkClipboard* clipboard) c_gtk_clipboard_clear;
 	void function(GtkClipboard* clipboard, gchar* text, gint len) c_gtk_clipboard_set_text;
 	void function(GtkClipboard* clipboard, GdkPixbuf* pixbuf) c_gtk_clipboard_set_image;
-	void function(GtkClipboard* clipboard, GdkAtom target, GtkClipboardReceivedFunc callback, gpointer userData) c_gtk_clipboard_request_contents;
-	void function(GtkClipboard* clipboard, GtkClipboardTextReceivedFunc callback, gpointer userData) c_gtk_clipboard_request_text;
-	void function(GtkClipboard* clipboard, GtkClipboardImageReceivedFunc callback, gpointer userData) c_gtk_clipboard_request_image;
-	void function(GtkClipboard* clipboard, GtkClipboardTargetsReceivedFunc callback, gpointer userData) c_gtk_clipboard_request_targets;
-	void function(GtkClipboard* clipboard, GtkTextBuffer* buffer, GtkClipboardRichTextReceivedFunc callback, gpointer userData) c_gtk_clipboard_request_rich_text;
-	void function(GtkClipboard* clipboard, GtkClipboardURIReceivedFunc callback, gpointer userData) c_gtk_clipboard_request_uris;
+	void function(GtkClipboard* clipboard, GdkAtom target, GtkClipboardReceivedFunc callback, void* userData) c_gtk_clipboard_request_contents;
+	void function(GtkClipboard* clipboard, GtkClipboardTextReceivedFunc callback, void* userData) c_gtk_clipboard_request_text;
+	void function(GtkClipboard* clipboard, GtkClipboardImageReceivedFunc callback, void* userData) c_gtk_clipboard_request_image;
+	void function(GtkClipboard* clipboard, GtkClipboardTargetsReceivedFunc callback, void* userData) c_gtk_clipboard_request_targets;
+	void function(GtkClipboard* clipboard, GtkTextBuffer* buffer, GtkClipboardRichTextReceivedFunc callback, void* userData) c_gtk_clipboard_request_rich_text;
+	void function(GtkClipboard* clipboard, GtkClipboardURIReceivedFunc callback, void* userData) c_gtk_clipboard_request_uris;
 	GtkSelectionData* function(GtkClipboard* clipboard, GdkAtom target) c_gtk_clipboard_wait_for_contents;
 	gchar* function(GtkClipboard* clipboard) c_gtk_clipboard_wait_for_text;
 	GdkPixbuf* function(GtkClipboard* clipboard) c_gtk_clipboard_wait_for_image;
@@ -4318,7 +4318,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkStockItem* item) c_gtk_stock_item_free;
 	GSList* function() c_gtk_stock_list_ids;
 	gboolean function(gchar* stockId, GtkStockItem* item) c_gtk_stock_lookup;
-	void function(gchar* domain, GtkTranslateFunc func, gpointer data, GDestroyNotify notify) c_gtk_stock_set_translate_func;
+	void function(gchar* domain, GtkTranslateFunc func, void* data, GDestroyNotify notify) c_gtk_stock_set_translate_func;
 
 	// gtk.Settings
 
@@ -4340,7 +4340,7 @@ mixin( gshared ~"extern(C)
 
 	void function(GtkBindingSet* bindingSet, guint keyval, GdkModifierType modifiers, gchar* signalName, GSList* bindingArgs) c_gtk_binding_entry_add_signall;
 	GtkBindingSet* function(gchar* setName) c_gtk_binding_set_new;
-	GtkBindingSet* function(gpointer objectClass) c_gtk_binding_set_by_class;
+	GtkBindingSet* function(void* objectClass) c_gtk_binding_set_by_class;
 	GtkBindingSet* function(gchar* setName) c_gtk_binding_set_find;
 	gboolean function(GObject* object, guint keyval, GdkModifierType modifiers) c_gtk_bindings_activate;
 	gboolean function(GObject* object, GdkEventKey* event) c_gtk_bindings_activate_event;
@@ -4465,10 +4465,10 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkStyleContext* context, GtkStateType state, gdouble* progress) c_gtk_style_context_state_is_running;
 	gboolean function(GtkStyleContext* context, gchar* colorName, GdkRGBA* color) c_gtk_style_context_lookup_color;
 	GtkIconSet* function(GtkStyleContext* context, gchar* stockId) c_gtk_style_context_lookup_icon_set;
-	void function(GtkStyleContext* context, GdkWindow* window, gpointer regionId, GtkStateType state, gboolean stateValue) c_gtk_style_context_notify_state_change;
+	void function(GtkStyleContext* context, GdkWindow* window, void* regionId, GtkStateType state, gboolean stateValue) c_gtk_style_context_notify_state_change;
 	void function(GtkStyleContext* context) c_gtk_style_context_pop_animatable_region;
-	void function(GtkStyleContext* context, gpointer regionId) c_gtk_style_context_push_animatable_region;
-	void function(GtkStyleContext* context, gpointer regionId) c_gtk_style_context_cancel_animations;
+	void function(GtkStyleContext* context, void* regionId) c_gtk_style_context_push_animatable_region;
+	void function(GtkStyleContext* context, void* regionId) c_gtk_style_context_cancel_animations;
 	void function(GtkStyleContext* context, GdkWindow* window, gint dx, gint dy) c_gtk_style_context_scroll_animations;
 	void function(GtkStyleContext* context, GtkStyleProvider* provider) c_gtk_style_context_remove_provider;
 	void function(GdkScreen* screen, GtkStyleProvider* provider) c_gtk_style_context_remove_provider_for_screen;
@@ -5029,7 +5029,7 @@ mixin( gshared ~"extern(C)
 	gint function(GtkAssistant* assistant, GtkWidget* page) c_gtk_assistant_append_page;
 	gint function(GtkAssistant* assistant, GtkWidget* page, gint position) c_gtk_assistant_insert_page;
 	void function(GtkAssistant* assistant, gint pageNum) c_gtk_assistant_remove_page;
-	void function(GtkAssistant* assistant, GtkAssistantPageFunc pageFunc, gpointer data, GDestroyNotify destroy) c_gtk_assistant_set_forward_page_func;
+	void function(GtkAssistant* assistant, GtkAssistantPageFunc pageFunc, void* data, GDestroyNotify destroy) c_gtk_assistant_set_forward_page_func;
 	void function(GtkAssistant* assistant, GtkWidget* page, GtkAssistantPageType type) c_gtk_assistant_set_page_type;
 	GtkAssistantPageType function(GtkAssistant* assistant, GtkWidget* page) c_gtk_assistant_get_page_type;
 	void function(GtkAssistant* assistant, GtkWidget* page, gchar* title) c_gtk_assistant_set_page_title;
@@ -5212,7 +5212,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkStatusIcon* statusIcon, gboolean visible) c_gtk_status_icon_set_visible;
 	gboolean function(GtkStatusIcon* statusIcon) c_gtk_status_icon_get_visible;
 	gboolean function(GtkStatusIcon* statusIcon) c_gtk_status_icon_is_embedded;
-	void function(GtkMenu* menu, gint* x, gint* y, gboolean* pushIn, gpointer userData) c_gtk_status_icon_position_menu;
+	void function(GtkMenu* menu, gint* x, gint* y, gboolean* pushIn, void* userData) c_gtk_status_icon_position_menu;
 	gboolean function(GtkStatusIcon* statusIcon, GdkScreen** screen, GdkRectangle* area, GtkOrientation* orientation) c_gtk_status_icon_get_geometry;
 	guint32 function(GtkStatusIcon* statusIcon) c_gtk_status_icon_get_x11_window_id;
 
@@ -5408,7 +5408,7 @@ mixin( gshared ~"extern(C)
 	GtkWidget* function(GtkEntryCompletion* completion) c_gtk_entry_completion_get_entry;
 	void function(GtkEntryCompletion* completion, GtkTreeModel* model) c_gtk_entry_completion_set_model;
 	GtkTreeModel* function(GtkEntryCompletion* completion) c_gtk_entry_completion_get_model;
-	void function(GtkEntryCompletion* completion, GtkEntryCompletionMatchFunc func, gpointer funcData, GDestroyNotify funcNotify) c_gtk_entry_completion_set_match_func;
+	void function(GtkEntryCompletion* completion, GtkEntryCompletionMatchFunc func, void* funcData, GDestroyNotify funcNotify) c_gtk_entry_completion_set_match_func;
 	void function(GtkEntryCompletion* completion, gint length) c_gtk_entry_completion_set_minimum_key_length;
 	gint function(GtkEntryCompletion* completion) c_gtk_entry_completion_get_minimum_key_length;
 	void function(GtkEntryCompletion* completion) c_gtk_entry_completion_complete;
@@ -5586,8 +5586,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkTextIter* iter) c_gtk_text_iter_forward_to_line_end;
 	gboolean function(GtkTextIter* iter, GtkTextTag* tag) c_gtk_text_iter_forward_to_tag_toggle;
 	gboolean function(GtkTextIter* iter, GtkTextTag* tag) c_gtk_text_iter_backward_to_tag_toggle;
-	gboolean function(GtkTextIter* iter, GtkTextCharPredicate pred, gpointer userData, GtkTextIter* limit) c_gtk_text_iter_forward_find_char;
-	gboolean function(GtkTextIter* iter, GtkTextCharPredicate pred, gpointer userData, GtkTextIter* limit) c_gtk_text_iter_backward_find_char;
+	gboolean function(GtkTextIter* iter, GtkTextCharPredicate pred, void* userData, GtkTextIter* limit) c_gtk_text_iter_forward_find_char;
+	gboolean function(GtkTextIter* iter, GtkTextCharPredicate pred, void* userData, GtkTextIter* limit) c_gtk_text_iter_backward_find_char;
 	gboolean function(GtkTextIter* iter, gchar* str, GtkTextSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_text_iter_forward_search;
 	gboolean function(GtkTextIter* iter, gchar* str, GtkTextSearchFlags flags, GtkTextIter* matchStart, GtkTextIter* matchEnd, GtkTextIter* limit) c_gtk_text_iter_backward_search;
 	gboolean function(GtkTextIter* lhs, GtkTextIter* rhs) c_gtk_text_iter_equal;
@@ -5673,9 +5673,9 @@ mixin( gshared ~"extern(C)
 	GdkAtom* function(GtkTextBuffer* buffer, gint* nFormats) c_gtk_text_buffer_get_deserialize_formats;
 	GtkTargetList* function(GtkTextBuffer* buffer) c_gtk_text_buffer_get_paste_target_list;
 	GdkAtom* function(GtkTextBuffer* buffer, gint* nFormats) c_gtk_text_buffer_get_serialize_formats;
-	GdkAtom function(GtkTextBuffer* buffer, gchar* mimeType, GtkTextBufferDeserializeFunc funct, gpointer userData, GDestroyNotify userDataDestroy) c_gtk_text_buffer_register_deserialize_format;
+	GdkAtom function(GtkTextBuffer* buffer, gchar* mimeType, GtkTextBufferDeserializeFunc funct, void* userData, GDestroyNotify userDataDestroy) c_gtk_text_buffer_register_deserialize_format;
 	GdkAtom function(GtkTextBuffer* buffer, gchar* tagsetName) c_gtk_text_buffer_register_deserialize_tagset;
-	GdkAtom function(GtkTextBuffer* buffer, gchar* mimeType, GtkTextBufferSerializeFunc funct, gpointer userData, GDestroyNotify userDataDestroy) c_gtk_text_buffer_register_serialize_format;
+	GdkAtom function(GtkTextBuffer* buffer, gchar* mimeType, GtkTextBufferSerializeFunc funct, void* userData, GDestroyNotify userDataDestroy) c_gtk_text_buffer_register_serialize_format;
 	GdkAtom function(GtkTextBuffer* buffer, gchar* tagsetName) c_gtk_text_buffer_register_serialize_tagset;
 	guint8* function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GdkAtom format, GtkTextIter* start, GtkTextIter* end, gsize* length) c_gtk_text_buffer_serialize;
 	void function(GtkTextBuffer* buffer, GdkAtom format) c_gtk_text_buffer_unregister_deserialize_format;
@@ -5702,7 +5702,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkTextTagTable* table, GtkTextTag* tag) c_gtk_text_tag_table_add;
 	void function(GtkTextTagTable* table, GtkTextTag* tag) c_gtk_text_tag_table_remove;
 	GtkTextTag* function(GtkTextTagTable* table, gchar* name) c_gtk_text_tag_table_lookup;
-	void function(GtkTextTagTable* table, GtkTextTagTableForeach func, gpointer data) c_gtk_text_tag_table_foreach;
+	void function(GtkTextTagTable* table, GtkTextTagTableForeach func, void* data) c_gtk_text_tag_table_foreach;
 	gint function(GtkTextTagTable* table) c_gtk_text_tag_table_get_size;
 
 	// gtk.TextView
@@ -5823,7 +5823,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeModel* treeModel, GtkTreeIter* iter) c_gtk_tree_model_unref_node;
 	void function(GtkTreeModel* treeModel, GtkTreeIter* iter, ... ) c_gtk_tree_model_get;
 	void function(GtkTreeModel* treeModel, GtkTreeIter* iter, va_list varArgs) c_gtk_tree_model_get_valist;
-	void function(GtkTreeModel* model, GtkTreeModelForeachFunc func, gpointer userData) c_gtk_tree_model_foreach;
+	void function(GtkTreeModel* model, GtkTreeModelForeachFunc func, void* userData) c_gtk_tree_model_foreach;
 	void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter) c_gtk_tree_model_row_changed;
 	void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter) c_gtk_tree_model_row_inserted;
 	void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter) c_gtk_tree_model_row_has_child_toggled;
@@ -5858,12 +5858,12 @@ mixin( gshared ~"extern(C)
 
 	void function(GtkTreeSelection* selection, GtkSelectionMode type) c_gtk_tree_selection_set_mode;
 	GtkSelectionMode function(GtkTreeSelection* selection) c_gtk_tree_selection_get_mode;
-	void function(GtkTreeSelection* selection, GtkTreeSelectionFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_selection_set_select_function;
+	void function(GtkTreeSelection* selection, GtkTreeSelectionFunc func, void* data, GDestroyNotify destroy) c_gtk_tree_selection_set_select_function;
 	GtkTreeSelectionFunc function(GtkTreeSelection* selection) c_gtk_tree_selection_get_select_function;
 	gpointer function(GtkTreeSelection* selection) c_gtk_tree_selection_get_user_data;
 	GtkTreeView* function(GtkTreeSelection* selection) c_gtk_tree_selection_get_tree_view;
 	gboolean function(GtkTreeSelection* selection, GtkTreeModel** model, GtkTreeIter* iter) c_gtk_tree_selection_get_selected;
-	void function(GtkTreeSelection* selection, GtkTreeSelectionForeachFunc func, gpointer data) c_gtk_tree_selection_selected_foreach;
+	void function(GtkTreeSelection* selection, GtkTreeSelectionForeachFunc func, void* data) c_gtk_tree_selection_selected_foreach;
 	GList* function(GtkTreeSelection* selection, GtkTreeModel** model) c_gtk_tree_selection_get_selected_rows;
 	gint function(GtkTreeSelection* selection) c_gtk_tree_selection_count_selected_rows;
 	void function(GtkTreeSelection* selection, GtkTreePath* path) c_gtk_tree_selection_select_path;
@@ -5887,7 +5887,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeViewColumn* treeColumn) c_gtk_tree_view_column_clear;
 	void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cellRenderer, gchar* attribute, gint column) c_gtk_tree_view_column_add_attribute;
 	void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cellRenderer, ... ) c_gtk_tree_view_column_set_attributes;
-	void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cellRenderer, GtkTreeCellDataFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_tree_view_column_set_cell_data_func;
+	void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cellRenderer, GtkTreeCellDataFunc func, void* funcData, GDestroyNotify destroy) c_gtk_tree_view_column_set_cell_data_func;
 	void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cellRenderer) c_gtk_tree_view_column_clear_attributes;
 	void function(GtkTreeViewColumn* treeColumn, gint spacing) c_gtk_tree_view_column_set_spacing;
 	gint function(GtkTreeViewColumn* treeColumn) c_gtk_tree_view_column_get_spacing;
@@ -5959,13 +5959,13 @@ mixin( gshared ~"extern(C)
 	gint function(GtkTreeView* treeView, GtkTreeViewColumn* column) c_gtk_tree_view_remove_column;
 	gint function(GtkTreeView* treeView, GtkTreeViewColumn* column, gint position) c_gtk_tree_view_insert_column;
 	gint function(GtkTreeView* treeView, gint position, gchar* title, GtkCellRenderer* cell, ... ) c_gtk_tree_view_insert_column_with_attributes;
-	gint function(GtkTreeView* treeView, gint position, gchar* title, GtkCellRenderer* cell, GtkTreeCellDataFunc func, gpointer data, GDestroyNotify dnotify) c_gtk_tree_view_insert_column_with_data_func;
+	gint function(GtkTreeView* treeView, gint position, gchar* title, GtkCellRenderer* cell, GtkTreeCellDataFunc func, void* data, GDestroyNotify dnotify) c_gtk_tree_view_insert_column_with_data_func;
 	GtkTreeViewColumn* function(GtkTreeView* treeView, gint n) c_gtk_tree_view_get_column;
 	GList* function(GtkTreeView* treeView) c_gtk_tree_view_get_columns;
 	void function(GtkTreeView* treeView, GtkTreeViewColumn* column, GtkTreeViewColumn* baseColumn) c_gtk_tree_view_move_column_after;
 	void function(GtkTreeView* treeView, GtkTreeViewColumn* column) c_gtk_tree_view_set_expander_column;
 	GtkTreeViewColumn* function(GtkTreeView* treeView) c_gtk_tree_view_get_expander_column;
-	void function(GtkTreeView* treeView, GtkTreeViewColumnDropFunc func, gpointer userData, GDestroyNotify destroy) c_gtk_tree_view_set_column_drag_function;
+	void function(GtkTreeView* treeView, GtkTreeViewColumnDropFunc func, void* userData, GDestroyNotify destroy) c_gtk_tree_view_set_column_drag_function;
 	void function(GtkTreeView* treeView, gint treeX, gint treeY) c_gtk_tree_view_scroll_to_point;
 	void function(GtkTreeView* treeView, GtkTreePath* path, GtkTreeViewColumn* column, gboolean useAlign, gfloat rowAlign, gfloat colAlign) c_gtk_tree_view_scroll_to_cell;
 	void function(GtkTreeView* treeView, GtkTreePath* path, GtkTreeViewColumn* focusColumn, gboolean startEditing) c_gtk_tree_view_set_cursor;
@@ -5977,7 +5977,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeView* treeView, GtkTreePath* path) c_gtk_tree_view_expand_to_path;
 	gboolean function(GtkTreeView* treeView, GtkTreePath* path, gboolean openAll) c_gtk_tree_view_expand_row;
 	gboolean function(GtkTreeView* treeView, GtkTreePath* path) c_gtk_tree_view_collapse_row;
-	void function(GtkTreeView* treeView, GtkTreeViewMappingFunc func, gpointer data) c_gtk_tree_view_map_expanded_rows;
+	void function(GtkTreeView* treeView, GtkTreeViewMappingFunc func, void* data) c_gtk_tree_view_map_expanded_rows;
 	gboolean function(GtkTreeView* treeView, GtkTreePath* path) c_gtk_tree_view_row_expanded;
 	void function(GtkTreeView* treeView, gboolean reorderable) c_gtk_tree_view_set_reorderable;
 	gboolean function(GtkTreeView* treeView) c_gtk_tree_view_get_reorderable;
@@ -6007,20 +6007,20 @@ mixin( gshared ~"extern(C)
 	gint function(GtkTreeView* treeView) c_gtk_tree_view_get_search_column;
 	void function(GtkTreeView* treeView, gint column) c_gtk_tree_view_set_search_column;
 	GtkTreeViewSearchEqualFunc function(GtkTreeView* treeView) c_gtk_tree_view_get_search_equal_func;
-	void function(GtkTreeView* treeView, GtkTreeViewSearchEqualFunc searchEqualFunc, gpointer searchUserData, GDestroyNotify searchDestroy) c_gtk_tree_view_set_search_equal_func;
+	void function(GtkTreeView* treeView, GtkTreeViewSearchEqualFunc searchEqualFunc, void* searchUserData, GDestroyNotify searchDestroy) c_gtk_tree_view_set_search_equal_func;
 	GtkEntry* function(GtkTreeView* treeView) c_gtk_tree_view_get_search_entry;
 	void function(GtkTreeView* treeView, GtkEntry* entry) c_gtk_tree_view_set_search_entry;
 	GtkTreeViewSearchPositionFunc function(GtkTreeView* treeView) c_gtk_tree_view_get_search_position_func;
-	void function(GtkTreeView* treeView, GtkTreeViewSearchPositionFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_view_set_search_position_func;
+	void function(GtkTreeView* treeView, GtkTreeViewSearchPositionFunc func, void* data, GDestroyNotify destroy) c_gtk_tree_view_set_search_position_func;
 	gboolean function(GtkTreeView* treeView) c_gtk_tree_view_get_fixed_height_mode;
 	void function(GtkTreeView* treeView, gboolean enable) c_gtk_tree_view_set_fixed_height_mode;
 	gboolean function(GtkTreeView* treeView) c_gtk_tree_view_get_hover_selection;
 	void function(GtkTreeView* treeView, gboolean hover) c_gtk_tree_view_set_hover_selection;
 	gboolean function(GtkTreeView* treeView) c_gtk_tree_view_get_hover_expand;
 	void function(GtkTreeView* treeView, gboolean expand) c_gtk_tree_view_set_hover_expand;
-	void function(GtkTreeView* treeView, GtkTreeDestroyCountFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_view_set_destroy_count_func;
+	void function(GtkTreeView* treeView, GtkTreeDestroyCountFunc func, void* data, GDestroyNotify destroy) c_gtk_tree_view_set_destroy_count_func;
 	GtkTreeViewRowSeparatorFunc function(GtkTreeView* treeView) c_gtk_tree_view_get_row_separator_func;
-	void function(GtkTreeView* treeView, GtkTreeViewRowSeparatorFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_view_set_row_separator_func;
+	void function(GtkTreeView* treeView, GtkTreeViewRowSeparatorFunc func, void* data, GDestroyNotify destroy) c_gtk_tree_view_set_row_separator_func;
 	gboolean function(GtkTreeView* treeView) c_gtk_tree_view_get_rubber_banding;
 	void function(GtkTreeView* treeView, gboolean enable) c_gtk_tree_view_set_rubber_banding;
 	gboolean function(GtkTreeView* treeView) c_gtk_tree_view_is_rubber_banding_active;
@@ -6090,7 +6090,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkIconView* iconView, gint wx, gint wy, gint* bx, gint* by) c_gtk_icon_view_convert_widget_to_bin_window_coords;
 	void function(GtkIconView* iconView, GtkTreePath* path, GtkCellRenderer* cell, gboolean startEditing) c_gtk_icon_view_set_cursor;
 	gboolean function(GtkIconView* iconView, GtkTreePath** path, GtkCellRenderer** cell) c_gtk_icon_view_get_cursor;
-	void function(GtkIconView* iconView, GtkIconViewForeachFunc func, gpointer data) c_gtk_icon_view_selected_foreach;
+	void function(GtkIconView* iconView, GtkIconViewForeachFunc func, void* data) c_gtk_icon_view_selected_foreach;
 	void function(GtkIconView* iconView, GtkSelectionMode mode) c_gtk_icon_view_set_selection_mode;
 	GtkSelectionMode function(GtkIconView* iconView) c_gtk_icon_view_get_selection_mode;
 	void function(GtkIconView* iconView, GtkOrientation orientation) c_gtk_icon_view_set_item_orientation;
@@ -6144,8 +6144,8 @@ mixin( gshared ~"extern(C)
 	void function(GtkTreeSortable* sortable) c_gtk_tree_sortable_sort_column_changed;
 	gboolean function(GtkTreeSortable* sortable, gint* sortColumnId, GtkSortType* order) c_gtk_tree_sortable_get_sort_column_id;
 	void function(GtkTreeSortable* sortable, gint sortColumnId, GtkSortType order) c_gtk_tree_sortable_set_sort_column_id;
-	void function(GtkTreeSortable* sortable, gint sortColumnId, GtkTreeIterCompareFunc sortFunc, gpointer userData, GDestroyNotify destroy) c_gtk_tree_sortable_set_sort_func;
-	void function(GtkTreeSortable* sortable, GtkTreeIterCompareFunc sortFunc, gpointer userData, GDestroyNotify destroy) c_gtk_tree_sortable_set_default_sort_func;
+	void function(GtkTreeSortable* sortable, gint sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy) c_gtk_tree_sortable_set_sort_func;
+	void function(GtkTreeSortable* sortable, GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy) c_gtk_tree_sortable_set_default_sort_func;
 	gboolean function(GtkTreeSortable* sortable) c_gtk_tree_sortable_has_default_sort_func;
 
 	// gtk.TreeModelSort
@@ -6163,8 +6163,8 @@ mixin( gshared ~"extern(C)
 	// gtk.TreeModelFilter
 
 	GtkTreeModel* function(GtkTreeModel* childModel, GtkTreePath* root) c_gtk_tree_model_filter_new;
-	void function(GtkTreeModelFilter* filter, GtkTreeModelFilterVisibleFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_model_filter_set_visible_func;
-	void function(GtkTreeModelFilter* filter, gint nColumns, GType* types, GtkTreeModelFilterModifyFunc func, gpointer data, GDestroyNotify destroy) c_gtk_tree_model_filter_set_modify_func;
+	void function(GtkTreeModelFilter* filter, GtkTreeModelFilterVisibleFunc func, void* data, GDestroyNotify destroy) c_gtk_tree_model_filter_set_visible_func;
+	void function(GtkTreeModelFilter* filter, gint nColumns, GType* types, GtkTreeModelFilterModifyFunc func, void* data, GDestroyNotify destroy) c_gtk_tree_model_filter_set_modify_func;
 	void function(GtkTreeModelFilter* filter, gint column) c_gtk_tree_model_filter_set_visible_column;
 	GtkTreeModel* function(GtkTreeModelFilter* filter) c_gtk_tree_model_filter_get_model;
 	gboolean function(GtkTreeModelFilter* filter, GtkTreeIter* filterIter, GtkTreeIter* childIter) c_gtk_tree_model_filter_convert_child_iter_to_iter;
@@ -6187,7 +6187,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkCellLayout* cellLayout) c_gtk_cell_layout_clear;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, ... ) c_gtk_cell_layout_set_attributes;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gchar* attribute, gint column) c_gtk_cell_layout_add_attribute;
-	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, GtkCellLayoutDataFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_cell_layout_set_cell_data_func;
+	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy) c_gtk_cell_layout_set_cell_data_func;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell) c_gtk_cell_layout_clear_attributes;
 
 	// gtk.CellArea
@@ -6195,8 +6195,8 @@ mixin( gshared ~"extern(C)
 	void function(GtkCellArea* area, GtkCellRenderer* renderer) c_gtk_cell_area_add;
 	void function(GtkCellArea* area, GtkCellRenderer* renderer) c_gtk_cell_area_remove;
 	gboolean function(GtkCellArea* area, GtkCellRenderer* renderer) c_gtk_cell_area_has_renderer;
-	void function(GtkCellArea* area, GtkCellCallback callback, gpointer callbackData) c_gtk_cell_area_foreach;
-	void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkRectangle* cellArea, GdkRectangle* backgroundArea, GtkCellAllocCallback callback, gpointer callbackData) c_gtk_cell_area_foreach_alloc;
+	void function(GtkCellArea* area, GtkCellCallback callback, void* callbackData) c_gtk_cell_area_foreach;
+	void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkRectangle* cellArea, GdkRectangle* backgroundArea, GtkCellAllocCallback callback, void* callbackData) c_gtk_cell_area_foreach_alloc;
 	gint function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkEvent* event, GdkRectangle* cellArea, GtkCellRendererState flags) c_gtk_cell_area_event;
 	void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, cairo_t* cr, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags, gboolean paintFocus) c_gtk_cell_area_render;
 	void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GtkCellRenderer* renderer, GdkRectangle* cellArea, GdkRectangle* allocation) c_gtk_cell_area_get_cell_allocation;
@@ -6420,7 +6420,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkComboBox* comboBox) c_gtk_combo_box_popdown;
 	AtkObject* function(GtkComboBox* comboBox) c_gtk_combo_box_get_popup_accessible;
 	GtkTreeViewRowSeparatorFunc function(GtkComboBox* comboBox) c_gtk_combo_box_get_row_separator_func;
-	void function(GtkComboBox* comboBox, GtkTreeViewRowSeparatorFunc func, gpointer data, GDestroyNotify destroy) c_gtk_combo_box_set_row_separator_func;
+	void function(GtkComboBox* comboBox, GtkTreeViewRowSeparatorFunc func, void* data, GDestroyNotify destroy) c_gtk_combo_box_set_row_separator_func;
 	void function(GtkComboBox* comboBox, gboolean addTearoffs) c_gtk_combo_box_set_add_tearoffs;
 	gboolean function(GtkComboBox* comboBox) c_gtk_combo_box_get_add_tearoffs;
 	void function(GtkComboBox* comboBox, gchar* title) c_gtk_combo_box_set_title;
@@ -6455,8 +6455,8 @@ mixin( gshared ~"extern(C)
 	void function(GtkMenu* menu, GdkScreen* screen) c_gtk_menu_set_screen;
 	void function(GtkMenu* menu, GtkWidget* child, gint position) c_gtk_menu_reorder_child;
 	void function(GtkMenu* menu, GtkWidget* child, guint leftAttach, guint rightAttach, guint topAttach, guint bottomAttach) c_gtk_menu_attach;
-	void function(GtkMenu* menu, GdkDevice* device, GtkWidget* parentMenuShell, GtkWidget* parentMenuItem, GtkMenuPositionFunc func, gpointer data, GDestroyNotify destroy, guint button, guint32 activateTime) c_gtk_menu_popup_for_device;
-	void function(GtkMenu* menu, GtkWidget* parentMenuShell, GtkWidget* parentMenuItem, GtkMenuPositionFunc func, gpointer data, guint button, guint32 activateTime) c_gtk_menu_popup;
+	void function(GtkMenu* menu, GdkDevice* device, GtkWidget* parentMenuShell, GtkWidget* parentMenuItem, GtkMenuPositionFunc func, void* data, GDestroyNotify destroy, guint button, guint32 activateTime) c_gtk_menu_popup_for_device;
+	void function(GtkMenu* menu, GtkWidget* parentMenuShell, GtkWidget* parentMenuItem, GtkMenuPositionFunc func, void* data, guint button, guint32 activateTime) c_gtk_menu_popup;
 	void function(GtkMenu* menu, GtkAccelGroup* accelGroup) c_gtk_menu_set_accel_group;
 	GtkAccelGroup* function(GtkMenu* menu) c_gtk_menu_get_accel_group;
 	void function(GtkMenu* menu, gchar* accelPath) c_gtk_menu_set_accel_path;
@@ -6746,13 +6746,13 @@ mixin( gshared ~"extern(C)
 	void function(GtkActionGroup* actionGroup, GtkAction* action) c_gtk_action_group_add_action;
 	void function(GtkActionGroup* actionGroup, GtkAction* action, gchar* accelerator) c_gtk_action_group_add_action_with_accel;
 	void function(GtkActionGroup* actionGroup, GtkAction* action) c_gtk_action_group_remove_action;
-	void function(GtkActionGroup* actionGroup, GtkActionEntry* entries, guint nEntries, gpointer userData) c_gtk_action_group_add_actions;
-	void function(GtkActionGroup* actionGroup, GtkActionEntry* entries, guint nEntries, gpointer userData, GDestroyNotify destroy) c_gtk_action_group_add_actions_full;
-	void function(GtkActionGroup* actionGroup, GtkToggleActionEntry* entries, guint nEntries, gpointer userData) c_gtk_action_group_add_toggle_actions;
-	void function(GtkActionGroup* actionGroup, GtkToggleActionEntry* entries, guint nEntries, gpointer userData, GDestroyNotify destroy) c_gtk_action_group_add_toggle_actions_full;
-	void function(GtkActionGroup* actionGroup, GtkRadioActionEntry* entries, guint nEntries, gint value, GCallback onChange, gpointer userData) c_gtk_action_group_add_radio_actions;
-	void function(GtkActionGroup* actionGroup, GtkRadioActionEntry* entries, guint nEntries, gint value, GCallback onChange, gpointer userData, GDestroyNotify destroy) c_gtk_action_group_add_radio_actions_full;
-	void function(GtkActionGroup* actionGroup, GtkTranslateFunc func, gpointer data, GDestroyNotify notify) c_gtk_action_group_set_translate_func;
+	void function(GtkActionGroup* actionGroup, GtkActionEntry* entries, guint nEntries, void* userData) c_gtk_action_group_add_actions;
+	void function(GtkActionGroup* actionGroup, GtkActionEntry* entries, guint nEntries, void* userData, GDestroyNotify destroy) c_gtk_action_group_add_actions_full;
+	void function(GtkActionGroup* actionGroup, GtkToggleActionEntry* entries, guint nEntries, void* userData) c_gtk_action_group_add_toggle_actions;
+	void function(GtkActionGroup* actionGroup, GtkToggleActionEntry* entries, guint nEntries, void* userData, GDestroyNotify destroy) c_gtk_action_group_add_toggle_actions_full;
+	void function(GtkActionGroup* actionGroup, GtkRadioActionEntry* entries, guint nEntries, gint value, GCallback onChange, void* userData) c_gtk_action_group_add_radio_actions;
+	void function(GtkActionGroup* actionGroup, GtkRadioActionEntry* entries, guint nEntries, gint value, GCallback onChange, void* userData, GDestroyNotify destroy) c_gtk_action_group_add_radio_actions_full;
+	void function(GtkActionGroup* actionGroup, GtkTranslateFunc func, void* data, GDestroyNotify notify) c_gtk_action_group_set_translate_func;
 	void function(GtkActionGroup* actionGroup, gchar* domain) c_gtk_action_group_set_translation_domain;
 	gchar* function(GtkActionGroup* actionGroup, gchar* string) c_gtk_action_group_translate_string;
 
@@ -6985,7 +6985,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkFileFilter* filter, gchar* mimeType) c_gtk_file_filter_add_mime_type;
 	void function(GtkFileFilter* filter, gchar* pattern) c_gtk_file_filter_add_pattern;
 	void function(GtkFileFilter* filter) c_gtk_file_filter_add_pixbuf_formats;
-	void function(GtkFileFilter* filter, GtkFileFilterFlags needed, GtkFileFilterFunc func, gpointer data, GDestroyNotify notify) c_gtk_file_filter_add_custom;
+	void function(GtkFileFilter* filter, GtkFileFilterFlags needed, GtkFileFilterFunc func, void* data, GDestroyNotify notify) c_gtk_file_filter_add_custom;
 	GtkFileFilterFlags function(GtkFileFilter* filter) c_gtk_file_filter_get_needed;
 	gboolean function(GtkFileFilter* filter, GtkFileFilterInfo* filterInfo) c_gtk_file_filter_filter;
 
@@ -7005,7 +7005,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkFontChooser* fontchooser, gchar* text) c_gtk_font_chooser_set_preview_text;
 	gboolean function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_show_preview_entry;
 	void function(GtkFontChooser* fontchooser, gboolean showPreviewEntry) c_gtk_font_chooser_set_show_preview_entry;
-	void function(GtkFontChooser* fontchooser, GtkFontFilterFunc filter, gpointer userData, GDestroyNotify destroy) c_gtk_font_chooser_set_filter_func;
+	void function(GtkFontChooser* fontchooser, GtkFontFilterFunc filter, void* userData, GDestroyNotify destroy) c_gtk_font_chooser_set_filter_func;
 
 	// gtk.FontButton
 
@@ -7372,7 +7372,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkPrintOperation* op, gboolean embed) c_gtk_print_operation_set_embed_page_setup;
 	gboolean function(GtkPrintOperation* op) c_gtk_print_operation_get_embed_page_setup;
 	GtkPageSetup* function(GtkWindow* parent, GtkPageSetup* pageSetup, GtkPrintSettings* settings) c_gtk_print_run_page_setup_dialog;
-	void function(GtkWindow* parent, GtkPageSetup* pageSetup, GtkPrintSettings* settings, GtkPageSetupDoneFunc doneCb, gpointer data) c_gtk_print_run_page_setup_dialog_async;
+	void function(GtkWindow* parent, GtkPageSetup* pageSetup, GtkPrintSettings* settings, GtkPageSetupDoneFunc doneCb, void* data) c_gtk_print_run_page_setup_dialog_async;
 
 	// gtk.PrintOperationPreviewT
 
@@ -7405,7 +7405,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(GtkPrintSettings* settings, gchar* key) c_gtk_print_settings_get;
 	void function(GtkPrintSettings* settings, gchar* key, gchar* value) c_gtk_print_settings_set;
 	void function(GtkPrintSettings* settings, gchar* key) c_gtk_print_settings_unset;
-	void function(GtkPrintSettings* settings, GtkPrintSettingsFunc func, gpointer userData) c_gtk_print_settings_foreach;
+	void function(GtkPrintSettings* settings, GtkPrintSettingsFunc func, void* userData) c_gtk_print_settings_foreach;
 	gboolean function(GtkPrintSettings* settings, gchar* key) c_gtk_print_settings_get_bool;
 	void function(GtkPrintSettings* settings, gchar* key, gboolean value) c_gtk_print_settings_set_bool;
 	gdouble function(GtkPrintSettings* settings, gchar* key) c_gtk_print_settings_get_double;
@@ -7550,7 +7550,7 @@ mixin( gshared ~"extern(C)
 	GtkPrintCapabilities function(GtkPrinter* printer) c_gtk_printer_get_capabilities;
 	GtkPageSetup* function(GtkPrinter* printer) c_gtk_printer_get_default_page_size;
 	gboolean function(GtkPrinter* printer, gdouble* top, gdouble* bottom, gdouble* left, gdouble* right) c_gtk_printer_get_hard_margins;
-	void function(GtkPrinterFunc func, gpointer data, GDestroyNotify destroy, gboolean wait) c_gtk_enumerate_printers;
+	void function(GtkPrinterFunc func, void* data, GDestroyNotify destroy, gboolean wait) c_gtk_enumerate_printers;
 
 	// gtk.PrintJob
 
@@ -7561,7 +7561,7 @@ mixin( gshared ~"extern(C)
 	GtkPrintStatus function(GtkPrintJob* job) c_gtk_print_job_get_status;
 	gboolean function(GtkPrintJob* job, gchar* filename, GError** error) c_gtk_print_job_set_source_file;
 	cairo_surface_t* function(GtkPrintJob* job, GError** error) c_gtk_print_job_get_surface;
-	void function(GtkPrintJob* job, GtkPrintJobCompleteFunc callback, gpointer userData, GDestroyNotify dnotify) c_gtk_print_job_send;
+	void function(GtkPrintJob* job, GtkPrintJobCompleteFunc callback, void* userData, GDestroyNotify dnotify) c_gtk_print_job_send;
 	void function(GtkPrintJob* job, gboolean trackStatus) c_gtk_print_job_set_track_print_status;
 	gboolean function(GtkPrintJob* job) c_gtk_print_job_get_track_print_status;
 	GtkPrintPages function(GtkPrintJob* job) c_gtk_print_job_get_pages;
@@ -7652,7 +7652,7 @@ mixin( gshared ~"extern(C)
 	GtkCalendarDisplayOptions function(GtkCalendar* calendar) c_gtk_calendar_get_display_options;
 	void function(GtkCalendar* calendar, GtkCalendarDisplayOptions flags) c_gtk_calendar_set_display_options;
 	void function(GtkCalendar* calendar, guint* year, guint* month, guint* day) c_gtk_calendar_get_date;
-	void function(GtkCalendar* calendar, GtkCalendarDetailFunc func, gpointer data, GDestroyNotify destroy) c_gtk_calendar_set_detail_func;
+	void function(GtkCalendar* calendar, GtkCalendarDetailFunc func, void* data, GDestroyNotify destroy) c_gtk_calendar_set_detail_func;
 	gint function(GtkCalendar* calendar) c_gtk_calendar_get_detail_width_chars;
 	void function(GtkCalendar* calendar, gint chars) c_gtk_calendar_set_detail_width_chars;
 	gint function(GtkCalendar* calendar) c_gtk_calendar_get_detail_height_rows;
@@ -7966,7 +7966,7 @@ mixin( gshared ~"extern(C)
 	GtkResizeMode function(GtkContainer* container) c_gtk_container_get_resize_mode;
 	void function(GtkContainer* container, GtkResizeMode resizeMode) c_gtk_container_set_resize_mode;
 	void function(GtkContainer* container) c_gtk_container_check_resize;
-	void function(GtkContainer* container, GtkCallback callback, gpointer callbackData) c_gtk_container_foreach;
+	void function(GtkContainer* container, GtkCallback callback, void* callbackData) c_gtk_container_foreach;
 	GList* function(GtkContainer* container) c_gtk_container_get_children;
 	GtkWidgetPath* function(GtkContainer* container, GtkWidget* child) c_gtk_container_get_path_for_child;
 	void function(GtkContainer* container, gboolean needsRedraws) c_gtk_container_set_reallocate_redraws;
@@ -7985,7 +7985,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkContainer* container, GtkWidget* child, gchar* firstPropertyName, va_list varArgs) c_gtk_container_child_get_valist;
 	void function(GtkContainer* container, GtkWidget* child, gchar* firstPropertyName, va_list varArgs) c_gtk_container_child_set_valist;
 	void function(GtkContainer* container, GtkWidget* child, gchar* childProperty) c_gtk_container_child_notify;
-	void function(GtkContainer* container, GtkCallback callback, gpointer callbackData) c_gtk_container_forall;
+	void function(GtkContainer* container, GtkCallback callback, void* callbackData) c_gtk_container_forall;
 	guint function(GtkContainer* container) c_gtk_container_get_border_width;
 	void function(GtkContainer* container, guint borderWidth) c_gtk_container_set_border_width;
 	void function(GtkContainer* container, GtkWidget* child, cairo_t* cr) c_gtk_container_propagate_draw;
@@ -8148,7 +8148,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkRecentChooser* chooser) c_gtk_recent_chooser_get_show_tips;
 	void function(GtkRecentChooser* chooser, GtkRecentSortType sortType) c_gtk_recent_chooser_set_sort_type;
 	GtkRecentSortType function(GtkRecentChooser* chooser) c_gtk_recent_chooser_get_sort_type;
-	void function(GtkRecentChooser* chooser, GtkRecentSortFunc sortFunc, gpointer sortData, GDestroyNotify dataDestroy) c_gtk_recent_chooser_set_sort_func;
+	void function(GtkRecentChooser* chooser, GtkRecentSortFunc sortFunc, void* sortData, GDestroyNotify dataDestroy) c_gtk_recent_chooser_set_sort_func;
 	gboolean function(GtkRecentChooser* chooser, gchar* uri, GError** error) c_gtk_recent_chooser_set_current_uri;
 	gchar* function(GtkRecentChooser* chooser) c_gtk_recent_chooser_get_current_uri;
 	GtkRecentInfo* function(GtkRecentChooser* chooser) c_gtk_recent_chooser_get_current_item;
@@ -8192,7 +8192,7 @@ mixin( gshared ~"extern(C)
 	void function(GtkRecentFilter* filter, gchar* application) c_gtk_recent_filter_add_application;
 	void function(GtkRecentFilter* filter, gchar* group) c_gtk_recent_filter_add_group;
 	void function(GtkRecentFilter* filter, gint days) c_gtk_recent_filter_add_age;
-	void function(GtkRecentFilter* filter, GtkRecentFilterFlags needed, GtkRecentFilterFunc func, gpointer data, GDestroyNotify dataDestroy) c_gtk_recent_filter_add_custom;
+	void function(GtkRecentFilter* filter, GtkRecentFilterFlags needed, GtkRecentFilterFunc func, void* data, GDestroyNotify dataDestroy) c_gtk_recent_filter_add_custom;
 	GtkRecentFilterFlags function(GtkRecentFilter* filter) c_gtk_recent_filter_get_needed;
 	gboolean function(GtkRecentFilter* filter, GtkRecentFilterInfo* filterInfo) c_gtk_recent_filter_filter;
 
@@ -8252,9 +8252,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* type) c_gtk_buildable_add_child;
 	void function(GtkBuildable* buildable, GtkBuilder* builder, gchar* name, GValue* value) c_gtk_buildable_set_buildable_property;
 	GObject* function(GtkBuildable* buildable, GtkBuilder* builder, gchar* name) c_gtk_buildable_construct_child;
-	gboolean function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, GMarkupParser* parser, gpointer* data) c_gtk_buildable_custom_tag_start;
-	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, gpointer* data) c_gtk_buildable_custom_tag_end;
-	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, gpointer data) c_gtk_buildable_custom_finished;
+	gboolean function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, GMarkupParser* parser, void** data) c_gtk_buildable_custom_tag_start;
+	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, void** data) c_gtk_buildable_custom_tag_end;
+	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, void* data) c_gtk_buildable_custom_finished;
 	void function(GtkBuildable* buildable, GtkBuilder* builder) c_gtk_buildable_parser_finished;
 	GObject* function(GtkBuildable* buildable, GtkBuilder* builder, gchar* childname) c_gtk_buildable_get_internal_child;
 
@@ -8267,8 +8267,8 @@ mixin( gshared ~"extern(C)
 	guint function(GtkBuilder* builder, gchar* buffer, gsize length, gchar** objectIds, GError** error) c_gtk_builder_add_objects_from_string;
 	GObject* function(GtkBuilder* builder, gchar* name) c_gtk_builder_get_object;
 	GSList* function(GtkBuilder* builder) c_gtk_builder_get_objects;
-	void function(GtkBuilder* builder, gpointer userData) c_gtk_builder_connect_signals;
-	void function(GtkBuilder* builder, GtkBuilderConnectFunc func, gpointer userData) c_gtk_builder_connect_signals_full;
+	void function(GtkBuilder* builder, void* userData) c_gtk_builder_connect_signals;
+	void function(GtkBuilder* builder, GtkBuilderConnectFunc func, void* userData) c_gtk_builder_connect_signals_full;
 	void function(GtkBuilder* builder, gchar* domain) c_gtk_builder_set_translation_domain;
 	gchar* function(GtkBuilder* builder) c_gtk_builder_get_translation_domain;
 	GType function(GtkBuilder* builder, char* typeName) c_gtk_builder_get_type_from_name;

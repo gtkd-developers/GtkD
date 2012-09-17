@@ -685,7 +685,7 @@ mixin( gshared ~"extern(C)
 
 	PangoFont* function(PangoFontset* fontset, guint wc) c_pango_fontset_get_font;
 	PangoFontMetrics* function(PangoFontset* fontset) c_pango_fontset_get_metrics;
-	void function(PangoFontset* fontset, PangoFontsetForeachFunc func, gpointer data) c_pango_fontset_foreach;
+	void function(PangoFontset* fontset, PangoFontsetForeachFunc func, void* data) c_pango_fontset_foreach;
 
 	// pango.PgFontsetSimple
 
@@ -718,7 +718,7 @@ mixin( gshared ~"extern(C)
 	PangoAttribute* function(PangoUnderline underline) c_pango_attr_underline_new;
 	PangoAttribute* function(guint16 red, guint16 green, guint16 blue) c_pango_attr_underline_color_new;
 	PangoAttribute* function(PangoRectangle* inkRect, PangoRectangle* logicalRect) c_pango_attr_shape_new;
-	PangoAttribute* function(PangoRectangle* inkRect, PangoRectangle* logicalRect, gpointer data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc) c_pango_attr_shape_new_with_data;
+	PangoAttribute* function(PangoRectangle* inkRect, PangoRectangle* logicalRect, void* data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc) c_pango_attr_shape_new_with_data;
 	PangoAttribute* function(double scaleFactor) c_pango_attr_scale_new;
 	PangoAttribute* function(int rise) c_pango_attr_rise_new;
 	PangoAttribute* function(int letterSpacing) c_pango_attr_letter_spacing_new;
@@ -743,7 +743,7 @@ mixin( gshared ~"extern(C)
 	void function(PangoAttrList* list, PangoAttribute* attr) c_pango_attr_list_insert_before;
 	void function(PangoAttrList* list, PangoAttribute* attr) c_pango_attr_list_change;
 	void function(PangoAttrList* list, PangoAttrList* other, gint pos, gint len) c_pango_attr_list_splice;
-	PangoAttrList* function(PangoAttrList* list, PangoAttrFilterFunc func, gpointer data) c_pango_attr_list_filter;
+	PangoAttrList* function(PangoAttrList* list, PangoAttrFilterFunc func, void* data) c_pango_attr_list_filter;
 	PangoAttrIterator* function(PangoAttrList* list) c_pango_attr_list_get_iterator;
 
 	// pango.PgAttributeIterator
@@ -906,8 +906,8 @@ mixin( gshared ~"extern(C)
 	double function(PangoContext* context) c_pango_cairo_context_get_resolution;
 	void function(PangoContext* context, cairo_font_options_t* options) c_pango_cairo_context_set_font_options;
 	cairo_font_options_t* function(PangoContext* context) c_pango_cairo_context_get_font_options;
-	void function(PangoContext* context, PangoCairoShapeRendererFunc func, gpointer data, GDestroyNotify dnotify) c_pango_cairo_context_set_shape_renderer;
-	PangoCairoShapeRendererFunc function(PangoContext* context, gpointer* data) c_pango_cairo_context_get_shape_renderer;
+	void function(PangoContext* context, PangoCairoShapeRendererFunc func, void* data, GDestroyNotify dnotify) c_pango_cairo_context_set_shape_renderer;
+	PangoCairoShapeRendererFunc function(PangoContext* context, void** data) c_pango_cairo_context_get_shape_renderer;
 	PangoContext* function(cairo_t* cr) c_pango_cairo_create_context;
 	void function(cairo_t* cr, PangoContext* context) c_pango_cairo_update_context;
 	PangoLayout* function(cairo_t* cr) c_pango_cairo_create_layout;

@@ -157,7 +157,7 @@ public class SpinButton : Entry
 		}
 	}
 	
-	gint delegate(gpointer, SpinButton)[] onInputListeners;
+	gint delegate(void*, SpinButton)[] onInputListeners;
 	/**
 	 * The ::input signal can be used to influence the conversion of
 	 * the users input into a double value. The signal handler is
@@ -167,7 +167,7 @@ public class SpinButton : Entry
 	 * TRUE for a successful conversion, FALSE if the input
 	 * was not handled, and GTK_INPUT_ERROR if the conversion failed.
 	 */
-	void addOnInput(gint delegate(gpointer, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInput(gint delegate(void*, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("input" in connectedSignals) )
 		{
@@ -182,9 +182,9 @@ public class SpinButton : Entry
 		}
 		onInputListeners ~= dlg;
 	}
-	extern(C) static void callBackInput(GtkSpinButton* spinButtonStruct, gpointer newValue, SpinButton _spinButton)
+	extern(C) static void callBackInput(GtkSpinButton* spinButtonStruct, void* newValue, SpinButton _spinButton)
 	{
-		foreach ( gint delegate(gpointer, SpinButton) dlg ; _spinButton.onInputListeners )
+		foreach ( gint delegate(void*, SpinButton) dlg ; _spinButton.onInputListeners )
 		{
 			dlg(newValue, _spinButton);
 		}

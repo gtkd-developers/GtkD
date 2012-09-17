@@ -144,14 +144,14 @@ public class ObjectAtk : ObjectG
 	 */
 	int[string] connectedSignals;
 	
-	void delegate(gpointer, ObjectAtk)[] onActiveDescendantChangedListeners;
+	void delegate(void*, ObjectAtk)[] onActiveDescendantChangedListeners;
 	/**
 	 * The "active-descendant-changed" signal is emitted by an object which has
 	 * the state ATK_STATE_MANAGES_DESCENDANTS when the focus object in the
 	 * object changes. For instance, a table will emit the signal when the cell
 	 * in the table which has focus changes.
 	 */
-	void addOnActiveDescendantChanged(void delegate(gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnActiveDescendantChanged(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("active-descendant-changed" in connectedSignals) )
 		{
@@ -166,20 +166,20 @@ public class ObjectAtk : ObjectG
 		}
 		onActiveDescendantChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActiveDescendantChanged(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk _objectAtk)
+	extern(C) static void callBackActiveDescendantChanged(AtkObject* atkobjectStruct, void* arg1, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(gpointer, ObjectAtk) dlg ; _objectAtk.onActiveDescendantChangedListeners )
+		foreach ( void delegate(void*, ObjectAtk) dlg ; _objectAtk.onActiveDescendantChangedListeners )
 		{
 			dlg(arg1, _objectAtk);
 		}
 	}
 	
-	void delegate(guint, gpointer, ObjectAtk)[] onChildrenChangedListeners;
+	void delegate(guint, void*, ObjectAtk)[] onChildrenChangedListeners;
 	/**
 	 * The signal "children-changed" is emitted when a child is added or
 	 * removed form an object. It supports two details: "add" and "remove"
 	 */
-	void addOnChildrenChanged(void delegate(guint, gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChildrenChanged(void delegate(guint, void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("children-changed" in connectedSignals) )
 		{
@@ -194,9 +194,9 @@ public class ObjectAtk : ObjectG
 		}
 		onChildrenChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChildrenChanged(AtkObject* atkobjectStruct, guint arg1, gpointer arg2, ObjectAtk _objectAtk)
+	extern(C) static void callBackChildrenChanged(AtkObject* atkobjectStruct, guint arg1, void* arg2, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(guint, gpointer, ObjectAtk) dlg ; _objectAtk.onChildrenChangedListeners )
+		foreach ( void delegate(guint, void*, ObjectAtk) dlg ; _objectAtk.onChildrenChangedListeners )
 		{
 			dlg(arg1, arg2, _objectAtk);
 		}
@@ -229,13 +229,13 @@ public class ObjectAtk : ObjectG
 		}
 	}
 	
-	void delegate(gpointer, ObjectAtk)[] onPropertyChangeListeners;
+	void delegate(void*, ObjectAtk)[] onPropertyChangeListeners;
 	/**
 	 * The signal "property-change" is emitted when an object's property
 	 * value changes. The detail identifies the name of the property whose
 	 * value has changed.
 	 */
-	void addOnPropertyChange(void delegate(gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPropertyChange(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("property-change" in connectedSignals) )
 		{
@@ -250,9 +250,9 @@ public class ObjectAtk : ObjectG
 		}
 		onPropertyChangeListeners ~= dlg;
 	}
-	extern(C) static void callBackPropertyChange(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk _objectAtk)
+	extern(C) static void callBackPropertyChange(AtkObject* atkobjectStruct, void* arg1, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(gpointer, ObjectAtk) dlg ; _objectAtk.onPropertyChangeListeners )
+		foreach ( void delegate(void*, ObjectAtk) dlg ; _objectAtk.onPropertyChangeListeners )
 		{
 			dlg(arg1, _objectAtk);
 		}

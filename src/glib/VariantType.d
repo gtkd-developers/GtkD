@@ -311,8 +311,8 @@ public class VariantType
 	/**
 	 * Makes a copy of a GVariantType. It is appropriate to call
 	 * g_variant_type_free() on the return value. type may not be NULL.
-	 * Since 2.24
-	 * Returns: a new GVariantType. [transfer full]
+	 * Since 2.24. [transfer full]
+	 * Returns: a new GVariantType
 	 */
 	public VariantType copy()
 	{
@@ -422,8 +422,8 @@ public class VariantType
 	 * Returns a newly-allocated copy of the type string corresponding to
 	 * type. The returned string is nul-terminated. It is appropriate to
 	 * call g_free() on the return value.
-	 * Since 2.24
-	 * Returns: the corresponding type string. [transfer full]
+	 * Since 2.24. [transfer full]
+	 * Returns: the corresponding type string
 	 */
 	public string dupString()
 	{
@@ -611,7 +611,7 @@ public class VariantType
 	 * Constructs the type corresponding to an array of elements of the
 	 * type type.
 	 * It is appropriate to call g_variant_type_free() on the return value.
-	 * Since 2.24
+	 * Since 2.24. [transfer full]
 	 * Params:
 	 * element = a GVariantType
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -632,7 +632,7 @@ public class VariantType
 	 * length is the number of items in items, or -1 to indicate that
 	 * items is NULL-terminated.
 	 * It is appropriate to call g_variant_type_free() on the return value.
-	 * Since 2.24
+	 * Since 2.24. [transfer full]
 	 * Params:
 	 * items = an array of GVariantTypes, one for each item. [array length=length]
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -659,7 +659,7 @@ public class VariantType
 	 * Constructs the type corresponding to a dictionary entry with a key
 	 * of type key and a value of type value.
 	 * It is appropriate to call g_variant_type_free() on the return value.
-	 * Since 2.24
+	 * Since 2.24. [transfer full]
 	 * Params:
 	 * key = a basic GVariantType
 	 * value = a GVariantType
@@ -679,8 +679,8 @@ public class VariantType
 	/**
 	 * Determines the element type of an array or maybe type.
 	 * This function may only be used with array or maybe types.
-	 * Since 2.24
-	 * Returns: the element type of type. [transfer none]
+	 * Since 2.24. [transfer none]
+	 * Returns: the element type of type
 	 */
 	public VariantType element()
 	{
@@ -721,8 +721,8 @@ public class VariantType
 	 * NULL is returned in case of type being G_VARIANT_TYPE_UNIT.
 	 * This call, together with g_variant_type_next() provides an iterator
 	 * interface over tuple and dictionary entry types.
-	 * Since 2.24
-	 * Returns: the first item type of type, or NULL. [transfer none]
+	 * Since 2.24. [transfer none]
+	 * Returns: the first item type of type, or NULL
 	 */
 	public VariantType first()
 	{
@@ -744,8 +744,8 @@ public class VariantType
 	 * returns the value type. If called on the value type of a dictionary
 	 * entry then this call returns NULL.
 	 * For tuples, NULL is returned when type is the last item in a tuple.
-	 * Since 2.24
-	 * Returns: the next GVariantType after type, or NULL. [transfer none]
+	 * Since 2.24. [transfer none]
+	 * Returns: the next GVariantType after type, or NULL
 	 */
 	public VariantType next()
 	{
@@ -763,8 +763,8 @@ public class VariantType
 	 * This function may only be used with a dictionary entry type. Other
 	 * than the additional restriction, this call is equivalent to
 	 * g_variant_type_first().
-	 * Since 2.24
-	 * Returns: the key type of the dictionary entry. [transfer none]
+	 * Since 2.24. [transfer none]
+	 * Returns: the key type of the dictionary entry
 	 */
 	public VariantType key()
 	{
@@ -780,8 +780,8 @@ public class VariantType
 	/**
 	 * Determines the value type of a dictionary entry type.
 	 * This function may only be used with a dictionary entry type.
-	 * Since 2.24
-	 * Returns: the value type of the dictionary entry. [transfer none]
+	 * Since 2.24. [transfer none]
+	 * Returns: the value type of the dictionary entry
 	 */
 	public VariantType value()
 	{

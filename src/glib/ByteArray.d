@@ -40,11 +40,14 @@
  * 	- g_byte_array_
  * omit structs:
  * omit prefixes:
+ * 	- g_bytes_
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Bytes
  * structWrap:
  * 	- GByteArray* -> ByteArray
+ * 	- GBytes* -> Bytes
  * module aliases:
  * local aliases:
  * overrides:
@@ -58,20 +61,22 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import glib.Bytes;
 
 
 
 
 /**
  * Description
- * GByteArray is based on GArray, to provide arrays of bytes which
- * grow automatically as elements are added.
- * To create a new GByteArray use g_byte_array_new().
- * To add elements to a GByteArray, use g_byte_array_append(), and
- * g_byte_array_prepend().
+ * GByteArray is a mutable array of bytes based on GArray, to provide arrays
+ * of bytes which grow automatically as elements are added.
+ * To create a new GByteArray use g_byte_array_new(). To add elements to a
+ * GByteArray, use g_byte_array_append(), and g_byte_array_prepend().
  * To set the size of a GByteArray, use g_byte_array_set_size().
  * To free a GByteArray, use g_byte_array_free().
  * $(DDOC_COMMENT example)
+ * See GBytes if you are interested in an immutable object representing a
+ * sequence of bytes.
  */
 public class ByteArray
 {
@@ -119,6 +124,26 @@ public class ByteArray
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_byte_array_new()");
+		}
+		this(cast(GByteArray*) p);
+	}
+	
+	/**
+	 * Create byte array containing the data. The data will be owned by the array
+	 * and will be freed with g_free(), i.e. it could be allocated using g_strdup().
+	 * Since 2.32
+	 * Params:
+	 * data = byte data for the array. [array length=len]
+	 * len = length of data
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ubyte* data, gsize len)
+	{
+		// GByteArray * g_byte_array_new_take (guint8 *data,  gsize len);
+		auto p = g_byte_array_new_take(data, len);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_byte_array_new_take(data, len)");
 		}
 		this(cast(GByteArray*) p);
 	}
@@ -273,8 +298,8 @@ public class ByteArray
 	 * arg is less than second arg, zero for equal, greater than zero if
 	 * first arg is greater than second arg).
 	 * If two array elements compare equal, their order in the sorted array
-	 * is undefined. If you want equal elements to keep their order 8211; i.e.
-	 * you want a stable sort 8211; you can write a comparison function that,
+	 * is undefined. If you want equal elements to keep their order (i.e.
+	 * you want a stable sort) you can write a comparison function that,
 	 * if two elements would otherwise compare equal, compares them by
 	 * their addresses.
 	 * Params:
@@ -329,5 +354,26 @@ public class ByteArray
 	{
 		// guint8 * g_byte_array_free (GByteArray *array,  gboolean free_segment);
 		return g_byte_array_free(gByteArray, freeSegment);
+	}
+	
+	/**
+	 * Transfers the data from the GByteArray into a new immutable GBytes.
+	 * The GByteArray is freed unless the reference count of array is greater
+	 * than one, the GByteArray wrapper is preserved but the size of array
+	 * will be set to zero.
+	 * This is identical to using g_bytes_new_take() and g_byte_array_free()
+	 * together.
+	 * Since 2.32
+	 * Returns: a new immutable GBytes representing same byte data that was in the array. [transfer full]
+	 */
+	public Bytes freeToBytes()
+	{
+		// GBytes * g_byte_array_free_to_bytes (GByteArray *array);
+		auto p = g_byte_array_free_to_bytes(gByteArray);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Bytes(cast(GBytes*) p);
 	}
 }

@@ -25,11 +25,11 @@
  * Conversion parameters:
  * inFile  = 
  * outPack = gthread
- * outFile = Cond
- * strct   = GCond
+ * outFile = Once
+ * strct   = GOnce
  * realStrct=
  * ctorStrct=
- * clss    = Cond
+ * clss    = Once
  * interf  = 
  * class Code: No
  * interface Code: No
@@ -37,23 +37,19 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- g_cond_
+ * 	- g_once_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gthread.Mutex
- * 	- glib.TimeVal
  * structWrap:
- * 	- GMutex* -> Mutex
- * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gthread.Cond;
+module gthread.Once;
 
 public  import gtkc.gthreadtypes;
 
@@ -61,8 +57,6 @@ private import gtkc.gthread;
 private import glib.ConstructionException;
 
 
-private import gthread.Mutex;
-private import glib.TimeVal;
 
 
 
@@ -136,157 +130,75 @@ private import glib.TimeVal;
  * multiple threads. Most refcounting functions such as g_object_ref()
  * are also thread-safe.
  */
-public class Cond
+public class Once
 {
 	
 	/** the main Gtk struct */
-	protected GCond* gCond;
+	protected GOnce* gOnce;
 	
 	
-	public GCond* getCondStruct()
+	public GOnce* getOnceStruct()
 	{
-		return gCond;
+		return gOnce;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
-		return cast(void*)gCond;
+		return cast(void*)gOnce;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GCond* gCond)
+	public this (GOnce* gOnce)
 	{
-		if(gCond is null)
+		if(gOnce is null)
 		{
 			this = null;
 			return;
 		}
-		this.gCond = gCond;
+		this.gOnce = gOnce;
 	}
 	
 	/**
 	 */
 	
 	/**
-	 * Initialises a GCond so that it can be used.
-	 * This function is useful to initialise a GCond that has been
-	 * allocated as part of a larger structure. It is not necessary to
-	 * initialise a GCond that has been statically allocated.
-	 * To undo the effect of g_cond_init() when a GCond is no longer
-	 * needed, use g_cond_clear().
-	 * Calling g_cond_init() on an already-initialised GCond leads
-	 * to undefined behaviour.
-	 * Since 2.32
-	 */
-	public void init()
-	{
-		// void g_cond_init (GCond *cond);
-		g_cond_init(gCond);
-	}
-	
-	/**
-	 * Frees the resources allocated to a GCond with g_cond_init().
-	 * This function should not be used with a GCond that has been
-	 * statically allocated.
-	 * Calling g_cond_clear() for a GCond on which threads are
-	 * blocking leads to undefined behaviour.
-	 * Since 2.32
-	 */
-	public void clear()
-	{
-		// void g_cond_clear (GCond *cond);
-		g_cond_clear(gCond);
-	}
-	
-	/**
-	 * Atomically releases mutex and waits until cond is signalled.
-	 * When using condition variables, it is possible that a spurious wakeup
-	 * may occur (ie: g_cond_wait() returns even though g_cond_signal() was
-	 * not called). It's also possible that a stolen wakeup may occur.
-	 * This is when g_cond_signal() is called, but another thread acquires
-	 * mutex before this thread and modifies the state of the program in
-	 * such a way that when g_cond_wait() is able to return, the expected
-	 * condition is no longer met.
-	 * For this reason, g_cond_wait() must always be used in a loop. See
-	 * the documentation for GCond for a complete example.
+	 * Function to be called when starting a critical initialization
+	 * section. The argument location must point to a static
+	 * 0-initialized variable that will be set to a value other than 0 at
+	 * the end of the initialization section. In combination with
+	 * g_once_init_leave() and the unique address value_location, it can
+	 * be ensured that an initialization section will be executed only once
+	 * during a program's life time, and that concurrent threads are
+	 * blocked until initialization completed. To be used in constructs
+	 * Since 2.14
 	 * Params:
-	 * mutex = a GMutex that is currently locked
+	 * location = location of a static initializable variable containing 0
+	 * Returns: TRUE if the initialization section should be entered, FALSE and blocks otherwise
 	 */
-	public void wait(Mutex mutex)
+	public static int initEnter(void* location)
 	{
-		// void g_cond_wait (GCond *cond,  GMutex *mutex);
-		g_cond_wait(gCond, (mutex is null) ? null : mutex.getMutexStruct());
+		// gboolean g_once_init_enter (volatile void *location);
+		return g_once_init_enter(location);
 	}
 	
 	/**
-	 * Warning
-	 * g_cond_timed_wait has been deprecated since version 2.32 and should not be used in newly-written code. Use g_cond_wait_until() instead.
-	 * Waits until this thread is woken up on cond, but not longer than
-	 * until the time specified by abs_time. The mutex is unlocked before
-	 * falling asleep and locked again before resuming.
-	 * If abs_time is NULL, g_cond_timed_wait() acts like g_cond_wait().
-	 * This function can be used even if g_thread_init() has not yet been
-	 * called, and, in that case, will immediately return TRUE.
-	 * To easily calculate abs_time a combination of g_get_current_time()
-	 * and g_time_val_add() can be used.
+	 * Counterpart to g_once_init_enter(). Expects a location of a static
+	 * 0-initialized initialization variable, and an initialization value
+	 * other than 0. Sets the variable to the initialization value, and
+	 * releases concurrent threads blocking in g_once_init_enter() on this
+	 * initialization variable.
+	 * Since 2.14
 	 * Params:
-	 * mutex = a GMutex that is currently locked
-	 * absTime = a GTimeVal, determining the final time
-	 * Returns: TRUE if cond was signalled, or FALSE on timeout
+	 * location = location of a static initializable variable containing 0
+	 * result = new non-0 value for *value_location
 	 */
-	public int timedWait(Mutex mutex, TimeVal absTime)
+	public static void initLeave(void* location, gsize result)
 	{
-		// gboolean g_cond_timed_wait (GCond *cond,  GMutex *mutex,  GTimeVal *abs_time);
-		return g_cond_timed_wait(gCond, (mutex is null) ? null : mutex.getMutexStruct(), (absTime is null) ? null : absTime.getTimeValStruct());
-	}
-	
-	/**
-	 * Waits until either cond is signalled or end_time has passed.
-	 * As with g_cond_wait() it is possible that a spurious or stolen wakeup
-	 * could occur. For that reason, waiting on a condition variable should
-	 * always be in a loop, based on an explicitly-checked predicate.
-	 * TRUE is returned if the condition variable was signalled (or in the
-	 * case of a spurious wakeup). FALSE is returned if end_time has
-	 * passed.
-	 * The following code shows how to correctly perform a timed wait on a
-	 * condition variable (extended the example presented in the
-	 * Since 2.32
-	 * Params:
-	 * mutex = a GMutex that is currently locked
-	 * endTime = the monotonic time to wait until
-	 * Returns: TRUE on a signal, FALSE on a timeout
-	 */
-	public int waitUntil(Mutex mutex, long endTime)
-	{
-		// gboolean g_cond_wait_until (GCond *cond,  GMutex *mutex,  gint64 end_time);
-		return g_cond_wait_until(gCond, (mutex is null) ? null : mutex.getMutexStruct(), endTime);
-	}
-	
-	/**
-	 * If threads are waiting for cond, at least one of them is unblocked.
-	 * If no threads are waiting for cond, this function has no effect.
-	 * It is good practice to hold the same lock as the waiting thread
-	 * while calling this function, though not required.
-	 */
-	public void signal()
-	{
-		// void g_cond_signal (GCond *cond);
-		g_cond_signal(gCond);
-	}
-	
-	/**
-	 * If threads are waiting for cond, all of them are unblocked.
-	 * If no threads are waiting for cond, this function has no effect.
-	 * It is good practice to lock the same mutex as the waiting threads
-	 * while calling this function, though not required.
-	 */
-	public void broadcast()
-	{
-		// void g_cond_broadcast (GCond *cond);
-		g_cond_broadcast(gCond);
+		// void g_once_init_leave (volatile void *location,  gsize result);
+		g_once_init_leave(location, result);
 	}
 }

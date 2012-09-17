@@ -394,8 +394,8 @@ public template TreeModelT(TStruct)
 		}
 	}
 	
-	void delegate(TreePath, TreeIter, gpointer, TreeModelIF)[] _onRowsReorderedListeners;
-	void delegate(TreePath, TreeIter, gpointer, TreeModelIF)[] onRowsReorderedListeners()
+	void delegate(TreePath, TreeIter, void*, TreeModelIF)[] _onRowsReorderedListeners;
+	void delegate(TreePath, TreeIter, void*, TreeModelIF)[] onRowsReorderedListeners()
 	{
 		return  _onRowsReorderedListeners;
 	}
@@ -412,7 +412,7 @@ public template TreeModelT(TStruct)
 	 * [4] Here, iter is short
 	 * for “iterator”
 	 */
-	void addOnRowsReordered(void delegate(TreePath, TreeIter, gpointer, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnRowsReordered(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("rows-reordered" in connectedSignals) )
 		{
@@ -427,9 +427,9 @@ public template TreeModelT(TStruct)
 		}
 		_onRowsReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer newOrder, TreeModelIF _treeModelIF)
+	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, void* newOrder, TreeModelIF _treeModelIF)
 	{
-		foreach ( void delegate(TreePath, TreeIter, gpointer, TreeModelIF) dlg ; _treeModelIF.onRowsReorderedListeners )
+		foreach ( void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg ; _treeModelIF.onRowsReorderedListeners )
 		{
 			dlg(new TreePath(path), new TreeIter(iter), newOrder, _treeModelIF);
 		}

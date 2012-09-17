@@ -65,9 +65,9 @@ private import glib.Str;
 
 /**
  * Description
- * These functions provide some level of UNIX emulation on the Windows platform.
- * If your application really needs the POSIX APIs, we suggest you try the Cygwin
- * project.
+ * These functions provide some level of UNIX emulation on the
+ * Windows platform. If your application really needs the POSIX
+ * APIs, we suggest you try the Cygwin project.
  */
 public class WindowsUtils
 {
@@ -147,7 +147,7 @@ public class WindowsUtils
 	 * the main executable of the process was loaded is used instead in
 	 * the same way as above.
 	 * Params:
-	 * dllName = The name of a DLL that a package provides in UTF-8, or NULL.
+	 * dllName = The name of a DLL that a package provides in UTF-8, or NULL. [allow-none]
 	 * Returns: a string containing the installation directory for package. The string is in the GLib file name encoding, i.e. UTF-8. The return value should be freed with g_free() when not needed any longer. If the function fails NULL is returned.
 	 */
 	public static string getPackageInstallationDirectory(string p, string dllName)
@@ -179,7 +179,7 @@ public class WindowsUtils
 	 * function passing the DLL handle.
 	 * Since 2.16
 	 * Params:
-	 * hmodule = The Win32 handle for a DLL loaded into the current process, or NULL
+	 * hmodule = The Win32 handle for a DLL loaded into the current process, or NULL. [allow-none]
 	 * Returns: a string containing the guessed installation directory for the software package hmodule is from. The string is in the GLib file name encoding, i.e. UTF-8. The return value should be freed with g_free() when not needed any longer. If the function fails NULL is returned.
 	 */
 	public static string getPackageInstallationDirectoryOfModule(void* hmodule)
@@ -204,7 +204,7 @@ public class WindowsUtils
 	 * particular, note that it is deprecated to pass anything except NULL
 	 * as package.
 	 * Params:
-	 * dllName = The name of a DLL that a package provides, in UTF-8, or NULL.
+	 * dllName = The name of a DLL that a package provides, in UTF-8, or NULL. [allow-none]
 	 * subdir = A subdirectory of the package installation directory, also in UTF-8
 	 * Returns: a string containing the complete path to subdir inside the installation directory of package. The returned string is in the GLib file name encoding, i.e. UTF-8. The return value should be freed with g_free() when no longer needed. If something goes wrong, NULL is returned.
 	 */

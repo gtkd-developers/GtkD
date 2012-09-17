@@ -145,13 +145,13 @@ public class Messages
 	/**
 	 * Invokes gdb, which attaches to the current
 	 * process and shows a stack trace. Called by g_on_error_query()
-	 * when the [S]tack trace option is selected.
+	 * when the [S]tack trace option is selected. You can get the current
+	 * process's "program name" with g_get_prgname(), assuming that you
+	 * have called gtk_init() or gdk_init().
 	 * This function may cause different actions on non-UNIX platforms.
 	 * Params:
 	 * prgName = the program name, needed by gdb
-	 * for the [S]tack trace option. If prg_name is NULL, g_get_prgname()
-	 * is called to get the program name (which will work correctly if
-	 * gdk_init() or gtk_init() has been called)
+	 * for the [S]tack trace option.
 	 */
 	public static void onErrorStackTrace(string prgName)
 	{

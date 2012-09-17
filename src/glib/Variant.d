@@ -116,6 +116,10 @@ private import glib.VariantType;
  * or supplied out-of-band (for instance, a type and/or endianness
  * indicator could be placed at the beginning of a file, network message
  * or network stream).
+ * A GVariant's size is limited mainly by any lower level operating
+ * system constraints, such as the number of bits in gsize. For
+ * example, it is reasonable to have a 2GB file mapped into memory
+ * with GMappedFile, and call g_variant_new_from_data() on it.
  * For convenience to C programmers, GVariant features powerful
  * varargs-based value construction and destruction. This feature is
  * designed to be embedded in other libraries.
@@ -573,6 +577,7 @@ public class Variant
 	
 	/**
 	 * Checks if value is a container.
+	 * Since 2.24
 	 * Returns: TRUE if value is a container
 	 */
 	public int isContainer()
@@ -636,6 +641,10 @@ public class Variant
 	 * These two generalisations allow mixing of multiple calls to
 	 * g_variant_new_va() and g_variant_get_va() within a single actual
 	 * varargs call by the user.
+	 * format_string determines the C types that are used for unpacking
+	 * the values and also determines if the values are copied or borrowed,
+	 * see the section on
+	 * GVariant Format Strings.
 	 * Since 2.24
 	 * Params:
 	 * formatString = a string that is prefixed with a format string
@@ -1266,7 +1275,7 @@ public class Variant
 	 * returning a constant string, the string is duplicated.
 	 * The return value must be freed using g_free().
 	 * Since 2.26
-	 * Returns: (transfer full) (array zero-terminated=1 length=length) (element-type guint8): a newly allocated string
+	 * Returns: a newly allocated string. [transfer full][array zero-terminated=1 length=length][element-type guint8]
 	 */
 	public string dupBytestring()
 	{
@@ -1446,6 +1455,36 @@ public class Variant
 	}
 	
 	/**
+	 * Provides access to the serialised data for an array of fixed-sized
+	 * items.
+	 * value must be an array with fixed-sized elements. Numeric types are
+	 * fixed-size as are tuples containing only other fixed-sized types.
+	 * element_size must be the size of a single element in the array. For
+	 * example, if calling this function for an array of 32 bit integers,
+	 * you might say sizeof (gint32). This value isn't used
+	 * except for the purpose of a double-check that the form of the
+	 * serialised data matches the caller's expectation.
+	 * n_elements, which must be non-NULL is set equal to the number of
+	 * items in the array.
+	 * Since 2.32
+	 * Params:
+	 * elementType = the GVariantType of each element
+	 * elements = a pointer to the fixed array of contiguous elements
+	 * elementSize = the size of each element
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (VariantType elementType, void[] elements, gsize elementSize)
+	{
+		// GVariant * g_variant_new_fixed_array (const GVariantType *element_type,  gconstpointer elements,  gsize n_elements,  gsize element_size);
+		auto p = g_variant_new_fixed_array((elementType is null) ? null : elementType.getVariantTypeStruct(), elements.ptr, cast(int) elements.length, elementSize);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_fixed_array((elementType is null) ? null : elementType.getVariantTypeStruct(), elements.ptr, cast(int) elements.length, elementSize)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
 	 * Given a maybe-typed GVariant instance, extract its value. If the
 	 * value is Nothing, then this function returns NULL.
 	 * Since 2.24
@@ -1488,6 +1527,8 @@ public class Variant
 	 * GVariant.
 	 * It is an error if index_ is greater than the number of child items
 	 * in the container. See g_variant_n_children().
+	 * The returned value is never floating. You should free it with
+	 * g_variant_unref() when you're done with it.
 	 * This function is O(1).
 	 * Since 2.24
 	 * Params:
@@ -1784,6 +1825,7 @@ public class Variant
 	 * The format is described here.
 	 * If type_annotate is TRUE, then type information is included in
 	 * the output.
+	 * Since 2.24
 	 * Params:
 	 * typeAnnotate = TRUE if type information should be included in
 	 * the output
@@ -1841,10 +1883,10 @@ public class Variant
 	 * Officially, the language understood by the parser is "any string
 	 * produced by g_variant_print()".
 	 * Params:
-	 * type = a GVariantType, or NULL
+	 * type = a GVariantType, or NULL. [allow-none]
 	 * text = a string containing a GVariant in text form
-	 * limit = a pointer to the end of text, or NULL
-	 * endptr = a location to store the end pointer, or NULL
+	 * limit = a pointer to the end of text, or NULL. [allow-none]
+	 * endptr = a location to store the end pointer, or NULL. [allow-none]
 	 * Returns: a reference to a GVariant, or NULL
 	 * Throws: GException on failure.
 	 */

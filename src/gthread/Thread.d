@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = 
+ * inFile  = glib-Threads.html
  * outPack = gthread
  * outFile = Thread
  * strct   = GThread
@@ -42,15 +42,15 @@
  * omit structs:
  * omit prefixes:
  * 	- g_mutex_
- * 	- g_static_mutex_
- * 	- g_static_rec_mutex_
- * 	- g_static_rw_lock_
+ * 	- g_rec_mutex_
+ * 	- g_rw_lock_
  * 	- g_cond_
  * 	- g_private_
- * 	- g_static_private_
+ * 	- g_once_
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
  * structWrap:
@@ -68,6 +68,7 @@ private import gtkc.gthread;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 
@@ -85,47 +86,63 @@ private import glib.GException;
  * assumptions on the order of execution of code running in different
  * threads can be made, unless order is explicitly forced by the
  * programmer through synchronization primitives.
- * The aim of the thread related functions in GLib is to provide a
+ * The aim of the thread-related functions in GLib is to provide a
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
- * (GMutex, GStaticMutex, G_LOCK_DEFINE, GStaticRecMutex and
- * GStaticRWLock). There is a facility to use individual bits for
- * locks (g_bit_lock()). There are primitives for condition variables to
- * allow synchronization of threads (GCond). There are primitives for
- * thread-private data - data that every thread has a private instance
- * of (GPrivate, GStaticPrivate). There are facilities for one-time
- * initialization (GOnce, g_once_init_enter()). Last but definitely
- * not least there are primitives to portably create and manage
- * threads (GThread).
- * The threading system is initialized with g_thread_init(), which
- * takes an optional custom thread implementation or NULL for the
- * default implementation. If you want to call g_thread_init() with a
- * non-NULL argument this must be done before executing any other GLib
- * functions (except g_mem_set_vtable()). This is a requirement even if
- * no threads are in fact ever created by the process.
- * Calling g_thread_init() with a NULL argument is somewhat more
- * relaxed. You may call any other glib functions in the main thread
- * before g_thread_init() as long as g_thread_init() is not called from
- * a glib callback, or with any locks held. However, many libraries
- * above glib does not support late initialization of threads, so doing
- * this should be avoided if possible.
- * Please note that since version 2.24 the GObject initialization
- * function g_type_init() initializes threads (with a NULL argument),
- * so most applications, including those using Gtk+ will run with
- * threads enabled. If you want a special thread implementation, make
- * sure you call g_thread_init() before g_type_init() is called.
- * After calling g_thread_init(), GLib is completely thread safe (all
- * global data is automatically locked), but individual data structure
- * instances are not automatically locked for performance reasons. So,
- * for example you must coordinate accesses to the same GHashTable
- * from multiple threads. The two notable exceptions from this rule
- * are GMainLoop and GAsyncQueue, which are
- * threadsafe and need no further application-level locking to be
- * accessed from multiple threads.
- * To help debugging problems in multithreaded applications, GLib
- * supports error-checking mutexes that will give you helpful error
- * messages on common problems. To use error-checking mutexes, define
- * the symbol G_ERRORCHECK_MUTEXES when compiling the application.
+ * (GMutex, GRecMutex and GRWLock). There is a facility to use
+ * individual bits for locks (g_bit_lock()). There are primitives
+ * for condition variables to allow synchronization of threads (GCond).
+ * There are primitives for thread-private data - data that every
+ * thread has a private instance of (GPrivate). There are facilities
+ * for one-time initialization (GOnce, g_once_init_enter()). Finally,
+ * there are primitives to create and manage threads (GThread).
+ * The GLib threading system used to be initialized with g_thread_init().
+ * This is no longer necessary. Since version 2.32, the GLib threading
+ * system is automatically initialized at the start of your program,
+ * and all thread-creation functions and synchronization primitives
+ * are available right away.
+ * Note that it is not safe to assume that your program has no threads
+ * even if you don't call g_thread_new() yourself. GLib and GIO can
+ * and will create threads for their own purposes in some cases, such
+ * as when using g_unix_signal_source_new() or when using GDBus.
+ * Originally, UNIX did not have threads, and therefore some traditional
+ * UNIX APIs are problematic in threaded programs. Some notable examples
+ * are
+ *  C library functions that return data in statically allocated
+ *  buffers, such as strtok() or strerror(). For many of these,
+ *  there are thread-safe variants with a _r suffix, or you can
+ *  look at corresponding GLib APIs (like g_strsplit() or g_strerror()).
+ * setenv() and unsetenv() manipulate the process environment in
+ *  a not thread-safe way, and may interfere with getenv() calls
+ *  in other threads. Note that getenv() calls may be
+ *  “hidden” behind other APIs. For example, GNU gettext()
+ *  calls getenv() under the covers. In general, it is best to treat
+ *  the environment as readonly. If you absolutely have to modify the
+ *  environment, do it early in main(), when no other threads are around yet.
+ * setlocale() changes the locale for the entire process, affecting
+ *  all threads. Temporary changes to the locale are often made to
+ *  change the behavior of string scanning or formatting functions
+ *  like scanf() or printf(). GLib offers a number of string APIs
+ *  (like g_ascii_formatd() or g_ascii_strtod()) that can often be
+ *  used as an alternative. Or you can use the uselocale() function
+ *  to change the locale only for the current thread.
+ * fork() only takes the calling thread into the child's copy of the
+ *  process image. If other threads were executing in critical
+ *  sections they could have left mutexes locked which could easily
+ *  cause deadlocks in the new child. For this reason, you should
+ *  call exit() or exec() as soon as possible in the child and only
+ *  make signal-safe library calls before that.
+ * daemon() uses fork() in a way contrary to what is described
+ *  above. It should not be used with GLib programs.
+ * GLib itself is internally completely thread-safe (all global data is
+ * automatically locked), but individual data structure instances are
+ * not automatically locked for performance reasons. For example,
+ * you must coordinate accesses to the same GHashTable from multiple
+ * threads. The two notable exceptions from this rule are GMainLoop
+ * and GAsyncQueue, which are thread-safe and
+ * need no further application-level locking to be accessed from
+ * multiple threads. Most refcounting functions such as g_object_ref()
+ * are also thread-safe.
  */
 public class Thread
 {
@@ -163,90 +180,54 @@ public class Thread
 	 */
 	
 	/**
-	 * If you use GLib from more than one thread, you must initialize the
-	 * thread system by calling g_thread_init(). Most of the time you will
-	 * only have to call g_thread_init (NULL).
-	 * Note
-	 * Do not call g_thread_init() with a non-NULL parameter unless
-	 * you really know what you are doing.
-	 * Note
-	 * g_thread_init() must not be called directly or indirectly as a
-	 * callback from GLib. Also no mutexes may be currently locked while
-	 * calling g_thread_init().
-	 * Note
-	 * g_thread_init() changes the way in which GTimer measures
-	 * elapsed time. As a consequence, timers that are running while
-	 * g_thread_init() is called may report unreliable times.
-	 * Calling g_thread_init() multiple times is allowed (since version
-	 * 2.24), but nothing happens except for the first call. If the
-	 * argument is non-NULL on such a call a warning will be printed, but
-	 * otherwise the argument is ignored.
-	 * If no thread system is available and vtable is NULL or if not all
-	 * elements of vtable are non-NULL, then g_thread_init() will abort.
-	 * Note
-	 * To use g_thread_init() in your program, you have to link with
-	 * the libraries that the command pkg-config --libs
-	 * gthread-2.0 outputs. This is not the case for all the
-	 * other thread related functions of GLib. Those can be used without
-	 * having to link with the thread libraries.
+	 * This function creates a new thread. The new thread starts by invoking
+	 * func with the argument data. The thread will run until func returns
+	 * or until g_thread_exit() is called from the new thread. The return value
+	 * of func becomes the return value of the thread, which can be obtained
+	 * with g_thread_join().
+	 * The name can be useful for discriminating threads in a debugger.
+	 * Some systems restrict the length of name to 16 bytes.
+	 * If the thread can not be created the program aborts. See
+	 * g_thread_try_new() if you want to attempt to deal with failures.
+	 * To free the struct returned by this function, use g_thread_unref().
+	 * Note that g_thread_join() implicitly unrefs the GThread as well.
+	 * Since 2.32
 	 * Params:
-	 * vtable = a function table of type GThreadFunctions, that provides
-	 * the entry points to the thread system to be used.
+	 * name = a name for the new thread
+	 * func = a function to execute in the new thread
+	 * data = an argument to supply to the new thread
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static void init(GThreadFunctions* vtable)
+	public this (string name, GThreadFunc func, void* data)
 	{
-		// void g_thread_init (GThreadFunctions *vtable);
-		g_thread_init(vtable);
+		// GThread * g_thread_new (const gchar *name,  GThreadFunc func,  gpointer data);
+		auto p = g_thread_new(Str.toStringz(name), func, data);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_thread_new(Str.toStringz(name), func, data)");
+		}
+		this(cast(GThread*) p);
 	}
 	
 	/**
-	 * This function returns TRUE if the thread system is initialized, and
-	 * FALSE if it is not.
-	 * Note
-	 * This function is actually a macro. Apart from taking the
-	 * address of it you can however use it as if it was a
-	 * function.
-	 * Returns: TRUE, if the thread system is initialized.
-	 */
-	public static int supported()
-	{
-		// gboolean g_thread_supported ();
-		return g_thread_supported();
-	}
-	
-	/**
-	 * Indicates if g_thread_init() has been called.
-	 * Since 2.20
-	 * Returns: TRUE if threads have been initialized.
-	 */
-	public static int getInitialized()
-	{
-		// gboolean g_thread_get_initialized (void);
-		return g_thread_get_initialized();
-	}
-	
-	/**
-	 * This function creates a new thread with the default priority.
-	 * If joinable is TRUE, you can wait for this threads termination
-	 * calling g_thread_join(). Otherwise the thread will just disappear
-	 * when it terminates.
-	 * The new thread executes the function func with the argument data.
-	 * If the thread was created successfully, it is returned.
-	 * error can be NULL to ignore errors, or non-NULL to report errors.
-	 * The error is set, if and only if the function returns NULL.
+	 * This function is the same as g_thread_new() except that
+	 * it allows for the possibility of failure.
+	 * If a thread can not be created (due to resource limits),
+	 * error is set and NULL is returned.
+	 * Since 2.32
 	 * Params:
-	 * func = a function to execute in the new thread.
-	 * data = an argument to supply to the new thread.
-	 * joinable = should this thread be joinable?
-	 * Returns: the new GThread on success.
+	 * name = a name for the new thread
+	 * func = a function to execute in the new thread
+	 * data = an argument to supply to the new thread
+	 * Returns: the new GThread, or NULL if an error occurred
 	 * Throws: GException on failure.
 	 */
-	public static Thread create(GThreadFunc func, void* data, int joinable)
+	public static Thread tryNew(string name, GThreadFunc func, void* data)
 	{
-		// GThread * g_thread_create (GThreadFunc func,  gpointer data,  gboolean joinable,  GError **error);
+		// GThread * g_thread_try_new (const gchar *name,  GThreadFunc func,  gpointer data,  GError **error);
 		GError* err = null;
 		
-		auto p = g_thread_create(func, data, joinable, &err);
+		auto p = g_thread_try_new(Str.toStringz(name), func, data, &err);
 		
 		if (err !is null)
 		{
@@ -261,55 +242,14 @@ public class Thread
 	}
 	
 	/**
-	 * This function creates a new thread with the priority priority. If
-	 * the underlying thread implementation supports it, the thread gets a
-	 * stack size of stack_size or the default value for the current
-	 * platform, if stack_size is 0.
-	 * If joinable is TRUE, you can wait for this threads termination
-	 * calling g_thread_join(). Otherwise the thread will just disappear
-	 * when it terminates. If bound is TRUE, this thread will be
-	 * scheduled in the system scope, otherwise the implementation is free
-	 * to do scheduling in the process scope. The first variant is more
-	 * expensive resource-wise, but generally faster. On some systems (e.g.
-	 * Linux) all threads are bound.
-	 * The new thread executes the function func with the argument data.
-	 * If the thread was created successfully, it is returned.
-	 * error can be NULL to ignore errors, or non-NULL to report errors.
-	 * The error is set, if and only if the function returns NULL.
-	 * Note
-	 * It is not guaranteed that threads with different priorities
-	 * really behave accordingly. On some systems (e.g. Linux) there are no
-	 * thread priorities. On other systems (e.g. Solaris) there doesn't
-	 * seem to be different scheduling for different priorities. All in all
-	 * try to avoid being dependent on priorities. Use
-	 * G_THREAD_PRIORITY_NORMAL here as a default.
-	 * Note
-	 * Only use g_thread_create_full() if you really can't use
-	 * g_thread_create() instead. g_thread_create() does not take
-	 * stack_size, bound, and priority as arguments, as they should only
-	 * be used in cases in which it is unavoidable.
-	 * Params:
-	 * func = a function to execute in the new thread.
-	 * data = an argument to supply to the new thread.
-	 * stackSize = a stack size for the new thread.
-	 * joinable = should this thread be joinable?
-	 * bound = should this thread be bound to a system thread?
-	 * priority = a priority for the thread.
-	 * Returns: the new GThread on success.
-	 * Throws: GException on failure.
+	 * Increase the reference count on thread.
+	 * Since 2.32
+	 * Returns: a new reference to thread
 	 */
-	public static Thread createFull(GThreadFunc func, void* data, gulong stackSize, int joinable, int bound, GThreadPriority priority)
+	public Thread doref()
 	{
-		// GThread * g_thread_create_full (GThreadFunc func,  gpointer data,  gulong stack_size,  gboolean joinable,  gboolean bound,  GThreadPriority priority,  GError **error);
-		GError* err = null;
-		
-		auto p = g_thread_create_full(func, data, stackSize, joinable, bound, priority, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
+		// GThread * g_thread_ref (GThread *thread);
+		auto p = g_thread_ref(gThread);
 		if(p is null)
 		{
 			return null;
@@ -318,9 +258,83 @@ public class Thread
 	}
 	
 	/**
-	 * This functions returns the GThread corresponding to the calling
-	 * thread.
-	 * Returns: the current thread.
+	 * Decrease the reference count on thread, possibly freeing all
+	 * resources associated with it.
+	 * Note that each thread holds a reference to its GThread while
+	 * it is running, so it is safe to drop your own reference to it
+	 * if you don't need it anymore.
+	 * Since 2.32
+	 */
+	public void unref()
+	{
+		// void g_thread_unref (GThread *thread);
+		g_thread_unref(gThread);
+	}
+	
+	/**
+	 * Waits until thread finishes, i.e. the function func, as
+	 * given to g_thread_new(), returns or g_thread_exit() is called.
+	 * If thread has already terminated, then g_thread_join()
+	 * returns immediately.
+	 * Any thread can wait for any other thread by calling g_thread_join(),
+	 * not just its 'creator'. Calling g_thread_join() from multiple threads
+	 * for the same thread leads to undefined behaviour.
+	 * The value returned by func or given to g_thread_exit() is
+	 * returned by this function.
+	 * g_thread_join() consumes the reference to the passed-in thread.
+	 * This will usually cause the GThread struct and associated resources
+	 * to be freed. Use g_thread_ref() to obtain an extra reference if you
+	 * want to keep the GThread alive beyond the g_thread_join() call.
+	 * Returns: the return value of the thread
+	 */
+	public void* join()
+	{
+		// gpointer g_thread_join (GThread *thread);
+		return g_thread_join(gThread);
+	}
+	
+	/**
+	 * Causes the calling thread to voluntarily relinquish the CPU, so
+	 * that other threads can run.
+	 * This function is often used as a method to make busy wait less evil.
+	 */
+	public static void yield()
+	{
+		// void g_thread_yield ();
+		g_thread_yield();
+	}
+	
+	/**
+	 * Terminates the current thread.
+	 * If another thread is waiting for us using g_thread_join() then the
+	 * waiting thread will be woken up and get retval as the return value
+	 * of g_thread_join().
+	 * Calling g_thread_exit (retval) is equivalent to
+	 * returning retval from the function func, as given to g_thread_new().
+	 * Note
+	 *  You must only call g_thread_exit() from a thread that you created
+	 *  yourself with g_thread_new() or related APIs. You must not call
+	 *  this function from a thread created with another threading library
+	 *  or or from within a GThreadPool.
+	 * Params:
+	 * retval = the return value of this thread
+	 */
+	public static void exit(void* retval)
+	{
+		// void g_thread_exit (gpointer retval);
+		g_thread_exit(retval);
+	}
+	
+	/**
+	 * This functions returns the GThread corresponding to the
+	 * current thread. Note that this function does not increase
+	 * the reference count of the returned struct.
+	 * This function will return a GThread even for threads that
+	 * were not created by GLib (i.e. those created by other threading
+	 * APIs). This may be useful for thread identification purposes
+	 * (i.e. comparisons) but you must not use GLib functions (such
+	 * as g_thread_join()) on these threads.
+	 * Returns: the GThread representing the current thread
 	 */
 	public static Thread self()
 	{
@@ -331,131 +345,6 @@ public class Thread
 			return null;
 		}
 		return new Thread(cast(GThread*) p);
-	}
-	
-	/**
-	 * Waits until thread finishes, i.e. the function func, as given to
-	 * g_thread_create(), returns or g_thread_exit() is called by thread.
-	 * All resources of thread including the GThread struct are released.
-	 * thread must have been created with joinable=TRUE in
-	 * g_thread_create(). The value returned by func or given to
-	 * g_thread_exit() by thread is returned by this function.
-	 * Returns: the return value of the thread.
-	 */
-	public void* join()
-	{
-		// gpointer g_thread_join (GThread *thread);
-		return g_thread_join(gThread);
-	}
-	
-	/**
-	 * Changes the priority of thread to priority.
-	 * Note
-	 * It is not guaranteed that threads with different
-	 * priorities really behave accordingly. On some systems (e.g. Linux)
-	 * there are no thread priorities. On other systems (e.g. Solaris) there
-	 * doesn't seem to be different scheduling for different priorities. All
-	 * in all try to avoid being dependent on priorities.
-	 * Params:
-	 * priority = a new priority for thread.
-	 */
-	public void setPriority(GThreadPriority priority)
-	{
-		// void g_thread_set_priority (GThread *thread,  GThreadPriority priority);
-		g_thread_set_priority(gThread, priority);
-	}
-	
-	/**
-	 * Gives way to other threads waiting to be scheduled.
-	 * This function is often used as a method to make busy wait less evil.
-	 * But in most cases you will encounter, there are better methods to do
-	 * that. So in general you shouldn't use this function.
-	 */
-	public static void yield()
-	{
-		// void g_thread_yield ();
-		g_thread_yield();
-	}
-	
-	/**
-	 * Exits the current thread. If another thread is waiting for that
-	 * thread using g_thread_join() and the current thread is joinable, the
-	 * waiting thread will be woken up and get retval as the return value
-	 * of g_thread_join(). If the current thread is not joinable, retval
-	 * is ignored. Calling
-	 * $(DDOC_COMMENT example)
-	 * is equivalent to returning retval from the function func, as given
-	 * to g_thread_create().
-	 * Note
-	 * Never call g_thread_exit() from within a thread of a
-	 * GThreadPool, as that will mess up the bookkeeping and lead to funny
-	 * and unwanted results.
-	 * Params:
-	 * retval = the return value of this thread.
-	 */
-	public static void exit(void* retval)
-	{
-		// void g_thread_exit (gpointer retval);
-		g_thread_exit(retval);
-	}
-	
-	/**
-	 * Call thread_func on all existing GThread structures. Note that
-	 * threads may decide to exit while thread_func is running, so
-	 * without intimate knowledge about the lifetime of foreign threads,
-	 * thread_func shouldn't access the GThread* pointer passed in as
-	 * first argument. However, thread_func will not be called for threads
-	 * which are known to have exited already.
-	 * Due to thread lifetime checks, this function has an execution complexity
-	 * which is quadratic in the number of existing threads.
-	 * Since 2.10
-	 * Params:
-	 * threadFunc = function to call for all GThread structures
-	 * userData = second argument to thread_func
-	 */
-	public static void foreac(GFunc threadFunc, void* userData)
-	{
-		// void g_thread_foreach (GFunc thread_func,  gpointer user_data);
-		g_thread_foreach(threadFunc, userData);
-	}
-	
-	/**
-	 * Function to be called when starting a critical initialization
-	 * section. The argument value_location must point to a static
-	 * 0-initialized variable that will be set to a value other than 0 at
-	 * the end of the initialization section. In combination with
-	 * g_once_init_leave() and the unique address value_location, it can
-	 * be ensured that an initialization section will be executed only once
-	 * during a program's life time, and that concurrent threads are
-	 * blocked until initialization completed. To be used in constructs
-	 * Since 2.14
-	 * Params:
-	 * valueLocation = location of a static initializable variable
-	 * containing 0.
-	 * Returns: TRUE if the initialization section should be entered, FALSE and blocks otherwise
-	 */
-	public static int onceInitEnter(out gsize valueLocation)
-	{
-		// gboolean g_once_init_enter (volatile gsize *value_location);
-		return g_once_init_enter(&valueLocation);
-	}
-	
-	/**
-	 * Counterpart to g_once_init_enter(). Expects a location of a static
-	 * 0-initialized initialization variable, and an initialization value
-	 * other than 0. Sets the variable to the initialization value, and
-	 * releases concurrent threads blocking in g_once_init_enter() on this
-	 * initialization variable.
-	 * Since 2.14
-	 * Params:
-	 * valueLocation = location of a static initializable variable
-	 * containing 0.
-	 * initializationValue = new non-0 value for *value_location.
-	 */
-	public static void onceInitLeave(out gsize valueLocation, gsize initializationValue)
-	{
-		// void g_once_init_leave (volatile gsize *value_location,  gsize initialization_value);
-		g_once_init_leave(&valueLocation, initializationValue);
 	}
 	
 	/**

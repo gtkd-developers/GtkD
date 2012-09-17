@@ -65,104 +65,18 @@ wrap: gthread
 
 file: glib-Threads.html
 
-struct: GMutex
-class: Mutex
-prefix: g_mutex_
-strictPrefix: Yes
-outFile: Mutex
-
-struct: GStaticMutex
-class: StaticMutex
-prefix: g_static_mutex_
-strictPrefix: Yes
-import: gthread.Mutex
-structWrap: GMutex* Mutex
-
-code: start
-	/**
-	 * Creates a new initialized StaticMutex.
-	 */
-	public this ()
-	{
-		this(new GStaticMutex);
-
-		init();
-	}
-code: end
-outFile: StaticMutex
-
-struct: GStaticRecMutex
-class: StaticRecMutex
-prefix: g_static_rec_mutex_
-strictPrefix: Yes
-
-code: start
-	/**
-	 * Creates a new initialized StaticRecMutex.
-	 */
-	public this ()
-	{
-		this(new GStaticRecMutex);
-
-		init();
-	}
-code: end
-outFile: StaticRecMutex
-
-struct: GStaticRWLock
-class: RWLock
-prefix: g_static_rw_lock_
-strictPrefix: Yes
-
-code: start
-	/**
-	 * Creates a new initialized RWLock.
-	 */
-	public this ()
-	{
-		this(new GStaticRWLock);
-
-		init();
-	}
-code: end
-outFile: RWLock
-
-struct: GCond
-class: Cond
-prefix: g_cond_
-strictPrefix: Yes
-import: gthread.Mutex
-structWrap: GMutex* Mutex
-import: glib.TimeVal
-structWrap: GTimeVal* TimeVal
-outFile: Cond
-
-struct: GPrivate
-class: Private
-prefix: g_private_
-strictPrefix: Yes
-outFile: Private
-
-struct: GStaticPrivate
-class: StaticPrivate
-prefix: g_static_private_
-strictPrefix: Yes
-outFile: StaticPrivate
-
 struct: GThread
 class: Thread
 prefix: g_thread_
 prefix: g_
 noprefix: g_mutex_
-noprefix: g_static_mutex_
-noprefix: g_static_rec_mutex_
-noprefix: g_static_rw_lock_
+noprefix: g_rec_mutex_
+noprefix: g_rw_lock_
 noprefix: g_cond_
 noprefix: g_private_
-noprefix: g_static_private_
+noprefix: g_once_
 structWrap: GThread* Thread
-#import: glib.ThreadFunctions
-#structWrap: GThreadFunctions* ThreadFunctions
+import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 
@@ -172,4 +86,44 @@ inout: g_bit_lock address
 inout: g_bit_trylock address
 inout: g_bit_unlock address
 outFile: Thread
+
+struct: GMutex
+class: Mutex
+prefix: g_mutex_
+strictPrefix: Yes
+outFile: Mutex
+
+struct: GRecMutex
+class: RecMutex
+prefix: g_rec_mutex_
+strictPrefix: Yes
+outFile: RecMutex
+
+struct: GRWLock
+class: RWLock
+prefix: g_rw_lock_
+strictPrefix: Yes
+outFile: RWLock
+
+struct: GCond
+class: Cond
+prefix: g_cond_
+strictPrefix: Yes
+import: gthread.Mutex
+import: glib.TimeVal
+structWrap: GMutex* Mutex
+structWrap: GTimeVal* TimeVal
+outFile: Cond
+
+struct: GPrivate
+class: Private
+prefix: g_private_
+strictPrefix: Yes
+outFile: Private
+
+struct: GOnce
+class: Once
+prefix: g_once_
+strictPrefix: Yes
+outFile: Once
 

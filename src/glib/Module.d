@@ -67,12 +67,12 @@ private import glib.Str;
 /**
  * Description
  * These functions provide a portable way to dynamically load object files
- * (commonly known as 'plug-ins').
- * The current implementation supports all systems that provide
- * an implementation of dlopen() (e.g. Linux/Sun), as well as HP-UX via its
- * shl_load() mechanism, and Windows platforms via DLLs.
+ * (commonly known as 'plug-ins'). The current implementation supports all
+ * systems that provide an implementation of dlopen() (e.g. Linux/Sun), as
+ * well as HP-UX via its shl_load() mechanism, and Windows platforms via DLLs.
  * A program which wants to use these functions must be linked to the
- * libraries output by the command pkg-config --libs gmodule-2.0.
+ * libraries output by the command
+ * pkg-config --libs gmodule-2.0.
  * To use them you must first determine whether dynamic loading
  * is supported on the platform by calling g_module_supported().
  * If it is, you can open a module with g_module_open(),
@@ -85,7 +85,8 @@ private import glib.Str;
  * and supports hook functions within a module which are called when the
  * module is loaded and unloaded (see GModuleCheckInit and GModuleUnload).
  * If your module introduces static data to common subsystems in the running
- * program, e.g. through calling g_quark_from_static_string ("my-module-stuff"),
+ * program, e.g. through calling
+ * g_quark_from_static_string ("my-module-stuff"),
  * it must ensure that it is never unloaded, by calling g_module_make_resident().
  * $(DDOC_COMMENT example)
  */
@@ -125,37 +126,8 @@ public class Module
 	 */
 	
 	/**
-	 * Opens a module. If the module has already been opened, its reference
-	 * count is incremented.
-	 * First of all g_module_open() tries to open file_name as a module. If
-	 * that fails and file_name has the ".la"-suffix (and is a libtool archive)
-	 * it tries to open the corresponding module. If that fails and it doesn't
-	 * have the proper module suffix for the platform (G_MODULE_SUFFIX), this
-	 * suffix will be appended and the corresponding module will be opended. If
-	 * that fails and file_name doesn't have the ".la"-suffix, this suffix is
-	 * appended and g_module_open() tries to open the corresponding module. If
-	 * eventually that fails as well, NULL is returned.
-	 * Params:
-	 * fileName = the name of the file containing the module, or NULL to obtain
-	 * a GModule representing the main program itself.
-	 * flags = the flags used for opening the module.
-	 * This can be the logical OR of any of the GModuleFlags.
-	 * Returns: a GModule on success, or NULL on failure.
-	 */
-	public static Module open(string fileName, GModuleFlags flags)
-	{
-		// GModule* g_module_open (const gchar *file_name, GModuleFlags flags);
-		auto p = g_module_open(Str.toStringz(fileName), flags);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Module(cast(GModule*) p);
-	}
-	
-	/**
 	 * Checks if modules are supported on the current platform.
-	 * Returns: TRUE if modules are supported.
+	 * Returns: TRUE if modules are supported
 	 */
 	public static int supported()
 	{
@@ -165,23 +137,23 @@ public class Module
 	
 	/**
 	 * A portable way to build the filename of a module. The platform-specific
-	 * prefix and suffix are added to the filename, if needed, and the result is
-	 * added to the directory, using the correct separator character.
+	 * prefix and suffix are added to the filename, if needed, and the result
+	 * is added to the directory, using the correct separator character.
 	 * The directory should specify the directory where the module can be found.
-	 * It can be NULL or an empty string to indicate that the module is in a standard
-	 * platform-specific directory, though this is not recommended since the
-	 * wrong module may be found.
-	 * For example, calling g_module_build_path() on a Linux system with a directory
-	 * of /lib and a module_name of "mylibrary" will return
-	 * /lib/libmylibrary.so. On a Windows system, using
-	 * \Windows as the directory it will return
+	 * It can be NULL or an empty string to indicate that the module is in a
+	 * standard platform-specific directory, though this is not recommended
+	 * since the wrong module may be found.
+	 * For example, calling g_module_build_path() on a Linux system with a
+	 * directory of /lib and a module_name of "mylibrary"
+	 * will return /lib/libmylibrary.so. On a Windows system,
+	 * using \Windows as the directory it will return
 	 * \Windows\mylibrary.dll.
 	 * Params:
-	 * directory = the directory where the module is. This can be NULL or the empty
-	 * string to indicate that the standard platform-specific directories will be
-	 * used, though that is not recommended.
-	 * moduleName = the name of the module.
-	 * Returns: the complete path of the module, including the standard library prefix and suffix. This should be freed when no longer needed.
+	 * directory = the directory where the module is. This can be NULL
+	 * or the empty string to indicate that the standard platform-specific
+	 * directories will be used, though that is not recommended
+	 * moduleName = the name of the module
+	 * Returns: the complete path of the module, including the standard library prefix and suffix. This should be freed when no longer needed
 	 */
 	public static string buildPath(string directory, string moduleName)
 	{
@@ -190,17 +162,58 @@ public class Module
 	}
 	
 	/**
-	 * Gets a symbol pointer from a module, such as one exported by G_MODULE_EXPORT.
-	 * Note that a valid symbol can be NULL.
+	 * Opens a module. If the module has already been opened,
+	 * its reference count is incremented.
+	 * First of all g_module_open() tries to open file_name as a module.
+	 * If that fails and file_name has the ".la"-suffix (and is a libtool
+	 * archive) it tries to open the corresponding module. If that fails
+	 * and it doesn't have the proper module suffix for the platform
+	 * (G_MODULE_SUFFIX), this suffix will be appended and the corresponding
+	 * module will be opended. If that fails and file_name doesn't have the
+	 * ".la"-suffix, this suffix is appended and g_module_open() tries to open
+	 * the corresponding module. If eventually that fails as well, NULL is
+	 * returned.
 	 * Params:
-	 * symbolName = the name of the symbol to find.
-	 * symbol = returns the pointer to the symbol value.
-	 * Returns: TRUE on success.
+	 * fileName = the name of the file containing the module, or NULL
+	 * to obtain a GModule representing the main program itself. [allow-none]
+	 * flags = the flags used for opening the module. This can be the
+	 * logical OR of any of the GModuleFlags
+	 * Returns: a GModule on success, or NULL on failure
+	 */
+	public static Module open(string fileName, GModuleFlags flags)
+	{
+		// GModule * g_module_open (const gchar *file_name,  GModuleFlags flags);
+		auto p = g_module_open(Str.toStringz(fileName), flags);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Module(cast(GModule*) p);
+	}
+	
+	/**
+	 * Gets a symbol pointer from a module, such as one exported
+	 * by G_MODULE_EXPORT. Note that a valid symbol can be NULL.
+	 * Params:
+	 * symbolName = the name of the symbol to find
+	 * symbol = returns the pointer to the symbol value
+	 * Returns: TRUE on success
 	 */
 	public int symbol(string symbolName, void** symbol)
 	{
 		// gboolean g_module_symbol (GModule *module,  const gchar *symbol_name,  gpointer *symbol);
 		return g_module_symbol(gModule, Str.toStringz(symbolName), symbol);
+	}
+	
+	/**
+	 * Returns the filename that the module was opened with.
+	 * If module refers to the application itself, "main" is returned.
+	 * Returns: the filename of the module. [transfer none]
+	 */
+	public string name()
+	{
+		// const gchar * g_module_name (GModule *module);
+		return Str.toString(g_module_name(gModule));
 	}
 	
 	/**
@@ -215,7 +228,7 @@ public class Module
 	
 	/**
 	 * Closes a module.
-	 * Returns: TRUE on success.
+	 * Returns: TRUE on success
 	 */
 	public int close()
 	{
@@ -225,7 +238,7 @@ public class Module
 	
 	/**
 	 * Gets a string describing the last module error.
-	 * Returns: a string describing the last module error.
+	 * Returns: a string describing the last module error
 	 */
 	public static string error()
 	{

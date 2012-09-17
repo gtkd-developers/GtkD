@@ -47,7 +47,10 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.Str
+ * 	- gtkc.paths;
+ * 	- gtkc.Loader;
  * structWrap:
+ * 	- GKeyFile* -> KeyFile
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,6 +67,8 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import gtkc.paths;;
+private import gtkc.Loader;;
 
 
 
@@ -89,27 +94,31 @@ private import glib.Str;
  * the end of the file. Each key-value pair must be contained in a group.
  * Key-value pairs generally have the form key=value,
  * with the exception of localized strings, which have the form
- * key[locale]=value, with a locale identifier of the form
- * lang_COUNTRYMODIFIER where COUNTRY and
- * MODIFIER are optional. Space before and after the
- * '=' character are ignored. Newline, tab, carriage return and backslash
- * characters in value are escaped as \n, \t, \r, and \\, respectively.
- * To preserve leading spaces in values, these can also be escaped as \s.
+ * key[locale]=value, with a locale identifier of the
+ * form lang_COUNTRYMODIFIER where
+ * COUNTRY and MODIFIER are optional.
+ * Space before and after the '=' character are ignored. Newline, tab,
+ * carriage return and backslash characters in value are escaped as \n,
+ * \t, \r, and \\, respectively. To preserve leading spaces in values,
+ * these can also be escaped as \s.
  * Key files can store strings (possibly with localized variants), integers,
  * booleans and lists of these. Lists are separated by a separator character,
  * typically ';' or ','. To use the list separator character in a value in
  * a list, it has to be escaped by prefixing it with a backslash.
- * This syntax is obviously inspired by the .ini
- * files commonly met on Windows, but there are some important differences:
+ * This syntax is obviously inspired by the .ini files commonly met
+ * on Windows, but there are some important differences:
  * .ini files use the ';' character to begin comments,
  *  key files use the '#' character.
- * Key files do not allow for ungrouped keys meaning only comments can precede the first group.
+ * Key files do not allow for ungrouped keys meaning only
+ *  comments can precede the first group.
  * Key files are always encoded in UTF-8.
- * Key and Group names are case-sensitive, for example a group called
- * [GROUP] is a different group from [group].
- * .ini files don't have a strongly typed boolean entry type, they only
- * have GetProfileInt. In GKeyFile only
- * true and false (in lower case) are allowed.
+ * Key and Group names are case-sensitive. For example, a
+ *  group called [GROUP] is a different from
+ *  [group].
+ * .ini files don't have a strongly typed boolean entry type,
+ *  they only have GetProfileInt(). In key files, only
+ *  true and false (in lower case)
+ *  are allowed.
  * Note that in contrast to the
  * Desktop
  * Entry Specification, groups in key files may contain the same
@@ -148,6 +157,14 @@ public class KeyFile
 			return;
 		}
 		this.gKeyFile = gKeyFile;
+	}
+	
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gKeyFile !is null )
+		{
+			g_key_file_unref(gKeyFile);
+		}
 	}
 	
 	/**
@@ -206,13 +223,42 @@ public class KeyFile
 	}
 	
 	/**
-	 * Frees a GKeyFile.
+	 * Clears all keys and groups from key_file, and decreases the
+	 * reference count by 1. If the reference count reaches zero,
+	 * frees the key file and all its allocated memory.
 	 * Since 2.6
 	 */
 	public void free()
 	{
 		// void g_key_file_free (GKeyFile *key_file);
 		g_key_file_free(gKeyFile);
+	}
+	
+	/**
+	 * Increases the reference count of key_file.
+	 * Since 2.32
+	 * Returns: the same key_file.
+	 */
+	public KeyFile doref()
+	{
+		// GKeyFile * g_key_file_ref (GKeyFile *key_file);
+		auto p = g_key_file_ref(gKeyFile);
+		if(p is null)
+		{
+			return null;
+		}
+		return new KeyFile(cast(GKeyFile*) p);
+	}
+	
+	/**
+	 * Decreases the reference count of key_file by 1. If the reference count
+	 * reaches zero, frees the key file and all its allocated memory.
+	 * Since 2.32
+	 */
+	public void unref()
+	{
+		// void g_key_file_unref (GKeyFile *key_file);
+		g_key_file_unref(gKeyFile);
 	}
 	
 	/**
@@ -235,7 +281,7 @@ public class KeyFile
 	 * either a GFileError or GKeyFileError.
 	 * Since 2.6
 	 * Params:
-	 * file = the path of a filename to load, in the GLib filename encoding
+	 * file = the path of a filename to load, in the GLib filename encoding. [type filename]
 	 * flags = flags from GKeyFileFlags
 	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 * Throws: GException on failure.
@@ -260,8 +306,8 @@ public class KeyFile
 	 * If the object cannot be created then error is set to a GKeyFileError.
 	 * Since 2.6
 	 * Params:
-	 * data = key file loaded in memory
-	 * length = the length of data in bytes
+	 * data = key file loaded in memory. [length length]
+	 * length = the length of data in bytes (or -1 if data is nul-terminated)
 	 * flags = flags from GKeyFileFlags
 	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 * Throws: GException on failure.
@@ -289,9 +335,9 @@ public class KeyFile
 	 * set to either a GFileError or GKeyFileError.
 	 * Since 2.6
 	 * Params:
-	 * file = a relative path to a filename to open and parse
+	 * file = a relative path to a filename to open and parse. [type filename]
 	 * fullPath = return location for a string containing the full path
-	 * of the file, or NULL
+	 * of the file, or NULL. [out][type filename][allow-none]
 	 * flags = flags from GKeyFileFlags
 	 * Returns: TRUE if a key file could be loaded, FALSE othewise
 	 * Throws: GException on failure.
@@ -320,7 +366,7 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * length = return location for the length of the
-	 * returned string, or NULL
+	 * returned string, or NULL. [out][allow-none]
 	 * Returns: a newly allocated string holding the contents of the GKeyFile
 	 * Throws: GException on failure.
 	 */
@@ -356,8 +402,8 @@ public class KeyFile
 	 * length may optionally be NULL.
 	 * Since 2.6
 	 * Params:
-	 * length = return location for the number of returned groups, or NULL
-	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
+	 * length = return location for the number of returned groups, or NULL. [out][allow-none]
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it. [array zero-terminated=1][transfer full]
 	 */
 	public string[] getGroups(out gsize length)
 	{
@@ -374,8 +420,8 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * groupName = a group name
-	 * length = return location for the number of keys returned, or NULL
-	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it.
+	 * length = return location for the number of keys returned, or NULL. [out][allow-none]
+	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it. [array zero-terminated=1][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public string[] getKeys(string groupName, out gsize length)
@@ -677,7 +723,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * length = return location for the number of returned strings, or NULL
+	 * length = return location for the number of returned strings, or NULL. [out][allow-none]
 	 * Returns: a NULL-terminated string array or NULL if the specified key cannot be found. The array should be freed with g_strfreev(). [array zero-terminated=1 length=length][element-type utf8][transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -711,7 +757,7 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * locale = a locale identifier or NULL. [allow-none]
-	 * length = return location for the number of returned strings or NULL. [out]
+	 * length = return location for the number of returned strings or NULL. [out][allow-none]
 	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev(). [array zero-terminated=1 length=length][element-type utf8][transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -827,7 +873,7 @@ public class KeyFile
 	 * comment will be read from above the first group in the file.
 	 * Since 2.6
 	 * Params:
-	 * groupName = a group name, or NULL
+	 * groupName = a group name, or NULL. [allow-none]
 	 * key = a key
 	 * Returns: a comment that should be freed with g_free()
 	 * Throws: GException on failure.
@@ -999,7 +1045,7 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * locale = a locale identifier
-	 * list = a NULL-terminated array of locale string values
+	 * list = a NULL-terminated array of locale string values. [array zero-terminated=1 length=length]
 	 */
 	public void setLocaleStringList(string groupName, string key, string locale, string[] list)
 	{
@@ -1015,7 +1061,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * list = an array of boolean values
+	 * list = an array of boolean values. [array length=length]
 	 */
 	public void setBooleanList(string groupName, string key, int[] list)
 	{
@@ -1030,7 +1076,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * list = an array of integer values
+	 * list = an array of integer values. [array length=length]
 	 */
 	public void setIntegerList(string groupName, string key, int[] list)
 	{
@@ -1045,7 +1091,7 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * list = an array of double values
+	 * list = an array of double values. [array length=length]
 	 */
 	public void setDoubleList(string groupName, string key, double[] list)
 	{
@@ -1060,8 +1106,8 @@ public class KeyFile
 	 * written above the first group in the file.
 	 * Since 2.6
 	 * Params:
-	 * groupName = a group name, or NULL
-	 * key = a key
+	 * groupName = a group name, or NULL. [allow-none]
+	 * key = a key. [allow-none]
 	 * comment = a comment
 	 * Returns: TRUE if the comment was written, FALSE otherwise
 	 * Throws: GException on failure.
@@ -1136,8 +1182,8 @@ public class KeyFile
 	 * be removed above the first group in the file.
 	 * Since 2.6
 	 * Params:
-	 * groupName = a group name, or NULL
-	 * key = a key
+	 * groupName = a group name, or NULL. [allow-none]
+	 * key = a key. [allow-none]
 	 * Returns: TRUE if the comment was removed, FALSE otherwise
 	 * Throws: GException on failure.
 	 */

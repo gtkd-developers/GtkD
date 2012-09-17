@@ -70,8 +70,9 @@ private import glib.ConstructionException;
  * To insert a node into a tree use g_node_insert(),
  * g_node_insert_before(), g_node_append() and g_node_prepend().
  * To create a new node and insert it into a tree use
- * g_node_insert_data(), g_node_insert_data_before(),
- * g_node_append_data() and g_node_prepend_data().
+ * g_node_insert_data(), g_node_insert_data_after(),
+ * g_node_insert_data_before(), g_node_append_data()
+ * and g_node_prepend_data().
  * To reverse the children of a node use g_node_reverse_children().
  * To find a node use g_node_get_root(), g_node_find(),
  * g_node_find_child(), g_node_child_index(), g_node_child_position(),
@@ -523,39 +524,5 @@ public class Node
 	{
 		// void g_node_destroy (GNode *root);
 		g_node_destroy(gNode);
-	}
-	
-	/**
-	 * Warning
-	 * g_node_push_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GNode has been converted to
-	 *  the slice
-	 *  allocator
-	 * Sets the allocator to use to allocate GNode elements. Use
-	 * g_node_pop_allocator() to restore the previous allocator.
-	 * Note that this function is not available if GLib has been compiled
-	 * with --disable-mem-pools
-	 * Params:
-	 * dummy = the GAllocator to use when allocating GNode elements.
-	 */
-	public static void pushAllocator(void* dummy)
-	{
-		// void g_node_push_allocator (gpointer dummy);
-		g_node_push_allocator(dummy);
-	}
-	
-	/**
-	 * Warning
-	 * g_node_pop_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GNode has been converted to
-	 *  the slice
-	 *  allocator
-	 * Restores the previous GAllocator, used when allocating GNode
-	 * elements.
-	 * Note that this function is not available if GLib has been compiled
-	 * with --disable-mem-pools
-	 */
-	public static void popAllocator()
-	{
-		// void g_node_pop_allocator (void);
-		g_node_pop_allocator();
 	}
 }

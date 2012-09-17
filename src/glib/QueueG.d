@@ -135,11 +135,28 @@ public class QueueG
 	 * Frees the memory allocated for the GQueue. Only call this function if
 	 * queue was created with g_queue_new(). If queue elements contain
 	 * dynamically-allocated memory, they should be freed first.
+	 * Note
+	 * If queue elements contain dynamically-allocated memory,
+	 * you should either use g_queue_free_full() or free them manually
+	 * first.
 	 */
 	public void free()
 	{
 		// void g_queue_free (GQueue *queue);
 		g_queue_free(gQueue);
+	}
+	
+	/**
+	 * Convenience method, which frees all the memory used by a GQueue, and
+	 * calls the specified destroy function on every element's data.
+	 * Since 2.32
+	 * Params:
+	 * freeFunc = the function to be called to free each element's data
+	 */
+	public void freeFull(GDestroyNotify freeFunc)
+	{
+		// void g_queue_free_full (GQueue *queue,  GDestroyNotify free_func);
+		g_queue_free_full(gQueue, freeFunc);
 	}
 	
 	/**

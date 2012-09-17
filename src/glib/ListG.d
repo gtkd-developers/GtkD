@@ -438,7 +438,8 @@ public class ListG
 	}
 	
 	/**
-	 * Sorts a GList using the given comparison function.
+	 * Sorts a GList using the given comparison function. The algorithm
+	 * used is a stable sort.
 	 * Params:
 	 * compareFunc = the comparison function used to sort the GList.
 	 * This function is passed the data from 2 elements of the GList
@@ -673,39 +674,5 @@ public class ListG
 	{
 		// gint g_list_index (GList *list,  gconstpointer data);
 		return g_list_index(gList, data);
-	}
-	
-	/**
-	 * Warning
-	 * g_list_push_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GList has been converted
-	 *  to the slice
-	 *  allocator
-	 * Sets the allocator to use to allocate GList elements. Use
-	 * g_list_pop_allocator() to restore the previous allocator.
-	 * Note that this function is not available if GLib has been compiled
-	 * with --disable-mem-pools
-	 * Params:
-	 * allocator = the GAllocator to use when allocating GList elements.
-	 */
-	public static void pushAllocator(void* allocator)
-	{
-		// void g_list_push_allocator (gpointer allocator);
-		g_list_push_allocator(allocator);
-	}
-	
-	/**
-	 * Warning
-	 * g_list_pop_allocator has been deprecated since version 2.10 and should not be used in newly-written code. It does nothing, since GList has been converted
-	 *  to the slice
-	 *  allocator
-	 * Restores the previous GAllocator, used when allocating GList
-	 * elements.
-	 * Note that this function is not available if GLib has been compiled
-	 * with --disable-mem-pools
-	 */
-	public static void popAllocator()
-	{
-		// void g_list_pop_allocator (void);
-		g_list_pop_allocator();
 	}
 }

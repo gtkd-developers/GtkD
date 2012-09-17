@@ -241,7 +241,7 @@ public class OptionContext
 	 * Since 2.12
 	 * Params:
 	 * summary = a string to be shown in --help output
-	 * before the list of options, or NULL
+	 * before the list of options, or NULL. [allow-none]
 	 */
 	public void setSummary(string summary)
 	{
@@ -269,7 +269,7 @@ public class OptionContext
 	 * Since 2.12
 	 * Params:
 	 * description = a string to be shown in --help output
-	 * after the list of options, or NULL
+	 * after the list of options, or NULL. [allow-none]
 	 */
 	public void setDescription(string description)
 	{
@@ -300,9 +300,9 @@ public class OptionContext
 	 * domain, see g_option_context_set_translation_domain().
 	 * Since 2.12
 	 * Params:
-	 * func = the GTranslateFunc, or NULL
-	 * data = user data to pass to func, or NULL
-	 * destroyNotify = a function which gets called to free data, or NULL
+	 * func = the GTranslateFunc, or NULL. [allow-none]
+	 * data = user data to pass to func, or NULL. [allow-none]
+	 * destroyNotify = a function which gets called to free data, or NULL. [allow-none]
 	 */
 	public void setTranslateFunc(GTranslateFunc func, void* data, GDestroyNotify destroyNotify)
 	{
@@ -406,7 +406,7 @@ public class OptionContext
 	 * Since 2.14
 	 * Params:
 	 * mainHelp = if TRUE, only include the main group
-	 * group = the GOptionGroup to create help for, or NULL
+	 * group = the GOptionGroup to create help for, or NULL. [allow-none]
 	 * Returns: A newly allocated string containing the help text
 	 */
 	public string getHelp(int mainHelp, OptionGroup group)
@@ -423,7 +423,7 @@ public class OptionContext
 	 * entries = a NULL-terminated array of GOptionEntrys
 	 * translationDomain = a translation domain to use for translating
 	 * the --help output for the options in entries
-	 * with gettext(), or NULL
+	 * with gettext(), or NULL. [allow-none]
 	 */
 	public void addMainEntries(GOptionEntry* entries, string translationDomain)
 	{

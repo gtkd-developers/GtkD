@@ -428,12 +428,13 @@ public class Unicode
 	/**
 	 * Performs a single composition step of the
 	 * Unicode canonical composition algorithm.
-	 * This function does not perform algorithmic composition
-	 * for Hangul characters, and does not include compatibility
-	 * compositions. It does, however, include 'singleton'
-	 * compositions which replace a character by a single
-	 * other character. To obtain these, pass zero for b.
-	 * This function includes algorithmic Hangul Jamo composition.
+	 * This function includes algorithmic Hangul Jamo composition,
+	 * but it is not exactly the inverse of g_unichar_decompose().
+	 * No composition can have either of a or b equal to zero.
+	 * To be precise, this function composes if and only if
+	 * there exists a Primary Composite P which is canonically
+	 * equivalent to the sequence <a,b>. See the Unicode
+	 * Standard for the definition of Primary Composite.
 	 * If a and b do not compose a new character, ch is set to zero.
 	 * See UAX#15
 	 * for details.
@@ -495,14 +496,15 @@ public class Unicode
 	 * this may change in the future (very unlikely though).
 	 * At any rate, Unicode does guarantee that a buffer of length
 	 * 18 is always enough for both compatibility and canonical
-	 * decompositions.
+	 * decompositions, so that is the size recommended. This is provided
+	 * as G_UNICHAR_MAX_DECOMPOSITION_LENGTH.
 	 * See UAX#15
 	 * for details.
 	 * Since 2.30
 	 * Params:
 	 * ch = a Unicode character.
 	 * compat = whether perform canonical or compatibility decomposition
-	 * result = location to store decomposed result, or NULL
+	 * result = location to store decomposed result, or NULL. [allow-none]
 	 * Returns: the length of the full decomposition.
 	 */
 	public static gsize unicharFullyDecompose(gunichar ch, int compat, gunichar[] result)
@@ -787,13 +789,15 @@ public class Unicode
 	
 	/**
 	 * Computes the length of the string in characters, not including
-	 * the terminating nul character.
+	 * the terminating nul character. If the max'th byte falls in the
+	 * middle of a character, the last (partial) character is not counted.
 	 * Params:
 	 * p = pointer to the start of a UTF-8 encoded string
 	 * max = the maximum number of bytes to examine. If max
 	 * is less than 0, then the string is assumed to be
 	 * nul-terminated. If max is 0, p will not be examined and
-	 * may be NULL.
+	 * may be NULL. If max is greater than 0, up to max
+	 * bytes are examined
 	 * Returns: the length of the string in characters
 	 */
 	public static glong utf8_Strlen(string p, gssize max)
@@ -903,15 +907,15 @@ public class Unicode
 	 * character if some bytes were invalid, or the end of the text
 	 * being validated otherwise).
 	 * Note that g_utf8_validate() returns FALSE if max_len is
-	 * positive and NUL is met before max_len bytes have been read.
+	 * positive and any of the max_len bytes are NUL.
 	 * Returns TRUE if all of str was valid. Many GLib and GTK+
 	 * routines require valid UTF-8 as input;
 	 * so data read from a file or the network should be checked
 	 * with g_utf8_validate() before doing anything else with it.
 	 * Params:
-	 * str = a pointer to character data
+	 * str = a pointer to character data. [array length=max_len][element-type guint8]
 	 * maxLen = max bytes to validate, or -1 to go until NUL
-	 * end = return location for end of valid data. [allow-none][out]
+	 * end = return location for end of valid data. [allow-none][out][transfer none]
 	 * Returns: TRUE if the text was valid UTF-8
 	 */
 	public static int utf8_Validate(string str, gssize maxLen, out string end)
@@ -1088,10 +1092,10 @@ public class Unicode
 	 * If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
 	 * returned in case str contains a trailing partial
 	 * character. If an error occurs then the index of the
-	 * invalid input is stored here.
+	 * invalid input is stored here. [allow-none]
 	 * itemsWritten = location to store number of gunichar2 written,
 	 * or NULL.
-	 * The value stored here does not include the trailing 0.
+	 * The value stored here does not include the trailing 0. [allow-none]
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -1122,10 +1126,10 @@ public class Unicode
 	 * If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
 	 * returned in case str contains a trailing partial
 	 * character. If an error occurs then the index of the
-	 * invalid input is stored here.
+	 * invalid input is stored here. [allow-none]
 	 * itemsWritten = location to store number of characters written or NULL.
 	 * The value here stored does not include the trailing 0
-	 * character.
+	 * character. [allow-none]
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -1155,7 +1159,7 @@ public class Unicode
 	 * len = the maximum length of str to use, in bytes. If len < 0,
 	 * then the string is nul-terminated.
 	 * itemsWritten = location to store the number of characters in the
-	 * result, or NULL.
+	 * result, or NULL. [allow-none]
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free().
 	 */
 	public static gunichar* utf8_ToUcs4_Fast(string str, glong len, out glong itemsWritten)
@@ -1175,10 +1179,10 @@ public class Unicode
 	 * If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
 	 * returned in case str contains a trailing partial
 	 * character. If an error occurs then the index of the
-	 * invalid input is stored here.
+	 * invalid input is stored here. [allow-none]
 	 * itemsWritten = location to store number of characters written, or NULL.
 	 * The value stored here does not include the trailing
-	 * 0 character.
+	 * 0 character. [allow-none]
 	 * Returns: a pointer to a newly allocated UCS-4 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -1217,10 +1221,10 @@ public class Unicode
 	 * If NULL, then G_CONVERT_ERROR_PARTIAL_INPUT will be
 	 * returned in case str contains a trailing partial
 	 * character. If an error occurs then the index of the
-	 * invalid input is stored here.
+	 * invalid input is stored here. [allow-none]
 	 * itemsWritten = location to store number of bytes written, or NULL.
 	 * The value stored here does not include the trailing
-	 * 0 byte.
+	 * 0 byte. [allow-none]
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -1248,10 +1252,10 @@ public class Unicode
 	 * If len < 0, then the string is nul-terminated.
 	 * itemsRead = location to store number of bytes read, or NULL.
 	 * If an error occurs then the index of the invalid input
-	 * is stored here.
+	 * is stored here. [allow-none]
 	 * itemsWritten = location to store number of gunichar2
 	 * written, or NULL. The value stored here does not
-	 * include the trailing 0.
+	 * include the trailing 0. [allow-none]
 	 * Returns: a pointer to a newly allocated UTF-16 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set.
 	 * Throws: GException on failure.
 	 */
@@ -1277,10 +1281,10 @@ public class Unicode
 	 * str = a UCS-4 encoded string
 	 * len = the maximum length (number of characters) of str to use.
 	 * If len < 0, then the string is nul-terminated.
-	 * itemsRead = location to store number of characters read, or NULL.
+	 * itemsRead = location to store number of characters read, or NULL. [allow-none]
 	 * itemsWritten = location to store number of bytes written or NULL.
 	 * The value here stored does not include the trailing 0
-	 * byte.
+	 * byte. [allow-none]
 	 * Returns: a pointer to a newly allocated UTF-8 string. This value must be freed with g_free(). If an error occurs, NULL will be returned and error set. In that case, items_read will be set to the position of the first invalid input character.
 	 * Throws: GException on failure.
 	 */

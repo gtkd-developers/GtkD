@@ -125,6 +125,9 @@ private import glib.Source;
  * The operation of these functions can best be seen in terms
  * of a state diagram, as shown in Figure 1, “States of a Main Context”.
  * Figure 1. States of a Main Context
+ * On Unix, the GLib mainloop is incompatible with fork(). Any program
+ * using the mainloop must either exec() or exit() from the child
+ * without returning to the mainloop.
  */
 public class Idle
 {
@@ -299,7 +302,7 @@ public class Idle
 	 * priority = the priority of the idle source. Typically this will be in the
 	 * range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
 	 * data = data to pass to function
-	 * notify = function to call when the idle is removed, or NULL
+	 * notify = function to call when the idle is removed, or NULL. [allow-none]
 	 * Returns: the ID (greater than 0) of the event source. Rename to: g_idle_add
 	 */
 	public static uint addFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)

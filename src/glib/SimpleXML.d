@@ -84,7 +84,7 @@ private import glib.Str;
  * time if the need arises.
  * GMarkup is not guaranteed to signal an error on all invalid XML;
  * the parser may accept documents that an XML parser would not.
- * However, XML documents which are not well-formed[5]
+ * However, XML documents which are not well-formed[6]
  * are not considered valid GMarkup documents.
  * Simplifications to XML include:
  * Only UTF-8 encoding is allowed

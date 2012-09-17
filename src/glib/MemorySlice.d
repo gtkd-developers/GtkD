@@ -65,11 +65,11 @@ private import glib.ConstructionException;
  * Description
  * Memory slices provide a space-efficient and multi-processing scalable
  * way to allocate equal-sized pieces of memory, just like the original
- * GMemChunks (from GLib <= 2.8), while avoiding their excessive
+ * GMemChunks (from GLib 2.8), while avoiding their excessive
  * memory-waste, scalability and performance problems.
  * To achieve these goals, the slice allocator uses a sophisticated,
  * layered design that has been inspired by Bonwick's slab allocator
- * [6].
+ * [1].
  * It uses posix_memalign() to optimize allocations of many equally-sized
  * chunks, and has per-thread free lists (the so-called magazine layer)
  * to quickly satisfy allocation requests of already known structure sizes.
@@ -117,10 +117,10 @@ public class MemorySlice
 	}
 	
 	/**
-	 * Allocates a block of memory via g_slice_alloc()
-	 * and initialize the returned memory to 0.
-	 * Note that the underlying slice allocation mechanism can
-	 * be changed with the G_SLICE=always-malloc
+	 * Allocates a block of memory via g_slice_alloc() and initializes
+	 * the returned memory to 0. Note that the underlying slice allocation
+	 * mechanism can be changed with the
+	 * G_SLICE=always-malloc
 	 * environment variable.
 	 * Since 2.10
 	 * Params:
@@ -134,8 +134,8 @@ public class MemorySlice
 	}
 	
 	/**
-	 * Allocates a block of memory from the slice allocator and copies
-	 * block_size bytes into it from mem_block.
+	 * Allocates a block of memory from the slice allocator
+	 * and copies block_size bytes into it from mem_block.
 	 * Since 2.14
 	 * Params:
 	 * blockSize = the number of bytes to allocate
@@ -149,12 +149,14 @@ public class MemorySlice
 	}
 	
 	/**
-	 * Frees a block of memory. The memory must have been allocated via
-	 * g_slice_alloc() or g_slice_alloc0()
-	 * and the block_size has to match the size specified upon allocation.
-	 * Note that the exact release behaviour can be changed with the
-	 * G_DEBUG=gc-friendly environment variable,
-	 * also see G_SLICE for related debugging options.
+	 * Frees a block of memory.
+	 * The memory must have been allocated via g_slice_alloc() or
+	 * g_slice_alloc0() and the block_size has to match the size
+	 * specified upon allocation. Note that the exact release behaviour
+	 * can be changed with the
+	 * G_DEBUG=gc-friendly environment
+	 * variable, also see G_SLICE for
+	 * related debugging options.
 	 * Since 2.10
 	 * Params:
 	 * blockSize = the size of the block
@@ -169,12 +171,13 @@ public class MemorySlice
 	/**
 	 * Frees a linked list of memory blocks of structure type type.
 	 * The memory blocks must be equal-sized, allocated via
-	 * g_slice_alloc() or g_slice_alloc0()
-	 * and linked together by a next pointer (similar to GSList). The offset
-	 * of the next field in each block is passed as third argument.
+	 * g_slice_alloc() or g_slice_alloc0() and linked together by a
+	 * next pointer (similar to GSList). The offset of the next
+	 * field in each block is passed as third argument.
 	 * Note that the exact release behaviour can be changed with the
-	 * G_DEBUG=gc-friendly environment variable,
-	 * also see G_SLICE for related debugging options.
+	 * G_DEBUG=gc-friendly environment
+	 * variable, also see G_SLICE for
+	 * related debugging options.
 	 * Since 2.10
 	 * Params:
 	 * blockSize = the size of the blocks

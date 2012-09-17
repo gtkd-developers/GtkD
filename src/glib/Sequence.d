@@ -140,7 +140,7 @@ public class Sequence
 	 * are removed from the sequence.
 	 * Since 2.14
 	 * Params:
-	 * dataDestroy = a GDestroyNotify function, or NULL
+	 * dataDestroy = a GDestroyNotify function, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDestroyNotify dataDestroy)
@@ -479,7 +479,7 @@ public class Sequence
 	/**
 	 * Removes the item pointed to by iter. It is an error to pass the
 	 * end iterator to this function.
-	 * If the sequnce has a data destroy function associated with it, this
+	 * If the sequence has a data destroy function associated with it, this
 	 * function is called on the data for the removed item.
 	 * Since 2.14
 	 * Params:
@@ -535,6 +535,12 @@ public class Sequence
 	 * the second item comes before the first.
 	 * If you are simply searching for an existing element of the sequence,
 	 * consider using g_sequence_lookup().
+	 * Note
+	 * This function will fail if the data contained in the sequence is
+	 * unsorted. Use g_sequence_insert_sorted() or
+	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
+	 * you want to add a large amount of data, call g_sequence_sort() after
+	 * doing unsorted insertions.
 	 * Since 2.14
 	 * Params:
 	 * data = data for the new item
@@ -562,6 +568,12 @@ public class Sequence
 	 * value if the second iterator comes before the first.
 	 * If you are simply searching for an existing element of the sequence,
 	 * consider using g_sequence_lookup_iter().
+	 * Note
+	 * This function will fail if the data contained in the sequence is
+	 * unsorted. Use g_sequence_insert_sorted() or
+	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
+	 * you want to add a large amount of data, call g_sequence_sort() after
+	 * doing unsorted insertions.
 	 * Since 2.14
 	 * Params:
 	 * data = data for the new item
@@ -590,6 +602,12 @@ public class Sequence
 	 * It should return 0 if the items are equal, a negative value if
 	 * the first item comes before the second, and a positive value if
 	 * the second item comes before the first.
+	 * Note
+	 * This function will fail if the data contained in the sequence is
+	 * unsorted. Use g_sequence_insert_sorted() or
+	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
+	 * you want to add a large amount of data, call g_sequence_sort() after
+	 * doing unsorted insertions.
 	 * Since 2.28
 	 * Params:
 	 * data = data to lookup
@@ -615,6 +633,12 @@ public class Sequence
 	 * It should return 0 if the iterators are equal, a negative value
 	 * if the first iterator comes before the second, and a positive
 	 * value if the second iterator comes before the first.
+	 * Note
+	 * This function will fail if the data contained in the sequence is
+	 * unsorted. Use g_sequence_insert_sorted() or
+	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
+	 * you want to add a large amount of data, call g_sequence_sort() after
+	 * doing unsorted insertions.
 	 * Since 2.28
 	 * Params:
 	 * data = data to lookup

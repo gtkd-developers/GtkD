@@ -259,14 +259,14 @@ public class Window : ObjectG
 		}
 	}
 	
-	void delegate(gdouble, gdouble, gpointer, gpointer, Window)[] onFromEmbedderListeners;
+	void delegate(gdouble, gdouble, void*, void*, Window)[] onFromEmbedderListeners;
 	/**
 	 * The ::from-embedder signal is emitted to translate coordinates
 	 * in the embedder of an offscreen window to the offscreen window.
 	 * See also "to-embedder".
 	 * Since 2.18
 	 */
-	void addOnFromEmbedder(void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFromEmbedder(void delegate(gdouble, gdouble, void*, void*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("from-embedder" in connectedSignals) )
 		{
@@ -281,9 +281,9 @@ public class Window : ObjectG
 		}
 		onFromEmbedderListeners ~= dlg;
 	}
-	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedder_x, gdouble embedder_y, gpointer offscreen_x, gpointer offscreen_y, Window _window)
+	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedder_x, gdouble embedder_y, void* offscreen_x, void* offscreen_y, Window _window)
 	{
-		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; _window.onFromEmbedderListeners )
+		foreach ( void delegate(gdouble, gdouble, void*, void*, Window) dlg ; _window.onFromEmbedderListeners )
 		{
 			dlg(embedder_x, embedder_y, offscreen_x, offscreen_y, _window);
 		}
@@ -318,14 +318,14 @@ public class Window : ObjectG
 		}
 	}
 	
-	void delegate(gdouble, gdouble, gpointer, gpointer, Window)[] onToEmbedderListeners;
+	void delegate(gdouble, gdouble, void*, void*, Window)[] onToEmbedderListeners;
 	/**
 	 * The ::to-embedder signal is emitted to translate coordinates
 	 * in an offscreen window to its embedder.
 	 * See also "from-embedder".
 	 * Since 2.18
 	 */
-	void addOnToEmbedder(void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnToEmbedder(void delegate(gdouble, gdouble, void*, void*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("to-embedder" in connectedSignals) )
 		{
@@ -340,9 +340,9 @@ public class Window : ObjectG
 		}
 		onToEmbedderListeners ~= dlg;
 	}
-	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreen_x, gdouble offscreen_y, gpointer embedder_x, gpointer embedder_y, Window _window)
+	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreen_x, gdouble offscreen_y, void* embedder_x, void* embedder_y, Window _window)
 	{
-		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; _window.onToEmbedderListeners )
+		foreach ( void delegate(gdouble, gdouble, void*, void*, Window) dlg ; _window.onToEmbedderListeners )
 		{
 			dlg(offscreen_x, offscreen_y, embedder_x, embedder_y, _window);
 		}

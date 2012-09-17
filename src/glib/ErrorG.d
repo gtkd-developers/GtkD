@@ -157,7 +157,7 @@ private import glib.Str;
  * $(DDOC_COMMENT example)
  *  The quark function for the error domain is called
  *  <namespace>_<module>_error_quark,
- *  for example g_spawn_error_quark() or %g_thread_error_quark().
+ *  for example g_spawn_error_quark() or g_thread_error_quark().
  *  The error codes are in an enumeration called
  *  <Namespace><Module>Error;
  *  for example,GThreadError or GSpawnError.
@@ -167,7 +167,7 @@ private import glib.Str;
  *  If there's a "generic" or "unknown" error code for unrecoverable
  *  errors it doesn't make sense to distinguish with specific codes,
  *  it should be called <NAMESPACE>_<MODULE>_ERROR_FAILED,
- *  for example G_SPAWN_ERROR_FAILED or G_THREAD_ERROR_FAILED.
+ *  for example G_SPAWN_ERROR_FAILED.
  * Summary of rules for use of GError:
  *  Do not report programming errors via GError.
  *  The last argument of a function that returns an error should
@@ -186,6 +186,8 @@ private import glib.Str;
  *  then you handled it and you should not report it. If it was fatal,
  *  then you must report it and discontinue whatever you were doing
  *  immediately.
+ *  If a GError is reported, out parameters are not guaranteed to
+ *  be set to any defined value.
  *  A GError* must be initialized to NULL before passing its address
  *  to a function that can report errors.
  *  "Piling up" errors is always a bug. That is, if you assign a
@@ -334,7 +336,7 @@ public class ErrorG
 	 * that could include printf() escape sequences.
 	 * Since 2.18
 	 * Params:
-	 * err = a return location for a GError, or NULL
+	 * err = a return location for a GError, or NULL. [allow-none]
 	 * domain = error domain
 	 * code = error code
 	 * message = error message

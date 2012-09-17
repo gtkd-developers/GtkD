@@ -162,11 +162,11 @@ public class CharacterSet
 	/**
 	 * Converts a string from one character set to another.
 	 * Note that you should use g_iconv() for streaming
-	 * conversions[2].
+	 * conversions[3].
 	 * Params:
 	 * str = the string to convert
 	 * len = the length of the string, or -1 if the string is
-	 * nul-terminated[1].
+	 * nul-terminated[2].
 	 * toCodeset = name of character set into which to convert str
 	 * fromCodeset = character set of str.
 	 * bytesRead = location to store the number of bytes in the
@@ -206,11 +206,11 @@ public class CharacterSet
 	 * to to_codeset in their iconv() functions,
 	 * in which case GLib will simply return that approximate conversion.
 	 * Note that you should use g_iconv() for streaming
-	 * conversions[2].
+	 * conversions[3].
 	 * Params:
 	 * str = the string to convert
 	 * len = the length of the string, or -1 if the string is
-	 * nul-terminated[1].
+	 * nul-terminated[2].
 	 * toCodeset = name of character set into which to convert str
 	 * fromCodeset = character set of str.
 	 * fallback = UTF-8 string to use in place of character not
@@ -252,7 +252,7 @@ public class CharacterSet
 	 * opsysstring = a string in the encoding of the current locale. On Windows
 	 * this means the system codepage.
 	 * len = the length of the string, or -1 if the string is
-	 * nul-terminated[1].
+	 * nul-terminated[2].
 	 * bytesRead = location to store the number of bytes in the
 	 * input string that were successfully converted, or NULL.
 	 * Even if the conversion was successful, this may be
@@ -289,7 +289,7 @@ public class CharacterSet
 	 * Params:
 	 * opsysstring = a string in the encoding for filenames
 	 * len = the length of the string, or -1 if the string is
-	 * nul-terminated[1].
+	 * nul-terminated[2].
 	 * bytesRead = location to store the number of bytes in the
 	 * input string that were successfully converted, or NULL.
 	 * Even if the conversion was successful, this may be
@@ -451,7 +451,7 @@ public class CharacterSet
 	 * Params:
 	 * utf8string = a UTF-8 encoded string
 	 * len = the length of the string, or -1 if the string is
-	 * nul-terminated[1].
+	 * nul-terminated[2].
 	 * bytesRead = location to store the number of bytes in the
 	 * input string that were successfully converted, or NULL.
 	 * Even if the conversion was successful, this may be
@@ -497,7 +497,7 @@ public class CharacterSet
 	 * freed.
 	 * Params:
 	 * charset = return location for character set name
-	 * Returns: TRUE if the returned charset is UTF-8 [1] Note that some encodings may allow nul bytes to occur inside strings. In that case, using -1 for the len parameter is unsafe. [2] Despite the fact that byes_read can return information about partial characters, the g_convert_... functions are not generally suitable for streaming. If the underlying converter being used maintains internal state, then this won't be preserved across successive calls to g_convert(), g_convert_with_iconv() or g_convert_with_fallback(). (An example of this is the GNU C converter for CP1255 which does not emit a base character until it knows that the next character is not a mark that could combine with the base character.)
+	 * Returns: TRUE if the returned charset is UTF-8
 	 */
 	public static int getCharset(out string charset)
 	{
@@ -508,5 +508,15 @@ public class CharacterSet
 		
 		charset = Str.toString(outcharset);
 		return p;
+	}
+	
+	/**
+	 * Gets the character set for the current locale.
+	 * Returns: a newly allocated string containing the name of the character set. This string must be freed with g_free(). [2] Note that some encodings may allow nul bytes to occur inside strings. In that case, using -1 for the len parameter is unsafe. [3] Despite the fact that byes_read can return information about partial characters, the g_convert_... functions are not generally suitable for streaming. If the underlying converter being used maintains internal state, then this won't be preserved across successive calls to g_convert(), g_convert_with_iconv() or g_convert_with_fallback(). (An example of this is the GNU C converter for CP1255 which does not emit a base character until it knows that the next character is not a mark that could combine with the base character.)
+	 */
+	public static string getCodeset()
+	{
+		// gchar * g_get_codeset (void);
+		return Str.toString(g_get_codeset());
 	}
 }

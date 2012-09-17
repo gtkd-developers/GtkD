@@ -414,7 +414,7 @@ mixin( gshared ~"extern(C)
 	guint function(AtkObject* accessible, AtkPropertyChangeHandler* handler) c_atk_object_connect_property_change_handler;
 	void function(AtkObject* accessible, guint handlerId) c_atk_object_remove_property_change_handler;
 	void function(AtkObject* accessible, AtkState state, gboolean value) c_atk_object_notify_state_change;
-	void function(AtkObject* accessible, gpointer data) c_atk_object_initialize;
+	void function(AtkObject* accessible, void* data) c_atk_object_initialize;
 	gboolean function(AtkObject* object, AtkRelationType relationship, AtkObject* target) c_atk_object_add_relationship;
 	gboolean function(AtkObject* object, AtkRelationType relationship, AtkObject* target) c_atk_object_remove_relationship;
 	AtkAttributeSet* function(AtkObject* accessible) c_atk_object_get_attributes;
@@ -562,7 +562,7 @@ mixin( gshared ~"extern(C)
 	void function(AtkObject* object) c_atk_focus_tracker_notify;
 	guint function(GSignalEmissionHook listener, gchar* eventType) c_atk_add_global_event_listener;
 	void function(guint listenerId) c_atk_remove_global_event_listener;
-	guint function(AtkKeySnoopFunc listener, gpointer data) c_atk_add_key_event_listener;
+	guint function(AtkKeySnoopFunc listener, void* data) c_atk_add_key_event_listener;
 	void function(guint listenerId) c_atk_remove_key_event_listener;
 	AtkObject* function() c_atk_get_root;
 	AtkObject* function() c_atk_get_focus_object;

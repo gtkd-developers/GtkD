@@ -122,8 +122,6 @@ public class StringCompletion
 	 */
 	
 	/**
-	 * Warning
-	 * g_completion_new is deprecated and should not be used in newly-written code.
 	 * Creates a new GCompletion.
 	 * Params:
 	 * func = the function to be called to return the string representing

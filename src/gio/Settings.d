@@ -222,7 +222,7 @@ public class Settings : ObjectG
 	 */
 	int[string] connectedSignals;
 	
-	bool delegate(gpointer, gint, Settings)[] onChangeListeners;
+	bool delegate(void*, gint, Settings)[] onChangeListeners;
 	/**
 	 * The "change-event" signal is emitted once per change event that
 	 * affects this settings object. You should connect to this signal
@@ -240,7 +240,7 @@ public class Settings : ObjectG
 	 * TRUE to stop other handlers from being invoked for the
 	 * event. FALSE to propagate the event further.
 	 */
-	void addOnChange(bool delegate(gpointer, gint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChange(bool delegate(void*, gint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-event" in connectedSignals) )
 		{
@@ -255,9 +255,9 @@ public class Settings : ObjectG
 		}
 		onChangeListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackChange(GSettings* settingsStruct, gpointer keys, gint nKeys, Settings _settings)
+	extern(C) static gboolean callBackChange(GSettings* settingsStruct, void* keys, gint nKeys, Settings _settings)
 	{
-		foreach ( bool delegate(gpointer, gint, Settings) dlg ; _settings.onChangeListeners )
+		foreach ( bool delegate(void*, gint, Settings) dlg ; _settings.onChangeListeners )
 		{
 			if ( dlg(keys, nKeys, _settings) )
 			{

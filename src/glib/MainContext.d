@@ -132,6 +132,9 @@ private import gthread.Mutex;
  * The operation of these functions can best be seen in terms
  * of a state diagram, as shown in Figure 1, “States of a Main Context”.
  * Figure 1. States of a Main Context
+ * On Unix, the GLib mainloop is incompatible with fork(). Any program
+ * using the mainloop must either exec() or exit() from the child
+ * without returning to the mainloop.
  */
 public class MainContext
 {
@@ -534,7 +537,7 @@ public class MainContext
 	 * Params:
 	 * priority = the priority at which to run function
 	 * data = data to pass to function
-	 * notify = a function to call when data is no longer in use, or NULL.
+	 * notify = a function to call when data is no longer in use, or NULL. [allow-none]
 	 */
 	public void invokeFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -545,11 +548,14 @@ public class MainContext
 	/**
 	 * Gets the thread-default GMainContext for this thread. Asynchronous
 	 * operations that want to be able to be run in contexts other than
-	 * the default one should call this method to get a GMainContext to
-	 * add their GSources to. (Note that even in single-threaded
+	 * the default one should call this method or
+	 * g_main_context_ref_thread_default() to get a GMainContext to add
+	 * their GSources to. (Note that even in single-threaded
 	 * programs applications may sometimes want to temporarily push a
 	 * non-default context, so it is not safe to assume that this will
-	 * always return NULL if threads are not initialized.)
+	 * always return NULL if you are running in the default thread.)
+	 * If you need to hold a reference on the context, use
+	 * g_main_context_ref_thread_default() instead.
 	 * Since 2.22
 	 * Returns: the thread-default GMainContext, or NULL if the thread-default context is the global default context. [transfer none]
 	 */
@@ -557,6 +563,27 @@ public class MainContext
 	{
 		// GMainContext * g_main_context_get_thread_default (void);
 		auto p = g_main_context_get_thread_default();
+		if(p is null)
+		{
+			return null;
+		}
+		return new MainContext(cast(GMainContext*) p);
+	}
+	
+	/**
+	 * Gets the thread-default GMainContext for this thread, as with
+	 * g_main_context_get_thread_default(), but also adds a reference to
+	 * it with g_main_context_ref(). In addition, unlike
+	 * g_main_context_get_thread_default(), if the thread-default context
+	 * is the global default context, this will return that GMainContext
+	 * (with a ref added to it) rather than returning NULL.
+	 * Since 2.32
+	 * Returns: the thread-default GMainContext. Unref with g_main_context_unref() when you are done with it. [transfer full]
+	 */
+	public static MainContext refThreadDefault()
+	{
+		// GMainContext * g_main_context_ref_thread_default (void);
+		auto p = g_main_context_ref_thread_default();
 		if(p is null)
 		{
 			return null;

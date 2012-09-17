@@ -76,9 +76,9 @@ private import glib.GException;
  * wrappers is to make it possible to handle file names with any Unicode
  * characters in them on Windows without having to use ifdefs and the
  * wide character API in the application code.
- * The pathname argument should be in the GLib file name encoding. On
- * POSIX this is the actual on-disk encoding which might correspond to
- * the locale settings of the process (or the
+ * The pathname argument should be in the GLib file name encoding.
+ * On POSIX this is the actual on-disk encoding which might correspond
+ * to the locale settings of the process (or the
  * G_FILENAME_ENCODING environment variable), or not.
  * On Windows the GLib file name encoding is UTF-8. Note that the
  * Microsoft C library does not use UTF-8, but has separate APIs for
@@ -191,6 +191,9 @@ public class Directory
 	 * The order of entries returned from this function is not defined,
 	 * and may vary by file system or other operating-system dependent
 	 * factors.
+	 * NULL may also be returned in case of errors. On Unix, you can
+	 * check errno to find out if NULL was returned
+	 * because of an error.
 	 * On Unix, the '.' and '..' entries are omitted, and the returned
 	 * name is in the on-disk encoding.
 	 * On Windows, as is true of all GLib functions which operate on

@@ -3,10 +3,9 @@ mkdir gtkdocs
 cd gtkdocs
 
 #GLIB
-curl http://developer.gnome.org/glib/glib-html-2.30.3.tar.gz | tar xvfz -
-ln -s glib-html-2.30.3 gthread
-ln -s glib-html-2.30.3 glib
-exit
+curl http://developer.gnome.org/glib/glib-html-2.32.4.tar.gz | tar xvfz -
+ln -s glib-html-2.32.4 gthread
+ln -s glib-html-2.32.4 glib
 #GOBJECT
 curl http://developer.gnome.org/gobject/gobject-html-2.30.3.tar.gz | tar xvfz -
 ln -s gobject-html-2.30.3 gobject

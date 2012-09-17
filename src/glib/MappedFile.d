@@ -76,9 +76,9 @@ private import glib.GException;
  * wrappers is to make it possible to handle file names with any Unicode
  * characters in them on Windows without having to use ifdefs and the
  * wide character API in the application code.
- * The pathname argument should be in the GLib file name encoding. On
- * POSIX this is the actual on-disk encoding which might correspond to
- * the locale settings of the process (or the
+ * The pathname argument should be in the GLib file name encoding.
+ * On POSIX this is the actual on-disk encoding which might correspond
+ * to the locale settings of the process (or the
  * G_FILENAME_ENCODING environment variable), or not.
  * On Windows the GLib file name encoding is UTF-8. Note that the
  * Microsoft C library does not use UTF-8, but has separate APIs for
@@ -160,6 +160,42 @@ public class MappedFile
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_mapped_file_new(Str.toStringz(filename), writable, &err)");
+		}
+		this(cast(GMappedFile*) p);
+	}
+	
+	/**
+	 * Maps a file into memory. On UNIX, this is using the mmap() function.
+	 * If writable is TRUE, the mapped buffer may be modified, otherwise
+	 * it is an error to modify the mapped buffer. Modifications to the buffer
+	 * are not visible to other processes mapping the same file, and are not
+	 * written back to the file.
+	 * Note that modifications of the underlying file might affect the contents
+	 * of the GMappedFile. Therefore, mapping should only be used if the file
+	 * will not be modified, or if all modifications of the file are done
+	 * atomically (e.g. using g_file_set_contents()).
+	 * Since 2.32
+	 * Params:
+	 * fd = The file descriptor of the file to load
+	 * writable = whether the mapping should be writable
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (int fd, int writable)
+	{
+		// GMappedFile * g_mapped_file_new_from_fd (gint fd,  gboolean writable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_mapped_file_new_from_fd(fd, writable, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_mapped_file_new_from_fd(fd, writable, &err)");
 		}
 		this(cast(GMappedFile*) p);
 	}

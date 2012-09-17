@@ -93,6 +93,8 @@ private import glib.HashTable;
  * key/value pairs in the hash table, see GHashTableIter.
  * To destroy a GHashTable use g_hash_table_destroy().
  * $(DDOC_COMMENT example)
+ * As of version 2.32, there is also a g_hash_table_add() function to
+ * add a key to a GHashTable that is being used as a set.
  */
 public class HashTableIter
 {
@@ -136,7 +138,7 @@ public class HashTableIter
 	 * $(DDOC_COMMENT example)
 	 * Since 2.16
 	 * Params:
-	 * hashTable = a GHashTable.
+	 * hashTable = a GHashTable
 	 */
 	public void init(HashTable hashTable)
 	{
@@ -150,8 +152,8 @@ public class HashTableIter
 	 * key and value are not set, and the iterator becomes invalid.
 	 * Since 2.16
 	 * Params:
-	 * key = a location to store the key, or NULL.
-	 * value = a location to store the value, or NULL.
+	 * key = a location to store the key, or NULL. [allow-none]
+	 * value = a location to store the value, or NULL. [allow-none]
 	 * Returns: FALSE if the end of the GHashTable has been reached.
 	 */
 	public int next(void** key, void** value)
@@ -180,9 +182,9 @@ public class HashTableIter
 	 * Replaces the value currently pointed to by the iterator
 	 * from its associated GHashTable. Can only be called after
 	 * g_hash_table_iter_next() returned TRUE.
-	 * If you supplied a value_destroy_func when creating the GHashTable,
-	 * the old value is freed using that function.
-	 * Since 2.29.9
+	 * If you supplied a value_destroy_func when creating the
+	 * GHashTable, the old value is freed using that function.
+	 * Since 2.30
 	 * Params:
 	 * value = the value to replace with
 	 */
@@ -195,12 +197,12 @@ public class HashTableIter
 	/**
 	 * Removes the key/value pair currently pointed to by the iterator
 	 * from its associated GHashTable. Can only be called after
-	 * g_hash_table_iter_next() returned TRUE, and cannot be called more
-	 * than once for the same key/value pair.
-	 * If the GHashTable was created using g_hash_table_new_full(), the
-	 * key and value are freed using the supplied destroy functions, otherwise
-	 * you have to make sure that any dynamically allocated values are freed
-	 * yourself.
+	 * g_hash_table_iter_next() returned TRUE, and cannot be called
+	 * more than once for the same key/value pair.
+	 * If the GHashTable was created using g_hash_table_new_full(),
+	 * the key and value are freed using the supplied destroy functions,
+	 * otherwise you have to make sure that any dynamically allocated
+	 * values are freed yourself.
 	 * Since 2.16
 	 */
 	public void remove()
@@ -210,11 +212,11 @@ public class HashTableIter
 	}
 	
 	/**
-	 * Removes the key/value pair currently pointed to by the iterator
-	 * from its associated GHashTable, without calling the key and value
-	 * destroy functions. Can only be called after
-	 * g_hash_table_iter_next() returned TRUE, and cannot be called more
-	 * than once for the same key/value pair.
+	 * Removes the key/value pair currently pointed to by the
+	 * iterator from its associated GHashTable, without calling
+	 * the key and value destroy functions. Can only be called
+	 * after g_hash_table_iter_next() returned TRUE, and cannot
+	 * be called more than once for the same key/value pair.
 	 * Since 2.16
 	 */
 	public void steal()

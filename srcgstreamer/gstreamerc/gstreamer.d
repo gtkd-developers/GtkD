@@ -829,12 +829,12 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstObject* object, GstObject* ancestor) c_gst_object_has_ancestor;
 	GstXmlNodePtr function(GstObject* object, GstXmlNodePtr parent) c_gst_object_save_thyself;
 	void function(GstObject* object, GstXmlNodePtr self) c_gst_object_restore_thyself;
-	gpointer function(gpointer object) c_gst_object_ref;
-	void function(gpointer object) c_gst_object_unref;
-	void function(gpointer object) c_gst_object_sink;
+	gpointer function(void* object) c_gst_object_ref;
+	void function(void* object) c_gst_object_unref;
+	void function(void* object) c_gst_object_sink;
 	void function(GstObject** oldobj, GstObject* newobj) c_gst_object_replace;
 	gchar* function(GstObject* object) c_gst_object_get_path_string;
-	guint function(GstObjectClass* klass, gchar* name, gpointer func, gpointer funcData) c_gst_class_signal_connect;
+	guint function(GstObjectClass* klass, gchar* name, void* func, void* funcData) c_gst_class_signal_connect;
 	void function(GstObject* object, gchar* name, GstXmlNodePtr self) c_gst_class_signal_emit_by_name;
 
 	// gstreamer.Element
@@ -962,14 +962,14 @@ mixin( gshared ~"extern(C)
 	GstMessage* function(GstBus* bus) c_gst_bus_pop;
 	GstMessage* function(GstBus* bus, GstClockTime timeout) c_gst_bus_timed_pop;
 	void function(GstBus* bus, gboolean flushing) c_gst_bus_set_flushing;
-	void function(GstBus* bus, GstBusSyncHandler func, gpointer data) c_gst_bus_set_sync_handler;
-	GstBusSyncReply function(GstBus* bus, GstMessage* message, gpointer data) c_gst_bus_sync_signal_handler;
+	void function(GstBus* bus, GstBusSyncHandler func, void* data) c_gst_bus_set_sync_handler;
+	GstBusSyncReply function(GstBus* bus, GstMessage* message, void* data) c_gst_bus_sync_signal_handler;
 	GSource* function(GstBus* bus) c_gst_bus_create_watch;
-	guint function(GstBus* bus, gint priority, GstBusFunc func, gpointer userData, GDestroyNotify notify) c_gst_bus_add_watch_full;
-	guint function(GstBus* bus, GstBusFunc func, gpointer userData) c_gst_bus_add_watch;
+	guint function(GstBus* bus, gint priority, GstBusFunc func, void* userData, GDestroyNotify notify) c_gst_bus_add_watch_full;
+	guint function(GstBus* bus, GstBusFunc func, void* userData) c_gst_bus_add_watch;
 	void function(GstBus* bus) c_gst_bus_disable_sync_message_emission;
 	void function(GstBus* bus) c_gst_bus_enable_sync_message_emission;
-	gboolean function(GstBus* bus, GstMessage* message, gpointer data) c_gst_bus_async_signal_func;
+	gboolean function(GstBus* bus, GstMessage* message, void* data) c_gst_bus_async_signal_func;
 	void function(GstBus* bus) c_gst_bus_add_signal_watch;
 	void function(GstBus* bus, gint priority) c_gst_bus_add_signal_watch_full;
 	void function(GstBus* bus) c_gst_bus_remove_signal_watch;
@@ -1033,9 +1033,9 @@ mixin( gshared ~"extern(C)
 	void function(GstClock* clock, GstClockTime internal, GstClockTime external, GstClockTime rateNum, GstClockTime rateDenom) c_gst_clock_set_calibration;
 	GstClockTime function(GstClockID id) c_gst_clock_id_get_time;
 	GstClockReturn function(GstClockID id, GstClockTimeDiff* jitter) c_gst_clock_id_wait;
-	GstClockReturn function(GstClockID id, GstClockCallback func, gpointer userData) c_gst_clock_id_wait_async;
+	GstClockReturn function(GstClockID id, GstClockCallback func, void* userData) c_gst_clock_id_wait_async;
 	void function(GstClockID id) c_gst_clock_id_unschedule;
-	gint function(gconstpointer id1, gconstpointer id2) c_gst_clock_id_compare_func;
+	gint function(void* id1, void* id2) c_gst_clock_id_compare_func;
 	GstClockID function(GstClockID id) c_gst_clock_id_ref;
 	void function(GstClockID id) c_gst_clock_id_unref;
 
@@ -1111,8 +1111,8 @@ mixin( gshared ~"extern(C)
 	// gstreamer.ImplementsInterface
 
 	gboolean function(GstElement* element, GType ifaceType) c_gst_element_implements_interface;
-	gpointer function(gpointer from, GType type) c_gst_implements_interface_cast;
-	gboolean function(gpointer from, GType type) c_gst_implements_interface_check;
+	gpointer function(void* from, GType type) c_gst_implements_interface_cast;
+	gboolean function(void* from, GType type) c_gst_implements_interface_check;
 
 	// gstreamer.Index
 
@@ -1123,17 +1123,17 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstIndex* index, gint groupnum) c_gst_index_set_group;
 	void function(GstIndex* index, GstIndexCertainty certainty) c_gst_index_set_certainty;
 	GstIndexCertainty function(GstIndex* index) c_gst_index_get_certainty;
-	void function(GstIndex* index, GstIndexFilter filter, gpointer userData) c_gst_index_set_filter;
-	void function(GstIndex* index, GstIndexFilter filter, gpointer userData, GDestroyNotify userDataDestroy) c_gst_index_set_filter_full;
-	void function(GstIndex* index, GstIndexResolver resolver, gpointer userData) c_gst_index_set_resolver;
+	void function(GstIndex* index, GstIndexFilter filter, void* userData) c_gst_index_set_filter;
+	void function(GstIndex* index, GstIndexFilter filter, void* userData, GDestroyNotify userDataDestroy) c_gst_index_set_filter_full;
+	void function(GstIndex* index, GstIndexResolver resolver, void* userData) c_gst_index_set_resolver;
 	gboolean function(GstIndex* index, GstObject* writer, gint* id) c_gst_index_get_writer_id;
 	GstIndexEntry* function(GstIndex* index, gint id, GstFormat format) c_gst_index_add_format;
 	GstIndexEntry* function(GstIndex* index, gint id, GstAssocFlags flags, GstFormat format, gint64 value, ... ) c_gst_index_add_association;
 	GstIndexEntry* function(GstIndex* index, gint id, GstAssocFlags flags, gint n, GstIndexAssociation* list) c_gst_index_add_associationv;
-	GstIndexEntry* function(GstIndex* index, gint id, gchar* key, GType type, gpointer object) c_gst_index_add_object;
+	GstIndexEntry* function(GstIndex* index, gint id, gchar* key, GType type, void* object) c_gst_index_add_object;
 	GstIndexEntry* function(GstIndex* index, gint id, gchar* description) c_gst_index_add_id;
 	GstIndexEntry* function(GstIndex* index, gint id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, gint64 value) c_gst_index_get_assoc_entry;
-	GstIndexEntry* function(GstIndex* index, gint id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, gint64 value, GCompareDataFunc func, gpointer userData) c_gst_index_get_assoc_entry_full;
+	GstIndexEntry* function(GstIndex* index, gint id, GstIndexLookupMethod method, GstAssocFlags flags, GstFormat format, gint64 value, GCompareDataFunc func, void* userData) c_gst_index_get_assoc_entry_full;
 	GstIndexEntry* function(GstIndexEntry* entry) c_gst_index_entry_copy;
 	void function(GstIndexEntry* entry) c_gst_index_entry_free;
 	gboolean function(GstIndexEntry* entry, GstFormat format, gint64* value) c_gst_index_entry_assoc_map;
@@ -1149,15 +1149,15 @@ mixin( gshared ~"extern(C)
 	// gstreamer.Iterator
 
 	GstIterator* function(guint size, GType type, GMutex* lock, guint32* masterCookie, GstIteratorNextFunction next, GstIteratorItemFunction item, GstIteratorResyncFunction resync, GstIteratorFreeFunction free) c_gst_iterator_new;
-	GstIterator* function(GType type, GMutex* lock, guint32* masterCookie, GList** list, gpointer owner, GstIteratorItemFunction item, GstIteratorDisposeFunction free) c_gst_iterator_new_list;
-	GstIteratorResult function(GstIterator* it, gpointer* elem) c_gst_iterator_next;
+	GstIterator* function(GType type, GMutex* lock, guint32* masterCookie, GList** list, void* owner, GstIteratorItemFunction item, GstIteratorDisposeFunction free) c_gst_iterator_new_list;
+	GstIteratorResult function(GstIterator* it, void** elem) c_gst_iterator_next;
 	void function(GstIterator* it) c_gst_iterator_resync;
 	void function(GstIterator* it) c_gst_iterator_free;
 	void function(GstIterator* it, GstIterator* other) c_gst_iterator_push;
-	GstIterator* function(GstIterator* it, GCompareFunc func, gpointer userData) c_gst_iterator_filter;
-	GstIteratorResult function(GstIterator* it, GstIteratorFoldFunction func, GValue* ret, gpointer userData) c_gst_iterator_fold;
-	GstIteratorResult function(GstIterator* it, GFunc func, gpointer userData) c_gst_iterator_foreach;
-	gpointer function(GstIterator* it, GCompareFunc func, gpointer userData) c_gst_iterator_find_custom;
+	GstIterator* function(GstIterator* it, GCompareFunc func, void* userData) c_gst_iterator_filter;
+	GstIteratorResult function(GstIterator* it, GstIteratorFoldFunction func, GValue* ret, void* userData) c_gst_iterator_fold;
+	GstIteratorResult function(GstIterator* it, GFunc func, void* userData) c_gst_iterator_foreach;
+	gpointer function(GstIterator* it, GCompareFunc func, void* userData) c_gst_iterator_find_custom;
 
 	// gstreamer.Pad
 
@@ -1178,12 +1178,12 @@ mixin( gshared ~"extern(C)
 	void function(GstPad* pad) c_gst_pad_use_fixed_caps;
 	gboolean function(GstPad* pad) c_gst_pad_is_active;
 	gboolean function(GstPad* pad, gboolean blocked) c_gst_pad_set_blocked;
-	gboolean function(GstPad* pad, gboolean blocked, GstPadBlockCallback callback, gpointer userData) c_gst_pad_set_blocked_async;
+	gboolean function(GstPad* pad, gboolean blocked, GstPadBlockCallback callback, void* userData) c_gst_pad_set_blocked_async;
 	gboolean function(GstPad* pad) c_gst_pad_is_blocked;
 	gboolean function(GstPad* pad) c_gst_pad_is_blocking;
-	gulong function(GstPad* pad, GCallback handler, gpointer data) c_gst_pad_add_data_probe;
-	gulong function(GstPad* pad, GCallback handler, gpointer data) c_gst_pad_add_buffer_probe;
-	gulong function(GstPad* pad, GCallback handler, gpointer data) c_gst_pad_add_event_probe;
+	gulong function(GstPad* pad, GCallback handler, void* data) c_gst_pad_add_data_probe;
+	gulong function(GstPad* pad, GCallback handler, void* data) c_gst_pad_add_buffer_probe;
+	gulong function(GstPad* pad, GCallback handler, void* data) c_gst_pad_add_event_probe;
 	void function(GstPad* pad, guint handlerId) c_gst_pad_remove_data_probe;
 	void function(GstPad* pad, guint handlerId) c_gst_pad_remove_buffer_probe;
 	void function(GstPad* pad, guint handlerId) c_gst_pad_remove_event_probe;
@@ -1237,11 +1237,11 @@ mixin( gshared ~"extern(C)
 	GList* function(GstPad* pad) c_gst_pad_get_internal_links;
 	GList* function(GstPad* pad) c_gst_pad_get_internal_links_default;
 	void function(xmlNodePtr self, GstObject* parent) c_gst_pad_load_and_link;
-	gboolean function(GstPad* pad, GstPadDispatcherFunction dispatch, gpointer data) c_gst_pad_dispatcher;
-	void function(GstPad* pad, gpointer priv) c_gst_pad_set_element_private;
+	gboolean function(GstPad* pad, GstPadDispatcherFunction dispatch, void* data) c_gst_pad_dispatcher;
+	void function(GstPad* pad, void* priv) c_gst_pad_set_element_private;
 	gpointer function(GstPad* pad) c_gst_pad_get_element_private;
 	GstFlowReturn function(GstPad* pad, GstBuffer* buffer) c_gst_pad_chain;
-	gboolean function(GstPad* pad, GstTaskFunction func, gpointer data) c_gst_pad_start_task;
+	gboolean function(GstPad* pad, GstTaskFunction func, void* data) c_gst_pad_start_task;
 	gboolean function(GstPad* pad) c_gst_pad_pause_task;
 	gboolean function(GstPad* pad) c_gst_pad_stop_task;
 	gboolean function(GstPad* pad, gboolean active) c_gst_pad_set_active;
@@ -1389,8 +1389,8 @@ mixin( gshared ~"extern(C)
 	GList* function(GstRegistry* registry) c_gst_registry_get_plugin_list;
 	gboolean function(GstRegistry* registry, GstPlugin* plugin) c_gst_registry_add_plugin;
 	void function(GstRegistry* registry, GstPlugin* plugin) c_gst_registry_remove_plugin;
-	GList* function(GstRegistry* registry, GstPluginFilter filter, gboolean first, gpointer userData) c_gst_registry_plugin_filter;
-	GList* function(GstRegistry* registry, GstPluginFeatureFilter filter, gboolean first, gpointer userData) c_gst_registry_feature_filter;
+	GList* function(GstRegistry* registry, GstPluginFilter filter, gboolean first, void* userData) c_gst_registry_plugin_filter;
+	GList* function(GstRegistry* registry, GstPluginFeatureFilter filter, gboolean first, void* userData) c_gst_registry_feature_filter;
 	GstPlugin* function(GstRegistry* registry, gchar* name) c_gst_registry_find_plugin;
 	GstPluginFeature* function(GstRegistry* registry, gchar* name, GType type) c_gst_registry_find_feature;
 	GstPluginFeature* function(GstRegistry* registry, char* name) c_gst_registry_lookup_feature;
@@ -1443,7 +1443,7 @@ mixin( gshared ~"extern(C)
 	void function(GstStructure* structure, gchar* fieldname, va_list varargs) c_gst_structure_remove_fields_valist;
 	void function(GstStructure* structure) c_gst_structure_remove_all_fields;
 	GType function(GstStructure* structure, gchar* fieldname) c_gst_structure_get_field_type;
-	gboolean function(GstStructure* structure, GstStructureForeachFunc func, gpointer userData) c_gst_structure_foreach;
+	gboolean function(GstStructure* structure, GstStructureForeachFunc func, void* userData) c_gst_structure_foreach;
 	gint function(GstStructure* structure) c_gst_structure_n_fields;
 	gboolean function(GstStructure* structure, gchar* fieldname) c_gst_structure_has_field;
 	gboolean function(GstStructure* structure, gchar* fieldname, GType type) c_gst_structure_has_field_typed;
@@ -1456,7 +1456,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstStructure* structure, gchar* fieldname, GstClockTime* value) c_gst_structure_get_clock_time;
 	gboolean function(GstStructure* structure, gchar* fieldname, GType enumtype, gint* value) c_gst_structure_get_enum;
 	gboolean function(GstStructure* structure, gchar* fieldname, gint* valueNumerator, gint* valueDenominator) c_gst_structure_get_fraction;
-	gboolean function(GstStructure* structure, GstStructureMapFunc func, gpointer userData) c_gst_structure_map_in_place;
+	gboolean function(GstStructure* structure, GstStructureMapFunc func, void* userData) c_gst_structure_map_in_place;
 	gchar* function(GstStructure* structure, guint index) c_gst_structure_nth_field_name;
 	void function(GstStructure* structure, gint* refcount) c_gst_structure_set_parent_refcount;
 	gchar* function(GstStructure* structure) c_gst_structure_to_string;
@@ -1482,7 +1482,7 @@ mixin( gshared ~"extern(C)
 	GstTagFlag function(gchar* tag) c_gst_tag_get_flag;
 	gboolean function(gchar* tag) c_gst_tag_is_fixed;
 	GstTagList* function() c_gst_tag_list_new;
-	gboolean function(gconstpointer p) c_gst_is_tag_list;
+	gboolean function(void* p) c_gst_is_tag_list;
 	gboolean function(GstTagList* list) c_gst_tag_list_is_empty;
 	GstTagList* function(GstTagList* list) c_gst_tag_list_copy;
 	void function(GstTagList* into, GstTagList* from, GstTagMergeMode mode) c_gst_tag_list_insert;
@@ -1494,7 +1494,7 @@ mixin( gshared ~"extern(C)
 	void function(GstTagList* list, GstTagMergeMode mode, gchar* tag, va_list varArgs) c_gst_tag_list_add_valist;
 	void function(GstTagList* list, GstTagMergeMode mode, gchar* tag, va_list varArgs) c_gst_tag_list_add_valist_values;
 	void function(GstTagList* list, gchar* tag) c_gst_tag_list_remove_tag;
-	void function(GstTagList* list, GstTagForeachFunc func, gpointer userData) c_gst_tag_list_foreach;
+	void function(GstTagList* list, GstTagForeachFunc func, void* userData) c_gst_tag_list_foreach;
 	GValue* function(GstTagList* list, gchar* tag, guint index) c_gst_tag_list_get_value_index;
 	gboolean function(GValue* dest, GstTagList* list, gchar* tag) c_gst_tag_list_copy_value;
 	gboolean function(GstTagList* list, gchar* tag, gchar* value) c_gst_tag_list_get_char;
@@ -1521,8 +1521,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GstTagList* list, gchar* tag, guint index, gdouble* value) c_gst_tag_list_get_double_index;
 	gboolean function(GstTagList* list, gchar* tag, gchar** value) c_gst_tag_list_get_string;
 	gboolean function(GstTagList* list, gchar* tag, guint index, gchar** value) c_gst_tag_list_get_string_index;
-	gboolean function(GstTagList* list, gchar* tag, gpointer* value) c_gst_tag_list_get_pointer;
-	gboolean function(GstTagList* list, gchar* tag, guint index, gpointer* value) c_gst_tag_list_get_pointer_index;
+	gboolean function(GstTagList* list, gchar* tag, void** value) c_gst_tag_list_get_pointer;
+	gboolean function(GstTagList* list, gchar* tag, guint index, void** value) c_gst_tag_list_get_pointer_index;
 	gboolean function(GstTagList* list, gchar* tag, GDate** value) c_gst_tag_list_get_date;
 	gboolean function(GstTagList* list, gchar* tag, guint index, GDate** value) c_gst_tag_list_get_date_index;
 
@@ -1540,7 +1540,7 @@ mixin( gshared ~"extern(C)
 	// gstreamer.Task
 
 	void function() c_gst_task_cleanup_all;
-	GstTask* function(GstTaskFunction func, gpointer data) c_gst_task_create;
+	GstTask* function(GstTaskFunction func, void* data) c_gst_task_create;
 	GstTaskState function(GstTask* task) c_gst_task_get_state;
 	gboolean function(GstTask* task) c_gst_task_join;
 	gboolean function(GstTask* task) c_gst_task_pause;
@@ -1553,7 +1553,7 @@ mixin( gshared ~"extern(C)
 	guint8* function(GstTypeFind* find, gint64 offset, guint size) c_gst_type_find_peek;
 	void function(GstTypeFind* find, guint probability, GstCaps* caps) c_gst_type_find_suggest;
 	guint64 function(GstTypeFind* find) c_gst_type_find_get_length;
-	gboolean function(GstPlugin* plugin, gchar* name, guint rank, GstTypeFindFunction func, gchar** extensions, GstCaps* possibleCaps, gpointer data, GDestroyNotify dataNotify) c_gst_type_find_register;
+	gboolean function(GstPlugin* plugin, gchar* name, guint rank, GstTypeFindFunction func, gchar** extensions, GstCaps* possibleCaps, void* data, GDestroyNotify dataNotify) c_gst_type_find_register;
 
 	// gstreamer.TypeFindFactory
 

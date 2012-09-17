@@ -87,12 +87,13 @@ public class UnixUtils
 	 * Similar to the UNIX pipe() call, but on modern systems like Linux
 	 * uses the pipe2() system call, which atomically creates a pipe with
 	 * the configured flags. The only supported flag currently is
-	 * FD_CLOEXEC. If for example you want to configure O_NONBLOCK,
-	 * that must still be done separately with fcntl().
+	 * FD_CLOEXEC. If for example you want to configure
+	 * O_NONBLOCK, that must still be done separately with
+	 * fcntl().
 	 * Note
 	 * This function does *not* take O_CLOEXEC, it takes
-	 * FD_CLOEXEC as if for fcntl(); these are different on
-	 * Linux/glibc.
+	 * FD_CLOEXEC as if for fcntl(); these are
+	 * different on Linux/glibc.
 	 * Since 2.30
 	 * Params:
 	 * fds = Array of two integers
@@ -154,7 +155,8 @@ public class UnixUtils
 	
 	/**
 	 * Create a GSource that will be dispatched upon delivery of the UNIX
-	 * signal signum. Currently only SIGHUP, SIGINT, and SIGTERM can
+	 * signal signum. Currently only SIGHUP,
+	 * SIGINT, and SIGTERM can
 	 * be monitored. Note that unlike the UNIX default, all sources which
 	 * have created a watch will be dispatched, regardless of which
 	 * underlying thread invoked g_unix_signal_source_new().
@@ -167,12 +169,6 @@ public class UnixUtils
 	 * is safe against this kind of reentrancy.
 	 * The interaction of this source when combined with native UNIX
 	 * functions like sigprocmask() is not defined.
-	 * Note
-	 * For reliable behavior, if your program links to gthread
-	 * (either directly or indirectly via GObject, GIO, or a higher level
-	 * library), you should ensure g_thread_init() is called before using
-	 * this function. For example, if your program uses GObject, call
-	 * g_type_init().
 	 * The source will not initially be associated with any GMainContext
 	 * and must be added to one with g_source_attach() before it will be
 	 * executed.

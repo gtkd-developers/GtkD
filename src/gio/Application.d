@@ -267,12 +267,12 @@ public class Application : ObjectG, ActionGroupIF
 		}
 	}
 	
-	void delegate(gpointer, gint, string, Application)[] onOpenListeners;
+	void delegate(void*, gint, string, Application)[] onOpenListeners;
 	/**
 	 * The ::open signal is emitted on the primary instance when there are
 	 * files to open. See g_application_open() for more information.
 	 */
-	void addOnOpen(void delegate(gpointer, gint, string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnOpen(void delegate(void*, gint, string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("open" in connectedSignals) )
 		{
@@ -287,9 +287,9 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onOpenListeners ~= dlg;
 	}
-	extern(C) static void callBackOpen(GApplication* applicationStruct, gpointer files, gint nFiles, gchar* hint, Application _application)
+	extern(C) static void callBackOpen(GApplication* applicationStruct, void* files, gint nFiles, gchar* hint, Application _application)
 	{
-		foreach ( void delegate(gpointer, gint, string, Application) dlg ; _application.onOpenListeners )
+		foreach ( void delegate(void*, gint, string, Application) dlg ; _application.onOpenListeners )
 		{
 			dlg(files, nFiles, Str.toString(hint), _application);
 		}

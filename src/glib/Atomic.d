@@ -80,19 +80,6 @@ private import glib.ConstructionException;
  * All of the operations act as a full compiler and (where appropriate)
  * hardware memory barrier. Acquire and release or producer and
  * consumer barrier semantics are not available through this API.
- * On GCC, these macros are implemented using GCC intrinsic operations.
- * On non-GCC compilers they will evaluate to function calls to
- * functions implemented by GLib.
- * If GLib itself was compiled with GCC then these functions will again
- * be implemented by the GCC intrinsics. On Windows without GCC, the
- * interlocked API is used to implement the functions.
- * With non-GCC compilers on non-Windows systems, the functions are
- * currently incapable of implementing true atomic operations --
- * instead, they fallback to holding a global lock while performing the
- * operation. This provides atomicity between the threads of one
- * process, but not between separate processes. For this reason, one
- * should exercise caution when attempting to use these options on
- * shared memory regions.
  * It is very important that all accesses to a particular integer or
  * pointer be performed using only this API and that different sizes of
  * operation are not mixed or used on overlapping memory regions. Never

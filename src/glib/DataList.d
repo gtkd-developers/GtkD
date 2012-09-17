@@ -140,7 +140,7 @@ public class DataList
 	 * datalist = a datalist.
 	 * keyId = the GQuark to identify the data element.
 	 * data = the data element or NULL to remove any previous element
-	 * corresponding to key_id.
+	 * corresponding to key_id. [allow-none]
 	 * destroyFunc = the function to call when the data element is
 	 * removed. This function will be called with the data
 	 * element and can be used to free any memory allocated
@@ -181,7 +181,7 @@ public class DataList
 	}
 	
 	/**
-	 * Gets a data element, using its string identifer. This is slower than
+	 * Gets a data element, using its string identifier. This is slower than
 	 * g_datalist_id_get_data() because it compares strings.
 	 * Params:
 	 * datalist = a datalist.

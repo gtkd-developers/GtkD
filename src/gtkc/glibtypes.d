@@ -113,6 +113,8 @@ const uint G_MAXUINT = 4294967295;
  * A type which is used to hold a process identification.
  * On UNIX, processes are identified by a process id (an integer),
  * while Windows uses process handles (which are pointers).
+ * GPid is used in GLib only for descendant processes spawned with
+ * the g_spawn functions.
  */
 public alias int GPid;
 
@@ -139,7 +141,7 @@ public alias uint gunichar;
 /**
  * typedef guint16 gunichar2;
  * A type which can hold any UTF-16 code
- * point[3].
+ * point[4].
  * To print/scan values of this type to/from text you need to convert
  * to/from UTF-8, using g_utf16_to_utf8()/g_utf8_to_utf16().
  * To print/scan values of this type as integer, use
@@ -201,11 +203,12 @@ enum GPriority
 }
 
 /**
- * Flags passed to g_module_open(). Note that these flags are
- * not supported on all platforms.
+ * Flags passed to g_module_open().
+ * Note that these flags are not supported on all platforms.
  * G_MODULE_BIND_LAZY
- * specifies that symbols are only resolved when needed.
- *  The default action is to bind all symbols when the module is loaded.
+ * specifies that symbols are only resolved when
+ *  needed. The default action is to bind all symbols when the module
+ *  is loaded.
  * G_MODULE_BIND_LOCAL
  * specifies that symbols in the module should
  *  not be added to the global name space. The default action on most
@@ -335,12 +338,12 @@ alias GIOCondition IOCondition;
  *  syscall).
  * G_IO_FLAG_NONBLOCK
  * turns on nonblocking mode, corresponds to
- *  O_NONBLOCK/O_NDELAY (see the documentation of
- *  the UNIX open() syscall).
+ *  O_NONBLOCK/O_NDELAY
+ *  (see the documentation of the UNIX open() syscall).
  * G_IO_FLAG_IS_READABLE
  * indicates that the io channel is readable.
  *  This flag cannot be changed.
- * G_IO_FLAG_IS_WRITEABLE
+ * G_IO_FLAG_IS_WRITABLE
  * indicates that the io channel is writable.
  *  This flag cannot be changed.
  * G_IO_FLAG_IS_SEEKABLE
@@ -361,7 +364,7 @@ public enum GIOFlags
 	APPEND = 1 << 0,
 	NONBLOCK = 1 << 1,
 	IS_READABLE = 1 << 2, /+* Read only flag +/
-	IS_WRITEABLE = 1 << 3, /+* Read only flag +/
+	IS_WRITABLE = 1 << 3, /+* Read only flag +/
 	IS_SEEKABLE = 1 << 4, /+* Read only flag +/
 	MASK = (1 << 5) - 1,
 	GET_MASK = MASK,
@@ -391,9 +394,9 @@ public enum GIOError
 alias GIOError IOError;
 
 /**
- * Flags specifying the level of log messages. It is possible to change
- * how GLib treats messages of the various levels using g_log_set_handler()
- * and g_log_set_fatal_mask().
+ * Flags specifying the level of log messages.
+ * It is possible to change how GLib treats messages of the various
+ * levels using g_log_set_handler() and g_log_set_fatal_mask().
  * G_LOG_FLAG_RECURSION
  * internal flag
  * G_LOG_FLAG_FATAL
@@ -403,8 +406,8 @@ alias GIOError IOError;
  *  This level is also used for messages produced by g_assert().
  * G_LOG_LEVEL_CRITICAL
  * log level for critical messages, see g_critical().
- *  This level is also used for messages produced by g_return_if_fail() and
- *  g_return_val_if_fail().
+ *  This level is also used for messages produced by g_return_if_fail()
+ *  and g_return_val_if_fail().
  * G_LOG_LEVEL_WARNING
  * log level for warnings, see g_warning()
  * G_LOG_LEVEL_MESSAGE
@@ -414,7 +417,7 @@ alias GIOError IOError;
  * G_LOG_LEVEL_DEBUG
  * log level for debug messages, see g_debug()
  * G_LOG_LEVEL_MASK
- * a mask including all log levels.
+ * a mask including all log levels
  */
 public enum GLogLevelFlags
 {
@@ -640,6 +643,10 @@ alias GUnicodeType UnicodeType;
  * Hangul LVT Syllable (H3)
  * G_UNICODE_BREAK_CLOSE_PARANTHESIS
  * Closing Parenthesis (CP). Since 2.28
+ * G_UNICODE_BREAK_CONDITIONAL_JAPANESE_STARTER
+ * Conditional Japanese Starter (CJ). Since: 2.32
+ * G_UNICODE_BREAK_HEBREW_LETTER
+ * Hebrew Letter (HL). Since: 2.32
  */
 public enum GUnicodeBreakType
 {
@@ -679,7 +686,9 @@ public enum GUnicodeBreakType
 	HANGUL_T_JAMO,
 	HANGUL_LV_SYLLABLE,
 	HANGUL_LVT_SYLLABLE,
-	CLOSE_PARANTHESIS
+	CLOSE_PARANTHESIS,
+	CONDITIONAL_JAPANESE_STARTER,
+	HEBREW_LETTER
 }
 alias GUnicodeBreakType UnicodeBreakType;
 
@@ -887,19 +896,33 @@ alias GUnicodeBreakType UnicodeBreakType;
  * Brahmi. Since 2.28
  * G_UNICODE_SCRIPT_MANDAIC
  * Mandaic. Since 2.28
+ * G_UNICODE_SCRIPT_CHAKMA
+ * Chakma. Since: 2.32
+ * G_UNICODE_SCRIPT_MEROITIC_CURSIVE
+ * Meroitic Cursive. Since: 2.32
+ * G_UNICODE_SCRIPT_MEROITIC_HIEROGLYPHS, Meroitic Hieroglyphs. Since: 2.32
+ * G_UNICODE_SCRIPT_MEROITIC_HIEROGLYPHS
+ * G_UNICODE_SCRIPT_MIAO
+ * Miao. Since: 2.32
+ * G_UNICODE_SCRIPT_SHARADA
+ * Sharada. Since: 2.32
+ * G_UNICODE_SCRIPT_SORA_SOMPENG
+ * Sora Sompeng. Since: 2.32
+ * G_UNICODE_SCRIPT_TAKRI
+ * Takri. Since: 2.32
  */
 public enum GUnicodeScript
 {
 	/+* ISO 15924 code +/
 	G_UNICODE_SCRIPT_INVALID_CODE = -1,
 	G_UNICODE_SCRIPT_COMMON = 0, /+* Zyyy +/
-	G_UNICODE_SCRIPT_INHERITED, /+* Qaai +/
+	G_UNICODE_SCRIPT_INHERITED, /+* Zinh (Qaai) +/
 	G_UNICODE_SCRIPT_ARABIC, /+* Arab +/
 	G_UNICODE_SCRIPT_ARMENIAN, /+* Armn +/
 	G_UNICODE_SCRIPT_BENGALI, /+* Beng +/
 	G_UNICODE_SCRIPT_BOPOMOFO, /+* Bopo +/
 	G_UNICODE_SCRIPT_CHEROKEE, /+* Cher +/
-	G_UNICODE_SCRIPT_COPTIC, /+* Qaac +/
+	G_UNICODE_SCRIPT_COPTIC, /+* Copt (Qaac) +/
 	G_UNICODE_SCRIPT_CYRILLIC, /+* Cyrl (Cyrs) +/
 	G_UNICODE_SCRIPT_DESERET, /+* Dsrt +/
 	G_UNICODE_SCRIPT_DEVANAGARI, /+* Deva +/
@@ -993,7 +1016,15 @@ public enum GUnicodeScript
 	/+* Unicode-6.0 additions +/
 	G_UNICODE_SCRIPT_BATAK, /+* Batk +/
 	G_UNICODE_SCRIPT_BRAHMI, /+* Brah +/
-	G_UNICODE_SCRIPT_MANDAIC /+* Mand +/
+	G_UNICODE_SCRIPT_MANDAIC, /+* Mand +/
+	/+* Unicode-6.1 additions +/
+	G_UNICODE_SCRIPT_CHAKMA, /+* Cakm +/
+	G_UNICODE_SCRIPT_MEROITIC_CURSIVE, /+* Merc +/
+	G_UNICODE_SCRIPT_MEROITIC_HIEROGLYPHS, /+* Mero +/
+	G_UNICODE_SCRIPT_MIAO, /+* Plrd +/
+	G_UNICODE_SCRIPT_SHARADA, /+* Shrd +/
+	G_UNICODE_SCRIPT_SORA_SOMPENG, /+* Sora +/
+	G_UNICODE_SCRIPT_TAKRI /+* Takr +/
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -1224,21 +1255,17 @@ public enum GUserDirectory
 alias GUserDirectory UserDirectory;
 
 /**
- * Flags to modify the format of the string returned by
- * g_format_size_full().
+ * Flags to modify the format of the string returned by g_format_size_full().
  * G_FORMAT_SIZE_DEFAULT
  * behave the same as g_format_size()
  * G_FORMAT_SIZE_LONG_FORMAT
  * include the exact number of bytes as part
- *  of the returned string. For example,
- *  "45.6 kB (45,612 bytes)".
+ *  of the returned string. For example, "45.6 kB (45,612 bytes)".
  * G_FORMAT_SIZE_IEC_UNITS
  * use IEC (base 1024) units with "KiB"-style
- *  suffixes. IEC units should only be used
- *  for reporting things with a strong "power
- *  of 2" basis, like RAM sizes or RAID stripe
- *  sizes. Network and storage sizes should
- *  be reported in the normal SI units.
+ *  suffixes. IEC units should only be used for reporting things with
+ *  a strong "power of 2" basis, like RAM sizes or RAID stripe sizes.
+ *  Network and storage sizes should be reported in the normal SI units.
  */
 public enum GFormatSizeFlags
 {
@@ -1249,16 +1276,18 @@ public enum GFormatSizeFlags
 alias GFormatSizeFlags FormatSizeFlags;
 
 /**
- * The possible types of token returned from each g_scanner_get_next_token() call.
+ * The possible types of token returned from each
+ * g_scanner_get_next_token() call.
  * G_TOKEN_EOF
- * the end of the file.
+ * the end of the file
  * G_TOKEN_LEFT_PAREN
- * a '(' character.
+ * a '(' character
  * G_TOKEN_RIGHT_PAREN
+ * a ')' character
  * G_TOKEN_LEFT_CURLY
- * a '{' character.
+ * a '{' character
  * G_TOKEN_RIGHT_CURLY
- * a '}' character.
+ * a '}' character
  */
 public enum GTokenType
 {
@@ -1293,21 +1322,21 @@ alias GTokenType TokenType;
  * The possible errors, used in the v_error field
  * of GTokenValue, when the token is a G_TOKEN_ERROR.
  * G_ERR_UNKNOWN
- * unknown error.
+ * unknown error
  * G_ERR_UNEXP_EOF
- * unexpected end of file.
+ * unexpected end of file
  * G_ERR_UNEXP_EOF_IN_STRING
- * unterminated string constant.
+ * unterminated string constant
  * G_ERR_UNEXP_EOF_IN_COMMENT
- * unterminated comment.
+ * unterminated comment
  * G_ERR_NON_DIGIT_IN_CONST
- * non-digit character in a number.
+ * non-digit character in a number
  * G_ERR_DIGIT_RADIX
- * digit beyond radix in a number.
+ * digit beyond radix in a number
  * G_ERR_FLOAT_RADIX
- * non-decimal floating point number.
+ * non-decimal floating point number
  * G_ERR_FLOAT_MALFORMED
- * malformed floating point number.
+ * malformed floating point number
  */
 public enum GErrorType
 {
@@ -1331,37 +1360,39 @@ alias GErrorType ErrorType;
  * G_SPAWN_ERROR_CHDIR
  * Changing to working directory failed.
  * G_SPAWN_ERROR_ACCES
- * execv() returned EACCES.
+ * execv() returned EACCES
  * G_SPAWN_ERROR_PERM
- * execv() returned EPERM.
+ * execv() returned EPERM
+ * G_SPAWN_ERROR_TOO_BIG
+ * execv() returned E2BIG
  * G_SPAWN_ERROR_2BIG
- * execv() returned E2BIG.
+ * deprecated alias for G_SPAWN_ERROR_TOO_BIG
  * G_SPAWN_ERROR_NOEXEC
- * execv() returned ENOEXEC.
+ * execv() returned ENOEXEC
  * G_SPAWN_ERROR_NAMETOOLONG
- * execv() returned ENAMETOOLONG.
+ * execv() returned ENAMETOOLONG
  * G_SPAWN_ERROR_NOENT
- * execv() returned ENOENT.
+ * execv() returned ENOENT
  * G_SPAWN_ERROR_NOMEM
- * execv() returned ENOMEM.
+ * execv() returned ENOMEM
  * G_SPAWN_ERROR_NOTDIR
- * execv() returned ENOTDIR.
+ * execv() returned ENOTDIR
  * G_SPAWN_ERROR_LOOP
- * execv() returned ELOOP.
+ * execv() returned ELOOP
  * G_SPAWN_ERROR_TXTBUSY
- * execv() returned ETXTBUSY.
+ * execv() returned ETXTBUSY
  * G_SPAWN_ERROR_IO
- * execv() returned EIO.
+ * execv() returned EIO
  * G_SPAWN_ERROR_NFILE
- * execv() returned ENFILE.
+ * execv() returned ENFILE
  * G_SPAWN_ERROR_MFILE
- * execv() returned EMFILE.
+ * execv() returned EMFILE
  * G_SPAWN_ERROR_INVAL
- * execv() returned EINVAL.
+ * execv() returned EINVAL
  * G_SPAWN_ERROR_ISDIR
- * execv() returned EISDIR.
+ * execv() returned EISDIR
  * G_SPAWN_ERROR_LIBBAD
- * execv() returned ELIBBAD.
+ * execv() returned ELIBBAD
  * G_SPAWN_ERROR_FAILED
  * Some other fatal failure,
  *  error->message should explain.
@@ -1373,7 +1404,8 @@ public enum GSpawnError
 	CHDIR, /+* changing to working dir failed +/
 	ACCES, /+* execv() returned EACCES +/
 	PERM, /+* execv() returned EPERM +/
-	TOO_BIG, /+* execv() returned E2BIG +/
+	TOO_BIG,/+* execv() returned E2BIG +/
+	
 	NOEXEC, /+* execv() returned ENOEXEC +/
 	NAMETOOLONG, /+* "" "" ENAMETOOLONG +/
 	NOENT, /+* "" "" ENOENT +/
@@ -1439,19 +1471,19 @@ alias GSpawnFlags SpawnFlags;
 /**
  * Values corresponding to errno codes returned from file operations
  * on UNIX. Unlike errno codes, GFileError values are available on
- * all systems, even Windows. The exact meaning of each code depends on what
- * sort of file operation you were performing; the UNIX documentation
- * gives more details. The following error code descriptions come
- * from the GNU C Library manual, and are under the copyright
+ * all systems, even Windows. The exact meaning of each code depends
+ * on what sort of file operation you were performing; the UNIX
+ * documentation gives more details. The following error code descriptions
+ * come from the GNU C Library manual, and are under the copyright
  * of that manual.
  * It's not very portable to make detailed assumptions about exactly
  * which errors will be returned from a given operation. Some errors
  * don't occur on some systems, etc., sometimes there are subtle
  * differences in when a system will report a given error, etc.
  * G_FILE_ERROR_EXIST
- * Operation not permitted; only the owner of the
- *  file (or other resource) or processes with special privileges can
- *  perform the operation.
+ * Operation not permitted; only the owner of
+ *  the file (or other resource) or processes with special privileges
+ *  can perform the operation.
  * G_FILE_ERROR_ISDIR
  * File is a directory; you cannot open a directory
  *  for writing, or create or remove hard links to it.
@@ -1515,8 +1547,8 @@ alias GSpawnFlags SpawnFlags;
  *  other end of a pipe. Every library function that returns this
  *  error code also generates a `SIGPIPE' signal; this signal
  *  terminates the program if not handled or blocked. Thus, your
- *  program will never actually see this code unless it has handled or
- *  blocked `SIGPIPE'.
+ *  program will never actually see this code unless it has handled
+ *  or blocked `SIGPIPE'.
  * G_FILE_ERROR_AGAIN
  * Resource temporarily unavailable; the call might
  *  work if you try again later.
@@ -1533,12 +1565,12 @@ alias GSpawnFlags SpawnFlags;
  *  file (or other resource) or processes with special privileges can
  *  perform the operation.
  * G_FILE_ERROR_NOSYS
- * Function not implemented; this indicates that the
- *  system is missing some functionality.
+ * Function not implemented; this indicates that
+ *  the system is missing some functionality.
  * G_FILE_ERROR_FAILED
  * Does not correspond to a UNIX error code; this
- *  is the standard "failed for unspecified reason" error code present in
- *  all GError error code enumerations. Returned if no specific
+ *  is the standard "failed for unspecified reason" error code present
+ *  in all GError error code enumerations. Returned if no specific
  *  code applies.
  */
 public enum GFileError
@@ -1574,9 +1606,9 @@ alias GFileError FileError;
 /**
  * A test to perform on a file using g_file_test().
  * G_FILE_TEST_IS_REGULAR
- * TRUE if the file is a regular file (not a directory).
- *  Note that this test will also return TRUE if the tested file is a symlink
- *  to a regular file.
+ * TRUE if the file is a regular file
+ *  (not a directory). Note that this test will also return TRUE
+ *  if the tested file is a symlink to a regular file.
  * G_FILE_TEST_IS_SYMLINK
  * TRUE if the file is a symlink.
  * G_FILE_TEST_IS_DIR
@@ -1584,8 +1616,8 @@ alias GFileError FileError;
  * G_FILE_TEST_IS_EXECUTABLE
  * TRUE if the file is executable.
  * G_FILE_TEST_EXISTS
- * TRUE if the file exists.
- *  It may or may not be a regular file.
+ * TRUE if the file exists. It may or may not
+ *  be a regular file.
  */
 public enum GFileTest
 {
@@ -2159,7 +2191,8 @@ alias GMarkupCollectType MarkupCollectType;
 /**
  * Error codes returned by key file parsing.
  * G_KEY_FILE_ERROR_UNKNOWN_ENCODING
- * the text being parsed was in an unknown encoding
+ * the text being parsed was in
+ *  an unknown encoding
  * G_KEY_FILE_ERROR_PARSE
  * document was ill-formed
  * G_KEY_FILE_ERROR_NOT_FOUND
@@ -2187,13 +2220,15 @@ alias GKeyFileError KeyFileError;
  * G_KEY_FILE_NONE
  * No flags, default behaviour
  * G_KEY_FILE_KEEP_COMMENTS
- * Use this flag if you plan to write the (possibly modified)
- *  contents of the key file back to a file; otherwise all comments will be lost when
- *  the key file is written back.
+ * Use this flag if you plan to write the
+ *  (possibly modified) contents of the key file back to a file;
+ *  otherwise all comments will be lost when the key file is
+ *  written back.
  * G_KEY_FILE_KEEP_TRANSLATIONS
- * Use this flag if you plan to write the (possibly modified)
- *  contents of the key file back to a file; otherwise only the translations for the current
- *  language will be written back.
+ * Use this flag if you plan to write the
+ *  (possibly modified) contents of the key file back to a file;
+ *  otherwise only the translations for the current language will be
+ *  written back.
  */
 public enum GKeyFileFlags
 {
@@ -2442,7 +2477,10 @@ public struct GMainContext{}
 
 
 /**
+ * Represents a file descriptor, which events to poll for, and which events
+ * occurred.
  * gint64 fd;
+ * the file descriptor to poll (or a HANDLE on Win32)
  * gint fd;
  * gushort events;
  * a bitwise combination from GIOCondition, specifying which
@@ -2516,8 +2554,6 @@ public struct GSource{}
  * are needed for this type of event source.
  * finalize ()
  * Called when the source is finalized.
- * GSourceFunc closure_callback;
- * GSourceDummyMarshal closure_marshal;
  */
 public struct GSourceFuncs
 {
@@ -2525,9 +2561,6 @@ public struct GSourceFuncs
 	extern(C) int  function(GSource *source) check;
 	extern(C) int  function(GSource *source,GSourceFunc callback,void* userData) dispatch;
 	extern(C) void  function(GSource *source) finalize; /+* Can be NULL +/
-	/+* For use by sourceSetClosure +/
-	GSourceFunc closureCallback;
-	GSourceDummyMarshal closureMarshal; /+* Really is of type GClosureMarshal +/
 }
 
 
@@ -2553,8 +2586,8 @@ public struct GSourceCallbackFuncs
 /**
  * Main Gtk struct.
  * The GThreadPool struct represents a thread pool. It has three
- * public read-only members, but the underlying struct is bigger, so
- * you must not copy this struct.
+ * public read-only members, but the underlying struct is bigger,
+ * so you must not copy this struct.
  * GFunc func;
  * the function to execute in the threads of this pool
  * gpointer user_data;
@@ -2572,7 +2605,7 @@ public struct GThreadPool
 
 /**
  * Main Gtk struct.
- * The GAsyncQueue struct is an opaque data structure, which represents
+ * The GAsyncQueue struct is an opaque data structure which represents
  * an asynchronous queue. It should only be accessed through the
  * g_async_queue_* functions.
  */
@@ -2582,8 +2615,8 @@ public struct GAsyncQueue{}
 /**
  * Main Gtk struct.
  * The GModule struct is an opaque data structure to represent a
- * Dynamically-Loaded Module.
- * It should only be accessed via the following functions.
+ * Dynamically-Loaded
+ * Module. It should only be accessed via the following functions.
  */
 public struct GModule{}
 
@@ -2725,7 +2758,7 @@ public struct GHmac{}
  * Main Gtk struct.
  * Represents a precise time, with seconds and microseconds.
  * Similar to the struct timeval returned by
- * the gettimeofday() UNIX call.
+ * the gettimeofday() UNIX system call.
  * GLib is attempting to unify around the use of 64bit integers to
  * represent microsecond-precision time. As such, this type will be
  * removed from a future version of GLib.
@@ -2745,12 +2778,12 @@ public struct GTimeVal
  * Represents a day between January 1, Year 1 and a few thousand years in
  * the future. None of its members should be accessed directly. If the
  * GDate is obtained from g_date_new(), it will
- * be safe to mutate but invalid and thus not safe for calendrical computations.
- * If it's declared on the stack, it will contain garbage so must be
- * initialized with g_date_clear(). g_date_clear() makes the date invalid
- * but sane. An invalid date doesn't represent a day, it's "empty." A
- * date becomes valid after you set it to a Julian day or you set a day,
- * month, and year.
+ * be safe to mutate but invalid and thus not safe for calendrical
+ * computations. If it's declared on the stack, it will contain garbage
+ * so must be initialized with g_date_clear(). g_date_clear() makes the
+ * date invalid but sane. An invalid date doesn't represent a day, it's
+ * "empty." A date becomes valid after you set it to a Julian day or you
+ * set a day, month, and year.
  * guint julian_days : 32;
  * the Julian representation of the date
  * guint julian : 1;
@@ -2758,11 +2791,11 @@ public struct GTimeVal
  * guint dmy : 1;
  * this is set if day, month and year are valid
  * guint day : 6;
- * the day of the day-month-year representation of the date, as
- * a number between 1 and 31
+ * the day of the day-month-year representation of the date,
+ * as a number between 1 and 31
  * guint month : 4;
- * the day of the day-month-year representation of the date, as
- * a number between 1 and 12
+ * the day of the day-month-year representation of the date,
+ * as a number between 1 and 12
  * guint year : 16;
  * the day of the day-month-year representation of the date
  */
@@ -2829,22 +2862,28 @@ public struct GDebugKey
 /**
  * Main Gtk struct.
  * The data structure representing a lexical scanner.
- * You should set input_name after creating
- * the scanner, since it is used by the default message handler when
- * displaying warnings and errors. If you are scanning a file, the file
- * name would be a good choice.
- * The user_data and
- * max_parse_errors fields are not used.
- * If you need to associate extra data with the scanner you can place them here.
+ * You should set input_name after creating the scanner, since
+ * it is used by the default message handler when displaying
+ * warnings and errors. If you are scanning a file, the filename
+ * would be a good choice.
+ * The user_data and max_parse_errors fields are not used.
+ * If you need to associate extra data with the scanner you
+ * can place them here.
  * If you want to use your own message handler you can set the
- * msg_handler field. The type of the message
- * handler function is declared by GScannerMsgFunc.
+ * msg_handler field. The type of the message handler function
+ * is declared by GScannerMsgFunc.
  * gpointer user_data;
+ * unused
  * guint max_parse_errors;
+ * unused
  * guint parse_errors;
+ * g_scanner_error() increments this field
  * const gchar *input_name;
+ * name of input stream, featured by the default message handler
  * GData *qdata;
+ * quarked data
  * GScannerConfig *config;
+ * link into the scanner configuration
  * GTokenType token;
  * token parsed by the last g_scanner_get_next_token()
  * GTokenValue value;
@@ -2861,14 +2900,8 @@ public struct GDebugKey
  * line number of the last token from g_scanner_peek_next_token()
  * guint next_position;
  * char number of the last token from g_scanner_peek_next_token()
- * GHashTable *symbol_table;
- * gint input_fd;
- * const gchar *text;
- * const gchar *text_end;
- * gchar *buffer;
- * guint scope_id;
  * GScannerMsgFunc msg_handler;
- * function to handle GScanner message output
+ * handler function for _warn and _error
  */
 public struct GScanner
 {
@@ -2893,81 +2926,99 @@ public struct GScanner
 	GTokenValue nextValue;
 	uint nextLine;
 	uint nextPosition;
-	/+* to be considered private +/
-	GHashTable *symbolTable;
-	int inputFd;
-	char *text;
-	char *textEnd;
-	char *buffer;
-	uint scopeId;
 	/+* handler funct for _Warn and _Error +/
 	GScannerMsgFunc msgHandler;
 }
 
 
 /**
- * Specifies the GScanner parser configuration. Most settings can be changed during
- * the parsing phase and will affect the lexical parsing of the next unpeeked token.
- * cset_skip_characters specifies which characters
- * should be skipped by the scanner (the default is the whitespace characters:
- * space, tab, carriage-return and line-feed).
- * cset_identifier_first specifies the characters
- * which can start identifiers (the default is G_CSET_a_2_z, "_", and
- * G_CSET_A_2_Z).
- * cset_identifier_nth specifies the characters
- * which can be used in identifiers, after the first character (the default
- * is G_CSET_a_2_z, "_0123456789", G_CSET_A_2_Z, G_CSET_LATINS,
+ * Specifies the GScanner parser configuration. Most settings can
+ * be changed during the parsing phase and will affect the lexical
+ * parsing of the next unpeeked token.
+ * gchar *cset_skip_characters;
+ * specifies which characters should be skipped
+ * by the scanner (the default is the whitespace characters: space,
+ * tab, carriage-return and line-feed).
+ * gchar *cset_identifier_first;
+ * specifies the characters which can start
+ * identifiers (the default is G_CSET_a_2_z, "_", and G_CSET_A_2_Z).
+ * gchar *cset_identifier_nth;
+ * specifies the characters which can be used
+ * in identifiers, after the first character (the default is
+ * G_CSET_a_2_z, "_0123456789", G_CSET_A_2_Z, G_CSET_LATINS,
  * G_CSET_LATINC).
- * cpair_comment_single specifies the characters
- * at the start and end of single-line comments. The default is "#\n" which
- * means that single-line comments start with a '#' and continue until a '\n'
- * (end of line).
- * case_sensitive specifies if symbols are
- * case sensitive (the default is FALSE).
- * skip_comment_multi specifies if multi-line
- * comments are skipped and not returned as tokens (the default is TRUE).
- * skip_comment_single specifies if single-line
- * comments are skipped and not returned as tokens (the default is TRUE).
- * scan_comment_multi specifies if multi-line
- * comments are recognized (the default is TRUE).
- * scan_identifier specifies if identifiers
- * are recognized (the default is TRUE).
- * scan_identifier_1char specifies if single-character
- * identifiers are recognized (the default is FALSE).
- * scan_identifier_NULL specifies if
- * NULL is reported as G_TOKEN_IDENTIFIER_NULL.
- * (the default is FALSE).
- * scan_symbols specifies if symbols are
- * recognized (the default is TRUE).
- * scan_binary specifies if binary numbers
- * are recognized (the default is FALSE).
- * scan_octal specifies if octal numbers
- * are recognized (the default is TRUE).
- * scan_float specifies if floating point numbers
- * are recognized (the default is TRUE).
- * scan_hex specifies if hexadecimal numbers
- * are recognized (the default is TRUE).
- * scan_hex_dollar specifies if '$' is recognized
- * as a prefix for hexadecimal numbers (the default is FALSE).
- * scan_string_sq specifies if strings can be
- * enclosed in single quotes (the default is TRUE).
- * scan_string_dq specifies if strings can be
- * enclosed in double quotes (the default is TRUE).
- * numbers_2_int specifies if binary, octal and
- * hexadecimal numbers are reported as G_TOKEN_INT (the default is TRUE).
- * int_2_float specifies if all numbers are
- * reported as G_TOKEN_FLOAT (the default is FALSE).
- * identifier_2_string specifies if identifiers
- * are reported as strings (the default is FALSE).
- * char_2_token specifies if characters
- * are reported by setting token = ch or as G_TOKEN_CHAR
+ * gchar *cpair_comment_single;
+ * specifies the characters at the start and
+ * end of single-line comments. The default is "#\n" which means
+ * that single-line comments start with a '#' and continue until
+ * a '\n' (end of line).
+ * guint case_sensitive : 1;
+ * specifies if symbols are case sensitive (the
+ * default is FALSE).
+ * guint skip_comment_multi : 1;
+ * specifies if multi-line comments are skipped
+ * and not returned as tokens (the default is TRUE).
+ * guint skip_comment_single : 1;
+ * specifies if single-line comments are skipped
+ * and not returned as tokens (the default is TRUE).
+ * guint scan_comment_multi : 1;
+ * specifies if multi-line comments are recognized
  * (the default is TRUE).
- * symbol_2_token specifies if symbols
- * are reported by setting token = v_symbol or as
- * G_TOKEN_SYMBOL (the default is FALSE).
- * scope_0_fallback specifies if a symbol
- * is searched for in the default scope in addition to the current scope
+ * guint scan_identifier : 1;
+ * specifies if identifiers are recognized (the
+ * default is TRUE).
+ * guint scan_identifier_1char : 1;
+ * specifies if single-character
+ * identifiers are recognized (the default is FALSE).
+ * guint scan_identifier_NULL : 1;
+ * specifies if NULL is reported as
+ * G_TOKEN_IDENTIFIER_NULL (the default is FALSE).
+ * guint scan_symbols : 1;
+ * specifies if symbols are recognized (the default
+ * is TRUE).
+ * guint scan_binary : 1;
+ * specifies if binary numbers are recognized (the
+ * default is FALSE).
+ * guint scan_octal : 1;
+ * specifies if octal numbers are recognized (the
+ * default is TRUE).
+ * guint scan_float : 1;
+ * specifies if floating point numbers are recognized
+ * (the default is TRUE).
+ * guint scan_hex : 1;
+ * specifies if hexadecimal numbers are recognized (the
+ * default is TRUE).
+ * guint scan_hex_dollar : 1;
+ * specifies if '$' is recognized as a prefix for
+ * hexadecimal numbers (the default is FALSE).
+ * guint scan_string_sq : 1;
+ * specifies if strings can be enclosed in single
+ * quotes (the default is TRUE).
+ * guint scan_string_dq : 1;
+ * specifies if strings can be enclosed in double
+ * quotes (the default is TRUE).
+ * guint numbers_2_int : 1;
+ * specifies if binary, octal and hexadecimal numbers
+ * are reported as G_TOKEN_INT (the default is TRUE).
+ * guint int_2_float : 1;
+ * specifies if all numbers are reported as G_TOKEN_FLOAT
  * (the default is FALSE).
+ * guint identifier_2_string : 1;
+ * specifies if identifiers are reported as strings
+ * (the default is FALSE).
+ * guint char_2_token : 1;
+ * specifies if characters are reported by setting
+ * token = ch or as G_TOKEN_CHAR (the default
+ * is TRUE).
+ * guint symbol_2_token : 1;
+ * specifies if symbols are reported by setting
+ * token = v_symbol or as G_TOKEN_SYMBOL (the
+ * default is FALSE).
+ * guint scope_0_fallback : 1;
+ * specifies if a symbol is searched for in the
+ * default scope in addition to the current scope (the default is FALSE).
+ * guint store_int64 : 1;
+ * use value.v_int64 rather than v_int
  */
 public struct GScannerConfig
 {
@@ -3005,34 +3056,6 @@ public struct GScannerConfig
 	//uint symbol2_Token : 1;
 	//uint scope0_Fallback : 1; /+* try scop 0 on lookups? +/
 	//uint storeInt64 : 1; /+* use value.vInt64 rather than vInt +/
-	uint paddingDummy;
-}
-
-
-/**
- * Main Gtk struct.
- * The data structure used for automatic completion.
- * GList *items;
- * list of target items (strings or data structures).
- * GCompletionFunc func;
- * function which is called to get the string associated with a
- * target item. It is NULL if the target items are strings.
- * gchar *prefix;
- * the last prefix passed to g_completion_complete() or
- * g_completion_complete_utf8().
- * GList *cache;
- * the list of items which begin with prefix.
- * GCompletionStrncmpFunc strncmp_func;
- * The function to use when comparing strings. Use
- * g_completion_set_compare() to modify this function.
- */
-public struct GCompletion
-{
-	GList* items;
-	GCompletionFunc func;
-	char* prefix;
-	GList* cache;
-	GCompletionStrncmpFunc strncmpFunc;
 }
 
 
@@ -3236,8 +3259,8 @@ public struct GMarkupParser
 
 /**
  * Main Gtk struct.
- * The GKeyFile struct contains only private fields
- * and should not be used directly.
+ * The GKeyFile struct contains only private data
+ * and should not be accessed directly.
  */
 public struct GKeyFile{}
 
@@ -3248,17 +3271,6 @@ public struct GKeyFile{}
  * private data and should not be directly accessed.
  */
 public struct GBookmarkFile{}
-
-
-/**
- * Main Gtk struct.
- * Warning
- * GMemChunk is deprecated and should not be used in newly-written code.
- * The GMemChunk struct is an opaque data structure representing a
- * memory chunk. It should be accessed only through the use of the
- * following functions.
- */
-public struct GMemChunk{}
 
 
 /**
@@ -3340,7 +3352,7 @@ public struct GSequenceIter{}
  * GTrashStack *next;
  * pointer to the previous element of the stack,
  * gets stored in the first sizeof (gpointer)
- * bytes of the element.
+ * bytes of the element
  */
 public struct GTrashStack
 {
@@ -3369,7 +3381,6 @@ public struct GHashTableIter{}
 /**
  * Main Gtk struct.
  * The GString struct contains the public fields of a GString.
- * The GString struct contains the public fields of a GString.
  * gchar *str;
  * points to the character data. It may move as text is added.
  * The str field is null-terminated and so
@@ -3391,8 +3402,8 @@ public struct GString
 
 /**
  * Main Gtk struct.
- * An opaque data structure representing String Chunks. It should only
- * be accessed by using the following functions.
+ * An opaque data structure representing String Chunks.
+ * It should only be accessed by using the following functions.
  */
 public struct GStringChunk{}
 
@@ -3448,6 +3459,32 @@ public struct GByteArray
 
 
 /**
+ * A simple refcounted data type representing an immutable byte sequence
+ * from an unspecified origin.
+ * The purpose of a GBytes is to keep the memory region that it holds
+ * alive for as long as anyone holds a reference to the bytes. When
+ * the last reference count is dropped, the memory is released. Multiple
+ * unrelated callers can use byte data in the GBytes without coordinating
+ * their activities, resting assured that the byte data will not change or
+ * move while they hold a reference.
+ * A GBytes can come from many different origins that may have
+ * different procedures for freeing the memory region. Examples are
+ * memory from g_malloc(), from memory slices, from a GMappedFile or
+ * memory from other allocators.
+ * GBytes work well as keys in GHashTable. Use g_bytes_equal() and
+ * g_bytes_hash() as parameters to g_hash_table_new() or g_hash_table_new_full().
+ * GBytes can also be used as keys in a GTree by passing the g_bytes_compare()
+ * function to g_tree_new().
+ * The data pointed to by this bytes must not be modified. For a mutable
+ * array of bytes see GByteArray. Use g_bytes_unref_to_array() to create a
+ * mutable array for a GBytes sequence. To create an immutable GBytes from
+ * a mutable GByteArray, use the g_byte_array_free_to_bytes() function.
+ * Since 2.32
+ */
+public struct GBytes{}
+
+
+/**
  * Main Gtk struct.
  * The GTree struct is an opaque data
  * structure representing a Balanced Binary Tree. It
@@ -3495,48 +3532,6 @@ public struct GData{}
 
 /**
  * Main Gtk struct.
- * The GRelation struct is an opaque data structure to represent a
- * Relation. It should
- * only be accessed via the following functions.
- */
-public struct GRelation{}
-
-
-/**
- * The GTuples struct is used to return records (or tuples) from the
- * GRelation by g_relation_select(). It only contains one public
- * member - the number of records that matched. To access the matched
- * records, you must use g_tuples_index().
- * guint len;
- * the number of records that matched.
- */
-public struct GTuples
-{
-	uint len;
-}
-
-
-/**
- * Main Gtk struct.
- * The GCache struct is an opaque data structure containing
- * information about a GCache. It should only be accessed via the
- * following functions.
- */
-public struct GCache{}
-
-
-/**
- * Main Gtk struct.
- * Warning
- * GAllocator is deprecated and should not be used in newly-written code.
- * The GAllocator struct contains private data. and should only be
- * accessed using the following functions.
- */
-public struct GAllocator{}
-
-
-/**
- * Main Gtk struct.
  * A type in the GVariant type system.
  * Two types may not be compared by value; use g_variant_type_equal() or
  * g_variant_type_is_subtype_of(). May be copied using
@@ -3569,6 +3564,67 @@ public struct GVariantIter{}
  * access it from more than one thread.
  */
 public struct GVariantBuilder{}
+
+
+/**
+ * Main Gtk struct.
+ * Warning
+ * GCache has been deprecated since version 2.32 and should not be used in newly-written code. Use a GHashTable instead
+ * The GCache struct is an opaque data structure containing
+ * information about a GCache. It should only be accessed via the
+ * following functions.
+ */
+public struct GCache{}
+
+
+/**
+ * Main Gtk struct.
+ * The GRelation struct is an opaque data structure to represent a
+ * Relation. It should
+ * only be accessed via the following functions.
+ */
+public struct GRelation{}
+
+
+/**
+ * The GTuples struct is used to return records (or tuples) from the
+ * GRelation by g_relation_select(). It only contains one public
+ * member - the number of records that matched. To access the matched
+ * records, you must use g_tuples_index().
+ * guint len;
+ * the number of records that matched.
+ */
+public struct GTuples
+{
+	uint len;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The data structure used for automatic completion.
+ * GList *items;
+ * list of target items (strings or data structures).
+ * GCompletionFunc func;
+ * function which is called to get the string associated with a
+ * target item. It is NULL if the target items are strings.
+ * gchar *prefix;
+ * the last prefix passed to g_completion_complete() or
+ * g_completion_complete_utf8().
+ * GList *cache;
+ * the list of items which begin with prefix.
+ * GCompletionStrncmpFunc strncmp_func;
+ * The function to use when comparing strings. Use
+ * g_completion_set_compare() to modify this function.
+ */
+public struct GCompletion
+{
+	GList* items;
+	GCompletionFunc func;
+	char* prefix;
+	GList* cache;
+	GCompletionStrncmpFunc strncmpFunc;
+}
 
 
 /*
@@ -3835,6 +3891,104 @@ public struct GVariantBuilder{}
 // #define g_memmove(dest,src,len)
 
 /*
+ * A convenience macro to allocate a block of memory from the
+ * slice allocator.
+ * It calls g_slice_alloc() with sizeof (type)
+ * and casts the returned pointer to a pointer of the given type,
+ * avoiding a type cast in the source code.
+ * Note that the underlying slice allocation mechanism can
+ * be changed with the G_SLICE=always-malloc
+ * environment variable.
+ * type :
+ * the type to allocate, typically a structure name
+ * Returns :
+ * a pointer to the allocated block, cast to a pointer to type
+ * Since 2.10
+ */
+// TODO
+// #define g_slice_new(type)
+
+/*
+ * A convenience macro to allocate a block of memory from the
+ * slice allocator and set the memory to 0.
+ * It calls g_slice_alloc0() with sizeof (type)
+ * and casts the returned pointer to a pointer of the given type,
+ * avoiding a type cast in the source code.
+ * Note that the underlying slice allocation mechanism can
+ * be changed with the G_SLICE=always-malloc
+ * environment variable.
+ * type :
+ * the type to allocate, typically a structure name
+ * Since 2.10
+ */
+// TODO
+// #define g_slice_new0(type)
+
+/*
+ * A convenience macro to duplicate a block of memory using
+ * the slice allocator.
+ * It calls g_slice_copy() with sizeof (type)
+ * and casts the returned pointer to a pointer of the given type,
+ * avoiding a type cast in the source code.
+ * Note that the underlying slice allocation mechanism can
+ * be changed with the G_SLICE=always-malloc
+ * environment variable.
+ * type :
+ * the type to duplicate, typically a structure name
+ * mem :
+ * the memory to copy into the allocated block
+ * Returns :
+ * a pointer to the allocated block, cast to a pointer to type
+ * Since 2.14
+ */
+// TODO
+// #define g_slice_dup(type, mem)
+
+/*
+ * A convenience macro to free a block of memory that has
+ * been allocated from the slice allocator.
+ * It calls g_slice_free1() using sizeof (type)
+ * as the block size.
+ * Note that the exact release behaviour can be changed with the
+ * G_DEBUG=gc-friendly environment
+ * variable, also see G_SLICE for
+ * related debugging options.
+ * type :
+ * the type of the block to free, typically a structure name
+ * mem :
+ * a pointer to the block to free
+ * Since 2.10
+ */
+// TODO
+// #define g_slice_free(type, mem)
+
+/*
+ * Frees a linked list of memory blocks of structure type type.
+ * The memory blocks must be equal-sized, allocated via
+ * g_slice_alloc() or g_slice_alloc0() and linked together by
+ * a next pointer (similar to GSList). The name of the
+ * next field in type is passed as third argument.
+ * Note that the exact release behaviour can be changed with the
+ * G_DEBUG=gc-friendly environment
+ * variable, also see G_SLICE for
+ * related debugging options.
+ * type :
+ * the type of the mem_chain blocks
+ * mem_chain :
+ * a pointer to the first block of the chain
+ * next :
+ * the field name of the next pointer in type
+ * Since 2.10
+ * [1]
+ * [Bonwick94] Jeff Bonwick, The slab allocator: An object-caching kernel
+ * memory allocator. USENIX 1994, and
+ * [Bonwick01] Bonwick and Jonathan Adams, Magazines and vmem: Extending the
+ * slab allocator to many cpu's and arbitrary resources. USENIX 2001
+ */
+// TODO
+// #define g_slice_free_chain(type, mem_chain, next)
+
+/*
  * Verifies that the expression evaluates to TRUE. If the expression
  * evaluates to FALSE, a critical message is logged and the current
  * function returns. This can only be used in functions which do not
@@ -3882,32 +4036,37 @@ public struct GVariantBuilder{}
 /*
  * A convenience function/macro to log a normal message.
  * ... :
- * format string, followed by parameters to insert into the format string (as with printf())
+ * format string, followed by parameters to insert
+ * into the format string (as with printf())
  */
 // TODO
 // #define g_message(...)
 
 /*
  * A convenience function/macro to log a warning message.
- * You can make warnings fatal at runtime by setting the G_DEBUG environment
- * variable (see Running GLib Applications).
+ * You can make warnings fatal at runtime by setting the
+ * G_DEBUG environment variable (see
+ * Running GLib Applications).
  * ... :
- * format string, followed by parameters to insert into the format string (as with printf())
+ * format string, followed by parameters to insert
+ * into the format string (as with printf())
  */
 // TODO
 // #define g_warning(...)
 
 /*
- * Logs a "critical warning" (G_LOG_LEVEL_CRITICAL). It's more or less
- * application-defined what constitutes a critical vs. a regular
- * warning. You could call g_log_set_always_fatal() to make critical
- * warnings exit the program, then use g_critical() for fatal errors, for
+ * Logs a "critical warning" (G_LOG_LEVEL_CRITICAL).
+ * It's more or less application-defined what constitutes
+ * a critical vs. a regular warning. You could call
+ * g_log_set_always_fatal() to make critical warnings exit
+ * the program, then use g_critical() for fatal errors, for
  * example.
- * You can also make critical warnings fatal at runtime by setting
- * the G_DEBUG environment variable (see
+ * You can also make critical warnings fatal at runtime by
+ * setting the G_DEBUG environment variable (see
  * Running GLib Applications).
  * ... :
- * format string, followed by parameters to insert into the format string (as with printf())
+ * format string, followed by parameters to insert
+ * into the format string (as with printf())
  */
 // TODO
 // #define g_critical(...)
@@ -3915,12 +4074,13 @@ public struct GVariantBuilder{}
 /*
  * A convenience function/macro to log an error message.
  * Error messages are always fatal, resulting in a call to
- * abort() to terminate the application.
- * This function will result in a core dump; don't use it for errors you
- * expect. Using this function indicates a bug in your program, i.e. an
- * assertion failure.
+ * abort() to terminate the application. This function will
+ * result in a core dump; don't use it for errors you expect.
+ * Using this function indicates a bug in your program, i.e.
+ * an assertion failure.
  * ... :
- * format string, followed by parameters to insert into the format string (as with printf())
+ * format string, followed by parameters to insert
+ * into the format string (as with printf())
  */
 // TODO
 // #define g_error(...)
@@ -3928,17 +4088,20 @@ public struct GVariantBuilder{}
 /*
  * A convenience function/macro to log a debug message.
  * ... :
- * format string, followed by parameters to insert into the format string (as with printf())
+ * format string, followed by parameters to insert
+ * into the format string (as with printf())
  * Since 2.6
  */
 // TODO
 // #define g_debug(...)
 
 /*
- * Removes leading and trailing whitespace from a string. See g_strchomp() and
- * g_strchug().
+ * Removes leading and trailing whitespace from a string.
+ * See g_strchomp() and g_strchug().
  * string :
- * a string to remove the leading and trailing whitespace from.
+ * a string to remove the leading and trailing whitespace from
+ * Returns :
+ * string
  */
 // TODO
 // #define g_strstrip( string )
@@ -3967,26 +4130,26 @@ public struct GVariantBuilder{}
 // #define _(String)
 
 /*
- * Like _(), but handles context in message ids. This has the advantage that
- * the string can be adorned with a prefix to guarantee uniqueness and provide
- * context to the translator.
- * One use case given in the gettext manual is GUI translation, where one could
- * e.g. disambiguate two "Open" menu entries as "File|Open" and "Printer|Open".
- * Another use case is the string "Russian" which may have to be translated
- * differently depending on whether it's the name of a character set or a
- * language. This could be solved by using "charset|Russian" and
- * "language|Russian".
+ * Like _(), but handles context in message ids. This has the advantage
+ * that the string can be adorned with a prefix to guarantee uniqueness
+ * and provide context to the translator.
+ * One use case given in the gettext manual is GUI translation, where one
+ * could e.g. disambiguate two "Open" menu entries as "File|Open" and
+ * "Printer|Open". Another use case is the string "Russian" which may
+ * have to be translated differently depending on whether it's the name
+ * of a character set or a language. This could be solved by using
+ * "charset|Russian" and "language|Russian".
  * See the C_() macro for a different way to mark up translatable strings
  * with context.
  * Note
- * If you are using the Q_() macro, you need to make sure that you
- * pass --keyword=Q_ to xgettext when extracting messages.
- * If you are using GNU gettext >= 0.15, you can also use
+ * If you are using the Q_() macro, you need to make sure
+ * that you pass --keyword=Q_ to xgettext when extracting
+ * messages. If you are using GNU gettext >= 0.15, you can also use
  * --keyword=Q_:1g to let xgettext split the context
  * string off into a msgctxt line in the po file.
  * String :
- * the string to be translated, with a '|'-separated prefix which
- * must not be translated
+ * the string to be translated, with a '|'-separated prefix
+ * which must not be translated
  * Returns :
  * the translated message
  * Since 2.4
@@ -3995,15 +4158,16 @@ public struct GVariantBuilder{}
 // #define Q_(String)
 
 /*
- * Uses gettext to get the translation for msgid. msgctxt is
+ * Uses gettext to get the translation for String. Context is
  * used as a context. This is mainly useful for short strings which
  * may need different translations, depending on the context in which
  * they are used.
  * $(DDOC_COMMENT example)
  * Note
- * If you are using the C_() macro, you need to make sure that you
- * pass --keyword=C_:1c,2 to xgettext when extracting
- * messages. Note that this only works with GNU gettext >= 0.15.
+ * If you are using the C_() macro, you need to make sure
+ * that you pass --keyword=C_:1c,2 to xgettext when
+ * extracting messages. Note that this only works with GNU
+ * gettext >= 0.15.
  * Context :
  * a message context, must be a string literal
  * String :
@@ -4016,10 +4180,10 @@ public struct GVariantBuilder{}
 // #define C_(Context,String)
 
 /*
- * Only marks a string for translation.
- * This is useful in situations where the translated strings can't
- * be directly used, e.g. in string array initializers.
- * To get the translated string, call gettext() at runtime.
+ * Only marks a string for translation. This is useful in situations
+ * where the translated strings can't be directly used, e.g. in string
+ * array initializers. To get the translated string, call gettext()
+ * at runtime.
  * $(DDOC_COMMENT example)
  * String :
  * the string to be translated
@@ -4031,13 +4195,13 @@ public struct GVariantBuilder{}
 /*
  * Only marks a string for translation, with context.
  * This is useful in situations where the translated strings can't
- * be directly used, e.g. in string array initializers.
- * To get the translated string, you should call g_dpgettext2() at runtime.
+ * be directly used, e.g. in string array initializers. To get the
+ * translated string, you should call g_dpgettext2() at runtime.
  * $(DDOC_COMMENT example)
  * Note
- * If you are using the NC_() macro, you need to make sure that you
- * pass --keyword=NC_:1c,2 to xgettext when extracting
- * messages. Note that this only works with GNU gettext >= 0.15.
+ * If you are using the NC_() macro, you need to make sure
+ * that you pass --keyword=NC_:1c,2 to xgettext when
+ * extracting messages. Note that this only works with GNU gettext >= 0.15.
  * Intltool has support for the NC_() macro since version 0.40.1.
  * Context :
  * a message context, must be a string literal
@@ -4064,11 +4228,11 @@ public struct GVariantBuilder{}
  * g_scanner_add_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_add_symbol() instead.
  * Adds a symbol to the default scope.
  * scanner :
- * a GScanner.
+ * a GScanner
  * symbol :
- * the symbol to add.
+ * the symbol to add
  * value :
- * the value of the symbol.
+ * the value of the symbol
  */
 // TODO
 // #define g_scanner_add_symbol( scanner, symbol, value )
@@ -4078,9 +4242,9 @@ public struct GVariantBuilder{}
  * g_scanner_remove_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_remove_symbol() instead.
  * Removes a symbol from the default scope.
  * scanner :
- * a GScanner.
+ * a GScanner
  * symbol :
- * the symbol to remove.
+ * the symbol to remove
  */
 // TODO
 // #define g_scanner_remove_symbol( scanner, symbol )
@@ -4090,11 +4254,11 @@ public struct GVariantBuilder{}
  * g_scanner_foreach_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_foreach_symbol() instead.
  * Calls a function for each symbol in the default scope.
  * scanner :
- * a GScanner.
+ * a GScanner
  * func :
- * the function to call with each symbol.
+ * the function to call with each symbol
  * data :
- * data to pass to the function.
+ * data to pass to the function
  */
 // TODO
 // #define g_scanner_foreach_symbol( scanner, func, data )
@@ -4104,7 +4268,7 @@ public struct GVariantBuilder{}
  * g_scanner_freeze_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
  * There is no reason to use this macro, since it does nothing.
  * scanner :
- * a GScanner.
+ * a GScanner
  */
 // TODO
 // #define g_scanner_freeze_symbol_table(scanner)
@@ -4114,7 +4278,7 @@ public struct GVariantBuilder{}
  * g_scanner_thaw_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
  * There is no reason to use this macro, since it does nothing.
  * scanner :
- * a GScanner.
+ * a GScanner
  */
 // TODO
 // #define g_scanner_thaw_symbol_table(scanner)
@@ -4122,176 +4286,7 @@ public struct GVariantBuilder{}
 /*
  */
 // TODO
-// # define G_WIN32_DLLMAIN_FOR_DLL_NAME(static, dll_name) Warning G_WIN32_DLLMAIN_FOR_DLL_NAME is deprecated and should not be used in newly-written code. On Windows, this macro defines a DllMain() function that stores the actual DLL name that the code being compiled will be included in. On non-Windows platforms, expands to nothing. static : empty or "static". dll_name : the name of the (pointer to the) char array where the DLL name will be stored. If this is used, you must also include windows.h. If you need a more complex DLL entry point function, you cannot use this.
-
-/*
- * A convenience macro to allocate a block of memory from the slice allocator.
- * It calls g_slice_alloc() with sizeof (type) and casts
- * the returned pointer to a pointer of the given type, avoiding a type cast
- * in the source code.
- * Note that the underlying slice allocation mechanism can
- * be changed with the G_SLICE=always-malloc
- * environment variable.
- * type :
- * the type to allocate, typically a structure name
- * Returns :
- * a pointer to the allocated block, cast to a pointer to type.
- * Since 2.10
- */
-// TODO
-// #define g_slice_new(type)
-
-/*
- * A convenience macro to allocate a block of memory from the slice allocator
- * and set the memory to 0. It calls g_slice_alloc0() with
- * sizeof (type) and casts the returned pointer to a pointer
- * of the given type, avoiding a type cast in the source code.
- * Note that the underlying slice allocation mechanism can
- * be changed with the G_SLICE=always-malloc
- * environment variable.
- * type :
- * the type to allocate, typically a structure name
- * Returns :
- * a pointer to the allocated block, cast to a pointer to type.
- * Since 2.10
- */
-// TODO
-// #define g_slice_new0(type)
-
-/*
- * A convenience macro to duplicate a block of memory using the slice allocator.
- * It calls g_slice_copy() with sizeof (type) and casts
- * the returned pointer to a pointer of the given type, avoiding a type cast
- * in the source code.
- * Note that the underlying slice allocation mechanism can
- * be changed with the G_SLICE=always-malloc
- * environment variable.
- * type :
- * the type to duplicate, typically a structure name
- * mem :
- * the memory to copy into the allocated block
- * Returns :
- * a pointer to the allocated block, cast to a pointer to type.
- * Since 2.14
- */
-// TODO
-// #define g_slice_dup(type, mem)
-
-/*
- * A convenience macro to free a block of memory that has been allocated
- * from the slice allocator. It calls g_slice_free1() using
- * sizeof (type) as the block size.
- * Note that the exact release behaviour can be changed with the
- * G_DEBUG=gc-friendly environment variable,
- * also see G_SLICE for related debugging options.
- * type :
- * the type of the block to free, typically a structure name
- * mem :
- * a pointer to the block to free
- * Since 2.10
- */
-// TODO
-// #define g_slice_free(type, mem)
-
-/*
- * Frees a linked list of memory blocks of structure type type.
- * The memory blocks must be equal-sized, allocated via
- * g_slice_alloc() or g_slice_alloc0() and linked together by a
- * next pointer (similar to GSList). The name of the
- * next field in type is passed as third argument.
- * Note that the exact release behaviour can be changed with the
- * G_DEBUG=gc-friendly environment variable,
- * also see G_SLICE for related debugging options.
- * type :
- * the type of the mem_chain blocks
- * mem_chain :
- * a pointer to the first block of the chain
- * next :
- * the field name of the next pointer in type
- * Since 2.10
- * [6]
- * [Bonwick94] Jeff Bonwick, The slab allocator: An object-caching kernel
- * memory allocator. USENIX 1994, and
- * [Bonwick01] Bonwick and Jonathan Adams, Magazines and vmem: Extending the
- * slab allocator to many cpu's and arbitrary resources. USENIX 2001
- */
-// TODO
-// #define g_slice_free_chain(type, mem_chain, next)
-
-/*
- * Warning
- * g_mem_chunk_create has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice
- *  allocator instead
- * A convenience macro for creating a new GMemChunk. It calls
- * g_mem_chunk_new(), using the given type to create the GMemChunk
- * name. The atom size is determined using
- * sizeof(), and the area size is calculated by
- * multiplying the pre_alloc parameter with the atom size.
- * type :
- * the type of the atoms, typically a structure name.
- * pre_alloc :
- * the number of atoms to store in each block of memory.
- * alloc_type :
- * the type of the GMemChunk. G_ALLOC_AND_FREE is used
- * if the atoms will be freed individually. G_ALLOC_ONLY
- * should be used if atoms will never be freed
- * individually. G_ALLOC_ONLY is quicker, since it does
- * not need to track free atoms, but it obviously wastes
- * memory if you no longer need many of the atoms.
- * Returns :
- * the new GMemChunk.
- */
-// TODO
-// #define g_mem_chunk_create(type, pre_alloc, alloc_type)
-
-/*
- * Warning
- * g_chunk_new has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_new() instead
- * A convenience macro to allocate an atom of memory from a GMemChunk.
- * It calls g_mem_chunk_alloc() and casts the returned atom to a
- * pointer to the given type, avoiding a type cast in the source code.
- * type :
- * the type of the GMemChunk atoms, typically a structure name.
- * chunk :
- * a GMemChunk.
- * Returns :
- * a pointer to the allocated atom, cast to a pointer to
- * type.
- */
-// TODO
-// #define g_chunk_new(type, chunk)
-
-/*
- * Warning
- * g_chunk_new0 has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_new0() instead
- * A convenience macro to allocate an atom of memory from a GMemChunk.
- * It calls g_mem_chunk_alloc0() and casts the returned atom to a
- * pointer to the given type, avoiding a type cast in the source code.
- * type :
- * the type of the GMemChunk atoms, typically a structure name.
- * chunk :
- * a GMemChunk.
- * Returns :
- * a pointer to the allocated atom, cast to a pointer to
- * type.
- */
-// TODO
-// #define g_chunk_new0(type, chunk)
-
-/*
- * Warning
- * g_chunk_free has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_free() instead
- * A convenience macro to free an atom of memory from a GMemChunk. It
- * simply switches the arguments and calls g_mem_chunk_free() It is
- * included simply to complement the other convenience macros,
- * g_chunk_new() and g_chunk_new0().
- * mem :
- * a pointer to the atom to be freed.
- * mem_chunk :
- * a GMemChunk.
- */
-// TODO
-// #define g_chunk_free(mem, mem_chunk)
+// # define G_WIN32_DLLMAIN_FOR_DLL_NAME(static, dll_name) Warning G_WIN32_DLLMAIN_FOR_DLL_NAME is deprecated and should not be used in newly-written code. On Windows, this macro defines a DllMain() function that stores the actual DLL name that the code being compiled will be included in. On non-Windows platforms, expands to nothing. static : empty or "static" dll_name : the name of the (pointer to the) char array where the DLL name will be stored. If this is used, you must also include windows.h. If you need a more complex DLL entry point function, you cannot use this
 
 /*
  * A convenience macro to get the previous element in a GList.
@@ -4457,6 +4452,20 @@ public struct GVariantBuilder{}
 // #define g_node_insert_data(parent, position, data)
 
 /*
+ * Inserts a new GNode after the given sibling.
+ * parent :
+ * the GNode to place the new GNode under
+ * sibling :
+ * the sibling GNode to place the new GNode after
+ * data :
+ * the data for the new GNode
+ * Returns :
+ * the new GNode
+ */
+// TODO
+// #define g_node_insert_data_after(parent, sibling, data)
+
+/*
  * Inserts a new GNode before the given sibling.
  * parent :
  * the GNode to place the new GNode under
@@ -4559,7 +4568,7 @@ public struct GVariantBuilder{}
  * the GQuark to identify the data element.
  * d :
  * the data element, or NULL to remove any previous element
- * corresponding to q.
+ * corresponding to q. [allow-none]
  */
 // TODO
 // #define g_datalist_id_set_data(dl, q, d)
@@ -4582,7 +4591,7 @@ public struct GVariantBuilder{}
  * the string to identify the data element.
  * d :
  * the data element, or NULL to remove any previous element
- * corresponding to k.
+ * corresponding to k. [allow-none]
  */
 // TODO
 // #define g_datalist_set_data(dl, k, d)
@@ -4596,7 +4605,7 @@ public struct GVariantBuilder{}
  * the string to identify the data element.
  * d :
  * the data element, or NULL to remove any previous element
- * corresponding to k.
+ * corresponding to k. [allow-none]
  * f :
  * the function to call when the data element is removed. This
  * function will be called with the data element and can be used to
@@ -4776,9 +4785,9 @@ public alias extern(C) int  function (void*) GSourceFunc;
  * and should return NULL on success or a string describing the initialization
  * error.
  * module :
- * the GModule corresponding to the module which has just been loaded.
+ * the GModule corresponding to the module which has just been loaded
  * Returns :
- * NULL on success, or a string describing the initialization error.
+ * NULL on success, or a string describing the initialization error
  */
 // const gchar * (*GModuleCheckInit) (GModule *module);
 public alias extern(C) char *  function (GModule*) GModuleCheckInit;
@@ -4789,7 +4798,7 @@ public alias extern(C) char *  function (GModule*) GModuleCheckInit;
  * automatically when the module is unloaded.
  * It is passed the GModule structure.
  * module :
- * the GModule about to be unloaded.
+ * the GModule about to be unloaded
  */
 // void (*GModuleUnload) (GModule *module);
 public alias extern(C) void  function (GModule*) GModuleUnload;
@@ -4823,19 +4832,21 @@ public alias extern(C) void  function (char*) GPrintFunc;
 /*
  * Specifies the prototype of log handler functions.
  * log_domain :
- * the log domain of the message.
+ * the log domain of the message
  * log_level :
- * the log level of the message (including the fatal and recursion
- * flags).
+ * the log level of the message (including the
+ * fatal and recursion flags)
  * message :
- * the message to process.
+ * the message to process
  * user_data :
- * user data, set in g_log_set_handler().
+ * user data, set in g_log_set_handler()
  */
 // void (*GLogFunc) (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *message,  gpointer user_data);
 public alias extern(C) void  function (char*, GLogLevelFlags, char*, void*) GLogFunc;
 
 /*
+ * Warning
+ * GVoidFunc is deprecated and should not be used in newly-written code.
  * Declares a type of function which takes no arguments
  * and has no return value. It is used to specify the type
  * function passed to g_atexit().
@@ -4856,64 +4867,44 @@ public alias extern(C) void  function (void*) GFreeFunc;
 /*
  * Specifies the type of the message handler function.
  * scanner :
- * a GScanner.
+ * a GScanner
  * message :
- * the message.
+ * the message
  * error :
- * TRUE if the message signals an error, FALSE if it
- * signals a warning.
+ * TRUE if the message signals an error,
+ * FALSE if it signals a warning.
  */
 // void (*GScannerMsgFunc) (GScanner *scanner,  gchar *message,  gboolean error);
 public alias extern(C) void  function (GScanner*, char*, int) GScannerMsgFunc;
 
 /*
- * Specifies the type of the function passed to g_completion_new(). It
- * should return the string corresponding to the given target item.
- * This is used when you use data structures as GCompletion items.
- * Param1 :
- * the completion item.
- * Returns :
- * the string corresponding to the item.
- */
-// gchar * (*GCompletionFunc) (gpointer Param1);
-public alias extern(C) char *  function (void*) GCompletionFunc;
-
-/*
- * Specifies the type of the function passed to
- * g_completion_set_compare(). This is used when you use strings as
- * GCompletion items.
- * s1 :
- * string to compare with s2.
- * s2 :
- * string to compare with s1.
- * n :
- * maximal number of bytes to compare.
- * Returns :
- * an integer less than, equal to, or greater than zero if
- * the first n bytes of s1 is found, respectively, to be
- * less than, to match, or to be greater than the first n
- * bytes of s2.
- */
-// gint (*GCompletionStrncmpFunc) (const gchar *s1,  const gchar *s2,  gsize n);
-public alias extern(C) int  function (char*, char*, gsize) GCompletionStrncmpFunc;
-
-/*
  * Specifies the type of the setup function passed to g_spawn_async(),
- * g_spawn_sync() and g_spawn_async_with_pipes(). On POSIX platforms it
- * is called in the child after GLib has performed all the setup it plans
- * to perform but before calling exec(). On POSIX actions taken in this
- * function will thus only affect the child, not the parent.
- * Note that POSIX allows only async-signal-safe functions (see signal(7))
- * to be called in the child between fork() and exec(), which drastically
- * limits the usefulness of child setup functions.
- * Also note that modifying the environment from the child setup function
- * may not have the intended effect, since it will get overridden by
- * a non-NULL env argument to the g_spawn... functions.
- * On Windows the function is called in the parent. Its usefulness on
+ * g_spawn_sync() and g_spawn_async_with_pipes(), which can, in very
+ * limited ways, be used to affect the child's execution.
+ * On POSIX platforms, the function is called in the child after GLib
+ * has performed all the setup it plans to perform, but before calling
+ * exec(). Actions taken in this function will only affect the child,
+ * not the parent.
+ * On Windows, the function is called in the parent. Its usefulness on
  * Windows is thus questionable. In many cases executing the child setup
  * function in the parent can have ill effects, and you should be very
  * careful when porting software to Windows that uses child setup
  * functions.
+ * However, even on POSIX, you are extremely limited in what you can
+ * safely do from a GSpawnChildSetupFunc, because any mutexes that
+ * were held by other threads in the parent process at the time of the
+ * fork() will still be locked in the child process, and they will
+ * never be unlocked (since the threads that held them don't exist in
+ * the child). POSIX allows only async-signal-safe functions (see
+ * signal(7))
+ * to be called in the child between fork() and exec(), which
+ * drastically limits the usefulness of child setup functions.
+ * In particular, it is not safe to call any function which may
+ * call malloc(), which includes POSIX functions such as setenv().
+ * If you need to set up the child environment differently from
+ * the parent, you should use g_get_environ(), g_environ_setenv(),
+ * and g_environ_unsetenv(), and then pass the complete environment
+ * list to the g_spawn... function.
  * user_data :
  * user data to pass to the function.
  */
@@ -5079,7 +5070,7 @@ public alias extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) GSe
  * g_hash_table_new() when a GHashTable is created.
  * The function is passed a key and should return a guint hash value.
  * The functions g_direct_hash(), g_int_hash() and g_str_hash() provide
- * hash functions which can be used when the key is a gpointer, gint,
+ * hash functions which can be used when the key is a gpointer, gint*,
  * and gchar* respectively.
  * g_direct_hash() is also the appropriate hash function for keys
  * of the form GINT_TO_POINTER (n) (or similar macros).
@@ -5100,9 +5091,9 @@ public alias extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) GSe
  * remainder is taken modulo a somewhat predictable prime number. There
  * must be an element of randomness that an attacker is unable to guess.
  * key :
- * a key.
+ * a key
  * Returns :
- * the hash value corresponding to the key.
+ * the hash value corresponding to the key
  */
 // guint (*GHashFunc) (gconstpointer key);
 public alias extern(C) uint  function (void*) GHashFunc;
@@ -5112,11 +5103,11 @@ public alias extern(C) uint  function (void*) GHashFunc;
  * equality. The function should return TRUE if both values are equal
  * and FALSE otherwise.
  * a :
- * a value.
+ * a value
  * b :
- * a value to compare with.
+ * a value to compare with
  * Returns :
- * TRUE if a = b; FALSE otherwise.
+ * TRUE if a = b; FALSE otherwise
  */
 // gboolean (*GEqualFunc) (gconstpointer a,  gconstpointer b);
 public alias extern(C) int  function (void*, void*) GEqualFunc;
@@ -5126,11 +5117,11 @@ public alias extern(C) int  function (void*, void*) GEqualFunc;
  * It is called with each key/value pair, together with the user_data
  * parameter which is passed to g_hash_table_foreach().
  * key :
- * a key.
+ * a key
  * value :
- * the value corresponding to the key.
+ * the value corresponding to the key
  * user_data :
- * user data passed to g_hash_table_foreach().
+ * user data passed to g_hash_table_foreach()
  */
 // void (*GHFunc) (gpointer key,  gpointer value,  gpointer user_data);
 public alias extern(C) void  function (void*, void*, void*) GHFunc;
@@ -5142,14 +5133,14 @@ public alias extern(C) void  function (void*, void*, void*) GHFunc;
  * g_hash_table_foreach_remove(). It should return TRUE if the
  * key/value pair should be removed from the GHashTable.
  * key :
- * a key.
+ * a key
  * value :
- * the value associated with the key.
+ * the value associated with the key
  * user_data :
- * user data passed to g_hash_table_remove().
+ * user data passed to g_hash_table_remove()
  * Returns :
  * TRUE if the key/value pair should be removed from the
- * GHashTable.
+ * GHashTable
  */
 // gboolean (*GHRFunc) (gpointer key,  gpointer value,  gpointer user_data);
 public alias extern(C) int  function (void*, void*, void*) GHRFunc;
@@ -5242,7 +5233,7 @@ public alias extern(C) void  function (GQuark, void*, void*) GDataForeachFunc;
  * pointer to the GCache key or GCache value and should free any
  * memory and other resources associated with it.
  * value :
- * the GCache value to destroy.
+ * the GCache value to destroy
  */
 // void (*GCacheDestroyFunc) (gpointer value);
 public alias extern(C) void  function (void*) GCacheDestroyFunc;
@@ -5254,9 +5245,9 @@ public alias extern(C) void  function (void*) GCacheDestroyFunc;
  * should return a duplicate of the key.
  * value :
  * the GCache key to destroy (not a
- * GCache value as it seems).
+ * GCache value as it seems)
  * Returns :
- * a copy of the GCache key.
+ * a copy of the GCache key
  */
 // gpointer (*GCacheDupFunc) (gpointer value);
 public alias extern(C) void*  function (void*) GCacheDupFunc;
@@ -5266,14 +5257,69 @@ public alias extern(C) void*  function (void*) GCacheDupFunc;
  * g_cache_new(). It is passed a GCache key and should create the
  * value corresponding to the key.
  * key :
- * a GCache key.
+ * a GCache key
  * Returns :
  * a new GCache value corresponding to the key.
  */
 // gpointer (*GCacheNewFunc) (gpointer key);
 public alias extern(C) void*  function (void*) GCacheNewFunc;
+
+/*
+ * Specifies the type of the function passed to g_completion_new(). It
+ * should return the string corresponding to the given target item.
+ * This is used when you use data structures as GCompletion items.
+ * Param1 :
+ * the completion item.
+ * Returns :
+ * the string corresponding to the item.
+ */
+// gchar * (*GCompletionFunc) (gpointer Param1);
+public alias extern(C) char *  function (void*) GCompletionFunc;
+
+/*
+ * Specifies the type of the function passed to
+ * g_completion_set_compare(). This is used when you use strings as
+ * GCompletion items.
+ * s1 :
+ * string to compare with s2.
+ * s2 :
+ * string to compare with s1.
+ * n :
+ * maximal number of bytes to compare.
+ * Returns :
+ * an integer less than, equal to, or greater than zero if
+ * the first n bytes of s1 is found, respectively, to be
+ * less than, to match, or to be greater than the first n
+ * bytes of s2.
+ */
+// gint (*GCompletionStrncmpFunc) (const gchar *s1,  const gchar *s2,  gsize n);
+public alias extern(C) int  function (char*, char*, gsize) GCompletionStrncmpFunc;
 /**
  * A union holding the value of the token.
+ * gpointer v_symbol;
+ * token symbol value
+ * gchar *v_identifier;
+ * token identifier value
+ * gulong v_binary;
+ * token binary integer value
+ * gulong v_octal;
+ * octal integer value
+ * gulong v_int;
+ * integer value
+ * guint64 v_int64;
+ * 64-bit integer value
+ * gdouble v_float;
+ * floating point value
+ * gulong v_hex;
+ * hex integer value
+ * gchar *v_string;
+ * string value
+ * gchar *v_comment;
+ * comment value
+ * guchar v_char;
+ * character value
+ * guint v_error;
+ * error value
  */
 public struct GTokenValue
 {

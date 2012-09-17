@@ -590,7 +590,6 @@ import: glib.ErrorG
 import: glib.GException
 outFile: ThreadPool
 
-
 file: glib-Asynchronous-Queues.html
 struct: GAsyncQueue
 class: AsyncQueue
@@ -606,28 +605,6 @@ class: Module
 prefix: g_module_
 structWrap: GModule* Module
 import: glib.Str
-text: start
-g_module_open ()
-GModule* g_module_open (const gchar *file_name, GModuleFlags flags);
-Opens a module. If the module has already been opened, its reference
-count is incremented.
-First of all g_module_open() tries to open file_name as a module. If
-that fails and file_name has the ".la"-suffix (and is a libtool archive)
-it tries to open the corresponding module. If that fails and it doesn't
-have the proper module suffix for the platform (G_MODULE_SUFFIX), this
-suffix will be appended and the corresponding module will be opended. If
-that fails and file_name doesn't have the ".la"-suffix, this suffix is
-appended and g_module_open() tries to open the corresponding module. If
-eventually that fails as well, NULL is returned.
-file_name :
-the name of the file containing the module, or NULL to obtain
-a GModule representing the main program itself.
-flags :
-the flags used for opening the module.
-This can be the logical OR of any of the GModuleFlags.
-Returns :
-a GModule on success, or NULL on failure.
-text: end
 outFile: Module
 
 file: glib-Memory-Allocation.html
@@ -636,6 +613,11 @@ prefix: g_
 #import: glib.MemVTable
 #structWrap: GMemVTable* MemVTable
 outFile: Memory
+
+file: glib-Memory-Slices.html
+class: MemorySlice
+prefix: g_slice_
+outFile: MemorySlice
 
 file: glib-IO-Channels.html
 struct: GIOChannel
@@ -1069,8 +1051,6 @@ code: start
 		return result;
 	}
 code: end
-
-
 outFile: Str
 
 file: glib-Character-Set-Conversion.html
@@ -1256,7 +1236,7 @@ import: glib.TimeVal
 structWrap: GDateTime* DateTime
 structWrap: GTimeZone* TimeZone
 structWrap: GTimeVal* TimeVal
-structWrap: gconstpointer DateTime
+structWrap: void* DateTime
 
 nocode: g_date_time_new_now_utc
 nocode: g_date_time_new_now_local
@@ -1456,9 +1436,12 @@ class: Util
 import: glib.ListG
 structWrap: GList* ListG
 prefix: g_
-#import: glib.DebugKey
-#structWrap: GDebugKey* DebugKey
 import: glib.Str
+
+array: g_environ_getenv envp
+array: g_environ_setenv envp
+array: g_environ_unsetenv envp
+
 code: start
 	/**
 	 * Creates a filename from a series of elements using the correct
@@ -1531,19 +1514,6 @@ structWrap: GScanner* ScannerG
 #structWrap: GScannerConfig* ScannerConfig
 import: glib.Str
 outFile: ScannerG
-
-file: glib-Automatic-String-Completion.html
-struct: GCompletion
-class: StringCompletion
-import: glib.ListG
-structWrap: GList* ListG
-prefix:g_completion_
-import: glib.Str
-
-out: g_completion_complete new_prefix
-out: g_completion_complete_utf8 new_prefix
-
-outFile: StringCompletion
 
 file: glib-Timers.html
 struct: GTimer
@@ -2202,6 +2172,9 @@ prefix: g_key_file_
 import: glib.ErrorG
 import: glib.GException
 import: glib.Str
+import: gtkc.paths;
+import: gtkc.Loader;
+structWrap: GKeyFile* KeyFile
 
 out: g_key_file_load_from_data_dirs full_path
 out: g_key_file_to_data length
@@ -2224,6 +2197,14 @@ array: g_key_file_set_double_list list length
 nocode: g_key_file_load_from_dirs
 
 code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gKeyFile !is null )
+		{
+			g_key_file_unref(gKeyFile);
+		}
+	}
+
 	/**
 	 * This function looks for a key file named file in the paths
 	 * specified in search_dirs, loads the file into key_file and
@@ -2321,56 +2302,6 @@ outFile: WindowsUtils
 ###########################################################
 ### GLib Data Types #######################################
 ###########################################################
-
-file: glib-Memory-Slices.html
-class: MemorySlice
-prefix: g_slice_
-outFile: MemorySlice
-
-file: glib-Memory-Chunks.html
-struct: GMemChunk
-class: MemoryChunk
-prefix: g_mem_chunk_
-prefix: g_
-import: glib.Str
-
-nocode: g_mem_chunk_print
-
-code: start
-	/**
-	 * Warning
-	 * g_mem_chunk_print has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice
-	 *  allocator instead
-	 * Outputs debugging information for a GMemChunk.
-	 * It outputs the name of the GMemChunk (set with g_mem_chunk_new()),
-	 * the number of bytes used, and the number of blocks of memory allocated.
-	 */
-	version(Tango)
-	{
-		public void print()
-		{
-			// void g_mem_chunk_print (GMemChunk *mem_chunk);
-			g_mem_chunk_print(gMemChunk);
-		}
-	}
-	else version(D_Version2)
-	{
-		public void print()
-		{
-			// void g_mem_chunk_print (GMemChunk *mem_chunk);
-			g_mem_chunk_print(gMemChunk);
-		}
-	}
-	else
-	{
-		public override void print()
-		{
-			// void g_mem_chunk_print (GMemChunk *mem_chunk);
-			g_mem_chunk_print(gMemChunk);
-		}
-	}
-code: end
-outFile: MemoryChunk
 
 file: glib-Doubly-Linked-Lists.html
 struct: GList
@@ -2518,12 +2449,30 @@ file: glib-Byte-Arrays.html
 struct: GByteArray
 class: ByteArray
 prefix: g_byte_array_
+noprefix: g_bytes_
+import: glib.Bytes
 structWrap: GByteArray* ByteArray
+structWrap: GBytes* Bytes
 
 array: g_byte_array_append data len
 array: g_byte_array_prepend data len
 
 outFile: ByteArray
+
+struct: GBytes
+class: Bytes
+prefix: g_bytes_
+strictPrefix: Y
+nocode: g_bytes_new_take
+nocode: g_bytes_new_static
+import: glib.ByteArray
+structWrap: GByteArray* ByteArray
+structWrap: GBytes* Bytes
+
+array: g_bytes_get_data Return size
+array: g_bytes_unref_to_data Return size
+
+outFile: Bytes
 
 file: glib-Balanced-Binary-Trees.html
 struct: GTree
@@ -2557,67 +2506,6 @@ file: glib-Datasets.html
 class: Dataset
 prefix: g_dataset_
 outFile: Dataset
-
-file: glib-Relations-and-Tuples.html
-struct: GRelation
-class: Relation
-prefix: g_relation_
-noprefix: g_tuples_
-import: glib.Tuples
-structWrap: GTuples* Tuples
-
-nocode: g_relation_print
-
-code: start
-	/**
-	 * Outputs information about all records in a GRelation, as well as the indexes.
-	 * It is for debugging.
-	 */
-	version(Tango)
-	{
-		public void print()
-		{
-			// void g_relation_print (GRelation *relation);
-			g_relation_print(gRelation);
-		}
-	}
-	else version(D_Version2)
-	{
-		public void print()
-		{
-			// void g_relation_print (GRelation *relation);
-			g_relation_print(gRelation);
-		}
-	}
-	else
-	{
-		public override void print()
-		{
-			// void g_relation_print (GRelation *relation);
-			g_relation_print(gRelation);
-		}
-	}
-code: end
-outFile: Relation
-
-struct: GTuples
-class: Tuples
-prefix: g_tuples_
-strictPrefix: Yes
-outFile: Tuples
-
-file: glib-Caches.html
-struct: GCache
-class: Cache
-prefix: g_cache_
-outFile: Cache
-
-file: glib-Memory-Allocators.html
-struct: GAllocator
-class: Allocator
-prefix: g_allocator_
-import: glib.Str
-outFile: Allocator
 
 file: glib-GVariantType.html
 struct: GVariantType
@@ -2693,6 +2581,7 @@ array: g_variant_get_bytestring_array Return length
 array: g_variant_get_objv Return length
 array: g_variant_dup_objv Return length
 array: g_variant_new_objv strv length
+array: g_variant_new_fixed_array elements n_elements
 
 code: start
 	/**
@@ -2839,5 +2728,72 @@ structWrap: GVariantType* VariantType
 outFile: VariantBuilder
 
 ###########################################################
-### GLib Tools ############################################
+### Deprecated APIs #######################################
 ###########################################################
+
+file: glib-Caches.html
+struct: GCache
+class: Cache
+prefix: g_cache_
+outFile: Cache
+
+file: glib-Relations-and-Tuples.html
+struct: GRelation
+class: Relation
+prefix: g_relation_
+noprefix: g_tuples_
+import: glib.Tuples
+structWrap: GTuples* Tuples
+
+nocode: g_relation_print
+
+code: start
+	/**
+	 * Outputs information about all records in a GRelation, as well as the indexes.
+	 * It is for debugging.
+	 */
+	version(Tango)
+	{
+		public void print()
+		{
+			// void g_relation_print (GRelation *relation);
+			g_relation_print(gRelation);
+		}
+	}
+	else version(D_Version2)
+	{
+		public void print()
+		{
+			// void g_relation_print (GRelation *relation);
+			g_relation_print(gRelation);
+		}
+	}
+	else
+	{
+		public override void print()
+		{
+			// void g_relation_print (GRelation *relation);
+			g_relation_print(gRelation);
+		}
+	}
+code: end
+outFile: Relation
+
+struct: GTuples
+class: Tuples
+prefix: g_tuples_
+strictPrefix: Yes
+outFile: Tuples
+
+file: glib-Automatic-String-Completion.html
+struct: GCompletion
+class: StringCompletion
+import: glib.ListG
+structWrap: GList* ListG
+prefix:g_completion_
+import: glib.Str
+
+out: g_completion_complete new_prefix
+out: g_completion_complete_utf8 new_prefix
+
+outFile: StringCompletion

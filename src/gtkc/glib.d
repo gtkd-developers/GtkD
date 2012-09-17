@@ -100,6 +100,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_main_context_invoke, \"g_main_context_invoke\", LIBRARY.GLIB);
 	Linker.link(g_main_context_invoke_full, \"g_main_context_invoke_full\", LIBRARY.GLIB);
 	Linker.link(g_main_context_get_thread_default, \"g_main_context_get_thread_default\", LIBRARY.GLIB);
+	Linker.link(g_main_context_ref_thread_default, \"g_main_context_ref_thread_default\", LIBRARY.GLIB);
 	Linker.link(g_main_context_push_thread_default, \"g_main_context_push_thread_default\", LIBRARY.GLIB);
 	Linker.link(g_main_context_pop_thread_default, \"g_main_context_pop_thread_default\", LIBRARY.GLIB);
 
@@ -182,7 +183,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_async_queue_push_sorted, \"g_async_queue_push_sorted\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_pop, \"g_async_queue_pop\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_try_pop, \"g_async_queue_try_pop\", LIBRARY.GLIB);
-	Linker.link(g_async_queue_timed_pop, \"g_async_queue_timed_pop\", LIBRARY.GLIB);
+	Linker.link(g_async_queue_timeout_pop, \"g_async_queue_timeout_pop\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_length, \"g_async_queue_length\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_sort, \"g_async_queue_sort\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_lock, \"g_async_queue_lock\", LIBRARY.GLIB);
@@ -193,16 +194,19 @@ mixin( _shared ~ "static this()
 	Linker.link(g_async_queue_push_sorted_unlocked, \"g_async_queue_push_sorted_unlocked\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_pop_unlocked, \"g_async_queue_pop_unlocked\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_try_pop_unlocked, \"g_async_queue_try_pop_unlocked\", LIBRARY.GLIB);
-	Linker.link(g_async_queue_timed_pop_unlocked, \"g_async_queue_timed_pop_unlocked\", LIBRARY.GLIB);
+	Linker.link(g_async_queue_timeout_pop_unlocked, \"g_async_queue_timeout_pop_unlocked\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_length_unlocked, \"g_async_queue_length_unlocked\", LIBRARY.GLIB);
 	Linker.link(g_async_queue_sort_unlocked, \"g_async_queue_sort_unlocked\", LIBRARY.GLIB);
+	Linker.link(g_async_queue_timed_pop, \"g_async_queue_timed_pop\", LIBRARY.GLIB);
+	Linker.link(g_async_queue_timed_pop_unlocked, \"g_async_queue_timed_pop_unlocked\", LIBRARY.GLIB);
 
 	// glib.Module
 
-	Linker.link(g_module_open, \"g_module_open\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_supported, \"g_module_supported\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_build_path, \"g_module_build_path\", LIBRARY.GLIB, LIBRARY.GMODULE);
+	Linker.link(g_module_open, \"g_module_open\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_symbol, \"g_module_symbol\", LIBRARY.GLIB, LIBRARY.GMODULE);
+	Linker.link(g_module_name, \"g_module_name\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_make_resident, \"g_module_make_resident\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_close, \"g_module_close\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_error, \"g_module_error\", LIBRARY.GLIB, LIBRARY.GMODULE);
@@ -226,6 +230,14 @@ mixin( _shared ~ "static this()
 	Linker.link(g_mem_set_vtable, \"g_mem_set_vtable\", LIBRARY.GLIB);
 	Linker.link(g_mem_is_system_malloc, \"g_mem_is_system_malloc\", LIBRARY.GLIB);
 	Linker.link(g_mem_profile, \"g_mem_profile\", LIBRARY.GLIB);
+
+	// glib.MemorySlice
+
+	Linker.link(g_slice_alloc, \"g_slice_alloc\", LIBRARY.GLIB);
+	Linker.link(g_slice_alloc0, \"g_slice_alloc0\", LIBRARY.GLIB);
+	Linker.link(g_slice_copy, \"g_slice_copy\", LIBRARY.GLIB);
+	Linker.link(g_slice_free1, \"g_slice_free1\", LIBRARY.GLIB);
+	Linker.link(g_slice_free_chain_with_offset, \"g_slice_free_chain_with_offset\", LIBRARY.GLIB);
 
 	// glib.IOChannel
 
@@ -397,6 +409,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_filename_display_basename, \"g_filename_display_basename\", LIBRARY.GLIB);
 	Linker.link(g_locale_from_utf8, \"g_locale_from_utf8\", LIBRARY.GLIB);
 	Linker.link(g_get_charset, \"g_get_charset\", LIBRARY.GLIB);
+	Linker.link(g_get_codeset, \"g_get_codeset\", LIBRARY.GLIB);
 
 	// glib.Unicode
 
@@ -660,6 +673,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_get_prgname, \"g_get_prgname\", LIBRARY.GLIB);
 	Linker.link(g_set_prgname, \"g_set_prgname\", LIBRARY.GLIB);
 	Linker.link(g_get_environ, \"g_get_environ\", LIBRARY.GLIB);
+	Linker.link(g_environ_getenv, \"g_environ_getenv\", LIBRARY.GLIB);
+	Linker.link(g_environ_setenv, \"g_environ_setenv\", LIBRARY.GLIB);
+	Linker.link(g_environ_unsetenv, \"g_environ_unsetenv\", LIBRARY.GLIB);
 	Linker.link(g_getenv, \"g_getenv\", LIBRARY.GLIB);
 	Linker.link(g_setenv, \"g_setenv\", LIBRARY.GLIB);
 	Linker.link(g_unsetenv, \"g_unsetenv\", LIBRARY.GLIB);
@@ -724,17 +740,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_scanner_error, \"g_scanner_error\", LIBRARY.GLIB);
 	Linker.link(g_scanner_unexp_token, \"g_scanner_unexp_token\", LIBRARY.GLIB);
 
-	// glib.StringCompletion
-
-	Linker.link(g_completion_new, \"g_completion_new\", LIBRARY.GLIB);
-	Linker.link(g_completion_add_items, \"g_completion_add_items\", LIBRARY.GLIB);
-	Linker.link(g_completion_remove_items, \"g_completion_remove_items\", LIBRARY.GLIB);
-	Linker.link(g_completion_clear_items, \"g_completion_clear_items\", LIBRARY.GLIB);
-	Linker.link(g_completion_complete, \"g_completion_complete\", LIBRARY.GLIB);
-	Linker.link(g_completion_complete_utf8, \"g_completion_complete_utf8\", LIBRARY.GLIB);
-	Linker.link(g_completion_set_compare, \"g_completion_set_compare\", LIBRARY.GLIB);
-	Linker.link(g_completion_free, \"g_completion_free\", LIBRARY.GLIB);
-
 	// glib.Timer
 
 	Linker.link(g_timer_new, \"g_timer_new\", LIBRARY.GLIB);
@@ -794,6 +799,7 @@ mixin( _shared ~ "static this()
 	// glib.MappedFile
 
 	Linker.link(g_mapped_file_new, \"g_mapped_file_new\", LIBRARY.GLIB);
+	Linker.link(g_mapped_file_new_from_fd, \"g_mapped_file_new_from_fd\", LIBRARY.GLIB);
 	Linker.link(g_mapped_file_ref, \"g_mapped_file_ref\", LIBRARY.GLIB);
 	Linker.link(g_mapped_file_unref, \"g_mapped_file_unref\", LIBRARY.GLIB);
 	Linker.link(g_mapped_file_free, \"g_mapped_file_free\", LIBRARY.GLIB);
@@ -929,6 +935,8 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_key_file_new, \"g_key_file_new\", LIBRARY.GLIB);
 	Linker.link(g_key_file_free, \"g_key_file_free\", LIBRARY.GLIB);
+	Linker.link(g_key_file_ref, \"g_key_file_ref\", LIBRARY.GLIB);
+	Linker.link(g_key_file_unref, \"g_key_file_unref\", LIBRARY.GLIB);
 	Linker.link(g_key_file_set_list_separator, \"g_key_file_set_list_separator\", LIBRARY.GLIB);
 	Linker.link(g_key_file_load_from_file, \"g_key_file_load_from_file\", LIBRARY.GLIB);
 	Linker.link(g_key_file_load_from_data, \"g_key_file_load_from_data\", LIBRARY.GLIB);
@@ -1032,27 +1040,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_win32_get_windows_version, \"g_win32_get_windows_version\", LIBRARY.GLIB);
 	Linker.link(g_win32_locale_filename_from_utf8, \"g_win32_locale_filename_from_utf8\", LIBRARY.GLIB);
 
-	// glib.MemorySlice
-
-	Linker.link(g_slice_alloc, \"g_slice_alloc\", LIBRARY.GLIB);
-	Linker.link(g_slice_alloc0, \"g_slice_alloc0\", LIBRARY.GLIB);
-	Linker.link(g_slice_copy, \"g_slice_copy\", LIBRARY.GLIB);
-	Linker.link(g_slice_free1, \"g_slice_free1\", LIBRARY.GLIB);
-	Linker.link(g_slice_free_chain_with_offset, \"g_slice_free_chain_with_offset\", LIBRARY.GLIB);
-
-	// glib.MemoryChunk
-
-	Linker.link(g_mem_chunk_new, \"g_mem_chunk_new\", LIBRARY.GLIB);
-	Linker.link(g_mem_chunk_alloc, \"g_mem_chunk_alloc\", LIBRARY.GLIB);
-	Linker.link(g_mem_chunk_alloc0, \"g_mem_chunk_alloc0\", LIBRARY.GLIB);
-	Linker.link(g_mem_chunk_free, \"g_mem_chunk_free\", LIBRARY.GLIB);
-	Linker.link(g_mem_chunk_destroy, \"g_mem_chunk_destroy\", LIBRARY.GLIB);
-	Linker.link(g_mem_chunk_reset, \"g_mem_chunk_reset\", LIBRARY.GLIB);
-	Linker.link(g_mem_chunk_clean, \"g_mem_chunk_clean\", LIBRARY.GLIB);
-	Linker.link(g_blow_chunks, \"g_blow_chunks\", LIBRARY.GLIB);
-	Linker.link(g_mem_chunk_info, \"g_mem_chunk_info\", LIBRARY.GLIB);
-	Linker.link(g_mem_chunk_print, \"g_mem_chunk_print\", LIBRARY.GLIB);
-
 	// glib.ListG
 
 	Linker.link(g_list_append, \"g_list_append\", LIBRARY.GLIB);
@@ -1085,8 +1072,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_list_find_custom, \"g_list_find_custom\", LIBRARY.GLIB);
 	Linker.link(g_list_position, \"g_list_position\", LIBRARY.GLIB);
 	Linker.link(g_list_index, \"g_list_index\", LIBRARY.GLIB);
-	Linker.link(g_list_push_allocator, \"g_list_push_allocator\", LIBRARY.GLIB);
-	Linker.link(g_list_pop_allocator, \"g_list_pop_allocator\", LIBRARY.GLIB);
 
 	// glib.ListSG
 
@@ -1118,13 +1103,12 @@ mixin( _shared ~ "static this()
 	Linker.link(g_slist_find_custom, \"g_slist_find_custom\", LIBRARY.GLIB);
 	Linker.link(g_slist_position, \"g_slist_position\", LIBRARY.GLIB);
 	Linker.link(g_slist_index, \"g_slist_index\", LIBRARY.GLIB);
-	Linker.link(g_slist_push_allocator, \"g_slist_push_allocator\", LIBRARY.GLIB);
-	Linker.link(g_slist_pop_allocator, \"g_slist_pop_allocator\", LIBRARY.GLIB);
 
 	// glib.QueueG
 
 	Linker.link(g_queue_new, \"g_queue_new\", LIBRARY.GLIB);
 	Linker.link(g_queue_free, \"g_queue_free\", LIBRARY.GLIB);
+	Linker.link(g_queue_free_full, \"g_queue_free_full\", LIBRARY.GLIB);
 	Linker.link(g_queue_init, \"g_queue_init\", LIBRARY.GLIB);
 	Linker.link(g_queue_clear, \"g_queue_clear\", LIBRARY.GLIB);
 	Linker.link(g_queue_is_empty, \"g_queue_is_empty\", LIBRARY.GLIB);
@@ -1219,6 +1203,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_hash_table_new_full, \"g_hash_table_new_full\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_insert, \"g_hash_table_insert\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_replace, \"g_hash_table_replace\", LIBRARY.GLIB);
+	Linker.link(g_hash_table_add, \"g_hash_table_add\", LIBRARY.GLIB);
+	Linker.link(g_hash_table_contains, \"g_hash_table_contains\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_size, \"g_hash_table_size\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_lookup, \"g_hash_table_lookup\", LIBRARY.GLIB);
 	Linker.link(g_hash_table_lookup_extended, \"g_hash_table_lookup_extended\", LIBRARY.GLIB);
@@ -1314,6 +1300,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_array_sort, \"g_array_sort\", LIBRARY.GLIB);
 	Linker.link(g_array_sort_with_data, \"g_array_sort_with_data\", LIBRARY.GLIB);
 	Linker.link(g_array_set_size, \"g_array_set_size\", LIBRARY.GLIB);
+	Linker.link(g_array_set_clear_func, \"g_array_set_clear_func\", LIBRARY.GLIB);
 	Linker.link(g_array_free, \"g_array_free\", LIBRARY.GLIB);
 
 	// glib.PtrArray
@@ -1340,6 +1327,7 @@ mixin( _shared ~ "static this()
 	// glib.ByteArray
 
 	Linker.link(g_byte_array_new, \"g_byte_array_new\", LIBRARY.GLIB);
+	Linker.link(g_byte_array_new_take, \"g_byte_array_new_take\", LIBRARY.GLIB);
 	Linker.link(g_byte_array_sized_new, \"g_byte_array_sized_new\", LIBRARY.GLIB);
 	Linker.link(g_byte_array_ref, \"g_byte_array_ref\", LIBRARY.GLIB);
 	Linker.link(g_byte_array_unref, \"g_byte_array_unref\", LIBRARY.GLIB);
@@ -1352,6 +1340,24 @@ mixin( _shared ~ "static this()
 	Linker.link(g_byte_array_sort_with_data, \"g_byte_array_sort_with_data\", LIBRARY.GLIB);
 	Linker.link(g_byte_array_set_size, \"g_byte_array_set_size\", LIBRARY.GLIB);
 	Linker.link(g_byte_array_free, \"g_byte_array_free\", LIBRARY.GLIB);
+	Linker.link(g_byte_array_free_to_bytes, \"g_byte_array_free_to_bytes\", LIBRARY.GLIB);
+
+	// glib.Bytes
+
+	Linker.link(g_bytes_new, \"g_bytes_new\", LIBRARY.GLIB);
+	Linker.link(g_bytes_new_take, \"g_bytes_new_take\", LIBRARY.GLIB);
+	Linker.link(g_bytes_new_static, \"g_bytes_new_static\", LIBRARY.GLIB);
+	Linker.link(g_bytes_new_with_free_func, \"g_bytes_new_with_free_func\", LIBRARY.GLIB);
+	Linker.link(g_bytes_new_from_bytes, \"g_bytes_new_from_bytes\", LIBRARY.GLIB);
+	Linker.link(g_bytes_get_data, \"g_bytes_get_data\", LIBRARY.GLIB);
+	Linker.link(g_bytes_get_size, \"g_bytes_get_size\", LIBRARY.GLIB);
+	Linker.link(g_bytes_hash, \"g_bytes_hash\", LIBRARY.GLIB);
+	Linker.link(g_bytes_equal, \"g_bytes_equal\", LIBRARY.GLIB);
+	Linker.link(g_bytes_compare, \"g_bytes_compare\", LIBRARY.GLIB);
+	Linker.link(g_bytes_ref, \"g_bytes_ref\", LIBRARY.GLIB);
+	Linker.link(g_bytes_unref, \"g_bytes_unref\", LIBRARY.GLIB);
+	Linker.link(g_bytes_unref_to_data, \"g_bytes_unref_to_data\", LIBRARY.GLIB);
+	Linker.link(g_bytes_unref_to_array, \"g_bytes_unref_to_array\", LIBRARY.GLIB);
 
 	// glib.BBTree
 
@@ -1401,8 +1407,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_node_max_height, \"g_node_max_height\", LIBRARY.GLIB);
 	Linker.link(g_node_unlink, \"g_node_unlink\", LIBRARY.GLIB);
 	Linker.link(g_node_destroy, \"g_node_destroy\", LIBRARY.GLIB);
-	Linker.link(g_node_push_allocator, \"g_node_push_allocator\", LIBRARY.GLIB);
-	Linker.link(g_node_pop_allocator, \"g_node_pop_allocator\", LIBRARY.GLIB);
 
 	// glib.Quark
 
@@ -1433,37 +1437,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dataset_id_remove_no_notify, \"g_dataset_id_remove_no_notify\", LIBRARY.GLIB);
 	Linker.link(g_dataset_foreach, \"g_dataset_foreach\", LIBRARY.GLIB);
 	Linker.link(g_dataset_destroy, \"g_dataset_destroy\", LIBRARY.GLIB);
-
-	// glib.Relation
-
-	Linker.link(g_relation_new, \"g_relation_new\", LIBRARY.GLIB);
-	Linker.link(g_relation_index, \"g_relation_index\", LIBRARY.GLIB);
-	Linker.link(g_relation_insert, \"g_relation_insert\", LIBRARY.GLIB);
-	Linker.link(g_relation_exists, \"g_relation_exists\", LIBRARY.GLIB);
-	Linker.link(g_relation_count, \"g_relation_count\", LIBRARY.GLIB);
-	Linker.link(g_relation_select, \"g_relation_select\", LIBRARY.GLIB);
-	Linker.link(g_relation_delete, \"g_relation_delete\", LIBRARY.GLIB);
-	Linker.link(g_relation_destroy, \"g_relation_destroy\", LIBRARY.GLIB);
-	Linker.link(g_relation_print, \"g_relation_print\", LIBRARY.GLIB);
-
-	// glib.Tuples
-
-	Linker.link(g_tuples_destroy, \"g_tuples_destroy\", LIBRARY.GLIB);
-	Linker.link(g_tuples_index, \"g_tuples_index\", LIBRARY.GLIB);
-
-	// glib.Cache
-
-	Linker.link(g_cache_new, \"g_cache_new\", LIBRARY.GLIB);
-	Linker.link(g_cache_insert, \"g_cache_insert\", LIBRARY.GLIB);
-	Linker.link(g_cache_remove, \"g_cache_remove\", LIBRARY.GLIB);
-	Linker.link(g_cache_destroy, \"g_cache_destroy\", LIBRARY.GLIB);
-	Linker.link(g_cache_key_foreach, \"g_cache_key_foreach\", LIBRARY.GLIB);
-	Linker.link(g_cache_value_foreach, \"g_cache_value_foreach\", LIBRARY.GLIB);
-
-	// glib.Allocator
-
-	Linker.link(g_allocator_new, \"g_allocator_new\", LIBRARY.GLIB);
-	Linker.link(g_allocator_free, \"g_allocator_free\", LIBRARY.GLIB);
 
 	// glib.VariantType
 
@@ -1559,6 +1532,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_variant_new_array, \"g_variant_new_array\", LIBRARY.GLIB);
 	Linker.link(g_variant_new_tuple, \"g_variant_new_tuple\", LIBRARY.GLIB);
 	Linker.link(g_variant_new_dict_entry, \"g_variant_new_dict_entry\", LIBRARY.GLIB);
+	Linker.link(g_variant_new_fixed_array, \"g_variant_new_fixed_array\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_maybe, \"g_variant_get_maybe\", LIBRARY.GLIB);
 	Linker.link(g_variant_n_children, \"g_variant_n_children\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_child_value, \"g_variant_get_child_value\", LIBRARY.GLIB);
@@ -1605,6 +1579,43 @@ mixin( _shared ~ "static this()
 	Linker.link(g_variant_builder_end, \"g_variant_builder_end\", LIBRARY.GLIB);
 	Linker.link(g_variant_builder_open, \"g_variant_builder_open\", LIBRARY.GLIB);
 	Linker.link(g_variant_builder_close, \"g_variant_builder_close\", LIBRARY.GLIB);
+
+	// glib.Cache
+
+	Linker.link(g_cache_new, \"g_cache_new\", LIBRARY.GLIB);
+	Linker.link(g_cache_insert, \"g_cache_insert\", LIBRARY.GLIB);
+	Linker.link(g_cache_remove, \"g_cache_remove\", LIBRARY.GLIB);
+	Linker.link(g_cache_destroy, \"g_cache_destroy\", LIBRARY.GLIB);
+	Linker.link(g_cache_key_foreach, \"g_cache_key_foreach\", LIBRARY.GLIB);
+	Linker.link(g_cache_value_foreach, \"g_cache_value_foreach\", LIBRARY.GLIB);
+
+	// glib.Relation
+
+	Linker.link(g_relation_new, \"g_relation_new\", LIBRARY.GLIB);
+	Linker.link(g_relation_index, \"g_relation_index\", LIBRARY.GLIB);
+	Linker.link(g_relation_insert, \"g_relation_insert\", LIBRARY.GLIB);
+	Linker.link(g_relation_exists, \"g_relation_exists\", LIBRARY.GLIB);
+	Linker.link(g_relation_count, \"g_relation_count\", LIBRARY.GLIB);
+	Linker.link(g_relation_select, \"g_relation_select\", LIBRARY.GLIB);
+	Linker.link(g_relation_delete, \"g_relation_delete\", LIBRARY.GLIB);
+	Linker.link(g_relation_destroy, \"g_relation_destroy\", LIBRARY.GLIB);
+	Linker.link(g_relation_print, \"g_relation_print\", LIBRARY.GLIB);
+
+	// glib.Tuples
+
+	Linker.link(g_tuples_destroy, \"g_tuples_destroy\", LIBRARY.GLIB);
+	Linker.link(g_tuples_index, \"g_tuples_index\", LIBRARY.GLIB);
+
+	// glib.StringCompletion
+
+	Linker.link(g_completion_new, \"g_completion_new\", LIBRARY.GLIB);
+	Linker.link(g_completion_add_items, \"g_completion_add_items\", LIBRARY.GLIB);
+	Linker.link(g_completion_remove_items, \"g_completion_remove_items\", LIBRARY.GLIB);
+	Linker.link(g_completion_clear_items, \"g_completion_clear_items\", LIBRARY.GLIB);
+	Linker.link(g_completion_complete, \"g_completion_complete\", LIBRARY.GLIB);
+	Linker.link(g_completion_complete_utf8, \"g_completion_complete_utf8\", LIBRARY.GLIB);
+	Linker.link(g_completion_set_compare, \"g_completion_set_compare\", LIBRARY.GLIB);
+	Linker.link(g_completion_free, \"g_completion_free\", LIBRARY.GLIB);
 }");
 
 mixin( gshared ~"extern(C)
@@ -1625,8 +1636,8 @@ mixin( gshared ~"extern(C)
 	guint function(guint* atomic, guint val) c_g_atomic_int_or;
 	guint function(guint* atomic, guint val) c_g_atomic_int_xor;
 	gpointer function(void* atomic) c_g_atomic_pointer_get;
-	void function(void* atomic, gpointer newval) c_g_atomic_pointer_set;
-	gboolean function(void* atomic, gpointer oldval, gpointer newval) c_g_atomic_pointer_compare_and_exchange;
+	void function(void* atomic, void* newval) c_g_atomic_pointer_set;
+	gboolean function(void* atomic, void* oldval, void* newval) c_g_atomic_pointer_compare_and_exchange;
 	gssize function(void* atomic, gssize val) c_g_atomic_pointer_add;
 	gsize function(void* atomic, gsize val) c_g_atomic_pointer_and;
 	gsize function(void* atomic, gsize val) c_g_atomic_pointer_or;
@@ -1655,8 +1666,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GMainContext* context, gboolean mayBlock) c_g_main_context_iteration;
 	gboolean function(GMainContext* context) c_g_main_context_pending;
 	GSource* function(GMainContext* context, guint sourceId) c_g_main_context_find_source_by_id;
-	GSource* function(GMainContext* context, gpointer userData) c_g_main_context_find_source_by_user_data;
-	GSource* function(GMainContext* context, GSourceFuncs* funcs, gpointer userData) c_g_main_context_find_source_by_funcs_user_data;
+	GSource* function(GMainContext* context, void* userData) c_g_main_context_find_source_by_user_data;
+	GSource* function(GMainContext* context, GSourceFuncs* funcs, void* userData) c_g_main_context_find_source_by_funcs_user_data;
 	void function(GMainContext* context) c_g_main_context_wakeup;
 	gboolean function(GMainContext* context) c_g_main_context_acquire;
 	void function(GMainContext* context) c_g_main_context_release;
@@ -1670,9 +1681,10 @@ mixin( gshared ~"extern(C)
 	GPollFunc function(GMainContext* context) c_g_main_context_get_poll_func;
 	void function(GMainContext* context, GPollFD* fd, gint priority) c_g_main_context_add_poll;
 	void function(GMainContext* context, GPollFD* fd) c_g_main_context_remove_poll;
-	void function(GMainContext* context, GSourceFunc funct, gpointer data) c_g_main_context_invoke;
-	void function(GMainContext* context, gint priority, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_g_main_context_invoke_full;
+	void function(GMainContext* context, GSourceFunc funct, void* data) c_g_main_context_invoke;
+	void function(GMainContext* context, gint priority, GSourceFunc funct, void* data, GDestroyNotify notify) c_g_main_context_invoke_full;
 	GMainContext* function() c_g_main_context_get_thread_default;
+	GMainContext* function() c_g_main_context_ref_thread_default;
 	void function(GMainContext* context) c_g_main_context_push_thread_default;
 	void function(GMainContext* context) c_g_main_context_pop_thread_default;
 
@@ -1680,23 +1692,23 @@ mixin( gshared ~"extern(C)
 
 	GSource* function(guint interval) c_g_timeout_source_new;
 	GSource* function(guint interval) c_g_timeout_source_new_seconds;
-	guint function(guint interval, GSourceFunc funct, gpointer data) c_g_timeout_add;
-	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_g_timeout_add_full;
-	guint function(guint interval, GSourceFunc funct, gpointer data) c_g_timeout_add_seconds;
-	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_g_timeout_add_seconds_full;
+	guint function(guint interval, GSourceFunc funct, void* data) c_g_timeout_add;
+	guint function(gint priority, guint interval, GSourceFunc funct, void* data, GDestroyNotify notify) c_g_timeout_add_full;
+	guint function(guint interval, GSourceFunc funct, void* data) c_g_timeout_add_seconds;
+	guint function(gint priority, guint interval, GSourceFunc funct, void* data, GDestroyNotify notify) c_g_timeout_add_seconds_full;
 
 	// glib.Idle
 
 	GSource* function() c_g_idle_source_new;
-	guint function(GSourceFunc funct, gpointer data) c_g_idle_add;
-	guint function(gint priority, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_g_idle_add_full;
-	gboolean function(gpointer data) c_g_idle_remove_by_data;
+	guint function(GSourceFunc funct, void* data) c_g_idle_add;
+	guint function(gint priority, GSourceFunc funct, void* data, GDestroyNotify notify) c_g_idle_add_full;
+	gboolean function(void* data) c_g_idle_remove_by_data;
 
 	// glib.Child
 
 	GSource* function(GPid pid) c_g_child_watch_source_new;
-	guint function(GPid pid, GChildWatchFunc funct, gpointer data) c_g_child_watch_add;
-	guint function(gint priority, GPid pid, GChildWatchFunc funct, gpointer data, GDestroyNotify notify) c_g_child_watch_add_full;
+	guint function(GPid pid, GChildWatchFunc funct, void* data) c_g_child_watch_add;
+	guint function(gint priority, GPid pid, GChildWatchFunc funct, void* data, GDestroyNotify notify) c_g_child_watch_add_full;
 
 	// glib.Source
 
@@ -1716,8 +1728,8 @@ mixin( gshared ~"extern(C)
 	void function(GSource* source, char* name) c_g_source_set_name;
 	void function(guint tag, char* name) c_g_source_set_name_by_id;
 	GMainContext* function(GSource* source) c_g_source_get_context;
-	void function(GSource* source, GSourceFunc func, gpointer data, GDestroyNotify notify) c_g_source_set_callback;
-	void function(GSource* source, gpointer callbackData, GSourceCallbackFuncs* callbackFuncs) c_g_source_set_callback_indirect;
+	void function(GSource* source, GSourceFunc func, void* data, GDestroyNotify notify) c_g_source_set_callback;
+	void function(GSource* source, void* callbackData, GSourceCallbackFuncs* callbackFuncs) c_g_source_set_callback_indirect;
 	void function(GSource* source, GPollFD* fd) c_g_source_add_poll;
 	void function(GSource* source, GPollFD* fd) c_g_source_remove_poll;
 	void function(GSource* source, GSource* childSource) c_g_source_add_child_source;
@@ -1725,14 +1737,14 @@ mixin( gshared ~"extern(C)
 	gint64 function(GSource* source) c_g_source_get_time;
 	void function(GSource* source, GTimeVal* timeval) c_g_source_get_current_time;
 	gboolean function(guint tag) c_g_source_remove;
-	gboolean function(GSourceFuncs* funcs, gpointer userData) c_g_source_remove_by_funcs_user_data;
-	gboolean function(gpointer userData) c_g_source_remove_by_user_data;
+	gboolean function(GSourceFuncs* funcs, void* userData) c_g_source_remove_by_funcs_user_data;
+	gboolean function(void* userData) c_g_source_remove_by_user_data;
 
 	// glib.ThreadPool
 
-	GThreadPool* function(GFunc func, gpointer userData, gint maxThreads, gboolean exclusive, GError** error) c_g_thread_pool_new;
-	void function(GThreadPool* pool, gpointer data, GError** error) c_g_thread_pool_push;
-	void function(GThreadPool* pool, gint maxThreads, GError** error) c_g_thread_pool_set_max_threads;
+	GThreadPool* function(GFunc func, void* userData, gint maxThreads, gboolean exclusive, GError** error) c_g_thread_pool_new;
+	gboolean function(GThreadPool* pool, void* data, GError** error) c_g_thread_pool_push;
+	gboolean function(GThreadPool* pool, gint maxThreads, GError** error) c_g_thread_pool_set_max_threads;
 	gint function(GThreadPool* pool) c_g_thread_pool_get_max_threads;
 	guint function(GThreadPool* pool) c_g_thread_pool_get_num_threads;
 	guint function(GThreadPool* pool) c_g_thread_pool_unprocessed;
@@ -1741,7 +1753,7 @@ mixin( gshared ~"extern(C)
 	gint function() c_g_thread_pool_get_max_unused_threads;
 	guint function() c_g_thread_pool_get_num_unused_threads;
 	void function() c_g_thread_pool_stop_unused_threads;
-	void function(GThreadPool* pool, GCompareDataFunc func, gpointer userData) c_g_thread_pool_set_sort_function;
+	void function(GThreadPool* pool, GCompareDataFunc func, void* userData) c_g_thread_pool_set_sort_function;
 	void function(guint interval) c_g_thread_pool_set_max_idle_time;
 	guint function() c_g_thread_pool_get_max_idle_time;
 
@@ -1751,31 +1763,34 @@ mixin( gshared ~"extern(C)
 	GAsyncQueue* function(GDestroyNotify itemFreeFunc) c_g_async_queue_new_full;
 	GAsyncQueue* function(GAsyncQueue* queue) c_g_async_queue_ref;
 	void function(GAsyncQueue* queue) c_g_async_queue_unref;
-	void function(GAsyncQueue* queue, gpointer data) c_g_async_queue_push;
-	void function(GAsyncQueue* queue, gpointer data, GCompareDataFunc func, gpointer userData) c_g_async_queue_push_sorted;
+	void function(GAsyncQueue* queue, void* data) c_g_async_queue_push;
+	void function(GAsyncQueue* queue, void* data, GCompareDataFunc func, void* userData) c_g_async_queue_push_sorted;
 	gpointer function(GAsyncQueue* queue) c_g_async_queue_pop;
 	gpointer function(GAsyncQueue* queue) c_g_async_queue_try_pop;
-	gpointer function(GAsyncQueue* queue, GTimeVal* endTime) c_g_async_queue_timed_pop;
+	gpointer function(GAsyncQueue* queue, guint64 timeout) c_g_async_queue_timeout_pop;
 	gint function(GAsyncQueue* queue) c_g_async_queue_length;
-	void function(GAsyncQueue* queue, GCompareDataFunc func, gpointer userData) c_g_async_queue_sort;
+	void function(GAsyncQueue* queue, GCompareDataFunc func, void* userData) c_g_async_queue_sort;
 	void function(GAsyncQueue* queue) c_g_async_queue_lock;
 	void function(GAsyncQueue* queue) c_g_async_queue_unlock;
 	void function(GAsyncQueue* queue) c_g_async_queue_ref_unlocked;
 	void function(GAsyncQueue* queue) c_g_async_queue_unref_and_unlock;
-	void function(GAsyncQueue* queue, gpointer data) c_g_async_queue_push_unlocked;
-	void function(GAsyncQueue* queue, gpointer data, GCompareDataFunc func, gpointer userData) c_g_async_queue_push_sorted_unlocked;
+	void function(GAsyncQueue* queue, void* data) c_g_async_queue_push_unlocked;
+	void function(GAsyncQueue* queue, void* data, GCompareDataFunc func, void* userData) c_g_async_queue_push_sorted_unlocked;
 	gpointer function(GAsyncQueue* queue) c_g_async_queue_pop_unlocked;
 	gpointer function(GAsyncQueue* queue) c_g_async_queue_try_pop_unlocked;
-	gpointer function(GAsyncQueue* queue, GTimeVal* endTime) c_g_async_queue_timed_pop_unlocked;
+	gpointer function(GAsyncQueue* queue, guint64 timeout) c_g_async_queue_timeout_pop_unlocked;
 	gint function(GAsyncQueue* queue) c_g_async_queue_length_unlocked;
-	void function(GAsyncQueue* queue, GCompareDataFunc func, gpointer userData) c_g_async_queue_sort_unlocked;
+	void function(GAsyncQueue* queue, GCompareDataFunc func, void* userData) c_g_async_queue_sort_unlocked;
+	gpointer function(GAsyncQueue* queue, GTimeVal* endTime) c_g_async_queue_timed_pop;
+	gpointer function(GAsyncQueue* queue, GTimeVal* endTime) c_g_async_queue_timed_pop_unlocked;
 
 	// glib.Module
 
-	GModule* function(gchar* fileName, GModuleFlags flags) c_g_module_open;
 	gboolean function() c_g_module_supported;
 	gchar* function(gchar* directory, gchar* moduleName) c_g_module_build_path;
-	gboolean function(GModule* modul, gchar* symbolName, gpointer* symbol) c_g_module_symbol;
+	GModule* function(gchar* fileName, GModuleFlags flags) c_g_module_open;
+	gboolean function(GModule* modul, gchar* symbolName, void** symbol) c_g_module_symbol;
+	gchar* function(GModule* modul) c_g_module_name;
 	void function(GModule* modul) c_g_module_make_resident;
 	gboolean function(GModule* modul) c_g_module_close;
 	gchar* function() c_g_module_error;
@@ -1784,21 +1799,29 @@ mixin( gshared ~"extern(C)
 
 	gpointer function(gsize nBytes) c_g_malloc;
 	gpointer function(gsize nBytes) c_g_malloc0;
-	gpointer function(gpointer mem, gsize nBytes) c_g_realloc;
+	gpointer function(void* mem, gsize nBytes) c_g_realloc;
 	gpointer function(gsize nBytes) c_g_try_malloc;
 	gpointer function(gsize nBytes) c_g_try_malloc0;
-	gpointer function(gpointer mem, gsize nBytes) c_g_try_realloc;
+	gpointer function(void* mem, gsize nBytes) c_g_try_realloc;
 	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_malloc_n;
 	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_malloc0_n;
-	gpointer function(gpointer mem, gsize nBlocks, gsize nBlockBytes) c_g_realloc_n;
+	gpointer function(void* mem, gsize nBlocks, gsize nBlockBytes) c_g_realloc_n;
 	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_try_malloc_n;
 	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_try_malloc0_n;
-	gpointer function(gpointer mem, gsize nBlocks, gsize nBlockBytes) c_g_try_realloc_n;
-	void function(gpointer mem) c_g_free;
-	gpointer function(gconstpointer mem, guint byteSize) c_g_memdup;
+	gpointer function(void* mem, gsize nBlocks, gsize nBlockBytes) c_g_try_realloc_n;
+	void function(void* mem) c_g_free;
+	gpointer function(void* mem, guint byteSize) c_g_memdup;
 	void function(GMemVTable* vtable) c_g_mem_set_vtable;
 	gboolean function() c_g_mem_is_system_malloc;
 	void function() c_g_mem_profile;
+
+	// glib.MemorySlice
+
+	gpointer function(gsize blockSize) c_g_slice_alloc;
+	gpointer function(gsize blockSize) c_g_slice_alloc0;
+	gpointer function(gsize blockSize, void* memBlock) c_g_slice_copy;
+	void function(gsize blockSize, void* memBlock) c_g_slice_free1;
+	void function(gsize blockSize, void* memChain, gsize nextOffset) c_g_slice_free_chain_with_offset;
 
 	// glib.IOChannel
 
@@ -1822,8 +1845,8 @@ mixin( gshared ~"extern(C)
 	GIOChannel* function(GIOChannel* channel) c_g_io_channel_ref;
 	void function(GIOChannel* channel) c_g_io_channel_unref;
 	GSource* function(GIOChannel* channel, GIOCondition condition) c_g_io_create_watch;
-	guint function(GIOChannel* channel, GIOCondition condition, GIOFunc func, gpointer userData) c_g_io_add_watch;
-	guint function(GIOChannel* channel, gint priority, GIOCondition condition, GIOFunc func, gpointer userData, GDestroyNotify notify) c_g_io_add_watch_full;
+	guint function(GIOChannel* channel, GIOCondition condition, GIOFunc func, void* userData) c_g_io_add_watch;
+	guint function(GIOChannel* channel, gint priority, GIOCondition condition, GIOFunc func, void* userData, GDestroyNotify notify) c_g_io_add_watch_full;
 	gsize function(GIOChannel* channel) c_g_io_channel_get_buffer_size;
 	void function(GIOChannel* channel, gsize size) c_g_io_channel_set_buffer_size;
 	GIOCondition function(GIOChannel* channel) c_g_io_channel_get_buffer_condition;
@@ -1876,12 +1899,12 @@ mixin( gshared ~"extern(C)
 
 	void function(gchar* logDomain, GLogLevelFlags logLevel, gchar* format, ... ) c_g_log;
 	void function(gchar* logDomain, GLogLevelFlags logLevel, gchar* format, va_list args) c_g_logv;
-	guint function(gchar* logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, gpointer userData) c_g_log_set_handler;
+	guint function(gchar* logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData) c_g_log_set_handler;
 	void function(gchar* logDomain, guint handlerId) c_g_log_remove_handler;
 	GLogLevelFlags function(GLogLevelFlags fatalMask) c_g_log_set_always_fatal;
 	GLogLevelFlags function(gchar* logDomain, GLogLevelFlags fatalMask) c_g_log_set_fatal_mask;
-	void function(gchar* logDomain, GLogLevelFlags logLevel, gchar* message, gpointer unusedData) c_g_log_default_handler;
-	GLogFunc function(GLogFunc logFunc, gpointer userData) c_g_log_set_default_handler;
+	void function(gchar* logDomain, GLogLevelFlags logLevel, gchar* message, void* unusedData) c_g_log_default_handler;
+	GLogFunc function(GLogFunc logFunc, void* userData) c_g_log_set_default_handler;
 
 	// glib.Str
 
@@ -1970,6 +1993,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* filename) c_g_filename_display_basename;
 	gchar* function(gchar* utf8string, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_locale_from_utf8;
 	gboolean function(char** charset) c_g_get_charset;
+	gchar* function() c_g_get_codeset;
 
 	// glib.Unicode
 
@@ -2075,7 +2099,7 @@ mixin( gshared ~"extern(C)
 	// glib.Internationalization
 
 	gchar* function(gchar* domain, gchar* msgid) c_g_dgettext;
-	gchar* function(gchar* domain, gchar* msgid, int category) c_g_dcgettext;
+	gchar* function(gchar* domain, gchar* msgid, gint category) c_g_dcgettext;
 	gchar* function(gchar* domain, gchar* msgid, gchar* msgidPlural, gulong n) c_g_dngettext;
 	gchar* function(gchar* domain, gchar* msgctxtid, gsize msgidoffset) c_g_dpgettext;
 	gchar* function(gchar* domain, gchar* context, gchar* msgid) c_g_dpgettext2;
@@ -2180,10 +2204,10 @@ mixin( gshared ~"extern(C)
 	GDateTime* function(GDateTime* datetime, gint minutes) c_g_date_time_add_minutes;
 	GDateTime* function(GDateTime* datetime, gdouble seconds) c_g_date_time_add_seconds;
 	GDateTime* function(GDateTime* datetime, gint years, gint months, gint days, gint hours, gint minutes, gdouble seconds) c_g_date_time_add_full;
-	gint function(gconstpointer dt1, gconstpointer dt2) c_g_date_time_compare;
+	gint function(void* dt1, void* dt2) c_g_date_time_compare;
 	GTimeSpan function(GDateTime* end, GDateTime* begin) c_g_date_time_difference;
-	guint function(gconstpointer datetime) c_g_date_time_hash;
-	gboolean function(gconstpointer dt1, gconstpointer dt2) c_g_date_time_equal;
+	guint function(void* datetime) c_g_date_time_hash;
+	gboolean function(void* dt1, void* dt2) c_g_date_time_equal;
 	void function(GDateTime* datetime, gint* year, gint* month, gint* day) c_g_date_time_get_ymd;
 	gint function(GDateTime* datetime) c_g_date_time_get_year;
 	gint function(GDateTime* datetime) c_g_date_time_get_month;
@@ -2233,6 +2257,9 @@ mixin( gshared ~"extern(C)
 	gchar* function() c_g_get_prgname;
 	void function(gchar* prgname) c_g_set_prgname;
 	gchar** function() c_g_get_environ;
+	gchar* function(gchar** envp, gchar* variable) c_g_environ_getenv;
+	gchar** function(gchar** envp, gchar* variable, gchar* value, gboolean overwrite) c_g_environ_setenv;
+	gchar** function(gchar** envp, gchar* variable) c_g_environ_unsetenv;
 	gchar* function(gchar* variable) c_g_getenv;
 	gboolean function(gchar* variable, gchar* value, gboolean overwrite) c_g_setenv;
 	void function(gchar* variable) c_g_unsetenv;
@@ -2262,7 +2289,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* separator, gchar** args) c_g_build_pathv;
 	gchar* function(guint64 size) c_g_format_size;
 	gchar* function(guint64 size, GFormatSizeFlags flags) c_g_format_size_full;
-	char* function(goffset size) c_g_format_size_for_display;
+	gchar* function(goffset size) c_g_format_size_for_display;
 	gchar* function(gchar* program) c_g_find_program_in_path;
 	gint function(gulong mask, gint nthBit) c_g_bit_nth_lsf;
 	gint function(gulong mask, gint nthBit) c_g_bit_nth_msf;
@@ -2270,8 +2297,8 @@ mixin( gshared ~"extern(C)
 	guint function(guint num) c_g_spaced_primes_closest;
 	void function(GVoidFunc func) c_g_atexit;
 	guint function(gchar* string, GDebugKey* keys, guint nkeys) c_g_parse_debug_string;
-	void function(gconstpointer pbase, gint totalElems, gsize size, GCompareDataFunc compareFunc, gpointer userData) c_g_qsort_with_data;
-	void function(gpointer* nullifyLocation) c_g_nullify_pointer;
+	void function(void* pbase, gint totalElems, gsize size, GCompareDataFunc compareFunc, void* userData) c_g_qsort_with_data;
+	void function(void** nullifyLocation) c_g_nullify_pointer;
 
 	// glib.ScannerG
 
@@ -2288,25 +2315,14 @@ mixin( gshared ~"extern(C)
 	GTokenType function(GScanner* scanner) c_g_scanner_cur_token;
 	GTokenValue function(GScanner* scanner) c_g_scanner_cur_value;
 	guint function(GScanner* scanner, guint scopeId) c_g_scanner_set_scope;
-	void function(GScanner* scanner, guint scopeId, gchar* symbol, gpointer value) c_g_scanner_scope_add_symbol;
-	void function(GScanner* scanner, guint scopeId, GHFunc func, gpointer userData) c_g_scanner_scope_foreach_symbol;
+	void function(GScanner* scanner, guint scopeId, gchar* symbol, void* value) c_g_scanner_scope_add_symbol;
+	void function(GScanner* scanner, guint scopeId, GHFunc func, void* userData) c_g_scanner_scope_foreach_symbol;
 	gpointer function(GScanner* scanner, guint scopeId, gchar* symbol) c_g_scanner_scope_lookup_symbol;
 	void function(GScanner* scanner, guint scopeId, gchar* symbol) c_g_scanner_scope_remove_symbol;
 	gpointer function(GScanner* scanner, gchar* symbol) c_g_scanner_lookup_symbol;
 	void function(GScanner* scanner, gchar* format, ... ) c_g_scanner_warn;
 	void function(GScanner* scanner, gchar* format, ... ) c_g_scanner_error;
 	void function(GScanner* scanner, GTokenType expectedToken, gchar* identifierSpec, gchar* symbolSpec, gchar* symbolName, gchar* message, gint isError) c_g_scanner_unexp_token;
-
-	// glib.StringCompletion
-
-	GCompletion* function(GCompletionFunc func) c_g_completion_new;
-	void function(GCompletion* cmp, GList* items) c_g_completion_add_items;
-	void function(GCompletion* cmp, GList* items) c_g_completion_remove_items;
-	void function(GCompletion* cmp) c_g_completion_clear_items;
-	GList* function(GCompletion* cmp, gchar* prefix, gchar** newPrefix) c_g_completion_complete;
-	GList* function(GCompletion* cmp, gchar* prefix, gchar** newPrefix) c_g_completion_complete_utf8;
-	void function(GCompletion* cmp, GCompletionStrncmpFunc strncmpFunc) c_g_completion_set_compare;
-	void function(GCompletion* cmp) c_g_completion_free;
 
 	// glib.Timer
 
@@ -2320,9 +2336,9 @@ mixin( gshared ~"extern(C)
 
 	// glib.Spawn
 
-	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, gpointer userData, GPid* childPid, gint* standardInput, gint* standardOutput, gint* standardError, GError** error) c_g_spawn_async_with_pipes;
-	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, gpointer userData, GPid* childPid, GError** error) c_g_spawn_async;
-	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, gpointer userData, gchar** standardOutput, gchar** standardError, gint* exitStatus, GError** error) c_g_spawn_sync;
+	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, gint* standardInput, gint* standardOutput, gint* standardError, GError** error) c_g_spawn_async_with_pipes;
+	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** error) c_g_spawn_async;
+	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, gchar** standardOutput, gchar** standardError, gint* exitStatus, GError** error) c_g_spawn_sync;
 	gboolean function(gchar* commandLine, GError** error) c_g_spawn_command_line_async;
 	gboolean function(gchar* commandLine, gchar** standardOutput, gchar** standardError, gint* exitStatus, GError** error) c_g_spawn_command_line_sync;
 	void function(GPid pid) c_g_spawn_close_pid;
@@ -2337,7 +2353,7 @@ mixin( gshared ~"extern(C)
 	gint function(gchar* tmpl, gint flags, gint mode) c_g_mkstemp_full;
 	gint function(gchar* tmpl, gchar** nameUsed, GError** error) c_g_file_open_tmp;
 	gchar* function(gchar* filename, GError** error) c_g_file_read_link;
-	int function(gchar* pathname, int mode) c_g_mkdir_with_parents;
+	gint function(gchar* pathname, gint mode) c_g_mkdir_with_parents;
 	gchar* function(gchar* tmpl) c_g_mkdtemp;
 	gchar* function(gchar* tmpl, gint mode) c_g_mkdtemp_full;
 	int function(gchar* filename, int flags, int mode) c_g_open;
@@ -2367,6 +2383,7 @@ mixin( gshared ~"extern(C)
 	// glib.MappedFile
 
 	GMappedFile* function(gchar* filename, gboolean writable, GError** error) c_g_mapped_file_new;
+	GMappedFile* function(gint fd, gboolean writable, GError** error) c_g_mapped_file_new_from_fd;
 	GMappedFile* function(GMappedFile* file) c_g_mapped_file_ref;
 	void function(GMappedFile* file) c_g_mapped_file_unref;
 	void function(GMappedFile* file) c_g_mapped_file_free;
@@ -2404,7 +2421,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(GOptionContext* context) c_g_option_context_get_summary;
 	void function(GOptionContext* context, gchar* description) c_g_option_context_set_description;
 	gchar* function(GOptionContext* context) c_g_option_context_get_description;
-	void function(GOptionContext* context, GTranslateFunc func, gpointer data, GDestroyNotify destroyNotify) c_g_option_context_set_translate_func;
+	void function(GOptionContext* context, GTranslateFunc func, void* data, GDestroyNotify destroyNotify) c_g_option_context_set_translate_func;
 	void function(GOptionContext* context, gchar* domain) c_g_option_context_set_translation_domain;
 	void function(GOptionContext* context) c_g_option_context_free;
 	gboolean function(GOptionContext* context, gint* argc, gchar*** argv, GError** error) c_g_option_context_parse;
@@ -2420,12 +2437,12 @@ mixin( gshared ~"extern(C)
 
 	// glib.OptionGroup
 
-	GOptionGroup* function(gchar* name, gchar* description, gchar* helpDescription, gpointer userData, GDestroyNotify destroy) c_g_option_group_new;
+	GOptionGroup* function(gchar* name, gchar* description, gchar* helpDescription, void* userData, GDestroyNotify destroy) c_g_option_group_new;
 	void function(GOptionGroup* group) c_g_option_group_free;
 	void function(GOptionGroup* group, GOptionEntry* entries) c_g_option_group_add_entries;
 	void function(GOptionGroup* group, GOptionParseFunc preParseFunc, GOptionParseFunc postParseFunc) c_g_option_group_set_parse_hooks;
 	void function(GOptionGroup* group, GOptionErrorFunc errorFunc) c_g_option_group_set_error_hook;
-	void function(GOptionGroup* group, GTranslateFunc func, gpointer data, GDestroyNotify destroyNotify) c_g_option_group_set_translate_func;
+	void function(GOptionGroup* group, GTranslateFunc func, void* data, GDestroyNotify destroyNotify) c_g_option_group_set_translate_func;
 	void function(GOptionGroup* group, gchar* domain) c_g_option_group_set_translation_domain;
 
 	// glib.Pattern
@@ -2460,7 +2477,7 @@ mixin( gshared ~"extern(C)
 	gchar** function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, GRegexMatchFlags matchOptions, gint maxTokens, GError** error) c_g_regex_split_full;
 	gchar* function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, gchar* replacement, GRegexMatchFlags matchOptions, GError** error) c_g_regex_replace;
 	gchar* function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, gchar* replacement, GRegexMatchFlags matchOptions, GError** error) c_g_regex_replace_literal;
-	gchar* function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, gpointer userData, GError** error) c_g_regex_replace_eval;
+	gchar* function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData, GError** error) c_g_regex_replace_eval;
 	gboolean function(gchar* replacement, gboolean* hasReferences, GError** error) c_g_regex_check_replacement;
 
 	// glib.MatchInfo
@@ -2492,9 +2509,9 @@ mixin( gshared ~"extern(C)
 	gchar* function(GMarkupParseContext* context) c_g_markup_parse_context_get_element;
 	GSList* function(GMarkupParseContext* context) c_g_markup_parse_context_get_element_stack;
 	gpointer function(GMarkupParseContext* context) c_g_markup_parse_context_get_user_data;
-	GMarkupParseContext* function(GMarkupParser* parser, GMarkupParseFlags flags, gpointer userData, GDestroyNotify userDataDnotify) c_g_markup_parse_context_new;
+	GMarkupParseContext* function(GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify) c_g_markup_parse_context_new;
 	gboolean function(GMarkupParseContext* context, gchar* text, gssize textLen, GError** error) c_g_markup_parse_context_parse;
-	void function(GMarkupParseContext* context, GMarkupParser* parser, gpointer userData) c_g_markup_parse_context_push;
+	void function(GMarkupParseContext* context, GMarkupParser* parser, void* userData) c_g_markup_parse_context_push;
 	gpointer function(GMarkupParseContext* context) c_g_markup_parse_context_pop;
 	gboolean function(gchar* elementName, gchar** attributeNames, gchar** attributeValues, GError** error, GMarkupCollectType firstType, gchar* firstAttr, ... ) c_g_markup_collect_attributes;
 
@@ -2502,6 +2519,8 @@ mixin( gshared ~"extern(C)
 
 	GKeyFile* function() c_g_key_file_new;
 	void function(GKeyFile* keyFile) c_g_key_file_free;
+	GKeyFile* function(GKeyFile* keyFile) c_g_key_file_ref;
+	void function(GKeyFile* keyFile) c_g_key_file_unref;
 	void function(GKeyFile* keyFile, gchar separator) c_g_key_file_set_list_separator;
 	gboolean function(GKeyFile* keyFile, gchar* file, GKeyFileFlags flags, GError** error) c_g_key_file_load_from_file;
 	gboolean function(GKeyFile* keyFile, gchar* data, gsize length, GKeyFileFlags flags, GError** error) c_g_key_file_load_from_data;
@@ -2590,8 +2609,8 @@ mixin( gshared ~"extern(C)
 	// glib.UnixUtils
 
 	gboolean function(gint* fds, gint flags, GError** error) c_g_unix_open_pipe;
-	guint function(gint signum, GSourceFunc handler, gpointer userData) c_g_unix_signal_add;
-	guint function(gint priority, gint signum, GSourceFunc handler, gpointer userData, GDestroyNotify notify) c_g_unix_signal_add_full;
+	guint function(gint signum, GSourceFunc handler, void* userData) c_g_unix_signal_add;
+	guint function(gint priority, gint signum, GSourceFunc handler, void* userData, GDestroyNotify notify) c_g_unix_signal_add_full;
 	GSource* function(gint signum) c_g_unix_signal_source_new;
 	gboolean function(gint fd, gboolean nonblock, GError** error) c_g_unix_set_fd_nonblocking;
 
@@ -2600,43 +2619,22 @@ mixin( gshared ~"extern(C)
 	gchar* function(gint error) c_g_win32_error_message;
 	gchar* function() c_g_win32_getlocale;
 	gchar* function(gchar* p, gchar* dllName) c_g_win32_get_package_installation_directory;
-	gchar* function(gpointer hmodule) c_g_win32_get_package_installation_directory_of_module;
+	gchar* function(void* hmodule) c_g_win32_get_package_installation_directory_of_module;
 	gchar* function(gchar* p, gchar* dllName, gchar* subdir) c_g_win32_get_package_installation_subdirectory;
 	guint function() c_g_win32_get_windows_version;
 	gchar* function(gchar* utf8filename) c_g_win32_locale_filename_from_utf8;
 
-	// glib.MemorySlice
-
-	gpointer function(gsize blockSize) c_g_slice_alloc;
-	gpointer function(gsize blockSize) c_g_slice_alloc0;
-	gpointer function(gsize blockSize, gconstpointer memBlock) c_g_slice_copy;
-	void function(gsize blockSize, gpointer memBlock) c_g_slice_free1;
-	void function(gsize blockSize, gpointer memChain, gsize nextOffset) c_g_slice_free_chain_with_offset;
-
-	// glib.MemoryChunk
-
-	GMemChunk* function(gchar* name, gint atomSize, gsize areaSize, gint type) c_g_mem_chunk_new;
-	gpointer function(GMemChunk* memChunk) c_g_mem_chunk_alloc;
-	gpointer function(GMemChunk* memChunk) c_g_mem_chunk_alloc0;
-	void function(GMemChunk* memChunk, gpointer mem) c_g_mem_chunk_free;
-	void function(GMemChunk* memChunk) c_g_mem_chunk_destroy;
-	void function(GMemChunk* memChunk) c_g_mem_chunk_reset;
-	void function(GMemChunk* memChunk) c_g_mem_chunk_clean;
-	void function() c_g_blow_chunks;
-	void function() c_g_mem_chunk_info;
-	void function(GMemChunk* memChunk) c_g_mem_chunk_print;
-
 	// glib.ListG
 
-	GList* function(GList* list, gpointer data) c_g_list_append;
-	GList* function(GList* list, gpointer data) c_g_list_prepend;
-	GList* function(GList* list, gpointer data, gint position) c_g_list_insert;
-	GList* function(GList* list, GList* sibling, gpointer data) c_g_list_insert_before;
-	GList* function(GList* list, gpointer data, GCompareFunc func) c_g_list_insert_sorted;
-	GList* function(GList* list, gconstpointer data) c_g_list_remove;
+	GList* function(GList* list, void* data) c_g_list_append;
+	GList* function(GList* list, void* data) c_g_list_prepend;
+	GList* function(GList* list, void* data, gint position) c_g_list_insert;
+	GList* function(GList* list, GList* sibling, void* data) c_g_list_insert_before;
+	GList* function(GList* list, void* data, GCompareFunc func) c_g_list_insert_sorted;
+	GList* function(GList* list, void* data) c_g_list_remove;
 	GList* function(GList* list, GList* llink) c_g_list_remove_link;
 	GList* function(GList* list, GList* link) c_g_list_delete_link;
-	GList* function(GList* list, gconstpointer data) c_g_list_remove_all;
+	GList* function(GList* list, void* data) c_g_list_remove_all;
 	void function(GList* list) c_g_list_free;
 	void function(GList* list, GDestroyNotify freeFunc) c_g_list_free_full;
 	GList* function() c_g_list_alloc;
@@ -2645,84 +2643,81 @@ mixin( gshared ~"extern(C)
 	GList* function(GList* list) c_g_list_copy;
 	GList* function(GList* list) c_g_list_reverse;
 	GList* function(GList* list, GCompareFunc compareFunc) c_g_list_sort;
-	GList* function(GList* list, gpointer data, GCompareDataFunc func, gpointer userData) c_g_list_insert_sorted_with_data;
-	GList* function(GList* list, GCompareDataFunc compareFunc, gpointer userData) c_g_list_sort_with_data;
+	GList* function(GList* list, void* data, GCompareDataFunc func, void* userData) c_g_list_insert_sorted_with_data;
+	GList* function(GList* list, GCompareDataFunc compareFunc, void* userData) c_g_list_sort_with_data;
 	GList* function(GList* list1, GList* list2) c_g_list_concat;
-	void function(GList* list, GFunc func, gpointer userData) c_g_list_foreach;
+	void function(GList* list, GFunc func, void* userData) c_g_list_foreach;
 	GList* function(GList* list) c_g_list_first;
 	GList* function(GList* list) c_g_list_last;
 	GList* function(GList* list, guint n) c_g_list_nth;
 	gpointer function(GList* list, guint n) c_g_list_nth_data;
 	GList* function(GList* list, guint n) c_g_list_nth_prev;
-	GList* function(GList* list, gconstpointer data) c_g_list_find;
-	GList* function(GList* list, gconstpointer data, GCompareFunc func) c_g_list_find_custom;
+	GList* function(GList* list, void* data) c_g_list_find;
+	GList* function(GList* list, void* data, GCompareFunc func) c_g_list_find_custom;
 	gint function(GList* list, GList* llink) c_g_list_position;
-	gint function(GList* list, gconstpointer data) c_g_list_index;
-	void function(gpointer allocator) c_g_list_push_allocator;
-	void function() c_g_list_pop_allocator;
+	gint function(GList* list, void* data) c_g_list_index;
 
 	// glib.ListSG
 
 	GSList* function() c_g_slist_alloc;
-	GSList* function(GSList* list, gpointer data) c_g_slist_append;
-	GSList* function(GSList* list, gpointer data) c_g_slist_prepend;
-	GSList* function(GSList* list, gpointer data, gint position) c_g_slist_insert;
-	GSList* function(GSList* slist, GSList* sibling, gpointer data) c_g_slist_insert_before;
-	GSList* function(GSList* list, gpointer data, GCompareFunc func) c_g_slist_insert_sorted;
-	GSList* function(GSList* list, gconstpointer data) c_g_slist_remove;
+	GSList* function(GSList* list, void* data) c_g_slist_append;
+	GSList* function(GSList* list, void* data) c_g_slist_prepend;
+	GSList* function(GSList* list, void* data, gint position) c_g_slist_insert;
+	GSList* function(GSList* slist, GSList* sibling, void* data) c_g_slist_insert_before;
+	GSList* function(GSList* list, void* data, GCompareFunc func) c_g_slist_insert_sorted;
+	GSList* function(GSList* list, void* data) c_g_slist_remove;
 	GSList* function(GSList* list, GSList* link) c_g_slist_remove_link;
 	GSList* function(GSList* list, GSList* link) c_g_slist_delete_link;
-	GSList* function(GSList* list, gconstpointer data) c_g_slist_remove_all;
+	GSList* function(GSList* list, void* data) c_g_slist_remove_all;
 	void function(GSList* list) c_g_slist_free;
 	void function(GSList* list, GDestroyNotify freeFunc) c_g_slist_free_full;
 	void function(GSList* list) c_g_slist_free_1;
 	guint function(GSList* list) c_g_slist_length;
 	GSList* function(GSList* list) c_g_slist_copy;
 	GSList* function(GSList* list) c_g_slist_reverse;
-	GSList* function(GSList* list, gpointer data, GCompareDataFunc func, gpointer userData) c_g_slist_insert_sorted_with_data;
+	GSList* function(GSList* list, void* data, GCompareDataFunc func, void* userData) c_g_slist_insert_sorted_with_data;
 	GSList* function(GSList* list, GCompareFunc compareFunc) c_g_slist_sort;
-	GSList* function(GSList* list, GCompareDataFunc compareFunc, gpointer userData) c_g_slist_sort_with_data;
+	GSList* function(GSList* list, GCompareDataFunc compareFunc, void* userData) c_g_slist_sort_with_data;
 	GSList* function(GSList* list1, GSList* list2) c_g_slist_concat;
-	void function(GSList* list, GFunc func, gpointer userData) c_g_slist_foreach;
+	void function(GSList* list, GFunc func, void* userData) c_g_slist_foreach;
 	GSList* function(GSList* list) c_g_slist_last;
 	GSList* function(GSList* list, guint n) c_g_slist_nth;
 	gpointer function(GSList* list, guint n) c_g_slist_nth_data;
-	GSList* function(GSList* list, gconstpointer data) c_g_slist_find;
-	GSList* function(GSList* list, gconstpointer data, GCompareFunc func) c_g_slist_find_custom;
+	GSList* function(GSList* list, void* data) c_g_slist_find;
+	GSList* function(GSList* list, void* data, GCompareFunc func) c_g_slist_find_custom;
 	gint function(GSList* list, GSList* llink) c_g_slist_position;
-	gint function(GSList* list, gconstpointer data) c_g_slist_index;
-	void function(gpointer dummy) c_g_slist_push_allocator;
-	void function() c_g_slist_pop_allocator;
+	gint function(GSList* list, void* data) c_g_slist_index;
 
 	// glib.QueueG
 
 	GQueue* function() c_g_queue_new;
 	void function(GQueue* queue) c_g_queue_free;
+	void function(GQueue* queue, GDestroyNotify freeFunc) c_g_queue_free_full;
 	void function(GQueue* queue) c_g_queue_init;
 	void function(GQueue* queue) c_g_queue_clear;
 	gboolean function(GQueue* queue) c_g_queue_is_empty;
 	guint function(GQueue* queue) c_g_queue_get_length;
 	void function(GQueue* queue) c_g_queue_reverse;
 	GQueue* function(GQueue* queue) c_g_queue_copy;
-	void function(GQueue* queue, GFunc func, gpointer userData) c_g_queue_foreach;
-	GList* function(GQueue* queue, gconstpointer data) c_g_queue_find;
-	GList* function(GQueue* queue, gconstpointer data, GCompareFunc func) c_g_queue_find_custom;
-	void function(GQueue* queue, GCompareDataFunc compareFunc, gpointer userData) c_g_queue_sort;
-	void function(GQueue* queue, gpointer data) c_g_queue_push_head;
-	void function(GQueue* queue, gpointer data) c_g_queue_push_tail;
-	void function(GQueue* queue, gpointer data, gint n) c_g_queue_push_nth;
+	void function(GQueue* queue, GFunc func, void* userData) c_g_queue_foreach;
+	GList* function(GQueue* queue, void* data) c_g_queue_find;
+	GList* function(GQueue* queue, void* data, GCompareFunc func) c_g_queue_find_custom;
+	void function(GQueue* queue, GCompareDataFunc compareFunc, void* userData) c_g_queue_sort;
+	void function(GQueue* queue, void* data) c_g_queue_push_head;
+	void function(GQueue* queue, void* data) c_g_queue_push_tail;
+	void function(GQueue* queue, void* data, gint n) c_g_queue_push_nth;
 	gpointer function(GQueue* queue) c_g_queue_pop_head;
 	gpointer function(GQueue* queue) c_g_queue_pop_tail;
 	gpointer function(GQueue* queue, guint n) c_g_queue_pop_nth;
 	gpointer function(GQueue* queue) c_g_queue_peek_head;
 	gpointer function(GQueue* queue) c_g_queue_peek_tail;
 	gpointer function(GQueue* queue, guint n) c_g_queue_peek_nth;
-	gint function(GQueue* queue, gconstpointer data) c_g_queue_index;
-	gboolean function(GQueue* queue, gconstpointer data) c_g_queue_remove;
-	guint function(GQueue* queue, gconstpointer data) c_g_queue_remove_all;
-	void function(GQueue* queue, GList* sibling, gpointer data) c_g_queue_insert_before;
-	void function(GQueue* queue, GList* sibling, gpointer data) c_g_queue_insert_after;
-	void function(GQueue* queue, gpointer data, GCompareDataFunc func, gpointer userData) c_g_queue_insert_sorted;
+	gint function(GQueue* queue, void* data) c_g_queue_index;
+	gboolean function(GQueue* queue, void* data) c_g_queue_remove;
+	guint function(GQueue* queue, void* data) c_g_queue_remove_all;
+	void function(GQueue* queue, GList* sibling, void* data) c_g_queue_insert_before;
+	void function(GQueue* queue, GList* sibling, void* data) c_g_queue_insert_after;
+	void function(GQueue* queue, void* data, GCompareDataFunc func, void* userData) c_g_queue_insert_sorted;
 	void function(GQueue* queue, GList* link) c_g_queue_push_head_link;
 	void function(GQueue* queue, GList* link) c_g_queue_push_tail_link;
 	void function(GQueue* queue, gint n, GList* link) c_g_queue_push_nth_link;
@@ -2741,31 +2736,31 @@ mixin( gshared ~"extern(C)
 	GSequence* function(GDestroyNotify dataDestroy) c_g_sequence_new;
 	void function(GSequence* seq) c_g_sequence_free;
 	gint function(GSequence* seq) c_g_sequence_get_length;
-	void function(GSequence* seq, GFunc func, gpointer userData) c_g_sequence_foreach;
-	void function(GSequenceIter* begin, GSequenceIter* end, GFunc func, gpointer userData) c_g_sequence_foreach_range;
-	void function(GSequence* seq, GCompareDataFunc cmpFunc, gpointer cmpData) c_g_sequence_sort;
-	void function(GSequence* seq, GSequenceIterCompareFunc cmpFunc, gpointer cmpData) c_g_sequence_sort_iter;
+	void function(GSequence* seq, GFunc func, void* userData) c_g_sequence_foreach;
+	void function(GSequenceIter* begin, GSequenceIter* end, GFunc func, void* userData) c_g_sequence_foreach_range;
+	void function(GSequence* seq, GCompareDataFunc cmpFunc, void* cmpData) c_g_sequence_sort;
+	void function(GSequence* seq, GSequenceIterCompareFunc cmpFunc, void* cmpData) c_g_sequence_sort_iter;
 	GSequenceIter* function(GSequence* seq) c_g_sequence_get_begin_iter;
 	GSequenceIter* function(GSequence* seq) c_g_sequence_get_end_iter;
 	GSequenceIter* function(GSequence* seq, gint pos) c_g_sequence_get_iter_at_pos;
-	GSequenceIter* function(GSequence* seq, gpointer data) c_g_sequence_append;
-	GSequenceIter* function(GSequence* seq, gpointer data) c_g_sequence_prepend;
-	GSequenceIter* function(GSequenceIter* iter, gpointer data) c_g_sequence_insert_before;
+	GSequenceIter* function(GSequence* seq, void* data) c_g_sequence_append;
+	GSequenceIter* function(GSequence* seq, void* data) c_g_sequence_prepend;
+	GSequenceIter* function(GSequenceIter* iter, void* data) c_g_sequence_insert_before;
 	void function(GSequenceIter* src, GSequenceIter* dest) c_g_sequence_move;
 	void function(GSequenceIter* a, GSequenceIter* b) c_g_sequence_swap;
-	GSequenceIter* function(GSequence* seq, gpointer data, GCompareDataFunc cmpFunc, gpointer cmpData) c_g_sequence_insert_sorted;
-	GSequenceIter* function(GSequence* seq, gpointer data, GSequenceIterCompareFunc iterCmp, gpointer cmpData) c_g_sequence_insert_sorted_iter;
-	void function(GSequenceIter* iter, GCompareDataFunc cmpFunc, gpointer cmpData) c_g_sequence_sort_changed;
-	void function(GSequenceIter* iter, GSequenceIterCompareFunc iterCmp, gpointer cmpData) c_g_sequence_sort_changed_iter;
+	GSequenceIter* function(GSequence* seq, void* data, GCompareDataFunc cmpFunc, void* cmpData) c_g_sequence_insert_sorted;
+	GSequenceIter* function(GSequence* seq, void* data, GSequenceIterCompareFunc iterCmp, void* cmpData) c_g_sequence_insert_sorted_iter;
+	void function(GSequenceIter* iter, GCompareDataFunc cmpFunc, void* cmpData) c_g_sequence_sort_changed;
+	void function(GSequenceIter* iter, GSequenceIterCompareFunc iterCmp, void* cmpData) c_g_sequence_sort_changed_iter;
 	void function(GSequenceIter* iter) c_g_sequence_remove;
 	void function(GSequenceIter* begin, GSequenceIter* end) c_g_sequence_remove_range;
 	void function(GSequenceIter* dest, GSequenceIter* begin, GSequenceIter* end) c_g_sequence_move_range;
-	GSequenceIter* function(GSequence* seq, gpointer data, GCompareDataFunc cmpFunc, gpointer cmpData) c_g_sequence_search;
-	GSequenceIter* function(GSequence* seq, gpointer data, GSequenceIterCompareFunc iterCmp, gpointer cmpData) c_g_sequence_search_iter;
-	GSequenceIter* function(GSequence* seq, gpointer data, GCompareDataFunc cmpFunc, gpointer cmpData) c_g_sequence_lookup;
-	GSequenceIter* function(GSequence* seq, gpointer data, GSequenceIterCompareFunc iterCmp, gpointer cmpData) c_g_sequence_lookup_iter;
+	GSequenceIter* function(GSequence* seq, void* data, GCompareDataFunc cmpFunc, void* cmpData) c_g_sequence_search;
+	GSequenceIter* function(GSequence* seq, void* data, GSequenceIterCompareFunc iterCmp, void* cmpData) c_g_sequence_search_iter;
+	GSequenceIter* function(GSequence* seq, void* data, GCompareDataFunc cmpFunc, void* cmpData) c_g_sequence_lookup;
+	GSequenceIter* function(GSequence* seq, void* data, GSequenceIterCompareFunc iterCmp, void* cmpData) c_g_sequence_lookup_iter;
 	gpointer function(GSequenceIter* iter) c_g_sequence_get;
-	void function(GSequenceIter* iter, gpointer data) c_g_sequence_set;
+	void function(GSequenceIter* iter, void* data) c_g_sequence_set;
 	GSequenceIter* function(GSequenceIter* begin, GSequenceIter* end) c_g_sequence_range_get_midpoint;
 
 	// glib.SequenceIter
@@ -2781,7 +2776,7 @@ mixin( gshared ~"extern(C)
 
 	// glib.TrashStack
 
-	void function(GTrashStack** stackP, gpointer dataP) c_g_trash_stack_push;
+	void function(GTrashStack** stackP, void* dataP) c_g_trash_stack_push;
 	gpointer function(GTrashStack** stackP) c_g_trash_stack_pop;
 	gpointer function(GTrashStack** stackP) c_g_trash_stack_peek;
 	guint function(GTrashStack** stackP) c_g_trash_stack_height;
@@ -2790,17 +2785,19 @@ mixin( gshared ~"extern(C)
 
 	GHashTable* function(GHashFunc hashFunc, GEqualFunc keyEqualFunc) c_g_hash_table_new;
 	GHashTable* function(GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc) c_g_hash_table_new_full;
-	void function(GHashTable* hashTable, gpointer key, gpointer value) c_g_hash_table_insert;
-	void function(GHashTable* hashTable, gpointer key, gpointer value) c_g_hash_table_replace;
+	void function(GHashTable* hashTable, void* key, void* value) c_g_hash_table_insert;
+	void function(GHashTable* hashTable, void* key, void* value) c_g_hash_table_replace;
+	void function(GHashTable* hashTable, void* key) c_g_hash_table_add;
+	gboolean function(GHashTable* hashTable, void* key) c_g_hash_table_contains;
 	guint function(GHashTable* hashTable) c_g_hash_table_size;
-	gpointer function(GHashTable* hashTable, gconstpointer key) c_g_hash_table_lookup;
-	gboolean function(GHashTable* hashTable, gconstpointer lookupKey, gpointer* origKey, gpointer* value) c_g_hash_table_lookup_extended;
-	void function(GHashTable* hashTable, GHFunc func, gpointer userData) c_g_hash_table_foreach;
-	gpointer function(GHashTable* hashTable, GHRFunc predicate, gpointer userData) c_g_hash_table_find;
-	gboolean function(GHashTable* hashTable, gconstpointer key) c_g_hash_table_remove;
-	gboolean function(GHashTable* hashTable, gconstpointer key) c_g_hash_table_steal;
-	guint function(GHashTable* hashTable, GHRFunc func, gpointer userData) c_g_hash_table_foreach_remove;
-	guint function(GHashTable* hashTable, GHRFunc func, gpointer userData) c_g_hash_table_foreach_steal;
+	gpointer function(GHashTable* hashTable, void* key) c_g_hash_table_lookup;
+	gboolean function(GHashTable* hashTable, void* lookupKey, void** origKey, void** value) c_g_hash_table_lookup_extended;
+	void function(GHashTable* hashTable, GHFunc func, void* userData) c_g_hash_table_foreach;
+	gpointer function(GHashTable* hashTable, GHRFunc predicate, void* userData) c_g_hash_table_find;
+	gboolean function(GHashTable* hashTable, void* key) c_g_hash_table_remove;
+	gboolean function(GHashTable* hashTable, void* key) c_g_hash_table_steal;
+	guint function(GHashTable* hashTable, GHRFunc func, void* userData) c_g_hash_table_foreach_remove;
+	guint function(GHashTable* hashTable, GHRFunc func, void* userData) c_g_hash_table_foreach_steal;
 	void function(GHashTable* hashTable) c_g_hash_table_remove_all;
 	void function(GHashTable* hashTable) c_g_hash_table_steal_all;
 	GList* function(GHashTable* hashTable) c_g_hash_table_get_keys;
@@ -2808,23 +2805,23 @@ mixin( gshared ~"extern(C)
 	void function(GHashTable* hashTable) c_g_hash_table_destroy;
 	GHashTable* function(GHashTable* hashTable) c_g_hash_table_ref;
 	void function(GHashTable* hashTable) c_g_hash_table_unref;
-	gboolean function(gconstpointer v1, gconstpointer v2) c_g_direct_equal;
-	guint function(gconstpointer v) c_g_direct_hash;
-	gboolean function(gconstpointer v1, gconstpointer v2) c_g_int_equal;
-	guint function(gconstpointer v) c_g_int_hash;
-	gboolean function(gconstpointer v1, gconstpointer v2) c_g_int64_equal;
-	guint function(gconstpointer v) c_g_int64_hash;
-	gboolean function(gconstpointer v1, gconstpointer v2) c_g_double_equal;
-	guint function(gconstpointer v) c_g_double_hash;
-	gboolean function(gconstpointer v1, gconstpointer v2) c_g_str_equal;
-	guint function(gconstpointer v) c_g_str_hash;
+	gboolean function(void* v1, void* v2) c_g_direct_equal;
+	guint function(void* v) c_g_direct_hash;
+	gboolean function(void* v1, void* v2) c_g_int_equal;
+	guint function(void* v) c_g_int_hash;
+	gboolean function(void* v1, void* v2) c_g_int64_equal;
+	guint function(void* v) c_g_int64_hash;
+	gboolean function(void* v1, void* v2) c_g_double_equal;
+	guint function(void* v) c_g_double_hash;
+	gboolean function(void* v1, void* v2) c_g_str_equal;
+	guint function(void* v) c_g_str_hash;
 
 	// glib.HashTableIter
 
 	void function(GHashTableIter* iter, GHashTable* hashTable) c_g_hash_table_iter_init;
-	gboolean function(GHashTableIter* iter, gpointer* key, gpointer* value) c_g_hash_table_iter_next;
+	gboolean function(GHashTableIter* iter, void** key, void** value) c_g_hash_table_iter_next;
 	GHashTable* function(GHashTableIter* iter) c_g_hash_table_iter_get_hash_table;
-	void function(GHashTableIter* iter, gpointer value) c_g_hash_table_iter_replace;
+	void function(GHashTableIter* iter, void* value) c_g_hash_table_iter_replace;
 	void function(GHashTableIter* iter) c_g_hash_table_iter_remove;
 	void function(GHashTableIter* iter) c_g_hash_table_iter_steal;
 
@@ -2842,7 +2839,7 @@ mixin( gshared ~"extern(C)
 	GString* function(GString* string, gchar c) c_g_string_append_c;
 	GString* function(GString* string, gunichar wc) c_g_string_append_unichar;
 	GString* function(GString* string, gchar* val, gssize len) c_g_string_append_len;
-	GString* function(GString* string, char* unescaped, char* reservedCharsAllowed, gboolean allowUtf8) c_g_string_append_uri_escaped;
+	GString* function(GString* string, gchar* unescaped, gchar* reservedCharsAllowed, gboolean allowUtf8) c_g_string_append_uri_escaped;
 	GString* function(GString* string, gchar* val) c_g_string_prepend;
 	GString* function(GString* string, gchar c) c_g_string_prepend_c;
 	GString* function(GString* string, gunichar wc) c_g_string_prepend_unichar;
@@ -2878,15 +2875,16 @@ mixin( gshared ~"extern(C)
 	GArray* function(GArray* array) c_g_array_ref;
 	void function(GArray* array) c_g_array_unref;
 	guint function(GArray* array) c_g_array_get_element_size;
-	GArray* function(GArray* array, gconstpointer data, guint len) c_g_array_append_vals;
-	GArray* function(GArray* array, gconstpointer data, guint len) c_g_array_prepend_vals;
-	GArray* function(GArray* array, guint index, gconstpointer data, guint len) c_g_array_insert_vals;
+	GArray* function(GArray* array, void* data, guint len) c_g_array_append_vals;
+	GArray* function(GArray* array, void* data, guint len) c_g_array_prepend_vals;
+	GArray* function(GArray* array, guint index, void* data, guint len) c_g_array_insert_vals;
 	GArray* function(GArray* array, guint index) c_g_array_remove_index;
 	GArray* function(GArray* array, guint index) c_g_array_remove_index_fast;
 	GArray* function(GArray* array, guint index, guint length) c_g_array_remove_range;
 	void function(GArray* array, GCompareFunc compareFunc) c_g_array_sort;
-	void function(GArray* array, GCompareDataFunc compareFunc, gpointer userData) c_g_array_sort_with_data;
+	void function(GArray* array, GCompareDataFunc compareFunc, void* userData) c_g_array_sort_with_data;
 	GArray* function(GArray* array, guint length) c_g_array_set_size;
+	void function(GArray* array, GDestroyNotify clearFunc) c_g_array_set_clear_func;
 	gchar* function(GArray* array, gboolean freeSegment) c_g_array_free;
 
 	// glib.PtrArray
@@ -2898,21 +2896,22 @@ mixin( gshared ~"extern(C)
 	void function(GPtrArray* array, GDestroyNotify elementFreeFunc) c_g_ptr_array_set_free_func;
 	GPtrArray* function(GPtrArray* array) c_g_ptr_array_ref;
 	void function(GPtrArray* array) c_g_ptr_array_unref;
-	void function(GPtrArray* array, gpointer data) c_g_ptr_array_add;
-	gboolean function(GPtrArray* array, gpointer data) c_g_ptr_array_remove;
+	void function(GPtrArray* array, void* data) c_g_ptr_array_add;
+	gboolean function(GPtrArray* array, void* data) c_g_ptr_array_remove;
 	gpointer function(GPtrArray* array, guint index) c_g_ptr_array_remove_index;
-	gboolean function(GPtrArray* array, gpointer data) c_g_ptr_array_remove_fast;
+	gboolean function(GPtrArray* array, void* data) c_g_ptr_array_remove_fast;
 	gpointer function(GPtrArray* array, guint index) c_g_ptr_array_remove_index_fast;
 	void function(GPtrArray* array, guint index, guint length) c_g_ptr_array_remove_range;
 	void function(GPtrArray* array, GCompareFunc compareFunc) c_g_ptr_array_sort;
-	void function(GPtrArray* array, GCompareDataFunc compareFunc, gpointer userData) c_g_ptr_array_sort_with_data;
+	void function(GPtrArray* array, GCompareDataFunc compareFunc, void* userData) c_g_ptr_array_sort_with_data;
 	void function(GPtrArray* array, gint length) c_g_ptr_array_set_size;
 	gpointer* function(GPtrArray* array, gboolean freeSeg) c_g_ptr_array_free;
-	void function(GPtrArray* array, GFunc func, gpointer userData) c_g_ptr_array_foreach;
+	void function(GPtrArray* array, GFunc func, void* userData) c_g_ptr_array_foreach;
 
 	// glib.ByteArray
 
 	GByteArray* function() c_g_byte_array_new;
+	GByteArray* function(guint8* data, gsize len) c_g_byte_array_new_take;
 	GByteArray* function(guint reservedSize) c_g_byte_array_sized_new;
 	GByteArray* function(GByteArray* array) c_g_byte_array_ref;
 	void function(GByteArray* array) c_g_byte_array_unref;
@@ -2922,46 +2921,64 @@ mixin( gshared ~"extern(C)
 	GByteArray* function(GByteArray* array, guint index) c_g_byte_array_remove_index_fast;
 	GByteArray* function(GByteArray* array, guint index, guint length) c_g_byte_array_remove_range;
 	void function(GByteArray* array, GCompareFunc compareFunc) c_g_byte_array_sort;
-	void function(GByteArray* array, GCompareDataFunc compareFunc, gpointer userData) c_g_byte_array_sort_with_data;
+	void function(GByteArray* array, GCompareDataFunc compareFunc, void* userData) c_g_byte_array_sort_with_data;
 	GByteArray* function(GByteArray* array, guint length) c_g_byte_array_set_size;
 	guint8* function(GByteArray* array, gboolean freeSegment) c_g_byte_array_free;
+	GBytes* function(GByteArray* array) c_g_byte_array_free_to_bytes;
+
+	// glib.Bytes
+
+	GBytes* function(void* data, gsize size) c_g_bytes_new;
+	GBytes* function(void* data, gsize size) c_g_bytes_new_take;
+	GBytes* function(void* data, gsize size) c_g_bytes_new_static;
+	GBytes* function(void* data, gsize size, GDestroyNotify freeFunc, void* userData) c_g_bytes_new_with_free_func;
+	GBytes* function(GBytes* bytes, gsize offset, gsize length) c_g_bytes_new_from_bytes;
+	void* function(GBytes* bytes, gsize* size) c_g_bytes_get_data;
+	gsize function(GBytes* bytes) c_g_bytes_get_size;
+	guint function(void* bytes) c_g_bytes_hash;
+	gboolean function(void* bytes1, void* bytes2) c_g_bytes_equal;
+	gint function(void* bytes1, void* bytes2) c_g_bytes_compare;
+	GBytes* function(GBytes* bytes) c_g_bytes_ref;
+	void function(GBytes* bytes) c_g_bytes_unref;
+	void* function(GBytes* bytes, gsize* size) c_g_bytes_unref_to_data;
+	GByteArray* function(GBytes* bytes) c_g_bytes_unref_to_array;
 
 	// glib.BBTree
 
 	GTree* function(GCompareFunc keyCompareFunc) c_g_tree_new;
 	GTree* function(GTree* tree) c_g_tree_ref;
 	void function(GTree* tree) c_g_tree_unref;
-	GTree* function(GCompareDataFunc keyCompareFunc, gpointer keyCompareData) c_g_tree_new_with_data;
-	GTree* function(GCompareDataFunc keyCompareFunc, gpointer keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc) c_g_tree_new_full;
-	void function(GTree* tree, gpointer key, gpointer value) c_g_tree_insert;
-	void function(GTree* tree, gpointer key, gpointer value) c_g_tree_replace;
+	GTree* function(GCompareDataFunc keyCompareFunc, void* keyCompareData) c_g_tree_new_with_data;
+	GTree* function(GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc) c_g_tree_new_full;
+	void function(GTree* tree, void* key, void* value) c_g_tree_insert;
+	void function(GTree* tree, void* key, void* value) c_g_tree_replace;
 	gint function(GTree* tree) c_g_tree_nnodes;
 	gint function(GTree* tree) c_g_tree_height;
-	gpointer function(GTree* tree, gconstpointer key) c_g_tree_lookup;
-	gboolean function(GTree* tree, gconstpointer lookupKey, gpointer* origKey, gpointer* value) c_g_tree_lookup_extended;
-	void function(GTree* tree, GTraverseFunc func, gpointer userData) c_g_tree_foreach;
-	void function(GTree* tree, GTraverseFunc traverseFunc, GTraverseType traverseType, gpointer userData) c_g_tree_traverse;
-	gpointer function(GTree* tree, GCompareFunc searchFunc, gconstpointer userData) c_g_tree_search;
-	gboolean function(GTree* tree, gconstpointer key) c_g_tree_remove;
-	gboolean function(GTree* tree, gconstpointer key) c_g_tree_steal;
+	gpointer function(GTree* tree, void* key) c_g_tree_lookup;
+	gboolean function(GTree* tree, void* lookupKey, void** origKey, void** value) c_g_tree_lookup_extended;
+	void function(GTree* tree, GTraverseFunc func, void* userData) c_g_tree_foreach;
+	void function(GTree* tree, GTraverseFunc traverseFunc, GTraverseType traverseType, void* userData) c_g_tree_traverse;
+	gpointer function(GTree* tree, GCompareFunc searchFunc, void* userData) c_g_tree_search;
+	gboolean function(GTree* tree, void* key) c_g_tree_remove;
+	gboolean function(GTree* tree, void* key) c_g_tree_steal;
 	void function(GTree* tree) c_g_tree_destroy;
 
 	// glib.Node
 
-	GNode* function(gpointer data) c_g_node_new;
+	GNode* function(void* data) c_g_node_new;
 	GNode* function(GNode* node) c_g_node_copy;
-	GNode* function(GNode* node, GCopyFunc copyFunc, gpointer data) c_g_node_copy_deep;
+	GNode* function(GNode* node, GCopyFunc copyFunc, void* data) c_g_node_copy_deep;
 	GNode* function(GNode* parent, gint position, GNode* node) c_g_node_insert;
 	GNode* function(GNode* parent, GNode* sibling, GNode* node) c_g_node_insert_before;
 	GNode* function(GNode* parent, GNode* sibling, GNode* node) c_g_node_insert_after;
 	GNode* function(GNode* parent, GNode* node) c_g_node_prepend;
 	void function(GNode* node) c_g_node_reverse_children;
-	void function(GNode* root, GTraverseType order, GTraverseFlags flags, gint maxDepth, GNodeTraverseFunc func, gpointer data) c_g_node_traverse;
-	void function(GNode* node, GTraverseFlags flags, GNodeForeachFunc func, gpointer data) c_g_node_children_foreach;
+	void function(GNode* root, GTraverseType order, GTraverseFlags flags, gint maxDepth, GNodeTraverseFunc func, void* data) c_g_node_traverse;
+	void function(GNode* node, GTraverseFlags flags, GNodeForeachFunc func, void* data) c_g_node_children_foreach;
 	GNode* function(GNode* node) c_g_node_get_root;
-	GNode* function(GNode* root, GTraverseType order, GTraverseFlags flags, gpointer data) c_g_node_find;
-	GNode* function(GNode* node, GTraverseFlags flags, gpointer data) c_g_node_find_child;
-	gint function(GNode* node, gpointer data) c_g_node_child_index;
+	GNode* function(GNode* root, GTraverseType order, GTraverseFlags flags, void* data) c_g_node_find;
+	GNode* function(GNode* node, GTraverseFlags flags, void* data) c_g_node_find_child;
+	gint function(GNode* node, void* data) c_g_node_child_index;
 	gint function(GNode* node, GNode* child) c_g_node_child_position;
 	GNode* function(GNode* node) c_g_node_last_child;
 	GNode* function(GNode* node, guint n) c_g_node_nth_child;
@@ -2974,8 +2991,6 @@ mixin( gshared ~"extern(C)
 	guint function(GNode* root) c_g_node_max_height;
 	void function(GNode* node) c_g_node_unlink;
 	void function(GNode* root) c_g_node_destroy;
-	void function(gpointer dummy) c_g_node_push_allocator;
-	void function() c_g_node_pop_allocator;
 
 	// glib.Quark
 
@@ -2989,11 +3004,11 @@ mixin( gshared ~"extern(C)
 	// glib.DataList
 
 	void function(GData** datalist) c_g_datalist_init;
-	void function(GData** datalist, GQuark keyId, gpointer data, GDestroyNotify destroyFunc) c_g_datalist_id_set_data_full;
+	void function(GData** datalist, GQuark keyId, void* data, GDestroyNotify destroyFunc) c_g_datalist_id_set_data_full;
 	gpointer function(GData** datalist, GQuark keyId) c_g_datalist_id_get_data;
 	gpointer function(GData** datalist, GQuark keyId) c_g_datalist_id_remove_no_notify;
 	gpointer function(GData** datalist, gchar* key) c_g_datalist_get_data;
-	void function(GData** datalist, GDataForeachFunc func, gpointer userData) c_g_datalist_foreach;
+	void function(GData** datalist, GDataForeachFunc func, void* userData) c_g_datalist_foreach;
 	void function(GData** datalist) c_g_datalist_clear;
 	void function(GData** datalist, guint flags) c_g_datalist_set_flags;
 	void function(GData** datalist, guint flags) c_g_datalist_unset_flags;
@@ -3001,42 +3016,11 @@ mixin( gshared ~"extern(C)
 
 	// glib.Dataset
 
-	void function(gconstpointer datasetLocation, GQuark keyId, gpointer data, GDestroyNotify destroyFunc) c_g_dataset_id_set_data_full;
-	gpointer function(gconstpointer datasetLocation, GQuark keyId) c_g_dataset_id_get_data;
-	gpointer function(gconstpointer datasetLocation, GQuark keyId) c_g_dataset_id_remove_no_notify;
-	void function(gconstpointer datasetLocation, GDataForeachFunc func, gpointer userData) c_g_dataset_foreach;
-	void function(gconstpointer datasetLocation) c_g_dataset_destroy;
-
-	// glib.Relation
-
-	GRelation* function(gint fields) c_g_relation_new;
-	void function(GRelation* relation, gint field, GHashFunc hashFunc, GEqualFunc keyEqualFunc) c_g_relation_index;
-	void function(GRelation* relation, ... ) c_g_relation_insert;
-	gboolean function(GRelation* relation, ... ) c_g_relation_exists;
-	gint function(GRelation* relation, gconstpointer key, gint field) c_g_relation_count;
-	GTuples* function(GRelation* relation, gconstpointer key, gint field) c_g_relation_select;
-	gint function(GRelation* relation, gconstpointer key, gint field) c_g_relation_delete;
-	void function(GRelation* relation) c_g_relation_destroy;
-	void function(GRelation* relation) c_g_relation_print;
-
-	// glib.Tuples
-
-	void function(GTuples* tuples) c_g_tuples_destroy;
-	gpointer function(GTuples* tuples, gint index, gint field) c_g_tuples_index;
-
-	// glib.Cache
-
-	GCache* function(GCacheNewFunc valueNewFunc, GCacheDestroyFunc valueDestroyFunc, GCacheDupFunc keyDupFunc, GCacheDestroyFunc keyDestroyFunc, GHashFunc hashKeyFunc, GHashFunc hashValueFunc, GEqualFunc keyEqualFunc) c_g_cache_new;
-	gpointer function(GCache* cache, gpointer key) c_g_cache_insert;
-	void function(GCache* cache, gconstpointer value) c_g_cache_remove;
-	void function(GCache* cache) c_g_cache_destroy;
-	void function(GCache* cache, GHFunc func, gpointer userData) c_g_cache_key_foreach;
-	void function(GCache* cache, GHFunc func, gpointer userData) c_g_cache_value_foreach;
-
-	// glib.Allocator
-
-	GAllocator* function(gchar* name, guint nPreallocs) c_g_allocator_new;
-	void function(GAllocator* allocator) c_g_allocator_free;
+	void function(void* datasetLocation, GQuark keyId, void* data, GDestroyNotify destroyFunc) c_g_dataset_id_set_data_full;
+	gpointer function(void* datasetLocation, GQuark keyId) c_g_dataset_id_get_data;
+	gpointer function(void* datasetLocation, GQuark keyId) c_g_dataset_id_remove_no_notify;
+	void function(void* datasetLocation, GDataForeachFunc func, void* userData) c_g_dataset_foreach;
+	void function(void* datasetLocation) c_g_dataset_destroy;
 
 	// glib.VariantType
 
@@ -3056,8 +3040,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GVariantType* type) c_g_variant_type_is_tuple;
 	gboolean function(GVariantType* type) c_g_variant_type_is_dict_entry;
 	gboolean function(GVariantType* type) c_g_variant_type_is_variant;
-	guint function(gconstpointer type) c_g_variant_type_hash;
-	gboolean function(gconstpointer type1, gconstpointer type2) c_g_variant_type_equal;
+	guint function(void* type) c_g_variant_type_hash;
+	gboolean function(void* type1, void* type2) c_g_variant_type_equal;
 	gboolean function(GVariantType* type, GVariantType* supertype) c_g_variant_type_is_subtype_of;
 	GVariantType* function(GVariantType* element) c_g_variant_type_new_maybe;
 	GVariantType* function(GVariantType* element) c_g_variant_type_new_array;
@@ -3081,7 +3065,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(GVariant* value) c_g_variant_get_type_string;
 	gboolean function(GVariant* value, GVariantType* type) c_g_variant_is_of_type;
 	gboolean function(GVariant* value) c_g_variant_is_container;
-	gint function(gconstpointer one, gconstpointer two) c_g_variant_compare;
+	gint function(void* one, void* two) c_g_variant_compare;
 	GVariantClass function(GVariant* value) c_g_variant_classify;
 	void function(GVariant* value, gchar* formatString, ... ) c_g_variant_get;
 	void function(GVariant* value, gchar* formatString, gchar** endptr, va_list* app) c_g_variant_get_va;
@@ -3132,6 +3116,7 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GVariantType* childType, GVariant** children, gsize nChildren) c_g_variant_new_array;
 	GVariant* function(GVariant** children, gsize nChildren) c_g_variant_new_tuple;
 	GVariant* function(GVariant* key, GVariant* value) c_g_variant_new_dict_entry;
+	GVariant* function(GVariantType* elementType, void* elements, gsize nElements, gsize elementSize) c_g_variant_new_fixed_array;
 	GVariant* function(GVariant* value) c_g_variant_get_maybe;
 	gsize function(GVariant* value) c_g_variant_n_children;
 	GVariant* function(GVariant* value, gsize index) c_g_variant_get_child_value;
@@ -3141,13 +3126,13 @@ mixin( gshared ~"extern(C)
 	gconstpointer function(GVariant* value, gsize* nElements, gsize elementSize) c_g_variant_get_fixed_array;
 	gsize function(GVariant* value) c_g_variant_get_size;
 	gconstpointer function(GVariant* value) c_g_variant_get_data;
-	void function(GVariant* value, gpointer data) c_g_variant_store;
-	GVariant* function(GVariantType* type, gconstpointer data, gsize size, gboolean trusted, GDestroyNotify notify, gpointer userData) c_g_variant_new_from_data;
+	void function(GVariant* value, void* data) c_g_variant_store;
+	GVariant* function(GVariantType* type, void* data, gsize size, gboolean trusted, GDestroyNotify notify, void* userData) c_g_variant_new_from_data;
 	GVariant* function(GVariant* value) c_g_variant_byteswap;
 	GVariant* function(GVariant* value) c_g_variant_get_normal_form;
 	gboolean function(GVariant* value) c_g_variant_is_normal_form;
-	guint function(gconstpointer value) c_g_variant_hash;
-	gboolean function(gconstpointer one, gconstpointer two) c_g_variant_equal;
+	guint function(void* value) c_g_variant_hash;
+	gboolean function(void* one, void* two) c_g_variant_equal;
 	gchar* function(GVariant* value, gboolean typeAnnotate) c_g_variant_print;
 	GString* function(GVariant* value, GString* string, gboolean typeAnnotate) c_g_variant_print_string;
 	GVariant* function(GVariantType* type, gchar* text, gchar* limit, gchar** endptr, GError** error) c_g_variant_parse;
@@ -3178,6 +3163,43 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GVariantBuilder* builder) c_g_variant_builder_end;
 	void function(GVariantBuilder* builder, GVariantType* type) c_g_variant_builder_open;
 	void function(GVariantBuilder* builder) c_g_variant_builder_close;
+
+	// glib.Cache
+
+	GCache* function(GCacheNewFunc valueNewFunc, GCacheDestroyFunc valueDestroyFunc, GCacheDupFunc keyDupFunc, GCacheDestroyFunc keyDestroyFunc, GHashFunc hashKeyFunc, GHashFunc hashValueFunc, GEqualFunc keyEqualFunc) c_g_cache_new;
+	gpointer function(GCache* cache, void* key) c_g_cache_insert;
+	void function(GCache* cache, void* value) c_g_cache_remove;
+	void function(GCache* cache) c_g_cache_destroy;
+	void function(GCache* cache, GHFunc func, void* userData) c_g_cache_key_foreach;
+	void function(GCache* cache, GHFunc func, void* userData) c_g_cache_value_foreach;
+
+	// glib.Relation
+
+	GRelation* function(gint fields) c_g_relation_new;
+	void function(GRelation* relation, gint field, GHashFunc hashFunc, GEqualFunc keyEqualFunc) c_g_relation_index;
+	void function(GRelation* relation, ... ) c_g_relation_insert;
+	gboolean function(GRelation* relation, ... ) c_g_relation_exists;
+	gint function(GRelation* relation, void* key, gint field) c_g_relation_count;
+	GTuples* function(GRelation* relation, void* key, gint field) c_g_relation_select;
+	gint function(GRelation* relation, void* key, gint field) c_g_relation_delete;
+	void function(GRelation* relation) c_g_relation_destroy;
+	void function(GRelation* relation) c_g_relation_print;
+
+	// glib.Tuples
+
+	void function(GTuples* tuples) c_g_tuples_destroy;
+	gpointer function(GTuples* tuples, gint index, gint field) c_g_tuples_index;
+
+	// glib.StringCompletion
+
+	GCompletion* function(GCompletionFunc func) c_g_completion_new;
+	void function(GCompletion* cmp, GList* items) c_g_completion_add_items;
+	void function(GCompletion* cmp, GList* items) c_g_completion_remove_items;
+	void function(GCompletion* cmp) c_g_completion_clear_items;
+	GList* function(GCompletion* cmp, gchar* prefix, gchar** newPrefix) c_g_completion_complete;
+	GList* function(GCompletion* cmp, gchar* prefix, gchar** newPrefix) c_g_completion_complete_utf8;
+	void function(GCompletion* cmp, GCompletionStrncmpFunc strncmpFunc) c_g_completion_set_compare;
+	void function(GCompletion* cmp) c_g_completion_free;
 }");
 
 // glib.Version
@@ -3244,6 +3266,7 @@ alias c_g_main_context_remove_poll  g_main_context_remove_poll;
 alias c_g_main_context_invoke  g_main_context_invoke;
 alias c_g_main_context_invoke_full  g_main_context_invoke_full;
 alias c_g_main_context_get_thread_default  g_main_context_get_thread_default;
+alias c_g_main_context_ref_thread_default  g_main_context_ref_thread_default;
 alias c_g_main_context_push_thread_default  g_main_context_push_thread_default;
 alias c_g_main_context_pop_thread_default  g_main_context_pop_thread_default;
 
@@ -3326,7 +3349,7 @@ alias c_g_async_queue_push  g_async_queue_push;
 alias c_g_async_queue_push_sorted  g_async_queue_push_sorted;
 alias c_g_async_queue_pop  g_async_queue_pop;
 alias c_g_async_queue_try_pop  g_async_queue_try_pop;
-alias c_g_async_queue_timed_pop  g_async_queue_timed_pop;
+alias c_g_async_queue_timeout_pop  g_async_queue_timeout_pop;
 alias c_g_async_queue_length  g_async_queue_length;
 alias c_g_async_queue_sort  g_async_queue_sort;
 alias c_g_async_queue_lock  g_async_queue_lock;
@@ -3337,16 +3360,19 @@ alias c_g_async_queue_push_unlocked  g_async_queue_push_unlocked;
 alias c_g_async_queue_push_sorted_unlocked  g_async_queue_push_sorted_unlocked;
 alias c_g_async_queue_pop_unlocked  g_async_queue_pop_unlocked;
 alias c_g_async_queue_try_pop_unlocked  g_async_queue_try_pop_unlocked;
-alias c_g_async_queue_timed_pop_unlocked  g_async_queue_timed_pop_unlocked;
+alias c_g_async_queue_timeout_pop_unlocked  g_async_queue_timeout_pop_unlocked;
 alias c_g_async_queue_length_unlocked  g_async_queue_length_unlocked;
 alias c_g_async_queue_sort_unlocked  g_async_queue_sort_unlocked;
+alias c_g_async_queue_timed_pop  g_async_queue_timed_pop;
+alias c_g_async_queue_timed_pop_unlocked  g_async_queue_timed_pop_unlocked;
 
 // glib.Module
 
-alias c_g_module_open  g_module_open;
 alias c_g_module_supported  g_module_supported;
 alias c_g_module_build_path  g_module_build_path;
+alias c_g_module_open  g_module_open;
 alias c_g_module_symbol  g_module_symbol;
+alias c_g_module_name  g_module_name;
 alias c_g_module_make_resident  g_module_make_resident;
 alias c_g_module_close  g_module_close;
 alias c_g_module_error  g_module_error;
@@ -3370,6 +3396,14 @@ alias c_g_memdup  g_memdup;
 alias c_g_mem_set_vtable  g_mem_set_vtable;
 alias c_g_mem_is_system_malloc  g_mem_is_system_malloc;
 alias c_g_mem_profile  g_mem_profile;
+
+// glib.MemorySlice
+
+alias c_g_slice_alloc  g_slice_alloc;
+alias c_g_slice_alloc0  g_slice_alloc0;
+alias c_g_slice_copy  g_slice_copy;
+alias c_g_slice_free1  g_slice_free1;
+alias c_g_slice_free_chain_with_offset  g_slice_free_chain_with_offset;
 
 // glib.IOChannel
 
@@ -3541,6 +3575,7 @@ alias c_g_filename_display_name  g_filename_display_name;
 alias c_g_filename_display_basename  g_filename_display_basename;
 alias c_g_locale_from_utf8  g_locale_from_utf8;
 alias c_g_get_charset  g_get_charset;
+alias c_g_get_codeset  g_get_codeset;
 
 // glib.Unicode
 
@@ -3804,6 +3839,9 @@ alias c_g_set_application_name  g_set_application_name;
 alias c_g_get_prgname  g_get_prgname;
 alias c_g_set_prgname  g_set_prgname;
 alias c_g_get_environ  g_get_environ;
+alias c_g_environ_getenv  g_environ_getenv;
+alias c_g_environ_setenv  g_environ_setenv;
+alias c_g_environ_unsetenv  g_environ_unsetenv;
 alias c_g_getenv  g_getenv;
 alias c_g_setenv  g_setenv;
 alias c_g_unsetenv  g_unsetenv;
@@ -3868,17 +3906,6 @@ alias c_g_scanner_warn  g_scanner_warn;
 alias c_g_scanner_error  g_scanner_error;
 alias c_g_scanner_unexp_token  g_scanner_unexp_token;
 
-// glib.StringCompletion
-
-alias c_g_completion_new  g_completion_new;
-alias c_g_completion_add_items  g_completion_add_items;
-alias c_g_completion_remove_items  g_completion_remove_items;
-alias c_g_completion_clear_items  g_completion_clear_items;
-alias c_g_completion_complete  g_completion_complete;
-alias c_g_completion_complete_utf8  g_completion_complete_utf8;
-alias c_g_completion_set_compare  g_completion_set_compare;
-alias c_g_completion_free  g_completion_free;
-
 // glib.Timer
 
 alias c_g_timer_new  g_timer_new;
@@ -3938,6 +3965,7 @@ alias c_g_dir_close  g_dir_close;
 // glib.MappedFile
 
 alias c_g_mapped_file_new  g_mapped_file_new;
+alias c_g_mapped_file_new_from_fd  g_mapped_file_new_from_fd;
 alias c_g_mapped_file_ref  g_mapped_file_ref;
 alias c_g_mapped_file_unref  g_mapped_file_unref;
 alias c_g_mapped_file_free  g_mapped_file_free;
@@ -4073,6 +4101,8 @@ alias c_g_markup_collect_attributes  g_markup_collect_attributes;
 
 alias c_g_key_file_new  g_key_file_new;
 alias c_g_key_file_free  g_key_file_free;
+alias c_g_key_file_ref  g_key_file_ref;
+alias c_g_key_file_unref  g_key_file_unref;
 alias c_g_key_file_set_list_separator  g_key_file_set_list_separator;
 alias c_g_key_file_load_from_file  g_key_file_load_from_file;
 alias c_g_key_file_load_from_data  g_key_file_load_from_data;
@@ -4176,27 +4206,6 @@ alias c_g_win32_get_package_installation_subdirectory  g_win32_get_package_insta
 alias c_g_win32_get_windows_version  g_win32_get_windows_version;
 alias c_g_win32_locale_filename_from_utf8  g_win32_locale_filename_from_utf8;
 
-// glib.MemorySlice
-
-alias c_g_slice_alloc  g_slice_alloc;
-alias c_g_slice_alloc0  g_slice_alloc0;
-alias c_g_slice_copy  g_slice_copy;
-alias c_g_slice_free1  g_slice_free1;
-alias c_g_slice_free_chain_with_offset  g_slice_free_chain_with_offset;
-
-// glib.MemoryChunk
-
-alias c_g_mem_chunk_new  g_mem_chunk_new;
-alias c_g_mem_chunk_alloc  g_mem_chunk_alloc;
-alias c_g_mem_chunk_alloc0  g_mem_chunk_alloc0;
-alias c_g_mem_chunk_free  g_mem_chunk_free;
-alias c_g_mem_chunk_destroy  g_mem_chunk_destroy;
-alias c_g_mem_chunk_reset  g_mem_chunk_reset;
-alias c_g_mem_chunk_clean  g_mem_chunk_clean;
-alias c_g_blow_chunks  g_blow_chunks;
-alias c_g_mem_chunk_info  g_mem_chunk_info;
-alias c_g_mem_chunk_print  g_mem_chunk_print;
-
 // glib.ListG
 
 alias c_g_list_append  g_list_append;
@@ -4229,8 +4238,6 @@ alias c_g_list_find  g_list_find;
 alias c_g_list_find_custom  g_list_find_custom;
 alias c_g_list_position  g_list_position;
 alias c_g_list_index  g_list_index;
-alias c_g_list_push_allocator  g_list_push_allocator;
-alias c_g_list_pop_allocator  g_list_pop_allocator;
 
 // glib.ListSG
 
@@ -4262,13 +4269,12 @@ alias c_g_slist_find  g_slist_find;
 alias c_g_slist_find_custom  g_slist_find_custom;
 alias c_g_slist_position  g_slist_position;
 alias c_g_slist_index  g_slist_index;
-alias c_g_slist_push_allocator  g_slist_push_allocator;
-alias c_g_slist_pop_allocator  g_slist_pop_allocator;
 
 // glib.QueueG
 
 alias c_g_queue_new  g_queue_new;
 alias c_g_queue_free  g_queue_free;
+alias c_g_queue_free_full  g_queue_free_full;
 alias c_g_queue_init  g_queue_init;
 alias c_g_queue_clear  g_queue_clear;
 alias c_g_queue_is_empty  g_queue_is_empty;
@@ -4363,6 +4369,8 @@ alias c_g_hash_table_new  g_hash_table_new;
 alias c_g_hash_table_new_full  g_hash_table_new_full;
 alias c_g_hash_table_insert  g_hash_table_insert;
 alias c_g_hash_table_replace  g_hash_table_replace;
+alias c_g_hash_table_add  g_hash_table_add;
+alias c_g_hash_table_contains  g_hash_table_contains;
 alias c_g_hash_table_size  g_hash_table_size;
 alias c_g_hash_table_lookup  g_hash_table_lookup;
 alias c_g_hash_table_lookup_extended  g_hash_table_lookup_extended;
@@ -4458,6 +4466,7 @@ alias c_g_array_remove_range  g_array_remove_range;
 alias c_g_array_sort  g_array_sort;
 alias c_g_array_sort_with_data  g_array_sort_with_data;
 alias c_g_array_set_size  g_array_set_size;
+alias c_g_array_set_clear_func  g_array_set_clear_func;
 alias c_g_array_free  g_array_free;
 
 // glib.PtrArray
@@ -4484,6 +4493,7 @@ alias c_g_ptr_array_foreach  g_ptr_array_foreach;
 // glib.ByteArray
 
 alias c_g_byte_array_new  g_byte_array_new;
+alias c_g_byte_array_new_take  g_byte_array_new_take;
 alias c_g_byte_array_sized_new  g_byte_array_sized_new;
 alias c_g_byte_array_ref  g_byte_array_ref;
 alias c_g_byte_array_unref  g_byte_array_unref;
@@ -4496,6 +4506,24 @@ alias c_g_byte_array_sort  g_byte_array_sort;
 alias c_g_byte_array_sort_with_data  g_byte_array_sort_with_data;
 alias c_g_byte_array_set_size  g_byte_array_set_size;
 alias c_g_byte_array_free  g_byte_array_free;
+alias c_g_byte_array_free_to_bytes  g_byte_array_free_to_bytes;
+
+// glib.Bytes
+
+alias c_g_bytes_new  g_bytes_new;
+alias c_g_bytes_new_take  g_bytes_new_take;
+alias c_g_bytes_new_static  g_bytes_new_static;
+alias c_g_bytes_new_with_free_func  g_bytes_new_with_free_func;
+alias c_g_bytes_new_from_bytes  g_bytes_new_from_bytes;
+alias c_g_bytes_get_data  g_bytes_get_data;
+alias c_g_bytes_get_size  g_bytes_get_size;
+alias c_g_bytes_hash  g_bytes_hash;
+alias c_g_bytes_equal  g_bytes_equal;
+alias c_g_bytes_compare  g_bytes_compare;
+alias c_g_bytes_ref  g_bytes_ref;
+alias c_g_bytes_unref  g_bytes_unref;
+alias c_g_bytes_unref_to_data  g_bytes_unref_to_data;
+alias c_g_bytes_unref_to_array  g_bytes_unref_to_array;
 
 // glib.BBTree
 
@@ -4545,8 +4573,6 @@ alias c_g_node_is_ancestor  g_node_is_ancestor;
 alias c_g_node_max_height  g_node_max_height;
 alias c_g_node_unlink  g_node_unlink;
 alias c_g_node_destroy  g_node_destroy;
-alias c_g_node_push_allocator  g_node_push_allocator;
-alias c_g_node_pop_allocator  g_node_pop_allocator;
 
 // glib.Quark
 
@@ -4577,37 +4603,6 @@ alias c_g_dataset_id_get_data  g_dataset_id_get_data;
 alias c_g_dataset_id_remove_no_notify  g_dataset_id_remove_no_notify;
 alias c_g_dataset_foreach  g_dataset_foreach;
 alias c_g_dataset_destroy  g_dataset_destroy;
-
-// glib.Relation
-
-alias c_g_relation_new  g_relation_new;
-alias c_g_relation_index  g_relation_index;
-alias c_g_relation_insert  g_relation_insert;
-alias c_g_relation_exists  g_relation_exists;
-alias c_g_relation_count  g_relation_count;
-alias c_g_relation_select  g_relation_select;
-alias c_g_relation_delete  g_relation_delete;
-alias c_g_relation_destroy  g_relation_destroy;
-alias c_g_relation_print  g_relation_print;
-
-// glib.Tuples
-
-alias c_g_tuples_destroy  g_tuples_destroy;
-alias c_g_tuples_index  g_tuples_index;
-
-// glib.Cache
-
-alias c_g_cache_new  g_cache_new;
-alias c_g_cache_insert  g_cache_insert;
-alias c_g_cache_remove  g_cache_remove;
-alias c_g_cache_destroy  g_cache_destroy;
-alias c_g_cache_key_foreach  g_cache_key_foreach;
-alias c_g_cache_value_foreach  g_cache_value_foreach;
-
-// glib.Allocator
-
-alias c_g_allocator_new  g_allocator_new;
-alias c_g_allocator_free  g_allocator_free;
 
 // glib.VariantType
 
@@ -4703,6 +4698,7 @@ alias c_g_variant_new_maybe  g_variant_new_maybe;
 alias c_g_variant_new_array  g_variant_new_array;
 alias c_g_variant_new_tuple  g_variant_new_tuple;
 alias c_g_variant_new_dict_entry  g_variant_new_dict_entry;
+alias c_g_variant_new_fixed_array  g_variant_new_fixed_array;
 alias c_g_variant_get_maybe  g_variant_get_maybe;
 alias c_g_variant_n_children  g_variant_n_children;
 alias c_g_variant_get_child_value  g_variant_get_child_value;
@@ -4749,3 +4745,40 @@ alias c_g_variant_builder_add_parsed  g_variant_builder_add_parsed;
 alias c_g_variant_builder_end  g_variant_builder_end;
 alias c_g_variant_builder_open  g_variant_builder_open;
 alias c_g_variant_builder_close  g_variant_builder_close;
+
+// glib.Cache
+
+alias c_g_cache_new  g_cache_new;
+alias c_g_cache_insert  g_cache_insert;
+alias c_g_cache_remove  g_cache_remove;
+alias c_g_cache_destroy  g_cache_destroy;
+alias c_g_cache_key_foreach  g_cache_key_foreach;
+alias c_g_cache_value_foreach  g_cache_value_foreach;
+
+// glib.Relation
+
+alias c_g_relation_new  g_relation_new;
+alias c_g_relation_index  g_relation_index;
+alias c_g_relation_insert  g_relation_insert;
+alias c_g_relation_exists  g_relation_exists;
+alias c_g_relation_count  g_relation_count;
+alias c_g_relation_select  g_relation_select;
+alias c_g_relation_delete  g_relation_delete;
+alias c_g_relation_destroy  g_relation_destroy;
+alias c_g_relation_print  g_relation_print;
+
+// glib.Tuples
+
+alias c_g_tuples_destroy  g_tuples_destroy;
+alias c_g_tuples_index  g_tuples_index;
+
+// glib.StringCompletion
+
+alias c_g_completion_new  g_completion_new;
+alias c_g_completion_add_items  g_completion_add_items;
+alias c_g_completion_remove_items  g_completion_remove_items;
+alias c_g_completion_clear_items  g_completion_clear_items;
+alias c_g_completion_complete  g_completion_complete;
+alias c_g_completion_complete_utf8  g_completion_complete_utf8;
+alias c_g_completion_set_compare  g_completion_set_compare;
+alias c_g_completion_free  g_completion_free;

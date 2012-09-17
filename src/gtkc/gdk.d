@@ -757,7 +757,7 @@ mixin( gshared ~"extern(C)
 	GdkPixbuf* function(cairo_surface_t* surface, gint srcX, gint srcY, gint width, gint height) c_gdk_pixbuf_get_from_surface;
 	GType function() c_gdk_pixbuf_get_type;
 	GdkPixbuf* function(GdkColorspace colorspace, gboolean hasAlpha, int bitsPerSample, int width, int height) c_gdk_pixbuf_new;
-	GdkPixbuf* function(guchar* data, GdkColorspace colorspace, gboolean hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, gpointer destroyFnData) c_gdk_pixbuf_new_from_data;
+	GdkPixbuf* function(guchar* data, GdkColorspace colorspace, gboolean hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData) c_gdk_pixbuf_new_from_data;
 	GdkPixbuf* function(char** data) c_gdk_pixbuf_new_from_xpm_data;
 	GdkPixbuf* function(gint dataLength, guint8* data, gboolean copyPixels, GError** error) c_gdk_pixbuf_new_from_inline;
 	GdkPixbuf* function(GdkPixbuf* srcPixbuf, int srcX, int srcY, int width, int height) c_gdk_pixbuf_new_subpixbuf;
@@ -781,8 +781,8 @@ mixin( gshared ~"extern(C)
 	GdkPixbuf* function(GInputStream* stream, gint width, gint height, gboolean preserveAspectRatio, GCancellable* cancellable, GError** error) c_gdk_pixbuf_new_from_stream_at_scale;
 	gboolean function(GdkPixbuf* pixbuf, char* filename, char* type, char** optionKeys, char** optionValues, GError** error) c_gdk_pixbuf_savev;
 	gboolean function(GdkPixbuf* pixbuf, char* filename, char* type, GError** error, ... ) c_gdk_pixbuf_save;
-	gboolean function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, gpointer userData, char* type, GError** error, ... ) c_gdk_pixbuf_save_to_callback;
-	gboolean function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, gpointer userData, char* type, char** optionKeys, char** optionValues, GError** error) c_gdk_pixbuf_save_to_callbackv;
+	gboolean function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, void* userData, char* type, GError** error, ... ) c_gdk_pixbuf_save_to_callback;
+	gboolean function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, void* userData, char* type, char** optionKeys, char** optionValues, GError** error) c_gdk_pixbuf_save_to_callbackv;
 	gboolean function(GdkPixbuf* pixbuf, gchar** buffer, gsize* bufferSize, char* type, GError** error, ... ) c_gdk_pixbuf_save_to_buffer;
 	gboolean function(GdkPixbuf* pixbuf, gchar** buffer, gsize* bufferSize, char* type, char** optionKeys, char** optionValues, GError** error) c_gdk_pixbuf_save_to_bufferv;
 	gboolean function(GdkPixbuf* pixbuf, GOutputStream* stream, char* type, GCancellable* cancellable, GError** error, ... ) c_gdk_pixbuf_save_to_stream;
@@ -813,8 +813,8 @@ mixin( gshared ~"extern(C)
 	GdkRGBA* function(GdkRGBA* rgba) c_gdk_rgba_copy;
 	void function(GdkRGBA* rgba) c_gdk_rgba_free;
 	gboolean function(GdkRGBA* rgba, gchar* spec) c_gdk_rgba_parse;
-	gboolean function(gconstpointer p1, gconstpointer p2) c_gdk_rgba_equal;
-	guint function(gconstpointer p) c_gdk_rgba_hash;
+	gboolean function(void* p1, void* p2) c_gdk_rgba_equal;
+	guint function(void* p) c_gdk_rgba_hash;
 	gchar* function(GdkRGBA* rgba) c_gdk_rgba_to_string;
 
 	// gdk.Visual
@@ -908,7 +908,7 @@ mixin( gshared ~"extern(C)
 	cairo_region_t* function(GdkWindow* window) c_gdk_window_get_visible_region;
 	void function(GdkWindow* window, GdkRectangle* rect, gboolean invalidateChildren) c_gdk_window_invalidate_rect;
 	void function(GdkWindow* window, cairo_region_t* region, gboolean invalidateChildren) c_gdk_window_invalidate_region;
-	void function(GdkWindow* window, cairo_region_t* region, GdkWindowChildFunc childFunc, gpointer userData) c_gdk_window_invalidate_maybe_recurse;
+	void function(GdkWindow* window, cairo_region_t* region, GdkWindowChildFunc childFunc, void* userData) c_gdk_window_invalidate_maybe_recurse;
 	cairo_region_t* function(GdkWindow* window) c_gdk_window_get_update_area;
 	void function(GdkWindow* window) c_gdk_window_freeze_updates;
 	void function(GdkWindow* window) c_gdk_window_thaw_updates;
@@ -917,14 +917,14 @@ mixin( gshared ~"extern(C)
 	void function(gboolean setting) c_gdk_window_set_debug_updates;
 	void function(GdkWindow* window) c_gdk_window_enable_synchronized_configure;
 	void function(GdkWindow* window) c_gdk_window_configure_finished;
-	void function(GdkWindow* window, gpointer userData) c_gdk_window_set_user_data;
+	void function(GdkWindow* window, void* userData) c_gdk_window_set_user_data;
 	void function(GdkWindow* window, gboolean overrideRedirect) c_gdk_window_set_override_redirect;
 	void function(GdkWindow* window, gboolean acceptFocus) c_gdk_window_set_accept_focus;
 	gboolean function(GdkWindow* window) c_gdk_window_get_accept_focus;
 	void function(GdkWindow* window, gboolean focusOnMap) c_gdk_window_set_focus_on_map;
 	gboolean function(GdkWindow* window) c_gdk_window_get_focus_on_map;
-	void function(GdkWindow* window, GdkFilterFunc funct, gpointer data) c_gdk_window_add_filter;
-	void function(GdkWindow* window, GdkFilterFunc funct, gpointer data) c_gdk_window_remove_filter;
+	void function(GdkWindow* window, GdkFilterFunc funct, void* data) c_gdk_window_add_filter;
+	void function(GdkWindow* window, GdkFilterFunc funct, void* data) c_gdk_window_remove_filter;
 	void function(GdkWindow* window, cairo_region_t* shapeRegion, gint offsetX, gint offsetY) c_gdk_window_shape_combine_region;
 	void function(GdkWindow* window) c_gdk_window_set_child_shapes;
 	void function(GdkWindow* window) c_gdk_window_merge_child_shapes;
@@ -939,7 +939,7 @@ mixin( gshared ~"extern(C)
 	cairo_pattern_t* function(GdkWindow* window) c_gdk_window_get_background_pattern;
 	void function(GdkWindow* window, GdkCursor* cursor) c_gdk_window_set_cursor;
 	GdkCursor* function(GdkWindow* window) c_gdk_window_get_cursor;
-	void function(GdkWindow* window, gpointer* data) c_gdk_window_get_user_data;
+	void function(GdkWindow* window, void** data) c_gdk_window_get_user_data;
 	void function(GdkWindow* window, gint* x, gint* y, gint* width, gint* height) c_gdk_window_get_geometry;
 	void function(GdkWindow* window, GdkGeometry* geometry, GdkWindowHints geomMask) c_gdk_window_set_geometry_hints;
 	int function(GdkWindow* window) c_gdk_window_get_width;
@@ -1015,7 +1015,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkEvent* event1, GdkEvent* event2, gdouble* angle) c_gdk_events_get_angle;
 	gboolean function(GdkEvent* event1, GdkEvent* event2, gdouble* x, gdouble* y) c_gdk_events_get_center;
 	gboolean function(GdkEvent* event1, GdkEvent* event2, gdouble* distance) c_gdk_events_get_distance;
-	void function(GdkEventFunc func, gpointer data, GDestroyNotify notify) c_gdk_event_handler_set;
+	void function(GdkEventFunc func, void* data, GDestroyNotify notify) c_gdk_event_handler_set;
 	gboolean function() c_gdk_get_show_events;
 	void function(gboolean showEvents) c_gdk_set_show_events;
 	void function(GdkEvent* event, GdkScreen* screen) c_gdk_event_set_screen;
@@ -1102,12 +1102,12 @@ mixin( gshared ~"extern(C)
 	void function() c_gdk_threads_enter;
 	void function() c_gdk_threads_leave;
 	void function(GCallback enterFn, GCallback leaveFn) c_gdk_threads_set_lock_functions;
-	guint function(GSourceFunc funct, gpointer data) c_gdk_threads_add_idle;
-	guint function(gint priority, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_gdk_threads_add_idle_full;
-	guint function(guint interval, GSourceFunc funct, gpointer data) c_gdk_threads_add_timeout;
-	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_gdk_threads_add_timeout_full;
-	guint function(guint interval, GSourceFunc funct, gpointer data) c_gdk_threads_add_timeout_seconds;
-	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify) c_gdk_threads_add_timeout_seconds_full;
+	guint function(GSourceFunc funct, void* data) c_gdk_threads_add_idle;
+	guint function(gint priority, GSourceFunc funct, void* data, GDestroyNotify notify) c_gdk_threads_add_idle_full;
+	guint function(guint interval, GSourceFunc funct, void* data) c_gdk_threads_add_timeout;
+	guint function(gint priority, guint interval, GSourceFunc funct, void* data, GDestroyNotify notify) c_gdk_threads_add_timeout_full;
+	guint function(guint interval, GSourceFunc funct, void* data) c_gdk_threads_add_timeout_seconds;
+	guint function(gint priority, guint interval, GSourceFunc funct, void* data, GDestroyNotify notify) c_gdk_threads_add_timeout_seconds_full;
 
 	// gdk.X11
 

@@ -155,7 +155,7 @@ public class Memory
 	 * on failure. Contrast with g_realloc(), which aborts the program
 	 * on failure. If mem is NULL, behaves the same as g_try_malloc().
 	 * Params:
-	 * mem = previously-allocated memory, or NULL.
+	 * mem = previously-allocated memory, or NULL. [allow-none]
 	 * nBytes = number of bytes to allocate.
 	 * Returns: the allocated memory, or NULL.
 	 */
@@ -246,7 +246,7 @@ public class Memory
 	 * but care is taken to detect possible overflow during multiplication.
 	 * Since 2.24
 	 * Params:
-	 * mem = previously-allocated memory, or NULL.
+	 * mem = previously-allocated memory, or NULL. [allow-none]
 	 * nBlocks = the number of blocks to allocate
 	 * nBlockBytes = the size of each block in bytes
 	 * Returns: the allocated memory, or NULL.

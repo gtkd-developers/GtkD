@@ -131,6 +131,9 @@ private import glib.TimeVal;
  * The operation of these functions can best be seen in terms
  * of a state diagram, as shown in Figure 1, “States of a Main Context”.
  * Figure 1. States of a Main Context
+ * On Unix, the GLib mainloop is incompatible with fork(). Any program
+ * using the mainloop must either exec() or exit() from the child
+ * without returning to the mainloop.
  */
 public class Source
 {
@@ -235,7 +238,7 @@ public class Source
 	 * Adds a GSource to a context so that it will be executed within
 	 * that context. Remove it by calling g_source_destroy().
 	 * Params:
-	 * context = a GMainContext (if NULL, the default context will be used)
+	 * context = a GMainContext (if NULL, the default context will be used). [allow-none]
 	 * Returns: the ID (greater than 0) for the source within the GMainContext.
 	 */
 	public uint attach(MainContext context)
@@ -389,7 +392,7 @@ public class Source
 	/**
 	 * Gets the GMainContext with which the source is associated.
 	 * Calling this function on a destroyed source is an error.
-	 * Returns: the GMainContext with which the source is associated, or NULL if the context has not yet been added to a source. [transfer none]
+	 * Returns: the GMainContext with which the source is associated, or NULL if the context has not yet been added to a source. [transfer none][allow-none]
 	 */
 	public MainContext getContext()
 	{
@@ -413,7 +416,7 @@ public class Source
 	 * Params:
 	 * func = a callback function
 	 * data = the data to pass to callback function
-	 * notify = a function to call when data is no longer in use, or NULL.
+	 * notify = a function to call when data is no longer in use, or NULL. [allow-none]
 	 */
 	public void setCallback(GSourceFunc func, void* data, GDestroyNotify notify)
 	{
@@ -522,11 +525,8 @@ public class Source
 	/**
 	 * Warning
 	 * g_source_get_current_time has been deprecated since version 2.28 and should not be used in newly-written code. use g_source_get_time() instead
-	 * Gets the "current time" to be used when checking
-	 * this source. The advantage of calling this function over
-	 * calling g_get_current_time() directly is that when
-	 * checking multiple sources, GLib can cache a single value
-	 * instead of having to repeatedly get the system time.
+	 * This function ignores source and is otherwise the same as
+	 * g_get_current_time().
 	 * Params:
 	 * timeval = GTimeVal structure in which to store current time.
 	 */

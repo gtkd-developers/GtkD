@@ -155,8 +155,8 @@ public class OptionGroup
 	 * This string is translated using the translation domain or translation function
 	 * of the group
 	 * userData = user data that will be passed to the pre- and post-parse hooks,
-	 * the error hook and to callbacks of G_OPTION_ARG_CALLBACK options, or NULL
-	 * destroy = a function that will be called to free user_data, or NULL
+	 * the error hook and to callbacks of G_OPTION_ARG_CALLBACK options, or NULL. [allow-none]
+	 * destroy = a function that will be called to free user_data, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
@@ -202,8 +202,8 @@ public class OptionGroup
 	 * with g_option_group_new().
 	 * Since 2.6
 	 * Params:
-	 * preParseFunc = a function to call before parsing, or NULL
-	 * postParseFunc = a function to call after parsing, or NULL
+	 * preParseFunc = a function to call before parsing, or NULL. [allow-none]
+	 * postParseFunc = a function to call after parsing, or NULL. [allow-none]
 	 */
 	public void setParseHooks(GOptionParseFunc preParseFunc, GOptionParseFunc postParseFunc)
 	{
@@ -235,9 +235,9 @@ public class OptionGroup
 	 * domain, see g_option_group_set_translation_domain().
 	 * Since 2.6
 	 * Params:
-	 * func = the GTranslateFunc, or NULL
-	 * data = user data to pass to func, or NULL
-	 * destroyNotify = a function which gets called to free data, or NULL
+	 * func = the GTranslateFunc, or NULL. [allow-none]
+	 * data = user data to pass to func, or NULL. [allow-none]
+	 * destroyNotify = a function which gets called to free data, or NULL. [allow-none]
 	 */
 	public void setTranslateFunc(GTranslateFunc func, void* data, GDestroyNotify destroyNotify)
 	{

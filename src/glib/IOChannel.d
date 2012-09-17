@@ -422,7 +422,7 @@ public class IOChannel
 	 * buffer = a GString into which the line will be written.
 	 * If buffer already contains data, the old data will
 	 * be overwritten.
-	 * terminatorPos = location to store position of line terminator, or NULL
+	 * terminatorPos = location to store position of line terminator, or NULL. [allow-none]
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
@@ -699,7 +699,7 @@ public class IOChannel
 	/**
 	 * Gets the current flags for a GIOChannel, including read-only
 	 * flags such as G_IO_FLAG_IS_READABLE.
-	 * The values of the flags G_IO_FLAG_IS_READABLE and G_IO_FLAG_IS_WRITEABLE
+	 * The values of the flags G_IO_FLAG_IS_READABLE and G_IO_FLAG_IS_WRITABLE
 	 * are cached for internal use by the channel when it is created.
 	 * If they should change at some later point (e.g. partial shutdown
 	 * of a socket with the UNIX shutdown() function), the user
@@ -714,7 +714,7 @@ public class IOChannel
 	}
 	
 	/**
-	 * Sets the (writeable) flags in channel to (flags  G_IO_CHANNEL_SET_MASK).
+	 * Sets the (writeable) flags in channel to (flags  G_IO_FLAG_SET_MASK).
 	 * Params:
 	 * flags = the flags to set on the IO channel
 	 * Returns: the status of the operation.

@@ -85,9 +85,9 @@ version(Tango) {
  * wrappers is to make it possible to handle file names with any Unicode
  * characters in them on Windows without having to use ifdefs and the
  * wide character API in the application code.
- * The pathname argument should be in the GLib file name encoding. On
- * POSIX this is the actual on-disk encoding which might correspond to
- * the locale settings of the process (or the
+ * The pathname argument should be in the GLib file name encoding.
+ * On POSIX this is the actual on-disk encoding which might correspond
+ * to the locale settings of the process (or the
  * G_FILENAME_ENCODING environment variable), or not.
  * On Windows the GLib file name encoding is UTF-8. Note that the
  * Microsoft C library does not use UTF-8, but has separate APIs for
@@ -140,7 +140,7 @@ public class FileUtils
 	 */
 	
 	/**
-	 * Gets a GFileError constant based on the passed-in errno.
+	 * Gets a GFileError constant based on the passed-in err_no.
 	 * For example, if you pass in EEXIST this function returns
 	 * G_FILE_ERROR_EXIST. Unlike errno values, you can portably
 	 * assume that all GFileError values will exist.
@@ -345,7 +345,7 @@ public class FileUtils
 	 */
 	public static int mkdirWithParents(string pathname, int mode)
 	{
-		// int g_mkdir_with_parents (const gchar *pathname,  int mode);
+		// gint g_mkdir_with_parents (const gchar *pathname,  gint mode);
 		return g_mkdir_with_parents(Str.toStringz(pathname), mode);
 	}
 	
@@ -360,7 +360,7 @@ public class FileUtils
 	 * be modified to form the name of a directory that didn't exist.
 	 * The string should be in the GLib file name encoding. Most importantly,
 	 * on Windows it should be in UTF-8.
-	 * Since 2.26
+	 * Since 2.30
 	 * Params:
 	 * tmpl = template directory name. [type filename]
 	 * Returns: A pointer to tmpl, which has been modified to hold the directory name. In case of errors, NULL is returned and errno will be set.
@@ -382,7 +382,7 @@ public class FileUtils
 	 * the name of a directory that didn't exist. The string should be
 	 * in the GLib file name encoding. Most importantly, on Windows it
 	 * should be in UTF-8.
-	 * Since 2.26
+	 * Since 2.30
 	 * Params:
 	 * tmpl = template directory name. [type filename]
 	 * mode = permissions to create the temporary directory with
@@ -604,7 +604,7 @@ public class FileUtils
 	 * filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * mode = a string describing the mode in which the file should be
 	 * opened
-	 * stream = an existing stream which will be reused, or NULL
+	 * stream = an existing stream which will be reused, or NULL. [allow-none]
 	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred.
 	 */
 	public static FILE* freopen(string filename, string mode, FILE* stream)

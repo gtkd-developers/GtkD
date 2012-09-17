@@ -102,7 +102,7 @@ public class Internationalization
 	 * Since 2.18
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 * the domain set with textdomain()
+	 * the domain set with textdomain(). [allow-none]
 	 * msgid = message to translate
 	 * Returns: The translated string
 	 */
@@ -127,7 +127,7 @@ public class Internationalization
 	 */
 	public static string dcgettext(string domain, string msgid, int category)
 	{
-		// const gchar * g_dcgettext (const gchar *domain,  const gchar *msgid,  int category);
+		// const gchar * g_dcgettext (const gchar *domain,  const gchar *msgid,  gint category);
 		return Str.toString(g_dcgettext(Str.toStringz(domain), Str.toStringz(msgid), category));
 	}
 	
@@ -140,7 +140,7 @@ public class Internationalization
 	 * Since 2.18
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 * the domain set with textdomain()
+	 * the domain set with textdomain(). [allow-none]
 	 * msgid = message to translate
 	 * msgidPlural = plural form of the message
 	 * n = the quantity for which translation is needed
@@ -167,7 +167,7 @@ public class Internationalization
 	 * Since 2.16
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 * the domain set with textdomain()
+	 * the domain set with textdomain(). [allow-none]
 	 * msgctxtid = a combined message context and message id, separated
 	 * by a \004 character
 	 * msgidoffset = the offset of the message id in msgctxid
@@ -191,7 +191,7 @@ public class Internationalization
 	 * Since 2.18
 	 * Params:
 	 * domain = the translation domain to use, or NULL to use
-	 * the domain set with textdomain()
+	 * the domain set with textdomain(). [allow-none]
 	 * context = the message context
 	 * msgid = the message
 	 * Returns: The translated string

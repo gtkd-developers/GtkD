@@ -158,7 +158,7 @@ public class PtrArray
 	 * set to TRUE or when removing elements.
 	 * Since 2.22
 	 * Params:
-	 * elementFreeFunc = A function to free elements with destroy array or NULL.
+	 * elementFreeFunc = A function to free elements with destroy array or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GDestroyNotify elementFreeFunc)
@@ -183,7 +183,7 @@ public class PtrArray
 	 * Since 2.30
 	 * Params:
 	 * reservedSize = number of pointers preallocated.
-	 * elementFreeFunc = A function to free elements with destroy array or NULL.
+	 * elementFreeFunc = A function to free elements with destroy array or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (uint reservedSize, GDestroyNotify elementFreeFunc)
@@ -203,7 +203,7 @@ public class PtrArray
 	 * with free_segment set to TRUE or when removing elements.
 	 * Since 2.22
 	 * Params:
-	 * elementFreeFunc = A function to free elements with destroy array or NULL.
+	 * elementFreeFunc = A function to free elements with destroy array or NULL. [allow-none]
 	 */
 	public void setFreeFunc(GDestroyNotify elementFreeFunc)
 	{
@@ -340,15 +340,11 @@ public class PtrArray
 	 * comparison function (returns less than zero for first arg is less
 	 * than second arg, zero for equal, greater than zero if irst arg is
 	 * greater than second arg).
-	 * If two array elements compare equal, their order in the sorted array
-	 * is undefined. If you want equal elements to keep their order 8211; i.e.
-	 * you want a stable sort 8211; you can write a comparison function that,
-	 * if two elements would otherwise compare equal, compares them by
-	 * their addresses.
 	 * Note
 	 * The comparison function for g_ptr_array_sort() doesn't
 	 * take the pointers from the array as arguments, it takes pointers to
 	 * the pointers in the array.
+	 * This is guaranteed to be a stable sort since version 2.32.
 	 * Params:
 	 * compareFunc = comparison function.
 	 */
@@ -365,6 +361,7 @@ public class PtrArray
 	 * The comparison function for g_ptr_array_sort_with_data()
 	 * doesn't take the pointers from the array as arguments, it takes
 	 * pointers to the pointers in the array.
+	 * This is guaranteed to be a stable sort since version 2.32.
 	 * Params:
 	 * compareFunc = comparison function.
 	 * userData = data to pass to compare_func.

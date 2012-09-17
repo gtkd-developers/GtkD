@@ -141,7 +141,8 @@ public class Date
 	 */
 	
 	/**
-	 * Allocates a GDate and initializes it to a sane state. The new date will
+	 * Allocates a GDate and initializes
+	 * it to a sane state. The new date will
 	 * be cleared (as if you'd called g_date_clear()) but invalid (it won't
 	 * represent an existing day). Free the return value with g_date_free().
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -221,8 +222,8 @@ public class Date
 	}
 	
 	/**
-	 * Sets the day of the month for a GDate. If the resulting day-month-year
-	 * triplet is invalid, the date will be invalid.
+	 * Sets the day of the month for a GDate. If the resulting
+	 * day-month-year triplet is invalid, the date will be invalid.
 	 * Params:
 	 * day = day to set
 	 */
@@ -245,8 +246,8 @@ public class Date
 	}
 	
 	/**
-	 * Sets the year for a GDate. If the resulting day-month-year triplet is
-	 * invalid, the date will be invalid.
+	 * Sets the year for a GDate. If the resulting day-month-year
+	 * triplet is invalid, the date will be invalid.
 	 * Params:
 	 * year = year to set
 	 */
@@ -257,9 +258,10 @@ public class Date
 	}
 	
 	/**
-	 * Sets the value of a GDate from a day, month, and year. The day-month-year
-	 * triplet must be valid; if you aren't sure it is, call g_date_valid_dmy() to
-	 * check before you set it.
+	 * Sets the value of a GDate from a day, month, and year.
+	 * The day-month-year triplet must be valid; if you aren't
+	 * sure it is, call g_date_valid_dmy() to check before you
+	 * set it.
 	 * Params:
 	 * day = day
 	 * month = month
@@ -332,9 +334,9 @@ public class Date
 	 * valid after the call. Otherwise, it will be invalid. You should check
 	 * using g_date_valid() to see whether the parsing succeeded.
 	 * This function is not appropriate for file formats and the like; it
-	 * isn't very precise, and its exact behavior varies with the
-	 * locale. It's intended to be a heuristic routine that guesses what the
-	 * user means by a given string (and it does work pretty well in that
+	 * isn't very precise, and its exact behavior varies with the locale.
+	 * It's intended to be a heuristic routine that guesses what the user
+	 * means by a given string (and it does work pretty well in that
 	 * capacity).
 	 * Params:
 	 * str = string to parse
@@ -346,8 +348,9 @@ public class Date
 	}
 	
 	/**
-	 * Increments a date some number of days. To move forward by weeks, add
-	 * weeks*7 days. The date must be valid.
+	 * Increments a date some number of days.
+	 * To move forward by weeks, add weeks*7 days.
+	 * The date must be valid.
 	 * Params:
 	 * nDays = number of days to move the date forward
 	 */
@@ -358,8 +361,9 @@ public class Date
 	}
 	
 	/**
-	 * Moves a date some number of days into the past. To move by weeks, just
-	 * move by weeks*7 days. The date must be valid.
+	 * Moves a date some number of days into the past.
+	 * To move by weeks, just move by weeks*7 days.
+	 * The date must be valid.
 	 * Params:
 	 * nDays = number of days to move
 	 */
@@ -370,10 +374,11 @@ public class Date
 	}
 	
 	/**
-	 * Increments a date by some number of months. If the day of the month is
-	 * greater than 28, this routine may change the day of the month (because
-	 * the destination month may not have the current day in it). The date
-	 * must be valid.
+	 * Increments a date by some number of months.
+	 * If the day of the month is greater than 28,
+	 * this routine may change the day of the month
+	 * (because the destination month may not have
+	 * the current day in it). The date must be valid.
 	 * Params:
 	 * nMonths = number of months to move forward
 	 */
@@ -384,8 +389,9 @@ public class Date
 	}
 	
 	/**
-	 * Moves a date some number of months into the past. If the current day of
-	 * the month doesn't exist in the destination month, the day of the month
+	 * Moves a date some number of months into the past.
+	 * If the current day of the month doesn't exist in
+	 * the destination month, the day of the month
 	 * may change. The date must be valid.
 	 * Params:
 	 * nMonths = number of months to move
@@ -397,8 +403,9 @@ public class Date
 	}
 	
 	/**
-	 * Increments a date by some number of years. If the date is February 29,
-	 * and the destination year is not a leap year, the date will be changed
+	 * Increments a date by some number of years.
+	 * If the date is February 29, and the destination
+	 * year is not a leap year, the date will be changed
 	 * to February 28. The date must be valid.
 	 * Params:
 	 * nYears = number of years to move forward
@@ -410,9 +417,10 @@ public class Date
 	}
 	
 	/**
-	 * Moves a date some number of years into the past. If the current day
-	 * doesn't exist in the destination year (i.e. it's February 29 and you
-	 * move to a non-leap-year) then the day is changed to February 29. The date
+	 * Moves a date some number of years into the past.
+	 * If the current day doesn't exist in the destination
+	 * year (i.e. it's February 29 and you move to a non-leap-year)
+	 * then the day is changed to February 29. The date
 	 * must be valid.
 	 * Params:
 	 * nYears = number of years to move
@@ -438,8 +446,8 @@ public class Date
 	}
 	
 	/**
-	 * qsort()-style comparsion function for dates. Both
-	 * dates must be valid.
+	 * qsort()-style comparison function for dates.
+	 * Both dates must be valid.
 	 * Params:
 	 * rhs = second date to compare
 	 * Returns: 0 for equal, less than zero if lhs is less than rhs, greater than zero if lhs is greater than rhs
@@ -454,8 +462,8 @@ public class Date
 	 * If date is prior to min_date, sets date equal to min_date.
 	 * If date falls after max_date, sets date equal to max_date.
 	 * Otherwise, date is unchanged.
-	 * Either of min_date and max_date may be NULL. All non-NULL dates
-	 * must be valid.
+	 * Either of min_date and max_date may be NULL.
+	 * All non-NULL dates must be valid.
 	 * Params:
 	 * minDate = minimum accepted value for date
 	 * maxDate = maximum accepted value for date
@@ -543,7 +551,8 @@ public class Date
 	}
 	
 	/**
-	 * Returns the number of days in a month, taking leap years into account.
+	 * Returns the number of days in a month, taking leap
+	 * years into account.
 	 * Params:
 	 * month = month
 	 * year = year
@@ -556,7 +565,8 @@ public class Date
 	}
 	
 	/**
-	 * Returns TRUE if the date is on the first of a month. The date must be valid.
+	 * Returns TRUE if the date is on the first of a month.
+	 * The date must be valid.
 	 * Returns: TRUE if the date is the first of the month
 	 */
 	public int isFirstOfMonth()
@@ -566,7 +576,8 @@ public class Date
 	}
 	
 	/**
-	 * Returns TRUE if the date is the last day of the month. The date must be valid.
+	 * Returns TRUE if the date is the last day of the month.
+	 * The date must be valid.
 	 * Returns: TRUE if the date is the last day of the month
 	 */
 	public int isLastOfMonth()
@@ -576,7 +587,8 @@ public class Date
 	}
 	
 	/**
-	 * Returns TRUE if the year is a leap year.[4]
+	 * Returns TRUE if the year is a leap year.
+	 * [5]
 	 * Params:
 	 * year = year to check
 	 * Returns: TRUE if the year is a leap year
@@ -600,12 +612,13 @@ public class Date
 	}
 	
 	/**
-	 * Returns the number of weeks in the year, where weeks are taken to start
-	 * on Monday. Will be 52 or 53. The date must be valid. (Years always have 52
-	 * 7-day periods, plus 1 or 2 extra days depending on whether it's a leap
-	 * year. This function is basically telling you how many Mondays are in
-	 * the year, i.e. there are 53 Mondays if one of the extra days happens
-	 * to be a Monday.)
+	 * Returns the number of weeks in the year, where weeks
+	 * are taken to start on Monday. Will be 52 or 53. The
+	 * date must be valid. (Years always have 52 7-day periods,
+	 * plus 1 or 2 extra days depending on whether it's a leap
+	 * year. This function is basically telling you how many
+	 * Mondays are in the year, i.e. there are 53 Mondays if
+	 * one of the extra days happens to be a Monday.)
 	 * Params:
 	 * year = a year
 	 * Returns: number of Mondays in the year
@@ -618,8 +631,8 @@ public class Date
 	
 	/**
 	 * Returns the week of the year during which this date falls, if weeks
-	 * are understood to being on Sunday. The date must be valid. Can return 0 if
-	 * the day is before the first Sunday of the year.
+	 * are understood to being on Sunday. The date must be valid. Can return
+	 * 0 if the day is before the first Sunday of the year.
 	 * Returns: week number
 	 */
 	public uint getSundayWeekOfYear()
@@ -629,15 +642,16 @@ public class Date
 	}
 	
 	/**
-	 * Returns the number of weeks in the year, where weeks are taken to start
-	 * on Sunday. Will be 52 or 53. The date must be valid. (Years always have 52
-	 * 7-day periods, plus 1 or 2 extra days depending on whether it's a leap
-	 * year. This function is basically telling you how many Sundays are in
-	 * the year, i.e. there are 53 Sundays if one of the extra days happens
-	 * to be a Sunday.)
+	 * Returns the number of weeks in the year, where weeks
+	 * are taken to start on Sunday. Will be 52 or 53. The
+	 * date must be valid. (Years always have 52 7-day periods,
+	 * plus 1 or 2 extra days depending on whether it's a leap
+	 * year. This function is basically telling you how many
+	 * Sundays are in the year, i.e. there are 53 Sundays if
+	 * one of the extra days happens to be a Sunday.)
 	 * Params:
 	 * year = year to count weeks in
-	 * Returns: number of weeks
+	 * Returns: the number of weeks in year
 	 */
 	public static ubyte getSundayWeeksInYear(GDateYear year)
 	{
@@ -659,15 +673,17 @@ public class Date
 	
 	/**
 	 * Generates a printed representation of the date, in a
-	 * locale-specific way. Works just like
-	 * the platform's C library strftime() function, but only accepts date-related
-	 * formats; time-related formats give undefined results. Date must be valid.
-	 * Unlike strftime() (which uses the locale encoding), works on a UTF-8 format
+	 * locale-specific way.
+	 * Works just like the platform's C library strftime() function,
+	 * but only accepts date-related formats; time-related formats
+	 * give undefined results. Date must be valid. Unlike strftime()
+	 * (which uses the locale encoding), works on a UTF-8 format
 	 * string and stores a UTF-8 result.
-	 * This function does not provide any conversion specifiers in addition
-	 * to those implemented by the platform's C library. For example, don't
-	 * expect that using g_date_strftime() would make the %F provided by the C99
-	 * strftime() work on Windows where the C library only complies to C89.
+	 * This function does not provide any conversion specifiers in
+	 * addition to those implemented by the platform's C library.
+	 * For example, don't expect that using g_date_strftime() would
+	 * make the %F provided by the C99 strftime() work on Windows
+	 * where the C library only complies to C89.
 	 * Params:
 	 * s = destination buffer
 	 * slen = buffer size
@@ -686,7 +702,7 @@ public class Date
 	 * using the date value. Initializes the non-date parts with something
 	 * sane but meaningless.
 	 * Params:
-	 * tm = struct tm to fill.
+	 * tm = struct tm to fill
 	 */
 	public void toStructTm(void* tm)
 	{
@@ -779,7 +795,7 @@ public class Date
 	 * values are the only valid weekdays.
 	 * Params:
 	 * weekday = weekday
-	 * Returns: TRUE if the weekday is valid [4] For the purposes of this function, leap year is every year divisible by 4 unless that year is divisible by 100. If it is divisible by 100 it would be a leap year only if that year is also divisible by 400.
+	 * Returns: TRUE if the weekday is valid [5] For the purposes of this function, leap year is every year divisible by 4 unless that year is divisible by 100. If it is divisible by 100 it would be a leap year only if that year is also divisible by 400.
 	 */
 	public static int validWeekday(GDateWeekday weekday)
 	{

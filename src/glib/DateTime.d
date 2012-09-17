@@ -59,7 +59,7 @@
  * 	- GDateTime* -> DateTime
  * 	- GTimeVal* -> TimeVal
  * 	- GTimeZone* -> TimeZone
- * 	- gconstpointer -> DateTime
+ * 	- void* -> DateTime
  * module aliases:
  * local aliases:
  * overrides:
@@ -602,9 +602,9 @@ public class DateTime
 	 * Retrieves the Gregorian day, month, and year of a given GDateTime.
 	 * Since 2.26
 	 * Params:
-	 * year = the return location for the gregorian year, or NULL. [out]
-	 * month = the return location for the month of the year, or NULL. [out]
-	 * day = the return location for the day of the month, or NULL. [out]
+	 * year = the return location for the gregorian year, or NULL. [out][allow-none]
+	 * month = the return location for the month of the year, or NULL. [out][allow-none]
+	 * day = the return location for the day of the month, or NULL. [out][allow-none]
 	 */
 	public void getYmd(int* year, int* month, int* day)
 	{

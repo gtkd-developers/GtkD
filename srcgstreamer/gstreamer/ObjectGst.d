@@ -202,12 +202,12 @@ public class ObjectGst : ObjectG
 		}
 	}
 	
-	void delegate(gpointer, ObjectGst)[] onObjectSavedListeners;
+	void delegate(void*, ObjectGst)[] onObjectSavedListeners;
 	/**
 	 * Trigered whenever a new object is saved to XML. You can connect to this
 	 * signal to insert custom XML tags into the core XML.
 	 */
-	void addOnObjectSaved(void delegate(gpointer, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnObjectSaved(void delegate(void*, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("object-saved" in connectedSignals) )
 		{
@@ -222,9 +222,9 @@ public class ObjectGst : ObjectG
 		}
 		onObjectSavedListeners ~= dlg;
 	}
-	extern(C) static void callBackObjectSaved(GstObject* gstobjectStruct, gpointer xmlNode, ObjectGst _objectGst)
+	extern(C) static void callBackObjectSaved(GstObject* gstobjectStruct, void* xmlNode, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(gpointer, ObjectGst) dlg ; _objectGst.onObjectSavedListeners )
+		foreach ( void delegate(void*, ObjectGst) dlg ; _objectGst.onObjectSavedListeners )
 		{
 			dlg(xmlNode, _objectGst);
 		}

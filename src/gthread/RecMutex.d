@@ -25,11 +25,11 @@
  * Conversion parameters:
  * inFile  = 
  * outPack = gthread
- * outFile = Cond
- * strct   = GCond
+ * outFile = RecMutex
+ * strct   = GRecMutex
  * realStrct=
  * ctorStrct=
- * clss    = Cond
+ * clss    = RecMutex
  * interf  = 
  * class Code: No
  * interface Code: No
@@ -37,23 +37,19 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- g_cond_
+ * 	- g_rec_mutex_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- gthread.Mutex
- * 	- glib.TimeVal
  * structWrap:
- * 	- GMutex* -> Mutex
- * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gthread.Cond;
+module gthread.RecMutex;
 
 public  import gtkc.gthreadtypes;
 
@@ -61,8 +57,6 @@ private import gtkc.gthread;
 private import glib.ConstructionException;
 
 
-private import gthread.Mutex;
-private import glib.TimeVal;
 
 
 
@@ -136,157 +130,115 @@ private import glib.TimeVal;
  * multiple threads. Most refcounting functions such as g_object_ref()
  * are also thread-safe.
  */
-public class Cond
+public class RecMutex
 {
 	
 	/** the main Gtk struct */
-	protected GCond* gCond;
+	protected GRecMutex* gRecMutex;
 	
 	
-	public GCond* getCondStruct()
+	public GRecMutex* getRecMutexStruct()
 	{
-		return gCond;
+		return gRecMutex;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
-		return cast(void*)gCond;
+		return cast(void*)gRecMutex;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GCond* gCond)
+	public this (GRecMutex* gRecMutex)
 	{
-		if(gCond is null)
+		if(gRecMutex is null)
 		{
 			this = null;
 			return;
 		}
-		this.gCond = gCond;
+		this.gRecMutex = gRecMutex;
 	}
 	
 	/**
 	 */
 	
 	/**
-	 * Initialises a GCond so that it can be used.
-	 * This function is useful to initialise a GCond that has been
-	 * allocated as part of a larger structure. It is not necessary to
-	 * initialise a GCond that has been statically allocated.
-	 * To undo the effect of g_cond_init() when a GCond is no longer
-	 * needed, use g_cond_clear().
-	 * Calling g_cond_init() on an already-initialised GCond leads
-	 * to undefined behaviour.
+	 * Initializes a GRecMutex so that it can be used.
+	 * This function is useful to initialize a recursive mutex
+	 * that has been allocated on the stack, or as part of a larger
+	 * structure.
+	 * It is not necessary to initialise a recursive mutex that has been
+	 * statically allocated.
+	 * $(DDOC_COMMENT example)
+	 * Calling g_rec_mutex_init() on an already initialized GRecMutex
+	 * leads to undefined behaviour.
+	 * To undo the effect of g_rec_mutex_init() when a recursive mutex
+	 * is no longer needed, use g_rec_mutex_clear().
 	 * Since 2.32
 	 */
 	public void init()
 	{
-		// void g_cond_init (GCond *cond);
-		g_cond_init(gCond);
+		// void g_rec_mutex_init (GRecMutex *rec_mutex);
+		g_rec_mutex_init(gRecMutex);
 	}
 	
 	/**
-	 * Frees the resources allocated to a GCond with g_cond_init().
-	 * This function should not be used with a GCond that has been
+	 * Frees the resources allocated to a recursive mutex with
+	 * g_rec_mutex_init().
+	 * This function should not be used with a GRecMutex that has been
 	 * statically allocated.
-	 * Calling g_cond_clear() for a GCond on which threads are
-	 * blocking leads to undefined behaviour.
-	 * Since 2.32
+	 * Calling g_rec_mutex_clear() on a locked recursive mutex leads
+	 * to undefined behaviour.
+	 * Sine: 2.32
 	 */
 	public void clear()
 	{
-		// void g_cond_clear (GCond *cond);
-		g_cond_clear(gCond);
+		// void g_rec_mutex_clear (GRecMutex *rec_mutex);
+		g_rec_mutex_clear(gRecMutex);
 	}
 	
 	/**
-	 * Atomically releases mutex and waits until cond is signalled.
-	 * When using condition variables, it is possible that a spurious wakeup
-	 * may occur (ie: g_cond_wait() returns even though g_cond_signal() was
-	 * not called). It's also possible that a stolen wakeup may occur.
-	 * This is when g_cond_signal() is called, but another thread acquires
-	 * mutex before this thread and modifies the state of the program in
-	 * such a way that when g_cond_wait() is able to return, the expected
-	 * condition is no longer met.
-	 * For this reason, g_cond_wait() must always be used in a loop. See
-	 * the documentation for GCond for a complete example.
-	 * Params:
-	 * mutex = a GMutex that is currently locked
-	 */
-	public void wait(Mutex mutex)
-	{
-		// void g_cond_wait (GCond *cond,  GMutex *mutex);
-		g_cond_wait(gCond, (mutex is null) ? null : mutex.getMutexStruct());
-	}
-	
-	/**
-	 * Warning
-	 * g_cond_timed_wait has been deprecated since version 2.32 and should not be used in newly-written code. Use g_cond_wait_until() instead.
-	 * Waits until this thread is woken up on cond, but not longer than
-	 * until the time specified by abs_time. The mutex is unlocked before
-	 * falling asleep and locked again before resuming.
-	 * If abs_time is NULL, g_cond_timed_wait() acts like g_cond_wait().
-	 * This function can be used even if g_thread_init() has not yet been
-	 * called, and, in that case, will immediately return TRUE.
-	 * To easily calculate abs_time a combination of g_get_current_time()
-	 * and g_time_val_add() can be used.
-	 * Params:
-	 * mutex = a GMutex that is currently locked
-	 * absTime = a GTimeVal, determining the final time
-	 * Returns: TRUE if cond was signalled, or FALSE on timeout
-	 */
-	public int timedWait(Mutex mutex, TimeVal absTime)
-	{
-		// gboolean g_cond_timed_wait (GCond *cond,  GMutex *mutex,  GTimeVal *abs_time);
-		return g_cond_timed_wait(gCond, (mutex is null) ? null : mutex.getMutexStruct(), (absTime is null) ? null : absTime.getTimeValStruct());
-	}
-	
-	/**
-	 * Waits until either cond is signalled or end_time has passed.
-	 * As with g_cond_wait() it is possible that a spurious or stolen wakeup
-	 * could occur. For that reason, waiting on a condition variable should
-	 * always be in a loop, based on an explicitly-checked predicate.
-	 * TRUE is returned if the condition variable was signalled (or in the
-	 * case of a spurious wakeup). FALSE is returned if end_time has
-	 * passed.
-	 * The following code shows how to correctly perform a timed wait on a
-	 * condition variable (extended the example presented in the
+	 * Locks rec_mutex. If rec_mutex is already locked by another
+	 * thread, the current thread will block until rec_mutex is
+	 * unlocked by the other thread. If rec_mutex is already locked
+	 * by the current thread, the 'lock count' of rec_mutex is increased.
+	 * The mutex will only become available again when it is unlocked
+	 * as many times as it has been locked.
 	 * Since 2.32
-	 * Params:
-	 * mutex = a GMutex that is currently locked
-	 * endTime = the monotonic time to wait until
-	 * Returns: TRUE on a signal, FALSE on a timeout
 	 */
-	public int waitUntil(Mutex mutex, long endTime)
+	public void lock()
 	{
-		// gboolean g_cond_wait_until (GCond *cond,  GMutex *mutex,  gint64 end_time);
-		return g_cond_wait_until(gCond, (mutex is null) ? null : mutex.getMutexStruct(), endTime);
+		// void g_rec_mutex_lock (GRecMutex *rec_mutex);
+		g_rec_mutex_lock(gRecMutex);
 	}
 	
 	/**
-	 * If threads are waiting for cond, at least one of them is unblocked.
-	 * If no threads are waiting for cond, this function has no effect.
-	 * It is good practice to hold the same lock as the waiting thread
-	 * while calling this function, though not required.
+	 * Tries to lock rec_mutex. If rec_mutex is already locked
+	 * by another thread, it immediately returns FALSE. Otherwise
+	 * it locks rec_mutex and returns TRUE.
+	 * Since 2.32
+	 * Returns: TRUE if rec_mutex could be locked
 	 */
-	public void signal()
+	public int trylock()
 	{
-		// void g_cond_signal (GCond *cond);
-		g_cond_signal(gCond);
+		// gboolean g_rec_mutex_trylock (GRecMutex *rec_mutex);
+		return g_rec_mutex_trylock(gRecMutex);
 	}
 	
 	/**
-	 * If threads are waiting for cond, all of them are unblocked.
-	 * If no threads are waiting for cond, this function has no effect.
-	 * It is good practice to lock the same mutex as the waiting threads
-	 * while calling this function, though not required.
+	 * Unlocks rec_mutex. If another thread is blocked in a
+	 * g_rec_mutex_lock() call for rec_mutex, it will become unblocked
+	 * and can lock rec_mutex itself.
+	 * Calling g_rec_mutex_unlock() on a recursive mutex that is not
+	 * locked by the current thread leads to undefined behaviour.
+	 * Since 2.32
 	 */
-	public void broadcast()
+	public void unlock()
 	{
-		// void g_cond_broadcast (GCond *cond);
-		g_cond_broadcast(gCond);
+		// void g_rec_mutex_unlock (GRecMutex *rec_mutex);
+		g_rec_mutex_unlock(gRecMutex);
 	}
 }
