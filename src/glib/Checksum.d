@@ -287,6 +287,6 @@ public class Checksum
 	public static string computeForString(GChecksumType checksumType, string str)
 	{
 		// gchar * g_compute_checksum_for_string (GChecksumType checksum_type,  const gchar *str,  gssize length);
-		return Str.toString(g_compute_checksum_for_string(checksumType, Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_compute_checksum_for_string(checksumType, cast(char*)str.ptr, cast(int) str.length));
 	}
 }

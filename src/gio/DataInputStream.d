@@ -500,7 +500,7 @@ public class DataInputStream : BufferedInputStream
 		gsize length;
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_upto(gDataInputStream, Str.toStringz(stopChars), cast(int) stopChars.length, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_data_input_stream_read_upto(gDataInputStream, cast(char*)stopChars.ptr, cast(int) stopChars.length, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -534,7 +534,7 @@ public class DataInputStream : BufferedInputStream
 	public void readUptoAsync(string stopChars, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_data_input_stream_read_upto_async (GDataInputStream *stream,  const gchar *stop_chars,  gssize stop_chars_len,  gint io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
-		g_data_input_stream_read_upto_async(gDataInputStream, Str.toStringz(stopChars), cast(int) stopChars.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		g_data_input_stream_read_upto_async(gDataInputStream, cast(char*)stopChars.ptr, cast(int) stopChars.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 	
 	/**

@@ -203,10 +203,10 @@ public class UnixSocketAddress : SocketAddress
 	public this (string path, GUnixSocketAddressType type)
 	{
 		// GSocketAddress * g_unix_socket_address_new_with_type (const gchar *path,  gint path_len,  GUnixSocketAddressType type);
-		auto p = g_unix_socket_address_new_with_type(Str.toStringz(path), cast(int) path.length, type);
+		auto p = g_unix_socket_address_new_with_type(cast(char*)path.ptr, cast(int) path.length, type);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_unix_socket_address_new_with_type(Str.toStringz(path), cast(int) path.length, type)");
+			throw new ConstructionException("null returned by g_unix_socket_address_new_with_type(cast(char*)path.ptr, cast(int) path.length, type)");
 		}
 		this(cast(GUnixSocketAddress*) p);
 	}

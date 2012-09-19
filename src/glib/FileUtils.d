@@ -174,7 +174,7 @@ public class FileUtils
 		// gboolean g_file_set_contents (const gchar *filename,  const gchar *contents,  gssize length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), cast(int) contents.length, &err);
+		auto p = g_file_set_contents(Str.toStringz(filename), cast(char*)contents.ptr, cast(int) contents.length, &err);
 		
 		if (err !is null)
 		{

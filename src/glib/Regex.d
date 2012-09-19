@@ -311,7 +311,7 @@ public class Regex
 	public static string escapeString(string string)
 	{
 		// gchar * g_regex_escape_string (const gchar *string,  gint length);
-		return Str.toString(g_regex_escape_string(Str.toStringz(string), cast(int) string.length));
+		return Str.toString(g_regex_escape_string(cast(char*)string.ptr, cast(int) string.length));
 	}
 	
 	/**
@@ -327,7 +327,7 @@ public class Regex
 	public static string escapeNul(string string)
 	{
 		// gchar * g_regex_escape_nul (const gchar *string,  gint length);
-		return Str.toString(g_regex_escape_nul(Str.toStringz(string), cast(int) string.length));
+		return Str.toString(g_regex_escape_nul(cast(char*)string.ptr, cast(int) string.length));
 	}
 	
 	/**
@@ -422,7 +422,7 @@ public class Regex
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 		
-		auto p = g_regex_match_full(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, matchOptions, &outmatchInfo, &err);
+		auto p = g_regex_match_full(gRegex, cast(char*)string.ptr, cast(int) string.length, startPosition, matchOptions, &outmatchInfo, &err);
 		
 		if (err !is null)
 		{
@@ -512,7 +512,7 @@ public class Regex
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 		
-		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, matchOptions, &outmatchInfo, &err);
+		auto p = g_regex_match_all_full(gRegex, cast(char*)string.ptr, cast(int) string.length, startPosition, matchOptions, &outmatchInfo, &err);
 		
 		if (err !is null)
 		{
@@ -623,7 +623,7 @@ public class Regex
 		// gchar ** g_regex_split_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  gint max_tokens,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_split_full(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, matchOptions, maxTokens, &err);
+		auto p = g_regex_split_full(gRegex, cast(char*)string.ptr, cast(int) string.length, startPosition, matchOptions, maxTokens, &err);
 		
 		if (err !is null)
 		{
@@ -655,7 +655,7 @@ public class Regex
 		// gchar * g_regex_replace (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_replace(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
+		auto p = g_regex_replace(gRegex, cast(char*)string.ptr, cast(int) string.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
 		
 		if (err !is null)
 		{
@@ -687,7 +687,7 @@ public class Regex
 		// gchar * g_regex_replace_literal (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_replace_literal(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
+		auto p = g_regex_replace_literal(gRegex, cast(char*)string.ptr, cast(int) string.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
 		
 		if (err !is null)
 		{
@@ -719,7 +719,7 @@ public class Regex
 		// gchar * g_regex_replace_eval (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GRegexEvalCallback eval,  gpointer user_data,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_replace_eval(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, matchOptions, eval, userData, &err);
+		auto p = g_regex_replace_eval(gRegex, cast(char*)string.ptr, cast(int) string.length, startPosition, matchOptions, eval, userData, &err);
 		
 		if (err !is null)
 		{

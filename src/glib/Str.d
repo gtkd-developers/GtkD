@@ -433,7 +433,7 @@ public class Str
 	public static string strstrLen(string haystack, string needle)
 	{
 		// gchar * g_strstr_len (const gchar *haystack,  gssize haystack_len,  const gchar *needle);
-		return Str.toString(g_strstr_len(Str.toStringz(haystack), cast(int) haystack.length, Str.toStringz(needle)));
+		return Str.toString(g_strstr_len(cast(char*)haystack.ptr, cast(int) haystack.length, Str.toStringz(needle)));
 	}
 	
 	/**
@@ -462,7 +462,7 @@ public class Str
 	public static string strrstrLen(string haystack, string needle)
 	{
 		// gchar * g_strrstr_len (const gchar *haystack,  gssize haystack_len,  const gchar *needle);
-		return Str.toString(g_strrstr_len(Str.toStringz(haystack), cast(int) haystack.length, Str.toStringz(needle)));
+		return Str.toString(g_strrstr_len(cast(char*)haystack.ptr, cast(int) haystack.length, Str.toStringz(needle)));
 	}
 	
 	/**
@@ -975,7 +975,7 @@ public class Str
 	public static string asciiStrup(string str)
 	{
 		// gchar * g_ascii_strup (const gchar *str,  gssize len);
-		return Str.toString(g_ascii_strup(Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_ascii_strup(cast(char*)str.ptr, cast(int) str.length));
 	}
 	
 	/**
@@ -987,7 +987,7 @@ public class Str
 	public static string asciiStrdown(string str)
 	{
 		// gchar * g_ascii_strdown (const gchar *str,  gssize len);
-		return Str.toString(g_ascii_strdown(Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_ascii_strdown(cast(char*)str.ptr, cast(int) str.length));
 	}
 	
 	/**

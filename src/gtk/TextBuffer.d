@@ -827,7 +827,7 @@ public class TextBuffer : ObjectG
 	public void insert(TextIter iter, string text)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), cast(char*)text.ptr, cast(int) text.length);
 	}
 	
 	/**
@@ -839,7 +839,7 @@ public class TextBuffer : ObjectG
 	public void insertAtCursor(string text)
 	{
 		// void gtk_text_buffer_insert_at_cursor (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int) text.length);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, cast(char*)text.ptr, cast(int) text.length);
 	}
 	
 	/**
@@ -859,7 +859,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractive(TextIter iter, string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int) text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), cast(char*)text.ptr, cast(int) text.length, defaultEditable);
 	}
 	
 	/**
@@ -876,7 +876,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractiveAtCursor(string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int) text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, cast(char*)text.ptr, cast(int) text.length, defaultEditable);
 	}
 	
 	/**
@@ -985,7 +985,7 @@ public class TextBuffer : ObjectG
 	public void setText(string text)
 	{
 		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), cast(int) text.length);
+		gtk_text_buffer_set_text(gtkTextBuffer, cast(char*)text.ptr, cast(int) text.length);
 	}
 	
 	/**

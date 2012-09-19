@@ -282,7 +282,7 @@ public class KeyFile
 		// gboolean g_key_file_load_from_data (GKeyFile *key_file,  const gchar *data,  gsize length,  GKeyFileFlags flags,  GError **error);
 		GError* err = null;
 		
-		auto p = g_key_file_load_from_data(gKeyFile, Str.toStringz(data), cast(int) data.length, flags, &err);
+		auto p = g_key_file_load_from_data(gKeyFile, cast(char*)data.ptr, cast(int) data.length, flags, &err);
 		
 		if (err !is null)
 		{

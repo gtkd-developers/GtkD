@@ -196,10 +196,10 @@ public class EntryBuffer : ObjectG
 	public this (string initialChars)
 	{
 		// GtkEntryBuffer * gtk_entry_buffer_new (const gchar *initial_chars,  gint n_initial_chars);
-		auto p = gtk_entry_buffer_new(Str.toStringz(initialChars), cast(int) initialChars.length);
+		auto p = gtk_entry_buffer_new(cast(char*)initialChars.ptr, cast(int) initialChars.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_entry_buffer_new(Str.toStringz(initialChars), cast(int) initialChars.length)");
+			throw new ConstructionException("null returned by gtk_entry_buffer_new(cast(char*)initialChars.ptr, cast(int) initialChars.length)");
 		}
 		this(cast(GtkEntryBuffer*) p);
 	}
@@ -229,7 +229,7 @@ public class EntryBuffer : ObjectG
 	public void setText(string chars)
 	{
 		// void gtk_entry_buffer_set_text (GtkEntryBuffer *buffer,  const gchar *chars,  gint n_chars);
-		gtk_entry_buffer_set_text(gtkEntryBuffer, Str.toStringz(chars), cast(int) chars.length);
+		gtk_entry_buffer_set_text(gtkEntryBuffer, cast(char*)chars.ptr, cast(int) chars.length);
 	}
 	
 	/**
@@ -300,7 +300,7 @@ public class EntryBuffer : ObjectG
 	public uint insertText(uint position, string chars)
 	{
 		// guint gtk_entry_buffer_insert_text (GtkEntryBuffer *buffer,  guint position,  const gchar *chars,  gint n_chars);
-		return gtk_entry_buffer_insert_text(gtkEntryBuffer, position, Str.toStringz(chars), cast(int) chars.length);
+		return gtk_entry_buffer_insert_text(gtkEntryBuffer, position, cast(char*)chars.ptr, cast(int) chars.length);
 	}
 	
 	/**
@@ -345,6 +345,6 @@ public class EntryBuffer : ObjectG
 	public void emitInsertedText(uint position, string chars)
 	{
 		// void gtk_entry_buffer_emit_inserted_text (GtkEntryBuffer *buffer,  guint position,  const gchar *chars,  guint n_chars);
-		gtk_entry_buffer_emit_inserted_text(gtkEntryBuffer, position, Str.toStringz(chars), cast(int) chars.length);
+		gtk_entry_buffer_emit_inserted_text(gtkEntryBuffer, position, cast(char*)chars.ptr, cast(int) chars.length);
 	}
 }

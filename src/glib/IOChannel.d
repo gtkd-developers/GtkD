@@ -459,7 +459,7 @@ public class IOChannel
 		// GIOStatus g_io_channel_write_chars (GIOChannel *channel,  const gchar *buf,  gssize count,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), cast(int) buf.length, &bytesWritten, &err);
+		auto p = g_io_channel_write_chars(gIOChannel, cast(char*)buf.ptr, cast(int) buf.length, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
@@ -756,7 +756,7 @@ public class IOChannel
 	public void setLineTerm(string lineTerm)
 	{
 		// void g_io_channel_set_line_term (GIOChannel *channel,  const gchar *line_term,  gint length);
-		g_io_channel_set_line_term(gIOChannel, Str.toStringz(lineTerm), cast(int) lineTerm.length);
+		g_io_channel_set_line_term(gIOChannel, cast(char*)lineTerm.ptr, cast(int) lineTerm.length);
 	}
 	
 	/**
@@ -889,7 +889,7 @@ public class IOChannel
 	public GIOError write(string buf, out gsize bytesWritten)
 	{
 		// GIOError g_io_channel_write (GIOChannel *channel,  const gchar *buf,  gsize count,  gsize *bytes_written);
-		return g_io_channel_write(gIOChannel, Str.toStringz(buf), cast(int) buf.length, &bytesWritten);
+		return g_io_channel_write(gIOChannel, cast(char*)buf.ptr, cast(int) buf.length, &bytesWritten);
 	}
 	
 	/**

@@ -649,7 +649,7 @@ public class UIManager : ObjectG, BuildableIF
 		// guint gtk_ui_manager_add_ui_from_string (GtkUIManager *manager,  const gchar *buffer,  gssize length,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), cast(int) buffer.length, &err);
+		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, cast(char*)buffer.ptr, cast(int) buffer.length, &err);
 		
 		if (err !is null)
 		{

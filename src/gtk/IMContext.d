@@ -488,7 +488,7 @@ public class IMContext : ObjectG
 	public void setSurrounding(string text, int cursorIndex)
 	{
 		// void gtk_im_context_set_surrounding (GtkIMContext *context,  const gchar *text,  gint len,  gint cursor_index);
-		gtk_im_context_set_surrounding(gtkIMContext, Str.toStringz(text), cast(int) text.length, cursorIndex);
+		gtk_im_context_set_surrounding(gtkIMContext, cast(char*)text.ptr, cast(int) text.length, cursorIndex);
 	}
 	
 	/**

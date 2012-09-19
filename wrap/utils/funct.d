@@ -595,9 +595,9 @@ public struct Funct
 		{
 			if ( param.typeWrap == "string" )
 			{
-				if ( param.arrayParam && param.lengthParamName != "" )
+				if ( param.lengthParamName != "" && param.constParam )
 				{
-					parmToGtk = param.convName ~".ptr";
+					parmToGtk = "cast(char*)"~ param.convName ~".ptr";
 				}
 				else
 				{

@@ -691,7 +691,7 @@ public class Unicode
 	public static gunichar utf8_GetCharValidated(string p)
 	{
 		// gunichar g_utf8_get_char_validated (const gchar *p,  gssize max_len);
-		return g_utf8_get_char_validated(Str.toStringz(p), cast(int) p.length);
+		return g_utf8_get_char_validated(cast(char*)p.ptr, cast(int) p.length);
 	}
 	
 	/**
@@ -796,7 +796,7 @@ public class Unicode
 	public static glong utf8_Strlen(string p)
 	{
 		// glong g_utf8_strlen (const gchar *p,  gssize max);
-		return g_utf8_strlen(Str.toStringz(p), cast(int) p.length);
+		return g_utf8_strlen(cast(char*)p.ptr, cast(int) p.length);
 	}
 	
 	/**
@@ -869,7 +869,7 @@ public class Unicode
 	public static string utf8_Strreverse(string str)
 	{
 		// gchar * g_utf8_strreverse (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strreverse(Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_utf8_strreverse(cast(char*)str.ptr, cast(int) str.length));
 	}
 	
 	/**
@@ -913,7 +913,7 @@ public class Unicode
 		// gboolean g_utf8_validate (const gchar *str,  gssize max_len,  const gchar **end);
 		char* outend = null;
 		
-		auto p = g_utf8_validate(Str.toStringz(str), cast(int) str.length, &outend);
+		auto p = g_utf8_validate(cast(char*)str.ptr, cast(int) str.length, &outend);
 		
 		end = Str.toString(outend);
 		return p;
@@ -932,7 +932,7 @@ public class Unicode
 	public static string utf8_Strup(string str)
 	{
 		// gchar * g_utf8_strup (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strup(Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_utf8_strup(cast(char*)str.ptr, cast(int) str.length));
 	}
 	
 	/**
@@ -947,7 +947,7 @@ public class Unicode
 	public static string utf8_Strdown(string str)
 	{
 		// gchar * g_utf8_strdown (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strdown(Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_utf8_strdown(cast(char*)str.ptr, cast(int) str.length));
 	}
 	
 	/**
@@ -968,7 +968,7 @@ public class Unicode
 	public static string utf8_Casefold(string str)
 	{
 		// gchar * g_utf8_casefold (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_casefold(Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_utf8_casefold(cast(char*)str.ptr, cast(int) str.length));
 	}
 	
 	/**
@@ -1003,7 +1003,7 @@ public class Unicode
 	public static string utf8_Normalize(string str, GNormalizeMode mode)
 	{
 		// gchar * g_utf8_normalize (const gchar *str,  gssize len,  GNormalizeMode mode);
-		return Str.toString(g_utf8_normalize(Str.toStringz(str), cast(int) str.length, mode));
+		return Str.toString(g_utf8_normalize(cast(char*)str.ptr, cast(int) str.length, mode));
 	}
 	
 	/**
@@ -1040,7 +1040,7 @@ public class Unicode
 	public static string utf8_CollateKey(string str)
 	{
 		// gchar * g_utf8_collate_key (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_collate_key(Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_utf8_collate_key(cast(char*)str.ptr, cast(int) str.length));
 	}
 	
 	/**
@@ -1063,7 +1063,7 @@ public class Unicode
 	public static string utf8_CollateKeyForFilename(string str)
 	{
 		// gchar * g_utf8_collate_key_for_filename (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_collate_key_for_filename(Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_utf8_collate_key_for_filename(cast(char*)str.ptr, cast(int) str.length));
 	}
 	
 	/**
@@ -1085,7 +1085,7 @@ public class Unicode
 		glong itemsWritten;
 		GError* err = null;
 		
-		auto p = g_utf8_to_utf16(Str.toStringz(str), cast(int) str.length, &itemsRead, &itemsWritten, &err);
+		auto p = g_utf8_to_utf16(cast(char*)str.ptr, cast(int) str.length, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
@@ -1115,7 +1115,7 @@ public class Unicode
 		glong itemsWritten;
 		GError* err = null;
 		
-		auto p = g_utf8_to_ucs4(Str.toStringz(str), cast(int) str.length, &itemsRead, &itemsWritten, &err);
+		auto p = g_utf8_to_ucs4(cast(char*)str.ptr, cast(int) str.length, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
@@ -1139,7 +1139,7 @@ public class Unicode
 	{
 		// gunichar * g_utf8_to_ucs4_fast (const gchar *str,  glong len,  glong *items_written);
 		glong itemsWritten;
-		auto p = g_utf8_to_ucs4_fast(Str.toStringz(str), cast(int) str.length, &itemsWritten);
+		auto p = g_utf8_to_ucs4_fast(cast(char*)str.ptr, cast(int) str.length, &itemsWritten);
 		return p[0 .. itemsWritten];
 	}
 	

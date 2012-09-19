@@ -220,7 +220,7 @@ public class BookmarkFile
 		// gboolean g_bookmark_file_load_from_data (GBookmarkFile *bookmark,  const gchar *data,  gsize length,  GError **error);
 		GError* err = null;
 		
-		auto p = g_bookmark_file_load_from_data(gBookmarkFile, Str.toStringz(data), length, &err);
+		auto p = g_bookmark_file_load_from_data(gBookmarkFile, cast(char*)data.ptr, length, &err);
 		
 		if (err !is null)
 		{

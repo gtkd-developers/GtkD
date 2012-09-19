@@ -255,7 +255,7 @@ public class SelectionData
 	public int dataSetText(string str)
 	{
 		// gboolean gtk_selection_data_set_text (GtkSelectionData *selection_data,  const gchar *str,  gint len);
-		return gtk_selection_data_set_text(gtkSelectionData, Str.toStringz(str), cast(int) str.length);
+		return gtk_selection_data_set_text(gtkSelectionData, cast(char*)str.ptr, cast(int) str.length);
 	}
 	
 	/**

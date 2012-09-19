@@ -160,7 +160,7 @@ public class Base64
 	public static gsize decodeStep(string inn, char* f_out, ref int state, ref uint save)
 	{
 		// gsize g_base64_decode_step (const gchar *in,  gsize len,  guchar *out,  gint *state,  guint *save);
-		return g_base64_decode_step(Str.toStringz(inn), cast(int) inn.length, f_out, &state, &save);
+		return g_base64_decode_step(cast(char*)inn.ptr, cast(int) inn.length, f_out, &state, &save);
 	}
 	
 	/**

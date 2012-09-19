@@ -281,6 +281,6 @@ public class Hmac
 	public static string computeHmacForString(GChecksumType digestType, char[] key, string str)
 	{
 		// gchar * g_compute_hmac_for_string (GChecksumType digest_type,  const guchar *key,  gsize key_len,  const gchar *str,  gssize length);
-		return Str.toString(g_compute_hmac_for_string(digestType, key.ptr, cast(int) key.length, Str.toStringz(str), cast(int) str.length));
+		return Str.toString(g_compute_hmac_for_string(digestType, key.ptr, cast(int) key.length, cast(char*)str.ptr, cast(int) str.length));
 	}
 }

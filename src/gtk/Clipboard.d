@@ -378,7 +378,7 @@ public class Clipboard : ObjectG
 	public void setText(string text)
 	{
 		// void gtk_clipboard_set_text (GtkClipboard *clipboard,  const gchar *text,  gint len);
-		gtk_clipboard_set_text(gtkClipboard, Str.toStringz(text), cast(int) text.length);
+		gtk_clipboard_set_text(gtkClipboard, cast(char*)text.ptr, cast(int) text.length);
 	}
 	
 	/**

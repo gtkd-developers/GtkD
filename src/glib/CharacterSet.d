@@ -291,7 +291,7 @@ public class CharacterSet
 		gsize bytesWritten;
 		GError* err = null;
 		
-		auto p = g_convert_with_iconv(Str.toStringz(str), cast(int) str.length, converter, &bytesRead, &bytesWritten, &err);
+		auto p = g_convert_with_iconv(cast(char*)str.ptr, cast(int) str.length, converter, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
@@ -401,7 +401,7 @@ public class CharacterSet
 		// gchar * g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = g_filename_to_utf8(Str.toStringz(opsysstring), cast(int) opsysstring.length, &bytesRead, &bytesWritten, &err);
+		auto p = g_filename_to_utf8(cast(char*)opsysstring.ptr, cast(int) opsysstring.length, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
@@ -438,7 +438,7 @@ public class CharacterSet
 		// gchar * g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = g_filename_from_utf8(Str.toStringz(utf8string), cast(int) utf8string.length, &bytesRead, &bytesWritten, &err);
+		auto p = g_filename_from_utf8(cast(char*)utf8string.ptr, cast(int) utf8string.length, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{

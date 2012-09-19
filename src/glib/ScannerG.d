@@ -177,7 +177,7 @@ public class ScannerG
 	public void inputText(string text)
 	{
 		// void g_scanner_input_text (GScanner *scanner,  const gchar *text,  guint text_len);
-		g_scanner_input_text(gScanner, Str.toStringz(text), cast(int) text.length);
+		g_scanner_input_text(gScanner, cast(char*)text.ptr, cast(int) text.length);
 	}
 	
 	/**

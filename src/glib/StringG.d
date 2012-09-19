@@ -131,10 +131,10 @@ public class StringG
 	public this (string init)
 	{
 		// GString * g_string_new_len (const gchar *init,  gssize len);
-		auto p = g_string_new_len(Str.toStringz(init), cast(int) init.length);
+		auto p = g_string_new_len(cast(char*)init.ptr, cast(int) init.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_string_new_len(Str.toStringz(init), cast(int) init.length)");
+			throw new ConstructionException("null returned by g_string_new_len(cast(char*)init.ptr, cast(int) init.length)");
 		}
 		this(cast(GString*) p);
 	}
@@ -266,7 +266,7 @@ public class StringG
 	public StringG append(string val)
 	{
 		// GString * g_string_append_len (GString *string,  const gchar *val,  gssize len);
-		auto p = g_string_append_len(gString, Str.toStringz(val), cast(int) val.length);
+		auto p = g_string_append_len(gString, cast(char*)val.ptr, cast(int) val.length);
 		if(p is null)
 		{
 			return null;
@@ -348,7 +348,7 @@ public class StringG
 	public StringG prepend(string val)
 	{
 		// GString * g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
-		auto p = g_string_prepend_len(gString, Str.toStringz(val), cast(int) val.length);
+		auto p = g_string_prepend_len(gString, cast(char*)val.ptr, cast(int) val.length);
 		if(p is null)
 		{
 			return null;
@@ -412,7 +412,7 @@ public class StringG
 	public StringG insert(gssize pos, string val)
 	{
 		// GString * g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
-		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), cast(int) val.length);
+		auto p = g_string_insert_len(gString, pos, cast(char*)val.ptr, cast(int) val.length);
 		if(p is null)
 		{
 			return null;
@@ -433,7 +433,7 @@ public class StringG
 	public StringG overwrite(gsize pos, string val)
 	{
 		// GString * g_string_overwrite_len (GString *string,  gsize pos,  const gchar *val,  gssize len);
-		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), cast(int) val.length);
+		auto p = g_string_overwrite_len(gString, pos, cast(char*)val.ptr, cast(int) val.length);
 		if(p is null)
 		{
 			return null;
