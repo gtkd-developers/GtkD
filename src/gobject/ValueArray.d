@@ -71,6 +71,14 @@ private import gobject.Value;
  * object property that holds an array of values. A GValueArray wraps
  * an array of GValue elements in order for it to be used as a boxed
  * type through G_TYPE_VALUE_ARRAY.
+ * GValueArray is deprecated in favour of GArray since GLib 2.32. It
+ * is possible to create a GArray that behaves like a GValueArray by
+ * using the size of GValue as the element size, and by setting
+ * g_value_unset() as the clear function using g_array_set_clear_func(),
+ * for instance, the following code:
+ * $(DDOC_COMMENT example)
+ * can be replaced by:
+ * $(DDOC_COMMENT example)
  */
 public class ValueArray
 {
@@ -108,6 +116,8 @@ public class ValueArray
 	 */
 	
 	/**
+	 * Warning
+	 * g_value_array_get_nth has been deprecated since version 2.32 and should not be used in newly-written code. Use g_array_index() instead.
 	 * Return a pointer to the value at index_ containd in value_array.
 	 * Params:
 	 * index = index of the value of interest
@@ -125,6 +135,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_new has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_sized_new() instead.
 	 * Allocate and initialize a new GValueArray, optionally preserve space
 	 * for n_prealloced elements. New arrays always contain 0 elements,
 	 * regardless of the value of n_prealloced.
@@ -144,6 +156,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_copy has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_ref() instead.
 	 * Construct an exact copy of a GValueArray by duplicating all its
 	 * contents.
 	 * Returns: Newly allocated copy of GValueArray. [transfer full]
@@ -160,6 +174,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_free has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_unref() instead.
 	 * Free a GValueArray including its contents.
 	 */
 	public void free()
@@ -169,6 +185,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_append has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_append_val() instead.
 	 * Insert a copy of value as last element of value_array. If value is
 	 * NULL, an uninitialized value is appended.
 	 * Params:
@@ -187,6 +205,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_prepend has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_prepend_val() instead.
 	 * Insert a copy of value as first element of value_array. If value is
 	 * NULL, an uninitialized value is prepended.
 	 * Params:
@@ -205,6 +225,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_insert has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_insert_val() instead.
 	 * Insert a copy of value at specified position into value_array. If value
 	 * is NULL, an uninitialized value is inserted.
 	 * Params:
@@ -224,6 +246,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_remove has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_remove_index() instead.
 	 * Remove the value at position index_ from value_array.
 	 * Params:
 	 * index = position of value to remove, which must be less than
@@ -242,6 +266,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_sort has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_sort().
 	 * Sort value_array using compare_func to compare the elements according to
 	 * the semantics of GCompareFunc.
 	 * The current implementation uses Quick-Sort as sorting algorithm.
@@ -261,6 +287,8 @@ public class ValueArray
 	}
 	
 	/**
+	 * Warning
+	 * g_value_array_sort_with_data has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_sort_with_data().
 	 * Sort value_array using compare_func to compare the elements according
 	 * to the semantics of GCompareDataFunc.
 	 * The current implementation uses Quick-Sort as sorting algorithm.

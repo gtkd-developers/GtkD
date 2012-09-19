@@ -179,7 +179,7 @@ alias GTypeFundamentalFlags TypeFundamentalFlags;
  * the parameter is deprecated and will be removed
  *  in a future version. A warning will be generated if it is used
  *  while running with G_ENABLE_DIAGNOSTIC=1.
- *  Since: 2.26
+ *  Since 2.26
  */
 public enum GParamFlags
 {
@@ -226,6 +226,10 @@ alias GParamFlags ParamFlags;
  * G_SIGNAL_MUST_COLLECT
  * Varargs signal emission will always collect the
  *  arguments, even if there are no signal handlers connected. Since 2.30.
+ * G_SIGNAL_DEPRECATED
+ * The signal is deprecated and will be removed
+ *  in a future version. A warning will be generated if it is connected while
+ *  running with G_ENABLE_DIAGNOSTIC=1. Since 2.32.
  */
 public enum GSignalFlags
 {
@@ -236,7 +240,8 @@ public enum GSignalFlags
 	DETAILED = 1 << 4,
 	ACTION = 1 << 5,
 	NO_HOOKS = 1 << 6,
-	MUST_COLLECT = 1 << 7
+	MUST_COLLECT = 1 << 7,
+	DEPRECATED = 1 << 8
 }
 alias GSignalFlags SignalFlags;
 
@@ -550,7 +555,7 @@ public struct GInterfaceInfo
  * or strings, return this pointer, so the caller can peek at
  * the current contents. To extend on our above string example:
  * $(DDOC_COMMENT example)
- * gchar *collect_format;
+ * const gchar *collect_format;
  * A string format describing how to collect the contents of
  * this value bit-by-bit. Each character in the format represents
  * an argument to be collected, and the characters themselves indicate
@@ -609,7 +614,7 @@ public struct GInterfaceInfo
  * a correctly setup value for error returns, simply because
  * any non-NULL return is considered a fatal condition so further
  * program behaviour is undefined.
- * gchar *lcopy_format;
+ * const gchar *lcopy_format;
  * Format description of the arguments to collect for lcopy_value,
  * analogous to collect_format. Usually, lcopy_format string consists
  * only of 'p's to provide lcopy_value() with pointers to storage locations.
@@ -775,6 +780,28 @@ public struct GInitiallyUnowned{}
  * The class structure for the GInitiallyUnowned type.
  */
 public struct GInitiallyUnownedClass{}
+
+
+/**
+ * A structure containing a weak reference to a GObject. It can either
+ * be empty (i.e. point to NULL), or point to an object for as long as
+ * at least one "strong" reference to that object exists. Before the
+ * object's GObjectClass.dispose method is called, every GWeakRef
+ * associated with becomes empty (i.e. points to NULL).
+ * Like GValue, GWeakRef can be statically allocated, stack- or
+ * heap-allocated, or embedded in larger structures.
+ * Unlike g_object_weak_ref() and g_object_add_weak_pointer(), this weak
+ * reference is thread-safe: converting a weak pointer to a reference is
+ * atomic with respect to invalidation of weak pointers to destroyed
+ * objects.
+ * If the object's GObjectClass.dispose method results in additional
+ * references to the object being held, any GWeakRefs taken
+ * before it was disposed will continue to point to NULL. If
+ * GWeakRefs are taken after the object is disposed and
+ * re-referenced, they will continue to point to it until its refcount
+ * goes back to zero, at which point they too will be invalidated.
+ */
+public struct GWeakRef{}
 
 
 /**
@@ -2217,31 +2244,6 @@ public struct GBinding{}
  * the numeric id of the property
  * pspec :
  * the GParamSpec of the property
- * Signal Details
- * The "notify" signal
- * void user_function (GObject *gobject,
- *  GParamSpec *pspec,
- *  gpointer user_data) : No Hooks
- * The notify signal is emitted on an object when one of its
- * properties has been changed. Note that getting this signal
- * doesn't guarantee that the value of the property has actually
- * changed, it may also be emitted when the setter for the property
- * is called to reinstate the previous value.
- * This signal is typically used to obtain change notification for a
- * single property, by specifying the property name as a detail in the
- * g_signal_connect() call, like this:
- * $(DDOC_COMMENT example)
- * It is important to note that you must use
- * canonical parameter names as
- * detail strings for the notify signal.
- * gobject :
- * the object which received the signal.
- * pspec :
- * the GParamSpec of the property which changed.
- * user_data :
- * user data set when the signal handler was connected.
- * See Also
- * GParamSpecObject, g_param_spec_object()
  */
 // TODO
 // #define G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec)
@@ -2932,6 +2934,8 @@ public struct GBinding{}
 // #define G_PARAM_SPEC_UNICHAR(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), G_TYPE_PARAM_UNICHAR, GParamSpecUnichar))
 
 /*
+ * Warning
+ * G_IS_PARAM_SPEC_VALUE_ARRAY has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray instead of GValueArray
  * Checks whether the given GParamSpec is of type G_TYPE_PARAM_VALUE_ARRAY.
  * pspec :
  * a valid GParamSpec instance
@@ -2942,6 +2946,8 @@ public struct GBinding{}
 // #define G_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_VALUE_ARRAY))
 
 /*
+ * Warning
+ * G_PARAM_SPEC_VALUE_ARRAY has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray instead of GValueArray
  * Cast a GParamSpec instance into a GParamSpecValueArray.
  * pspec :
  * a valid GParamSpec instance
@@ -3199,6 +3205,19 @@ public struct GBinding{}
  */
 // TODO
 // #define g_signal_handlers_disconnect_by_func(instance, func, data)
+
+/*
+ * Disconnects all handlers on an instance that match data.
+ * instance :
+ * The instance to remove handlers from
+ * data :
+ * the closure data of the handlers' closures
+ * Returns :
+ * The number of handlers that matched.
+ * Since 2.32
+ */
+// TODO
+// #define g_signal_handlers_disconnect_by_data(instance, data)
 
 /*
  * Check if the closure still needs a marshaller. See g_closure_set_marshal().

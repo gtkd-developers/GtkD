@@ -186,7 +186,7 @@ public class Enums
 	}
 	
 	/**
-	 * This function is meant to be called from the complete_type_info()
+	 * This function is meant to be called from the complete_type_info
 	 * function of a GTypePlugin implementation, as in the following
 	 * Params:
 	 * type = the type identifier of the type being completed

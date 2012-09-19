@@ -417,6 +417,8 @@ public class Value
 	}
 	
 	/**
+	 * Warning
+	 * g_value_set_char has been deprecated since version 2.32 and should not be used in newly-written code. This function's input type is broken, see g_value_set_schar()
 	 * Set the contents of a G_TYPE_CHAR GValue to v_char.
 	 * Params:
 	 * vChar = character value to be set
@@ -428,6 +430,10 @@ public class Value
 	}
 	
 	/**
+	 * Warning
+	 * g_value_get_char has been deprecated since version 2.32 and should not be used in newly-written code. This function's return type is broken, see g_value_get_schar()
+	 * Do not use this function; it is broken on platforms where the char
+	 * type is unsigned, such as ARM and PowerPC. See g_value_get_schar().
 	 * Get the contents of a G_TYPE_CHAR GValue.
 	 * Returns: character contents of value
 	 */
@@ -435,6 +441,29 @@ public class Value
 	{
 		// gchar g_value_get_char (const GValue *value);
 		return g_value_get_char(gValue);
+	}
+	
+	/**
+	 * Get the contents of a G_TYPE_CHAR GValue.
+	 * Since 2.32
+	 * Returns: signed 8 bit integer contents of value
+	 */
+	public byte getSchar()
+	{
+		// gint8 g_value_get_schar (const GValue *value);
+		return g_value_get_schar(gValue);
+	}
+	
+	/**
+	 * Set the contents of a G_TYPE_CHAR GValue to v_char.
+	 * Since 2.32
+	 * Params:
+	 * vChar = signed 8 bit integer to be set
+	 */
+	public void setSchar(byte vChar)
+	{
+		// void g_value_set_schar (GValue *value,  gint8 v_char);
+		g_value_set_schar(gValue, vChar);
 	}
 	
 	/**

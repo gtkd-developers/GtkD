@@ -136,6 +136,7 @@ public class Type
 	 * to initialize the type system and assorted other code portions
 	 * (such as the various fundamental type implementations or the signal
 	 * system).
+	 * This function is idempotent.
 	 * Since version 2.24 this also initializes the thread system
 	 */
 	public static void init()
@@ -146,6 +147,7 @@ public class Type
 	
 	/**
 	 * Similar to g_type_init(), but additionally sets debug flags.
+	 * This function is idempotent.
 	 * Params:
 	 * debugFlags = Bitwise combination of GTypeDebugFlags values for
 	 * debugging purposes.
@@ -350,6 +352,8 @@ public class Type
 	 * MyObject defined in the standard GObject
 	 * fashion.
 	 * type's class_init() function.
+	 * Note the use of a structure member "priv" to avoid the overhead
+	 * of repeatedly calling MY_OBJECT_GET_PRIVATE().
 	 * $(DDOC_COMMENT example)
 	 * Since 2.4
 	 * Params:
@@ -622,10 +626,11 @@ public class Type
 	
 	/**
 	 * Registers type_id as the predefined identifier and type_name as the
-	 * name of a fundamental type. The type system uses the information
-	 * contained in the GTypeInfo structure pointed to by info and the
-	 * GTypeFundamentalInfo structure pointed to by finfo to manage the
-	 * type and its instances. The value of flags determines additional
+	 * name of a fundamental type. If type_id is already registered, or a type
+	 * named type_name is already registered, the behaviour is undefined. The type
+	 * system uses the information contained in the GTypeInfo structure pointed to
+	 * by info and the GTypeFundamentalInfo structure pointed to by finfo to
+	 * manage the type and its instances. The value of flags determines additional
 	 * characteristics of the fundamental type.
 	 * Params:
 	 * typeId = A predefined type identifier.

@@ -247,14 +247,11 @@ nostruct: GObject
 nostruct: GObjectClass
 prefix: g_object_
 prefix: g_
+noprefix: g_weak_ref_
 import: gobject.ObjectG
 structWrap: GObject* ObjectG
-#import: gobject.ObjectClass
-#structWrap: GObjectClass* ObjectClass
 import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
-#import: gobject.Parameter
-#structWrap: GParameter* Parameter
 import: gobject.Value
 structWrap: GValue* Value
 import: gobject.Closure
@@ -415,11 +412,23 @@ code: start
 		return this;
 	}
 code: end
-
 outFile: ObjectG
 
-file: gobject-Enumeration-and-Flag-Types.html
+struct: GWeakRef
+class: WeakRef
+strictPrefix: Y
+prefix: g_weak_ref_
 
+code: start
+	/** */
+	this(void* object)
+	{
+		g_weak_ref_init(gWeakRef, object);
+	}
+code: end
+outFile: WeakRef
+
+file: gobject-Enumeration-and-Flag-Types.html
 struct: GEnumValue
 class: Enums
 prefix: g_enum_

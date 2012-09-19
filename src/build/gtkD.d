@@ -107,6 +107,7 @@ private import gobject.Type;
 private import gobject.TypePlugin;
 private import gobject.TypeModule;
 private import gobject.ObjectG;
+private import gobject.WeakRef;
 private import gobject.Enums;
 private import gobject.Flags;
 private import gobject.Boxed;

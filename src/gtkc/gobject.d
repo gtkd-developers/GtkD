@@ -149,6 +149,13 @@ mixin( _shared ~ "static this()
 	Linker.link(g_object_watch_closure, \"g_object_watch_closure\", LIBRARY.GOBJECT);
 	Linker.link(g_object_run_dispose, \"g_object_run_dispose\", LIBRARY.GOBJECT);
 
+	// gobject.WeakRef
+
+	Linker.link(g_weak_ref_init, \"g_weak_ref_init\", LIBRARY.GOBJECT);
+	Linker.link(g_weak_ref_clear, \"g_weak_ref_clear\", LIBRARY.GOBJECT);
+	Linker.link(g_weak_ref_get, \"g_weak_ref_get\", LIBRARY.GOBJECT);
+	Linker.link(g_weak_ref_set, \"g_weak_ref_set\", LIBRARY.GOBJECT);
+
 	// gobject.Enums
 
 	Linker.link(g_enum_get_value, \"g_enum_get_value\", LIBRARY.GOBJECT);
@@ -192,6 +199,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_param_spec_char, \"g_param_spec_char\", LIBRARY.GOBJECT);
 	Linker.link(g_value_set_char, \"g_value_set_char\", LIBRARY.GOBJECT);
 	Linker.link(g_value_get_char, \"g_value_get_char\", LIBRARY.GOBJECT);
+	Linker.link(g_value_get_schar, \"g_value_get_schar\", LIBRARY.GOBJECT);
+	Linker.link(g_value_set_schar, \"g_value_set_schar\", LIBRARY.GOBJECT);
 	Linker.link(g_param_spec_uchar, \"g_param_spec_uchar\", LIBRARY.GOBJECT);
 	Linker.link(g_value_set_uchar, \"g_value_set_uchar\", LIBRARY.GOBJECT);
 	Linker.link(g_value_get_uchar, \"g_value_get_uchar\", LIBRARY.GOBJECT);
@@ -528,6 +537,13 @@ mixin( gshared ~"extern(C)
 	void function(GObject* object, GClosure* closure) c_g_object_watch_closure;
 	void function(GObject* object) c_g_object_run_dispose;
 
+	// gobject.WeakRef
+
+	void function(GWeakRef* weakRef, void* object) c_g_weak_ref_init;
+	void function(GWeakRef* weakRef) c_g_weak_ref_clear;
+	gpointer function(GWeakRef* weakRef) c_g_weak_ref_get;
+	void function(GWeakRef* weakRef, void* object) c_g_weak_ref_set;
+
 	// gobject.Enums
 
 	GEnumValue* function(GEnumClass* enumClass, gint value) c_g_enum_get_value;
@@ -571,6 +587,8 @@ mixin( gshared ~"extern(C)
 	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, gint8 minimum, gint8 maximum, gint8 defaultValue, GParamFlags flags) c_g_param_spec_char;
 	void function(GValue* value, gchar vChar) c_g_value_set_char;
 	gchar function(GValue* value) c_g_value_get_char;
+	gint8 function(GValue* value) c_g_value_get_schar;
+	void function(GValue* value, gint8 vChar) c_g_value_set_schar;
 	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, guint8 minimum, guint8 maximum, guint8 defaultValue, GParamFlags flags) c_g_param_spec_uchar;
 	void function(GValue* value, guchar vUchar) c_g_value_set_uchar;
 	guchar function(GValue* value) c_g_value_get_uchar;
@@ -905,6 +923,13 @@ alias c_g_object_get_valist  g_object_get_valist;
 alias c_g_object_watch_closure  g_object_watch_closure;
 alias c_g_object_run_dispose  g_object_run_dispose;
 
+// gobject.WeakRef
+
+alias c_g_weak_ref_init  g_weak_ref_init;
+alias c_g_weak_ref_clear  g_weak_ref_clear;
+alias c_g_weak_ref_get  g_weak_ref_get;
+alias c_g_weak_ref_set  g_weak_ref_set;
+
 // gobject.Enums
 
 alias c_g_enum_get_value  g_enum_get_value;
@@ -948,6 +973,8 @@ alias c_g_value_get_boolean  g_value_get_boolean;
 alias c_g_param_spec_char  g_param_spec_char;
 alias c_g_value_set_char  g_value_set_char;
 alias c_g_value_get_char  g_value_get_char;
+alias c_g_value_get_schar  g_value_get_schar;
+alias c_g_value_set_schar  g_value_set_schar;
 alias c_g_param_spec_uchar  g_param_spec_uchar;
 alias c_g_value_set_uchar  g_value_set_uchar;
 alias c_g_value_get_uchar  g_value_get_uchar;
