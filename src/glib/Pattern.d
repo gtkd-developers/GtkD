@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Pattern
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -45,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GPatternSpec* -> Pattern
  * module aliases:
@@ -61,6 +63,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -112,6 +116,14 @@ public class Pattern
 			return;
 		}
 		this.gPatternSpec = gPatternSpec;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gPatternSpec !is null )
+		{
+			g_pattern_spec_free(gPatternSpec);
+		}
 	}
 	
 	/**

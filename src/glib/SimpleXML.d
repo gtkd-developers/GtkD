@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = SimpleXML
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,10 +44,12 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ListSG
+ * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- glib.Str
+ * 	- glib.ListSG
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GSList* -> ListSG
  * module aliases:
@@ -63,10 +65,12 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
-private import glib.ListSG;
+private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import glib.Str;
+private import glib.ListSG;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -130,6 +134,14 @@ public class SimpleXML
 			return;
 		}
 		this.gMarkupParseContext = gMarkupParseContext;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gMarkupParseContext !is null )
+		{
+			g_markup_parse_context_free(gMarkupParseContext);
+		}
 	}
 	
 	/**

@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = TimeZone
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -46,6 +46,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GTimeZone* -> TimeZone
  * module aliases:
@@ -62,6 +64,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -115,6 +119,14 @@ public class TimeZone
 			return;
 		}
 		this.gTimeZone = gTimeZone;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gTimeZone !is null )
+		{
+			g_time_zone_unref(gTimeZone);
+		}
 	}
 	
 	/**
@@ -235,10 +247,10 @@ public class TimeZone
 	 * time = a pointer to a number of seconds since January 1, 1970
 	 * Returns: the interval containing time_, never -1
 	 */
-	public int adjustTime(GTimeType type, long* time)
+	public int adjustTime(GTimeType type, ref long time)
 	{
 		// gint g_time_zone_adjust_time (GTimeZone *tz,  GTimeType type,  gint64 *time_);
-		return g_time_zone_adjust_time(gTimeZone, type, time);
+		return g_time_zone_adjust_time(gTimeZone, type, &time);
 	}
 	
 	/**

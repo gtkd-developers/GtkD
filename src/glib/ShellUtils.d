@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = ShellUtils
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,7 +41,6 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- g_shell_parse_argv
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -75,6 +74,9 @@ public class ShellUtils
 {
 	
 	/**
+	 */
+	
+	/**
 	 * Parses a command line into an argument vector, in much the same way
 	 * the shell would, but without many of the expansions the shell would
 	 * perform (variable expansion, globs, operators, filename expansion,
@@ -85,31 +87,32 @@ public class ShellUtils
 	 * literally. Possible errors are those from the G_SHELL_ERROR
 	 * domain. Free the returned vector with g_strfreev().
 	 * Params:
-	 * commandLine =  command line to parse
-	 * argcp =  return location for number of args
-	 * argvp =  return location for array of args
+	 * commandLine = command line to parse
+	 * argvp = return location for array of args. [out][array length=argcp zero-terminated=1]
 	 * Returns: TRUE on success, FALSE if error set
 	 * Throws: GException on failure.
 	 */
-	public static int parseArgv(string commandLine, out int argcp, out string[] argvp)
+	public static int parseArgv(string commandLine, out string[] argvp)
 	{
 		// gboolean g_shell_parse_argv (const gchar *command_line,  gint *argcp,  gchar ***argvp,  GError **error);
+		char** outargvp = null;
+		int argcp;
 		GError* err = null;
-		char** arg = null;
 		
-		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &arg, &err);
+		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &outargvp, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		argvp = Str.toStringArray(arg);
+		argvp = null;
+		foreach ( cstr; outargvp[0 .. argcp] )
+		{
+			argvp ~= Str.toString(cstr);
+		}
 		return p;
 	}
-	
-	/**
-	 */
 	
 	/**
 	 * Quotes a string so that the shell (/bin/sh) will interpret the

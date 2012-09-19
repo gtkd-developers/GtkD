@@ -41,12 +41,13 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- g_bookmark_file_set_groups
  * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.Str
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * module aliases:
  * local aliases:
@@ -64,6 +65,8 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -136,20 +139,12 @@ public class BookmarkFile
 		this.gBookmarkFile = gBookmarkFile;
 	}
 	
-	/**
-	 * Sets a list of group names for the item with URI uri. Each previously
-	 * set group name list is removed.
-	 * If uri cannot be found then an item for it is created.
-	 * Since 2.12
-	 * Params:
-	 * uri =  an item's URI
-	 * groups =  an array of group names, or NULL to remove all groups
-	 * length =  number of group name values in groups
-	 */
-	public void setGroups(string uri, string[] groups, uint length)
+	~this ()
 	{
-		// void g_bookmark_file_set_groups (GBookmarkFile *bookmark,  const gchar *uri,  const gchar **groups,  gsize length);
-		g_bookmark_file_set_groups(gBookmarkFile, Str.toStringz(uri), Str.toStringzArray(groups), length);
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gBookmarkFile !is null )
+		{
+			g_bookmark_file_free(gBookmarkFile);
+		}
 	}
 	
 	/**
@@ -269,14 +264,13 @@ public class BookmarkFile
 	/**
 	 * This function outputs bookmark as a string.
 	 * Since 2.12
-	 * Params:
-	 * length = return location for the length of the returned string, or NULL. [allow-none]
 	 * Returns: a newly allocated string holding the contents of the GBookmarkFile
 	 * Throws: GException on failure.
 	 */
-	public string toData(out gsize length)
+	public string toData()
 	{
 		// gchar * g_bookmark_file_to_data (GBookmarkFile *bookmark,  gsize *length,  GError **error);
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_bookmark_file_to_data(gBookmarkFile, &length, &err);
@@ -286,7 +280,7 @@ public class BookmarkFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		return Str.toString(p, length);
 	}
 	
 	/**
@@ -396,14 +390,21 @@ public class BookmarkFile
 	 * The array of returned URIs will be NULL-terminated, so length may
 	 * optionally be NULL.
 	 * Since 2.12
-	 * Params:
-	 * length = return location for the number of returned URIs, or NULL. [allow-none]
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
-	public string[] getUris(out gsize length)
+	public string[] getUris()
 	{
 		// gchar ** g_bookmark_file_get_uris (GBookmarkFile *bookmark,  gsize *length);
-		return Str.toStringArray(g_bookmark_file_get_uris(gBookmarkFile, &length));
+		gsize length;
+		auto p = g_bookmark_file_get_uris(gBookmarkFile, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
@@ -626,13 +627,13 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * length = return location for the length of the returned string, or NULL. [allow-none]
 	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public string[] getGroups(string uri, out gsize length)
+	public string[] getGroups(string uri)
 	{
 		// gchar ** g_bookmark_file_get_groups (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err);
@@ -642,7 +643,14 @@ public class BookmarkFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
@@ -653,13 +661,13 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * length = return location of the length of the returned list, or NULL. [allow-none]
 	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
 	 * Throws: GException on failure.
 	 */
-	public string[] getApplications(string uri, out gsize length)
+	public string[] getApplications(string uri)
 	{
 		// gchar ** g_bookmark_file_get_applications (GBookmarkFile *bookmark,  const gchar *uri,  gsize *length,  GError **error);
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err);
@@ -669,7 +677,14 @@ public class BookmarkFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
@@ -799,6 +814,21 @@ public class BookmarkFile
 	{
 		// void g_bookmark_file_set_added (GBookmarkFile *bookmark,  const gchar *uri,  time_t added);
 		g_bookmark_file_set_added(gBookmarkFile, Str.toStringz(uri), added);
+	}
+	
+	/**
+	 * Sets a list of group names for the item with URI uri. Each previously
+	 * set group name list is removed.
+	 * If uri cannot be found then an item for it is created.
+	 * Since 2.12
+	 * Params:
+	 * uri = an item's URI
+	 * groups = an array of group names, or NULL to remove all groups. [allow-none]
+	 */
+	public void setGroups(string uri, string[] groups)
+	{
+		// void g_bookmark_file_set_groups (GBookmarkFile *bookmark,  const gchar *uri,  const gchar **groups,  gsize length);
+		g_bookmark_file_set_groups(gBookmarkFile, Str.toStringz(uri), Str.toStringzArray(groups), cast(int) groups.length);
 	}
 	
 	/**

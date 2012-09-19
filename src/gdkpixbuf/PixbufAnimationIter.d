@@ -44,9 +44,7 @@
  * omit signals:
  * imports:
  * 	- gdk.Pixbuf
- * 	- glib.TimeVal
  * structWrap:
- * 	- GTimeVal* -> TimeVal
  * 	- GdkPixbuf* -> Pixbuf
  * module aliases:
  * local aliases:
@@ -62,7 +60,6 @@ private import glib.ConstructionException;
 
 
 private import gdk.Pixbuf;
-private import glib.TimeVal;
 
 
 
@@ -148,10 +145,10 @@ public class PixbufAnimationIter : ObjectG
 	 * currentTime = current time
 	 * Returns: TRUE if the image may need updating
 	 */
-	public int advance(TimeVal currentTime)
+	public int advance(ref GTimeVal currentTime)
 	{
 		// gboolean gdk_pixbuf_animation_iter_advance (GdkPixbufAnimationIter *iter,  const GTimeVal *current_time);
-		return gdk_pixbuf_animation_iter_advance(gdkPixbufAnimationIter, (currentTime is null) ? null : currentTime.getTimeValStruct());
+		return gdk_pixbuf_animation_iter_advance(gdkPixbufAnimationIter, &currentTime);
 	}
 	
 	/**

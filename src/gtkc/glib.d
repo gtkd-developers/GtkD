@@ -401,6 +401,10 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_convert, \"g_convert\", LIBRARY.GLIB);
 	Linker.link(g_convert_with_fallback, \"g_convert_with_fallback\", LIBRARY.GLIB);
+	Linker.link(g_convert_with_iconv, \"g_convert_with_iconv\", LIBRARY.GLIB);
+	Linker.link(g_iconv_open, \"g_iconv_open\", LIBRARY.GLIB);
+	Linker.link(g_iconv, \"g_iconv\", LIBRARY.GLIB);
+	Linker.link(g_iconv_close, \"g_iconv_close\", LIBRARY.GLIB);
 	Linker.link(g_locale_to_utf8, \"g_locale_to_utf8\", LIBRARY.GLIB);
 	Linker.link(g_filename_to_utf8, \"g_filename_to_utf8\", LIBRARY.GLIB);
 	Linker.link(g_filename_from_utf8, \"g_filename_from_utf8\", LIBRARY.GLIB);
@@ -1985,6 +1989,10 @@ mixin( gshared ~"extern(C)
 
 	gchar* function(gchar* str, gssize len, gchar* toCodeset, gchar* fromCodeset, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_convert;
 	gchar* function(gchar* str, gssize len, gchar* toCodeset, gchar* fromCodeset, gchar* fallback, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_convert_with_fallback;
+	gchar* function(gchar* str, gssize len, GIConv converter, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_convert_with_iconv;
+	GIConv function(gchar* toCodeset, gchar* fromCodeset) c_g_iconv_open;
+	gsize function(GIConv converter, gchar** inbuf, gsize* inbytesLeft, gchar** outbuf, gsize* outbytesLeft) c_g_iconv;
+	gint function(GIConv converter) c_g_iconv_close;
 	gchar* function(gchar* opsysstring, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_locale_to_utf8;
 	gchar* function(gchar* opsysstring, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_filename_to_utf8;
 	gchar* function(gchar* utf8string, gssize len, gsize* bytesRead, gsize* bytesWritten, GError** error) c_g_filename_from_utf8;
@@ -3567,6 +3575,10 @@ alias c_g_strsignal  g_strsignal;
 
 alias c_g_convert  g_convert;
 alias c_g_convert_with_fallback  g_convert_with_fallback;
+alias c_g_convert_with_iconv  g_convert_with_iconv;
+alias c_g_iconv_open  g_iconv_open;
+alias c_g_iconv  g_iconv;
+alias c_g_iconv_close  g_iconv_close;
 alias c_g_locale_to_utf8  g_locale_to_utf8;
 alias c_g_filename_to_utf8  g_filename_to_utf8;
 alias c_g_filename_from_utf8  g_filename_from_utf8;

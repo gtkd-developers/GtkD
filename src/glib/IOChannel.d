@@ -45,13 +45,13 @@
  * 	- g_io_channel_read_to_end
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
- * 	- glib.StringG
  * 	- glib.Source
- * 	- glib.Str
- * 	- gtkc.paths;
- * 	- gtkc.Loader;
+ * 	- glib.StringG
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GIOChannel* -> IOChannel
  * 	- GSource* -> Source
@@ -69,13 +69,13 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import glib.StringG;
 private import glib.Source;
-private import glib.Str;
-private import gtkc.paths;;
-private import gtkc.Loader;;
+private import glib.StringG;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -147,9 +147,9 @@ public class IOChannel
 	
 	~this()
 	{
-		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gIOChannel !is null )
 		{
-			unref();
+			g_io_channel_unref(gIOChannel);
 		}
 	}
 	
@@ -368,9 +368,6 @@ public class IOChannel
 	 * Replacement for g_io_channel_read() with the new API.
 	 * Params:
 	 * buf = a buffer to read data into
-	 * count = the size of the buffer. Note that the buffer may not be
-	 * complelely filled even if there is data in the buffer if the
-	 * remaining data is not a complete character.
 	 * bytesRead = The number of bytes read. This may be
 	 * zero even on success if count < 6 and the channel's encoding
 	 * is non-NULL. This indicates that the next UTF-8 character is
@@ -378,12 +375,12 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus readChars(string buf, gsize count, out gsize bytesRead)
+	public GIOStatus readChars(char[] buf, out gsize bytesRead)
 	{
 		// GIOStatus g_io_channel_read_chars (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read,  GError **error);
 		GError* err = null;
 		
-		auto p = g_io_channel_read_chars(gIOChannel, Str.toStringz(buf), count, &bytesRead, &err);
+		auto p = g_io_channel_read_chars(gIOChannel, buf.ptr, cast(int) buf.length, &bytesRead, &err);
 		
 		if (err !is null)
 		{
@@ -449,8 +446,6 @@ public class IOChannel
 	 * cases described in the documentation for g_io_channel_set_encoding().
 	 * Params:
 	 * buf = a buffer to write data from
-	 * count = the size of the buffer. If -1, the buffer
-	 * is taken to be a nul-terminated string.
 	 * bytesWritten = The number of bytes written. This can be nonzero
 	 * even if the return value is not G_IO_STATUS_NORMAL.
 	 * If the return value is G_IO_STATUS_NORMAL and the
@@ -459,12 +454,12 @@ public class IOChannel
 	 * Returns: the status of the operation.
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus writeChars(string buf, gssize count, out gsize bytesWritten)
+	public GIOStatus writeChars(string buf, out gsize bytesWritten)
 	{
 		// GIOStatus g_io_channel_write_chars (GIOChannel *channel,  const gchar *buf,  gssize count,  gsize *bytes_written,  GError **error);
 		GError* err = null;
 		
-		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), count, &bytesWritten, &err);
+		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), cast(int) buf.length, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
@@ -739,14 +734,14 @@ public class IOChannel
 	 * This returns the string that GIOChannel uses to determine
 	 * where in the file a line break occurs. A value of NULL
 	 * indicates autodetection.
-	 * Params:
-	 * length = a location to return the length of the line terminator
 	 * Returns: The line termination string. This value is owned by GLib and must not be freed.
 	 */
-	public string getLineTerm(out int length)
+	public string getLineTerm()
 	{
 		// const gchar * g_io_channel_get_line_term (GIOChannel *channel,  gint *length);
-		return Str.toString(g_io_channel_get_line_term(gIOChannel, &length));
+		int length;
+		auto p = g_io_channel_get_line_term(gIOChannel, &length);
+		return Str.toString(p, length);
 	}
 	
 	/**
@@ -757,14 +752,11 @@ public class IOChannel
 	 * Autodetection breaks on "\n", "\r\n", "\r", "\0", and
 	 * the Unicode paragraph separator. Autodetection should
 	 * not be used for anything other than file-based channels.
-	 * length = The length of the termination string. If -1 is passed, the
-	 * string is assumed to be nul-terminated. This option allows
-	 * termination strings with embedded nuls.
 	 */
-	public void setLineTerm(string lineTerm, int length)
+	public void setLineTerm(string lineTerm)
 	{
 		// void g_io_channel_set_line_term (GIOChannel *channel,  const gchar *line_term,  gint length);
-		g_io_channel_set_line_term(gIOChannel, Str.toStringz(lineTerm), length);
+		g_io_channel_set_line_term(gIOChannel, Str.toStringz(lineTerm), cast(int) lineTerm.length);
 	}
 	
 	/**
@@ -876,14 +868,13 @@ public class IOChannel
 	 * Params:
 	 * buf = a buffer to read the data into (which should be at least
 	 * count bytes long)
-	 * count = the number of bytes to read from the GIOChannel
 	 * bytesRead = returns the number of bytes actually read
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
-	public GIOError read(string buf, gsize count, out gsize bytesRead)
+	public GIOError read(char[] buf, out gsize bytesRead)
 	{
 		// GIOError g_io_channel_read (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read);
-		return g_io_channel_read(gIOChannel, Str.toStringz(buf), count, &bytesRead);
+		return g_io_channel_read(gIOChannel, buf.ptr, cast(int) buf.length, &bytesRead);
 	}
 	
 	/**
@@ -892,14 +883,13 @@ public class IOChannel
 	 * Writes data to a GIOChannel.
 	 * Params:
 	 * buf = the buffer containing the data to write
-	 * count = the number of bytes to write
 	 * bytesWritten = the number of bytes actually written
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
-	public GIOError write(string buf, gsize count, out gsize bytesWritten)
+	public GIOError write(string buf, out gsize bytesWritten)
 	{
 		// GIOError g_io_channel_write (GIOChannel *channel,  const gchar *buf,  gsize count,  gsize *bytes_written);
-		return g_io_channel_write(gIOChannel, Str.toStringz(buf), count, &bytesWritten);
+		return g_io_channel_write(gIOChannel, Str.toStringz(buf), cast(int) buf.length, &bytesWritten);
 	}
 	
 	/**

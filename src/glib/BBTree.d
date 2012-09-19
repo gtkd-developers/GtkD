@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = BBTree
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -43,6 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GTree* -> BBTree
  * module aliases:
@@ -58,6 +60,8 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -108,6 +112,14 @@ public class BBTree
 			return;
 		}
 		this.gTree = gTree;
+	}
+	
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gTree !is null )
+		{
+			g_tree_unref(gTree);
+		}
 	}
 	
 	/**

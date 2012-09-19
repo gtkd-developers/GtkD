@@ -45,7 +45,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.TimeVal
  * 	- gobject.ObjectG
  * 	- gio.Icon
  * 	- gio.IconIF
@@ -55,7 +54,6 @@
  * 	- GFileInfo* -> FileInfo
  * 	- GIcon* -> IconIF
  * 	- GObject* -> ObjectG
- * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  * overrides:
@@ -70,7 +68,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import glib.TimeVal;
 private import gobject.ObjectG;
 private import gio.Icon;
 private import gio.IconIF;
@@ -691,10 +688,10 @@ public class FileInfo : ObjectG
 	 * Params:
 	 * result = a GTimeVal. [out caller-allocates]
 	 */
-	public void getModificationTime(TimeVal result)
+	public void getModificationTime(out GTimeVal result)
 	{
 		// void g_file_info_get_modification_time (GFileInfo *info,  GTimeVal *result);
-		g_file_info_get_modification_time(gFileInfo, (result is null) ? null : result.getTimeValStruct());
+		g_file_info_get_modification_time(gFileInfo, &result);
 	}
 	
 	/**
@@ -864,10 +861,10 @@ public class FileInfo : ObjectG
 	 * Params:
 	 * mtime = a GTimeVal.
 	 */
-	public void setModificationTime(TimeVal mtime)
+	public void setModificationTime(ref GTimeVal mtime)
 	{
 		// void g_file_info_set_modification_time (GFileInfo *info,  GTimeVal *mtime);
-		g_file_info_set_modification_time(gFileInfo, (mtime is null) ? null : mtime.getTimeValStruct());
+		g_file_info_set_modification_time(gFileInfo, &mtime);
 	}
 	
 	/**

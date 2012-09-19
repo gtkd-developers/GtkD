@@ -96,17 +96,16 @@ public class Base64
 	 * Since 2.12
 	 * Params:
 	 * in = the binary data to encode. [array length=len][element-type guint8]
-	 * len = the length of in
 	 * breakLines = whether to break long lines
 	 * out = pointer to destination buffer. [out][array][element-type guint8]
 	 * state = Saved state between steps, initialize to 0. [inout]
 	 * save = Saved state between steps, initialize to 0. [inout]
 	 * Returns: The number of bytes of output that was written
 	 */
-	public static gsize encodeStep(char* inn, gsize len, int breakLines, string f_out, ref int state, ref int save)
+	public static gsize encodeStep(char[] inn, int breakLines, string f_out, ref int state, ref int save)
 	{
 		// gsize g_base64_encode_step (const guchar *in,  gsize len,  gboolean break_lines,  gchar *out,  gint *state,  gint *save);
-		return g_base64_encode_step(inn, len, breakLines, Str.toStringz(f_out), &state, &save);
+		return g_base64_encode_step(inn.ptr, cast(int) inn.length, breakLines, Str.toStringz(f_out), &state, &save);
 	}
 	
 	/**
@@ -134,13 +133,12 @@ public class Base64
 	 * Since 2.12
 	 * Params:
 	 * data = the binary data to encode. [array length=len][element-type guint8]
-	 * len = the length of data
 	 * Returns: a newly allocated, zero-terminated Base-64 encoded string representing data. The returned string must be freed with g_free(). [transfer full]
 	 */
-	public static string encode(char* data, gsize len)
+	public static string encode(char[] data)
 	{
 		// gchar * g_base64_encode (const guchar *data,  gsize len);
-		return Str.toString(g_base64_encode(data, len));
+		return Str.toString(g_base64_encode(data.ptr, cast(int) data.length));
 	}
 	
 	/**
@@ -154,16 +152,15 @@ public class Base64
 	 * Since 2.12
 	 * Params:
 	 * in = binary input data. [array length=len][element-type guint8]
-	 * len = max length of in data to decode
 	 * out = output buffer. [out][array][element-type guint8]
 	 * state = Saved state between steps, initialize to 0. [inout]
 	 * save = Saved state between steps, initialize to 0. [inout]
 	 * Returns: The number of bytes of output that was written
 	 */
-	public static gsize decodeStep(string inn, gsize len, char* f_out, ref int state, ref uint save)
+	public static gsize decodeStep(string inn, char* f_out, ref int state, ref uint save)
 	{
 		// gsize g_base64_decode_step (const gchar *in,  gsize len,  guchar *out,  gint *state,  guint *save);
-		return g_base64_decode_step(Str.toStringz(inn), len, f_out, &state, &save);
+		return g_base64_decode_step(Str.toStringz(inn), cast(int) inn.length, f_out, &state, &save);
 	}
 	
 	/**

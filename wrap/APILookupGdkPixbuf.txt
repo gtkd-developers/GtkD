@@ -156,13 +156,12 @@ import: glib.GException
 structWrap: GdkPixbufAnimation* PixbufAnimation
 import: gdkpixbuf.PixbufAnimationIter
 structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
-import: glib.TimeVal
-structWrap: GTimeVal* TimeVal
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.Str
 nocode: gdk_pixbuf_animation_ref
 nocode: gdk_pixbuf_animation_unref
+inout: gdk_pixbuf_animation_get_iter start_time
 outFile: PixbufAnimation
 
 struct: GdkPixbufAnimationIter
@@ -172,8 +171,7 @@ prefix: gdk_pixbuf_animation_iter_
 strictPrefix: Yes
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: glib.TimeVal
-structWrap: GTimeVal* TimeVal
+inout: gdk_pixbuf_animation_iter_advance current_time
 outFile: PixbufAnimationIter
 
 struct: GdkPixbufSimpleAnim

@@ -31,23 +31,29 @@
  * ctorStrct=
  * clss    = Checksum
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
  * 	- g_checksum_
+ * 	- g_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_checksum_get_digest
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GChecksum* -> Checksum
  * module aliases:
  * local aliases:
+ * 	- computeChecksumForData -> computeForData
+ * 	- computeChecksumForString -> computeForString
  * overrides:
  */
 
@@ -60,6 +66,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -110,6 +118,33 @@ public class Checksum
 			return;
 		}
 		this.gChecksum = gChecksum;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gChecksum !is null )
+		{
+			g_checksum_free(gChecksum);
+		}
+	}
+	
+	/**
+	 * Gets the digest from checksum as a raw binary vector and places it
+	 * into buffer. The size of the digest depends on the type of checksum.
+	 * Once this function has been called, the GChecksum is closed and can
+	 * no longer be updated with g_checksum_update().
+	 * Since 2.16
+	 * Params:
+	 * buffer = output buffer
+	 */
+	public void getDigest(ref ubyte[] buffer)
+	{
+		size_t digestLen = buffer.length;
+		
+		// void g_checksum_get_digest (GChecksum *checksum,  guint8 *buffer,  gsize *digest_len);
+		g_checksum_get_digest(gChecksum, buffer.ptr, &digestLen);
+		
+		buffer = buffer[0 .. digestLen];
 	}
 	
 	/**
@@ -202,12 +237,11 @@ public class Checksum
 	 * Since 2.16
 	 * Params:
 	 * data = buffer used to compute the checksum
-	 * length = size of the buffer, or -1 if it is a null-terminated string.
 	 */
-	public void update(char* data, gssize length)
+	public void update(char[] data)
 	{
 		// void g_checksum_update (GChecksum *checksum,  const guchar *data,  gssize length);
-		g_checksum_update(gChecksum, data, length);
+		g_checksum_update(gChecksum, data.ptr, cast(int) data.length);
 	}
 	
 	/**
@@ -225,23 +259,6 @@ public class Checksum
 	}
 	
 	/**
-	 * Gets the digest from checksum as a raw binary vector and places it
-	 * into buffer. The size of the digest depends on the type of checksum.
-	 * Once this function has been called, the GChecksum is closed and can
-	 * no longer be updated with g_checksum_update().
-	 * Since 2.16
-	 * Params:
-	 * buffer = output buffer
-	 * digestLen = an inout parameter. The caller initializes it to the size of buffer.
-	 * After the call it contains the length of the digest.
-	 */
-	public void getDigest(ubyte* buffer, gsize* digestLen)
-	{
-		// void g_checksum_get_digest (GChecksum *checksum,  guint8 *buffer,  gsize *digest_len);
-		g_checksum_get_digest(gChecksum, buffer, digestLen);
-	}
-	
-	/**
 	 * Computes the checksum for a binary data of length. This is a
 	 * convenience wrapper for g_checksum_new(), g_checksum_get_string()
 	 * and g_checksum_free().
@@ -250,13 +267,12 @@ public class Checksum
 	 * Params:
 	 * checksumType = a GChecksumType
 	 * data = binary blob to compute the digest of
-	 * length = length of data
 	 * Returns: the digest of the binary data as a string in hexadecimal. The returned string should be freed with g_free() when done using it.
 	 */
-	public static string gComputeChecksumForData(GChecksumType checksumType, char* data, gsize length)
+	public static string computeForData(GChecksumType checksumType, char[] data)
 	{
 		// gchar * g_compute_checksum_for_data (GChecksumType checksum_type,  const guchar *data,  gsize length);
-		return Str.toString(g_compute_checksum_for_data(checksumType, data, length));
+		return Str.toString(g_compute_checksum_for_data(checksumType, data.ptr, cast(int) data.length));
 	}
 	
 	/**
@@ -266,12 +282,11 @@ public class Checksum
 	 * Params:
 	 * checksumType = a GChecksumType
 	 * str = the string to compute the checksum of
-	 * length = the length of the string, or -1 if the string is null-terminated.
 	 * Returns: the checksum as a hexadecimal string. The returned string should be freed with g_free() when done using it.
 	 */
-	public static string gComputeChecksumForString(GChecksumType checksumType, string str, gssize length)
+	public static string computeForString(GChecksumType checksumType, string str)
 	{
 		// gchar * g_compute_checksum_for_string (GChecksumType checksum_type,  const gchar *str,  gssize length);
-		return Str.toString(g_compute_checksum_for_string(checksumType, Str.toStringz(str), length));
+		return Str.toString(g_compute_checksum_for_string(checksumType, Str.toStringz(str), cast(int) str.length));
 	}
 }

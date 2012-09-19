@@ -49,10 +49,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * 	- glib.MainContext
  * 	- glib.Source
- * 	- gtkc.paths;
- * 	- gtkc.Loader;
  * structWrap:
  * 	- GMainContext* -> MainContext
  * 	- GMainLoop* -> MainLoop
@@ -70,10 +70,10 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import gtkc.paths;
+private import gtkc.Loader;
 private import glib.MainContext;
 private import glib.Source;
-private import gtkc.paths;;
-private import gtkc.Loader;;
 
 
 

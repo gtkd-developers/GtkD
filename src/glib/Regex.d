@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Regex
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -48,6 +48,8 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.MatchInfo
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GMatchInfo* -> MatchInfo
  * 	- GRegex* -> Regex
@@ -68,6 +70,8 @@ private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.MatchInfo;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -151,6 +155,14 @@ public class Regex
 			return;
 		}
 		this.gRegex = gRegex;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gRegex !is null )
+		{
+			g_regex_unref(gRegex);
+		}
 	}
 	
 	/**
@@ -294,13 +306,12 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * string = the string to escape. [array length=length]
-	 * length = the length of string, or -1 if string is nul-terminated
 	 * Returns: a newly-allocated escaped string
 	 */
-	public static string escapeString(string string, int length)
+	public static string escapeString(string string)
 	{
 		// gchar * g_regex_escape_string (const gchar *string,  gint length);
-		return Str.toString(g_regex_escape_string(Str.toStringz(string), length));
+		return Str.toString(g_regex_escape_string(Str.toStringz(string), cast(int) string.length));
 	}
 	
 	/**
@@ -398,7 +409,6 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * string = the string to scan for matches. [array length=string_len]
-	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store
@@ -406,13 +416,13 @@ public class Regex
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
-	public int matchFull(string string, gssize stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
+	public int matchFull(string string, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GMatchInfo **match_info,  GError **error);
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 		
-		auto p = g_regex_match_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, &outmatchInfo, &err);
+		auto p = g_regex_match_full(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, matchOptions, &outmatchInfo, &err);
 		
 		if (err !is null)
 		{
@@ -489,7 +499,6 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * string = the string to scan for matches. [array length=string_len]
-	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match options
 	 * matchInfo = pointer to location where to store
@@ -497,13 +506,13 @@ public class Regex
 	 * Returns: TRUE is the string matched, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
-	public int matchAllFull(string string, gssize stringLen, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
+	public int matchAllFull(string string, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		// gboolean g_regex_match_all_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GMatchInfo **match_info,  GError **error);
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 		
-		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, &outmatchInfo, &err);
+		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, matchOptions, &outmatchInfo, &err);
 		
 		if (err !is null)
 		{
@@ -602,7 +611,6 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * string = the string to split with the pattern. [array length=string_len]
-	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * matchOptions = match time option flags
 	 * maxTokens = the maximum number of tokens to split string into.
@@ -610,12 +618,12 @@ public class Regex
 	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
 	 * Throws: GException on failure.
 	 */
-	public string[] splitFull(string string, gssize stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
+	public string[] splitFull(string string, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
 	{
 		// gchar ** g_regex_split_full (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  gint max_tokens,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_split_full(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, maxTokens, &err);
+		auto p = g_regex_split_full(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, matchOptions, maxTokens, &err);
 		
 		if (err !is null)
 		{
@@ -636,19 +644,18 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * string = the string to perform matches against. [array length=string_len]
-	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * replacement = text to replace each match with
 	 * matchOptions = options for the match
 	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
-	public string replace(string string, gssize stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
+	public string replace(string string, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
 		// gchar * g_regex_replace (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_replace(gRegex, Str.toStringz(string), stringLen, startPosition, Str.toStringz(replacement), matchOptions, &err);
+		auto p = g_regex_replace(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
 		
 		if (err !is null)
 		{
@@ -669,19 +676,18 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * string = the string to perform matches against. [array length=string_len]
-	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * replacement = text to replace each match with
 	 * matchOptions = options for the match
 	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
-	public string replaceLiteral(string string, gssize stringLen, int startPosition, string replacement, GRegexMatchFlags matchOptions)
+	public string replaceLiteral(string string, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
 		// gchar * g_regex_replace_literal (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  const gchar *replacement,  GRegexMatchFlags match_options,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_replace_literal(gRegex, Str.toStringz(string), stringLen, startPosition, Str.toStringz(replacement), matchOptions, &err);
+		auto p = g_regex_replace_literal(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
 		
 		if (err !is null)
 		{
@@ -701,7 +707,6 @@ public class Regex
 	 * Since 2.14
 	 * Params:
 	 * string = string to perform matches against. [array length=string_len]
-	 * stringLen = the length of string, or -1 if string is nul-terminated
 	 * startPosition = starting index of the string to match
 	 * matchOptions = options for the match
 	 * eval = a function to call for each match
@@ -709,12 +714,12 @@ public class Regex
 	 * Returns: a newly allocated string containing the replacements
 	 * Throws: GException on failure.
 	 */
-	public string replaceEval(string string, gssize stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
+	public string replaceEval(string string, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
 	{
 		// gchar * g_regex_replace_eval (const GRegex *regex,  const gchar *string,  gssize string_len,  gint start_position,  GRegexMatchFlags match_options,  GRegexEvalCallback eval,  gpointer user_data,  GError **error);
 		GError* err = null;
 		
-		auto p = g_regex_replace_eval(gRegex, Str.toStringz(string), stringLen, startPosition, matchOptions, eval, userData, &err);
+		auto p = g_regex_replace_eval(gRegex, Str.toStringz(string), cast(int) string.length, startPosition, matchOptions, eval, userData, &err);
 		
 		if (err !is null)
 		{

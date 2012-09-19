@@ -44,16 +44,14 @@
  * 	- g_spawn_async_with_pipes
  * omit signals:
  * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.MainLoop
- * 	- glib.Str
  * 	- std.thread
  * 	- std.c.stdio
  * 	- std.string
  * 	- std.c.string
+ * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
- * 	- GMainLoop* -> MainLoop
  * module aliases:
  * local aliases:
  * overrides:
@@ -67,10 +65,9 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import glib.MainLoop;
-private import glib.Str;
 
 
 version(Tango) {
@@ -335,12 +332,7 @@ public class Spawn
 		}
 		size_t l = strlen(line.ptr);
 		if ( l > 0 ) --l;
-		//printf("\nreadLine\n");
-		//foreach ( char c ; line )
-		//{
-			//       printf("%c", c);
-		//}
-		//printf("\n\n");
+		
 		return line[0..l];
 	}
 	
@@ -457,12 +449,12 @@ public class Spawn
 	 * Returns: TRUE on success, FALSE if error is set
 	 * Throws: GException on failure.
 	 */
-	public static int async(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid)
+	public static int async(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out GPid childPid)
 	{
 		// gboolean g_spawn_async (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  GPid *child_pid,  GError **error);
 		GError* err = null;
 		
-		auto p = g_spawn_async(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, childPid, &err);
+		auto p = g_spawn_async(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &err);
 		
 		if (err !is null)
 		{

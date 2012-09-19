@@ -42,13 +42,14 @@
  * omit prefixes:
  * 	- g_option_group_
  * omit code:
- * 	- g_option_context_parse
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.OptionGroup
- * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GOptionGroup* -> OptionGroup
  * module aliases:
@@ -64,10 +65,12 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.OptionGroup;
-private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -148,48 +151,12 @@ public class OptionContext
 		this.gOptionContext = gOptionContext;
 	}
 	
-	/**
-	 * Parses the command line arguments, recognizing options
-	 * which have been added to context. A side-effect of
-	 * calling this function is that g_set_prgname() will be
-	 * called.
-	 * If the parsing is successful, any parsed arguments are
-	 * removed from the array and argc and argv are updated
-	 * accordingly. A '--' option is stripped from argv
-	 * unless there are unparsed options before and after it,
-	 * or some of the options after it start with '-'. In case
-	 * of an error, argc and argv are left unmodified.
-	 * If automatic --help support is enabled
-	 * (see g_option_context_set_help_enabled()), and the
-	 * argv array contains one of the recognized help options,
-	 * this function will produce help output to stdout and
-	 * call exit (0).
-	 * Note that function depends on the
-	 * current locale for
-	 * automatic character set conversion of string and filename
-	 * arguments.
-	 * Since 2.6
-	 * Params:
-	 * argc =  a pointer to the number of command line arguments
-	 * argv =  a pointer to the array of command line arguments
-	 * Returns: TRUE if the parsing was successful,  FALSE if an error occurred
-	 * Throws: GException on failure.
-	 */
-	public int parse(out int argc, out string[] argv)
+	~this ()
 	{
-		// gboolean g_option_context_parse (GOptionContext *context,  gint *argc,  gchar ***argv,  GError **error);
-		GError* err = null;
-		char** arg = null;
-		
-		auto p = g_option_context_parse(gOptionContext, &argc, &arg, &err);
-		
-		if (err !is null)
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gOptionContext !is null )
 		{
-			throw new GException( new ErrorG(err) );
+			g_option_context_free(gOptionContext);
 		}
-		
-		argv = Str.toStringArray(arg);
-		return p;
 	}
 	
 	/**
@@ -334,6 +301,54 @@ public class OptionContext
 	{
 		// void g_option_context_free (GOptionContext *context);
 		g_option_context_free(gOptionContext);
+	}
+	
+	/**
+	 * Parses the command line arguments, recognizing options
+	 * which have been added to context. A side-effect of
+	 * calling this function is that g_set_prgname() will be
+	 * called.
+	 * If the parsing is successful, any parsed arguments are
+	 * removed from the array and argc and argv are updated
+	 * accordingly. A '--' option is stripped from argv
+	 * unless there are unparsed options before and after it,
+	 * or some of the options after it start with '-'. In case
+	 * of an error, argc and argv are left unmodified.
+	 * If automatic --help support is enabled
+	 * (see g_option_context_set_help_enabled()), and the
+	 * argv array contains one of the recognized help options,
+	 * this function will produce help output to stdout and
+	 * call exit (0).
+	 * Note that function depends on the
+	 * current locale for
+	 * automatic character set conversion of string and filename
+	 * arguments.
+	 * Since 2.6
+	 * Params:
+	 * argv = a pointer to the array of command line arguments. [inout][array length=argc][allow-none]
+	 * Returns: TRUE if the parsing was successful, FALSE if an error occurred
+	 * Throws: GException on failure.
+	 */
+	public int parse(out string[] argv)
+	{
+		// gboolean g_option_context_parse (GOptionContext *context,  gint *argc,  gchar ***argv,  GError **error);
+		char** outargv = null;
+		int argc;
+		GError* err = null;
+		
+		auto p = g_option_context_parse(gOptionContext, &argc, &outargv, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		argv = null;
+		foreach ( cstr; outargv[0 .. argc] )
+		{
+			argv ~= Str.toString(cstr);
+		}
+		return p;
 	}
 	
 	/**

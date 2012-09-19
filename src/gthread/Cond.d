@@ -44,10 +44,8 @@
  * omit signals:
  * imports:
  * 	- gthread.Mutex
- * 	- glib.TimeVal
  * structWrap:
  * 	- GMutex* -> Mutex
- * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,7 +60,6 @@ private import glib.ConstructionException;
 
 
 private import gthread.Mutex;
-private import glib.TimeVal;
 
 
 
@@ -238,10 +235,10 @@ public class Cond
 	 * absTime = a GTimeVal, determining the final time
 	 * Returns: TRUE if cond was signalled, or FALSE on timeout
 	 */
-	public int timedWait(Mutex mutex, TimeVal absTime)
+	public int timedWait(Mutex mutex, ref GTimeVal absTime)
 	{
 		// gboolean g_cond_timed_wait (GCond *cond,  GMutex *mutex,  GTimeVal *abs_time);
-		return g_cond_timed_wait(gCond, (mutex is null) ? null : mutex.getMutexStruct(), (absTime is null) ? null : absTime.getTimeValStruct());
+		return g_cond_timed_wait(gCond, (mutex is null) ? null : mutex.getMutexStruct(), &absTime);
 	}
 	
 	/**

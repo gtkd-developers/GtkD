@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = CharacterSet
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,11 +40,8 @@
  * 	- g_
  * omit structs:
  * omit prefixes:
- * 	- g_convert_with_iconv
- * 	- g_iconv_open
- * 	- g_iconv
- * 	- g_iconv_close
  * omit code:
+ * 	- g_iconv
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -157,6 +154,33 @@ public class CharacterSet
 {
 	
 	/**
+	 * Same as the standard UNIX routine iconv(), but
+	 * may be implemented via libiconv on UNIX flavors that lack
+	 * a native implementation.
+	 * GLib provides g_convert() and g_locale_to_utf8() which are likely
+	 * more convenient than the raw iconv wrappers.
+	 * Params:
+	 * converter = conversion descriptor from g_iconv_open()
+	 * inbuf = bytes to convert
+	 * outbuf = converted output bytes
+	 * Returns: count of non-reversible conversions, or -1 on error
+	 */
+	public static gsize iconv(GIConv converter, ref char[] inbuf, ref char[] outbuf)
+	{
+		// gsize g_iconv (GIConv converter,  gchar **inbuf,  gsize *inbytes_left,  gchar **outbuf,  gsize *outbytes_left);
+		gchar* outinbuf = inbuf.ptr;
+		size_t inbytesLeft = inbuf.length;
+		gchar* outoutbuf = outbuf.ptr;
+		size_t outbytesLeft = outbuf.length;
+		
+		auto p = g_iconv(converter, &outinbuf, &inbytesLeft, &outoutbuf, &outbytesLeft);
+		
+		inbuf = outinbuf[0 .. inbytesLeft];
+		outbuf = outoutbuf[0 .. outbytesLeft];
+		return p;
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -241,6 +265,75 @@ public class CharacterSet
 		}
 		
 		return Str.toString(p);
+	}
+	
+	/**
+	 * Converts a string from one character set to another.
+	 * Note that you should use g_iconv() for streaming
+	 * conversions[3].
+	 * Params:
+	 * str = the string to convert
+	 * converter = conversion descriptor from g_iconv_open()
+	 * bytesRead = location to store the number of bytes in the
+	 * input string that were successfully converted, or NULL.
+	 * Even if the conversion was successful, this may be
+	 * less than len if there were partial characters
+	 * at the end of the input. If the error
+	 * G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 * stored will the byte offset after the last valid
+	 * input sequence.
+	 * Returns: If the conversion was successful, a newly allocated nul-terminated string, which must be freed with g_free(). Otherwise NULL and error will be set.
+	 * Throws: GException on failure.
+	 */
+	public static string convertWithIconv(string str, GIConv converter, out gsize bytesRead)
+	{
+		// gchar * g_convert_with_iconv (const gchar *str,  gssize len,  GIConv converter,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
+		gsize bytesWritten;
+		GError* err = null;
+		
+		auto p = g_convert_with_iconv(Str.toStringz(str), cast(int) str.length, converter, &bytesRead, &bytesWritten, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return Str.toString(p, bytesWritten);
+	}
+	
+	/**
+	 * Same as the standard UNIX routine iconv_open(), but
+	 * may be implemented via libiconv on UNIX flavors that lack
+	 * a native implementation.
+	 * GLib provides g_convert() and g_locale_to_utf8() which are likely
+	 * more convenient than the raw iconv wrappers.
+	 * Params:
+	 * toCodeset = destination codeset
+	 * fromCodeset = source codeset
+	 * Returns: a "conversion descriptor", or (GIConv)-1 if opening the converter failed.
+	 */
+	public static GIConv iconvOpen(string toCodeset, string fromCodeset)
+	{
+		// GIConv g_iconv_open (const gchar *to_codeset,  const gchar *from_codeset);
+		return g_iconv_open(Str.toStringz(toCodeset), Str.toStringz(fromCodeset));
+	}
+	
+	/**
+	 * Same as the standard UNIX routine iconv_close(), but
+	 * may be implemented via libiconv on UNIX flavors that lack
+	 * a native implementation. Should be called to clean up
+	 * the conversion descriptor from g_iconv_open() when
+	 * you are done converting things.
+	 * GLib provides g_convert() and g_locale_to_utf8() which are likely
+	 * more convenient than the raw iconv wrappers.
+	 * Params:
+	 * converter = a conversion descriptor from g_iconv_open()
+	 * Returns: -1 on error, 0 on success
+	 */
+	public static int iconvClose(GIConv converter)
+	{
+		// gint g_iconv_close (GIConv converter);
+		return g_iconv_close(converter);
 	}
 	
 	/**

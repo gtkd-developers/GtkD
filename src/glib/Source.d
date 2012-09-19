@@ -45,11 +45,9 @@
  * imports:
  * 	- glib.Str
  * 	- glib.MainContext
- * 	- glib.TimeVal
  * structWrap:
  * 	- GMainContext* -> MainContext
  * 	- GSource* -> Source
- * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  * overrides:
@@ -65,7 +63,6 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.MainContext;
-private import glib.TimeVal;
 
 
 
@@ -452,10 +449,10 @@ public class Source
 	 * fd = a GPollFD structure holding information about a file
 	 * descriptor to watch.
 	 */
-	public void addPoll(GPollFD* fd)
+	public void addPoll(ref GPollFD fd)
 	{
 		// void g_source_add_poll (GSource *source,  GPollFD *fd);
-		g_source_add_poll(gSource, fd);
+		g_source_add_poll(gSource, &fd);
 	}
 	
 	/**
@@ -464,10 +461,10 @@ public class Source
 	 * Params:
 	 * fd = a GPollFD structure previously passed to g_source_add_poll().
 	 */
-	public void removePoll(GPollFD* fd)
+	public void removePoll(ref GPollFD fd)
 	{
 		// void g_source_remove_poll (GSource *source,  GPollFD *fd);
-		g_source_remove_poll(gSource, fd);
+		g_source_remove_poll(gSource, &fd);
 	}
 	
 	/**
@@ -530,10 +527,10 @@ public class Source
 	 * Params:
 	 * timeval = GTimeVal structure in which to store current time.
 	 */
-	public void getCurrentTime(TimeVal timeval)
+	public void getCurrentTime(out GTimeVal timeval)
 	{
 		// void g_source_get_current_time (GSource *source,  GTimeVal *timeval);
-		g_source_get_current_time(gSource, (timeval is null) ? null : timeval.getTimeValStruct());
+		g_source_get_current_time(gSource, &timeval);
 	}
 	
 	/**

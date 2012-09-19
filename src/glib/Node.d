@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Node
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,8 +41,11 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_node_destroy
  * omit signals:
  * imports:
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GNode* -> Node
  * module aliases:
@@ -58,6 +61,8 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -117,6 +122,26 @@ public class Node
 			return;
 		}
 		this.gNode = gNode;
+	}
+	
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gNode !is null )
+		{
+			g_node_destroy(gNode);
+		}
+	}
+	
+	/**
+	 * Removes root and its children from the tree, freeing any memory
+	 * allocated.
+	 */
+	public void destroy()
+	{
+		// void g_node_destroy (GNode *root);
+		g_node_destroy(gNode);
+		
+		gNode = null;
 	}
 	
 	/**
@@ -514,15 +539,5 @@ public class Node
 	{
 		// void g_node_unlink (GNode *node);
 		g_node_unlink(gNode);
-	}
-	
-	/**
-	 * Removes root and its children from the tree, freeing any memory
-	 * allocated.
-	 */
-	public void destroy()
-	{
-		// void g_node_destroy (GNode *root);
-		g_node_destroy(gNode);
 	}
 }

@@ -140,12 +140,10 @@ extend: GObject
 prefix: g_file_info_
 noprefix: g_file_attribute_matcher_
 import: glib.Str
-import: glib.TimeVal
 import: gobject.ObjectG
 import: gio.Icon
 import: gio.IconIF
 import: gio.FileAttributeMatcher
-structWrap: GTimeVal* TimeVal
 structWrap: GObject* ObjectG
 structWrap: GIcon* IconIF
 structWrap: GFileAttributeMatcher* FileAttributeMatcher
@@ -155,6 +153,8 @@ out: g_file_info_get_attribute_data type
 out: g_file_info_get_attribute_data value_pp
 out: g_file_info_get_attribute_data status
 array: g_file_info_set_attribute_stringv attr_value
+out: g_file_info_get_modification_time result
+inout: g_file_info_set_modification_time mtime
 
 outFile: FileInfo
 

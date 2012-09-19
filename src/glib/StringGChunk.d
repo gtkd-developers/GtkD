@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = StringGChunk
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * module aliases:
  * local aliases:
@@ -59,6 +61,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -112,6 +116,14 @@ public class StringGChunk
 			return;
 		}
 		this.gStringChunk = gStringChunk;
+	}
+	
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gStringChunk !is null )
+		{
+			g_string_chunk_free(gStringChunk);
+		}
 	}
 	
 	/**

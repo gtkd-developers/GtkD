@@ -110,9 +110,8 @@ class: Cond
 prefix: g_cond_
 strictPrefix: Yes
 import: gthread.Mutex
-import: glib.TimeVal
 structWrap: GMutex* Mutex
-structWrap: GTimeVal* TimeVal
+inout: g_cond_timed_wait abs_time
 outFile: Cond
 
 struct: GPrivate

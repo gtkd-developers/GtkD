@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Date
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -43,11 +43,11 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.TimeVal
  * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GDate* -> Date
- * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  * overrides:
@@ -61,8 +61,9 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
-private import glib.TimeVal;
 private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -135,6 +136,14 @@ public class Date
 			return;
 		}
 		this.gDate = gDate;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gDate !is null )
+		{
+			g_date_free(gDate);
+		}
 	}
 	
 	/**
@@ -321,10 +330,10 @@ public class Date
 	 * Params:
 	 * timeval = GTimeVal value to set
 	 */
-	public void setTimeVal(TimeVal timeval)
+	public void setTimeVal(ref GTimeVal timeval)
 	{
 		// void g_date_set_time_val (GDate *date,  GTimeVal *timeval);
-		g_date_set_time_val(gDate, (timeval is null) ? null : timeval.getTimeValStruct());
+		g_date_set_time_val(gDate, &timeval);
 	}
 	
 	/**
@@ -686,15 +695,14 @@ public class Date
 	 * where the C library only complies to C89.
 	 * Params:
 	 * s = destination buffer
-	 * slen = buffer size
 	 * format = format string
 	 * date = valid GDate
 	 * Returns: number of characters written to the buffer, or 0 the buffer was too small
 	 */
-	public static gsize strftime(string s, gsize slen, string format, Date date)
+	public static gsize strftime(char[] s, string format, Date date)
 	{
 		// gsize g_date_strftime (gchar *s,  gsize slen,  const gchar *format,  const GDate *date);
-		return g_date_strftime(Str.toStringz(s), slen, Str.toStringz(format), (date is null) ? null : date.getDateStruct());
+		return g_date_strftime(s.ptr, cast(int) s.length, Str.toStringz(format), (date is null) ? null : date.getDateStruct());
 	}
 	
 	/**

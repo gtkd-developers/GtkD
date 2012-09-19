@@ -41,6 +41,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_build_filenamev
+ * 	- g_build_pathv
  * omit signals:
  * imports:
  * 	- glib.ListG
@@ -95,7 +97,7 @@ public class Util
 	public static string buildFilename(string[] firstElement ... )
 	{
 		// gchar* g_build_filename (const gchar *first_element,  ...);
-		return buildFilenamev(Str.toStringzArray(firstElement));
+		return Str.toString(g_build_filenamev(Str.toStringzArray(firstElement)));
 	}
 	
 	/**
@@ -130,7 +132,7 @@ public class Util
 	public static string buildPath(string separator, string[] firstElement ... )
 	{
 		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
-		return buildPathv(separator, Str.toStringzArray(firstElement));
+		return Str.toString(g_build_pathv(Str.toStringz(separator), Str.toStringzArray(firstElement)));
 	}
 	
 	/**
@@ -741,37 +743,6 @@ public class Util
 	}
 	
 	/**
-	 * Behaves exactly like g_build_filename(), but takes the path elements
-	 * as a string array, instead of varargs. This function is mainly
-	 * meant for language bindings.
-	 * Since 2.8
-	 * Params:
-	 * args = NULL-terminated array of strings containing the path elements. [array zero-terminated=1]
-	 * Returns: a newly-allocated string that must be freed with g_free().
-	 */
-	public static string buildFilenamev(char** args)
-	{
-		// gchar * g_build_filenamev (gchar **args);
-		return Str.toString(g_build_filenamev(args));
-	}
-	
-	/**
-	 * Behaves exactly like g_build_path(), but takes the path elements
-	 * as a string array, instead of varargs. This function is mainly
-	 * meant for language bindings.
-	 * Since 2.8
-	 * Params:
-	 * separator = a string used to separator the elements of the path.
-	 * args = NULL-terminated array of strings containing the path elements. [array zero-terminated=1]
-	 * Returns: a newly-allocated string that must be freed with g_free().
-	 */
-	public static string buildPathv(string separator, char** args)
-	{
-		// gchar * g_build_pathv (const gchar *separator,  gchar **args);
-		return Str.toString(g_build_pathv(Str.toStringz(separator), args));
-	}
-	
-	/**
 	 * Formats a size (for example the size of a file) into a human readable
 	 * string. Sizes are rounded to the nearest size prefix (kB, MB, GB)
 	 * and are displayed rounded to the nearest tenth. E.g. the file size
@@ -969,13 +940,12 @@ public class Util
 	 * commas, or NULL. [allow-none]
 	 * keys = pointer to an array of GDebugKey which associate
 	 * strings with bit flags. [array length=nkeys]
-	 * nkeys = the number of GDebugKeys in the array.
 	 * Returns: the combined set of bit flags.
 	 */
-	public static uint parseDebugString(string string, GDebugKey* keys, uint nkeys)
+	public static uint parseDebugString(string string, GDebugKey[] keys)
 	{
 		// guint g_parse_debug_string (const gchar *string,  const GDebugKey *keys,  guint nkeys);
-		return g_parse_debug_string(Str.toStringz(string), keys, nkeys);
+		return g_parse_debug_string(Str.toStringz(string), keys.ptr, cast(int) keys.length);
 	}
 	
 	/**
@@ -984,15 +954,14 @@ public class Util
 	 * This is guaranteed to be a stable sort since version 2.32.
 	 * Params:
 	 * pbase = start of array to sort
-	 * totalElems = elements in the array
 	 * size = size of each element
 	 * compareFunc = function to compare elements
 	 * userData = data to pass to compare_func
 	 */
-	public static void qsortWithData(void* pbase, int totalElems, gsize size, GCompareDataFunc compareFunc, void* userData)
+	public static void qsortWithData(void[] pbase, gsize size, GCompareDataFunc compareFunc, void* userData)
 	{
 		// void g_qsort_with_data (gconstpointer pbase,  gint total_elems,  gsize size,  GCompareDataFunc compare_func,  gpointer user_data);
-		g_qsort_with_data(pbase, totalElems, size, compareFunc, userData);
+		g_qsort_with_data(pbase.ptr, cast(int) pbase.length, size, compareFunc, userData);
 	}
 	
 	/**

@@ -54,10 +54,10 @@
  * imports:
  * 	- glib.Str
  * 	- glib.TimeZone
- * 	- glib.TimeVal
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GDateTime* -> DateTime
- * 	- GTimeVal* -> TimeVal
  * 	- GTimeZone* -> TimeZone
  * 	- void* -> DateTime
  * module aliases:
@@ -75,7 +75,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.TimeZone;
-private import glib.TimeVal;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -190,18 +191,18 @@ public class DateTime
 	 *     utc = If true use utc else use the local timezone.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (TimeVal tv, bool utc = true)
+	public this (ref GTimeVal tv, bool utc = true)
 	{
 		// GDateTime * g_date_time_new_from_timeval_local (const GTimeVal *tv);
 		GDateTime* p;
 		
 		if ( utc )
 		{
-			p = g_date_time_new_from_timeval_utc((tv is null) ? null : tv.getTimeValStruct());
+			p = g_date_time_new_from_timeval_utc(&tv);
 		}
 		else
 		{
-			p = g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct());
+			p = g_date_time_new_from_timeval_local(&tv);
 		}
 		
 		if(p is null)
@@ -209,6 +210,14 @@ public class DateTime
 			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
 		}
 		this(cast(GDateTime*) p);
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gDateTime !is null )
+		{
+			g_date_time_unref(gDateTime);
+		}
 	}
 	
 	version(D_Version2)
@@ -606,10 +615,10 @@ public class DateTime
 	 * month = the return location for the month of the year, or NULL. [out][allow-none]
 	 * day = the return location for the day of the month, or NULL. [out][allow-none]
 	 */
-	public void getYmd(int* year, int* month, int* day)
+	public void getYmd(out int year, out int month, out int day)
 	{
 		// void g_date_time_get_ymd (GDateTime *datetime,  gint *year,  gint *month,  gint *day);
-		g_date_time_get_ymd(gDateTime, year, month, day);
+		g_date_time_get_ymd(gDateTime, &year, &month, &day);
 	}
 	
 	/**
@@ -796,10 +805,10 @@ public class DateTime
 	 * tv = a GTimeVal to modify
 	 * Returns: TRUE if successful, else FALSE
 	 */
-	public int toTimeval(TimeVal tv)
+	public int toTimeval(out GTimeVal tv)
 	{
 		// gboolean g_date_time_to_timeval (GDateTime *datetime,  GTimeVal *tv);
-		return g_date_time_to_timeval(gDateTime, (tv is null) ? null : tv.getTimeValStruct());
+		return g_date_time_to_timeval(gDateTime, &tv);
 	}
 	
 	/**

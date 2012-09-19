@@ -26,7 +26,7 @@
  * inFile  = glib-Date-and-Time-Functions.html
  * outPack = glib
  * outFile = TimeVal
- * strct   = GTimeVal
+ * strct   = 
  * realStrct=
  * ctorStrct=
  * clss    = TimeVal
@@ -106,46 +106,19 @@ private import glib.Str;
 public class TimeVal
 {
 	
-	/** the main Gtk struct */
-	protected GTimeVal* gTimeVal;
-	
-	
-	public GTimeVal* getTimeValStruct()
-	{
-		return gTimeVal;
-	}
-	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gTimeVal;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GTimeVal* gTimeVal)
-	{
-		if(gTimeVal is null)
-		{
-			this = null;
-			return;
-		}
-		this.gTimeVal = gTimeVal;
-	}
-	
 	/**
 	 */
 	
 	/**
 	 * Equivalent to the UNIX gettimeofday() function, but portable.
 	 * You may find g_get_real_time() to be more convenient.
+	 * Params:
+	 * result = GTimeVal structure in which to store current time.
 	 */
-	public void getCurrentTime()
+	public static void getCurrentTime(out GTimeVal result)
 	{
 		// void g_get_current_time (GTimeVal *result);
-		g_get_current_time(gTimeVal);
+		g_get_current_time(&result);
 	}
 	
 	/**
@@ -167,12 +140,13 @@ public class TimeVal
 	 * Adds the given number of microseconds to time_. microseconds can
 	 * also be negative to decrease the value of time_.
 	 * Params:
+	 * time = a GTimeVal
 	 * microseconds = number of microseconds to add to time
 	 */
-	public void add(glong microseconds)
+	public static void add(ref GTimeVal time, glong microseconds)
 	{
 		// void g_time_val_add (GTimeVal *time_,  glong microseconds);
-		g_time_val_add(gTimeVal, microseconds);
+		g_time_val_add(&time, microseconds);
 	}
 	
 	/**
@@ -188,10 +162,10 @@ public class TimeVal
 	 * time = a GTimeVal. [out]
 	 * Returns: TRUE if the conversion was successful.
 	 */
-	public static int fromIso8601(string isoDate, GTimeVal* time)
+	public static int fromIso8601(string isoDate, out GTimeVal time)
 	{
 		// gboolean g_time_val_from_iso8601 (const gchar *iso_date,  GTimeVal *time_);
-		return g_time_val_from_iso8601(Str.toStringz(isoDate), time);
+		return g_time_val_from_iso8601(Str.toStringz(isoDate), &time);
 	}
 	
 	/**
@@ -213,12 +187,14 @@ public class TimeVal
 	 * Use g_date_time_format() or g_strdup_printf() if a different
 	 * variation of ISO 8601 format is required.
 	 * Since 2.12
+	 * Params:
+	 * time = a GTimeVal
 	 * Returns: a newly allocated string containing an ISO 8601 date
 	 */
-	public string toIso8601()
+	public static string toIso8601(ref GTimeVal time)
 	{
 		// gchar * g_time_val_to_iso8601 (GTimeVal *time_);
-		return Str.toString(g_time_val_to_iso8601(gTimeVal));
+		return Str.toString(g_time_val_to_iso8601(&time));
 	}
 	
 	/**

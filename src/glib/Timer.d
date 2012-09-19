@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Timer
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -43,6 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GTimer* -> Timer
  * module aliases:
@@ -58,6 +60,8 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -99,6 +103,14 @@ public class Timer
 			return;
 		}
 		this.gTimer = gTimer;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gTimer !is null )
+		{
+			g_timer_destroy(gTimer);
+		}
 	}
 	
 	/**

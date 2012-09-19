@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = HashTable
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,11 +44,11 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.HashTableIter
  * 	- glib.ListG
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GHashTable* -> HashTable
- * 	- GHashTableIter* -> HashTableIter
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
@@ -63,8 +63,9 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
-private import glib.HashTableIter;
 private import glib.ListG;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -131,6 +132,14 @@ public class HashTable
 			return;
 		}
 		this.gHashTable = gHashTable;
+	}
+	
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gHashTable !is null )
+		{
+			g_hash_table_unref(gHashTable);
+		}
 	}
 	
 	/**

@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = RandG
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,6 +44,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GRand* -> RandG
  * module aliases:
@@ -63,6 +65,8 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -131,6 +135,14 @@ public class RandG
 			return;
 		}
 		this.gRand = gRand;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gRand !is null )
+		{
+			g_rand_free(gRand);
+		}
 	}
 	
 	/**

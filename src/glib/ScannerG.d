@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = ScannerG
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * 	- GScanner* -> ScannerG
  * module aliases:
@@ -60,6 +62,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -99,6 +103,14 @@ public class ScannerG
 			return;
 		}
 		this.gScanner = gScanner;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gScanner !is null )
+		{
+			g_scanner_destroy(gScanner);
+		}
 	}
 	
 	/**
@@ -161,12 +173,11 @@ public class ScannerG
 	 * Prepares to scan a text buffer.
 	 * Params:
 	 * text = the text buffer to scan
-	 * textLen = the length of the text buffer
 	 */
-	public void inputText(string text, uint textLen)
+	public void inputText(string text)
 	{
 		// void g_scanner_input_text (GScanner *scanner,  const gchar *text,  guint text_len);
-		g_scanner_input_text(gScanner, Str.toStringz(text), textLen);
+		g_scanner_input_text(gScanner, Str.toStringz(text), cast(int) text.length);
 	}
 	
 	/**

@@ -134,16 +134,15 @@ public class ByteArray
 	 * Since 2.32
 	 * Params:
 	 * data = byte data for the array. [array length=len]
-	 * len = length of data
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (ubyte* data, gsize len)
+	public this (ubyte[] data)
 	{
 		// GByteArray * g_byte_array_new_take (guint8 *data,  gsize len);
-		auto p = g_byte_array_new_take(data, len);
+		auto p = g_byte_array_new_take(data.ptr, cast(int) data.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_byte_array_new_take(data, len)");
+			throw new ConstructionException("null returned by g_byte_array_new_take(data.ptr, cast(int) data.length)");
 		}
 		this(cast(GByteArray*) p);
 	}

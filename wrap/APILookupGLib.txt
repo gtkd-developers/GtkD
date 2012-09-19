@@ -165,9 +165,6 @@ outFile: GLib
 #file: glib-Basic-Types.html
 #outFile: types
 
-#file: glib-Limits-of-Basic-Types.html
-#outFile: typeLimits
-
 #file: glib-Standard-Macros.html
 #class: 
 #prefix: 
@@ -213,13 +210,14 @@ noprefix: g_timeout_
 noprefix: g_idle_
 noprefix: g_child_
 noprefix: g_source_
-structWrap: GMainLoop* MainLoop
+import: gtkc.paths
+import: gtkc.Loader
 import: glib.MainContext
-structWrap: GMainContext* MainContext
 import: glib.Source
+structWrap: GMainContext* MainContext
+structWrap: GMainLoop* MainLoop
 structWrap: GSource* Source
-import: gtkc.paths;
-import: gtkc.Loader;
+
 array: g_poll fds nfds
 
 code: start
@@ -238,19 +236,19 @@ class: MainContext
 prefix: g_main_context_
 strictPrefix: Yes
 import: glib.Source
-structWrap: GSource* Source
 import: gthread.Cond
-structWrap: GCond* Cond
 import: gthread.Mutex
-structWrap: GMutex* Mutex
 structWrap: GMainContext* MainContext
-#import: glib.SourceFuncs
-#structWrap: GSourceFuncs* SourceFuncs
-#import: glib.PollFD
-#structWrap: GPollFD* PollFD
+structWrap: GSource* Source
+structWrap: GCond* Cond
+structWrap: GMutex* Mutex
 
 out: g_main_context_prepare priority
 out: g_main_context_query timeout_
+array: g_main_context_query fds n_fds
+array: g_main_context_check fds n_fds
+inout: g_main_context_add_poll fd
+inout: g_main_context_remove_poll fd
 
 outFile: MainContext
 
@@ -565,17 +563,13 @@ class: Source
 prefix: g_source_
 strictPrefix: Yes
 import: glib.Str
-#import: glib.SourceFuncs
-#structWrap: GSourceFuncs* SourceFuncs
-structWrap: GSource* Source
 import: glib.MainContext
 structWrap: GMainContext* MainContext
-#import: glib.SourceCallbackFuncs
-#structWrap: GSourceCallbackFuncs* SourceCallbackFuncs
-#import: glib.PollFD
-#structWrap: GPollFD* PollFD
-import: glib.TimeVal
-structWrap: GTimeVal* TimeVal
+structWrap: GSource* Source
+
+inout: g_source_add_poll fd
+inout: g_source_remove_poll fd
+out: g_source_get_current_time timeval
 outFile: Source
 
 
@@ -595,51 +589,81 @@ struct: GAsyncQueue
 class: AsyncQueue
 prefix: g_async_queue_
 structWrap: GAsyncQueue* AsyncQueue
-import: glib.TimeVal
-structWrap: GTimeVal* TimeVal
+inout: g_async_queue_timed_pop end_time
+inout: g_async_queue_timed_pop_unlocked end_time
 outFile: AsyncQueue
 
 file: glib-Dynamic-Loading-of-Modules.html
 struct: GModule
 class: Module
 prefix: g_module_
-structWrap: GModule* Module
 import: glib.Str
+structWrap: GModule* Module
 outFile: Module
 
 file: glib-Memory-Allocation.html
 class: Memory
 prefix: g_
-#import: glib.MemVTable
-#structWrap: GMemVTable* MemVTable
 outFile: Memory
 
 file: glib-Memory-Slices.html
 class: MemorySlice
 prefix: g_slice_
+
+code: start
+	T* mewSlice(T)()
+	{
+		return cast(T*)g_slice_alloc(T.sizeof);
+	}
+
+	T* mewSlice0(T)()
+	{
+		return cast(T*)g_slice_alloc0(T.sizeof);
+	}
+
+	T* dup(T)(T* memBlock)
+	{
+		return cast(T*)g_slice_copy(T.sizeof, memBlock);
+	}
+
+	void free(T)(T* memBlock)
+	{
+		 g_slice_free1(T.sizeof, memBlock);
+	}
+code: end
 outFile: MemorySlice
 
 file: glib-IO-Channels.html
 struct: GIOChannel
 class: IOChannel
 prefix: g_io_channel_
+import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-import: glib.StringG
 import: glib.Source
-import: glib.Str
-import: gtkc.paths;
-import: gtkc.Loader;
-structWrap: GString* StringG
-structWrap: GSource* Source
+import: glib.StringG
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GIOChannel* IOChannel
+structWrap: GSource* Source
+structWrap: GString* StringG
 
 out: g_io_channel_read_chars bytes_read
+array: g_io_channel_read_chars buf count
 out: g_io_channel_read_unichar thechar
+array: g_io_channel_read_line str_return length
+out: g_io_channel_read_line str_return
+out: g_io_channel_read_line terminator_pos
 out: g_io_channel_read_line_string terminator_pos
+array: g_io_channel_read_to_end str_return length
+out: g_io_channel_read_to_end str_return
+array: g_io_channel_write_chars buf count
 out: g_io_channel_write_chars bytes_written
-out: g_io_channel_get_line_term length
+array: g_io_channel_get_line_term Return length
+array: g_io_channel_set_line_term line_term length
+array: g_io_channel_read buf count 
 out: g_io_channel_read bytes_read
+array: g_io_channel_write buf count 
 out: g_io_channel_write bytes_written
 
 nocode: g_io_channel_read_line
@@ -648,9 +672,9 @@ nocode: g_io_channel_read_to_end
 code: start
 	~this()
 	{
-		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gIOChannel !is null )
 		{
-			unref();
+			g_io_channel_unref(gIOChannel);
 		}
 	}
 
@@ -738,12 +762,23 @@ struct: GError
 class: ErrorG
 prefix: g_error_
 import: glib.Str
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GError* ErrorG
 
 out: g_propagate_error dest
 inout: g_clear_error err
 out: g_set_error_literal err
 
+code: start
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gError !is null )
+		{
+			g_error_free(gError);
+		}
+	}
+code: end
 outFile: ErrorG
 
 file:
@@ -797,7 +832,6 @@ prefix: g_
 import: glib.Str
 outFile: MessageLog
 
-
 ###########################################################
 ### GLib Utilities ########################################
 ###########################################################
@@ -805,17 +839,25 @@ outFile: MessageLog
 file: glib-String-Utility-Functions.html
 class: Str
 import: std.c.stdio
+import: std.c.string
 import: glib.StringG
 structWrap: GString* StringG
-import: std.c.string
 prefix: g_
 
 array: g_strdupv str_array
+array: g_strstr_len haystack haystack_len
+array: g_strrstr_len haystack haystack_len
+array: g_strlcpy dest dest_size
+array: g_strlcat dest dest_size
+array: g_vsnprintf string n
 out: g_vasprintf string
-out: g_ascii_strtoll endptr
+array: g_ascii_strup str len
+array: g_ascii_strdown str len
 out: g_ascii_strtoll endptr
 out: g_ascii_strtoull endptr
 out: g_ascii_strtod endptr
+array: g_ascii_dtostr buffer buf_len
+array: g_ascii_formatd buffer buf_len
 out: g_strtod endptr
 array: g_strfreev str_array
 array: g_strjoinv str_array
@@ -1059,16 +1101,18 @@ prefix: g_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-# these fail to compile because of a reference to a struct that size is not known
-noprefix: g_convert_with_iconv
-noprefix: g_iconv_open
-noprefix: g_iconv
-noprefix: g_iconv_close
 
 out: g_convert bytes_read
 out: g_convert bytes_written
 out: g_convert_with_fallback bytes_read
 out: g_convert_with_fallback bytes_written
+array: g_convert_with_iconv str len
+out: g_convert_with_iconv bytes_read
+array: g_convert_with_iconv Return bytes_written
+inout: g_iconv inbuf
+array: g_iconv inbuf inbytes_left
+inout: g_iconv outbuf
+array: g_iconv outbuf outbytes_left
 out: g_locale_to_utf8 bytes_read
 out: g_locale_to_utf8 bytes_written
 array: g_filename_to_utf8 opsysstring len
@@ -1084,6 +1128,36 @@ out: g_get_charset charset
 out: g_get_filename_charsets charsets
 array: g_get_filename_charsets charsets
 
+nocode: g_iconv
+
+code: start
+/**
+	 * Same as the standard UNIX routine iconv(), but
+	 * may be implemented via libiconv on UNIX flavors that lack
+	 * a native implementation.
+	 * GLib provides g_convert() and g_locale_to_utf8() which are likely
+	 * more convenient than the raw iconv wrappers.
+	 * Params:
+	 * converter = conversion descriptor from g_iconv_open()
+	 * inbuf = bytes to convert
+	 * outbuf = converted output bytes
+	 * Returns: count of non-reversible conversions, or -1 on error
+	 */
+	public static gsize iconv(GIConv converter, ref char[] inbuf, ref char[] outbuf)
+	{
+		// gsize g_iconv (GIConv converter,  gchar **inbuf,  gsize *inbytes_left,  gchar **outbuf,  gsize *outbytes_left);
+		gchar* outinbuf = inbuf.ptr;
+		size_t inbytesLeft = inbuf.length;
+		gchar* outoutbuf = outbuf.ptr;
+		size_t outbytesLeft = outbuf.length;
+		
+		auto p = g_iconv(converter, &outinbuf, &inbytesLeft, &outoutbuf, &outbytesLeft);
+		
+		inbuf = outinbuf[0 .. inbytesLeft];
+		outbuf = outoutbuf[0 .. outbytesLeft];
+		return p;
+	}
+code: end
 outFile: CharacterSet
 
 file: glib-Unicode-Manipulation.html
@@ -1093,25 +1167,44 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 
-out: g_unicode_canonical_decomposition result_len
-out: g_utf8_validate end
-out: g_utf8_to_utf16 items_read
-out: g_utf8_to_utf16 items_written
-out: g_utf8_to_ucs4 items_read
-out: g_utf8_to_ucs4 items_written
-out: g_utf8_to_ucs4_fast items_written
-out: g_utf16_to_ucs4 items_read
-out: g_utf16_to_ucs4 items_written
-out: g_utf16_to_utf8 items_read
-out: g_utf16_to_utf8 items_written
-out: g_ucs4_to_utf16 items_read
-out: g_ucs4_to_utf16 items_written
-out: g_ucs4_to_utf8 items_read
-out: g_ucs4_to_utf8 items_written
 out: g_unichar_compose ch
 out: g_unichar_decompose a
 out: g_unichar_decompose b
 array: g_unichar_fully_decompose result result_len
+array: g_unicode_canonical_ordering string len
+array: g_unicode_canonical_decomposition Return result_len
+out: g_unichar_get_mirror_char mirrored_ch
+array: g_utf8_get_char_validated p max_len
+array: g_utf8_strlen p max
+array: g_utf8_strreverse str len
+out: g_utf8_validate end
+array: g_utf8_validate str max_len
+array: g_utf8_strup str len
+array: g_utf8_strdown str len
+array: g_utf8_casefold str len
+array: g_utf8_normalize str len
+array: g_utf8_collate_key str len
+array: g_utf8_collate_key_for_filename str len
+array: g_utf8_to_utf16 str len
+out: g_utf8_to_utf16 items_read
+array: g_utf8_to_utf16 Return items_written
+array: g_utf8_to_ucs4 str len
+out: g_utf8_to_ucs4 items_read
+array: g_utf8_to_ucs4 Return items_written
+array: g_utf8_to_ucs4_fast str len
+array: g_utf8_to_ucs4_fast Return items_written
+array: g_utf16_to_ucs4 str len
+out: g_utf16_to_ucs4 items_read
+array: g_utf16_to_ucs4 Return items_written
+array: g_utf16_to_utf8 str len
+out: g_utf16_to_utf8 items_read
+array: g_utf16_to_utf8 Return items_written
+array: g_ucs4_to_utf16 str len
+out: g_ucs4_to_utf16 items_read
+array: g_ucs4_to_utf16 Return items_written
+array: g_ucs4_to_utf8 str len
+out: g_ucs4_to_utf8 items_read
+array: g_ucs4_to_utf8 Return items_written
 
 outFile: Unicode
 
@@ -1120,10 +1213,13 @@ class: Base64
 prefix: g_base64_
 import: glib.Str
 
+array: g_base64_encode_step in len
 inout: g_base64_encode_step state
 inout: g_base64_encode_step save
 inout: g_base64_encode_close state
 inout: g_base64_encode_close save
+array: g_base64_encode data len
+array: g_base64_decode_step in len
 inout: g_base64_decode_step state
 inout: g_base64_decode_step save
 array: g_base64_decode Return out_len
@@ -1135,8 +1231,52 @@ file: glib-Data-Checksums.html
 struct: GChecksum
 class: Checksum
 prefix: g_checksum_
+prefix: g_
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GChecksum* Checksum
+
+inout: g_checksum_get_digest digest_len
+array: g_checksum_get_digest buffer digest_len
+array: g_checksum_update data length
+array: g_compute_checksum_for_data data length
+array: g_compute_checksum_for_string str length
+
+alias: computeChecksumForData computeForData
+alias: computeChecksumForString computeForString
+
+#TODO: Let the wrapper handle this correctly.
+nocode: g_checksum_get_digest
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gChecksum !is null )
+		{
+			g_checksum_free(gChecksum);
+		}
+	}
+
+	/**
+	 * Gets the digest from checksum as a raw binary vector and places it
+	 * into buffer. The size of the digest depends on the type of checksum.
+	 * Once this function has been called, the GChecksum is closed and can
+	 * no longer be updated with g_checksum_update().
+	 * Since 2.16
+	 * Params:
+	 * buffer = output buffer
+	 */
+	public void getDigest(ref ubyte[] buffer)
+	{
+		size_t digestLen = buffer.length;
+
+		// void g_checksum_get_digest (GChecksum *checksum,  guint8 *buffer,  gsize *digest_len);
+		g_checksum_get_digest(gChecksum, buffer.ptr, &digestLen);
+
+		buffer = buffer[0 .. digestLen];
+	}
+code: end
 outFile: Checksum
 
 file: glib-Data-HMACs.html
@@ -1197,22 +1337,40 @@ import: glib.Str
 outFile: Internationalization
 
 file: glib-Date-and-Time-Functions.html
-struct: GTimeVal
 class: TimeVal
 prefix: g_time_val_
 prefix: g_
 noprefix: g_date_
 import: glib.Str
+
+out: g_get_current_time result
+inout: g_time_val_add time_
+out: g_time_val_from_iso8601 time_
+inout: g_time_val_to_iso8601 time_
+
 outFile: TimeVal
 
 struct: GDate
 class: Date
 prefix: g_date_
 strictPrefix: Y
-import: glib.TimeVal
-structWrap: GTimeVal* TimeVal
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GDate* Date
+
+inout: g_date_set_time_val timeval
+array: g_date_strftime s slen
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gDate !is null )
+		{
+			g_date_free(gDate);
+		}
+	}
+code: end
 outFile: Date
 
 file: glib-GTimeZone.html
@@ -1220,10 +1378,23 @@ struct: GTimeZone
 class: TimeZone
 prefix: g_time_zone_
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GTimeZone* TimeZone
 nocode: g_time_zone_new_local
 nocode: g_time_zone_new_utc
-inout: g_time_zone_adjust_time time
+
+inout: g_time_zone_adjust_time time_
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gTimeZone !is null )
+		{
+			g_time_zone_unref(gTimeZone);
+		}
+	}
+code: end
 outFile: TimeZone
 
 file: glib-GDateTime.html
@@ -1232,11 +1403,16 @@ class: DateTime
 prefix: g_date_time_
 import: glib.Str
 import: glib.TimeZone
-import: glib.TimeVal
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GDateTime* DateTime
 structWrap: GTimeZone* TimeZone
-structWrap: GTimeVal* TimeVal
 structWrap: void* DateTime
+
+out: g_date_time_get_ymd year
+out: g_date_time_get_ymd month
+out: g_date_time_get_ymd day
+out: g_date_time_to_timeval tv
 
 nocode: g_date_time_new_now_utc
 nocode: g_date_time_new_now_local
@@ -1303,18 +1479,18 @@ code: start
 	 *     utc = If true use utc else use the local timezone.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (TimeVal tv, bool utc = true)
+	public this (ref GTimeVal tv, bool utc = true)
 	{
 		// GDateTime * g_date_time_new_from_timeval_local (const GTimeVal *tv);
 		GDateTime* p;
 
 		if ( utc )
 		{
-			p = g_date_time_new_from_timeval_utc((tv is null) ? null : tv.getTimeValStruct());
+			p = g_date_time_new_from_timeval_utc(&tv);
 		}
 		else
 		{
-			p = g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct());
+			p = g_date_time_new_from_timeval_local(&tv);
 		}
 
 		if(p is null)
@@ -1322,6 +1498,14 @@ code: start
 			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
 		}
 		this(cast(GDateTime*) p);
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gDateTime !is null )
+		{
+			g_date_time_unref(gDateTime);
+		}
 	}
 
 	version(D_Version2)
@@ -1409,6 +1593,8 @@ struct: GRand
 class: RandG
 prefix: g_rand_
 prefix: g_
+import: gtkc.Loader
+import: gtkc.paths
 
 array: g_rand_set_seed_array seed seed_length
 array: g_rand_new_with_seed_array seed seed_length
@@ -1420,6 +1606,15 @@ alias: intRange randIntRange
 alias: double randDouble
 alias: doubleRange randDoubleRange
 
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gRand !is null )
+		{
+			g_rand_free(gRand);
+		}
+	}
+code: end
 outFile: RandG
 
 #file: glib-Hook-Functions.html
@@ -1441,6 +1636,11 @@ import: glib.Str
 array: g_environ_getenv envp
 array: g_environ_setenv envp
 array: g_environ_unsetenv envp
+array: g_parse_debug_string keys nkeys
+array: g_qsort_with_data pbase total_elems
+
+nocode: g_build_filenamev
+nocode: g_build_pathv
 
 code: start
 	/**
@@ -1465,7 +1665,7 @@ code: start
 	public static string buildFilename(string[] firstElement ... )
 	{
 		// gchar* g_build_filename (const gchar *first_element,  ...);
-		return buildFilenamev(Str.toStringzArray(firstElement));
+		return Str.toString(g_build_filenamev(Str.toStringzArray(firstElement)));
 	}
 
 	/**
@@ -1500,7 +1700,7 @@ code: start
 	public static string buildPath(string separator, string[] firstElement ... )
 	{
 		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
-		return buildPathv(separator, Str.toStringzArray(firstElement));
+		return Str.toString(g_build_pathv(Str.toStringz(separator), Str.toStringzArray(firstElement)));
 	}
 code: end
 outFile: Util
@@ -1509,42 +1709,61 @@ file: glib-Lexical-Scanner.html
 struct: GScanner
 class: ScannerG
 prefix: g_scanner_
-structWrap: GScanner* ScannerG
-#import: glib.ScannerConfig
-#structWrap: GScannerConfig* ScannerConfig
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: GScanner* ScannerG
+
+array: g_scanner_input_text text text_len
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gScanner !is null )
+		{
+			g_scanner_destroy(gScanner);
+		}
+	}
+code: end
 outFile: ScannerG
 
 file: glib-Timers.html
 struct: GTimer
 class: Timer
 prefix: g_timer_
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GTimer* Timer
 
 out: g_timer_elapsed microseconds
 
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gTimer !is null )
+		{
+			g_timer_destroy(gTimer);
+		}
+	}
+code: end
 outFile: Timer
 
 file: glib-Spawning-Processes.html
 class: Spawn
-import: glib.ErrorG
-import: glib.GException
-import: glib.MainLoop
-structWrap: GMainLoop* MainLoop
 prefix: g_spawn_
-#import: glib.Pid
-#structWrap: GPid* Pid
-#import: glib.Error*
-import: glib.Str
 import: std.thread
 import: std.c.stdio
 import: std.string
 import: std.c.string
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 
 array: g_spawn_async argv
 array: g_spawn_async envp
 array: g_spawn_sync argv
 array: g_spawn_sync envp
+out: g_spawn_async child_pid
 out: g_spawn_sync standard_output
 out: g_spawn_sync standard_error
 out: g_spawn_sync exit_status
@@ -1787,12 +2006,7 @@ code: start
 		}
 		size_t l = strlen(line.ptr);
 		if ( l > 0 ) --l;
-		//printf("\nreadLine\n");
-		//foreach ( char c ; line )
-		//{
-		//       printf("%c", c);
-		//}
-		//printf("\n\n");
+
 		return line[0..l];
 	}
 	
@@ -1881,7 +2095,6 @@ code: start
 		return status;
 	}
 code: end
-
 outFile: Spawn
 
 file: glib-File-Utilities.html
@@ -1894,13 +2107,15 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 
+out: g_file_get_contents contents
+array: g_file_get_contents contents length
 array: g_file_set_contents contents length
 out: g_file_open_tmp name_used
 
 nocode: g_file_get_contents
 
 code: start
-	/**
+/**
 	 * Reads an entire file into allocated memory, with good error
 	 * checking.
 	 * If the call was successful, it returns TRUE and sets contents to the file
@@ -1963,6 +2178,7 @@ prefix: g_uri_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+out: g_filename_from_uri hostname
 outFile: URI
 
 file: glib-Hostname-Utilities.html
@@ -1978,104 +2194,34 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 
-nocode: g_shell_parse_argv
+out: g_shell_parse_argv argvp
+array: g_shell_parse_argv argvp argcp
 
-code: start
-	/**
-	 * Parses a command line into an argument vector, in much the same way
-	 * the shell would, but without many of the expansions the shell would
-	 * perform (variable expansion, globs, operators, filename expansion,
-	 * etc. are not supported). The results are defined to be the same as
-	 * those you would get from a UNIX98 /bin/sh, as long as the input
-	 * contains none of the unsupported shell expansions. If the input
-	 * does contain such expansions, they are passed through
-	 * literally. Possible errors are those from the G_SHELL_ERROR
-	 * domain. Free the returned vector with g_strfreev().
-	 * Params:
-	 * commandLine =  command line to parse
-	 * argcp =  return location for number of args
-	 * argvp =  return location for array of args
-	 * Returns: TRUE on success, FALSE if error set
-	 * Throws: GException on failure.
-	 */
-	public static int parseArgv(string commandLine, out int argcp, out string[] argvp)
-	{
-		// gboolean g_shell_parse_argv (const gchar *command_line,  gint *argcp,  gchar ***argvp,  GError **error);
-		GError* err = null;
-		char** arg = null;
-		
-		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &arg, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		argvp = Str.toStringArray(arg);		
-		return p;
-	}
-code: end
 outFile: ShellUtils
 
 file: glib-Commandline-option-parser.html
-
 struct: GOptionContext
 class: OptionContext
 prefix: g_option_context_
 noprefix: g_option_group_
+import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-#import: glib.OptionEntry
-#structWrap: GOptionEntry* OptionEntry
 import: glib.OptionGroup
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GOptionGroup* OptionGroup
-import: glib.Str
 
-nocode: g_option_context_parse
+out: g_option_context_parse argv
+array: g_option_context_parse argv argc
 
 code: start
-	/**
-	 * Parses the command line arguments, recognizing options
-	 * which have been added to context. A side-effect of
-	 * calling this function is that g_set_prgname() will be
-	 * called.
-	 * If the parsing is successful, any parsed arguments are
-	 * removed from the array and argc and argv are updated
-	 * accordingly. A '--' option is stripped from argv
-	 * unless there are unparsed options before and after it,
-	 * or some of the options after it start with '-'. In case
-	 * of an error, argc and argv are left unmodified.
-	 * If automatic --help support is enabled
-	 * (see g_option_context_set_help_enabled()), and the
-	 * argv array contains one of the recognized help options,
-	 * this function will produce help output to stdout and
-	 * call exit (0).
-	 * Note that function depends on the
-	 * current locale for
-	 * automatic character set conversion of string and filename
-	 * arguments.
-	 * Since 2.6
-	 * Params:
-	 * argc =  a pointer to the number of command line arguments
-	 * argv =  a pointer to the array of command line arguments
-	 * Returns: TRUE if the parsing was successful,  FALSE if an error occurred
-	 * Throws: GException on failure.
-	 */
-	public int parse(out int argc, out string[] argv)
+	~this ()
 	{
-		// gboolean g_option_context_parse (GOptionContext *context,  gint *argc,  gchar ***argv,  GError **error);
-		GError* err = null;
-		char** arg = null;
-
-		auto p = g_option_context_parse(gOptionContext, &argc, &arg, &err);
-		
-		if (err !is null)
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gOptionContext !is null )
 		{
-			throw new GException( new ErrorG(err) );
+			g_option_context_free(gOptionContext);
 		}
-
-		argv = Str.toStringArray(arg);
-		return p;
 	}
 code: end
 outFile: OptionContext
@@ -2084,9 +2230,19 @@ struct: GOptionGroup
 class: OptionGroup
 prefix: g_option_group_
 strictPrefix: Yes
-#import: glib.OptionEntry
-#structWrap: GOptionEntry* OptionEntry
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gOptionGroup !is null )
+		{
+			g_option_group_free(gOptionGroup);
+		}
+	}
+code: end
 outFile: OptionGroup
 
 file: glib-Glob-style-pattern-matching.html
@@ -2094,8 +2250,20 @@ struct: GPatternSpec
 class: Pattern
 prefix: g_pattern_spec_
 prefix: g_pattern_
-structWrap: GPatternSpec* Pattern
 import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: GPatternSpec* Pattern
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gPatternSpec !is null )
+		{
+			g_pattern_spec_free(gPatternSpec);
+		}
+	}
+code: end
 outFile: Pattern
 
 file: glib-Perl-compatible-regular-expressions.html
@@ -2104,18 +2272,37 @@ class: Regex
 prefix: g_regex_
 noprefix: g_match_info_
 import: glib.Str
-structWrap: GRegex* Regex
 import: glib.ErrorG
 import: glib.GException
 import: glib.MatchInfo
+import: gtkc.Loader
+import: gtkc.paths
 structWrap: GMatchInfo* MatchInfo
+structWrap: GRegex* Regex
 
+array: g_regex_escape_string string length
+array: g_regex_escape_nul string length
 out: g_regex_match match_info
+array: g_regex_match_full string string_len
 out: g_regex_match_full match_info
 out: g_regex_match_all match_info
+array: g_regex_match_all_full string string_len
 out: g_regex_match_all_full match_info
+array: g_regex_split_full string string_len
+array: g_regex_replace string string_len
+array: g_regex_replace_literal string string_len
+array: g_regex_replace_eval string string_len
 out: g_regex_check_replacement has_references
-array: g_regex_escape_nul string length
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gRegex !is null )
+		{
+			g_regex_unref(gRegex);
+		}
+	}
+code: end
 outFile: Regex
 
 struct: GMatchInfo
@@ -2152,17 +2339,26 @@ struct: GMarkupParseContext
 class: SimpleXML
 prefix: g_markup_parse_context_
 prefix: g_markup_
-import: glib.ListSG
-structWrap: GSList* ListSG
+import: glib.Str
 import: glib.ErrorG
 import: glib.GException
-#import: glib.MarkupParser
-#structWrap: GMarkupParser* MarkupParser
-import: glib.Str
+import: glib.ListSG
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: GSList* ListSG
 
 out: g_markup_parse_context_get_position line_number
 out: g_markup_parse_context_get_position char_number
 
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gMarkupParseContext !is null )
+		{
+			g_markup_parse_context_free(gMarkupParseContext);
+		}
+	}
+code: end
 outFile: SimpleXML
 
 file: glib-Key-value-file-parser.html
@@ -2172,19 +2368,19 @@ prefix: g_key_file_
 import: glib.ErrorG
 import: glib.GException
 import: glib.Str
-import: gtkc.paths;
-import: gtkc.Loader;
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GKeyFile* KeyFile
 
 out: g_key_file_load_from_data_dirs full_path
-out: g_key_file_to_data length
-out: g_key_file_get_groups length
-out: g_key_file_get_keys length
-out: g_key_file_get_string_list length
-out: g_key_file_get_locale_string_list length
-out: g_key_file_get_boolean_list length
-out: g_key_file_get_integer_list length
-out: g_key_file_get_double_list length
+out: g_key_file_load_from_dirs full_path
+array: g_key_file_load_from_data data length
+array: g_key_file_load_from_dirs search_dirs
+array: g_key_file_to_data Return length
+array: g_key_file_get_groups Return length
+array: g_key_file_get_keys Return length
+array: g_key_file_get_string_list Return length
+array: g_key_file_get_locale_string_list Return length
 array: g_key_file_get_boolean_list Return length
 array: g_key_file_get_integer_list Return length
 array: g_key_file_get_double_list Return length
@@ -2194,8 +2390,6 @@ array: g_key_file_set_boolean_list list length
 array: g_key_file_set_integer_list list length
 array: g_key_file_set_double_list list length
 
-nocode: g_key_file_load_from_dirs
-
 code: start
 	~this ()
 	{
@@ -2203,39 +2397,6 @@ code: start
 		{
 			g_key_file_unref(gKeyFile);
 		}
-	}
-
-	/**
-	 * This function looks for a key file named file in the paths
-	 * specified in search_dirs, loads the file into key_file and
-	 * returns the file's full path in full_path. If the file could not
-	 * be loaded then an error is set to either a GFileError or
-	 * GKeyFileError.
-	 * Since 2.14
-	 * Params:
-	 * file =  a relative path to a filename to open and parse
-	 * searchDirs =  NULL-terminated array of directories to search
-	 * fullPath =  return location for a string containing the full path
-	 *  of the file, or NULL
-	 * flags =  flags from GKeyFileFlags
-	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
-	 * Throws: GException on failure.
-	 */
-	public int loadFromDirs(string file, string[] searchDirs, out string fullPath, GKeyFileFlags flags)
-	{
-		// gboolean g_key_file_load_from_dirs (GKeyFile *key_file,  const gchar *file,  const gchar **search_dirs,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
-		char* outStr = null;
-		GError* err = null;
-		
-		auto p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), Str.toStringzArray(searchDirs), &outStr, flags, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		fullPath = Str.toString(outStr);
-		return p;
 	}
 code: end
 outFile: KeyFile
@@ -2247,35 +2408,29 @@ prefix: g_bookmark_file_
 import: glib.ErrorG
 import: glib.GException
 import: glib.Str
+import: gtkc.paths
+import: gtkc.Loader
 
+array: g_bookmark_file_load_from_data data lenght
 out: g_bookmark_file_load_from_data_dirs full_path 
-out: g_bookmark_file_to_data length
-out: g_bookmark_file_get_uris length
+array: g_bookmark_file_to_data Return length
+array: g_bookmark_file_get_uris Return length
 out: g_bookmark_file_get_icon href
 out: g_bookmark_file_get_icon mime_type
-out: g_bookmark_file_get_groups length
-out: g_bookmark_file_get_applications length
+array: g_bookmark_file_get_groups Return length
+array: g_bookmark_file_get_applications Return length
 out: g_bookmark_file_get_app_info exec
 out: g_bookmark_file_get_app_info count
 out: g_bookmark_file_get_app_info stamp
-
-nocode: g_bookmark_file_set_groups
+array: g_bookmark_file_set_groups groups length
 
 code: start
-	/**
-	 * Sets a list of group names for the item with URI uri. Each previously
-	 * set group name list is removed.
-	 * If uri cannot be found then an item for it is created.
-	 * Since 2.12
-	 * Params:
-	 * uri =  an item's URI
-	 * groups =  an array of group names, or NULL to remove all groups
-	 * length =  number of group name values in groups
-	 */
-	public void setGroups(string uri, string[] groups, uint length)
+	~this ()
 	{
-		// void g_bookmark_file_set_groups (GBookmarkFile *bookmark,  const gchar *uri,  const gchar **groups,  gsize length);
-		g_bookmark_file_set_groups(gBookmarkFile, Str.toStringz(uri), Str.toStringzArray(groups), length);
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gBookmarkFile !is null )
+		{
+			g_bookmark_file_free(gBookmarkFile);
+		}
 	}
 code: end
 outFile: BookmarkFile
@@ -2364,9 +2519,9 @@ file: glib-Double-ended-Queues.html
 struct: GQueue
 class: QueueG
 prefix: g_queue_
-structWrap: GQueue* QueueG
 import: glib.ListG
 structWrap: GList* ListG
+structWrap: GQueue* QueueG
 outFile: QueueG
 
 file: glib-Sequences.html
@@ -2374,8 +2529,8 @@ struct: GSequence
 class: Sequence
 prefix: g_sequence_
 noprefix: g_sequence_iter_
-structWrap: GSequence* Sequence
 import: glib.SequenceIter
+structWrap: GSequence* Sequence
 structWrap: GSequenceIter* SequenceIter
 outFile: Sequence
 
@@ -2392,7 +2547,6 @@ file: glib-Trash-Stacks.html
 struct: GTrashStack
 class: TrashStack
 prefix: g_trash_stack_
-#structWrap: GTrashStack** TrashStack*
 outFile: TrashStack
 
 file: glib-Hash-Tables.html
@@ -2400,11 +2554,21 @@ struct: GHashTable
 class: HashTable
 prefix: g_hash_table_
 noprefix: g_hash_table_iter_
-structWrap: GHashTable* HashTable
-import: glib.HashTableIter
-structWrap: GHashTableIter* HashTableIter
 import: glib.ListG
+import: gtkc.paths
+import: gtkc.Loader
+structWrap: GHashTable* HashTable
 structWrap: GList* ListG
+
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gHashTable !is null )
+		{
+			g_hash_table_unref(gHashTable);
+		}
+	}
+code: end
 outFile: HashTable
 
 struct: GHashTableIter
@@ -2419,8 +2583,26 @@ file: glib-Strings.html
 struct: GString
 class: StringG
 prefix: g_string_
-structWrap: GString* StringG
 import: glib.Str
+structWrap: GString* StringG
+
+array: g_string_new_len init len
+array: g_string_append_len val len
+array: g_string_prepend_len val len
+array: g_string_insert_len val len
+array: g_string_overwrite_len val len
+
+alias: appendLen append
+alias: prependLen prepend
+alias: insertLen insert
+alias: overwriteLen overwrite
+
+nocode: g_string_new
+nocode: g_string_append
+nocode: g_string_prepend
+nocode: g_string_insert
+nocode: g_string_overwrite
+
 outFile: StringG
 
 file: glib-String-Chunks.html
@@ -2428,14 +2610,26 @@ struct: GStringChunk
 class: StringGChunk
 prefix: g_string_chunk_
 import: glib.Str
+import: gtkc.paths
+import: gtkc.Loader
+
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gStringChunk !is null )
+		{
+			g_string_chunk_free(gStringChunk);
+		}
+	}
+code: end
 outFile: StringGChunk
 
 file: glib-Arrays.html
 struct: GArray
 class: ArrayG
 prefix: g_array_
-structWrap: GArray* ArrayG
 import: glib.Str
+structWrap: GArray* ArrayG
 outFile: ArrayG
 
 file: glib-Pointer-Arrays.html
@@ -2454,6 +2648,7 @@ import: glib.Bytes
 structWrap: GByteArray* ByteArray
 structWrap: GBytes* Bytes
 
+array: g_byte_array_new_take data len
 array: g_byte_array_append data len
 array: g_byte_array_prepend data len
 
@@ -2478,14 +2673,53 @@ file: glib-Balanced-Binary-Trees.html
 struct: GTree
 class: BBTree
 prefix: g_tree_
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GTree* BBTree
+
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gTree !is null )
+		{
+			g_tree_unref(gTree);
+		}
+	}
+code: end
 outFile: BBTree
 
 file: glib-N-ary-Trees.html
 struct: GNode
 class: Node
 prefix: g_node_
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GNode* Node
+
+nocode: g_node_destroy
+
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gNode !is null )
+		{
+			g_node_destroy(gNode);
+		}
+	}
+
+	/**
+	 * Removes root and its children from the tree, freeing any memory
+	 * allocated.
+	 */
+	public void destroy()
+	{
+		// void g_node_destroy (GNode *root);
+		g_node_destroy(gNode);
+
+		gNode = null;
+	}
+code: end
+
 outFile: Node
 
 file: glib-Quarks.html
@@ -2512,6 +2746,8 @@ struct: GVariantType
 class: VariantType
 prefix: g_variant_type_
 import: glib.Str
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GVariantType* VariantType
 alias: string str
 
@@ -2520,6 +2756,14 @@ array: g_variant_type_new_tuple items length
 
 nocode: g_variant_type_new_maybe
 code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gVariantType !is null )
+		{
+			g_variant_type_free(gVariantType);
+		}
+	}
+
 	/**
 	 * Constructs the type corresponding to a maybe instance containing
 	 * type type or Nothing.
@@ -2711,8 +2955,20 @@ prefix: g_variant_iter_
 strictPrefix: Yes
 import: glib.Str
 import: glib.Variant
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GVariant* Variant
 structWrap: GVariantIter* VariantIter
+
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gVariantIter !is null )
+		{
+			g_variant_iter_free(gVariantIter);
+		}
+	}
+code: end
 outFile: VariantIter
 
 struct: GVariantBuilder
@@ -2722,9 +2978,21 @@ strictPrefix: Yes
 import: glib.Str
 import: glib.Variant
 import: glib.VariantType
+import: gtkc.paths
+import: gtkc.Loader
 structWrap: GVariant* Variant
 structWrap: GVariantBuilder* VariantBuilder
 structWrap: GVariantType* VariantType
+
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gVariantBuilder !is null )
+		{
+			g_variant_builder_unref(gVariantBuilder);
+		}
+	}
+code: end
 outFile: VariantBuilder
 
 ###########################################################

@@ -43,10 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.TimeVal
  * structWrap:
  * 	- GAsyncQueue* -> AsyncQueue
- * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,7 +58,6 @@ private import gtkc.glib;
 private import glib.ConstructionException;
 
 
-private import glib.TimeVal;
 
 
 
@@ -485,10 +482,10 @@ public class AsyncQueue
 	 * endTime = a GTimeVal, determining the final time
 	 * Returns: data from the queue or NULL, when no data is received before end_time.
 	 */
-	public void* timedPop(TimeVal endTime)
+	public void* timedPop(ref GTimeVal endTime)
 	{
 		// gpointer g_async_queue_timed_pop (GAsyncQueue *queue,  GTimeVal *end_time);
-		return g_async_queue_timed_pop(gAsyncQueue, (endTime is null) ? null : endTime.getTimeValStruct());
+		return g_async_queue_timed_pop(gAsyncQueue, &endTime);
 	}
 	
 	/**
@@ -504,9 +501,9 @@ public class AsyncQueue
 	 * endTime = a GTimeVal, determining the final time
 	 * Returns: data from the queue or NULL, when no data is received before end_time.
 	 */
-	public void* timedPopUnlocked(TimeVal endTime)
+	public void* timedPopUnlocked(ref GTimeVal endTime)
 	{
 		// gpointer g_async_queue_timed_pop_unlocked (GAsyncQueue *queue,  GTimeVal *end_time);
-		return g_async_queue_timed_pop_unlocked(gAsyncQueue, (endTime is null) ? null : endTime.getTimeValStruct());
+		return g_async_queue_timed_pop_unlocked(gAsyncQueue, &endTime);
 	}
 }

@@ -2755,7 +2755,6 @@ public struct GHmac{}
 
 
 /**
- * Main Gtk struct.
  * Represents a precise time, with seconds and microseconds.
  * Similar to the struct timeval returned by
  * the gettimeofday() UNIX system call.

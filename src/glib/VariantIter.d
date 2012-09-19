@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = VariantIter
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -45,6 +45,8 @@
  * imports:
  * 	- glib.Str
  * 	- glib.Variant
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GVariant* -> Variant
  * 	- GVariantIter* -> VariantIter
@@ -63,6 +65,8 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.Variant;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -272,6 +276,14 @@ public class VariantIter
 			return;
 		}
 		this.gVariantIter = gVariantIter;
+	}
+	
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gVariantIter !is null )
+		{
+			g_variant_iter_free(gVariantIter);
+		}
 	}
 	
 	/**

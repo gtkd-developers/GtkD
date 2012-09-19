@@ -44,8 +44,8 @@
  * omit signals:
  * imports:
  * 	- std.c.stdio
- * 	- glib.StringG
  * 	- std.c.string
+ * 	- glib.StringG
  * structWrap:
  * 	- GString* -> StringG
  * module aliases:
@@ -427,16 +427,13 @@ public class Str
 	 * to haystack_len.
 	 * Params:
 	 * haystack = a string
-	 * haystackLen = the maximum length of haystack. Note that -1 is
-	 * a valid length, if haystack is nul-terminated, meaning it will
-	 * search through the whole string.
 	 * needle = the string to search for
 	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
-	public static string strstrLen(string haystack, gssize haystackLen, string needle)
+	public static string strstrLen(string haystack, string needle)
 	{
 		// gchar * g_strstr_len (const gchar *haystack,  gssize haystack_len,  const gchar *needle);
-		return Str.toString(g_strstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle)));
+		return Str.toString(g_strstr_len(Str.toStringz(haystack), cast(int) haystack.length, Str.toStringz(needle)));
 	}
 	
 	/**
@@ -459,14 +456,13 @@ public class Str
 	 * to haystack_len.
 	 * Params:
 	 * haystack = a nul-terminated string
-	 * haystackLen = the maximum length of haystack
 	 * needle = the nul-terminated string to search for
 	 * Returns: a pointer to the found occurrence, or NULL if not found.
 	 */
-	public static string strrstrLen(string haystack, gssize haystackLen, string needle)
+	public static string strrstrLen(string haystack, string needle)
 	{
 		// gchar * g_strrstr_len (const gchar *haystack,  gssize haystack_len,  const gchar *needle);
-		return Str.toString(g_strrstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle)));
+		return Str.toString(g_strrstr_len(Str.toStringz(haystack), cast(int) haystack.length, Str.toStringz(needle)));
 	}
 	
 	/**
@@ -530,13 +526,12 @@ public class Str
 	 * Params:
 	 * dest = destination buffer
 	 * src = source buffer
-	 * destSize = length of dest in bytes
 	 * Returns: length of src
 	 */
-	public static gsize strlcpy(string dest, string src, gsize destSize)
+	public static gsize strlcpy(char[] dest, string src)
 	{
 		// gsize g_strlcpy (gchar *dest,  const gchar *src,  gsize dest_size);
-		return g_strlcpy(Str.toStringz(dest), Str.toStringz(src), destSize);
+		return g_strlcpy(dest.ptr, Str.toStringz(src), cast(int) dest.length);
 	}
 	
 	/**
@@ -556,14 +551,12 @@ public class Str
 	 * Params:
 	 * dest = destination buffer, already containing one nul-terminated string
 	 * src = source buffer
-	 * destSize = length of dest buffer in bytes (not length of existing string
-	 * inside dest)
 	 * Returns: size of attempted result, which is MIN (dest_size, strlen (original dest)) + strlen (src), so if retval >= dest_size, truncation occurred.
 	 */
-	public static gsize strlcat(string dest, string src, gsize destSize)
+	public static gsize strlcat(char[] dest, string src)
 	{
 		// gsize g_strlcat (gchar *dest,  const gchar *src,  gsize dest_size);
-		return g_strlcat(Str.toStringz(dest), Str.toStringz(src), destSize);
+		return g_strlcat(dest.ptr, Str.toStringz(src), cast(int) dest.length);
 	}
 	
 	/**
@@ -658,10 +651,10 @@ public class Str
 	 * args = the list of arguments to insert in the output.
 	 * Returns: the number of bytes which would be produced if the buffer was large enough.
 	 */
-	public static int vsnprintf(string string, gulong n, string format, void* args)
+	public static int vsnprintf(char[] string, string format, void* args)
 	{
 		// gint g_vsnprintf (gchar *string,  gulong n,  gchar const *format,  va_list args);
-		return g_vsnprintf(Str.toStringz(string), n, Str.toStringz(format), args);
+		return g_vsnprintf(string.ptr, cast(int) string.length, Str.toStringz(format), args);
 	}
 	
 	/**
@@ -977,26 +970,24 @@ public class Str
 	 * Converts all lower case ASCII letters to upper case ASCII letters.
 	 * Params:
 	 * str = a string.
-	 * len = length of str in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly allocated string, with all the lower case characters in str converted to upper case, with semantics that exactly match g_ascii_toupper(). (Note that this is unlike the old g_strup(), which modified the string in place.)
 	 */
-	public static string asciiStrup(string str, gssize len)
+	public static string asciiStrup(string str)
 	{
 		// gchar * g_ascii_strup (const gchar *str,  gssize len);
-		return Str.toString(g_ascii_strup(Str.toStringz(str), len));
+		return Str.toString(g_ascii_strup(Str.toStringz(str), cast(int) str.length));
 	}
 	
 	/**
 	 * Converts all upper case ASCII letters to lower case ASCII letters.
 	 * Params:
 	 * str = a string.
-	 * len = length of str in bytes, or -1 if str is nul-terminated.
 	 * Returns: a newly-allocated string, with all the upper case characters in str converted to lower case, with semantics that exactly match g_ascii_tolower(). (Note that this is unlike the old g_strdown(), which modified the string in place.)
 	 */
-	public static string asciiStrdown(string str, gssize len)
+	public static string asciiStrdown(string str)
 	{
 		// gchar * g_ascii_strdown (const gchar *str,  gssize len);
-		return Str.toString(g_ascii_strdown(Str.toStringz(str), len));
+		return Str.toString(g_ascii_strdown(Str.toStringz(str), cast(int) str.length));
 	}
 	
 	/**
@@ -1282,14 +1273,13 @@ public class Str
 	 * be larger than G_ASCII_DTOSTR_BUF_SIZE bytes.
 	 * Params:
 	 * buffer = A buffer to place the resulting string in
-	 * bufLen = The length of the buffer.
 	 * d = The gdouble to convert
 	 * Returns: The pointer to the buffer with the converted string.
 	 */
-	public static string asciiDtostr(string buffer, int bufLen, double d)
+	public static string asciiDtostr(char[] buffer, double d)
 	{
 		// gchar * g_ascii_dtostr (gchar *buffer,  gint buf_len,  gdouble d);
-		return Str.toString(g_ascii_dtostr(Str.toStringz(buffer), bufLen, d));
+		return Str.toString(g_ascii_dtostr(buffer.ptr, cast(int) buffer.length, d));
 	}
 	
 	/**
@@ -1301,16 +1291,15 @@ public class Str
 	 * string, use g_ascii_dtostr().
 	 * Params:
 	 * buffer = A buffer to place the resulting string in
-	 * bufLen = The length of the buffer.
 	 * format = The printf()-style format to use for the
 	 * code to use for converting.
 	 * d = The gdouble to convert
 	 * Returns: The pointer to the buffer with the converted string.
 	 */
-	public static string asciiFormatd(string buffer, int bufLen, string format, double d)
+	public static string asciiFormatd(char[] buffer, string format, double d)
 	{
 		// gchar * g_ascii_formatd (gchar *buffer,  gint buf_len,  const gchar *format,  gdouble d);
-		return Str.toString(g_ascii_formatd(Str.toStringz(buffer), bufLen, Str.toStringz(format), d));
+		return Str.toString(g_ascii_formatd(buffer.ptr, cast(int) buffer.length, Str.toStringz(format), d));
 	}
 	
 	/**

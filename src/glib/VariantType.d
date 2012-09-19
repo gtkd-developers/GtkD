@@ -45,6 +45,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GVariantType* -> VariantType
  * module aliases:
@@ -62,6 +64,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -270,6 +274,14 @@ public class VariantType
 			return;
 		}
 		this.gVariantType = gVariantType;
+	}
+	
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && gVariantType !is null )
+		{
+			g_variant_type_free(gVariantType);
+		}
 	}
 	
 	/**

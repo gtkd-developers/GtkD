@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = OptionGroup
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.Loader
+ * 	- gtkc.paths
  * structWrap:
  * module aliases:
  * local aliases:
@@ -59,6 +61,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 
 
@@ -137,6 +141,14 @@ public class OptionGroup
 			return;
 		}
 		this.gOptionGroup = gOptionGroup;
+	}
+	
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gOptionGroup !is null )
+		{
+			g_option_group_free(gOptionGroup);
+		}
 	}
 	
 	/**

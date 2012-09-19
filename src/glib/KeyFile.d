@@ -41,14 +41,13 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- g_key_file_load_from_dirs
  * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.Str
- * 	- gtkc.paths;
- * 	- gtkc.Loader;
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GKeyFile* -> KeyFile
  * module aliases:
@@ -67,8 +66,8 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.paths;;
-private import gtkc.Loader;;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -165,39 +164,6 @@ public class KeyFile
 		{
 			g_key_file_unref(gKeyFile);
 		}
-	}
-	
-	/**
-	 * This function looks for a key file named file in the paths
-	 * specified in search_dirs, loads the file into key_file and
-	 * returns the file's full path in full_path. If the file could not
-	 * be loaded then an error is set to either a GFileError or
-	 * GKeyFileError.
-	 * Since 2.14
-	 * Params:
-	 * file =  a relative path to a filename to open and parse
-	 * searchDirs =  NULL-terminated array of directories to search
-	 * fullPath =  return location for a string containing the full path
-	 *  of the file, or NULL
-	 * flags =  flags from GKeyFileFlags
-	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
-	 * Throws: GException on failure.
-	 */
-	public int loadFromDirs(string file, string[] searchDirs, out string fullPath, GKeyFileFlags flags)
-	{
-		// gboolean g_key_file_load_from_dirs (GKeyFile *key_file,  const gchar *file,  const gchar **search_dirs,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
-		char* outStr = null;
-		GError* err = null;
-		
-		auto p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), Str.toStringzArray(searchDirs), &outStr, flags, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		fullPath = Str.toString(outStr);
-		return p;
 	}
 	
 	/**
@@ -307,17 +273,16 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * data = key file loaded in memory. [length length]
-	 * length = the length of data in bytes (or -1 if data is nul-terminated)
 	 * flags = flags from GKeyFileFlags
 	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 * Throws: GException on failure.
 	 */
-	public int loadFromData(string data, gsize length, GKeyFileFlags flags)
+	public int loadFromData(string data, GKeyFileFlags flags)
 	{
 		// gboolean g_key_file_load_from_data (GKeyFile *key_file,  const gchar *data,  gsize length,  GKeyFileFlags flags,  GError **error);
 		GError* err = null;
 		
-		auto p = g_key_file_load_from_data(gKeyFile, Str.toStringz(data), length, flags, &err);
+		auto p = g_key_file_load_from_data(gKeyFile, Str.toStringz(data), cast(int) data.length, flags, &err);
 		
 		if (err !is null)
 		{
@@ -360,19 +325,50 @@ public class KeyFile
 	}
 	
 	/**
+	 * This function looks for a key file named file in the paths
+	 * specified in search_dirs, loads the file into key_file and
+	 * returns the file's full path in full_path. If the file could not
+	 * be loaded then an error is set to either a GFileError or
+	 * GKeyFileError.
+	 * Since 2.14
+	 * Params:
+	 * file = a relative path to a filename to open and parse. [type filename]
+	 * searchDirs = NULL-terminated array of directories to search. [array zero-terminated=1][element-type filename]
+	 * fullPath = return location for a string containing the full path
+	 * of the file, or NULL. [out][type filename][allow-none]
+	 * flags = flags from GKeyFileFlags
+	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
+	 * Throws: GException on failure.
+	 */
+	public int loadFromDirs(string file, string[] searchDirs, out string fullPath, GKeyFileFlags flags)
+	{
+		// gboolean g_key_file_load_from_dirs (GKeyFile *key_file,  const gchar *file,  const gchar **search_dirs,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
+		char* outfullPath = null;
+		GError* err = null;
+		
+		auto p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), Str.toStringzArray(searchDirs), &outfullPath, flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		fullPath = Str.toString(outfullPath);
+		return p;
+	}
+	
+	/**
 	 * This function outputs key_file as a string.
 	 * Note that this function never reports an error,
 	 * so it is safe to pass NULL as error.
 	 * Since 2.6
-	 * Params:
-	 * length = return location for the length of the
-	 * returned string, or NULL. [out][allow-none]
 	 * Returns: a newly allocated string holding the contents of the GKeyFile
 	 * Throws: GException on failure.
 	 */
-	public string toData(out gsize length)
+	public string toData()
 	{
 		// gchar * g_key_file_to_data (GKeyFile *key_file,  gsize *length,  GError **error);
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_key_file_to_data(gKeyFile, &length, &err);
@@ -382,7 +378,7 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		return Str.toString(p, length);
 	}
 	
 	/**
@@ -401,14 +397,21 @@ public class KeyFile
 	 * The array of returned groups will be NULL-terminated, so
 	 * length may optionally be NULL.
 	 * Since 2.6
-	 * Params:
-	 * length = return location for the number of returned groups, or NULL. [out][allow-none]
 	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it. [array zero-terminated=1][transfer full]
 	 */
-	public string[] getGroups(out gsize length)
+	public string[] getGroups()
 	{
 		// gchar ** g_key_file_get_groups (GKeyFile *key_file,  gsize *length);
-		return Str.toStringArray(g_key_file_get_groups(gKeyFile, &length));
+		gsize length;
+		auto p = g_key_file_get_groups(gKeyFile, &length);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
@@ -420,13 +423,13 @@ public class KeyFile
 	 * Since 2.6
 	 * Params:
 	 * groupName = a group name
-	 * length = return location for the number of keys returned, or NULL. [out][allow-none]
 	 * Returns: a newly-allocated NULL-terminated array of strings. Use g_strfreev() to free it. [array zero-terminated=1][transfer full]
 	 * Throws: GException on failure.
 	 */
-	public string[] getKeys(string groupName, out gsize length)
+	public string[] getKeys(string groupName)
 	{
 		// gchar ** g_key_file_get_keys (GKeyFile *key_file,  const gchar *group_name,  gsize *length,  GError **error);
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), &length, &err);
@@ -436,7 +439,14 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
@@ -723,13 +733,13 @@ public class KeyFile
 	 * Params:
 	 * groupName = a group name
 	 * key = a key
-	 * length = return location for the number of returned strings, or NULL. [out][allow-none]
 	 * Returns: a NULL-terminated string array or NULL if the specified key cannot be found. The array should be freed with g_strfreev(). [array zero-terminated=1 length=length][element-type utf8][transfer full]
 	 * Throws: GException on failure.
 	 */
-	public string[] getStringList(string groupName, string key, out gsize length)
+	public string[] getStringList(string groupName, string key)
 	{
 		// gchar ** g_key_file_get_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
@@ -739,7 +749,14 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**
@@ -757,13 +774,13 @@ public class KeyFile
 	 * groupName = a group name
 	 * key = a key
 	 * locale = a locale identifier or NULL. [allow-none]
-	 * length = return location for the number of returned strings or NULL. [out][allow-none]
 	 * Returns: a newly allocated NULL-terminated string array or NULL if the key isn't found. The string array should be freed with g_strfreev(). [array zero-terminated=1 length=length][element-type utf8][transfer full]
 	 * Throws: GException on failure.
 	 */
-	public string[] getLocaleStringList(string groupName, string key, string locale, out gsize length)
+	public string[] getLocaleStringList(string groupName, string key, string locale)
 	{
 		// gchar ** g_key_file_get_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
+		gsize length;
 		GError* err = null;
 		
 		auto p = g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &length, &err);
@@ -773,7 +790,14 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. length] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
 	}
 	
 	/**

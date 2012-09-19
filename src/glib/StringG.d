@@ -41,6 +41,11 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_string_new
+ * 	- g_string_append
+ * 	- g_string_prepend
+ * 	- g_string_insert
+ * 	- g_string_overwrite
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -48,6 +53,10 @@
  * 	- GString* -> StringG
  * module aliases:
  * local aliases:
+ * 	- appendLen -> append
+ * 	- insertLen -> insert
+ * 	- overwriteLen -> overwrite
+ * 	- prependLen -> prepend
  * overrides:
  */
 
@@ -109,23 +118,6 @@ public class StringG
 	 */
 	
 	/**
-	 * Creates a new GString, initialized with the given string.
-	 * Params:
-	 * init = the initial text to copy into the string
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string init)
-	{
-		// GString * g_string_new (const gchar *init);
-		auto p = g_string_new(Str.toStringz(init));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_string_new(Str.toStringz(init))");
-		}
-		this(cast(GString*) p);
-	}
-	
-	/**
 	 * Creates a new GString with len bytes of the init buffer.
 	 * Because a length is provided, init need not be nul-terminated,
 	 * and can contain embedded nul bytes.
@@ -134,16 +126,15 @@ public class StringG
 	 * bytes.
 	 * Params:
 	 * init = initial contents of the string
-	 * len = length of init to use
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string init, gssize len)
+	public this (string init)
 	{
 		// GString * g_string_new_len (const gchar *init,  gssize len);
-		auto p = g_string_new_len(Str.toStringz(init), len);
+		auto p = g_string_new_len(Str.toStringz(init), cast(int) init.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_string_new_len(Str.toStringz(init), len)");
+			throw new ConstructionException("null returned by g_string_new_len(Str.toStringz(init), cast(int) init.length)");
 		}
 		this(cast(GString*) p);
 	}
@@ -225,25 +216,6 @@ public class StringG
 	}
 	
 	/**
-	 * Adds a string onto the end of a GString, expanding
-	 * it if necessary.
-	 * Params:
-	 * string = a GString
-	 * val = the string to append onto the end of string
-	 * Returns: string
-	 */
-	public StringG append(string val)
-	{
-		// GString * g_string_append (GString *string,  const gchar *val);
-		auto p = g_string_append(gString, Str.toStringz(val));
-		if(p is null)
-		{
-			return null;
-		}
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
 	 * Adds a byte onto the end of a GString, expanding
 	 * it if necessary.
 	 * Params:
@@ -289,13 +261,12 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * val = bytes to append
-	 * len = number of bytes of val to use
 	 * Returns: string
 	 */
-	public StringG appendLen(string val, gssize len)
+	public StringG append(string val)
 	{
 		// GString * g_string_append_len (GString *string,  const gchar *val,  gssize len);
-		auto p = g_string_append_len(gString, Str.toStringz(val), len);
+		auto p = g_string_append_len(gString, Str.toStringz(val), cast(int) val.length);
 		if(p is null)
 		{
 			return null;
@@ -319,25 +290,6 @@ public class StringG
 	{
 		// GString * g_string_append_uri_escaped (GString *string,  const gchar *unescaped,  const gchar *reserved_chars_allowed,  gboolean allow_utf8);
 		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
-		if(p is null)
-		{
-			return null;
-		}
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Adds a string on to the start of a GString,
-	 * expanding it if necessary.
-	 * Params:
-	 * string = a GString
-	 * val = the string to prepend on the start of string
-	 * Returns: string
-	 */
-	public StringG prepend(string val)
-	{
-		// GString * g_string_prepend (GString *string,  const gchar *val);
-		auto p = g_string_prepend(gString, Str.toStringz(val));
 		if(p is null)
 		{
 			return null;
@@ -391,33 +343,12 @@ public class StringG
 	 * Params:
 	 * string = a GString
 	 * val = bytes to prepend
-	 * len = number of bytes in val to prepend
 	 * Returns: string
 	 */
-	public StringG prependLen(string val, gssize len)
+	public StringG prepend(string val)
 	{
 		// GString * g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
-		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
-		if(p is null)
-		{
-			return null;
-		}
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Inserts a copy of a string into a GString,
-	 * expanding it if necessary.
-	 * Params:
-	 * string = a GString
-	 * pos = the position to insert the copy of the string
-	 * val = the string to insert
-	 * Returns: string
-	 */
-	public StringG insert(gssize pos, string val)
-	{
-		// GString * g_string_insert (GString *string,  gssize pos,  const gchar *val);
-		auto p = g_string_insert(gString, pos, Str.toStringz(val));
+		auto p = g_string_prepend_len(gString, Str.toStringz(val), cast(int) val.length);
 		if(p is null)
 		{
 			return null;
@@ -476,33 +407,12 @@ public class StringG
 	 * pos = position in string where insertion should
 	 * happen, or -1 for at the end
 	 * val = bytes to insert
-	 * len = number of bytes of val to insert
 	 * Returns: string
 	 */
-	public StringG insertLen(gssize pos, string val, gssize len)
+	public StringG insert(gssize pos, string val)
 	{
 		// GString * g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
-		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
-		if(p is null)
-		{
-			return null;
-		}
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Overwrites part of a string, lengthening it if necessary.
-	 * Since 2.14
-	 * Params:
-	 * string = a GString
-	 * pos = the position at which to start overwriting
-	 * val = the string that will overwrite the string starting at pos
-	 * Returns: string
-	 */
-	public StringG overwrite(gsize pos, string val)
-	{
-		// GString * g_string_overwrite (GString *string,  gsize pos,  const gchar *val);
-		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
+		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), cast(int) val.length);
 		if(p is null)
 		{
 			return null;
@@ -518,13 +428,12 @@ public class StringG
 	 * string = a GString
 	 * pos = the position at which to start overwriting
 	 * val = the string that will overwrite the string starting at pos
-	 * len = the number of bytes to write from val
 	 * Returns: string
 	 */
-	public StringG overwriteLen(gsize pos, string val, gssize len)
+	public StringG overwrite(gsize pos, string val)
 	{
 		// GString * g_string_overwrite_len (GString *string,  gsize pos,  const gchar *val,  gssize len);
-		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
+		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), cast(int) val.length);
 		if(p is null)
 		{
 			return null;

@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = MemorySlice
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -91,6 +91,26 @@ private import glib.ConstructionException;
  */
 public class MemorySlice
 {
+	
+	T* mewSlice(T)()
+	{
+		return cast(T*)g_slice_alloc(T.sizeof);
+	}
+	
+	T* mewSlice0(T)()
+	{
+		return cast(T*)g_slice_alloc0(T.sizeof);
+	}
+	
+	T* dup(T)(T* memBlock)
+	{
+		return cast(T*)g_slice_copy(T.sizeof, memBlock);
+	}
+	
+	void free(T)(T* memBlock)
+	{
+		g_slice_free1(T.sizeof, memBlock);
+	}
 	
 	/**
 	 */

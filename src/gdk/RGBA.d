@@ -135,7 +135,7 @@ public class RGBA
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GDK] in Linker.loadedLibraries && gdkRGBA !is null )
+		if ( Linker.isLoaded(LIBRARY.GDK) && gdkRGBA !is null )
 		{
 			gdk_rgba_free(gdkRGBA);
 		}

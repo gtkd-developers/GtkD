@@ -143,7 +143,7 @@ public class Color
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.GDK] in Linker.loadedLibraries && gdkColor !is null )
+		if ( Linker.isLoaded(LIBRARY.GDK) && gdkColor !is null )
 		{
 			gdk_color_free(gdkColor);
 		}

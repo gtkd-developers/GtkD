@@ -50,11 +50,9 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- gdkpixbuf.PixbufAnimationIter
- * 	- glib.TimeVal
  * 	- gdk.Pixbuf
  * 	- glib.Str
  * structWrap:
- * 	- GTimeVal* -> TimeVal
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
  * 	- GdkPixbufAnimationIter* -> PixbufAnimationIter
@@ -74,7 +72,6 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import gdkpixbuf.PixbufAnimationIter;
-private import glib.TimeVal;
 private import gdk.Pixbuf;
 private import glib.Str;
 
@@ -223,10 +220,10 @@ public class PixbufAnimation : ObjectG
 	 * startTime = time when the animation starts playing
 	 * Returns: an iterator to move over the animation. [transfer full]
 	 */
-	public PixbufAnimationIter getIter(TimeVal startTime)
+	public PixbufAnimationIter getIter(ref GTimeVal startTime)
 	{
 		// GdkPixbufAnimationIter * gdk_pixbuf_animation_get_iter (GdkPixbufAnimation *animation,  const GTimeVal *start_time);
-		auto p = gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, (startTime is null) ? null : startTime.getTimeValStruct());
+		auto p = gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, &startTime);
 		if(p is null)
 		{
 			return null;

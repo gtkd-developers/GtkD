@@ -409,13 +409,12 @@ public class MainContext
 	 * timeout = location to store timeout to be used in polling. [out]
 	 * fds = location to
 	 * store GPollFD records that need to be polled. [out caller-allocates][array length=n_fds]
-	 * nFds = length of fds.
 	 * Returns: the number of records actually stored in fds, or, if more than n_fds records need to be stored, the number of records that need to be stored.
 	 */
-	public int query(int maxPriority, out int timeout, GPollFD* fds, int nFds)
+	public int query(int maxPriority, out int timeout, GPollFD[] fds)
 	{
 		// gint g_main_context_query (GMainContext *context,  gint max_priority,  gint *timeout_,  GPollFD *fds,  gint n_fds);
-		return g_main_context_query(gMainContext, maxPriority, &timeout, fds, nFds);
+		return g_main_context_query(gMainContext, maxPriority, &timeout, fds.ptr, cast(int) fds.length);
 	}
 	
 	/**
@@ -424,13 +423,12 @@ public class MainContext
 	 * maxPriority = the maximum numerical priority of sources to check
 	 * fds = array of GPollFD's that was passed to
 	 * the last call to g_main_context_query(). [array length=n_fds]
-	 * nFds = return value of g_main_context_query()
 	 * Returns: TRUE if some sources are ready to be dispatched.
 	 */
-	public int check(int maxPriority, GPollFD* fds, int nFds)
+	public int check(int maxPriority, GPollFD[] fds)
 	{
 		// gint g_main_context_check (GMainContext *context,  gint max_priority,  GPollFD *fds,  gint n_fds);
-		return g_main_context_check(gMainContext, maxPriority, fds, nFds);
+		return g_main_context_check(gMainContext, maxPriority, fds.ptr, cast(int) fds.length);
 	}
 	
 	/**
@@ -479,10 +477,10 @@ public class MainContext
 	 * the same as the priority used for g_source_attach() to ensure that the
 	 * file descriptor is polled whenever the results may be needed.
 	 */
-	public void addPoll(GPollFD* fd, int priority)
+	public void addPoll(ref GPollFD fd, int priority)
 	{
 		// void g_main_context_add_poll (GMainContext *context,  GPollFD *fd,  gint priority);
-		g_main_context_add_poll(gMainContext, fd, priority);
+		g_main_context_add_poll(gMainContext, &fd, priority);
 	}
 	
 	/**
@@ -491,10 +489,10 @@ public class MainContext
 	 * Params:
 	 * fd = a GPollFD descriptor previously added with g_main_context_add_poll()
 	 */
-	public void removePoll(GPollFD* fd)
+	public void removePoll(ref GPollFD fd)
 	{
 		// void g_main_context_remove_poll (GMainContext *context,  GPollFD *fd);
-		g_main_context_remove_poll(gMainContext, fd);
+		g_main_context_remove_poll(gMainContext, &fd);
 	}
 	
 	/**

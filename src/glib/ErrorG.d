@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = ErrorG
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtkc.paths
+ * 	- gtkc.Loader
  * structWrap:
  * 	- GError* -> ErrorG
  * module aliases:
@@ -60,6 +62,8 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import gtkc.paths;
+private import gtkc.Loader;
 
 
 
@@ -240,6 +244,14 @@ public class ErrorG
 			return;
 		}
 		this.gError = gError;
+	}
+	
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gError !is null )
+		{
+			g_error_free(gError);
+		}
 	}
 	
 	/**

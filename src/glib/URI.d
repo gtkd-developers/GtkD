@@ -179,18 +179,20 @@ public class URI
 	 * Returns: a newly-allocated string holding the resulting filename, or NULL on an error.
 	 * Throws: GException on failure.
 	 */
-	public static string gFilenameFromUri(string uri, char** hostname)
+	public static string gFilenameFromUri(string uri, out string hostname)
 	{
 		// gchar * g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
+		char* outhostname = null;
 		GError* err = null;
 		
-		auto p = g_filename_from_uri(Str.toStringz(uri), hostname, &err);
+		auto p = g_filename_from_uri(Str.toStringz(uri), &outhostname, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
+		hostname = Str.toString(outhostname);
 		return Str.toString(p);
 	}
 	
