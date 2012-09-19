@@ -42,6 +42,7 @@
  * omit prefixes:
  * omit code:
  * omit signals:
+ * 	- notify
  * imports:
  * structWrap:
  * module aliases:
@@ -137,47 +138,6 @@ public class WeakRef
 	
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(GParamSpec*, WeakRef)[] onNotifyListeners;
-	/**
-	 * The notify signal is emitted on an object when one of its
-	 * properties has been changed. Note that getting this signal
-	 * doesn't guarantee that the value of the property has actually
-	 * changed, it may also be emitted when the setter for the property
-	 * is called to reinstate the previous value.
-	 * This signal is typically used to obtain change notification for a
-	 * single property, by specifying the property name as a detail in the
-	 * $(DDOC_COMMENT example)
-	 * It is important to note that you must use
-	 * canonical parameter names as
-	 * detail strings for the notify signal.
-	 * See Also
-	 * GParamSpecObject, g_param_spec_object()
-	 */
-	void addOnNotify(void delegate(GParamSpec*, WeakRef) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("notify" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"notify",
-			cast(GCallback)&callBackNotify,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["notify"] = 1;
-		}
-		onNotifyListeners ~= dlg;
-	}
-	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* pspec, WeakRef _weakRef)
-	{
-		foreach ( void delegate(GParamSpec*, WeakRef) dlg ; _weakRef.onNotifyListeners )
-		{
-			dlg(pspec, _weakRef);
-		}
-	}
-	
 	
 	/**
 	 * Initialise a non-statically-allocated GWeakRef.

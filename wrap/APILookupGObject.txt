@@ -418,6 +418,7 @@ struct: GWeakRef
 class: WeakRef
 strictPrefix: Y
 prefix: g_weak_ref_
+nosignal: notify
 
 code: start
 	/** */
