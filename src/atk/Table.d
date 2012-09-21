@@ -237,7 +237,7 @@ public class Table
 	void delegate(gint, gint, Table)[] onRowDeletedListeners;
 	/**
 	 * The "row-deleted" signal is emitted by an object which implements the
-	 * AtkTable interface when a column is inserted.
+	 * AtkTable interface when a row is deleted.
 	 */
 	void addOnRowDeleted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -265,7 +265,7 @@ public class Table
 	void delegate(gint, gint, Table)[] onRowInsertedListeners;
 	/**
 	 * The "row-inserted" signal is emitted by an object which implements the
-	 * AtkTable interface when a column is inserted.
+	 * AtkTable interface when a row is inserted.
 	 */
 	void addOnRowInserted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -293,7 +293,7 @@ public class Table
 	void delegate(Table)[] onRowReorderedListeners;
 	/**
 	 * The "row-reordered" signal is emitted by an object which implements the
-	 * AtkTable interface when the columns are reordered.
+	 * AtkTable interface when the rows are reordered.
 	 * See Also
 	 * AtkObject, ATK_STATE_TRANSIENT
 	 */

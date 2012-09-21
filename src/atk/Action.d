@@ -147,7 +147,6 @@ public class Action
 	}
 	
 	/**
-	 * Returns a description of the specified action of the object.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
 	 * Returns: a description string, or NULL if action does not implement this interface.
@@ -159,19 +158,6 @@ public class Action
 	}
 	
 	/**
-	 * Returns a non-localized string naming the specified action of the
-	 * object. This name is generally not descriptive of the end result
-	 * of the action, but instead names the 'interaction type' which the
-	 * object supports. By convention, the above strings should be used to
-	 * represent the actions which correspond to the common point-and-click
-	 * interaction techniques of the same name: i.e.
-	 * "click", "press", "release", "drag", "drop", "popup", etc.
-	 * The "popup" action should be used to pop up a context menu for the
-	 * object, if one exists.
-	 * For technical reasons, some toolkits cannot guarantee that the
-	 * reported action is actually 'bound' to a nontrivial user event;
-	 * i.e. the result of some actions via atk_action_do_action() may be
-	 * NIL.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
 	 * Returns: a name string, or NULL if action does not implement this interface.
@@ -183,7 +169,6 @@ public class Action
 	}
 	
 	/**
-	 * Returns the localized name of the specified action of the object.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
 	 * Returns: a name string, or NULL if action does not implement this interface.
@@ -195,20 +180,29 @@ public class Action
 	}
 	
 	/**
-	 * Returns a keybinding associated with this action, if one exists.
-	 * The returned string is in the format "<a>;<b>;<c>"
-	 * (i.e. semicolon-delimited), where <a> is the keybinding which
-	 * activates the object if it is presently enabled onscreen,
-	 * <b> corresponds to the keybinding or sequence of keys
-	 * which invokes the action even if the relevant element is not
-	 * currently posted on screen (for instance, for a menu item it
-	 * posts the parent menus before invoking). The last token in the
-	 * above string, if non-empty, represents a keyboard shortcut which
-	 * invokes the same action without posting the component or its
-	 * enclosing menus or dialogs.
+	 * Gets the keybinding which can be used to activate this action, if one
+	 * exists. The string returned should contain localized, human-readable,
+	 * key sequences as they would appear when displayed on screen. It must
+	 * be in the format "mnemonic;sequence;shortcut".
+	 * The mnemonic key activates the object if it is presently enabled onscreen.
+	 *  This typically corresponds to the underlined letter within the widget.
+	 *  Example: "n" in a traditional "New..." menu item or the "a" in "Apply" for
+	 *  a button.
+	 * The sequence is the full list of keys which invoke the action even if the
+	 *  relevant element is not currently shown on screen. For instance, for a menu
+	 *  item the sequence is the keybindings used to open the parent menus before
+	 *  invoking. The sequence string is colon-delimited. Example: "Alt+F:N" in a
+	 *  traditional "New..." menu item.
+	 * The shortcut, if it exists, will invoke the same action without showing
+	 *  the component or its enclosing menus or dialogs. Example: "Ctrl+N" in a
+	 *  traditional "New..." menu item.
+	 * Example: For a traditional "New..." menu item, the expected return value
+	 * would be: "N;Alt+F:N;Ctrl+N" for the English locale and "N;Alt+D:N;Strg+N"
+	 * for the German locale. If, hypothetically, this menu item lacked a mnemonic,
+	 * it would be represented by ";;Ctrl+N" and ";;Strg+N" respectively.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
-	 * Returns: a string representing the available keybindings, or NULL if there is no keybinding for this action.
+	 * Returns: the keybinding which can be used to activate this action, or NULL if there is no keybinding for this action.
 	 */
 	public string getKeybinding(int i)
 	{

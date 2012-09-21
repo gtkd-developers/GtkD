@@ -317,7 +317,7 @@ public class Text
 	 * Gets the specified text.
 	 * Params:
 	 * startOffset = start position
-	 * endOffset = end position
+	 * endOffset = end position, or -1 for the end of the string.
 	 * Returns: a newly allocated string containing the text from start_offset up to, but not including end_offset. Use g_free() to free the returned string.
 	 */
 	public string getText(int startOffset, int endOffset)

@@ -2,10 +2,6 @@
 mkdir gtkdocs
 cd gtkdocs
 
-curl http://developer.gnome.org/gio/gio-html-2.32.4.tar.gz | tar xvfz -
-ln -s gio-html-2.32.4 gio
-exit
-
 #GLIB
 curl http://developer.gnome.org/glib/glib-html-2.32.4.tar.gz | tar xvfz -
 ln -s glib-html-2.32.4 gthread
@@ -17,8 +13,8 @@ ln -s gobject-html-2.32.4 gobject
 curl http://developer.gnome.org/gio/gio-html-2.32.4.tar.gz | tar xvfz -
 ln -s gio-html-2.32.4 gio
 #ATK
-curl http://developer.gnome.org/atk/atk-html-2.2.0.tar.gz | tar xvfz -
-ln -s atk-html-2.2.0 atk
+curl http://developer.gnome.org/atk/atk-html-2.4.0.tar.gz | tar xvfz -
+ln -s atk-html-2.4.0 atk
 #PANGO
 curl http://developer.gnome.org/pango/pango-html-1.28.4.tar.gz | tar xvfz -
 ln -s pango-html-1.28.4 pango

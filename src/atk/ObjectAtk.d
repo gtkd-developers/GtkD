@@ -491,7 +491,10 @@ public class ObjectAtk : ObjectG
 	}
 	
 	/**
-	 * Sets the accessible name of the accessible.
+	 * Sets the accessible name of the accessible. You can't set the name
+	 * to NULL. This is reserved for the initial value. In this aspect
+	 * NULL is similar to ATK_ROLE_UNKNOWN. If you want to set the name to
+	 * a empty value you can use "".
 	 * Params:
 	 * name = a character string to be set as the accessible name
 	 */
@@ -502,7 +505,10 @@ public class ObjectAtk : ObjectG
 	}
 	
 	/**
-	 * Sets the accessible description of the accessible.
+	 * Sets the accessible description of the accessible. You can't set
+	 * the description to NULL. This is reserved for the initial value. In
+	 * this aspect NULL is similar to ATK_ROLE_UNKNOWN. If you want to set
+	 * the name to a empty value you can use "".
 	 * Params:
 	 * description = a character string to be set as the accessible description
 	 */
