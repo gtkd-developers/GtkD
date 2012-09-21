@@ -210,17 +210,16 @@ alias GdkGrabOwnership GrabOwnership;
  */
 public enum GdkPixbufError
 {
-	/+* image data hosed +/
-	GDK_PIXBUF_ERROR_CORRUPT_IMAGE,
+	CORRUPT_IMAGE,
 	/+* no mem to load image +/
-	GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY,
+	INSUFFICIENT_MEMORY,
 	/+* bad option passed to save routine +/
-	GDK_PIXBUF_ERROR_BAD_OPTION,
+	BAD_OPTION,
 	/+* unsupported image type (sort of an ENOSYS) +/
-	GDK_PIXBUF_ERROR_UNKNOWN_TYPE,
+	UNKNOWN_TYPE,
 	/+* unsupported operation (load, save) for image type +/
-	GDK_PIXBUF_ERROR_UNSUPPORTED_OPERATION,
-	GDK_PIXBUF_ERROR_FAILED
+	UNSUPPORTED_OPERATION,
+	FAILED
 }
 alias GdkPixbufError PixbufError;
 

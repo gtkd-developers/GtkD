@@ -148,9 +148,9 @@ public class PgRenderer : ObjectG
 	 * Params:
 	 * layout = a PangoLayout
 	 * x = X position of left edge of baseline, in user space coordinates
-	 *  in Pango units.
+	 * in Pango units.
 	 * y = Y position of left edge of baseline, in user space coordinates
-	 *  in Pango units.
+	 * in Pango units.
 	 */
 	public void drawLayout(PgLayout layout, int x, int y)
 	{
@@ -164,9 +164,9 @@ public class PgRenderer : ObjectG
 	 * Params:
 	 * line = a PangoLayoutLine
 	 * x = X position of left edge of baseline, in user space coordinates
-	 *  in Pango units.
+	 * in Pango units.
 	 * y = Y position of left edge of baseline, in user space coordinates
-	 *  in Pango units.
+	 * in Pango units.
 	 */
 	public void drawLayoutLine(PgLayoutLine line, int x, int y)
 	{
@@ -181,9 +181,9 @@ public class PgRenderer : ObjectG
 	 * font = a PangoFont
 	 * glyphs = a PangoGlyphString
 	 * x = X position of left edge of baseline, in user space coordinates
-	 *  in Pango units.
+	 * in Pango units.
 	 * y = Y position of left edge of baseline, in user space coordinates
-	 *  in Pango units.
+	 * in Pango units.
 	 */
 	public void drawGlyphs(PgFont font, PgGlyphString glyphs, int x, int y)
 	{
@@ -202,12 +202,12 @@ public class PgRenderer : ObjectG
 	 * pango_renderer_draw_glyphs().
 	 * Since 1.22
 	 * Params:
-	 * text = the UTF-8 text that glyph_item refers to, or NULL
+	 * text = the UTF-8 text that glyph_item refers to, or NULL. [allow-none]
 	 * glyphItem = a PangoGlyphItem
 	 * x = X position of left edge of baseline, in user space coordinates
-	 *  in Pango units.
+	 * in Pango units.
 	 * y = Y position of left edge of baseline, in user space coordinates
-	 *  in Pango units.
+	 * in Pango units.
 	 */
 	public void drawGlyphItem(string text, PgGlyphItem glyphItem, int x, int y)
 	{
@@ -341,7 +341,7 @@ public class PgRenderer : ObjectG
 	 * Since 1.8
 	 * Params:
 	 * part = the part to change the color of
-	 * color = the new color or NULL to unset the current color
+	 * color = the new color or NULL to unset the current color. [allow-none]
 	 */
 	public void setColor(PangoRenderPart part, PgColor color)
 	{
@@ -372,7 +372,7 @@ public class PgRenderer : ObjectG
 	 * Since 1.8
 	 * Params:
 	 * matrix = a PangoMatrix, or NULL to unset any existing matrix.
-	 *  (No matrix set is the same as setting the identity matrix.)
+	 * (No matrix set is the same as setting the identity matrix.). [allow-none]
 	 */
 	public void setMatrix(PgMatrix matrix)
 	{
@@ -404,7 +404,7 @@ public class PgRenderer : ObjectG
 	 * The returned layout should not be modified while still being
 	 * rendered.
 	 * Since 1.20
-	 * Returns: the layout, or NULL if no layout is being rendered using renderer at this time.
+	 * Returns: the layout, or NULL if no layout is being rendered using renderer at this time. [transfer none]
 	 */
 	public PgLayout getLayout()
 	{

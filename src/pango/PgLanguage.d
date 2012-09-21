@@ -117,7 +117,7 @@ public class PgLanguage
 	 * Use pango_language_get_default() if you want to get the PangoLanguage for
 	 * the current locale of the process.
 	 * Params:
-	 * language = a string representing a language tag, or NULL
+	 * language = a string representing a language tag, or NULL. [allow-none]
 	 * Returns: an opaque pointer to a PangoLanguage structure, or NULL if language was NULL. The returned pointer will be valid forever after, and should not be freed.
 	 */
 	public static PgLanguage fromString(string language)
@@ -149,9 +149,9 @@ public class PgLanguage
 	 * in the tag is '-'.
 	 * Params:
 	 * rangeList = a list of language ranges, separated by ';', ':',
-	 *  ',', or space characters.
-	 *  Each element must either be '*', or a RFC 3066 language range
-	 *  canonicalized as by pango_language_from_string()
+	 * ',', or space characters.
+	 * Each element must either be '*', or a RFC 3066 language range
+	 * canonicalized as by pango_language_from_string()
 	 * Returns: TRUE if a match was found.
 	 */
 	public int matches(string rangeList)
@@ -200,7 +200,8 @@ public class PgLanguage
 	 * internally.
 	 * Since 1.22
 	 * Params:
-	 * numScripts = location to return number of scripts, or NULL
+	 * numScripts = location to return number of scripts,
+	 * or NULL. [out caller-allocates][allow-none]
 	 * Returns: An array of PangoScript values, with the number of entries in the array stored in num_scripts, or NULL if Pango does not have any information about this particular language tag (also the case if language is NULL). The returned array is owned by Pango and should not be modified or freed.
 	 */
 	public PangoScript* getScripts(int* numScripts)

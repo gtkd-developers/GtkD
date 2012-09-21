@@ -296,6 +296,7 @@ mixin( _shared ~ "static this()
 	Linker.link(pango_layout_context_changed, \"pango_layout_context_changed\", LIBRARY.PANGO);
 	Linker.link(pango_layout_set_text, \"pango_layout_set_text\", LIBRARY.PANGO);
 	Linker.link(pango_layout_get_text, \"pango_layout_get_text\", LIBRARY.PANGO);
+	Linker.link(pango_layout_get_character_count, \"pango_layout_get_character_count\", LIBRARY.PANGO);
 	Linker.link(pango_layout_set_markup, \"pango_layout_set_markup\", LIBRARY.PANGO);
 	Linker.link(pango_layout_set_markup_with_accel, \"pango_layout_set_markup_with_accel\", LIBRARY.PANGO);
 	Linker.link(pango_layout_set_attributes, \"pango_layout_set_attributes\", LIBRARY.PANGO);
@@ -328,6 +329,7 @@ mixin( _shared ~ "static this()
 	Linker.link(pango_layout_get_single_paragraph_mode, \"pango_layout_get_single_paragraph_mode\", LIBRARY.PANGO);
 	Linker.link(pango_layout_get_unknown_glyphs_count, \"pango_layout_get_unknown_glyphs_count\", LIBRARY.PANGO);
 	Linker.link(pango_layout_get_log_attrs, \"pango_layout_get_log_attrs\", LIBRARY.PANGO);
+	Linker.link(pango_layout_get_log_attrs_readonly, \"pango_layout_get_log_attrs_readonly\", LIBRARY.PANGO);
 	Linker.link(pango_layout_index_to_pos, \"pango_layout_index_to_pos\", LIBRARY.PANGO);
 	Linker.link(pango_layout_index_to_line_x, \"pango_layout_index_to_line_x\", LIBRARY.PANGO);
 	Linker.link(pango_layout_xy_to_index, \"pango_layout_xy_to_index\", LIBRARY.PANGO);
@@ -777,6 +779,7 @@ mixin( gshared ~"extern(C)
 	void function(PangoLayout* layout) c_pango_layout_context_changed;
 	void function(PangoLayout* layout, char* text, int length) c_pango_layout_set_text;
 	char* function(PangoLayout* layout) c_pango_layout_get_text;
+	gint function(PangoLayout* layout) c_pango_layout_get_character_count;
 	void function(PangoLayout* layout, char* markup, int length) c_pango_layout_set_markup;
 	void function(PangoLayout* layout, char* markup, int length, gunichar accelMarker, gunichar* accelChar) c_pango_layout_set_markup_with_accel;
 	void function(PangoLayout* layout, PangoAttrList* attrs) c_pango_layout_set_attributes;
@@ -809,6 +812,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(PangoLayout* layout) c_pango_layout_get_single_paragraph_mode;
 	int function(PangoLayout* layout) c_pango_layout_get_unknown_glyphs_count;
 	void function(PangoLayout* layout, PangoLogAttr** attrs, gint* nAttrs) c_pango_layout_get_log_attrs;
+	PangoLogAttr* function(PangoLayout* layout, gint* nAttrs) c_pango_layout_get_log_attrs_readonly;
 	void function(PangoLayout* layout, int index, PangoRectangle* pos) c_pango_layout_index_to_pos;
 	void function(PangoLayout* layout, int index, gboolean trailing, int* line, int* xPos) c_pango_layout_index_to_line_x;
 	gboolean function(PangoLayout* layout, int x, int y, int* index, int* trailing) c_pango_layout_xy_to_index;
@@ -1256,6 +1260,7 @@ alias c_pango_layout_get_context  pango_layout_get_context;
 alias c_pango_layout_context_changed  pango_layout_context_changed;
 alias c_pango_layout_set_text  pango_layout_set_text;
 alias c_pango_layout_get_text  pango_layout_get_text;
+alias c_pango_layout_get_character_count  pango_layout_get_character_count;
 alias c_pango_layout_set_markup  pango_layout_set_markup;
 alias c_pango_layout_set_markup_with_accel  pango_layout_set_markup_with_accel;
 alias c_pango_layout_set_attributes  pango_layout_set_attributes;
@@ -1288,6 +1293,7 @@ alias c_pango_layout_set_single_paragraph_mode  pango_layout_set_single_paragrap
 alias c_pango_layout_get_single_paragraph_mode  pango_layout_get_single_paragraph_mode;
 alias c_pango_layout_get_unknown_glyphs_count  pango_layout_get_unknown_glyphs_count;
 alias c_pango_layout_get_log_attrs  pango_layout_get_log_attrs;
+alias c_pango_layout_get_log_attrs_readonly  pango_layout_get_log_attrs_readonly;
 alias c_pango_layout_index_to_pos  pango_layout_index_to_pos;
 alias c_pango_layout_index_to_line_x  pango_layout_index_to_line_x;
 alias c_pango_layout_xy_to_index  pango_layout_xy_to_index;

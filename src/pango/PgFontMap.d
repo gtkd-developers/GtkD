@@ -149,7 +149,7 @@ public class PgFontMap : ObjectG
 	 * gdk_pango_context_get_for_screen(), and
 	 * gtk_widget_get_pango_context(). Use those instead.
 	 * Since 1.22
-	 * Returns: the newly allocated PangoContext, which should be freed with g_object_unref().
+	 * Returns: the newly allocated PangoContext, which should be freed with g_object_unref(). [transfer full]
 	 */
 	public PgContext createContext()
 	{
@@ -167,7 +167,7 @@ public class PgFontMap : ObjectG
 	 * Params:
 	 * context = the PangoContext the font will be used with
 	 * desc = a PangoFontDescription describing the font to load
-	 * Returns: the font loaded, or NULL if no font matched.
+	 * Returns: the newly allocated PangoFont loaded, or NULL if no font matched. [transfer full]
 	 */
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
 	{
@@ -187,7 +187,7 @@ public class PgFontMap : ObjectG
 	 * context = the PangoContext the font will be used with
 	 * desc = a PangoFontDescription describing the font to load
 	 * language = a PangoLanguage the fonts will be used for
-	 * Returns: the fontset, or NULL if no font matched.
+	 * Returns: the newly allocated PangoFontset loaded, or NULL if no font matched. [transfer full]
 	 */
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{
@@ -204,7 +204,7 @@ public class PgFontMap : ObjectG
 	 * List all families for a fontmap.
 	 * Params:
 	 * families = location to store a pointer to an array of PangoFontFamily *.
-	 *  This array should be freed with g_free().
+	 * This array should be freed with g_free(). [out][array length=n_families]
 	 */
 	public void listFamilies(out PgFontFamily[] families)
 	{

@@ -132,7 +132,7 @@ public class PgFontset : ObjectG
 	 * Unicode character wc.
 	 * Params:
 	 * wc = a Unicode character
-	 * Returns: a PangoFont. The caller must call g_object_unref when finished with the font.
+	 * Returns: a PangoFont. The caller must call g_object_unref when finished with the font. [transfer full]
 	 */
 	public PgFont getFont(uint wc)
 	{
@@ -165,8 +165,8 @@ public class PgFontset : ObjectG
 	 * each one. If func returns TRUE, that stops the iteration.
 	 * Since 1.4
 	 * Params:
-	 * func = Callback function
-	 * data = data to pass to the callback function
+	 * func = Callback function. [closure data][scope call]
+	 * data = data to pass to the callback function. [closure]
 	 */
 	public void foreac(PangoFontsetForeachFunc func, void* data)
 	{

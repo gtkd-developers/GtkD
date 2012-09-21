@@ -200,11 +200,11 @@ public class PgContext : ObjectG
 	 * text = the text to itemize.
 	 * startIndex = first byte in text to process
 	 * length = the number of bytes (not characters) to process
-	 *  after start_index.
-	 *  This must be >= 0.
+	 * after start_index.
+	 * This must be >= 0.
 	 * attrs = the set of attributes that apply to text.
-	 * cachedIter = Cached attribute iterator, or NULL
-	 * Returns: a GList of PangoItem structures.
+	 * cachedIter = Cached attribute iterator, or NULL. [allow-none]
+	 * Returns: a GList of PangoItem structures. The items should be freed using pango_item_free() probably in combination with g_list_foreach(), and the list itself using g_list_free(). [transfer full][element-type Pango.Item]
 	 */
 	public ListG itemize(string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
@@ -227,11 +227,10 @@ public class PgContext : ObjectG
 	 * text = the text to itemize.
 	 * startIndex = first byte in text to process
 	 * length = the number of bytes (not characters) to process
-	 *  after start_index.
-	 *  This must be >= 0.
+	 * after start_index. This must be >= 0.
 	 * attrs = the set of attributes that apply to text.
-	 * cachedIter = Cached attribute iterator, or NULL
-	 * Returns: a GList of PangoItem structures. The items should be freed using pango_item_free() probably in combination with g_list_foreach(), and the list itself using g_list_free().
+	 * cachedIter = Cached attribute iterator, or NULL. [allow-none]
+	 * Returns: a GList of PangoItem structures. The items should be freed using pango_item_free() probably in combination with g_list_foreach(), and the list itself using g_list_free(). [transfer full][element-type Pango.Item]
 	 */
 	public ListG itemizeWithBaseDir(PangoDirection baseDir, string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
@@ -249,8 +248,8 @@ public class PgContext : ObjectG
 	 * directional levels, produce a list in visual order.
 	 * The original list is unmodified.
 	 * Params:
-	 * logicalItems = a GList of PangoItem in logical order.
-	 * Returns: a GList of PangoItem structures in visual order. (Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.)
+	 * logicalItems = a GList of PangoItem in logical order. [element-type Pango.Item]
+	 * Returns: a GList of PangoItem structures in visual order. (Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.). [transfer full][element-type Pango.Item]
 	 */
 	public static ListG reorderItems(ListG logicalItems)
 	{
@@ -303,7 +302,7 @@ public class PgContext : ObjectG
 	/**
 	 * Gets the PangoFontmap used to look up fonts for this context.
 	 * Since 1.6
-	 * Returns: the font map for the PangoContext. This value is owned by Pango and should not be unreferenced.
+	 * Returns: the font map for the PangoContext. This value is owned by Pango and should not be unreferenced. [transfer none]
 	 */
 	public PgFontMap getFontMap()
 	{
@@ -318,7 +317,7 @@ public class PgContext : ObjectG
 	
 	/**
 	 * Retrieve the default font description for the context.
-	 * Returns: a pointer to the context's default font description. This value must not be modified or freed.
+	 * Returns: a pointer to the context's default font description. This value must not be modified or freed. [transfer none]
 	 */
 	public PgFontDescription getFontDescription()
 	{
@@ -490,8 +489,8 @@ public class PgContext : ObjectG
 	 * matrices, depending on how the text is fit to the pixel grid.
 	 * Since 1.6
 	 * Params:
-	 * matrix = a PangoMatrix, or NULL to unset any existing matrix.
-	 *  (No matrix set is the same as setting the identity matrix.)
+	 * matrix = a PangoMatrix, or NULL to unset any existing
+	 * matrix. (No matrix set is the same as setting the identity matrix.). [allow-none]
 	 */
 	public void setMatrix(PgMatrix matrix)
 	{
@@ -504,7 +503,7 @@ public class PgContext : ObjectG
 	 * that is the closest match for desc.
 	 * Params:
 	 * desc = a PangoFontDescription describing the font to load
-	 * Returns: the font loaded, or NULL if no font matched.
+	 * Returns: the newly allocated PangoFont that was loaded, or NULL if no font matched. [transfer full]
 	 */
 	public PgFont loadFont(PgFontDescription desc)
 	{
@@ -523,7 +522,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 * desc = a PangoFontDescription describing the fonts to load
 	 * language = a PangoLanguage the fonts will be used for
-	 * Returns: the fontset, or NULL if no font matched.
+	 * Returns: the newly allocated PangoFontset loaded, or NULL if no font matched. [transfer full]
 	 */
 	public PgFontset loadFontset(PgFontDescription desc, PgLanguage language)
 	{
@@ -549,13 +548,13 @@ public class PgContext : ObjectG
 	 * be a composite of the metrics for the fonts loaded for the
 	 * individual families.
 	 * Params:
-	 * desc = a PangoFontDescription structure. NULL means that the font
-	 * 	 description from the context will be used.
-	 * language = language tag used to determine which script to get the metrics
-	 *  for. NULL means that the language tag from the context will
-	 *  be used. If no language tag is set on the context, metrics
-	 *  for the default language (as determined by
-	 *  pango_language_get_default()) will be returned.
+	 * desc = a PangoFontDescription structure. NULL means that the
+	 * font description from the context will be used. [allow-none]
+	 * language = language tag used to determine which script to get
+	 * the metrics for. NULL means that the language tag from the context
+	 * will be used. If no language tag is set on the context, metrics
+	 * for the default language (as determined by pango_language_get_default())
+	 * will be returned. [allow-none]
 	 * Returns: a PangoFontMetrics object. The caller must call pango_font_metrics_unref() when finished using the object.
 	 */
 	public PgFontMetrics getMetrics(PgFontDescription desc, PgLanguage language)
@@ -572,8 +571,9 @@ public class PgContext : ObjectG
 	/**
 	 * List all families for a context.
 	 * Params:
-	 * families = location to store a pointer to an array of PangoFontFamily *.
-	 *  This array should be freed with g_free().
+	 * families = location to store a pointer to
+	 * an array of PangoFontFamily *. This array should be freed
+	 * with g_free(). [out][array length=n_families]
 	 */
 	public void listFamilies(out PgFontFamily[] families)
 	{

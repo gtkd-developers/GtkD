@@ -146,7 +146,7 @@ public class PgFontFace : ObjectG
 	 * Since 1.4
 	 * Params:
 	 * sizes = location to store a pointer to an array of int. This array
-	 *  should be freed with g_free().
+	 * should be freed with g_free().
 	 */
 	public void listSizes(out int[] sizes)
 	{

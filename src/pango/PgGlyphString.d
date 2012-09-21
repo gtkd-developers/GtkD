@@ -165,10 +165,10 @@ public class PgGlyphString
 	 * of the rectangles.
 	 * Params:
 	 * font = a PangoFont
-	 * inkRect = rectangle used to store the extents of the glyph string as drawn
-	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect = rectangle used to store the logical extents of the glyph string
-	 *  or NULL to indicate that the result is not needed.
+	 * inkRect = rectangle used to store the extents of the glyph string
+	 * as drawn or NULL to indicate that the result is not needed. [out][allow-none]
+	 * logicalRect = rectangle used to store the logical extents of the
+	 * glyph string or NULL to indicate that the result is not needed. [out][allow-none]
 	 */
 	public void extents(PgFont font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -184,12 +184,12 @@ public class PgGlyphString
 	 * Params:
 	 * start = start index
 	 * end = end index (the range is the set of bytes with
-	 * 	 indices such that start <= index < end)
+	 * indices such that start <= index < end)
 	 * font = a PangoFont
 	 * inkRect = rectangle used to store the extents of the glyph string range as drawn
-	 *  or NULL to indicate that the result is not needed.
+	 * or NULL to indicate that the result is not needed.
 	 * logicalRect = rectangle used to store the logical extents of the glyph string range
-	 *  or NULL to indicate that the result is not needed.
+	 * or NULL to indicate that the result is not needed.
 	 */
 	public void extentsRange(int start, int end, PgFont font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -221,7 +221,7 @@ public class PgGlyphString
 	 * analysis = the analysis information return from pango_itemize()
 	 * index = the byte index within text
 	 * trailing = whether we should compute the result for the beginning (FALSE)
-	 *  or end (TRUE) of the character.
+	 * or end (TRUE) of the character.
 	 * xPos = location to store result
 	 */
 	public void indexToX(string text, int length, PangoAnalysis* analysis, int index, int trailing, out int xPos)
@@ -244,8 +244,8 @@ public class PgGlyphString
 	 * xPos = the x offset (in Pango units)
 	 * index = location to store calculated byte index within text
 	 * trailing = location to store a boolean indicating
-	 *  whether the user clicked on the leading or trailing
-	 *  edge of the character.
+	 * whether the user clicked on the leading or trailing
+	 * edge of the character.
 	 */
 	public void xToIndex(string text, int length, PangoAnalysis* analysis, int xPos, out int index, out int trailing)
 	{
@@ -264,9 +264,9 @@ public class PgGlyphString
 	 * length = the length of text, in bytes
 	 * embeddingLevel = the embedding level of the string
 	 * logicalWidths = an array whose length is the number of characters in
-	 *  text (equal to g_utf8_strlen (text, length) unless
-	 *  text has NUL bytes)
-	 *  to be filled in with the resulting character widths.
+	 * text (equal to g_utf8_strlen (text, length) unless
+	 * text has NUL bytes)
+	 * to be filled in with the resulting character widths.
 	 */
 	public void getLogicalWidths(string text, int length, int embeddingLevel, int* logicalWidths)
 	{

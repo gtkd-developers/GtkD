@@ -92,7 +92,7 @@ public class PgMiscellaneous
 	 * white space and substituting ~/ with $HOME/.
 	 * Params:
 	 * str = a G_SEARCHPATH_SEPARATOR separated list of filenames
-	 * Returns: a list of strings to be freed with g_strfreev()
+	 * Returns: a list of strings to be freed with g_strfreev(). [transfer full][array zero-terminated=1]
 	 */
 	public static string[] splitFileList(string str)
 	{
@@ -122,7 +122,7 @@ public class PgMiscellaneous
 	 * unmodified.
 	 * Params:
 	 * stream = a stdio stream
-	 * str = GString buffer into which to write the result
+	 * str = GString buffer into which to write the result. [out]
 	 * Returns: 0 if the stream was already at an EOF character, otherwise the number of lines read (this is useful for maintaining a line number counter which doesn't combine lines with '\')
 	 */
 	public static int readLine(FILE* stream, StringG str)
@@ -134,7 +134,7 @@ public class PgMiscellaneous
 	/**
 	 * Skips 0 or more characters of white space.
 	 * Params:
-	 * pos = in/out string position
+	 * pos = in/out string position. [inout]
 	 * Returns: FALSE if skipping the white space leaves the position at a '\0' character.
 	 */
 	public static int skipSpace(ref string pos)
@@ -153,8 +153,8 @@ public class PgMiscellaneous
 	 * of [A-Za-z_] followed by zero or more [A-Za-z_0-9]
 	 * Leading white space is skipped.
 	 * Params:
-	 * pos = in/out string position
-	 * out = a GString into which to write the result
+	 * pos = in/out string position. [inout]
+	 * out = a GString into which to write the result. [out]
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanWord(ref string pos, StringG f_out)
@@ -174,8 +174,8 @@ public class PgMiscellaneous
 	 * string with '"'. Instead a quoted string, '\"' represents
 	 * a literal quote. Leading white space outside of quotes is skipped.
 	 * Params:
-	 * pos = in/out string position
-	 * out = a GString into which to write the result
+	 * pos = in/out string position. [inout]
+	 * out = a GString into which to write the result. [out]
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanString(ref string pos, StringG f_out)
@@ -193,8 +193,8 @@ public class PgMiscellaneous
 	 * Scans an integer.
 	 * Leading white space is skipped.
 	 * Params:
-	 * pos = in/out string position
-	 * out = an int into which to write the result
+	 * pos = in/out string position. [inout]
+	 * out = an int into which to write the result. [out]
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanInt(ref string pos, out int f_out)
@@ -211,7 +211,7 @@ public class PgMiscellaneous
 	/**
 	 * Looks up a key in the Pango config database
 	 * (pseudo-win.ini style, read from $sysconfdir/pango/pangorc,
-	 *  ~/.pangorc, and getenv (PANGO_RC_FILE).)
+	 *  $XDG_CONFIG_HOME/pango/pangorc, and getenv (PANGO_RC_FILE).)
 	 * Params:
 	 * key = Key to look up, in the form "SECTION/KEY".
 	 * Returns: the value, if found, otherwise NULL. The value is a newly-allocated string and must be freed with g_free().
@@ -229,7 +229,7 @@ public class PgMiscellaneous
 	 * Params:
 	 * fontname = an ascii string
 	 * families = will be set to an array of font family names.
-	 *  this array is owned by pango and should not be freed.
+	 * this array is owned by pango and should not be freed. [out][array length=n_families]
 	 */
 	public static void lookupAliases(string fontname, out string[] families)
 	{
@@ -258,10 +258,10 @@ public class PgMiscellaneous
 	 * Since 1.16
 	 * Params:
 	 * type = enum type to parse, eg. PANGO_TYPE_ELLIPSIZE_MODE.
-	 * str = string to parse. May be NULL.
-	 * value = integer to store the result in, or NULL.
+	 * str = string to parse. May be NULL. [allow-none]
+	 * value = integer to store the result in, or NULL. [out][allow-none]
 	 * warn = if TRUE, issue a g_warning() on bad input.
-	 * possibleValues = place to store list of possible values on failure, or NULL.
+	 * possibleValues = place to store list of possible values on failure, or NULL. [out][allow-none]
 	 * Returns: TRUE if str was successfully parsed.
 	 */
 	public static int parseEnum(GType type, string str, out int value, int warn, out string possibleValues)
@@ -373,7 +373,7 @@ public class PgMiscellaneous
 	 * Params:
 	 * text = the text to itemize.
 	 * length = the number of bytes (not characters) to process, or -1
-	 *  if text is nul-terminated and the length should be calculated.
+	 * if text is nul-terminated and the length should be calculated.
 	 * pbaseDir = input base direction, and output resolved direction.
 	 * Returns: a newly allocated array of embedding levels, one item per character (not byte), that should be freed using g_free.
 	 */
@@ -410,8 +410,8 @@ public class PgMiscellaneous
 	 * of rounding.
 	 * Since 1.12
 	 * Params:
-	 * thickness = pointer to the thickness of a line, in Pango units
-	 * position = corresponding position
+	 * thickness = pointer to the thickness of a line, in Pango units. [inout]
+	 * position = corresponding position. [inout]
 	 */
 	public static void quantizeLineGeometry(ref int thickness, ref int position)
 	{

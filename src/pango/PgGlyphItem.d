@@ -209,7 +209,7 @@ public class PgGlyphItem
 	 * Params:
 	 * text = text that list applies to
 	 * list = a PangoAttrList
-	 * Returns: a list of glyph items resulting from splitting glyph_item. Free the elements using pango_glyph_item_free(), the list using g_slist_free().
+	 * Returns: a list of glyph items resulting from splitting glyph_item. Free the elements using pango_glyph_item_free(), the list using g_slist_free(). [transfer full][element-type Pango.GlyphItem]
 	 */
 	public ListSG applyAttrs(string text, PgAttributeList list)
 	{
@@ -228,14 +228,14 @@ public class PgGlyphItem
 	 * Since 1.6
 	 * Params:
 	 * text = text that glyph_item corresponds to
-	 *  (glyph_item->item->offset is an offset from the
-	 *  start of text)
+	 * (glyph_item->item->offset is an offset from the
+	 * start of text)
 	 * logAttrs = logical attributes for the item (the
-	 *  first logical attribute refers to the position
-	 *  before the first character in the item)
+	 * first logical attribute refers to the position
+	 * before the first character in the item)
 	 * letterSpacing = amount of letter spacing to add
-	 *  in Pango units. May be negative, though too large
-	 *  negative values will give ugly results.
+	 * in Pango units. May be negative, though too large
+	 * negative values will give ugly results.
 	 */
 	public void letterSpace(string text, ref PangoLogAttr logAttrs, int letterSpacing)
 	{

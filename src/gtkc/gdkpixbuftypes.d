@@ -62,17 +62,16 @@ private import std.stdio;
  */
 public enum GdkPixdataType
 {
-	/+* colorspace + alpha +/
-	GDK_PIXDATA_COLOR_TYPE_RGB = 0x01,
-	GDK_PIXDATA_COLOR_TYPE_RGBA = 0x02,
-	GDK_PIXDATA_COLOR_TYPE_MASK = 0xff,
+	COLOR_TYPE_RGB = 0x01,
+	COLOR_TYPE_RGBA = 0x02,
+	COLOR_TYPE_MASK = 0xff,
 	/+* width, support 8bits only currently +/
-	GDK_PIXDATA_SAMPLE_WIDTH_8 = 0x01 << 16,
-	GDK_PIXDATA_SAMPLE_WIDTH_MASK = 0x0f << 16,
+	SAMPLE_WIDTH_8 = 0x01 << 16,
+	SAMPLE_WIDTH_MASK = 0x0f << 16,
 	/+* encoding +/
-	GDK_PIXDATA_ENCODING_RAW = 0x01 << 24,
-	GDK_PIXDATA_ENCODING_RLE = 0x02 << 24,
-	GDK_PIXDATA_ENCODING_MASK = 0x0f << 24
+	ENCODING_RAW = 0x01 << 24,
+	ENCODING_RLE = 0x02 << 24,
+	ENCODING_MASK = 0x0f << 24
 }
 alias GdkPixdataType PixdataType;
 
@@ -112,17 +111,16 @@ alias GdkPixdataType PixdataType;
  */
 public enum GdkPixdataDumpType
 {
-	/+* type of source to save +/
-	GDK_PIXDATA_DUMP_PIXDATA_STREAM = 0,
-	GDK_PIXDATA_DUMP_PIXDATA_STRUCT = 1,
-	GDK_PIXDATA_DUMP_MACROS = 2,
+	PIXDATA_STREAM = 0,
+	PIXDATA_STRUCT = 1,
+	MACROS = 2,
 	/+* type of variables to use +/
-	GDK_PIXDATA_DUMP_GTYPES = 0,
-	GDK_PIXDATA_DUMP_CTYPES = 1 << 8,
-	GDK_PIXDATA_DUMP_STATIC = 1 << 9,
-	GDK_PIXDATA_DUMP_CONST = 1 << 10,
+	GTYPES = 0,
+	CTYPES = 1 << 8,
+	STATIC = 1 << 9,
+	CONST = 1 << 10,
 	/+* save RLE decoder macro? +/
-	GDK_PIXDATA_DUMP_RLE_DECODER = 1 << 16
+	RLE_DECODER = 1 << 16
 }
 alias GdkPixdataDumpType PixdataDumpType;
 

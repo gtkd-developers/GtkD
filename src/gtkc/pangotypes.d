@@ -158,28 +158,27 @@ public enum PangoDirection
  */
 public enum PangoBidiType
 {
-	/+* Strong types +/
-	PANGO_BIDI_TYPE_L,
-	PANGO_BIDI_TYPE_LRE,
-	PANGO_BIDI_TYPE_LRO,
-	PANGO_BIDI_TYPE_R,
-	PANGO_BIDI_TYPE_AL,
-	PANGO_BIDI_TYPE_RLE,
-	PANGO_BIDI_TYPE_RLO,
+	TYPE_L,
+	TYPE_LRE,
+	TYPE_LRO,
+	TYPE_R,
+	TYPE_AL,
+	TYPE_RLE,
+	TYPE_RLO,
 	/+* Weak types +/
-	PANGO_BIDI_TYPE_PDF,
-	PANGO_BIDI_TYPE_EN,
-	PANGO_BIDI_TYPE_ES,
-	PANGO_BIDI_TYPE_ET,
-	PANGO_BIDI_TYPE_AN,
-	PANGO_BIDI_TYPE_CS,
-	PANGO_BIDI_TYPE_NSM,
-	PANGO_BIDI_TYPE_BN,
+	TYPE_PDF,
+	TYPE_EN,
+	TYPE_ES,
+	TYPE_ET,
+	TYPE_AN,
+	TYPE_CS,
+	TYPE_NSM,
+	TYPE_BN,
 	/+* Neutral types +/
-	PANGO_BIDI_TYPE_B,
-	PANGO_BIDI_TYPE_S,
-	PANGO_BIDI_TYPE_WS,
-	PANGO_BIDI_TYPE_ON
+	TYPE_B,
+	TYPE_S,
+	TYPE_WS,
+	TYPE_ON
 }
 /**
  * An enumeration specifying the various slant styles possible for a font.
@@ -860,8 +859,6 @@ public struct PangoContext{}
 /**
  * The PangoItem structure stores information about
  * a segment of text. It contains the following fields:
- * gint offset;
- * the offset of the segment from the beginning of the
  */
 public struct PangoItem
 {
@@ -922,6 +919,59 @@ public struct PangoAnalysis
  * is whitespace character
  * guint is_cursor_position : 1;
  * if set, cursor can appear in front of character.
+ * i.e. this is a grapheme boundary, or the first character
+ * in the text.
+ * This flag implements Unicode's
+ * Grapheme
+ * Cluster Boundaries semantics.
+ * guint is_word_start : 1;
+ * is first character in a word
+ * guint is_word_end : 1;
+ * is first non-word char after a word
+ * Note that in degenerate cases, you could have both is_word_start
+ * and is_word_end set for some character.
+ * guint is_sentence_boundary : 1;
+ * is a sentence boundary.
+ * There are two ways to divide sentences. The first assigns all
+ * inter-sentence whitespace/control/format chars to some sentence,
+ * so all chars are in some sentence; is_sentence_boundary denotes
+ * the boundaries there. The second way doesn't assign
+ * between-sentence spaces, etc. to any sentence, so
+ * is_sentence_start/is_sentence_end mark the boundaries
+ * of those sentences.
+ * guint is_sentence_start : 1;
+ * is first character in a sentence
+ * guint is_sentence_end : 1;
+ * is first char after a sentence.
+ * Note that in degenerate cases, you could have both is_sentence_start
+ * and is_sentence_end set for some character. (e.g. no space after a
+ * period, so the next sentence starts right away)
+ * guint backspace_deletes_character : 1;
+ * if set, backspace deletes one character
+ * rather than the entire grapheme cluster. This
+ * field is only meaningful on grapheme
+ * boundaries (where is_cursor_position is
+ * set). In some languages, the full grapheme
+ * (e.g. letter + diacritics) is considered a
+ * unit, while in others, each decomposed
+ * character in the grapheme is a unit. In the
+ * default implementation of pango_break(), this
+ * bit is set on all grapheme boundaries except
+ * those following Latin, Cyrillic or Greek base
+ * characters.
+ * guint is_expandable_space : 1;
+ * is a whitespace character that can possibly be
+ * expanded for justification purposes. (Since: 1.18)
+ * guint is_word_boundary : 1;
+ * is a word boundary.
+ * More specifically, means that this is not a position in the middle
+ * of a word. For example, both sides of a punctuation mark are
+ * considered word boundaries. This flag is particularly useful when
+ * selecting text word-by-word.
+ * This flag implements Unicode's
+ * Word
+ * Boundaries semantics.
+ * (Since: 1.22)
  */
 public struct PangoLogAttr
 {
@@ -1061,6 +1111,10 @@ public struct PangoGlyphGeometry
  * added in the future.
  * guint is_cluster_start : 1;
  * set for the first logical glyph in each cluster. (Clusters
+ * are stored in visual order, within the cluster, glyphs
+ * are always ordered in logical order, since visual
+ * order is meaningless; that is, in Arabic text, accent glyphs
+ * follow the glyphs for the base character.)
  */
 public struct PangoGlyphVisAttr
 {
@@ -1074,14 +1128,6 @@ public struct PangoGlyphVisAttr
  * of glyphs with geometry and visual attribute information.
  * The storage for the glyph information is owned
  * by the structure which simplifies memory management.
- * gint num_glyphs;
- * the number of glyphs in the string.
- * PangoGlyphInfo *glyphs;
- * an array of PangoGlyphInfo structures of length num_glyphs.
- * gint *log_clusters;
- * for each glyph, byte index of the starting character for the
- * cluster. The indices are relative to the start of the text
- * corresponding to the PangoGlyphString.
  */
 public struct PangoGlyphString
 {
@@ -1102,8 +1148,6 @@ public struct PangoGlyphString
  * As an example of the usage of PangoGlyphItem, the results
  * of shaping text with PangoLayout is a list of PangoLayoutLine,
  * each of which contains a list of PangoGlyphItem.
- * PangoItem *item;
- * a PangoItem structure that provides information
  */
 public struct PangoGlyphItem
 {
@@ -1159,8 +1203,6 @@ public struct PangoFontDescription{}
  * structure are private to implementations of a font backend. See
  * the documentation of the corresponding getters for documentation
  * of their meaning.
- * guint ref_count;
- * reference count. Used internally. See pango_font_metrics_ref()
  */
 public struct PangoFontMetrics
 {
@@ -1230,6 +1272,17 @@ public struct PangoFontMap{}
  * parent GObjectClass.
  * load_font ()
  * a function to load a font with a given description. See
+ * pango_font_map_load_font().
+ * list_families ()
+ * A function to list available font families. See
+ * pango_font_map_list_families().
+ * load_fontset ()
+ * a function to load a fontset with a given given description
+ * suitable for a particular language. See
+ * pango_font_map_load_fontset().
+ * const char *shape_engine_type;
+ * the type of rendering-system-dependent engines that
+ * can handle fonts of this fonts loaded with this fontmap.
  */
 public struct PangoFontMapClass
 {
@@ -1259,6 +1312,15 @@ public struct PangoFontset{}
  * parent GObjectClass.
  * get_font ()
  * a function to get the font in the fontset that contains the
+ * best glyph for the given Unicode character; see pango_fontset_get_font().
+ * get_metrics ()
+ * a function to get overall metric information for the fonts
+ * in the fontset; see pango_fontset_get_metrics().
+ * get_language ()
+ * a function to get the language of the fontset.
+ * foreach ()
+ * a function to loop over the fonts in the fontset. See
+ * pango_fontset_foreach().
  */
 public struct PangoFontsetClass
 {
@@ -1316,6 +1378,7 @@ public struct PangoAttrClass
  * the start index of the range (in bytes).
  * guint end_index;
  * end index of the range (in bytes). The character at this index
+ * is not included in the range.
  */
 public struct PangoAttribute
 {
@@ -1449,6 +1512,12 @@ public struct PangoAttrShape
  * the common portion of the attribute
  * int size;
  * size of font, in units of 1/PANGO_SCALE of a point (for
+ * PANGO_ATTR_SIZE) or of a device uni (for PANGO_ATTR_ABSOLUTE_SIZE)
+ * guint absolute : 1;
+ * whether the font size is in device units or points.
+ * This field is only present for compatibility with Pango-1.8.0
+ * (PANGO_ATTR_ABSOLUTE_SIZE was added in 1.8.1); and always will
+ * be FALSE for PANGO_ATTR_SIZE and TRUE for PANGO_ATTR_ABSOLUTE_SIZE.
  */
 public struct PangoAttrSize
 {
@@ -1462,8 +1531,6 @@ public struct PangoAttrSize
 /**
  * The PangoColor structure is used to
  * represent a color in an uncalibrated RGB color-space.
- * guint16 red;
- * The red component of the color. This is a value between 0 and 65535,
  */
 public struct PangoColor
 {
@@ -1544,18 +1611,6 @@ public struct PangoLayoutIter{}
  * parent PangoLayout are modified.
  * Routines for rendering PangoLayout objects are provided in
  * code specific to each rendering system.
- * PangoLayout *layout;
- * the parent layout for this line
- * gint start_index;
- * the start of the line as byte index into layout->text
- * gint length;
- * the length of the line in bytes
- * GSList *runs;
- * a list containing the runs of the line in visual order
- * guint is_paragraph_start : 1;
- * TRUE if this is the first line of the paragraph
- * guint resolved_dir : 3;
- * the resolved PangoDirection of the line
  */
 public struct PangoLayoutLine
 {
@@ -1610,6 +1665,8 @@ public struct PangoCairoFontMap{}
  * PangoLayout.
  * PangoMatrix *matrix;
  * the current transformation matrix for the Renderer; may
+ * be NULL, which should be treated the same as the identity matrix.
+ * Since 1.8
  */
 public struct PangoRenderer
 {
@@ -1629,6 +1686,24 @@ public struct PangoRenderer
  * indicate a spelling error.
  * draw_shape ()
  * draw content for a glyph shaped with PangoAttrShape.
+ * x, y are the coordinates of the left edge of the baseline,
+ * in user coordinates.
+ * draw_trapezoid ()
+ * draws a trapezoidal filled area
+ * draw_glyph ()
+ * draws a single glyph
+ * part_changed ()
+ * do renderer specific processing when rendering
+ * attributes change
+ * begin ()
+ * Do renderer-specific initialization before drawing
+ * end ()
+ * Do renderer-specific cleanup after drawing
+ * prepare_run ()
+ * updates the renderer for a new run
+ * draw_glyph_item ()
+ * draws a PangoGlyphItem
+ * Since 1.8
  */
 public struct PangoRendererClass
 {
@@ -1700,6 +1775,17 @@ public struct PangoEngineInfo
  * script.
  * PangoScript script;
  * a PangoScript. The value PANGO_SCRIPT_COMMON has
+ * the special meaning here of "all scripts"
+ * const gchar *langs;
+ * a semicolon separated list of languages that this
+ * engine handles for this script. This may be empty,
+ * in which case the engine is saying that it is a
+ * fallback choice for all languages for this range,
+ * but should not be used if another engine
+ * indicates that it is specific for the language for
+ * a given code point. An entry in this list of "*"
+ * indicates that this engine is specific to all
+ * languages for this range.
  */
 public struct PangoEngineScriptInfo
 {
@@ -1768,6 +1854,26 @@ public struct PangoEngineShape{}
  * Class structure for PangoEngineShape
  * script_shape ()
  * Given a font, a piece of text, and a PangoAnalysis
+ * structure, converts characters to glyphs and positions the
+ * resulting glyphs. The results are stored in the PangoGlyphString
+ * that is passed in. (The implementation should resize it
+ * appropriately using pango_glyph_string_set_size()). All fields
+ * of the log_clusters and glyphs array must be filled in, with
+ * the exception that Pango will automatically generate
+ * glyphs->glyphs[i].attr.is_cluster_start
+ * using the log_clusters array. Each input character must occur in one
+ * of the output logical clusters;
+ * if no rendering is desired for a character, this may involve
+ * inserting glyphs with the PangoGlyph ID PANGO_GLYPH_EMPTY, which
+ * is guaranteed never to render. If the shaping fails for any reason,
+ * the shaper should return with an empty (zero-size) glyph string.
+ * If the shaper has not set the size on the glyph string yet, simply
+ * returning signals the failure too.
+ * covers ()
+ * Returns the characters that this engine can cover
+ * with a given font for a given language. If not overridden, the default
+ * implementation simply returns the coverage information for the
+ * font itself unmodified.
  */
 public struct PangoEngineShapeClass
 {
@@ -1970,8 +2076,8 @@ public struct PangoEngineShapeClass
  * gravity :
  * the PangoGravity to check
  * Returns :
- *  TRUE if gravity is PANGO_GRAVITY_EAST or PANGO_GRAVITY_WEST,
- *  FALSE otherwise.
+ * TRUE if gravity is PANGO_GRAVITY_EAST or PANGO_GRAVITY_WEST,
+ * FALSE otherwise.
  * Since 1.16
  */
 // TODO
@@ -2060,7 +2166,7 @@ public struct PangoEngineShapeClass
  * data :
  * callback data
  * Returns :
- *  if TRUE, stop iteration and return immediately.
+ * if TRUE, stop iteration and return immediately.
  * Since 1.4
  */
 // gboolean (*PangoFontsetForeachFunc) (PangoFontset *fontset,  PangoFont *font,  gpointer data);
@@ -2095,14 +2201,14 @@ public alias extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFun
  * with Pango's Cairo renderer.
  * cr :
  * a Cairo context with current point set to where the shape should
- *  be rendered
+ * be rendered
  * attr :
  * the PANGO_ATTR_SHAPE to render
  * do_path :
  * whether only the shape path should be appended to current
- *  path of cr and no filling/stroking done. This will be set
- * 	 to TRUE when called from pango_cairo_layout_path() and
- * 	 pango_cairo_layout_line_path() rendering functions.
+ * path of cr and no filling/stroking done. This will be set
+ * to TRUE when called from pango_cairo_layout_path() and
+ * pango_cairo_layout_line_path() rendering functions.
  * data :
  * user data passed to pango_cairo_context_set_shape_renderer()
  */

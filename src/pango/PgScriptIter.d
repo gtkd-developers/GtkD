@@ -133,13 +133,13 @@ public class PgScriptIter
 	 * (That is, it doesn't include the character stored at *end)
 	 * Since 1.4
 	 * Params:
-	 * start = location to store start position of the range, or NULL
-	 * end = location to store end position of the range, or NULL
-	 * script = location to store script for range, or NULL
+	 * start = location to store start position of the range, or NULL. [out][allow-none]
+	 * end = location to store end position of the range, or NULL. [out][allow-none]
+	 * script = location to store script for range, or NULL. [out][allow-none]
 	 */
 	public void getRange(out string start, out string end, out PangoScript script)
 	{
-		// void pango_script_iter_get_range (PangoScriptIter *iter,  G_CONST_RETURN char **start,  G_CONST_RETURN char **end,  PangoScript *script);
+		// void pango_script_iter_get_range (PangoScriptIter *iter,  const char **start,  const char **end,  PangoScript *script);
 		char* outstart = null;
 		char* outend = null;
 		

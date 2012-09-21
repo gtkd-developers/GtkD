@@ -182,17 +182,17 @@ public class PgAttributeIterator
 	 * Get the font and other attributes at the current iterator position.
 	 * Params:
 	 * desc = a PangoFontDescription to fill in with the current values.
-	 *  The family name in this structure will be set using
-	 *  pango_font_description_set_family_static() using values from
-	 *  an attribute in the PangoAttrList associated with the iterator,
+	 * The family name in this structure will be set using
+	 * pango_font_description_set_family_static() using values from
+	 * an attribute in the PangoAttrList associated with the iterator,
 	 * language = if non-NULL, location to store language tag for item, or NULL
-	 *  if none is found.
+	 * if none is found. [allow-none]
 	 * extraAttrs = if non-NULL,
-	 *  location in which to store a list of non-font
-	 *  attributes at the the current position; only the highest priority
-	 *  value of each attribute will be added to this list. In order
-	 *  to free this value, you must call pango_attribute_destroy() on
-	 *  each member. [element type Pango.Attribute][transfer full]
+	 * location in which to store a list of non-font
+	 * attributes at the the current position; only the highest priority
+	 * value of each attribute will be added to this list. In order
+	 * to free this value, you must call pango_attribute_destroy() on
+	 * each member. [allow-none][element-type Pango.Attribute][transfer full]
 	 */
 	public void getFont(PgFontDescription desc, out PgLanguage language, out ListSG extraAttrs)
 	{
@@ -210,7 +210,7 @@ public class PgAttributeIterator
 	 * Gets a list of all attributes at the current position of the
 	 * iterator.
 	 * Since 1.2
-	 * Returns: a list of all attributes for the current range. To free this value, call pango_attribute_destroy() on each value and g_slist_free() on the list. [element-type Pango.Attribute][transfer full Pango.Attribute]
+	 * Returns: a list of all attributes for the current range. To free this value, call pango_attribute_destroy() on each value and g_slist_free() on the list. [element-type Pango.Attribute][transfer full]
 	 */
 	public ListSG getAttrs()
 	{

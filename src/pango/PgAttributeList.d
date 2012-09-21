@@ -174,7 +174,7 @@ public class PgAttributeList
 	 * start_index.
 	 * Params:
 	 * attr = the attribute to insert. Ownership of this value is
-	 *  assumed by the list.
+	 * assumed by the list.
 	 */
 	public void insert(PgAttribute attr)
 	{
@@ -188,7 +188,7 @@ public class PgAttributeList
 	 * start_index.
 	 * Params:
 	 * attr = the attribute to insert. Ownership of this value is
-	 *  assumed by the list.
+	 * assumed by the list.
 	 */
 	public void insertBefore(PgAttribute attr)
 	{
@@ -207,7 +207,7 @@ public class PgAttributeList
 	 * since it never removes or combines existing attributes.
 	 * Params:
 	 * attr = the attribute to insert. Ownership of this value is
-	 *  assumed by the list.
+	 * assumed by the list.
 	 */
 	public void change(PgAttribute attr)
 	{
@@ -228,8 +228,8 @@ public class PgAttributeList
 	 * other = another PangoAttrList
 	 * pos = the position in list at which to insert other
 	 * len = the length of the spliced segment. (Note that this
-	 *  must be specified since the attributes in other
-	 *  may only be present at some subsection of this range)
+	 * must be specified since the attributes in other
+	 * may only be present at some subsection of this range)
 	 */
 	public void splice(PgAttributeList other, int pos, int len)
 	{
@@ -243,10 +243,10 @@ public class PgAttributeList
 	 * a new list.
 	 * Since 1.2
 	 * Params:
-	 * func = callback function; returns TRUE if an attribute
-	 *  should be filtered out.
-	 * data = Data to be passed to func
-	 * Returns: the new PangoAttrList or NULL if no attributes of the given types were found.
+	 * func = callback function; returns TRUE
+	 * if an attribute should be filtered out. [scope call][closure data]
+	 * data = Data to be passed to func. [closure]
+	 * Returns: the new PangoAttrList or NULL if no attributes of the given types were found. [transfer full]
 	 */
 	public PgAttributeList filter(PangoAttrFilterFunc func, void* data)
 	{

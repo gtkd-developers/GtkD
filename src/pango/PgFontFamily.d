@@ -163,9 +163,9 @@ public class PgFontFamily : ObjectG
 	 * in a family share a common design, but differ in slant, weight,
 	 * width and other aspects.
 	 * Params:
-	 * faces = location to store an array of pointers to PangoFontFace
-	 *  objects, or NULL. This array should be freed with g_free()
-	 *  when it is no longer needed.
+	 * faces = location to store an array of pointers to PangoFontFace objects,
+	 * or NULL. This array should be freed with g_free() when it is no
+	 * longer needed. [out][allow-none][array length=n_faces][transfer container]
 	 */
 	public void listFaces(out PgFontFace[] faces)
 	{

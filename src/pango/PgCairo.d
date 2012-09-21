@@ -156,8 +156,8 @@ public class PgCairo
 	 * Params:
 	 * context = a PangoContext, from a pangocairo font map
 	 * dpi = the resolution in "dots per inch". (Physical inches aren't actually
-	 *  involved; the terminology is conventional.) A 0 or negative value
-	 *  means to use the resolution from the font map.
+	 * involved; the terminology is conventional.) A 0 or negative value
+	 * means to use the resolution from the font map.
 	 */
 	public static void contextSetResolution(PgContext context, double dpi)
 	{
@@ -186,7 +186,7 @@ public class PgCairo
 	 * Params:
 	 * context = a PangoContext, from a pangocairo font map
 	 * options = a cairo_font_options_t, or NULL to unset any previously set
-	 *  options. A copy is made.
+	 * options. A copy is made.
 	 */
 	public static void contextSetFontOptions(PgContext context, FontOption options)
 	{
@@ -225,7 +225,7 @@ public class PgCairo
 	 * PANGO_ATTR_SHAPE, or NULL to disable shape rendering.
 	 * data = User data that will be passed to func.
 	 * dnotify = Callback that will be called when the
-	 *  context is freed to release data, or NULL.
+	 * context is freed to release data, or NULL.
 	 */
 	public static void contextSetShapeRenderer(PgContext context, PangoCairoShapeRendererFunc func, void* data, GDestroyNotify dnotify)
 	{
@@ -263,7 +263,7 @@ public class PgCairo
 	 * Since 1.22
 	 * Params:
 	 * cr = a Cairo context
-	 * Returns: the newly created PangoContext. Free with g_object_unref().
+	 * Returns: the newly created PangoContext. Free with g_object_unref(). [transfer full]
 	 */
 	public static PgContext createContext(Context cr)
 	{
@@ -307,7 +307,7 @@ public class PgCairo
 	 * Since 1.10
 	 * Params:
 	 * cr = a Cairo context
-	 * Returns: the newly created PangoLayout. Free with g_object_unref().
+	 * Returns: the newly created PangoLayout. Free with g_object_unref(). [transfer full]
 	 */
 	public static PgLayout createLayout(Context cr)
 	{

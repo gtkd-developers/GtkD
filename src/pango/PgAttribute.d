@@ -557,11 +557,11 @@ public class PgAttribute
 	 * inkRect = ink rectangle to assign to each character
 	 * logicalRect = logical rectangle to assign to each character
 	 * data = user data pointer
-	 * copyFunc = function to copy data when the attribute
-	 *  is copied. If NULL, data is simply copied
-	 *  as a pointer.
-	 * destroyFunc = function to free data when the attribute
-	 *  is freed, or NULL
+	 * copyFunc = function to copy data when the
+	 * attribute is copied. If NULL, data is simply
+	 * copied as a pointer. [allow-none]
+	 * destroyFunc = function to free data when the
+	 * attribute is freed, or NULL. [allow-none]
 	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute shapeNewWithData(PangoRectangle* inkRect, PangoRectangle* logicalRect, void* data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc)
@@ -597,7 +597,7 @@ public class PgAttribute
 	 * Create a new baseline displacement attribute.
 	 * Params:
 	 * rise = the amount that the text should be displaced vertically,
-	 *  in Pango units. Positive values displace the text upwards.
+	 * in Pango units. Positive values displace the text upwards.
 	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute riseNew(int rise)
@@ -616,7 +616,7 @@ public class PgAttribute
 	 * Since 1.6
 	 * Params:
 	 * letterSpacing = amount of extra space to add between graphemes
-	 *  of the text, in Pango units.
+	 * of the text, in Pango units.
 	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute letterSpacingNew(int letterSpacing)
@@ -639,7 +639,7 @@ public class PgAttribute
 	 * Since 1.4
 	 * Params:
 	 * enableFallback = TRUE if we should fall back on other fonts
-	 *  for characters the active font is missing.
+	 * for characters the active font is missing.
 	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute fallbackNew(int enableFallback)

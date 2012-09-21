@@ -161,7 +161,7 @@ public class PgCairoFontMap : PgFontMap
 	 * change the Cairo font backend that the default fontmap
 	 * uses for example.
 	 * Since 1.10
-	 * Returns: the default Cairo fontmap for Pango. This object is owned by Pango and must not be freed.
+	 * Returns: the default Cairo fontmap for Pango. This object is owned by Pango and must not be freed. [transfer none]
 	 */
 	public static PgFontMap getDefault()
 	{
@@ -217,9 +217,9 @@ public class PgCairoFontMap : PgFontMap
 	/**
 	 * Creates a new PangoCairoFontMap object of the type suitable
 	 * to be used with cairo font backend of type fonttype.
-	 * In most cases one should simply use @pango_cairo_font_map_new(),
+	 * In most cases one should simply use pango_cairo_font_map_new(),
 	 * or in fact in most of those cases, just use
-	 * @pango_cairo_font_map_get_default().
+	 * pango_cairo_font_map_get_default().
 	 * Since 1.18
 	 * Params:
 	 * fonttype = desired cairo_font_type_t
@@ -255,7 +255,7 @@ public class PgCairoFontMap : PgFontMap
 	 * Since 1.10
 	 * Params:
 	 * dpi = the resolution in "dots per inch". (Physical inches aren't actually
-	 *  involved; the terminology is conventional.)
+	 * involved; the terminology is conventional.)
 	 */
 	public void setResolution(double dpi)
 	{

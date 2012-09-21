@@ -64,6 +64,7 @@ private import glib.Str;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -74,7 +75,7 @@ private import glib.Str;
  * Pango provides routines to list available fonts, and
  * to load a font of a given description.
  */
-public class PgFontDescription
+public class PgFontDescription : Boxed
 {
 	
 	/** the main Gtk struct */
@@ -354,12 +355,12 @@ public class PgFontDescription
 	 * exclusive with pango_font_description_set_absolute_size().
 	 * Params:
 	 * size = the size of the font in points, scaled by PANGO_SCALE. (That is,
-	 *  a size value of 10 * PANGO_SCALE is a 10 point font. The conversion
-	 *  factor between points and device units depends on system configuration
-	 *  and the output device. For screen display, a logical DPI of 96 is
-	 *  common, in which case a 10 point font corresponds to a 10 * (96 / 72) = 13.3
-	 *  pixel font. Use pango_font_description_set_absolute_size() if you need
-	 *  a particular size in device units.
+	 * a size value of 10 * PANGO_SCALE is a 10 point font. The conversion
+	 * factor between points and device units depends on system configuration
+	 * and the output device. For screen display, a logical DPI of 96 is
+	 * common, in which case a 10 point font corresponds to a 10 * (96 / 72) = 13.3
+	 * pixel font. Use pango_font_description_set_absolute_size() if you need
+	 * a particular size in device units.
 	 */
 	public void setSize(int size)
 	{
@@ -385,8 +386,8 @@ public class PgFontDescription
 	 * Since 1.8
 	 * Params:
 	 * size = the new size, in Pango units. There are PANGO_SCALE Pango units in one
-	 *  device unit. For an output backend where a device unit is a pixel, a size
-	 *  value of 10 * PANGO_SCALE gives a 10 pixel font.
+	 * device unit. For an output backend where a device unit is a pixel, a size
+	 * value of 10 * PANGO_SCALE gives a 10 pixel font.
 	 */
 	public void setAbsoluteSize(double size)
 	{
@@ -465,10 +466,10 @@ public class PgFontDescription
 	 * If desc_to_merge is NULL, this function performs nothing.
 	 * Params:
 	 * desc = a PangoFontDescription
-	 * descToMerge = the PangoFontDescription to merge from, or NULL
+	 * descToMerge = the PangoFontDescription to merge from, or NULL. [allow-none]
 	 * replaceExisting = if TRUE, replace fields in desc with the
-	 *  corresponding values from desc_to_merge, even if they
-	 *  are already exist.
+	 * corresponding values from desc_to_merge, even if they
+	 * are already exist.
 	 */
 	public void merge(PgFontDescription descToMerge, int replaceExisting)
 	{
@@ -485,8 +486,8 @@ public class PgFontDescription
 	 * desc = a PangoFontDescription
 	 * descToMerge = the PangoFontDescription to merge from
 	 * replaceExisting = if TRUE, replace fields in desc with the
-	 *  corresponding values from desc_to_merge, even if they
-	 *  are already exist.
+	 * corresponding values from desc_to_merge, even if they
+	 * are already exist.
 	 */
 	public void mergeStatic(PgFontDescription descToMerge, int replaceExisting)
 	{
@@ -506,7 +507,7 @@ public class PgFontDescription
 	 * styles are equal.
 	 * Note that old_match must match desc.
 	 * Params:
-	 * oldMatch = a PangoFontDescription, or NULL
+	 * oldMatch = a PangoFontDescription, or NULL. [allow-none]
 	 * newMatch = a PangoFontDescription
 	 * Returns: TRUE if new_match is a better match
 	 */
@@ -567,7 +568,7 @@ public class PgFontDescription
 	 */
 	public string toFilename()
 	{
-		// char * pango_font_description_to_filename  (const PangoFontDescription *desc);
+		// char * pango_font_description_to_filename (const PangoFontDescription *desc);
 		return Str.toString(pango_font_description_to_filename(pangoFontDescription));
 	}
 }

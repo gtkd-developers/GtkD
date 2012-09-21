@@ -113,7 +113,7 @@ public class PgLayoutIter
 	 */
 	
 	/**
-	 * Copies a PangLayoutIter.
+	 * Copies a PangoLayoutIter.
 	 * Since 1.20
 	 * Returns: the newly allocated PangoLayoutIter, which should be freed with pango_layout_iter_free(), or NULL if iter was NULL.
 	 */
@@ -222,7 +222,7 @@ public class PgLayoutIter
 	 * at least one run, even lines consisting of only a newline.
 	 * Use the faster pango_layout_iter_get_run_readonly() if you do not plan
 	 * to modify the contents of the run (glyphs, glyph widths, etc.).
-	 * Returns: the current run.
+	 * Returns: the current run. [transfer none]
 	 */
 	public PangoLayoutRun* getRun()
 	{
@@ -239,7 +239,7 @@ public class PgLayoutIter
 	 * but the user is not expected
 	 * to modify the contents of the run (glyphs, glyph widths, etc.).
 	 * Since 1.16
-	 * Returns: the current run, that should not be modified.
+	 * Returns: the current run, that should not be modified. [transfer none]
 	 */
 	public PangoLayoutRun* getRunReadonly()
 	{
@@ -286,7 +286,7 @@ public class PgLayoutIter
 	/**
 	 * Gets the layout associated with a PangoLayoutIter.
 	 * Since 1.20
-	 * Returns: the layout associated with iter.
+	 * Returns: the layout associated with iter. [transfer none]
 	 */
 	public PgLayout getLayout()
 	{
@@ -317,8 +317,8 @@ public class PgLayoutIter
 	 * Gets the extents of the current cluster, in layout coordinates
 	 * (origin is the top left of the entire layout).
 	 * Params:
-	 * inkRect = rectangle to fill with ink extents, or NULL
-	 * logicalRect = rectangle to fill with logical extents, or NULL
+	 * inkRect = rectangle to fill with ink extents, or NULL. [out][allow-none]
+	 * logicalRect = rectangle to fill with logical extents, or NULL. [out][allow-none]
 	 */
 	public void getClusterExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -330,8 +330,8 @@ public class PgLayoutIter
 	 * Gets the extents of the current run in layout coordinates
 	 * (origin is the top left of the entire layout).
 	 * Params:
-	 * inkRect = rectangle to fill with ink extents, or NULL
-	 * logicalRect = rectangle to fill with logical extents, or NULL
+	 * inkRect = rectangle to fill with ink extents, or NULL. [out][allow-none]
+	 * logicalRect = rectangle to fill with logical extents, or NULL. [out][allow-none]
 	 */
 	public void getRunExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -348,8 +348,8 @@ public class PgLayoutIter
 	 * The Y positions are in layout coordinates (origin at top left of the
 	 * entire layout).
 	 * Params:
-	 * y0_ = start of line
-	 * y1_ = end of line
+	 * y0_ = start of line, or NULL. [out][allow-none]
+	 * y1_ = end of line, or NULL. [out][allow-none]
 	 */
 	public void getLineYrange(out int y0_, out int y1_)
 	{
@@ -365,8 +365,8 @@ public class PgLayoutIter
 	 * the same width/height but not at the same x/y as the extents
 	 * returned from pango_layout_line_get_extents().
 	 * Params:
-	 * inkRect = rectangle to fill with ink extents, or NULL
-	 * logicalRect = rectangle to fill with logical extents, or NULL
+	 * inkRect = rectangle to fill with ink extents, or NULL. [out][allow-none]
+	 * logicalRect = rectangle to fill with logical extents, or NULL. [out][allow-none]
 	 */
 	public void getLineExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -379,8 +379,10 @@ public class PgLayoutIter
 	 * over. ink_rect or logical_rect can be NULL if you
 	 * aren't interested in them.
 	 * Params:
-	 * inkRect = rectangle to fill with ink extents, or NULL
-	 * logicalRect = rectangle to fill with logical extents, or NULL
+	 * inkRect = rectangle to fill with ink extents,
+	 * or NULL. [out][allow-none]
+	 * logicalRect = rectangle to fill with logical
+	 * extents, or NULL. [out][allow-none]
 	 */
 	public void getLayoutExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{

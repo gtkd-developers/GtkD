@@ -61,13 +61,14 @@ private import glib.ConstructionException;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
  * Functions in this section are used to deal with PangoTabArray objects
  * that can be used to set tab stop positions in a PangoLayout.
  */
-public class PgTabArray
+public class PgTabArray : Boxed
 {
 	
 	/** the main Gtk struct */
@@ -187,8 +188,8 @@ public class PgTabArray
 	 * Gets the alignment and position of a tab stop.
 	 * Params:
 	 * tabIndex = tab stop index
-	 * alignment = location to store alignment, or NULL
-	 * location = location to store tab position, or NULL
+	 * alignment = location to store alignment, or NULL. [out][allow-none]
+	 * location = location to store tab position, or NULL. [out][allow-none]
 	 */
 	public void getTab(int tabIndex, out PangoTabAlign alignment, out int location)
 	{
@@ -201,8 +202,10 @@ public class PgTabArray
 	 * arrays of length pango_tab_array_get_size(). You must free the
 	 * returned array.
 	 * Params:
-	 * alignments = location to store an array of tab stop alignments, or NULL
-	 * locations = location to store an array of tab positions, or NULL
+	 * alignments = location to store an array of tab stop
+	 * alignments, or NULL. [out][allow-none]
+	 * locations = location to store an array of tab positions,
+	 * or NULL. [out][allow-none]
 	 */
 	public void getTabs(out PangoTabAlign[] alignments, out int[] locations)
 	{

@@ -34,7 +34,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- pango_font_
@@ -229,10 +229,10 @@ public class PgFont : ObjectG
 	 * output variables and returns.
 	 * Params:
 	 * glyph = the glyph index
-	 * inkRect = rectangle used to store the extents of the glyph as drawn
-	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect = rectangle used to store the logical extents of the glyph
-	 *  or NULL to indicate that the result is not needed.
+	 * inkRect = rectangle used to store the extents of the glyph
+	 * as drawn or NULL to indicate that the result is not needed. [out][allow-none]
+	 * logicalRect = rectangle used to store the logical extents of
+	 * the glyph or NULL to indicate that the result is not needed. [out][allow-none]
 	 */
 	public void getGlyphExtents(PangoGlyph glyph, PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -249,8 +249,7 @@ public class PgFont : ObjectG
 	 * output variables and returns.
 	 * Params:
 	 * language = language tag used to determine which script to get the metrics
-	 *  for, or NULL to indicate to get the metrics for the entire
-	 *  font.
+	 * for, or NULL to indicate to get the metrics for the entire font. [allow-none]
 	 * Returns: a PangoFontMetrics object. The caller must call pango_font_metrics_unref() when finished using the object.
 	 */
 	public PgFontMetrics getMetrics(PgLanguage language)
@@ -274,7 +273,7 @@ public class PgFont : ObjectG
 	 * alive. In most uses this is not an issue as a PangoContext holds
 	 * a reference to the font map.
 	 * Since 1.10
-	 * Returns: the PangoFontMap for the font, or NULL if font is NULL.
+	 * Returns: the PangoFontMap for the font, or NULL if font is NULL. [transfer none]
 	 */
 	public PgFontMap getFontMap()
 	{

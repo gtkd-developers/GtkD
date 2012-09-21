@@ -65,6 +65,7 @@ private import glib.ConstructionException;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -73,7 +74,7 @@ private import glib.ConstructionException;
  * structures are used to store information about
  * glyphs.
  */
-public class PgMatrix
+public class PgMatrix : Boxed
 {
 	
 	/** the main Gtk struct */
@@ -151,8 +152,8 @@ public class PgMatrix
 	 * as nearest.
 	 * Since 1.16
 	 * Params:
-	 * inclusive = rectangle to round to pixels inclusively, or NULL.
-	 * nearest = rectangle to round to nearest pixels, or NULL.
+	 * inclusive = rectangle to round to pixels inclusively, or NULL. [allow-none]
+	 * nearest = rectangle to round to nearest pixels, or NULL. [allow-none]
 	 */
 	public static void extentsToPixels(PangoRectangle* inclusive, PangoRectangle* nearest)
 	{
@@ -258,8 +259,8 @@ public class PgMatrix
 	 * Since 1.16
 	 * Params:
 	 * matrix = a PangoMatrix, or NULL
-	 * x = in/out X position
-	 * y = in/out Y position
+	 * x = in/out X position. [inout]
+	 * y = in/out Y position. [inout]
 	 */
 	public void matrixTransformPoint(ref double x, ref double y)
 	{
@@ -274,8 +275,8 @@ public class PgMatrix
 	 * Since 1.16
 	 * Params:
 	 * matrix = a PangoMatrix, or NULL
-	 * dx = in/out X component of a distance vector
-	 * dy = yn/out Y component of a distance vector
+	 * dx = in/out X component of a distance vector. [inout]
+	 * dy = in/out Y component of a distance vector. [inout]
 	 */
 	public void matrixTransformDistance(ref double dx, ref double dy)
 	{
@@ -302,7 +303,7 @@ public class PgMatrix
 	 * Since 1.16
 	 * Params:
 	 * matrix = a PangoMatrix, or NULL
-	 * rect = in/out bounding box in Pango units, or NULL
+	 * rect = in/out bounding box in Pango units, or NULL. [inout][allow-none]
 	 */
 	public void matrixTransformRectangle(PangoRectangle* rect)
 	{
@@ -323,7 +324,7 @@ public class PgMatrix
 	 * Since 1.16
 	 * Params:
 	 * matrix = a PangoMatrix, or NULL
-	 * rect = in/out bounding box in device units, or NULL
+	 * rect = in/out bounding box in device units, or NULL. [inout][allow-none]
 	 */
 	public void matrixTransformPixelRectangle(PangoRectangle* rect)
 	{
@@ -337,7 +338,7 @@ public class PgMatrix
 	 * vector that the X coordinate is mapped to.
 	 * Since 1.12
 	 * Params:
-	 * matrix = a PangoMatrix, may be NULL
+	 * matrix = a PangoMatrix, may be NULL. [allow-none]
 	 * Returns: the scale factor of matrix on the height of the font, or 1.0 if matrix is NULL.
 	 */
 	public double matrixGetFontScaleFactor()

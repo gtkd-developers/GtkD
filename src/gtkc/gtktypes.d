@@ -1370,14 +1370,13 @@ alias GtkTreeViewColumnSizing TreeViewColumnSizing;
  */
 public enum GtkTreeViewDropPosition
 {
-	/+* drop before/after this row +/
-	GTK_TREE_VIEW_DROP_BEFORE,
-	GTK_TREE_VIEW_DROP_AFTER,
+	BEFORE,
+	AFTER,
 	/+* drop as a child of this row (with fallback to before or after
 	 * if into is not possible)
 	+/
-	GTK_TREE_VIEW_DROP_INTO_OR_BEFORE,
-	GTK_TREE_VIEW_DROP_INTO_OR_AFTER
+	INTO_OR_BEFORE,
+	INTO_OR_AFTER
 }
 alias GtkTreeViewDropPosition TreeViewDropPosition;
 

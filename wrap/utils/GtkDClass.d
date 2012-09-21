@@ -1537,6 +1537,9 @@ public class GtkDClass
 		bool invalidDEnum = false;
 		if ( pos<lines.length && lines[pos][0] != '}' )
 		{
+			if ( lines[pos].strip.startsWith("/+") )
+				pos++;
+		
 			string enumPrefix = getEnumPrefix(enumName, std.string.strip(lines[pos]));
 			while ( pos<lines.length && lines[pos][0] != '}' )
 			{

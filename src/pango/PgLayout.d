@@ -181,7 +181,7 @@ public class PgLayout : ObjectG
 	 * Does a deep copy-by-value of the src layout. The attribute list,
 	 * tab array, and text from the original layout are all copied by
 	 * value.
-	 * Returns: the newly allocated PangoLayout, with a reference count of one, which should be freed with g_object_unref().
+	 * Returns: the newly allocated PangoLayout, with a reference count of one, which should be freed with g_object_unref(). [transfer full]
 	 */
 	public PgLayout copy()
 	{
@@ -233,12 +233,24 @@ public class PgLayout : ObjectG
 	}
 	
 	/**
+	 * Returns the number of Unicode characters in the
+	 * the text of layout.
+	 * Since 1.30
+	 * Returns: the number of Unicode characters in the text of layout
+	 */
+	public int getCharacterCount()
+	{
+		// gint pango_layout_get_character_count (PangoLayout *layout);
+		return pango_layout_get_character_count(pangoLayout);
+	}
+	
+	/**
 	 * Same as pango_layout_set_markup_with_accel(), but
 	 * the markup text isn't scanned for accelerators.
 	 * Params:
 	 * markup = marked-up text
 	 * length = length of marked-up text in bytes, or -1 if markup is
-	 * nul-terminated
+	 * null-terminated
 	 */
 	public void setMarkup(string markup, int length)
 	{
@@ -261,9 +273,10 @@ public class PgLayout : ObjectG
 	 * markup = marked-up text
 	 * (see markup format)
 	 * length = length of marked-up text in bytes, or -1 if markup is
-	 * nul-terminated
+	 * null-terminated
 	 * accelMarker = marker for accelerators in the text
-	 * accelChar = return location for first located accelerator, or NULL
+	 * accelChar = return location
+	 * for first located accelerator, or NULL. [out caller-allocates][allow-none]
 	 */
 	public void setMarkupWithAccel(string markup, int length, gunichar accelMarker, gunichar* accelChar)
 	{
@@ -275,7 +288,7 @@ public class PgLayout : ObjectG
 	 * Sets the text attributes for a layout object.
 	 * References attrs, so the caller can unref its reference.
 	 * Params:
-	 * attrs = a PangoAttrList, can be NULL
+	 * attrs = a PangoAttrList, can be NULL. [allow-none][transfer full]
 	 */
 	public void setAttributes(PgAttributeList attrs)
 	{
@@ -304,7 +317,7 @@ public class PgLayout : ObjectG
 	 * the layout's context is used.
 	 * Params:
 	 * desc = the new PangoFontDescription, or NULL to unset the
-	 *  current font description
+	 * current font description. [allow-none]
 	 */
 	public void setFontDescription(PgFontDescription desc)
 	{
@@ -333,7 +346,7 @@ public class PgLayout : ObjectG
 	 * ellipsized. The default value is -1: no width set.
 	 * Params:
 	 * width = the desired width in Pango units, or -1 to indicate that no
-	 *  wrapping or ellipsization should be performed.
+	 * wrapping or ellipsization should be performed.
 	 */
 	public void setWidth(int width)
 	{
@@ -375,7 +388,7 @@ public class PgLayout : ObjectG
 	 * Since 1.20
 	 * Params:
 	 * height = the desired height of the layout in Pango units if positive,
-	 *  or desired number of lines if negative.
+	 * or desired number of lines if negative.
 	 */
 	public void setHeight(int height)
 	{
@@ -578,7 +591,7 @@ public class PgLayout : ObjectG
 	 * Since 1.4
 	 * Params:
 	 * autoDir = if TRUE, compute the bidirectional base direction
-	 *  from the layout's contents.
+	 * from the layout's contents.
 	 */
 	public void setAutoDir(int autoDir)
 	{
@@ -628,7 +641,7 @@ public class PgLayout : ObjectG
 	 * tabs are reinstated. tabs is copied into the layout; you must
 	 * free your copy of tabs yourself.
 	 * Params:
-	 * tabs = a PangoTabArray, or NULL
+	 * tabs = a PangoTabArray, or NULL. [allow-none]
 	 */
 	public void setTabs(PgTabArray tabs)
 	{
@@ -700,7 +713,7 @@ public class PgLayout : ObjectG
 	 * the layout.
 	 * Params:
 	 * attrs = location to store a pointer to an array of logical attributes
-	 *  This value must be freed with g_free(). [out][array length=n_attrs][transfer container length=n_attrs]
+	 * This value must be freed with g_free(). [out][array length=n_attrs][transfer container]
 	 */
 	public void getLogAttrs(out PangoLogAttr[] attrs)
 	{
@@ -711,6 +724,27 @@ public class PgLayout : ObjectG
 		pango_layout_get_log_attrs(pangoLayout, &outattrs, &nAttrs);
 		
 		attrs = outattrs[0 .. nAttrs];
+	}
+	
+	/**
+	 * Retrieves an array of logical attributes for each character in
+	 * the layout.
+	 * This is a faster alternative to pango_layout_get_log_attrs().
+	 * The returned array is part of layout and must not be modified.
+	 * Modifying the layout will invalidate the returned array.
+	 * The number of attributes returned in n_attrs will be one more
+	 * than the total number of characters in the layout, since there
+	 * need to be attributes corresponding to both the position before
+	 * the first character and the position after the last character.
+	 * Since 1.30
+	 * Returns: an array of logical attributes
+	 */
+	public PangoLogAttr[] getLogAttrsReadonly()
+	{
+		// const PangoLogAttr * pango_layout_get_log_attrs_readonly  (PangoLayout *layout,  gint *n_attrs);
+		int nAttrs;
+		auto p = pango_layout_get_log_attrs_readonly(pangoLayout, &nAttrs);
+		return p[0 .. nAttrs];
 	}
 	
 	/**
@@ -736,12 +770,12 @@ public class PgLayout : ObjectG
 	 * Params:
 	 * index = the byte index of a grapheme within the layout.
 	 * trailing = an integer indicating the edge of the grapheme to retrieve the
-	 *  position of. If 0, the trailing edge of the grapheme, if > 0,
-	 *  the leading of the grapheme.
+	 * position of. If 0, the trailing edge of the grapheme, if > 0,
+	 * the leading of the grapheme.
 	 * line = location to store resulting line index. (which will
-	 *  between 0 and pango_layout_get_line_count(layout) - 1)
-	 * x_pos (out): location to store resulting position within line
-	 *  (PANGO_SCALE units per device unit). [out]
+	 * between 0 and pango_layout_get_line_count(layout) - 1), or NULL. [out][allow-none]
+	 * xPos = location to store resulting position within line
+	 * (PANGO_SCALE units per device unit), or NULL. [out][allow-none]
 	 */
 	public void indexToLineX(int index, int trailing, out int line, out int xPos)
 	{
@@ -760,14 +794,14 @@ public class PgLayout : ObjectG
 	 * function returns FALSE; on an exact hit, it returns TRUE.
 	 * Params:
 	 * x = the X offset (in Pango units)
-	 *  from the left edge of the layout.
+	 * from the left edge of the layout.
 	 * y = the Y offset (in Pango units)
-	 *  from the top edge of the layout
+	 * from the top edge of the layout
 	 * index = location to store calculated byte index. [out]
 	 * trailing = location to store a integer indicating where
-	 *  in the grapheme the user clicked. It will either
-	 *  be zero, or the number of characters in the
-	 *  grapheme. 0 represents the trailing edge of the grapheme. [out]
+	 * in the grapheme the user clicked. It will either
+	 * be zero, or the number of characters in the
+	 * grapheme. 0 represents the trailing edge of the grapheme. [out]
 	 * Returns: TRUE if the coordinates were inside text, FALSE otherwise.
 	 */
 	public int xyToIndex(int x, int y, out int index, out int trailing)
@@ -788,8 +822,8 @@ public class PgLayout : ObjectG
 	 * Params:
 	 * index = the byte index of the cursor
 	 * strongPos = location to store the strong cursor position
-	 *  (may be NULL). [out]
-	 * weakPos = location to store the weak cursor position (may be NULL). [out]
+	 * (may be NULL). [out][allow-none]
+	 * weakPos = location to store the weak cursor position (may be NULL). [out][allow-none]
 	 */
 	public void getCursorPos(int index, PangoRectangle* strongPos, PangoRectangle* weakPos)
 	{
@@ -814,24 +848,25 @@ public class PgLayout : ObjectG
 	 * to form a single grapheme.
 	 * Params:
 	 * strong = whether the moving cursor is the strong cursor or the
-	 *  weak cursor. The strong cursor is the cursor corresponding
-	 *  to text insertion in the base direction for the layout.
+	 * weak cursor. The strong cursor is the cursor corresponding
+	 * to text insertion in the base direction for the layout.
 	 * oldIndex = the byte index of the grapheme for the old index
 	 * oldTrailing = if 0, the cursor was at the trailing edge of the
-	 *  grapheme indicated by old_index, if > 0, the cursor
-	 *  was at the leading edge.
+	 * grapheme indicated by old_index, if > 0, the cursor
+	 * was at the leading edge.
 	 * direction = direction to move cursor. A negative
-	 *  value indicates motion to the left.
+	 * value indicates motion to the left.
 	 * newIndex = location to store the new cursor byte index. A value of -1
-	 *  indicates that the cursor has been moved off the beginning
-	 *  of the layout. A value of G_MAXINT indicates that
-	 *  the cursor has been moved off the end of the layout. [out]
-	 * newTrailing = number of characters to move forward from the location returned
-	 *  for new_index to get the position where the cursor should
-	 *  be displayed. This allows distinguishing the position at
-	 *  the beginning of one line from the position at the end
-	 *  of the preceding line. new_index is always on the line
-	 *  where the cursor should be displayed.
+	 * indicates that the cursor has been moved off the beginning
+	 * of the layout. A value of G_MAXINT indicates that
+	 * the cursor has been moved off the end of the layout. [out]
+	 * newTrailing = number of characters to move forward from the
+	 * location returned for new_index to get the position
+	 * where the cursor should be displayed. This allows
+	 * distinguishing the position at the beginning of one
+	 * line from the position at the end of the preceding
+	 * line. new_index is always on the line where the
+	 * cursor should be displayed. [out]
 	 */
 	public void moveCursorVisually(int strong, int oldIndex, int oldTrailing, int direction, out int newIndex, out int newTrailing)
 	{
@@ -849,11 +884,12 @@ public class PgLayout : ObjectG
 	 * The extents are given in layout coordinates and in Pango units; layout
 	 * coordinates begin at the top left corner of the layout.
 	 * Params:
-	 * inkRect = rectangle used to store the extents of the layout as drawn
-	 *  or NULL to indicate that the result is not needed. [out]
-	 * logicalRect = rectangle used to store the logical extents of the
-	 *  layout or NULL to indicate that the result is not
-	 *  needed. [out]
+	 * inkRect = rectangle used to store the extents of the
+	 * layout as drawn or NULL to indicate that the result is
+	 * not needed. [out][allow-none]
+	 * logicalRect = rectangle used to store the logical
+	 * extents of the layout or NULL to indicate that the
+	 * result is not needed. [out][allow-none]
 	 */
 	public void getExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -868,11 +904,12 @@ public class PgLayout : ObjectG
 	 * such that the rounded rectangles fully contain the unrounded one (that is,
 	 * passes them as first argument to pango_extents_to_pixels()).
 	 * Params:
-	 * inkRect = rectangle used to store the extents of the layout as drawn
-	 *  or NULL to indicate that the result is not needed. [out]
-	 * logicalRect = rectangle used to store the logical extents of the
-	 *  layout or NULL to indicate that the result is not
-	 *  needed. [out]
+	 * inkRect = rectangle used to store the extents of the
+	 * layout as drawn or NULL to indicate that the result is
+	 * not needed. [out][allow-none]
+	 * logicalRect = rectangle used to store the logical
+	 * extents of the layout or NULL to indicate that the
+	 * result is not needed. [out][allow-none]
 	 */
 	public void getPixelExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -885,8 +922,8 @@ public class PgLayout : ObjectG
 	 * in Pango units (device units scaled by PANGO_SCALE). This
 	 * is simply a convenience function around pango_layout_get_extents().
 	 * Params:
-	 * width = location to store the logical width, or NULL. [out]
-	 * height = location to store the logical height, or NULL. [out]
+	 * width = location to store the logical width, or NULL. [out caller-allocates][allow-none]
+	 * height = location to store the logical height, or NULL. [out caller-allocates][allow-none]
 	 */
 	public void getSize(out int width, out int height)
 	{
@@ -901,8 +938,8 @@ public class PgLayout : ObjectG
 	 * is simply a convenience function around
 	 * pango_layout_get_pixel_extents().
 	 * Params:
-	 * width = location to store the logical width, or NULL. [out]
-	 * height = location to store the logical height, or NULL. [out]
+	 * width = location to store the logical width, or NULL. [out][allow-none]
+	 * height = location to store the logical height, or NULL. [out][allow-none]
 	 */
 	public void getPixelSize(out int width, out int height)
 	{
@@ -937,8 +974,8 @@ public class PgLayout : ObjectG
 	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 * Params:
 	 * line = the index of a line, which must be between 0 and
-	 *  pango_layout_get_line_count(layout) - 1, inclusive.
-	 * Returns: the requested PangoLayoutLine, or NULL if the index is out of range. This layout line can be ref'ed and retained, but will become invalid if changes are made to the PangoLayout.
+	 * pango_layout_get_line_count(layout) - 1, inclusive.
+	 * Returns: the requested PangoLayoutLine, or NULL if the index is out of range. This layout line can be ref'ed and retained, but will become invalid if changes are made to the PangoLayout. [transfer none]
 	 */
 	public PgLayoutLine getLine(int line)
 	{
@@ -959,8 +996,8 @@ public class PgLayout : ObjectG
 	 * Since 1.16
 	 * Params:
 	 * line = the index of a line, which must be between 0 and
-	 *  pango_layout_get_line_count(layout) - 1, inclusive.
-	 * Returns: the requested PangoLayoutLine, or NULL if the index is out of range. This layout line can be ref'ed and retained, but will become invalid if changes are made to the PangoLayout. No changes should be made to the line.
+	 * pango_layout_get_line_count(layout) - 1, inclusive.
+	 * Returns: the requested PangoLayoutLine, or NULL if the index is out of range. This layout line can be ref'ed and retained, but will become invalid if changes are made to the PangoLayout. No changes should be made to the line. [transfer none]
 	 */
 	public PgLayoutLine getLineReadonly(int line)
 	{
@@ -977,7 +1014,7 @@ public class PgLayout : ObjectG
 	 * Returns the lines of the layout as a list.
 	 * Use the faster pango_layout_get_lines_readonly() if you do not plan
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
-	 * Returns: a GSList containing the lines in the layout. This points to internal data of the PangoLayout and must be used with care. It will become invalid on any change to the layout's text or properties. [element-type Pango.LayoutLine][transfer none Pango.LayoutLine]
+	 * Returns: a GSList containing the lines in the layout. This points to internal data of the PangoLayout and must be used with care. It will become invalid on any change to the layout's text or properties. [element-type Pango.LayoutLine][transfer none]
 	 */
 	public ListSG getLines()
 	{
@@ -996,7 +1033,7 @@ public class PgLayout : ObjectG
 	 * but the user is not expected
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
 	 * Since 1.16
-	 * Returns: a GSList containing the lines in the layout. This points to internal data of the PangoLayout and must be used with care. It will become invalid on any change to the layout's text or properties. No changes should be made to the lines. [element-type Pango.LayoutLine][transfer none Pango.LayoutLine]
+	 * Returns: a GSList containing the lines in the layout. This points to internal data of the PangoLayout and must be used with care. It will become invalid on any change to the layout's text or properties. No changes should be made to the lines. [element-type Pango.LayoutLine][transfer none]
 	 */
 	public ListSG getLinesReadonly()
 	{

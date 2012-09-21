@@ -258,7 +258,6 @@ alias GstStateChangeReturn StateChangeReturn;
  */
 public enum GstBinFlags
 {
-	/+* padding +/
 	FLAG_LAST = (GstElementFlags.FLAG_LAST << 5)
 }
 alias GstBinFlags BinFlags;
@@ -451,7 +450,6 @@ alias GstClockFlags ClockFlags;
  */
 public enum GstSeekType
 {
-	/+* one of these +/
 	NONE = 0,
 	CUR = 1,
 	SET = 2,
@@ -977,21 +975,20 @@ alias GstPadLinkReturn PadLinkReturn;
  */
 public enum GstFlowReturn
 {
-	/+* custom success starts here +/
-	GST_FLOW_CUSTOM_SUCCESS = 100,
+	CUSTOM_SUCCESS = 100,
 	/+* core predefined +/
-	GST_FLOW_RESEND = 1,
-	GST_FLOW_OK = 0,
+	RESEND = 1,
+	OK = 0,
 	/+* expected failures +/
-	GST_FLOW_NOT_LINKED = -1,
-	GST_FLOW_WRONG_STATE = -2,
+	NOT_LINKED = -1,
+	WRONG_STATE = -2,
 	/+* error cases +/
-	GST_FLOW_UNEXPECTED = -3,
-	GST_FLOW_NOT_NEGOTIATED = -4,
-	GST_FLOW_ERROR = -5,
-	GST_FLOW_NOT_SUPPORTED = -6,
+	UNEXPECTED = -3,
+	NOT_NEGOTIATED = -4,
+	ERROR = -5,
+	NOT_SUPPORTED = -6,
 	/+* custom error starts here +/
-	GST_FLOW_CUSTOM_ERROR = -100
+	CUSTOM_ERROR = -100
 }
 alias GstFlowReturn FlowReturn;
 

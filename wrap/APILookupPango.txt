@@ -237,6 +237,7 @@ file: pango-Fonts.html
 
 struct: PangoFont
 class: PgFont
+extend: GObject
 prefix: pango_font_
 noprefix: pango_font_description_
 noprefix: pango_font_descriptions_
@@ -494,6 +495,7 @@ out: pango_layout_get_size width
 out: pango_layout_get_size height
 out: pango_layout_get_pixel_size width
 out: pango_layout_get_pixel_size height
+array: pango_layout_get_log_attrs_readonly Return n_attrs
 
 nocode: pango_layout_set_text
 

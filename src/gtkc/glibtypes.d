@@ -286,17 +286,16 @@ alias GIOStatus IOStatus;
  */
 public enum GIOChannelError
 {
-	/+* Derived from errno +/
-	G_IO_CHANNEL_ERROR_FBIG,
-	G_IO_CHANNEL_ERROR_INVAL,
-	G_IO_CHANNEL_ERROR_IO,
-	G_IO_CHANNEL_ERROR_ISDIR,
-	G_IO_CHANNEL_ERROR_NOSPC,
-	G_IO_CHANNEL_ERROR_NXIO,
-	G_IO_CHANNEL_ERROR_OVERFLOW,
-	G_IO_CHANNEL_ERROR_PIPE,
+	FBIG,
+	INVAL,
+	IO,
+	ISDIR,
+	NOSPC,
+	NXIO,
+	OVERFLOW,
+	PIPE,
 	/+* Other +/
-	G_IO_CHANNEL_ERROR_FAILED
+	FAILED
 }
 alias GIOChannelError IOChannelError;
 
@@ -421,17 +420,16 @@ alias GIOError IOError;
  */
 public enum GLogLevelFlags
 {
-	/+* log flags +/
-	G_LOG_FLAG_RECURSION = 1 << 0,
-	G_LOG_FLAG_FATAL = 1 << 1,
+	FLAG_RECURSION = 1 << 0,
+	FLAG_FATAL = 1 << 1,
 	/+* GLib log levels +/
-	G_LOG_LEVEL_ERROR = 1 << 2, /+* always fatal +/
-	G_LOG_LEVEL_CRITICAL = 1 << 3,
-	G_LOG_LEVEL_WARNING = 1 << 4,
-	G_LOG_LEVEL_MESSAGE = 1 << 5,
-	G_LOG_LEVEL_INFO = 1 << 6,
-	G_LOG_LEVEL_DEBUG = 1 << 7,
-	G_LOG_LEVEL_MASK = ~(G_LOG_FLAG_RECURSION | G_LOG_FLAG_FATAL)
+	LEVEL_ERROR = 1 << 2, /+* always fatal +/
+	LEVEL_CRITICAL = 1 << 3,
+	LEVEL_WARNING = 1 << 4,
+	LEVEL_MESSAGE = 1 << 5,
+	LEVEL_INFO = 1 << 6,
+	LEVEL_DEBUG = 1 << 7,
+	LEVEL_MASK = ~(FLAG_RECURSION | FLAG_FATAL)
 }
 alias GLogLevelFlags LogLevelFlags;
 
@@ -913,118 +911,117 @@ alias GUnicodeBreakType UnicodeBreakType;
  */
 public enum GUnicodeScript
 {
-	/+* ISO 15924 code +/
-	G_UNICODE_SCRIPT_INVALID_CODE = -1,
-	G_UNICODE_SCRIPT_COMMON = 0, /+* Zyyy +/
-	G_UNICODE_SCRIPT_INHERITED, /+* Zinh (Qaai) +/
-	G_UNICODE_SCRIPT_ARABIC, /+* Arab +/
-	G_UNICODE_SCRIPT_ARMENIAN, /+* Armn +/
-	G_UNICODE_SCRIPT_BENGALI, /+* Beng +/
-	G_UNICODE_SCRIPT_BOPOMOFO, /+* Bopo +/
-	G_UNICODE_SCRIPT_CHEROKEE, /+* Cher +/
-	G_UNICODE_SCRIPT_COPTIC, /+* Copt (Qaac) +/
-	G_UNICODE_SCRIPT_CYRILLIC, /+* Cyrl (Cyrs) +/
-	G_UNICODE_SCRIPT_DESERET, /+* Dsrt +/
-	G_UNICODE_SCRIPT_DEVANAGARI, /+* Deva +/
-	G_UNICODE_SCRIPT_ETHIOPIC, /+* Ethi +/
-	G_UNICODE_SCRIPT_GEORGIAN, /+* Geor (Geon, Geoa) +/
-	G_UNICODE_SCRIPT_GOTHIC, /+* Goth +/
-	G_UNICODE_SCRIPT_GREEK, /+* Grek +/
-	G_UNICODE_SCRIPT_GUJARATI, /+* Gujr +/
-	G_UNICODE_SCRIPT_GURMUKHI, /+* Guru +/
-	G_UNICODE_SCRIPT_HAN, /+* Hani +/
-	G_UNICODE_SCRIPT_HANGUL, /+* Hang +/
-	G_UNICODE_SCRIPT_HEBREW, /+* Hebr +/
-	G_UNICODE_SCRIPT_HIRAGANA, /+* Hira +/
-	G_UNICODE_SCRIPT_KANNADA, /+* Knda +/
-	G_UNICODE_SCRIPT_KATAKANA, /+* Kana +/
-	G_UNICODE_SCRIPT_KHMER, /+* Khmr +/
-	G_UNICODE_SCRIPT_LAO, /+* Laoo +/
-	G_UNICODE_SCRIPT_LATIN, /+* Latn (Latf, Latg) +/
-	G_UNICODE_SCRIPT_MALAYALAM, /+* Mlym +/
-	G_UNICODE_SCRIPT_MONGOLIAN, /+* Mong +/
-	G_UNICODE_SCRIPT_MYANMAR, /+* Mymr +/
-	G_UNICODE_SCRIPT_OGHAM, /+* Ogam +/
-	G_UNICODE_SCRIPT_OLD_ITALIC, /+* Ital +/
-	G_UNICODE_SCRIPT_ORIYA, /+* Orya +/
-	G_UNICODE_SCRIPT_RUNIC, /+* Runr +/
-	G_UNICODE_SCRIPT_SINHALA, /+* Sinh +/
-	G_UNICODE_SCRIPT_SYRIAC, /+* Syrc (Syrj, Syrn, Syre) +/
-	G_UNICODE_SCRIPT_TAMIL, /+* Taml +/
-	G_UNICODE_SCRIPT_TELUGU, /+* Telu +/
-	G_UNICODE_SCRIPT_THAANA, /+* Thaa +/
-	G_UNICODE_SCRIPT_THAI, /+* Thai +/
-	G_UNICODE_SCRIPT_TIBETAN, /+* Tibt +/
-	G_UNICODE_SCRIPT_CANADIAN_ABORIGINAL, /+* Cans +/
-	G_UNICODE_SCRIPT_YI, /+* Yiii +/
-	G_UNICODE_SCRIPT_TAGALOG, /+* Tglg +/
-	G_UNICODE_SCRIPT_HANUNOO, /+* Hano +/
-	G_UNICODE_SCRIPT_BUHID, /+* Buhd +/
-	G_UNICODE_SCRIPT_TAGBANWA, /+* Tagb +/
+	INVALID_CODE = -1,
+	COMMON = 0, /+* Zyyy +/
+	INHERITED, /+* Zinh (Qaai) +/
+	ARABIC, /+* Arab +/
+	ARMENIAN, /+* Armn +/
+	BENGALI, /+* Beng +/
+	BOPOMOFO, /+* Bopo +/
+	CHEROKEE, /+* Cher +/
+	COPTIC, /+* Copt (Qaac) +/
+	CYRILLIC, /+* Cyrl (Cyrs) +/
+	DESERET, /+* Dsrt +/
+	DEVANAGARI, /+* Deva +/
+	ETHIOPIC, /+* Ethi +/
+	GEORGIAN, /+* Geor (Geon, Geoa) +/
+	GOTHIC, /+* Goth +/
+	GREEK, /+* Grek +/
+	GUJARATI, /+* Gujr +/
+	GURMUKHI, /+* Guru +/
+	HAN, /+* Hani +/
+	HANGUL, /+* Hang +/
+	HEBREW, /+* Hebr +/
+	HIRAGANA, /+* Hira +/
+	KANNADA, /+* Knda +/
+	KATAKANA, /+* Kana +/
+	KHMER, /+* Khmr +/
+	LAO, /+* Laoo +/
+	LATIN, /+* Latn (Latf, Latg) +/
+	MALAYALAM, /+* Mlym +/
+	MONGOLIAN, /+* Mong +/
+	MYANMAR, /+* Mymr +/
+	OGHAM, /+* Ogam +/
+	OLD_ITALIC, /+* Ital +/
+	ORIYA, /+* Orya +/
+	RUNIC, /+* Runr +/
+	SINHALA, /+* Sinh +/
+	SYRIAC, /+* Syrc (Syrj, Syrn, Syre) +/
+	TAMIL, /+* Taml +/
+	TELUGU, /+* Telu +/
+	THAANA, /+* Thaa +/
+	THAI, /+* Thai +/
+	TIBETAN, /+* Tibt +/
+	CANADIAN_ABORIGINAL, /+* Cans +/
+	YI, /+* Yiii +/
+	TAGALOG, /+* Tglg +/
+	HANUNOO, /+* Hano +/
+	BUHID, /+* Buhd +/
+	TAGBANWA, /+* Tagb +/
 	/+* Unicode-4.0 additions +/
-	G_UNICODE_SCRIPT_BRAILLE, /+* Brai +/
-	G_UNICODE_SCRIPT_CYPRIOT, /+* Cprt +/
-	G_UNICODE_SCRIPT_LIMBU, /+* Limb +/
-	G_UNICODE_SCRIPT_OSMANYA, /+* Osma +/
-	G_UNICODE_SCRIPT_SHAVIAN, /+* Shaw +/
-	G_UNICODE_SCRIPT_LINEAR_B, /+* Linb +/
-	G_UNICODE_SCRIPT_TAI_LE, /+* Tale +/
-	G_UNICODE_SCRIPT_UGARITIC, /+* Ugar +/
+	BRAILLE, /+* Brai +/
+	CYPRIOT, /+* Cprt +/
+	LIMBU, /+* Limb +/
+	OSMANYA, /+* Osma +/
+	SHAVIAN, /+* Shaw +/
+	LINEAR_B, /+* Linb +/
+	TAI_LE, /+* Tale +/
+	UGARITIC, /+* Ugar +/
 	/+* Unicode-4.1 additions +/
-	G_UNICODE_SCRIPT_NEW_TAI_LUE, /+* Talu +/
-	G_UNICODE_SCRIPT_BUGINESE, /+* Bugi +/
-	G_UNICODE_SCRIPT_GLAGOLITIC, /+* Glag +/
-	G_UNICODE_SCRIPT_TIFINAGH, /+* Tfng +/
-	G_UNICODE_SCRIPT_SYLOTI_NAGRI, /+* Sylo +/
-	G_UNICODE_SCRIPT_OLD_PERSIAN, /+* Xpeo +/
-	G_UNICODE_SCRIPT_KHAROSHTHI, /+* Khar +/
+	NEW_TAI_LUE, /+* Talu +/
+	BUGINESE, /+* Bugi +/
+	GLAGOLITIC, /+* Glag +/
+	TIFINAGH, /+* Tfng +/
+	SYLOTI_NAGRI, /+* Sylo +/
+	OLD_PERSIAN, /+* Xpeo +/
+	KHAROSHTHI, /+* Khar +/
 	/+* Unicode-5.0 additions +/
-	G_UNICODE_SCRIPT_UNKNOWN, /+* Zzzz +/
-	G_UNICODE_SCRIPT_BALINESE, /+* Bali +/
-	G_UNICODE_SCRIPT_CUNEIFORM, /+* Xsux +/
-	G_UNICODE_SCRIPT_PHOENICIAN, /+* Phnx +/
-	G_UNICODE_SCRIPT_PHAGS_PA, /+* Phag +/
-	G_UNICODE_SCRIPT_NKO, /+* Nkoo +/
+	UNKNOWN, /+* Zzzz +/
+	BALINESE, /+* Bali +/
+	CUNEIFORM, /+* Xsux +/
+	PHOENICIAN, /+* Phnx +/
+	PHAGS_PA, /+* Phag +/
+	NKO, /+* Nkoo +/
 	/+* Unicode-5.1 additions +/
-	G_UNICODE_SCRIPT_KAYAH_LI, /+* Kali +/
-	G_UNICODE_SCRIPT_LEPCHA, /+* Lepc +/
-	G_UNICODE_SCRIPT_REJANG, /+* Rjng +/
-	G_UNICODE_SCRIPT_SUNDANESE, /+* Sund +/
-	G_UNICODE_SCRIPT_SAURASHTRA, /+* Saur +/
-	G_UNICODE_SCRIPT_CHAM, /+* Cham +/
-	G_UNICODE_SCRIPT_OL_CHIKI, /+* Olck +/
-	G_UNICODE_SCRIPT_VAI, /+* Vaii +/
-	G_UNICODE_SCRIPT_CARIAN, /+* Cari +/
-	G_UNICODE_SCRIPT_LYCIAN, /+* Lyci +/
-	G_UNICODE_SCRIPT_LYDIAN, /+* Lydi +/
+	KAYAH_LI, /+* Kali +/
+	LEPCHA, /+* Lepc +/
+	REJANG, /+* Rjng +/
+	SUNDANESE, /+* Sund +/
+	SAURASHTRA, /+* Saur +/
+	CHAM, /+* Cham +/
+	OL_CHIKI, /+* Olck +/
+	VAI, /+* Vaii +/
+	CARIAN, /+* Cari +/
+	LYCIAN, /+* Lyci +/
+	LYDIAN, /+* Lydi +/
 	/+* Unicode-5.2 additions +/
-	G_UNICODE_SCRIPT_AVESTAN, /+* Avst +/
-	G_UNICODE_SCRIPT_BAMUM, /+* Bamu +/
-	G_UNICODE_SCRIPT_EGYPTIAN_HIEROGLYPHS, /+* Egyp +/
-	G_UNICODE_SCRIPT_IMPERIAL_ARAMAIC, /+* Armi +/
-	G_UNICODE_SCRIPT_INSCRIPTIONAL_PAHLAVI, /+* Phli +/
-	G_UNICODE_SCRIPT_INSCRIPTIONAL_PARTHIAN, /+* Prti +/
-	G_UNICODE_SCRIPT_JAVANESE, /+* Java +/
-	G_UNICODE_SCRIPT_KAITHI, /+* Kthi +/
-	G_UNICODE_SCRIPT_LISU, /+* Lisu +/
-	G_UNICODE_SCRIPT_MEETEI_MAYEK, /+* Mtei +/
-	G_UNICODE_SCRIPT_OLD_SOUTH_ARABIAN, /+* Sarb +/
-	G_UNICODE_SCRIPT_OLD_TURKIC, /+* Orkh +/
-	G_UNICODE_SCRIPT_SAMARITAN, /+* Samr +/
-	G_UNICODE_SCRIPT_TAI_THAM, /+* Lana +/
-	G_UNICODE_SCRIPT_TAI_VIET, /+* Tavt +/
+	AVESTAN, /+* Avst +/
+	BAMUM, /+* Bamu +/
+	EGYPTIAN_HIEROGLYPHS, /+* Egyp +/
+	IMPERIAL_ARAMAIC, /+* Armi +/
+	INSCRIPTIONAL_PAHLAVI, /+* Phli +/
+	INSCRIPTIONAL_PARTHIAN, /+* Prti +/
+	JAVANESE, /+* Java +/
+	KAITHI, /+* Kthi +/
+	LISU, /+* Lisu +/
+	MEETEI_MAYEK, /+* Mtei +/
+	OLD_SOUTH_ARABIAN, /+* Sarb +/
+	OLD_TURKIC, /+* Orkh +/
+	SAMARITAN, /+* Samr +/
+	TAI_THAM, /+* Lana +/
+	TAI_VIET, /+* Tavt +/
 	/+* Unicode-6.0 additions +/
-	G_UNICODE_SCRIPT_BATAK, /+* Batk +/
-	G_UNICODE_SCRIPT_BRAHMI, /+* Brah +/
-	G_UNICODE_SCRIPT_MANDAIC, /+* Mand +/
+	BATAK, /+* Batk +/
+	BRAHMI, /+* Brah +/
+	MANDAIC, /+* Mand +/
 	/+* Unicode-6.1 additions +/
-	G_UNICODE_SCRIPT_CHAKMA, /+* Cakm +/
-	G_UNICODE_SCRIPT_MEROITIC_CURSIVE, /+* Merc +/
-	G_UNICODE_SCRIPT_MEROITIC_HIEROGLYPHS, /+* Mero +/
-	G_UNICODE_SCRIPT_MIAO, /+* Plrd +/
-	G_UNICODE_SCRIPT_SHARADA, /+* Shrd +/
-	G_UNICODE_SCRIPT_SORA_SOMPENG, /+* Sora +/
-	G_UNICODE_SCRIPT_TAKRI /+* Takr +/
+	CHAKMA, /+* Cakm +/
+	MEROITIC_CURSIVE, /+* Merc +/
+	MEROITIC_HIEROGLYPHS, /+* Mero +/
+	MIAO, /+* Plrd +/
+	SHARADA, /+* Shrd +/
+	SORA_SOMPENG, /+* Sora +/
+	TAKRI /+* Takr +/
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -1640,11 +1637,10 @@ alias GFileTest FileTest;
  */
 public enum GShellError
 {
-	/+* mismatched or otherwise mangled quoting +/
-	G_SHELL_ERROR_BAD_QUOTING,
+	BAD_QUOTING,
 	/+* string to be parsed was empty +/
-	G_SHELL_ERROR_EMPTY_STRING,
-	G_SHELL_ERROR_FAILED
+	EMPTY_STRING,
+	FAILED
 }
 alias GShellError ShellError;
 

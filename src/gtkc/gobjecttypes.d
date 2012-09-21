@@ -315,11 +315,10 @@ alias GConnectFlags ConnectFlags;
  */
 public enum GBindingFlags
 {
-	/+*< prefix= G_BINDING >+/
-	G_BINDING_DEFAULT = 0,
-	G_BINDING_BIDIRECTIONAL = 1 << 0,
-	G_BINDING_SYNC_CREATE = 1 << 1,
-	G_BINDING_INVERT_BOOLEAN = 1 << 2
+	DEFAULT = 0,
+	BIDIRECTIONAL = 1 << 0,
+	SYNC_CREATE = 1 << 1,
+	INVERT_BOOLEAN = 1 << 2
 }
 alias GBindingFlags BindingFlags;
 
