@@ -355,7 +355,7 @@ public class PixbufLoader : ObjectG
 	 * Obtains the available information about the format of the
 	 * currently loading image file.
 	 * Since 2.2
-	 * Returns: A GdkPixbufFormat or NULL. The return value is owned by GdkPixbuf and should not be freed.
+	 * Returns: A GdkPixbufFormat or NULL. The return value is owned by GdkPixbuf and should not be freed. [transfer none]
 	 */
 	public PixbufFormat getFormat()
 	{

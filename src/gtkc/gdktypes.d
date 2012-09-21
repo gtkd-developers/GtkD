@@ -2588,9 +2588,10 @@ public struct GdkAppLaunchContext{}
  * of GdkPixbufDestroyNotify so that the pixel data can be freed
  * when the pixbuf is finalized.
  * pixels :
- * The pixel array of the pixbuf that is being finalized.
+ * The pixel array of the pixbuf
+ * that is being finalized. [array][element-type guint8]
  * data :
- * User closure data.
+ * User closure data. [closure]
  * See Also
  * GdkPixbuf, gdk_pixbuf_new_from_data().
  */
@@ -2605,7 +2606,7 @@ public alias extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * error and return FALSE, in which case gdk_pixbuf_save_to_callback()
  * will fail with the same error.
  * buf :
- * bytes to be written.
+ * bytes to be written. [array length=count][element-type guint8]
  * count :
  * number of bytes in buf.
  * error :

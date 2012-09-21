@@ -77,7 +77,7 @@ private import glib.Str;
  * Description
  * Using GdkPixdata, images can be compiled into an application,
  * making it unnecessary to refer to external image files at runtime.
- * gdk-pixbuf; includes a utility named gdk-pixbuf-csource, which
+ * GdkPixBuf includes a utility named gdk-pixbuf-csource, which
  * can be used to convert image files into GdkPixdata structures suitable
  * for inclusion in C sources. To convert the GdkPixdata structures back
  * into GdkPixbufs, use gdk_pixbuf_from_pixdata.
@@ -139,7 +139,7 @@ public class Pixdata
 	 * Params:
 	 * copyPixels = whether to copy raw pixel data; run-length encoded
 	 * pixel data is always copied.
-	 * Returns: a new GdkPixbuf.
+	 * Returns: a new GdkPixbuf. [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public Pixbuf gdkPixbufFromPixdata(int copyPixels)
@@ -166,7 +166,7 @@ public class Pixdata
 	 * The byte stream consists of a straightforward writeout of the
 	 * GdkPixdata fields in network byte order, plus the pixel_data
 	 * bytes the structure points to.
-	 * Returns: A newly-allocated string containing the serialized GdkPixdata structure.
+	 * Returns: A newly-allocated string containing the serialized GdkPixdata structure. [array length=stream_length_p][transfer full]
 	 */
 	public ubyte[] serialize()
 	{
@@ -182,10 +182,11 @@ public class Pixdata
 	 * GdkPixdata fields in network byte order, plus the pixel_data
 	 * bytes the structure points to.
 	 * The pixdata contents are reconstructed byte by byte and are checked
-	 * for validity. This function may fail with GDK_PIXBUF_CORRUPT_IMAGE
+	 * for validity. This function may fail with GDK_PIXBUF_ERROR_CORRUPT_IMAGE
 	 * or GDK_PIXBUF_ERROR_UNKNOWN_TYPE.
 	 * Params:
-	 * stream = stream of bytes containing a serialized GdkPixdata structure.
+	 * stream = stream of bytes containing a
+	 * serialized GdkPixdata structure. [array length=stream_length]
 	 * Returns: Upon successful deserialization TRUE is returned, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */

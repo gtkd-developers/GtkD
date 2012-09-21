@@ -261,12 +261,14 @@ import: cairo.Surface
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.InputStream
 import: gdk.Window
 import: gdkpixbuf.PixbufFormat
 
 structWrap: cairo_surface_t* Surface
+structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GInputStream* InputStream
 structWrap: GdkWindow* Window
@@ -320,6 +322,7 @@ text: end
 mergeFile: Pixbuf
 
 file: ../gdk-pixbuf/gdk-pixbuf-The-GdkPixbuf-Structure.html
+array: gdk_pixbuf_get_pixels_with_length Return length
 mergeFile:  Pixbuf
 
 file: ../gdk-pixbuf/gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html

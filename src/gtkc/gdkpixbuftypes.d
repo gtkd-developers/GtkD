@@ -167,7 +167,7 @@ alias GdkPixbufFormatFlags PixbufFormatFlags;
  * Height of the image in pixels.
  * guint8 *pixel_data;
  * width x height pixels, encoded according to pixdata_type
- * and rowstride.
+ * and rowstride. [array][element-type guint8]
  */
 public struct GdkPixdata
 {

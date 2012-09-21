@@ -72,7 +72,7 @@ private import glib.Str;
 
 /**
  * Description
- * If gdk-pixbuf; has been compiled with GModule support, it can be extended by
+ * If GdkPixBuf has been compiled with GModule support, it can be extended by
  * modules which can load (and perhaps also save) new image and animation
  * formats. Each loadable module must export a
  * GdkPixbufModuleFillInfoFunc function named fill_info and
@@ -83,14 +83,14 @@ private import glib.Str;
  * signatures (and other information) via the fill_info
  * function. An external utility, gdk-pixbuf-query-loaders,
  * uses this to create a text file containing a list of all available loaders and
- * their signatures. This file is then read at runtime by gdk-pixbuf; to obtain
+ * their signatures. This file is then read at runtime by GdkPixBuf to obtain
  * the list of available loaders and their signatures.
  * Modules may only implement a subset of the functionality available via
  * GdkPixbufModule. If a particular functionality is not implemented, the
  * fill_vtable function will simply not set the corresponding
  * function pointers of the GdkPixbufModule structure. If a module supports
  * incremental loading (i.e. provides begin_load, stop_load and
- * load_increment), it doesn't have to implement load, since gdk-pixbuf; can
+ * load_increment), it doesn't have to implement load, since GdkPixBuf can
  * supply a generic load implementation wrapping the incremental loading.
  * Installing a module is a two-step process:
  * copy the module file(s) to the loader directory (normally
@@ -102,11 +102,11 @@ private import glib.Str;
  * sysconfdir/gtk-2.0/gdk-pixbuf.loaders,
  * unless overridden by the environment variable
  * GDK_PIXBUF_MODULE_FILE)
- * The gdk-pixbuf; interfaces needed for implementing modules are contained in
+ * The GdkPixBuf interfaces needed for implementing modules are contained in
  * gdk-pixbuf-io.h (and
  * gdk-pixbuf-animation.h if the module supports animations).
  * They are not covered by the same stability guarantees as the regular
- * gdk-pixbuf; API. To underline this fact, they are protected by
+ * GdkPixBuf API. To underline this fact, they are protected by
  * #ifdef GDK_PIXBUF_ENABLE_BACKEND.
  */
 public class PixbufFormat

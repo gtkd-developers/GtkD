@@ -47,11 +47,13 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.InputStream
  * 	- gdk.Window
  * 	- gdkpixbuf.PixbufFormat
  * structWrap:
+ * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GInputStream* -> InputStream
  * 	- GdkPixbuf* -> Pixbuf
@@ -75,6 +77,7 @@ private import cairo.Surface;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.InputStream;
 private import gdk.Window;
@@ -245,7 +248,7 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Description
-	 * The gdk-pixbuf; library provides a simple mechanism for loading
+	 * The GdkPixBuf library provides a simple mechanism for loading
 	 * an image from a file in synchronous fashion. This means that the
 	 * library takes control of the application while the file is being
 	 * loaded; from the user's point of view, the application will block
@@ -260,14 +263,14 @@ public class Pixbuf : ObjectG
 	 * Description
 	 * These functions allow to save a GdkPixbuf in a number of
 	 * file formats. The formatted data can be written to a file
-	 * or to a memory buffer. gdk-pixbuf; can also call a user-defined
+	 * or to a memory buffer. GdkPixBuf can also call a user-defined
 	 * callback on the data, which allows to e.g. write the image
 	 * to a socket or store it in a database.
 	 */
 	
 	/**
 	 * Description
-	 * The gdk-pixbuf; contains functions to scale pixbufs, to scale
+	 * The GdkPixBuf contains functions to scale pixbufs, to scale
 	 * pixbufs and composite against an existing image, and to scale
 	 * pixbufs and composite against a solid color or checkerboard.
 	 * Compositing a checkerboard is a common way to show an image with
@@ -404,7 +407,7 @@ public class Pixbuf : ObjectG
 	 * Creates a new GdkPixbuf out of in-memory image data. Currently only RGB
 	 * images with 8 bits per sample are supported.
 	 * Params:
-	 * data = Image data in 8-bit/sample packed format. [array][element-type char]
+	 * data = Image data in 8-bit/sample packed format. [array]
 	 * colorspace = Colorspace for the image data
 	 * hasAlpha = Whether the data has an opacity channel
 	 * bitsPerSample = Number of bits per sample
@@ -412,7 +415,7 @@ public class Pixbuf : ObjectG
 	 * height = Height of the image in pixels, must be > 0
 	 * rowstride = Distance in bytes between row starts
 	 * destroyFn = Function used to free the data when the pixbuf's reference count
-	 * drops to zero, or NULL if the data should not be freed. [scope async]
+	 * drops to zero, or NULL if the data should not be freed. [scope async][allow-none]
 	 * destroyFnData = Closure data to pass to the destroy notification function. [closure]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -431,7 +434,7 @@ public class Pixbuf : ObjectG
 	 * Creates a new pixbuf by parsing XPM data in memory. This data is commonly
 	 * the result of including an XPM file into a program's C source.
 	 * Params:
-	 * data = Pointer to inline XPM data.
+	 * data = Pointer to inline XPM data. [array zero-terminated=1]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string[] data)
@@ -454,7 +457,8 @@ public class Pixbuf : ObjectG
 	 * which allows for conversion of GdkPixbufs into such a inline representation.
 	 * In almost all cases, you should pass the --raw flag to
 	 * Params:
-	 * data = Byte data containing a serialized GdkPixdata structure
+	 * data = Byte data containing a
+	 * serialized GdkPixdata structure. [array length=data_length]
 	 * copyPixels = Whether to copy the pixel data, or use direct pointers
 	 * data for the resulting pixbuf
 	 * Throws: GException on failure.
@@ -563,12 +567,25 @@ public class Pixbuf : ObjectG
 	
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
-	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called “Image Data” for information about how the pixel data is stored in memory.
+	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called “Image Data” for information about how the pixel data is stored in memory. [array]
 	 */
 	public char* getPixels()
 	{
 		// guchar * gdk_pixbuf_get_pixels (const GdkPixbuf *pixbuf);
 		return gdk_pixbuf_get_pixels(gdkPixbuf);
+	}
+	
+	/**
+	 * Queries a pointer to the pixel data of a pixbuf.
+	 * Since 2.26
+	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called “Image Data” for information about how the pixel data is stored in memory. Rename to: gdk_pixbuf_get_pixels. [array length=length]
+	 */
+	public char[] getPixelsWithLength()
+	{
+		// guchar * gdk_pixbuf_get_pixels_with_length (const GdkPixbuf *pixbuf,  guint *length);
+		uint length;
+		auto p = gdk_pixbuf_get_pixels_with_length(gdkPixbuf, &length);
+		return p[0 .. length];
 	}
 	
 	/**
@@ -600,6 +617,17 @@ public class Pixbuf : ObjectG
 	{
 		// int gdk_pixbuf_get_rowstride (const GdkPixbuf *pixbuf);
 		return gdk_pixbuf_get_rowstride(gdkPixbuf);
+	}
+	
+	/**
+	 * Returns the length of the pixel data, in bytes.
+	 * Since 2.26
+	 * Returns: The length of the pixel data.
+	 */
+	public gsize getByteLength()
+	{
+		// gsize gdk_pixbuf_get_byte_length (const GdkPixbuf *pixbuf);
+		return gdk_pixbuf_get_byte_length(gdkPixbuf);
 	}
 	
 	/**
@@ -732,9 +760,9 @@ public class Pixbuf : ObjectG
 	 * Since 2.4
 	 * Params:
 	 * filename = The name of the file to identify.
-	 * width = Return location for the width of the image, or NULL
-	 * height = Return location for the height of the image, or NULL
-	 * Returns: A GdkPixbufFormat describing the image format of the file or NULL if the image format wasn't recognized. The return value is owned by GdkPixbuf and should not be freed.
+	 * width = Return location for the width of the image, or NULL. [out]
+	 * height = Return location for the height of the image, or NULL. [out]
+	 * Returns: A GdkPixbufFormat describing the image format of the file or NULL if the image format wasn't recognized. The return value is owned by GdkPixbuf and should not be freed. [transfer none]
 	 */
 	public static PixbufFormat getFileInfo(string filename, out int width, out int height)
 	{
@@ -752,13 +780,13 @@ public class Pixbuf : ObjectG
 	 * The file format is detected automatically. If NULL is returned, then
 	 * error will be set. The cancellable can be used to abort the operation
 	 * from another thread. If the operation was cancelled, the error
-	 * GIO_ERROR_CANCELLED will be returned. Other possible errors are in
+	 * G_IO_ERROR_CANCELLED will be returned. Other possible errors are in
 	 * the GDK_PIXBUF_ERROR and G_IO_ERROR domains.
 	 * The stream is not closed.
 	 * Since 2.14
 	 * Params:
 	 * stream = a GInputStream to load the pixbuf from
-	 * cancellable = optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -782,11 +810,58 @@ public class Pixbuf : ObjectG
 	}
 	
 	/**
+	 * Creates a new pixbuf by asynchronously loading an image from an input stream.
+	 * For more details see gdk_pixbuf_new_from_stream(), which is the synchronous
+	 * version of this function.
+	 * When the operation is finished, callback will be called in the main thread.
+	 * You can then call gdk_pixbuf_new_from_stream_finish() to get the result of the operation.
+	 * Since 2.24
+	 * Params:
+	 * stream = a GInputStream from which to load the pixbuf
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the the pixbuf is loaded
+	 * userData = the data to pass to the callback function
+	 */
+	public static void newFromStreamAsync(InputStream stream, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void gdk_pixbuf_new_from_stream_async (GInputStream *stream,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		gdk_pixbuf_new_from_stream_async((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous pixbuf creation operation started with
+	 * gdk_pixbuf_new_from_stream_async().
+	 * Since 2.24
+	 * Params:
+	 * asyncResult = a GAsyncResult
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (AsyncResultIF asyncResult)
+	{
+		// GdkPixbuf * gdk_pixbuf_new_from_stream_finish (GAsyncResult *async_result,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultTStruct(), &err)");
+		}
+		this(cast(GdkPixbuf*) p);
+	}
+	
+	/**
 	 * Creates a new pixbuf by loading an image from an input stream.
 	 * The file format is detected automatically. If NULL is returned, then
 	 * error will be set. The cancellable can be used to abort the operation
 	 * from another thread. If the operation was cancelled, the error
-	 * GIO_ERROR_CANCELLED will be returned. Other possible errors are in
+	 * G_IO_ERROR_CANCELLED will be returned. Other possible errors are in
 	 * the GDK_PIXBUF_ERROR and G_IO_ERROR domains.
 	 * The image will be scaled to fit in the requested size, optionally
 	 * preserving the image's aspect ratio. When preserving the aspect ratio,
@@ -801,7 +876,7 @@ public class Pixbuf : ObjectG
 	 * width = The width the image should have or -1 to not constrain the width
 	 * height = The height the image should have or -1 to not constrain the height
 	 * preserveAspectRatio = TRUE to preserve the image's aspect ratio
-	 * cancellable = optional GCancellable object, NULL to ignore
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -822,6 +897,28 @@ public class Pixbuf : ObjectG
 			throw new ConstructionException("null returned by gdk_pixbuf_new_from_stream_at_scale((stream is null) ? null : stream.getInputStreamStruct(), width, height, preserveAspectRatio, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err)");
 		}
 		this(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Creates a new pixbuf by asynchronously loading an image from an input stream.
+	 * For more details see gdk_pixbuf_new_from_stream_at_scale(), which is the synchronous
+	 * version of this function.
+	 * When the operation is finished, callback will be called in the main thread.
+	 * You can then call gdk_pixbuf_new_from_stream_finish() to get the result of the operation.
+	 * Since 2.24
+	 * Params:
+	 * stream = a GInputStream from which to load the pixbuf
+	 * width = the width the image should have or -1 to not constrain the width
+	 * height = the height the image should have or -1 to not constrain the height
+	 * preserveAspectRatio = TRUE to preserve the image's aspect ratio
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the the pixbuf is loaded
+	 * userData = the data to pass to the callback function
+	 */
+	public static void newFromStreamAtScaleAsync(InputStream stream, int width, int height, int preserveAspectRatio, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void gdk_pixbuf_new_from_stream_at_scale_async  (GInputStream *stream,  gint width,  gint height,  gboolean preserve_aspect_ratio,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		gdk_pixbuf_new_from_stream_at_scale_async((stream is null) ? null : stream.getInputStreamStruct(), width, height, preserveAspectRatio, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 	
 	/**
@@ -859,7 +956,7 @@ public class Pixbuf : ObjectG
 	 * Params:
 	 * saveFunc = a function that is called to save each block of data that
 	 * the save routine generates. [scope call]
-	 * userData = user data to pass to the save function. [closure save_func]
+	 * userData = user data to pass to the save function. [closure]
 	 * type = name of file format.
 	 * optionKeys = name of options to set, NULL-terminated. [array zero-terminated=1][element-type utf8]
 	 * optionValues = values for named options. [array zero-terminated=1][element-type utf8]
@@ -872,6 +969,30 @@ public class Pixbuf : ObjectG
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Finishes an asynchronous pixbuf save operation started with
+	 * gdk_pixbuf_save_to_stream_async().
+	 * Since 2.24
+	 * Params:
+	 * asyncResult = a GAsyncResult
+	 * Returns: TRUE if the pixbuf was saved successfully, FALSE if an error was set.
+	 * Throws: GException on failure.
+	 */
+	public static int saveToStreamFinish(AsyncResultIF asyncResult)
+	{
+		// gboolean gdk_pixbuf_save_to_stream_finish (GAsyncResult *async_result,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_save_to_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{
