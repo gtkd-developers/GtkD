@@ -237,6 +237,11 @@ private import gobject.ObjectG;
  * A lighter variant of color
  * darker(color)
  * A darker variant of color
+ * alpha(color, f)
+ * Modifies passed color's alpha by a factor f. f is a
+ *  floating point number. f < 1.0 results in a more transparent
+ *  color while f > 1.0 results in a more opaque color.
+ * alhpa(blue, 0.5)
  * <hr>
  * Gradients
  * Linear or radial Gradients can be used as background images.
@@ -480,6 +485,13 @@ private import gobject.ObjectG;
  *  color-stop (0.0, #fff),
  *  color-stop (1.0, #000));
  * url ('background.png');
+ * background-repeat
+ * [repeat|no-repeat]
+ * internal
+ * background-repeat: no-repeat;
+ *  If not specified, the style doesn't respect the CSS3
+ *  specification, since the background will be
+ *  stretched to fill the area.
  * border-top-width
  * integer
  * gint
@@ -759,7 +771,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * from this function on a new provider created with
 	 * gtk_css_provider_new() will basicallu create a duplicate of
 	 * this provider.
-	 * Returns: a new string representing the provider.
+	 * Returns: a new string representing the provider. Since 3.2
 	 */
 	public string toString()
 	{

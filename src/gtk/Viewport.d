@@ -78,7 +78,7 @@ private import gtk.Bin;
  * The GtkViewport widget acts as an adaptor class, implementing
  * scrollability for child widgets that lack their own scrolling
  * capabilities. Use GtkViewport to scroll child widgets such as
- * GtkTable, GtkBox, and so on.
+ * GtkGrid, GtkBox, and so on.
  * If a widget has native scrolling abilities, such as GtkTextView,
  * GtkTreeView or GtkIconview, it can be added to a GtkScrolledWindow
  * with gtk_container_add(). If a widget does not, you must first add the

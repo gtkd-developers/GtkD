@@ -168,7 +168,11 @@ private import gobject.Boxed;
  * GTK_STYLE_CLASS_QUESTION,
  * GTK_STYLE_CLASS_ERROR,
  * GTK_STYLE_CLASS_HORIZONTAL,
- * GTK_STYLE_CLASS_VERTICAL.
+ * GTK_STYLE_CLASS_VERTICAL,
+ * GTK_STYLE_CLASS_TOP,
+ * GTK_STYLE_CLASS_BOTTOM,
+ * GTK_STYLE_CLASS_LEFT,
+ * GTK_STYLE_CLASS_RIGHT,
  * Widgets can also add regions with flags to their context.
  * The regions used by GTK+ widgets are:
  * Region

@@ -87,6 +87,8 @@ private import gtk.ComboBox;
  * its contents can be retrieved using gtk_combo_box_text_get_active_text().
  * The entry itself can be accessed by calling gtk_bin_get_child() on the
  * combo box.
+ * You should not call gtk_combo_box_set_model() or attempt to pack more cells
+ * into this combo box via its GtkCellLayout interface.
  * GtkComboBoxText as GtkBuildable
  * The GtkComboBoxText implementation of the GtkBuildable interface
  * supports adding items directly using the <items> element
@@ -286,6 +288,43 @@ public class ComboBoxText : ComboBox
 		foreach ( void delegate(ComboBoxText) dlg ; _comboBoxText.onChangedListeners )
 		{
 			dlg(_comboBoxText);
+		}
+	}
+	
+	string delegate(string, ComboBoxText)[] onFormatEntryTextListeners;
+	/**
+	 * For combo boxes that are created with an entry (See GtkComboBox:has-entry).
+	 * A signal which allows you to change how the text displayed in a combo box's
+	 * entry is displayed.
+	 * Connect a signal handler which returns an allocated string representing
+	 * path. That string will then be used to set the text in the combo box's entry.
+	 * The default signal handler uses the text from the GtkComboBox::entry-text-column
+	 * model column.
+	 * Here's an example signal handler which fetches data from the model and
+	 * displays it in the entry.
+	 * $(DDOC_COMMENT example)
+	 * Since 3.4
+	 */
+	void addOnFormatEntryText(string delegate(string, ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("format-entry-text" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"format-entry-text",
+			cast(GCallback)&callBackFormatEntryText,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["format-entry-text"] = 1;
+		}
+		onFormatEntryTextListeners ~= dlg;
+	}
+	extern(C) static void callBackFormatEntryText(GtkComboBox* comboStruct, gchar* path, ComboBoxText _comboBoxText)
+	{
+		foreach ( string delegate(string, ComboBoxText) dlg ; _comboBoxText.onFormatEntryTextListeners )
+		{
+			dlg(Str.toString(path), _comboBoxText);
 		}
 	}
 	

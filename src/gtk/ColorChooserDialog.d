@@ -23,39 +23,36 @@
 
 /*
  * Conversion parameters:
- * inFile  = GtkFontChooserDialog.html
+ * inFile  = GtkColorChooserDialog.html
  * outPack = gtk
- * outFile = FontChooserDialog
- * strct   = GtkFontChooserDialog
+ * outFile = ColorChooserDialog
+ * strct   = GtkColorChooserDialog
  * realStrct=
  * ctorStrct=
- * clss    = FontChooserDialog
+ * clss    = ColorChooserDialog
  * interf  = 
  * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- FontChooserIF
+ * 	- ColorChooserIF
  * prefixes:
- * 	- gtk_font_chooser_dialog_
+ * 	- gtk_color_chooser_dialog_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gtk.Window
- * 	- gtk.FontChooserT
- * 	- gtk.FontChooserIF
+ * 	- gio.ColorChooserIF
+ * 	- gio.ColorChooserT
  * structWrap:
- * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gtk.FontChooserDialog;
+module gtk.ColorChooserDialog;
 
 public  import gtkc.gtktypes;
 
@@ -63,10 +60,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import glib.Str;
-private import gtk.Window;
-private import gtk.FontChooserT;
-private import gtk.FontChooserIF;
+private import gio.ColorChooserIF;
+private import gio.ColorChooserT;
 
 
 
@@ -74,80 +69,76 @@ private import gtk.Dialog;
 
 /**
  * Description
- * The GtkFontChooserDialog widget is a dialog for selecting a font.
- * It implements the GtkFontChooser interface.
- * GtkFontChooserDialog as GtkBuildable
- * The GtkFontChooserDialog implementation of the GtkBuildable interface
- * exposes the buttons with the names
- * "select_button" and "cancel_button.
+ * The GtkColorChooserDialog widget is a dialog for choosing
+ * a color. It implements the GtkColorChooser interface.
  */
-public class FontChooserDialog : Dialog, FontChooserIF
+public class ColorChooserDialog : Dialog, ColorChooserIF
 {
 	
 	/** the main Gtk struct */
-	protected GtkFontChooserDialog* gtkFontChooserDialog;
+	protected GtkColorChooserDialog* gtkColorChooserDialog;
 	
 	
-	public GtkFontChooserDialog* getFontChooserDialogStruct()
+	public GtkColorChooserDialog* getColorChooserDialogStruct()
 	{
-		return gtkFontChooserDialog;
+		return gtkColorChooserDialog;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)gtkFontChooserDialog;
+		return cast(void*)gtkColorChooserDialog;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GtkFontChooserDialog* gtkFontChooserDialog)
+	public this (GtkColorChooserDialog* gtkColorChooserDialog)
 	{
-		if(gtkFontChooserDialog is null)
+		if(gtkColorChooserDialog is null)
 		{
 			this = null;
 			return;
 		}
 		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFontChooserDialog);
+		void* ptr = getDObject(cast(GObject*)gtkColorChooserDialog);
 		if( ptr !is null )
 		{
-			this = cast(FontChooserDialog)ptr;
+			this = cast(ColorChooserDialog)ptr;
 			return;
 		}
-		super(cast(GtkDialog*)gtkFontChooserDialog);
-		this.gtkFontChooserDialog = gtkFontChooserDialog;
+		super(cast(GtkDialog*)gtkColorChooserDialog);
+		this.gtkColorChooserDialog = gtkColorChooserDialog;
 	}
 	
 	protected override void setStruct(GObject* obj)
 	{
 		super.setStruct(obj);
-		gtkFontChooserDialog = cast(GtkFontChooserDialog*)obj;
+		gtkColorChooserDialog = cast(GtkColorChooserDialog*)obj;
 	}
 	
-	// add the FontChooser capabilities
-	mixin FontChooserT!(GtkFontChooserDialog);
+	// add the ColorChooser capabilities
+	mixin ColorChooserT!(GtkColorChooserDialog);
 	
 	/**
 	 */
 	
 	/**
-	 * Creates a new GtkFontChooserDialog.
+	 * Creates a new GtkColorChooserDialog.
 	 * Params:
 	 * title = Title of the dialog, or NULL. [allow-none]
 	 * parent = Transient parent of the dialog, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string title, Window parent)
+	public this (string title, GtkWindow* parent)
 	{
-		// GtkWidget * gtk_font_chooser_dialog_new (const gchar *title,  GtkWindow *parent);
-		auto p = gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
+		// GtkWidget * gtk_color_chooser_dialog_new (const gchar *title,  GtkWindow *parent);
+		auto p = gtk_color_chooser_dialog_new(Str.toStringz(title), parent);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct())");
+			throw new ConstructionException("null returned by gtk_color_chooser_dialog_new(Str.toStringz(title), parent)");
 		}
-		this(cast(GtkFontChooserDialog*) p);
+		this(cast(GtkColorChooserDialog*) p);
 	}
 }

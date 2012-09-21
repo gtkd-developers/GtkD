@@ -975,6 +975,8 @@ public class Notebook : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_notebook_get_tab_hborder has been deprecated since version 3.4 and should not be used in newly-written code. this function returns zero
 	 * Returns the horizontal width of a tab border.
 	 * Since 2.22
 	 * Returns: horizontal width of a tab border
@@ -986,6 +988,8 @@ public class Notebook : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_notebook_get_tab_vborder has been deprecated since version 3.4 and should not be used in newly-written code. this function returns zero
 	 * Returns the vertical width of a tab border.
 	 * Since 2.22
 	 * Returns: vertical width of a tab border

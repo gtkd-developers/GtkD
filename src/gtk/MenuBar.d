@@ -43,10 +43,12 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gio.MenuModel
  * 	- gtk.Menu
  * 	- gtk.MenuItem
  * 	- gtk.Widget
  * structWrap:
+ * 	- GMenuModel* -> MenuModel
  * module aliases:
  * local aliases:
  * overrides:
@@ -60,6 +62,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
+private import gio.MenuModel;
 private import gtk.Menu;
 private import gtk.MenuItem;
 private import gtk.Widget;
@@ -151,6 +154,28 @@ public class MenuBar : MenuShell
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_menu_bar_new()");
+		}
+		this(cast(GtkMenuBar*) p);
+	}
+	
+	/**
+	 * Creates a new GtkMenuBar and populates it with menu items
+	 * and submenus according to model.
+	 * The created menu items are connected to actions found in the
+	 * GtkApplicationWindow to which the menu bar belongs - typically
+	 * by means of being contained within the GtkApplicationWindows
+	 * widget hierarchy.
+	 * Params:
+	 * model = a GMenuModel
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (MenuModel model)
+	{
+		// GtkWidget * gtk_menu_bar_new_from_model (GMenuModel *model);
+		auto p = gtk_menu_bar_new_from_model((model is null) ? null : model.getMenuModelStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_bar_new_from_model((model is null) ? null : model.getMenuModelStruct())");
 		}
 		this(cast(GtkMenuBar*) p);
 	}

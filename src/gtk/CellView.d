@@ -350,6 +350,8 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_cell_view_set_background_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_cell_view_set_background_rgba() instead.
 	 * Sets the background color of view.
 	 * Since 2.6
 	 * Params:

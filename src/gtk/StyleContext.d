@@ -54,6 +54,7 @@
  * 	- gdk.RGBA
  * 	- gdk.Screen
  * 	- gdk.Window
+ * 	- gtk.CssSection
  * 	- gtk.IconSet
  * 	- gtk.IconSource
  * 	- gtk.StyleProviderIF
@@ -67,8 +68,10 @@
  * 	- GdkRGBA* -> RGBA
  * 	- GdkScreen* -> Screen
  * 	- GdkWindow* -> Window
+ * 	- GtkCssSection* -> CssSection
  * 	- GtkIconSet* -> IconSet
  * 	- GtkIconSource* -> IconSource
+ * 	- GtkStyleContext* -> StyleContext
  * 	- GtkStyleProvider* -> StyleProviderIF
  * 	- GtkWidgetPath* -> WidgetPath
  * 	- PangoFontDescription* -> PgFontDescription
@@ -97,6 +100,7 @@ private import gdk.Pixbuf;
 private import gdk.RGBA;
 private import gdk.Screen;
 private import gdk.Window;
+private import gtk.CssSection;
 private import gtk.IconSet;
 private import gtk.IconSource;
 private import gtk.StyleProviderIF;
@@ -219,7 +223,11 @@ private import gobject.ObjectG;
  * GTK_STYLE_CLASS_QUESTION,
  * GTK_STYLE_CLASS_ERROR,
  * GTK_STYLE_CLASS_HORIZONTAL,
- * GTK_STYLE_CLASS_VERTICAL.
+ * GTK_STYLE_CLASS_VERTICAL,
+ * GTK_STYLE_CLASS_TOP,
+ * GTK_STYLE_CLASS_BOTTOM,
+ * GTK_STYLE_CLASS_LEFT,
+ * GTK_STYLE_CLASS_RIGHT,
  * Widgets can also add regions with flags to their context.
  * The regions used by GTK+ widgets are:
  * Region
@@ -361,6 +369,10 @@ public class StyleContext : ObjectG
 	
 	/**
 	 * Adds a style provider to context, to be used in style construction.
+	 * Note that a style provider added by this function only affects
+	 * the style of the widget to which context belongs. If you want
+	 * to affect the style of all widgets, use
+	 * gtk_style_context_add_provider_for_screen().
 	 * Note
 	 * If both priorities are the same, A GtkStyleProvider
 	 * added through this function takes precedence over another added
@@ -382,8 +394,7 @@ public class StyleContext : ObjectG
 	
 	/**
 	 * Adds a global style provider to screen, which will be used
-	 * in style construction for all GtkStyleContexts under
-	 * screen.
+	 * in style construction for all GtkStyleContexts under screen.
 	 * GTK+ uses this to make styling information from GtkSettings
 	 * available.
 	 * Note
@@ -424,6 +435,23 @@ public class StyleContext : ObjectG
 	{
 		// GtkJunctionSides gtk_style_context_get_junction_sides  (GtkStyleContext *context);
 		return gtk_style_context_get_junction_sides(gtkStyleContext);
+	}
+	
+	/**
+	 * Sets the parent style context for context. The parent style
+	 * context is used to implement
+	 * inheritance
+	 * of properties.
+	 * If you are using a GtkStyleContext returned from
+	 * gtk_widget_get_style_context(), the parent will be set for you.
+	 * Params:
+	 * parent = the new parent or NULL. [allow-none]
+	 * Since 3.4
+	 */
+	public void setParent(StyleContext parent)
+	{
+		// void gtk_style_context_set_parent (GtkStyleContext *context,  GtkStyleContext *parent);
+		gtk_style_context_set_parent(gtkStyleContext, (parent is null) ? null : parent.getStyleContextStruct());
 	}
 	
 	/**
@@ -520,6 +548,32 @@ public class StyleContext : ObjectG
 	{
 		// void gtk_style_context_get_valist (GtkStyleContext *context,  GtkStateFlags state,  va_list args);
 		gtk_style_context_get_valist(gtkStyleContext, state, args);
+	}
+	
+	/**
+	 * Queries the location in the CSS where property was defined for the
+	 * current context. Note that the state to be queried is taken from
+	 * gtk_style_context_get_state().
+	 * If the location is not available, NULL will be returned. The
+	 * location might not be available for various reasons, such as the
+	 * property being overridden, property not naming a supported CSS
+	 * property or tracking of definitions being disabled for performance
+	 * reasons.
+	 * Shorthand CSS properties cannot be queried for a location and will
+	 * always return NULL.
+	 * Params:
+	 * property = style property name
+	 * Returns: NULL or the section where value was defined
+	 */
+	public CssSection getSection(string property)
+	{
+		// GtkCssSection * gtk_style_context_get_section (GtkStyleContext *context,  const gchar *property);
+		auto p = gtk_style_context_get_section(gtkStyleContext, Str.toStringz(property));
+		if(p is null)
+		{
+			return null;
+		}
+		return new CssSection(cast(GtkCssSection*) p);
 	}
 	
 	/**
@@ -1341,5 +1395,22 @@ public class StyleContext : ObjectG
 	{
 		// void gtk_render_icon (GtkStyleContext *context,  cairo_t *cr,  GdkPixbuf *pixbuf,  gdouble x,  gdouble y);
 		gtk_render_icon(gtkStyleContext, (cr is null) ? null : cr.getContextStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y);
+	}
+	
+	/**
+	 * Draws a text caret on cr at the specified index of layout.
+	 * Params:
+	 * cr = a cairo_t
+	 * x = X origin
+	 * y = Y origin
+	 * layout = the PangoLayout of the text
+	 * index = the index in the PangoLayout
+	 * direction = the PangoDirection of the text
+	 * Since 3.4
+	 */
+	public void renderInsertionCursor(Context cr, double x, double y, PgLayout layout, int index, PangoDirection direction)
+	{
+		// void gtk_render_insertion_cursor (GtkStyleContext *context,  cairo_t *cr,  gdouble x,  gdouble y,  PangoLayout *layout,  int index,  PangoDirection direction);
+		gtk_render_insertion_cursor(gtkStyleContext, (cr is null) ? null : cr.getContextStruct(), x, y, (layout is null) ? null : layout.getPgLayoutStruct(), index, direction);
 	}
 }

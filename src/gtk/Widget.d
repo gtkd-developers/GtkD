@@ -2735,6 +2735,37 @@ public class Widget : ObjectG, BuildableIF
 		}
 	}
 	
+	bool delegate(Event, Widget)[] onTouchListeners;
+	/**
+	 */
+	void addOnTouch(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("touch-event" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"touch-event",
+			cast(GCallback)&callBackTouch,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["touch-event"] = 1;
+		}
+		onTouchListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackTouch(GtkWidget* widgetStruct, GdkEvent* arg1, Widget _widget)
+	{
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onTouchListeners )
+		{
+			if ( dlg(new Event(arg1), _widget) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
 	void delegate(Widget)[] onUnmapListeners;
 	/**
 	 */
@@ -3733,6 +3764,8 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_get_pointer has been deprecated since version 3.4 and should not be used in newly-written code. Use gdk_window_get_device_position() instead.
 	 * Obtains the location of the mouse pointer in widget coordinates.
 	 * Widget coordinates are a bit odd; for historical reasons, they are
 	 * defined as widget->window coordinates for widgets that are not
@@ -6008,6 +6041,20 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// gboolean gtk_widget_device_is_shadowed (GtkWidget *widget,  GdkDevice *device);
 		return gtk_widget_device_is_shadowed(gtkWidget, (device is null) ? null : device.getDeviceStruct());
+	}
+	
+	/**
+	 * Returns the modifier mask the widget's windowing system backend
+	 * uses for a particular purpose.
+	 * See gdk_keymap_get_modifier_mask().
+	 * Params:
+	 * intent = the use case for the modifier mask
+	 * Returns: the modifier mask used for intent. Since 3.4
+	 */
+	public GdkModifierType getModifierMask(GdkModifierIntent intent)
+	{
+		// GdkModifierType gtk_widget_get_modifier_mask (GtkWidget *widget,  GdkModifierIntent intent);
+		return gtk_widget_get_modifier_mask(gtkWidget, intent);
 	}
 	
 	/**

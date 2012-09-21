@@ -177,8 +177,8 @@ public class Range : Widget, OrientableIF
 	 * handler clamps the value based on "round-digits".
 	 * It is not possible to use delayed update policies in an overridden
 	 * "change-value" handler.
-	 * TRUE to prevent other handlers from being invoked for the
-	 * signal, FALSE to propagate the signal further
+	 * TRUE to prevent other handlers from being invoked for
+	 * the signal, FALSE to propagate the signal further
 	 * Since 2.6
 	 */
 	void addOnChangeValue(bool delegate(GtkScrollType, gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

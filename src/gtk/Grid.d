@@ -79,7 +79,8 @@ private import gtk.Container;
  * height-for-width geometry management.
  * Children are added using gtk_grid_attach(). They can span multiple
  * rows or columns. It is also possible to add a child next to an
- * existing child, using gtk_grid_attach_next_to().
+ * existing child, using gtk_grid_attach_next_to(). The behaviour of
+ * GtkGrid when several children occupy the same grid cell is undefined.
  * GtkGrid can be used like a GtkBox by just using gtk_container_add(),
  * which will place children next to each other in the direction determined
  * by the "orientation" property.
@@ -179,8 +180,8 @@ public class Grid : Container, OrientableIF
 	 * side == GTK_POS_LEFT yields a layout of [3][2][1].
 	 * Params:
 	 * child = the widget to add
-	 * sibling (allow-none): the child of grid that child will be placed
-	 * next to, or NULL to place child at the beginning or end
+	 * sibling = the child of grid that child will be placed
+	 * next to, or NULL to place child at the beginning or end. [allow-none]
 	 * side = the side of sibling that child is positioned next to
 	 * width = the number of columns that child will span
 	 * height = the number of rows that child will span
@@ -197,7 +198,7 @@ public class Grid : Container, OrientableIF
 	 * Params:
 	 * left = the left edge of the cell
 	 * top = the top edge of the cell
-	 * Returns: the child at the given position, or NULL Since 3.2
+	 * Returns: the child at the given position, or NULL. [transfer none] Since 3.2
 	 */
 	public Widget getChildAt(int left, int top)
 	{

@@ -36,6 +36,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- ActionableIF
  * prefixes:
  * 	- gtk_tool_button_
  * omit structs:
@@ -45,6 +46,8 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- gio.ActionableIF
+ * 	- gio.ActionableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -64,6 +67,8 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
+private import gio.ActionableIF;
+private import gio.ActionableT;
 
 
 
@@ -89,7 +94,7 @@ private import gtk.ToolItem;
  * non-NULL, the icon is determined by the stock item. Otherwise,
  * the button does not have a icon.
  */
-public class ToolButton : ToolItem
+public class ToolButton : ToolItem, ActionableIF
 {
 	
 	/** the main Gtk struct */
@@ -137,6 +142,9 @@ public class ToolButton : ToolItem
 	
 	/** An arbitrary string to be used by the application */
 	private string action;
+	
+	// add the Actionable capabilities
+	mixin ActionableT!(GtkToolButton);
 	
 	/** */
 	public void setActionName(string action)

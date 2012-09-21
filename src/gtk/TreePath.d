@@ -364,7 +364,7 @@ public class TreePath
 	}
 	
 	/**
-	 * Frees path.
+	 * Frees path. If path is NULL, it simply returns.
 	 */
 	public void free()
 	{

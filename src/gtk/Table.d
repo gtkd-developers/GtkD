@@ -85,9 +85,9 @@ private import gtk.Container;
  * gtk_table_set_homogeneous(), can be used to set whether all cells in the
  * table will resize themselves to the size of the largest widget in the table.
  * Note
- * Note that GtkGrid provides the same capabilities as GtkTable for arranging
- * widgets in a rectangular grid, and additionally supports height-for-width
- * geometry management.
+ * GtkTable has been deprecated. Use GtkGrid instead. It provides the same
+ * capabilities as GtkTable for arranging widgets in a rectangular grid, but
+ * does support height-for-width geometry management.
  */
 public class Table : Container
 {
@@ -208,6 +208,8 @@ public class Table : Container
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_table_resize has been deprecated since version 3.4 and should not be used in newly-written code. GtkGrid resizes automatically.
 	 * If you need to change a table's size after
 	 * it has been created, this function allows you to do so.
 	 * Params:
@@ -221,6 +223,9 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_get_size has been deprecated since version 3.4 and should not be used in newly-written code. GtkGrid does not expose the number of columns and
+	 *  rows.
 	 * Gets the number of rows and columns in the table.
 	 * Since 2.22
 	 * Params:
@@ -236,6 +241,9 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_attach has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_grid_attach() with GtkGrid. Note that the attach
+	 *  arguments differ between those two functions.
 	 * Adds a widget to a table. The number of 'cells' that a widget will occupy is
 	 * specified by left_attach, right_attach, top_attach and bottom_attach.
 	 * These each represent the leftmost, rightmost, uppermost and lowest column
@@ -261,6 +269,9 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_attach_defaults has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_grid_attach() with GtkGrid. Note that the attach
+	 *  arguments differ between those two functions.
 	 * As there are many options associated with gtk_table_attach(), this convenience
 	 * function provides the programmer with a means to add children to a table with
 	 * identical padding and expansion options. The values used for the GtkAttachOptions
@@ -279,6 +290,10 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_set_row_spacing has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_widget_set_margin_top() and
+	 *  gtk_widget_set_margin_bottom() on the widgets contained in the row if
+	 *  you need this functionality. GtkGrid does not support per-row spacing.
 	 * Changes the space between a given table row and the subsequent row.
 	 * Params:
 	 * row = row number whose spacing will be changed.
@@ -291,6 +306,10 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_set_col_spacing has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_widget_set_margin_left() and
+	 *  gtk_widget_set_margin_right() on the widgets contained in the row if
+	 *  you need this functionality. GtkGrid does not support per-row spacing.
 	 * Alters the amount of space between a given table column and the following
 	 * column.
 	 * Params:
@@ -304,6 +323,8 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_set_row_spacings has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_grid_set_row_spacing() with GtkGrid.
 	 * Sets the space between every row in table equal to spacing.
 	 * Params:
 	 * spacing = the number of pixels of space to place between every row in the table.
@@ -315,6 +336,8 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_set_col_spacings has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_grid_set_column_spacing() with GtkGrid.
 	 * Sets the space between every column in table equal to spacing.
 	 * Params:
 	 * spacing = the number of pixels of space to place between every column
@@ -327,6 +350,9 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_set_homogeneous has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_grid_set_row_homogeneous() and
+	 *  gtk_grid_set_column_homogeneous() with GtkGrid.
 	 * Changes the homogenous property of table cells, ie. whether all cells are
 	 * an equal size or not.
 	 * Params:
@@ -340,6 +366,8 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_get_default_row_spacing has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_grid_get_row_spacing() with GtkGrid.
 	 * Gets the default row spacing for the table. This is
 	 * the spacing that will be used for newly added rows.
 	 * (See gtk_table_set_row_spacings())
@@ -352,6 +380,9 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_get_homogeneous has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_grid_get_row_homogeneous() and
+	 *  gtk_grid_get_column_homogeneous() with GtkGrid.
 	 * Returns whether the table cells are all constrained to the same
 	 * width and height. (See gtk_table_set_homogenous())
 	 * Returns: TRUE if the cells are all constrained to the same size
@@ -363,6 +394,9 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_get_row_spacing has been deprecated since version 3.4 and should not be used in newly-written code. GtkGrid does not offer a replacement for this
+	 *  functionality.
 	 * Gets the amount of space between row row, and
 	 * row row + 1. See gtk_table_set_row_spacing().
 	 * Params:
@@ -376,6 +410,9 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_get_col_spacing has been deprecated since version 3.4 and should not be used in newly-written code. GtkGrid does not offer a replacement for this
+	 *  functionality.
 	 * Gets the amount of space between column col, and
 	 * column col + 1. See gtk_table_set_col_spacing().
 	 * Params:
@@ -389,6 +426,8 @@ public class Table : Container
 	}
 	
 	/**
+	 * Warning
+	 * gtk_table_get_default_col_spacing has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_grid_get_column_spacing() with GtkGrid.
 	 * Gets the default column spacing for the table. This is
 	 * the spacing that will be used for newly added columns.
 	 * (See gtk_table_set_col_spacings())

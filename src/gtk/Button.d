@@ -36,6 +36,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- ActionableIF
  * 	- ActivatableIF
  * prefixes:
  * 	- gtk_button_
@@ -51,6 +52,8 @@
  * 	- gtk.Image
  * 	- gdk.Window
  * 	- gtk.Widget
+ * 	- gio.ActionableIF
+ * 	- gio.ActionableT
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
@@ -75,6 +78,8 @@ private import glib.Str;
 private import gtk.Image;
 private import gdk.Window;
 private import gtk.Widget;
+private import gio.ActionableIF;
+private import gio.ActionableT;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
 
@@ -84,14 +89,14 @@ private import gtk.Bin;
 
 /**
  * Description
- * The GtkButton widget is generally used to attach a function to that is
+ * The GtkButton widget is generally used to trigger a callback function that is
  * called when the button is pressed. The various signals and how to use them
  * are outlined below.
- * The GtkButton widget can hold any valid child widget. That is it can hold
- * most any other standard GtkWidget. The most commonly used child is the
+ * The GtkButton widget can hold any valid child widget. That is, it can hold
+ * almost any other standard GtkWidget. The most commonly used child is the
  * GtkLabel.
  */
-public class Button : Bin, ActivatableIF
+public class Button : Bin, ActionableIF, ActivatableIF
 {
 	
 	/** the main Gtk struct */
@@ -141,6 +146,9 @@ public class Button : Bin, ActivatableIF
 	
 	/** An arbitrary string to be used by the application */
 	private string action;
+	
+	// add the Actionable capabilities
+	mixin ActionableT!(GtkButton);
 	
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkButton);

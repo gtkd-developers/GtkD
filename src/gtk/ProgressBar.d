@@ -151,7 +151,7 @@ public class ProgressBar : Widget
 	}
 	
 	/**
-	 * Indicates that some progress is made, but you don't know how much.
+	 * Indicates that some progress has been made, but you don't know how much.
 	 * Causes the progress bar to enter "activity mode," where a block
 	 * bounces back and forth. Each call to gtk_progress_bar_pulse()
 	 * causes the block to move by a little bit (the amount of movement
@@ -199,7 +199,7 @@ public class ProgressBar : Widget
 	}
 	
 	/**
-	 * Gets the value set by gtk_progress_bar_set_inverted()
+	 * Gets the value set by gtk_progress_bar_set_inverted().
 	 * Returns: TRUE if the progress bar is inverted
 	 */
 	public int getInverted()
@@ -209,7 +209,7 @@ public class ProgressBar : Widget
 	}
 	
 	/**
-	 * Sets whether the progressbar will show text superimposed
+	 * Sets whether the progress bar will show text superimposed
 	 * over the bar. The shown text is either the value of
 	 * the "text" property or, if that is NULL,
 	 * the "fraction" value, as a percentage.
@@ -281,7 +281,7 @@ public class ProgressBar : Widget
 	}
 	
 	/**
-	 * Returns the ellipsizing position of the progressbar.
+	 * Returns the ellipsizing position of the progress bar.
 	 * See gtk_progress_bar_set_ellipsize().
 	 * Since 2.6
 	 * Returns: PangoEllipsizeMode
@@ -305,7 +305,7 @@ public class ProgressBar : Widget
 	}
 	
 	/**
-	 * Retrieves the pulse step set with gtk_progress_bar_set_pulse_step()
+	 * Retrieves the pulse step set with gtk_progress_bar_set_pulse_step().
 	 * Returns: a fraction from 0.0 to 1.0
 	 */
 	public double getPulseStep()

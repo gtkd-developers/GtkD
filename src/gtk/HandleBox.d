@@ -85,6 +85,10 @@ private import gtk.Bin;
  * when the handlebox is detached, the bottom edge of the handlebox's
  * allocation will remain fixed as the height of the handlebox shrinks,
  * so the snap edge should be set to GTK_POS_BOTTOM.
+ * Note
+ * GtkHandleBox has been deprecated. It is very specialized, lacks features
+ * to make it useful and most importantly does not fit well into modern
+ * application design. Do not use it. There is no replacement.
  */
 public class HandleBox : Bin
 {
@@ -138,6 +142,8 @@ public class HandleBox : Bin
 	
 	void delegate(GtkWidget*, HandleBox)[] onChildAttachedListeners;
 	/**
+	 * Warning
+	 * GtkHandleBox::child-attached has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * This signal is emitted when the contents of the
 	 * handlebox are reattached to the main window.
 	 */
@@ -166,6 +172,8 @@ public class HandleBox : Bin
 	
 	void delegate(GtkWidget*, HandleBox)[] onChildDetachedListeners;
 	/**
+	 * Warning
+	 * GtkHandleBox::child-detached has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * This signal is emitted when the contents of the
 	 * handlebox are detached from the main window.
 	 */
@@ -194,6 +202,8 @@ public class HandleBox : Bin
 	
 	
 	/**
+	 * Warning
+	 * gtk_handle_box_new has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * Create a new handle box.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -209,6 +219,8 @@ public class HandleBox : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_handle_box_set_shadow_type has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * Sets the type of shadow to be drawn around the border
 	 * of the handle box.
 	 * Params:
@@ -221,6 +233,8 @@ public class HandleBox : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_handle_box_set_handle_position has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * Sets the side of the handlebox where the handle is drawn.
 	 * Params:
 	 * position = the side of the handlebox where the handle should be drawn.
@@ -232,6 +246,8 @@ public class HandleBox : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_handle_box_set_snap_edge has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * Sets the snap edge of a handlebox. The snap edge is
 	 * the edge of the detached child that must be aligned
 	 * with the corresponding edge of the "ghost" left
@@ -256,6 +272,8 @@ public class HandleBox : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_handle_box_get_handle_position has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * Gets the handle position of the handle box. See
 	 * gtk_handle_box_set_handle_position().
 	 * Returns: the current handle position.
@@ -267,6 +285,8 @@ public class HandleBox : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_handle_box_get_shadow_type has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * Gets the type of shadow drawn around the handle box. See
 	 * gtk_handle_box_set_shadow_type().
 	 * Returns: the type of shadow currently drawn around the handle box.
@@ -278,6 +298,8 @@ public class HandleBox : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_handle_box_get_snap_edge has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * Gets the edge used for determining reattachment of the handle box.
 	 * See gtk_handle_box_set_snap_edge().
 	 * Returns: the edge used for determining reattachment, or (GtkPositionType)-1 if this is determined (as per default) from the handle position.
@@ -289,6 +311,8 @@ public class HandleBox : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_handle_box_get_child_detached has been deprecated since version 3.4 and should not be used in newly-written code. GtkHandleBox has been deprecated.
 	 * Whether the handlebox's child is currently detached.
 	 * Since 2.14
 	 * Returns: TRUE if the child is currently detached, otherwise FALSE

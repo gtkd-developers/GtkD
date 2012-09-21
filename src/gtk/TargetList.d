@@ -34,7 +34,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GBoxed
  * implements:
  * prefixes:
  * 	- gtk_target_list_

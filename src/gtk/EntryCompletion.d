@@ -455,6 +455,21 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	}
 	
 	/**
+	 * Computes the common prefix that is shared by all rows in completion
+	 * that start with key. If no row matches key, NULL will be returned.
+	 * Note that a text column must have been set for this function to work,
+	 * see gtk_entry_completion_set_text_column() for details.
+	 * Params:
+	 * key = The text to complete for
+	 * Returns: The common prefix all rows starting with key or NULL if no row matches key. [transfer full] Since 3.4
+	 */
+	public string computePrefix(string key)
+	{
+		// gchar * gtk_entry_completion_compute_prefix (GtkEntryCompletion *completion,  const char *key);
+		return Str.toString(gtk_entry_completion_compute_prefix(gtkEntryCompletion, Str.toStringz(key)));
+	}
+	
+	/**
 	 * Requests a completion operation, or in other words a refiltering of the
 	 * current list with completions, using the current key. The completion list
 	 * view will be updated accordingly.

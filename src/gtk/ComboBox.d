@@ -297,6 +297,43 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 	}
 	
+	string delegate(string, ComboBox)[] onFormatEntryTextListeners;
+	/**
+	 * For combo boxes that are created with an entry (See GtkComboBox:has-entry).
+	 * A signal which allows you to change how the text displayed in a combo box's
+	 * entry is displayed.
+	 * Connect a signal handler which returns an allocated string representing
+	 * path. That string will then be used to set the text in the combo box's entry.
+	 * The default signal handler uses the text from the GtkComboBox::entry-text-column
+	 * model column.
+	 * Here's an example signal handler which fetches data from the model and
+	 * displays it in the entry.
+	 * $(DDOC_COMMENT example)
+	 * Since 3.4
+	 */
+	void addOnFormatEntryText(string delegate(string, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("format-entry-text" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"format-entry-text",
+			cast(GCallback)&callBackFormatEntryText,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["format-entry-text"] = 1;
+		}
+		onFormatEntryTextListeners ~= dlg;
+	}
+	extern(C) static void callBackFormatEntryText(GtkComboBox* comboStruct, gchar* path, ComboBox _comboBox)
+	{
+		foreach ( string delegate(string, ComboBox) dlg ; _comboBox.onFormatEntryTextListeners )
+		{
+			dlg(Str.toString(path), _comboBox);
+		}
+	}
+	
 	void delegate(GtkScrollType, ComboBox)[] onMoveActiveListeners;
 	/**
 	 * The ::move-active signal is a

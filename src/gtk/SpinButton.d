@@ -398,6 +398,8 @@ public class SpinButton : Entry
 	
 	/**
 	 * Sets the minimum and maximum allowable values for spin_button.
+	 * If the current value is outside this range, it will be adjusted
+	 * to fit within the range, otherwise it will remain unchanged.
 	 * Params:
 	 * min = minimum allowable value
 	 * max = maximum allowable value

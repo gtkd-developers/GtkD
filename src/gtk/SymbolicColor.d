@@ -210,6 +210,28 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Creates a symbolic color based on the current win32
+	 * theme.
+	 * Note that while this call is available on all platforms
+	 * the actual value returned is not reliable on non-win32
+	 * platforms.
+	 * Params:
+	 * themeClass = The theme class to pull color from
+	 * id = The color id
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string themeClass, int id)
+	{
+		// GtkSymbolicColor * gtk_symbolic_color_new_win32 (const gchar *theme_class,  gint id);
+		auto p = gtk_symbolic_color_new_win32(Str.toStringz(themeClass), id);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_symbolic_color_new_win32(Str.toStringz(themeClass), id)");
+		}
+		this(cast(GtkSymbolicColor*) p);
+	}
+	
+	/**
 	 * Increases the reference count of color
 	 * Returns: the same color Since 3.0
 	 */

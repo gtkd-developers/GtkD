@@ -226,6 +226,11 @@ private import gobject.Boxed;
  * A lighter variant of color
  * darker(color)
  * A darker variant of color
+ * alpha(color, f)
+ * Modifies passed color's alpha by a factor f. f is a
+ *  floating point number. f < 1.0 results in a more transparent
+ *  color while f > 1.0 results in a more opaque color.
+ * alhpa(blue, 0.5)
  * <hr>
  * Gradients
  * Linear or radial Gradients can be used as background images.
@@ -469,6 +474,13 @@ private import gobject.Boxed;
  *  color-stop (0.0, #fff),
  *  color-stop (1.0, #000));
  * url ('background.png');
+ * background-repeat
+ * [repeat|no-repeat]
+ * internal
+ * background-repeat: no-repeat;
+ *  If not specified, the style doesn't respect the CSS3
+ *  specification, since the background will be
+ *  stretched to fill the area.
  * border-top-width
  * integer
  * gint
@@ -590,6 +602,15 @@ public class CssSection : Boxed
 	}
 	
 	/**
+	 * Returns the offset in bytes from the start of the current line
+	 * returned via gtk_css_section_get_end_line().
+	 * This value may change in future invocations of this function if
+	 * section is not yet parsed completely. This will for example
+	 * happen in the GtkCssProvider::parsing-error signal.
+	 * The end position and line may be identical to the start
+	 * position and line for sections which failed to parse anything
+	 * successfully.
+	 * Returns: the offset in bytes from the start of the line. Since 3.2
 	 */
 	public uint getEndPosition()
 	{
@@ -601,7 +622,7 @@ public class CssSection : Boxed
 	 * Gets the file that section was parsed from. If no such file exists,
 	 * for example because the CSS was loaded via
 	 * gtk_css_provider_load_from_data(), then NULL is returned.
-	 * Returns: the GFile that section was parsed from or NULL if section was parsed from other data. Since 3.2
+	 * Returns: the GFile that section was parsed from or NULL if section was parsed from other data. [transfer none] Since 3.2
 	 */
 	public File getFile()
 	{
@@ -659,13 +680,7 @@ public class CssSection : Boxed
 	
 	/**
 	 * Returns the offset in bytes from the start of the current line
-	 * returned via gtk_css_section_get_end_line().
-	 * This value may change in future invocations of this function if
-	 * section is not yet parsed completely. This will for example
-	 * happen in the GtkCssProvider::parsing-error signal.
-	 * The end position and line may be identical to the start
-	 * position and line for sections which failed to parse anything
-	 * successfully.
+	 * returned via gtk_css_section_get_start_line().
 	 * Returns: the offset in bytes from the start of the line. Since 3.2
 	 */
 	public uint getStartPosition()

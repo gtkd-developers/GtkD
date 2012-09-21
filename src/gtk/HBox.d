@@ -131,7 +131,7 @@ public class HBox : Box
 	/**
 	 * Warning
 	 * gtk_hbox_new has been deprecated since version 3.2 and should not be used in newly-written code. You can use gtk_box_new() with GTK_ORIENTATION_HORIZONTAL instead,
-	 *  wich is a very quick and easy change. But the recommendation is to switch to
+	 *  which is a quick and easy change. But the recommendation is to switch to
 	 *  GtkGrid, since GtkBox is going to go away eventually.
 	 *  See Migrating from other containers to GtkGrid.
 	 * Creates a new GtkHBox.

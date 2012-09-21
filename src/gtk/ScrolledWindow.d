@@ -83,7 +83,7 @@ private import gtk.Bin;
  * For widgets that lack native scrolling support, the GtkViewport
  * widget acts as an adaptor class, implementing scrollability for child
  * widgets that lack their own scrolling capabilities. Use GtkViewport
- * to scroll child widgets such as GtkTable, GtkBox, and so on.
+ * to scroll child widgets such as GtkGrid, GtkBox, and so on.
  * If a widget has native scrolling abilities, it can be added to the
  * GtkScrolledWindow with gtk_container_add(). If a widget does not, you
  * must first add the widget to a GtkViewport, then add the GtkViewport
@@ -101,7 +101,7 @@ private import gtk.Bin;
  * for example the PageDown key).
  * If a GtkScrolledWindow doesn't behave quite as you would like, or
  * doesn't have exactly the right layout, it's very possible to set up
- * your own scrolling with GtkScrollbar and for example a GtkTable.
+ * your own scrolling with GtkScrollbar and for example a GtkGrid.
  */
 public class ScrolledWindow : Bin
 {
@@ -531,5 +531,60 @@ public class ScrolledWindow : Bin
 	{
 		// void gtk_scrolled_window_set_min_content_height  (GtkScrolledWindow *scrolled_window,  gint height);
 		gtk_scrolled_window_set_min_content_height(gtkScrolledWindow, height);
+	}
+	
+	/**
+	 * Turns kinetic scrolling on or off.
+	 * Kinetic scrolling only applies to devices with source
+	 * GDK_SOURCE_TOUCHSCREEN.
+	 * Params:
+	 * kineticScrolling = TRUE to enable kinetic scrolling
+	 * Since 3.4
+	 */
+	public void setKineticScrolling(int kineticScrolling)
+	{
+		// void gtk_scrolled_window_set_kinetic_scrolling  (GtkScrolledWindow *scrolled_window,  gboolean kinetic_scrolling);
+		gtk_scrolled_window_set_kinetic_scrolling(gtkScrolledWindow, kineticScrolling);
+	}
+	
+	/**
+	 * Returns the specified kinetic scrolling behavior.
+	 * Returns: the scrolling behavior flags. Since 3.4
+	 */
+	public int getKineticScrolling()
+	{
+		// gboolean gtk_scrolled_window_get_kinetic_scrolling  (GtkScrolledWindow *scrolled_window);
+		return gtk_scrolled_window_get_kinetic_scrolling(gtkScrolledWindow);
+	}
+	
+	/**
+	 * Changes the behaviour of scrolled_window wrt. to the initial
+	 * event that possibly starts kinetic scrolling. When capture_button_press
+	 * is set to TRUE, the event is captured by the scrolled window, and
+	 * then later replayed if it is meant to go to the child widget.
+	 * This should be enabled if any child widgets perform non-reversible
+	 * actions on "button-press-event". If they don't, and handle
+	 * additionally handle "grab-broken-event", it might be better
+	 * to set capture_button_press to FALSE.
+	 * This setting only has an effect if kinetic scrolling is enabled.
+	 * Params:
+	 * captureButtonPress = TRUE to capture button presses
+	 * Since 3.4
+	 */
+	public void setCaptureButtonPress(int captureButtonPress)
+	{
+		// void gtk_scrolled_window_set_capture_button_press  (GtkScrolledWindow *scrolled_window,  gboolean capture_button_press);
+		gtk_scrolled_window_set_capture_button_press(gtkScrolledWindow, captureButtonPress);
+	}
+	
+	/**
+	 * Return whether button presses are captured during kinetic
+	 * scrolling. See gtk_scrolled_window_set_capture_button_press().
+	 * Returns: TRUE if button presses are captured during kinetic scrolling Since 3.4
+	 */
+	public int getCaptureButtonPress()
+	{
+		// gboolean gtk_scrolled_window_get_capture_button_press  (GtkScrolledWindow *scrolled_window);
+		return gtk_scrolled_window_get_capture_button_press(gtkScrolledWindow);
 	}
 }

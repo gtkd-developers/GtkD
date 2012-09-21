@@ -490,9 +490,10 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * this function only works with unsorted stores.
 	 * Since 2.2
 	 * Params:
-	 * newOrder = an array of integers mapping the new position of each child
-	 * to its old position before the re-ordering,
-	 * i.e. new_order[newpos] = oldpos. [array]
+	 * newOrder = an array of integers mapping the new
+	 * position of each child to its old position before the re-ordering,
+	 * i.e. new_order[newpos] = oldpos. It must have
+	 * exactly as many items as the list store's length. [array zero-terminated=1]
 	 */
 	public void reorder(int[] newOrder)
 	{

@@ -78,7 +78,7 @@ private import gobject.ObjectG;
  * GtkSizeGroup provides a mechanism for grouping a number of widgets
  * together so they all request the same amount of space. This is
  * typically useful when you want a column of widgets to have the same
- * size, but you can't use a GtkTable widget.
+ * size, but you can't use a GtkGrid widget.
  * In detail, the size requested for each widget in a GtkSizeGroup is
  * the maximum of the sizes that would have been requested for each
  * widget in the size group if they were not in the size group. The mode

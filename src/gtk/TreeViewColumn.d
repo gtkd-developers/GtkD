@@ -531,8 +531,8 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	}
 	
 	/**
-	 * Sets the header to be active if active is TRUE. When the header is active,
-	 * then it can take keyboard focus, and can be clicked.
+	 * Sets the header to be active if clickable is TRUE. When the header is
+	 * active, then it can take keyboard focus, and can be clicked.
 	 * Params:
 	 * clickable = TRUE if the header is active.
 	 */

@@ -110,6 +110,7 @@
  * 	- unrealize
  * 	- visibility-notify-event
  * 	- window-state-event
+ * 	- touch-event
  * imports:
  * 	- gtkc.Loader
  * 	- gtkc.paths

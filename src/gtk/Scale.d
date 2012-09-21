@@ -248,6 +248,21 @@ public class Scale : Range
 	}
 	
 	/**
+	 * If has_origin is set to TRUE (the default),
+	 * the scale will highlight the part of the scale
+	 * between the origin (bottom or left side) of the scale
+	 * and the current value.
+	 * Params:
+	 * hasOrigin = TRUE if the scale has an origin
+	 * Since 3.4
+	 */
+	public void setHasOrigin(int hasOrigin)
+	{
+		// void gtk_scale_set_has_origin (GtkScale *scale,  gboolean has_origin);
+		gtk_scale_set_has_origin(gtkScale, hasOrigin);
+	}
+	
+	/**
 	 * Sets the position in which the current value is displayed.
 	 * Params:
 	 * pos = the position in which the current value is displayed
@@ -277,6 +292,16 @@ public class Scale : Range
 	{
 		// gboolean gtk_scale_get_draw_value (GtkScale *scale);
 		return gtk_scale_get_draw_value(gtkScale);
+	}
+	
+	/**
+	 * Returns whether the scale has an origin.
+	 * Returns: TRUE if the scale has an origin. Since 3.4
+	 */
+	public int getHasOrigin()
+	{
+		// gboolean gtk_scale_get_has_origin (GtkScale *scale);
+		return gtk_scale_get_has_origin(gtkScale);
 	}
 	
 	/**

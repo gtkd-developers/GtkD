@@ -47,11 +47,13 @@
  * 	- glib.Str
  * 	- gobject.Closure
  * 	- gobject.ObjectG
+ * 	- gdk.Display
  * 	- glib.ListSG
  * structWrap:
  * 	- GClosure* -> Closure
  * 	- GObject* -> ObjectG
  * 	- GSList* -> ListSG
+ * 	- GdkDisplay* -> Display
  * 	- GtkAccelGroup* -> AccelGroup
  * module aliases:
  * local aliases:
@@ -71,6 +73,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gobject.Closure;
 private import gobject.ObjectG;
+private import gdk.Display;
 private import glib.ListSG;
 
 
@@ -180,7 +183,7 @@ public class AccelGroup : ObjectG
 	
 	void delegate(guint, GdkModifierType, Closure, AccelGroup)[] onAccelChangedListeners;
 	/**
-	 * The accel-changed signal is emitted when a GtkAccelGroupEntry
+	 * The accel-changed signal is emitted when an entry
 	 * is added to or removed from the accel group.
 	 * Widgets like GtkAccelLabel which display an associated
 	 * accelerator should connect to this signal, and rebuild
@@ -296,22 +299,6 @@ public class AccelGroup : ObjectG
 	{
 		// gboolean gtk_accel_group_disconnect_key (GtkAccelGroup *accel_group,  guint accel_key,  GdkModifierType accel_mods);
 		return gtk_accel_group_disconnect_key(gtkAccelGroup, accelKey, accelMods);
-	}
-	
-	/**
-	 * Queries an accelerator group for all entries matching accel_key
-	 * and accel_mods.
-	 * Params:
-	 * accelKey = key value of the accelerator
-	 * accelMods = modifier combination of the accelerator
-	 * Returns: an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is owned by GTK+ and must not be freed. [transfer none][array length=n_entries]
-	 */
-	public GtkAccelGroupEntry[] query(uint accelKey, GdkModifierType accelMods)
-	{
-		// GtkAccelGroupEntry * gtk_accel_group_query (GtkAccelGroup *accel_group,  guint accel_key,  GdkModifierType accel_mods,  guint *n_entries);
-		uint nEntries;
-		auto p = gtk_accel_group_query(gtkAccelGroup, accelKey, accelMods, &nEntries);
-		return p[0 .. nEntries];
 	}
 	
 	/**
@@ -518,6 +505,68 @@ public class AccelGroup : ObjectG
 	{
 		// gchar * gtk_accelerator_get_label (guint accelerator_key,  GdkModifierType accelerator_mods);
 		return Str.toString(gtk_accelerator_get_label(acceleratorKey, acceleratorMods));
+	}
+	
+	/**
+	 * Parses a string representing an accelerator, similarly to
+	 * gtk_accelerator_parse() but handles keycodes as well. This is only
+	 * useful for system-level components, applications should use
+	 * gtk_accelerator_parse() instead.
+	 * If a keycode is present in the accelerator and no accelerator_codes
+	 * is given, the parse will fail.
+	 * If the parse fails, accelerator_key, accelerator_mods and
+	 * accelerator_codes will be set to 0 (zero).
+	 * Params:
+	 * accelerator = string representing an accelerator
+	 * acceleratorKey = return location for accelerator
+	 * keyval, or NULL. [out][allow-none]
+	 * acceleratorCodes = return location for accelerator
+	 * keycodes, or NULL. [out][allow-none]
+	 * acceleratorMods = return location for accelerator
+	 * modifier mask, NULL. [out][allow-none]
+	 * Since 3.4
+	 */
+	public static void acceleratorParseWithKeycode(string accelerator, out uint acceleratorKey, out uint* acceleratorCodes, out GdkModifierType acceleratorMods)
+	{
+		// void gtk_accelerator_parse_with_keycode (const gchar *accelerator,  guint *accelerator_key,  guint **accelerator_codes,  GdkModifierType *accelerator_mods);
+		gtk_accelerator_parse_with_keycode(Str.toStringz(accelerator), &acceleratorKey, &acceleratorCodes, &acceleratorMods);
+	}
+	
+	/**
+	 * Converts an accelerator keyval and modifier mask
+	 * into a string parseable by gtk_accelerator_parse_full(),
+	 * similarly to gtk_accelerator_name() but handling keycodes.
+	 * This is only useful for system-level components, applications
+	 * should use gtk_accelerator_parse() instead.
+	 * Params:
+	 * display = a GdkDisplay or NULL to use the default display. [allow-none]
+	 * acceleratorKey = accelerator keyval
+	 * acceleratorMods = accelerator modifier mask
+	 * Returns: a newly allocated accelerator name. Since 3.4
+	 */
+	public static string acceleratorNameWithKeycode(Display display, uint acceleratorKey, uint keycode, GdkModifierType acceleratorMods)
+	{
+		// gchar * gtk_accelerator_name_with_keycode (GdkDisplay *display,  guint accelerator_key,  guint keycode,  GdkModifierType accelerator_mods);
+		return Str.toString(gtk_accelerator_name_with_keycode((display is null) ? null : display.getDisplayStruct(), acceleratorKey, keycode, acceleratorMods));
+	}
+	
+	/**
+	 * Converts an accelerator keyval and modifier mask
+	 * into a (possibly translated) string that can be displayed to
+	 * a user, similarly to gtk_accelerator_get_label(), but handling
+	 * keycodes.
+	 * This is only useful for system-level components, applications
+	 * should use gtk_accelerator_parse() instead.
+	 * Params:
+	 * display = a GdkDisplay or NULL to use the default display. [allow-none]
+	 * acceleratorKey = accelerator keyval
+	 * acceleratorMods = accelerator modifier mask
+	 * Returns: a newly-allocated string representing the accelerator. Since 3.4
+	 */
+	public static string acceleratorGetLabelWithKeycode(Display display, uint acceleratorKey, uint keycode, GdkModifierType acceleratorMods)
+	{
+		// gchar * gtk_accelerator_get_label_with_keycode  (GdkDisplay *display,  guint accelerator_key,  guint keycode,  GdkModifierType accelerator_mods);
+		return Str.toString(gtk_accelerator_get_label_with_keycode((display is null) ? null : display.getDisplayStruct(), acceleratorKey, keycode, acceleratorMods));
 	}
 	
 	/**

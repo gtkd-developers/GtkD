@@ -137,8 +137,6 @@ public class FontSelection : Box
 	 */
 	
 	/**
-	 * Warning
-	 * gtk_font_selection_new is deprecated and should not be used in newly-written code.
 	 * Creates a new GtkFontSelection.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

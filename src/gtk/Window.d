@@ -568,6 +568,28 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Marks window as attached to attach_widget. This creates a logical binding
+	 * between the window and the widget it belongs to, which is used by GTK+ to
+	 * propagate information such as styling or accessibility to window as if it
+	 * was a children of attach_widget.
+	 * Examples of places where specifying this relation is useful are for instance
+	 * a GtkMenu created by a GtkComboBox, a completion popup window
+	 * created by GtkEntry or a typeahead search entry created by GtkTreeView.
+	 * Note that this function should not be confused with
+	 * gtk_window_set_transient_for(), which specifies a window manager relation
+	 * between two toplevels instead.
+	 * Passing NULL for attach_widget detaches the window.
+	 * Params:
+	 * attachWidget = a GtkWidget, or NULL. [allow-none]
+	 * Since 3.4
+	 */
+	public void setAttachedTo(Widget attachWidget)
+	{
+		// void gtk_window_set_attached_to (GtkWindow *window,  GtkWidget *attach_widget);
+		gtk_window_set_attached_to(gtkWindow, (attachWidget is null) ? null : attachWidget.getWidgetStruct());
+	}
+	
+	/**
 	 * If setting is TRUE, then destroying the transient parent of window
 	 * will also destroy window itself. This is useful for dialogs that
 	 * shouldn't persist beyond the lifetime of the main window they're
@@ -579,6 +601,23 @@ public class Window : Bin
 	{
 		// void gtk_window_set_destroy_with_parent (GtkWindow *window,  gboolean setting);
 		gtk_window_set_destroy_with_parent(gtkWindow, setting);
+	}
+	
+	/**
+	 * If setting is TRUE, then window will request that it's titlebar
+	 * should be hidden when maximized.
+	 * This is useful for windows that don't convey any information other
+	 * than the application name in the titlebar, to put the available
+	 * screen space to better use. If the underlying window system does not
+	 * support the request, the setting will not have any effect.
+	 * Params:
+	 * setting = whether to hide the titlebar when window is maximized
+	 * Since 3.4
+	 */
+	public void setHideTitlebarWhenMaximized(int setting)
+	{
+		// void gtk_window_set_hide_titlebar_when_maximized  (GtkWindow *window,  gboolean setting);
+		gtk_window_set_hide_titlebar_when_maximized(gtkWindow, setting);
 	}
 	
 	/**
@@ -1322,6 +1361,17 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Returns whether the window has requested to have its titlebar hidden
+	 * when maximized. See gtk_window_set_hide_titlebar_when_maximized().
+	 * Returns: TRUE if the window has requested to have its titlebar hidden when maximized Since 3.4
+	 */
+	public int getHideTitlebarWhenMaximized()
+	{
+		// gboolean gtk_window_get_hide_titlebar_when_maximized  (GtkWindow *window);
+		return gtk_window_get_hide_titlebar_when_maximized(gtkWindow);
+	}
+	
+	/**
 	 * Gets the value set by gtk_window_set_icon() (or if you've
 	 * called gtk_window_set_icon_list(), gets the first icon in
 	 * the icon list).
@@ -1421,7 +1471,7 @@ public class Window : Bin
 	 * "GnomeClient" object in the GNOME libraries for example) and allow
 	 * the window manager to save your window sizes and positions.
 	 * Params:
-	 * rootX = eturn location for X coordinate of
+	 * rootX = return location for X coordinate of
 	 * gravity-determined reference point, or NULL. [out][allow-none]
 	 * rootY = return location for Y coordinate of
 	 * gravity-determined reference point, or NULL. [out][allow-none]
@@ -1517,6 +1567,22 @@ public class Window : Bin
 			return null;
 		}
 		return new Window(cast(GtkWindow*) p);
+	}
+	
+	/**
+	 * Fetches the attach widget for this window. See
+	 * gtk_window_set_attached_to().
+	 * Returns: the widget where the window is attached, or NULL if the window is not attached to any widget. [transfer none] Since 3.4
+	 */
+	public Widget getAttachedTo()
+	{
+		// GtkWidget * gtk_window_get_attached_to (GtkWindow *window);
+		auto p = gtk_window_get_attached_to(gtkWindow);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

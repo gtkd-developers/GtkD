@@ -128,6 +128,8 @@ public class Accessible : ObjectAtk
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_accessible_connect_widget_destroyed has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_accessible_set_widget() and its vfuncs.
 	 * This function specifies the callback function to be called
 	 * when the widget corresponding to a GtkAccessible is destroyed.
 	 */
@@ -157,9 +159,14 @@ public class Accessible : ObjectAtk
 	
 	/**
 	 * Sets the GtkWidget corresponding to the GtkAccessible.
+	 * Note
+	 * accessible will not hold a reference to widget.
+	 * It is the caller's responsibility to ensure that when widget
+	 * is destroyed, the widget is unset by calling this function
+	 * again with widget set to NULL.
 	 * Since 2.22
 	 * Params:
-	 * widget = a GtkWidget
+	 * widget = a GtkWidget or NULL to unset. [allow-none]
 	 */
 	public void setWidget(Widget widget)
 	{

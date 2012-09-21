@@ -576,4 +576,17 @@ public class AboutDialog : Dialog
 		// void gtk_about_dialog_set_logo_icon_name (GtkAboutDialog *about,  const gchar *icon_name);
 		gtk_about_dialog_set_logo_icon_name(gtkAboutDialog, Str.toStringz(iconName));
 	}
+	
+	/**
+	 * Creates a new section in the Credits page.
+	 * Params:
+	 * sectionName = The name of the section
+	 * people = The people who belong to that section
+	 * Since 3.4
+	 */
+	public void addCreditSection(string sectionName, string[] people)
+	{
+		// void gtk_about_dialog_add_credit_section (GtkAboutDialog *about,  const gchar *section_name,  const gchar **people);
+		gtk_about_dialog_add_credit_section(gtkAboutDialog, Str.toStringz(sectionName), Str.toStringzArray(people));
+	}
 }

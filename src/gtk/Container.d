@@ -105,7 +105,7 @@ private import gtk.Widget;
  * The second type of container can have more than one child; its purpose is to
  * manage layout. This means that these containers assign
  * sizes and positions to their children. For example, a GtkHBox arranges its
- * children in a horizontal row, and a GtkTable arranges the widgets it contains
+ * children in a horizontal row, and a GtkGrid arranges the widgets it contains
  * in a two-dimensional grid.
  * Height for width geometry management
  * GTK+ uses a height-for-width (and width-for-height) geometry management system.
@@ -391,10 +391,10 @@ public class Container : Widget
 	/**
 	 * Adds widget to container. Typically used for simple containers
 	 * such as GtkWindow, GtkFrame, or GtkButton; for more complicated
-	 * layout containers such as GtkBox or GtkTable, this function will
+	 * layout containers such as GtkBox or GtkGrid, this function will
 	 * pick default packing parameters that may not be correct. So
 	 * consider functions such as gtk_box_pack_start() and
-	 * gtk_table_attach() as an alternative to gtk_container_add() in
+	 * gtk_grid_attach() as an alternative to gtk_container_add() in
 	 * those cases. A widget may be added to only one container at a time;
 	 * you can't place the same widget inside two different containers.
 	 * Params:

@@ -120,7 +120,7 @@ public interface StyleProviderIF
 	 * state = state to query the style property for
 	 * pspec = The GParamSpec to query
 	 * value = return location for the property value. [out]
-	 * Returns: TRUE if the property was found and has a value, FALSE otherwise
+	 * Returns: TRUE if the property was found and has a value, FALSE otherwise Since 3.0
 	 */
 	public int getStyleProperty(WidgetPath path, GtkStateFlags state, ParamSpec pspec, Value value);
 }

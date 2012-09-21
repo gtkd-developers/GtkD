@@ -91,7 +91,6 @@ private import gobject.ObjectG;
  * a <mime-type> or <pattern> is the same
  * as calling gtk_recent_filter_add_mime_type() or gtk_recent_filter_add_pattern()
  * $(DDOC_COMMENT example)
- * see_also: GtkFileChooser
  */
 public class FileFilter : ObjectG, BuildableIF
 {

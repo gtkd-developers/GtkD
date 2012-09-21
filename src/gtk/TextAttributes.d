@@ -78,6 +78,10 @@ private import gtkc.paths;
  * before using them with that buffer.
  * gtk_text_buffer_create_tag() is the best way to create tags.
  * See gtk3-demo for numerous examples.
+ * For each property of GtkTextTag, there is a "set" property, e.g.
+ * "font-set" corresponds to "font". These "set" properties reflect
+ * whether a property has been set or not.
+ * You should not set them independently.
  */
 public class TextAttributes
 {

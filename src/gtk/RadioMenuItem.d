@@ -238,7 +238,8 @@ public class RadioMenuItem : CheckMenuItem
 	/**
 	 * Creates a new GtkRadioMenuItem.
 	 * Params:
-	 * group = the group to which the radio menu item is to be attached
+	 * group = the group to which the
+	 * radio menu item is to be attached. [element-type GtkRadioMenuItem]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ListSG group)
@@ -273,7 +274,7 @@ public class RadioMenuItem : CheckMenuItem
 	/**
 	 * Sets the group of a radio menu item, or changes it.
 	 * Params:
-	 * group = the new group.
+	 * group = the new group. [element-type GtkRadioMenuItem]
 	 */
 	public void setGroup(ListSG group)
 	{

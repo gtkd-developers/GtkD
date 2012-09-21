@@ -74,6 +74,9 @@ private import gtk.MenuItem;
  * as a dotted line which has a left pointing arrow graphic indicating that
  * the tearoff menu can be reattached. Activating it will erase the tearoff
  * menu window.
+ * Note
+ * GtkTearoffMenuItem is deprecated and should not be used in newly
+ * written code. Menus are not meant to be torn around.
  */
 public class TearoffMenuItem : MenuItem
 {
@@ -125,6 +128,9 @@ public class TearoffMenuItem : MenuItem
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_tearoff_menu_item_new has been deprecated since version 3.4 and should not be used in newly-written code. GtkTearoffMenuItem is deprecated and should not be
+	 *  used in newly written code.
 	 * Creates a new GtkTearoffMenuItem.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

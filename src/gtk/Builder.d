@@ -128,37 +128,86 @@ private import gobject.ObjectG;
  * used to connect handlers to the named signals in the description.
  * GtkBuilder UI Definitions
  * GtkBuilder parses textual descriptions of user interfaces which are specified
- * in an XML format which can be roughly described by the DTD below. We refer to
- * these descriptions as GtkBuilder UI definitions or
- * just UI definitions if the context is clear. Do not
+ * in an XML format which can be roughly described by the RELAX NG schema below.
+ * We refer to these descriptions as GtkBuilder UI definitions
+ * or just UI definitions if the context is clear. Do not
  * confuse GtkBuilder UI Definitions with
  * GtkUIManager UI Definitions, which are more
  * limited in scope.
- * <!ELEMENT interface (requires|object)* >
- * <!ELEMENT object (property|signal|child|ANY)* >
- * <!ELEMENT property PCDATA >
- * <!ELEMENT signal EMPTY >
- * <!ELEMENT requires EMPTY >
- * <!ELEMENT child (object|ANY*) >
- * <!ATTLIST interface domain 	 #IMPLIED >
- * <!ATTLIST object id 	 #REQUIRED
- *  class 	 #REQUIRED
- *  type-func 	 #IMPLIED
- *  constructor 	 #IMPLIED >
- * <!ATTLIST requires lib 	 #REQUIRED
- *  version 	 #REQUIRED >
- * <!ATTLIST property name 	 #REQUIRED
- *  translatable 	 #IMPLIED
- *  comments #IMPLIED
- *  context #IMPLIED >
- * <!ATTLIST signal name 	 #REQUIRED
- *  handler 	 #REQUIRED
- *  after 	 #IMPLIED
- *  swapped 	 #IMPLIED
- *  object 	 #IMPLIED
- *  last_modification_time #IMPLIED >
- * <!ATTLIST child type 	 #IMPLIED
- *  internal-child 	 #IMPLIED >
+ * start = element interface {
+	 *  attribute domain { text } ?,
+	 *  ( requires | object | menu ) *
+ * }
+ * requires = element requires {
+	 *  attribute lib { text },
+	 *  attribute version { text }
+ * }
+ * object = element object {
+	 *  attribute id { xsd:ID },
+	 *  attribute class { text },
+	 *  attribute type-func { text } ?,
+	 *  attribute constructor { text } ?,
+	 *  (property | signal | child | ANY) *
+ * }
+ * property = element property {
+	 *  attribute name { text },
+	 *  attribute translatable { "yes" | "no" } ?,
+	 *  attribute comments { text } ?,
+	 *  attribute context { text } ?,
+	 *  text ?
+ * }
+ * signal = element signal {
+	 *  attribute name { text },
+	 *  attribute handler { text },
+	 *  attribute after { text } ?,
+	 *  attribute swapped { text } ?,
+	 *  attribute object { text } ?,
+	 *  attribute last_modification_time { text } ?,
+	 *  empty
+ * }
+ * child = element child {
+	 *  attribute type { text } ?,
+	 *  attribute internal-child { text } ?,
+	 *  (object | ANY)*
+ * }
+ * menu = element menu {
+	 *  attribute id { xsd:ID },
+	 *  attribute domain { text } ?,
+	 *  (item | submenu | section) *
+ * }
+ * item = element item {
+	 *  attribute id { xsd:ID } ?,
+	 *  (attribute_ | link) *
+ * }
+ * attribute_ = element attribute {
+	 *  attribute name { text },
+	 *  attribute type { text } ?,
+	 *  attribute translatable { "yes" | "no" } ?,
+	 *  attribute context { text } ?,
+	 *  attribute comments { text } ?,
+	 *  text ?
+ * }
+ * link = element link {
+	 *  attribute id { xsd:ID } ?,
+	 *  attribute name { text },
+	 *  item *
+ * }
+ * submenu = element submenu {
+	 *  attribute id { xsd:ID } ?,
+	 *  (attribute_ | item | submenu | section) *
+ * }
+ * section = element section {
+	 *  attribute id { xsd:ID } ?,
+	 *  (attribute_ | item | submenu | section) *
+ * }
+ * ANY = element * - (interface | requires | object | property | signal | child | menu | item | attribute | link | submenu | section) {
+	 *  attribute * { text } *,
+	 *  (ALL *  text ?)
+ * }
+ * ALL = element * {
+	 *  attribute * { text } *,
+	 *  (ALL *  text ?)
+ * }
  * The toplevel element is <interface>. It optionally takes a "domain"
  * attribute, which will make the builder look for translated strings using
  * dgettext() in the domain specified. This can also be done by calling
@@ -268,6 +317,13 @@ private import gobject.ObjectG;
  * GtkRecentFilter,
  * GtkFileFilter,
  * GtkTextTagTable.
+ * <hr>
+ * Embedding other XML
+ * Apart from the language for UI descriptions that has been explained
+ * in the previous section, GtkBuilder can also parse XML fragments
+ * of GMenu markup. The resulting
+ * GMenu object and its named submenus are available via
+ * gtk_builder_get_object() like other constructed objects.
  */
 public class Builder : ObjectG
 {
@@ -599,6 +655,32 @@ public class Builder : ObjectG
 		GError* err = null;
 		
 		auto p = gtk_builder_add_from_file(gtkBuilder, Str.toStringz(filename), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Parses a resource file containing a GtkBuilder
+	 * UI definition and merges it with the current contents of builder.
+	 * Upon errors 0 will be returned and error will be assigned a
+	 * GError from the GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_RESOURCE_ERROR
+	 * domain.
+	 * Params:
+	 * resourcePath = the path of the resource file to parse
+	 * Returns: A positive value on success, 0 if an error occurred Since 3.4
+	 * Throws: GException on failure.
+	 */
+	public uint addFromResource(string resourcePath)
+	{
+		// guint gtk_builder_add_from_resource (GtkBuilder *builder,  const gchar *resource_path,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_builder_add_from_resource(gtkBuilder, Str.toStringz(resourcePath), &err);
 		
 		if (err !is null)
 		{

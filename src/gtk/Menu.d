@@ -45,6 +45,7 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
+ * 	- gio.MenuModel
  * 	- gdk.Device
  * 	- gdk.Screen
  * 	- gtk.AccelGroup
@@ -52,6 +53,7 @@
  * 	- gtk.Widget
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GMenuModel* -> MenuModel
  * 	- GdkDevice* -> Device
  * 	- GdkScreen* -> Screen
  * 	- GtkAccelGroup* -> AccelGroup
@@ -73,6 +75,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListG;
+private import gio.MenuModel;
 private import gdk.Device;
 private import gdk.Screen;
 private import gtk.AccelGroup;
@@ -238,6 +241,28 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Creates a GtkMenu and populates it with menu items and
+	 * submenus according to model.
+	 * The created menu items are connected to actions found in the
+	 * GtkApplicationWindow to which the menu belongs - typically
+	 * by means of being attached to a widget (see gtk_menu_attach_to_widget())
+	 * that is contained within the GtkApplicationWindows widget hierarchy.
+	 * Params:
+	 * model = a GMenuModel
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (MenuModel model)
+	{
+		// GtkWidget * gtk_menu_new_from_model (GMenuModel *model);
+		auto p = gtk_menu_new_from_model((model is null) ? null : model.getMenuModelStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_new_from_model((model is null) ? null : model.getMenuModelStruct())");
+		}
+		this(cast(GtkMenu*) p);
+	}
+	
+	/**
 	 * Sets the GdkScreen on which the menu will be displayed.
 	 * Since 2.2
 	 * Params:
@@ -345,7 +370,7 @@ public class Menu : MenuShell
 	 * parentMenuItem = the menu item whose activation
 	 * triggered the popup, or NULL. [allow-none]
 	 * func = a user supplied function used to position
-	 * the menu, or NULL. [allow-none]
+	 * the menu, or NULL. [scope async][allow-none]
 	 * data = user supplied data to be passed to func.
 	 * button = the mouse button which was pressed to initiate the event.
 	 * activateTime = the time at which the activation event occurred.

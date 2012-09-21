@@ -350,15 +350,20 @@ prefix: gtk_
 import: glib.Str
 import: gobject.Closure
 import: gobject.ObjectG
+import: gdk.Display
 import: glib.ListSG
 structWrap: GClosure* Closure
 structWrap: GObject* ObjectG
 structWrap: GSList* ListSG
+structWrap: GdkDisplay* Display
 structWrap: GtkAccelGroup* AccelGroup
 
 array: gtk_accel_group_query Return n_entries
 out: gtk_accelerator_parse accelerator_key
 out: gtk_accelerator_parse accelerator_mods
+out: gtk_accelerator_parse_with_keycode accelerator_key
+out: gtk_accelerator_parse_with_keycode accelerator_codes
+out: gtk_accelerator_parse_with_keycode accelerator_mods
 
 outFile: AccelGroup
 
@@ -525,6 +530,7 @@ outFile: TargetEntry
 
 struct: GtkTargetList
 class: TargetList
+extend: GBoxed
 prefix: gtk_target_list_
 prefix: gtk_targets_
 prefix: gtk_target_
@@ -667,6 +673,7 @@ import: gdk.Pixbuf
 import: gdk.RGBA
 import: gdk.Screen
 import: gdk.Window
+import: gtk.CssSection
 import: gtk.IconSet
 import: gtk.IconSource
 import: gtk.StyleProviderIF
@@ -680,8 +687,10 @@ structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkRGBA* RGBA
 structWrap: GdkScreen* Screen
 structWrap: GdkWindow* Window
+structWrap: GtkCssSection* CssSection
 structWrap: GtkIconSet* IconSet
 structWrap: GtkIconSource* IconSource
+structWrap: GtkStyleContext* StyleContext
 structWrap: GtkStyleProvider* StyleProviderIF
 structWrap: GtkWidgetPath* WidgetPath
 structWrap: PangoFontDescription* PgFontDescription
@@ -1691,6 +1700,7 @@ override: setName
 array: gtk_about_dialog_set_authors authors
 array: gtk_about_dialog_set_artists artists
 array: gtk_about_dialog_set_documenters documenters
+array: gtk_about_dialog_add_credit_section people
 
 outFile: AboutDialog
 
@@ -2088,6 +2098,7 @@ outFile: Spinner
 file: GtkButton.html
 struct: GtkButton
 class: Button
+implements: ActionableIF
 implements: ActivatableIF
 prefix: gtk_button_
 import: glib.Str
@@ -2096,6 +2107,10 @@ import: gdk.Window
 import: gtk.Widget
 structWrap: GdkWindow* Window
 structWrap: GtkWidget* Widget
+
+#imports for Actionable Interface.
+import: gio.ActionableIF
+import: gio.ActionableT
 
 # imports for Activatable Interface
 import: gtk.ActivatableT
@@ -2113,6 +2128,9 @@ code: start
 
 	/** An arbitrary string to be used by the application */
 	private string action;
+
+	// add the Actionable capabilities
+	mixin ActionableT!(GtkButton);
 
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkButton);
@@ -2486,14 +2504,22 @@ outFile: VolumeButton
 file: GtkSwitch.html
 struct: GtkSwitch
 class: Switch
+implements: ActionableIF
 implements: ActivatableIF
 prefix: gtk_switch_
+
+#imports for Actionable Interface.
+import: gio.ActionableIF
+import: gio.ActionableT
 
 # imports for Activatable Interface
 import: gtk.ActivatableT
 import: gtk.ActivatableIF
 
 code: start
+	// add the Actionable capabilities
+	mixin ActionableT!(GtkSwitch);
+
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkSwitch);
 code: end
@@ -5531,15 +5557,17 @@ class: Menu
 prefix: gtk_menu_
 import: glib.Str
 import: glib.ListG
+import: gio.MenuModel
 import: gdk.Device
 import: gdk.Screen
 import: gtk.AccelGroup
 import: gtk.MenuItem
 import: gtk.Widget
 structWrap: GList* ListG
+structWrap: GMenuModel* MenuModel
 structWrap: GdkDevice* Device
-structWrap: GtkAccelGroup* AccelGroup
 structWrap: GdkScreen* Screen
+structWrap: GtkAccelGroup* AccelGroup
 structWrap: GtkWidget* Widget
 
 code: start
@@ -5594,9 +5622,11 @@ file: GtkMenuBar.html
 struct: GtkMenuBar
 class: MenuBar
 prefix: gtk_menu_bar_
+import: gio.MenuModel
 import: gtk.Menu
 import: gtk.MenuItem
 import: gtk.Widget
+structWrap: GMenuModel* MenuModel
 
 code: start
 	/** */
@@ -6134,14 +6164,22 @@ file: GtkToolButton.html
 struct: GtkToolButton
 ctorStruct: GtkToolItem
 class: ToolButton
+implements: ActionableIF
 prefix: gtk_tool_button_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
+#imports for Actionable Interface.
+import: gio.ActionableIF
+import: gio.ActionableT
+
 code: start
 	/** An arbitrary string to be used by the application */
 	private string action;
+
+	// add the Actionable capabilities
+	mixin ActionableT!(GtkToolButton);
 
 	/** */
 	public void setActionName(string action)
@@ -6588,16 +6626,152 @@ outFile: ActivatableT
 ###  Selectors (File/Font/Color/Input Devices) ############
 ###########################################################
 
+file: GtkColorChooser.html
+struct: GtkColorChooser
+class: ColorChooserT
+template: TStruct
+prefix: gtk_color_chooser_
+import: gdk.RGBA
+structWrap: GdkRGBA* RGBA
+interfaceCode: start
+	/**
+	 * Adds a palette to the color chooser. If orientation is horizontal,
+	 * the colors are grouped in rows, with colorsPerPine colors
+	 * in each row. If horizontal is false, the colors are grouped
+	 * in columns instead.
+	 * 
+	 * The default color palette of ColorChooserWidget has
+	 * 27 colors, organized in columns of 3 colors. The default gray
+	 * palette has 9 grays in a single row.
+	 * 
+	 * The layout of the color chooser widget works best when the
+	 * palettes have 9-10 columns.
+	 * 
+	 * Calling this function for the first time has the
+	 * side effect of removing the default color and gray palettes
+	 * from the color chooser.
+	 * 
+	 * If colors is null, removes all previously added palettes.
+	 * 
+	 * Params:
+	 *     orientation   = Orientation.HORIZONTAL if the palette should
+	 *                     be displayed in rows, Orientation.VERTICAL for columns
+	 *     colorsPerLine = the number of colors to show in each row/column
+	 *     colors        = the colors of the palette, or null.
+	 * Since 3.4
+	 */
+	public void addPalette(GtkOrientation orientation, int colorsPerLine, RGBA[] colors);	
+interfaceCode: end
+code: start
+	/**
+	 * Adds a palette to the color chooser. If orientation is horizontal,
+	 * the colors are grouped in rows, with colorsPerPine colors
+	 * in each row. If horizontal is false, the colors are grouped
+	 * in columns instead.
+	 * 
+	 * The default color palette of ColorChooserWidget has
+	 * 27 colors, organized in columns of 3 colors. The default gray
+	 * palette has 9 grays in a single row.
+	 * 
+	 * The layout of the color chooser widget works best when the
+	 * palettes have 9-10 columns.
+	 * 
+	 * Calling this function for the first time has the
+	 * side effect of removing the default color and gray palettes
+	 * from the color chooser.
+	 * 
+	 * If colors is null, removes all previously added palettes.
+	 * 
+	 * Params:
+	 *     orientation   = Orientation.HORIZONTAL if the palette should
+	 *                     be displayed in rows, Orientation.VERTICAL for columns
+	 *     colorsPerLine = the number of colors to show in each row/column
+	 *     colors        = the colors of the palette, or null.
+	 * Since 3.4
+	 */
+	public void addPalette(GtkOrientation orientation, int colorsPerLine, RGBA[] colors)
+	{
+		GdkRGBA[] cColors = new GdkRGBA[colors.length];
+
+		foreach( i, color; colors )
+		{
+			cColors[i] = color.getRGBAStruct();
+		}
+
+		// void gtk_color_chooser_add_palette (GtkColorChooser *chooser,  GtkOrientation orientation,  gint colors_per_line,  gint n_colors,  GdkRGBA *colors);
+		gtk_color_chooser_add_palette(getColorChooserTStruct(), orientation, colorsPerLine, cast(int) colors.length, cColors.ptr);
+	}
+code: end
+interface: ColorChooserIF
+outFile: ColorChooserT
+
 file: GtkColorButton.html
 struct: GtkColorButton
 class: ColorButton
+implements: ColorChooserIF
 prefix: gtk_color_button_
 import: glib.Str
 import: gdk.Color
 import: gdk.RGBA
 structWrap: GdkColor* Color
 structWrap: GdkRGBA* RGBA
+
+#imports for ColorChooser Interface.
+import: gio.ColorChooserIF
+import: gio.ColorChooserT
+
+code: start
+	// add the ColorChooser capabilities
+	mixin ColorChooserT!(GtkColorButton);
+code: end
 outFile: ColorButton
+
+file: GtkColorChooserWidget.html
+struct: GtkColorChooserWidget
+class: ColorChooserWidget
+implements: ColorChooserIF
+prefix: gtk_color_chooser_widget_
+
+#imports for ColorChooser Interface.
+import: gio.ColorChooserIF
+import: gio.ColorChooserT
+
+code: start
+	// add the ColorChooser capabilities
+	mixin ColorChooserT!(GtkColorChooserWidget);
+code: end
+outFile: ColorChooserWidget
+
+file: GtkColorChooserDialog.html
+struct: GtkColorChooserDialog
+class: ColorChooserDialog
+implements: ColorChooserIF
+prefix: gtk_color_chooser_dialog_
+
+#imports for ColorChooser Interface.
+import: gio.ColorChooserIF
+import: gio.ColorChooserT
+
+code: start
+	// add the ColorChooser capabilities
+	mixin ColorChooserT!(GtkColorChooserDialog);
+code: end
+outFile: ColorChooserDialog
+
+file: GtkColorSelection.html
+struct: GtkColorSelection
+class: ColorSelection
+prefix: gtk_color_selection_
+import: glib.Str
+import: gdk.Color
+import: gdk.RGBA
+structWrap: GdkColor* Color
+structWrap: GdkRGBA* RGBA
+
+out: gtk_color_selection_palette_from_string colors
+array: gtk_color_selection_palette_from_string colors n_colors
+array: gtk_color_selection_palette_to_string colors n_colors
+outFile: ColorSelection
 
 file: GtkColorSelectionDialog.html
 struct: GtkColorSelectionDialog
@@ -6626,21 +6800,6 @@ code: start
 	}
 code: end
 outFile: ColorSelectionDialog
-
-file: GtkColorSelection.html
-struct: GtkColorSelection
-class: ColorSelection
-prefix: gtk_color_selection_
-import: glib.Str
-import: gdk.Color
-import: gdk.RGBA
-structWrap: GdkColor* Color
-structWrap: GdkRGBA* RGBA
-
-out: gtk_color_selection_palette_from_string colors
-array: gtk_color_selection_palette_from_string colors n_colors
-array: gtk_color_selection_palette_to_string colors n_colors
-outFile: ColorSelection
 
 file: GtkHSV.html
 struct: GtkHSV
@@ -6855,6 +7014,8 @@ class: FontChooserDialog
 implements: FontChooserIF
 prefix: gtk_font_chooser_dialog_
 import: glib.Str
+import: gtk.Window
+structWrap: GtkWindow* Window
 
 # imports for FontChooser Interface
 import: gtk.FontChooserT
@@ -8365,6 +8526,7 @@ nosignal: unmap-event
 nosignal: unrealize
 nosignal: visibility-notify-event
 nosignal: window-state-event
+nosignal: touch-event
 
 code: start
 	~this ()
@@ -9126,7 +9288,47 @@ prefix: gtk_application_
 import: glib.Str
 import: glib.ListG
 import: gio.Application : GioApplication = Application
+import: gio.MenuModel
 import: gtk.Window
 structWrap: GList* ListG
+structWrap: GMenuModel* MenuModel
 structWrap: GtkWindow* Window
 outFile: Application
+
+file: GtkApplicationWindow.html
+struct: GtkApplicationWindow
+class: ApplicationWindow
+implements: ActionGroupIF
+implements: ActionMapIF
+prefix: gtk_application_window_
+import: gtk.Application
+structWrap: GtkApplication* Application
+
+#imports for ActionGroup Interface.
+import: gio.ActionGroupIF
+import: gio.ActionGroupT
+
+#imports for ActionMap Interface.
+import: gio.ActionMapIF
+import: gio.ActionMapT
+
+code: start
+	// add the ActionGroup capabilities
+	mixin ActionGroupT!(GtkApplicationWindow);
+
+	// add the ActionMap capabilities
+	mixin ActionMapT!(GtkApplicationWindow);
+code: end
+outFile: ApplicationWindow
+
+file: GtkActionable.html
+struct: GtkActionable
+class: ActionableT
+template: TStruct
+prefix: gtk_actionable_
+import: glib.Str
+import: glib.Variant
+structWrap: GVariant* Variant
+interface: ActionableIF
+outFile: ActionableT
+

@@ -155,8 +155,8 @@ public class RadioToolButton : ToggleToolButton
 	 * stock item indicated by stock_id.
 	 * Since 2.4
 	 * Params:
-	 * group = an existing radio button group, or NULL if you are
-	 * creating a new group. [allow-none]
+	 * group = an existing radio button
+	 * group, or NULL if you are creating a new group. [allow-none][element-type GtkRadioButton]
 	 * stockId = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

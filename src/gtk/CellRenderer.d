@@ -95,7 +95,7 @@ private import gobject.ObjectG;
  * cell is measured using gtk_cell_renderer_get_size(). Finally, the cell
  * is rendered in the correct location using gtk_cell_renderer_render().
  * There are a number of rules that must be followed when writing a new
- * GtkCellRenderer. First and formost, its important that a certain set
+ * GtkCellRenderer. First and foremost, its important that a certain set
  * of properties will always yield a cell renderer of the same size,
  * barring a GtkStyle change. The GtkCellRenderer also has a number of
  * generic properties that are expected to be honored by all children.
@@ -108,6 +108,10 @@ private import gobject.ObjectG;
  * To make a cell renderer activatable or editable, you have to
  * implement the GtkCellRendererClass.activate or
  * GtkCellRendererClass.start_editing virtual functions, respectively.
+ * Many properties of GtkCellRenderer and its subclasses have a
+ * corresponding "set" property, e.g. "cell-background-set" corresponds
+ * to "cell-background". These "set" properties reflect whether a property
+ * has been set or not. You should not set them independently.
  */
 public class CellRenderer : ObjectG
 {

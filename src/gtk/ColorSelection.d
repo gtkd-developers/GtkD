@@ -240,6 +240,8 @@ public class ColorSelection : Box
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_selection_get_current_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_selection_get_current_rgba() instead.
 	 * Sets color to be the current color in the GtkColorSelection widget.
 	 * Params:
 	 * color = a GdkColor to fill in with the current color. [out]
@@ -251,6 +253,8 @@ public class ColorSelection : Box
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_selection_set_current_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_selection_set_current_rgba() instead.
 	 * Sets the current color to be color.
 	 * The first time this is called, it will also set
 	 * the original color to be color too.
@@ -287,6 +291,8 @@ public class ColorSelection : Box
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_selection_get_previous_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_selection_get_previous_rgba() instead.
 	 * Fills color in with the original color value.
 	 * Params:
 	 * color = a GdkColor to fill in with the original color value. [out]
@@ -298,6 +304,8 @@ public class ColorSelection : Box
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_selection_set_previous_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_selection_set_previous_rgba() instead.
 	 * Sets the 'previous' color to be color.
 	 * This function should be called with some hesitations,
 	 * as it might seem confusing to have that color change.

@@ -79,6 +79,7 @@ private import gtkc.paths;
 
 
 
+private import gobject.Boxed;
 
 /**
  * Description
@@ -95,7 +96,7 @@ private import gtkc.paths;
  * store a chunk of data along with the data type and other
  * associated information.
  */
-public class SelectionData
+public class SelectionData : Boxed
 {
 	
 	/** the main Gtk struct */

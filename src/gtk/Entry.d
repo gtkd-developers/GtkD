@@ -239,11 +239,12 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	
 	void delegate(Entry)[] onActivateListeners;
 	/**
-	 * A keybinding signal
-	 * which gets emitted when the user activates the entry.
-	 * Applications should not connect to it, but may emit it with
-	 * g_signal_emit_by_name() if they need to control activation
-	 * programmatically.
+	 * The ::activate signal is emitted when the user hits
+	 * the Enter key.
+	 * While this signal is used as a
+	 * keybinding signal,
+	 * it is also commonly used by applications to intercept
+	 * activation of entries.
 	 * The default bindings for this signal are all forms of the Enter key.
 	 */
 	void addOnActivate(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -850,6 +851,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_entry_get_inner_border has been deprecated since version 3.4 and should not be used in newly-written code. Use the standard border and padding CSS properties (through
+	 *  objects like GtkStyleContext and GtkCssProvider); the value returned by
+	 *  this function is ignored by GtkEntry.
 	 * This function returns the entry's "inner-border" property. See
 	 * gtk_entry_set_inner_border() for more information.
 	 * Since 2.10
@@ -905,6 +910,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_entry_set_inner_border has been deprecated since version 3.4 and should not be used in newly-written code. Use the standard border and padding CSS properties (through
+	 *  objects like GtkStyleContext and GtkCssProvider); the value set with
+	 *  this function is ignored by GtkEntry.
 	 * Sets entry's inner-border property to border, or clears it if NULL
 	 * is passed. The inner-border is the area around the entry's text, but
 	 * inside its frame.

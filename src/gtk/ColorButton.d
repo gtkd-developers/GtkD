@@ -31,11 +31,12 @@
  * ctorStrct=
  * clss    = ColorButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- ColorChooserIF
  * prefixes:
  * 	- gtk_color_button_
  * omit structs:
@@ -46,6 +47,8 @@
  * 	- glib.Str
  * 	- gdk.Color
  * 	- gdk.RGBA
+ * 	- gio.ColorChooserIF
+ * 	- gio.ColorChooserT
  * structWrap:
  * 	- GdkColor* -> Color
  * 	- GdkRGBA* -> RGBA
@@ -67,6 +70,8 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gdk.Color;
 private import gdk.RGBA;
+private import gio.ColorChooserIF;
+private import gio.ColorChooserT;
 
 
 
@@ -78,7 +83,7 @@ private import gtk.Button;
  * color an allows to open a color selection dialog to change the color.
  * It is suitable widget for selecting a color in a preference dialog.
  */
-public class ColorButton : Button
+public class ColorButton : Button, ColorChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -123,6 +128,9 @@ public class ColorButton : Button
 		super.setStruct(obj);
 		gtkColorButton = cast(GtkColorButton*)obj;
 	}
+	
+	// add the ColorChooser capabilities
+	mixin ColorChooserT!(GtkColorButton);
 	
 	/**
 	 */
@@ -187,6 +195,8 @@ public class ColorButton : Button
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_new_with_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_button_new_with_rgba() instead.
 	 * Creates a new color button.
 	 * Since 2.4
 	 * Params:
@@ -222,6 +232,8 @@ public class ColorButton : Button
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_set_color is deprecated and should not be used in newly-written code. Use gtk_color_chooser_set_rgba() instead.
 	 * Sets the current color to be color.
 	 * Since 2.4
 	 * Params:
@@ -229,11 +241,13 @@ public class ColorButton : Button
 	 */
 	public void setColor(Color color)
 	{
-		// void gtk_color_button_set_color (GtkColorButton *color_button,  const GdkColor *color);
+		// void gtk_color_button_set_color (GtkColorButton *button,  const GdkColor *color);
 		gtk_color_button_set_color(gtkColorButton, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_get_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_get_rgba() instead.
 	 * Sets color to be the current color in the GtkColorButton widget.
 	 * Since 2.4
 	 * Params:
@@ -241,11 +255,13 @@ public class ColorButton : Button
 	 */
 	public void getColor(Color color)
 	{
-		// void gtk_color_button_get_color (GtkColorButton *color_button,  GdkColor *color);
+		// void gtk_color_button_get_color (GtkColorButton *button,  GdkColor *color);
 		gtk_color_button_get_color(gtkColorButton, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_set_alpha has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_set_rgba() instead.
 	 * Sets the current opacity to be alpha.
 	 * Since 2.4
 	 * Params:
@@ -253,22 +269,26 @@ public class ColorButton : Button
 	 */
 	public void setAlpha(ushort alpha)
 	{
-		// void gtk_color_button_set_alpha (GtkColorButton *color_button,  guint16 alpha);
+		// void gtk_color_button_set_alpha (GtkColorButton *button,  guint16 alpha);
 		gtk_color_button_set_alpha(gtkColorButton, alpha);
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_get_alpha has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_get_rgba() instead.
 	 * Returns the current alpha value.
 	 * Since 2.4
 	 * Returns: an integer between 0 and 65535
 	 */
 	public ushort getAlpha()
 	{
-		// guint16 gtk_color_button_get_alpha (GtkColorButton *color_button);
+		// guint16 gtk_color_button_get_alpha (GtkColorButton *button);
 		return gtk_color_button_get_alpha(gtkColorButton);
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_set_rgba has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_set_rgba() instead.
 	 * Sets the current color to be rgba.
 	 * Params:
 	 * rgba = a GdkRGBA to set the current color with
@@ -276,11 +296,13 @@ public class ColorButton : Button
 	 */
 	public void setRgba(RGBA rgba)
 	{
-		// void gtk_color_button_set_rgba (GtkColorButton *color_button,  const GdkRGBA *rgba);
+		// void gtk_color_button_set_rgba (GtkColorButton *button,  const GdkRGBA *rgba);
 		gtk_color_button_set_rgba(gtkColorButton, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_get_rgba has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_get_rgba() instead.
 	 * Sets rgba to be the current color in the GtkColorButton widget.
 	 * Params:
 	 * rgba = a GdkRGBA to fill in with the current color. [out]
@@ -288,11 +310,13 @@ public class ColorButton : Button
 	 */
 	public void getRgba(RGBA rgba)
 	{
-		// void gtk_color_button_get_rgba (GtkColorButton *color_button,  GdkRGBA *rgba);
+		// void gtk_color_button_get_rgba (GtkColorButton *button,  GdkRGBA *rgba);
 		gtk_color_button_get_rgba(gtkColorButton, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_set_use_alpha has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_set_use_alpha() instead.
 	 * Sets whether or not the color button should use the alpha channel.
 	 * Since 2.4
 	 * Params:
@@ -300,18 +324,20 @@ public class ColorButton : Button
 	 */
 	public void setUseAlpha(int useAlpha)
 	{
-		// void gtk_color_button_set_use_alpha (GtkColorButton *color_button,  gboolean use_alpha);
+		// void gtk_color_button_set_use_alpha (GtkColorButton *button,  gboolean use_alpha);
 		gtk_color_button_set_use_alpha(gtkColorButton, useAlpha);
 	}
 	
 	/**
+	 * Warning
+	 * gtk_color_button_get_use_alpha has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_get_use_alpha() instead.
 	 * Does the color selection dialog use the alpha channel ?
 	 * Since 2.4
 	 * Returns: TRUE if the color sample uses alpha channel, FALSE if not
 	 */
 	public int getUseAlpha()
 	{
-		// gboolean gtk_color_button_get_use_alpha (GtkColorButton *color_button);
+		// gboolean gtk_color_button_get_use_alpha (GtkColorButton *button);
 		return gtk_color_button_get_use_alpha(gtkColorButton);
 	}
 	
@@ -323,7 +349,7 @@ public class ColorButton : Button
 	 */
 	public void setTitle(string title)
 	{
-		// void gtk_color_button_set_title (GtkColorButton *color_button,  const gchar *title);
+		// void gtk_color_button_set_title (GtkColorButton *button,  const gchar *title);
 		gtk_color_button_set_title(gtkColorButton, Str.toStringz(title));
 	}
 	
@@ -334,7 +360,7 @@ public class ColorButton : Button
 	 */
 	public string getTitle()
 	{
-		// const gchar * gtk_color_button_get_title (GtkColorButton *color_button);
+		// const gchar * gtk_color_button_get_title (GtkColorButton *button);
 		return Str.toString(gtk_color_button_get_title(gtkColorButton));
 	}
 }

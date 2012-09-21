@@ -621,6 +621,8 @@ alias GtkStateType StateType;
  * Widget is inconsistent.
  * GTK_STATE_FLAG_FOCUSED
  * Widget has the keyboard focus.
+ * GTK_STATE_FLAG_BACKDROP
+ * Widget is in a background toplevel window.
  */
 public enum GtkStateFlags
 {
@@ -630,7 +632,8 @@ public enum GtkStateFlags
 	SELECTED = 1 << 2,
 	INSENSITIVE = 1 << 3,
 	INCONSISTENT = 1 << 4,
-	FOCUSED = 1 << 5
+	FOCUSED = 1 << 5,
+	BACKDROP = 1 << 6
 }
 alias GtkStateFlags StateFlags;
 
@@ -795,18 +798,36 @@ alias GtkJunctionSides JunctionSides;
  * GTK_BORDER_STYLE_NONE
  * No visible border
  * GTK_BORDER_STYLE_SOLID
- * A solid border
+ * A single line segment
  * GTK_BORDER_STYLE_INSET
- * An inset border
+ * Looks as if the content is sunken into the canvas
  * GTK_BORDER_STYLE_OUTSET
- * An outset border
+ * Looks as if the content is coming out of the canvas
+ * GTK_BORDER_STYLE_HIDDEN
+ * Same as GTK_BORDER_STYLE_NONE
+ * GTK_BORDER_STYLE_DOTTED
+ * A series of round dots
+ * GTK_BORDER_STYLE_DASHED
+ * A series of square-ended dashes
+ * GTK_BORDER_STYLE_DOUBLE
+ * Two parrallel lines with some space between them
+ * GTK_BORDER_STYLE_GROOVE
+ * Looks as if it were carved in the canvas
+ * GTK_BORDER_STYLE_RIDGE
+ * Looks as if it were coming out of the canvas
  */
 public enum GtkBorderStyle
 {
 	NONE,
 	SOLID,
 	INSET,
-	OUTSET
+	OUTSET,
+	HIDDEN,
+	DOTTED,
+	DASHED,
+	DOUBLE,
+	GROOVE,
+	RIDGE
 }
 alias GtkBorderStyle BorderStyle;
 
@@ -820,6 +841,8 @@ alias GtkBorderStyle BorderStyle;
  * Region is the first one within a set.
  * GTK_REGION_LAST
  * Region is the last one within a set.
+ * GTK_REGION_ONLY
+ * Region is the only one within a set.
  * GTK_REGION_SORTED
  * Region is part of a sorted area.
  */
@@ -829,6 +852,7 @@ public enum GtkRegionFlags
 	ODD = 1 << 1,
 	FIRST = 1 << 2,
 	LAST = 1 << 3,
+	ONLY = 1 << 4,
 	SORTED = 1 << 5
 }
 alias GtkRegionFlags RegionFlags;
@@ -844,6 +868,36 @@ public enum GtkCssProviderError
 }
 alias GtkCssProviderError CssProviderError;
 
+/**
+ * The different types of sections indicate parts of a CSS document as
+ * parsed by GTK's CSS parser. They are oriented towards the CSS grammar
+ * CSS grammer,
+ * but may contain extensions.
+ * More types might be added in the future as the parser incorporates
+ * more features.
+ * GTK_CSS_SECTION_DOCUMENT
+ * The section describes a complete document.
+ *  This section time is the only one where gtk_css_section_get_parent()
+ *  might return NULL.
+ * GTK_CSS_SECTION_IMPORT
+ * The section defines an import rule.
+ * GTK_CSS_SECTION_COLOR_DEFINITION
+ * The section defines a color. This
+ *  is a GTK extension to CSS.
+ * GTK_CSS_SECTION_BINDING_SET
+ * The section defines a binding set. This
+ *  is a GTK extension to CSS.
+ * GTK_CSS_SECTION_RULESET
+ * The section defines a CSS ruleset.
+ * GTK_CSS_SECTION_SELECTOR
+ * The section defines a CSS selector.
+ * GTK_CSS_SECTION_DECLARATION
+ * The section defines the declaration of
+ *  a CSS variable.
+ * GTK_CSS_SECTION_VALUE
+ * The section defines the value of a CSS declaration.
+ * Since 3.2
+ */
 public enum GtkCssSectionType
 {
 	DOCUMENT,
@@ -1439,6 +1493,10 @@ alias GtkIconViewDropPosition IconViewDropPosition;
  * The cell is in a sorted row
  * GTK_CELL_RENDERER_FOCUSED
  * The cell is in the focus row.
+ * GTK_CELL_RENDERER_EXPANDABLE
+ * The cell is in a row that can be expanded. Since 3.4
+ * GTK_CELL_RENDERER_EXPANDED
+ * The cell is in a row that is expanded. Since 3.4
  */
 public enum GtkCellRendererState
 {
@@ -1447,7 +1505,9 @@ public enum GtkCellRendererState
 	INSENSITIVE = 1 << 2,
 	/+* this flag means the cell is inn the sort column/row +/
 	SORTED = 1 << 3,
-	FOCUSED = 1 << 4
+	FOCUSED = 1 << 4,
+	EXPANDABLE = 1 << 5,
+	EXPANDED = 1 << 6
 }
 alias GtkCellRendererState CellRendererState;
 
@@ -2229,6 +2289,30 @@ public enum GtkBuilderError
 }
 alias GtkBuilderError BuilderError;
 
+/**
+ * Types of user actions that may be blocked by gtk_application_inhibit().
+ * GTK_APPLICATION_INHIBIT_LOGOUT
+ * Inhibit ending the user session
+ *  by logging out or by shutting down the computer
+ * GTK_APPLICATION_INHIBIT_SWITCH
+ * Inhibit user switching
+ * GTK_APPLICATION_INHIBIT_SUSPEND
+ * Inhibit suspending the
+ *  session or computer
+ * GTK_APPLICATION_INHIBIT_IDLE
+ * Inhibit the session being
+ *  marked as idle (and possibly locked)
+ * Since 3.4
+ */
+public enum GtkApplicationInhibitFlags
+{
+	LOGOUT = (1 << 0),
+	SWITCH = (1 << 1),
+	SUSPEND = (1 << 2),
+	IDLE = (1 << 3)
+}
+alias GtkApplicationInhibitFlags ApplicationInhibitFlags;
+
 
 struct GtkWidgetClass
 {
@@ -2595,6 +2679,18 @@ public struct GtkBindingArg
 }
 
 
+public struct GtkSelectionData
+{
+	GdkAtom selection;
+	GdkAtom target;
+	GdkAtom type;
+	int format;
+	char *data;
+	int length;
+	GdkDisplay *display;
+}
+
+
 /**
  * Main Gtk struct.
  * A GtkTargetEntry structure represents a single type of
@@ -2659,12 +2755,9 @@ public struct GtkCssProvider{}
 
 
 /**
- * The different types of sections indicate parts of a CSS document as
- * parsed by GTK's CSS parser. They are oriented towards the CSS grammar
- * CSS grammer,
- * but may contain extensions.
- * More types might be added in the future as the parser incorporates
- * more features.
+ * Defines a part of a CSS document. Because sections are nested into
+ * one another, you can use gtk_css_section_get_parent() to get the
+ * containing region.
  * Since 3.2
  */
 public struct GtkCssSection{}
@@ -2700,7 +2793,7 @@ public struct GtkStyleProvider{}
 public struct GtkStyleProperties
 {
 	GObject parentObject;
-	void* priv;
+	GtkStylePropertiesPrivate *priv;
 }
 
 
@@ -3070,16 +3163,12 @@ public struct GtkScale{}
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkHScale is deprecated and should not be used in newly-written code.
  */
 public struct GtkHScale{}
 
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkVScale is deprecated and should not be used in newly-written code.
  * The GtkVScale struct contains private data only, and
  * should be accessed using the functions below.
  */
@@ -3178,11 +3267,9 @@ public struct GtkTextAppearance
 	//uint insideSelection : 1;
 	//uint isText : 1;
 	GdkRGBA *rgba[2];
-	static if (int.sizeof == ptrdiff_t.sizeof)
-	{
-		/+* unusable, just for ABI compat +/
-		uint padding[2];
-	}
+	/+* unusable, just for ABI compat +/
+	uint padding[2];
+}
 }
 
 
@@ -3546,8 +3633,8 @@ public struct GtkCellRendererClass
 	/+* Signals +/
 	extern(C) void  function(GtkCellRenderer *cell)  editingCanceled;
 	extern(C) void  function(GtkCellRenderer *cell,GtkCellEditable *editable,char *path)  editingStarted;
+	GtkCellRendererClassPrivate *priv;
 	/+* Padding for future expansion +/
-	extern(C) void  function() _GtkReserved1;
 	extern(C) void  function() _GtkReserved2;
 	extern(C) void  function() _GtkReserved3;
 	extern(C) void  function() _GtkReserved4;
@@ -3958,19 +4045,37 @@ public struct GtkActivatableIface
 /**
  * Main Gtk struct.
  */
+public struct GtkColorChooser{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkColorButton{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkColorSelectionDialog{}
+public struct GtkColorChooserWidget{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkColorChooserDialog{}
 
 
 /**
  * Main Gtk struct.
  */
 public struct GtkColorSelection{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkColorSelectionDialog{}
 
 
 /**
@@ -4061,16 +4166,12 @@ public struct GtkFontChooserDialog{}
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkFontSelection is deprecated and should not be used in newly-written code.
  */
 public struct GtkFontSelection{}
 
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkFontSelectionDialog is deprecated and should not be used in newly-written code.
  */
 public struct GtkFontSelectionDialog{}
 
@@ -4101,16 +4202,12 @@ public struct GtkBox{}
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkHBox is deprecated and should not be used in newly-written code.
  */
 public struct GtkHBox{}
 
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkVBox is deprecated and should not be used in newly-written code.
  */
 public struct GtkVBox{}
 
@@ -4123,16 +4220,12 @@ public struct GtkButtonBox{}
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkHButtonBox is deprecated and should not be used in newly-written code.
  */
 public struct GtkHButtonBox{}
 
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkVButtonBox is deprecated and should not be used in newly-written code.
  */
 public struct GtkVButtonBox{}
 
@@ -4151,16 +4244,12 @@ public struct GtkPaned{}
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkHPaned is deprecated and should not be used in newly-written code.
  */
 public struct GtkHPaned{}
 
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkVPaned is deprecated and should not be used in newly-written code.
  */
 public struct GtkVPaned{}
 
@@ -4215,16 +4304,12 @@ public struct GtkSeparator{}
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkHSeparator is deprecated and should not be used in newly-written code.
  */
 public struct GtkHSeparator{}
 
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkVSeparator is deprecated and should not be used in newly-written code.
  * The GtkVSeparator struct contains private data only, and
  * should be accessed using the functions below.
  */
@@ -4239,16 +4324,12 @@ public struct GtkScrollbar{}
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkHScrollbar is deprecated and should not be used in newly-written code.
  */
 public struct GtkHScrollbar{}
 
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkVScrollbar is deprecated and should not be used in newly-written code.
  * The GtkVScrollbar struct contains private data and should be accessed
  * using the functions below.
  */
@@ -4412,18 +4493,6 @@ public struct GtkAccessible{}
  * Main Gtk struct.
  */
 public struct GtkWidget{}
-
-
-public struct GtkSelectionData
-{
-	GdkAtom selection;
-	GdkAtom target;
-	GdkAtom type;
-	int format;
-	char *data;
-	int length;
-	GdkDisplay *display;
-}
 
 
 public struct GtkWidgetAuxInfo
@@ -4866,6 +4935,41 @@ public struct GtkBuilder{}
  * Main Gtk struct.
  */
 public struct GtkApplication{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkApplicationWindow{}
+
+
+/**
+ * Main Gtk struct.
+ * An opaque pointer type.
+ */
+public struct GtkActionable{}
+
+
+/**
+ * The interface vtable for GtkActionable.
+ * GTypeInterface g_iface;
+ * get_action_name ()
+ * virtual pointer for gtk_actionable_get_action_name()
+ * set_action_name ()
+ * virtual pointer for gtk_actionable_set_action_name()
+ * get_action_target_value ()
+ * virtual pointer for gtk_actionable_get_action_target_value()
+ * set_action_target_value ()
+ * virtual pointer for gtk_actionable_set_action_target_value
+ */
+public struct GtkActionableInterface
+{
+	GTypeInterface gIface;
+	extern(C) char *  function(GtkActionable *actionable)  getActionName;
+	extern(C) void  function(GtkActionable *actionable,char *actionName)  setActionName;
+	extern(C) GVariant *  function(GtkActionable *actionable)  getActionTargetValue;
+	extern(C) void  function(GtkActionable *actionable,GVariant *actionTargetValue)  setActionTargetValue;
+}
 
 
 /*
@@ -5593,12 +5697,13 @@ public alias extern(C) void  function (GdkScreen*, GdkColor*, int) GtkColorSelec
 /*
  * The type of function that is used with custom filters, see
  * gtk_file_filter_add_custom().
- * Returns: TRUE if the file should be displayed
  * filter_info :
  * a GtkFileFilterInfo that is filled according
  * to the needed flags passed to gtk_file_filter_add_custom()
  * data :
  * user data passed to gtk_file_filter_add_custom(). [closure]
+ * Returns :
+ * TRUE if the file should be displayed
  */
 // gboolean (*GtkFileFilterFunc) (const GtkFileFilterInfo *filter_info,  gpointer data);
 public alias extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilterFunc;

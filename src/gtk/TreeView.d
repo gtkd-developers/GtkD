@@ -1072,6 +1072,16 @@ public class TreeView : Container, ScrollableIF
 	}
 	
 	/**
+	 * Queries the number of columns in the given tree_view.
+	 * Returns: The number of columns in the tree_view Since 3.4
+	 */
+	public uint getNColumns()
+	{
+		// guint gtk_tree_view_get_n_columns (GtkTreeView *tree_view);
+		return gtk_tree_view_get_n_columns(gtkTreeView);
+	}
+	
+	/**
 	 * Gets the GtkTreeViewColumn at the given position in the tree_view.
 	 * Params:
 	 * n = The position of the column, counting from 0.
@@ -1978,7 +1988,7 @@ public class TreeView : Container, ScrollableIF
 	}
 	
 	/**
-	 * Enables of disables the hover selection mode of tree_view.
+	 * Enables or disables the hover selection mode of tree_view.
 	 * Hover selection makes the selected row follow the pointer.
 	 * Currently, this works only for the selection modes
 	 * GTK_SELECTION_SINGLE and GTK_SELECTION_BROWSE.
@@ -2004,7 +2014,7 @@ public class TreeView : Container, ScrollableIF
 	}
 	
 	/**
-	 * Enables of disables the hover expansion mode of tree_view.
+	 * Enables or disables the hover expansion mode of tree_view.
 	 * Hover expansion makes rows expand or collapse if the pointer
 	 * moves over them.
 	 * Since 2.6
@@ -2018,6 +2028,8 @@ public class TreeView : Container, ScrollableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tree_view_set_destroy_count_func has been deprecated since version 3.4 and should not be used in newly-written code. Accessibility does not need the function anymore.
 	 * This function should almost never be used. It is meant for private use by
 	 * ATK for determining the number of visible children that are removed when the
 	 * user collapses a row, or a row is deleted.

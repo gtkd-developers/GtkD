@@ -413,8 +413,6 @@ public class Style : ObjectG
 	}
 	
 	/**
-	 * Warning
-	 * gtk_style_get_style_property is deprecated and should not be used in newly-written code.
 	 * Queries the value of a style property corresponding to a
 	 * widget class is in the given style.
 	 * Since 2.16
@@ -431,8 +429,6 @@ public class Style : ObjectG
 	}
 	
 	/**
-	 * Warning
-	 * gtk_style_get_valist is deprecated and should not be used in newly-written code.
 	 * Non-vararg variant of gtk_style_get().
 	 * Used primarily by language bindings.
 	 * Since 2.16
@@ -898,6 +894,8 @@ public class Style : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_draw_insertion_cursor has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_render_insertion_cursor() instead.
 	 * Draws a text caret on cr at location. This is not a style function
 	 * but merely a convenience function for drawing the standard cursor shape.
 	 * Params:

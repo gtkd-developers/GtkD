@@ -70,7 +70,6 @@ private import gtk.SizeGroup;
  * Description
  * The GtkToolShell interface allows container widgets to provide additional
  * information when embedding GtkToolItem widgets.
- * see_also: GtkToolbar, GtkToolItem
  */
 public interface ToolShellIF
 {

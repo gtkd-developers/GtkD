@@ -36,6 +36,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- ActionableIF
  * 	- ActivatableIF
  * prefixes:
  * 	- gtk_switch_
@@ -44,6 +45,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gio.ActionableIF
+ * 	- gio.ActionableT
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
@@ -62,6 +65,8 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gio.ActionableIF;
+private import gio.ActionableT;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
 
@@ -75,7 +80,7 @@ private import gtk.Widget;
  * which state should be active by clicking the empty area, or by dragging the
  * handle.
  */
-public class Switch : Widget, ActivatableIF
+public class Switch : Widget, ActionableIF, ActivatableIF
 {
 	
 	/** the main Gtk struct */
@@ -120,6 +125,9 @@ public class Switch : Widget, ActivatableIF
 		super.setStruct(obj);
 		gtkSwitch = cast(GtkSwitch*)obj;
 	}
+	
+	// add the Actionable capabilities
+	mixin ActionableT!(GtkSwitch);
 	
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkSwitch);

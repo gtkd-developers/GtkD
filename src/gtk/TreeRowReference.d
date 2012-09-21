@@ -225,8 +225,8 @@ public class TreeRowReference
 	/**
 	 * Creates a row reference based on path.
 	 * This reference will keep pointing to the node pointed to
-	 * by path, so long as it exists. It listens to all signals
-	 * emitted by model, and updates its path appropriately. If
+	 * by path, so long as it exists. Any changes that occur on model are
+	 * propagated, and the path is updated appropriately. If
 	 * path isn't a valid path in model, then NULL is returned.
 	 * Params:
 	 * model = a GtkTreeModel
