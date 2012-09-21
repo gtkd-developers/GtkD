@@ -226,7 +226,7 @@ public class ContentType
 	 * Since 2.18
 	 * Params:
 	 * root = the root of the tree to guess a type for
-	 * Returns: an NULL-terminated array of zero or more content types, or NULL. Free with g_strfreev(). [transfer full][array zero-terminated=1]
+	 * Returns: an NULL-terminated array of zero or more content types. Free with g_strfreev(). [transfer full][array zero-terminated=1]
 	 */
 	public static string[] guessForTree(File root)
 	{
@@ -237,8 +237,7 @@ public class ContentType
 	/**
 	 * Gets a list of strings containing all the registered content types
 	 * known to the system. The list and its data should be freed using
-	 * g_list_foreach (list, g_free, NULL);
-	 * g_list_free (list);
+	 * g_list_free_full (list, g_free);
 	 * Returns: GList of the registered content types. [element-type utf8][transfer full]
 	 */
 	public static ListG gContentTypesGetRegistered()

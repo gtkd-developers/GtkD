@@ -111,6 +111,11 @@ public template DBusInterfaceT(TStruct)
 	
 	/**
 	 * Gets the GDBusObject that interface_ belongs to, if any.
+	 * Warning
+	 * It is not safe to use the returned object if interface_
+	 * or the returned object is being used from other threads. See
+	 * g_dbus_interface_dup_object() for a thread-safe
+	 * alternative.
 	 * Since 2.30
 	 * Returns: A GDBusObject or NULL. The returned reference belongs to interface_ and should not be freed. [transfer none]
 	 */
@@ -126,11 +131,27 @@ public template DBusInterfaceT(TStruct)
 	}
 	
 	/**
+	 * Gets the GDBusObject that interface_ belongs to, if any.
+	 * Since 2.32
+	 * Returns: A GDBusObject or NULL. The returned reference should be freed with g_object_unref(). [transfer full]
+	 */
+	public DBusObjectIF dupObject()
+	{
+		// GDBusObject * g_dbus_interface_dup_object (GDBusInterface *interface_);
+		auto p = g_dbus_interface_dup_object(getDBusInterfaceTStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new DBusObject(cast(GDBusObject*) p);
+	}
+	
+	/**
 	 * Sets the GDBusObject for interface_ to object.
 	 * Note that interface_ will hold a weak reference to object.
 	 * Since 2.30
 	 * Params:
-	 * object = A GDBusObject or NULL.
+	 * object = A GDBusObject or NULL. [allow-none]
 	 */
 	public void setObject(DBusObjectIF object)
 	{

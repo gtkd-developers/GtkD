@@ -241,6 +241,9 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * local cache has already been updated when this signal fires. Note
 	 * that both changed_properties and invalidated_properties are
 	 * guaranteed to never be NULL (either may be empty though).
+	 * If the proxy has the flag
+	 * G_DBUS_PROXY_FLAGS_GET_INVALIDATED_PROPERTIES set, then
+	 * invalidated_properties will always be empty.
 	 * This signal corresponds to the
 	 * PropertiesChanged D-Bus signal on the
 	 * org.freedesktop.DBus.Properties interface.
@@ -325,7 +328,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * name = A bus name (well-known or unique) or NULL if connection is not a message bus connection. [allow-none]
 	 * objectPath = An object path.
 	 * interfaceName = A D-Bus interface name.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = Callback function to invoke when the proxy is ready.
 	 * userData = User data to pass to callback.
 	 */
@@ -392,7 +395,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * name = A bus name (well-known or unique).
 	 * objectPath = An object path.
 	 * interfaceName = A D-Bus interface name.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = Callback function to invoke when the proxy is ready.
 	 * userData = User data to pass to callback.
 	 */
@@ -414,7 +417,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * name = A bus name (well-known or unique).
 	 * objectPath = An object path.
 	 * interfaceName = A D-Bus interface name.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -654,9 +657,9 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * flags = Flags from the GDBusCallFlags enumeration.
 	 * timeoutMsec = The timeout in milliseconds (with G_MAXINT meaning
 	 * "infinite") or -1 to use the proxy default timeout.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied or NULL if you don't
-	 * care about the result of the method invocation.
+	 * care about the result of the method invocation. [allow-none]
 	 * userData = The data to pass to callback.
 	 */
 	public void call(string methodName, Variant parameters, GDBusCallFlags flags, int timeoutMsec, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -712,7 +715,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * flags = Flags from the GDBusCallFlags enumeration.
 	 * timeoutMsec = The timeout in milliseconds (with G_MAXINT meaning
 	 * "infinite") or -1 to use the proxy default timeout.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
 	 * Throws: GException on failure.
 	 */
@@ -746,9 +749,9 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * timeoutMsec = The timeout in milliseconds (with G_MAXINT meaning
 	 * "infinite") or -1 to use the proxy default timeout.
 	 * fdList = A GUnixFDList or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied or NULL if you don't
-	 * care about the result of the method invocation.
+	 * care about the result of the method invocation. [allow-none]
 	 * userData = The data to pass to callback.
 	 */
 	public void callWithUnixFdList(string methodName, Variant parameters, GDBusCallFlags flags, int timeoutMsec, UnixFDList fdList, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -761,7 +764,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * Finishes an operation started with g_dbus_proxy_call_with_unix_fd_list().
 	 * Since 2.30
 	 * Params:
-	 * outFdList = Return location for a GUnixFDList or NULL. [out]
+	 * outFdList = Return location for a GUnixFDList or NULL. [out][allow-none]
 	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_proxy_call_with_unix_fd_list().
 	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
 	 * Throws: GException on failure.
@@ -799,8 +802,8 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * timeoutMsec = The timeout in milliseconds (with G_MAXINT meaning
 	 * "infinite") or -1 to use the proxy default timeout.
 	 * fdList = A GUnixFDList or NULL. [allow-none]
-	 * outFdList = Return location for a GUnixFDList or NULL. [out]
-	 * cancellable = A GCancellable or NULL.
+	 * outFdList = Return location for a GUnixFDList or NULL. [out][allow-none]
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
 	 * Throws: GException on failure.
 	 */

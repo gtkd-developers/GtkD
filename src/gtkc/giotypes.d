@@ -27,14 +27,6 @@ module gtkc.giotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
-struct GIOModuleScope {}
-
-public enum GIOModuleScopeFlags
-{
-	NONE,
-	BLOCK_DUPLICATES
-}
-alias GIOModuleScopeFlags IOModuleScopeFlags;
 /**
  * Flags used when querying a GFileInfo.
  * G_FILE_QUERY_INFO_NONE
@@ -251,11 +243,11 @@ alias GFileType FileType;
  * G_IO_ERROR_FAILED
  * Generic error condition for when any operation fails.
  * G_IO_ERROR_NOT_FOUND
- * File not found error.
+ * File not found.
  * G_IO_ERROR_EXISTS
- * File already exists error.
+ * File already exists.
  * G_IO_ERROR_IS_DIRECTORY
- * File is a directory error.
+ * File is a directory.
  * G_IO_ERROR_NOT_DIRECTORY
  * File is not a directory.
  * G_IO_ERROR_NOT_EMPTY
@@ -904,6 +896,51 @@ public enum GCredentialsType
 alias GCredentialsType CredentialsType;
 
 /**
+ * Describes an event occurring on a GSocketClient. See the
+ * "event" signal for more details.
+ * Additional values may be added to this type in the future.
+ * G_SOCKET_CLIENT_RESOLVING
+ * The client is doing a DNS lookup.
+ * G_SOCKET_CLIENT_RESOLVED
+ * The client has completed a DNS lookup.
+ * G_SOCKET_CLIENT_CONNECTING
+ * The client is connecting to a remote
+ *  host (either a proxy or the destination server).
+ * G_SOCKET_CLIENT_CONNECTED
+ * The client has connected to a remote
+ *  host.
+ * G_SOCKET_CLIENT_PROXY_NEGOTIATING
+ * The client is negotiating
+ *  with a proxy to connect to the destination server.
+ * G_SOCKET_CLIENT_PROXY_NEGOTIATED
+ * The client has negotiated
+ *  with the proxy server.
+ * G_SOCKET_CLIENT_TLS_HANDSHAKING
+ * The client is performing a
+ *  TLS handshake.
+ * G_SOCKET_CLIENT_TLS_HANDSHAKED
+ * The client has performed a
+ *  TLS handshake.
+ * G_SOCKET_CLIENT_COMPLETE
+ * The client is done with a particular
+ *  GSocketConnectable.
+ * Since 2.32
+ */
+public enum GSocketClientEvent
+{
+	RESOLVING,
+	RESOLVED,
+	CONNECTING,
+	CONNECTED,
+	PROXY_NEGOTIATING,
+	PROXY_NEGOTIATED,
+	TLS_HANDSHAKING,
+	TLS_HANDSHAKED,
+	COMPLETE
+}
+alias GSocketClientEvent SocketClientEvent;
+
+/**
  * An error code used with G_TLS_ERROR in a GError returned from a
  * TLS-related routine.
  * G_TLS_ERROR_UNAVAILABLE
@@ -1034,8 +1071,9 @@ public enum GTlsDatabaseVerifyFlags
 alias GTlsDatabaseVerifyFlags TlsDatabaseVerifyFlags;
 
 /**
- * Flags for g_tls_database_lookup_handle(), g_tls_database_lookup_issuer(),
- * and g_tls_database_lookup_issued().
+ * Flags for g_tls_database_lookup_certificate_handle(),
+ * g_tls_database_lookup_certificate_issuer(),
+ * and g_tls_database_lookup_certificates_issued_by().
  * G_TLS_DATABASE_LOOKUP_NONE
  * No lookup flags
  * G_TLS_DATABASE_LOOKUP_KEYPAIR
@@ -1607,6 +1645,8 @@ alias GDBusInterfaceSkeletonFlags DBusInterfaceSkeletonFlags;
  * If not set and the proxy if for a well-known name,
  * then request the bus to launch an owner for the name if no-one owns the name. This flag can
  * only be used in proxies for well-known names.
+ * G_DBUS_PROXY_FLAGS_GET_INVALIDATED_PROPERTIES
+ * If set, the property value for any invalidated property will be (asynchronously) retrieved upon receiving the PropertiesChanged D-Bus signal and the property will not cause emission of the "g-properties-changed" signal. When the value is received the "g-properties-changed" signal is emitted for the property along with the retrieved value. Since 2.32.
  * Since 2.26
  */
 public enum GDBusProxyFlags
@@ -1614,7 +1654,8 @@ public enum GDBusProxyFlags
 	NONE = 0,
 	DO_NOT_LOAD_PROPERTIES = (1<<0),
 	DO_NOT_CONNECT_SIGNALS = (1<<1),
-	DO_NOT_AUTO_START = (1<<2)
+	DO_NOT_AUTO_START = (1<<2),
+	GET_INVALIDATED_PROPERTIES = (1<<3)
 }
 alias GDBusProxyFlags DBusProxyFlags;
 
@@ -1670,6 +1711,50 @@ public enum GSettingsBindFlags
 alias GSettingsBindFlags SettingsBindFlags;
 
 /**
+ * GResourceFlags give information about a particular file inside a resource
+ * bundle.
+ * G_RESOURCE_FLAGS_NONE
+ * No flags set.
+ * G_RESOURCE_FLAGS_COMPRESSED
+ * The file is compressed.
+ * Since 2.32
+ */
+public enum GResourceFlags
+{
+	NONE = 0,
+	COMPRESSED = (1<<0)
+}
+alias GResourceFlags ResourceFlags;
+
+/**
+ * GResourceLookupFlags determine how resource path lookups are handled.
+ * G_RESOURCE_LOOKUP_FLAGS_NONE
+ * No flags set.
+ * Since 2.32
+ */
+public enum GResourceLookupFlags
+{
+	NONE = 0
+}
+alias GResourceLookupFlags ResourceLookupFlags;
+
+/**
+ * An error code used with G_RESOURCE_ERROR in a GError returned
+ * from a GResource routine.
+ * G_RESOURCE_ERROR_NOT_FOUND
+ * no file was found at the requested path
+ * G_RESOURCE_ERROR_INTERNAL
+ * unknown error
+ * Since 2.32
+ */
+public enum GResourceError
+{
+	NOT_FOUND,
+	INTERNAL
+}
+alias GResourceError ResourceError;
+
+/**
  * Flags used to define the behaviour of a GApplication.
  * G_APPLICATION_FLAGS_NONE
  * Default
@@ -1701,10 +1786,11 @@ alias GSettingsBindFlags SettingsBindFlags;
  *  g_application_command_line_getenv().
  * G_APPLICATION_NON_UNIQUE
  * Make no attempts to do any of the typical
- *  single-instance application negotiation. The application neither
- *  attempts to become the owner of the application ID nor does it
- *  check if an existing owner already exists. Everything occurs in
- *  the local process. Since: 2.30.
+ *  single-instance application negotiation, even if the application
+ *  ID is given. The application neither attempts to become the
+ *  owner of the application ID nor does it check if an existing
+ *  owner already exists. Everything occurs in the local process.
+ *  Since: 2.30.
  * Since 2.28
  */
 public enum GApplicationFlags
@@ -1718,6 +1804,23 @@ public enum GApplicationFlags
 	G_APPLICATION_NON_UNIQUE = (1 << 5)
 }
 alias GApplicationFlags ApplicationFlags;
+
+/**
+ * Flags for use with g_io_module_scope_new().
+ * G_IO_MODULE_SCOPE_NONE
+ * No module scan flags
+ * G_IO_MODULE_SCOPE_BLOCK_DUPLICATES
+ * When using this scope to load or
+ *  scan modules, automatically block a modules which has the same base
+ *  basename as previously loaded module.
+ * Since 2.30
+ */
+public enum GIOModuleScopeFlags
+{
+	NONE,
+	BLOCK_DUPLICATES
+}
+alias GIOModuleScopeFlags IOModuleScopeFlags;
 
 
 /**
@@ -2231,7 +2334,7 @@ public struct GSeekable{}
  * seek ()
  * Seeks to a location within a stream.
  * can_truncate ()
- * Chekcs if truncation is suppored by the stream.
+ * Checks if truncation is supported by the stream.
  * truncate_fn ()
  * Truncates a stream.
  */
@@ -2641,6 +2744,8 @@ public struct GVolume{}
  * Starts ejecting a GVolume using a GMountOperation. Since 2.22.
  * eject_with_operation_finish ()
  * Finishes an eject operation using a GMountOperation. Since 2.22.
+ * get_sort_key ()
+ * Gets a key used for sorting GVolume instance or NULL if no such key exists. Since 2.32.
  */
 public struct GVolumeIface
 {
@@ -2666,6 +2771,7 @@ public struct GVolumeIface
 	extern(C) GFile *  function(GVolume *volume)  getActivationRoot;
 	extern(C) void  function(GVolume *volume,GMountUnmountFlags flags,GMountOperation *mountOperation,GCancellable *cancellable,GAsyncReadyCallback callback,void* userData)  ejectWithOperation;
 	extern(C) int  function(GVolume *volume,GAsyncResult *result,GError **error)  ejectWithOperationFinish;
+	extern(C) char *  function(GVolume *volume)  getSortKey;
 }
 
 
@@ -2717,11 +2823,11 @@ public struct GMount{}
  * See g_mount_guess_content_type() for more information on content
  * type guessing. This operation was added in 2.18.
  * guess_content_type_finish ()
- * Finishes a contenet type guessing operation. Added in 2.18.
+ * Finishes a content type guessing operation. Added in 2.18.
  * guess_content_type_sync ()
  * Synchronous variant of guess_content_type. Added in 2.18
  * pre_unmount ()
- * The pre_unmout signal that is emitted when the GMount will soon be emitted. If the recipient is somehow holding the mount open by keeping an open file on it it should close the file.
+ * The ::pre-unmount signal that is emitted when the GMount will soon be emitted. If the recipient is somehow holding the mount open by keeping an open file on it it should close the file.
  * unmount_with_operation ()
  * Starts unmounting a GMount using a GMountOperation. Since 2.22.
  * unmount_with_operation_finish ()
@@ -2732,6 +2838,8 @@ public struct GMount{}
  * Finishes an eject operation using a GMountOperation. Since 2.22.
  * get_default_location ()
  * Gets a GFile indication a start location that can be use as the entry point for this mount. Since 2.24.
+ * get_sort_key ()
+ * Gets a key used for sorting GMount instance or NULL if no such key exists. Since 2.32.
  */
 public struct GMountIface
 {
@@ -2764,6 +2872,7 @@ public struct GMountIface
 	extern(C) void  function(GMount *mount,GMountUnmountFlags flags,GMountOperation *mountOperation,GCancellable *cancellable,GAsyncReadyCallback callback,void* userData)  ejectWithOperation;
 	extern(C) int  function(GMount *mount,GAsyncResult *result,GError **error)  ejectWithOperationFinish;
 	extern(C) GFile *  function(GMount *mount)  getDefaultLocation;
+	extern(C) char *  function(GMount *mount)  getSortKey;
 }
 
 
@@ -2838,6 +2947,8 @@ public struct GDrive{}
  * Starts ejecting a GDrive using a GMountOperation. Since 2.22.
  * eject_with_operation_finish ()
  * Finishes an eject operation using a GMountOperation. Since 2.22.
+ * get_sort_key ()
+ * Gets a key used for sorting GDrive instances or NULL if no such key exists. Since 2.32.
  */
 public struct GDriveIface
 {
@@ -2874,6 +2985,7 @@ public struct GDriveIface
 	extern(C) void  function(GDrive *drive)  stopButton;
 	extern(C) void  function(GDrive *drive,GMountUnmountFlags flags,GMountOperation *mountOperation,GCancellable *cancellable,GAsyncReadyCallback callback,void* userData)  ejectWithOperation;
 	extern(C) int  function(GDrive *drive,GAsyncResult *result,GError **error)  ejectWithOperationFinish;
+	extern(C) char *  function(GDrive *drive)  getSortKey;
 }
 
 
@@ -3098,6 +3210,18 @@ public struct GInetAddress{}
 
 /**
  * Main Gtk struct.
+ * A combination of an IPv4 or IPv6 base address and a length,
+ * representing a range of IP addresses.
+ * Since 2.32
+ */
+public struct GInetAddressMask
+{
+	GObject parentInstance;
+}
+
+
+/**
+ * Main Gtk struct.
  * A socket endpoint address, corresponding to struct sockaddr
  * or one of its subtypes.
  */
@@ -3184,10 +3308,11 @@ public struct GProxy{}
  * Connect to proxy server and wrap (if required) the connection
  * to handle payload.
  * connect_async ()
- * Same has connect() but asynchronous.
+ * Same as connect() but asynchronous.
  * connect_finish ()
  * Returns the result of connect_async()
  * supports_hostname ()
+ * Returns whether the proxy supports hostname lookups.
  * Since 2.26
  */
 public struct GProxyInterface
@@ -3217,7 +3342,7 @@ public struct GProxyAddressClass
 
 /**
  * Main Gtk struct.
- * A helper class for network servers to listen for and accept connections.
+ * A helper class for network clients to make connections.
  * Since 2.22
  */
 public struct GSocketClient{}
@@ -3239,7 +3364,7 @@ public struct GUnixConnection{}
 
 /**
  * Main Gtk struct.
- * A GSocketConnection for UNIX domain socket connections.
+ * A GSocketConnection for TCP/IP connections.
  * Since 2.22
  */
 public struct GTcpConnection{}
@@ -3247,6 +3372,8 @@ public struct GTcpConnection{}
 
 /**
  * Main Gtk struct.
+ * A helper class for network servers to listen for and accept connections.
+ * Since 2.22
  */
 public struct GSocketListener{}
 
@@ -3262,11 +3389,30 @@ public struct GSocketService{}
 
 /**
  * Main Gtk struct.
- * A helper class for handling accepting incomming connections in the
+ * A helper class for handling accepting incoming connections in the
  * glib mainloop and handling them in a thread.
  * Since 2.22
  */
 public struct GThreadedSocketService{}
+
+
+/**
+ * Main Gtk struct.
+ * GNetworkMonitor monitors the status of network connections and
+ * indicates when a possibly-user-visible change has occurred.
+ * Since 2.32
+ */
+public struct GNetworkMonitor{}
+
+
+public struct GNetworkMonitorInterface
+{
+	GTypeInterface gIface;
+	extern(C) void  function(GNetworkMonitor *monitor,int available) networkChanged;
+	extern(C) int  function(GNetworkMonitor *monitor,GSocketConnectable *connectable,GCancellable *cancellable,GError **error) canReach;
+	extern(C) void  function(GNetworkMonitor *monitor,GSocketConnectable *connectable,GCancellable *cancellable,GAsyncReadyCallback callback,void* userData) canReachAsync;
+	extern(C) int  function(GNetworkMonitor *monitor,GAsyncResult *result,GError **error) canReachFinish;
+}
 
 
 /**
@@ -3279,8 +3425,8 @@ public struct GTlsCertificate{}
 
 /**
  * Main Gtk struct.
- * TLS connection. This is an abstract type that will be subclassed by
- * a TLS-library-specific subtype.
+ * Abstract base class for the backend-specific GTlsClientConnection
+ * and GTlsServerConnection types.
  * Since 2.28
  */
 public struct GTlsConnection{}
@@ -3787,6 +3933,8 @@ public struct GDBusInterface{}
  * Gets the enclosing GDBusObject. See g_dbus_interface_get_object().
  * set_object ()
  * Sets the enclosing GDBusObject. See g_dbus_interface_set_object().
+ * dup_object ()
+ * Gets a reference to the enclosing GDBusObject. See g_dbus_interface_dup_object(). Added in 2.32.
  * Since 2.30
  */
 public struct GDBusInterfaceIface
@@ -3796,6 +3944,7 @@ public struct GDBusInterfaceIface
 	extern(C) GDBusInterfaceInfo * function(GDBusInterface *iface) getInfo;
 	extern(C) GDBusObject * function(GDBusInterface *iface) getObject;
 	extern(C) void  function(GDBusInterface *iface,GDBusObject *object) setObject;
+	extern(C) GDBusObject * function(GDBusInterface *iface) dupObject;
 }
 
 
@@ -4066,6 +4215,29 @@ public struct GSettingsBackendClass
 
 
 /**
+ * This is an opaque structure type. You may not access it directly.
+ * Since 2.32
+ */
+public struct GSettingsSchemaSource{}
+
+
+/**
+ * Main Gtk struct.
+ * This is an opaque structure type. You may not access it directly.
+ * Since 2.32
+ */
+public struct GSettingsSchema{}
+
+
+/**
+ * Main Gtk struct.
+ * A resource bundle.
+ * Since 2.32
+ */
+public struct GResource{}
+
+
+/**
  * Main Gtk struct.
  * GPermission is an opaque data structure and can only be accessed
  * using the following functions.
@@ -4083,27 +4255,182 @@ public struct GSimplePermission{}
 
 /**
  * Main Gtk struct.
+ * Since 2.28
+ */
+public struct GApplication{}
+
+
+/**
+ * Virtual function table for GApplication.
+ * startup ()
+ * invoked on the primary instance immediately after registration
+ * activate ()
+ * invoked on the primary instance when an activation occurs
+ * open ()
+ * invoked on the primary instance when there are files to open
+ * command_line ()
+ * invoked on the primary instance when a command-line is
+ * not handled locally
+ * local_command_line ()
+ * invoked (locally) when the process has been invoked
+ * via commandline execution (as opposed to, say, D-Bus activation - which
+ * is not currently supported by GApplication). The virtual function has
+ * the chance to inspect (and possibly replace) the list of command line
+ * arguments. See g_application_run() for more information.
+ * before_emit ()
+ * invoked on the primary instance before 'activate', 'open',
+ * 'command-line' or any action invocation, gets the 'platform data' from
+ * the calling instance
+ * after_emit ()
+ * invoked on the primary instance after 'activate', 'open',
+ * 'command-line' or any action invocation, gets the 'platform data' from
+ * the calling instance
+ * add_platform_data ()
+ * invoked (locally) to add 'platform data' to be sent to
+ * the primary instance when activating, opening or invoking actions
+ * quit_mainloop ()
+ * Used to be invoked on the primary instance when the use
+ * count of the application drops to zero (and after any inactivity
+ * timeout, if requested). Not used anymore since 2.32
+ * run_mainloop ()
+ * Used to be invoked on the primary instance from
+ * g_application_run() if the use-count is non-zero. Since 2.32,
+ * GApplication is iterating the main context directly and is not
+ * using run_mainloop anymore
+ * shutdown ()
+ * invoked only on the registered primary instance immediately
+ * after the main loop terminates
+ * Since 2.28
+ */
+public struct GApplicationClass
+{
+	/+* signals +/
+	extern(C) void  function(GApplication *application)  startup;
+	extern(C) void  function(GApplication *application)  activate;
+	extern(C) void  function(GApplication *application,GFile **files,int nFiles,char *hint)  open;
+	extern(C) int  function(GApplication *application,GApplicationCommandLine *commandLine)  commandLine;
+	/+* vfuncs +/
+	extern(C) int  function(GApplication *application,char ***arguments,int *exitStatus)  localCommandLine;
+	extern(C) void  function(GApplication *application,GVariant *platformData)  beforeEmit;
+	extern(C) void  function(GApplication *application,GVariant *platformData)  afterEmit;
+	extern(C) void  function(GApplication *application,GVariantBuilder *builder)  addPlatformData;
+	extern(C) void  function(GApplication *application)  quitMainloop;
+	extern(C) void  function(GApplication *application)  runMainloop;
+	extern(C) void  function(GApplication *application)  shutdown;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GApplicationCommandLine{}
+
+
+/**
+ * The GApplicationCommandLineClass structure
+ * contains private data only
+ * Since 2.28
+ */
+public struct GApplicationCommandLineClass{}
+
+
+/**
+ * Main Gtk struct.
  */
 public struct GActionGroup{}
 
 
 /**
- * Main Gtk struct.
- * The GSimpleActionGroup structure contains private data and should only be accessed using the provided API.
+ * The virtual function table for GActionGroup.
+ * GTypeInterface g_iface;
+ * has_action ()
+ * the virtual function pointer for g_action_group_has_action()
+ * list_actions ()
+ * the virtual function pointer for g_action_group_list_actions()
+ * get_action_enabled ()
+ * the virtual function pointer for g_action_group_get_action_enabled()
+ * get_action_parameter_type ()
+ * the virtual function pointer for g_action_group_get_action_parameter_type()
+ * get_action_state_type ()
+ * the virtual function pointer for g_action_group_get_action_state_type()
+ * get_action_state_hint ()
+ * the virtual function pointer for g_action_group_get_action_state_hint()
+ * get_action_state ()
+ * the virtual function pointer for g_action_group_get_action_state()
+ * change_action_state ()
+ * the virtual function pointer for g_action_group_change_action_state()
+ * activate_action ()
+ * the virtual function pointer for g_action_group_activate_action()
+ * action_added ()
+ * the class closure for the "action-added" signal
+ * action_removed ()
+ * the class closure for the "action-removed" signal
+ * action_enabled_changed ()
+ * the class closure for the "action-enabled-changed" signal
+ * action_state_changed ()
+ * the class closure for the "action-enabled-changed" signal
+ * query_action ()
+ * the virtual function pointer for g_action_group_query_action()
  * Since 2.28
  */
-public struct GSimpleActionGroup{}
+public struct GActionGroupInterface
+{
+	GTypeInterface gIface;
+	/+* virtual functions +/
+	extern(C) int  function(GActionGroup *actionGroup,char *actionName)  hasAction;
+	extern(C) char **  function(GActionGroup *actionGroup)  listActions;
+	extern(C) int  function(GActionGroup *actionGroup,char *actionName)  getActionEnabled;
+	extern(C) GVariantType *  function(GActionGroup *actionGroup,char *actionName)  getActionParameterType;
+	extern(C) GVariantType *  function(GActionGroup *actionGroup,char *actionName)  getActionStateType;
+	extern(C) GVariant *  function(GActionGroup *actionGroup,char *actionName)  getActionStateHint;
+	extern(C) GVariant *  function(GActionGroup *actionGroup,char *actionName)  getActionState;
+	extern(C) void  function(GActionGroup *actionGroup,char *actionName,GVariant *value)  changeActionState;
+	extern(C) void  function(GActionGroup *actionGroup,char *actionName,GVariant *parameter)  activateAction;
+	/+* signals +/
+	extern(C) void  function(GActionGroup *actionGroup,char *actionName)  actionAdded;
+	extern(C) void  function(GActionGroup *actionGroup,char *actionName)  actionRemoved;
+	extern(C) void  function(GActionGroup *actionGroup,char *actionName,int enabled)  actionEnabledChanged;
+	extern(C) void  function(GActionGroup *actionGroup,char *actionName,GVariant *state)  actionStateChanged;
+	/+* more virtual functions +/
+	extern(C) int  function(GActionGroup *actionGroup,char *actionName,int *enabled,GVariantType **parameterType,GVariantType **stateType,GVariant **stateHint,GVariant **state)  queryAction;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GActionMap{}
+
+
+/**
+ * The virtual function table for GActionMap.
+ * GTypeInterface g_iface;
+ * lookup_action ()
+ * the virtual function pointer for g_action_map_lookup_action()
+ * add_action ()
+ * the virtual function pointer for g_action_map_add_action()
+ * remove_action ()
+ * the virtual function pointer for g_action_map_remove_action()
+ * Since 2.32
+ */
+public struct GActionMapInterface
+{
+	GTypeInterface gIface;
+	extern(C) GAction *  function(GActionMap *actionMap,char *actionName)  lookupAction;
+	extern(C) void  function(GActionMap *actionMap,GAction *action)  addAction;
+	extern(C) void  function(GActionMap *actionMap,char *actionName)  removeAction;
+}
 
 
 /**
  * This struct defines a single action. It is for use with
- * g_simple_action_group_add_entries().
+ * g_action_map_add_action_entries().
  * The order of the items in the structure are intended to reflect
  * frequency of use. It is permissible to use an incomplete initialiser
  * in order to leave some of the later values as NULL. All values
  * after name are optional. Additional optional fields may be added in
  * the future.
- * See g_simple_action_group_add_entries() for an example.
+ * See g_action_map_add_action_entries() for an example.
  * const gchar *name;
  * the name of the action
  * activate ()
@@ -4134,8 +4461,53 @@ public struct GActionEntry
 
 /**
  * Main Gtk struct.
+ * The GSimpleActionGroup structure contains private data and should only be accessed using the provided API.
+ * Since 2.28
+ */
+public struct GSimpleActionGroup{}
+
+
+/**
+ * Main Gtk struct.
  */
 public struct GAction{}
+
+
+/**
+ * The virtual function table for GAction.
+ * GTypeInterface g_iface;
+ * get_name ()
+ * the virtual function pointer for g_action_get_name()
+ * get_parameter_type ()
+ * the virtual function pointer for g_action_get_parameter_type()
+ * get_state_type ()
+ * the virtual function pointer for g_action_get_state_type()
+ * get_state_hint ()
+ * the virtual function pointer for g_action_get_state_hint()
+ * get_enabled ()
+ * the virtual function pointer for g_action_get_enabled()
+ * get_state ()
+ * the virtual function pointer for g_action_get_state()
+ * change_state ()
+ * the virtual function pointer for g_action_change_state()
+ * activate ()
+ * the virtual function pointer for g_action_activate(). Note that GAction does not have an
+ * 'activate' signal but that implementations of it may have one.
+ * Since 2.28
+ */
+public struct GActionInterface
+{
+	GTypeInterface gIface;
+	/+* virtual functions +/
+	extern(C) char *  function(GAction *action)  getName;
+	extern(C) GVariantType *  function(GAction *action)  getParameterType;
+	extern(C) GVariantType *  function(GAction *action)  getStateType;
+	extern(C) GVariant *  function(GAction *action)  getStateHint;
+	extern(C) int  function(GAction *action)  getEnabled;
+	extern(C) GVariant *  function(GAction *action)  getState;
+	extern(C) void  function(GAction *action,GVariant *value)  changeState;
+	extern(C) void  function(GAction *action,GVariant *parameter)  activate;
+}
 
 
 /**
@@ -4146,80 +4518,79 @@ public struct GSimpleAction{}
 
 /**
  * Main Gtk struct.
- * The GApplication structure contains private
- * data and should only be accessed using the provided API
- * Since 2.28
  */
-public struct GApplication{}
+public struct GRemoteActionGroup{}
 
 
 /**
- * startup ()
- * invoked on the primary instance immediately after registration
- * activate ()
- * invoked on the primary instance when an activation occurs
- * open ()
- * invoked on the primary instance when there are files to open
- * command_line ()
- * invoked on the primary instance when a command-line is
- * not handled locally
- * local_command_line ()
- * invoked (locally) when the process has been invoked
- * via commandline execution. The virtual function has the chance to
- * inspect (and possibly replace) the list of command line arguments.
- * See g_application_run() for more information.
- * before_emit ()
- * invoked on the primary instance before 'activate', 'open',
- * 'command-line' or any action invocation, gets the 'platform data' from
- * the calling instance
- * after_emit ()
- * invoked on the primary instance after 'activate', 'open',
- * 'command-line' or any action invocation, gets the 'platform data' from
- * the calling instance
- * add_platform_data ()
- * invoked (locally) to add 'platform data' to be sent to
- * the primary instance when activating, opening or invoking actions
- * quit_mainloop ()
- * invoked on the primary instance when the use count of the
- * application drops to zero (and after any inactivity timeout, if
- * requested)
- * run_mainloop ()
- * invoked on the primary instance from g_application_run()
- * if the use-count is non-zero
- * Since 2.28
+ * The virtual function table for GRemoteActionGroup.
+ * GTypeInterface g_iface;
+ * activate_action_full ()
+ * the virtual function pointer for g_remote_action_group_activate_action_full()
+ * change_action_state_full ()
+ * the virtual function pointer for g_remote_action_group_change_action_state_full()
+ * Since 2.32
  */
-public struct GApplicationClass
+public struct GRemoteActionGroupInterface
 {
-	/+* signals +/
-	extern(C) void  function(GApplication *application)  startup;
-	extern(C) void  function(GApplication *application)  activate;
-	extern(C) void  function(GApplication *application,GFile **files,int nFiles,char *hint)  open;
-	extern(C) int  function(GApplication *application,GApplicationCommandLine *commandLine)  commandLine;
-	/+* vfuncs +/
-	extern(C) int  function(GApplication *application,char ***arguments,int *exitStatus)  localCommandLine;
-	extern(C) void  function(GApplication *application,GVariant *platformData)  beforeEmit;
-	extern(C) void  function(GApplication *application,GVariant *platformData)  afterEmit;
-	extern(C) void  function(GApplication *application,GVariantBuilder *builder)  addPlatformData;
-	extern(C) void  function(GApplication *application)  quitMainloop;
-	extern(C) void  function(GApplication *application)  runMainloop;
+	GTypeInterface gIface;
+	extern(C) void  function(GRemoteActionGroup *remote,char *actionName,GVariant *parameter,GVariant *platformData)  activateActionFull;
+	extern(C) void  function(GRemoteActionGroup *remote,char *actionName,GVariant *value,GVariant *platformData)  changeActionStateFull;
 }
 
 
 /**
  * Main Gtk struct.
- * The GApplicationCommandLine structure contains private
- * data and should only be accessed using the provided API
- * Since 2.28
  */
-public struct GApplicationCommandLine{}
+public struct GDBusActionGroup{}
 
 
 /**
- * The GApplicationCommandLineClass structure contains
- * private data only
- * Since 2.28
+ * Main Gtk struct.
+ * GMenuModel is an opaque structure type. You must access it using the
+ * functions below.
+ * Since 2.32
  */
-public struct GApplicationCommandLineClass{}
+public struct GMenuModel{}
+
+
+/**
+ * GMenuAttributeIter is an opaque structure type. You must access it
+ * using the functions below.
+ * Since 2.32
+ */
+public struct GMenuAttributeIter{}
+
+
+/**
+ * GMenuLinkIter is an opaque structure type. You must access it using
+ * the functions below.
+ * Since 2.32
+ */
+public struct GMenuLinkIter{}
+
+
+/**
+ * Main Gtk struct.
+ * GMenu is an opaque structure type. You must access it using the
+ * functions below.
+ * Since 2.32
+ */
+public struct GMenu{}
+
+
+/**
+ * GMenuItem is an opaque structure type. You must access it using the
+ * functions below.
+ * Since 2.32
+ */
+public struct GMenuItem{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GDBusMenuModel{}
 
 
 /**
@@ -4234,6 +4605,16 @@ public struct GVfs{}
  * Opaque module base class for extending GIO.
  */
 public struct GIOModule{}
+
+
+/**
+ * Represents a scope for loading IO modules. A scope can be used for blocking
+ * duplicate modules, or blocking a module you don't want to load.
+ * The scope can be used with g_io_modules_load_all_in_directory_with_scope()
+ * or g_io_modules_scan_all_in_directory_with_scope().
+ * Since 2.30
+ */
+public struct GIOModuleScope{}
 
 
 /**
@@ -4305,9 +4686,6 @@ public alias extern(C) void  function (GObject*, GAsyncResult*, void*) GAsyncRea
 
 /*
  * I/O Job function.
- * Note that depending on whether threads are available, the
- * GIOScheduler may run jobs in separate threads or in an idle
- * in the mainloop.
  * Long-running jobs should periodically check the cancellable
  * to see if they have been cancelled.
  * job :
@@ -4366,8 +4744,6 @@ public alias extern(C) void*  function (void*, gsize) GReallocFunc;
 public alias extern(C) int  function (GObject*, void*) GPollableSourceFunc;
 
 /*
- * Warning
- * GDesktopAppLaunchCallback is deprecated and should not be used in newly-written code.
  * During invocation, g_desktop_app_info_launch_uris_as_manager() may
  * create one or more child processes. This callback is invoked once
  * for each, providing the process ID.
@@ -4748,10 +5124,6 @@ public alias extern(C) GVariant *  function (GValue*, GVariantType*, void*) GSet
  * user data that was specified when the binding was created
  * Returns :
  * TRUE if the conversion succeeded, FALSE in case of an error
- * Property Details
- * The "backend" property
- *  "backend" GSettingsBackend* : Read / Write / Construct Only
- * The GSettingsBackend for this settings object.
  */
 // gboolean (*GSettingsBindGetMapping) (GValue *value,  GVariant *variant,  gpointer user_data);
 public alias extern(C) int  function (GValue*, GVariant*, void*) GSettingsBindGetMapping;

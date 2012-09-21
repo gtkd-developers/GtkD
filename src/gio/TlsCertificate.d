@@ -157,7 +157,9 @@ public class TlsCertificate : ObjectG
 	/**
 	 * Creates a new GTlsCertificate from the PEM-encoded data in data.
 	 * If data includes both a certificate and a private key, then the
-	 * returned certificate will include the private key data as well.
+	 * returned certificate will include the private key data as well. (See
+	 * the "private-key-pem" property for information about
+	 * supported formats.)
 	 * If data includes multiple certificates, only the first one will be
 	 * parsed.
 	 * Since 2.28
@@ -189,7 +191,7 @@ public class TlsCertificate : ObjectG
 	 * Creates a GTlsCertificate from the PEM-encoded data in cert_file
 	 * and key_file. If either file cannot be read or parsed, the
 	 * function will return NULL and set error. Otherwise, this behaves
-	 * like g_tls_certificate_new().
+	 * like g_tls_certificate_new_from_pem().
 	 * Since 2.28
 	 * Params:
 	 * certFile = file containing a PEM-encoded certificate to import

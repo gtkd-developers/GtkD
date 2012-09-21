@@ -123,7 +123,7 @@ public template ConverterT(TStruct)
 	 * inbuf = the buffer
 	 * containing the data to convert. [array length=inbuf_size][element-type guint8]
 	 * outbuf = a buffer to write converted data in.
-	 * flags = a GConvertFlags controlling the conversion details
+	 * flags = a GConverterFlags controlling the conversion details
 	 * bytesRead = will be set to the number of bytes read from inbuf on success. [out]
 	 * bytesWritten = will be set to the number of bytes written to outbuf on success. [out]
 	 * Returns: a GConverterResult, G_CONVERTER_ERROR on error.

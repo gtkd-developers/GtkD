@@ -95,11 +95,11 @@ public class DBusNames
 	 * busType = The type of bus to own a name on.
 	 * name = The well-known name to own.
 	 * flags = A set of flags from the GBusNameOwnerFlags enumeration.
-	 * busAcquiredHandler = Handler to invoke when connected to the bus of type bus_type or NULL.
-	 * nameAcquiredHandler = Handler to invoke when name is acquired or NULL.
-	 * nameLostHandler = Handler to invoke when name is lost or NULL.
+	 * busAcquiredHandler = Handler to invoke when connected to the bus of type bus_type or NULL. [allow-none]
+	 * nameAcquiredHandler = Handler to invoke when name is acquired or NULL. [allow-none]
+	 * nameLostHandler = Handler to invoke when name is lost or NULL. [allow-none]
 	 * userData = User data to pass to handlers.
-	 * userDataFreeFunc = Function for freeing user_data or NULL.
+	 * userDataFreeFunc = Function for freeing user_data or NULL. [allow-none]
 	 * Returns: An identifier (never 0) that an be used with g_bus_unown_name() to stop owning the name.
 	 */
 	public static uint ownName(GBusType busType, string name, GBusNameOwnerFlags flags, GBusAcquiredCallback busAcquiredHandler, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, void* userData, GDestroyNotify userDataFreeFunc)
@@ -116,10 +116,10 @@ public class DBusNames
 	 * connection = A GDBusConnection.
 	 * name = The well-known name to own.
 	 * flags = A set of flags from the GBusNameOwnerFlags enumeration.
-	 * nameAcquiredHandler = Handler to invoke when name is acquired or NULL.
-	 * nameLostHandler = Handler to invoke when name is lost or NULL.
+	 * nameAcquiredHandler = Handler to invoke when name is acquired or NULL. [allow-none]
+	 * nameLostHandler = Handler to invoke when name is lost or NULL. [allow-none]
 	 * userData = User data to pass to handlers.
-	 * userDataFreeFunc = Function for freeing user_data or NULL.
+	 * userDataFreeFunc = Function for freeing user_data or NULL. [allow-none]
 	 * Returns: An identifier (never 0) that an be used with g_bus_unown_name() to stop owning the name.
 	 */
 	public static uint ownNameOnConnection(DBusConnection connection, string name, GBusNameOwnerFlags flags, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, void* userData, GDestroyNotify userDataFreeFunc)
@@ -211,10 +211,10 @@ public class DBusNames
 	 * busType = The type of bus to watch a name on.
 	 * name = The name (well-known or unique) to watch.
 	 * flags = Flags from the GBusNameWatcherFlags enumeration.
-	 * nameAppearedHandler = Handler to invoke when name is known to exist or NULL.
-	 * nameVanishedHandler = Handler to invoke when name is known to not exist or NULL.
+	 * nameAppearedHandler = Handler to invoke when name is known to exist or NULL. [allow-none]
+	 * nameVanishedHandler = Handler to invoke when name is known to not exist or NULL. [allow-none]
 	 * userData = User data to pass to handlers.
-	 * userDataFreeFunc = Function for freeing user_data or NULL.
+	 * userDataFreeFunc = Function for freeing user_data or NULL. [allow-none]
 	 * Returns: An identifier (never 0) that an be used with g_bus_unwatch_name() to stop watching the name.
 	 */
 	public static uint watchName(GBusType busType, string name, GBusNameWatcherFlags flags, GBusNameAppearedCallback nameAppearedHandler, GBusNameVanishedCallback nameVanishedHandler, void* userData, GDestroyNotify userDataFreeFunc)
@@ -231,10 +231,10 @@ public class DBusNames
 	 * connection = A GDBusConnection.
 	 * name = The name (well-known or unique) to watch.
 	 * flags = Flags from the GBusNameWatcherFlags enumeration.
-	 * nameAppearedHandler = Handler to invoke when name is known to exist or NULL.
-	 * nameVanishedHandler = Handler to invoke when name is known to not exist or NULL.
+	 * nameAppearedHandler = Handler to invoke when name is known to exist or NULL. [allow-none]
+	 * nameVanishedHandler = Handler to invoke when name is known to not exist or NULL. [allow-none]
 	 * userData = User data to pass to handlers.
-	 * userDataFreeFunc = Function for freeing user_data or NULL.
+	 * userDataFreeFunc = Function for freeing user_data or NULL. [allow-none]
 	 * Returns: An identifier (never 0) that an be used with g_bus_unwatch_name() to stop watching the name.
 	 */
 	public static uint watchNameOnConnection(DBusConnection connection, string name, GBusNameWatcherFlags flags, GBusNameAppearedCallback nameAppearedHandler, GBusNameVanishedCallback nameVanishedHandler, void* userData, GDestroyNotify userDataFreeFunc)

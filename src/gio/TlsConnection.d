@@ -494,7 +494,7 @@ public class TlsConnection : IOStream
 	 * handshake.
 	 * Since 2.28
 	 * Params:
-	 * cancellable = a GCancellable, or NULL
+	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * Returns: success or failure
 	 * Throws: GException on failure.
 	 */
@@ -520,7 +520,7 @@ public class TlsConnection : IOStream
 	 * Params:
 	 * ioPriority = the I/O priority
 	 * of the request.
-	 * cancellable = a GCancellable, or NULL
+	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * callback = callback to call when the handshake is complete
 	 * userData = the data to pass to the callback function
 	 */

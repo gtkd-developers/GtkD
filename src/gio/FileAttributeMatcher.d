@@ -164,6 +164,29 @@ public class FileAttributeMatcher : Boxed
 	}
 	
 	/**
+	 * Subtracts all attributes of subtract from matcher and returns
+	 * a matcher that supports those attributes.
+	 * Note that currently it is not possible to remove a single
+	 * attribute when the matcher matches the whole namespace - or remove
+	 * a namespace or attribute when the matcher matches everything. This
+	 * is a limitation of the current implementation, but may be fixed
+	 * in the future.
+	 * Params:
+	 * subtract = The matcher to subtract
+	 * Returns: A file attribute matcher matching all attributes of matcher that are not matched by subtract
+	 */
+	public FileAttributeMatcher subtract(FileAttributeMatcher subtract)
+	{
+		// GFileAttributeMatcher * g_file_attribute_matcher_subtract  (GFileAttributeMatcher *matcher,  GFileAttributeMatcher *subtract);
+		auto p = g_file_attribute_matcher_subtract(gFileAttributeMatcher, (subtract is null) ? null : subtract.getFileAttributeMatcherStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new FileAttributeMatcher(cast(GFileAttributeMatcher*) p);
+	}
+	
+	/**
 	 * Unreferences matcher. If the reference count falls below 1,
 	 * the matcher is automatically freed.
 	 */
@@ -224,5 +247,19 @@ public class FileAttributeMatcher : Boxed
 	{
 		// const char * g_file_attribute_matcher_enumerate_next  (GFileAttributeMatcher *matcher);
 		return Str.toString(g_file_attribute_matcher_enumerate_next(gFileAttributeMatcher));
+	}
+	
+	/**
+	 * Prints what the matcher is matching against. The format will be
+	 * equal to the format passed to g_file_attribute_matcher_new().
+	 * The output however, might not be identical, as the matcher may
+	 * decide to use a different order or omit needless parts.
+	 * Since 2.32
+	 * Returns: a string describing the attributes the matcher matches against or NULL if matcher was NULL.
+	 */
+	public string toString()
+	{
+		// char * g_file_attribute_matcher_to_string (GFileAttributeMatcher *matcher);
+		return Str.toString(g_file_attribute_matcher_to_string(gFileAttributeMatcher));
 	}
 }

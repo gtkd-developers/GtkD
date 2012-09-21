@@ -231,4 +231,43 @@ public class TlsInteraction : ObjectG
 		
 		return p;
 	}
+	
+	/**
+	 * Invoke the interaction to ask the user for a password. It invokes this
+	 * interaction in the main loop, specifically the GMainContext returned by
+	 * g_main_context_get_thread_default() when the interaction is created. This
+	 * is called by called by GTlsConnection or GTlsDatabase to ask the user
+	 * for a password.
+	 * Derived subclasses usually implement a password prompt, although they may
+	 * also choose to provide a password from elsewhere. The password value will
+	 * be filled in and then callback will be called. Alternatively the user may
+	 * abort this password request, which will usually abort the TLS connection.
+	 * The implementation can either be a synchronous (eg: modal dialog) or an
+	 * asynchronous one (eg: modeless dialog). This function will take care of
+	 * calling which ever one correctly.
+	 * If the interaction is cancelled by the cancellation object, or by the
+	 * user then G_TLS_INTERACTION_FAILED will be returned with an error that
+	 * contains a G_IO_ERROR_CANCELLED error code. Certain implementations may
+	 * not support immediate cancellation.
+	 * Since 2.30
+	 * Params:
+	 * password = a GTlsPassword object
+	 * cancellable = an optional GCancellable cancellation object
+	 * Returns: The status of the ask password interaction.
+	 * Throws: GException on failure.
+	 */
+	public GTlsInteractionResult invokeAskPassword(TlsPassword password, Cancellable cancellable)
+	{
+		// GTlsInteractionResult g_tls_interaction_invoke_ask_password  (GTlsInteraction *interaction,  GTlsPassword *password,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_tls_interaction_invoke_ask_password(gTlsInteraction, (password is null) ? null : password.getTlsPasswordStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
 }

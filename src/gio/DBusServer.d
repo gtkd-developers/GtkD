@@ -215,8 +215,8 @@ public class DBusServer : ObjectG, InitableIF
 	 * address = A D-Bus address.
 	 * flags = Flags from the GDBusServerFlags enumeration.
 	 * guid = A D-Bus GUID.
-	 * observer = A GDBusAuthObserver or NULL.
-	 * cancellable = A GCancellable or NULL.
+	 * observer = A GDBusAuthObserver or NULL. [allow-none]
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

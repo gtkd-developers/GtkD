@@ -105,8 +105,8 @@ public import gio.MountOperation;
  * mounted. Note, when porting from GnomeVFS, GVolume is the moral
  * equivalent of GnomeVFSDrive.
  * Mounting a GVolume instance is an asynchronous operation. For more
- * information about asynchronous operations, see GAsyncReady and
- * GSimpleAsyncReady. To mount a GVolume, first call
+ * information about asynchronous operations, see GAsyncResult and
+ * GSimpleAsyncResult. To mount a GVolume, first call
  * g_volume_mount() with (at least) the GVolume instance, optionally
  * a GMountOperation object and a GAsyncReadyCallback.
  * Typically, one will only want to pass NULL for the
@@ -134,7 +134,7 @@ public import gio.MountOperation;
  * when the gvfs hal volume monitor is in use. Other volume monitors
  * will generally be able to provide the G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE
  * identifier, which can be used to obtain a hal device by means of
- * libhal_manger_find_device_string_match().
+ * libhal_manager_find_device_string_match().
  */
 public template VolumeT(TStruct)
 {
@@ -448,7 +448,7 @@ public template VolumeT(TStruct)
 	 * mountOperation = a GMountOperation or NULL to
 	 * avoid user interaction. [allow-none]
 	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback, or NULL.
+	 * callback = a GAsyncReadyCallback, or NULL. [allow-none]
 	 * userData = user data passed to callback.
 	 */
 	public void ejectWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -483,7 +483,7 @@ public template VolumeT(TStruct)
 	
 	/**
 	 * Gets the kinds of identifiers
-	 * that volume has. Use g_volume_get_identifer() to obtain
+	 * that volume has. Use g_volume_get_identifier() to obtain
 	 * the identifiers themselves.
 	 * Returns: a NULL-terminated array of strings containing kinds of identifiers. Use g_strfreev() to free. [array zero-terminated=1][transfer full]
 	 */
@@ -499,11 +499,27 @@ public template VolumeT(TStruct)
 	 * for more information about volume identifiers.
 	 * Params:
 	 * kind = the kind of identifier to return
-	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GVolume doesn't have this kind of identifier Signal Details The "changed" signal void user_function (GVolume *arg0, gpointer user_data) : Run Last Emitted when the volume has been changed.
+	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GVolume doesn't have this kind of identifier
 	 */
 	public string getIdentifier(string kind)
 	{
 		// char * g_volume_get_identifier (GVolume *volume,  const char *kind);
 		return Str.toString(g_volume_get_identifier(getVolumeTStruct(), Str.toStringz(kind)));
+	}
+	
+	/**
+	 * Gets the sort key for volume, if any.
+	 * Since 2.32
+	 * Signal Details
+	 * The "changed" signal
+	 * void user_function (GVolume *arg0,
+	 *  gpointer user_data) : Run Last
+	 * Emitted when the volume has been changed.
+	 * Returns: Sorting key for volume or NULL if no such key is available.
+	 */
+	public string getSortKey()
+	{
+		// const gchar * g_volume_get_sort_key (GVolume *volume);
+		return Str.toString(g_volume_get_sort_key(getVolumeTStruct()));
 	}
 }

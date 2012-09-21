@@ -198,9 +198,9 @@ public class DBusAuthObserver : ObjectG
 	 * Since 2.26
 	 * Params:
 	 * stream = A GIOStream for the GDBusConnection.
-	 * credentials = Credentials received from the peer or NULL.
+	 * credentials = Credentials received from the peer or NULL. [allow-none]
 	 * stream = A GIOStream for the GDBusConnection.
-	 * credentials = Credentials received from the peer or NULL.
+	 * credentials = Credentials received from the peer or NULL. [allow-none]
 	 * Returns: TRUE if the peer is authorized, FALSE if not.Returns: TRUE if the peer is authorized, FALSE if not.
 	 */
 	public int authorizeAuthenticatedPeer(IOStream stream, Credentials credentials)

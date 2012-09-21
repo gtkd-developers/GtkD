@@ -191,7 +191,7 @@ public class Permission : ObjectG
 	 * the non-blocking version.
 	 * Since 2.26
 	 * Params:
-	 * cancellable = a GCancellable, or NULL
+	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * Returns: TRUE if the permission was successfully acquired
 	 * Throws: GException on failure.
 	 */
@@ -216,7 +216,7 @@ public class Permission : ObjectG
 	 * g_permission_acquire().
 	 * Since 2.26
 	 * Params:
-	 * cancellable = a GCancellable, or NULL
+	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * callback = the GAsyncReadyCallback to call when done
 	 * userData = the user data to pass to callback
 	 */
@@ -266,7 +266,7 @@ public class Permission : ObjectG
 	 * the non-blocking version.
 	 * Since 2.26
 	 * Params:
-	 * cancellable = a GCancellable, or NULL
+	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * Returns: TRUE if the permission was successfully released
 	 * Throws: GException on failure.
 	 */
@@ -291,7 +291,7 @@ public class Permission : ObjectG
 	 * g_permission_release().
 	 * Since 2.26
 	 * Params:
-	 * cancellable = a GCancellable, or NULL
+	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * callback = the GAsyncReadyCallback to call when done
 	 * userData = the user data to pass to callback
 	 */

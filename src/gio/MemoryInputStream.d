@@ -142,7 +142,7 @@ public class MemoryInputStream : InputStream, SeekableIF
 	/**
 	 * Creates a new GMemoryInputStream with data in memory of a given size.
 	 * Params:
-	 * data = input data. [array length=len][element-type guint8]
+	 * data = input data. [array length=len][element-type guint8][transfer full]
 	 * len = length of the data, may be -1 if data is a nul-terminated string
 	 * destroy = function that is called to free data, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -161,7 +161,7 @@ public class MemoryInputStream : InputStream, SeekableIF
 	/**
 	 * Appends data to data that can be read from the input stream
 	 * Params:
-	 * data = input data. [array length=len][element-type guint8]
+	 * data = input data. [array length=len][element-type guint8][transfer full]
 	 * len = length of the data, may be -1 if data is a nul-terminated string
 	 * destroy = function that is called to free data, or NULL. [allow-none]
 	 */

@@ -226,7 +226,8 @@ public class BufferedInputStream : FilterInputStream
 	 * Peeks in the buffer, copying data of size count into buffer,
 	 * offset offset bytes.
 	 * Params:
-	 * buffer = a pointer to an allocated chunk of memory
+	 * buffer = a pointer to
+	 * an allocated chunk of memory. [array length=count][element-type guint8]
 	 * offset = a gsize
 	 * count = a gsize
 	 * Returns: a gsize of the number of bytes peeked, or -1 on error.

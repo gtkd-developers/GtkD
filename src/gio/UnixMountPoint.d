@@ -167,6 +167,17 @@ public class UnixMountPoint
 	}
 	
 	/**
+	 * Gets the options for the mount point.
+	 * Since 2.32
+	 * Returns: a string containing the options.
+	 */
+	public string getOptions()
+	{
+		// const char * g_unix_mount_point_get_options (GUnixMountPoint *mount_point);
+		return Str.toString(g_unix_mount_point_get_options(gUnixMountPoint));
+	}
+	
+	/**
 	 * Checks if a unix mount point is read only.
 	 * Returns: TRUE if a mount point is read only.
 	 */

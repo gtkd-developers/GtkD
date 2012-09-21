@@ -80,13 +80,13 @@ private import gobject.ObjectG;
  * The GApplicationCommandLine object can provide the argc and argv
  * parameters for use with the GOptionContext command-line parsing API,
  * with the g_application_command_line_get_arguments() function. See
- *  Example 19, “Deferred commandline handling” for an example.
+ *  Example 18, “Deferred commandline handling” for an example.
  * The exit status of the originally-invoked process may be set and
  * messages can be printed to stdout or stderr of that process. The
  * lifecycle of the originally-invoked process is tied to the lifecycle
  * of this object (ie: the process exits when the last reference is
  * dropped).
- * The main use for GApplicationCommandline (and the
+ * The main use for GApplicationCommandLine (and the
  * "command-line" signal) is 'Emacs server' like use cases:
  * You can set the EDITOR environment variable to have
  * e.g. git use your favourite editor to edit commit messages, and if you
@@ -248,7 +248,7 @@ public class ApplicationCommandLine : ObjectG
 	 * notification ID.
 	 * For local invocation, it will be NULL.
 	 * Since 2.28
-	 * Returns: the platform data, or NULL
+	 * Returns: the platform data, or NULL. [allow-none]
 	 */
 	public Variant getPlatformData()
 	{

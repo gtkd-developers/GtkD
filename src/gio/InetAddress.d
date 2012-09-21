@@ -178,11 +178,11 @@ public class InetAddress : ObjectG
 	
 	/**
 	 * Creates a new GInetAddress from the given family and bytes.
-	 * bytes should be 4 bytes for G_INET_ADDRESS_IPV4 and 16 bytes for
-	 * G_INET_ADDRESS_IPV6.
+	 * bytes should be 4 bytes for G_SOCKET_FAMILY_IPV4 and 16 bytes for
+	 * G_SOCKET_FAMILY_IPV6.
 	 * Since 2.22
 	 * Params:
-	 * bytes = raw address data
+	 * bytes = raw address data. [array][element-type guint8]
 	 * family = the address family of bytes
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -164,4 +164,28 @@ public class InetSocketAddress : SocketAddress
 		// guint16 g_inet_socket_address_get_port (GInetSocketAddress *address);
 		return g_inet_socket_address_get_port(gInetSocketAddress);
 	}
+	
+	/**
+	 * Gets the sin6_flowinfo field from address,
+	 * which must be an IPv6 address.
+	 * Since 2.32
+	 * Returns: the flowinfo field
+	 */
+	public uint getFlowinfo()
+	{
+		// guint32 g_inet_socket_address_get_flowinfo (GInetSocketAddress *address);
+		return g_inet_socket_address_get_flowinfo(gInetSocketAddress);
+	}
+	
+	/**
+	 * Gets the sin6_scope_id field from address,
+	 * which must be an IPv6 address.
+	 * Since 2.32
+	 * Returns: the scope id field
+	 */
+	public uint getScopeId()
+	{
+		// guint32 g_inet_socket_address_get_scope_id (GInetSocketAddress *address);
+		return g_inet_socket_address_get_scope_id(gInetSocketAddress);
+	}
 }

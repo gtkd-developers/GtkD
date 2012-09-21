@@ -205,7 +205,7 @@ public class DBusUtilities
 	 * Since 2.30
 	 * Params:
 	 * value = A GVariant.
-	 * outGvalue = Return location pointing to a zero-filled (uninitialized) GValue.
+	 * outGvalue = Return location pointing to a zero-filled (uninitialized) GValue. [out]
 	 */
 	public static void gvariantToGvalue(Variant value, Value outGvalue)
 	{
@@ -266,7 +266,7 @@ public class DBusUtilities
 	 * Since 2.26
 	 * Params:
 	 * address = A valid D-Bus address.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
 	 * userData = Data to pass to callback.
 	 */
@@ -316,7 +316,7 @@ public class DBusUtilities
 	 * Params:
 	 * address = A valid D-Bus address.
 	 * outGuid = NULL or return location to store the GUID extracted from address, if any.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: A GIOStream or NULL if error is set. [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -348,7 +348,7 @@ public class DBusUtilities
 	 * Since 2.26
 	 * Params:
 	 * busType = A GBusType.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: A valid D-Bus address string for bus_type or NULL if error is set.
 	 * Throws: GException on failure.
 	 */

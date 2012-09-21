@@ -378,7 +378,7 @@ public class Cancellable : ObjectG
 	 * Params:
 	 * callback = The GCallback to connect.
 	 * data = Data to pass to callback.
-	 * dataDestroyFunc = Free function for data or NULL.
+	 * dataDestroyFunc = Free function for data or NULL. [allow-none]
 	 * Returns: The id of the signal handler or 0 if cancellable has already been cancelled.
 	 */
 	public gulong connect(GCallback callback, void* data, GDestroyNotify dataDestroyFunc)

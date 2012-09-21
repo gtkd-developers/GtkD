@@ -47,9 +47,13 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.AsyncResultIF
+ * 	- gio.Cancellable
  * 	- gio.Socket
  * 	- gio.SocketAddress
  * structWrap:
+ * 	- GAsyncResult* -> AsyncResultIF
+ * 	- GCancellable* -> Cancellable
  * 	- GSocket* -> Socket
  * 	- GSocketAddress* -> SocketAddress
  * 	- GSocketConnection* -> SocketConnection
@@ -68,6 +72,8 @@ private import glib.ConstructionException;
 
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.AsyncResultIF;
+private import gio.Cancellable;
 private import gio.Socket;
 private import gio.SocketAddress;
 
@@ -136,6 +142,83 @@ public class SocketConnection : IOStream
 	
 	/**
 	 */
+	
+	/**
+	 * Connect connection to the specified remote address.
+	 * Since 2.32
+	 * Params:
+	 * address = a GSocketAddress specifying the remote address.
+	 * cancellable = a GCancellable or NULL. [allow-none]
+	 * Returns: TRUE if the connection succeeded, FALSE on error
+	 * Throws: GException on failure.
+	 */
+	public int connect(SocketAddress address, Cancellable cancellable)
+	{
+		// gboolean g_socket_connection_connect (GSocketConnection *connection,  GSocketAddress *address,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_connection_connect(gSocketConnection, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Asynchronously connect connection to the specified remote address.
+	 * This clears the "blocking" flag on connection's underlying
+	 * socket if it is currently set.
+	 * Use g_socket_connection_connect_finish() to retrieve the result.
+	 * Since 2.32
+	 * Params:
+	 * address = a GSocketAddress specifying the remote address.
+	 * cancellable = a GCancellable or NULL. [allow-none]
+	 * callback = a GAsyncReadyCallback. [scope async]
+	 * userData = user data for the callback. [closure]
+	 */
+	public void connectAsync(SocketAddress address, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_socket_connection_connect_async (GSocketConnection *connection,  GSocketAddress *address,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_socket_connection_connect_async(gSocketConnection, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Gets the result of a g_socket_connection_connect_async() call.
+	 * Since 2.32
+	 * Params:
+	 * result = the GAsyncResult
+	 * Returns: TRUE if the connection succeeded, FALSE on error
+	 * Throws: GException on failure.
+	 */
+	public int connectFinish(AsyncResultIF result)
+	{
+		// gboolean g_socket_connection_connect_finish (GSocketConnection *connection,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_connection_connect_finish(gSocketConnection, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Checks if connection is connected. This is equivalent to calling
+	 * g_socket_is_connected() on connection's underlying GSocket.
+	 * Since 2.32
+	 * Returns: whether connection is connected
+	 */
+	public int isConnected()
+	{
+		// gboolean g_socket_connection_is_connected (GSocketConnection *connection);
+		return g_socket_connection_is_connected(gSocketConnection);
+	}
 	
 	/**
 	 * Try to get the local address of a socket connection.

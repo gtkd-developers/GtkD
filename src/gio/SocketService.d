@@ -82,9 +82,10 @@ private import gio.SocketListener;
  * will block additional incoming connections from being serviced.
  * If you are interested in writing connection handlers that contain
  * blocking code then see GThreadedSocketService.
- * The socket service runs on the main loop in the main thread, and is
- * not threadsafe in general. However, the calls to start and stop
- * the service are threadsafe so these can be used from threads that
+ * The socket service runs on the main loop of the thread-default
+ * context of the thread it is created in, and is not
+ * threadsafe in general. However, the calls to start and stop the
+ * service are thread-safe so these can be used from threads that
  * handle incoming clients.
  */
 public class SocketService : SocketListener
@@ -200,7 +201,7 @@ public class SocketService : SocketListener
 	/**
 	 * Starts the service, i.e. start accepting connections
 	 * from the added sockets when the mainloop runs.
-	 * This call is threadsafe, so it may be called from a thread
+	 * This call is thread-safe, so it may be called from a thread
 	 * handling an incoming client request.
 	 * Since 2.22
 	 */
@@ -213,7 +214,7 @@ public class SocketService : SocketListener
 	/**
 	 * Stops the service, i.e. stops accepting connections
 	 * from the added sockets when the mainloop runs.
-	 * This call is threadsafe, so it may be called from a thread
+	 * This call is thread-safe, so it may be called from a thread
 	 * handling an incoming client request.
 	 * Since 2.22
 	 */

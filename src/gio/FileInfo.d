@@ -179,7 +179,8 @@ public class FileInfo : ObjectG
 	}
 	
 	/**
-	 * Copies all of the GFileAttributes from src_info to dest_info.
+	 * Copies all of the GFileAttributes
+	 * from src_info to dest_info.
 	 * Params:
 	 * destInfo = destination to copy attributes to.
 	 */
@@ -419,7 +420,8 @@ public class FileInfo : ObjectG
 	}
 	
 	/**
-	 * Sets the attribute to contain the given value, if possible.
+	 * Sets the attribute to contain the given value, if possible. To unset the
+	 * attribute, use G_ATTRIBUTE_TYPE_INVALID for type.
 	 * Params:
 	 * attribute = a file attribute key.
 	 * type = a GFileAttributeType
@@ -468,7 +470,7 @@ public class FileInfo : ObjectG
 	 * Sinze: 2.22
 	 * Params:
 	 * attribute = a file attribute key
-	 * attrValue = a NULL terminated array of UTF-8 strings.
+	 * attrValue = a NULL terminated array of UTF-8 strings. [array][element-type utf8]
 	 */
 	public void setAttributeStringv(string attribute, string[] attrValue)
 	{

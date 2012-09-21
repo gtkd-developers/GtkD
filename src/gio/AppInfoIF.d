@@ -141,6 +141,11 @@ public interface AppInfoIF
 	
 	/**
 	 * Creates a new GAppInfo from the given information.
+	 * Note that for commandline, the quoting rules of the Exec key of the
+	 * freedesktop.org Desktop
+	 * Entry Specification are applied. For example, if the commandline contains
+	 * percent-encoded URIs, the percent-character must be doubled in order to prevent it from
+	 * being swallowed by Exec key unquoting. See the specification for exact quoting rules.
 	 * Params:
 	 * commandline = the commandline to use
 	 * applicationName = the application name, or NULL to use commandline. [allow-none]
@@ -225,9 +230,12 @@ public interface AppInfoIF
 	 * can fail to start if it runs into problems during startup. There is
 	 * no way to detect this.
 	 * Some URIs can be changed when passed through a GFile (for instance
-	 * unsupported uris with strange formats like mailto:), so if you have
-	 * a textual uri you want to pass in as argument, consider using
+	 * unsupported URIs with strange formats like mailto:), so if you have
+	 * a textual URI you want to pass in as argument, consider using
 	 * g_app_info_launch_uris() instead.
+	 * The launched application inherits the environment of the launching
+	 * process, but it can be modified with g_app_launch_context_setenv() and
+	 * g_app_launch_context_unsetenv().
 	 * On UNIX, this function sets the GIO_LAUNCHED_DESKTOP_FILE
 	 * environment variable with the path of the launched desktop file and
 	 * GIO_LAUNCHED_DESKTOP_FILE_PID to the process
@@ -303,7 +311,8 @@ public interface AppInfoIF
 	 * Removes all changes to the type associations done by
 	 * g_app_info_set_as_default_for_type(),
 	 * g_app_info_set_as_default_for_extension(),
-	 * g_app_info_add_supports_type() or g_app_info_remove_supports_type().
+	 * g_app_info_add_supports_type() or
+	 * g_app_info_remove_supports_type().
 	 * Since 2.20
 	 * Params:
 	 * contentType = a content type
@@ -379,7 +388,10 @@ public interface AppInfoIF
 	public static ListG getAll();
 	
 	/**
-	 * Gets a list of all GAppInfos for a given content type.
+	 * Gets a list of all GAppInfos for a given content type,
+	 * including the recommended and fallback GAppInfos. See
+	 * g_app_info_get_recommended_for_type() and
+	 * g_app_info_get_fallback_for_type().
 	 * Params:
 	 * contentType = the content type to find a GAppInfo for
 	 * Returns: GList of GAppInfos for given content_type or NULL on error. [element-type GAppInfo][transfer full]
@@ -387,7 +399,7 @@ public interface AppInfoIF
 	public static ListG getAllForType(string contentType);
 	
 	/**
-	 * Gets the GAppInfo that corresponds to a given content type.
+	 * Gets the default GAppInfo for a given content type.
 	 * Params:
 	 * contentType = the content type to find a GAppInfo for
 	 * mustSupportUris = if TRUE, the GAppInfo is expected to
@@ -397,8 +409,8 @@ public interface AppInfoIF
 	public static AppInfoIF getDefaultForType(string contentType, int mustSupportUris);
 	
 	/**
-	 * Gets the default application for launching applications
-	 * using this URI scheme. A URI scheme is the initial part
+	 * Gets the default application for handling URIs with
+	 * the given URI scheme. A URI scheme is the initial part
 	 * of the URI, up to but not including the ':', e.g. "http",
 	 * "ftp" or "sip".
 	 * Params:
@@ -423,7 +435,7 @@ public interface AppInfoIF
 	 * those applications which claim to support the given content type exactly,
 	 * and not by MIME type subclassing.
 	 * Note that the first application of the list is the last used one, i.e.
-	 * the last one for which g_app_info_set_as_last_used_for_type has been
+	 * the last one for which g_app_info_set_as_last_used_for_type() has been
 	 * called.
 	 * Since 2.28
 	 * Params:

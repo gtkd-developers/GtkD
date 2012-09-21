@@ -37,6 +37,7 @@
  * extend  = 
  * implements:
  * 	- ActionGroupIF
+ * 	- ActionMapIF
  * prefixes:
  * 	- g_simple_action_group_
  * omit structs:
@@ -49,6 +50,8 @@
  * 	- gio.ActionIF
  * 	- gio.ActionGroupIF
  * 	- gio.ActionGroupT
+ * 	- gio.ActionMapIF
+ * 	- gio.ActionMapT
  * structWrap:
  * 	- GAction* -> ActionIF
  * module aliases:
@@ -69,6 +72,8 @@ private import gio.Action;
 private import gio.ActionIF;
 private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
+private import gio.ActionMapIF;
+private import gio.ActionMapT;
 
 
 
@@ -77,9 +82,9 @@ private import gobject.ObjectG;
 /**
  * Description
  * GSimpleActionGroup is a hash table filled with GAction objects,
- * implementing the GActionGroup interface.
+ * implementing the GActionGroup and GActionMap interfaces.
  */
-public class SimpleActionGroup : ObjectG, ActionGroupIF
+public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 {
 	
 	/** the main Gtk struct */
@@ -127,6 +132,9 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF
 	
 	// add the ActionGroup capabilities
 	mixin ActionGroupT!(GSimpleActionGroup);
+	
+	// add the ActionMap capabilities
+	mixin ActionMapT!(GSimpleActionGroup);
 	
 	/**
 	 */
@@ -197,12 +205,10 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF
 	/**
 	 * A convenience function for creating multiple GSimpleAction instances
 	 * and adding them to the action group.
-	 * Each action is constructed as per one GActionEntry.
-	 * $(DDOC_COMMENT example)
 	 * Since 2.30
 	 * Params:
-	 * entries = a pointer to the first item in an array of GActionEntry
-	 * structs
+	 * entries = a pointer to the first item in
+	 * an array of GActionEntry structs. [array length=n_entries]
 	 * userData = the user data for signal connections
 	 */
 	public void addEntries(GActionEntry[] entries, void* userData)

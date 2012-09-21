@@ -136,10 +136,13 @@ public class TlsPassword : ObjectG
 	}
 	
 	/**
-	 * Get the password value. If length is not NULL then it will be filled
-	 * in with the length of the password value.
+	 * Get the password value. If length is not NULL then it will be
+	 * filled in with the length of the password value. (Note that the
+	 * password value is not nul-terminated, so you can only pass NULL
+	 * for length in contexts where you know the password will have a
+	 * certain fixed length.)
 	 * Since 2.30
-	 * Returns: The password value owned by the password object.
+	 * Returns: The password value (owned by the password object).
 	 */
 	public char[] getValue()
 	{
@@ -152,9 +155,10 @@ public class TlsPassword : ObjectG
 	/**
 	 * Set the value for this password. The value will be copied by the password
 	 * object.
-	 * Specify the length, for a non-null-terminated password. Pass -1 as
-	 * length if using a null-terminated password, and length will be calculated
-	 * automatically.
+	 * Specify the length, for a non-nul-terminated password. Pass -1 as
+	 * length if using a nul-terminated password, and length will be
+	 * calculated automatically. (Note that the terminating nul is not
+	 * considered part of the password in this case.)
 	 * Since 2.30
 	 * Params:
 	 * value = the new password value
@@ -169,9 +173,11 @@ public class TlsPassword : ObjectG
 	 * Provide the value for this password.
 	 * The value will be owned by the password object, and later freed using
 	 * the destroy function callback.
-	 * Specify the length, for a non-null-terminated password. Pass -1 as
-	 * length if using a null-terminated password, and length will be calculated
-	 * automatically.
+	 * Specify the length, for a non-nul-terminated password. Pass -1 as
+	 * length if using a nul-terminated password, and length will be
+	 * calculated automatically. (Note that the terminating nul is not
+	 * considered part of the password in this case.)
+	 * Virtual: set_value
 	 * Since 2.30
 	 * Params:
 	 * value = the value for the password

@@ -74,7 +74,27 @@ public import glib.VariantType;
 
 /**
  * Description
- * GActionGroup represents a group of actions.
+ * GActionGroup represents a group of actions. Actions can be used to
+ * expose functionality in a structured way, either from one part of a
+ * program to another, or to the outside world. Action groups are often
+ * used together with a GMenuModel that provides additional
+ * representation data for displaying the actions to the user, e.g. in
+ * a menu.
+ * The main way to interact with the actions in a GActionGroup is to
+ * activate them with g_action_group_activate_action(). Activating an
+ * action may require a GVariant parameter. The required type of the
+ * parameter can be inquired with g_action_group_get_action_parameter_type().
+ * Actions may be disabled, see g_action_group_get_action_enabled().
+ * Activating a disabled action has no effect.
+ * Actions may optionally have a state in the form of a GVariant. The
+ * current state of an action can be inquired with
+ * g_action_group_get_action_state(). Activating a stateful action may
+ * change its state, but it is also possible to set the state by calling
+ * g_action_group_change_action_state().
+ * As typical example, consider a text editing application which has an
+ * option to change the current font to 'bold'. A good way to represent
+ * this would be a stateful action, with a boolean state. Activating the
+ * action would toggle the state.
  * Each action in the group has a unique name (which is a string). All
  * method calls, except g_action_group_list_actions() take the name of
  * an action as an argument.
@@ -83,10 +103,15 @@ public import glib.VariantType;
  * forces' (eg: UI, incoming D-Bus messages, etc.) are supposed to have
  * with actions. 'Internal' APIs (ie: ones meant only to be accessed by
  * the action group implementation) are found on subclasses. This is
- * why you will find -- for example -- g_action_group_get_action_enabled()
+ * why you will find - for example - g_action_group_get_action_enabled()
  * but not an equivalent set() call.
  * Signals are emitted on the action group in response to state changes
  * on individual actions.
+ * Implementations of GActionGroup should provide implementations for
+ * the virtual functions g_action_group_list_actions() and
+ * g_action_group_query_action(). The other virtual functions should
+ * not be implemented - their "wrappers" are actually implemented with
+ * calls to g_action_group_query_action().
  */
 public template ActionGroupT(TStruct)
 {
@@ -213,6 +238,8 @@ public template ActionGroupT(TStruct)
 	/**
 	 * Signals that the state of the named action has changed.
 	 * Since 2.28
+	 * See Also
+	 * GAction
 	 */
 	void addOnActionStateChanged(void delegate(string, Variant, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -239,19 +266,6 @@ public template ActionGroupT(TStruct)
 	
 	
 	/**
-	 * Checks if the named action exists within action_group.
-	 * Since 2.28
-	 * Params:
-	 * actionName = the name of the action to check for
-	 * Returns: whether the named action exists
-	 */
-	public int hasAction(string actionName)
-	{
-		// gboolean g_action_group_has_action (GActionGroup *action_group,  const gchar *action_name);
-		return g_action_group_has_action(getActionGroupTStruct(), Str.toStringz(actionName));
-	}
-	
-	/**
 	 * Lists the actions contained within action_group.
 	 * The caller is responsible for freeing the list with g_strfreev() when
 	 * it is no longer required.
@@ -262,6 +276,69 @@ public template ActionGroupT(TStruct)
 	{
 		// gchar ** g_action_group_list_actions (GActionGroup *action_group);
 		return Str.toStringArray(g_action_group_list_actions(getActionGroupTStruct()));
+	}
+	
+	/**
+	 * Queries all aspects of the named action within an action_group.
+	 * This function acquires the information available from
+	 * g_action_group_has_action(), g_action_group_get_action_enabled(),
+	 * g_action_group_get_action_parameter_type(),
+	 * g_action_group_get_action_state_type(),
+	 * g_action_group_get_action_state_hint() and
+	 * g_action_group_get_action_state() with a single function call.
+	 * This provides two main benefits.
+	 * The first is the improvement in efficiency that comes with not having
+	 * to perform repeated lookups of the action in order to discover
+	 * different things about it. The second is that implementing
+	 * GActionGroup can now be done by only overriding this one virtual
+	 * function.
+	 * The interface provides a default implementation of this function that
+	 * calls the individual functions, as required, to fetch the
+	 * information. The interface also provides default implementations of
+	 * those functions that call this function. All implementations,
+	 * therefore, must override either this function or all of the others.
+	 * If the action exists, TRUE is returned and any of the requested
+	 * fields (as indicated by having a non-NULL reference passed in) are
+	 * filled. If the action doesn't exist, FALSE is returned and the
+	 * fields may or may not have been modified.
+	 * Since 2.32
+	 * Params:
+	 * actionName = the name of an action in the group
+	 * enabled = if the action is presently enabled. [out]
+	 * parameterType = the parameter type, or NULL if none needed. [out][allow-none]
+	 * stateType = the state type, or NULL if stateless. [out][allow-none]
+	 * stateHint = the state hint, or NULL if none. [out][allow-none]
+	 * state = the current state, or NULL if stateless. [out][allow-none]
+	 * Returns: TRUE if the action exists, else FALSE
+	 */
+	public int queryAction(string actionName, out int enabled, out VariantType parameterType, out VariantType stateType, out Variant stateHint, out Variant state)
+	{
+		// gboolean g_action_group_query_action (GActionGroup *action_group,  const gchar *action_name,  gboolean *enabled,  const GVariantType **parameter_type,  const GVariantType **state_type,  GVariant **state_hint,  GVariant **state);
+		GVariantType* outparameterType = null;
+		GVariantType* outstateType = null;
+		GVariant* outstateHint = null;
+		GVariant* outstate = null;
+		
+		auto p = g_action_group_query_action(getActionGroupTStruct(), Str.toStringz(actionName), &enabled, &outparameterType, &outstateType, &outstateHint, &outstate);
+		
+		parameterType = new VariantType(outparameterType);
+		stateType = new VariantType(outstateType);
+		stateHint = new Variant(outstateHint);
+		state = new Variant(outstate);
+		return p;
+	}
+	
+	/**
+	 * Checks if the named action exists within action_group.
+	 * Since 2.28
+	 * Params:
+	 * actionName = the name of the action to check for
+	 * Returns: whether the named action exists
+	 */
+	public int hasAction(string actionName)
+	{
+		// gboolean g_action_group_has_action (GActionGroup *action_group,  const gchar *action_name);
+		return g_action_group_has_action(getActionGroupTStruct(), Str.toStringz(actionName));
 	}
 	
 	/**

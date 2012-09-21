@@ -121,7 +121,7 @@ private import gobject.ObjectG;
  * operations that are dangerous to cancel, such as close (which would
  * cause a leak if cancelled before being run).
  * GSimpleAsyncResult can integrate into GLib's event loop, GMainLoop,
- * or it can use GThreads if available.
+ * or it can use GThreads.
  * g_simple_async_result_complete() will finish an I/O task directly
  * from the point where it is called. g_simple_async_result_complete_in_idle()
  * will finish it from an idle handler in the thread-default main
@@ -199,6 +199,13 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	
 	/**
 	 * Creates a GSimpleAsyncResult.
+	 * The common convention is to create the GSimpleAsyncResult in the
+	 * function that starts the asynchronous operation and use that same
+	 * function as the source_tag.
+	 * If your operation supports cancellation with GCancellable (which it
+	 * probably should) then you should provide the user's cancellable to
+	 * g_simple_async_result_set_check_cancellable() immediately after
+	 * this function returns.
 	 * Params:
 	 * sourceObject = a GObject, or NULL. [allow-none]
 	 * callback = a GAsyncReadyCallback. [scope async]
@@ -235,6 +242,29 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 			throw new ConstructionException("null returned by g_simple_async_result_new_from_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct())");
 		}
 		this(cast(GSimpleAsyncResult*) p);
+	}
+	
+	/**
+	 * Sets a GCancellable to check before dispatching results.
+	 * This function has one very specific purpose: the provided cancellable
+	 * is checked at the time of g_simple_async_result_propagate_error() If
+	 * it is cancelled, these functions will return an "Operation was
+	 * cancelled" error (G_IO_ERROR_CANCELLED).
+	 * Implementors of cancellable asynchronous functions should use this in
+	 * order to provide a guarantee to their callers that cancelling an
+	 * async operation will reliably result in an error being returned for
+	 * that operation (even if a positive result for the operation has
+	 * already been sent as an idle to the main context to be dispatched).
+	 * The checking described above is done regardless of any call to the
+	 * unrelated g_simple_async_result_set_handle_cancellation() function.
+	 * Since 2.32
+	 * Params:
+	 * checkCancellable = a GCancellable to check, or NULL to unset. [allow-none]
+	 */
+	public void setCheckCancellable(Cancellable checkCancellable)
+	{
+		// void g_simple_async_result_set_check_cancellable  (GSimpleAsyncResult *simple,  GCancellable *check_cancellable);
+		g_simple_async_result_set_check_cancellable(gSimpleAsyncResult, (checkCancellable is null) ? null : checkCancellable.getCancellableStruct());
 	}
 	
 	/**
@@ -339,6 +369,9 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	
 	/**
 	 * Sets whether to handle cancellation within the asynchronous operation.
+	 * This function has nothing to do with
+	 * g_simple_async_result_set_check_cancellable(). It only refers to the
+	 * GCancellable passed to g_simple_async_result_run_in_thread().
 	 * Params:
 	 * handleCancellation = a gboolean.
 	 */
@@ -419,6 +452,9 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Propagates an error from within the simple asynchronous result to
 	 * a given destination.
+	 * If the GCancellable given to a prior call to
+	 * g_simple_async_result_set_check_cancellable() is cancelled then this
+	 * function will return TRUE with dest set appropriately.
 	 * Returns: TRUE if the error was propagated to dest. FALSE otherwise.
 	 */
 	public int propagateError()

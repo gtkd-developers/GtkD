@@ -45,9 +45,11 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.Credentials
  * structWrap:
+ * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GCredentials* -> Credentials
  * module aliases:
@@ -65,6 +67,7 @@ private import glib.ConstructionException;
 
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.Credentials;
 
@@ -223,6 +226,52 @@ public class UnixConnection : SocketConnection
 	}
 	
 	/**
+	 * Asynchronously receive credentials.
+	 * For more details, see g_unix_connection_receive_credentials() which is
+	 * the synchronous version of this call.
+	 * When the operation is finished, callback will be called. You can then call
+	 * g_unix_connection_receive_credentials_finish() to get the result of the operation.
+	 * Since 2.32
+	 * Params:
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
+	 */
+	public void receiveCredentialsAsync(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_unix_connection_receive_credentials_async  (GUnixConnection *connection,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_unix_connection_receive_credentials_async(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous receive credentials operation started with
+	 * g_unix_connection_receive_credentials_async().
+	 * Since 2.32
+	 * Params:
+	 * result = a GAsyncResult.
+	 * Returns: a GCredentials, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
+	 * Throws: GException on failure.
+	 */
+	public Credentials receiveCredentialsFinish(AsyncResultIF result)
+	{
+		// GCredentials * g_unix_connection_receive_credentials_finish  (GUnixConnection *connection,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_unix_connection_receive_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new Credentials(cast(GCredentials*) p);
+	}
+	
+	/**
 	 * Passes the credentials of the current user the receiving side
 	 * of the connection. The receiving end has to call
 	 * g_unix_connection_receive_credentials() (or similar) to accept the
@@ -244,6 +293,48 @@ public class UnixConnection : SocketConnection
 		GError* err = null;
 		
 		auto p = g_unix_connection_send_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Asynchronously send credentials.
+	 * For more details, see g_unix_connection_send_credentials() which is
+	 * the synchronous version of this call.
+	 * When the operation is finished, callback will be called. You can then call
+	 * g_unix_connection_send_credentials_finish() to get the result of the operation.
+	 * Since 2.32
+	 * Params:
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
+	 */
+	public void sendCredentialsAsync(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_unix_connection_send_credentials_async  (GUnixConnection *connection,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_unix_connection_send_credentials_async(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous send credentials operation started with
+	 * g_unix_connection_send_credentials_async().
+	 * Since 2.32
+	 * Params:
+	 * result = a GAsyncResult.
+	 * Returns: TRUE if the operation was successful, otherwise FALSE.
+	 * Throws: GException on failure.
+	 */
+	public int sendCredentialsFinish(AsyncResultIF result)
+	{
+		// gboolean g_unix_connection_send_credentials_finish  (GUnixConnection *connection,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_unix_connection_send_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{

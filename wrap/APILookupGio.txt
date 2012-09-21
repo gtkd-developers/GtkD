@@ -32,20 +32,12 @@ addTypedefs: start
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
-struct GIOModuleScope {}
-
 addTypedefs: end
 
 addAliases: start
 addAliases: end
 
 addEnums: start
-	public enum GIOModuleScopeFlags
-	{
-		NONE,
-		BLOCK_DUPLICATES
-	}
-	alias GIOModuleScopeFlags IOModuleScopeFlags;
 addEnums: end
 
 addStructs: start
@@ -118,6 +110,7 @@ out: g_file_load_partial_contents_finish  length
 out: g_file_load_partial_contents_finish etag_out
 out: g_file_replace_contents new_etag
 out: g_file_replace_contents_finish new_etag
+out: g_file_new_tmp iostream
 
 # g_file_new_for_commandline_arg also accepts paths ans uris
 nocode: g_file_new_for_path
@@ -1367,14 +1360,16 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 import: glib.Source
-import: gio.SocketAddress
 import: gio.Cancellable
 import: gio.Credentials
+import: gio.InetAddress
+import: gio.SocketAddress
 import: gio.SocketControlMessage
-structWrap: GCredentials* Credentials
 structWrap: GSource* Source
-structWrap: GSocketAddress* SocketAddress
 structWrap: GCancellable* Cancellable
+structWrap: GCredentials* Credentials
+structWrap: GInetAddress* InetAddress
+structWrap: GSocketAddress* SocketAddress
 structWrap: GSocketControlMessage* SocketControlMessage
 
 #imports for Initable Interface.
@@ -1447,6 +1442,19 @@ code: start
 	}
 code: end
 outFile: InetAddress
+
+file: gio-GInetAddressMask.html
+struct: GInetAddressMask
+class: InetAddressMask
+extend: GObject
+prefix: g_inet_address_mask_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.InetAddress
+structWrap: GInetAddress* InetAddress
+structWrap: GInetAddressMask* InetAddressMask
+outFile: InetAddressMask
 
 file: GSocketAddress.html
 struct: GSocketAddress
@@ -1617,11 +1625,14 @@ import: glib.ErrorG
 import: glib.GException
 import: gio.AsyncResultIF
 import: gio.Cancellable
+import: gio.IOStream
 import: gio.SocketAddress
 import: gio.SocketConnection
+import: gio.SocketConnectable
 import: gio.SocketConnectableIF
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
+structWrap: GIOStream* IOStream
 structWrap: GSocketAddress* SocketAddress
 structWrap: GSocketConnection* SocketConnection
 structWrap: GSocketConnectable* SocketConnectableIF
@@ -1635,8 +1646,12 @@ noprefix: g_tcp_connection_
 noprefix: g_unix_connection_
 import: glib.ErrorG
 import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
 import: gio.Socket
 import: gio.SocketAddress
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
 structWrap: GSocket* Socket
 structWrap: GSocketAddress* SocketAddress
 structWrap: GSocketConnection* SocketConnection
@@ -1648,8 +1663,10 @@ class: UnixConnection
 prefix: g_unix_connection_
 import: glib.ErrorG
 import: glib.GException
+import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.Credentials
+structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GCredentials* Credentials
 outFile: UnixConnection
@@ -1697,6 +1714,68 @@ ctorStruct: GSocketService
 class: ThreadedSocketService
 prefix: g_threaded_socket_service_
 outFile: ThreadedSocketService
+
+file: GNetworkMonitor.html
+struct: GNetworkMonitor
+class: NetworkMonitorT
+template: TStruct
+prefix: g_network_monitor_
+import: glib.ErrorG
+import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
+import: gio.NetworkMonitorIF
+import: gio.SocketConnectableIF
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
+structWrap: GNetworkMonitor* NetworkMonitorIF
+structWrap: GSocketConnectable* SocketConnectableIF
+interface: NetworkMonitorIF
+outFile: NetworkMonitorT
+
+file:
+class: NetworkMonitor
+extend: GObject
+implements: InitableIF
+implements: NetworkMonitorIF
+
+#imports for Initable Interface.
+import: gio.InitableIF
+import: gio.InitableT
+
+# imports for NetworkMonitor Interface
+import: gio.NetworkMonitorT
+import: gio.NetworkMonitorIF
+
+code: start
+	// Minimal implementation.
+	mixin NetworkMonitorT!(GNetworkMonitor);
+
+	// add the Initable capabilities
+	mixin InitableT!(GNetworkMonitor);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gNetworkMonitor;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GNetworkMonitor* gNetworkMonitor)
+	{
+		if(gNetworkMonitor is null)
+		{
+			this = null;
+			return;
+		}
+
+		super(cast(GObject*)gNetworkMonitor);
+		this.gNetworkMonitor = gNetworkMonitor;
+	}
+code: end
+outFile: NetworkMonitor
 
 ###########################################################
 ### TLS (SSL) Support #####################################
@@ -2246,6 +2325,7 @@ import: glib.ErrorG
 import: glib.GException
 import: glib.Variant
 import: glib.VariantType
+import: gio.ActionGroupIF
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.Credentials
@@ -2253,6 +2333,7 @@ import: gio.DBusAuthObserver
 import: gio.DBusMessage
 import: gio.DBusMethodInvocation
 import: gio.IOStream
+import: gio.MenuModel
 import: gio.UnixFDList
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
@@ -2327,7 +2408,15 @@ code: start
 		this(cast(GDBusConnection*) p);
 	}	
 code: end
-outFile: DBusConnection
+openFile: DBusConnection
+
+file: gio-GActionGroup-exporter.html
+structWrap: GActionGroup* ActionGroupIF
+mergeFile: DBusConnection
+
+file: gio-GMenuModel-exporter.html
+structWrap: GMenuModel* MenuModel
+closeFile: DBusConnection
 
 file: GDBusMethodInvocation.html
 struct: GDBusMethodInvocation
@@ -2457,9 +2546,11 @@ prefix: g_dbus_interface_skeleton_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: glib.ListG
 import: glib.Variant
 import: gio.DBusConnection
 import: gio.DBusInterfaceInfo
+structWrap: GList* ListG
 structWrap: GVariant* Variant
 structWrap: GDBusConnection* DBusConnection
 structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
@@ -2782,12 +2873,17 @@ import: glib.Str
 import: glib.Variant
 import: glib.VariantType
 import: gobject.Value
+import: gio.Action
+import: gio.ActionIF
 import: gio.SettingsBackend
+import: gio.SettingsSchema
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
 structWrap: GValue* Value
+structWrap: GAction* ActionIF
 structWrap: GSettings* Settings
 structWrap: GSettingsBackend* SettingsBackend
+structWrap: GSettingsSchema* SettingsSchema
 array: g_settings_set_strv value
 outFile: Settings
 
@@ -2808,6 +2904,84 @@ out: g_settings_backend_flatten_tree values
 array: g_settings_backend_flatten_tree keys
 array: g_settings_backend_flatten_tree values keys.length
 outFile: SettingsBackend
+
+file: gio-GSettingsSchema-GSettingsSchemaSource.html
+struct: GSettingsSchema
+class: SettingsSchema
+prefix: g_settings_schema_
+noprefix: g_settings_schema_source_
+import: glib.Str
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: GSettingsSchema* SettingsSchema
+
+code: start
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GIO) && gSettingsSchema != null)
+		{
+			g_settings_schema_unref(gSettingsSchema);
+		}
+	}
+code: end
+outFile: SettingsSchema
+
+struct: GSettingsSchemaSource
+class: SettingsSchemaSource
+prefix: g_settings_schema_source_
+strictPrefix: Y
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.SettingsSchema
+import: gtkc.paths
+import: gtkc.Loader
+structWrap: GSettingsSchema* SettingsSchema
+structWrap: GSettingsSchemaSource* SettingsSchemaSource
+
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GTK) && gSettingsSchemaSource !is null )
+		{
+			g_settings_schema_source_unref(gSettingsSchemaSource);
+		}
+	}
+code: end
+outFile: SettingsSchemaSource
+
+###########################################################
+### Resources #############################################
+###########################################################
+
+file: gio-GResource.html
+struct: GResource
+class: Resource
+prefix: g_permission_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.Bytes
+import: gio.InputStream
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: GBytes* Bytes
+structWrap: GInputStream* InputStream
+structWrap: GResource* Resource
+
+out: g_resource_get_info size
+out: g_resource_get_info flags
+
+code: start
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GIO) && gResource != null)
+		{
+			g_resource_unref(gResource);
+		}
+	}
+code: end
+outFile: Resource
 
 ###########################################################
 ### Permissions ###########################################
@@ -2837,6 +3011,51 @@ outFile: SimplePermission
 ### Application Support ###################################
 ###########################################################
 
+file: GApplication.html
+struct: GApplication
+class: Application
+implements: ActionGroupIF
+implements: ActionMapIF
+prefix: g_application_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gio.Cancellable
+import: gio.File
+structWrap: GApplication* Application
+structWrap: GCancellable* Cancellable
+structWrap: GFile* File
+
+#imports for ActionGroup Interface.
+import: gio.ActionGroupIF
+import: gio.ActionGroupT
+
+#imports for ActionMap Interface.
+import: gio.ActionMapIF
+import: gio.ActionMapT
+
+array: g_application_open files n_files
+array: g_application_run argv argc
+
+code: start
+	// add the ActionGroup capabilities
+	mixin ActionGroupT!(GApplication);
+
+	// add the ActionMap capabilities
+	mixin ActionMapT!(GApplication);
+code: end
+outFile: Application
+
+file: GApplicationCommandLine.html
+struct: GApplicationCommandLine
+class: ApplicationCommandLine
+prefix: g_application_command_line_
+import: glib.Str
+import: glib.Variant
+structWrap: GVariant* Variant
+array: g_application_command_line_get_arguments Return argc
+outFile: ApplicationCommandLine
+
 file: GActionGroup.html
 struct: GActionGroup
 class: ActionGroupT
@@ -2847,13 +3066,34 @@ import: glib.Variant
 import: glib.VariantType
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
+
+out: g_action_group_query_action enabled
+out: g_action_group_query_action parameter_type
+out: g_action_group_query_action state_type
+out: g_action_group_query_action state_hint
+out: g_action_group_query_action state
+
 interface: ActionGroupIF
 outFile: ActionGroupT
+
+file: GActionMap.html
+struct: GActionMap
+class: ActionMapT
+template: TStruct
+prefix: g_action_map_
+import: glib.Str
+import: gio.Action
+import: gio.ActionIF
+structWrap: GAction* ActionIF
+array: g_action_map_add_action_entries entries n_entries
+interface: ActionMapIF
+outFile: ActionMapT
 
 file: GSimpleActionGroup.html
 struct: GSimpleActionGroup
 class: SimpleActionGroup
 implements: ActionGroupIF
+implements: ActionMapIF
 prefix: g_simple_action_group_
 import: glib.Str
 import: gio.Action
@@ -2864,11 +3104,18 @@ structWrap: GAction* ActionIF
 import: gio.ActionGroupIF
 import: gio.ActionGroupT
 
+#imports for ActionMap Interface.
+import: gio.ActionMapIF
+import: gio.ActionMapT
+
 array: g_simple_action_group_add_entries entries n_entries
 
 code: start
 	// add the ActionGroup capabilities
 	mixin ActionGroupT!(GSimpleActionGroup);
+
+	// add the ActionMap capabilities
+	mixin ActionMapT!(GSimpleActionGroup);
 code: end
 outFile: SimpleActionGroup
 
@@ -2943,41 +3190,155 @@ code: start
 code: end
 outFile: SimpleAction
 
-file: GApplication.html
-struct: GApplication
-class: Application
-implements: ActionGroupIF
-prefix: g_application_
+file: GRemoteActionGroup.html
+struct: GRemoteActionGroup
+class: RemoteActionGroupT
+template: TStruct
+prefix: g_remote_action_group_
 import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gio.Cancellable
-import: gio.File
-structWrap: GCancellable* Cancellable
-structWrap: GFile* File
+import: glib.Variant
+structWrap: GVariant* Variant
+interface: RemoteActionGroupIF
+outFile: RemoteActionGroupT
+
+#file: gio-GActionGroup-exporter.html
+#See: GDBusConnection
+
+file: GDBusActionGroup.html
+struct: GDBusActionGroup
+class: DBusActionGroup
+implements: ActionGroupIF
+implements: RemoteActionGroupIF
+prefix:  g_dbus_action_group_
+import: glib.Str
+import: gio.DBusConnection
+structWrap: GDBusActionGroup* DBusActionGroup
+structWrap: GDBusConnection* DBusConnection
 
 #imports for ActionGroup Interface.
 import: gio.ActionGroupIF
 import: gio.ActionGroupT
 
-array: g_application_open files n_files
-array: g_application_run argv argc
+#imports for RemoteActionGroup Interface.
+import: gio.RemoteActionGroupIF
+import: gio.RemoteActionGroupT
 
 code: start
 	// add the ActionGroup capabilities
-	mixin ActionGroupT!(GApplication);
-code: end
-outFile: Application
+	mixin ActionGroupT!(GDBusActionGroup);
 
-file: GApplicationCommandLine.html
-struct: GApplicationCommandLine
-class: ApplicationCommandLine
-prefix: g_application_command_line_
+	// add the RemoteActionGroup capabilities
+	mixin RemoteActionGroupT!(GDBusActionGroup);
+
+	/**
+	 * See_Also: get().
+	 */
+	this(DBusConnection connection, string busName, string objectPath)
+	{
+		auto p =  g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_action_group_get");
+		}
+		this(cast(GDBusActionGroup*) p);
+	}
+code: end
+outFile: DBusActionGroup
+
+file: GMenuModel.html
+struct: GMenuModel
+class: MenuModel
+prefix: g_menu_model_
+noprefix: g_menu_attribute_iter_
+noprefix: g_menu_link_iter_
+import: glib.Str
+import: glib.Variant
+import: glib.VariantType
+import: gio.MenuAttributeIter
+import: gio.MenuLinkIter
+structWrap: GVariant* Variant
+structWrap: GVariantType* VariantType
+structWrap: GMenuAttributeIter* MenuAttributeIter
+structWrap: GMenuLinkIter* MenuLinkIter
+structWrap: GMenuModel* MenuModel
+outFile: MenuModel
+
+struct: GMenuAttributeIter
+class: MenuAttributeIter
+prefix: g_menu_attribute_iter_
+strictPrefix: Y
 import: glib.Str
 import: glib.Variant
 structWrap: GVariant* Variant
-array: g_application_command_line_get_arguments Return argc
-outFile: ApplicationCommandLine
+nosignal: items-changed
+out: g_menu_attribute_iter_get_next out_name
+out: g_menu_attribute_iter_get_next value
+outFile: MenuAttributeIter
+
+struct: GMenuLinkIter
+class: MenuLinkIter
+prefix: g_menu_link_iter_
+strictPrefix: Y
+import: glib.Str
+import: gio.MenuModel
+structWrap: GMenuModel* MenuModel
+nosignal: items-changed
+out: g_menu_link_iter_get_next out_name
+out: g_menu_link_iter_get_next value
+outFile: MenuLinkIter
+
+file: GMenu.html
+struct: GMenu
+class: Menu
+prefix: g_menu_
+noprefix: g_menu_item_
+import: glib.Str
+import: gio.MenuItem
+import: gio.MenuModel
+structWrap: GMenuItem* MenuItem
+structWrap: GMenuModel* MenuModel
+outFile: Menu
+
+struct: GMenuItem
+class: MenuItem
+prefix: g_menu_item_
+strictPrefix: Y
+import: glib.Str
+import: glib.Variant
+import: gio.MenuModel
+structWrap: GVariant* Variant
+structWrap: GMenuModel* MenuModel
+outFile: MenuItem
+
+#file: gio-GMenuModel-exporter.html
+#See: GDBusConnection
+
+file: GDBusMenuModel.html
+struct: GDBusMenuModel
+class: DBusMenuModel
+prefix: g_menu_
+import: glib.Str
+import: gio.DBusConnection
+structWrap: GDBusConnection* DBusConnection
+structWrap: GDBusMenuModel* DBusMenuModel
+
+code: start
+	/**
+	 * See_Also: get().
+	 */
+	this(DBusConnection connection, string busName, string objectPath)
+	{
+		auto p =  g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_menu_model_get");
+		}
+		this(cast(GDBusMenuModel*) p);
+	}
+code: end
+outFile: DBusMenuModel
 
 ###########################################################
 ### Extending GIO #########################################

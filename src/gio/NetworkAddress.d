@@ -236,7 +236,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 * Creates a new GSocketConnectable for connecting to the given
 	 * uri. May fail and return NULL in case parsing uri fails.
 	 * Using this rather than g_network_address_new() or
-	 * g_network_address_parse_host() allows GSocketClient to determine
+	 * g_network_address_parse() allows GSocketClient to determine
 	 * when to use application-specific proxy protocols.
 	 * Since 2.26
 	 * Params:

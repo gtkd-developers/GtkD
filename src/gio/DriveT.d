@@ -622,7 +622,7 @@ public template DriveT(TStruct)
 	
 	/**
 	 * Gets the kinds of identifiers that drive has.
-	 * Use g_drive_get_identifer() to obtain the identifiers
+	 * Use g_drive_get_identifier() to obtain the identifiers
 	 * themselves.
 	 * Returns: a NULL-terminated array of strings containing kinds of identifiers. Use g_strfreev() to free. [transfer full][array zero-terminated=1]
 	 */
@@ -636,11 +636,27 @@ public template DriveT(TStruct)
 	 * Gets the identifier of the given kind for drive.
 	 * Params:
 	 * kind = the kind of identifier to return
-	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GDrive doesn't have this kind of identifier. Signal Details The "changed" signal void user_function (GDrive *drive, gpointer user_data) : Run Last Emitted when the drive's state has changed.
+	 * Returns: a newly allocated string containing the requested identfier, or NULL if the GDrive doesn't have this kind of identifier.
 	 */
 	public string getIdentifier(string kind)
 	{
 		// char * g_drive_get_identifier (GDrive *drive,  const char *kind);
 		return Str.toString(g_drive_get_identifier(getDriveTStruct(), Str.toStringz(kind)));
+	}
+	
+	/**
+	 * Gets the sort key for drive, if any.
+	 * Since 2.32
+	 * Signal Details
+	 * The "changed" signal
+	 * void user_function (GDrive *drive,
+	 *  gpointer user_data) : Run Last
+	 * Emitted when the drive's state has changed.
+	 * Returns: Sorting key for drive or NULL if no such key is available.
+	 */
+	public string getSortKey()
+	{
+		// const gchar * g_drive_get_sort_key (GDrive *drive);
+		return Str.toString(g_drive_get_sort_key(getDriveTStruct()));
 	}
 }

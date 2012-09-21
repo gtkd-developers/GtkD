@@ -108,8 +108,8 @@ public import gio.VolumeIF;
  * mount, but you can still access the files on it if you use GIO. Might or
  * might not be related to a volume object.
  * Unmounting a GMount instance is an asynchronous operation. For
- * more information about asynchronous operations, see GAsyncReady
- * and GSimpleAsyncReady. To unmount a GMount instance, first call
+ * more information about asynchronous operations, see GAsyncResult
+ * and GSimpleAsyncResult. To unmount a GMount instance, first call
  * g_mount_unmount_with_operation() with (at least) the GMount instance and a
  * GAsyncReadyCallback. The callback will be fired when the
  * operation has resolved (either with success or failure), and a
@@ -211,7 +211,7 @@ public template MountT(TStruct)
 	 * object they should release them so the object can be
 	 * finalized.
 	 * See Also
-	 * GVolume, GUnixMount
+	 * GVolume, GUnixMountEntry, GUnixMountPoint
 	 */
 	void addOnUnmounted(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -718,15 +718,26 @@ public template MountT(TStruct)
 	 * mount, see g_mount_is_shadowed() for more information. The caller
 	 * will need to emit the "changed" signal on mount manually.
 	 * Since 2.20
-	 * Signal Details
-	 * The "changed" signal
-	 * void user_function (GMount *mount,
-	 *  gpointer user_data) : Run Last
-	 * Emitted when the mount has been changed.
 	 */
 	public void unshadow()
 	{
 		// void g_mount_unshadow (GMount *mount);
 		g_mount_unshadow(getMountTStruct());
+	}
+	
+	/**
+	 * Gets the sort key for mount, if any.
+	 * Since 2.32
+	 * Signal Details
+	 * The "changed" signal
+	 * void user_function (GMount *mount,
+	 *  gpointer user_data) : Run Last
+	 * Emitted when the mount has been changed.
+	 * Returns: Sorting key for mount or NULL if no such key is available.
+	 */
+	public string getSortKey()
+	{
+		// const gchar * g_mount_get_sort_key (GMount *mount);
+		return Str.toString(g_mount_get_sort_key(getMountTStruct()));
 	}
 }

@@ -150,6 +150,7 @@ public class OutputStream : ObjectG
 	 * operation was partially finished when the operation was cancelled the
 	 * partial result will be returned, without an error.
 	 * On error -1 is returned and error is set accordingly.
+	 * Virtual: write_fn
 	 * Params:
 	 * buffer = the buffer containing the data to write. [array length=count][element-type guint8]
 	 * count = the number of bytes to write
@@ -231,8 +232,9 @@ public class OutputStream : ObjectG
 	}
 	
 	/**
-	 * Flushed any outstanding buffers in the stream. Will block during
-	 * the operation. Closing the stream will implicitly cause a flush.
+	 * Forces a write of all user-space buffered data for the given
+	 * stream. Will block during the operation. Closing the stream will
+	 * implicitly cause a flush.
 	 * This function is optional for inherited classes.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -405,7 +407,8 @@ public class OutputStream : ObjectG
 	}
 	
 	/**
-	 * Flushes a stream asynchronously.
+	 * Forces an asynchronous write of all user-space buffered data for
+	 * the given stream.
 	 * For behaviour details see g_output_stream_flush().
 	 * When the operation is finished callback will be
 	 * called. You can then call g_output_stream_flush_finish() to get the

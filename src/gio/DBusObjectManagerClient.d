@@ -346,10 +346,10 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 * flags = Zero or more flags from the GDBusObjectManagerClientFlags enumeration.
 	 * name = The owner of the control object (unique or well-known name).
 	 * objectPath = The object path of the control object.
-	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies.
+	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies. [allow-none]
 	 * getProxyTypeUserData = User data to pass to get_proxy_type_func.
 	 * getProxyTypeDestroyNotify = Free function for get_proxy_type_user_data or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
 	 * userData = The data to pass to callback.
 	 */
@@ -370,10 +370,10 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 * flags = Zero or more flags from the GDBusObjectManagerClientFlags enumeration.
 	 * name = The owner of the control object (unique or well-known name).
 	 * objectPath = The object path of the control object.
-	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies.
+	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies. [allow-none]
 	 * getProxyTypeUserData = User data to pass to get_proxy_type_func.
 	 * getProxyTypeDestroyNotify = Free function for get_proxy_type_user_data or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -411,10 +411,10 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 * flags = Zero or more flags from the GDBusObjectManagerClientFlags enumeration.
 	 * name = The owner of the control object (unique or well-known name).
 	 * objectPath = The object path of the control object.
-	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies.
+	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies. [allow-none]
 	 * getProxyTypeUserData = User data to pass to get_proxy_type_func.
 	 * getProxyTypeDestroyNotify = Free function for get_proxy_type_user_data or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
 	 * userData = The data to pass to callback.
 	 */
@@ -436,10 +436,10 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 * flags = Zero or more flags from the GDBusObjectManagerClientFlags enumeration.
 	 * name = The owner of the control object (unique or well-known name).
 	 * objectPath = The object path of the control object.
-	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies.
+	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies. [allow-none]
 	 * getProxyTypeUserData = User data to pass to get_proxy_type_func.
 	 * getProxyTypeDestroyNotify = Free function for get_proxy_type_user_data or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

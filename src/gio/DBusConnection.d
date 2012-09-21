@@ -53,6 +53,7 @@
  * 	- glib.GException
  * 	- glib.Variant
  * 	- glib.VariantType
+ * 	- gio.ActionGroupIF
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.Credentials
@@ -60,6 +61,7 @@
  * 	- gio.DBusMessage
  * 	- gio.DBusMethodInvocation
  * 	- gio.IOStream
+ * 	- gio.MenuModel
  * 	- gio.UnixFDList
  * 	- gio.InitableT
  * 	- gio.InitableIF
@@ -97,6 +99,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Variant;
 private import glib.VariantType;
+private import gio.ActionGroupIF;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.Credentials;
@@ -104,6 +107,7 @@ private import gio.DBusAuthObserver;
 private import gio.DBusMessage;
 private import gio.DBusMethodInvocation;
 private import gio.IOStream;
+private import gio.MenuModel;
 private import gio.UnixFDList;
 private import gio.InitableT;
 private import gio.InitableIF;
@@ -123,20 +127,23 @@ private import gobject.ObjectG;
  * This class is rarely used directly in D-Bus clients. If you are writing
  * an D-Bus client, it is often easier to use the g_bus_own_name(),
  * g_bus_watch_name() or g_dbus_proxy_new_for_bus() APIs.
+ * As an exception to the usual GLib rule that a particular object must not be
+ * used by two threads at the same time, GDBusConnection's methods may be
+ * called from any thread[1].
  * Most of the ways to obtain a GDBusConnection automatically initialize it
  * (i.e. connect to D-Bus): for instance, g_dbus_connection_new() and
  * g_bus_get(), and the synchronous versions of those methods, give you an
  * initialized connection. Language bindings for GIO should use
- * g_initable_new() or g_async_initable_new(), which also initialize the
+ * g_initable_new() or g_async_initable_new_async(), which also initialize the
  * connection.
  * If you construct an uninitialized GDBusConnection, such as via
  * g_object_new(), you must initialize it via g_initable_init() or
- * g_async_initable_init() before using its methods or properties. Calling
- * methods or accessing properties on a GDBusConnection that has not completed
- * initialization successfully is considered to be invalid, and leads to
- * undefined behaviour. In particular, if initialization fails with a GError,
- * the only valid thing you can do with that GDBusConnection is to free it
- * with g_object_unref().
+ * g_async_initable_init_async() before using its methods or properties.
+ * Calling methods or accessing properties on a GDBusConnection that has not
+ * completed initialization successfully is considered to be invalid, and leads
+ * to undefined behaviour. In particular, if initialization fails with a
+ * GError, the only valid thing you can do with that GDBusConnection is to
+ * free it with g_object_unref().
  * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
@@ -232,6 +239,21 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	}
 	
 	/**
+	 * Description
+	 * These functions support exporting a GActionGroup on D-Bus.
+	 * The D-Bus interface that is used is a private implementation
+	 * detail.
+	 * To access an exported GActionGroup remotely, use
+	 * g_dbus_action_group_get() to obtain a GDBusActionGroup.
+	 */
+	
+	/**
+	 * Description
+	 * These functions support exporting a GMenuModel on D-Bus.
+	 * The D-Bus interface that is used is a private implementation
+	 * detail.
+	 * To access an exported GMenuModel remotely, use
+	 * g_dbus_menu_model_get() to obtain a GDBusMenuModel.
 	 */
 	int[string] connectedSignals;
 	
@@ -252,6 +274,9 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * TRUE if connection is closed because the
 	 * remote peer closed its end of the connection.
 	 * Since 2.26
+	 * [1]
+	 *  This is so that g_bus_get() and g_bus_get_sync() can safely return the
+	 *  same GDBusConnection when called from any thread.
 	 */
 	void addOnClosed(void delegate(gboolean, GError*, DBusConnection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -286,7 +311,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Since 2.26
 	 * Params:
 	 * busType = A GBusType.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
 	 * userData = The data to pass to callback.
 	 */
@@ -347,7 +372,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Since 2.26
 	 * Params:
 	 * busType = A GBusType.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: A GDBusConnection or NULL if error is set. Free with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -392,7 +417,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * guid = The GUID to use if a authenticating as a server or NULL. [allow-none]
 	 * flags = Flags describing how to make the connection.
 	 * observer = A GDBusAuthObserver or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
 	 * userData = The data to pass to callback.
 	 */
@@ -420,7 +445,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * guid = The GUID to use if a authenticating as a server or NULL. [allow-none]
 	 * flags = Flags describing how to make the connection.
 	 * observer = A GDBusAuthObserver or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -465,7 +490,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * address = A D-Bus address.
 	 * flags = Flags describing how to make the connection.
 	 * observer = A GDBusAuthObserver or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
 	 * userData = The data to pass to callback.
 	 */
@@ -493,7 +518,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * address = A D-Bus address.
 	 * flags = Flags describing how to make the connection.
 	 * observer = A GDBusAuthObserver or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -550,7 +575,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * version.
 	 * Since 2.26
 	 * Params:
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is
 	 * satisfied or NULL if you don't care about the result. [allow-none]
 	 * userData = The data to pass to callback.
@@ -591,7 +616,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * does.
 	 * Since 2.26
 	 * Params:
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: TRUE if the operation succeeded, FALSE if error is set.
 	 * Throws: GException on failure.
 	 */
@@ -637,7 +662,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * version.
 	 * Since 2.26
 	 * Params:
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is
 	 * satisfied or NULL if you don't care about the result. [allow-none]
 	 * userData = The data to pass to callback.
@@ -678,7 +703,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * does.
 	 * Since 2.26
 	 * Params:
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: TRUE if the operation succeeded, FALSE if error is set.
 	 * Throws: GException on failure.
 	 */
@@ -835,9 +860,9 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * flags = Flags from the GDBusCallFlags enumeration.
 	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
 	 * timeout or G_MAXINT for no timeout.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is
-	 * satisfied or NULL if you don't * care about the result of the
+	 * satisfied or NULL if you don't care about the result of the
 	 * method invocation. [allow-none]
 	 * userData = The data to pass to callback.
 	 */
@@ -900,7 +925,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * flags = Flags from the GDBusCallFlags enumeration.
 	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
 	 * timeout or G_MAXINT for no timeout.
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
 	 * Throws: GException on failure.
 	 */
@@ -940,7 +965,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
 	 * timeout or G_MAXINT for no timeout.
 	 * fdList = A GUnixFDList or NULL. [allow-none]
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is
 	 * satisfied or NULL if you don't * care about the result of the
 	 * method invocation. [allow-none]
@@ -956,7 +981,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Finishes an operation started with g_dbus_connection_call_with_unix_fd_list().
 	 * Since 2.30
 	 * Params:
-	 * outFdList = Return location for a GUnixFDList or NULL. [out]
+	 * outFdList = Return location for a GUnixFDList or NULL. [out][allow-none]
 	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_connection_call_with_unix_fd_list().
 	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
 	 * Throws: GException on failure.
@@ -998,8 +1023,8 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * timeoutMsec = The timeout in milliseconds, -1 to use the default
 	 * timeout or G_MAXINT for no timeout.
 	 * fdList = A GUnixFDList or NULL. [allow-none]
-	 * outFdList = Return location for a GUnixFDList or NULL. [out]
-	 * cancellable = A GCancellable or NULL.
+	 * outFdList = Return location for a GUnixFDList or NULL. [out][allow-none]
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: NULL if error is set. Otherwise a GVariant tuple with return values. Free with g_variant_unref().
 	 * Throws: GException on failure.
 	 */
@@ -1171,7 +1196,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * timeout or G_MAXINT for no timeout.
 	 * outSerial = Return location for serial number assigned
 	 * to message when sending it or NULL. [out][allow-none]
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * callback = A GAsyncReadyCallback to call when the request is
 	 * satisfied or NULL if you don't care about the result. [allow-none]
 	 * userData = The data to pass to callback.
@@ -1246,7 +1271,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * timeout or G_MAXINT for no timeout.
 	 * outSerial = Return location for serial number assigned
 	 * to message when sending it or NULL. [out][allow-none]
-	 * cancellable = A GCancellable or NULL.
+	 * cancellable = A GCancellable or NULL. [allow-none]
 	 * Returns: A locked GDBusMessage that is the reply to message or NULL if error is set. [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1446,5 +1471,109 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	{
 		// gboolean g_dbus_connection_unregister_subtree  (GDBusConnection *connection,  guint registration_id);
 		return g_dbus_connection_unregister_subtree(gDBusConnection, registrationId);
+	}
+	
+	/**
+	 * Exports action_group on connection at object_path.
+	 * The implemented D-Bus API should be considered private. It is
+	 * subject to change in the future.
+	 * A given object path can only have one action group exported on it.
+	 * If this constraint is violated, the export will fail and 0 will be
+	 * returned (with error set accordingly).
+	 * You can unexport the action group using
+	 * g_dbus_connection_unexport_action_group() with the return value of
+	 * this function.
+	 * The thread default main context is taken at the time of this call.
+	 * All incoming action activations and state change requests are
+	 * reported from this context. Any changes on the action group that
+	 * cause it to emit signals must also come from this same context.
+	 * Since incoming action activations and state change requests are
+	 * rather likely to cause changes on the action group, this effectively
+	 * limits a given action group to being exported from only one main
+	 * context.
+	 * Since 2.32
+	 * Params:
+	 * objectPath = a D-Bus object path
+	 * actionGroup = a GActionGroup
+	 * Returns: the ID of the export (never zero), or 0 in case of failure
+	 * Throws: GException on failure.
+	 */
+	public uint exportActionGroup(string objectPath, ActionGroupIF actionGroup)
+	{
+		// guint g_dbus_connection_export_action_group  (GDBusConnection *connection,  const gchar *object_path,  GActionGroup *action_group,  GError **error);
+		GError* err = null;
+		
+		auto p = g_dbus_connection_export_action_group(gDBusConnection, Str.toStringz(objectPath), (actionGroup is null) ? null : actionGroup.getActionGroupTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Reverses the effect of a previous call to
+	 * g_dbus_connection_export_action_group().
+	 * It is an error to call this function with an ID that wasn't returned
+	 * from g_dbus_connection_export_action_group() or to call it with the
+	 * same ID more than once.
+	 * Since 2.32
+	 * Params:
+	 * exportId = the ID from g_dbus_connection_export_action_group()
+	 */
+	public void unexportActionGroup(uint exportId)
+	{
+		// void g_dbus_connection_unexport_action_group  (GDBusConnection *connection,  guint export_id);
+		g_dbus_connection_unexport_action_group(gDBusConnection, exportId);
+	}
+	
+	/**
+	 * Exports menu on connection at object_path.
+	 * The implemented D-Bus API should be considered private.
+	 * It is subject to change in the future.
+	 * An object path can only have one action group exported on it. If this
+	 * constraint is violated, the export will fail and 0 will be
+	 * returned (with error set accordingly).
+	 * You can unexport the menu model using
+	 * g_dbus_connection_unexport_menu_model() with the return value of
+	 * this function.
+	 * Since 2.32
+	 * Params:
+	 * objectPath = a D-Bus object path
+	 * menu = a GMenuModel
+	 * Returns: the ID of the export (never zero), or 0 in case of failure
+	 * Throws: GException on failure.
+	 */
+	public uint exportMenuModel(string objectPath, MenuModel menu)
+	{
+		// guint g_dbus_connection_export_menu_model (GDBusConnection *connection,  const gchar *object_path,  GMenuModel *menu,  GError **error);
+		GError* err = null;
+		
+		auto p = g_dbus_connection_export_menu_model(gDBusConnection, Str.toStringz(objectPath), (menu is null) ? null : menu.getMenuModelStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Reverses the effect of a previous call to
+	 * g_dbus_connection_export_menu_model().
+	 * It is an error to call this function with an ID that wasn't returned
+	 * from g_dbus_connection_export_menu_model() or to call it with the
+	 * same ID more than once.
+	 * Since 2.32
+	 * Params:
+	 * exportId = the ID from g_dbus_connection_export_menu_model()
+	 */
+	public void unexportMenuModel(uint exportId)
+	{
+		// void g_dbus_connection_unexport_menu_model  (GDBusConnection *connection,  guint export_id);
+		g_dbus_connection_unexport_menu_model(gDBusConnection, exportId);
 	}
 }

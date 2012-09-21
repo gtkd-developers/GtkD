@@ -122,19 +122,7 @@ public template AsyncInitableT(TStruct)
 	 * G_IO_ERROR_CANCELLED will be returned. If cancellable is not NULL, and
 	 * the object doesn't support cancellable initialization, the error
 	 * G_IO_ERROR_NOT_SUPPORTED will be returned.
-	 * If this function is not called, or returns with an error, then all
-	 * operations on the object should fail, generally returning the
-	 * error G_IO_ERROR_NOT_INITIALIZED.
-	 * Implementations of this method must be idempotent: i.e. multiple calls
-	 * to this function with the same argument should return the same results.
-	 * Only the first call initializes the object; further calls return the result
-	 * of the first call. This is so that it's safe to implement the singleton
-	 * pattern in the GObject constructor function.
-	 * For classes that also support the GInitable interface, the default
-	 * implementation of this method will run the g_initable_init() function
-	 * in a thread, so if you want to support asynchronous initialization via
-	 * threads, just implement the GAsyncInitable interface without overriding
-	 * any interface methods.
+	 * As with GInitable, if the object is not initialized, or initialization
 	 * Since 2.22
 	 * Params:
 	 * ioPriority = the I/O priority
@@ -142,6 +130,7 @@ public template AsyncInitableT(TStruct)
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * callback = a GAsyncReadyCallback to call when the request is satisfied
 	 * userData = the data to pass to callback function
+	 * Returns: with an error, then all operations on the object except g_object_ref() and g_object_unref() are considered to be invalid, and have undefined behaviour. They will often fail with g_critical() or g_warning(), but this must not be relied on. Implementations of this method must be idempotent: i.e. multiple calls to this function with the same argument should return the same results. Only the first call initializes the object; further calls return the result of the first call. This is so that it's safe to implement the singleton pattern in the GObject constructor function. For classes that also support the GInitable interface, the default implementation of this method will run the g_initable_init() function in a thread, so if you want to support asynchronous initialization via threads, just implement the GAsyncInitable interface without overriding any interface methods.
 	 */
 	public void gAsyncInitableInitAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{

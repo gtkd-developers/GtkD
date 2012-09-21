@@ -181,7 +181,7 @@ public class TlsBackend
 	}
 	
 	/**
-	 * Gets the GTyep of backend's GTlsFileDatabase implementation.
+	 * Gets the GType of backend's GTlsFileDatabase implementation.
 	 * Since 2.30
 	 * Returns: the GType of backend's GTlsFileDatabase implementation.
 	 */

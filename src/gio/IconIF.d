@@ -110,7 +110,7 @@ public interface IconIF
 	/**
 	 * Checks if two icons are equal.
 	 * Params:
-	 * icon2 = pointer to the second GIcon.
+	 * icon2 = pointer to the second GIcon. [allow-none]
 	 * Returns: TRUE if icon1 is equal to icon2. FALSE otherwise.
 	 */
 	public int equal(GIcon* icon2);

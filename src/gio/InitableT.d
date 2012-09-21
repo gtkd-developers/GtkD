@@ -77,11 +77,15 @@ public import gio.Cancellable;
 /**
  * Description
  * GInitable is implemented by objects that can fail during
- * initialization. If an object implements this interface the
- * g_initable_init() function must be called as the first thing
- * after construction. If g_initable_init() is not called, or if
- * it returns an error, all further operations on the object
- * should fail, generally with a G_IO_ERROR_NOT_INITIALIZED error.
+ * initialization. If an object implements this interface then
+ * it must be initialized as the first thing after construction,
+ * either via g_initable_init() or g_async_initable_init_async()
+ * (the latter is only available if it also implements GAsyncInitable).
+ * If the object is not initialized, or initialization returns with an
+ * error, then all operations on the object except g_object_ref() and
+ * g_object_unref() are considered to be invalid, and have undefined
+ * behaviour. They will often fail with g_critical() or g_warning(), but
+ * this must not be relied on.
  * Users of objects implementing this are not intended to use
  * the interface method directly, instead it will be used automatically
  * in various ways. For C applications you generally just call
@@ -111,21 +115,24 @@ public template InitableT(TStruct)
 	 */
 	
 	/**
-	 * Initializes the object implementing the interface. This must be
-	 * done before any real use of the object after initial construction.
+	 * Initializes the object implementing the interface.
+	 * The object must be initialized before any real use after initial
+	 * construction, either with this function or g_async_initable_init_async().
 	 * Implementations may also support cancellation. If cancellable is not NULL,
 	 * then initialization can be cancelled by triggering the cancellable object
 	 * from another thread. If the operation was cancelled, the error
 	 * G_IO_ERROR_CANCELLED will be returned. If cancellable is not NULL and
 	 * the object doesn't support cancellable initialization the error
 	 * G_IO_ERROR_NOT_SUPPORTED will be returned.
-	 * If this function is not called, or returns with an error then all
-	 * operations on the object should fail, generally returning the
-	 * error G_IO_ERROR_NOT_INITIALIZED.
+	 * If the object is not initialized, or initialization returns with an
+	 * error, then all operations on the object except g_object_ref() and
+	 * g_object_unref() are considered to be invalid, and have undefined
+	 * behaviour. See the ??? section introduction
+	 * for more details.
 	 * Implementations of this method must be idempotent, i.e. multiple calls
 	 * to this function with the same argument should return the same results.
 	 * Only the first call initializes the object, further calls return the result
-	 * of the first call. This is so that its safe to implement the singleton
+	 * of the first call. This is so that it's safe to implement the singleton
 	 * pattern in the GObject constructor function.
 	 * Since 2.22
 	 * Params:
@@ -149,7 +156,7 @@ public template InitableT(TStruct)
 	}
 	
 	/**
-	 * Helper function for constructing GInitiable object. This is
+	 * Helper function for constructing GInitable object. This is
 	 * similar to g_object_new_valist() but also initializes the object
 	 * and returns NULL, setting an error on failure.
 	 * Since 2.22
@@ -182,13 +189,13 @@ public template InitableT(TStruct)
 	}
 	
 	/**
-	 * Helper function for constructing GInitiable object. This is
+	 * Helper function for constructing GInitable object. This is
 	 * similar to g_object_newv() but also initializes the object
 	 * and returns NULL, setting an error on failure.
 	 * Since 2.22
 	 * Params:
 	 * objectType = a GType supporting GInitable.
-	 * parameters = the parameters to use to construct the object
+	 * parameters = the parameters to use to construct the object. [array length=n_parameters]
 	 * cancellable = optional GCancellable object, NULL to ignore.
 	 * Returns: a newly allocated GObject, or NULL on error. [transfer full]
 	 * Throws: GException on failure.

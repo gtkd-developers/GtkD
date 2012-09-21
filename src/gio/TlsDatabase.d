@@ -328,7 +328,7 @@ public class TlsDatabase : ObjectG
 	 * interaction = used to interact with the user if necessary. [allow-none]
 	 * flags = Flags which affect the lookup operation.
 	 * cancellable = a GCancellable, or NULL. [allow-none]
-	 * Returns: a newly allocated list of GTlsCertificate objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list. [transfer full]
+	 * Returns: a newly allocated list of GTlsCertificate objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list. [transfer full][element-type GTlsCertificate]
 	 * Throws: GException on failure.
 	 */
 	public ListG lookupCertificatesIssuedBy(ByteArray issuerRawDn, TlsInteraction interaction, GTlsDatabaseLookupFlags flags, Cancellable cancellable)
@@ -420,9 +420,10 @@ public class TlsDatabase : ObjectG
 	
 	/**
 	 * Lookup a certificate by its handle.
-	 * The handle should have been created by calling g_tls_database_create_handle()
-	 * on a GTlsDatabase object of the same TLS backend. The handle is designed
-	 * to remain valid across instantiations of the database.
+	 * The handle should have been created by calling
+	 * g_tls_database_create_certificate_handle() on a GTlsDatabase object of
+	 * the same TLS backend. The handle is designed to remain valid across
+	 * instantiations of the database.
 	 * If the handle is no longer valid, or does not point to a certificate in
 	 * this database, then NULL will be returned.
 	 * This function can block, use g_tls_database_lookup_certificate_for_handle_async() to perform
@@ -457,7 +458,7 @@ public class TlsDatabase : ObjectG
 	
 	/**
 	 * Asynchronously lookup a certificate by its handle in the database. See
-	 * g_tls_database_lookup_handle() for more information.
+	 * g_tls_database_lookup_certificate_for_handle() for more information.
 	 * Since 2.30
 	 * Params:
 	 * handle = a certificate handle
@@ -475,7 +476,7 @@ public class TlsDatabase : ObjectG
 	
 	/**
 	 * Finish an asynchronous lookup of a certificate by its handle. See
-	 * g_tls_database_lookup_handle() for more information.
+	 * g_tls_database_lookup_certificate_handle() for more information.
 	 * If the handle is no longer valid, or does not point to a certificate in
 	 * this database, then NULL will be returned.
 	 * Since 2.30

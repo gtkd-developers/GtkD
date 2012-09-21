@@ -264,7 +264,7 @@ public class DBusError
 	 * error = A pointer to a GError or NULL.
 	 * dbusErrorName = D-Bus error name.
 	 * dbusErrorMessage = D-Bus error message.
-	 * format = printf()-style format to prepend to dbus_error_message or NULL.
+	 * format = printf()-style format to prepend to dbus_error_message or NULL. [allow-none]
 	 * varArgs = Arguments for format.
 	 */
 	public static void setDbusErrorValist(out ErrorG error, string dbusErrorName, string dbusErrorMessage, string format, void* varArgs)

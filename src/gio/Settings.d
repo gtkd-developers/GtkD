@@ -47,10 +47,15 @@
  * 	- glib.Variant
  * 	- glib.VariantType
  * 	- gobject.Value
+ * 	- gio.Action
+ * 	- gio.ActionIF
  * 	- gio.SettingsBackend
+ * 	- gio.SettingsSchema
  * structWrap:
+ * 	- GAction* -> ActionIF
  * 	- GSettings* -> Settings
  * 	- GSettingsBackend* -> SettingsBackend
+ * 	- GSettingsSchema* -> SettingsSchema
  * 	- GValue* -> Value
  * 	- GVariant* -> Variant
  * 	- GVariantType* -> VariantType
@@ -73,7 +78,10 @@ private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gobject.Value;
+private import gio.Action;
+private import gio.ActionIF;
 private import gio.SettingsBackend;
+private import gio.SettingsSchema;
 
 
 
@@ -107,6 +115,13 @@ private import gobject.ObjectG;
  * can also be 'relocatable', i.e. not equipped with a fixed path. This is
  * useful e.g. when the schema describes an 'account', and you want to be
  * able to store a arbitrary number of accounts.
+ * Paths must start with and end with a forward slash character ('/')
+ * and must not contain two sequential slash characters. Paths should
+ * be chosen based on a domain name associated with the program or
+ * library to which the settings belong. Examples of paths are
+ * "/org/gtk/settings/file-chooser/" and "/ca/desrt/dconf-editor/".
+ * Paths should not start with "/apps/", "/desktop/" or "/system/" as
+ * they often did in GConf.
  * Unlike other configuration systems (like GConf), GSettings does not
  * restrict keys to basic types like strings and numbers. GSettings stores
  * values as GVariant, and allows any GVariantType for keys. Key names
@@ -383,29 +398,31 @@ public class Settings : ObjectG
 	
 	
 	/**
-	 * Creates a new GSettings object with a given schema.
+	 * Creates a new GSettings object with the schema specified by
+	 * schema_id.
 	 * Signals on the newly created GSettings object will be dispatched
 	 * via the thread-default GMainContext in effect at the time of the
 	 * call to g_settings_new(). The new GSettings will hold a reference
 	 * on the context. See g_main_context_push_thread_default().
 	 * Since 2.26
 	 * Params:
-	 * schema = the name of the schema
+	 * schemaId = the id of the schema
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string schema)
+	public this (string schemaId)
 	{
-		// GSettings * g_settings_new (const gchar *schema);
-		auto p = g_settings_new(Str.toStringz(schema));
+		// GSettings * g_settings_new (const gchar *schema_id);
+		auto p = g_settings_new(Str.toStringz(schemaId));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_settings_new(Str.toStringz(schema))");
+			throw new ConstructionException("null returned by g_settings_new(Str.toStringz(schemaId))");
 		}
 		this(cast(GSettings*) p);
 	}
 	
 	/**
-	 * Creates a new GSettings object with a given schema and path.
+	 * Creates a new GSettings object with the relocatable schema specified
+	 * by schema_id and a given path.
 	 * You only need to do this if you want to directly create a settings
 	 * object with a schema that doesn't have a specified path of its own.
 	 * That's quite rare.
@@ -413,23 +430,24 @@ public class Settings : ObjectG
 	 * has an explicitly specified path.
 	 * Since 2.26
 	 * Params:
-	 * schema = the name of the schema
+	 * schemaId = the id of the schema
 	 * path = the path to use
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string schema, string path)
+	public this (string schemaId, string path)
 	{
-		// GSettings * g_settings_new_with_path (const gchar *schema,  const gchar *path);
-		auto p = g_settings_new_with_path(Str.toStringz(schema), Str.toStringz(path));
+		// GSettings * g_settings_new_with_path (const gchar *schema_id,  const gchar *path);
+		auto p = g_settings_new_with_path(Str.toStringz(schemaId), Str.toStringz(path));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_settings_new_with_path(Str.toStringz(schema), Str.toStringz(path))");
+			throw new ConstructionException("null returned by g_settings_new_with_path(Str.toStringz(schemaId), Str.toStringz(path))");
 		}
 		this(cast(GSettings*) p);
 	}
 	
 	/**
-	 * Creates a new GSettings object with a given schema and backend.
+	 * Creates a new GSettings object with the schema specified by
+	 * schema_id and a given GSettingsBackend.
 	 * Creating a GSettings object with a different backend allows accessing
 	 * settings from a database other than the usual one. For example, it may make
 	 * sense to pass a backend corresponding to the "defaults" settings database on
@@ -437,17 +455,40 @@ public class Settings : ObjectG
 	 * settings instead of the settings for this user.
 	 * Since 2.26
 	 * Params:
-	 * schema = the name of the schema
+	 * schemaId = the id of the schema
 	 * backend = the GSettingsBackend to use
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string schema, SettingsBackend backend)
+	public this (string schemaId, SettingsBackend backend)
 	{
-		// GSettings * g_settings_new_with_backend (const gchar *schema,  GSettingsBackend *backend);
-		auto p = g_settings_new_with_backend(Str.toStringz(schema), (backend is null) ? null : backend.getSettingsBackendStruct());
+		// GSettings * g_settings_new_with_backend (const gchar *schema_id,  GSettingsBackend *backend);
+		auto p = g_settings_new_with_backend(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_settings_new_with_backend(Str.toStringz(schema), (backend is null) ? null : backend.getSettingsBackendStruct())");
+			throw new ConstructionException("null returned by g_settings_new_with_backend(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct())");
+		}
+		this(cast(GSettings*) p);
+	}
+	
+	/**
+	 * Creates a new GSettings object with the schema specified by
+	 * schema_id and a given GSettingsBackend and path.
+	 * This is a mix of g_settings_new_with_backend() and
+	 * g_settings_new_with_path().
+	 * Since 2.26
+	 * Params:
+	 * schemaId = the id of the schema
+	 * backend = the GSettingsBackend to use
+	 * path = the path to use
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string schemaId, SettingsBackend backend, string path)
+	{
+		// GSettings * g_settings_new_with_backend_and_path  (const gchar *schema_id,  GSettingsBackend *backend,  const gchar *path);
+		auto p = g_settings_new_with_backend_and_path(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_settings_new_with_backend_and_path(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path))");
 		}
 		this(cast(GSettings*) p);
 	}
@@ -455,22 +496,36 @@ public class Settings : ObjectG
 	/**
 	 * Creates a new GSettings object with a given schema, backend and
 	 * path.
-	 * This is a mix of g_settings_new_with_backend() and
-	 * g_settings_new_with_path().
-	 * Since 2.26
+	 * It should be extremely rare that you ever want to use this function.
+	 * It is made available for advanced use-cases (such as plugin systems
+	 * that want to provide access to schemas loaded from custom locations,
+	 * etc).
+	 * At the most basic level, a GSettings object is a pure composition of
+	 * 4 things: a GSettingsSchema, a GSettingsBackend, a path within that
+	 * backend, and a GMainContext to which signals are dispatched.
+	 * This constructor therefore gives you full control over constructing
+	 * GSettings instances. The first 4 parameters are given directly as
+	 * schema, backend and path, and the main context is taken from the
+	 * thread-default (as per g_settings_new()).
+	 * If backend is NULL then the default backend is used.
+	 * If path is NULL then the path from the schema is used. It is an
+	 * error f path is NULL and the schema has no path of its own or if
+	 * path is non-NULL and not equal to the path that the schema does
+	 * have.
+	 * Since 2.32
 	 * Params:
-	 * schema = the name of the schema
-	 * backend = the GSettingsBackend to use
-	 * path = the path to use
+	 * schema = a GSettingsSchema
+	 * backend = a GSettingsBackend. [allow-none]
+	 * path = the path to use. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string schema, SettingsBackend backend, string path)
+	public this (SettingsSchema schema, SettingsBackend backend, string path)
 	{
-		// GSettings * g_settings_new_with_backend_and_path  (const gchar *schema,  GSettingsBackend *backend,  const gchar *path);
-		auto p = g_settings_new_with_backend_and_path(Str.toStringz(schema), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
+		// GSettings * g_settings_new_full (GSettingsSchema *schema,  GSettingsBackend *backend,  const gchar *path);
+		auto p = g_settings_new_full((schema is null) ? null : schema.getSettingsSchemaStruct(), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_settings_new_with_backend_and_path(Str.toStringz(schema), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path))");
+			throw new ConstructionException("null returned by g_settings_new_full((schema is null) ? null : schema.getSettingsSchemaStruct(), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path))");
 		}
 		this(cast(GSettings*) p);
 	}
@@ -650,7 +705,7 @@ public class Settings : ObjectG
 	 * system. These are schemas that do not provide their own path. It is
 	 * usual to instantiate these schemas directly, but if you want to you
 	 * can use g_settings_new_with_path() to specify the path.
-	 * The output of this function, tTaken together with the output of
+	 * The output of this function, taken together with the output of
 	 * g_settings_list_schemas() represents the complete list of all
 	 * installed schemas.
 	 * Since 2.28
@@ -1192,5 +1247,33 @@ public class Settings : ObjectG
 	{
 		// void g_settings_unbind (gpointer object,  const gchar *property);
 		g_settings_unbind(object, Str.toStringz(property));
+	}
+	
+	/**
+	 * Creates a GAction corresponding to a given GSettings key.
+	 * The action has the same name as the key.
+	 * The value of the key becomes the state of the action and the action
+	 * is enabled when the key is writable. Changing the state of the
+	 * action results in the key being written to. Changes to the value or
+	 * writability of the key cause appropriate change notifications to be
+	 * emitted for the action.
+	 * For boolean-valued keys, action activations take no parameter and
+	 * result in the toggling of the value. For all other types,
+	 * activations take the new value for the key (which must have the
+	 * correct type).
+	 * Since 2.32
+	 * Params:
+	 * key = the name of a key in settings
+	 * Returns: a new GAction. [transfer full]
+	 */
+	public ActionIF createAction(string key)
+	{
+		// GAction * g_settings_create_action (GSettings *settings,  const gchar *key);
+		auto p = g_settings_create_action(gSettings, Str.toStringz(key));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Action(cast(GAction*) p);
 	}
 }

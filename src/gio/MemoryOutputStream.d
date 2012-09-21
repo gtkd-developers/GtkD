@@ -132,12 +132,12 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	 * pass NULL as realloc_fn.
 	 * $(DDOC_COMMENT example)
 	 * Params:
-	 * data = pointer to a chunk of memory to use, or NULL
+	 * data = pointer to a chunk of memory to use, or NULL. [allow-none]
 	 * size = the size of data
 	 * reallocFunction = a function with realloc() semantics (like g_realloc())
-	 * to be called when data needs to be grown, or NULL
+	 * to be called when data needs to be grown, or NULL. [allow-none]
 	 * destroyFunction = a function to be called on data when the stream is
-	 * finalized, or NULL
+	 * finalized, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (void* data, gsize size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction)

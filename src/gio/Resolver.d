@@ -172,8 +172,7 @@ public class Resolver : ObjectG
 	/**
 	 * Gets the default GResolver. You should unref it when you are done
 	 * with it. GResolver may use its reference count as a hint about how
-	 * many threads/processes, etc it should allocate for concurrent DNS
-	 * resolutions.
+	 * many threads it should allocate for concurrent DNS resolutions.
 	 * Since 2.22
 	 * Returns: the default GResolver. [transfer full]
 	 */

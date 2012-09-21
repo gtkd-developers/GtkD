@@ -48,15 +48,17 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.Source
- * 	- gio.SocketAddress
  * 	- gio.Cancellable
  * 	- gio.Credentials
+ * 	- gio.InetAddress
+ * 	- gio.SocketAddress
  * 	- gio.SocketControlMessage
  * 	- gio.InitableT
  * 	- gio.InitableIF
  * structWrap:
  * 	- GCancellable* -> Cancellable
  * 	- GCredentials* -> Credentials
+ * 	- GInetAddress* -> InetAddress
  * 	- GSocketAddress* -> SocketAddress
  * 	- GSocketControlMessage* -> SocketControlMessage
  * 	- GSource* -> Source
@@ -80,9 +82,10 @@ private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Source;
-private import gio.SocketAddress;
 private import gio.Cancellable;
 private import gio.Credentials;
+private import gio.InetAddress;
+private import gio.SocketAddress;
 private import gio.SocketControlMessage;
 private import gio.InitableT;
 private import gio.InitableIF;
@@ -461,9 +464,10 @@ public class Socket : ObjectG, InitableIF
 	 * See g_socket_receive() for additional information.
 	 * Since 2.22
 	 * Params:
-	 * address = a pointer to a GSocketAddress pointer, or NULL
-	 * buffer = a buffer to read data into (which should be at least size
-	 * bytes long).
+	 * address = a pointer to a GSocketAddress
+	 * pointer, or NULL. [out][allow-none]
+	 * buffer = a buffer to
+	 * read data into (which should be at least size bytes long). [array length=size][element-type guint8]
 	 * size = the number of bytes you want to read from the socket
 	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes read, or 0 if the connection was closed by the peer, or -1 on error
@@ -536,7 +540,8 @@ public class Socket : ObjectG, InitableIF
 	 * On error -1 is returned and error is set accordingly.
 	 * Since 2.22
 	 * Params:
-	 * address = a pointer to a GSocketAddress pointer, or NULL
+	 * address = a pointer to a GSocketAddress
+	 * pointer, or NULL. [out][allow-none]
 	 * vectors = an array of GInputVector structs. [array length=num_vectors]
 	 * messages = a pointer which
 	 * may be filled with an array of GSocketControlMessages, or NULL. [array length=num_messages][allow-none]
@@ -621,7 +626,8 @@ public class Socket : ObjectG, InitableIF
 	 * On error -1 is returned and error is set accordingly.
 	 * Since 2.22
 	 * Params:
-	 * buffer = the buffer containing the data to send. [array length=size]
+	 * buffer = the buffer
+	 * containing the data to send. [array length=size][element-type guint8]
 	 * size = the number of bytes to send
 	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes written (which may be less than size), or -1 on error
@@ -649,8 +655,9 @@ public class Socket : ObjectG, InitableIF
 	 * See g_socket_send() for additional information.
 	 * Since 2.22
 	 * Params:
-	 * address = a GSocketAddress, or NULL
-	 * buffer = the buffer containing the data to send. [array length=size]
+	 * address = a GSocketAddress, or NULL. [allow-none]
+	 * buffer = the buffer
+	 * containing the data to send. [array length=size][element-type guint8]
 	 * size = the number of bytes to send
 	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes written (which may be less than size), or -1 on error
@@ -705,7 +712,7 @@ public class Socket : ObjectG, InitableIF
 	 * On error -1 is returned and error is set accordingly.
 	 * Since 2.22
 	 * Params:
-	 * address = a GSocketAddress, or NULL
+	 * address = a GSocketAddress, or NULL. [allow-none]
 	 * vectors = an array of GOutputVector structs. [array length=num_vectors]
 	 * messages = a pointer to an
 	 * array of GSocketControlMessages, or NULL. [array length=num_messages][allow-none]
@@ -738,7 +745,8 @@ public class Socket : ObjectG, InitableIF
 	 * the blocking argument rather than by socket's properties.
 	 * Since 2.26
 	 * Params:
-	 * buffer = the buffer containing the data to send. [array length=size]
+	 * buffer = the buffer
+	 * containing the data to send. [array length=size][element-type guint8]
 	 * size = the number of bytes to send
 	 * blocking = whether to do blocking or non-blocking I/O
 	 * cancellable = a GCancellable or NULL. [allow-none]
@@ -927,6 +935,7 @@ public class Socket : ObjectG, InitableIF
 	 * met, then FALSE is returned and error, if non-NULL, is set to
 	 * the appropriate value (G_IO_ERROR_CANCELLED or
 	 * G_IO_ERROR_TIMED_OUT).
+	 * See also g_socket_condition_timed_wait().
 	 * Since 2.22
 	 * Params:
 	 * condition = a GIOCondition mask to wait for
@@ -947,6 +956,54 @@ public class Socket : ObjectG, InitableIF
 		}
 		
 		return p;
+	}
+	
+	/**
+	 * Waits for up to timeout microseconds for condition to become true
+	 * on socket. If the condition is met, TRUE is returned.
+	 * If cancellable is cancelled before the condition is met, or if
+	 * timeout (or the socket's "timeout") is reached before the
+	 * condition is met, then FALSE is returned and error, if non-NULL,
+	 * is set to the appropriate value (G_IO_ERROR_CANCELLED or
+	 * G_IO_ERROR_TIMED_OUT).
+	 * If you don't want a timeout, use g_socket_condition_wait().
+	 * (Alternatively, you can pass -1 for timeout.)
+	 * Note that although timeout is in microseconds for consistency with
+	 * other GLib APIs, this function actually only has millisecond
+	 * resolution, and the behavior is undefined if timeout is not an
+	 * exact number of milliseconds.
+	 * Since 2.32
+	 * Params:
+	 * condition = a GIOCondition mask to wait for
+	 * timeout = the maximum time (in microseconds) to wait, or -1
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * Returns: TRUE if the condition was met, FALSE otherwise
+	 * Throws: GException on failure.
+	 */
+	public int conditionTimedWait(GIOCondition condition, long timeout, Cancellable cancellable)
+	{
+		// gboolean g_socket_condition_timed_wait (GSocket *socket,  GIOCondition condition,  gint64 timeout,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_condition_timed_wait(gSocket, condition, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Get the amount of data pending in the OS input buffer.
+	 * Since 2.32
+	 * Returns: the number of bytes that can be read from the socket without blocking or -1 on error.
+	 */
+	public gssize getAvailableBytes()
+	{
+		// gssize g_socket_get_available_bytes (GSocket *socket);
+		return g_socket_get_available_bytes(gSocket);
 	}
 	
 	/**
@@ -1081,6 +1138,58 @@ public class Socket : ObjectG, InitableIF
 	{
 		// void g_socket_set_timeout (GSocket *socket,  guint timeout);
 		g_socket_set_timeout(gSocket, timeout);
+	}
+	
+	/**
+	 * Sets the time-to-live for outgoing unicast packets on socket.
+	 * By default the platform-specific default value is used.
+	 * Since 2.32
+	 * Params:
+	 * ttl = the time-to-live value for all unicast packets on socket
+	 */
+	public void setTtl(uint ttl)
+	{
+		// void g_socket_set_ttl (GSocket *socket,  guint ttl);
+		g_socket_set_ttl(gSocket, ttl);
+	}
+	
+	/**
+	 * Gets the unicast time-to-live setting on socket; see
+	 * g_socket_set_ttl() for more details.
+	 * Since 2.32
+	 * Returns: the time-to-live setting on socket
+	 */
+	public uint getTtl()
+	{
+		// guint g_socket_get_ttl (GSocket *socket);
+		return g_socket_get_ttl(gSocket);
+	}
+	
+	/**
+	 * Gets the broadcast setting on socket; if TRUE,
+	 * it is possible to send packets to broadcast
+	 * addresses or receive from broadcast addresses.
+	 * Since 2.32
+	 * Returns: the broadcast setting on socket
+	 */
+	public int getBroadcast()
+	{
+		// gboolean g_socket_get_broadcast (GSocket *socket);
+		return g_socket_get_broadcast(gSocket);
+	}
+	
+	/**
+	 * Sets whether socket should allow sending to and receiving from
+	 * broadcast addresses. This is FALSE by default.
+	 * Since 2.32
+	 * Params:
+	 * broadcast = whether socket should allow sending to and receiving
+	 * from broadcast addresses
+	 */
+	public void setBroadcast(int broadcast)
+	{
+		// void g_socket_set_broadcast (GSocket *socket,  gboolean broadcast);
+		g_socket_set_broadcast(gSocket, broadcast);
 	}
 	
 	/**
@@ -1234,5 +1343,121 @@ public class Socket : ObjectG, InitableIF
 			return null;
 		}
 		return new Credentials(cast(GCredentials*) p);
+	}
+	
+	/**
+	 * Registers socket to receive multicast messages sent to group.
+	 * socket must be a G_SOCKET_TYPE_DATAGRAM socket, and must have
+	 * been bound to an appropriate interface and port with
+	 * g_socket_bind().
+	 * If iface is NULL, the system will automatically pick an interface
+	 * to bind to based on group.
+	 * If source_specific is TRUE, source-specific multicast as defined
+	 * in RFC 4604 is used. Note that on older platforms this may fail
+	 * with a G_IO_ERROR_NOT_SUPPORTED error.
+	 * Since 2.32
+	 * Params:
+	 * group = a GInetAddress specifying the group address to join.
+	 * iface = Name of the interface to use, or NULL. [allow-none]
+	 * sourceSpecific = TRUE if source-specific multicast should be used
+	 * Returns: TRUE on success, FALSE on error.
+	 * Throws: GException on failure.
+	 */
+	public int joinMulticastGroup(InetAddress group, int sourceSpecific, string iface)
+	{
+		// gboolean g_socket_join_multicast_group (GSocket *socket,  GInetAddress *group,  gboolean source_specific,  const gchar *iface,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_join_multicast_group(gSocket, (group is null) ? null : group.getInetAddressStruct(), sourceSpecific, Str.toStringz(iface), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Removes socket from the multicast group defined by group, iface,
+	 * and source_specific (which must all have the same values they had
+	 * when you joined the group).
+	 * socket remains bound to its address and port, and can still receive
+	 * unicast messages after calling this.
+	 * Since 2.32
+	 * Params:
+	 * group = a GInetAddress specifying the group address to leave.
+	 * iface = Interface used. [allow-none]
+	 * sourceSpecific = TRUE if source-specific multicast was used
+	 * Returns: TRUE on success, FALSE on error.
+	 * Throws: GException on failure.
+	 */
+	public int leaveMulticastGroup(InetAddress group, int sourceSpecific, string iface)
+	{
+		// gboolean g_socket_leave_multicast_group (GSocket *socket,  GInetAddress *group,  gboolean source_specific,  const gchar *iface,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_leave_multicast_group(gSocket, (group is null) ? null : group.getInetAddressStruct(), sourceSpecific, Str.toStringz(iface), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Gets the multicast loopback setting on socket; if TRUE (the
+	 * default), outgoing multicast packets will be looped back to
+	 * multicast listeners on the same host.
+	 * Since 2.32
+	 * Returns: the multicast loopback setting on socket
+	 */
+	public int getMulticastLoopback()
+	{
+		// gboolean g_socket_get_multicast_loopback (GSocket *socket);
+		return g_socket_get_multicast_loopback(gSocket);
+	}
+	
+	/**
+	 * Sets whether outgoing multicast packets will be received by sockets
+	 * listening on that multicast address on the same host. This is TRUE
+	 * by default.
+	 * Since 2.32
+	 * Params:
+	 * loopback = whether socket should receive messages sent to its
+	 * multicast groups from the local host
+	 */
+	public void setMulticastLoopback(int loopback)
+	{
+		// void g_socket_set_multicast_loopback (GSocket *socket,  gboolean loopback);
+		g_socket_set_multicast_loopback(gSocket, loopback);
+	}
+	
+	/**
+	 * Gets the multicast time-to-live setting on socket; see
+	 * g_socket_set_multicast_ttl() for more details.
+	 * Since 2.32
+	 * Returns: the multicast time-to-live setting on socket
+	 */
+	public uint getMulticastTtl()
+	{
+		// guint g_socket_get_multicast_ttl (GSocket *socket);
+		return g_socket_get_multicast_ttl(gSocket);
+	}
+	
+	/**
+	 * Sets the time-to-live for outgoing multicast datagrams on socket.
+	 * By default, this is 1, meaning that multicast packets will not leave
+	 * the local network.
+	 * Since 2.32
+	 * Params:
+	 * ttl = the time-to-live value for all multicast datagrams on socket
+	 */
+	public void setMulticastTtl(uint ttl)
+	{
+		// void g_socket_set_multicast_ttl (GSocket *socket,  guint ttl);
+		g_socket_set_multicast_ttl(gSocket, ttl);
 	}
 }

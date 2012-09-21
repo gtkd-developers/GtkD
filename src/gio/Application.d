@@ -37,6 +37,7 @@
  * extend  = 
  * implements:
  * 	- ActionGroupIF
+ * 	- ActionMapIF
  * prefixes:
  * 	- g_application_
  * omit structs:
@@ -51,7 +52,10 @@
  * 	- gio.File
  * 	- gio.ActionGroupIF
  * 	- gio.ActionGroupT
+ * 	- gio.ActionMapIF
+ * 	- gio.ActionMapT
  * structWrap:
+ * 	- GApplication* -> Application
  * 	- GCancellable* -> Cancellable
  * 	- GFile* -> File
  * module aliases:
@@ -76,6 +80,8 @@ private import gio.Cancellable;
 private import gio.File;
 private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
+private import gio.ActionMapIF;
+private import gio.ActionMapT;
 
 
 
@@ -83,47 +89,53 @@ private import gobject.ObjectG;
 
 /**
  * Description
- * A GApplication is the foundation of an application, unique for a
- * given application identifier. The GApplication class wraps some
+ * A GApplication is the foundation of an application. It wraps some
  * low-level platform-specific services and is intended to act as the
  * foundation for higher-level application classes such as
  * GtkApplication or MxApplication. In general, you should not use
  * this class outside of a higher level framework.
- * One of the core features that GApplication provides is process
- * uniqueness, in the context of a "session". The session concept is
- * platform-dependent, but corresponds roughly to a graphical desktop
- * login. When your application is launched again, its arguments
- * are passed through platform communication to the already running
- * program. The already running instance of the program is called the
- * primary instance.
- * Before using GApplication, you must choose an "application identifier".
- * The expected form of an application identifier is very close to that of
- * of a DBus bus name.
- * Examples include: "com.example.MyApp", "org.example.internal-apps.Calculator".
- * For details on valid application identifiers, see
- * g_application_id_is_valid().
- * The application identifier is claimed by the application as a
- * well-known bus name on the user's session bus. This means that the
- * uniqueness of your application is scoped to the current session. It
- * also means that your application may provide additional services
- * (through registration of other object paths) at that bus name.
- * The registration of these object paths should be done with the shared
- * GDBus session bus. Note that due to the internal architecture of
- * GDBus, method calls can be dispatched at any time (even if a main
- * loop is not running). For this reason, you must ensure that any
- * object paths that you wish to register are registered before
- * GApplication attempts to acquire the bus name of your application
- * (which happens in g_application_register()). Unfortunately, this
- * means that you cannot use g_application_get_is_remote() to decide if
- * you want to register object paths.
  * GApplication provides convenient life cycle management by maintaining
  * a use count for the primary application instance.
  * The use count can be changed using g_application_hold() and
  * g_application_release(). If it drops to zero, the application exits.
- * GApplication also implements the GActionGroup interface and lets you
- * easily export actions by adding them with g_application_set_action_group().
- * When invoking an action by calling g_action_group_activate_action() on
- * the application, it is always invoked in the primary instance.
+ * Higher-level classes such as GtkApplication employ the use count to
+ * ensure that the application stays alive as long as it has any opened
+ * windows.
+ * Another feature that GApplication (optionally) provides is process
+ * uniqueness. Applications can make use of this functionality by
+ * providing a unique application ID. If given, only one application
+ * with this ID can be running at a time per session. The session
+ * concept is platform-dependent, but corresponds roughly to a graphical
+ * desktop login. When your application is launched again, its
+ * arguments are passed through platform communication to the already
+ * running program. The already running instance of the program is
+ * called the primary instance. On Linux, the
+ * D-Bus session bus is used for communication.
+ * If used, the expected form of an application identifier is very close
+ * to that of of a
+ * DBus bus name.
+ * Examples include: "com.example.MyApp", "org.example.internal-apps.Calculator".
+ * For details on valid application identifiers, see g_application_id_is_valid().
+ * On Linux, the application identifier is claimed as a well-known bus name
+ * on the user's session bus. This means that the uniqueness of your
+ * application is scoped to the current session. It also means that your
+ * application may provide additional services (through registration of other
+ * object paths) at that bus name. The registration of these object paths
+ * should be done with the shared GDBus session bus. Note that due to the
+ * internal architecture of GDBus, method calls can be dispatched at any time
+ * (even if a main loop is not running). For this reason, you must ensure that
+ * any object paths that you wish to register are registered before GApplication
+ * attempts to acquire the bus name of your application (which happens in
+ * g_application_register()). Unfortunately, this means that you cannot use
+ * g_application_get_is_remote() to decide if you want to register object paths.
+ * GApplication also implements the GActionGroup and GActionMap
+ * interfaces and lets you easily export actions by adding them with
+ * g_action_map_add_action(). When invoking an action by calling
+ * g_action_group_activate_action() on the application, it is always
+ * invoked in the primary instance. The actions are also exported on
+ * the session bus, and GIO provides the GDBusActionGroup wrapper to
+ * conveniently access them remotely. GIO provides a GDBusMenuModel wrapper
+ * for remote access to exported GMenuModels.
  * There is a number of different entry points into a GApplication:
  * via 'Activate' (i.e. just starting the application)
  * via 'Open' (i.e. opening some files)
@@ -137,7 +149,7 @@ private import gobject.ObjectG;
  * in the form of a GVariant dictionary mapping strings to variants.
  * To use platform data, override the before_emit or after_emit virtual
  * functions in your GApplication subclass. When dealing with
- * GApplicationCommandline objects, the platform data is directly
+ * GApplicationCommandLine objects, the platform data is directly
  * available via g_application_command_line_get_cwd(),
  * g_application_command_line_get_environ() and
  * g_application_command_line_get_platform_data().
@@ -146,7 +158,7 @@ private import gobject.ObjectG;
  * "cwd"), and optionally the environment (ie the set of environment
  * variables and their values) of the calling process (key "environ").
  * The environment is only added to the platform data if the
- * G_APPLICATION_SEND_ENVIONMENT flag is set. GApplication subclasses
+ * G_APPLICATION_SEND_ENVIRONMENT flag is set. GApplication subclasses
  * can add their own platform data by overriding the add_platform_data
  * virtual function. For instance, GtkApplication adds startup notification
  * data in this way.
@@ -157,7 +169,7 @@ private import gobject.ObjectG;
  * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
  */
-public class Application : ObjectG, ActionGroupIF
+public class Application : ObjectG, ActionGroupIF, ActionMapIF
 {
 	
 	/** the main Gtk struct */
@@ -206,6 +218,9 @@ public class Application : ObjectG, ActionGroupIF
 	// add the ActionGroup capabilities
 	mixin ActionGroupT!(GApplication);
 	
+	// add the ActionMap capabilities
+	mixin ActionMapT!(GApplication);
+	
 	/**
 	 */
 	int[string] connectedSignals;
@@ -242,7 +257,7 @@ public class Application : ObjectG, ActionGroupIF
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
 	 * a commandline is not handled locally. See g_application_run() and
-	 * the GApplicationCommandline documentation for more information.
+	 * the GApplicationCommandLine documentation for more information.
 	 */
 	void addOnCommandLine(gint delegate(GApplicationCommandLine*, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -295,6 +310,34 @@ public class Application : ObjectG, ActionGroupIF
 		}
 	}
 	
+	void delegate(Application)[] onShutdownListeners;
+	/**
+	 * The ::shutdown signal is emitted only on the registered primary instance
+	 * immediately after the main loop terminates.
+	 */
+	void addOnShutdown(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("shutdown" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"shutdown",
+			cast(GCallback)&callBackShutdown,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["shutdown"] = 1;
+		}
+		onShutdownListeners ~= dlg;
+	}
+	extern(C) static void callBackShutdown(GApplication* applicationStruct, Application _application)
+	{
+		foreach ( void delegate(Application) dlg ; _application.onShutdownListeners )
+		{
+			dlg(_application);
+		}
+	}
+	
 	void delegate(Application)[] onStartupListeners;
 	/**
 	 * The ::startup signal is emitted on the primary instance immediately
@@ -342,9 +385,12 @@ public class Application : ObjectG, ActionGroupIF
 	/**
 	 * Creates a new GApplication instance.
 	 * This function calls g_type_init() for you.
-	 * The application id must be valid. See g_application_id_is_valid().
+	 * If non-NULL, the application id must be valid. See
+	 * g_application_id_is_valid().
+	 * If no application ID is given then some features of GApplication
+	 * (most notably application uniqueness) will be disabled.
 	 * Params:
-	 * applicationId = the application id
+	 * applicationId = the application id. [allow-none]
 	 * flags = the application flags
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -374,11 +420,12 @@ public class Application : ObjectG, ActionGroupIF
 	 * Sets the unique identifier for application.
 	 * The application id can only be modified if application has not yet
 	 * been registered.
-	 * The application id must be valid. See g_application_id_is_valid().
+	 * If non-NULL, the application id must be valid. See
+	 * g_application_id_is_valid().
 	 * Since 2.28
 	 * Params:
 	 * application = a GApplication
-	 * applicationId = the identifier for application
+	 * applicationId = the identifier for application. [allow-none]
 	 */
 	public void setApplicationId(string applicationId)
 	{
@@ -444,10 +491,14 @@ public class Application : ObjectG, ActionGroupIF
 	}
 	
 	/**
-	 * Sets or unsets the group of actions associated with the application.
-	 * These actions are the actions that can be remotely invoked.
-	 * It is an error to call this function after the application has been
-	 * registered.
+	 * Warning
+	 * g_application_set_action_group has been deprecated since version 2.32 and should not be used in newly-written code. Use the GActionMap interface instead. Never ever
+	 * mix use of this API with use of GActionMap on the same application
+	 * or things will go very badly wrong. This function is known to
+	 * introduce buggy behaviour (ie: signals not emitted on changes to the
+	 * action group), so you should really use GActionMap instead.
+	 * This used to be how actions were associated with a GApplication.
+	 * Now there is GActionMap for that.
 	 * Since 2.28
 	 * Params:
 	 * actionGroup = a GActionGroup, or NULL. [allow-none]
@@ -496,6 +547,8 @@ public class Application : ObjectG, ActionGroupIF
 	 * primary instance. This is implemented by attempting to acquire the
 	 * application identifier as a unique bus name on the session bus using
 	 * GDBus.
+	 * If there is no application ID or if G_APPLICATION_NON_UNIQUE was
+	 * given, then this process will always become the primary instance.
 	 * Due to the internal architecture of GDBus, method calls can be
 	 * dispatched at any time (even if a main loop is not running). For
 	 * this reason, you must ensure that any object paths that you wish to
@@ -503,7 +556,8 @@ public class Application : ObjectG, ActionGroupIF
 	 * If the application has already been registered then TRUE is
 	 * returned with no work performed.
 	 * The "startup" signal is emitted if registration succeeds
-	 * and application is the primary instance.
+	 * and application is the primary instance (including the non-unique
+	 * case).
 	 * In the event of an error (such as cancellable being cancelled, or a
 	 * failure to connect to the session bus), FALSE is returned and error
 	 * is set appropriately.
@@ -512,7 +566,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * g_application_get_is_remote() for that.
 	 * Since 2.28
 	 * Params:
-	 * cancellable = a GCancellable, or NULL
+	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * Returns: TRUE if registration succeeded
 	 * Throws: GException on failure.
 	 */
@@ -557,8 +611,23 @@ public class Application : ObjectG, ActionGroupIF
 	}
 	
 	/**
+	 * Immediately quits the application.
+	 * Upon return to the mainloop, g_application_run() will return,
+	 * calling only the 'shutdown' function before doing so.
+	 * The hold count is ignored.
+	 * The result of calling g_application_run() again after it returns is
+	 * unspecified.
+	 * Since 2.32
+	 */
+	public void quit()
+	{
+		// void g_application_quit (GApplication *application);
+		g_application_quit(gApplication);
+	}
+	
+	/**
 	 * Activates the application.
-	 * In essence, this results in the GApplication::activate() signal being
+	 * In essence, this results in the "activate" signal being
 	 * emitted in the primary instance.
 	 * The application must be registered before calling this function.
 	 * Since 2.28
@@ -609,7 +678,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * This function always runs on the local instance. It gets passed a pointer
 	 * to a NULL-terminated copy of argv and is expected to remove the arguments
 	 * that it handled (shifting up remaining arguments). See
-	 *  Example 18, “Split commandline handling” for an example of
+	 *  Example 17, “Split commandline handling” for an example of
 	 * parsing argv manually. Alternatively, you may use the GOptionContext API,
 	 * after setting argc = g_strv_length (argv);.
 	 * The last argument to local_command_line() is a pointer to the status
@@ -621,7 +690,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * If local_command_line() returns FALSE then the application is registered
 	 * and the "command-line" signal is emitted in the primary
 	 * instance (which may or may not be this instance). The signal handler
-	 * gets passed a GApplicationCommandline object that (among other things)
+	 * gets passed a GApplicationCommandLine object that (among other things)
 	 * contains the remaining commandline arguments that have not been handled
 	 * by local_command_line().
 	 * If the application has the G_APPLICATION_HANDLES_COMMAND_LINE
@@ -638,7 +707,7 @@ public class Application : ObjectG, ActionGroupIF
 	 * are assumed to be filenames and g_application_open() is called.
 	 * If you need to handle commandline arguments that are not filenames,
 	 * and you don't mind commandline handling to happen in the primary
-	 * instance, you should set G_APPLICATION_HANDLED_COMMAND_LINE and
+	 * instance, you should set G_APPLICATION_HANDLES_COMMAND_LINE and
 	 * process the commandline arguments in your "command-line"
 	 * signal handler, either manually or using the GOptionContext API.
 	 * If you are interested in doing more complicated local handling of the
@@ -646,11 +715,11 @@ public class Application : ObjectG, ActionGroupIF
 	 * and override local_command_line(). In this case, you most likely want
 	 * to return TRUE from your local_command_line() implementation to
 	 * suppress the default handling. See
-	 *  Example 18, “Split commandline handling” for an example.
+	 *  Example 17, “Split commandline handling” for an example.
 	 * If, after the above is done, the use count of the application is zero
 	 * then the exit status is returned immediately. If the use count is
-	 * non-zero then the mainloop is run until the use count falls to zero,
-	 * at which point 0 is returned.
+	 * non-zero then the default main context is iterated until the use count
+	 * falls to zero, at which point 0 is returned.
 	 * If the G_APPLICATION_IS_SERVICE flag is set, then the exiting at
 	 * use count of zero is delayed for a while (ie: the instance stays
 	 * around to provide its service to others).
@@ -663,5 +732,39 @@ public class Application : ObjectG, ActionGroupIF
 	{
 		// int g_application_run (GApplication *application,  int argc,  char **argv);
 		return g_application_run(gApplication, cast(int) argv.length, Str.toStringzArray(argv));
+	}
+	
+	/**
+	 * Sets or unsets the default application for the process, as returned
+	 * by g_application_get_default().
+	 * This function does not take its own reference on application. If
+	 * application is destroyed then the default application will revert
+	 * back to NULL.
+	 * Since 2.32
+	 */
+	public void setDefault()
+	{
+		// void g_application_set_default (GApplication *application);
+		g_application_set_default(gApplication);
+	}
+	
+	/**
+	 * Returns the default GApplication instance for this process.
+	 * Normally there is only one GApplication per process and it becomes
+	 * the default when it is created. You can exercise more control over
+	 * this by using g_application_set_default().
+	 * If there is no default application then NULL is returned.
+	 * Since 2.32
+	 * Returns: the default application for this process, or NULL. [transfer none]
+	 */
+	public static Application getDefault()
+	{
+		// GApplication * g_application_get_default (void);
+		auto p = g_application_get_default();
+		if(p is null)
+		{
+			return null;
+		}
+		return new Application(cast(GApplication*) p);
 	}
 }

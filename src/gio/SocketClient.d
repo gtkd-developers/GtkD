@@ -48,12 +48,15 @@
  * 	- glib.GException
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
+ * 	- gio.IOStream
  * 	- gio.SocketAddress
  * 	- gio.SocketConnection
+ * 	- gio.SocketConnectable
  * 	- gio.SocketConnectableIF
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
+ * 	- GIOStream* -> IOStream
  * 	- GSocketAddress* -> SocketAddress
  * 	- GSocketConnectable* -> SocketConnectableIF
  * 	- GSocketConnection* -> SocketConnection
@@ -69,14 +72,18 @@ public  import gtkc.giotypes;
 private import gtkc.gio;
 private import glib.ConstructionException;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
+private import gio.IOStream;
 private import gio.SocketAddress;
 private import gio.SocketConnection;
+private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
 
 
@@ -85,14 +92,16 @@ private import gobject.ObjectG;
 
 /**
  * Description
- * GSocketClient is a high-level utility class for connecting to a
- * network host using a connection oriented socket type.
+ * GSocketClient is a lightweight high-level utility class for connecting to
+ * a network host using a connection oriented socket type.
  * You create a GSocketClient object, set any options you want, and then
  * call a sync or async connect operation, which returns a GSocketConnection
  * subclass on success.
  * The type of the GSocketConnection object returned depends on the type of
  * the underlying socket that is in use. For instance, for a TCP/IP connection
  * it will be a GTcpConnection.
+ * As GSocketClient is a lightweight object, you don't need to cache it. You
+ * can just create a new one any time you need one.
  */
 public class SocketClient : ObjectG
 {
@@ -142,30 +151,83 @@ public class SocketClient : ObjectG
 	
 	/**
 	 */
+	int[string] connectedSignals;
 	
+	void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient)[] onListeners;
 	/**
-	 * Enable proxy protocols to be handled by the application. When the
-	 * indicated proxy protocol is returned by the GProxyResolver,
-	 * GSocketClient will consider this protocol as supported but will
-	 * not try to find a GProxy instance to handle handshaking. The
-	 * application must check for this case by calling
-	 * g_socket_connection_get_remote_address() on the returned
-	 * GSocketConnection, and seeing if it's a GProxyAddress of the
-	 * appropriate type, to determine whether or not it needs to handle
-	 * the proxy handshaking itself.
-	 * This should be used for proxy protocols that are dialects of
-	 * another protocol such as HTTP proxy. It also allows cohabitation of
-	 * proxy protocols that are reused between protocols. A good example
-	 * is HTTP. It can be used to proxy HTTP, FTP and Gopher and can also
-	 * be use as generic socket proxy through the HTTP CONNECT method.
-	 * Params:
-	 * protocol = The proxy protocol
+	 * Emitted when client's activity on connectable changes state.
+	 * Among other things, this can be used to provide progress
+	 * information about a network connection in the UI. The meanings of
+	 *  client is about to look up connectable in DNS.
+	 *  connection will be NULL.
+	 *
+	 *  client has successfully resolved connectable in DNS.
+	 *  connection will be NULL.
+	 *
+	 *  client is about to make a connection to a remote host;
+	 *  either a proxy server or the destination server itself.
+	 *  connection is the GSocketConnection, which is not yet
+	 *  connected.
+	 *
+	 *  client has successfully connected to a remote host.
+	 *  connection is the connected GSocketConnection.
+	 *
+	 *  client is about to negotiate with a proxy to get it to
+	 *  connect to connectable. connection is the
+	 *  GSocketConnection to the proxy server.
+	 *
+	 *  client has negotiated a connection to connectable through
+	 *  a proxy server. connection is the stream returned from
+	 *  g_proxy_connect(), which may or may not be a
+	 *  GSocketConnection.
+	 *
+	 *  client is about to begin a TLS handshake. connection is a
+	 *  GTlsClientConnection.
+	 *
+	 *  client has successfully completed the TLS handshake.
+	 *  connection is a GTlsClientConnection.
+	 *
+	 *  client has either successfully connected to connectable
+	 *  (in which case connection is the GSocketConnection that
+	 *  it will be returning to the caller) or has failed (in which
+	 *  case connection is NULL and the client is about to return
+	 *  an error).
+	 *
+	 * Each event except G_SOCKET_CLIENT_COMPLETE may be emitted
+	 * multiple times (or not at all) for a given connectable (in
+	 * particular, if client ends up attempting to connect to more than
+	 * one address). However, if client emits the "event"
+	 * signal at all for a given connectable, that it will always emit
+	 * it with G_SOCKET_CLIENT_COMPLETE when it is done.
+	 * Note that there may be additional GSocketClientEvent values in
+	 * the future; unrecognized event values should be ignored.
+	 * Since 2.32
+	 * See Also
+	 * GSocketConnection, GSocketListener
 	 */
-	public void addApplicationProxy(string protocol)
+	void addOn(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		// void g_socket_client_add_application_proxy  (GSocketClient *client,  const gchar *protocol);
-		g_socket_client_add_application_proxy(gSocketClient, Str.toStringz(protocol));
+		if ( !("event" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"event",
+			cast(GCallback)&callBack,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["event"] = 1;
+		}
+		onListeners ~= dlg;
 	}
+	extern(C) static void callBack(GSocketClient* clientStruct, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection, SocketClient _socketClient)
+	{
+		foreach ( void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg ; _socketClient.onListeners )
+		{
+			dlg(event, new SocketConnectable(connectable), new IOStream(connection), _socketClient);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new GSocketClient with the default options.
@@ -565,7 +627,7 @@ public class SocketClient : ObjectG
 	 * a specific interface.
 	 * Since 2.22
 	 * Params:
-	 * address = a GSocketAddress, or NULL
+	 * address = a GSocketAddress, or NULL. [allow-none]
 	 */
 	public void setLocalAddress(SocketAddress address)
 	{
@@ -646,6 +708,13 @@ public class SocketClient : ObjectG
 	 * GTcpWrapperConnection when returning it. You can use
 	 * g_tcp_wrapper_connection_get_base_io_stream() on the return value
 	 * to extract the GTlsClientConnection.
+	 * If you need to modify the behavior of the TLS handshake (eg, by
+	 * setting a client-side certificate to use, or connecting to the
+	 * "accept-certificate" signal), you can connect to
+	 * client's "event" signal and wait for it to be
+	 * emitted with G_SOCKET_CLIENT_TLS_HANDSHAKING, which will give you
+	 * a chance to see the GTlsClientConnection before the handshake
+	 * starts.
 	 * Since 2.28
 	 * Params:
 	 * tls = whether to use TLS
@@ -767,5 +836,32 @@ public class SocketClient : ObjectG
 	{
 		// GTlsCertificateFlags g_socket_client_get_tls_validation_flags  (GSocketClient *client);
 		return g_socket_client_get_tls_validation_flags(gSocketClient);
+	}
+	
+	/**
+	 * Enable proxy protocols to be handled by the application. When the
+	 * indicated proxy protocol is returned by the GProxyResolver,
+	 * GSocketClient will consider this protocol as supported but will
+	 * not try to find a GProxy instance to handle handshaking. The
+	 * application must check for this case by calling
+	 * g_socket_connection_get_remote_address() on the returned
+	 * GSocketConnection, and seeing if it's a GProxyAddress of the
+	 * appropriate type, to determine whether or not it needs to handle
+	 * the proxy handshaking itself.
+	 * This should be used for proxy protocols that are dialects of
+	 * another protocol such as HTTP proxy. It also allows cohabitation of
+	 * proxy protocols that are reused between protocols. A good example
+	 * is HTTP. It can be used to proxy HTTP, FTP and Gopher and can also
+	 * be use as generic socket proxy through the HTTP CONNECT method.
+	 * When the proxy is detected as being an application proxy, TLS handshake
+	 * will be skipped. This is required to let the application do the proxy
+	 * specific handshake.
+	 * Params:
+	 * protocol = The proxy protocol
+	 */
+	public void addApplicationProxy(string protocol)
+	{
+		// void g_socket_client_add_application_proxy  (GSocketClient *client,  const gchar *protocol);
+		g_socket_client_add_application_proxy(gSocketClient, Str.toStringz(protocol));
 	}
 }

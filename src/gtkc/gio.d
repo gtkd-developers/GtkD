@@ -40,6 +40,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_new_for_path, \"g_file_new_for_path\", LIBRARY.GIO);
 	Linker.link(g_file_new_for_uri, \"g_file_new_for_uri\", LIBRARY.GIO);
 	Linker.link(g_file_new_for_commandline_arg, \"g_file_new_for_commandline_arg\", LIBRARY.GIO);
+	Linker.link(g_file_new_tmp, \"g_file_new_tmp\", LIBRARY.GIO);
 	Linker.link(g_file_parse_name, \"g_file_parse_name\", LIBRARY.GIO);
 	Linker.link(g_file_dup, \"g_file_dup\", LIBRARY.GIO);
 	Linker.link(g_file_hash, \"g_file_hash\", LIBRARY.GIO);
@@ -226,11 +227,13 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_file_attribute_matcher_new, \"g_file_attribute_matcher_new\", LIBRARY.GIO);
 	Linker.link(g_file_attribute_matcher_ref, \"g_file_attribute_matcher_ref\", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_subtract, \"g_file_attribute_matcher_subtract\", LIBRARY.GIO);
 	Linker.link(g_file_attribute_matcher_unref, \"g_file_attribute_matcher_unref\", LIBRARY.GIO);
 	Linker.link(g_file_attribute_matcher_matches, \"g_file_attribute_matcher_matches\", LIBRARY.GIO);
 	Linker.link(g_file_attribute_matcher_matches_only, \"g_file_attribute_matcher_matches_only\", LIBRARY.GIO);
 	Linker.link(g_file_attribute_matcher_enumerate_namespace, \"g_file_attribute_matcher_enumerate_namespace\", LIBRARY.GIO);
 	Linker.link(g_file_attribute_matcher_enumerate_next, \"g_file_attribute_matcher_enumerate_next\", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_to_string, \"g_file_attribute_matcher_to_string\", LIBRARY.GIO);
 
 	// gio.FileEnumerator
 
@@ -319,6 +322,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_simple_async_result_new_error, \"g_simple_async_result_new_error\", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_new_from_error, \"g_simple_async_result_new_from_error\", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_new_take_error, \"g_simple_async_result_new_take_error\", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_set_check_cancellable, \"g_simple_async_result_set_check_cancellable\", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_set_op_res_gpointer, \"g_simple_async_result_set_op_res_gpointer\", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_get_op_res_gpointer, \"g_simple_async_result_get_op_res_gpointer\", LIBRARY.GIO);
 	Linker.link(g_simple_async_result_set_op_res_gssize, \"g_simple_async_result_set_op_res_gssize\", LIBRARY.GIO);
@@ -661,6 +665,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_desktop_app_info_get_show_in, \"g_desktop_app_info_get_show_in\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_get_generic_name, \"g_desktop_app_info_get_generic_name\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_get_categories, \"g_desktop_app_info_get_categories\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_keywords, \"g_desktop_app_info_get_keywords\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_set_desktop_env, \"g_desktop_app_info_set_desktop_env\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_launch_uris_as_manager, \"g_desktop_app_info_launch_uris_as_manager\", LIBRARY.GIO);
 
@@ -696,6 +701,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_volume_eject_with_operation_finish, \"g_volume_eject_with_operation_finish\", LIBRARY.GIO);
 	Linker.link(g_volume_enumerate_identifiers, \"g_volume_enumerate_identifiers\", LIBRARY.GIO);
 	Linker.link(g_volume_get_identifier, \"g_volume_get_identifier\", LIBRARY.GIO);
+	Linker.link(g_volume_get_sort_key, \"g_volume_get_sort_key\", LIBRARY.GIO);
 
 	// gio.Volume
 
@@ -730,6 +736,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_mount_is_shadowed, \"g_mount_is_shadowed\", LIBRARY.GIO);
 	Linker.link(g_mount_shadow, \"g_mount_shadow\", LIBRARY.GIO);
 	Linker.link(g_mount_unshadow, \"g_mount_unshadow\", LIBRARY.GIO);
+	Linker.link(g_mount_get_sort_key, \"g_mount_get_sort_key\", LIBRARY.GIO);
 
 	// gio.Mount
 
@@ -764,6 +771,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_drive_stop_finish, \"g_drive_stop_finish\", LIBRARY.GIO);
 	Linker.link(g_drive_enumerate_identifiers, \"g_drive_enumerate_identifiers\", LIBRARY.GIO);
 	Linker.link(g_drive_get_identifier, \"g_drive_get_identifier\", LIBRARY.GIO);
+	Linker.link(g_drive_get_sort_key, \"g_drive_get_sort_key\", LIBRARY.GIO);
 
 	// gio.Drive
 
@@ -795,6 +803,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_unix_mount_point_get_mount_path, \"g_unix_mount_point_get_mount_path\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_get_device_path, \"g_unix_mount_point_get_device_path\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_get_fs_type, \"g_unix_mount_point_get_fs_type\", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_get_options, \"g_unix_mount_point_get_options\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_is_readonly, \"g_unix_mount_point_is_readonly\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_is_user_mountable, \"g_unix_mount_point_is_user_mountable\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_is_loopback, \"g_unix_mount_point_is_loopback\", LIBRARY.GIO);
@@ -904,6 +913,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_socket_create_source, \"g_socket_create_source\", LIBRARY.GIO);
 	Linker.link(g_socket_condition_check, \"g_socket_condition_check\", LIBRARY.GIO);
 	Linker.link(g_socket_condition_wait, \"g_socket_condition_wait\", LIBRARY.GIO);
+	Linker.link(g_socket_condition_timed_wait, \"g_socket_condition_timed_wait\", LIBRARY.GIO);
+	Linker.link(g_socket_get_available_bytes, \"g_socket_get_available_bytes\", LIBRARY.GIO);
 	Linker.link(g_socket_set_listen_backlog, \"g_socket_set_listen_backlog\", LIBRARY.GIO);
 	Linker.link(g_socket_get_listen_backlog, \"g_socket_get_listen_backlog\", LIBRARY.GIO);
 	Linker.link(g_socket_get_blocking, \"g_socket_get_blocking\", LIBRARY.GIO);
@@ -912,6 +923,10 @@ mixin( _shared ~ "static this()
 	Linker.link(g_socket_set_keepalive, \"g_socket_set_keepalive\", LIBRARY.GIO);
 	Linker.link(g_socket_get_timeout, \"g_socket_get_timeout\", LIBRARY.GIO);
 	Linker.link(g_socket_set_timeout, \"g_socket_set_timeout\", LIBRARY.GIO);
+	Linker.link(g_socket_set_ttl, \"g_socket_set_ttl\", LIBRARY.GIO);
+	Linker.link(g_socket_get_ttl, \"g_socket_get_ttl\", LIBRARY.GIO);
+	Linker.link(g_socket_get_broadcast, \"g_socket_get_broadcast\", LIBRARY.GIO);
+	Linker.link(g_socket_set_broadcast, \"g_socket_set_broadcast\", LIBRARY.GIO);
 	Linker.link(g_socket_get_family, \"g_socket_get_family\", LIBRARY.GIO);
 	Linker.link(g_socket_get_fd, \"g_socket_get_fd\", LIBRARY.GIO);
 	Linker.link(g_socket_get_local_address, \"g_socket_get_local_address\", LIBRARY.GIO);
@@ -920,6 +935,12 @@ mixin( _shared ~ "static this()
 	Linker.link(g_socket_get_socket_type, \"g_socket_get_socket_type\", LIBRARY.GIO);
 	Linker.link(g_socket_speaks_ipv4, \"g_socket_speaks_ipv4\", LIBRARY.GIO);
 	Linker.link(g_socket_get_credentials, \"g_socket_get_credentials\", LIBRARY.GIO);
+	Linker.link(g_socket_join_multicast_group, \"g_socket_join_multicast_group\", LIBRARY.GIO);
+	Linker.link(g_socket_leave_multicast_group, \"g_socket_leave_multicast_group\", LIBRARY.GIO);
+	Linker.link(g_socket_get_multicast_loopback, \"g_socket_get_multicast_loopback\", LIBRARY.GIO);
+	Linker.link(g_socket_set_multicast_loopback, \"g_socket_set_multicast_loopback\", LIBRARY.GIO);
+	Linker.link(g_socket_get_multicast_ttl, \"g_socket_get_multicast_ttl\", LIBRARY.GIO);
+	Linker.link(g_socket_set_multicast_ttl, \"g_socket_set_multicast_ttl\", LIBRARY.GIO);
 
 	// gio.InetAddress
 
@@ -943,6 +964,17 @@ mixin( _shared ~ "static this()
 	Linker.link(g_inet_address_get_is_mc_org_local, \"g_inet_address_get_is_mc_org_local\", LIBRARY.GIO);
 	Linker.link(g_inet_address_get_is_mc_global, \"g_inet_address_get_is_mc_global\", LIBRARY.GIO);
 
+	// gio.InetAddressMask
+
+	Linker.link(g_inet_address_mask_new, \"g_inet_address_mask_new\", LIBRARY.GIO);
+	Linker.link(g_inet_address_mask_new_from_string, \"g_inet_address_mask_new_from_string\", LIBRARY.GIO);
+	Linker.link(g_inet_address_mask_to_string, \"g_inet_address_mask_to_string\", LIBRARY.GIO);
+	Linker.link(g_inet_address_mask_get_family, \"g_inet_address_mask_get_family\", LIBRARY.GIO);
+	Linker.link(g_inet_address_mask_get_address, \"g_inet_address_mask_get_address\", LIBRARY.GIO);
+	Linker.link(g_inet_address_mask_get_length, \"g_inet_address_mask_get_length\", LIBRARY.GIO);
+	Linker.link(g_inet_address_mask_matches, \"g_inet_address_mask_matches\", LIBRARY.GIO);
+	Linker.link(g_inet_address_mask_equal, \"g_inet_address_mask_equal\", LIBRARY.GIO);
+
 	// gio.SocketAddress
 
 	Linker.link(g_socket_address_new_from_native, \"g_socket_address_new_from_native\", LIBRARY.GIO);
@@ -955,6 +987,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_inet_socket_address_new, \"g_inet_socket_address_new\", LIBRARY.GIO);
 	Linker.link(g_inet_socket_address_get_address, \"g_inet_socket_address_get_address\", LIBRARY.GIO);
 	Linker.link(g_inet_socket_address_get_port, \"g_inet_socket_address_get_port\", LIBRARY.GIO);
+	Linker.link(g_inet_socket_address_get_flowinfo, \"g_inet_socket_address_get_flowinfo\", LIBRARY.GIO);
+	Linker.link(g_inet_socket_address_get_scope_id, \"g_inet_socket_address_get_scope_id\", LIBRARY.GIO);
 
 	// gio.UnixSocketAddress
 
@@ -1035,7 +1069,6 @@ mixin( _shared ~ "static this()
 
 	// gio.SocketClient
 
-	Linker.link(g_socket_client_add_application_proxy, \"g_socket_client_add_application_proxy\", LIBRARY.GIO);
 	Linker.link(g_socket_client_new, \"g_socket_client_new\", LIBRARY.GIO);
 	Linker.link(g_socket_client_connect, \"g_socket_client_connect\", LIBRARY.GIO);
 	Linker.link(g_socket_client_connect_async, \"g_socket_client_connect_async\", LIBRARY.GIO);
@@ -1065,9 +1098,14 @@ mixin( _shared ~ "static this()
 	Linker.link(g_socket_client_get_enable_proxy, \"g_socket_client_get_enable_proxy\", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_tls, \"g_socket_client_get_tls\", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_tls_validation_flags, \"g_socket_client_get_tls_validation_flags\", LIBRARY.GIO);
+	Linker.link(g_socket_client_add_application_proxy, \"g_socket_client_add_application_proxy\", LIBRARY.GIO);
 
 	// gio.SocketConnection
 
+	Linker.link(g_socket_connection_connect, \"g_socket_connection_connect\", LIBRARY.GIO);
+	Linker.link(g_socket_connection_connect_async, \"g_socket_connection_connect_async\", LIBRARY.GIO);
+	Linker.link(g_socket_connection_connect_finish, \"g_socket_connection_connect_finish\", LIBRARY.GIO);
+	Linker.link(g_socket_connection_is_connected, \"g_socket_connection_is_connected\", LIBRARY.GIO);
 	Linker.link(g_socket_connection_get_local_address, \"g_socket_connection_get_local_address\", LIBRARY.GIO);
 	Linker.link(g_socket_connection_get_remote_address, \"g_socket_connection_get_remote_address\", LIBRARY.GIO);
 	Linker.link(g_socket_connection_get_socket, \"g_socket_connection_get_socket\", LIBRARY.GIO);
@@ -1080,7 +1118,11 @@ mixin( _shared ~ "static this()
 	Linker.link(g_unix_connection_receive_fd, \"g_unix_connection_receive_fd\", LIBRARY.GIO);
 	Linker.link(g_unix_connection_send_fd, \"g_unix_connection_send_fd\", LIBRARY.GIO);
 	Linker.link(g_unix_connection_receive_credentials, \"g_unix_connection_receive_credentials\", LIBRARY.GIO);
+	Linker.link(g_unix_connection_receive_credentials_async, \"g_unix_connection_receive_credentials_async\", LIBRARY.GIO);
+	Linker.link(g_unix_connection_receive_credentials_finish, \"g_unix_connection_receive_credentials_finish\", LIBRARY.GIO);
 	Linker.link(g_unix_connection_send_credentials, \"g_unix_connection_send_credentials\", LIBRARY.GIO);
+	Linker.link(g_unix_connection_send_credentials_async, \"g_unix_connection_send_credentials_async\", LIBRARY.GIO);
+	Linker.link(g_unix_connection_send_credentials_finish, \"g_unix_connection_send_credentials_finish\", LIBRARY.GIO);
 
 	// gio.TcpConnection
 
@@ -1113,6 +1155,20 @@ mixin( _shared ~ "static this()
 	// gio.ThreadedSocketService
 
 	Linker.link(g_threaded_socket_service_new, \"g_threaded_socket_service_new\", LIBRARY.GIO);
+
+	// gio.NetworkMonitorT
+
+
+	// gio.NetworkMonitorT
+
+	Linker.link(g_network_monitor_get_default, \"g_network_monitor_get_default\", LIBRARY.GIO);
+	Linker.link(g_network_monitor_get_network_available, \"g_network_monitor_get_network_available\", LIBRARY.GIO);
+	Linker.link(g_network_monitor_can_reach, \"g_network_monitor_can_reach\", LIBRARY.GIO);
+	Linker.link(g_network_monitor_can_reach_async, \"g_network_monitor_can_reach_async\", LIBRARY.GIO);
+	Linker.link(g_network_monitor_can_reach_finish, \"g_network_monitor_can_reach_finish\", LIBRARY.GIO);
+
+	// gio.NetworkMonitor
+
 
 	// gio.TlsCertificate
 
@@ -1194,6 +1250,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_tls_interaction_ask_password, \"g_tls_interaction_ask_password\", LIBRARY.GIO);
 	Linker.link(g_tls_interaction_ask_password_async, \"g_tls_interaction_ask_password_async\", LIBRARY.GIO);
 	Linker.link(g_tls_interaction_ask_password_finish, \"g_tls_interaction_ask_password_finish\", LIBRARY.GIO);
+	Linker.link(g_tls_interaction_invoke_ask_password, \"g_tls_interaction_invoke_ask_password\", LIBRARY.GIO);
 
 	// gio.TlsPassword
 
@@ -1453,6 +1510,10 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_connection_unregister_object, \"g_dbus_connection_unregister_object\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_register_subtree, \"g_dbus_connection_register_subtree\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_unregister_subtree, \"g_dbus_connection_unregister_subtree\", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_export_action_group, \"g_dbus_connection_export_action_group\", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_unexport_action_group, \"g_dbus_connection_unexport_action_group\", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_export_menu_model, \"g_dbus_connection_export_menu_model\", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_unexport_menu_model, \"g_dbus_connection_unexport_menu_model\", LIBRARY.GIO);
 
 	// gio.DBusMethodInvocation
 
@@ -1509,6 +1570,7 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_dbus_interface_get_info, \"g_dbus_interface_get_info\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_get_object, \"g_dbus_interface_get_object\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_dup_object, \"g_dbus_interface_dup_object\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_set_object, \"g_dbus_interface_set_object\", LIBRARY.GIO);
 
 	// gio.DBusInterface
@@ -1522,7 +1584,10 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_interface_skeleton_get_properties, \"g_dbus_interface_skeleton_get_properties\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_skeleton_export, \"g_dbus_interface_skeleton_export\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_skeleton_unexport, \"g_dbus_interface_skeleton_unexport\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_unexport_from_connection, \"g_dbus_interface_skeleton_unexport_from_connection\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_skeleton_get_connection, \"g_dbus_interface_skeleton_get_connection\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_get_connections, \"g_dbus_interface_skeleton_get_connections\", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_has_connection, \"g_dbus_interface_skeleton_has_connection\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_skeleton_get_object_path, \"g_dbus_interface_skeleton_get_object_path\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_skeleton_get_flags, \"g_dbus_interface_skeleton_get_flags\", LIBRARY.GIO);
 	Linker.link(g_dbus_interface_skeleton_set_flags, \"g_dbus_interface_skeleton_set_flags\", LIBRARY.GIO);
@@ -1619,6 +1684,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_settings_new_with_path, \"g_settings_new_with_path\", LIBRARY.GIO);
 	Linker.link(g_settings_new_with_backend, \"g_settings_new_with_backend\", LIBRARY.GIO);
 	Linker.link(g_settings_new_with_backend_and_path, \"g_settings_new_with_backend_and_path\", LIBRARY.GIO);
+	Linker.link(g_settings_new_full, \"g_settings_new_full\", LIBRARY.GIO);
 	Linker.link(g_settings_sync, \"g_settings_sync\", LIBRARY.GIO);
 	Linker.link(g_settings_get_value, \"g_settings_get_value\", LIBRARY.GIO);
 	Linker.link(g_settings_set_value, \"g_settings_set_value\", LIBRARY.GIO);
@@ -1658,6 +1724,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_settings_bind_with_mapping, \"g_settings_bind_with_mapping\", LIBRARY.GIO);
 	Linker.link(g_settings_bind_writable, \"g_settings_bind_writable\", LIBRARY.GIO);
 	Linker.link(g_settings_unbind, \"g_settings_unbind\", LIBRARY.GIO);
+	Linker.link(g_settings_create_action, \"g_settings_create_action\", LIBRARY.GIO);
 
 	// gio.SettingsBackend
 
@@ -1672,6 +1739,38 @@ mixin( _shared ~ "static this()
 	Linker.link(g_keyfile_settings_backend_new, \"g_keyfile_settings_backend_new\", LIBRARY.GIO);
 	Linker.link(g_memory_settings_backend_new, \"g_memory_settings_backend_new\", LIBRARY.GIO);
 	Linker.link(g_null_settings_backend_new, \"g_null_settings_backend_new\", LIBRARY.GIO);
+
+	// gio.SettingsSchema
+
+	Linker.link(g_settings_schema_ref, \"g_settings_schema_ref\", LIBRARY.GIO);
+	Linker.link(g_settings_schema_unref, \"g_settings_schema_unref\", LIBRARY.GIO);
+	Linker.link(g_settings_schema_get_id, \"g_settings_schema_get_id\", LIBRARY.GIO);
+	Linker.link(g_settings_schema_get_path, \"g_settings_schema_get_path\", LIBRARY.GIO);
+
+	// gio.SettingsSchemaSource
+
+	Linker.link(g_settings_schema_source_get_default, \"g_settings_schema_source_get_default\", LIBRARY.GIO);
+	Linker.link(g_settings_schema_source_ref, \"g_settings_schema_source_ref\", LIBRARY.GIO);
+	Linker.link(g_settings_schema_source_unref, \"g_settings_schema_source_unref\", LIBRARY.GIO);
+	Linker.link(g_settings_schema_source_new_from_directory, \"g_settings_schema_source_new_from_directory\", LIBRARY.GIO);
+	Linker.link(g_settings_schema_source_lookup, \"g_settings_schema_source_lookup\", LIBRARY.GIO);
+
+	// gio.Resource
+
+	Linker.link(g_resource_load, \"g_resource_load\", LIBRARY.GIO);
+	Linker.link(g_resource_new_from_data, \"g_resource_new_from_data\", LIBRARY.GIO);
+	Linker.link(g_resource_ref, \"g_resource_ref\", LIBRARY.GIO);
+	Linker.link(g_resource_unref, \"g_resource_unref\", LIBRARY.GIO);
+	Linker.link(g_resource_lookup_data, \"g_resource_lookup_data\", LIBRARY.GIO);
+	Linker.link(g_resource_open_stream, \"g_resource_open_stream\", LIBRARY.GIO);
+	Linker.link(g_resource_enumerate_children, \"g_resource_enumerate_children\", LIBRARY.GIO);
+	Linker.link(g_resource_get_info, \"g_resource_get_info\", LIBRARY.GIO);
+	Linker.link(g_resources_register, \"g_resources_register\", LIBRARY.GIO);
+	Linker.link(g_resources_unregister, \"g_resources_unregister\", LIBRARY.GIO);
+	Linker.link(g_resources_lookup_data, \"g_resources_lookup_data\", LIBRARY.GIO);
+	Linker.link(g_resources_open_stream, \"g_resources_open_stream\", LIBRARY.GIO);
+	Linker.link(g_resources_enumerate_children, \"g_resources_enumerate_children\", LIBRARY.GIO);
+	Linker.link(g_resources_get_info, \"g_resources_get_info\", LIBRARY.GIO);
 
 	// gio.Permission
 
@@ -1690,13 +1789,50 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_simple_permission_new, \"g_simple_permission_new\", LIBRARY.GIO);
 
+	// gio.Application
+
+	Linker.link(g_application_id_is_valid, \"g_application_id_is_valid\", LIBRARY.GIO);
+	Linker.link(g_application_new, \"g_application_new\", LIBRARY.GIO);
+	Linker.link(g_application_get_application_id, \"g_application_get_application_id\", LIBRARY.GIO);
+	Linker.link(g_application_set_application_id, \"g_application_set_application_id\", LIBRARY.GIO);
+	Linker.link(g_application_get_inactivity_timeout, \"g_application_get_inactivity_timeout\", LIBRARY.GIO);
+	Linker.link(g_application_set_inactivity_timeout, \"g_application_set_inactivity_timeout\", LIBRARY.GIO);
+	Linker.link(g_application_get_flags, \"g_application_get_flags\", LIBRARY.GIO);
+	Linker.link(g_application_set_flags, \"g_application_set_flags\", LIBRARY.GIO);
+	Linker.link(g_application_set_action_group, \"g_application_set_action_group\", LIBRARY.GIO);
+	Linker.link(g_application_get_is_registered, \"g_application_get_is_registered\", LIBRARY.GIO);
+	Linker.link(g_application_get_is_remote, \"g_application_get_is_remote\", LIBRARY.GIO);
+	Linker.link(g_application_register, \"g_application_register\", LIBRARY.GIO);
+	Linker.link(g_application_hold, \"g_application_hold\", LIBRARY.GIO);
+	Linker.link(g_application_release, \"g_application_release\", LIBRARY.GIO);
+	Linker.link(g_application_quit, \"g_application_quit\", LIBRARY.GIO);
+	Linker.link(g_application_activate, \"g_application_activate\", LIBRARY.GIO);
+	Linker.link(g_application_open, \"g_application_open\", LIBRARY.GIO);
+	Linker.link(g_application_run, \"g_application_run\", LIBRARY.GIO);
+	Linker.link(g_application_set_default, \"g_application_set_default\", LIBRARY.GIO);
+	Linker.link(g_application_get_default, \"g_application_get_default\", LIBRARY.GIO);
+
+	// gio.ApplicationCommandLine
+
+	Linker.link(g_application_command_line_get_arguments, \"g_application_command_line_get_arguments\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_cwd, \"g_application_command_line_get_cwd\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_environ, \"g_application_command_line_get_environ\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_getenv, \"g_application_command_line_getenv\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_is_remote, \"g_application_command_line_get_is_remote\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_platform_data, \"g_application_command_line_get_platform_data\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_set_exit_status, \"g_application_command_line_set_exit_status\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_exit_status, \"g_application_command_line_get_exit_status\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_print, \"g_application_command_line_print\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_printerr, \"g_application_command_line_printerr\", LIBRARY.GIO);
+
 	// gio.ActionGroupT
 
 
 	// gio.ActionGroupT
 
-	Linker.link(g_action_group_has_action, \"g_action_group_has_action\", LIBRARY.GIO);
 	Linker.link(g_action_group_list_actions, \"g_action_group_list_actions\", LIBRARY.GIO);
+	Linker.link(g_action_group_query_action, \"g_action_group_query_action\", LIBRARY.GIO);
+	Linker.link(g_action_group_has_action, \"g_action_group_has_action\", LIBRARY.GIO);
 	Linker.link(g_action_group_get_action_enabled, \"g_action_group_get_action_enabled\", LIBRARY.GIO);
 	Linker.link(g_action_group_get_action_parameter_type, \"g_action_group_get_action_parameter_type\", LIBRARY.GIO);
 	Linker.link(g_action_group_get_action_state_type, \"g_action_group_get_action_state_type\", LIBRARY.GIO);
@@ -1708,6 +1844,16 @@ mixin( _shared ~ "static this()
 	Linker.link(g_action_group_action_removed, \"g_action_group_action_removed\", LIBRARY.GIO);
 	Linker.link(g_action_group_action_enabled_changed, \"g_action_group_action_enabled_changed\", LIBRARY.GIO);
 	Linker.link(g_action_group_action_state_changed, \"g_action_group_action_state_changed\", LIBRARY.GIO);
+
+	// gio.ActionMapT
+
+
+	// gio.ActionMapT
+
+	Linker.link(g_action_map_lookup_action, \"g_action_map_lookup_action\", LIBRARY.GIO);
+	Linker.link(g_action_map_add_action_entries, \"g_action_map_add_action_entries\", LIBRARY.GIO);
+	Linker.link(g_action_map_add_action, \"g_action_map_add_action\", LIBRARY.GIO);
+	Linker.link(g_action_map_remove_action, \"g_action_map_remove_action\", LIBRARY.GIO);
 
 	// gio.SimpleActionGroup
 
@@ -1741,38 +1887,79 @@ mixin( _shared ~ "static this()
 	Linker.link(g_simple_action_set_enabled, \"g_simple_action_set_enabled\", LIBRARY.GIO);
 	Linker.link(g_simple_action_set_state, \"g_simple_action_set_state\", LIBRARY.GIO);
 
-	// gio.Application
+	// gio.RemoteActionGroupT
 
-	Linker.link(g_application_id_is_valid, \"g_application_id_is_valid\", LIBRARY.GIO);
-	Linker.link(g_application_new, \"g_application_new\", LIBRARY.GIO);
-	Linker.link(g_application_get_application_id, \"g_application_get_application_id\", LIBRARY.GIO);
-	Linker.link(g_application_set_application_id, \"g_application_set_application_id\", LIBRARY.GIO);
-	Linker.link(g_application_get_inactivity_timeout, \"g_application_get_inactivity_timeout\", LIBRARY.GIO);
-	Linker.link(g_application_set_inactivity_timeout, \"g_application_set_inactivity_timeout\", LIBRARY.GIO);
-	Linker.link(g_application_get_flags, \"g_application_get_flags\", LIBRARY.GIO);
-	Linker.link(g_application_set_flags, \"g_application_set_flags\", LIBRARY.GIO);
-	Linker.link(g_application_set_action_group, \"g_application_set_action_group\", LIBRARY.GIO);
-	Linker.link(g_application_get_is_registered, \"g_application_get_is_registered\", LIBRARY.GIO);
-	Linker.link(g_application_get_is_remote, \"g_application_get_is_remote\", LIBRARY.GIO);
-	Linker.link(g_application_register, \"g_application_register\", LIBRARY.GIO);
-	Linker.link(g_application_hold, \"g_application_hold\", LIBRARY.GIO);
-	Linker.link(g_application_release, \"g_application_release\", LIBRARY.GIO);
-	Linker.link(g_application_activate, \"g_application_activate\", LIBRARY.GIO);
-	Linker.link(g_application_open, \"g_application_open\", LIBRARY.GIO);
-	Linker.link(g_application_run, \"g_application_run\", LIBRARY.GIO);
 
-	// gio.ApplicationCommandLine
+	// gio.RemoteActionGroupT
 
-	Linker.link(g_application_command_line_get_arguments, \"g_application_command_line_get_arguments\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_cwd, \"g_application_command_line_get_cwd\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_environ, \"g_application_command_line_get_environ\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_getenv, \"g_application_command_line_getenv\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_is_remote, \"g_application_command_line_get_is_remote\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_platform_data, \"g_application_command_line_get_platform_data\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_set_exit_status, \"g_application_command_line_set_exit_status\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_exit_status, \"g_application_command_line_get_exit_status\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_print, \"g_application_command_line_print\", LIBRARY.GIO);
-	Linker.link(g_application_command_line_printerr, \"g_application_command_line_printerr\", LIBRARY.GIO);
+	Linker.link(g_remote_action_group_activate_action_full, \"g_remote_action_group_activate_action_full\", LIBRARY.GIO);
+	Linker.link(g_remote_action_group_change_action_state_full, \"g_remote_action_group_change_action_state_full\", LIBRARY.GIO);
+
+	// gio.DBusActionGroup
+
+	Linker.link(g_dbus_action_group_get, \"g_dbus_action_group_get\", LIBRARY.GIO);
+
+	// gio.MenuModel
+
+	Linker.link(g_menu_model_is_mutable, \"g_menu_model_is_mutable\", LIBRARY.GIO);
+	Linker.link(g_menu_model_get_n_items, \"g_menu_model_get_n_items\", LIBRARY.GIO);
+	Linker.link(g_menu_model_get_item_attribute_value, \"g_menu_model_get_item_attribute_value\", LIBRARY.GIO);
+	Linker.link(g_menu_model_get_item_attribute, \"g_menu_model_get_item_attribute\", LIBRARY.GIO);
+	Linker.link(g_menu_model_get_item_link, \"g_menu_model_get_item_link\", LIBRARY.GIO);
+	Linker.link(g_menu_model_iterate_item_attributes, \"g_menu_model_iterate_item_attributes\", LIBRARY.GIO);
+	Linker.link(g_menu_model_iterate_item_links, \"g_menu_model_iterate_item_links\", LIBRARY.GIO);
+	Linker.link(g_menu_model_items_changed, \"g_menu_model_items_changed\", LIBRARY.GIO);
+
+	// gio.MenuAttributeIter
+
+	Linker.link(g_menu_attribute_iter_get_next, \"g_menu_attribute_iter_get_next\", LIBRARY.GIO);
+	Linker.link(g_menu_attribute_iter_get_name, \"g_menu_attribute_iter_get_name\", LIBRARY.GIO);
+	Linker.link(g_menu_attribute_iter_get_value, \"g_menu_attribute_iter_get_value\", LIBRARY.GIO);
+	Linker.link(g_menu_attribute_iter_next, \"g_menu_attribute_iter_next\", LIBRARY.GIO);
+
+	// gio.MenuLinkIter
+
+	Linker.link(g_menu_link_iter_get_name, \"g_menu_link_iter_get_name\", LIBRARY.GIO);
+	Linker.link(g_menu_link_iter_get_next, \"g_menu_link_iter_get_next\", LIBRARY.GIO);
+	Linker.link(g_menu_link_iter_get_value, \"g_menu_link_iter_get_value\", LIBRARY.GIO);
+	Linker.link(g_menu_link_iter_next, \"g_menu_link_iter_next\", LIBRARY.GIO);
+
+	// gio.Menu
+
+	Linker.link(g_menu_new, \"g_menu_new\", LIBRARY.GIO);
+	Linker.link(g_menu_freeze, \"g_menu_freeze\", LIBRARY.GIO);
+	Linker.link(g_menu_insert, \"g_menu_insert\", LIBRARY.GIO);
+	Linker.link(g_menu_prepend, \"g_menu_prepend\", LIBRARY.GIO);
+	Linker.link(g_menu_append, \"g_menu_append\", LIBRARY.GIO);
+	Linker.link(g_menu_insert_item, \"g_menu_insert_item\", LIBRARY.GIO);
+	Linker.link(g_menu_append_item, \"g_menu_append_item\", LIBRARY.GIO);
+	Linker.link(g_menu_prepend_item, \"g_menu_prepend_item\", LIBRARY.GIO);
+	Linker.link(g_menu_insert_section, \"g_menu_insert_section\", LIBRARY.GIO);
+	Linker.link(g_menu_prepend_section, \"g_menu_prepend_section\", LIBRARY.GIO);
+	Linker.link(g_menu_append_section, \"g_menu_append_section\", LIBRARY.GIO);
+	Linker.link(g_menu_append_submenu, \"g_menu_append_submenu\", LIBRARY.GIO);
+	Linker.link(g_menu_insert_submenu, \"g_menu_insert_submenu\", LIBRARY.GIO);
+	Linker.link(g_menu_prepend_submenu, \"g_menu_prepend_submenu\", LIBRARY.GIO);
+	Linker.link(g_menu_remove, \"g_menu_remove\", LIBRARY.GIO);
+
+	// gio.MenuItem
+
+	Linker.link(g_menu_item_new, \"g_menu_item_new\", LIBRARY.GIO);
+	Linker.link(g_menu_item_new_section, \"g_menu_item_new_section\", LIBRARY.GIO);
+	Linker.link(g_menu_item_new_submenu, \"g_menu_item_new_submenu\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_label, \"g_menu_item_set_label\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_action_and_target_value, \"g_menu_item_set_action_and_target_value\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_action_and_target, \"g_menu_item_set_action_and_target\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_detailed_action, \"g_menu_item_set_detailed_action\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_section, \"g_menu_item_set_section\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_submenu, \"g_menu_item_set_submenu\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_attribute_value, \"g_menu_item_set_attribute_value\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_attribute, \"g_menu_item_set_attribute\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_link, \"g_menu_item_set_link\", LIBRARY.GIO);
+
+	// gio.DBusMenuModel
+
+	Linker.link(g_dbus_menu_model_get, \"g_dbus_menu_model_get\", LIBRARY.GIO);
 
 	// gio.Vfs
 
@@ -1826,6 +2013,7 @@ mixin( gshared ~"extern(C)
 	GFile* function(char* path) c_g_file_new_for_path;
 	GFile* function(char* uri) c_g_file_new_for_uri;
 	GFile* function(char* arg) c_g_file_new_for_commandline_arg;
+	GFile* function(char* tmpl, GFileIOStream** iostream, GError** error) c_g_file_new_tmp;
 	GFile* function(char* parseName) c_g_file_parse_name;
 	GFile* function(GFile* file) c_g_file_dup;
 	guint function(void* file) c_g_file_hash;
@@ -2012,11 +2200,13 @@ mixin( gshared ~"extern(C)
 
 	GFileAttributeMatcher* function(char* attributes) c_g_file_attribute_matcher_new;
 	GFileAttributeMatcher* function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_ref;
+	GFileAttributeMatcher* function(GFileAttributeMatcher* matcher, GFileAttributeMatcher* subtract) c_g_file_attribute_matcher_subtract;
 	void function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_unref;
 	gboolean function(GFileAttributeMatcher* matcher, char* attribute) c_g_file_attribute_matcher_matches;
 	gboolean function(GFileAttributeMatcher* matcher, char* attribute) c_g_file_attribute_matcher_matches_only;
 	gboolean function(GFileAttributeMatcher* matcher, char* ns) c_g_file_attribute_matcher_enumerate_namespace;
 	char* function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_enumerate_next;
+	char* function(GFileAttributeMatcher* matcher) c_g_file_attribute_matcher_to_string;
 
 	// gio.FileEnumerator
 
@@ -2105,6 +2295,7 @@ mixin( gshared ~"extern(C)
 	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, void* userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_result_new_error;
 	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, void* userData, GError* error) c_g_simple_async_result_new_from_error;
 	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, void* userData, GError* error) c_g_simple_async_result_new_take_error;
+	void function(GSimpleAsyncResult* simple, GCancellable* checkCancellable) c_g_simple_async_result_set_check_cancellable;
 	void function(GSimpleAsyncResult* simple, void* opRes, GDestroyNotify destroyOpRes) c_g_simple_async_result_set_op_res_gpointer;
 	gpointer function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_op_res_gpointer;
 	void function(GSimpleAsyncResult* simple, gssize opRes) c_g_simple_async_result_set_op_res_gssize;
@@ -2447,6 +2638,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDesktopAppInfo* info, gchar* desktopEnv) c_g_desktop_app_info_get_show_in;
 	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_generic_name;
 	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_categories;
+	char** function(GDesktopAppInfo* info) c_g_desktop_app_info_get_keywords;
 	void function(char* desktopEnv) c_g_desktop_app_info_set_desktop_env;
 	gboolean function(GDesktopAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData, GError** error) c_g_desktop_app_info_launch_uris_as_manager;
 
@@ -2482,6 +2674,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_eject_with_operation_finish;
 	char** function(GVolume* volume) c_g_volume_enumerate_identifiers;
 	char* function(GVolume* volume, char* kind) c_g_volume_get_identifier;
+	gchar* function(GVolume* volume) c_g_volume_get_sort_key;
 
 	// gio.Volume
 
@@ -2516,6 +2709,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GMount* mount) c_g_mount_is_shadowed;
 	void function(GMount* mount) c_g_mount_shadow;
 	void function(GMount* mount) c_g_mount_unshadow;
+	gchar* function(GMount* mount) c_g_mount_get_sort_key;
 
 	// gio.Mount
 
@@ -2550,6 +2744,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_stop_finish;
 	char** function(GDrive* drive) c_g_drive_enumerate_identifiers;
 	char* function(GDrive* drive, char* kind) c_g_drive_get_identifier;
+	gchar* function(GDrive* drive) c_g_drive_get_sort_key;
 
 	// gio.Drive
 
@@ -2581,6 +2776,7 @@ mixin( gshared ~"extern(C)
 	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_mount_path;
 	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_device_path;
 	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_fs_type;
+	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_options;
 	gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_readonly;
 	gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_user_mountable;
 	gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_loopback;
@@ -2690,6 +2886,8 @@ mixin( gshared ~"extern(C)
 	GSource* function(GSocket* socket, GIOCondition condition, GCancellable* cancellable) c_g_socket_create_source;
 	GIOCondition function(GSocket* socket, GIOCondition condition) c_g_socket_condition_check;
 	gboolean function(GSocket* socket, GIOCondition condition, GCancellable* cancellable, GError** error) c_g_socket_condition_wait;
+	gboolean function(GSocket* socket, GIOCondition condition, gint64 timeout, GCancellable* cancellable, GError** error) c_g_socket_condition_timed_wait;
+	gssize function(GSocket* socket) c_g_socket_get_available_bytes;
 	void function(GSocket* socket, gint backlog) c_g_socket_set_listen_backlog;
 	gint function(GSocket* socket) c_g_socket_get_listen_backlog;
 	gboolean function(GSocket* socket) c_g_socket_get_blocking;
@@ -2698,6 +2896,10 @@ mixin( gshared ~"extern(C)
 	void function(GSocket* socket, gboolean keepalive) c_g_socket_set_keepalive;
 	guint function(GSocket* socket) c_g_socket_get_timeout;
 	void function(GSocket* socket, guint timeout) c_g_socket_set_timeout;
+	void function(GSocket* socket, guint ttl) c_g_socket_set_ttl;
+	guint function(GSocket* socket) c_g_socket_get_ttl;
+	gboolean function(GSocket* socket) c_g_socket_get_broadcast;
+	void function(GSocket* socket, gboolean broadcast) c_g_socket_set_broadcast;
 	GSocketFamily function(GSocket* socket) c_g_socket_get_family;
 	int function(GSocket* socket) c_g_socket_get_fd;
 	GSocketAddress* function(GSocket* socket, GError** error) c_g_socket_get_local_address;
@@ -2706,6 +2908,12 @@ mixin( gshared ~"extern(C)
 	GSocketType function(GSocket* socket) c_g_socket_get_socket_type;
 	gboolean function(GSocket* socket) c_g_socket_speaks_ipv4;
 	GCredentials* function(GSocket* socket, GError** error) c_g_socket_get_credentials;
+	gboolean function(GSocket* socket, GInetAddress* group, gboolean sourceSpecific, gchar* iface, GError** error) c_g_socket_join_multicast_group;
+	gboolean function(GSocket* socket, GInetAddress* group, gboolean sourceSpecific, gchar* iface, GError** error) c_g_socket_leave_multicast_group;
+	gboolean function(GSocket* socket) c_g_socket_get_multicast_loopback;
+	void function(GSocket* socket, gboolean loopback) c_g_socket_set_multicast_loopback;
+	guint function(GSocket* socket) c_g_socket_get_multicast_ttl;
+	void function(GSocket* socket, guint ttl) c_g_socket_set_multicast_ttl;
 
 	// gio.InetAddress
 
@@ -2729,6 +2937,17 @@ mixin( gshared ~"extern(C)
 	gboolean function(GInetAddress* address) c_g_inet_address_get_is_mc_org_local;
 	gboolean function(GInetAddress* address) c_g_inet_address_get_is_mc_global;
 
+	// gio.InetAddressMask
+
+	GInetAddressMask* function(GInetAddress* addr, guint length, GError** error) c_g_inet_address_mask_new;
+	GInetAddressMask* function(gchar* maskString, GError** error) c_g_inet_address_mask_new_from_string;
+	gchar* function(GInetAddressMask* mask) c_g_inet_address_mask_to_string;
+	GSocketFamily function(GInetAddressMask* mask) c_g_inet_address_mask_get_family;
+	GInetAddress* function(GInetAddressMask* mask) c_g_inet_address_mask_get_address;
+	guint function(GInetAddressMask* mask) c_g_inet_address_mask_get_length;
+	gboolean function(GInetAddressMask* mask, GInetAddress* address) c_g_inet_address_mask_matches;
+	gboolean function(GInetAddressMask* mask, GInetAddressMask* mask2) c_g_inet_address_mask_equal;
+
 	// gio.SocketAddress
 
 	GSocketAddress* function(void* native, gsize len) c_g_socket_address_new_from_native;
@@ -2741,6 +2960,8 @@ mixin( gshared ~"extern(C)
 	GSocketAddress* function(GInetAddress* address, guint16 port) c_g_inet_socket_address_new;
 	GInetAddress* function(GInetSocketAddress* address) c_g_inet_socket_address_get_address;
 	guint16 function(GInetSocketAddress* address) c_g_inet_socket_address_get_port;
+	guint32 function(GInetSocketAddress* address) c_g_inet_socket_address_get_flowinfo;
+	guint32 function(GInetSocketAddress* address) c_g_inet_socket_address_get_scope_id;
 
 	// gio.UnixSocketAddress
 
@@ -2821,7 +3042,6 @@ mixin( gshared ~"extern(C)
 
 	// gio.SocketClient
 
-	void function(GSocketClient* client, gchar* protocol) c_g_socket_client_add_application_proxy;
 	GSocketClient* function() c_g_socket_client_new;
 	GSocketConnection* function(GSocketClient* client, GSocketConnectable* connectable, GCancellable* cancellable, GError** error) c_g_socket_client_connect;
 	void function(GSocketClient* client, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_socket_client_connect_async;
@@ -2851,9 +3071,14 @@ mixin( gshared ~"extern(C)
 	gboolean function(GSocketClient* client) c_g_socket_client_get_enable_proxy;
 	gboolean function(GSocketClient* client) c_g_socket_client_get_tls;
 	GTlsCertificateFlags function(GSocketClient* client) c_g_socket_client_get_tls_validation_flags;
+	void function(GSocketClient* client, gchar* protocol) c_g_socket_client_add_application_proxy;
 
 	// gio.SocketConnection
 
+	gboolean function(GSocketConnection* connection, GSocketAddress* address, GCancellable* cancellable, GError** error) c_g_socket_connection_connect;
+	void function(GSocketConnection* connection, GSocketAddress* address, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_socket_connection_connect_async;
+	gboolean function(GSocketConnection* connection, GAsyncResult* result, GError** error) c_g_socket_connection_connect_finish;
+	gboolean function(GSocketConnection* connection) c_g_socket_connection_is_connected;
 	GSocketAddress* function(GSocketConnection* connection, GError** error) c_g_socket_connection_get_local_address;
 	GSocketAddress* function(GSocketConnection* connection, GError** error) c_g_socket_connection_get_remote_address;
 	GSocket* function(GSocketConnection* connection) c_g_socket_connection_get_socket;
@@ -2866,7 +3091,11 @@ mixin( gshared ~"extern(C)
 	gint function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_receive_fd;
 	gboolean function(GUnixConnection* connection, gint fd, GCancellable* cancellable, GError** error) c_g_unix_connection_send_fd;
 	GCredentials* function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_receive_credentials;
+	void function(GUnixConnection* connection, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_unix_connection_receive_credentials_async;
+	GCredentials* function(GUnixConnection* connection, GAsyncResult* result, GError** error) c_g_unix_connection_receive_credentials_finish;
 	gboolean function(GUnixConnection* connection, GCancellable* cancellable, GError** error) c_g_unix_connection_send_credentials;
+	void function(GUnixConnection* connection, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_unix_connection_send_credentials_async;
+	gboolean function(GUnixConnection* connection, GAsyncResult* result, GError** error) c_g_unix_connection_send_credentials_finish;
 
 	// gio.TcpConnection
 
@@ -2899,6 +3128,20 @@ mixin( gshared ~"extern(C)
 	// gio.ThreadedSocketService
 
 	GSocketService* function(int maxThreads) c_g_threaded_socket_service_new;
+
+	// gio.NetworkMonitorT
+
+
+	// gio.NetworkMonitorT
+
+	GNetworkMonitor* function() c_g_network_monitor_get_default;
+	gboolean function(GNetworkMonitor* monitor) c_g_network_monitor_get_network_available;
+	gboolean function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GError** error) c_g_network_monitor_can_reach;
+	void function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_network_monitor_can_reach_async;
+	gboolean function(GNetworkMonitor* monitor, GAsyncResult* result, GError** error) c_g_network_monitor_can_reach_finish;
+
+	// gio.NetworkMonitor
+
 
 	// gio.TlsCertificate
 
@@ -2980,6 +3223,7 @@ mixin( gshared ~"extern(C)
 	GTlsInteractionResult function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GError** error) c_g_tls_interaction_ask_password;
 	void function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_tls_interaction_ask_password_async;
 	GTlsInteractionResult function(GTlsInteraction* interaction, GAsyncResult* result, GError** error) c_g_tls_interaction_ask_password_finish;
+	GTlsInteractionResult function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GError** error) c_g_tls_interaction_invoke_ask_password;
 
 	// gio.TlsPassword
 
@@ -3239,6 +3483,10 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDBusConnection* connection, guint registrationId) c_g_dbus_connection_unregister_object;
 	guint function(GDBusConnection* connection, gchar* objectPath, GDBusSubtreeVTable* vtable, GDBusSubtreeFlags flags, void* userData, GDestroyNotify userDataFreeFunc, GError** error) c_g_dbus_connection_register_subtree;
 	gboolean function(GDBusConnection* connection, guint registrationId) c_g_dbus_connection_unregister_subtree;
+	guint function(GDBusConnection* connection, gchar* objectPath, GActionGroup* actionGroup, GError** error) c_g_dbus_connection_export_action_group;
+	void function(GDBusConnection* connection, guint exportId) c_g_dbus_connection_unexport_action_group;
+	guint function(GDBusConnection* connection, gchar* objectPath, GMenuModel* menu, GError** error) c_g_dbus_connection_export_menu_model;
+	void function(GDBusConnection* connection, guint exportId) c_g_dbus_connection_unexport_menu_model;
 
 	// gio.DBusMethodInvocation
 
@@ -3295,6 +3543,7 @@ mixin( gshared ~"extern(C)
 
 	GDBusInterfaceInfo* function(GDBusInterface* iface) c_g_dbus_interface_get_info;
 	GDBusObject* function(GDBusInterface* iface) c_g_dbus_interface_get_object;
+	GDBusObject* function(GDBusInterface* iface) c_g_dbus_interface_dup_object;
 	void function(GDBusInterface* iface, GDBusObject* object) c_g_dbus_interface_set_object;
 
 	// gio.DBusInterface
@@ -3308,7 +3557,10 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_properties;
 	gboolean function(GDBusInterfaceSkeleton* iface, GDBusConnection* connection, gchar* objectPath, GError** error) c_g_dbus_interface_skeleton_export;
 	void function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_unexport;
+	void function(GDBusInterfaceSkeleton* iface, GDBusConnection* connection) c_g_dbus_interface_skeleton_unexport_from_connection;
 	GDBusConnection* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_connection;
+	GList* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_connections;
+	gboolean function(GDBusInterfaceSkeleton* iface, GDBusConnection* connection) c_g_dbus_interface_skeleton_has_connection;
 	gchar* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_object_path;
 	GDBusInterfaceSkeletonFlags function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_flags;
 	void function(GDBusInterfaceSkeleton* iface, GDBusInterfaceSkeletonFlags flags) c_g_dbus_interface_skeleton_set_flags;
@@ -3401,10 +3653,11 @@ mixin( gshared ~"extern(C)
 
 	// gio.Settings
 
-	GSettings* function(gchar* schema) c_g_settings_new;
-	GSettings* function(gchar* schema, gchar* path) c_g_settings_new_with_path;
-	GSettings* function(gchar* schema, GSettingsBackend* backend) c_g_settings_new_with_backend;
-	GSettings* function(gchar* schema, GSettingsBackend* backend, gchar* path) c_g_settings_new_with_backend_and_path;
+	GSettings* function(gchar* schemaId) c_g_settings_new;
+	GSettings* function(gchar* schemaId, gchar* path) c_g_settings_new_with_path;
+	GSettings* function(gchar* schemaId, GSettingsBackend* backend) c_g_settings_new_with_backend;
+	GSettings* function(gchar* schemaId, GSettingsBackend* backend, gchar* path) c_g_settings_new_with_backend_and_path;
+	GSettings* function(GSettingsSchema* schema, GSettingsBackend* backend, gchar* path) c_g_settings_new_full;
 	void function() c_g_settings_sync;
 	GVariant* function(GSettings* settings, gchar* key) c_g_settings_get_value;
 	gboolean function(GSettings* settings, gchar* key, GVariant* value) c_g_settings_set_value;
@@ -3444,6 +3697,7 @@ mixin( gshared ~"extern(C)
 	void function(GSettings* settings, gchar* key, void* object, gchar* property, GSettingsBindFlags flags, GSettingsBindGetMapping getMapping, GSettingsBindSetMapping setMapping, void* userData, GDestroyNotify destroy) c_g_settings_bind_with_mapping;
 	void function(GSettings* settings, gchar* key, void* object, gchar* property, gboolean inverted) c_g_settings_bind_writable;
 	void function(void* object, gchar* property) c_g_settings_unbind;
+	GAction* function(GSettings* settings, gchar* key) c_g_settings_create_action;
 
 	// gio.SettingsBackend
 
@@ -3458,6 +3712,38 @@ mixin( gshared ~"extern(C)
 	GSettingsBackend* function(gchar* filename, gchar* rootPath, gchar* rootGroup) c_g_keyfile_settings_backend_new;
 	GSettingsBackend* function() c_g_memory_settings_backend_new;
 	GSettingsBackend* function() c_g_null_settings_backend_new;
+
+	// gio.SettingsSchema
+
+	GSettingsSchema* function(GSettingsSchema* schema) c_g_settings_schema_ref;
+	void function(GSettingsSchema* schema) c_g_settings_schema_unref;
+	gchar* function(GSettingsSchema* schema) c_g_settings_schema_get_id;
+	gchar* function(GSettingsSchema* schema) c_g_settings_schema_get_path;
+
+	// gio.SettingsSchemaSource
+
+	GSettingsSchemaSource* function() c_g_settings_schema_source_get_default;
+	GSettingsSchemaSource* function(GSettingsSchemaSource* source) c_g_settings_schema_source_ref;
+	void function(GSettingsSchemaSource* source) c_g_settings_schema_source_unref;
+	GSettingsSchemaSource* function(gchar* directory, GSettingsSchemaSource* parent, gboolean trusted, GError** error) c_g_settings_schema_source_new_from_directory;
+	GSettingsSchema* function(GSettingsSchemaSource* source, gchar* schemaId, gboolean recursive) c_g_settings_schema_source_lookup;
+
+	// gio.Resource
+
+	GResource* function(gchar* filename, GError** error) c_g_resource_load;
+	GResource* function(GBytes* data, GError** error) c_g_resource_new_from_data;
+	GResource* function(GResource* resource) c_g_resource_ref;
+	void function(GResource* resource) c_g_resource_unref;
+	GBytes* function(GResource* resource, char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resource_lookup_data;
+	GInputStream* function(GResource* resource, char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resource_open_stream;
+	char** function(GResource* resource, char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resource_enumerate_children;
+	gboolean function(GResource* resource, char* path, GResourceLookupFlags lookupFlags, gsize* size, guint32* flags, GError** error) c_g_resource_get_info;
+	void function(GResource* resource) c_g_resources_register;
+	void function(GResource* resource) c_g_resources_unregister;
+	GBytes* function(char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resources_lookup_data;
+	GInputStream* function(char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resources_open_stream;
+	char** function(char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resources_enumerate_children;
+	gboolean function(char* path, GResourceLookupFlags lookupFlags, gsize* size, guint32* flags, GError** error) c_g_resources_get_info;
 
 	// gio.Permission
 
@@ -3476,13 +3762,50 @@ mixin( gshared ~"extern(C)
 
 	GPermission* function(gboolean allowed) c_g_simple_permission_new;
 
+	// gio.Application
+
+	gboolean function(gchar* applicationId) c_g_application_id_is_valid;
+	GApplication* function(gchar* applicationId, GApplicationFlags flags) c_g_application_new;
+	gchar* function(GApplication* application) c_g_application_get_application_id;
+	void function(GApplication* application, gchar* applicationId) c_g_application_set_application_id;
+	guint function(GApplication* application) c_g_application_get_inactivity_timeout;
+	void function(GApplication* application, guint inactivityTimeout) c_g_application_set_inactivity_timeout;
+	GApplicationFlags function(GApplication* application) c_g_application_get_flags;
+	void function(GApplication* application, GApplicationFlags flags) c_g_application_set_flags;
+	void function(GApplication* application, GActionGroup* actionGroup) c_g_application_set_action_group;
+	gboolean function(GApplication* application) c_g_application_get_is_registered;
+	gboolean function(GApplication* application) c_g_application_get_is_remote;
+	gboolean function(GApplication* application, GCancellable* cancellable, GError** error) c_g_application_register;
+	void function(GApplication* application) c_g_application_hold;
+	void function(GApplication* application) c_g_application_release;
+	void function(GApplication* application) c_g_application_quit;
+	void function(GApplication* application) c_g_application_activate;
+	void function(GApplication* application, GFile** files, gint nFiles, gchar* hint) c_g_application_open;
+	int function(GApplication* application, int argc, char** argv) c_g_application_run;
+	void function(GApplication* application) c_g_application_set_default;
+	GApplication* function() c_g_application_get_default;
+
+	// gio.ApplicationCommandLine
+
+	gchar** function(GApplicationCommandLine* cmdline, int* argc) c_g_application_command_line_get_arguments;
+	gchar* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_cwd;
+	gchar** function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_environ;
+	gchar* function(GApplicationCommandLine* cmdline, gchar* name) c_g_application_command_line_getenv;
+	gboolean function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_is_remote;
+	GVariant* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_platform_data;
+	void function(GApplicationCommandLine* cmdline, int exitStatus) c_g_application_command_line_set_exit_status;
+	int function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_exit_status;
+	void function(GApplicationCommandLine* cmdline, gchar* format, ... ) c_g_application_command_line_print;
+	void function(GApplicationCommandLine* cmdline, gchar* format, ... ) c_g_application_command_line_printerr;
+
 	// gio.ActionGroupT
 
 
 	// gio.ActionGroupT
 
-	gboolean function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_has_action;
 	gchar** function(GActionGroup* actionGroup) c_g_action_group_list_actions;
+	gboolean function(GActionGroup* actionGroup, gchar* actionName, gboolean* enabled, GVariantType** parameterType, GVariantType** stateType, GVariant** stateHint, GVariant** state) c_g_action_group_query_action;
+	gboolean function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_has_action;
 	gboolean function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_enabled;
 	GVariantType* function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_parameter_type;
 	GVariantType* function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_get_action_state_type;
@@ -3494,6 +3817,16 @@ mixin( gshared ~"extern(C)
 	void function(GActionGroup* actionGroup, gchar* actionName) c_g_action_group_action_removed;
 	void function(GActionGroup* actionGroup, gchar* actionName, gboolean enabled) c_g_action_group_action_enabled_changed;
 	void function(GActionGroup* actionGroup, gchar* actionName, GVariant* state) c_g_action_group_action_state_changed;
+
+	// gio.ActionMapT
+
+
+	// gio.ActionMapT
+
+	GAction* function(GActionMap* actionMap, gchar* actionName) c_g_action_map_lookup_action;
+	void function(GActionMap* actionMap, GActionEntry* entries, gint nEntries, void* userData) c_g_action_map_add_action_entries;
+	void function(GActionMap* actionMap, GAction* action) c_g_action_map_add_action;
+	void function(GActionMap* actionMap, gchar* actionName) c_g_action_map_remove_action;
 
 	// gio.SimpleActionGroup
 
@@ -3527,38 +3860,79 @@ mixin( gshared ~"extern(C)
 	void function(GSimpleAction* simple, gboolean enabled) c_g_simple_action_set_enabled;
 	void function(GSimpleAction* simple, GVariant* value) c_g_simple_action_set_state;
 
-	// gio.Application
+	// gio.RemoteActionGroupT
 
-	gboolean function(gchar* applicationId) c_g_application_id_is_valid;
-	GApplication* function(gchar* applicationId, GApplicationFlags flags) c_g_application_new;
-	gchar* function(GApplication* application) c_g_application_get_application_id;
-	void function(GApplication* application, gchar* applicationId) c_g_application_set_application_id;
-	guint function(GApplication* application) c_g_application_get_inactivity_timeout;
-	void function(GApplication* application, guint inactivityTimeout) c_g_application_set_inactivity_timeout;
-	GApplicationFlags function(GApplication* application) c_g_application_get_flags;
-	void function(GApplication* application, GApplicationFlags flags) c_g_application_set_flags;
-	void function(GApplication* application, GActionGroup* actionGroup) c_g_application_set_action_group;
-	gboolean function(GApplication* application) c_g_application_get_is_registered;
-	gboolean function(GApplication* application) c_g_application_get_is_remote;
-	gboolean function(GApplication* application, GCancellable* cancellable, GError** error) c_g_application_register;
-	void function(GApplication* application) c_g_application_hold;
-	void function(GApplication* application) c_g_application_release;
-	void function(GApplication* application) c_g_application_activate;
-	void function(GApplication* application, GFile** files, gint nFiles, gchar* hint) c_g_application_open;
-	int function(GApplication* application, int argc, char** argv) c_g_application_run;
 
-	// gio.ApplicationCommandLine
+	// gio.RemoteActionGroupT
 
-	gchar** function(GApplicationCommandLine* cmdline, int* argc) c_g_application_command_line_get_arguments;
-	gchar* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_cwd;
-	gchar** function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_environ;
-	gchar* function(GApplicationCommandLine* cmdline, gchar* name) c_g_application_command_line_getenv;
-	gboolean function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_is_remote;
-	GVariant* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_platform_data;
-	void function(GApplicationCommandLine* cmdline, int exitStatus) c_g_application_command_line_set_exit_status;
-	int function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_exit_status;
-	void function(GApplicationCommandLine* cmdline, gchar* format, ... ) c_g_application_command_line_print;
-	void function(GApplicationCommandLine* cmdline, gchar* format, ... ) c_g_application_command_line_printerr;
+	void function(GRemoteActionGroup* remote, gchar* actionName, GVariant* parameter, GVariant* platformData) c_g_remote_action_group_activate_action_full;
+	void function(GRemoteActionGroup* remote, gchar* actionName, GVariant* value, GVariant* platformData) c_g_remote_action_group_change_action_state_full;
+
+	// gio.DBusActionGroup
+
+	GDBusActionGroup* function(GDBusConnection* connection, gchar* busName, gchar* objectPath) c_g_dbus_action_group_get;
+
+	// gio.MenuModel
+
+	gboolean function(GMenuModel* model) c_g_menu_model_is_mutable;
+	gint function(GMenuModel* model) c_g_menu_model_get_n_items;
+	GVariant* function(GMenuModel* model, gint itemIndex, gchar* attribute, GVariantType* expectedType) c_g_menu_model_get_item_attribute_value;
+	gboolean function(GMenuModel* model, gint itemIndex, gchar* attribute, gchar* formatString, ... ) c_g_menu_model_get_item_attribute;
+	GMenuModel* function(GMenuModel* model, gint itemIndex, gchar* link) c_g_menu_model_get_item_link;
+	GMenuAttributeIter* function(GMenuModel* model, gint itemIndex) c_g_menu_model_iterate_item_attributes;
+	GMenuLinkIter* function(GMenuModel* model, gint itemIndex) c_g_menu_model_iterate_item_links;
+	void function(GMenuModel* model, gint position, gint removed, gint added) c_g_menu_model_items_changed;
+
+	// gio.MenuAttributeIter
+
+	gboolean function(GMenuAttributeIter* iter, gchar** outName, GVariant** value) c_g_menu_attribute_iter_get_next;
+	gchar* function(GMenuAttributeIter* iter) c_g_menu_attribute_iter_get_name;
+	GVariant* function(GMenuAttributeIter* iter) c_g_menu_attribute_iter_get_value;
+	gboolean function(GMenuAttributeIter* iter) c_g_menu_attribute_iter_next;
+
+	// gio.MenuLinkIter
+
+	gchar* function(GMenuLinkIter* iter) c_g_menu_link_iter_get_name;
+	gboolean function(GMenuLinkIter* iter, gchar** outLink, GMenuModel** value) c_g_menu_link_iter_get_next;
+	GMenuModel* function(GMenuLinkIter* iter) c_g_menu_link_iter_get_value;
+	gboolean function(GMenuLinkIter* iter) c_g_menu_link_iter_next;
+
+	// gio.Menu
+
+	GMenu* function() c_g_menu_new;
+	void function(GMenu* menu) c_g_menu_freeze;
+	void function(GMenu* menu, gint position, gchar* label, gchar* detailedAction) c_g_menu_insert;
+	void function(GMenu* menu, gchar* label, gchar* detailedAction) c_g_menu_prepend;
+	void function(GMenu* menu, gchar* label, gchar* detailedAction) c_g_menu_append;
+	void function(GMenu* menu, gint position, GMenuItem* item) c_g_menu_insert_item;
+	void function(GMenu* menu, GMenuItem* item) c_g_menu_append_item;
+	void function(GMenu* menu, GMenuItem* item) c_g_menu_prepend_item;
+	void function(GMenu* menu, gint position, gchar* label, GMenuModel* section) c_g_menu_insert_section;
+	void function(GMenu* menu, gchar* label, GMenuModel* section) c_g_menu_prepend_section;
+	void function(GMenu* menu, gchar* label, GMenuModel* section) c_g_menu_append_section;
+	void function(GMenu* menu, gchar* label, GMenuModel* submenu) c_g_menu_append_submenu;
+	void function(GMenu* menu, gint position, gchar* label, GMenuModel* submenu) c_g_menu_insert_submenu;
+	void function(GMenu* menu, gchar* label, GMenuModel* submenu) c_g_menu_prepend_submenu;
+	void function(GMenu* menu, gint position) c_g_menu_remove;
+
+	// gio.MenuItem
+
+	GMenuItem* function(gchar* label, gchar* detailedAction) c_g_menu_item_new;
+	GMenuItem* function(gchar* label, GMenuModel* section) c_g_menu_item_new_section;
+	GMenuItem* function(gchar* label, GMenuModel* submenu) c_g_menu_item_new_submenu;
+	void function(GMenuItem* menuItem, gchar* label) c_g_menu_item_set_label;
+	void function(GMenuItem* menuItem, gchar* action, GVariant* targetValue) c_g_menu_item_set_action_and_target_value;
+	void function(GMenuItem* menuItem, gchar* action, gchar* formatString, ... ) c_g_menu_item_set_action_and_target;
+	void function(GMenuItem* menuItem, gchar* detailedAction) c_g_menu_item_set_detailed_action;
+	void function(GMenuItem* menuItem, GMenuModel* section) c_g_menu_item_set_section;
+	void function(GMenuItem* menuItem, GMenuModel* submenu) c_g_menu_item_set_submenu;
+	void function(GMenuItem* menuItem, gchar* attribute, GVariant* value) c_g_menu_item_set_attribute_value;
+	void function(GMenuItem* menuItem, gchar* attribute, gchar* formatString, ... ) c_g_menu_item_set_attribute;
+	void function(GMenuItem* menuItem, gchar* link, GMenuModel* model) c_g_menu_item_set_link;
+
+	// gio.DBusMenuModel
+
+	GDBusMenuModel* function(GDBusConnection* connection, gchar* busName, gchar* objectPath) c_g_dbus_menu_model_get;
 
 	// gio.Vfs
 
@@ -3610,6 +3984,7 @@ mixin( gshared ~"extern(C)
 alias c_g_file_new_for_path  g_file_new_for_path;
 alias c_g_file_new_for_uri  g_file_new_for_uri;
 alias c_g_file_new_for_commandline_arg  g_file_new_for_commandline_arg;
+alias c_g_file_new_tmp  g_file_new_tmp;
 alias c_g_file_parse_name  g_file_parse_name;
 alias c_g_file_dup  g_file_dup;
 alias c_g_file_hash  g_file_hash;
@@ -3796,11 +4171,13 @@ alias c_g_file_info_set_sort_order  g_file_info_set_sort_order;
 
 alias c_g_file_attribute_matcher_new  g_file_attribute_matcher_new;
 alias c_g_file_attribute_matcher_ref  g_file_attribute_matcher_ref;
+alias c_g_file_attribute_matcher_subtract  g_file_attribute_matcher_subtract;
 alias c_g_file_attribute_matcher_unref  g_file_attribute_matcher_unref;
 alias c_g_file_attribute_matcher_matches  g_file_attribute_matcher_matches;
 alias c_g_file_attribute_matcher_matches_only  g_file_attribute_matcher_matches_only;
 alias c_g_file_attribute_matcher_enumerate_namespace  g_file_attribute_matcher_enumerate_namespace;
 alias c_g_file_attribute_matcher_enumerate_next  g_file_attribute_matcher_enumerate_next;
+alias c_g_file_attribute_matcher_to_string  g_file_attribute_matcher_to_string;
 
 // gio.FileEnumerator
 
@@ -3889,6 +4266,7 @@ alias c_g_simple_async_result_new  g_simple_async_result_new;
 alias c_g_simple_async_result_new_error  g_simple_async_result_new_error;
 alias c_g_simple_async_result_new_from_error  g_simple_async_result_new_from_error;
 alias c_g_simple_async_result_new_take_error  g_simple_async_result_new_take_error;
+alias c_g_simple_async_result_set_check_cancellable  g_simple_async_result_set_check_cancellable;
 alias c_g_simple_async_result_set_op_res_gpointer  g_simple_async_result_set_op_res_gpointer;
 alias c_g_simple_async_result_get_op_res_gpointer  g_simple_async_result_get_op_res_gpointer;
 alias c_g_simple_async_result_set_op_res_gssize  g_simple_async_result_set_op_res_gssize;
@@ -4231,6 +4609,7 @@ alias c_g_desktop_app_info_get_nodisplay  g_desktop_app_info_get_nodisplay;
 alias c_g_desktop_app_info_get_show_in  g_desktop_app_info_get_show_in;
 alias c_g_desktop_app_info_get_generic_name  g_desktop_app_info_get_generic_name;
 alias c_g_desktop_app_info_get_categories  g_desktop_app_info_get_categories;
+alias c_g_desktop_app_info_get_keywords  g_desktop_app_info_get_keywords;
 alias c_g_desktop_app_info_set_desktop_env  g_desktop_app_info_set_desktop_env;
 alias c_g_desktop_app_info_launch_uris_as_manager  g_desktop_app_info_launch_uris_as_manager;
 
@@ -4266,6 +4645,7 @@ alias c_g_volume_eject_with_operation  g_volume_eject_with_operation;
 alias c_g_volume_eject_with_operation_finish  g_volume_eject_with_operation_finish;
 alias c_g_volume_enumerate_identifiers  g_volume_enumerate_identifiers;
 alias c_g_volume_get_identifier  g_volume_get_identifier;
+alias c_g_volume_get_sort_key  g_volume_get_sort_key;
 
 // gio.Volume
 
@@ -4300,6 +4680,7 @@ alias c_g_mount_guess_content_type_sync  g_mount_guess_content_type_sync;
 alias c_g_mount_is_shadowed  g_mount_is_shadowed;
 alias c_g_mount_shadow  g_mount_shadow;
 alias c_g_mount_unshadow  g_mount_unshadow;
+alias c_g_mount_get_sort_key  g_mount_get_sort_key;
 
 // gio.Mount
 
@@ -4334,6 +4715,7 @@ alias c_g_drive_stop  g_drive_stop;
 alias c_g_drive_stop_finish  g_drive_stop_finish;
 alias c_g_drive_enumerate_identifiers  g_drive_enumerate_identifiers;
 alias c_g_drive_get_identifier  g_drive_get_identifier;
+alias c_g_drive_get_sort_key  g_drive_get_sort_key;
 
 // gio.Drive
 
@@ -4365,6 +4747,7 @@ alias c_g_unix_mount_point_compare  g_unix_mount_point_compare;
 alias c_g_unix_mount_point_get_mount_path  g_unix_mount_point_get_mount_path;
 alias c_g_unix_mount_point_get_device_path  g_unix_mount_point_get_device_path;
 alias c_g_unix_mount_point_get_fs_type  g_unix_mount_point_get_fs_type;
+alias c_g_unix_mount_point_get_options  g_unix_mount_point_get_options;
 alias c_g_unix_mount_point_is_readonly  g_unix_mount_point_is_readonly;
 alias c_g_unix_mount_point_is_user_mountable  g_unix_mount_point_is_user_mountable;
 alias c_g_unix_mount_point_is_loopback  g_unix_mount_point_is_loopback;
@@ -4474,6 +4857,8 @@ alias c_g_socket_is_connected  g_socket_is_connected;
 alias c_g_socket_create_source  g_socket_create_source;
 alias c_g_socket_condition_check  g_socket_condition_check;
 alias c_g_socket_condition_wait  g_socket_condition_wait;
+alias c_g_socket_condition_timed_wait  g_socket_condition_timed_wait;
+alias c_g_socket_get_available_bytes  g_socket_get_available_bytes;
 alias c_g_socket_set_listen_backlog  g_socket_set_listen_backlog;
 alias c_g_socket_get_listen_backlog  g_socket_get_listen_backlog;
 alias c_g_socket_get_blocking  g_socket_get_blocking;
@@ -4482,6 +4867,10 @@ alias c_g_socket_get_keepalive  g_socket_get_keepalive;
 alias c_g_socket_set_keepalive  g_socket_set_keepalive;
 alias c_g_socket_get_timeout  g_socket_get_timeout;
 alias c_g_socket_set_timeout  g_socket_set_timeout;
+alias c_g_socket_set_ttl  g_socket_set_ttl;
+alias c_g_socket_get_ttl  g_socket_get_ttl;
+alias c_g_socket_get_broadcast  g_socket_get_broadcast;
+alias c_g_socket_set_broadcast  g_socket_set_broadcast;
 alias c_g_socket_get_family  g_socket_get_family;
 alias c_g_socket_get_fd  g_socket_get_fd;
 alias c_g_socket_get_local_address  g_socket_get_local_address;
@@ -4490,6 +4879,12 @@ alias c_g_socket_get_remote_address  g_socket_get_remote_address;
 alias c_g_socket_get_socket_type  g_socket_get_socket_type;
 alias c_g_socket_speaks_ipv4  g_socket_speaks_ipv4;
 alias c_g_socket_get_credentials  g_socket_get_credentials;
+alias c_g_socket_join_multicast_group  g_socket_join_multicast_group;
+alias c_g_socket_leave_multicast_group  g_socket_leave_multicast_group;
+alias c_g_socket_get_multicast_loopback  g_socket_get_multicast_loopback;
+alias c_g_socket_set_multicast_loopback  g_socket_set_multicast_loopback;
+alias c_g_socket_get_multicast_ttl  g_socket_get_multicast_ttl;
+alias c_g_socket_set_multicast_ttl  g_socket_set_multicast_ttl;
 
 // gio.InetAddress
 
@@ -4513,6 +4908,17 @@ alias c_g_inet_address_get_is_mc_site_local  g_inet_address_get_is_mc_site_local
 alias c_g_inet_address_get_is_mc_org_local  g_inet_address_get_is_mc_org_local;
 alias c_g_inet_address_get_is_mc_global  g_inet_address_get_is_mc_global;
 
+// gio.InetAddressMask
+
+alias c_g_inet_address_mask_new  g_inet_address_mask_new;
+alias c_g_inet_address_mask_new_from_string  g_inet_address_mask_new_from_string;
+alias c_g_inet_address_mask_to_string  g_inet_address_mask_to_string;
+alias c_g_inet_address_mask_get_family  g_inet_address_mask_get_family;
+alias c_g_inet_address_mask_get_address  g_inet_address_mask_get_address;
+alias c_g_inet_address_mask_get_length  g_inet_address_mask_get_length;
+alias c_g_inet_address_mask_matches  g_inet_address_mask_matches;
+alias c_g_inet_address_mask_equal  g_inet_address_mask_equal;
+
 // gio.SocketAddress
 
 alias c_g_socket_address_new_from_native  g_socket_address_new_from_native;
@@ -4525,6 +4931,8 @@ alias c_g_socket_address_get_native_size  g_socket_address_get_native_size;
 alias c_g_inet_socket_address_new  g_inet_socket_address_new;
 alias c_g_inet_socket_address_get_address  g_inet_socket_address_get_address;
 alias c_g_inet_socket_address_get_port  g_inet_socket_address_get_port;
+alias c_g_inet_socket_address_get_flowinfo  g_inet_socket_address_get_flowinfo;
+alias c_g_inet_socket_address_get_scope_id  g_inet_socket_address_get_scope_id;
 
 // gio.UnixSocketAddress
 
@@ -4605,7 +5013,6 @@ alias c_g_proxy_address_new  g_proxy_address_new;
 
 // gio.SocketClient
 
-alias c_g_socket_client_add_application_proxy  g_socket_client_add_application_proxy;
 alias c_g_socket_client_new  g_socket_client_new;
 alias c_g_socket_client_connect  g_socket_client_connect;
 alias c_g_socket_client_connect_async  g_socket_client_connect_async;
@@ -4635,9 +5042,14 @@ alias c_g_socket_client_get_timeout  g_socket_client_get_timeout;
 alias c_g_socket_client_get_enable_proxy  g_socket_client_get_enable_proxy;
 alias c_g_socket_client_get_tls  g_socket_client_get_tls;
 alias c_g_socket_client_get_tls_validation_flags  g_socket_client_get_tls_validation_flags;
+alias c_g_socket_client_add_application_proxy  g_socket_client_add_application_proxy;
 
 // gio.SocketConnection
 
+alias c_g_socket_connection_connect  g_socket_connection_connect;
+alias c_g_socket_connection_connect_async  g_socket_connection_connect_async;
+alias c_g_socket_connection_connect_finish  g_socket_connection_connect_finish;
+alias c_g_socket_connection_is_connected  g_socket_connection_is_connected;
 alias c_g_socket_connection_get_local_address  g_socket_connection_get_local_address;
 alias c_g_socket_connection_get_remote_address  g_socket_connection_get_remote_address;
 alias c_g_socket_connection_get_socket  g_socket_connection_get_socket;
@@ -4650,7 +5062,11 @@ alias c_g_socket_connection_factory_register_type  g_socket_connection_factory_r
 alias c_g_unix_connection_receive_fd  g_unix_connection_receive_fd;
 alias c_g_unix_connection_send_fd  g_unix_connection_send_fd;
 alias c_g_unix_connection_receive_credentials  g_unix_connection_receive_credentials;
+alias c_g_unix_connection_receive_credentials_async  g_unix_connection_receive_credentials_async;
+alias c_g_unix_connection_receive_credentials_finish  g_unix_connection_receive_credentials_finish;
 alias c_g_unix_connection_send_credentials  g_unix_connection_send_credentials;
+alias c_g_unix_connection_send_credentials_async  g_unix_connection_send_credentials_async;
+alias c_g_unix_connection_send_credentials_finish  g_unix_connection_send_credentials_finish;
 
 // gio.TcpConnection
 
@@ -4683,6 +5099,20 @@ alias c_g_socket_service_is_active  g_socket_service_is_active;
 // gio.ThreadedSocketService
 
 alias c_g_threaded_socket_service_new  g_threaded_socket_service_new;
+
+// gio.NetworkMonitorT
+
+
+// gio.NetworkMonitorT
+
+alias c_g_network_monitor_get_default  g_network_monitor_get_default;
+alias c_g_network_monitor_get_network_available  g_network_monitor_get_network_available;
+alias c_g_network_monitor_can_reach  g_network_monitor_can_reach;
+alias c_g_network_monitor_can_reach_async  g_network_monitor_can_reach_async;
+alias c_g_network_monitor_can_reach_finish  g_network_monitor_can_reach_finish;
+
+// gio.NetworkMonitor
+
 
 // gio.TlsCertificate
 
@@ -4764,6 +5194,7 @@ alias c_g_tls_file_database_new  g_tls_file_database_new;
 alias c_g_tls_interaction_ask_password  g_tls_interaction_ask_password;
 alias c_g_tls_interaction_ask_password_async  g_tls_interaction_ask_password_async;
 alias c_g_tls_interaction_ask_password_finish  g_tls_interaction_ask_password_finish;
+alias c_g_tls_interaction_invoke_ask_password  g_tls_interaction_invoke_ask_password;
 
 // gio.TlsPassword
 
@@ -5023,6 +5454,10 @@ alias c_g_dbus_connection_register_object  g_dbus_connection_register_object;
 alias c_g_dbus_connection_unregister_object  g_dbus_connection_unregister_object;
 alias c_g_dbus_connection_register_subtree  g_dbus_connection_register_subtree;
 alias c_g_dbus_connection_unregister_subtree  g_dbus_connection_unregister_subtree;
+alias c_g_dbus_connection_export_action_group  g_dbus_connection_export_action_group;
+alias c_g_dbus_connection_unexport_action_group  g_dbus_connection_unexport_action_group;
+alias c_g_dbus_connection_export_menu_model  g_dbus_connection_export_menu_model;
+alias c_g_dbus_connection_unexport_menu_model  g_dbus_connection_unexport_menu_model;
 
 // gio.DBusMethodInvocation
 
@@ -5079,6 +5514,7 @@ alias c_g_bus_watch_name_on_connection_with_closures  g_bus_watch_name_on_connec
 
 alias c_g_dbus_interface_get_info  g_dbus_interface_get_info;
 alias c_g_dbus_interface_get_object  g_dbus_interface_get_object;
+alias c_g_dbus_interface_dup_object  g_dbus_interface_dup_object;
 alias c_g_dbus_interface_set_object  g_dbus_interface_set_object;
 
 // gio.DBusInterface
@@ -5092,7 +5528,10 @@ alias c_g_dbus_interface_skeleton_get_vtable  g_dbus_interface_skeleton_get_vtab
 alias c_g_dbus_interface_skeleton_get_properties  g_dbus_interface_skeleton_get_properties;
 alias c_g_dbus_interface_skeleton_export  g_dbus_interface_skeleton_export;
 alias c_g_dbus_interface_skeleton_unexport  g_dbus_interface_skeleton_unexport;
+alias c_g_dbus_interface_skeleton_unexport_from_connection  g_dbus_interface_skeleton_unexport_from_connection;
 alias c_g_dbus_interface_skeleton_get_connection  g_dbus_interface_skeleton_get_connection;
+alias c_g_dbus_interface_skeleton_get_connections  g_dbus_interface_skeleton_get_connections;
+alias c_g_dbus_interface_skeleton_has_connection  g_dbus_interface_skeleton_has_connection;
 alias c_g_dbus_interface_skeleton_get_object_path  g_dbus_interface_skeleton_get_object_path;
 alias c_g_dbus_interface_skeleton_get_flags  g_dbus_interface_skeleton_get_flags;
 alias c_g_dbus_interface_skeleton_set_flags  g_dbus_interface_skeleton_set_flags;
@@ -5189,6 +5628,7 @@ alias c_g_settings_new  g_settings_new;
 alias c_g_settings_new_with_path  g_settings_new_with_path;
 alias c_g_settings_new_with_backend  g_settings_new_with_backend;
 alias c_g_settings_new_with_backend_and_path  g_settings_new_with_backend_and_path;
+alias c_g_settings_new_full  g_settings_new_full;
 alias c_g_settings_sync  g_settings_sync;
 alias c_g_settings_get_value  g_settings_get_value;
 alias c_g_settings_set_value  g_settings_set_value;
@@ -5228,6 +5668,7 @@ alias c_g_settings_bind  g_settings_bind;
 alias c_g_settings_bind_with_mapping  g_settings_bind_with_mapping;
 alias c_g_settings_bind_writable  g_settings_bind_writable;
 alias c_g_settings_unbind  g_settings_unbind;
+alias c_g_settings_create_action  g_settings_create_action;
 
 // gio.SettingsBackend
 
@@ -5242,6 +5683,38 @@ alias c_g_settings_backend_flatten_tree  g_settings_backend_flatten_tree;
 alias c_g_keyfile_settings_backend_new  g_keyfile_settings_backend_new;
 alias c_g_memory_settings_backend_new  g_memory_settings_backend_new;
 alias c_g_null_settings_backend_new  g_null_settings_backend_new;
+
+// gio.SettingsSchema
+
+alias c_g_settings_schema_ref  g_settings_schema_ref;
+alias c_g_settings_schema_unref  g_settings_schema_unref;
+alias c_g_settings_schema_get_id  g_settings_schema_get_id;
+alias c_g_settings_schema_get_path  g_settings_schema_get_path;
+
+// gio.SettingsSchemaSource
+
+alias c_g_settings_schema_source_get_default  g_settings_schema_source_get_default;
+alias c_g_settings_schema_source_ref  g_settings_schema_source_ref;
+alias c_g_settings_schema_source_unref  g_settings_schema_source_unref;
+alias c_g_settings_schema_source_new_from_directory  g_settings_schema_source_new_from_directory;
+alias c_g_settings_schema_source_lookup  g_settings_schema_source_lookup;
+
+// gio.Resource
+
+alias c_g_resource_load  g_resource_load;
+alias c_g_resource_new_from_data  g_resource_new_from_data;
+alias c_g_resource_ref  g_resource_ref;
+alias c_g_resource_unref  g_resource_unref;
+alias c_g_resource_lookup_data  g_resource_lookup_data;
+alias c_g_resource_open_stream  g_resource_open_stream;
+alias c_g_resource_enumerate_children  g_resource_enumerate_children;
+alias c_g_resource_get_info  g_resource_get_info;
+alias c_g_resources_register  g_resources_register;
+alias c_g_resources_unregister  g_resources_unregister;
+alias c_g_resources_lookup_data  g_resources_lookup_data;
+alias c_g_resources_open_stream  g_resources_open_stream;
+alias c_g_resources_enumerate_children  g_resources_enumerate_children;
+alias c_g_resources_get_info  g_resources_get_info;
 
 // gio.Permission
 
@@ -5260,13 +5733,50 @@ alias c_g_permission_impl_update  g_permission_impl_update;
 
 alias c_g_simple_permission_new  g_simple_permission_new;
 
+// gio.Application
+
+alias c_g_application_id_is_valid  g_application_id_is_valid;
+alias c_g_application_new  g_application_new;
+alias c_g_application_get_application_id  g_application_get_application_id;
+alias c_g_application_set_application_id  g_application_set_application_id;
+alias c_g_application_get_inactivity_timeout  g_application_get_inactivity_timeout;
+alias c_g_application_set_inactivity_timeout  g_application_set_inactivity_timeout;
+alias c_g_application_get_flags  g_application_get_flags;
+alias c_g_application_set_flags  g_application_set_flags;
+alias c_g_application_set_action_group  g_application_set_action_group;
+alias c_g_application_get_is_registered  g_application_get_is_registered;
+alias c_g_application_get_is_remote  g_application_get_is_remote;
+alias c_g_application_register  g_application_register;
+alias c_g_application_hold  g_application_hold;
+alias c_g_application_release  g_application_release;
+alias c_g_application_quit  g_application_quit;
+alias c_g_application_activate  g_application_activate;
+alias c_g_application_open  g_application_open;
+alias c_g_application_run  g_application_run;
+alias c_g_application_set_default  g_application_set_default;
+alias c_g_application_get_default  g_application_get_default;
+
+// gio.ApplicationCommandLine
+
+alias c_g_application_command_line_get_arguments  g_application_command_line_get_arguments;
+alias c_g_application_command_line_get_cwd  g_application_command_line_get_cwd;
+alias c_g_application_command_line_get_environ  g_application_command_line_get_environ;
+alias c_g_application_command_line_getenv  g_application_command_line_getenv;
+alias c_g_application_command_line_get_is_remote  g_application_command_line_get_is_remote;
+alias c_g_application_command_line_get_platform_data  g_application_command_line_get_platform_data;
+alias c_g_application_command_line_set_exit_status  g_application_command_line_set_exit_status;
+alias c_g_application_command_line_get_exit_status  g_application_command_line_get_exit_status;
+alias c_g_application_command_line_print  g_application_command_line_print;
+alias c_g_application_command_line_printerr  g_application_command_line_printerr;
+
 // gio.ActionGroupT
 
 
 // gio.ActionGroupT
 
-alias c_g_action_group_has_action  g_action_group_has_action;
 alias c_g_action_group_list_actions  g_action_group_list_actions;
+alias c_g_action_group_query_action  g_action_group_query_action;
+alias c_g_action_group_has_action  g_action_group_has_action;
 alias c_g_action_group_get_action_enabled  g_action_group_get_action_enabled;
 alias c_g_action_group_get_action_parameter_type  g_action_group_get_action_parameter_type;
 alias c_g_action_group_get_action_state_type  g_action_group_get_action_state_type;
@@ -5278,6 +5788,16 @@ alias c_g_action_group_action_added  g_action_group_action_added;
 alias c_g_action_group_action_removed  g_action_group_action_removed;
 alias c_g_action_group_action_enabled_changed  g_action_group_action_enabled_changed;
 alias c_g_action_group_action_state_changed  g_action_group_action_state_changed;
+
+// gio.ActionMapT
+
+
+// gio.ActionMapT
+
+alias c_g_action_map_lookup_action  g_action_map_lookup_action;
+alias c_g_action_map_add_action_entries  g_action_map_add_action_entries;
+alias c_g_action_map_add_action  g_action_map_add_action;
+alias c_g_action_map_remove_action  g_action_map_remove_action;
 
 // gio.SimpleActionGroup
 
@@ -5311,38 +5831,79 @@ alias c_g_simple_action_new_stateful  g_simple_action_new_stateful;
 alias c_g_simple_action_set_enabled  g_simple_action_set_enabled;
 alias c_g_simple_action_set_state  g_simple_action_set_state;
 
-// gio.Application
+// gio.RemoteActionGroupT
 
-alias c_g_application_id_is_valid  g_application_id_is_valid;
-alias c_g_application_new  g_application_new;
-alias c_g_application_get_application_id  g_application_get_application_id;
-alias c_g_application_set_application_id  g_application_set_application_id;
-alias c_g_application_get_inactivity_timeout  g_application_get_inactivity_timeout;
-alias c_g_application_set_inactivity_timeout  g_application_set_inactivity_timeout;
-alias c_g_application_get_flags  g_application_get_flags;
-alias c_g_application_set_flags  g_application_set_flags;
-alias c_g_application_set_action_group  g_application_set_action_group;
-alias c_g_application_get_is_registered  g_application_get_is_registered;
-alias c_g_application_get_is_remote  g_application_get_is_remote;
-alias c_g_application_register  g_application_register;
-alias c_g_application_hold  g_application_hold;
-alias c_g_application_release  g_application_release;
-alias c_g_application_activate  g_application_activate;
-alias c_g_application_open  g_application_open;
-alias c_g_application_run  g_application_run;
 
-// gio.ApplicationCommandLine
+// gio.RemoteActionGroupT
 
-alias c_g_application_command_line_get_arguments  g_application_command_line_get_arguments;
-alias c_g_application_command_line_get_cwd  g_application_command_line_get_cwd;
-alias c_g_application_command_line_get_environ  g_application_command_line_get_environ;
-alias c_g_application_command_line_getenv  g_application_command_line_getenv;
-alias c_g_application_command_line_get_is_remote  g_application_command_line_get_is_remote;
-alias c_g_application_command_line_get_platform_data  g_application_command_line_get_platform_data;
-alias c_g_application_command_line_set_exit_status  g_application_command_line_set_exit_status;
-alias c_g_application_command_line_get_exit_status  g_application_command_line_get_exit_status;
-alias c_g_application_command_line_print  g_application_command_line_print;
-alias c_g_application_command_line_printerr  g_application_command_line_printerr;
+alias c_g_remote_action_group_activate_action_full  g_remote_action_group_activate_action_full;
+alias c_g_remote_action_group_change_action_state_full  g_remote_action_group_change_action_state_full;
+
+// gio.DBusActionGroup
+
+alias c_g_dbus_action_group_get  g_dbus_action_group_get;
+
+// gio.MenuModel
+
+alias c_g_menu_model_is_mutable  g_menu_model_is_mutable;
+alias c_g_menu_model_get_n_items  g_menu_model_get_n_items;
+alias c_g_menu_model_get_item_attribute_value  g_menu_model_get_item_attribute_value;
+alias c_g_menu_model_get_item_attribute  g_menu_model_get_item_attribute;
+alias c_g_menu_model_get_item_link  g_menu_model_get_item_link;
+alias c_g_menu_model_iterate_item_attributes  g_menu_model_iterate_item_attributes;
+alias c_g_menu_model_iterate_item_links  g_menu_model_iterate_item_links;
+alias c_g_menu_model_items_changed  g_menu_model_items_changed;
+
+// gio.MenuAttributeIter
+
+alias c_g_menu_attribute_iter_get_next  g_menu_attribute_iter_get_next;
+alias c_g_menu_attribute_iter_get_name  g_menu_attribute_iter_get_name;
+alias c_g_menu_attribute_iter_get_value  g_menu_attribute_iter_get_value;
+alias c_g_menu_attribute_iter_next  g_menu_attribute_iter_next;
+
+// gio.MenuLinkIter
+
+alias c_g_menu_link_iter_get_name  g_menu_link_iter_get_name;
+alias c_g_menu_link_iter_get_next  g_menu_link_iter_get_next;
+alias c_g_menu_link_iter_get_value  g_menu_link_iter_get_value;
+alias c_g_menu_link_iter_next  g_menu_link_iter_next;
+
+// gio.Menu
+
+alias c_g_menu_new  g_menu_new;
+alias c_g_menu_freeze  g_menu_freeze;
+alias c_g_menu_insert  g_menu_insert;
+alias c_g_menu_prepend  g_menu_prepend;
+alias c_g_menu_append  g_menu_append;
+alias c_g_menu_insert_item  g_menu_insert_item;
+alias c_g_menu_append_item  g_menu_append_item;
+alias c_g_menu_prepend_item  g_menu_prepend_item;
+alias c_g_menu_insert_section  g_menu_insert_section;
+alias c_g_menu_prepend_section  g_menu_prepend_section;
+alias c_g_menu_append_section  g_menu_append_section;
+alias c_g_menu_append_submenu  g_menu_append_submenu;
+alias c_g_menu_insert_submenu  g_menu_insert_submenu;
+alias c_g_menu_prepend_submenu  g_menu_prepend_submenu;
+alias c_g_menu_remove  g_menu_remove;
+
+// gio.MenuItem
+
+alias c_g_menu_item_new  g_menu_item_new;
+alias c_g_menu_item_new_section  g_menu_item_new_section;
+alias c_g_menu_item_new_submenu  g_menu_item_new_submenu;
+alias c_g_menu_item_set_label  g_menu_item_set_label;
+alias c_g_menu_item_set_action_and_target_value  g_menu_item_set_action_and_target_value;
+alias c_g_menu_item_set_action_and_target  g_menu_item_set_action_and_target;
+alias c_g_menu_item_set_detailed_action  g_menu_item_set_detailed_action;
+alias c_g_menu_item_set_section  g_menu_item_set_section;
+alias c_g_menu_item_set_submenu  g_menu_item_set_submenu;
+alias c_g_menu_item_set_attribute_value  g_menu_item_set_attribute_value;
+alias c_g_menu_item_set_attribute  g_menu_item_set_attribute;
+alias c_g_menu_item_set_link  g_menu_item_set_link;
+
+// gio.DBusMenuModel
+
+alias c_g_dbus_menu_model_get  g_dbus_menu_model_get;
 
 // gio.Vfs
 

@@ -47,6 +47,7 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.ListG
  * 	- glib.Variant
  * 	- gio.DBusConnection
  * 	- gio.DBusInterfaceInfo
@@ -55,6 +56,7 @@
  * structWrap:
  * 	- GDBusConnection* -> DBusConnection
  * 	- GDBusInterfaceInfo* -> DBusInterfaceInfo
+ * 	- GList* -> ListG
  * 	- GVariant* -> Variant
  * module aliases:
  * local aliases:
@@ -74,6 +76,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.ListG;
 private import glib.Variant;
 private import gio.DBusConnection;
 private import gio.DBusInterfaceInfo;
@@ -265,12 +268,15 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	
 	/**
 	 * Exports interface_ at object_path on connection.
+	 * This can be called multiple times to export the same interface_
+	 * onto multiple connections however the object_path provided must be
+	 * the same for all connections.
 	 * Use g_dbus_interface_skeleton_unexport() to unexport the object.
 	 * Since 2.30
 	 * Params:
 	 * connection = A GDBusConnection to export interface_ on.
 	 * objectPath = The path to export the interface at.
-	 * Returns: TRUE if the interface was exported, other FALSE with error set.
+	 * Returns: TRUE if the interface was exported on connection, otherwise FALSE with error set.
 	 * Throws: GException on failure.
 	 */
 	public int expor(DBusConnection connection, string objectPath)
@@ -289,8 +295,9 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	}
 	
 	/**
-	 * Stops exporting an interface previously exported with
-	 * g_dbus_interface_skeleton_export().
+	 * Stops exporting interface_ on all connections it is exported on.
+	 * To unexport interface_ from only a single connection, use
+	 * g_dbus_interface_skeleton_unexport_from_connection()
 	 * Since 2.30
 	 */
 	public void unexport()
@@ -300,7 +307,21 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	}
 	
 	/**
-	 * Gets the connection that interface_ is exported on, if any.
+	 * Stops exporting interface_ on connection.
+	 * To stop exporting on all connections the interface is exported on,
+	 * use g_dbus_interface_skeleton_unexport().
+	 * Since 2.32
+	 * Params:
+	 * connection = A GDBusConnection.
+	 */
+	public void unexportFromConnection(DBusConnection connection)
+	{
+		// void g_dbus_interface_skeleton_unexport_from_connection  (GDBusInterfaceSkeleton *interface_,  GDBusConnection *connection);
+		g_dbus_interface_skeleton_unexport_from_connection(gDBusInterfaceSkeleton, (connection is null) ? null : connection.getDBusConnectionStruct());
+	}
+	
+	/**
+	 * Gets the first connection that interface_ is exported on, if any.
 	 * Since 2.30
 	 * Returns: A GDBusConnection or NULL if interface_ is not exported anywhere. Do not free, the object belongs to interface_. [transfer none]
 	 */
@@ -313,6 +334,35 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 			return null;
 		}
 		return new DBusConnection(cast(GDBusConnection*) p);
+	}
+	
+	/**
+	 * Gets a list of the connections that interface_ is exported on.
+	 * Since 2.32
+	 * Returns: A list of all the connections that interface_ is exported on. The returned list should be freed with g_list_free() after each element has been freed with g_object_unref(). [element-type GDBusConnection][transfer full]
+	 */
+	public ListG getConnections()
+	{
+		// GList * g_dbus_interface_skeleton_get_connections  (GDBusInterfaceSkeleton *interface_);
+		auto p = g_dbus_interface_skeleton_get_connections(gDBusInterfaceSkeleton);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Checks if interface_ is export on connection.
+	 * Since 2.32
+	 * Params:
+	 * connection = A GDBusConnection.
+	 * Returns: TRUE if interface_ is exported on connection, FALSE otherwise.
+	 */
+	public int hasConnection(DBusConnection connection)
+	{
+		// gboolean g_dbus_interface_skeleton_has_connection  (GDBusInterfaceSkeleton *interface_,  GDBusConnection *connection);
+		return g_dbus_interface_skeleton_has_connection(gDBusInterfaceSkeleton, (connection is null) ? null : connection.getDBusConnectionStruct());
 	}
 	
 	/**

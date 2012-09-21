@@ -272,6 +272,17 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 	
 	/**
+	 * Gets the keywords from the desktop file.
+	 * Since 2.32
+	 * Returns: The value of the Keywords key. [transfer none]
+	 */
+	public string[] getKeywords()
+	{
+		// const char * const * g_desktop_app_info_get_keywords (GDesktopAppInfo *info);
+		return Str.toStringArray(g_desktop_app_info_get_keywords(gDesktopAppInfo));
+	}
+	
+	/**
 	 * Sets the name of the desktop that the application is running in.
 	 * This is used by g_app_info_should_show() and
 	 * g_desktop_app_info_get_show_in() to evaluate the
@@ -288,8 +299,6 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 	
 	/**
-	 * Warning
-	 * g_desktop_app_info_launch_uris_as_manager is deprecated and should not be used in newly-written code.
 	 * This function performs the equivalent of g_app_info_launch_uris(),
 	 * but is intended primarily for operating system components that
 	 * launch applications. Ordinary applications should use
@@ -299,9 +308,9 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * calls.
 	 * This guarantee allows additional control over the exact environment
 	 * of the child processes, which is provided via a setup function
-	 * setup, as well as the process identifier of each child process via
-	 * pid_callback. See g_spawn_async() for more information about the
-	 * semantics of the setup function.
+	 * user_setup, as well as the process identifier of each child process
+	 * via pid_callback. See g_spawn_async() for more information about the
+	 * semantics of the user_setup function.
 	 * Params:
 	 * uris = List of URIs. [element-type utf8]
 	 * launchContext = a GAppLaunchContext

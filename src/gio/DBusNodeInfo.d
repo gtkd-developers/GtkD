@@ -119,6 +119,11 @@ public class DBusNodeInfo
 	
 	/**
 	 * Parses xml_data and returns a GDBusNodeInfo representing the data.
+	 * The introspection XML must contain exactly one top-level
+	 * <node> element.
+	 * Note that this routine is using a
+	 * GMarkup-based
+	 * parser that only accepts a subset of valid XML documents.
 	 * Since 2.26
 	 * Params:
 	 * xmlData = Valid D-Bus introspection XML.

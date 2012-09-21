@@ -68,8 +68,7 @@ private import gio.Cancellable;
 /**
  * Description
  * Schedules asynchronous I/O operations. GIOScheduler integrates
- * into the main event loop (GMainLoop) and may use threads if they
- * are available.
+ * into the main event loop (GMainLoop) and uses threads.
  * Each I/O operation has a priority, and the scheduler uses the priorities
  * to determine the order in which operations are executed. They are
  * not used to determine system-wide I/O scheduling.
@@ -113,7 +112,7 @@ public class IOSchedulerJob
 	 */
 	
 	/**
-	 * Schedules the I/O job to run.
+	 * Schedules the I/O job to run in another thread.
 	 * notify will be called on user_data after job_func has returned,
 	 * regardless whether the job was cancelled or has run to completion.
 	 * If cancellable is not NULL, it can be used to cancel the I/O job
@@ -122,7 +121,7 @@ public class IOSchedulerJob
 	 * Params:
 	 * jobFunc = a GIOSchedulerJobFunc.
 	 * userData = data to pass to job_func
-	 * notify = a GDestroyNotify for user_data, or NULL
+	 * notify = a GDestroyNotify for user_data, or NULL. [allow-none]
 	 * ioPriority = the I/O priority
 	 * of the request.
 	 * cancellable = optional GCancellable object, NULL to ignore.
@@ -151,7 +150,7 @@ public class IOSchedulerJob
 	 * Params:
 	 * func = a GSourceFunc callback that will be called in the original thread
 	 * userData = data to pass to func
-	 * notify = a GDestroyNotify for user_data, or NULL
+	 * notify = a GDestroyNotify for user_data, or NULL. [allow-none]
 	 * Returns: The return value of func
 	 */
 	public int sendToMainloop(GSourceFunc func, void* userData, GDestroyNotify notify)
@@ -172,7 +171,7 @@ public class IOSchedulerJob
 	 * Params:
 	 * func = a GSourceFunc callback that will be called in the original thread
 	 * userData = data to pass to func
-	 * notify = a GDestroyNotify for user_data, or NULL
+	 * notify = a GDestroyNotify for user_data, or NULL. [allow-none]
 	 */
 	public void sendToMainloopAsync(GSourceFunc func, void* userData, GDestroyNotify notify)
 	{

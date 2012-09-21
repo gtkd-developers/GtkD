@@ -149,7 +149,7 @@ public class InputStream : ObjectG
 	 * buffer = a buffer to read data into (which should be at least count bytes long).
 	 * count = the number of bytes that will be read from the stream
 	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * Returns: Number of bytes read, or -1 on error
+	 * Returns: Number of bytes read, or -1 on error, or 0 on end of file.
 	 * Throws: GException on failure.
 	 */
 	public gssize read(void* buffer, gsize count, Cancellable cancellable)
@@ -311,7 +311,7 @@ public class InputStream : ObjectG
 	 * Finishes an asynchronous stream read operation.
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: number of bytes read in, or -1 on error.
+	 * Returns: number of bytes read in, or -1 on error, or 0 on end of file.
 	 * Throws: GException on failure.
 	 */
 	public gssize readFinish(AsyncResultIF result)
