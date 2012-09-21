@@ -44,6 +44,18 @@ alias Rectangle GdkRectangle;
 addAliases: end
 
 addEnums: start
+
+enum GdkModifierIntent
+{
+	PRIMARY_ACCELERATOR,
+	CONTEXT_MENU,
+	EXTEND_SELECTION,
+	MODIFY_SELECTION,
+	NO_TEXT_INPUT,
+	SHIFT_GROUP
+}
+public alias GdkModifierIntent ModifierIntent;
+
 addEnums: end
 
 addStructs: start
@@ -186,6 +198,7 @@ structWrap: GdkVisual* Visual
 structWrap: GdkWindow* Window
 
 out: gdk_screen_get_monitor_geometry dest
+out: gdk_screen_get_monitor_workarea dest
 outFile: Screen
 
 file: GdkDeviceManager.html
@@ -721,6 +734,8 @@ out: gdk_event_get_click_count click_count
 out: gdk_event_get_keycode keycode
 out: gdk_event_get_keyval keyval
 out: gdk_event_get_scroll_direction direction
+out: gdk_event_get_scroll_deltas delta_x
+out: gdk_event_get_scroll_deltas delta_y
 
 code: start
 	/**

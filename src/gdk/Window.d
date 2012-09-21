@@ -119,7 +119,7 @@ private import gobject.ObjectG;
  * composited window it is the responsibility of the
  * application to render the window contents at the right spot.
  * $(DDOC_COMMENT example)
- * In the example Example 3, “Composited windows”, a button is
+ * In the example Example 4, “Composited windows”, a button is
  * placed inside of an event box inside of a window. The event box is set as
  * composited and therefore is no longer automatically drawn to the screen.
  * When the contents of the event box change, an expose event is generated on
@@ -281,11 +281,11 @@ public class Window : ObjectG
 		}
 		onFromEmbedderListeners ~= dlg;
 	}
-	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedder_x, gdouble embedder_y, void* offscreen_x, void* offscreen_y, Window _window)
+	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedderX, gdouble embedderY, void* offscreenX, void* offscreenY, Window _window)
 	{
 		foreach ( void delegate(gdouble, gdouble, void*, void*, Window) dlg ; _window.onFromEmbedderListeners )
 		{
-			dlg(embedder_x, embedder_y, offscreen_x, offscreen_y, _window);
+			dlg(embedderX, embedderY, offscreenX, offscreenY, _window);
 		}
 	}
 	
@@ -340,11 +340,11 @@ public class Window : ObjectG
 		}
 		onToEmbedderListeners ~= dlg;
 	}
-	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreen_x, gdouble offscreen_y, void* embedder_x, void* embedder_y, Window _window)
+	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreenX, gdouble offscreenY, void* embedderX, void* embedderY, Window _window)
 	{
 		foreach ( void delegate(gdouble, gdouble, void*, void*, Window) dlg ; _window.onToEmbedderListeners )
 		{
-			dlg(offscreen_x, offscreen_y, embedder_x, embedder_y, _window);
+			dlg(offscreenX, offscreenY, embedderX, embedderY, _window);
 		}
 	}
 	
@@ -358,7 +358,8 @@ public class Window : ObjectG
 	 * parent = a GdkWindow, or NULL to create the window as a child of
 	 * the default root window for the default display. [allow-none]
 	 * attributes = attributes of the new window
-	 * attributesMask = mask indicating which fields in attributes are valid
+	 * attributesMask = mask indicating which
+	 * fields in attributes are valid. [type GdkWindowAttributesType]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Window parent, GdkWindowAttr* attributes, int attributesMask)
@@ -776,7 +777,7 @@ public class Window : ObjectG
 	 * and an expose event is emitted on the parent of the composited
 	 * window. It is the responsibility of the parent's expose handler
 	 * to manually merge the off-screen content onto the screen in
-	 * whatever way it sees fit. See Example 3, “Composited windows”
+	 * whatever way it sees fit. See Example 4, “Composited windows”
 	 * for an example.
 	 * It only makes sense for child windows to be composited; see
 	 * gdk_window_set_opacity() if you need translucent toplevel
@@ -1037,10 +1038,9 @@ public class Window : ObjectG
 	
 	/**
 	 * Begins a window resize operation (for a toplevel window).
-	 * You might use this function to implement a "window resize grip," for
-	 * example; in fact GtkStatusbar uses it. The function works best
-	 * with window managers that support the Extended Window Manager Hints, but has a
-	 * fallback implementation for other window managers.
+	 * This function assumes that the drag is controlled by the
+	 * client pointer device, use gdk_window_begin_resize_drag_for_device()
+	 * to begin a drag with a different device.
 	 * Params:
 	 * edge = the edge or corner from which the drag is started
 	 * button = the button being used to drag
@@ -1055,12 +1055,31 @@ public class Window : ObjectG
 	}
 	
 	/**
-	 * Begins a window move operation (for a toplevel window). You might
-	 * use this function to implement a "window move grip," for
-	 * example. The function works best with window managers that support
-	 * the Extended
-	 * Window Manager Hints, but has a fallback implementation for
-	 * other window managers.
+	 * Begins a window resize operation (for a toplevel window).
+	 * You might use this function to implement a "window resize grip," for
+	 * example; in fact GtkStatusbar uses it. The function works best
+	 * with window managers that support the Extended Window Manager Hints, but has a
+	 * fallback implementation for other window managers.
+	 * Params:
+	 * edge = the edge or corner from which the drag is started
+	 * device = the device used for the operation
+	 * button = the button being used to drag
+	 * rootX = root window X coordinate of mouse click that began the drag
+	 * rootY = root window Y coordinate of mouse click that began the drag
+	 * timestamp = timestamp of mouse click that began the drag (use gdk_event_get_time())
+	 * Since 3.4
+	 */
+	public void beginResizeDragForDevice(GdkWindowEdge edge, Device device, int button, int rootX, int rootY, uint timestamp)
+	{
+		// void gdk_window_begin_resize_drag_for_device  (GdkWindow *window,  GdkWindowEdge edge,  GdkDevice *device,  gint button,  gint root_x,  gint root_y,  guint32 timestamp);
+		gdk_window_begin_resize_drag_for_device(gdkWindow, edge, (device is null) ? null : device.getDeviceStruct(), button, rootX, rootY, timestamp);
+	}
+	
+	/**
+	 * Begins a window move operation (for a toplevel window).
+	 * This function assumes that the drag is controlled by the
+	 * client pointer device, use gdk_window_begin_move_drag_for_device()
+	 * to begin a drag with a different device.
 	 * Params:
 	 * button = the button being used to drag
 	 * rootX = root window X coordinate of mouse click that began the drag
@@ -1071,6 +1090,27 @@ public class Window : ObjectG
 	{
 		// void gdk_window_begin_move_drag (GdkWindow *window,  gint button,  gint root_x,  gint root_y,  guint32 timestamp);
 		gdk_window_begin_move_drag(gdkWindow, button, rootX, rootY, timestamp);
+	}
+	
+	/**
+	 * Begins a window move operation (for a toplevel window).
+	 * You might use this function to implement a "window move grip," for
+	 * example. The function works best with window managers that support
+	 * the Extended
+	 * Window Manager Hints, but has a fallback implementation for
+	 * other window managers.
+	 * Params:
+	 * device = the device used for the operation
+	 * button = the button being used to drag
+	 * rootX = root window X coordinate of mouse click that began the drag
+	 * rootY = root window Y coordinate of mouse click that began the drag
+	 * timestamp = timestamp of mouse click that began the drag
+	 * Since 3.4
+	 */
+	public void beginMoveDragForDevice(Device device, int button, int rootX, int rootY, uint timestamp)
+	{
+		// void gdk_window_begin_move_drag_for_device  (GdkWindow *window,  GdkDevice *device,  gint button,  gint root_x,  gint root_y,  guint32 timestamp);
+		gdk_window_begin_move_drag_for_device(gdkWindow, (device is null) ? null : device.getDeviceStruct(), button, rootX, rootY, timestamp);
 	}
 	
 	/**
@@ -1667,6 +1707,8 @@ public class Window : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_window_set_background has been deprecated since version 3.4 and should not be used in newly-written code. Use gdk_window_set_background_rgba() instead.
 	 * Sets the background color of window. (However, when using GTK+,
 	 * set the background of a widget with gtk_widget_modify_bg() - if
 	 * you're an application - or gtk_style_set_background() - if you're
@@ -2016,7 +2058,7 @@ public class Window : ObjectG
 	 * coordinates. To get the position of the window itself (rather than
 	 * the frame) in root window coordinates, use gdk_window_get_origin().
 	 * Params:
-	 * rect = rectangle to fill with bounding box of the window frame
+	 * rect = rectangle to fill with bounding box of the window frame. [out]
 	 */
 	public void getFrameExtents(out Rectangle rect)
 	{

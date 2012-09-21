@@ -156,6 +156,8 @@ public static int getClipRectangle(Context cr, Rectangle* rect)
 }
 
 /**
+ * Warning
+ * gdk_cairo_set_source_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gdk_cairo_set_source_rgba() instead
  * Sets the specified GdkColor as the source color of cr.
  * Since 2.8
  * Params:

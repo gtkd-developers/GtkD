@@ -60,6 +60,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_keyboard_ungrab, \"gdk_keyboard_ungrab\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_beep, \"gdk_beep\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_error_trap_push, \"gdk_error_trap_push\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_error_trap_pop, \"gdk_error_trap_pop\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_error_trap_pop_ignored, \"gdk_error_trap_pop_ignored\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.DisplayManager
@@ -132,6 +133,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_screen_get_n_monitors, \"gdk_screen_get_n_monitors\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_screen_get_primary_monitor, \"gdk_screen_get_primary_monitor\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_screen_get_monitor_geometry, \"gdk_screen_get_monitor_geometry\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_screen_get_monitor_workarea, \"gdk_screen_get_monitor_workarea\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_screen_get_monitor_at_point, \"gdk_screen_get_monitor_at_point\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_screen_get_monitor_at_window, \"gdk_screen_get_monitor_at_window\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_screen_get_monitor_height_mm, \"gdk_screen_get_monitor_height_mm\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -342,7 +344,9 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_window_focus, \"gdk_window_focus\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_register_dnd, \"gdk_window_register_dnd\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_begin_resize_drag, \"gdk_window_begin_resize_drag\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_begin_resize_drag_for_device, \"gdk_window_begin_resize_drag_for_device\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_begin_move_drag, \"gdk_window_begin_move_drag\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_begin_move_drag_for_device, \"gdk_window_begin_move_drag_for_device\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_constrain_size, \"gdk_window_constrain_size\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_beep, \"gdk_window_beep\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_clip_region, \"gdk_window_get_clip_region\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -453,12 +457,15 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_event_get_keyval, \"gdk_event_get_keyval\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_get_root_coords, \"gdk_event_get_root_coords\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_get_scroll_direction, \"gdk_event_get_scroll_direction\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_scroll_deltas, \"gdk_event_get_scroll_deltas\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_get_state, \"gdk_event_get_state\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_get_time, \"gdk_event_get_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_get_event_sequence, \"gdk_event_get_event_sequence\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_request_motions, \"gdk_event_request_motions\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_events_get_angle, \"gdk_events_get_angle\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_events_get_center, \"gdk_events_get_center\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_events_get_distance, \"gdk_events_get_distance\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_event_triggers_context_menu, \"gdk_event_triggers_context_menu\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_event_handler_set, \"gdk_event_handler_set\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_get_show_events, \"gdk_get_show_events\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_set_show_events, \"gdk_set_show_events\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -482,8 +489,10 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_keymap_have_bidi_layouts, \"gdk_keymap_have_bidi_layouts\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_get_caps_lock_state, \"gdk_keymap_get_caps_lock_state\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_get_num_lock_state, \"gdk_keymap_get_num_lock_state\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_keymap_get_modifier_state, \"gdk_keymap_get_modifier_state\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_add_virtual_modifiers, \"gdk_keymap_add_virtual_modifiers\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_map_virtual_modifiers, \"gdk_keymap_map_virtual_modifiers\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_keymap_get_modifier_mask, \"gdk_keymap_get_modifier_mask\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keyval_name, \"gdk_keyval_name\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keyval_from_name, \"gdk_keyval_from_name\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keyval_convert_case, \"gdk_keyval_convert_case\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -562,9 +571,11 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_x11_display_get_startup_notification_id, \"gdk_x11_display_get_startup_notification_id\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_display_set_startup_notification_id, \"gdk_x11_display_set_startup_notification_id\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_display_error_trap_push, \"gdk_x11_display_error_trap_push\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_display_error_trap_pop, \"gdk_x11_display_error_trap_pop\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_display_error_trap_pop_ignored, \"gdk_x11_display_error_trap_pop_ignored\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_screen_get_monitor_output, \"gdk_x11_screen_get_monitor_output\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_get_xid, \"gdk_x11_window_get_xid\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_window_set_hide_titlebar_when_maximized, \"gdk_x11_window_set_hide_titlebar_when_maximized\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_set_theme_variant, \"gdk_x11_window_set_theme_variant\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_set_user_time, \"gdk_x11_window_set_user_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_move_to_current_desktop, \"gdk_x11_window_move_to_current_desktop\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -634,6 +645,7 @@ mixin( gshared ~"extern(C)
 	void function(guint32 time) c_gdk_keyboard_ungrab;
 	void function() c_gdk_beep;
 	void function() c_gdk_error_trap_push;
+	gint function() c_gdk_error_trap_pop;
 	void function() c_gdk_error_trap_pop_ignored;
 
 	// gdk.DisplayManager
@@ -706,6 +718,7 @@ mixin( gshared ~"extern(C)
 	gint function(GdkScreen* screen) c_gdk_screen_get_n_monitors;
 	gint function(GdkScreen* screen) c_gdk_screen_get_primary_monitor;
 	void function(GdkScreen* screen, gint monitorNum, GdkRectangle* dest) c_gdk_screen_get_monitor_geometry;
+	void function(GdkScreen* screen, gint monitorNum, GdkRectangle* dest) c_gdk_screen_get_monitor_workarea;
 	gint function(GdkScreen* screen, gint x, gint y) c_gdk_screen_get_monitor_at_point;
 	gint function(GdkScreen* screen, GdkWindow* window) c_gdk_screen_get_monitor_at_window;
 	gint function(GdkScreen* screen, gint monitorNum) c_gdk_screen_get_monitor_height_mm;
@@ -916,7 +929,9 @@ mixin( gshared ~"extern(C)
 	void function(GdkWindow* window, guint32 timestamp) c_gdk_window_focus;
 	void function(GdkWindow* window) c_gdk_window_register_dnd;
 	void function(GdkWindow* window, GdkWindowEdge edge, gint button, gint rootX, gint rootY, guint32 timestamp) c_gdk_window_begin_resize_drag;
+	void function(GdkWindow* window, GdkWindowEdge edge, GdkDevice* device, gint button, gint rootX, gint rootY, guint32 timestamp) c_gdk_window_begin_resize_drag_for_device;
 	void function(GdkWindow* window, gint button, gint rootX, gint rootY, guint32 timestamp) c_gdk_window_begin_move_drag;
+	void function(GdkWindow* window, GdkDevice* device, gint button, gint rootX, gint rootY, guint32 timestamp) c_gdk_window_begin_move_drag_for_device;
 	void function(GdkGeometry* geometry, guint flags, gint width, gint height, gint* newWidth, gint* newHeight) c_gdk_window_constrain_size;
 	void function(GdkWindow* window) c_gdk_window_beep;
 	cairo_region_t* function(GdkWindow* window) c_gdk_window_get_clip_region;
@@ -1027,12 +1042,15 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkEvent* event, guint* keyval) c_gdk_event_get_keyval;
 	gboolean function(GdkEvent* event, gdouble* xRoot, gdouble* yRoot) c_gdk_event_get_root_coords;
 	gboolean function(GdkEvent* event, GdkScrollDirection* direction) c_gdk_event_get_scroll_direction;
+	gboolean function(GdkEvent* event, gdouble* deltaX, gdouble* deltaY) c_gdk_event_get_scroll_deltas;
 	gboolean function(GdkEvent* event, GdkModifierType* state) c_gdk_event_get_state;
 	guint32 function(GdkEvent* event) c_gdk_event_get_time;
+	GdkEventSequence* function(GdkEvent* event) c_gdk_event_get_event_sequence;
 	void function(GdkEventMotion* event) c_gdk_event_request_motions;
 	gboolean function(GdkEvent* event1, GdkEvent* event2, gdouble* angle) c_gdk_events_get_angle;
 	gboolean function(GdkEvent* event1, GdkEvent* event2, gdouble* x, gdouble* y) c_gdk_events_get_center;
 	gboolean function(GdkEvent* event1, GdkEvent* event2, gdouble* distance) c_gdk_events_get_distance;
+	gboolean function(GdkEvent* event) c_gdk_event_triggers_context_menu;
 	void function(GdkEventFunc func, void* data, GDestroyNotify notify) c_gdk_event_handler_set;
 	gboolean function() c_gdk_get_show_events;
 	void function(gboolean showEvents) c_gdk_set_show_events;
@@ -1056,8 +1074,10 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdkKeymap* keymap) c_gdk_keymap_have_bidi_layouts;
 	gboolean function(GdkKeymap* keymap) c_gdk_keymap_get_caps_lock_state;
 	gboolean function(GdkKeymap* keymap) c_gdk_keymap_get_num_lock_state;
+	guint function(GdkKeymap* keymap) c_gdk_keymap_get_modifier_state;
 	void function(GdkKeymap* keymap, GdkModifierType* state) c_gdk_keymap_add_virtual_modifiers;
 	gboolean function(GdkKeymap* keymap, GdkModifierType* state) c_gdk_keymap_map_virtual_modifiers;
+	GdkModifierType function(GdkKeymap* keymap, GdkModifierIntent intent) c_gdk_keymap_get_modifier_mask;
 	gchar* function(guint keyval) c_gdk_keyval_name;
 	guint function(gchar* keyvalName) c_gdk_keyval_from_name;
 	void function(guint symbol, guint* lower, guint* upper) c_gdk_keyval_convert_case;
@@ -1136,9 +1156,11 @@ mixin( gshared ~"extern(C)
 	gchar* function(GdkDisplay* display) c_gdk_x11_display_get_startup_notification_id;
 	void function(GdkDisplay* display, gchar* startupId) c_gdk_x11_display_set_startup_notification_id;
 	void function(GdkDisplay* display) c_gdk_x11_display_error_trap_push;
+	gint function(GdkDisplay* display) c_gdk_x11_display_error_trap_pop;
 	void function(GdkDisplay* display) c_gdk_x11_display_error_trap_pop_ignored;
 	XID function(GdkScreen* screen, gint monitorNum) c_gdk_x11_screen_get_monitor_output;
 	gulong function(GdkWindow* window) c_gdk_x11_window_get_xid;
+	void function(GdkWindow* window, gboolean hideTitlebarWhenMaximized) c_gdk_x11_window_set_hide_titlebar_when_maximized;
 	void function(GdkWindow* window, char* variant) c_gdk_x11_window_set_theme_variant;
 	void function(GdkWindow* window, guint32 timestamp) c_gdk_x11_window_set_user_time;
 	void function(GdkWindow* window) c_gdk_x11_window_move_to_current_desktop;
@@ -1206,6 +1228,7 @@ alias c_gdk_keyboard_grab  gdk_keyboard_grab;
 alias c_gdk_keyboard_ungrab  gdk_keyboard_ungrab;
 alias c_gdk_beep  gdk_beep;
 alias c_gdk_error_trap_push  gdk_error_trap_push;
+alias c_gdk_error_trap_pop  gdk_error_trap_pop;
 alias c_gdk_error_trap_pop_ignored  gdk_error_trap_pop_ignored;
 
 // gdk.DisplayManager
@@ -1278,6 +1301,7 @@ alias c_gdk_screen_make_display_name  gdk_screen_make_display_name;
 alias c_gdk_screen_get_n_monitors  gdk_screen_get_n_monitors;
 alias c_gdk_screen_get_primary_monitor  gdk_screen_get_primary_monitor;
 alias c_gdk_screen_get_monitor_geometry  gdk_screen_get_monitor_geometry;
+alias c_gdk_screen_get_monitor_workarea  gdk_screen_get_monitor_workarea;
 alias c_gdk_screen_get_monitor_at_point  gdk_screen_get_monitor_at_point;
 alias c_gdk_screen_get_monitor_at_window  gdk_screen_get_monitor_at_window;
 alias c_gdk_screen_get_monitor_height_mm  gdk_screen_get_monitor_height_mm;
@@ -1488,7 +1512,9 @@ alias c_gdk_window_restack  gdk_window_restack;
 alias c_gdk_window_focus  gdk_window_focus;
 alias c_gdk_window_register_dnd  gdk_window_register_dnd;
 alias c_gdk_window_begin_resize_drag  gdk_window_begin_resize_drag;
+alias c_gdk_window_begin_resize_drag_for_device  gdk_window_begin_resize_drag_for_device;
 alias c_gdk_window_begin_move_drag  gdk_window_begin_move_drag;
+alias c_gdk_window_begin_move_drag_for_device  gdk_window_begin_move_drag_for_device;
 alias c_gdk_window_constrain_size  gdk_window_constrain_size;
 alias c_gdk_window_beep  gdk_window_beep;
 alias c_gdk_window_get_clip_region  gdk_window_get_clip_region;
@@ -1599,12 +1625,15 @@ alias c_gdk_event_get_keycode  gdk_event_get_keycode;
 alias c_gdk_event_get_keyval  gdk_event_get_keyval;
 alias c_gdk_event_get_root_coords  gdk_event_get_root_coords;
 alias c_gdk_event_get_scroll_direction  gdk_event_get_scroll_direction;
+alias c_gdk_event_get_scroll_deltas  gdk_event_get_scroll_deltas;
 alias c_gdk_event_get_state  gdk_event_get_state;
 alias c_gdk_event_get_time  gdk_event_get_time;
+alias c_gdk_event_get_event_sequence  gdk_event_get_event_sequence;
 alias c_gdk_event_request_motions  gdk_event_request_motions;
 alias c_gdk_events_get_angle  gdk_events_get_angle;
 alias c_gdk_events_get_center  gdk_events_get_center;
 alias c_gdk_events_get_distance  gdk_events_get_distance;
+alias c_gdk_event_triggers_context_menu  gdk_event_triggers_context_menu;
 alias c_gdk_event_handler_set  gdk_event_handler_set;
 alias c_gdk_get_show_events  gdk_get_show_events;
 alias c_gdk_set_show_events  gdk_set_show_events;
@@ -1628,8 +1657,10 @@ alias c_gdk_keymap_get_direction  gdk_keymap_get_direction;
 alias c_gdk_keymap_have_bidi_layouts  gdk_keymap_have_bidi_layouts;
 alias c_gdk_keymap_get_caps_lock_state  gdk_keymap_get_caps_lock_state;
 alias c_gdk_keymap_get_num_lock_state  gdk_keymap_get_num_lock_state;
+alias c_gdk_keymap_get_modifier_state  gdk_keymap_get_modifier_state;
 alias c_gdk_keymap_add_virtual_modifiers  gdk_keymap_add_virtual_modifiers;
 alias c_gdk_keymap_map_virtual_modifiers  gdk_keymap_map_virtual_modifiers;
+alias c_gdk_keymap_get_modifier_mask  gdk_keymap_get_modifier_mask;
 alias c_gdk_keyval_name  gdk_keyval_name;
 alias c_gdk_keyval_from_name  gdk_keyval_from_name;
 alias c_gdk_keyval_convert_case  gdk_keyval_convert_case;
@@ -1708,9 +1739,11 @@ alias c_gdk_x11_display_broadcast_startup_message  gdk_x11_display_broadcast_sta
 alias c_gdk_x11_display_get_startup_notification_id  gdk_x11_display_get_startup_notification_id;
 alias c_gdk_x11_display_set_startup_notification_id  gdk_x11_display_set_startup_notification_id;
 alias c_gdk_x11_display_error_trap_push  gdk_x11_display_error_trap_push;
+alias c_gdk_x11_display_error_trap_pop  gdk_x11_display_error_trap_pop;
 alias c_gdk_x11_display_error_trap_pop_ignored  gdk_x11_display_error_trap_pop_ignored;
 alias c_gdk_x11_screen_get_monitor_output  gdk_x11_screen_get_monitor_output;
 alias c_gdk_x11_window_get_xid  gdk_x11_window_get_xid;
+alias c_gdk_x11_window_set_hide_titlebar_when_maximized  gdk_x11_window_set_hide_titlebar_when_maximized;
 alias c_gdk_x11_window_set_theme_variant  gdk_x11_window_set_theme_variant;
 alias c_gdk_x11_window_set_user_time  gdk_x11_window_set_user_time;
 alias c_gdk_x11_window_move_to_current_desktop  gdk_x11_window_move_to_current_desktop;

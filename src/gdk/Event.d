@@ -454,6 +454,19 @@ public class Event
 	}
 	
 	/**
+	 * Retrieves the scroll deltas from a GdkEvent
+	 * Params:
+	 * deltaX = return location for X delta. [out]
+	 * deltaY = return location for Y delta. [out]
+	 * Returns: TRUE if the event contains smooth scroll information Since 3.4
+	 */
+	public int getScrollDeltas(out double deltaX, out double deltaY)
+	{
+		// gboolean gdk_event_get_scroll_deltas (const GdkEvent *event,  gdouble *delta_x,  gdouble *delta_y);
+		return gdk_event_get_scroll_deltas(gdkEvent, &deltaX, &deltaY);
+	}
+	
+	/**
 	 * If the event contains a "state" field, puts that field in state. Otherwise
 	 * stores an empty state (0). Returns TRUE if there was a state field
 	 * in the event. event may be NULL, in which case it's treated
@@ -476,6 +489,18 @@ public class Event
 	{
 		// guint32 gdk_event_get_time (const GdkEvent *event);
 		return gdk_event_get_time(gdkEvent);
+	}
+	
+	/**
+	 * If event if of type GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE,
+	 * GDK_TOUCH_END or GDK_TOUCH_CANCEL, returns the GdkEventSequence
+	 * to which the event belongs. Otherwise, return NULL.
+	 * Returns: the event sequence that the event belongs to Since 3.4
+	 */
+	public GdkEventSequence* getEventSequence()
+	{
+		// GdkEventSequence * gdk_event_get_event_sequence (const GdkEvent *event);
+		return gdk_event_get_event_sequence(gdkEvent);
 	}
 	
 	/**
@@ -537,6 +562,23 @@ public class Event
 	{
 		// gboolean gdk_events_get_distance (GdkEvent *event1,  GdkEvent *event2,  gdouble *distance);
 		return gdk_events_get_distance(gdkEvent, (event2 is null) ? null : event2.getEventStruct(), &distance);
+	}
+	
+	/**
+	 * This function returns whether a GdkEventButton should trigger a
+	 * context menu, according to platform conventions. The right mouse
+	 * button always triggers context menus. Additionally, if
+	 * gdk_keymap_get_modifier_mask() returns a non-0 mask for
+	 * GDK_MODIFIER_INTENT_CONTEXT_MENU, then the left mouse button will
+	 * also trigger a context menu if this modifier is pressed.
+	 * This function should always be used instead of simply checking for
+	 * event->button == GDK_BUTTON_SECONDARY.
+	 * Returns: TRUE if the event should trigger a context menu. Since 3.4
+	 */
+	public int triggersContextMenu()
+	{
+		// gboolean gdk_event_triggers_context_menu (const GdkEvent *event);
+		return gdk_event_triggers_context_menu(gdkEvent);
 	}
 	
 	/**

@@ -47,6 +47,18 @@ public alias cairo_rectangle_int_t Rectangle;
  * backend, MSGs for Win32).
  */
 public alias void GdkXEvent;
+
+enum GdkModifierIntent
+{
+	PRIMARY_ACCELERATOR,
+	CONTEXT_MENU,
+	EXTEND_SELECTION,
+	MODIFY_SELECTION,
+	NO_TEXT_INPUT,
+	SHIFT_GROUP
+}
+public alias GdkModifierIntent ModifierIntent;
+
 /**
  * Returned by gdk_pointer_grab() and gdk_keyboard_grab() to indicate
  * success or the reason for the failure of the grab attempt.
@@ -87,6 +99,12 @@ alias GdkGrabStatus GrabStatus;
  * the device is a graphics tablet "puck" or similar device.
  * GDK_SOURCE_KEYBOARD
  * the device is a keyboard.
+ * GDK_SOURCE_TOUCHSCREEN
+ * the device is a direct-input touch device, such
+ *  as a touchscreen or tablet. This device type has been added in 3.4.
+ * GDK_SOURCE_TOUCHPAD
+ * the device is an indirect touch device, such
+ *  as a touchpad. This device type has been added in 3.4.
  */
 public enum GdkInputSource
 {
@@ -94,7 +112,9 @@ public enum GdkInputSource
 	SOURCE_PEN,
 	SOURCE_ERASER,
 	SOURCE_CURSOR,
-	SOURCE_KEYBOARD
+	SOURCE_KEYBOARD,
+	SOURCE_TOUCHSCREEN,
+	SOURCE_TOUCHPAD
 }
 alias GdkInputSource InputSource;
 
@@ -371,7 +391,7 @@ alias GdkVisualType VisualType;
  * GDK_MSB_FIRST
  * The values are stored with the most-significant byte
  *  first. For instance, the 32-bit value 0xffeecc would be stored
- *  in memory as 0x00, 0xcc, 0xee, 0xff.
+ *  in memory as 0x00, 0xff, 0xee, 0xcc.
  */
 public enum GdkByteOrder
 {
@@ -594,8 +614,8 @@ alias GdkWindowType WindowType;
  */
 public enum GdkWindowWindowClass
 {
-	INPUT_OUTPUT,
-	INPUT_ONLY
+	INPUT_OUTPUT, /+*< nick= input-output >+/
+	INPUT_ONLY /+*< nick= input-only >+/
 }
 alias GdkWindowWindowClass WindowWindowClass;
 
@@ -1104,6 +1124,18 @@ alias GdkWMFunction WMFunction;
  * GDK_DAMAGE
  * the content of the window has been changed. This event type
  *  was added in 2.14.
+ * GDK_TOUCH_BEGIN
+ * A new touch event sequence has just started. This event
+ *  type was added in 3.4.
+ * GDK_TOUCH_UPDATE
+ * A touch event sequence has been updated. This event type
+ *  was added in 3.4.
+ * GDK_TOUCH_END
+ * A touch event sequence has finished. This event type
+ *  was added in 3.4.
+ * GDK_TOUCH_CANCEL
+ * A touch event sequence has been canceled. This event type
+ *  was added in 3.4.
  * GDK_EVENT_LAST
  * marks the end of the GdkEventType enumeration. Added in 2.18
  */
@@ -1146,6 +1178,10 @@ public enum GdkEventType
 	OWNER_CHANGE = 34,
 	GRAB_BROKEN = 35,
 	DAMAGE = 36,
+	TOUCH_BEGIN = 37,
+	TOUCH_UPDATE = 38,
+	TOUCH_END = 39,
+	TOUCH_CANCEL = 40,
 	EVENT_LAST /+* helper variable for decls +/
 }
 alias GdkEventType EventType;
@@ -1163,6 +1199,12 @@ alias GdkEventType EventType;
  * some of which are marked as a hint (the is_hint member is TRUE).
  * To receive more motion events after a motion hint event, the application
  * needs to asks for more, by calling gdk_event_request_motions().
+ * If GDK_TOUCH_MASK is enabled, the window will receive touch events
+ * from touch-enabled devices. Those will come as sequences of GdkEventTouch
+ * with type GDK_TOUCH_UPDATE, enclosed by two events with
+ * type GDK_TOUCH_BEGIN and GDK_TOUCH_END (or GDK_TOUCH_CANCEL).
+ * gdk_event_get_event_sequence() returns the event sequence for these
+ * events, so different sequences may be distinguished.
  * GDK_EXPOSURE_MASK
  * receive expose events
  * GDK_POINTER_MOTION_MASK
@@ -1206,6 +1248,10 @@ alias GdkEventType EventType;
  *  child windows
  * GDK_SCROLL_MASK
  * receive scroll events
+ * GDK_TOUCH_MASK
+ * receive touch events. Since 3.4
+ * GDK_SMOOTH_SCROLL_MASK
+ * receive smooth scrolling events. Since 3.4
  * GDK_ALL_EVENTS_MASK
  * the combination of all the above event masks.
  */
@@ -1232,7 +1278,9 @@ public enum GdkEventMask
 	PROXIMITY_OUT_MASK = 1 << 19,
 	SUBSTRUCTURE_MASK = 1 << 20,
 	SCROLL_MASK = 1 << 21,
-	ALL_EVENTS_MASK = 0x3FFFFE
+	TOUCH_MASK = 1 << 22,
+	SMOOTH_SCROLL_MASK = 1 << 23,
+	ALL_EVENTS_MASK = 0xFFFFFE
 }
 alias GdkEventMask EventMask;
 
@@ -1246,13 +1294,17 @@ alias GdkEventMask EventMask;
  * the window is scrolled to the left.
  * GDK_SCROLL_RIGHT
  * the window is scrolled to the right.
+ * GDK_SCROLL_SMOOTH
+ * the scrolling is determined by the delta values
+ *  in GdkEventScroll. See gdk_event_get_scroll_deltas(). Since: 3.4
  */
 public enum GdkScrollDirection
 {
 	UP,
 	DOWN,
 	LEFT,
-	RIGHT
+	RIGHT,
+	SMOOTH
 }
 alias GdkScrollDirection ScrollDirection;
 
@@ -1288,6 +1340,16 @@ alias GdkVisibilityState VisibilityState;
  * GDK_CROSSING_STATE_CHANGED
  * crossing because a GTK+ widget changed
  *  state (e.g. sensitivity).
+ * GDK_CROSSING_TOUCH_BEGIN
+ * crossing because a touch sequence has begun,
+ *  this event is synthetic as the pointer might have not left the window.
+ * GDK_CROSSING_TOUCH_END
+ * crossing because a touch sequence has ended,
+ *  this event is synthetic as the pointer might have not left the window.
+ * GDK_CROSSING_DEVICE_SWITCH
+ * crossing because of a device switch (i.e.
+ *  a mouse taking control of the pointer after a touch device), this event
+ *  is synthetic as the pointer didn't leave the window.
  */
 public enum GdkCrossingMode
 {
@@ -1296,7 +1358,10 @@ public enum GdkCrossingMode
 	UNGRAB,
 	GTK_GRAB,
 	GTK_UNGRAB,
-	STATE_CHANGED
+	STATE_CHANGED,
+	TOUCH_BEGIN,
+	TOUCH_END,
+	DEVICE_SWITCH
 }
 alias GdkCrossingMode CrossingMode;
 
@@ -1366,6 +1431,8 @@ alias GdkPropertyState PropertyState;
  * the window is kept above other windows.
  * GDK_WINDOW_STATE_BELOW
  * the window is kept below other windows.
+ * GDK_WINDOW_STATE_FOCUSED
+ * the window is presented as focused (with active decorations).
  */
 public enum GdkWindowState
 {
@@ -1375,7 +1442,8 @@ public enum GdkWindowState
 	STICKY = 1 << 3,
 	FULLSCREEN = 1 << 4,
 	ABOVE = 1 << 5,
-	BELOW = 1 << 6
+	BELOW = 1 << 6,
+	FOCUSED = 1 << 7
 }
 alias GdkWindowState WindowState;
 
@@ -1573,7 +1641,7 @@ public struct GdkPixbuf{}
  * guint16 red;
  * The red component of the color. This is
  * a value between 0 and 65535, with 65535 indicating
- * full intensitiy
+ * full intensity
  * guint16 green;
  * The green component of the color
  * guint16 blue;
@@ -1762,6 +1830,9 @@ public struct GdkWindowAttr
 }
 
 
+public struct GdkEventSequence{}
+
+
 /**
  * Contains the fields which are common to all event structs.
  * Any event pointer can safely be cast to a pointer to a GdkEventAny to
@@ -1843,7 +1914,7 @@ public struct GdkEventKey
 /**
  * Used for button press and button release events. The
  * type field will be one of GDK_BUTTON_PRESS,
- * GDK_2BUTTON_PRESS, GDK_3BUTTON_PRESS, and GDK_BUTTON_RELEASE.
+ * GDK_2BUTTON_PRESS, GDK_3BUTTON_PRESS or GDK_BUTTON_RELEASE,
  * Double and triple-clicks result in a sequence of events being received.
  * For double-clicks the order of events will be:
  * GDK_BUTTON_PRESS
@@ -1920,9 +1991,75 @@ public struct GdkEventButton
 
 
 /**
+ * Used for touch events.
+ * type field will be one of GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE,
+ * GDK_TOUCH_END or GDK_TOUCH_CANCEL.
+ * Touch events are grouped into sequences by means of the sequence
+ * field, which can also be obtained with gdk_event_get_event_sequence().
+ * Each sequence begins with a GDK_TOUCH_BEGIN event, followed by
+ * any number of GDK_TOUCH_UPDATE events, and ends with a GDK_TOUCH_END
+ * (or GDK_TOUCH_CANCEL) event. With multitouch devices, there may be
+ * several active sequences at the same time.
+ * GdkEventType type;
+ * the type of the event (GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE,
+ * GDK_TOUCH_END, GDK_TOUCH_CANCEL)
+ * GdkWindow *window;
+ * the window which received the event
+ * gint8 send_event;
+ * TRUE if the event was sent explicitly (e.g. using
+ * XSendEvent)
+ * guint32 time;
+ * the time of the event in milliseconds.
+ * gdouble x;
+ * the x coordinate of the pointer relative to the window
+ * gdouble y;
+ * the y coordinate of the pointer relative to the window
+ * gdouble *axes;
+ * x, y translated to the axes of device, or NULL if device is
+ * the mouse
+ * guint state;
+ * a bit-mask representing the state of
+ * the modifier keys (e.g. Control, Shift and Alt) and the pointer
+ * buttons. See GdkModifierType. [type GdkModifierType]
+ * GdkEventSequence *sequence;
+ * the event sequence that the event belongs to
+ * gboolean emulating_pointer;
+ * whether the event should be used for emulating
+ * pointer event
+ * GdkDevice *device;
+ * the device where the event originated
+ * gdouble x_root;
+ * the x coordinate of the pointer relative to the root of the
+ * screen
+ * gdouble y_root;
+ * the y coordinate of the pointer relative to the root of the
+ * screen
+ */
+public struct GdkEventTouch
+{
+	GdkEventType type;
+	GdkWindow *window;
+	byte sendEvent;
+	uint time;
+	double x;
+	double y;
+	double *axes;
+	uint state;
+	GdkEventSequence *sequence;
+	int emulatingPointer;
+	GdkDevice *device;
+	double xRoot, yRoot;
+}
+
+
+/**
  * Generated from button presses for the buttons 4 to 7. Wheel mice are
  * usually configured to generate button press events for buttons 4 and 5
  * when the wheel is turned.
+ * Some GDK backends can also generate 'smooth' scroll events, which
+ * can be recognized by the GDK_SCROLL_SMOOTH scroll direction. For
+ * these, the scroll deltas can be obtained with
+ * gdk_event_get_scroll_deltas().
  * GdkEventType type;
  * the type of the event (GDK_SCROLL).
  * GdkWindow *window;
@@ -1942,7 +2079,8 @@ public struct GdkEventButton
  * buttons. See GdkModifierType. [type GdkModifierType]
  * GdkScrollDirection direction;
  * the direction to scroll to (one of GDK_SCROLL_UP,
- * GDK_SCROLL_DOWN, GDK_SCROLL_LEFT and GDK_SCROLL_RIGHT).
+ * GDK_SCROLL_DOWN, GDK_SCROLL_LEFT, GDK_SCROLL_RIGHT or
+ * GDK_SCROLL_SMOOTH).
  * GdkDevice *device;
  * the device where the event originated.
  * gdouble x_root;
@@ -1951,6 +2089,8 @@ public struct GdkEventButton
  * gdouble y_root;
  * the y coordinate of the pointer relative to the root of the
  * screen.
+ * gdouble delta_x;
+ * gdouble delta_y;
  */
 public struct GdkEventScroll
 {
@@ -1964,6 +2104,8 @@ public struct GdkEventScroll
 	GdkScrollDirection direction;
 	GdkDevice *device;
 	double xRoot, yRoot;
+	double deltaX;
+	double deltaY;
 }
 
 
@@ -2191,8 +2333,8 @@ public struct GdkEventConfigure
  * guint32 time;
  * the time of the event in milliseconds.
  * guint state;
- * whether the property was changed (GDK_PROPERTY_NEW_VALUE) or
- * deleted (GDK_PROPERTY_DELETE).
+ * whether the property was changed
+ * (GDK_PROPERTY_NEW_VALUE) or deleted (GDK_PROPERTY_DELETE). [type GdkPropertyState]
  */
 public struct GdkEventProperty
 {

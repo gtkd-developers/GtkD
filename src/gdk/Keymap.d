@@ -457,6 +457,16 @@ public class Keymap : ObjectG
 	}
 	
 	/**
+	 * Returns the current modifier state.
+	 * Returns: the current modifier state. Since 3.4
+	 */
+	public uint getModifierState()
+	{
+		// guint gdk_keymap_get_modifier_state (GdkKeymap *keymap);
+		return gdk_keymap_get_modifier_state(gdkKeymap);
+	}
+	
+	/**
 	 * Adds virtual modifiers (i.e. Super, Hyper and Meta) which correspond
 	 * to the real modifiers (i.e Mod2, Mod3, ...) in modifiers.
 	 * are set in state to their non-virtual counterparts (i.e. Mod2,
@@ -491,6 +501,25 @@ public class Keymap : ObjectG
 	{
 		// gboolean gdk_keymap_map_virtual_modifiers (GdkKeymap *keymap,  GdkModifierType *state);
 		return gdk_keymap_map_virtual_modifiers(gdkKeymap, &state);
+	}
+	
+	/**
+	 * Returns the modifier mask the keymap's windowing system backend
+	 * uses for a particular purpose.
+	 * Note that this function always returns real hardware modifiers, not
+	 * virtual ones (e.g. it will return GDK_MOD1_MASK rather than
+	 * GDK_META_MASK if the backend maps MOD1 to META), so there are use
+	 * cases where the return value of this function has to be transformed
+	 * by gdk_keymap_add_virtual_modifiers() in order to contain the
+	 * expected result.
+	 * Params:
+	 * intent = the use case for the modifier mask
+	 * Returns: the modifier mask used for intent. Since 3.4
+	 */
+	public GdkModifierType getModifierMask(GdkModifierIntent intent)
+	{
+		// GdkModifierType gdk_keymap_get_modifier_mask (GdkKeymap *keymap,  GdkModifierIntent intent);
+		return gdk_keymap_get_modifier_mask(gdkKeymap, intent);
 	}
 	
 	/**

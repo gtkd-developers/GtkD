@@ -72,7 +72,17 @@ private import gdk.Window;
 /**
  * Description
  * This section describes the GDK initialization functions and miscellaneous
- * utility functions.
+ * utility functions, as well as deprecation facilities.
+ * The GDK and GTK+ headers annotate deprecated APIs in a way that produces
+ * compiler warnings if these deprecated APIs are used. The warnings
+ * can be turned off by defining the macro GDK_DISABLE_DEPRECATION_WARNINGS
+ * before including the glib.h header.
+ * GDK and GTK+ also provide support for building applications against
+ * defined subsets of deprecated or new APIs. Define the macro
+ * GDK_VERSION_MIN_REQUIRED to specify up to what version
+ * you want to receive warnings about deprecated APIs. Define the
+ * macro GDK_VERSION_MAX_ALLOWED to specify the newest version
+ * whose API you want to use.
  */
 public class Gdk
 {
@@ -461,6 +471,25 @@ public class Gdk
 	{
 		// void gdk_error_trap_push (void);
 		gdk_error_trap_push();
+	}
+	
+	/**
+	 * Removes an error trap pushed with gdk_error_trap_push().
+	 * May block until an error has been definitively received
+	 * or not received from the X server. gdk_error_trap_pop_ignored()
+	 * is preferred if you don't need to know whether an error
+	 * occurred, because it never has to block. If you don't
+	 * need the return value of gdk_error_trap_pop(), use
+	 * gdk_error_trap_pop_ignored().
+	 * Prior to GDK 3.0, this function would not automatically
+	 * sync for you, so you had to gdk_flush() if your last
+	 * call to Xlib was not a blocking round trip.
+	 * Returns: X error code or 0 on success
+	 */
+	public static int errorTrapPop()
+	{
+		// gint gdk_error_trap_pop (void);
+		return gdk_error_trap_pop();
 	}
 	
 	/**

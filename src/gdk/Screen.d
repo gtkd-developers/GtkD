@@ -487,17 +487,40 @@ public class Screen : ObjectG
 	/**
 	 * Retrieves the GdkRectangle representing the size and position of
 	 * the individual monitor within the entire screen area.
+	 * Monitor numbers start at 0. To obtain the number of monitors of
+	 * screen, use gdk_screen_get_n_monitors().
 	 * Note that the size of the entire screen area can be retrieved via
 	 * gdk_screen_get_width() and gdk_screen_get_height().
 	 * Since 2.2
 	 * Params:
-	 * monitorNum = the monitor number, between 0 and gdk_screen_get_n_monitors (screen)
-	 * dest = a GdkRectangle to be filled with the monitor geometry. [out][allow-none]
+	 * monitorNum = the monitor number
+	 * dest = a GdkRectangle to be filled with
+	 * the monitor geometry. [out][allow-none]
 	 */
 	public void getMonitorGeometry(int monitorNum, out Rectangle dest)
 	{
 		// void gdk_screen_get_monitor_geometry (GdkScreen *screen,  gint monitor_num,  GdkRectangle *dest);
 		gdk_screen_get_monitor_geometry(gdkScreen, monitorNum, &dest);
+	}
+	
+	/**
+	 * Retrieves the GdkRectangle representing the size and position of
+	 * the "work area" on a monitor within the entire screen area.
+	 * The work area should be considered when positioning menus and
+	 * similar popups, to avoid placing them below panels, docks or other
+	 * desktop components.
+	 * Monitor numbers start at 0. To obtain the number of monitors of
+	 * screen, use gdk_screen_get_n_monitors().
+	 * Params:
+	 * monitorNum = the monitor number
+	 * dest = a GdkRectangle to be filled with
+	 * the monitor workarea. [out][allow-none]
+	 * Since 3.4
+	 */
+	public void getMonitorWorkarea(int monitorNum, out Rectangle dest)
+	{
+		// void gdk_screen_get_monitor_workarea (GdkScreen *screen,  gint monitor_num,  GdkRectangle *dest);
+		gdk_screen_get_monitor_workarea(gdkScreen, monitorNum, &dest);
 	}
 	
 	/**

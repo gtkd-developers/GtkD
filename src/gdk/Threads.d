@@ -67,7 +67,6 @@ private import glib.ConstructionException;
 /**
  * Initializes GDK so that it can be used from multiple threads
  * in conjunction with gdk_threads_enter() and gdk_threads_leave().
- * g_thread_init() must be called previous to this function.
  * This call must be made before any use of the main loop from
  * GTK+; to be safe, call it before gtk_init().
  */
@@ -78,8 +77,8 @@ public static void threadsInit()
 }
 
 /**
- * This macro marks the beginning of a critical section in which GDK and
- * GTK+ functions can be called safely and without causing race
+ * This function marks the beginning of a critical section in which
+ * GDK and GTK+ functions can be called safely and without causing race
  * conditions. Only one thread at a time can be in such a critial
  * section.
  */

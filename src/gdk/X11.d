@@ -261,6 +261,25 @@ public class X11
 	
 	/**
 	 * Pops the error trap pushed by gdk_x11_display_error_trap_push().
+	 * Will XSync() if necessary and will always block until
+	 * the error is known to have occurred or not occurred,
+	 * so the error code can be returned.
+	 * If you don't need to use the return value,
+	 * gdk_x11_display_error_trap_pop_ignored() would be more efficient.
+	 * See gdk_error_trap_pop() for the all-displays-at-once
+	 * equivalent.
+	 * Params:
+	 * display = the display. [type GdkX11Display]
+	 * Returns: X error code or 0 on success Since 3.0
+	 */
+	public static int displayErrorTrapPop(Display display)
+	{
+		// gint gdk_x11_display_error_trap_pop (GdkDisplay *display);
+		return gdk_x11_display_error_trap_pop((display is null) ? null : display.getDisplayStruct());
+	}
+	
+	/**
+	 * Pops the error trap pushed by gdk_x11_display_error_trap_push().
 	 * Does not block to see if an error occurred; merely records the
 	 * range of requests to ignore errors for, and ignores those errors
 	 * if they arrive asynchronously.
@@ -290,6 +309,24 @@ public class X11
 	{
 		// XID gdk_x11_screen_get_monitor_output (GdkScreen *screen,  gint monitor_num);
 		return gdk_x11_screen_get_monitor_output((screen is null) ? null : screen.getScreenStruct(), monitorNum);
+	}
+	
+	/**
+	 * Set a hint for the window manager, requesting that the titlebar
+	 * should be hidden when the window is maximized.
+	 * Note that this property is automatically updated by GTK+, so this
+	 * function should only be used by applications which do not use GTK+
+	 * to create toplevel windows.
+	 * Params:
+	 * window = a GdkWindow. [type GdkX11Window]
+	 * hideTitlebarWhenMaximized = whether to hide the titlebar when
+	 * maximized
+	 * Since 3.4
+	 */
+	public static void windowSetHideTitlebarWhenMaximized(Window window, int hideTitlebarWhenMaximized)
+	{
+		// void gdk_x11_window_set_hide_titlebar_when_maximized  (GdkWindow *window,  gboolean hide_titlebar_when_maximized);
+		gdk_x11_window_set_hide_titlebar_when_maximized((window is null) ? null : window.getWindowStruct(), hideTitlebarWhenMaximized);
 	}
 	
 	/**

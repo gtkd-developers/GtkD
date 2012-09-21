@@ -81,6 +81,7 @@ private import gio.IconIF;
  * startup notification and allows to launch applications on a specific
  * screen or workspace.
  * $(DDOC_COMMENT example)
+ * $(DDOC_COMMENT example)
  */
 public class AppLaunchContext : GioAppLaunchContext
 {

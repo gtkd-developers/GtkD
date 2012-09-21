@@ -76,17 +76,33 @@ private import gobject.ObjectG;
  * In addition to a single pointer and keyboard for user interface input,
  * GDK contains support for a variety of input devices, including graphics
  * tablets, touchscreens and multiple pointers/keyboards interacting
- * simultaneously with the user interface. Under X, the support for multiple
- * input devices is done through the XInput 2 extension,
- * which also supports additional features such as sub-pixel positioning
- * information and additional device-dependent information.
+ * simultaneously with the user interface. Such input devices often have
+ * additional features, such as sub-pixel positioning information and
+ * additional device-dependent information.
+ * In order to query the device hierarchy and be aware of changes in the
+ * device hierarchy (such as virtual devices being created or removed, or
+ * physical devices being plugged or unplugged), GDK provides
+ * GdkDeviceManager.
  * By default, and if the platform supports it, GDK is aware of multiple
- * keyboard/pointer pairs and multitouch devices, this behavior can be
- * changed by calling gdk_disable_multidevice() before gdk_display_open(),
- * although there would rarely be a reason to do that. For a widget or
- * window to be dealt as multipointer aware,
- * gdk_window_set_support_multidevice() or
- * gtk_widget_set_support_multidevice() must have been called on it.
+ * keyboard/pointer pairs and multitouch devices. This behavior can be
+ * changed by calling gdk_disable_multidevice() before gdk_display_open().
+ * There should rarely be a need to do that though, since GDK defaults
+ * to a compatibility mode in which it will emit just one enter/leave
+ * event pair for all devices on a window. To enable per-device
+ * enter/leave events and other multi-pointer interaction features,
+ * gdk_window_set_support_multidevice() must be called on
+ * GdkWindows (or gtk_widget_set_support_multidevice() on widgets).
+ * window. See the gdk_window_set_support_multidevice() documentation
+ * for more information.
+ * On X11, multi-device support is implemented through XInput 2.
+ * Unless gdk_disable_multidevice() is called, the XInput 2
+ * GdkDeviceManager implementation will be used as the input source.
+ * Otherwise either the core or XInput 1 implementations will be used.
+ * For simple applications that don't have any special interest in
+ * input devices, the so-called client pointer
+ * provides a reasonable approximation to a simple setup with a single
+ * pointer and keyboard. The device that has been set as the client
+ * pointer can be accessed via gdk_device_manager_get_client_pointer().
  * Conceptually, in multidevice mode there are 2 device types. Virtual
  * devices (or master devices) are represented by the pointer cursors
  * and keyboard foci that are seen on the screen. Physical devices (or
@@ -98,19 +114,22 @@ private import gobject.ObjectG;
  * There may be several virtual devices, and several physical devices could
  * be controlling each of these virtual devices. Physical devices may also
  * be "floating", which means they are not attached to any virtual device.
+ * $(DDOC_COMMENT example)
  * By default, GDK will automatically listen for events coming from all
  * master devices, setting the GdkDevice for all events coming from input
- * devices,
- * [1]
- * Although gdk_window_set_support_multidevice() must be called on
- * GdkWindows in order to support additional features of multiple pointer
- * interaction, such as multiple per-device enter/leave events, the default
- * setting will emit just one enter/leave event pair for all devices on the
- * window. See gdk_window_set_support_multidevice() documentation for more
- * information.
- * In order to listen for events coming from other than a virtual device,
- * gdk_window_set_device_events() must be called. Generally, this function
- * can be used to modify the event mask for any given device.
+ * devices. Events containing device information are GDK_MOTION_NOTIFY,
+ * GDK_BUTTON_PRESS, GDK_2BUTTON_PRESS, GDK_3BUTTON_PRESS,
+ * GDK_BUTTON_RELEASE, GDK_SCROLL, GDK_KEY_PRESS, GDK_KEY_RELEASE,
+ * GDK_ENTER_NOTIFY, GDK_LEAVE_NOTIFY, GDK_FOCUS_CHANGE,
+ * GDK_PROXIMITY_IN, GDK_PROXIMITY_OUT, GDK_DRAG_ENTER, GDK_DRAG_LEAVE,
+ * GDK_DRAG_MOTION, GDK_DRAG_STATUS, GDK_DROP_START, GDK_DROP_FINISHED
+ * and GDK_GRAB_BROKEN. When dealing with an event on a master device,
+ * it is possible to get the source (slave) device that the event originated
+ * from via gdk_event_get_source_device().
+ * In order to listen for events coming from devices
+ * other than a virtual device, gdk_window_set_device_events() must be
+ * called. Generally, this function can be used to modify the event mask
+ * for any given device.
  * Input devices may also provide additional information besides X/Y.
  * For example, graphics tablets may also provide pressure and X/Y tilt
  * information. This information is device-dependent, and may be
@@ -122,13 +141,6 @@ private import gobject.ObjectG;
  * Devices may also have associated keys or
  * macro buttons. Such keys can be globally set to map into normal X
  * keyboard events. The mapping is set using gdk_device_set_key().
- * In order to query the device hierarchy and be aware of changes in the
- * device hierarchy (such as virtual devices being created or removed, or
- * physical devices being plugged or unplugged), GDK provides
- * GdkDeviceManager. On X11, multidevice support is implemented through
- * XInput 2. Unless gdk_disable_multidevice() is called, the XInput 2.x
- * GdkDeviceManager implementation will be used as the input source. Otherwise
- * either the core or XInput 1.x implementations will be used.
  */
 public class DeviceManager : ObjectG
 {
@@ -251,7 +263,6 @@ public class DeviceManager : ObjectG
 	 * is unplugged.
 	 * See Also
 	 * GdkDevice, GdkEvent
-	 * [1] GDK_MOTION_NOTIFYGDK_BUTTON_PRESSGDK_2BUTTON_PRESSGDK_3BUTTON_PRESSGDK_BUTTON_RELEASEGDK_SCROLLGDK_KEY_PRESSGDK_KEY_RELEASEGDK_ENTER_NOTIFYGDK_LEAVE_NOTIFYGDK_FOCUS_CHANGEGDK_PROXIMITY_INGDK_PROXIMITY_OUTGDK_DRAG_ENTERGDK_DRAG_LEAVEGDK_DRAG_MOTIONGDK_DRAG_STATUSGDK_DROP_STARTGDK_DROP_FINISHEDGDK_GRAB_BROKEN
 	 */
 	void addOnDeviceRemoved(void delegate(Device, DeviceManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
