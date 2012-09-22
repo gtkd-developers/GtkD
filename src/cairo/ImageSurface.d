@@ -110,6 +110,13 @@ public class ImageSurface : Surface
 	 * Description
 	 * The PNG functions allow reading PNG images into image surfaces, and writing
 	 * any surface to a PNG file.
+	 * It is a toy API. It only offers very simple support for reading and
+	 * writing PNG files, which is sufficient for testing and
+	 * demonstration purposes. Applications which need more control over
+	 * the generated PNG file should access the pixel data directly, using
+	 * cairo_image_surface_get_data() or a backend-specific access
+	 * function, and process it with another library, e.g. gdk-pixbuf or
+	 * libpng.
 	 */
 	
 	/**
@@ -133,6 +140,7 @@ public class ImageSurface : Surface
 	 * 0. (Specifically, within each pixel, each color or alpha channel
 	 * belonging to format will be 0. The contents of bits within a pixel,
 	 * but not belonging to the given format are undefined).
+	 * Since 1.0
 	 * Params:
 	 * format = format of pixels in the surface to create
 	 * width = width of the surface, in pixels
@@ -165,17 +173,18 @@ public class ImageSurface : Surface
 	 * maximum image width value, and then use the resulting stride value
 	 * to allocate the data and to create the image surface. See
 	 * cairo_format_stride_for_width() for example code.
+	 * Since 1.0
 	 * Params:
 	 * data = a pointer to a buffer supplied by the application in which
-	 *  to write contents. This pointer must be suitably aligned for any
-	 *  kind of variable, (for example, a pointer returned by malloc).
+	 * to write contents. This pointer must be suitably aligned for any
+	 * kind of variable, (for example, a pointer returned by malloc).
 	 * format = the format of pixels in the buffer
 	 * width = the width of the image to be stored in the buffer
 	 * height = the height of the image to be stored in the buffer
 	 * stride = the number of bytes between the start of rows in the
-	 *  buffer as allocated. This value should always be computed by
-	 *  cairo_format_stride_for_width() before allocating the data
-	 *  buffer.
+	 * buffer as allocated. This value should always be computed by
+	 * cairo_format_stride_for_width() before allocating the data
+	 * buffer.
 	 * Returns: a pointer to the newly created surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface in the case of an error such as out of memory or an invalid stride value. In case of invalid stride value the error status of the returned surface will be CAIRO_STATUS_INVALID_STRIDE. You can use cairo_surface_status() to check for this. See cairo_surface_set_user_data() for a means of attaching a destroy-notification fallback to the surface if necessary.
 	 */
 	public static ImageSurface createForData(ubyte* data, cairo_format_t format, int width, int height, int stride)
@@ -192,6 +201,10 @@ public class ImageSurface : Surface
 	/**
 	 * Get a pointer to the data of the image surface, for direct
 	 * inspection or modification.
+	 * A call to cairo_surface_flush() is required before accessing the
+	 * pixel data to ensure that all pending drawing operations are
+	 * finished. A call to cairo_surface_mark_dirty() is required after
+	 * the data is modified.
 	 * Since 1.2
 	 * Returns: a pointer to the image data of this surface or NULL if surface is not an image surface, or if cairo_surface_finish() has been called.
 	 */
@@ -214,6 +227,7 @@ public class ImageSurface : Surface
 	
 	/**
 	 * Get the width of the image surface in pixels.
+	 * Since 1.0
 	 * Returns: the width of the surface in pixels.
 	 */
 	public int getWidth()
@@ -224,6 +238,7 @@ public class ImageSurface : Surface
 	
 	/**
 	 * Get the height of the image surface in pixels.
+	 * Since 1.0
 	 * Returns: the height of the surface in pixels.
 	 */
 	public int getHeight()
@@ -246,6 +261,7 @@ public class ImageSurface : Surface
 	/**
 	 * Creates a new image surface and initializes the contents to the
 	 * given PNG file.
+	 * Since 1.0
 	 * Params:
 	 * filename = name of PNG file to load
 	 * Returns: a new cairo_surface_t initialized with the contents of the PNG file, or a "nil" surface if any error occurred. A nil surface can be checked for with cairo_surface_status(surface) which
@@ -264,6 +280,7 @@ public class ImageSurface : Surface
 	/**
 	 * Creates a new image surface from PNG data read incrementally
 	 * via the read_func function.
+	 * Since 1.0
 	 * Params:
 	 * readFunc = function called to read the data of the file
 	 * closure = data to pass to read_func.
@@ -283,6 +300,7 @@ public class ImageSurface : Surface
 	/**
 	 * Writes the contents of surface to a new file filename as a PNG
 	 * image.
+	 * Since 1.0
 	 * Params:
 	 * filename = the name of a file to write to
 	 * Returns: CAIRO_STATUS_SUCCESS if the PNG file was written successfully. Otherwise, CAIRO_STATUS_NO_MEMORY if memory could not be allocated for the operation or CAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does not have pixel contents, or CAIRO_STATUS_WRITE_ERROR if an I/O error occurs while attempting to write the file.
@@ -295,6 +313,7 @@ public class ImageSurface : Surface
 	
 	/**
 	 * Writes the image surface to the write function.
+	 * Since 1.0
 	 * Params:
 	 * writeFunc = a cairo_write_func_t
 	 * closure = closure data for the write function

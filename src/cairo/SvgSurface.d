@@ -115,9 +115,9 @@ public class SvgSurface : Surface
 	 * Since 1.2
 	 * Params:
 	 * filename = a filename for the SVG output (must be writable), NULL may be
-	 *  used to specify no output. This will generate a SVG surface that
-	 *  may be queried and used as a source, without generating a
-	 *  temporary file.
+	 * used to specify no output. This will generate a SVG surface that
+	 * may be queried and used as a source, without generating a
+	 * temporary file.
 	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if an error such as out of memory occurs. You can use cairo_surface_status() to check for this.
@@ -139,9 +139,9 @@ public class SvgSurface : Surface
 	 * Since 1.2
 	 * Params:
 	 * writeFunc = a cairo_write_func_t to accept the output data, may be NULL
-	 *  to indicate a no-op write_func. With a no-op write_func,
-	 *  the surface may be queried or used as a source without
-	 *  generating any temporary files.
+	 * to indicate a no-op write_func. With a no-op write_func,
+	 * the surface may be queried or used as a source without
+	 * generating any temporary files.
 	 * closure = the closure argument for write_func
 	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)

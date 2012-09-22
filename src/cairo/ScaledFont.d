@@ -117,17 +117,18 @@ public class ScaledFont
 	 * Creates a cairo_scaled_font_t object from a font face and matrices that
 	 * describe the size of the font and the environment in which it will
 	 * be used.
+	 * Since 1.0
 	 * Params:
 	 * fontFace = a cairo_font_face_t
 	 * fontMatrix = font space to user space transformation matrix for the
-	 *  font. In the simplest case of a N point font, this matrix is
-	 *  just a scale by N, but it can also be used to shear the font
-	 *  or stretch it unequally along the two axes. See
-	 *  cairo_set_font_matrix().
+	 * font. In the simplest case of a N point font, this matrix is
+	 * just a scale by N, but it can also be used to shear the font
+	 * or stretch it unequally along the two axes. See
+	 * cairo_set_font_matrix().
 	 * ctm = user to device transformation matrix with which the font will
-	 *  be used.
+	 * be used.
 	 * options = options to use when getting metrics for the font and
-	 *  rendering with it.
+	 * rendering with it.
 	 * Returns: a newly created cairo_scaled_font_t. Destroy with cairo_scaled_font_destroy()
 	 */
 	public static ScaledFont create(FontFace fontFace, Matrix fontMatrix, Matrix ctm, FontOption options)
@@ -147,6 +148,7 @@ public class ScaledFont
 	 * cairo_scaled_font_destroy() is made.
 	 * The number of references to a cairo_scaled_font_t can be get using
 	 * cairo_scaled_font_get_reference_count().
+	 * Since 1.0
 	 * Returns: the referenced cairo_scaled_font_t
 	 */
 	public ScaledFont reference()
@@ -164,6 +166,7 @@ public class ScaledFont
 	 * Decreases the reference count on font by one. If the result
 	 * is zero, then font and all associated resources are freed.
 	 * See cairo_scaled_font_reference().
+	 * Since 1.0
 	 */
 	public void destroy()
 	{
@@ -174,6 +177,7 @@ public class ScaledFont
 	/**
 	 * Checks whether an error has previously occurred for this
 	 * scaled_font.
+	 * Since 1.0
 	 * Returns: CAIRO_STATUS_SUCCESS or another error such as CAIRO_STATUS_NO_MEMORY.
 	 */
 	public cairo_status_t status()
@@ -184,6 +188,7 @@ public class ScaledFont
 	
 	/**
 	 * Gets the metrics for a cairo_scaled_font_t.
+	 * Since 1.0
 	 * Params:
 	 * extents = a cairo_font_extents_t which to store the retrieved extents.
 	 */
@@ -228,6 +233,7 @@ public class ScaledFont
 	 * would be advanced by cairo_show_glyphs().
 	 * Note that whitespace glyphs do not contribute to the size of the
 	 * rectangle (extents.width and extents.height).
+	 * Since 1.0
 	 * Params:
 	 * glyphs = an array of glyph IDs with X and Y offsets.
 	 * numGlyphs = the number of glyphs in the glyphs array
@@ -274,7 +280,7 @@ public class ScaledFont
 	 * glyphs = pointer to array of glyphs to fill
 	 * clusters = pointer to array of cluster mapping information to fill, or NULL
 	 * clusterFlags = pointer to location to store cluster flags corresponding to the
-	 *  output clusters, or NULL
+	 * output clusters, or NULL
 	 * Returns: CAIRO_STATUS_SUCCESS upon success, or an error status if the input values are wrong or if conversion failed. If the input values are correct but the conversion failed, the error status is also set on scaled_font.
 	 */
 	public cairo_status_t textToGlyphs(double x, double y, string utf8, int utf8_Len, out cairo_glyph_t[] glyphs, out cairo_text_cluster_t[] clusters, out cairo_text_cluster_flags_t clusterFlags)
@@ -293,8 +299,9 @@ public class ScaledFont
 	}
 	
 	/**
-	 * Gets the font face that this scaled font uses. This is the
-	 * font face passed to cairo_scaled_font_create().
+	 * Gets the font face that this scaled font uses. This might be the
+	 * font face passed to cairo_scaled_font_create(), but this does not
+	 * hold true for all possible cases.
 	 * Since 1.2
 	 * Returns: The cairo_font_face_t with which scaled_font was created.
 	 */

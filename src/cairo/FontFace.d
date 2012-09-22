@@ -68,8 +68,8 @@ private import glib.ConstructionException;
  * slant, and other characteristic but no size, transformation, or size.
  * Font faces are created using font-backend-specific
  * constructors, typically of the form
- * cairo_backend_font_face_create(), or implicitly
- * using the toy text API by way of
+ * cairo_backend_font_face_create(),
+ * or implicitly using the toy text API by way of
  * cairo_select_font_face(). The resulting face can be accessed using
  * cairo_get_font_face().
  */
@@ -114,6 +114,7 @@ public class FontFace
 	 * cairo_font_face_destroy() is made.
 	 * The number of references to a cairo_font_face_t can be get using
 	 * cairo_font_face_get_reference_count().
+	 * Since 1.0
 	 * Returns: the referenced cairo_font_face_t.
 	 */
 	public FontFace reference()
@@ -131,6 +132,7 @@ public class FontFace
 	 * Decreases the reference count on font_face by one. If the result
 	 * is zero, then font_face and all associated resources are freed.
 	 * See cairo_font_face_reference().
+	 * Since 1.0
 	 */
 	public void destroy()
 	{
@@ -141,6 +143,7 @@ public class FontFace
 	/**
 	 * Checks whether an error has previously occurred for this
 	 * font face
+	 * Since 1.0
 	 * Returns: CAIRO_STATUS_SUCCESS or another error such as CAIRO_STATUS_NO_MEMORY.
 	 */
 	public cairo_status_t status()
@@ -176,6 +179,7 @@ public class FontFace
 	 * Attach user data to font_face. To remove user data from a font face,
 	 * call this function with the key that was used to set it and NULL
 	 * for data.
+	 * Since 1.0
 	 * Params:
 	 * key = the address of a cairo_user_data_key_t to attach the user data to
 	 * userData = the user data to attach to the font face
@@ -194,6 +198,7 @@ public class FontFace
 	 * Return user data previously attached to font_face using the specified
 	 * key. If no user data has been attached with the given key this
 	 * function returns NULL.
+	 * Since 1.0
 	 * Params:
 	 * key = the address of the cairo_user_data_key_t the user data was
 	 * attached to

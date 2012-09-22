@@ -117,9 +117,9 @@ public class PostScriptSurface : Surface
 	 * Since 1.2
 	 * Params:
 	 * filename = a filename for the PS output (must be writable), NULL may be
-	 *  used to specify no output. This will generate a PS surface that
-	 *  may be queried and used as a source, without generating a
-	 *  temporary file.
+	 * used to specify no output. This will generate a PS surface that
+	 * may be queried and used as a source, without generating a
+	 * temporary file.
 	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if an error such as out of memory occurs. You can use cairo_surface_status() to check for this.
@@ -145,9 +145,9 @@ public class PostScriptSurface : Surface
 	 * Since 1.2
 	 * Params:
 	 * writeFunc = a cairo_write_func_t to accept the output data, may be NULL
-	 *  to indicate a no-op write_func. With a no-op write_func,
-	 *  the surface may be queried or used as a source without
-	 *  generating any temporary files.
+	 * to indicate a no-op write_func. With a no-op write_func,
+	 * the surface may be queried or used as a source without
+	 * generating any temporary files.
 	 * closure = the closure argument for write_func
 	 * widthInPoints = width of the surface, in points (1 point == 1/72.0 inch)
 	 * heightInPoints = height of the surface, in points (1 point == 1/72.0 inch)
@@ -301,7 +301,7 @@ public class PostScriptSurface : Surface
 	 * The comment is expected to conform to the PostScript Language
 	 * Document Structuring Conventions (DSC). Please see that manual for
 	 * details on the available comments and their meanings. In
-	 * particular, the %IncludeFeature comment allows a
+	 * particular, the %%IncludeFeature comment allows a
 	 * device-independent means of controlling printer device features. So
 	 * the PostScript Printer Description Files Specification will also be
 	 * a useful reference.
@@ -320,18 +320,20 @@ public class PostScriptSurface : Surface
 	 * section apply only to a single page.
 	 * For comments to appear in the header section, this function should
 	 * be called after the surface is created, but before a call to
-	 * cairo_ps_surface_begin_setup().
+	 * cairo_ps_surface_dsc_begin_setup().
 	 * For comments to appear in the Setup section, this function should
-	 * be called after a call to cairo_ps_surface_begin_setup() but before
-	 * a call to cairo_ps_surface_begin_page_setup().
+	 * be called after a call to cairo_ps_surface_dsc_begin_setup() but
+	 * before a call to cairo_ps_surface_dsc_begin_page_setup().
 	 * For comments to appear in the PageSetup section, this function
-	 * should be called after a call to cairo_ps_surface_begin_page_setup().
-	 * Note that it is only necessary to call cairo_ps_surface_begin_page_setup()
-	 * for the first page of any surface. After a call to
-	 * cairo_show_page() or cairo_copy_page() comments are unambiguously
-	 * directed to the PageSetup section of the current page. But it
-	 * doesn't hurt to call this function at the beginning of every page
-	 * as that consistency may make the calling code simpler.
+	 * should be called after a call to
+	 * cairo_ps_surface_dsc_begin_page_setup().
+	 * Note that it is only necessary to call
+	 * cairo_ps_surface_dsc_begin_page_setup() for the first page of any
+	 * surface. After a call to cairo_show_page() or cairo_copy_page()
+	 * comments are unambiguously directed to the PageSetup section of the
+	 * current page. But it doesn't hurt to call this function at the
+	 * beginning of every page as that consistency may make the calling
+	 * code simpler.
 	 * As a final note, cairo automatically generates several comments on
 	 * its own. As such, applications must not manually generate any of
 	 * Since 1.2

@@ -116,6 +116,7 @@ public class Matrix
 	/**
 	 * Sets matrix to be the affine transformation given by
 	 * xx, yx, xy, yy, x0, y0. The transformation is given
+	 * Since 1.0
 	 * Params:
 	 * xx = xx component of the affine transformation
 	 * yx = yx component of the affine transformation
@@ -132,6 +133,7 @@ public class Matrix
 	
 	/**
 	 * Modifies matrix to be an identity transformation.
+	 * Since 1.0
 	 */
 	public void initIdentity()
 	{
@@ -142,6 +144,7 @@ public class Matrix
 	/**
 	 * Initializes matrix to a transformation that translates by tx and
 	 * ty in the X and Y dimensions, respectively.
+	 * Since 1.0
 	 * Params:
 	 * tx = amount to translate in the X direction
 	 * ty = amount to translate in the Y direction
@@ -155,6 +158,7 @@ public class Matrix
 	/**
 	 * Initializes matrix to a transformation that scales by sx and sy
 	 * in the X and Y dimensions, respectively.
+	 * Since 1.0
 	 * Params:
 	 * sx = scale factor in the X direction
 	 * sy = scale factor in the Y direction
@@ -167,6 +171,7 @@ public class Matrix
 	
 	/**
 	 * Initialized matrix to a transformation that rotates by radians.
+	 * Since 1.0
 	 * Params:
 	 * radians = angle of rotation, in radians. The direction of rotation
 	 * is defined such that positive angles rotate in the direction from
@@ -185,6 +190,7 @@ public class Matrix
 	 * matrix. The effect of the new transformation is to first translate
 	 * the coordinates by tx and ty, then apply the original transformation
 	 * to the coordinates.
+	 * Since 1.0
 	 * Params:
 	 * tx = amount to translate in the X direction
 	 * ty = amount to translate in the Y direction
@@ -199,6 +205,7 @@ public class Matrix
 	 * Applies scaling by sx, sy to the transformation in matrix. The
 	 * effect of the new transformation is to first scale the coordinates
 	 * by sx and sy, then apply the original transformation to the coordinates.
+	 * Since 1.0
 	 * Params:
 	 * sx = scale factor in the X direction
 	 * sy = scale factor in the Y direction
@@ -214,6 +221,7 @@ public class Matrix
 	 * matrix. The effect of the new transformation is to first rotate the
 	 * coordinates by radians, then apply the original transformation
 	 * to the coordinates.
+	 * Since 1.0
 	 * Params:
 	 * radians = angle of rotation, in radians. The direction of rotation
 	 * is defined such that positive angles rotate in the direction from
@@ -232,6 +240,7 @@ public class Matrix
 	 * all transformation matrices have inverses; if the matrix
 	 * collapses points together (it is degenerate),
 	 * then it has no inverse and this function will fail.
+	 * Since 1.0
 	 * Returns: If matrix has an inverse, modifies matrix to be the inverse matrix and returns CAIRO_STATUS_SUCCESS. Otherwise, returns CAIRO_STATUS_INVALID_MATRIX.
 	 */
 	public cairo_status_t invert()
@@ -247,6 +256,7 @@ public class Matrix
 	 * coordinates and then apply the transformation in b to the
 	 * coordinates.
 	 * It is allowable for result to be identical to either a or b.
+	 * Since 1.0
 	 * Params:
 	 * a = a cairo_matrix_t
 	 * b = a cairo_matrix_t
@@ -261,6 +271,7 @@ public class Matrix
 	 * Transforms the distance vector (dx,dy) by matrix. This is
 	 * similar to cairo_matrix_transform_point() except that the translation
 	 * components of the transformation are ignored. The calculation of
+	 * Since 1.0
 	 * Params:
 	 * dx = X component of a distance vector. An in/out parameter
 	 * dy = Y component of a distance vector. An in/out parameter
@@ -273,6 +284,7 @@ public class Matrix
 	
 	/**
 	 * Transforms the point (x, y) by matrix.
+	 * Since 1.0
 	 * Params:
 	 * x = X position. An in/out parameter
 	 * y = Y position. An in/out parameter

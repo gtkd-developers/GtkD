@@ -169,6 +169,7 @@ mixin( _shared ~ "static this()
 	Linker.link(cairo_pattern_get_linear_points, \"cairo_pattern_get_linear_points\", LIBRARY.CAIRO);
 	Linker.link(cairo_pattern_create_radial, \"cairo_pattern_create_radial\", LIBRARY.CAIRO);
 	Linker.link(cairo_pattern_get_radial_circles, \"cairo_pattern_get_radial_circles\", LIBRARY.CAIRO);
+	Linker.link(cairo_pattern_create_mesh, \"cairo_pattern_create_mesh\", LIBRARY.CAIRO);
 	Linker.link(cairo_pattern_reference, \"cairo_pattern_reference\", LIBRARY.CAIRO);
 	Linker.link(cairo_pattern_destroy, \"cairo_pattern_destroy\", LIBRARY.CAIRO);
 	Linker.link(cairo_pattern_status, \"cairo_pattern_status\", LIBRARY.CAIRO);
@@ -182,6 +183,21 @@ mixin( _shared ~ "static this()
 	Linker.link(cairo_pattern_get_reference_count, \"cairo_pattern_get_reference_count\", LIBRARY.CAIRO);
 	Linker.link(cairo_pattern_set_user_data, \"cairo_pattern_set_user_data\", LIBRARY.CAIRO);
 	Linker.link(cairo_pattern_get_user_data, \"cairo_pattern_get_user_data\", LIBRARY.CAIRO);
+
+	// cairo.MeshPattern
+
+	Linker.link(cairo_mesh_pattern_begin_patch, \"cairo_mesh_pattern_begin_patch\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_end_patch, \"cairo_mesh_pattern_end_patch\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_move_to, \"cairo_mesh_pattern_move_to\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_line_to, \"cairo_mesh_pattern_line_to\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_curve_to, \"cairo_mesh_pattern_curve_to\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_set_control_point, \"cairo_mesh_pattern_set_control_point\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_set_corner_color_rgb, \"cairo_mesh_pattern_set_corner_color_rgb\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_set_corner_color_rgba, \"cairo_mesh_pattern_set_corner_color_rgba\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_get_patch_count, \"cairo_mesh_pattern_get_patch_count\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_get_path, \"cairo_mesh_pattern_get_path\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_get_control_point, \"cairo_mesh_pattern_get_control_point\", LIBRARY.CAIRO);
+	Linker.link(cairo_mesh_pattern_get_corner_color_rgba, \"cairo_mesh_pattern_get_corner_color_rgba\", LIBRARY.CAIRO);
 
 	// cairo.Region
 
@@ -208,6 +224,20 @@ mixin( _shared ~ "static this()
 	Linker.link(cairo_region_union_rectangle, \"cairo_region_union_rectangle\", LIBRARY.CAIRO);
 	Linker.link(cairo_region_xor, \"cairo_region_xor\", LIBRARY.CAIRO);
 	Linker.link(cairo_region_xor_rectangle, \"cairo_region_xor_rectangle\", LIBRARY.CAIRO);
+
+	// cairo.RasterSource
+
+	Linker.link(cairo_pattern_create_raster_source, \"cairo_pattern_create_raster_source\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_set_callback_data, \"cairo_raster_source_pattern_set_callback_data\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_get_callback_data, \"cairo_raster_source_pattern_get_callback_data\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_set_acquire, \"cairo_raster_source_pattern_set_acquire\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_get_acquire, \"cairo_raster_source_pattern_get_acquire\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_set_snapshot, \"cairo_raster_source_pattern_set_snapshot\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_get_snapshot, \"cairo_raster_source_pattern_get_snapshot\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_set_copy, \"cairo_raster_source_pattern_set_copy\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_get_copy, \"cairo_raster_source_pattern_get_copy\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_set_finish, \"cairo_raster_source_pattern_set_finish\", LIBRARY.CAIRO);
+	Linker.link(cairo_raster_source_pattern_get_finish, \"cairo_raster_source_pattern_get_finish\", LIBRARY.CAIRO);
 
 	// cairo.FontFace
 
@@ -286,6 +316,7 @@ mixin( _shared ~ "static this()
 	// cairo.Surface
 
 	Linker.link(cairo_surface_create_similar, \"cairo_surface_create_similar\", LIBRARY.CAIRO);
+	Linker.link(cairo_surface_create_similar_image, \"cairo_surface_create_similar_image\", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_create_for_rectangle, \"cairo_surface_create_for_rectangle\", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_reference, \"cairo_surface_reference\", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_destroy, \"cairo_surface_destroy\", LIBRARY.CAIRO);
@@ -310,6 +341,9 @@ mixin( _shared ~ "static this()
 	Linker.link(cairo_surface_has_show_text_glyphs, \"cairo_surface_has_show_text_glyphs\", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_set_mime_data, \"cairo_surface_set_mime_data\", LIBRARY.CAIRO);
 	Linker.link(cairo_surface_get_mime_data, \"cairo_surface_get_mime_data\", LIBRARY.CAIRO);
+	Linker.link(cairo_surface_supports_mime_type, \"cairo_surface_supports_mime_type\", LIBRARY.CAIRO);
+	Linker.link(cairo_surface_map_to_image, \"cairo_surface_map_to_image\", LIBRARY.CAIRO);
+	Linker.link(cairo_surface_unmap_image, \"cairo_surface_unmap_image\", LIBRARY.CAIRO);
 
 	// cairo.ImageSurface
 
@@ -353,6 +387,7 @@ mixin( _shared ~ "static this()
 
 	Linker.link(cairo_recording_surface_create, \"cairo_recording_surface_create\", LIBRARY.CAIRO);
 	Linker.link(cairo_recording_surface_ink_extents, \"cairo_recording_surface_ink_extents\", LIBRARY.CAIRO);
+	Linker.link(cairo_recording_surface_get_extents, \"cairo_recording_surface_get_extents\", LIBRARY.CAIRO);
 
 	// cairo.SvgSurface
 
@@ -361,6 +396,20 @@ mixin( _shared ~ "static this()
 	Linker.link(cairo_svg_surface_restrict_to_version, \"cairo_svg_surface_restrict_to_version\", LIBRARY.CAIRO);
 	Linker.link(cairo_svg_get_versions, \"cairo_svg_get_versions\", LIBRARY.CAIRO);
 	Linker.link(cairo_svg_version_to_string, \"cairo_svg_version_to_string\", LIBRARY.CAIRO);
+
+	// cairo.Script
+
+	Linker.link(cairo_script_create, \"cairo_script_create\", LIBRARY.CAIRO);
+	Linker.link(cairo_script_create_for_stream, \"cairo_script_create_for_stream\", LIBRARY.CAIRO);
+	Linker.link(cairo_script_from_recording_surface, \"cairo_script_from_recording_surface\", LIBRARY.CAIRO);
+	Linker.link(cairo_script_get_mode, \"cairo_script_get_mode\", LIBRARY.CAIRO);
+	Linker.link(cairo_script_set_mode, \"cairo_script_set_mode\", LIBRARY.CAIRO);
+	Linker.link(cairo_script_write_comment, \"cairo_script_write_comment\", LIBRARY.CAIRO);
+
+	// cairo.ScriptSurface
+
+	Linker.link(cairo_script_surface_create, \"cairo_script_surface_create\", LIBRARY.CAIRO);
+	Linker.link(cairo_script_surface_create_for_target, \"cairo_script_surface_create_for_target\", LIBRARY.CAIRO);
 
 	// cairo.Matrix
 
@@ -527,6 +576,7 @@ mixin( gshared ~"extern(C)
 	cairo_status_t function(cairo_pattern_t* pattern, double* x0, double* y0, double* x1, double* y1) c_cairo_pattern_get_linear_points;
 	cairo_pattern_t* function(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1) c_cairo_pattern_create_radial;
 	cairo_status_t function(cairo_pattern_t* pattern, double* x0, double* y0, double* r0, double* x1, double* y1, double* r1) c_cairo_pattern_get_radial_circles;
+	cairo_pattern_t* function() c_cairo_pattern_create_mesh;
 	cairo_pattern_t* function(cairo_pattern_t* pattern) c_cairo_pattern_reference;
 	void function(cairo_pattern_t* pattern) c_cairo_pattern_destroy;
 	cairo_status_t function(cairo_pattern_t* pattern) c_cairo_pattern_status;
@@ -540,6 +590,21 @@ mixin( gshared ~"extern(C)
 	uint function(cairo_pattern_t* pattern) c_cairo_pattern_get_reference_count;
 	cairo_status_t function(cairo_pattern_t* pattern, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy) c_cairo_pattern_set_user_data;
 	void* function(cairo_pattern_t* pattern, cairo_user_data_key_t* key) c_cairo_pattern_get_user_data;
+
+	// cairo.MeshPattern
+
+	void function(cairo_pattern_t* pattern) c_cairo_mesh_pattern_begin_patch;
+	void function(cairo_pattern_t* pattern) c_cairo_mesh_pattern_end_patch;
+	void function(cairo_pattern_t* pattern, double x, double y) c_cairo_mesh_pattern_move_to;
+	void function(cairo_pattern_t* pattern, double x, double y) c_cairo_mesh_pattern_line_to;
+	void function(cairo_pattern_t* pattern, double x1, double y1, double x2, double y2, double x3, double y3) c_cairo_mesh_pattern_curve_to;
+	void function(cairo_pattern_t* pattern, uint pointNum, double x, double y) c_cairo_mesh_pattern_set_control_point;
+	void function(cairo_pattern_t* pattern, uint cornerNum, double red, double green, double blue) c_cairo_mesh_pattern_set_corner_color_rgb;
+	void function(cairo_pattern_t* pattern, uint cornerNum, double red, double green, double blue, double alpha) c_cairo_mesh_pattern_set_corner_color_rgba;
+	cairo_status_t function(cairo_pattern_t* pattern, uint* count) c_cairo_mesh_pattern_get_patch_count;
+	cairo_path_t* function(cairo_pattern_t* pattern, uint patchNum) c_cairo_mesh_pattern_get_path;
+	cairo_status_t function(cairo_pattern_t* pattern, uint patchNum, uint pointNum, double* x, double* y) c_cairo_mesh_pattern_get_control_point;
+	cairo_status_t function(cairo_pattern_t* pattern, uint patchNum, uint cornerNum, double* red, double* green, double* blue, double* alpha) c_cairo_mesh_pattern_get_corner_color_rgba;
 
 	// cairo.Region
 
@@ -566,6 +631,20 @@ mixin( gshared ~"extern(C)
 	cairo_status_t function(cairo_region_t* dst, cairo_rectangle_int_t* rectangle) c_cairo_region_union_rectangle;
 	cairo_status_t function(cairo_region_t* dst, cairo_region_t* other) c_cairo_region_xor;
 	cairo_status_t function(cairo_region_t* dst, cairo_rectangle_int_t* rectangle) c_cairo_region_xor_rectangle;
+
+	// cairo.RasterSource
+
+	cairo_pattern_t* function(void* userData, cairo_content_t content, int width, int height) c_cairo_pattern_create_raster_source;
+	void function(cairo_pattern_t* pattern, void* data) c_cairo_raster_source_pattern_set_callback_data;
+	void* function(cairo_pattern_t* pattern) c_cairo_raster_source_pattern_get_callback_data;
+	void function(cairo_pattern_t* pattern, cairo_raster_source_acquire_func_t acquire, cairo_raster_source_release_func_t release) c_cairo_raster_source_pattern_set_acquire;
+	void function(cairo_pattern_t* pattern, cairo_raster_source_acquire_func_t* acquire, cairo_raster_source_release_func_t* release) c_cairo_raster_source_pattern_get_acquire;
+	void function(cairo_pattern_t* pattern, cairo_raster_source_snapshot_func_t snapshot) c_cairo_raster_source_pattern_set_snapshot;
+	cairo_raster_source_snapshot_func_t function(cairo_pattern_t* pattern) c_cairo_raster_source_pattern_get_snapshot;
+	void function(cairo_pattern_t* pattern, cairo_raster_source_copy_func_t copy) c_cairo_raster_source_pattern_set_copy;
+	cairo_raster_source_copy_func_t function(cairo_pattern_t* pattern) c_cairo_raster_source_pattern_get_copy;
+	void function(cairo_pattern_t* pattern, cairo_raster_source_finish_func_t finish) c_cairo_raster_source_pattern_set_finish;
+	cairo_raster_source_finish_func_t function(cairo_pattern_t* pattern) c_cairo_raster_source_pattern_get_finish;
 
 	// cairo.FontFace
 
@@ -644,6 +723,7 @@ mixin( gshared ~"extern(C)
 	// cairo.Surface
 
 	cairo_surface_t* function(cairo_surface_t* other, cairo_content_t content, int width, int height) c_cairo_surface_create_similar;
+	cairo_surface_t* function(cairo_surface_t* other, cairo_format_t format, int width, int height) c_cairo_surface_create_similar_image;
 	cairo_surface_t* function(cairo_surface_t* target, double x, double y, double width, double height) c_cairo_surface_create_for_rectangle;
 	cairo_surface_t* function(cairo_surface_t* surface) c_cairo_surface_reference;
 	void function(cairo_surface_t* surface) c_cairo_surface_destroy;
@@ -668,6 +748,9 @@ mixin( gshared ~"extern(C)
 	cairo_bool_t function(cairo_surface_t* surface) c_cairo_surface_has_show_text_glyphs;
 	cairo_status_t function(cairo_surface_t* surface, char* mimeType, uchar* data, ulong length, cairo_destroy_func_t destroy, void* closure) c_cairo_surface_set_mime_data;
 	void function(cairo_surface_t* surface, char* mimeType, uchar** data, ulong* length) c_cairo_surface_get_mime_data;
+	cairo_bool_t function(cairo_surface_t* surface, char* mimeType) c_cairo_surface_supports_mime_type;
+	cairo_surface_t* function(cairo_surface_t* surface, cairo_rectangle_int_t* extents) c_cairo_surface_map_to_image;
+	void function(cairo_surface_t* surface, cairo_surface_t* image) c_cairo_surface_unmap_image;
 
 	// cairo.ImageSurface
 
@@ -711,6 +794,7 @@ mixin( gshared ~"extern(C)
 
 	cairo_surface_t* function(cairo_content_t content, cairo_rectangle_t* extents) c_cairo_recording_surface_create;
 	void function(cairo_surface_t* surface, double* x0, double* y0, double* width, double* height) c_cairo_recording_surface_ink_extents;
+	cairo_bool_t function(cairo_surface_t* surface, cairo_rectangle_t* extents) c_cairo_recording_surface_get_extents;
 
 	// cairo.SvgSurface
 
@@ -719,6 +803,20 @@ mixin( gshared ~"extern(C)
 	void function(cairo_surface_t* surface, cairo_svg_version_t versio) c_cairo_svg_surface_restrict_to_version;
 	void function(cairo_svg_version_t** versions, int* numVersions) c_cairo_svg_get_versions;
 	char* function(cairo_svg_version_t versio) c_cairo_svg_version_to_string;
+
+	// cairo.Script
+
+	cairo_device_t* function(char* filename) c_cairo_script_create;
+	cairo_device_t* function(cairo_write_func_t writeFunc, void* closure) c_cairo_script_create_for_stream;
+	cairo_status_t function(cairo_device_t* script, cairo_surface_t* recordingSurface) c_cairo_script_from_recording_surface;
+	cairo_script_mode_t function(cairo_device_t* script) c_cairo_script_get_mode;
+	void function(cairo_device_t* script, cairo_script_mode_t mode) c_cairo_script_set_mode;
+	void function(cairo_device_t* script, char* comment, int len) c_cairo_script_write_comment;
+
+	// cairo.ScriptSurface
+
+	cairo_surface_t* function(cairo_device_t* script, cairo_content_t content, double width, double height) c_cairo_script_surface_create;
+	cairo_surface_t* function(cairo_device_t* script, cairo_surface_t* target) c_cairo_script_surface_create_for_target;
 
 	// cairo.Matrix
 
@@ -883,6 +981,7 @@ alias c_cairo_pattern_create_linear  cairo_pattern_create_linear;
 alias c_cairo_pattern_get_linear_points  cairo_pattern_get_linear_points;
 alias c_cairo_pattern_create_radial  cairo_pattern_create_radial;
 alias c_cairo_pattern_get_radial_circles  cairo_pattern_get_radial_circles;
+alias c_cairo_pattern_create_mesh  cairo_pattern_create_mesh;
 alias c_cairo_pattern_reference  cairo_pattern_reference;
 alias c_cairo_pattern_destroy  cairo_pattern_destroy;
 alias c_cairo_pattern_status  cairo_pattern_status;
@@ -896,6 +995,21 @@ alias c_cairo_pattern_get_type  cairo_pattern_get_type;
 alias c_cairo_pattern_get_reference_count  cairo_pattern_get_reference_count;
 alias c_cairo_pattern_set_user_data  cairo_pattern_set_user_data;
 alias c_cairo_pattern_get_user_data  cairo_pattern_get_user_data;
+
+// cairo.MeshPattern
+
+alias c_cairo_mesh_pattern_begin_patch  cairo_mesh_pattern_begin_patch;
+alias c_cairo_mesh_pattern_end_patch  cairo_mesh_pattern_end_patch;
+alias c_cairo_mesh_pattern_move_to  cairo_mesh_pattern_move_to;
+alias c_cairo_mesh_pattern_line_to  cairo_mesh_pattern_line_to;
+alias c_cairo_mesh_pattern_curve_to  cairo_mesh_pattern_curve_to;
+alias c_cairo_mesh_pattern_set_control_point  cairo_mesh_pattern_set_control_point;
+alias c_cairo_mesh_pattern_set_corner_color_rgb  cairo_mesh_pattern_set_corner_color_rgb;
+alias c_cairo_mesh_pattern_set_corner_color_rgba  cairo_mesh_pattern_set_corner_color_rgba;
+alias c_cairo_mesh_pattern_get_patch_count  cairo_mesh_pattern_get_patch_count;
+alias c_cairo_mesh_pattern_get_path  cairo_mesh_pattern_get_path;
+alias c_cairo_mesh_pattern_get_control_point  cairo_mesh_pattern_get_control_point;
+alias c_cairo_mesh_pattern_get_corner_color_rgba  cairo_mesh_pattern_get_corner_color_rgba;
 
 // cairo.Region
 
@@ -922,6 +1036,20 @@ alias c_cairo_region_union  cairo_region_union;
 alias c_cairo_region_union_rectangle  cairo_region_union_rectangle;
 alias c_cairo_region_xor  cairo_region_xor;
 alias c_cairo_region_xor_rectangle  cairo_region_xor_rectangle;
+
+// cairo.RasterSource
+
+alias c_cairo_pattern_create_raster_source  cairo_pattern_create_raster_source;
+alias c_cairo_raster_source_pattern_set_callback_data  cairo_raster_source_pattern_set_callback_data;
+alias c_cairo_raster_source_pattern_get_callback_data  cairo_raster_source_pattern_get_callback_data;
+alias c_cairo_raster_source_pattern_set_acquire  cairo_raster_source_pattern_set_acquire;
+alias c_cairo_raster_source_pattern_get_acquire  cairo_raster_source_pattern_get_acquire;
+alias c_cairo_raster_source_pattern_set_snapshot  cairo_raster_source_pattern_set_snapshot;
+alias c_cairo_raster_source_pattern_get_snapshot  cairo_raster_source_pattern_get_snapshot;
+alias c_cairo_raster_source_pattern_set_copy  cairo_raster_source_pattern_set_copy;
+alias c_cairo_raster_source_pattern_get_copy  cairo_raster_source_pattern_get_copy;
+alias c_cairo_raster_source_pattern_set_finish  cairo_raster_source_pattern_set_finish;
+alias c_cairo_raster_source_pattern_get_finish  cairo_raster_source_pattern_get_finish;
 
 // cairo.FontFace
 
@@ -1000,6 +1128,7 @@ alias c_cairo_device_release  cairo_device_release;
 // cairo.Surface
 
 alias c_cairo_surface_create_similar  cairo_surface_create_similar;
+alias c_cairo_surface_create_similar_image  cairo_surface_create_similar_image;
 alias c_cairo_surface_create_for_rectangle  cairo_surface_create_for_rectangle;
 alias c_cairo_surface_reference  cairo_surface_reference;
 alias c_cairo_surface_destroy  cairo_surface_destroy;
@@ -1024,6 +1153,9 @@ alias c_cairo_surface_show_page  cairo_surface_show_page;
 alias c_cairo_surface_has_show_text_glyphs  cairo_surface_has_show_text_glyphs;
 alias c_cairo_surface_set_mime_data  cairo_surface_set_mime_data;
 alias c_cairo_surface_get_mime_data  cairo_surface_get_mime_data;
+alias c_cairo_surface_supports_mime_type  cairo_surface_supports_mime_type;
+alias c_cairo_surface_map_to_image  cairo_surface_map_to_image;
+alias c_cairo_surface_unmap_image  cairo_surface_unmap_image;
 
 // cairo.ImageSurface
 
@@ -1067,6 +1199,7 @@ alias c_cairo_ps_surface_dsc_comment  cairo_ps_surface_dsc_comment;
 
 alias c_cairo_recording_surface_create  cairo_recording_surface_create;
 alias c_cairo_recording_surface_ink_extents  cairo_recording_surface_ink_extents;
+alias c_cairo_recording_surface_get_extents  cairo_recording_surface_get_extents;
 
 // cairo.SvgSurface
 
@@ -1075,6 +1208,20 @@ alias c_cairo_svg_surface_create_for_stream  cairo_svg_surface_create_for_stream
 alias c_cairo_svg_surface_restrict_to_version  cairo_svg_surface_restrict_to_version;
 alias c_cairo_svg_get_versions  cairo_svg_get_versions;
 alias c_cairo_svg_version_to_string  cairo_svg_version_to_string;
+
+// cairo.Script
+
+alias c_cairo_script_create  cairo_script_create;
+alias c_cairo_script_create_for_stream  cairo_script_create_for_stream;
+alias c_cairo_script_from_recording_surface  cairo_script_from_recording_surface;
+alias c_cairo_script_get_mode  cairo_script_get_mode;
+alias c_cairo_script_set_mode  cairo_script_set_mode;
+alias c_cairo_script_write_comment  cairo_script_write_comment;
+
+// cairo.ScriptSurface
+
+alias c_cairo_script_surface_create  cairo_script_surface_create;
+alias c_cairo_script_surface_create_for_target  cairo_script_surface_create_for_target;
 
 // cairo.Matrix
 

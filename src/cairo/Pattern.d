@@ -40,7 +40,9 @@
  * 	- cairo_pattern_
  * omit structs:
  * omit prefixes:
+ * 	- cairo_mesh_pattern_
  * omit code:
+ * 	- cairo_pattern_create_mesh
  * omit signals:
  * imports:
  * 	- cairo.Matrix
@@ -75,9 +77,11 @@ private import cairo.Surface;
  * operations, although they can also be used as masks, that is, as the
  * brush too.
  * A cairo pattern is created by using one of the many constructors,
- * of the form cairo_pattern_create_type()
+ * of the form
+ * cairo_pattern_create_type()
  * or implicitly through
- * cairo_set_source_type() functions.
+ * cairo_set_source_type()
+ * functions.
  */
 public class Pattern
 {
@@ -129,6 +133,7 @@ public class Pattern
 	 * Note: If the pattern is not a gradient pattern, (eg. a linear or
 	 * radial pattern), then the pattern will be put into an error status
 	 * with a status of CAIRO_STATUS_PATTERN_TYPE_MISMATCH.
+	 * Since 1.0
 	 * Params:
 	 * offset = an offset in the range [0.0 .. 1.0]
 	 * red = red component of color
@@ -156,6 +161,7 @@ public class Pattern
 	 * Note: If the pattern is not a gradient pattern, (eg. a linear or
 	 * radial pattern), then the pattern will be put into an error status
 	 * with a status of CAIRO_STATUS_PATTERN_TYPE_MISMATCH.
+	 * Since 1.0
 	 * Params:
 	 * offset = an offset in the range [0.0 .. 1.0]
 	 * red = red component of color
@@ -208,6 +214,7 @@ public class Pattern
 	 * color components are floating point numbers in the range 0 to 1.
 	 * If the values passed in are outside that range, they will be
 	 * clamped.
+	 * Since 1.0
 	 * Params:
 	 * red = red component of the color
 	 * green = green component of the color
@@ -230,6 +237,7 @@ public class Pattern
 	 * The color components are floating point numbers in the range 0 to
 	 * 1. If the values passed in are outside that range, they will be
 	 * clamped.
+	 * Since 1.0
 	 * Params:
 	 * red = red component of the color
 	 * green = green component of the color
@@ -266,6 +274,7 @@ public class Pattern
 	
 	/**
 	 * Create a new cairo_pattern_t for the given surface.
+	 * Since 1.0
 	 * Params:
 	 * surface = the surface
 	 * Returns: the newly created cairo_pattern_t if successful, or an error pattern in case of no memory. The caller owns the returned object and should call cairo_pattern_destroy() when finished with it. This function will always return a valid pointer, but if an error occurred the pattern status will be set to an error. To inspect the status of a pattern use cairo_pattern_status().
@@ -310,6 +319,7 @@ public class Pattern
 	 * Note: The coordinates here are in pattern space. For a new pattern,
 	 * pattern space is identical to user space, but the relationship
 	 * between the spaces can be changed with cairo_pattern_set_matrix().
+	 * Since 1.0
 	 * Params:
 	 * x0 = x coordinate of the start point
 	 * y0 = y coordinate of the start point
@@ -353,6 +363,7 @@ public class Pattern
 	 * Note: The coordinates here are in pattern space. For a new pattern,
 	 * pattern space is identical to user space, but the relationship
 	 * between the spaces can be changed with cairo_pattern_set_matrix().
+	 * Since 1.0
 	 * Params:
 	 * cx0 = x coordinate for the center of the start circle
 	 * cy0 = y coordinate for the center of the start circle
@@ -398,6 +409,7 @@ public class Pattern
 	 * cairo_pattern_destroy() is made.
 	 * The number of references to a cairo_pattern_t can be get using
 	 * cairo_pattern_get_reference_count().
+	 * Since 1.0
 	 * Returns: the referenced cairo_pattern_t.
 	 */
 	public Pattern reference()
@@ -415,6 +427,7 @@ public class Pattern
 	 * Decreases the reference count on pattern by one. If the result is
 	 * zero, then pattern and all associated resources are freed. See
 	 * cairo_pattern_reference().
+	 * Since 1.0
 	 */
 	public void destroy()
 	{
@@ -425,7 +438,8 @@ public class Pattern
 	/**
 	 * Checks whether an error has previously occurred for this
 	 * pattern.
-	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NO_MEMORY, or CAIRO_STATUS_PATTERN_TYPE_MISMATCH.
+	 * Since 1.0
+	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NO_MEMORY, CAIRO_STATUS_INVALID_MATRIX, CAIRO_STATUS_PATTERN_TYPE_MISMATCH, or CAIRO_STATUS_INVALID_MESH_CONSTRUCTION.
 	 */
 	public cairo_status_t status()
 	{
@@ -439,6 +453,7 @@ public class Pattern
 	 * strategy.
 	 * The default extend mode is CAIRO_EXTEND_NONE for surface patterns
 	 * and CAIRO_EXTEND_PAD for gradient patterns.
+	 * Since 1.0
 	 * Params:
 	 * extend = a cairo_extend_t describing how the area outside of the
 	 * pattern will be drawn
@@ -452,6 +467,7 @@ public class Pattern
 	/**
 	 * Gets the current extend mode for a pattern. See cairo_extend_t
 	 * for details on the semantics of each extend strategy.
+	 * Since 1.0
 	 * Returns: the current extend strategy used for drawing the pattern.
 	 */
 	public cairo_extend_t getExtend()
@@ -467,6 +483,7 @@ public class Pattern
 	 * have an explicit cairo_pattern_t object, (for example when using
 	 * cairo_set_source_surface()). In these cases, it is convenient to
 	 * use cairo_get_source() to get access to the pattern that cairo
+	 * Since 1.0
 	 * Params:
 	 * filter = a cairo_filter_t describing the filter to use for resizing
 	 * the pattern
@@ -480,6 +497,7 @@ public class Pattern
 	/**
 	 * Gets the current filter for a pattern. See cairo_filter_t
 	 * for details on each filter.
+	 * Since 1.0
 	 * Returns: the current filter used for resizing the pattern.
 	 */
 	public cairo_filter_t getFilter()
@@ -500,6 +518,7 @@ public class Pattern
 	 * space), then coordinates in that flow will be transformed by the
 	 * inverse of the pattern matrix.
 	 * For example, if you want to make a pattern appear twice as large as
+	 * Since 1.0
 	 * Params:
 	 * matrix = a cairo_matrix_t
 	 */
@@ -511,6 +530,7 @@ public class Pattern
 	
 	/**
 	 * Stores the pattern's transformation matrix into matrix.
+	 * Since 1.0
 	 * Params:
 	 * matrix = return value for the matrix
 	 */

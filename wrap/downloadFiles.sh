@@ -31,8 +31,11 @@ cd ..
 curl http://developer.gnome.org/gtk3/gtk3-html-3.4.4.tar.gz | tar xvfz -
 ln -s gtk3-html-3.4.4 gtk
 #CAIRO
-curl http://cairographics.org/releases/cairo-1.10.2.tar.gz | tar xvfz -
-ln -s cairo-1.10.2/doc/public/html cairo
+curl http://cairographics.org/releases/cairo-1.12.2.tar.xz | tar xvfJ -
+ln -s cairo-1.12.2/doc/public/html cairo
+cd cairo
+wget http://cairographics.org/manual-1.10.2/cairo-Version-Information.html
+cd ..
 
 #other libraries.
 #gda

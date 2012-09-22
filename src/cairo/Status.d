@@ -84,6 +84,7 @@ public class Status
 	
 	/**
 	 * Provides a human-readable description of a cairo_status_t.
+	 * Since 1.0
 	 * Params:
 	 * status = a cairo status
 	 * Returns: a string representation of the status
@@ -110,6 +111,7 @@ public class Status
 	 * functions have been called as necessary). If there are active cairo
 	 * objects, this call is likely to cause a crash, (eg. an assertion
 	 * failure due to a hash table being destroyed when non-empty).
+	 * Since 1.0
 	 */
 	public static void debugResetStaticData()
 	{

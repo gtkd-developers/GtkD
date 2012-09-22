@@ -107,6 +107,7 @@ public class FontOption
 	/**
 	 * Allocates a new font options object with all options initialized
 	 *  to default values.
+	 * Since 1.0
 	 * Returns: a newly allocated cairo_font_options_t. Free with cairo_font_options_destroy(). This function always returns a valid pointer; if memory cannot be allocated, then a special error object is returned where all operations on the object do nothing. You can check for this with cairo_font_options_status().
 	 */
 	public static FontOption create()
@@ -123,6 +124,7 @@ public class FontOption
 	/**
 	 * Allocates a new font options object copying the option values from
 	 *  original.
+	 * Since 1.0
 	 * Returns: a newly allocated cairo_font_options_t. Free with cairo_font_options_destroy(). This function always returns a valid pointer; if memory cannot be allocated, then a special error object is returned where all operations on the object do nothing. You can check for this with cairo_font_options_status().
 	 */
 	public FontOption copy()
@@ -139,6 +141,7 @@ public class FontOption
 	/**
 	 * Destroys a cairo_font_options_t object created with
 	 * cairo_font_options_create() or cairo_font_options_copy().
+	 * Since 1.0
 	 */
 	public void destroy()
 	{
@@ -149,6 +152,7 @@ public class FontOption
 	/**
 	 * Checks whether an error has previously occurred for this
 	 * font options object
+	 * Since 1.0
 	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY
 	 */
 	public cairo_status_t status()
@@ -161,7 +165,8 @@ public class FontOption
 	 * Merges non-default options from other into options, replacing
 	 * existing values. This operation can be thought of as somewhat
 	 * similar to compositing other onto options with the operation
-	 * of CAIRO_OPERATION_OVER.
+	 * of CAIRO_OPERATOR_OVER.
+	 * Since 1.0
 	 * Params:
 	 * other = another cairo_font_options_t
 	 */
@@ -175,6 +180,7 @@ public class FontOption
 	 * Compute a hash for the font options object; this value will
 	 * be useful when storing an object containing a cairo_font_options_t
 	 * in a hash table.
+	 * Since 1.0
 	 * Returns: the hash value for the font options object. The return value can be cast to a 32-bit type if a 32-bit hash value is needed.
 	 */
 	public ulong hash()
@@ -185,6 +191,7 @@ public class FontOption
 	
 	/**
 	 * Compares two font options objects for equality.
+	 * Since 1.0
 	 * Params:
 	 * other = another cairo_font_options_t
 	 * Returns: TRUE if all fields of the two font options objects match. Note that this function will return FALSE if either object is in error.
@@ -198,6 +205,7 @@ public class FontOption
 	/**
 	 * Sets the antialiasing mode for the font options object. This
 	 * specifies the type of antialiasing to do when rendering text.
+	 * Since 1.0
 	 * Params:
 	 * antialias = the new antialiasing mode
 	 */
@@ -209,6 +217,7 @@ public class FontOption
 	
 	/**
 	 * Gets the antialiasing mode for the font options object.
+	 * Since 1.0
 	 * Returns: the antialiasing mode
 	 */
 	public cairo_antialias_t getAntialias()
@@ -223,6 +232,7 @@ public class FontOption
 	 * the display device when rendering with an antialiasing mode of
 	 * CAIRO_ANTIALIAS_SUBPIXEL. See the documentation for
 	 * cairo_subpixel_order_t for full details.
+	 * Since 1.0
 	 * Params:
 	 * subpixelOrder = the new subpixel order
 	 */
@@ -235,6 +245,7 @@ public class FontOption
 	/**
 	 * Gets the subpixel order for the font options object.
 	 * See the documentation for cairo_subpixel_order_t for full details.
+	 * Since 1.0
 	 * Returns: the subpixel order for the font options object
 	 */
 	public cairo_subpixel_order_t getSubpixelOrder()
@@ -248,6 +259,7 @@ public class FontOption
 	 * This controls whether to fit font outlines to the pixel grid,
 	 * and if so, whether to optimize for fidelity or contrast.
 	 * See the documentation for cairo_hint_style_t for full details.
+	 * Since 1.0
 	 * Params:
 	 * hintStyle = the new hint style
 	 */
@@ -260,6 +272,7 @@ public class FontOption
 	/**
 	 * Gets the hint style for font outlines for the font options object.
 	 * See the documentation for cairo_hint_style_t for full details.
+	 * Since 1.0
 	 * Returns: the hint style for the font options object
 	 */
 	public cairo_hint_style_t getHintStyle()
@@ -273,6 +286,7 @@ public class FontOption
 	 * controls whether metrics are quantized to integer values in
 	 * device units.
 	 * See the documentation for cairo_hint_metrics_t for full details.
+	 * Since 1.0
 	 * Params:
 	 * hintMetrics = the new metrics hinting mode
 	 */
@@ -285,6 +299,7 @@ public class FontOption
 	/**
 	 * Gets the metrics hinting mode for the font options object.
 	 * See the documentation for cairo_hint_metrics_t for full details.
+	 * Since 1.0
 	 * Returns: the metrics hinting mode for the font options object
 	 */
 	public cairo_hint_metrics_t getHintMetrics()

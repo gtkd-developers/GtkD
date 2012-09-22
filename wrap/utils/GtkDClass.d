@@ -595,7 +595,7 @@ public class GtkDClass
 								"}" ];
 
 							text ~= checkIfNull;
-							if ( gtkDParentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed" )
+							if ( gtkDParentName.length > 0 && convParms.outPack != "cairo" && gtkDParentName != "Boxed" )
 								text ~= checkObject;
 
 							if ( parentName.length > 0 && gtkDParentName != "Boxed" )
@@ -605,7 +605,7 @@ public class GtkDClass
 							text ~= "this."~var~" = "~var~";";
 							text ~= "}";
 
-							if ( parentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed" )
+							if ( parentName.length > 0 && convParms.outPack != "cairo" && gtkDParentName != "Boxed" )
 							{
 								text ~= "";
 								text ~= "protected override void setStruct(GObject* obj)";

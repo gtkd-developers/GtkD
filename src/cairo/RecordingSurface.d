@@ -38,8 +38,6 @@
  * implements:
  * prefixes:
  * 	- cairo_recording_surface_
- * 	- cairo_surface_
- * 	- cairo_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -136,7 +134,7 @@ public class RecordingSurface : Surface
 	 * Params:
 	 * content = the content of the recording surface
 	 * extents = the extents to record in pixels, can be NULL to record
-	 *  unbounded operations.
+	 * unbounded operations.
 	 * Returns: a pointer to the newly created surface. The caller owns the surface and should call cairo_surface_destroy() when done with it.
 	 */
 	public static cairo_surface_t* create(cairo_content_t content, cairo_rectangle_t* extents)
@@ -160,5 +158,18 @@ public class RecordingSurface : Surface
 	{
 		// void cairo_recording_surface_ink_extents (cairo_surface_t *surface,  double *x0,  double *y0,  double *width,  double *height);
 		cairo_recording_surface_ink_extents(cairo_surface, x0, y0, width, height);
+	}
+	
+	/**
+	 * Get the extents of the recording-surface.
+	 * Since 1.12
+	 * Params:
+	 * extents = the cairo_rectangle_t to be assigned the extents
+	 * Returns: TRUE if the surface is bounded, of recording type, and not in an error state, otherwise FALSE
+	 */
+	public cairo_bool_t getExtents(out cairo_rectangle_t extents)
+	{
+		// cairo_bool_t cairo_recording_surface_get_extents (cairo_surface_t *surface,  cairo_rectangle_t *extents);
+		return cairo_recording_surface_get_extents(cairo_surface, &extents);
 	}
 }

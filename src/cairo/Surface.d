@@ -161,6 +161,9 @@ public class Surface
 	 * be examined with cairo_surface_get_type().
 	 * Initially the surface contents are all 0 (transparent if contents
 	 * have transparency, black otherwise.)
+	 * Use cairo_surface_create_similar_image() if you need an image surface
+	 * which can be painted quickly to the target surface.
+	 * Since 1.0
 	 * Params:
 	 * content = the content for the new surface
 	 * width = width of the new surface, (in device-space units)
@@ -171,6 +174,31 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_create_similar (cairo_surface_t *other,  cairo_content_t content,  int width,  int height);
 		auto p = cairo_surface_create_similar(cairo_surface, content, width, height);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Surface(cast(cairo_surface_t*) p);
+	}
+	
+	/**
+	 * Create a new image surface that is as compatible as possible for uploading
+	 * to and the use in conjunction with an existing surface. However, this surface
+	 * can still be used like any normal image surface.
+	 * Initially the surface contents are all 0 (transparent if contents
+	 * have transparency, black otherwise.)
+	 * Use cairo_surface_create_similar() if you don't need an image surface.
+	 * Since 1.12
+	 * Params:
+	 * format = the format for the new surface
+	 * width = width of the new surface, (in device-space units)
+	 * height = height of the new surface (in device-space units)
+	 * Returns: a pointer to the newly allocated image surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs.
+	 */
+	public Surface createSimilarImage(cairo_format_t format, int width, int height)
+	{
+		// cairo_surface_t * cairo_surface_create_similar_image (cairo_surface_t *other,  cairo_format_t format,  int width,  int height);
+		auto p = cairo_surface_create_similar_image(cairo_surface, format, width, height);
 		if(p is null)
 		{
 			return null;
@@ -216,6 +244,7 @@ public class Surface
 	 * cairo_surface_destroy() is made.
 	 * The number of references to a cairo_surface_t can be get using
 	 * cairo_surface_get_reference_count().
+	 * Since 1.0
 	 * Returns: the referenced cairo_surface_t.
 	 */
 	public Surface reference()
@@ -233,6 +262,7 @@ public class Surface
 	 * Decreases the reference count on surface by one. If the result is
 	 * zero, then surface and all associated resources are freed. See
 	 * cairo_surface_reference().
+	 * Since 1.0
 	 */
 	public void destroy()
 	{
@@ -243,6 +273,7 @@ public class Surface
 	/**
 	 * Checks whether an error has previously occurred for this
 	 * surface.
+	 * Since 1.0
 	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NULL_POINTER, CAIRO_STATUS_NO_MEMORY, CAIRO_STATUS_READ_ERROR, CAIRO_STATUS_INVALID_CONTENT, CAIRO_STATUS_INVALID_FORMAT, or CAIRO_STATUS_INVALID_VISUAL.
 	 */
 	public cairo_status_t status()
@@ -265,6 +296,7 @@ public class Surface
 	 * reference count to zero, cairo will call cairo_surface_finish() if
 	 * it hasn't been called already, before freeing the resources
 	 * associated with the surface.
+	 * Since 1.0
 	 */
 	public void finish()
 	{
@@ -279,6 +311,7 @@ public class Surface
 	 * drawing on the surface with cairo to drawing on it directly
 	 * with native APIs. If the surface doesn't support direct access,
 	 * then this function does nothing.
+	 * Since 1.0
 	 */
 	public void flush()
 	{
@@ -309,9 +342,10 @@ public class Surface
 	 * for rendering on them, print surfaces to disable hinting of
 	 * metrics and so forth. The result can then be used with
 	 * cairo_scaled_font_create().
+	 * Since 1.0
 	 * Params:
 	 * options = a cairo_font_options_t object into which to store
-	 *  the retrieved options. All existing values are overwritten
+	 * the retrieved options. All existing values are overwritten
 	 */
 	public void getFontOptions(FontOption options)
 	{
@@ -336,6 +370,7 @@ public class Surface
 	 * Tells cairo that drawing has been done to surface using means other
 	 * than cairo, and that cairo should reread any cached areas. Note
 	 * that you must call cairo_surface_flush() before doing such drawing.
+	 * Since 1.0
 	 */
 	public void markDirty()
 	{
@@ -350,6 +385,7 @@ public class Surface
 	 * Any cached clip set on the surface will be reset by this function,
 	 * to make sure that future cairo calls have the clip set that they
 	 * expect.
+	 * Since 1.0
 	 * Params:
 	 * x = X coordinate of dirty rectangle
 	 * y = Y coordinate of dirty rectangle
@@ -373,6 +409,7 @@ public class Surface
 	 * cairo_device_to_user() will expose the hidden offset.
 	 * Note that the offset affects drawing to the surface as well as
 	 * using the surface in a source pattern.
+	 * Since 1.0
 	 * Params:
 	 * xOffset = the offset in the X direction, in device units
 	 * yOffset = the offset in the Y direction, in device units
@@ -472,6 +509,7 @@ public class Surface
 	 * Attach user data to surface. To remove user data from a surface,
 	 * call this function with the key that was used to set it and NULL
 	 * for data.
+	 * Since 1.0
 	 * Params:
 	 * key = the address of a cairo_user_data_key_t to attach the user data to
 	 * userData = the user data to attach to the surface
@@ -490,6 +528,7 @@ public class Surface
 	 * Return user data previously attached to surface using the specified
 	 * key. If no user data has been attached with the given key this
 	 * function returns NULL.
+	 * Since 1.0
 	 * Params:
 	 * key = the address of the cairo_user_data_key_t the user data was
 	 * attached to
@@ -576,7 +615,60 @@ public class Surface
 	 */
 	public cairo_status_t setMimeData(string mimeType, ubyte[] data, cairo_destroy_func_t destroy, void* closure)
 	{
-		// cairo_status_t cairo_surface_set_mime_data (cairo_surface_t *surface,  const char *mime_type,  unsigned char *data,  unsigned long  length,  cairo_destroy_func_t destroy,  void *closure);
+		// cairo_status_t cairo_surface_set_mime_data (cairo_surface_t *surface,  const char *mime_type,  const unsigned char *data,  unsigned long  length,  cairo_destroy_func_t destroy,  void *closure);
 		return cairo_surface_set_mime_data(cairo_surface, Str.toStringz(mimeType), data.ptr, cast(int) data.length, destroy, closure);
+	}
+	
+	/**
+	 * Return whether surface supports mime_type.
+	 * Since 1.12
+	 * Params:
+	 * mimeType = the mime type
+	 * Returns: TRUE if surface supports mime_type, FALSE otherwise
+	 */
+	public cairo_bool_t supportsMimeType(string mimeType)
+	{
+		// cairo_bool_t cairo_surface_supports_mime_type (cairo_surface_t *surface,  const char *mime_type);
+		return cairo_surface_supports_mime_type(cairo_surface, Str.toStringz(mimeType));
+	}
+	
+	/**
+	 * Returns an image surface that is the most efficient mechanism for
+	 * modifying the backing store of the target surface. The region retrieved
+	 * may be limited to the extents or NULL for the whole surface
+	 * Note, the use of the original surface as a target or source whilst it is
+	 * mapped is undefined. The result of mapping the surface multiple times is
+	 * undefined. Calling cairo_surface_destroy() or cairo_surface_finish() on the
+	 * resulting image surface results in undefined behavior.
+	 * Since 1.12
+	 * Params:
+	 * extents = limit the extraction to an rectangular region
+	 * Returns: a pointer to the newly allocated image surface. The caller must use cairo_surface_unmap_image() to destroy this image surface. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs.
+	 */
+	public Surface mapToImage(cairo_rectangle_int_t* extents)
+	{
+		// cairo_surface_t * cairo_surface_map_to_image (cairo_surface_t *surface,  const cairo_rectangle_int_t *extents);
+		auto p = cairo_surface_map_to_image(cairo_surface, extents);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Surface(cast(cairo_surface_t*) p);
+	}
+	
+	/**
+	 * Unmaps the image surface as returned from #cairo_surface_map_to_image().
+	 * The content of the image will be uploaded to the target surface.
+	 * Afterwards, the image is destroyed.
+	 * Using an image surface which wasn't returned by cairo_surface_map_to_image()
+	 * results in undefined behavior.
+	 * Since 1.12
+	 * Params:
+	 * image = the currently mapped image
+	 */
+	public void unmapImage(Surface image)
+	{
+		// void cairo_surface_unmap_image (cairo_surface_t *surface,  cairo_surface_t *image);
+		cairo_surface_unmap_image(cairo_surface, (image is null) ? null : image.getSurfaceStruct());
 	}
 }

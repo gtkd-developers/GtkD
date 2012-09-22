@@ -307,7 +307,9 @@ private import gio.IOExtensionPoint;
 
 private import cairo.Context;
 private import cairo.Pattern;
+private import cairo.MeshPattern;
 private import cairo.Region;
+private import cairo.RasterSource;
 private import cairo.FontFace;
 private import cairo.ScaledFont;
 private import cairo.FontOption;
@@ -319,6 +321,8 @@ private import cairo.PdfSurface;
 private import cairo.PostScriptSurface;
 private import cairo.RecordingSurface;
 private import cairo.SvgSurface;
+private import cairo.Script;
+private import cairo.ScriptSurface;
 private import cairo.Matrix;
 private import cairo.Status;
 private import cairo.Version;

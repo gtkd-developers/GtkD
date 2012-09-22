@@ -202,7 +202,7 @@ public class Region
 	}
 	
 	/**
-	 * Checks whether an error has previous occured for this
+	 * Checks whether an error has previous occurred for this
 	 * region object.
 	 * Since 1.10
 	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY

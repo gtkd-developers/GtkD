@@ -217,11 +217,14 @@ file: cairo-cairo-pattern-t.html
 struct: cairo_pattern_t
 class: Pattern
 prefix: cairo_pattern_
+noprefix: cairo_mesh_pattern_
 structWrap: cairo_matrix_t* Matrix
 structWrap: cairo_pattern_t* Pattern
 structWrap: cairo_surface_t* Surface
 import: cairo.Matrix
 import: cairo.Surface
+
+nocode: cairo_pattern_create_mesh
 
 out: cairo_pattern_get_color_stop_count count
 out: cairo_pattern_get_color_stop_rgba offset
@@ -247,6 +250,29 @@ out: cairo_pattern_get_radial_circles r1
 
 outFile: Pattern
 
+struct: cairo_pattern_t
+class: MeshPattern
+extend: cairo_pattern_t
+prefix: cairo_mesh_pattern_
+strictPrefix: Y
+
+out: cairo_mesh_pattern_get_control_point x
+out: cairo_mesh_pattern_get_control_point y
+out: cairo_mesh_pattern_get_corner_color_rgba red
+out: cairo_mesh_pattern_get_corner_color_rgba green
+out: cairo_mesh_pattern_get_corner_color_rgba blue
+out: cairo_mesh_pattern_get_corner_color_rgba alpha
+out: cairo_mesh_pattern_get_patch_count count
+
+code: start
+	/** */
+	public this()
+	{
+		this(cairo_pattern_create_mesh());
+	}
+code: end
+outFile: MeshPattern
+
 file: cairo-Regions.html
 struct: cairo_region_t
 class: Region
@@ -262,6 +288,38 @@ inout: cairo_region_subtract_rectangle rectangle
 inout: cairo_region_union_rectangle rectangle
 inout: cairo_region_xor_rectangle rectangle
 outFile: Region
+
+file: cairo-Raster-Sources.html
+struct: cairo_pattern_t
+class: RasterSource
+extend: cairo_pattern_t
+prefix: cairo_raster_source_pattern_
+
+nocode: cairo_pattern_create_raster_source
+code: start
+	/**
+	 * Creates a new user pattern for providing pixel data.
+	 *
+	 * Use the setter functions to associate callbacks with the returned
+	 * pattern. The only mandatory callback is acquire.
+	 * 
+	 * Since 1.12
+	 * 
+	 * Params:
+	 *     userData = the user data to be passed to all callbacks
+	 *     content  = content type for the pixel data that will be returned.
+	 *                Knowing the content type ahead of time is used for analysing
+	 *                the operation and picking the appropriate rendering path.
+	 *     width    = maximum size of the sample area
+	 *     height   = maximum size of the sample area
+	 */
+	public this(void* userData, CairoContent content, int width, int height)
+	{
+		// cairo_pattern_t * cairo_pattern_create_raster_source (void *user_data,  cairo_content_t content,  int width,  int height);
+		this(cairo_pattern_create_raster_source(userData, content, width, height));
+	}
+code: end
+outFile: RasterSource
 
 ###########################################################
 ### Cairo Fonts ###########################################
@@ -351,6 +409,7 @@ out: cairo_surface_get_fallback_resolution x_pixels_per_inch
 out: cairo_surface_get_fallback_resolution y_pixels_per_inch
 out: cairo_surface_get_mime_data data
 array: cairo_surface_set_mime_data data length
+inout:  cairo_surface_map_to_image extents
 
 nocode: cairo_surface_get_mime_data
 
@@ -426,8 +485,9 @@ struct: cairo_surface_t
 class: RecordingSurface
 extend: cairo_surface_t
 prefix: cairo_recording_surface_
-prefix: cairo_surface_
-prefix: cairo_
+
+out: cairo_recording_surface_get_extents extents
+
 outFile: RecordingSurface
 
 #file: cairo-win32-surface.html
@@ -447,8 +507,39 @@ array: cairo_svg_get_versions versions num_versions
 
 outFile: SvgSurface
 
+#file: cairo-Quartz-Surfaces.html
+#closeFile: Surface
+
+#file: cairo-XCB-Surfaces.html
+#closeFile: Surface
+
 #file: cairo-XLib-Surfaces.html
 #closeFile: Surface
+
+file: cairo-Script-Surfaces.html
+struct: cairo_device_t
+class: Script
+extend: cairo_device_t
+prefix: cairo_script_
+noprefix: cairo_script_surface_
+import: glib.Str
+import: cairo.Script
+import: cairo.RecordingSurface
+structWrap: cairo_device_t* Script
+structWrap: cairo_surface_t* RecordingSurface
+array: cairo_script_write_comment comment len
+outFile: Script
+
+struct: cairo_surface_t
+class: ScriptSurface
+extend: cairo_surface_t
+prefix: cairo_script_surface_
+strictPrefix: Y
+import: cairo.Device
+import: cairo.Surface
+structWrap: cairo_device_t* Device
+structWrap: cairo_surface_t* Surface
+outFile: ScriptSurface
 
 ###########################################################
 ### Cairo Utilities #######################################
