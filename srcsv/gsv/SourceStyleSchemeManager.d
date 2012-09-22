@@ -203,7 +203,7 @@ public class SourceStyleSchemeManager : ObjectG
 	
 	/**
 	 * Returns the ids of the available style schemes.
-	 * Returns: a NULL-terminated array of string containing the ids of the available style schemes or NULL if no style scheme is available. The array is owned by the manager and must not be modified. [array zero-terminated=1][transfer none]
+	 * Returns: a NULL-terminated array of string containing the ids of the available style schemes or NULL if no style scheme is available. The array is sorted alphabetically according to the scheme name. The array is owned by the manager and must not be modified. [array zero-terminated=1][transfer none]
 	 */
 	public string[] getSchemeIds()
 	{

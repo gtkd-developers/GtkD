@@ -645,10 +645,10 @@ public class Surface
 	 * extents = limit the extraction to an rectangular region
 	 * Returns: a pointer to the newly allocated image surface. The caller must use cairo_surface_unmap_image() to destroy this image surface. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs.
 	 */
-	public Surface mapToImage(cairo_rectangle_int_t* extents)
+	public Surface mapToImage(ref cairo_rectangle_int_t extents)
 	{
 		// cairo_surface_t * cairo_surface_map_to_image (cairo_surface_t *surface,  const cairo_rectangle_int_t *extents);
-		auto p = cairo_surface_map_to_image(cairo_surface, extents);
+		auto p = cairo_surface_map_to_image(cairo_surface, &extents);
 		if(p is null)
 		{
 			return null;

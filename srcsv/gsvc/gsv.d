@@ -257,6 +257,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_language_get_globs, \"gtk_source_language_get_globs\", LIBRARY.GSV);
 	Linker.link(gtk_source_language_get_style_name, \"gtk_source_language_get_style_name\", LIBRARY.GSV);
 	Linker.link(gtk_source_language_get_style_ids, \"gtk_source_language_get_style_ids\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_style_fallback, \"gtk_source_language_get_style_fallback\", LIBRARY.GSV);
 
 	// gsv.SourceLanguageManager
 
@@ -575,6 +576,7 @@ mixin( gshared ~"extern(C)
 	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_globs;
 	gchar* function(GtkSourceLanguage* language, gchar* styleId) c_gtk_source_language_get_style_name;
 	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_style_ids;
+	gchar* function(GtkSourceLanguage* language, gchar* styleId) c_gtk_source_language_get_style_fallback;
 
 	// gsv.SourceLanguageManager
 
@@ -891,6 +893,7 @@ alias c_gtk_source_language_get_mime_types  gtk_source_language_get_mime_types;
 alias c_gtk_source_language_get_globs  gtk_source_language_get_globs;
 alias c_gtk_source_language_get_style_name  gtk_source_language_get_style_name;
 alias c_gtk_source_language_get_style_ids  gtk_source_language_get_style_ids;
+alias c_gtk_source_language_get_style_fallback  gtk_source_language_get_style_fallback;
 
 // gsv.SourceLanguageManager
 

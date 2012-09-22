@@ -76,7 +76,7 @@ private import gtk.Window;
 /**
  * Description
  * This object can be used to show a calltip or help for the
- * .* current completion proposal.
+ * current completion proposal.
  */
 public class SourceCompletionInfo : Window
 {
@@ -130,6 +130,9 @@ public class SourceCompletionInfo : Window
 	
 	void delegate(SourceCompletionInfo)[] onBeforeShowListeners;
 	/**
+	 * This signal is emitted before any "show" management. You can connect
+	 * to this signal if you want to change some properties or position
+	 * before the real "show".
 	 */
 	void addOnBeforeShow(void delegate(SourceCompletionInfo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -146,7 +149,7 @@ public class SourceCompletionInfo : Window
 		}
 		onBeforeShowListeners ~= dlg;
 	}
-	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct, SourceCompletionInfo _sourceCompletionInfo)
+	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* infoStruct, SourceCompletionInfo _sourceCompletionInfo)
 	{
 		foreach ( void delegate(SourceCompletionInfo) dlg ; _sourceCompletionInfo.onBeforeShowListeners )
 		{
@@ -201,7 +204,7 @@ public class SourceCompletionInfo : Window
 	
 	/**
 	 * Get the current content widget.
-	 * Returns: The current content widget. [transfer none] Signal Details The "before-show" signal void user_function (GtkSourceCompletionInfo *sourcecompletioninfo, gpointer user_data) : Action
+	 * Returns: The current content widget. [transfer none] Signal Details The "before-show" signal void user_function (GtkSourceCompletionInfo *info, gpointer user_data) : Action This signal is emitted before any "show" management. You can connect to this signal if you want to change some properties or position before the real "show".
 	 */
 	public Widget getWidget()
 	{

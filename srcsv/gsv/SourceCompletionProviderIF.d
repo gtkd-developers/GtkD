@@ -150,8 +150,7 @@ public interface SourceCompletionProviderIF
 	public Widget gtkSourceCompletionProviderGetInfoWidget(SourceCompletionProposalIF proposal);
 	
 	/**
-	 * Update extra information shown in info for proposal. This should be
-	 * implemented if your provider sets a custom info widget for proposal.
+	 * Update extra information shown in info for proposal.
 	 * This function MUST be implemented when
 	 * gtk_source_completion_provider_get_info_widget is implemented.
 	 * Params:
@@ -165,10 +164,13 @@ public interface SourceCompletionProviderIF
 	 * implemented, the completion can use this information to position the
 	 * completion window accordingly when a proposal is selected in the completion
 	 * window.
+	 * When the proposal is activated, the default handler uses iter as the start
+	 * of the word to replace. See
+	 * gtk_source_completion_provider_activate_proposal() for more information.
 	 * Params:
 	 * proposal = a GtkSourceCompletionProposal.
 	 * context = a GtkSourceCompletionContext.
-	 * iter = a GtkTextIter. [out]
+	 * iter = a GtkTextIter.
 	 * Returns: TRUE if iter was set for proposal, FALSE otherwise.
 	 */
 	public int gtkSourceCompletionProviderGetStartIter(SourceCompletionContext context, SourceCompletionProposalIF proposal, TextIter iter);
@@ -176,7 +178,13 @@ public interface SourceCompletionProviderIF
 	/**
 	 * Activate proposal at iter. When this functions returns FALSE, the default
 	 * activation of proposal will take place which replaces the word at iter
-	 * with the label of proposal.
+	 * with the text of proposal (see gtk_source_completion_proposal_get_text()).
+	 * Here is how the default activation selects the boundaries of the word to
+	 * replace. The end of the word is iter. For the start of the word, it depends
+	 * on wheter a start iter is defined for proposal (see
+	 * gtk_source_completion_provider_get_start_iter()). If a start iter is defined,
+	 * the start of the word is the start iter. Else, the word (as long as possible)
+	 * will contain only alphanumerical and the "_" characters.
 	 * Params:
 	 * proposal = a GtkSourceCompletionProposal.
 	 * iter = a GtkTextIter.

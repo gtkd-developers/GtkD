@@ -225,4 +225,17 @@ public class SourceLanguage : ObjectG
 		// gchar ** gtk_source_language_get_style_ids (GtkSourceLanguage *language);
 		return Str.toStringArray(gtk_source_language_get_style_ids(gtkSourceLanguage));
 	}
+	
+	/**
+	 * Returns the ID of the style to use if the specified style_id
+	 * is not present in the current style scheme.
+	 * Params:
+	 * styleId = a style ID.
+	 * Returns: the ID of the style to use if the specified style_id is not present in the current style scheme or NULL if the style has no fallback defined. The returned string is owned by the language and must not be modified. Since 3.4
+	 */
+	public string getStyleFallback(string styleId)
+	{
+		// const gchar * gtk_source_language_get_style_fallback  (GtkSourceLanguage *language,  const gchar *style_id);
+		return Str.toString(gtk_source_language_get_style_fallback(gtkSourceLanguage, Str.toStringz(styleId)));
+	}
 }

@@ -202,6 +202,12 @@ public class SourceCompletion : ObjectG
 	/**
 	 * The ::move-cursor signal is a keybinding signal which gets emitted when
 	 * the user initiates a cursor movement.
+	 * The Up, Down,
+	 * PageUp, PageDown,
+	 * Home and End keys are bound to the
+	 * normal behavior expected by those keys. The PageDown
+	 * and PageUp keys use the page size defined by the
+	 * "proposal-page-size" property.
 	 * Applications should not connect to it, but may emit it with
 	 * g_signal_emit_by_name if they need to control the cursor
 	 * programmatically.
@@ -234,6 +240,14 @@ public class SourceCompletion : ObjectG
 	 * The ::move-page signal is a keybinding signal which gets emitted when
 	 * the user initiates a page movement (i.e. switches between provider
 	 * pages).
+	 * Control+Left
+	 * is for going to the previous provider.
+	 * Control+Right
+	 * is for going to the next provider.
+	 * Control+Home
+	 * is for displaying all the providers.
+	 * Control+End
+	 * is for going to the last provider.
 	 * Applications should not connect to it, but may emit it with
 	 * g_signal_emit_by_name if they need to control the page selection
 	 * programmatically.
@@ -436,10 +450,9 @@ public class SourceCompletion : ObjectG
 	}
 	
 	/**
-	 * Create a new GtkSourceCompletionContext for completion. The position at
-	 * which the completion using the new context will consider completion can
-	 * be provider by position. If position is NULL, the current cursor
-	 * position will be used.
+	 * Create a new GtkSourceCompletionContext for completion. The position where
+	 * the completion occurs can be specified by position. If position is NULL,
+	 * the current cursor position will be used.
 	 * Params:
 	 * position = a GtkTextIter, or NULL. [allow-none]
 	 * Returns: a new GtkSourceCompletionContext. The reference being returned is a 'floating' reference, so if you invoke gtk_source_completion_show with this context you don't need to unref it. [transfer full]
