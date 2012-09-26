@@ -671,6 +671,7 @@ private import gtk.ApplicationWindow;
 private import gtk.ActionableIF;
 private import gtk.ActionableT;
 
+/+
 private import gsv.SourceBuffer;
 private import gsv.SourceCompletion;
 private import gsv.SourceCompletionContext;
@@ -697,6 +698,7 @@ private import gsv.SourceStyleSchemeManager;
 private import gsv.SourceUndoManagerIF;
 private import gsv.SourceUndoManagerT;
 private import gsv.SourceUndoManager;
++/
 
 private import gda.Gda;
 private import gda.Blob;
