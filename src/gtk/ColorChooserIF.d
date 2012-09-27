@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_color_chooser_add_palette
  * omit signals:
  * imports:
  * 	- gdk.RGBA
@@ -156,28 +157,4 @@ public interface ColorChooserIF
 	 * Since 3.4
 	 */
 	public void setUseAlpha(int useAlpha);
-	
-	/**
-	 * Adds a palette to the color chooser. If orientation is horizontal,
-	 * the colors are grouped in rows, with colors_per_line colors
-	 * in each row. If horizontal is FALSE, the colors are grouped
-	 * in columns instead.
-	 * The default color palette of GtkColorChooserWidget has
-	 * 27 colors, organized in columns of 3 colors. The default gray
-	 * palette has 9 grays in a single row.
-	 * The layout of the color chooser widget works best when the
-	 * palettes have 9-10 columns.
-	 * Calling this function for the first time has the
-	 * side effect of removing the default color and gray palettes
-	 * from the color chooser.
-	 * If colors is NULL, removes all previously added palettes.
-	 * Params:
-	 * orientation = GTK_ORIENTATION_HORIZONTAL if the palette should
-	 * be displayed in rows, GTK_ORIENTATION_VERTICAL for columns
-	 * colorsPerLine = the number of colors to show in each row/column
-	 * nColors = the total number of elements in colors
-	 * colors = the colors of the palette, or NULL. [allow-none][array length=n_colors]
-	 * Since 3.4
-	 */
-	public void addPalette(GtkOrientation orientation, int colorsPerLine, int nColors, RGBA colors);
 }

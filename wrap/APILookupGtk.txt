@@ -59,6 +59,9 @@ else
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
+public struct GtkStylePropertiesPrivate{}
+public struct GtkCellRendererClassPrivate{}
+
 addTypedefs: end
 
 addAliases: start
@@ -6633,6 +6636,8 @@ template: TStruct
 prefix: gtk_color_chooser_
 import: gdk.RGBA
 structWrap: GdkRGBA* RGBA
+
+nocode: gtk_color_chooser_add_palette
 interfaceCode: start
 	/**
 	 * Adds a palette to the color chooser. If orientation is horizontal,
@@ -6691,7 +6696,7 @@ code: start
 	 */
 	public void addPalette(GtkOrientation orientation, int colorsPerLine, RGBA[] colors)
 	{
-		GdkRGBA[] cColors = new GdkRGBA[colors.length];
+		GdkRGBA*[] cColors = new GdkRGBA*[colors.length];
 
 		foreach( i, color; colors )
 		{
@@ -6699,7 +6704,7 @@ code: start
 		}
 
 		// void gtk_color_chooser_add_palette (GtkColorChooser *chooser,  GtkOrientation orientation,  gint colors_per_line,  gint n_colors,  GdkRGBA *colors);
-		gtk_color_chooser_add_palette(getColorChooserTStruct(), orientation, colorsPerLine, cast(int) colors.length, cColors.ptr);
+		gtk_color_chooser_add_palette(getColorChooserTStruct(), orientation, colorsPerLine, cast(int) colors.length, cColors[0]);
 	}
 code: end
 interface: ColorChooserIF
@@ -6717,8 +6722,8 @@ structWrap: GdkColor* Color
 structWrap: GdkRGBA* RGBA
 
 #imports for ColorChooser Interface.
-import: gio.ColorChooserIF
-import: gio.ColorChooserT
+import: gtk.ColorChooserIF
+import: gtk.ColorChooserT
 
 code: start
 	// add the ColorChooser capabilities
@@ -6733,8 +6738,8 @@ implements: ColorChooserIF
 prefix: gtk_color_chooser_widget_
 
 #imports for ColorChooser Interface.
-import: gio.ColorChooserIF
-import: gio.ColorChooserT
+import: gtk.ColorChooserIF
+import: gtk.ColorChooserT
 
 code: start
 	// add the ColorChooser capabilities
@@ -6747,10 +6752,11 @@ struct: GtkColorChooserDialog
 class: ColorChooserDialog
 implements: ColorChooserIF
 prefix: gtk_color_chooser_dialog_
+import: glib.Str
 
 #imports for ColorChooser Interface.
-import: gio.ColorChooserIF
-import: gio.ColorChooserT
+import: gtk.ColorChooserIF
+import: gtk.ColorChooserT
 
 code: start
 	// add the ColorChooser capabilities

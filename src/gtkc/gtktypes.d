@@ -51,6 +51,9 @@ else
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
+public struct GtkStylePropertiesPrivate{}
+public struct GtkCellRendererClassPrivate{}
+
 
 /**
  * typedef 	GdkRectangle	 GtkAllocation;

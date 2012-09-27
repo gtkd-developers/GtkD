@@ -47,8 +47,8 @@
  * 	- glib.Str
  * 	- gdk.Color
  * 	- gdk.RGBA
- * 	- gio.ColorChooserIF
- * 	- gio.ColorChooserT
+ * 	- gtk.ColorChooserIF
+ * 	- gtk.ColorChooserT
  * structWrap:
  * 	- GdkColor* -> Color
  * 	- GdkRGBA* -> RGBA
@@ -70,8 +70,8 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gdk.Color;
 private import gdk.RGBA;
-private import gio.ColorChooserIF;
-private import gio.ColorChooserT;
+private import gtk.ColorChooserIF;
+private import gtk.ColorChooserT;
 
 
 

@@ -44,8 +44,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gio.ColorChooserIF
- * 	- gio.ColorChooserT
+ * 	- gtk.ColorChooserIF
+ * 	- gtk.ColorChooserT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -60,8 +60,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 
 
-private import gio.ColorChooserIF;
-private import gio.ColorChooserT;
+private import gtk.ColorChooserIF;
+private import gtk.ColorChooserT;
 
 
 

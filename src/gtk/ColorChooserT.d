@@ -42,6 +42,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_color_chooser_add_palette
  * omit signals:
  * imports:
  * 	- gdk.RGBA
@@ -116,7 +117,7 @@ public template ColorChooserT(TStruct)
 	 */
 	public void addPalette(GtkOrientation orientation, int colorsPerLine, RGBA[] colors)
 	{
-		GdkRGBA[] cColors = new GdkRGBA[colors.length];
+		GdkRGBA*[] cColors = new GdkRGBA*[colors.length];
 		
 		foreach( i, color; colors )
 		{
@@ -124,7 +125,7 @@ public template ColorChooserT(TStruct)
 		}
 		
 		// void gtk_color_chooser_add_palette (GtkColorChooser *chooser,  GtkOrientation orientation,  gint colors_per_line,  gint n_colors,  GdkRGBA *colors);
-		gtk_color_chooser_add_palette(getColorChooserTStruct(), orientation, colorsPerLine, cast(int) colors.length, cColors.ptr);
+		gtk_color_chooser_add_palette(getColorChooserTStruct(), orientation, colorsPerLine, cast(int) colors.length, cColors[0]);
 	}
 	
 	/**
@@ -213,33 +214,5 @@ public template ColorChooserT(TStruct)
 	{
 		// void gtk_color_chooser_set_use_alpha (GtkColorChooser *chooser,  gboolean use_alpha);
 		gtk_color_chooser_set_use_alpha(getColorChooserTStruct(), useAlpha);
-	}
-	
-	/**
-	 * Adds a palette to the color chooser. If orientation is horizontal,
-	 * the colors are grouped in rows, with colors_per_line colors
-	 * in each row. If horizontal is FALSE, the colors are grouped
-	 * in columns instead.
-	 * The default color palette of GtkColorChooserWidget has
-	 * 27 colors, organized in columns of 3 colors. The default gray
-	 * palette has 9 grays in a single row.
-	 * The layout of the color chooser widget works best when the
-	 * palettes have 9-10 columns.
-	 * Calling this function for the first time has the
-	 * side effect of removing the default color and gray palettes
-	 * from the color chooser.
-	 * If colors is NULL, removes all previously added palettes.
-	 * Params:
-	 * orientation = GTK_ORIENTATION_HORIZONTAL if the palette should
-	 * be displayed in rows, GTK_ORIENTATION_VERTICAL for columns
-	 * colorsPerLine = the number of colors to show in each row/column
-	 * nColors = the total number of elements in colors
-	 * colors = the colors of the palette, or NULL. [allow-none][array length=n_colors]
-	 * Since 3.4
-	 */
-	public void addPalette(GtkOrientation orientation, int colorsPerLine, int nColors, RGBA colors)
-	{
-		// void gtk_color_chooser_add_palette (GtkColorChooser *chooser,  GtkOrientation orientation,  gint colors_per_line,  gint n_colors,  GdkRGBA *colors);
-		gtk_color_chooser_add_palette(getColorChooserTStruct(), orientation, colorsPerLine, nColors, (colors is null) ? null : colors.getRGBAStruct());
 	}
 }
