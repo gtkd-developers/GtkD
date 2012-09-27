@@ -2109,8 +2109,8 @@ structWrap: GdkWindow* Window
 structWrap: GtkWidget* Widget
 
 #imports for Actionable Interface.
-import: gio.ActionableIF
-import: gio.ActionableT
+import: gtk.ActionableIF
+import: gtk.ActionableT
 
 # imports for Activatable Interface
 import: gtk.ActivatableT
@@ -2509,8 +2509,8 @@ implements: ActivatableIF
 prefix: gtk_switch_
 
 #imports for Actionable Interface.
-import: gio.ActionableIF
-import: gio.ActionableT
+import: gtk.ActionableIF
+import: gtk.ActionableT
 
 # imports for Activatable Interface
 import: gtk.ActivatableT
@@ -6171,8 +6171,8 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 
 #imports for Actionable Interface.
-import: gio.ActionableIF
-import: gio.ActionableT
+import: gtk.ActionableIF
+import: gtk.ActionableT
 
 code: start
 	/** An arbitrary string to be used by the application */

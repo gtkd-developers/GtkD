@@ -46,8 +46,8 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
- * 	- gio.ActionableIF
- * 	- gio.ActionableT
+ * 	- gtk.ActionableIF
+ * 	- gtk.ActionableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -67,8 +67,8 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
-private import gio.ActionableIF;
-private import gio.ActionableT;
+private import gtk.ActionableIF;
+private import gtk.ActionableT;
 
 
 

@@ -52,8 +52,8 @@
  * 	- gtk.Image
  * 	- gdk.Window
  * 	- gtk.Widget
- * 	- gio.ActionableIF
- * 	- gio.ActionableT
+ * 	- gtk.ActionableIF
+ * 	- gtk.ActionableT
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
@@ -78,8 +78,8 @@ private import glib.Str;
 private import gtk.Image;
 private import gdk.Window;
 private import gtk.Widget;
-private import gio.ActionableIF;
-private import gio.ActionableT;
+private import gtk.ActionableIF;
+private import gtk.ActionableT;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
 

@@ -45,8 +45,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gio.ActionableIF
- * 	- gio.ActionableT
+ * 	- gtk.ActionableIF
+ * 	- gtk.ActionableT
  * 	- gtk.ActivatableT
  * 	- gtk.ActivatableIF
  * structWrap:
@@ -65,8 +65,8 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gio.ActionableIF;
-private import gio.ActionableT;
+private import gtk.ActionableIF;
+private import gtk.ActionableT;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
 
