@@ -1834,7 +1834,8 @@ public class GtkDClass
 					collectedStructs ~= "version(Win64)";
 					collectedStructs ~= "{";
 				}
-				if ( std.string.indexOf(elem, "#if __SIZEOF_INT__ == __SIZEOF_POINTER__") > -1 )
+				if ( std.string.indexOf(elem, "#if __SIZEOF_INT__ == __SIZEOF_POINTER__") > -1  ||
+				     std.string.indexOf(elem, "#if (defined(__SIZEOF_INT__) defined(__SIZEOF_POINTER__)) (__SIZEOF_INT__ == __SIZEOF_POINTER__)") > -1 )
 				{
 					collectedStructs ~= "static if (int.sizeof == ptrdiff_t.sizeof)";
 					collectedStructs ~= "{";

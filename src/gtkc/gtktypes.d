@@ -3267,9 +3267,11 @@ public struct GtkTextAppearance
 	//uint insideSelection : 1;
 	//uint isText : 1;
 	GdkRGBA *rgba[2];
-	/+* unusable, just for ABI compat +/
-	uint padding[2];
-}
+	static if (int.sizeof == ptrdiff_t.sizeof)
+	{
+		/+* unusable, just for ABI compat +/
+		uint padding[2];
+	}
 }
 
 
