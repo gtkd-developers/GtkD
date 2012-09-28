@@ -1,0 +1,12 @@
+# gtkD brf file
+-lib
+-nolink
+-I../src
+-I../srcgl
+-I../srcsv
+-I../srcgda
+-I../srcgstreamer
+-allobj
+-cleanup
+-Xphobos
+gtkD.d
