@@ -45,9 +45,7 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gthread.StaticRecMutex
  * structWrap:
- * 	- GStaticRecMutex* -> StaticRecMutex
  * 	- GstTask* -> Task
  * module aliases:
  * local aliases:
@@ -63,7 +61,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import gthread.StaticRecMutex;
 
 
 
@@ -224,10 +221,10 @@ public class Task : ObjectGst
 	 * Params:
 	 * mutex = The GMutex to use
 	 */
-	public void setLock(StaticRecMutex mutex)
+	public void setLock(void* mutex)
 	{
 		// void gst_task_set_lock (GstTask *task,  GStaticRecMutex *mutex);
-		gst_task_set_lock(gstTask, (mutex is null) ? null : mutex.getStaticRecMutexStruct());
+		gst_task_set_lock(gstTask, mutex);
 	}
 	
 	/**

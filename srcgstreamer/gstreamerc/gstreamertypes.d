@@ -46,6 +46,8 @@ public alias GST_SECOND SECOND;
 //#define GST_CLOCK_TIME_NONE		((GstClockTime) -1)
 const long GST_CLOCK_TIME_NONE = -1L;
 public alias GST_CLOCK_TIME_NONE CLOCK_TIME_NONE;
+
+alias void GStaticRecMutex;
 alias void* GstXmlNodePtr;
 alias void* xmlNodePtr;
 
@@ -1442,7 +1444,7 @@ public struct GstObjectClass {
 	gchar   *path_string_separator;
 	GObject	*signal_object;
 	
-	GStaticRecMutex *lock;
+	void* lock;
 	
 	/* signals */
 	extern(C) void function(GstObject* object, GstObject* parent) parent_set;
@@ -1512,7 +1514,7 @@ public struct GstObject
  */
 public struct GstElement
 {
-	GStaticRecMutex *stateLock;
+	void *stateLock;
 	/+* element state +/
 	GCond *stateCond;
 	uint stateCookie;
@@ -1811,7 +1813,7 @@ public struct GstPad
 	GstPadTemplate *padtemplate;
 	GstPadDirection direction;
 	/+* streaming recLock +/
-	GStaticRecMutex *streamRecLock;
+	void *streamRecLock;
 	GstTask *task;
 	GMutex *prerollLock;
 	GCond *prerollCond;
@@ -2035,7 +2037,7 @@ public struct GstTask
 {
 	GstTaskState state;
 	GCond *cond;
-	GStaticRecMutex *lock;
+	void *lock;
 	GstTaskFunction func;
 	void* data;
 	int running;

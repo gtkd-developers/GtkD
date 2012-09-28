@@ -49,6 +49,7 @@ alias: GST_SEEK_TYPE_SET SET
 alias: GST_SEEK_TYPE_END END
 alias: GST_BIN_FLAG_LAST FLAG_LAST
 
+alias: GStaticRecMutex void
 alias: GstXmlNodePtr void*
 alias: xmlNodePtr void*
 
@@ -59,6 +60,7 @@ public import gtkc.gobjecttypes;
 addTypedefs: end
 
 addAliases: start
+	alias void GStaticRecMutex;
 	alias void* GstXmlNodePtr;
 	alias void* xmlNodePtr;
 addAliases: end
@@ -148,7 +150,7 @@ addStructs: start
 		gchar   *path_string_separator;
 		GObject	*signal_object;
 
-		GStaticRecMutex *lock;
+		void* lock;
 
 		/* signals */
 		extern(C) void function(GstObject* object, GstObject* parent) parent_set;
@@ -1608,9 +1610,7 @@ class: Task
 prefix: gst_task_
 prefix: gst_
 import: glib.Str
-import: gthread.StaticRecMutex
 structWrap: GstTask* Task
-structWrap: GStaticRecMutex* StaticRecMutex
 outFile: Task
 
 file: gstreamer-GstTypeFind.html

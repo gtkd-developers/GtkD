@@ -44,6 +44,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gtk.ColorChooserIF
  * 	- gtk.ColorChooserT
  * structWrap:
@@ -58,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+
 
 private import glib.Str;
 private import gtk.ColorChooserIF;
