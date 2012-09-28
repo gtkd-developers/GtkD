@@ -46,7 +46,6 @@ public alias GST_SECOND SECOND;
 //#define GST_CLOCK_TIME_NONE		((GstClockTime) -1)
 const long GST_CLOCK_TIME_NONE = -1L;
 public alias GST_CLOCK_TIME_NONE CLOCK_TIME_NONE;
-
 alias void GStaticRecMutex;
 alias void* GstXmlNodePtr;
 alias void* xmlNodePtr;
