@@ -234,4 +234,4 @@ lookup: APILookupGstInterfaces.txt
 lookup: APILookupGStreamer.txt
 
 #Hack to put the build text in the correct place.
-srcdir: src
+srcdir: .
