@@ -2,7 +2,7 @@
 -lib
 -nolink
 -I../src
-# -I../srcgl
+-I../srcgl
 -I../srcsv
 -I../srcgda
 -I../srcgstreamer
