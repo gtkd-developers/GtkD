@@ -2129,9 +2129,6 @@ nocode: gtk_button_new_from_stock
 code: start
 	private static IconSize currentIconSize = IconSize.BUTTON;
 
-	/** An arbitrary string to be used by the application */
-	private string action;
-
 	// add the Actionable capabilities
 	mixin ActionableT!(GtkButton);
 
@@ -2148,18 +2145,6 @@ code: start
 	public static IconSize getIconSize()
 	{
 		return currentIconSize;
-	}
-
-	/** */
-	public void setActionName(string action)
-	{
-		this.action = action;
-	}
-
-	/** */
-	public string getActionName()
-	{
-		return action;
 	}
 
 	/**
@@ -3061,6 +3046,9 @@ structWrap: GtkTextIter* TextIter
 structWrap: GtkTextMark* TextMark
 structWrap: GtkWidget* Widget
 structWrap: PangoTabArray* PgTabArray
+
+nocode: gtk_text_view_get_hadjustment
+nocode: gtk_text_view_get_vadjustment
 
 #imports for Scrollable Interface.
 import: gtk.ScrollableIF
@@ -4261,6 +4249,11 @@ structWrap: GtkTreeModel* TreeModelIF
 structWrap: GtkTreePath* TreePath
 structWrap: GtkTreeSelection* TreeSelection
 structWrap: GtkTreeViewColumn* TreeViewColumn
+
+nocode: gtk_tree_view_get_hadjustment
+nocode: gtk_tree_view_set_hadjustment
+nocode: gtk_tree_view_get_vadjustment
+nocode: gtk_tree_view_set_vadjustment
 
 #imports for Scrollable Interface.
 import: gtk.ScrollableT
@@ -6102,6 +6095,9 @@ structWrap: GtkToolItem* ToolItem
 structWrap: GtkToolItemGroup* ToolItemGroup
 structWrap: GtkWidget* Widget
 
+nocode: gtk_tool_palette_get_hadjustment
+nocode: gtk_tool_palette_get_vadjustment
+
 alias: getStyle getToolbarStyle
 
 #imports for Orientable Interface.
@@ -6178,23 +6174,8 @@ import: gtk.ActionableIF
 import: gtk.ActionableT
 
 code: start
-	/** An arbitrary string to be used by the application */
-	private string action;
-
 	// add the Actionable capabilities
 	mixin ActionableT!(GtkToolButton);
-
-	/** */
-	public void setActionName(string action)
-	{
-		this.action = action;
-	}
-	
-	/** */
-	public string getActionName()
-	{
-		return action;
-	}
 
 	/** */
 	public this (StockID stockID)
@@ -6720,6 +6701,11 @@ import: gdk.Color
 import: gdk.RGBA
 structWrap: GdkColor* Color
 structWrap: GdkRGBA* RGBA
+
+nocode: gtk_color_button_set_rgba
+nocode: gtk_color_button_get_rgba
+nocode: gtk_color_button_set_use_alpha
+nocode: gtk_color_button_get_use_alpha
 
 #imports for ColorChooser Interface.
 import: gtk.ColorChooserIF
@@ -7425,6 +7411,11 @@ structWrap: GdkWindow* Window
 structWrap: GtkAdjustment* Adjustment
 structWrap: GtkWidget* Widget
 
+nocode: gtk_layout_get_hadjustment
+nocode: gtk_layout_get_vadjustment
+nocode: gtk_layout_set_hadjustment
+nocode: gtk_layout_set_vadjustment
+
 #imports for Scrollable Interface.
 import: gtk.ScrollableIF
 import: gtk.ScrollableT
@@ -8078,6 +8069,11 @@ import: gdk.Window
 import: gtk.Adjustment
 structWrap: GdkWindow* Window
 structWrap: GtkAdjustment* Adjustment
+
+nocode: gtk_viewport_get_hadjustment
+nocode: gtk_viewport_get_vadjustment
+nocode: gtk_viewport_set_hadjustment
+nocode: gtk_viewport_set_vadjustment
 
 #imports for Scrollable Interface.
 import: gtk.ScrollableT

@@ -2555,6 +2555,8 @@ structWrap: GVariant* Variant
 structWrap: GDBusConnection* DBusConnection
 structWrap: GDBusInterfaceInfo* DBusInterfaceInfo
 
+nocode: g_dbus_interface_skeleton_get_info
+
 # imports for DBusInterface Interface
 import: gio.DBusInterfaceT
 import: gio.DBusInterfaceIF
