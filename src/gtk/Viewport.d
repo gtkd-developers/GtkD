@@ -159,66 +159,6 @@ public class Viewport : Bin, ScrollableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_viewport_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
-	 * Returns the horizontal adjustment of the viewport.
-	 * Returns: the horizontal adjustment of viewport. [transfer none]
-	 */
-	public Adjustment getHadjustment()
-	{
-		// GtkAdjustment * gtk_viewport_get_hadjustment (GtkViewport *viewport);
-		auto p = gtk_viewport_get_hadjustment(gtkViewport);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_viewport_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
-	 * Returns the vertical adjustment of the viewport.
-	 * Returns: the vertical adjustment of viewport. [transfer none]
-	 */
-	public Adjustment getVadjustment()
-	{
-		// GtkAdjustment * gtk_viewport_get_vadjustment (GtkViewport *viewport);
-		auto p = gtk_viewport_get_vadjustment(gtkViewport);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_viewport_set_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
-	 * Sets the horizontal adjustment of the viewport.
-	 * Params:
-	 * adjustment = a GtkAdjustment. [allow-none]
-	 */
-	public void setHadjustment(Adjustment adjustment)
-	{
-		// void gtk_viewport_set_hadjustment (GtkViewport *viewport,  GtkAdjustment *adjustment);
-		gtk_viewport_set_hadjustment(gtkViewport, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_viewport_set_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
-	 * Sets the vertical adjustment of the viewport.
-	 * Params:
-	 * adjustment = a GtkAdjustment. [allow-none]
-	 */
-	public void setVadjustment(Adjustment adjustment)
-	{
-		// void gtk_viewport_set_vadjustment (GtkViewport *viewport,  GtkAdjustment *adjustment);
-		gtk_viewport_set_vadjustment(gtkViewport, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
-	}
-	
-	/**
 	 * Sets the shadow type of the viewport.
 	 * Params:
 	 * type = the new shadow type.
