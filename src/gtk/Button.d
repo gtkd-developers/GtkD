@@ -165,18 +165,6 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		return currentIconSize;
 	}
 	
-	/** */
-	public void setActionName(string action)
-	{
-		this.action = action;
-	}
-	
-	/** */
-	public string getActionName()
-	{
-		return action;
-	}
-	
 	/**
 	 * Creates a new GtkButton containing a label.
 	 * If characters in label are preceded by an underscore, they are underlined.

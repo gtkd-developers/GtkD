@@ -287,61 +287,6 @@ public class ColorButton : Button, ColorChooserIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_color_button_set_rgba has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_set_rgba() instead.
-	 * Sets the current color to be rgba.
-	 * Params:
-	 * rgba = a GdkRGBA to set the current color with
-	 * Since 3.0
-	 */
-	public void setRgba(RGBA rgba)
-	{
-		// void gtk_color_button_set_rgba (GtkColorButton *button,  const GdkRGBA *rgba);
-		gtk_color_button_set_rgba(gtkColorButton, (rgba is null) ? null : rgba.getRGBAStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_color_button_get_rgba has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_get_rgba() instead.
-	 * Sets rgba to be the current color in the GtkColorButton widget.
-	 * Params:
-	 * rgba = a GdkRGBA to fill in with the current color. [out]
-	 * Since 3.0
-	 */
-	public void getRgba(RGBA rgba)
-	{
-		// void gtk_color_button_get_rgba (GtkColorButton *button,  GdkRGBA *rgba);
-		gtk_color_button_get_rgba(gtkColorButton, (rgba is null) ? null : rgba.getRGBAStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_color_button_set_use_alpha has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_set_use_alpha() instead.
-	 * Sets whether or not the color button should use the alpha channel.
-	 * Since 2.4
-	 * Params:
-	 * useAlpha = TRUE if color button should use alpha channel, FALSE if not
-	 */
-	public void setUseAlpha(int useAlpha)
-	{
-		// void gtk_color_button_set_use_alpha (GtkColorButton *button,  gboolean use_alpha);
-		gtk_color_button_set_use_alpha(gtkColorButton, useAlpha);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_color_button_get_use_alpha has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_get_use_alpha() instead.
-	 * Does the color selection dialog use the alpha channel ?
-	 * Since 2.4
-	 * Returns: TRUE if the color sample uses alpha channel, FALSE if not
-	 */
-	public int getUseAlpha()
-	{
-		// gboolean gtk_color_button_get_use_alpha (GtkColorButton *button);
-		return gtk_color_button_get_use_alpha(gtkColorButton);
-	}
-	
-	/**
 	 * Sets the title for the color selection dialog.
 	 * Since 2.4
 	 * Params:

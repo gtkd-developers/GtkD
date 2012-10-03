@@ -221,23 +221,6 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	}
 	
 	/**
-	 * Gets D-Bus introspection information for the D-Bus interface
-	 * implemented by interface_.
-	 * Since 2.30
-	 * Returns: A GDBusInterfaceInfo (never NULL). Do not free. [transfer none]
-	 */
-	public DBusInterfaceInfo getInfo()
-	{
-		// GDBusInterfaceInfo * g_dbus_interface_skeleton_get_info (GDBusInterfaceSkeleton *interface_);
-		auto p = g_dbus_interface_skeleton_get_info(gDBusInterfaceSkeleton);
-		if(p is null)
-		{
-			return null;
-		}
-		return new DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
-	}
-	
-	/**
 	 * Gets the interface vtable for the D-Bus interface implemented by
 	 * interface_. The returned function pointers should expect interface_
 	 * itself to be passed as user_data.

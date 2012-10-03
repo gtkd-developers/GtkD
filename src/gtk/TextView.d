@@ -743,42 +743,6 @@ public class TextView : Container, ScrollableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_text_view_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
-	 * Gets the horizontal-scrolling GtkAdjustment.
-	 * Since 2.22
-	 * Returns: pointer to the horizontal GtkAdjustment. [transfer none]
-	 */
-	public Adjustment getHadjustment()
-	{
-		// GtkAdjustment * gtk_text_view_get_hadjustment (GtkTextView *text_view);
-		auto p = gtk_text_view_get_hadjustment(gtkTextView);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_text_view_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
-	 * Gets the vertical-scrolling GtkAdjustment.
-	 * Since 2.22
-	 * Returns: pointer to the vertical GtkAdjustment. [transfer none]
-	 */
-	public Adjustment getVadjustment()
-	{
-		// GtkAdjustment * gtk_text_view_get_vadjustment (GtkTextView *text_view);
-		auto p = gtk_text_view_get_vadjustment(gtkTextView);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
-	
-	/**
 	 * Scrolls text_view so that mark is on the screen in the position
 	 * indicated by xalign and yalign. An alignment of 0.0 indicates
 	 * left or top, 1.0 indicates right or bottom, 0.5 means center.
