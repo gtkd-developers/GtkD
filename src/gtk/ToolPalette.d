@@ -460,39 +460,4 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 		gtk_tool_palette_set_drag_source(gtkToolPalette, targets);
 	}
 	
-	/**
-	 * Warning
-	 * gtk_tool_palette_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
-	 * Gets the horizontal adjustment of the tool palette.
-	 * Since 2.20
-	 * Returns: the horizontal adjustment of palette. [transfer none]
-	 */
-	public Adjustment getHadjustment()
-	{
-		// GtkAdjustment * gtk_tool_palette_get_hadjustment (GtkToolPalette *palette);
-		auto p = gtk_tool_palette_get_hadjustment(gtkToolPalette);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_tool_palette_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
-	 * Gets the vertical adjustment of the tool palette.
-	 * Since 2.20
-	 * Returns: the vertical adjustment of palette. [transfer none]
-	 */
-	public Adjustment getVadjustment()
-	{
-		// GtkAdjustment * gtk_tool_palette_get_vadjustment (GtkToolPalette *palette);
-		auto p = gtk_tool_palette_get_vadjustment(gtkToolPalette);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
 }

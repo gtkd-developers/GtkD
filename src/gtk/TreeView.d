@@ -863,66 +863,6 @@ public class TreeView : Container, ScrollableIF
 	}
 	
 	/**
-	 * Warning
-	 * gtk_tree_view_get_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
-	 * Gets the GtkAdjustment currently being used for the horizontal aspect.
-	 * Returns: A GtkAdjustment object, or NULL if none is currently being used. [transfer none]
-	 */
-	public Adjustment getHadjustment()
-	{
-		// GtkAdjustment * gtk_tree_view_get_hadjustment (GtkTreeView *tree_view);
-		auto p = gtk_tree_view_get_hadjustment(gtkTreeView);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_tree_view_set_hadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
-	 * Sets the GtkAdjustment for the current horizontal aspect.
-	 * Params:
-	 * adjustment = The GtkAdjustment to set, or NULL. [allow-none]
-	 */
-	public void setHadjustment(Adjustment adjustment)
-	{
-		// void gtk_tree_view_set_hadjustment (GtkTreeView *tree_view,  GtkAdjustment *adjustment);
-		gtk_tree_view_set_hadjustment(gtkTreeView, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_tree_view_get_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
-	 * Gets the GtkAdjustment currently being used for the vertical aspect.
-	 * Returns: A GtkAdjustment object, or NULL if none is currently being used. [transfer none]
-	 */
-	public Adjustment getVadjustment()
-	{
-		// GtkAdjustment * gtk_tree_view_get_vadjustment (GtkTreeView *tree_view);
-		auto p = gtk_tree_view_get_vadjustment(gtkTreeView);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Adjustment(cast(GtkAdjustment*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_tree_view_set_vadjustment has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
-	 * Sets the GtkAdjustment for the current vertical aspect.
-	 * Params:
-	 * adjustment = The GtkAdjustment to set, or NULL. [allow-none]
-	 */
-	public void setVadjustment(Adjustment adjustment)
-	{
-		// void gtk_tree_view_set_vadjustment (GtkTreeView *tree_view,  GtkAdjustment *adjustment);
-		gtk_tree_view_set_vadjustment(gtkTreeView, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
-	}
-	
-	/**
 	 * Returns TRUE if the headers on the tree_view are visible.
 	 * Returns: Whether the headers are visible or not.
 	 */

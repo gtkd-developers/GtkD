@@ -147,18 +147,6 @@ public class ToolButton : ToolItem, ActionableIF
 	mixin ActionableT!(GtkToolButton);
 	
 	/** */
-	public void setActionName(string action)
-	{
-		this.action = action;
-	}
-	
-	/** */
-	public string getActionName()
-	{
-		return action;
-	}
-	
-	/** */
 	public this (StockID stockID)
 	{
 		this(StockDesc[stockID]);
