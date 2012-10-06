@@ -83,6 +83,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_type_add_interface_check, \"g_type_add_interface_check\", LIBRARY.GOBJECT);
 	Linker.link(g_type_remove_interface_check, \"g_type_remove_interface_check\", LIBRARY.GOBJECT);
 	Linker.link(g_type_value_table_peek, \"g_type_value_table_peek\", LIBRARY.GOBJECT);
+	Linker.link(g_type_ensure, \"g_type_ensure\", LIBRARY.GOBJECT);
 
 	// gobject.TypePlugin
 
@@ -137,10 +138,14 @@ mixin( _shared ~ "static this()
 	Linker.link(g_object_set_data, \"g_object_set_data\", LIBRARY.GOBJECT);
 	Linker.link(g_object_set_data_full, \"g_object_set_data_full\", LIBRARY.GOBJECT);
 	Linker.link(g_object_steal_data, \"g_object_steal_data\", LIBRARY.GOBJECT);
+	Linker.link(g_object_dup_data, \"g_object_dup_data\", LIBRARY.GOBJECT);
+	Linker.link(g_object_replace_data, \"g_object_replace_data\", LIBRARY.GOBJECT);
 	Linker.link(g_object_get_qdata, \"g_object_get_qdata\", LIBRARY.GOBJECT);
 	Linker.link(g_object_set_qdata, \"g_object_set_qdata\", LIBRARY.GOBJECT);
 	Linker.link(g_object_set_qdata_full, \"g_object_set_qdata_full\", LIBRARY.GOBJECT);
 	Linker.link(g_object_steal_qdata, \"g_object_steal_qdata\", LIBRARY.GOBJECT);
+	Linker.link(g_object_dup_qdata, \"g_object_dup_qdata\", LIBRARY.GOBJECT);
+	Linker.link(g_object_replace_qdata, \"g_object_replace_qdata\", LIBRARY.GOBJECT);
 	Linker.link(g_object_set_property, \"g_object_set_property\", LIBRARY.GOBJECT);
 	Linker.link(g_object_get_property, \"g_object_get_property\", LIBRARY.GOBJECT);
 	Linker.link(g_object_new_valist, \"g_object_new_valist\", LIBRARY.GOBJECT);
@@ -311,6 +316,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_signal_new, \"g_signal_new\", LIBRARY.GOBJECT);
 	Linker.link(g_signal_newv, \"g_signal_newv\", LIBRARY.GOBJECT);
 	Linker.link(g_signal_new_valist, \"g_signal_new_valist\", LIBRARY.GOBJECT);
+	Linker.link(g_signal_set_va_marshaller, \"g_signal_set_va_marshaller\", LIBRARY.GOBJECT);
 	Linker.link(g_signal_query, \"g_signal_query\", LIBRARY.GOBJECT);
 	Linker.link(g_signal_lookup, \"g_signal_lookup\", LIBRARY.GOBJECT);
 	Linker.link(g_signal_name, \"g_signal_name\", LIBRARY.GOBJECT);
@@ -395,6 +401,29 @@ mixin( _shared ~ "static this()
 	Linker.link(g_cclosure_marshal_VOID__UINT_POINTER, \"g_cclosure_marshal_VOID__UINT_POINTER\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_BOOLEAN__FLAGS, \"g_cclosure_marshal_BOOLEAN__FLAGS\", LIBRARY.GOBJECT);
 	Linker.link(g_cclosure_marshal_BOOLEAN__BOXED_BOXED, \"g_cclosure_marshal_BOOLEAN__BOXED_BOXED\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_generic_va, \"g_cclosure_marshal_generic_va\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__VOIDv, \"g_cclosure_marshal_VOID__VOIDv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__BOOLEANv, \"g_cclosure_marshal_VOID__BOOLEANv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__CHARv, \"g_cclosure_marshal_VOID__CHARv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__UCHARv, \"g_cclosure_marshal_VOID__UCHARv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__INTv, \"g_cclosure_marshal_VOID__INTv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__UINTv, \"g_cclosure_marshal_VOID__UINTv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__LONGv, \"g_cclosure_marshal_VOID__LONGv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__ULONGv, \"g_cclosure_marshal_VOID__ULONGv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__ENUMv, \"g_cclosure_marshal_VOID__ENUMv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__FLAGSv, \"g_cclosure_marshal_VOID__FLAGSv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__FLOATv, \"g_cclosure_marshal_VOID__FLOATv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__DOUBLEv, \"g_cclosure_marshal_VOID__DOUBLEv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__STRINGv, \"g_cclosure_marshal_VOID__STRINGv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__PARAMv, \"g_cclosure_marshal_VOID__PARAMv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__BOXEDv, \"g_cclosure_marshal_VOID__BOXEDv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__POINTERv, \"g_cclosure_marshal_VOID__POINTERv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__OBJECTv, \"g_cclosure_marshal_VOID__OBJECTv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__VARIANTv, \"g_cclosure_marshal_VOID__VARIANTv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_STRING__OBJECT_POINTERv, \"g_cclosure_marshal_STRING__OBJECT_POINTERv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_VOID__UINT_POINTERv, \"g_cclosure_marshal_VOID__UINT_POINTERv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_BOOLEAN__FLAGSv, \"g_cclosure_marshal_BOOLEAN__FLAGSv\", LIBRARY.GOBJECT);
+	Linker.link(g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv, \"g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv\", LIBRARY.GOBJECT);
 
 	// gobject.ValueArray
 
@@ -471,6 +500,7 @@ mixin( gshared ~"extern(C)
 	void function(void* checkData, GTypeInterfaceCheckFunc checkFunc) c_g_type_add_interface_check;
 	void function(void* checkData, GTypeInterfaceCheckFunc checkFunc) c_g_type_remove_interface_check;
 	GTypeValueTable* function(GType type) c_g_type_value_table_peek;
+	void function(GType type) c_g_type_ensure;
 
 	// gobject.TypePlugin
 
@@ -525,10 +555,14 @@ mixin( gshared ~"extern(C)
 	void function(GObject* object, gchar* key, void* data) c_g_object_set_data;
 	void function(GObject* object, gchar* key, void* data, GDestroyNotify destroy) c_g_object_set_data_full;
 	gpointer function(GObject* object, gchar* key) c_g_object_steal_data;
+	gpointer function(GObject* object, gchar* key, GDuplicateFunc dupFunc, void* userData) c_g_object_dup_data;
+	gboolean function(GObject* object, gchar* key, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy) c_g_object_replace_data;
 	gpointer function(GObject* object, GQuark quark) c_g_object_get_qdata;
 	void function(GObject* object, GQuark quark, void* data) c_g_object_set_qdata;
 	void function(GObject* object, GQuark quark, void* data, GDestroyNotify destroy) c_g_object_set_qdata_full;
 	gpointer function(GObject* object, GQuark quark) c_g_object_steal_qdata;
+	gpointer function(GObject* object, GQuark quark, GDuplicateFunc dupFunc, void* userData) c_g_object_dup_qdata;
+	gboolean function(GObject* object, GQuark quark, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy) c_g_object_replace_qdata;
 	void function(GObject* object, gchar* propertyName, GValue* value) c_g_object_set_property;
 	void function(GObject* object, gchar* propertyName, GValue* value) c_g_object_get_property;
 	GObject* function(GType objectType, gchar* firstPropertyName, va_list varArgs) c_g_object_new_valist;
@@ -699,6 +733,7 @@ mixin( gshared ~"extern(C)
 	guint function(gchar* signalName, GType itype, GSignalFlags signalFlags, guint classOffset, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, guint nParams, ... ) c_g_signal_new;
 	guint function(gchar* signalName, GType itype, GSignalFlags signalFlags, GClosure* classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, guint nParams, GType* paramTypes) c_g_signal_newv;
 	guint function(gchar* signalName, GType itype, GSignalFlags signalFlags, GClosure* classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, guint nParams, va_list args) c_g_signal_new_valist;
+	void function(guint signalId, GType instanceType, GSignalCVaMarshaller vaMarshaller) c_g_signal_set_va_marshaller;
 	void function(guint signalId, GSignalQuery* query) c_g_signal_query;
 	guint function(gchar* name, GType itype) c_g_signal_lookup;
 	gchar* function(guint signalId) c_g_signal_name;
@@ -783,6 +818,29 @@ mixin( gshared ~"extern(C)
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__UINT_POINTER;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_BOOLEAN__FLAGS;
 	void function(GClosure* closure, GValue* returnValue, guint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_BOOLEAN__BOXED_BOXED;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list argsList, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_generic_va;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__VOIDv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__BOOLEANv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__CHARv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UCHARv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__INTv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UINTv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__LONGv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__ULONGv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__ENUMv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__FLAGSv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__FLOATv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__DOUBLEv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__STRINGv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__PARAMv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__BOXEDv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__POINTERv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__OBJECTv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__VARIANTv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_STRING__OBJECT_POINTERv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UINT_POINTERv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_BOOLEAN__FLAGSv;
+	void function(GClosure* closure, GValue* returnValue, void* instanc, va_list args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv;
 
 	// gobject.ValueArray
 
@@ -857,6 +915,7 @@ alias c_g_type_class_unref_uncached  g_type_class_unref_uncached;
 alias c_g_type_add_interface_check  g_type_add_interface_check;
 alias c_g_type_remove_interface_check  g_type_remove_interface_check;
 alias c_g_type_value_table_peek  g_type_value_table_peek;
+alias c_g_type_ensure  g_type_ensure;
 
 // gobject.TypePlugin
 
@@ -911,10 +970,14 @@ alias c_g_object_get_data  g_object_get_data;
 alias c_g_object_set_data  g_object_set_data;
 alias c_g_object_set_data_full  g_object_set_data_full;
 alias c_g_object_steal_data  g_object_steal_data;
+alias c_g_object_dup_data  g_object_dup_data;
+alias c_g_object_replace_data  g_object_replace_data;
 alias c_g_object_get_qdata  g_object_get_qdata;
 alias c_g_object_set_qdata  g_object_set_qdata;
 alias c_g_object_set_qdata_full  g_object_set_qdata_full;
 alias c_g_object_steal_qdata  g_object_steal_qdata;
+alias c_g_object_dup_qdata  g_object_dup_qdata;
+alias c_g_object_replace_qdata  g_object_replace_qdata;
 alias c_g_object_set_property  g_object_set_property;
 alias c_g_object_get_property  g_object_get_property;
 alias c_g_object_new_valist  g_object_new_valist;
@@ -1085,6 +1148,7 @@ alias c_g_param_spec_pool_list_owned  g_param_spec_pool_list_owned;
 alias c_g_signal_new  g_signal_new;
 alias c_g_signal_newv  g_signal_newv;
 alias c_g_signal_new_valist  g_signal_new_valist;
+alias c_g_signal_set_va_marshaller  g_signal_set_va_marshaller;
 alias c_g_signal_query  g_signal_query;
 alias c_g_signal_lookup  g_signal_lookup;
 alias c_g_signal_name  g_signal_name;
@@ -1169,6 +1233,29 @@ alias c_g_cclosure_marshal_STRING__OBJECT_POINTER  g_cclosure_marshal_STRING__OB
 alias c_g_cclosure_marshal_VOID__UINT_POINTER  g_cclosure_marshal_VOID__UINT_POINTER;
 alias c_g_cclosure_marshal_BOOLEAN__FLAGS  g_cclosure_marshal_BOOLEAN__FLAGS;
 alias c_g_cclosure_marshal_BOOLEAN__BOXED_BOXED  g_cclosure_marshal_BOOLEAN__BOXED_BOXED;
+alias c_g_cclosure_marshal_generic_va  g_cclosure_marshal_generic_va;
+alias c_g_cclosure_marshal_VOID__VOIDv  g_cclosure_marshal_VOID__VOIDv;
+alias c_g_cclosure_marshal_VOID__BOOLEANv  g_cclosure_marshal_VOID__BOOLEANv;
+alias c_g_cclosure_marshal_VOID__CHARv  g_cclosure_marshal_VOID__CHARv;
+alias c_g_cclosure_marshal_VOID__UCHARv  g_cclosure_marshal_VOID__UCHARv;
+alias c_g_cclosure_marshal_VOID__INTv  g_cclosure_marshal_VOID__INTv;
+alias c_g_cclosure_marshal_VOID__UINTv  g_cclosure_marshal_VOID__UINTv;
+alias c_g_cclosure_marshal_VOID__LONGv  g_cclosure_marshal_VOID__LONGv;
+alias c_g_cclosure_marshal_VOID__ULONGv  g_cclosure_marshal_VOID__ULONGv;
+alias c_g_cclosure_marshal_VOID__ENUMv  g_cclosure_marshal_VOID__ENUMv;
+alias c_g_cclosure_marshal_VOID__FLAGSv  g_cclosure_marshal_VOID__FLAGSv;
+alias c_g_cclosure_marshal_VOID__FLOATv  g_cclosure_marshal_VOID__FLOATv;
+alias c_g_cclosure_marshal_VOID__DOUBLEv  g_cclosure_marshal_VOID__DOUBLEv;
+alias c_g_cclosure_marshal_VOID__STRINGv  g_cclosure_marshal_VOID__STRINGv;
+alias c_g_cclosure_marshal_VOID__PARAMv  g_cclosure_marshal_VOID__PARAMv;
+alias c_g_cclosure_marshal_VOID__BOXEDv  g_cclosure_marshal_VOID__BOXEDv;
+alias c_g_cclosure_marshal_VOID__POINTERv  g_cclosure_marshal_VOID__POINTERv;
+alias c_g_cclosure_marshal_VOID__OBJECTv  g_cclosure_marshal_VOID__OBJECTv;
+alias c_g_cclosure_marshal_VOID__VARIANTv  g_cclosure_marshal_VOID__VARIANTv;
+alias c_g_cclosure_marshal_STRING__OBJECT_POINTERv  g_cclosure_marshal_STRING__OBJECT_POINTERv;
+alias c_g_cclosure_marshal_VOID__UINT_POINTERv  g_cclosure_marshal_VOID__UINT_POINTERv;
+alias c_g_cclosure_marshal_BOOLEAN__FLAGSv  g_cclosure_marshal_BOOLEAN__FLAGSv;
+alias c_g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv  g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv;
 
 // gobject.ValueArray
 

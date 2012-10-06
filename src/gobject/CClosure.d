@@ -613,4 +613,188 @@ public class CClosure
 		// void g_cclosure_marshal_BOOLEAN__BOXED_BOXED  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
 		g_cclosure_marshal_BOOLEAN__BOXED_BOXED((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), cast(int) paramValues.length, paramValues.ptr, invocationHint, marshalData);
 	}
+	
+	/**
+	 */
+	public static void marshalGenericVa(Closure closure, Value returnValue, void* instanc, void* argsList, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_generic_va (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args_list,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_generic_va((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, argsList, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__VOIDv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__VOIDv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__VOIDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__BOOLEANv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__BOOLEANv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__BOOLEANv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__CHARv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__CHARv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__CHARv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__UCHARv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__UCHARv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__UCHARv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__INTv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__INTv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__INTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__UINTv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__UINTv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__UINTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__LONGv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__LONGv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__LONGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__ULONGv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__ULONGv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__ULONGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__ENUMv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__ENUMv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__ENUMv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__FLAGSv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__FLAGSv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__FLAGSv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__FLOATv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__FLOATv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__FLOATv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__DOUBLEv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__DOUBLEv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__DOUBLEv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__STRINGv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__STRINGv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__STRINGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__PARAMv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__PARAMv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__PARAMv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__BOXEDv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__BOXEDv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__BOXEDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__POINTERv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__POINTERv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__OBJECTv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__OBJECTv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__OBJECTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__VARIANTv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__VARIANTv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__VARIANTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalSTRING__OBJECT_POINTERv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_STRING__OBJECT_POINTERv  (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_STRING__OBJECT_POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalVOID__UINT_POINTERv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_VOID__UINT_POINTERv  (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_VOID__UINT_POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
+	
+	/**
+	 */
+	public static void marshalBOOLEAN__FLAGSv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes)
+	{
+		// void g_cclosure_marshal_BOOLEAN__FLAGSv (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_BOOLEAN__FLAGSv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, nParams, paramTypes);
+	}
+	
+	/**
+	 */
+	public static void marshalBOOLEAN__BOXED_BOXEDv(Closure closure, Value returnValue, void* instanc, void* args, void* marshalData, GType[] paramTypes)
+	{
+		// void g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv  (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+		g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), instanc, args, marshalData, cast(int) paramTypes.length, paramTypes.ptr);
+	}
 }

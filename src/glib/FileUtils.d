@@ -48,11 +48,9 @@
  * imports:
  * 	- std.c.stdio
  * 	- glib.Str
- * 	- glib.Bytes
  * 	- glib.ErrorG
  * 	- glib.GException
  * structWrap:
- * 	- GBytes* -> Bytes
  * module aliases:
  * local aliases:
  * overrides:
@@ -67,7 +65,6 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
-private import glib.Bytes;
 private import glib.ErrorG;
 private import glib.GException;
 

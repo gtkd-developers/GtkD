@@ -806,7 +806,9 @@ public class ObjectG
 	 * Increases the freeze count on object. If the freeze count is
 	 * non-zero, the emission of "notify" signals on object is
 	 * stopped. The signals are queued until the freeze count is decreased
-	 * to zero.
+	 * to zero. Duplicate notifications are squashed so that at most one
+	 * "notify" signal is emitted for each property modified while the
+	 * object is frozen.
 	 * This is necessary for accessors that modify multiple properties to prevent
 	 * premature notification while the object is still being modified.
 	 */
@@ -819,7 +821,9 @@ public class ObjectG
 	/**
 	 * Reverts the effect of a previous call to
 	 * g_object_freeze_notify(). The freeze count is decreased on object
-	 * and when it reaches zero, all queued "notify" signals are emitted.
+	 * and when it reaches zero, queued "notify" signals are emitted.
+	 * Duplicate notifications for each property are squashed so that at most one
+	 * "notify" signal is emitted for each property.
 	 * It is an error to call this function when the freeze count is zero.
 	 */
 	public void thawNotify()
@@ -882,6 +886,59 @@ public class ObjectG
 	{
 		// gpointer g_object_steal_data (GObject *object,  const gchar *key);
 		return g_object_steal_data(gObject, Str.toStringz(key));
+	}
+	
+	/**
+	 * This is a variant of g_object_get_data() which returns
+	 * a 'duplicate' of the value. dup_func defines the
+	 * meaning of 'duplicate' in this context, it could e.g.
+	 * take a reference on a ref-counted object.
+	 * If the key is not set on the object then dup_func
+	 * will be called with a NULL argument.
+	 * Note that dup_func is called while user data of object
+	 * is locked.
+	 * This function can be useful to avoid races when multiple
+	 * threads are using object data on the same key on the same
+	 * object.
+	 * Since 2.34
+	 * Params:
+	 * key = a string, naming the user data pointer
+	 * dupFunc = function to dup the value. [allow-none]
+	 * userData = passed as user_data to dup_func. [allow-none]
+	 * Returns: the result of calling dup_func on the value associated with key on object, or NULL if not set. If dup_func is NULL, the value is returned unmodified.
+	 */
+	public void* dupData(string key, GDuplicateFunc dupFunc, void* userData)
+	{
+		// gpointer g_object_dup_data (GObject *object,  const gchar *key,  GDuplicateFunc dup_func,  gpointer user_data);
+		return g_object_dup_data(gObject, Str.toStringz(key), dupFunc, userData);
+	}
+	
+	/**
+	 * Compares the user data for the key key on object with
+	 * oldval, and if they are the same, replaces oldval with
+	 * newval.
+	 * This is like a typical atomic compare-and-exchange
+	 * operation, for user data on an object.
+	 * If the previous value was replaced then ownership of the
+	 * old value (oldval) is passed to the caller, including
+	 * the registred destroy notify for it (passed out in old_destroy).
+	 * Its up to the caller to free this as he wishes, which may
+	 * or may not include using old_destroy as sometimes replacement
+	 * should not destroy the object in the normal way.
+	 * Return: TRUE if the existing value for key was replaced
+	 *  by newval, FALSE otherwise.
+	 * Since 2.34
+	 * Params:
+	 * key = a string, naming the user data pointer
+	 * oldval = the old value to compare against. [allow-none]
+	 * newval = the new value. [allow-none]
+	 * destroy = a destroy notify for the new value. [allow-none]
+	 * oldDestroy = destroy notify for the existing value. [allow-none]
+	 */
+	public int replaceData(string key, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy)
+	{
+		// gboolean g_object_replace_data (GObject *object,  const gchar *key,  gpointer oldval,  gpointer newval,  GDestroyNotify destroy,  GDestroyNotify *old_destroy);
+		return g_object_replace_data(gObject, Str.toStringz(key), oldval, newval, destroy, oldDestroy);
 	}
 	
 	/**
@@ -948,6 +1005,59 @@ public class ObjectG
 	{
 		// gpointer g_object_steal_qdata (GObject *object,  GQuark quark);
 		return g_object_steal_qdata(gObject, quark);
+	}
+	
+	/**
+	 * This is a variant of g_object_get_qdata() which returns
+	 * a 'duplicate' of the value. dup_func defines the
+	 * meaning of 'duplicate' in this context, it could e.g.
+	 * take a reference on a ref-counted object.
+	 * If the quark is not set on the object then dup_func
+	 * will be called with a NULL argument.
+	 * Note that dup_func is called while user data of object
+	 * is locked.
+	 * This function can be useful to avoid races when multiple
+	 * threads are using object data on the same key on the same
+	 * object.
+	 * Since 2.34
+	 * Params:
+	 * quark = a GQuark, naming the user data pointer
+	 * dupFunc = function to dup the value. [allow-none]
+	 * userData = passed as user_data to dup_func. [allow-none]
+	 * Returns: the result of calling dup_func on the value associated with quark on object, or NULL if not set. If dup_func is NULL, the value is returned unmodified.
+	 */
+	public void* dupQdata(GQuark quark, GDuplicateFunc dupFunc, void* userData)
+	{
+		// gpointer g_object_dup_qdata (GObject *object,  GQuark quark,  GDuplicateFunc dup_func,  gpointer user_data);
+		return g_object_dup_qdata(gObject, quark, dupFunc, userData);
+	}
+	
+	/**
+	 * Compares the user data for the key quark on object with
+	 * oldval, and if they are the same, replaces oldval with
+	 * newval.
+	 * This is like a typical atomic compare-and-exchange
+	 * operation, for user data on an object.
+	 * If the previous value was replaced then ownership of the
+	 * old value (oldval) is passed to the caller, including
+	 * the registred destroy notify for it (passed out in old_destroy).
+	 * Its up to the caller to free this as he wishes, which may
+	 * or may not include using old_destroy as sometimes replacement
+	 * should not destroy the object in the normal way.
+	 * Return: TRUE if the existing value for quark was replaced
+	 *  by newval, FALSE otherwise.
+	 * Since 2.34
+	 * Params:
+	 * quark = a GQuark, naming the user data pointer
+	 * oldval = the old value to compare against. [allow-none]
+	 * newval = the new value. [allow-none]
+	 * destroy = a destroy notify for the new value. [allow-none]
+	 * oldDestroy = destroy notify for the existing value. [allow-none]
+	 */
+	public int replaceQdata(GQuark quark, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy)
+	{
+		// gboolean g_object_replace_qdata (GObject *object,  GQuark quark,  gpointer oldval,  gpointer newval,  GDestroyNotify destroy,  GDestroyNotify *old_destroy);
+		return g_object_replace_qdata(gObject, quark, oldval, newval, destroy, oldDestroy);
 	}
 	
 	/**

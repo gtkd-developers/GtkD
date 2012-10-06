@@ -82,6 +82,14 @@ public alias char* gchararray;
  * signal system.
  */
 public alias GClosureMarshal GSignalCMarshaller;
+
+/**
+ * typedef GVaClosureMarshal		 GSignalCVaMarshaller;
+ * This is the signature of va_list marshaller functions, an optional
+ * marshaller that can be used in some situations to avoid
+ * marshalling the signal argument into GValues.
+ */
+public alias GVaClosureMarshal GSignalCVaMarshaller;
 /**
  * The GTypeDebugFlags enumeration values can be passed to
  * g_type_init_with_debug_flags() to trigger debugging messages during runtime.
@@ -522,8 +530,6 @@ public struct GInterfaceInfo
 
 
 /**
- * The GTypeValueTable provides the functions required by the GValue implementation,
- * to serve as a container for values of a type.
  * value_init ()
  * Default initialize values contents by poking values
  * directly into the value->data array. The data array of
@@ -600,38 +606,8 @@ public struct GInterfaceInfo
  * $(DDOC_COMMENT example)
  * The reference count for valid objects is always incremented,
  * regardless of collect_flags. For invalid objects, the example
- * returns a newly allocated string without altering value.
- * Upon success, collect_value() needs to return NULL. If, however,
- * an error condition occurred, collect_value() may spew an
- * error by returning a newly allocated non-NULL string, giving
- * a suitable description of the error condition.
- * The calling code makes no assumptions about the value
- * contents being valid upon error returns, value
- * is simply thrown away without further freeing. As such, it is
- * a good idea to not allocate GValue contents, prior to returning
- * an error, however, collect_values() is not obliged to return
- * a correctly setup value for error returns, simply because
- * any non-NULL return is considered a fatal condition so further
- * program behaviour is undefined.
  * const gchar *lcopy_format;
- * Format description of the arguments to collect for lcopy_value,
- * analogous to collect_format. Usually, lcopy_format string consists
- * only of 'p's to provide lcopy_value() with pointers to storage locations.
  * lcopy_value ()
- * This function is responsible for storing the value contents into
- * arguments passed through a variable argument list which got
- * collected into collect_values according to lcopy_format.
- * n_collect_values equals the string length of lcopy_format,
- * and collect_flags may contain G_VALUE_NOCOPY_CONTENTS.
- * In contrast to collect_value(), lcopy_value() is obliged to
- * always properly support G_VALUE_NOCOPY_CONTENTS.
- * Similar to collect_value() the function may prematurely abort
- * by returning a newly allocated string describing an error condition.
- * To complete the string example:
- * $(DDOC_COMMENT example)
- * And an illustrative version of lcopy_value() for
- * reference-counted types:
- * $(DDOC_COMMENT example)
  */
 public struct GTypeValueTable
 {
@@ -2366,7 +2342,7 @@ public struct GBinding{}
 // #define G_VALUE_TYPE(value)		(((GValue*) (value))->g_type)
 
 /*
- * Gets the the type name of value.
+ * Gets the type name of value.
  * value :
  * A GValue structure.
  * Returns :
@@ -3655,6 +3631,11 @@ public alias extern(C) void  function () GCallback;
  */
 // void (*GClosureMarshal) (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
 public alias extern(C) void  function (GClosure*, GValue*, uint, GValue*, void*, void*) GClosureMarshal;
+
+/*
+ */
+// void (*GVaClosureMarshal) (GClosure *closure,  GValue *return_value,  gpointer instance,  va_list args,  gpointer marshal_data,  int n_params,  GType *param_types);
+public alias extern(C) void  function (GClosure*, GValue*, void*, void*, void*, int, GType*) GVaClosureMarshal;
 
 /*
  * The type used for the various notification callbacks which can be registered

@@ -190,6 +190,14 @@ public class Signals
 	}
 	
 	/**
+	 */
+	public static void setVaMarshaller(uint signalId, GType instanceType, GSignalCVaMarshaller vaMarshaller)
+	{
+		// void g_signal_set_va_marshaller (guint signal_id,  GType instance_type,  GSignalCVaMarshaller va_marshaller);
+		g_signal_set_va_marshaller(signalId, instanceType, vaMarshaller);
+	}
+	
+	/**
 	 * Queries the signal system for in-depth information about a
 	 * specific signal. This function will fill in a user-provided
 	 * structure to hold signal-specific information. If an invalid

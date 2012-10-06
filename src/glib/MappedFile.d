@@ -44,9 +44,11 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.Bytes
  * 	- glib.ErrorG
  * 	- glib.GException
  * structWrap:
+ * 	- GBytes* -> Bytes
  * 	- GMappedFile* -> MappedFile
  * module aliases:
  * local aliases:
@@ -62,6 +64,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import glib.Bytes;
 private import glib.ErrorG;
 private import glib.GException;
 
@@ -274,9 +277,14 @@ public class MappedFile
 	 * Since 2.34
 	 * Returns: A newly allocated GBytes referencing data from file. [transfer full]
 	 */
-	public GBytes* getBytes()
+	public Bytes getBytes()
 	{
 		// GBytes * g_mapped_file_get_bytes (GMappedFile *file);
-		return g_mapped_file_get_bytes(gMappedFile);
+		auto p = g_mapped_file_get_bytes(gMappedFile);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Bytes(cast(GBytes*) p);
 	}
 }

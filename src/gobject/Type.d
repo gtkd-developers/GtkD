@@ -136,7 +136,9 @@ public class Type
 	 * to initialize the type system and assorted other code portions
 	 * (such as the various fundamental type implementations or the signal
 	 * system).
-	 * This function is idempotent.
+	 * This function is idempotent: If you call it multiple times, all but
+	 * the first calls will be silently ignored.
+	 * There is no way to undo the effect of g_type_init().
 	 * Since version 2.24 this also initializes the thread system
 	 */
 	public static void init()
@@ -889,5 +891,27 @@ public class Type
 	{
 		// GTypeValueTable * g_type_value_table_peek (GType type);
 		return g_type_value_table_peek(type);
+	}
+	
+	/**
+	 * Ensures that the indicated type has been registered with the
+	 * type system, and its _class_init() method has been run.
+	 * In theory, simply calling the type's _get_type() method (or using
+	 * the corresponding macro) is supposed take care of this. However,
+	 * _get_type() methods are often marked G_GNUC_CONST for performance
+	 * reasons, even though this is technically incorrect (since
+	 * G_GNUC_CONST requires that the function not have side effects,
+	 * which _get_type() methods do on the first call). As a result, if
+	 * you write a bare call to a _get_type() macro, it may get optimized
+	 * out by the compiler. Using g_type_ensure() guarantees that the
+	 * type's _get_type() method is called.
+	 * Since 2.34
+	 * Params:
+	 * type = a GType.
+	 */
+	public static void ensure(GType type)
+	{
+		// void g_type_ensure (GType type);
+		g_type_ensure(type);
 	}
 }

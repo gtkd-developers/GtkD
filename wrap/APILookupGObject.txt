@@ -682,6 +682,29 @@ array: g_cclosure_marshal_STRING__OBJECT_POINTER param_values n_param_values
 array: g_cclosure_marshal_VOID__UINT_POINTER param_values n_param_values
 array: g_cclosure_marshal_BOOLEAN__FLAGS param_values n_param_values
 array: g_cclosure_marshal_BOOLEAN__BOXED_BOXED param_values n_param_values
+array: g_cclosure_marshal_generic_va param_types n_params
+array: g_cclosure_marshal_VOID__VOIDv param_types n_params
+array: g_cclosure_marshal_VOID__BOOLEANv param_types n_params
+array: g_cclosure_marshal_VOID__CHARv param_types n_params
+array: g_cclosure_marshal_VOID__UCHARv param_types n_params
+array: g_cclosure_marshal_VOID__INTv param_types n_params
+array: g_cclosure_marshal_VOID__UINTv param_types n_params
+array: g_cclosure_marshal_VOID__LONGv param_types n_params
+array: g_cclosure_marshal_VOID__ULONGv param_types n_params
+array: g_cclosure_marshal_VOID__ENUMv param_types n_params
+array: g_cclosure_marshal_VOID__FLAGSv param_types n_params
+array: g_cclosure_marshal_VOID__FLOATv param_types n_params
+array: g_cclosure_marshal_VOID__DOUBLEv param_types n_params
+array: g_cclosure_marshal_VOID__STRINGv param_types n_params
+array: g_cclosure_marshal_VOID__PARAMv param_types n_params
+array: g_cclosure_marshal_VOID__BOXEDv param_types n_params
+array: g_cclosure_marshal_VOID__POINTERv param_types n_params
+array: g_cclosure_marshal_VOID__OBJECTv param_types n_params
+array: g_cclosure_marshal_VOID__VARIANTv param_types n_params
+array: g_cclosure_marshal_STRING__OBJECT_POINTERv param_types n_params
+array: g_cclosure_marshal_VOID__UINT_POINTERv param_types n_params
+array: g_cclosure_marshal_BOOLEAN__FLAGSv () param_types n_params
+array: g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv param_types n_params
 outFile: CClosure
 
 file: gobject-Value-arrays.html
