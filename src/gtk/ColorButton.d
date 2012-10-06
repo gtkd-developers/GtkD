@@ -42,6 +42,10 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_color_button_set_rgba
+ * 	- gtk_color_button_get_rgba
+ * 	- gtk_color_button_set_use_alpha
+ * 	- gtk_color_button_get_use_alpha
  * omit signals:
  * imports:
  * 	- glib.Str

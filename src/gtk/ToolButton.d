@@ -140,9 +140,6 @@ public class ToolButton : ToolItem, ActionableIF
 		gtkToolButton = cast(GtkToolButton*)obj;
 	}
 	
-	/** An arbitrary string to be used by the application */
-	private string action;
-	
 	// add the Actionable capabilities
 	mixin ActionableT!(GtkToolButton);
 	

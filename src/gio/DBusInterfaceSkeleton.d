@@ -42,6 +42,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_dbus_interface_skeleton_get_info
  * omit signals:
  * imports:
  * 	- glib.Str

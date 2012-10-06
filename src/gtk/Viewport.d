@@ -42,6 +42,10 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_viewport_get_hadjustment
+ * 	- gtk_viewport_get_vadjustment
+ * 	- gtk_viewport_set_hadjustment
+ * 	- gtk_viewport_set_vadjustment
  * omit signals:
  * imports:
  * 	- gdk.Window

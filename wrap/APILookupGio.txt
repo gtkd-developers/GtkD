@@ -3311,6 +3311,11 @@ import: glib.Variant
 import: gio.MenuModel
 structWrap: GVariant* Variant
 structWrap: GMenuModel* MenuModel
+
+#Use setSection or setSubmenu
+nocode: g_menu_item_new_section
+nocode: g_menu_item_new_submenu
+
 outFile: MenuItem
 
 #file: gio-GMenuModel-exporter.html

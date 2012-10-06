@@ -144,9 +144,6 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	
 	private static IconSize currentIconSize = IconSize.BUTTON;
 	
-	/** An arbitrary string to be used by the application */
-	private string action;
-	
 	// add the Actionable capabilities
 	mixin ActionableT!(GtkButton);
 	

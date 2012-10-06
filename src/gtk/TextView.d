@@ -43,6 +43,8 @@
  * omit prefixes:
  * 	- gtk_text_child_anchor_
  * omit code:
+ * 	- gtk_text_view_get_hadjustment
+ * 	- gtk_text_view_get_vadjustment
  * omit signals:
  * imports:
  * 	- glib.Str

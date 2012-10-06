@@ -43,6 +43,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_tool_palette_get_hadjustment
+ * 	- gtk_tool_palette_get_vadjustment
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -459,5 +461,4 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 		// void gtk_tool_palette_set_drag_source (GtkToolPalette *palette,  GtkToolPaletteDragTargets targets);
 		gtk_tool_palette_set_drag_source(gtkToolPalette, targets);
 	}
-	
 }

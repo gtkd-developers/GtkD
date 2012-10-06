@@ -41,6 +41,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_symbolic_color_new_shade
+ * 	- gtk_symbolic_color_new_alpha
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -129,6 +131,40 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Creates a symbolic color defined as a shade of another color.
+	 * A factor > 1.0 would resolve to a brighter or more transparent color,
+	 * while < 1.0 would resolve to a darker or more opaque color.
+	 *
+	 * Params:
+	 *     color    = another GtkSymbolicColor.
+	 *     factor   = shading factor to apply to color.
+	 *     useAlpha = if true change the relative alpha value of the color,
+	 *                otherwise change the shade.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (SymbolicColor color, double factor, bool useAlpha = true)
+	{
+		GtkSymbolicColor* p
+		
+		if ( useAlpha )
+		{
+			p = gtk_symbolic_color_new_alpha((color is null) ? null : color.getSymbolicColorStruct(), factor);
+		}
+		else
+		{
+			p = gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor);
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor)");
+		}
+		
+		this(cast(GtkSymbolicColor*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -163,27 +199,6 @@ public class SymbolicColor
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_symbolic_color_new_name(Str.toStringz(name))");
-		}
-		this(cast(GtkSymbolicColor*) p);
-	}
-	
-	/**
-	 * Creates a symbolic color defined as a shade of
-	 * another color. A factor > 1.0 would resolve to
-	 * a brighter color, while < 1.0 would resolve to
-	 * a darker color.
-	 * Params:
-	 * color = another GtkSymbolicColor
-	 * factor = shading factor to apply to color
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (SymbolicColor color, double factor)
-	{
-		// GtkSymbolicColor * gtk_symbolic_color_new_shade (GtkSymbolicColor *color,  gdouble factor);
-		auto p = gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor)");
 		}
 		this(cast(GtkSymbolicColor*) p);
 	}

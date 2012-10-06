@@ -42,6 +42,10 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_tree_view_get_hadjustment
+ * 	- gtk_tree_view_set_hadjustment
+ * 	- gtk_tree_view_get_vadjustment
+ * 	- gtk_tree_view_set_vadjustment
  * omit signals:
  * imports:
  * 	- cairo.Surface

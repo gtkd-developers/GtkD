@@ -41,6 +41,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_menu_item_new_section
+ * 	- g_menu_item_new_submenu
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -134,41 +136,6 @@ public class MenuItem
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_menu_item_new(Str.toStringz(label), Str.toStringz(detailedAction))");
-		}
-		this(cast(GMenuItem*) p);
-	}
-	
-	/**
-	 * Creates a new GMenuItem representing a section.
-	 * This is a convenience API around g_menu_item_new() and
-	 * g_menu_item_set_section().
-	 * The effect of having one menu appear as a section of another is
-	 * exactly as it sounds: the items from section become a direct part of
-	 * the menu that menu_item is added to.
-	 * Visual separation is typically displayed between two non-empty
-	 * sections. If label is non-NULL then it will be encorporated into
-	 * this visual indication. This allows for labeled subsections of a
-	 * menu.
-	 * As a simple example, consider a typical "Edit" menu from a simple
-	 * program. It probably contains an "Undo" and "Redo" item, followed by
-	 * a separator, followed by "Cut", "Copy" and "Paste".
-	 * This would be accomplished by creating three GMenu instances. The
-	 * first would be populated with the "Undo" and "Redo" items, and the
-	 * second with the "Cut", "Copy" and "Paste" items. The first and
-	 * second menus would then be added as submenus of the third. In XML
-	 * Since 2.32
-	 * Params:
-	 * label = the section label, or NULL. [allow-none]
-	 * section = a GMenuModel with the items of the section
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string label, MenuModel section)
-	{
-		// GMenuItem * g_menu_item_new_section (const gchar *label,  GMenuModel *section);
-		auto p = g_menu_item_new_section(Str.toStringz(label), (section is null) ? null : section.getMenuModelStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_menu_item_new_section(Str.toStringz(label), (section is null) ? null : section.getMenuModelStruct())");
 		}
 		this(cast(GMenuItem*) p);
 	}
