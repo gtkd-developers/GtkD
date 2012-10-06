@@ -407,13 +407,38 @@ public class ListG
 	 * Note
 	 * Note that this is a "shallow" copy. If the list elements
 	 * consist of pointers to data, the pointers are copied but
-	 * the actual data is not.
+	 * the actual data is not. See g_list_copy_deep() if you need
+	 * to copy the data as well.
 	 * Returns: a copy of list
 	 */
 	public ListG copy()
 	{
 		// GList * g_list_copy (GList *list);
 		auto p = g_list_copy(gList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Makes a full (deep) copy of a GList.
+	 * In contrast with g_list_copy(), this function uses func to make a copy of
+	 * each list element, in addition to copying the list container itself.
+	 * func, as a GCopyFunc, takes two arguments, the data to be copied and a user
+	 * pointer. It's safe to pass NULL as user_data, if the copy function takes only
+	 * one argument.
+	 * Since 2.34
+	 * Params:
+	 * func = a copy function used to copy every element in the list
+	 * userData = user data passed to the copy function func, or NULL
+	 * Returns: a full copy of list, use g_list_free_full to free it
+	 */
+	public ListG copyDeep(GCopyFunc func, void* userData)
+	{
+		// GList * g_list_copy_deep (GList *list,  GCopyFunc func,  gpointer user_data);
+		auto p = g_list_copy_deep(gList, func, userData);
 		if(p is null)
 		{
 			return null;

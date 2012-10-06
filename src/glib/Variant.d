@@ -626,6 +626,29 @@ public class Variant
 	}
 	
 	/**
+	 * Checks if calling g_variant_get() with format_string on value would
+	 * be valid from a type-compatibility standpoint. format_string is
+	 * assumed to be a valid format string (from a syntactic standpoint).
+	 * If copy_only is TRUE then this function additionally checks that it
+	 * would be safe to call g_variant_unref() on value immediately after
+	 * the call to g_variant_get() without invalidating the result. This is
+	 * only possible if deep copies are made (ie: there are no pointers to
+	 * the data inside of the soon-to-be-freed GVariant instance). If this
+	 * check fails then a g_critical() is printed and FALSE is returned.
+	 * This function is meant to be used by functions that wish to provide
+	 * Since 2.34
+	 * Params:
+	 * formatString = a valid GVariant format string
+	 * copyOnly = TRUE to ensure the format string makes deep copies
+	 * Returns: TRUE if format_string is safe to use
+	 */
+	public int checkFormatString(string formatString, int copyOnly)
+	{
+		// gboolean g_variant_check_format_string (GVariant *value,  const gchar *format_string,  gboolean copy_only);
+		return g_variant_check_format_string(gVariant, Str.toStringz(formatString), copyOnly);
+	}
+	
+	/**
 	 * This function is intended to be used by libraries based on GVariant
 	 * that want to provide g_variant_get()-like functionality to their
 	 * users.

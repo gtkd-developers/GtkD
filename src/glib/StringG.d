@@ -49,7 +49,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.Bytes
  * structWrap:
+ * 	- GBytes* -> Bytes
  * 	- GString* -> StringG
  * module aliases:
  * local aliases:
@@ -69,18 +71,23 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import glib.Bytes;
 
 
 
 
 /**
  * Description
- * A GString is an object that handles the memory management
- * of a C string for you. You can think of it as similar to a
- * Java StringBuffer. In addition to the string itself, GString
- * stores the length of the string, so can be used for binary
- * data with embedded nul bytes. To access the C string managed
- * by the GString string, simply use string->str.
+ * A GString is an object that handles the memory management of a C
+ * string for you. The emphasis of GString is on text, typically
+ * UTF-8. Crucially, the "str" member of a GString is guaranteed to
+ * have a trailing nul character, and it is therefore always safe to
+ * call functions such as strchr() or g_strdup() on it.
+ * However, a GString can also hold arbitrary binary data, because it
+ * has a "len" member, which includes any possible embedded nul
+ * characters in the data. Conceptually then, GString is like a
+ * GByteArray with the addition of many convenience methods for text,
+ * and a guaranteed nul terminator.
  */
 public class StringG
 {
@@ -513,6 +520,28 @@ public class StringG
 	{
 		// gchar * g_string_free (GString *string,  gboolean free_segment);
 		return Str.toString(g_string_free(gString, freeSegment));
+	}
+	
+	/**
+	 * Transfers ownership of the contents of string to a newly allocated
+	 * GBytes. The GString structure itself is deallocated, and it is
+	 * therefore invalid to use string after invoking this function.
+	 * Note that while GString ensures that its buffer always has a
+	 * trailing nul character (not reflected in its "len"), the returned
+	 * GBytes does not include this extra nul; i.e. it has length exactly
+	 * equal to the "len" member.
+	 * Since 2.34
+	 * Returns: A newly allocated GBytes containing contents of string; string itself is freed
+	 */
+	public Bytes freeToBytes()
+	{
+		// GBytes * g_string_free_to_bytes (GString *string);
+		auto p = g_string_free_to_bytes(gString);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Bytes(cast(GBytes*) p);
 	}
 	
 	/**

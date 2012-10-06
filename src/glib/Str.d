@@ -1549,8 +1549,6 @@ public class Str
 	}
 	
 	/**
-	 * Returns a string describing the given signal, e.g. "Segmentation fault".
-	 * You should use this function in preference to strsignal(), because it
 	 * returns a string in UTF-8 encoding, and since not all platforms support
 	 * the strsignal() function.
 	 * Params:

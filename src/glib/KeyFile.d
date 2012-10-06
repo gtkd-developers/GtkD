@@ -272,7 +272,7 @@ public class KeyFile
 	 * If the object cannot be created then error is set to a GKeyFileError.
 	 * Since 2.6
 	 * Params:
-	 * data = key file loaded in memory. [length length]
+	 * data = key file loaded in memory
 	 * flags = flags from GKeyFileFlags
 	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 * Throws: GException on failure.

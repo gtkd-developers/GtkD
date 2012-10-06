@@ -145,7 +145,7 @@ public class StringCompletion
 	 * g_completion_add_items has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
 	 * Adds items to the GCompletion.
 	 * Params:
-	 * items = the list of items to add.
+	 * items = the list of items to add. [transfer none]
 	 */
 	public void addItems(ListG items)
 	{
@@ -156,9 +156,11 @@ public class StringCompletion
 	/**
 	 * Warning
 	 * g_completion_remove_items has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
-	 * Removes items from a GCompletion.
+	 * Removes items from a GCompletion. The items are not freed, so if the memory
+	 * was dynamically allocated, free items with g_list_free_full() after calling
+	 * this function.
 	 * Params:
-	 * items = the items to remove.
+	 * items = the items to remove. [transfer none]
 	 */
 	public void removeItems(ListG items)
 	{
@@ -169,7 +171,9 @@ public class StringCompletion
 	/**
 	 * Warning
 	 * g_completion_clear_items has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
-	 * Removes all items from the GCompletion.
+	 * Removes all items from the GCompletion. The items are not freed, so if the
+	 * memory was dynamically allocated, it should be freed after calling this
+	 * function.
 	 */
 	public void clearItems()
 	{
@@ -189,7 +193,7 @@ public class StringCompletion
 	 * common to all items that matched prefix, or NULL if
 	 * no items matched prefix. This string should be freed
 	 * when no longer needed.
-	 * Returns: the list of items whose strings begin with prefix. This should not be changed.
+	 * Returns: the list of items whose strings begin with prefix. This should not be changed. [transfer none]
 	 */
 	public ListG complete(string prefix, out string newPrefix)
 	{
@@ -257,7 +261,9 @@ public class StringCompletion
 	/**
 	 * Warning
 	 * g_completion_free has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
-	 * Frees all memory used by the GCompletion.
+	 * Frees all memory used by the GCompletion. The items are not freed, so if
+	 * the memory was dynamically allocated, it should be freed after calling this
+	 * function.
 	 */
 	public void free()
 	{

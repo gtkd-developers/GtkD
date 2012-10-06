@@ -46,9 +46,11 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.Bytes
  * 	- gtkc.Loader
  * 	- gtkc.paths
  * structWrap:
+ * 	- GBytes* -> Bytes
  * 	- GChecksum* -> Checksum
  * module aliases:
  * local aliases:
@@ -66,6 +68,7 @@ private import glib.ConstructionException;
 
 
 private import glib.Str;
+private import glib.Bytes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
@@ -288,5 +291,22 @@ public class Checksum
 	{
 		// gchar * g_compute_checksum_for_string (GChecksumType checksum_type,  const gchar *str,  gssize length);
 		return Str.toString(g_compute_checksum_for_string(checksumType, cast(char*)str.ptr, cast(int) str.length));
+	}
+	
+	/**
+	 * Computes the checksum for a binary data. This is a
+	 * convenience wrapper for g_checksum_new(), g_checksum_get_string()
+	 * and g_checksum_free().
+	 * The hexadecimal string returned will be in lower case.
+	 * Since 2.34
+	 * Params:
+	 * checksumType = a GChecksumType
+	 * data = binary blob to compute the digest of
+	 * Returns: the digest of the binary data as a string in hexadecimal. The returned string should be freed with g_free() when done using it.
+	 */
+	public static string computeChecksumForBytes(GChecksumType checksumType, Bytes data)
+	{
+		// gchar * g_compute_checksum_for_bytes (GChecksumType checksum_type,  GBytes *data);
+		return Str.toString(g_compute_checksum_for_bytes(checksumType, (data is null) ? null : data.getBytesStruct()));
 	}
 }

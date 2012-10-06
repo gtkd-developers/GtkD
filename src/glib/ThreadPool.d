@@ -302,6 +302,7 @@ public class ThreadPool
 	 * Sets the maximal number of unused threads to max_threads.
 	 * If max_threads is -1, no limit is imposed on the number
 	 * of unused threads.
+	 * The default value is 2.
 	 * Params:
 	 * maxThreads = maximal number of unused threads
 	 */
@@ -374,8 +375,7 @@ public class ThreadPool
 	 * g_thread_pool_stop_unused_threads() on a regular timeout,
 	 * except this is done on a per thread basis.
 	 * By setting interval to 0, idle threads will not be stopped.
-	 * This function makes use of g_async_queue_timed_pop() using
-	 * interval.
+	 * The default value is 15000 (15 seconds).
 	 * Since 2.10
 	 * Params:
 	 * interval = the maximum interval (in milliseconds)

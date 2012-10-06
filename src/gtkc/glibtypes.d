@@ -898,8 +898,8 @@ alias GUnicodeBreakType UnicodeBreakType;
  * Chakma. Since: 2.32
  * G_UNICODE_SCRIPT_MEROITIC_CURSIVE
  * Meroitic Cursive. Since: 2.32
- * G_UNICODE_SCRIPT_MEROITIC_HIEROGLYPHS, Meroitic Hieroglyphs. Since: 2.32
  * G_UNICODE_SCRIPT_MEROITIC_HIEROGLYPHS
+ * Meroitic Hieroglyphs. Since: 2.32
  * G_UNICODE_SCRIPT_MIAO
  * Miao. Since: 2.32
  * G_UNICODE_SCRIPT_SHARADA
@@ -1450,6 +1450,10 @@ alias GSpawnError SpawnError;
  *  vector to pass to the file. Normally g_spawn_async_with_pipes() uses
  *  argv[0] as the file to execute, and passes all of
  *  argv to the child.
+ * G_SPAWN_SEARCH_PATH_FROM_ENVP
+ * if argv[0] is not an abolute path,
+ *  it will be looked for in the PATH from the passed child
+ *  environment. Since: 2.34
  */
 public enum GSpawnFlags
 {
@@ -1461,7 +1465,8 @@ public enum GSpawnFlags
 	STDOUT_TO_DEV_NULL = 1 << 3,
 	STDERR_TO_DEV_NULL = 1 << 4,
 	CHILD_INHERITS_STDIN = 1 << 5,
-	FILE_AND_ARGV_ZERO = 1 << 6
+	FILE_AND_ARGV_ZERO = 1 << 6,
+	SEARCH_PATH_FROM_ENVP = 1 << 7
 }
 alias GSpawnFlags SpawnFlags;
 
@@ -1865,13 +1870,52 @@ alias GOptionFlags OptionFlags;
  *  than one branch. Since 2.16
  * G_REGEX_ERROR_DEFINE_REPETION
  * Repeating a "DEFINE" group is not allowed.
- *  Since 2.16
+ *  This error is never raised. Since: 2.16 Deprecated: 2.34
  * G_REGEX_ERROR_INCONSISTENT_NEWLINE_OPTIONS
  * Inconsistent newline options.
  *  Since 2.16
  * G_REGEX_ERROR_MISSING_BACK_REFERENCE
- * "\\g" is not followed by a braced
- *  name or an optionally braced non-zero number. Since 2.16
+ * "\\g" is not followed by a braced,
+ *  angle-bracketed, or quoted name or number, or by a plain number. Since: 2.16
+ * G_REGEX_ERROR_INVALID_RELATIVE_REFERENCE
+ * relative reference must not be zero. Since: 2.34
+ * G_REGEX_ERROR_BACKTRACKING_CONTROL_VERB_ARGUMENT_FORBIDDEN
+ * the backtracing
+ *  control verb used does not allow an argument. Since: 2.34
+ * G_REGEX_ERROR_UNKNOWN_BACKTRACKING_CONTROL_VERB
+ * unknown backtracing
+ *  control verb. Since: 2.34
+ * G_REGEX_ERROR_NUMBER_TOO_BIG
+ * number is too big in escape sequence. Since: 2.34
+ * G_REGEX_ERROR_MISSING_SUBPATTERN_NAME
+ * Missing subpattern name. Since: 2.34
+ * G_REGEX_ERROR_MISSING_DIGIT
+ * Missing digit. Since 2.34
+ * G_REGEX_ERROR_INVALID_DATA_CHARACTER
+ * In JavaScript compatibility mode,
+ *  "[" is an invalid data character. Since: 2.34
+ * G_REGEX_ERROR_EXTRA_SUBPATTERN_NAME
+ * different names for subpatterns of the
+ *  same number are not allowed. Since: 2.34
+ * G_REGEX_ERROR_BACKTRACKING_CONTROL_VERB_ARGUMENT_REQUIRED
+ * the backtracing control
+ *  verb requires an argument. Since: 2.34
+ * G_REGEX_ERROR_INVALID_CONTROL_CHAR
+ * "\\c" must be followed by an ASCII
+ *  character. Since: 2.34
+ * G_REGEX_ERROR_MISSING_NAME
+ * "\\k" is not followed by a braced, angle-bracketed, or
+ *  quoted name. Since: 2.34
+ * G_REGEX_ERROR_NOT_SUPPORTED_IN_CLASS
+ * "\\N" is not supported in a class. Since: 2.34
+ * G_REGEX_ERROR_TOO_MANY_FORWARD_REFERENCES
+ * too many forward references. Since: 2.34
+ * G_REGEX_ERROR_NAME_TOO_LONG
+ * the name is too long in "(*MARK)", "(*PRUNE)",
+ *  "(*SKIP)", or "(*THEN)". Since: 2.34
+ * G_REGEX_ERROR_CHARACTER_VALUE_TOO_LARGE
+ * the character value in the \\u sequence is
+ *  too large. Since: 2.34
  * Since 2.14
  */
 public enum GRegexError
@@ -1918,7 +1962,22 @@ public enum GRegexError
 	TOO_MANY_BRANCHES_IN_DEFINE = 154,
 	DEFINE_REPETION = 155,
 	INCONSISTENT_NEWLINE_OPTIONS = 156,
-	MISSING_BACK_REFERENCE = 157
+	MISSING_BACK_REFERENCE = 157,
+	INVALID_RELATIVE_REFERENCE = 158,
+	BACKTRACKING_CONTROL_VERB_ARGUMENT_FORBIDDEN = 159,
+	UNKNOWN_BACKTRACKING_CONTROL_VERB = 160,
+	NUMBER_TOO_BIG = 161,
+	MISSING_SUBPATTERN_NAME = 162,
+	MISSING_DIGIT = 163,
+	INVALID_DATA_CHARACTER = 164,
+	EXTRA_SUBPATTERN_NAME = 165,
+	BACKTRACKING_CONTROL_VERB_ARGUMENT_REQUIRED = 166,
+	INVALID_CONTROL_CHAR = 168,
+	MISSING_NAME = 169,
+	NOT_SUPPORTED_IN_CLASS = 171,
+	TOO_MANY_FORWARD_REFERENCES = 172,
+	NAME_TOO_LONG = 175,
+	CHARACTER_VALUE_TOO_LARGE = 176
 }
 alias GRegexError RegexError;
 
@@ -1980,20 +2039,37 @@ alias GRegexError RegexError;
  * Optimize the regular expression. If the pattern will
  *  be used many times, then it may be worth the effort to optimize it
  *  to improve the speed of matches.
+ * G_REGEX_FIRSTLINE
+ * Limits an unanchored pattern to match before (or at) the
+ *  first newline. Since: 2.34
  * G_REGEX_DUPNAMES
  * Names used to identify capturing subpatterns need not
  *  be unique. This can be helpful for certain types of pattern when it
  *  is known that only one instance of the named subpattern can ever be
  *  matched.
  * G_REGEX_NEWLINE_CR
- * Usually any newline character is recognized, if this
- *  option is set, the only recognized newline character is '\r'.
+ * Usually any newline character or character sequence is
+ *  recognized. If this option is set, the only recognized newline character
+ *  is '\r'.
  * G_REGEX_NEWLINE_LF
- * Usually any newline character is recognized, if this
- *  option is set, the only recognized newline character is '\n'.
+ * Usually any newline character or character sequence is
+ *  recognized. If this option is set, the only recognized newline character
+ *  is '\n'.
  * G_REGEX_NEWLINE_CRLF
- * Usually any newline character is recognized, if this
- *  option is set, the only recognized newline character sequence is '\r\n'.
+ * Usually any newline character or character sequence is
+ *  recognized. If this option is set, the only recognized newline character
+ *  sequence is '\r\n'.
+ * G_REGEX_NEWLINE_ANYCRLF
+ * Usually any newline character or character sequence
+ *  is recognized. If this option is set, the only recognized newline character
+ *  sequences are '\r', '\n', and '\r\n'. Since: 2.34
+ * G_REGEX_BSR_ANYCRLF
+ * Usually any newline character or character sequence
+ *  is recognised. If this option is set, then "\R" only recognizes the newline
+ *  characters '\r', '\n' and '\r\n'. Since: 2.34
+ * G_REGEX_JAVASCRIPT_COMPAT
+ * Changes behaviour so that it is compatible with
+ *  JavaScript rather than PCRE. Since: 2.34
  * Since 2.14
  */
 public enum GRegexCompileFlags
@@ -2008,10 +2084,14 @@ public enum GRegexCompileFlags
 	RAW = 1 << 11,
 	NO_AUTO_CAPTURE = 1 << 12,
 	OPTIMIZE = 1 << 13,
+	FIRSTLINE = 1 << 18,
 	DUPNAMES = 1 << 19,
 	NEWLINE_CR = 1 << 20,
 	NEWLINE_LF = 1 << 21,
-	NEWLINE_CRLF = NEWLINE_CR | NEWLINE_LF
+	NEWLINE_CRLF = NEWLINE_CR | NEWLINE_LF,
+	NEWLINE_ANYCRLF = NEWLINE_CR | 1 << 22,
+	BSR_ANYCRLF = 1 << 23,
+	JAVASCRIPT_COMPAT = 1 << 25
 }
 alias GRegexCompileFlags RegexCompileFlags;
 
@@ -2057,11 +2137,40 @@ alias GRegexCompileFlags RegexCompileFlags;
  *  creating a new GRegex, setting the '\n' character as line terminator.
  * G_REGEX_MATCH_NEWLINE_CRLF
  * Overrides the newline definition set when
- *  creating a new GRegex, setting the '\r\n' characters as line terminator.
+ *  creating a new GRegex, setting the '\r\n' characters sequence as line terminator.
  * G_REGEX_MATCH_NEWLINE_ANY
  * Overrides the newline definition set when
- *  creating a new GRegex, any newline character or character sequence
- *  is recognized.
+ *  creating a new GRegex, any Unicode newline sequence
+ *  is recognised as a newline. These are '\r', '\n' and '\rn', and the
+ *  single characters U+000B LINE TABULATION, U+000C FORM FEED (FF),
+ *  U+0085 NEXT LINE (NEL), U+2028 LINE SEPARATOR and
+ *  U+2029 PARAGRAPH SEPARATOR.
+ * G_REGEX_MATCH_NEWLINE_ANYCRLF
+ * Overrides the newline definition set when
+ *  creating a new GRegex; any '\r', '\n', or '\r\n' character sequence
+ *  is recognized as a newline. Since: 2.34
+ * G_REGEX_MATCH_BSR_ANYCRLF
+ * Overrides the newline definition for "\R" set when
+ *  creating a new GRegex; only '\r', '\n', or '\r\n' character sequences
+ *  are recognized as a newline by "\R". Since: 2.34
+ * G_REGEX_MATCH_BSR_ANY
+ * Overrides the newline definition for "\R" set when
+ *  creating a new GRegex; any Unicode newline character or character sequence
+ *  are recognized as a newline by "\R". These are '\r', '\n' and '\rn', and the
+ *  single characters U+000B LINE TABULATION, U+000C FORM FEED (FF),
+ *  U+0085 NEXT LINE (NEL), U+2028 LINE SEPARATOR and
+ *  U+2029 PARAGRAPH SEPARATOR. Since: 2.34
+ * G_REGEX_MATCH_PARTIAL_SOFT
+ * An alias for G_REGEX_MATCH_PARTIAL. Since: 2.34
+ * G_REGEX_MATCH_PARTIAL_HARD
+ * Turns on the partial matching feature. In contrast to
+ *  to G_REGEX_MATCH_PARTIAL_SOFT, this stops matching as soon as a partial match
+ *  is found, without continuing to search for a possible complete match. See
+ *  see g_match_info_is_partial_match() for more information. Since: 2.34
+ * G_REGEX_MATCH_NOTEMPTY_ATSTART
+ * Like G_REGEX_MATCH_NOTEMPTY, but only applied to
+ *  the start of the matched string. For anchored
+ *  patterns this can only happen for pattern containing "\K". Since: 2.34
  * Since 2.14
  */
 public enum GRegexMatchFlags
@@ -2074,7 +2183,13 @@ public enum GRegexMatchFlags
 	NEWLINE_CR = 1 << 20,
 	NEWLINE_LF = 1 << 21,
 	NEWLINE_CRLF = NEWLINE_CR | NEWLINE_LF,
-	NEWLINE_ANY = 1 << 22
+	NEWLINE_ANY = 1 << 22,
+	NEWLINE_ANYCRLF = NEWLINE_CR | NEWLINE_ANY,
+	BSR_ANYCRLF = 1 << 23,
+	BSR_ANY = 1 << 24,
+	PARTIAL_SOFT = PARTIAL,
+	PARTIAL_HARD = 1 << 27,
+	NOTEMPTY_ATSTART = 1 << 28
 }
 alias GRegexMatchFlags RegexMatchFlags;
 
@@ -4554,6 +4669,21 @@ public struct GCompletion
 // #define G_NODE_IS_ROOT(node)
 
 /*
+ * A convenience macro which defines a function returning the
+ * GQuark for the name QN. The function will be named
+ * q_n_quark().
+ * Note that the quark name will be stringified automatically in the
+ * macro, so you shouldn't use double quotes.
+ * QN :
+ * the name to return a GQuark for
+ * q_n :
+ * prefix for the function name
+ * Since 2.34
+ */
+// TODO
+// #define G_DEFINE_QUARK(QN, q_n)
+
+/*
  * Sets the data corresponding to the given GQuark id. Any previous
  * data with the same key is removed, and its destroy function is
  * called.
@@ -4742,12 +4872,14 @@ public struct GCompletion
 public alias extern(C) int  function (GPollFD*, uint, int) GPollFunc;
 
 /*
- * The type of functions to be called when a child exists.
+ * Prototype of a GChildWatchSource callback, called when a child
+ * process has exited. To interpret status, see the documentation
+ * for g_spawn_check_exit_status().
  * pid :
  * the process id of the child process
  * status :
- * Status information about the child process,
- * see waitpid(2) for more information about this field
+ * Status information about the child process, encoded
+ * in a platform-specific manner
  * user_data :
  * user data passed to g_child_watch_add()
  */
@@ -5197,6 +5329,21 @@ public alias extern(C) int  function (GNode*, void*) GNodeTraverseFunc;
  */
 // void (*GNodeForeachFunc) (GNode *node,  gpointer data);
 public alias extern(C) void  function (GNode*, void*) GNodeForeachFunc;
+
+/*
+ * The type of functions that are used to 'duplicate' an object.
+ * What this means depends on the context, it could just be
+ * incrementing the reference count, if data is a ref-counted
+ * object.
+ * data :
+ * the data to duplicate
+ * user_data :
+ * user data that was specified in g_datalist_id_dup_data()
+ * Returns :
+ * a duplicate of data
+ */
+// gpointer (*GDuplicateFunc) (gpointer data,  gpointer user_data);
+public alias extern(C) void*  function (void*, void*) GDuplicateFunc;
 
 /*
  * Specifies the type of function which is called when a data element

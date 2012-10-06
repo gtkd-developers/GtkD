@@ -239,7 +239,7 @@ public class MainContext
 	 * events sources will be dispatched (if any), that are ready at this
 	 * given moment without further waiting.
 	 * Note that even when may_block is TRUE, it is still possible for
-	 * g_main_context_iteration() to return FALSE, since the the wait may
+	 * g_main_context_iteration() to return FALSE, since the wait may
 	 * be interrupted for other reasons than an event source becoming ready.
 	 * Params:
 	 * mayBlock = whether the call may block.

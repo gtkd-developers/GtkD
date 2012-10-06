@@ -470,11 +470,11 @@ public class Spawn
 	 * if those parameters are non-NULL. Note that you must set the
 	 * G_SPAWN_STDOUT_TO_DEV_NULL and G_SPAWN_STDERR_TO_DEV_NULL flags when
 	 * passing NULL for standard_output and standard_error.
-	 * If exit_status is non-NULL, the exit status of the child is stored
-	 * there as it would be returned by waitpid(); standard UNIX macros such
-	 * as WIFEXITED() and WEXITSTATUS() must be used to evaluate the exit status.
-	 * Note that this function call waitpid() even if exit_status is NULL, and
-	 * does not accept the G_SPAWN_DO_NOT_REAP_CHILD flag.
+	 * If exit_status is non-NULL, the platform-specific exit status of
+	 * the child is stored there; see the doucumentation of
+	 * g_spawn_check_exit_status() for how to use and interpret this.
+	 * Note that it is invalid to pass G_SPAWN_DO_NOT_REAP_CHILD in
+	 * flags.
 	 * If an error occurs, no data is returned in standard_output,
 	 * standard_error, or exit_status.
 	 * This function calls g_spawn_async_with_pipes() internally; see that
@@ -508,6 +508,61 @@ public class Spawn
 		
 		standardOutput = Str.toString(outstandardOutput);
 		standardError = Str.toString(outstandardError);
+		return p;
+	}
+	
+	/**
+	 * Set error if exit_status indicates the child exited abnormally
+	 * (e.g. with a nonzero exit code, or via a fatal signal).
+	 * The g_spawn_sync() and g_child_watch_add() family of APIs return an
+	 * exit status for subprocesses encoded in a platform-specific way.
+	 * On Unix, this is guaranteed to be in the same format
+	 * waitpid(2) returns, and on Windows it is
+	 * guaranteed to be the result of
+	 * GetExitCodeProcess(). Prior to the introduction
+	 * of this function in GLib 2.34, interpreting exit_status required
+	 * use of platform-specific APIs, which is problematic for software
+	 * using GLib as a cross-platform layer.
+	 * Additionally, many programs simply want to determine whether or not
+	 * the child exited successfully, and either propagate a GError or
+	 * print a message to standard error. In that common case, this
+	 * function can be used. Note that the error message in error will
+	 * contain human-readable information about the exit status.
+	 * The domain and code of error
+	 * have special semantics in the case where the process has an "exit
+	 * code", as opposed to being killed by a signal. On Unix, this
+	 * happens if WIFEXITED would be true of
+	 * exit_status. On Windows, it is always the case.
+	 * The special semantics are that the actual exit code will be the
+	 * code set in error, and the domain will be G_SPAWN_EXIT_ERROR.
+	 * This allows you to differentiate between different exit codes.
+	 * If the process was terminated by some means other than an exit
+	 * status, the domain will be G_SPAWN_ERROR, and the code will be
+	 * G_SPAWN_ERROR_FAILED.
+	 * This function just offers convenience; you can of course also check
+	 * the available platform via a macro such as G_OS_UNIX, and use
+	 * WIFEXITED() and WEXITSTATUS()
+	 * on exit_status directly. Do not attempt to scan or parse the
+	 * error message string; it may be translated and/or change in future
+	 * versions of GLib.
+	 * Since 2.34
+	 * Params:
+	 * exitStatus = An exit code as returned from g_spawn_sync()
+	 * Returns: TRUE if child exited successfully, FALSE otherwise (and error will be set)
+	 * Throws: GException on failure.
+	 */
+	public static int checkExitStatus(int exitStatus)
+	{
+		// gboolean g_spawn_check_exit_status (gint exit_status,  GError **error);
+		GError* err = null;
+		
+		auto p = g_spawn_check_exit_status(exitStatus, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
 		return p;
 	}
 	
@@ -549,9 +604,9 @@ public class Spawn
 	 * implications, so consider using g_spawn_sync() directly if
 	 * appropriate. Possible errors are those from g_spawn_sync() and those
 	 * from g_shell_parse_argv().
-	 * If exit_status is non-NULL, the exit status of the child is stored there as
-	 * it would be returned by waitpid(); standard UNIX macros such as WIFEXITED()
-	 * and WEXITSTATUS() must be used to evaluate the exit status.
+	 * If exit_status is non-NULL, the platform-specific exit status of
+	 * the child is stored there; see the documentation of
+	 * g_spawn_check_exit_status() for how to use and interpret this.
 	 * On Windows, please note the implications of g_shell_parse_argv()
 	 * parsing command_line. Parsing is done according to Unix shell rules, not
 	 * Windows command interpreter rules.

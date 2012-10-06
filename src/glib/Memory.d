@@ -270,6 +270,27 @@ public class Memory
 	}
 	
 	/**
+	 * Clears a reference to a variable.
+	 * pp must not be NULL.
+	 * If the reference is NULL then this function does nothing.
+	 * Otherwise, the variable is destroyed using destroy and the
+	 * pointer is set to NULL.
+	 * This function is threadsafe and modifies the pointer atomically,
+	 * using memory barriers where needed.
+	 * A macro is also included that allows this function to be used without
+	 * pointer casts.
+	 * Since 2.34
+	 * Params:
+	 * pp = a pointer to a variable, struct member etc. holding a pointer
+	 * destroy = a function to which a gpointer can be passed, to destroy *pp
+	 */
+	public static void clearPointer(void** pp, GDestroyNotify destroy)
+	{
+		// void g_clear_pointer (gpointer *pp,  GDestroyNotify destroy);
+		g_clear_pointer(pp, destroy);
+	}
+	
+	/**
 	 * Allocates byte_size bytes of memory, and copies byte_size bytes into it
 	 * from mem. If mem is NULL it returns NULL.
 	 * Params:

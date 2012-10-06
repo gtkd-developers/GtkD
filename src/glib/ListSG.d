@@ -291,6 +291,12 @@ public class ListSG
 	 * freeing the element. The removed element's next
 	 * link is set to NULL, so that it becomes a
 	 * self-contained list with one element.
+	 * Note
+	 * Removing arbitrary nodes from a singly-linked list
+	 * requires time that is proportional to the length of the list
+	 * (ie. O(n)). If you find yourself using g_slist_remove_link()
+	 * frequently, you should consider a different data structure, such
+	 * as the doubly-linked GList.
 	 * Params:
 	 * link = an element in the GSList
 	 * Returns: the new start of the GSList, without the element
@@ -310,6 +316,12 @@ public class ListSG
 	 * Removes the node link_ from the list and frees it.
 	 * Compare this to g_slist_remove_link() which removes the node
 	 * without freeing it.
+	 * Note
+	 * Removing arbitrary nodes from a singly-linked list
+	 * requires time that is proportional to the length of the list
+	 * (ie. O(n)). If you find yourself using g_slist_delete_link()
+	 * frequently, you should consider a different data structure, such
+	 * as the doubly-linked GList.
 	 * Params:
 	 * link = node to delete
 	 * Returns: the new head of list
@@ -400,13 +412,38 @@ public class ListSG
 	 * Note
 	 * Note that this is a "shallow" copy. If the list elements
 	 * consist of pointers to data, the pointers are copied but
-	 * the actual data isn't.
+	 * the actual data isn't. See g_slist_copy_deep() if you need
+	 * to copy the data as well.
 	 * Returns: a copy of list
 	 */
 	public ListSG copy()
 	{
 		// GSList * g_slist_copy (GSList *list);
 		auto p = g_slist_copy(gSList);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListSG(cast(GSList*) p);
+	}
+	
+	/**
+	 * Makes a full (deep) copy of a GSList.
+	 * In contrast with g_slist_copy(), this function uses func to make a copy of
+	 * each list element, in addition to copying the list container itself.
+	 * func, as a GCopyFunc, takes two arguments, the data to be copied and a user
+	 * pointer. It's safe to pass NULL as user_data, if the copy function takes only
+	 * one argument.
+	 * Since 2.34
+	 * Params:
+	 * func = a copy function used to copy every element in the list
+	 * userData = user data passed to the copy function func, or NULL
+	 * Returns: a full copy of list, use g_slist_free_full to free it
+	 */
+	public ListSG copyDeep(GCopyFunc func, void* userData)
+	{
+		// GSList * g_slist_copy_deep (GSList *list,  GCopyFunc func,  gpointer user_data);
+		auto p = g_slist_copy_deep(gSList, func, userData);
 		if(p is null)
 		{
 			return null;

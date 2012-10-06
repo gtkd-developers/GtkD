@@ -170,7 +170,7 @@ public class Mutex
 	 * This function is useful to initialize a mutex that has been
 	 * allocated on the stack, or as part of a larger structure.
 	 * It is not necessary to initialize a mutex that has been
-	 * created that has been statically allocated.
+	 * statically allocated.
 	 * $(DDOC_COMMENT example)
 	 * To undo the effect of g_mutex_init() when a mutex is no longer
 	 * needed, use g_mutex_clear().

@@ -116,6 +116,17 @@ private import gtkc.paths;
  * relevant when compiling a pattern if G_REGEX_EXTENDED is set, and an
  * unescaped "#" outside a character class is encountered. This indicates
  * a comment that lasts until after the next newline.
+ * When setting the G_REGEX_JAVASCRIPT_COMPAT flag, pattern syntax and pattern
+ * matching is changed to be compatible with the way that regular expressions
+ * work in JavaScript. More precisely, a lonely ']' character in the pattern
+ * is a syntax error; the '\x' escape only allows 0 to 2 hexadecimal digits, and
+ * you must use the '\u' escape sequence with 4 hex digits to specify a unicode
+ * codepoint instead of '\x' or 'x{....}'. If '\x' or '\u' are not followed by
+ * the specified number of hex digits, they match 'x' and 'u' literally; also
+ * '\U' always matches 'U' instead of being an error in the pattern. Finally,
+ * pattern matching is modified so that back references to an unset subpattern
+ * group produces a match with the empty string instead of an error. See
+ * man:pcreapi(3) for more information.
  * Creating and manipulating the same GRegex structure from different
  * threads is not a problem as GRegex does not modify its internal
  * state between creation and destruction, on the other hand GMatchInfo
@@ -302,12 +313,20 @@ public class MatchInfo
 	 * check that what has been typed so far is potentially valid, it is
 	 * able to raise an error as soon as a mistake is made.
 	 * GRegex supports the concept of partial matching by means of the
-	 * G_REGEX_MATCH_PARTIAL flag. When this is set the return code for
+	 * G_REGEX_MATCH_PARTIAL_SOFT and G_REGEX_MATCH_PARTIAL_HARD flags.
+	 * When they are used, the return code for
 	 * g_regex_match() or g_regex_match_full() is, as usual, TRUE
 	 * for a complete match, FALSE otherwise. But, when these functions
 	 * return FALSE, you can check if the match was partial calling
 	 * g_match_info_is_partial_match().
-	 * When using partial matching you cannot use g_match_info_fetch*().
+	 * The difference between G_REGEX_MATCH_PARTIAL_SOFT and
+	 * G_REGEX_MATCH_PARTIAL_HARD is that when a partial match is encountered
+	 * with G_REGEX_MATCH_PARTIAL_SOFT, matching continues to search for a
+	 * possible complete match, while with G_REGEX_MATCH_PARTIAL_HARD matching
+	 * stops at the partial match.
+	 * When both G_REGEX_MATCH_PARTIAL_SOFT and G_REGEX_MATCH_PARTIAL_HARD
+	 * are set, the latter takes precedence.
+	 * See man:pcrepartial for more information on partial matching.
 	 * Because of the way certain internal optimizations are implemented
 	 * the partial matching algorithm cannot be used with all patterns.
 	 * So repeated single characters such as "a{2,4}" and repeated single
@@ -315,7 +334,8 @@ public class MatchInfo
 	 * of occurrences is greater than one. Optional items such as "\d?"
 	 * (where the maximum is one) are permitted. Quantifiers with any values
 	 * are permitted after parentheses, so the invalid examples above can be
-	 * coded thus "(a){2,4}" and "(\d)+". If G_REGEX_MATCH_PARTIAL is set
+	 * coded thus "(a){2,4}" and "(\d)+". If G_REGEX_MATCH_PARTIAL or
+	 * G_REGEX_MATCH_PARTIAL_HARD is set
 	 * for a pattern that does not conform to the restrictions, matching
 	 * functions return an error.
 	 * Since 2.14
@@ -468,7 +488,7 @@ public class MatchInfo
 	 * The strings are fetched from the string passed to the match function,
 	 * so you cannot call this function after freeing the string.
 	 * Since 2.14
-	 * Returns: a NULL-terminated array of gchar * pointers. It must be freed using g_strfreev(). If the previous match failed NULL is returned. [allow-none]
+	 * Returns: a NULL-terminated array of gchar * pointers. It must be freed using g_strfreev(). If the previous match failed NULL is returned. [transfer full]
 	 */
 	public string[] fetchAll()
 	{

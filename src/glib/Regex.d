@@ -117,6 +117,17 @@ private import gtkc.paths;
  * relevant when compiling a pattern if G_REGEX_EXTENDED is set, and an
  * unescaped "#" outside a character class is encountered. This indicates
  * a comment that lasts until after the next newline.
+ * When setting the G_REGEX_JAVASCRIPT_COMPAT flag, pattern syntax and pattern
+ * matching is changed to be compatible with the way that regular expressions
+ * work in JavaScript. More precisely, a lonely ']' character in the pattern
+ * is a syntax error; the '\x' escape only allows 0 to 2 hexadecimal digits, and
+ * you must use the '\u' escape sequence with 4 hex digits to specify a unicode
+ * codepoint instead of '\x' or 'x{....}'. If '\x' or '\u' are not followed by
+ * the specified number of hex digits, they match 'x' and 'u' literally; also
+ * '\U' always matches 'U' instead of being an error in the pattern. Finally,
+ * pattern matching is modified so that back references to an unset subpattern
+ * group produces a match with the empty string instead of an error. See
+ * man:pcreapi(3) for more information.
  * Creating and manipulating the same GRegex structure from different
  * threads is not a problem as GRegex does not modify its internal
  * state between creation and destruction, on the other hand GMatchInfo
@@ -259,6 +270,17 @@ public class Regex
 	{
 		// gint g_regex_get_capture_count (const GRegex *regex);
 		return g_regex_get_capture_count(gRegex);
+	}
+	
+	/**
+	 * Checks whether the pattern contains explicit CR or LF references.
+	 * Since 2.34
+	 * Returns: TRUE if the pattern contains explicit CR or LF references
+	 */
+	public int getHasCrOrLf()
+	{
+		// gboolean g_regex_get_has_cr_or_lf (const GRegex *regex);
+		return g_regex_get_has_cr_or_lf(gRegex);
 	}
 	
 	/**
@@ -553,7 +575,7 @@ public class Regex
 	 * string = the string to scan for matches
 	 * compileOptions = compile options for the regular expression, or 0
 	 * matchOptions = match options, or 0
-	 * Returns: a NULL-terminated array of strings. Free it using g_strfreev()
+	 * Returns: a NULL-terminated array of strings. Free it using g_strfreev(). [transfer full]
 	 */
 	public static string[] splitSimple(string pattern, string string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
@@ -581,7 +603,7 @@ public class Regex
 	 * Params:
 	 * string = the string to split with the pattern
 	 * matchOptions = match time option flags
-	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
+	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev(). [transfer full]
 	 */
 	public string[] split(string string, GRegexMatchFlags matchOptions)
 	{
@@ -615,7 +637,7 @@ public class Regex
 	 * matchOptions = match time option flags
 	 * maxTokens = the maximum number of tokens to split string into.
 	 * If this is less than 1, the string is split completely
-	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev()
+	 * Returns: a NULL-terminated gchar ** array. Free it using g_strfreev(). [transfer full]
 	 * Throws: GException on failure.
 	 */
 	public string[] splitFull(string string, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)

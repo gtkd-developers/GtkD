@@ -226,6 +226,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_try_malloc0_n, \"g_try_malloc0_n\", LIBRARY.GLIB);
 	Linker.link(g_try_realloc_n, \"g_try_realloc_n\", LIBRARY.GLIB);
 	Linker.link(g_free, \"g_free\", LIBRARY.GLIB);
+	Linker.link(g_clear_pointer, \"g_clear_pointer\", LIBRARY.GLIB);
 	Linker.link(g_memdup, \"g_memdup\", LIBRARY.GLIB);
 	Linker.link(g_mem_set_vtable, \"g_mem_set_vtable\", LIBRARY.GLIB);
 	Linker.link(g_mem_is_system_malloc, \"g_mem_is_system_malloc\", LIBRARY.GLIB);
@@ -503,6 +504,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_checksum_get_digest, \"g_checksum_get_digest\", LIBRARY.GLIB);
 	Linker.link(g_compute_checksum_for_data, \"g_compute_checksum_for_data\", LIBRARY.GLIB);
 	Linker.link(g_compute_checksum_for_string, \"g_compute_checksum_for_string\", LIBRARY.GLIB);
+	Linker.link(g_compute_checksum_for_bytes, \"g_compute_checksum_for_bytes\", LIBRARY.GLIB);
 
 	// glib.Hmac
 
@@ -759,6 +761,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_spawn_async_with_pipes, \"g_spawn_async_with_pipes\", LIBRARY.GLIB);
 	Linker.link(g_spawn_async, \"g_spawn_async\", LIBRARY.GLIB);
 	Linker.link(g_spawn_sync, \"g_spawn_sync\", LIBRARY.GLIB);
+	Linker.link(g_spawn_check_exit_status, \"g_spawn_check_exit_status\", LIBRARY.GLIB);
 	Linker.link(g_spawn_command_line_async, \"g_spawn_command_line_async\", LIBRARY.GLIB);
 	Linker.link(g_spawn_command_line_sync, \"g_spawn_command_line_sync\", LIBRARY.GLIB);
 	Linker.link(g_spawn_close_pid, \"g_spawn_close_pid\", LIBRARY.GLIB);
@@ -809,6 +812,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_mapped_file_free, \"g_mapped_file_free\", LIBRARY.GLIB);
 	Linker.link(g_mapped_file_get_length, \"g_mapped_file_get_length\", LIBRARY.GLIB);
 	Linker.link(g_mapped_file_get_contents, \"g_mapped_file_get_contents\", LIBRARY.GLIB);
+	Linker.link(g_mapped_file_get_bytes, \"g_mapped_file_get_bytes\", LIBRARY.GLIB);
 
 	// glib.URI
 
@@ -882,6 +886,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_regex_get_pattern, \"g_regex_get_pattern\", LIBRARY.GLIB);
 	Linker.link(g_regex_get_max_backref, \"g_regex_get_max_backref\", LIBRARY.GLIB);
 	Linker.link(g_regex_get_capture_count, \"g_regex_get_capture_count\", LIBRARY.GLIB);
+	Linker.link(g_regex_get_has_cr_or_lf, \"g_regex_get_has_cr_or_lf\", LIBRARY.GLIB);
 	Linker.link(g_regex_get_string_number, \"g_regex_get_string_number\", LIBRARY.GLIB);
 	Linker.link(g_regex_get_compile_flags, \"g_regex_get_compile_flags\", LIBRARY.GLIB);
 	Linker.link(g_regex_get_match_flags, \"g_regex_get_match_flags\", LIBRARY.GLIB);
@@ -1061,6 +1066,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_list_free_1, \"g_list_free_1\", LIBRARY.GLIB);
 	Linker.link(g_list_length, \"g_list_length\", LIBRARY.GLIB);
 	Linker.link(g_list_copy, \"g_list_copy\", LIBRARY.GLIB);
+	Linker.link(g_list_copy_deep, \"g_list_copy_deep\", LIBRARY.GLIB);
 	Linker.link(g_list_reverse, \"g_list_reverse\", LIBRARY.GLIB);
 	Linker.link(g_list_sort, \"g_list_sort\", LIBRARY.GLIB);
 	Linker.link(g_list_insert_sorted_with_data, \"g_list_insert_sorted_with_data\", LIBRARY.GLIB);
@@ -1094,6 +1100,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_slist_free_1, \"g_slist_free_1\", LIBRARY.GLIB);
 	Linker.link(g_slist_length, \"g_slist_length\", LIBRARY.GLIB);
 	Linker.link(g_slist_copy, \"g_slist_copy\", LIBRARY.GLIB);
+	Linker.link(g_slist_copy_deep, \"g_slist_copy_deep\", LIBRARY.GLIB);
 	Linker.link(g_slist_reverse, \"g_slist_reverse\", LIBRARY.GLIB);
 	Linker.link(g_slist_insert_sorted_with_data, \"g_slist_insert_sorted_with_data\", LIBRARY.GLIB);
 	Linker.link(g_slist_sort, \"g_slist_sort\", LIBRARY.GLIB);
@@ -1274,6 +1281,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_string_truncate, \"g_string_truncate\", LIBRARY.GLIB);
 	Linker.link(g_string_set_size, \"g_string_set_size\", LIBRARY.GLIB);
 	Linker.link(g_string_free, \"g_string_free\", LIBRARY.GLIB);
+	Linker.link(g_string_free_to_bytes, \"g_string_free_to_bytes\", LIBRARY.GLIB);
 	Linker.link(g_string_up, \"g_string_up\", LIBRARY.GLIB);
 	Linker.link(g_string_down, \"g_string_down\", LIBRARY.GLIB);
 	Linker.link(g_string_hash, \"g_string_hash\", LIBRARY.GLIB);
@@ -1427,6 +1435,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_datalist_id_set_data_full, \"g_datalist_id_set_data_full\", LIBRARY.GLIB);
 	Linker.link(g_datalist_id_get_data, \"g_datalist_id_get_data\", LIBRARY.GLIB);
 	Linker.link(g_datalist_id_remove_no_notify, \"g_datalist_id_remove_no_notify\", LIBRARY.GLIB);
+	Linker.link(g_datalist_id_dup_data, \"g_datalist_id_dup_data\", LIBRARY.GLIB);
+	Linker.link(g_datalist_id_replace_data, \"g_datalist_id_replace_data\", LIBRARY.GLIB);
 	Linker.link(g_datalist_get_data, \"g_datalist_get_data\", LIBRARY.GLIB);
 	Linker.link(g_datalist_foreach, \"g_datalist_foreach\", LIBRARY.GLIB);
 	Linker.link(g_datalist_clear, \"g_datalist_clear\", LIBRARY.GLIB);
@@ -1487,6 +1497,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_variant_is_container, \"g_variant_is_container\", LIBRARY.GLIB);
 	Linker.link(g_variant_compare, \"g_variant_compare\", LIBRARY.GLIB);
 	Linker.link(g_variant_classify, \"g_variant_classify\", LIBRARY.GLIB);
+	Linker.link(g_variant_check_format_string, \"g_variant_check_format_string\", LIBRARY.GLIB);
 	Linker.link(g_variant_get, \"g_variant_get\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_va, \"g_variant_get_va\", LIBRARY.GLIB);
 	Linker.link(g_variant_new, \"g_variant_new\", LIBRARY.GLIB);
@@ -1814,6 +1825,7 @@ mixin( gshared ~"extern(C)
 	gpointer function(gsize nBlocks, gsize nBlockBytes) c_g_try_malloc0_n;
 	gpointer function(void* mem, gsize nBlocks, gsize nBlockBytes) c_g_try_realloc_n;
 	void function(void* mem) c_g_free;
+	void function(void** pp, GDestroyNotify destroy) c_g_clear_pointer;
 	gpointer function(void* mem, guint byteSize) c_g_memdup;
 	void function(GMemVTable* vtable) c_g_mem_set_vtable;
 	gboolean function() c_g_mem_is_system_malloc;
@@ -2091,6 +2103,7 @@ mixin( gshared ~"extern(C)
 	void function(GChecksum* checksum, guint8* buffer, gsize* digestLen) c_g_checksum_get_digest;
 	gchar* function(GChecksumType checksumType, guchar* data, gsize length) c_g_compute_checksum_for_data;
 	gchar* function(GChecksumType checksumType, gchar* str, gssize length) c_g_compute_checksum_for_string;
+	gchar* function(GChecksumType checksumType, GBytes* data) c_g_compute_checksum_for_bytes;
 
 	// glib.Hmac
 
@@ -2347,6 +2360,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, gint* standardInput, gint* standardOutput, gint* standardError, GError** error) c_g_spawn_async_with_pipes;
 	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** error) c_g_spawn_async;
 	gboolean function(gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, gchar** standardOutput, gchar** standardError, gint* exitStatus, GError** error) c_g_spawn_sync;
+	gboolean function(gint exitStatus, GError** error) c_g_spawn_check_exit_status;
 	gboolean function(gchar* commandLine, GError** error) c_g_spawn_command_line_async;
 	gboolean function(gchar* commandLine, gchar** standardOutput, gchar** standardError, gint* exitStatus, GError** error) c_g_spawn_command_line_sync;
 	void function(GPid pid) c_g_spawn_close_pid;
@@ -2397,6 +2411,7 @@ mixin( gshared ~"extern(C)
 	void function(GMappedFile* file) c_g_mapped_file_free;
 	gsize function(GMappedFile* file) c_g_mapped_file_get_length;
 	gchar* function(GMappedFile* file) c_g_mapped_file_get_contents;
+	GBytes* function(GMappedFile* file) c_g_mapped_file_get_bytes;
 
 	// glib.URI
 
@@ -2470,6 +2485,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(GRegex* regex) c_g_regex_get_pattern;
 	gint function(GRegex* regex) c_g_regex_get_max_backref;
 	gint function(GRegex* regex) c_g_regex_get_capture_count;
+	gboolean function(GRegex* regex) c_g_regex_get_has_cr_or_lf;
 	gint function(GRegex* regex, gchar* name) c_g_regex_get_string_number;
 	GRegexCompileFlags function(GRegex* regex) c_g_regex_get_compile_flags;
 	GRegexMatchFlags function(GRegex* regex) c_g_regex_get_match_flags;
@@ -2649,6 +2665,7 @@ mixin( gshared ~"extern(C)
 	void function(GList* list) c_g_list_free_1;
 	guint function(GList* list) c_g_list_length;
 	GList* function(GList* list) c_g_list_copy;
+	GList* function(GList* list, GCopyFunc func, void* userData) c_g_list_copy_deep;
 	GList* function(GList* list) c_g_list_reverse;
 	GList* function(GList* list, GCompareFunc compareFunc) c_g_list_sort;
 	GList* function(GList* list, void* data, GCompareDataFunc func, void* userData) c_g_list_insert_sorted_with_data;
@@ -2682,6 +2699,7 @@ mixin( gshared ~"extern(C)
 	void function(GSList* list) c_g_slist_free_1;
 	guint function(GSList* list) c_g_slist_length;
 	GSList* function(GSList* list) c_g_slist_copy;
+	GSList* function(GSList* list, GCopyFunc func, void* userData) c_g_slist_copy_deep;
 	GSList* function(GSList* list) c_g_slist_reverse;
 	GSList* function(GSList* list, void* data, GCompareDataFunc func, void* userData) c_g_slist_insert_sorted_with_data;
 	GSList* function(GSList* list, GCompareFunc compareFunc) c_g_slist_sort;
@@ -2862,6 +2880,7 @@ mixin( gshared ~"extern(C)
 	GString* function(GString* string, gsize len) c_g_string_truncate;
 	GString* function(GString* string, gsize len) c_g_string_set_size;
 	gchar* function(GString* string, gboolean freeSegment) c_g_string_free;
+	GBytes* function(GString* string) c_g_string_free_to_bytes;
 	GString* function(GString* string) c_g_string_up;
 	GString* function(GString* string) c_g_string_down;
 	guint function(GString* str) c_g_string_hash;
@@ -3015,6 +3034,8 @@ mixin( gshared ~"extern(C)
 	void function(GData** datalist, GQuark keyId, void* data, GDestroyNotify destroyFunc) c_g_datalist_id_set_data_full;
 	gpointer function(GData** datalist, GQuark keyId) c_g_datalist_id_get_data;
 	gpointer function(GData** datalist, GQuark keyId) c_g_datalist_id_remove_no_notify;
+	gpointer function(GData** datalist, GQuark keyId, GDuplicateFunc dupFunc, void* userData) c_g_datalist_id_dup_data;
+	gboolean function(GData** datalist, GQuark keyId, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy) c_g_datalist_id_replace_data;
 	gpointer function(GData** datalist, gchar* key) c_g_datalist_get_data;
 	void function(GData** datalist, GDataForeachFunc func, void* userData) c_g_datalist_foreach;
 	void function(GData** datalist) c_g_datalist_clear;
@@ -3075,6 +3096,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GVariant* value) c_g_variant_is_container;
 	gint function(void* one, void* two) c_g_variant_compare;
 	GVariantClass function(GVariant* value) c_g_variant_classify;
+	gboolean function(GVariant* value, gchar* formatString, gboolean copyOnly) c_g_variant_check_format_string;
 	void function(GVariant* value, gchar* formatString, ... ) c_g_variant_get;
 	void function(GVariant* value, gchar* formatString, gchar** endptr, va_list* app) c_g_variant_get_va;
 	GVariant* function(gchar* formatString, ... ) c_g_variant_new;
@@ -3400,6 +3422,7 @@ alias c_g_try_malloc_n  g_try_malloc_n;
 alias c_g_try_malloc0_n  g_try_malloc0_n;
 alias c_g_try_realloc_n  g_try_realloc_n;
 alias c_g_free  g_free;
+alias c_g_clear_pointer  g_clear_pointer;
 alias c_g_memdup  g_memdup;
 alias c_g_mem_set_vtable  g_mem_set_vtable;
 alias c_g_mem_is_system_malloc  g_mem_is_system_malloc;
@@ -3677,6 +3700,7 @@ alias c_g_checksum_get_string  g_checksum_get_string;
 alias c_g_checksum_get_digest  g_checksum_get_digest;
 alias c_g_compute_checksum_for_data  g_compute_checksum_for_data;
 alias c_g_compute_checksum_for_string  g_compute_checksum_for_string;
+alias c_g_compute_checksum_for_bytes  g_compute_checksum_for_bytes;
 
 // glib.Hmac
 
@@ -3933,6 +3957,7 @@ alias c_g_timer_destroy  g_timer_destroy;
 alias c_g_spawn_async_with_pipes  g_spawn_async_with_pipes;
 alias c_g_spawn_async  g_spawn_async;
 alias c_g_spawn_sync  g_spawn_sync;
+alias c_g_spawn_check_exit_status  g_spawn_check_exit_status;
 alias c_g_spawn_command_line_async  g_spawn_command_line_async;
 alias c_g_spawn_command_line_sync  g_spawn_command_line_sync;
 alias c_g_spawn_close_pid  g_spawn_close_pid;
@@ -3983,6 +4008,7 @@ alias c_g_mapped_file_unref  g_mapped_file_unref;
 alias c_g_mapped_file_free  g_mapped_file_free;
 alias c_g_mapped_file_get_length  g_mapped_file_get_length;
 alias c_g_mapped_file_get_contents  g_mapped_file_get_contents;
+alias c_g_mapped_file_get_bytes  g_mapped_file_get_bytes;
 
 // glib.URI
 
@@ -4056,6 +4082,7 @@ alias c_g_regex_unref  g_regex_unref;
 alias c_g_regex_get_pattern  g_regex_get_pattern;
 alias c_g_regex_get_max_backref  g_regex_get_max_backref;
 alias c_g_regex_get_capture_count  g_regex_get_capture_count;
+alias c_g_regex_get_has_cr_or_lf  g_regex_get_has_cr_or_lf;
 alias c_g_regex_get_string_number  g_regex_get_string_number;
 alias c_g_regex_get_compile_flags  g_regex_get_compile_flags;
 alias c_g_regex_get_match_flags  g_regex_get_match_flags;
@@ -4235,6 +4262,7 @@ alias c_g_list_alloc  g_list_alloc;
 alias c_g_list_free_1  g_list_free_1;
 alias c_g_list_length  g_list_length;
 alias c_g_list_copy  g_list_copy;
+alias c_g_list_copy_deep  g_list_copy_deep;
 alias c_g_list_reverse  g_list_reverse;
 alias c_g_list_sort  g_list_sort;
 alias c_g_list_insert_sorted_with_data  g_list_insert_sorted_with_data;
@@ -4268,6 +4296,7 @@ alias c_g_slist_free_full  g_slist_free_full;
 alias c_g_slist_free_1  g_slist_free_1;
 alias c_g_slist_length  g_slist_length;
 alias c_g_slist_copy  g_slist_copy;
+alias c_g_slist_copy_deep  g_slist_copy_deep;
 alias c_g_slist_reverse  g_slist_reverse;
 alias c_g_slist_insert_sorted_with_data  g_slist_insert_sorted_with_data;
 alias c_g_slist_sort  g_slist_sort;
@@ -4448,6 +4477,7 @@ alias c_g_string_erase  g_string_erase;
 alias c_g_string_truncate  g_string_truncate;
 alias c_g_string_set_size  g_string_set_size;
 alias c_g_string_free  g_string_free;
+alias c_g_string_free_to_bytes  g_string_free_to_bytes;
 alias c_g_string_up  g_string_up;
 alias c_g_string_down  g_string_down;
 alias c_g_string_hash  g_string_hash;
@@ -4601,6 +4631,8 @@ alias c_g_datalist_init  g_datalist_init;
 alias c_g_datalist_id_set_data_full  g_datalist_id_set_data_full;
 alias c_g_datalist_id_get_data  g_datalist_id_get_data;
 alias c_g_datalist_id_remove_no_notify  g_datalist_id_remove_no_notify;
+alias c_g_datalist_id_dup_data  g_datalist_id_dup_data;
+alias c_g_datalist_id_replace_data  g_datalist_id_replace_data;
 alias c_g_datalist_get_data  g_datalist_get_data;
 alias c_g_datalist_foreach  g_datalist_foreach;
 alias c_g_datalist_clear  g_datalist_clear;
@@ -4661,6 +4693,7 @@ alias c_g_variant_is_of_type  g_variant_is_of_type;
 alias c_g_variant_is_container  g_variant_is_container;
 alias c_g_variant_compare  g_variant_compare;
 alias c_g_variant_classify  g_variant_classify;
+alias c_g_variant_check_format_string  g_variant_check_format_string;
 alias c_g_variant_get  g_variant_get;
 alias c_g_variant_get_va  g_variant_get_va;
 alias c_g_variant_new  g_variant_new;

@@ -322,8 +322,8 @@ public class BBTree
 	 * to add each item to a list in your GTraverseFunc as you walk over
 	 * the tree, then walk the list and remove each item.
 	 * Params:
-	 * func = the function to call for each node visited. If this function
-	 * returns TRUE, the traversal is stopped.
+	 * func = the function to call for each node visited.
+	 * If this function returns TRUE, the traversal is stopped.
 	 * userData = user data to pass to the function.
 	 */
 	public void foreac(GTraverseFunc func, void* userData)

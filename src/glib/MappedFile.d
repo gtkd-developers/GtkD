@@ -266,4 +266,17 @@ public class MappedFile
 		// gchar * g_mapped_file_get_contents (GMappedFile *file);
 		return Str.toString(g_mapped_file_get_contents(gMappedFile));
 	}
+	
+	/**
+	 * Creates a new GBytes which references the data mapped from file.
+	 * The mapped contents of the file must not be modified after creating this
+	 * bytes object, because a GBytes should be immutable.
+	 * Since 2.34
+	 * Returns: A newly allocated GBytes referencing data from file. [transfer full]
+	 */
+	public GBytes* getBytes()
+	{
+		// GBytes * g_mapped_file_get_bytes (GMappedFile *file);
+		return g_mapped_file_get_bytes(gMappedFile);
+	}
 }

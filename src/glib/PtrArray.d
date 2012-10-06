@@ -212,10 +212,10 @@ public class PtrArray
 	}
 	
 	/**
-	 * Atomically increments the reference count of array by one. This
-	 * function is MT-safe and may be called from any thread.
+	 * Atomically increments the reference count of array by one.
+	 * This function is thread-safe and may be called from any thread.
 	 * Since 2.22
-	 * Returns: The passed in GPtrArray.
+	 * Returns: The passed in GPtrArray
 	 */
 	public PtrArray doref()
 	{

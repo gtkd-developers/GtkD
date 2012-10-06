@@ -181,6 +181,60 @@ public class DataList
 	}
 	
 	/**
+	 * This is a variant of g_datalist_id_get_data() which
+	 * returns a 'duplicate' of the value. dup_func defines the
+	 * meaning of 'duplicate' in this context, it could e.g.
+	 * take a reference on a ref-counted object.
+	 * If the key_id is not set in the datalist then dup_func
+	 * will be called with a NULL argument.
+	 * Note that dup_func is called while the datalist is locked, so it
+	 * is not allowed to read or modify the datalist.
+	 * This function can be useful to avoid races when multiple
+	 * threads are using the same datalist and the same key.
+	 * Since 2.34
+	 * Params:
+	 * datalist = location of a datalist
+	 * keyId = the GQuark identifying a data element
+	 * dupFunc = function to duplicate the old value. [allow-none]
+	 * userData = passed as user_data to dup_func. [allow-none]
+	 * Returns: the result of calling dup_func on the value associated with key_id in datalist, or NULL if not set. If dup_func is NULL, the value is returned unmodified.
+	 */
+	public static void* idDupData(GData** datalist, GQuark keyId, GDuplicateFunc dupFunc, void* userData)
+	{
+		// gpointer g_datalist_id_dup_data (GData **datalist,  GQuark key_id,  GDuplicateFunc dup_func,  gpointer user_data);
+		return g_datalist_id_dup_data(datalist, keyId, dupFunc, userData);
+	}
+	
+	/**
+	 * Compares the member that is associated with key_id in
+	 * datalist to oldval, and if they are the same, replace
+	 * oldval with newval.
+	 * This is like a typical atomic compare-and-exchange
+	 * operation, for a member of datalist.
+	 * If the previous value was replaced then ownership of the
+	 * old value (oldval) is passed to the caller, including
+	 * the registred destroy notify for it (passed out in old_destroy).
+	 * Its up to the caller to free this as he wishes, which may
+	 * or may not include using old_destroy as sometimes replacement
+	 * should not destroy the object in the normal way.
+	 * Return: TRUE if the existing value for key_id was replaced
+	 *  by newval, FALSE otherwise.
+	 * Since 2.34
+	 * Params:
+	 * datalist = location of a datalist
+	 * keyId = the GQuark identifying a data element
+	 * oldval = the old value to compare against. [allow-none]
+	 * newval = the new value to replace it with. [allow-none]
+	 * destroy = destroy notify for the new value. [allow-none]
+	 * oldDestroy = destroy notify for the existing value. [allow-none]
+	 */
+	public static int idReplaceData(GData** datalist, GQuark keyId, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy)
+	{
+		// gboolean g_datalist_id_replace_data (GData **datalist,  GQuark key_id,  gpointer oldval,  gpointer newval,  GDestroyNotify destroy,  GDestroyNotify *old_destroy);
+		return g_datalist_id_replace_data(datalist, keyId, oldval, newval, destroy, oldDestroy);
+	}
+	
+	/**
 	 * Gets a data element, using its string identifier. This is slower than
 	 * g_datalist_id_get_data() because it compares strings.
 	 * Params:

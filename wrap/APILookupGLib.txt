@@ -1233,8 +1233,10 @@ class: Checksum
 prefix: g_checksum_
 prefix: g_
 import: glib.Str
+import: glib.Bytes
 import: gtkc.Loader
 import: gtkc.paths
+structWrap: GBytes* Bytes
 structWrap: GChecksum* Checksum
 
 inout: g_checksum_get_digest digest_len
@@ -2167,8 +2169,10 @@ class: MappedFile
 prefix: g_mapped_file_
 strictPrefix: Y
 import: glib.Str
+import: glib.Bytes
 import: glib.ErrorG
 import: glib.GException
+structWrap: GBytes* Bytes
 structWrap: GMappedFile* MappedFile
 outFile: MappedFile
 
@@ -2584,6 +2588,8 @@ struct: GString
 class: StringG
 prefix: g_string_
 import: glib.Str
+import: glib.Bytes
+structWrap: GBytes* Bytes 
 structWrap: GString* StringG
 
 array: g_string_new_len init len

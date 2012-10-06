@@ -160,7 +160,7 @@ public class URI
 	 * Since 2.6
 	 * Params:
 	 * uriList = an URI list
-	 * Returns: a newly allocated NULL-terminated list of strings holding the individual URIs. The array should be freed with g_strfreev().
+	 * Returns: a newly allocated NULL-terminated list of strings holding the individual URIs. The array should be freed with g_strfreev(). [transfer full]
 	 */
 	public static string[] listExtractUris(string uriList)
 	{

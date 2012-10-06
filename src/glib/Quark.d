@@ -157,7 +157,7 @@ public class Quark
 	 * Gets the string associated with the given GQuark.
 	 * Params:
 	 * quark = a GQuark.
-	 * Returns: the string associated with the GQuark.
+	 * Returns: the string associated with the GQuark
 	 */
 	public static string toString(GQuark quark)
 	{
@@ -181,8 +181,9 @@ public class Quark
 	}
 	
 	/**
-	 * Returns a canonical representation for string. Interned strings can
-	 * be compared for equality by comparing the pointers, instead of using strcmp().
+	 * Returns a canonical representation for string. Interned strings
+	 * can be compared for equality by comparing the pointers, instead of
+	 * using strcmp().
 	 * Since 2.10
 	 * Params:
 	 * string = a string. [allow-none]
@@ -195,10 +196,10 @@ public class Quark
 	}
 	
 	/**
-	 * Returns a canonical representation for string. Interned strings can
-	 * be compared for equality by comparing the pointers, instead of using strcmp().
-	 * g_intern_static_string() does not copy the string, therefore string must
-	 * not be freed or modified.
+	 * Returns a canonical representation for string. Interned strings
+	 * can be compared for equality by comparing the pointers, instead of
+	 * using strcmp(). g_intern_static_string() does not copy the string,
+	 * therefore string must not be freed or modified.
 	 * Since 2.10
 	 * Params:
 	 * string = a static string. [allow-none]
