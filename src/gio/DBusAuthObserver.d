@@ -63,6 +63,7 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import glib.Str;
 private import gio.Credentials;
 private import gio.IOStream;
 
@@ -132,6 +133,40 @@ public class DBusAuthObserver : ObjectG
 	 */
 	int[string] connectedSignals;
 	
+	bool delegate(string, DBusAuthObserver)[] onAllowMechanismListeners;
+	/**
+	 * Emitted to check if mechanism is allowed to be used.
+	 * TRUE if mechanism can be used to authenticate the other peer, FALSE if not.
+	 * Since 2.34
+	 */
+	void addOnAllowMechanism(bool delegate(string, DBusAuthObserver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("allow-mechanism" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"allow-mechanism",
+			cast(GCallback)&callBackAllowMechanism,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["allow-mechanism"] = 1;
+		}
+		onAllowMechanismListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackAllowMechanism(GDBusAuthObserver* observerStruct, gchar* mechanism, DBusAuthObserver _dBusAuthObserver)
+	{
+		foreach ( bool delegate(string, DBusAuthObserver) dlg ; _dBusAuthObserver.onAllowMechanismListeners )
+		{
+			if ( dlg(Str.toString(mechanism), _dBusAuthObserver) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
 	bool delegate(IOStream, Credentials, DBusAuthObserver)[] onAuthorizeAuthenticatedPeerListeners;
 	/**
 	 * Emitted to check if a peer that is successfully authenticated
@@ -187,25 +222,35 @@ public class DBusAuthObserver : ObjectG
 	/**
 	 * Emits the "authorize-authenticated-peer" signal on observer.
 	 * Since 2.26
-	 * Signal Details
-	 * The "authorize-authenticated-peer" signal
-	 * gboolean user_function (GDBusAuthObserver *observer,
-	 *  GIOStream *stream,
-	 *  GCredentials *credentials,
-	 *  gpointer user_data) : Run Last
-	 * Emitted to check if a peer that is successfully authenticated
-	 * is authorized.
-	 * Since 2.26
 	 * Params:
 	 * stream = A GIOStream for the GDBusConnection.
 	 * credentials = Credentials received from the peer or NULL. [allow-none]
-	 * stream = A GIOStream for the GDBusConnection.
-	 * credentials = Credentials received from the peer or NULL. [allow-none]
-	 * Returns: TRUE if the peer is authorized, FALSE if not.Returns: TRUE if the peer is authorized, FALSE if not.
+	 * Returns: TRUE if the peer is authorized, FALSE if not.
 	 */
 	public int authorizeAuthenticatedPeer(IOStream stream, Credentials credentials)
 	{
 		// gboolean g_dbus_auth_observer_authorize_authenticated_peer  (GDBusAuthObserver *observer,  GIOStream *stream,  GCredentials *credentials);
 		return g_dbus_auth_observer_authorize_authenticated_peer(gDBusAuthObserver, (stream is null) ? null : stream.getIOStreamStruct(), (credentials is null) ? null : credentials.getCredentialsStruct());
+	}
+	
+	/**
+	 * Emits the "allow-mechanism" signal on observer.
+	 * Since 2.34
+	 * Signal Details
+	 * The "allow-mechanism" signal
+	 * gboolean user_function (GDBusAuthObserver *observer,
+	 *  gchar *mechanism,
+	 *  gpointer user_data) : Run Last
+	 * Emitted to check if mechanism is allowed to be used.
+	 * Since 2.34
+	 * Params:
+	 * mechanism = The name of the mechanism, e.g. DBUS_COOKIE_SHA1.
+	 * mechanism = The name of the mechanism, e.g. DBUS_COOKIE_SHA1.
+	 * Returns: TRUE if mechanism can be used to authenticate the other peer, FALSE if not.Returns: TRUE if mechanism can be used to authenticate the other peer, FALSE if not.
+	 */
+	public int allowMechanism(string mechanism)
+	{
+		// gboolean g_dbus_auth_observer_allow_mechanism  (GDBusAuthObserver *observer,  const gchar *mechanism);
+		return g_dbus_auth_observer_allow_mechanism(gDBusAuthObserver, Str.toStringz(mechanism));
 	}
 }

@@ -79,9 +79,9 @@ private import gobject.ObjectG;
 /**
  * Description
  * A certificate used for TLS authentication and encryption.
- * This can represent either a public key only (eg, the certificate
+ * This can represent either a certificate only (eg, the certificate
  * received by a client from a server), or the combination of
- * a public key and a private key (which is needed when acting as a
+ * a certificate and a private key (which is needed when acting as a
  * GTlsServerConnection).
  */
 public class TlsCertificate : ObjectG
@@ -292,5 +292,22 @@ public class TlsCertificate : ObjectG
 	{
 		// GTlsCertificateFlags g_tls_certificate_verify (GTlsCertificate *cert,  GSocketConnectable *identity,  GTlsCertificate *trusted_ca);
 		return g_tls_certificate_verify(gTlsCertificate, (identity is null) ? null : identity.getSocketConnectableTStruct(), (trustedCa is null) ? null : trustedCa.getTlsCertificateStruct());
+	}
+	
+	/**
+	 * Check if two GTlsCertificate objects represent the same certificate.
+	 * The raw DER byte data of the two certificates are checked for equality.
+	 * This has the effect that two certificates may compare equal even if
+	 * their "issuer", "private-key", or
+	 * "private-key-pem" properties differ.
+	 * Since 2.34
+	 * Params:
+	 * certTwo = second certificate to compare
+	 * Returns: whether the same or not
+	 */
+	public int isSame(TlsCertificate certTwo)
+	{
+		// gboolean g_tls_certificate_is_same (GTlsCertificate *cert_one,  GTlsCertificate *cert_two);
+		return g_tls_certificate_is_same(gTlsCertificate, (certTwo is null) ? null : certTwo.getTlsCertificateStruct());
 	}
 }

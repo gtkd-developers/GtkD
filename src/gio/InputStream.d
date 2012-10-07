@@ -478,4 +478,99 @@ public class InputStream : ObjectG
 		// void g_input_stream_clear_pending (GInputStream *stream);
 		g_input_stream_clear_pending(gInputStream);
 	}
+	
+	/**
+	 * Like g_input_stream_read(), this tries to read count bytes from
+	 * the stream in a blocking fashion. However, rather than reading into
+	 * a user-supplied buffer, this will create a new GBytes containing
+	 * the data that was read. This may be easier to use from language
+	 * bindings.
+	 * If count is zero, returns a zero-length GBytes and does nothing. A
+	 * value of count larger than G_MAXSSIZE will cause a
+	 * G_IO_ERROR_INVALID_ARGUMENT error.
+	 * On success, a new GBytes is returned. It is not an error if the
+	 * size of this object is not the same as the requested size, as it
+	 * can happen e.g. near the end of a file. A zero-length GBytes is
+	 * returned on end of file (or if count is zero), but never
+	 * otherwise.
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned. If an
+	 * operation was partially finished when the operation was cancelled the
+	 * partial result will be returned, without an error.
+	 * On error NULL is returned and error is set accordingly.
+	 * Params:
+	 * count = maximum number of bytes that will be read from the stream. Common
+	 * values include 4096 and 8192.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * Returns: a new GBytes, or NULL on error
+	 * Throws: GException on failure.
+	 */
+	public GBytes* readBytes(gsize count, Cancellable cancellable)
+	{
+		// GBytes * g_input_stream_read_bytes (GInputStream *stream,  gsize count,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_input_stream_read_bytes(gInputStream, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Request an asynchronous read of count bytes from the stream into a
+	 * new GBytes. When the operation is finished callback will be
+	 * called. You can then call g_input_stream_read_bytes_finish() to get the
+	 * result of the operation.
+	 * During an async request no other sync and async calls are allowed
+	 * on stream, and will result in G_IO_ERROR_PENDING errors.
+	 * A value of count larger than G_MAXSSIZE will cause a
+	 * G_IO_ERROR_INVALID_ARGUMENT error.
+	 * On success, the new GBytes will be passed to the callback. It is
+	 * not an error if this is smaller than the requested size, as it can
+	 * happen e.g. near the end of a file, but generally we try to read as
+	 * many bytes as requested. Zero is returned on end of file (or if
+	 * count is zero), but never otherwise.
+	 * Any outstanding I/O request with higher priority (lower numerical
+	 * value) will be executed before an outstanding request with lower
+	 * priority. Default priority is G_PRIORITY_DEFAULT.
+	 * Params:
+	 * count = the number of bytes that will be read from the stream
+	 * ioPriority = the I/O priority
+	 * of the request.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = callback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
+	 */
+	public void readBytesAsync(gsize count, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_input_stream_read_bytes_async (GInputStream *stream,  gsize count,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_input_stream_read_bytes_async(gInputStream, count, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous stream read-into-GBytes operation.
+	 * Params:
+	 * result = a GAsyncResult.
+	 * Returns: the newly-allocated GBytes, or NULL on error
+	 * Throws: GException on failure.
+	 */
+	public GBytes* readBytesFinish(AsyncResultIF result)
+	{
+		// GBytes * g_input_stream_read_bytes_finish (GInputStream *stream,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_input_stream_read_bytes_finish(gInputStream, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
 }

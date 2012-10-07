@@ -71,6 +71,8 @@ private import gio.InputStream;
  * Description
  * GMemoryInputStream is a class for using arbitrary
  * memory chunks as input for GIO streaming input operations.
+ * As of GLib 2.34, GMemoryInputStream implements
+ * GPollableInputStream.
  */
 public class MemoryInputStream : InputStream, SeekableIF
 {

@@ -291,6 +291,46 @@ public class MountOperation : ObjectG
 		}
 	}
 	
+	void delegate(string, gint64, gint64, MountOperation)[] onShowUnmountProgressListeners;
+	/**
+	 * Emitted when an unmount operation has been busy for more than some time
+	 * (typically 1.5 seconds).
+	 * When unmounting or ejecting a volume, the kernel might need to flush
+	 * pending data in its buffers to the volume stable storage, and this operation
+	 * can take a considerable amount of time. This signal may be emitted several
+	 * times as long as the unmount operation is outstanding, and then one
+	 * last time when the operation is completed, with bytes_left set to zero.
+	 * Implementations of GMountOperation should handle this signal by
+	 * showing an UI notification, and then dismiss it, or show another notification
+	 * of completion, when bytes_left reaches zero.
+	 * If the message contains a line break, the first line should be
+	 * presented as a heading. For example, it may be used as the
+	 * primary text in a GtkMessageDialog.
+	 * Since 2.34
+	 */
+	void addOnShowUnmountProgress(void delegate(string, gint64, gint64, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("show-unmount-progress" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"show-unmount-progress",
+			cast(GCallback)&callBackShowUnmountProgress,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["show-unmount-progress"] = 1;
+		}
+		onShowUnmountProgressListeners ~= dlg;
+	}
+	extern(C) static void callBackShowUnmountProgress(GMountOperation* opStruct, gchar* message, gint64 timeLeft, gint64 bytesLeft, MountOperation _mountOperation)
+	{
+		foreach ( void delegate(string, gint64, gint64, MountOperation) dlg ; _mountOperation.onShowUnmountProgressListeners )
+		{
+			dlg(Str.toString(message), timeLeft, bytesLeft, _mountOperation);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new mount operation.

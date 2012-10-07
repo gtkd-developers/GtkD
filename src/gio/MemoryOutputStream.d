@@ -71,6 +71,8 @@ private import gio.OutputStream;
  * Description
  * GMemoryOutputStream is a class for using arbitrary
  * memory chunks as output for GIO streaming output operations.
+ * As of GLib 2.34, GMemoryOutputStream implements
+ * GPollableOutputStream.
  */
 public class MemoryOutputStream : OutputStream, SeekableIF
 {

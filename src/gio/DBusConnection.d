@@ -835,6 +835,21 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	}
 	
 	/**
+	 * Retrieves the last serial number assigned to a GDBusMessage on
+	 * the current thread. This includes messages sent via both low-level
+	 * API such as g_dbus_connection_send_message() as well as
+	 * high-level API such as g_dbus_connection_emit_signal(),
+	 * g_dbus_connection_call() or g_dbus_proxy_call().
+	 * Since 2.34
+	 * Returns: the last used serial or zero when no message has been sent within the current thread.
+	 */
+	public uint getLastSerial()
+	{
+		// guint32 g_dbus_connection_get_last_serial (GDBusConnection *connection);
+		return g_dbus_connection_get_last_serial(gDBusConnection);
+	}
+	
+	/**
 	 * Asynchronously invokes the method_name method on the
 	 * interface_name D-Bus interface on the remote object at
 	 * object_path owned by bus_name.
@@ -915,7 +930,8 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * If the parameters GVariant is floating, it is consumed.
 	 * Since 2.26
 	 * Params:
-	 * busName = A unique or well-known bus name.
+	 * busName = A unique or well-known bus name or NULL if
+	 * connection is not a message bus connection. [allow-none]
 	 * objectPath = Path of remote object.
 	 * interfaceName = D-Bus interface to invoke method on.
 	 * methodName = The name of the method to invoke.
@@ -1012,7 +1028,8 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * This method is only available on UNIX.
 	 * Since 2.30
 	 * Params:
-	 * busName = A unique or well-known bus name.
+	 * busName = A unique or well-known bus name or NULL if
+	 * connection is not a message bus connection. [allow-none]
 	 * objectPath = Path of remote object.
 	 * interfaceName = D-Bus interface to invoke method on.
 	 * methodName = The name of the method to invoke.

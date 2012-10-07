@@ -226,6 +226,19 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	}
 	
 	/**
+	 * Returns whether object is currently exported on manager.
+	 * Since 2.34
+	 * Params:
+	 * object = An object.
+	 * Returns: TRUE if object is exported
+	 */
+	public int isExported(DBusObjectSkeleton object)
+	{
+		// gboolean g_dbus_object_manager_server_is_exported  (GDBusObjectManagerServer *manager,  GDBusObjectSkeleton *object);
+		return g_dbus_object_manager_server_is_exported(gDBusObjectManagerServer, (object is null) ? null : object.getDBusObjectSkeletonStruct());
+	}
+	
+	/**
 	 * If manager has an object at path, removes the object. Otherwise
 	 * does nothing.
 	 * Note that object_path must be in the hierarchy rooted by the

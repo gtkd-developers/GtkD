@@ -132,7 +132,7 @@ public interface PollableOutputStreamIF
 	public Source gPollableOutputStreamCreateSource(Cancellable cancellable);
 	
 	/**
-	 * Attempts to write up to size bytes from buffer to stream, as
+	 * Attempts to write up to count bytes from buffer to stream, as
 	 * with g_output_stream_write(). If stream is not currently writable,
 	 * this will immediately return G_IO_ERROR_WOULD_BLOCK, and you can
 	 * use g_pollable_output_stream_create_source() to create a GSource
@@ -145,11 +145,11 @@ public interface PollableOutputStreamIF
 	 * Virtual: write_nonblocking
 	 * Params:
 	 * buffer = a buffer to write
-	 * data from. [array length=size][element-type guint8]
-	 * size = the number of bytes you want to write
+	 * data from. [array length=count][element-type guint8]
+	 * count = the number of bytes you want to write
 	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * Returns: the number of bytes written, or -1 on error (including G_IO_ERROR_WOULD_BLOCK).
 	 * Throws: GException on failure.
 	 */
-	public gssize gPollableOutputStreamWriteNonblocking(void[] buffer, Cancellable cancellable);
+	public gssize gPollableOutputStreamWriteNonblocking(void[] buffer, gsize count, Cancellable cancellable);
 }

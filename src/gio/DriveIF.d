@@ -166,6 +166,13 @@ public interface DriveIF
 	public IconIF getIcon();
 	
 	/**
+	 * Gets the icon for drive.
+	 * Since 2.34
+	 * Returns: symbolic GIcon for the drive. Free the returned object with g_object_unref(). [transfer full]
+	 */
+	public IconIF getSymbolicIcon();
+	
+	/**
 	 * Check if drive has any mountable volumes.
 	 * Returns: TRUE if the drive contains volumes, FALSE otherwise.
 	 */

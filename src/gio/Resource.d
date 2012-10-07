@@ -417,7 +417,7 @@ public class Resource
 	
 	/**
 	 * Looks for a file at the specified path in the set of
-	 * globally registred resources and returns a GBytes that
+	 * globally registered resources and returns a GBytes that
 	 * lets you directly access the data in memory.
 	 * The data is always followed by a zero byte, so you
 	 * can safely use the data as a C string. However, that byte
@@ -455,7 +455,7 @@ public class Resource
 	
 	/**
 	 * Looks for a file at the specified path in the set of
-	 * globally registred resources and returns a GInputStream
+	 * globally registered resources and returns a GInputStream
 	 * that lets you read the data.
 	 * lookup_flags controls the behaviour of the lookup.
 	 * Since 2.32
@@ -486,7 +486,7 @@ public class Resource
 	
 	/**
 	 * Returns all the names of children at the specified path in the set of
-	 * globally registred resources.
+	 * globally registered resources.
 	 * The return result is a NULL terminated list of strings which should
 	 * be released with g_strfreev().
 	 * lookup_flags controls the behaviour of the lookup.
@@ -514,7 +514,7 @@ public class Resource
 	
 	/**
 	 * Looks for a file at the specified path in the set of
-	 * globally registred resources and if found returns information about it.
+	 * globally registered resources and if found returns information about it.
 	 * lookup_flags controls the behaviour of the lookup.
 	 * Since 2.32
 	 * Params:

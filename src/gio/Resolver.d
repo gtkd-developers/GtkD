@@ -501,4 +501,91 @@ public class Resolver : ObjectG
 		// void g_resolver_free_targets (GList *targets);
 		g_resolver_free_targets((targets is null) ? null : targets.getListGStruct());
 	}
+	
+	/**
+	 * Synchronously performs a DNS record lookup for the given rrname and returns
+	 * a list of records as GVariant tuples. See GResolverRecordType for
+	 * information on what the records contain for each record_type.
+	 * If the DNS resolution fails, error (if non-NULL) will be set to
+	 * a value from GResolverError.
+	 * If cancellable is non-NULL, it can be used to cancel the
+	 * operation, in which case error (if non-NULL) will be set to
+	 * G_IO_ERROR_CANCELLED.
+	 * Since 2.34
+	 * Params:
+	 * rrname = the DNS name to lookup the record for
+	 * recordType = the type of DNS record to lookup
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * Returns: a GList of GVariant, or NULL on error. You must free each of the records and the list when you are done with it. (You can use g_list_free_full() with g_variant_unref() to do this.). [element-type GVariant][transfer full]
+	 * Throws: GException on failure.
+	 */
+	public ListG lookupRecords(string rrname, GResolverRecordType recordType, Cancellable cancellable)
+	{
+		// GList * g_resolver_lookup_records (GResolver *resolver,  const gchar *rrname,  GResolverRecordType record_type,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_resolver_lookup_records(gResolver, Str.toStringz(rrname), recordType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
+	
+	/**
+	 * Begins asynchronously performing a DNS lookup for the given
+	 * rrname, and eventually calls callback, which must call
+	 * g_resolver_lookup_records_finish() to get the final result. See
+	 * g_resolver_lookup_records() for more details.
+	 * Since 2.34
+	 * Params:
+	 * rrname = the DNS name to lookup the record for
+	 * recordType = the type of DNS record to lookup
+	 * cancellable = a GCancellable, or NULL. [allow-none]
+	 * callback = callback to call after resolution completes. [scope async]
+	 * userData = data for callback. [closure]
+	 */
+	public void lookupRecordsAsync(string rrname, GResolverRecordType recordType, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_resolver_lookup_records_async (GResolver *resolver,  const gchar *rrname,  GResolverRecordType record_type,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_resolver_lookup_records_async(gResolver, Str.toStringz(rrname), recordType, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Retrieves the result of a previous call to
+	 * g_resolver_lookup_records_async(). Returns a list of records as GVariant
+	 * tuples. See GResolverRecordType for information on what the records contain.
+	 * If the DNS resolution failed, error (if non-NULL) will be set to
+	 * a value from GResolverError. If the operation was cancelled,
+	 * error will be set to G_IO_ERROR_CANCELLED.
+	 * Since 2.34
+	 * Params:
+	 * result = the result passed to your GAsyncReadyCallback
+	 * Returns: a GList of GVariant, or NULL on error. You must free each of the records and the list when you are done with it. (You can use g_list_free_full() with g_variant_unref() to do this.). [element-type GVariant][transfer full]
+	 * Throws: GException on failure.
+	 */
+	public ListG lookupRecordsFinish(AsyncResultIF result)
+	{
+		// GList * g_resolver_lookup_records_finish (GResolver *resolver,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_resolver_lookup_records_finish(gResolver, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		return new ListG(cast(GList*) p);
+	}
 }

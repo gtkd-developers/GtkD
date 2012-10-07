@@ -283,6 +283,19 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 	
 	/**
+	 * Retrieves the StartupWMClass field from info. This represents the
+	 * WM_CLASS property of the main window of the application, if launched
+	 * through info.
+	 * Since 2.34
+	 * Returns: the startup WM class, or NULL if none is set in the desktop file. [transfer none]
+	 */
+	public string getStartupWmClass()
+	{
+		// const char * g_desktop_app_info_get_startup_wm_class  (GDesktopAppInfo *info);
+		return Str.toString(g_desktop_app_info_get_startup_wm_class(gDesktopAppInfo));
+	}
+	
+	/**
 	 * Sets the name of the desktop that the application is running in.
 	 * This is used by g_app_info_should_show() and
 	 * g_desktop_app_info_get_show_in() to evaluate the

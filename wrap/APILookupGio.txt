@@ -38,6 +38,17 @@ addAliases: start
 addAliases: end
 
 addEnums: start
+
+enum GResolverRecordType
+{
+	SRV = 1,
+	MX,
+	TXT,
+	SOA,
+	NS
+}
+alias GResolverRecordType ResolverRecordType;
+
 addEnums: end
 
 addStructs: start
@@ -81,6 +92,8 @@ import: gio.FileInputStream
 import: gio.FileIOStream
 import: gio.FileMonitor
 import: gio.FileOutputStream
+import: gio.Icon
+import: gio.IconIF
 import: gio.Mount
 import: gio.MountIF
 import: gio.MountOperation
@@ -95,6 +108,7 @@ structWrap: GFileInputStream* FileInputStream
 structWrap: GFileIOStream* FileIOStream
 structWrap: GFileMonitor* FileMonitor
 structWrap: GFileOutputStream* FileOutputStream
+structWrap: GIcon* IconIF
 structWrap: GMount* MountIF
 structWrap: GMountOperation* MountOperation
 
@@ -237,6 +251,8 @@ class: AsyncResultT
 template: TStruct
 prefix: g_async_result_
 import: gobject.ObjectG
+import: glib.ErrorG
+import: glib.GException
 structWrap: GObject* ObjectG
 interface: AsyncResultIF
 outFile: AsyncResultT
@@ -411,8 +427,10 @@ class: InputStream
 prefix: g_input_stream_
 import: glib.ErrorG
 import: glib.GException
+import: glib.Bytes
 import: gio.AsyncResultIF
 import: gio.Cancellable
+structWrap: GBytes* Bytes
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 out: g_input_stream_read_all bytes_read
@@ -425,9 +443,11 @@ extend: GObject
 prefix: g_output_stream_
 import: glib.ErrorG
 import: glib.GException
+import: glib.Bytes
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.InputStream
+structWrap: GBytes* Bytes
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GInputStream* InputStream
@@ -738,6 +758,28 @@ structWrap: GSource* Source
 array: g_pollable_output_stream_write_nonblocking buffer size
 interface: PollableOutputStreamIF
 outFile: PollableOutputStreamT
+
+file: gio-gpollableutils.html
+prefix: g_
+import: gobject.ObjectG
+import: glib.ErrorG
+import: glib.GException
+import: glib.Source
+import: gio.Cancellable
+import: gio.InputStream
+import: gio.OutputStream
+structWrap: GObject* ObjectG
+structWrap: GSource* Source
+structWrap: GCancellable* Cancellable
+structWrap: GInputStream* InputStream
+structWrap: GOutputStream* OutputStream
+
+array: g_pollable_stream_read buffer count
+array: g_pollable_stream_write buffer count
+array: g_pollable_stream_write_all buffer count
+out: g_pollable_stream_write_all bytes_written
+
+outFile: PollableUtils
 
 ###########################################################
 ### File types and applications ###########################
@@ -2463,6 +2505,7 @@ file: GDBusAuthObserver.html
 struct: GDBusAuthObserver
 class: DBusAuthObserver
 prefix: g_dbus_auth_observer_
+import: glib.Str
 import: gio.Credentials
 import: gio.IOStream
 structWrap: GCredentials* Credentials
@@ -3023,9 +3066,11 @@ import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 import: gio.Cancellable
+import: gio.DBusConnection
 import: gio.File
 structWrap: GApplication* Application
 structWrap: GCancellable* Cancellable
+structWrap: GDBusConnection* DBusConnection
 structWrap: GFile* File
 
 #imports for ActionGroup Interface.
@@ -3308,8 +3353,10 @@ prefix: g_menu_item_
 strictPrefix: Y
 import: glib.Str
 import: glib.Variant
+import: glib.VariantType
 import: gio.MenuModel
 structWrap: GVariant* Variant
+structWrap: GVariantType* VariantType
 structWrap: GMenuModel* MenuModel
 
 #Use setSection or setSubmenu
@@ -3414,3 +3461,15 @@ structWrap: GList* ListG
 structWrap: GIOExtension* IOExtension
 structWrap: GIOExtensionPoint* IOExtensionPoint
 outFile: IOExtensionPoint
+
+###########################################################
+### GIO Testing ###########################################
+###########################################################
+
+file: GTestDBus.html
+struct: GTestDBus
+class: TestDBus
+prefix: g_test_dbus_
+import: glib.Str
+outFile: TestDBus
+

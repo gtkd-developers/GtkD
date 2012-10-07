@@ -59,6 +59,8 @@
  * 	- gio.FileIOStream
  * 	- gio.FileMonitor
  * 	- gio.FileOutputStream
+ * 	- gio.Icon
+ * 	- gio.IconIF
  * 	- gio.Mount
  * 	- gio.MountIF
  * 	- gio.MountOperation
@@ -74,6 +76,7 @@
  * 	- GFileInputStream* -> FileInputStream
  * 	- GFileMonitor* -> FileMonitor
  * 	- GFileOutputStream* -> FileOutputStream
+ * 	- GIcon* -> IconIF
  * 	- GMount* -> MountIF
  * 	- GMountOperation* -> MountOperation
  * module aliases:
@@ -103,6 +106,8 @@ private import gio.FileInputStream;
 private import gio.FileIOStream;
 private import gio.FileMonitor;
 private import gio.FileOutputStream;
+private import gio.Icon;
+private import gio.IconIF;
 private import gio.Mount;
 private import gio.MountIF;
 private import gio.MountOperation;
@@ -114,47 +119,50 @@ private import gobject.ObjectG;
 /**
  * Description
  * GFile is a high level abstraction for manipulating files on a
- * virtual file system. GFiles are lightweight, immutable
- * objects that do no I/O upon creation. It is necessary to understand that
- * GFile objects do not represent files, merely an identifier for a file. All
- * file content I/O is implemented as streaming operations (see GInputStream and
- * GOutputStream).
+ * virtual file system. GFiles are lightweight, immutable objects
+ * that do no I/O upon creation. It is necessary to understand that
+ * GFile objects do not represent files, merely an identifier for a
+ * file. All file content I/O is implemented as streaming operations
+ * (see GInputStream and GOutputStream).
  * To construct a GFile, you can use:
  * g_file_new_for_path() if you have a path.
  * g_file_new_for_uri() if you have a URI.
  * g_file_new_for_commandline_arg() for a command line argument.
  * g_file_new_tmp() to create a temporary file from a template.
- * g_file_parse_name() from a utf8 string gotten from g_file_get_parse_name().
- * One way to think of a GFile is as an abstraction of a pathname. For normal
- * files the system pathname is what is stored internally, but as GFiles
- * are extensible it could also be something else that corresponds to a pathname
- * in a userspace implementation of a filesystem.
- * GFiles make up hierarchies of directories and files that correspond to the
- * files on a filesystem. You can move through the file system with GFile using
- * g_file_get_parent() to get an identifier for the parent directory, g_file_get_child()
- * to get a child within a directory, g_file_resolve_relative_path() to resolve a relative
- * path between two GFiles. There can be multiple hierarchies, so you may not
- * end up at the same root if you repeatedly call g_file_get_parent() on two different
+ * g_file_parse_name() from a UTF-8 string gotten from g_file_get_parse_name().
+ * One way to think of a GFile is as an abstraction of a pathname. For
+ * normal files the system pathname is what is stored internally, but as
+ * GFiles are extensible it could also be something else that corresponds
+ * to a pathname in a userspace implementation of a filesystem.
+ * GFiles make up hierarchies of directories and files that correspond to
+ * the files on a filesystem. You can move through the file system with
+ * GFile using g_file_get_parent() to get an identifier for the parent
+ * directory, g_file_get_child() to get a child within a directory,
+ * g_file_resolve_relative_path() to resolve a relative path between two
+ * GFiles. There can be multiple hierarchies, so you may not end up at
+ * the same root if you repeatedly call g_file_get_parent() on two different
  * files.
  * All GFiles have a basename (get with g_file_get_basename()). These names
- * are byte strings that are used to identify the file on the filesystem (relative to
- * its parent directory) and there is no guarantees that they have any particular charset
- * encoding or even make any sense at all. If you want to use filenames in a user
- * interface you should use the display name that you can get by requesting the
+ * are byte strings that are used to identify the file on the filesystem
+ * (relative to its parent directory) and there is no guarantees that they
+ * have any particular charset encoding or even make any sense at all. If
+ * you want to use filenames in a user interface you should use the display
+ * name that you can get by requesting the
  * G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME attribute with g_file_query_info().
- * This is guaranteed to be in utf8 and can be used in a user interface. But always
- * store the real basename or the GFile to use to actually access the file, because
- * there is no way to go from a display name to the actual name.
- * Using GFile as an identifier has the same weaknesses as using a path in that
- * there may be multiple aliases for the same file. For instance, hard or
- * soft links may cause two different GFiles to refer to the same file.
- * Other possible causes for aliases are: case insensitive filesystems, short
- * and long names on Fat/NTFS, or bind mounts in Linux. If you want to check if
- * two GFiles point to the same file you can query for the
+ * This is guaranteed to be in UTF-8 and can be used in a user interface.
+ * But always store the real basename or the GFile to use to actually
+ * access the file, because there is no way to go from a display name to
+ * the actual name.
+ * Using GFile as an identifier has the same weaknesses as using a path
+ * in that there may be multiple aliases for the same file. For instance,
+ * hard or soft links may cause two different GFiles to refer to the same
+ * file. Other possible causes for aliases are: case insensitive filesystems,
+ * short and long names on FAT/NTFS, or bind mounts in Linux. If you want to
+ * check if two GFiles point to the same file you can query for the
  * G_FILE_ATTRIBUTE_ID_FILE attribute. Note that GFile does some trivial
- * canonicalization of pathnames passed in, so that trivial differences in the
- * path string used at creation (duplicated slashes, slash at end of path, "."
- * or ".." path segments, etc) does not create different GFiles.
+ * canonicalization of pathnames passed in, so that trivial differences in
+ * the path string used at creation (duplicated slashes, slash at end of
+ * path, "." or ".." path segments, etc) does not create different GFiles.
  * Many GFile operations have both synchronous and asynchronous versions
  * to suit your application. Asynchronous versions of synchronous functions
  * simply have _async() appended to their function names. The asynchronous
@@ -224,13 +232,13 @@ public class File : ObjectG
 	 */
 	
 	/**
-	 * Creates a GFile with the given argument from the command line. The value of
-	 * arg can be either a URI, an absolute path or a relative path resolved
-	 * relative to the current working directory.
-	 * This operation never fails, but the returned object might not support any
-	 * I/O operation if arg points to a malformed path.
+	 * Creates a GFile with the given argument from the command line.
+	 * The value of arg can be either a URI, an absolute path or a
+	 * relative path resolved relative to the current working directory.
+	 * This operation never fails, but the returned object might not
+	 * support any I/O operation if arg points to a malformed path.
 	 * Params:
-	 * arg = a command line string.
+	 * arg = a command line string
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string arg)
@@ -283,11 +291,12 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Constructs a GFile with the given parse_name (i.e. something given by g_file_get_parse_name()).
-	 * This operation never fails, but the returned object might not support any I/O
-	 * operation if the parse_name cannot be parsed.
+	 * Constructs a GFile with the given parse_name (i.e. something
+	 * given by g_file_get_parse_name()). This operation never fails,
+	 * but the returned object might not support any I/O operation if
+	 * the parse_name cannot be parsed.
 	 * Params:
-	 * parseName = a file name or path to be parsed.
+	 * parseName = a file name or path to be parsed
 	 * Returns: a new GFile. [transfer full]
 	 */
 	public static File parseName(string parseName)
@@ -305,7 +314,7 @@ public class File : ObjectG
 	 * Duplicates a GFile handle. This operation does not duplicate
 	 * the actual file or directory represented by the GFile; see
 	 * g_file_copy() if attempting to copy a file.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Returns: a new GFile that is a duplicate of the given GFile. [transfer full]
 	 */
 	public File dup()
@@ -321,7 +330,7 @@ public class File : ObjectG
 	
 	/**
 	 * Creates a hash value for a GFile.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Virtual: hash
 	 * Params:
 	 * file = gconstpointer to a GFile. [type GFile]
@@ -334,13 +343,13 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Checks equality of two given GFiles. Note that two
-	 * GFiles that differ can still refer to the same
+	 * Checks equality of two given GFiles.
+	 * Note that two GFiles that differ can still refer to the same
 	 * file on the filesystem due to various forms of filename
 	 * aliasing.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Params:
-	 * file2 = the second GFile.
+	 * file2 = the second GFile
 	 * Returns: TRUE if file1 and file2 are equal. FALSE if either is not a GFile.
 	 */
 	public int equal(File file2)
@@ -354,12 +363,12 @@ public class File : ObjectG
 	 * If called for the top level of a system (such as the filesystem root
 	 * or a uri like sftp://host/) it will return a single directory separator
 	 * (and on Windows, possibly a drive letter).
-	 * The base name is a byte string (*not* UTF-8). It has no defined encoding
+	 * The base name is a byte string (not UTF-8). It has no defined encoding
 	 * or rules other than it may not contain zero bytes. If you want to use
 	 * filenames in a user interface you should use the display name that you
 	 * can get by requesting the G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME
 	 * attribute with g_file_query_info().
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Returns: string containing the GFile's base name, or NULL if given GFile is invalid. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getBasename()
@@ -370,7 +379,7 @@ public class File : ObjectG
 	
 	/**
 	 * Gets the local pathname for GFile, if one exists.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Returns: string containing the GFile's path, or NULL if no such path exists. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getPath()
@@ -381,7 +390,7 @@ public class File : ObjectG
 	
 	/**
 	 * Gets the URI for the file.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Returns: a string containing the GFile's URI. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getUri()
@@ -399,9 +408,9 @@ public class File : ObjectG
 	 * full-pathname kind of string in a user interface,
 	 * like in a location entry.
 	 * For local files with names that can safely be converted
-	 * to UTF8 the pathname is used, otherwise the IRI is used
-	 * (a form of URI that allows UTF8 characters unescaped).
-	 * This call does no blocking i/o.
+	 * to UTF-8 the pathname is used, otherwise the IRI is used
+	 * (a form of URI that allows UTF-8 characters unescaped).
+	 * This call does no blocking I/O.
 	 * Returns: a string containing the GFile's parse name. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getParseName()
@@ -414,7 +423,7 @@ public class File : ObjectG
 	 * Gets the parent directory for the file.
 	 * If the file represents the root directory of the
 	 * file system, then NULL will be returned.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Returns: a GFile structure to the parent of the given GFile or NULL if there is no parent. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public File getParent()
@@ -449,9 +458,9 @@ public class File : ObjectG
 	 * Note that the file with that specific name might not exist, but
 	 * you can still have a GFile that points to it. You can use this
 	 * for instance to create that file.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Params:
-	 * name = string containing the child's basename.
+	 * name = string containing the child's basename
 	 * Returns: a GFile to a child specified by name. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public File getChild(string name)
@@ -466,14 +475,15 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Gets the child of file for a given display_name (i.e. a UTF8
-	 * version of the name). If this function fails, it returns NULL and error will be
-	 * set. This is very useful when constructing a GFile for a new file
-	 * and the user entered the filename in the user interface, for instance
-	 * when you select a directory and type a filename in the file selector.
-	 * This call does no blocking i/o.
+	 * Gets the child of file for a given display_name (i.e. a UTF-8
+	 * version of the name). If this function fails, it returns NULL
+	 * and error will be set. This is very useful when constructing a
+	 * GFile for a new file and the user entered the filename in the
+	 * user interface, for instance when you select a directory and
+	 * type a filename in the file selector.
+	 * This call does no blocking I/O.
 	 * Params:
-	 * displayName = string to a possible child.
+	 * displayName = string to a possible child
 	 * Returns: a GFile to the specified child, or NULL if the display name couldn't be converted. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -497,18 +507,19 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Checks whether file has the prefix specified by prefix. In other word,
-	 * if the names of initial elements of files pathname match prefix.
-	 * Only full pathname elements are matched, so a path like /foo is not
-	 * considered a prefix of /foobar, only of /foo/bar.
-	 * This call does no i/o, as it works purely on names. As such it can
+	 * Checks whether file has the prefix specified by prefix.
+	 * In other words, if the names of initial elements of file's
+	 * pathname match prefix. Only full pathname elements are matched,
+	 * so a path like /foo is not considered a prefix of /foobar, only
+	 * of /foo/bar.
+	 * This call does no I/O, as it works purely on names. As such it can
 	 * sometimes return FALSE even if file is inside a prefix (from a
 	 * filesystem point of view), because the prefix of file is an alias
 	 * of prefix.
 	 * Virtual: prefix_matches
 	 * Params:
-	 * prefix = input GFile.
-	 * Returns: TRUE if the files's parent, grandparent, etc is prefix. FALSE otherwise.
+	 * prefix = input GFile
+	 * Returns: TRUE if the files's parent, grandparent, etc is prefix, FALSE otherwise.
 	 */
 	public int hasPrefix(File prefix)
 	{
@@ -518,9 +529,9 @@ public class File : ObjectG
 	
 	/**
 	 * Gets the path for descendant relative to parent.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Params:
-	 * descendant = input GFile.
+	 * descendant = input GFile
 	 * Returns: string with the relative path from descendant to parent, or NULL if descendant doesn't have parent as prefix. The returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getRelativePath(File descendant)
@@ -531,9 +542,9 @@ public class File : ObjectG
 	
 	/**
 	 * Resolves a relative path for file to an absolute path.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Params:
-	 * relativePath = a given relative path string.
+	 * relativePath = a given relative path string
 	 * Returns: GFile to the resolved path. NULL if relative_path is NULL or if file is invalid. Free the returned object with g_object_unref(). [transfer full]
 	 */
 	public File resolveRelativePath(string relativePath)
@@ -552,12 +563,11 @@ public class File : ObjectG
 	 * A native file s one expressed in the platform-native filename format,
 	 * e.g. "C:\Windows" or "/usr/bin/". This does not mean the file is local,
 	 * as it might be on a locally mounted remote filesystem.
-	 * On some systems non-native files may be available using
-	 * the native filesystem via a userspace filesystem (FUSE), in
-	 * these cases this call will return FALSE, but g_file_get_path()
-	 * will still return a native path.
-	 * This call does no blocking i/o.
-	 * Returns: TRUE if file is native.
+	 * On some systems non-native files may be available using the native
+	 * filesystem via a userspace filesystem (FUSE), in these cases this call
+	 * will return FALSE, but g_file_get_path() will still return a native path.
+	 * This call does no blocking I/O.
+	 * Returns: TRUE if file is native
 	 */
 	public int isNative()
 	{
@@ -567,9 +577,9 @@ public class File : ObjectG
 	
 	/**
 	 * Checks to see if a GFile has a given URI scheme.
-	 * This call does no blocking i/o.
+	 * This call does no blocking I/O.
 	 * Params:
-	 * uriScheme = a string containing a URI scheme.
+	 * uriScheme = a string containing a URI scheme
 	 * Returns: TRUE if GFile's backend supports the given URI scheme, FALSE if URI scheme is NULL, not supported, or GFile is invalid.
 	 */
 	public int hasUriScheme(string uriScheme)
@@ -594,9 +604,10 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be returned.
-	 * If the file is a directory, the G_IO_ERROR_IS_DIRECTORY error will be returned.
-	 * Other errors are possible too, and depend on what kind of filesystem the file is on.
+	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be
+	 * returned. If the file is a directory, the G_IO_ERROR_IS_DIRECTORY
+	 * error will be returned. Other errors are possible too, and depend
+	 * on what kind of filesystem the file is on.
 	 * Virtual: read_fn
 	 * Params:
 	 * cancellable = a GCancellable. [allow-none]
@@ -626,13 +637,16 @@ public class File : ObjectG
 	 * Asynchronously opens file for reading.
 	 * For more details, see g_file_read() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_read_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_read_finish() to get the result
+	 * of the operation.
 	 * Params:
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void readAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -645,7 +659,7 @@ public class File : ObjectG
 	 * Finishes an asynchronous file read operation started with
 	 * g_file_read_async().
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: a GFileInputStream or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -669,23 +683,24 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Gets an output stream for appending data to the file. If
-	 * the file doesn't already exist it is created.
+	 * Gets an output stream for appending data to the file.
+	 * If the file doesn't already exist it is created.
 	 * By default files created are generally readable by everyone,
 	 * but if you pass G_FILE_CREATE_PRIVATE in flags the file
 	 * will be made readable only to the current user, to the level that
 	 * is supported on the target filesystem.
-	 * If cancellable is not NULL, then the operation can be cancelled by
-	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * Some file systems don't allow all file names, and may
-	 * return an G_IO_ERROR_INVALID_FILENAME error.
-	 * If the file is a directory the G_IO_ERROR_IS_DIRECTORY error will be
-	 * returned. Other errors are possible too, and depend on what kind of
-	 * filesystem the file is on.
+	 * If cancellable is not NULL, then the operation can be cancelled
+	 * by triggering the cancellable object from another thread. If the
+	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
+	 * returned.
+	 * Some file systems don't allow all file names, and may return an
+	 * G_IO_ERROR_INVALID_FILENAME error. If the file is a directory the
+	 * G_IO_ERROR_IS_DIRECTORY error will be returned. Other errors are
+	 * possible too, and depend on what kind of filesystem the file is on.
 	 * Params:
-	 * flags = a set of GFileCreateFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * flags = a set of GFileCreateFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileOutputStream, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -713,21 +728,22 @@ public class File : ObjectG
 	 * The file must not already exist.
 	 * By default files created are generally readable by everyone,
 	 * but if you pass G_FILE_CREATE_PRIVATE in flags the file
-	 * will be made readable only to the current user, to the level that
-	 * is supported on the target filesystem.
-	 * If cancellable is not NULL, then the operation can be cancelled by
-	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * If a file or directory with this name already exists the G_IO_ERROR_EXISTS
-	 * error will be returned.
-	 * Some file systems don't allow all file names, and may
-	 * return an G_IO_ERROR_INVALID_FILENAME error, and if the name
-	 * is to long G_IO_ERROR_FILENAME_TOO_LONG will be returned.
-	 * Other errors are possible too, and depend on what kind of
-	 * filesystem the file is on.
+	 * will be made readable only to the current user, to the level
+	 * that is supported on the target filesystem.
+	 * If cancellable is not NULL, then the operation can be cancelled
+	 * by triggering the cancellable object from another thread. If the
+	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
+	 * returned.
+	 * If a file or directory with this name already exists the
+	 * G_IO_ERROR_EXISTS error will be returned. Some file systems don't
+	 * allow all file names, and may return an G_IO_ERROR_INVALID_FILENAME
+	 * error, and if the name is to long G_IO_ERROR_FILENAME_TOO_LONG will
+	 * be returned. Other errors are possible too, and depend on what kind
+	 * of filesystem the file is on.
 	 * Params:
-	 * flags = a set of GFileCreateFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * flags = a set of GFileCreateFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileOutputStream for the newly created file, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -763,9 +779,10 @@ public class File : ObjectG
 	 * but if you pass G_FILE_CREATE_PRIVATE in flags the file
 	 * will be made readable only to the current user, to the level that
 	 * is supported on the target filesystem.
-	 * If cancellable is not NULL, then the operation can be cancelled by
-	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * If cancellable is not NULL, then the operation can be cancelled
+	 * by triggering the cancellable object from another thread. If the
+	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
+	 * returned.
 	 * If you pass in a non-NULL etag value, then this value is
 	 * compared to the current entity tag of the file, and if they differ
 	 * an G_IO_ERROR_WRONG_ETAG error is returned. This generally means
@@ -774,24 +791,24 @@ public class File : ObjectG
 	 * finished writing and closed the GFileOutputStream. When you load
 	 * a new file you can use g_file_input_stream_query_info() to get
 	 * the etag of the file.
-	 * If make_backup is TRUE, this function will attempt to make a backup
-	 * of the current file before overwriting it. If this fails a G_IO_ERROR_CANT_CREATE_BACKUP
-	 * error will be returned. If you want to replace anyway, try again with
-	 * make_backup set to FALSE.
-	 * If the file is a directory the G_IO_ERROR_IS_DIRECTORY error will be returned,
-	 * and if the file is some other form of non-regular file then a
-	 * G_IO_ERROR_NOT_REGULAR_FILE error will be returned.
-	 * Some file systems don't allow all file names, and may
-	 * return an G_IO_ERROR_INVALID_FILENAME error, and if the name
-	 * is to long G_IO_ERROR_FILENAME_TOO_LONG will be returned.
-	 * Other errors are possible too, and depend on what kind of
-	 * filesystem the file is on.
+	 * If make_backup is TRUE, this function will attempt to make a
+	 * backup of the current file before overwriting it. If this fails
+	 * a G_IO_ERROR_CANT_CREATE_BACKUP error will be returned. If you
+	 * want to replace anyway, try again with make_backup set to FALSE.
+	 * If the file is a directory the G_IO_ERROR_IS_DIRECTORY error will
+	 * be returned, and if the file is some other form of non-regular file
+	 * then a G_IO_ERROR_NOT_REGULAR_FILE error will be returned. Some
+	 * file systems don't allow all file names, and may return an
+	 * G_IO_ERROR_INVALID_FILENAME error, and if the name is to long
+	 * G_IO_ERROR_FILENAME_TOO_LONG will be returned. Other errors are
+	 * possible too, and depend on what kind of filesystem the file is on.
 	 * Params:
-	 * etag = an optional entity tag for the
-	 * current GFile, or NULL to ignore. [allow-none]
-	 * makeBackup = TRUE if a backup should be created.
-	 * flags = a set of GFileCreateFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * etag = an optional entity tag
+	 * for the current GFile, or NULL to ignore. [allow-none]
+	 * makeBackup = TRUE if a backup should be created
+	 * flags = a set of GFileCreateFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileOutputStream or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -818,14 +835,17 @@ public class File : ObjectG
 	 * Asynchronously opens file for appending.
 	 * For more details, see g_file_append_to() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_append_to_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_append_to_finish() to get the result
+	 * of the operation.
 	 * Params:
-	 * flags = a set of GFileCreateFlags.
+	 * flags = a set of GFileCreateFlags
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void appendToAsync(GFileCreateFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -862,18 +882,21 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Asynchronously creates a new file and returns an output stream for writing to it.
-	 * The file must not already exist.
+	 * Asynchronously creates a new file and returns an output stream
+	 * for writing to it. The file must not already exist.
 	 * For more details, see g_file_create() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_create_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_create_finish() to get the result
+	 * of the operation.
 	 * Params:
-	 * flags = a set of GFileCreateFlags.
+	 * flags = a set of GFileCreateFlags
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void createAsync(GFileCreateFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -886,7 +909,7 @@ public class File : ObjectG
 	 * Finishes an asynchronous file create operation started with
 	 * g_file_create_async().
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: a GFileOutputStream or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -910,21 +933,24 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Asynchronously overwrites the file, replacing the contents, possibly
-	 * creating a backup copy of the file first.
+	 * Asynchronously overwrites the file, replacing the contents,
+	 * possibly creating a backup copy of the file first.
 	 * For more details, see g_file_replace() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_replace_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_replace_finish() to get the result
+	 * of the operation.
 	 * Params:
-	 * etag = an entity tag for the
-	 * current GFile, or NULL to ignore. [allow-none]
-	 * makeBackup = TRUE if a backup should be created.
-	 * flags = a set of GFileCreateFlags.
+	 * etag = an entity tag
+	 * for the current GFile, or NULL to ignore. [allow-none]
+	 * makeBackup = TRUE if a backup should be created
+	 * flags = a set of GFileCreateFlags
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void replaceAsync(string etag, int makeBackup, GFileCreateFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -937,7 +963,7 @@ public class File : ObjectG
 	 * Finishes an asynchronous file replace operation started with
 	 * g_file_replace_async().
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: a GFileOutputStream, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -961,31 +987,37 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Gets the requested information about specified file. The result
-	 * is a GFileInfo object that contains key-value attributes (such as
-	 * the type or size of the file).
-	 * The attributes value is a string that specifies the file attributes that
-	 * should be gathered. It is not an error if it's not possible to read a particular
-	 * requested attribute from a file - it just won't be set. attributes should
-	 * be a comma-separated list of attributes or attribute wildcards. The wildcard "*"
-	 * means all attributes, and a wildcard like "standard::*" means all attributes in the standard
-	 * namespace. An example attribute query be "standard::*,owner::user".
-	 * The standard attributes are available as defines, like G_FILE_ATTRIBUTE_STANDARD_NAME.
-	 * If cancellable is not NULL, then the operation can be cancelled by
-	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * Gets the requested information about specified file.
+	 * The result is a GFileInfo object that contains key-value
+	 * attributes (such as the type or size of the file).
+	 * The attributes value is a string that specifies the file
+	 * attributes that should be gathered. It is not an error if
+	 * it's not possible to read a particular requested attribute
+	 * from a file - it just won't be set. attributes should be a
+	 * comma-separated list of attributes or attribute wildcards.
+	 * The wildcard "*" means all attributes, and a wildcard like
+	 * "standard::*" means all attributes in the standard namespace.
+	 * An example attribute query be "standard::*,owner::user".
+	 * The standard attributes are available as defines, like
+	 * G_FILE_ATTRIBUTE_STANDARD_NAME.
+	 * If cancellable is not NULL, then the operation can be cancelled
+	 * by triggering the cancellable object from another thread. If the
+	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
+	 * returned.
 	 * For symlinks, normally the information about the target of the
-	 * symlink is returned, rather than information about the symlink itself.
-	 * However if you pass G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS in flags the
-	 * information about the symlink itself will be returned. Also, for symlinks
-	 * that point to non-existing files the information about the symlink itself
-	 * will be returned.
-	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be returned.
-	 * Other errors are possible too, and depend on what kind of filesystem the file is on.
+	 * symlink is returned, rather than information about the symlink
+	 * itself. However if you pass G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS
+	 * in flags the information about the symlink itself will be returned.
+	 * Also, for symlinks that point to non-existing files the information
+	 * about the symlink itself will be returned.
+	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be
+	 * returned. Other errors are possible too, and depend on what kind of
+	 * filesystem the file is on.
 	 * Params:
-	 * attributes = an attribute query string.
-	 * flags = a set of GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attributes = an attribute query string
+	 * flags = a set of GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileInfo for the given file, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1009,20 +1041,22 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Asynchronously gets the requested information about specified file. The result
-	 * is a GFileInfo object that contains key-value attributes (such as type or size
-	 * for the file).
-	 * For more details, see g_file_query_info() which is
-	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_query_info_finish() to get the result of the operation.
+	 * Asynchronously gets the requested information about specified file.
+	 * The result is a GFileInfo object that contains key-value attributes
+	 * (such as type or size for the file).
+	 * For more details, see g_file_query_info() which is the synchronous
+	 * version of this call.
+	 * When the operation is finished, callback will be called. You can
+	 * then call g_file_query_info_finish() to get the result of the operation.
 	 * Params:
-	 * attributes = an attribute query string.
-	 * flags = a set of GFileQueryInfoFlags.
+	 * attributes = an attribute query string
+	 * flags = a set of GFileQueryInfoFlags
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the
+	 * request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void queryInfoAsync(string attributes, GFileQueryInfoFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -1035,7 +1069,7 @@ public class File : ObjectG
 	 * Finishes an asynchronous file info query.
 	 * See g_file_query_info_async().
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: GFileInfo for given file or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1066,20 +1100,21 @@ public class File : ObjectG
 	 * file might have been created or removed in between the operations. The
 	 * general approach to handling that is to not check, but just do the
 	 * operation and handle the errors as they come.
-	 * As an example of race-free checking, take the case of reading a file, and
-	 * if it doesn't exist, creating it. There are two racy versions: read it, and
-	 * on error create it; and: check if it exists, if not create it. These
-	 * can both result in two processes creating the file (with perhaps a partially
-	 * written file as the result). The correct approach is to always try to create
-	 * the file with g_file_create() which will either atomically create the file
-	 * or fail with a G_IO_ERROR_EXISTS error.
-	 * However, in many cases an existence check is useful in a user
-	 * interface, for instance to make a menu item sensitive/insensitive, so that
-	 * you don't have to fool users that something is possible and then just show
-	 * and error dialog. If you do this, you should make sure to also handle the
-	 * errors that can happen due to races when you execute the operation.
+	 * As an example of race-free checking, take the case of reading a file,
+	 * and if it doesn't exist, creating it. There are two racy versions: read
+	 * it, and on error create it; and: check if it exists, if not create it.
+	 * These can both result in two processes creating the file (with perhaps
+	 * a partially written file as the result). The correct approach is to
+	 * always try to create the file with g_file_create() which will either
+	 * atomically create the file or fail with a G_IO_ERROR_EXISTS error.
+	 * However, in many cases an existence check is useful in a user interface,
+	 * for instance to make a menu item sensitive/insensitive, so that you don't
+	 * have to fool users that something is possible and then just show an error
+	 * dialog. If you do this, you should make sure to also handle the errors
+	 * that can happen due to races when you execute the operation.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the file exists (and can be detected without error), FALSE otherwise (or if cancelled).
 	 */
 	public int queryExists(Cancellable cancellable)
@@ -1091,12 +1126,13 @@ public class File : ObjectG
 	/**
 	 * Utility function to inspect the GFileType of a file. This is
 	 * implemented using g_file_query_info() and as such does blocking I/O.
-	 * The primary use case of this method is to check if a file is a regular file,
-	 * directory, or symlink.
+	 * The primary use case of this method is to check if a file is
+	 * a regular file, directory, or symlink.
 	 * Since 2.18
 	 * Params:
-	 * flags = a set of GFileQueryInfoFlags passed to g_file_query_info().
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * flags = a set of GFileQueryInfoFlags passed to g_file_query_info()
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: The GFileType of the file and G_FILE_TYPE_UNKNOWN if the file does not exist
 	 */
 	public GFileType queryFileType(GFileQueryInfoFlags flags, Cancellable cancellable)
@@ -1110,23 +1146,28 @@ public class File : ObjectG
 	 * about the filesystem the file is on, rather than the file itself.
 	 * For instance the amount of space available and the type of
 	 * the filesystem.
-	 * The attributes value is a string that specifies the file attributes that
-	 * should be gathered. It is not an error if it's not possible to read a particular
-	 * requested attribute from a file - it just won't be set. attributes should
-	 * be a comma-separated list of attributes or attribute wildcards. The wildcard "*"
-	 * means all attributes, and a wildcard like "filesystem::*" means all attributes in the
-	 * filesystem namespace. The standard namespace for filesystem attributes is "filesystem".
-	 * Common attributes of interest are G_FILE_ATTRIBUTE_FILESYSTEM_SIZE
-	 * (the total size of the filesystem in bytes), G_FILE_ATTRIBUTE_FILESYSTEM_FREE (number of
-	 * bytes available), and G_FILE_ATTRIBUTE_FILESYSTEM_TYPE (type of the filesystem).
-	 * If cancellable is not NULL, then the operation can be cancelled by
-	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be returned.
-	 * Other errors are possible too, and depend on what kind of filesystem the file is on.
+	 * The attributes value is a string that specifies the attributes
+	 * that should be gathered. It is not an error if it's not possible
+	 * to read a particular requested attribute from a file - it just
+	 * won't be set. attributes should be a comma-separated list of
+	 * attributes or attribute wildcards. The wildcard "*" means all
+	 * attributes, and a wildcard like "filesystem::*" means all attributes
+	 * in the filesystem namespace. The standard namespace for filesystem
+	 * attributes is "filesystem". Common attributes of interest are
+	 * G_FILE_ATTRIBUTE_FILESYSTEM_SIZE (the total size of the filesystem
+	 * in bytes), G_FILE_ATTRIBUTE_FILESYSTEM_FREE (number of bytes available),
+	 * and G_FILE_ATTRIBUTE_FILESYSTEM_TYPE (type of the filesystem).
+	 * If cancellable is not NULL, then the operation can be cancelled
+	 * by triggering the cancellable object from another thread. If the
+	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
+	 * returned.
+	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will
+	 * be returned. Other errors are possible too, and depend on what
+	 * kind of filesystem the file is on.
 	 * Params:
-	 * attributes = an attribute query string.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attributes = an attribute query string
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileInfo or NULL if there was an error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1160,11 +1201,13 @@ public class File : ObjectG
 	 * then call g_file_query_info_finish() to get the result of the
 	 * operation.
 	 * Params:
-	 * attributes = an attribute query string.
+	 * attributes = an attribute query string
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void queryFilesystemInfoAsync(string attributes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -1174,10 +1217,10 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Finishes an asynchronous filesystem info query. See
-	 * g_file_query_filesystem_info_async().
+	 * Finishes an asynchronous filesystem info query.
+	 * See g_file_query_filesystem_info_async().
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: GFileInfo for given file or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1207,7 +1250,7 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore
 	 * Returns: a GAppInfo if the handle was found, NULL if there were errors. When you are done with it, release it with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1232,14 +1275,15 @@ public class File : ObjectG
 	
 	/**
 	 * Gets a GMount for the GFile.
-	 * If the GFileIface for file does not have a mount (e.g. possibly a
-	 * remote share), error will be set to G_IO_ERROR_NOT_FOUND and NULL
-	 * will be returned.
+	 * If the GFileIface for file does not have a mount (e.g.
+	 * possibly a remote share), error will be set to G_IO_ERROR_NOT_FOUND
+	 * and NULL will be returned.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GMount where the file is located or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1266,13 +1310,16 @@ public class File : ObjectG
 	 * Asynchronously gets the mount for the file.
 	 * For more details, see g_file_find_enclosing_mount() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_find_enclosing_mount_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_find_enclosing_mount_finish() to
+	 * get the result of the operation.
 	 * Params:
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void findEnclosingMountAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -1309,26 +1356,31 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Gets the requested information about the files in a directory. The result
-	 * is a GFileEnumerator object that will give out GFileInfo objects for
-	 * all the files in the directory.
-	 * The attributes value is a string that specifies the file attributes that
-	 * should be gathered. It is not an error if it's not possible to read a particular
-	 * requested attribute from a file - it just won't be set. attributes should
-	 * be a comma-separated list of attributes or attribute wildcards. The wildcard "*"
-	 * means all attributes, and a wildcard like "standard::*" means all attributes in the standard
-	 * namespace. An example attribute query be "standard::*,owner::user".
-	 * The standard attributes are available as defines, like G_FILE_ATTRIBUTE_STANDARD_NAME.
-	 * If cancellable is not NULL, then the operation can be cancelled by
-	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be returned.
-	 * If the file is not a directory, the G_FILE_ERROR_NOTDIR error will be returned.
-	 * Other errors are possible too.
+	 * Gets the requested information about the files in a directory.
+	 * The result is a GFileEnumerator object that will give out
+	 * GFileInfo objects for all the files in the directory.
+	 * The attributes value is a string that specifies the file
+	 * attributes that should be gathered. It is not an error if
+	 * it's not possible to read a particular requested attribute
+	 * from a file - it just won't be set. attributes should
+	 * be a comma-separated list of attributes or attribute wildcards.
+	 * The wildcard "*" means all attributes, and a wildcard like
+	 * "standard::*" means all attributes in the standard namespace.
+	 * An example attribute query be "standard::*,owner::user".
+	 * The standard attributes are available as defines, like
+	 * G_FILE_ATTRIBUTE_STANDARD_NAME.
+	 * If cancellable is not NULL, then the operation can be cancelled
+	 * by triggering the cancellable object from another thread. If the
+	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
+	 * returned.
+	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will
+	 * be returned. If the file is not a directory, the G_FILE_ERROR_NOTDIR
+	 * error will be returned. Other errors are possible too.
 	 * Params:
-	 * attributes = an attribute query string.
-	 * flags = a set of GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attributes = an attribute query string
+	 * flags = a set of GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: A GFileEnumerator if successful, NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1352,21 +1404,23 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Asynchronously gets the requested information about the files in a directory. The result
-	 * is a GFileEnumerator object that will give out GFileInfo objects for
-	 * all the files in the directory.
+	 * Asynchronously gets the requested information about the files
+	 * in a directory. The result is a GFileEnumerator object that will
+	 * give out GFileInfo objects for all the files in the directory.
 	 * For more details, see g_file_enumerate_children() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_enumerate_children_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called. You can
+	 * then call g_file_enumerate_children_finish() to get the result of
+	 * the operation.
 	 * Params:
-	 * attributes = an attribute query string.
-	 * flags = a set of GFileQueryInfoFlags.
+	 * attributes = an attribute query string
+	 * flags = a set of GFileQueryInfoFlags
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = (scope async) : a GAsyncReadyCallback to call when the
-	 * request is satisfied
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the
+	 * request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void enumerateChildrenAsync(string attributes, GFileQueryInfoFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -1379,7 +1433,7 @@ public class File : ObjectG
 	 * Finishes an async enumerate children operation.
 	 * See g_file_enumerate_children_async().
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: a GFileEnumerator or NULL if an error occurred. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1404,18 +1458,20 @@ public class File : ObjectG
 	
 	/**
 	 * Renames file to the specified display name.
-	 * The display name is converted from UTF8 to the correct encoding for the target
-	 * filesystem if possible and the file is renamed to this.
-	 * If you want to implement a rename operation in the user interface the edit name
-	 * (G_FILE_ATTRIBUTE_STANDARD_EDIT_NAME) should be used as the initial value in the rename
-	 * widget, and then the result after editing should be passed to g_file_set_display_name().
+	 * The display name is converted from UTF-8 to the correct encoding
+	 * for the target filesystem if possible and the file is renamed to this.
+	 * If you want to implement a rename operation in the user interface the
+	 * edit name (G_FILE_ATTRIBUTE_STANDARD_EDIT_NAME) should be used as the
+	 * initial value in the rename widget, and then the result after editing
+	 * should be passed to g_file_set_display_name().
 	 * On success the resulting converted filename is returned.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * displayName = a string.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * displayName = a string
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFile specifying what file was renamed to, or NULL if there was an error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1442,14 +1498,17 @@ public class File : ObjectG
 	 * Asynchronously sets the display name for a given GFile.
 	 * For more details, see g_file_set_display_name() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_set_display_name_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_set_display_name_finish() to get
+	 * the result of the operation.
 	 * Params:
-	 * displayName = a string.
+	 * displayName = a string
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void setDisplayNameAsync(string displayName, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -1462,7 +1521,7 @@ public class File : ObjectG
 	 * Finishes setting a display name started with
 	 * g_file_set_display_name_async().
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: a GFile or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -1486,14 +1545,15 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Deletes a file. If the file is a directory, it will only be deleted if it
-	 * is empty.
+	 * Deletes a file. If the file is a directory, it will only be
+	 * deleted if it is empty. This has the same semantics as g_unlink().
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Virtual: delete_file
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the file was deleted. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1513,6 +1573,50 @@ public class File : ObjectG
 	}
 	
 	/**
+	 * Asynchronously delete a file. If the file is a directory, it will
+	 * only be deleted if it is empty. This has the same semantics as
+	 * g_unlink().
+	 * Virtual: delete_file_async
+	 * Since 2.34
+	 * Params:
+	 * ioPriority = the I/O priority
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied
+	 * userData = the data to pass to callback function
+	 */
+	public void deleteAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_delete_async (GFile *file,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_delete_async(gFile, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes deleting a file started with g_file_delete_async().
+	 * Virtual: delete_file_finish
+	 * Since 2.34
+	 * Params:
+	 * result = a GAsyncResult
+	 * Throws: GException on failure.
+	 */
+	public int deleteFinish(AsyncResultIF result)
+	{
+		// gboolean g_file_delete_finish (GFile *file,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_delete_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Sends file to the "Trashcan", if possible. This is similar to
 	 * deleting it, but the user can recover it before emptying the trashcan.
 	 * Not all file systems support trashing, so this call can return the
@@ -1521,7 +1625,8 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE on successful trash, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1551,16 +1656,16 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * If progress_callback is not NULL, then the operation can be monitored by
-	 * setting this to a GFileProgressCallback function. progress_callback_data
-	 * will be passed to this function. It is guaranteed that this callback will
-	 * be called after all data has been transferred with the total number of bytes
-	 * copied during the operation.
-	 * If the source file does not exist then the G_IO_ERROR_NOT_FOUND
-	 * error is returned, independent on the status of the destination.
-	 * If G_FILE_COPY_OVERWRITE is not specified and the target exists, then the
-	 * error G_IO_ERROR_EXISTS is returned.
-	 * If trying to overwrite a file over a directory the G_IO_ERROR_IS_DIRECTORY
+	 * If progress_callback is not NULL, then the operation can be monitored
+	 * by setting this to a GFileProgressCallback function.
+	 * progress_callback_data will be passed to this function. It is guaranteed
+	 * that this callback will be called after all data has been transferred with
+	 * the total number of bytes copied during the operation.
+	 * If the source file does not exist, then the G_IO_ERROR_NOT_FOUND error
+	 * is returned, independent on the status of the destination.
+	 * If G_FILE_COPY_OVERWRITE is not specified and the target exists, then
+	 * the error G_IO_ERROR_EXISTS is returned.
+	 * If trying to overwrite a file over a directory, the G_IO_ERROR_IS_DIRECTORY
 	 * error is returned. If trying to overwrite a directory with a directory the
 	 * G_IO_ERROR_WOULD_MERGE error is returned.
 	 * If the source is a directory and the target does not exist, or
@@ -1571,7 +1676,8 @@ public class File : ObjectG
 	 * Params:
 	 * destination = destination GFile
 	 * flags = set of GFileCopyFlags
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * progressCallback = function to callback with
 	 * progress information, or NULL if progress information is not needed. [allow-none][scope call]
 	 * progressCallbackData = user data to pass to progress_callback. [closure]
@@ -1606,7 +1712,8 @@ public class File : ObjectG
 	 * flags = set of GFileCopyFlags
 	 * ioPriority = the I/O priority
 	 * of the request
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * progressCallback = function to callback with progress
 	 * information, or NULL if progress information is not needed. [allow-none]
 	 * progressCallbackData = user data to pass to progress_callback. [closure]
@@ -1620,10 +1727,9 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Finishes copying the file started with
-	 * g_file_copy_async().
+	 * Finishes copying the file started with g_file_copy_async().
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: a TRUE on success, FALSE on error.
 	 * Throws: GException on failure.
 	 */
@@ -1643,10 +1749,11 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Tries to move the file or directory source to the location specified by destination.
-	 * If native move operations are supported then this is used, otherwise a copy + delete
-	 * fallback is used. The native implementation may support moving directories (for instance
-	 * on moves inside the same filesystem), but the fallback code does not.
+	 * Tries to move the file or directory source to the location specified
+	 * by destination. If native move operations are supported then this is
+	 * used, otherwise a copy + delete fallback is used. The native
+	 * implementation may support moving directories (for instance on moves
+	 * inside the same filesystem), but the fallback code does not.
 	 * If the flag G_FILE_COPY_OVERWRITE is specified an already
 	 * existing destination file is overwritten.
 	 * If the flag G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks
@@ -1655,27 +1762,31 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * If progress_callback is not NULL, then the operation can be monitored by
-	 * setting this to a GFileProgressCallback function. progress_callback_data
-	 * will be passed to this function. It is guaranteed that this callback will
-	 * be called after all data has been transferred with the total number of bytes
-	 * copied during the operation.
-	 * If the source file does not exist then the G_IO_ERROR_NOT_FOUND
+	 * If progress_callback is not NULL, then the operation can be monitored
+	 * by setting this to a GFileProgressCallback function.
+	 * progress_callback_data will be passed to this function. It is
+	 * guaranteed that this callback will be called after all data has been
+	 * transferred with the total number of bytes copied during the operation.
+	 * If the source file does not exist, then the G_IO_ERROR_NOT_FOUND
 	 * error is returned, independent on the status of the destination.
-	 * If G_FILE_COPY_OVERWRITE is not specified and the target exists, then the
-	 * error G_IO_ERROR_EXISTS is returned.
-	 * If trying to overwrite a file over a directory the G_IO_ERROR_IS_DIRECTORY
+	 * If G_FILE_COPY_OVERWRITE is not specified and the target exists,
+	 * then the error G_IO_ERROR_EXISTS is returned.
+	 * If trying to overwrite a file over a directory, the G_IO_ERROR_IS_DIRECTORY
 	 * error is returned. If trying to overwrite a directory with a directory the
 	 * G_IO_ERROR_WOULD_MERGE error is returned.
-	 * If the source is a directory and the target does not exist, or G_FILE_COPY_OVERWRITE is
-	 * specified and the target is a file, then the G_IO_ERROR_WOULD_RECURSE error
-	 * may be returned (if the native move operation isn't available).
+	 * If the source is a directory and the target does not exist, or
+	 * G_FILE_COPY_OVERWRITE is specified and the target is a file, then
+	 * the G_IO_ERROR_WOULD_RECURSE error may be returned (if the native
+	 * move operation isn't available).
 	 * Params:
-	 * destination = GFile pointing to the destination location.
-	 * flags = set of GFileCopyFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * progressCallback = GFileProgressCallback function for updates. [allow-none][scope call]
-	 * progressCallbackData = gpointer to user data for the callback function. [closure]
+	 * destination = GFile pointing to the destination location
+	 * flags = set of GFileCopyFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * progressCallback = GFileProgressCallback
+	 * function for updates. [allow-none][scope call]
+	 * progressCallbackData = gpointer to user data for
+	 * the callback function. [closure]
 	 * Returns: TRUE on successful move, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1695,12 +1806,12 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Creates a directory. Note that this will only create a child directory of
-	 * the immediate parent directory of the path or URI given by the GFile. To
-	 * recursively create directories, see g_file_make_directory_with_parents().
+	 * Creates a directory. Note that this will only create a child directory
+	 * of the immediate parent directory of the path or URI given by the GFile.
+	 * To recursively create directories, see g_file_make_directory_with_parents().
 	 * This function will fail if the parent directory does not exist, setting
-	 * error to G_IO_ERROR_NOT_FOUND. If the file system doesn't support creating
-	 * directories, this function will fail, setting error to
+	 * error to G_IO_ERROR_NOT_FOUND. If the file system doesn't support
+	 * creating directories, this function will fail, setting error to
 	 * G_IO_ERROR_NOT_SUPPORTED.
 	 * For a local GFile the newly created directory will have the default
 	 * (current) ownership and permissions of the current process.
@@ -1708,7 +1819,8 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE on successful creation, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1728,11 +1840,12 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Creates a directory and any parent directories that may not exist similar to
-	 * 'mkdir -p'. If the file system does not support creating directories, this
-	 * function will fail, setting error to G_IO_ERROR_NOT_SUPPORTED. If the
-	 * directory itself already exists, this function will fail setting error
-	 * to G_IO_ERROR_EXISTS, unlike the similar g_mkdir_with_parents().
+	 * Creates a directory and any parent directories that may not
+	 * exist similar to 'mkdir -p'. If the file system does not support
+	 * creating directories, this function will fail, setting error to
+	 * G_IO_ERROR_NOT_SUPPORTED. If the directory itself already exists,
+	 * this function will fail setting error to G_IO_ERROR_EXISTS, unlike
+	 * the similar g_mkdir_with_parents().
 	 * For a local GFile the newly created directories will have the default
 	 * (current) ownership and permissions of the current process.
 	 * If cancellable is not NULL, then the operation can be cancelled by
@@ -1740,7 +1853,8 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Since 2.18
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if all directories have been successfully created, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1767,7 +1881,8 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
 	 * symlinkValue = a string with the path for the target of the new symlink
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE on the creation of a new symlink, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1789,14 +1904,15 @@ public class File : ObjectG
 	/**
 	 * Obtain the list of settable attributes for the file.
 	 * Returns the type and full attribute name of all the attributes
-	 * that can be set on this file. This doesn't mean setting it will always
-	 * succeed though, you might get an access failure, or some specific
-	 * file may not support a specific attribute.
+	 * that can be set on this file. This doesn't mean setting it will
+	 * always succeed though, you might get an access failure, or some
+	 * specific file may not support a specific attribute.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileAttributeInfoList describing the settable attributes. When you are done with it, release it with g_file_attribute_info_list_unref()
 	 * Throws: GException on failure.
 	 */
@@ -1827,7 +1943,8 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileAttributeInfoList describing the writable namespaces. When you are done with it, release it with g_file_attribute_info_list_unref()
 	 * Throws: GException on failure.
 	 */
@@ -1858,11 +1975,13 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * attribute = a string containing the attribute's name.
+	 * attribute = a string containing the attribute's name
 	 * type = The type of the attribute
-	 * valueP = a pointer to the value (or the pointer itself if the type is a pointer type). [allow-none]
-	 * flags = a set of GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * valueP = a pointer to the value (or the pointer
+	 * itself if the type is a pointer type). [allow-none]
+	 * flags = a set of GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the attribute was set, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1882,20 +2001,21 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Tries to set all attributes in the GFileInfo on the target values,
-	 * not stopping on the first error.
-	 * If there is any error during this operation then error will be set to
-	 * the first error. Error on particular fields are flagged by setting
-	 * the "status" field in the attribute value to
-	 * G_FILE_ATTRIBUTE_STATUS_ERROR_SETTING, which means you can also detect
-	 * further errors.
+	 * Tries to set all attributes in the GFileInfo on the target
+	 * values, not stopping on the first error.
+	 * If there is any error during this operation then error will
+	 * be set to the first error. Error on particular fields are flagged
+	 * by setting the "status" field in the attribute value to
+	 * G_FILE_ATTRIBUTE_STATUS_ERROR_SETTING, which means you can
+	 * also detect further errors.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * info = a GFileInfo.
+	 * info = a GFileInfo
 	 * flags = GFileQueryInfoFlags
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if there was any error, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1916,16 +2036,18 @@ public class File : ObjectG
 	
 	/**
 	 * Asynchronously sets the attributes of file with info.
-	 * For more details, see g_file_set_attributes_from_info() which is
-	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_set_attributes_finish() to get the result of the operation.
+	 * For more details, see g_file_set_attributes_from_info(),
+	 * which is the synchronous version of this call.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_set_attributes_finish() to get
+	 * the result of the operation.
 	 * Params:
-	 * info = a GFileInfo.
-	 * flags = a GFileQueryInfoFlags.
+	 * info = a GFileInfo
+	 * flags = a GFileQueryInfoFlags
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * callback = a GAsyncReadyCallback. [scope async]
 	 * userData = a gpointer. [closure]
 	 */
@@ -1938,7 +2060,7 @@ public class File : ObjectG
 	/**
 	 * Finishes setting an attribute started in g_file_set_attributes_async().
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * info = a GFileInfo. [out][transfer full]
 	 * Returns: TRUE if the attributes were set correctly, FALSE otherwise.
 	 * Throws: GException on failure.
@@ -1967,10 +2089,11 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * attribute = a string containing the attribute's name.
-	 * value = a string containing the attribute's value.
-	 * flags = GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attribute = a string containing the attribute's name
+	 * value = a string containing the attribute's value
+	 * flags = GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the attribute was successfully set, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -1997,10 +2120,11 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * attribute = a string containing the attribute's name.
-	 * value = a string containing the attribute's new value.
-	 * flags = a GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attribute = a string containing the attribute's name
+	 * value = a string containing the attribute's new value
+	 * flags = a GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the attribute was successfully set to value in the file, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2026,10 +2150,11 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * attribute = a string containing the attribute's name.
-	 * value = a guint32 containing the attribute's new value.
-	 * flags = a GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attribute = a string containing the attribute's name
+	 * value = a guint32 containing the attribute's new value
+	 * flags = a GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the attribute was successfully set to value in the file, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2055,10 +2180,11 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * attribute = a string containing the attribute's name.
-	 * value = a gint32 containing the attribute's new value.
-	 * flags = a GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attribute = a string containing the attribute's name
+	 * value = a gint32 containing the attribute's new value
+	 * flags = a GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the attribute was successfully set to value in the file, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2084,10 +2210,11 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * attribute = a string containing the attribute's name.
-	 * value = a guint64 containing the attribute's new value.
-	 * flags = a GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attribute = a string containing the attribute's name
+	 * value = a guint64 containing the attribute's new value
+	 * flags = a GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the attribute was successfully set to value in the file, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2113,10 +2240,11 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * attribute = a string containing the attribute's name.
-	 * value = a guint64 containing the attribute's new value.
-	 * flags = a GFileQueryInfoFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * attribute = a string containing the attribute's name
+	 * value = a guint64 containing the attribute's new value
+	 * flags = a GFileQueryInfoFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the attribute was successfully set, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2142,13 +2270,17 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_mount_mountable_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_mount_mountable_finish() to get
+	 * the result of the operation.
 	 * Params:
 	 * flags = flags affecting the operation
-	 * mountOperation = a GMountOperation, or NULL to avoid user interaction. [allow-none]
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied, or NULL. [scope async][allow-none]
+	 * mountOperation = a GMountOperation,
+	 * or NULL to avoid user interaction. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied, or NULL. [scope async][allow-none]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void mountMountable(GMountMountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -2162,7 +2294,7 @@ public class File : ObjectG
 	 * Finish an asynchronous mount operation that was started
 	 * with g_file_mount_mountable().
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: a GFile or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -2192,12 +2324,15 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_unmount_mountable_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_unmount_mountable_finish() to get
+	 * the result of the operation.
 	 * Params:
 	 * flags = flags affecting the operation
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied, or NULL. [scope async][allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied, or NULL. [scope async][allow-none]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void unmountMountable(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -2208,12 +2343,13 @@ public class File : ObjectG
 	
 	/**
 	 * Warning
-	 * g_file_unmount_mountable_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_file_unmount_mountable_with_operation_finish() instead.
+	 * g_file_unmount_mountable_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_file_unmount_mountable_with_operation_finish()
+	 *  instead.
 	 * Finishes an unmount operation, see g_file_unmount_mountable() for details.
 	 * Finish an asynchronous unmount operation that was started
 	 * with g_file_unmount_mountable().
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2237,14 +2373,18 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_unmount_mountable_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_unmount_mountable_finish() to get
+	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
 	 * flags = flags affecting the operation
-	 * mountOperation = a GMountOperation, or NULL to avoid user interaction. [allow-none]
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied, or NULL. [scope async][allow-none]
+	 * mountOperation = a GMountOperation,
+	 * or NULL to avoid user interaction. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied, or NULL. [scope async][allow-none]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void unmountMountableWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -2254,12 +2394,13 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Finishes an unmount operation, see g_file_unmount_mountable_with_operation() for details.
+	 * Finishes an unmount operation,
+	 * see g_file_unmount_mountable_with_operation() for details.
 	 * Finish an asynchronous unmount operation that was started
 	 * with g_file_unmount_mountable_with_operation().
 	 * Since 2.22
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2290,8 +2431,10 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
 	 * flags = flags affecting the operation
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied, or NULL. [scope async][allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied, or NULL. [scope async][allow-none]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void ejectMountable(GMountUnmountFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -2302,11 +2445,12 @@ public class File : ObjectG
 	
 	/**
 	 * Warning
-	 * g_file_eject_mountable_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_file_eject_mountable_with_operation_finish() instead.
+	 * g_file_eject_mountable_finish has been deprecated since version 2.22 and should not be used in newly-written code. Use g_file_eject_mountable_with_operation_finish()
+	 *  instead.
 	 * Finishes an asynchronous eject operation started by
 	 * g_file_eject_mountable().
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: TRUE if the file was ejected successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2336,9 +2480,12 @@ public class File : ObjectG
 	 * Since 2.22
 	 * Params:
 	 * flags = flags affecting the operation
-	 * mountOperation = a GMountOperation, or NULL to avoid user interaction. [allow-none]
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied, or NULL. [scope async][allow-none]
+	 * mountOperation = a GMountOperation,
+	 * or NULL to avoid user interaction. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied, or NULL. [scope async][allow-none]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void ejectMountableWithOperation(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -2352,7 +2499,7 @@ public class File : ObjectG
 	 * g_file_eject_mountable_with_operation().
 	 * Since 2.22
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: TRUE if the file was ejected successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2378,8 +2525,9 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_mount_mountable_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_mount_mountable_finish() to get
+	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
 	 * flags = flags affecting the operation
@@ -2400,7 +2548,7 @@ public class File : ObjectG
 	 * with g_file_start_mountable().
 	 * Since 2.22
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2424,14 +2572,18 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_stop_mountable_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_stop_mountable_finish() to get
+	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
 	 * flags = flags affecting the operation
-	 * mountOperation = a GMountOperation, or NULL to avoid user interaction. [allow-none]
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied, or NULL. [allow-none]
+	 * mountOperation = a GMountOperation,
+	 * or NULL to avoid user interaction. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied, or NULL. [allow-none]
 	 * userData = the data to pass to callback function
 	 */
 	public void stopMountable(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -2446,7 +2598,7 @@ public class File : ObjectG
 	 * with g_file_stop_mountable().
 	 * Since 2.22
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2470,12 +2622,14 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_mount_mountable_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_mount_mountable_finish() to get
+	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied, or NULL. [allow-none]
+	 * cancellable = optional GCancellable object, NULL to ignore
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied, or NULL. [allow-none]
 	 * userData = the data to pass to callback function
 	 */
 	public void pollMountable(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -2490,7 +2644,7 @@ public class File : ObjectG
 	 * with g_file_poll_mountable().
 	 * Since 2.22
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: TRUE if the operation finished successfully. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2510,7 +2664,8 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Starts a mount_operation, mounting the volume that contains the file location.
+	 * Starts a mount_operation, mounting the volume that contains
+	 * the file location.
 	 * When this operation has completed, callback will be called with
 	 * user_user data, and the operation can be finalized with
 	 * g_file_mount_enclosing_volume_finish().
@@ -2519,9 +2674,12 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
 	 * flags = flags affecting the operation
-	 * mountOperation = a GMountOperation or NULL to avoid user interaction. [allow-none]
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied, or NULL. [allow-none]
+	 * mountOperation = a GMountOperation
+	 * or NULL to avoid user interaction. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied, or NULL. [allow-none]
 	 * userData = the data to pass to callback function
 	 */
 	public void mountEnclosingVolume(GMountMountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -2533,7 +2691,7 @@ public class File : ObjectG
 	/**
 	 * Finishes a mount operation started by g_file_mount_enclosing_volume().
 	 * Params:
-	 * result = a GAsyncResult.
+	 * result = a GAsyncResult
 	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */
@@ -2560,8 +2718,9 @@ public class File : ObjectG
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Virtual: monitor_dir
 	 * Params:
-	 * flags = a set of GFileMonitorFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * flags = a set of GFileMonitorFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileMonitor for the given file, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -2591,8 +2750,9 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * flags = a set of GFileMonitorFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * flags = a set of GFileMonitorFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileMonitor for the given file, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -2616,15 +2776,16 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Obtains a file or directory monitor for the given file, depending
-	 * on the type of the file.
+	 * Obtains a file or directory monitor for the given file,
+	 * depending on the type of the file.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Since 2.18
 	 * Params:
 	 * flags = a set of GFileMonitorFlags
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileMonitor for the given file, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -2656,7 +2817,7 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore
 	 * contents = a location to place the contents of the file. [out][transfer full][element-type guint8][array length=length]
 	 * length = a location to place the length of the contents of the file,
 	 * or NULL if the length is not needed. [out][allow-none]
@@ -2696,7 +2857,7 @@ public class File : ObjectG
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore
 	 * callback = a GAsyncReadyCallback to call when the request is satisfied
 	 * userData = the data to pass to callback function
 	 */
@@ -2713,7 +2874,7 @@ public class File : ObjectG
 	 * g_free() when no longer needed. If etag_out is present, it will be
 	 * set to the new entity tag for the file.
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * contents = a location to place the contents of the file. [out][transfer full][element-type guint8][array length=length]
 	 * length = a location to place the length of the contents of the file,
 	 * or NULL if the length is not needed. [out][allow-none]
@@ -2742,20 +2903,21 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Reads the partial contents of a file. A GFileReadMoreCallback should be
-	 * used to stop reading from the file when appropriate, else this function
-	 * will behave exactly as g_file_load_contents_async(). This operation
-	 * can be finished by g_file_load_partial_contents_finish().
+	 * Reads the partial contents of a file. A GFileReadMoreCallback should
+	 * be used to stop reading from the file when appropriate, else this
+	 * function will behave exactly as g_file_load_contents_async(). This
+	 * operation can be finished by g_file_load_partial_contents_finish().
 	 * Users of this function should be aware that user_data is passed to
 	 * both the read_more_callback and the callback.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * readMoreCallback = a GFileReadMoreCallback to receive partial data and to specify whether further data should be read.
+	 * cancellable = optional GCancellable object, NULL to ignore
+	 * readMoreCallback = a GFileReadMoreCallback to receive partial data
+	 * and to specify whether further data should be read
 	 * callback = a GAsyncReadyCallback to call when the request is satisfied
-	 * userData = the data to pass to the callback functions.
+	 * userData = the data to pass to the callback functions
 	 */
 	public void loadPartialContentsAsync(Cancellable cancellable, GFileReadMoreCallback readMoreCallback, GAsyncReadyCallback callback, void* userData)
 	{
@@ -2770,7 +2932,7 @@ public class File : ObjectG
 	 * The returned content should be freed with g_free() when no longer
 	 * needed.
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * contents = a location to place the contents of the file. [out][transfer full][element-type guint8][array length=length]
 	 * length = a location to place the length of the contents of the file,
 	 * or NULL if the length is not needed. [out][allow-none]
@@ -2800,25 +2962,26 @@ public class File : ObjectG
 	
 	/**
 	 * Replaces the contents of file with contents of length bytes.
-	 * If etag is specified (not NULL) any existing file must have that etag, or
-	 * the error G_IO_ERROR_WRONG_ETAG will be returned.
-	 * If make_backup is TRUE, this function will attempt to make a backup of file.
+	 * If etag is specified (not NULL), any existing file must have that etag,
+	 * or the error G_IO_ERROR_WRONG_ETAG will be returned.
+	 * If make_backup is TRUE, this function will attempt to make a backup
+	 * of file.
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * The returned new_etag can be used to verify that the file hasn't changed the
-	 * next time it is saved over.
+	 * The returned new_etag can be used to verify that the file hasn't
+	 * changed the next time it is saved over.
 	 * Params:
 	 * contents = a string containing the new contents for file. [element-type guint8][array length=length]
-	 * length = the length of contents in bytes.
+	 * length = the length of contents in bytes
 	 * etag = the old entity tag
 	 * for the document, or NULL. [allow-none]
-	 * makeBackup = TRUE if a backup should be created.
-	 * flags = a set of GFileCreateFlags.
+	 * makeBackup = TRUE if a backup should be created
+	 * flags = a set of GFileCreateFlags
 	 * newEtag = a location to a new entity tag
 	 * for the document. This should be freed with g_free() when no longer
 	 * needed, or NULL. [allow-none][out]
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * cancellable = optional GCancellable object, NULL to ignore
 	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
 	 * Throws: GException on failure.
 	 */
@@ -2853,11 +3016,11 @@ public class File : ObjectG
 	 * make a backup of file.
 	 * Params:
 	 * contents = string of contents to replace the file with. [element-type guint8][array length=length]
-	 * length = the length of contents in bytes.
+	 * length = the length of contents in bytes
 	 * etag = a new entity tag for the file, or NULL. [allow-none]
-	 * makeBackup = TRUE if a backup should be created.
-	 * flags = a set of GFileCreateFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore.
+	 * makeBackup = TRUE if a backup should be created
+	 * flags = a set of GFileCreateFlags
+	 * cancellable = optional GCancellable object, NULL to ignore
 	 * callback = a GAsyncReadyCallback to call when the request is satisfied
 	 * userData = the data to pass to callback function
 	 */
@@ -2872,7 +3035,7 @@ public class File : ObjectG
 	 * g_file_replace_contents_async(). Sets new_etag to the new entity
 	 * tag for the document, if present.
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * newEtag = a location of a new entity tag
 	 * for the document. This should be freed with g_free() when it is no
 	 * longer needed, or NULL. [out][allow-none]
@@ -2905,9 +3068,10 @@ public class File : ObjectG
 	 * all the metadata that is possible to copy is copied. This
 	 * is useful when implementing move by copy + delete source.
 	 * Params:
-	 * destination = a GFile to copy attributes to.
-	 * flags = a set of GFileCopyFlags.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * destination = a GFile to copy attributes to
+	 * flags = a set of GFileCopyFlags
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: TRUE if the attributes were copied successfully, FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
@@ -2927,27 +3091,30 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Creates a new file and returns a stream for reading and writing to it.
-	 * The file must not already exist.
+	 * Creates a new file and returns a stream for reading and
+	 * writing to it. The file must not already exist.
 	 * By default files created are generally readable by everyone,
 	 * but if you pass G_FILE_CREATE_PRIVATE in flags the file
-	 * will be made readable only to the current user, to the level that
-	 * is supported on the target filesystem.
-	 * If cancellable is not NULL, then the operation can be cancelled by
-	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * If a file or directory with this name already exists the G_IO_ERROR_EXISTS
-	 * error will be returned. Some file systems don't allow all file names,
-	 * and may return an G_IO_ERROR_INVALID_FILENAME error, and if the name
-	 * is too long, G_IO_ERROR_FILENAME_TOO_LONG will be returned. Other errors
-	 * are possible too, and depend on what kind of filesystem the file is on.
-	 * Note that in many non-local file cases read and write streams are not
-	 * supported, so make sure you really need to do read and write streaming,
-	 * rather than just opening for reading or writing.
+	 * will be made readable only to the current user, to the level
+	 * that is supported on the target filesystem.
+	 * If cancellable is not NULL, then the operation can be cancelled
+	 * by triggering the cancellable object from another thread. If the
+	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
+	 * returned.
+	 * If a file or directory with this name already exists, the
+	 * G_IO_ERROR_EXISTS error will be returned. Some file systems don't
+	 * allow all file names, and may return an G_IO_ERROR_INVALID_FILENAME
+	 * error, and if the name is too long, G_IO_ERROR_FILENAME_TOO_LONG
+	 * will be returned. Other errors are possible too, and depend on what
+	 * kind of filesystem the file is on.
+	 * Note that in many non-local file cases read and write streams are
+	 * not supported, so make sure you really need to do read and write
+	 * streaming, rather than just opening for reading or writing.
 	 * Since 2.22
 	 * Params:
 	 * flags = a set of GFileCreateFlags
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileIOStream for the newly created file, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -2971,19 +3138,22 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Asynchronously creates a new file and returns a stream for reading and
-	 * writing to it. The file must not already exist.
+	 * Asynchronously creates a new file and returns a stream
+	 * for reading and writing to it. The file must not already exist.
 	 * For more details, see g_file_create_readwrite() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then
-	 * call g_file_create_readwrite_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_create_readwrite_finish() to get
+	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
 	 * flags = a set of GFileCreateFlags
 	 * ioPriority = the I/O priority
 	 * of the request
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void createReadwriteAsync(GFileCreateFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -3022,16 +3192,19 @@ public class File : ObjectG
 	
 	/**
 	 * Opens an existing file for reading and writing. The result is
-	 * a GFileIOStream that can be used to read and write the contents of the file.
-	 * If cancellable is not NULL, then the operation can be cancelled by
-	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be returned.
-	 * If the file is a directory, the G_IO_ERROR_IS_DIRECTORY error will be returned.
-	 * Other errors are possible too, and depend on what kind of filesystem the file is on.
-	 * Note that in many non-local file cases read and write streams are not supported,
-	 * so make sure you really need to do read and write streaming, rather than
-	 * just opening for reading or writing.
+	 * a GFileIOStream that can be used to read and write the contents
+	 * of the file.
+	 * If cancellable is not NULL, then the operation can be cancelled
+	 * by triggering the cancellable object from another thread. If the
+	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
+	 * returned.
+	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will
+	 * be returned. If the file is a directory, the G_IO_ERROR_IS_DIRECTORY
+	 * error will be returned. Other errors are possible too, and depend on
+	 * what kind of filesystem the file is on. Note that in many non-local
+	 * file cases read and write streams are not supported, so make sure you
+	 * really need to do read and write streaming, rather than just opening
+	 * for reading or writing.
 	 * Since 2.22
 	 * Params:
 	 * cancellable = a GCancellable. [allow-none]
@@ -3061,14 +3234,17 @@ public class File : ObjectG
 	 * Asynchronously opens file for reading and writing.
 	 * For more details, see g_file_open_readwrite() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then call
-	 * g_file_open_readwrite_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_open_readwrite_finish() to get
+	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void openReadwriteAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -3082,7 +3258,7 @@ public class File : ObjectG
 	 * g_file_open_readwrite_async().
 	 * Since 2.22
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: a GFileIOStream or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -3109,18 +3285,19 @@ public class File : ObjectG
 	 * Returns an output stream for overwriting the file in readwrite mode,
 	 * possibly creating a backup copy of the file first. If the file doesn't
 	 * exist, it will be created.
-	 * For details about the behaviour, see g_file_replace() which does the same
-	 * thing but returns an output stream only.
+	 * For details about the behaviour, see g_file_replace() which does the
+	 * same thing but returns an output stream only.
 	 * Note that in many non-local file cases read and write streams are not
 	 * supported, so make sure you really need to do read and write streaming,
 	 * rather than just opening for reading or writing.
 	 * Since 2.22
 	 * Params:
-	 * etag = an optional entity tag for the
-	 * current GFile, or NULL to ignore. [allow-none]
+	 * etag = an optional entity tag
+	 * for the current GFile, or NULL to ignore. [allow-none]
 	 * makeBackup = TRUE if a backup should be created
 	 * flags = a set of GFileCreateFlags
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
 	 * Returns: a GFileIOStream or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */
@@ -3144,22 +3321,26 @@ public class File : ObjectG
 	}
 	
 	/**
-	 * Asynchronously overwrites the file in read-write mode, replacing the
-	 * contents, possibly creating a backup copy of the file first.
+	 * Asynchronously overwrites the file in read-write mode,
+	 * replacing the contents, possibly creating a backup copy
+	 * of the file first.
 	 * For more details, see g_file_replace_readwrite() which is
 	 * the synchronous version of this call.
-	 * When the operation is finished, callback will be called. You can then
-	 * call g_file_replace_readwrite_finish() to get the result of the operation.
+	 * When the operation is finished, callback will be called.
+	 * You can then call g_file_replace_readwrite_finish() to get
+	 * the result of the operation.
 	 * Since 2.22
 	 * Params:
-	 * etag = an entity tag for the
-	 * current GFile, or NULL to ignore. [allow-none]
-	 * makeBackup = TRUE if a backup should be created.
-	 * flags = a set of GFileCreateFlags.
+	 * etag = an entity tag
+	 * for the current GFile, or NULL to ignore. [allow-none]
+	 * makeBackup = TRUE if a backup should be created
+	 * flags = a set of GFileCreateFlags
 	 * ioPriority = the I/O priority
-	 * of the request.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the request is satisfied. [scope async]
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
 	public void replaceReadwriteAsync(string etag, int makeBackup, GFileCreateFlags flags, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
@@ -3173,7 +3354,7 @@ public class File : ObjectG
 	 * g_file_replace_readwrite_async().
 	 * Since 2.22
 	 * Params:
-	 * res = a GAsyncResult.
+	 * res = a GAsyncResult
 	 * Returns: a GFileIOStream, or NULL on error. Free the returned object with g_object_unref(). [transfer full]
 	 * Throws: GException on failure.
 	 */

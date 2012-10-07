@@ -208,6 +208,22 @@ public class UnixMountEntry
 	}
 	
 	/**
+	 * Guesses the symbolic icon of a Unix mount.
+	 * Since 2.34
+	 * Returns: a GIcon. [transfer full]
+	 */
+	public IconIF guessSymbolicIcon()
+	{
+		// GIcon * g_unix_mount_guess_symbolic_icon (GUnixMountEntry *mount_entry);
+		auto p = g_unix_mount_guess_symbolic_icon(gUnixMountEntry);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
+	}
+	
+	/**
 	 * Guesses the name of a Unix mount.
 	 * The result is a translated string.
 	 * Returns: A newly allocated string that must be freed with g_free()

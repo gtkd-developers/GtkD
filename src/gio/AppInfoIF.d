@@ -245,7 +245,7 @@ public interface AppInfoIF
 	 * DESKTOP_STARTUP_ID environment variables are also
 	 * set, based on information provided in launch_context.
 	 * Params:
-	 * files = a GList of GFile objects. [element-type GFile]
+	 * files = a GList of GFile objects. [allow-none][element-type GFile]
 	 * launchContext = a GAppLaunchContext or NULL. [allow-none]
 	 * Returns: TRUE on successful launch, FALSE otherwise.
 	 * Throws: GException on failure.
@@ -274,7 +274,7 @@ public interface AppInfoIF
 	 * can fail to start if it runs into problems during startup. There is
 	 * no way to detect this.
 	 * Params:
-	 * uris = a GList containing URIs to launch. [element-type utf8]
+	 * uris = a GList containing URIs to launch. [allow-none][element-type utf8]
 	 * launchContext = a GAppLaunchContext or NULL. [allow-none]
 	 * Returns: TRUE on successful launch, FALSE otherwise.
 	 * Throws: GException on failure.
@@ -373,6 +373,18 @@ public interface AppInfoIF
 	 * Throws: GException on failure.
 	 */
 	public int removeSupportsType(string contentType);
+	
+	/**
+	 * Retrieves the list of content types that app_info claims to support.
+	 * If this information is not provided by the environment, this function
+	 * will return NULL.
+	 * This function does not take in consideration associations added with
+	 * g_app_info_add_supports_type(), but only those exported directly by
+	 * the application.
+	 * Since 2.34
+	 * Returns: a list of content types. [transfer none][array zero-terminated=1][element-type utf8]
+	 */
+	public string[] getSupportedTypes();
 	
 	/**
 	 * Gets a list of all of the applications currently registered

@@ -166,6 +166,7 @@ private import gio.PollableInputStreamIF;
 private import gio.PollableInputStreamT;
 private import gio.PollableOutputStreamIF;
 private import gio.PollableOutputStreamT;
+private import gio.PollableUtils;
 private import gio.ContentType;
 private import gio.AppInfoIF;
 private import gio.AppInfoT;
@@ -304,6 +305,7 @@ private import gio.IOModule;
 private import gio.IOModuleScope;
 private import gio.IOExtension;
 private import gio.IOExtensionPoint;
+private import gio.TestDBus;
 
 private import cairo.Context;
 private import cairo.Pattern;

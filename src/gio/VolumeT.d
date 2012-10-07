@@ -257,6 +257,22 @@ public template VolumeT(TStruct)
 	}
 	
 	/**
+	 * Gets the symbolic icon for volume.
+	 * Since 2.34
+	 * Returns: a GIcon. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
+	 */
+	public IconIF getSymbolicIcon()
+	{
+		// GIcon * g_volume_get_symbolic_icon (GVolume *volume);
+		auto p = g_volume_get_symbolic_icon(getVolumeTStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
+	}
+	
+	/**
 	 * Gets the drive for the volume.
 	 * Returns: a GDrive or NULL if volume is not associated with a drive. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */

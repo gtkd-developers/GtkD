@@ -49,6 +49,7 @@
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- gio.Cancellable
+ * 	- gio.DBusConnection
  * 	- gio.File
  * 	- gio.ActionGroupIF
  * 	- gio.ActionGroupT
@@ -57,6 +58,7 @@
  * structWrap:
  * 	- GApplication* -> Application
  * 	- GCancellable* -> Cancellable
+ * 	- GDBusConnection* -> DBusConnection
  * 	- GFile* -> File
  * module aliases:
  * local aliases:
@@ -77,6 +79,7 @@ private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import gio.Cancellable;
+private import gio.DBusConnection;
 private import gio.File;
 private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
@@ -109,8 +112,21 @@ private import gobject.ObjectG;
  * desktop login. When your application is launched again, its
  * arguments are passed through platform communication to the already
  * running program. The already running instance of the program is
- * called the primary instance. On Linux, the
- * D-Bus session bus is used for communication.
+ * called the primary instance; for non-unique
+ * applications this is the always the current instance.
+ * On Linux, the D-Bus session bus is used for communication.
+ * The use of GApplication differs from some other commonly-used
+ * uniqueness libraries (such as libunique) in important ways. The
+ * application is not expected to manually register itself and check if
+ * it is the primary instance. Instead, the main()
+ * function of a GApplication should do very little more than
+ * instantiating the application instance, possibly connecting signal
+ * handlers, then calling g_application_run(). All checks for
+ * uniqueness are done internally. If the application is the primary
+ * instance then the startup signal is emitted and the mainloop runs.
+ * If the application is not the primary instance then a signal is sent
+ * to the primary instance and g_application_run() promptly returns.
+ * See the code examples below.
  * If used, the expected form of an application identifier is very close
  * to that of of a
  * DBus bus name.
@@ -166,6 +182,8 @@ private import gobject.ObjectG;
  * "command-line" signal or override the local_command_line()
  * vfunc, to parse them in either the primary instance or the local instance,
  * respectively.
+ * $(DDOC_COMMENT example)
+ * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
  */
@@ -491,6 +509,52 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	}
 	
 	/**
+	 * Gets the GDBusConnection being used by the application, or NULL.
+	 * If GApplication is using its D-Bus backend then this function will
+	 * return the GDBusConnection being used for uniqueness and
+	 * communication with the desktop environment and other instances of the
+	 * application.
+	 * If GApplication is not using D-Bus then this function will return
+	 * NULL. This includes the situation where the D-Bus backend would
+	 * normally be in use but we were unable to connect to the bus.
+	 * This function must not be called before the application has been
+	 * registered. See g_application_get_is_registered().
+	 * Since 2.34
+	 * Returns: a GDBusConnection, or NULL. [transfer none]
+	 */
+	public DBusConnection getDbusConnection()
+	{
+		// GDBusConnection * g_application_get_dbus_connection (GApplication *application);
+		auto p = g_application_get_dbus_connection(gApplication);
+		if(p is null)
+		{
+			return null;
+		}
+		return new DBusConnection(cast(GDBusConnection*) p);
+	}
+	
+	/**
+	 * Gets the D-Bus object path being used by the application, or NULL.
+	 * If GApplication is using its D-Bus backend then this function will
+	 * return the D-Bus object path that GApplication is using. If the
+	 * application is the primary instance then there is an object published
+	 * at this path. If the application is not the primary instance then
+	 * the result of this function is undefined.
+	 * If GApplication is not using D-Bus then this function will return
+	 * NULL. This includes the situation where the D-Bus backend would
+	 * normally be in use but we were unable to connect to the bus.
+	 * This function must not be called before the application has been
+	 * registered. See g_application_get_is_registered().
+	 * Since 2.34
+	 * Returns: the object path, or NULL
+	 */
+	public string getDbusObjectPath()
+	{
+		// const gchar * g_application_get_dbus_object_path (GApplication *application);
+		return Str.toString(g_application_get_dbus_object_path(gApplication));
+	}
+	
+	/**
 	 * Warning
 	 * g_application_set_action_group has been deprecated since version 2.32 and should not be used in newly-written code. Use the GActionMap interface instead. Never ever
 	 * mix use of this API with use of GActionMap on the same application
@@ -678,7 +742,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * This function always runs on the local instance. It gets passed a pointer
 	 * to a NULL-terminated copy of argv and is expected to remove the arguments
 	 * that it handled (shifting up remaining arguments). See
-	 *  Example 17, “Split commandline handling” for an example of
+	 *  Example 19, “Split commandline handling” for an example of
 	 * parsing argv manually. Alternatively, you may use the GOptionContext API,
 	 * after setting argc = g_strv_length (argv);.
 	 * The last argument to local_command_line() is a pointer to the status
@@ -715,7 +779,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * and override local_command_line(). In this case, you most likely want
 	 * to return TRUE from your local_command_line() implementation to
 	 * suppress the default handling. See
-	 *  Example 17, “Split commandline handling” for an example.
+	 *  Example 19, “Split commandline handling” for an example.
 	 * If, after the above is done, the use count of the application is zero
 	 * then the exit status is returned immediately. If the use count is
 	 * non-zero then the default main context is iterated until the use count

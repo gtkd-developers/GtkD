@@ -288,6 +288,22 @@ public template DriveT(TStruct)
 	}
 	
 	/**
+	 * Gets the icon for drive.
+	 * Since 2.34
+	 * Returns: symbolic GIcon for the drive. Free the returned object with g_object_unref(). [transfer full]
+	 */
+	public IconIF getSymbolicIcon()
+	{
+		// GIcon * g_drive_get_symbolic_icon (GDrive *drive);
+		auto p = g_drive_get_symbolic_icon(getDriveTStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
+	}
+	
+	/**
 	 * Check if drive has any mountable volumes.
 	 * Returns: TRUE if the drive contains volumes, FALSE otherwise.
 	 */

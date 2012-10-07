@@ -135,7 +135,7 @@ public interface PollableInputStreamIF
 	public Source createSource(Cancellable cancellable);
 	
 	/**
-	 * Attempts to read up to size bytes from stream into buffer, as
+	 * Attempts to read up to count bytes from stream into buffer, as
 	 * with g_input_stream_read(). If stream is not currently readable,
 	 * this will immediately return G_IO_ERROR_WOULD_BLOCK, and you can
 	 * use g_pollable_input_stream_create_source() to create a GSource
@@ -147,25 +147,12 @@ public interface PollableInputStreamIF
 	 * to having been cancelled.
 	 * Virtual: read_nonblocking
 	 * Params:
-	 * buffer = a buffer to read data into (which should be at least size
+	 * buffer = a buffer to read data into (which should be at least count
 	 * bytes long).
-	 * size = the number of bytes you want to read
+	 * count = the number of bytes you want to read
 	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * Returns: the number of bytes read, or -1 on error (including G_IO_ERROR_WOULD_BLOCK).
 	 * Throws: GException on failure.
 	 */
-	public gssize readNonblocking(void[] buffer, Cancellable cancellable);
-	
-	/**
-	 * Utility method for GPollableInputStream and GPollableOutputStream
-	 * implementations. Creates a new GSource that expects a callback of
-	 * type GPollableSourceFunc. The new source does not actually do
-	 * anything on its own; use g_source_add_child_source() to add other
-	 * sources to it to cause it to trigger.
-	 * Since 2.28
-	 * Params:
-	 * pollableStream = the stream associated with the new source
-	 * Returns: the new GSource. [transfer full]
-	 */
-	public static Source gPollableSourceNew(ObjectG pollableStream);
+	public gssize readNonblocking(void[] buffer, gsize count, Cancellable cancellable);
 }

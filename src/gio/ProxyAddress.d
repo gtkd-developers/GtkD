@@ -118,7 +118,21 @@ public class ProxyAddress : InetSocketAddress
 	 */
 	
 	/**
-	 * Gets proxy's destination hostname.
+	 * Gets the protocol that is being spoken to the destination
+	 * server; eg, "http" or "ftp".
+	 * Since 2.34
+	 * Returns: the proxy's destination protocol
+	 */
+	public string getDestinationProtocol()
+	{
+		// const gchar * g_proxy_address_get_destination_protocol  (GProxyAddress *proxy);
+		return Str.toString(g_proxy_address_get_destination_protocol(gProxyAddress));
+	}
+	
+	/**
+	 * Gets proxy's destination hostname; that is, the name of the host
+	 * that will be connected to via the proxy, not the name of the proxy
+	 * itself.
 	 * Since 2.26
 	 * Returns: the proxy's destination hostname
 	 */
@@ -129,7 +143,9 @@ public class ProxyAddress : InetSocketAddress
 	}
 	
 	/**
-	 * Gets proxy's destination port.
+	 * Gets proxy's destination port; that is, the port on the
+	 * destination host that will be connected to via the proxy, not the
+	 * port number of the proxy itself.
 	 * Since 2.26
 	 * Returns: the proxy's destination port
 	 */
@@ -151,7 +167,7 @@ public class ProxyAddress : InetSocketAddress
 	}
 	
 	/**
-	 * Gets proxy's protocol.
+	 * Gets proxy's protocol. eg, "socks" or "http"
 	 * Since 2.26
 	 * Returns: the proxy's protocol
 	 */
@@ -173,14 +189,28 @@ public class ProxyAddress : InetSocketAddress
 	}
 	
 	/**
+	 * Gets the proxy URI that proxy was constructed from.
+	 * Since 2.34
+	 * Returns: the proxy's URI, or NULL if unknown
+	 */
+	public string getUri()
+	{
+		// const gchar * g_proxy_address_get_uri (GProxyAddress *proxy);
+		return Str.toString(g_proxy_address_get_uri(gProxyAddress));
+	}
+	
+	/**
 	 * Creates a new GProxyAddress for inetaddr with protocol that should
 	 * tunnel through dest_hostname and dest_port.
+	 * (Note that this method doesn't set the "uri" or
+	 * "destination-protocol" fields; use g_object_new()
+	 * directly if you want to set those.)
 	 * Since 2.26
 	 * Params:
 	 * inetaddr = The proxy server GInetAddress.
 	 * port = The proxy server port.
 	 * protocol = The proxy protocol to support, in lower case (e.g. socks, http).
-	 * destHostname = The destination hostname the the proxy should tunnel to.
+	 * destHostname = The destination hostname the proxy should tunnel to.
 	 * destPort = The destination port to tunnel to.
 	 * username = The username to authenticate to the proxy server
 	 * (or NULL). [allow-none]

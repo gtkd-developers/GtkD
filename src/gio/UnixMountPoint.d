@@ -223,6 +223,22 @@ public class UnixMountPoint
 	}
 	
 	/**
+	 * Guesses the symbolic icon of a Unix mount point.
+	 * Since 2.34
+	 * Returns: a GIcon. [transfer full]
+	 */
+	public IconIF guessSymbolicIcon()
+	{
+		// GIcon * g_unix_mount_point_guess_symbolic_icon  (GUnixMountPoint *mount_point);
+		auto p = g_unix_mount_point_guess_symbolic_icon(gUnixMountPoint);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
+	}
+	
+	/**
 	 * Guesses the name of a Unix mount point.
 	 * The result is a translated string.
 	 * Returns: A newly allocated string that must be freed with g_free()

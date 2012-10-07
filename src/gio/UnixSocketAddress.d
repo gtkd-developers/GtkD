@@ -263,7 +263,7 @@ public class UnixSocketAddress : SocketAddress
 	}
 	
 	/**
-	 * Checks if abstract unix domain socket names are supported.
+	 * Checks if abstract UNIX domain socket names are supported.
 	 * Since 2.22
 	 * Returns: TRUE if supported, FALSE otherwise
 	 */

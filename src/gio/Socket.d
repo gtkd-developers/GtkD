@@ -1205,7 +1205,7 @@ public class Socket : ObjectG, InitableIF
 	
 	/**
 	 * Returns the underlying OS socket object. On unix this
-	 * is a socket file descriptor, and on windows this is
+	 * is a socket file descriptor, and on Windows this is
 	 * a Winsock2 SOCKET handle. This may be useful for
 	 * doing platform specific or otherwise unusual operations
 	 * on the socket.

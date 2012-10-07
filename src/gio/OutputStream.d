@@ -554,4 +554,98 @@ public class OutputStream : ObjectG
 		// void g_output_stream_clear_pending (GOutputStream *stream);
 		g_output_stream_clear_pending(gOutputStream);
 	}
+	
+	/**
+	 * Tries to write the data from bytes into the stream. Will block
+	 * during the operation.
+	 * If bytes is 0-length, returns 0 and does nothing. A GBytes larger
+	 * than G_MAXSSIZE will cause a G_IO_ERROR_INVALID_ARGUMENT error.
+	 * On success, the number of bytes written to the stream is returned.
+	 * It is not an error if this is not the same as the requested size, as it
+	 * can happen e.g. on a partial I/O error, or if there is not enough
+	 * storage in the stream. All writes block until at least one byte
+	 * is written or an error occurs; 0 is never returned (unless
+	 * the size of bytes is 0).
+	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned. If an
+	 * operation was partially finished when the operation was cancelled the
+	 * partial result will be returned, without an error.
+	 * On error -1 is returned and error is set accordingly.
+	 * Params:
+	 * bytes = the GBytes to write
+	 * cancellable = optional cancellable object. [allow-none]
+	 * Returns: Number of bytes written, or -1 on error
+	 * Throws: GException on failure.
+	 */
+	public gssize writeBytes(GBytes* bytes, Cancellable cancellable)
+	{
+		// gssize g_output_stream_write_bytes (GOutputStream *stream,  GBytes *bytes,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = g_output_stream_write_bytes(gOutputStream, bytes, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Request an asynchronous write of the data in bytes to the stream.
+	 * When the operation is finished callback will be called. You can
+	 * then call g_output_stream_write_bytes_finish() to get the result of
+	 * the operation.
+	 * During an async request no other sync and async calls are allowed,
+	 * and will result in G_IO_ERROR_PENDING errors.
+	 * A GBytes larger than G_MAXSSIZE will cause a
+	 * G_IO_ERROR_INVALID_ARGUMENT error.
+	 * On success, the number of bytes written will be passed to the
+	 * callback. It is not an error if this is not the same as the
+	 * requested size, as it can happen e.g. on a partial I/O error,
+	 * but generally we try to write as many bytes as requested.
+	 * You are guaranteed that this method will never fail with
+	 * G_IO_ERROR_WOULD_BLOCK - if stream can't accept more data, the
+	 * method will just wait until this changes.
+	 * Any outstanding I/O request with higher priority (lower numerical
+	 * value) will be executed before an outstanding request with lower
+	 * priority. Default priority is G_PRIORITY_DEFAULT.
+	 * For the synchronous, blocking version of this function, see
+	 * g_output_stream_write_bytes().
+	 * Params:
+	 * bytes = The bytes to write
+	 * ioPriority = the io priority of the request.
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = callback to call when the request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
+	 */
+	public void writeBytesAsync(GBytes* bytes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_output_stream_write_bytes_async (GOutputStream *stream,  GBytes *bytes,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_output_stream_write_bytes_async(gOutputStream, bytes, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes a stream write-from-GBytes operation.
+	 * Params:
+	 * result = a GAsyncResult.
+	 * Returns: a gssize containing the number of bytes written to the stream.
+	 * Throws: GException on failure.
+	 */
+	public gssize writeBytesFinish(AsyncResultIF result)
+	{
+		// gssize g_output_stream_write_bytes_finish (GOutputStream *stream,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_output_stream_write_bytes_finish(gOutputStream, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
 }

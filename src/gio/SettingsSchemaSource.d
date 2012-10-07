@@ -220,7 +220,7 @@ public class SettingsSchemaSource
 	 * recursive flag set to TRUE and the schema can not be found in the
 	 * source, the lookup will recurse to the parent.
 	 * Second, any references to other schemas specified within this
-	 * source (ie: child or extents)
+	 * source (ie: child or extends)
 	 * references may be resolved from the parent.
 	 * For this second reason, except in very unusual situations, the
 	 * parent should probably be given as the default schema source, as

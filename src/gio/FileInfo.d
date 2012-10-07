@@ -665,6 +665,22 @@ public class FileInfo : ObjectG
 	}
 	
 	/**
+	 * Gets the symbolic icon for a file.
+	 * Since 2.34
+	 * Returns: GIcon for the given info. [transfer none]
+	 */
+	public IconIF getSymbolicIcon()
+	{
+		// GIcon * g_file_info_get_symbolic_icon (GFileInfo *info);
+		auto p = g_file_info_get_symbolic_icon(gFileInfo);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
+	}
+	
+	/**
 	 * Gets the file's content type.
 	 * Returns: a string containing the file's content type.
 	 */
@@ -831,6 +847,19 @@ public class FileInfo : ObjectG
 	{
 		// void g_file_info_set_icon (GFileInfo *info,  GIcon *icon);
 		g_file_info_set_icon(gFileInfo, (icon is null) ? null : icon.getIconTStruct());
+	}
+	
+	/**
+	 * Sets the symbolic icon for a given GFileInfo.
+	 * See G_FILE_ATTRIBUTE_STANDARD_SYMBOLIC_ICON.
+	 * Since 2.34
+	 * Params:
+	 * icon = a GIcon.
+	 */
+	public void setSymbolicIcon(IconIF icon)
+	{
+		// void g_file_info_set_symbolic_icon (GFileInfo *info,  GIcon *icon);
+		g_file_info_set_symbolic_icon(gFileInfo, (icon is null) ? null : icon.getIconTStruct());
 	}
 	
 	/**

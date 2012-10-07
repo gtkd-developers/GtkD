@@ -430,6 +430,16 @@ public enum GPasswordSave
 }
 alias GPasswordSave PasswordSave;
 
+enum GResolverRecordType
+{
+	SRV = 1,
+	MX,
+	TXT,
+	SOA,
+	NS
+}
+alias GResolverRecordType ResolverRecordType;
+
 /**
  * GMountOperationResult is returned as a result when a request for
  * information is send by the mounting operation.
@@ -1583,7 +1593,7 @@ alias GDBusServerFlags DBusServerFlags;
  * G_BUS_NAME_OWNER_FLAGS_NONE
  * No flags set.
  * G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT
- * Allow another message bus connection to claim the the name.
+ * Allow another message bus connection to claim the name.
  * G_BUS_NAME_OWNER_FLAGS_REPLACE
  * If another message bus connection owns the name and have
  * specified G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
@@ -1821,6 +1831,18 @@ public enum GIOModuleScopeFlags
 }
 alias GIOModuleScopeFlags IOModuleScopeFlags;
 
+/**
+ * Flags to define future GTestDBus behaviour.
+ * G_TEST_DBUS_NONE
+ * No flags.
+ * Since 2.34
+ */
+public enum GTestDBusFlags
+{
+	NONE = 0
+}
+alias GTestDBusFlags TestDBusFlags;
+
 
 /**
  * Main Gtk struct.
@@ -1941,9 +1963,9 @@ public struct GFile{}
  * Finishes asynchronously replacing a file.
  * delete_file ()
  * Deletes a file.
- * _delete_file_async ()
+ * delete_file_async ()
  * Asynchronously deletes a file.
- * _delete_file_finish ()
+ * delete_file_finish ()
  * Finishes an asynchronous delete.
  * trash ()
  * Sends a GFile to the Trash location.
@@ -2093,8 +2115,8 @@ public struct GFileIface
 	extern(C) void  function(GFile *file,char *etag,int makeBackup,GFileCreateFlags flags,int ioPriority,GCancellable *cancellable,GAsyncReadyCallback callback,void* userData)  replaceAsync;
 	extern(C) GFileOutputStream *  function(GFile *file,GAsyncResult *res,GError **error)  replaceFinish;
 	extern(C) int  function(GFile *file,GCancellable *cancellable,GError **error)  deleteFile;
-	extern(C) void  function()  _DeleteFileAsync;
-	extern(C) void  function()  _DeleteFileFinish;
+	extern(C) void  function(GFile *file,int ioPriority,GCancellable *cancellable,GAsyncReadyCallback callback,void* userData)  deleteFileAsync;
+	extern(C) int  function(GFile *file,GAsyncResult *result,GError **error)  deleteFileFinish;
 	extern(C) int  function(GFile *file,GCancellable *cancellable,GError **error)  trash;
 	extern(C) void  function()  _TrashAsync;
 	extern(C) void  function()  _TrashFinish;
@@ -2241,6 +2263,8 @@ public struct GAsyncResult{}
  * Gets the user data passed to the callback.
  * get_source_object ()
  * Gets the source object that issued the asynchronous operation.
+ * is_tagged ()
+ * Checks if a result is tagged with a particular source.
  */
 public struct GAsyncResultIface
 {
@@ -2248,6 +2272,7 @@ public struct GAsyncResultIface
 	/+* Virtual Table +/
 	extern(C) void*  function(GAsyncResult *res)  getUserData;
 	extern(C) GObject *  function(GAsyncResult *res)  getSourceObject;
+	extern(C) int  function(GAsyncResult *res,void* tag)  isTagged;
 }
 
 
@@ -2533,7 +2558,7 @@ public struct GPollableInputStreamInterface
 	extern(C) int  function(GPollableInputStream *stream) canPoll;
 	extern(C) int  function(GPollableInputStream *stream) isReadable;
 	extern(C) GSource *  function(GPollableInputStream *stream,GCancellable *cancellable) createSource;
-	extern(C) gssize  function(GPollableInputStream *stream,void *buffer,gsize size,GError **error) readNonblocking;
+	extern(C) gssize  function(GPollableInputStream *stream,void *buffer,gsize count,GError **error) readNonblocking;
 }
 
 
@@ -2574,7 +2599,7 @@ public struct GPollableOutputStreamInterface
 	extern(C) int  function(GPollableOutputStream *stream) canPoll;
 	extern(C) int  function(GPollableOutputStream *stream) isWritable;
 	extern(C) GSource *  function(GPollableOutputStream *stream,GCancellable *cancellable) createSource;
-	extern(C) gssize  function(GPollableOutputStream *stream,void *buffer,gsize size,GError **error) writeNonblocking;
+	extern(C) gssize  function(GPollableOutputStream *stream,void *buffer,gsize count,GError **error) writeNonblocking;
 }
 
 
@@ -2635,6 +2660,7 @@ public struct GAppInfo{}
  * Gets the display name for the GAppInfo. Since 2.24
  * set_as_last_used_for_type ()
  * Sets the application as the last used. See g_app_info_set_as_last_used_for_type().
+ * get_supported_types ()
  */
 public struct GAppInfoIface
 {
@@ -2663,6 +2689,7 @@ public struct GAppInfoIface
 	extern(C) char *  function(GAppInfo *appinfo)  getCommandline;
 	extern(C) char *  function(GAppInfo *appinfo)  getDisplayName;
 	extern(C) int  function(GAppInfo *appinfo,char *contentType,GError **error)  setAsLastUsedForType;
+	extern(C) char **  function(GAppInfo *appinfo)  getSupportedTypes;
 }
 
 
@@ -2745,6 +2772,8 @@ public struct GVolume{}
  * Finishes an eject operation using a GMountOperation. Since 2.22.
  * get_sort_key ()
  * Gets a key used for sorting GVolume instance or NULL if no such key exists. Since 2.32.
+ * get_symbolic_icon ()
+ * Gets a symbolic GIcon for the GVolume. Since 2.34.
  */
 public struct GVolumeIface
 {
@@ -2771,6 +2800,7 @@ public struct GVolumeIface
 	extern(C) void  function(GVolume *volume,GMountUnmountFlags flags,GMountOperation *mountOperation,GCancellable *cancellable,GAsyncReadyCallback callback,void* userData)  ejectWithOperation;
 	extern(C) int  function(GVolume *volume,GAsyncResult *result,GError **error)  ejectWithOperationFinish;
 	extern(C) char *  function(GVolume *volume)  getSortKey;
+	extern(C) GIcon *  function(GVolume *volume)  getSymbolicIcon;
 }
 
 
@@ -2839,6 +2869,8 @@ public struct GMount{}
  * Gets a GFile indication a start location that can be use as the entry point for this mount. Since 2.24.
  * get_sort_key ()
  * Gets a key used for sorting GMount instance or NULL if no such key exists. Since 2.32.
+ * get_symbolic_icon ()
+ * Gets a symbolic GIcon for the GMount. Since 2.34.
  */
 public struct GMountIface
 {
@@ -2872,6 +2904,7 @@ public struct GMountIface
 	extern(C) int  function(GMount *mount,GAsyncResult *result,GError **error)  ejectWithOperationFinish;
 	extern(C) GFile *  function(GMount *mount)  getDefaultLocation;
 	extern(C) char *  function(GMount *mount)  getSortKey;
+	extern(C) GIcon *  function(GMount *mount)  getSymbolicIcon;
 }
 
 
@@ -2948,6 +2981,8 @@ public struct GDrive{}
  * Finishes an eject operation using a GMountOperation. Since 2.22.
  * get_sort_key ()
  * Gets a key used for sorting GDrive instances or NULL if no such key exists. Since 2.32.
+ * get_symbolic_icon ()
+ * Returns a symbolic GIcon for the given GDrive. Since 2.34.
  */
 public struct GDriveIface
 {
@@ -2985,6 +3020,7 @@ public struct GDriveIface
 	extern(C) void  function(GDrive *drive,GMountUnmountFlags flags,GMountOperation *mountOperation,GCancellable *cancellable,GAsyncReadyCallback callback,void* userData)  ejectWithOperation;
 	extern(C) int  function(GDrive *drive,GAsyncResult *result,GError **error)  ejectWithOperationFinish;
 	extern(C) char *  function(GDrive *drive)  getSortKey;
+	extern(C) GIcon *  function(GDrive *drive)  getSymbolicIcon;
 }
 
 
@@ -4299,6 +4335,18 @@ public struct GApplication{}
  * shutdown ()
  * invoked only on the registered primary instance immediately
  * after the main loop terminates
+ * dbus_register ()
+ * invoked locally during registration, if the application is
+ * using its D-Bus backend. You can use this to export extra objects on the
+ * bus, that need to exist before the application tries to own the bus name.
+ * The function is passed the GDBusConnection to to session bus, and the
+ * object path that GApplication will use to export is D-Bus API.
+ * If this function returns TRUE, registration will proceed; otherwise
+ * registration will abort. Since: 2.34
+ * dbus_unregister ()
+ * invoked locally during unregistration, if the application
+ * is using its D-Bus backend. Use this to undo anything done by the
+ * dbus_register vfunc. Since: 2.34
  * Since 2.28
  */
 public struct GApplicationClass
@@ -4316,6 +4364,8 @@ public struct GApplicationClass
 	extern(C) void  function(GApplication *application)  quitMainloop;
 	extern(C) void  function(GApplication *application)  runMainloop;
 	extern(C) void  function(GApplication *application)  shutdown;
+	extern(C) int  function(GApplication *application,GDBusConnection *connection,char *objectPath,GError **error)  dbusRegister;
+	extern(C) void  function(GApplication *application,GDBusConnection *connection,char *objectPath)  dbusUnregister;
 }
 
 
@@ -4623,6 +4673,15 @@ public struct GIOExtension{}
 
 
 public struct GIOExtensionPoint{}
+
+
+/**
+ * Main Gtk struct.
+ * The GTestDBus structure contains only private data and
+ * should only be accessed using the provided API.
+ * Since 2.34
+ */
+public struct GTestDBus{}
 
 
 /*

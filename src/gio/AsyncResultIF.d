@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- gobject.ObjectG
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * structWrap:
  * 	- GObject* -> ObjectG
  * module aliases:
@@ -60,6 +62,8 @@ private import glib.ConstructionException;
 
 
 private import gobject.ObjectG;
+private import glib.ErrorG;
+private import glib.GException;
 
 
 
@@ -119,4 +123,30 @@ public interface AsyncResultIF
 	 * Returns: a new reference to the source object for the res, or NULL if there is none. [transfer full]
 	 */
 	public ObjectG getSourceObject();
+	
+	/**
+	 * Checks if res has the given source_tag (generally a function
+	 * pointer indicating the function res was created by).
+	 * Since 2.34
+	 * Params:
+	 * sourceTag = an application-defined tag
+	 * Returns: TRUE if res has the indicated source_tag, FALSE if not.
+	 */
+	public int isTagged(void* sourceTag);
+	
+	/**
+	 * If res is a GSimpleAsyncResult, this is equivalent to
+	 * g_simple_async_result_propagate_error(). Otherwise it returns
+	 * FALSE.
+	 * This can be used for legacy error handling in async
+	 * _finish() wrapper functions that traditionally
+	 * handled GSimpleAsyncResult error returns themselves rather than
+	 * calling into the virtual method. This should not be used in new
+	 * code; GAsyncResult errors that are set by virtual methods should
+	 * also be extracted by virtual methods, to enable subclasses to chain
+	 * up correctly.
+	 * Since 2.34
+	 * Returns: TRUE if error is has been filled in with an error from res, FALSE if not.
+	 */
+	public int legacyPropagateError();
 }

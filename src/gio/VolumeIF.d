@@ -183,6 +183,13 @@ public interface VolumeIF
 	public IconIF getIcon();
 	
 	/**
+	 * Gets the symbolic icon for volume.
+	 * Since 2.34
+	 * Returns: a GIcon. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
+	 */
+	public IconIF getSymbolicIcon();
+	
+	/**
 	 * Gets the drive for the volume.
 	 * Returns: a GDrive or NULL if volume is not associated with a drive. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
 	 */

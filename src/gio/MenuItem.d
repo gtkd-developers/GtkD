@@ -47,10 +47,12 @@
  * imports:
  * 	- glib.Str
  * 	- glib.Variant
+ * 	- glib.VariantType
  * 	- gio.MenuModel
  * structWrap:
  * 	- GMenuModel* -> MenuModel
  * 	- GVariant* -> Variant
+ * 	- GVariantType* -> VariantType
  * module aliases:
  * local aliases:
  * overrides:
@@ -66,6 +68,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import glib.Variant;
+private import glib.VariantType;
 private import gio.MenuModel;
 
 
@@ -136,6 +139,28 @@ public class MenuItem
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_menu_item_new(Str.toStringz(label), Str.toStringz(detailedAction))");
+		}
+		this(cast(GMenuItem*) p);
+	}
+	
+	/**
+	 * Creates a GMenuItem as an exact copy of an existing menu item in a
+	 * GMenuModel.
+	 * item_index must be valid (ie: be sure to call
+	 * g_menu_model_get_n_items() first).
+	 * Since 2.34
+	 * Params:
+	 * model = a GMenuModel
+	 * itemIndex = the index of an item in model
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (MenuModel model, int itemIndex)
+	{
+		// GMenuItem * g_menu_item_new_from_model (GMenuModel *model,  gint item_index);
+		auto p = g_menu_item_new_from_model((model is null) ? null : model.getMenuModelStruct(), itemIndex);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_menu_item_new_from_model((model is null) ? null : model.getMenuModelStruct(), itemIndex)");
 		}
 		this(cast(GMenuItem*) p);
 	}
@@ -249,6 +274,46 @@ public class MenuItem
 	{
 		// void g_menu_item_set_submenu (GMenuItem *menu_item,  GMenuModel *submenu);
 		g_menu_item_set_submenu(gMenuItem, (submenu is null) ? null : submenu.getMenuModelStruct());
+	}
+	
+	/**
+	 * Queries the named attribute on menu_item.
+	 * If expected_type is specified and the attribute does not have this
+	 * type, NULL is returned. NULL is also returned if the attribute
+	 * simply does not exist.
+	 * Since 2.34
+	 * Params:
+	 * attribute = the attribute name to query
+	 * expectedType = the expected type of the attribute. [allow-none]
+	 * Returns: the attribute value, or NULL. [transfer full]
+	 */
+	public Variant getAttributeValue(string attribute, VariantType expectedType)
+	{
+		// GVariant * g_menu_item_get_attribute_value (GMenuItem *menu_item,  const gchar *attribute,  const GVariantType *expected_type);
+		auto p = g_menu_item_get_attribute_value(gMenuItem, Str.toStringz(attribute), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Variant(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Queries the named link on menu_item.
+	 * Since 2.34
+	 * Params:
+	 * link = the link name to query
+	 * Returns: the link, or NULL. [transfer full]
+	 */
+	public MenuModel getLink(string link)
+	{
+		// GMenuModel * g_menu_item_get_link (GMenuItem *menu_item,  const gchar *link);
+		auto p = g_menu_item_get_link(gMenuItem, Str.toStringz(link));
+		if(p is null)
+		{
+			return null;
+		}
+		return new MenuModel(cast(GMenuModel*) p);
 	}
 	
 	/**

@@ -153,7 +153,7 @@ public template PollableOutputStreamT(TStruct)
 	}
 	
 	/**
-	 * Attempts to write up to size bytes from buffer to stream, as
+	 * Attempts to write up to count bytes from buffer to stream, as
 	 * with g_output_stream_write(). If stream is not currently writable,
 	 * this will immediately return G_IO_ERROR_WOULD_BLOCK, and you can
 	 * use g_pollable_output_stream_create_source() to create a GSource
@@ -166,18 +166,18 @@ public template PollableOutputStreamT(TStruct)
 	 * Virtual: write_nonblocking
 	 * Params:
 	 * buffer = a buffer to write
-	 * data from. [array length=size][element-type guint8]
-	 * size = the number of bytes you want to write
+	 * data from. [array length=count][element-type guint8]
+	 * count = the number of bytes you want to write
 	 * cancellable = a GCancellable, or NULL. [allow-none]
 	 * Returns: the number of bytes written, or -1 on error (including G_IO_ERROR_WOULD_BLOCK).
 	 * Throws: GException on failure.
 	 */
-	public gssize gPollableOutputStreamWriteNonblocking(void[] buffer, Cancellable cancellable)
+	public gssize gPollableOutputStreamWriteNonblocking(void[] buffer, gsize count, Cancellable cancellable)
 	{
-		// gssize g_pollable_output_stream_write_nonblocking  (GPollableOutputStream *stream,  const void *buffer,  gsize size,  GCancellable *cancellable,  GError **error);
+		// gssize g_pollable_output_stream_write_nonblocking  (GPollableOutputStream *stream,  const void *buffer,  gsize count,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_pollable_output_stream_write_nonblocking(getPollableOutputStreamTStruct(), buffer.ptr, cast(int) buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_pollable_output_stream_write_nonblocking(getPollableOutputStreamTStruct(), buffer.ptr, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{

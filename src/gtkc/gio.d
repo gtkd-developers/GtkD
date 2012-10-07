@@ -90,6 +90,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_set_display_name_async, \"g_file_set_display_name_async\", LIBRARY.GIO);
 	Linker.link(g_file_set_display_name_finish, \"g_file_set_display_name_finish\", LIBRARY.GIO);
 	Linker.link(g_file_delete, \"g_file_delete\", LIBRARY.GIO);
+	Linker.link(g_file_delete_async, \"g_file_delete_async\", LIBRARY.GIO);
+	Linker.link(g_file_delete_finish, \"g_file_delete_finish\", LIBRARY.GIO);
 	Linker.link(g_file_trash, \"g_file_trash\", LIBRARY.GIO);
 	Linker.link(g_file_copy, \"g_file_copy\", LIBRARY.GIO);
 	Linker.link(g_file_copy_async, \"g_file_copy_async\", LIBRARY.GIO);
@@ -202,6 +204,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_info_get_display_name, \"g_file_info_get_display_name\", LIBRARY.GIO);
 	Linker.link(g_file_info_get_edit_name, \"g_file_info_get_edit_name\", LIBRARY.GIO);
 	Linker.link(g_file_info_get_icon, \"g_file_info_get_icon\", LIBRARY.GIO);
+	Linker.link(g_file_info_get_symbolic_icon, \"g_file_info_get_symbolic_icon\", LIBRARY.GIO);
 	Linker.link(g_file_info_get_content_type, \"g_file_info_get_content_type\", LIBRARY.GIO);
 	Linker.link(g_file_info_get_size, \"g_file_info_get_size\", LIBRARY.GIO);
 	Linker.link(g_file_info_get_modification_time, \"g_file_info_get_modification_time\", LIBRARY.GIO);
@@ -217,6 +220,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_info_set_display_name, \"g_file_info_set_display_name\", LIBRARY.GIO);
 	Linker.link(g_file_info_set_edit_name, \"g_file_info_set_edit_name\", LIBRARY.GIO);
 	Linker.link(g_file_info_set_icon, \"g_file_info_set_icon\", LIBRARY.GIO);
+	Linker.link(g_file_info_set_symbolic_icon, \"g_file_info_set_symbolic_icon\", LIBRARY.GIO);
 	Linker.link(g_file_info_set_content_type, \"g_file_info_set_content_type\", LIBRARY.GIO);
 	Linker.link(g_file_info_set_size, \"g_file_info_set_size\", LIBRARY.GIO);
 	Linker.link(g_file_info_set_modification_time, \"g_file_info_set_modification_time\", LIBRARY.GIO);
@@ -308,6 +312,8 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_async_result_get_user_data, \"g_async_result_get_user_data\", LIBRARY.GIO);
 	Linker.link(g_async_result_get_source_object, \"g_async_result_get_source_object\", LIBRARY.GIO);
+	Linker.link(g_async_result_is_tagged, \"g_async_result_is_tagged\", LIBRARY.GIO);
+	Linker.link(g_async_result_legacy_propagate_error, \"g_async_result_legacy_propagate_error\", LIBRARY.GIO);
 
 	// gio.IOSchedulerJob
 
@@ -400,6 +406,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_input_stream_has_pending, \"g_input_stream_has_pending\", LIBRARY.GIO);
 	Linker.link(g_input_stream_set_pending, \"g_input_stream_set_pending\", LIBRARY.GIO);
 	Linker.link(g_input_stream_clear_pending, \"g_input_stream_clear_pending\", LIBRARY.GIO);
+	Linker.link(g_input_stream_read_bytes, \"g_input_stream_read_bytes\", LIBRARY.GIO);
+	Linker.link(g_input_stream_read_bytes_async, \"g_input_stream_read_bytes_async\", LIBRARY.GIO);
+	Linker.link(g_input_stream_read_bytes_finish, \"g_input_stream_read_bytes_finish\", LIBRARY.GIO);
 
 	// gio.OutputStream
 
@@ -421,6 +430,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_output_stream_has_pending, \"g_output_stream_has_pending\", LIBRARY.GIO);
 	Linker.link(g_output_stream_set_pending, \"g_output_stream_set_pending\", LIBRARY.GIO);
 	Linker.link(g_output_stream_clear_pending, \"g_output_stream_clear_pending\", LIBRARY.GIO);
+	Linker.link(g_output_stream_write_bytes, \"g_output_stream_write_bytes\", LIBRARY.GIO);
+	Linker.link(g_output_stream_write_bytes_async, \"g_output_stream_write_bytes_async\", LIBRARY.GIO);
+	Linker.link(g_output_stream_write_bytes_finish, \"g_output_stream_write_bytes_finish\", LIBRARY.GIO);
 
 	// gio.IOStream
 
@@ -585,7 +597,6 @@ mixin( _shared ~ "static this()
 	Linker.link(g_pollable_input_stream_is_readable, \"g_pollable_input_stream_is_readable\", LIBRARY.GIO);
 	Linker.link(g_pollable_input_stream_create_source, \"g_pollable_input_stream_create_source\", LIBRARY.GIO);
 	Linker.link(g_pollable_input_stream_read_nonblocking, \"g_pollable_input_stream_read_nonblocking\", LIBRARY.GIO);
-	Linker.link(g_pollable_source_new, \"g_pollable_source_new\", LIBRARY.GIO);
 
 	// gio.PollableOutputStreamT
 
@@ -597,6 +608,14 @@ mixin( _shared ~ "static this()
 	Linker.link(g_pollable_output_stream_create_source, \"g_pollable_output_stream_create_source\", LIBRARY.GIO);
 	Linker.link(g_pollable_output_stream_write_nonblocking, \"g_pollable_output_stream_write_nonblocking\", LIBRARY.GIO);
 
+	// gio.
+
+	Linker.link(g_pollable_source_new, \"g_pollable_source_new\", LIBRARY.GIO);
+	Linker.link(g_pollable_source_new_full, \"g_pollable_source_new_full\", LIBRARY.GIO);
+	Linker.link(g_pollable_stream_read, \"g_pollable_stream_read\", LIBRARY.GIO);
+	Linker.link(g_pollable_stream_write, \"g_pollable_stream_write\", LIBRARY.GIO);
+	Linker.link(g_pollable_stream_write_all, \"g_pollable_stream_write_all\", LIBRARY.GIO);
+
 	// gio.ContentType
 
 	Linker.link(g_content_type_equals, \"g_content_type_equals\", LIBRARY.GIO);
@@ -605,6 +624,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_content_type_get_description, \"g_content_type_get_description\", LIBRARY.GIO);
 	Linker.link(g_content_type_get_mime_type, \"g_content_type_get_mime_type\", LIBRARY.GIO);
 	Linker.link(g_content_type_get_icon, \"g_content_type_get_icon\", LIBRARY.GIO);
+	Linker.link(g_content_type_get_symbolic_icon, \"g_content_type_get_symbolic_icon\", LIBRARY.GIO);
+	Linker.link(g_content_type_get_generic_icon_name, \"g_content_type_get_generic_icon_name\", LIBRARY.GIO);
 	Linker.link(g_content_type_can_be_executable, \"g_content_type_can_be_executable\", LIBRARY.GIO);
 	Linker.link(g_content_type_from_mime_type, \"g_content_type_from_mime_type\", LIBRARY.GIO);
 	Linker.link(g_content_type_guess, \"g_content_type_guess\", LIBRARY.GIO);
@@ -640,6 +661,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_app_info_add_supports_type, \"g_app_info_add_supports_type\", LIBRARY.GIO);
 	Linker.link(g_app_info_can_remove_supports_type, \"g_app_info_can_remove_supports_type\", LIBRARY.GIO);
 	Linker.link(g_app_info_remove_supports_type, \"g_app_info_remove_supports_type\", LIBRARY.GIO);
+	Linker.link(g_app_info_get_supported_types, \"g_app_info_get_supported_types\", LIBRARY.GIO);
 	Linker.link(g_app_info_get_all, \"g_app_info_get_all\", LIBRARY.GIO);
 	Linker.link(g_app_info_get_all_for_type, \"g_app_info_get_all_for_type\", LIBRARY.GIO);
 	Linker.link(g_app_info_get_default_for_type, \"g_app_info_get_default_for_type\", LIBRARY.GIO);
@@ -666,6 +688,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_desktop_app_info_get_generic_name, \"g_desktop_app_info_get_generic_name\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_get_categories, \"g_desktop_app_info_get_categories\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_get_keywords, \"g_desktop_app_info_get_keywords\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_startup_wm_class, \"g_desktop_app_info_get_startup_wm_class\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_set_desktop_env, \"g_desktop_app_info_set_desktop_env\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_launch_uris_as_manager, \"g_desktop_app_info_launch_uris_as_manager\", LIBRARY.GIO);
 
@@ -687,6 +710,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_volume_get_name, \"g_volume_get_name\", LIBRARY.GIO);
 	Linker.link(g_volume_get_uuid, \"g_volume_get_uuid\", LIBRARY.GIO);
 	Linker.link(g_volume_get_icon, \"g_volume_get_icon\", LIBRARY.GIO);
+	Linker.link(g_volume_get_symbolic_icon, \"g_volume_get_symbolic_icon\", LIBRARY.GIO);
 	Linker.link(g_volume_get_drive, \"g_volume_get_drive\", LIBRARY.GIO);
 	Linker.link(g_volume_get_mount, \"g_volume_get_mount\", LIBRARY.GIO);
 	Linker.link(g_volume_can_mount, \"g_volume_can_mount\", LIBRARY.GIO);
@@ -714,6 +738,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_mount_get_name, \"g_mount_get_name\", LIBRARY.GIO);
 	Linker.link(g_mount_get_uuid, \"g_mount_get_uuid\", LIBRARY.GIO);
 	Linker.link(g_mount_get_icon, \"g_mount_get_icon\", LIBRARY.GIO);
+	Linker.link(g_mount_get_symbolic_icon, \"g_mount_get_symbolic_icon\", LIBRARY.GIO);
 	Linker.link(g_mount_get_drive, \"g_mount_get_drive\", LIBRARY.GIO);
 	Linker.link(g_mount_get_root, \"g_mount_get_root\", LIBRARY.GIO);
 	Linker.link(g_mount_get_volume, \"g_mount_get_volume\", LIBRARY.GIO);
@@ -748,6 +773,7 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_drive_get_name, \"g_drive_get_name\", LIBRARY.GIO);
 	Linker.link(g_drive_get_icon, \"g_drive_get_icon\", LIBRARY.GIO);
+	Linker.link(g_drive_get_symbolic_icon, \"g_drive_get_symbolic_icon\", LIBRARY.GIO);
 	Linker.link(g_drive_has_volumes, \"g_drive_has_volumes\", LIBRARY.GIO);
 	Linker.link(g_drive_get_volumes, \"g_drive_get_volumes\", LIBRARY.GIO);
 	Linker.link(g_drive_can_eject, \"g_drive_can_eject\", LIBRARY.GIO);
@@ -786,6 +812,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_unix_mount_is_readonly, \"g_unix_mount_is_readonly\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_is_system_internal, \"g_unix_mount_is_system_internal\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_guess_icon, \"g_unix_mount_guess_icon\", LIBRARY.GIO);
+	Linker.link(g_unix_mount_guess_symbolic_icon, \"g_unix_mount_guess_symbolic_icon\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_guess_name, \"g_unix_mount_guess_name\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_guess_can_eject, \"g_unix_mount_guess_can_eject\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_guess_should_display, \"g_unix_mount_guess_should_display\", LIBRARY.GIO);
@@ -808,6 +835,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_unix_mount_point_is_user_mountable, \"g_unix_mount_point_is_user_mountable\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_is_loopback, \"g_unix_mount_point_is_loopback\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_guess_icon, \"g_unix_mount_point_guess_icon\", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_guess_symbolic_icon, \"g_unix_mount_point_guess_symbolic_icon\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_guess_name, \"g_unix_mount_point_guess_name\", LIBRARY.GIO);
 	Linker.link(g_unix_mount_point_guess_can_eject, \"g_unix_mount_point_guess_can_eject\", LIBRARY.GIO);
 
@@ -1060,11 +1088,13 @@ mixin( _shared ~ "static this()
 
 	// gio.ProxyAddress
 
+	Linker.link(g_proxy_address_get_destination_protocol, \"g_proxy_address_get_destination_protocol\", LIBRARY.GIO);
 	Linker.link(g_proxy_address_get_destination_hostname, \"g_proxy_address_get_destination_hostname\", LIBRARY.GIO);
 	Linker.link(g_proxy_address_get_destination_port, \"g_proxy_address_get_destination_port\", LIBRARY.GIO);
 	Linker.link(g_proxy_address_get_password, \"g_proxy_address_get_password\", LIBRARY.GIO);
 	Linker.link(g_proxy_address_get_protocol, \"g_proxy_address_get_protocol\", LIBRARY.GIO);
 	Linker.link(g_proxy_address_get_username, \"g_proxy_address_get_username\", LIBRARY.GIO);
+	Linker.link(g_proxy_address_get_uri, \"g_proxy_address_get_uri\", LIBRARY.GIO);
 	Linker.link(g_proxy_address_new, \"g_proxy_address_new\", LIBRARY.GIO);
 
 	// gio.SocketClient
@@ -1178,6 +1208,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_tls_certificate_list_new_from_file, \"g_tls_certificate_list_new_from_file\", LIBRARY.GIO);
 	Linker.link(g_tls_certificate_get_issuer, \"g_tls_certificate_get_issuer\", LIBRARY.GIO);
 	Linker.link(g_tls_certificate_verify, \"g_tls_certificate_verify\", LIBRARY.GIO);
+	Linker.link(g_tls_certificate_is_same, \"g_tls_certificate_is_same\", LIBRARY.GIO);
 
 	// gio.TlsConnection
 
@@ -1280,6 +1311,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_resolver_lookup_service_async, \"g_resolver_lookup_service_async\", LIBRARY.GIO);
 	Linker.link(g_resolver_lookup_service_finish, \"g_resolver_lookup_service_finish\", LIBRARY.GIO);
 	Linker.link(g_resolver_free_targets, \"g_resolver_free_targets\", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_records, \"g_resolver_lookup_records\", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_records_async, \"g_resolver_lookup_records_async\", LIBRARY.GIO);
+	Linker.link(g_resolver_lookup_records_finish, \"g_resolver_lookup_records_finish\", LIBRARY.GIO);
 
 	// gio.ProxyResolverT
 
@@ -1491,6 +1525,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_connection_get_unique_name, \"g_dbus_connection_get_unique_name\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_get_capabilities, \"g_dbus_connection_get_capabilities\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_get_peer_credentials, \"g_dbus_connection_get_peer_credentials\", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_get_last_serial, \"g_dbus_connection_get_last_serial\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_call, \"g_dbus_connection_call\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_call_finish, \"g_dbus_connection_call_finish\", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_call_sync, \"g_dbus_connection_call_sync\", LIBRARY.GIO);
@@ -1549,6 +1584,7 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_dbus_auth_observer_new, \"g_dbus_auth_observer_new\", LIBRARY.GIO);
 	Linker.link(g_dbus_auth_observer_authorize_authenticated_peer, \"g_dbus_auth_observer_authorize_authenticated_peer\", LIBRARY.GIO);
+	Linker.link(g_dbus_auth_observer_allow_mechanism, \"g_dbus_auth_observer_allow_mechanism\", LIBRARY.GIO);
 
 	// gio.DBusNames
 
@@ -1663,6 +1699,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_object_manager_server_set_connection, \"g_dbus_object_manager_server_set_connection\", LIBRARY.GIO);
 	Linker.link(g_dbus_object_manager_server_export, \"g_dbus_object_manager_server_export\", LIBRARY.GIO);
 	Linker.link(g_dbus_object_manager_server_export_uniquely, \"g_dbus_object_manager_server_export_uniquely\", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_server_is_exported, \"g_dbus_object_manager_server_is_exported\", LIBRARY.GIO);
 	Linker.link(g_dbus_object_manager_server_unexport, \"g_dbus_object_manager_server_unexport\", LIBRARY.GIO);
 
 	// gio.DBusObjectManagerClient
@@ -1799,6 +1836,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_application_set_inactivity_timeout, \"g_application_set_inactivity_timeout\", LIBRARY.GIO);
 	Linker.link(g_application_get_flags, \"g_application_get_flags\", LIBRARY.GIO);
 	Linker.link(g_application_set_flags, \"g_application_set_flags\", LIBRARY.GIO);
+	Linker.link(g_application_get_dbus_connection, \"g_application_get_dbus_connection\", LIBRARY.GIO);
+	Linker.link(g_application_get_dbus_object_path, \"g_application_get_dbus_object_path\", LIBRARY.GIO);
 	Linker.link(g_application_set_action_group, \"g_application_set_action_group\", LIBRARY.GIO);
 	Linker.link(g_application_get_is_registered, \"g_application_get_is_registered\", LIBRARY.GIO);
 	Linker.link(g_application_get_is_remote, \"g_application_get_is_remote\", LIBRARY.GIO);
@@ -1947,12 +1986,16 @@ mixin( _shared ~ "static this()
 	Linker.link(g_menu_item_new, \"g_menu_item_new\", LIBRARY.GIO);
 	Linker.link(g_menu_item_new_section, \"g_menu_item_new_section\", LIBRARY.GIO);
 	Linker.link(g_menu_item_new_submenu, \"g_menu_item_new_submenu\", LIBRARY.GIO);
+	Linker.link(g_menu_item_new_from_model, \"g_menu_item_new_from_model\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_label, \"g_menu_item_set_label\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_action_and_target_value, \"g_menu_item_set_action_and_target_value\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_action_and_target, \"g_menu_item_set_action_and_target\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_detailed_action, \"g_menu_item_set_detailed_action\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_section, \"g_menu_item_set_section\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_submenu, \"g_menu_item_set_submenu\", LIBRARY.GIO);
+	Linker.link(g_menu_item_get_attribute_value, \"g_menu_item_get_attribute_value\", LIBRARY.GIO);
+	Linker.link(g_menu_item_get_attribute, \"g_menu_item_get_attribute\", LIBRARY.GIO);
+	Linker.link(g_menu_item_get_link, \"g_menu_item_get_link\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_attribute_value, \"g_menu_item_set_attribute_value\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_attribute, \"g_menu_item_set_attribute\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_link, \"g_menu_item_set_link\", LIBRARY.GIO);
@@ -2004,6 +2047,17 @@ mixin( _shared ~ "static this()
 	Linker.link(g_io_extension_point_lookup, \"g_io_extension_point_lookup\", LIBRARY.GIO);
 	Linker.link(g_io_extension_point_register, \"g_io_extension_point_register\", LIBRARY.GIO);
 	Linker.link(g_io_extension_point_set_required_type, \"g_io_extension_point_set_required_type\", LIBRARY.GIO);
+
+	// gio.TestDBus
+
+	Linker.link(g_test_dbus_new, \"g_test_dbus_new\", LIBRARY.GIO);
+	Linker.link(g_test_dbus_get_flags, \"g_test_dbus_get_flags\", LIBRARY.GIO);
+	Linker.link(g_test_dbus_get_bus_address, \"g_test_dbus_get_bus_address\", LIBRARY.GIO);
+	Linker.link(g_test_dbus_add_service_dir, \"g_test_dbus_add_service_dir\", LIBRARY.GIO);
+	Linker.link(g_test_dbus_up, \"g_test_dbus_up\", LIBRARY.GIO);
+	Linker.link(g_test_dbus_stop, \"g_test_dbus_stop\", LIBRARY.GIO);
+	Linker.link(g_test_dbus_down, \"g_test_dbus_down\", LIBRARY.GIO);
+	Linker.link(g_test_dbus_unset, \"g_test_dbus_unset\", LIBRARY.GIO);
 }");
 
 mixin( gshared ~"extern(C)
@@ -2063,6 +2117,8 @@ mixin( gshared ~"extern(C)
 	void function(GFile* file, char* displayName, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_set_display_name_async;
 	GFile* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_set_display_name_finish;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_delete;
+	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_delete_async;
+	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_delete_finish;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_trash;
 	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** error) c_g_file_copy;
 	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) c_g_file_copy_async;
@@ -2175,6 +2231,7 @@ mixin( gshared ~"extern(C)
 	char* function(GFileInfo* info) c_g_file_info_get_display_name;
 	char* function(GFileInfo* info) c_g_file_info_get_edit_name;
 	GIcon* function(GFileInfo* info) c_g_file_info_get_icon;
+	GIcon* function(GFileInfo* info) c_g_file_info_get_symbolic_icon;
 	char* function(GFileInfo* info) c_g_file_info_get_content_type;
 	goffset function(GFileInfo* info) c_g_file_info_get_size;
 	void function(GFileInfo* info, GTimeVal* result) c_g_file_info_get_modification_time;
@@ -2190,6 +2247,7 @@ mixin( gshared ~"extern(C)
 	void function(GFileInfo* info, char* displayName) c_g_file_info_set_display_name;
 	void function(GFileInfo* info, char* editName) c_g_file_info_set_edit_name;
 	void function(GFileInfo* info, GIcon* icon) c_g_file_info_set_icon;
+	void function(GFileInfo* info, GIcon* icon) c_g_file_info_set_symbolic_icon;
 	void function(GFileInfo* info, char* contentType) c_g_file_info_set_content_type;
 	void function(GFileInfo* info, goffset size) c_g_file_info_set_size;
 	void function(GFileInfo* info, GTimeVal* mtime) c_g_file_info_set_modification_time;
@@ -2281,6 +2339,8 @@ mixin( gshared ~"extern(C)
 
 	gpointer function(GAsyncResult* res) c_g_async_result_get_user_data;
 	GObject* function(GAsyncResult* res) c_g_async_result_get_source_object;
+	gboolean function(GAsyncResult* res, void* sourceTag) c_g_async_result_is_tagged;
+	gboolean function(GAsyncResult* res, GError** error) c_g_async_result_legacy_propagate_error;
 
 	// gio.IOSchedulerJob
 
@@ -2373,6 +2433,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GInputStream* stream) c_g_input_stream_has_pending;
 	gboolean function(GInputStream* stream, GError** error) c_g_input_stream_set_pending;
 	void function(GInputStream* stream) c_g_input_stream_clear_pending;
+	GBytes* function(GInputStream* stream, gsize count, GCancellable* cancellable, GError** error) c_g_input_stream_read_bytes;
+	void function(GInputStream* stream, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_input_stream_read_bytes_async;
+	GBytes* function(GInputStream* stream, GAsyncResult* result, GError** error) c_g_input_stream_read_bytes_finish;
 
 	// gio.OutputStream
 
@@ -2394,6 +2457,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GOutputStream* stream) c_g_output_stream_has_pending;
 	gboolean function(GOutputStream* stream, GError** error) c_g_output_stream_set_pending;
 	void function(GOutputStream* stream) c_g_output_stream_clear_pending;
+	gssize function(GOutputStream* stream, GBytes* bytes, GCancellable* cancellable, GError** error) c_g_output_stream_write_bytes;
+	void function(GOutputStream* stream, GBytes* bytes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_write_bytes_async;
+	gssize function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_write_bytes_finish;
 
 	// gio.IOStream
 
@@ -2557,8 +2623,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GPollableInputStream* stream) c_g_pollable_input_stream_can_poll;
 	gboolean function(GPollableInputStream* stream) c_g_pollable_input_stream_is_readable;
 	GSource* function(GPollableInputStream* stream, GCancellable* cancellable) c_g_pollable_input_stream_create_source;
-	gssize function(GPollableInputStream* stream, void* buffer, gsize size, GCancellable* cancellable, GError** error) c_g_pollable_input_stream_read_nonblocking;
-	GSource* function(GObject* pollableStream) c_g_pollable_source_new;
+	gssize function(GPollableInputStream* stream, void* buffer, gsize count, GCancellable* cancellable, GError** error) c_g_pollable_input_stream_read_nonblocking;
 
 	// gio.PollableOutputStreamT
 
@@ -2568,7 +2633,15 @@ mixin( gshared ~"extern(C)
 	gboolean function(GPollableOutputStream* stream) c_g_pollable_output_stream_can_poll;
 	gboolean function(GPollableOutputStream* stream) c_g_pollable_output_stream_is_writable;
 	GSource* function(GPollableOutputStream* stream, GCancellable* cancellable) c_g_pollable_output_stream_create_source;
-	gssize function(GPollableOutputStream* stream, void* buffer, gsize size, GCancellable* cancellable, GError** error) c_g_pollable_output_stream_write_nonblocking;
+	gssize function(GPollableOutputStream* stream, void* buffer, gsize count, GCancellable* cancellable, GError** error) c_g_pollable_output_stream_write_nonblocking;
+
+	// gio.
+
+	GSource* function(GObject* pollableStream) c_g_pollable_source_new;
+	GSource* function(void* pollableStream, GSource* childSource, GCancellable* cancellable) c_g_pollable_source_new_full;
+	gssize function(GInputStream* stream, void* buffer, gsize count, gboolean blocking, GCancellable* cancellable, GError** error) c_g_pollable_stream_read;
+	gssize function(GOutputStream* stream, void* buffer, gsize count, gboolean blocking, GCancellable* cancellable, GError** error) c_g_pollable_stream_write;
+	gboolean function(GOutputStream* stream, void* buffer, gsize count, gboolean blocking, gsize* bytesWritten, GCancellable* cancellable, GError** error) c_g_pollable_stream_write_all;
 
 	// gio.ContentType
 
@@ -2578,6 +2651,8 @@ mixin( gshared ~"extern(C)
 	gchar* function(gchar* type) c_g_content_type_get_description;
 	gchar* function(gchar* type) c_g_content_type_get_mime_type;
 	GIcon* function(gchar* type) c_g_content_type_get_icon;
+	GIcon* function(gchar* type) c_g_content_type_get_symbolic_icon;
+	gchar* function(gchar* type) c_g_content_type_get_generic_icon_name;
 	gboolean function(gchar* type) c_g_content_type_can_be_executable;
 	gchar* function(gchar* mimeType) c_g_content_type_from_mime_type;
 	gchar* function(gchar* filename, guchar* data, gsize dataSize, gboolean* resultUncertain) c_g_content_type_guess;
@@ -2613,6 +2688,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GAppInfo* appinfo, char* contentType, GError** error) c_g_app_info_add_supports_type;
 	gboolean function(GAppInfo* appinfo) c_g_app_info_can_remove_supports_type;
 	gboolean function(GAppInfo* appinfo, char* contentType, GError** error) c_g_app_info_remove_supports_type;
+	char** function(GAppInfo* appinfo) c_g_app_info_get_supported_types;
 	GList* function() c_g_app_info_get_all;
 	GList* function(char* contentType) c_g_app_info_get_all_for_type;
 	GAppInfo* function(char* contentType, gboolean mustSupportUris) c_g_app_info_get_default_for_type;
@@ -2639,6 +2715,7 @@ mixin( gshared ~"extern(C)
 	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_generic_name;
 	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_categories;
 	char** function(GDesktopAppInfo* info) c_g_desktop_app_info_get_keywords;
+	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_startup_wm_class;
 	void function(char* desktopEnv) c_g_desktop_app_info_set_desktop_env;
 	gboolean function(GDesktopAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData, GError** error) c_g_desktop_app_info_launch_uris_as_manager;
 
@@ -2660,6 +2737,7 @@ mixin( gshared ~"extern(C)
 	char* function(GVolume* volume) c_g_volume_get_name;
 	char* function(GVolume* volume) c_g_volume_get_uuid;
 	GIcon* function(GVolume* volume) c_g_volume_get_icon;
+	GIcon* function(GVolume* volume) c_g_volume_get_symbolic_icon;
 	GDrive* function(GVolume* volume) c_g_volume_get_drive;
 	GMount* function(GVolume* volume) c_g_volume_get_mount;
 	gboolean function(GVolume* volume) c_g_volume_can_mount;
@@ -2687,6 +2765,7 @@ mixin( gshared ~"extern(C)
 	char* function(GMount* mount) c_g_mount_get_name;
 	char* function(GMount* mount) c_g_mount_get_uuid;
 	GIcon* function(GMount* mount) c_g_mount_get_icon;
+	GIcon* function(GMount* mount) c_g_mount_get_symbolic_icon;
 	GDrive* function(GMount* mount) c_g_mount_get_drive;
 	GFile* function(GMount* mount) c_g_mount_get_root;
 	GVolume* function(GMount* mount) c_g_mount_get_volume;
@@ -2721,6 +2800,7 @@ mixin( gshared ~"extern(C)
 
 	char* function(GDrive* drive) c_g_drive_get_name;
 	GIcon* function(GDrive* drive) c_g_drive_get_icon;
+	GIcon* function(GDrive* drive) c_g_drive_get_symbolic_icon;
 	gboolean function(GDrive* drive) c_g_drive_has_volumes;
 	GList* function(GDrive* drive) c_g_drive_get_volumes;
 	gboolean function(GDrive* drive) c_g_drive_can_eject;
@@ -2759,6 +2839,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GUnixMountEntry* mountEntry) c_g_unix_mount_is_readonly;
 	gboolean function(GUnixMountEntry* mountEntry) c_g_unix_mount_is_system_internal;
 	GIcon* function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_icon;
+	GIcon* function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_symbolic_icon;
 	char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_name;
 	gboolean function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_can_eject;
 	gboolean function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_should_display;
@@ -2781,6 +2862,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_user_mountable;
 	gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_loopback;
 	GIcon* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_icon;
+	GIcon* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_symbolic_icon;
 	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_name;
 	gboolean function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_can_eject;
 
@@ -3033,11 +3115,13 @@ mixin( gshared ~"extern(C)
 
 	// gio.ProxyAddress
 
+	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_destination_protocol;
 	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_destination_hostname;
 	guint16 function(GProxyAddress* proxy) c_g_proxy_address_get_destination_port;
 	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_password;
 	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_protocol;
 	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_username;
+	gchar* function(GProxyAddress* proxy) c_g_proxy_address_get_uri;
 	GSocketAddress* function(GInetAddress* inetaddr, guint16 port, gchar* protocol, gchar* destHostname, guint16 destPort, gchar* username, gchar* password) c_g_proxy_address_new;
 
 	// gio.SocketClient
@@ -3151,6 +3235,7 @@ mixin( gshared ~"extern(C)
 	GList* function(gchar* file, GError** error) c_g_tls_certificate_list_new_from_file;
 	GTlsCertificate* function(GTlsCertificate* cert) c_g_tls_certificate_get_issuer;
 	GTlsCertificateFlags function(GTlsCertificate* cert, GSocketConnectable* identity, GTlsCertificate* trustedCa) c_g_tls_certificate_verify;
+	gboolean function(GTlsCertificate* certOne, GTlsCertificate* certTwo) c_g_tls_certificate_is_same;
 
 	// gio.TlsConnection
 
@@ -3253,6 +3338,9 @@ mixin( gshared ~"extern(C)
 	void function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_resolver_lookup_service_async;
 	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_service_finish;
 	void function(GList* targets) c_g_resolver_free_targets;
+	GList* function(GResolver* resolver, gchar* rrname, GResolverRecordType recordType, GCancellable* cancellable, GError** error) c_g_resolver_lookup_records;
+	void function(GResolver* resolver, gchar* rrname, GResolverRecordType recordType, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_resolver_lookup_records_async;
+	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_records_finish;
 
 	// gio.ProxyResolverT
 
@@ -3464,6 +3552,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(GDBusConnection* connection) c_g_dbus_connection_get_unique_name;
 	GDBusCapabilityFlags function(GDBusConnection* connection) c_g_dbus_connection_get_capabilities;
 	GCredentials* function(GDBusConnection* connection) c_g_dbus_connection_get_peer_credentials;
+	guint32 function(GDBusConnection* connection) c_g_dbus_connection_get_last_serial;
 	void function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_connection_call;
 	GVariant* function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_call_finish;
 	GVariant* function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_connection_call_sync;
@@ -3522,6 +3611,7 @@ mixin( gshared ~"extern(C)
 
 	GDBusAuthObserver* function() c_g_dbus_auth_observer_new;
 	gboolean function(GDBusAuthObserver* observer, GIOStream* stream, GCredentials* credentials) c_g_dbus_auth_observer_authorize_authenticated_peer;
+	gboolean function(GDBusAuthObserver* observer, gchar* mechanism) c_g_dbus_auth_observer_allow_mechanism;
 
 	// gio.DBusNames
 
@@ -3636,6 +3726,7 @@ mixin( gshared ~"extern(C)
 	void function(GDBusObjectManagerServer* manager, GDBusConnection* connection) c_g_dbus_object_manager_server_set_connection;
 	void function(GDBusObjectManagerServer* manager, GDBusObjectSkeleton* object) c_g_dbus_object_manager_server_export;
 	void function(GDBusObjectManagerServer* manager, GDBusObjectSkeleton* object) c_g_dbus_object_manager_server_export_uniquely;
+	gboolean function(GDBusObjectManagerServer* manager, GDBusObjectSkeleton* object) c_g_dbus_object_manager_server_is_exported;
 	gboolean function(GDBusObjectManagerServer* manager, gchar* objectPath) c_g_dbus_object_manager_server_unexport;
 
 	// gio.DBusObjectManagerClient
@@ -3772,6 +3863,8 @@ mixin( gshared ~"extern(C)
 	void function(GApplication* application, guint inactivityTimeout) c_g_application_set_inactivity_timeout;
 	GApplicationFlags function(GApplication* application) c_g_application_get_flags;
 	void function(GApplication* application, GApplicationFlags flags) c_g_application_set_flags;
+	GDBusConnection* function(GApplication* application) c_g_application_get_dbus_connection;
+	gchar* function(GApplication* application) c_g_application_get_dbus_object_path;
 	void function(GApplication* application, GActionGroup* actionGroup) c_g_application_set_action_group;
 	gboolean function(GApplication* application) c_g_application_get_is_registered;
 	gboolean function(GApplication* application) c_g_application_get_is_remote;
@@ -3920,12 +4013,16 @@ mixin( gshared ~"extern(C)
 	GMenuItem* function(gchar* label, gchar* detailedAction) c_g_menu_item_new;
 	GMenuItem* function(gchar* label, GMenuModel* section) c_g_menu_item_new_section;
 	GMenuItem* function(gchar* label, GMenuModel* submenu) c_g_menu_item_new_submenu;
+	GMenuItem* function(GMenuModel* model, gint itemIndex) c_g_menu_item_new_from_model;
 	void function(GMenuItem* menuItem, gchar* label) c_g_menu_item_set_label;
 	void function(GMenuItem* menuItem, gchar* action, GVariant* targetValue) c_g_menu_item_set_action_and_target_value;
 	void function(GMenuItem* menuItem, gchar* action, gchar* formatString, ... ) c_g_menu_item_set_action_and_target;
 	void function(GMenuItem* menuItem, gchar* detailedAction) c_g_menu_item_set_detailed_action;
 	void function(GMenuItem* menuItem, GMenuModel* section) c_g_menu_item_set_section;
 	void function(GMenuItem* menuItem, GMenuModel* submenu) c_g_menu_item_set_submenu;
+	GVariant* function(GMenuItem* menuItem, gchar* attribute, GVariantType* expectedType) c_g_menu_item_get_attribute_value;
+	gboolean function(GMenuItem* menuItem, gchar* attribute, gchar* formatString, ... ) c_g_menu_item_get_attribute;
+	GMenuModel* function(GMenuItem* menuItem, gchar* link) c_g_menu_item_get_link;
 	void function(GMenuItem* menuItem, gchar* attribute, GVariant* value) c_g_menu_item_set_attribute_value;
 	void function(GMenuItem* menuItem, gchar* attribute, gchar* formatString, ... ) c_g_menu_item_set_attribute;
 	void function(GMenuItem* menuItem, gchar* link, GMenuModel* model) c_g_menu_item_set_link;
@@ -3977,6 +4074,17 @@ mixin( gshared ~"extern(C)
 	GIOExtensionPoint* function(char* name) c_g_io_extension_point_lookup;
 	GIOExtensionPoint* function(char* name) c_g_io_extension_point_register;
 	void function(GIOExtensionPoint* extensionPoint, GType type) c_g_io_extension_point_set_required_type;
+
+	// gio.TestDBus
+
+	GTestDBus* function(GTestDBusFlags flags) c_g_test_dbus_new;
+	GTestDBusFlags function(GTestDBus* self) c_g_test_dbus_get_flags;
+	gchar* function(GTestDBus* self) c_g_test_dbus_get_bus_address;
+	void function(GTestDBus* self, gchar* path) c_g_test_dbus_add_service_dir;
+	void function(GTestDBus* self) c_g_test_dbus_up;
+	void function(GTestDBus* self) c_g_test_dbus_stop;
+	void function(GTestDBus* self) c_g_test_dbus_down;
+	void function() c_g_test_dbus_unset;
 }");
 
 // gio.File
@@ -4034,6 +4142,8 @@ alias c_g_file_set_display_name  g_file_set_display_name;
 alias c_g_file_set_display_name_async  g_file_set_display_name_async;
 alias c_g_file_set_display_name_finish  g_file_set_display_name_finish;
 alias c_g_file_delete  g_file_delete;
+alias c_g_file_delete_async  g_file_delete_async;
+alias c_g_file_delete_finish  g_file_delete_finish;
 alias c_g_file_trash  g_file_trash;
 alias c_g_file_copy  g_file_copy;
 alias c_g_file_copy_async  g_file_copy_async;
@@ -4146,6 +4256,7 @@ alias c_g_file_info_get_name  g_file_info_get_name;
 alias c_g_file_info_get_display_name  g_file_info_get_display_name;
 alias c_g_file_info_get_edit_name  g_file_info_get_edit_name;
 alias c_g_file_info_get_icon  g_file_info_get_icon;
+alias c_g_file_info_get_symbolic_icon  g_file_info_get_symbolic_icon;
 alias c_g_file_info_get_content_type  g_file_info_get_content_type;
 alias c_g_file_info_get_size  g_file_info_get_size;
 alias c_g_file_info_get_modification_time  g_file_info_get_modification_time;
@@ -4161,6 +4272,7 @@ alias c_g_file_info_set_name  g_file_info_set_name;
 alias c_g_file_info_set_display_name  g_file_info_set_display_name;
 alias c_g_file_info_set_edit_name  g_file_info_set_edit_name;
 alias c_g_file_info_set_icon  g_file_info_set_icon;
+alias c_g_file_info_set_symbolic_icon  g_file_info_set_symbolic_icon;
 alias c_g_file_info_set_content_type  g_file_info_set_content_type;
 alias c_g_file_info_set_size  g_file_info_set_size;
 alias c_g_file_info_set_modification_time  g_file_info_set_modification_time;
@@ -4252,6 +4364,8 @@ alias c_g_cancellable_cancel  g_cancellable_cancel;
 
 alias c_g_async_result_get_user_data  g_async_result_get_user_data;
 alias c_g_async_result_get_source_object  g_async_result_get_source_object;
+alias c_g_async_result_is_tagged  g_async_result_is_tagged;
+alias c_g_async_result_legacy_propagate_error  g_async_result_legacy_propagate_error;
 
 // gio.IOSchedulerJob
 
@@ -4344,6 +4458,9 @@ alias c_g_input_stream_is_closed  g_input_stream_is_closed;
 alias c_g_input_stream_has_pending  g_input_stream_has_pending;
 alias c_g_input_stream_set_pending  g_input_stream_set_pending;
 alias c_g_input_stream_clear_pending  g_input_stream_clear_pending;
+alias c_g_input_stream_read_bytes  g_input_stream_read_bytes;
+alias c_g_input_stream_read_bytes_async  g_input_stream_read_bytes_async;
+alias c_g_input_stream_read_bytes_finish  g_input_stream_read_bytes_finish;
 
 // gio.OutputStream
 
@@ -4365,6 +4482,9 @@ alias c_g_output_stream_is_closed  g_output_stream_is_closed;
 alias c_g_output_stream_has_pending  g_output_stream_has_pending;
 alias c_g_output_stream_set_pending  g_output_stream_set_pending;
 alias c_g_output_stream_clear_pending  g_output_stream_clear_pending;
+alias c_g_output_stream_write_bytes  g_output_stream_write_bytes;
+alias c_g_output_stream_write_bytes_async  g_output_stream_write_bytes_async;
+alias c_g_output_stream_write_bytes_finish  g_output_stream_write_bytes_finish;
 
 // gio.IOStream
 
@@ -4529,7 +4649,6 @@ alias c_g_pollable_input_stream_can_poll  g_pollable_input_stream_can_poll;
 alias c_g_pollable_input_stream_is_readable  g_pollable_input_stream_is_readable;
 alias c_g_pollable_input_stream_create_source  g_pollable_input_stream_create_source;
 alias c_g_pollable_input_stream_read_nonblocking  g_pollable_input_stream_read_nonblocking;
-alias c_g_pollable_source_new  g_pollable_source_new;
 
 // gio.PollableOutputStreamT
 
@@ -4541,6 +4660,14 @@ alias c_g_pollable_output_stream_is_writable  g_pollable_output_stream_is_writab
 alias c_g_pollable_output_stream_create_source  g_pollable_output_stream_create_source;
 alias c_g_pollable_output_stream_write_nonblocking  g_pollable_output_stream_write_nonblocking;
 
+// gio.
+
+alias c_g_pollable_source_new  g_pollable_source_new;
+alias c_g_pollable_source_new_full  g_pollable_source_new_full;
+alias c_g_pollable_stream_read  g_pollable_stream_read;
+alias c_g_pollable_stream_write  g_pollable_stream_write;
+alias c_g_pollable_stream_write_all  g_pollable_stream_write_all;
+
 // gio.ContentType
 
 alias c_g_content_type_equals  g_content_type_equals;
@@ -4549,6 +4676,8 @@ alias c_g_content_type_is_unknown  g_content_type_is_unknown;
 alias c_g_content_type_get_description  g_content_type_get_description;
 alias c_g_content_type_get_mime_type  g_content_type_get_mime_type;
 alias c_g_content_type_get_icon  g_content_type_get_icon;
+alias c_g_content_type_get_symbolic_icon  g_content_type_get_symbolic_icon;
+alias c_g_content_type_get_generic_icon_name  g_content_type_get_generic_icon_name;
 alias c_g_content_type_can_be_executable  g_content_type_can_be_executable;
 alias c_g_content_type_from_mime_type  g_content_type_from_mime_type;
 alias c_g_content_type_guess  g_content_type_guess;
@@ -4584,6 +4713,7 @@ alias c_g_app_info_set_as_last_used_for_type  g_app_info_set_as_last_used_for_ty
 alias c_g_app_info_add_supports_type  g_app_info_add_supports_type;
 alias c_g_app_info_can_remove_supports_type  g_app_info_can_remove_supports_type;
 alias c_g_app_info_remove_supports_type  g_app_info_remove_supports_type;
+alias c_g_app_info_get_supported_types  g_app_info_get_supported_types;
 alias c_g_app_info_get_all  g_app_info_get_all;
 alias c_g_app_info_get_all_for_type  g_app_info_get_all_for_type;
 alias c_g_app_info_get_default_for_type  g_app_info_get_default_for_type;
@@ -4610,6 +4740,7 @@ alias c_g_desktop_app_info_get_show_in  g_desktop_app_info_get_show_in;
 alias c_g_desktop_app_info_get_generic_name  g_desktop_app_info_get_generic_name;
 alias c_g_desktop_app_info_get_categories  g_desktop_app_info_get_categories;
 alias c_g_desktop_app_info_get_keywords  g_desktop_app_info_get_keywords;
+alias c_g_desktop_app_info_get_startup_wm_class  g_desktop_app_info_get_startup_wm_class;
 alias c_g_desktop_app_info_set_desktop_env  g_desktop_app_info_set_desktop_env;
 alias c_g_desktop_app_info_launch_uris_as_manager  g_desktop_app_info_launch_uris_as_manager;
 
@@ -4631,6 +4762,7 @@ alias c_g_volume_monitor_get_volume_for_uuid  g_volume_monitor_get_volume_for_uu
 alias c_g_volume_get_name  g_volume_get_name;
 alias c_g_volume_get_uuid  g_volume_get_uuid;
 alias c_g_volume_get_icon  g_volume_get_icon;
+alias c_g_volume_get_symbolic_icon  g_volume_get_symbolic_icon;
 alias c_g_volume_get_drive  g_volume_get_drive;
 alias c_g_volume_get_mount  g_volume_get_mount;
 alias c_g_volume_can_mount  g_volume_can_mount;
@@ -4658,6 +4790,7 @@ alias c_g_volume_get_sort_key  g_volume_get_sort_key;
 alias c_g_mount_get_name  g_mount_get_name;
 alias c_g_mount_get_uuid  g_mount_get_uuid;
 alias c_g_mount_get_icon  g_mount_get_icon;
+alias c_g_mount_get_symbolic_icon  g_mount_get_symbolic_icon;
 alias c_g_mount_get_drive  g_mount_get_drive;
 alias c_g_mount_get_root  g_mount_get_root;
 alias c_g_mount_get_volume  g_mount_get_volume;
@@ -4692,6 +4825,7 @@ alias c_g_mount_get_sort_key  g_mount_get_sort_key;
 
 alias c_g_drive_get_name  g_drive_get_name;
 alias c_g_drive_get_icon  g_drive_get_icon;
+alias c_g_drive_get_symbolic_icon  g_drive_get_symbolic_icon;
 alias c_g_drive_has_volumes  g_drive_has_volumes;
 alias c_g_drive_get_volumes  g_drive_get_volumes;
 alias c_g_drive_can_eject  g_drive_can_eject;
@@ -4730,6 +4864,7 @@ alias c_g_unix_mount_get_fs_type  g_unix_mount_get_fs_type;
 alias c_g_unix_mount_is_readonly  g_unix_mount_is_readonly;
 alias c_g_unix_mount_is_system_internal  g_unix_mount_is_system_internal;
 alias c_g_unix_mount_guess_icon  g_unix_mount_guess_icon;
+alias c_g_unix_mount_guess_symbolic_icon  g_unix_mount_guess_symbolic_icon;
 alias c_g_unix_mount_guess_name  g_unix_mount_guess_name;
 alias c_g_unix_mount_guess_can_eject  g_unix_mount_guess_can_eject;
 alias c_g_unix_mount_guess_should_display  g_unix_mount_guess_should_display;
@@ -4752,6 +4887,7 @@ alias c_g_unix_mount_point_is_readonly  g_unix_mount_point_is_readonly;
 alias c_g_unix_mount_point_is_user_mountable  g_unix_mount_point_is_user_mountable;
 alias c_g_unix_mount_point_is_loopback  g_unix_mount_point_is_loopback;
 alias c_g_unix_mount_point_guess_icon  g_unix_mount_point_guess_icon;
+alias c_g_unix_mount_point_guess_symbolic_icon  g_unix_mount_point_guess_symbolic_icon;
 alias c_g_unix_mount_point_guess_name  g_unix_mount_point_guess_name;
 alias c_g_unix_mount_point_guess_can_eject  g_unix_mount_point_guess_can_eject;
 
@@ -5004,11 +5140,13 @@ alias c_g_proxy_supports_hostname  g_proxy_supports_hostname;
 
 // gio.ProxyAddress
 
+alias c_g_proxy_address_get_destination_protocol  g_proxy_address_get_destination_protocol;
 alias c_g_proxy_address_get_destination_hostname  g_proxy_address_get_destination_hostname;
 alias c_g_proxy_address_get_destination_port  g_proxy_address_get_destination_port;
 alias c_g_proxy_address_get_password  g_proxy_address_get_password;
 alias c_g_proxy_address_get_protocol  g_proxy_address_get_protocol;
 alias c_g_proxy_address_get_username  g_proxy_address_get_username;
+alias c_g_proxy_address_get_uri  g_proxy_address_get_uri;
 alias c_g_proxy_address_new  g_proxy_address_new;
 
 // gio.SocketClient
@@ -5122,6 +5260,7 @@ alias c_g_tls_certificate_new_from_files  g_tls_certificate_new_from_files;
 alias c_g_tls_certificate_list_new_from_file  g_tls_certificate_list_new_from_file;
 alias c_g_tls_certificate_get_issuer  g_tls_certificate_get_issuer;
 alias c_g_tls_certificate_verify  g_tls_certificate_verify;
+alias c_g_tls_certificate_is_same  g_tls_certificate_is_same;
 
 // gio.TlsConnection
 
@@ -5224,6 +5363,9 @@ alias c_g_resolver_lookup_service  g_resolver_lookup_service;
 alias c_g_resolver_lookup_service_async  g_resolver_lookup_service_async;
 alias c_g_resolver_lookup_service_finish  g_resolver_lookup_service_finish;
 alias c_g_resolver_free_targets  g_resolver_free_targets;
+alias c_g_resolver_lookup_records  g_resolver_lookup_records;
+alias c_g_resolver_lookup_records_async  g_resolver_lookup_records_async;
+alias c_g_resolver_lookup_records_finish  g_resolver_lookup_records_finish;
 
 // gio.ProxyResolverT
 
@@ -5435,6 +5577,7 @@ alias c_g_dbus_connection_get_guid  g_dbus_connection_get_guid;
 alias c_g_dbus_connection_get_unique_name  g_dbus_connection_get_unique_name;
 alias c_g_dbus_connection_get_capabilities  g_dbus_connection_get_capabilities;
 alias c_g_dbus_connection_get_peer_credentials  g_dbus_connection_get_peer_credentials;
+alias c_g_dbus_connection_get_last_serial  g_dbus_connection_get_last_serial;
 alias c_g_dbus_connection_call  g_dbus_connection_call;
 alias c_g_dbus_connection_call_finish  g_dbus_connection_call_finish;
 alias c_g_dbus_connection_call_sync  g_dbus_connection_call_sync;
@@ -5493,6 +5636,7 @@ alias c_g_dbus_server_get_client_address  g_dbus_server_get_client_address;
 
 alias c_g_dbus_auth_observer_new  g_dbus_auth_observer_new;
 alias c_g_dbus_auth_observer_authorize_authenticated_peer  g_dbus_auth_observer_authorize_authenticated_peer;
+alias c_g_dbus_auth_observer_allow_mechanism  g_dbus_auth_observer_allow_mechanism;
 
 // gio.DBusNames
 
@@ -5607,6 +5751,7 @@ alias c_g_dbus_object_manager_server_get_connection  g_dbus_object_manager_serve
 alias c_g_dbus_object_manager_server_set_connection  g_dbus_object_manager_server_set_connection;
 alias c_g_dbus_object_manager_server_export  g_dbus_object_manager_server_export;
 alias c_g_dbus_object_manager_server_export_uniquely  g_dbus_object_manager_server_export_uniquely;
+alias c_g_dbus_object_manager_server_is_exported  g_dbus_object_manager_server_is_exported;
 alias c_g_dbus_object_manager_server_unexport  g_dbus_object_manager_server_unexport;
 
 // gio.DBusObjectManagerClient
@@ -5743,6 +5888,8 @@ alias c_g_application_get_inactivity_timeout  g_application_get_inactivity_timeo
 alias c_g_application_set_inactivity_timeout  g_application_set_inactivity_timeout;
 alias c_g_application_get_flags  g_application_get_flags;
 alias c_g_application_set_flags  g_application_set_flags;
+alias c_g_application_get_dbus_connection  g_application_get_dbus_connection;
+alias c_g_application_get_dbus_object_path  g_application_get_dbus_object_path;
 alias c_g_application_set_action_group  g_application_set_action_group;
 alias c_g_application_get_is_registered  g_application_get_is_registered;
 alias c_g_application_get_is_remote  g_application_get_is_remote;
@@ -5891,12 +6038,16 @@ alias c_g_menu_remove  g_menu_remove;
 alias c_g_menu_item_new  g_menu_item_new;
 alias c_g_menu_item_new_section  g_menu_item_new_section;
 alias c_g_menu_item_new_submenu  g_menu_item_new_submenu;
+alias c_g_menu_item_new_from_model  g_menu_item_new_from_model;
 alias c_g_menu_item_set_label  g_menu_item_set_label;
 alias c_g_menu_item_set_action_and_target_value  g_menu_item_set_action_and_target_value;
 alias c_g_menu_item_set_action_and_target  g_menu_item_set_action_and_target;
 alias c_g_menu_item_set_detailed_action  g_menu_item_set_detailed_action;
 alias c_g_menu_item_set_section  g_menu_item_set_section;
 alias c_g_menu_item_set_submenu  g_menu_item_set_submenu;
+alias c_g_menu_item_get_attribute_value  g_menu_item_get_attribute_value;
+alias c_g_menu_item_get_attribute  g_menu_item_get_attribute;
+alias c_g_menu_item_get_link  g_menu_item_get_link;
 alias c_g_menu_item_set_attribute_value  g_menu_item_set_attribute_value;
 alias c_g_menu_item_set_attribute  g_menu_item_set_attribute;
 alias c_g_menu_item_set_link  g_menu_item_set_link;
@@ -5948,3 +6099,14 @@ alias c_g_io_extension_point_implement  g_io_extension_point_implement;
 alias c_g_io_extension_point_lookup  g_io_extension_point_lookup;
 alias c_g_io_extension_point_register  g_io_extension_point_register;
 alias c_g_io_extension_point_set_required_type  g_io_extension_point_set_required_type;
+
+// gio.TestDBus
+
+alias c_g_test_dbus_new  g_test_dbus_new;
+alias c_g_test_dbus_get_flags  g_test_dbus_get_flags;
+alias c_g_test_dbus_get_bus_address  g_test_dbus_get_bus_address;
+alias c_g_test_dbus_add_service_dir  g_test_dbus_add_service_dir;
+alias c_g_test_dbus_up  g_test_dbus_up;
+alias c_g_test_dbus_stop  g_test_dbus_stop;
+alias c_g_test_dbus_down  g_test_dbus_down;
+alias c_g_test_dbus_unset  g_test_dbus_unset;

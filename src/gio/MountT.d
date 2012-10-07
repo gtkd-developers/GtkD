@@ -276,6 +276,22 @@ public template MountT(TStruct)
 	}
 	
 	/**
+	 * Gets the symbolic icon for mount.
+	 * Since 2.34
+	 * Returns: a GIcon. The returned object should be unreffed with g_object_unref() when no longer needed. [transfer full]
+	 */
+	public IconIF getSymbolicIcon()
+	{
+		// GIcon * g_mount_get_symbolic_icon (GMount *mount);
+		auto p = g_mount_get_symbolic_icon(getMountTStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
+	}
+	
+	/**
 	 * Gets the drive for the mount.
 	 * This is a convenience method for getting the GVolume and then
 	 * using that object to get the GDrive.

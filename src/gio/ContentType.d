@@ -170,6 +170,39 @@ public class ContentType
 	}
 	
 	/**
+	 * Gets the symbolic icon for a content type.
+	 * Since 2.34
+	 * Params:
+	 * type = a content type string
+	 * Returns: symbolic GIcon corresponding to the content type. Free the returned object with g_object_unref(). [transfer full]
+	 */
+	public static IconIF getSymbolicIcon(string type)
+	{
+		// GIcon * g_content_type_get_symbolic_icon (const gchar *type);
+		auto p = g_content_type_get_symbolic_icon(Str.toStringz(type));
+		if(p is null)
+		{
+			return null;
+		}
+		return new Icon(cast(GIcon*) p);
+	}
+	
+	/**
+	 * Gets the generic icon name for a content type.
+	 * See the shared-mime-info
+	 * specification for more on the generic icon name.
+	 * Since 2.34
+	 * Params:
+	 * type = a content type string
+	 * Returns: the registered generic icon name for the given type, or NULL if unknown. Free with g_free(). [allow-none]
+	 */
+	public static string getGenericIconName(string type)
+	{
+		// gchar * g_content_type_get_generic_icon_name  (const gchar *type);
+		return Str.toString(g_content_type_get_generic_icon_name(Str.toStringz(type)));
+	}
+	
+	/**
 	 * Checks if a content type can be executable. Note that for instance
 	 * things like text files can be executables (i.e. scripts and batch files).
 	 * Params:

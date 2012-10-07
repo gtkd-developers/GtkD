@@ -71,6 +71,8 @@ private import gio.FilterOutputStream;
  * Description
  * Converter output stream implements GOutputStream and allows
  * conversion of data of various types during reading.
+ * As of GLib 2.34, GConverterOutputStream implements
+ * GPollableOutputStream.
  */
 public class ConverterOutputStream : FilterOutputStream
 {
