@@ -1157,10 +1157,10 @@ public enum GdkEventType
 	EXPOSE = 2,
 	MOTION_NOTIFY = 3,
 	BUTTON_PRESS = 4,
+	
 	DOUBLE_BUTTON_PRESS = 5,
-	DOUBLE_BUTTON_PRESS = 2BUTTON_PRESS,
+	
 	TRIPLE_BUTTON_PRESS = 6,
-	TRIPLE_BUTTON_PRESS = 3BUTTON_PRESS,
 	BUTTON_RELEASE = 7,
 	KEY_PRESS = 8,
 	KEY_RELEASE = 9,
@@ -2750,7 +2750,7 @@ public struct GdkAppLaunchContext{}
  * GdkPixbuf, gdk_pixbuf_new_from_data().
  */
 // void (*GdkPixbufDestroyNotify) (guchar *pixels,  gpointer data);
-public alias extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
+public alias extern(C) void function(guchar* pixels, void* data) GdkPixbufDestroyNotify;
 
 /*
  * Specifies the type of the function passed to
@@ -2772,7 +2772,7 @@ public alias extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * Since 2.4
  */
 // gboolean (*GdkPixbufSaveFunc) (const gchar *buf,  gsize count,  GError **error,  gpointer data);
-public alias extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSaveFunc;
+public alias extern(C) int function(char* buf, gsize count, GError** error, void* data) GdkPixbufSaveFunc;
 
 /*
  * A function of this type is passed to gdk_window_invalidate_maybe_recurse().
@@ -2786,7 +2786,7 @@ public alias extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSa
  * TRUE to invalidate window recursively
  */
 // gboolean (*GdkWindowChildFunc) (GdkWindow *window,  gpointer user_data);
-public alias extern(C) int  function (GdkWindow*, void*) GdkWindowChildFunc;
+public alias extern(C) int function(GdkWindow* window, void* userData) GdkWindowChildFunc;
 
 /*
  * Specifies the type of function used to filter native events before they are
@@ -2806,7 +2806,7 @@ public alias extern(C) int  function (GdkWindow*, void*) GdkWindowChildFunc;
  * a GdkFilterReturn value.
  */
 // GdkFilterReturn (*GdkFilterFunc) (GdkXEvent *xevent,  GdkEvent *event,  gpointer data);
-public alias extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*) GdkFilterFunc;
+public alias extern(C) GdkFilterReturn function(GdkXEvent* xevent, GdkEvent* event, void* data) GdkFilterFunc;
 
 /*
  * Specifies the type of function passed to gdk_event_handler_set() to
@@ -2818,7 +2818,7 @@ public alias extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*) 
  * gdk_event_handler_set(). [closure]
  */
 // void (*GdkEventFunc) (GdkEvent *event,  gpointer data);
-public alias extern(C) void  function (GdkEvent*, void*) GdkEventFunc;
+public alias extern(C) void function(GdkEvent* event, void* data) GdkEventFunc;
 /**
  * The GdkEvent struct contains a union of all of the event structs,
  * and allows access to the data fields in a number of ways.

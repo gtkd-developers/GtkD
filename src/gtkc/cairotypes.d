@@ -1518,7 +1518,7 @@ public struct cairo_rectangle_int_t
  * Since 1.12
  */
 // cairo_surface_t (*cairo_raster_source_acquire_func_t)  (cairo_pattern_t *pattern,  void *callback_data,  cairo_surface_t *target,  const cairo_rectangle_int_t *extents);
-public alias extern(C) cairo_surface_t  function (cairo_pattern_t*, void*, cairo_surface_t*, cairo_rectangle_int_t*) cairo_raster_source_acquire_func_t;
+public alias extern(C) cairo_surface_t function(cairo_pattern_t* pattern, void* callbackData, cairo_surface_t* target, cairo_rectangle_int_t* extents) cairo_raster_source_acquire_func_t;
 
 /*
  * cairo_raster_source_release_func_t is the type of function which is
@@ -1534,7 +1534,7 @@ public alias extern(C) cairo_surface_t  function (cairo_pattern_t*, void*, cairo
  * Since 1.12
  */
 // void (*cairo_raster_source_release_func_t)  (cairo_pattern_t *pattern,  void *callback_data,  cairo_surface_t *surface);
-public alias extern(C) void  function (cairo_pattern_t*, void*, cairo_surface_t*) cairo_raster_source_release_func_t;
+public alias extern(C) void function(cairo_pattern_t* pattern, void* callbackData, cairo_surface_t* surface) cairo_raster_source_release_func_t;
 
 /*
  * cairo_raster_source_snapshot_func_t is the type of function which is
@@ -1552,7 +1552,7 @@ public alias extern(C) void  function (cairo_pattern_t*, void*, cairo_surface_t*
  * Since 1.12
  */
 // cairo_status_t (*cairo_raster_source_snapshot_func_t)  (cairo_pattern_t *pattern,  void *callback_data);
-public alias extern(C) cairo_status_t  function (cairo_pattern_t*, void*) cairo_raster_source_snapshot_func_t;
+public alias extern(C) cairo_status_t function(cairo_pattern_t* pattern, void* callbackData) cairo_raster_source_snapshot_func_t;
 
 /*
  * cairo_raster_source_copy_func_t is the type of function which is
@@ -1569,7 +1569,7 @@ public alias extern(C) cairo_status_t  function (cairo_pattern_t*, void*) cairo_
  * Since 1.12
  */
 // cairo_status_t (*cairo_raster_source_copy_func_t) (cairo_pattern_t *pattern,  void *callback_data,  const cairo_pattern_t *other);
-public alias extern(C) cairo_status_t  function (cairo_pattern_t*, void*, cairo_pattern_t*) cairo_raster_source_copy_func_t;
+public alias extern(C) cairo_status_t function(cairo_pattern_t* pattern, void* callbackData, cairo_pattern_t* other) cairo_raster_source_copy_func_t;
 
 /*
  * cairo_raster_source_finish_func_t is the type of function which is
@@ -1583,7 +1583,7 @@ public alias extern(C) cairo_status_t  function (cairo_pattern_t*, void*, cairo_
  * cairo_pattern_t
  */
 // void (*cairo_raster_source_finish_func_t)  (cairo_pattern_t *pattern,  void *callback_data);
-public alias extern(C) void  function (cairo_pattern_t*, void*) cairo_raster_source_finish_func_t;
+public alias extern(C) void function(cairo_pattern_t* pattern, void* callbackData) cairo_raster_source_finish_func_t;
 
 /*
  * cairo_user_scaled_font_init_func_t is the type of function which is
@@ -1614,7 +1614,7 @@ public alias extern(C) void  function (cairo_pattern_t*, void*) cairo_raster_sou
  * Since 1.8
  */
 // cairo_status_t (*cairo_user_scaled_font_init_func_t)  (cairo_scaled_font_t *scaled_font,  cairo_t *cr,  cairo_font_extents_t *extents);
-public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, cairo_t*, cairo_font_extents_t*) cairo_user_scaled_font_init_func_t;
+public alias extern(C) cairo_status_t function(cairo_scaled_font_t* scaledFont, cairo_t* cr, cairo_font_extents_t* extents) cairo_user_scaled_font_init_func_t;
 
 /*
  * cairo_user_scaled_font_render_glyph_func_t is the type of function which
@@ -1658,7 +1658,7 @@ public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, cairo_t*,
  * Since 1.8
  */
 // cairo_status_t (*cairo_user_scaled_font_render_glyph_func_t)  (cairo_scaled_font_t *scaled_font,  unsigned long  glyph,  cairo_t *cr,  cairo_text_extents_t *extents);
-public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, ulong, cairo_t*, cairo_text_extents_t*) cairo_user_scaled_font_render_glyph_func_t;
+public alias extern(C) cairo_status_t function(cairo_scaled_font_t* scaledFont, ulong glyph, cairo_t* cr, cairo_text_extents_t* extents) cairo_user_scaled_font_render_glyph_func_t;
 
 /*
  * cairo_user_scaled_font_text_to_glyphs_func_t is the type of function which
@@ -1726,7 +1726,7 @@ public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, ulong, ca
  * Since 1.8
  */
 // cairo_status_t (*cairo_user_scaled_font_text_to_glyphs_func_t)  (cairo_scaled_font_t *scaled_font,  const char *utf8,  int utf8_len,  cairo_glyph_t **glyphs,  int *num_glyphs,  cairo_text_cluster_t **clusters,  int *num_clusters,  cairo_text_cluster_flags_t *cluster_flags);
-public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, char*, int, cairo_glyph_t**, int*, cairo_text_cluster_t**, int*, cairo_text_cluster_flags_t*) cairo_user_scaled_font_text_to_glyphs_func_t;
+public alias extern(C) cairo_status_t function(cairo_scaled_font_t* scaledFont, char* utf8, int utf8_Len, cairo_glyph_t** glyphs, int* numGlyphs, cairo_text_cluster_t** clusters, int* numClusters, cairo_text_cluster_flags_t* clusterFlags) cairo_user_scaled_font_text_to_glyphs_func_t;
 
 /*
  * cairo_user_scaled_font_unicode_to_glyph_func_t is the type of function which
@@ -1764,7 +1764,7 @@ public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, char*, in
  * Since 1.8
  */
 // cairo_status_t (*cairo_user_scaled_font_unicode_to_glyph_func_t)  (cairo_scaled_font_t *scaled_font,  unsigned long  unicode,  unsigned long *glyph_index);
-public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, ulong, ulong*) cairo_user_scaled_font_unicode_to_glyph_func_t;
+public alias extern(C) cairo_status_t function(cairo_scaled_font_t* scaledFont, ulong unicode, ulong* glyphIndex) cairo_user_scaled_font_unicode_to_glyph_func_t;
 
 /*
  * cairo_read_func_t is the type of function which is called when a
@@ -1785,7 +1785,7 @@ public alias extern(C) cairo_status_t  function (cairo_scaled_font_t*, ulong, ul
  * Since 1.0
  */
 // cairo_status_t (*cairo_read_func_t) (void *closure,  unsigned char *data,  unsigned int length);
-public alias extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_read_func_t;
+public alias extern(C) cairo_status_t function(void* closure, uchar* data, uint length) cairo_read_func_t;
 
 /*
  * cairo_write_func_t is the type of function which is called when a
@@ -1806,7 +1806,7 @@ public alias extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_read
  * Since 1.0
  */
 // cairo_status_t (*cairo_write_func_t) (void *closure,  const unsigned char *data,  unsigned int length);
-public alias extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_write_func_t;
+public alias extern(C) cairo_status_t function(void* closure, uchar* data, uint length) cairo_write_func_t;
 
 /*
  * cairo_destroy_func_t the type of function which is called when a
@@ -1817,7 +1817,7 @@ public alias extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_writ
  * Since 1.0
  */
 // void (*cairo_destroy_func_t) (void *data);
-public alias extern(C) void  function (void*) cairo_destroy_func_t;
+public alias extern(C) void function(void* data) cairo_destroy_func_t;
 
 // skipped union cairo_path_data_t
 

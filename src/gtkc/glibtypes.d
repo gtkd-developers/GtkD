@@ -2668,10 +2668,10 @@ public struct GSource{}
  */
 public struct GSourceFuncs
 {
-	extern(C) int  function(GSource *source,int *timeout) prepare;
-	extern(C) int  function(GSource *source) check;
-	extern(C) int  function(GSource *source,GSourceFunc callback,void* userData) dispatch;
-	extern(C) void  function(GSource *source) finalize; /+* Can be NULL +/
+	extern(C) int function(GSource* source, int* timeout) prepare;
+	extern(C) int function(GSource* source) check;
+	extern(C) int function(GSource* source, GSourceFunc callback, void* userData) dispatch;
+	extern(C) void function(GSource* source) finalize; /+* Can be NULL +/
 }
 
 
@@ -2688,9 +2688,9 @@ public struct GSourceFuncs
  */
 public struct GSourceCallbackFuncs
 {
-	extern(C) void  function(void* cbData) doref;
-	extern(C) void  function(void* cbData) unref;
-	extern(C) void  function(void* cbData,GSource *source, GSourceFunc *func,void* *data) get;
+	extern(C) void function(void* cbData) doref;
+	extern(C) void function(void* cbData) unref;
+	extern(C) void function(void* cbData, GSource* source, GSourceFunc* func, void** data) get;
 }
 
 
@@ -2751,13 +2751,13 @@ public struct GModule{}
  */
 public struct GMemVTable
 {
-	extern(C) void*  function(gsize nBytes) malloc;
-	extern(C) void*  function(void* mem,gsize nBytes) realloc;
-	extern(C) void  function(void* mem) free;
+	extern(C) void* function(gsize nBytes) malloc;
+	extern(C) void* function(void* mem, gsize nBytes) realloc;
+	extern(C) void function(void* mem) free;
 	/+* optional; set to NULL if not used ! +/
-	extern(C) void*  function(gsize nBlocks,gsize nBlockBytes) calloc;
-	extern(C) void*  function(gsize nBytes) tryMalloc;
-	extern(C) void*  function(void* mem,gsize nBytes) tryRealloc;
+	extern(C) void* function(gsize nBlocks, gsize nBlockBytes) calloc;
+	extern(C) void* function(gsize nBytes) tryMalloc;
+	extern(C) void* function(void* mem, gsize nBytes) tryRealloc;
 }
 
 
@@ -2812,14 +2812,14 @@ public struct GIOChannel{}
  */
 public struct GIOFuncs
 {
-	extern(C) GIOStatus  function(GIOChannel *channel, char *buf, gsize count,gsize *bytesRead,GError **err) ioRead;
-	extern(C) GIOStatus  function(GIOChannel *channel, char *buf, gsize count,gsize *bytesWritten,GError **err) ioWrite;
-	extern(C) GIOStatus  function(GIOChannel *channel, long offset, GSeekType type,GError **err) ioSeek;
-	extern(C) GIOStatus  function(GIOChannel *channel,GError **err) ioClose;
-	extern(C) GSource*  function(GIOChannel *channel,GIOCondition condition) ioCreateWatch;
-	extern(C) void  function(GIOChannel *channel) ioFree;
-	extern(C) GIOStatus  function(GIOChannel *channel,GIOFlags flags,GError **err) ioSetFlags;
-	extern(C) GIOFlags  function(GIOChannel *channel) ioGetFlags;
+	extern(C) GIOStatus function(GIOChannel* channel, char* buf, gsize count, gsize* bytesRead, GError** err) ioRead;
+	extern(C) GIOStatus function(GIOChannel* channel, char* buf, gsize count, gsize* bytesWritten, GError** err) ioWrite;
+	extern(C) GIOStatus function(GIOChannel* channel, long offset, GSeekType type, GError** err) ioSeek;
+	extern(C) GIOStatus function(GIOChannel* channel, GError** err) ioClose;
+	extern(C) GSource* function(GIOChannel* channel, GIOCondition condition) ioCreateWatch;
+	extern(C) void function(GIOChannel* channel) ioFree;
+	extern(C) GIOStatus function(GIOChannel* channel, GIOFlags flags, GError** err) ioSetFlags;
+	extern(C) GIOFlags function(GIOChannel* channel) ioGetFlags;
 }
 
 
@@ -3348,22 +3348,22 @@ public struct GMarkupParseContext{}
 public struct GMarkupParser
 {
 	/+* Called for open tags <foo bar="baz"> +/
-	extern(C) void  function(GMarkupParseContext *context,char *elementName,char **attributeNames,char **attributeValues,void* userData,GError **error) startElement;
+	extern(C) void function(GMarkupParseContext* context, char* elementName, char** attributeNames, char** attributeValues, void* userData, GError** error) startElement;
 	/+* Called for close tags </foo> +/
-	extern(C) void  function(GMarkupParseContext *context,char *elementName,void* userData,GError **error) endElement;
+	extern(C) void function(GMarkupParseContext* context, char* elementName, void* userData, GError** error) endElement;
 	/+* Called for character data +/
 	/+* text is not nul-terminated +/
-	extern(C) void  function(GMarkupParseContext *context,char *text,gsize textLen,void* userData,GError **error) text;
+	extern(C) void function(GMarkupParseContext* context, char* text, gsize textLen, void* userData, GError** error) text;
 	/+* Called for strings that should be re-saved verbatim inn this same
 	 * position, but are not otherwise interpretable. At the moment
 	 * this includes comments and processing instructions.
 	+/
 	/+* text is not nul-terminated. +/
-	extern(C) void  function(GMarkupParseContext *context,char *passthroughText,gsize textLen,void* userData,GError **error) passthrough;
+	extern(C) void function(GMarkupParseContext* context, char* passthroughText, gsize textLen, void* userData, GError** error) passthrough;
 	/+* Called on error, including one set by other
 	 * methods inn the vtable. The GError should not be freed.
 	+/
-	extern(C) void  function(GMarkupParseContext *context,GError *error,void* userData) error;
+	extern(C) void function(GMarkupParseContext* context, GError* error, void* userData) error;
 }
 
 
@@ -4869,7 +4869,7 @@ public struct GCompletion
  * reported, or -1 if an error occurred.
  */
 // gint (*GPollFunc) (GPollFD *ufds,  guint nfsd,  gint timeout_);
-public alias extern(C) int  function (GPollFD*, uint, int) GPollFunc;
+public alias extern(C) int function(GPollFD* ufds, uint nfsd, int timeout) GPollFunc;
 
 /*
  * Prototype of a GChildWatchSource callback, called when a child
@@ -4884,14 +4884,14 @@ public alias extern(C) int  function (GPollFD*, uint, int) GPollFunc;
  * user data passed to g_child_watch_add()
  */
 // void (*GChildWatchFunc) (GPid pid,  gint status,  gpointer user_data);
-public alias extern(C) void  function (GPid, int, void*) GChildWatchFunc;
+public alias extern(C) void function(GPid pid, int status, void* userData) GChildWatchFunc;
 
 /*
  * This is just a placeholder for GClosureMarshal,
  * which cannot be used here for dependency reasons.
  */
 // void (*GSourceDummyMarshal) (void);
-public alias extern(C) void  function () GSourceDummyMarshal;
+public alias extern(C) void function() GSourceDummyMarshal;
 
 /*
  * Specifies the type of function passed to g_timeout_add(),
@@ -4903,7 +4903,7 @@ public alias extern(C) void  function () GSourceDummyMarshal;
  * FALSE if the source should be removed
  */
 // gboolean (*GSourceFunc) (gpointer user_data);
-public alias extern(C) int  function (void*) GSourceFunc;
+public alias extern(C) int function(void* userData) GSourceFunc;
 
 /*
  * Specifies the type of the module initialization function.
@@ -4917,7 +4917,7 @@ public alias extern(C) int  function (void*) GSourceFunc;
  * NULL on success, or a string describing the initialization error
  */
 // const gchar * (*GModuleCheckInit) (GModule *module);
-public alias extern(C) char *  function (GModule*) GModuleCheckInit;
+public alias extern(C) char * function(GModule* modul) GModuleCheckInit;
 
 /*
  * Specifies the type of the module function called when it is unloaded.
@@ -4928,7 +4928,7 @@ public alias extern(C) char *  function (GModule*) GModuleCheckInit;
  * the GModule about to be unloaded
  */
 // void (*GModuleUnload) (GModule *module);
-public alias extern(C) void  function (GModule*) GModuleUnload;
+public alias extern(C) void function(GModule* modul) GModuleUnload;
 
 /*
  * Specifies the type of function passed to g_io_add_watch() or
@@ -4945,7 +4945,7 @@ public alias extern(C) void  function (GModule*) GModuleUnload;
  * should be removed
  */
 // gboolean (*GIOFunc) (GIOChannel *source,  GIOCondition condition,  gpointer data);
-public alias extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFunc;
+public alias extern(C) int function(GIOChannel* source, GIOCondition condition, void* data) GIOFunc;
 
 /*
  * Specifies the type of the print handler functions.
@@ -4954,7 +4954,7 @@ public alias extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFunc;
  * the message to output
  */
 // void (*GPrintFunc) (const gchar *string);
-public alias extern(C) void  function (char*) GPrintFunc;
+public alias extern(C) void function(char* string) GPrintFunc;
 
 /*
  * Specifies the prototype of log handler functions.
@@ -4969,7 +4969,7 @@ public alias extern(C) void  function (char*) GPrintFunc;
  * user data, set in g_log_set_handler()
  */
 // void (*GLogFunc) (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *message,  gpointer user_data);
-public alias extern(C) void  function (char*, GLogLevelFlags, char*, void*) GLogFunc;
+public alias extern(C) void function(char* logDomain, GLogLevelFlags logLevel, char* message, void* userData) GLogFunc;
 
 /*
  * Warning
@@ -4979,7 +4979,7 @@ public alias extern(C) void  function (char*, GLogLevelFlags, char*, void*) GLog
  * function passed to g_atexit().
  */
 // void (*GVoidFunc) (void);
-public alias extern(C) void  function () GVoidFunc;
+public alias extern(C) void function() GVoidFunc;
 
 /*
  * Declares a type of function which takes an arbitrary
@@ -4989,7 +4989,7 @@ public alias extern(C) void  function () GVoidFunc;
  * a data pointer
  */
 // void (*GFreeFunc) (gpointer data);
-public alias extern(C) void  function (void*) GFreeFunc;
+public alias extern(C) void function(void* data) GFreeFunc;
 
 /*
  * Specifies the type of the message handler function.
@@ -5002,7 +5002,7 @@ public alias extern(C) void  function (void*) GFreeFunc;
  * FALSE if it signals a warning.
  */
 // void (*GScannerMsgFunc) (GScanner *scanner,  gchar *message,  gboolean error);
-public alias extern(C) void  function (GScanner*, char*, int) GScannerMsgFunc;
+public alias extern(C) void function(GScanner* scanner, char* message, int error) GScannerMsgFunc;
 
 /*
  * Specifies the type of the setup function passed to g_spawn_async(),
@@ -5036,7 +5036,7 @@ public alias extern(C) void  function (GScanner*, char*, int) GScannerMsgFunc;
  * user data to pass to the function.
  */
 // void (*GSpawnChildSetupFunc) (gpointer user_data);
-public alias extern(C) void  function (void*) GSpawnChildSetupFunc;
+public alias extern(C) void function(void* userData) GSpawnChildSetupFunc;
 
 /*
  * The type of function to be passed as callback for G_OPTION_ARG_CALLBACK
@@ -5058,7 +5058,7 @@ public alias extern(C) void  function (void*) GSpawnChildSetupFunc;
  * occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionArgFunc) (const gchar *option_name,  const gchar *value,  gpointer data,  GError **error);
-public alias extern(C) int  function (char*, char*, void*, GError**) GOptionArgFunc;
+public alias extern(C) int function(char* optionName, char* value, void* data, GError** error) GOptionArgFunc;
 
 /*
  * The type of functions which are used to translate user-visible
@@ -5073,7 +5073,7 @@ public alias extern(C) int  function (char*, char*, void*, GError**) GOptionArgF
  * The returned string is owned by GLib and must not be freed.
  */
 // const gchar * (*GTranslateFunc) (const gchar *str,  gpointer data);
-public alias extern(C) char *  function (char*, void*) GTranslateFunc;
+public alias extern(C) char * function(char* str, void* data) GTranslateFunc;
 
 /*
  * The type of function that can be called before and after parsing.
@@ -5091,7 +5091,7 @@ public alias extern(C) char *  function (char*, void*) GTranslateFunc;
  * occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionParseFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
-public alias extern(C) int  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionParseFunc;
+public alias extern(C) int function(GOptionContext* context, GOptionGroup* group, void* data, GError** error) GOptionParseFunc;
 
 /*
  * The type of function to be used as callback when a parse error occurs.
@@ -5106,7 +5106,7 @@ public alias extern(C) int  function (GOptionContext*, GOptionGroup*, void*, GEr
  * The GError containing details about the parse error
  */
 // void (*GOptionErrorFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
-public alias extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionErrorFunc;
+public alias extern(C) void function(GOptionContext* context, GOptionGroup* group, void* data, GError** error) GOptionErrorFunc;
 
 /*
  * Specifies the type of the function passed to g_regex_replace_eval().
@@ -5126,7 +5126,7 @@ public alias extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GE
  * Since 2.14
  */
 // gboolean (*GRegexEvalCallback) (const GMatchInfo *match_info,  GString *result,  gpointer user_data);
-public alias extern(C) int  function (GMatchInfo*, GString*, void*) GRegexEvalCallback;
+public alias extern(C) int function(GMatchInfo* matchInfo, GString* result, void* userData) GRegexEvalCallback;
 
 /*
  * Specifies the type of a comparison function used to compare two
@@ -5142,7 +5142,7 @@ public alias extern(C) int  function (GMatchInfo*, GString*, void*) GRegexEvalCa
  * value if a > b.
  */
 // gint (*GCompareFunc) (gconstpointer a,  gconstpointer b);
-public alias extern(C) int  function (void*, void*) GCompareFunc;
+public alias extern(C) int function(void* a, void* b) GCompareFunc;
 
 /*
  * Specifies the type of a comparison function used to compare two
@@ -5160,7 +5160,7 @@ public alias extern(C) int  function (void*, void*) GCompareFunc;
  * value if a > b.
  */
 // gint (*GCompareDataFunc) (gconstpointer a,  gconstpointer b,  gpointer user_data);
-public alias extern(C) int  function (void*, void*, void*) GCompareDataFunc;
+public alias extern(C) int function(void* a, void* b, void* userData) GCompareDataFunc;
 
 /*
  * Specifies the type of functions passed to g_list_foreach() and
@@ -5172,7 +5172,7 @@ public alias extern(C) int  function (void*, void*, void*) GCompareDataFunc;
  * g_slist_foreach().
  */
 // void (*GFunc) (gpointer data,  gpointer user_data);
-public alias extern(C) void  function (void*, void*) GFunc;
+public alias extern(C) void function(void* data, void* userData) GFunc;
 
 /*
  * A GSequenceIterCompareFunc is a function used to compare iterators.
@@ -5190,7 +5190,7 @@ public alias extern(C) void  function (void*, void*) GFunc;
  * a.
  */
 // gint (*GSequenceIterCompareFunc) (GSequenceIter *a,  GSequenceIter *b,  gpointer data);
-public alias extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) GSequenceIterCompareFunc;
+public alias extern(C) int function(GSequenceIter* a, GSequenceIter* b, void* data) GSequenceIterCompareFunc;
 
 /*
  * Specifies the type of the hash function which is passed to
@@ -5223,7 +5223,7 @@ public alias extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) GSe
  * the hash value corresponding to the key
  */
 // guint (*GHashFunc) (gconstpointer key);
-public alias extern(C) uint  function (void*) GHashFunc;
+public alias extern(C) uint function(void* key) GHashFunc;
 
 /*
  * Specifies the type of a function used to test two values for
@@ -5237,7 +5237,7 @@ public alias extern(C) uint  function (void*) GHashFunc;
  * TRUE if a = b; FALSE otherwise
  */
 // gboolean (*GEqualFunc) (gconstpointer a,  gconstpointer b);
-public alias extern(C) int  function (void*, void*) GEqualFunc;
+public alias extern(C) int function(void* a, void* b) GEqualFunc;
 
 /*
  * Specifies the type of the function passed to g_hash_table_foreach().
@@ -5251,7 +5251,7 @@ public alias extern(C) int  function (void*, void*) GEqualFunc;
  * user data passed to g_hash_table_foreach()
  */
 // void (*GHFunc) (gpointer key,  gpointer value,  gpointer user_data);
-public alias extern(C) void  function (void*, void*, void*) GHFunc;
+public alias extern(C) void function(void* key, void* value, void* userData) GHFunc;
 
 /*
  * Specifies the type of the function passed to
@@ -5270,7 +5270,7 @@ public alias extern(C) void  function (void*, void*, void*) GHFunc;
  * GHashTable
  */
 // gboolean (*GHRFunc) (gpointer key,  gpointer value,  gpointer user_data);
-public alias extern(C) int  function (void*, void*, void*) GHRFunc;
+public alias extern(C) int function(void* key, void* value, void* userData) GHRFunc;
 
 /*
  * Specifies the type of function passed to g_tree_traverse(). It is
@@ -5287,7 +5287,7 @@ public alias extern(C) int  function (void*, void*, void*) GHRFunc;
  * TRUE to stop the traversal.
  */
 // gboolean (*GTraverseFunc) (gpointer key,  gpointer value,  gpointer data);
-public alias extern(C) int  function (void*, void*, void*) GTraverseFunc;
+public alias extern(C) int function(void* key, void* value, void* data) GTraverseFunc;
 
 /*
  * A function of this signature is used to copy the node data
@@ -5301,7 +5301,7 @@ public alias extern(C) int  function (void*, void*, void*) GTraverseFunc;
  * Since 2.4
  */
 // gpointer (*GCopyFunc) (gconstpointer src,  gpointer data);
-public alias extern(C) void*  function (void*, void*) GCopyFunc;
+public alias extern(C) void* function(void* src, void* data) GCopyFunc;
 
 /*
  * Specifies the type of function passed to g_node_traverse(). The
@@ -5316,7 +5316,7 @@ public alias extern(C) void*  function (void*, void*) GCopyFunc;
  * TRUE to stop the traversal.
  */
 // gboolean (*GNodeTraverseFunc) (GNode *node,  gpointer data);
-public alias extern(C) int  function (GNode*, void*) GNodeTraverseFunc;
+public alias extern(C) int function(GNode* node, void* data) GNodeTraverseFunc;
 
 /*
  * Specifies the type of function passed to g_node_children_foreach().
@@ -5328,7 +5328,7 @@ public alias extern(C) int  function (GNode*, void*) GNodeTraverseFunc;
  * user data passed to g_node_children_foreach().
  */
 // void (*GNodeForeachFunc) (GNode *node,  gpointer data);
-public alias extern(C) void  function (GNode*, void*) GNodeForeachFunc;
+public alias extern(C) void function(GNode* node, void* data) GNodeForeachFunc;
 
 /*
  * The type of functions that are used to 'duplicate' an object.
@@ -5343,7 +5343,7 @@ public alias extern(C) void  function (GNode*, void*) GNodeForeachFunc;
  * a duplicate of data
  */
 // gpointer (*GDuplicateFunc) (gpointer data,  gpointer user_data);
-public alias extern(C) void*  function (void*, void*) GDuplicateFunc;
+public alias extern(C) void* function(void* data, void* userData) GDuplicateFunc;
 
 /*
  * Specifies the type of function which is called when a data element
@@ -5353,7 +5353,7 @@ public alias extern(C) void*  function (void*, void*) GDuplicateFunc;
  * the data element.
  */
 // void (*GDestroyNotify) (gpointer data);
-public alias extern(C) void  function (void*) GDestroyNotify;
+public alias extern(C) void function(void* data) GDestroyNotify;
 
 /*
  * Specifies the type of function passed to g_dataset_foreach(). It is
@@ -5367,7 +5367,7 @@ public alias extern(C) void  function (void*) GDestroyNotify;
  * user data passed to g_dataset_foreach().
  */
 // void (*GDataForeachFunc) (GQuark key_id,  gpointer data,  gpointer user_data);
-public alias extern(C) void  function (GQuark, void*, void*) GDataForeachFunc;
+public alias extern(C) void function(GQuark keyId, void* data, void* userData) GDataForeachFunc;
 
 /*
  * Specifies the type of the value_destroy_func and key_destroy_func
@@ -5378,7 +5378,7 @@ public alias extern(C) void  function (GQuark, void*, void*) GDataForeachFunc;
  * the GCache value to destroy
  */
 // void (*GCacheDestroyFunc) (gpointer value);
-public alias extern(C) void  function (void*) GCacheDestroyFunc;
+public alias extern(C) void function(void* value) GCacheDestroyFunc;
 
 /*
  * Specifies the type of the key_dup_func function passed to
@@ -5392,7 +5392,7 @@ public alias extern(C) void  function (void*) GCacheDestroyFunc;
  * a copy of the GCache key
  */
 // gpointer (*GCacheDupFunc) (gpointer value);
-public alias extern(C) void*  function (void*) GCacheDupFunc;
+public alias extern(C) void* function(void* value) GCacheDupFunc;
 
 /*
  * Specifies the type of the value_new_func function passed to
@@ -5404,7 +5404,7 @@ public alias extern(C) void*  function (void*) GCacheDupFunc;
  * a new GCache value corresponding to the key.
  */
 // gpointer (*GCacheNewFunc) (gpointer key);
-public alias extern(C) void*  function (void*) GCacheNewFunc;
+public alias extern(C) void* function(void* key) GCacheNewFunc;
 
 /*
  * Specifies the type of the function passed to g_completion_new(). It
@@ -5416,7 +5416,7 @@ public alias extern(C) void*  function (void*) GCacheNewFunc;
  * the string corresponding to the item.
  */
 // gchar * (*GCompletionFunc) (gpointer Param1);
-public alias extern(C) char *  function (void*) GCompletionFunc;
+public alias extern(C) char * function(void* Param1) GCompletionFunc;
 
 /*
  * Specifies the type of the function passed to
@@ -5435,7 +5435,7 @@ public alias extern(C) char *  function (void*) GCompletionFunc;
  * bytes of s2.
  */
 // gint (*GCompletionStrncmpFunc) (const gchar *s1,  const gchar *s2,  gsize n);
-public alias extern(C) int  function (char*, char*, gsize) GCompletionStrncmpFunc;
+public alias extern(C) int function(char* s1, char* s2, gsize n) GCompletionStrncmpFunc;
 /**
  * A union holding the value of the token.
  * gpointer v_symbol;

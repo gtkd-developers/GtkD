@@ -206,14 +206,14 @@ public struct GdaServerProviderPrivate{}
 public struct GdaBlob
 {
 	/+* Private +/
-	extern(C) int  function(GdaBlob *blob, GdaBlobMode mode)  open;
-	extern(C) int  function(GdaBlob *blob, void* buf, int size,int *bytesRead)  read;
-	extern(C) int  function(GdaBlob *blob, void* buf, int size,int *bytesWritten)  write;
-	extern(C) int  function(GdaBlob *blob, int offset, int whence)  lseek;
-	extern(C) int  function(GdaBlob *blob)  close;
-	extern(C) int  function(GdaBlob *blob)  remove;
-	extern(C) char *  function(GdaBlob *blob)  stringify;
-	extern(C) void  function(GdaBlob *blob)  freeData;
+	extern(C) int function(GdaBlob* blob, GdaBlobMode mode)  open;
+	extern(C) int function(GdaBlob* blob, void* buf, int size, int* bytesRead)  read;
+	extern(C) int function(GdaBlob* blob, void* buf, int size, int* bytesWritten)  write;
+	extern(C) int function(GdaBlob* blob, int offset, int whence)  lseek;
+	extern(C) int function(GdaBlob* blob)  close;
+	extern(C) int function(GdaBlob* blob)  remove;
+	extern(C) char * function(GdaBlob* blob)  stringify;
+	extern(C) void function(GdaBlob* blob)  freeData;
 	void* privData;
 	/+* +/
 	/+* Public +/
@@ -463,14 +463,14 @@ public struct GdaValue
  * user_data :
  */
 // void (*GdaInitFunc) (gpointer user_data);
-public alias extern(C) void  function (void*) GdaInitFunc;
+public alias extern(C) void function(void* userData) GdaInitFunc;
 
 /*
  * path :
  * user_data :
  */
 // void (*GdaConfigListenerFunc) (const gchar *path,  gpointer user_data);
-public alias extern(C) void  function (char*, void*) GdaConfigListenerFunc;
+public alias extern(C) void function(char* path, void* userData) GdaConfigListenerFunc;
 
 /*
  * model :
@@ -479,4 +479,4 @@ public alias extern(C) void  function (char*, void*) GdaConfigListenerFunc;
  * Returns :
  */
 // gboolean (*GdaDataModelForeachFunc) (GdaDataModel *model,  GdaRow *row,  gpointer user_data);
-public alias extern(C) int  function (GdaDataModel*, GdaRow*, void*) GdaDataModelForeachFunc;
+public alias extern(C) int function(GdaDataModel* model, GdaRow* row, void* userData) GdaDataModelForeachFunc;

@@ -1574,8 +1574,8 @@ public class GtkDClass
 						switch (v[0..3])
 						{
 							case "2BI": v = ""; break;
-							case "2BU": v = "DOUBLE_"~v[1..v.length]; break;
-							case "3BU": v = "TRIPLE_"~v[1..v.length]; break;
+							case "2BU": v = ""; break;
+							case "3BU": v = ""; break;
 							case "1_1": v = "VERSION_"~v; break;
 							case "1_2": v = "VERSION_"~v; break;
 							case "1_4": v = "VERSION_"~v; break;
@@ -1765,14 +1765,11 @@ public class GtkDClass
 	{
 		string getFunctionPointer(string def, inout int i)
 		{
+		
 			string funct = std.string.split(def, ";")[0];
 			string comment = std.string.split(def, ";")[1];
-
-			string[] splitFunct = std.string.split(funct, "(");
-
-			string name = (splitFunct[1][1..$-2] == "ref") ? "doref" : splitFunct[1][1..$-2];
-
-			return splitFunct[0] ~ " function(" ~ ((splitFunct[2][0..$-1] == "void") ? ")" : splitFunct[2]) ~" "~ name ~";"~ comment;
+			
+			return getFunction(funct, convParms) ~ comment;
 		}
 
 		bool bitField = false;	// if we are in a bit field
@@ -1868,7 +1865,7 @@ public class GtkDClass
 						break;
 				}
 
-				collectedStructs ~= "extern(C) " ~ getFunctionPointer(funct, i);
+				collectedStructs ~= getFunctionPointer(funct, i);
 			}
 			else if( std.string.indexOf(elem, "{") > 0 )
 			//Nested Structs and unions.
@@ -2114,7 +2111,7 @@ public class GtkDClass
 								collectedFuncts ~= "// "~funct;
 							}
 							// body
-							collectedFuncts ~= getFunction(funct, convParms);
+							collectedFuncts ~= "public alias "~ getFunction(funct, convParms);
 						}
 					}
 				}
@@ -2452,7 +2449,7 @@ public class GtkDClass
 
 
 
-		string f = "public alias extern(C) ";
+		string f = "extern(C) ";
 		int pos = 0;
 		string type = until(pos, line, "(");
 		until(pos, line, "*");
@@ -2462,8 +2459,8 @@ public class GtkDClass
 			return "";
 		}
 
-		f ~= stringToGtkD(type, convParms, wrapper.getAliases());
-		f ~= " function (";
+		f ~= stringToGtkD(type, convParms, wrapper.getAliases()).strip();
+		f ~= " function(";
 
 		until(pos, line, "(");
 		skip(pos, line, '(');
@@ -2496,10 +2493,13 @@ public class GtkDClass
 				debug(parmType)writefln("\tParameter type after = %s", pType);
 				debug(parmName)writefln("\tParameter name after = %s", pName);
 
-				parms ~= tokenToGtkD(pType, convParms, wrapper.getAliases());
+				parms ~= tokenToGtkD(pType, convParms, wrapper.getAliases()) ~" "~ idsToGtkD(pName, convParms, wrapper.getAliases());
 				++sPos;
 			}
 		}
+
+		if ( name == "ref" )
+			 name = "doref";
 
 		f ~= parms ~ ") " ~ name ~ ";";
 

@@ -26,6 +26,8 @@
 ###
 #
 
+enumType: GDK_2BUTTON_PRESS 5
+enumType: GDK_3BUTTON_PRESS 6
 
 addTypedefs: start
 

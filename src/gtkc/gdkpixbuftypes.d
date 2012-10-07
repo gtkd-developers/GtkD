@@ -324,17 +324,17 @@ public struct GdkPixbufModule
 	char *modulePath;
 	GModule *modul;
 	GdkPixbufFormat *info;
-	extern(C) GdkPixbuf * function(FILE *f,GError **error)  load;
-	extern(C) GdkPixbuf * function( char **data)  loadXpmData;
+	extern(C) GdkPixbuf * function(FILE* f, GError** error)  load;
+	extern(C) GdkPixbuf * function(char** data)  loadXpmData;
 	/+* Incremental loading +/
-	extern(C) void*  function(GdkPixbufModuleSizeFunc sizeFunc,GdkPixbufModulePreparedFunc prepareFunc,GdkPixbufModuleUpdatedFunc updateFunc,void* userData,GError **error)  beginLoad;
-	extern(C) int  function(void* context,GError **error)  stopLoad;
-	extern(C) int  function(void* context,char *buf,uint size,GError **error)  loadIncrement;
+	extern(C) void* function(GdkPixbufModuleSizeFunc sizeFunc, GdkPixbufModulePreparedFunc prepareFunc, GdkPixbufModuleUpdatedFunc updateFunc, void* userData, GError** error)  beginLoad;
+	extern(C) int function(void* context, GError** error)  stopLoad;
+	extern(C) int function(void* context, char* buf, uint size, GError** error)  loadIncrement;
 	/+* Animation loading +/
-	extern(C) GdkPixbufAnimation * function(FILE *f,GError **error)  loadAnimation;
+	extern(C) GdkPixbufAnimation * function(FILE* f, GError** error)  loadAnimation;
 	/+* Saving +/
-	extern(C) int  function(FILE *f,GdkPixbuf *pixbuf,char **paramKeys,char **paramValues,GError **error)  save;
-	extern(C) int  function(GdkPixbufSaveFunc saveFunc,void* userData,GdkPixbuf *pixbuf,char **optionKeys,char **optionValues,GError **error) saveToCallback;
+	extern(C) int function(FILE* f, GdkPixbuf* pixbuf, char** paramKeys, char** paramValues, GError** error)  save;
+	extern(C) int function(GdkPixbufSaveFunc saveFunc, void* userData, GdkPixbuf* pixbuf, char** optionKeys, char** optionValues, GError** error) saveToCallback;
 }
 
 
@@ -356,10 +356,10 @@ public struct GdkPixbufModule
 public struct GdkPixbufAnimationClass
 {
 	GObjectClass parentClass;
-	extern(C) int  function(GdkPixbufAnimation *anim) isStaticImage;
-	extern(C) GdkPixbuf*  function(GdkPixbufAnimation *anim) getStaticImage;
-	extern(C) void  function(GdkPixbufAnimation *anim,int *width,int *height) getSize;
-	extern(C) GdkPixbufAnimationIter*  function(GdkPixbufAnimation *anim,GTimeVal *startTime) getIter;
+	extern(C) int function(GdkPixbufAnimation* anim) isStaticImage;
+	extern(C) GdkPixbuf* function(GdkPixbufAnimation* anim) getStaticImage;
+	extern(C) void function(GdkPixbufAnimation* anim, int* width, int* height) getSize;
+	extern(C) GdkPixbufAnimationIter* function(GdkPixbufAnimation* anim, GTimeVal* startTime) getIter;
 }
 
 
@@ -384,10 +384,10 @@ public struct GdkPixbufAnimationClass
 public struct GdkPixbufAnimationIterClass
 {
 	GObjectClass parentClass;
-	extern(C) int  function(GdkPixbufAnimationIter *iter) getDelayTime;
-	extern(C) GdkPixbuf*  function(GdkPixbufAnimationIter *iter) getPixbuf;
-	extern(C) int  function(GdkPixbufAnimationIter *iter) onCurrentlyLoadingFrame;
-	extern(C) int  function(GdkPixbufAnimationIter *iter,GTimeVal *currentTime) advance;
+	extern(C) int function(GdkPixbufAnimationIter* iter) getDelayTime;
+	extern(C) GdkPixbuf* function(GdkPixbufAnimationIter* iter) getPixbuf;
+	extern(C) int function(GdkPixbufAnimationIter* iter) onCurrentlyLoadingFrame;
+	extern(C) int function(GdkPixbufAnimationIter* iter, GTimeVal* currentTime) advance;
 }
 
 
@@ -399,7 +399,7 @@ public struct GdkPixbufAnimationIterClass
  * Since 2.2
  */
 // void (*GdkPixbufModuleFillVtableFunc) (GdkPixbufModule *module);
-public alias extern(C) void  function (GdkPixbufModule*) GdkPixbufModuleFillVtableFunc;
+public alias extern(C) void function(GdkPixbufModule* modul) GdkPixbufModuleFillVtableFunc;
 
 /*
  * Defines the type of the function used to fill a
@@ -409,7 +409,7 @@ public alias extern(C) void  function (GdkPixbufModule*) GdkPixbufModuleFillVtab
  * Since 2.2
  */
 // void (*GdkPixbufModuleFillInfoFunc) (GdkPixbufFormat *info);
-public alias extern(C) void  function (GdkPixbufFormat*) GdkPixbufModuleFillInfoFunc;
+public alias extern(C) void function(GdkPixbufFormat* info) GdkPixbufModuleFillInfoFunc;
 
 /*
  * Defines the type of the function that gets called once the size
@@ -432,7 +432,7 @@ public alias extern(C) void  function (GdkPixbufFormat*) GdkPixbufModuleFillInfo
  * Since 2.2
  */
 // void (*GdkPixbufModuleSizeFunc) (gint *width,  gint *height,  gpointer user_data);
-public alias extern(C) void  function (gint*, gint*, void*) GdkPixbufModuleSizeFunc;
+public alias extern(C) void function(gint* width, gint* height, void* userData) GdkPixbufModuleSizeFunc;
 
 /*
  * Defines the type of the function that gets called once the initial
@@ -449,7 +449,7 @@ public alias extern(C) void  function (gint*, gint*, void*) GdkPixbufModuleSizeF
  * Since 2.2
  */
 // void (*GdkPixbufModulePreparedFunc) (GdkPixbuf *pixbuf,  GdkPixbufAnimation *anim,  gpointer user_data);
-public alias extern(C) void  function (GdkPixbuf*, GdkPixbufAnimation*, void*) GdkPixbufModulePreparedFunc;
+public alias extern(C) void function(GdkPixbuf* pixbuf, GdkPixbufAnimation* anim, void* userData) GdkPixbufModulePreparedFunc;
 
 /*
  * Defines the type of the function that gets called every time a region
@@ -472,4 +472,4 @@ public alias extern(C) void  function (GdkPixbuf*, GdkPixbufAnimation*, void*) G
  * Since 2.2
  */
 // void (*GdkPixbufModuleUpdatedFunc) (GdkPixbuf *pixbuf,  int x,  int y,  int width,  int height,  gpointer user_data);
-public alias extern(C) void  function (GdkPixbuf*, int, int, int, int, void*) GdkPixbufModuleUpdatedFunc;
+public alias extern(C) void function(GdkPixbuf* pixbuf, int x, int y, int width, int height, void* userData) GdkPixbufModuleUpdatedFunc;

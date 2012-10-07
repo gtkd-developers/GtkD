@@ -300,7 +300,7 @@ public struct GOnce
  * the return value of the thread
  */
 // gpointer (*GThreadFunc) (gpointer data);
-public alias extern(C) void*  function (void*) GThreadFunc;
+public alias extern(C) void* function(void* data) GThreadFunc;
 /**
  * The GMutex struct is an opaque data structure to represent a mutex
  * (mutual exclusion). It can be used to protect data against shared
