@@ -45,12 +45,14 @@
  * imports:
  * 	- glib.Str
  * 	- cairo.Pattern
+ * 	- gtk.StyleContext
  * 	- gtk.StyleProperties
  * 	- gtk.SymbolicColor
  * 	- gtkc.paths
  * 	- gtkc.Loader
  * structWrap:
  * 	- GtkGradient* -> Gradient
+ * 	- GtkStyleContext* -> StyleContext
  * 	- GtkStyleProperties* -> StyleProperties
  * 	- GtkSymbolicColor* -> SymbolicColor
  * 	- cairo_pattern_t* -> Pattern
@@ -69,6 +71,7 @@ private import glib.ConstructionException;
 
 private import glib.Str;
 private import cairo.Pattern;
+private import gtk.StyleContext;
 private import gtk.StyleProperties;
 private import gtk.SymbolicColor;
 private import gtkc.paths;
@@ -236,6 +239,19 @@ public class Gradient
 		
 		resolvedGradient = new Pattern(outresolvedGradient);
 		return p;
+	}
+	
+	/**
+	 */
+	public Pattern resolveForContext(StyleContext context)
+	{
+		// cairo_pattern_t * gtk_gradient_resolve_for_context (GtkGradient *gradient,  GtkStyleContext *context);
+		auto p = gtk_gradient_resolve_for_context(gtkGradient, (context is null) ? null : context.getStyleContextStruct());
+		if(p is null)
+		{
+			return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**

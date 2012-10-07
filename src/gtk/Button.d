@@ -712,6 +712,32 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	}
 	
 	/**
+	 * If TRUE, the button will ignore the "gtk-button-images"
+	 * setting and always show the image, if available.
+	 * Use this property if the button would be useless or hard to use
+	 * without the image.
+	 * Params:
+	 * alwaysShow = TRUE if the menuitem should always show the image
+	 * Since 3.6
+	 */
+	public void setAlwaysShowImage(int alwaysShow)
+	{
+		// void gtk_button_set_always_show_image (GtkButton *button,  gboolean always_show);
+		gtk_button_set_always_show_image(gtkButton, alwaysShow);
+	}
+	
+	/**
+	 * Returns whether the button will ignore the "gtk-button-images"
+	 * setting and always show the image, if available.
+	 * Returns: TRUE if the button will always show the image Since 3.6
+	 */
+	public int getAlwaysShowImage()
+	{
+		// gboolean gtk_button_get_always_show_image (GtkButton *button);
+		return gtk_button_get_always_show_image(gtkButton);
+	}
+	
+	/**
 	 * Returns the button's event window if it is realized, NULL otherwise.
 	 * This function should be rarely needed.
 	 * Since 2.22

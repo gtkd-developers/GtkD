@@ -77,7 +77,7 @@ private import gtk.Dialog;
  * GtkFileChooserDialog is a dialog box suitable for use with
  * "File/Open" or "File/Save as" commands. This widget works by
  * putting a GtkFileChooserWidget inside a GtkDialog. It exposes
- * the GtkFileChooserIface interface, so you can use all of the
+ * the GtkFileChooser interface, so you can use all of the
  * GtkFileChooser functions on the file chooser dialog as well as
  * those for GtkDialog.
  * Note that GtkFileChooserDialog does not have any methods of its

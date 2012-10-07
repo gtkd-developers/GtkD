@@ -412,15 +412,15 @@ public class TreeStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	/**
 	 * Creates a new row at position. If parent is non-NULL, then the row will be
 	 * made a child of parent. Otherwise, the row will be created at the toplevel.
-	 * If position is larger than the number of rows at that level, then the new
-	 * row will be inserted to the end of the list. iter will be changed to point
-	 * to this new row. The row will be empty after this function is called. To
-	 * fill in values, you need to call gtk_tree_store_set() or
+	 * If position is -1 or is larger than the number of rows at that level, then
+	 * the new row will be inserted to the end of the list. iter will be changed
+	 * to point to this new row. The row will be empty after this function is
+	 * called. To fill in values, you need to call gtk_tree_store_set() or
 	 * gtk_tree_store_set_value().
 	 * Params:
 	 * iter = An unset GtkTreeIter to set to the new row. [out]
 	 * parent = A valid GtkTreeIter, or NULL. [allow-none]
-	 * position = position to insert the new row
+	 * position = position to insert the new row, or -1 for last
 	 */
 	public void insert(TreeIter iter, TreeIter parent, int position)
 	{
@@ -476,7 +476,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * Params:
 	 * iter = An unset GtkTreeIter to set the new row, or NULL. [out][allow-none]
 	 * parent = A valid GtkTreeIter, or NULL. [allow-none]
-	 * position = position to insert the new row
+	 * position = position to insert the new row, or -1 for last
 	 * columns = an array of column numbers. [array length=n_values]
 	 * values = an array of GValues. [array length=n_values]
 	 */

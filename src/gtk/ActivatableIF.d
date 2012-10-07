@@ -108,7 +108,8 @@ public interface ActivatableIF
 	 * Note
 	 * Be careful to call this before setting the local
 	 * copy of the GtkAction property, since this function uses
-	 * gtk_activatable_get_action() to retrieve the previous action
+	 * gtk_activatable_get_related_action() to retrieve the
+	 * previous action
 	 * Since 2.16
 	 * Params:
 	 * action = the GtkAction to set

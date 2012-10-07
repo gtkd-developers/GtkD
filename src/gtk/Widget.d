@@ -57,6 +57,7 @@
  * 	- gobject.ParamSpec
  * 	- gobject.Type
  * 	- gobject.Value
+ * 	- gio.ActionGroupIF
  * 	- gdk.Color
  * 	- gdk.Cursor
  * 	- gdk.Device
@@ -85,6 +86,7 @@
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- CairoContext* -> Context
+ * 	- GActionGroup* -> ActionGroupIF
  * 	- GList* -> ListG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
@@ -136,6 +138,7 @@ private import glib.Str;
 private import gobject.ParamSpec;
 private import gobject.Type;
 private import gobject.Value;
+private import gio.ActionGroupIF;
 private import gdk.Color;
 private import gdk.Cursor;
 private import gdk.Device;
@@ -773,11 +776,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onChildNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* pspec, Widget _widget)
+	extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* childProperty, Widget _widget)
 	{
 		foreach ( void delegate(ParamSpec, Widget) dlg ; _widget.onChildNotifyListeners )
 		{
-			dlg(new ParamSpec(pspec), _widget);
+			dlg(new ParamSpec(childProperty), _widget);
 		}
 	}
 	
@@ -1024,7 +1027,7 @@ public class Widget : ObjectG, BuildableIF
 	/**
 	 * The ::drag-begin signal is emitted on the drag source when a drag is
 	 * started. A typical reason to connect to this signal is to set up a
-	 * custom drag icon with gtk_drag_source_set_icon().
+	 * custom drag icon with e.g. gtk_drag_source_set_icon_pixbuf().
 	 * Note that some widgets set up a drag icon in the default handler of
 	 * this signal, so you may have to use g_signal_connect_after() to
 	 * override what the default handler did.
@@ -1044,11 +1047,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragBeginListeners ~= dlg;
 	}
-	extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
+	extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* context, Widget _widget)
 	{
 		foreach ( void delegate(DragContext, Widget) dlg ; _widget.onDragBeginListeners )
 		{
-			dlg(new DragContext(dragContext), _widget);
+			dlg(new DragContext(context), _widget);
 		}
 	}
 	
@@ -1074,11 +1077,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragDataDeleteListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
+	extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* context, Widget _widget)
 	{
 		foreach ( void delegate(DragContext, Widget) dlg ; _widget.onDragDataDeleteListeners )
 		{
-			dlg(new DragContext(dragContext), _widget);
+			dlg(new DragContext(context), _widget);
 		}
 	}
 	
@@ -1105,11 +1108,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragDataGetListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkSelectionData* data, guint info, guint time, Widget _widget)
+	extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* context, GtkSelectionData* data, guint info, guint time, Widget _widget)
 	{
 		foreach ( void delegate(DragContext, SelectionData, guint, guint, Widget) dlg ; _widget.onDragDataGetListeners )
 		{
-			dlg(new DragContext(dragContext), new SelectionData(data), info, time, _widget);
+			dlg(new DragContext(context), new SelectionData(data), info, time, _widget);
 		}
 	}
 	
@@ -1122,10 +1125,11 @@ public class Widget : ObjectG, BuildableIF
 	 * If the data was received in response to a "drag-drop" signal
 	 * (and this is the last target to be received), the handler for this
 	 * signal is expected to process the received data and then call
-	 * gtk_drag_finish(), setting the success parameter depending on whether
-	 * the data was processed successfully.
-	 * The handler may inspect and modify drag_context->action before calling
-	 * gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as shown in the
+	 * gtk_drag_finish(), setting the success parameter depending on
+	 * whether the data was processed successfully.
+	 * The handler may inspect the selected action with
+	 * gdk_drag_context_get_selected_action() before calling
+	 * gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as
 	 * $(DDOC_COMMENT example)
 	 */
 	void addOnDragDataReceived(void delegate(DragContext, gint, gint, SelectionData, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1143,11 +1147,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragDataReceivedListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data, guint info, guint time, Widget _widget)
+	extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* context, gint x, gint y, GtkSelectionData* data, guint info, guint time, Widget _widget)
 	{
 		foreach ( void delegate(DragContext, gint, gint, SelectionData, guint, guint, Widget) dlg ; _widget.onDragDataReceivedListeners )
 		{
-			dlg(new DragContext(dragContext), x, y, new SelectionData(data), info, time, _widget);
+			dlg(new DragContext(context), x, y, new SelectionData(data), info, time, _widget);
 		}
 	}
 	
@@ -1179,11 +1183,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragDropListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget _widget)
+	extern(C) static gboolean callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* context, gint x, gint y, guint time, Widget _widget)
 	{
 		foreach ( bool delegate(DragContext, gint, gint, guint, Widget) dlg ; _widget.onDragDropListeners )
 		{
-			if ( dlg(new DragContext(dragContext), x, y, time, _widget) )
+			if ( dlg(new DragContext(context), x, y, time, _widget) )
 			{
 				return 1;
 			}
@@ -1213,11 +1217,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragEndListeners ~= dlg;
 	}
-	extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
+	extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* context, Widget _widget)
 	{
 		foreach ( void delegate(DragContext, Widget) dlg ; _widget.onDragEndListeners )
 		{
-			dlg(new DragContext(dragContext), _widget);
+			dlg(new DragContext(context), _widget);
 		}
 	}
 	
@@ -1246,11 +1250,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragFailedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget _widget)
+	extern(C) static gboolean callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* context, GtkDragResult result, Widget _widget)
 	{
 		foreach ( bool delegate(DragContext, GtkDragResult, Widget) dlg ; _widget.onDragFailedListeners )
 		{
-			if ( dlg(new DragContext(dragContext), result, _widget) )
+			if ( dlg(new DragContext(context), result, _widget) )
 			{
 				return 1;
 			}
@@ -1281,17 +1285,17 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragLeaveListeners ~= dlg;
 	}
-	extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* dragContext, guint time, Widget _widget)
+	extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* context, guint time, Widget _widget)
 	{
 		foreach ( void delegate(DragContext, guint, Widget) dlg ; _widget.onDragLeaveListeners )
 		{
-			dlg(new DragContext(dragContext), time, _widget);
+			dlg(new DragContext(context), time, _widget);
 		}
 	}
 	
 	bool delegate(DragContext, gint, gint, guint, Widget)[] onDragMotionListeners;
 	/**
-	 * The drag-motion signal is emitted on the drop site when the user
+	 * The ::drag-motion signal is emitted on the drop site when the user
 	 * moves the cursor over the widget during a drag. The signal handler
 	 * must determine whether the cursor position is in a drop zone or not.
 	 * If it is not in a drop zone, it returns FALSE and no further processing
@@ -1327,11 +1331,11 @@ public class Widget : ObjectG, BuildableIF
 		}
 		onDragMotionListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget _widget)
+	extern(C) static gboolean callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* context, gint x, gint y, guint time, Widget _widget)
 	{
 		foreach ( bool delegate(DragContext, gint, gint, guint, Widget) dlg ; _widget.onDragMotionListeners )
 		{
-			if ( dlg(new DragContext(dragContext), x, y, time, _widget) )
+			if ( dlg(new DragContext(context), x, y, time, _widget) )
 			{
 				return 1;
 			}
@@ -1351,6 +1355,8 @@ public class Widget : ObjectG, BuildableIF
 	 * context passed as cr in any way they like and don't need to
 	 * restore it. The signal emission takes care of calling cairo_save()
 	 * before and cairo_restore() after invoking the handler.
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * % FALSE to propagate the event further.
 	 * Since 3.0
 	 */
 	void addOnDraw(bool delegate(Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1968,6 +1974,8 @@ public class Widget : ObjectG, BuildableIF
 	
 	bool delegate(gboolean, Widget)[] onMnemonicActivateListeners;
 	/**
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
 	void addOnMnemonicActivate(bool delegate(gboolean, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2557,6 +2565,8 @@ public class Widget : ObjectG, BuildableIF
 	
 	bool delegate(GtkWidgetHelpType, Widget)[] onShowHelpListeners;
 	/**
+	 * TRUE to stop other handlers from being invoked for the event.
+	 * FALSE to propagate the event further.
 	 */
 	void addOnShowHelp(bool delegate(GtkWidgetHelpType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3240,7 +3250,7 @@ public class Widget : ObjectG, BuildableIF
 	 * Installs an accelerator for this widget in accel_group that causes
 	 * accel_signal to be emitted if the accelerator is activated.
 	 * The accel_group needs to be added to the widget's toplevel via
-	 * gtk_window_add_accel_group(), and the signal must be of type G_RUN_ACTION.
+	 * gtk_window_add_accel_group(), and the signal must be of type G_SIGNAL_ACTION.
 	 * Accelerators added through this function are not user changeable during
 	 * runtime. If you want to support accelerators that can be changed by the
 	 * user, use gtk_accel_map_add_entry() and gtk_widget_set_accel_path() or
@@ -3431,10 +3441,10 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
-	 * Causes widget to become the default widget. widget must have the
-	 * GTK_CAN_DEFAULT flag set; typically you have to set this flag
-	 * yourself by calling gtk_widget_set_can_default (widget,
-	 * TRUE). The default widget is activated when
+	 * Causes widget to become the default widget. widget must be able to be
+	 * a default widget; typically you would ensure this yourself
+	 * by calling gtk_widget_set_can_default() with a TRUE value.
+	 * The default widget is activated when
 	 * the user presses Enter in a window. Default widgets must be
 	 * activatable, that is, gtk_widget_activate() should affect them. Note
 	 * that GtkEntry widgets require the "activates-default" property
@@ -3750,7 +3760,7 @@ public class Widget : ObjectG, BuildableIF
 	/**
 	 * Sets the visual that should be used for by widget and its children for
 	 * creating GdkWindows. The visual must be on the same GdkScreen as
-	 * returned by gdk_widget_get_screen(), so handling the
+	 * returned by gtk_widget_get_screen(), so handling the
 	 * "screen-changed" signal is necessary.
 	 * Setting a new visual will not cause widget to recreate its windows,
 	 * so you should call this function before widget is realized.
@@ -4566,7 +4576,7 @@ public class Widget : ObjectG, BuildableIF
 	 * to turn off the buffering. "Double buffered" simply means that
 	 * gdk_window_begin_paint_region() and gdk_window_end_paint() are called
 	 * automatically around expose events sent to the
-	 * widget. gdk_window_begin_paint() diverts all drawing to a widget's
+	 * widget. gdk_window_begin_paint_region() diverts all drawing to a widget's
 	 * window to an offscreen buffer, and gdk_window_end_paint() draws the
 	 * buffer to the screen. The result is that users see the window
 	 * update in one smooth step, and don't see individual graphics
@@ -4577,7 +4587,7 @@ public class Widget : ObjectG, BuildableIF
 	 * Note: if you turn off double-buffering, you have to handle
 	 * expose events, since even the clearing to the background color or
 	 * pixmap will not happen automatically (as it is done in
-	 * gdk_window_begin_paint()).
+	 * gdk_window_begin_paint_region()).
 	 * Params:
 	 * doubleBuffered = TRUE to double-buffer a widget
 	 */
@@ -6055,6 +6065,22 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// GdkModifierType gtk_widget_get_modifier_mask (GtkWidget *widget,  GdkModifierIntent intent);
 		return gtk_widget_get_modifier_mask(gtkWidget, intent);
+	}
+	
+	/**
+	 * Inserts group into widget. Children of widget that implement
+	 * GtkActionable can then be associated with actions in group by
+	 * setting their 'action-name' to
+	 * prefix.action-name.
+	 * Params:
+	 * name = the prefix for actions in group
+	 * group = a GActionGroup
+	 * Since 3.6
+	 */
+	public void insertActionGroup(string name, ActionGroupIF group)
+	{
+		// void gtk_widget_insert_action_group (GtkWidget *widget,  const gchar *name,  GActionGroup *group);
+		gtk_widget_insert_action_group(gtkWidget, Str.toStringz(name), (group is null) ? null : group.getActionGroupTStruct());
 	}
 	
 	/**

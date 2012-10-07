@@ -949,6 +949,22 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	}
 	
 	/**
+	 * Fills the bounding rectangle in widget coordinates for the cell specified by
+	 * path and cell. If cell is NULL the main cell area is used.
+	 * This function is only valid if icon_view is realized.
+	 * Params:
+	 * path = a GtkTreePath
+	 * cell = a GtkCellRenderer or NULL. [allow-none]
+	 * rect = rectangle to fill with cell rect. [out]
+	 * Returns: FALSE if there is no such item, TRUE otherwise Since 3.6
+	 */
+	public int getCellRect(TreePath path, CellRenderer cell, out Rectangle rect)
+	{
+		// gboolean gtk_icon_view_get_cell_rect (GtkIconView *icon_view,  GtkTreePath *path,  GtkCellRenderer *cell,  GdkRectangle *rect);
+		return gtk_icon_view_get_cell_rect(gtkIconView, (path is null) ? null : path.getTreePathStruct(), (cell is null) ? null : cell.getCellRendererStruct(), &rect);
+	}
+	
+	/**
 	 * Selects the row at path.
 	 * Since 2.6
 	 * Params:
@@ -1135,7 +1151,8 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * x = the x coordinate (relative to widget coordinates). [inout]
 	 * y = the y coordinate (relative to widget coordinates). [inout]
 	 * keyboardTip = whether this is a keyboard tooltip or not
-	 * model = a pointer to receive a GtkTreeModel or NULL. [out][allow-none]
+	 * model = a pointer to receive a
+	 * GtkTreeModel or NULL. [out][allow-none][transfer none]
 	 * path = a pointer to receive a GtkTreePath or NULL. [out][allow-none]
 	 * iter = a pointer to receive a GtkTreeIter or NULL. [out][allow-none]
 	 * Returns: whether or not the given tooltip context points to a item

@@ -372,13 +372,13 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	
 	/**
 	 * Creates a new row at position. iter will be changed to point to this new
-	 * row. If position is larger than the number of rows on the list, then the
-	 * new row will be appended to the list. The row will be empty after this
-	 * function is called. To fill in values, you need to call
+	 * row. If position is -1 or is larger than the number of rows on the list,
+	 * then the new row will be appended to the list. The row will be empty after
+	 * this function is called. To fill in values, you need to call
 	 * gtk_list_store_set() or gtk_list_store_set_value().
 	 * Params:
 	 * iter = An unset GtkTreeIter to set to the new row. [out]
-	 * position = position to insert the new row
+	 * position = position to insert the new row, or -1 for last
 	 */
 	public void insert(TreeIter iter, int position)
 	{
@@ -424,7 +424,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 * Since 2.6
 	 * Params:
 	 * iter = An unset GtkTreeIter to set to the new row, or NULL. [out][allow-none]
-	 * position = position to insert the new row
+	 * position = position to insert the new row, or -1 for last
 	 * columns = an array of column numbers. [array length=n_values]
 	 * values = an array of GValues. [array length=n_values]
 	 */

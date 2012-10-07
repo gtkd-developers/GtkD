@@ -130,8 +130,8 @@ public class Adjustment : ObjectG
 	
 	void delegate(Adjustment)[] onChangedListeners;
 	/**
-	 * Emitted when one or more of the GtkAdjustment fields have been changed,
-	 * other than the value field.
+	 * Emitted when one or more of the GtkAdjustment properties have been
+	 * changed, other than the "value" property.
 	 */
 	void addOnChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -158,7 +158,7 @@ public class Adjustment : ObjectG
 	
 	void delegate(Adjustment)[] onValueChangedListeners;
 	/**
-	 * Emitted when the GtkAdjustment value field has been changed.
+	 * Emitted when the "value" property has been changed.
 	 */
 	void addOnValueChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -219,10 +219,10 @@ public class Adjustment : ObjectG
 	
 	/**
 	 * Sets the GtkAdjustment value. The value is clamped to lie between
-	 * GtkAdjustment.lower and GtkAdjustment.upper.
+	 * "lower" and "upper".
 	 * Note that for adjustments which are used in a GtkScrollbar, the effective
-	 * range of allowed values goes from GtkAdjustment.lower to
-	 * GtkAdjustment.upper - GtkAdjustment.page_size.
+	 * range of allowed values goes from "lower" to
+	 * "upper" - "page_size".
 	 * Params:
 	 * value = the new value.
 	 */
@@ -233,9 +233,9 @@ public class Adjustment : ObjectG
 	}
 	
 	/**
-	 * Updates the GtkAdjustment GtkAdjustment.value to ensure that the range
+	 * Updates the "value" property to ensure that the range
 	 * between lower and upper is in the current page (i.e. between
-	 * GtkAdjustment.value and GtkAdjustment.value + GtkAdjustment.page_size).
+	 * "value" and "value" + "page_size").
 	 * If the range is larger than the page size, then only the start of it will
 	 * be in the current page.
 	 * A "changed" signal will be emitted if the value is changed.
@@ -252,7 +252,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Emits a "changed" signal from the GtkAdjustment.
 	 * This is typically called by the owner of the GtkAdjustment after it has
-	 * changed any of the GtkAdjustment fields other than the value.
+	 * changed any of the GtkAdjustment properties other than the value.
 	 */
 	public void changed()
 	{
@@ -263,7 +263,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Emits a "value_changed" signal from the GtkAdjustment.
 	 * This is typically called by the owner of the GtkAdjustment after it has
-	 * changed the GtkAdjustment value field.
+	 * changed the "value" property.
 	 */
 	public void valueChanged()
 	{
@@ -361,7 +361,7 @@ public class Adjustment : ObjectG
 	 * When setting multiple adjustment properties via their individual
 	 * setters, multiple "changed" signals will be emitted. However, since
 	 * the emission of the "changed" signal is tied to the emission of the
-	 * "GObject::notify" signals of the changed properties, it's possible
+	 * "notify" signals of the changed properties, it's possible
 	 * to compress the "changed" signals into one by calling
 	 * g_object_freeze_notify() and g_object_thaw_notify() around the
 	 * calls to the individual setters.
@@ -396,7 +396,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Sets the page size of the adjustment.
 	 * See gtk_adjustment_set_lower() about how to compress multiple
-	 * emissions of the "changed" signal when setting multiple adjustment
+	 * emissions of the GtkAdjustment::changed signal when setting multiple adjustment
 	 * properties.
 	 * Since 2.14
 	 * Params:

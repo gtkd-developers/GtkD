@@ -137,6 +137,8 @@ public class FontSelection : Box
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_font_selection_new has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooserWidget instead
 	 * Creates a new GtkFontSelection.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -340,7 +342,7 @@ public class FontSelection : Box
 	/**
 	 * Warning
 	 * gtk_font_selection_get_size_list has been deprecated since version 3.2 and should not be used in newly-written code. Use GtkFontChooser
-	 * This returns the GtkTreeeView used to list font sizes.
+	 * This returns the GtkTreeView used to list font sizes.
 	 * Since 2.14
 	 * Returns: A GtkWidget that is part of fontsel. [transfer none]
 	 */

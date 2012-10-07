@@ -560,6 +560,17 @@ public class Image : Misc
 	}
 	
 	/**
+	 * See gtk_image_new_from_resource() for details.
+	 * Params:
+	 * resourcePath = a resource path or NULL. [allow-none]
+	 */
+	public void setFromResource(string resourcePath)
+	{
+		// void gtk_image_set_from_resource (GtkImage *image,  const gchar *resource_path);
+		gtk_image_set_from_resource(gtkImage, Str.toStringz(resourcePath));
+	}
+	
+	/**
 	 * Resets the image to be empty.
 	 * Since 2.8
 	 */

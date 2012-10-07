@@ -45,12 +45,14 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
+ * 	- glib.Variant
  * 	- gio.Application : GioApplication = Application
  * 	- gio.MenuModel
  * 	- gtk.Window
  * structWrap:
  * 	- GList* -> ListG
  * 	- GMenuModel* -> MenuModel
+ * 	- GVariant* -> Variant
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
@@ -69,6 +71,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListG;
+private import glib.Variant;
 private import gio.Application : GioApplication = Application;
 private import gio.MenuModel;
 private import gtk.Window;
@@ -100,7 +103,7 @@ private import gtk.Window;
  * gtk_application_set_app_menu(). The GMenuModel that this function
  * expects is usually constructed using GtkBuilder, as seen in the
  * following example. To specify a menubar that will be shown by
- * GApplicationWindows, use gtk_application_set_menubar(). Use the base
+ * GtkApplicationWindows, use gtk_application_set_menubar(). Use the base
  * GActionMap interface to add actions, to respond to the user
  * selecting these menu items.
  * GTK+ displays these menus as expected, depending on the platform
@@ -245,9 +248,13 @@ public class Application : GioApplication
 	 * problem. If you absolutely must support GTK+ commandline arguments,
 	 * you can explicitly call gtk_init() before creating the application
 	 * instance.
-	 * The application id must be valid. See g_application_id_is_valid().
+	 * If non-NULL, the application ID must be valid. See
+	 * g_application_id_is_valid().
+	 * If no application ID is given then some features (most notably application
+	 * uniqueness) will be disabled. A null application ID is only allowed with
+	 * GTK+ 3.6 or later.
 	 * Params:
-	 * applicationId = the application id
+	 * applicationId = The application ID. [allow-none]
 	 * flags = the application flags
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -320,6 +327,42 @@ public class Application : GioApplication
 	}
 	
 	/**
+	 * Returns the GtkApplicationWindow with the given ID.
+	 * Params:
+	 * id = an identifier number
+	 * Returns: the window with ID id, or NULL if there is no window with this ID. [transfer none] Since 3.6
+	 */
+	public Window getWindowById(uint id)
+	{
+		// GtkWindow * gtk_application_get_window_by_id (GtkApplication *application,  guint id);
+		auto p = gtk_application_get_window_by_id(gtkApplication, id);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GtkWindow*) p);
+	}
+	
+	/**
+	 * Gets the "active" window for the application.
+	 * The active window is the one that was most recently focused (within
+	 * the application). This window may not have the focus at the moment
+	 * if another application has it -- this is just the most
+	 * recently-focused window within this application.
+	 * Returns: the active window. [transfer none] Since 3.6
+	 */
+	public Window getActiveWindow()
+	{
+		// GtkWindow * gtk_application_get_active_window (GtkApplication *application);
+		auto p = gtk_application_get_active_window(gtkApplication);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Window(cast(GtkWindow*) p);
+	}
+	
+	/**
 	 * Inform the session manager that certain types of actions should be
 	 * inhibited. This is not guaranteed to work on all platforms and for
 	 * all types of actions.
@@ -327,7 +370,7 @@ public class Application : GioApplication
 	 * that should not be interrupted, such as creating a CD or DVD. The
 	 * types of actions that may be blocked are specified by the flags
 	 * parameter. When the application completes the operation it should
-	 * call g_application_uninhibit() to remove the inhibitor. Note that
+	 * call gtk_application_uninhibit() to remove the inhibitor. Note that
 	 * an application can have multiple inhibitors, and all of the must
 	 * be individually removed. Inhibitors are also cleared when the
 	 * application exits.
@@ -342,7 +385,7 @@ public class Application : GioApplication
 	 * flags = what types of actions should be inhibited
 	 * reason = a short, human-readable string that explains
 	 * why these operations are inhibited. [allow-none]
-	 * Returns: A non-zero cookie that is used to uniquely identify this request. It should be used as an argument to g_application_uninhibit() in order to remove the request. If the platform does not support inhibiting or the request failed for some reason, 0 is returned. Since 3.4
+	 * Returns: A non-zero cookie that is used to uniquely identify this request. It should be used as an argument to gtk_application_uninhibit() in order to remove the request. If the platform does not support inhibiting or the request failed for some reason, 0 is returned. Since 3.4
 	 */
 	public uint inhibit(Window window, GtkApplicationInhibitFlags flags, string reason)
 	{
@@ -351,10 +394,10 @@ public class Application : GioApplication
 	}
 	
 	/**
-	 * Removes an inhibitor that has been established with g_application_inhibit().
+	 * Removes an inhibitor that has been established with gtk_application_inhibit().
 	 * Inhibitors are also cleared when the application exits.
 	 * Params:
-	 * cookie = a cookie that was returned by g_application_inhibit()
+	 * cookie = a cookie that was returned by gtk_application_inhibit()
 	 * Since 3.4
 	 */
 	public void uninhibit(uint cookie)
@@ -455,5 +498,48 @@ public class Application : GioApplication
 	{
 		// void gtk_application_set_menubar (GtkApplication *application,  GMenuModel *menubar);
 		gtk_application_set_menubar(gtkApplication, (menubar is null) ? null : menubar.getMenuModelStruct());
+	}
+	
+	/**
+	 * Installs an accelerator that will cause the named action
+	 * to be activated when the key combination specificed by accelerator
+	 * is pressed.
+	 * accelerator must be a string that can be parsed by
+	 * gtk_accelerator_parse(), e.g. "<Primary>q" or
+	 * "<Control><Alt>p".
+	 * action_name must be the name of an action as it would be used
+	 * in the app menu, i.e. actions that have been added to the application
+	 * are referred to with an "app." prefix, and window-specific actions
+	 * with a "win." prefix.
+	 * GtkApplication also extracts accelerators out of 'accel' attributes
+	 * in the GMenuModels passed to gtk_application_set_app_menu() and
+	 * gtk_application_set_menubar(), which is usually more convenient
+	 * than calling this function for each accelerator.
+	 * Params:
+	 * accelerator = accelerator string
+	 * actionName = the name of the action to activate
+	 * parameter = parameter to pass when activating the action,
+	 * or NULL if the action does not accept an activation parameter. [allow-none]
+	 * Since 3.4
+	 */
+	public void addAccelerator(string accelerator, string actionName, Variant parameter)
+	{
+		// void gtk_application_add_accelerator (GtkApplication *application,  const gchar *accelerator,  const gchar *action_name,  GVariant *parameter);
+		gtk_application_add_accelerator(gtkApplication, Str.toStringz(accelerator), Str.toStringz(actionName), (parameter is null) ? null : parameter.getVariantStruct());
+	}
+	
+	/**
+	 * Removes an accelerator that has been previously added
+	 * with gtk_application_add_accelerator().
+	 * Params:
+	 * actionName = the name of the action to activate
+	 * parameter = parameter to pass when activating the action,
+	 * or NULL if the action does not accept an activation parameter. [allow-none]
+	 * Since 3.4
+	 */
+	public void removeAccelerator(string actionName, Variant parameter)
+	{
+		// void gtk_application_remove_accelerator (GtkApplication *application,  const gchar *action_name,  GVariant *parameter);
+		gtk_application_remove_accelerator(gtkApplication, Str.toStringz(actionName), (parameter is null) ? null : parameter.getVariantStruct());
 	}
 }

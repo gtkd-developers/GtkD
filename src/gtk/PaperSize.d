@@ -178,7 +178,7 @@ public class PaperSize : Boxed
 	 * displayName = the human-readable name
 	 * width = the paper width, in units of unit
 	 * height = the paper height, in units of unit
-	 * unit = the unit for width and height
+	 * unit = the unit for width and height. not GTK_UNIT_NONE.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string displayName, double width, double height, GtkUnit unit)
@@ -289,7 +289,7 @@ public class PaperSize : Boxed
 	 * units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit = the unit for the return value
+	 * unit = the unit for the return value, not GTK_UNIT_NONE
 	 * Returns: the paper width
 	 */
 	public double getWidth(GtkUnit unit)
@@ -303,7 +303,7 @@ public class PaperSize : Boxed
 	 * units of unit.
 	 * Since 2.10
 	 * Params:
-	 * unit = the unit for the return value
+	 * unit = the unit for the return value, not GTK_UNIT_NONE
 	 * Returns: the paper height
 	 */
 	public double getHeight(GtkUnit unit)
@@ -340,7 +340,7 @@ public class PaperSize : Boxed
 	 * Gets the default top margin for the GtkPaperSize.
 	 * Since 2.10
 	 * Params:
-	 * unit = the unit for the return value
+	 * unit = the unit for the return value, not GTK_UNIT_NONE
 	 * Returns: the default top margin
 	 */
 	public double getDefaultTopMargin(GtkUnit unit)
@@ -353,7 +353,7 @@ public class PaperSize : Boxed
 	 * Gets the default bottom margin for the GtkPaperSize.
 	 * Since 2.10
 	 * Params:
-	 * unit = the unit for the return value
+	 * unit = the unit for the return value, not GTK_UNIT_NONE
 	 * Returns: the default bottom margin
 	 */
 	public double getDefaultBottomMargin(GtkUnit unit)
@@ -366,7 +366,7 @@ public class PaperSize : Boxed
 	 * Gets the default left margin for the GtkPaperSize.
 	 * Since 2.10
 	 * Params:
-	 * unit = the unit for the return value
+	 * unit = the unit for the return value, not GTK_UNIT_NONE
 	 * Returns: the default left margin
 	 */
 	public double getDefaultLeftMargin(GtkUnit unit)
@@ -379,7 +379,7 @@ public class PaperSize : Boxed
 	 * Gets the default right margin for the GtkPaperSize.
 	 * Since 2.10
 	 * Params:
-	 * unit = the unit for the return value
+	 * unit = the unit for the return value, not GTK_UNIT_NONE
 	 * Returns: the default right margin
 	 */
 	public double getDefaultRightMargin(GtkUnit unit)

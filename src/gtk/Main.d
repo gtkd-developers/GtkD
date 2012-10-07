@@ -471,7 +471,7 @@ public class Main
 	 * unable to interact with widget during the grab.
 	 * Params:
 	 * widget = a GtkWidget
-	 * device = a GtkDevice to grab on.
+	 * device = a GdkDevice to grab on.
 	 * blockOthers = TRUE to prevent other devices to interact with widget.
 	 * Since 3.0
 	 */

@@ -518,7 +518,7 @@ private import gobject.Boxed;
  * border-image: url("/path/to/image.png") 3 4 4 3 repeat stretch;
  * text-shadow
  * shadow list (see above)
- * GtkTextShadow
+ * internal use only
  * text-shadow: 1 1 0 blue, -4 -4 red;
  * transition
  * transition (see above)
@@ -638,10 +638,10 @@ public class CssSection : Boxed
 	/**
 	 * Gets the parent section for the given section. The parent section is
 	 * the section that contains this section. A special case are sections of
-	 * type GTK_CSS_SECTION_TYPE_DOCUMENT. Their parent will either be NULL
+	 * type GTK_CSS_SECTION_DOCUMENT. Their parent will either be NULL
 	 * if they are the original CSS document that was loaded by
 	 * gtk_css_provider_load_from_file() or a section of type
-	 * GTK_CSS_SECTION_TYPE_IMPORT if it was loaded with an import rule from
+	 * GTK_CSS_SECTION_IMPORT if it was loaded with an import rule from
 	 * a different file.
 	 * Returns: the parent section or NULL if none Since 3.2
 	 */
@@ -687,14 +687,6 @@ public class CssSection : Boxed
 	{
 		// guint gtk_css_section_get_start_position (const GtkCssSection *section);
 		return gtk_css_section_get_start_position(gtkCssSection);
-	}
-	
-	/**
-	 */
-	public static GType getType()
-	{
-		// GType gtk_css_section_get_type (void);
-		return gtk_css_section_get_type();
 	}
 	
 	/**

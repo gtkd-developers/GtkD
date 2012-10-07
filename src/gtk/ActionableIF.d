@@ -116,7 +116,7 @@ public interface ActionableIF
 	
 	/**
 	 * Gets the current target value of actionabe.
-	 * See gtk_actionable_set_target_value() for more information.
+	 * See gtk_actionable_set_action_target_value() for more information.
 	 * Returns: the current target value. [transfer none] Since 3.4
 	 */
 	public Variant getActionTargetValue();
@@ -148,8 +148,8 @@ public interface ActionableIF
 	 * Sets the action-name and associated string target value of an
 	 * actionable widget.
 	 * This allows for the effect of both gtk_actionable_set_action_name()
-	 * and gtk_actionable_set_target() in the common case that the target is
-	 * string-valued.
+	 * and gtk_actionable_set_action_target_value() in the common case that
+	 * the target is string-valued.
 	 * detailed_action_name is a string of the form
 	 * "action::target" where action
 	 * is the action name and target is the string to use

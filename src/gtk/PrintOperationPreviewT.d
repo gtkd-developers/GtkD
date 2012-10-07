@@ -105,7 +105,7 @@ public import gtk.PrintContext;
  * By default GtkPrintOperation uses an external application to do
  * print preview. To implement a custom print preview, an application
  * must connect to the preview signal. The functions
- * gtk_print_operation_print_preview_render_page(),
+ * gtk_print_operation_preview_render_page(),
  * gtk_print_operation_preview_end_preview() and
  * gtk_print_operation_preview_is_selected()
  * are useful when implementing a print preview.

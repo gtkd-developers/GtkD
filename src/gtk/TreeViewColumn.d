@@ -283,14 +283,14 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	}
 	
 	/**
-	 * Sets the GtkTreeViewColumnFunc to use for the column. This
+	 * Sets the GtkTreeCellDataFunc to use for the column. This
 	 * function is used instead of the standard attributes mapping for
 	 * setting the column value, and should set the value of tree_column's
 	 * cell renderer as appropriate. func may be NULL to remove an
 	 * older one.
 	 * Params:
 	 * cellRenderer = A GtkCellRenderer
-	 * func = The GtkTreeViewColumnFunc to use. [allow-none]
+	 * func = The GtkTreeCellDataFunc to use. [allow-none]
 	 * funcData = The user data for func.
 	 * destroy = The destroy notification for func_data
 	 */
@@ -679,7 +679,7 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	 * This does not actually sort the model. Use
 	 * gtk_tree_view_column_set_sort_column_id() if you want automatic sorting
 	 * support. This function is primarily for custom sorting behavior, and should
-	 * be used in conjunction with gtk_tree_sortable_set_sort_column() to do
+	 * be used in conjunction with gtk_tree_sortable_set_sort_column_id() to do
 	 * that. For custom models, the mechanism will vary.
 	 * The sort indicator changes direction to indicate normal sort or reverse sort.
 	 * Note that you must have the sort indicator enabled to see anything when

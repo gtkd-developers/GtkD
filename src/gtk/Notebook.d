@@ -197,7 +197,7 @@ public class Notebook : Container
 	 * a notebook where the tab will be attached. It is also
 	 * responsible for moving/resizing the window and adding the
 	 * necessary properties to the notebook (e.g. the
-	 * "group" ).
+	 * "group-name" ).
 	 * Since 2.12
 	 */
 	void addOnCreateWindow(GtkNotebook* delegate(Widget, gint, gint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

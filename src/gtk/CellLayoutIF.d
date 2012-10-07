@@ -88,7 +88,7 @@ private import gtk.CellRenderer;
  * of the attribute for each cell that is rendered.
  * GtkCellLayouts as GtkBuildable
  * Implementations of GtkCellLayout which also implement the GtkBuildable
- * interface (GtkCellView, GtkIconView, GtkComboBox, GtkComboBoxEntry,
+ * interface (GtkCellView, GtkIconView, GtkComboBox,
  * GtkEntryCompletion, GtkTreeViewColumn) accept GtkCellRenderer objects
  * as <child> elements in UI definitions. They support a custom
  * <attributes> element for their children, which can contain

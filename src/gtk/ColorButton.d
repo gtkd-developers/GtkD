@@ -143,8 +143,7 @@ public class ColorButton : Button, ColorChooserIF
 	void delegate(ColorButton)[] onColorSetListeners;
 	/**
 	 * The ::color-set signal is emitted when the user selects a color.
-	 * When handling this signal, use gtk_color_button_get_color() and
-	 * gtk_color_button_get_alpha() (or gtk_color_button_get_rgba()) to
+	 * When handling this signal, use gtk_color_button_get_rgba() to
 	 * find out which color was just selected.
 	 * Note that this signal is only emitted when the user
 	 * changes the color. If you need to react to programmatic color changes

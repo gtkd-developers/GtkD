@@ -73,7 +73,7 @@ private import gtk.CellRendererText;
  * Description
  * GtkCellRendererCombo renders text in a cell like GtkCellRendererText from
  * which it is derived. But while GtkCellRendererText offers a simple entry to
- * edit the text, GtkCellRendererCombo offers a GtkComboBox or GtkComboBoxEntry
+ * edit the text, GtkCellRendererCombo offers a GtkComboBox
  * widget to edit the text. The values to display in the combo box are taken from
  * the tree model specified in the "model" property.
  * The combo cell renderer takes care of adding a text cell renderer to the combo

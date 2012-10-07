@@ -131,8 +131,8 @@ public class AspectFrame : Frame
 	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
 	 * to 1.0 (right aligned)
 	 * yalign = Vertical alignment of the child within the allocation of
-	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 * to 1.0 (right aligned)
+	 * the GtkAspectFrame. This ranges from 0.0 (top aligned)
+	 * to 1.0 (bottom aligned)
 	 * ratio = The desired aspect ratio.
 	 * obeyChild = If TRUE, ratio is ignored, and the aspect
 	 * ratio is taken from the requistion of the child.
@@ -156,8 +156,8 @@ public class AspectFrame : Frame
 	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
 	 * to 1.0 (right aligned)
 	 * yalign = Vertical alignment of the child within the allocation of
-	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 * to 1.0 (right aligned)
+	 * the GtkAspectFrame. This ranges from 0.0 (top aligned)
+	 * to 1.0 (bottom aligned)
 	 * ratio = The desired aspect ratio.
 	 * obeyChild = If TRUE, ratio is ignored, and the aspect
 	 * ratio is taken from the requistion of the child.

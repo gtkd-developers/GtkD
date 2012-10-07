@@ -748,7 +748,7 @@ public class RcStyle : ObjectG
 	 * Parses a GtkStateType variable from the format expected
 	 * in a RC file.
 	 * Params:
-	 * scanner = a GtkScanner (must be initialized for parsing an RC file)
+	 * scanner = a GScanner (must be initialized for parsing an RC file)
 	 * state = A pointer to a GtkStateType variable in which to
 	 * store the result. [out]
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found.

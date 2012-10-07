@@ -508,8 +508,8 @@ public class IMContext : ObjectG
 	 * string of text holding context around the insertion point.
 	 * If the function returns TRUE, then you must free the result
 	 * stored in this location with g_free(). [out][transfer full]
-	 * cursorIndex = (out) location to store byte index of the insertion
-	 * cursor within text.
+	 * cursorIndex = location to store byte index of the insertion
+	 * cursor within text. [out]
 	 * Returns: TRUE if surrounding text was provided; in this case you must free the result stored in *text.
 	 */
 	public int getSurrounding(out string text, out int cursorIndex)
@@ -542,7 +542,7 @@ public class IMContext : ObjectG
 	 * offset = offset from cursor position in chars;
 	 * a negative value means start before the cursor.
 	 * nChars = number of characters to delete.
-	 * Returns: TRUE if the signal was handled. Signal Details The "commit" signal void user_function (GtkIMContext *context, gchar *str, gpointer user_data) : Run Last The ::commit signal is emitted when a complete input sequence has been entered by the user. This can be a single character immediately after a key press or the final result of preediting.
+	 * Returns: TRUE if the signal was handled.
 	 */
 	public int deleteSurrounding(int offset, int nChars)
 	{

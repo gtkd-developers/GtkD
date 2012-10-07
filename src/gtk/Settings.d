@@ -93,7 +93,9 @@ private import gobject.ObjectG;
  * utilities that let the user change these settings. In the absence of
  * an Xsettings manager, GTK+ reads default values for settings from
  * settings.ini files in
- * /etc/gtk-3.0 and $XDG_CONFIG_HOME/gtk-3.0. These files must be valid key files (see GKeyFile), and have
+ * /etc/gtk-3.0, $XDG_CONFIG_DIRS/gtk-3.0
+ * and $XDG_CONFIG_HOME/gtk-3.0.
+ * These files must be valid key files (see GKeyFile), and have
  * a section called Settings. Themes can also provide default values
  * for settings by installing a settings.ini file
  * next to their gtk.css file.

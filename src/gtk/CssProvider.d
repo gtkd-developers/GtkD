@@ -529,7 +529,7 @@ private import gobject.ObjectG;
  * border-image: url("/path/to/image.png") 3 4 4 3 repeat stretch;
  * text-shadow
  * shadow list (see above)
- * GtkTextShadow
+ * internal use only
  * text-shadow: 1 1 0 blue, -4 -4 red;
  * transition
  * transition (see above)
@@ -685,7 +685,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * length = the length of data in bytes, or -1 for NUL terminated strings. If
 	 * length is not -1, the code will assume it is not NUL terminated and will
 	 * potentially do a copy.
-	 * Returns: TRUE if the data could be loaded.
+	 * Returns: TRUE. The return value is deprecated and FALSE will only be returned for backwards compatibility reasons if an error is not NULL and a loading error occured. To track errors while loading CSS, connect to the GtkCssProvider::parsing-error signal.
 	 * Throws: GException on failure.
 	 */
 	public int loadFromData(string data, gssize length)
@@ -708,7 +708,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * clear any previously loaded information.
 	 * Params:
 	 * file = GFile pointing to a file to load
-	 * Returns: TRUE if the data could be loaded.
+	 * Returns: TRUE. The return value is deprecated and FALSE will only be returned for backwards compatibility reasons if an error is not NULL and a loading error occured. To track errors while loading CSS, connect to the GtkCssProvider::parsing-error signal.
 	 * Throws: GException on failure.
 	 */
 	public int loadFromFile(File file)
@@ -731,7 +731,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * any previously loaded information.
 	 * Params:
 	 * path = the path of a filename to load, in the GLib filename encoding
-	 * Returns: TRUE if the data could be loaded.
+	 * Returns: TRUE. The return value is deprecated and FALSE will only be returned for backwards compatibility reasons if an error is not NULL and a loading error occured. To track errors while loading CSS, connect to the GtkCssProvider::parsing-error signal.
 	 * Throws: GException on failure.
 	 */
 	public int loadFromPath(string path)

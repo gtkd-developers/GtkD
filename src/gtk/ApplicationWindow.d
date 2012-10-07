@@ -103,12 +103,13 @@ private import gtk.Window;
  * on Windows neither will be. gnome-shell (starting with version 3.4)
  * will display the application menu, but not the menubar.
  * If the desktop environment does not display the menubar, then
- * GApplicationWindow will automatically show a GtkMenubar for it.
+ * GtkApplicationWindow will automatically show a GtkMenuBar for it.
  * (see the GtkApplication docs for some screenshots of how this
  * looks on different platforms).
  * This behaviour can be overridden with the "show-menubar"
  * property. If the desktop environment does not display the application
  * menu, then it will automatically be included in the menubar.
+ * $(DDOC_COMMENT example)
  * $(DDOC_COMMENT example)
  * The XML format understood by GtkBuilder for GMenuModel consists
  * of a toplevel <menu> element, which contains
@@ -219,5 +220,16 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	{
 		// gboolean gtk_application_window_get_show_menubar  (GtkApplicationWindow *window);
 		return gtk_application_window_get_show_menubar(gtkApplicationWindow);
+	}
+	
+	/**
+	 * Returns the unique ID of the window. If the window has not yet been added to
+	 * a GtkApplication, returns 0.
+	 * Returns: the unique ID for window, or 0 if the window has not yet been added to a GtkApplication Since 3.6
+	 */
+	public uint getId()
+	{
+		// guint gtk_application_window_get_id (GtkApplicationWindow *window);
+		return gtk_application_window_get_id(gtkApplicationWindow);
 	}
 }

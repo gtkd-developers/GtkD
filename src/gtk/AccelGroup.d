@@ -541,6 +541,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * display = a GdkDisplay or NULL to use the default display. [allow-none]
 	 * acceleratorKey = accelerator keyval
+	 * keycode = accelerator keycode
 	 * acceleratorMods = accelerator modifier mask
 	 * Returns: a newly allocated accelerator name. Since 3.4
 	 */
@@ -560,6 +561,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 * display = a GdkDisplay or NULL to use the default display. [allow-none]
 	 * acceleratorKey = accelerator keyval
+	 * keycode = accelerator keycode
 	 * acceleratorMods = accelerator modifier mask
 	 * Returns: a newly-allocated string representing the accelerator. Since 3.4
 	 */

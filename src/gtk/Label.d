@@ -84,7 +84,7 @@ private import gtk.Misc;
  * Description
  * The GtkLabel widget displays a small amount of text. As the name
  * implies, most labels are used to label another widget such as a
- * GtkButton, a GtkMenuItem, or a GtkOptionMenu.
+ * GtkButton, a GtkMenuItem, or a GtkComboBox.
  * GtkLabel as GtkBuildable
  * The GtkLabel implementation of the GtkBuildable interface supports a
  * custom <attributes> element, which supports any number of <attribute>
@@ -627,8 +627,8 @@ public class Label : Misc
 	/**
 	 * If the label has been set so that it has an mnemonic key this function
 	 * returns the keyval used for the mnemonic accelerator. If there is no
-	 * mnemonic set up it returns GDK_VoidSymbol.
-	 * Returns: GDK keyval usable for accelerators, or GDK_VoidSymbol
+	 * mnemonic set up it returns GDK_KEY_VoidSymbol.
+	 * Returns: GDK keyval usable for accelerators, or GDK_KEY_VoidSymbol
 	 */
 	public uint getMnemonicKeyval()
 	{

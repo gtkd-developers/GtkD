@@ -121,7 +121,7 @@ public template BuildableT(TStruct)
 	
 	/**
 	 * Gets the name of the buildable object.
-	 * GtkBuilder sets the name based on the the
+	 * GtkBuilder sets the name based on the
 	 * GtkBuilder UI definition
 	 * used to construct the buildable.
 	 * Since 2.12

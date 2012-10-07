@@ -264,7 +264,7 @@ public class Statusbar : Box
 	}
 	
 	/**
-	 * Removes the first message in the GtkStatusBar's stack
+	 * Removes the first message in the GtkStatusbar's stack
 	 * with the given context id.
 	 * Note that this may not change the displayed message, if
 	 * the message at the top of the stack has a different

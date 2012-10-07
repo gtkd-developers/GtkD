@@ -212,6 +212,23 @@ public class AccelLabel : Label
 	}
 	
 	/**
+	 * Manually sets a keyval and modifier mask as the accelerator rendered
+	 * by accel_label.
+	 * If a keyval and modifier are explicitly set then these values are
+	 * used regardless of any associated accel closure or widget.
+	 * Providing an accelerator_key of 0 removes the manual setting.
+	 * Params:
+	 * acceleratorKey = a keyval, or 0
+	 * acceleratorMods = the modifier mask for the accel
+	 * Since 3.6
+	 */
+	public void setAccel(uint acceleratorKey, GdkModifierType acceleratorMods)
+	{
+		// void gtk_accel_label_set_accel (GtkAccelLabel *accel_label,  guint accelerator_key,  GdkModifierType accelerator_mods);
+		gtk_accel_label_set_accel(gtkAccelLabel, acceleratorKey, acceleratorMods);
+	}
+	
+	/**
 	 * Recreates the string representing the accelerator keys.
 	 * This should not be needed since the string is automatically updated whenever
 	 * accelerators are added or removed from the associated widget.

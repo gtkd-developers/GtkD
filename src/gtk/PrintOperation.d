@@ -117,7 +117,7 @@ private import gobject.ObjectG;
  * By default GtkPrintOperation uses an external application to do
  * print preview. To implement a custom print preview, an application
  * must connect to the preview signal. The functions
- * gtk_print_operation_print_preview_render_page(),
+ * gtk_print_operation_preview_render_page(),
  * gtk_print_operation_preview_end_preview() and
  * gtk_print_operation_preview_is_selected()
  * are useful when implementing a print preview.
@@ -1010,7 +1010,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Selected page setup is stored as default page setup in GtkPrintOperation.
 	 * Since 2.18
 	 * Params:
-	 * embed = TRUE to embed page setup selection in the GtkPrintDialog
+	 * embed = TRUE to embed page setup selection in the GtkPrintUnixDialog
 	 */
 	public void setEmbedPageSetup(int embed)
 	{

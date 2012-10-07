@@ -492,7 +492,7 @@ public class ToolItem : Bin, ActivatableIF
 	}
 	
 	/**
-	 * Returns the relief style of tool_item. See gtk_button_set_relief_style().
+	 * Returns the relief style of tool_item. See gtk_button_set_relief().
 	 * Custom subclasses of GtkToolItem should call this function in the handler
 	 * of the "toolbar_reconfigured" signal to find out the
 	 * relief style of buttons.

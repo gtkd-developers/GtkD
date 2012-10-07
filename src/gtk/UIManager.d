@@ -644,6 +644,29 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Parses a resource file containing a UI definition and
+	 * merges it with the current contents of manager.
+	 * Params:
+	 * resourcePath = the resource path of the file to parse
+	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0. Since 3.4
+	 * Throws: GException on failure.
+	 */
+	public uint addUiFromResource(string resourcePath)
+	{
+		// guint gtk_ui_manager_add_ui_from_resource (GtkUIManager *manager,  const gchar *resource_path,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_ui_manager_add_ui_from_resource(gtkUIManager, Str.toStringz(resourcePath), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Parses a string containing a UI definition and
 	 * merges it with the current contents of manager. An enclosing <ui>
 	 * element is added if it is missing.

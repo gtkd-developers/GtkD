@@ -414,6 +414,8 @@ public class ThemingEngine : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_theming_engine_state_is_running has been deprecated since version 3.6 and should not be used in newly-written code. Always returns FALSE
 	 * Returns TRUE if there is a transition animation running for the
 	 * current region (see gtk_style_context_push_animatable_region()).
 	 * If progress is not NULL, the animation progress will be returned

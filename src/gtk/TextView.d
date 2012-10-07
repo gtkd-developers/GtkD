@@ -504,7 +504,7 @@ public class TextView : Container, ScrollableIF
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkTextView* entryStruct, GtkMenu* menu, TextView _textView)
+	extern(C) static void callBackPopulatePopup(GtkTextView* textViewStruct, GtkMenu* menu, TextView _textView)
 	{
 		foreach ( void delegate(GtkMenu*, TextView) dlg ; _textView.onPopulatePopupListeners )
 		{
@@ -1596,5 +1596,50 @@ public class TextView : Container, ScrollableIF
 	{
 		// void gtk_text_view_reset_im_context (GtkTextView *text_view);
 		gtk_text_view_reset_im_context(gtkTextView);
+	}
+	
+	/**
+	 * Sets the "input-purpose" property which
+	 * can be used by on-screen keyboards and other input
+	 * methods to adjust their behaviour.
+	 * Params:
+	 * purpose = the purpose
+	 * Since 3.6
+	 */
+	public void setInputPurpose(GtkInputPurpose purpose)
+	{
+		// void gtk_text_view_set_input_purpose (GtkTextView *text_view,  GtkInputPurpose purpose);
+		gtk_text_view_set_input_purpose(gtkTextView, purpose);
+	}
+	
+	/**
+	 * Gets the value of the "input-purpose" property.
+	 */
+	public GtkInputPurpose getInputPurpose()
+	{
+		// GtkInputPurpose gtk_text_view_get_input_purpose (GtkTextView *text_view);
+		return gtk_text_view_get_input_purpose(gtkTextView);
+	}
+	
+	/**
+	 * Sets the "input-hints" property, which
+	 * allows input methods to fine-tune their behaviour.
+	 * Params:
+	 * hints = the hints
+	 * Since 3.6
+	 */
+	public void setInputHints(GtkInputHints hints)
+	{
+		// void gtk_text_view_set_input_hints (GtkTextView *text_view,  GtkInputHints hints);
+		gtk_text_view_set_input_hints(gtkTextView, hints);
+	}
+	
+	/**
+	 * Gets the value of the "input-hints" property.
+	 */
+	public GtkInputHints getInputHints()
+	{
+		// GtkInputHints gtk_text_view_get_input_hints (GtkTextView *text_view);
+		return gtk_text_view_get_input_hints(gtkTextView);
 	}
 }

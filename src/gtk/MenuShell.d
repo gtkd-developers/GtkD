@@ -43,8 +43,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gio.MenuModel
  * 	- gtk.Widget
  * structWrap:
+ * 	- GMenuModel* -> MenuModel
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -61,6 +64,8 @@ private import glib.ConstructionException;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import glib.Str;
+private import gio.MenuModel;
 private import gtk.Widget;
 
 
@@ -537,5 +542,39 @@ public class MenuShell : Container
 			return null;
 		}
 		return new Widget(cast(GtkWidget*) p);
+	}
+	
+	/**
+	 * Establishes a binding between a GtkMenuShell and a GMenuModel.
+	 * The contents of shell are removed and then refilled with menu items
+	 * according to model. When model changes, shell is updated.
+	 * Calling this function twice on shell with different model will
+	 * cause the first binding to be replaced with a binding to the new
+	 * model. If model is NULL then any previous binding is undone and
+	 * all children are removed.
+	 * with_separators determines if toplevel items (eg: sections) have
+	 * separators inserted between them. This is typically desired for
+	 * menus but doesn't make sense for menubars.
+	 * If action_namespace is non-NULL then the effect is as if all
+	 * actions mentioned in the model have their names prefixed with the
+	 * namespace, plus a dot. For example, if the action "quit" is
+	 * mentioned and action_namespace is "app" then the effective action
+	 * name is "app.quit".
+	 * For most cases you are probably better off using
+	 * gtk_menu_new_from_model() or gtk_menu_bar_new_from_model() or just
+	 * directly passing the GMenuModel to gtk_application_set_app_menu() or
+	 * gtk_application_set_menu_bar().
+	 * Params:
+	 * model = the GMenuModel to bind to or NULL to remove
+	 * binding. [allow-none]
+	 * actionNamespace = the namespace for actions in model. [allow-none]
+	 * withSeparators = TRUE if toplevel items in shell should have
+	 * separators between them
+	 * Since 3.6
+	 */
+	public void bindModel(MenuModel model, string actionNamespace, int withSeparators)
+	{
+		// void gtk_menu_shell_bind_model (GtkMenuShell *menu_shell,  GMenuModel *model,  const gchar *action_namespace,  gboolean with_separators);
+		gtk_menu_shell_bind_model(gtkMenuShell, (model is null) ? null : model.getMenuModelStruct(), Str.toStringz(actionNamespace), withSeparators);
 	}
 }

@@ -25,8 +25,8 @@ ln -s gdk-pixbuf-html-2.26.4 gdk-pixbuf
 curl http://developer.gnome.org/gdk3/gdk3-html-3.6.0.tar.gz | tar xvfz -
 ln -s gdk3-html-3.6.0 gdk
 #GTK
-curl http://developer.gnome.org/gtk3/gtk3-html-3.4.4.tar.gz | tar xvfz -
-ln -s gtk3-html-3.4.4 gtk
+curl http://developer.gnome.org/gtk3/gtk3-html-3.6.0.tar.gz | tar xvfz -
+ln -s gtk3-html-3.6.0 gtk
 #CAIRO
 curl http://cairographics.org/releases/cairo-1.12.2.tar.xz | tar xvfJ -
 ln -s cairo-1.12.2/doc/public/html cairo

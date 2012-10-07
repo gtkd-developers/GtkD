@@ -159,8 +159,8 @@ public class SelectionData : Boxed
 	 * if widget is NULL, release ownership of the selection.
 	 * Since 2.2
 	 * Params:
-	 * display = the Gdkdisplay where the selection is set
-	 * widget = new selection owner (a GdkWidget), or NULL. [allow-none]
+	 * display = the GdkDisplay where the selection is set
+	 * widget = new selection owner (a GtkWidget), or NULL. [allow-none]
 	 * selection = an interned atom representing the selection to claim.
 	 * time = timestamp with which to claim the selection
 	 * Returns: TRUE if the operation succeeded

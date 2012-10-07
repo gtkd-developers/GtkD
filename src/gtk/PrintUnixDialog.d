@@ -215,7 +215,7 @@ public class PrintUnixDialog : Dialog
 	}
 	
 	/**
-	 * Gets the current page of the GtkPrintDialog.
+	 * Gets the current page of the GtkPrintUnixDialog.
 	 * Since 2.10
 	 * Returns: the current page of dialog
 	 */

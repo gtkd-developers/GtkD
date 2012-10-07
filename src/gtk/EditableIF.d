@@ -129,7 +129,7 @@ public interface EditableIF
 	/**
 	 * Selects a region of text. The characters that are selected are
 	 * those characters at positions from start_pos up to, but not
-	 * including end_pos. If end_pos is negative, then the the
+	 * including end_pos. If end_pos is negative, then the
 	 * characters selected are those characters from start_pos to
 	 * the end of the text.
 	 * Note that positions are specified in characters, not bytes.
@@ -167,7 +167,7 @@ public interface EditableIF
 	/**
 	 * Deletes a sequence of characters. The characters that are deleted are
 	 * those characters at positions from start_pos up to, but not including
-	 * end_pos. If end_pos is negative, then the the characters deleted
+	 * end_pos. If end_pos is negative, then the characters deleted
 	 * are those from start_pos to the end of the text.
 	 * Note that the positions are specified in characters, not bytes.
 	 * Virtual: do_delete_text
@@ -180,7 +180,7 @@ public interface EditableIF
 	/**
 	 * Retrieves a sequence of characters. The characters that are retrieved
 	 * are those characters at positions from start_pos up to, but not
-	 * including end_pos. If end_pos is negative, then the the characters
+	 * including end_pos. If end_pos is negative, then the characters
 	 * retrieved are those characters from start_pos to the end of the text.
 	 * Note that positions are specified in characters, not bytes.
 	 * Params:

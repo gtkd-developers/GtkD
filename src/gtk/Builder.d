@@ -784,6 +784,38 @@ public class Builder : ObjectG
 	}
 	
 	/**
+	 * Parses a resource file containing a GtkBuilder
+	 * UI definition building only the requested objects and merges
+	 * them with the current contents of builder.
+	 * Upon errors 0 will be returned and error will be assigned a
+	 * GError from the GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_RESOURCE_ERROR
+	 * domain.
+	 * Note
+	 * If you are adding an object that depends on an object that is not
+	 * its child (for instance a GtkTreeView that depends on its
+	 * GtkTreeModel), you have to explicitely list all of them in object_ids.
+	 * Params:
+	 * resourcePath = the path of the resource file to parse
+	 * objectIds = nul-terminated array of objects to build. [array zero-terminated=1][element-type utf8]
+	 * Returns: A positive value on success, 0 if an error occurred Since 3.4
+	 * Throws: GException on failure.
+	 */
+	public uint addObjectsFromResource(string resourcePath, string[] objectIds)
+	{
+		// guint gtk_builder_add_objects_from_resource  (GtkBuilder *builder,  const gchar *resource_path,  gchar **object_ids,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_builder_add_objects_from_resource(gtkBuilder, Str.toStringz(resourcePath), Str.toStringzArray(objectIds), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * This method is a simpler variation of gtk_builder_connect_signals_full().
 	 * It uses GModule's introspective features (by opening the module NULL)
 	 * to look at the application's symbol table. From here it tries to match

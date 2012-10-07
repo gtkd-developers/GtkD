@@ -94,7 +94,7 @@ private import gtk.MenuShell;
  * A GtkMenu is most commonly dropped down by activating a
  * GtkMenuItem in a GtkMenuBar or popped up by activating a
  * GtkMenuItem in another GtkMenu.
- * A GtkMenu can also be popped up by activating a GtkOptionMenu.
+ * A GtkMenu can also be popped up by activating a GtkComboBox.
  * Other composite widgets such as the GtkNotebook can pop up a
  * GtkMenu as well.
  * Applications can display a GtkMenu as a popup menu by calling the
@@ -556,7 +556,7 @@ public class Menu : MenuShell
 	
 	/**
 	 * Returns the selected menu item from the menu. This is used by the
-	 * GtkOptionMenu.
+	 * GtkComboBox.
 	 * Returns: the GtkMenuItem that was last selected in the menu. If a selection has not yet been made, the first menu item is selected. [transfer none]
 	 */
 	public Widget getActive()
@@ -572,7 +572,7 @@ public class Menu : MenuShell
 	
 	/**
 	 * Selects the specified menu item within the menu. This is used by
-	 * the GtkOptionMenu and should not be used by anyone else.
+	 * the GtkComboBox and should not be used by anyone else.
 	 * Params:
 	 * index = the index of the menu item to select. Iindex values are
 	 * from 0 to n-1

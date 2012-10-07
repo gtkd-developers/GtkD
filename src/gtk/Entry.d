@@ -54,6 +54,7 @@
  * 	- gtk.EntryBuffer
  * 	- gtk.EntryCompletion
  * 	- gtk.TargetList
+ * 	- pango.PgAttributeList
  * 	- pango.PgLayout
  * 	- gtk.EditableT
  * 	- gtk.EditableIF
@@ -67,6 +68,7 @@
  * 	- GtkEntryBuffer* -> EntryBuffer
  * 	- GtkEntryCompletion* -> EntryCompletion
  * 	- GtkTargetList* -> TargetList
+ * 	- PangoAttrList* -> PgAttributeList
  * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
@@ -92,6 +94,7 @@ private import gtk.Border;
 private import gtk.EntryBuffer;
 private import gtk.EntryCompletion;
 private import gtk.TargetList;
+private import pango.PgAttributeList;
 private import pango.PgLayout;
 private import gtk.EditableT;
 private import gtk.EditableIF;
@@ -776,6 +779,10 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * By default, GTK+ picks the best invisible character available
 	 * in the current font, but it can be changed with
 	 * gtk_entry_set_invisible_char().
+	 * Note that you probably want to set "input-purpose"
+	 * to GTK_INPUT_PURPOSE_PASSWORD or GTK_INPUT_PURPOSE_PIN to
+	 * inform input methods about the purpose of this entry,
+	 * in addition to setting visibility to FALSE.
 	 * Params:
 	 * visible = TRUE if the contents of the entry are displayed
 	 * as plaintext
@@ -1112,6 +1119,35 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// gint gtk_entry_text_index_to_layout_index  (GtkEntry *entry,  gint text_index);
 		return gtk_entry_text_index_to_layout_index(gtkEntry, textIndex);
+	}
+	
+	/**
+	 * Sets a PangoAttrList; the attributes in the list are applied to the
+	 * entry text.
+	 * Params:
+	 * attrs = a PangoAttrList
+	 * Since 3.6
+	 */
+	public void setAttributes(PgAttributeList attrs)
+	{
+		// void gtk_entry_set_attributes (GtkEntry *entry,  PangoAttrList *attrs);
+		gtk_entry_set_attributes(gtkEntry, (attrs is null) ? null : attrs.getPgAttributeListStruct());
+	}
+	
+	/**
+	 * Gets the attribute list that was set on the entry using
+	 * gtk_entry_set_attributes(), if any.
+	 * Returns: the attribute list, or NULL if none was set. [transfer none] Since 3.6
+	 */
+	public PgAttributeList getAttributes()
+	{
+		// PangoAttrList * gtk_entry_get_attributes (GtkEntry *entry);
+		auto p = gtk_entry_get_attributes(gtkEntry);
+		if(p is null)
+		{
+			return null;
+		}
+		return new PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -1557,7 +1593,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 * the Pango text markup language.
 	 * Use NULL for tooltip to remove an existing tooltip.
 	 * See also gtk_widget_set_tooltip_markup() and
-	 * gtk_enty_set_icon_tooltip_text().
+	 * gtk_entry_set_icon_tooltip_text().
 	 * Since 2.16
 	 * Params:
 	 * iconPos = the icon position
@@ -1637,5 +1673,50 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// void gtk_entry_get_icon_area (GtkEntry *entry,  GtkEntryIconPosition icon_pos,  GdkRectangle *icon_area);
 		gtk_entry_get_icon_area(gtkEntry, iconPos, &iconArea);
+	}
+	
+	/**
+	 * Sets the "input-purpose" property which
+	 * can be used by on-screen keyboards and other input
+	 * methods to adjust their behaviour.
+	 * Params:
+	 * purpose = the purpose
+	 * Since 3.6
+	 */
+	public void setInputPurpose(GtkInputPurpose purpose)
+	{
+		// void gtk_entry_set_input_purpose (GtkEntry *entry,  GtkInputPurpose purpose);
+		gtk_entry_set_input_purpose(gtkEntry, purpose);
+	}
+	
+	/**
+	 * Gets the value of the "input-purpose" property.
+	 */
+	public GtkInputPurpose getInputPurpose()
+	{
+		// GtkInputPurpose gtk_entry_get_input_purpose (GtkEntry *entry);
+		return gtk_entry_get_input_purpose(gtkEntry);
+	}
+	
+	/**
+	 * Sets the "input-hints" property, which
+	 * allows input methods to fine-tune their behaviour.
+	 * Params:
+	 * hints = the hints
+	 * Since 3.6
+	 */
+	public void setInputHints(GtkInputHints hints)
+	{
+		// void gtk_entry_set_input_hints (GtkEntry *entry,  GtkInputHints hints);
+		gtk_entry_set_input_hints(gtkEntry, hints);
+	}
+	
+	/**
+	 * Gets the value of the "input-hints" property.
+	 */
+	public GtkInputHints getInputHints()
+	{
+		// GtkInputHints gtk_entry_get_input_hints (GtkEntry *entry);
+		return gtk_entry_get_input_hints(gtkEntry);
 	}
 }

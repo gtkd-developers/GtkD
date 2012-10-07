@@ -438,20 +438,19 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
-	 * Sets the parent style context for context. The parent style
-	 * context is used to implement
-	 * inheritance
-	 * of properties.
-	 * If you are using a GtkStyleContext returned from
-	 * gtk_widget_get_style_context(), the parent will be set for you.
-	 * Params:
-	 * parent = the new parent or NULL. [allow-none]
-	 * Since 3.4
+	 * Gets the parent context set via gtk_style_context_set_parent().
+	 * See that function for details.
+	 * Returns: the parent context or NULL. [transfer none] Since 3.4
 	 */
-	public void setParent(StyleContext parent)
+	public StyleContext getParent()
 	{
-		// void gtk_style_context_set_parent (GtkStyleContext *context,  GtkStyleContext *parent);
-		gtk_style_context_set_parent(gtkStyleContext, (parent is null) ? null : parent.getStyleContextStruct());
+		// GtkStyleContext * gtk_style_context_get_parent (GtkStyleContext *context);
+		auto p = gtk_style_context_get_parent(gtkStyleContext);
+		if(p is null)
+		{
+			return null;
+		}
+		return new StyleContext(cast(GtkStyleContext*) p);
 	}
 	
 	/**
@@ -690,6 +689,8 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_state_is_running has been deprecated since version 3.6 and should not be used in newly-written code. This function always returns FALSE
 	 * Returns TRUE if there is a transition animation running for the
 	 * current region (see gtk_style_context_push_animatable_region()).
 	 * If progress is not NULL, the animation progress will be returned
@@ -741,6 +742,8 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_notify_state_change has been deprecated since version 3.6 and should not be used in newly-written code. This function does nothing.
 	 * Notifies a state change on context, so if the current style makes use
 	 * of transition animations, one will be started so all rendered elements
 	 * under region_id are animated for state state being set to value
@@ -767,6 +770,8 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_pop_animatable_region has been deprecated since version 3.6 and should not be used in newly-written code. This function does nothing.
 	 * Pops an animatable region from context.
 	 * See gtk_style_context_push_animatable_region().
 	 */
@@ -777,6 +782,8 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_push_animatable_region has been deprecated since version 3.6 and should not be used in newly-written code. This function does nothing.
 	 * Pushes an animatable region, so all further gtk_render_*() calls between
 	 * this call and the following gtk_style_context_pop_animatable_region()
 	 * will potentially show transition animations for this region if
@@ -796,6 +803,8 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_cancel_animations has been deprecated since version 3.6 and should not be used in newly-written code. This function does nothing.
 	 * Stops all running animations for region_id and all animatable
 	 * regions underneath.
 	 * A NULL region_id will stop all ongoing animations in context,
@@ -816,6 +825,8 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_scroll_animations has been deprecated since version 3.6 and should not be used in newly-written code. This function does nothing.
 	 * This function is analogous to gdk_window_scroll(), and
 	 * should be called together with it so the invalidation
 	 * areas for any ongoing animation are scrolled together
@@ -943,6 +954,23 @@ public class StyleContext : ObjectG
 	{
 		// void gtk_style_context_set_junction_sides  (GtkStyleContext *context,  GtkJunctionSides sides);
 		gtk_style_context_set_junction_sides(gtkStyleContext, sides);
+	}
+	
+	/**
+	 * Sets the parent style context for context. The parent style
+	 * context is used to implement
+	 * inheritance
+	 * of properties.
+	 * If you are using a GtkStyleContext returned from
+	 * gtk_widget_get_style_context(), the parent will be set for you.
+	 * Params:
+	 * parent = the new parent or NULL. [allow-none]
+	 * Since 3.4
+	 */
+	public void setParent(StyleContext parent)
+	{
+		// void gtk_style_context_set_parent (GtkStyleContext *context,  GtkStyleContext *parent);
+		gtk_style_context_set_parent(gtkStyleContext, (parent is null) ? null : parent.getStyleContextStruct());
 	}
 	
 	/**

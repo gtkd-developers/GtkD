@@ -46,12 +46,14 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
+ * 	- gtk.AccelGroup
  * 	- gtk.Action
  * 	- gtk.Widget
  * 	- gtk.BuildableIF
  * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkAction* -> Action
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -71,6 +73,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListG;
+private import gtk.AccelGroup;
 private import gtk.Action;
 private import gtk.Widget;
 private import gtk.BuildableIF;
@@ -380,6 +383,33 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Gets the accelerator group.
+	 * Returns: the accelerator group associated with this action group or NULL if there is none. [transfer none] Since 3.6
+	 */
+	public AccelGroup getAccelGroup()
+	{
+		// GtkAccelGroup * gtk_action_group_get_accel_group (GtkActionGroup *action_group);
+		auto p = gtk_action_group_get_accel_group(gtkActionGroup);
+		if(p is null)
+		{
+			return null;
+		}
+		return new AccelGroup(cast(GtkAccelGroup*) p);
+	}
+	
+	/**
+	 * Sets the accelerator group to be used by every action in this group.
+	 * Params:
+	 * accelGroup = a GtkAccelGroup to set or NULL. [allow-none]
+	 * Since 3.6
+	 */
+	public void setAccelGroup(AccelGroup accelGroup)
+	{
+		// void gtk_action_group_set_accel_group (GtkActionGroup *action_group,  GtkAccelGroup *accel_group);
+		gtk_action_group_set_accel_group(gtkActionGroup, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+	}
+	
+	/**
 	 * Looks up an action in the action group by name.
 	 * Since 2.4
 	 * Params:
@@ -565,7 +595,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	/**
 	 * Sets a function to be used for translating the label and tooltip of
-	 * GtkActionGroupEntrys added by gtk_action_group_add_actions().
+	 * GtkActionEntrys added by gtk_action_group_add_actions().
 	 * If you're using gettext(), it is enough to set the translation domain
 	 * with gtk_action_group_set_translation_domain().
 	 * Since 2.4
@@ -599,7 +629,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
-	 * Translates a string using the specified translate_func(). This
+	 * Translates a string using the function set with
+	 * gtk_action_group_set_translate_func(). This
 	 * is mainly intended for language bindings.
 	 * Since 2.6
 	 * Params:
