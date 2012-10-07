@@ -145,7 +145,7 @@ public class SymbolicColor
 	 */
 	public this (SymbolicColor color, double factor, bool useAlpha = true)
 	{
-		GtkSymbolicColor* p
+		GtkSymbolicColor* p;
 		
 		if ( useAlpha )
 		{
