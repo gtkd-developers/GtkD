@@ -49,6 +49,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gio.FileAttributeMatcher;
@@ -257,7 +258,7 @@ public class FileAttributeMatcher : Boxed
 	 * Since 2.32
 	 * Returns: a string describing the attributes the matcher matches against or NULL if matcher was NULL.
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// char * g_file_attribute_matcher_to_string (GFileAttributeMatcher *matcher);
 		return Str.toString(g_file_attribute_matcher_to_string(gFileAttributeMatcher));

@@ -60,6 +60,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gtk.CssProvider;
@@ -773,7 +774,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * this provider.
 	 * Returns: a new string representing the provider. Since 3.2
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// char * gtk_css_provider_to_string (GtkCssProvider *provider);
 		return Str.toString(gtk_css_provider_to_string(gtkCssProvider));

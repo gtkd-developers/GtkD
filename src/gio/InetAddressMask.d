@@ -53,6 +53,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gio.InetAddressMask;
@@ -192,7 +193,7 @@ public class InetAddressMask : ObjectG
 	 * Since 2.32
 	 * Returns: a string corresponding to mask.
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// gchar * g_inet_address_mask_to_string (GInetAddressMask *mask);
 		return Str.toString(g_inet_address_mask_to_string(gInetAddressMask));

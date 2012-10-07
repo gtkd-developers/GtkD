@@ -172,6 +172,7 @@ prefix: g_file_attribute_matcher_
 strictPrefix: Y
 import: glib.Str
 structWrap: GFileAttributeMatcher* FileAttributeMatcher
+override: toString
 outFile: FileAttributeMatcher
 
 file: GFileEnumerator.html
@@ -1496,6 +1497,7 @@ import: glib.GException
 import: gio.InetAddress
 structWrap: GInetAddress* InetAddress
 structWrap: GInetAddressMask* InetAddressMask
+override: toString
 outFile: InetAddressMask
 
 file: GSocketAddress.html

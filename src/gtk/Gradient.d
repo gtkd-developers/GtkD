@@ -59,6 +59,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gtk.Gradient;
@@ -259,7 +260,7 @@ public class Gradient
 	 * for using in GTK CSS files.
 	 * Returns: A string representation for gradient
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// char * gtk_gradient_to_string (GtkGradient *gradient);
 		return Str.toString(gtk_gradient_to_string(gtkGradient));

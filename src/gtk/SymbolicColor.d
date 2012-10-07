@@ -57,6 +57,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gtk.SymbolicColor;
@@ -299,7 +300,7 @@ public class SymbolicColor
 	 * create the same symbolic color from it.
 	 * Returns: a new string representing color
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// char * gtk_symbolic_color_to_string (GtkSymbolicColor *color);
 		return Str.toString(gtk_symbolic_color_to_string(gtkSymbolicColor));

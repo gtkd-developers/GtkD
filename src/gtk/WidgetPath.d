@@ -55,6 +55,7 @@
  * module aliases:
  * local aliases:
  * overrides:
+ * 	- toString
  */
 
 module gtk.WidgetPath;
@@ -616,7 +617,7 @@ public class WidgetPath
 	 * g_print() the path or dump it in a gdb session.
 	 * Returns: A new string describing path. Since 3.2
 	 */
-	public string toString()
+	public override string toString()
 	{
 		// char * gtk_widget_path_to_string (const GtkWidgetPath *path);
 		return Str.toString(gtk_widget_path_to_string(gtkWidgetPath));

@@ -742,6 +742,8 @@ structWrap: GFile* File
 structWrap: GtkCssSection* CssSection
 structWrap: GtkCssProvider* CssProvider
 
+override: toString
+
 # imports for StyleProvider Interface
 import: gtk.StyleProviderT
 import: gtk.StyleProviderIF
@@ -859,6 +861,8 @@ structWrap: GSList* ListSG
 structWrap: GtkWidget* Widget
 structWrap: GtkWidgetPath* WidgetPath
 
+override: toString
+
 out: gtk_widget_path_iter_has_qregion flags
 out: gtk_widget_path_iter_has_region flags
 
@@ -885,6 +889,8 @@ import: gtkc.paths
 structWrap: GdkRGBA* RGBA
 structWrap: GtkStyleProperties* StyleProperties
 structWrap: GtkSymbolicColor* SymbolicColor
+
+override: toString
 
 nocode: gtk_symbolic_color_new_shade
 nocode: gtk_symbolic_color_new_alpha
@@ -950,6 +956,8 @@ structWrap: GtkGradient* Gradient
 structWrap: GtkStyleContext* StyleContext
 structWrap: GtkStyleProperties* StyleProperties
 structWrap: GtkSymbolicColor* SymbolicColor
+
+override: toString
 
 out: gtk_gradient_resolve resolved_gradient
 
