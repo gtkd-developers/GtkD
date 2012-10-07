@@ -116,7 +116,7 @@ structWrap: GtkSourceView* SourceView
 structWrap: GtkTextIter* TextIter
 outFile: SourceCompletion
 
-file: gtksourceview-3.0-completioncontext.html
+file: GtkSourceCompletionContext.html
 struct: GtkSourceCompletionContext
 class: SourceCompletionContext
 prefix: gtk_source_completion_context_

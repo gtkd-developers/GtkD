@@ -52,12 +52,16 @@ public enum GtkSourceCompletionActivation
 alias GtkSourceCompletionActivation SourceCompletionActivation;
 
 /**
- * GTK_SOURCE_GUTTER_RENDERER_STATE_NORMAL: normal state
- * GTK_SOURCE_GUTTER_RENDERER_STATE_CURSOR: area in the renderer represents the
+ * GTK_SOURCE_GUTTER_RENDERER_STATE_NORMAL
+ * normal state
+ * GTK_SOURCE_GUTTER_RENDERER_STATE_CURSOR
+ * area in the renderer represents the
  * line on which the insert cursor is currently positioned
- * GTK_SOURCE_GUTTER_RENDERER_STATE_PRELIT: the mouse pointer is currently
+ * GTK_SOURCE_GUTTER_RENDERER_STATE_PRELIT
+ * the mouse pointer is currently
  * over the activatable area of the renderer
- * GTK_SOURCE_GUTTER_RENDERER_STATE_SELECTED: area in the renderer represents
+ * GTK_SOURCE_GUTTER_RENDERER_STATE_SELECTED
+ * area in the renderer represents
  * a line in the buffer which contains part of the selection
  */
 public enum GtkSourceGutterRendererState

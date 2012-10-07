@@ -277,11 +277,14 @@ public class SourceView : TextView
 	
 	void delegate(SourceView)[] onShowCompletionListeners;
 	/**
-	 * The ::show-completion signal is a keybinding signal which gets
-	 * emitted when the user initiates a completion in default mode.
+	 * The ::show-completion signal is a key binding signal which gets
+	 * emitted when the user requests a completion, by pressing
+	 * Control+space.
+	 * This will create a GtkSourceCompletionContext with the activation
+	 * type as GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED.
 	 * Applications should not connect to it, but may emit it with
-	 * g_signal_emit_by_name if they need to control the default mode
-	 * completion activation.
+	 * g_signal_emit_by_name() if they need to activate the completion by
+	 * another means, for example with another key binding or a menu entry.
 	 */
 	void addOnShowCompletion(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

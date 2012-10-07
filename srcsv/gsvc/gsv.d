@@ -404,7 +404,7 @@ mixin( gshared ~"extern(C)
 
 	// gsv.SourceCompletionContext
 
-	void function(GtkSourceCompletionContext* context, void* provider, GList* proposals, gboolean finished) c_gtk_source_completion_context_add_proposals;
+	void function(GtkSourceCompletionContext* context, GtkSourceCompletionProvider* provider, GList* proposals, gboolean finished) c_gtk_source_completion_context_add_proposals;
 	void function(GtkSourceCompletionContext* context, GtkTextIter* iter) c_gtk_source_completion_context_get_iter;
 	GtkSourceCompletionActivation function(GtkSourceCompletionContext* context) c_gtk_source_completion_context_get_activation;
 

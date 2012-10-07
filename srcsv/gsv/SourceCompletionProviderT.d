@@ -130,7 +130,8 @@ public template SourceCompletionProviderT(TStruct)
 	}
 	
 	/**
-	 * Populate context with proposals from provider.
+	 * Populate context with proposals from provider added with the
+	 * gtk_source_completion_context_add_proposals() function.
 	 * Params:
 	 * context = a GtkSourceCompletionContext.
 	 */

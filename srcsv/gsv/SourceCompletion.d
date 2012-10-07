@@ -400,7 +400,7 @@ public class SourceCompletion : ObjectG
 	 * Params:
 	 * providers = a list of GtkSourceCompletionProvider, or NULL. [element-type GtkSource.CompletionProvider][allow-none]
 	 * context = The GtkSourceCompletionContext
-	 * with which to start the completion. [transfer full]
+	 * with which to start the completion. [transfer floating]
 	 * Returns: TRUE if it was possible to the show completion window.
 	 */
 	public int show(ListG providers, SourceCompletionContext context)
@@ -440,7 +440,7 @@ public class SourceCompletion : ObjectG
 	 */
 	public SourceView getView()
 	{
-		// struct _GtkSourceView * gtk_source_completion_get_view (GtkSourceCompletion *completion);
+		// GtkSourceView * gtk_source_completion_get_view (GtkSourceCompletion *completion);
 		auto p = gtk_source_completion_get_view(gtkSourceCompletion);
 		if(p is null)
 		{
@@ -455,7 +455,7 @@ public class SourceCompletion : ObjectG
 	 * the current cursor position will be used.
 	 * Params:
 	 * position = a GtkTextIter, or NULL. [allow-none]
-	 * Returns: a new GtkSourceCompletionContext. The reference being returned is a 'floating' reference, so if you invoke gtk_source_completion_show with this context you don't need to unref it. [transfer full]
+	 * Returns: a new GtkSourceCompletionContext. The reference being returned is a 'floating' reference, so if you invoke gtk_source_completion_show with this context you don't need to unref it. [transfer floating]
 	 */
 	public SourceCompletionContext createContext(TextIter position)
 	{
