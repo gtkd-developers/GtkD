@@ -467,10 +467,9 @@ public class Keymap : ObjectG
 	}
 	
 	/**
-	 * Adds virtual modifiers (i.e. Super, Hyper and Meta) which correspond
-	 * to the real modifiers (i.e Mod2, Mod3, ...) in modifiers.
-	 * are set in state to their non-virtual counterparts (i.e. Mod2,
-	 * Mod3,...) and set the corresponding bits in state.
+	 * Maps the non-virtual modifiers (i.e Mod2, Mod3, ...) which are set
+	 * in state to the virtual modifiers (i.e. Super, Hyper and Meta) and
+	 * set the corresponding bits in state.
 	 * GDK already does this before delivering key events, but for
 	 * compatibility reasons, it only sets the first virtual modifier
 	 * it finds, whereas this function sets all matching virtual modifiers.
@@ -478,7 +477,7 @@ public class Keymap : ObjectG
 	 * accelerators.
 	 * Since 2.20
 	 * Params:
-	 * state = pointer to the modifier mask to change. [out]
+	 * state = pointer to the modifier mask to change. [inout]
 	 */
 	public void addVirtualModifiers(ref GdkModifierType state)
 	{
@@ -494,7 +493,7 @@ public class Keymap : ObjectG
 	 * accelerators.
 	 * Since 2.20
 	 * Params:
-	 * state = pointer to the modifier state to map. [out]
+	 * state = pointer to the modifier state to map. [inout]
 	 * Returns: TRUE if no virtual modifiers were mapped to the same non-virtual modifier. Note that FALSE is also returned if a virtual modifier is mapped to a non-virtual modifier that was already set in state.
 	 */
 	public int mapVirtualModifiers(ref GdkModifierType state)

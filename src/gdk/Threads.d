@@ -65,6 +65,9 @@ private import glib.ConstructionException;
  */
 
 /**
+ * Warning
+ * gdk_threads_init has been deprecated since version 3.6 and should not be used in newly-written code. All GDK and GTK+ calls should be made from the main
+ *  thread
  * Initializes GDK so that it can be used from multiple threads
  * in conjunction with gdk_threads_enter() and gdk_threads_leave().
  * This call must be made before any use of the main loop from
@@ -77,6 +80,9 @@ public static void threadsInit()
 }
 
 /**
+ * Warning
+ * gdk_threads_enter has been deprecated since version 3.6 and should not be used in newly-written code. All GDK and GTK+ calls should be made from the main
+ *  thread
  * This function marks the beginning of a critical section in which
  * GDK and GTK+ functions can be called safely and without causing race
  * conditions. Only one thread at a time can be in such a critial
@@ -89,6 +95,9 @@ public static void threadsEnter()
 }
 
 /**
+ * Warning
+ * gdk_threads_leave has been deprecated since version 3.6 and should not be used in newly-written code. All GDK and GTK+ calls should be made from the main
+ *  thread
  * Leaves a critical region begun with gdk_threads_enter().
  */
 public static void threadsLeave()
@@ -98,6 +107,9 @@ public static void threadsLeave()
 }
 
 /**
+ * Warning
+ * gdk_threads_set_lock_functions has been deprecated since version 3.6 and should not be used in newly-written code. All GDK and GTK+ calls should be made from the main
+ *  thread
  * Allows the application to replace the standard method that
  * GDK uses to protect its data structures. Normally, GDK
  * creates a single GMutex that is locked by gdk_threads_enter(),

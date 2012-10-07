@@ -582,6 +582,8 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_x11_get_default_screen, \"gdk_x11_get_default_screen\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_grab_server, \"gdk_x11_grab_server\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_ungrab_server, \"gdk_x11_ungrab_server\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_keymap_get_group_for_state, \"gdk_x11_keymap_get_group_for_state\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_keymap_key_is_modifier, \"gdk_x11_keymap_key_is_modifier\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_set_sm_client_id, \"gdk_x11_set_sm_client_id\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_display_text_property_to_text_list, \"gdk_x11_display_text_property_to_text_list\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_free_text_list, \"gdk_x11_free_text_list\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -1167,6 +1169,8 @@ mixin( gshared ~"extern(C)
 	gint function() c_gdk_x11_get_default_screen;
 	void function() c_gdk_x11_grab_server;
 	void function() c_gdk_x11_ungrab_server;
+	gint function(GdkKeymap* keymap, guint state) c_gdk_x11_keymap_get_group_for_state;
+	gboolean function(GdkKeymap* keymap, guint keycode) c_gdk_x11_keymap_key_is_modifier;
 	void function(gchar* smClientId) c_gdk_x11_set_sm_client_id;
 	gint function(GdkDisplay* display, GdkAtom encoding, gint format, guchar* text, gint length, gchar*** list) c_gdk_x11_display_text_property_to_text_list;
 	void function(gchar** list) c_gdk_x11_free_text_list;
@@ -1750,6 +1754,8 @@ alias c_gdk_x11_window_move_to_current_desktop  gdk_x11_window_move_to_current_d
 alias c_gdk_x11_get_default_screen  gdk_x11_get_default_screen;
 alias c_gdk_x11_grab_server  gdk_x11_grab_server;
 alias c_gdk_x11_ungrab_server  gdk_x11_ungrab_server;
+alias c_gdk_x11_keymap_get_group_for_state  gdk_x11_keymap_get_group_for_state;
+alias c_gdk_x11_keymap_key_is_modifier  gdk_x11_keymap_key_is_modifier;
 alias c_gdk_x11_set_sm_client_id  gdk_x11_set_sm_client_id;
 alias c_gdk_x11_display_text_property_to_text_list  gdk_x11_display_text_property_to_text_list;
 alias c_gdk_x11_free_text_list  gdk_x11_free_text_list;

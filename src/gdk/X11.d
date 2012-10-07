@@ -93,12 +93,14 @@
  * 	- gdk.Device
  * 	- gdk.DeviceManager
  * 	- gdk.Display
+ * 	- gdk.Keymap
  * 	- gdk.Screen
  * 	- gdk.Window
  * structWrap:
  * 	- GdkDevice* -> Device
  * 	- GdkDeviceManager* -> DeviceManager
  * 	- GdkDisplay* -> Display
+ * 	- GdkKeymap* -> Keymap
  * 	- GdkScreen* -> Screen
  * 	- GdkWindow* -> Window
  * module aliases:
@@ -118,6 +120,7 @@ private import glib.Str;
 private import gdk.Device;
 private import gdk.DeviceManager;
 private import gdk.Display;
+private import gdk.Keymap;
 private import gdk.Screen;
 private import gdk.Window;
 
@@ -417,6 +420,39 @@ public class X11
 	{
 		// void gdk_x11_ungrab_server (void);
 		gdk_x11_ungrab_server();
+	}
+	
+	/**
+	 * Extracts the group from the state field sent in an X Key event.
+	 * This is only needed for code processing raw X events, since GdkEventKey
+	 * directly includes an is_modifier field.
+	 * Params:
+	 * keymap = a GdkX11Keymap
+	 * state = raw state returned from X
+	 * Returns: the index of the active keyboard group for the event Since 3.6
+	 */
+	public static int keymapGetGroupForState(Keymap keymap, uint state)
+	{
+		// gint gdk_x11_keymap_get_group_for_state (GdkKeymap *keymap,  guint state);
+		return gdk_x11_keymap_get_group_for_state((keymap is null) ? null : keymap.getKeymapStruct(), state);
+	}
+	
+	/**
+	 * Determines whether a particular key code represents a key that
+	 * is a modifier. That is, it's a key that normally just affects
+	 * the keyboard state and the behavior of other keys rather than
+	 * producing a direct effect itself. This is only needed for code
+	 * processing raw X events, since GdkEventKey directly includes
+	 * an is_modifier field.
+	 * Params:
+	 * keymap = a GdkX11Keymap
+	 * keycode = the hardware keycode from a key event
+	 * Returns: TRUE if the hardware keycode is a modifier key Since 3.6
+	 */
+	public static int keymapKeyIsModifier(Keymap keymap, uint keycode)
+	{
+		// gboolean gdk_x11_keymap_key_is_modifier (GdkKeymap *keymap,  guint keycode);
+		return gdk_x11_keymap_key_is_modifier((keymap is null) ? null : keymap.getKeymapStruct(), keycode);
 	}
 	
 	/**

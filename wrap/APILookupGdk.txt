@@ -1037,11 +1037,13 @@ import: glib.Str
 import: gdk.Device
 import: gdk.DeviceManager
 import: gdk.Display
+import: gdk.Keymap
 import: gdk.Screen
 import: gdk.Window
 structWrap: GdkDevice* Device
 structWrap: GdkDeviceManager* DeviceManager
 structWrap: GdkDisplay* Display
+structWrap: GdkKeymap* Keymap
 structWrap: GdkScreen* Screen
 structWrap: GdkWindow* Window
 
