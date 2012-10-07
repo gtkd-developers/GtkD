@@ -298,7 +298,7 @@ public class PgLayout : ObjectG
 	
 	/**
 	 * Gets the attribute list for the layout, if any.
-	 * Returns: a PangoAttrList.
+	 * Returns: a PangoAttrList. [transfer none]
 	 */
 	public PgAttributeList getAttributes()
 	{
@@ -737,7 +737,7 @@ public class PgLayout : ObjectG
 	 * need to be attributes corresponding to both the position before
 	 * the first character and the position after the last character.
 	 * Since 1.30
-	 * Returns: an array of logical attributes
+	 * Returns: an array of logical attributes. [array length=n_attrs]
 	 */
 	public PangoLogAttr[] getLogAttrsReadonly()
 	{

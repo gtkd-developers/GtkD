@@ -223,6 +223,21 @@ public class PgMiscellaneous
 	}
 	
 	/**
+	 * Looks up a key, consulting only the Pango system config database
+	 * in $sysconfdir/pango/pangorc.
+	 * Params:
+	 * key = Key to look up, in the form "SECTION/KEY".
+	 * Returns: the value, if found, otherwise NULL. The value is a newly-allocated string and must be freed with g_free().
+	 */
+	public static string configKeyGetSystem(string key)
+	{
+		// char * pango_config_key_get_system (const char *key);
+		return Str.toString(pango_config_key_get_system(Str.toStringz(key)));
+	}
+	
+	/**
+	 * Warning
+	 * pango_lookup_aliases has been deprecated since version 1.32 and should not be used in newly-written code. This function is not thread-safe.
 	 * Look up all user defined aliases for the alias fontname.
 	 * The resulting font family names will be stored in families,
 	 * and the number of families in n_families.
@@ -281,7 +296,8 @@ public class PgMiscellaneous
 	 * ignored.
 	 * Params:
 	 * str = a string to parse.
-	 * style = a PangoStyle to store the result in.
+	 * style = a PangoStyle to store the result
+	 * in. [out caller-allocates]
 	 * warn = if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
@@ -297,7 +313,8 @@ public class PgMiscellaneous
 	 * ignored.
 	 * Params:
 	 * str = a string to parse.
-	 * variant = a PangoVariant to store the result in.
+	 * variant = a PangoVariant to store the
+	 * result in. [out caller-allocates]
 	 * warn = if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
@@ -313,7 +330,8 @@ public class PgMiscellaneous
 	 * and integers. Case variations are ignored.
 	 * Params:
 	 * str = a string to parse.
-	 * weight = a PangoWeight to store the result in.
+	 * weight = a PangoWeight to store the result
+	 * in. [out caller-allocates]
 	 * warn = if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */
@@ -331,7 +349,8 @@ public class PgMiscellaneous
 	 * ignored and the '_' characters may be omitted.
 	 * Params:
 	 * str = a string to parse.
-	 * stretch = a PangoStretch to store the result in.
+	 * stretch = a PangoStretch to store the
+	 * result in. [out caller-allocates]
 	 * warn = if TRUE, issue a g_warning() on bad input.
 	 * Returns: TRUE if str was successfully parsed.
 	 */

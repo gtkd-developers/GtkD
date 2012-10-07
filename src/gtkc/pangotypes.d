@@ -661,6 +661,26 @@ public enum PangoAlignment
  *  Lycian. Since 1.20.1
  * PANGO_SCRIPT_LYDIAN
  *  Lydian. Since 1.20.1
+ * PANGO_SCRIPT_BATAK
+ *  Batak. Since 1.32
+ * PANGO_SCRIPT_BRAHMI
+ *  Brahmi. Since 1.32
+ * PANGO_SCRIPT_MANDAIC
+ *  Mandaic. Since 1.32
+ * PANGO_SCRIPT_CHAKMA
+ *  Chakma. Since: 1.32
+ * PANGO_SCRIPT_MEROITIC_CURSIVE
+ *  Meroitic Cursive. Since: 1.32
+ * PANGO_SCRIPT_MEROITIC_HIEROGLYPHS
+ * Meroitic Hieroglyphs. Since: 1.32
+ * PANGO_SCRIPT_MIAO
+ *  Miao. Since: 1.32
+ * PANGO_SCRIPT_SHARADA
+ *  Sharada. Since: 1.32
+ * PANGO_SCRIPT_SORA_SOMPENG
+ *  Sora Sompeng. Since: 1.32
+ * PANGO_SCRIPT_TAKRI
+ *  Takri. Since: 1.32
  */
 public enum PangoScript
 {
@@ -746,7 +766,19 @@ public enum PangoScript
 	VAI, /+* Vaii +/
 	CARIAN, /+* Cari +/
 	LYCIAN, /+* Lyci +/
-	LYDIAN /+* Lydi +/
+	LYDIAN, /+* Lydi +/
+	/+* Unicode-6.0 additions +/
+	BATAK, /+* Batk +/
+	BRAHMI, /+* Brah +/
+	MANDAIC, /+* Mand +/
+	/+* Unicode-6.1 additions +/
+	CHAKMA, /+* Cakm +/
+	MEROITIC_CURSIVE, /+* Merc +/
+	MEROITIC_HIEROGLYPHS,/+* Mero +/
+	MIAO, /+* Plrd +/
+	SHARADA, /+* Shrd +/
+	SORA_SOMPENG, /+* Sora +/
+	TAKRI /+* Takr +/
 }
 /**
  * The PangoGravity type represents the orientation of glyphs in a segment
@@ -1877,7 +1909,7 @@ public struct PangoEngineShape{}
  */
 public struct PangoEngineShapeClass
 {
-	extern(C) void  function(PangoEngineShape *engine,PangoFont *font,char *text,int length,PangoAnalysis *analysis,PangoGlyphString *glyphs) scriptShape;
+	extern(C) void  function(PangoEngineShape *engine,PangoFont *font,char *itemText,unsigned int itemLength,PangoAnalysis *analysis,PangoGlyphString *glyphs,char *paragraphText,unsigned int paragraphLength) scriptShape;
 	extern(C) PangoCoverageLevel  function(PangoEngineShape *engine,PangoFont *font,PangoLanguage *language,gunichar wc) covers;
 }
 
@@ -2072,6 +2104,18 @@ public struct PangoEngineShapeClass
 // #define PANGO_FONT_MAP_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), PANGO_TYPE_FONT_MAP, PangoFontMapClass))
 
 /*
+ * Whether a PangoGravity represents a gravity that results in reversal of text direction.
+ * gravity :
+ * the PangoGravity to check
+ * Returns :
+ * TRUE if gravity is PANGO_GRAVITY_WEST or PANGO_GRAVITY_NORTH,
+ * FALSE otherwise.
+ * Since 1.32
+ */
+// TODO
+// #define PANGO_GRAVITY_IS_IMPROPER(gravity)
+
+/*
  * Whether a PangoGravity represents vertical writing directions.
  * gravity :
  * the PangoGravity to check
@@ -2163,37 +2207,40 @@ public struct PangoEngineShapeClass
  * a PangoFontset
  * font :
  * a font from fontset
- * data :
+ * user_data :
  * callback data
  * Returns :
  * if TRUE, stop iteration and return immediately.
  * Since 1.4
  */
-// gboolean (*PangoFontsetForeachFunc) (PangoFontset *fontset,  PangoFont *font,  gpointer data);
+// gboolean (*PangoFontsetForeachFunc) (PangoFontset *fontset,  PangoFont *font,  gpointer user_data);
 public alias extern(C) int  function (PangoFontset*, PangoFont*, void*) PangoFontsetForeachFunc;
 
 /*
+ * Type of a function that can duplicate user data for an attribute.
  * A copy function passed to attribute new functions that take
  * user data.
- * data :
- * the user data
+ * user_data :
+ * user data to copy
  * Returns :
- * a new copy of data.
+ * new copy of user_data.
  */
-// gpointer (*PangoAttrDataCopyFunc) (gconstpointer data);
+// gpointer (*PangoAttrDataCopyFunc) (gconstpointer user_data);
 public alias extern(C) void*  function (void*) PangoAttrDataCopyFunc;
 
 /*
+ * Type of a function filtering a list of attributes.
  * A predicate function used by pango_attr_list_filter()
  * to filter out a subset of attributes for a list.
  * attribute :
- * a PangoAttribute
- * data :
- * callback data passed to pango_attr_list_filter()
+ * a Pango attribute
+ * user_data :
+ * user data passed to the function
  * Returns :
- * TRUE if the attribute should be filtered out
+ * TRUE if the attribute should be kept, FALSE if it should be
+ * filtered out.
  */
-// gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,  gpointer data);
+// gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,  gpointer user_data);
 public alias extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFunc;
 
 /*

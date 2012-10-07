@@ -230,9 +230,9 @@ public class PgGlyphItem
 	 * text = text that glyph_item corresponds to
 	 * (glyph_item->item->offset is an offset from the
 	 * start of text)
-	 * logAttrs = logical attributes for the item (the
-	 * first logical attribute refers to the position
-	 * before the first character in the item)
+	 * logAttrs = logical attributes for the item
+	 * (the first logical attribute refers to the position
+	 * before the first character in the item). [array]
 	 * letterSpacing = amount of letter spacing to add
 	 * in Pango units. May be negative, though too large
 	 * negative values will give ugly results.

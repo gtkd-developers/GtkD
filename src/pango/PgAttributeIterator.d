@@ -119,7 +119,7 @@ public class PgAttributeIterator
 	
 	/**
 	 * Copy a PangoAttrIterator
-	 * Returns: the newly allocated PangoAttrIterator, which should be freed with pango_attr_iterator_destroy().
+	 * Returns: the newly allocated PangoAttrIterator, which should be freed with pango_attr_iterator_destroy(). [transfer full]
 	 */
 	public PgAttributeIterator copy()
 	{
@@ -149,8 +149,8 @@ public class PgAttributeIterator
 	 * oversight, stored return values that wouldn't fit into
 	 * a signed integer are clamped to G_MAXINT.
 	 * Params:
-	 * start = location to store the start of the range
-	 * end = location to store the end of the range
+	 * start = location to store the start of the range. [out]
+	 * end = location to store the end of the range. [out]
 	 */
 	public void range(out int start, out int end)
 	{

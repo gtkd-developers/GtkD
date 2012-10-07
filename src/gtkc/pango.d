@@ -66,6 +66,7 @@ mixin( _shared ~ "static this()
 	Linker.link(pango_find_paragraph_boundary, \"pango_find_paragraph_boundary\", LIBRARY.PANGO);
 	Linker.link(pango_default_break, \"pango_default_break\", LIBRARY.PANGO);
 	Linker.link(pango_shape, \"pango_shape\", LIBRARY.PANGO);
+	Linker.link(pango_shape_full, \"pango_shape_full\", LIBRARY.PANGO);
 	Linker.link(pango_unichar_direction, \"pango_unichar_direction\", LIBRARY.PANGO);
 	Linker.link(pango_find_base_dir, \"pango_find_base_dir\", LIBRARY.PANGO);
 	Linker.link(pango_get_mirror_char, \"pango_get_mirror_char\", LIBRARY.PANGO);
@@ -498,6 +499,7 @@ mixin( _shared ~ "static this()
 	Linker.link(pango_scan_string, \"pango_scan_string\", LIBRARY.PANGO);
 	Linker.link(pango_scan_int, \"pango_scan_int\", LIBRARY.PANGO);
 	Linker.link(pango_config_key_get, \"pango_config_key_get\", LIBRARY.PANGO);
+	Linker.link(pango_config_key_get_system, \"pango_config_key_get_system\", LIBRARY.PANGO);
 	Linker.link(pango_lookup_aliases, \"pango_lookup_aliases\", LIBRARY.PANGO);
 	Linker.link(pango_parse_enum, \"pango_parse_enum\", LIBRARY.PANGO);
 	Linker.link(pango_parse_style, \"pango_parse_style\", LIBRARY.PANGO);
@@ -549,6 +551,7 @@ mixin( gshared ~"extern(C)
 	void function(gchar* text, gint length, gint* paragraphDelimiterIndex, gint* nextParagraphStart) c_pango_find_paragraph_boundary;
 	void function(gchar* text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen) c_pango_default_break;
 	void function(gchar* text, gint length, PangoAnalysis* analysis, PangoGlyphString* glyphs) c_pango_shape;
+	void function(gchar* itemText, gint itemLength, gchar* paragraphText, gint paragraphLength, PangoAnalysis* analysis, PangoGlyphString* glyphs) c_pango_shape_full;
 	PangoDirection function(gunichar ch) c_pango_unichar_direction;
 	PangoDirection function(gchar* text, gint length) c_pango_find_base_dir;
 	gboolean function(gunichar ch, gunichar* mirroredCh) c_pango_get_mirror_char;
@@ -981,6 +984,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(char** pos, GString* f_out) c_pango_scan_string;
 	gboolean function(char** pos, int* f_out) c_pango_scan_int;
 	char* function(char* key) c_pango_config_key_get;
+	char* function(char* key) c_pango_config_key_get_system;
 	void function(char* fontname, char*** families, int* nFamilies) c_pango_lookup_aliases;
 	gboolean function(GType type, char* str, int* value, gboolean warn, char** possibleValues) c_pango_parse_enum;
 	gboolean function(char* str, PangoStyle* style, gboolean warn) c_pango_parse_style;
@@ -1030,6 +1034,7 @@ alias c_pango_get_log_attrs  pango_get_log_attrs;
 alias c_pango_find_paragraph_boundary  pango_find_paragraph_boundary;
 alias c_pango_default_break  pango_default_break;
 alias c_pango_shape  pango_shape;
+alias c_pango_shape_full  pango_shape_full;
 alias c_pango_unichar_direction  pango_unichar_direction;
 alias c_pango_find_base_dir  pango_find_base_dir;
 alias c_pango_get_mirror_char  pango_get_mirror_char;
@@ -1462,6 +1467,7 @@ alias c_pango_scan_word  pango_scan_word;
 alias c_pango_scan_string  pango_scan_string;
 alias c_pango_scan_int  pango_scan_int;
 alias c_pango_config_key_get  pango_config_key_get;
+alias c_pango_config_key_get_system  pango_config_key_get_system;
 alias c_pango_lookup_aliases  pango_lookup_aliases;
 alias c_pango_parse_enum  pango_parse_enum;
 alias c_pango_parse_style  pango_parse_style;

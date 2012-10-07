@@ -424,7 +424,7 @@ public class PgRenderer : ObjectG
 	 * The returned layout line should not be modified while still being
 	 * rendered.
 	 * Since 1.20
-	 * Returns: the layout line, or NULL if no layout line is being rendered using renderer at this time.
+	 * Returns: the layout line, or NULL if no layout line is being rendered using renderer at this time. [transfer none]
 	 */
 	public PgLayoutLine getLayoutLine()
 	{

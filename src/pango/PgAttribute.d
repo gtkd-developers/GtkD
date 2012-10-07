@@ -217,7 +217,7 @@ public class PgAttribute
 	 * Make a copy of an attribute.
 	 * Params:
 	 * attr = a PangoAttribute
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public PgAttribute attributeCopy()
 	{
@@ -259,7 +259,7 @@ public class PgAttribute
 	 * Create a new language tag attribute.
 	 * Params:
 	 * language = language tag
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute languageNew(PgLanguage language)
 	{
@@ -276,7 +276,7 @@ public class PgAttribute
 	 * Create a new font family attribute.
 	 * Params:
 	 * family = the family or comma separated list of families
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute familyNew(string family)
 	{
@@ -293,7 +293,7 @@ public class PgAttribute
 	 * Create a new font slant style attribute.
 	 * Params:
 	 * style = the slant style
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute styleNew(PangoStyle style)
 	{
@@ -310,7 +310,7 @@ public class PgAttribute
 	 * Create a new font variant attribute (normal or small caps)
 	 * Params:
 	 * variant = the variant
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute variantNew(PangoVariant variant)
 	{
@@ -327,7 +327,7 @@ public class PgAttribute
 	 * Create a new font stretch attribute
 	 * Params:
 	 * stretch = the stretch
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute stretchNew(PangoStretch stretch)
 	{
@@ -344,7 +344,7 @@ public class PgAttribute
 	 * Create a new font weight attribute.
 	 * Params:
 	 * weight = the weight
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute weightNew(PangoWeight weight)
 	{
@@ -361,7 +361,7 @@ public class PgAttribute
 	 * Create a new font-size attribute in fractional points.
 	 * Params:
 	 * size = the font size, in PANGO_SCALEths of a point.
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute sizeNew(int size)
 	{
@@ -398,7 +398,7 @@ public class PgAttribute
 	 * and size simultaneously.
 	 * Params:
 	 * desc = the font description
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute fontDescNew(PgFontDescription desc)
 	{
@@ -417,7 +417,7 @@ public class PgAttribute
 	 * red = the red value (ranging from 0 to 65535)
 	 * green = the green value
 	 * blue = the blue value
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute foregroundNew(ushort red, ushort green, ushort blue)
 	{
@@ -436,7 +436,7 @@ public class PgAttribute
 	 * red = the red value (ranging from 0 to 65535)
 	 * green = the green value
 	 * blue = the blue value
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute backgroundNew(ushort red, ushort green, ushort blue)
 	{
@@ -453,7 +453,7 @@ public class PgAttribute
 	 * Create a new strike-through attribute.
 	 * Params:
 	 * strikethrough = TRUE if the text should be struck-through.
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute strikethroughNew(int strikethrough)
 	{
@@ -475,7 +475,7 @@ public class PgAttribute
 	 * red = the red value (ranging from 0 to 65535)
 	 * green = the green value
 	 * blue = the blue value
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute strikethroughColorNew(ushort red, ushort green, ushort blue)
 	{
@@ -492,7 +492,7 @@ public class PgAttribute
 	 * Create a new underline-style attribute.
 	 * Params:
 	 * underline = the underline style.
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute underlineNew(PangoUnderline underline)
 	{
@@ -514,7 +514,7 @@ public class PgAttribute
 	 * red = the red value (ranging from 0 to 65535)
 	 * green = the green value
 	 * blue = the blue value
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute underlineColorNew(ushort red, ushort green, ushort blue)
 	{
@@ -535,7 +535,7 @@ public class PgAttribute
 	 * Params:
 	 * inkRect = ink rectangle to assign to each character
 	 * logicalRect = logical rectangle to assign to each character
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute shapeNew(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -580,7 +580,7 @@ public class PgAttribute
 	 * affected text will have its size multiplied by scale_factor.
 	 * Params:
 	 * scaleFactor = factor to scale the font
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute scaleNew(double scaleFactor)
 	{
@@ -598,7 +598,7 @@ public class PgAttribute
 	 * Params:
 	 * rise = the amount that the text should be displaced vertically,
 	 * in Pango units. Positive values displace the text upwards.
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute riseNew(int rise)
 	{
@@ -617,7 +617,7 @@ public class PgAttribute
 	 * Params:
 	 * letterSpacing = amount of extra space to add between graphemes
 	 * of the text, in Pango units.
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute letterSpacingNew(int letterSpacing)
 	{
@@ -640,7 +640,7 @@ public class PgAttribute
 	 * Params:
 	 * enableFallback = TRUE if we should fall back on other fonts
 	 * for characters the active font is missing.
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute fallbackNew(int enableFallback)
 	{
@@ -658,7 +658,7 @@ public class PgAttribute
 	 * Since 1.16
 	 * Params:
 	 * gravity = the gravity value; should not be PANGO_GRAVITY_AUTO.
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute gravityNew(PangoGravity gravity)
 	{
@@ -676,7 +676,7 @@ public class PgAttribute
 	 * Since 1.16
 	 * Params:
 	 * hint = the gravity hint value.
-	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy(). [transfer full]
 	 */
 	public static PgAttribute gravityHintNew(PangoGravityHint hint)
 	{

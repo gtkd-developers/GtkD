@@ -119,6 +119,8 @@ out: pango_context_list_families families
 array: pango_context_list_families families n_families
 out: pango_find_paragraph_boundary paragraph_delimiter_index
 out: pango_find_paragraph_boundary next_paragraph_start
+array: pango_shape_full item_text item_length
+array: pango_shape_full paragraph_text paragraph_length
 
 code: start
 	/**

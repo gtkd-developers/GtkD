@@ -118,7 +118,7 @@ public class PgLanguage
 	 * the current locale of the process.
 	 * Params:
 	 * language = a string representing a language tag, or NULL. [allow-none]
-	 * Returns: an opaque pointer to a PangoLanguage structure, or NULL if language was NULL. The returned pointer will be valid forever after, and should not be freed.
+	 * Returns: an opaque pointer to a PangoLanguage structure, or NULL if language was NULL. The returned pointer will be valid forever after, and should not be freed. [transfer none]
 	 */
 	public static PgLanguage fromString(string language)
 	{
@@ -202,7 +202,7 @@ public class PgLanguage
 	 * Params:
 	 * numScripts = location to return number of scripts,
 	 * or NULL. [out caller-allocates][allow-none]
-	 * Returns: An array of PangoScript values, with the number of entries in the array stored in num_scripts, or NULL if Pango does not have any information about this particular language tag (also the case if language is NULL). The returned array is owned by Pango and should not be modified or freed.
+	 * Returns: An array of PangoScript values, with the number of entries in the array stored in num_scripts, or NULL if Pango does not have any information about this particular language tag (also the case if language is NULL). The returned array is owned by Pango and should not be modified or freed. [array length=num_scripts]
 	 */
 	public PangoScript* getScripts(int* numScripts)
 	{
@@ -235,7 +235,7 @@ public class PgLanguage
 	 * functions automatically (by calling gtk_set_locale()).
 	 * See man setlocale for more details.
 	 * Since 1.16
-	 * Returns: the default language as a PangoLanguage, must not be freed.
+	 * Returns: the default language as a PangoLanguage, must not be freed. [transfer none]
 	 */
 	public static PgLanguage getDefault()
 	{

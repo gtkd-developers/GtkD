@@ -270,7 +270,7 @@ public class PgLayoutIter
 	 * but the user is not expected
 	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 * Since 1.16
-	 * Returns: the current line, that should not be modified.
+	 * Returns: the current line, that should not be modified. [transfer none]
 	 */
 	public PgLayoutLine getLineReadonly()
 	{
@@ -305,7 +305,8 @@ public class PgLayoutIter
 	 * can sensibly be obtained for characters; ink extents make sense only
 	 * down to the level of clusters.
 	 * Params:
-	 * logicalRect = rectangle to fill with logical extents
+	 * logicalRect = rectangle to fill with
+	 * logical extents. [out caller-allocates]
 	 */
 	public void getCharExtents(PangoRectangle* logicalRect)
 	{

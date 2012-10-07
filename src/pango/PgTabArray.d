@@ -202,10 +202,10 @@ public class PgTabArray : Boxed
 	 * arrays of length pango_tab_array_get_size(). You must free the
 	 * returned array.
 	 * Params:
-	 * alignments = location to store an array of tab stop
-	 * alignments, or NULL. [out][allow-none]
-	 * locations = location to store an array of tab positions,
-	 * or NULL. [out][allow-none]
+	 * alignments = location to store an array of tab
+	 * stop alignments, or NULL. [out][allow-none]
+	 * locations = location to store an array
+	 * of tab positions, or NULL. [out][allow-none][array]
 	 */
 	public void getTabs(out PangoTabAlign[] alignments, out int[] locations)
 	{

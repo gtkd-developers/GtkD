@@ -204,7 +204,7 @@ public class PgFont : ObjectG
 	 * Computes the coverage map for a given font and language tag.
 	 * Params:
 	 * language = the language tag
-	 * Returns: a newly-allocated PangoCoverage object.
+	 * Returns: a newly-allocated PangoCoverage object. [transfer full]
 	 */
 	public PgCoverage getCoverage(PgLanguage language)
 	{

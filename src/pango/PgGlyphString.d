@@ -186,10 +186,12 @@ public class PgGlyphString
 	 * end = end index (the range is the set of bytes with
 	 * indices such that start <= index < end)
 	 * font = a PangoFont
-	 * inkRect = rectangle used to store the extents of the glyph string range as drawn
-	 * or NULL to indicate that the result is not needed.
-	 * logicalRect = rectangle used to store the logical extents of the glyph string range
-	 * or NULL to indicate that the result is not needed.
+	 * inkRect = rectangle used to store the
+	 * extents of the glyph string range as drawn or NULL to
+	 * indicate that the result is not needed. [out caller-allocates]
+	 * logicalRect = rectangle used to store the
+	 * logical extents of the glyph string range or NULL to
+	 * indicate that the result is not needed. [out caller-allocates]
 	 */
 	public void extentsRange(int start, int end, PgFont font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -222,7 +224,7 @@ public class PgGlyphString
 	 * index = the byte index within text
 	 * trailing = whether we should compute the result for the beginning (FALSE)
 	 * or end (TRUE) of the character.
-	 * xPos = location to store result
+	 * xPos = location to store result. [out]
 	 */
 	public void indexToX(string text, int length, PangoAnalysis* analysis, int index, int trailing, out int xPos)
 	{
@@ -242,10 +244,10 @@ public class PgGlyphString
 	 * length = the number of bytes (not characters) in text.
 	 * analysis = the analysis information return from pango_itemize()
 	 * xPos = the x offset (in Pango units)
-	 * index = location to store calculated byte index within text
+	 * index = location to store calculated byte index within text. [out]
 	 * trailing = location to store a boolean indicating
 	 * whether the user clicked on the leading or trailing
-	 * edge of the character.
+	 * edge of the character. [out]
 	 */
 	public void xToIndex(string text, int length, PangoAnalysis* analysis, int xPos, out int index, out int trailing)
 	{
@@ -263,10 +265,10 @@ public class PgGlyphString
 	 * text = the text corresponding to the glyphs
 	 * length = the length of text, in bytes
 	 * embeddingLevel = the embedding level of the string
-	 * logicalWidths = an array whose length is the number of characters in
-	 * text (equal to g_utf8_strlen (text, length) unless
-	 * text has NUL bytes)
-	 * to be filled in with the resulting character widths.
+	 * logicalWidths = an array whose length is the number of
+	 * characters in text (equal to g_utf8_strlen (text,
+	 * length) unless text has NUL bytes) to be filled in
+	 * with the resulting character widths. [array]
 	 */
 	public void getLogicalWidths(string text, int length, int embeddingLevel, int* logicalWidths)
 	{

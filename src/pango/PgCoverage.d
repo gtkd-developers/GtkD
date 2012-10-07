@@ -147,7 +147,7 @@ public class PgCoverage
 	/**
 	 * Copy an existing PangoCoverage. (This function may now be unnecessary
 	 * since we refcount the structure. File a bug if you use it.)
-	 * Returns: the newly allocated PangoCoverage, with a reference count of one, which should be freed with pango_coverage_unref().
+	 * Returns: the newly allocated PangoCoverage, with a reference count of one, which should be freed with pango_coverage_unref(). [transfer full]
 	 */
 	public PgCoverage copy()
 	{
@@ -200,7 +200,7 @@ public class PgCoverage
 	/**
 	 * Convert a PangoCoverage structure into a flat binary format
 	 * Params:
-	 * bytes = location to store result (must be freed with g_free())
+	 * bytes = location to store result (must be freed with g_free()). [out][array length=n_bytes][element-type guint8]
 	 */
 	public void toBytes(out char[] bytes)
 	{
@@ -217,8 +217,9 @@ public class PgCoverage
 	 * Convert data generated from pango_converage_to_bytes() back
 	 * to a PangoCoverage
 	 * Params:
-	 * bytes = binary data representing a PangoCoverage
-	 * Returns: a newly allocated PangoCoverage, or NULL if the data was invalid.
+	 * bytes = binary data
+	 * representing a PangoCoverage. [array length=n_bytes][element-type guint8]
+	 * Returns: a newly allocated PangoCoverage, or NULL if the data was invalid. [transfer full]
 	 */
 	public static PgCoverage fromBytes(char[] bytes)
 	{

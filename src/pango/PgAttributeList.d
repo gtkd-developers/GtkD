@@ -173,8 +173,8 @@ public class PgAttributeList
 	 * be inserted after all other attributes with a matching
 	 * start_index.
 	 * Params:
-	 * attr = the attribute to insert. Ownership of this value is
-	 * assumed by the list.
+	 * attr = the attribute to insert. Ownership of this
+	 * value is assumed by the list. [transfer full]
 	 */
 	public void insert(PgAttribute attr)
 	{
@@ -187,8 +187,8 @@ public class PgAttributeList
 	 * be inserted before all other attributes with a matching
 	 * start_index.
 	 * Params:
-	 * attr = the attribute to insert. Ownership of this value is
-	 * assumed by the list.
+	 * attr = the attribute to insert. Ownership of this
+	 * value is assumed by the list. [transfer full]
 	 */
 	public void insertBefore(PgAttribute attr)
 	{
@@ -206,8 +206,8 @@ public class PgAttributeList
 	 * suitable for continually changing a set of attributes
 	 * since it never removes or combines existing attributes.
 	 * Params:
-	 * attr = the attribute to insert. Ownership of this value is
-	 * assumed by the list.
+	 * attr = the attribute to insert. Ownership of this
+	 * value is assumed by the list. [transfer full]
 	 */
 	public void change(PgAttribute attr)
 	{
@@ -262,7 +262,7 @@ public class PgAttributeList
 	/**
 	 * Create a iterator initialized to the beginning of the list.
 	 * list must not be modified until this iterator is freed.
-	 * Returns: the newly allocated PangoAttrIterator, which should be freed with pango_attr_iterator_destroy().
+	 * Returns: the newly allocated PangoAttrIterator, which should be freed with pango_attr_iterator_destroy(). [transfer full]
 	 */
 	public PgAttributeIterator getIterator()
 	{

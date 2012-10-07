@@ -573,7 +573,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 * families = location to store a pointer to
 	 * an array of PangoFontFamily *. This array should be freed
-	 * with g_free(). [out][array length=n_families]
+	 * with g_free(). [out][array length=n_families][transfer container]
 	 */
 	public void listFamilies(out PgFontFamily[] families)
 	{
@@ -604,7 +604,8 @@ public class PgContext : ObjectG
 	 * length = length in bytes of text
 	 * level = embedding level, or -1 if unknown
 	 * language = language tag
-	 * logAttrs = array with one PangoLogAttr per character in text, plus one extra, to be filled in
+	 * logAttrs = array with one PangoLogAttr
+	 * per character in text, plus one extra, to be filled in. [array length=attrs_len]
 	 * attrsLen = length of log_attrs array
 	 */
 	public static void getLogAttrs(string text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
@@ -626,8 +627,10 @@ public class PgContext : ObjectG
 	 * Params:
 	 * text = UTF-8 text
 	 * length = length of text in bytes, or -1 if nul-terminated
-	 * paragraphDelimiterIndex = return location for index of delimiter
-	 * nextParagraphStart = return location for start of next paragraph
+	 * paragraphDelimiterIndex = return location for index of
+	 * delimiter. [out]
+	 * nextParagraphStart = return location for start of next
+	 * paragraph. [out]
 	 */
 	public static void findParagraphBoundary(string text, int length, out int paragraphDelimiterIndex, out int nextParagraphStart)
 	{
@@ -661,6 +664,9 @@ public class PgContext : ObjectG
 	 * PangoAnalysis structure returned from pango_itemize(),
 	 * convert the characters into glyphs. You may also pass
 	 * in only a substring of the item from pango_itemize().
+	 * It is recommended that you use pango_shape_full() instead, since
+	 * that API allows for shaping interaction happening across text item
+	 * boundaries.
 	 * Params:
 	 * text = the text to process
 	 * length = the length (in bytes) of text
@@ -671,6 +677,29 @@ public class PgContext : ObjectG
 	{
 		// void pango_shape (const gchar *text,  gint length,  const PangoAnalysis *analysis,  PangoGlyphString *glyphs);
 		pango_shape(Str.toStringz(text), length, analysis, (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());
+	}
+	
+	/**
+	 * Given a segment of text and the corresponding
+	 * PangoAnalysis structure returned from pango_itemize(),
+	 * convert the characters into glyphs. You may also pass
+	 * in only a substring of the item from pango_itemize().
+	 * This is similar to pango_shape(), except it also can optionally take
+	 * the full paragraph text as input, which will then be used to perform
+	 * certain cross-item shaping interactions. If you have access to the broader
+	 * text of which item_text is part of, provide the broader text as
+	 * paragraph_text. If paragraph_text is NULL, item text is used instead.
+	 * Since 1.32
+	 * Params:
+	 * itemText = valid UTF-8 text to shape.
+	 * paragraphText = (allow-none) text of the paragraph (see details). May be NULL.
+	 * analysis = PangoAnalysis structure from pango_itemize().
+	 * glyphs = glyph string in which to store results.
+	 */
+	public static void shapeFull(string itemText, string paragraphText, PangoAnalysis* analysis, PgGlyphString glyphs)
+	{
+		// void pango_shape_full (const gchar *item_text,  gint item_length,  const gchar *paragraph_text,  gint paragraph_length,  const PangoAnalysis *analysis,  PangoGlyphString *glyphs);
+		pango_shape_full(cast(char*)itemText.ptr, cast(int) itemText.length, cast(char*)paragraphText.ptr, cast(int) paragraphText.length, analysis, (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());
 	}
 	
 	/**
