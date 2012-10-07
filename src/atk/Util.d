@@ -145,6 +145,12 @@ public class Util
 	}
 	
 	/**
+	 * listener_id is the value returned by atk_add_global_event_listener
+	 * when you registered that event listener.
+	 * Toolkit implementor note: Atk provides a default implementation for
+	 * this virtual method, and that implementation should be enough for
+	 * most of the cases. You should have a really good reason to
+	 * reimplement this method.
 	 * Removes the specified event listener
 	 * Params:
 	 * listenerId = the id of the event listener to remove
@@ -172,7 +178,9 @@ public class Util
 	}
 	
 	/**
-	 * Removes the specified event listener
+	 * listener_id is the value returned by atk_add_key_event_listener
+	 * when you registered that event listener.
+	 * Removes the specified event listener.
 	 * Params:
 	 * listenerId = the id of the event listener to remove
 	 */

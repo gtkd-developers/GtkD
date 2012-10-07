@@ -45,10 +45,12 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.Bytes
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
+ * 	- GBytes* -> Bytes
  * 	- GCancellable* -> Cancellable
  * module aliases:
  * local aliases:
@@ -65,6 +67,7 @@ private import glib.ConstructionException;
 
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.Bytes;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 
@@ -506,7 +509,7 @@ public class InputStream : ObjectG
 	 * Returns: a new GBytes, or NULL on error
 	 * Throws: GException on failure.
 	 */
-	public GBytes* readBytes(gsize count, Cancellable cancellable)
+	public Bytes readBytes(gsize count, Cancellable cancellable)
 	{
 		// GBytes * g_input_stream_read_bytes (GInputStream *stream,  gsize count,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -518,7 +521,11 @@ public class InputStream : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		if(p is null)
+		{
+			return null;
+		}
+		return new Bytes(cast(GBytes*) p);
 	}
 	
 	/**
@@ -559,7 +566,7 @@ public class InputStream : ObjectG
 	 * Returns: the newly-allocated GBytes, or NULL on error
 	 * Throws: GException on failure.
 	 */
-	public GBytes* readBytesFinish(AsyncResultIF result)
+	public Bytes readBytesFinish(AsyncResultIF result)
 	{
 		// GBytes * g_input_stream_read_bytes_finish (GInputStream *stream,  GAsyncResult *result,  GError **error);
 		GError* err = null;
@@ -571,6 +578,10 @@ public class InputStream : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		if(p is null)
+		{
+			return null;
+		}
+		return new Bytes(cast(GBytes*) p);
 	}
 }

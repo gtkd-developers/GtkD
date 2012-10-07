@@ -27,6 +27,17 @@ module gtkc.giotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
+
+enum GResolverRecordType
+{
+	SRV = 1,
+	MX,
+	TXT,
+	SOA,
+	NS
+}
+alias GResolverRecordType ResolverRecordType;
+
 /**
  * Flags used when querying a GFileInfo.
  * G_FILE_QUERY_INFO_NONE
@@ -429,16 +440,6 @@ public enum GPasswordSave
 	PERMANENTLY
 }
 alias GPasswordSave PasswordSave;
-
-enum GResolverRecordType
-{
-	SRV = 1,
-	MX,
-	TXT,
-	SOA,
-	NS
-}
-alias GResolverRecordType ResolverRecordType;
 
 /**
  * GMountOperationResult is returned as a result when a request for

@@ -43,6 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gio.Credentials
  * 	- gio.IOStream
  * structWrap:

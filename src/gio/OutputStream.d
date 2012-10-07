@@ -45,11 +45,13 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.Bytes
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.InputStream
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
+ * 	- GBytes* -> Bytes
  * 	- GCancellable* -> Cancellable
  * 	- GInputStream* -> InputStream
  * module aliases:
@@ -67,6 +69,7 @@ private import glib.ConstructionException;
 
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.Bytes;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.InputStream;
@@ -578,12 +581,12 @@ public class OutputStream : ObjectG
 	 * Returns: Number of bytes written, or -1 on error
 	 * Throws: GException on failure.
 	 */
-	public gssize writeBytes(GBytes* bytes, Cancellable cancellable)
+	public gssize writeBytes(Bytes bytes, Cancellable cancellable)
 	{
 		// gssize g_output_stream_write_bytes (GOutputStream *stream,  GBytes *bytes,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_output_stream_write_bytes(gOutputStream, bytes, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_output_stream_write_bytes(gOutputStream, (bytes is null) ? null : bytes.getBytesStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -621,10 +624,10 @@ public class OutputStream : ObjectG
 	 * callback = callback to call when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
-	public void writeBytesAsync(GBytes* bytes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void writeBytesAsync(Bytes bytes, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_output_stream_write_bytes_async (GOutputStream *stream,  GBytes *bytes,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
-		g_output_stream_write_bytes_async(gOutputStream, bytes, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		g_output_stream_write_bytes_async(gOutputStream, (bytes is null) ? null : bytes.getBytesStruct(), ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 	
 	/**
