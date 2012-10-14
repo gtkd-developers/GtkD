@@ -1,6 +1,8 @@
 Building gtkD with DSSS mini-HOWTO:
 -----------------------------------
 
+This method only works with D1, for D2 use one of the other build options.
+
 1) Get the latest stable version of DSSS and install it on your system.
 (Last tested with DSSS-0.78).
 

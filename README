@@ -8,7 +8,7 @@ Requirements:
 - Linux, Windows(2000, XP), or Mac
 - Gtk libs
 - dmd, gdc or ldc installation
-  (on your home directory on linux or the root directory on windows)
+
 optional:
 - OpenGL libs (mesa is fine on linux)
 - GtkGLext
@@ -31,6 +31,28 @@ to the license.
 
 Compile the lib and the test programs:
 --------------------------------------
-To compile gtkD, please refer to the README of your choice.
 
-We HIGHLY recommend following README_DSSS and using dsss to compile.
+Linux / Posix:
+--------------
+Using the GNU make to compile GtkD on these Operating systems, calling make
+with no options will build GtkD, GtkD-Sourceview and one of the demos.
+Optionaly these options are available:
+ * all             = build everything.
+ * [shared-]gtkd   = build gtkd.
+ * [shared-]gtkdsv = build gtkd-sourceview.
+ * [shared-]gda    = build gda.
+ * [shared-]gstreamer = build gstreamer.
+ * shared          = build gtkd and gtkd-sourceview as shared libraries.
+                     This currently only works with LDC.
+ * install and uninstall options are also available for the options
+   mentioned above.
+
+Or you can use one of the build options also available for Windows.
+
+Windows:
+--------
+You can build GtkD using build/bud http://www.dsource.org/projects/build
+see the README in the build directory.
+
+If you are using D1 dsss is also an option see the README_DSSS for more
+information.
