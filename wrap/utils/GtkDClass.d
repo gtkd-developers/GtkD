@@ -1565,6 +1565,7 @@ public class GtkDClass
 				{
 					debug(enumPrefix)writefln("\t\t%s", value);
 					string v = std.array.replace(value, enumPrefix, "");
+					v = std.array.replace(v, "(int)", "cast(int)");
 					if ( enumName == "cairo_ps_level_t" )
 					{
 						v = "LEVEL_"~v;

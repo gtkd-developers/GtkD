@@ -66,7 +66,7 @@ public class IndentedStringBuilder
 			{
 				text ~= tabs ~ ln ~ "\n";
 			}
-			if ( endsWith(ln,'{') )//&& !startsWith(line, " *") )
+			if ( endsWith(ln,'{') && !startsWith(line, "}") )
 			{
 				tabs ~= '\t';
 			}

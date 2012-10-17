@@ -34,6 +34,10 @@ cd cairo
 wget http://cairographics.org/manual-1.10.2/cairo-Version-Information.html
 cd ..
 
+#GTKGLEXT
+#ln -s /usr/share/gtk-doc/html/gtkglext/ glgdk
+#ln -s /usr/share/gtk-doc/html/gtkglext/ glgtk
+
 #other libraries.
 #gda
 curl -L http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | tar xvfz -

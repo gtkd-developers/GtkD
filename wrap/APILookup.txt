@@ -144,6 +144,11 @@ package: gdk gdk
 package: gtk gtk
 bind: gtkc
 
+srcdir: srcgl
+package: glgdk glgdk
+package: glgtk glgtk
+bind: gtkglc
+
 srcdir: srcsv
 package: sourceview gsv
 bind: gsvc
@@ -207,6 +212,11 @@ lookup: APILookupAtk.txt
 lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
+
+srcdir: srcgl
+bindDir: gtkglc
+lookup: APILookupGLd.txt
+lookup: APILookupGLt.txt
 
 srcdir: srcsv
 bindDir: gsvc

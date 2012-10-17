@@ -79,6 +79,12 @@ SOURCES_GTKD = $(subst src/build/gtkD.d,,$(wildcard src/*/*.d))
 OBJECTS_GTKD = $(patsubst %.d,%.o,$(SOURCES_GTKD))
 PICOBJECTS_GTKD = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKD))
 
+LIBNAME_GTKDGL = libgtkdgl.a
+SONAME_GTKDGL = libgtkdgl.so
+SOURCES_GTKDGL = $(wildcard srcgl/*/*.d)
+OBJECTS_GTKDGL = $(patsubst %.d,%.o,$(SOURCES_GTKDGL))
+PICOBJECTS_GTKDGL = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDGL))
+
 LIBNAME_GTKDSV = libgtkdsv.a
 SONAME_GTKDSV = libgtkdsv.so
 SOURCES_GTKDSV = $(wildcard srcsv/*/*.d)
@@ -118,11 +124,13 @@ else
 endif
 
 gtkd:      $(LIBNAME_GTKD)
+gtkdgl:    $(LIBNAME_GTKDGL)
 sv:        $(LIBNAME_GTKDSV)
 gda:       $(LIBNAME_GTKDGDA)
 gstreamer: $(LIBNAME_GSTREAMERD)
 
 shared-gtkd:      $(SONAME_GTKD)
+shared-gtkdgl:    $(SONAME_GTKDGL)
 shared-sv:        $(SONAME_GTKDSV)
 shared-gda:       $(SONAME_GTKDGDA)
 shared-gstreamer: $(SONAME_GSTREAMERD)
@@ -131,6 +139,10 @@ shared-gstreamer: $(SONAME_GSTREAMERD)
 
 $(LIBNAME_GTKD): IMPORTS=-Isrc
 $(LIBNAME_GTKD): $(OBJECTS_GTKD)
+	$(make-lib)
+
+$(LIBNAME_GTKDGL): IMPORTS=-Isrc -Isrcgl
+$(LIBNAME_GTKDGL): $(LIBNAME_GTKD) $(OBJECTS_GTKDGL)
 	$(make-lib)
 
 $(LIBNAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
@@ -149,6 +161,10 @@ $(LIBNAME_GSTREAMERD): $(LIBNAME_GTKD) $(OBJECTS_GSTREAMERD)
 
 $(SONAME_GTKD): IMPORTS=-Isrc
 $(SONAME_GTKD): $(PICOBJECTS_GTKD)
+	$(make-shared-lib)
+
+$(SONAME_GTKDGL): IMPORTS=-Isrc -Isrcgl
+$(SONAME_GTKDGL): $(PICOBJECTS_GTKDGL)
 	$(make-shared-lib)
 
 $(SONAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
@@ -207,6 +223,9 @@ install-gtkd: $(LIBNAME_GTKD) install-headers-gtkd
 	install -d $(DESTDIR)$(prefix)/$(libdir)
 	install -m 644 $(LIBNAME_GTKD)   $(DESTDIR)$(prefix)/$(libdir)
 
+install-gtkdgl: $(LIBNAME_GTKDGL) install-gtkd install-headers-gtkdgl
+	install -m 644 $(LIBNAME_GTKDGL) $(DESTDIR)$(prefix)/$(libdir)
+
 install-gtkdsv: $(LIBNAME_GTKDSV) install-gtkd install-headers-gtkdsv
 	install -m 644 $(LIBNAME_GTKDSV) $(DESTDIR)$(prefix)/$(libdir)
 
@@ -218,6 +237,9 @@ install-gstreamer: $(LIBNAME_GSTREAMERD) install-gtkd install-headers-gstreamer
 
 install-shared-gtkd: $(SONAME_GTKD)
 	install -d $(DESTDIR)$(prefix)/$(libdir)
+	$(install-so)
+
+install-shared-gtkdgl: $(SONAME_GTKDGL) install-shared-gtkd
 	$(install-so)
 
 install-shared-gtkdsv: $(SONAME_GTKDSV) install-shared-gtkd
@@ -232,6 +254,9 @@ install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
 install-headers-gtkd:
 	install -d $(DESTDIR)$(prefix)/include/d
 	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
+
+install-headers-gtkdgl:
+	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
 
 install-headers-gtkdsv:
 	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d; tar xv)
@@ -248,6 +273,13 @@ uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(call stripBugfix,$(SO_VERSION))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(SO_VERSION)
+
+uninstall-gtkdgl:
+	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGL)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(call stripBugfix,$(SO_VERSION))
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(SO_VERSION)
 
 uninstall-gtkdsv:
 	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
@@ -272,6 +304,7 @@ uninstall-gstreamer:
 
 clean:
 	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
+	-rm -f $(LIBNAME_GTKDGL)     $(SONAME_GTKDGL)     $(OBJECTS_GTKDGL)     $(PICOBJECTS_GTKDGL)
 	-rm -f $(LIBNAME_GTKDSV)     $(SONAME_GTKDSV)     $(OBJECTS_GTKDSV)     $(PICOBJECTS_GTKDSV)
 	-rm -f $(LIBNAME_GTKDGDA)    $(SONAME_GTKDGDA)    $(OBJECTS_GTKDGDA)    $(PICOBJECTS_GTKDGDA)
 	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)

@@ -676,6 +676,19 @@ private import gtk.ApplicationWindow;
 private import gtk.ActionableIF;
 private import gtk.ActionableT;
 
+private import glgdk.GLdInit;
+private import glgdk.GLQuery;
+private import glgdk.GLConfig;
+private import glgdk.GLContext;
+private import glgdk.GLDrawableIF;
+private import glgdk.GLDrawableT;
+private import glgdk.GLDrawable;
+private import glgdk.GLWindow;
+
+private import glgtk.GLtInit;
+private import glgtk.GLWidget;
+private import glgtk.GLCapability;
+
 private import gsv.SourceBuffer;
 private import gsv.SourceCompletion;
 private import gsv.SourceCompletionContext;
@@ -778,6 +791,8 @@ private import gtkc.atk;
 private import gtkc.gdkpixbuf;
 private import gtkc.gdk;
 private import gtkc.gtk;
+private import gtkglc.glgdk;
+private import gtkglc.glgtk;
 private import gsvc.gsv;
 private import gdac.gda;
 private import gstreamerc.gstinterfaces;
