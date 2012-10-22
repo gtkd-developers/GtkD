@@ -76,9 +76,9 @@ public import gdk.Event;
 
 version(Tango) {
 	private import tango.core.Memory;
-	} else version(D_Version2) {
+} else version(D_Version2) {
 	private import core.memory;
-	} else {
+} else {
 	private import std.gc;
 }
 
@@ -335,14 +335,14 @@ template GLCapability()
 		return consumeEvent;
 	}
 	
-	bool onMap()
+	void onMap()
 	{
-		return true;
+		return;
 	}
 	
-	bool onUnmap()
+	void onUnmap()
 	{
-		return true;
+		return;
 	}
 	
 	bool onVisibility(Event event)

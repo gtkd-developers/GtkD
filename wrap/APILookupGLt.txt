@@ -375,14 +375,14 @@ template GLCapability()
 		return consumeEvent;
 	}
 
-	bool onMap()
+	void onMap()
 	{
-		return true;
+		return;
 	}
 	
-	bool onUnmap()
+	void onUnmap()
 	{
-		return true;
+		return;
 	}
 	
 	bool onVisibility(Event event)

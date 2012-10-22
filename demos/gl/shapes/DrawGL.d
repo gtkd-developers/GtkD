@@ -64,43 +64,44 @@ else
 
 static void drawBox(GLfloat size, GLenum type)
 {
-  static GLfloat n[6][3] =
-  [
-    [-1.0, 0.0, 0.0],
-    [0.0, 1.0, 0.0],
-    [1.0, 0.0, 0.0],
-    [0.0, -1.0, 0.0],
-    [0.0, 0.0, 1.0],
-    [0.0, 0.0, -1.0]
-  ];
-  static GLint faces[6][4] =
-  [
-    [0, 1, 2, 3],
-    [3, 2, 6, 7],
-    [7, 6, 5, 4],
-    [4, 5, 1, 0],
-    [5, 6, 2, 1],
-    [7, 4, 0, 3]
-  ];
-  GLfloat v[8][3];
-  GLint i;
+	static GLfloat n[6][3] =
+	[
+		[-1.0, 0.0, 0.0],
+		[0.0, 1.0, 0.0],
+		[1.0, 0.0, 0.0],
+		[0.0, -1.0, 0.0],
+		[0.0, 0.0, 1.0],
+		[0.0, 0.0, -1.0]
+	];
+	static GLint faces[6][4] =
+	[
+		[0, 1, 2, 3],
+		[3, 2, 6, 7],
+		[7, 6, 5, 4],
+		[4, 5, 1, 0],
+		[5, 6, 2, 1],
+		[7, 4, 0, 3]
+	];
 
-  v[0][0] = v[1][0] = v[2][0] = v[3][0] = -size / 2;
-  v[4][0] = v[5][0] = v[6][0] = v[7][0] = size / 2;
-  v[0][1] = v[1][1] = v[4][1] = v[5][1] = -size / 2;
-  v[2][1] = v[3][1] = v[6][1] = v[7][1] = size / 2;
-  v[0][2] = v[3][2] = v[4][2] = v[7][2] = -size / 2;
-  v[1][2] = v[2][2] = v[5][2] = v[6][2] = size / 2;
+	GLfloat v[8][3];
+	GLint i;
 
-  for (i = 5; i >= 0; i--) {
-    glBegin(type);
-    glNormal3fv(&n[i][0]);
-    glVertex3fv(&v[faces[i][0]][0]);
-    glVertex3fv(&v[faces[i][1]][0]);
-    glVertex3fv(&v[faces[i][2]][0]);
-    glVertex3fv(&v[faces[i][3]][0]);
-    glEnd();
-  }
+	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -size / 2;
+	v[4][0] = v[5][0] = v[6][0] = v[7][0] = size / 2;
+	v[0][1] = v[1][1] = v[4][1] = v[5][1] = -size / 2;
+	v[2][1] = v[3][1] = v[6][1] = v[7][1] = size / 2;
+	v[0][2] = v[3][2] = v[4][2] = v[7][2] = -size / 2;
+	v[1][2] = v[2][2] = v[5][2] = v[6][2] = size / 2;
+
+	for (i = 5; i >= 0; i--) {
+		glBegin(type);
+		glNormal3fv(&n[i][0]);
+		glVertex3fv(&v[faces[i][0]][0]);
+		glVertex3fv(&v[faces[i][1]][0]);
+		glVertex3fv(&v[faces[i][2]][0]);
+		glVertex3fv(&v[faces[i][3]][0]);
+		glEnd();
+	}
 }
 
 /**
@@ -301,7 +302,7 @@ static void normalize(ref GLfloat[3] v)
 	v[2] *= d;
 }
 
-static void recorditem(GLfloat* n1, GLfloat* n2, GLfloat* n3, GLenum shadeType)
+static void recorditem(GLfloat[3] n1, GLfloat[3] n2, GLfloat[3] n3, GLenum shadeType)
 {
 	GLfloat[3] q0, q1;
 
@@ -312,13 +313,13 @@ static void recorditem(GLfloat* n1, GLfloat* n2, GLfloat* n3, GLenum shadeType)
 
 	glBegin(shadeType);
 	glNormal3fv(q1.ptr);
-	glVertex3fv(n1);
-	glVertex3fv(n2);
-	glVertex3fv(n3);
+	glVertex3fv(n1.ptr);
+	glVertex3fv(n2.ptr);
+	glVertex3fv(n3.ptr);
 	glEnd();
 }
 
-static void subdivide(GLfloat* v0, GLfloat* v1, GLfloat* v2, GLenum shadeType)
+static void subdivide(GLfloat[3] v0, GLfloat[3] v1, GLfloat[3] v2, GLenum shadeType)
 {
 	int depth;
 	GLfloat[3] w0, w1, w2;
@@ -348,18 +349,18 @@ static void subdivide(GLfloat* v0, GLfloat* v1, GLfloat* v2, GLenum shadeType)
 			w2[0] /= l;
 			w2[1] /= l;
 			w2[2] /= l;
-			recorditem(w1.ptr, w0.ptr, w2.ptr, shadeType);
+			recorditem(w1, w0, w2, shadeType);
 		}
 	}
 }
 
 static void drawtriangle(int i, GLfloat[3][] data, int[3][] ndx, GLenum shadeType)
 {
-	GLfloat* x0, x1, x2;
+	GLfloat[3] x0, x1, x2;
 
-	x0 = data[ndx[i][0]].ptr;
-	x1 = data[ndx[i][1]].ptr;
-	x2 = data[ndx[i][2]].ptr;
+	x0 = data[ndx[i][0]];
+	x1 = data[ndx[i][1]];
+	x2 = data[ndx[i][2]];
 	subdivide(x0, x1, x2, shadeType);
 }
 
