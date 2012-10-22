@@ -24,27 +24,46 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
 
-module testGL.ShapesGL;
+module ShapesGL;
 
-private import gtk.VBox;
-private import gtk.SeparatorMenuItem;
-private import gtkglc.gl;
-private import gtkglc.glu;
-private import gl.TrackBall;
-private import cairo.Context;
+import TrackBall;
+import DrawGL;
 
-private import gtkc.glibtypes;
+import cairo.Context;
+import glib.Idle;
+import glib.Timeout;
+import gdk.Event;
+import gtk.Button;
+import gtk.DrawingArea;
+import gtk.Layout;
+import gtk.Main;
+import gtk.MainWindow;
+import gtk.Menu;
+import gtk.MenuItem;
+import gtk.SeparatorMenuItem;
+import gtk.VBox;
+import gtk.Widget;
+import glgdk.GLConfig;
+import glgdk.GLContext;
+import glgdk.GLdInit;
+import glgdk.GLWindow;
+import glgtk.GLCapability;
+import glgtk.GLWidget;
+
+import gtkc.glibtypes;
+import gtkglc.gl;
+import gtkglc.glu;
+import gtkglc.glgdktypes;
+import gtkglc.glgtktypes;
 
 version (Tango)
 {
-    private import tango.io.Stdout;
-    private import tango.math.Math;
+    import tango.io.Stdout;
+    import tango.math.Math;
 }
 else
 {
-    private import std.c.stdio;
-    private import std.math;
-
+    import std.math;
 	import std.stdio;
 }
 
@@ -76,11 +95,11 @@ static GLuint shape_current = 0;
 
 struct MaterialProp
 {
-  GLfloat ambient[4];
-  GLfloat diffuse[4];
-  GLfloat specular[4];
-  GLfloat shininess;
-};
+	GLfloat ambient[4];
+	GLfloat diffuse[4];
+	GLfloat specular[4];
+	GLfloat shininess;
+}
 
 static MaterialProp mat_emerald = {
   [0.0215, 0.1745, 0.0215, 1.0],
@@ -183,28 +202,6 @@ static void init_view()
   view_scale = 1.0;
 }
 
-import DrawGL;
-
-private import glib.Idle;
-private import glib.Timeout;
-private import gdk.Event;
-private import gtk.Button;
-private import gtk.DrawingArea;
-private import gtk.Layout;
-private import gtk.Main;
-private import gtk.MainWindow;
-private import gtk.Menu;
-private import gtk.MenuItem;
-private import gtk.Widget;
-private import glgdk.GLConfig;
-private import glgdk.GLContext;
-private import glgdk.GLWindow;
-private import glgtk.GLCapability;
-private import glgtk.GLWidget;
-
-private import gtkglc.glgdktypes;
-private import gtkglc.glgtktypes;
-
 /**
  * A GL toggle button
  */
@@ -229,12 +226,10 @@ class ShapesGL : DrawingArea
 		setGLCapability();	// set the GL capabilities for this widget
 	
 		setSizeRequest(400,400);		
-		addOnRealize(&realizeCallback);						// dispatcher.addRealizeListener(this,da);
-		addOnMap(&mapCallback);								// dispatcher.addMapListener(this,da);
-		addOnDraw(&drawCallback);						// dispatcher.addExposeListener(this,da);
-		addOnVisibilityNotify(&visibilityCallback);			// dispatcher.addVisibilityListener(this,da);
-		addOnButtonPress(&mouseButtonPressCallback);		// dispatcher.addMouseButtonListener(this,da);
-		addOnButtonRelease(&mouseButtonReleaseCallback);	// dispatcher.addMouseMotionListener(this,da);
+		addOnMap(&mapCallback);	                         // dispatcher.addMapListener(this,da);
+		addOnVisibilityNotify(&visibilityCallback);      // dispatcher.addVisibilityListener(this,da);
+		addOnButtonPress(&mouseButtonPressCallback);     // dispatcher.addMouseButtonListener(this,da);
+		addOnButtonRelease(&mouseButtonReleaseCallback); // dispatcher.addMouseMotionListener(this,da);
 		addOnMotionNotify(&motionNotifyCallback);
 			
 		menu = createPopupMenu();
@@ -259,24 +254,7 @@ class ShapesGL : DrawingArea
 	
 	bool idleCallback()
 	{
-		glDrawFrame(this);
-		return true;
-	}
-	
-	bool drawCallback(Context ct, Widget widget)
-	{
-		glDrawFrame(widget);
-		return true;
-	}
-	
-	/**
-	 * put any gl initializations here
-	 * returns true to consume the event
-	 */
-	bool initGL()
-	{
-		resizeGL(null);
-		return true;
+		return drawFrame();
 	}
 	
 	bool drawGL()
@@ -286,8 +264,7 @@ class ShapesGL : DrawingArea
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glLoadIdentity();
-		gluLookAt(0, 0, 10, 0, 0, 0, 0, 1,0); //Set the camera position
-
+		
 		/* View transformation. */
 		glTranslatef(0.0, 0.0, -10.0);
 		glScalef(view_scale, view_scale, view_scale);
@@ -303,11 +280,6 @@ class ShapesGL : DrawingArea
 		glCallList(shape_list_base + shape_current);
 
 		return true;
-	}
-
-	bool noExposeCallback(Widget widget)
-	{
-		return false;
 	}
 
 	bool resizeGL(Event e)
@@ -349,55 +321,18 @@ class ShapesGL : DrawingArea
 		
 		return true;
 	}
-
-	void addIdle()
-	{
-		if ( mainIdle is null )
-		{
-			mainIdle = new Idle(&idleCallback);
-		}
-	}
 	
-	void removeIdle()
+	void initGL()
 	{
-		if ( mainIdle !is null )
-		{
-			mainIdle.stop();
-			mainIdle = null;
-		}
-	}
-
-	void mapCallback(Widget drawable)
-	{
-		if (animate)
-		{
-			addIdle();
-		}
-	}
-
-	void unmapCallback(Widget drawable)
-	{
-		removeIdle();
-	}
-
-	void realizeCallback(Widget widget)
-	{
-		GLContext context = getGLContext(widget);
-		GLWindow drawable = getGLWindow(widget);
-		
 		static GLfloat ambient[] = [0.0, 0.0, 0.0, 1.0];
 		static GLfloat diffuse[] = [1.0, 1.0, 1.0, 1.0];
 		static GLfloat position[] = [0.0, 3.0, 3.0, 0.0];
 		
 		static GLfloat lmodel_ambient[] = [0.2, 0.2, 0.2, 1.0];
 		static GLfloat local_view[] = [0.0];
-		
-		/*** OpenGL BEGIN ***/
-		if ( !context.makeCurrent(drawable, drawable) )
-		{
-			return;
-		}
-		
+
+		resizeGL(null);
+
 		glClearColor(0.5, 0.5, 0.8, 1.0);
 		glClearDepth(1.0);
 		
@@ -530,21 +465,43 @@ class ShapesGL : DrawingArea
 		glNewList(shape_list_base + Shapes.teapot, GL_COMPILE);
 			drawTeapot(true, 1.0);
 		glEndList();
-	
-		context.releaseCurrent();
-		/*** OpenGL END ***/
-
-		return;
 	}
 
-	bool unrealizeCallback(Widget widget){return false;}
+	void mapCallback(Widget drawable)
+	{
+		if (animate)
+		{
+			addIdle();
+		}
+	}
 
-static float begin_x = 0.0;
-static float begin_y = 0.0;
+	void unmapCallback(Widget drawable)
+	{
+		removeIdle();
+	}
+	
+	void addIdle()
+	{
+		if ( mainIdle is null )
+		{
+			mainIdle = new Idle(&idleCallback);
+		}
+	}
+	
+	void removeIdle()
+	{
+		if ( mainIdle !is null )
+		{
+			mainIdle.stop();
+			mainIdle = null;
+		}
+	}
 
-static float dx = 0.0;
-static float dy = 0.0;
+	float begin_x = 0.0;
+	float begin_y = 0.0;
 
+	float dx = 0.0;
+	float dy = 0.0;
 
 	bool mouseButtonPressCallback(Event event, Widget widget)
 	{
@@ -634,24 +591,6 @@ static float dy = 0.0;
 		return true;
 	}
 
-//static gboolean
-//key_press_event (GtkWidget   *widget,
-//		 GdkEventKey *event,
-//		 gpointer     data)
-//{
-//  switch (event->keyval)
-//    {
-//    case GDK_Escape:
-//      gtk_main_quit ();
-//      break;
-//
-//    default:
-//      return false;
-//    }
-//
-//  return true;
-//}
-
 	/* Toggle animation.*/
 	void toggleAnimation()
 	{
@@ -682,7 +621,7 @@ static float dy = 0.0;
 		}
 		else //version(Phobos)
 		{
-			printf("activateItemCallback action = %.*s \n", action);
+			writefln("activateItemCallback action = %s ", action);
 		}
 		
 		switch(action)
@@ -709,6 +648,7 @@ static float dy = 0.0;
 			case "materials.Copper":mat_current = &mat_copper;break;
 			case "materials.Gold":mat_current = &mat_gold;break;
 			case "materials.Silver":mat_current = &mat_silver;break;
+
 			case "reset":init_view();break;
 			case "fullScreen":testGL.fullscreen();break;
 			case "unFullScreen":testGL.unfullscreen();break;
@@ -758,18 +698,6 @@ static float dy = 0.0;
 		menu.append(new MenuItem("Gold", &activateItemCallback, "materials.Gold"));
 		menu.append(new MenuItem("Silver", &activateItemCallback, "materials.Silver"));
 
-		/* 
-		 * Root popup menu.
-	     */
-	
-//		item = new MenuItem("Shapes");
-//		menu.append(item);
-//		item.setSubmenu(shapes);
-//		
-//		item = new MenuItem("Materials");
-//		menu.append(item);
-//		item.setSubmenu(materials);
-
 		/* reset */
 		menu.append(new SeparatorMenuItem());
 		menu.append(new MenuItem("Reset", &activateItemCallback, "reset"));	
@@ -786,7 +714,6 @@ static float dy = 0.0;
 	}
 }
 
-public:
 class TestGL : MainWindow
 {
 	this()
@@ -797,19 +724,13 @@ class TestGL : MainWindow
 	}
 }
  
- 
-private import glgdk.GLdInit;
-
 void main(string[] args)
 {
-	
-	
 	Main.init(args);
 
 	GLdInit.init(args);
 		
 	TestGL testGL = new TestGL();
-	
 	
 	testGL.add(new ShapesGL(testGL));
 	testGL.showAll();

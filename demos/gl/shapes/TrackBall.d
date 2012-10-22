@@ -51,7 +51,7 @@
  * Programmer.
  */
 
-module gl.TrackBall;
+module TrackBall;
 
 //private import tango.stdc.math;//std.math;
 version (Tango)

@@ -64,10 +64,9 @@ class SimpleGL : DrawingArea
 	 * put any gl initializations here
 	 * returns true to consume the event
 	 */
-	bool initGL()
+	void initGL()
 	{
 		resizeGL(null);
-		return true;
 	}
 	
 	/**

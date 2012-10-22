@@ -139,43 +139,9 @@ template GLCapability()
 	/**
 	 * The widget should use this method to redraw it self at any time
 	 */
-	public bool glDrawFrame()
+	bool drawFrame()
 	{
-		return glDrawFrame(this);
-	}
-	
-	/**
-	 * The application should use this method to redraw the scene at any time
-	 */
-	bool glDrawFrame(Widget widget)
-	{
-		//printf("GLCapabilityT.realizeFrame \n" );
-		GLContext context = getGLContext(widget);
-		GLWindow drawable = getGLWindow(widget);
-		
-		/*** OpenGL BEGIN ***/
-		if ( !context.makeCurrent(drawable, drawable) )
-		{
-			return false;
-		}
-		
-		/*** do user actions ***/
-		bool consumeEvent = typeof(this).drawGL();
-		
-		/*** flush ***/
-		if ( drawable.isDoubleBuffered() )
-		{
-			drawable.swapBuffers();
-		}
-		else
-		{
-			glFlush ();
-		}
-		
-		context.releaseCurrent();
-		/*** OpenGL END ***/
-		return true;
-		
+		return drawFrame(null, this);
 	}
 	
 	bool alreadyRealized;
@@ -200,7 +166,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		bool consumeEvent = typeof(this).initGL();
+		typeof(this).initGL();
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -254,11 +220,7 @@ template GLCapability()
 			width = event.configure.width;
 			height = event.configure.height;
 		}
-		version(Tango) tango.core.Memory.GC.disable();
-		else version(D_Version2) core.memory.GC.disable();
-		else std.gc.disable();
-		//writefln("configureFrame 1");
-		//printf("GLCapabilityT.configureFrame \n" );
+		
 		GLContext context = getGLContext(widget);
 		GLWindow drawable = getGLWindow(widget);
 		
@@ -268,41 +230,27 @@ template GLCapability()
 			return false;
 		}
 		
-		//writefln("configureFrame 2");
 		/*** do user actions ***/
 		bool consumeEvent = typeof(this).resizeGL(event);
-		//printf("here\n");
-		//writefln("configureFrame 3");
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
 		{
-			//writefln("configureFrame 4");
 			drawable.swapBuffers();
-			//writefln("configureFrame 5");
 		}
 		else
 		{
-			//writefln("configureFrame 6");
 			glFlush ();
-			//writefln("configureFrame 7");
 		}
 		
-		//writefln("configureFrame 8");
 		context.releaseCurrent();
-		//writefln("configureFrame 9");
 		/*** OpenGL END ***/
-		
-		version(Tango) tango.core.Memory.GC.enable();
-		else version(D_Version2) core.memory.GC.enable();
-		else std.gc.enable();
 		
 		return consumeEvent;
 	}
 	
 	void mapFrame(Widget widget)
 	{
-		//printf("GLCapabilityT.mapFrame \n" );
 		GLContext context = getGLContext(widget);
 		GLWindow drawable = getGLWindow(widget);
 		
@@ -313,7 +261,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		bool consumeEvent = typeof(this).onMap();
+		typeof(this).onMap();
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -327,13 +275,10 @@ template GLCapability()
 		
 		context.releaseCurrent();
 		/*** OpenGL END ***/
-		
-		//return consumeEvent;
 	}
 	
 	void unmapFrame(Widget widget)
 	{
-		//printf("GLCapabilityT.unmapFrame \n" );
 		GLContext context = getGLContext(widget);
 		GLWindow drawable = getGLWindow(widget);
 		
@@ -344,7 +289,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		bool consumeEvent = typeof(this).onUnmap();
+		typeof(this).onUnmap();
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -358,13 +303,10 @@ template GLCapability()
 		
 		context.releaseCurrent();
 		/*** OpenGL END ***/
-		
-		//return consumeEvent;
 	}
 	
 	bool visibilityFrame(Event event, Widget widget)
 	{
-		//printf("GLCapabilityT.visibilityFrame \n" );
 		GLContext context = getGLContext(widget);
 		GLWindow drawable = getGLWindow(widget);
 		
@@ -395,20 +337,20 @@ template GLCapability()
 	
 	bool onMap()
 	{
-		//printf("GLCapabilityT.map \n" );
 		return true;
 	}
 	
 	bool onUnmap()
 	{
-		//printf("GLCapabilityT.unmap \n" );
 		return true;
 	}
 	
 	bool onVisibility(Event event)
 	{
-		//printf("GLCapabilityT.visibility \n" );
 		return true;
 	}
 }
+
+/**
+ */
 
