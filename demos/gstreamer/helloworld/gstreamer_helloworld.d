@@ -5,19 +5,14 @@
 
 module gstreamer_helloworld;
 
-
-//Phobos imports:
-//import std.stdio;
-
-//Tango imports
-import tango.util.log.Trace;//Thread safe console output.
-import Util = tango.text.Util;
-import Integer = tango.text.convert.Integer;
-import Stringz = tango.stdc.stringz;
-
+version(Tango)
+	import tango.util.log.Trace;//Thread safe console output.
+else
+	import std.stdio;
 
 //gtkD imports:
 
+import glib.Str;
 import gtk.Main;
 
 //gstreamerD imports:
@@ -45,16 +40,26 @@ public:
 
 	bool busCall( Message msg )
 	{
-		debug(gstreamer) Trace.formatln("GstHello.busCall(msg) START.");
-		debug(gstreamer) scope(exit) Trace.formatln("GstHello.busCall(msg) END.");
+		version(Tango) debug(gstreamer)
+		{
+			Trace.formatln("GstHello.busCall(msg) START.");
+			scope(exit) Trace.formatln("GstHello.busCall(msg) END.");
+		}
+		else debug(gstreamer)
+		{
+			writefln("GstHello.busCall(msg) START.");
+			scope(exit) writefln("GstHello.busCall(msg) END.");
+		}
 
 		switch( msg.type )
 		{
 			case GstMessageType.UNKNOWN:
-				Trace.formatln("Unknown message type.");
+				version(Tango) Trace.formatln("Unknown message type.");
+				else writefln("Unknown message type.");
 			break;
 			case GstMessageType.EOS:
-				Trace.formatln("End-of-stream.");
+				version(Tango) Trace.formatln("End-of-stream.");
+				else writefln("End-of-stream.");
 				Main.quit();
 			break;
 
@@ -64,7 +69,8 @@ public:
 				ErrorG err;
 				msg.parseError(err, dbug);
 				//g_free (dbug);
-				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.getErrorGStruct().message), dbug );
+				version(Tango) Trace.formatln("Error: {} dbug: {}", Str.toString(err.getErrorGStruct().message), dbug );
+				else writefln("Error: %s dbug: %s", Str.toString(err.getErrorGStruct().message), dbug);
 				Main.quit();
 			break;
 			}
@@ -75,9 +81,8 @@ public:
 		return true;
 	}
 
-	this(char[] file)
+	this(string file)
 	{
-
 		// create elements
 		
 		pipeline = new Pipeline("audio-player");
@@ -90,13 +95,28 @@ public:
 
 		if( pipeline is null || source is null || parser is null || decoder is null || conv is null || sink is null )
 		{
-			Trace.formatln("One or more element could not be created");
-			if( pipeline is null ) Trace.formatln(" : no pipeline.");
-			if( source is null ) Trace.formatln(" : no source.");
-			if( parser is null ) Trace.formatln(" : no parser.");
-			if( decoder is null ) Trace.formatln(" : no decoder.");
-			if( conv is null ) Trace.formatln(" : no conv.");
-			if( sink is null ) Trace.formatln(" : no sink.");
+			version(Tango)
+			{
+				Trace.formatln("One or more element could not be created");
+
+				if( pipeline is null ) Trace.formatln(" : no pipeline.");
+				if( source is null ) Trace.formatln(" : no source.");
+				if( parser is null ) Trace.formatln(" : no parser.");
+				if( decoder is null ) Trace.formatln(" : no decoder.");
+				if( conv is null ) Trace.formatln(" : no conv.");
+				if( sink is null ) Trace.formatln(" : no sink.");
+			}
+			else
+			{
+				writefln("One or more element could not be created");
+
+				if( pipeline is null ) writefln(" : no pipeline.");
+				if( source is null ) writefln(" : no source.");
+				if( parser is null ) writefln(" : no parser.");
+				if( decoder is null ) writefln(" : no decoder.");
+				if( conv is null ) writefln(" : no conv.");
+				if( sink is null ) writefln(" : no sink.");
+			}
 
 			throw new Exception("One or more gstreamerD elements could not be created.");
 		}
@@ -133,9 +153,11 @@ public:
 		parser.addOnPadAdded(&newPad);
 
 		// Now set to playing and iterate.
-		Trace.formatln("Setting to PLAYING.");
+		version(Tango) Trace.formatln("Setting to PLAYING.");
+		else writefln("Setting to PLAYING.");
 		pipeline.setState( GstState.PLAYING );
-		Trace.formatln("Running.");
+		version(Tango) Trace.formatln("Running.");
+		else writefln("Running.");
 	}
 
 	~this()
@@ -145,16 +167,24 @@ public:
 
 	void newPad( Pad pad, Element element )
 	{
-		Trace.formatln("newPad callback called. START.");
+		version(Tango) Trace.formatln("newPad callback called. START.");
+		else writefln("newPad callback called. START.");
+
 		Pad sinkpad;
 
 		// We can now link this pad with the audio decoder
-		Trace.formatln("Dynamic pad created, linking parser/decoder");
+		version(Tango) Trace.formatln("Dynamic pad created, linking parser/decoder");
+		else writefln("Dynamic pad created, linking parser/decoder");
 
 		sinkpad = decoder.getPad("sink");
-		Trace.formatln("doing a gst_pad_link.");
+
+		version(Tango) Trace.formatln("doing a gst_pad_link.");
+		else writefln("doing a gst_pad_link.");
+
 		pad.link( sinkpad );
-		Trace.formatln("Done. That was ok.");
+
+		version(Tango) Trace.formatln("Done. That was ok.");
+		else writefln("Done. That was ok.");
 
 	}
 
@@ -165,13 +195,15 @@ protected:
 }
 
 
-int main(char[][] args)
+int main(string[] args)
 {
-	Trace.formatln("gstreamerD Hello World!");
+	version(Tango) Trace.formatln("gstreamerD Hello World!");
+	else writefln("gstreamerD Hello World!");
 
 	uint major, minor, micro, nano;
 
-	Trace.formatln("Trying to init...");
+	version(Tango) Trace.formatln("Trying to init...");
+	else writefln("Trying to init...");
 
 	//Main.init(args);
 	GStreamer.init(args);
@@ -179,15 +211,23 @@ int main(char[][] args)
 	// check input arguments
 	if (args.length != 2)
 	{
-		Trace.formatln("Usage: {} <Ogg/Vorbis filename>", args[0]);
+		version(Tango) Trace.formatln("Usage: {} <Ogg/Vorbis filename>", args[0]);
+		else writefln("Usage: %s <Ogg/Vorbis filename>", args[0]);
+
 		return -1;
 	}
 
-	Trace.formatln("Checking version of GStreamer...");
-	GStreamer.versio(major, minor, micro, nano);
-	Trace.formatln("The installed version of GStreamer is {}.{}.{}", major, minor, micro );
+	version(Tango) Trace.formatln("Checking version of GStreamer...");
+	else writefln("Checking version of GStreamer...");
 
-	Trace.formatln( "The file is: {}", args[1] );
+	GStreamer.versio(major, minor, micro, nano);
+
+	version(Tango) Trace.formatln("The installed version of GStreamer is {}.{}.{}", major, minor, micro );
+	else writefln("The installed version of GStreamer is %s.%s.%s", major, minor, micro );
+
+	version(Tango) Trace.formatln( "The file is: {}", args[1] );
+	else writefln( "The file is: %s", args[1] );
+
 	GstHello gstHello = new GstHello( args[1] );
 
 	//We must use the gtkD mainloop to run gstreamerD apps.
@@ -195,5 +235,3 @@ int main(char[][] args)
 
 	return 0;
 }
-
-
