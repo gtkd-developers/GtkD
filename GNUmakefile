@@ -25,9 +25,9 @@ default-goal: libs test
 shared: shared-libs
 
 ifneq (,$(findstring ldc,$(DC)))
-    all: libs shared-libs gda gstreamer shared-gda shared-gstreamer test
+    all: libs shared-libs gtkdgl gda gstreamer shared-gtkdgl shared-gda shared-gstreamer test
 else
-    all: libs gda gstreamer test
+    all: libs gtkdgl gda gstreamer test
 endif
 
 ifeq ("$(DC)","gdc")
@@ -175,8 +175,8 @@ $(SONAME_GTKDGDA): IMPORTS=-Isrc -Isrcgda
 $(SONAME_GTKDGDA): $(PICOBJECTS_GTKDGDA)
 	$(make-shared-lib)
 
-$(SONAME_GTKDGSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
-$(SONAME_GTKDGSTREAMERD): $(PICOBJECTS_GTKDGSTREAMERD)
+$(SONAME_GSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
+$(SONAME_GSTREAMERD): $(PICOBJECTS_GSTREAMERD)
 	$(make-shared-lib)
 
 #######################################################################
