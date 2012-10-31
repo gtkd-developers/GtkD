@@ -260,7 +260,7 @@ gstreamerd-1.pc:
 	echo Name: GstreamerD > $@
 	echo Description: A D binding and OO wrapper for Gstreamer. >> $@
 	echo Version: 1.6.0 >> $@
-	echo Libs: $(LINKERFLAG)-lgstreamerd-$(MAJOR) >> $@
+	echo Libs: $(LINKERFLAG)-lgstreamerd-1) >> $@
 #	echo Requires: gtkd-2 >> $@
 
 #######################################################################
