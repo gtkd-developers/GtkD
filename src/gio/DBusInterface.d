@@ -87,12 +87,6 @@ public class DBusInterface : ObjectG, DBusInterfaceIF
 	 */
 	public this (GDBusInterface* gDBusInterface)
 	{
-		if(gDBusInterface is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gDBusInterface);
 		this.gDBusInterface = gDBusInterface;
 	}

@@ -127,20 +127,6 @@ public class TreeModel : ObjectG, TreeModelIF
 	 */
 	public this (GtkTreeModel* gtkTreeModel)
 	{
-		if(gtkTreeModel is null)
-		{
-			this = null;
-			return;
-		}
-		
-		//Check if there already is a D object for this gtk struct
-		void* ptr = g_object_get_data(cast(GObject*) gtkTreeModel, Str.toStringz("customTreeModel"));
-		if( ptr !is null )
-		{
-			this = cast(TreeModel)ptr;
-			return;
-		}
-		
 		super(cast(GObject*)gtkTreeModel);
 		this.gtkTreeModel = gtkTreeModel;
 	}

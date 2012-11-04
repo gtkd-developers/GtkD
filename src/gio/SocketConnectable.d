@@ -87,12 +87,6 @@ public class SocketConnectable : ObjectG, SocketConnectableIF
 	 */
 	public this (GSocketConnectable* gSocketConnectable)
 	{
-		if(gSocketConnectable is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gSocketConnectable);
 		this.gSocketConnectable = gSocketConnectable;
 	}

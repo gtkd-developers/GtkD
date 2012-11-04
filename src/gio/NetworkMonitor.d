@@ -94,12 +94,6 @@ public class NetworkMonitor : ObjectG, InitableIF, NetworkMonitorIF
 	 */
 	public this (GNetworkMonitor* gNetworkMonitor)
 	{
-		if(gNetworkMonitor is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gNetworkMonitor);
 		this.gNetworkMonitor = gNetworkMonitor;
 	}

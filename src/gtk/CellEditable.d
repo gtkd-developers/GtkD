@@ -86,12 +86,6 @@ public class CellEditable : ObjectG, CellEditableIF
 	 */
 	public this (GtkCellEditable* gtkCellEditable)
 	{
-		if(gtkCellEditable is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gtkCellEditable);
 		this.gtkCellEditable = gtkCellEditable;
 	}

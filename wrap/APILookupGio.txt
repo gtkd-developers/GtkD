@@ -339,12 +339,6 @@ code: start
 	 */
 	public this (GConverter* gConverter)
 	{
-		if(gConverter is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gConverter);
 		this.gConverter = gConverter;
 	}
@@ -847,12 +841,6 @@ code: start
 	 */
 	public this (GAppInfo* gAppInfo)
 	{
-		if(gAppInfo is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gAppInfo);
 		this.gAppInfo = gAppInfo;
 	}
@@ -1008,12 +996,6 @@ code: start
 	 */
 	public this (GVolume* gVolume)
 	{
-		if(gVolume is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gVolume);
 		this.gVolume = gVolume;
 	}
@@ -1074,12 +1056,6 @@ code: start
 	 */
 	public this (GMount* gMount)
 	{
-		if(gMount is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gMount);
 		this.gMount = gMount;
 	}
@@ -1134,12 +1110,6 @@ code: start
 	 */
 	public this (GDrive* gDrive)
 	{
-		if(gDrive is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gDrive);
 		this.gDrive = gDrive;
 	}
@@ -1233,12 +1203,6 @@ code: start
 	 */
 	public this (GIcon* gIcon)
 	{
-		if(gIcon is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gIcon);
 		this.gIcon = gIcon;
 	}
@@ -1643,12 +1607,6 @@ code: start
 	 */
 	public this (GProxy* gProxy)
 	{
-		if(gProxy is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gProxy);
 		this.gProxy = gProxy;
 	}
@@ -1816,12 +1774,6 @@ code: start
 	 */
 	public this (GNetworkMonitor* gNetworkMonitor)
 	{
-		if(gNetworkMonitor is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gNetworkMonitor);
 		this.gNetworkMonitor = gNetworkMonitor;
 	}
@@ -2035,12 +1987,6 @@ code: start
 	 */
 	public this (GProxyResolver* gProxyResolver)
 	{
-		if(gProxyResolver is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gProxyResolver);
 		this.gProxyResolver = gProxyResolver;
 	}
@@ -2083,12 +2029,6 @@ code: start
 	 */
 	public this (GSocketConnectable* gSocketConnectable)
 	{
-		if(gSocketConnectable is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gSocketConnectable);
 		this.gSocketConnectable = gSocketConnectable;
 	}
@@ -2578,12 +2518,6 @@ code: start
 	 */
 	public this (GDBusInterface* gDBusInterface)
 	{
-		if(gDBusInterface is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gDBusInterface);
 		this.gDBusInterface = gDBusInterface;
 	}
@@ -2747,12 +2681,6 @@ code: start
 	 */
 	public this (GDBusObject* gDBusObject)
 	{
-		if(gDBusObject is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gDBusObject);
 		this.gDBusObject = gDBusObject;
 	}
@@ -3213,12 +3141,6 @@ code: start
 	 */
 	public this (GAction* gAction)
 	{
-		if(gAction is null)
-		{
-			this = null;
-			return;
-		}
-
 		super(cast(GObject*)gAction);
 		this.gAction = gAction;
 	}

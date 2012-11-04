@@ -86,12 +86,6 @@ public class GLDrawable : ObjectG, GLDrawableIF
 	 */
 	public this (GdkGLDrawable* gdkGLDrawable)
 	{
-		if(gdkGLDrawable is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gdkGLDrawable);
 		this.gdkGLDrawable = gdkGLDrawable;
 	}

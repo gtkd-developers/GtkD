@@ -87,12 +87,6 @@ public class DBusObject : ObjectG, DBusObjectIF
 	 */
 	public this (GDBusObject* gDBusObject)
 	{
-		if(gDBusObject is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gDBusObject);
 		this.gDBusObject = gDBusObject;
 	}

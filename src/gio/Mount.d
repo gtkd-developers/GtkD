@@ -87,12 +87,6 @@ public class Mount : ObjectG, MountIF
 	 */
 	public this (GMount* gMount)
 	{
-		if(gMount is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gMount);
 		this.gMount = gMount;
 	}

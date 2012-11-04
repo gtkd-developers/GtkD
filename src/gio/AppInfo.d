@@ -87,12 +87,6 @@ public class AppInfo : ObjectG, AppInfoIF
 	 */
 	public this (GAppInfo* gAppInfo)
 	{
-		if(gAppInfo is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gAppInfo);
 		this.gAppInfo = gAppInfo;
 	}

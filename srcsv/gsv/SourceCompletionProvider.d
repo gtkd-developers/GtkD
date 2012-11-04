@@ -86,12 +86,6 @@ public class SourceCompletionProvider : ObjectG, SourceCompletionProviderIF
 	 */
 	public this (GtkSourceCompletionProvider* gtkSourceCompletionProvider)
 	{
-		if(gtkSourceCompletionProvider is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gtkSourceCompletionProvider);
 		this.gtkSourceCompletionProvider = gtkSourceCompletionProvider;
 	}

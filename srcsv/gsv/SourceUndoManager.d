@@ -86,12 +86,6 @@ public class SourceUndoManager : ObjectG, SourceUndoManagerIF
 	 */
 	public this (GtkSourceUndoManager* gtkSourceUndoManager)
 	{
-		if(gtkSourceUndoManager is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gtkSourceUndoManager);
 		this.gtkSourceUndoManager = gtkSourceUndoManager;
 	}
