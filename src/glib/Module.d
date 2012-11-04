@@ -113,11 +113,6 @@ public class Module
 	 */
 	public this (GModule* gModule)
 	{
-		if(gModule is null)
-		{
-			this = null;
-			return;
-		}
 		this.gModule = gModule;
 	}
 	
@@ -146,10 +141,12 @@ public class Module
 	{
 		// GModule* g_module_open (const gchar *file_name, GModuleFlags flags);
 		auto p = g_module_open(Str.toStringz(fileName), flags);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Module(cast(GModule*) p);
 	}
 	

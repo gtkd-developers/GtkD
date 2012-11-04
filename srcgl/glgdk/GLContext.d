@@ -60,6 +60,7 @@ public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glgdk.GLDrawable;
@@ -96,18 +97,6 @@ public class GLContext : ObjectG
 	 */
 	public this (GdkGLContext* gdkGLContext)
 	{
-		if(gdkGLContext is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkGLContext);
-		if( ptr !is null )
-		{
-			this = cast(GLContext)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkGLContext);
 		this.gdkGLContext = gdkGLContext;
 	}
@@ -177,11 +166,13 @@ public class GLContext : ObjectG
 	{
 		// GdkGLDrawable* gdk_gl_context_get_gl_drawable  (GdkGLContext *glcontext);
 		auto p = gdk_gl_context_get_gl_drawable(gdkGLContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLDrawable(cast(GdkGLDrawable*) p);
+		
+		return ObjectG.getDObject!GLDrawable(cast(GdkGLDrawable*) p);
 	}
 	
 	/**
@@ -192,11 +183,13 @@ public class GLContext : ObjectG
 	{
 		// GdkGLConfig* gdk_gl_context_get_gl_config (GdkGLContext *glcontext);
 		auto p = gdk_gl_context_get_gl_config(gdkGLContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLConfig(cast(GdkGLConfig*) p);
+		
+		return ObjectG.getDObject!GLConfig(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -208,11 +201,13 @@ public class GLContext : ObjectG
 	{
 		// GdkGLContext* gdk_gl_context_get_share_list (GdkGLContext *glcontext);
 		auto p = gdk_gl_context_get_share_list(gdkGLContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLContext(cast(GdkGLContext*) p);
+		
+		return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
 	}
 	
 	/**
@@ -243,10 +238,12 @@ public class GLContext : ObjectG
 	{
 		// GdkGLContext* gdk_gl_context_get_current (void);
 		auto p = gdk_gl_context_get_current();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLContext(cast(GdkGLContext*) p);
+		
+		return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
 	}
 }

@@ -64,6 +64,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -109,18 +110,6 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 */
 	public this (GNetworkAddress* gNetworkAddress)
 	{
-		if(gNetworkAddress is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gNetworkAddress);
-		if( ptr !is null )
-		{
-			this = cast(NetworkAddress)ptr;
-			return;
-		}
 		super(cast(GObject*)gNetworkAddress);
 		this.gNetworkAddress = gNetworkAddress;
 	}
@@ -257,10 +246,12 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnectable(cast(GSocketConnectable*) p);
+		
+		return ObjectG.getDObject!SocketConnectable(cast(GSocketConnectable*) p);
 	}
 }

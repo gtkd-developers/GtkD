@@ -57,6 +57,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -104,11 +105,6 @@ public class Flags
 	 */
 	public this (GFlagsValue* gFlagsValue)
 	{
-		if(gFlagsValue is null)
-		{
-			this = null;
-			return;
-		}
 		this.gFlagsValue = gFlagsValue;
 	}
 	
@@ -126,11 +122,13 @@ public class Flags
 	{
 		// GFlagsValue *	 g_flags_get_first_value (GFlagsClass *flags_class,  guint value);
 		auto p = g_flags_get_first_value(flagsClass, value);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Flags(cast(GFlagsValue*) p);
+		
+		return ObjectG.getDObject!Flags(cast(GFlagsValue*) p);
 	}
 	
 	/**
@@ -144,11 +142,13 @@ public class Flags
 	{
 		// GFlagsValue *	 g_flags_get_value_by_name (GFlagsClass *flags_class,  const gchar *name);
 		auto p = g_flags_get_value_by_name(flagsClass, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Flags(cast(GFlagsValue*) p);
+		
+		return ObjectG.getDObject!Flags(cast(GFlagsValue*) p);
 	}
 	
 	/**
@@ -162,11 +162,13 @@ public class Flags
 	{
 		// GFlagsValue *	 g_flags_get_value_by_nick (GFlagsClass *flags_class,  const gchar *nick);
 		auto p = g_flags_get_value_by_nick(flagsClass, Str.toStringz(nick));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Flags(cast(GFlagsValue*) p);
+		
+		return ObjectG.getDObject!Flags(cast(GFlagsValue*) p);
 	}
 	
 	/**

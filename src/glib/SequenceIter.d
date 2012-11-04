@@ -122,11 +122,6 @@ public class SequenceIter
 	 */
 	public this (GSequenceIter* gSequenceIter)
 	{
-		if(gSequenceIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gSequenceIter = gSequenceIter;
 	}
 	
@@ -165,10 +160,12 @@ public class SequenceIter
 	{
 		// GSequenceIter * g_sequence_iter_next (GSequenceIter *iter);
 		auto p = g_sequence_iter_next(gSequenceIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -182,10 +179,12 @@ public class SequenceIter
 	{
 		// GSequenceIter * g_sequence_iter_prev (GSequenceIter *iter);
 		auto p = g_sequence_iter_prev(gSequenceIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -215,10 +214,12 @@ public class SequenceIter
 	{
 		// GSequenceIter * g_sequence_iter_move (GSequenceIter *iter,  gint delta);
 		auto p = g_sequence_iter_move(gSequenceIter, delta);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -231,10 +232,12 @@ public class SequenceIter
 	{
 		// GSequence * g_sequence_iter_get_sequence (GSequenceIter *iter);
 		auto p = g_sequence_iter_get_sequence(gSequenceIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Sequence(cast(GSequence*) p);
 	}
 	

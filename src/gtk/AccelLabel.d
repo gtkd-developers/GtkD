@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -125,18 +126,6 @@ public class AccelLabel : Label
 	 */
 	public this (GtkAccelLabel* gtkAccelLabel)
 	{
-		if(gtkAccelLabel is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAccelLabel);
-		if( ptr !is null )
-		{
-			this = cast(AccelLabel)ptr;
-			return;
-		}
 		super(cast(GtkLabel*)gtkAccelLabel);
 		this.gtkAccelLabel = gtkAccelLabel;
 	}
@@ -188,11 +177,13 @@ public class AccelLabel : Label
 	{
 		// GtkWidget * gtk_accel_label_get_accel_widget (GtkAccelLabel *accel_label);
 		auto p = gtk_accel_label_get_accel_widget(gtkAccelLabel);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

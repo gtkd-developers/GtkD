@@ -140,11 +140,6 @@ public class OptionContext
 	 */
 	public this (GOptionContext* gOptionContext)
 	{
-		if(gOptionContext is null)
-		{
-			this = null;
-			return;
-		}
 		this.gOptionContext = gOptionContext;
 	}
 	
@@ -471,10 +466,12 @@ public class OptionContext
 	{
 		// GOptionGroup * g_option_context_get_main_group (GOptionContext *context);
 		auto p = g_option_context_get_main_group(gOptionContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new OptionGroup(cast(GOptionGroup*) p);
 	}
 }

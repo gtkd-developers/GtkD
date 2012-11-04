@@ -63,6 +63,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -118,18 +119,6 @@ public class ObjectAtk : ObjectG
 	 */
 	public this (AtkObject* atkObject)
 	{
-		if(atkObject is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkObject);
-		if( ptr !is null )
-		{
-			this = cast(ObjectAtk)ptr;
-			return;
-		}
 		super(cast(GObject*)atkObject);
 		this.atkObject = atkObject;
 	}
@@ -144,14 +133,14 @@ public class ObjectAtk : ObjectG
 	 */
 	int[string] connectedSignals;
 	
-	void delegate(gpointer, ObjectAtk)[] onActiveDescendantChangedListeners;
+	void delegate(void*, ObjectAtk)[] onActiveDescendantChangedListeners;
 	/**
 	 * The "active-descendant-changed" signal is emitted by an object which has
 	 * the state ATK_STATE_MANAGES_DESCENDANTS when the focus object in the
 	 * object changes. For instance, a table will emit the signal when the cell
 	 * in the table which has focus changes.
 	 */
-	void addOnActiveDescendantChanged(void delegate(gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnActiveDescendantChanged(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("active-descendant-changed" in connectedSignals) )
 		{
@@ -166,20 +155,20 @@ public class ObjectAtk : ObjectG
 		}
 		onActiveDescendantChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActiveDescendantChanged(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk objectAtk)
+	extern(C) static void callBackActiveDescendantChanged(AtkObject* atkobjectStruct, void* arg1, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(gpointer, ObjectAtk) dlg ; objectAtk.onActiveDescendantChangedListeners )
+		foreach ( void delegate(void*, ObjectAtk) dlg ; _objectAtk.onActiveDescendantChangedListeners )
 		{
-			dlg(arg1, objectAtk);
+			dlg(arg1, _objectAtk);
 		}
 	}
 	
-	void delegate(guint, gpointer, ObjectAtk)[] onChildrenChangedListeners;
+	void delegate(guint, void*, ObjectAtk)[] onChildrenChangedListeners;
 	/**
 	 * The signal "children-changed" is emitted when a child is added or
 	 * removed form an object. It supports two details: "add" and "remove"
 	 */
-	void addOnChildrenChanged(void delegate(guint, gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChildrenChanged(void delegate(guint, void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("children-changed" in connectedSignals) )
 		{
@@ -194,11 +183,11 @@ public class ObjectAtk : ObjectG
 		}
 		onChildrenChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChildrenChanged(AtkObject* atkobjectStruct, guint arg1, gpointer arg2, ObjectAtk objectAtk)
+	extern(C) static void callBackChildrenChanged(AtkObject* atkobjectStruct, guint arg1, void* arg2, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(guint, gpointer, ObjectAtk) dlg ; objectAtk.onChildrenChangedListeners )
+		foreach ( void delegate(guint, void*, ObjectAtk) dlg ; _objectAtk.onChildrenChangedListeners )
 		{
-			dlg(arg1, arg2, objectAtk);
+			dlg(arg1, arg2, _objectAtk);
 		}
 	}
 	
@@ -221,21 +210,21 @@ public class ObjectAtk : ObjectG
 		}
 		onFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackFocus(AtkObject* atkobjectStruct, gboolean arg1, ObjectAtk objectAtk)
+	extern(C) static void callBackFocus(AtkObject* atkobjectStruct, gboolean arg1, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(gboolean, ObjectAtk) dlg ; objectAtk.onFocusListeners )
+		foreach ( void delegate(gboolean, ObjectAtk) dlg ; _objectAtk.onFocusListeners )
 		{
-			dlg(arg1, objectAtk);
+			dlg(arg1, _objectAtk);
 		}
 	}
 	
-	void delegate(gpointer, ObjectAtk)[] onPropertyChangeListeners;
+	void delegate(void*, ObjectAtk)[] onPropertyChangeListeners;
 	/**
 	 * The signal "property-change" is emitted when an object's property
 	 * value changes. The detail identifies the name of the property whose
 	 * value has changed.
 	 */
-	void addOnPropertyChange(void delegate(gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPropertyChange(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("property-change" in connectedSignals) )
 		{
@@ -250,11 +239,11 @@ public class ObjectAtk : ObjectG
 		}
 		onPropertyChangeListeners ~= dlg;
 	}
-	extern(C) static void callBackPropertyChange(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk objectAtk)
+	extern(C) static void callBackPropertyChange(AtkObject* atkobjectStruct, void* arg1, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(gpointer, ObjectAtk) dlg ; objectAtk.onPropertyChangeListeners )
+		foreach ( void delegate(void*, ObjectAtk) dlg ; _objectAtk.onPropertyChangeListeners )
 		{
-			dlg(arg1, objectAtk);
+			dlg(arg1, _objectAtk);
 		}
 	}
 	
@@ -278,11 +267,11 @@ public class ObjectAtk : ObjectG
 		}
 		onStateChangeListeners ~= dlg;
 	}
-	extern(C) static void callBackStateChange(AtkObject* atkobjectStruct, gchar* arg1, gboolean arg2, ObjectAtk objectAtk)
+	extern(C) static void callBackStateChange(AtkObject* atkobjectStruct, gchar* arg1, gboolean arg2, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(string, gboolean, ObjectAtk) dlg ; objectAtk.onStateChangeListeners )
+		foreach ( void delegate(string, gboolean, ObjectAtk) dlg ; _objectAtk.onStateChangeListeners )
 		{
-			dlg(Str.toString(arg1), arg2, objectAtk);
+			dlg(Str.toString(arg1), arg2, _objectAtk);
 		}
 	}
 	
@@ -309,11 +298,11 @@ public class ObjectAtk : ObjectG
 		}
 		onVisibleDataChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackVisibleDataChanged(AtkObject* atkobjectStruct, ObjectAtk objectAtk)
+	extern(C) static void callBackVisibleDataChanged(AtkObject* atkobjectStruct, ObjectAtk _objectAtk)
 	{
-		foreach ( void delegate(ObjectAtk) dlg ; objectAtk.onVisibleDataChangedListeners )
+		foreach ( void delegate(ObjectAtk) dlg ; _objectAtk.onVisibleDataChangedListeners )
 		{
-			dlg(objectAtk);
+			dlg(_objectAtk);
 		}
 	}
 	
@@ -342,11 +331,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkObject * atk_implementor_ref_accessible (AtkImplementor *implementor);
 		auto p = atk_implementor_ref_accessible(implementor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -377,11 +368,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkObject * atk_object_get_parent (AtkObject *accessible);
 		auto p = atk_object_get_parent(atkObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -406,11 +399,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkObject * atk_object_ref_accessible_child (AtkObject *accessible,  gint i);
 		auto p = atk_object_ref_accessible_child(atkObject, i);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -421,11 +416,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkRelationSet * atk_object_ref_relation_set (AtkObject *accessible);
 		auto p = atk_object_ref_relation_set(atkObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RelationSet(cast(AtkRelationSet*) p);
+		
+		return ObjectG.getDObject!RelationSet(cast(AtkRelationSet*) p);
 	}
 	
 	/**
@@ -472,11 +469,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkStateSet * atk_object_ref_state_set (AtkObject *accessible);
 		auto p = atk_object_ref_state_set(atkObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StateSet(cast(AtkStateSet*) p);
+		
+		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
 	}
 	
 	/**

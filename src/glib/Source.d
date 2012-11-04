@@ -156,11 +156,6 @@ public class Source
 	 */
 	public this (GSource* gSource)
 	{
-		if(gSource is null)
-		{
-			this = null;
-			return;
-		}
 		this.gSource = gSource;
 	}
 	
@@ -200,10 +195,12 @@ public class Source
 	{
 		// GSource * g_source_ref (GSource *source);
 		auto p = g_source_ref(gSource);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	
@@ -395,10 +392,12 @@ public class Source
 	{
 		// GMainContext * g_source_get_context (GSource *source);
 		auto p = g_source_get_context(gSource);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new MainContext(cast(GMainContext*) p);
 	}
 	

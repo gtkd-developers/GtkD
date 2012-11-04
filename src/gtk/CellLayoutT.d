@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.Str;
@@ -153,11 +154,13 @@ public template CellLayoutT(TStruct)
 	{
 		// GList * gtk_cell_layout_get_cells (GtkCellLayout *cell_layout);
 		auto p = gtk_cell_layout_get_cells(getCellLayoutTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

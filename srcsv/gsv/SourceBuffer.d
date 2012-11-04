@@ -68,6 +68,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -120,18 +121,6 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this (GtkSourceBuffer* gtkSourceBuffer)
 	{
-		if(gtkSourceBuffer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceBuffer);
-		if( ptr !is null )
-		{
-			this = cast(SourceBuffer)ptr;
-			return;
-		}
 		super(cast(GtkTextBuffer*)gtkSourceBuffer);
 		this.gtkSourceBuffer = gtkSourceBuffer;
 	}
@@ -164,11 +153,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onHighlightUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* arg1, GtkTextIter* arg2, SourceBuffer sourceBuffer)
+	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* arg1, GtkTextIter* arg2, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; sourceBuffer.onHighlightUpdatedListeners )
+		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; _sourceBuffer.onHighlightUpdatedListeners )
 		{
-			dlg(new TextIter(arg1), new TextIter(arg2), sourceBuffer);
+			dlg(ObjectG.getDObject!TextIter(arg1), ObjectG.getDObject!TextIter(arg2), _sourceBuffer);
 		}
 	}
 	
@@ -190,11 +179,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onRedoListeners ~= dlg;
 	}
-	extern(C) static void callBackRedo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer sourceBuffer)
+	extern(C) static void callBackRedo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(SourceBuffer) dlg ; sourceBuffer.onRedoListeners )
+		foreach ( void delegate(SourceBuffer) dlg ; _sourceBuffer.onRedoListeners )
 		{
-			dlg(sourceBuffer);
+			dlg(_sourceBuffer);
 		}
 	}
 	
@@ -218,11 +207,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onSourceMarkUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* bufferStruct, GtkTextMark* arg1, SourceBuffer sourceBuffer)
+	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* bufferStruct, GtkTextMark* arg1, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(GtkTextMark*, SourceBuffer) dlg ; sourceBuffer.onSourceMarkUpdatedListeners )
+		foreach ( void delegate(GtkTextMark*, SourceBuffer) dlg ; _sourceBuffer.onSourceMarkUpdatedListeners )
 		{
-			dlg(arg1, sourceBuffer);
+			dlg(arg1, _sourceBuffer);
 		}
 	}
 	
@@ -246,11 +235,11 @@ public class SourceBuffer : TextBuffer
 		}
 		onUndoListeners ~= dlg;
 	}
-	extern(C) static void callBackUndo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer sourceBuffer)
+	extern(C) static void callBackUndo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer _sourceBuffer)
 	{
-		foreach ( void delegate(SourceBuffer) dlg ; sourceBuffer.onUndoListeners )
+		foreach ( void delegate(SourceBuffer) dlg ; _sourceBuffer.onUndoListeners )
 		{
-			dlg(sourceBuffer);
+			dlg(_sourceBuffer);
 		}
 	}
 	
@@ -344,11 +333,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GtkSourceLanguage * gtk_source_buffer_get_language (GtkSourceBuffer *buffer);
 		auto p = gtk_source_buffer_get_language(gtkSourceBuffer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceLanguage(cast(GtkSourceLanguage*) p);
+		
+		return ObjectG.getDObject!SourceLanguage(cast(GtkSourceLanguage*) p);
 	}
 	
 	/**
@@ -398,11 +389,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GtkSourceStyleScheme * gtk_source_buffer_get_style_scheme  (GtkSourceBuffer *buffer);
 		auto p = gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
+		
+		return ObjectG.getDObject!SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
 	}
 	
 	/**
@@ -530,11 +523,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GtkSourceMark * gtk_source_buffer_create_source_mark  (GtkSourceBuffer *buffer,  const gchar *name,  const gchar *category,  const GtkTextIter *where);
 		auto p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceMark(cast(GtkSourceMark*) p);
+		
+		return ObjectG.getDObject!SourceMark(cast(GtkSourceMark*) p);
 	}
 	
 	/**
@@ -550,11 +545,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GSList * gtk_source_buffer_get_source_marks_at_line  (GtkSourceBuffer *buffer,  gint line,  const gchar *category);
 		auto p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -570,11 +567,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GSList * gtk_source_buffer_get_source_marks_at_iter  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
 		auto p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**

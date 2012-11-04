@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -188,18 +189,6 @@ public class Label : Misc
 	 */
 	public this (GtkLabel* gtkLabel)
 	{
-		if(gtkLabel is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkLabel);
-		if( ptr !is null )
-		{
-			this = cast(Label)ptr;
-			return;
-		}
 		super(cast(GtkMisc*)gtkLabel);
 		this.gtkLabel = gtkLabel;
 	}
@@ -281,11 +270,11 @@ public class Label : Misc
 		}
 		onActivateCurrentLinkListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateCurrentLink(GtkLabel* labelStruct, Label label)
+	extern(C) static void callBackActivateCurrentLink(GtkLabel* labelStruct, Label _label)
 	{
-		foreach ( void delegate(Label) dlg ; label.onActivateCurrentLinkListeners )
+		foreach ( void delegate(Label) dlg ; _label.onActivateCurrentLinkListeners )
 		{
-			dlg(label);
+			dlg(_label);
 		}
 	}
 	
@@ -312,11 +301,11 @@ public class Label : Misc
 		}
 		onActivateLinkListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackActivateLink(GtkLabel* labelStruct, gchar* uri, Label label)
+	extern(C) static gboolean callBackActivateLink(GtkLabel* labelStruct, gchar* uri, Label _label)
 	{
-		foreach ( bool delegate(string, Label) dlg ; label.onActivateLinkListeners )
+		foreach ( bool delegate(string, Label) dlg ; _label.onActivateLinkListeners )
 		{
-			if ( dlg(Str.toString(uri), label) )
+			if ( dlg(Str.toString(uri), _label) )
 			{
 				return 1;
 			}
@@ -347,11 +336,11 @@ public class Label : Misc
 		}
 		onCopyClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct, Label label)
+	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct, Label _label)
 	{
-		foreach ( void delegate(Label) dlg ; label.onCopyClipboardListeners )
+		foreach ( void delegate(Label) dlg ; _label.onCopyClipboardListeners )
 		{
-			dlg(label);
+			dlg(_label);
 		}
 	}
 	
@@ -389,11 +378,11 @@ public class Label : Misc
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkLabel* entryStruct, GtkMovementStep step, gint count, gboolean extendSelection, Label label)
+	extern(C) static void callBackMoveCursor(GtkLabel* entryStruct, GtkMovementStep step, gint count, gboolean extendSelection, Label _label)
 	{
-		foreach ( void delegate(GtkMovementStep, gint, gboolean, Label) dlg ; label.onMoveCursorListeners )
+		foreach ( void delegate(GtkMovementStep, gint, gboolean, Label) dlg ; _label.onMoveCursorListeners )
 		{
-			dlg(step, count, extendSelection, label);
+			dlg(step, count, extendSelection, _label);
 		}
 	}
 	
@@ -420,11 +409,11 @@ public class Label : Misc
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu, Label label)
+	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu, Label _label)
 	{
-		foreach ( void delegate(GtkMenu*, Label) dlg ; label.onPopulatePopupListeners )
+		foreach ( void delegate(GtkMenu*, Label) dlg ; _label.onPopulatePopupListeners )
 		{
-			dlg(menu, label);
+			dlg(menu, _label);
 		}
 	}
 	
@@ -757,11 +746,13 @@ public class Label : Misc
 	{
 		// PangoAttrList * gtk_label_get_attributes (GtkLabel *label);
 		auto p = gtk_label_get_attributes(gtkLabel);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeList(cast(PangoAttrList*) p);
+		
+		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -833,11 +824,13 @@ public class Label : Misc
 	{
 		// PangoLayout * gtk_label_get_layout (GtkLabel *label);
 		auto p = gtk_label_get_layout(gtkLabel);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -871,11 +864,13 @@ public class Label : Misc
 	{
 		// GtkWidget * gtk_label_get_mnemonic_widget (GtkLabel *label);
 		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

@@ -413,14 +413,14 @@ public:
 		ResponseType[] r;
 		a ~= "Play file";
 		a ~= "Close";
-		r ~= ResponseType.GTK_RESPONSE_APPLY;//GTK_RESPONSE_OK;
-		r ~= ResponseType.GTK_RESPONSE_CANCEL;
+		r ~= ResponseType.APPLY;//OK;
+		r ~= ResponseType.CANCEL;
 		if ( importMaterialFileChooserDialog  is  null )
 		{
 			importMaterialFileChooserDialog = new FileChooserDialog("Play mediafile", this, FileChooserAction.OPEN, a, r);
 		}
 		
-		if( importMaterialFileChooserDialog.run() != ResponseType.GTK_RESPONSE_CANCEL )
+		if( importMaterialFileChooserDialog.run() != ResponseType.CANCEL )
 		{
 			//mediaFileUri = importMaterialFileChooserDialog.getFilename();
 			mediaFileUri = importMaterialFileChooserDialog.getUri();

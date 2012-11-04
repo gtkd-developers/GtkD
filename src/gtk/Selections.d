@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -260,11 +261,13 @@ public class Selections
 	{
 		// GdkPixbuf * gtk_selection_data_get_pixbuf (GtkSelectionData *selection_data);
 		auto p = gtk_selection_data_get_pixbuf(selectionData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -445,11 +448,13 @@ public class Selections
 	{
 		// GdkDisplay * gtk_selection_data_get_display (GtkSelectionData *selection_data);
 		auto p = gtk_selection_data_get_display(selectionData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**

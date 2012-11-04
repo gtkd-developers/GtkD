@@ -68,6 +68,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -118,18 +119,6 @@ public class SocketClient : ObjectG
 	 */
 	public this (GSocketClient* gSocketClient)
 	{
-		if(gSocketClient is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSocketClient);
-		if( ptr !is null )
-		{
-			this = cast(SocketClient)ptr;
-			return;
-		}
 		super(cast(GObject*)gSocketClient);
 		this.gSocketClient = gSocketClient;
 	}
@@ -217,11 +206,13 @@ public class SocketClient : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -262,11 +253,13 @@ public class SocketClient : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -313,11 +306,13 @@ public class SocketClient : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -359,11 +354,13 @@ public class SocketClient : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -397,11 +394,13 @@ public class SocketClient : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -441,11 +440,13 @@ public class SocketClient : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -485,11 +486,13 @@ public class SocketClient : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -531,11 +534,13 @@ public class SocketClient : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -691,11 +696,13 @@ public class SocketClient : ObjectG
 	{
 		// GSocketAddress * g_socket_client_get_local_address (GSocketClient *client);
 		auto p = g_socket_client_get_local_address(gSocketClient);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketAddress(cast(GSocketAddress*) p);
+		
+		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
 	}
 	
 	/**

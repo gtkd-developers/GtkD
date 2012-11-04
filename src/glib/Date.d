@@ -129,11 +129,6 @@ public class Date
 	 */
 	public this (GDate* gDate)
 	{
-		if(gDate is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDate = gDate;
 	}
 	

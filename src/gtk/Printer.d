@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -109,18 +110,6 @@ public class Printer : ObjectG
 	 */
 	public this (GtkPrinter* gtkPrinter)
 	{
-		if(gtkPrinter is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPrinter);
-		if( ptr !is null )
-		{
-			this = cast(Printer)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkPrinter);
 		this.gtkPrinter = gtkPrinter;
 	}
@@ -158,11 +147,11 @@ public class Printer : ObjectG
 		}
 		onDetailsAcquiredListeners ~= dlg;
 	}
-	extern(C) static void callBackDetailsAcquired(GtkPrinter* printerStruct, gboolean success, Printer printer)
+	extern(C) static void callBackDetailsAcquired(GtkPrinter* printerStruct, gboolean success, Printer _printer)
 	{
-		foreach ( void delegate(gboolean, Printer) dlg ; printer.onDetailsAcquiredListeners )
+		foreach ( void delegate(gboolean, Printer) dlg ; _printer.onDetailsAcquiredListeners )
 		{
-			dlg(success, printer);
+			dlg(success, _printer);
 		}
 	}
 	
@@ -360,11 +349,13 @@ public class Printer : ObjectG
 	{
 		// GList * gtk_printer_list_papers (GtkPrinter *printer);
 		auto p = gtk_printer_list_papers(gtkPrinter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -428,11 +419,13 @@ public class Printer : ObjectG
 	{
 		// GtkPageSetup * gtk_printer_get_default_page_size (GtkPrinter *printer);
 		auto p = gtk_printer_get_default_page_size(gtkPrinter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PageSetup(cast(GtkPageSetup*) p);
+		
+		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
 	}
 	
 	/**

@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -146,18 +147,6 @@ public class IMContext : ObjectG
 	 */
 	public this (GtkIMContext* gtkIMContext)
 	{
-		if(gtkIMContext is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkIMContext);
-		if( ptr !is null )
-		{
-			this = cast(IMContext)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkIMContext);
 		this.gtkIMContext = gtkIMContext;
 	}
@@ -193,11 +182,11 @@ public class IMContext : ObjectG
 		}
 		onCommitListeners ~= dlg;
 	}
-	extern(C) static void callBackCommit(GtkIMContext* contextStruct, gchar* str, IMContext iMContext)
+	extern(C) static void callBackCommit(GtkIMContext* contextStruct, gchar* str, IMContext _iMContext)
 	{
-		foreach ( void delegate(string, IMContext) dlg ; iMContext.onCommitListeners )
+		foreach ( void delegate(string, IMContext) dlg ; _iMContext.onCommitListeners )
 		{
-			dlg(Str.toString(str), iMContext);
+			dlg(Str.toString(str), _iMContext);
 		}
 	}
 	
@@ -222,11 +211,11 @@ public class IMContext : ObjectG
 		}
 		onDeleteSurroundingListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDeleteSurrounding(GtkIMContext* contextStruct, gint offset, gint nChars, IMContext iMContext)
+	extern(C) static gboolean callBackDeleteSurrounding(GtkIMContext* contextStruct, gint offset, gint nChars, IMContext _iMContext)
 	{
-		foreach ( bool delegate(gint, gint, IMContext) dlg ; iMContext.onDeleteSurroundingListeners )
+		foreach ( bool delegate(gint, gint, IMContext) dlg ; _iMContext.onDeleteSurroundingListeners )
 		{
-			if ( dlg(offset, nChars, iMContext) )
+			if ( dlg(offset, nChars, _iMContext) )
 			{
 				return 1;
 			}
@@ -257,11 +246,11 @@ public class IMContext : ObjectG
 		}
 		onPreeditChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackPreeditChanged(GtkIMContext* contextStruct, IMContext iMContext)
+	extern(C) static void callBackPreeditChanged(GtkIMContext* contextStruct, IMContext _iMContext)
 	{
-		foreach ( void delegate(IMContext) dlg ; iMContext.onPreeditChangedListeners )
+		foreach ( void delegate(IMContext) dlg ; _iMContext.onPreeditChangedListeners )
 		{
-			dlg(iMContext);
+			dlg(_iMContext);
 		}
 	}
 	
@@ -285,11 +274,11 @@ public class IMContext : ObjectG
 		}
 		onPreeditEndListeners ~= dlg;
 	}
-	extern(C) static void callBackPreeditEnd(GtkIMContext* contextStruct, IMContext iMContext)
+	extern(C) static void callBackPreeditEnd(GtkIMContext* contextStruct, IMContext _iMContext)
 	{
-		foreach ( void delegate(IMContext) dlg ; iMContext.onPreeditEndListeners )
+		foreach ( void delegate(IMContext) dlg ; _iMContext.onPreeditEndListeners )
 		{
-			dlg(iMContext);
+			dlg(_iMContext);
 		}
 	}
 	
@@ -313,11 +302,11 @@ public class IMContext : ObjectG
 		}
 		onPreeditStartListeners ~= dlg;
 	}
-	extern(C) static void callBackPreeditStart(GtkIMContext* contextStruct, IMContext iMContext)
+	extern(C) static void callBackPreeditStart(GtkIMContext* contextStruct, IMContext _iMContext)
 	{
-		foreach ( void delegate(IMContext) dlg ; iMContext.onPreeditStartListeners )
+		foreach ( void delegate(IMContext) dlg ; _iMContext.onPreeditStartListeners )
 		{
-			dlg(iMContext);
+			dlg(_iMContext);
 		}
 	}
 	
@@ -344,11 +333,11 @@ public class IMContext : ObjectG
 		}
 		onRetrieveSurroundingListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackRetrieveSurrounding(GtkIMContext* contextStruct, IMContext iMContext)
+	extern(C) static gboolean callBackRetrieveSurrounding(GtkIMContext* contextStruct, IMContext _iMContext)
 	{
-		foreach ( bool delegate(IMContext) dlg ; iMContext.onRetrieveSurroundingListeners )
+		foreach ( bool delegate(IMContext) dlg ; _iMContext.onRetrieveSurroundingListeners )
 		{
-			if ( dlg(iMContext) )
+			if ( dlg(_iMContext) )
 			{
 				return 1;
 			}

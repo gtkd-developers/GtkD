@@ -64,6 +64,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -128,18 +129,6 @@ public class RadioButton : CheckButton
 	 */
 	public this (GtkRadioButton* gtkRadioButton)
 	{
-		if(gtkRadioButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRadioButton);
-		if( ptr !is null )
-		{
-			this = cast(RadioButton)ptr;
-			return;
-		}
 		super(cast(GtkCheckButton*)gtkRadioButton);
 		this.gtkRadioButton = gtkRadioButton;
 	}
@@ -273,11 +262,11 @@ public class RadioButton : CheckButton
 		}
 		onGroupChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackGroupChanged(GtkRadioButton* styleStruct, RadioButton radioButton)
+	extern(C) static void callBackGroupChanged(GtkRadioButton* styleStruct, RadioButton _radioButton)
 	{
-		foreach ( void delegate(RadioButton) dlg ; radioButton.onGroupChangedListeners )
+		foreach ( void delegate(RadioButton) dlg ; _radioButton.onGroupChangedListeners )
 		{
-			dlg(radioButton);
+			dlg(_radioButton);
 		}
 	}
 	
@@ -351,10 +340,12 @@ public class RadioButton : CheckButton
 	{
 		// GSList * gtk_radio_button_get_group (GtkRadioButton *radio_button);
 		auto p = gtk_radio_button_get_group(gtkRadioButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 }

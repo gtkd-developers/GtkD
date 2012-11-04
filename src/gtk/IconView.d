@@ -74,6 +74,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -126,18 +127,6 @@ public class IconView : Container, CellLayoutIF
 	 */
 	public this (GtkIconView* gtkIconView)
 	{
-		if(gtkIconView is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkIconView);
-		if( ptr !is null )
-		{
-			this = cast(IconView)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkIconView);
 		this.gtkIconView = gtkIconView;
 	}
@@ -180,11 +169,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onActivateCursorItemListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static gboolean callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( bool delegate(IconView) dlg ; iconView.onActivateCursorItemListeners )
+		foreach ( bool delegate(IconView) dlg ; _iconView.onActivateCursorItemListeners )
 		{
-			if ( dlg(iconView) )
+			if ( dlg(_iconView) )
 			{
 				return 1;
 			}
@@ -216,11 +205,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onItemActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* path, IconView iconView)
+	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* path, IconView _iconView)
 	{
-		foreach ( void delegate(TreePath, IconView) dlg ; iconView.onItemActivatedListeners )
+		foreach ( void delegate(TreePath, IconView) dlg ; _iconView.onItemActivatedListeners )
 		{
-			dlg(new TreePath(path), iconView);
+			dlg(ObjectG.getDObject!TreePath(path), _iconView);
 		}
 	}
 	
@@ -254,11 +243,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep step, gint count, IconView iconView)
+	extern(C) static gboolean callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep step, gint count, IconView _iconView)
 	{
-		foreach ( bool delegate(GtkMovementStep, gint, IconView) dlg ; iconView.onMoveCursorListeners )
+		foreach ( bool delegate(GtkMovementStep, gint, IconView) dlg ; _iconView.onMoveCursorListeners )
 		{
-			if ( dlg(step, count, iconView) )
+			if ( dlg(step, count, _iconView) )
 			{
 				return 1;
 			}
@@ -291,11 +280,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onSelectAllListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onSelectAllListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -324,11 +313,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onSelectCursorItemListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onSelectCursorItemListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onSelectCursorItemListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -352,11 +341,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onSelectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onSelectionChangedListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onSelectionChangedListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -381,11 +370,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkIconView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, IconView iconView)
+	extern(C) static void callBackSetScrollAdjustments(GtkIconView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, IconView _iconView)
 	{
-		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg ; iconView.onSetScrollAdjustmentsListeners )
+		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg ; _iconView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(vertical, arg2, iconView);
+			dlg(vertical, arg2, _iconView);
 		}
 	}
 	
@@ -415,11 +404,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onToggleCursorItemListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onToggleCursorItemListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onToggleCursorItemListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -447,11 +436,11 @@ public class IconView : Container, CellLayoutIF
 		}
 		onUnselectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct, IconView iconView)
+	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct, IconView _iconView)
 	{
-		foreach ( void delegate(IconView) dlg ; iconView.onUnselectAllListeners )
+		foreach ( void delegate(IconView) dlg ; _iconView.onUnselectAllListeners )
 		{
-			dlg(iconView);
+			dlg(_iconView);
 		}
 	}
 	
@@ -515,11 +504,13 @@ public class IconView : Container, CellLayoutIF
 	{
 		// GtkTreeModel * gtk_icon_view_get_model (GtkIconView *icon_view);
 		auto p = gtk_icon_view_get_model(gtkIconView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -612,11 +603,13 @@ public class IconView : Container, CellLayoutIF
 	{
 		// GtkTreePath * gtk_icon_view_get_path_at_pos (GtkIconView *icon_view,  gint x,  gint y);
 		auto p = gtk_icon_view_get_path_at_pos(gtkIconView, x, y);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreePath(cast(GtkTreePath*) p);
+		
+		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -643,8 +636,8 @@ public class IconView : Container, CellLayoutIF
 		
 		auto p = gtk_icon_view_get_item_at_pos(gtkIconView, x, y, &outpath, &outcell);
 		
-		path = new TreePath(outpath);
-		cell = new CellRenderer(outcell);
+		path = ObjectG.getDObject!TreePath(outpath);
+		cell = ObjectG.getDObject!CellRenderer(outcell);
 		return p;
 	}
 	
@@ -704,8 +697,8 @@ public class IconView : Container, CellLayoutIF
 		
 		auto p = gtk_icon_view_get_cursor(gtkIconView, &outpath, &outcell);
 		
-		path = new TreePath(outpath);
-		cell = new CellRenderer(outcell);
+		path = ObjectG.getDObject!TreePath(outpath);
+		cell = ObjectG.getDObject!CellRenderer(outcell);
 		return p;
 	}
 	
@@ -1023,11 +1016,13 @@ public class IconView : Container, CellLayoutIF
 	{
 		// GList * gtk_icon_view_get_selected_items (GtkIconView *icon_view);
 		auto p = gtk_icon_view_get_selected_items(gtkIconView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1107,8 +1102,8 @@ public class IconView : Container, CellLayoutIF
 		
 		auto p = gtk_icon_view_get_visible_range(gtkIconView, &outstartPath, &outendPath);
 		
-		startPath = new TreePath(outstartPath);
-		endPath = new TreePath(outendPath);
+		startPath = ObjectG.getDObject!TreePath(outstartPath);
+		endPath = ObjectG.getDObject!TreePath(outendPath);
 		return p;
 	}
 	
@@ -1172,8 +1167,8 @@ public class IconView : Container, CellLayoutIF
 		
 		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, x, y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
 		
-		model = new TreeModel(outmodel);
-		path = new TreePath(outpath);
+		model = ObjectG.getDObject!TreeModel(outmodel);
+		path = ObjectG.getDObject!TreePath(outpath);
 		return p;
 	}
 	
@@ -1348,7 +1343,7 @@ public class IconView : Container, CellLayoutIF
 		
 		gtk_icon_view_get_drag_dest_item(gtkIconView, &outpath, &pos);
 		
-		path = new TreePath(outpath);
+		path = ObjectG.getDObject!TreePath(outpath);
 	}
 	
 	/**
@@ -1368,7 +1363,7 @@ public class IconView : Container, CellLayoutIF
 		
 		auto p = gtk_icon_view_get_dest_item_at_pos(gtkIconView, dragX, dragY, &outpath, &pos);
 		
-		path = new TreePath(outpath);
+		path = ObjectG.getDObject!TreePath(outpath);
 		return p;
 	}
 	
@@ -1384,10 +1379,12 @@ public class IconView : Container, CellLayoutIF
 	{
 		// GdkPixmap * gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
 		auto p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixmap(cast(GdkPixmap*) p);
+		
+		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
 	}
 }

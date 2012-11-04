@@ -135,11 +135,6 @@ public class StaticRecMutex
 	 */
 	public this (GStaticRecMutex* gStaticRecMutex)
 	{
-		if(gStaticRecMutex is null)
-		{
-			this = null;
-			return;
-		}
 		this.gStaticRecMutex = gStaticRecMutex;
 	}
 	

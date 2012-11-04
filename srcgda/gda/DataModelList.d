@@ -61,6 +61,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ListG;
@@ -98,18 +99,6 @@ public class DataModelList : DataModel
 	 */
 	public this (GdaDataModelList* gdaDataModelList)
 	{
-		if(gdaDataModelList is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaDataModelList);
-		if( ptr !is null )
-		{
-			this = cast(DataModelList)ptr;
-			return;
-		}
 		super(cast(GdaDataModel*)gdaDataModelList);
 		this.gdaDataModelList = gdaDataModelList;
 	}
@@ -163,10 +152,12 @@ public class DataModelList : DataModel
 	{
 		// const GdaRow* gda_data_model_list_append_value (GdaDataModelList *model,  const GdaValue *value);
 		auto p = gda_data_model_list_append_value(gdaDataModelList, (value is null) ? null : value.getValueStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Row(cast(GdaRow*) p);
+		
+		return ObjectG.getDObject!Row(cast(GdaRow*) p);
 	}
 }

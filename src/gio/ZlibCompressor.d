@@ -60,6 +60,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.FileInfo;
@@ -99,18 +100,6 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	 */
 	public this (GZlibCompressor* gZlibCompressor)
 	{
-		if(gZlibCompressor is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gZlibCompressor);
-		if( ptr !is null )
-		{
-			this = cast(ZlibCompressor)ptr;
-			return;
-		}
 		super(cast(GObject*)gZlibCompressor);
 		this.gZlibCompressor = gZlibCompressor;
 	}
@@ -155,11 +144,13 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	{
 		// GFileInfo * g_zlib_compressor_get_file_info (GZlibCompressor *compressor);
 		auto p = g_zlib_compressor_get_file_info(gZlibCompressor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInfo(cast(GFileInfo*) p);
+		
+		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
 	}
 	
 	/**

@@ -113,11 +113,6 @@ public class Directory
 	 */
 	public this (GDir* gDir)
 	{
-		if(gDir is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDir = gDir;
 	}
 	

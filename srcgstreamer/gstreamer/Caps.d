@@ -64,6 +64,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -118,11 +119,6 @@ public class Caps
 	 */
 	public this (GstCaps* gstCaps)
 	{
-		if(gstCaps is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstCaps = gstCaps;
 	}
 	
@@ -191,11 +187,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_copy (const GstCaps *caps);
 		auto p = gst_caps_copy(gstCaps);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -209,11 +207,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_copy_nth (const GstCaps *caps,  guint nth);
 		auto p = gst_caps_copy_nth(gstCaps, nth);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -226,11 +226,13 @@ public class Caps
 	{
 		// GstCaps* gst_static_caps_get (GstStaticCaps *static_caps);
 		auto p = gst_static_caps_get(staticCaps);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -322,11 +324,13 @@ public class Caps
 	{
 		// GstStructure* gst_caps_get_structure (const GstCaps *caps,  guint index);
 		auto p = gst_caps_get_structure(gstCaps, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -444,11 +448,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_intersect (const GstCaps *caps1,  const GstCaps *caps2);
 		auto p = gst_caps_intersect(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -462,11 +468,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_union (const GstCaps *caps1,  const GstCaps *caps2);
 		auto p = gst_caps_union(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -479,11 +487,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_normalize (const GstCaps *caps);
 		auto p = gst_caps_normalize(gstCaps);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -516,7 +526,7 @@ public class Caps
 		
 		gst_caps_replace(&outcaps, (newcaps is null) ? null : newcaps.getCapsStruct());
 		
-		caps = new Caps(outcaps);
+		caps = ObjectG.getDObject!Caps(outcaps);
 	}
 	
 	/**
@@ -540,11 +550,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_from_string (const gchar *string);
 		auto p = gst_caps_from_string(Str.toStringz(string));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -560,11 +572,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_subtract (const GstCaps *minuend,  const GstCaps *subtrahend);
 		auto p = gst_caps_subtract(gstCaps, (subtrahend is null) ? null : subtrahend.getCapsStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -583,11 +597,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_make_writable (GstCaps *caps);
 		auto p = gst_caps_make_writable(gstCaps);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -604,11 +620,13 @@ public class Caps
 	{
 		// GstCaps* gst_caps_ref (GstCaps *caps);
 		auto p = gst_caps_ref(gstCaps);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**

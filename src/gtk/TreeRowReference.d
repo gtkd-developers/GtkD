@@ -70,6 +70,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -182,11 +183,6 @@ public class TreeRowReference
 	 */
 	public this (GtkTreeRowReference* gtkTreeRowReference)
 	{
-		if(gtkTreeRowReference is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTreeRowReference = gtkTreeRowReference;
 	}
 	
@@ -259,11 +255,13 @@ public class TreeRowReference
 	{
 		// GtkTreeModel * gtk_tree_row_reference_get_model (GtkTreeRowReference *reference);
 		auto p = gtk_tree_row_reference_get_model(gtkTreeRowReference);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -275,11 +273,13 @@ public class TreeRowReference
 	{
 		// GtkTreePath * gtk_tree_row_reference_get_path (GtkTreeRowReference *reference);
 		auto p = gtk_tree_row_reference_get_path(gtkTreeRowReference);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreePath(cast(GtkTreePath*) p);
+		
+		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -311,11 +311,13 @@ public class TreeRowReference
 	{
 		// GtkTreeRowReference * gtk_tree_row_reference_copy (GtkTreeRowReference *reference);
 		auto p = gtk_tree_row_reference_copy(gtkTreeRowReference);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeRowReference(cast(GtkTreeRowReference*) p);
+		
+		return ObjectG.getDObject!TreeRowReference(cast(GtkTreeRowReference*) p);
 	}
 	
 	/**

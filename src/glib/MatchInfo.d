@@ -143,11 +143,6 @@ public class MatchInfo
 	 */
 	public this (GMatchInfo* gMatchInfo)
 	{
-		if(gMatchInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMatchInfo = gMatchInfo;
 	}
 	
@@ -165,10 +160,12 @@ public class MatchInfo
 	{
 		// GRegex * g_match_info_get_regex (const GMatchInfo *match_info);
 		auto p = g_match_info_get_regex(gMatchInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Regex(cast(GRegex*) p);
 	}
 	

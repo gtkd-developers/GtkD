@@ -56,6 +56,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -93,11 +94,6 @@ public class PgCoverage
 	 */
 	public this (PangoCoverage* pangoCoverage)
 	{
-		if(pangoCoverage is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoCoverage = pangoCoverage;
 	}
 	
@@ -127,11 +123,13 @@ public class PgCoverage
 	{
 		// PangoCoverage * pango_coverage_ref (PangoCoverage *coverage);
 		auto p = pango_coverage_ref(pangoCoverage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgCoverage(cast(PangoCoverage*) p);
+		
+		return ObjectG.getDObject!PgCoverage(cast(PangoCoverage*) p);
 	}
 	
 	/**
@@ -153,11 +151,13 @@ public class PgCoverage
 	{
 		// PangoCoverage * pango_coverage_copy (PangoCoverage *coverage);
 		auto p = pango_coverage_copy(pangoCoverage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgCoverage(cast(PangoCoverage*) p);
+		
+		return ObjectG.getDObject!PgCoverage(cast(PangoCoverage*) p);
 	}
 	
 	/**
@@ -224,10 +224,12 @@ public class PgCoverage
 	{
 		// PangoCoverage * pango_coverage_from_bytes (guchar *bytes,  int n_bytes);
 		auto p = pango_coverage_from_bytes(bytes.ptr, cast(int) bytes.length);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgCoverage(cast(PangoCoverage*) p);
+		
+		return ObjectG.getDObject!PgCoverage(cast(PangoCoverage*) p);
 	}
 }

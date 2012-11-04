@@ -59,6 +59,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -154,10 +155,12 @@ public static Iterator iterateDefinitions()
 {
 	// GstIterator* gst_format_iterate_definitions (void);
 	auto p = gst_format_iterate_definitions();
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new Iterator(cast(GstIterator*) p);
+	
+	return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 }
 

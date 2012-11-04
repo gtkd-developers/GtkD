@@ -474,7 +474,7 @@ mixin( gshared ~"extern(C)
 	// gda.Gda
 
 	void function(gchar* appId, gchar* versio, gint nargs, gchar** args) c_gda_init;
-	void function(GdaInitFunc initFunc, gpointer userData) c_gda_main_run;
+	void function(GdaInitFunc initFunc, void* userData) c_gda_main_run;
 	void function() c_gda_main_quit;
 	gchar* function(GdaValueType type) c_gda_type_to_string;
 	GdaValueType function(gchar* str) c_gda_type_from_string;
@@ -486,8 +486,8 @@ mixin( gshared ~"extern(C)
 	// gda.Blob
 
 	gint function(GdaBlob* blob, GdaBlobMode mode) c_gda_blob_open;
-	gint function(GdaBlob* blob, gpointer buf, gint size, gint* bytesRead) c_gda_blob_read;
-	gint function(GdaBlob* blob, gpointer buf, gint size, gint* bytesWritten) c_gda_blob_write;
+	gint function(GdaBlob* blob, void* buf, gint size, gint* bytesRead) c_gda_blob_read;
+	gint function(GdaBlob* blob, void* buf, gint size, gint* bytesWritten) c_gda_blob_write;
 	gint function(GdaBlob* blob, gint offset, gint whence) c_gda_blob_lseek;
 	gint function(GdaBlob* blob) c_gda_blob_close;
 	gint function(GdaBlob* blob) c_gda_blob_remove;
@@ -545,7 +545,7 @@ mixin( gshared ~"extern(C)
 	GList* function(gchar* path) c_gda_config_list_keys;
 	gchar* function(gchar* path) c_gda_config_get_type;
 	void function(GList* list) c_gda_config_free_list;
-	guint function(gchar* path, GdaConfigListenerFunc func, gpointer userData) c_gda_config_add_listener;
+	guint function(gchar* path, GdaConfigListenerFunc func, void* userData) c_gda_config_add_listener;
 	void function(guint id) c_gda_config_remove_listener;
 	GList* function() c_gda_config_get_provider_list;
 	void function(GList* list) c_gda_config_free_provider_list;
@@ -653,7 +653,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GdaDataModel* model, GdaFieldAttributes* attrs) c_gda_data_model_append_column;
 	gboolean function(GdaDataModel* model, gint col, GdaFieldAttributes* attrs) c_gda_data_model_update_column;
 	gboolean function(GdaDataModel* model, gint col) c_gda_data_model_remove_column;
-	void function(GdaDataModel* model, GdaDataModelForeachFunc func, gpointer userData) c_gda_data_model_foreach;
+	void function(GdaDataModel* model, GdaDataModelForeachFunc func, void* userData) c_gda_data_model_foreach;
 	gboolean function(GdaDataModel* model) c_gda_data_model_has_changed;
 	gboolean function(GdaDataModel* model) c_gda_data_model_begin_update;
 	gboolean function(GdaDataModel* model) c_gda_data_model_cancel_update;
@@ -822,7 +822,7 @@ mixin( gshared ~"extern(C)
 	GdaValue* function() c_gda_value_new_null;
 	GdaValue* function(gint64 val) c_gda_value_new_bigint;
 	GdaValue* function(guint64 val) c_gda_value_new_biguint;
-	GdaValue* function(gconstpointer val, glong size) c_gda_value_new_binary;
+	GdaValue* function(void* val, glong size) c_gda_value_new_binary;
 	GdaValue* function(GdaBlob* val) c_gda_value_new_blob;
 	GdaValue* function(gboolean val) c_gda_value_new_boolean;
 	GdaValue* function(GdaDate* val) c_gda_value_new_date;
@@ -856,7 +856,7 @@ mixin( gshared ~"extern(C)
 	guint64 function(GdaValue* value) c_gda_value_get_biguint;
 	void function(GdaValue* value, guint64 val) c_gda_value_set_biguint;
 	gpointer function(GdaValue* value, glong* size) c_gda_value_get_binary;
-	void function(GdaValue* value, gconstpointer val, glong size) c_gda_value_set_binary;
+	void function(GdaValue* value, void* val, glong size) c_gda_value_set_binary;
 	GdaBlob* function(GdaValue* value) c_gda_value_get_blob;
 	void function(GdaValue* value, GdaBlob* val) c_gda_value_set_blob;
 	gboolean function(GdaValue* value) c_gda_value_get_boolean;

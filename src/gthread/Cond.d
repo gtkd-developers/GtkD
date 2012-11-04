@@ -141,11 +141,6 @@ public class Cond
 	 */
 	public this (GCond* gCond)
 	{
-		if(gCond is null)
-		{
-			this = null;
-			return;
-		}
 		this.gCond = gCond;
 	}
 	

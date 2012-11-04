@@ -84,6 +84,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -135,11 +136,6 @@ public class Message
 	 */
 	public this (GstMessage* gstMessage)
 	{
-		if(gstMessage is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstMessage = gstMessage;
 	}
 	
@@ -412,11 +408,13 @@ public class Message
 	{
 		// const GstStructure* gst_message_get_structure (GstMessage *message);
 		auto p = gst_message_get_structure(gstMessage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -628,7 +626,7 @@ public class Message
 		
 		gst_message_parse_clock_lost(gstMessage, &outclock);
 		
-		clock = new Clock(outclock);
+		clock = ObjectG.getDObject!Clock(outclock);
 	}
 	
 	/**
@@ -646,7 +644,7 @@ public class Message
 		
 		gst_message_parse_clock_provide(gstMessage, &outclock, &ready);
 		
-		clock = new Clock(outclock);
+		clock = ObjectG.getDObject!Clock(outclock);
 	}
 	
 	/**
@@ -665,7 +663,7 @@ public class Message
 		
 		gst_message_parse_error(gstMessage, &outgerror, &outdbug);
 		
-		gerror = new ErrorG(outgerror);
+		gerror = ObjectG.getDObject!ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -686,7 +684,7 @@ public class Message
 		
 		gst_message_parse_info(gstMessage, &outgerror, &outdbug);
 		
-		gerror = new ErrorG(outgerror);
+		gerror = ObjectG.getDObject!ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -704,7 +702,7 @@ public class Message
 		
 		gst_message_parse_new_clock(gstMessage, &outclock);
 		
-		clock = new Clock(outclock);
+		clock = ObjectG.getDObject!Clock(outclock);
 	}
 	
 	/**
@@ -777,7 +775,7 @@ public class Message
 		
 		gst_message_parse_warning(gstMessage, &outgerror, &outdbug);
 		
-		gerror = new ErrorG(outgerror);
+		gerror = ObjectG.getDObject!ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -818,10 +816,12 @@ public class Message
 	{
 		// GstMessage* gst_message_ref (GstMessage *msg);
 		auto p = gst_message_ref(gstMessage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Message(cast(GstMessage*) p);
+		
+		return ObjectG.getDObject!Message(cast(GstMessage*) p);
 	}
 }

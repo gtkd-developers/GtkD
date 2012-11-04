@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -109,18 +110,6 @@ public class Assistant : Window
 	 */
 	public this (GtkAssistant* gtkAssistant)
 	{
-		if(gtkAssistant is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAssistant);
-		if( ptr !is null )
-		{
-			this = cast(Assistant)ptr;
-			return;
-		}
 		super(cast(GtkWindow*)gtkAssistant);
 		this.gtkAssistant = gtkAssistant;
 	}
@@ -162,11 +151,11 @@ public class Assistant : Window
 		}
 		onApplyListeners ~= dlg;
 	}
-	extern(C) static void callBackApply(GtkAssistant* assistantStruct, Assistant assistant)
+	extern(C) static void callBackApply(GtkAssistant* assistantStruct, Assistant _assistant)
 	{
-		foreach ( void delegate(Assistant) dlg ; assistant.onApplyListeners )
+		foreach ( void delegate(Assistant) dlg ; _assistant.onApplyListeners )
 		{
-			dlg(assistant);
+			dlg(_assistant);
 		}
 	}
 	
@@ -190,11 +179,11 @@ public class Assistant : Window
 		}
 		onCancelListeners ~= dlg;
 	}
-	extern(C) static void callBackCancel(GtkAssistant* assistantStruct, Assistant assistant)
+	extern(C) static void callBackCancel(GtkAssistant* assistantStruct, Assistant _assistant)
 	{
-		foreach ( void delegate(Assistant) dlg ; assistant.onCancelListeners )
+		foreach ( void delegate(Assistant) dlg ; _assistant.onCancelListeners )
 		{
-			dlg(assistant);
+			dlg(_assistant);
 		}
 	}
 	
@@ -220,11 +209,11 @@ public class Assistant : Window
 		}
 		onCloseListeners ~= dlg;
 	}
-	extern(C) static void callBackClose(GtkAssistant* assistantStruct, Assistant assistant)
+	extern(C) static void callBackClose(GtkAssistant* assistantStruct, Assistant _assistant)
 	{
-		foreach ( void delegate(Assistant) dlg ; assistant.onCloseListeners )
+		foreach ( void delegate(Assistant) dlg ; _assistant.onCloseListeners )
 		{
-			dlg(assistant);
+			dlg(_assistant);
 		}
 	}
 	
@@ -250,11 +239,11 @@ public class Assistant : Window
 		}
 		onPrepareListeners ~= dlg;
 	}
-	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page, Assistant assistant)
+	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page, Assistant _assistant)
 	{
-		foreach ( void delegate(Widget, Assistant) dlg ; assistant.onPrepareListeners )
+		foreach ( void delegate(Widget, Assistant) dlg ; _assistant.onPrepareListeners )
 		{
-			dlg(new Widget(page), assistant);
+			dlg(ObjectG.getDObject!Widget(page), _assistant);
 		}
 	}
 	
@@ -325,11 +314,13 @@ public class Assistant : Window
 	{
 		// GtkWidget * gtk_assistant_get_nth_page (GtkAssistant *assistant,  gint page_num);
 		auto p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -470,11 +461,13 @@ public class Assistant : Window
 	{
 		// GdkPixbuf * gtk_assistant_get_page_header_image (GtkAssistant *assistant,  GtkWidget *page);
 		auto p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -502,11 +495,13 @@ public class Assistant : Window
 	{
 		// GdkPixbuf * gtk_assistant_get_page_side_image (GtkAssistant *assistant,  GtkWidget *page);
 		auto p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

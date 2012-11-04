@@ -60,6 +60,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -104,18 +105,6 @@ public class ThemedIcon : ObjectG, IconIF
 	 */
 	public this (GThemedIcon* gThemedIcon)
 	{
-		if(gThemedIcon is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gThemedIcon);
-		if( ptr !is null )
-		{
-			this = cast(ThemedIcon)ptr;
-			return;
-		}
 		super(cast(GObject*)gThemedIcon);
 		this.gThemedIcon = gThemedIcon;
 	}

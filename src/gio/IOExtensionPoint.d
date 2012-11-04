@@ -61,6 +61,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -121,11 +122,6 @@ public class IOExtensionPoint
 	 */
 	public this (GIOExtensionPoint* gIOExtensionPoint)
 	{
-		if(gIOExtensionPoint is null)
-		{
-			this = null;
-			return;
-		}
 		this.gIOExtensionPoint = gIOExtensionPoint;
 	}
 	
@@ -142,11 +138,13 @@ public class IOExtensionPoint
 	{
 		// GIOExtension * g_io_extension_point_get_extension_by_name  (GIOExtensionPoint *extension_point,  const char *name);
 		auto p = g_io_extension_point_get_extension_by_name(gIOExtensionPoint, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOExtension(cast(GIOExtension*) p);
+		
+		return ObjectG.getDObject!IOExtension(cast(GIOExtension*) p);
 	}
 	
 	/**
@@ -158,11 +156,13 @@ public class IOExtensionPoint
 	{
 		// GList * g_io_extension_point_get_extensions (GIOExtensionPoint *extension_point);
 		auto p = g_io_extension_point_get_extensions(gIOExtensionPoint);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -191,11 +191,13 @@ public class IOExtensionPoint
 	{
 		// GIOExtension * g_io_extension_point_implement (const char *extension_point_name,  GType type,  const char *extension_name,  gint priority);
 		auto p = g_io_extension_point_implement(Str.toStringz(extensionPointName), type, Str.toStringz(extensionName), priority);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOExtension(cast(GIOExtension*) p);
+		
+		return ObjectG.getDObject!IOExtension(cast(GIOExtension*) p);
 	}
 	
 	/**
@@ -208,11 +210,13 @@ public class IOExtensionPoint
 	{
 		// GIOExtensionPoint * g_io_extension_point_lookup (const char *name);
 		auto p = g_io_extension_point_lookup(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOExtensionPoint(cast(GIOExtensionPoint*) p);
+		
+		return ObjectG.getDObject!IOExtensionPoint(cast(GIOExtensionPoint*) p);
 	}
 	
 	/**
@@ -225,11 +229,13 @@ public class IOExtensionPoint
 	{
 		// GIOExtensionPoint * g_io_extension_point_register (const char *name);
 		auto p = g_io_extension_point_register(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOExtensionPoint(cast(GIOExtensionPoint*) p);
+		
+		return ObjectG.getDObject!IOExtensionPoint(cast(GIOExtensionPoint*) p);
 	}
 	
 	/**

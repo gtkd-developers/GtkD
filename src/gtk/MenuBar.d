@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -100,18 +101,6 @@ public class MenuBar : MenuShell
 	 */
 	public this (GtkMenuBar* gtkMenuBar)
 	{
-		if(gtkMenuBar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMenuBar);
-		if( ptr !is null )
-		{
-			this = cast(MenuBar)ptr;
-			return;
-		}
 		super(cast(GtkMenuShell*)gtkMenuBar);
 		this.gtkMenuBar = gtkMenuBar;
 	}

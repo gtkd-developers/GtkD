@@ -59,6 +59,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -110,11 +111,6 @@ public class Command
 	 */
 	public this (GdaCommand* gdaCommand)
 	{
-		if(gdaCommand is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaCommand = gdaCommand;
 	}
 	
@@ -169,11 +165,13 @@ public class Command
 	{
 		// GdaCommand* gda_command_copy (GdaCommand *cmd);
 		auto p = gda_command_copy(gdaCommand);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Command(cast(GdaCommand*) p);
+		
+		return ObjectG.getDObject!Command(cast(GdaCommand*) p);
 	}
 	
 	/**
@@ -248,11 +246,13 @@ public class Command
 	{
 		// GdaTransaction* gda_command_get_transaction (GdaCommand *cmd);
 		auto p = gda_command_get_transaction(gdaCommand);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Transaction(cast(GdaTransaction*) p);
+		
+		return ObjectG.getDObject!Transaction(cast(GdaTransaction*) p);
 	}
 	
 	/**

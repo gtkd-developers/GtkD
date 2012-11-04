@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -121,18 +122,6 @@ public class Menu : MenuShell
 	 */
 	public this (GtkMenu* gtkMenu)
 	{
-		if(gtkMenu is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMenu);
-		if( ptr !is null )
-		{
-			this = cast(Menu)ptr;
-			return;
-		}
 		super(cast(GtkMenuShell*)gtkMenu);
 		this.gtkMenu = gtkMenu;
 	}
@@ -210,11 +199,11 @@ public class Menu : MenuShell
 		}
 		onMoveScrollListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType arg1, Menu menu)
+	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType arg1, Menu _menu)
 	{
-		foreach ( void delegate(GtkScrollType, Menu) dlg ; menu.onMoveScrollListeners )
+		foreach ( void delegate(GtkScrollType, Menu) dlg ; _menu.onMoveScrollListeners )
 		{
-			dlg(arg1, menu);
+			dlg(arg1, _menu);
 		}
 	}
 	
@@ -336,11 +325,13 @@ public class Menu : MenuShell
 	{
 		// GtkAccelGroup * gtk_menu_get_accel_group (GtkMenu *menu);
 		auto p = gtk_menu_get_accel_group(gtkMenu);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AccelGroup(cast(GtkAccelGroup*) p);
+		
+		return ObjectG.getDObject!AccelGroup(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -493,11 +484,13 @@ public class Menu : MenuShell
 	{
 		// GtkWidget * gtk_menu_get_active (GtkMenu *menu);
 		auto p = gtk_menu_get_active(gtkMenu);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -561,11 +554,13 @@ public class Menu : MenuShell
 	{
 		// GtkWidget * gtk_menu_get_attach_widget (GtkMenu *menu);
 		auto p = gtk_menu_get_attach_widget(gtkMenu);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -580,10 +575,12 @@ public class Menu : MenuShell
 	{
 		// GList * gtk_menu_get_for_attach_widget (GtkWidget *widget);
 		auto p = gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 }

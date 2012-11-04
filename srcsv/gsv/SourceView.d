@@ -67,6 +67,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -113,18 +114,6 @@ public class SourceView : TextView
 	 */
 	public this (GtkSourceView* gtkSourceView)
 	{
-		if(gtkSourceView is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceView);
-		if( ptr !is null )
-		{
-			this = cast(SourceView)ptr;
-			return;
-		}
 		super(cast(GtkTextView*)gtkSourceView);
 		this.gtkSourceView = gtkSourceView;
 	}
@@ -145,10 +134,15 @@ public class SourceView : TextView
 	public override SourceBuffer getBuffer()
 	{
 		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
-		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
+		auto p = gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView);
+		
+		if ( p is null )
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!SourceBuffer( cast(GtkSourceBuffer*)p );
 	}
-	
-	
 	
 	/**
 	 */
@@ -175,11 +169,11 @@ public class SourceView : TextView
 		}
 		onLineMarkActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackLineMarkActivated(GtkSourceView* viewStruct, GtkTextIter* iter, GdkEvent* event, SourceView sourceView)
+	extern(C) static void callBackLineMarkActivated(GtkSourceView* viewStruct, GtkTextIter* iter, GdkEvent* event, SourceView _sourceView)
 	{
-		foreach ( void delegate(TextIter, GdkEvent*, SourceView) dlg ; sourceView.onLineMarkActivatedListeners )
+		foreach ( void delegate(TextIter, GdkEvent*, SourceView) dlg ; _sourceView.onLineMarkActivatedListeners )
 		{
-			dlg(new TextIter(iter), event, sourceView);
+			dlg(ObjectG.getDObject!TextIter(iter), event, _sourceView);
 		}
 	}
 	
@@ -201,11 +195,11 @@ public class SourceView : TextView
 		}
 		onMoveLinesListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveLines(GtkSourceView* sourceviewStruct, gboolean arg1, gint arg2, SourceView sourceView)
+	extern(C) static void callBackMoveLines(GtkSourceView* sourceviewStruct, gboolean arg1, gint arg2, SourceView _sourceView)
 	{
-		foreach ( void delegate(gboolean, gint, SourceView) dlg ; sourceView.onMoveLinesListeners )
+		foreach ( void delegate(gboolean, gint, SourceView) dlg ; _sourceView.onMoveLinesListeners )
 		{
-			dlg(arg1, arg2, sourceView);
+			dlg(arg1, arg2, _sourceView);
 		}
 	}
 	
@@ -227,11 +221,11 @@ public class SourceView : TextView
 		}
 		onRedoListeners ~= dlg;
 	}
-	extern(C) static void callBackRedo(GtkSourceView* sourceviewStruct, SourceView sourceView)
+	extern(C) static void callBackRedo(GtkSourceView* sourceviewStruct, SourceView _sourceView)
 	{
-		foreach ( void delegate(SourceView) dlg ; sourceView.onRedoListeners )
+		foreach ( void delegate(SourceView) dlg ; _sourceView.onRedoListeners )
 		{
-			dlg(sourceView);
+			dlg(_sourceView);
 		}
 	}
 	
@@ -258,11 +252,11 @@ public class SourceView : TextView
 		}
 		onShowCompletionListeners ~= dlg;
 	}
-	extern(C) static void callBackShowCompletion(GtkSourceView* viewStruct, SourceView sourceView)
+	extern(C) static void callBackShowCompletion(GtkSourceView* viewStruct, SourceView _sourceView)
 	{
-		foreach ( void delegate(SourceView) dlg ; sourceView.onShowCompletionListeners )
+		foreach ( void delegate(SourceView) dlg ; _sourceView.onShowCompletionListeners )
 		{
-			dlg(sourceView);
+			dlg(_sourceView);
 		}
 	}
 	
@@ -286,11 +280,11 @@ public class SourceView : TextView
 		}
 		onUndoListeners ~= dlg;
 	}
-	extern(C) static void callBackUndo(GtkSourceView* sourceviewStruct, SourceView sourceView)
+	extern(C) static void callBackUndo(GtkSourceView* sourceviewStruct, SourceView _sourceView)
 	{
-		foreach ( void delegate(SourceView) dlg ; sourceView.onUndoListeners )
+		foreach ( void delegate(SourceView) dlg ; _sourceView.onUndoListeners )
 		{
-			dlg(sourceView);
+			dlg(_sourceView);
 		}
 	}
 	
@@ -504,11 +498,13 @@ public class SourceView : TextView
 	{
 		// GdkPixbuf * gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
 		auto p = gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -795,10 +791,12 @@ public class SourceView : TextView
 	{
 		// GtkSourceGutter * gtk_source_view_get_gutter (GtkSourceView *view,  GtkTextWindowType window_type);
 		auto p = gtk_source_view_get_gutter(gtkSourceView, windowType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceGutter(cast(GtkSourceGutter*) p);
+		
+		return ObjectG.getDObject!SourceGutter(cast(GtkSourceGutter*) p);
 	}
 }

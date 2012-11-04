@@ -59,6 +59,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import gio.SocketAddressEnumerator;
@@ -100,11 +101,13 @@ public template SocketConnectableT(TStruct)
 	{
 		// GSocketAddressEnumerator * g_socket_connectable_enumerate  (GSocketConnectable *connectable);
 		auto p = g_socket_connectable_enumerate(getSocketConnectableTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketAddressEnumerator(cast(GSocketAddressEnumerator*) p);
+		
+		return ObjectG.getDObject!SocketAddressEnumerator(cast(GSocketAddressEnumerator*) p);
 	}
 	
 	/**
@@ -121,10 +124,12 @@ public template SocketConnectableT(TStruct)
 	{
 		// GSocketAddressEnumerator * g_socket_connectable_proxy_enumerate  (GSocketConnectable *connectable);
 		auto p = g_socket_connectable_proxy_enumerate(getSocketConnectableTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketAddressEnumerator(cast(GSocketAddressEnumerator*) p);
+		
+		return ObjectG.getDObject!SocketAddressEnumerator(cast(GSocketAddressEnumerator*) p);
 	}
 }

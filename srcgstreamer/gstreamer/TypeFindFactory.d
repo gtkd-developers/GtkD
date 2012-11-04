@@ -64,6 +64,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -111,18 +112,6 @@ public class TypeFindFactory : PluginFeature
 	 */
 	public this (GstTypeFindFactory* gstTypeFindFactory)
 	{
-		if(gstTypeFindFactory is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstTypeFindFactory);
-		if( ptr !is null )
-		{
-			this = cast(TypeFindFactory)ptr;
-			return;
-		}
 		super(cast(GstPluginFeature*)gstTypeFindFactory);
 		this.gstTypeFindFactory = gstTypeFindFactory;
 	}
@@ -145,11 +134,13 @@ public class TypeFindFactory : PluginFeature
 	{
 		// GList* gst_type_find_factory_get_list (void);
 		auto p = gst_type_find_factory_get_list();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -173,11 +164,13 @@ public class TypeFindFactory : PluginFeature
 	{
 		// GstCaps* gst_type_find_factory_get_caps (GstTypeFindFactory *factory);
 		auto p = gst_type_find_factory_get_caps(gstTypeFindFactory);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**

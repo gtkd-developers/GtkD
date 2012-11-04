@@ -70,6 +70,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -147,18 +148,6 @@ public class ObjectGst : ObjectG
 	 */
 	public this (GstObject* gstObject)
 	{
-		if(gstObject is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstObject);
-		if( ptr !is null )
-		{
-			this = cast(ObjectGst)ptr;
-			return;
-		}
 		super(cast(GObject*)gstObject);
 		this.gstObject = gstObject;
 	}
@@ -194,20 +183,20 @@ public class ObjectGst : ObjectG
 		}
 		onDeepNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackDeepNotify(GstObject* gstobjectStruct, GstObject* propObject, GParamSpec* prop, ObjectGst objectGst)
+	extern(C) static void callBackDeepNotify(GstObject* gstobjectStruct, GstObject* propObject, GParamSpec* prop, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(ObjectGst, ParamSpec, ObjectGst) dlg ; objectGst.onDeepNotifyListeners )
+		foreach ( void delegate(ObjectGst, ParamSpec, ObjectGst) dlg ; _objectGst.onDeepNotifyListeners )
 		{
-			dlg(new ObjectGst(propObject), new ParamSpec(prop), objectGst);
+			dlg(ObjectG.getDObject!ObjectGst(propObject), ObjectG.getDObject!ParamSpec(prop), _objectGst);
 		}
 	}
 	
-	void delegate(gpointer, ObjectGst)[] onObjectSavedListeners;
+	void delegate(void*, ObjectGst)[] onObjectSavedListeners;
 	/**
 	 * Trigered whenever a new object is saved to XML. You can connect to this
 	 * signal to insert custom XML tags into the core XML.
 	 */
-	void addOnObjectSaved(void delegate(gpointer, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnObjectSaved(void delegate(void*, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("object-saved" in connectedSignals) )
 		{
@@ -222,11 +211,11 @@ public class ObjectGst : ObjectG
 		}
 		onObjectSavedListeners ~= dlg;
 	}
-	extern(C) static void callBackObjectSaved(GstObject* gstobjectStruct, gpointer xmlNode, ObjectGst objectGst)
+	extern(C) static void callBackObjectSaved(GstObject* gstobjectStruct, void* xmlNode, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(gpointer, ObjectGst) dlg ; objectGst.onObjectSavedListeners )
+		foreach ( void delegate(void*, ObjectGst) dlg ; _objectGst.onObjectSavedListeners )
 		{
-			dlg(xmlNode, objectGst);
+			dlg(xmlNode, _objectGst);
 		}
 	}
 	
@@ -249,11 +238,11 @@ public class ObjectGst : ObjectG
 		}
 		onParentSetListeners ~= dlg;
 	}
-	extern(C) static void callBackParentSet(GstObject* gstobjectStruct, GObject* parent, ObjectGst objectGst)
+	extern(C) static void callBackParentSet(GstObject* gstobjectStruct, GObject* parent, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(ObjectG, ObjectGst) dlg ; objectGst.onParentSetListeners )
+		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentSetListeners )
 		{
-			dlg(new ObjectG(parent), objectGst);
+			dlg(ObjectG.getDObject!ObjectG(parent), _objectGst);
 		}
 	}
 	
@@ -276,11 +265,11 @@ public class ObjectGst : ObjectG
 		}
 		onParentUnsetListeners ~= dlg;
 	}
-	extern(C) static void callBackParentUnset(GstObject* gstobjectStruct, GObject* parent, ObjectGst objectGst)
+	extern(C) static void callBackParentUnset(GstObject* gstobjectStruct, GObject* parent, ObjectGst _objectGst)
 	{
-		foreach ( void delegate(ObjectG, ObjectGst) dlg ; objectGst.onParentUnsetListeners )
+		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentUnsetListeners )
 		{
-			dlg(new ObjectG(parent), objectGst);
+			dlg(ObjectG.getDObject!ObjectG(parent), _objectGst);
 		}
 	}
 	
@@ -337,11 +326,13 @@ public class ObjectGst : ObjectG
 	{
 		// GstObject* gst_object_get_parent (GstObject *object);
 		auto p = gst_object_get_parent(gstObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectGst(cast(GstObject*) p);
+		
+		return ObjectG.getDObject!ObjectGst(cast(GstObject*) p);
 	}
 	
 	/**
@@ -514,7 +505,7 @@ public class ObjectGst : ObjectG
 		
 		gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct());
 		
-		oldobj = new ObjectGst(outoldobj);
+		oldobj = ObjectG.getDObject!ObjectGst(outoldobj);
 	}
 	
 	/**

@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -109,18 +110,6 @@ public class MountOperation : ObjectG
 	 */
 	public this (GMountOperation* gMountOperation)
 	{
-		if(gMountOperation is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gMountOperation);
-		if( ptr !is null )
-		{
-			this = cast(MountOperation)ptr;
-			return;
-		}
 		super(cast(GObject*)gMountOperation);
 		this.gMountOperation = gMountOperation;
 	}
@@ -158,11 +147,11 @@ public class MountOperation : ObjectG
 		}
 		onAbortedListeners ~= dlg;
 	}
-	extern(C) static void callBackAborted(GMountOperation* arg0Struct, MountOperation mountOperation)
+	extern(C) static void callBackAborted(GMountOperation* arg0Struct, MountOperation _mountOperation)
 	{
-		foreach ( void delegate(MountOperation) dlg ; mountOperation.onAbortedListeners )
+		foreach ( void delegate(MountOperation) dlg ; _mountOperation.onAbortedListeners )
 		{
-			dlg(mountOperation);
+			dlg(_mountOperation);
 		}
 	}
 	
@@ -188,11 +177,11 @@ public class MountOperation : ObjectG
 		}
 		onAskPasswordListeners ~= dlg;
 	}
-	extern(C) static void callBackAskPassword(GMountOperation* opStruct, gchar* message, gchar* defaultUser, gchar* defaultDomain, GAskPasswordFlags flags, MountOperation mountOperation)
+	extern(C) static void callBackAskPassword(GMountOperation* opStruct, gchar* message, gchar* defaultUser, gchar* defaultDomain, GAskPasswordFlags flags, MountOperation _mountOperation)
 	{
-		foreach ( void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg ; mountOperation.onAskPasswordListeners )
+		foreach ( void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg ; _mountOperation.onAskPasswordListeners )
 		{
-			dlg(Str.toString(message), Str.toString(defaultUser), Str.toString(defaultDomain), flags, mountOperation);
+			dlg(Str.toString(message), Str.toString(defaultUser), Str.toString(defaultDomain), flags, _mountOperation);
 		}
 	}
 	
@@ -219,11 +208,11 @@ public class MountOperation : ObjectG
 		}
 		onAskQuestionListeners ~= dlg;
 	}
-	extern(C) static void callBackAskQuestion(GMountOperation* opStruct, gchar* message, GStrv choices, MountOperation mountOperation)
+	extern(C) static void callBackAskQuestion(GMountOperation* opStruct, gchar* message, GStrv choices, MountOperation _mountOperation)
 	{
-		foreach ( void delegate(string, GStrv, MountOperation) dlg ; mountOperation.onAskQuestionListeners )
+		foreach ( void delegate(string, GStrv, MountOperation) dlg ; _mountOperation.onAskQuestionListeners )
 		{
-			dlg(Str.toString(message), choices, mountOperation);
+			dlg(Str.toString(message), choices, _mountOperation);
 		}
 	}
 	
@@ -246,11 +235,11 @@ public class MountOperation : ObjectG
 		}
 		onReplyListeners ~= dlg;
 	}
-	extern(C) static void callBackReply(GMountOperation* opStruct, GMountOperationResult result, MountOperation mountOperation)
+	extern(C) static void callBackReply(GMountOperation* opStruct, GMountOperationResult result, MountOperation _mountOperation)
 	{
-		foreach ( void delegate(GMountOperationResult, MountOperation) dlg ; mountOperation.onReplyListeners )
+		foreach ( void delegate(GMountOperationResult, MountOperation) dlg ; _mountOperation.onReplyListeners )
 		{
-			dlg(result, mountOperation);
+			dlg(result, _mountOperation);
 		}
 	}
 	
@@ -283,11 +272,11 @@ public class MountOperation : ObjectG
 		}
 		onShowProcessesListeners ~= dlg;
 	}
-	extern(C) static void callBackShowProcesses(GMountOperation* opStruct, gchar* message, GArray* processes, GStrv choices, MountOperation mountOperation)
+	extern(C) static void callBackShowProcesses(GMountOperation* opStruct, gchar* message, GArray* processes, GStrv choices, MountOperation _mountOperation)
 	{
-		foreach ( void delegate(string, ArrayG, GStrv, MountOperation) dlg ; mountOperation.onShowProcessesListeners )
+		foreach ( void delegate(string, ArrayG, GStrv, MountOperation) dlg ; _mountOperation.onShowProcessesListeners )
 		{
-			dlg(Str.toString(message), new ArrayG(processes), choices, mountOperation);
+			dlg(Str.toString(message), ObjectG.getDObject!ArrayG(processes), choices, _mountOperation);
 		}
 	}
 	

@@ -67,6 +67,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -110,11 +111,6 @@ public class UnixMountEntry
 	 */
 	public this (GUnixMountEntry* gUnixMountEntry)
 	{
-		if(gUnixMountEntry is null)
-		{
-			this = null;
-			return;
-		}
 		this.gUnixMountEntry = gUnixMountEntry;
 	}
 	
@@ -200,11 +196,13 @@ public class UnixMountEntry
 	{
 		// GIcon * g_unix_mount_guess_icon (GUnixMountEntry *mount_entry);
 		auto p = g_unix_mount_guess_icon(gUnixMountEntry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -251,11 +249,13 @@ public class UnixMountEntry
 	{
 		// GList * g_unix_mount_points_get (guint64 *time_read);
 		auto p = g_unix_mount_points_get(timeRead);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -271,11 +271,13 @@ public class UnixMountEntry
 	{
 		// GList * g_unix_mounts_get (guint64 *time_read);
 		auto p = g_unix_mounts_get(&timeRead);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -291,11 +293,13 @@ public class UnixMountEntry
 	{
 		// GUnixMountEntry * g_unix_mount_at (const char *mount_path,  guint64 *time_read);
 		auto p = g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new UnixMountEntry(cast(GUnixMountEntry*) p);
+		
+		return ObjectG.getDObject!UnixMountEntry(cast(GUnixMountEntry*) p);
 	}
 	
 	/**

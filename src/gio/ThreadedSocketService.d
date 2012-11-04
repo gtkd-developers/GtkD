@@ -55,6 +55,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -103,18 +104,6 @@ public class ThreadedSocketService : SocketService
 	 */
 	public this (GThreadedSocketService* gThreadedSocketService)
 	{
-		if(gThreadedSocketService is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gThreadedSocketService);
-		if( ptr !is null )
-		{
-			this = cast(ThreadedSocketService)ptr;
-			return;
-		}
 		super(cast(GSocketService*)gThreadedSocketService);
 		this.gThreadedSocketService = gThreadedSocketService;
 	}
@@ -154,11 +143,11 @@ public class ThreadedSocketService : SocketService
 		}
 		onRunListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackRun(GThreadedSocketService* serviceStruct, GSocketConnection* connection, GObject* sourceObject, ThreadedSocketService threadedSocketService)
+	extern(C) static gboolean callBackRun(GThreadedSocketService* serviceStruct, GSocketConnection* connection, GObject* sourceObject, ThreadedSocketService _threadedSocketService)
 	{
-		foreach ( bool delegate(GSocketConnection*, GObject*, ThreadedSocketService) dlg ; threadedSocketService.onRunListeners )
+		foreach ( bool delegate(GSocketConnection*, GObject*, ThreadedSocketService) dlg ; _threadedSocketService.onRunListeners )
 		{
-			if ( dlg(connection, sourceObject, threadedSocketService) )
+			if ( dlg(connection, sourceObject, _threadedSocketService) )
 			{
 				return 1;
 			}

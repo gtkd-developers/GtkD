@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -113,18 +114,6 @@ public class Scale : Range
 	 */
 	public this (GtkScale* gtkScale)
 	{
-		if(gtkScale is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkScale);
-		if( ptr !is null )
-		{
-			this = cast(Scale)ptr;
-			return;
-		}
 		super(cast(GtkRange*)gtkScale);
 		this.gtkScale = gtkScale;
 	}
@@ -163,11 +152,11 @@ public class Scale : Range
 		}
 		onFormatValueListeners ~= dlg;
 	}
-	extern(C) static void callBackFormatValue(GtkScale* scaleStruct, gdouble value, Scale scale)
+	extern(C) static void callBackFormatValue(GtkScale* scaleStruct, gdouble value, Scale _scale)
 	{
-		foreach ( string delegate(gdouble, Scale) dlg ; scale.onFormatValueListeners )
+		foreach ( string delegate(gdouble, Scale) dlg ; _scale.onFormatValueListeners )
 		{
-			dlg(value, scale);
+			dlg(value, _scale);
 		}
 	}
 	
@@ -251,11 +240,13 @@ public class Scale : Range
 	{
 		// PangoLayout * gtk_scale_get_layout (GtkScale *scale);
 		auto p = gtk_scale_get_layout(gtkScale);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**

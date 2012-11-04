@@ -59,6 +59,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -107,18 +108,6 @@ public class UnixFDMessage : SocketControlMessage
 	 */
 	public this (GUnixFDMessage* gUnixFDMessage)
 	{
-		if(gUnixFDMessage is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gUnixFDMessage);
-		if( ptr !is null )
-		{
-			this = cast(UnixFDMessage)ptr;
-			return;
-		}
 		super(cast(GSocketControlMessage*)gUnixFDMessage);
 		this.gUnixFDMessage = gUnixFDMessage;
 	}
@@ -178,11 +167,13 @@ public class UnixFDMessage : SocketControlMessage
 	{
 		// GUnixFDList * g_unix_fd_message_get_fd_list (GUnixFDMessage *message);
 		auto p = g_unix_fd_message_get_fd_list(gUnixFDMessage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new UnixFDList(cast(GUnixFDList*) p);
+		
+		return ObjectG.getDObject!UnixFDList(cast(GUnixFDList*) p);
 	}
 	
 	/**
@@ -235,6 +226,12 @@ public class UnixFDMessage : SocketControlMessage
 		// gint * g_unix_fd_message_steal_fds (GUnixFDMessage *message,  gint *length);
 		int length;
 		auto p = g_unix_fd_message_steal_fds(gUnixFDMessage, &length);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. length];
 	}
 }

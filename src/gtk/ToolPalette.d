@@ -68,6 +68,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -125,18 +126,6 @@ public class ToolPalette : Container, OrientableIF
 	 */
 	public this (GtkToolPalette* gtkToolPalette)
 	{
-		if(gtkToolPalette is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToolPalette);
-		if( ptr !is null )
-		{
-			this = cast(ToolPalette)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkToolPalette);
 		this.gtkToolPalette = gtkToolPalette;
 	}
@@ -177,11 +166,11 @@ public class ToolPalette : Container, OrientableIF
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkToolPalette* widgetStruct, GtkAdjustment* hadjustment, GtkAdjustment* vadjustment, ToolPalette toolPalette)
+	extern(C) static void callBackSetScrollAdjustments(GtkToolPalette* widgetStruct, GtkAdjustment* hadjustment, GtkAdjustment* vadjustment, ToolPalette _toolPalette)
 	{
-		foreach ( void delegate(Adjustment, Adjustment, ToolPalette) dlg ; toolPalette.onSetScrollAdjustmentsListeners )
+		foreach ( void delegate(Adjustment, Adjustment, ToolPalette) dlg ; _toolPalette.onSetScrollAdjustmentsListeners )
 		{
-			dlg(new Adjustment(hadjustment), new Adjustment(vadjustment), toolPalette);
+			dlg(ObjectG.getDObject!Adjustment(hadjustment), ObjectG.getDObject!Adjustment(vadjustment), _toolPalette);
 		}
 	}
 	
@@ -387,11 +376,13 @@ public class ToolPalette : Container, OrientableIF
 	{
 		// GtkWidget * gtk_tool_palette_get_drag_item (GtkToolPalette *palette,  const GtkSelectionData *selection);
 		auto p = gtk_tool_palette_get_drag_item(gtkToolPalette, selection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -428,11 +419,13 @@ public class ToolPalette : Container, OrientableIF
 	{
 		// GtkToolItemGroup * gtk_tool_palette_get_drop_group (GtkToolPalette *palette,  gint x,  gint y);
 		auto p = gtk_tool_palette_get_drop_group(gtkToolPalette, x, y);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ToolItemGroup(cast(GtkToolItemGroup*) p);
+		
+		return ObjectG.getDObject!ToolItemGroup(cast(GtkToolItemGroup*) p);
 	}
 	
 	/**
@@ -448,11 +441,13 @@ public class ToolPalette : Container, OrientableIF
 	{
 		// GtkToolItem * gtk_tool_palette_get_drop_item (GtkToolPalette *palette,  gint x,  gint y);
 		auto p = gtk_tool_palette_get_drop_item(gtkToolPalette, x, y);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ToolItem(cast(GtkToolItem*) p);
+		
+		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
 	}
 	
 	/**
@@ -480,11 +475,13 @@ public class ToolPalette : Container, OrientableIF
 	{
 		// GtkAdjustment * gtk_tool_palette_get_hadjustment (GtkToolPalette *palette);
 		auto p = gtk_tool_palette_get_hadjustment(gtkToolPalette);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -496,10 +493,12 @@ public class ToolPalette : Container, OrientableIF
 	{
 		// GtkAdjustment * gtk_tool_palette_get_vadjustment (GtkToolPalette *palette);
 		auto p = gtk_tool_palette_get_vadjustment(gtkToolPalette);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 }

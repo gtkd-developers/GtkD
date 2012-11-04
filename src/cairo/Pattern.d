@@ -103,11 +103,6 @@ public class Pattern
 	 */
 	public this (cairo_pattern_t* cairo_pattern)
 	{
-		if(cairo_pattern is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo_pattern = cairo_pattern;
 	}
 	
@@ -218,10 +213,12 @@ public class Pattern
 	{
 		// cairo_pattern_t * cairo_pattern_create_rgb (double red,  double green,  double blue);
 		auto p = cairo_pattern_create_rgb(red, green, blue);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
@@ -241,10 +238,12 @@ public class Pattern
 	{
 		// cairo_pattern_t * cairo_pattern_create_rgba (double red,  double green,  double blue,  double alpha);
 		auto p = cairo_pattern_create_rgba(red, green, blue, alpha);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
@@ -274,10 +273,12 @@ public class Pattern
 	{
 		// cairo_pattern_t * cairo_pattern_create_for_surface (cairo_surface_t *surface);
 		auto p = cairo_pattern_create_for_surface((surface is null) ? null : surface.getSurfaceStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
@@ -321,10 +322,12 @@ public class Pattern
 	{
 		// cairo_pattern_t * cairo_pattern_create_linear (double x0,  double y0,  double x1,  double y1);
 		auto p = cairo_pattern_create_linear(x0, y0, x1, y1);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
@@ -366,10 +369,12 @@ public class Pattern
 	{
 		// cairo_pattern_t * cairo_pattern_create_radial (double cx0,  double cy0,  double radius0,  double cx1,  double cy1,  double radius1);
 		auto p = cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
@@ -404,10 +409,12 @@ public class Pattern
 	{
 		// cairo_pattern_t * cairo_pattern_reference (cairo_pattern_t *pattern);
 		auto p = cairo_pattern_reference(cairo_pattern);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	

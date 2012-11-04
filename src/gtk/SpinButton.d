@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -107,18 +108,6 @@ public class SpinButton : Entry
 	 */
 	public this (GtkSpinButton* gtkSpinButton)
 	{
-		if(gtkSpinButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSpinButton);
-		if( ptr !is null )
-		{
-			this = cast(SpinButton)ptr;
-			return;
-		}
 		super(cast(GtkEntry*)gtkSpinButton);
 		this.gtkSpinButton = gtkSpinButton;
 	}
@@ -151,18 +140,18 @@ public class SpinButton : Entry
 		}
 		onChangeValueListeners ~= dlg;
 	}
-	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType arg1, SpinButton spinButton)
+	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType arg1, SpinButton _spinButton)
 	{
-		foreach ( void delegate(GtkScrollType, SpinButton) dlg ; spinButton.onChangeValueListeners )
+		foreach ( void delegate(GtkScrollType, SpinButton) dlg ; _spinButton.onChangeValueListeners )
 		{
-			dlg(arg1, spinButton);
+			dlg(arg1, _spinButton);
 		}
 	}
 	
-	gint delegate(gpointer, SpinButton)[] onInputListeners;
+	gint delegate(void*, SpinButton)[] onInputListeners;
 	/**
 	 */
-	void addOnInput(gint delegate(gpointer, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInput(gint delegate(void*, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("input" in connectedSignals) )
 		{
@@ -177,11 +166,11 @@ public class SpinButton : Entry
 		}
 		onInputListeners ~= dlg;
 	}
-	extern(C) static void callBackInput(GtkSpinButton* spinbuttonStruct, gpointer arg1, SpinButton spinButton)
+	extern(C) static void callBackInput(GtkSpinButton* spinbuttonStruct, void* arg1, SpinButton _spinButton)
 	{
-		foreach ( gint delegate(gpointer, SpinButton) dlg ; spinButton.onInputListeners )
+		foreach ( gint delegate(void*, SpinButton) dlg ; _spinButton.onInputListeners )
 		{
-			dlg(arg1, spinButton);
+			dlg(arg1, _spinButton);
 		}
 	}
 	
@@ -207,11 +196,11 @@ public class SpinButton : Entry
 		}
 		onOutputListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackOutput(GtkSpinButton* spinButtonStruct, SpinButton spinButton)
+	extern(C) static gboolean callBackOutput(GtkSpinButton* spinButtonStruct, SpinButton _spinButton)
 	{
-		foreach ( bool delegate(SpinButton) dlg ; spinButton.onOutputListeners )
+		foreach ( bool delegate(SpinButton) dlg ; _spinButton.onOutputListeners )
 		{
-			if ( dlg(spinButton) )
+			if ( dlg(_spinButton) )
 			{
 				return 1;
 			}
@@ -238,11 +227,11 @@ public class SpinButton : Entry
 		}
 		onValueChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
+	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct, SpinButton _spinButton)
 	{
-		foreach ( void delegate(SpinButton) dlg ; spinButton.onValueChangedListeners )
+		foreach ( void delegate(SpinButton) dlg ; _spinButton.onValueChangedListeners )
 		{
-			dlg(spinButton);
+			dlg(_spinButton);
 		}
 	}
 	
@@ -270,11 +259,11 @@ public class SpinButton : Entry
 		}
 		onWrappedListeners ~= dlg;
 	}
-	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
+	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, SpinButton _spinButton)
 	{
-		foreach ( void delegate(SpinButton) dlg ; spinButton.onWrappedListeners )
+		foreach ( void delegate(SpinButton) dlg ; _spinButton.onWrappedListeners )
 		{
-			dlg(spinButton);
+			dlg(_spinButton);
 		}
 	}
 	
@@ -357,11 +346,13 @@ public class SpinButton : Entry
 	{
 		// GtkAdjustment * gtk_spin_button_get_adjustment (GtkSpinButton *spin_button);
 		auto p = gtk_spin_button_get_adjustment(gtkSpinButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**

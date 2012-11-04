@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -116,11 +117,6 @@ public class IOExtension
 	 */
 	public this (GIOExtension* gIOExtension)
 	{
-		if(gIOExtension is null)
-		{
-			this = null;
-			return;
-		}
 		this.gIOExtension = gIOExtension;
 	}
 	

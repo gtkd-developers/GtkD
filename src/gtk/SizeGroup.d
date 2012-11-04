@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -138,18 +139,6 @@ public class SizeGroup : ObjectG, BuildableIF
 	 */
 	public this (GtkSizeGroup* gtkSizeGroup)
 	{
-		if(gtkSizeGroup is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSizeGroup);
-		if( ptr !is null )
-		{
-			this = cast(SizeGroup)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSizeGroup);
 		this.gtkSizeGroup = gtkSizeGroup;
 	}
@@ -271,10 +260,12 @@ public class SizeGroup : ObjectG, BuildableIF
 	{
 		// GSList * gtk_size_group_get_widgets (GtkSizeGroup *size_group);
 		auto p = gtk_size_group_get_widgets(gtkSizeGroup);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 }

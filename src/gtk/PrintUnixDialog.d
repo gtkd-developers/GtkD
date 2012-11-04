@@ -69,6 +69,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -129,18 +130,6 @@ public class PrintUnixDialog : Dialog
 	 */
 	public this (GtkPrintUnixDialog* gtkPrintUnixDialog)
 	{
-		if(gtkPrintUnixDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPrintUnixDialog);
-		if( ptr !is null )
-		{
-			this = cast(PrintUnixDialog)ptr;
-			return;
-		}
 		super(cast(GtkDialog*)gtkPrintUnixDialog);
 		this.gtkPrintUnixDialog = gtkPrintUnixDialog;
 	}
@@ -194,11 +183,13 @@ public class PrintUnixDialog : Dialog
 	{
 		// GtkPageSetup * gtk_print_unix_dialog_get_page_setup  (GtkPrintUnixDialog *dialog);
 		auto p = gtk_print_unix_dialog_get_page_setup(gtkPrintUnixDialog);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PageSetup(cast(GtkPageSetup*) p);
+		
+		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
 	}
 	
 	/**
@@ -251,11 +242,13 @@ public class PrintUnixDialog : Dialog
 	{
 		// GtkPrintSettings * gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
 		auto p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PrintSettings(cast(GtkPrintSettings*) p);
+		
+		return ObjectG.getDObject!PrintSettings(cast(GtkPrintSettings*) p);
 	}
 	
 	/**
@@ -267,11 +260,13 @@ public class PrintUnixDialog : Dialog
 	{
 		// GtkPrinter * gtk_print_unix_dialog_get_selected_printer  (GtkPrintUnixDialog *dialog);
 		auto p = gtk_print_unix_dialog_get_selected_printer(gtkPrintUnixDialog);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Printer(cast(GtkPrinter*) p);
+		
+		return ObjectG.getDObject!Printer(cast(GtkPrinter*) p);
 	}
 	
 	/**

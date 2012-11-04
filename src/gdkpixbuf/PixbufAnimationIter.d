@@ -59,6 +59,7 @@ public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Pixbuf;
@@ -102,18 +103,6 @@ public class PixbufAnimationIter : ObjectG
 	 */
 	public this (GdkPixbufAnimationIter* gdkPixbufAnimationIter)
 	{
-		if(gdkPixbufAnimationIter is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkPixbufAnimationIter);
-		if( ptr !is null )
-		{
-			this = cast(PixbufAnimationIter)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkPixbufAnimationIter);
 		this.gdkPixbufAnimationIter = gdkPixbufAnimationIter;
 	}
@@ -199,10 +188,12 @@ public class PixbufAnimationIter : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_animation_iter_get_pixbuf  (GdkPixbufAnimationIter *iter);
 		auto p = gdk_pixbuf_animation_iter_get_pixbuf(gdkPixbufAnimationIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 }

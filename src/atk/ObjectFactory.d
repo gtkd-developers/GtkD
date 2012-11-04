@@ -59,6 +59,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import atk.ObjectAtk;
@@ -100,18 +101,6 @@ public class ObjectFactory : ObjectG
 	 */
 	public this (AtkObjectFactory* atkObjectFactory)
 	{
-		if(atkObjectFactory is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkObjectFactory);
-		if( ptr !is null )
-		{
-			this = cast(ObjectFactory)ptr;
-			return;
-		}
 		super(cast(GObject*)atkObjectFactory);
 		this.atkObjectFactory = atkObjectFactory;
 	}
@@ -136,11 +125,13 @@ public class ObjectFactory : ObjectG
 	{
 		// AtkObject * atk_object_factory_create_accessible  (AtkObjectFactory *factory,  GObject *obj);
 		auto p = atk_object_factory_create_accessible(atkObjectFactory, (obj is null) ? null : obj.getObjectGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

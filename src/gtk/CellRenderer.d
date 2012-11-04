@@ -68,6 +68,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -137,18 +138,6 @@ public class CellRenderer : ObjectGtk
 	 */
 	public this (GtkCellRenderer* gtkCellRenderer)
 	{
-		if(gtkCellRenderer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellRenderer);
-		if( ptr !is null )
-		{
-			this = cast(CellRenderer)ptr;
-			return;
-		}
 		super(cast(GtkObject*)gtkCellRenderer);
 		this.gtkCellRenderer = gtkCellRenderer;
 	}
@@ -186,11 +175,11 @@ public class CellRenderer : ObjectGtk
 		}
 		onEditingCanceledListeners ~= dlg;
 	}
-	extern(C) static void callBackEditingCanceled(GtkCellRenderer* rendererStruct, CellRenderer cellRenderer)
+	extern(C) static void callBackEditingCanceled(GtkCellRenderer* rendererStruct, CellRenderer _cellRenderer)
 	{
-		foreach ( void delegate(CellRenderer) dlg ; cellRenderer.onEditingCanceledListeners )
+		foreach ( void delegate(CellRenderer) dlg ; _cellRenderer.onEditingCanceledListeners )
 		{
-			dlg(cellRenderer);
+			dlg(_cellRenderer);
 		}
 	}
 	
@@ -223,11 +212,11 @@ public class CellRenderer : ObjectGtk
 		}
 		onEditingStartedListeners ~= dlg;
 	}
-	extern(C) static void callBackEditingStarted(GtkCellRenderer* rendererStruct, GtkCellEditable* editable, gchar* path, CellRenderer cellRenderer)
+	extern(C) static void callBackEditingStarted(GtkCellRenderer* rendererStruct, GtkCellEditable* editable, gchar* path, CellRenderer _cellRenderer)
 	{
-		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg ; cellRenderer.onEditingStartedListeners )
+		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg ; _cellRenderer.onEditingStartedListeners )
 		{
-			dlg(new CellEditable(editable), Str.toString(path), cellRenderer);
+			dlg(ObjectG.getDObject!CellEditable(editable), Str.toString(path), _cellRenderer);
 		}
 	}
 	
@@ -316,11 +305,13 @@ public class CellRenderer : ObjectGtk
 	{
 		// GtkCellEditable * gtk_cell_renderer_start_editing (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  const GdkRectangle *background_area,  const GdkRectangle *cell_area,  GtkCellRendererState flags);
 		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellEditable(cast(GtkCellEditable*) p);
+		
+		return ObjectG.getDObject!CellEditable(cast(GtkCellEditable*) p);
 	}
 	
 	/**

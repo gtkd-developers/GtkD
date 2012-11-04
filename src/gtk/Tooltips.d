@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -113,18 +114,6 @@ public class Tooltips : ObjectGtk
 	 */
 	public this (GtkTooltips* gtkTooltips)
 	{
-		if(gtkTooltips is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTooltips);
-		if( ptr !is null )
-		{
-			this = cast(Tooltips)ptr;
-			return;
-		}
 		super(cast(GtkObject*)gtkTooltips);
 		this.gtkTooltips = gtkTooltips;
 	}
@@ -255,7 +244,7 @@ public class Tooltips : ObjectGtk
 		
 		auto p = gtk_tooltips_get_info_from_tip_window((tipWindow is null) ? null : tipWindow.getWindowStruct(), &tooltips, &outcurrentWidget);
 		
-		currentWidget = new Widget(outcurrentWidget);
+		currentWidget = ObjectG.getDObject!Widget(outcurrentWidget);
 		return p;
 	}
 }

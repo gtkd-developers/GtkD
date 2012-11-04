@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -197,18 +198,6 @@ public class Settings : ObjectG
 	 */
 	public this (GSettings* gSettings)
 	{
-		if(gSettings is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSettings);
-		if( ptr !is null )
-		{
-			this = cast(Settings)ptr;
-			return;
-		}
 		super(cast(GObject*)gSettings);
 		this.gSettings = gSettings;
 	}
@@ -223,7 +212,7 @@ public class Settings : ObjectG
 	 */
 	int[string] connectedSignals;
 	
-	bool delegate(gpointer, gint, Settings)[] onChangeListeners;
+	bool delegate(void*, gint, Settings)[] onChangeListeners;
 	/**
 	 * The "change-event" signal is emitted once per change event that
 	 * affects this settings object. You should connect to this signal
@@ -241,7 +230,7 @@ public class Settings : ObjectG
 	 * TRUE to stop other handlers from being invoked for the
 	 * event. FALSE to propagate the event further.
 	 */
-	void addOnChange(bool delegate(gpointer, gint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnChange(bool delegate(void*, gint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-event" in connectedSignals) )
 		{
@@ -256,11 +245,11 @@ public class Settings : ObjectG
 		}
 		onChangeListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackChange(GSettings* settingsStruct, gpointer keys, gint nKeys, Settings settings)
+	extern(C) static gboolean callBackChange(GSettings* settingsStruct, void* keys, gint nKeys, Settings _settings)
 	{
-		foreach ( bool delegate(gpointer, gint, Settings) dlg ; settings.onChangeListeners )
+		foreach ( bool delegate(void*, gint, Settings) dlg ; _settings.onChangeListeners )
 		{
-			if ( dlg(keys, nKeys, settings) )
+			if ( dlg(keys, nKeys, _settings) )
 			{
 				return 1;
 			}
@@ -293,11 +282,11 @@ public class Settings : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GSettings* settingsStruct, gchar* key, Settings settings)
+	extern(C) static void callBackChanged(GSettings* settingsStruct, gchar* key, Settings _settings)
 	{
-		foreach ( void delegate(string, Settings) dlg ; settings.onChangedListeners )
+		foreach ( void delegate(string, Settings) dlg ; _settings.onChangedListeners )
 		{
-			dlg(Str.toString(key), settings);
+			dlg(Str.toString(key), _settings);
 		}
 	}
 	
@@ -337,11 +326,11 @@ public class Settings : ObjectG
 		}
 		onWritableChangeListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackWritableChange(GSettings* settingsStruct, guint key, Settings settings)
+	extern(C) static gboolean callBackWritableChange(GSettings* settingsStruct, guint key, Settings _settings)
 	{
-		foreach ( bool delegate(guint, Settings) dlg ; settings.onWritableChangeListeners )
+		foreach ( bool delegate(guint, Settings) dlg ; _settings.onWritableChangeListeners )
 		{
-			if ( dlg(key, settings) )
+			if ( dlg(key, _settings) )
 			{
 				return 1;
 			}
@@ -374,11 +363,11 @@ public class Settings : ObjectG
 		}
 		onWritableChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, gchar* key, Settings settings)
+	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, gchar* key, Settings _settings)
 	{
-		foreach ( void delegate(string, Settings) dlg ; settings.onWritableChangedListeners )
+		foreach ( void delegate(string, Settings) dlg ; _settings.onWritableChangedListeners )
 		{
-			dlg(Str.toString(key), settings);
+			dlg(Str.toString(key), _settings);
 		}
 	}
 	
@@ -506,11 +495,13 @@ public class Settings : ObjectG
 	{
 		// GVariant * g_settings_get_value (GSettings *settings,  const gchar *key);
 		auto p = g_settings_get_value(gSettings, Str.toStringz(key));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -608,11 +599,13 @@ public class Settings : ObjectG
 	{
 		// GSettings * g_settings_get_child (GSettings *settings,  const gchar *name);
 		auto p = g_settings_get_child(gSettings, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Settings(cast(GSettings*) p);
+		
+		return ObjectG.getDObject!Settings(cast(GSettings*) p);
 	}
 	
 	/**
@@ -745,11 +738,13 @@ public class Settings : ObjectG
 	{
 		// GVariant * g_settings_get_range (GSettings *settings,  const gchar *key);
 		auto p = g_settings_get_range(gSettings, Str.toStringz(key));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**

@@ -59,6 +59,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -94,11 +95,6 @@ public class FieldAttributes
 	 */
 	public this (GdaFieldAttributes* gdaFieldAttributes)
 	{
-		if(gdaFieldAttributes is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaFieldAttributes = gdaFieldAttributes;
 	}
 	
@@ -136,11 +132,13 @@ public class FieldAttributes
 	{
 		// GdaFieldAttributes* gda_field_attributes_copy (GdaFieldAttributes *fa);
 		auto p = gda_field_attributes_copy(gdaFieldAttributes);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FieldAttributes(cast(GdaFieldAttributes*) p);
+		
+		return ObjectG.getDObject!FieldAttributes(cast(GdaFieldAttributes*) p);
 	}
 	
 	/**
@@ -415,11 +413,13 @@ public class FieldAttributes
 	{
 		// const GdaValue* gda_field_attributes_get_default_value  (GdaFieldAttributes *fa);
 		auto p = gda_field_attributes_get_default_value(gdaFieldAttributes);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GdaValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GdaValue*) p);
 	}
 	
 	/**

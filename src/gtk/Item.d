@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -95,18 +96,6 @@ public class Item : Bin
 	 */
 	public this (GtkItem* gtkItem)
 	{
-		if(gtkItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkItem);
-		if( ptr !is null )
-		{
-			this = cast(Item)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkItem);
 		this.gtkItem = gtkItem;
 	}
@@ -140,11 +129,11 @@ public class Item : Bin
 		}
 		onDeselectListeners ~= dlg;
 	}
-	extern(C) static void callBackDeselect(GtkItem* itemStruct, Item item)
+	extern(C) static void callBackDeselect(GtkItem* itemStruct, Item _item)
 	{
-		foreach ( void delegate(Item) dlg ; item.onDeselectListeners )
+		foreach ( void delegate(Item) dlg ; _item.onDeselectListeners )
 		{
-			dlg(item);
+			dlg(_item);
 		}
 	}
 	
@@ -167,11 +156,11 @@ public class Item : Bin
 		}
 		onSelectListeners ~= dlg;
 	}
-	extern(C) static void callBackSelect(GtkItem* itemStruct, Item item)
+	extern(C) static void callBackSelect(GtkItem* itemStruct, Item _item)
 	{
-		foreach ( void delegate(Item) dlg ; item.onSelectListeners )
+		foreach ( void delegate(Item) dlg ; _item.onSelectListeners )
 		{
-			dlg(item);
+			dlg(_item);
 		}
 	}
 	
@@ -194,11 +183,11 @@ public class Item : Bin
 		}
 		onToggleListeners ~= dlg;
 	}
-	extern(C) static void callBackToggle(GtkItem* itemStruct, Item item)
+	extern(C) static void callBackToggle(GtkItem* itemStruct, Item _item)
 	{
-		foreach ( void delegate(Item) dlg ; item.onToggleListeners )
+		foreach ( void delegate(Item) dlg ; _item.onToggleListeners )
 		{
-			dlg(item);
+			dlg(_item);
 		}
 	}
 	

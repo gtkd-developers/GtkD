@@ -256,11 +256,6 @@ public class VariantBuilder
 	 */
 	public this (GVariantBuilder* gVariantBuilder)
 	{
-		if(gVariantBuilder is null)
-		{
-			this = null;
-			return;
-		}
 		this.gVariantBuilder = gVariantBuilder;
 	}
 	
@@ -292,10 +287,12 @@ public class VariantBuilder
 	{
 		// GVariantBuilder * g_variant_builder_ref (GVariantBuilder *builder);
 		auto p = g_variant_builder_ref(gVariantBuilder);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantBuilder(cast(GVariantBuilder*) p);
 	}
 	
@@ -418,10 +415,12 @@ public class VariantBuilder
 	{
 		// GVariant * g_variant_builder_end (GVariantBuilder *builder);
 		auto p = g_variant_builder_end(gVariantBuilder);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	

@@ -96,11 +96,6 @@ public class StringG
 	 */
 	public this (GString* gString)
 	{
-		if(gString is null)
-		{
-			this = null;
-			return;
-		}
 		this.gString = gString;
 	}
 	
@@ -161,10 +156,12 @@ public class StringG
 	{
 		// GString * g_string_sized_new (gsize dfl_size);
 		auto p = g_string_sized_new(dflSize);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -183,10 +180,12 @@ public class StringG
 	{
 		// GString * g_string_assign (GString *string,  const gchar *rval);
 		auto p = g_string_assign(gString, Str.toStringz(rval));
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -235,10 +234,12 @@ public class StringG
 	{
 		// GString * g_string_append (GString *string,  const gchar *val);
 		auto p = g_string_append(gString, Str.toStringz(val));
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -253,10 +254,12 @@ public class StringG
 	{
 		// GString * g_string_append_c (GString *string,  gchar c);
 		auto p = g_string_append_c(gString, c);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -271,10 +274,12 @@ public class StringG
 	{
 		// GString * g_string_append_unichar (GString *string,  gunichar wc);
 		auto p = g_string_append_unichar(gString, wc);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -295,10 +300,12 @@ public class StringG
 	{
 		// GString * g_string_append_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_append_len(gString, Str.toStringz(val), len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -317,10 +324,12 @@ public class StringG
 	{
 		// GString * g_string_append_uri_escaped (GString *string,  const char *unescaped,  const char *reserved_chars_allowed,  gboolean allow_utf8);
 		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -336,10 +345,12 @@ public class StringG
 	{
 		// GString * g_string_prepend (GString *string,  const gchar *val);
 		auto p = g_string_prepend(gString, Str.toStringz(val));
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -354,10 +365,12 @@ public class StringG
 	{
 		// GString * g_string_prepend_c (GString *string,  gchar c);
 		auto p = g_string_prepend_c(gString, c);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -372,10 +385,12 @@ public class StringG
 	{
 		// GString * g_string_prepend_unichar (GString *string,  gunichar wc);
 		auto p = g_string_prepend_unichar(gString, wc);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -396,10 +411,12 @@ public class StringG
 	{
 		// GString * g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -416,10 +433,12 @@ public class StringG
 	{
 		// GString * g_string_insert (GString *string,  gssize pos,  const gchar *val);
 		auto p = g_string_insert(gString, pos, Str.toStringz(val));
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -434,10 +453,12 @@ public class StringG
 	{
 		// GString * g_string_insert_c (GString *string,  gssize pos,  gchar c);
 		auto p = g_string_insert_c(gString, pos, c);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -454,10 +475,12 @@ public class StringG
 	{
 		// GString * g_string_insert_unichar (GString *string,  gssize pos,  gunichar wc);
 		auto p = g_string_insert_unichar(gString, pos, wc);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -481,10 +504,12 @@ public class StringG
 	{
 		// GString * g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
 		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -501,10 +526,12 @@ public class StringG
 	{
 		// GString * g_string_overwrite (GString *string,  gsize pos,  const gchar *val);
 		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -523,10 +550,12 @@ public class StringG
 	{
 		// GString * g_string_overwrite_len (GString *string,  gsize pos,  const gchar *val,  gssize len);
 		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -543,10 +572,12 @@ public class StringG
 	{
 		// GString * g_string_erase (GString *string,  gssize pos,  gssize len);
 		auto p = g_string_erase(gString, pos, len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -560,10 +591,12 @@ public class StringG
 	{
 		// GString * g_string_truncate (GString *string,  gsize len);
 		auto p = g_string_truncate(gString, len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -581,10 +614,12 @@ public class StringG
 	{
 		// GString * g_string_set_size (GString *string,  gsize len);
 		auto p = g_string_set_size(gString, len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -616,10 +651,12 @@ public class StringG
 	{
 		// GString * g_string_up (GString *string);
 		auto p = g_string_up(gString);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -635,10 +672,12 @@ public class StringG
 	{
 		// GString * g_string_down (GString *string);
 		auto p = g_string_down(gString);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	

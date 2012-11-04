@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -126,18 +127,6 @@ public class DrawingArea : Widget
 	 */
 	public this (GtkDrawingArea* gtkDrawingArea)
 	{
-		if(gtkDrawingArea is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkDrawingArea);
-		if( ptr !is null )
-		{
-			this = cast(DrawingArea)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkDrawingArea);
 		this.gtkDrawingArea = gtkDrawingArea;
 	}

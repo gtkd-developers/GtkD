@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -160,18 +161,6 @@ public class Clipboard : ObjectG
 	 */
 	public this (GtkClipboard* gtkClipboard)
 	{
-		if(gtkClipboard is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkClipboard);
-		if( ptr !is null )
-		{
-			this = cast(Clipboard)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkClipboard);
 		this.gtkClipboard = gtkClipboard;
 	}
@@ -214,11 +203,11 @@ public class Clipboard : ObjectG
 		}
 		onOwnerChangeListeners ~= dlg;
 	}
-	extern(C) static void callBackOwnerChange(GtkClipboard* clipboardStruct, GdkEvent* event, Clipboard clipboard)
+	extern(C) static void callBackOwnerChange(GtkClipboard* clipboardStruct, GdkEvent* event, Clipboard _clipboard)
 	{
-		foreach ( void delegate(GdkEvent*, Clipboard) dlg ; clipboard.onOwnerChangeListeners )
+		foreach ( void delegate(GdkEvent*, Clipboard) dlg ; _clipboard.onOwnerChangeListeners )
 		{
-			dlg(event, clipboard);
+			dlg(event, _clipboard);
 		}
 	}
 	
@@ -234,11 +223,13 @@ public class Clipboard : ObjectG
 	{
 		// GtkClipboard * gtk_clipboard_get (GdkAtom selection);
 		auto p = gtk_clipboard_get(selection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Clipboard(cast(GtkClipboard*) p);
+		
+		return ObjectG.getDObject!Clipboard(cast(GtkClipboard*) p);
 	}
 	
 	/**
@@ -275,11 +266,13 @@ public class Clipboard : ObjectG
 	{
 		// GtkClipboard * gtk_clipboard_get_for_display (GdkDisplay *display,  GdkAtom selection);
 		auto p = gtk_clipboard_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Clipboard(cast(GtkClipboard*) p);
+		
+		return ObjectG.getDObject!Clipboard(cast(GtkClipboard*) p);
 	}
 	
 	/**
@@ -291,11 +284,13 @@ public class Clipboard : ObjectG
 	{
 		// GdkDisplay * gtk_clipboard_get_display (GtkClipboard *clipboard);
 		auto p = gtk_clipboard_get_display(gtkClipboard);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -351,11 +346,13 @@ public class Clipboard : ObjectG
 	{
 		// GObject * gtk_clipboard_get_owner (GtkClipboard *clipboard);
 		auto p = gtk_clipboard_get_owner(gtkClipboard);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 	
 	/**
@@ -563,11 +560,13 @@ public class Clipboard : ObjectG
 	{
 		// GdkPixbuf * gtk_clipboard_wait_for_image (GtkClipboard *clipboard);
 		auto p = gtk_clipboard_wait_for_image(gtkClipboard);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -585,6 +584,12 @@ public class Clipboard : ObjectG
 		// guint8 * gtk_clipboard_wait_for_rich_text (GtkClipboard *clipboard,  GtkTextBuffer *buffer,  GdkAtom *format,  gsize *length);
 		gsize length;
 		auto p = gtk_clipboard_wait_for_rich_text(gtkClipboard, (buffer is null) ? null : buffer.getTextBufferStruct(), &format, &length);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. length];
 	}
 	

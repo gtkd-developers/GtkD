@@ -93,11 +93,6 @@ public class UserFontFace
 	 */
 	public this (cairo_font_face_t* cairo_font_face)
 	{
-		if(cairo_font_face is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo_font_face = cairo_font_face;
 	}
 	
@@ -120,10 +115,12 @@ public class UserFontFace
 	{
 		// cairo_font_face_t * cairo_user_font_face_create (void);
 		auto p = cairo_user_font_face_create();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new UserFontFace(cast(cairo_font_face_t*) p);
 	}
 	

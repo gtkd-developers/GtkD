@@ -112,7 +112,14 @@ code: start
 	 */
 	static GLDrawable getGLDrawable(Widget widget)
 	{
-		return new GLDrawable(cast(GdkGLDrawable*)gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct()));
+		auto p = gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct());
+
+		if ( p is null )
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!GLDrawable(cast(GdkGLDrawable*)p);
 	}	
 
 code: end

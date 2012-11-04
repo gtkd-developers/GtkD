@@ -178,6 +178,12 @@ public class Base64
 		// guchar * g_base64_decode (const gchar *text,  gsize *out_len);
 		gsize outLen;
 		auto p = g_base64_decode(Str.toStringz(text), &outLen);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. outLen];
 	}
 	
@@ -194,6 +200,12 @@ public class Base64
 		// guchar * g_base64_decode_inplace (gchar *text,  gsize *out_len);
 		gsize outLen;
 		auto p = g_base64_decode_inplace(Str.toStringz(text), &outLen);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. outLen];
 	}
 }

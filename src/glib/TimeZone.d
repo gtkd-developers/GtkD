@@ -109,11 +109,6 @@ public class TimeZone
 	 */
 	public this (GTimeZone* gTimeZone)
 	{
-		if(gTimeZone is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTimeZone = gTimeZone;
 	}
 	
@@ -139,10 +134,12 @@ public class TimeZone
 	{
 		// GTimeZone * g_time_zone_ref (GTimeZone *tz);
 		auto p = g_time_zone_ref(gTimeZone);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new TimeZone(cast(GTimeZone*) p);
 	}
 	

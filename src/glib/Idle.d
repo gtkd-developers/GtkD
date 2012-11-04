@@ -262,10 +262,12 @@ public class Idle
 	{
 		// GSource * g_idle_source_new (void);
 		auto p = g_idle_source_new();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	

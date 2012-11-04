@@ -62,6 +62,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Visual;
@@ -110,11 +111,6 @@ public class ImageGdk
 	 */
 	public this (GdkImage* gdkImage)
 	{
-		if(gdkImage is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkImage = gdkImage;
 	}
 	
@@ -191,11 +187,13 @@ public class ImageGdk
 	{
 		// GdkImage * gdk_image_get (GdkDrawable *drawable,  gint x,  gint y,  gint width,  gint height);
 		auto p = gdk_image_get((drawable is null) ? null : drawable.getDrawableStruct(), x, y, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ImageGdk(cast(GdkImage*) p);
+		
+		return ObjectG.getDObject!ImageGdk(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -208,11 +206,13 @@ public class ImageGdk
 	{
 		// GdkImage * gdk_image_ref (GdkImage *image);
 		auto p = gdk_image_ref(gdkImage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ImageGdk(cast(GdkImage*) p);
+		
+		return ObjectG.getDObject!ImageGdk(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -239,11 +239,13 @@ public class ImageGdk
 	{
 		// GdkColormap * gdk_image_get_colormap (GdkImage *image);
 		auto p = gdk_image_get_colormap(gdkImage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Colormap(cast(GdkColormap*) p);
+		
+		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -365,11 +367,13 @@ public class ImageGdk
 	{
 		// GdkVisual * gdk_image_get_visual (GdkImage *image);
 		auto p = gdk_image_get_visual(gdkImage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**

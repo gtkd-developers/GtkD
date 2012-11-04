@@ -124,11 +124,6 @@ public class SimpleXML
 	 */
 	public this (GMarkupParseContext* gMarkupParseContext)
 	{
-		if(gMarkupParseContext is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMarkupParseContext = gMarkupParseContext;
 	}
 	
@@ -255,10 +250,12 @@ public class SimpleXML
 	{
 		// const GSList * g_markup_parse_context_get_element_stack  (GMarkupParseContext *context);
 		auto p = g_markup_parse_context_get_element_stack(gMarkupParseContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	

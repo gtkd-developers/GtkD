@@ -64,6 +64,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -187,18 +188,6 @@ public class Bin : Element
 	 */
 	public this (GstBin* gstBin)
 	{
-		if(gstBin is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstBin);
-		if( ptr !is null )
-		{
-			this = cast(Bin)ptr;
-			return;
-		}
 		super(cast(GstElement*)gstBin);
 		this.gstBin = gstBin;
 	}
@@ -239,11 +228,11 @@ public class Bin : Element
 		}
 		onElementAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackElementAdded(GstBin* binStruct, GstElement* element, Bin bin)
+	extern(C) static void callBackElementAdded(GstBin* binStruct, GstElement* element, Bin _bin)
 	{
-		foreach ( void delegate(Element, Bin) dlg ; bin.onElementAddedListeners )
+		foreach ( void delegate(Element, Bin) dlg ; _bin.onElementAddedListeners )
 		{
-			dlg(new Element(element), bin);
+			dlg(ObjectG.getDObject!Element(element), _bin);
 		}
 	}
 	
@@ -266,11 +255,11 @@ public class Bin : Element
 		}
 		onElementRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackElementRemoved(GstBin* binStruct, GstElement* element, Bin bin)
+	extern(C) static void callBackElementRemoved(GstBin* binStruct, GstElement* element, Bin _bin)
 	{
-		foreach ( void delegate(Element, Bin) dlg ; bin.onElementRemovedListeners )
+		foreach ( void delegate(Element, Bin) dlg ; _bin.onElementRemovedListeners )
 		{
-			dlg(new Element(element), bin);
+			dlg(ObjectG.getDObject!Element(element), _bin);
 		}
 	}
 	
@@ -341,11 +330,13 @@ public class Bin : Element
 	{
 		// GstElement* gst_bin_get_by_name (GstBin *bin,  const gchar *name);
 		auto p = gst_bin_get_by_name(gstBin, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Element(cast(GstElement*) p);
+		
+		return ObjectG.getDObject!Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -359,11 +350,13 @@ public class Bin : Element
 	{
 		// GstElement* gst_bin_get_by_name_recurse_up (GstBin *bin,  const gchar *name);
 		auto p = gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Element(cast(GstElement*) p);
+		
+		return ObjectG.getDObject!Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -381,11 +374,13 @@ public class Bin : Element
 	{
 		// GstElement* gst_bin_get_by_interface (GstBin *bin,  GType iface);
 		auto p = gst_bin_get_by_interface(gstBin, iface);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Element(cast(GstElement*) p);
+		
+		return ObjectG.getDObject!Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -399,11 +394,13 @@ public class Bin : Element
 	{
 		// GstIterator* gst_bin_iterate_elements (GstBin *bin);
 		auto p = gst_bin_iterate_elements(gstBin);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -418,11 +415,13 @@ public class Bin : Element
 	{
 		// GstIterator* gst_bin_iterate_recurse (GstBin *bin);
 		auto p = gst_bin_iterate_recurse(gstBin);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -437,11 +436,13 @@ public class Bin : Element
 	{
 		// GstIterator* gst_bin_iterate_sinks (GstBin *bin);
 		auto p = gst_bin_iterate_sinks(gstBin);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -459,11 +460,13 @@ public class Bin : Element
 	{
 		// GstIterator* gst_bin_iterate_sorted (GstBin *bin);
 		auto p = gst_bin_iterate_sorted(gstBin);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -478,11 +481,13 @@ public class Bin : Element
 	{
 		// GstIterator* gst_bin_iterate_sources (GstBin *bin);
 		auto p = gst_bin_iterate_sources(gstBin);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -501,11 +506,13 @@ public class Bin : Element
 	{
 		// GstIterator* gst_bin_iterate_all_by_interface (GstBin *bin,  GType iface);
 		auto p = gst_bin_iterate_all_by_interface(gstBin, iface);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -522,10 +529,12 @@ public class Bin : Element
 	{
 		// GstPad* gst_bin_find_unconnected_pad (GstBin *bin,  GstPadDirection direction);
 		auto p = gst_bin_find_unconnected_pad(gstBin, direction);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pad(cast(GstPad*) p);
+		
+		return ObjectG.getDObject!Pad(cast(GstPad*) p);
 	}
 }

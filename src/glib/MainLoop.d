@@ -164,11 +164,6 @@ public class MainLoop
 	 */
 	public this (GMainLoop* gMainLoop)
 	{
-		if(gMainLoop is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMainLoop = gMainLoop;
 	}
 	
@@ -211,10 +206,12 @@ public class MainLoop
 	{
 		// GMainLoop * g_main_loop_ref (GMainLoop *loop);
 		auto p = g_main_loop_ref(gMainLoop);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new MainLoop(cast(GMainLoop*) p);
 	}
 	
@@ -270,10 +267,12 @@ public class MainLoop
 	{
 		// GMainContext * g_main_loop_get_context (GMainLoop *loop);
 		auto p = g_main_loop_get_context(gMainLoop);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new MainContext(cast(GMainContext*) p);
 	}
 	
@@ -302,10 +301,12 @@ public class MainLoop
 	{
 		// GSource * g_main_current_source (void);
 		auto p = g_main_current_source();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	

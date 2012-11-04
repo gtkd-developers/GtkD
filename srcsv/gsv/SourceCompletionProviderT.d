@@ -69,6 +69,7 @@ public  import gsvc.gsvtypes;
 
 public import gsvc.gsv;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.Str;
@@ -122,11 +123,13 @@ public template SourceCompletionProviderT(TStruct)
 	{
 		// GdkPixbuf * gtk_source_completion_provider_get_icon  (GtkSourceCompletionProvider *provider);
 		auto p = gtk_source_completion_provider_get_icon(getSourceCompletionProviderTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -178,11 +181,13 @@ public template SourceCompletionProviderT(TStruct)
 	{
 		// GtkWidget * gtk_source_completion_provider_get_info_widget  (GtkSourceCompletionProvider *provider,  GtkSourceCompletionProposal *proposal);
 		auto p = gtk_source_completion_provider_get_info_widget(getSourceCompletionProviderTStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

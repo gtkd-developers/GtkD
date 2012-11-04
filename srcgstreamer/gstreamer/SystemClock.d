@@ -59,6 +59,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,18 +104,6 @@ public class SystemClock : Clock
 	 */
 	public this (GstSystemClock* gstSystemClock)
 	{
-		if(gstSystemClock is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstSystemClock);
-		if( ptr !is null )
-		{
-			this = cast(SystemClock)ptr;
-			return;
-		}
 		super(cast(GstClock*)gstSystemClock);
 		this.gstSystemClock = gstSystemClock;
 	}
@@ -138,10 +127,12 @@ public class SystemClock : Clock
 	{
 		// GstClock* gst_system_clock_obtain (void);
 		auto p = gst_system_clock_obtain();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Clock(cast(GstClock*) p);
+		
+		return ObjectG.getDObject!Clock(cast(GstClock*) p);
 	}
 }

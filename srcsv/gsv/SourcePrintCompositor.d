@@ -62,6 +62,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gsv.SourceBuffer;
@@ -111,18 +112,6 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public this (GtkSourcePrintCompositor* gtkSourcePrintCompositor)
 	{
-		if(gtkSourcePrintCompositor is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourcePrintCompositor);
-		if( ptr !is null )
-		{
-			this = cast(SourcePrintCompositor)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourcePrintCompositor);
 		this.gtkSourcePrintCompositor = gtkSourcePrintCompositor;
 	}
@@ -189,11 +178,13 @@ public class SourcePrintCompositor : ObjectG
 	{
 		// GtkSourceBuffer * gtk_source_print_compositor_get_buffer  (GtkSourcePrintCompositor *compositor);
 		auto p = gtk_source_print_compositor_get_buffer(gtkSourcePrintCompositor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceBuffer(cast(GtkSourceBuffer*) p);
+		
+		return ObjectG.getDObject!SourceBuffer(cast(GtkSourceBuffer*) p);
 	}
 	
 	/**

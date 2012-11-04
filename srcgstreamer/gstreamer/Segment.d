@@ -58,6 +58,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -129,11 +130,6 @@ public class Segment
 	 */
 	public this (GstSegment* gstSegment)
 	{
-		if(gstSegment is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstSegment = gstSegment;
 	}
 	

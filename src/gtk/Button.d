@@ -68,6 +68,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -116,18 +117,6 @@ public class Button : Bin, ActivatableIF
 	 */
 	public this (GtkButton* gtkButton)
 	{
-		if(gtkButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkButton);
-		if( ptr !is null )
-		{
-			this = cast(Button)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkButton);
 		this.gtkButton = gtkButton;
 	}
@@ -290,11 +279,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkButton* widgetStruct, Button button)
+	extern(C) static void callBackActivate(GtkButton* widgetStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onActivateListeners )
+		foreach ( void delegate(Button) dlg ; _button.onActivateListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -317,11 +306,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onClickedListeners ~= dlg;
 	}
-	extern(C) static void callBackClicked(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackClicked(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onClickedListeners )
+		foreach ( void delegate(Button) dlg ; _button.onClickedListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -346,11 +335,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onEnterListeners ~= dlg;
 	}
-	extern(C) static void callBackEnter(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackEnter(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onEnterListeners )
+		foreach ( void delegate(Button) dlg ; _button.onEnterListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -375,11 +364,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onLeaveListeners ~= dlg;
 	}
-	extern(C) static void callBackLeave(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackLeave(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onLeaveListeners )
+		foreach ( void delegate(Button) dlg ; _button.onLeaveListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -404,11 +393,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onPressedListeners ~= dlg;
 	}
-	extern(C) static void callBackPressed(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackPressed(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onPressedListeners )
+		foreach ( void delegate(Button) dlg ; _button.onPressedListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -433,11 +422,11 @@ public class Button : Bin, ActivatableIF
 		}
 		onReleasedListeners ~= dlg;
 	}
-	extern(C) static void callBackReleased(GtkButton* buttonStruct, Button button)
+	extern(C) static void callBackReleased(GtkButton* buttonStruct, Button _button)
 	{
-		foreach ( void delegate(Button) dlg ; button.onReleasedListeners )
+		foreach ( void delegate(Button) dlg ; _button.onReleasedListeners )
 		{
-			dlg(button);
+			dlg(_button);
 		}
 	}
 	
@@ -689,11 +678,13 @@ public class Button : Bin, ActivatableIF
 	{
 		// GtkWidget * gtk_button_get_image (GtkButton *button);
 		auto p = gtk_button_get_image(gtkButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -731,10 +722,12 @@ public class Button : Bin, ActivatableIF
 	{
 		// GdkWindow * gtk_button_get_event_window (GtkButton *button);
 		auto p = gtk_button_get_event_window(gtkButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

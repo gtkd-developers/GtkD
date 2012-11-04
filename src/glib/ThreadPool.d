@@ -116,11 +116,6 @@ public class ThreadPool
 	 */
 	public this (GThreadPool* gThreadPool)
 	{
-		if(gThreadPool is null)
-		{
-			this = null;
-			return;
-		}
 		this.gThreadPool = gThreadPool;
 	}
 	

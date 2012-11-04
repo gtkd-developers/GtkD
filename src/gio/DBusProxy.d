@@ -68,6 +68,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -137,18 +138,6 @@ public class DBusProxy : ObjectG
 	 */
 	public this (GDBusProxy* gDBusProxy)
 	{
-		if(gDBusProxy is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusProxy);
-		if( ptr !is null )
-		{
-			this = cast(DBusProxy)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusProxy);
 		this.gDBusProxy = gDBusProxy;
 	}
@@ -226,11 +215,11 @@ public class DBusProxy : ObjectG
 		}
 		onGPropertiesChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackGPropertiesChanged(GDBusProxy* proxyStruct, GVariant* changedProperties, GStrv invalidatedProperties, DBusProxy dBusProxy)
+	extern(C) static void callBackGPropertiesChanged(GDBusProxy* proxyStruct, GVariant* changedProperties, GStrv invalidatedProperties, DBusProxy _dBusProxy)
 	{
-		foreach ( void delegate(Variant, GStrv, DBusProxy) dlg ; dBusProxy.onGPropertiesChangedListeners )
+		foreach ( void delegate(Variant, GStrv, DBusProxy) dlg ; _dBusProxy.onGPropertiesChangedListeners )
 		{
-			dlg(new Variant(changedProperties), invalidatedProperties, dBusProxy);
+			dlg(ObjectG.getDObject!Variant(changedProperties), invalidatedProperties, _dBusProxy);
 		}
 	}
 	
@@ -254,11 +243,11 @@ public class DBusProxy : ObjectG
 		}
 		onGSignalListeners ~= dlg;
 	}
-	extern(C) static void callBackGSignal(GDBusProxy* proxyStruct, gchar* senderName, gchar* signalName, GVariant* parameters, DBusProxy dBusProxy)
+	extern(C) static void callBackGSignal(GDBusProxy* proxyStruct, gchar* senderName, gchar* signalName, GVariant* parameters, DBusProxy _dBusProxy)
 	{
-		foreach ( void delegate(string, string, Variant, DBusProxy) dlg ; dBusProxy.onGSignalListeners )
+		foreach ( void delegate(string, string, Variant, DBusProxy) dlg ; _dBusProxy.onGSignalListeners )
 		{
-			dlg(Str.toString(senderName), Str.toString(signalName), new Variant(parameters), dBusProxy);
+			dlg(Str.toString(senderName), Str.toString(signalName), ObjectG.getDObject!Variant(parameters), _dBusProxy);
 		}
 	}
 	
@@ -422,11 +411,13 @@ public class DBusProxy : ObjectG
 	{
 		// GDBusConnection * g_dbus_proxy_get_connection (GDBusProxy *proxy);
 		auto p = g_dbus_proxy_get_connection(gDBusProxy);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusConnection(cast(GDBusConnection*) p);
+		
+		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -520,11 +511,13 @@ public class DBusProxy : ObjectG
 	{
 		// GVariant * g_dbus_proxy_get_cached_property (GDBusProxy *proxy,  const gchar *property_name);
 		auto p = g_dbus_proxy_get_cached_property(gDBusProxy, Str.toStringz(propertyName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -653,11 +646,13 @@ public class DBusProxy : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -696,10 +691,12 @@ public class DBusProxy : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 }

@@ -56,6 +56,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -95,11 +96,6 @@ public class PgLayoutLine
 	 */
 	public this (PangoLayoutLine* pangoLayoutLine)
 	{
-		if(pangoLayoutLine is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoLayoutLine = pangoLayoutLine;
 	}
 	
@@ -115,11 +111,13 @@ public class PgLayoutLine
 	{
 		// PangoLayoutLine * pango_layout_line_ref (PangoLayoutLine *line);
 		auto p = pango_layout_line_ref(pangoLayoutLine);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayoutLine(cast(PangoLayoutLine*) p);
+		
+		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
 	}
 	
 	/**

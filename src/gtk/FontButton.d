@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -96,18 +97,6 @@ public class FontButton : Button
 	 */
 	public this (GtkFontButton* gtkFontButton)
 	{
-		if(gtkFontButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFontButton);
-		if( ptr !is null )
-		{
-			this = cast(FontButton)ptr;
-			return;
-		}
 		super(cast(GtkButton*)gtkFontButton);
 		this.gtkFontButton = gtkFontButton;
 	}
@@ -149,11 +138,11 @@ public class FontButton : Button
 		}
 		onFontSetListeners ~= dlg;
 	}
-	extern(C) static void callBackFontSet(GtkFontButton* widgetStruct, FontButton fontButton)
+	extern(C) static void callBackFontSet(GtkFontButton* widgetStruct, FontButton _fontButton)
 	{
-		foreach ( void delegate(FontButton) dlg ; fontButton.onFontSetListeners )
+		foreach ( void delegate(FontButton) dlg ; _fontButton.onFontSetListeners )
 		{
-			dlg(fontButton);
+			dlg(_fontButton);
 		}
 	}
 	

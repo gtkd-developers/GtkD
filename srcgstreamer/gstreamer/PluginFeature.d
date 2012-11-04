@@ -62,6 +62,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -99,18 +100,6 @@ public class PluginFeature : ObjectGst
 	 */
 	public this (GstPluginFeature* gstPluginFeature)
 	{
-		if(gstPluginFeature is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstPluginFeature);
-		if( ptr !is null )
-		{
-			this = cast(PluginFeature)ptr;
-			return;
-		}
 		super(cast(GstObject*)gstPluginFeature);
 		this.gstPluginFeature = gstPluginFeature;
 	}
@@ -191,11 +180,13 @@ public class PluginFeature : ObjectGst
 	{
 		// GstPluginFeature* gst_plugin_feature_load (GstPluginFeature *feature);
 		auto p = gst_plugin_feature_load(gstPluginFeature);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PluginFeature(cast(GstPluginFeature*) p);
+		
+		return ObjectG.getDObject!PluginFeature(cast(GstPluginFeature*) p);
 	}
 	
 	/**

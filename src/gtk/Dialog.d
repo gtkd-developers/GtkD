@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -155,18 +156,6 @@ public class Dialog : Window
 	 */
 	public this (GtkDialog* gtkDialog)
 	{
-		if(gtkDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkDialog);
-		if( ptr !is null )
-		{
-			this = cast(Dialog)ptr;
-			return;
-		}
 		super(cast(GtkWindow*)gtkDialog);
 		this.gtkDialog = gtkDialog;
 	}
@@ -292,11 +281,11 @@ public class Dialog : Window
 		}
 		onCloseListeners ~= dlg;
 	}
-	extern(C) static void callBackClose(GtkDialog* arg0Struct, Dialog dialog)
+	extern(C) static void callBackClose(GtkDialog* arg0Struct, Dialog _dialog)
 	{
-		foreach ( void delegate(Dialog) dlg ; dialog.onCloseListeners )
+		foreach ( void delegate(Dialog) dlg ; _dialog.onCloseListeners )
 		{
-			dlg(dialog);
+			dlg(_dialog);
 		}
 	}
 	
@@ -330,11 +319,11 @@ public class Dialog : Window
 		}
 		onResponseListeners ~= dlg;
 	}
-	extern(C) static void callBackResponse(GtkDialog* dialogStruct, gint responseId, Dialog dialog)
+	extern(C) static void callBackResponse(GtkDialog* dialogStruct, gint responseId, Dialog _dialog)
 	{
-		foreach ( void delegate(gint, Dialog) dlg ; dialog.onResponseListeners )
+		foreach ( void delegate(gint, Dialog) dlg ; _dialog.onResponseListeners )
 		{
-			dlg(responseId, dialog);
+			dlg(responseId, _dialog);
 		}
 	}
 	
@@ -411,11 +400,13 @@ public class Dialog : Window
 	{
 		// GtkWidget * gtk_dialog_add_button (GtkDialog *dialog,  const gchar *button_text,  gint response_id);
 		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -513,11 +504,13 @@ public class Dialog : Window
 	{
 		// GtkWidget * gtk_dialog_get_widget_for_response (GtkDialog *dialog,  gint response_id);
 		auto p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -102,18 +103,6 @@ public class ColorSelection : VBox
 	 */
 	public this (GtkColorSelection* gtkColorSelection)
 	{
-		if(gtkColorSelection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkColorSelection);
-		if( ptr !is null )
-		{
-			this = cast(ColorSelection)ptr;
-			return;
-		}
 		super(cast(GtkVBox*)gtkColorSelection);
 		this.gtkColorSelection = gtkColorSelection;
 	}
@@ -148,11 +137,11 @@ public class ColorSelection : VBox
 		}
 		onColorChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct, ColorSelection colorSelection)
+	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct, ColorSelection _colorSelection)
 	{
-		foreach ( void delegate(ColorSelection) dlg ; colorSelection.onColorChangedListeners )
+		foreach ( void delegate(ColorSelection) dlg ; _colorSelection.onColorChangedListeners )
 		{
-			dlg(colorSelection);
+			dlg(_colorSelection);
 		}
 	}
 	

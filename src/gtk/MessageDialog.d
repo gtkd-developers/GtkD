@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -117,18 +118,6 @@ public class MessageDialog : Dialog
 	 */
 	public this (GtkMessageDialog* gtkMessageDialog)
 	{
-		if(gtkMessageDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMessageDialog);
-		if( ptr !is null )
-		{
-			this = cast(MessageDialog)ptr;
-			return;
-		}
 		super(cast(GtkDialog*)gtkMessageDialog);
 		this.gtkMessageDialog = gtkMessageDialog;
 	}
@@ -290,10 +279,12 @@ public class MessageDialog : Dialog
 	{
 		// GtkWidget * gtk_message_dialog_get_image (GtkMessageDialog *dialog);
 		auto p = gtk_message_dialog_get_image(gtkMessageDialog);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -115,11 +116,11 @@ public template TreeSortableT(TStruct)
 		}
 		_onSortColumnChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* sortableStruct, TreeSortableIF treeSortableIF)
+	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* sortableStruct, TreeSortableIF _treeSortableIF)
 	{
-		foreach ( void delegate(TreeSortableIF) dlg ; treeSortableIF.onSortColumnChangedListeners )
+		foreach ( void delegate(TreeSortableIF) dlg ; _treeSortableIF.onSortColumnChangedListeners )
 		{
-			dlg(treeSortableIF);
+			dlg(_treeSortableIF);
 		}
 	}
 	

@@ -62,6 +62,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -243,6 +244,12 @@ public class Signals
 		// guint * g_signal_list_ids (GType itype,  guint *n_ids);
 		uint nIds;
 		auto p = g_signal_list_ids(itype, &nIds);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. nIds];
 	}
 	
@@ -701,11 +708,13 @@ public class Signals
 	{
 		// GClosure * g_signal_type_cclosure_new (GType itype,  guint struct_offset);
 		auto p = g_signal_type_cclosure_new(itype, structOffset);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Closure(cast(GClosure*) p);
+		
+		return ObjectG.getDObject!Closure(cast(GClosure*) p);
 	}
 	
 	/**

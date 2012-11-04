@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -100,18 +101,6 @@ public class Scrollbar : Range
 	 */
 	public this (GtkScrollbar* gtkScrollbar)
 	{
-		if(gtkScrollbar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkScrollbar);
-		if( ptr !is null )
-		{
-			this = cast(Scrollbar)ptr;
-			return;
-		}
 		super(cast(GtkRange*)gtkScrollbar);
 		this.gtkScrollbar = gtkScrollbar;
 	}

@@ -86,6 +86,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -173,18 +174,6 @@ public class Window : Drawable
 	 */
 	public this (GdkWindow* gdkWindow)
 	{
-		if(gdkWindow is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkWindow);
-		if( ptr !is null )
-		{
-			this = cast(Window)ptr;
-			return;
-		}
 		super(cast(GdkDrawable*)gdkWindow);
 		this.gdkWindow = gdkWindow;
 	}
@@ -199,14 +188,14 @@ public class Window : Drawable
 	 */
 	int[string] connectedSignals;
 	
-	void delegate(gdouble, gdouble, gpointer, gpointer, Window)[] onFromEmbedderListeners;
+	void delegate(gdouble, gdouble, void*, void*, Window)[] onFromEmbedderListeners;
 	/**
 	 * The ::from-embedder signal is emitted to translate coordinates
 	 * in the embedder of an offscreen window to the offscreen window.
 	 * See also "to-embedder".
 	 * Since 2.18
 	 */
-	void addOnFromEmbedder(void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFromEmbedder(void delegate(gdouble, gdouble, void*, void*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("from-embedder" in connectedSignals) )
 		{
@@ -221,11 +210,11 @@ public class Window : Drawable
 		}
 		onFromEmbedderListeners ~= dlg;
 	}
-	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedder_x, gdouble embedder_y, gpointer offscreen_x, gpointer offscreen_y, Window window)
+	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, gdouble embedder_x, gdouble embedder_y, void* offscreen_x, void* offscreen_y, Window _window)
 	{
-		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; window.onFromEmbedderListeners )
+		foreach ( void delegate(gdouble, gdouble, void*, void*, Window) dlg ; _window.onFromEmbedderListeners )
 		{
-			dlg(embedder_x, embedder_y, offscreen_x, offscreen_y, window);
+			dlg(embedder_x, embedder_y, offscreen_x, offscreen_y, _window);
 		}
 	}
 	
@@ -250,22 +239,22 @@ public class Window : Drawable
 		}
 		onPickEmbeddedChildListeners ~= dlg;
 	}
-	extern(C) static void callBackPickEmbeddedChild(GdkWindow* windowStruct, gdouble x, gdouble y, Window window)
+	extern(C) static void callBackPickEmbeddedChild(GdkWindow* windowStruct, gdouble x, gdouble y, Window _window)
 	{
-		foreach ( Window delegate(gdouble, gdouble, Window) dlg ; window.onPickEmbeddedChildListeners )
+		foreach ( Window delegate(gdouble, gdouble, Window) dlg ; _window.onPickEmbeddedChildListeners )
 		{
-			dlg(x, y, window);
+			dlg(x, y, _window);
 		}
 	}
 	
-	void delegate(gdouble, gdouble, gpointer, gpointer, Window)[] onToEmbedderListeners;
+	void delegate(gdouble, gdouble, void*, void*, Window)[] onToEmbedderListeners;
 	/**
 	 * The ::to-embedder signal is emitted to translate coordinates
 	 * in an offscreen window to its embedder.
 	 * See also "from-embedder".
 	 * Since 2.18
 	 */
-	void addOnToEmbedder(void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnToEmbedder(void delegate(gdouble, gdouble, void*, void*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("to-embedder" in connectedSignals) )
 		{
@@ -280,11 +269,11 @@ public class Window : Drawable
 		}
 		onToEmbedderListeners ~= dlg;
 	}
-	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreen_x, gdouble offscreen_y, gpointer embedder_x, gpointer embedder_y, Window window)
+	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, gdouble offscreen_x, gdouble offscreen_y, void* embedder_x, void* embedder_y, Window _window)
 	{
-		foreach ( void delegate(gdouble, gdouble, gpointer, gpointer, Window) dlg ; window.onToEmbedderListeners )
+		foreach ( void delegate(gdouble, gdouble, void*, void*, Window) dlg ; _window.onToEmbedderListeners )
 		{
-			dlg(offscreen_x, offscreen_y, embedder_x, embedder_y, window);
+			dlg(offscreen_x, offscreen_y, embedder_x, embedder_y, _window);
 		}
 	}
 	
@@ -334,11 +323,13 @@ public class Window : Drawable
 	{
 		// GdkDisplay * gdk_window_get_display (GdkWindow *window);
 		auto p = gdk_window_get_display(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -349,11 +340,13 @@ public class Window : Drawable
 	{
 		// GdkScreen * gdk_window_get_screen (GdkWindow *window);
 		auto p = gdk_window_get_screen(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -365,11 +358,13 @@ public class Window : Drawable
 	{
 		// GdkVisual * gdk_window_get_visual (GdkWindow *window);
 		auto p = gdk_window_get_visual(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -427,11 +422,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_window_at_pointer (gint *win_x,  gint *win_y);
 		auto p = gdk_window_at_pointer(&winX, &winY);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1227,11 +1224,13 @@ public class Window : Drawable
 	{
 		// GdkRegion * gdk_window_get_update_area (GdkWindow *window);
 		auto p = gdk_window_get_update_area(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(GdkRegion*) p);
+		
+		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -1338,7 +1337,7 @@ public class Window : Drawable
 		
 		gdk_window_get_internal_paint_info(gdkWindow, &outrealDrawable, &xOffset, &yOffset);
 		
-		realDrawable = new Drawable(outrealDrawable);
+		realDrawable = ObjectG.getDObject!Drawable(outrealDrawable);
 	}
 	
 	/**
@@ -1758,11 +1757,13 @@ public class Window : Drawable
 	{
 		// cairo_pattern_t * gdk_window_get_background_pattern (GdkWindow *window);
 		auto p = gdk_window_get_background_pattern(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pattern(cast(cairo_pattern_t*) p);
+		
+		return ObjectG.getDObject!Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -1792,11 +1793,13 @@ public class Window : Drawable
 	{
 		// GdkCursor * gdk_window_get_cursor (GdkWindow *window);
 		auto p = gdk_window_get_cursor(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Cursor(cast(GdkCursor*) p);
+		
+		return ObjectG.getDObject!Cursor(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -2163,11 +2166,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_window_get_pointer (GdkWindow *window,  gint *x,  gint *y,  GdkModifierType *mask);
 		auto p = gdk_window_get_pointer(gdkWindow, &x, &y, &mask);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2187,11 +2192,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_window_get_parent (GdkWindow *window);
 		auto p = gdk_window_get_parent(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2206,11 +2213,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_window_get_effective_parent (GdkWindow *window);
 		auto p = gdk_window_get_effective_parent(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2228,11 +2237,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_window_get_toplevel (GdkWindow *window);
 		auto p = gdk_window_get_toplevel(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2247,11 +2258,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_window_get_effective_toplevel (GdkWindow *window);
 		auto p = gdk_window_get_effective_toplevel(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2267,11 +2280,13 @@ public class Window : Drawable
 	{
 		// GList * gdk_window_get_children (GdkWindow *window);
 		auto p = gdk_window_get_children(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -2283,11 +2298,13 @@ public class Window : Drawable
 	{
 		// GList * gdk_window_peek_children (GdkWindow *window);
 		auto p = gdk_window_peek_children(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -2427,11 +2444,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_window_get_group (GdkWindow *window);
 		auto p = gdk_window_get_group(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2504,11 +2523,13 @@ public class Window : Drawable
 	{
 		// GList * gdk_window_get_toplevels (void);
 		auto p = gdk_window_get_toplevels();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -2520,11 +2541,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_get_default_root_window (void);
 		auto p = gdk_get_default_root_window();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2560,11 +2583,13 @@ public class Window : Drawable
 	{
 		// GdkPixmap * gdk_offscreen_window_get_pixmap (GdkWindow *window);
 		auto p = gdk_offscreen_window_get_pixmap(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixmap(cast(GdkPixmap*) p);
+		
+		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -2592,11 +2617,13 @@ public class Window : Drawable
 	{
 		// GdkWindow * gdk_offscreen_window_get_embedder (GdkWindow *window);
 		auto p = gdk_offscreen_window_get_embedder(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**

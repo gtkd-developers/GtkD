@@ -240,7 +240,12 @@ public class GtkDClass
 		/* Type information should be publicly imported by all modules. */
 		gtkDText ~= "public  import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
 		gtkDText ~= privPub ~" import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n";
-		gtkDText ~= privPub ~" import glib.ConstructionException;\n\n";
+		gtkDText ~= privPub ~" import glib.ConstructionException;\n";
+		
+		if ( convParms.outPack != "cairo" && convParms.outPack != "glib" && convParms.outPack != "gthread" )
+			gtkDText ~= privPub ~" import gobject.ObjectG;\n";
+			
+		gtkDText ~= "\n";
 		
 		// move signal imports out of classes - JJR
 		if (needSignalImports)
@@ -540,8 +545,10 @@ public class GtkDClass
 				}
 				else
 				{
-					if ( gtkDParentName == "GioMountOperation" )
+					if ( gtkDParentName == "GioMountOperation" || gtkDParentName == "GioApplication" )
 						text ~= "public "~gtkStruct~"* getGtk"~convParms.clss~"Struct()"~iFaceChar;
+					else if ( gtkDParentName == "GioAppLaunchContext" )
+						text ~= "public "~gtkStruct~"* getGdk"~convParms.clss~"Struct()"~iFaceChar;
 					else
 						text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
 					if ( !convParms.isInterface )
@@ -575,27 +582,6 @@ public class GtkDClass
 							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
 							text ~= "{";
 
-							string[] checkIfNull = [
-												    	"if("~var~" is null)",
-												        "{",
-												        "	this = null;",
-								"	return;",
-								"}" ];
-
-												    string[] checkObject = [
-								""
-								"//Check if there already is a D object for this gtk struct",
-								"void* ptr = getDObject(cast(GObject*)"~var~");",
-								"if( ptr !is null )",
-								"{",
-								"	this = cast("~convParms.clss~")ptr;",
-								"	return;",
-								"}" ];
-
-							text ~= checkIfNull;
-							if ( gtkDParentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed" )
-								text ~= checkObject;
-
 							if ( parentName.length > 0 && gtkDParentName != "Boxed" )
 							{
 								text ~= "super("~castToParent(var)~");";
@@ -603,7 +589,7 @@ public class GtkDClass
 							text ~= "this."~var~" = "~var~";";
 							text ~= "}";
 
-							if ( parentName.length > 0 && gtkDParentName != "Surface" && gtkDParentName != "Boxed" )
+							if ( parentName.length > 0 && convParms.outPack != "cairo" && gtkDParentName != "Boxed" )
 							{
 								text ~= "";
 								text ~= "protected override void setStruct(GObject* obj)";
@@ -806,15 +792,16 @@ public class GtkDClass
 		string conv;
 		string prefix;
 
-		if ( startsWith(gName, "Gtk") )		prefix = "Gtk";
-		else if ( startsWith(gName, "Gio") )	prefix = "";
-		else if ( startsWith(gName, "Gdk") )	prefix = "Gdk";
-		else if ( startsWith(gName, "Gst") )	prefix = "Gst";
-		else if ( startsWith(gName, "Gda") )	prefix = "Gda";
-		else if ( startsWith(gName, "Atk") )	prefix = "Atk";
-		else if ( startsWith(gName, "G") )	prefix = "G";
-		else if ( startsWith(gName, "Pango") )	prefix = "Pg";
-		else if ( startsWith(gName, "cairo") )	prefix = "cairo";
+		if ( startsWith(gName, "GtkSource") )   prefix = "Gsv";
+		else if ( startsWith(gName, "Gtk") )    prefix = "Gtk";
+		else if ( startsWith(gName, "Gio") )    prefix = "";
+		else if ( startsWith(gName, "Gdk") )    prefix = "Gdk";
+		else if ( startsWith(gName, "Gst") )    prefix = "Gst";
+		else if ( startsWith(gName, "Gda") )    prefix = "Gda";
+		else if ( startsWith(gName, "Atk") )    prefix = "Atk";
+		else if ( startsWith(gName, "G") )      prefix = "G";
+		else if ( startsWith(gName, "Pango") )  prefix = "Pg";
+		else if ( startsWith(gName, "cairo") )  prefix = "cairo";
 
 		conv = gName[prefix.length..gName.length];
 
@@ -855,7 +842,7 @@ public class GtkDClass
 			}
 			else if ( count == 0 || parentName.length == 0)
 			{
-				impls ~= "/+implements+/ ";
+				impls ~= " : ";
 			}
 			impls ~= impl;
 		}
@@ -951,11 +938,10 @@ public class GtkDClass
 					comments ~= "*/";
 				}
 
-				Funct fun;
-				fun.init(funct, convParms);
+				Funct fun = Funct(funct, convParms, wrapper.getAliases());
 
 				string gtkDSignal = signalNameToGtkD(signalName);
-				string delegateDeclaration = fun.getDelegateDeclaration(convParms, 1);
+				string delegateDeclaration = fun.getDelegateDeclaration(1);
 
 				// Removed function "addSignalImports" and replaced it 
 				// with simple "if" block to make sure class local imports
@@ -1013,21 +999,21 @@ public class GtkDClass
 			if ( startsWith(dlg, "bool") )
 			{
 				text ~= "extern(C) static gboolean callBack"~gtkDSignal~"("
-						~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
+						~fun.getCallbackParameters()
 						~")";
 			}
 			else
 			{
 				text ~= "extern(C) static void callBack"~gtkDSignal~"("
-						~ std.array.replace(fun.getCallbackParameters(0, convParms, wrapper.getAliases()), "string", "str")
+						~ std.array.replace(fun.getCallbackParameters(), "string", "str")
 						~")";
 			}
 			text ~= "{";
-			text ~= "	foreach ( "~dlg~" dlg ; "~getClassVar(convParms)~".on"~gtkDSignal~"Listeners )";
+			text ~= "	foreach ( "~dlg~" dlg ; _"~idsToGtkD(getClassVar(convParms), convParms, wrapper.getAliases())~".on"~gtkDSignal~"Listeners )";
 			text ~= "	{";
 			if ( startsWith(dlg, "bool") )
 			{
-				text ~= "		if ( dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~") )";
+				text ~= "		if ( dlg("~fun.getCallbackVars()~") )";
 				text ~= "		{";
 				text ~= "			return 1;";
 				text ~= "		}";
@@ -1037,7 +1023,7 @@ public class GtkDClass
 			}
 			else
 			{
-				text ~= "		dlg("~ std.array.replace(fun.getCallbackVars(convParms, wrapper.getAliases()), "string", "str")~");";
+				text ~= "		dlg("~ std.array.replace(fun.getCallbackVars(), "string", "str")~");";
 				text ~= "	}";
 			}
 			text ~= "}";
@@ -1141,6 +1127,7 @@ public class GtkDClass
 
 		if ( "MapEvent" != signalGtkD
 			&& "UnmapEvent" != signalGtkD
+			&& "DestroyEvent" != signalGtkD
 			&& endsWith(signalGtkD, "Event") )
 		{
 			signalGtkD = signalGtkD[0..signalGtkD.length-5];
@@ -1534,6 +1521,12 @@ public class GtkDClass
 		bool invalidDEnum = false;
 		if ( pos<lines.length && lines[pos][0] != '}' )
 		{
+			while ( lines[pos].strip.startsWith("/+") || lines[pos].strip.startsWith("*") || lines[pos].strip.startsWith("+/") )
+			{
+				values ~= lines[pos];
+				pos++;
+			}
+
 			string enumPrefix = getEnumPrefix(enumName, std.string.strip(lines[pos]));
 			while ( pos<lines.length && lines[pos][0] != '}' )
 			{
@@ -1559,6 +1552,7 @@ public class GtkDClass
 				{
 					debug(enumPrefix)writefln("\t\t%s", value);
 					string v = std.array.replace(value, enumPrefix, "");
+					v = std.array.replace(v, "(int)", "cast(int)");
 					if ( enumName == "cairo_ps_level_t" )
 					{
 						v = "LEVEL_"~v;
@@ -1611,6 +1605,7 @@ public class GtkDClass
 				debug(enums)writefln("\t\t%s", value);
 				collectedEnums ~= stringToGtkD(value, convParms, wrapper.getAliases());
 			}
+			
 			collectedEnums ~= "}";
 			if ( gtkDEnumName.length > 0
 				&& !startsWith(gtkDEnumName, "Gdk")
@@ -1754,14 +1749,11 @@ public class GtkDClass
 	{
 		string getFunctionPointer(string def, inout int i)
 		{
+		
 			string funct = std.string.split(def, ";")[0];
 			string comment = std.string.split(def, ";")[1];
-
-			string[] splitFunct = std.string.split(funct, "(");
-
-			string name = (splitFunct[1][1..$-2] == "ref") ? "doref" : splitFunct[1][1..$-2];
-
-			return splitFunct[0] ~ " function(" ~ ((splitFunct[2][0..$-1] == "void") ? ")" : splitFunct[2]) ~" "~ name ~";"~ comment;
+			
+			return getFunction(funct, convParms) ~ comment;
 		}
 
 		bool bitField = false;	// if we are in a bit field
@@ -1823,6 +1815,12 @@ public class GtkDClass
 					collectedStructs ~= "version(Win64)";
 					collectedStructs ~= "{";
 				}
+				if ( std.string.indexOf(elem, "#if __SIZEOF_INT__ == __SIZEOF_POINTER__") > -1  ||
+				     std.string.indexOf(elem, "#if (defined(__SIZEOF_INT__) defined(__SIZEOF_POINTER__)) (__SIZEOF_INT__ == __SIZEOF_POINTER__)") > -1 )
+				{
+					collectedStructs ~= "static if (int.sizeof == ptrdiff_t.sizeof)";
+					collectedStructs ~= "{";
+				}
 				if ( std.string.indexOf(elem, "#ifndef") == 0 )
 				{
 					collectedStructs ~= "version("~ elem[8..$] ~")";
@@ -1851,7 +1849,7 @@ public class GtkDClass
 						break;
 				}
 
-				collectedStructs ~= "extern(C) " ~ getFunctionPointer(funct, i);
+				collectedStructs ~= getFunctionPointer(funct, i);
 			}
 			else if( std.string.indexOf(elem, "{") > 0 )
 			//Nested Structs and unions.
@@ -2008,8 +2006,7 @@ public class GtkDClass
 
 		string funct = getFunctionDeclaration(line, lines);
 
-		Funct fun;
-		fun.init(funct, convParms);
+		Funct fun = Funct(funct, convParms, wrapper.getAliases());
 
 		/**
 		 * Checks restrictions on the functions to include
@@ -2098,7 +2095,10 @@ public class GtkDClass
 								collectedFuncts ~= "// "~funct;
 							}
 							// body
-							collectedFuncts ~= getFunction(funct, convParms);
+							string decl = getFunction(funct, convParms);
+							
+							if ( decl.length > 0 )
+								collectedFuncts ~= "public alias "~ decl;
 						}
 					}
 				}
@@ -2122,7 +2122,7 @@ public class GtkDClass
 									string param = strip( idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases()) );
 
 									//If this param is not in the Gtkd Function Skip it.
-									if(indexOf(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
+									if(indexOf(fun.declaration(), param) == -1)
 									{
 										//Loop for multi line descriptons for this param.
 										while(i+1 < comments.length && stilInParam(comments[i+1]))
@@ -2150,7 +2150,7 @@ public class GtkDClass
 								else if( comments[i].chomp(":").strip() == "Returns" )
 								{
 									//Skip return for Constructors.
-									if(indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
+									if(indexOf(fun.declaration(), "this (") > -1)
 									{
 										//Loop for multi line descriptons for this return.
 										while(i+1 < comments.length && stilInParam(comments[i+1]))
@@ -2189,13 +2189,13 @@ public class GtkDClass
 							if(ret.length > 0)
 								description ~= ret;
 
-							if ( indexOf(fun.getExternal(convParms, wrapper.getAliases()), "GError**") > -1
-								 && indexOf(fun.declaration(convParms,wrapper.getAliases()), "Error") == -1 )
+							if ( indexOf(fun.getExternal(), "GError**") > -1
+								 && indexOf(fun.declaration(), "Error") == -1 )
 							{
 								description ~= "Throws: GException on failure.";
 							}
 
-							if ( indexOf(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1 )
+							if ( indexOf(fun.declaration(), "this (") > -1 )
 							{
 								description ~= "Throws: ConstructionException GTK+ fails to create the object.";
 							}
@@ -2234,7 +2234,7 @@ public class GtkDClass
 					{
 						if ( !convParms.isInterface )
 						{
-							string externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
+							string externalDeclaration = fun.getExternal();
 							
 							/* Don't add repeated declarations. */
 							bool addme = true;
@@ -2247,9 +2247,9 @@ public class GtkDClass
 							if(addme) externalDeclarations ~= externalDeclaration;
 						}
 						// body
-						if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(convParms,wrapper.getAliases()), "...") < 0 )
+						if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(), "...") < 0 )
 						{
-							string gtkDDeclaration = fun.declaration(convParms,wrapper.getAliases());
+							string gtkDDeclaration = fun.declaration();
 							//string gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
 							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
 							addComments();
@@ -2258,27 +2258,7 @@ public class GtkDClass
 							{
 								member ~= "{";
 								member ~= "// "~funct;
-								version( noGtkBody )
-								{
-//									switch ( fun.typeWrap )
-//									{
-//										case "void": break;
-//										case "int", "uint", "bool", "long", "ulong"
-//											member ~= "return 0;";
-//											break;
-//
-//										case "int", "uint", "bool", "long", "ulong"
-//											member ~= "return 0;";
-//											break;
-//
-//										case "string": member ~= "return "";"; break;
-//										default: member ~= "return null;"; break;
-//									}
-								}
-								else
-								{
-									member ~= fun.bod(convParms, wrapper.getAliases());
-								}
+								member ~= fun.bod();
 								member ~= "}";
 							}
 							/* Duplicated functions are omitted. */
@@ -2433,11 +2413,11 @@ public class GtkDClass
 		{
 			check(fun.typeWrap);
 		}
-		foreach ( int count , string parm ; fun.parmsWrap )
+		foreach ( count , param ; fun.params )
 		{
-			if ( count > 0 || parm != convParms.strct~'*' )
+			if ( count > 0 || param.typeWrap != convParms.strct~'*' )
 			{
-				check(parm);
+				check(param.typeWrap);
 			}
 		}
 	}
@@ -2456,7 +2436,7 @@ public class GtkDClass
 
 
 
-		string f = "public alias extern(C) ";
+		string f = "extern(C) ";
 		int pos = 0;
 		string type = until(pos, line, "(");
 		until(pos, line, "*");
@@ -2466,8 +2446,8 @@ public class GtkDClass
 			return "";
 		}
 
-		f ~= stringToGtkD(type, convParms, wrapper.getAliases());
-		f ~= " function (";
+		f ~= stringToGtkD(type, convParms, wrapper.getAliases()).strip();
+		f ~= " function(";
 
 		until(pos, line, "(");
 		skip(pos, line, '(');
@@ -2500,10 +2480,13 @@ public class GtkDClass
 				debug(parmType)writefln("\tParameter type after = %s", pType);
 				debug(parmName)writefln("\tParameter name after = %s", pName);
 
-				parms ~= tokenToGtkD(pType, convParms, wrapper.getAliases());
+				parms ~= tokenToGtkD(pType, convParms, wrapper.getAliases()) ~" "~ idsToGtkD(pName, convParms, wrapper.getAliases());
 				++sPos;
 			}
 		}
+
+		if ( name == "ref" )
+			 name = "doref";
 
 		f ~= parms ~ ") " ~ name ~ ";";
 

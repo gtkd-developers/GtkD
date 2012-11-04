@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -97,18 +98,6 @@ public class HPaned : Paned
 	 */
 	public this (GtkHPaned* gtkHPaned)
 	{
-		if(gtkHPaned is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkHPaned);
-		if( ptr !is null )
-		{
-			this = cast(HPaned)ptr;
-			return;
-		}
 		super(cast(GtkPaned*)gtkHPaned);
 		this.gtkHPaned = gtkHPaned;
 	}

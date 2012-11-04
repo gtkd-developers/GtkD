@@ -142,11 +142,6 @@ public class KeyFile
 	 */
 	public this (GKeyFile* gKeyFile)
 	{
-		if(gKeyFile is null)
-		{
-			this = null;
-			return;
-		}
 		this.gKeyFile = gKeyFile;
 	}
 	
@@ -750,6 +745,12 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. length];
 	}
 	
@@ -780,6 +781,12 @@ public class KeyFile
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. length];
 	}
 	
@@ -808,6 +815,12 @@ public class KeyFile
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
 		}
 		
 		return p[0 .. length];

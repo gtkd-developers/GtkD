@@ -127,11 +127,6 @@ public class TimeVal
 	 */
 	public this (GTimeVal* gTimeVal)
 	{
-		if(gTimeVal is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTimeVal = gTimeVal;
 	}
 	

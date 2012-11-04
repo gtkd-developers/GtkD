@@ -110,11 +110,6 @@ public class StringCompletion
 	 */
 	public this (GCompletion* gCompletion)
 	{
-		if(gCompletion is null)
-		{
-			this = null;
-			return;
-		}
 		this.gCompletion = gCompletion;
 	}
 	
@@ -201,10 +196,12 @@ public class StringCompletion
 		auto p = g_completion_complete(gCompletion, Str.toStringz(prefix), &outnewPrefix);
 		
 		newPrefix = Str.toString(outnewPrefix);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -234,10 +231,12 @@ public class StringCompletion
 		auto p = g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), &outnewPrefix);
 		
 		newPrefix = Str.toString(outnewPrefix);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	

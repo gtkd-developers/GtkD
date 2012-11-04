@@ -73,6 +73,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -118,11 +119,6 @@ public class TextIter : Boxed
 	 */
 	public this (GtkTextIter* gtkTextIter)
 	{
-		if(gtkTextIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTextIter = gtkTextIter;
 	}
 	
@@ -144,11 +140,13 @@ public class TextIter : Boxed
 	{
 		// GtkTextBuffer * gtk_text_iter_get_buffer (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_buffer(gtkTextIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextBuffer(cast(GtkTextBuffer*) p);
+		
+		return ObjectG.getDObject!TextBuffer(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -162,11 +160,13 @@ public class TextIter : Boxed
 	{
 		// GtkTextIter * gtk_text_iter_copy (const GtkTextIter *iter);
 		auto p = gtk_text_iter_copy(gtkTextIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextIter(cast(GtkTextIter*) p);
+		
+		return ObjectG.getDObject!TextIter(cast(GtkTextIter*) p);
 	}
 	
 	/**
@@ -348,11 +348,13 @@ public class TextIter : Boxed
 	{
 		// GdkPixbuf * gtk_text_iter_get_pixbuf (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_pixbuf(gtkTextIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -367,11 +369,13 @@ public class TextIter : Boxed
 	{
 		// GSList * gtk_text_iter_get_marks (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_marks(gtkTextIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -389,11 +393,13 @@ public class TextIter : Boxed
 	{
 		// GSList * gtk_text_iter_get_toggled_tags (const GtkTextIter *iter,  gboolean toggled_on);
 		auto p = gtk_text_iter_get_toggled_tags(gtkTextIter, toggledOn);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -406,11 +412,13 @@ public class TextIter : Boxed
 	{
 		// GtkTextChildAnchor * gtk_text_iter_get_child_anchor (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_child_anchor(gtkTextIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextChildAnchor(cast(GtkTextChildAnchor*) p);
+		
+		return ObjectG.getDObject!TextChildAnchor(cast(GtkTextChildAnchor*) p);
 	}
 	
 	/**
@@ -484,11 +492,13 @@ public class TextIter : Boxed
 	{
 		// GSList * gtk_text_iter_get_tags (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_tags(gtkTextIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -702,11 +712,13 @@ public class TextIter : Boxed
 	{
 		// PangoLanguage * gtk_text_iter_get_language (const GtkTextIter *iter);
 		auto p = gtk_text_iter_get_language(gtkTextIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLanguage(cast(PangoLanguage*) p);
+		
+		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
 	}
 	
 	/**

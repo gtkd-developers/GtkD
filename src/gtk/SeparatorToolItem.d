@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.ToolItem;
@@ -100,18 +101,6 @@ public class SeparatorToolItem : ToolItem
 	 */
 	public this (GtkSeparatorToolItem* gtkSeparatorToolItem)
 	{
-		if(gtkSeparatorToolItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSeparatorToolItem);
-		if( ptr !is null )
-		{
-			this = cast(SeparatorToolItem)ptr;
-			return;
-		}
 		super(cast(GtkToolItem*)gtkSeparatorToolItem);
 		this.gtkSeparatorToolItem = gtkSeparatorToolItem;
 	}

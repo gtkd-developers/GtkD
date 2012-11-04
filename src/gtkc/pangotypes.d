@@ -159,27 +159,27 @@ public enum PangoDirection
 public enum PangoBidiType
 {
 	/+* Strong types +/
-	PANGO_BIDI_TYPE_L,
-	PANGO_BIDI_TYPE_LRE,
-	PANGO_BIDI_TYPE_LRO,
-	PANGO_BIDI_TYPE_R,
-	PANGO_BIDI_TYPE_AL,
-	PANGO_BIDI_TYPE_RLE,
-	PANGO_BIDI_TYPE_RLO,
+	TYPE_L,
+	TYPE_LRE,
+	TYPE_LRO,
+	TYPE_R,
+	TYPE_AL,
+	TYPE_RLE,
+	TYPE_RLO,
 	/+* Weak types +/
-	PANGO_BIDI_TYPE_PDF,
-	PANGO_BIDI_TYPE_EN,
-	PANGO_BIDI_TYPE_ES,
-	PANGO_BIDI_TYPE_ET,
-	PANGO_BIDI_TYPE_AN,
-	PANGO_BIDI_TYPE_CS,
-	PANGO_BIDI_TYPE_NSM,
-	PANGO_BIDI_TYPE_BN,
+	TYPE_PDF,
+	TYPE_EN,
+	TYPE_ES,
+	TYPE_ET,
+	TYPE_AN,
+	TYPE_CS,
+	TYPE_NSM,
+	TYPE_BN,
 	/+* Neutral types +/
-	PANGO_BIDI_TYPE_B,
-	PANGO_BIDI_TYPE_S,
-	PANGO_BIDI_TYPE_WS,
-	PANGO_BIDI_TYPE_ON
+	TYPE_B,
+	TYPE_S,
+	TYPE_WS,
+	TYPE_ON
 }
 /**
  * An enumeration specifying the various slant styles possible for a font.
@@ -1234,9 +1234,9 @@ public struct PangoFontMap{}
 public struct PangoFontMapClass
 {
 	GObjectClass parentClass;
-	extern(C) PangoFont *  function(PangoFontMap *fontmap,PangoContext *context,PangoFontDescription *desc) loadFont;
-	extern(C) void  function(PangoFontMap *fontmap,PangoFontFamily ***families,int *nFamilies) listFamilies;
-	extern(C) PangoFontset * function(PangoFontMap *fontmap,PangoContext *context,PangoFontDescription *desc,PangoLanguage *language) loadFontset;
+	extern(C) PangoFont * function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc) loadFont;
+	extern(C) void function(PangoFontMap* fontmap, PangoFontFamily*** families, int* nFamilies) listFamilies;
+	extern(C) PangoFontset * function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc, PangoLanguage* language) loadFontset;
 	char *shapeEngineType;
 }
 
@@ -1263,10 +1263,10 @@ public struct PangoFontset{}
 public struct PangoFontsetClass
 {
 	GObjectClass parentClass;
-	extern(C) PangoFont *  function(PangoFontset *fontset,uint wc) getFont;
-	extern(C) PangoFontMetrics * function(PangoFontset *fontset) getMetrics;
-	extern(C) PangoLanguage *  function(PangoFontset *fontset) getLanguage;
-	extern(C) void  function(PangoFontset *fontset,PangoFontsetForeachFunc func,void* data) foreac;
+	extern(C) PangoFont * function(PangoFontset* fontset, uint wc) getFont;
+	extern(C) PangoFontMetrics * function(PangoFontset* fontset) getMetrics;
+	extern(C) PangoLanguage * function(PangoFontset* fontset) getLanguage;
+	extern(C) void function(PangoFontset* fontset, PangoFontsetForeachFunc func, void* data) foreac;
 }
 
 
@@ -1296,9 +1296,9 @@ public struct PangoFontsetSimple{}
 public struct PangoAttrClass
 {
 	PangoAttrType type;
-	extern(C) PangoAttribute *  function( PangoAttribute *attr) copy;
-	extern(C) void  function(PangoAttribute *attr) destroy;
-	extern(C) int  function( PangoAttribute *attr1, PangoAttribute *attr2) equal;
+	extern(C) PangoAttribute * function(PangoAttribute* attr) copy;
+	extern(C) void function(PangoAttribute* attr) destroy;
+	extern(C) int function(PangoAttribute* attr1, PangoAttribute* attr2) equal;
 }
 
 
@@ -1635,30 +1635,30 @@ public struct PangoRendererClass
 	/+* All of the following have defaulx implementations
 	 * and take as coordinates user coordinates inn Pango units
 	+/
-	extern(C) void  function(PangoRenderer *renderer,PangoFont *font,PangoGlyphString *glyphs,int x,int y) drawGlyphs;
-	extern(C) void  function(PangoRenderer *renderer,PangoRenderPart part,int x,int y,int width,int height) drawRectangle;
-	extern(C) void  function(PangoRenderer *renderer,int x,int y,int width,int height) drawErrorUnderline;
+	extern(C) void function(PangoRenderer* renderer, PangoFont* font, PangoGlyphString* glyphs, int x, int y) drawGlyphs;
+	extern(C) void function(PangoRenderer* renderer, PangoRenderPart part, int x, int y, int width, int height) drawRectangle;
+	extern(C) void function(PangoRenderer* renderer, int x, int y, int width, int height) drawErrorUnderline;
 	/+* Nothing is drawn for shaped glyphs unless this is implemented +/
-	extern(C) void  function(PangoRenderer *renderer,PangoAttrShape *attr,int x,int y) drawShape;
+	extern(C) void function(PangoRenderer* renderer, PangoAttrShape* attr, int x, int y) drawShape;
 	/+* These two must be implemented and take coordinates inn
 	 * device space as doubles.
 	+/
-	extern(C) void  function(PangoRenderer *renderer,PangoRenderPart part,double y1_,double x11,double x21,double y2,double x12,double x22) drawTrapezoid;
-	extern(C) void  function(PangoRenderer *renderer,PangoFont *font,PangoGlyph glyph,double x,double y) drawGlyph;
+	extern(C) void function(PangoRenderer* renderer, PangoRenderPart part, double y1_, double x11, double x21, double y2, double x12, double x22) drawTrapezoid;
+	extern(C) void function(PangoRenderer* renderer, PangoFont* font, PangoGlyph glyph, double x, double y) drawGlyph;
 	/+* Notification of change inn rendering attributes
 	+/
-	extern(C) void  function(PangoRenderer *renderer,PangoRenderPart part) partChanged;
+	extern(C) void function(PangoRenderer* renderer, PangoRenderPart part) partChanged;
 	/+* Paired around drawing operations
 	+/
-	extern(C) void  function(PangoRenderer *renderer) begin;
-	extern(C) void  function(PangoRenderer *renderer) end;
+	extern(C) void function(PangoRenderer* renderer) begin;
+	extern(C) void function(PangoRenderer* renderer) end;
 	/+* Hooks into the details of layout rendering
 	+/
-	extern(C) void  function(PangoRenderer *renderer,PangoLayoutRun *run) prepareRun;
+	extern(C) void function(PangoRenderer* renderer, PangoLayoutRun* run) prepareRun;
 	/+* All of the following have defaulx implementations
 	 * and take as coordinates user coordinates inn Pango units
 	+/
-	extern(C) void  function(PangoRenderer *renderer,char *text,PangoGlyphItem *glyphItem,int x,int y) drawGlyphItem;
+	extern(C) void function(PangoRenderer* renderer, char* text, PangoGlyphItem* glyphItem, int x, int y) drawGlyphItem;
 }
 
 
@@ -1746,7 +1746,7 @@ public struct PangoEngineLang{}
  */
 public struct PangoEngineLangClass
 {
-	extern(C) void  function(PangoEngineLang *engine,char *text,int len,PangoAnalysis *analysis,PangoLogAttr *attrs,int attrsLen) scriptBreak;
+	extern(C) void function(PangoEngineLang* engine, char* text, int len, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen) scriptBreak;
 }
 
 
@@ -1771,8 +1771,8 @@ public struct PangoEngineShape{}
  */
 public struct PangoEngineShapeClass
 {
-	extern(C) void  function(PangoEngineShape *engine,PangoFont *font,char *text,int length,PangoAnalysis *analysis,PangoGlyphString *glyphs) scriptShape;
-	extern(C) PangoCoverageLevel  function(PangoEngineShape *engine,PangoFont *font,PangoLanguage *language,gunichar wc) covers;
+	extern(C) void function(PangoEngineShape* engine, PangoFont* font, char* text, int length, PangoAnalysis* analysis, PangoGlyphString* glyphs) scriptShape;
+	extern(C) PangoCoverageLevel function(PangoEngineShape* engine, PangoFont* font, PangoLanguage* language, gunichar wc) covers;
 }
 
 
@@ -2064,7 +2064,7 @@ public struct PangoEngineShapeClass
  * Since 1.4
  */
 // gboolean (*PangoFontsetForeachFunc) (PangoFontset *fontset,  PangoFont *font,  gpointer data);
-public alias extern(C) int  function (PangoFontset*, PangoFont*, void*) PangoFontsetForeachFunc;
+public alias extern(C) int function(PangoFontset* fontset, PangoFont* font, void* data) PangoFontsetForeachFunc;
 
 /*
  * A copy function passed to attribute new functions that take
@@ -2075,7 +2075,7 @@ public alias extern(C) int  function (PangoFontset*, PangoFont*, void*) PangoFon
  * a new copy of data.
  */
 // gpointer (*PangoAttrDataCopyFunc) (gconstpointer data);
-public alias extern(C) void*  function (void*) PangoAttrDataCopyFunc;
+public alias extern(C) void* function(void* data) PangoAttrDataCopyFunc;
 
 /*
  * A predicate function used by pango_attr_list_filter()
@@ -2088,7 +2088,7 @@ public alias extern(C) void*  function (void*) PangoAttrDataCopyFunc;
  * TRUE if the attribute should be filtered out
  */
 // gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,  gpointer data);
-public alias extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFunc;
+public alias extern(C) int function(PangoAttribute* attribute, void* data) PangoAttrFilterFunc;
 
 /*
  * Function type for rendering attributes of type PANGO_ATTR_SHAPE
@@ -2107,4 +2107,4 @@ public alias extern(C) int  function (PangoAttribute*, void*) PangoAttrFilterFun
  * user data passed to pango_cairo_context_set_shape_renderer()
  */
 // void (*PangoCairoShapeRendererFunc) (cairo_t *cr,  PangoAttrShape *attr,  gboolean do_path,  gpointer data);
-public alias extern(C) void  function (cairo_t*, PangoAttrShape*, int, void*) PangoCairoShapeRendererFunc;
+public alias extern(C) void function(cairo_t* cr, PangoAttrShape* attr, int doPath, void* data) PangoCairoShapeRendererFunc;

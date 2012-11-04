@@ -76,6 +76,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -301,18 +302,6 @@ public class Builder : ObjectG
 	 */
 	public this (GtkBuilder* gtkBuilder)
 	{
-		if(gtkBuilder is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkBuilder);
-		if( ptr !is null )
-		{
-			this = cast(Builder)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkBuilder);
 		this.gtkBuilder = gtkBuilder;
 	}

@@ -58,6 +58,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -100,18 +101,6 @@ public class PgFontFamily : ObjectG
 	 */
 	public this (PangoFontFamily* pangoFontFamily)
 	{
-		if(pangoFontFamily is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoFontFamily);
-		if( ptr !is null )
-		{
-			this = cast(PgFontFamily)ptr;
-			return;
-		}
 		super(cast(GObject*)pangoFontFamily);
 		this.pangoFontFamily = pangoFontFamily;
 	}
@@ -179,7 +168,7 @@ public class PgFontFamily : ObjectG
 		faces = new PgFontFace[nFaces];
 		for(int i = 0; i < nFaces; i++)
 		{
-			faces[i] = new PgFontFace(cast(PangoFontFace*) outfaces[i]);
+			faces[i] = ObjectG.getDObject!PgFontFace(cast(PangoFontFace*) outfaces[i]);
 		}
 	}
 }

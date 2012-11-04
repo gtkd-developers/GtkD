@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -98,18 +99,6 @@ public class Bin : Container
 	 */
 	public this (GtkBin* gtkBin)
 	{
-		if(gtkBin is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkBin);
-		if( ptr !is null )
-		{
-			this = cast(Bin)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkBin);
 		this.gtkBin = gtkBin;
 	}
@@ -133,10 +122,12 @@ public class Bin : Container
 	{
 		// GtkWidget * gtk_bin_get_child (GtkBin *bin);
 		auto p = gtk_bin_get_child(gtkBin);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

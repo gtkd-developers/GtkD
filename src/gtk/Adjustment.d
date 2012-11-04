@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -106,18 +107,6 @@ public class Adjustment : ObjectGtk
 	 */
 	public this (GtkAdjustment* gtkAdjustment)
 	{
-		if(gtkAdjustment is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAdjustment);
-		if( ptr !is null )
-		{
-			this = cast(Adjustment)ptr;
-			return;
-		}
 		super(cast(GtkObject*)gtkAdjustment);
 		this.gtkAdjustment = gtkAdjustment;
 	}
@@ -152,11 +141,11 @@ public class Adjustment : ObjectGtk
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, Adjustment adjustment)
+	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, Adjustment _adjustment)
 	{
-		foreach ( void delegate(Adjustment) dlg ; adjustment.onChangedListeners )
+		foreach ( void delegate(Adjustment) dlg ; _adjustment.onChangedListeners )
 		{
-			dlg(adjustment);
+			dlg(_adjustment);
 		}
 	}
 	
@@ -179,11 +168,11 @@ public class Adjustment : ObjectGtk
 		}
 		onValueChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, Adjustment adjustment)
+	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, Adjustment _adjustment)
 	{
-		foreach ( void delegate(Adjustment) dlg ; adjustment.onValueChangedListeners )
+		foreach ( void delegate(Adjustment) dlg ; _adjustment.onValueChangedListeners )
 		{
-			dlg(adjustment);
+			dlg(_adjustment);
 		}
 	}
 	

@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -101,18 +102,6 @@ public class ItemFactory : ObjectGtk
 	 */
 	public this (GtkItemFactory* gtkItemFactory)
 	{
-		if(gtkItemFactory is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkItemFactory);
-		if( ptr !is null )
-		{
-			this = cast(ItemFactory)ptr;
-			return;
-		}
 		super(cast(GtkObject*)gtkItemFactory);
 		this.gtkItemFactory = gtkItemFactory;
 	}
@@ -206,11 +195,13 @@ public class ItemFactory : ObjectGtk
 	{
 		// GtkItemFactory * gtk_item_factory_from_widget (GtkWidget *widget);
 		auto p = gtk_item_factory_from_widget((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ItemFactory(cast(GtkItemFactory*) p);
+		
+		return ObjectG.getDObject!ItemFactory(cast(GtkItemFactory*) p);
 	}
 	
 	/**
@@ -245,11 +236,13 @@ public class ItemFactory : ObjectGtk
 	{
 		// GtkWidget * gtk_item_factory_get_item (GtkItemFactory *ifactory,  const gchar *path);
 		auto p = gtk_item_factory_get_item(gtkItemFactory, Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -267,11 +260,13 @@ public class ItemFactory : ObjectGtk
 	{
 		// GtkWidget * gtk_item_factory_get_widget (GtkItemFactory *ifactory,  const gchar *path);
 		auto p = gtk_item_factory_get_widget(gtkItemFactory, Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -290,11 +285,13 @@ public class ItemFactory : ObjectGtk
 	{
 		// GtkWidget * gtk_item_factory_get_widget_by_action  (GtkItemFactory *ifactory,  guint action);
 		auto p = gtk_item_factory_get_widget_by_action(gtkItemFactory, action);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -311,11 +308,13 @@ public class ItemFactory : ObjectGtk
 	{
 		// GtkWidget * gtk_item_factory_get_item_by_action (GtkItemFactory *ifactory,  guint action);
 		auto p = gtk_item_factory_get_item_by_action(gtkItemFactory, action);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -510,11 +509,13 @@ public class ItemFactory : ObjectGtk
 	{
 		// GtkItemFactory * gtk_item_factory_from_path (const gchar *path);
 		auto p = gtk_item_factory_from_path(Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ItemFactory(cast(GtkItemFactory*) p);
+		
+		return ObjectG.getDObject!ItemFactory(cast(GtkItemFactory*) p);
 	}
 	
 	/**

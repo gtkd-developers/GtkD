@@ -60,6 +60,7 @@ public  import gsvc.gsvtypes;
 
 public import gsvc.gsv;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -117,11 +118,11 @@ public template SourceCompletionProposalT(TStruct)
 		}
 		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkSourceCompletionProposal* proposalStruct, SourceCompletionProposalIF sourceCompletionProposalIF)
+	extern(C) static void callBackChanged(GtkSourceCompletionProposal* proposalStruct, SourceCompletionProposalIF _sourceCompletionProposalIF)
 	{
-		foreach ( void delegate(SourceCompletionProposalIF) dlg ; sourceCompletionProposalIF.onChangedListeners )
+		foreach ( void delegate(SourceCompletionProposalIF) dlg ; _sourceCompletionProposalIF.onChangedListeners )
 		{
-			dlg(sourceCompletionProposalIF);
+			dlg(_sourceCompletionProposalIF);
 		}
 	}
 	
@@ -173,11 +174,13 @@ public template SourceCompletionProposalT(TStruct)
 	{
 		// GdkPixbuf * gtk_source_completion_proposal_get_icon  (GtkSourceCompletionProposal *proposal);
 		auto p = gtk_source_completion_proposal_get_icon(getSourceCompletionProposalTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

@@ -57,6 +57,7 @@ public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Pixbuf;
@@ -99,18 +100,6 @@ public class PixbufSimpleAnimation : ObjectG
 	 */
 	public this (GdkPixbufSimpleAnim* gdkPixbufSimpleAnim)
 	{
-		if(gdkPixbufSimpleAnim is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkPixbufSimpleAnim);
-		if( ptr !is null )
-		{
-			this = cast(PixbufSimpleAnimation)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkPixbufSimpleAnim);
 		this.gdkPixbufSimpleAnim = gdkPixbufSimpleAnim;
 	}

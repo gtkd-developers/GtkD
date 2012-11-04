@@ -63,6 +63,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -109,18 +110,6 @@ public class TlsConnection : IOStream
 	 */
 	public this (GTlsConnection* gTlsConnection)
 	{
-		if(gTlsConnection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gTlsConnection);
-		if( ptr !is null )
-		{
-			this = cast(TlsConnection)ptr;
-			return;
-		}
 		super(cast(GIOStream*)gTlsConnection);
 		this.gTlsConnection = gTlsConnection;
 	}
@@ -187,11 +176,11 @@ public class TlsConnection : IOStream
 		}
 		onAcceptCertificateListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackAcceptCertificate(GTlsConnection* connStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, TlsConnection tlsConnection)
+	extern(C) static gboolean callBackAcceptCertificate(GTlsConnection* connStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, TlsConnection _tlsConnection)
 	{
-		foreach ( bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg ; tlsConnection.onAcceptCertificateListeners )
+		foreach ( bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg ; _tlsConnection.onAcceptCertificateListeners )
 		{
-			if ( dlg(new TlsCertificate(peerCert), errors, tlsConnection) )
+			if ( dlg(ObjectG.getDObject!TlsCertificate(peerCert), errors, _tlsConnection) )
 			{
 				return 1;
 			}
@@ -238,11 +227,13 @@ public class TlsConnection : IOStream
 	{
 		// GTlsCertificate * g_tls_connection_get_certificate (GTlsConnection *conn);
 		auto p = g_tls_connection_get_certificate(gTlsConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsCertificate(cast(GTlsCertificate*) p);
+		
+		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
 	}
 	
 	/**
@@ -256,11 +247,13 @@ public class TlsConnection : IOStream
 	{
 		// GTlsCertificate * g_tls_connection_get_peer_certificate  (GTlsConnection *conn);
 		auto p = g_tls_connection_get_peer_certificate(gTlsConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsCertificate(cast(GTlsCertificate*) p);
+		
+		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
 	}
 	
 	/**

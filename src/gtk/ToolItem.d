@@ -68,6 +68,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -118,18 +119,6 @@ public class ToolItem : Bin, ActivatableIF
 	 */
 	public this (GtkToolItem* gtkToolItem)
 	{
-		if(gtkToolItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToolItem);
-		if( ptr !is null )
-		{
-			this = cast(ToolItem)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkToolItem);
 		this.gtkToolItem = gtkToolItem;
 	}
@@ -195,11 +184,11 @@ public class ToolItem : Bin, ActivatableIF
 		}
 		onCreateMenuProxyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCreateMenuProxy(GtkToolItem* toolItemStruct, ToolItem toolItem)
+	extern(C) static gboolean callBackCreateMenuProxy(GtkToolItem* toolItemStruct, ToolItem _toolItem)
 	{
-		foreach ( bool delegate(ToolItem) dlg ; toolItem.onCreateMenuProxyListeners )
+		foreach ( bool delegate(ToolItem) dlg ; _toolItem.onCreateMenuProxyListeners )
 		{
-			if ( dlg(toolItem) )
+			if ( dlg(_toolItem) )
 			{
 				return 1;
 			}
@@ -233,11 +222,11 @@ public class ToolItem : Bin, ActivatableIF
 		}
 		onSetTooltipListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSetTooltip(GtkToolItem* toolItemStruct, GtkTooltips* tooltips, gchar* tipText, gchar* tipPrivate, ToolItem toolItem)
+	extern(C) static gboolean callBackSetTooltip(GtkToolItem* toolItemStruct, GtkTooltips* tooltips, gchar* tipText, gchar* tipPrivate, ToolItem _toolItem)
 	{
-		foreach ( bool delegate(Tooltips, string, string, ToolItem) dlg ; toolItem.onSetTooltipListeners )
+		foreach ( bool delegate(Tooltips, string, string, ToolItem) dlg ; _toolItem.onSetTooltipListeners )
 		{
-			if ( dlg(new Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), toolItem) )
+			if ( dlg(ObjectG.getDObject!Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), _toolItem) )
 			{
 				return 1;
 			}
@@ -282,11 +271,11 @@ public class ToolItem : Bin, ActivatableIF
 		}
 		onToolbarReconfiguredListeners ~= dlg;
 	}
-	extern(C) static void callBackToolbarReconfigured(GtkToolItem* toolItemStruct, ToolItem toolItem)
+	extern(C) static void callBackToolbarReconfigured(GtkToolItem* toolItemStruct, ToolItem _toolItem)
 	{
-		foreach ( void delegate(ToolItem) dlg ; toolItem.onToolbarReconfiguredListeners )
+		foreach ( void delegate(ToolItem) dlg ; _toolItem.onToolbarReconfiguredListeners )
 		{
-			dlg(toolItem);
+			dlg(_toolItem);
 		}
 	}
 	
@@ -615,11 +604,13 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		// GtkWidget * gtk_tool_item_retrieve_proxy_menu_item  (GtkToolItem *tool_item);
 		auto p = gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -638,11 +629,13 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		// GtkWidget * gtk_tool_item_get_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id);
 		auto p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -698,10 +691,12 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		// GtkSizeGroup * gtk_tool_item_get_text_size_group (GtkToolItem *tool_item);
 		auto p = gtk_tool_item_get_text_size_group(gtkToolItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SizeGroup(cast(GtkSizeGroup*) p);
+		
+		return ObjectG.getDObject!SizeGroup(cast(GtkSizeGroup*) p);
 	}
 }

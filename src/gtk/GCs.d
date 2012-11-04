@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.GC;
@@ -100,11 +101,13 @@ public class GCs
 	{
 		// GdkGC * gtk_gc_get (gint depth,  GdkColormap *colormap,  GdkGCValues *values,  GdkGCValuesMask values_mask);
 		auto p = gtk_gc_get(depth, (colormap is null) ? null : colormap.getColormapStruct(), values, valuesMask);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GC(cast(GdkGC*) p);
+		
+		return ObjectG.getDObject!GC(cast(GdkGC*) p);
 	}
 	
 	/**

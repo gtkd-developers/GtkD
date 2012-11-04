@@ -58,6 +58,7 @@ public  import gstreamerc.gstinterfacestypes;
 
 private import gstreamerc.gstinterfaces;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtkc.glibtypes;
@@ -140,11 +141,6 @@ public class XOverlay
 	 */
 	public this (GstXOverlay* gstXOverlay)
 	{
-		if(gstXOverlay is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstXOverlay = gstXOverlay;
 	}
 	

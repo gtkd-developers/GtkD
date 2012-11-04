@@ -78,6 +78,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -126,18 +127,6 @@ public class Pixbuf : ObjectG
 	 */
 	public this (GdkPixbuf* gdkPixbuf)
 	{
-		if(gdkPixbuf is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkPixbuf);
-		if( ptr !is null )
-		{
-			this = cast(Pixbuf)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkPixbuf);
 		this.gdkPixbuf = gdkPixbuf;
 	}
@@ -208,7 +197,14 @@ public class Pixbuf : ObjectG
 	public static Pixbuf getFromDrawable(Drawable src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
 		// GdkPixbuf* gdk_pixbuf_get_from_drawable (GdkPixbuf *dest,  GdkDrawable *src,  GdkColormap *cmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height);
-		return new Pixbuf( gdk_pixbuf_get_from_drawable(null, (src is null) ? null : src.getDrawableStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height) );
+		auto p = gdk_pixbuf_get_from_drawable(null, (src is null) ? null : src.getDrawableStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height);
+		
+		if ( p is null )
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!Pixbuf( p );
 	}
 	
 	/**
@@ -517,7 +513,7 @@ public class Pixbuf : ObjectG
 		
 		gdk_pixbuf_render_pixmap_and_mask(gdkPixbuf, &pixmapReturn, &outmaskReturn, alphaThreshold);
 		
-		maskReturn = new Bitmap(outmaskReturn);
+		maskReturn = ObjectG.getDObject!Bitmap(outmaskReturn);
 	}
 	
 	/**
@@ -546,7 +542,7 @@ public class Pixbuf : ObjectG
 		
 		gdk_pixbuf_render_pixmap_and_mask_for_colormap(gdkPixbuf, (colormap is null) ? null : colormap.getColormapStruct(), &pixmapReturn, &outmaskReturn, alphaThreshold);
 		
-		maskReturn = new Bitmap(outmaskReturn);
+		maskReturn = ObjectG.getDObject!Bitmap(outmaskReturn);
 	}
 	
 	/**
@@ -568,11 +564,13 @@ public class Pixbuf : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_get_from_image (GdkPixbuf *dest,  GdkImage *src,  GdkColormap *cmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height);
 		auto p = gdk_pixbuf_get_from_image(gdkPixbuf, (src is null) ? null : src.getImageGdkStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -720,11 +718,13 @@ public class Pixbuf : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_copy (const GdkPixbuf *pixbuf);
 		auto p = gdk_pixbuf_copy(gdkPixbuf);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1088,11 +1088,13 @@ public class Pixbuf : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_scale_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type);
 		auto p = gdk_pixbuf_scale_simple(gdkPixbuf, destWidth, destHeight, interpType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1143,11 +1145,13 @@ public class Pixbuf : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_composite_color_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type,  int overall_alpha,  int check_size,  guint32 color1,  guint32 color2);
 		auto p = gdk_pixbuf_composite_color_simple(gdkPixbuf, destWidth, destHeight, interpType, overallAlpha, checkSize, color1, color2);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1225,11 +1229,13 @@ public class Pixbuf : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_rotate_simple (const GdkPixbuf *src,  GdkPixbufRotation angle);
 		auto p = gdk_pixbuf_rotate_simple(gdkPixbuf, angle);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1244,11 +1250,13 @@ public class Pixbuf : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_flip (const GdkPixbuf *src,  gboolean horizontal);
 		auto p = gdk_pixbuf_flip(gdkPixbuf, horizontal);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1271,11 +1279,13 @@ public class Pixbuf : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_add_alpha (const GdkPixbuf *pixbuf,  gboolean substitute_color,  guchar r,  guchar g,  guchar b);
 		auto p = gdk_pixbuf_add_alpha(gdkPixbuf, substituteColor, r, g, b);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1335,11 +1345,13 @@ public class Pixbuf : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_apply_embedded_orientation  (GdkPixbuf *src);
 		auto p = gdk_pixbuf_apply_embedded_orientation(gdkPixbuf);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

@@ -56,6 +56,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -95,11 +96,6 @@ public class PgFontMetrics
 	 */
 	public this (PangoFontMetrics* pangoFontMetrics)
 	{
-		if(pangoFontMetrics is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoFontMetrics = pangoFontMetrics;
 	}
 	
@@ -114,11 +110,13 @@ public class PgFontMetrics
 	{
 		// PangoFontMetrics * pango_font_metrics_ref (PangoFontMetrics *metrics);
 		auto p = pango_font_metrics_ref(pangoFontMetrics);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontMetrics(cast(PangoFontMetrics*) p);
+		
+		return ObjectG.getDObject!PgFontMetrics(cast(PangoFontMetrics*) p);
 	}
 	
 	/**

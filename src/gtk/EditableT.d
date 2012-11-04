@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -125,11 +126,11 @@ public template EditableT(TStruct)
 		}
 		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkEditable* editableStruct, EditableIF editableIF)
+	extern(C) static void callBackChanged(GtkEditable* editableStruct, EditableIF _editableIF)
 	{
-		foreach ( void delegate(EditableIF) dlg ; editableIF.onChangedListeners )
+		foreach ( void delegate(EditableIF) dlg ; _editableIF.onChangedListeners )
 		{
-			dlg(editableIF);
+			dlg(_editableIF);
 		}
 	}
 	
@@ -164,16 +165,16 @@ public template EditableT(TStruct)
 		}
 		_onDeleteTextListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, gint startPos, gint endPos, EditableIF editableIF)
+	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, gint startPos, gint endPos, EditableIF _editableIF)
 	{
-		foreach ( void delegate(gint, gint, EditableIF) dlg ; editableIF.onDeleteTextListeners )
+		foreach ( void delegate(gint, gint, EditableIF) dlg ; _editableIF.onDeleteTextListeners )
 		{
-			dlg(startPos, endPos, editableIF);
+			dlg(startPos, endPos, _editableIF);
 		}
 	}
 	
-	void delegate(string, gint, gpointer, EditableIF)[] _onInsertTextListeners;
-	void delegate(string, gint, gpointer, EditableIF)[] onInsertTextListeners()
+	void delegate(string, gint, void*, EditableIF)[] _onInsertTextListeners;
+	void delegate(string, gint, void*, EditableIF)[] onInsertTextListeners()
 	{
 		return  _onInsertTextListeners;
 	}
@@ -186,7 +187,7 @@ public template EditableT(TStruct)
 	 * is possible to modify the inserted text, or prevent
 	 * it from being inserted entirely.
 	 */
-	void addOnInsertText(void delegate(string, gint, gpointer, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnInsertText(void delegate(string, gint, void*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
 		{
@@ -201,11 +202,11 @@ public template EditableT(TStruct)
 		}
 		_onInsertTextListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gpointer position, EditableIF editableIF)
+	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, void* position, EditableIF _editableIF)
 	{
-		foreach ( void delegate(string, gint, gpointer, EditableIF) dlg ; editableIF.onInsertTextListeners )
+		foreach ( void delegate(string, gint, void*, EditableIF) dlg ; _editableIF.onInsertTextListeners )
 		{
-			dlg(Str.toString(newText), newTextLength, position, editableIF);
+			dlg(Str.toString(newText), newTextLength, position, _editableIF);
 		}
 	}
 	

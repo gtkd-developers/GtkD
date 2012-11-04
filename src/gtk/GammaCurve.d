@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -99,18 +100,6 @@ public class GammaCurve : VBox
 	 */
 	public this (GtkGammaCurve* gtkGammaCurve)
 	{
-		if(gtkGammaCurve is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkGammaCurve);
-		if( ptr !is null )
-		{
-			this = cast(GammaCurve)ptr;
-			return;
-		}
 		super(cast(GtkVBox*)gtkGammaCurve);
 		this.gtkGammaCurve = gtkGammaCurve;
 	}

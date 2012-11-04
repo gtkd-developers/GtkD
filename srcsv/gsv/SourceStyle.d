@@ -56,6 +56,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -92,18 +93,6 @@ public class SourceStyle : ObjectG
 	 */
 	public this (GtkSourceStyle* gtkSourceStyle)
 	{
-		if(gtkSourceStyle is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceStyle);
-		if( ptr !is null )
-		{
-			this = cast(SourceStyle)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceStyle);
 		this.gtkSourceStyle = gtkSourceStyle;
 	}
@@ -127,10 +116,12 @@ public class SourceStyle : ObjectG
 	{
 		// GtkSourceStyle * gtk_source_style_copy (const GtkSourceStyle *style);
 		auto p = gtk_source_style_copy(gtkSourceStyle);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceStyle(cast(GtkSourceStyle*) p);
+		
+		return ObjectG.getDObject!SourceStyle(cast(GtkSourceStyle*) p);
 	}
 }

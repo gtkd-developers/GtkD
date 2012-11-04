@@ -64,6 +64,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Visual;
@@ -124,11 +125,6 @@ public class Colormap
 	 */
 	public this (GdkColormap* gdkColormap)
 	{
-		if(gdkColormap is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkColormap = gdkColormap;
 	}
 	
@@ -165,11 +161,13 @@ public class Colormap
 	{
 		// GdkColormap * gdk_colormap_ref (GdkColormap *cmap);
 		auto p = gdk_colormap_ref(gdkColormap);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Colormap(cast(GdkColormap*) p);
+		
+		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -192,11 +190,13 @@ public class Colormap
 	{
 		// GdkColormap * gdk_colormap_get_system (void);
 		auto p = gdk_colormap_get_system();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Colormap(cast(GdkColormap*) p);
+		
+		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -308,11 +308,13 @@ public class Colormap
 	{
 		// GdkVisual * gdk_colormap_get_visual (GdkColormap *colormap);
 		auto p = gdk_colormap_get_visual(gdkColormap);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -324,11 +326,13 @@ public class Colormap
 	{
 		// GdkScreen * gdk_colormap_get_screen (GdkColormap *cmap);
 		auto p = gdk_colormap_get_screen(gdkColormap);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**

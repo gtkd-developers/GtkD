@@ -68,6 +68,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -119,18 +120,6 @@ public class MenuItem : Item, ActivatableIF
 	 */
 	public this (GtkMenuItem* gtkMenuItem)
 	{
-		if(gtkMenuItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMenuItem);
-		if( ptr !is null )
-		{
-			this = cast(MenuItem)ptr;
-			return;
-		}
 		super(cast(GtkItem*)gtkMenuItem);
 		this.gtkMenuItem = gtkMenuItem;
 	}
@@ -259,11 +248,11 @@ public class MenuItem : Item, ActivatableIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, MenuItem menuItem)
+	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, MenuItem _menuItem)
 	{
-		foreach ( void delegate(MenuItem) dlg ; menuItem.onActivateListeners )
+		foreach ( void delegate(MenuItem) dlg ; _menuItem.onActivateListeners )
 		{
-			dlg(menuItem);
+			dlg(_menuItem);
 		}
 	}
 	
@@ -287,11 +276,11 @@ public class MenuItem : Item, ActivatableIF
 		}
 		onActivateItemListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, MenuItem menuItem)
+	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, MenuItem _menuItem)
 	{
-		foreach ( void delegate(MenuItem) dlg ; menuItem.onActivateItemListeners )
+		foreach ( void delegate(MenuItem) dlg ; _menuItem.onActivateItemListeners )
 		{
-			dlg(menuItem);
+			dlg(_menuItem);
 		}
 	}
 	
@@ -313,15 +302,15 @@ public class MenuItem : Item, ActivatableIF
 		}
 		onToggleSizeAllocateListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, gint arg1, MenuItem menuItem)
+	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, gint arg1, MenuItem _menuItem)
 	{
-		foreach ( void delegate(gint, MenuItem) dlg ; menuItem.onToggleSizeAllocateListeners )
+		foreach ( void delegate(gint, MenuItem) dlg ; _menuItem.onToggleSizeAllocateListeners )
 		{
-			dlg(arg1, menuItem);
+			dlg(arg1, _menuItem);
 		}
 	}
 	
-	void delegate(gpointer, MenuItem)[] onToggleSizeRequestListeners;
+	void delegate(void*, MenuItem)[] onToggleSizeRequestListeners;
 	/**
 	 * See Also
 	 * GtkBin
@@ -331,7 +320,7 @@ public class MenuItem : Item, ActivatableIF
 	 * GtkMenuShell
 	 * is always the parent of GtkMenuItem.
 	 */
-	void addOnToggleSizeRequest(void delegate(gpointer, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnToggleSizeRequest(void delegate(void*, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-size-request" in connectedSignals) )
 		{
@@ -346,11 +335,11 @@ public class MenuItem : Item, ActivatableIF
 		}
 		onToggleSizeRequestListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, gpointer arg1, MenuItem menuItem)
+	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, void* arg1, MenuItem _menuItem)
 	{
-		foreach ( void delegate(gpointer, MenuItem) dlg ; menuItem.onToggleSizeRequestListeners )
+		foreach ( void delegate(void*, MenuItem) dlg ; _menuItem.onToggleSizeRequestListeners )
 		{
-			dlg(arg1, menuItem);
+			dlg(arg1, _menuItem);
 		}
 	}
 	
@@ -466,11 +455,13 @@ public class MenuItem : Item, ActivatableIF
 	{
 		// GtkWidget * gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
 		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

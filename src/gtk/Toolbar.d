@@ -74,6 +74,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -130,18 +131,6 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public this (GtkToolbar* gtkToolbar)
 	{
-		if(gtkToolbar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToolbar);
-		if( ptr !is null )
-		{
-			this = cast(Toolbar)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkToolbar);
 		this.gtkToolbar = gtkToolbar;
 	}
@@ -232,11 +221,11 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		}
 		onFocusHomeOrEndListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, gboolean focusHome, Toolbar toolbar)
+	extern(C) static gboolean callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, gboolean focusHome, Toolbar _toolbar)
 	{
-		foreach ( bool delegate(gboolean, Toolbar) dlg ; toolbar.onFocusHomeOrEndListeners )
+		foreach ( bool delegate(gboolean, Toolbar) dlg ; _toolbar.onFocusHomeOrEndListeners )
 		{
-			if ( dlg(focusHome, toolbar) )
+			if ( dlg(focusHome, _toolbar) )
 			{
 				return 1;
 			}
@@ -264,11 +253,11 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		}
 		onOrientationChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackOrientationChanged(GtkToolbar* toolbarStruct, GtkOrientation orientation, Toolbar toolbar)
+	extern(C) static void callBackOrientationChanged(GtkToolbar* toolbarStruct, GtkOrientation orientation, Toolbar _toolbar)
 	{
-		foreach ( void delegate(GtkOrientation, Toolbar) dlg ; toolbar.onOrientationChangedListeners )
+		foreach ( void delegate(GtkOrientation, Toolbar) dlg ; _toolbar.onOrientationChangedListeners )
 		{
-			dlg(orientation, toolbar);
+			dlg(orientation, _toolbar);
 		}
 	}
 	
@@ -297,11 +286,11 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		}
 		onPopupContextMenuListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPopupContextMenu(GtkToolbar* toolbarStruct, gint x, gint y, gint button, Toolbar toolbar)
+	extern(C) static gboolean callBackPopupContextMenu(GtkToolbar* toolbarStruct, gint x, gint y, gint button, Toolbar _toolbar)
 	{
-		foreach ( bool delegate(gint, gint, gint, Toolbar) dlg ; toolbar.onPopupContextMenuListeners )
+		foreach ( bool delegate(gint, gint, gint, Toolbar) dlg ; _toolbar.onPopupContextMenuListeners )
 		{
-			if ( dlg(x, y, button, toolbar) )
+			if ( dlg(x, y, button, _toolbar) )
 			{
 				return 1;
 			}
@@ -332,11 +321,11 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		}
 		onStyleChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStyleChanged(GtkToolbar* toolbarStruct, GtkToolbarStyle style, Toolbar toolbar)
+	extern(C) static void callBackStyleChanged(GtkToolbar* toolbarStruct, GtkToolbarStyle style, Toolbar _toolbar)
 	{
-		foreach ( void delegate(GtkToolbarStyle, Toolbar) dlg ; toolbar.onStyleChangedListeners )
+		foreach ( void delegate(GtkToolbarStyle, Toolbar) dlg ; _toolbar.onStyleChangedListeners )
 		{
-			dlg(style, toolbar);
+			dlg(style, _toolbar);
 		}
 	}
 	
@@ -393,11 +382,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkToolItem * gtk_toolbar_get_nth_item (GtkToolbar *toolbar,  gint n);
 		auto p = gtk_toolbar_get_nth_item(gtkToolbar, n);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ToolItem(cast(GtkToolItem*) p);
+		
+		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
 	}
 	
 	/**
@@ -532,11 +523,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkWidget * gtk_toolbar_append_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_append_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -558,11 +551,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkWidget * gtk_toolbar_prepend_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_prepend_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -586,11 +581,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkWidget * gtk_toolbar_insert_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -653,11 +650,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkWidget * gtk_toolbar_append_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_append_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -685,11 +684,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkWidget * gtk_toolbar_prepend_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data);
 		auto p = gtk_toolbar_prepend_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -719,11 +720,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkWidget * gtk_toolbar_insert_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -805,11 +808,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkWidget * gtk_toolbar_insert_stock (GtkToolbar *toolbar,  const gchar *stock_id,  const char *tooltip_text,  const char *tooltip_private_text,  GCallback callback,  gpointer user_data,  gint position);
 		auto p = gtk_toolbar_insert_stock(gtkToolbar, Str.toStringz(stockId), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), callback, userData, position);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

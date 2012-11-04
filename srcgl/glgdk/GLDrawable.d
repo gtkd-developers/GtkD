@@ -60,6 +60,7 @@ public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glgdk.GLContext;
@@ -95,11 +96,6 @@ public class GLDrawable
 	 */
 	public this (GdkGLDrawable* gdkGLDrawable)
 	{
-		if(gdkGLDrawable is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkGLDrawable = gdkGLDrawable;
 	}
 	
@@ -184,11 +180,13 @@ public class GLDrawable
 	{
 		// GdkGLConfig* gdk_gl_drawable_get_gl_config (GdkGLDrawable *gldrawable);
 		auto p = gdk_gl_drawable_get_gl_config(gdkGLDrawable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLConfig(cast(GdkGLConfig*) p);
+		
+		return ObjectG.getDObject!GLConfig(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -212,10 +210,12 @@ public class GLDrawable
 	{
 		// GdkGLDrawable* gdk_gl_drawable_get_current (void);
 		auto p = gdk_gl_drawable_get_current();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLDrawable(cast(GdkGLDrawable*) p);
+		
+		return ObjectG.getDObject!GLDrawable(cast(GdkGLDrawable*) p);
 	}
 }

@@ -64,6 +64,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -113,18 +114,6 @@ public class PrintSettings : ObjectG
 	 */
 	public this (GtkPrintSettings* gtkPrintSettings)
 	{
-		if(gtkPrintSettings is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPrintSettings);
-		if( ptr !is null )
-		{
-			this = cast(PrintSettings)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkPrintSettings);
 		this.gtkPrintSettings = gtkPrintSettings;
 	}
@@ -163,11 +152,13 @@ public class PrintSettings : ObjectG
 	{
 		// GtkPrintSettings * gtk_print_settings_copy (GtkPrintSettings *other);
 		auto p = gtk_print_settings_copy(gtkPrintSettings);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PrintSettings(cast(GtkPrintSettings*) p);
+		
+		return ObjectG.getDObject!PrintSettings(cast(GtkPrintSettings*) p);
 	}
 	
 	/**
@@ -436,11 +427,13 @@ public class PrintSettings : ObjectG
 	{
 		// GtkPaperSize * gtk_print_settings_get_paper_size (GtkPrintSettings *settings);
 		auto p = gtk_print_settings_get_paper_size(gtkPrintSettings);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PaperSize(cast(GtkPaperSize*) p);
+		
+		return ObjectG.getDObject!PaperSize(cast(GtkPaperSize*) p);
 	}
 	
 	/**
@@ -836,6 +829,12 @@ public class PrintSettings : ObjectG
 		// GtkPageRange * gtk_print_settings_get_page_ranges (GtkPrintSettings *settings,  gint *num_ranges);
 		int numRanges;
 		auto p = gtk_print_settings_get_page_ranges(gtkPrintSettings, &numRanges);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. numRanges];
 	}
 	

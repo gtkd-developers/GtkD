@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -119,18 +120,6 @@ public class MenuToolButton : ToolButton
 	 */
 	public this (GtkMenuToolButton* gtkMenuToolButton)
 	{
-		if(gtkMenuToolButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMenuToolButton);
-		if( ptr !is null )
-		{
-			this = cast(MenuToolButton)ptr;
-			return;
-		}
 		super(cast(GtkToolButton*)gtkMenuToolButton);
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}
@@ -261,11 +250,11 @@ public class MenuToolButton : ToolButton
 		}
 		onShowMenuListeners ~= dlg;
 	}
-	extern(C) static void callBackShowMenu(GtkMenuToolButton* buttonStruct, MenuToolButton menuToolButton)
+	extern(C) static void callBackShowMenu(GtkMenuToolButton* buttonStruct, MenuToolButton _menuToolButton)
 	{
-		foreach ( void delegate(MenuToolButton) dlg ; menuToolButton.onShowMenuListeners )
+		foreach ( void delegate(MenuToolButton) dlg ; _menuToolButton.onShowMenuListeners )
 		{
-			dlg(menuToolButton);
+			dlg(_menuToolButton);
 		}
 	}
 	

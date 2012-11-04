@@ -61,6 +61,7 @@ public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glgdk.GLConfig;
@@ -97,18 +98,6 @@ public class GLPixmap : Drawable
 	 */
 	public this (GdkGLPixmap* gdkGLPixmap)
 	{
-		if(gdkGLPixmap is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkGLPixmap);
-		if( ptr !is null )
-		{
-			this = cast(GLPixmap)ptr;
-			return;
-		}
 		super(cast(GdkDrawable*)gdkGLPixmap);
 		this.gdkGLPixmap = gdkGLPixmap;
 	}
@@ -163,11 +152,13 @@ public class GLPixmap : Drawable
 	{
 		// GdkPixmap* gdk_gl_pixmap_get_pixmap (GdkGLPixmap *glpixmap);
 		auto p = gdk_gl_pixmap_get_pixmap(gdkGLPixmap);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixmap(cast(GdkPixmap*) p);
+		
+		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -185,11 +176,13 @@ public class GLPixmap : Drawable
 	{
 		// GdkGLPixmap* gdk_pixmap_set_gl_capability (GdkPixmap *pixmap,  GdkGLConfig *glconfig,  const int *attrib_list);
 		auto p = gdk_pixmap_set_gl_capability((pixmap is null) ? null : pixmap.getPixmapStruct(), (glconfig is null) ? null : glconfig.getGLConfigStruct(), attribList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLPixmap(cast(GdkGLPixmap*) p);
+		
+		return ObjectG.getDObject!GLPixmap(cast(GdkGLPixmap*) p);
 	}
 	
 	/**
@@ -226,10 +219,12 @@ public class GLPixmap : Drawable
 	{
 		// GdkGLPixmap* gdk_pixmap_get_gl_pixmap (GdkPixmap *pixmap);
 		auto p = gdk_pixmap_get_gl_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLPixmap(cast(GdkGLPixmap*) p);
+		
+		return ObjectG.getDObject!GLPixmap(cast(GdkGLPixmap*) p);
 	}
 }

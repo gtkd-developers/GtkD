@@ -67,6 +67,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -115,18 +116,6 @@ public class ElementFactory : PluginFeature
 	 */
 	public this (GstElementFactory* gstElementFactory)
 	{
-		if(gstElementFactory is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstElementFactory);
-		if( ptr !is null )
-		{
-			this = cast(ElementFactory)ptr;
-			return;
-		}
 		super(cast(GstPluginFeature*)gstElementFactory);
 		this.gstElementFactory = gstElementFactory;
 	}
@@ -182,11 +171,13 @@ public class ElementFactory : PluginFeature
 	{
 		// GstElementFactory* gst_element_factory_find (const gchar *name);
 		auto p = gst_element_factory_find(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ElementFactory(cast(GstElementFactory*) p);
+		
+		return ObjectG.getDObject!ElementFactory(cast(GstElementFactory*) p);
 	}
 	
 	/**
@@ -298,11 +289,13 @@ public class ElementFactory : PluginFeature
 	{
 		// GstElement* gst_element_factory_create (GstElementFactory *factory,  const gchar *name);
 		auto p = gst_element_factory_create(gstElementFactory, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Element(cast(GstElement*) p);
+		
+		return ObjectG.getDObject!Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -319,11 +312,13 @@ public class ElementFactory : PluginFeature
 	{
 		// GstElement* gst_element_factory_make (const gchar *factoryname,  const gchar *name);
 		auto p = gst_element_factory_make(Str.toStringz(factoryname), Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Element(cast(GstElement*) p);
+		
+		return ObjectG.getDObject!Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -358,10 +353,12 @@ public class ElementFactory : PluginFeature
 	{
 		// const GList* gst_element_factory_get_static_pad_templates  (GstElementFactory *factory);
 		auto p = gst_element_factory_get_static_pad_templates(gstElementFactory);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 }

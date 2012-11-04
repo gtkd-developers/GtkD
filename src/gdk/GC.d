@@ -76,6 +76,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Drawable;
@@ -134,18 +135,6 @@ public class GC : ObjectG
 	 */
 	public this (GdkGC* gdkGC)
 	{
-		if(gdkGC is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkGC);
-		if( ptr !is null )
-		{
-			this = cast(GC)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkGC);
 		this.gdkGC = gdkGC;
 	}
@@ -213,11 +202,13 @@ public class GC : ObjectG
 	{
 		// GdkScreen * gdk_gc_get_screen (GdkGC *gc);
 		auto p = gdk_gc_get_screen(gdkGC);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -609,11 +600,13 @@ public class GC : ObjectG
 	{
 		// GdkColormap * gdk_gc_get_colormap (GdkGC *gc);
 		auto p = gdk_gc_get_colormap(gdkGC);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Colormap(cast(GdkColormap*) p);
+		
+		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**

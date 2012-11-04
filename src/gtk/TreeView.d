@@ -84,6 +84,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -159,18 +160,6 @@ public class TreeView : Container
 	 */
 	public this (GtkTreeView* gtkTreeView)
 	{
-		if(gtkTreeView is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeView);
-		if( ptr !is null )
-		{
-			this = cast(TreeView)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
 	}
@@ -287,11 +276,11 @@ public class TreeView : Container
 		}
 		onColumnsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackColumnsChanged(GtkTreeView* treeViewStruct, TreeView treeView)
+	extern(C) static void callBackColumnsChanged(GtkTreeView* treeViewStruct, TreeView _treeView)
 	{
-		foreach ( void delegate(TreeView) dlg ; treeView.onColumnsChangedListeners )
+		foreach ( void delegate(TreeView) dlg ; _treeView.onColumnsChangedListeners )
 		{
-			dlg(treeView);
+			dlg(_treeView);
 		}
 	}
 	
@@ -314,11 +303,11 @@ public class TreeView : Container
 		}
 		onCursorChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackCursorChanged(GtkTreeView* treeViewStruct, TreeView treeView)
+	extern(C) static void callBackCursorChanged(GtkTreeView* treeViewStruct, TreeView _treeView)
 	{
-		foreach ( void delegate(TreeView) dlg ; treeView.onCursorChangedListeners )
+		foreach ( void delegate(TreeView) dlg ; _treeView.onCursorChangedListeners )
 		{
-			dlg(treeView);
+			dlg(_treeView);
 		}
 	}
 	
@@ -340,11 +329,11 @@ public class TreeView : Container
 		}
 		onExpandCollapseCursorRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackExpandCollapseCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, gboolean arg2, gboolean arg3, TreeView treeView)
+	extern(C) static gboolean callBackExpandCollapseCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, gboolean arg2, gboolean arg3, TreeView _treeView)
 	{
-		foreach ( bool delegate(gboolean, gboolean, gboolean, TreeView) dlg ; treeView.onExpandCollapseCursorRowListeners )
+		foreach ( bool delegate(gboolean, gboolean, gboolean, TreeView) dlg ; _treeView.onExpandCollapseCursorRowListeners )
 		{
-			if ( dlg(arg1, arg2, arg3, treeView) )
+			if ( dlg(arg1, arg2, arg3, _treeView) )
 			{
 				return 1;
 			}
@@ -371,11 +360,11 @@ public class TreeView : Container
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMoveCursor(GtkTreeView* treeviewStruct, GtkMovementStep arg1, gint arg2, TreeView treeView)
+	extern(C) static gboolean callBackMoveCursor(GtkTreeView* treeviewStruct, GtkMovementStep arg1, gint arg2, TreeView _treeView)
 	{
-		foreach ( bool delegate(GtkMovementStep, gint, TreeView) dlg ; treeView.onMoveCursorListeners )
+		foreach ( bool delegate(GtkMovementStep, gint, TreeView) dlg ; _treeView.onMoveCursorListeners )
 		{
-			if ( dlg(arg1, arg2, treeView) )
+			if ( dlg(arg1, arg2, _treeView) )
 			{
 				return 1;
 			}
@@ -409,11 +398,11 @@ public class TreeView : Container
 		}
 		onRowActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowActivated(GtkTreeView* treeViewStruct, GtkTreePath* path, GtkTreeViewColumn* column, TreeView treeView)
+	extern(C) static void callBackRowActivated(GtkTreeView* treeViewStruct, GtkTreePath* path, GtkTreeViewColumn* column, TreeView _treeView)
 	{
-		foreach ( void delegate(TreePath, TreeViewColumn, TreeView) dlg ; treeView.onRowActivatedListeners )
+		foreach ( void delegate(TreePath, TreeViewColumn, TreeView) dlg ; _treeView.onRowActivatedListeners )
 		{
-			dlg(new TreePath(path), new TreeViewColumn(column), treeView);
+			dlg(ObjectG.getDObject!TreePath(path), ObjectG.getDObject!TreeViewColumn(column), _treeView);
 		}
 	}
 	
@@ -436,11 +425,11 @@ public class TreeView : Container
 		}
 		onRowCollapsedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowCollapsed(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
+	extern(C) static void callBackRowCollapsed(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView _treeView)
 	{
-		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onRowCollapsedListeners )
+		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onRowCollapsedListeners )
 		{
-			dlg(new TreeIter(iter), new TreePath(path), treeView);
+			dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView);
 		}
 	}
 	
@@ -463,11 +452,11 @@ public class TreeView : Container
 		}
 		onRowExpandedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowExpanded(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
+	extern(C) static void callBackRowExpanded(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView _treeView)
 	{
-		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onRowExpandedListeners )
+		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onRowExpandedListeners )
 		{
-			dlg(new TreeIter(iter), new TreePath(path), treeView);
+			dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView);
 		}
 	}
 	
@@ -489,11 +478,11 @@ public class TreeView : Container
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectAll(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackSelectAll(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onSelectAllListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onSelectAllListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -520,11 +509,11 @@ public class TreeView : Container
 		}
 		onSelectCursorParentListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectCursorParent(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackSelectCursorParent(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onSelectCursorParentListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onSelectCursorParentListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -551,11 +540,11 @@ public class TreeView : Container
 		}
 		onSelectCursorRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, TreeView treeView)
+	extern(C) static gboolean callBackSelectCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, TreeView _treeView)
 	{
-		foreach ( bool delegate(gboolean, TreeView) dlg ; treeView.onSelectCursorRowListeners )
+		foreach ( bool delegate(gboolean, TreeView) dlg ; _treeView.onSelectCursorRowListeners )
 		{
-			if ( dlg(arg1, treeView) )
+			if ( dlg(arg1, _treeView) )
 			{
 				return 1;
 			}
@@ -585,11 +574,11 @@ public class TreeView : Container
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkTreeView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TreeView treeView)
+	extern(C) static void callBackSetScrollAdjustments(GtkTreeView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TreeView _treeView)
 	{
-		foreach ( void delegate(Adjustment, Adjustment, TreeView) dlg ; treeView.onSetScrollAdjustmentsListeners )
+		foreach ( void delegate(Adjustment, Adjustment, TreeView) dlg ; _treeView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(new Adjustment(vertical), new Adjustment(arg2), treeView);
+			dlg(ObjectG.getDObject!Adjustment(vertical), ObjectG.getDObject!Adjustment(arg2), _treeView);
 		}
 	}
 	
@@ -611,11 +600,11 @@ public class TreeView : Container
 		}
 		onStartInteractiveSearchListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackStartInteractiveSearch(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackStartInteractiveSearch(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onStartInteractiveSearchListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onStartInteractiveSearchListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -645,11 +634,11 @@ public class TreeView : Container
 		}
 		onTestCollapseRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackTestCollapseRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
+	extern(C) static gboolean callBackTestCollapseRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestCollapseRowListeners )
+		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onTestCollapseRowListeners )
 		{
-			if ( dlg(new TreeIter(iter), new TreePath(path), treeView) )
+			if ( dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView) )
 			{
 				return 1;
 			}
@@ -679,11 +668,11 @@ public class TreeView : Container
 		}
 		onTestExpandRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackTestExpandRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
+	extern(C) static gboolean callBackTestExpandRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestExpandRowListeners )
+		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onTestExpandRowListeners )
 		{
-			if ( dlg(new TreeIter(iter), new TreePath(path), treeView) )
+			if ( dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView) )
 			{
 				return 1;
 			}
@@ -710,11 +699,11 @@ public class TreeView : Container
 		}
 		onToggleCursorRowListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackToggleCursorRow(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackToggleCursorRow(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onToggleCursorRowListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onToggleCursorRowListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -743,11 +732,11 @@ public class TreeView : Container
 		}
 		onUnselectAllListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackUnselectAll(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static gboolean callBackUnselectAll(GtkTreeView* treeviewStruct, TreeView _treeView)
 	{
-		foreach ( bool delegate(TreeView) dlg ; treeView.onUnselectAllListeners )
+		foreach ( bool delegate(TreeView) dlg ; _treeView.onUnselectAllListeners )
 		{
-			if ( dlg(treeView) )
+			if ( dlg(_treeView) )
 			{
 				return 1;
 			}
@@ -855,11 +844,13 @@ public class TreeView : Container
 	{
 		// GtkTreeModel * gtk_tree_view_get_model (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_model(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -883,11 +874,13 @@ public class TreeView : Container
 	{
 		// GtkTreeSelection * gtk_tree_view_get_selection (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_selection(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeSelection(cast(GtkTreeSelection*) p);
+		
+		return ObjectG.getDObject!TreeSelection(cast(GtkTreeSelection*) p);
 	}
 	
 	/**
@@ -898,11 +891,13 @@ public class TreeView : Container
 	{
 		// GtkAdjustment * gtk_tree_view_get_hadjustment (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_hadjustment(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -924,11 +919,13 @@ public class TreeView : Container
 	{
 		// GtkAdjustment * gtk_tree_view_get_vadjustment (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_vadjustment(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -1101,11 +1098,13 @@ public class TreeView : Container
 	{
 		// GtkTreeViewColumn * gtk_tree_view_get_column (GtkTreeView *tree_view,  gint n);
 		auto p = gtk_tree_view_get_column(gtkTreeView, n);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeViewColumn(cast(GtkTreeViewColumn*) p);
+		
+		return ObjectG.getDObject!TreeViewColumn(cast(GtkTreeViewColumn*) p);
 	}
 	
 	/**
@@ -1117,11 +1116,13 @@ public class TreeView : Container
 	{
 		// GList * gtk_tree_view_get_columns (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_columns(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1161,11 +1162,13 @@ public class TreeView : Container
 	{
 		// GtkTreeViewColumn * gtk_tree_view_get_expander_column (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_expander_column(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeViewColumn(cast(GtkTreeViewColumn*) p);
+		
+		return ObjectG.getDObject!TreeViewColumn(cast(GtkTreeViewColumn*) p);
 	}
 	
 	/**
@@ -1301,8 +1304,8 @@ public class TreeView : Container
 		
 		gtk_tree_view_get_cursor(gtkTreeView, &outpath, &outfocusColumn);
 		
-		path = new TreePath(outpath);
-		focusColumn = new TreeViewColumn(outfocusColumn);
+		path = ObjectG.getDObject!TreePath(outpath);
+		focusColumn = ObjectG.getDObject!TreeViewColumn(outfocusColumn);
 	}
 	
 	/**
@@ -1464,8 +1467,8 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY);
 		
-		path = new TreePath(outpath);
-		column = new TreeViewColumn(outcolumn);
+		path = ObjectG.getDObject!TreePath(outpath);
+		column = ObjectG.getDObject!TreeViewColumn(outcolumn);
 		return p;
 	}
 	
@@ -1545,8 +1548,8 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath);
 		
-		startPath = new TreePath(outstartPath);
-		endPath = new TreePath(outendPath);
+		startPath = ObjectG.getDObject!TreePath(outstartPath);
+		endPath = ObjectG.getDObject!TreePath(outendPath);
 		return p;
 	}
 	
@@ -1560,11 +1563,13 @@ public class TreeView : Container
 	{
 		// GdkWindow * gtk_tree_view_get_bin_window (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_bin_window(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1779,7 +1784,7 @@ public class TreeView : Container
 		
 		gtk_tree_view_get_drag_dest_row(gtkTreeView, &outpath, &pos);
 		
-		path = new TreePath(outpath);
+		path = ObjectG.getDObject!TreePath(outpath);
 	}
 	
 	/**
@@ -1801,7 +1806,7 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos);
 		
-		path = new TreePath(outpath);
+		path = ObjectG.getDObject!TreePath(outpath);
 		return p;
 	}
 	
@@ -1816,11 +1821,13 @@ public class TreeView : Container
 	{
 		// GdkPixmap * gtk_tree_view_create_row_drag_icon (GtkTreeView *tree_view,  GtkTreePath *path);
 		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixmap(cast(GdkPixmap*) p);
+		
+		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -1911,11 +1918,13 @@ public class TreeView : Container
 	{
 		// GtkEntry * gtk_tree_view_get_search_entry (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_search_entry(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Entry(cast(GtkEntry*) p);
+		
+		return ObjectG.getDObject!Entry(cast(GtkEntry*) p);
 	}
 	
 	/**
@@ -2234,8 +2243,8 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
 		
-		model = new TreeModel(outmodel);
-		path = new TreePath(outpath);
+		model = ObjectG.getDObject!TreeModel(outmodel);
+		path = ObjectG.getDObject!TreePath(outpath);
 		return p;
 	}
 	

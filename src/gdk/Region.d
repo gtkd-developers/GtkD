@@ -58,6 +58,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Rectangle;
@@ -104,11 +105,6 @@ public class Region
 	 */
 	public this (GdkRegion* gdkRegion)
 	{
-		if(gdkRegion is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkRegion = gdkRegion;
 	}
 	
@@ -146,11 +142,13 @@ public class Region
 	{
 		// GdkRegion * gdk_region_polygon (const GdkPoint *points,  gint n_points,  GdkFillRule fill_rule);
 		auto p = gdk_region_polygon(points.ptr, cast(int) points.length, fillRule);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(GdkRegion*) p);
+		
+		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -161,11 +159,13 @@ public class Region
 	{
 		// GdkRegion * gdk_region_copy (const GdkRegion *region);
 		auto p = gdk_region_copy(gdkRegion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(GdkRegion*) p);
+		
+		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -178,11 +178,13 @@ public class Region
 	{
 		// GdkRegion * gdk_region_rectangle (const GdkRectangle *rectangle);
 		auto p = gdk_region_rectangle((rectangle is null) ? null : rectangle.getRectangleStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(GdkRegion*) p);
+		
+		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
 	}
 	
 	/**

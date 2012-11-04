@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -129,18 +130,6 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	 */
 	public this (GtkEntryCompletion* gtkEntryCompletion)
 	{
-		if(gtkEntryCompletion is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkEntryCompletion);
-		if( ptr !is null )
-		{
-			this = cast(EntryCompletion)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkEntryCompletion);
 		this.gtkEntryCompletion = gtkEntryCompletion;
 	}
@@ -178,11 +167,11 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		}
 		onActionActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionActivated(GtkEntryCompletion* widgetStruct, gint index, EntryCompletion entryCompletion)
+	extern(C) static void callBackActionActivated(GtkEntryCompletion* widgetStruct, gint index, EntryCompletion _entryCompletion)
 	{
-		foreach ( void delegate(gint, EntryCompletion) dlg ; entryCompletion.onActionActivatedListeners )
+		foreach ( void delegate(gint, EntryCompletion) dlg ; _entryCompletion.onActionActivatedListeners )
 		{
-			dlg(index, entryCompletion);
+			dlg(index, _entryCompletion);
 		}
 	}
 	
@@ -210,11 +199,11 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		}
 		onCursorOnMatchListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCursorOnMatch(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
+	extern(C) static gboolean callBackCursorOnMatch(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion _entryCompletion)
 	{
-		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
+		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; _entryCompletion.onCursorOnMatchListeners )
 		{
-			if ( dlg(new TreeModel(model), iter, entryCompletion) )
+			if ( dlg(ObjectG.getDObject!TreeModel(model), iter, _entryCompletion) )
 			{
 				return 1;
 			}
@@ -250,11 +239,11 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		}
 		onInsertPrefixListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackInsertPrefix(GtkEntryCompletion* widgetStruct, gchar* prefix, EntryCompletion entryCompletion)
+	extern(C) static gboolean callBackInsertPrefix(GtkEntryCompletion* widgetStruct, gchar* prefix, EntryCompletion _entryCompletion)
 	{
-		foreach ( bool delegate(string, EntryCompletion) dlg ; entryCompletion.onInsertPrefixListeners )
+		foreach ( bool delegate(string, EntryCompletion) dlg ; _entryCompletion.onInsertPrefixListeners )
 		{
-			if ( dlg(Str.toString(prefix), entryCompletion) )
+			if ( dlg(Str.toString(prefix), _entryCompletion) )
 			{
 				return 1;
 			}
@@ -287,11 +276,11 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 		}
 		onMatchSelectedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMatchSelected(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
+	extern(C) static gboolean callBackMatchSelected(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion _entryCompletion)
 	{
-		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
+		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; _entryCompletion.onMatchSelectedListeners )
 		{
-			if ( dlg(new TreeModel(model), iter, entryCompletion) )
+			if ( dlg(ObjectG.getDObject!TreeModel(model), iter, _entryCompletion) )
 			{
 				return 1;
 			}
@@ -326,11 +315,13 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	{
 		// GtkWidget * gtk_entry_completion_get_entry (GtkEntryCompletion *completion);
 		auto p = gtk_entry_completion_get_entry(gtkEntryCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -357,11 +348,13 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	{
 		// GtkTreeModel * gtk_entry_completion_get_model (GtkEntryCompletion *completion);
 		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**

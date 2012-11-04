@@ -71,6 +71,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -131,18 +132,6 @@ public class StatusIcon : ObjectG
 	 */
 	public this (GtkStatusIcon* gtkStatusIcon)
 	{
-		if(gtkStatusIcon is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkStatusIcon);
-		if( ptr !is null )
-		{
-			this = cast(StatusIcon)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkStatusIcon);
 		this.gtkStatusIcon = gtkStatusIcon;
 	}
@@ -238,11 +227,11 @@ public class StatusIcon : ObjectG
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkStatusIcon* statusIconStruct, StatusIcon statusIcon)
+	extern(C) static void callBackActivate(GtkStatusIcon* statusIconStruct, StatusIcon _statusIcon)
 	{
-		foreach ( void delegate(StatusIcon) dlg ; statusIcon.onActivateListeners )
+		foreach ( void delegate(StatusIcon) dlg ; _statusIcon.onActivateListeners )
 		{
-			dlg(statusIcon);
+			dlg(_statusIcon);
 		}
 	}
 	
@@ -271,11 +260,11 @@ public class StatusIcon : ObjectG
 		}
 		onButtonPressListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonPress(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon statusIcon)
+	extern(C) static gboolean callBackButtonPress(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon _statusIcon)
 	{
-		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; statusIcon.onButtonPressListeners )
+		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; _statusIcon.onButtonPressListeners )
 		{
-			if ( dlg(event, statusIcon) )
+			if ( dlg(event, _statusIcon) )
 			{
 				return 1;
 			}
@@ -309,11 +298,11 @@ public class StatusIcon : ObjectG
 		}
 		onButtonReleaseListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonRelease(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon statusIcon)
+	extern(C) static gboolean callBackButtonRelease(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon _statusIcon)
 	{
-		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; statusIcon.onButtonReleaseListeners )
+		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; _statusIcon.onButtonReleaseListeners )
 		{
-			if ( dlg(event, statusIcon) )
+			if ( dlg(event, _statusIcon) )
 			{
 				return 1;
 			}
@@ -348,11 +337,11 @@ public class StatusIcon : ObjectG
 		}
 		onPopupMenuListeners ~= dlg;
 	}
-	extern(C) static void callBackPopupMenu(GtkStatusIcon* statusIconStruct, guint button, guint activateTime, StatusIcon statusIcon)
+	extern(C) static void callBackPopupMenu(GtkStatusIcon* statusIconStruct, guint button, guint activateTime, StatusIcon _statusIcon)
 	{
-		foreach ( void delegate(guint, guint, StatusIcon) dlg ; statusIcon.onPopupMenuListeners )
+		foreach ( void delegate(guint, guint, StatusIcon) dlg ; _statusIcon.onPopupMenuListeners )
 		{
-			dlg(button, activateTime, statusIcon);
+			dlg(button, activateTime, _statusIcon);
 		}
 	}
 	
@@ -389,11 +378,11 @@ public class StatusIcon : ObjectG
 		}
 		onQueryTooltipListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackQueryTooltip(GtkStatusIcon* statusIconStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, StatusIcon statusIcon)
+	extern(C) static gboolean callBackQueryTooltip(GtkStatusIcon* statusIconStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, StatusIcon _statusIcon)
 	{
-		foreach ( bool delegate(gint, gint, gboolean, Tooltip, StatusIcon) dlg ; statusIcon.onQueryTooltipListeners )
+		foreach ( bool delegate(gint, gint, gboolean, Tooltip, StatusIcon) dlg ; _statusIcon.onQueryTooltipListeners )
 		{
-			if ( dlg(x, y, keyboardMode, new Tooltip(tooltip), statusIcon) )
+			if ( dlg(x, y, keyboardMode, ObjectG.getDObject!Tooltip(tooltip), _statusIcon) )
 			{
 				return 1;
 			}
@@ -426,11 +415,11 @@ public class StatusIcon : ObjectG
 		}
 		onScrollListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackScroll(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon statusIcon)
+	extern(C) static gboolean callBackScroll(GtkStatusIcon* statusIconStruct, GdkEvent* event, StatusIcon _statusIcon)
 	{
-		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; statusIcon.onScrollListeners )
+		foreach ( bool delegate(GdkEvent*, StatusIcon) dlg ; _statusIcon.onScrollListeners )
 		{
-			if ( dlg(event, statusIcon) )
+			if ( dlg(event, _statusIcon) )
 			{
 				return 1;
 			}
@@ -462,11 +451,11 @@ public class StatusIcon : ObjectG
 		}
 		onSizeChangedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSizeChanged(GtkStatusIcon* statusIconStruct, gint size, StatusIcon statusIcon)
+	extern(C) static gboolean callBackSizeChanged(GtkStatusIcon* statusIconStruct, gint size, StatusIcon _statusIcon)
 	{
-		foreach ( bool delegate(gint, StatusIcon) dlg ; statusIcon.onSizeChangedListeners )
+		foreach ( bool delegate(gint, StatusIcon) dlg ; _statusIcon.onSizeChangedListeners )
 		{
-			if ( dlg(size, statusIcon) )
+			if ( dlg(size, _statusIcon) )
 			{
 				return 1;
 			}
@@ -623,11 +612,13 @@ public class StatusIcon : ObjectG
 	{
 		// GdkPixbuf * gtk_status_icon_get_pixbuf (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_pixbuf(gtkStatusIcon);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -674,11 +665,13 @@ public class StatusIcon : ObjectG
 	{
 		// GIcon * gtk_status_icon_get_gicon (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_gicon(gtkStatusIcon);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -721,11 +714,13 @@ public class StatusIcon : ObjectG
 	{
 		// GdkScreen * gtk_status_icon_get_screen (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_screen(gtkStatusIcon);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -981,7 +976,7 @@ public class StatusIcon : ObjectG
 		
 		auto p = gtk_status_icon_get_geometry(gtkStatusIcon, &outscreen, &area, &orientation);
 		
-		screen = new Screen(outscreen);
+		screen = ObjectG.getDObject!Screen(outscreen);
 		return p;
 	}
 	

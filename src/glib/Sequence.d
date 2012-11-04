@@ -123,11 +123,6 @@ public class Sequence
 	 */
 	public this (GSequence* gSequence)
 	{
-		if(gSequence is null)
-		{
-			this = null;
-			return;
-		}
 		this.gSequence = gSequence;
 	}
 	
@@ -250,10 +245,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_get_begin_iter (GSequence *seq);
 		auto p = g_sequence_get_begin_iter(gSequence);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -266,10 +263,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_get_end_iter (GSequence *seq);
 		auto p = g_sequence_get_end_iter(gSequence);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -285,10 +284,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_get_iter_at_pos (GSequence *seq,  gint pos);
 		auto p = g_sequence_get_iter_at_pos(gSequence, pos);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -303,10 +304,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_append (GSequence *seq,  gpointer data);
 		auto p = g_sequence_append(gSequence, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -321,10 +324,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_prepend (GSequence *seq,  gpointer data);
 		auto p = g_sequence_prepend(gSequence, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -340,10 +345,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_insert_before (GSequenceIter *iter,  gpointer data);
 		auto p = g_sequence_insert_before((iter is null) ? null : iter.getSequenceIterStruct(), data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -397,10 +404,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_insert_sorted (GSequence *seq,  gpointer data,  GCompareDataFunc cmp_func,  gpointer cmp_data);
 		auto p = g_sequence_insert_sorted(gSequence, data, cmpFunc, cmpData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -423,10 +432,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_insert_sorted_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
 		auto p = g_sequence_insert_sorted_iter(gSequence, data, iterCmp, cmpData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -541,10 +552,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_search (GSequence *seq,  gpointer data,  GCompareDataFunc cmp_func,  gpointer cmp_data);
 		auto p = g_sequence_search(gSequence, data, cmpFunc, cmpData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -569,10 +582,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_search_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
 		auto p = g_sequence_search_iter(gSequence, data, iterCmp, cmpData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -597,10 +612,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_lookup (GSequence *seq,  gpointer data,  GCompareDataFunc cmp_func,  gpointer cmp_data);
 		auto p = g_sequence_lookup(gSequence, data, cmpFunc, cmpData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -623,10 +640,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_lookup_iter (GSequence *seq,  gpointer data,  GSequenceIterCompareFunc iter_cmp,  gpointer cmp_data);
 		auto p = g_sequence_lookup_iter(gSequence, data, iterCmp, cmpData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 	
@@ -674,10 +693,12 @@ public class Sequence
 	{
 		// GSequenceIter * g_sequence_range_get_midpoint (GSequenceIter *begin,  GSequenceIter *end);
 		auto p = g_sequence_range_get_midpoint((begin is null) ? null : begin.getSequenceIterStruct(), (end is null) ? null : end.getSequenceIterStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 }

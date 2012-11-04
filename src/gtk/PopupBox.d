@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.MessageDialog;;
@@ -94,7 +95,7 @@ public class PopupBox
 		ButtonsType.OK ,
 		message);
 		d.setTitle(title);
-		//d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
+		//d.addButton("gtk-dialog-info",GtkResponseType.OK);
 		d.run();
 		d.destroy();
 	}
@@ -125,7 +126,7 @@ public class PopupBox
 		ButtonsType.CANCEL ,
 		message);
 		d.setTitle(title);
-		//d.addButton("gtk-dialog-error",ResponseType.GTK_RESPONSE_CANCEL);
+		//d.addButton("gtk-dialog-error",ResponseType.CANCEL);
 		d.run();
 		d.destroy();
 	}
@@ -158,11 +159,11 @@ public class PopupBox
 		ButtonsType.NONE ,
 		message);
 		d.setTitle(title);
-		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
-		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
+		d.addButton("gtk-no",ResponseType.NO);
+		d.addButton("gtk-yes",ResponseType.YES);
 		int responce = d.run();
 		d.destroy();
-		return responce == ResponseType.GTK_RESPONSE_YES;
+		return responce == ResponseType.YES;
 	}
 	
 	
@@ -192,9 +193,9 @@ public class PopupBox
 		ButtonsType.NONE ,
 		message);
 		d.setTitle(title);
-		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
-		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
-		d.addButton("gtk-cancel",ResponseType.GTK_RESPONSE_CANCEL);
+		d.addButton("gtk-no",ResponseType.NO);
+		d.addButton("gtk-yes",ResponseType.YES);
+		d.addButton("gtk-cancel",ResponseType.CANCEL);
 		ResponseType responce = cast(ResponseType)d.run();
 		d.destroy();
 		return responce;

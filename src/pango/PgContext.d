@@ -84,6 +84,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -135,18 +136,6 @@ public class PgContext : ObjectG
 	 */
 	public this (PangoContext* pangoContext)
 	{
-		if(pangoContext is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoContext);
-		if( ptr !is null )
-		{
-			this = cast(PgContext)ptr;
-			return;
-		}
 		super(cast(GObject*)pangoContext);
 		this.pangoContext = pangoContext;
 	}
@@ -210,11 +199,13 @@ public class PgContext : ObjectG
 	{
 		// GList * pango_itemize (PangoContext *context,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
 		auto p = pango_itemize(pangoContext, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -237,11 +228,13 @@ public class PgContext : ObjectG
 	{
 		// GList * pango_itemize_with_base_dir (PangoContext *context,  PangoDirection base_dir,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
 		auto p = pango_itemize_with_base_dir(pangoContext, baseDir, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -256,11 +249,13 @@ public class PgContext : ObjectG
 	{
 		// GList * pango_reorder_items (GList *logical_items);
 		auto p = pango_reorder_items((logicalItems is null) ? null : logicalItems.getListGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -309,11 +304,13 @@ public class PgContext : ObjectG
 	{
 		// PangoFontMap * pango_context_get_font_map (PangoContext *context);
 		auto p = pango_context_get_font_map(pangoContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontMap(cast(PangoFontMap*) p);
+		
+		return ObjectG.getDObject!PgFontMap(cast(PangoFontMap*) p);
 	}
 	
 	/**
@@ -324,11 +321,13 @@ public class PgContext : ObjectG
 	{
 		// PangoFontDescription * pango_context_get_font_description  (PangoContext *context);
 		auto p = pango_context_get_font_description(pangoContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -350,11 +349,13 @@ public class PgContext : ObjectG
 	{
 		// PangoLanguage * pango_context_get_language (PangoContext *context);
 		auto p = pango_context_get_language(pangoContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLanguage(cast(PangoLanguage*) p);
+		
+		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -474,11 +475,13 @@ public class PgContext : ObjectG
 	{
 		// const PangoMatrix * pango_context_get_matrix (PangoContext *context);
 		auto p = pango_context_get_matrix(pangoContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgMatrix(cast(PangoMatrix*) p);
+		
+		return ObjectG.getDObject!PgMatrix(cast(PangoMatrix*) p);
 	}
 	
 	/**
@@ -510,11 +513,13 @@ public class PgContext : ObjectG
 	{
 		// PangoFont * pango_context_load_font (PangoContext *context,  const PangoFontDescription *desc);
 		auto p = pango_context_load_font(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFont(cast(PangoFont*) p);
+		
+		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -529,11 +534,13 @@ public class PgContext : ObjectG
 	{
 		// PangoFontset * pango_context_load_fontset (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
 		auto p = pango_context_load_fontset(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontset(cast(PangoFontset*) p);
+		
+		return ObjectG.getDObject!PgFontset(cast(PangoFontset*) p);
 	}
 	
 	/**
@@ -562,11 +569,13 @@ public class PgContext : ObjectG
 	{
 		// PangoFontMetrics * pango_context_get_metrics (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
 		auto p = pango_context_get_metrics(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontMetrics(cast(PangoFontMetrics*) p);
+		
+		return ObjectG.getDObject!PgFontMetrics(cast(PangoFontMetrics*) p);
 	}
 	
 	/**
@@ -587,7 +596,7 @@ public class PgContext : ObjectG
 		families = new PgFontFamily[nFamilies];
 		for(int i = 0; i < nFamilies; i++)
 		{
-			families[i] = new PgFontFamily(cast(PangoFontFamily*) outfamilies[i]);
+			families[i] = ObjectG.getDObject!PgFontFamily(cast(PangoFontFamily*) outfamilies[i]);
 		}
 	}
 	

@@ -58,6 +58,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -95,11 +96,6 @@ public class PgLanguage
 	 */
 	public this (PangoLanguage* pangoLanguage)
 	{
-		if(pangoLanguage is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoLanguage = pangoLanguage;
 	}
 	
@@ -124,11 +120,13 @@ public class PgLanguage
 	{
 		// PangoLanguage * pango_language_from_string (const char *language);
 		auto p = pango_language_from_string(Str.toStringz(language));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLanguage(cast(PangoLanguage*) p);
+		
+		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -240,11 +238,13 @@ public class PgLanguage
 	{
 		// PangoLanguage * pango_language_get_default (void);
 		auto p = pango_language_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLanguage(cast(PangoLanguage*) p);
+		
+		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
 	}
 	
 	/**

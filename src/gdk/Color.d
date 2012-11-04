@@ -60,6 +60,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -119,11 +120,6 @@ public class Color
 	 */
 	public this (GdkColor* gdkColor)
 	{
-		if(gdkColor is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkColor = gdkColor;
 	}
 	
@@ -257,11 +253,13 @@ public class Color
 	{
 		// GdkColor * gdk_color_copy (const GdkColor *color);
 		auto p = gdk_color_copy(gdkColor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Color(cast(GdkColor*) p);
+		
+		return ObjectG.getDObject!Color(cast(GdkColor*) p);
 	}
 	
 	/**

@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import gtk.TreePath;
@@ -190,8 +191,8 @@ public template TreeDragSourceT(TStruct)
 		
 		auto p = gtk_tree_get_row_drag_data(selectionData, &outtreeModel, &outpath);
 		
-		treeModel = new TreeModel(outtreeModel);
-		path = new TreePath(outpath);
+		treeModel = ObjectG.getDObject!TreeModel(outtreeModel);
+		path = ObjectG.getDObject!TreePath(outpath);
 		return p;
 	}
 }

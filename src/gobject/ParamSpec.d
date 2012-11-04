@@ -62,6 +62,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -105,11 +106,6 @@ public class ParamSpec
 	 */
 	public this (GParamSpec* gParamSpec)
 	{
-		if(gParamSpec is null)
-		{
-			this = null;
-			return;
-		}
 		this.gParamSpec = gParamSpec;
 	}
 	
@@ -124,11 +120,13 @@ public class ParamSpec
 	{
 		// GParamSpec *	 g_param_spec_ref (GParamSpec *pspec);
 		auto p = g_param_spec_ref(gParamSpec);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -164,11 +162,13 @@ public class ParamSpec
 	{
 		// GParamSpec *	 g_param_spec_ref_sink (GParamSpec *pspec);
 		auto p = g_param_spec_ref_sink(gParamSpec);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -353,11 +353,13 @@ public class ParamSpec
 	{
 		// GParamSpec * g_param_spec_get_redirect_target (GParamSpec *pspec);
 		auto p = g_param_spec_get_redirect_target(gParamSpec);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**

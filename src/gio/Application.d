@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -181,18 +182,6 @@ public class Application : ObjectG, ActionGroupIF
 	 */
 	public this (GApplication* gApplication)
 	{
-		if(gApplication is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gApplication);
-		if( ptr !is null )
-		{
-			this = cast(Application)ptr;
-			return;
-		}
 		super(cast(GObject*)gApplication);
 		this.gApplication = gApplication;
 	}
@@ -230,11 +219,11 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GApplication* applicationStruct, Application application)
+	extern(C) static void callBackActivate(GApplication* applicationStruct, Application _application)
 	{
-		foreach ( void delegate(Application) dlg ; application.onActivateListeners )
+		foreach ( void delegate(Application) dlg ; _application.onActivateListeners )
 		{
-			dlg(application);
+			dlg(_application);
 		}
 	}
 	
@@ -259,20 +248,20 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onCommandLineListeners ~= dlg;
 	}
-	extern(C) static void callBackCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application application)
+	extern(C) static void callBackCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application _application)
 	{
-		foreach ( gint delegate(GApplicationCommandLine*, Application) dlg ; application.onCommandLineListeners )
+		foreach ( gint delegate(GApplicationCommandLine*, Application) dlg ; _application.onCommandLineListeners )
 		{
-			dlg(commandLine, application);
+			dlg(commandLine, _application);
 		}
 	}
 	
-	void delegate(gpointer, gint, string, Application)[] onOpenListeners;
+	void delegate(void*, gint, string, Application)[] onOpenListeners;
 	/**
 	 * The ::open signal is emitted on the primary instance when there are
 	 * files to open. See g_application_open() for more information.
 	 */
-	void addOnOpen(void delegate(gpointer, gint, string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnOpen(void delegate(void*, gint, string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("open" in connectedSignals) )
 		{
@@ -287,11 +276,11 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onOpenListeners ~= dlg;
 	}
-	extern(C) static void callBackOpen(GApplication* applicationStruct, gpointer files, gint nFiles, gchar* hint, Application application)
+	extern(C) static void callBackOpen(GApplication* applicationStruct, void* files, gint nFiles, gchar* hint, Application _application)
 	{
-		foreach ( void delegate(gpointer, gint, string, Application) dlg ; application.onOpenListeners )
+		foreach ( void delegate(void*, gint, string, Application) dlg ; _application.onOpenListeners )
 		{
-			dlg(files, nFiles, Str.toString(hint), application);
+			dlg(files, nFiles, Str.toString(hint), _application);
 		}
 	}
 	
@@ -315,11 +304,11 @@ public class Application : ObjectG, ActionGroupIF
 		}
 		onStartupListeners ~= dlg;
 	}
-	extern(C) static void callBackStartup(GApplication* applicationStruct, Application application)
+	extern(C) static void callBackStartup(GApplication* applicationStruct, Application _application)
 	{
-		foreach ( void delegate(Application) dlg ; application.onStartupListeners )
+		foreach ( void delegate(Application) dlg ; _application.onStartupListeners )
 		{
-			dlg(application);
+			dlg(_application);
 		}
 	}
 	

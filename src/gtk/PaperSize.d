@@ -64,6 +64,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -112,11 +113,6 @@ public class PaperSize : Boxed
 	 */
 	public this (GtkPaperSize* gtkPaperSize)
 	{
-		if(gtkPaperSize is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkPaperSize = gtkPaperSize;
 	}
 	
@@ -202,11 +198,13 @@ public class PaperSize : Boxed
 	{
 		// GtkPaperSize * gtk_paper_size_copy (GtkPaperSize *other);
 		auto p = gtk_paper_size_copy(gtkPaperSize);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PaperSize(cast(GtkPaperSize*) p);
+		
+		return ObjectG.getDObject!PaperSize(cast(GtkPaperSize*) p);
 	}
 	
 	/**
@@ -244,11 +242,13 @@ public class PaperSize : Boxed
 	{
 		// GList * gtk_paper_size_get_paper_sizes (gboolean include_custom);
 		auto p = gtk_paper_size_get_paper_sizes(includeCustom);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

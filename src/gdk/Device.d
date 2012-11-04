@@ -62,6 +62,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -157,11 +158,6 @@ public class Device
 	 */
 	public this (GdkDevice* gdkDevice)
 	{
-		if(gdkDevice is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkDevice = gdkDevice;
 	}
 	
@@ -203,11 +199,13 @@ public class Device
 	{
 		// GList * gdk_devices_list (void);
 		auto p = gdk_devices_list();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -330,11 +328,13 @@ public class Device
 	{
 		// GdkDevice * gdk_device_get_core_pointer (void);
 		auto p = gdk_device_get_core_pointer();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Device(cast(GdkDevice*) p);
+		
+		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
 	}
 	
 	/**

@@ -463,16 +463,16 @@ alias GdkImageType ImageType;
 public enum GdkPixbufError
 {
 	/+* image data hosed +/
-	GDK_PIXBUF_ERROR_CORRUPT_IMAGE,
+	CORRUPT_IMAGE,
 	/+* no mem to load image +/
-	GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY,
+	INSUFFICIENT_MEMORY,
 	/+* bad option passed to save routine +/
-	GDK_PIXBUF_ERROR_BAD_OPTION,
+	BAD_OPTION,
 	/+* unsupported image type (sort of an ENOSYS) +/
-	GDK_PIXBUF_ERROR_UNKNOWN_TYPE,
+	UNKNOWN_TYPE,
 	/+* unsupported operation (load, save) for image type +/
-	GDK_PIXBUF_ERROR_UNSUPPORTED_OPERATION,
-	GDK_PIXBUF_ERROR_FAILED
+	UNSUPPORTED_OPERATION,
+	FAILED
 }
 alias GdkPixbufError PixbufError;
 
@@ -1865,9 +1865,9 @@ public struct GdkDisplay{}
  */
 public struct GdkDisplayPointerHooks
 {
-	extern(C) void  function(GdkDisplay *display,GdkScreen **screen,int *x,int *y,GdkModifierType *mask) getPointer;
-	extern(C) GdkWindow*  function(GdkDisplay *display,GdkWindow *window,int *x,int *y,GdkModifierType *mask) windowGetPointer;
-	extern(C) GdkWindow*  function(GdkDisplay *display,int *winX,int *winY) windowAtPointer;
+	extern(C) void function(GdkDisplay* display, GdkScreen** screen, int* x, int* y, GdkModifierType* mask) getPointer;
+	extern(C) GdkWindow* function(GdkDisplay* display, GdkWindow* window, int* x, int* y, GdkModifierType* mask) windowGetPointer;
+	extern(C) GdkWindow* function(GdkDisplay* display, int* winX, int* winY) windowAtPointer;
 }
 
 
@@ -2403,8 +2403,8 @@ public struct GdkWindowAttr
  */
 public struct GdkPointerHooks
 {
-	extern(C) GdkWindow*  function(GdkWindow *window,int *x,int *y,GdkModifierType *mask) getPointer;
-	extern(C) GdkWindow*  function(GdkScreen *screen, /+* unused +/int *winX,int *winY) windowAtPointer;
+	extern(C) GdkWindow* function(GdkWindow* window, int* x, int* y, GdkModifierType* mask) getPointer;
+	extern(C) GdkWindow* function(GdkScreen* screen, /+* unused +/int *winX, int* winY) windowAtPointer;
 }
 
 
@@ -3546,7 +3546,7 @@ public struct GdkAppLaunchContext{}
  * the user data passed to gdk_region_spans_intersect_foreach().
  */
 // void (*GdkSpanFunc) (GdkSpan *span,  gpointer data);
-public alias extern(C) void  function (GdkSpan*, void*) GdkSpanFunc;
+public alias extern(C) void function(GdkSpan* span, void* data) GdkSpanFunc;
 
 /*
  * A function of this type is responsible for freeing the pixel array
@@ -3563,7 +3563,7 @@ public alias extern(C) void  function (GdkSpan*, void*) GdkSpanFunc;
  * GdkPixbuf, gdk_pixbuf_new_from_data().
  */
 // void (*GdkPixbufDestroyNotify) (guchar *pixels,  gpointer data);
-public alias extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
+public alias extern(C) void function(guchar* pixels, void* data) GdkPixbufDestroyNotify;
 
 /*
  * Specifies the type of the function passed to
@@ -3585,7 +3585,7 @@ public alias extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
  * Since 2.4
  */
 // gboolean (*GdkPixbufSaveFunc) (const gchar *buf,  gsize count,  GError **error,  gpointer data);
-public alias extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSaveFunc;
+public alias extern(C) int function(char* buf, gsize count, GError** error, void* data) GdkPixbufSaveFunc;
 
 /*
  * Specifies the type of function used to filter native events before they are
@@ -3605,7 +3605,7 @@ public alias extern(C) int  function (char*, gsize, GError**, void*) GdkPixbufSa
  * a GdkFilterReturn value.
  */
 // GdkFilterReturn (*GdkFilterFunc) (GdkXEvent *xevent,  GdkEvent *event,  gpointer data);
-public alias extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*) GdkFilterFunc;
+public alias extern(C) GdkFilterReturn function(GdkXEvent* xevent, GdkEvent* event, void* data) GdkFilterFunc;
 
 /*
  * Specifies the type of function passed to gdk_event_handler_set() to handle
@@ -3617,7 +3617,7 @@ public alias extern(C) GdkFilterReturn  function (GdkXEvent*, GdkEvent*, void*) 
  * gdk_event_handler_set().
  */
 // void (*GdkEventFunc) (GdkEvent *event,  gpointer data);
-public alias extern(C) void  function (GdkEvent*, void*) GdkEventFunc;
+public alias extern(C) void function(GdkEvent* event, void* data) GdkEventFunc;
 
 /*
  * A callback function that will be called when some condition
@@ -3630,7 +3630,7 @@ public alias extern(C) void  function (GdkEvent*, void*) GdkEventFunc;
  * the triggering condition.
  */
 // void (*GdkInputFunction) (gpointer data,  gint source,  GdkInputCondition condition);
-public alias extern(C) void  function (void*, int, GdkInputCondition) GdkInputFunction;
+public alias extern(C) void function(void* data, int source, GdkInputCondition condition) GdkInputFunction;
 
 /*
  * Warning
@@ -3642,7 +3642,7 @@ public alias extern(C) void  function (void*, int, GdkInputCondition) GdkInputFu
  * the user data.
  */
 // void (*GdkDestroyNotify) (gpointer data);
-public alias extern(C) void  function (void*) GdkDestroyNotify;
+public alias extern(C) void function(void* data) GdkDestroyNotify;
 /**
  * The GdkEvent struct contains a union of all of the event structs,
  * and allows access to the data fields in a number of ways.

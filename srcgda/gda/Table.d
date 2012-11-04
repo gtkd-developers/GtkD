@@ -60,6 +60,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -97,18 +98,6 @@ public class Table : DataModelArray
 	 */
 	public this (GdaTable* gdaTable)
 	{
-		if(gdaTable is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaTable);
-		if( ptr !is null )
-		{
-			this = cast(Table)ptr;
-			return;
-		}
 		super(cast(GdaDataModelArray*)gdaTable);
 		this.gdaTable = gdaTable;
 	}

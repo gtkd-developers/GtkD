@@ -56,6 +56,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -91,18 +92,6 @@ public class Transaction : ObjectG
 	 */
 	public this (GdaTransaction* gdaTransaction)
 	{
-		if(gdaTransaction is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaTransaction);
-		if( ptr !is null )
-		{
-			this = cast(Transaction)ptr;
-			return;
-		}
 		super(cast(GObject*)gdaTransaction);
 		this.gdaTransaction = gdaTransaction;
 	}

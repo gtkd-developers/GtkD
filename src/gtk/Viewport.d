@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -108,18 +109,6 @@ public class Viewport : Bin
 	 */
 	public this (GtkViewport* gtkViewport)
 	{
-		if(gtkViewport is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkViewport);
-		if( ptr !is null )
-		{
-			this = cast(Viewport)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkViewport);
 		this.gtkViewport = gtkViewport;
 	}
@@ -157,11 +146,11 @@ public class Viewport : Bin
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkViewport* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, Viewport viewport)
+	extern(C) static void callBackSetScrollAdjustments(GtkViewport* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, Viewport _viewport)
 	{
-		foreach ( void delegate(Adjustment, Adjustment, Viewport) dlg ; viewport.onSetScrollAdjustmentsListeners )
+		foreach ( void delegate(Adjustment, Adjustment, Viewport) dlg ; _viewport.onSetScrollAdjustmentsListeners )
 		{
-			dlg(new Adjustment(vertical), new Adjustment(arg2), viewport);
+			dlg(ObjectG.getDObject!Adjustment(vertical), ObjectG.getDObject!Adjustment(arg2), _viewport);
 		}
 	}
 	
@@ -192,11 +181,13 @@ public class Viewport : Bin
 	{
 		// GtkAdjustment * gtk_viewport_get_hadjustment (GtkViewport *viewport);
 		auto p = gtk_viewport_get_hadjustment(gtkViewport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -207,11 +198,13 @@ public class Viewport : Bin
 	{
 		// GtkAdjustment * gtk_viewport_get_vadjustment (GtkViewport *viewport);
 		auto p = gtk_viewport_get_vadjustment(gtkViewport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -267,11 +260,13 @@ public class Viewport : Bin
 	{
 		// GdkWindow * gtk_viewport_get_bin_window (GtkViewport *viewport);
 		auto p = gtk_viewport_get_bin_window(gtkViewport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -283,10 +278,12 @@ public class Viewport : Bin
 	{
 		// GdkWindow * gtk_viewport_get_view_window (GtkViewport *viewport);
 		auto p = gtk_viewport_get_view_window(gtkViewport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

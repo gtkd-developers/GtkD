@@ -60,6 +60,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -97,11 +98,6 @@ public class PgMatrix
 	 */
 	public this (PangoMatrix* pangoMatrix)
 	{
-		if(pangoMatrix is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoMatrix = pangoMatrix;
 	}
 	
@@ -171,11 +167,13 @@ public class PgMatrix
 	{
 		// PangoMatrix * pango_matrix_copy (const PangoMatrix *matrix);
 		auto p = pango_matrix_copy(pangoMatrix);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgMatrix(cast(PangoMatrix*) p);
+		
+		return ObjectG.getDObject!PgMatrix(cast(PangoMatrix*) p);
 	}
 	
 	/**

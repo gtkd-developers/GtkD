@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ListG;
@@ -99,18 +100,6 @@ public class WindowGroup : ObjectG
 	 */
 	public this (GtkWindowGroup* gtkWindowGroup)
 	{
-		if(gtkWindowGroup is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkWindowGroup);
-		if( ptr !is null )
-		{
-			this = cast(WindowGroup)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkWindowGroup);
 		this.gtkWindowGroup = gtkWindowGroup;
 	}
@@ -171,11 +160,13 @@ public class WindowGroup : ObjectG
 	{
 		// GList * gtk_window_group_list_windows (GtkWindowGroup *window_group);
 		auto p = gtk_window_group_list_windows(gtkWindowGroup);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -184,10 +175,12 @@ public class WindowGroup : ObjectG
 	{
 		// GtkWidget * gtk_window_group_get_current_grab (GtkWindowGroup *window_group);
 		auto p = gtk_window_group_get_current_grab(gtkWindowGroup);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

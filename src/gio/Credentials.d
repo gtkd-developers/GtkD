@@ -60,6 +60,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -114,18 +115,6 @@ public class Credentials : ObjectG
 	 */
 	public this (GCredentials* gCredentials)
 	{
-		if(gCredentials is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gCredentials);
-		if( ptr !is null )
-		{
-			this = cast(Credentials)ptr;
-			return;
-		}
 		super(cast(GObject*)gCredentials);
 		this.gCredentials = gCredentials;
 	}

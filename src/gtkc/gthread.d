@@ -168,13 +168,13 @@ mixin( gshared ~"extern(C)
 
 	GPrivate* function(GDestroyNotify destructor) c_g_private_new;
 	gpointer function(GPrivate* privateKey) c_g_private_get;
-	void function(GPrivate* privateKey, gpointer data) c_g_private_set;
+	void function(GPrivate* privateKey, void* data) c_g_private_set;
 
 	// gthread.StaticPrivate
 
 	void function(GStaticPrivate* privateKey) c_g_static_private_init;
 	gpointer function(GStaticPrivate* privateKey) c_g_static_private_get;
-	void function(GStaticPrivate* privateKey, gpointer data, GDestroyNotify notify) c_g_static_private_set;
+	void function(GStaticPrivate* privateKey, void* data, GDestroyNotify notify) c_g_static_private_set;
 	void function(GStaticPrivate* privateKey) c_g_static_private_free;
 
 	// gthread.Thread
@@ -182,14 +182,14 @@ mixin( gshared ~"extern(C)
 	void function(GThreadFunctions* vtable) c_g_thread_init;
 	gboolean function() c_g_thread_supported;
 	gboolean function() c_g_thread_get_initialized;
-	GThread* function(GThreadFunc func, gpointer data, gboolean joinable, GError** error) c_g_thread_create;
-	GThread* function(GThreadFunc func, gpointer data, gulong stackSize, gboolean joinable, gboolean bound, GThreadPriority priority, GError** error) c_g_thread_create_full;
+	GThread* function(GThreadFunc func, void* data, gboolean joinable, GError** error) c_g_thread_create;
+	GThread* function(GThreadFunc func, void* data, gulong stackSize, gboolean joinable, gboolean bound, GThreadPriority priority, GError** error) c_g_thread_create_full;
 	GThread* function() c_g_thread_self;
 	gpointer function(GThread* thread) c_g_thread_join;
 	void function(GThread* thread, GThreadPriority priority) c_g_thread_set_priority;
 	void function() c_g_thread_yield;
-	void function(gpointer retval) c_g_thread_exit;
-	void function(GFunc threadFunc, gpointer userData) c_g_thread_foreach;
+	void function(void* retval) c_g_thread_exit;
+	void function(GFunc threadFunc, void* userData) c_g_thread_foreach;
 	gboolean function(gsize* valueLocation) c_g_once_init_enter;
 	void function(gsize* valueLocation, gsize initializationValue) c_g_once_init_leave;
 	void function(gint* address, gint lockBit) c_g_bit_lock;

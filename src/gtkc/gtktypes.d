@@ -1157,25 +1157,25 @@ public enum GtkResponseType
 	/+* GTK returns this if a response widget has no responseId,
 	 * or if the dialog gets programmatically hidden or destroyed.
 	+/
-	GTK_RESPONSE_NONE = -1,
+	NONE = -1,
 	/+* GTK won't return these unless you pass them inn
 	 * as the response for an action widget. They are
 	 * for your convenience.
 	+/
-	GTK_RESPONSE_REJECT = -2,
-	GTK_RESPONSE_ACCEPT = -3,
+	REJECT = -2,
+	ACCEPT = -3,
 	/+* If the dialog is deleted. +/
-	GTK_RESPONSE_DELETE_EVENT = -4,
+	DELETE_EVENT = -4,
 	/+* These are returned from GTK dialogs, and you can also use them
 	 * yourself if you like.
 	+/
-	GTK_RESPONSE_OK = -5,
-	GTK_RESPONSE_CANCEL = -6,
-	GTK_RESPONSE_CLOSE = -7,
-	GTK_RESPONSE_YES = -8,
-	GTK_RESPONSE_NO = -9,
-	GTK_RESPONSE_APPLY = -10,
-	GTK_RESPONSE_HELP = -11
+	OK = -5,
+	CANCEL = -6,
+	CLOSE = -7,
+	YES = -8,
+	NO = -9,
+	APPLY = -10,
+	HELP = -11
 }
 alias GtkResponseType ResponseType;
 
@@ -1498,13 +1498,13 @@ alias GtkTreeViewColumnSizing TreeViewColumnSizing;
 public enum GtkTreeViewDropPosition
 {
 	/+* drop before/after this row +/
-	GTK_TREE_VIEW_DROP_BEFORE,
-	GTK_TREE_VIEW_DROP_AFTER,
+	BEFORE,
+	AFTER,
 	/+* drop as a child of this row (with fallback to before or after
 	 * if into is not possible)
 	+/
-	GTK_TREE_VIEW_DROP_INTO_OR_BEFORE,
-	GTK_TREE_VIEW_DROP_INTO_OR_AFTER
+	INTO_OR_BEFORE,
+	INTO_OR_AFTER
 }
 alias GtkTreeViewDropPosition TreeViewDropPosition;
 
@@ -3381,26 +3381,26 @@ public struct GtkTreeModelIface
 {
 	GTypeInterface gIface;
 	/+* Signals +/
-	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowChanged;
-	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowInserted;
-	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter)  rowHasChildToggled;
-	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path)  rowDeleted;
-	extern(C) void  function(GtkTreeModel *treeModel,GtkTreePath *path,GtkTreeIter *iter,int *newOrder)  rowsReordered;
+	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter)  rowChanged;
+	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter)  rowInserted;
+	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter)  rowHasChildToggled;
+	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path)  rowDeleted;
+	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, int* newOrder)  rowsReordered;
 	/+* Virtual Table +/
-	extern(C) GtkTreeModelFlags  function(GtkTreeModel *treeModel)  getFlags;
-	extern(C) int  function(GtkTreeModel *treeModel)  getNColumns;
-	extern(C) GType  function(GtkTreeModel *treeModel,int index)  getColumnType;
-	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreePath *path)  getIter;
-	extern(C) GtkTreePath * function(GtkTreeModel *treeModel,GtkTreeIter *iter)  getPath;
-	extern(C) void  function(GtkTreeModel *treeModel,GtkTreeIter *iter,int column,GValue *value)  getValue;
-	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterNext;
-	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *parent)  iterChildren;
-	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterHasChild;
-	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  iterNChildren;
-	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *parent,int n)  iterNthChild;
-	extern(C) int  function(GtkTreeModel *treeModel,GtkTreeIter *iter,GtkTreeIter *child)  iterParent;
-	extern(C) void  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  refNode;
-	extern(C) void  function(GtkTreeModel *treeModel,GtkTreeIter *iter)  unrefNode;
+	extern(C) GtkTreeModelFlags function(GtkTreeModel* treeModel)  getFlags;
+	extern(C) int function(GtkTreeModel* treeModel)  getNColumns;
+	extern(C) GType function(GtkTreeModel* treeModel, int index)  getColumnType;
+	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreePath* path)  getIter;
+	extern(C) GtkTreePath * function(GtkTreeModel* treeModel, GtkTreeIter* iter)  getPath;
+	extern(C) void function(GtkTreeModel* treeModel, GtkTreeIter* iter, int column, GValue* value)  getValue;
+	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter)  iterNext;
+	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreeIter* parent)  iterChildren;
+	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter)  iterHasChild;
+	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter)  iterNChildren;
+	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreeIter* parent, int n)  iterNthChild;
+	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreeIter* child)  iterParent;
+	extern(C) void function(GtkTreeModel* treeModel, GtkTreeIter* iter)  refNode;
+	extern(C) void function(GtkTreeModel* treeModel, GtkTreeIter* iter)  unrefNode;
 }
 
 
@@ -3439,9 +3439,9 @@ public struct GtkTreeDragSourceIface
 {
 	GTypeInterface gIface;
 	/+* VTable - not signals +/
-	extern(C) int  function(GtkTreeDragSource *dragSource,GtkTreePath *path)  rowDraggable;
-	extern(C) int  function(GtkTreeDragSource *dragSource,GtkTreePath *path,GtkSelectionData *selectionData)  dragDataGet;
-	extern(C) int  function(GtkTreeDragSource *dragSource,GtkTreePath *path)  dragDataDelete;
+	extern(C) int function(GtkTreeDragSource* dragSource, GtkTreePath* path)  rowDraggable;
+	extern(C) int function(GtkTreeDragSource* dragSource, GtkTreePath* path, GtkSelectionData* selectionData)  dragDataGet;
+	extern(C) int function(GtkTreeDragSource* dragSource, GtkTreePath* path)  dragDataDelete;
 }
 
 
@@ -3452,8 +3452,8 @@ public struct GtkTreeDragDestIface
 {
 	GTypeInterface gIface;
 	/+* VTable - not signals +/
-	extern(C) int  function(GtkTreeDragDest *dragDest,GtkTreePath *dest,GtkSelectionData *selectionData)  dragDataReceived;
-	extern(C) int  function(GtkTreeDragDest *dragDest,GtkTreePath *destPath,GtkSelectionData *selectionData)  rowDropPossible;
+	extern(C) int function(GtkTreeDragDest* dragDest, GtkTreePath* dest, GtkSelectionData* selectionData)  dragDataReceived;
+	extern(C) int function(GtkTreeDragDest* dragDest, GtkTreePath* destPath, GtkSelectionData* selectionData)  rowDropPossible;
 }
 
 
@@ -3481,13 +3481,13 @@ public struct GtkTreeSortableIface
 {
 	GTypeInterface gIface;
 	/+* signals +/
-	extern(C) void  function(GtkTreeSortable *sortable)  sortColumnChanged;
+	extern(C) void function(GtkTreeSortable* sortable)  sortColumnChanged;
 	/+* virtual table +/
-	extern(C) int  function(GtkTreeSortable *sortable,int *sortColumnId,GtkSortType *order)  getSortColumnId;
-	extern(C) void  function(GtkTreeSortable *sortable,int sortColumnId,GtkSortType order)  setSortColumnId;
-	extern(C) void  function(GtkTreeSortable *sortable,int sortColumnId,GtkTreeIterCompareFunc func,void* data,GDestroyNotify destroy)  setSortFunc;
-	extern(C) void  function(GtkTreeSortable *sortable,GtkTreeIterCompareFunc func,void* data,GDestroyNotify destroy)  setDefaultSortFunc;
-	extern(C) int  function(GtkTreeSortable *sortable)  hasDefaultSortFunc;
+	extern(C) int function(GtkTreeSortable* sortable, int* sortColumnId, GtkSortType* order)  getSortColumnId;
+	extern(C) void function(GtkTreeSortable* sortable, int sortColumnId, GtkSortType order)  setSortColumnId;
+	extern(C) void function(GtkTreeSortable* sortable, int sortColumnId, GtkTreeIterCompareFunc func, void* data, GDestroyNotify destroy)  setSortFunc;
+	extern(C) void function(GtkTreeSortable* sortable, GtkTreeIterCompareFunc func, void* data, GDestroyNotify destroy)  setDefaultSortFunc;
+	extern(C) int function(GtkTreeSortable* sortable)  hasDefaultSortFunc;
 }
 
 
@@ -3515,14 +3515,14 @@ public struct GtkCellLayoutIface
 {
 	GTypeInterface gIface;
 	/+* Virtual Table +/
-	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int expand)  packStart;
-	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int expand)  packEnd;
-	extern(C) void  function(GtkCellLayout *cellLayout)  clear;
-	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,char *attribute,int column)  addAttribute;
-	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,GtkCellLayoutDataFunc func,void* funcData,GDestroyNotify destroy)  setCellDataFunc;
-	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell)  clearAttributes;
-	extern(C) void  function(GtkCellLayout *cellLayout,GtkCellRenderer *cell,int position)  reorder;
-	extern(C) GList*  function(GtkCellLayout *cellLayout)  getCells;
+	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, int expand)  packStart;
+	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, int expand)  packEnd;
+	extern(C) void function(GtkCellLayout* cellLayout)  clear;
+	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, char* attribute, int column)  addAttribute;
+	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy)  setCellDataFunc;
+	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell)  clearAttributes;
+	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, int position)  reorder;
+	extern(C) GList* function(GtkCellLayout* cellLayout)  getCells;
 }
 
 
@@ -3536,16 +3536,16 @@ public struct GtkCellRendererClass
 {
 	GtkObjectClass parentClass;
 	/+* vtable - not signals +/
-	extern(C) void  function(GtkCellRenderer *cell,GtkWidget *widget,GdkRectangle *cellArea,int *xOffset,int *yOffset,int *width,int *height)  getSize;
-	extern(C) void  function(GtkCellRenderer *cell,GdkDrawable *window,GtkWidget *widget,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GdkRectangle *exposeArea,GtkCellRendererState flags)  render;
-	extern(C) int  function(GtkCellRenderer *cell,GdkEvent *event,GtkWidget *widget,char *path,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GtkCellRendererState flags)  activate;
-	extern(C) GtkCellEditable * function(GtkCellRenderer *cell,GdkEvent *event,GtkWidget *widget,char *path,GdkRectangle *backgroundArea,GdkRectangle *cellArea,GtkCellRendererState flags)  startEditing;
+	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, GdkRectangle* cellArea, int* xOffset, int* yOffset, int* width, int* height)  getSize;
+	extern(C) void function(GtkCellRenderer* cell, GdkDrawable* window, GtkWidget* widget, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GdkRectangle* exposeArea, GtkCellRendererState flags)  render;
+	extern(C) int function(GtkCellRenderer* cell, GdkEvent* event, GtkWidget* widget, char* path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)  activate;
+	extern(C) GtkCellEditable * function(GtkCellRenderer* cell, GdkEvent* event, GtkWidget* widget, char* path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)  startEditing;
 	/+* Signals +/
-	extern(C) void  function(GtkCellRenderer *cell)  editingCanceled;
-	extern(C) void  function(GtkCellRenderer *cell,GtkCellEditable *editable,char *path)  editingStarted;
+	extern(C) void function(GtkCellRenderer* cell)  editingCanceled;
+	extern(C) void function(GtkCellRenderer* cell, GtkCellEditable* editable, char* path)  editingStarted;
 	/+* Padding for future expansion +/
-	extern(C) void  function() _GtkReserved1;
-	extern(C) void  function() _GtkReserved2;
+	extern(C) void function() _GtkReserved1;
+	extern(C) void function() _GtkReserved2;
 }
 
 
@@ -3559,10 +3559,10 @@ public struct GtkCellEditableIface
 {
 	GTypeInterface gIface;
 	/+* signals +/
-	extern(C) void  function(GtkCellEditable *cellEditable)  editingDone;
-	extern(C) void  function(GtkCellEditable *cellEditable)  removeWidget;
+	extern(C) void function(GtkCellEditable* cellEditable)  editingDone;
+	extern(C) void function(GtkCellEditable* cellEditable)  removeWidget;
 	/+* virtual table +/
-	extern(C) void  function(GtkCellEditable *cellEditable,GdkEvent *event)  startEditing;
+	extern(C) void function(GtkCellEditable* cellEditable, GdkEvent* event)  startEditing;
 }
 
 
@@ -3732,15 +3732,15 @@ public struct GtkToolShell{}
  */
 public struct GtkToolShellIface
 {
-	extern(C) GtkIconSize  function(GtkToolShell *shell) getIconSize;
-	extern(C) GtkOrientation  function(GtkToolShell *shell) getOrientation;
-	extern(C) GtkToolbarStyle  function(GtkToolShell *shell) getStyle;
-	extern(C) GtkReliefStyle  function(GtkToolShell *shell) getReliefStyle;
-	extern(C) void  function(GtkToolShell *shell) rebuildMenu;
-	extern(C) GtkOrientation  function(GtkToolShell *shell) getTextOrientation;
-	extern(C) float  function(GtkToolShell *shell) getTextAlignment;
-	extern(C) PangoEllipsizeMode  function(GtkToolShell *shell) getEllipsizeMode;
-	extern(C) GtkSizeGroup *  function(GtkToolShell *shell) getTextSizeGroup;
+	extern(C) GtkIconSize function(GtkToolShell* shell) getIconSize;
+	extern(C) GtkOrientation function(GtkToolShell* shell) getOrientation;
+	extern(C) GtkToolbarStyle function(GtkToolShell* shell) getStyle;
+	extern(C) GtkReliefStyle function(GtkToolShell* shell) getReliefStyle;
+	extern(C) void function(GtkToolShell* shell) rebuildMenu;
+	extern(C) GtkOrientation function(GtkToolShell* shell) getTextOrientation;
+	extern(C) float function(GtkToolShell* shell) getTextAlignment;
+	extern(C) PangoEllipsizeMode function(GtkToolShell* shell) getEllipsizeMode;
+	extern(C) GtkSizeGroup * function(GtkToolShell* shell) getTextSizeGroup;
 }
 
 
@@ -4002,8 +4002,8 @@ public struct GtkActivatableIface
 {
 	GTypeInterface gIface;
 	/+* virtual table +/
-	extern(C) void  function(GtkActivatable *activatable,GtkAction *action,char *propertyName)  update;
-	extern(C) void  function(GtkActivatable *activatable,GtkAction *action)  syncActionProperties;
+	extern(C) void function(GtkActivatable* activatable, GtkAction* action, char* propertyName)  update;
+	extern(C) void function(GtkActivatable* activatable, GtkAction* action)  syncActionProperties;
 }
 
 
@@ -4830,23 +4830,23 @@ public struct GtkIMContext{}
 public struct GtkIMContextClass
 {
 	/+* Signals +/
-	extern(C) void  function(GtkIMContext *context) preeditStart;
-	extern(C) void  function(GtkIMContext *context) preeditEnd;
-	extern(C) void  function(GtkIMContext *context) preeditChanged;
-	extern(C) void  function(GtkIMContext *context, char *str) commit;
-	extern(C) int  function(GtkIMContext *context) retrieveSurrounding;
-	extern(C) int  function(GtkIMContext *context,int offset,int nChars) deleteSurrounding;
+	extern(C) void function(GtkIMContext* context) preeditStart;
+	extern(C) void function(GtkIMContext* context) preeditEnd;
+	extern(C) void function(GtkIMContext* context) preeditChanged;
+	extern(C) void function(GtkIMContext* context, char* str) commit;
+	extern(C) int function(GtkIMContext* context) retrieveSurrounding;
+	extern(C) int function(GtkIMContext* context, int offset, int nChars) deleteSurrounding;
 	/+* Virtual functions +/
-	extern(C) void  function(GtkIMContext *context,GdkWindow *window) setClientWindow;
-	extern(C) void  function(GtkIMContext *context,char **str,PangoAttrList **attrs,int *cursorPos) getPreeditString;
-	extern(C) int  function(GtkIMContext *context,GdkEventKey *event) filterKeypress;
-	extern(C) void  function(GtkIMContext *context) focusIn;
-	extern(C) void  function(GtkIMContext *context) focusOut;
-	extern(C) void  function(GtkIMContext *context) reset;
-	extern(C) void  function(GtkIMContext *context,GdkRectangle *area) setCursorLocation;
-	extern(C) void  function(GtkIMContext *context,int usePreedit) setUsePreedit;
-	extern(C) void  function(GtkIMContext *context,char *text,int len,int cursorIndex) setSurrounding;
-	extern(C) int  function(GtkIMContext *context,char **text,int *cursorIndex) getSurrounding;
+	extern(C) void function(GtkIMContext* context, GdkWindow* window) setClientWindow;
+	extern(C) void function(GtkIMContext* context, char** str, PangoAttrList** attrs, int* cursorPos) getPreeditString;
+	extern(C) int function(GtkIMContext* context, GdkEventKey* event) filterKeypress;
+	extern(C) void function(GtkIMContext* context) focusIn;
+	extern(C) void function(GtkIMContext* context) focusOut;
+	extern(C) void function(GtkIMContext* context) reset;
+	extern(C) void function(GtkIMContext* context, GdkRectangle* area) setCursorLocation;
+	extern(C) void function(GtkIMContext* context, int usePreedit) setUsePreedit;
+	extern(C) void function(GtkIMContext* context, char* text, int len, int cursorIndex) setSurrounding;
+	extern(C) int function(GtkIMContext* context, char** text, int* cursorIndex) getSurrounding;
 }
 
 
@@ -5017,23 +5017,23 @@ public struct GtkRecentChooserIface
 	/+*
 	 * Methods
 	+/
-	extern(C) int  function(GtkRecentChooser *chooser,char *uri,GError **error)  setCurrentUri;
-	extern(C) char *  function(GtkRecentChooser *chooser)  getCurrentUri;
-	extern(C) int  function(GtkRecentChooser *chooser,char *uri,GError **error)  selectUri;
-	extern(C) void  function(GtkRecentChooser *chooser,char *uri)  unselectUri;
-	extern(C) void  function(GtkRecentChooser *chooser)  selectAll;
-	extern(C) void  function(GtkRecentChooser *chooser)  unselectAll;
-	extern(C) GList *  function(GtkRecentChooser *chooser)  getItems;
-	extern(C) GtkRecentManager * function(GtkRecentChooser *chooser)  getRecentManager;
-	extern(C) void  function(GtkRecentChooser *chooser,GtkRecentFilter *filter)  addFilter;
-	extern(C) void  function(GtkRecentChooser *chooser,GtkRecentFilter *filter)  removeFilter;
-	extern(C) GSList *  function(GtkRecentChooser *chooser)  listFilters;
-	extern(C) void  function(GtkRecentChooser *chooser,GtkRecentSortFunc sortFunc,void* data,GDestroyNotify destroy)  setSortFunc;
+	extern(C) int function(GtkRecentChooser* chooser, char* uri, GError** error)  setCurrentUri;
+	extern(C) char * function(GtkRecentChooser* chooser)  getCurrentUri;
+	extern(C) int function(GtkRecentChooser* chooser, char* uri, GError** error)  selectUri;
+	extern(C) void function(GtkRecentChooser* chooser, char* uri)  unselectUri;
+	extern(C) void function(GtkRecentChooser* chooser)  selectAll;
+	extern(C) void function(GtkRecentChooser* chooser)  unselectAll;
+	extern(C) GList * function(GtkRecentChooser* chooser)  getItems;
+	extern(C) GtkRecentManager * function(GtkRecentChooser* chooser)  getRecentManager;
+	extern(C) void function(GtkRecentChooser* chooser, GtkRecentFilter* filter)  addFilter;
+	extern(C) void function(GtkRecentChooser* chooser, GtkRecentFilter* filter)  removeFilter;
+	extern(C) GSList * function(GtkRecentChooser* chooser)  listFilters;
+	extern(C) void function(GtkRecentChooser* chooser, GtkRecentSortFunc sortFunc, void* data, GDestroyNotify destroy)  setSortFunc;
 	/+*
 	 * Signals
 	+/
-	extern(C) void  function(GtkRecentChooser *chooser)  itemActivated;
-	extern(C) void  function(GtkRecentChooser *chooser)  selectionChanged;
+	extern(C) void function(GtkRecentChooser* chooser)  itemActivated;
+	extern(C) void function(GtkRecentChooser* chooser)  selectionChanged;
 }
 
 
@@ -5163,16 +5163,16 @@ public struct GtkBuildableIface
 {
 	GTypeInterface gIface;
 	/+* virtual table +/
-	extern(C) void  function(GtkBuildable *buildable,char *name)  setName;
-	extern(C) char *  function(GtkBuildable *buildable)  getName;
-	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *type)  addChild;
-	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder,char *name,GValue *value)  setBuildableProperty;
-	extern(C) GObject *  function(GtkBuildable *buildable,GtkBuilder *builder,char *name)  constructChild;
-	extern(C) int  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,GMarkupParser *parser,void* *data)  customTagStart;
-	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,void* *data)  customTagEnd;
-	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder,GObject *child,char *tagname,void* data)  customFinished;
-	extern(C) void  function(GtkBuildable *buildable,GtkBuilder *builder)  parserFinished;
-	extern(C) GObject *  function(GtkBuildable *buildable,GtkBuilder *builder,char *childname)  getInternalChild;
+	extern(C) void function(GtkBuildable* buildable, char* name)  setName;
+	extern(C) char * function(GtkBuildable* buildable)  getName;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* type)  addChild;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, char* name, GValue* value)  setBuildableProperty;
+	extern(C) GObject * function(GtkBuildable* buildable, GtkBuilder* builder, char* name)  constructChild;
+	extern(C) int function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, GMarkupParser* parser, void** data)  customTagStart;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, void** data)  customTagEnd;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, void* data)  customFinished;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder)  parserFinished;
+	extern(C) GObject * function(GtkBuildable* buildable, GtkBuilder* builder, char* childname)  getInternalChild;
 }
 
 
@@ -6624,13 +6624,13 @@ public struct GtkProgress{}
  * Points to the argument vector.
  */
 // void (*GtkModuleInitFunc) (gint *argc,  gchar ***argv);
-public alias extern(C) void  function (gint*, gchar***) GtkModuleInitFunc;
+public alias extern(C) void function(gint* argc, gchar*** argv) GtkModuleInitFunc;
 
 /*
  * Since 2.2
  */
 // void (*GtkModuleDisplayInitFunc) (GdkDisplay *display);
-public alias extern(C) void  function (GdkDisplay*) GtkModuleDisplayInitFunc;
+public alias extern(C) void function(GdkDisplay* display) GtkModuleDisplayInitFunc;
 
 /*
  * Key snooper functions are called before normal event delivery.
@@ -6645,18 +6645,18 @@ public alias extern(C) void  function (GdkDisplay*) GtkModuleDisplayInitFunc;
  * TRUE to stop further processing of event, FALSE to continue.
  */
 // gint (*GtkKeySnoopFunc) (GtkWidget *grab_widget,  GdkEventKey *event,  gpointer func_data);
-public alias extern(C) int  function (GtkWidget*, GdkEventKey*, void*) GtkKeySnoopFunc;
+public alias extern(C) int function(GtkWidget* grabWidget, GdkEventKey* event, void* funcData) GtkKeySnoopFunc;
 
 /*
  */
 // gboolean (*GtkAccelGroupActivate) (GtkAccelGroup *accel_group,  GObject *acceleratable,  guint keyval,  GdkModifierType modifier);
-public alias extern(C) int  function (GtkAccelGroup*, GObject*, uint, GdkModifierType) GtkAccelGroupActivate;
+public alias extern(C) int function(GtkAccelGroup* accelGroup, GObject* acceleratable, uint keyval, GdkModifierType modifier) GtkAccelGroupActivate;
 
 /*
  * Since 2.2
  */
 // gboolean (*GtkAccelGroupFindFunc) (GtkAccelKey *key,  GClosure *closure,  gpointer data);
-public alias extern(C) int  function (GtkAccelKey*, GClosure*, void*) GtkAccelGroupFindFunc;
+public alias extern(C) int function(GtkAccelKey* key, GClosure* closure, void* data) GtkAccelGroupFindFunc;
 
 /*
  * data :
@@ -6666,7 +6666,7 @@ public alias extern(C) int  function (GtkAccelKey*, GClosure*, void*) GtkAccelGr
  * changed :
  */
 // void (*GtkAccelMapForeach) (gpointer data,  const gchar *accel_path,  guint accel_key,  GdkModifierType accel_mods,  gboolean changed);
-public alias extern(C) void  function (void*, char*, uint, GdkModifierType, int) GtkAccelMapForeach;
+public alias extern(C) void function(void* data, char* accelPath, uint accelKey, GdkModifierType accelMods, int changed) GtkAccelMapForeach;
 
 /*
  *  A function to be called when the results of gtk_clipboard_request_contents()
@@ -6681,7 +6681,7 @@ public alias extern(C) void  function (void*, char*, uint, GdkModifierType, int)
  * the user_data supplied to gtk_clipboard_request_contents().
  */
 // void (*GtkClipboardReceivedFunc) (GtkClipboard *clipboard,  GtkSelectionData *selection_data,  gpointer data);
-public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, void*) GtkClipboardReceivedFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, GtkSelectionData* selectionData, void* data) GtkClipboardReceivedFunc;
 
 /*
  *  A function to be called when the results of gtk_clipboard_request_text()
@@ -6695,7 +6695,7 @@ public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, void*) 
  * the user_data supplied to gtk_clipboard_request_text().
  */
 // void (*GtkClipboardTextReceivedFunc) (GtkClipboard *clipboard,  const gchar *text,  gpointer data);
-public alias extern(C) void  function (GtkClipboard*, char*, void*) GtkClipboardTextReceivedFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, char* text, void* data) GtkClipboardTextReceivedFunc;
 
 /*
  *  A function to be called when the results of gtk_clipboard_request_image()
@@ -6709,7 +6709,7 @@ public alias extern(C) void  function (GtkClipboard*, char*, void*) GtkClipboard
  * Since 2.6
  */
 // void (*GtkClipboardImageReceivedFunc) (GtkClipboard *clipboard,  GdkPixbuf *pixbuf,  gpointer data);
-public alias extern(C) void  function (GtkClipboard*, GdkPixbuf*, void*) GtkClipboardImageReceivedFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, GdkPixbuf* pixbuf, void* data) GtkClipboardImageReceivedFunc;
 
 /*
  *  A function to be called when the results of gtk_clipboard_request_targets()
@@ -6726,17 +6726,17 @@ public alias extern(C) void  function (GtkClipboard*, GdkPixbuf*, void*) GtkClip
  * Since 2.4
  */
 // void (*GtkClipboardTargetsReceivedFunc) (GtkClipboard *clipboard,  GdkAtom *atoms,  gint n_atoms,  gpointer data);
-public alias extern(C) void  function (GtkClipboard*, GdkAtom*, int, void*) GtkClipboardTargetsReceivedFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, GdkAtom* atoms, int nAtoms, void* data) GtkClipboardTargetsReceivedFunc;
 
 /*
  */
 // void (*GtkClipboardRichTextReceivedFunc) (GtkClipboard *clipboard,  GdkAtom format,  const guint8 *text,  gsize length,  gpointer data);
-public alias extern(C) void  function (GtkClipboard*, GdkAtom, guint8*, gsize, void*) GtkClipboardRichTextReceivedFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, GdkAtom format, guint8* text, gsize length, void* data) GtkClipboardRichTextReceivedFunc;
 
 /*
  */
 // void (*GtkClipboardURIReceivedFunc) (GtkClipboard *clipboard,  gchar **uris,  gpointer data);
-public alias extern(C) void  function (GtkClipboard*, gchar**, void*) GtkClipboardURIReceivedFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, gchar** uris, void* data) GtkClipboardURIReceivedFunc;
 
 /*
  * A function that will be called to provide the contents of the selection.
@@ -6761,7 +6761,7 @@ public alias extern(C) void  function (GtkClipboard*, gchar**, void*) GtkClipboa
  * the owner argument passed to gtk_clipboard_set_with_owner()
  */
 // void (*GtkClipboardGetFunc) (GtkClipboard *clipboard,  GtkSelectionData *selection_data,  guint info,  gpointer user_data_or_owner);
-public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, uint, void*) GtkClipboardGetFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, GtkSelectionData* selectionData, uint info, void* userDataOrOwner) GtkClipboardGetFunc;
 
 /*
  * A function that will be called when the contents of the clipboard are changed
@@ -6774,7 +6774,7 @@ public alias extern(C) void  function (GtkClipboard*, GtkSelectionData*, uint, v
  * the owner argument passed to gtk_clipboard_set_with_owner()
  */
 // void (*GtkClipboardClearFunc) (GtkClipboard *clipboard,  gpointer user_data_or_owner);
-public alias extern(C) void  function (GtkClipboard*, void*) GtkClipboardClearFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, void* userDataOrOwner) GtkClipboardClearFunc;
 
 /*
  * Signal Details
@@ -6792,7 +6792,7 @@ public alias extern(C) void  function (GtkClipboard*, void*) GtkClipboardClearFu
  * Since 2.4
  */
 // gboolean (*GtkRcPropertyParser) (const GParamSpec *pspec,  const GString *rc_string,  GValue *property_value);
-public alias extern(C) int  function (GParamSpec*, GString*, GValue*) GtkRcPropertyParser;
+public alias extern(C) int function(GParamSpec* pspec, GString* rcString, GValue* propertyValue) GtkRcPropertyParser;
 
 /*
  * Warning
@@ -6800,7 +6800,7 @@ public alias extern(C) int  function (GParamSpec*, GString*, GValue*) GtkRcPrope
  * Defines a function pointer.
  */
 // void (*GtkSignalFunc) (void);
-public alias extern(C) void  function () GtkSignalFunc;
+public alias extern(C) void function() GtkSignalFunc;
 
 /*
  * Warning
@@ -6812,7 +6812,7 @@ public alias extern(C) void  function () GtkSignalFunc;
  * gint
  */
 // gboolean (*GtkFunction) (gpointer data);
-public alias extern(C) int  function (void*) GtkFunction;
+public alias extern(C) int function(void* data) GtkFunction;
 
 /*
  * Warning
@@ -6822,7 +6822,7 @@ public alias extern(C) int  function (void*) GtkFunction;
  * gpointer
  */
 // void (*GtkDestroyNotify) (gpointer data);
-public alias extern(C) void  function (void*) GtkDestroyNotify;
+public alias extern(C) void function(void* data) GtkDestroyNotify;
 
 /*
  * Warning
@@ -6838,7 +6838,7 @@ public alias extern(C) void  function (void*) GtkDestroyNotify;
  * GtkArg*
  */
 // void (*GtkCallbackMarshal) (GtkObject *object,  gpointer data,  guint n_args,  GtkArg *args);
-public alias extern(C) void  function (GtkObject*, void*, uint, GtkArg*) GtkCallbackMarshal;
+public alias extern(C) void function(GtkObject* object, void* data, uint nArgs, GtkArg* args) GtkCallbackMarshal;
 
 /*
  * The type of a function which is called when a URL or email
@@ -6853,7 +6853,7 @@ public alias extern(C) void  function (GtkObject*, void*, uint, GtkArg*) GtkCall
  * gtk_about_dialog_set_url_hook()
  */
 // void (*GtkAboutDialogActivateLinkFunc) (GtkAboutDialog *about,  const gchar *link_,  gpointer data);
-public alias extern(C) void  function (GtkAboutDialog*, char*, void*) GtkAboutDialogActivateLinkFunc;
+public alias extern(C) void function(GtkAboutDialog* about, char* link, void* data) GtkAboutDialogActivateLinkFunc;
 
 /*
  * A function used by gtk_assistant_set_forward_page_func() to know which
@@ -6868,7 +6868,7 @@ public alias extern(C) void  function (GtkAboutDialog*, char*, void*) GtkAboutDi
  * The next page number.
  */
 // gint (*GtkAssistantPageFunc) (gint current_page,  gpointer data);
-public alias extern(C) int  function (int, void*) GtkAssistantPageFunc;
+public alias extern(C) int function(int currentPage, void* data) GtkAssistantPageFunc;
 
 /*
  * The type of a function which is called when the GtkLinkButton is
@@ -6882,7 +6882,7 @@ public alias extern(C) int  function (int, void*) GtkAssistantPageFunc;
  * with gtk_link_button_set_uri_hook()
  */
 // void (*GtkLinkButtonUriFunc) (GtkLinkButton *button,  const gchar *link_,  gpointer user_data);
-public alias extern(C) void  function (GtkLinkButton*, char*, void*) GtkLinkButtonUriFunc;
+public alias extern(C) void function(GtkLinkButton* button, char* link, void* userData) GtkLinkButtonUriFunc;
 
 /*
  * A function which decides whether the row indicated by iter matches a given
@@ -6902,12 +6902,12 @@ public alias extern(C) void  function (GtkLinkButton*, char*, void*) GtkLinkButt
  * TRUE if iter should be displayed as a possible completion for key
  */
 // gboolean (*GtkEntryCompletionMatchFunc) (GtkEntryCompletion *completion,  const gchar *key,  GtkTreeIter *iter,  gpointer user_data);
-public alias extern(C) int  function (GtkEntryCompletion*, char*, GtkTreeIter*, void*) GtkEntryCompletionMatchFunc;
+public alias extern(C) int function(GtkEntryCompletion* completion, char* key, GtkTreeIter* iter, void* userData) GtkEntryCompletionMatchFunc;
 
 /*
  */
 // gboolean (*GtkTextCharPredicate) (gunichar ch,  gpointer user_data);
-public alias extern(C) int  function (gunichar, void*) GtkTextCharPredicate;
+public alias extern(C) int function(gunichar ch, void* userData) GtkTextCharPredicate;
 
 /*
  * A function that is called to deserialize rich text that has been
@@ -6932,7 +6932,7 @@ public alias extern(C) int  function (gunichar, void*) GtkTextCharPredicate;
  * TRUE on success, FALSE otherwise
  */
 // gboolean (*GtkTextBufferDeserializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GtkTextIter *iter,  const guint8 *data,  gsize length,  gboolean create_tags,  gpointer user_data,  GError **error);
-public alias extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, guint8*, gsize, int, void*, GError**) GtkTextBufferDeserializeFunc;
+public alias extern(C) int function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GtkTextIter* iter, guint8* data, gsize length, int createTags, void* userData, GError** error) GtkTextBufferDeserializeFunc;
 
 /*
  * A function that is called to serialize the content of a text buffer.
@@ -6954,12 +6954,12 @@ public alias extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIte
  * data, or NULL if an error occurred
  */
 // guint8 * (*GtkTextBufferSerializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length,  gpointer user_data);
-public alias extern(C) ubyte *  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, GtkTextIter*, gsize*, void*) GtkTextBufferSerializeFunc;
+public alias extern(C) ubyte * function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GtkTextIter* start, GtkTextIter* end, gsize* length, void* userData) GtkTextBufferSerializeFunc;
 
 /*
  */
 // void (*GtkTextTagTableForeach) (GtkTextTag *tag,  gpointer data);
-public alias extern(C) void  function (GtkTextTag*, void*) GtkTextTagTableForeach;
+public alias extern(C) void function(GtkTextTag* tag, void* data) GtkTextTagTableForeach;
 
 /*
  * model :
@@ -6974,7 +6974,7 @@ public alias extern(C) void  function (GtkTextTag*, void*) GtkTextTagTableForeac
  * TRUE to stop iterating, FALSE to continue.
  */
 // gboolean (*GtkTreeModelForeachFunc) (GtkTreeModel *model,  GtkTreePath *path,  GtkTreeIter *iter,  gpointer data);
-public alias extern(C) int  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, void*) GtkTreeModelForeachFunc;
+public alias extern(C) int function(GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, void* data) GtkTreeModelForeachFunc;
 
 /*
  * A function used by gtk_tree_selection_set_select_function() to filter
@@ -6995,7 +6995,7 @@ public alias extern(C) int  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter*,
  * TRUE, if the selection state of the row can be toggled
  */
 // gboolean (*GtkTreeSelectionFunc) (GtkTreeSelection *selection,  GtkTreeModel *model,  GtkTreePath *path,  gboolean path_currently_selected,  gpointer data);
-public alias extern(C) int  function (GtkTreeSelection*, GtkTreeModel*, GtkTreePath*, int, void*) GtkTreeSelectionFunc;
+public alias extern(C) int function(GtkTreeSelection* selection, GtkTreeModel* model, GtkTreePath* path, int pathCurrentlySelected, void* data) GtkTreeSelectionFunc;
 
 /*
  * A function used by gtk_tree_selection_selected_foreach() to map all
@@ -7010,7 +7010,7 @@ public alias extern(C) int  function (GtkTreeSelection*, GtkTreeModel*, GtkTreeP
  * user data
  */
 // void (*GtkTreeSelectionForeachFunc) (GtkTreeModel *model,  GtkTreePath *path,  GtkTreeIter *iter,  gpointer data);
-public alias extern(C) void  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, void*) GtkTreeSelectionForeachFunc;
+public alias extern(C) void function(GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, void* data) GtkTreeSelectionForeachFunc;
 
 /*
  * A function to set the properties of a cell instead of just using the
@@ -7031,7 +7031,7 @@ public alias extern(C) void  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter*
  * user data
  */
 // void (*GtkTreeCellDataFunc) (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell,  GtkTreeModel *tree_model,  GtkTreeIter *iter,  gpointer data);
-public alias extern(C) void  function (GtkTreeViewColumn*, GtkCellRenderer*, GtkTreeModel*, GtkTreeIter*, void*) GtkTreeCellDataFunc;
+public alias extern(C) void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cell, GtkTreeModel* treeModel, GtkTreeIter* iter, void* data) GtkTreeCellDataFunc;
 
 /*
  * Function type for determining whether column can be dropped in a
@@ -7056,7 +7056,7 @@ public alias extern(C) void  function (GtkTreeViewColumn*, GtkCellRenderer*, Gtk
  * TRUE, if column can be dropped in this spot
  */
 // gboolean (*GtkTreeViewColumnDropFunc) (GtkTreeView *tree_view,  GtkTreeViewColumn *column,  GtkTreeViewColumn *prev_column,  GtkTreeViewColumn *next_column,  gpointer data);
-public alias extern(C) int  function (GtkTreeView*, GtkTreeViewColumn*, GtkTreeViewColumn*, GtkTreeViewColumn*, void*) GtkTreeViewColumnDropFunc;
+public alias extern(C) int function(GtkTreeView* treeView, GtkTreeViewColumn* column, GtkTreeViewColumn* prevColumn, GtkTreeViewColumn* nextColumn, void* data) GtkTreeViewColumnDropFunc;
 
 /*
  * Function used for gtk_tree_view_map_expanded_rows.
@@ -7068,7 +7068,7 @@ public alias extern(C) int  function (GtkTreeView*, GtkTreeViewColumn*, GtkTreeV
  * user data
  */
 // void (*GtkTreeViewMappingFunc) (GtkTreeView *tree_view,  GtkTreePath *path,  gpointer user_data);
-public alias extern(C) void  function (GtkTreeView*, GtkTreePath*, void*) GtkTreeViewMappingFunc;
+public alias extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, void* userData) GtkTreeViewMappingFunc;
 
 /*
  * A function used for checking whether a row in model matches
@@ -7090,17 +7090,17 @@ public alias extern(C) void  function (GtkTreeView*, GtkTreePath*, void*) GtkTre
  * FALSE if the row matches, TRUE otherwise.
  */
 // gboolean (*GtkTreeViewSearchEqualFunc) (GtkTreeModel *model,  gint column,  const gchar *key,  GtkTreeIter *iter,  gpointer search_data);
-public alias extern(C) int  function (GtkTreeModel*, int, char*, GtkTreeIter*, void*) GtkTreeViewSearchEqualFunc;
+public alias extern(C) int function(GtkTreeModel* model, int column, char* key, GtkTreeIter* iter, void* searchData) GtkTreeViewSearchEqualFunc;
 
 /*
  */
 // void (*GtkTreeViewSearchPositionFunc) (GtkTreeView *tree_view,  GtkWidget *search_dialog,  gpointer user_data);
-public alias extern(C) void  function (GtkTreeView*, GtkWidget*, void*) GtkTreeViewSearchPositionFunc;
+public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDialog, void* userData) GtkTreeViewSearchPositionFunc;
 
 /*
  */
 // void (*GtkTreeDestroyCountFunc) (GtkTreeView *tree_view,  GtkTreePath *path,  gint children,  gpointer user_data);
-public alias extern(C) void  function (GtkTreeView*, GtkTreePath*, int, void*) GtkTreeDestroyCountFunc;
+public alias extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, int children, void* userData) GtkTreeDestroyCountFunc;
 
 /*
  * Function type for determining whether the row pointed to by iter should
@@ -7117,7 +7117,7 @@ public alias extern(C) void  function (GtkTreeView*, GtkTreePath*, int, void*) G
  * TRUE if the row is a separator
  */
 // gboolean (*GtkTreeViewRowSeparatorFunc) (GtkTreeModel *model,  GtkTreeIter *iter,  gpointer data);
-public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkTreeViewRowSeparatorFunc;
+public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* iter, void* data) GtkTreeViewRowSeparatorFunc;
 
 /*
  * A function used by gtk_icon_view_selected_foreach() to map all
@@ -7130,7 +7130,7 @@ public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkTre
  * user data
  */
 // void (*GtkIconViewForeachFunc) (GtkIconView *icon_view,  GtkTreePath *path,  gpointer data);
-public alias extern(C) void  function (GtkIconView*, GtkTreePath*, void*) GtkIconViewForeachFunc;
+public alias extern(C) void function(GtkIconView* iconView, GtkTreePath* path, void* data) GtkIconViewForeachFunc;
 
 /*
  * A GtkTreeIterCompareFunc should return a negative integer, zero, or a positive
@@ -7156,7 +7156,7 @@ public alias extern(C) void  function (GtkIconView*, GtkTreePath*, void*) GtkIco
  * a sorts before, with or after b
  */
 // gint (*GtkTreeIterCompareFunc) (GtkTreeModel *model,  GtkTreeIter *a,  GtkTreeIter *b,  gpointer user_data);
-public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, GtkTreeIter*, void*) GtkTreeIterCompareFunc;
+public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* a, GtkTreeIter* b, void* userData) GtkTreeIterCompareFunc;
 
 /*
  * A function which decides whether the row indicated by iter is visible.
@@ -7171,7 +7171,7 @@ public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, GtkTreeIter*,
  * Whether the row indicated by iter is visible.
  */
 // gboolean (*GtkTreeModelFilterVisibleFunc) (GtkTreeModel *model,  GtkTreeIter *iter,  gpointer data);
-public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkTreeModelFilterVisibleFunc;
+public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* iter, void* data) GtkTreeModelFilterVisibleFunc;
 
 /*
  * A function which calculates display values from raw values in the model.
@@ -7192,7 +7192,7 @@ public alias extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkTre
  * user data given to gtk_tree_model_filter_set_modify_func()
  */
 // void (*GtkTreeModelFilterModifyFunc) (GtkTreeModel *model,  GtkTreeIter *iter,  GValue *value,  gint column,  gpointer data);
-public alias extern(C) void  function (GtkTreeModel*, GtkTreeIter*, GValue*, int, void*) GtkTreeModelFilterModifyFunc;
+public alias extern(C) void function(GtkTreeModel* model, GtkTreeIter* iter, GValue* value, int column, void* data) GtkTreeModelFilterModifyFunc;
 
 /*
  * A function which should set the value of cell_layout's cell renderer(s)
@@ -7209,7 +7209,7 @@ public alias extern(C) void  function (GtkTreeModel*, GtkTreeIter*, GValue*, int
  * user data passed to gtk_cell_layout_set_cell_data_func()
  */
 // void (*GtkCellLayoutDataFunc) (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  GtkTreeModel *tree_model,  GtkTreeIter *iter,  gpointer data);
-public alias extern(C) void  function (GtkCellLayout*, GtkCellRenderer*, GtkTreeModel*, GtkTreeIter*, void*) GtkCellLayoutDataFunc;
+public alias extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, GtkTreeModel* treeModel, GtkTreeIter* iter, void* data) GtkCellLayoutDataFunc;
 
 /*
  * A user function supplied when calling gtk_menu_popup() which controls the
@@ -7241,7 +7241,7 @@ public alias extern(C) void  function (GtkCellLayout*, GtkCellRenderer*, GtkTree
  * parameter.
  */
 // void (*GtkMenuPositionFunc) (GtkMenu *menu,  gint *x,  gint *y,  gboolean *push_in,  gpointer user_data);
-public alias extern(C) void  function (GtkMenu*, gint*, gint*, gboolean*, void*) GtkMenuPositionFunc;
+public alias extern(C) void function(GtkMenu* menu, gint* x, gint* y, gboolean* pushIn, void* userData) GtkMenuPositionFunc;
 
 /*
  * A user function supplied when calling gtk_menu_attach_to_widget() which
@@ -7257,18 +7257,18 @@ public alias extern(C) void  function (GtkMenu*, gint*, gint*, gboolean*, void*)
  * Since 2.14
  */
 // void (*GtkMenuDetachFunc) (GtkWidget *attach_widget,  GtkMenu *menu);
-public alias extern(C) void  function (GtkWidget*, GtkMenu*) GtkMenuDetachFunc;
+public alias extern(C) void function(GtkWidget* attachWidget, GtkMenu* menu) GtkMenuDetachFunc;
 
 /*
  */
 // void (*GtkColorSelectionChangePaletteFunc)  (const GdkColor *colors,  gint n_colors);
-public alias extern(C) void  function (GdkColor*, int) GtkColorSelectionChangePaletteFunc;
+public alias extern(C) void function(GdkColor* colors, int nColors) GtkColorSelectionChangePaletteFunc;
 
 /*
  * Since 2.2
  */
 // void (*GtkColorSelectionChangePaletteWithScreenFunc)  (GdkScreen *screen,  const GdkColor *colors,  gint n_colors);
-public alias extern(C) void  function (GdkScreen*, GdkColor*, int) GtkColorSelectionChangePaletteWithScreenFunc;
+public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nColors) GtkColorSelectionChangePaletteWithScreenFunc;
 
 /*
  * The type of function that is used with custom filters,
@@ -7282,7 +7282,7 @@ public alias extern(C) void  function (GdkScreen*, GdkColor*, int) GtkColorSelec
  * TRUE if the file should be displayed
  */
 // gboolean (*GtkFileFilterFunc) (const GtkFileFilterInfo *filter_info,  gpointer data);
-public alias extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilterFunc;
+public alias extern(C) int function(GtkFileFilterInfo* filterInfo, void* data) GtkFileFilterFunc;
 
 /*
  * A function used by GtkNotebook when a detachable tab is dropped
@@ -7305,7 +7305,7 @@ public alias extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilterFu
  * The created GtkNotebook where the tab will be attached, or NULL to cancel the drag
  */
 // GtkNotebook * (*GtkNotebookWindowCreationFunc) (GtkNotebook *source,  GtkWidget *page,  gint x,  gint y,  gpointer data);
-public alias extern(C) GtkNotebook *  function (GtkNotebook*, GtkWidget*, int, int, void*) GtkNotebookWindowCreationFunc;
+public alias extern(C) GtkNotebook * function(GtkNotebook* source, GtkWidget* page, int x, int y, void* data) GtkNotebookWindowCreationFunc;
 
 /*
  * The type of function that is passed to gtk_print_run_page_setup_dialog_async().
@@ -7318,12 +7318,12 @@ public alias extern(C) GtkNotebook *  function (GtkNotebook*, GtkWidget*, int, i
  * gtk_print_run_page_setup_dialog_async().
  */
 // void (*GtkPageSetupDoneFunc) (GtkPageSetup *page_setup,  gpointer data);
-public alias extern(C) void  function (GtkPageSetup*, void*) GtkPageSetupDoneFunc;
+public alias extern(C) void function(GtkPageSetup* pageSetup, void* data) GtkPageSetupDoneFunc;
 
 /*
  */
 // void (*GtkPrintSettingsFunc) (const gchar *key,  const gchar *value,  gpointer user_data);
-public alias extern(C) void  function (char*, char*, void*) GtkPrintSettingsFunc;
+public alias extern(C) void function(char* key, char* value, void* userData) GtkPrintSettingsFunc;
 
 /*
  * The type of function passed to gtk_enumerate_printers().
@@ -7337,7 +7337,7 @@ public alias extern(C) void  function (char*, char*, void*) GtkPrintSettingsFunc
  * TRUE to stop the enumeration, FALSE to continue
  */
 // gboolean (*GtkPrinterFunc) (GtkPrinter *printer,  gpointer data);
-public alias extern(C) int  function (GtkPrinter*, void*) GtkPrinterFunc;
+public alias extern(C) int function(GtkPrinter* printer, void* data) GtkPrinterFunc;
 
 /*
  * The type of callback that is passed to gtk_print_job_send().
@@ -7351,7 +7351,7 @@ public alias extern(C) int  function (GtkPrinter*, void*) GtkPrinterFunc;
  * of the print job failed, otherwise NULL
  */
 // void (*GtkPrintJobCompleteFunc) (GtkPrintJob *print_job,  gpointer user_data,  GError *error);
-public alias extern(C) void  function (GtkPrintJob*, void*, GError*) GtkPrintJobCompleteFunc;
+public alias extern(C) void function(GtkPrintJob* printJob, void* userData, GError* error) GtkPrintJobCompleteFunc;
 
 /*
  * This kind of functions provide Pango markup with detail information for the
@@ -7373,7 +7373,7 @@ public alias extern(C) void  function (GtkPrintJob*, void*, GError*) GtkPrintJob
  * Since 2.14
  */
 // gchar * (*GtkCalendarDetailFunc) (GtkCalendar *calendar,  guint year,  guint month,  guint day,  gpointer user_data);
-public alias extern(C) char *  function (GtkCalendar*, uint, uint, uint, void*) GtkCalendarDetailFunc;
+public alias extern(C) char * function(GtkCalendar* calendar, uint year, uint month, uint day, void* userData) GtkCalendarDetailFunc;
 
 /*
  * The type of the callback functions used for e.g. iterating over
@@ -7384,12 +7384,12 @@ public alias extern(C) char *  function (GtkCalendar*, uint, uint, uint, void*) 
  * user-supplied data
  */
 // void (*GtkCallback) (GtkWidget *widget,  gpointer data);
-public alias extern(C) void  function (GtkWidget*, void*) GtkCallback;
+public alias extern(C) void function(GtkWidget* widget, void* data) GtkCallback;
 
 /*
  */
 // gint (*GtkRecentSortFunc) (GtkRecentInfo *a,  GtkRecentInfo *b,  gpointer user_data);
-public alias extern(C) int  function (GtkRecentInfo*, GtkRecentInfo*, void*) GtkRecentSortFunc;
+public alias extern(C) int function(GtkRecentInfo* a, GtkRecentInfo* b, void* userData) GtkRecentSortFunc;
 
 /*
  * The type of function that is used with custom filters,
@@ -7403,7 +7403,7 @@ public alias extern(C) int  function (GtkRecentInfo*, GtkRecentInfo*, void*) Gtk
  * TRUE if the file should be displayed
  */
 // gboolean (*GtkRecentFilterFunc) (const GtkRecentFilterInfo *filter_info,  gpointer user_data);
-public alias extern(C) int  function (GtkRecentFilterInfo*, void*) GtkRecentFilterFunc;
+public alias extern(C) int function(GtkRecentFilterInfo* filterInfo, void* userData) GtkRecentFilterFunc;
 
 /*
  * This is the signature of a function used to connect signals. It is used
@@ -7428,14 +7428,14 @@ public alias extern(C) int  function (GtkRecentFilterInfo*, void*) GtkRecentFilt
  * Since 2.12
  */
 // void (*GtkBuilderConnectFunc) (GtkBuilder *builder,  GObject *object,  const gchar *signal_name,  const gchar *handler_name,  GObject *connect_object,  GConnectFlags flags,  gpointer user_data);
-public alias extern(C) void  function (GtkBuilder*, GObject*, char*, char*, GObject*, GConnectFlags, void*) GtkBuilderConnectFunc;
+public alias extern(C) void function(GtkBuilder* builder, GObject* object, char* signalName, char* handlerName, GObject* connectObject, GConnectFlags flags, void* userData) GtkBuilderConnectFunc;
 
 /*
  * Warning
  * GtkPrintFunc is deprecated and should not be used in newly-written code.
  */
 // void (*GtkPrintFunc) (gpointer func_data,  const gchar *str);
-public alias extern(C) void  function (void*, char*) GtkPrintFunc;
+public alias extern(C) void function(void* funcData, char* str) GtkPrintFunc;
 
 /*
  * The function used to translate messages in e.g. GtkIconFactory
@@ -7450,28 +7450,28 @@ public alias extern(C) void  function (void*, char*) GtkPrintFunc;
  * the translated message
  */
 // gchar * (*GtkTranslateFunc) (const gchar *path,  gpointer func_data);
-public alias extern(C) char *  function (char*, void*) GtkTranslateFunc;
+public alias extern(C) char * function(char* path, void* funcData) GtkTranslateFunc;
 
 /*
  * Warning
  * GtkItemFactoryCallback is deprecated and should not be used in newly-written code.
  */
 // void (*GtkItemFactoryCallback) ();
-public alias extern(C) void  function () GtkItemFactoryCallback;
+public alias extern(C) void function() GtkItemFactoryCallback;
 
 /*
  * Warning
  * GtkItemFactoryCallback1 is deprecated and should not be used in newly-written code.
  */
 // void (*GtkItemFactoryCallback1) (gpointer callback_data,  guint callback_action,  GtkWidget *widget);
-public alias extern(C) void  function (void*, uint, GtkWidget*) GtkItemFactoryCallback1;
+public alias extern(C) void function(void* callbackData, uint callbackAction, GtkWidget* widget) GtkItemFactoryCallback1;
 
 /*
  * Warning
  * GtkItemFactoryCallback2 is deprecated and should not be used in newly-written code.
  */
 // void (*GtkItemFactoryCallback2) (GtkWidget *widget,  gpointer callback_data,  guint callback_action);
-public alias extern(C) void  function (GtkWidget*, void*, uint) GtkItemFactoryCallback2;
+public alias extern(C) void function(GtkWidget* widget, void* callbackData, uint callbackAction) GtkItemFactoryCallback2;
 
 
 // StockIDs

@@ -56,6 +56,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -98,11 +99,6 @@ public class Document
 	 */
 	public this (AtkDocument* atkDocument)
 	{
-		if(atkDocument is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkDocument = atkDocument;
 	}
 	
@@ -135,11 +131,11 @@ public class Document
 		}
 		onLoadCompleteListeners ~= dlg;
 	}
-	extern(C) static void callBackLoadComplete(AtkDocument* atkdocumentStruct, Document document)
+	extern(C) static void callBackLoadComplete(AtkDocument* atkdocumentStruct, Document _document)
 	{
-		foreach ( void delegate(Document) dlg ; document.onLoadCompleteListeners )
+		foreach ( void delegate(Document) dlg ; _document.onLoadCompleteListeners )
 		{
-			dlg(document);
+			dlg(_document);
 		}
 	}
 	
@@ -166,11 +162,11 @@ public class Document
 		}
 		onLoadStoppedListeners ~= dlg;
 	}
-	extern(C) static void callBackLoadStopped(AtkDocument* atkdocumentStruct, Document document)
+	extern(C) static void callBackLoadStopped(AtkDocument* atkdocumentStruct, Document _document)
 	{
-		foreach ( void delegate(Document) dlg ; document.onLoadStoppedListeners )
+		foreach ( void delegate(Document) dlg ; _document.onLoadStoppedListeners )
 		{
-			dlg(document);
+			dlg(_document);
 		}
 	}
 	
@@ -196,11 +192,11 @@ public class Document
 		}
 		onReloadListeners ~= dlg;
 	}
-	extern(C) static void callBackReload(AtkDocument* atkdocumentStruct, Document document)
+	extern(C) static void callBackReload(AtkDocument* atkdocumentStruct, Document _document)
 	{
-		foreach ( void delegate(Document) dlg ; document.onReloadListeners )
+		foreach ( void delegate(Document) dlg ; _document.onReloadListeners )
 		{
-			dlg(document);
+			dlg(_document);
 		}
 	}
 	

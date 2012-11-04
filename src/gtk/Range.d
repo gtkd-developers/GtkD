@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -109,18 +110,6 @@ public class Range : Widget, OrientableIF
 	 */
 	public this (GtkRange* gtkRange)
 	{
-		if(gtkRange is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRange);
-		if( ptr !is null )
-		{
-			this = cast(Range)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkRange);
 		this.gtkRange = gtkRange;
 	}
@@ -156,11 +145,11 @@ public class Range : Widget, OrientableIF
 		}
 		onAdjustBoundsListeners ~= dlg;
 	}
-	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, gdouble arg1, Range range)
+	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, gdouble arg1, Range _range)
 	{
-		foreach ( void delegate(gdouble, Range) dlg ; range.onAdjustBoundsListeners )
+		foreach ( void delegate(gdouble, Range) dlg ; _range.onAdjustBoundsListeners )
 		{
-			dlg(arg1, range);
+			dlg(arg1, _range);
 		}
 	}
 	
@@ -198,11 +187,11 @@ public class Range : Widget, OrientableIF
 		}
 		onChangeValueListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, gdouble value, Range range)
+	extern(C) static gboolean callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, gdouble value, Range _range)
 	{
-		foreach ( bool delegate(GtkScrollType, gdouble, Range) dlg ; range.onChangeValueListeners )
+		foreach ( bool delegate(GtkScrollType, gdouble, Range) dlg ; _range.onChangeValueListeners )
 		{
-			if ( dlg(scroll, value, range) )
+			if ( dlg(scroll, value, _range) )
 			{
 				return 1;
 			}
@@ -230,11 +219,11 @@ public class Range : Widget, OrientableIF
 		}
 		onMoveSliderListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType step, Range range)
+	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType step, Range _range)
 	{
-		foreach ( void delegate(GtkScrollType, Range) dlg ; range.onMoveSliderListeners )
+		foreach ( void delegate(GtkScrollType, Range) dlg ; _range.onMoveSliderListeners )
 		{
-			dlg(step, range);
+			dlg(step, _range);
 		}
 	}
 	
@@ -257,11 +246,11 @@ public class Range : Widget, OrientableIF
 		}
 		onValueChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackValueChanged(GtkRange* rangeStruct, Range range)
+	extern(C) static void callBackValueChanged(GtkRange* rangeStruct, Range _range)
 	{
-		foreach ( void delegate(Range) dlg ; range.onValueChangedListeners )
+		foreach ( void delegate(Range) dlg ; _range.onValueChangedListeners )
 		{
-			dlg(range);
+			dlg(_range);
 		}
 	}
 	
@@ -363,11 +352,13 @@ public class Range : Widget, OrientableIF
 	{
 		// GtkAdjustment * gtk_range_get_adjustment (GtkRange *range);
 		auto p = gtk_range_get_adjustment(gtkRange);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**

@@ -85,7 +85,6 @@ import: gtkc.gtk
 import: glib.Str
 
 code: start
-
 	/**
 	 * Returns the GtkSourceBuffer being displayed by this source view.
 	 * The reference count on the buffer is not incremented; the caller
@@ -96,13 +95,16 @@ code: start
 	public override SourceBuffer getBuffer()
 	{
 		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
-		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
+		auto p = gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView);
+
+		if ( p is null )
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!SourceBuffer( cast(GtkSourceBuffer*)p );
 	}
-	
-
-
 code: end
-
 outFile: SourceView
 
 file: GtkSourceBuffer.html

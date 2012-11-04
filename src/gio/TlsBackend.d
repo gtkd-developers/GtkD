@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -89,11 +90,6 @@ public class TlsBackend
 	 */
 	public this (GTlsBackend* gTlsBackend)
 	{
-		if(gTlsBackend is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTlsBackend = gTlsBackend;
 	}
 	
@@ -109,11 +105,13 @@ public class TlsBackend
 	{
 		// GTlsBackend * g_tls_backend_get_default (void);
 		auto p = g_tls_backend_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsBackend(cast(GTlsBackend*) p);
+		
+		return ObjectG.getDObject!TlsBackend(cast(GTlsBackend*) p);
 	}
 	
 	/**

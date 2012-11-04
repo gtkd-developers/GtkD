@@ -121,11 +121,6 @@ public class Relation
 	 */
 	public this (GRelation* gRelation)
 	{
-		if(gRelation is null)
-		{
-			this = null;
-			return;
-		}
 		this.gRelation = gRelation;
 	}
 	
@@ -228,10 +223,12 @@ public class Relation
 	{
 		// GTuples * g_relation_select (GRelation *relation,  gconstpointer key,  gint field);
 		auto p = g_relation_select(gRelation, key, field);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Tuples(cast(GTuples*) p);
 	}
 	

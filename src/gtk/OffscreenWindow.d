@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Pixmap;
@@ -114,18 +115,6 @@ public class OffscreenWindow : Window
 	 */
 	public this (GtkOffscreenWindow* gtkOffscreenWindow)
 	{
-		if(gtkOffscreenWindow is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkOffscreenWindow);
-		if( ptr !is null )
-		{
-			this = cast(OffscreenWindow)ptr;
-			return;
-		}
 		super(cast(GtkWindow*)gtkOffscreenWindow);
 		this.gtkOffscreenWindow = gtkOffscreenWindow;
 	}
@@ -169,11 +158,13 @@ public class OffscreenWindow : Window
 	{
 		// GdkPixmap * gtk_offscreen_window_get_pixmap (GtkOffscreenWindow *offscreen);
 		auto p = gtk_offscreen_window_get_pixmap(gtkOffscreenWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixmap(cast(GdkPixmap*) p);
+		
+		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -188,10 +179,12 @@ public class OffscreenWindow : Window
 	{
 		// GdkPixbuf * gtk_offscreen_window_get_pixbuf (GtkOffscreenWindow *offscreen);
 		auto p = gtk_offscreen_window_get_pixbuf(gtkOffscreenWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 }

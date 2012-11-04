@@ -55,6 +55,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -93,18 +94,6 @@ public class SimplePermission : Permission
 	 */
 	public this (GSimplePermission* gSimplePermission)
 	{
-		if(gSimplePermission is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSimplePermission);
-		if( ptr !is null )
-		{
-			this = cast(SimplePermission)ptr;
-			return;
-		}
 		super(cast(GPermission*)gSimplePermission);
 		this.gSimplePermission = gSimplePermission;
 	}

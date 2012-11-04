@@ -61,6 +61,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -130,11 +131,11 @@ public template ActionGroupT(TStruct)
 		}
 		_onActionAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionAdded(GActionGroup* actionGroupStruct, gchar* actionName, ActionGroupIF actionGroupIF)
+	extern(C) static void callBackActionAdded(GActionGroup* actionGroupStruct, gchar* actionName, ActionGroupIF _actionGroupIF)
 	{
-		foreach ( void delegate(string, ActionGroupIF) dlg ; actionGroupIF.onActionAddedListeners )
+		foreach ( void delegate(string, ActionGroupIF) dlg ; _actionGroupIF.onActionAddedListeners )
 		{
-			dlg(Str.toString(actionName), actionGroupIF);
+			dlg(Str.toString(actionName), _actionGroupIF);
 		}
 	}
 	
@@ -162,11 +163,11 @@ public template ActionGroupT(TStruct)
 		}
 		_onActionEnabledChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionEnabledChanged(GActionGroup* actionGroupStruct, gchar* actionName, gboolean enabled, ActionGroupIF actionGroupIF)
+	extern(C) static void callBackActionEnabledChanged(GActionGroup* actionGroupStruct, gchar* actionName, gboolean enabled, ActionGroupIF _actionGroupIF)
 	{
-		foreach ( void delegate(string, gboolean, ActionGroupIF) dlg ; actionGroupIF.onActionEnabledChangedListeners )
+		foreach ( void delegate(string, gboolean, ActionGroupIF) dlg ; _actionGroupIF.onActionEnabledChangedListeners )
 		{
-			dlg(Str.toString(actionName), enabled, actionGroupIF);
+			dlg(Str.toString(actionName), enabled, _actionGroupIF);
 		}
 	}
 	
@@ -196,11 +197,11 @@ public template ActionGroupT(TStruct)
 		}
 		_onActionRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionRemoved(GActionGroup* actionGroupStruct, gchar* actionName, ActionGroupIF actionGroupIF)
+	extern(C) static void callBackActionRemoved(GActionGroup* actionGroupStruct, gchar* actionName, ActionGroupIF _actionGroupIF)
 	{
-		foreach ( void delegate(string, ActionGroupIF) dlg ; actionGroupIF.onActionRemovedListeners )
+		foreach ( void delegate(string, ActionGroupIF) dlg ; _actionGroupIF.onActionRemovedListeners )
 		{
-			dlg(Str.toString(actionName), actionGroupIF);
+			dlg(Str.toString(actionName), _actionGroupIF);
 		}
 	}
 	
@@ -228,11 +229,11 @@ public template ActionGroupT(TStruct)
 		}
 		_onActionStateChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionStateChanged(GActionGroup* actionGroupStruct, gchar* actionName, GVariant* value, ActionGroupIF actionGroupIF)
+	extern(C) static void callBackActionStateChanged(GActionGroup* actionGroupStruct, gchar* actionName, GVariant* value, ActionGroupIF _actionGroupIF)
 	{
-		foreach ( void delegate(string, Variant, ActionGroupIF) dlg ; actionGroupIF.onActionStateChangedListeners )
+		foreach ( void delegate(string, Variant, ActionGroupIF) dlg ; _actionGroupIF.onActionStateChangedListeners )
 		{
-			dlg(Str.toString(actionName), new Variant(value), actionGroupIF);
+			dlg(Str.toString(actionName), ObjectG.getDObject!Variant(value), _actionGroupIF);
 		}
 	}
 	
@@ -298,11 +299,13 @@ public template ActionGroupT(TStruct)
 	{
 		// const GVariantType * g_action_group_get_action_parameter_type  (GActionGroup *action_group,  const gchar *action_name);
 		auto p = g_action_group_get_action_parameter_type(getActionGroupTStruct(), Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new VariantType(cast(GVariantType*) p);
+		
+		return ObjectG.getDObject!VariantType(cast(GVariantType*) p);
 	}
 	
 	/**
@@ -327,11 +330,13 @@ public template ActionGroupT(TStruct)
 	{
 		// const GVariantType * g_action_group_get_action_state_type  (GActionGroup *action_group,  const gchar *action_name);
 		auto p = g_action_group_get_action_state_type(getActionGroupTStruct(), Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new VariantType(cast(GVariantType*) p);
+		
+		return ObjectG.getDObject!VariantType(cast(GVariantType*) p);
 	}
 	
 	/**
@@ -358,11 +363,13 @@ public template ActionGroupT(TStruct)
 	{
 		// GVariant * g_action_group_get_action_state_hint  (GActionGroup *action_group,  const gchar *action_name);
 		auto p = g_action_group_get_action_state_hint(getActionGroupTStruct(), Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -381,11 +388,13 @@ public template ActionGroupT(TStruct)
 	{
 		// GVariant * g_action_group_get_action_state  (GActionGroup *action_group,  const gchar *action_name);
 		auto p = g_action_group_get_action_state(getActionGroupTStruct(), Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**

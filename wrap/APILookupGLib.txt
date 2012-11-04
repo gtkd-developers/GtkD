@@ -1199,7 +1199,7 @@ import: glib.TimeVal
 structWrap: GDateTime* DateTime
 structWrap: GTimeZone* TimeZone
 structWrap: GTimeVal* TimeVal
-structWrap: gconstpointer DateTime
+structWrap: void* DateTime
 
 nocode: g_date_time_new_now_utc
 nocode: g_date_time_new_now_local
@@ -2272,6 +2272,11 @@ code: start
 	 */ 
 	ListG next()
 	{
+		if ( getListGStruct().next is null )
+		{
+			return null;
+		}
+
 		return new ListG(getListGStruct().next);
 	}
 
@@ -2281,6 +2286,11 @@ code: start
 	 */ 
 	ListG previous()
 	{
+		if ( getListGStruct().prev is null )
+		{
+			return null;
+		}
+
 		return new ListG(getListGStruct().prev);
 	}
 code: end
@@ -2296,6 +2306,11 @@ code: start
   	/** */ 
 	void* data()
 	{
+		if ( getListSGStruct().next is null )
+		{
+			return null;
+		}
+
 		return getListSGStruct().data;
 	}
 

@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Adjustment;
@@ -99,18 +100,6 @@ public class HScrollbar : Scrollbar
 	 */
 	public this (GtkHScrollbar* gtkHScrollbar)
 	{
-		if(gtkHScrollbar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkHScrollbar);
-		if( ptr !is null )
-		{
-			this = cast(HScrollbar)ptr;
-			return;
-		}
 		super(cast(GtkScrollbar*)gtkHScrollbar);
 		this.gtkHScrollbar = gtkHScrollbar;
 	}

@@ -65,6 +65,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -121,18 +122,6 @@ public class Plugin : ObjectGst
 	 */
 	public this (GstPlugin* gstPlugin)
 	{
-		if(gstPlugin is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstPlugin);
-		if( ptr !is null )
-		{
-			this = cast(Plugin)ptr;
-			return;
-		}
 		super(cast(GstObject*)gstPlugin);
 		this.gstPlugin = gstPlugin;
 	}
@@ -245,11 +234,13 @@ public class Plugin : ObjectGst
 	{
 		// GModule* gst_plugin_get_module (GstPlugin *plugin);
 		auto p = gst_plugin_get_module(gstPlugin);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Module(cast(GModule*) p);
+		
+		return ObjectG.getDObject!Module(cast(GModule*) p);
 	}
 	
 	/**
@@ -294,11 +285,13 @@ public class Plugin : ObjectGst
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Plugin(cast(GstPlugin*) p);
+		
+		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**
@@ -309,11 +302,13 @@ public class Plugin : ObjectGst
 	{
 		// GstPlugin* gst_plugin_load (GstPlugin *plugin);
 		auto p = gst_plugin_load(gstPlugin);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Plugin(cast(GstPlugin*) p);
+		
+		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**
@@ -326,11 +321,13 @@ public class Plugin : ObjectGst
 	{
 		// GstPlugin* gst_plugin_load_by_name (const gchar *name);
 		auto p = gst_plugin_load_by_name(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Plugin(cast(GstPlugin*) p);
+		
+		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**

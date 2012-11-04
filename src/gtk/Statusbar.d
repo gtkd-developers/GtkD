@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -120,18 +121,6 @@ public class Statusbar : HBox
 	 */
 	public this (GtkStatusbar* gtkStatusbar)
 	{
-		if(gtkStatusbar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkStatusbar);
-		if( ptr !is null )
-		{
-			this = cast(Statusbar)ptr;
-			return;
-		}
 		super(cast(GtkHBox*)gtkStatusbar);
 		this.gtkStatusbar = gtkStatusbar;
 	}
@@ -165,11 +154,11 @@ public class Statusbar : HBox
 		}
 		onTextPoppedListeners ~= dlg;
 	}
-	extern(C) static void callBackTextPopped(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar statusbar)
+	extern(C) static void callBackTextPopped(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar _statusbar)
 	{
-		foreach ( void delegate(guint, string, Statusbar) dlg ; statusbar.onTextPoppedListeners )
+		foreach ( void delegate(guint, string, Statusbar) dlg ; _statusbar.onTextPoppedListeners )
 		{
-			dlg(contextId, Str.toString(text), statusbar);
+			dlg(contextId, Str.toString(text), _statusbar);
 		}
 	}
 	
@@ -192,11 +181,11 @@ public class Statusbar : HBox
 		}
 		onTextPushedListeners ~= dlg;
 	}
-	extern(C) static void callBackTextPushed(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar statusbar)
+	extern(C) static void callBackTextPushed(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar _statusbar)
 	{
-		foreach ( void delegate(guint, string, Statusbar) dlg ; statusbar.onTextPushedListeners )
+		foreach ( void delegate(guint, string, Statusbar) dlg ; _statusbar.onTextPushedListeners )
 		{
-			dlg(contextId, Str.toString(text), statusbar);
+			dlg(contextId, Str.toString(text), _statusbar);
 		}
 	}
 	
@@ -317,10 +306,12 @@ public class Statusbar : HBox
 	{
 		// GtkWidget * gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
 		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

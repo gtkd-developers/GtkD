@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -135,18 +136,6 @@ public class IconFactory : ObjectG
 	 */
 	public this (GtkIconFactory* gtkIconFactory)
 	{
-		if(gtkIconFactory is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkIconFactory);
-		if( ptr !is null )
-		{
-			this = cast(IconFactory)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkIconFactory);
 		this.gtkIconFactory = gtkIconFactory;
 	}
@@ -209,11 +198,13 @@ public class IconFactory : ObjectG
 	{
 		// GtkIconSet* gtk_icon_factory_lookup (GtkIconFactory *factory,  const gchar *stock_id);
 		auto p = gtk_icon_factory_lookup(gtkIconFactory, Str.toStringz(stockId));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconSet(cast(GtkIconSet*) p);
+		
+		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -230,11 +221,13 @@ public class IconFactory : ObjectG
 	{
 		// GtkIconSet* gtk_icon_factory_lookup_default (const gchar *stock_id);
 		auto p = gtk_icon_factory_lookup_default(Str.toStringz(stockId));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconSet(cast(GtkIconSet*) p);
+		
+		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
 	}
 	
 	/**

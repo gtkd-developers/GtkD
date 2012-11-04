@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -92,18 +93,6 @@ public class ProxyAddress : InetSocketAddress
 	 */
 	public this (GProxyAddress* gProxyAddress)
 	{
-		if(gProxyAddress is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gProxyAddress);
-		if( ptr !is null )
-		{
-			this = cast(ProxyAddress)ptr;
-			return;
-		}
 		super(cast(GInetSocketAddress*)gProxyAddress);
 		this.gProxyAddress = gProxyAddress;
 	}

@@ -72,6 +72,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -157,18 +158,6 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 */
 	public this (GtkComboBox* gtkComboBox)
 	{
-		if(gtkComboBox is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkComboBox);
-		if( ptr !is null )
-		{
-			this = cast(ComboBox)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkComboBox);
 		this.gtkComboBox = gtkComboBox;
 	}
@@ -317,11 +306,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkComboBox* widgetStruct, ComboBox comboBox)
+	extern(C) static void callBackChanged(GtkComboBox* widgetStruct, ComboBox _comboBox)
 	{
-		foreach ( void delegate(ComboBox) dlg ; comboBox.onChangedListeners )
+		foreach ( void delegate(ComboBox) dlg ; _comboBox.onChangedListeners )
 		{
-			dlg(comboBox);
+			dlg(_comboBox);
 		}
 	}
 	
@@ -347,11 +336,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onMoveActiveListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveActive(GtkComboBox* widgetStruct, GtkScrollType scrollType, ComboBox comboBox)
+	extern(C) static void callBackMoveActive(GtkComboBox* widgetStruct, GtkScrollType scrollType, ComboBox _comboBox)
 	{
-		foreach ( void delegate(GtkScrollType, ComboBox) dlg ; comboBox.onMoveActiveListeners )
+		foreach ( void delegate(GtkScrollType, ComboBox) dlg ; _comboBox.onMoveActiveListeners )
 		{
-			dlg(scrollType, comboBox);
+			dlg(scrollType, _comboBox);
 		}
 	}
 	
@@ -378,11 +367,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onPopdownListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPopdown(GtkComboBox* buttonStruct, ComboBox comboBox)
+	extern(C) static gboolean callBackPopdown(GtkComboBox* buttonStruct, ComboBox _comboBox)
 	{
-		foreach ( bool delegate(ComboBox) dlg ; comboBox.onPopdownListeners )
+		foreach ( bool delegate(ComboBox) dlg ; _comboBox.onPopdownListeners )
 		{
-			if ( dlg(comboBox) )
+			if ( dlg(_comboBox) )
 			{
 				return 1;
 			}
@@ -416,11 +405,11 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 		onPopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopup(GtkComboBox* widgetStruct, ComboBox comboBox)
+	extern(C) static void callBackPopup(GtkComboBox* widgetStruct, ComboBox _comboBox)
 	{
-		foreach ( void delegate(ComboBox) dlg ; comboBox.onPopupListeners )
+		foreach ( void delegate(ComboBox) dlg ; _comboBox.onPopupListeners )
 		{
-			dlg(comboBox);
+			dlg(_comboBox);
 		}
 	}
 	
@@ -598,11 +587,13 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	{
 		// GtkTreeModel * gtk_combo_box_get_model (GtkComboBox *combo_box);
 		auto p = gtk_combo_box_get_model(gtkComboBox);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -741,11 +732,13 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	{
 		// AtkObject * gtk_combo_box_get_popup_accessible (GtkComboBox *combo_box);
 		auto p = gtk_combo_box_get_popup_accessible(gtkComboBox);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

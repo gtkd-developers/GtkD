@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -106,18 +107,6 @@ public class DBusMessage : ObjectG
 	 */
 	public this (GDBusMessage* gDBusMessage)
 	{
-		if(gDBusMessage is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusMessage);
-		if( ptr !is null )
-		{
-			this = cast(DBusMessage)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusMessage);
 		this.gDBusMessage = gDBusMessage;
 	}
@@ -308,11 +297,13 @@ public class DBusMessage : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusMessage(cast(GDBusMessage*) p);
+		
+		return ObjectG.getDObject!DBusMessage(cast(GDBusMessage*) p);
 	}
 	
 	/**
@@ -415,11 +406,13 @@ public class DBusMessage : ObjectG
 	{
 		// GVariant * g_dbus_message_get_body (GDBusMessage *message);
 		auto p = g_dbus_message_get_body(gDBusMessage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -445,11 +438,13 @@ public class DBusMessage : ObjectG
 	{
 		// GUnixFDList * g_dbus_message_get_unix_fd_list (GDBusMessage *message);
 		auto p = g_dbus_message_get_unix_fd_list(gDBusMessage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new UnixFDList(cast(GUnixFDList*) p);
+		
+		return ObjectG.getDObject!UnixFDList(cast(GUnixFDList*) p);
 	}
 	
 	/**
@@ -513,11 +508,13 @@ public class DBusMessage : ObjectG
 	{
 		// GVariant * g_dbus_message_get_header (GDBusMessage *message,  GDBusMessageHeaderField header_field);
 		auto p = g_dbus_message_get_header(gDBusMessage, headerField);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -751,6 +748,12 @@ public class DBusMessage : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. outSize];
 	}
 	
@@ -827,7 +830,7 @@ public class DBusMessage : ObjectG
 		
 		auto p = g_dbus_message_to_gerror(gDBusMessage, &outerror);
 		
-		error = new ErrorG(outerror);
+		error = ObjectG.getDObject!ErrorG(outerror);
 		return p;
 	}
 }

@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -107,18 +108,6 @@ public class Frame : Bin
 	 */
 	public this (GtkFrame* gtkFrame)
 	{
-		if(gtkFrame is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFrame);
-		if( ptr !is null )
-		{
-			this = cast(Frame)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkFrame);
 		this.gtkFrame = gtkFrame;
 	}
@@ -250,11 +239,13 @@ public class Frame : Bin
 	{
 		// GtkWidget * gtk_frame_get_label_widget (GtkFrame *frame);
 		auto p = gtk_frame_get_label_widget(gtkFrame);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

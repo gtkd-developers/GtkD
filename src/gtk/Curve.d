@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -101,18 +102,6 @@ public class Curve : DrawingArea
 	 */
 	public this (GtkCurve* gtkCurve)
 	{
-		if(gtkCurve is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCurve);
-		if( ptr !is null )
-		{
-			this = cast(Curve)ptr;
-			return;
-		}
 		super(cast(GtkDrawingArea*)gtkCurve);
 		this.gtkCurve = gtkCurve;
 	}
@@ -152,11 +141,11 @@ public class Curve : DrawingArea
 		}
 		onCurveTypeChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackCurveTypeChanged(GtkCurve* curveStruct, Curve curve)
+	extern(C) static void callBackCurveTypeChanged(GtkCurve* curveStruct, Curve _curve)
 	{
-		foreach ( void delegate(Curve) dlg ; curve.onCurveTypeChangedListeners )
+		foreach ( void delegate(Curve) dlg ; _curve.onCurveTypeChangedListeners )
 		{
-			dlg(curve);
+			dlg(_curve);
 		}
 	}
 	

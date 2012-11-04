@@ -120,11 +120,6 @@ public class HashTable
 	 */
 	public this (GHashTable* gHashTable)
 	{
-		if(gHashTable is null)
-		{
-			this = null;
-			return;
-		}
 		this.gHashTable = gHashTable;
 	}
 	
@@ -408,10 +403,12 @@ public class HashTable
 	{
 		// GList * g_hash_table_get_keys (GHashTable *hash_table);
 		auto p = g_hash_table_get_keys(gHashTable);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -425,10 +422,12 @@ public class HashTable
 	{
 		// GList * g_hash_table_get_values (GHashTable *hash_table);
 		auto p = g_hash_table_get_values(gHashTable);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -456,10 +455,12 @@ public class HashTable
 	{
 		// GHashTable * g_hash_table_ref (GHashTable *hash_table);
 		auto p = g_hash_table_ref(gHashTable);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new HashTable(cast(GHashTable*) p);
 	}
 	

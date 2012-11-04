@@ -832,7 +832,14 @@ code: start
 
 	public static DesktopAppInfo createFromFilename(string filename)
 	{
-		return new DesktopAppInfo(g_desktop_app_info_new_from_filename(Str.toStringz(filename)));
+		auto p = g_desktop_app_info_new_from_filename(Str.toStringz(filename));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_desktop_app_info_new_from_filename");
+		}
+
+		return new DesktopAppInfo(p);
 	}
 code: end
 outFile: DesktopAppInfo

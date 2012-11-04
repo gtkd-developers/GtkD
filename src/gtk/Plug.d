@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -106,18 +107,6 @@ public class Plug : Window
 	 */
 	public this (GtkPlug* gtkPlug)
 	{
-		if(gtkPlug is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPlug);
-		if( ptr !is null )
-		{
-			this = cast(Plug)ptr;
-			return;
-		}
 		super(cast(GtkWindow*)gtkPlug);
 		this.gtkPlug = gtkPlug;
 	}
@@ -153,11 +142,11 @@ public class Plug : Window
 		}
 		onEmbeddedListeners ~= dlg;
 	}
-	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, Plug plug)
+	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, Plug _plug)
 	{
-		foreach ( void delegate(Plug) dlg ; plug.onEmbeddedListeners )
+		foreach ( void delegate(Plug) dlg ; _plug.onEmbeddedListeners )
 		{
-			dlg(plug);
+			dlg(_plug);
 		}
 	}
 	

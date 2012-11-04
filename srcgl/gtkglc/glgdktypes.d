@@ -280,4 +280,4 @@ public struct GdkGLWindow{}
 /*
  */
 // void (*GdkGLProc) (void);
-public alias extern(C) void  function () GdkGLProc;
+public alias extern(C) void function() GdkGLProc;

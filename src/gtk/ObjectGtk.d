@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -147,18 +148,6 @@ public class ObjectGtk : ObjectG
 	 */
 	public this (GtkObject* gtkObject)
 	{
-		if(gtkObject is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkObject);
-		if( ptr !is null )
-		{
-			this = cast(ObjectGtk)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkObject);
 		this.gtkObject = gtkObject;
 	}
@@ -202,11 +191,11 @@ public class ObjectGtk : ObjectG
 		}
 		onDestroyListeners ~= dlg;
 	}
-	extern(C) static void callBackDestroy(GtkObject* objectStruct, ObjectGtk objectGtk)
+	extern(C) static void callBackDestroy(GtkObject* objectStruct, ObjectGtk _objectGtk)
 	{
-		foreach ( void delegate(ObjectGtk) dlg ; objectGtk.onDestroyListeners )
+		foreach ( void delegate(ObjectGtk) dlg ; _objectGtk.onDestroyListeners )
 		{
-			dlg(objectGtk);
+			dlg(_objectGtk);
 		}
 	}
 	

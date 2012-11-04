@@ -110,11 +110,6 @@ public class Node
 	 */
 	public this (GNode* gNode)
 	{
-		if(gNode is null)
-		{
-			this = null;
-			return;
-		}
 		this.gNode = gNode;
 	}
 	
@@ -148,10 +143,12 @@ public class Node
 	{
 		// GNode * g_node_copy (GNode *node);
 		auto p = g_node_copy(gNode);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -168,10 +165,12 @@ public class Node
 	{
 		// GNode * g_node_copy_deep (GNode *node,  GCopyFunc copy_func,  gpointer data);
 		auto p = g_node_copy_deep(gNode, copyFunc, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -187,10 +186,12 @@ public class Node
 	{
 		// GNode *	 g_node_insert (GNode *parent,  gint position,  GNode *node);
 		auto p = g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -206,10 +207,12 @@ public class Node
 	{
 		// GNode *	 g_node_insert_before (GNode *parent,  GNode *sibling,  GNode *node);
 		auto p = g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -225,10 +228,12 @@ public class Node
 	{
 		// GNode * g_node_insert_after (GNode *parent,  GNode *sibling,  GNode *node);
 		auto p = g_node_insert_after(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -242,10 +247,12 @@ public class Node
 	{
 		// GNode *	 g_node_prepend (GNode *parent,  GNode *node);
 		auto p = g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -304,10 +311,12 @@ public class Node
 	{
 		// GNode *	 g_node_get_root (GNode *node);
 		auto p = g_node_get_root(gNode);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -325,10 +334,12 @@ public class Node
 	{
 		// GNode *	 g_node_find (GNode *root,  GTraverseType order,  GTraverseFlags flags,  gpointer data);
 		auto p = g_node_find(gNode, order, flags, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -344,10 +355,12 @@ public class Node
 	{
 		// GNode *	 g_node_find_child (GNode *node,  GTraverseFlags flags,  gpointer data);
 		auto p = g_node_find_child(gNode, flags, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -386,10 +399,12 @@ public class Node
 	{
 		// GNode *	 g_node_last_child (GNode *node);
 		auto p = g_node_last_child(gNode);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -405,10 +420,12 @@ public class Node
 	{
 		// GNode *	 g_node_nth_child (GNode *node,  guint n);
 		auto p = g_node_nth_child(gNode, n);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -421,10 +438,12 @@ public class Node
 	{
 		// GNode *	 g_node_first_sibling (GNode *node);
 		auto p = g_node_first_sibling(gNode);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	
@@ -437,10 +456,12 @@ public class Node
 	{
 		// GNode *	 g_node_last_sibling (GNode *node);
 		auto p = g_node_last_sibling(gNode);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Node(cast(GNode*) p);
 	}
 	

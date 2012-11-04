@@ -311,10 +311,12 @@ public class Timeout
 	{
 		// GSource * g_timeout_source_new (guint interval);
 		auto p = g_timeout_source_new(interval);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	
@@ -334,10 +336,12 @@ public class Timeout
 	{
 		// GSource * g_timeout_source_new_seconds (guint interval);
 		auto p = g_timeout_source_new_seconds(interval);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	

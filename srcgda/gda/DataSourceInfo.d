@@ -57,6 +57,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ListG;
@@ -95,11 +96,6 @@ public class DataSourceInfo
 	 */
 	public this (GdaDataSourceInfo* gdaDataSourceInfo)
 	{
-		if(gdaDataSourceInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaDataSourceInfo = gdaDataSourceInfo;
 	}
 	
@@ -108,28 +104,28 @@ public class DataSourceInfo
 		this.gdaDataSourceInfo = cast(GdaDataSourceInfo *) glist.data;
 	}
 	/** */
-string name() { return Str.toString(this.gdaDataSourceInfo.name); }
-/** */
-string provider() { return Str.toString(this.gdaDataSourceInfo.provider); }
-/** */
-string cncString() { return Str.toString(this.gdaDataSourceInfo.cncString); }
-/** */
-string description() { return Str.toString(this.gdaDataSourceInfo.description); }
-/** */
-string username() { return Str.toString(this.gdaDataSourceInfo.username); }
-/** */
-string password() { return Str.toString(this.gdaDataSourceInfo.password); }
-
-
-/**
- */
-
-/**
- * Returns:
- */
-public static GType infoGetType()
-{
-	// GType gda_data_source_info_get_type (void);
-	return gda_data_source_info_get_type();
-}
+	string name() { return Str.toString(this.gdaDataSourceInfo.name); }
+	/** */
+	string provider() { return Str.toString(this.gdaDataSourceInfo.provider); }
+	/** */
+	string cncString() { return Str.toString(this.gdaDataSourceInfo.cncString); }
+	/** */
+	string description() { return Str.toString(this.gdaDataSourceInfo.description); }
+	/** */
+	string username() { return Str.toString(this.gdaDataSourceInfo.username); }
+	/** */
+	string password() { return Str.toString(this.gdaDataSourceInfo.password); }
+	
+	
+	/**
+	 */
+	
+	/**
+	 * Returns:
+	 */
+	public static GType infoGetType()
+	{
+		// GType gda_data_source_info_get_type (void);
+		return gda_data_source_info_get_type();
+	}
 }

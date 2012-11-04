@@ -61,6 +61,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -106,18 +107,6 @@ public class UnixConnection : SocketConnection
 	 */
 	public this (GUnixConnection* gUnixConnection)
 	{
-		if(gUnixConnection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gUnixConnection);
-		if( ptr !is null )
-		{
-			this = cast(UnixConnection)ptr;
-			return;
-		}
 		super(cast(GSocketConnection*)gUnixConnection);
 		this.gUnixConnection = gUnixConnection;
 	}
@@ -215,11 +204,13 @@ public class UnixConnection : SocketConnection
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Credentials(cast(GCredentials*) p);
+		
+		return ObjectG.getDObject!Credentials(cast(GCredentials*) p);
 	}
 	
 	/**

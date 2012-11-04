@@ -74,6 +74,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -250,18 +251,6 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public this (GtkUIManager* gtkUIManager)
 	{
-		if(gtkUIManager is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkUIManager);
-		if( ptr !is null )
-		{
-			this = cast(UIManager)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkUIManager);
 		this.gtkUIManager = gtkUIManager;
 	}
@@ -300,11 +289,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onActionsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackActionsChanged(GtkUIManager* mergeStruct, UIManager uIManager)
+	extern(C) static void callBackActionsChanged(GtkUIManager* mergeStruct, UIManager _uIManager)
 	{
-		foreach ( void delegate(UIManager) dlg ; uIManager.onActionsChangedListeners )
+		foreach ( void delegate(UIManager) dlg ; _uIManager.onActionsChangedListeners )
 		{
-			dlg(uIManager);
+			dlg(_uIManager);
 		}
 	}
 	
@@ -330,11 +319,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onAddWidgetListeners ~= dlg;
 	}
-	extern(C) static void callBackAddWidget(GtkUIManager* mergeStruct, GtkWidget* widget, UIManager uIManager)
+	extern(C) static void callBackAddWidget(GtkUIManager* mergeStruct, GtkWidget* widget, UIManager _uIManager)
 	{
-		foreach ( void delegate(Widget, UIManager) dlg ; uIManager.onAddWidgetListeners )
+		foreach ( void delegate(Widget, UIManager) dlg ; _uIManager.onAddWidgetListeners )
 		{
-			dlg(new Widget(widget), uIManager);
+			dlg(ObjectG.getDObject!Widget(widget), _uIManager);
 		}
 	}
 	
@@ -362,11 +351,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onConnectProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackConnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager uIManager)
+	extern(C) static void callBackConnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager _uIManager)
 	{
-		foreach ( void delegate(Action, Widget, UIManager) dlg ; uIManager.onConnectProxyListeners )
+		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onConnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), uIManager);
+			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _uIManager);
 		}
 	}
 	
@@ -391,11 +380,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onDisconnectProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackDisconnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager uIManager)
+	extern(C) static void callBackDisconnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager _uIManager)
 	{
-		foreach ( void delegate(Action, Widget, UIManager) dlg ; uIManager.onDisconnectProxyListeners )
+		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onDisconnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), uIManager);
+			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _uIManager);
 		}
 	}
 	
@@ -422,11 +411,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onPostActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackPostActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager uIManager)
+	extern(C) static void callBackPostActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager _uIManager)
 	{
-		foreach ( void delegate(Action, UIManager) dlg ; uIManager.onPostActivateListeners )
+		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPostActivateListeners )
 		{
-			dlg(new Action(action), uIManager);
+			dlg(ObjectG.getDObject!Action(action), _uIManager);
 		}
 	}
 	
@@ -455,11 +444,11 @@ public class UIManager : ObjectG, BuildableIF
 		}
 		onPreActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackPreActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager uIManager)
+	extern(C) static void callBackPreActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager _uIManager)
 	{
-		foreach ( void delegate(Action, UIManager) dlg ; uIManager.onPreActivateListeners )
+		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPreActivateListeners )
 		{
-			dlg(new Action(action), uIManager);
+			dlg(ObjectG.getDObject!Action(action), _uIManager);
 		}
 	}
 	
@@ -544,11 +533,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GList * gtk_ui_manager_get_action_groups (GtkUIManager *self);
 		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -560,11 +551,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GtkAccelGroup * gtk_ui_manager_get_accel_group (GtkUIManager *self);
 		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AccelGroup(cast(GtkAccelGroup*) p);
+		
+		return ObjectG.getDObject!AccelGroup(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -588,11 +581,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GtkWidget * gtk_ui_manager_get_widget (GtkUIManager *self,  const gchar *path);
 		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -608,11 +603,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GSList * gtk_ui_manager_get_toplevels (GtkUIManager *self,  GtkUIManagerItemType types);
 		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -627,11 +624,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GtkAction * gtk_ui_manager_get_action (GtkUIManager *self,  const gchar *path);
 		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Action(cast(GtkAction*) p);
+		
+		return ObjectG.getDObject!Action(cast(GtkAction*) p);
 	}
 	
 	/**

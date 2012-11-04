@@ -56,6 +56,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -88,11 +89,6 @@ public class PgItem
 	 */
 	public this (PangoItem* pangoItem)
 	{
-		if(pangoItem is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoItem = pangoItem;
 	}
 	

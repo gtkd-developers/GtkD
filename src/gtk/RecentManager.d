@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -127,18 +128,6 @@ public class RecentManager : ObjectG
 	 */
 	public this (GtkRecentManager* gtkRecentManager)
 	{
-		if(gtkRecentManager is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRecentManager);
-		if( ptr !is null )
-		{
-			this = cast(RecentManager)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkRecentManager);
 		this.gtkRecentManager = gtkRecentManager;
 	}
@@ -174,11 +163,11 @@ public class RecentManager : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkRecentManager* recentManagerStruct, RecentManager recentManager)
+	extern(C) static void callBackChanged(GtkRecentManager* recentManagerStruct, RecentManager _recentManager)
 	{
-		foreach ( void delegate(RecentManager) dlg ; recentManager.onChangedListeners )
+		foreach ( void delegate(RecentManager) dlg ; _recentManager.onChangedListeners )
 		{
-			dlg(recentManager);
+			dlg(_recentManager);
 		}
 	}
 	
@@ -215,11 +204,13 @@ public class RecentManager : ObjectG
 	{
 		// GtkRecentManager * gtk_recent_manager_get_default (void);
 		auto p = gtk_recent_manager_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RecentManager(cast(GtkRecentManager*) p);
+		
+		return ObjectG.getDObject!RecentManager(cast(GtkRecentManager*) p);
 	}
 	
 	/**
@@ -244,11 +235,13 @@ public class RecentManager : ObjectG
 	{
 		// GtkRecentManager * gtk_recent_manager_get_for_screen (GdkScreen *screen);
 		auto p = gtk_recent_manager_get_for_screen((screen is null) ? null : screen.getScreenStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RecentManager(cast(GtkRecentManager*) p);
+		
+		return ObjectG.getDObject!RecentManager(cast(GtkRecentManager*) p);
 	}
 	
 	/**
@@ -363,11 +356,13 @@ public class RecentManager : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RecentInfo(cast(GtkRecentInfo*) p);
+		
+		return ObjectG.getDObject!RecentInfo(cast(GtkRecentInfo*) p);
 	}
 	
 	/**
@@ -454,11 +449,13 @@ public class RecentManager : ObjectG
 	{
 		// GList * gtk_recent_manager_get_items (GtkRecentManager *manager);
 		auto p = gtk_recent_manager_get_items(gtkRecentManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

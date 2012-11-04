@@ -57,6 +57,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -102,11 +103,6 @@ public class Rectangle
 	 */
 	public this (GdkRectangle* gdkRectangle)
 	{
-		if(gdkRectangle is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkRectangle = gdkRectangle;
 	}
 	

@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -126,18 +127,6 @@ public class InfoBar : HBox
 	 */
 	public this (GtkInfoBar* gtkInfoBar)
 	{
-		if(gtkInfoBar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkInfoBar);
-		if( ptr !is null )
-		{
-			this = cast(InfoBar)ptr;
-			return;
-		}
 		super(cast(GtkHBox*)gtkInfoBar);
 		this.gtkInfoBar = gtkInfoBar;
 	}
@@ -254,11 +243,11 @@ public class InfoBar : HBox
 		}
 		onCloseListeners ~= dlg;
 	}
-	extern(C) static void callBackClose(GtkInfoBar* arg0Struct, InfoBar infoBar)
+	extern(C) static void callBackClose(GtkInfoBar* arg0Struct, InfoBar _infoBar)
 	{
-		foreach ( void delegate(InfoBar) dlg ; infoBar.onCloseListeners )
+		foreach ( void delegate(InfoBar) dlg ; _infoBar.onCloseListeners )
 		{
-			dlg(infoBar);
+			dlg(_infoBar);
 		}
 	}
 	
@@ -286,11 +275,11 @@ public class InfoBar : HBox
 		}
 		onResponseListeners ~= dlg;
 	}
-	extern(C) static void callBackResponse(GtkInfoBar* infoBarStruct, gint responseId, InfoBar infoBar)
+	extern(C) static void callBackResponse(GtkInfoBar* infoBarStruct, gint responseId, InfoBar _infoBar)
 	{
-		foreach ( void delegate(gint, InfoBar) dlg ; infoBar.onResponseListeners )
+		foreach ( void delegate(gint, InfoBar) dlg ; _infoBar.onResponseListeners )
 		{
-			dlg(responseId, infoBar);
+			dlg(responseId, _infoBar);
 		}
 	}
 	
@@ -343,11 +332,13 @@ public class InfoBar : HBox
 	{
 		// GtkWidget * gtk_info_bar_add_button (GtkInfoBar *info_bar,  const gchar *button_text,  gint response_id);
 		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(buttonText), responseId);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

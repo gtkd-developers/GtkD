@@ -57,6 +57,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.Credentials;
@@ -102,18 +103,6 @@ public class UnixCredentialsMessage : SocketControlMessage
 	 */
 	public this (GUnixCredentialsMessage* gUnixCredentialsMessage)
 	{
-		if(gUnixCredentialsMessage is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gUnixCredentialsMessage);
-		if( ptr !is null )
-		{
-			this = cast(UnixCredentialsMessage)ptr;
-			return;
-		}
 		super(cast(GSocketControlMessage*)gUnixCredentialsMessage);
 		this.gUnixCredentialsMessage = gUnixCredentialsMessage;
 	}
@@ -170,11 +159,13 @@ public class UnixCredentialsMessage : SocketControlMessage
 	{
 		// GCredentials * g_unix_credentials_message_get_credentials  (GUnixCredentialsMessage *message);
 		auto p = g_unix_credentials_message_get_credentials(gUnixCredentialsMessage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Credentials(cast(GCredentials*) p);
+		
+		return ObjectG.getDObject!Credentials(cast(GCredentials*) p);
 	}
 	
 	/**

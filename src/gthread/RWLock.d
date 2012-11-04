@@ -135,11 +135,6 @@ public class RWLock
 	 */
 	public this (GStaticRWLock* gStaticRWLock)
 	{
-		if(gStaticRWLock is null)
-		{
-			this = null;
-			return;
-		}
 		this.gStaticRWLock = gStaticRWLock;
 	}
 	

@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -135,18 +136,6 @@ public class Box : Container, OrientableIF
 	 */
 	public this (GtkBox* gtkBox)
 	{
-		if(gtkBox is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkBox);
-		if( ptr !is null )
-		{
-			this = cast(Box)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkBox);
 		this.gtkBox = gtkBox;
 	}

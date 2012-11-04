@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -178,11 +179,6 @@ public class TreeIter
 	 */
 	public this (GtkTreeIter* gtkTreeIter)
 	{
-		if(gtkTreeIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTreeIter = gtkTreeIter;
 	}
 	
@@ -545,11 +541,13 @@ public class TreeIter
 	{
 		// GtkTreeIter * gtk_tree_iter_copy (GtkTreeIter *iter);
 		auto p = gtk_tree_iter_copy(gtkTreeIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeIter(cast(GtkTreeIter*) p);
+		
+		return ObjectG.getDObject!TreeIter(cast(GtkTreeIter*) p);
 	}
 	
 	/**

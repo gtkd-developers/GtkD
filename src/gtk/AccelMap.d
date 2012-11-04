@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -100,18 +101,6 @@ public class AccelMap : ObjectG
 	 */
 	public this (GtkAccelMap* gtkAccelMap)
 	{
-		if(gtkAccelMap is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAccelMap);
-		if( ptr !is null )
-		{
-			this = cast(AccelMap)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkAccelMap);
 		this.gtkAccelMap = gtkAccelMap;
 	}
@@ -149,11 +138,11 @@ public class AccelMap : ObjectG
 		}
 		onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GtkAccelMap* objectStruct, gchar* accelPath, guint accelKey, GdkModifierType accelMods, AccelMap accelMap)
+	extern(C) static void callBackChanged(GtkAccelMap* objectStruct, gchar* accelPath, guint accelKey, GdkModifierType accelMods, AccelMap _accelMap)
 	{
-		foreach ( void delegate(string, guint, GdkModifierType, AccelMap) dlg ; accelMap.onChangedListeners )
+		foreach ( void delegate(string, guint, GdkModifierType, AccelMap) dlg ; _accelMap.onChangedListeners )
 		{
-			dlg(Str.toString(accelPath), accelKey, accelMods, accelMap);
+			dlg(Str.toString(accelPath), accelKey, accelMods, _accelMap);
 		}
 	}
 	
@@ -343,11 +332,13 @@ public class AccelMap : ObjectG
 	{
 		// GtkAccelMap * gtk_accel_map_get (void);
 		auto p = gtk_accel_map_get();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AccelMap(cast(GtkAccelMap*) p);
+		
+		return ObjectG.getDObject!AccelMap(cast(GtkAccelMap*) p);
 	}
 	
 	/**

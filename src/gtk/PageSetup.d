@@ -64,6 +64,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -119,18 +120,6 @@ public class PageSetup : ObjectG
 	 */
 	public this (GtkPageSetup* gtkPageSetup)
 	{
-		if(gtkPageSetup is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPageSetup);
-		if( ptr !is null )
-		{
-			this = cast(PageSetup)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkPageSetup);
 		this.gtkPageSetup = gtkPageSetup;
 	}
@@ -169,11 +158,13 @@ public class PageSetup : ObjectG
 	{
 		// GtkPageSetup * gtk_page_setup_copy (GtkPageSetup *other);
 		auto p = gtk_page_setup_copy(gtkPageSetup);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PageSetup(cast(GtkPageSetup*) p);
+		
+		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
 	}
 	
 	/**
@@ -208,11 +199,13 @@ public class PageSetup : ObjectG
 	{
 		// GtkPaperSize * gtk_page_setup_get_paper_size (GtkPageSetup *setup);
 		auto p = gtk_page_setup_get_paper_size(gtkPageSetup);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PaperSize(cast(GtkPaperSize*) p);
+		
+		return ObjectG.getDObject!PaperSize(cast(GtkPaperSize*) p);
 	}
 	
 	/**

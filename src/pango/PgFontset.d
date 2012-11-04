@@ -60,6 +60,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import pango.PgFont;
@@ -102,18 +103,6 @@ public class PgFontset : ObjectG
 	 */
 	public this (PangoFontset* pangoFontset)
 	{
-		if(pangoFontset is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoFontset);
-		if( ptr !is null )
-		{
-			this = cast(PgFontset)ptr;
-			return;
-		}
 		super(cast(GObject*)pangoFontset);
 		this.pangoFontset = pangoFontset;
 	}
@@ -138,11 +127,13 @@ public class PgFontset : ObjectG
 	{
 		// PangoFont * pango_fontset_get_font (PangoFontset *fontset,  guint wc);
 		auto p = pango_fontset_get_font(pangoFontset, wc);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFont(cast(PangoFont*) p);
+		
+		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -153,11 +144,13 @@ public class PgFontset : ObjectG
 	{
 		// PangoFontMetrics * pango_fontset_get_metrics (PangoFontset *fontset);
 		auto p = pango_fontset_get_metrics(pangoFontset);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontMetrics(cast(PangoFontMetrics*) p);
+		
+		return ObjectG.getDObject!PgFontMetrics(cast(PangoFontMetrics*) p);
 	}
 	
 	/**

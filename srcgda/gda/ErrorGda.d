@@ -58,6 +58,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -94,18 +95,6 @@ public class ErrorGda : ObjectG
 	 */
 	public this (GdaError* gdaError)
 	{
-		if(gdaError is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaError);
-		if( ptr !is null )
-		{
-			this = cast(ErrorGda)ptr;
-			return;
-		}
 		super(cast(GObject*)gdaError);
 		this.gdaError = gdaError;
 	}
@@ -159,11 +148,13 @@ public class ErrorGda : ObjectG
 	{
 		// GList* gda_error_list_copy (const GList *errors);
 		auto p = gda_error_list_copy((errors is null) ? null : errors.getListGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

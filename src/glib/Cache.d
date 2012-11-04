@@ -96,11 +96,6 @@ public class Cache
 	 */
 	public this (GCache* gCache)
 	{
-		if(gCache is null)
-		{
-			this = null;
-			return;
-		}
 		this.gCache = gCache;
 	}
 	

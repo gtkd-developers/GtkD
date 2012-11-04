@@ -91,6 +91,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -155,18 +156,6 @@ public class Drawable : ObjectG
 	 */
 	public this (GdkDrawable* gdkDrawable)
 	{
-		if(gdkDrawable is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkDrawable);
-		if( ptr !is null )
-		{
-			this = cast(Drawable)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkDrawable);
 		this.gdkDrawable = gdkDrawable;
 	}
@@ -241,11 +230,13 @@ public class Drawable : ObjectG
 	{
 		// GdkDisplay * gdk_drawable_get_display (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_display(gdkDrawable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -259,11 +250,13 @@ public class Drawable : ObjectG
 	{
 		// GdkScreen * gdk_drawable_get_screen (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_screen(gdkDrawable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -276,11 +269,13 @@ public class Drawable : ObjectG
 	{
 		// GdkVisual * gdk_drawable_get_visual (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_visual(gdkDrawable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -310,11 +305,13 @@ public class Drawable : ObjectG
 	{
 		// GdkColormap * gdk_drawable_get_colormap (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_colormap(gdkDrawable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Colormap(cast(GdkColormap*) p);
+		
+		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -361,11 +358,13 @@ public class Drawable : ObjectG
 	{
 		// GdkRegion * gdk_drawable_get_clip_region (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_clip_region(gdkDrawable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(GdkRegion*) p);
+		
+		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -379,11 +378,13 @@ public class Drawable : ObjectG
 	{
 		// GdkRegion * gdk_drawable_get_visible_region (GdkDrawable *drawable);
 		auto p = gdk_drawable_get_visible_region(gdkDrawable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(GdkRegion*) p);
+		
+		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -894,11 +895,13 @@ public class Drawable : ObjectG
 	{
 		// GdkImage * gdk_drawable_get_image (GdkDrawable *drawable,  gint x,  gint y,  gint width,  gint height);
 		auto p = gdk_drawable_get_image(gdkDrawable, x, y, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ImageGdk(cast(GdkImage*) p);
+		
+		return ObjectG.getDObject!ImageGdk(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -923,10 +926,12 @@ public class Drawable : ObjectG
 	{
 		// GdkImage * gdk_drawable_copy_to_image (GdkDrawable *drawable,  GdkImage *image,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height);
 		auto p = gdk_drawable_copy_to_image(gdkDrawable, (image is null) ? null : image.getImageGdkStruct(), srcX, srcY, destX, destY, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ImageGdk(cast(GdkImage*) p);
+		
+		return ObjectG.getDObject!ImageGdk(cast(GdkImage*) p);
 	}
 }

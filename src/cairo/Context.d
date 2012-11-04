@@ -138,11 +138,6 @@ public class Context
 	 */
 	public this (cairo_t* cairo)
 	{
-		if(cairo is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo = cairo;
 	}
 	
@@ -368,10 +363,12 @@ public class Context
 	{
 		// cairo_t * cairo_create (cairo_surface_t *target);
 		auto p = cairo_create((target is null) ? null : target.getSurfaceStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Context(cast(cairo_t*) p);
 	}
 	
@@ -387,10 +384,12 @@ public class Context
 	{
 		// cairo_t * cairo_reference (cairo_t *cr);
 		auto p = cairo_reference(cairo);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Context(cast(cairo_t*) p);
 	}
 	
@@ -447,10 +446,12 @@ public class Context
 	{
 		// cairo_surface_t * cairo_get_target (cairo_t *cr);
 		auto p = cairo_get_target(cairo);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
@@ -521,10 +522,12 @@ public class Context
 	{
 		// cairo_pattern_t * cairo_pop_group (cairo_t *cr);
 		auto p = cairo_pop_group(cairo);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
@@ -558,10 +561,12 @@ public class Context
 	{
 		// cairo_surface_t * cairo_get_group_target (cairo_t *cr);
 		auto p = cairo_get_group_target(cairo);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
@@ -660,10 +665,12 @@ public class Context
 	{
 		// cairo_pattern_t * cairo_get_source (cairo_t *cr);
 		auto p = cairo_get_source(cairo);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
@@ -2076,10 +2083,12 @@ public class Context
 	{
 		// cairo_font_face_t * cairo_get_font_face (cairo_t *cr);
 		auto p = cairo_get_font_face(cairo);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new FontFace(cast(cairo_font_face_t*) p);
 	}
 	
@@ -2108,10 +2117,12 @@ public class Context
 	{
 		// cairo_scaled_font_t * cairo_get_scaled_font (cairo_t *cr);
 		auto p = cairo_get_scaled_font(cairo);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 	
@@ -2263,10 +2274,12 @@ public class Context
 	{
 		// cairo_font_face_t * cairo_toy_font_face_create (const char *family,  cairo_font_slant_t slant,  cairo_font_weight_t weight);
 		auto p = cairo_toy_font_face_create(Str.toStringz(family), slant, weight);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new FontFace(cast(cairo_font_face_t*) p);
 	}
 	

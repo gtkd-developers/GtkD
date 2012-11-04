@@ -75,6 +75,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -209,11 +210,13 @@ public class Main
 	{
 		// PangoLanguage * gtk_get_default_language (void);
 		auto p = gtk_get_default_language();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLanguage(cast(PangoLanguage*) p);
+		
+		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -482,11 +485,13 @@ public class Main
 	{
 		// GtkWidget * gtk_grab_get_current (void);
 		auto p = gtk_grab_get_current();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -669,11 +674,13 @@ public class Main
 	{
 		// GdkEvent * gtk_get_current_event (void);
 		auto p = gtk_get_current_event();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Event(cast(GdkEvent*) p);
+		
+		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -713,11 +720,13 @@ public class Main
 	{
 		// GtkWidget * gtk_get_event_widget (GdkEvent *event);
 		auto p = gtk_get_event_widget((event is null) ? null : event.getEventStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

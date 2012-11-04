@@ -62,6 +62,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -100,11 +101,6 @@ public class Parameter
 	 */
 	public this (GdaParameter* gdaParameter)
 	{
-		if(gdaParameter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaParameter = gdaParameter;
 	}
 	
@@ -219,11 +215,13 @@ public class Parameter
 	{
 		// GdaParameter* gda_parameter_copy (GdaParameter *param);
 		auto p = gda_parameter_copy(gdaParameter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Parameter(cast(GdaParameter*) p);
+		
+		return ObjectG.getDObject!Parameter(cast(GdaParameter*) p);
 	}
 	
 	/**
@@ -262,11 +260,13 @@ public class Parameter
 	{
 		// const GdaValue* gda_parameter_get_value (GdaParameter *param);
 		auto p = gda_parameter_get_value(gdaParameter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GdaValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GdaValue*) p);
 	}
 	
 	/**

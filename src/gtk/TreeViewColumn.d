@@ -79,6 +79,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -131,18 +132,6 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	 */
 	public this (GtkTreeViewColumn* gtkTreeViewColumn)
 	{
-		if(gtkTreeViewColumn is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeViewColumn);
-		if( ptr !is null )
-		{
-			this = cast(TreeViewColumn)ptr;
-			return;
-		}
 		super(cast(GtkObject*)gtkTreeViewColumn);
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}
@@ -206,11 +195,11 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 		}
 		onClickedListeners ~= dlg;
 	}
-	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, TreeViewColumn treeViewColumn)
+	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, TreeViewColumn _treeViewColumn)
 	{
-		foreach ( void delegate(TreeViewColumn) dlg ; treeViewColumn.onClickedListeners )
+		foreach ( void delegate(TreeViewColumn) dlg ; _treeViewColumn.onClickedListeners )
 		{
-			dlg(treeViewColumn);
+			dlg(_treeViewColumn);
 		}
 	}
 	
@@ -241,11 +230,13 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	{
 		// GList * gtk_tree_view_column_get_cell_renderers  (GtkTreeViewColumn *tree_column);
 		auto p = gtk_tree_view_column_get_cell_renderers(gtkTreeViewColumn);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -539,11 +530,13 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	{
 		// GtkWidget * gtk_tree_view_column_get_widget (GtkTreeViewColumn *tree_column);
 		auto p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -766,10 +759,12 @@ public class TreeViewColumn : ObjectGtk, CellLayoutIF
 	{
 		// GtkWidget * gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
 		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

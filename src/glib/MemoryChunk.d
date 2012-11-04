@@ -128,11 +128,6 @@ public class MemoryChunk
 	 */
 	public this (GMemChunk* gMemChunk)
 	{
-		if(gMemChunk is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMemChunk = gMemChunk;
 	}
 	

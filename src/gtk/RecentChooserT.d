@@ -70,6 +70,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -137,11 +138,11 @@ public template RecentChooserT(TStruct)
 		}
 		_onItemActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackItemActivated(GtkRecentChooser* chooserStruct, RecentChooserIF recentChooserIF)
+	extern(C) static void callBackItemActivated(GtkRecentChooser* chooserStruct, RecentChooserIF _recentChooserIF)
 	{
-		foreach ( void delegate(RecentChooserIF) dlg ; recentChooserIF.onItemActivatedListeners )
+		foreach ( void delegate(RecentChooserIF) dlg ; _recentChooserIF.onItemActivatedListeners )
 		{
-			dlg(recentChooserIF);
+			dlg(_recentChooserIF);
 		}
 	}
 	
@@ -175,11 +176,11 @@ public template RecentChooserT(TStruct)
 		}
 		_onSelectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionChanged(GtkRecentChooser* chooserStruct, RecentChooserIF recentChooserIF)
+	extern(C) static void callBackSelectionChanged(GtkRecentChooser* chooserStruct, RecentChooserIF _recentChooserIF)
 	{
-		foreach ( void delegate(RecentChooserIF) dlg ; recentChooserIF.onSelectionChangedListeners )
+		foreach ( void delegate(RecentChooserIF) dlg ; _recentChooserIF.onSelectionChangedListeners )
 		{
-			dlg(recentChooserIF);
+			dlg(_recentChooserIF);
 		}
 	}
 	
@@ -472,11 +473,13 @@ public template RecentChooserT(TStruct)
 	{
 		// GtkRecentInfo * gtk_recent_chooser_get_current_item (GtkRecentChooser *chooser);
 		auto p = gtk_recent_chooser_get_current_item(getRecentChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RecentInfo(cast(GtkRecentInfo*) p);
+		
+		return ObjectG.getDObject!RecentInfo(cast(GtkRecentInfo*) p);
 	}
 	
 	/**
@@ -546,11 +549,13 @@ public template RecentChooserT(TStruct)
 	{
 		// GList * gtk_recent_chooser_get_items (GtkRecentChooser *chooser);
 		auto p = gtk_recent_chooser_get_items(getRecentChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -611,11 +616,13 @@ public template RecentChooserT(TStruct)
 	{
 		// GSList * gtk_recent_chooser_list_filters (GtkRecentChooser *chooser);
 		auto p = gtk_recent_chooser_list_filters(getRecentChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -641,10 +648,12 @@ public template RecentChooserT(TStruct)
 	{
 		// GtkRecentFilter * gtk_recent_chooser_get_filter (GtkRecentChooser *chooser);
 		auto p = gtk_recent_chooser_get_filter(getRecentChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RecentFilter(cast(GtkRecentFilter*) p);
+		
+		return ObjectG.getDObject!RecentFilter(cast(GtkRecentFilter*) p);
 	}
 }

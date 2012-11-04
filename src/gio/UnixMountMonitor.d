@@ -55,6 +55,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -95,18 +96,6 @@ public class UnixMountMonitor : ObjectG
 	 */
 	public this (GUnixMountMonitor* gUnixMountMonitor)
 	{
-		if(gUnixMountMonitor is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gUnixMountMonitor);
-		if( ptr !is null )
-		{
-			this = cast(UnixMountMonitor)ptr;
-			return;
-		}
 		super(cast(GObject*)gUnixMountMonitor);
 		this.gUnixMountMonitor = gUnixMountMonitor;
 	}
@@ -140,11 +129,11 @@ public class UnixMountMonitor : ObjectG
 		}
 		onMountpointsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackMountpointsChanged(GUnixMountMonitor* monitorStruct, UnixMountMonitor unixMountMonitor)
+	extern(C) static void callBackMountpointsChanged(GUnixMountMonitor* monitorStruct, UnixMountMonitor _unixMountMonitor)
 	{
-		foreach ( void delegate(UnixMountMonitor) dlg ; unixMountMonitor.onMountpointsChangedListeners )
+		foreach ( void delegate(UnixMountMonitor) dlg ; _unixMountMonitor.onMountpointsChangedListeners )
 		{
-			dlg(unixMountMonitor);
+			dlg(_unixMountMonitor);
 		}
 	}
 	
@@ -167,11 +156,11 @@ public class UnixMountMonitor : ObjectG
 		}
 		onMountsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackMountsChanged(GUnixMountMonitor* monitorStruct, UnixMountMonitor unixMountMonitor)
+	extern(C) static void callBackMountsChanged(GUnixMountMonitor* monitorStruct, UnixMountMonitor _unixMountMonitor)
 	{
-		foreach ( void delegate(UnixMountMonitor) dlg ; unixMountMonitor.onMountsChangedListeners )
+		foreach ( void delegate(UnixMountMonitor) dlg ; _unixMountMonitor.onMountsChangedListeners )
 		{
-			dlg(unixMountMonitor);
+			dlg(_unixMountMonitor);
 		}
 	}
 	

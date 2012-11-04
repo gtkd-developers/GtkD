@@ -61,6 +61,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -99,18 +100,6 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 */
 	public this (GtkSourceCompletionItem* gtkSourceCompletionItem)
 	{
-		if(gtkSourceCompletionItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceCompletionItem);
-		if( ptr !is null )
-		{
-			this = cast(SourceCompletionItem)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceCompletionItem);
 		this.gtkSourceCompletionItem = gtkSourceCompletionItem;
 	}

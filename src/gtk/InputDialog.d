@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -108,18 +109,6 @@ public class InputDialog : Dialog
 	 */
 	public this (GtkInputDialog* gtkInputDialog)
 	{
-		if(gtkInputDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkInputDialog);
-		if( ptr !is null )
-		{
-			this = cast(InputDialog)ptr;
-			return;
-		}
 		super(cast(GtkDialog*)gtkInputDialog);
 		this.gtkInputDialog = gtkInputDialog;
 	}
@@ -132,20 +121,6 @@ public class InputDialog : Dialog
 	
 	Button getCloseButton()
 	{
-		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
-		//	184, 188, 192, 196, 200, 204, 208, 212, 216,
-		//	224];
-		
-		//foreach(i; arr)
-		//{
-			//	int* pt2 =cast(int*)getStruct();
-			//	pt2+=i/4;
-			//	printf("*pt+%d=%X\n", i, *pt2);
-			
-			//	Widget wg = new Widget(cast(GtkWidget*)(*pt2));
-			//	Stdout(wg.getName()).newline;
-		//}
-		
 		int* pt =cast(int*)getStruct();
 		pt += 172/4;
 		return new Button(cast(GtkButton*)(*pt));
@@ -153,20 +128,6 @@ public class InputDialog : Dialog
 	
 	Button getSaveButton()
 	{
-		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
-		//	184, 188, 192, 196, 200, 204, 208, 212, 216,
-		//	224];
-		
-		//foreach(i; arr)
-		//{
-			//	int* pt2 =cast(int*)getStruct();
-			//	pt2+=i/4;
-			//	printf("*pt+%d=%X\n", i, *pt2);
-			
-			//	Widget wg = new Widget(cast(GtkWidget*)(*pt2));
-			//	Stdout(wg.getName()).newline;
-		//}
-		
 		int* pt =cast(int*)getStruct();
 		pt += 176/4;
 		return new Button(cast(GtkButton*)(*pt));
@@ -197,11 +158,11 @@ public class InputDialog : Dialog
 		}
 		onDisableDeviceListeners ~= dlg;
 	}
-	extern(C) static void callBackDisableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* arg1, InputDialog inputDialog)
+	extern(C) static void callBackDisableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* arg1, InputDialog _inputDialog)
 	{
-		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; inputDialog.onDisableDeviceListeners )
+		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; _inputDialog.onDisableDeviceListeners )
 		{
-			dlg(arg1, inputDialog);
+			dlg(arg1, _inputDialog);
 		}
 	}
 	
@@ -226,11 +187,11 @@ public class InputDialog : Dialog
 		}
 		onEnableDeviceListeners ~= dlg;
 	}
-	extern(C) static void callBackEnableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* arg1, InputDialog inputDialog)
+	extern(C) static void callBackEnableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* arg1, InputDialog _inputDialog)
 	{
-		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; inputDialog.onEnableDeviceListeners )
+		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; _inputDialog.onEnableDeviceListeners )
 		{
-			dlg(arg1, inputDialog);
+			dlg(arg1, _inputDialog);
 		}
 	}
 	

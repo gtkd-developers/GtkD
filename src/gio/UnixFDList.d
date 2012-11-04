@@ -57,6 +57,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -101,18 +102,6 @@ public class UnixFDList : ObjectG
 	 */
 	public this (GUnixFDList* gUnixFDList)
 	{
-		if(gUnixFDList is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gUnixFDList);
-		if( ptr !is null )
-		{
-			this = cast(UnixFDList)ptr;
-			return;
-		}
 		super(cast(GObject*)gUnixFDList);
 		this.gUnixFDList = gUnixFDList;
 	}
@@ -227,6 +216,12 @@ public class UnixFDList : ObjectG
 		// const gint * g_unix_fd_list_peek_fds (GUnixFDList *list,  gint *length);
 		int length;
 		auto p = g_unix_fd_list_peek_fds(gUnixFDList, &length);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. length];
 	}
 	
@@ -253,6 +248,12 @@ public class UnixFDList : ObjectG
 		// gint * g_unix_fd_list_steal_fds (GUnixFDList *list,  gint *length);
 		int length;
 		auto p = g_unix_fd_list_steal_fds(gUnixFDList, &length);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. length];
 	}
 	

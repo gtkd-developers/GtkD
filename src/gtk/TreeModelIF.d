@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -229,7 +230,7 @@ public interface TreeModelIF
 	 * then fill it with the desired values.
 	 */
 	void addOnRowInserted(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(TreePath, TreeIter, gpointer, TreeModelIF)[] onRowsReorderedListeners();
+	void delegate(TreePath, TreeIter, void*, TreeModelIF)[] onRowsReorderedListeners();
 	/**
 	 * This signal is emitted when the children of a node in the GtkTreeModel
 	 * have been reordered.
@@ -241,7 +242,7 @@ public interface TreeModelIF
 	 * [4]
 	 * Here, iter is short for “iterator”
 	 */
-	void addOnRowsReordered(void delegate(TreePath, TreeIter, gpointer, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void addOnRowsReordered(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
 	 * Returns a set of flags supported by this interface. The flags are a bitwise

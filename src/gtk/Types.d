@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -93,11 +94,6 @@ public class Types
 	 */
 	public this (GtkType* gtkType)
 	{
-		if(gtkType is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkType = gtkType;
 	}
 	

@@ -60,6 +60,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -102,11 +103,6 @@ public class Iterator
 	 */
 	public this (GstIterator* gstIterator)
 	{
-		if(gstIterator is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstIterator = gstIterator;
 	}
 	
@@ -229,11 +225,13 @@ public class Iterator
 	{
 		// GstIterator* gst_iterator_filter (GstIterator *it,  GCompareFunc func,  gpointer user_data);
 		auto p = gst_iterator_filter(gstIterator, func, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**

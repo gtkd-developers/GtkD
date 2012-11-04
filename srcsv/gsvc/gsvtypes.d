@@ -130,13 +130,13 @@ public struct GtkSourceView{}
 public struct GtkSourceViewClass
 {
 	GtkTextViewClass parentClass;
-	extern(C) void  function(GtkSourceView *view) undo;
-	extern(C) void  function(GtkSourceView *view) redo;
-	extern(C) void  function(GtkSourceView *view, GtkTextIter *iter,GdkEvent *event) lineMarkActivated;
-	extern(C) void  function(GtkSourceView *view) showCompletion;
-	extern(C) void  function(GtkSourceView *view,int copy,int step) moveLines;
+	extern(C) void function(GtkSourceView* view) undo;
+	extern(C) void function(GtkSourceView* view) redo;
+	extern(C) void function(GtkSourceView* view, GtkTextIter* iter, GdkEvent* event) lineMarkActivated;
+	extern(C) void function(GtkSourceView* view) showCompletion;
+	extern(C) void function(GtkSourceView* view, int copy, int step) moveLines;
 	/+* Padding for future expansion +/
-	extern(C) void  function() _GtkSourceReserved1;
+	extern(C) void function() _GtkSourceReserved1;
 }
 
 
@@ -150,13 +150,13 @@ public struct GtkSourceBufferClass
 {
 	GtkTextBufferClass parentClass;
 	/+* Signals +/
-	extern(C) void  function(GtkSourceBuffer *buffer) undo;
-	extern(C) void  function(GtkSourceBuffer *buffer) redo;
+	extern(C) void function(GtkSourceBuffer* buffer) undo;
+	extern(C) void function(GtkSourceBuffer* buffer) redo;
 	/+* Padding for future expansion +/
-	extern(C) void  function() _GtkSourceReserved1;
-	extern(C) void  function() _GtkSourceReserved2;
-	extern(C) void  function() _GtkSourceReserved3;
-	extern(C) void  function() _GtkSourceReserved4;
+	extern(C) void function() _GtkSourceReserved1;
+	extern(C) void function() _GtkSourceReserved2;
+	extern(C) void function() _GtkSourceReserved3;
+	extern(C) void function() _GtkSourceReserved4;
 }
 
 
@@ -254,14 +254,14 @@ public struct GtkSourceStyleSchemeManager{}
  *  a newly-allocated string that is going to be shown as tooltip text.
  */
 // gchar * (*GtkSourceViewMarkTooltipFunc) (GtkSourceMark *mark,  gpointer user_data);
-public alias extern(C) char *  function (GtkSourceMark*, void*) GtkSourceViewMarkTooltipFunc;
+public alias extern(C) char * function(GtkSourceMark* mark, void* userData) GtkSourceViewMarkTooltipFunc;
 
 /*
  */
 // void (*GtkSourceGutterDataFunc) (GtkSourceGutter *gutter,  GtkCellRenderer *cell,  gint line_number,  gboolean current_line,  gpointer data);
-public alias extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, int, int, void*) GtkSourceGutterDataFunc;
+public alias extern(C) void function(GtkSourceGutter* gutter, GtkCellRenderer* cell, int lineNumber, int currentLine, void* data) GtkSourceGutterDataFunc;
 
 /*
  */
 // void (*GtkSourceGutterSizeFunc) (GtkSourceGutter *gutter,  GtkCellRenderer *cell,  gpointer data);
-public alias extern(C) void  function (GtkSourceGutter*, GtkCellRenderer*, void*) GtkSourceGutterSizeFunc;
+public alias extern(C) void function(GtkSourceGutter* gutter, GtkCellRenderer* cell, void* data) GtkSourceGutterSizeFunc;

@@ -116,11 +116,6 @@ public class Tuples
 	 */
 	public this (GTuples* gTuples)
 	{
-		if(gTuples is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTuples = gTuples;
 	}
 	

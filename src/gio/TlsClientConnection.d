@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -108,18 +109,6 @@ public class TlsClientConnection : TlsConnection
 	 */
 	public this (GTlsClientConnection* gTlsClientConnection)
 	{
-		if(gTlsClientConnection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gTlsClientConnection);
-		if( ptr !is null )
-		{
-			this = cast(TlsClientConnection)ptr;
-			return;
-		}
 		super(cast(GTlsConnection*)gTlsClientConnection);
 		this.gTlsClientConnection = gTlsClientConnection;
 	}
@@ -187,11 +176,13 @@ public class TlsClientConnection : TlsConnection
 	{
 		// GSocketConnectable * g_tls_client_connection_get_server_identity  (GTlsClientConnection *conn);
 		auto p = g_tls_client_connection_get_server_identity(gTlsClientConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnectable(cast(GSocketConnectable*) p);
+		
+		return ObjectG.getDObject!SocketConnectable(cast(GSocketConnectable*) p);
 	}
 	
 	/**
@@ -262,10 +253,12 @@ public class TlsClientConnection : TlsConnection
 	{
 		// GList * g_tls_client_connection_get_accepted_cas  (GTlsClientConnection *conn);
 		auto p = g_tls_client_connection_get_accepted_cas(gTlsClientConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 }

@@ -57,6 +57,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.InetAddress;
@@ -94,18 +95,6 @@ public class InetSocketAddress : SocketAddress
 	 */
 	public this (GInetSocketAddress* gInetSocketAddress)
 	{
-		if(gInetSocketAddress is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gInetSocketAddress);
-		if( ptr !is null )
-		{
-			this = cast(InetSocketAddress)ptr;
-			return;
-		}
 		super(cast(GSocketAddress*)gInetSocketAddress);
 		this.gInetSocketAddress = gInetSocketAddress;
 	}
@@ -147,11 +136,13 @@ public class InetSocketAddress : SocketAddress
 	{
 		// GInetAddress * g_inet_socket_address_get_address (GInetSocketAddress *address);
 		auto p = g_inet_socket_address_get_address(gInetSocketAddress);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new InetAddress(cast(GInetAddress*) p);
+		
+		return ObjectG.getDObject!InetAddress(cast(GInetAddress*) p);
 	}
 	
 	/**

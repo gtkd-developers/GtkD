@@ -105,11 +105,6 @@ public class PtrArray
 	 */
 	public this (GPtrArray* gPtrArray)
 	{
-		if(gPtrArray is null)
-		{
-			this = null;
-			return;
-		}
 		this.gPtrArray = gPtrArray;
 	}
 	
@@ -144,10 +139,12 @@ public class PtrArray
 	{
 		// GPtrArray * g_ptr_array_sized_new (guint reserved_size);
 		auto p = g_ptr_array_sized_new(reservedSize);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new PtrArray(cast(GPtrArray*) p);
 	}
 	
@@ -196,10 +193,12 @@ public class PtrArray
 	{
 		// GPtrArray * g_ptr_array_ref (GPtrArray *array);
 		auto p = g_ptr_array_ref(gPtrArray);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new PtrArray(cast(GPtrArray*) p);
 	}
 	

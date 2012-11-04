@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -102,18 +103,6 @@ public class Alignment : Bin
 	 */
 	public this (GtkAlignment* gtkAlignment)
 	{
-		if(gtkAlignment is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAlignment);
-		if( ptr !is null )
-		{
-			this = cast(Alignment)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkAlignment);
 		this.gtkAlignment = gtkAlignment;
 	}

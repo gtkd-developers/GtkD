@@ -70,6 +70,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -128,11 +129,6 @@ public class Event
 	 */
 	public this (GstEvent* gstEvent)
 	{
-		if(gstEvent is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstEvent = gstEvent;
 	}
 	
@@ -224,11 +220,13 @@ public class Event
 	{
 		// const GstStructure* gst_event_get_structure (GstEvent *event);
 		auto p = gst_event_get_structure(gstEvent);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -561,7 +559,7 @@ public class Event
 		
 		gst_event_parse_tag(gstEvent, &outtaglist);
 		
-		taglist = new TagList(outtaglist);
+		taglist = ObjectG.getDObject!TagList(outtaglist);
 	}
 	
 	/**
@@ -572,11 +570,13 @@ public class Event
 	{
 		// GstEvent* gst_event_ref (GstEvent *event);
 		auto p = gst_event_ref(gstEvent);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Event(cast(GstEvent*) p);
+		
+		return ObjectG.getDObject!Event(cast(GstEvent*) p);
 	}
 	
 	/**

@@ -67,6 +67,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -112,11 +113,6 @@ public class Query
 	 */
 	public this (GstQuery* gstQuery)
 	{
-		if(gstQuery is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstQuery = gstQuery;
 	}
 	
@@ -271,11 +267,13 @@ public class Query
 	{
 		// GstIterator* gst_query_type_iterate_definitions (void);
 		auto p = gst_query_type_iterate_definitions();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -305,11 +303,13 @@ public class Query
 	{
 		// GstStructure* gst_query_get_structure (GstQuery *query);
 		auto p = gst_query_get_structure(gstQuery);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**

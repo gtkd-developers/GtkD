@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -188,18 +189,6 @@ public class Container : Widget
 	 */
 	public this (GtkContainer* gtkContainer)
 	{
-		if(gtkContainer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkContainer);
-		if( ptr !is null )
-		{
-			this = cast(Container)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkContainer);
 		this.gtkContainer = gtkContainer;
 	}
@@ -248,11 +237,11 @@ public class Container : Widget
 		}
 		onAddListeners ~= dlg;
 	}
-	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* widget, Container container)
+	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* widget, Container _container)
 	{
-		foreach ( void delegate(Widget, Container) dlg ; container.onAddListeners )
+		foreach ( void delegate(Widget, Container) dlg ; _container.onAddListeners )
 		{
-			dlg(new Widget(widget), container);
+			dlg(ObjectG.getDObject!Widget(widget), _container);
 		}
 	}
 	
@@ -274,11 +263,11 @@ public class Container : Widget
 		}
 		onCheckResizeListeners ~= dlg;
 	}
-	extern(C) static void callBackCheckResize(GtkContainer* containerStruct, Container container)
+	extern(C) static void callBackCheckResize(GtkContainer* containerStruct, Container _container)
 	{
-		foreach ( void delegate(Container) dlg ; container.onCheckResizeListeners )
+		foreach ( void delegate(Container) dlg ; _container.onCheckResizeListeners )
 		{
-			dlg(container);
+			dlg(_container);
 		}
 	}
 	
@@ -300,11 +289,11 @@ public class Container : Widget
 		}
 		onRemoveListeners ~= dlg;
 	}
-	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* widget, Container container)
+	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* widget, Container _container)
 	{
-		foreach ( void delegate(Widget, Container) dlg ; container.onRemoveListeners )
+		foreach ( void delegate(Widget, Container) dlg ; _container.onRemoveListeners )
 		{
-			dlg(new Widget(widget), container);
+			dlg(ObjectG.getDObject!Widget(widget), _container);
 		}
 	}
 	
@@ -326,11 +315,11 @@ public class Container : Widget
 		}
 		onSetFocusChildListeners ~= dlg;
 	}
-	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* widget, Container container)
+	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* widget, Container _container)
 	{
-		foreach ( void delegate(Widget, Container) dlg ; container.onSetFocusChildListeners )
+		foreach ( void delegate(Widget, Container) dlg ; _container.onSetFocusChildListeners )
 		{
-			dlg(new Widget(widget), container);
+			dlg(ObjectG.getDObject!Widget(widget), _container);
 		}
 	}
 	
@@ -439,11 +428,13 @@ public class Container : Widget
 	{
 		// GList * gtk_container_get_children (GtkContainer *container);
 		auto p = gtk_container_get_children(gtkContainer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -470,11 +461,13 @@ public class Container : Widget
 	{
 		// GtkWidget * gtk_container_get_focus_child (GtkContainer *container);
 		auto p = gtk_container_get_focus_child(gtkContainer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -502,11 +495,13 @@ public class Container : Widget
 	{
 		// GtkAdjustment * gtk_container_get_focus_vadjustment (GtkContainer *container);
 		auto p = gtk_container_get_focus_vadjustment(gtkContainer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -537,11 +532,13 @@ public class Container : Widget
 	{
 		// GtkAdjustment * gtk_container_get_focus_hadjustment (GtkContainer *container);
 		auto p = gtk_container_get_focus_hadjustment(gtkContainer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -735,7 +732,7 @@ public class Container : Widget
 		
 		auto p = gtk_container_get_focus_chain(gtkContainer, &outfocusableWidgets);
 		
-		focusableWidgets = new ListG(outfocusableWidgets);
+		focusableWidgets = ObjectG.getDObject!ListG(outfocusableWidgets);
 		return p;
 	}
 	
@@ -775,11 +772,13 @@ public class Container : Widget
 	{
 		// GParamSpec * gtk_container_class_find_child_property  (GObjectClass *cclass,  const gchar *property_name);
 		auto p = gtk_container_class_find_child_property(cclass, Str.toStringz(propertyName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -806,6 +805,7 @@ public class Container : Widget
 		// GParamSpec ** gtk_container_class_list_child_properties  (GObjectClass *cclass,  guint *n_properties);
 		uint nProperties;
 		auto p = gtk_container_class_list_child_properties(cclass, &nProperties);
+		
 		if(p is null)
 		{
 			return null;
@@ -814,7 +814,7 @@ public class Container : Widget
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;

@@ -58,6 +58,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -105,11 +106,6 @@ public class Enums
 	 */
 	public this (GEnumValue* gEnumValue)
 	{
-		if(gEnumValue is null)
-		{
-			this = null;
-			return;
-		}
 		this.gEnumValue = gEnumValue;
 	}
 	
@@ -127,11 +123,13 @@ public class Enums
 	{
 		// GEnumValue *	 g_enum_get_value (GEnumClass *enum_class,  gint value);
 		auto p = g_enum_get_value(enumClass, value);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Enums(cast(GEnumValue*) p);
+		
+		return ObjectG.getDObject!Enums(cast(GEnumValue*) p);
 	}
 	
 	/**
@@ -145,11 +143,13 @@ public class Enums
 	{
 		// GEnumValue *	 g_enum_get_value_by_name (GEnumClass *enum_class,  const gchar *name);
 		auto p = g_enum_get_value_by_name(enumClass, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Enums(cast(GEnumValue*) p);
+		
+		return ObjectG.getDObject!Enums(cast(GEnumValue*) p);
 	}
 	
 	/**
@@ -163,11 +163,13 @@ public class Enums
 	{
 		// GEnumValue *	 g_enum_get_value_by_nick (GEnumClass *enum_class,  const gchar *nick);
 		auto p = g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Enums(cast(GEnumValue*) p);
+		
+		return ObjectG.getDObject!Enums(cast(GEnumValue*) p);
 	}
 	
 	/**

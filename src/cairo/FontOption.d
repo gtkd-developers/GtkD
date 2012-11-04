@@ -93,11 +93,6 @@ public class FontOption
 	 */
 	public this (cairo_font_options_t* cairo_font_options)
 	{
-		if(cairo_font_options is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo_font_options = cairo_font_options;
 	}
 	
@@ -113,10 +108,12 @@ public class FontOption
 	{
 		// cairo_font_options_t * cairo_font_options_create (void);
 		auto p = cairo_font_options_create();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new FontOption(cast(cairo_font_options_t*) p);
 	}
 	
@@ -129,10 +126,12 @@ public class FontOption
 	{
 		// cairo_font_options_t * cairo_font_options_copy (const cairo_font_options_t *original);
 		auto p = cairo_font_options_copy(cairo_font_options);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new FontOption(cast(cairo_font_options_t*) p);
 	}
 	

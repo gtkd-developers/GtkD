@@ -106,11 +106,6 @@ public class StringGChunk
 	 */
 	public this (GStringChunk* gStringChunk)
 	{
-		if(gStringChunk is null)
-		{
-			this = null;
-			return;
-		}
 		this.gStringChunk = gStringChunk;
 	}
 	

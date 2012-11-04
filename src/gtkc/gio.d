@@ -1647,7 +1647,7 @@ mixin( gshared ~"extern(C)
 	GFile* function(char* arg) c_g_file_new_for_commandline_arg;
 	GFile* function(char* parseName) c_g_file_parse_name;
 	GFile* function(GFile* file) c_g_file_dup;
-	guint function(gconstpointer file) c_g_file_hash;
+	guint function(void* file) c_g_file_hash;
 	gboolean function(GFile* file1, GFile* file2) c_g_file_equal;
 	char* function(GFile* file) c_g_file_get_basename;
 	char* function(GFile* file) c_g_file_get_path;
@@ -1664,49 +1664,49 @@ mixin( gshared ~"extern(C)
 	gboolean function(GFile* file, char* uriScheme) c_g_file_has_uri_scheme;
 	char* function(GFile* file) c_g_file_get_uri_scheme;
 	GFileInputStream* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_read;
-	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_read_async;
+	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_read_async;
 	GFileInputStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_read_finish;
 	GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_append_to;
 	GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_create;
 	GFileOutputStream* function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_replace;
-	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_append_to_async;
+	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_append_to_async;
 	GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_append_to_finish;
-	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_create_async;
+	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_create_async;
 	GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_create_finish;
-	void function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_replace_async;
+	void function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_replace_async;
 	GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_replace_finish;
 	GFileInfo* function(GFile* file, char* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_query_info;
-	void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_query_info_async;
+	void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_query_info_async;
 	GFileInfo* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_query_info_finish;
 	gboolean function(GFile* file, GCancellable* cancellable) c_g_file_query_exists;
 	GFileType function(GFile* file, GFileQueryInfoFlags flags, GCancellable* cancellable) c_g_file_query_file_type;
 	GFileInfo* function(GFile* file, char* attributes, GCancellable* cancellable, GError** error) c_g_file_query_filesystem_info;
-	void function(GFile* file, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_query_filesystem_info_async;
+	void function(GFile* file, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_query_filesystem_info_async;
 	GFileInfo* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_query_filesystem_info_finish;
 	GAppInfo* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_query_default_handler;
 	GMount* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_find_enclosing_mount;
-	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_find_enclosing_mount_async;
+	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_find_enclosing_mount_async;
 	GMount* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_find_enclosing_mount_finish;
 	GFileEnumerator* function(GFile* file, char* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_enumerate_children;
-	void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_enumerate_children_async;
+	void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_enumerate_children_async;
 	GFileEnumerator* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_enumerate_children_finish;
 	GFile* function(GFile* file, char* displayName, GCancellable* cancellable, GError** error) c_g_file_set_display_name;
-	void function(GFile* file, char* displayName, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_set_display_name_async;
+	void function(GFile* file, char* displayName, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_set_display_name_async;
 	GFile* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_set_display_name_finish;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_delete;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_trash;
-	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GError** error) c_g_file_copy;
-	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GAsyncReadyCallback callback, gpointer userData) c_g_file_copy_async;
+	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** error) c_g_file_copy;
+	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) c_g_file_copy_async;
 	gboolean function(GFile* file, GAsyncResult* res, GError** error) c_g_file_copy_finish;
-	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, gpointer progressCallbackData, GError** error) c_g_file_move;
+	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** error) c_g_file_move;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_make_directory;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_make_directory_with_parents;
 	gboolean function(GFile* file, char* symlinkValue, GCancellable* cancellable, GError** error) c_g_file_make_symbolic_link;
 	GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_query_settable_attributes;
 	GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_query_writable_namespaces;
-	gboolean function(GFile* file, char* attribute, GFileAttributeType type, gpointer valueP, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute;
+	gboolean function(GFile* file, char* attribute, GFileAttributeType type, void* valueP, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute;
 	gboolean function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attributes_from_info;
-	void function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_set_attributes_async;
+	void function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_set_attributes_async;
 	gboolean function(GFile* file, GAsyncResult* result, GFileInfo** info, GError** error) c_g_file_set_attributes_finish;
 	gboolean function(GFile* file, char* attribute, char* value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_string;
 	gboolean function(GFile* file, char* attribute, char* value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_byte_string;
@@ -1714,44 +1714,44 @@ mixin( gshared ~"extern(C)
 	gboolean function(GFile* file, char* attribute, gint32 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_int32;
 	gboolean function(GFile* file, char* attribute, guint64 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_uint64;
 	gboolean function(GFile* file, char* attribute, gint64 value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error) c_g_file_set_attribute_int64;
-	void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_mount_mountable;
+	void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_mount_mountable;
 	GFile* function(GFile* file, GAsyncResult* result, GError** error) c_g_file_mount_mountable_finish;
-	void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_unmount_mountable;
+	void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_unmount_mountable;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_unmount_mountable_finish;
-	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_unmount_mountable_with_operation;
+	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_unmount_mountable_with_operation;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_unmount_mountable_with_operation_finish;
-	void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_eject_mountable;
+	void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_eject_mountable;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_eject_mountable_finish;
-	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_eject_mountable_with_operation;
+	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_eject_mountable_with_operation;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_eject_mountable_with_operation_finish;
-	void function(GFile* file, GDriveStartFlags flags, GMountOperation* startOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_start_mountable;
+	void function(GFile* file, GDriveStartFlags flags, GMountOperation* startOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_start_mountable;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_start_mountable_finish;
-	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_stop_mountable;
+	void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_stop_mountable;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_stop_mountable_finish;
-	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_poll_mountable;
+	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_poll_mountable;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_poll_mountable_finish;
-	void function(GFile* location, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_mount_enclosing_volume;
+	void function(GFile* location, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_mount_enclosing_volume;
 	gboolean function(GFile* location, GAsyncResult* result, GError** error) c_g_file_mount_enclosing_volume_finish;
 	GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error) c_g_file_monitor_directory;
 	GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error) c_g_file_monitor_file;
 	GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error) c_g_file_monitor;
 	gboolean function(GFile* file, GCancellable* cancellable, char** contents, gsize* length, char** etagOut, GError** error) c_g_file_load_contents;
-	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_load_contents_async;
+	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_load_contents_async;
 	gboolean function(GFile* file, GAsyncResult* res, char** contents, gsize* length, char** etagOut, GError** error) c_g_file_load_contents_finish;
-	void function(GFile* file, GCancellable* cancellable, GFileReadMoreCallback readMoreCallback, GAsyncReadyCallback callback, gpointer userData) c_g_file_load_partial_contents_async;
+	void function(GFile* file, GCancellable* cancellable, GFileReadMoreCallback readMoreCallback, GAsyncReadyCallback callback, void* userData) c_g_file_load_partial_contents_async;
 	gboolean function(GFile* file, GAsyncResult* res, char** contents, gsize* length, char** etagOut, GError** error) c_g_file_load_partial_contents_finish;
 	gboolean function(GFile* file, char* contents, gsize length, char* etag, gboolean makeBackup, GFileCreateFlags flags, char** newEtag, GCancellable* cancellable, GError** error) c_g_file_replace_contents;
-	void function(GFile* file, char* contents, gsize length, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_replace_contents_async;
+	void function(GFile* file, char* contents, gsize length, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_replace_contents_async;
 	gboolean function(GFile* file, GAsyncResult* res, char** newEtag, GError** error) c_g_file_replace_contents_finish;
 	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GError** error) c_g_file_copy_attributes;
 	GFileIOStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_create_readwrite;
-	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_create_readwrite_async;
+	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_create_readwrite_async;
 	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_create_readwrite_finish;
 	GFileIOStream* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_open_readwrite;
-	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_open_readwrite_async;
+	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_open_readwrite_async;
 	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_open_readwrite_finish;
 	GFileIOStream* function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** error) c_g_file_replace_readwrite;
-	void function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_replace_readwrite_async;
+	void function(GFile* file, char* etag, gboolean makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_replace_readwrite_async;
 	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_replace_readwrite_finish;
 	gboolean function(GFile* file) c_g_file_supports_thread_contexts;
 
@@ -1775,7 +1775,7 @@ mixin( gshared ~"extern(C)
 	GFileAttributeType function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_type;
 	void function(GFileInfo* info, char* attribute) c_g_file_info_remove_attribute;
 	char* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_as_string;
-	gboolean function(GFileInfo* info, char* attribute, GFileAttributeType* type, gpointer* valuePp, GFileAttributeStatus* status) c_g_file_info_get_attribute_data;
+	gboolean function(GFileInfo* info, char* attribute, GFileAttributeType* type, void** valuePp, GFileAttributeStatus* status) c_g_file_info_get_attribute_data;
 	GFileAttributeStatus function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_status;
 	char* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_string;
 	char** function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_stringv;
@@ -1786,7 +1786,7 @@ mixin( gshared ~"extern(C)
 	guint64 function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_uint64;
 	gint64 function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_int64;
 	GObject* function(GFileInfo* info, char* attribute) c_g_file_info_get_attribute_object;
-	void function(GFileInfo* info, char* attribute, GFileAttributeType type, gpointer valueP) c_g_file_info_set_attribute;
+	void function(GFileInfo* info, char* attribute, GFileAttributeType type, void* valueP) c_g_file_info_set_attribute;
 	gboolean function(GFileInfo* info, char* attribute, GFileAttributeStatus status) c_g_file_info_set_attribute_status;
 	void function(GFileInfo* info, char* attribute, char* attrValue) c_g_file_info_set_attribute_string;
 	void function(GFileInfo* info, char* attribute, char** attrValue) c_g_file_info_set_attribute_stringv;
@@ -1841,9 +1841,9 @@ mixin( gshared ~"extern(C)
 
 	GFileInfo* function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_file_enumerator_next_file;
 	gboolean function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** error) c_g_file_enumerator_close;
-	void function(GFileEnumerator* enumerator, int numFiles, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_enumerator_next_files_async;
+	void function(GFileEnumerator* enumerator, int numFiles, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_enumerator_next_files_async;
 	GList* function(GFileEnumerator* enumerator, GAsyncResult* result, GError** error) c_g_file_enumerator_next_files_finish;
-	void function(GFileEnumerator* enumerator, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_enumerator_close_async;
+	void function(GFileEnumerator* enumerator, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_enumerator_close_async;
 	gboolean function(GFileEnumerator* enumerator, GAsyncResult* result, GError** error) c_g_file_enumerator_close_finish;
 	gboolean function(GFileEnumerator* enumerator) c_g_file_enumerator_is_closed;
 	gboolean function(GFileEnumerator* enumerator) c_g_file_enumerator_has_pending;
@@ -1892,7 +1892,7 @@ mixin( gshared ~"extern(C)
 	void function(GCancellable* cancellable) c_g_cancellable_pop_current;
 	void function(GCancellable* cancellable) c_g_cancellable_push_current;
 	void function(GCancellable* cancellable) c_g_cancellable_reset;
-	gulong function(GCancellable* cancellable, GCallback callback, gpointer data, GDestroyNotify dataDestroyFunc) c_g_cancellable_connect;
+	gulong function(GCancellable* cancellable, GCallback callback, void* data, GDestroyNotify dataDestroyFunc) c_g_cancellable_connect;
 	void function(GCancellable* cancellable, gulong handlerId) c_g_cancellable_disconnect;
 	void function(GCancellable* cancellable) c_g_cancellable_cancel;
 
@@ -1906,25 +1906,25 @@ mixin( gshared ~"extern(C)
 
 	// gio.IOSchedulerJob
 
-	void function(GIOSchedulerJobFunc jobFunc, gpointer userData, GDestroyNotify notify, gint ioPriority, GCancellable* cancellable) c_g_io_scheduler_push_job;
+	void function(GIOSchedulerJobFunc jobFunc, void* userData, GDestroyNotify notify, gint ioPriority, GCancellable* cancellable) c_g_io_scheduler_push_job;
 	void function() c_g_io_scheduler_cancel_all_jobs;
-	gboolean function(GIOSchedulerJob* job, GSourceFunc func, gpointer userData, GDestroyNotify notify) c_g_io_scheduler_job_send_to_mainloop;
-	void function(GIOSchedulerJob* job, GSourceFunc func, gpointer userData, GDestroyNotify notify) c_g_io_scheduler_job_send_to_mainloop_async;
+	gboolean function(GIOSchedulerJob* job, GSourceFunc func, void* userData, GDestroyNotify notify) c_g_io_scheduler_job_send_to_mainloop;
+	void function(GIOSchedulerJob* job, GSourceFunc func, void* userData, GDestroyNotify notify) c_g_io_scheduler_job_send_to_mainloop_async;
 
 	// gio.SimpleAsyncResult
 
-	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, gpointer sourceTag) c_g_simple_async_result_new;
-	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_result_new_error;
-	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_result_new_from_error;
-	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_result_new_take_error;
-	void function(GSimpleAsyncResult* simple, gpointer opRes, GDestroyNotify destroyOpRes) c_g_simple_async_result_set_op_res_gpointer;
+	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, void* userData, void* sourceTag) c_g_simple_async_result_new;
+	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, void* userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_result_new_error;
+	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, void* userData, GError* error) c_g_simple_async_result_new_from_error;
+	GSimpleAsyncResult* function(GObject* sourceObject, GAsyncReadyCallback callback, void* userData, GError* error) c_g_simple_async_result_new_take_error;
+	void function(GSimpleAsyncResult* simple, void* opRes, GDestroyNotify destroyOpRes) c_g_simple_async_result_set_op_res_gpointer;
 	gpointer function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_op_res_gpointer;
 	void function(GSimpleAsyncResult* simple, gssize opRes) c_g_simple_async_result_set_op_res_gssize;
 	gssize function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_op_res_gssize;
 	void function(GSimpleAsyncResult* simple, gboolean opRes) c_g_simple_async_result_set_op_res_gboolean;
 	gboolean function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_op_res_gboolean;
 	gpointer function(GSimpleAsyncResult* simple) c_g_simple_async_result_get_source_tag;
-	gboolean function(GAsyncResult* result, GObject* source, gpointer sourceTag) c_g_simple_async_result_is_valid;
+	gboolean function(GAsyncResult* result, GObject* source, void* sourceTag) c_g_simple_async_result_is_valid;
 	void function(GSimpleAsyncResult* simple, gboolean handleCancellation) c_g_simple_async_result_set_handle_cancellation;
 	void function(GSimpleAsyncResult* simple) c_g_simple_async_result_complete;
 	void function(GSimpleAsyncResult* simple) c_g_simple_async_result_complete_in_idle;
@@ -1934,9 +1934,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GSimpleAsyncResult* simple, GError** dest) c_g_simple_async_result_propagate_error;
 	void function(GSimpleAsyncResult* simple, GQuark domain, gint code, char* format, ... ) c_g_simple_async_result_set_error;
 	void function(GSimpleAsyncResult* simple, GQuark domain, gint code, char* format, va_list args) c_g_simple_async_result_set_error_va;
-	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_report_error_in_idle;
-	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_report_gerror_in_idle;
-	void function(GObject* object, GAsyncReadyCallback callback, gpointer userData, GError* error) c_g_simple_async_report_take_gerror_in_idle;
+	void function(GObject* object, GAsyncReadyCallback callback, void* userData, GQuark domain, gint code, char* format, ... ) c_g_simple_async_report_error_in_idle;
+	void function(GObject* object, GAsyncReadyCallback callback, void* userData, GError* error) c_g_simple_async_report_gerror_in_idle;
+	void function(GObject* object, GAsyncReadyCallback callback, void* userData, GError* error) c_g_simple_async_report_take_gerror_in_idle;
 
 	// gio.ConverterT
 
@@ -1984,11 +1984,11 @@ mixin( gshared ~"extern(C)
 	gboolean function(GInputStream* stream, void* buffer, gsize count, gsize* bytesRead, GCancellable* cancellable, GError** error) c_g_input_stream_read_all;
 	gssize function(GInputStream* stream, gsize count, GCancellable* cancellable, GError** error) c_g_input_stream_skip;
 	gboolean function(GInputStream* stream, GCancellable* cancellable, GError** error) c_g_input_stream_close;
-	void function(GInputStream* stream, void* buffer, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_input_stream_read_async;
+	void function(GInputStream* stream, void* buffer, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_input_stream_read_async;
 	gssize function(GInputStream* stream, GAsyncResult* result, GError** error) c_g_input_stream_read_finish;
-	void function(GInputStream* stream, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_input_stream_skip_async;
+	void function(GInputStream* stream, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_input_stream_skip_async;
 	gssize function(GInputStream* stream, GAsyncResult* result, GError** error) c_g_input_stream_skip_finish;
-	void function(GInputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_input_stream_close_async;
+	void function(GInputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_input_stream_close_async;
 	gboolean function(GInputStream* stream, GAsyncResult* result, GError** error) c_g_input_stream_close_finish;
 	gboolean function(GInputStream* stream) c_g_input_stream_is_closed;
 	gboolean function(GInputStream* stream) c_g_input_stream_has_pending;
@@ -2002,13 +2002,13 @@ mixin( gshared ~"extern(C)
 	gssize function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, GCancellable* cancellable, GError** error) c_g_output_stream_splice;
 	gboolean function(GOutputStream* stream, GCancellable* cancellable, GError** error) c_g_output_stream_flush;
 	gboolean function(GOutputStream* stream, GCancellable* cancellable, GError** error) c_g_output_stream_close;
-	void function(GOutputStream* stream, void* buffer, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_write_async;
+	void function(GOutputStream* stream, void* buffer, gsize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_write_async;
 	gssize function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_write_finish;
-	void function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_splice_async;
+	void function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_splice_async;
 	gssize function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_splice_finish;
-	void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_flush_async;
+	void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_flush_async;
 	gboolean function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_flush_finish;
-	void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_output_stream_close_async;
+	void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_close_async;
 	gboolean function(GOutputStream* stream, GAsyncResult* result, GError** error) c_g_output_stream_close_finish;
 	gboolean function(GOutputStream* stream) c_g_output_stream_is_closing;
 	gboolean function(GOutputStream* stream) c_g_output_stream_is_closed;
@@ -2020,10 +2020,10 @@ mixin( gshared ~"extern(C)
 
 	GInputStream* function(GIOStream* stream) c_g_io_stream_get_input_stream;
 	GOutputStream* function(GIOStream* stream) c_g_io_stream_get_output_stream;
-	void function(GIOStream* stream1, GIOStream* stream2, GIOStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_io_stream_splice_async;
+	void function(GIOStream* stream1, GIOStream* stream2, GIOStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_io_stream_splice_async;
 	gboolean function(GAsyncResult* result, GError** error) c_g_io_stream_splice_finish;
 	gboolean function(GIOStream* stream, GCancellable* cancellable, GError** error) c_g_io_stream_close;
-	void function(GIOStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_io_stream_close_async;
+	void function(GIOStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_io_stream_close_async;
 	gboolean function(GIOStream* stream, GAsyncResult* result, GError** error) c_g_io_stream_close_finish;
 	gboolean function(GIOStream* stream) c_g_io_stream_is_closed;
 	gboolean function(GIOStream* stream) c_g_io_stream_has_pending;
@@ -2033,13 +2033,13 @@ mixin( gshared ~"extern(C)
 	// gio.FileInputStream
 
 	GFileInfo* function(GFileInputStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_input_stream_query_info;
-	void function(GFileInputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_input_stream_query_info_async;
+	void function(GFileInputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_input_stream_query_info_async;
 	GFileInfo* function(GFileInputStream* stream, GAsyncResult* result, GError** error) c_g_file_input_stream_query_info_finish;
 
 	// gio.FileOutputStream
 
 	GFileInfo* function(GFileOutputStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_output_stream_query_info;
-	void function(GFileOutputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_output_stream_query_info_async;
+	void function(GFileOutputStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_output_stream_query_info_async;
 	GFileInfo* function(GFileOutputStream* stream, GAsyncResult* result, GError** error) c_g_file_output_stream_query_info_finish;
 	char* function(GFileOutputStream* stream) c_g_file_output_stream_get_etag;
 
@@ -2047,7 +2047,7 @@ mixin( gshared ~"extern(C)
 
 	char* function(GFileIOStream* stream) c_g_file_io_stream_get_etag;
 	GFileInfo* function(GFileIOStream* stream, char* attributes, GCancellable* cancellable, GError** error) c_g_file_io_stream_query_info;
-	void function(GFileIOStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_file_io_stream_query_info_async;
+	void function(GFileIOStream* stream, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_io_stream_query_info_async;
 	GFileInfo* function(GFileIOStream* stream, GAsyncResult* result, GError** error) c_g_file_io_stream_query_info_finish;
 
 	// gio.FileDescriptorBasedT
@@ -2077,7 +2077,7 @@ mixin( gshared ~"extern(C)
 
 	// gio.MemoryOutputStream
 
-	GOutputStream* function(gpointer data, gsize size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction) c_g_memory_output_stream_new;
+	GOutputStream* function(void* data, gsize size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction) c_g_memory_output_stream_new;
 	gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_size;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data_size;
@@ -2093,7 +2093,7 @@ mixin( gshared ~"extern(C)
 	void* function(GBufferedInputStream* stream, gsize* count) c_g_buffered_input_stream_peek_buffer;
 	gsize function(GBufferedInputStream* stream, void* buffer, gsize offset, gsize count) c_g_buffered_input_stream_peek;
 	gssize function(GBufferedInputStream* stream, gssize count, GCancellable* cancellable, GError** error) c_g_buffered_input_stream_fill;
-	void function(GBufferedInputStream* stream, gssize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_buffered_input_stream_fill_async;
+	void function(GBufferedInputStream* stream, gssize count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_buffered_input_stream_fill_async;
 	gssize function(GBufferedInputStream* stream, GAsyncResult* result, GError** error) c_g_buffered_input_stream_fill_finish;
 	int function(GBufferedInputStream* stream, GCancellable* cancellable, GError** error) c_g_buffered_input_stream_read_byte;
 
@@ -2121,13 +2121,13 @@ mixin( gshared ~"extern(C)
 	gint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_int64;
 	guint64 function(GDataInputStream* stream, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_uint64;
 	char* function(GDataInputStream* stream, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_line;
-	void function(GDataInputStream* stream, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_line_async;
+	void function(GDataInputStream* stream, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_data_input_stream_read_line_async;
 	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_line_finish;
 	char* function(GDataInputStream* stream, gchar* stopChars, gssize stopCharsLen, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_upto;
-	void function(GDataInputStream* stream, gchar* stopChars, gssize stopCharsLen, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_upto_async;
+	void function(GDataInputStream* stream, gchar* stopChars, gssize stopCharsLen, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_data_input_stream_read_upto_async;
 	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_upto_finish;
 	char* function(GDataInputStream* stream, gchar* stopChars, gsize* length, GCancellable* cancellable, GError** error) c_g_data_input_stream_read_until;
-	void function(GDataInputStream* stream, gchar* stopChars, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_data_input_stream_read_until_async;
+	void function(GDataInputStream* stream, gchar* stopChars, gint ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_data_input_stream_read_until_async;
 	char* function(GDataInputStream* stream, GAsyncResult* result, gsize* length, GError** error) c_g_data_input_stream_read_until_finish;
 
 	// gio.DataOutputStream
@@ -2278,12 +2278,12 @@ mixin( gshared ~"extern(C)
 	gboolean function(GVolume* volume) c_g_volume_can_mount;
 	gboolean function(GVolume* volume) c_g_volume_should_automount;
 	GFile* function(GVolume* volume) c_g_volume_get_activation_root;
-	void function(GVolume* volume, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_volume_mount;
+	void function(GVolume* volume, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_volume_mount;
 	gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_mount_finish;
 	gboolean function(GVolume* volume) c_g_volume_can_eject;
-	void function(GVolume* volume, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_volume_eject;
+	void function(GVolume* volume, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_volume_eject;
 	gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_eject_finish;
-	void function(GVolume* volume, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_volume_eject_with_operation;
+	void function(GVolume* volume, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_volume_eject_with_operation;
 	gboolean function(GVolume* volume, GAsyncResult* result, GError** error) c_g_volume_eject_with_operation_finish;
 	char** function(GVolume* volume) c_g_volume_enumerate_identifiers;
 	char* function(GVolume* volume, char* kind) c_g_volume_get_identifier;
@@ -2304,18 +2304,18 @@ mixin( gshared ~"extern(C)
 	GVolume* function(GMount* mount) c_g_mount_get_volume;
 	GFile* function(GMount* mount) c_g_mount_get_default_location;
 	gboolean function(GMount* mount) c_g_mount_can_unmount;
-	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_unmount;
+	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_mount_unmount;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_unmount_finish;
-	void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_unmount_with_operation;
+	void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_mount_unmount_with_operation;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_unmount_with_operation_finish;
-	void function(GMount* mount, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_remount;
+	void function(GMount* mount, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_mount_remount;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_remount_finish;
 	gboolean function(GMount* mount) c_g_mount_can_eject;
-	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_eject;
+	void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_mount_eject;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_eject_finish;
-	void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_eject_with_operation;
+	void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_mount_eject_with_operation;
 	gboolean function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_eject_with_operation_finish;
-	void function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_mount_guess_content_type;
+	void function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_mount_guess_content_type;
 	gchar** function(GMount* mount, GAsyncResult* result, GError** error) c_g_mount_guess_content_type_finish;
 	gchar** function(GMount* mount, gboolean forceRescan, GCancellable* cancellable, GError** error) c_g_mount_guess_content_type_sync;
 	gboolean function(GMount* mount) c_g_mount_is_shadowed;
@@ -2340,18 +2340,18 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDrive* drive) c_g_drive_can_start_degraded;
 	gboolean function(GDrive* drive) c_g_drive_can_stop;
 	gboolean function(GDrive* drive) c_g_drive_can_poll_for_media;
-	void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_poll_for_media;
+	void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_drive_poll_for_media;
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_poll_for_media_finish;
 	gboolean function(GDrive* drive) c_g_drive_has_media;
 	gboolean function(GDrive* drive) c_g_drive_is_media_check_automatic;
 	gboolean function(GDrive* drive) c_g_drive_is_media_removable;
-	void function(GDrive* drive, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_eject;
+	void function(GDrive* drive, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_drive_eject;
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_eject_finish;
-	void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_eject_with_operation;
+	void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_drive_eject_with_operation;
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_eject_with_operation_finish;
-	void function(GDrive* drive, GDriveStartFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_start;
+	void function(GDrive* drive, GDriveStartFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_drive_start;
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_start_finish;
-	void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_drive_stop;
+	void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_drive_stop;
 	gboolean function(GDrive* drive, GAsyncResult* result, GError** error) c_g_drive_stop_finish;
 	char** function(GDrive* drive) c_g_drive_enumerate_identifiers;
 	char* function(GDrive* drive, char* kind) c_g_drive_get_identifier;
@@ -2403,7 +2403,7 @@ mixin( gshared ~"extern(C)
 
 	// gio.IconT
 
-	guint function(gconstpointer icon) c_g_icon_hash;
+	guint function(void* icon) c_g_icon_hash;
 	gboolean function(GIcon* icon1, GIcon* icon2) c_g_icon_equal;
 	gchar* function(GIcon* icon) c_g_icon_to_string;
 	GIcon* function(gchar* str, GError** error) c_g_icon_new_for_string;
@@ -2422,7 +2422,7 @@ mixin( gshared ~"extern(C)
 	// gio.LoadableIconT
 
 	GInputStream* function(GLoadableIcon* icon, int size, char** type, GCancellable* cancellable, GError** error) c_g_loadable_icon_load;
-	void function(GLoadableIcon* icon, int size, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_loadable_icon_load_async;
+	void function(GLoadableIcon* icon, int size, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_loadable_icon_load_async;
 	GInputStream* function(GLoadableIcon* icon, GAsyncResult* res, char** type, GError** error) c_g_loadable_icon_load_finish;
 
 	// gio.ThemedIcon
@@ -2464,12 +2464,12 @@ mixin( gshared ~"extern(C)
 
 	// gio.AsyncInitableT
 
-	void function(GAsyncInitable* initable, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_init_async;
+	void function(GAsyncInitable* initable, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_async_initable_init_async;
 	gboolean function(GAsyncInitable* initable, GAsyncResult* res, GError** error) c_g_async_initable_init_finish;
-	void function(GType objectType, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData, gchar* firstPropertyName, ... ) c_g_async_initable_new_async;
+	void function(GType objectType, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData, gchar* firstPropertyName, ... ) c_g_async_initable_new_async;
 	GObject* function(GAsyncInitable* initable, GAsyncResult* res, GError** error) c_g_async_initable_new_finish;
-	void function(GType objectType, gchar* firstPropertyName, va_list varArgs, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_new_valist_async;
-	void function(GType objectType, guint nParameters, GParameter* parameters, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_async_initable_newv_async;
+	void function(GType objectType, gchar* firstPropertyName, va_list varArgs, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_async_initable_new_valist_async;
+	void function(GType objectType, guint nParameters, GParameter* parameters, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_async_initable_newv_async;
 
 	// gio.Socket
 
@@ -2535,9 +2535,9 @@ mixin( gshared ~"extern(C)
 
 	// gio.SocketAddress
 
-	GSocketAddress* function(gpointer native, gsize len) c_g_socket_address_new_from_native;
+	GSocketAddress* function(void* native, gsize len) c_g_socket_address_new_from_native;
 	GSocketFamily function(GSocketAddress* address) c_g_socket_address_get_family;
-	gboolean function(GSocketAddress* address, gpointer dest, gsize destlen, GError** error) c_g_socket_address_to_native;
+	gboolean function(GSocketAddress* address, void* dest, gsize destlen, GError** error) c_g_socket_address_to_native;
 	gssize function(GSocketAddress* address) c_g_socket_address_get_native_size;
 
 	// gio.InetSocketAddress
@@ -2559,11 +2559,11 @@ mixin( gshared ~"extern(C)
 
 	// gio.SocketControlMessage
 
-	GSocketControlMessage* function(int level, int type, gsize size, gpointer data) c_g_socket_control_message_deserialize;
+	GSocketControlMessage* function(int level, int type, gsize size, void* data) c_g_socket_control_message_deserialize;
 	int function(GSocketControlMessage* message) c_g_socket_control_message_get_level;
 	int function(GSocketControlMessage* message) c_g_socket_control_message_get_msg_type;
 	gsize function(GSocketControlMessage* message) c_g_socket_control_message_get_size;
-	void function(GSocketControlMessage* message, gpointer data) c_g_socket_control_message_serialize;
+	void function(GSocketControlMessage* message, void* data) c_g_socket_control_message_serialize;
 
 	// gio.UnixFDList
 
@@ -2588,7 +2588,7 @@ mixin( gshared ~"extern(C)
 	GCredentials* function() c_g_credentials_new;
 	gchar* function(GCredentials* credentials) c_g_credentials_to_string;
 	gpointer function(GCredentials* credentials, GCredentialsType nativeType) c_g_credentials_get_native;
-	void function(GCredentials* credentials, GCredentialsType nativeType, gpointer native) c_g_credentials_set_native;
+	void function(GCredentials* credentials, GCredentialsType nativeType, void* native) c_g_credentials_set_native;
 	gboolean function(GCredentials* credentials, GCredentials* otherCredentials, GError** error) c_g_credentials_is_same_user;
 	uid_t function(GCredentials* credentials, GError** error) c_g_credentials_get_unix_user;
 	gboolean function(GCredentials* credentials, uid_t uid, GError** error) c_g_credentials_set_unix_user;
@@ -2606,7 +2606,7 @@ mixin( gshared ~"extern(C)
 	// gio.ProxyT
 
 	GIOStream* function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GError** error) c_g_proxy_connect;
-	void function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_proxy_connect_async;
+	void function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_proxy_connect_async;
 	GIOStream* function(GProxy* proxy, GAsyncResult* result, GError** error) c_g_proxy_connect_finish;
 	GProxy* function(gchar* protocol) c_g_proxy_get_default_for_protocol;
 	gboolean function(GProxy* proxy) c_g_proxy_supports_hostname;
@@ -2628,16 +2628,16 @@ mixin( gshared ~"extern(C)
 	void function(GSocketClient* client, gchar* protocol) c_g_socket_client_add_application_proxy;
 	GSocketClient* function() c_g_socket_client_new;
 	GSocketConnection* function(GSocketClient* client, GSocketConnectable* connectable, GCancellable* cancellable, GError** error) c_g_socket_client_connect;
-	void function(GSocketClient* client, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_client_connect_async;
+	void function(GSocketClient* client, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_socket_client_connect_async;
 	GSocketConnection* function(GSocketClient* client, GAsyncResult* result, GError** error) c_g_socket_client_connect_finish;
 	GSocketConnection* function(GSocketClient* client, gchar* hostAndPort, guint16 defaultPort, GCancellable* cancellable, GError** error) c_g_socket_client_connect_to_host;
-	void function(GSocketClient* client, gchar* hostAndPort, guint16 defaultPort, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_client_connect_to_host_async;
+	void function(GSocketClient* client, gchar* hostAndPort, guint16 defaultPort, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_socket_client_connect_to_host_async;
 	GSocketConnection* function(GSocketClient* client, GAsyncResult* result, GError** error) c_g_socket_client_connect_to_host_finish;
 	GSocketConnection* function(GSocketClient* client, gchar* domain, gchar* service, GCancellable* cancellable, GError** error) c_g_socket_client_connect_to_service;
-	void function(GSocketClient* client, gchar* domain, gchar* service, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_client_connect_to_service_async;
+	void function(GSocketClient* client, gchar* domain, gchar* service, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_socket_client_connect_to_service_async;
 	GSocketConnection* function(GSocketClient* client, GAsyncResult* result, GError** error) c_g_socket_client_connect_to_service_finish;
 	GSocketConnection* function(GSocketClient* client, gchar* uri, guint16 defaultPort, GCancellable* cancellable, GError** error) c_g_socket_client_connect_to_uri;
-	void function(GSocketClient* client, gchar* uri, guint16 defaultPort, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_client_connect_to_uri_async;
+	void function(GSocketClient* client, gchar* uri, guint16 defaultPort, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_socket_client_connect_to_uri_async;
 	GSocketConnection* function(GSocketClient* client, GAsyncResult* result, GError** error) c_g_socket_client_connect_to_uri_finish;
 	void function(GSocketClient* client, GSocketFamily family) c_g_socket_client_set_family;
 	void function(GSocketClient* client, GSocketAddress* address) c_g_socket_client_set_local_address;
@@ -2685,10 +2685,10 @@ mixin( gshared ~"extern(C)
 	gboolean function(GSocketListener* listener, guint16 port, GObject* sourceObject, GError** error) c_g_socket_listener_add_inet_port;
 	guint16 function(GSocketListener* listener, GObject* sourceObject, GError** error) c_g_socket_listener_add_any_inet_port;
 	GSocketConnection* function(GSocketListener* listener, GObject** sourceObject, GCancellable* cancellable, GError** error) c_g_socket_listener_accept;
-	void function(GSocketListener* listener, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_listener_accept_async;
+	void function(GSocketListener* listener, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_socket_listener_accept_async;
 	GSocketConnection* function(GSocketListener* listener, GAsyncResult* result, GObject** sourceObject, GError** error) c_g_socket_listener_accept_finish;
 	GSocket* function(GSocketListener* listener, GObject** sourceObject, GCancellable* cancellable, GError** error) c_g_socket_listener_accept_socket;
-	void function(GSocketListener* listener, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_socket_listener_accept_socket_async;
+	void function(GSocketListener* listener, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_socket_listener_accept_socket_async;
 	GSocket* function(GSocketListener* listener, GAsyncResult* result, GObject** sourceObject, GError** error) c_g_socket_listener_accept_socket_finish;
 	void function(GSocketListener* listener) c_g_socket_listener_close;
 	void function(GSocketListener* listener, int listenBacklog) c_g_socket_listener_set_backlog;
@@ -2726,7 +2726,7 @@ mixin( gshared ~"extern(C)
 	void function(GTlsConnection* conn, gboolean useSystemCertdb) c_g_tls_connection_set_use_system_certdb;
 	gboolean function(GTlsConnection* conn) c_g_tls_connection_get_use_system_certdb;
 	gboolean function(GTlsConnection* conn, GCancellable* cancellable, GError** error) c_g_tls_connection_handshake;
-	void function(GTlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_tls_connection_handshake_async;
+	void function(GTlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_tls_connection_handshake_async;
 	gboolean function(GTlsConnection* conn, GAsyncResult* result, GError** error) c_g_tls_connection_handshake_finish;
 	gboolean function(GTlsConnection* conn, GTlsCertificate* peerCert, GTlsCertificateFlags errors) c_g_tls_connection_emit_accept_certificate;
 
@@ -2758,14 +2758,14 @@ mixin( gshared ~"extern(C)
 	GResolver* function() c_g_resolver_get_default;
 	void function(GResolver* resolver) c_g_resolver_set_default;
 	GList* function(GResolver* resolver, gchar* hostname, GCancellable* cancellable, GError** error) c_g_resolver_lookup_by_name;
-	void function(GResolver* resolver, gchar* hostname, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_by_name_async;
+	void function(GResolver* resolver, gchar* hostname, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_resolver_lookup_by_name_async;
 	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_by_name_finish;
 	void function(GList* addresses) c_g_resolver_free_addresses;
 	gchar* function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GError** error) c_g_resolver_lookup_by_address;
-	void function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_by_address_async;
+	void function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_resolver_lookup_by_address_async;
 	gchar* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_by_address_finish;
 	GList* function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GError** error) c_g_resolver_lookup_service;
-	void function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_resolver_lookup_service_async;
+	void function(GResolver* resolver, gchar* service, gchar* protocol, gchar* domain, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_resolver_lookup_service_async;
 	GList* function(GResolver* resolver, GAsyncResult* result, GError** error) c_g_resolver_lookup_service_finish;
 	void function(GList* targets) c_g_resolver_free_targets;
 
@@ -2777,7 +2777,7 @@ mixin( gshared ~"extern(C)
 	GProxyResolver* function() c_g_proxy_resolver_get_default;
 	gboolean function(GProxyResolver* resolver) c_g_proxy_resolver_is_supported;
 	gchar** function(GProxyResolver* resolver, gchar* uri, GCancellable* cancellable, GError** error) c_g_proxy_resolver_lookup;
-	void function(GProxyResolver* resolver, gchar* uri, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_proxy_resolver_lookup_async;
+	void function(GProxyResolver* resolver, gchar* uri, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_proxy_resolver_lookup_async;
 	gchar** function(GProxyResolver* resolver, GAsyncResult* result, GError** error) c_g_proxy_resolver_lookup_finish;
 
 	// gio.ProxyResolver
@@ -2836,7 +2836,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(gchar* string) c_g_dbus_is_interface_name;
 	gboolean function(gchar* string) c_g_dbus_is_address;
 	gboolean function(gchar* string, GError** error) c_g_dbus_is_supported_address;
-	void function(gchar* address, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_address_get_stream;
+	void function(gchar* address, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_address_get_stream;
 	GIOStream* function(GAsyncResult* res, gchar** outGuid, GError** error) c_g_dbus_address_get_stream_finish;
 	GIOStream* function(gchar* address, gchar** outGuid, GCancellable* cancellable, GError** error) c_g_dbus_address_get_stream_sync;
 	gchar* function(GBusType busType, GCancellable* cancellable, GError** error) c_g_dbus_address_get_for_bus_sync;
@@ -2930,21 +2930,21 @@ mixin( gshared ~"extern(C)
 
 	// gio.DBusConnection
 
-	void function(GBusType busType, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_bus_get;
+	void function(GBusType busType, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_bus_get;
 	GDBusConnection* function(GAsyncResult* res, GError** error) c_g_bus_get_finish;
 	GDBusConnection* function(GBusType busType, GCancellable* cancellable, GError** error) c_g_bus_get_sync;
-	void function(GIOStream* stream, gchar* guid, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_new;
+	void function(GIOStream* stream, gchar* guid, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_connection_new;
 	GDBusConnection* function(GAsyncResult* res, GError** error) c_g_dbus_connection_new_finish;
 	GDBusConnection* function(GIOStream* stream, gchar* guid, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GError** error) c_g_dbus_connection_new_sync;
-	void function(gchar* address, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_new_for_address;
+	void function(gchar* address, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_connection_new_for_address;
 	GDBusConnection* function(GAsyncResult* res, GError** error) c_g_dbus_connection_new_for_address_finish;
 	GDBusConnection* function(gchar* address, GDBusConnectionFlags flags, GDBusAuthObserver* observer, GCancellable* cancellable, GError** error) c_g_dbus_connection_new_for_address_sync;
 	void function(GDBusConnection* connection) c_g_dbus_connection_start_message_processing;
-	void function(GDBusConnection* connection, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_close;
+	void function(GDBusConnection* connection, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_connection_close;
 	gboolean function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_close_finish;
 	gboolean function(GDBusConnection* connection, GCancellable* cancellable, GError** error) c_g_dbus_connection_close_sync;
 	gboolean function(GDBusConnection* connection) c_g_dbus_connection_is_closed;
-	void function(GDBusConnection* connection, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_flush;
+	void function(GDBusConnection* connection, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_connection_flush;
 	gboolean function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_flush_finish;
 	gboolean function(GDBusConnection* connection, GCancellable* cancellable, GError** error) c_g_dbus_connection_flush_sync;
 	gboolean function(GDBusConnection* connection) c_g_dbus_connection_get_exit_on_close;
@@ -2954,21 +2954,21 @@ mixin( gshared ~"extern(C)
 	gchar* function(GDBusConnection* connection) c_g_dbus_connection_get_unique_name;
 	GDBusCapabilityFlags function(GDBusConnection* connection) c_g_dbus_connection_get_capabilities;
 	GCredentials* function(GDBusConnection* connection) c_g_dbus_connection_get_peer_credentials;
-	void function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_call;
+	void function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_connection_call;
 	GVariant* function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_call_finish;
 	GVariant* function(GDBusConnection* connection, gchar* busName, gchar* objectPath, gchar* interfaceName, gchar* methodName, GVariant* parameters, GVariantType* replyType, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_connection_call_sync;
 	gboolean function(GDBusConnection* connection, gchar* destinationBusName, gchar* objectPath, gchar* interfaceName, gchar* signalName, GVariant* parameters, GError** error) c_g_dbus_connection_emit_signal;
-	guint function(GDBusConnection* connection, gchar* sender, gchar* interfaceName, gchar* member, gchar* objectPath, gchar* arg0, GDBusSignalFlags flags, GDBusSignalCallback callback, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_dbus_connection_signal_subscribe;
+	guint function(GDBusConnection* connection, gchar* sender, gchar* interfaceName, gchar* member, gchar* objectPath, gchar* arg0, GDBusSignalFlags flags, GDBusSignalCallback callback, void* userData, GDestroyNotify userDataFreeFunc) c_g_dbus_connection_signal_subscribe;
 	void function(GDBusConnection* connection, guint subscriptionId) c_g_dbus_connection_signal_unsubscribe;
 	gboolean function(GDBusConnection* connection, GDBusMessage* message, GDBusSendMessageFlags flags, guint32* outSerial, GError** error) c_g_dbus_connection_send_message;
-	void function(GDBusConnection* connection, GDBusMessage* message, GDBusSendMessageFlags flags, gint timeoutMsec, guint32* outSerial, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_connection_send_message_with_reply;
+	void function(GDBusConnection* connection, GDBusMessage* message, GDBusSendMessageFlags flags, gint timeoutMsec, guint32* outSerial, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_connection_send_message_with_reply;
 	GDBusMessage* function(GDBusConnection* connection, GAsyncResult* res, GError** error) c_g_dbus_connection_send_message_with_reply_finish;
 	GDBusMessage* function(GDBusConnection* connection, GDBusMessage* message, GDBusSendMessageFlags flags, gint timeoutMsec, guint32* outSerial, GCancellable* cancellable, GError** error) c_g_dbus_connection_send_message_with_reply_sync;
-	guint function(GDBusConnection* connection, GDBusMessageFilterFunction filterFunction, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_dbus_connection_add_filter;
+	guint function(GDBusConnection* connection, GDBusMessageFilterFunction filterFunction, void* userData, GDestroyNotify userDataFreeFunc) c_g_dbus_connection_add_filter;
 	void function(GDBusConnection* connection, guint filterId) c_g_dbus_connection_remove_filter;
-	guint function(GDBusConnection* connection, gchar* objectPath, GDBusInterfaceInfo* interfaceInfo, GDBusInterfaceVTable* vtable, gpointer userData, GDestroyNotify userDataFreeFunc, GError** error) c_g_dbus_connection_register_object;
+	guint function(GDBusConnection* connection, gchar* objectPath, GDBusInterfaceInfo* interfaceInfo, GDBusInterfaceVTable* vtable, void* userData, GDestroyNotify userDataFreeFunc, GError** error) c_g_dbus_connection_register_object;
 	gboolean function(GDBusConnection* connection, guint registrationId) c_g_dbus_connection_unregister_object;
-	guint function(GDBusConnection* connection, gchar* objectPath, GDBusSubtreeVTable* vtable, GDBusSubtreeFlags flags, gpointer userData, GDestroyNotify userDataFreeFunc, GError** error) c_g_dbus_connection_register_subtree;
+	guint function(GDBusConnection* connection, gchar* objectPath, GDBusSubtreeVTable* vtable, GDBusSubtreeFlags flags, void* userData, GDestroyNotify userDataFreeFunc, GError** error) c_g_dbus_connection_register_subtree;
 	gboolean function(GDBusConnection* connection, guint registrationId) c_g_dbus_connection_unregister_subtree;
 
 	// gio.DBusMethodInvocation
@@ -3006,23 +3006,23 @@ mixin( gshared ~"extern(C)
 
 	// gio.DBusNames
 
-	guint function(GBusType busType, gchar* name, GBusNameOwnerFlags flags, GBusAcquiredCallback busAcquiredHandler, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_own_name;
-	guint function(GDBusConnection* connection, gchar* name, GBusNameOwnerFlags flags, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_own_name_on_connection;
+	guint function(GBusType busType, gchar* name, GBusNameOwnerFlags flags, GBusAcquiredCallback busAcquiredHandler, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, void* userData, GDestroyNotify userDataFreeFunc) c_g_bus_own_name;
+	guint function(GDBusConnection* connection, gchar* name, GBusNameOwnerFlags flags, GBusNameAcquiredCallback nameAcquiredHandler, GBusNameLostCallback nameLostHandler, void* userData, GDestroyNotify userDataFreeFunc) c_g_bus_own_name_on_connection;
 	void function(guint ownerId) c_g_bus_unown_name;
 	guint function(GBusType busType, gchar* name, GBusNameOwnerFlags flags, GClosure* busAcquiredClosure, GClosure* nameAcquiredClosure, GClosure* nameLostClosure) c_g_bus_own_name_with_closures;
 	guint function(GDBusConnection* connection, gchar* name, GBusNameOwnerFlags flags, GClosure* nameAcquiredClosure, GClosure* nameLostClosure) c_g_bus_own_name_on_connection_with_closures;
-	guint function(GBusType busType, gchar* name, GBusNameWatcherFlags flags, GBusNameAppearedCallback nameAppearedHandler, GBusNameVanishedCallback nameVanishedHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_watch_name;
-	guint function(GDBusConnection* connection, gchar* name, GBusNameWatcherFlags flags, GBusNameAppearedCallback nameAppearedHandler, GBusNameVanishedCallback nameVanishedHandler, gpointer userData, GDestroyNotify userDataFreeFunc) c_g_bus_watch_name_on_connection;
+	guint function(GBusType busType, gchar* name, GBusNameWatcherFlags flags, GBusNameAppearedCallback nameAppearedHandler, GBusNameVanishedCallback nameVanishedHandler, void* userData, GDestroyNotify userDataFreeFunc) c_g_bus_watch_name;
+	guint function(GDBusConnection* connection, gchar* name, GBusNameWatcherFlags flags, GBusNameAppearedCallback nameAppearedHandler, GBusNameVanishedCallback nameVanishedHandler, void* userData, GDestroyNotify userDataFreeFunc) c_g_bus_watch_name_on_connection;
 	void function(guint watcherId) c_g_bus_unwatch_name;
 	guint function(GBusType busType, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_with_closures;
 	guint function(GDBusConnection* connection, gchar* name, GBusNameWatcherFlags flags, GClosure* nameAppearedClosure, GClosure* nameVanishedClosure) c_g_bus_watch_name_on_connection_with_closures;
 
 	// gio.DBusProxy
 
-	void function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_new;
+	void function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_proxy_new;
 	GDBusProxy* function(GAsyncResult* res, GError** error) c_g_dbus_proxy_new_finish;
 	GDBusProxy* function(GDBusConnection* connection, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GError** error) c_g_dbus_proxy_new_sync;
-	void function(GBusType busType, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_new_for_bus;
+	void function(GBusType busType, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_proxy_new_for_bus;
 	GDBusProxy* function(GAsyncResult* res, GError** error) c_g_dbus_proxy_new_for_bus_finish;
 	GDBusProxy* function(GBusType busType, GDBusProxyFlags flags, GDBusInterfaceInfo* info, gchar* name, gchar* objectPath, gchar* interfaceName, GCancellable* cancellable, GError** error) c_g_dbus_proxy_new_for_bus_sync;
 	GDBusProxyFlags function(GDBusProxy* proxy) c_g_dbus_proxy_get_flags;
@@ -3038,7 +3038,7 @@ mixin( gshared ~"extern(C)
 	gchar** function(GDBusProxy* proxy) c_g_dbus_proxy_get_cached_property_names;
 	void function(GDBusProxy* proxy, GDBusInterfaceInfo* info) c_g_dbus_proxy_set_interface_info;
 	GDBusInterfaceInfo* function(GDBusProxy* proxy) c_g_dbus_proxy_get_interface_info;
-	void function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_dbus_proxy_call;
+	void function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_proxy_call;
 	GVariant* function(GDBusProxy* proxy, GAsyncResult* res, GError** error) c_g_dbus_proxy_call_finish;
 	GVariant* function(GDBusProxy* proxy, gchar* methodName, GVariant* parameters, GDBusCallFlags flags, gint timeoutMsec, GCancellable* cancellable, GError** error) c_g_dbus_proxy_call_sync;
 
@@ -3087,21 +3087,21 @@ mixin( gshared ~"extern(C)
 	gboolean function(GSettings* settings, gchar* key, gint value) c_g_settings_set_enum;
 	guint function(GSettings* settings, gchar* key) c_g_settings_get_flags;
 	gboolean function(GSettings* settings, gchar* key, guint value) c_g_settings_set_flags;
-	gpointer function(GSettings* settings, gchar* key, GSettingsGetMapping mapping, gpointer userData) c_g_settings_get_mapped;
-	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, GSettingsBindFlags flags) c_g_settings_bind;
-	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, GSettingsBindFlags flags, GSettingsBindGetMapping getMapping, GSettingsBindSetMapping setMapping, gpointer userData, GDestroyNotify destroy) c_g_settings_bind_with_mapping;
-	void function(GSettings* settings, gchar* key, gpointer object, gchar* property, gboolean inverted) c_g_settings_bind_writable;
-	void function(gpointer object, gchar* property) c_g_settings_unbind;
+	gpointer function(GSettings* settings, gchar* key, GSettingsGetMapping mapping, void* userData) c_g_settings_get_mapped;
+	void function(GSettings* settings, gchar* key, void* object, gchar* property, GSettingsBindFlags flags) c_g_settings_bind;
+	void function(GSettings* settings, gchar* key, void* object, gchar* property, GSettingsBindFlags flags, GSettingsBindGetMapping getMapping, GSettingsBindSetMapping setMapping, void* userData, GDestroyNotify destroy) c_g_settings_bind_with_mapping;
+	void function(GSettings* settings, gchar* key, void* object, gchar* property, gboolean inverted) c_g_settings_bind_writable;
+	void function(void* object, gchar* property) c_g_settings_unbind;
 
 	// gio.SettingsBackend
 
 	GSettingsBackend* function() c_g_settings_backend_get_default;
-	void function(GSettingsBackend* backend, gchar* key, gpointer originTag) c_g_settings_backend_changed;
-	void function(GSettingsBackend* backend, gchar* path, gpointer originTag) c_g_settings_backend_path_changed;
-	void function(GSettingsBackend* backend, gchar* path, gchar** items, gpointer originTag) c_g_settings_backend_keys_changed;
+	void function(GSettingsBackend* backend, gchar* key, void* originTag) c_g_settings_backend_changed;
+	void function(GSettingsBackend* backend, gchar* path, void* originTag) c_g_settings_backend_path_changed;
+	void function(GSettingsBackend* backend, gchar* path, gchar** items, void* originTag) c_g_settings_backend_keys_changed;
 	void function(GSettingsBackend* backend, gchar* path) c_g_settings_backend_path_writable_changed;
 	void function(GSettingsBackend* backend, gchar* key) c_g_settings_backend_writable_changed;
-	void function(GSettingsBackend* backend, GTree* tree, gpointer originTag) c_g_settings_backend_changed_tree;
+	void function(GSettingsBackend* backend, GTree* tree, void* originTag) c_g_settings_backend_changed_tree;
 	void function(GTree* tree, gchar** path, gchar*** keys, GVariant*** values) c_g_settings_backend_flatten_tree;
 	GSettingsBackend* function(gchar* filename, gchar* rootPath, gchar* rootGroup) c_g_keyfile_settings_backend_new;
 	GSettingsBackend* function() c_g_memory_settings_backend_new;
@@ -3113,10 +3113,10 @@ mixin( gshared ~"extern(C)
 	gboolean function(GPermission* permission) c_g_permission_get_can_acquire;
 	gboolean function(GPermission* permission) c_g_permission_get_can_release;
 	gboolean function(GPermission* permission, GCancellable* cancellable, GError** error) c_g_permission_acquire;
-	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_permission_acquire_async;
+	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_permission_acquire_async;
 	gboolean function(GPermission* permission, GAsyncResult* result, GError** error) c_g_permission_acquire_finish;
 	gboolean function(GPermission* permission, GCancellable* cancellable, GError** error) c_g_permission_release;
-	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData) c_g_permission_release_async;
+	void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_permission_release_async;
 	gboolean function(GPermission* permission, GAsyncResult* result, GError** error) c_g_permission_release_finish;
 	void function(GPermission* permission, gboolean allowed, gboolean canAcquire, gboolean canRelease) c_g_permission_impl_update;
 

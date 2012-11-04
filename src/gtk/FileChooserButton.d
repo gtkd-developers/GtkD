@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -116,18 +117,6 @@ public class FileChooserButton : HBox, FileChooserIF
 	 */
 	public this (GtkFileChooserButton* gtkFileChooserButton)
 	{
-		if(gtkFileChooserButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFileChooserButton);
-		if( ptr !is null )
-		{
-			this = cast(FileChooserButton)ptr;
-			return;
-		}
 		super(cast(GtkHBox*)gtkFileChooserButton);
 		this.gtkFileChooserButton = gtkFileChooserButton;
 	}
@@ -169,11 +158,11 @@ public class FileChooserButton : HBox, FileChooserIF
 		}
 		onFileSetListeners ~= dlg;
 	}
-	extern(C) static void callBackFileSet(GtkFileChooserButton* widgetStruct, FileChooserButton fileChooserButton)
+	extern(C) static void callBackFileSet(GtkFileChooserButton* widgetStruct, FileChooserButton _fileChooserButton)
 	{
-		foreach ( void delegate(FileChooserButton) dlg ; fileChooserButton.onFileSetListeners )
+		foreach ( void delegate(FileChooserButton) dlg ; _fileChooserButton.onFileSetListeners )
 		{
-			dlg(fileChooserButton);
+			dlg(_fileChooserButton);
 		}
 	}
 	

@@ -135,11 +135,6 @@ public class StaticPrivate
 	 */
 	public this (GStaticPrivate* gStaticPrivate)
 	{
-		if(gStaticPrivate is null)
-		{
-			this = null;
-			return;
-		}
 		this.gStaticPrivate = gStaticPrivate;
 	}
 	

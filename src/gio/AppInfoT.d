@@ -69,6 +69,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.Str;
@@ -164,11 +165,13 @@ public template AppInfoT(TStruct)
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AppInfo(cast(GAppInfo*) p);
+		
+		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -179,11 +182,13 @@ public template AppInfoT(TStruct)
 	{
 		// GAppInfo * g_app_info_dup (GAppInfo *appinfo);
 		auto p = g_app_info_dup(getAppInfoTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AppInfo(cast(GAppInfo*) p);
+		
+		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -275,11 +280,13 @@ public template AppInfoT(TStruct)
 	{
 		// GIcon * g_app_info_get_icon (GAppInfo *appinfo);
 		auto p = g_app_info_get_icon(getAppInfoTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -566,11 +573,13 @@ public template AppInfoT(TStruct)
 	{
 		// GList * g_app_info_get_all (void);
 		auto p = g_app_info_get_all();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -583,11 +592,13 @@ public template AppInfoT(TStruct)
 	{
 		// GList * g_app_info_get_all_for_type (const char *content_type);
 		auto p = g_app_info_get_all_for_type(Str.toStringz(contentType));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -602,11 +613,13 @@ public template AppInfoT(TStruct)
 	{
 		// GAppInfo * g_app_info_get_default_for_type (const char *content_type,  gboolean must_support_uris);
 		auto p = g_app_info_get_default_for_type(Str.toStringz(contentType), mustSupportUris);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AppInfo(cast(GAppInfo*) p);
+		
+		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -622,11 +635,13 @@ public template AppInfoT(TStruct)
 	{
 		// GAppInfo * g_app_info_get_default_for_uri_scheme  (const char *uri_scheme);
 		auto p = g_app_info_get_default_for_uri_scheme(Str.toStringz(uriScheme));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AppInfo(cast(GAppInfo*) p);
+		
+		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -642,11 +657,13 @@ public template AppInfoT(TStruct)
 	{
 		// GList * g_app_info_get_fallback_for_type (const gchar *content_type);
 		auto p = g_app_info_get_fallback_for_type(Str.toStringz(contentType));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -665,11 +682,13 @@ public template AppInfoT(TStruct)
 	{
 		// GList * g_app_info_get_recommended_for_type (const gchar *content_type);
 		auto p = g_app_info_get_recommended_for_type(Str.toStringz(contentType));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

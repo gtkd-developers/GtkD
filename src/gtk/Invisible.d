@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Screen;
@@ -98,18 +99,6 @@ public class Invisible : Widget
 	 */
 	public this (GtkInvisible* gtkInvisible)
 	{
-		if(gtkInvisible is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkInvisible);
-		if( ptr !is null )
-		{
-			this = cast(Invisible)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkInvisible);
 		this.gtkInvisible = gtkInvisible;
 	}
@@ -178,10 +167,12 @@ public class Invisible : Widget
 	{
 		// GdkScreen * gtk_invisible_get_screen (GtkInvisible *invisible);
 		auto p = gtk_invisible_get_screen(gtkInvisible);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 }

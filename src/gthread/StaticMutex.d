@@ -138,11 +138,6 @@ public class StaticMutex
 	 */
 	public this (GStaticMutex* gStaticMutex)
 	{
-		if(gStaticMutex is null)
-		{
-			this = null;
-			return;
-		}
 		this.gStaticMutex = gStaticMutex;
 	}
 	
@@ -207,10 +202,12 @@ public class StaticMutex
 	{
 		// GMutex * g_static_mutex_get_mutex (GStaticMutex *mutex);
 		auto p = g_static_mutex_get_mutex(gStaticMutex);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Mutex(cast(GMutex*) p);
 	}
 	

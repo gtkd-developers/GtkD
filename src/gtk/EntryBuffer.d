@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -102,18 +103,6 @@ public class EntryBuffer : ObjectG
 	 */
 	public this (GtkEntryBuffer* gtkEntryBuffer)
 	{
-		if(gtkEntryBuffer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkEntryBuffer);
-		if( ptr !is null )
-		{
-			this = cast(EntryBuffer)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkEntryBuffer);
 		this.gtkEntryBuffer = gtkEntryBuffer;
 	}
@@ -148,11 +137,11 @@ public class EntryBuffer : ObjectG
 		}
 		onDeletedTextListeners ~= dlg;
 	}
-	extern(C) static void callBackDeletedText(GtkEntryBuffer* bufferStruct, guint position, guint nChars, EntryBuffer entryBuffer)
+	extern(C) static void callBackDeletedText(GtkEntryBuffer* bufferStruct, guint position, guint nChars, EntryBuffer _entryBuffer)
 	{
-		foreach ( void delegate(guint, guint, EntryBuffer) dlg ; entryBuffer.onDeletedTextListeners )
+		foreach ( void delegate(guint, guint, EntryBuffer) dlg ; _entryBuffer.onDeletedTextListeners )
 		{
-			dlg(position, nChars, entryBuffer);
+			dlg(position, nChars, _entryBuffer);
 		}
 	}
 	
@@ -176,11 +165,11 @@ public class EntryBuffer : ObjectG
 		}
 		onInsertedTextListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertedText(GtkEntryBuffer* bufferStruct, guint position, gchar* chars, guint nChars, EntryBuffer entryBuffer)
+	extern(C) static void callBackInsertedText(GtkEntryBuffer* bufferStruct, guint position, gchar* chars, guint nChars, EntryBuffer _entryBuffer)
 	{
-		foreach ( void delegate(guint, string, guint, EntryBuffer) dlg ; entryBuffer.onInsertedTextListeners )
+		foreach ( void delegate(guint, string, guint, EntryBuffer) dlg ; _entryBuffer.onInsertedTextListeners )
 		{
-			dlg(position, Str.toString(chars), nChars, entryBuffer);
+			dlg(position, Str.toString(chars), nChars, _entryBuffer);
 		}
 	}
 	
@@ -193,13 +182,13 @@ public class EntryBuffer : ObjectG
 	 * initialChars = initial buffer text, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (char[] initialChars)
+	public this (string initialChars)
 	{
 		// GtkEntryBuffer * gtk_entry_buffer_new (const gchar *initial_chars,  gint n_initial_chars);
-		auto p = gtk_entry_buffer_new(initialChars.ptr, cast(int) initialChars.length);
+		auto p = gtk_entry_buffer_new(cast(char*)initialChars.ptr, cast(int) initialChars.length);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_entry_buffer_new(initialChars.ptr, cast(int) initialChars.length)");
+			throw new ConstructionException("null returned by gtk_entry_buffer_new(cast(char*)initialChars.ptr, cast(int) initialChars.length)");
 		}
 		this(cast(GtkEntryBuffer*) p);
 	}
@@ -226,10 +215,10 @@ public class EntryBuffer : ObjectG
 	 * Params:
 	 * chars = the new text
 	 */
-	public void setText(char[] chars)
+	public void setText(string chars)
 	{
 		// void gtk_entry_buffer_set_text (GtkEntryBuffer *buffer,  const gchar *chars,  gint n_chars);
-		gtk_entry_buffer_set_text(gtkEntryBuffer, chars.ptr, cast(int) chars.length);
+		gtk_entry_buffer_set_text(gtkEntryBuffer, cast(char*)chars.ptr, cast(int) chars.length);
 	}
 	
 	/**
@@ -297,10 +286,10 @@ public class EntryBuffer : ObjectG
 	 * chars = the text to insert into the buffer.
 	 * Returns: The number of characters actually inserted.
 	 */
-	public uint insertText(uint position, char[] chars)
+	public uint insertText(uint position, string chars)
 	{
 		// guint gtk_entry_buffer_insert_text (GtkEntryBuffer *buffer,  guint position,  const gchar *chars,  gint n_chars);
-		return gtk_entry_buffer_insert_text(gtkEntryBuffer, position, chars.ptr, cast(int) chars.length);
+		return gtk_entry_buffer_insert_text(gtkEntryBuffer, position, cast(char*)chars.ptr, cast(int) chars.length);
 	}
 	
 	/**
@@ -342,9 +331,9 @@ public class EntryBuffer : ObjectG
 	 * position = position at which text was inserted
 	 * chars = text that was inserted
 	 */
-	public void emitInsertedText(uint position, char[] chars)
+	public void emitInsertedText(uint position, string chars)
 	{
 		// void gtk_entry_buffer_emit_inserted_text (GtkEntryBuffer *buffer,  guint position,  const gchar *chars,  guint n_chars);
-		gtk_entry_buffer_emit_inserted_text(gtkEntryBuffer, position, chars.ptr, cast(int) chars.length);
+		gtk_entry_buffer_emit_inserted_text(gtkEntryBuffer, position, cast(char*)chars.ptr, cast(int) chars.length);
 	}
 }

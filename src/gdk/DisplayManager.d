@@ -62,6 +62,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -104,18 +105,6 @@ public class DisplayManager : ObjectG
 	 */
 	public this (GdkDisplayManager* gdkDisplayManager)
 	{
-		if(gdkDisplayManager is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkDisplayManager);
-		if( ptr !is null )
-		{
-			this = cast(DisplayManager)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkDisplayManager);
 		this.gdkDisplayManager = gdkDisplayManager;
 	}
@@ -150,11 +139,11 @@ public class DisplayManager : ObjectG
 		}
 		onDisplayOpenedListeners ~= dlg;
 	}
-	extern(C) static void callBackDisplayOpened(GdkDisplayManager* displayManagerStruct, GdkDisplay* display, DisplayManager displayManager)
+	extern(C) static void callBackDisplayOpened(GdkDisplayManager* displayManagerStruct, GdkDisplay* display, DisplayManager _displayManager)
 	{
-		foreach ( void delegate(Display, DisplayManager) dlg ; displayManager.onDisplayOpenedListeners )
+		foreach ( void delegate(Display, DisplayManager) dlg ; _displayManager.onDisplayOpenedListeners )
 		{
-			dlg(new Display(display), displayManager);
+			dlg(ObjectG.getDObject!Display(display), _displayManager);
 		}
 	}
 	
@@ -168,11 +157,13 @@ public class DisplayManager : ObjectG
 	{
 		// GdkDisplayManager * gdk_display_manager_get (void);
 		auto p = gdk_display_manager_get();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DisplayManager(cast(GdkDisplayManager*) p);
+		
+		return ObjectG.getDObject!DisplayManager(cast(GdkDisplayManager*) p);
 	}
 	
 	/**
@@ -184,11 +175,13 @@ public class DisplayManager : ObjectG
 	{
 		// GdkDisplay * gdk_display_manager_get_default_display  (GdkDisplayManager *display_manager);
 		auto p = gdk_display_manager_get_default_display(gdkDisplayManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -212,11 +205,13 @@ public class DisplayManager : ObjectG
 	{
 		// GSList * gdk_display_manager_list_displays (GdkDisplayManager *display_manager);
 		auto p = gdk_display_manager_list_displays(gdkDisplayManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -230,10 +225,12 @@ public class DisplayManager : ObjectG
 	{
 		// GdkDevice * gdk_display_get_core_pointer (GdkDisplay *display);
 		auto p = gdk_display_get_core_pointer((display is null) ? null : display.getDisplayStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Device(cast(GdkDevice*) p);
+		
+		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
 	}
 }

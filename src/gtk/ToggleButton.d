@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -108,18 +109,6 @@ public class ToggleButton : Button
 	 */
 	public this (GtkToggleButton* gtkToggleButton)
 	{
-		if(gtkToggleButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToggleButton);
-		if( ptr !is null )
-		{
-			this = cast(ToggleButton)ptr;
-			return;
-		}
 		super(cast(GtkButton*)gtkToggleButton);
 		this.gtkToggleButton = gtkToggleButton;
 	}
@@ -193,11 +182,11 @@ public class ToggleButton : Button
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkToggleButton* togglebuttonStruct, ToggleButton toggleButton)
+	extern(C) static void callBackToggled(GtkToggleButton* togglebuttonStruct, ToggleButton _toggleButton)
 	{
-		foreach ( void delegate(ToggleButton) dlg ; toggleButton.onToggledListeners )
+		foreach ( void delegate(ToggleButton) dlg ; _toggleButton.onToggledListeners )
 		{
-			dlg(toggleButton);
+			dlg(_toggleButton);
 		}
 	}
 	

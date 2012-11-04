@@ -112,6 +112,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -148,11 +149,13 @@ public class X11
 	{
 		// GdkWindow * gdk_window_foreign_new (GdkNativeWindow anid);
 		auto p = gdk_window_foreign_new(anid);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -187,11 +190,13 @@ public class X11
 	{
 		// GdkWindow * gdk_window_lookup (GdkNativeWindow anid);
 		auto p = gdk_window_lookup(anid);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -206,11 +211,13 @@ public class X11
 	{
 		// GdkPixmap * gdk_pixmap_lookup (GdkNativeWindow anid);
 		auto p = gdk_pixmap_lookup(anid);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixmap(cast(GdkPixmap*) p);
+		
+		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
 	}
 	
 	/**

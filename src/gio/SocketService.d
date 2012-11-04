@@ -55,6 +55,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -111,18 +112,6 @@ public class SocketService : SocketListener
 	 */
 	public this (GSocketService* gSocketService)
 	{
-		if(gSocketService is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSocketService);
-		if( ptr !is null )
-		{
-			this = cast(SocketService)ptr;
-			return;
-		}
 		super(cast(GSocketListener*)gSocketService);
 		this.gSocketService = gSocketService;
 	}
@@ -163,11 +152,11 @@ public class SocketService : SocketListener
 		}
 		onIncomingListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackIncoming(GSocketService* serviceStruct, GSocketConnection* connection, GObject* sourceObject, SocketService socketService)
+	extern(C) static gboolean callBackIncoming(GSocketService* serviceStruct, GSocketConnection* connection, GObject* sourceObject, SocketService _socketService)
 	{
-		foreach ( bool delegate(GSocketConnection*, GObject*, SocketService) dlg ; socketService.onIncomingListeners )
+		foreach ( bool delegate(GSocketConnection*, GObject*, SocketService) dlg ; _socketService.onIncomingListeners )
 		{
-			if ( dlg(connection, sourceObject, socketService) )
+			if ( dlg(connection, sourceObject, _socketService) )
 			{
 				return 1;
 			}

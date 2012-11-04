@@ -62,6 +62,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -230,11 +231,6 @@ public class Font
 	 */
 	public this (GdkFont* gdkFont)
 	{
-		if(gdkFont is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkFont = gdkFont;
 	}
 	
@@ -263,11 +259,13 @@ public class Font
 	{
 		// GdkFont * gdk_font_load (const gchar *font_name);
 		auto p = gdk_font_load(Str.toStringz(fontName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Font(cast(GdkFont*) p);
+		
+		return ObjectG.getDObject!Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -286,11 +284,13 @@ public class Font
 	{
 		// GdkFont * gdk_font_load_for_display (GdkDisplay *display,  const gchar *font_name);
 		auto p = gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Font(cast(GdkFont*) p);
+		
+		return ObjectG.getDObject!Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -308,11 +308,13 @@ public class Font
 	{
 		// GdkFont * gdk_fontset_load (const gchar *fontset_name);
 		auto p = gdk_fontset_load(Str.toStringz(fontsetName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Font(cast(GdkFont*) p);
+		
+		return ObjectG.getDObject!Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -332,11 +334,13 @@ public class Font
 	{
 		// GdkFont * gdk_fontset_load_for_display (GdkDisplay *display,  const gchar *fontset_name);
 		auto p = gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontsetName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Font(cast(GdkFont*) p);
+		
+		return ObjectG.getDObject!Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -355,11 +359,13 @@ public class Font
 	{
 		// GdkFont * gdk_font_from_description (PangoFontDescription *font_desc);
 		auto p = gdk_font_from_description((fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Font(cast(GdkFont*) p);
+		
+		return ObjectG.getDObject!Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -380,11 +386,13 @@ public class Font
 	{
 		// GdkFont * gdk_font_from_description_for_display  (GdkDisplay *display,  PangoFontDescription *font_desc);
 		auto p = gdk_font_from_description_for_display((display is null) ? null : display.getDisplayStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Font(cast(GdkFont*) p);
+		
+		return ObjectG.getDObject!Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -398,11 +406,13 @@ public class Font
 	{
 		// GdkDisplay * gdk_font_get_display (GdkFont *font);
 		auto p = gdk_font_get_display(gdkFont);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -415,11 +425,13 @@ public class Font
 	{
 		// GdkFont * gdk_font_ref (GdkFont *font);
 		auto p = gdk_font_ref(gdkFont);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Font(cast(GdkFont*) p);
+		
+		return ObjectG.getDObject!Font(cast(GdkFont*) p);
 	}
 	
 	/**

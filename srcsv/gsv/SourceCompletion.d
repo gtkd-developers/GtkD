@@ -69,6 +69,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -113,18 +114,6 @@ public class SourceCompletion : ObjectGtk
 	 */
 	public this (GtkSourceCompletion* gtkSourceCompletion)
 	{
-		if(gtkSourceCompletion is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceCompletion);
-		if( ptr !is null )
-		{
-			this = cast(SourceCompletion)ptr;
-			return;
-		}
 		super(cast(GtkObject*)gtkSourceCompletion);
 		this.gtkSourceCompletion = gtkSourceCompletion;
 	}
@@ -162,11 +151,11 @@ public class SourceCompletion : ObjectGtk
 		}
 		onActivateProposalListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateProposal(GtkSourceCompletion* completionStruct, SourceCompletion sourceCompletion)
+	extern(C) static void callBackActivateProposal(GtkSourceCompletion* completionStruct, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(SourceCompletion) dlg ; sourceCompletion.onActivateProposalListeners )
+		foreach ( void delegate(SourceCompletion) dlg ; _sourceCompletion.onActivateProposalListeners )
 		{
-			dlg(sourceCompletion);
+			dlg(_sourceCompletion);
 		}
 	}
 	
@@ -190,11 +179,11 @@ public class SourceCompletion : ObjectGtk
 		}
 		onHideListeners ~= dlg;
 	}
-	extern(C) static void callBackHide(GtkSourceCompletion* completionStruct, SourceCompletion sourceCompletion)
+	extern(C) static void callBackHide(GtkSourceCompletion* completionStruct, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(SourceCompletion) dlg ; sourceCompletion.onHideListeners )
+		foreach ( void delegate(SourceCompletion) dlg ; _sourceCompletion.onHideListeners )
 		{
-			dlg(sourceCompletion);
+			dlg(_sourceCompletion);
 		}
 	}
 	
@@ -221,11 +210,11 @@ public class SourceCompletion : ObjectGtk
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkSourceCompletion* completionStruct, GtkScrollStep step, gint num, SourceCompletion sourceCompletion)
+	extern(C) static void callBackMoveCursor(GtkSourceCompletion* completionStruct, GtkScrollStep step, gint num, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(GtkScrollStep, gint, SourceCompletion) dlg ; sourceCompletion.onMoveCursorListeners )
+		foreach ( void delegate(GtkScrollStep, gint, SourceCompletion) dlg ; _sourceCompletion.onMoveCursorListeners )
 		{
-			dlg(step, num, sourceCompletion);
+			dlg(step, num, _sourceCompletion);
 		}
 	}
 	
@@ -253,11 +242,11 @@ public class SourceCompletion : ObjectGtk
 		}
 		onMovePageListeners ~= dlg;
 	}
-	extern(C) static void callBackMovePage(GtkSourceCompletion* completionStruct, GtkScrollStep step, gint num, SourceCompletion sourceCompletion)
+	extern(C) static void callBackMovePage(GtkSourceCompletion* completionStruct, GtkScrollStep step, gint num, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(GtkScrollStep, gint, SourceCompletion) dlg ; sourceCompletion.onMovePageListeners )
+		foreach ( void delegate(GtkScrollStep, gint, SourceCompletion) dlg ; _sourceCompletion.onMovePageListeners )
 		{
-			dlg(step, num, sourceCompletion);
+			dlg(step, num, _sourceCompletion);
 		}
 	}
 	
@@ -281,11 +270,11 @@ public class SourceCompletion : ObjectGtk
 		}
 		onPopulateContextListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulateContext(GtkSourceCompletion* completionStruct, GtkSourceCompletionContext* context, SourceCompletion sourceCompletion)
+	extern(C) static void callBackPopulateContext(GtkSourceCompletion* completionStruct, GtkSourceCompletionContext* context, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(SourceCompletionContext, SourceCompletion) dlg ; sourceCompletion.onPopulateContextListeners )
+		foreach ( void delegate(SourceCompletionContext, SourceCompletion) dlg ; _sourceCompletion.onPopulateContextListeners )
 		{
-			dlg(new SourceCompletionContext(context), sourceCompletion);
+			dlg(ObjectG.getDObject!SourceCompletionContext(context), _sourceCompletion);
 		}
 	}
 	
@@ -309,11 +298,11 @@ public class SourceCompletion : ObjectGtk
 		}
 		onShowListeners ~= dlg;
 	}
-	extern(C) static void callBackShow(GtkSourceCompletion* completionStruct, SourceCompletion sourceCompletion)
+	extern(C) static void callBackShow(GtkSourceCompletion* completionStruct, SourceCompletion _sourceCompletion)
 	{
-		foreach ( void delegate(SourceCompletion) dlg ; sourceCompletion.onShowListeners )
+		foreach ( void delegate(SourceCompletion) dlg ; _sourceCompletion.onShowListeners )
 		{
-			dlg(sourceCompletion);
+			dlg(_sourceCompletion);
 		}
 	}
 	
@@ -373,11 +362,13 @@ public class SourceCompletion : ObjectGtk
 	{
 		// GList * gtk_source_completion_get_providers (GtkSourceCompletion *completion);
 		auto p = gtk_source_completion_get_providers(gtkSourceCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -412,11 +403,13 @@ public class SourceCompletion : ObjectGtk
 	{
 		// GtkSourceCompletionInfo * gtk_source_completion_get_info_window  (GtkSourceCompletion *completion);
 		auto p = gtk_source_completion_get_info_window(gtkSourceCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceCompletionInfo(cast(GtkSourceCompletionInfo*) p);
+		
+		return ObjectG.getDObject!SourceCompletionInfo(cast(GtkSourceCompletionInfo*) p);
 	}
 	
 	/**
@@ -427,11 +420,13 @@ public class SourceCompletion : ObjectGtk
 	{
 		// struct _GtkSourceView * gtk_source_completion_get_view (GtkSourceCompletion *completion);
 		auto p = gtk_source_completion_get_view(gtkSourceCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceView(cast(GtkSourceView*) p);
+		
+		return ObjectG.getDObject!SourceView(cast(GtkSourceView*) p);
 	}
 	
 	/**
@@ -447,11 +442,13 @@ public class SourceCompletion : ObjectGtk
 	{
 		// GtkSourceCompletionContext * gtk_source_completion_create_context  (GtkSourceCompletion *completion,  GtkTextIter *position);
 		auto p = gtk_source_completion_create_context(gtkSourceCompletion, (position is null) ? null : position.getTextIterStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceCompletionContext(cast(GtkSourceCompletionContext*) p);
+		
+		return ObjectG.getDObject!SourceCompletionContext(cast(GtkSourceCompletionContext*) p);
 	}
 	
 	/**

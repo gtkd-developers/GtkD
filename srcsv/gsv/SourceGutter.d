@@ -59,6 +59,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -117,18 +118,6 @@ public class SourceGutter : ObjectG
 	 */
 	public this (GtkSourceGutter* gtkSourceGutter)
 	{
-		if(gtkSourceGutter is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceGutter);
-		if( ptr !is null )
-		{
-			this = cast(SourceGutter)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceGutter);
 		this.gtkSourceGutter = gtkSourceGutter;
 	}
@@ -164,11 +153,11 @@ public class SourceGutter : ObjectG
 		}
 		onCellActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackCellActivated(GtkSourceGutter* gutterStruct, GtkCellRenderer* renderer, GtkTextIter* iter, GdkEvent* event, SourceGutter sourceGutter)
+	extern(C) static void callBackCellActivated(GtkSourceGutter* gutterStruct, GtkCellRenderer* renderer, GtkTextIter* iter, GdkEvent* event, SourceGutter _sourceGutter)
 	{
-		foreach ( void delegate(CellRenderer, GtkTextIter*, GdkEvent*, SourceGutter) dlg ; sourceGutter.onCellActivatedListeners )
+		foreach ( void delegate(CellRenderer, GtkTextIter*, GdkEvent*, SourceGutter) dlg ; _sourceGutter.onCellActivatedListeners )
 		{
-			dlg(new CellRenderer(renderer), iter, event, sourceGutter);
+			dlg(ObjectG.getDObject!CellRenderer(renderer), iter, event, _sourceGutter);
 		}
 	}
 	
@@ -194,11 +183,11 @@ public class SourceGutter : ObjectG
 		}
 		onQueryTooltipListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackQueryTooltip(GtkSourceGutter* gutterStruct, GtkCellRenderer* renderer, GtkTextIter* iter, GtkTooltip* tooltip, SourceGutter sourceGutter)
+	extern(C) static gboolean callBackQueryTooltip(GtkSourceGutter* gutterStruct, GtkCellRenderer* renderer, GtkTextIter* iter, GtkTooltip* tooltip, SourceGutter _sourceGutter)
 	{
-		foreach ( bool delegate(CellRenderer, GtkTextIter*, GtkTooltip*, SourceGutter) dlg ; sourceGutter.onQueryTooltipListeners )
+		foreach ( bool delegate(CellRenderer, GtkTextIter*, GtkTooltip*, SourceGutter) dlg ; _sourceGutter.onQueryTooltipListeners )
 		{
-			if ( dlg(new CellRenderer(renderer), iter, tooltip, sourceGutter) )
+			if ( dlg(ObjectG.getDObject!CellRenderer(renderer), iter, tooltip, _sourceGutter) )
 			{
 				return 1;
 			}
@@ -218,11 +207,13 @@ public class SourceGutter : ObjectG
 	{
 		// GdkWindow * gtk_source_gutter_get_window (GtkSourceGutter *gutter);
 		auto p = gtk_source_gutter_get_window(gtkSourceGutter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**

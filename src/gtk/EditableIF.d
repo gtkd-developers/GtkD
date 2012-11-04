@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -115,7 +116,7 @@ public interface EditableIF
 	 * gtk_editable_delete_text().
 	 */
 	void addOnDeleteText(void delegate(gint, gint, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(string, gint, gpointer, EditableIF)[] onInsertTextListeners();
+	void delegate(string, gint, void*, EditableIF)[] onInsertTextListeners();
 	/**
 	 * This signal is emitted when text is inserted into
 	 * the widget by the user. The default handler for
@@ -125,7 +126,7 @@ public interface EditableIF
 	 * is possible to modify the inserted text, or prevent
 	 * it from being inserted entirely.
 	 */
-	void addOnInsertText(void delegate(string, gint, gpointer, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void addOnInsertText(void delegate(string, gint, void*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
 	 * Selects a region of text. The characters that are selected are

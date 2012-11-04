@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -102,11 +103,6 @@ public class TextAttributes
 	 */
 	public this (GtkTextAttributes* gtkTextAttributes)
 	{
-		if(gtkTextAttributes is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTextAttributes = gtkTextAttributes;
 	}
 	
@@ -136,11 +132,11 @@ public class TextAttributes
 		}
 		onListeners ~= dlg;
 	}
-	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextAttributes textAttributes)
+	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextAttributes _textAttributes)
 	{
-		foreach ( bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg ; textAttributes.onListeners )
+		foreach ( bool delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg ; _textAttributes.onListeners )
 		{
-			if ( dlg(object, event, iter, textAttributes) )
+			if ( dlg(object, event, iter, _textAttributes) )
 			{
 				return 1;
 			}
@@ -174,11 +170,13 @@ public class TextAttributes
 	{
 		// GtkTextAttributes * gtk_text_attributes_copy (GtkTextAttributes *src);
 		auto p = gtk_text_attributes_copy(gtkTextAttributes);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextAttributes(cast(GtkTextAttributes*) p);
+		
+		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
 	}
 	
 	/**
@@ -211,10 +209,12 @@ public class TextAttributes
 	{
 		// GtkTextAttributes * gtk_text_attributes_ref (GtkTextAttributes *values);
 		auto p = gtk_text_attributes_ref(gtkTextAttributes);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextAttributes(cast(GtkTextAttributes*) p);
+		
+		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
 	}
 }

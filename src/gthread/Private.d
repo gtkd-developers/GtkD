@@ -135,11 +135,6 @@ public class Private
 	 */
 	public this (GPrivate* gPrivate)
 	{
-		if(gPrivate is null)
-		{
-			this = null;
-			return;
-		}
 		this.gPrivate = gPrivate;
 	}
 	

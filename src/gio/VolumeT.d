@@ -77,6 +77,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -176,11 +177,11 @@ public template VolumeT(TStruct)
 		}
 		_onChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackChanged(GVolume* arg0Struct, VolumeIF volumeIF)
+	extern(C) static void callBackChanged(GVolume* arg0Struct, VolumeIF _volumeIF)
 	{
-		foreach ( void delegate(VolumeIF) dlg ; volumeIF.onChangedListeners )
+		foreach ( void delegate(VolumeIF) dlg ; _volumeIF.onChangedListeners )
 		{
-			dlg(volumeIF);
+			dlg(_volumeIF);
 		}
 	}
 	
@@ -209,11 +210,11 @@ public template VolumeT(TStruct)
 		}
 		_onRemovedListeners ~= dlg;
 	}
-	extern(C) static void callBackRemoved(GVolume* arg0Struct, VolumeIF volumeIF)
+	extern(C) static void callBackRemoved(GVolume* arg0Struct, VolumeIF _volumeIF)
 	{
-		foreach ( void delegate(VolumeIF) dlg ; volumeIF.onRemovedListeners )
+		foreach ( void delegate(VolumeIF) dlg ; _volumeIF.onRemovedListeners )
 		{
-			dlg(volumeIF);
+			dlg(_volumeIF);
 		}
 	}
 	
@@ -249,11 +250,13 @@ public template VolumeT(TStruct)
 	{
 		// GIcon * g_volume_get_icon (GVolume *volume);
 		auto p = g_volume_get_icon(getVolumeTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -264,11 +267,13 @@ public template VolumeT(TStruct)
 	{
 		// GDrive * g_volume_get_drive (GVolume *volume);
 		auto p = g_volume_get_drive(getVolumeTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Drive(cast(GDrive*) p);
+		
+		return ObjectG.getDObject!Drive(cast(GDrive*) p);
 	}
 	
 	/**
@@ -279,11 +284,13 @@ public template VolumeT(TStruct)
 	{
 		// GMount * g_volume_get_mount (GVolume *volume);
 		auto p = g_volume_get_mount(getVolumeTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Mount(cast(GMount*) p);
+		
+		return ObjectG.getDObject!Mount(cast(GMount*) p);
 	}
 	
 	/**
@@ -333,11 +340,13 @@ public template VolumeT(TStruct)
 	{
 		// GFile * g_volume_get_activation_root (GVolume *volume);
 		auto p = g_volume_get_activation_root(getVolumeTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**

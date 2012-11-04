@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -98,18 +99,6 @@ public class IMMulticontext : IMContext
 	 */
 	public this (GtkIMMulticontext* gtkIMMulticontext)
 	{
-		if(gtkIMMulticontext is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkIMMulticontext);
-		if( ptr !is null )
-		{
-			this = cast(IMMulticontext)ptr;
-			return;
-		}
 		super(cast(GtkIMContext*)gtkIMMulticontext);
 		this.gtkIMMulticontext = gtkIMMulticontext;
 	}
@@ -131,11 +120,13 @@ public class IMMulticontext : IMContext
 	{
 		// GtkIMContext * gtk_im_multicontext_new (void);
 		auto p = gtk_im_multicontext_new();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IMContext(cast(GtkIMContext*) p);
+		
+		return ObjectG.getDObject!IMContext(cast(GtkIMContext*) p);
 	}
 	
 	/**

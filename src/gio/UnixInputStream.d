@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.PollableInputStreamT;
@@ -100,18 +101,6 @@ public class UnixInputStream : InputStream, PollableInputStreamIF
 	 */
 	public this (GUnixInputStream* gUnixInputStream)
 	{
-		if(gUnixInputStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gUnixInputStream);
-		if( ptr !is null )
-		{
-			this = cast(UnixInputStream)ptr;
-			return;
-		}
 		super(cast(GInputStream*)gUnixInputStream);
 		this.gUnixInputStream = gUnixInputStream;
 	}

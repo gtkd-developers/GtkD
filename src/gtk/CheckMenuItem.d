@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -102,18 +103,6 @@ public class CheckMenuItem : MenuItem
 	 */
 	public this (GtkCheckMenuItem* gtkCheckMenuItem)
 	{
-		if(gtkCheckMenuItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCheckMenuItem);
-		if( ptr !is null )
-		{
-			this = cast(CheckMenuItem)ptr;
-			return;
-		}
 		super(cast(GtkMenuItem*)gtkCheckMenuItem);
 		this.gtkCheckMenuItem = gtkCheckMenuItem;
 	}
@@ -181,11 +170,11 @@ public class CheckMenuItem : MenuItem
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem checkMenuItem)
+	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem _checkMenuItem)
 	{
-		foreach ( void delegate(CheckMenuItem) dlg ; checkMenuItem.onToggledListeners )
+		foreach ( void delegate(CheckMenuItem) dlg ; _checkMenuItem.onToggledListeners )
 		{
-			dlg(checkMenuItem);
+			dlg(_checkMenuItem);
 		}
 	}
 	

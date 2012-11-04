@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.Cancellable;
@@ -101,11 +102,6 @@ public class IOSchedulerJob
 	 */
 	public this (GIOSchedulerJob* gIOSchedulerJob)
 	{
-		if(gIOSchedulerJob is null)
-		{
-			this = null;
-			return;
-		}
 		this.gIOSchedulerJob = gIOSchedulerJob;
 	}
 	

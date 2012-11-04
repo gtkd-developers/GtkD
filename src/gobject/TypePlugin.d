@@ -55,6 +55,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -122,11 +123,6 @@ public class TypePlugin
 	 */
 	public this (GTypePlugin* gTypePlugin)
 	{
-		if(gTypePlugin is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTypePlugin = gTypePlugin;
 	}
 	

@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -135,18 +136,6 @@ public class Paned : Container, OrientableIF
 	 */
 	public this (GtkPaned* gtkPaned)
 	{
-		if(gtkPaned is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPaned);
-		if( ptr !is null )
-		{
-			this = cast(Paned)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkPaned);
 		this.gtkPaned = gtkPaned;
 	}
@@ -195,11 +184,11 @@ public class Paned : Container, OrientableIF
 		}
 		onAcceptPositionListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackAcceptPosition(GtkPaned* widgetStruct, Paned paned)
+	extern(C) static gboolean callBackAcceptPosition(GtkPaned* widgetStruct, Paned _paned)
 	{
-		foreach ( bool delegate(Paned) dlg ; paned.onAcceptPositionListeners )
+		foreach ( bool delegate(Paned) dlg ; _paned.onAcceptPositionListeners )
 		{
-			if ( dlg(paned) )
+			if ( dlg(_paned) )
 			{
 				return 1;
 			}
@@ -233,11 +222,11 @@ public class Paned : Container, OrientableIF
 		}
 		onCancelPositionListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCancelPosition(GtkPaned* widgetStruct, Paned paned)
+	extern(C) static gboolean callBackCancelPosition(GtkPaned* widgetStruct, Paned _paned)
 	{
-		foreach ( bool delegate(Paned) dlg ; paned.onCancelPositionListeners )
+		foreach ( bool delegate(Paned) dlg ; _paned.onCancelPositionListeners )
 		{
-			if ( dlg(paned) )
+			if ( dlg(_paned) )
 			{
 				return 1;
 			}
@@ -269,11 +258,11 @@ public class Paned : Container, OrientableIF
 		}
 		onCycleChildFocusListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCycleChildFocus(GtkPaned* widgetStruct, gboolean reversed, Paned paned)
+	extern(C) static gboolean callBackCycleChildFocus(GtkPaned* widgetStruct, gboolean reversed, Paned _paned)
 	{
-		foreach ( bool delegate(gboolean, Paned) dlg ; paned.onCycleChildFocusListeners )
+		foreach ( bool delegate(gboolean, Paned) dlg ; _paned.onCycleChildFocusListeners )
 		{
-			if ( dlg(reversed, paned) )
+			if ( dlg(reversed, _paned) )
 			{
 				return 1;
 			}
@@ -306,11 +295,11 @@ public class Paned : Container, OrientableIF
 		}
 		onCycleHandleFocusListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCycleHandleFocus(GtkPaned* widgetStruct, gboolean reversed, Paned paned)
+	extern(C) static gboolean callBackCycleHandleFocus(GtkPaned* widgetStruct, gboolean reversed, Paned _paned)
 	{
-		foreach ( bool delegate(gboolean, Paned) dlg ; paned.onCycleHandleFocusListeners )
+		foreach ( bool delegate(gboolean, Paned) dlg ; _paned.onCycleHandleFocusListeners )
 		{
-			if ( dlg(reversed, paned) )
+			if ( dlg(reversed, _paned) )
 			{
 				return 1;
 			}
@@ -342,11 +331,11 @@ public class Paned : Container, OrientableIF
 		}
 		onMoveHandleListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMoveHandle(GtkPaned* widgetStruct, GtkScrollType scrollType, Paned paned)
+	extern(C) static gboolean callBackMoveHandle(GtkPaned* widgetStruct, GtkScrollType scrollType, Paned _paned)
 	{
-		foreach ( bool delegate(GtkScrollType, Paned) dlg ; paned.onMoveHandleListeners )
+		foreach ( bool delegate(GtkScrollType, Paned) dlg ; _paned.onMoveHandleListeners )
 		{
-			if ( dlg(scrollType, paned) )
+			if ( dlg(scrollType, _paned) )
 			{
 				return 1;
 			}
@@ -379,11 +368,11 @@ public class Paned : Container, OrientableIF
 		}
 		onToggleHandleFocusListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackToggleHandleFocus(GtkPaned* widgetStruct, Paned paned)
+	extern(C) static gboolean callBackToggleHandleFocus(GtkPaned* widgetStruct, Paned _paned)
 	{
-		foreach ( bool delegate(Paned) dlg ; paned.onToggleHandleFocusListeners )
+		foreach ( bool delegate(Paned) dlg ; _paned.onToggleHandleFocusListeners )
 		{
-			if ( dlg(paned) )
+			if ( dlg(_paned) )
 			{
 				return 1;
 			}
@@ -454,11 +443,13 @@ public class Paned : Container, OrientableIF
 	{
 		// GtkWidget * gtk_paned_get_child1 (GtkPaned *paned);
 		auto p = gtk_paned_get_child1(gtkPaned);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -470,11 +461,13 @@ public class Paned : Container, OrientableIF
 	{
 		// GtkWidget * gtk_paned_get_child2 (GtkPaned *paned);
 		auto p = gtk_paned_get_child2(gtkPaned);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -511,10 +504,12 @@ public class Paned : Container, OrientableIF
 	{
 		// GdkWindow * gtk_paned_get_handle_window (GtkPaned *paned);
 		auto p = gtk_paned_get_handle_window(gtkPaned);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

@@ -50,7 +50,7 @@ public struct GladeXMLClass
 {
 	GObjectClass parentClass;
 	/+* Virtual function: gets the appropriate gtype for the typename.+/
-	extern(C) GType  function(GladeXML*self, char *gtypename)  lookupType;
+	extern(C) GType function(GladeXML*self, char *gtypename)  lookupType;
 }
 
 
@@ -77,7 +77,6 @@ public struct GladeXMLClass
  */
 // void (*GladeXMLConnectFunc) (const gchar *handler_name,  GObject *object,  const gchar *signal_name,  const gchar *signal_data,  GObject *connect_object,  gboolean after,  gpointer user_data);
 
-
 /*
  * This prototype is for a function that creates custom widgets.
  * xml:
@@ -100,4 +99,3 @@ public struct GladeXMLClass
  *  the GtkWidget.
  */
 // GtkWidget* (*GladeXMLCustomWidgetHandler) (GladeXML *xml,  gchar *func_name,  gchar *name,  gchar *string1,  gchar *string2,  gint int1,  gint int2,  gpointer user_data);
-

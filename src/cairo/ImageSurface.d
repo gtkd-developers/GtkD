@@ -97,11 +97,6 @@ public class ImageSurface : Surface
 	 */
 	public this (cairo_surface_t* cairo_surface)
 	{
-		if(cairo_surface is null)
-		{
-			this = null;
-			return;
-		}
 		super(cast(cairo_surface_t*)cairo_surface);
 		this.cairo_surface = cairo_surface;
 	}
@@ -143,10 +138,12 @@ public class ImageSurface : Surface
 	{
 		// cairo_surface_t * cairo_image_surface_create (cairo_format_t format,  int width,  int height);
 		auto p = cairo_image_surface_create(format, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
 	
@@ -182,10 +179,12 @@ public class ImageSurface : Surface
 	{
 		// cairo_surface_t * cairo_image_surface_create_for_data (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
 		auto p = cairo_image_surface_create_for_data(data, format, width, height, stride);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
 	
@@ -254,10 +253,12 @@ public class ImageSurface : Surface
 	{
 		// cairo_surface_t * cairo_image_surface_create_from_png (const char *filename);
 		auto p = cairo_image_surface_create_from_png(Str.toStringz(filename));
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
 	
@@ -273,10 +274,12 @@ public class ImageSurface : Surface
 	{
 		// cairo_surface_t * cairo_image_surface_create_from_png_stream  (cairo_read_func_t read_func,  void *closure);
 		auto p = cairo_image_surface_create_from_png_stream(readFunc, closure);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
 	

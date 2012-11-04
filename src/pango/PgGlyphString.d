@@ -59,6 +59,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -98,11 +99,6 @@ public class PgGlyphString
 	 */
 	public this (PangoGlyphString* pangoGlyphString)
 	{
-		if(pangoGlyphString is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoGlyphString = pangoGlyphString;
 	}
 	
@@ -132,11 +128,13 @@ public class PgGlyphString
 	{
 		// PangoGlyphString * pango_glyph_string_copy (PangoGlyphString *string);
 		auto p = pango_glyph_string_copy(pangoGlyphString);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgGlyphString(cast(PangoGlyphString*) p);
+		
+		return ObjectG.getDObject!PgGlyphString(cast(PangoGlyphString*) p);
 	}
 	
 	/**

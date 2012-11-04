@@ -93,11 +93,6 @@ public class ScannerG
 	 */
 	public this (GScanner* gScanner)
 	{
-		if(gScanner is null)
-		{
-			this = null;
-			return;
-		}
 		this.gScanner = gScanner;
 	}
 	

@@ -64,6 +64,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -106,18 +107,6 @@ public class ToolItemGroup : Container, ToolShellIF
 	 */
 	public this (GtkToolItemGroup* gtkToolItemGroup)
 	{
-		if(gtkToolItemGroup is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToolItemGroup);
-		if( ptr !is null )
-		{
-			this = cast(ToolItemGroup)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkToolItemGroup);
 		this.gtkToolItemGroup = gtkToolItemGroup;
 	}
@@ -170,11 +159,13 @@ public class ToolItemGroup : Container, ToolShellIF
 	{
 		// GtkToolItem * gtk_tool_item_group_get_drop_item (GtkToolItemGroup *group,  gint x,  gint y);
 		auto p = gtk_tool_item_group_get_drop_item(gtkToolItemGroup, x, y);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ToolItem(cast(GtkToolItem*) p);
+		
+		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
 	}
 	
 	/**
@@ -233,11 +224,13 @@ public class ToolItemGroup : Container, ToolShellIF
 	{
 		// GtkWidget * gtk_tool_item_group_get_label_widget  (GtkToolItemGroup *group);
 		auto p = gtk_tool_item_group_get_label_widget(gtkToolItemGroup);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -251,11 +244,13 @@ public class ToolItemGroup : Container, ToolShellIF
 	{
 		// GtkToolItem * gtk_tool_item_group_get_nth_item (GtkToolItemGroup *group,  guint index);
 		auto p = gtk_tool_item_group_get_nth_item(gtkToolItemGroup, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ToolItem(cast(GtkToolItem*) p);
+		
+		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
 	}
 	
 	/**

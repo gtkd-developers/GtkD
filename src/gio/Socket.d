@@ -74,6 +74,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -157,18 +158,6 @@ public class Socket : ObjectG, InitableIF
 	 */
 	public this (GSocket* gSocket)
 	{
-		if(gSocket is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSocket);
-		if( ptr !is null )
-		{
-			this = cast(Socket)ptr;
-			return;
-		}
 		super(cast(GObject*)gSocket);
 		this.gSocket = gSocket;
 	}
@@ -481,7 +470,7 @@ public class Socket : ObjectG, InitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
-		address = new SocketAddress(outaddress);
+		address = ObjectG.getDObject!SocketAddress(outaddress);
 		return p;
 	}
 	
@@ -565,12 +554,12 @@ public class Socket : ObjectG, InitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
-		address = new SocketAddress(outaddress);
+		address = ObjectG.getDObject!SocketAddress(outaddress);
 		
 		messages = new SocketControlMessage[numMessages];
 		for(int i = 0; i < numMessages; i++)
 		{
-			messages[i] = new SocketControlMessage(cast(GSocketControlMessage*) outmessages[i]);
+			messages[i] = ObjectG.getDObject!SocketControlMessage(cast(GSocketControlMessage*) outmessages[i]);
 		}
 		return p;
 	}
@@ -884,11 +873,13 @@ public class Socket : ObjectG, InitableIF
 	{
 		// GSource * g_socket_create_source (GSocket *socket,  GIOCondition condition,  GCancellable *cancellable);
 		auto p = g_socket_create_source(gSocket, condition, (cancellable is null) ? null : cancellable.getCancellableStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Source(cast(GSource*) p);
+		
+		return ObjectG.getDObject!Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -1127,11 +1118,13 @@ public class Socket : ObjectG, InitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketAddress(cast(GSocketAddress*) p);
+		
+		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
 	}
 	
 	/**
@@ -1165,11 +1158,13 @@ public class Socket : ObjectG, InitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketAddress(cast(GSocketAddress*) p);
+		
+		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
 	}
 	
 	/**
@@ -1227,10 +1222,12 @@ public class Socket : ObjectG, InitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Credentials(cast(GCredentials*) p);
+		
+		return ObjectG.getDObject!Credentials(cast(GCredentials*) p);
 	}
 }

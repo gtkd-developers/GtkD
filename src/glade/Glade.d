@@ -74,6 +74,7 @@ public  import gtkc.gladetypes;
 
 private import gtkc.glade;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -121,18 +122,6 @@ public class Glade : ObjectG
 	 */
 	public this (GladeXML* gladeXML)
 	{
-		if(gladeXML is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gladeXML);
-		if( ptr !is null )
-		{
-			this = cast(Glade)ptr;
-			return;
-		}
 		super(cast(GObject*)gladeXML);
 		this.gladeXML = gladeXML;
 	}
@@ -513,11 +502,13 @@ public class Glade : ObjectG
 	{
 		// GladeXML* glade_get_widget_tree (GtkWidget *widget);
 		auto p = glade_get_widget_tree((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Glade(cast(GladeXML*) p);
+		
+		return ObjectG.getDObject!Glade(cast(GladeXML*) p);
 	}
 	
 	/**

@@ -64,6 +64,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -142,18 +143,6 @@ public class Binding : ObjectG
 	 */
 	public this (GBinding* gBinding)
 	{
-		if(gBinding is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gBinding);
-		if( ptr !is null )
-		{
-			this = cast(Binding)ptr;
-			return;
-		}
 		super(cast(GObject*)gBinding);
 		this.gBinding = gBinding;
 	}
@@ -176,11 +165,13 @@ public class Binding : ObjectG
 	{
 		// GObject * g_binding_get_source (GBinding *binding);
 		auto p = g_binding_get_source(gBinding);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 	
 	/**
@@ -204,11 +195,13 @@ public class Binding : ObjectG
 	{
 		// GObject * g_binding_get_target (GBinding *binding);
 		auto p = g_binding_get_target(gBinding);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 	
 	/**
@@ -246,15 +239,17 @@ public class Binding : ObjectG
 	 * flags = flags to pass to GBinding
 	 * Returns: the GBinding instance representing the binding between the two GObject instances. The binding is released whenever the GBinding reference count reaches zero. [transfer none]
 	 */
-	public static Binding gObjectBindProperty(ObjectG source, string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags)
+	public static Binding gObjectBindProperty(void* source, string sourceProperty, void* target, string targetProperty, GBindingFlags flags)
 	{
 		// GBinding * g_object_bind_property (gpointer source,  const gchar *source_property,  gpointer target,  const gchar *target_property,  GBindingFlags flags);
-		auto p = g_object_bind_property((source is null) ? null : source.getObjectGStruct(), Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags);
+		auto p = g_object_bind_property(source, Str.toStringz(sourceProperty), target, Str.toStringz(targetProperty), flags);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Binding(cast(GBinding*) p);
+		
+		return ObjectG.getDObject!Binding(cast(GBinding*) p);
 	}
 	
 	/**
@@ -279,15 +274,17 @@ public class Binding : ObjectG
 	 * resources used by the transformation functions
 	 * Returns: the GBinding instance representing the binding between the two GObject instances. The binding is released whenever the GBinding reference count reaches zero. [transfer none]
 	 */
-	public static Binding gObjectBindPropertyFull(ObjectG source, string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, ObjectG userData, GDestroyNotify notify)
+	public static Binding gObjectBindPropertyFull(void* source, string sourceProperty, void* target, string targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, void* userData, GDestroyNotify notify)
 	{
 		// GBinding * g_object_bind_property_full (gpointer source,  const gchar *source_property,  gpointer target,  const gchar *target_property,  GBindingFlags flags,  GBindingTransformFunc transform_to,  GBindingTransformFunc transform_from,  gpointer user_data,  GDestroyNotify notify);
-		auto p = g_object_bind_property_full((source is null) ? null : source.getObjectGStruct(), Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, transformTo, transformFrom, (userData is null) ? null : userData.getObjectGStruct(), notify);
+		auto p = g_object_bind_property_full(source, Str.toStringz(sourceProperty), target, Str.toStringz(targetProperty), flags, transformTo, transformFrom, userData, notify);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Binding(cast(GBinding*) p);
+		
+		return ObjectG.getDObject!Binding(cast(GBinding*) p);
 	}
 	
 	/**
@@ -311,14 +308,16 @@ public class Binding : ObjectG
 	 * from the target to the source, or NULL to use the default
 	 * Returns: the GBinding instance representing the binding between the two GObject instances. The binding is released whenever the GBinding reference count reaches zero. [transfer none]
 	 */
-	public static Binding gObjectBindPropertyWithClosures(ObjectG source, string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, Closure transformTo, Closure transformFrom)
+	public static Binding gObjectBindPropertyWithClosures(void* source, string sourceProperty, void* target, string targetProperty, GBindingFlags flags, Closure transformTo, Closure transformFrom)
 	{
 		// GBinding * g_object_bind_property_with_closures  (gpointer source,  const gchar *source_property,  gpointer target,  const gchar *target_property,  GBindingFlags flags,  GClosure *transform_to,  GClosure *transform_from);
-		auto p = g_object_bind_property_with_closures((source is null) ? null : source.getObjectGStruct(), Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, (transformTo is null) ? null : transformTo.getClosureStruct(), (transformFrom is null) ? null : transformFrom.getClosureStruct());
+		auto p = g_object_bind_property_with_closures(source, Str.toStringz(sourceProperty), target, Str.toStringz(targetProperty), flags, (transformTo is null) ? null : transformTo.getClosureStruct(), (transformFrom is null) ? null : transformFrom.getClosureStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Binding(cast(GBinding*) p);
+		
+		return ObjectG.getDObject!Binding(cast(GBinding*) p);
 	}
 }

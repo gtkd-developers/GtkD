@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -98,11 +99,6 @@ public class TextChildAnchor
 	 */
 	public this (GtkTextChildAnchor* gtkTextChildAnchor)
 	{
-		if(gtkTextChildAnchor is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTextChildAnchor = gtkTextChildAnchor;
 	}
 	
@@ -133,11 +129,11 @@ public class TextChildAnchor
 		}
 		onBackspaceListeners ~= dlg;
 	}
-	extern(C) static void callBackBackspace(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackBackspace(GtkTextView* textViewStruct, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onBackspaceListeners )
+		foreach ( void delegate(TextChildAnchor) dlg ; _textChildAnchor.onBackspaceListeners )
 		{
-			dlg(textChildAnchor);
+			dlg(_textChildAnchor);
 		}
 	}
 	
@@ -164,11 +160,11 @@ public class TextChildAnchor
 		}
 		onCopyClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCopyClipboard(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackCopyClipboard(GtkTextView* textViewStruct, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onCopyClipboardListeners )
+		foreach ( void delegate(TextChildAnchor) dlg ; _textChildAnchor.onCopyClipboardListeners )
 		{
-			dlg(textChildAnchor);
+			dlg(_textChildAnchor);
 		}
 	}
 	
@@ -195,11 +191,11 @@ public class TextChildAnchor
 		}
 		onCutClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCutClipboard(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackCutClipboard(GtkTextView* textViewStruct, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onCutClipboardListeners )
+		foreach ( void delegate(TextChildAnchor) dlg ; _textChildAnchor.onCutClipboardListeners )
 		{
-			dlg(textChildAnchor);
+			dlg(_textChildAnchor);
 		}
 	}
 	
@@ -231,11 +227,11 @@ public class TextChildAnchor
 		}
 		onDeleteFromCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteFromCursor(GtkTextView* textViewStruct, GtkDeleteType type, gint count, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackDeleteFromCursor(GtkTextView* textViewStruct, GtkDeleteType type, gint count, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(GtkDeleteType, gint, TextChildAnchor) dlg ; textChildAnchor.onDeleteFromCursorListeners )
+		foreach ( void delegate(GtkDeleteType, gint, TextChildAnchor) dlg ; _textChildAnchor.onDeleteFromCursorListeners )
 		{
-			dlg(type, count, textChildAnchor);
+			dlg(type, count, _textChildAnchor);
 		}
 	}
 	
@@ -262,11 +258,11 @@ public class TextChildAnchor
 		}
 		onInsertAtCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertAtCursor(GtkTextView* textViewStruct, gchar* str, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackInsertAtCursor(GtkTextView* textViewStruct, gchar* str, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(string, TextChildAnchor) dlg ; textChildAnchor.onInsertAtCursorListeners )
+		foreach ( void delegate(string, TextChildAnchor) dlg ; _textChildAnchor.onInsertAtCursorListeners )
 		{
-			dlg(Str.toString(str), textChildAnchor);
+			dlg(Str.toString(str), _textChildAnchor);
 		}
 	}
 	
@@ -306,11 +302,11 @@ public class TextChildAnchor
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkTextView* textViewStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackMoveCursor(GtkTextView* textViewStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextChildAnchor) dlg ; textChildAnchor.onMoveCursorListeners )
+		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextChildAnchor) dlg ; _textChildAnchor.onMoveCursorListeners )
 		{
-			dlg(step, count, extendSelection, textChildAnchor);
+			dlg(step, count, extendSelection, _textChildAnchor);
 		}
 	}
 	
@@ -338,11 +334,11 @@ public class TextChildAnchor
 		}
 		onMoveViewportListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveViewport(GtkTextView* textViewStruct, GtkScrollStep step, gint count, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackMoveViewport(GtkTextView* textViewStruct, GtkScrollStep step, gint count, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(GtkScrollStep, gint, TextChildAnchor) dlg ; textChildAnchor.onMoveViewportListeners )
+		foreach ( void delegate(GtkScrollStep, gint, TextChildAnchor) dlg ; _textChildAnchor.onMoveViewportListeners )
 		{
-			dlg(step, count, textChildAnchor);
+			dlg(step, count, _textChildAnchor);
 		}
 	}
 	
@@ -372,11 +368,11 @@ public class TextChildAnchor
 		}
 		onPageHorizontallyListeners ~= dlg;
 	}
-	extern(C) static void callBackPageHorizontally(GtkTextView* textViewStruct, gint count, gboolean extendSelection, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackPageHorizontally(GtkTextView* textViewStruct, gint count, gboolean extendSelection, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(gint, gboolean, TextChildAnchor) dlg ; textChildAnchor.onPageHorizontallyListeners )
+		foreach ( void delegate(gint, gboolean, TextChildAnchor) dlg ; _textChildAnchor.onPageHorizontallyListeners )
 		{
-			dlg(count, extendSelection, textChildAnchor);
+			dlg(count, extendSelection, _textChildAnchor);
 		}
 	}
 	
@@ -404,11 +400,11 @@ public class TextChildAnchor
 		}
 		onPasteClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackPasteClipboard(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackPasteClipboard(GtkTextView* textViewStruct, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onPasteClipboardListeners )
+		foreach ( void delegate(TextChildAnchor) dlg ; _textChildAnchor.onPasteClipboardListeners )
 		{
-			dlg(textChildAnchor);
+			dlg(_textChildAnchor);
 		}
 	}
 	
@@ -434,11 +430,11 @@ public class TextChildAnchor
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkTextView* entryStruct, GtkMenu* menu, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackPopulatePopup(GtkTextView* entryStruct, GtkMenu* menu, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(GtkMenu*, TextChildAnchor) dlg ; textChildAnchor.onPopulatePopupListeners )
+		foreach ( void delegate(GtkMenu*, TextChildAnchor) dlg ; _textChildAnchor.onPopulatePopupListeners )
 		{
-			dlg(menu, textChildAnchor);
+			dlg(menu, _textChildAnchor);
 		}
 	}
 	
@@ -466,11 +462,11 @@ public class TextChildAnchor
 		}
 		onPreeditChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackPreeditChanged(GtkTextView* textViewStruct, gchar* preedit, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackPreeditChanged(GtkTextView* textViewStruct, gchar* preedit, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(string, TextChildAnchor) dlg ; textChildAnchor.onPreeditChangedListeners )
+		foreach ( void delegate(string, TextChildAnchor) dlg ; _textChildAnchor.onPreeditChangedListeners )
 		{
-			dlg(Str.toString(preedit), textChildAnchor);
+			dlg(Str.toString(preedit), _textChildAnchor);
 		}
 	}
 	
@@ -499,11 +495,11 @@ public class TextChildAnchor
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectAll(GtkTextView* textViewStruct, gboolean select, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackSelectAll(GtkTextView* textViewStruct, gboolean select, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(gboolean, TextChildAnchor) dlg ; textChildAnchor.onSelectAllListeners )
+		foreach ( void delegate(gboolean, TextChildAnchor) dlg ; _textChildAnchor.onSelectAllListeners )
 		{
-			dlg(select, textChildAnchor);
+			dlg(select, _textChildAnchor);
 		}
 	}
 	
@@ -531,11 +527,11 @@ public class TextChildAnchor
 		}
 		onSetAnchorListeners ~= dlg;
 	}
-	extern(C) static void callBackSetAnchor(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackSetAnchor(GtkTextView* textViewStruct, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onSetAnchorListeners )
+		foreach ( void delegate(TextChildAnchor) dlg ; _textChildAnchor.onSetAnchorListeners )
 		{
-			dlg(textChildAnchor);
+			dlg(_textChildAnchor);
 		}
 	}
 	
@@ -560,11 +556,11 @@ public class TextChildAnchor
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkTextView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackSetScrollAdjustments(GtkTextView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, TextChildAnchor) dlg ; textChildAnchor.onSetScrollAdjustmentsListeners )
+		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, TextChildAnchor) dlg ; _textChildAnchor.onSetScrollAdjustmentsListeners )
 		{
-			dlg(vertical, arg2, textChildAnchor);
+			dlg(vertical, arg2, _textChildAnchor);
 		}
 	}
 	
@@ -590,11 +586,11 @@ public class TextChildAnchor
 		}
 		onToggleCursorVisibleListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleCursorVisible(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackToggleCursorVisible(GtkTextView* textViewStruct, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onToggleCursorVisibleListeners )
+		foreach ( void delegate(TextChildAnchor) dlg ; _textChildAnchor.onToggleCursorVisibleListeners )
 		{
-			dlg(textChildAnchor);
+			dlg(_textChildAnchor);
 		}
 	}
 	
@@ -622,11 +618,11 @@ public class TextChildAnchor
 		}
 		onToggleOverwriteListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleOverwrite(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackToggleOverwrite(GtkTextView* textViewStruct, TextChildAnchor _textChildAnchor)
 	{
-		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onToggleOverwriteListeners )
+		foreach ( void delegate(TextChildAnchor) dlg ; _textChildAnchor.onToggleOverwriteListeners )
 		{
-			dlg(textChildAnchor);
+			dlg(_textChildAnchor);
 		}
 	}
 	
@@ -658,11 +654,13 @@ public class TextChildAnchor
 	{
 		// GList * gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor);
 		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

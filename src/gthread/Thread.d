@@ -148,11 +148,6 @@ public class Thread
 	 */
 	public this (GThread* gThread)
 	{
-		if(gThread is null)
-		{
-			this = null;
-			return;
-		}
 		this.gThread = gThread;
 	}
 	
@@ -250,10 +245,12 @@ public class Thread
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Thread(cast(GThread*) p);
 	}
 	
@@ -307,10 +304,12 @@ public class Thread
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Thread(cast(GThread*) p);
 	}
 	
@@ -323,10 +322,12 @@ public class Thread
 	{
 		// GThread * g_thread_self (void);
 		auto p = g_thread_self();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Thread(cast(GThread*) p);
 	}
 	

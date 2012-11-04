@@ -59,6 +59,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -96,11 +97,6 @@ public class QuarkList
 	 */
 	public this (GdaQuarkList* gdaQuarkList)
 	{
-		if(gdaQuarkList is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaQuarkList = gdaQuarkList;
 	}
 	
@@ -159,11 +155,13 @@ public class QuarkList
 	{
 		// GdaQuarkList* gda_quark_list_copy (GdaQuarkList *qlist);
 		auto p = gda_quark_list_copy(gdaQuarkList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new QuarkList(cast(GdaQuarkList*) p);
+		
+		return ObjectG.getDObject!QuarkList(cast(GdaQuarkList*) p);
 	}
 	
 	/**

@@ -61,6 +61,7 @@ public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Pixbuf;
@@ -133,11 +134,6 @@ public class PixbufFormat
 	 */
 	public this (GdkPixbufFormat* gdkPixbufFormat)
 	{
-		if(gdkPixbufFormat is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkPixbufFormat = gdkPixbufFormat;
 	}
 	
@@ -181,11 +177,13 @@ public class PixbufFormat
 	{
 		// GSList * gdk_pixbuf_get_formats (void);
 		auto p = gdk_pixbuf_get_formats();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -197,11 +195,13 @@ public class PixbufFormat
 	{
 		// GdkPixbufFormat * gdk_pixbuf_format_copy (const GdkPixbufFormat *format);
 		auto p = gdk_pixbuf_format_copy(gdkPixbufFormat);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PixbufFormat(cast(GdkPixbufFormat*) p);
+		
+		return ObjectG.getDObject!PixbufFormat(cast(GdkPixbufFormat*) p);
 	}
 	
 	/**
@@ -339,10 +339,12 @@ public class PixbufFormat
 	{
 		// GdkPixbufFormat * gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
 		auto p = gdk_pixbuf_get_file_info(Str.toStringz(filename), &width, &height);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PixbufFormat(cast(GdkPixbufFormat*) p);
+		
+		return ObjectG.getDObject!PixbufFormat(cast(GdkPixbufFormat*) p);
 	}
 }

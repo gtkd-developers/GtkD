@@ -158,10 +158,12 @@ public class Child
 	{
 		// GSource * g_child_watch_source_new (GPid pid);
 		auto p = g_child_watch_source_new(pid);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	

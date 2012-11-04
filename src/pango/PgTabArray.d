@@ -56,6 +56,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -91,11 +92,6 @@ public class PgTabArray
 	 */
 	public this (PangoTabArray* pangoTabArray)
 	{
-		if(pangoTabArray is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoTabArray = pangoTabArray;
 	}
 	
@@ -130,11 +126,13 @@ public class PgTabArray
 	{
 		// PangoTabArray * pango_tab_array_copy (PangoTabArray *src);
 		auto p = pango_tab_array_copy(pangoTabArray);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgTabArray(cast(PangoTabArray*) p);
+		
+		return ObjectG.getDObject!PgTabArray(cast(PangoTabArray*) p);
 	}
 	
 	/**

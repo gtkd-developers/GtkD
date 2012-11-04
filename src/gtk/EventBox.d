@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -93,18 +94,6 @@ public class EventBox : Bin
 	 */
 	public this (GtkEventBox* gtkEventBox)
 	{
-		if(gtkEventBox is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkEventBox);
-		if( ptr !is null )
-		{
-			this = cast(EventBox)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkEventBox);
 		this.gtkEventBox = gtkEventBox;
 	}

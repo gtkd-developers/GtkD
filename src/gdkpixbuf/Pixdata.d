@@ -62,6 +62,7 @@ public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Pixbuf;
@@ -106,11 +107,6 @@ public class Pixdata
 	 */
 	public this (GdkPixdata* gdkPixdata)
 	{
-		if(gdkPixdata is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkPixdata = gdkPixdata;
 	}
 	
@@ -154,11 +150,13 @@ public class Pixdata
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -173,6 +171,12 @@ public class Pixdata
 		// guint8 * gdk_pixdata_serialize (const GdkPixdata *pixdata,  guint *stream_length_p);
 		uint streamLengthP;
 		auto p = gdk_pixdata_serialize(gdkPixdata, &streamLengthP);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. streamLengthP];
 	}
 	
@@ -219,10 +223,12 @@ public class Pixdata
 	{
 		// GString * gdk_pixdata_to_csource (GdkPixdata *pixdata,  const gchar *name,  GdkPixdataDumpType dump_type);
 		auto p = gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StringG(cast(GString*) p);
+		
+		return ObjectG.getDObject!StringG(cast(GString*) p);
 	}
 }

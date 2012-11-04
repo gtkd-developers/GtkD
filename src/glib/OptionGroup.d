@@ -131,11 +131,6 @@ public class OptionGroup
 	 */
 	public this (GOptionGroup* gOptionGroup)
 	{
-		if(gOptionGroup is null)
-		{
-			this = null;
-			return;
-		}
 		this.gOptionGroup = gOptionGroup;
 	}
 	

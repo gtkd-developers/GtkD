@@ -63,6 +63,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -104,18 +105,6 @@ public class DataInputStream : BufferedInputStream
 	 */
 	public this (GDataInputStream* gDataInputStream)
 	{
-		if(gDataInputStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDataInputStream);
-		if( ptr !is null )
-		{
-			this = cast(DataInputStream)ptr;
-			return;
-		}
 		super(cast(GBufferedInputStream*)gDataInputStream);
 		this.gDataInputStream = gDataInputStream;
 	}
@@ -435,13 +424,13 @@ public class DataInputStream : BufferedInputStream
 	 * Returns: a string with the data that was read before encountering any of the stop characters. Set length to a gsize to get the length of the string. This function will return NULL on an error. [transfer full]
 	 * Throws: GException on failure.
 	 */
-	public string readUpto(char[] stopChars, Cancellable cancellable)
+	public string readUpto(string stopChars, Cancellable cancellable)
 	{
 		// char * g_data_input_stream_read_upto (GDataInputStream *stream,  const gchar *stop_chars,  gssize stop_chars_len,  gsize *length,  GCancellable *cancellable,  GError **error);
 		gsize length;
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_upto(gDataInputStream, stopChars.ptr, cast(int) stopChars.length, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_data_input_stream_read_upto(gDataInputStream, cast(char*)stopChars.ptr, cast(int) stopChars.length, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -472,10 +461,10 @@ public class DataInputStream : BufferedInputStream
 	 * callback = callback to call when the request is satisfied. [scope async]
 	 * userData = the data to pass to callback function. [closure]
 	 */
-	public void readUptoAsync(char[] stopChars, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void readUptoAsync(string stopChars, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		// void g_data_input_stream_read_upto_async (GDataInputStream *stream,  const gchar *stop_chars,  gssize stop_chars_len,  gint io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
-		g_data_input_stream_read_upto_async(gDataInputStream, stopChars.ptr, cast(int) stopChars.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		g_data_input_stream_read_upto_async(gDataInputStream, cast(char*)stopChars.ptr, cast(int) stopChars.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 	
 	/**

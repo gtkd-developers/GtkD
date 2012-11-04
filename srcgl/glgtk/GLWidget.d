@@ -65,6 +65,7 @@ public  import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -99,7 +100,14 @@ public class GLWidget
 	 */
 	static GLDrawable getGLDrawable(Widget widget)
 	{
-		return new GLDrawable(cast(GdkGLDrawable*)gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct()));
+		auto p = gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct());
+		
+		if ( p is null )
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!GLDrawable(cast(GdkGLDrawable*)p);
 	}
 	
 	/**
@@ -147,11 +155,13 @@ public class GLWidget
 	{
 		// GdkGLConfig* gtk_widget_get_gl_config (GtkWidget *widget);
 		auto p = gtk_widget_get_gl_config((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLConfig(cast(GdkGLConfig*) p);
+		
+		return ObjectG.getDObject!GLConfig(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -172,11 +182,13 @@ public class GLWidget
 	{
 		// GdkGLContext* gtk_widget_create_gl_context (GtkWidget *widget,  GdkGLContext *share_list,  gboolean direct,  int render_type);
 		auto p = gtk_widget_create_gl_context((widget is null) ? null : widget.getWidgetStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLContext(cast(GdkGLContext*) p);
+		
+		return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
 	}
 	
 	/**
@@ -193,11 +205,13 @@ public class GLWidget
 	{
 		// GdkGLContext* gtk_widget_get_gl_context (GtkWidget *widget);
 		auto p = gtk_widget_get_gl_context((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLContext(cast(GdkGLContext*) p);
+		
+		return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
 	}
 	
 	/**
@@ -210,10 +224,12 @@ public class GLWidget
 	{
 		// GdkGLWindow* gtk_widget_get_gl_window (GtkWidget *widget);
 		auto p = gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLWindow(cast(GdkGLWindow*) p);
+		
+		return ObjectG.getDObject!GLWindow(cast(GdkGLWindow*) p);
 	}
 }

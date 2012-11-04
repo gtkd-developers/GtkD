@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -137,11 +138,6 @@ public class IconSource
 	 */
 	public this (GtkIconSource* gtkIconSource)
 	{
-		if(gtkIconSource is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkIconSource = gtkIconSource;
 	}
 	
@@ -156,11 +152,13 @@ public class IconSource
 	{
 		// GtkIconSource* gtk_icon_source_copy (const GtkIconSource *source);
 		auto p = gtk_icon_source_copy(gtkIconSource);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconSource(cast(GtkIconSource*) p);
+		
+		return ObjectG.getDObject!IconSource(cast(GtkIconSource*) p);
 	}
 	
 	/**
@@ -221,11 +219,13 @@ public class IconSource
 	{
 		// GdkPixbuf* gtk_icon_source_get_pixbuf (const GtkIconSource *source);
 		auto p = gtk_icon_source_get_pixbuf(gtkIconSource);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

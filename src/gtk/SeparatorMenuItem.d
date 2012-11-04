@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -93,18 +94,6 @@ public class SeparatorMenuItem : MenuItem
 	 */
 	public this (GtkSeparatorMenuItem* gtkSeparatorMenuItem)
 	{
-		if(gtkSeparatorMenuItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSeparatorMenuItem);
-		if( ptr !is null )
-		{
-			this = cast(SeparatorMenuItem)ptr;
-			return;
-		}
 		super(cast(GtkMenuItem*)gtkSeparatorMenuItem);
 		this.gtkSeparatorMenuItem = gtkSeparatorMenuItem;
 	}

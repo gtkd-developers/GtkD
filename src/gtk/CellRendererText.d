@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -103,18 +104,6 @@ public class CellRendererText : CellRenderer
 	 */
 	public this (GtkCellRendererText* gtkCellRendererText)
 	{
-		if(gtkCellRendererText is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellRendererText);
-		if( ptr !is null )
-		{
-			this = cast(CellRendererText)ptr;
-			return;
-		}
 		super(cast(GtkCellRenderer*)gtkCellRendererText);
 		this.gtkCellRendererText = gtkCellRendererText;
 	}
@@ -150,11 +139,11 @@ public class CellRendererText : CellRenderer
 		}
 		onEditedListeners ~= dlg;
 	}
-	extern(C) static void callBackEdited(GtkCellRendererText* rendererStruct, gchar* path, gchar* newText, CellRendererText cellRendererText)
+	extern(C) static void callBackEdited(GtkCellRendererText* rendererStruct, gchar* path, gchar* newText, CellRendererText _cellRendererText)
 	{
-		foreach ( void delegate(string, string, CellRendererText) dlg ; cellRendererText.onEditedListeners )
+		foreach ( void delegate(string, string, CellRendererText) dlg ; _cellRendererText.onEditedListeners )
 		{
-			dlg(Str.toString(path), Str.toString(newText), cellRendererText);
+			dlg(Str.toString(path), Str.toString(newText), _cellRendererText);
 		}
 	}
 	

@@ -64,6 +64,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ListG;
@@ -108,18 +109,6 @@ public class EmblemedIcon : ObjectG, IconIF
 	 */
 	public this (GEmblemedIcon* gEmblemedIcon)
 	{
-		if(gEmblemedIcon is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gEmblemedIcon);
-		if( ptr !is null )
-		{
-			this = cast(EmblemedIcon)ptr;
-			return;
-		}
 		super(cast(GObject*)gEmblemedIcon);
 		this.gEmblemedIcon = gEmblemedIcon;
 	}
@@ -164,11 +153,13 @@ public class EmblemedIcon : ObjectG, IconIF
 	{
 		// GIcon * g_emblemed_icon_get_icon (GEmblemedIcon *emblemed);
 		auto p = g_emblemed_icon_get_icon(gEmblemedIcon);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -180,11 +171,13 @@ public class EmblemedIcon : ObjectG, IconIF
 	{
 		// GList * g_emblemed_icon_get_emblems (GEmblemedIcon *emblemed);
 		auto p = g_emblemed_icon_get_emblems(gEmblemedIcon);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

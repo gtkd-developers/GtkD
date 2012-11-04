@@ -59,6 +59,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -96,18 +97,6 @@ public class Vfs : ObjectG
 	 */
 	public this (GVfs* gVfs)
 	{
-		if(gVfs is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gVfs);
-		if( ptr !is null )
-		{
-			this = cast(Vfs)ptr;
-			return;
-		}
 		super(cast(GObject*)gVfs);
 		this.gVfs = gVfs;
 	}
@@ -131,11 +120,13 @@ public class Vfs : ObjectG
 	{
 		// GFile * g_vfs_get_file_for_path (GVfs *vfs,  const char *path);
 		auto p = g_vfs_get_file_for_path(gVfs, Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -151,11 +142,13 @@ public class Vfs : ObjectG
 	{
 		// GFile * g_vfs_get_file_for_uri (GVfs *vfs,  const char *uri);
 		auto p = g_vfs_get_file_for_uri(gVfs, Str.toStringz(uri));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -170,11 +163,13 @@ public class Vfs : ObjectG
 	{
 		// GFile * g_vfs_parse_name (GVfs *vfs,  const char *parse_name);
 		auto p = g_vfs_parse_name(gVfs, Str.toStringz(parseName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -185,11 +180,13 @@ public class Vfs : ObjectG
 	{
 		// GVfs * g_vfs_get_default (void);
 		auto p = g_vfs_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Vfs(cast(GVfs*) p);
+		
+		return ObjectG.getDObject!Vfs(cast(GVfs*) p);
 	}
 	
 	/**
@@ -200,11 +197,13 @@ public class Vfs : ObjectG
 	{
 		// GVfs * g_vfs_get_local (void);
 		auto p = g_vfs_get_local();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Vfs(cast(GVfs*) p);
+		
+		return ObjectG.getDObject!Vfs(cast(GVfs*) p);
 	}
 	
 	/**

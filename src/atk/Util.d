@@ -58,6 +58,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import atk.ObjectAtk;
@@ -190,11 +191,13 @@ public class Util
 	{
 		// AtkObject * atk_get_root (void);
 		auto p = atk_get_root();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -206,11 +209,13 @@ public class Util
 	{
 		// AtkObject * atk_get_focus_object (void);
 		auto p = atk_get_focus_object();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

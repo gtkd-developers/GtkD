@@ -94,11 +94,6 @@ public class TrashStack
 	 */
 	public this (GTrashStack* gTrashStack)
 	{
-		if(gTrashStack is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTrashStack = gTrashStack;
 	}
 	

@@ -68,6 +68,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Drawable;
@@ -412,11 +413,13 @@ public class RGB
 	{
 		// GdkVisual * gdk_rgb_get_visual (void);
 		auto p = gdk_rgb_get_visual();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -433,11 +436,13 @@ public class RGB
 	{
 		// GdkColormap * gdk_rgb_get_colormap (void);
 		auto p = gdk_rgb_get_colormap();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Colormap(cast(GdkColormap*) p);
+		
+		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**

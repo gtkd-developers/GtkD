@@ -59,6 +59,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,11 +104,6 @@ public class Bitmap
 	 */
 	public this (GdkBitmap* gdkBitmap)
 	{
-		if(gdkBitmap is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkBitmap = gdkBitmap;
 	}
 	
@@ -138,10 +134,12 @@ public class Bitmap
 	{
 		// GdkBitmap * gdk_bitmap_create_from_data (GdkDrawable *drawable,  const gchar *data,  gint width,  gint height);
 		auto p = gdk_bitmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), Str.toStringz(data), width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Bitmap(cast(GdkBitmap*) p);
+		
+		return ObjectG.getDObject!Bitmap(cast(GdkBitmap*) p);
 	}
 }

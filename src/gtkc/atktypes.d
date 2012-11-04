@@ -1150,7 +1150,7 @@ public struct AtkValue{}
  * Nothing useful, this is only a dummy prototype.
  */
 // gboolean (*AtkFunction) (gpointer data);
-public alias extern(C) int  function (void*) AtkFunction;
+public alias extern(C) int function(void* data) AtkFunction;
 
 /*
  * An AtkPropertyChangeHandler is a function which is executed when an AtkObject's property changes value. It is specified in a call to
@@ -1161,7 +1161,7 @@ public alias extern(C) int  function (void*) AtkFunction;
  * an AtkPropertyValues
  */
 // void (*AtkPropertyChangeHandler) (AtkObject *Param1,  AtkPropertyValues *Param2);
-public alias extern(C) void  function (AtkObject*, AtkPropertyValues*) AtkPropertyChangeHandler;
+public alias extern(C) void function(AtkObject* Param1, AtkPropertyValues* Param2) AtkPropertyChangeHandler;
 
 /*
  * A function which is called when an object emits a matching event,
@@ -1175,7 +1175,7 @@ public alias extern(C) void  function (AtkObject*, AtkPropertyValues*) AtkProper
  * the specified event (e.g. 'focus:') takes place.
  */
 // void (*AtkEventListener) (AtkObject *obj);
-public alias extern(C) void  function (AtkObject*) AtkEventListener;
+public alias extern(C) void function(AtkObject* obj) AtkEventListener;
 
 /*
  * An AtkEventListenerInit function is a special function that is
@@ -1184,7 +1184,7 @@ public alias extern(C) void  function (AtkObject*) AtkEventListener;
  * see atk_focus_tracker_init.
  */
 // void (*AtkEventListenerInit) (void);
-public alias extern(C) void  function () AtkEventListenerInit;
+public alias extern(C) void function() AtkEventListenerInit;
 
 /*
  * An AtkKeySnoopFunc is a type of callback which is called whenever a key event occurs,
@@ -1202,4 +1202,4 @@ public alias extern(C) void  function () AtkEventListenerInit;
  * see atk_add_key_event_listener.
  */
 // gint (*AtkKeySnoopFunc) (AtkKeyEventStruct *event,  gpointer func_data);
-public alias extern(C) int  function (AtkKeyEventStruct*, void*) AtkKeySnoopFunc;
+public alias extern(C) int function(AtkKeyEventStruct* event, void* funcData) AtkKeySnoopFunc;

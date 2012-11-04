@@ -175,7 +175,7 @@ class TestWindow : MainWindow
 										ButtonsType.YES_NO,
 										"Are you sure you want' to exit these GtkDTests?");
 		int responce = d.run();
-		if ( responce == ResponseType.GTK_RESPONSE_YES )
+		if ( responce == ResponseType.YES )
 		{
 			Main.exit(0);
 		}
@@ -357,7 +357,7 @@ class TestWindow : MainWindow
 
 	void onDialogResponse(int response, Dialog dlg)
 	{
-		if(response == GtkResponseType.GTK_RESPONSE_CANCEL)
+		if(response == GtkResponseType.CANCEL)
 			dlg.destroy();
 	}
 
@@ -788,8 +788,8 @@ class TestWindow : MainWindow
 		ResponseType[] r;
 		a ~= "Lets go!";
 		a ~= "Please don't";
-		r ~= ResponseType.GTK_RESPONSE_OK;
-		r ~= ResponseType.GTK_RESPONSE_CANCEL;
+		r ~= ResponseType.OK;
+		r ~= ResponseType.CANCEL;
 		if ( fcd  is  null )
 		{
 			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.OPEN, a, r);

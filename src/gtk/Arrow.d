@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -100,18 +101,6 @@ public class Arrow : Misc
 	 */
 	public this (GtkArrow* gtkArrow)
 	{
-		if(gtkArrow is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkArrow);
-		if( ptr !is null )
-		{
-			this = cast(Arrow)ptr;
-			return;
-		}
 		super(cast(GtkMisc*)gtkArrow);
 		this.gtkArrow = gtkArrow;
 	}

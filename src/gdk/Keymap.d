@@ -59,6 +59,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -151,18 +152,6 @@ public class Keymap : ObjectG
 	 */
 	public this (GdkKeymap* gdkKeymap)
 	{
-		if(gdkKeymap is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkKeymap);
-		if( ptr !is null )
-		{
-			this = cast(Keymap)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkKeymap);
 		this.gdkKeymap = gdkKeymap;
 	}
@@ -198,11 +187,11 @@ public class Keymap : ObjectG
 		}
 		onDirectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct, Keymap keymap)
+	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct, Keymap _keymap)
 	{
-		foreach ( void delegate(Keymap) dlg ; keymap.onDirectionChangedListeners )
+		foreach ( void delegate(Keymap) dlg ; _keymap.onDirectionChangedListeners )
 		{
-			dlg(keymap);
+			dlg(_keymap);
 		}
 	}
 	
@@ -227,11 +216,11 @@ public class Keymap : ObjectG
 		}
 		onKeysChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, Keymap keymap)
+	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, Keymap _keymap)
 	{
-		foreach ( void delegate(Keymap) dlg ; keymap.onKeysChangedListeners )
+		foreach ( void delegate(Keymap) dlg ; _keymap.onKeysChangedListeners )
 		{
-			dlg(keymap);
+			dlg(_keymap);
 		}
 	}
 	
@@ -257,11 +246,11 @@ public class Keymap : ObjectG
 		}
 		onStateChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStateChanged(GdkKeymap* keymapStruct, Keymap keymap)
+	extern(C) static void callBackStateChanged(GdkKeymap* keymapStruct, Keymap _keymap)
 	{
-		foreach ( void delegate(Keymap) dlg ; keymap.onStateChangedListeners )
+		foreach ( void delegate(Keymap) dlg ; _keymap.onStateChangedListeners )
 		{
-			dlg(keymap);
+			dlg(_keymap);
 		}
 	}
 	
@@ -274,11 +263,13 @@ public class Keymap : ObjectG
 	{
 		// GdkKeymap * gdk_keymap_get_default (void);
 		auto p = gdk_keymap_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Keymap(cast(GdkKeymap*) p);
+		
+		return ObjectG.getDObject!Keymap(cast(GdkKeymap*) p);
 	}
 	
 	/**
@@ -292,11 +283,13 @@ public class Keymap : ObjectG
 	{
 		// GdkKeymap * gdk_keymap_get_for_display (GdkDisplay *display);
 		auto p = gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Keymap(cast(GdkKeymap*) p);
+		
+		return ObjectG.getDObject!Keymap(cast(GdkKeymap*) p);
 	}
 	
 	/**

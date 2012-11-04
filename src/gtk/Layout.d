@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -111,18 +112,6 @@ public class Layout : Container
 	 */
 	public this (GtkLayout* gtkLayout)
 	{
-		if(gtkLayout is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkLayout);
-		if( ptr !is null )
-		{
-			this = cast(Layout)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkLayout);
 		this.gtkLayout = gtkLayout;
 	}
@@ -160,11 +149,11 @@ public class Layout : Container
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkLayout* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, Layout layout)
+	extern(C) static void callBackSetScrollAdjustments(GtkLayout* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, Layout _layout)
 	{
-		foreach ( void delegate(Adjustment, Adjustment, Layout) dlg ; layout.onSetScrollAdjustmentsListeners )
+		foreach ( void delegate(Adjustment, Adjustment, Layout) dlg ; _layout.onSetScrollAdjustmentsListeners )
 		{
-			dlg(new Adjustment(vertical), new Adjustment(arg2), layout);
+			dlg(ObjectG.getDObject!Adjustment(vertical), ObjectG.getDObject!Adjustment(arg2), _layout);
 		}
 	}
 	
@@ -278,11 +267,13 @@ public class Layout : Container
 	{
 		// GtkAdjustment * gtk_layout_get_hadjustment (GtkLayout *layout);
 		auto p = gtk_layout_get_hadjustment(gtkLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -297,11 +288,13 @@ public class Layout : Container
 	{
 		// GtkAdjustment * gtk_layout_get_vadjustment (GtkLayout *layout);
 		auto p = gtk_layout_get_vadjustment(gtkLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -337,10 +330,12 @@ public class Layout : Container
 	{
 		// GdkWindow * gtk_layout_get_bin_window (GtkLayout *layout);
 		auto p = gtk_layout_get_bin_window(gtkLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

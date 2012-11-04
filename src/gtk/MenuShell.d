@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -101,18 +102,6 @@ public class MenuShell : Container
 	 */
 	public this (GtkMenuShell* gtkMenuShell)
 	{
-		if(gtkMenuShell is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMenuShell);
-		if( ptr !is null )
-		{
-			this = cast(MenuShell)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkMenuShell);
 		this.gtkMenuShell = gtkMenuShell;
 	}
@@ -147,11 +136,11 @@ public class MenuShell : Container
 		}
 		onActivateCurrentListeners ~= dlg;
 	}
-	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, gboolean arg1, MenuShell menuShell)
+	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, gboolean arg1, MenuShell _menuShell)
 	{
-		foreach ( void delegate(gboolean, MenuShell) dlg ; menuShell.onActivateCurrentListeners )
+		foreach ( void delegate(gboolean, MenuShell) dlg ; _menuShell.onActivateCurrentListeners )
 		{
-			dlg(arg1, menuShell);
+			dlg(arg1, _menuShell);
 		}
 	}
 	
@@ -175,11 +164,11 @@ public class MenuShell : Container
 		}
 		onCancelListeners ~= dlg;
 	}
-	extern(C) static void callBackCancel(GtkMenuShell* menushellStruct, MenuShell menuShell)
+	extern(C) static void callBackCancel(GtkMenuShell* menushellStruct, MenuShell _menuShell)
 	{
-		foreach ( void delegate(MenuShell) dlg ; menuShell.onCancelListeners )
+		foreach ( void delegate(MenuShell) dlg ; _menuShell.onCancelListeners )
 		{
-			dlg(menuShell);
+			dlg(_menuShell);
 		}
 	}
 	
@@ -201,11 +190,11 @@ public class MenuShell : Container
 		}
 		onCycleFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackCycleFocus(GtkMenuShell* menushellStruct, GtkDirectionType arg1, MenuShell menuShell)
+	extern(C) static void callBackCycleFocus(GtkMenuShell* menushellStruct, GtkDirectionType arg1, MenuShell _menuShell)
 	{
-		foreach ( void delegate(GtkDirectionType, MenuShell) dlg ; menuShell.onCycleFocusListeners )
+		foreach ( void delegate(GtkDirectionType, MenuShell) dlg ; _menuShell.onCycleFocusListeners )
 		{
-			dlg(arg1, menuShell);
+			dlg(arg1, _menuShell);
 		}
 	}
 	
@@ -228,11 +217,11 @@ public class MenuShell : Container
 		}
 		onDeactivateListeners ~= dlg;
 	}
-	extern(C) static void callBackDeactivate(GtkMenuShell* menushellStruct, MenuShell menuShell)
+	extern(C) static void callBackDeactivate(GtkMenuShell* menushellStruct, MenuShell _menuShell)
 	{
-		foreach ( void delegate(MenuShell) dlg ; menuShell.onDeactivateListeners )
+		foreach ( void delegate(MenuShell) dlg ; _menuShell.onDeactivateListeners )
 		{
-			dlg(menuShell);
+			dlg(_menuShell);
 		}
 	}
 	
@@ -256,11 +245,11 @@ public class MenuShell : Container
 		}
 		onMoveCurrentListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType arg1, MenuShell menuShell)
+	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType arg1, MenuShell _menuShell)
 	{
-		foreach ( void delegate(GtkMenuDirectionType, MenuShell) dlg ; menuShell.onMoveCurrentListeners )
+		foreach ( void delegate(GtkMenuDirectionType, MenuShell) dlg ; _menuShell.onMoveCurrentListeners )
 		{
-			dlg(arg1, menuShell);
+			dlg(arg1, _menuShell);
 		}
 	}
 	
@@ -286,11 +275,11 @@ public class MenuShell : Container
 		}
 		onMoveSelectedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMoveSelected(GtkMenuShell* menuShellStruct, gint distance, MenuShell menuShell)
+	extern(C) static gboolean callBackMoveSelected(GtkMenuShell* menuShellStruct, gint distance, MenuShell _menuShell)
 	{
-		foreach ( bool delegate(gint, MenuShell) dlg ; menuShell.onMoveSelectedListeners )
+		foreach ( bool delegate(gint, MenuShell) dlg ; _menuShell.onMoveSelectedListeners )
 		{
-			if ( dlg(distance, menuShell) )
+			if ( dlg(distance, _menuShell) )
 			{
 				return 1;
 			}
@@ -319,11 +308,11 @@ public class MenuShell : Container
 		}
 		onSelectionDoneListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionDone(GtkMenuShell* menushellStruct, MenuShell menuShell)
+	extern(C) static void callBackSelectionDone(GtkMenuShell* menushellStruct, MenuShell _menuShell)
 	{
-		foreach ( void delegate(MenuShell) dlg ; menuShell.onSelectionDoneListeners )
+		foreach ( void delegate(MenuShell) dlg ; _menuShell.onSelectionDoneListeners )
 		{
-			dlg(menuShell);
+			dlg(_menuShell);
 		}
 	}
 	

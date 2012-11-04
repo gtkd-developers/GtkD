@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -111,18 +112,6 @@ public class HandleBox : Bin
 	 */
 	public this (GtkHandleBox* gtkHandleBox)
 	{
-		if(gtkHandleBox is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkHandleBox);
-		if( ptr !is null )
-		{
-			this = cast(HandleBox)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkHandleBox);
 		this.gtkHandleBox = gtkHandleBox;
 	}
@@ -157,11 +146,11 @@ public class HandleBox : Bin
 		}
 		onChildAttachedListeners ~= dlg;
 	}
-	extern(C) static void callBackChildAttached(GtkHandleBox* handleboxStruct, GtkWidget* widget, HandleBox handleBox)
+	extern(C) static void callBackChildAttached(GtkHandleBox* handleboxStruct, GtkWidget* widget, HandleBox _handleBox)
 	{
-		foreach ( void delegate(GtkWidget*, HandleBox) dlg ; handleBox.onChildAttachedListeners )
+		foreach ( void delegate(GtkWidget*, HandleBox) dlg ; _handleBox.onChildAttachedListeners )
 		{
-			dlg(widget, handleBox);
+			dlg(widget, _handleBox);
 		}
 	}
 	
@@ -185,11 +174,11 @@ public class HandleBox : Bin
 		}
 		onChildDetachedListeners ~= dlg;
 	}
-	extern(C) static void callBackChildDetached(GtkHandleBox* handleboxStruct, GtkWidget* widget, HandleBox handleBox)
+	extern(C) static void callBackChildDetached(GtkHandleBox* handleboxStruct, GtkWidget* widget, HandleBox _handleBox)
 	{
-		foreach ( void delegate(GtkWidget*, HandleBox) dlg ; handleBox.onChildDetachedListeners )
+		foreach ( void delegate(GtkWidget*, HandleBox) dlg ; _handleBox.onChildDetachedListeners )
 		{
-			dlg(widget, handleBox);
+			dlg(widget, _handleBox);
 		}
 	}
 	

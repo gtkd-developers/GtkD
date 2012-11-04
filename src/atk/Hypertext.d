@@ -57,6 +57,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -98,11 +99,6 @@ public class Hypertext
 	 */
 	public this (AtkHypertext* atkHypertext)
 	{
-		if(atkHypertext is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkHypertext = atkHypertext;
 	}
 	
@@ -132,11 +128,11 @@ public class Hypertext
 		}
 		onLinkSelectedListeners ~= dlg;
 	}
-	extern(C) static void callBackLinkSelected(AtkHypertext* atkhypertextStruct, gint arg1, Hypertext hypertext)
+	extern(C) static void callBackLinkSelected(AtkHypertext* atkhypertextStruct, gint arg1, Hypertext _hypertext)
 	{
-		foreach ( void delegate(gint, Hypertext) dlg ; hypertext.onLinkSelectedListeners )
+		foreach ( void delegate(gint, Hypertext) dlg ; _hypertext.onLinkSelectedListeners )
 		{
-			dlg(arg1, hypertext);
+			dlg(arg1, _hypertext);
 		}
 	}
 	
@@ -152,11 +148,13 @@ public class Hypertext
 	{
 		// AtkHyperlink * atk_hypertext_get_link (AtkHypertext *hypertext,  gint link_index);
 		auto p = atk_hypertext_get_link(atkHypertext, linkIndex);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Hyperlink(cast(AtkHyperlink*) p);
+		
+		return ObjectG.getDObject!Hyperlink(cast(AtkHyperlink*) p);
 	}
 	
 	/**

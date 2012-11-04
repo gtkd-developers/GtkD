@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -93,18 +94,6 @@ public class Accessible : ObjectAtk
 	 */
 	public this (GtkAccessible* gtkAccessible)
 	{
-		if(gtkAccessible is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAccessible);
-		if( ptr !is null )
-		{
-			this = cast(Accessible)ptr;
-			return;
-		}
 		super(cast(AtkObject*)gtkAccessible);
 		this.gtkAccessible = gtkAccessible;
 	}
@@ -138,11 +127,13 @@ public class Accessible : ObjectAtk
 	{
 		// GtkWidget * gtk_accessible_get_widget (GtkAccessible *accessible);
 		auto p = gtk_accessible_get_widget(gtkAccessible);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

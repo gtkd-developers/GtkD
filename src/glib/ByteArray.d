@@ -97,11 +97,6 @@ public class ByteArray
 	 */
 	public this (GByteArray* gByteArray)
 	{
-		if(gByteArray is null)
-		{
-			this = null;
-			return;
-		}
 		this.gByteArray = gByteArray;
 	}
 	
@@ -136,10 +131,12 @@ public class ByteArray
 	{
 		// GByteArray * g_byte_array_sized_new (guint reserved_size);
 		auto p = g_byte_array_sized_new(reservedSize);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 	
@@ -153,10 +150,12 @@ public class ByteArray
 	{
 		// GByteArray * g_byte_array_ref (GByteArray *array);
 		auto p = g_byte_array_ref(gByteArray);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 	
@@ -184,10 +183,12 @@ public class ByteArray
 	{
 		// GByteArray * g_byte_array_append (GByteArray *array,  const guint8 *data,  guint len);
 		auto p = g_byte_array_append(gByteArray, data.ptr, cast(int) data.length);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 	
@@ -202,10 +203,12 @@ public class ByteArray
 	{
 		// GByteArray * g_byte_array_prepend (GByteArray *array,  const guint8 *data,  guint len);
 		auto p = g_byte_array_prepend(gByteArray, data.ptr, cast(int) data.length);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 	
@@ -220,10 +223,12 @@ public class ByteArray
 	{
 		// GByteArray * g_byte_array_remove_index (GByteArray *array,  guint index_);
 		auto p = g_byte_array_remove_index(gByteArray, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 	
@@ -240,10 +245,12 @@ public class ByteArray
 	{
 		// GByteArray * g_byte_array_remove_index_fast (GByteArray *array,  guint index_);
 		auto p = g_byte_array_remove_index_fast(gByteArray, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 	
@@ -260,10 +267,12 @@ public class ByteArray
 	{
 		// GByteArray * g_byte_array_remove_range (GByteArray *array,  guint index_,  guint length);
 		auto p = g_byte_array_remove_range(gByteArray, index, length);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 	
@@ -306,10 +315,12 @@ public class ByteArray
 	{
 		// GByteArray * g_byte_array_set_size (GByteArray *array,  guint length);
 		auto p = g_byte_array_set_size(gByteArray, length);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 	

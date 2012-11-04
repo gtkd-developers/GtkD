@@ -126,6 +126,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -227,18 +228,6 @@ public class Widget : ObjectGtk, BuildableIF
 	 */
 	public this (GtkWidget* gtkWidget)
 	{
-		if(gtkWidget is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkWidget);
-		if( ptr !is null )
-		{
-			this = cast(Widget)ptr;
-			return;
-		}
 		super(cast(GtkObject*)gtkWidget);
 		this.gtkWidget = gtkWidget;
 	}
@@ -606,11 +595,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onAccelClosuresChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackAccelClosuresChanged(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackAccelClosuresChanged(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onAccelClosuresChangedListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onAccelClosuresChangedListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -638,11 +627,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onButtonPressListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
+	extern(C) static gboolean callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventButton*, Widget) dlg ; widget.onButtonPressListeners )
+		foreach ( bool delegate(GdkEventButton*, Widget) dlg ; _widget.onButtonPressListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -676,11 +665,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onButtonReleaseListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
+	extern(C) static gboolean callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventButton*, Widget) dlg ; widget.onButtonReleaseListeners )
+		foreach ( bool delegate(GdkEventButton*, Widget) dlg ; _widget.onButtonReleaseListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -712,11 +701,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onCanActivateAccelListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackCanActivateAccel(GtkWidget* widgetStruct, guint signalId, Widget widget)
+	extern(C) static gboolean callBackCanActivateAccel(GtkWidget* widgetStruct, guint signalId, Widget _widget)
 	{
-		foreach ( bool delegate(guint, Widget) dlg ; widget.onCanActivateAccelListeners )
+		foreach ( bool delegate(guint, Widget) dlg ; _widget.onCanActivateAccelListeners )
 		{
-			if ( dlg(signalId, widget) )
+			if ( dlg(signalId, _widget) )
 			{
 				return 1;
 			}
@@ -746,11 +735,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onChildNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* pspec, Widget widget)
+	extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* pspec, Widget _widget)
 	{
-		foreach ( void delegate(ParamSpec, Widget) dlg ; widget.onChildNotifyListeners )
+		foreach ( void delegate(ParamSpec, Widget) dlg ; _widget.onChildNotifyListeners )
 		{
-			dlg(new ParamSpec(pspec), widget);
+			dlg(ObjectG.getDObject!ParamSpec(pspec), _widget);
 		}
 	}
 	
@@ -775,11 +764,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onClientListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackClient(GtkWidget* widgetStruct, GdkEventClient* event, Widget widget)
+	extern(C) static gboolean callBackClient(GtkWidget* widgetStruct, GdkEventClient* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventClient*, Widget) dlg ; widget.onClientListeners )
+		foreach ( bool delegate(GdkEventClient*, Widget) dlg ; _widget.onClientListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -809,11 +798,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onCompositedChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackCompositedChanged(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackCompositedChanged(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onCompositedChangedListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onCompositedChangedListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -840,11 +829,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onConfigureListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackConfigure(GtkWidget* widgetStruct, GdkEventConfigure* event, Widget widget)
+	extern(C) static gboolean callBackConfigure(GtkWidget* widgetStruct, GdkEventConfigure* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventConfigure*, Widget) dlg ; widget.onConfigureListeners )
+		foreach ( bool delegate(GdkEventConfigure*, Widget) dlg ; _widget.onConfigureListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -875,11 +864,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDamageListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDamage(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackDamage(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onDamageListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDamageListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -911,11 +900,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDeleteListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDelete(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackDelete(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onDeleteListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDeleteListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -924,7 +913,7 @@ public class Widget : ObjectGtk, BuildableIF
 		return 0;
 	}
 	
-	bool delegate(Event, Widget)[] onDestroyListeners;
+	bool delegate(Event, Widget)[] onDestroyEventListeners;
 	/**
 	 * The ::destroy-event signal is emitted when a GdkWindow is destroyed.
 	 * You rarely get this signal, because most widgets disconnect themselves
@@ -934,26 +923,26 @@ public class Widget : ObjectGtk, BuildableIF
 	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
 	 * automatically for all new windows.
 	 */
-	void addOnDestroy(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnDestroyEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("destroy-event" in connectedSignals) )
 		{
 			Signals.connectData(
 			getStruct(),
 			"destroy-event",
-			cast(GCallback)&callBackDestroy,
+			cast(GCallback)&callBackDestroyEvent,
 			cast(void*)this,
 			null,
 			connectFlags);
 			connectedSignals["destroy-event"] = 1;
 		}
-		onDestroyListeners ~= dlg;
+		onDestroyEventListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDestroy(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackDestroyEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onDestroyListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDestroyEventListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -982,11 +971,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDirectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackDirectionChanged(GtkWidget* widgetStruct, GtkTextDirection previousDirection, Widget widget)
+	extern(C) static void callBackDirectionChanged(GtkWidget* widgetStruct, GtkTextDirection previousDirection, Widget _widget)
 	{
-		foreach ( void delegate(GtkTextDirection, Widget) dlg ; widget.onDirectionChangedListeners )
+		foreach ( void delegate(GtkTextDirection, Widget) dlg ; _widget.onDirectionChangedListeners )
 		{
-			dlg(previousDirection, widget);
+			dlg(previousDirection, _widget);
 		}
 	}
 	
@@ -1014,11 +1003,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragBeginListeners ~= dlg;
 	}
-	extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
+	extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
 	{
-		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragBeginListeners )
+		foreach ( void delegate(GdkDragContext*, Widget) dlg ; _widget.onDragBeginListeners )
 		{
-			dlg(dragContext, widget);
+			dlg(dragContext, _widget);
 		}
 	}
 	
@@ -1044,11 +1033,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragDataDeleteListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
+	extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
 	{
-		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragDataDeleteListeners )
+		foreach ( void delegate(GdkDragContext*, Widget) dlg ; _widget.onDragDataDeleteListeners )
 		{
-			dlg(dragContext, widget);
+			dlg(dragContext, _widget);
 		}
 	}
 	
@@ -1075,11 +1064,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragDataGetListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkSelectionData* data, guint info, guint time, Widget widget)
+	extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkSelectionData* data, guint info, guint time, Widget _widget)
 	{
-		foreach ( void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget) dlg ; widget.onDragDataGetListeners )
+		foreach ( void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget) dlg ; _widget.onDragDataGetListeners )
 		{
-			dlg(dragContext, data, info, time, widget);
+			dlg(dragContext, data, info, time, _widget);
 		}
 	}
 	
@@ -1113,11 +1102,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragDataReceivedListeners ~= dlg;
 	}
-	extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data, guint info, guint time, Widget widget)
+	extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data, guint info, guint time, Widget _widget)
 	{
-		foreach ( void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg ; widget.onDragDataReceivedListeners )
+		foreach ( void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg ; _widget.onDragDataReceivedListeners )
 		{
-			dlg(dragContext, x, y, data, info, time, widget);
+			dlg(dragContext, x, y, data, info, time, _widget);
 		}
 	}
 	
@@ -1149,11 +1138,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragDropListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
+	extern(C) static gboolean callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget _widget)
 	{
-		foreach ( bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragDropListeners )
+		foreach ( bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; _widget.onDragDropListeners )
 		{
-			if ( dlg(dragContext, x, y, time, widget) )
+			if ( dlg(dragContext, x, y, time, _widget) )
 			{
 				return 1;
 			}
@@ -1183,11 +1172,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragEndListeners ~= dlg;
 	}
-	extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
+	extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget _widget)
 	{
-		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragEndListeners )
+		foreach ( void delegate(GdkDragContext*, Widget) dlg ; _widget.onDragEndListeners )
 		{
-			dlg(dragContext, widget);
+			dlg(dragContext, _widget);
 		}
 	}
 	
@@ -1215,11 +1204,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragFailedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget widget)
+	extern(C) static gboolean callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget _widget)
 	{
-		foreach ( bool delegate(GdkDragContext*, GtkDragResult, Widget) dlg ; widget.onDragFailedListeners )
+		foreach ( bool delegate(GdkDragContext*, GtkDragResult, Widget) dlg ; _widget.onDragFailedListeners )
 		{
-			if ( dlg(dragContext, result, widget) )
+			if ( dlg(dragContext, result, _widget) )
 			{
 				return 1;
 			}
@@ -1250,11 +1239,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragLeaveListeners ~= dlg;
 	}
-	extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* dragContext, guint time, Widget widget)
+	extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* dragContext, guint time, Widget _widget)
 	{
-		foreach ( void delegate(GdkDragContext*, guint, Widget) dlg ; widget.onDragLeaveListeners )
+		foreach ( void delegate(GdkDragContext*, guint, Widget) dlg ; _widget.onDragLeaveListeners )
 		{
-			dlg(dragContext, time, widget);
+			dlg(dragContext, time, _widget);
 		}
 	}
 	
@@ -1296,11 +1285,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onDragMotionListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
+	extern(C) static gboolean callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget _widget)
 	{
-		foreach ( bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragMotionListeners )
+		foreach ( bool delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; _widget.onDragMotionListeners )
 		{
-			if ( dlg(dragContext, x, y, time, widget) )
+			if ( dlg(dragContext, x, y, time, _widget) )
 			{
 				return 1;
 			}
@@ -1332,11 +1321,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onEnterNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackEnterNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget widget)
+	extern(C) static gboolean callBackEnterNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventCrossing*, Widget) dlg ; widget.onEnterNotifyListeners )
+		foreach ( bool delegate(GdkEventCrossing*, Widget) dlg ; _widget.onEnterNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -1368,11 +1357,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onListeners ~= dlg;
 	}
-	extern(C) static gboolean callBack(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBack(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1402,11 +1391,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onEventAfterListeners ~= dlg;
 	}
-	extern(C) static void callBackEventAfter(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static void callBackEventAfter(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( void delegate(Event, Widget) dlg ; widget.onEventAfterListeners )
+		foreach ( void delegate(Event, Widget) dlg ; _widget.onEventAfterListeners )
 		{
-			dlg(new Event(event), widget);
+			dlg(ObjectG.getDObject!Event(event), _widget);
 		}
 	}
 	
@@ -1434,11 +1423,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onExposeListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackExpose(GtkWidget* widgetStruct, GdkEventExpose* event, Widget widget)
+	extern(C) static gboolean callBackExpose(GtkWidget* widgetStruct, GdkEventExpose* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventExpose*, Widget) dlg ; widget.onExposeListeners )
+		foreach ( bool delegate(GdkEventExpose*, Widget) dlg ; _widget.onExposeListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -1465,11 +1454,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onFocusListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocus(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
+	extern(C) static gboolean callBackFocus(GtkWidget* widgetStruct, GtkDirectionType direction, Widget _widget)
 	{
-		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; widget.onFocusListeners )
+		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; _widget.onFocusListeners )
 		{
-			if ( dlg(direction, widget) )
+			if ( dlg(direction, _widget) )
 			{
 				return 1;
 			}
@@ -1500,11 +1489,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onFocusInListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusIn(GtkWidget* widgetStruct, GdkEventFocus* event, Widget widget)
+	extern(C) static gboolean callBackFocusIn(GtkWidget* widgetStruct, GdkEventFocus* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusInListeners )
+		foreach ( bool delegate(GdkEventFocus*, Widget) dlg ; _widget.onFocusInListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -1535,11 +1524,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onFocusOutListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackFocusOut(GtkWidget* widgetStruct, GdkEventFocus* event, Widget widget)
+	extern(C) static gboolean callBackFocusOut(GtkWidget* widgetStruct, GdkEventFocus* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusOutListeners )
+		foreach ( bool delegate(GdkEventFocus*, Widget) dlg ; _widget.onFocusOutListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -1572,11 +1561,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onGrabBrokenListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackGrabBroken(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackGrabBroken(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onGrabBrokenListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onGrabBrokenListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1603,11 +1592,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onGrabFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackGrabFocus(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackGrabFocus(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onGrabFocusListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onGrabFocusListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -1638,11 +1627,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onGrabNotifyListeners ~= dlg;
 	}
-	extern(C) static void callBackGrabNotify(GtkWidget* widgetStruct, gboolean wasGrabbed, Widget widget)
+	extern(C) static void callBackGrabNotify(GtkWidget* widgetStruct, gboolean wasGrabbed, Widget _widget)
 	{
-		foreach ( void delegate(gboolean, Widget) dlg ; widget.onGrabNotifyListeners )
+		foreach ( void delegate(gboolean, Widget) dlg ; _widget.onGrabNotifyListeners )
 		{
-			dlg(wasGrabbed, widget);
+			dlg(wasGrabbed, _widget);
 		}
 	}
 	
@@ -1664,11 +1653,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onHideListeners ~= dlg;
 	}
-	extern(C) static void callBackHide(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackHide(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onHideListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onHideListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -1695,11 +1684,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onHierarchyChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackHierarchyChanged(GtkWidget* widgetStruct, GtkWidget* previousToplevel, Widget widget)
+	extern(C) static void callBackHierarchyChanged(GtkWidget* widgetStruct, GtkWidget* previousToplevel, Widget _widget)
 	{
-		foreach ( void delegate(Widget, Widget) dlg ; widget.onHierarchyChangedListeners )
+		foreach ( void delegate(Widget, Widget) dlg ; _widget.onHierarchyChangedListeners )
 		{
-			dlg(new Widget(previousToplevel), widget);
+			dlg(ObjectG.getDObject!Widget(previousToplevel), _widget);
 		}
 	}
 	
@@ -1725,11 +1714,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onKeyPressListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackKeyPress(GtkWidget* widgetStruct, GdkEventKey* event, Widget widget)
+	extern(C) static gboolean callBackKeyPress(GtkWidget* widgetStruct, GdkEventKey* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventKey*, Widget) dlg ; widget.onKeyPressListeners )
+		foreach ( bool delegate(GdkEventKey*, Widget) dlg ; _widget.onKeyPressListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -1760,11 +1749,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onKeyReleaseListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackKeyRelease(GtkWidget* widgetStruct, GdkEventKey* event, Widget widget)
+	extern(C) static gboolean callBackKeyRelease(GtkWidget* widgetStruct, GdkEventKey* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventKey*, Widget) dlg ; widget.onKeyReleaseListeners )
+		foreach ( bool delegate(GdkEventKey*, Widget) dlg ; _widget.onKeyReleaseListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -1794,11 +1783,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onKeynavFailedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
+	extern(C) static gboolean callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, Widget _widget)
 	{
-		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; widget.onKeynavFailedListeners )
+		foreach ( bool delegate(GtkDirectionType, Widget) dlg ; _widget.onKeynavFailedListeners )
 		{
-			if ( dlg(direction, widget) )
+			if ( dlg(direction, _widget) )
 			{
 				return 1;
 			}
@@ -1830,11 +1819,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onLeaveNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackLeaveNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget widget)
+	extern(C) static gboolean callBackLeaveNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventCrossing*, Widget) dlg ; widget.onLeaveNotifyListeners )
+		foreach ( bool delegate(GdkEventCrossing*, Widget) dlg ; _widget.onLeaveNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -1861,11 +1850,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onMapListeners ~= dlg;
 	}
-	extern(C) static void callBackMap(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackMap(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onMapListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onMapListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -1892,11 +1881,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onMapEventListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackMapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onMapEventListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onMapEventListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -1923,11 +1912,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onMnemonicActivateListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMnemonicActivate(GtkWidget* widgetStruct, gboolean arg1, Widget widget)
+	extern(C) static gboolean callBackMnemonicActivate(GtkWidget* widgetStruct, gboolean arg1, Widget _widget)
 	{
-		foreach ( bool delegate(gboolean, Widget) dlg ; widget.onMnemonicActivateListeners )
+		foreach ( bool delegate(gboolean, Widget) dlg ; _widget.onMnemonicActivateListeners )
 		{
-			if ( dlg(arg1, widget) )
+			if ( dlg(arg1, _widget) )
 			{
 				return 1;
 			}
@@ -1960,11 +1949,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onMotionNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackMotionNotify(GtkWidget* widgetStruct, GdkEventMotion* event, Widget widget)
+	extern(C) static gboolean callBackMotionNotify(GtkWidget* widgetStruct, GdkEventMotion* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventMotion*, Widget) dlg ; widget.onMotionNotifyListeners )
+		foreach ( bool delegate(GdkEventMotion*, Widget) dlg ; _widget.onMotionNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -1991,11 +1980,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onMoveFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveFocus(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
+	extern(C) static void callBackMoveFocus(GtkWidget* widgetStruct, GtkDirectionType direction, Widget _widget)
 	{
-		foreach ( void delegate(GtkDirectionType, Widget) dlg ; widget.onMoveFocusListeners )
+		foreach ( void delegate(GtkDirectionType, Widget) dlg ; _widget.onMoveFocusListeners )
 		{
-			dlg(direction, widget);
+			dlg(direction, _widget);
 		}
 	}
 	
@@ -2022,11 +2011,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onNoExposeListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackNoExpose(GtkWidget* widgetStruct, GdkEventNoExpose* event, Widget widget)
+	extern(C) static gboolean callBackNoExpose(GtkWidget* widgetStruct, GdkEventNoExpose* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventNoExpose*, Widget) dlg ; widget.onNoExposeListeners )
+		foreach ( bool delegate(GdkEventNoExpose*, Widget) dlg ; _widget.onNoExposeListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2055,11 +2044,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onParentSetListeners ~= dlg;
 	}
-	extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkObject* oldParent, Widget widget)
+	extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkObject* oldParent, Widget _widget)
 	{
-		foreach ( void delegate(GtkObject*, Widget) dlg ; widget.onParentSetListeners )
+		foreach ( void delegate(GtkObject*, Widget) dlg ; _widget.onParentSetListeners )
 		{
-			dlg(oldParent, widget);
+			dlg(oldParent, _widget);
 		}
 	}
 	
@@ -2087,11 +2076,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onPopupMenuListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPopupMenu(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static gboolean callBackPopupMenu(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( bool delegate(Widget) dlg ; widget.onPopupMenuListeners )
+		foreach ( bool delegate(Widget) dlg ; _widget.onPopupMenuListeners )
 		{
-			if ( dlg(widget) )
+			if ( dlg(_widget) )
 			{
 				return 1;
 			}
@@ -2122,11 +2111,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onPropertyNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPropertyNotify(GtkWidget* widgetStruct, GdkEventProperty* event, Widget widget)
+	extern(C) static gboolean callBackPropertyNotify(GtkWidget* widgetStruct, GdkEventProperty* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventProperty*, Widget) dlg ; widget.onPropertyNotifyListeners )
+		foreach ( bool delegate(GdkEventProperty*, Widget) dlg ; _widget.onPropertyNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2156,11 +2145,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onProximityInListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackProximityIn(GtkWidget* widgetStruct, GdkEventProximity* event, Widget widget)
+	extern(C) static gboolean callBackProximityIn(GtkWidget* widgetStruct, GdkEventProximity* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityInListeners )
+		foreach ( bool delegate(GdkEventProximity*, Widget) dlg ; _widget.onProximityInListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2190,11 +2179,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onProximityOutListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackProximityOut(GtkWidget* widgetStruct, GdkEventProximity* event, Widget widget)
+	extern(C) static gboolean callBackProximityOut(GtkWidget* widgetStruct, GdkEventProximity* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityOutListeners )
+		foreach ( bool delegate(GdkEventProximity*, Widget) dlg ; _widget.onProximityOutListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2233,11 +2222,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onQueryTooltipListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackQueryTooltip(GtkWidget* widgetStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, Widget widget)
+	extern(C) static gboolean callBackQueryTooltip(GtkWidget* widgetStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, Widget _widget)
 	{
-		foreach ( bool delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg ; widget.onQueryTooltipListeners )
+		foreach ( bool delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg ; _widget.onQueryTooltipListeners )
 		{
-			if ( dlg(x, y, keyboardMode, tooltip, widget) )
+			if ( dlg(x, y, keyboardMode, tooltip, _widget) )
 			{
 				return 1;
 			}
@@ -2264,11 +2253,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onRealizeListeners ~= dlg;
 	}
-	extern(C) static void callBackRealize(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackRealize(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onRealizeListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onRealizeListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2292,11 +2281,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onScreenChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackScreenChanged(GtkWidget* widgetStruct, GdkScreen* previousScreen, Widget widget)
+	extern(C) static void callBackScreenChanged(GtkWidget* widgetStruct, GdkScreen* previousScreen, Widget _widget)
 	{
-		foreach ( void delegate(Screen, Widget) dlg ; widget.onScreenChangedListeners )
+		foreach ( void delegate(Screen, Widget) dlg ; _widget.onScreenChangedListeners )
 		{
-			dlg(new Screen(previousScreen), widget);
+			dlg(ObjectG.getDObject!Screen(previousScreen), _widget);
 		}
 	}
 	
@@ -2324,11 +2313,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onScrollListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackScroll(GtkWidget* widgetStruct, GdkEventScroll* event, Widget widget)
+	extern(C) static gboolean callBackScroll(GtkWidget* widgetStruct, GdkEventScroll* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventScroll*, Widget) dlg ; widget.onScrollListeners )
+		foreach ( bool delegate(GdkEventScroll*, Widget) dlg ; _widget.onScrollListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2357,11 +2346,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSelectionClearListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionClear(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
+	extern(C) static gboolean callBackSelectionClear(GtkWidget* widgetStruct, GdkEventSelection* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionClearListeners )
+		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; _widget.onSelectionClearListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2388,11 +2377,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSelectionGetListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, guint info, guint time, Widget widget)
+	extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, guint info, guint time, Widget _widget)
 	{
-		foreach ( void delegate(GtkSelectionData*, guint, guint, Widget) dlg ; widget.onSelectionGetListeners )
+		foreach ( void delegate(GtkSelectionData*, guint, guint, Widget) dlg ; _widget.onSelectionGetListeners )
 		{
-			dlg(data, info, time, widget);
+			dlg(data, info, time, _widget);
 		}
 	}
 	
@@ -2414,11 +2403,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSelectionNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionNotify(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
+	extern(C) static gboolean callBackSelectionNotify(GtkWidget* widgetStruct, GdkEventSelection* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionNotifyListeners )
+		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; _widget.onSelectionNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2445,11 +2434,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSelectionReceivedListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, guint time, Widget widget)
+	extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, guint time, Widget _widget)
 	{
-		foreach ( void delegate(GtkSelectionData*, guint, Widget) dlg ; widget.onSelectionReceivedListeners )
+		foreach ( void delegate(GtkSelectionData*, guint, Widget) dlg ; _widget.onSelectionReceivedListeners )
 		{
-			dlg(data, time, widget);
+			dlg(data, time, _widget);
 		}
 	}
 	
@@ -2474,11 +2463,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSelectionRequestListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackSelectionRequest(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
+	extern(C) static gboolean callBackSelectionRequest(GtkWidget* widgetStruct, GdkEventSelection* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionRequestListeners )
+		foreach ( bool delegate(GdkEventSelection*, Widget) dlg ; _widget.onSelectionRequestListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2505,11 +2494,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onShowListeners ~= dlg;
 	}
-	extern(C) static void callBackShow(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackShow(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onShowListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onShowListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2531,11 +2520,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onShowHelpListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType helpType, Widget widget)
+	extern(C) static gboolean callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType helpType, Widget _widget)
 	{
-		foreach ( bool delegate(GtkWidgetHelpType, Widget) dlg ; widget.onShowHelpListeners )
+		foreach ( bool delegate(GtkWidgetHelpType, Widget) dlg ; _widget.onShowHelpListeners )
 		{
-			if ( dlg(helpType, widget) )
+			if ( dlg(helpType, _widget) )
 			{
 				return 1;
 			}
@@ -2562,11 +2551,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSizeAllocateListeners ~= dlg;
 	}
-	extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, GtkAllocation* allocation, Widget widget)
+	extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, GtkAllocation* allocation, Widget _widget)
 	{
-		foreach ( void delegate(GtkAllocation*, Widget) dlg ; widget.onSizeAllocateListeners )
+		foreach ( void delegate(GtkAllocation*, Widget) dlg ; _widget.onSizeAllocateListeners )
 		{
-			dlg(allocation, widget);
+			dlg(allocation, _widget);
 		}
 	}
 	
@@ -2588,11 +2577,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onSizeRequestListeners ~= dlg;
 	}
-	extern(C) static void callBackSizeRequest(GtkWidget* widgetStruct, GtkRequisition* requisition, Widget widget)
+	extern(C) static void callBackSizeRequest(GtkWidget* widgetStruct, GtkRequisition* requisition, Widget _widget)
 	{
-		foreach ( void delegate(GtkRequisition*, Widget) dlg ; widget.onSizeRequestListeners )
+		foreach ( void delegate(GtkRequisition*, Widget) dlg ; _widget.onSizeRequestListeners )
 		{
-			dlg(requisition, widget);
+			dlg(requisition, _widget);
 		}
 	}
 	
@@ -2616,11 +2605,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onStateChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackStateChanged(GtkWidget* widgetStruct, GtkStateType state, Widget widget)
+	extern(C) static void callBackStateChanged(GtkWidget* widgetStruct, GtkStateType state, Widget _widget)
 	{
-		foreach ( void delegate(GtkStateType, Widget) dlg ; widget.onStateChangedListeners )
+		foreach ( void delegate(GtkStateType, Widget) dlg ; _widget.onStateChangedListeners )
 		{
-			dlg(state, widget);
+			dlg(state, _widget);
 		}
 	}
 	
@@ -2645,11 +2634,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onStyleSetListeners ~= dlg;
 	}
-	extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget widget)
+	extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget _widget)
 	{
-		foreach ( void delegate(Style, Widget) dlg ; widget.onStyleSetListeners )
+		foreach ( void delegate(Style, Widget) dlg ; _widget.onStyleSetListeners )
 		{
-			dlg(new Style(previousStyle), widget);
+			dlg(ObjectG.getDObject!Style(previousStyle), _widget);
 		}
 	}
 	
@@ -2671,11 +2660,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onUnmapListeners ~= dlg;
 	}
-	extern(C) static void callBackUnmap(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackUnmap(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onUnmapListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onUnmapListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2702,11 +2691,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onUnmapEventListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackUnmapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
+	extern(C) static gboolean callBackUnmapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget _widget)
 	{
-		foreach ( bool delegate(Event, Widget) dlg ; widget.onUnmapEventListeners )
+		foreach ( bool delegate(Event, Widget) dlg ; _widget.onUnmapEventListeners )
 		{
-			if ( dlg(new Event(event), widget) )
+			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
 			{
 				return 1;
 			}
@@ -2733,11 +2722,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onUnrealizeListeners ~= dlg;
 	}
-	extern(C) static void callBackUnrealize(GtkWidget* widgetStruct, Widget widget)
+	extern(C) static void callBackUnrealize(GtkWidget* widgetStruct, Widget _widget)
 	{
-		foreach ( void delegate(Widget) dlg ; widget.onUnrealizeListeners )
+		foreach ( void delegate(Widget) dlg ; _widget.onUnrealizeListeners )
 		{
-			dlg(widget);
+			dlg(_widget);
 		}
 	}
 	
@@ -2763,11 +2752,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onVisibilityNotifyListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEventVisibility* event, Widget widget)
+	extern(C) static gboolean callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEventVisibility* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventVisibility*, Widget) dlg ; widget.onVisibilityNotifyListeners )
+		foreach ( bool delegate(GdkEventVisibility*, Widget) dlg ; _widget.onVisibilityNotifyListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2799,11 +2788,11 @@ public class Widget : ObjectGtk, BuildableIF
 		}
 		onWindowStateListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackWindowState(GtkWidget* widgetStruct, GdkEventWindowState* event, Widget widget)
+	extern(C) static gboolean callBackWindowState(GtkWidget* widgetStruct, GdkEventWindowState* event, Widget _widget)
 	{
-		foreach ( bool delegate(GdkEventWindowState*, Widget) dlg ; widget.onWindowStateListeners )
+		foreach ( bool delegate(GdkEventWindowState*, Widget) dlg ; _widget.onWindowStateListeners )
 		{
-			if ( dlg(event, widget) )
+			if ( dlg(event, _widget) )
 			{
 				return 1;
 			}
@@ -2864,7 +2853,7 @@ public class Widget : ObjectGtk, BuildableIF
 		
 		gtk_widget_destroyed(gtkWidget, &outwidgetPointer);
 		
-		widgetPointer = new Widget(outwidgetPointer);
+		widgetPointer = ObjectG.getDObject!Widget(outwidgetPointer);
 	}
 	
 	/**
@@ -3184,11 +3173,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GList* gtk_widget_list_accel_closures (GtkWidget *widget);
 		auto p = gtk_widget_list_accel_closures(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -3402,11 +3393,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkWindow * gtk_widget_get_parent_window (GtkWidget *widget);
 		auto p = gtk_widget_get_parent_window(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -3542,11 +3535,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkWidget* gtk_widget_get_toplevel (GtkWidget *widget);
 		auto p = gtk_widget_get_toplevel(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -3567,11 +3562,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkWidget* gtk_widget_get_ancestor (GtkWidget *widget,  GType widget_type);
 		auto p = gtk_widget_get_ancestor(gtkWidget, widgetType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -3583,11 +3580,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkColormap* gtk_widget_get_colormap (GtkWidget *widget);
 		auto p = gtk_widget_get_colormap(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Colormap(cast(GdkColormap*) p);
+		
+		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -3612,11 +3611,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkVisual* gtk_widget_get_visual (GtkWidget *widget);
 		auto p = gtk_widget_get_visual(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -3730,11 +3731,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkStyle * gtk_widget_get_style (GtkWidget *widget);
 		auto p = gtk_widget_get_style(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Style(cast(GtkStyle*) p);
+		
+		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -3793,11 +3796,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkStyle* gtk_widget_get_default_style (void);
 		auto p = gtk_widget_get_default_style();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Style(cast(GtkStyle*) p);
+		
+		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -3808,11 +3813,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkColormap* gtk_widget_get_default_colormap (void);
 		auto p = gtk_widget_get_default_colormap();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Colormap(cast(GdkColormap*) p);
+		
+		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -3824,11 +3831,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkVisual* gtk_widget_get_default_visual (void);
 		auto p = gtk_widget_get_default_visual();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -4023,11 +4032,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkRcStyle * gtk_widget_get_modifier_style (GtkWidget *widget);
 		auto p = gtk_widget_get_modifier_style(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RcStyle(cast(GtkRcStyle*) p);
+		
+		return ObjectG.getDObject!RcStyle(cast(GtkRcStyle*) p);
 	}
 	
 	/**
@@ -4155,11 +4166,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// PangoContext * gtk_widget_create_pango_context (GtkWidget *widget);
 		auto p = gtk_widget_create_pango_context(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgContext(cast(PangoContext*) p);
+		
+		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -4179,11 +4192,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// PangoContext * gtk_widget_get_pango_context (GtkWidget *widget);
 		auto p = gtk_widget_get_pango_context(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgContext(cast(PangoContext*) p);
+		
+		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -4203,11 +4218,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// PangoLayout * gtk_widget_create_pango_layout (GtkWidget *widget,  const gchar *text);
 		auto p = gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -4233,11 +4250,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkPixbuf * gtk_widget_render_icon (GtkWidget *widget,  const gchar *stock_id,  GtkIconSize size,  const gchar *detail);
 		auto p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -4489,11 +4508,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GParamSpec* gtk_widget_class_find_style_property  (GtkWidgetClass *klass,  const gchar *property_name);
 		auto p = gtk_widget_class_find_style_property(klass, Str.toStringz(propertyName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -4508,6 +4529,7 @@ public class Widget : ObjectGtk, BuildableIF
 		// GParamSpec** gtk_widget_class_list_style_properties  (GtkWidgetClass *klass,  guint *n_properties);
 		uint nProperties;
 		auto p = gtk_widget_class_list_style_properties(klass, &nProperties);
+		
 		if(p is null)
 		{
 			return null;
@@ -4516,7 +4538,7 @@ public class Widget : ObjectGtk, BuildableIF
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -4537,11 +4559,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkRegion * gtk_widget_region_intersect (GtkWidget *widget,  const GdkRegion *region);
 		auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(GdkRegion*) p);
+		
+		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -4643,11 +4667,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// AtkObject* gtk_widget_get_accessible (GtkWidget *widget);
 		auto p = gtk_widget_get_accessible(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -4732,11 +4758,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkWidget * gtk_widget_get_parent (GtkWidget *widget);
 		auto p = gtk_widget_get_parent(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -4751,11 +4779,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkSettings* gtk_widget_get_settings (GtkWidget *widget);
 		auto p = gtk_widget_get_settings(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Settings(cast(GtkSettings*) p);
+		
+		return ObjectG.getDObject!Settings(cast(GtkSettings*) p);
 	}
 	
 	/**
@@ -4776,11 +4806,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkClipboard * gtk_widget_get_clipboard (GtkWidget *widget,  GdkAtom selection);
 		auto p = gtk_widget_get_clipboard(gtkWidget, selection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Clipboard(cast(GtkClipboard*) p);
+		
+		return ObjectG.getDObject!Clipboard(cast(GtkClipboard*) p);
 	}
 	
 	/**
@@ -4797,11 +4829,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkDisplay * gtk_widget_get_display (GtkWidget *widget);
 		auto p = gtk_widget_get_display(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -4819,11 +4853,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkWindow * gtk_widget_get_root_window (GtkWidget *widget);
 		auto p = gtk_widget_get_root_window(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -4841,11 +4877,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GdkScreen * gtk_widget_get_screen (GtkWidget *widget);
 		auto p = gtk_widget_get_screen(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -4996,11 +5034,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GList* gtk_widget_list_mnemonic_labels (GtkWidget *widget);
 		auto p = gtk_widget_list_mnemonic_labels(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -5048,11 +5088,13 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		// GtkAction * gtk_widget_get_action (GtkWidget *widget);
 		auto p = gtk_widget_get_action(gtkWidget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Action(cast(GtkAction*) p);
+		
+		return ObjectG.getDObject!Action(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -5243,426 +5285,428 @@ public class Widget : ObjectGtk, BuildableIF
 	 * For instance a clip_rect { +5, +5, -10, -10 } will
 	 * chop off 5 pixels at each side of the snapshot pixmap.
 	 * If non-NULL, clip_rect will contain the exact widget-relative snapshot
- * coordinates upon return. A clip_rect of { -1, -1, 0, 0 }
- * can be used to preserve the auto-grown snapshot area and use clip_rect
- * as a pure output parameter.
- * The returned pixmap can be NULL, if the resulting clip_area was empty.
- * Since 2.14
- * Params:
- * clipRect = a GdkRectangle or NULL. [allow-none]
- * Returns: GdkPixmap snapshot of the widget
- */
-public Pixmap getSnapshot(Rectangle clipRect)
-{
-	// GdkPixmap * gtk_widget_get_snapshot (GtkWidget *widget,  GdkRectangle *clip_rect);
-	auto p = gtk_widget_get_snapshot(gtkWidget, (clipRect is null) ? null : clipRect.getRectangleStruct());
-	if(p is null)
+	 * coordinates upon return. A clip_rect of { -1, -1, 0, 0 }
+	 * can be used to preserve the auto-grown snapshot area and use clip_rect
+	 * as a pure output parameter.
+	 * The returned pixmap can be NULL, if the resulting clip_area was empty.
+	 * Since 2.14
+	 * Params:
+	 * clipRect = a GdkRectangle or NULL. [allow-none]
+	 * Returns: GdkPixmap snapshot of the widget
+	 */
+	public Pixmap getSnapshot(Rectangle clipRect)
 	{
-		return null;
+		// GdkPixmap * gtk_widget_get_snapshot (GtkWidget *widget,  GdkRectangle *clip_rect);
+		auto p = gtk_widget_get_snapshot(gtkWidget, (clipRect is null) ? null : clipRect.getRectangleStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
 	}
-	return new Pixmap(cast(GdkPixmap*) p);
-}
-
-/**
- * Sets the widget's allocation. This should not be used
- * directly, but from within a widget's size_allocate method.
- * Since 2.18
- * Params:
- * allocation = a pointer to a GtkAllocation to copy from
- */
-public void setAllocation(ref GtkAllocation allocation)
-{
-	// void gtk_widget_set_allocation (GtkWidget *widget,  const GtkAllocation *allocation);
-	gtk_widget_set_allocation(gtkWidget, &allocation);
-}
-
-/**
- * Determines whether the application intends to draw on the widget in
- * an "expose-event" handler.
- * See gtk_widget_set_app_paintable()
- * Since 2.18
- * Returns: TRUE if the widget is app paintable
- */
-public int getAppPaintable()
-{
-	// gboolean gtk_widget_get_app_paintable (GtkWidget *widget);
-	return gtk_widget_get_app_paintable(gtkWidget);
-}
-
-/**
- * Determines whether widget can be a default widget. See
- * gtk_widget_set_can_default().
- * Since 2.18
- * Returns: TRUE if widget can be a default widget, FALSE otherwise
- */
-public int getCanDefault()
-{
-	// gboolean gtk_widget_get_can_default (GtkWidget *widget);
-	return gtk_widget_get_can_default(gtkWidget);
-}
-
-/**
- * Specifies whether widget can be a default widget. See
- * gtk_widget_grab_default() for details about the meaning of
- * "default".
- * Since 2.18
- * Params:
- * canDefault = whether or not widget can be a default widget.
- */
-public void setCanDefault(int canDefault)
-{
-	// void gtk_widget_set_can_default (GtkWidget *widget,  gboolean can_default);
-	gtk_widget_set_can_default(gtkWidget, canDefault);
-}
-
-/**
- * Determines whether widget can own the input focus. See
- * gtk_widget_set_can_focus().
- * Since 2.18
- * Returns: TRUE if widget can own the input focus, FALSE otherwise
- */
-public int getCanFocus()
-{
-	// gboolean gtk_widget_get_can_focus (GtkWidget *widget);
-	return gtk_widget_get_can_focus(gtkWidget);
-}
-
-/**
- * Specifies whether widget can own the input focus. See
- * gtk_widget_grab_focus() for actually setting the input focus on a
- * widget.
- * Since 2.18
- * Params:
- * canFocus = whether or not widget can own the input focus.
- */
-public void setCanFocus(int canFocus)
-{
-	// void gtk_widget_set_can_focus (GtkWidget *widget,  gboolean can_focus);
-	gtk_widget_set_can_focus(gtkWidget, canFocus);
-}
-
-/**
- * Determines whether the widget is double buffered.
- * See gtk_widget_set_double_buffered()
- * Since 2.18
- * Returns: TRUE if the widget is double buffered
- */
-public int getDoubleBuffered()
-{
-	// gboolean gtk_widget_get_double_buffered (GtkWidget *widget);
-	return gtk_widget_get_double_buffered(gtkWidget);
-}
-
-/**
- * Determines whether widget has a GdkWindow of its own. See
- * gtk_widget_set_has_window().
- * Since 2.18
- * Returns: TRUE if widget has a window, FALSE otherwise
- */
-public int getHasWindow()
-{
-	// gboolean gtk_widget_get_has_window (GtkWidget *widget);
-	return gtk_widget_get_has_window(gtkWidget);
-}
-
-/**
- * Specifies whether widget has a GdkWindow of its own. Note that
- * all realized widgets have a non-NULL "window" pointer
- * (gtk_widget_get_window() never returns a NULL window when a widget
- * is realized), but for many of them it's actually the GdkWindow of
- * one of its parent widgets. Widgets that do not create a window for
- * themselves in GtkWidget::realize() must announce this by
- * calling this function with has_window = FALSE.
- * This function should only be called by widget implementations,
- * and they should call it in their init() function.
- * Since 2.18
- * Params:
- * hasWindow = whether or not widget has a window.
- */
-public void setHasWindow(int hasWindow)
-{
-	// void gtk_widget_set_has_window (GtkWidget *widget,  gboolean has_window);
-	gtk_widget_set_has_window(gtkWidget, hasWindow);
-}
-
-/**
- * Returns the widget's sensitivity (in the sense of returning
- * the value that has been set using gtk_widget_set_sensitive()).
- * The effective sensitivity of a widget is however determined by both its
- * own and its parent widget's sensitivity. See gtk_widget_is_sensitive().
- * Since 2.18
- * Returns: TRUE if the widget is sensitive
- */
-public int getSensitive()
-{
-	// gboolean gtk_widget_get_sensitive (GtkWidget *widget);
-	return gtk_widget_get_sensitive(gtkWidget);
-}
-
-/**
- * Returns the widget's effective sensitivity, which means
- * it is sensitive itself and also its parent widget is sensntive
- * Since 2.18
- * Returns: TRUE if the widget is effectively sensitive
- */
-public int isSensitive()
-{
-	// gboolean gtk_widget_is_sensitive (GtkWidget *widget);
-	return gtk_widget_is_sensitive(gtkWidget);
-}
-
-/**
- * Returns the widget's state. See gtk_widget_set_state().
- * Since 2.18
- * Returns: the state of widget.
- */
-public GtkStateType getState()
-{
-	// GtkStateType gtk_widget_get_state (GtkWidget *widget);
-	return gtk_widget_get_state(gtkWidget);
-}
-
-/**
- * Determines whether the widget is visible. Note that this doesn't
- * take into account whether the widget's parent is also visible
- * or the widget is obscured in any way.
- * See gtk_widget_set_visible().
- * Since 2.18
- * Returns: TRUE if the widget is visible
- */
-public int getVisible()
-{
-	// gboolean gtk_widget_get_visible (GtkWidget *widget);
-	return gtk_widget_get_visible(gtkWidget);
-}
-
-/**
- * Sets the visibility state of widget. Note that setting this to
- * TRUE doesn't mean the widget is actually viewable, see
- * gtk_widget_get_visible().
- * This function simply calls gtk_widget_show() or gtk_widget_hide()
- * but is nicer to use when the visibility of the widget depends on
- * some condition.
- * Since 2.18
- * Params:
- * visible = whether the widget should be shown or not
- */
-public void setVisible(int visible)
-{
-	// void gtk_widget_set_visible (GtkWidget *widget,  gboolean visible);
-	gtk_widget_set_visible(gtkWidget, visible);
-}
-
-/**
- * Determines whether widget is the current default widget within its
- * toplevel. See gtk_widget_set_can_default().
- * Since 2.18
- * Returns: TRUE if widget is the current default widget within its toplevel, FALSE otherwise
- */
-public int hasDefault()
-{
-	// gboolean gtk_widget_has_default (GtkWidget *widget);
-	return gtk_widget_has_default(gtkWidget);
-}
-
-/**
- * Determines if the widget has the global input focus. See
- * gtk_widget_is_focus() for the difference between having the global
- * input focus, and only having the focus within a toplevel.
- * Since 2.18
- * Returns: TRUE if the widget has the global input focus.
- */
-public int hasFocus()
-{
-	// gboolean gtk_widget_has_focus (GtkWidget *widget);
-	return gtk_widget_has_focus(gtkWidget);
-}
-
-/**
- * Determines whether the widget is currently grabbing events, so it
- * is the only widget receiving input events (keyboard and mouse).
- * See also gtk_grab_add().
- * Since 2.18
- * Returns: TRUE if the widget is in the grab_widgets stack
- */
-public int hasGrab()
-{
-	// gboolean gtk_widget_has_grab (GtkWidget *widget);
-	return gtk_widget_has_grab(gtkWidget);
-}
-
-/**
- * Determines if the widget style has been looked up through the rc mechanism.
- * Since 2.20
- * Returns: TRUE if the widget has been looked up through the rc mechanism, FALSE otherwise.
- */
-public int hasRcStyle()
-{
-	// gboolean gtk_widget_has_rc_style (GtkWidget *widget);
-	return gtk_widget_has_rc_style(gtkWidget);
-}
-
-/**
- * Determines whether widget can be drawn to. A widget can be drawn
- * to if it is mapped and visible.
- * Since 2.18
- * Returns: TRUE if widget is drawable, FALSE otherwise
- */
-public int isDrawable()
-{
-	// gboolean gtk_widget_is_drawable (GtkWidget *widget);
-	return gtk_widget_is_drawable(gtkWidget);
-}
-
-/**
- * Determines whether widget is a toplevel widget. Currently only
- * GtkWindow and GtkInvisible are toplevel widgets. Toplevel
- * widgets have no parent widget.
- * Since 2.18
- * Returns: TRUE if widget is a toplevel, FALSE otherwise
- */
-public int isToplevel()
-{
-	// gboolean gtk_widget_is_toplevel (GtkWidget *widget);
-	return gtk_widget_is_toplevel(gtkWidget);
-}
-
-/**
- * Sets a widget's window. This function should only be used in a
- * widget's GtkWidget::realize() implementation. The window passed is
- * usually either new window created with gdk_window_new(), or the
- * window of its parent widget as returned by
- * gtk_widget_get_parent_window().
- * Widgets must indicate whether they will create their own GdkWindow
- * by calling gtk_widget_set_has_window(). This is usually done in the
- * widget's init() function.
- * Since 2.18
- * Params:
- * window = a GdkWindow
- */
-public void setWindow(Window window)
-{
-	// void gtk_widget_set_window (GtkWidget *widget,  GdkWindow *window);
-	gtk_widget_set_window(gtkWidget, (window is null) ? null : window.getWindowStruct());
-}
-
-/**
- * Specifies whether widget will be treated as the default widget
- * within its toplevel when it has the focus, even if another widget
- * is the default.
- * See gtk_widget_grab_default() for details about the meaning of
- * "default".
- * Since 2.18
- * Params:
- * receivesDefault = whether or not widget can be a default widget.
- */
-public void setReceivesDefault(int receivesDefault)
-{
-	// void gtk_widget_set_receives_default (GtkWidget *widget,  gboolean receives_default);
-	gtk_widget_set_receives_default(gtkWidget, receivesDefault);
-}
-
-/**
- * Determines whether widget is alyways treated as default widget
- * withing its toplevel when it has the focus, even if another widget
- * is the default.
- * See gtk_widget_set_receives_default().
- * Since 2.18
- * Returns: TRUE if widget acts as default widget when focussed, FALSE otherwise
- */
-public int getReceivesDefault()
-{
-	// gboolean gtk_widget_get_receives_default (GtkWidget *widget);
-	return gtk_widget_get_receives_default(gtkWidget);
-}
-
-/**
- * Marks the widget as being realized.
- * This function should only ever be called in a derived widget's
- * "realize" or "unrealize" implementation.
- * Since 2.20
- * Params:
- * realized = TRUE to mark the widget as realized
- */
-public void setRealized(int realized)
-{
-	// void gtk_widget_set_realized (GtkWidget *widget,  gboolean realized);
-	gtk_widget_set_realized(gtkWidget, realized);
-}
-
-/**
- * Determines whether widget is realized.
- * Since 2.20
- * Returns: TRUE if widget is realized, FALSE otherwise
- */
-public int getRealized()
-{
-	// gboolean gtk_widget_get_realized (GtkWidget *widget);
-	return gtk_widget_get_realized(gtkWidget);
-}
-
-/**
- * Marks the widget as being realized.
- * This function should only ever be called in a derived widget's
- * "map" or "unmap" implementation.
- * Since 2.20
- * Params:
- * mapped = TRUE to mark the widget as mapped
- */
-public void setMapped(int mapped)
-{
-	// void gtk_widget_set_mapped (GtkWidget *widget,  gboolean mapped);
-	gtk_widget_set_mapped(gtkWidget, mapped);
-}
-
-/**
- * Whether the widget is mapped.
- * Since 2.20
- * Returns: TRUE if the widget is mapped, FALSE otherwise.
- */
-public int getMapped()
-{
-	// gboolean gtk_widget_get_mapped (GtkWidget *widget);
-	return gtk_widget_get_mapped(gtkWidget);
-}
-
-/**
- * Retrieves the widget's requisition.
- * This function should only be used by widget implementations in
- * order to figure whether the widget's requisition has actually
- * changed after some internal state change (so that they can call
- * gtk_widget_queue_resize() instead of gtk_widget_queue_draw()).
- * Normally, gtk_widget_size_request() should be used.
- * Since 2.20
- * Params:
- * requisition = a pointer to a GtkRequisition to copy to. [out]
- */
-public void getRequisition(out GtkRequisition requisition)
-{
-	// void gtk_widget_get_requisition (GtkWidget *widget,  GtkRequisition *requisition);
-	gtk_widget_get_requisition(gtkWidget, &requisition);
-}
-
-/**
- * Copies a GtkRequisition.
- * Params:
- * requisition = a GtkRequisition
- * Returns: a copy of requisition
- */
-public static GtkRequisition* requisitionCopy(GtkRequisition* requisition)
-{
-	// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
-	return gtk_requisition_copy(requisition);
-}
-
-/**
- * Frees a GtkRequisition.
- * Params:
- * requisition = a GtkRequisition
- */
-public static void requisitionFree(GtkRequisition* requisition)
-{
-	// void gtk_requisition_free (GtkRequisition *requisition);
-	gtk_requisition_free(requisition);
-}
+	
+	/**
+	 * Sets the widget's allocation. This should not be used
+	 * directly, but from within a widget's size_allocate method.
+	 * Since 2.18
+	 * Params:
+	 * allocation = a pointer to a GtkAllocation to copy from
+	 */
+	public void setAllocation(ref GtkAllocation allocation)
+	{
+		// void gtk_widget_set_allocation (GtkWidget *widget,  const GtkAllocation *allocation);
+		gtk_widget_set_allocation(gtkWidget, &allocation);
+	}
+	
+	/**
+	 * Determines whether the application intends to draw on the widget in
+	 * an "expose-event" handler.
+	 * See gtk_widget_set_app_paintable()
+	 * Since 2.18
+	 * Returns: TRUE if the widget is app paintable
+	 */
+	public int getAppPaintable()
+	{
+		// gboolean gtk_widget_get_app_paintable (GtkWidget *widget);
+		return gtk_widget_get_app_paintable(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget can be a default widget. See
+	 * gtk_widget_set_can_default().
+	 * Since 2.18
+	 * Returns: TRUE if widget can be a default widget, FALSE otherwise
+	 */
+	public int getCanDefault()
+	{
+		// gboolean gtk_widget_get_can_default (GtkWidget *widget);
+		return gtk_widget_get_can_default(gtkWidget);
+	}
+	
+	/**
+	 * Specifies whether widget can be a default widget. See
+	 * gtk_widget_grab_default() for details about the meaning of
+	 * "default".
+	 * Since 2.18
+	 * Params:
+	 * canDefault = whether or not widget can be a default widget.
+	 */
+	public void setCanDefault(int canDefault)
+	{
+		// void gtk_widget_set_can_default (GtkWidget *widget,  gboolean can_default);
+		gtk_widget_set_can_default(gtkWidget, canDefault);
+	}
+	
+	/**
+	 * Determines whether widget can own the input focus. See
+	 * gtk_widget_set_can_focus().
+	 * Since 2.18
+	 * Returns: TRUE if widget can own the input focus, FALSE otherwise
+	 */
+	public int getCanFocus()
+	{
+		// gboolean gtk_widget_get_can_focus (GtkWidget *widget);
+		return gtk_widget_get_can_focus(gtkWidget);
+	}
+	
+	/**
+	 * Specifies whether widget can own the input focus. See
+	 * gtk_widget_grab_focus() for actually setting the input focus on a
+	 * widget.
+	 * Since 2.18
+	 * Params:
+	 * canFocus = whether or not widget can own the input focus.
+	 */
+	public void setCanFocus(int canFocus)
+	{
+		// void gtk_widget_set_can_focus (GtkWidget *widget,  gboolean can_focus);
+		gtk_widget_set_can_focus(gtkWidget, canFocus);
+	}
+	
+	/**
+	 * Determines whether the widget is double buffered.
+	 * See gtk_widget_set_double_buffered()
+	 * Since 2.18
+	 * Returns: TRUE if the widget is double buffered
+	 */
+	public int getDoubleBuffered()
+	{
+		// gboolean gtk_widget_get_double_buffered (GtkWidget *widget);
+		return gtk_widget_get_double_buffered(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget has a GdkWindow of its own. See
+	 * gtk_widget_set_has_window().
+	 * Since 2.18
+	 * Returns: TRUE if widget has a window, FALSE otherwise
+	 */
+	public int getHasWindow()
+	{
+		// gboolean gtk_widget_get_has_window (GtkWidget *widget);
+		return gtk_widget_get_has_window(gtkWidget);
+	}
+	
+	/**
+	 * Specifies whether widget has a GdkWindow of its own. Note that
+	 * all realized widgets have a non-NULL "window" pointer
+	 * (gtk_widget_get_window() never returns a NULL window when a widget
+	 * is realized), but for many of them it's actually the GdkWindow of
+	 * one of its parent widgets. Widgets that do not create a window for
+	 * themselves in GtkWidget::realize() must announce this by
+	 * calling this function with has_window = FALSE.
+	 * This function should only be called by widget implementations,
+	 * and they should call it in their init() function.
+	 * Since 2.18
+	 * Params:
+	 * hasWindow = whether or not widget has a window.
+	 */
+	public void setHasWindow(int hasWindow)
+	{
+		// void gtk_widget_set_has_window (GtkWidget *widget,  gboolean has_window);
+		gtk_widget_set_has_window(gtkWidget, hasWindow);
+	}
+	
+	/**
+	 * Returns the widget's sensitivity (in the sense of returning
+	 * the value that has been set using gtk_widget_set_sensitive()).
+	 * The effective sensitivity of a widget is however determined by both its
+	 * own and its parent widget's sensitivity. See gtk_widget_is_sensitive().
+	 * Since 2.18
+	 * Returns: TRUE if the widget is sensitive
+	 */
+	public int getSensitive()
+	{
+		// gboolean gtk_widget_get_sensitive (GtkWidget *widget);
+		return gtk_widget_get_sensitive(gtkWidget);
+	}
+	
+	/**
+	 * Returns the widget's effective sensitivity, which means
+	 * it is sensitive itself and also its parent widget is sensntive
+	 * Since 2.18
+	 * Returns: TRUE if the widget is effectively sensitive
+	 */
+	public int isSensitive()
+	{
+		// gboolean gtk_widget_is_sensitive (GtkWidget *widget);
+		return gtk_widget_is_sensitive(gtkWidget);
+	}
+	
+	/**
+	 * Returns the widget's state. See gtk_widget_set_state().
+	 * Since 2.18
+	 * Returns: the state of widget.
+	 */
+	public GtkStateType getState()
+	{
+		// GtkStateType gtk_widget_get_state (GtkWidget *widget);
+		return gtk_widget_get_state(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether the widget is visible. Note that this doesn't
+	 * take into account whether the widget's parent is also visible
+	 * or the widget is obscured in any way.
+	 * See gtk_widget_set_visible().
+	 * Since 2.18
+	 * Returns: TRUE if the widget is visible
+	 */
+	public int getVisible()
+	{
+		// gboolean gtk_widget_get_visible (GtkWidget *widget);
+		return gtk_widget_get_visible(gtkWidget);
+	}
+	
+	/**
+	 * Sets the visibility state of widget. Note that setting this to
+	 * TRUE doesn't mean the widget is actually viewable, see
+	 * gtk_widget_get_visible().
+	 * This function simply calls gtk_widget_show() or gtk_widget_hide()
+	 * but is nicer to use when the visibility of the widget depends on
+	 * some condition.
+	 * Since 2.18
+	 * Params:
+	 * visible = whether the widget should be shown or not
+	 */
+	public void setVisible(int visible)
+	{
+		// void gtk_widget_set_visible (GtkWidget *widget,  gboolean visible);
+		gtk_widget_set_visible(gtkWidget, visible);
+	}
+	
+	/**
+	 * Determines whether widget is the current default widget within its
+	 * toplevel. See gtk_widget_set_can_default().
+	 * Since 2.18
+	 * Returns: TRUE if widget is the current default widget within its toplevel, FALSE otherwise
+	 */
+	public int hasDefault()
+	{
+		// gboolean gtk_widget_has_default (GtkWidget *widget);
+		return gtk_widget_has_default(gtkWidget);
+	}
+	
+	/**
+	 * Determines if the widget has the global input focus. See
+	 * gtk_widget_is_focus() for the difference between having the global
+	 * input focus, and only having the focus within a toplevel.
+	 * Since 2.18
+	 * Returns: TRUE if the widget has the global input focus.
+	 */
+	public int hasFocus()
+	{
+		// gboolean gtk_widget_has_focus (GtkWidget *widget);
+		return gtk_widget_has_focus(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether the widget is currently grabbing events, so it
+	 * is the only widget receiving input events (keyboard and mouse).
+	 * See also gtk_grab_add().
+	 * Since 2.18
+	 * Returns: TRUE if the widget is in the grab_widgets stack
+	 */
+	public int hasGrab()
+	{
+		// gboolean gtk_widget_has_grab (GtkWidget *widget);
+		return gtk_widget_has_grab(gtkWidget);
+	}
+	
+	/**
+	 * Determines if the widget style has been looked up through the rc mechanism.
+	 * Since 2.20
+	 * Returns: TRUE if the widget has been looked up through the rc mechanism, FALSE otherwise.
+	 */
+	public int hasRcStyle()
+	{
+		// gboolean gtk_widget_has_rc_style (GtkWidget *widget);
+		return gtk_widget_has_rc_style(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget can be drawn to. A widget can be drawn
+	 * to if it is mapped and visible.
+	 * Since 2.18
+	 * Returns: TRUE if widget is drawable, FALSE otherwise
+	 */
+	public int isDrawable()
+	{
+		// gboolean gtk_widget_is_drawable (GtkWidget *widget);
+		return gtk_widget_is_drawable(gtkWidget);
+	}
+	
+	/**
+	 * Determines whether widget is a toplevel widget. Currently only
+	 * GtkWindow and GtkInvisible are toplevel widgets. Toplevel
+	 * widgets have no parent widget.
+	 * Since 2.18
+	 * Returns: TRUE if widget is a toplevel, FALSE otherwise
+	 */
+	public int isToplevel()
+	{
+		// gboolean gtk_widget_is_toplevel (GtkWidget *widget);
+		return gtk_widget_is_toplevel(gtkWidget);
+	}
+	
+	/**
+	 * Sets a widget's window. This function should only be used in a
+	 * widget's GtkWidget::realize() implementation. The window passed is
+	 * usually either new window created with gdk_window_new(), or the
+	 * window of its parent widget as returned by
+	 * gtk_widget_get_parent_window().
+	 * Widgets must indicate whether they will create their own GdkWindow
+	 * by calling gtk_widget_set_has_window(). This is usually done in the
+	 * widget's init() function.
+	 * Since 2.18
+	 * Params:
+	 * window = a GdkWindow
+	 */
+	public void setWindow(Window window)
+	{
+		// void gtk_widget_set_window (GtkWidget *widget,  GdkWindow *window);
+		gtk_widget_set_window(gtkWidget, (window is null) ? null : window.getWindowStruct());
+	}
+	
+	/**
+	 * Specifies whether widget will be treated as the default widget
+	 * within its toplevel when it has the focus, even if another widget
+	 * is the default.
+	 * See gtk_widget_grab_default() for details about the meaning of
+	 * "default".
+	 * Since 2.18
+	 * Params:
+	 * receivesDefault = whether or not widget can be a default widget.
+	 */
+	public void setReceivesDefault(int receivesDefault)
+	{
+		// void gtk_widget_set_receives_default (GtkWidget *widget,  gboolean receives_default);
+		gtk_widget_set_receives_default(gtkWidget, receivesDefault);
+	}
+	
+	/**
+	 * Determines whether widget is alyways treated as default widget
+	 * withing its toplevel when it has the focus, even if another widget
+	 * is the default.
+	 * See gtk_widget_set_receives_default().
+	 * Since 2.18
+	 * Returns: TRUE if widget acts as default widget when focussed, FALSE otherwise
+	 */
+	public int getReceivesDefault()
+	{
+		// gboolean gtk_widget_get_receives_default (GtkWidget *widget);
+		return gtk_widget_get_receives_default(gtkWidget);
+	}
+	
+	/**
+	 * Marks the widget as being realized.
+	 * This function should only ever be called in a derived widget's
+	 * "realize" or "unrealize" implementation.
+	 * Since 2.20
+	 * Params:
+	 * realized = TRUE to mark the widget as realized
+	 */
+	public void setRealized(int realized)
+	{
+		// void gtk_widget_set_realized (GtkWidget *widget,  gboolean realized);
+		gtk_widget_set_realized(gtkWidget, realized);
+	}
+	
+	/**
+	 * Determines whether widget is realized.
+	 * Since 2.20
+	 * Returns: TRUE if widget is realized, FALSE otherwise
+	 */
+	public int getRealized()
+	{
+		// gboolean gtk_widget_get_realized (GtkWidget *widget);
+		return gtk_widget_get_realized(gtkWidget);
+	}
+	
+	/**
+	 * Marks the widget as being realized.
+	 * This function should only ever be called in a derived widget's
+	 * "map" or "unmap" implementation.
+	 * Since 2.20
+	 * Params:
+	 * mapped = TRUE to mark the widget as mapped
+	 */
+	public void setMapped(int mapped)
+	{
+		// void gtk_widget_set_mapped (GtkWidget *widget,  gboolean mapped);
+		gtk_widget_set_mapped(gtkWidget, mapped);
+	}
+	
+	/**
+	 * Whether the widget is mapped.
+	 * Since 2.20
+	 * Returns: TRUE if the widget is mapped, FALSE otherwise.
+	 */
+	public int getMapped()
+	{
+		// gboolean gtk_widget_get_mapped (GtkWidget *widget);
+		return gtk_widget_get_mapped(gtkWidget);
+	}
+	
+	/**
+	 * Retrieves the widget's requisition.
+	 * This function should only be used by widget implementations in
+	 * order to figure whether the widget's requisition has actually
+	 * changed after some internal state change (so that they can call
+	 * gtk_widget_queue_resize() instead of gtk_widget_queue_draw()).
+	 * Normally, gtk_widget_size_request() should be used.
+	 * Since 2.20
+	 * Params:
+	 * requisition = a pointer to a GtkRequisition to copy to. [out]
+	 */
+	public void getRequisition(out GtkRequisition requisition)
+	{
+		// void gtk_widget_get_requisition (GtkWidget *widget,  GtkRequisition *requisition);
+		gtk_widget_get_requisition(gtkWidget, &requisition);
+	}
+	
+	/**
+	 * Copies a GtkRequisition.
+	 * Params:
+	 * requisition = a GtkRequisition
+	 * Returns: a copy of requisition
+	 */
+	public static GtkRequisition* requisitionCopy(GtkRequisition* requisition)
+	{
+		// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
+		return gtk_requisition_copy(requisition);
+	}
+	
+	/**
+	 * Frees a GtkRequisition.
+	 * Params:
+	 * requisition = a GtkRequisition
+	 */
+	public static void requisitionFree(GtkRequisition* requisition)
+	{
+		// void gtk_requisition_free (GtkRequisition *requisition);
+		gtk_requisition_free(requisition);
+	}
 }

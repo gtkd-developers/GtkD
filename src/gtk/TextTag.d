@@ -64,6 +64,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -113,18 +114,6 @@ public class TextTag : ObjectG
 	 */
 	public this (GtkTextTag* gtkTextTag)
 	{
-		if(gtkTextTag is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTextTag);
-		if( ptr !is null )
-		{
-			this = cast(TextTag)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkTextTag);
 		this.gtkTextTag = gtkTextTag;
 	}
@@ -161,11 +150,11 @@ public class TextTag : ObjectG
 		}
 		onListeners ~= dlg;
 	}
-	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextTag textTag)
+	extern(C) static gboolean callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextTag _textTag)
 	{
-		foreach ( bool delegate(ObjectG, Event, TextIter, TextTag) dlg ; textTag.onListeners )
+		foreach ( bool delegate(ObjectG, Event, TextIter, TextTag) dlg ; _textTag.onListeners )
 		{
-			if ( dlg(new ObjectG(object), new Event(event), new TextIter(iter), textTag) )
+			if ( dlg(ObjectG.getDObject!ObjectG(object), ObjectG.getDObject!Event(event), ObjectG.getDObject!TextIter(iter), _textTag) )
 			{
 				return 1;
 			}

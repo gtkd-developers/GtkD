@@ -115,11 +115,6 @@ public class HashTableIter
 	 */
 	public this (GHashTableIter* gHashTableIter)
 	{
-		if(gHashTableIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gHashTableIter = gHashTableIter;
 	}
 	
@@ -166,10 +161,12 @@ public class HashTableIter
 	{
 		// GHashTable * g_hash_table_iter_get_hash_table (GHashTableIter *iter);
 		auto p = g_hash_table_iter_get_hash_table(gHashTableIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new HashTable(cast(GHashTable*) p);
 	}
 	

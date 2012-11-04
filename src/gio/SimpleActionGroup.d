@@ -62,6 +62,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,18 +104,6 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF
 	 */
 	public this (GSimpleActionGroup* gSimpleActionGroup)
 	{
-		if(gSimpleActionGroup is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSimpleActionGroup);
-		if( ptr !is null )
-		{
-			this = cast(SimpleActionGroup)ptr;
-			return;
-		}
 		super(cast(GObject*)gSimpleActionGroup);
 		this.gSimpleActionGroup = gSimpleActionGroup;
 	}
@@ -159,11 +148,13 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF
 	{
 		// GAction * g_simple_action_group_lookup (GSimpleActionGroup *simple,  const gchar *action_name);
 		auto p = g_simple_action_group_lookup(gSimpleActionGroup, Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Action(cast(GAction*) p);
+		
+		return ObjectG.getDObject!Action(cast(GAction*) p);
 	}
 	
 	/**

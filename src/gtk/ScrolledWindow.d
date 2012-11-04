@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -131,18 +132,6 @@ public class ScrolledWindow : Bin
 	 */
 	public this (GtkScrolledWindow* gtkScrolledWindow)
 	{
-		if(gtkScrolledWindow is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkScrolledWindow);
-		if( ptr !is null )
-		{
-			this = cast(ScrolledWindow)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkScrolledWindow);
 		this.gtkScrolledWindow = gtkScrolledWindow;
 	}
@@ -226,11 +215,11 @@ public class ScrolledWindow : Bin
 		}
 		onMoveFocusOutListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveFocusOut(GtkScrolledWindow* scrolledwindowStruct, GtkDirectionType arg1, ScrolledWindow scrolledWindow)
+	extern(C) static void callBackMoveFocusOut(GtkScrolledWindow* scrolledwindowStruct, GtkDirectionType arg1, ScrolledWindow _scrolledWindow)
 	{
-		foreach ( void delegate(GtkDirectionType, ScrolledWindow) dlg ; scrolledWindow.onMoveFocusOutListeners )
+		foreach ( void delegate(GtkDirectionType, ScrolledWindow) dlg ; _scrolledWindow.onMoveFocusOutListeners )
 		{
-			dlg(arg1, scrolledWindow);
+			dlg(arg1, _scrolledWindow);
 		}
 	}
 	
@@ -262,11 +251,11 @@ public class ScrolledWindow : Bin
 		}
 		onScrollChildListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType arg1, gboolean arg2, ScrolledWindow scrolledWindow)
+	extern(C) static gboolean callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType arg1, gboolean arg2, ScrolledWindow _scrolledWindow)
 	{
-		foreach ( bool delegate(GtkScrollType, gboolean, ScrolledWindow) dlg ; scrolledWindow.onScrollChildListeners )
+		foreach ( bool delegate(GtkScrollType, gboolean, ScrolledWindow) dlg ; _scrolledWindow.onScrollChildListeners )
 		{
-			if ( dlg(arg1, arg2, scrolledWindow) )
+			if ( dlg(arg1, arg2, _scrolledWindow) )
 			{
 				return 1;
 			}
@@ -286,11 +275,13 @@ public class ScrolledWindow : Bin
 	{
 		// GtkAdjustment * gtk_scrolled_window_get_hadjustment (GtkScrolledWindow *scrolled_window);
 		auto p = gtk_scrolled_window_get_hadjustment(gtkScrolledWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -302,11 +293,13 @@ public class ScrolledWindow : Bin
 	{
 		// GtkAdjustment * gtk_scrolled_window_get_vadjustment (GtkScrolledWindow *scrolled_window);
 		auto p = gtk_scrolled_window_get_vadjustment(gtkScrolledWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -318,11 +311,13 @@ public class ScrolledWindow : Bin
 	{
 		// GtkWidget * gtk_scrolled_window_get_hscrollbar (GtkScrolledWindow *scrolled_window);
 		auto p = gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -334,11 +329,13 @@ public class ScrolledWindow : Bin
 	{
 		// GtkWidget * gtk_scrolled_window_get_vscrollbar (GtkScrolledWindow *scrolled_window);
 		auto p = gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

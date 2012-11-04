@@ -125,11 +125,6 @@ public class RandG
 	 */
 	public this (GRand* gRand)
 	{
-		if(gRand is null)
-		{
-			this = null;
-			return;
-		}
 		this.gRand = gRand;
 	}
 	
@@ -199,10 +194,12 @@ public class RandG
 	{
 		// GRand * g_rand_copy (GRand *rand_);
 		auto p = g_rand_copy(gRand);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new RandG(cast(GRand*) p);
 	}
 	

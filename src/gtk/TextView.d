@@ -80,6 +80,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -131,18 +132,6 @@ public class TextView : Container
 	 */
 	public this (GtkTextView* gtkTextView)
 	{
-		if(gtkTextView is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTextView);
-		if( ptr !is null )
-		{
-			this = cast(TextView)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;
 	}
@@ -233,11 +222,11 @@ public class TextView : Container
 		}
 		onBackspaceListeners ~= dlg;
 	}
-	extern(C) static void callBackBackspace(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackBackspace(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onBackspaceListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onBackspaceListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -264,11 +253,11 @@ public class TextView : Container
 		}
 		onCopyClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCopyClipboard(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackCopyClipboard(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onCopyClipboardListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onCopyClipboardListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -295,11 +284,11 @@ public class TextView : Container
 		}
 		onCutClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCutClipboard(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackCutClipboard(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onCutClipboardListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onCutClipboardListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -331,11 +320,11 @@ public class TextView : Container
 		}
 		onDeleteFromCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteFromCursor(GtkTextView* textViewStruct, GtkDeleteType type, gint count, TextView textView)
+	extern(C) static void callBackDeleteFromCursor(GtkTextView* textViewStruct, GtkDeleteType type, gint count, TextView _textView)
 	{
-		foreach ( void delegate(GtkDeleteType, gint, TextView) dlg ; textView.onDeleteFromCursorListeners )
+		foreach ( void delegate(GtkDeleteType, gint, TextView) dlg ; _textView.onDeleteFromCursorListeners )
 		{
-			dlg(type, count, textView);
+			dlg(type, count, _textView);
 		}
 	}
 	
@@ -362,11 +351,11 @@ public class TextView : Container
 		}
 		onInsertAtCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertAtCursor(GtkTextView* textViewStruct, gchar* str, TextView textView)
+	extern(C) static void callBackInsertAtCursor(GtkTextView* textViewStruct, gchar* str, TextView _textView)
 	{
-		foreach ( void delegate(string, TextView) dlg ; textView.onInsertAtCursorListeners )
+		foreach ( void delegate(string, TextView) dlg ; _textView.onInsertAtCursorListeners )
 		{
-			dlg(Str.toString(str), textView);
+			dlg(Str.toString(str), _textView);
 		}
 	}
 	
@@ -406,11 +395,11 @@ public class TextView : Container
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkTextView* textViewStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextView textView)
+	extern(C) static void callBackMoveCursor(GtkTextView* textViewStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextView _textView)
 	{
-		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextView) dlg ; textView.onMoveCursorListeners )
+		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextView) dlg ; _textView.onMoveCursorListeners )
 		{
-			dlg(step, count, extendSelection, textView);
+			dlg(step, count, extendSelection, _textView);
 		}
 	}
 	
@@ -438,11 +427,11 @@ public class TextView : Container
 		}
 		onMoveViewportListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveViewport(GtkTextView* textViewStruct, GtkScrollStep step, gint count, TextView textView)
+	extern(C) static void callBackMoveViewport(GtkTextView* textViewStruct, GtkScrollStep step, gint count, TextView _textView)
 	{
-		foreach ( void delegate(GtkScrollStep, gint, TextView) dlg ; textView.onMoveViewportListeners )
+		foreach ( void delegate(GtkScrollStep, gint, TextView) dlg ; _textView.onMoveViewportListeners )
 		{
-			dlg(step, count, textView);
+			dlg(step, count, _textView);
 		}
 	}
 	
@@ -472,11 +461,11 @@ public class TextView : Container
 		}
 		onPageHorizontallyListeners ~= dlg;
 	}
-	extern(C) static void callBackPageHorizontally(GtkTextView* textViewStruct, gint count, gboolean extendSelection, TextView textView)
+	extern(C) static void callBackPageHorizontally(GtkTextView* textViewStruct, gint count, gboolean extendSelection, TextView _textView)
 	{
-		foreach ( void delegate(gint, gboolean, TextView) dlg ; textView.onPageHorizontallyListeners )
+		foreach ( void delegate(gint, gboolean, TextView) dlg ; _textView.onPageHorizontallyListeners )
 		{
-			dlg(count, extendSelection, textView);
+			dlg(count, extendSelection, _textView);
 		}
 	}
 	
@@ -504,11 +493,11 @@ public class TextView : Container
 		}
 		onPasteClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackPasteClipboard(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackPasteClipboard(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onPasteClipboardListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onPasteClipboardListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -534,11 +523,11 @@ public class TextView : Container
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkTextView* entryStruct, GtkMenu* menu, TextView textView)
+	extern(C) static void callBackPopulatePopup(GtkTextView* entryStruct, GtkMenu* menu, TextView _textView)
 	{
-		foreach ( void delegate(GtkMenu*, TextView) dlg ; textView.onPopulatePopupListeners )
+		foreach ( void delegate(GtkMenu*, TextView) dlg ; _textView.onPopulatePopupListeners )
 		{
-			dlg(menu, textView);
+			dlg(menu, _textView);
 		}
 	}
 	
@@ -566,11 +555,11 @@ public class TextView : Container
 		}
 		onPreeditChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackPreeditChanged(GtkTextView* textViewStruct, gchar* preedit, TextView textView)
+	extern(C) static void callBackPreeditChanged(GtkTextView* textViewStruct, gchar* preedit, TextView _textView)
 	{
-		foreach ( void delegate(string, TextView) dlg ; textView.onPreeditChangedListeners )
+		foreach ( void delegate(string, TextView) dlg ; _textView.onPreeditChangedListeners )
 		{
-			dlg(Str.toString(preedit), textView);
+			dlg(Str.toString(preedit), _textView);
 		}
 	}
 	
@@ -599,11 +588,11 @@ public class TextView : Container
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectAll(GtkTextView* textViewStruct, gboolean select, TextView textView)
+	extern(C) static void callBackSelectAll(GtkTextView* textViewStruct, gboolean select, TextView _textView)
 	{
-		foreach ( void delegate(gboolean, TextView) dlg ; textView.onSelectAllListeners )
+		foreach ( void delegate(gboolean, TextView) dlg ; _textView.onSelectAllListeners )
 		{
-			dlg(select, textView);
+			dlg(select, _textView);
 		}
 	}
 	
@@ -631,11 +620,11 @@ public class TextView : Container
 		}
 		onSetAnchorListeners ~= dlg;
 	}
-	extern(C) static void callBackSetAnchor(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackSetAnchor(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onSetAnchorListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onSetAnchorListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -660,11 +649,11 @@ public class TextView : Container
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
 	}
-	extern(C) static void callBackSetScrollAdjustments(GtkTextView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TextView textView)
+	extern(C) static void callBackSetScrollAdjustments(GtkTextView* horizontalStruct, GtkAdjustment* vertical, GtkAdjustment* arg2, TextView _textView)
 	{
-		foreach ( void delegate(Adjustment, Adjustment, TextView) dlg ; textView.onSetScrollAdjustmentsListeners )
+		foreach ( void delegate(Adjustment, Adjustment, TextView) dlg ; _textView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(new Adjustment(vertical), new Adjustment(arg2), textView);
+			dlg(ObjectG.getDObject!Adjustment(vertical), ObjectG.getDObject!Adjustment(arg2), _textView);
 		}
 	}
 	
@@ -690,11 +679,11 @@ public class TextView : Container
 		}
 		onToggleCursorVisibleListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleCursorVisible(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackToggleCursorVisible(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onToggleCursorVisibleListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onToggleCursorVisibleListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -722,11 +711,11 @@ public class TextView : Container
 		}
 		onToggleOverwriteListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleOverwrite(GtkTextView* textViewStruct, TextView textView)
+	extern(C) static void callBackToggleOverwrite(GtkTextView* textViewStruct, TextView _textView)
 	{
-		foreach ( void delegate(TextView) dlg ; textView.onToggleOverwriteListeners )
+		foreach ( void delegate(TextView) dlg ; _textView.onToggleOverwriteListeners )
 		{
-			dlg(textView);
+			dlg(_textView);
 		}
 	}
 	
@@ -796,11 +785,13 @@ public class TextView : Container
 	{
 		// GtkTextBuffer * gtk_text_view_get_buffer (GtkTextView *text_view);
 		auto p = gtk_text_view_get_buffer(gtkTextView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextBuffer(cast(GtkTextBuffer*) p);
+		
+		return ObjectG.getDObject!TextBuffer(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -1044,11 +1035,13 @@ public class TextView : Container
 	{
 		// GdkWindow * gtk_text_view_get_window (GtkTextView *text_view,  GtkTextWindowType win);
 		auto p = gtk_text_view_get_window(gtkTextView, win);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1539,11 +1532,13 @@ public class TextView : Container
 	{
 		// PangoTabArray * gtk_text_view_get_tabs (GtkTextView *text_view);
 		auto p = gtk_text_view_get_tabs(gtkTextView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgTabArray(cast(PangoTabArray*) p);
+		
+		return ObjectG.getDObject!PgTabArray(cast(PangoTabArray*) p);
 	}
 	
 	/**
@@ -1589,11 +1584,13 @@ public class TextView : Container
 	{
 		// GtkTextAttributes * gtk_text_view_get_default_attributes  (GtkTextView *text_view);
 		auto p = gtk_text_view_get_default_attributes(gtkTextView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextAttributes(cast(GtkTextAttributes*) p);
+		
+		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
 	}
 	
 	/**
@@ -1638,11 +1635,13 @@ public class TextView : Container
 	{
 		// GtkAdjustment * gtk_text_view_get_hadjustment (GtkTextView *text_view);
 		auto p = gtk_text_view_get_hadjustment(gtkTextView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -1654,10 +1653,12 @@ public class TextView : Container
 	{
 		// GtkAdjustment * gtk_text_view_get_vadjustment (GtkTextView *text_view);
 		auto p = gtk_text_view_get_vadjustment(gtkTextView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 }

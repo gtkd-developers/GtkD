@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -136,18 +137,6 @@ public class Socket : Container
 	 */
 	public this (GtkSocket* gtkSocket)
 	{
-		if(gtkSocket is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSocket);
-		if( ptr !is null )
-		{
-			this = cast(Socket)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkSocket);
 		this.gtkSocket = gtkSocket;
 	}
@@ -182,11 +171,11 @@ public class Socket : Container
 		}
 		onPlugAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, Socket socket)
+	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, Socket _socket)
 	{
-		foreach ( void delegate(Socket) dlg ; socket.onPlugAddedListeners )
+		foreach ( void delegate(Socket) dlg ; _socket.onPlugAddedListeners )
 		{
-			dlg(socket);
+			dlg(_socket);
 		}
 	}
 	
@@ -214,11 +203,11 @@ public class Socket : Container
 		}
 		onPlugRemovedListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackPlugRemoved(GtkSocket* socketStruct, Socket socket)
+	extern(C) static gboolean callBackPlugRemoved(GtkSocket* socketStruct, Socket _socket)
 	{
-		foreach ( bool delegate(Socket) dlg ; socket.onPlugRemovedListeners )
+		foreach ( bool delegate(Socket) dlg ; _socket.onPlugRemovedListeners )
 		{
-			if ( dlg(socket) )
+			if ( dlg(_socket) )
 			{
 				return 1;
 			}
@@ -311,10 +300,12 @@ public class Socket : Container
 	{
 		// GdkWindow * gtk_socket_get_plug_window (GtkSocket *socket_);
 		auto p = gtk_socket_get_plug_window(gtkSocket);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

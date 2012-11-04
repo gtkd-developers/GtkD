@@ -75,6 +75,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -128,11 +129,6 @@ public class DragAndDrop
 	 */
 	public this (GdkDragContext* gdkDragContext)
 	{
-		if(gdkDragContext is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkDragContext = gdkDragContext;
 	}
 	
@@ -235,11 +231,13 @@ public class DragAndDrop
 	{
 		// GtkTargetList * gtk_drag_dest_get_target_list (GtkWidget *widget);
 		auto p = gtk_drag_dest_get_target_list((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TargetList(cast(GtkTargetList*) p);
+		
+		return ObjectG.getDObject!TargetList(cast(GtkTargetList*) p);
 	}
 	
 	/**
@@ -383,11 +381,13 @@ public class DragAndDrop
 	{
 		// GtkWidget * gtk_drag_get_source_widget (GdkDragContext *context);
 		auto p = gtk_drag_get_source_widget(gdkDragContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -440,11 +440,13 @@ public class DragAndDrop
 	{
 		// GdkDragContext * gtk_drag_begin (GtkWidget *widget,  GtkTargetList *targets,  GdkDragAction actions,  gint button,  GdkEvent *event);
 		auto p = gtk_drag_begin((widget is null) ? null : widget.getWidgetStruct(), (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DragContext(cast(GdkDragContext*) p);
+		
+		return ObjectG.getDObject!DragContext(cast(GdkDragContext*) p);
 	}
 	
 	/**
@@ -685,11 +687,13 @@ public class DragAndDrop
 	{
 		// GtkTargetList * gtk_drag_source_get_target_list (GtkWidget *widget);
 		auto p = gtk_drag_source_get_target_list((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TargetList(cast(GtkTargetList*) p);
+		
+		return ObjectG.getDObject!TargetList(cast(GtkTargetList*) p);
 	}
 	
 	/**

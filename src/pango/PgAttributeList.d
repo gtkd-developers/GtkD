@@ -60,6 +60,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import pango.PgAttribute;
@@ -100,11 +101,6 @@ public class PgAttributeList
 	 */
 	public this (PangoAttrList* pangoAttrList)
 	{
-		if(pangoAttrList is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoAttrList = pangoAttrList;
 	}
 	
@@ -135,11 +131,13 @@ public class PgAttributeList
 	{
 		// PangoAttrList * pango_attr_list_ref (PangoAttrList *list);
 		auto p = pango_attr_list_ref(pangoAttrList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeList(cast(PangoAttrList*) p);
+		
+		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -161,11 +159,13 @@ public class PgAttributeList
 	{
 		// PangoAttrList * pango_attr_list_copy (PangoAttrList *list);
 		auto p = pango_attr_list_copy(pangoAttrList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeList(cast(PangoAttrList*) p);
+		
+		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -252,11 +252,13 @@ public class PgAttributeList
 	{
 		// PangoAttrList * pango_attr_list_filter (PangoAttrList *list,  PangoAttrFilterFunc func,  gpointer data);
 		auto p = pango_attr_list_filter(pangoAttrList, func, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeList(cast(PangoAttrList*) p);
+		
+		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -268,10 +270,12 @@ public class PgAttributeList
 	{
 		// PangoAttrIterator * pango_attr_list_get_iterator (PangoAttrList *list);
 		auto p = pango_attr_list_get_iterator(pangoAttrList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeIterator(cast(PangoAttrIterator*) p);
+		
+		return ObjectG.getDObject!PgAttributeIterator(cast(PangoAttrIterator*) p);
 	}
 }

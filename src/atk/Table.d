@@ -58,6 +58,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -110,11 +111,6 @@ public class Table
 	 */
 	public this (AtkTable* atkTable)
 	{
-		if(atkTable is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkTable = atkTable;
 	}
 	
@@ -142,11 +138,11 @@ public class Table
 		}
 		onColumnDeletedListeners ~= dlg;
 	}
-	extern(C) static void callBackColumnDeleted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
+	extern(C) static void callBackColumnDeleted(AtkTable* atktableStruct, gint arg1, gint arg2, Table _table)
 	{
-		foreach ( void delegate(gint, gint, Table) dlg ; table.onColumnDeletedListeners )
+		foreach ( void delegate(gint, gint, Table) dlg ; _table.onColumnDeletedListeners )
 		{
-			dlg(arg1, arg2, table);
+			dlg(arg1, arg2, _table);
 		}
 	}
 	
@@ -170,11 +166,11 @@ public class Table
 		}
 		onColumnInsertedListeners ~= dlg;
 	}
-	extern(C) static void callBackColumnInserted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
+	extern(C) static void callBackColumnInserted(AtkTable* atktableStruct, gint arg1, gint arg2, Table _table)
 	{
-		foreach ( void delegate(gint, gint, Table) dlg ; table.onColumnInsertedListeners )
+		foreach ( void delegate(gint, gint, Table) dlg ; _table.onColumnInsertedListeners )
 		{
-			dlg(arg1, arg2, table);
+			dlg(arg1, arg2, _table);
 		}
 	}
 	
@@ -198,11 +194,11 @@ public class Table
 		}
 		onColumnReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackColumnReordered(AtkTable* atktableStruct, Table table)
+	extern(C) static void callBackColumnReordered(AtkTable* atktableStruct, Table _table)
 	{
-		foreach ( void delegate(Table) dlg ; table.onColumnReorderedListeners )
+		foreach ( void delegate(Table) dlg ; _table.onColumnReorderedListeners )
 		{
-			dlg(table);
+			dlg(_table);
 		}
 	}
 	
@@ -226,11 +222,11 @@ public class Table
 		}
 		onModelChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackModelChanged(AtkTable* atktableStruct, Table table)
+	extern(C) static void callBackModelChanged(AtkTable* atktableStruct, Table _table)
 	{
-		foreach ( void delegate(Table) dlg ; table.onModelChangedListeners )
+		foreach ( void delegate(Table) dlg ; _table.onModelChangedListeners )
 		{
-			dlg(table);
+			dlg(_table);
 		}
 	}
 	
@@ -254,11 +250,11 @@ public class Table
 		}
 		onRowDeletedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowDeleted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
+	extern(C) static void callBackRowDeleted(AtkTable* atktableStruct, gint arg1, gint arg2, Table _table)
 	{
-		foreach ( void delegate(gint, gint, Table) dlg ; table.onRowDeletedListeners )
+		foreach ( void delegate(gint, gint, Table) dlg ; _table.onRowDeletedListeners )
 		{
-			dlg(arg1, arg2, table);
+			dlg(arg1, arg2, _table);
 		}
 	}
 	
@@ -282,11 +278,11 @@ public class Table
 		}
 		onRowInsertedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowInserted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
+	extern(C) static void callBackRowInserted(AtkTable* atktableStruct, gint arg1, gint arg2, Table _table)
 	{
-		foreach ( void delegate(gint, gint, Table) dlg ; table.onRowInsertedListeners )
+		foreach ( void delegate(gint, gint, Table) dlg ; _table.onRowInsertedListeners )
 		{
-			dlg(arg1, arg2, table);
+			dlg(arg1, arg2, _table);
 		}
 	}
 	
@@ -312,11 +308,11 @@ public class Table
 		}
 		onRowReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowReordered(AtkTable* atktableStruct, Table table)
+	extern(C) static void callBackRowReordered(AtkTable* atktableStruct, Table _table)
 	{
-		foreach ( void delegate(Table) dlg ; table.onRowReorderedListeners )
+		foreach ( void delegate(Table) dlg ; _table.onRowReorderedListeners )
 		{
-			dlg(table);
+			dlg(_table);
 		}
 	}
 	
@@ -332,11 +328,13 @@ public class Table
 	{
 		// AtkObject * atk_table_ref_at (AtkTable *table,  gint row,  gint column);
 		auto p = atk_table_ref_at(atkTable, row, column);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -432,11 +430,13 @@ public class Table
 	{
 		// AtkObject * atk_table_get_caption (AtkTable *table);
 		auto p = atk_table_get_caption(atkTable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -473,11 +473,13 @@ public class Table
 	{
 		// AtkObject * atk_table_get_column_header (AtkTable *table,  gint column);
 		auto p = atk_table_get_column_header(atkTable, column);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -490,11 +492,13 @@ public class Table
 	{
 		// AtkObject * atk_table_get_row_header (AtkTable *table,  gint row);
 		auto p = atk_table_get_row_header(atkTable, row);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -505,11 +509,13 @@ public class Table
 	{
 		// AtkObject * atk_table_get_summary (AtkTable *table);
 		auto p = atk_table_get_summary(atkTable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

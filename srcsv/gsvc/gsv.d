@@ -306,8 +306,8 @@ mixin( gshared ~"extern(C)
 	void function(GtkSourceView* view, gchar* category, gchar* name) c_gtk_source_view_set_mark_category_icon_from_icon_name;
 	gboolean function(GtkSourceView* view, gchar* category, GdkColor* dest) c_gtk_source_view_get_mark_category_background;
 	void function(GtkSourceView* view, gchar* category, GdkColor* color) c_gtk_source_view_set_mark_category_background;
-	void function(GtkSourceView* view, gchar* category, GtkSourceViewMarkTooltipFunc func, gpointer userData, GDestroyNotify userDataNotify) c_gtk_source_view_set_mark_category_tooltip_func;
-	void function(GtkSourceView* view, gchar* category, GtkSourceViewMarkTooltipFunc markupFunc, gpointer userData, GDestroyNotify userDataNotify) c_gtk_source_view_set_mark_category_tooltip_markup_func;
+	void function(GtkSourceView* view, gchar* category, GtkSourceViewMarkTooltipFunc func, void* userData, GDestroyNotify userDataNotify) c_gtk_source_view_set_mark_category_tooltip_func;
+	void function(GtkSourceView* view, gchar* category, GtkSourceViewMarkTooltipFunc markupFunc, void* userData, GDestroyNotify userDataNotify) c_gtk_source_view_set_mark_category_tooltip_markup_func;
 	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_highlight_current_line;
 	gboolean function(GtkSourceView* view) c_gtk_source_view_get_highlight_current_line;
 	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_line_marks;
@@ -430,8 +430,8 @@ mixin( gshared ~"extern(C)
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, gint position) c_gtk_source_gutter_insert;
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, gint position) c_gtk_source_gutter_reorder;
 	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer) c_gtk_source_gutter_remove;
-	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterDataFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_data_func;
-	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterSizeFunc func, gpointer funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_size_func;
+	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterDataFunc func, void* funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_data_func;
+	void function(GtkSourceGutter* gutter, GtkCellRenderer* renderer, GtkSourceGutterSizeFunc func, void* funcData, GDestroyNotify destroy) c_gtk_source_gutter_set_cell_size_func;
 	void function(GtkSourceGutter* gutter) c_gtk_source_gutter_queue_draw;
 
 	// gsv.SourceMark

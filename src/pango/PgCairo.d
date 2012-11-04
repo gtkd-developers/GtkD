@@ -75,6 +75,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -140,11 +141,13 @@ public class PgCairo
 	{
 		// cairo_scaled_font_t * pango_cairo_font_get_scaled_font (PangoCairoFont *font);
 		auto p = pango_cairo_font_get_scaled_font(font);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ScaledFont(cast(cairo_scaled_font_t*) p);
+		
+		return ObjectG.getDObject!ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 	
 	/**
@@ -207,11 +210,13 @@ public class PgCairo
 	{
 		// const cairo_font_options_t * pango_cairo_context_get_font_options  (PangoContext *context);
 		auto p = pango_cairo_context_get_font_options((context is null) ? null : context.getPgContextStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FontOption(cast(cairo_font_options_t*) p);
+		
+		return ObjectG.getDObject!FontOption(cast(cairo_font_options_t*) p);
 	}
 	
 	/**
@@ -269,11 +274,13 @@ public class PgCairo
 	{
 		// PangoContext * pango_cairo_create_context (cairo_t *cr);
 		auto p = pango_cairo_create_context((cr is null) ? null : cr.getContextStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgContext(cast(PangoContext*) p);
+		
+		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -313,11 +320,13 @@ public class PgCairo
 	{
 		// PangoLayout * pango_cairo_create_layout (cairo_t *cr);
 		auto p = pango_cairo_create_layout((cr is null) ? null : cr.getContextStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**

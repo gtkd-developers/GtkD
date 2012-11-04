@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -135,18 +136,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public this (GtkActionGroup* gtkActionGroup)
 	{
-		if(gtkActionGroup is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkActionGroup);
-		if( ptr !is null )
-		{
-			this = cast(ActionGroup)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkActionGroup);
 		this.gtkActionGroup = gtkActionGroup;
 	}
@@ -192,11 +181,11 @@ public class ActionGroup : ObjectG, BuildableIF
 		}
 		onConnectProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackConnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
+	extern(C) static void callBackConnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup _actionGroup)
 	{
-		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; actionGroup.onConnectProxyListeners )
+		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; _actionGroup.onConnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), actionGroup);
+			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _actionGroup);
 		}
 	}
 	
@@ -224,11 +213,11 @@ public class ActionGroup : ObjectG, BuildableIF
 		}
 		onDisconnectProxyListeners ~= dlg;
 	}
-	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
+	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup _actionGroup)
 	{
-		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; actionGroup.onDisconnectProxyListeners )
+		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; _actionGroup.onDisconnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), actionGroup);
+			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _actionGroup);
 		}
 	}
 	
@@ -255,11 +244,11 @@ public class ActionGroup : ObjectG, BuildableIF
 		}
 		onPostActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackPostActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup actionGroup)
+	extern(C) static void callBackPostActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup _actionGroup)
 	{
-		foreach ( void delegate(Action, ActionGroup) dlg ; actionGroup.onPostActivateListeners )
+		foreach ( void delegate(Action, ActionGroup) dlg ; _actionGroup.onPostActivateListeners )
 		{
-			dlg(new Action(action), actionGroup);
+			dlg(ObjectG.getDObject!Action(action), _actionGroup);
 		}
 	}
 	
@@ -286,11 +275,11 @@ public class ActionGroup : ObjectG, BuildableIF
 		}
 		onPreActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackPreActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup actionGroup)
+	extern(C) static void callBackPreActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup _actionGroup)
 	{
-		foreach ( void delegate(Action, ActionGroup) dlg ; actionGroup.onPreActivateListeners )
+		foreach ( void delegate(Action, ActionGroup) dlg ; _actionGroup.onPreActivateListeners )
 		{
-			dlg(new Action(action), actionGroup);
+			dlg(ObjectG.getDObject!Action(action), _actionGroup);
 		}
 	}
 	
@@ -389,11 +378,13 @@ public class ActionGroup : ObjectG, BuildableIF
 	{
 		// GtkAction * gtk_action_group_get_action (GtkActionGroup *action_group,  const gchar *action_name);
 		auto p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Action(cast(GtkAction*) p);
+		
+		return ObjectG.getDObject!Action(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -405,11 +396,13 @@ public class ActionGroup : ObjectG, BuildableIF
 	{
 		// GList * gtk_action_group_list_actions (GtkActionGroup *action_group);
 		auto p = gtk_action_group_list_actions(gtkActionGroup);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

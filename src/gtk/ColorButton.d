@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -100,18 +101,6 @@ public class ColorButton : Button
 	 */
 	public this (GtkColorButton* gtkColorButton)
 	{
-		if(gtkColorButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkColorButton);
-		if( ptr !is null )
-		{
-			this = cast(ColorButton)ptr;
-			return;
-		}
 		super(cast(GtkButton*)gtkColorButton);
 		this.gtkColorButton = gtkColorButton;
 	}
@@ -153,11 +142,11 @@ public class ColorButton : Button
 		}
 		onColorSetListeners ~= dlg;
 	}
-	extern(C) static void callBackColorSet(GtkColorButton* widgetStruct, ColorButton colorButton)
+	extern(C) static void callBackColorSet(GtkColorButton* widgetStruct, ColorButton _colorButton)
 	{
-		foreach ( void delegate(ColorButton) dlg ; colorButton.onColorSetListeners )
+		foreach ( void delegate(ColorButton) dlg ; _colorButton.onColorSetListeners )
 		{
-			dlg(colorButton);
+			dlg(_colorButton);
 		}
 	}
 	

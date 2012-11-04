@@ -57,6 +57,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -94,18 +95,6 @@ public class StateSet : ObjectG
 	 */
 	public this (AtkStateSet* atkStateSet)
 	{
-		if(atkStateSet is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkStateSet);
-		if( ptr !is null )
-		{
-			this = cast(StateSet)ptr;
-			return;
-		}
 		super(cast(GObject*)atkStateSet);
 		this.atkStateSet = atkStateSet;
 	}
@@ -225,11 +214,13 @@ public class StateSet : ObjectG
 	{
 		// AtkStateSet * atk_state_set_and_sets (AtkStateSet *set,  AtkStateSet *compare_set);
 		auto p = atk_state_set_and_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StateSet(cast(AtkStateSet*) p);
+		
+		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
 	}
 	
 	/**
@@ -242,11 +233,13 @@ public class StateSet : ObjectG
 	{
 		// AtkStateSet * atk_state_set_or_sets (AtkStateSet *set,  AtkStateSet *compare_set);
 		auto p = atk_state_set_or_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StateSet(cast(AtkStateSet*) p);
+		
+		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
 	}
 	
 	/**
@@ -261,10 +254,12 @@ public class StateSet : ObjectG
 	{
 		// AtkStateSet * atk_state_set_xor_sets (AtkStateSet *set,  AtkStateSet *compare_set);
 		auto p = atk_state_set_xor_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StateSet(cast(AtkStateSet*) p);
+		
+		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
 	}
 }

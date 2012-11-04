@@ -95,11 +95,6 @@ public class Allocator
 	 */
 	public this (GAllocator* gAllocator)
 	{
-		if(gAllocator is null)
-		{
-			this = null;
-			return;
-		}
 		this.gAllocator = gAllocator;
 	}
 	

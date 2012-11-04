@@ -66,6 +66,7 @@ public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -146,18 +147,6 @@ public class PixbufLoader : ObjectG
 	 */
 	public this (GdkPixbufLoader* gdkPixbufLoader)
 	{
-		if(gdkPixbufLoader is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkPixbufLoader);
-		if( ptr !is null )
-		{
-			this = cast(PixbufLoader)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkPixbufLoader);
 		this.gdkPixbufLoader = gdkPixbufLoader;
 	}
@@ -233,11 +222,11 @@ public class PixbufLoader : ObjectG
 		}
 		onAreaPreparedListeners ~= dlg;
 	}
-	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* loaderStruct, PixbufLoader pixbufLoader)
+	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* loaderStruct, PixbufLoader _pixbufLoader)
 	{
-		foreach ( void delegate(PixbufLoader) dlg ; pixbufLoader.onAreaPreparedListeners )
+		foreach ( void delegate(PixbufLoader) dlg ; _pixbufLoader.onAreaPreparedListeners )
 		{
-			dlg(pixbufLoader);
+			dlg(_pixbufLoader);
 		}
 	}
 	
@@ -264,11 +253,11 @@ public class PixbufLoader : ObjectG
 		}
 		onAreaUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* loaderStruct, gint x, gint y, gint width, gint height, PixbufLoader pixbufLoader)
+	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* loaderStruct, gint x, gint y, gint width, gint height, PixbufLoader _pixbufLoader)
 	{
-		foreach ( void delegate(gint, gint, gint, gint, PixbufLoader) dlg ; pixbufLoader.onAreaUpdatedListeners )
+		foreach ( void delegate(gint, gint, gint, gint, PixbufLoader) dlg ; _pixbufLoader.onAreaUpdatedListeners )
 		{
-			dlg(x, y, width, height, pixbufLoader);
+			dlg(x, y, width, height, _pixbufLoader);
 		}
 	}
 	
@@ -294,11 +283,11 @@ public class PixbufLoader : ObjectG
 		}
 		onClosedListeners ~= dlg;
 	}
-	extern(C) static void callBackClosed(GdkPixbufLoader* loaderStruct, PixbufLoader pixbufLoader)
+	extern(C) static void callBackClosed(GdkPixbufLoader* loaderStruct, PixbufLoader _pixbufLoader)
 	{
-		foreach ( void delegate(PixbufLoader) dlg ; pixbufLoader.onClosedListeners )
+		foreach ( void delegate(PixbufLoader) dlg ; _pixbufLoader.onClosedListeners )
 		{
-			dlg(pixbufLoader);
+			dlg(_pixbufLoader);
 		}
 	}
 	
@@ -327,11 +316,11 @@ public class PixbufLoader : ObjectG
 		}
 		onSizePreparedListeners ~= dlg;
 	}
-	extern(C) static void callBackSizePrepared(GdkPixbufLoader* loaderStruct, gint width, gint height, PixbufLoader pixbufLoader)
+	extern(C) static void callBackSizePrepared(GdkPixbufLoader* loaderStruct, gint width, gint height, PixbufLoader _pixbufLoader)
 	{
-		foreach ( void delegate(gint, gint, PixbufLoader) dlg ; pixbufLoader.onSizePreparedListeners )
+		foreach ( void delegate(gint, gint, PixbufLoader) dlg ; _pixbufLoader.onSizePreparedListeners )
 		{
-			dlg(width, height, pixbufLoader);
+			dlg(width, height, _pixbufLoader);
 		}
 	}
 	
@@ -361,11 +350,13 @@ public class PixbufLoader : ObjectG
 	{
 		// GdkPixbufFormat * gdk_pixbuf_loader_get_format (GdkPixbufLoader *loader);
 		auto p = gdk_pixbuf_loader_get_format(gdkPixbufLoader);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PixbufFormat(cast(GdkPixbufFormat*) p);
+		
+		return ObjectG.getDObject!PixbufFormat(cast(GdkPixbufFormat*) p);
 	}
 	
 	/**
@@ -431,11 +422,13 @@ public class PixbufLoader : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_loader_get_pixbuf (GdkPixbufLoader *loader);
 		auto p = gdk_pixbuf_loader_get_pixbuf(gdkPixbufLoader);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -450,11 +443,13 @@ public class PixbufLoader : ObjectG
 	{
 		// GdkPixbufAnimation * gdk_pixbuf_loader_get_animation (GdkPixbufLoader *loader);
 		auto p = gdk_pixbuf_loader_get_animation(gdkPixbufLoader);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
+		
+		return ObjectG.getDObject!PixbufAnimation(cast(GdkPixbufAnimation*) p);
 	}
 	
 	/**

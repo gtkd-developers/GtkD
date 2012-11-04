@@ -60,6 +60,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -110,18 +111,6 @@ public class PgEngine : ObjectG
 	 */
 	public this (PangoEngine* pangoEngine)
 	{
-		if(pangoEngine is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoEngine);
-		if( ptr !is null )
-		{
-			this = cast(PgEngine)ptr;
-			return;
-		}
 		super(cast(GObject*)pangoEngine);
 		this.pangoEngine = pangoEngine;
 	}
@@ -187,10 +176,12 @@ public class PgEngine : ObjectG
 	{
 		// PangoEngine * script_engine_create (const char *id);
 		auto p = script_engine_create(Str.toStringz(id));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgEngine(cast(PangoEngine*) p);
+		
+		return ObjectG.getDObject!PgEngine(cast(PangoEngine*) p);
 	}
 }

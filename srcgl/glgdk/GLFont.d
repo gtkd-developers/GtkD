@@ -61,6 +61,7 @@ public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Display;
@@ -92,11 +93,13 @@ public class GLFont
 	{
 		// PangoFont* gdk_gl_font_use_pango_font (const PangoFontDescription *font_desc,  int first,  int count,  int list_base);
 		auto p = gdk_gl_font_use_pango_font((fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), first, count, listBase);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFont(cast(PangoFont*) p);
+		
+		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -113,10 +116,12 @@ public class GLFont
 	{
 		// PangoFont* gdk_gl_font_use_pango_font_for_display  (GdkDisplay *display,  const PangoFontDescription *font_desc,  int first,  int count,  int list_base);
 		auto p = gdk_gl_font_use_pango_font_for_display((display is null) ? null : display.getDisplayStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), first, count, listBase);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFont(cast(PangoFont*) p);
+		
+		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
 	}
 }

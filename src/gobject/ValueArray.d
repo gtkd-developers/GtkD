@@ -58,6 +58,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gobject.Value;
@@ -96,11 +97,6 @@ public class ValueArray
 	 */
 	public this (GValueArray* gValueArray)
 	{
-		if(gValueArray is null)
-		{
-			this = null;
-			return;
-		}
 		this.gValueArray = gValueArray;
 	}
 	
@@ -117,11 +113,13 @@ public class ValueArray
 	{
 		// GValue *		 g_value_array_get_nth (GValueArray *value_array,  guint index_);
 		auto p = g_value_array_get_nth(gValueArray, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GValue*) p);
 	}
 	
 	/**
@@ -152,11 +150,13 @@ public class ValueArray
 	{
 		// GValueArray *	 g_value_array_copy (const GValueArray *value_array);
 		auto p = g_value_array_copy(gValueArray);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ValueArray(cast(GValueArray*) p);
+		
+		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -179,11 +179,13 @@ public class ValueArray
 	{
 		// GValueArray *	 g_value_array_append (GValueArray *value_array,  const GValue *value);
 		auto p = g_value_array_append(gValueArray, (value is null) ? null : value.getValueStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ValueArray(cast(GValueArray*) p);
+		
+		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -197,11 +199,13 @@ public class ValueArray
 	{
 		// GValueArray *	 g_value_array_prepend (GValueArray *value_array,  const GValue *value);
 		auto p = g_value_array_prepend(gValueArray, (value is null) ? null : value.getValueStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ValueArray(cast(GValueArray*) p);
+		
+		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -216,11 +220,13 @@ public class ValueArray
 	{
 		// GValueArray *	 g_value_array_insert (GValueArray *value_array,  guint index_,  const GValue *value);
 		auto p = g_value_array_insert(gValueArray, index, (value is null) ? null : value.getValueStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ValueArray(cast(GValueArray*) p);
+		
+		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -234,11 +240,13 @@ public class ValueArray
 	{
 		// GValueArray *	 g_value_array_remove (GValueArray *value_array,  guint index_);
 		auto p = g_value_array_remove(gValueArray, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ValueArray(cast(GValueArray*) p);
+		
+		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -253,11 +261,13 @@ public class ValueArray
 	{
 		// GValueArray *	 g_value_array_sort (GValueArray *value_array,  GCompareFunc compare_func);
 		auto p = g_value_array_sort(gValueArray, compareFunc);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ValueArray(cast(GValueArray*) p);
+		
+		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -274,10 +284,12 @@ public class ValueArray
 	{
 		// GValueArray *	 g_value_array_sort_with_data (GValueArray *value_array,  GCompareDataFunc compare_func,  gpointer user_data);
 		auto p = g_value_array_sort_with_data(gValueArray, compareFunc, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ValueArray(cast(GValueArray*) p);
+		
+		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
 	}
 }
