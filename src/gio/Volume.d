@@ -87,12 +87,6 @@ public class Volume : ObjectG, VolumeIF
 	 */
 	public this (GVolume* gVolume)
 	{
-		if(gVolume is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gVolume);
 		this.gVolume = gVolume;
 	}

@@ -87,12 +87,6 @@ public class Action : ObjectG, ActionIF
 	 */
 	public this (GAction* gAction)
 	{
-		if(gAction is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gAction);
 		this.gAction = gAction;
 	}

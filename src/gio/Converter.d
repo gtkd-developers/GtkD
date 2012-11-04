@@ -87,12 +87,6 @@ public class Converter : ObjectG, ConverterIF
 	 */
 	public this (GConverter* gConverter)
 	{
-		if(gConverter is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gConverter);
 		this.gConverter = gConverter;
 	}

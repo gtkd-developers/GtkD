@@ -87,12 +87,6 @@ public class Proxy : ObjectG, ProxyIF
 	 */
 	public this (GProxy* gProxy)
 	{
-		if(gProxy is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gProxy);
 		this.gProxy = gProxy;
 	}

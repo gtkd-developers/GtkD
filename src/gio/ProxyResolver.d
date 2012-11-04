@@ -87,12 +87,6 @@ public class ProxyResolver : ObjectG, ProxyResolverIF
 	 */
 	public this (GProxyResolver* gProxyResolver)
 	{
-		if(gProxyResolver is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gProxyResolver);
 		this.gProxyResolver = gProxyResolver;
 	}

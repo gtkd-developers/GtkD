@@ -87,12 +87,6 @@ public class Icon : ObjectG, IconIF
 	 */
 	public this (GIcon* gIcon)
 	{
-		if(gIcon is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gIcon);
 		this.gIcon = gIcon;
 	}

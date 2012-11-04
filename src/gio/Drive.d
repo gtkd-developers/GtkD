@@ -87,12 +87,6 @@ public class Drive : ObjectG, DriveIF
 	 */
 	public this (GDrive* gDrive)
 	{
-		if(gDrive is null)
-		{
-			this = null;
-			return;
-		}
-		
 		super(cast(GObject*)gDrive);
 		this.gDrive = gDrive;
 	}
