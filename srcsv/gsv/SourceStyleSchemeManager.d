@@ -59,6 +59,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -95,18 +96,6 @@ public class SourceStyleSchemeManager : ObjectG
 	 */
 	public this (GtkSourceStyleSchemeManager* gtkSourceStyleSchemeManager)
 	{
-		if(gtkSourceStyleSchemeManager is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceStyleSchemeManager);
-		if( ptr !is null )
-		{
-			this = cast(SourceStyleSchemeManager)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceStyleSchemeManager);
 		this.gtkSourceStyleSchemeManager = gtkSourceStyleSchemeManager;
 	}
@@ -144,11 +133,13 @@ public class SourceStyleSchemeManager : ObjectG
 	{
 		// GtkSourceStyleSchemeManager * gtk_source_style_scheme_manager_get_default  (void);
 		auto p = gtk_source_style_scheme_manager_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceStyleSchemeManager(cast(GtkSourceStyleSchemeManager*) p);
+		
+		return ObjectG.getDObject!SourceStyleSchemeManager(cast(GtkSourceStyleSchemeManager*) p);
 	}
 	
 	/**
@@ -221,11 +212,13 @@ public class SourceStyleSchemeManager : ObjectG
 	{
 		// GtkSourceStyleScheme * gtk_source_style_scheme_manager_get_scheme  (GtkSourceStyleSchemeManager *manager,  const gchar *scheme_id);
 		auto p = gtk_source_style_scheme_manager_get_scheme(gtkSourceStyleSchemeManager, Str.toStringz(schemeId));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
+		
+		return ObjectG.getDObject!SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
 	}
 	
 	/**

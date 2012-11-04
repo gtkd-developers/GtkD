@@ -154,11 +154,6 @@ public class RecMutex
 	 */
 	public this (GRecMutex* gRecMutex)
 	{
-		if(gRecMutex is null)
-		{
-			this = null;
-			return;
-		}
 		this.gRecMutex = gRecMutex;
 	}
 	

@@ -61,6 +61,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,18 +104,6 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	 */
 	public this (GDBusObjectProxy* gDBusObjectProxy)
 	{
-		if(gDBusObjectProxy is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusObjectProxy);
-		if( ptr !is null )
-		{
-			this = cast(DBusObjectProxy)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusObjectProxy);
 		this.gDBusObjectProxy = gDBusObjectProxy;
 	}
@@ -160,10 +149,12 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	{
 		// GDBusConnection * g_dbus_object_proxy_get_connection (GDBusObjectProxy *proxy);
 		auto p = g_dbus_object_proxy_get_connection(gDBusObjectProxy);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusConnection(cast(GDBusConnection*) p);
+		
+		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
 	}
 }

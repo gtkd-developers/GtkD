@@ -61,6 +61,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -154,11 +155,6 @@ public class Buffer
 	 */
 	public this (GstBuffer* gstBuffer)
 	{
-		if(gstBuffer is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstBuffer = gstBuffer;
 	}
 	
@@ -219,11 +215,13 @@ public class Buffer
 	{
 		// GstBuffer* gst_buffer_try_new_and_alloc (guint size);
 		auto p = gst_buffer_try_new_and_alloc(size);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Buffer(cast(GstBuffer*) p);
+		
+		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -240,11 +238,13 @@ public class Buffer
 	{
 		// GstBuffer* gst_buffer_ref (GstBuffer *buf);
 		auto p = gst_buffer_ref(gstBuffer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Buffer(cast(GstBuffer*) p);
+		
+		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -290,11 +290,13 @@ public class Buffer
 	{
 		// GstBuffer* gst_buffer_make_metadata_writable (GstBuffer *buf);
 		auto p = gst_buffer_make_metadata_writable(gstBuffer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Buffer(cast(GstBuffer*) p);
+		
+		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -307,11 +309,13 @@ public class Buffer
 	{
 		// GstCaps* gst_buffer_get_caps (GstBuffer *buffer);
 		auto p = gst_buffer_get_caps(gstBuffer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -348,11 +352,13 @@ public class Buffer
 	{
 		// GstBuffer* gst_buffer_create_sub (GstBuffer *parent,  guint offset,  guint size);
 		auto p = gst_buffer_create_sub(gstBuffer, offset, size);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Buffer(cast(GstBuffer*) p);
+		
+		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -392,11 +398,13 @@ public class Buffer
 	{
 		// GstBuffer* gst_buffer_span (GstBuffer *buf1,  guint32 offset,  GstBuffer *buf2,  guint32 len);
 		auto p = gst_buffer_span(gstBuffer, offset, (buf2 is null) ? null : buf2.getBufferStruct(), len);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Buffer(cast(GstBuffer*) p);
+		
+		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -429,11 +437,13 @@ public class Buffer
 	{
 		// GstBuffer* gst_buffer_join (GstBuffer *buf1,  GstBuffer *buf2);
 		auto p = gst_buffer_join(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Buffer(cast(GstBuffer*) p);
+		
+		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -451,10 +461,12 @@ public class Buffer
 	{
 		// GstBuffer* gst_buffer_merge (GstBuffer *buf1,  GstBuffer *buf2);
 		auto p = gst_buffer_merge(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Buffer(cast(GstBuffer*) p);
+		
+		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
 	}
 }

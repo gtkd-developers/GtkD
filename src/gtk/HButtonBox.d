@@ -55,6 +55,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -105,18 +106,6 @@ public class HButtonBox : ButtonBox
 	 */
 	public this (GtkHButtonBox* gtkHButtonBox)
 	{
-		if(gtkHButtonBox is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkHButtonBox);
-		if( ptr !is null )
-		{
-			this = cast(HButtonBox)ptr;
-			return;
-		}
 		super(cast(GtkButtonBox*)gtkHButtonBox);
 		this.gtkHButtonBox = gtkHButtonBox;
 	}

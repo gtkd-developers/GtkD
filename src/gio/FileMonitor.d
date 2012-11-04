@@ -57,6 +57,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -105,18 +106,6 @@ public class FileMonitor : ObjectG
 	 */
 	public this (GFileMonitor* gFileMonitor)
 	{
-		if(gFileMonitor is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFileMonitor);
-		if( ptr !is null )
-		{
-			this = cast(FileMonitor)ptr;
-			return;
-		}
 		super(cast(GObject*)gFileMonitor);
 		this.gFileMonitor = gFileMonitor;
 	}
@@ -158,7 +147,7 @@ public class FileMonitor : ObjectG
 	{
 		foreach ( void delegate(File, File, GFileMonitorEvent, FileMonitor) dlg ; _fileMonitor.onChangedListeners )
 		{
-			dlg(new File(file), new File(otherFile), eventType, _fileMonitor);
+			dlg(ObjectG.getDObject!File(file), ObjectG.getDObject!File(otherFile), eventType, _fileMonitor);
 		}
 	}
 	

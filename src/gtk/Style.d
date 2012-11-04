@@ -77,6 +77,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -147,18 +148,6 @@ public class Style : ObjectG
 	 */
 	public this (GtkStyle* gtkStyle)
 	{
-		if(gtkStyle is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkStyle);
-		if( ptr !is null )
-		{
-			this = cast(Style)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkStyle);
 		this.gtkStyle = gtkStyle;
 	}
@@ -265,11 +254,13 @@ public class Style : ObjectG
 	{
 		// GtkStyle * gtk_style_copy (GtkStyle *style);
 		auto p = gtk_style_copy(gtkStyle);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Style(cast(GtkStyle*) p);
+		
+		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -289,11 +280,13 @@ public class Style : ObjectG
 	{
 		// GtkStyle * gtk_style_attach (GtkStyle *style,  GdkWindow *window);
 		auto p = gtk_style_attach(gtkStyle, (window is null) ? null : window.getWindowStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Style(cast(GtkStyle*) p);
+		
+		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -377,11 +370,13 @@ public class Style : ObjectG
 	{
 		// GtkIconSet * gtk_style_lookup_icon_set (GtkStyle *style,  const gchar *stock_id);
 		auto p = gtk_style_lookup_icon_set(gtkStyle, Str.toStringz(stockId));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconSet(cast(GtkIconSet*) p);
+		
+		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -405,11 +400,13 @@ public class Style : ObjectG
 	{
 		// GdkPixbuf * gtk_style_render_icon (GtkStyle *style,  const GtkIconSource *source,  GtkTextDirection direction,  GtkStateType state,  GtkIconSize size,  GtkWidget *widget,  const gchar *detail);
 		auto p = gtk_style_render_icon(gtkStyle, (source is null) ? null : source.getIconSourceStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

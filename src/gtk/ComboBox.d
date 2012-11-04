@@ -79,6 +79,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -146,18 +147,6 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	 */
 	public this (GtkComboBox* gtkComboBox)
 	{
-		if(gtkComboBox is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkComboBox);
-		if( ptr !is null )
-		{
-			this = cast(ComboBox)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkComboBox);
 		this.gtkComboBox = gtkComboBox;
 	}
@@ -633,11 +622,13 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	{
 		// GtkTreeModel * gtk_combo_box_get_model (GtkComboBox *combo_box);
 		auto p = gtk_combo_box_get_model(gtkComboBox);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -705,11 +696,13 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	{
 		// AtkObject * gtk_combo_box_get_popup_accessible (GtkComboBox *combo_box);
 		auto p = gtk_combo_box_get_popup_accessible(gtkComboBox);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

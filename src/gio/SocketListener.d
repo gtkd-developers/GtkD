@@ -68,6 +68,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -115,18 +116,6 @@ public class SocketListener : ObjectG
 	 */
 	public this (GSocketListener* gSocketListener)
 	{
-		if(gSocketListener is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSocketListener);
-		if( ptr !is null )
-		{
-			this = cast(SocketListener)ptr;
-			return;
-		}
 		super(cast(GObject*)gSocketListener);
 		this.gSocketListener = gSocketListener;
 	}
@@ -228,7 +217,7 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		effectiveAddress = new SocketAddress(outeffectiveAddress);
+		effectiveAddress = ObjectG.getDObject!SocketAddress(outeffectiveAddress);
 		return p;
 	}
 	
@@ -322,12 +311,14 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		sourceObject = new ObjectG(outsourceObject);
+		sourceObject = ObjectG.getDObject!ObjectG(outsourceObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -369,12 +360,14 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		sourceObject = new ObjectG(outsourceObject);
+		sourceObject = ObjectG.getDObject!ObjectG(outsourceObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -409,12 +402,14 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		sourceObject = new ObjectG(outsourceObject);
+		sourceObject = ObjectG.getDObject!ObjectG(outsourceObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Socket(cast(GSocket*) p);
+		
+		return ObjectG.getDObject!Socket(cast(GSocket*) p);
 	}
 	
 	/**
@@ -456,12 +451,14 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		sourceObject = new ObjectG(outsourceObject);
+		sourceObject = ObjectG.getDObject!ObjectG(outsourceObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Socket(cast(GSocket*) p);
+		
+		return ObjectG.getDObject!Socket(cast(GSocket*) p);
 	}
 	
 	/**

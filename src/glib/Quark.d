@@ -106,11 +106,6 @@ public class Quark
 	 */
 	public this (GQuark* gQuark)
 	{
-		if(gQuark is null)
-		{
-			this = null;
-			return;
-		}
 		this.gQuark = gQuark;
 	}
 	

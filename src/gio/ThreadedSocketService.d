@@ -55,6 +55,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -103,18 +104,6 @@ public class ThreadedSocketService : SocketService
 	 */
 	public this (GThreadedSocketService* gThreadedSocketService)
 	{
-		if(gThreadedSocketService is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gThreadedSocketService);
-		if( ptr !is null )
-		{
-			this = cast(ThreadedSocketService)ptr;
-			return;
-		}
 		super(cast(GSocketService*)gThreadedSocketService);
 		this.gThreadedSocketService = gThreadedSocketService;
 	}

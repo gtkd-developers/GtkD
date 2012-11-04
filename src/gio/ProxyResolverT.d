@@ -66,6 +66,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.Str;
@@ -110,11 +111,13 @@ public template ProxyResolverT(TStruct)
 	{
 		// GProxyResolver * g_proxy_resolver_get_default (void);
 		auto p = g_proxy_resolver_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ProxyResolver(cast(GProxyResolver*) p);
+		
+		return ObjectG.getDObject!ProxyResolver(cast(GProxyResolver*) p);
 	}
 	
 	/**

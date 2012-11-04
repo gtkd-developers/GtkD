@@ -160,11 +160,6 @@ public class MainContext
 	 */
 	public this (GMainContext* gMainContext)
 	{
-		if(gMainContext is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMainContext = gMainContext;
 	}
 	
@@ -194,10 +189,12 @@ public class MainContext
 	{
 		// GMainContext * g_main_context_ref (GMainContext *context);
 		auto p = g_main_context_ref(gMainContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new MainContext(cast(GMainContext*) p);
 	}
 	
@@ -222,10 +219,12 @@ public class MainContext
 	{
 		// GMainContext * g_main_context_default (void);
 		auto p = g_main_context_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new MainContext(cast(GMainContext*) p);
 	}
 	
@@ -271,10 +270,12 @@ public class MainContext
 	{
 		// GSource * g_main_context_find_source_by_id (GMainContext *context,  guint source_id);
 		auto p = g_main_context_find_source_by_id(gMainContext, sourceId);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	
@@ -290,10 +291,12 @@ public class MainContext
 	{
 		// GSource * g_main_context_find_source_by_user_data  (GMainContext *context,  gpointer user_data);
 		auto p = g_main_context_find_source_by_user_data(gMainContext, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	
@@ -310,10 +313,12 @@ public class MainContext
 	{
 		// GSource * g_main_context_find_source_by_funcs_user_data  (GMainContext *context,  GSourceFuncs *funcs,  gpointer user_data);
 		auto p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	
@@ -561,10 +566,12 @@ public class MainContext
 	{
 		// GMainContext * g_main_context_get_thread_default (void);
 		auto p = g_main_context_get_thread_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new MainContext(cast(GMainContext*) p);
 	}
 	
@@ -582,10 +589,12 @@ public class MainContext
 	{
 		// GMainContext * g_main_context_ref_thread_default (void);
 		auto p = g_main_context_ref_thread_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new MainContext(cast(GMainContext*) p);
 	}
 	

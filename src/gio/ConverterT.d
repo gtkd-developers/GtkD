@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.ErrorG;

@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -104,18 +105,6 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 */
 	public this (GtkSwitch* gtkSwitch)
 	{
-		if(gtkSwitch is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSwitch);
-		if( ptr !is null )
-		{
-			this = cast(Switch)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkSwitch);
 		this.gtkSwitch = gtkSwitch;
 	}

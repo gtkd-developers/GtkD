@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -110,18 +111,6 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	public this (GtkScaleButton* gtkScaleButton)
 	{
-		if(gtkScaleButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkScaleButton);
-		if( ptr !is null )
-		{
-			this = cast(ScaleButton)ptr;
-			return;
-		}
 		super(cast(GtkButton*)gtkScaleButton);
 		this.gtkScaleButton = gtkScaleButton;
 	}
@@ -309,11 +298,13 @@ public class ScaleButton : Button, OrientableIF
 	{
 		// GtkAdjustment * gtk_scale_button_get_adjustment (GtkScaleButton *button);
 		auto p = gtk_scale_button_get_adjustment(gtkScaleButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -336,11 +327,13 @@ public class ScaleButton : Button, OrientableIF
 	{
 		// GtkWidget * gtk_scale_button_get_popup (GtkScaleButton *button);
 		auto p = gtk_scale_button_get_popup(gtkScaleButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -352,11 +345,13 @@ public class ScaleButton : Button, OrientableIF
 	{
 		// GtkWidget * gtk_scale_button_get_plus_button (GtkScaleButton *button);
 		auto p = gtk_scale_button_get_plus_button(gtkScaleButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -368,10 +363,12 @@ public class ScaleButton : Button, OrientableIF
 	{
 		// GtkWidget * gtk_scale_button_get_minus_button (GtkScaleButton *button);
 		auto p = gtk_scale_button_get_minus_button(gtkScaleButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

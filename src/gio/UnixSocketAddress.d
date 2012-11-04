@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,18 +104,6 @@ public class UnixSocketAddress : SocketAddress
 	 */
 	public this (GUnixSocketAddress* gUnixSocketAddress)
 	{
-		if(gUnixSocketAddress is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gUnixSocketAddress);
-		if( ptr !is null )
-		{
-			this = cast(UnixSocketAddress)ptr;
-			return;
-		}
 		super(cast(GSocketAddress*)gUnixSocketAddress);
 		this.gUnixSocketAddress = gUnixSocketAddress;
 	}

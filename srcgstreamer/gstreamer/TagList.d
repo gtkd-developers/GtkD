@@ -62,6 +62,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -100,11 +101,6 @@ public class TagList
 	 */
 	public this (GstTagList* gstTagList)
 	{
-		if(gstTagList is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstTagList = gstTagList;
 	}
 	
@@ -291,11 +287,13 @@ public class TagList
 	{
 		// GstTagList* gst_tag_list_copy (const GstTagList *list);
 		auto p = gst_tag_list_copy(gstTagList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TagList(cast(GstTagList*) p);
+		
+		return ObjectG.getDObject!TagList(cast(GstTagList*) p);
 	}
 	
 	/**
@@ -322,11 +320,13 @@ public class TagList
 	{
 		// GstTagList* gst_tag_list_merge (const GstTagList *list1,  const GstTagList *list2,  GstTagMergeMode mode);
 		auto p = gst_tag_list_merge(gstTagList, (list2 is null) ? null : list2.getTagListStruct(), mode);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TagList(cast(GstTagList*) p);
+		
+		return ObjectG.getDObject!TagList(cast(GstTagList*) p);
 	}
 	
 	/**
@@ -414,11 +414,13 @@ public class TagList
 	{
 		// const GValue* gst_tag_list_get_value_index (const GstTagList *list,  const gchar *tag,  guint index);
 		auto p = gst_tag_list_get_value_index(gstTagList, Str.toStringz(tag), index);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GValue*) p);
 	}
 	
 	/**
@@ -846,7 +848,7 @@ public class TagList
 		
 		auto p = gst_tag_list_get_date(gstTagList, Str.toStringz(tag), &outvalue);
 		
-		value = new Date(outvalue);
+		value = ObjectG.getDObject!Date(outvalue);
 		return p;
 	}
 	
@@ -866,7 +868,7 @@ public class TagList
 		
 		auto p = gst_tag_list_get_date_index(gstTagList, Str.toStringz(tag), index, &outvalue);
 		
-		value = new Date(outvalue);
+		value = ObjectG.getDObject!Date(outvalue);
 		return p;
 	}
 }

@@ -63,6 +63,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -162,11 +163,13 @@ public class ContentType
 	{
 		// GIcon * g_content_type_get_icon (const gchar *type);
 		auto p = g_content_type_get_icon(Str.toStringz(type));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -180,11 +183,13 @@ public class ContentType
 	{
 		// GIcon * g_content_type_get_symbolic_icon (const gchar *type);
 		auto p = g_content_type_get_symbolic_icon(Str.toStringz(type));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -277,10 +282,12 @@ public class ContentType
 	{
 		// GList * g_content_types_get_registered (void);
 		auto p = g_content_types_get_registered();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 }

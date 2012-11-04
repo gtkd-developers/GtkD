@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Adjustment;
@@ -99,18 +100,6 @@ public class VScrollbar : Scrollbar
 	 */
 	public this (GtkVScrollbar* gtkVScrollbar)
 	{
-		if(gtkVScrollbar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkVScrollbar);
-		if( ptr !is null )
-		{
-			this = cast(VScrollbar)ptr;
-			return;
-		}
 		super(cast(GtkScrollbar*)gtkVScrollbar);
 		this.gtkVScrollbar = gtkVScrollbar;
 	}

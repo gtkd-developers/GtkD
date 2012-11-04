@@ -422,7 +422,14 @@ code: start
 	public override SourceBuffer getBuffer()
 	{
 		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
-		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
+		auto p = gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_text_view_get_buffer");
+		}
+
+		return new SourceBuffer( cast(GtkSourceBuffer*)p );
 	}
 code: end
 outFile: SourceView

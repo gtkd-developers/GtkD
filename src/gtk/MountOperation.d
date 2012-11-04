@@ -64,6 +64,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -116,18 +117,6 @@ public class MountOperation : GioMountOperation
 	 */
 	public this (GtkMountOperation* gtkMountOperation)
 	{
-		if(gtkMountOperation is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMountOperation);
-		if( ptr !is null )
-		{
-			this = cast(MountOperation)ptr;
-			return;
-		}
 		super(cast(GMountOperation*)gtkMountOperation);
 		this.gtkMountOperation = gtkMountOperation;
 	}
@@ -193,11 +182,13 @@ public class MountOperation : GioMountOperation
 	{
 		// GtkWindow * gtk_mount_operation_get_parent (GtkMountOperation *op);
 		auto p = gtk_mount_operation_get_parent(gtkMountOperation);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GtkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -222,11 +213,13 @@ public class MountOperation : GioMountOperation
 	{
 		// GdkScreen * gtk_mount_operation_get_screen (GtkMountOperation *op);
 		auto p = gtk_mount_operation_get_screen(gtkMountOperation);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**

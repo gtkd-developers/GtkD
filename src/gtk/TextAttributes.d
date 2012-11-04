@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -107,11 +108,6 @@ public class TextAttributes
 	 */
 	public this (GtkTextAttributes* gtkTextAttributes)
 	{
-		if(gtkTextAttributes is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTextAttributes = gtkTextAttributes;
 	}
 	
@@ -152,11 +148,13 @@ public class TextAttributes
 	{
 		// GtkTextAttributes * gtk_text_attributes_copy (GtkTextAttributes *src);
 		auto p = gtk_text_attributes_copy(gtkTextAttributes);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextAttributes(cast(GtkTextAttributes*) p);
+		
+		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
 	}
 	
 	/**
@@ -189,10 +187,12 @@ public class TextAttributes
 	{
 		// GtkTextAttributes * gtk_text_attributes_ref (GtkTextAttributes *values);
 		auto p = gtk_text_attributes_ref(gtkTextAttributes);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextAttributes(cast(GtkTextAttributes*) p);
+		
+		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
 	}
 }

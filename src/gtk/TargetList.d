@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.TextBuffer;
@@ -115,11 +116,6 @@ public class TargetList : Boxed
 	 */
 	public this (GtkTargetList* gtkTargetList)
 	{
-		if(gtkTargetList is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTargetList = gtkTargetList;
 	}
 	
@@ -159,11 +155,13 @@ public class TargetList : Boxed
 	{
 		// GtkTargetList * gtk_target_list_ref (GtkTargetList *list);
 		auto p = gtk_target_list_ref(gtkTargetList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TargetList(cast(GtkTargetList*) p);
+		
+		return ObjectG.getDObject!TargetList(cast(GtkTargetList*) p);
 	}
 	
 	/**
@@ -310,6 +308,12 @@ public class TargetList : Boxed
 		// GtkTargetEntry * gtk_target_table_new_from_list (GtkTargetList *list,  gint *n_targets);
 		int nTargets;
 		auto p = gtk_target_table_new_from_list(gtkTargetList, &nTargets);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. nTargets];
 	}
 	

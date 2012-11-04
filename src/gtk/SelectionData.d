@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -120,11 +121,6 @@ public class SelectionData : Boxed
 	 */
 	public this (GtkSelectionData* gtkSelectionData)
 	{
-		if(gtkSelectionData is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkSelectionData = gtkSelectionData;
 	}
 	
@@ -293,11 +289,13 @@ public class SelectionData : Boxed
 	{
 		// GdkPixbuf * gtk_selection_data_get_pixbuf (const GtkSelectionData *selection_data);
 		auto p = gtk_selection_data_get_pixbuf(gtkSelectionData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -447,6 +445,12 @@ public class SelectionData : Boxed
 		// const guchar * gtk_selection_data_get_data_with_length  (const GtkSelectionData *selection_data,  gint *length);
 		int length;
 		auto p = gtk_selection_data_get_data_with_length(gtkSelectionData, &length);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. length];
 	}
 	
@@ -470,11 +474,13 @@ public class SelectionData : Boxed
 	{
 		// GdkDisplay * gtk_selection_data_get_display (const GtkSelectionData *selection_data);
 		auto p = gtk_selection_data_get_display(gtkSelectionData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -523,11 +529,13 @@ public class SelectionData : Boxed
 	{
 		// GtkSelectionData * gtk_selection_data_copy (const GtkSelectionData *data);
 		auto p = gtk_selection_data_copy(gtkSelectionData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SelectionData(cast(GtkSelectionData*) p);
+		
+		return ObjectG.getDObject!SelectionData(cast(GtkSelectionData*) p);
 	}
 	
 	/**

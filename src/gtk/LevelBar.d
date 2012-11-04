@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -114,18 +115,6 @@ public class LevelBar : Widget
 	 */
 	public this (GtkLevelBar* gtkLevelBar)
 	{
-		if(gtkLevelBar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkLevelBar);
-		if( ptr !is null )
-		{
-			this = cast(LevelBar)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkLevelBar);
 		this.gtkLevelBar = gtkLevelBar;
 	}

@@ -131,11 +131,6 @@ public class BookmarkFile
 	 */
 	public this (GBookmarkFile* gBookmarkFile)
 	{
-		if(gBookmarkFile is null)
-		{
-			this = null;
-			return;
-		}
 		this.gBookmarkFile = gBookmarkFile;
 	}
 	

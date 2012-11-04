@@ -81,6 +81,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -163,18 +164,6 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	 */
 	public this (GtkEntry* gtkEntry)
 	{
-		if(gtkEntry is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkEntry);
-		if( ptr !is null )
-		{
-			this = cast(Entry)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkEntry);
 		this.gtkEntry = gtkEntry;
 	}
@@ -700,11 +689,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// GtkEntryBuffer * gtk_entry_get_buffer (GtkEntry *entry);
 		auto p = gtk_entry_get_buffer(gtkEntry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new EntryBuffer(cast(GtkEntryBuffer*) p);
+		
+		return ObjectG.getDObject!EntryBuffer(cast(GtkEntryBuffer*) p);
 	}
 	
 	/**
@@ -871,11 +862,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// const GtkBorder * gtk_entry_get_inner_border (GtkEntry *entry);
 		auto p = gtk_entry_get_inner_border(gtkEntry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Border(cast(GtkBorder*) p);
+		
+		return ObjectG.getDObject!Border(cast(GtkBorder*) p);
 	}
 	
 	/**
@@ -1058,11 +1051,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// PangoLayout * gtk_entry_get_layout (GtkEntry *entry);
 		auto p = gtk_entry_get_layout(gtkEntry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -1143,11 +1138,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// PangoAttrList * gtk_entry_get_attributes (GtkEntry *entry);
 		auto p = gtk_entry_get_attributes(gtkEntry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeList(cast(PangoAttrList*) p);
+		
+		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -1196,11 +1193,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// GtkEntryCompletion * gtk_entry_get_completion (GtkEntry *entry);
 		auto p = gtk_entry_get_completion(gtkEntry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new EntryCompletion(cast(GtkEntryCompletion*) p);
+		
+		return ObjectG.getDObject!EntryCompletion(cast(GtkEntryCompletion*) p);
 	}
 	
 	/**
@@ -1231,11 +1230,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// GtkAdjustment * gtk_entry_get_cursor_hadjustment (GtkEntry *entry);
 		auto p = gtk_entry_get_cursor_hadjustment(gtkEntry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -1428,11 +1429,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// GdkPixbuf * gtk_entry_get_icon_pixbuf (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
 		auto p = gtk_entry_get_icon_pixbuf(gtkEntry, iconPos);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1478,11 +1481,13 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	{
 		// GIcon * gtk_entry_get_icon_gicon (GtkEntry *entry,  GtkEntryIconPosition icon_pos);
 		auto p = gtk_entry_get_icon_gicon(gtkEntry, iconPos);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**

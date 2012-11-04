@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -206,11 +207,6 @@ public class TreePath
 	 */
 	public this (GtkTreePath* gtkTreePath)
 	{
-		if(gtkTreePath is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTreePath = gtkTreePath;
 	}
 	
@@ -345,6 +341,12 @@ public class TreePath
 	{
 		// gint * gtk_tree_path_get_indices (GtkTreePath *path);
 		auto p = gtk_tree_path_get_indices(gtkTreePath);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. getDepth()];
 	}
 	
@@ -360,6 +362,12 @@ public class TreePath
 		// gint * gtk_tree_path_get_indices_with_depth  (GtkTreePath *path,  gint *depth);
 		int depth;
 		auto p = gtk_tree_path_get_indices_with_depth(gtkTreePath, &depth);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. depth];
 	}
 	
@@ -380,11 +388,13 @@ public class TreePath
 	{
 		// GtkTreePath * gtk_tree_path_copy (const GtkTreePath *path);
 		auto p = gtk_tree_path_copy(gtkTreePath);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreePath(cast(GtkTreePath*) p);
+		
+		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**

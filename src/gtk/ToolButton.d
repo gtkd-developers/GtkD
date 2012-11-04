@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -118,18 +119,6 @@ public class ToolButton : ToolItem, ActionableIF
 	 */
 	public this (GtkToolButton* gtkToolButton)
 	{
-		if(gtkToolButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToolButton);
-		if( ptr !is null )
-		{
-			this = cast(ToolButton)ptr;
-			return;
-		}
 		super(cast(GtkToolItem*)gtkToolButton);
 		this.gtkToolButton = gtkToolButton;
 	}
@@ -363,11 +352,13 @@ public class ToolButton : ToolItem, ActionableIF
 	{
 		// GtkWidget * gtk_tool_button_get_icon_widget (GtkToolButton *button);
 		auto p = gtk_tool_button_get_icon_widget(gtkToolButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -396,10 +387,12 @@ public class ToolButton : ToolItem, ActionableIF
 	{
 		// GtkWidget * gtk_tool_button_get_label_widget (GtkToolButton *button);
 		auto p = gtk_tool_button_get_label_widget(gtkToolButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

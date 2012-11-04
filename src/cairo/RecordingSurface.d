@@ -110,11 +110,6 @@ public class RecordingSurface : Surface
 	 */
 	public this (cairo_surface_t* cairo_surface)
 	{
-		if(cairo_surface is null)
-		{
-			this = null;
-			return;
-		}
 		super(cast(cairo_surface_t*)cairo_surface);
 		this.cairo_surface = cairo_surface;
 	}

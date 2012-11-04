@@ -70,6 +70,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -147,18 +148,6 @@ public class ObjectGst : ObjectG
 	 */
 	public this (GstObject* gstObject)
 	{
-		if(gstObject is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstObject);
-		if( ptr !is null )
-		{
-			this = cast(ObjectGst)ptr;
-			return;
-		}
 		super(cast(GObject*)gstObject);
 		this.gstObject = gstObject;
 	}
@@ -198,7 +187,7 @@ public class ObjectGst : ObjectG
 	{
 		foreach ( void delegate(ObjectGst, ParamSpec, ObjectGst) dlg ; _objectGst.onDeepNotifyListeners )
 		{
-			dlg(new ObjectGst(propObject), new ParamSpec(prop), _objectGst);
+			dlg(ObjectG.getDObject!ObjectGst(propObject), ObjectG.getDObject!ParamSpec(prop), _objectGst);
 		}
 	}
 	
@@ -253,7 +242,7 @@ public class ObjectGst : ObjectG
 	{
 		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentSetListeners )
 		{
-			dlg(new ObjectG(parent), _objectGst);
+			dlg(ObjectG.getDObject!ObjectG(parent), _objectGst);
 		}
 	}
 	
@@ -280,7 +269,7 @@ public class ObjectGst : ObjectG
 	{
 		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentUnsetListeners )
 		{
-			dlg(new ObjectG(parent), _objectGst);
+			dlg(ObjectG.getDObject!ObjectG(parent), _objectGst);
 		}
 	}
 	
@@ -337,11 +326,13 @@ public class ObjectGst : ObjectG
 	{
 		// GstObject* gst_object_get_parent (GstObject *object);
 		auto p = gst_object_get_parent(gstObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectGst(cast(GstObject*) p);
+		
+		return ObjectG.getDObject!ObjectGst(cast(GstObject*) p);
 	}
 	
 	/**
@@ -514,7 +505,7 @@ public class ObjectGst : ObjectG
 		
 		gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct());
 		
-		oldobj = new ObjectGst(outoldobj);
+		oldobj = ObjectG.getDObject!ObjectGst(outoldobj);
 	}
 	
 	/**

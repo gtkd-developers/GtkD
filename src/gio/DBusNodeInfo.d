@@ -63,6 +63,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -106,11 +107,6 @@ public class DBusNodeInfo
 	 */
 	public this (GDBusNodeInfo* gDBusNodeInfo)
 	{
-		if(gDBusNodeInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDBusNodeInfo = gDBusNodeInfo;
 	}
 	
@@ -161,11 +157,13 @@ public class DBusNodeInfo
 	{
 		// GDBusInterfaceInfo * g_dbus_node_info_lookup_interface (GDBusNodeInfo *info,  const gchar *name);
 		auto p = g_dbus_node_info_lookup_interface(gDBusNodeInfo, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
+		
+		return ObjectG.getDObject!DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
 	}
 	
 	/**
@@ -193,11 +191,13 @@ public class DBusNodeInfo
 	{
 		// GDBusNodeInfo * g_dbus_node_info_ref (GDBusNodeInfo *info);
 		auto p = g_dbus_node_info_ref(gDBusNodeInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusNodeInfo(cast(GDBusNodeInfo*) p);
+		
+		return ObjectG.getDObject!DBusNodeInfo(cast(GDBusNodeInfo*) p);
 	}
 	
 	/**

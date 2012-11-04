@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -114,11 +115,6 @@ public class StockItem
 	 */
 	public this (GtkStockItem* gtkStockItem)
 	{
-		if(gtkStockItem is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkStockItem = gtkStockItem;
 	}
 	
@@ -169,11 +165,13 @@ public class StockItem
 	{
 		// GtkStockItem * gtk_stock_item_copy (const GtkStockItem *item);
 		auto p = gtk_stock_item_copy(gtkStockItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StockItem(cast(GtkStockItem*) p);
+		
+		return ObjectG.getDObject!StockItem(cast(GtkStockItem*) p);
 	}
 	
 	/**
@@ -197,11 +195,13 @@ public class StockItem
 	{
 		// GSList * gtk_stock_list_ids (void);
 		auto p = gtk_stock_list_ids();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**

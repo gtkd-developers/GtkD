@@ -61,6 +61,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -102,18 +103,6 @@ public class SourceCompletionInfo : Window
 	 */
 	public this (GtkSourceCompletionInfo* gtkSourceCompletionInfo)
 	{
-		if(gtkSourceCompletionInfo is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceCompletionInfo);
-		if( ptr !is null )
-		{
-			this = cast(SourceCompletionInfo)ptr;
-			return;
-		}
 		super(cast(GtkWindow*)gtkSourceCompletionInfo);
 		this.gtkSourceCompletionInfo = gtkSourceCompletionInfo;
 	}
@@ -210,10 +199,12 @@ public class SourceCompletionInfo : Window
 	{
 		// GtkWidget * gtk_source_completion_info_get_widget  (GtkSourceCompletionInfo *info);
 		auto p = gtk_source_completion_info_get_widget(gtkSourceCompletionInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

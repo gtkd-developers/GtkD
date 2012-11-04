@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -118,18 +119,6 @@ public class Notebook : Container
 	 */
 	public this (GtkNotebook* gtkNotebook)
 	{
-		if(gtkNotebook is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkNotebook);
-		if( ptr !is null )
-		{
-			this = cast(Notebook)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkNotebook);
 		this.gtkNotebook = gtkNotebook;
 	}
@@ -219,7 +208,7 @@ public class Notebook : Container
 	{
 		foreach ( GtkNotebook* delegate(Widget, gint, gint, Notebook) dlg ; _notebook.onCreateWindowListeners )
 		{
-			dlg(new Widget(page), x, y, _notebook);
+			dlg(ObjectG.getDObject!Widget(page), x, y, _notebook);
 		}
 	}
 	
@@ -305,7 +294,7 @@ public class Notebook : Container
 	{
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageAddedListeners )
 		{
-			dlg(new Widget(child), pageNum, _notebook);
+			dlg(ObjectG.getDObject!Widget(child), pageNum, _notebook);
 		}
 	}
 	
@@ -334,7 +323,7 @@ public class Notebook : Container
 	{
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageRemovedListeners )
 		{
-			dlg(new Widget(child), pageNum, _notebook);
+			dlg(ObjectG.getDObject!Widget(child), pageNum, _notebook);
 		}
 	}
 	
@@ -363,7 +352,7 @@ public class Notebook : Container
 	{
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageReorderedListeners )
 		{
-			dlg(new Widget(child), pageNum, _notebook);
+			dlg(ObjectG.getDObject!Widget(child), pageNum, _notebook);
 		}
 	}
 	
@@ -454,7 +443,7 @@ public class Notebook : Container
 	{
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onSwitchPageListeners )
 		{
-			dlg(new Widget(page), pageNum, _notebook);
+			dlg(ObjectG.getDObject!Widget(page), pageNum, _notebook);
 		}
 	}
 	
@@ -732,11 +721,13 @@ public class Notebook : Container
 	{
 		// GtkWidget * gtk_notebook_get_menu_label (GtkNotebook *notebook,  GtkWidget *child);
 		auto p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -750,11 +741,13 @@ public class Notebook : Container
 	{
 		// GtkWidget * gtk_notebook_get_nth_page (GtkNotebook *notebook,  gint page_num);
 		auto p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -780,11 +773,13 @@ public class Notebook : Container
 	{
 		// GtkWidget * gtk_notebook_get_tab_label (GtkNotebook *notebook,  GtkWidget *child);
 		auto p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -1073,10 +1068,12 @@ public class Notebook : Container
 	{
 		// GtkWidget * gtk_notebook_get_action_widget (GtkNotebook *notebook,  GtkPackType pack_type);
 		auto p = gtk_notebook_get_action_widget(gtkNotebook, packType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

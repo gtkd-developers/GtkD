@@ -82,6 +82,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -134,18 +135,6 @@ public class TextView : Container, ScrollableIF
 	 */
 	public this (GtkTextView* gtkTextView)
 	{
-		if(gtkTextView is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTextView);
-		if( ptr !is null )
-		{
-			this = cast(TextView)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;
 	}
@@ -737,11 +726,13 @@ public class TextView : Container, ScrollableIF
 	{
 		// GtkTextBuffer * gtk_text_view_get_buffer (GtkTextView *text_view);
 		auto p = gtk_text_view_get_buffer(gtkTextView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextBuffer(cast(GtkTextBuffer*) p);
+		
+		return ObjectG.getDObject!TextBuffer(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -1016,11 +1007,13 @@ public class TextView : Container, ScrollableIF
 	{
 		// GdkWindow * gtk_text_view_get_window (GtkTextView *text_view,  GtkTextWindowType win);
 		auto p = gtk_text_view_get_window(gtkTextView, win);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1508,11 +1501,13 @@ public class TextView : Container, ScrollableIF
 	{
 		// PangoTabArray * gtk_text_view_get_tabs (GtkTextView *text_view);
 		auto p = gtk_text_view_get_tabs(gtkTextView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgTabArray(cast(PangoTabArray*) p);
+		
+		return ObjectG.getDObject!PgTabArray(cast(PangoTabArray*) p);
 	}
 	
 	/**
@@ -1558,11 +1553,13 @@ public class TextView : Container, ScrollableIF
 	{
 		// GtkTextAttributes * gtk_text_view_get_default_attributes  (GtkTextView *text_view);
 		auto p = gtk_text_view_get_default_attributes(gtkTextView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextAttributes(cast(GtkTextAttributes*) p);
+		
+		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
 	}
 	
 	/**

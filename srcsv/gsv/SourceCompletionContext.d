@@ -62,6 +62,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -112,18 +113,6 @@ public class SourceCompletionContext : ObjectG
 	 */
 	public this (GtkSourceCompletionContext* gtkSourceCompletionContext)
 	{
-		if(gtkSourceCompletionContext is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceCompletionContext);
-		if( ptr !is null )
-		{
-			this = cast(SourceCompletionContext)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceCompletionContext);
 		this.gtkSourceCompletionContext = gtkSourceCompletionContext;
 	}

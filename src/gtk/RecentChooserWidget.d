@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.RecentManager;
@@ -104,18 +105,6 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	 */
 	public this (GtkRecentChooserWidget* gtkRecentChooserWidget)
 	{
-		if(gtkRecentChooserWidget is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRecentChooserWidget);
-		if( ptr !is null )
-		{
-			this = cast(RecentChooserWidget)ptr;
-			return;
-		}
 		super(cast(GtkBox*)gtkRecentChooserWidget);
 		this.gtkRecentChooserWidget = gtkRecentChooserWidget;
 	}

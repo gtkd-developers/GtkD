@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -121,18 +122,6 @@ public class AccelGroup : ObjectG
 	 */
 	public this (GtkAccelGroup* gtkAccelGroup)
 	{
-		if(gtkAccelGroup is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAccelGroup);
-		if( ptr !is null )
-		{
-			this = cast(AccelGroup)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkAccelGroup);
 		this.gtkAccelGroup = gtkAccelGroup;
 	}
@@ -172,7 +161,7 @@ public class AccelGroup : ObjectG
 	{
 		foreach ( bool delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg ; _accelGroup.onAccelActivateListeners )
 		{
-			if ( dlg(new ObjectG(acceleratable), keyval, modifier, _accelGroup) )
+			if ( dlg(ObjectG.getDObject!ObjectG(acceleratable), keyval, modifier, _accelGroup) )
 			{
 				return 1;
 			}
@@ -211,7 +200,7 @@ public class AccelGroup : ObjectG
 	{
 		foreach ( void delegate(guint, GdkModifierType, Closure, AccelGroup) dlg ; _accelGroup.onAccelChangedListeners )
 		{
-			dlg(keyval, modifier, new Closure(accelClosure), _accelGroup);
+			dlg(keyval, modifier, ObjectG.getDObject!Closure(accelClosure), _accelGroup);
 		}
 	}
 	
@@ -365,11 +354,13 @@ public class AccelGroup : ObjectG
 	{
 		// GtkAccelGroup * gtk_accel_group_from_accel_closure (GClosure *closure);
 		auto p = gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AccelGroup(cast(GtkAccelGroup*) p);
+		
+		return ObjectG.getDObject!AccelGroup(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -411,11 +402,13 @@ public class AccelGroup : ObjectG
 	{
 		// GSList * gtk_accel_groups_from_object (GObject *object);
 		auto p = gtk_accel_groups_from_object((object is null) ? null : object.getObjectGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**

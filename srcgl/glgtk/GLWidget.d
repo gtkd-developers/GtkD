@@ -63,6 +63,7 @@ public  import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -117,11 +118,13 @@ public static GLConfig getGLConfig(Widget widget)
 {
 	// GdkGLConfig * gtk_widget_get_gl_config (GtkWidget *widget);
 	auto p = gtk_widget_get_gl_config((widget is null) ? null : widget.getWidgetStruct());
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new GLConfig(cast(GdkGLConfig*) p);
+	
+	return ObjectG.getDObject!GLConfig(cast(GdkGLConfig*) p);
 }
 
 /**
@@ -141,11 +144,13 @@ public static GLContext createGLContext(Widget widget, GLContext shareList, int 
 {
 	// GdkGLContext * gtk_widget_create_gl_context (GtkWidget *widget,  GdkGLContext *share_list,  gboolean direct,  int render_type);
 	auto p = gtk_widget_create_gl_context((widget is null) ? null : widget.getWidgetStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType);
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new GLContext(cast(GdkGLContext*) p);
+	
+	return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
 }
 
 /**
@@ -162,11 +167,13 @@ public static GLContext getGLContext(Widget widget)
 {
 	// GdkGLContext * gtk_widget_get_gl_context (GtkWidget *widget);
 	auto p = gtk_widget_get_gl_context((widget is null) ? null : widget.getWidgetStruct());
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new GLContext(cast(GdkGLContext*) p);
+	
+	return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
 }
 
 /**
@@ -179,10 +186,12 @@ public static GLWindow getGLWindow(Widget widget)
 {
 	// GdkGLWindow * gtk_widget_get_gl_window (GtkWidget *widget);
 	auto p = gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct());
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new GLWindow(cast(GdkGLWindow*) p);
+	
+	return ObjectG.getDObject!GLWindow(cast(GdkGLWindow*) p);
 }
 

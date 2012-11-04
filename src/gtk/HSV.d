@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -99,18 +100,6 @@ public class HSV : Widget
 	 */
 	public this (GtkHSV* gtkHSV)
 	{
-		if(gtkHSV is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkHSV);
-		if( ptr !is null )
-		{
-			this = cast(HSV)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkHSV);
 		this.gtkHSV = gtkHSV;
 	}

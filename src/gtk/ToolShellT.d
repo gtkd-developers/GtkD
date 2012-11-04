@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import gtk.SizeGroup;
@@ -189,10 +190,12 @@ public template ToolShellT(TStruct)
 	{
 		// GtkSizeGroup * gtk_tool_shell_get_text_size_group (GtkToolShell *shell);
 		auto p = gtk_tool_shell_get_text_size_group(getToolShellTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SizeGroup(cast(GtkSizeGroup*) p);
+		
+		return ObjectG.getDObject!SizeGroup(cast(GtkSizeGroup*) p);
 	}
 }

@@ -55,6 +55,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -88,11 +89,6 @@ public class Blob
 	 */
 	public this (GdaBlob* gdaBlob)
 	{
-		if(gdaBlob is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaBlob = gdaBlob;
 	}
 	

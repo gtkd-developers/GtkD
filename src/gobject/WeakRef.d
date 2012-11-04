@@ -56,6 +56,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -122,11 +123,6 @@ public class WeakRef
 	 */
 	public this (GWeakRef* gWeakRef)
 	{
-		if(gWeakRef is null)
-		{
-			this = null;
-			return;
-		}
 		this.gWeakRef = gWeakRef;
 	}
 	

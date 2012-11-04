@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -122,18 +123,6 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public this (GApplicationCommandLine* gApplicationCommandLine)
 	{
-		if(gApplicationCommandLine is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gApplicationCommandLine);
-		if( ptr !is null )
-		{
-			this = cast(ApplicationCommandLine)ptr;
-			return;
-		}
 		super(cast(GObject*)gApplicationCommandLine);
 		this.gApplicationCommandLine = gApplicationCommandLine;
 	}
@@ -254,11 +243,13 @@ public class ApplicationCommandLine : ObjectG
 	{
 		// GVariant * g_application_command_line_get_platform_data  (GApplicationCommandLine *cmdline);
 		auto p = g_application_command_line_get_platform_data(gApplicationCommandLine);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**

@@ -59,6 +59,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -187,11 +188,6 @@ public class MenuAttributeIter
 	 */
 	public this (GMenuAttributeIter* gMenuAttributeIter)
 	{
-		if(gMenuAttributeIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMenuAttributeIter = gMenuAttributeIter;
 	}
 	
@@ -226,7 +222,7 @@ public class MenuAttributeIter
 		auto p = g_menu_attribute_iter_get_next(gMenuAttributeIter, &outoutName, &outvalue);
 		
 		outName = Str.toString(outoutName);
-		value = new Variant(outvalue);
+		value = ObjectG.getDObject!Variant(outvalue);
 		return p;
 	}
 	
@@ -253,11 +249,13 @@ public class MenuAttributeIter
 	{
 		// GVariant * g_menu_attribute_iter_get_value (GMenuAttributeIter *iter);
 		auto p = g_menu_attribute_iter_get_value(gMenuAttributeIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**

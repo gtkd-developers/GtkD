@@ -60,6 +60,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -97,18 +98,6 @@ public class Export : ObjectG
 	 */
 	public this (GdaExport* gdaExport)
 	{
-		if(gdaExport is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaExport);
-		if( ptr !is null )
-		{
-			this = cast(Export)ptr;
-			return;
-		}
 		super(cast(GObject*)gdaExport);
 		this.gdaExport = gdaExport;
 	}
@@ -159,11 +148,13 @@ public class Export : ObjectG
 	{
 		// GList* gda_export_get_tables (GdaExport *exp);
 		auto p = gda_export_get_tables(gdaExport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -176,11 +167,13 @@ public class Export : ObjectG
 	{
 		// GList* gda_export_get_selected_tables (GdaExport *exp);
 		auto p = gda_export_get_selected_tables(gdaExport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -246,11 +239,13 @@ public class Export : ObjectG
 	{
 		// GdaConnection* gda_export_get_connection (GdaExport *exp);
 		auto p = gda_export_get_connection(gdaExport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Connection(cast(GdaConnection*) p);
+		
+		return ObjectG.getDObject!Connection(cast(GdaConnection*) p);
 	}
 	
 	/**

@@ -105,11 +105,6 @@ public class QueueG
 	 */
 	public this (GQueue* gQueue)
 	{
-		if(gQueue is null)
-		{
-			this = null;
-			return;
-		}
 		this.gQueue = gQueue;
 	}
 	
@@ -225,10 +220,12 @@ public class QueueG
 	{
 		// GQueue * g_queue_copy (GQueue *queue);
 		auto p = g_queue_copy(gQueue);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new QueueG(cast(GQueue*) p);
 	}
 	
@@ -257,10 +254,12 @@ public class QueueG
 	{
 		// GList * g_queue_find (GQueue *queue,  gconstpointer data);
 		auto p = g_queue_find(gQueue, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -281,10 +280,12 @@ public class QueueG
 	{
 		// GList * g_queue_find_custom (GQueue *queue,  gconstpointer data,  GCompareFunc func);
 		auto p = g_queue_find_custom(gQueue, data, func);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -539,10 +540,12 @@ public class QueueG
 	{
 		// GList * g_queue_pop_head_link (GQueue *queue);
 		auto p = g_queue_pop_head_link(gQueue);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -554,10 +557,12 @@ public class QueueG
 	{
 		// GList * g_queue_pop_tail_link (GQueue *queue);
 		auto p = g_queue_pop_tail_link(gQueue);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -572,10 +577,12 @@ public class QueueG
 	{
 		// GList * g_queue_pop_nth_link (GQueue *queue,  guint n);
 		auto p = g_queue_pop_nth_link(gQueue, n);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -588,10 +595,12 @@ public class QueueG
 	{
 		// GList * g_queue_peek_head_link (GQueue *queue);
 		auto p = g_queue_peek_head_link(gQueue);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -604,10 +613,12 @@ public class QueueG
 	{
 		// GList * g_queue_peek_tail_link (GQueue *queue);
 		auto p = g_queue_peek_tail_link(gQueue);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	
@@ -622,10 +633,12 @@ public class QueueG
 	{
 		// GList * g_queue_peek_nth_link (GQueue *queue,  guint n);
 		auto p = g_queue_peek_nth_link(gQueue, n);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListG(cast(GList*) p);
 	}
 	

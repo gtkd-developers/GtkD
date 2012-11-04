@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -102,18 +103,6 @@ public class RecentAction : Action
 	 */
 	public this (GtkRecentAction* gtkRecentAction)
 	{
-		if(gtkRecentAction is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRecentAction);
-		if( ptr !is null )
-		{
-			this = cast(RecentAction)ptr;
-			return;
-		}
 		super(cast(GtkAction*)gtkRecentAction);
 		this.gtkRecentAction = gtkRecentAction;
 	}

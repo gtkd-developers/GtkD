@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -108,11 +109,6 @@ public class DBusInterfaceInfo
 	 */
 	public this (GDBusInterfaceInfo* gDBusInterfaceInfo)
 	{
-		if(gDBusInterfaceInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDBusInterfaceInfo = gDBusInterfaceInfo;
 	}
 	
@@ -132,11 +128,13 @@ public class DBusInterfaceInfo
 	{
 		// GDBusMethodInfo * g_dbus_interface_info_lookup_method (GDBusInterfaceInfo *info,  const gchar *name);
 		auto p = g_dbus_interface_info_lookup_method(gDBusInterfaceInfo, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusMethodInfo(cast(GDBusMethodInfo*) p);
+		
+		return ObjectG.getDObject!DBusMethodInfo(cast(GDBusMethodInfo*) p);
 	}
 	
 	/**
@@ -152,11 +150,13 @@ public class DBusInterfaceInfo
 	{
 		// GDBusSignalInfo * g_dbus_interface_info_lookup_signal (GDBusInterfaceInfo *info,  const gchar *name);
 		auto p = g_dbus_interface_info_lookup_signal(gDBusInterfaceInfo, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusSignalInfo(cast(GDBusSignalInfo*) p);
+		
+		return ObjectG.getDObject!DBusSignalInfo(cast(GDBusSignalInfo*) p);
 	}
 	
 	/**
@@ -172,11 +172,13 @@ public class DBusInterfaceInfo
 	{
 		// GDBusPropertyInfo * g_dbus_interface_info_lookup_property  (GDBusInterfaceInfo *info,  const gchar *name);
 		auto p = g_dbus_interface_info_lookup_property(gDBusInterfaceInfo, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusPropertyInfo(cast(GDBusPropertyInfo*) p);
+		
+		return ObjectG.getDObject!DBusPropertyInfo(cast(GDBusPropertyInfo*) p);
 	}
 	
 	/**
@@ -235,11 +237,13 @@ public class DBusInterfaceInfo
 	{
 		// GDBusInterfaceInfo * g_dbus_interface_info_ref (GDBusInterfaceInfo *info);
 		auto p = g_dbus_interface_info_ref(gDBusInterfaceInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
+		
+		return ObjectG.getDObject!DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
 	}
 	
 	/**

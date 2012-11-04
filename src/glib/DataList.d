@@ -108,11 +108,6 @@ public class DataList
 	 */
 	public this (GData* gData)
 	{
-		if(gData is null)
-		{
-			this = null;
-			return;
-		}
 		this.gData = gData;
 	}
 	

@@ -55,6 +55,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -102,18 +103,6 @@ public class TearoffMenuItem : MenuItem
 	 */
 	public this (GtkTearoffMenuItem* gtkTearoffMenuItem)
 	{
-		if(gtkTearoffMenuItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTearoffMenuItem);
-		if( ptr !is null )
-		{
-			this = cast(TearoffMenuItem)ptr;
-			return;
-		}
 		super(cast(GtkMenuItem*)gtkTearoffMenuItem);
 		this.gtkTearoffMenuItem = gtkTearoffMenuItem;
 	}

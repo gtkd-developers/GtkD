@@ -61,6 +61,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -105,18 +106,6 @@ public class Menu : MenuModel
 	 */
 	public this (GMenu* gMenu)
 	{
-		if(gMenu is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gMenu);
-		if( ptr !is null )
-		{
-			this = cast(Menu)ptr;
-			return;
-		}
 		super(cast(GMenuModel*)gMenu);
 		this.gMenu = gMenu;
 	}

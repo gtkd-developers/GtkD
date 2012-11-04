@@ -71,6 +71,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -158,7 +159,7 @@ public template PrintOperationPreviewT(TStruct)
 	{
 		foreach ( void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg ; _printOperationPreviewIF.onGotPageSizeListeners )
 		{
-			dlg(new PrintContext(context), new PageSetup(pageSetup), _printOperationPreviewIF);
+			dlg(ObjectG.getDObject!PrintContext(context), ObjectG.getDObject!PageSetup(pageSetup), _printOperationPreviewIF);
 		}
 	}
 	
@@ -193,7 +194,7 @@ public template PrintOperationPreviewT(TStruct)
 	{
 		foreach ( void delegate(PrintContext, PrintOperationPreviewIF) dlg ; _printOperationPreviewIF.onReadyListeners )
 		{
-			dlg(new PrintContext(context), _printOperationPreviewIF);
+			dlg(ObjectG.getDObject!PrintContext(context), _printOperationPreviewIF);
 		}
 	}
 	

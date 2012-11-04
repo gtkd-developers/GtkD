@@ -115,11 +115,6 @@ public class Checksum
 	 */
 	public this (GChecksum* gChecksum)
 	{
-		if(gChecksum is null)
-		{
-			this = null;
-			return;
-		}
 		this.gChecksum = gChecksum;
 	}
 	
@@ -206,10 +201,12 @@ public class Checksum
 	{
 		// GChecksum * g_checksum_copy (const GChecksum *checksum);
 		auto p = g_checksum_copy(gChecksum);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Checksum(cast(GChecksum*) p);
 	}
 	

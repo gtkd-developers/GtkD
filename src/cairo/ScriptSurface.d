@@ -99,11 +99,6 @@ public class ScriptSurface : Surface
 	 */
 	public this (cairo_surface_t* cairo_surface)
 	{
-		if(cairo_surface is null)
-		{
-			this = null;
-			return;
-		}
 		super(cast(cairo_surface_t*)cairo_surface);
 		this.cairo_surface = cairo_surface;
 	}
@@ -125,10 +120,12 @@ public class ScriptSurface : Surface
 	{
 		// cairo_surface_t * cairo_script_surface_create (cairo_device_t *script,  cairo_content_t content,  double width,  double height);
 		auto p = cairo_script_surface_create((script is null) ? null : script.getDeviceStruct(), content, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
@@ -145,10 +142,12 @@ public class ScriptSurface : Surface
 	{
 		// cairo_surface_t * cairo_script_surface_create_for_target  (cairo_device_t *script,  cairo_surface_t *target);
 		auto p = cairo_script_surface_create_for_target((script is null) ? null : script.getDeviceStruct(), (target is null) ? null : target.getSurfaceStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 }

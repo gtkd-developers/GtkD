@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -121,18 +122,6 @@ public class Expander : Bin
 	 */
 	public this (GtkExpander* gtkExpander)
 	{
-		if(gtkExpander is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkExpander);
-		if( ptr !is null )
-		{
-			this = cast(Expander)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkExpander);
 		this.gtkExpander = gtkExpander;
 	}
@@ -367,11 +356,13 @@ public class Expander : Bin
 	{
 		// GtkWidget * gtk_expander_get_label_widget (GtkExpander *expander);
 		auto p = gtk_expander_get_label_widget(gtkExpander);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

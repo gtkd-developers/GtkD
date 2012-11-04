@@ -61,6 +61,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import gio.DBusInterfaceInfo;
@@ -102,11 +103,13 @@ public template DBusInterfaceT(TStruct)
 	{
 		// GDBusInterfaceInfo * g_dbus_interface_get_info (GDBusInterface *interface_);
 		auto p = g_dbus_interface_get_info(getDBusInterfaceTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
+		
+		return ObjectG.getDObject!DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
 	}
 	
 	/**
@@ -123,11 +126,13 @@ public template DBusInterfaceT(TStruct)
 	{
 		// GDBusObject * g_dbus_interface_get_object (GDBusInterface *interface_);
 		auto p = g_dbus_interface_get_object(getDBusInterfaceTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusObject(cast(GDBusObject*) p);
+		
+		return ObjectG.getDObject!DBusObject(cast(GDBusObject*) p);
 	}
 	
 	/**
@@ -139,11 +144,13 @@ public template DBusInterfaceT(TStruct)
 	{
 		// GDBusObject * g_dbus_interface_dup_object (GDBusInterface *interface_);
 		auto p = g_dbus_interface_dup_object(getDBusInterfaceTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusObject(cast(GDBusObject*) p);
+		
+		return ObjectG.getDObject!DBusObject(cast(GDBusObject*) p);
 	}
 	
 	/**

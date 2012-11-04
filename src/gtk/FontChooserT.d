@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -142,11 +143,13 @@ public template FontChooserT(TStruct)
 	{
 		// PangoFontFamily * gtk_font_chooser_get_font_family (GtkFontChooser *fontchooser);
 		auto p = gtk_font_chooser_get_font_family(getFontChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontFamily(cast(PangoFontFamily*) p);
+		
+		return ObjectG.getDObject!PgFontFamily(cast(PangoFontFamily*) p);
 	}
 	
 	/**
@@ -159,11 +162,13 @@ public template FontChooserT(TStruct)
 	{
 		// PangoFontFace * gtk_font_chooser_get_font_face (GtkFontChooser *fontchooser);
 		auto p = gtk_font_chooser_get_font_face(getFontChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontFace(cast(PangoFontFace*) p);
+		
+		return ObjectG.getDObject!PgFontFace(cast(PangoFontFace*) p);
 	}
 	
 	/**
@@ -220,11 +225,13 @@ public template FontChooserT(TStruct)
 	{
 		// PangoFontDescription * gtk_font_chooser_get_font_desc (GtkFontChooser *fontchooser);
 		auto p = gtk_font_chooser_get_font_desc(getFontChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**

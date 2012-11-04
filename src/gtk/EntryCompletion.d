@@ -71,6 +71,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -152,18 +153,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public this (GtkEntryCompletion* gtkEntryCompletion)
 	{
-		if(gtkEntryCompletion is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkEntryCompletion);
-		if( ptr !is null )
-		{
-			this = cast(EntryCompletion)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkEntryCompletion);
 		this.gtkEntryCompletion = gtkEntryCompletion;
 	}
@@ -242,7 +231,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; _entryCompletion.onCursorOnMatchListeners )
 		{
-			if ( dlg(new TreeModel(model), new TreeIter(iter), _entryCompletion) )
+			if ( dlg(ObjectG.getDObject!TreeModel(model), ObjectG.getDObject!TreeIter(iter), _entryCompletion) )
 			{
 				return 1;
 			}
@@ -321,7 +310,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; _entryCompletion.onMatchSelectedListeners )
 		{
-			if ( dlg(new TreeModel(model), new TreeIter(iter), _entryCompletion) )
+			if ( dlg(ObjectG.getDObject!TreeModel(model), ObjectG.getDObject!TreeIter(iter), _entryCompletion) )
 			{
 				return 1;
 			}
@@ -375,11 +364,13 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkWidget * gtk_entry_completion_get_entry (GtkEntryCompletion *completion);
 		auto p = gtk_entry_completion_get_entry(gtkEntryCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -405,11 +396,13 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkTreeModel * gtk_entry_completion_get_model (GtkEntryCompletion *completion);
 		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**

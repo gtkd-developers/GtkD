@@ -58,6 +58,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -110,11 +111,6 @@ public class Table
 	 */
 	public this (AtkTable* atkTable)
 	{
-		if(atkTable is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkTable = atkTable;
 	}
 	
@@ -332,11 +328,13 @@ public class Table
 	{
 		// AtkObject * atk_table_ref_at (AtkTable *table,  gint row,  gint column);
 		auto p = atk_table_ref_at(atkTable, row, column);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -432,11 +430,13 @@ public class Table
 	{
 		// AtkObject * atk_table_get_caption (AtkTable *table);
 		auto p = atk_table_get_caption(atkTable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -473,11 +473,13 @@ public class Table
 	{
 		// AtkObject * atk_table_get_column_header (AtkTable *table,  gint column);
 		auto p = atk_table_get_column_header(atkTable, column);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -490,11 +492,13 @@ public class Table
 	{
 		// AtkObject * atk_table_get_row_header (AtkTable *table,  gint row);
 		auto p = atk_table_get_row_header(atkTable, row);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -505,11 +509,13 @@ public class Table
 	{
 		// AtkObject * atk_table_get_summary (AtkTable *table);
 		auto p = atk_table_get_summary(atkTable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

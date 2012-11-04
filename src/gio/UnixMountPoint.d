@@ -62,6 +62,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -104,11 +105,6 @@ public class UnixMountPoint
 	 */
 	public this (GUnixMountPoint* gUnixMountPoint)
 	{
-		if(gUnixMountPoint is null)
-		{
-			this = null;
-			return;
-		}
 		this.gUnixMountPoint = gUnixMountPoint;
 	}
 	
@@ -215,11 +211,13 @@ public class UnixMountPoint
 	{
 		// GIcon * g_unix_mount_point_guess_icon (GUnixMountPoint *mount_point);
 		auto p = g_unix_mount_point_guess_icon(gUnixMountPoint);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -231,11 +229,13 @@ public class UnixMountPoint
 	{
 		// GIcon * g_unix_mount_point_guess_symbolic_icon  (GUnixMountPoint *mount_point);
 		auto p = g_unix_mount_point_guess_symbolic_icon(gUnixMountPoint);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**

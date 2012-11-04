@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -104,18 +105,6 @@ public class ColorSelection : Box
 	 */
 	public this (GtkColorSelection* gtkColorSelection)
 	{
-		if(gtkColorSelection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkColorSelection);
-		if( ptr !is null )
-		{
-			this = cast(ColorSelection)ptr;
-			return;
-		}
 		super(cast(GtkBox*)gtkColorSelection);
 		this.gtkColorSelection = gtkColorSelection;
 	}

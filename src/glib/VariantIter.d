@@ -270,11 +270,6 @@ public class VariantIter
 	 */
 	public this (GVariantIter* gVariantIter)
 	{
-		if(gVariantIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gVariantIter = gVariantIter;
 	}
 	
@@ -305,10 +300,12 @@ public class VariantIter
 	{
 		// GVariantIter * g_variant_iter_copy (GVariantIter *iter);
 		auto p = g_variant_iter_copy(gVariantIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantIter(cast(GVariantIter*) p);
 	}
 	
@@ -391,10 +388,12 @@ public class VariantIter
 	{
 		// GVariant * g_variant_iter_next_value (GVariantIter *iter);
 		auto p = g_variant_iter_next_value(gVariantIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 }

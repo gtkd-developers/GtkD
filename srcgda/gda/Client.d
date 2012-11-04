@@ -67,6 +67,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -115,18 +116,6 @@ public class Client : ObjectG
 	 */
 	public this (GdaClient* gdaClient)
 	{
-		if(gdaClient is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaClient);
-		if( ptr !is null )
-		{
-			this = cast(Client)ptr;
-			return;
-		}
 		super(cast(GObject*)gdaClient);
 		this.gdaClient = gdaClient;
 	}
@@ -198,11 +187,13 @@ public class Client : ObjectG
 	{
 		// GdaConnection* gda_client_open_connection_from_string  (GdaClient *client,  const gchar *provider_id,  const gchar *cnc_string,  GdaConnectionOptions options);
 		auto p = gda_client_open_connection_from_string(gdaClient, Str.toStringz(providerId), Str.toStringz(cncString), options);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Connection(cast(GdaConnection*) p);
+		
+		return ObjectG.getDObject!Connection(cast(GdaConnection*) p);
 	}
 	
 	/**
@@ -215,11 +206,13 @@ public class Client : ObjectG
 	{
 		// const GList* gda_client_get_connection_list (GdaClient *client);
 		auto p = gda_client_get_connection_list(gdaClient);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -238,11 +231,13 @@ public class Client : ObjectG
 	{
 		// GdaConnection* gda_client_find_connection (GdaClient *client,  const gchar *dsn,  const gchar *username,  const gchar *password);
 		auto p = gda_client_find_connection(gdaClient, Str.toStringz(dsn), Str.toStringz(username), Str.toStringz(password));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Connection(cast(GdaConnection*) p);
+		
+		return ObjectG.getDObject!Connection(cast(GdaConnection*) p);
 	}
 	
 	/**

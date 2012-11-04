@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -118,11 +119,6 @@ public class DBusError
 	 */
 	public this (GError* gError)
 	{
-		if(gError is null)
-		{
-			this = null;
-			return;
-		}
 		this.gError = gError;
 	}
 	
@@ -274,7 +270,7 @@ public class DBusError
 		
 		g_dbus_error_set_dbus_error_valist(&outerror, Str.toStringz(dbusErrorName), Str.toStringz(dbusErrorMessage), Str.toStringz(format), varArgs);
 		
-		error = new ErrorG(outerror);
+		error = ObjectG.getDObject!ErrorG(outerror);
 	}
 	
 	/**

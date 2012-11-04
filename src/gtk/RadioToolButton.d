@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -105,18 +106,6 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this (GtkRadioToolButton* gtkRadioToolButton)
 	{
-		if(gtkRadioToolButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRadioToolButton);
-		if( ptr !is null )
-		{
-			this = cast(RadioToolButton)ptr;
-			return;
-		}
 		super(cast(GtkToggleToolButton*)gtkRadioToolButton);
 		this.gtkRadioToolButton = gtkRadioToolButton;
 	}
@@ -219,11 +208,13 @@ public class RadioToolButton : ToggleToolButton
 	{
 		// GSList * gtk_radio_tool_button_get_group (GtkRadioToolButton *button);
 		auto p = gtk_radio_tool_button_get_group(gtkRadioToolButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**

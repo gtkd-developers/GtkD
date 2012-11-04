@@ -74,6 +74,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -124,18 +125,6 @@ public class Connection : ObjectG
 	 */
 	public this (GdaConnection* gdaConnection)
 	{
-		if(gdaConnection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaConnection);
-		if( ptr !is null )
-		{
-			this = cast(Connection)ptr;
-			return;
-		}
 		super(cast(GObject*)gdaConnection);
 		this.gdaConnection = gdaConnection;
 	}
@@ -205,11 +194,13 @@ public class Connection : ObjectG
 	{
 		// GdaClient* gda_connection_get_client (GdaConnection *cnc);
 		auto p = gda_connection_get_client(gdaConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Client(cast(GdaClient*) p);
+		
+		return ObjectG.getDObject!Client(cast(GdaClient*) p);
 	}
 	
 	/**
@@ -422,11 +413,13 @@ public class Connection : ObjectG
 	{
 		// GList* gda_connection_execute_command (GdaConnection *cnc,  GdaCommand *cmd,  GdaParameterList *params);
 		auto p = gda_connection_execute_command(gdaConnection, (cmd is null) ? null : cmd.getCommandStruct(), (params is null) ? null : params.getParameterListStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -457,11 +450,13 @@ public class Connection : ObjectG
 	{
 		// GdaDataModel* gda_connection_execute_single_command  (GdaConnection *cnc,  GdaCommand *cmd,  GdaParameterList *params);
 		auto p = gda_connection_execute_single_command(gdaConnection, (cmd is null) ? null : cmd.getCommandStruct(), (params is null) ? null : params.getParameterListStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		
+		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
@@ -543,11 +538,13 @@ public class Connection : ObjectG
 	{
 		// const GList* gda_connection_get_errors (GdaConnection *cnc);
 		auto p = gda_connection_get_errors(gdaConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -580,10 +577,12 @@ public class Connection : ObjectG
 	{
 		// GdaDataModel* gda_connection_get_schema (GdaConnection *cnc,  GdaConnectionSchema schema,  GdaParameterList *params);
 		auto p = gda_connection_get_schema(gdaConnection, schema, (params is null) ? null : params.getParameterListStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		
+		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
 	}
 }

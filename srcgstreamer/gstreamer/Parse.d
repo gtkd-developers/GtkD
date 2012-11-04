@@ -64,6 +64,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -119,11 +120,13 @@ public class Parse
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Element(cast(GstElement*) p);
+		
+		return ObjectG.getDObject!Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -147,11 +150,13 @@ public class Parse
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Element(cast(GstElement*) p);
+		
+		return ObjectG.getDObject!Element(cast(GstElement*) p);
 	}
 	
 	/**
@@ -184,10 +189,12 @@ public class Parse
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Element(cast(GstElement*) p);
+		
+		return ObjectG.getDObject!Element(cast(GstElement*) p);
 	}
 }

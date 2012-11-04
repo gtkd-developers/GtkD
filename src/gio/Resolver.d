@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -114,18 +115,6 @@ public class Resolver : ObjectG
 	 */
 	public this (GResolver* gResolver)
 	{
-		if(gResolver is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gResolver);
-		if( ptr !is null )
-		{
-			this = cast(Resolver)ptr;
-			return;
-		}
 		super(cast(GObject*)gResolver);
 		this.gResolver = gResolver;
 	}
@@ -180,11 +169,13 @@ public class Resolver : ObjectG
 	{
 		// GResolver * g_resolver_get_default (void);
 		auto p = g_resolver_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Resolver(cast(GResolver*) p);
+		
+		return ObjectG.getDObject!Resolver(cast(GResolver*) p);
 	}
 	
 	/**
@@ -243,11 +234,13 @@ public class Resolver : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -292,11 +285,13 @@ public class Resolver : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -428,11 +423,13 @@ public class Resolver : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -480,11 +477,13 @@ public class Resolver : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -531,11 +530,13 @@ public class Resolver : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -582,10 +583,12 @@ public class Resolver : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 }

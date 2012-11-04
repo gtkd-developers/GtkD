@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.TlsDatabase;
@@ -92,11 +93,6 @@ public class TlsBackend
 	 */
 	public this (GTlsBackend* gTlsBackend)
 	{
-		if(gTlsBackend is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTlsBackend = gTlsBackend;
 	}
 	
@@ -112,11 +108,13 @@ public class TlsBackend
 	{
 		// GTlsBackend * g_tls_backend_get_default (void);
 		auto p = g_tls_backend_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsBackend(cast(GTlsBackend*) p);
+		
+		return ObjectG.getDObject!TlsBackend(cast(GTlsBackend*) p);
 	}
 	
 	/**
@@ -140,11 +138,13 @@ public class TlsBackend
 	{
 		// GTlsDatabase * g_tls_backend_get_default_database (GTlsBackend *backend);
 		auto p = g_tls_backend_get_default_database(gTlsBackend);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsDatabase(cast(GTlsDatabase*) p);
+		
+		return ObjectG.getDObject!TlsDatabase(cast(GTlsDatabase*) p);
 	}
 	
 	/**

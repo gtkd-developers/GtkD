@@ -58,6 +58,7 @@ public  import gtkglc.glgdktypes;
 
 public import gtkglc.glgdk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glgdk.GLConfig;
@@ -129,10 +130,12 @@ public template GLDrawableT(TStruct)
 	{
 		// GdkGLConfig * gdk_gl_drawable_get_gl_config (GdkGLDrawable *gldrawable);
 		auto p = gdk_gl_drawable_get_gl_config(getGLDrawableTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLConfig(cast(GdkGLConfig*) p);
+		
+		return ObjectG.getDObject!GLConfig(cast(GdkGLConfig*) p);
 	}
 }

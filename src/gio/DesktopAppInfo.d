@@ -70,6 +70,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -118,18 +119,6 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public this (GDesktopAppInfo* gDesktopAppInfo)
 	{
-		if(gDesktopAppInfo is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDesktopAppInfo);
-		if( ptr !is null )
-		{
-			this = cast(DesktopAppInfo)ptr;
-			return;
-		}
 		super(cast(GObject*)gDesktopAppInfo);
 		this.gDesktopAppInfo = gDesktopAppInfo;
 	}
@@ -145,7 +134,14 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	
 	public static DesktopAppInfo createFromFilename(string filename)
 	{
-		return new DesktopAppInfo(g_desktop_app_info_new_from_filename(Str.toStringz(filename)));
+		auto p = g_desktop_app_info_new_from_filename(Str.toStringz(filename));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_desktop_app_info_new_from_filename");
+		}
+		
+		return new DesktopAppInfo(p);
 	}
 	
 	/**

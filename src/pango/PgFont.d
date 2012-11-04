@@ -75,6 +75,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import pango.PgEngineShape;
@@ -121,18 +122,6 @@ public class PgFont : ObjectG
 	 */
 	public this (PangoFont* pangoFont)
 	{
-		if(pangoFont is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoFont);
-		if( ptr !is null )
-		{
-			this = cast(PgFont)ptr;
-			return;
-		}
 		super(cast(GObject*)pangoFont);
 		this.pangoFont = pangoFont;
 	}
@@ -158,11 +147,13 @@ public class PgFont : ObjectG
 	{
 		// PangoEngineShape * pango_font_find_shaper (PangoFont *font,  PangoLanguage *language,  guint32 ch);
 		auto p = pango_font_find_shaper(pangoFont, (language is null) ? null : language.getPgLanguageStruct(), ch);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgEngineShape(cast(PangoEngineShape*) p);
+		
+		return ObjectG.getDObject!PgEngineShape(cast(PangoEngineShape*) p);
 	}
 	
 	/**
@@ -175,11 +166,13 @@ public class PgFont : ObjectG
 	{
 		// PangoFontDescription * pango_font_describe (PangoFont *font);
 		auto p = pango_font_describe(pangoFont);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -193,11 +186,13 @@ public class PgFont : ObjectG
 	{
 		// PangoFontDescription * pango_font_describe_with_absolute_size  (PangoFont *font);
 		auto p = pango_font_describe_with_absolute_size(pangoFont);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -210,11 +205,13 @@ public class PgFont : ObjectG
 	{
 		// PangoCoverage * pango_font_get_coverage (PangoFont *font,  PangoLanguage *language);
 		auto p = pango_font_get_coverage(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgCoverage(cast(PangoCoverage*) p);
+		
+		return ObjectG.getDObject!PgCoverage(cast(PangoCoverage*) p);
 	}
 	
 	/**
@@ -256,11 +253,13 @@ public class PgFont : ObjectG
 	{
 		// PangoFontMetrics * pango_font_get_metrics (PangoFont *font,  PangoLanguage *language);
 		auto p = pango_font_get_metrics(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontMetrics(cast(PangoFontMetrics*) p);
+		
+		return ObjectG.getDObject!PgFontMetrics(cast(PangoFontMetrics*) p);
 	}
 	
 	/**
@@ -279,10 +278,12 @@ public class PgFont : ObjectG
 	{
 		// PangoFontMap * pango_font_get_font_map (PangoFont *font);
 		auto p = pango_font_get_font_map(pangoFont);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontMap(cast(PangoFontMap*) p);
+		
+		return ObjectG.getDObject!PgFontMap(cast(PangoFontMap*) p);
 	}
 }

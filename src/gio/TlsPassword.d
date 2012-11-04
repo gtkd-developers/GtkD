@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -92,18 +93,6 @@ public class TlsPassword : ObjectG
 	 */
 	public this (GTlsPassword* gTlsPassword)
 	{
-		if(gTlsPassword is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gTlsPassword);
-		if( ptr !is null )
-		{
-			this = cast(TlsPassword)ptr;
-			return;
-		}
 		super(cast(GObject*)gTlsPassword);
 		this.gTlsPassword = gTlsPassword;
 	}
@@ -149,6 +138,12 @@ public class TlsPassword : ObjectG
 		// const guchar * g_tls_password_get_value (GTlsPassword *password,  gsize *length);
 		gsize length;
 		auto p = g_tls_password_get_value(gTlsPassword, &length);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. length];
 	}
 	

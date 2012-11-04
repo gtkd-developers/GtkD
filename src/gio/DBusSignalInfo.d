@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -94,11 +95,6 @@ public class DBusSignalInfo
 	 */
 	public this (GDBusSignalInfo* gDBusSignalInfo)
 	{
-		if(gDBusSignalInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDBusSignalInfo = gDBusSignalInfo;
 	}
 	
@@ -115,11 +111,13 @@ public class DBusSignalInfo
 	{
 		// GDBusSignalInfo * g_dbus_signal_info_ref (GDBusSignalInfo *info);
 		auto p = g_dbus_signal_info_ref(gDBusSignalInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusSignalInfo(cast(GDBusSignalInfo*) p);
+		
+		return ObjectG.getDObject!DBusSignalInfo(cast(GDBusSignalInfo*) p);
 	}
 	
 	/**

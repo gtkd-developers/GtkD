@@ -55,6 +55,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -92,18 +93,6 @@ public class PgEngineLang : PgEngine
 	 */
 	public this (PangoEngineLang* pangoEngineLang)
 	{
-		if(pangoEngineLang is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoEngineLang);
-		if( ptr !is null )
-		{
-			this = cast(PgEngineLang)ptr;
-			return;
-		}
 		super(cast(PangoEngine*)pangoEngineLang);
 		this.pangoEngineLang = pangoEngineLang;
 	}

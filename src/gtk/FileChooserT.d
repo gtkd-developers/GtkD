@@ -69,6 +69,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -829,11 +830,13 @@ public template FileChooserT(TStruct)
 	{
 		// GSList * gtk_file_chooser_get_filenames (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_filenames(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -950,11 +953,13 @@ public template FileChooserT(TStruct)
 	{
 		// GSList * gtk_file_chooser_get_uris (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_uris(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -1026,11 +1031,13 @@ public template FileChooserT(TStruct)
 	{
 		// GtkWidget * gtk_file_chooser_get_preview_widget (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_preview_widget(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -1136,11 +1143,13 @@ public template FileChooserT(TStruct)
 	{
 		// GtkWidget * gtk_file_chooser_get_extra_widget (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_extra_widget(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -1181,11 +1190,13 @@ public template FileChooserT(TStruct)
 	{
 		// GSList * gtk_file_chooser_list_filters (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_list_filters(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -1214,11 +1225,13 @@ public template FileChooserT(TStruct)
 	{
 		// GtkFileFilter * gtk_file_chooser_get_filter (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_filter(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileFilter(cast(GtkFileFilter*) p);
+		
+		return ObjectG.getDObject!FileFilter(cast(GtkFileFilter*) p);
 	}
 	
 	/**
@@ -1280,11 +1293,13 @@ public template FileChooserT(TStruct)
 	{
 		// GSList * gtk_file_chooser_list_shortcut_folders  (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_list_shortcut_folders(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -1346,11 +1361,13 @@ public template FileChooserT(TStruct)
 	{
 		// GSList * gtk_file_chooser_list_shortcut_folder_uris  (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_list_shortcut_folder_uris(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -1363,11 +1380,13 @@ public template FileChooserT(TStruct)
 	{
 		// GFile * gtk_file_chooser_get_current_folder_file  (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_current_folder_file(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -1383,11 +1402,13 @@ public template FileChooserT(TStruct)
 	{
 		// GFile * gtk_file_chooser_get_file (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_file(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -1400,11 +1421,13 @@ public template FileChooserT(TStruct)
 	{
 		// GSList * gtk_file_chooser_get_files (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_files(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -1417,11 +1440,13 @@ public template FileChooserT(TStruct)
 	{
 		// GFile * gtk_file_chooser_get_preview_file (GtkFileChooser *chooser);
 		auto p = gtk_file_chooser_get_preview_file(getFileChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**

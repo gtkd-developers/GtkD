@@ -60,6 +60,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -108,18 +109,6 @@ public class DBusAuthObserver : ObjectG
 	 */
 	public this (GDBusAuthObserver* gDBusAuthObserver)
 	{
-		if(gDBusAuthObserver is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusAuthObserver);
-		if( ptr !is null )
-		{
-			this = cast(DBusAuthObserver)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusAuthObserver);
 		this.gDBusAuthObserver = gDBusAuthObserver;
 	}
@@ -194,7 +183,7 @@ public class DBusAuthObserver : ObjectG
 	{
 		foreach ( bool delegate(IOStream, Credentials, DBusAuthObserver) dlg ; _dBusAuthObserver.onAuthorizeAuthenticatedPeerListeners )
 		{
-			if ( dlg(new IOStream(stream), new Credentials(credentials), _dBusAuthObserver) )
+			if ( dlg(ObjectG.getDObject!IOStream(stream), ObjectG.getDObject!Credentials(credentials), _dBusAuthObserver) )
 			{
 				return 1;
 			}

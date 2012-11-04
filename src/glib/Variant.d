@@ -282,11 +282,6 @@ public class Variant
 	 */
 	public this (GVariant* gVariant)
 	{
-		if(gVariant is null)
-		{
-			this = null;
-			return;
-		}
 		this.gVariant = gVariant;
 	}
 	
@@ -432,10 +427,12 @@ public class Variant
 	{
 		// GVariant * g_variant_ref (GVariant *value);
 		auto p = g_variant_ref(gVariant);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -466,10 +463,12 @@ public class Variant
 	{
 		// GVariant * g_variant_ref_sink (GVariant *value);
 		auto p = g_variant_ref_sink(gVariant);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -524,10 +523,12 @@ public class Variant
 	{
 		// GVariant * g_variant_take_ref (GVariant *value);
 		auto p = g_variant_take_ref(gVariant);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -542,10 +543,12 @@ public class Variant
 	{
 		// const GVariantType * g_variant_get_type (GVariant *value);
 		auto p = g_variant_get_type(gVariant);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantType(cast(GVariantType*) p);
 	}
 	
@@ -1157,10 +1160,12 @@ public class Variant
 	{
 		// GVariant * g_variant_get_variant (GVariant *value);
 		auto p = g_variant_get_variant(gVariant);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -1517,10 +1522,12 @@ public class Variant
 	{
 		// GVariant * g_variant_get_maybe (GVariant *value);
 		auto p = g_variant_get_maybe(gVariant);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -1562,10 +1569,12 @@ public class Variant
 	{
 		// GVariant * g_variant_get_child_value (GVariant *value,  gsize index_);
 		auto p = g_variant_get_child_value(gVariant, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -1597,10 +1606,12 @@ public class Variant
 	{
 		// GVariant * g_variant_lookup_value (GVariant *dictionary,  const gchar *key,  const GVariantType *expected_type);
 		auto p = g_variant_lookup_value(gVariant, Str.toStringz(key), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -1756,10 +1767,12 @@ public class Variant
 	{
 		// GVariant * g_variant_byteswap (GVariant *value);
 		auto p = g_variant_byteswap(gVariant);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -1783,10 +1796,12 @@ public class Variant
 	{
 		// GVariant * g_variant_get_normal_form (GVariant *value);
 		auto p = g_variant_get_normal_form(gVariant);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	
@@ -1875,10 +1890,12 @@ public class Variant
 	{
 		// GString * g_variant_print_string (GVariant *value,  GString *string,  gboolean type_annotate);
 		auto p = g_variant_print_string(gVariant, (string is null) ? null : string.getStringGStruct(), typeAnnotate);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -1927,10 +1944,12 @@ public class Variant
 		}
 		
 		endptr = Str.toString(outendptr);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Variant(cast(GVariant*) p);
 	}
 	

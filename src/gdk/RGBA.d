@@ -60,6 +60,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -102,11 +103,6 @@ public class RGBA
 	 */
 	public this (GdkRGBA* gdkRGBA)
 	{
-		if(gdkRGBA is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkRGBA = gdkRGBA;
 	}
 	
@@ -204,11 +200,13 @@ public class RGBA
 	{
 		// GdkRGBA * gdk_rgba_copy (const GdkRGBA *rgba);
 		auto p = gdk_rgba_copy(gdkRGBA);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RGBA(cast(GdkRGBA*) p);
+		
+		return ObjectG.getDObject!RGBA(cast(GdkRGBA*) p);
 	}
 	
 	/**

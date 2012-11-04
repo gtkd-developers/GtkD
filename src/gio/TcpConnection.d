@@ -55,6 +55,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -91,18 +92,6 @@ public class TcpConnection : SocketConnection
 	 */
 	public this (GTcpConnection* gTcpConnection)
 	{
-		if(gTcpConnection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gTcpConnection);
-		if( ptr !is null )
-		{
-			this = cast(TcpConnection)ptr;
-			return;
-		}
 		super(cast(GSocketConnection*)gTcpConnection);
 		this.gTcpConnection = gTcpConnection;
 	}

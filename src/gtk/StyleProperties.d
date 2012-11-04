@@ -70,6 +70,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -132,18 +133,6 @@ public class StyleProperties : ObjectG
 	 */
 	public this (GtkStyleProperties* gtkStyleProperties)
 	{
-		if(gtkStyleProperties is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkStyleProperties);
-		if( ptr !is null )
-		{
-			this = cast(StyleProperties)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkStyleProperties);
 		this.gtkStyleProperties = gtkStyleProperties;
 	}
@@ -205,11 +194,13 @@ public class StyleProperties : ObjectG
 	{
 		// GtkSymbolicColor * gtk_style_properties_lookup_color (GtkStyleProperties *props,  const gchar *name);
 		auto p = gtk_style_properties_lookup_color(gtkStyleProperties, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SymbolicColor(cast(GtkSymbolicColor*) p);
+		
+		return ObjectG.getDObject!SymbolicColor(cast(GtkSymbolicColor*) p);
 	}
 	
 	/**
@@ -229,7 +220,7 @@ public class StyleProperties : ObjectG
 		
 		auto p = gtk_style_properties_lookup_property(Str.toStringz(propertyName), &parseFunc, &outpspec);
 		
-		pspec = new ParamSpec(outpspec);
+		pspec = ObjectG.getDObject!ParamSpec(outpspec);
 		return p;
 	}
 	

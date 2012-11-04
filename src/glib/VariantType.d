@@ -268,11 +268,6 @@ public class VariantType
 	 */
 	public this (GVariantType* gVariantType)
 	{
-		if(gVariantType is null)
-		{
-			this = null;
-			return;
-		}
 		this.gVariantType = gVariantType;
 	}
 	
@@ -330,10 +325,12 @@ public class VariantType
 	{
 		// GVariantType * g_variant_type_copy (const GVariantType *type);
 		auto p = g_variant_type_copy(gVariantType);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantType(cast(GVariantType*) p);
 	}
 	
@@ -698,10 +695,12 @@ public class VariantType
 	{
 		// const GVariantType * g_variant_type_element (const GVariantType *type);
 		auto p = g_variant_type_element(gVariantType);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantType(cast(GVariantType*) p);
 	}
 	
@@ -740,10 +739,12 @@ public class VariantType
 	{
 		// const GVariantType * g_variant_type_first (const GVariantType *type);
 		auto p = g_variant_type_first(gVariantType);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantType(cast(GVariantType*) p);
 	}
 	
@@ -763,10 +764,12 @@ public class VariantType
 	{
 		// const GVariantType * g_variant_type_next (const GVariantType *type);
 		auto p = g_variant_type_next(gVariantType);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantType(cast(GVariantType*) p);
 	}
 	
@@ -782,10 +785,12 @@ public class VariantType
 	{
 		// const GVariantType * g_variant_type_key (const GVariantType *type);
 		auto p = g_variant_type_key(gVariantType);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantType(cast(GVariantType*) p);
 	}
 	
@@ -799,10 +804,12 @@ public class VariantType
 	{
 		// const GVariantType * g_variant_type_value (const GVariantType *type);
 		auto p = g_variant_type_value(gVariantType);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new VariantType(cast(GVariantType*) p);
 	}
 }

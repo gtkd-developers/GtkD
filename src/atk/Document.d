@@ -56,6 +56,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -98,11 +99,6 @@ public class Document
 	 */
 	public this (AtkDocument* atkDocument)
 	{
-		if(atkDocument is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkDocument = atkDocument;
 	}
 	

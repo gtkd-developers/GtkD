@@ -238,11 +238,6 @@ public class ErrorG
 	 */
 	public this (GError* gError)
 	{
-		if(gError is null)
-		{
-			this = null;
-			return;
-		}
 		this.gError = gError;
 	}
 	
@@ -318,10 +313,12 @@ public class ErrorG
 	{
 		// GError * g_error_copy (const GError *error);
 		auto p = g_error_copy(gError);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ErrorG(cast(GError*) p);
 	}
 	

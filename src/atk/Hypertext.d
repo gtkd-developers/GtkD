@@ -57,6 +57,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -98,11 +99,6 @@ public class Hypertext
 	 */
 	public this (AtkHypertext* atkHypertext)
 	{
-		if(atkHypertext is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkHypertext = atkHypertext;
 	}
 	
@@ -152,11 +148,13 @@ public class Hypertext
 	{
 		// AtkHyperlink * atk_hypertext_get_link (AtkHypertext *hypertext,  gint link_index);
 		auto p = atk_hypertext_get_link(atkHypertext, linkIndex);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Hyperlink(cast(AtkHyperlink*) p);
+		
+		return ObjectG.getDObject!Hyperlink(cast(AtkHyperlink*) p);
 	}
 	
 	/**

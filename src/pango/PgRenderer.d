@@ -70,6 +70,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -117,18 +118,6 @@ public class PgRenderer : ObjectG
 	 */
 	public this (PangoRenderer* pangoRenderer)
 	{
-		if(pangoRenderer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoRenderer);
-		if( ptr !is null )
-		{
-			this = cast(PgRenderer)ptr;
-			return;
-		}
 		super(cast(GObject*)pangoRenderer);
 		this.pangoRenderer = pangoRenderer;
 	}
@@ -360,11 +349,13 @@ public class PgRenderer : ObjectG
 	{
 		// PangoColor * pango_renderer_get_color (PangoRenderer *renderer,  PangoRenderPart part);
 		auto p = pango_renderer_get_color(pangoRenderer, part);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgColor(cast(PangoColor*) p);
+		
+		return ObjectG.getDObject!PgColor(cast(PangoColor*) p);
 	}
 	
 	/**
@@ -390,11 +381,13 @@ public class PgRenderer : ObjectG
 	{
 		// const PangoMatrix * pango_renderer_get_matrix (PangoRenderer *renderer);
 		auto p = pango_renderer_get_matrix(pangoRenderer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgMatrix(cast(PangoMatrix*) p);
+		
+		return ObjectG.getDObject!PgMatrix(cast(PangoMatrix*) p);
 	}
 	
 	/**
@@ -410,11 +403,13 @@ public class PgRenderer : ObjectG
 	{
 		// PangoLayout * pango_renderer_get_layout (PangoRenderer *renderer);
 		auto p = pango_renderer_get_layout(pangoRenderer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -430,10 +425,12 @@ public class PgRenderer : ObjectG
 	{
 		// PangoLayoutLine * pango_renderer_get_layout_line (PangoRenderer *renderer);
 		auto p = pango_renderer_get_layout_line(pangoRenderer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayoutLine(cast(PangoLayoutLine*) p);
+		
+		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
 	}
 }

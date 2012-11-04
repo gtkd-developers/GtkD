@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Window;
@@ -116,18 +117,6 @@ public class Viewport : Bin, ScrollableIF
 	 */
 	public this (GtkViewport* gtkViewport)
 	{
-		if(gtkViewport is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkViewport);
-		if( ptr !is null )
-		{
-			this = cast(Viewport)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkViewport);
 		this.gtkViewport = gtkViewport;
 	}
@@ -193,11 +182,13 @@ public class Viewport : Bin, ScrollableIF
 	{
 		// GdkWindow * gtk_viewport_get_bin_window (GtkViewport *viewport);
 		auto p = gtk_viewport_get_bin_window(gtkViewport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -209,10 +200,12 @@ public class Viewport : Bin, ScrollableIF
 	{
 		// GdkWindow * gtk_viewport_get_view_window (GtkViewport *viewport);
 		auto p = gtk_viewport_get_view_window(gtkViewport);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

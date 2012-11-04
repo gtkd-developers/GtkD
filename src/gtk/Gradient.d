@@ -68,6 +68,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -118,11 +119,6 @@ public class Gradient
 	 */
 	public this (GtkGradient* gtkGradient)
 	{
-		if(gtkGradient is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkGradient = gtkGradient;
 	}
 	
@@ -203,11 +199,13 @@ public class Gradient
 	{
 		// GtkGradient * gtk_gradient_ref (GtkGradient *gradient);
 		auto p = gtk_gradient_ref(gtkGradient);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Gradient(cast(GtkGradient*) p);
+		
+		return ObjectG.getDObject!Gradient(cast(GtkGradient*) p);
 	}
 	
 	/**
@@ -238,7 +236,7 @@ public class Gradient
 		
 		auto p = gtk_gradient_resolve(gtkGradient, (props is null) ? null : props.getStylePropertiesStruct(), &outresolvedGradient);
 		
-		resolvedGradient = new Pattern(outresolvedGradient);
+		resolvedGradient = ObjectG.getDObject!Pattern(outresolvedGradient);
 		return p;
 	}
 	
@@ -248,11 +246,13 @@ public class Gradient
 	{
 		// cairo_pattern_t * gtk_gradient_resolve_for_context (GtkGradient *gradient,  GtkStyleContext *context);
 		auto p = gtk_gradient_resolve_for_context(gtkGradient, (context is null) ? null : context.getStyleContextStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pattern(cast(cairo_pattern_t*) p);
+		
+		return ObjectG.getDObject!Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**

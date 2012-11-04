@@ -60,6 +60,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -102,18 +103,6 @@ public class Cancellable : ObjectG
 	 */
 	public this (GCancellable* gCancellable)
 	{
-		if(gCancellable is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gCancellable);
-		if( ptr !is null )
-		{
-			this = cast(Cancellable)ptr;
-			return;
-		}
 		super(cast(GObject*)gCancellable);
 		this.gCancellable = gCancellable;
 	}
@@ -306,11 +295,13 @@ public class Cancellable : ObjectG
 	{
 		// GSource * g_cancellable_source_new (GCancellable *cancellable);
 		auto p = g_cancellable_source_new(gCancellable);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Source(cast(GSource*) p);
+		
+		return ObjectG.getDObject!Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -321,11 +312,13 @@ public class Cancellable : ObjectG
 	{
 		// GCancellable * g_cancellable_get_current (void);
 		auto p = g_cancellable_get_current();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Cancellable(cast(GCancellable*) p);
+		
+		return ObjectG.getDObject!Cancellable(cast(GCancellable*) p);
 	}
 	
 	/**

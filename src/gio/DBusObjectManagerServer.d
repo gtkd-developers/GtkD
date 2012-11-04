@@ -63,6 +63,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -113,18 +114,6 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 */
 	public this (GDBusObjectManagerServer* gDBusObjectManagerServer)
 	{
-		if(gDBusObjectManagerServer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusObjectManagerServer);
-		if( ptr !is null )
-		{
-			this = cast(DBusObjectManagerServer)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusObjectManagerServer);
 		this.gDBusObjectManagerServer = gDBusObjectManagerServer;
 	}
@@ -172,11 +161,13 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	{
 		// GDBusConnection * g_dbus_object_manager_server_get_connection  (GDBusObjectManagerServer *manager);
 		auto p = g_dbus_object_manager_server_get_connection(gDBusObjectManagerServer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusConnection(cast(GDBusConnection*) p);
+		
+		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
 	}
 	
 	/**

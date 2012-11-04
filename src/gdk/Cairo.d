@@ -70,6 +70,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import cairo.Context;
@@ -111,11 +112,13 @@ public static Surface gdkWindowCreateSimilarSurface(Window window, cairo_content
 {
 	// cairo_surface_t * gdk_window_create_similar_surface (GdkWindow *window,  cairo_content_t content,  int width,  int height);
 	auto p = gdk_window_create_similar_surface((window is null) ? null : window.getWindowStruct(), content, width, height);
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new Surface(cast(cairo_surface_t*) p);
+	
+	return ObjectG.getDObject!Surface(cast(cairo_surface_t*) p);
 }
 
 /**
@@ -133,11 +136,13 @@ public static Context createContext(Window window)
 {
 	// cairo_t * gdk_cairo_create (GdkWindow *window);
 	auto p = gdk_cairo_create((window is null) ? null : window.getWindowStruct());
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new Context(cast(cairo_t*) p);
+	
+	return ObjectG.getDObject!Context(cast(cairo_t*) p);
 }
 
 /**
@@ -259,10 +264,12 @@ public static Region regionCreateFromSurface(Surface surface)
 {
 	// cairo_region_t * gdk_cairo_region_create_from_surface  (cairo_surface_t *surface);
 	auto p = gdk_cairo_region_create_from_surface((surface is null) ? null : surface.getSurfaceStruct());
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new Region(cast(cairo_region_t*) p);
+	
+	return ObjectG.getDObject!Region(cast(cairo_region_t*) p);
 }
 

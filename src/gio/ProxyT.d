@@ -68,6 +68,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.Str;
@@ -132,11 +133,13 @@ public template ProxyT(TStruct)
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOStream(cast(GIOStream*) p);
+		
+		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -176,11 +179,13 @@ public template ProxyT(TStruct)
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOStream(cast(GIOStream*) p);
+		
+		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -195,11 +200,13 @@ public template ProxyT(TStruct)
 	{
 		// GProxy * g_proxy_get_default_for_protocol (const gchar *protocol);
 		auto p = g_proxy_get_default_for_protocol(Str.toStringz(protocol));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Proxy(cast(GProxy*) p);
+		
+		return ObjectG.getDObject!Proxy(cast(GProxy*) p);
 	}
 	
 	/**

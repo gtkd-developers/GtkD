@@ -62,6 +62,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -112,18 +113,6 @@ public class Cursor : ObjectG
 	 */
 	public this (GdkCursor* gdkCursor)
 	{
-		if(gdkCursor is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkCursor);
-		if( ptr !is null )
-		{
-			this = cast(Cursor)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkCursor);
 		this.gdkCursor = gdkCursor;
 	}
@@ -239,11 +228,13 @@ public class Cursor : ObjectG
 	{
 		// GdkDisplay * gdk_cursor_get_display (GdkCursor *cursor);
 		auto p = gdk_cursor_get_display(gdkCursor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -258,11 +249,13 @@ public class Cursor : ObjectG
 	{
 		// GdkPixbuf * gdk_cursor_get_image (GdkCursor *cursor);
 		auto p = gdk_cursor_get_image(gdkCursor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

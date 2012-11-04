@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -97,18 +98,6 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public this (GtkCellRendererToggle* gtkCellRendererToggle)
 	{
-		if(gtkCellRendererToggle is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellRendererToggle);
-		if( ptr !is null )
-		{
-			this = cast(CellRendererToggle)ptr;
-			return;
-		}
 		super(cast(GtkCellRenderer*)gtkCellRendererToggle);
 		this.gtkCellRendererToggle = gtkCellRendererToggle;
 	}

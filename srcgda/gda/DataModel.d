@@ -64,6 +64,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,18 +104,6 @@ public class DataModel : ObjectG
 	 */
 	public this (GdaDataModel* gdaDataModel)
 	{
-		if(gdaDataModel is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaDataModel);
-		if( ptr !is null )
-		{
-			this = cast(DataModel)ptr;
-			return;
-		}
 		super(cast(GObject*)gdaDataModel);
 		this.gdaDataModel = gdaDataModel;
 	}
@@ -263,11 +252,13 @@ public class DataModel : ObjectG
 	{
 		// GdaFieldAttributes* gda_data_model_describe_column (GdaDataModel *model,  gint col);
 		auto p = gda_data_model_describe_column(gdaDataModel, col);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FieldAttributes(cast(GdaFieldAttributes*) p);
+		
+		return ObjectG.getDObject!FieldAttributes(cast(GdaFieldAttributes*) p);
 	}
 	
 	/**
@@ -316,11 +307,13 @@ public class DataModel : ObjectG
 	{
 		// const GdaRow* gda_data_model_get_row (GdaDataModel *model,  gint row);
 		auto p = gda_data_model_get_row(gdaDataModel, row);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Row(cast(GdaRow*) p);
+		
+		return ObjectG.getDObject!Row(cast(GdaRow*) p);
 	}
 	
 	/**
@@ -336,11 +329,13 @@ public class DataModel : ObjectG
 	{
 		// const GdaValue* gda_data_model_get_value_at (GdaDataModel *model,  gint col,  gint row);
 		auto p = gda_data_model_get_value_at(gdaDataModel, col, row);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GdaValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GdaValue*) p);
 	}
 	
 	/**
@@ -365,11 +360,13 @@ public class DataModel : ObjectG
 	{
 		// const GdaRow* gda_data_model_append_row (GdaDataModel *model,  const GList *values);
 		auto p = gda_data_model_append_row(gdaDataModel, (values is null) ? null : values.getListGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Row(cast(GdaRow*) p);
+		
+		return ObjectG.getDObject!Row(cast(GdaRow*) p);
 	}
 	
 	/**

@@ -69,6 +69,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -161,18 +162,6 @@ public class Dialog : Window
 	 */
 	public this (GtkDialog* gtkDialog)
 	{
-		if(gtkDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkDialog);
-		if( ptr !is null )
-		{
-			this = cast(Dialog)ptr;
-			return;
-		}
 		super(cast(GtkWindow*)gtkDialog);
 		this.gtkDialog = gtkDialog;
 	}
@@ -216,7 +205,14 @@ public class Dialog : Window
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		return new Button(cast(GtkButton*)gtk_dialog_add_button(gtkDialog, Str.toStringz(StockDesc[stockID]), responseId));
+		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(StockDesc[stockID]), responseId);
+		
+		if ( p is null )
+		{
+			return null;
+		}
+		
+		return new Button(cast(GtkButton*)p);
 	}
 	
 	/** */
@@ -412,11 +408,13 @@ public class Dialog : Window
 	{
 		// GtkWidget * gtk_dialog_add_button (GtkDialog *dialog,  const gchar *button_text,  gint response_id);
 		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -489,11 +487,13 @@ public class Dialog : Window
 	{
 		// GtkWidget * gtk_dialog_get_widget_for_response (GtkDialog *dialog,  gint response_id);
 		auto p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

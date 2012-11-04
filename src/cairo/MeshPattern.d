@@ -99,11 +99,6 @@ public class MeshPattern : Pattern
 	 */
 	public this (cairo_pattern_t* cairo_pattern)
 	{
-		if(cairo_pattern is null)
-		{
-			this = null;
-			return;
-		}
 		super(cast(cairo_pattern_t*)cairo_pattern);
 		this.cairo_pattern = cairo_pattern;
 	}

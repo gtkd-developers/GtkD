@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -98,18 +99,6 @@ public class TlsFileDatabase : TlsDatabase
 	 */
 	public this (GTlsFileDatabase* gTlsFileDatabase)
 	{
-		if(gTlsFileDatabase is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gTlsFileDatabase);
-		if( ptr !is null )
-		{
-			this = cast(TlsFileDatabase)ptr;
-			return;
-		}
 		super(cast(GTlsDatabase*)gTlsFileDatabase);
 		this.gTlsFileDatabase = gTlsFileDatabase;
 	}

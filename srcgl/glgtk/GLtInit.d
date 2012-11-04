@@ -56,6 +56,7 @@ public  import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;

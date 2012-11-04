@@ -127,6 +127,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -310,11 +311,6 @@ public class Requisition
 	 */
 	public this (GtkRequisition* gtkRequisition)
 	{
-		if(gtkRequisition is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkRequisition = gtkRequisition;
 	}
 	
@@ -352,11 +348,13 @@ public class Requisition
 	{
 		// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
 		auto p = gtk_requisition_copy(gtkRequisition);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Requisition(cast(GtkRequisition*) p);
+		
+		return ObjectG.getDObject!Requisition(cast(GtkRequisition*) p);
 	}
 	
 	/**

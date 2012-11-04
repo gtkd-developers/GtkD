@@ -69,6 +69,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -116,18 +117,6 @@ public class SourceView : TextView
 	 */
 	public this (GtkSourceView* gtkSourceView)
 	{
-		if(gtkSourceView is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceView);
-		if( ptr !is null )
-		{
-			this = cast(SourceView)ptr;
-			return;
-		}
 		super(cast(GtkTextView*)gtkSourceView);
 		this.gtkSourceView = gtkSourceView;
 	}
@@ -148,7 +137,14 @@ public class SourceView : TextView
 	public override SourceBuffer getBuffer()
 	{
 		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
-		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
+		auto p = gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_text_view_get_buffer");
+		}
+		
+		return new SourceBuffer( cast(GtkSourceBuffer*)p );
 	}
 	
 	/**
@@ -180,7 +176,7 @@ public class SourceView : TextView
 	{
 		foreach ( void delegate(TextIter, Event, SourceView) dlg ; _sourceView.onLineMarkActivatedListeners )
 		{
-			dlg(new TextIter(iter), new Event(event), _sourceView);
+			dlg(ObjectG.getDObject!TextIter(iter), ObjectG.getDObject!Event(event), _sourceView);
 		}
 	}
 	
@@ -337,7 +333,7 @@ public class SourceView : TextView
 	{
 		foreach ( void delegate(TextIter, gint, SourceView) dlg ; _sourceView.onSmartHomeEndListeners )
 		{
-			dlg(new TextIter(iter), count, _sourceView);
+			dlg(ObjectG.getDObject!TextIter(iter), count, _sourceView);
 		}
 	}
 	
@@ -546,11 +542,13 @@ public class SourceView : TextView
 	{
 		// GtkSourceMarkAttributes * gtk_source_view_get_mark_attributes  (GtkSourceView *view,  const gchar *category,  gint *priority);
 		auto p = gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceMarkAttributes(cast(GtkSourceMarkAttributes*) p);
+		
+		return ObjectG.getDObject!SourceMarkAttributes(cast(GtkSourceMarkAttributes*) p);
 	}
 	
 	/**
@@ -713,11 +711,13 @@ public class SourceView : TextView
 	{
 		// GtkSourceCompletion * gtk_source_view_get_completion (GtkSourceView *view);
 		auto p = gtk_source_view_get_completion(gtkSourceView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceCompletion(cast(GtkSourceCompletion*) p);
+		
+		return ObjectG.getDObject!SourceCompletion(cast(GtkSourceCompletion*) p);
 	}
 	
 	/**
@@ -735,10 +735,12 @@ public class SourceView : TextView
 	{
 		// GtkSourceGutter * gtk_source_view_get_gutter (GtkSourceView *view,  GtkTextWindowType window_type);
 		auto p = gtk_source_view_get_gutter(gtkSourceView, windowType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceGutter(cast(GtkSourceGutter*) p);
+		
+		return ObjectG.getDObject!SourceGutter(cast(GtkSourceGutter*) p);
 	}
 }

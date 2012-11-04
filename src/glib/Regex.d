@@ -160,11 +160,6 @@ public class Regex
 	 */
 	public this (GRegex* gRegex)
 	{
-		if(gRegex is null)
-		{
-			this = null;
-			return;
-		}
 		this.gRegex = gRegex;
 	}
 	
@@ -218,10 +213,12 @@ public class Regex
 	{
 		// GRegex * g_regex_ref (GRegex *regex);
 		auto p = g_regex_ref(gRegex);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Regex(cast(GRegex*) p);
 	}
 	

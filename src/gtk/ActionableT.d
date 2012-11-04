@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.Str;
@@ -135,11 +136,13 @@ public template ActionableT(TStruct)
 	{
 		// GVariant * gtk_actionable_get_action_target_value  (GtkActionable *actionable);
 		auto p = gtk_actionable_get_action_target_value(getActionableTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**

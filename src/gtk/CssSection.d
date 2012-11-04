@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -564,11 +565,6 @@ public class CssSection : Boxed
 	 */
 	public this (GtkCssSection* gtkCssSection)
 	{
-		if(gtkCssSection is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkCssSection = gtkCssSection;
 	}
 	
@@ -628,11 +624,13 @@ public class CssSection : Boxed
 	{
 		// GFile * gtk_css_section_get_file (const GtkCssSection *section);
 		auto p = gtk_css_section_get_file(gtkCssSection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -649,11 +647,13 @@ public class CssSection : Boxed
 	{
 		// GtkCssSection * gtk_css_section_get_parent (const GtkCssSection *section);
 		auto p = gtk_css_section_get_parent(gtkCssSection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CssSection(cast(GtkCssSection*) p);
+		
+		return ObjectG.getDObject!CssSection(cast(GtkCssSection*) p);
 	}
 	
 	/**
@@ -697,11 +697,13 @@ public class CssSection : Boxed
 	{
 		// GtkCssSection * gtk_css_section_ref (GtkCssSection *section);
 		auto p = gtk_css_section_ref(gtkCssSection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CssSection(cast(GtkCssSection*) p);
+		
+		return ObjectG.getDObject!CssSection(cast(GtkCssSection*) p);
 	}
 	
 	/**

@@ -90,6 +90,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -173,18 +174,6 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 */
 	public this (GDBusConnection* gDBusConnection)
 	{
-		if(gDBusConnection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusConnection);
-		if( ptr !is null )
-		{
-			this = cast(DBusConnection)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusConnection);
 		this.gDBusConnection = gDBusConnection;
 	}
@@ -348,11 +337,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusConnection(cast(GDBusConnection*) p);
+		
+		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -388,11 +379,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusConnection(cast(GDBusConnection*) p);
+		
+		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -768,11 +761,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	{
 		// GIOStream * g_dbus_connection_get_stream (GDBusConnection *connection);
 		auto p = g_dbus_connection_get_stream(gDBusConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOStream(cast(GIOStream*) p);
+		
+		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -827,11 +822,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	{
 		// GCredentials * g_dbus_connection_get_peer_credentials  (GDBusConnection *connection);
 		auto p = g_dbus_connection_get_peer_credentials(gDBusConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Credentials(cast(GCredentials*) p);
+		
+		return ObjectG.getDObject!Credentials(cast(GCredentials*) p);
 	}
 	
 	/**
@@ -907,11 +904,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -957,11 +956,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -1015,12 +1016,14 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
-		outFdList = new UnixFDList(outoutFdList);
+		outFdList = ObjectG.getDObject!UnixFDList(outoutFdList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -1058,12 +1061,14 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
-		outFdList = new UnixFDList(outoutFdList);
+		outFdList = ObjectG.getDObject!UnixFDList(outoutFdList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -1250,11 +1255,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusMessage(cast(GDBusMessage*) p);
+		
+		return ObjectG.getDObject!DBusMessage(cast(GDBusMessage*) p);
 	}
 	
 	/**
@@ -1304,11 +1311,13 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusMessage(cast(GDBusMessage*) p);
+		
+		return ObjectG.getDObject!DBusMessage(cast(GDBusMessage*) p);
 	}
 	
 	/**

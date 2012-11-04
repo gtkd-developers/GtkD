@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.TreeIter;
@@ -163,18 +164,6 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	 */
 	public this (GtkTreeModelFilter* gtkTreeModelFilter)
 	{
-		if(gtkTreeModelFilter is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeModelFilter);
-		if( ptr !is null )
-		{
-			this = cast(TreeModelFilter)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkTreeModelFilter);
 		this.gtkTreeModelFilter = gtkTreeModelFilter;
 	}
@@ -283,11 +272,13 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	{
 		// GtkTreeModel * gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter);
 		auto p = gtk_tree_model_filter_get_model(gtkTreeModelFilter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -336,11 +327,13 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	{
 		// GtkTreePath * gtk_tree_model_filter_convert_child_path_to_path  (GtkTreeModelFilter *filter,  GtkTreePath *child_path);
 		auto p = gtk_tree_model_filter_convert_child_path_to_path(gtkTreeModelFilter, (childPath is null) ? null : childPath.getTreePathStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreePath(cast(GtkTreePath*) p);
+		
+		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -358,11 +351,13 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	{
 		// GtkTreePath * gtk_tree_model_filter_convert_path_to_child_path  (GtkTreeModelFilter *filter,  GtkTreePath *filter_path);
 		auto p = gtk_tree_model_filter_convert_path_to_child_path(gtkTreeModelFilter, (filterPath is null) ? null : filterPath.getTreePathStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreePath(cast(GtkTreePath*) p);
+		
+		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**

@@ -86,6 +86,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -178,18 +179,6 @@ public class Element : ObjectGst
 	 */
 	public this (GstElement* gstElement)
 	{
-		if(gstElement is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstElement);
-		if( ptr !is null )
-		{
-			this = cast(Element)ptr;
-			return;
-		}
 		super(cast(GstObject*)gstElement);
 		this.gstElement = gstElement;
 	}
@@ -334,7 +323,7 @@ public class Element : ObjectGst
 	{
 		foreach ( void delegate(Pad, Element) dlg ; _element.onPadAddedListeners )
 		{
-			dlg(new Pad(newPad), _element);
+			dlg(ObjectG.getDObject!Pad(newPad), _element);
 		}
 	}
 	
@@ -363,7 +352,7 @@ public class Element : ObjectGst
 	{
 		foreach ( void delegate(Pad, Element) dlg ; _element.onPadRemovedListeners )
 		{
-			dlg(new Pad(oldPad), _element);
+			dlg(ObjectG.getDObject!Pad(oldPad), _element);
 		}
 	}
 	
@@ -396,11 +385,13 @@ public class Element : ObjectGst
 	{
 		// GstPadTemplate* gst_element_class_get_pad_template (GstElementClass *element_class,  const gchar *name);
 		auto p = gst_element_class_get_pad_template(elementClass, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PadTemplate(cast(GstPadTemplate*) p);
+		
+		return ObjectG.getDObject!PadTemplate(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -493,11 +484,13 @@ public class Element : ObjectGst
 	{
 		// GstPad* gst_element_get_pad (GstElement *element,  const gchar *name);
 		auto p = gst_element_get_pad(gstElement, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pad(cast(GstPad*) p);
+		
+		return ObjectG.getDObject!Pad(cast(GstPad*) p);
 	}
 	
 	/**
@@ -524,11 +517,13 @@ public class Element : ObjectGst
 	{
 		// GstPad* gst_element_get_compatible_pad (GstElement *element,  GstPad *pad,  const GstCaps *caps);
 		auto p = gst_element_get_compatible_pad(gstElement, (pad is null) ? null : pad.getPadStruct(), (caps is null) ? null : caps.getCapsStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pad(cast(GstPad*) p);
+		
+		return ObjectG.getDObject!Pad(cast(GstPad*) p);
 	}
 	
 	/**
@@ -542,11 +537,13 @@ public class Element : ObjectGst
 	{
 		// GstPadTemplate* gst_element_get_compatible_pad_template  (GstElement *element,  GstPadTemplate *compattempl);
 		auto p = gst_element_get_compatible_pad_template(gstElement, (compattempl is null) ? null : compattempl.getPadTemplateStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PadTemplate(cast(GstPadTemplate*) p);
+		
+		return ObjectG.getDObject!PadTemplate(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -561,11 +558,13 @@ public class Element : ObjectGst
 	{
 		// GstPad* gst_element_get_request_pad (GstElement *element,  const gchar *name);
 		auto p = gst_element_get_request_pad(gstElement, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pad(cast(GstPad*) p);
+		
+		return ObjectG.getDObject!Pad(cast(GstPad*) p);
 	}
 	
 	/**
@@ -579,11 +578,13 @@ public class Element : ObjectGst
 	{
 		// GstPad* gst_element_get_static_pad (GstElement *element,  const gchar *name);
 		auto p = gst_element_get_static_pad(gstElement, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pad(cast(GstPad*) p);
+		
+		return ObjectG.getDObject!Pad(cast(GstPad*) p);
 	}
 	
 	/**
@@ -646,11 +647,13 @@ public class Element : ObjectGst
 	{
 		// GstIterator* gst_element_iterate_pads (GstElement *element);
 		auto p = gst_element_iterate_pads(gstElement);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -661,11 +664,13 @@ public class Element : ObjectGst
 	{
 		// GstIterator* gst_element_iterate_sink_pads (GstElement *element);
 		auto p = gst_element_iterate_sink_pads(gstElement);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -676,11 +681,13 @@ public class Element : ObjectGst
 	{
 		// GstIterator* gst_element_iterate_src_pads (GstElement *element);
 		auto p = gst_element_iterate_src_pads(gstElement);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -833,11 +840,13 @@ public class Element : ObjectGst
 	{
 		// GstBus* gst_element_get_bus (GstElement *element);
 		auto p = gst_element_get_bus(gstElement);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Bus(cast(GstBus*) p);
+		
+		return ObjectG.getDObject!Bus(cast(GstBus*) p);
 	}
 	
 	/**
@@ -848,11 +857,13 @@ public class Element : ObjectGst
 	{
 		// GstElementFactory* gst_element_get_factory (GstElement *element);
 		auto p = gst_element_get_factory(gstElement);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ElementFactory(cast(GstElementFactory*) p);
+		
+		return ObjectG.getDObject!ElementFactory(cast(GstElementFactory*) p);
 	}
 	
 	/**
@@ -876,11 +887,13 @@ public class Element : ObjectGst
 	{
 		// GstIndex* gst_element_get_index (GstElement *element);
 		auto p = gst_element_get_index(gstElement);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Index(cast(GstIndex*) p);
+		
+		return ObjectG.getDObject!Index(cast(GstIndex*) p);
 	}
 	
 	/**
@@ -926,11 +939,13 @@ public class Element : ObjectGst
 	{
 		// GstClock* gst_element_get_clock (GstElement *element);
 		auto p = gst_element_get_clock(gstElement);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Clock(cast(GstClock*) p);
+		
+		return ObjectG.getDObject!Clock(cast(GstClock*) p);
 	}
 	
 	/**
@@ -958,11 +973,13 @@ public class Element : ObjectGst
 	{
 		// GstClock* gst_element_provide_clock (GstElement *element);
 		auto p = gst_element_provide_clock(gstElement);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Clock(cast(GstClock*) p);
+		
+		return ObjectG.getDObject!Clock(cast(GstClock*) p);
 	}
 	
 	/**

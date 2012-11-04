@@ -57,6 +57,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -386,11 +387,6 @@ public class FileAttributeInfoList
 	 */
 	public this (GFileAttributeInfoList* gFileAttributeInfoList)
 	{
-		if(gFileAttributeInfoList is null)
-		{
-			this = null;
-			return;
-		}
 		this.gFileAttributeInfoList = gFileAttributeInfoList;
 	}
 	
@@ -420,11 +416,13 @@ public class FileAttributeInfoList
 	{
 		// GFileAttributeInfoList * g_file_attribute_info_list_ref (GFileAttributeInfoList *list);
 		auto p = g_file_attribute_info_list_ref(gFileAttributeInfoList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileAttributeInfoList(cast(GFileAttributeInfoList*) p);
+		
+		return ObjectG.getDObject!FileAttributeInfoList(cast(GFileAttributeInfoList*) p);
 	}
 	
 	/**
@@ -445,11 +443,13 @@ public class FileAttributeInfoList
 	{
 		// GFileAttributeInfoList * g_file_attribute_info_list_dup (GFileAttributeInfoList *list);
 		auto p = g_file_attribute_info_list_dup(gFileAttributeInfoList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileAttributeInfoList(cast(GFileAttributeInfoList*) p);
+		
+		return ObjectG.getDObject!FileAttributeInfoList(cast(GFileAttributeInfoList*) p);
 	}
 	
 	/**

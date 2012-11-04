@@ -61,6 +61,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -260,7 +261,7 @@ public template ActionGroupT(TStruct)
 	{
 		foreach ( void delegate(string, Variant, ActionGroupIF) dlg ; _actionGroupIF.onActionStateChangedListeners )
 		{
-			dlg(Str.toString(actionName), new Variant(value), _actionGroupIF);
+			dlg(Str.toString(actionName), ObjectG.getDObject!Variant(value), _actionGroupIF);
 		}
 	}
 	
@@ -321,10 +322,10 @@ public template ActionGroupT(TStruct)
 		
 		auto p = g_action_group_query_action(getActionGroupTStruct(), Str.toStringz(actionName), &enabled, &outparameterType, &outstateType, &outstateHint, &outstate);
 		
-		parameterType = new VariantType(outparameterType);
-		stateType = new VariantType(outstateType);
-		stateHint = new Variant(outstateHint);
-		state = new Variant(outstate);
+		parameterType = ObjectG.getDObject!VariantType(outparameterType);
+		stateType = ObjectG.getDObject!VariantType(outstateType);
+		stateHint = ObjectG.getDObject!Variant(outstateHint);
+		state = ObjectG.getDObject!Variant(outstate);
 		return p;
 	}
 	
@@ -376,11 +377,13 @@ public template ActionGroupT(TStruct)
 	{
 		// const GVariantType * g_action_group_get_action_parameter_type  (GActionGroup *action_group,  const gchar *action_name);
 		auto p = g_action_group_get_action_parameter_type(getActionGroupTStruct(), Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new VariantType(cast(GVariantType*) p);
+		
+		return ObjectG.getDObject!VariantType(cast(GVariantType*) p);
 	}
 	
 	/**
@@ -406,11 +409,13 @@ public template ActionGroupT(TStruct)
 	{
 		// const GVariantType * g_action_group_get_action_state_type  (GActionGroup *action_group,  const gchar *action_name);
 		auto p = g_action_group_get_action_state_type(getActionGroupTStruct(), Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new VariantType(cast(GVariantType*) p);
+		
+		return ObjectG.getDObject!VariantType(cast(GVariantType*) p);
 	}
 	
 	/**
@@ -437,11 +442,13 @@ public template ActionGroupT(TStruct)
 	{
 		// GVariant * g_action_group_get_action_state_hint  (GActionGroup *action_group,  const gchar *action_name);
 		auto p = g_action_group_get_action_state_hint(getActionGroupTStruct(), Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -460,11 +467,13 @@ public template ActionGroupT(TStruct)
 	{
 		// GVariant * g_action_group_get_action_state (GActionGroup *action_group,  const gchar *action_name);
 		auto p = g_action_group_get_action_state(getActionGroupTStruct(), Str.toStringz(actionName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**

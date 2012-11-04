@@ -103,11 +103,6 @@ public class Bytes
 	 */
 	public this (GBytes* gBytes)
 	{
-		if(gBytes is null)
-		{
-			this = null;
-			return;
-		}
 		this.gBytes = gBytes;
 	}
 	
@@ -193,6 +188,12 @@ public class Bytes
 		// gconstpointer g_bytes_get_data (GBytes *bytes,  gsize *size);
 		gsize size;
 		auto p = g_bytes_get_data(gBytes, &size);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. size];
 	}
 	
@@ -264,10 +265,12 @@ public class Bytes
 	{
 		// GBytes * g_bytes_ref (GBytes *bytes);
 		auto p = g_bytes_ref(gBytes);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Bytes(cast(GBytes*) p);
 	}
 	
@@ -297,6 +300,12 @@ public class Bytes
 		// gpointer g_bytes_unref_to_data (GBytes *bytes,  gsize *size);
 		gsize size;
 		auto p = g_bytes_unref_to_data(gBytes, &size);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. size];
 	}
 	
@@ -314,10 +323,12 @@ public class Bytes
 	{
 		// GByteArray * g_bytes_unref_to_array (GBytes *bytes);
 		auto p = g_bytes_unref_to_array(gBytes);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ByteArray(cast(GByteArray*) p);
 	}
 }

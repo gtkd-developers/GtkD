@@ -63,6 +63,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -117,11 +118,6 @@ public class Structure
 	 */
 	public this (GstStructure* gstStructure)
 	{
-		if(gstStructure is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstStructure = gstStructure;
 	}
 	
@@ -138,11 +134,13 @@ public class Structure
 	{
 		// GstStructure* gst_structure_empty_new (const gchar *name);
 		auto p = gst_structure_empty_new(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -155,11 +153,13 @@ public class Structure
 	{
 		// GstStructure* gst_structure_id_empty_new (GQuark quark);
 		auto p = gst_structure_id_empty_new(quark);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -191,11 +191,13 @@ public class Structure
 	{
 		// GstStructure* gst_structure_copy (const GstStructure *structure);
 		auto p = gst_structure_copy(gstStructure);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -262,11 +264,13 @@ public class Structure
 	{
 		// const GValue* gst_structure_id_get_value (const GstStructure *structure,  GQuark field);
 		auto p = gst_structure_id_get_value(gstStructure, field);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GValue*) p);
 	}
 	
 	/**
@@ -293,11 +297,13 @@ public class Structure
 	{
 		// const GValue* gst_structure_get_value (const GstStructure *structure,  const gchar *fieldname);
 		auto p = gst_structure_get_value(gstStructure, Str.toStringz(fieldname));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GValue*) p);
 	}
 	
 	/**
@@ -533,7 +539,7 @@ public class Structure
 		
 		auto p = gst_structure_get_date(gstStructure, Str.toStringz(fieldname), &outvalue);
 		
-		value = new Date(outvalue);
+		value = ObjectG.getDObject!Date(outvalue);
 		return p;
 	}
 	
@@ -652,11 +658,13 @@ public class Structure
 		auto p = gst_structure_from_string(Str.toStringz(string), &outend);
 		
 		end = Str.toString(outend);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**

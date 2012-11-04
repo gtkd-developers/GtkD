@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -128,18 +129,6 @@ public class Socket : Container
 	 */
 	public this (GtkSocket* gtkSocket)
 	{
-		if(gtkSocket is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSocket);
-		if( ptr !is null )
-		{
-			this = cast(Socket)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkSocket);
 		this.gtkSocket = gtkSocket;
 	}

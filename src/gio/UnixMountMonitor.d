@@ -55,6 +55,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -95,18 +96,6 @@ public class UnixMountMonitor : ObjectG
 	 */
 	public this (GUnixMountMonitor* gUnixMountMonitor)
 	{
-		if(gUnixMountMonitor is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gUnixMountMonitor);
-		if( ptr !is null )
-		{
-			this = cast(UnixMountMonitor)ptr;
-			return;
-		}
 		super(cast(GObject*)gUnixMountMonitor);
 		this.gUnixMountMonitor = gUnixMountMonitor;
 	}

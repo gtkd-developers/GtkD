@@ -55,6 +55,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -92,18 +93,6 @@ public class NoOpObjectFactory : ObjectFactory
 	 */
 	public this (AtkNoOpObjectFactory* atkNoOpObjectFactory)
 	{
-		if(atkNoOpObjectFactory is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkNoOpObjectFactory);
-		if( ptr !is null )
-		{
-			this = cast(NoOpObjectFactory)ptr;
-			return;
-		}
 		super(cast(AtkObjectFactory*)atkNoOpObjectFactory);
 		this.atkNoOpObjectFactory = atkNoOpObjectFactory;
 	}

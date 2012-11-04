@@ -54,6 +54,7 @@ public  import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -76,9 +77,9 @@ public import gdk.Event;
 
 version(Tango) {
 	private import tango.core.Memory;
-} else version(D_Version2) {
+	} else version(D_Version2) {
 	private import core.memory;
-} else {
+	} else {
 	private import std.gc;
 }
 

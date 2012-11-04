@@ -62,6 +62,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,11 +104,6 @@ public class MiniObject
 	 */
 	public this (GstMiniObject* gstMiniObject)
 	{
-		if(gstMiniObject is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstMiniObject = gstMiniObject;
 	}
 	
@@ -141,11 +137,13 @@ public class MiniObject
 	{
 		// GstMiniObject* gst_mini_object_copy (const GstMiniObject *mini_object);
 		auto p = gst_mini_object_copy(gstMiniObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MiniObject(cast(GstMiniObject*) p);
+		
+		return ObjectG.getDObject!MiniObject(cast(GstMiniObject*) p);
 	}
 	
 	/**
@@ -173,11 +171,13 @@ public class MiniObject
 	{
 		// GstMiniObject* gst_mini_object_make_writable (GstMiniObject *mini_object);
 		auto p = gst_mini_object_make_writable(gstMiniObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MiniObject(cast(GstMiniObject*) p);
+		
+		return ObjectG.getDObject!MiniObject(cast(GstMiniObject*) p);
 	}
 	
 	/**
@@ -194,11 +194,13 @@ public class MiniObject
 	{
 		// GstMiniObject* gst_mini_object_ref (GstMiniObject *mini_object);
 		auto p = gst_mini_object_ref(gstMiniObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MiniObject(cast(GstMiniObject*) p);
+		
+		return ObjectG.getDObject!MiniObject(cast(GstMiniObject*) p);
 	}
 	
 	/**
@@ -226,7 +228,7 @@ public class MiniObject
 		
 		gst_mini_object_replace(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct());
 		
-		olddata = new MiniObject(outolddata);
+		olddata = ObjectG.getDObject!MiniObject(outolddata);
 	}
 	
 	/**
@@ -243,11 +245,13 @@ public class MiniObject
 	{
 		// GParamSpec* gst_param_spec_mini_object (const char *name,  const char *nick,  const char *blurb,  GType object_type,  GParamFlags flags);
 		auto p = gst_param_spec_mini_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -290,10 +294,12 @@ public class MiniObject
 	{
 		// GstMiniObject* gst_value_get_mini_object (const GValue *value);
 		auto p = gst_value_get_mini_object((value is null) ? null : value.getValueStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MiniObject(cast(GstMiniObject*) p);
+		
+		return ObjectG.getDObject!MiniObject(cast(GstMiniObject*) p);
 	}
 }

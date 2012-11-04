@@ -70,6 +70,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -134,18 +135,6 @@ public class ThemingEngine : ObjectG
 	 */
 	public this (GtkThemingEngine* gtkThemingEngine)
 	{
-		if(gtkThemingEngine is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkThemingEngine);
-		if( ptr !is null )
-		{
-			this = cast(ThemingEngine)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkThemingEngine);
 		this.gtkThemingEngine = gtkThemingEngine;
 	}
@@ -187,11 +176,13 @@ public class ThemingEngine : ObjectG
 	{
 		// const GtkWidgetPath * gtk_theming_engine_get_path (GtkThemingEngine *engine);
 		auto p = gtk_theming_engine_get_path(gtkThemingEngine);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new WidgetPath(cast(GtkWidgetPath*) p);
+		
+		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -219,11 +210,13 @@ public class ThemingEngine : ObjectG
 	{
 		// GdkScreen * gtk_theming_engine_get_screen (GtkThemingEngine *engine);
 		auto p = gtk_theming_engine_get_screen(gtkThemingEngine);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -365,11 +358,13 @@ public class ThemingEngine : ObjectG
 	{
 		// const PangoFontDescription * gtk_theming_engine_get_font  (GtkThemingEngine *engine,  GtkStateFlags state);
 		auto p = gtk_theming_engine_get_font(gtkThemingEngine, state);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -445,11 +440,13 @@ public class ThemingEngine : ObjectG
 	{
 		// GtkThemingEngine * gtk_theming_engine_load (const gchar *name);
 		auto p = gtk_theming_engine_load(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ThemingEngine(cast(GtkThemingEngine*) p);
+		
+		return ObjectG.getDObject!ThemingEngine(cast(GtkThemingEngine*) p);
 	}
 	
 	/**

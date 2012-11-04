@@ -59,6 +59,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -98,11 +99,6 @@ public class PgGlyphItemIter
 	 */
 	public this (PangoGlyphItemIter* pangoGlyphItemIter)
 	{
-		if(pangoGlyphItemIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoGlyphItemIter = pangoGlyphItemIter;
 	}
 	
@@ -118,11 +114,13 @@ public class PgGlyphItemIter
 	{
 		// PangoGlyphItemIter * pango_glyph_item_iter_copy (PangoGlyphItemIter *orig);
 		auto p = pango_glyph_item_iter_copy(pangoGlyphItemIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgGlyphItemIter(cast(PangoGlyphItemIter*) p);
+		
+		return ObjectG.getDObject!PgGlyphItemIter(cast(PangoGlyphItemIter*) p);
 	}
 	
 	/**

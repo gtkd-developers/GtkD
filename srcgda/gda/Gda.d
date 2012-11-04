@@ -59,6 +59,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -149,11 +150,13 @@ public class Gda
 	{
 		// GList* gda_string_hash_to_list (GHashTable *hash_table);
 		auto p = gda_string_hash_to_list((hashTable is null) ? null : hashTable.getHashTableStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

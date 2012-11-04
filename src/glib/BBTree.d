@@ -106,11 +106,6 @@ public class BBTree
 	 */
 	public this (GTree* gTree)
 	{
-		if(gTree is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTree = gTree;
 	}
 	
@@ -156,10 +151,12 @@ public class BBTree
 	{
 		// GTree * g_tree_ref (GTree *tree);
 		auto p = g_tree_ref(gTree);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new BBTree(cast(GTree*) p);
 	}
 	

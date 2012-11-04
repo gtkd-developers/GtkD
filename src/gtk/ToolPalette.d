@@ -77,6 +77,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -136,18 +137,6 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 */
 	public this (GtkToolPalette* gtkToolPalette)
 	{
-		if(gtkToolPalette is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToolPalette);
-		if( ptr !is null )
-		{
-			this = cast(ToolPalette)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkToolPalette);
 		this.gtkToolPalette = gtkToolPalette;
 	}
@@ -368,11 +357,13 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	{
 		// GtkWidget * gtk_tool_palette_get_drag_item (GtkToolPalette *palette,  const GtkSelectionData *selection);
 		auto p = gtk_tool_palette_get_drag_item(gtkToolPalette, (selection is null) ? null : selection.getSelectionDataStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -384,11 +375,13 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	{
 		// const GtkTargetEntry * gtk_tool_palette_get_drag_target_group  (void);
 		auto p = gtk_tool_palette_get_drag_target_group();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TargetEntry(cast(GtkTargetEntry*) p);
+		
+		return ObjectG.getDObject!TargetEntry(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
@@ -400,11 +393,13 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	{
 		// const GtkTargetEntry * gtk_tool_palette_get_drag_target_item  (void);
 		auto p = gtk_tool_palette_get_drag_target_item();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TargetEntry(cast(GtkTargetEntry*) p);
+		
+		return ObjectG.getDObject!TargetEntry(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
@@ -419,11 +414,13 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	{
 		// GtkToolItemGroup * gtk_tool_palette_get_drop_group (GtkToolPalette *palette,  gint x,  gint y);
 		auto p = gtk_tool_palette_get_drop_group(gtkToolPalette, x, y);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ToolItemGroup(cast(GtkToolItemGroup*) p);
+		
+		return ObjectG.getDObject!ToolItemGroup(cast(GtkToolItemGroup*) p);
 	}
 	
 	/**
@@ -439,11 +436,13 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	{
 		// GtkToolItem * gtk_tool_palette_get_drop_item (GtkToolPalette *palette,  gint x,  gint y);
 		auto p = gtk_tool_palette_get_drop_item(gtkToolPalette, x, y);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ToolItem(cast(GtkToolItem*) p);
+		
+		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
 	}
 	
 	/**

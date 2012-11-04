@@ -67,6 +67,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gobject.ObjectG;
@@ -98,11 +99,13 @@ public static Source pollableSourceNew(ObjectG pollableStream)
 {
 	// GSource * g_pollable_source_new (GObject *pollable_stream);
 	auto p = g_pollable_source_new((pollableStream is null) ? null : pollableStream.getObjectGStruct());
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new Source(cast(GSource*) p);
+	
+	return ObjectG.getDObject!Source(cast(GSource*) p);
 }
 
 /**
@@ -122,11 +125,13 @@ public static Source pollableSourceNewFull(void* pollableStream, Source childSou
 {
 	// GSource * g_pollable_source_new_full (gpointer pollable_stream,  GSource *child_source,  GCancellable *cancellable);
 	auto p = g_pollable_source_new_full(pollableStream, (childSource is null) ? null : childSource.getSourceStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct());
+	
 	if(p is null)
 	{
 		return null;
 	}
-	return new Source(cast(GSource*) p);
+	
+	return ObjectG.getDObject!Source(cast(GSource*) p);
 }
 
 /**

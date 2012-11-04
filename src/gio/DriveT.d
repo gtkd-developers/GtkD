@@ -71,6 +71,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -280,11 +281,13 @@ public template DriveT(TStruct)
 	{
 		// GIcon * g_drive_get_icon (GDrive *drive);
 		auto p = g_drive_get_icon(getDriveTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -296,11 +299,13 @@ public template DriveT(TStruct)
 	{
 		// GIcon * g_drive_get_symbolic_icon (GDrive *drive);
 		auto p = g_drive_get_symbolic_icon(getDriveTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -323,11 +328,13 @@ public template DriveT(TStruct)
 	{
 		// GList * g_drive_get_volumes (GDrive *drive);
 		auto p = g_drive_get_volumes(getDriveTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

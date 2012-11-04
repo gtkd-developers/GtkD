@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -113,11 +114,6 @@ public class TargetEntry
 	 */
 	public this (GtkTargetEntry* gtkTargetEntry)
 	{
-		if(gtkTargetEntry is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTargetEntry = gtkTargetEntry;
 	}
 	
@@ -159,11 +155,13 @@ public class TargetEntry
 	{
 		// GtkTargetEntry * gtk_target_entry_copy (GtkTargetEntry *data);
 		auto p = gtk_target_entry_copy(gtkTargetEntry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TargetEntry(cast(GtkTargetEntry*) p);
+		
+		return ObjectG.getDObject!TargetEntry(cast(GtkTargetEntry*) p);
 	}
 	
 	/**

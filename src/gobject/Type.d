@@ -63,6 +63,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -484,6 +485,12 @@ public class Type
 		// GType * g_type_children (GType type,  guint *n_children);
 		uint nChildren;
 		auto p = g_type_children(type, &nChildren);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. nChildren];
 	}
 	
@@ -500,6 +507,12 @@ public class Type
 		// GType * g_type_interfaces (GType type,  guint *n_interfaces);
 		uint nInterfaces;
 		auto p = g_type_interfaces(type, &nInterfaces);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. nInterfaces];
 	}
 	
@@ -515,6 +528,12 @@ public class Type
 		// GType * g_type_interface_prerequisites (GType interface_type,  guint *n_prerequisites);
 		uint nPrerequisites;
 		auto p = g_type_interface_prerequisites(interfaceType, &nPrerequisites);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. nPrerequisites];
 	}
 	
@@ -706,11 +725,13 @@ public class Type
 	{
 		// GTypePlugin * g_type_get_plugin (GType type);
 		auto p = g_type_get_plugin(type);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TypePlugin(cast(GTypePlugin*) p);
+		
+		return ObjectG.getDObject!TypePlugin(cast(GTypePlugin*) p);
 	}
 	
 	/**
@@ -727,11 +748,13 @@ public class Type
 	{
 		// GTypePlugin * g_type_interface_get_plugin (GType instance_type,  GType interface_type);
 		auto p = g_type_interface_get_plugin(instanceType, interfaceType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TypePlugin(cast(GTypePlugin*) p);
+		
+		return ObjectG.getDObject!TypePlugin(cast(GTypePlugin*) p);
 	}
 	
 	/**

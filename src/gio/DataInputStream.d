@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -107,18 +108,6 @@ public class DataInputStream : BufferedInputStream
 	 */
 	public this (GDataInputStream* gDataInputStream)
 	{
-		if(gDataInputStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDataInputStream);
-		if( ptr !is null )
-		{
-			this = cast(DataInputStream)ptr;
-			return;
-		}
 		super(cast(GBufferedInputStream*)gDataInputStream);
 		this.gDataInputStream = gDataInputStream;
 	}

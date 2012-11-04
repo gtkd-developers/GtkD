@@ -58,6 +58,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.IOChannel;
@@ -105,11 +106,6 @@ public class StreamableContent
 	 */
 	public this (AtkStreamableContent* atkStreamableContent)
 	{
-		if(atkStreamableContent is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkStreamableContent = atkStreamableContent;
 	}
 	
@@ -149,11 +145,13 @@ public class StreamableContent
 	{
 		// GIOChannel * atk_streamable_content_get_stream (AtkStreamableContent *streamable,  const gchar *mime_type);
 		auto p = atk_streamable_content_get_stream(atkStreamableContent, Str.toStringz(mimeType));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOChannel(cast(GIOChannel*) p);
+		
+		return ObjectG.getDObject!IOChannel(cast(GIOChannel*) p);
 	}
 	
 	/**

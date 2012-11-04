@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -92,18 +93,6 @@ public class TestDBus : ObjectG
 	 */
 	public this (GTestDBus* gTestDBus)
 	{
-		if(gTestDBus is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gTestDBus);
-		if( ptr !is null )
-		{
-			this = cast(TestDBus)ptr;
-			return;
-		}
 		super(cast(GObject*)gTestDBus);
 		this.gTestDBus = gTestDBus;
 	}

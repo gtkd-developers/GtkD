@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -139,18 +140,6 @@ public class AccelMap : ObjectG
 	 */
 	public this (GtkAccelMap* gtkAccelMap)
 	{
-		if(gtkAccelMap is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAccelMap);
-		if( ptr !is null )
-		{
-			this = cast(AccelMap)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkAccelMap);
 		this.gtkAccelMap = gtkAccelMap;
 	}
@@ -383,11 +372,13 @@ public class AccelMap : ObjectG
 	{
 		// GtkAccelMap * gtk_accel_map_get (void);
 		auto p = gtk_accel_map_get();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AccelMap(cast(GtkAccelMap*) p);
+		
+		return ObjectG.getDObject!AccelMap(cast(GtkAccelMap*) p);
 	}
 	
 	/**

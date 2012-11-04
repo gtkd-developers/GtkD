@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -123,18 +124,6 @@ public class FileInfo : ObjectG
 	 */
 	public this (GFileInfo* gFileInfo)
 	{
-		if(gFileInfo is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFileInfo);
-		if( ptr !is null )
-		{
-			this = cast(FileInfo)ptr;
-			return;
-		}
 		super(cast(GObject*)gFileInfo);
 		this.gFileInfo = gFileInfo;
 	}
@@ -171,11 +160,13 @@ public class FileInfo : ObjectG
 	{
 		// GFileInfo * g_file_info_dup (GFileInfo *other);
 		auto p = g_file_info_dup(gFileInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInfo(cast(GFileInfo*) p);
+		
+		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -412,11 +403,13 @@ public class FileInfo : ObjectG
 	{
 		// GObject * g_file_info_get_attribute_object (GFileInfo *info,  const char *attribute);
 		auto p = g_file_info_get_attribute_object(gFileInfo, Str.toStringz(attribute));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 	
 	/**
@@ -657,11 +650,13 @@ public class FileInfo : ObjectG
 	{
 		// GIcon * g_file_info_get_icon (GFileInfo *info);
 		auto p = g_file_info_get_icon(gFileInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -673,11 +668,13 @@ public class FileInfo : ObjectG
 	{
 		// GIcon * g_file_info_get_symbolic_icon (GFileInfo *info);
 		auto p = g_file_info_get_symbolic_icon(gFileInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**

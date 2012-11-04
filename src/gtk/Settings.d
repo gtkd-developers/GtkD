@@ -69,6 +69,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -136,18 +137,6 @@ public class Settings : ObjectG, StyleProviderIF
 	 */
 	public this (GtkSettings* gtkSettings)
 	{
-		if(gtkSettings is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSettings);
-		if( ptr !is null )
-		{
-			this = cast(Settings)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSettings);
 		this.gtkSettings = gtkSettings;
 	}
@@ -173,11 +162,13 @@ public class Settings : ObjectG, StyleProviderIF
 	{
 		// GtkSettings * gtk_settings_get_default (void);
 		auto p = gtk_settings_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Settings(cast(GtkSettings*) p);
+		
+		return ObjectG.getDObject!Settings(cast(GtkSettings*) p);
 	}
 	
 	/**
@@ -191,11 +182,13 @@ public class Settings : ObjectG, StyleProviderIF
 	{
 		// GtkSettings * gtk_settings_get_for_screen (GdkScreen *screen);
 		auto p = gtk_settings_get_for_screen((screen is null) ? null : screen.getScreenStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Settings(cast(GtkSettings*) p);
+		
+		return ObjectG.getDObject!Settings(cast(GtkSettings*) p);
 	}
 	
 	/**

@@ -59,6 +59,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -98,18 +99,6 @@ public class DBusMenuModel : MenuModel
 	 */
 	public this (GDBusMenuModel* gDBusMenuModel)
 	{
-		if(gDBusMenuModel is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusMenuModel);
-		if( ptr !is null )
-		{
-			this = cast(DBusMenuModel)ptr;
-			return;
-		}
 		super(cast(GMenuModel*)gDBusMenuModel);
 		this.gDBusMenuModel = gDBusMenuModel;
 	}
@@ -131,6 +120,7 @@ public class DBusMenuModel : MenuModel
 		{
 			throw new ConstructionException("null returned by g_dbus_menu_model_get");
 		}
+		
 		this(cast(GDBusMenuModel*) p);
 	}
 	
@@ -156,10 +146,12 @@ public class DBusMenuModel : MenuModel
 	{
 		// GDBusMenuModel * g_dbus_menu_model_get (GDBusConnection *connection,  const gchar *bus_name,  const gchar *object_path);
 		auto p = g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusMenuModel(cast(GDBusMenuModel*) p);
+		
+		return ObjectG.getDObject!DBusMenuModel(cast(GDBusMenuModel*) p);
 	}
 }

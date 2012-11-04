@@ -62,6 +62,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.ErrorG;
@@ -145,11 +146,13 @@ public template PollableOutputStreamT(TStruct)
 	{
 		// GSource * g_pollable_output_stream_create_source  (GPollableOutputStream *stream,  GCancellable *cancellable);
 		auto p = g_pollable_output_stream_create_source(getPollableOutputStreamTStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Source(cast(GSource*) p);
+		
+		return ObjectG.getDObject!Source(cast(GSource*) p);
 	}
 	
 	/**

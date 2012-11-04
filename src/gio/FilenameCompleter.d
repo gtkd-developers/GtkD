@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -96,18 +97,6 @@ public class FilenameCompleter : ObjectG
 	 */
 	public this (GFilenameCompleter* gFilenameCompleter)
 	{
-		if(gFilenameCompleter is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFilenameCompleter);
-		if( ptr !is null )
-		{
-			this = cast(FilenameCompleter)ptr;
-			return;
-		}
 		super(cast(GObject*)gFilenameCompleter);
 		this.gFilenameCompleter = gFilenameCompleter;
 	}

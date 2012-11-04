@@ -102,11 +102,6 @@ public class ScaledFont
 	 */
 	public this (cairo_scaled_font_t* cairo_scaled_font)
 	{
-		if(cairo_scaled_font is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo_scaled_font = cairo_scaled_font;
 	}
 	
@@ -135,10 +130,12 @@ public class ScaledFont
 	{
 		// cairo_scaled_font_t * cairo_scaled_font_create (cairo_font_face_t *font_face,  const cairo_matrix_t *font_matrix,  const cairo_matrix_t *ctm,  const cairo_font_options_t *options);
 		auto p = cairo_scaled_font_create((fontFace is null) ? null : fontFace.getFontFaceStruct(), (fontMatrix is null) ? null : fontMatrix.getMatrixStruct(), (ctm is null) ? null : ctm.getMatrixStruct(), (options is null) ? null : options.getFontOptionStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 	
@@ -155,10 +152,12 @@ public class ScaledFont
 	{
 		// cairo_scaled_font_t * cairo_scaled_font_reference (cairo_scaled_font_t *scaled_font);
 		auto p = cairo_scaled_font_reference(cairo_scaled_font);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 	
@@ -309,10 +308,12 @@ public class ScaledFont
 	{
 		// cairo_font_face_t * cairo_scaled_font_get_font_face (cairo_scaled_font_t *scaled_font);
 		auto p = cairo_scaled_font_get_font_face(cairo_scaled_font);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new FontFace(cast(cairo_font_face_t*) p);
 	}
 	

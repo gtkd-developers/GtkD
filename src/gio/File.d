@@ -90,6 +90,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -206,18 +207,6 @@ public class File : ObjectG
 	 */
 	public this (GFile* gFile)
 	{
-		if(gFile is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFile);
-		if( ptr !is null )
-		{
-			this = cast(File)ptr;
-			return;
-		}
 		super(cast(GObject*)gFile);
 		this.gFile = gFile;
 	}
@@ -286,7 +275,7 @@ public class File : ObjectG
 			throw new ConstructionException("null returned by g_file_new_tmp(Str.toStringz(tmpl), &outiostream, &err)");
 		}
 		
-		iostream = new FileIOStream(outiostream);
+		iostream = ObjectG.getDObject!FileIOStream(outiostream);
 		this(cast(GFile*) p);
 	}
 	
@@ -303,11 +292,13 @@ public class File : ObjectG
 	{
 		// GFile * g_file_parse_name (const char *parse_name);
 		auto p = g_file_parse_name(Str.toStringz(parseName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -321,11 +312,13 @@ public class File : ObjectG
 	{
 		// GFile * g_file_dup (GFile *file);
 		auto p = g_file_dup(gFile);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -430,11 +423,13 @@ public class File : ObjectG
 	{
 		// GFile * g_file_get_parent (GFile *file);
 		auto p = g_file_get_parent(gFile);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -467,11 +462,13 @@ public class File : ObjectG
 	{
 		// GFile * g_file_get_child (GFile *file,  const char *name);
 		auto p = g_file_get_child(gFile, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -499,11 +496,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -551,11 +550,13 @@ public class File : ObjectG
 	{
 		// GFile * g_file_resolve_relative_path (GFile *file,  const char *relative_path);
 		auto p = g_file_resolve_relative_path(gFile, Str.toStringz(relativePath));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -626,11 +627,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInputStream(cast(GFileInputStream*) p);
+		
+		return ObjectG.getDObject!FileInputStream(cast(GFileInputStream*) p);
 	}
 	
 	/**
@@ -675,11 +678,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInputStream(cast(GFileInputStream*) p);
+		
+		return ObjectG.getDObject!FileInputStream(cast(GFileInputStream*) p);
 	}
 	
 	/**
@@ -716,11 +721,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileOutputStream(cast(GFileOutputStream*) p);
+		
+		return ObjectG.getDObject!FileOutputStream(cast(GFileOutputStream*) p);
 	}
 	
 	/**
@@ -759,11 +766,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileOutputStream(cast(GFileOutputStream*) p);
+		
+		return ObjectG.getDObject!FileOutputStream(cast(GFileOutputStream*) p);
 	}
 	
 	/**
@@ -824,11 +833,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileOutputStream(cast(GFileOutputStream*) p);
+		
+		return ObjectG.getDObject!FileOutputStream(cast(GFileOutputStream*) p);
 	}
 	
 	/**
@@ -874,11 +885,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileOutputStream(cast(GFileOutputStream*) p);
+		
+		return ObjectG.getDObject!FileOutputStream(cast(GFileOutputStream*) p);
 	}
 	
 	/**
@@ -925,11 +938,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileOutputStream(cast(GFileOutputStream*) p);
+		
+		return ObjectG.getDObject!FileOutputStream(cast(GFileOutputStream*) p);
 	}
 	
 	/**
@@ -979,11 +994,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileOutputStream(cast(GFileOutputStream*) p);
+		
+		return ObjectG.getDObject!FileOutputStream(cast(GFileOutputStream*) p);
 	}
 	
 	/**
@@ -1033,11 +1050,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInfo(cast(GFileInfo*) p);
+		
+		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -1085,11 +1104,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInfo(cast(GFileInfo*) p);
+		
+		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -1183,11 +1204,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInfo(cast(GFileInfo*) p);
+		
+		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -1236,11 +1259,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInfo(cast(GFileInfo*) p);
+		
+		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -1266,11 +1291,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AppInfo(cast(GAppInfo*) p);
+		
+		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -1299,11 +1326,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Mount(cast(GMount*) p);
+		
+		return ObjectG.getDObject!Mount(cast(GMount*) p);
 	}
 	
 	/**
@@ -1348,11 +1377,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Mount(cast(GMount*) p);
+		
+		return ObjectG.getDObject!Mount(cast(GMount*) p);
 	}
 	
 	/**
@@ -1396,11 +1427,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileEnumerator(cast(GFileEnumerator*) p);
+		
+		return ObjectG.getDObject!FileEnumerator(cast(GFileEnumerator*) p);
 	}
 	
 	/**
@@ -1449,11 +1482,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileEnumerator(cast(GFileEnumerator*) p);
+		
+		return ObjectG.getDObject!FileEnumerator(cast(GFileEnumerator*) p);
 	}
 	
 	/**
@@ -1487,11 +1522,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -1537,11 +1574,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -1928,11 +1967,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileAttributeInfoList(cast(GFileAttributeInfoList*) p);
+		
+		return ObjectG.getDObject!FileAttributeInfoList(cast(GFileAttributeInfoList*) p);
 	}
 	
 	/**
@@ -1960,11 +2001,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileAttributeInfoList(cast(GFileAttributeInfoList*) p);
+		
+		return ObjectG.getDObject!FileAttributeInfoList(cast(GFileAttributeInfoList*) p);
 	}
 	
 	/**
@@ -2078,7 +2121,7 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		info = new FileInfo(outinfo);
+		info = ObjectG.getDObject!FileInfo(outinfo);
 		return p;
 	}
 	
@@ -2310,11 +2353,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -2736,11 +2781,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileMonitor(cast(GFileMonitor*) p);
+		
+		return ObjectG.getDObject!FileMonitor(cast(GFileMonitor*) p);
 	}
 	
 	/**
@@ -2768,11 +2815,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileMonitor(cast(GFileMonitor*) p);
+		
+		return ObjectG.getDObject!FileMonitor(cast(GFileMonitor*) p);
 	}
 	
 	/**
@@ -2801,11 +2850,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileMonitor(cast(GFileMonitor*) p);
+		
+		return ObjectG.getDObject!FileMonitor(cast(GFileMonitor*) p);
 	}
 	
 	/**
@@ -3130,11 +3181,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileIOStream(cast(GFileIOStream*) p);
+		
+		return ObjectG.getDObject!FileIOStream(cast(GFileIOStream*) p);
 	}
 	
 	/**
@@ -3183,11 +3236,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileIOStream(cast(GFileIOStream*) p);
+		
+		return ObjectG.getDObject!FileIOStream(cast(GFileIOStream*) p);
 	}
 	
 	/**
@@ -3223,11 +3278,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileIOStream(cast(GFileIOStream*) p);
+		
+		return ObjectG.getDObject!FileIOStream(cast(GFileIOStream*) p);
 	}
 	
 	/**
@@ -3274,11 +3331,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileIOStream(cast(GFileIOStream*) p);
+		
+		return ObjectG.getDObject!FileIOStream(cast(GFileIOStream*) p);
 	}
 	
 	/**
@@ -3313,11 +3372,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileIOStream(cast(GFileIOStream*) p);
+		
+		return ObjectG.getDObject!FileIOStream(cast(GFileIOStream*) p);
 	}
 	
 	/**
@@ -3370,11 +3431,13 @@ public class File : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileIOStream(cast(GFileIOStream*) p);
+		
+		return ObjectG.getDObject!FileIOStream(cast(GFileIOStream*) p);
 	}
 	
 	/**

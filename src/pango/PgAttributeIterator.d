@@ -64,6 +64,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import pango.PgAttribute;
@@ -106,11 +107,6 @@ public class PgAttributeIterator
 	 */
 	public this (PangoAttrIterator* pangoAttrIterator)
 	{
-		if(pangoAttrIterator is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoAttrIterator = pangoAttrIterator;
 	}
 	
@@ -125,11 +121,13 @@ public class PgAttributeIterator
 	{
 		// PangoAttrIterator * pango_attr_iterator_copy (PangoAttrIterator *iterator);
 		auto p = pango_attr_iterator_copy(pangoAttrIterator);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeIterator(cast(PangoAttrIterator*) p);
+		
+		return ObjectG.getDObject!PgAttributeIterator(cast(PangoAttrIterator*) p);
 	}
 	
 	/**
@@ -171,11 +169,13 @@ public class PgAttributeIterator
 	{
 		// PangoAttribute * pango_attr_iterator_get (PangoAttrIterator *iterator,  PangoAttrType type);
 		auto p = pango_attr_iterator_get(pangoAttrIterator, type);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttribute(cast(PangoAttribute*) p);
+		
+		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -202,8 +202,8 @@ public class PgAttributeIterator
 		
 		pango_attr_iterator_get_font(pangoAttrIterator, (desc is null) ? null : desc.getPgFontDescriptionStruct(), &outlanguage, &outextraAttrs);
 		
-		language = new PgLanguage(outlanguage);
-		extraAttrs = new ListSG(outextraAttrs);
+		language = ObjectG.getDObject!PgLanguage(outlanguage);
+		extraAttrs = ObjectG.getDObject!ListSG(outextraAttrs);
 	}
 	
 	/**
@@ -216,11 +216,13 @@ public class PgAttributeIterator
 	{
 		// GSList * pango_attr_iterator_get_attrs (PangoAttrIterator *iterator);
 		auto p = pango_attr_iterator_get_attrs(pangoAttrIterator);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**

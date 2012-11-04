@@ -56,6 +56,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -100,11 +101,6 @@ public class Image
 	 */
 	public this (AtkImage* atkImage)
 	{
-		if(atkImage is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkImage = atkImage;
 	}
 	

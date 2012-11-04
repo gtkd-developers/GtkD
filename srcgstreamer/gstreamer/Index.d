@@ -60,6 +60,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -100,18 +101,6 @@ public class Index : ObjectGst
 	 */
 	public this (GstIndex* gstIndex)
 	{
-		if(gstIndex is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstIndex);
-		if( ptr !is null )
-		{
-			this = cast(Index)ptr;
-			return;
-		}
 		super(cast(GstObject*)gstIndex);
 		this.gstIndex = gstIndex;
 	}

@@ -68,6 +68,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -115,18 +116,6 @@ public class PgFontMap : ObjectG
 	 */
 	public this (PangoFontMap* pangoFontMap)
 	{
-		if(pangoFontMap is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoFontMap);
-		if( ptr !is null )
-		{
-			this = cast(PgFontMap)ptr;
-			return;
-		}
 		super(cast(GObject*)pangoFontMap);
 		this.pangoFontMap = pangoFontMap;
 	}
@@ -155,11 +144,13 @@ public class PgFontMap : ObjectG
 	{
 		// PangoContext * pango_font_map_create_context (PangoFontMap *fontmap);
 		auto p = pango_font_map_create_context(pangoFontMap);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgContext(cast(PangoContext*) p);
+		
+		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -173,11 +164,13 @@ public class PgFontMap : ObjectG
 	{
 		// PangoFont * pango_font_map_load_font (PangoFontMap *fontmap,  PangoContext *context,  const PangoFontDescription *desc);
 		auto p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFont(cast(PangoFont*) p);
+		
+		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -193,11 +186,13 @@ public class PgFontMap : ObjectG
 	{
 		// PangoFontset * pango_font_map_load_fontset (PangoFontMap *fontmap,  PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
 		auto p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontset(cast(PangoFontset*) p);
+		
+		return ObjectG.getDObject!PgFontset(cast(PangoFontset*) p);
 	}
 	
 	/**
@@ -218,7 +213,7 @@ public class PgFontMap : ObjectG
 		families = new PgFontFamily[nFamilies];
 		for(int i = 0; i < nFamilies; i++)
 		{
-			families[i] = new PgFontFamily(cast(PangoFontFamily*) outfamilies[i]);
+			families[i] = ObjectG.getDObject!PgFontFamily(cast(PangoFontFamily*) outfamilies[i]);
 		}
 	}
 	

@@ -79,6 +79,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -141,18 +142,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	 */
 	public this (GtkTreeStore* gtkTreeStore)
 	{
-		if(gtkTreeStore is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeStore);
-		if( ptr !is null )
-		{
-			this = cast(TreeStore)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;
 	}

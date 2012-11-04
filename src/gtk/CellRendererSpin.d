@@ -55,6 +55,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -100,18 +101,6 @@ public class CellRendererSpin : CellRendererText
 	 */
 	public this (GtkCellRendererSpin* gtkCellRendererSpin)
 	{
-		if(gtkCellRendererSpin is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellRendererSpin);
-		if( ptr !is null )
-		{
-			this = cast(CellRendererSpin)ptr;
-			return;
-		}
 		super(cast(GtkCellRendererText*)gtkCellRendererSpin);
 		this.gtkCellRendererSpin = gtkCellRendererSpin;
 	}

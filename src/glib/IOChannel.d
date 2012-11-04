@@ -137,11 +137,6 @@ public class IOChannel
 	 */
 	public this (GIOChannel* gIOChannel)
 	{
-		if(gIOChannel is null)
-		{
-			this = null;
-			return;
-		}
 		this.gIOChannel = gIOChannel;
 	}
 	
@@ -257,10 +252,12 @@ public class IOChannel
 	{
 		// GIOChannel * g_io_channel_unix_new (int fd);
 		auto p = g_io_channel_unix_new(fd);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
@@ -304,10 +301,12 @@ public class IOChannel
 	{
 		// GIOChannel * g_io_channel_win32_new_fd (gint fd);
 		auto p = g_io_channel_win32_new_fd(fd);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
@@ -326,10 +325,12 @@ public class IOChannel
 	{
 		// GIOChannel * g_io_channel_win32_new_socket (gint socket);
 		auto p = g_io_channel_win32_new_socket(socket);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
@@ -345,10 +346,12 @@ public class IOChannel
 	{
 		// GIOChannel * g_io_channel_win32_new_messages (gsize hwnd);
 		auto p = g_io_channel_win32_new_messages(hwnd);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
@@ -582,10 +585,12 @@ public class IOChannel
 	{
 		// GIOChannel * g_io_channel_ref (GIOChannel *channel);
 		auto p = g_io_channel_ref(gIOChannel);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
@@ -616,10 +621,12 @@ public class IOChannel
 	{
 		// GSource * g_io_create_watch (GIOChannel *channel,  GIOCondition condition);
 		auto p = g_io_create_watch(gIOChannel, condition);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	

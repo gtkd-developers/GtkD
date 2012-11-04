@@ -67,6 +67,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import cairo.Context;
@@ -107,18 +108,6 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	public this (GtkSourceGutterRenderer* gtkSourceGutterRenderer)
 	{
-		if(gtkSourceGutterRenderer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceGutterRenderer);
-		if( ptr !is null )
-		{
-			this = cast(SourceGutterRenderer)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceGutterRenderer);
 		this.gtkSourceGutterRenderer = gtkSourceGutterRenderer;
 	}
@@ -305,11 +294,13 @@ public class SourceGutterRenderer : ObjectG
 	{
 		// GtkTextView * gtk_source_gutter_renderer_get_view (GtkSourceGutterRenderer *renderer);
 		auto p = gtk_source_gutter_renderer_get_view(gtkSourceGutterRenderer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextView(cast(GtkTextView*) p);
+		
+		return ObjectG.getDObject!TextView(cast(GtkTextView*) p);
 	}
 	
 	/**

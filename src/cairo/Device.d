@@ -112,11 +112,6 @@ public class Device
 	 */
 	public this (cairo_device_t* cairo_device)
 	{
-		if(cairo_device is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo_device = cairo_device;
 	}
 	
@@ -136,10 +131,12 @@ public class Device
 	{
 		// cairo_device_t * cairo_device_reference (cairo_device_t *device);
 		auto p = cairo_device_reference(cairo_device);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Device(cast(cairo_device_t*) p);
 	}
 	

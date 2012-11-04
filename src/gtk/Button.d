@@ -70,6 +70,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -120,18 +121,6 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	public this (GtkButton* gtkButton)
 	{
-		if(gtkButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkButton);
-		if( ptr !is null )
-		{
-			this = cast(Button)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkButton);
 		this.gtkButton = gtkButton;
 	}
@@ -679,11 +668,13 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	{
 		// GtkWidget * gtk_button_get_image (GtkButton *button);
 		auto p = gtk_button_get_image(gtkButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -747,10 +738,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	{
 		// GdkWindow * gtk_button_get_event_window (GtkButton *button);
 		auto p = gtk_button_get_event_window(gtkButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

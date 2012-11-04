@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -110,18 +111,6 @@ public class FontSelectionDialog : Dialog
 	 */
 	public this (GtkFontSelectionDialog* gtkFontSelectionDialog)
 	{
-		if(gtkFontSelectionDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFontSelectionDialog);
-		if( ptr !is null )
-		{
-			this = cast(FontSelectionDialog)ptr;
-			return;
-		}
 		super(cast(GtkDialog*)gtkFontSelectionDialog);
 		this.gtkFontSelectionDialog = gtkFontSelectionDialog;
 	}
@@ -238,11 +227,13 @@ public class FontSelectionDialog : Dialog
 	{
 		// GtkWidget * gtk_font_selection_dialog_get_cancel_button  (GtkFontSelectionDialog *fsd);
 		auto p = gtk_font_selection_dialog_get_cancel_button(gtkFontSelectionDialog);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -256,10 +247,12 @@ public class FontSelectionDialog : Dialog
 	{
 		// GtkWidget * gtk_font_selection_dialog_get_ok_button  (GtkFontSelectionDialog *fsd);
 		auto p = gtk_font_selection_dialog_get_ok_button(gtkFontSelectionDialog);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

@@ -61,6 +61,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -99,18 +100,6 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	 */
 	public this (GtkSourceGutterRendererPixbuf* gtkSourceGutterRendererPixbuf)
 	{
-		if(gtkSourceGutterRendererPixbuf is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceGutterRendererPixbuf);
-		if( ptr !is null )
-		{
-			this = cast(SourceGutterRendererPixbuf)ptr;
-			return;
-		}
 		super(cast(GtkSourceGutterRenderer*)gtkSourceGutterRendererPixbuf);
 		this.gtkSourceGutterRendererPixbuf = gtkSourceGutterRendererPixbuf;
 	}
@@ -161,11 +150,13 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	{
 		// GdkPixbuf * gtk_source_gutter_renderer_pixbuf_get_pixbuf  (GtkSourceGutterRendererPixbuf *renderer);
 		auto p = gtk_source_gutter_renderer_pixbuf_get_pixbuf(gtkSourceGutterRendererPixbuf);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -200,11 +191,13 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	{
 		// GIcon * gtk_source_gutter_renderer_pixbuf_get_gicon  (GtkSourceGutterRendererPixbuf *renderer);
 		auto p = gtk_source_gutter_renderer_pixbuf_get_gicon(gtkSourceGutterRendererPixbuf);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**

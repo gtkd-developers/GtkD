@@ -64,6 +64,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -142,18 +143,6 @@ public class Binding : ObjectG
 	 */
 	public this (GBinding* gBinding)
 	{
-		if(gBinding is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gBinding);
-		if( ptr !is null )
-		{
-			this = cast(Binding)ptr;
-			return;
-		}
 		super(cast(GObject*)gBinding);
 		this.gBinding = gBinding;
 	}
@@ -176,11 +165,13 @@ public class Binding : ObjectG
 	{
 		// GObject * g_binding_get_source (GBinding *binding);
 		auto p = g_binding_get_source(gBinding);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 	
 	/**
@@ -204,11 +195,13 @@ public class Binding : ObjectG
 	{
 		// GObject * g_binding_get_target (GBinding *binding);
 		auto p = g_binding_get_target(gBinding);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 	
 	/**
@@ -250,11 +243,13 @@ public class Binding : ObjectG
 	{
 		// GBinding * g_object_bind_property (gpointer source,  const gchar *source_property,  gpointer target,  const gchar *target_property,  GBindingFlags flags);
 		auto p = g_object_bind_property(source, Str.toStringz(sourceProperty), target, Str.toStringz(targetProperty), flags);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Binding(cast(GBinding*) p);
+		
+		return ObjectG.getDObject!Binding(cast(GBinding*) p);
 	}
 	
 	/**
@@ -283,11 +278,13 @@ public class Binding : ObjectG
 	{
 		// GBinding * g_object_bind_property_full (gpointer source,  const gchar *source_property,  gpointer target,  const gchar *target_property,  GBindingFlags flags,  GBindingTransformFunc transform_to,  GBindingTransformFunc transform_from,  gpointer user_data,  GDestroyNotify notify);
 		auto p = g_object_bind_property_full(source, Str.toStringz(sourceProperty), target, Str.toStringz(targetProperty), flags, transformTo, transformFrom, userData, notify);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Binding(cast(GBinding*) p);
+		
+		return ObjectG.getDObject!Binding(cast(GBinding*) p);
 	}
 	
 	/**
@@ -315,10 +312,12 @@ public class Binding : ObjectG
 	{
 		// GBinding * g_object_bind_property_with_closures  (gpointer source,  const gchar *source_property,  gpointer target,  const gchar *target_property,  GBindingFlags flags,  GClosure *transform_to,  GClosure *transform_from);
 		auto p = g_object_bind_property_with_closures(source, Str.toStringz(sourceProperty), target, Str.toStringz(targetProperty), flags, (transformTo is null) ? null : transformTo.getClosureStruct(), (transformFrom is null) ? null : transformFrom.getClosureStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Binding(cast(GBinding*) p);
+		
+		return ObjectG.getDObject!Binding(cast(GBinding*) p);
 	}
 }

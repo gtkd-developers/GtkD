@@ -124,11 +124,6 @@ public class AsyncQueue
 	 */
 	public this (GAsyncQueue* gAsyncQueue)
 	{
-		if(gAsyncQueue is null)
-		{
-			this = null;
-			return;
-		}
 		this.gAsyncQueue = gAsyncQueue;
 	}
 	
@@ -179,10 +174,12 @@ public class AsyncQueue
 	{
 		// GAsyncQueue * g_async_queue_ref (GAsyncQueue *queue);
 		auto p = g_async_queue_ref(gAsyncQueue);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new AsyncQueue(cast(GAsyncQueue*) p);
 	}
 	

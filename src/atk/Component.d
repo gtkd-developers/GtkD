@@ -57,6 +57,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -102,11 +103,6 @@ public class Component
 	 */
 	public this (AtkComponent* atkComponent)
 	{
-		if(atkComponent is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkComponent = atkComponent;
 	}
 	
@@ -260,11 +256,13 @@ public class Component
 	{
 		// AtkObject * atk_component_ref_accessible_at_point  (AtkComponent *component,  gint x,  gint y,  AtkCoordType coord_type);
 		auto p = atk_component_ref_accessible_at_point(atkComponent, x, y, coordType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

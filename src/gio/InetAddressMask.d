@@ -62,6 +62,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -104,18 +105,6 @@ public class InetAddressMask : ObjectG
 	 */
 	public this (GInetAddressMask* gInetAddressMask)
 	{
-		if(gInetAddressMask is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gInetAddressMask);
-		if( ptr !is null )
-		{
-			this = cast(InetAddressMask)ptr;
-			return;
-		}
 		super(cast(GObject*)gInetAddressMask);
 		this.gInetAddressMask = gInetAddressMask;
 	}
@@ -219,11 +208,13 @@ public class InetAddressMask : ObjectG
 	{
 		// GInetAddress * g_inet_address_mask_get_address (GInetAddressMask *mask);
 		auto p = g_inet_address_mask_get_address(gInetAddressMask);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new InetAddress(cast(GInetAddress*) p);
+		
+		return ObjectG.getDObject!InetAddress(cast(GInetAddress*) p);
 	}
 	
 	/**

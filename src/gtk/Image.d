@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -140,18 +141,6 @@ public class Image : Misc
 	 */
 	public this (GtkImage* gtkImage)
 	{
-		if(gtkImage is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkImage);
-		if( ptr !is null )
-		{
-			this = cast(Image)ptr;
-			return;
-		}
 		super(cast(GtkMisc*)gtkImage);
 		this.gtkImage = gtkImage;
 	}
@@ -207,7 +196,7 @@ public class Image : Misc
 		
 		gtk_image_get_icon_set(gtkImage, &outiconSet, &size);
 		
-		iconSet = new IconSet(outiconSet);
+		iconSet = ObjectG.getDObject!IconSet(outiconSet);
 	}
 	
 	/**
@@ -222,11 +211,13 @@ public class Image : Misc
 	{
 		// GdkPixbuf * gtk_image_get_pixbuf (GtkImage *image);
 		auto p = gtk_image_get_pixbuf(gtkImage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -263,11 +254,13 @@ public class Image : Misc
 	{
 		// GdkPixbufAnimation * gtk_image_get_animation (GtkImage *image);
 		auto p = gtk_image_get_animation(gtkImage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
+		
+		return ObjectG.getDObject!PixbufAnimation(cast(GdkPixbufAnimation*) p);
 	}
 	
 	/**
@@ -313,7 +306,7 @@ public class Image : Misc
 		
 		gtk_image_get_gicon(gtkImage, &outgicon, &size);
 		
-		gicon = new Icon(outgicon);
+		gicon = ObjectG.getDObject!Icon(outgicon);
 	}
 	
 	/**

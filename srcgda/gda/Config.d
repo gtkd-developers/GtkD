@@ -66,6 +66,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -246,11 +247,13 @@ public class Config
 	{
 		// GList* gda_config_list_sections (const gchar *path);
 		auto p = gda_config_list_sections(Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -264,11 +267,13 @@ public class Config
 	{
 		// GList* gda_config_list_keys (const gchar *path);
 		auto p = gda_config_list_keys(Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -335,11 +340,13 @@ public class Config
 	{
 		// GList* gda_config_get_provider_list (void);
 		auto p = gda_config_get_provider_list();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -363,11 +370,13 @@ public class Config
 	{
 		// GdaProviderInfo* gda_config_get_provider_by_name (const gchar *name);
 		auto p = gda_config_get_provider_by_name(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ProviderInfo(cast(GdaProviderInfo*) p);
+		
+		return ObjectG.getDObject!ProviderInfo(cast(GdaProviderInfo*) p);
 	}
 	
 	/**
@@ -381,11 +390,13 @@ public class Config
 	{
 		// GdaDataModel* gda_config_get_provider_model (void);
 		auto p = gda_config_get_provider_model();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		
+		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
@@ -398,11 +409,13 @@ public class Config
 	{
 		// GdaDataSourceInfo* gda_config_copy_data_source_info (GdaDataSourceInfo *src);
 		auto p = gda_config_copy_data_source_info((src is null) ? null : src.getDataSourceInfoStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DataSourceInfo(cast(GdaDataSourceInfo*) p);
+		
+		return ObjectG.getDObject!DataSourceInfo(cast(GdaDataSourceInfo*) p);
 	}
 	
 	/**
@@ -427,11 +440,13 @@ public class Config
 	{
 		// GList* gda_config_get_data_source_list (void);
 		auto p = gda_config_get_data_source_list();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -445,11 +460,13 @@ public class Config
 	{
 		// GdaDataSourceInfo* gda_config_find_data_source (const gchar *name);
 		auto p = gda_config_find_data_source(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DataSourceInfo(cast(GdaDataSourceInfo*) p);
+		
+		return ObjectG.getDObject!DataSourceInfo(cast(GdaDataSourceInfo*) p);
 	}
 	
 	/**
@@ -475,11 +492,13 @@ public class Config
 	{
 		// GdaDataModel* gda_config_get_data_source_model (void);
 		auto p = gda_config_get_data_source_model();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		
+		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**

@@ -84,6 +84,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -135,11 +136,6 @@ public class Message
 	 */
 	public this (GstMessage* gstMessage)
 	{
-		if(gstMessage is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstMessage = gstMessage;
 	}
 	
@@ -174,16 +170,17 @@ public class Message
 	 * Params:
 	 *  tagList = Return location for the tag-list.
 	 */
-	/*public void parseTag(GstTagList** tagList)
-	{
-		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
-		gst_message_parse_tag(gstMessage, tagList);
-	}*/
 	public TagList parseTag()
 	{
 		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
 		GstTagList* tag_list_c;
 		gst_message_parse_tag(gstMessage, &tag_list_c);
+		
+		if ( tag_list_c is null )
+		{
+			return null;
+		}
+		
 		return new TagList(tag_list_c);
 	}
 	
@@ -217,7 +214,14 @@ public class Message
 	public static Message newElement(ObjectGst src, Structure structure)
 	{
 		// GstMessage* gst_message_new_element (GstObject *src,  GstStructure *structure);
-		return new Message(cast(GstMessage*)gst_message_new_element((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct()) );
+		auto p = gst_message_new_element((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_element");
+		}
+		
+		return new Message(cast(GstMessage*)p);
 	}
 	
 	/**
@@ -233,7 +237,14 @@ public class Message
 	public static Message newNewClock(ObjectGst src, Clock clock)
 	{
 		// GstMessage* gst_message_new_new_clock (GstObject *src,  GstClock *clock);
-		return new Message(cast(GstMessage*)gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct()) );
+		auto p = gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_new_clock");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -252,7 +263,14 @@ public class Message
 	public static Message newSegmentDone(ObjectGst src, GstFormat format, long position)
 	{
 		// GstMessage* gst_message_new_segment_done (GstObject *src,  GstFormat format,  gint64 position);
-		return new Message(cast(GstMessage*)gst_message_new_segment_done((src is null) ? null : src.getObjectGstStruct(), format, position) );
+		auto p = gst_message_new_segment_done((src is null) ? null : src.getObjectGstStruct(), format, position);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_segment_done");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -271,7 +289,14 @@ public class Message
 	public static Message newSegmentStart(ObjectGst src, GstFormat format, long position)
 	{
 		// GstMessage* gst_message_new_segment_start (GstObject *src,  GstFormat format,  gint64 position);
-		return new Message(cast(GstMessage*)gst_message_new_segment_start((src is null) ? null : src.getObjectGstStruct(), format, position) );
+		auto p = gst_message_new_segment_start((src is null) ? null : src.getObjectGstStruct(), format, position);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_segment_start");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -288,7 +313,14 @@ public class Message
 	public static Message newWarning(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_warning (GstObject *src,  GError *error,  gchar *debug);
-		return new Message(cast(GstMessage*)gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+		auto p = gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_warning");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -304,7 +336,14 @@ public class Message
 	public static Message newStateDirty(ObjectGst src)
 	{
 		// GstMessage* gst_message_new_state_dirty (GstObject *src);
-		return new Message(cast(GstMessage*)gst_message_new_state_dirty((src is null) ? null : src.getObjectGstStruct()) );
+		auto p = gst_message_new_state_dirty((src is null) ? null : src.getObjectGstStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_state_dirty");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -320,7 +359,14 @@ public class Message
 	public static Message newEOS(ObjectGst src)
 	{
 		// GstMessage* gst_message_new_eos (GstObject *src);
-		return new Message(cast(GstMessage*)gst_message_new_eos((src is null) ? null : src.getObjectGstStruct()) );
+		auto p = gst_message_new_eos((src is null) ? null : src.getObjectGstStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_eos");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -339,7 +385,14 @@ public class Message
 	public static Message newError(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_error (GstObject *src,  GError *error,  gchar *debug);
-		return new Message(cast(GstMessage*)gst_message_new_error((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+		auto p = gst_message_new_error((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_error");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -357,7 +410,14 @@ public class Message
 	public static Message newInfo(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_info (GstObject *src,  GError *error,  gchar *debug);
-		return new Message(cast(GstMessage*)gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+		auto p = gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_info");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -371,7 +431,14 @@ public class Message
 	public static Message newLatency(ObjectGst src)
 	{
 		// GstMessage* gst_message_new_latency (GstObject *src);
-		return new Message(cast(GstMessage*)gst_message_new_latency((src is null) ? null : src.getObjectGstStruct()) );
+		auto p = gst_message_new_latency((src is null) ? null : src.getObjectGstStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_latency");
+		}
+		
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
@@ -386,7 +453,14 @@ public class Message
 	public static Message newAsyncStart(ObjectGst src, int newBaseTime)
 	{
 		// GstMessage* gst_message_new_async_start (GstObject *src,  gboolean new_base_time);
-		return new Message(cast(GstMessage*)gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime));
+		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_start");
+		}
+		
+		return new Message(cast(GstMessage*)p);
 	}
 	
 	/**
@@ -412,11 +486,13 @@ public class Message
 	{
 		// const GstStructure* gst_message_get_structure (GstMessage *message);
 		auto p = gst_message_get_structure(gstMessage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -628,7 +704,7 @@ public class Message
 		
 		gst_message_parse_clock_lost(gstMessage, &outclock);
 		
-		clock = new Clock(outclock);
+		clock = ObjectG.getDObject!Clock(outclock);
 	}
 	
 	/**
@@ -646,7 +722,7 @@ public class Message
 		
 		gst_message_parse_clock_provide(gstMessage, &outclock, &ready);
 		
-		clock = new Clock(outclock);
+		clock = ObjectG.getDObject!Clock(outclock);
 	}
 	
 	/**
@@ -665,7 +741,7 @@ public class Message
 		
 		gst_message_parse_error(gstMessage, &outgerror, &outdbug);
 		
-		gerror = new ErrorG(outgerror);
+		gerror = ObjectG.getDObject!ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -686,7 +762,7 @@ public class Message
 		
 		gst_message_parse_info(gstMessage, &outgerror, &outdbug);
 		
-		gerror = new ErrorG(outgerror);
+		gerror = ObjectG.getDObject!ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -704,7 +780,7 @@ public class Message
 		
 		gst_message_parse_new_clock(gstMessage, &outclock);
 		
-		clock = new Clock(outclock);
+		clock = ObjectG.getDObject!Clock(outclock);
 	}
 	
 	/**
@@ -777,7 +853,7 @@ public class Message
 		
 		gst_message_parse_warning(gstMessage, &outgerror, &outdbug);
 		
-		gerror = new ErrorG(outgerror);
+		gerror = ObjectG.getDObject!ErrorG(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -818,10 +894,12 @@ public class Message
 	{
 		// GstMessage* gst_message_ref (GstMessage *msg);
 		auto p = gst_message_ref(gstMessage);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Message(cast(GstMessage*) p);
+		
+		return ObjectG.getDObject!Message(cast(GstMessage*) p);
 	}
 }

@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -117,18 +118,6 @@ public class Assistant : Window
 	 */
 	public this (GtkAssistant* gtkAssistant)
 	{
-		if(gtkAssistant is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAssistant);
-		if( ptr !is null )
-		{
-			this = cast(Assistant)ptr;
-			return;
-		}
 		super(cast(GtkWindow*)gtkAssistant);
 		this.gtkAssistant = gtkAssistant;
 	}
@@ -264,7 +253,7 @@ public class Assistant : Window
 	{
 		foreach ( void delegate(Widget, Assistant) dlg ; _assistant.onPrepareListeners )
 		{
-			dlg(new Widget(page), _assistant);
+			dlg(ObjectG.getDObject!Widget(page), _assistant);
 		}
 	}
 	
@@ -337,11 +326,13 @@ public class Assistant : Window
 	{
 		// GtkWidget * gtk_assistant_get_nth_page (GtkAssistant *assistant,  gint page_num);
 		auto p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -503,11 +494,13 @@ public class Assistant : Window
 	{
 		// GdkPixbuf * gtk_assistant_get_page_header_image (GtkAssistant *assistant,  GtkWidget *page);
 		auto p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -542,11 +535,13 @@ public class Assistant : Window
 	{
 		// GdkPixbuf * gtk_assistant_get_page_side_image (GtkAssistant *assistant,  GtkWidget *page);
 		auto p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

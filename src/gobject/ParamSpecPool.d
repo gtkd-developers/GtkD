@@ -60,6 +60,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,11 +104,6 @@ public class ParamSpecPool
 	 */
 	public this (GParamSpecPool* gParamSpecPool)
 	{
-		if(gParamSpecPool is null)
-		{
-			this = null;
-			return;
-		}
 		this.gParamSpecPool = gParamSpecPool;
 	}
 	
@@ -171,11 +167,13 @@ public class ParamSpecPool
 	{
 		// GParamSpec * g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
 		auto p = g_param_spec_pool_lookup(gParamSpecPool, Str.toStringz(paramName), ownerType, walkAncestors);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -190,6 +188,7 @@ public class ParamSpecPool
 		// GParamSpec ** g_param_spec_pool_list (GParamSpecPool *pool,  GType owner_type,  guint *n_pspecs_p);
 		uint nPspecsP;
 		auto p = g_param_spec_pool_list(gParamSpecPool, ownerType, &nPspecsP);
+		
 		if(p is null)
 		{
 			return null;
@@ -198,7 +197,7 @@ public class ParamSpecPool
 		ParamSpec[] arr = new ParamSpec[nPspecsP];
 		for(int i = 0; i < nPspecsP; i++)
 		{
-			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -215,10 +214,12 @@ public class ParamSpecPool
 	{
 		// GList * g_param_spec_pool_list_owned (GParamSpecPool *pool,  GType owner_type);
 		auto p = g_param_spec_pool_list_owned(gParamSpecPool, ownerType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 }

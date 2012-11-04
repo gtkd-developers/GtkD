@@ -240,7 +240,12 @@ public class GtkDClass
 		/* Type information should be publicly imported by all modules. */
 		gtkDText ~= "public  import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
 		gtkDText ~= privPub ~" import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n";
-		gtkDText ~= privPub ~" import glib.ConstructionException;\n\n";
+		gtkDText ~= privPub ~" import glib.ConstructionException;\n";
+		
+		if ( convParms.outPack != "cairo" && convParms.outPack != "glib" && convParms.outPack != "gthread" )
+			gtkDText ~= privPub ~" import gobject.ObjectG;\n";
+			
+		gtkDText ~= "\n";
 		
 		// move signal imports out of classes - JJR
 		if (needSignalImports)
@@ -576,27 +581,6 @@ public class GtkDClass
 							text ~= " */";
 							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
 							text ~= "{";
-
-							string[] checkIfNull = [
-												    	"if("~var~" is null)",
-												        "{",
-												        "	this = null;",
-								"	return;",
-								"}" ];
-
-												    string[] checkObject = [
-								""
-								"//Check if there already is a D object for this gtk struct",
-								"void* ptr = getDObject(cast(GObject*)"~var~");",
-								"if( ptr !is null )",
-								"{",
-								"	this = cast("~convParms.clss~")ptr;",
-								"	return;",
-								"}" ];
-
-							text ~= checkIfNull;
-							if ( gtkDParentName.length > 0 && convParms.outPack != "cairo" && gtkDParentName != "Boxed" )
-								text ~= checkObject;
 
 							if ( parentName.length > 0 && gtkDParentName != "Boxed" )
 							{

@@ -67,6 +67,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -114,18 +115,6 @@ public class DBusMethodInvocation : ObjectG
 	 */
 	public this (GDBusMethodInvocation* gDBusMethodInvocation)
 	{
-		if(gDBusMethodInvocation is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusMethodInvocation);
-		if( ptr !is null )
-		{
-			this = cast(DBusMethodInvocation)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusMethodInvocation);
 		this.gDBusMethodInvocation = gDBusMethodInvocation;
 	}
@@ -203,11 +192,13 @@ public class DBusMethodInvocation : ObjectG
 	{
 		// GDBusConnection * g_dbus_method_invocation_get_connection  (GDBusMethodInvocation *invocation);
 		auto p = g_dbus_method_invocation_get_connection(gDBusMethodInvocation);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusConnection(cast(GDBusConnection*) p);
+		
+		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -224,11 +215,13 @@ public class DBusMethodInvocation : ObjectG
 	{
 		// GDBusMessage * g_dbus_method_invocation_get_message  (GDBusMethodInvocation *invocation);
 		auto p = g_dbus_method_invocation_get_message(gDBusMethodInvocation);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusMessage(cast(GDBusMessage*) p);
+		
+		return ObjectG.getDObject!DBusMessage(cast(GDBusMessage*) p);
 	}
 	
 	/**
@@ -241,11 +234,13 @@ public class DBusMethodInvocation : ObjectG
 	{
 		// GVariant * g_dbus_method_invocation_get_parameters  (GDBusMethodInvocation *invocation);
 		auto p = g_dbus_method_invocation_get_parameters(gDBusMethodInvocation);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**

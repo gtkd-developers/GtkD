@@ -116,11 +116,6 @@ public class MappedFile
 	 */
 	public this (GMappedFile* gMappedFile)
 	{
-		if(gMappedFile is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMappedFile = gMappedFile;
 	}
 	
@@ -213,10 +208,12 @@ public class MappedFile
 	{
 		// GMappedFile * g_mapped_file_ref (GMappedFile *file);
 		auto p = g_mapped_file_ref(gMappedFile);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new MappedFile(cast(GMappedFile*) p);
 	}
 	
@@ -281,10 +278,12 @@ public class MappedFile
 	{
 		// GBytes * g_mapped_file_get_bytes (GMappedFile *file);
 		auto p = g_mapped_file_get_bytes(gMappedFile);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Bytes(cast(GBytes*) p);
 	}
 }

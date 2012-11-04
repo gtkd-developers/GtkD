@@ -61,6 +61,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gobject.Closure;
@@ -131,11 +132,6 @@ public class CClosure
 	 */
 	public this (GCClosure* gCClosure)
 	{
-		if(gCClosure is null)
-		{
-			this = null;
-			return;
-		}
 		this.gCClosure = gCClosure;
 	}
 	
@@ -155,11 +151,13 @@ public class CClosure
 	{
 		// GClosure * g_cclosure_new (GCallback callback_func,  gpointer user_data,  GClosureNotify destroy_data);
 		auto p = g_cclosure_new(callbackFunc, userData, destroyData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Closure(cast(GClosure*) p);
+		
+		return ObjectG.getDObject!Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -175,11 +173,13 @@ public class CClosure
 	{
 		// GClosure * g_cclosure_new_swap (GCallback callback_func,  gpointer user_data,  GClosureNotify destroy_data);
 		auto p = g_cclosure_new_swap(callbackFunc, userData, destroyData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Closure(cast(GClosure*) p);
+		
+		return ObjectG.getDObject!Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -197,11 +197,13 @@ public class CClosure
 	{
 		// GClosure * g_cclosure_new_object (GCallback callback_func,  GObject *object);
 		auto p = g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Closure(cast(GClosure*) p);
+		
+		return ObjectG.getDObject!Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -219,11 +221,13 @@ public class CClosure
 	{
 		// GClosure * g_cclosure_new_object_swap (GCallback callback_func,  GObject *object);
 		auto p = g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Closure(cast(GClosure*) p);
+		
+		return ObjectG.getDObject!Closure(cast(GClosure*) p);
 	}
 	
 	/**

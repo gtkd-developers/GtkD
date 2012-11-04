@@ -59,6 +59,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import atk.ObjectAtk;
@@ -99,18 +100,6 @@ public class GObjectAccessible : ObjectAtk
 	 */
 	public this (AtkGObjectAccessible* atkGObjectAccessible)
 	{
-		if(atkGObjectAccessible is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkGObjectAccessible);
-		if( ptr !is null )
-		{
-			this = cast(GObjectAccessible)ptr;
-			return;
-		}
 		super(cast(AtkObject*)atkGObjectAccessible);
 		this.atkGObjectAccessible = atkGObjectAccessible;
 	}
@@ -134,11 +123,13 @@ public class GObjectAccessible : ObjectAtk
 	{
 		// AtkObject * atk_gobject_accessible_for_object (GObject *obj);
 		auto p = atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -149,10 +140,12 @@ public class GObjectAccessible : ObjectAtk
 	{
 		// GObject * atk_gobject_accessible_get_object (AtkGObjectAccessible *obj);
 		auto p = atk_gobject_accessible_get_object(atkGObjectAccessible);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 }

@@ -82,6 +82,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -158,18 +159,6 @@ public class Window : ObjectG
 	 */
 	public this (GdkWindow* gdkWindow)
 	{
-		if(gdkWindow is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkWindow);
-		if( ptr !is null )
-		{
-			this = cast(Window)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkWindow);
 		this.gdkWindow = gdkWindow;
 	}
@@ -394,11 +383,13 @@ public class Window : ObjectG
 	{
 		// GdkDisplay * gdk_window_get_display (GdkWindow *window);
 		auto p = gdk_window_get_display(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -410,11 +401,13 @@ public class Window : ObjectG
 	{
 		// GdkScreen * gdk_window_get_screen (GdkWindow *window);
 		auto p = gdk_window_get_screen(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -426,11 +419,13 @@ public class Window : ObjectG
 	{
 		// GdkVisual * gdk_window_get_visual (GdkWindow *window);
 		auto p = gdk_window_get_visual(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -452,11 +447,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_at_pointer (gint *win_x,  gint *win_y);
 		auto p = gdk_window_at_pointer(&winX, &winY);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1143,11 +1140,13 @@ public class Window : ObjectG
 	{
 		// cairo_region_t * gdk_window_get_clip_region (GdkWindow *window);
 		auto p = gdk_window_get_clip_region(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(cairo_region_t*) p);
+		
+		return ObjectG.getDObject!Region(cast(cairo_region_t*) p);
 	}
 	
 	/**
@@ -1234,11 +1233,13 @@ public class Window : ObjectG
 	{
 		// cairo_region_t * gdk_window_get_visible_region (GdkWindow *window);
 		auto p = gdk_window_get_visible_region(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(cairo_region_t*) p);
+		
+		return ObjectG.getDObject!Region(cast(cairo_region_t*) p);
 	}
 	
 	/**
@@ -1322,11 +1323,13 @@ public class Window : ObjectG
 	{
 		// cairo_region_t * gdk_window_get_update_area (GdkWindow *window);
 		auto p = gdk_window_get_update_area(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Region(cast(cairo_region_t*) p);
+		
+		return ObjectG.getDObject!Region(cast(cairo_region_t*) p);
 	}
 	
 	/**
@@ -1750,11 +1753,13 @@ public class Window : ObjectG
 	{
 		// cairo_pattern_t * gdk_window_get_background_pattern (GdkWindow *window);
 		auto p = gdk_window_get_background_pattern(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pattern(cast(cairo_pattern_t*) p);
+		
+		return ObjectG.getDObject!Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -1784,11 +1789,13 @@ public class Window : ObjectG
 	{
 		// GdkCursor * gdk_window_get_cursor (GdkWindow *window);
 		auto p = gdk_window_get_cursor(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Cursor(cast(GdkCursor*) p);
+		
+		return ObjectG.getDObject!Cursor(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -2108,11 +2115,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_get_pointer (GdkWindow *window,  gint *x,  gint *y,  GdkModifierType *mask);
 		auto p = gdk_window_get_pointer(gdkWindow, &x, &y, &mask);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2130,11 +2139,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_get_device_position (GdkWindow *window,  GdkDevice *device,  gint *x,  gint *y,  GdkModifierType *mask);
 		auto p = gdk_window_get_device_position(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2154,11 +2165,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_get_parent (GdkWindow *window);
 		auto p = gdk_window_get_parent(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2176,11 +2189,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_get_toplevel (GdkWindow *window);
 		auto p = gdk_window_get_toplevel(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2196,11 +2211,13 @@ public class Window : ObjectG
 	{
 		// GList * gdk_window_get_children (GdkWindow *window);
 		auto p = gdk_window_get_children(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -2212,11 +2229,13 @@ public class Window : ObjectG
 	{
 		// GList * gdk_window_peek_children (GdkWindow *window);
 		auto p = gdk_window_peek_children(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -2341,11 +2360,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_get_group (GdkWindow *window);
 		auto p = gdk_window_get_group(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2413,11 +2434,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_get_default_root_window (void);
 		auto p = gdk_get_default_root_window();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2458,11 +2481,13 @@ public class Window : ObjectG
 	{
 		// GdkCursor * gdk_window_get_device_cursor (GdkWindow *window,  GdkDevice *device);
 		auto p = gdk_window_get_device_cursor(gdkWindow, (device is null) ? null : device.getDeviceStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Cursor(cast(GdkCursor*) p);
+		
+		return ObjectG.getDObject!Cursor(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -2551,11 +2576,13 @@ public class Window : ObjectG
 	{
 		// cairo_surface_t * gdk_offscreen_window_get_surface (GdkWindow *window);
 		auto p = gdk_offscreen_window_get_surface(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		
+		return ObjectG.getDObject!Surface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -2583,11 +2610,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_offscreen_window_get_embedder (GdkWindow *window);
 		auto p = gdk_offscreen_window_get_embedder(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2670,11 +2699,13 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_get_effective_parent (GdkWindow *window);
 		auto p = gdk_window_get_effective_parent(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2689,10 +2720,12 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_get_effective_toplevel (GdkWindow *window);
 		auto p = gdk_window_get_effective_toplevel(gdkWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

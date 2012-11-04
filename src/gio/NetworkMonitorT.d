@@ -66,6 +66,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -149,11 +150,13 @@ public template NetworkMonitorT(TStruct)
 	{
 		// GNetworkMonitor * g_network_monitor_get_default (void);
 		auto p = g_network_monitor_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new NetworkMonitor(cast(GNetworkMonitor*) p);
+		
+		return ObjectG.getDObject!NetworkMonitor(cast(GNetworkMonitor*) p);
 	}
 	
 	/**

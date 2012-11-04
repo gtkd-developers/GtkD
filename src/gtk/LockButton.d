@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.Permission;
@@ -114,18 +115,6 @@ public class LockButton : Button
 	 */
 	public this (GtkLockButton* gtkLockButton)
 	{
-		if(gtkLockButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkLockButton);
-		if( ptr !is null )
-		{
-			this = cast(LockButton)ptr;
-			return;
-		}
 		super(cast(GtkButton*)gtkLockButton);
 		this.gtkLockButton = gtkLockButton;
 	}
@@ -159,11 +148,13 @@ public class LockButton : Button
 	{
 		// GPermission * gtk_lock_button_get_permission (GtkLockButton *button);
 		auto p = gtk_lock_button_get_permission(gtkLockButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Permission(cast(GPermission*) p);
+		
+		return ObjectG.getDObject!Permission(cast(GPermission*) p);
 	}
 	
 	/**

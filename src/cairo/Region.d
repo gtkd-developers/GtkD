@@ -92,11 +92,6 @@ public class Region
 	 */
 	public this (cairo_region_t* cairo_region)
 	{
-		if(cairo_region is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo_region = cairo_region;
 	}
 	
@@ -112,10 +107,12 @@ public class Region
 	{
 		// cairo_region_t * cairo_region_create (void);
 		auto p = cairo_region_create();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Region(cast(cairo_region_t*) p);
 	}
 	
@@ -130,10 +127,12 @@ public class Region
 	{
 		// cairo_region_t * cairo_region_create_rectangle (const cairo_rectangle_int_t *rectangle);
 		auto p = cairo_region_create_rectangle(&rectangle);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Region(cast(cairo_region_t*) p);
 	}
 	
@@ -148,10 +147,12 @@ public class Region
 	{
 		// cairo_region_t * cairo_region_create_rectangles (const cairo_rectangle_int_t *rects,  int count);
 		auto p = cairo_region_create_rectangles(rects.ptr, cast(int) rects.length);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Region(cast(cairo_region_t*) p);
 	}
 	
@@ -164,10 +165,12 @@ public class Region
 	{
 		// cairo_region_t * cairo_region_copy (const cairo_region_t *original);
 		auto p = cairo_region_copy(cairo_region);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Region(cast(cairo_region_t*) p);
 	}
 	
@@ -182,10 +185,12 @@ public class Region
 	{
 		// cairo_region_t * cairo_region_reference (cairo_region_t *region);
 		auto p = cairo_region_reference(cairo_region);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Region(cast(cairo_region_t*) p);
 	}
 	

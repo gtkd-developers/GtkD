@@ -55,6 +55,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -92,18 +93,6 @@ public class PgEngineShape : PgEngine
 	 */
 	public this (PangoEngineShape* pangoEngineShape)
 	{
-		if(pangoEngineShape is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoEngineShape);
-		if( ptr !is null )
-		{
-			this = cast(PgEngineShape)ptr;
-			return;
-		}
 		super(cast(PangoEngine*)pangoEngineShape);
 		this.pangoEngineShape = pangoEngineShape;
 	}

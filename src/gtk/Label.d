@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -202,18 +203,6 @@ public class Label : Misc
 	 */
 	public this (GtkLabel* gtkLabel)
 	{
-		if(gtkLabel is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkLabel);
-		if( ptr !is null )
-		{
-			this = cast(Label)ptr;
-			return;
-		}
 		super(cast(GtkMisc*)gtkLabel);
 		this.gtkLabel = gtkLabel;
 	}
@@ -438,7 +427,7 @@ public class Label : Misc
 	{
 		foreach ( void delegate(Menu, Label) dlg ; _label.onPopulatePopupListeners )
 		{
-			dlg(new Menu(menu), _label);
+			dlg(ObjectG.getDObject!Menu(menu), _label);
 		}
 	}
 	
@@ -736,11 +725,13 @@ public class Label : Misc
 	{
 		// PangoAttrList * gtk_label_get_attributes (GtkLabel *label);
 		auto p = gtk_label_get_attributes(gtkLabel);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeList(cast(PangoAttrList*) p);
+		
+		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -813,11 +804,13 @@ public class Label : Misc
 	{
 		// PangoLayout * gtk_label_get_layout (GtkLabel *label);
 		auto p = gtk_label_get_layout(gtkLabel);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -851,11 +844,13 @@ public class Label : Misc
 	{
 		// GtkWidget * gtk_label_get_mnemonic_widget (GtkLabel *label);
 		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

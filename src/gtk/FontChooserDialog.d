@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -105,18 +106,6 @@ public class FontChooserDialog : Dialog, FontChooserIF
 	 */
 	public this (GtkFontChooserDialog* gtkFontChooserDialog)
 	{
-		if(gtkFontChooserDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFontChooserDialog);
-		if( ptr !is null )
-		{
-			this = cast(FontChooserDialog)ptr;
-			return;
-		}
 		super(cast(GtkDialog*)gtkFontChooserDialog);
 		this.gtkFontChooserDialog = gtkFontChooserDialog;
 	}

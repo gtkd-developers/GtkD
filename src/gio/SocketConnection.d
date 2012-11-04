@@ -68,6 +68,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -118,18 +119,6 @@ public class SocketConnection : IOStream
 	 */
 	public this (GSocketConnection* gSocketConnection)
 	{
-		if(gSocketConnection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSocketConnection);
-		if( ptr !is null )
-		{
-			this = cast(SocketConnection)ptr;
-			return;
-		}
 		super(cast(GIOStream*)gSocketConnection);
 		this.gSocketConnection = gSocketConnection;
 	}
@@ -238,11 +227,13 @@ public class SocketConnection : IOStream
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketAddress(cast(GSocketAddress*) p);
+		
+		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
 	}
 	
 	/**
@@ -263,11 +254,13 @@ public class SocketConnection : IOStream
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketAddress(cast(GSocketAddress*) p);
+		
+		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
 	}
 	
 	/**
@@ -281,11 +274,13 @@ public class SocketConnection : IOStream
 	{
 		// GSocket * g_socket_connection_get_socket (GSocketConnection *connection);
 		auto p = g_socket_connection_get_socket(gSocketConnection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Socket(cast(GSocket*) p);
+		
+		return ObjectG.getDObject!Socket(cast(GSocket*) p);
 	}
 	
 	/**
@@ -300,11 +295,13 @@ public class SocketConnection : IOStream
 	{
 		// GSocketConnection * g_socket_connection_factory_create_connection  (GSocket *socket);
 		auto p = g_socket_connection_factory_create_connection((socket is null) ? null : socket.getSocketStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketConnection(cast(GSocketConnection*) p);
+		
+		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
 	}
 	
 	/**

@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.Str;
@@ -109,11 +110,13 @@ public template AppChooserT(TStruct)
 	{
 		// GAppInfo * gtk_app_chooser_get_app_info (GtkAppChooser *self);
 		auto p = gtk_app_chooser_get_app_info(getAppChooserTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AppInfo(cast(GAppInfo*) p);
+		
+		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
 	}
 	
 	/**

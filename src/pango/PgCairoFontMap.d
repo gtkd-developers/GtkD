@@ -61,6 +61,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -125,18 +126,6 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public this (PangoCairoFontMap* pangoCairoFontMap)
 	{
-		if(pangoCairoFontMap is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoCairoFontMap);
-		if( ptr !is null )
-		{
-			this = cast(PgCairoFontMap)ptr;
-			return;
-		}
 		super(cast(PangoFontMap*)pangoCairoFontMap);
 		this.pangoCairoFontMap = pangoCairoFontMap;
 	}
@@ -167,11 +156,13 @@ public class PgCairoFontMap : PgFontMap
 	{
 		// PangoFontMap * pango_cairo_font_map_get_default (void);
 		auto p = pango_cairo_font_map_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontMap(cast(PangoFontMap*) p);
+		
+		return ObjectG.getDObject!PgFontMap(cast(PangoFontMap*) p);
 	}
 	
 	/**
@@ -285,10 +276,12 @@ public class PgCairoFontMap : PgFontMap
 	{
 		// PangoContext * pango_cairo_font_map_create_context (PangoCairoFontMap *fontmap);
 		auto p = pango_cairo_font_map_create_context(pangoCairoFontMap);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgContext(cast(PangoContext*) p);
+		
+		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
 	}
 }

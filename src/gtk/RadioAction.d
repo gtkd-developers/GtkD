@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -99,18 +100,6 @@ public class RadioAction : ToggleAction
 	 */
 	public this (GtkRadioAction* gtkRadioAction)
 	{
-		if(gtkRadioAction is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRadioAction);
-		if( ptr !is null )
-		{
-			this = cast(RadioAction)ptr;
-			return;
-		}
 		super(cast(GtkToggleAction*)gtkRadioAction);
 		this.gtkRadioAction = gtkRadioAction;
 	}
@@ -214,11 +203,13 @@ public class RadioAction : ToggleAction
 	{
 		// GSList * gtk_radio_action_get_group (GtkRadioAction *action);
 		auto p = gtk_radio_action_get_group(gtkRadioAction);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**

@@ -69,6 +69,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -113,18 +114,6 @@ public class SourceCompletion : ObjectG
 	 */
 	public this (GtkSourceCompletion* gtkSourceCompletion)
 	{
-		if(gtkSourceCompletion is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceCompletion);
-		if( ptr !is null )
-		{
-			this = cast(SourceCompletion)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceCompletion);
 		this.gtkSourceCompletion = gtkSourceCompletion;
 	}
@@ -299,7 +288,7 @@ public class SourceCompletion : ObjectG
 	{
 		foreach ( void delegate(SourceCompletionContext, SourceCompletion) dlg ; _sourceCompletion.onPopulateContextListeners )
 		{
-			dlg(new SourceCompletionContext(context), _sourceCompletion);
+			dlg(ObjectG.getDObject!SourceCompletionContext(context), _sourceCompletion);
 		}
 	}
 	
@@ -387,11 +376,13 @@ public class SourceCompletion : ObjectG
 	{
 		// GList * gtk_source_completion_get_providers (GtkSourceCompletion *completion);
 		auto p = gtk_source_completion_get_providers(gtkSourceCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -427,11 +418,13 @@ public class SourceCompletion : ObjectG
 	{
 		// GtkSourceCompletionInfo * gtk_source_completion_get_info_window  (GtkSourceCompletion *completion);
 		auto p = gtk_source_completion_get_info_window(gtkSourceCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceCompletionInfo(cast(GtkSourceCompletionInfo*) p);
+		
+		return ObjectG.getDObject!SourceCompletionInfo(cast(GtkSourceCompletionInfo*) p);
 	}
 	
 	/**
@@ -442,11 +435,13 @@ public class SourceCompletion : ObjectG
 	{
 		// GtkSourceView * gtk_source_completion_get_view (GtkSourceCompletion *completion);
 		auto p = gtk_source_completion_get_view(gtkSourceCompletion);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceView(cast(GtkSourceView*) p);
+		
+		return ObjectG.getDObject!SourceView(cast(GtkSourceView*) p);
 	}
 	
 	/**
@@ -461,11 +456,13 @@ public class SourceCompletion : ObjectG
 	{
 		// GtkSourceCompletionContext * gtk_source_completion_create_context  (GtkSourceCompletion *completion,  GtkTextIter *position);
 		auto p = gtk_source_completion_create_context(gtkSourceCompletion, (position is null) ? null : position.getTextIterStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceCompletionContext(cast(GtkSourceCompletionContext*) p);
+		
+		return ObjectG.getDObject!SourceCompletionContext(cast(GtkSourceCompletionContext*) p);
 	}
 	
 	/**

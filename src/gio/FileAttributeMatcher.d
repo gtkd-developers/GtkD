@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -112,11 +113,6 @@ public class FileAttributeMatcher : Boxed
 	 */
 	public this (GFileAttributeMatcher* gFileAttributeMatcher)
 	{
-		if(gFileAttributeMatcher is null)
-		{
-			this = null;
-			return;
-		}
 		this.gFileAttributeMatcher = gFileAttributeMatcher;
 	}
 	
@@ -157,11 +153,13 @@ public class FileAttributeMatcher : Boxed
 	{
 		// GFileAttributeMatcher * g_file_attribute_matcher_ref (GFileAttributeMatcher *matcher);
 		auto p = g_file_attribute_matcher_ref(gFileAttributeMatcher);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileAttributeMatcher(cast(GFileAttributeMatcher*) p);
+		
+		return ObjectG.getDObject!FileAttributeMatcher(cast(GFileAttributeMatcher*) p);
 	}
 	
 	/**
@@ -180,11 +178,13 @@ public class FileAttributeMatcher : Boxed
 	{
 		// GFileAttributeMatcher * g_file_attribute_matcher_subtract  (GFileAttributeMatcher *matcher,  GFileAttributeMatcher *subtract);
 		auto p = g_file_attribute_matcher_subtract(gFileAttributeMatcher, (subtract is null) ? null : subtract.getFileAttributeMatcherStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileAttributeMatcher(cast(GFileAttributeMatcher*) p);
+		
+		return ObjectG.getDObject!FileAttributeMatcher(cast(GFileAttributeMatcher*) p);
 	}
 	
 	/**

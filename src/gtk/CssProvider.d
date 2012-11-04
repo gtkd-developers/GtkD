@@ -69,6 +69,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -576,18 +577,6 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 */
 	public this (GtkCssProvider* gtkCssProvider)
 	{
-		if(gtkCssProvider is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCssProvider);
-		if( ptr !is null )
-		{
-			this = cast(CssProvider)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkCssProvider);
 		this.gtkCssProvider = gtkCssProvider;
 	}
@@ -638,7 +627,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	{
 		foreach ( void delegate(CssSection, ErrorG, CssProvider) dlg ; _cssProvider.onParsingErrorListeners )
 		{
-			dlg(new CssSection(section), new ErrorG(error), _cssProvider);
+			dlg(ObjectG.getDObject!CssSection(section), ObjectG.getDObject!ErrorG(error), _cssProvider);
 		}
 	}
 	
@@ -652,11 +641,13 @@ public class CssProvider : ObjectG, StyleProviderIF
 	{
 		// GtkCssProvider * gtk_css_provider_get_default (void);
 		auto p = gtk_css_provider_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CssProvider(cast(GtkCssProvider*) p);
+		
+		return ObjectG.getDObject!CssProvider(cast(GtkCssProvider*) p);
 	}
 	
 	/**
@@ -671,11 +662,13 @@ public class CssProvider : ObjectG, StyleProviderIF
 	{
 		// GtkCssProvider * gtk_css_provider_get_named (const gchar *name,  const gchar *variant);
 		auto p = gtk_css_provider_get_named(Str.toStringz(name), Str.toStringz(variant));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CssProvider(cast(GtkCssProvider*) p);
+		
+		return ObjectG.getDObject!CssProvider(cast(GtkCssProvider*) p);
 	}
 	
 	/**

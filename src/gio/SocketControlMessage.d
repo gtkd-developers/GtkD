@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -106,18 +107,6 @@ public class SocketControlMessage : ObjectG
 	 */
 	public this (GSocketControlMessage* gSocketControlMessage)
 	{
-		if(gSocketControlMessage is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSocketControlMessage);
-		if( ptr !is null )
-		{
-			this = cast(SocketControlMessage)ptr;
-			return;
-		}
 		super(cast(GObject*)gSocketControlMessage);
 		this.gSocketControlMessage = gSocketControlMessage;
 	}
@@ -150,11 +139,13 @@ public class SocketControlMessage : ObjectG
 	{
 		// GSocketControlMessage * g_socket_control_message_deserialize  (int level,  int type,  gsize size,  gpointer data);
 		auto p = g_socket_control_message_deserialize(level, type, size, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SocketControlMessage(cast(GSocketControlMessage*) p);
+		
+		return ObjectG.getDObject!SocketControlMessage(cast(GSocketControlMessage*) p);
 	}
 	
 	/**

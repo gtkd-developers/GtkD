@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -121,18 +122,6 @@ public class Fixed : Container
 	 */
 	public this (GtkFixed* gtkFixed)
 	{
-		if(gtkFixed is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFixed);
-		if( ptr !is null )
-		{
-			this = cast(Fixed)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkFixed);
 		this.gtkFixed = gtkFixed;
 	}

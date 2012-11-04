@@ -79,6 +79,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -156,18 +157,6 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public this (GtkAction* gtkAction)
 	{
-		if(gtkAction is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAction);
-		if( ptr !is null )
-		{
-			this = cast(Action)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkAction);
 		this.gtkAction = gtkAction;
 	}
@@ -474,11 +463,13 @@ public class Action : ObjectG, BuildableIF
 	{
 		// GSList * gtk_action_get_proxies (GtkAction *action);
 		auto p = gtk_action_get_proxies(gtkAction);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -596,11 +587,13 @@ public class Action : ObjectG, BuildableIF
 	{
 		// GClosure * gtk_action_get_accel_closure (GtkAction *action);
 		auto p = gtk_action_get_accel_closure(gtkAction);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Closure(cast(GClosure*) p);
+		
+		return ObjectG.getDObject!Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -718,11 +711,13 @@ public class Action : ObjectG, BuildableIF
 	{
 		// GIcon * gtk_action_get_gicon (GtkAction *action);
 		auto p = gtk_action_get_gicon(gtkAction);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**

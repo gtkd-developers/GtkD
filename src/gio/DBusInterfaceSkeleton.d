@@ -70,6 +70,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -116,18 +117,6 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 */
 	public this (GDBusInterfaceSkeleton* gDBusInterfaceSkeleton)
 	{
-		if(gDBusInterfaceSkeleton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusInterfaceSkeleton);
-		if( ptr !is null )
-		{
-			this = cast(DBusInterfaceSkeleton)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusInterfaceSkeleton);
 		this.gDBusInterfaceSkeleton = gDBusInterfaceSkeleton;
 	}
@@ -243,11 +232,13 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	{
 		// GVariant * g_dbus_interface_skeleton_get_properties  (GDBusInterfaceSkeleton *interface_);
 		auto p = g_dbus_interface_skeleton_get_properties(gDBusInterfaceSkeleton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -313,11 +304,13 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	{
 		// GDBusConnection * g_dbus_interface_skeleton_get_connection  (GDBusInterfaceSkeleton *interface_);
 		auto p = g_dbus_interface_skeleton_get_connection(gDBusInterfaceSkeleton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusConnection(cast(GDBusConnection*) p);
+		
+		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -329,11 +322,13 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	{
 		// GList * g_dbus_interface_skeleton_get_connections  (GDBusInterfaceSkeleton *interface_);
 		auto p = g_dbus_interface_skeleton_get_connections(gDBusInterfaceSkeleton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

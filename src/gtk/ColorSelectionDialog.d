@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -108,18 +109,6 @@ public class ColorSelectionDialog : Dialog
 	 */
 	public this (GtkColorSelectionDialog* gtkColorSelectionDialog)
 	{
-		if(gtkColorSelectionDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkColorSelectionDialog);
-		if( ptr !is null )
-		{
-			this = cast(ColorSelectionDialog)ptr;
-			return;
-		}
 		super(cast(GtkDialog*)gtkColorSelectionDialog);
 		this.gtkColorSelectionDialog = gtkColorSelectionDialog;
 	}

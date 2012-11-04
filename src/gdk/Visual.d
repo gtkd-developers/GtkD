@@ -61,6 +61,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ListG;
@@ -115,18 +116,6 @@ public class Visual : ObjectG
 	 */
 	public this (GdkVisual* gdkVisual)
 	{
-		if(gdkVisual is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkVisual);
-		if( ptr !is null )
-		{
-			this = cast(Visual)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkVisual);
 		this.gdkVisual = gdkVisual;
 	}
@@ -195,11 +184,13 @@ public class Visual : ObjectG
 	{
 		// GList * gdk_list_visuals (void);
 		auto p = gdk_list_visuals();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -343,11 +334,13 @@ public class Visual : ObjectG
 	{
 		// GdkVisual * gdk_visual_get_system (void);
 		auto p = gdk_visual_get_system();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -359,11 +352,13 @@ public class Visual : ObjectG
 	{
 		// GdkVisual * gdk_visual_get_best (void);
 		auto p = gdk_visual_get_best();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -379,11 +374,13 @@ public class Visual : ObjectG
 	{
 		// GdkVisual * gdk_visual_get_best_with_depth (gint depth);
 		auto p = gdk_visual_get_best_with_depth(depth);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -399,11 +396,13 @@ public class Visual : ObjectG
 	{
 		// GdkVisual * gdk_visual_get_best_with_type (GdkVisualType visual_type);
 		auto p = gdk_visual_get_best_with_type(visualType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -418,11 +417,13 @@ public class Visual : ObjectG
 	{
 		// GdkVisual * gdk_visual_get_best_with_both (gint depth,  GdkVisualType visual_type);
 		auto p = gdk_visual_get_best_with_both(depth, visualType);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -434,10 +435,12 @@ public class Visual : ObjectG
 	{
 		// GdkScreen * gdk_visual_get_screen (GdkVisual *visual);
 		auto p = gdk_visual_get_screen(gdkVisual);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 }

@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -148,18 +149,6 @@ public class Application : GioApplication
 	 */
 	public this (GtkApplication* gtkApplication)
 	{
-		if(gtkApplication is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkApplication);
-		if( ptr !is null )
-		{
-			this = cast(Application)ptr;
-			return;
-		}
 		super(cast(GApplication*)gtkApplication);
 		this.gtkApplication = gtkApplication;
 	}
@@ -199,7 +188,7 @@ public class Application : GioApplication
 	{
 		foreach ( void delegate(Window, Application) dlg ; _application.onWindowAddedListeners )
 		{
-			dlg(new Window(window), _application);
+			dlg(ObjectG.getDObject!Window(window), _application);
 		}
 	}
 	
@@ -229,7 +218,7 @@ public class Application : GioApplication
 	{
 		foreach ( void delegate(Window, Application) dlg ; _application.onWindowRemovedListeners )
 		{
-			dlg(new Window(window), _application);
+			dlg(ObjectG.getDObject!Window(window), _application);
 		}
 	}
 	
@@ -319,11 +308,13 @@ public class Application : GioApplication
 	{
 		// GList * gtk_application_get_windows (GtkApplication *application);
 		auto p = gtk_application_get_windows(gtkApplication);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -336,11 +327,13 @@ public class Application : GioApplication
 	{
 		// GtkWindow * gtk_application_get_window_by_id (GtkApplication *application,  guint id);
 		auto p = gtk_application_get_window_by_id(gtkApplication, id);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GtkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -355,11 +348,13 @@ public class Application : GioApplication
 	{
 		// GtkWindow * gtk_application_get_active_window (GtkApplication *application);
 		auto p = gtk_application_get_active_window(gtkApplication);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GtkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -428,11 +423,13 @@ public class Application : GioApplication
 	{
 		// GMenuModel * gtk_application_get_app_menu (GtkApplication *application);
 		auto p = gtk_application_get_app_menu(gtkApplication);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MenuModel(cast(GMenuModel*) p);
+		
+		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
 	}
 	
 	/**
@@ -468,11 +465,13 @@ public class Application : GioApplication
 	{
 		// GMenuModel * gtk_application_get_menubar (GtkApplication *application);
 		auto p = gtk_application_get_menubar(gtkApplication);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MenuModel(cast(GMenuModel*) p);
+		
+		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
 	}
 	
 	/**

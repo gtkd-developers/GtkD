@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -244,87 +245,87 @@ public class TreeModel : ObjectG, TreeModelIF
 		
 		static GtkTreeModelFlags customTreeModelGetFlags(GtkTreeModel *tree_model)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
 			return tm.getFlags();
 		}
 		
 		static int customTreeModelGetNColumns(GtkTreeModel *tree_model)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
 			return tm.getNColumns();
 		}
 		
 		static GType customTreeModelGetColumnType(GtkTreeModel *tree_model, int index)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
 			return tm.getColumnType(index);
 		}
 		
 		static gboolean customTreeModelGetIter(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreePath *path)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
-			return tm.getIter(new TreeIter(iter), new TreePath(gtk_tree_path_copy(path)));
+			return tm.getIter(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(gtk_tree_path_copy(path)));
 		}
 		
 		static GtkTreePath* customTreeModelGetPath(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
-			auto tm = new TreeModel(tree_model);
-			TreePath path = tm.getPath(new TreeIter(iter));
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
+			TreePath path = tm.getPath(ObjectG.getDObject!TreeIter(iter));
 			
 			return (path is null) ? null : gtk_tree_path_copy(path.getTreePathStruct());
 		}
 		
 		static void customTreeModelGetValue(GtkTreeModel *tree_model, GtkTreeIter *iter, int column, GValue *value)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
-			tm.getValue(new TreeIter(iter), column, new Value(value));
+			tm.getValue(ObjectG.getDObject!TreeIter(iter), column, ObjectG.getDObject!Value(value));
 		}
 		
 		static gboolean customTreeModelIterNext(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
-			return tm.iterNext(new TreeIter(iter));
+			return tm.iterNext(ObjectG.getDObject!TreeIter(iter));
 		}
 		
 		static gboolean customTreeModelIterChildren(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
-			return tm.iterChildren(new TreeIter(iter), new TreeIter(parent));
+			return tm.iterChildren(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreeIter(parent));
 		}
 		
 		static gboolean customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
-			return tm.iterHasChild(new TreeIter(iter));
+			return tm.iterHasChild(ObjectG.getDObject!TreeIter(iter));
 		}
 		
 		static int customTreeModelIterNChildren(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
-			return tm.iterNChildren(new TreeIter(iter));
+			return tm.iterNChildren(ObjectG.getDObject!TreeIter(iter));
 		}
 		
 		static gboolean customTreeModelIterNthChild(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent, int n)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
-			return tm.iterNthChild(new TreeIter(iter), new TreeIter(parent), n);
+			return tm.iterNthChild(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreeIter(parent), n);
 		}
 		
 		static gboolean customTreeModelIterParent(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *child)
 		{
-			auto tm = new TreeModel(tree_model);
+			auto tm = ObjectG.getDObject!TreeModel(tree_model);
 			
-			return tm.iterParent(new TreeIter(iter), new TreeIter(child));
+			return tm.iterParent(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreeIter(child));
 		}
 	}
 }

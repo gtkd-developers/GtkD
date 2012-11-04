@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import glib.Str;
@@ -178,11 +179,13 @@ public template BuildableT(TStruct)
 	{
 		// GObject * gtk_buildable_construct_child (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *name);
 		auto p = gtk_buildable_construct_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 	
 	/**
@@ -263,10 +266,12 @@ public template BuildableT(TStruct)
 	{
 		// GObject * gtk_buildable_get_internal_child (GtkBuildable *buildable,  GtkBuilder *builder,  const gchar *childname);
 		auto p = gtk_buildable_get_internal_child(getBuildableTStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(childname));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 }

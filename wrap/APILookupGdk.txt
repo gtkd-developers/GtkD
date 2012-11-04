@@ -376,6 +376,11 @@ code: start
 		{
 			throw new GException( new ErrorG(err) );
 		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_resource");
+		}
 		
 		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
@@ -411,6 +416,11 @@ code: start
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_new_from_resource_at_scale");
 		}
 		
 		return new Pixbuf(cast(GdkPixbuf*) p);

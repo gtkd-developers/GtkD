@@ -61,6 +61,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -105,18 +106,6 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 */
 	public this (GDBusObjectSkeleton* gDBusObjectSkeleton)
 	{
-		if(gDBusObjectSkeleton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusObjectSkeleton);
-		if( ptr !is null )
-		{
-			this = cast(DBusObjectSkeleton)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusObjectSkeleton);
 		this.gDBusObjectSkeleton = gDBusObjectSkeleton;
 	}
@@ -164,7 +153,7 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	{
 		foreach ( bool delegate(DBusInterfaceSkeleton, GDBusMethodInvocation*, DBusObjectSkeleton) dlg ; _dBusObjectSkeleton.onAuthorizeMethodListeners )
 		{
-			if ( dlg(new DBusInterfaceSkeleton(iface), invocation, _dBusObjectSkeleton) )
+			if ( dlg(ObjectG.getDObject!DBusInterfaceSkeleton(iface), invocation, _dBusObjectSkeleton) )
 			{
 				return 1;
 			}

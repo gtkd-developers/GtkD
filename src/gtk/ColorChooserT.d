@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -165,7 +166,7 @@ public template ColorChooserT(TStruct)
 	{
 		foreach ( void delegate(RGBA, ColorChooserIF) dlg ; _colorChooserIF.onColorActivatedListeners )
 		{
-			dlg(new RGBA(color), _colorChooserIF);
+			dlg(ObjectG.getDObject!RGBA(color), _colorChooserIF);
 		}
 	}
 	

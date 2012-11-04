@@ -63,6 +63,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -130,11 +131,6 @@ public class SettingsSchemaSource
 	 */
 	public this (GSettingsSchemaSource* gSettingsSchemaSource)
 	{
-		if(gSettingsSchemaSource is null)
-		{
-			this = null;
-			return;
-		}
 		this.gSettingsSchemaSource = gSettingsSchemaSource;
 	}
 	
@@ -168,11 +164,13 @@ public class SettingsSchemaSource
 	{
 		// GSettingsSchemaSource * g_settings_schema_source_get_default  (void);
 		auto p = g_settings_schema_source_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SettingsSchemaSource(cast(GSettingsSchemaSource*) p);
+		
+		return ObjectG.getDObject!SettingsSchemaSource(cast(GSettingsSchemaSource*) p);
 	}
 	
 	/**
@@ -184,11 +182,13 @@ public class SettingsSchemaSource
 	{
 		// GSettingsSchemaSource * g_settings_schema_source_ref (GSettingsSchemaSource *source);
 		auto p = g_settings_schema_source_ref(gSettingsSchemaSource);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SettingsSchemaSource(cast(GSettingsSchemaSource*) p);
+		
+		return ObjectG.getDObject!SettingsSchemaSource(cast(GSettingsSchemaSource*) p);
 	}
 	
 	/**
@@ -270,10 +270,12 @@ public class SettingsSchemaSource
 	{
 		// GSettingsSchema * g_settings_schema_source_lookup (GSettingsSchemaSource *source,  const gchar *schema_id,  gboolean recursive);
 		auto p = g_settings_schema_source_lookup(gSettingsSchemaSource, Str.toStringz(schemaId), recursive);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SettingsSchema(cast(GSettingsSchema*) p);
+		
+		return ObjectG.getDObject!SettingsSchema(cast(GSettingsSchema*) p);
 	}
 }

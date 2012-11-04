@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -124,18 +125,6 @@ public class AboutDialog : Dialog
 	 */
 	public this (GtkAboutDialog* gtkAboutDialog)
 	{
-		if(gtkAboutDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAboutDialog);
-		if( ptr !is null )
-		{
-			this = cast(AboutDialog)ptr;
-			return;
-		}
 		super(cast(GtkDialog*)gtkAboutDialog);
 		this.gtkAboutDialog = gtkAboutDialog;
 	}
@@ -531,11 +520,13 @@ public class AboutDialog : Dialog
 	{
 		// GdkPixbuf * gtk_about_dialog_get_logo (GtkAboutDialog *about);
 		auto p = gtk_about_dialog_get_logo(gtkAboutDialog);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

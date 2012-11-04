@@ -566,7 +566,14 @@ code: start
 	public static Caps newAny()
 	{
 		// GstCaps* gst_caps_new_any (void);
-		return new Caps(cast(GstCaps*)gst_caps_new_any() );
+		auto p = cast(GstCaps*)gst_caps_new_any();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_caps_new_any");
+		}
+
+		return new Caps(cast(GstCaps*)p );
 	}
 code: end
 outFile: Caps
@@ -618,7 +625,14 @@ code: start
 	public static Element make( string factoryname )
 	{
 		// GstElement* gst_element_factory_make (const gchar *factoryname,  const gchar *name);
-		return new Element( gst_element_factory_make(Str.toStringz(factoryname), null ) );
+		auto p = gst_element_factory_make(Str.toStringz(factoryname), null );
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_element_factory_make");
+		}
+
+		return new Element( p );
 	}
 code: end
 structWrap: GstElementFactory* ElementFactory
@@ -690,7 +704,14 @@ code: start
 	public static Event newBufferSize(GstFormat format, long minsize, long maxsize, int async)
 	{
 		// GstEvent* gst_event_new_buffer_size (GstFormat format,  gint64 minsize,  gint64 maxsize,  gboolean async);
-		return new Event(cast(GstEvent*)gst_event_new_buffer_size(format, minsize, maxsize, async) );
+		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_buffer_size");
+		}
+
+		return new Event(cast(GstEvent*)p);
 	}
 code: end
 nocode: gst_event_new_eos
@@ -711,7 +732,14 @@ code: start
 	public static Event newEOS()
 	{
 		// GstEvent* gst_event_new_eos (void);
-		return new Event(cast(GstEvent*)gst_event_new_eos() );
+		auto p = gst_event_new_eos();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_eos");
+		}
+
+		return new Event(cast(GstEvent*)p );
 	}
 code: end
 nocode: gst_event_new_flush_start
@@ -730,7 +758,14 @@ code: start
 	public static Event newFlushStart()
 	{
 		// GstEvent* gst_event_new_flush_start (void);
-		return new Event(cast(GstEvent*)gst_event_new_flush_start() );
+		auto p = gst_event_new_flush_start();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_flush_start");
+		}
+
+		return new Event(cast(GstEvent*)p );
 	}
 code: end
 nocode: gst_event_new_flush_stop
@@ -750,7 +785,14 @@ code: start
 	public static Event newFlushStop()
 	{
 		// GstEvent* gst_event_new_flush_stop (void);
-		return new Event(cast(GstEvent*)gst_event_new_flush_stop() );
+		auto p = gst_event_new_flush_stop();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_flush_stop");
+		}
+
+		return new Event(cast(GstEvent*)p );
 	}
 code: end
 nocode: gst_event_new_navigation
@@ -765,7 +807,14 @@ code: start
 	public static Event newNavigation(Structure structure)
 	{
 		// GstEvent* gst_event_new_navigation (GstStructure *structure);
-		return new Event(cast(GstEvent*)gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct()) );
+		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_navigation");
+		}
+
+		return new Event(cast(GstEvent*)p);
 	}
 code: end
 outFile: Event
@@ -1066,16 +1115,17 @@ code: start
 	 * Params:
 	 *  tagList = Return location for the tag-list.
 	 */
-	/*public void parseTag(GstTagList** tagList)
-	{
-		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
-		gst_message_parse_tag(gstMessage, tagList);
-	}*/
 	public TagList parseTag()
 	{
 		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
 		GstTagList* tag_list_c;
 		gst_message_parse_tag(gstMessage, &tag_list_c);
+
+		if ( tag_list_c is null )
+		{
+			return null;
+		}
+
 		return new TagList(tag_list_c);
 	}
 
@@ -1109,7 +1159,14 @@ code: start
 	public static Message newElement(ObjectGst src, Structure structure)
 	{
 		// GstMessage* gst_message_new_element (GstObject *src,  GstStructure *structure);
-		return new Message(cast(GstMessage*)gst_message_new_element((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct()) );
+		auto p = gst_message_new_element((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_element");
+		}
+
+		return new Message(cast(GstMessage*)p);
 	}
 
 	/**
@@ -1125,7 +1182,14 @@ code: start
 	public static Message newNewClock(ObjectGst src, Clock clock)
 	{
 		// GstMessage* gst_message_new_new_clock (GstObject *src,  GstClock *clock);
-		return new Message(cast(GstMessage*)gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct()) );
+		auto p = gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_new_clock");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1144,7 +1208,14 @@ code: start
 	public static Message newSegmentDone(ObjectGst src, GstFormat format, long position)
 	{
 		// GstMessage* gst_message_new_segment_done (GstObject *src,  GstFormat format,  gint64 position);
-		return new Message(cast(GstMessage*)gst_message_new_segment_done((src is null) ? null : src.getObjectGstStruct(), format, position) );
+		auto p = gst_message_new_segment_done((src is null) ? null : src.getObjectGstStruct(), format, position);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_segment_done");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1163,7 +1234,14 @@ code: start
 	public static Message newSegmentStart(ObjectGst src, GstFormat format, long position)
 	{
 		// GstMessage* gst_message_new_segment_start (GstObject *src,  GstFormat format,  gint64 position);
-		return new Message(cast(GstMessage*)gst_message_new_segment_start((src is null) ? null : src.getObjectGstStruct(), format, position) );
+		auto p = gst_message_new_segment_start((src is null) ? null : src.getObjectGstStruct(), format, position);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_segment_start");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1180,7 +1258,14 @@ code: start
 	public static Message newWarning(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_warning (GstObject *src,  GError *error,  gchar *debug);
-		return new Message(cast(GstMessage*)gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+		auto p = gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_warning");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1196,7 +1281,14 @@ code: start
 	public static Message newStateDirty(ObjectGst src)
 	{
 		// GstMessage* gst_message_new_state_dirty (GstObject *src);
-		return new Message(cast(GstMessage*)gst_message_new_state_dirty((src is null) ? null : src.getObjectGstStruct()) );
+		auto p = gst_message_new_state_dirty((src is null) ? null : src.getObjectGstStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_state_dirty");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1212,7 +1304,14 @@ code: start
 	public static Message newEOS(ObjectGst src)
 	{
 		// GstMessage* gst_message_new_eos (GstObject *src);
-		return new Message(cast(GstMessage*)gst_message_new_eos((src is null) ? null : src.getObjectGstStruct()) );
+		auto p = gst_message_new_eos((src is null) ? null : src.getObjectGstStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_eos");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1231,7 +1330,14 @@ code: start
 	public static Message newError(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_error (GstObject *src,  GError *error,  gchar *debug);
-		return new Message(cast(GstMessage*)gst_message_new_error((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+		auto p = gst_message_new_error((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_error");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1249,7 +1355,14 @@ code: start
 	public static Message newInfo(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_info (GstObject *src,  GError *error,  gchar *debug);
-		return new Message(cast(GstMessage*)gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+		auto p = gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_info");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1263,7 +1376,14 @@ code: start
 	public static Message newLatency(ObjectGst src)
 	{
 		// GstMessage* gst_message_new_latency (GstObject *src);
-		return new Message(cast(GstMessage*)gst_message_new_latency((src is null) ? null : src.getObjectGstStruct()) );
+		auto p = gst_message_new_latency((src is null) ? null : src.getObjectGstStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_latency");
+		}
+
+		return new Message(cast(GstMessage*)p );
 	}
 
 	/**
@@ -1278,7 +1398,14 @@ code: start
 	public static Message newAsyncStart(ObjectGst src, int newBaseTime)
 	{
 		// GstMessage* gst_message_new_async_start (GstObject *src,  gboolean new_base_time);
-		return new Message(cast(GstMessage*)gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime));
+		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_start");
+		}
+
+		return new Message(cast(GstMessage*)p);
 	}
 code: end
 outFile: Message
@@ -1420,7 +1547,14 @@ code: start
 	public static Query newPosition(GstFormat format)
 	{
 		// GstQuery* gst_query_new_position (GstFormat format);
-		return new Query( cast(GstQuery*)gst_query_new_position(format) );
+		auto p = gst_query_new_position(format);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_position");
+		}
+
+		return new Query( cast(GstQuery*)p );
 	}
 code: end
 nocode: gst_query_new_duration
@@ -1437,7 +1571,14 @@ code: start
 	public static Query newDuration(GstFormat format)
 	{
 		// GstQuery* gst_query_new_duration (GstFormat format);
-		return new Query( cast(GstQuery*)gst_query_new_duration(format) );
+		auto p = gst_query_new_duration(format);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_duration");
+		}
+
+		return new Query( cast(GstQuery*)p );
 	}
 code: end
 nocode: gst_query_new_seeking
@@ -1453,7 +1594,14 @@ code: start
 	public static Query newSeeking(GstFormat format)
 	{
 		// GstQuery* gst_query_new_seeking (GstFormat format);
-		return new Query(cast(GstQuery*)gst_query_new_seeking(format) );
+		auto p = gst_query_new_seeking(format);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_seeking");
+		}
+
+		return new Query(cast(GstQuery*)p );
 	}
 code: end
 nocode: gst_query_new_formats
@@ -1468,7 +1616,14 @@ code: start
 	public static Query newFormats()
 	{
 		// GstQuery* gst_query_new_formats (void);
-		return new Query(cast(GstQuery*)gst_query_new_formats() );
+		auto p = gst_query_new_formats();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_formats");
+		}
+
+		return new Query(cast(GstQuery*)p );
 	}
 code: end
 nocode: gst_query_new_segment
@@ -1485,7 +1640,14 @@ code: start
 	public static Query newSegment(GstFormat format)
 	{
 		// GstQuery* gst_query_new_segment (GstFormat format);
-		return new Query(cast(GstQuery*)gst_query_new_segment(format) );
+		auto p = gst_query_new_segment(format);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_segment");
+		}
+
+		return new Query(cast(GstQuery*)p );
 	}
 code: end
 outFile: Query

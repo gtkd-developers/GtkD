@@ -154,11 +154,6 @@ public class Once
 	 */
 	public this (GOnce* gOnce)
 	{
-		if(gOnce is null)
-		{
-			this = null;
-			return;
-		}
 		this.gOnce = gOnce;
 	}
 	

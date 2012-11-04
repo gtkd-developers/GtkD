@@ -56,6 +56,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -94,11 +95,6 @@ public class DBusArgInfo
 	 */
 	public this (GDBusArgInfo* gDBusArgInfo)
 	{
-		if(gDBusArgInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDBusArgInfo = gDBusArgInfo;
 	}
 	
@@ -115,11 +111,13 @@ public class DBusArgInfo
 	{
 		// GDBusArgInfo * g_dbus_arg_info_ref (GDBusArgInfo *info);
 		auto p = g_dbus_arg_info_ref(gDBusArgInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusArgInfo(cast(GDBusArgInfo*) p);
+		
+		return ObjectG.getDObject!DBusArgInfo(cast(GDBusArgInfo*) p);
 	}
 	
 	/**

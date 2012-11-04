@@ -62,6 +62,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -129,18 +130,6 @@ public class PadTemplate : ObjectGst
 	 */
 	public this (GstPadTemplate* gstPadTemplate)
 	{
-		if(gstPadTemplate is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstPadTemplate);
-		if( ptr !is null )
-		{
-			this = cast(PadTemplate)ptr;
-			return;
-		}
 		super(cast(GstObject*)gstPadTemplate);
 		this.gstPadTemplate = gstPadTemplate;
 	}
@@ -180,7 +169,7 @@ public class PadTemplate : ObjectGst
 	{
 		foreach ( void delegate(Pad, PadTemplate) dlg ; _padTemplate.onPadCreatedListeners )
 		{
-			dlg(new Pad(pad), _padTemplate);
+			dlg(ObjectG.getDObject!Pad(pad), _padTemplate);
 		}
 	}
 	
@@ -195,11 +184,13 @@ public class PadTemplate : ObjectGst
 	{
 		// GstPadTemplate* gst_static_pad_template_get (GstStaticPadTemplate *pad_template);
 		auto p = gst_static_pad_template_get(padTemplate);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PadTemplate(cast(GstPadTemplate*) p);
+		
+		return ObjectG.getDObject!PadTemplate(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -212,11 +203,13 @@ public class PadTemplate : ObjectGst
 	{
 		// GstCaps* gst_static_pad_template_get_caps (GstStaticPadTemplate *templ);
 		auto p = gst_static_pad_template_get_caps(templ);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -249,10 +242,12 @@ public class PadTemplate : ObjectGst
 	{
 		// GstCaps* gst_pad_template_get_caps (GstPadTemplate *templ);
 		auto p = gst_pad_template_get_caps(gstPadTemplate);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Caps(cast(GstCaps*) p);
+		
+		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
 	}
 }

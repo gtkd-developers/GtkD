@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -121,18 +122,6 @@ public class ComboBoxText : ComboBox
 	 */
 	public this (GtkComboBoxText* gtkComboBoxText)
 	{
-		if(gtkComboBoxText is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkComboBoxText);
-		if( ptr !is null )
-		{
-			this = cast(ComboBoxText)ptr;
-			return;
-		}
 		super(cast(GtkComboBox*)gtkComboBoxText);
 		this.gtkComboBoxText = gtkComboBoxText;
 	}

@@ -61,6 +61,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gda.DataModel;
@@ -102,18 +103,6 @@ public class DataModelHash : DataModel
 	 */
 	public this (GdaDataModelHash* gdaDataModelHash)
 	{
-		if(gdaDataModelHash is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdaDataModelHash);
-		if( ptr !is null )
-		{
-			this = cast(DataModelHash)ptr;
-			return;
-		}
 		super(cast(GdaDataModel*)gdaDataModelHash);
 		this.gdaDataModelHash = gdaDataModelHash;
 	}
@@ -155,11 +144,13 @@ public class DataModelHash : DataModel
 	{
 		// const GdaValue* gda_data_model_hash_get_value_at (GdaDataModel *model,  gint col,  gint row);
 		auto p = gda_data_model_hash_get_value_at((model is null) ? null : model.getDataModelStruct(), col, row);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GdaValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GdaValue*) p);
 	}
 	
 	/**
@@ -208,10 +199,12 @@ public class DataModelHash : DataModel
 	{
 		// const GdaRow* gda_data_model_hash_get_row (GdaDataModel *model,  gint row);
 		auto p = gda_data_model_hash_get_row((model is null) ? null : model.getDataModelStruct(), row);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Row(cast(GdaRow*) p);
+		
+		return ObjectG.getDObject!Row(cast(GdaRow*) p);
 	}
 }

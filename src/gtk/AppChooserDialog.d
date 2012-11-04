@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -112,18 +113,6 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	 */
 	public this (GtkAppChooserDialog* gtkAppChooserDialog)
 	{
-		if(gtkAppChooserDialog is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAppChooserDialog);
-		if( ptr !is null )
-		{
-			this = cast(AppChooserDialog)ptr;
-			return;
-		}
 		super(cast(GtkDialog*)gtkAppChooserDialog);
 		this.gtkAppChooserDialog = gtkAppChooserDialog;
 	}
@@ -188,11 +177,13 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	{
 		// GtkWidget * gtk_app_chooser_dialog_get_widget (GtkAppChooserDialog *self);
 		auto p = gtk_app_chooser_dialog_get_widget(gtkAppChooserDialog);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

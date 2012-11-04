@@ -104,11 +104,6 @@ public class ArrayG
 	 */
 	public this (GArray* gArray)
 	{
-		if(gArray is null)
-		{
-			this = null;
-			return;
-		}
 		this.gArray = gArray;
 	}
 	
@@ -154,10 +149,12 @@ public class ArrayG
 	{
 		// GArray * g_array_sized_new (gboolean zero_terminated,  gboolean clear_,  guint element_size,  guint reserved_size);
 		auto p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	
@@ -171,10 +168,12 @@ public class ArrayG
 	{
 		// GArray * g_array_ref (GArray *array);
 		auto p = g_array_ref(gArray);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	
@@ -213,10 +212,12 @@ public class ArrayG
 	{
 		// GArray * g_array_append_vals (GArray *array,  gconstpointer data,  guint len);
 		auto p = g_array_append_vals(gArray, data, len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	
@@ -235,10 +236,12 @@ public class ArrayG
 	{
 		// GArray * g_array_prepend_vals (GArray *array,  gconstpointer data,  guint len);
 		auto p = g_array_prepend_vals(gArray, data, len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	
@@ -254,10 +257,12 @@ public class ArrayG
 	{
 		// GArray * g_array_insert_vals (GArray *array,  guint index_,  gconstpointer data,  guint len);
 		auto p = g_array_insert_vals(gArray, index, data, len);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	
@@ -272,10 +277,12 @@ public class ArrayG
 	{
 		// GArray * g_array_remove_index (GArray *array,  guint index_);
 		auto p = g_array_remove_index(gArray, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	
@@ -292,10 +299,12 @@ public class ArrayG
 	{
 		// GArray * g_array_remove_index_fast (GArray *array,  guint index_);
 		auto p = g_array_remove_index_fast(gArray, index);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	
@@ -312,10 +321,12 @@ public class ArrayG
 	{
 		// GArray * g_array_remove_range (GArray *array,  guint index_,  guint length);
 		auto p = g_array_remove_range(gArray, index, length);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	
@@ -362,10 +373,12 @@ public class ArrayG
 	{
 		// GArray * g_array_set_size (GArray *array,  guint length);
 		auto p = g_array_set_size(gArray, length);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ArrayG(cast(GArray*) p);
 	}
 	

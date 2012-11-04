@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -117,18 +118,6 @@ public class PrintJob : ObjectG
 	 */
 	public this (GtkPrintJob* gtkPrintJob)
 	{
-		if(gtkPrintJob is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPrintJob);
-		if( ptr !is null )
-		{
-			this = cast(PrintJob)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkPrintJob);
 		this.gtkPrintJob = gtkPrintJob;
 	}
@@ -203,11 +192,13 @@ public class PrintJob : ObjectG
 	{
 		// GtkPrintSettings * gtk_print_job_get_settings (GtkPrintJob *job);
 		auto p = gtk_print_job_get_settings(gtkPrintJob);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PrintSettings(cast(GtkPrintSettings*) p);
+		
+		return ObjectG.getDObject!PrintSettings(cast(GtkPrintSettings*) p);
 	}
 	
 	/**
@@ -219,11 +210,13 @@ public class PrintJob : ObjectG
 	{
 		// GtkPrinter * gtk_print_job_get_printer (GtkPrintJob *job);
 		auto p = gtk_print_job_get_printer(gtkPrintJob);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Printer(cast(GtkPrinter*) p);
+		
+		return ObjectG.getDObject!Printer(cast(GtkPrinter*) p);
 	}
 	
 	/**
@@ -294,11 +287,13 @@ public class PrintJob : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		
+		return ObjectG.getDObject!Surface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -375,6 +370,12 @@ public class PrintJob : ObjectG
 		// GtkPageRange * gtk_print_job_get_page_ranges (GtkPrintJob *job,  gint *n_ranges);
 		int nRanges;
 		auto p = gtk_print_job_get_page_ranges(gtkPrintJob, &nRanges);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. nRanges];
 	}
 	

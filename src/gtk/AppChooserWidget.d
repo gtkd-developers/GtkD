@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -119,18 +120,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 */
 	public this (GtkAppChooserWidget* gtkAppChooserWidget)
 	{
-		if(gtkAppChooserWidget is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAppChooserWidget);
-		if( ptr !is null )
-		{
-			this = cast(AppChooserWidget)ptr;
-			return;
-		}
 		super(cast(GtkBox*)gtkAppChooserWidget);
 		this.gtkAppChooserWidget = gtkAppChooserWidget;
 	}
@@ -174,7 +163,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	{
 		foreach ( void delegate(AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onApplicationActivatedListeners )
 		{
-			dlg(new AppInfo(application), _appChooserWidget);
+			dlg(ObjectG.getDObject!AppInfo(application), _appChooserWidget);
 		}
 	}
 	
@@ -201,7 +190,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	{
 		foreach ( void delegate(AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onApplicationSelectedListeners )
 		{
-			dlg(new AppInfo(application), _appChooserWidget);
+			dlg(ObjectG.getDObject!AppInfo(application), _appChooserWidget);
 		}
 	}
 	
@@ -231,7 +220,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	{
 		foreach ( void delegate(Menu, AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onPopulatePopupListeners )
 		{
-			dlg(new Menu(menu), new AppInfo(application), _appChooserWidget);
+			dlg(ObjectG.getDObject!Menu(menu), ObjectG.getDObject!AppInfo(application), _appChooserWidget);
 		}
 	}
 	

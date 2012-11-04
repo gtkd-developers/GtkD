@@ -64,6 +64,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -134,18 +135,6 @@ public class Bus : ObjectGst
 	 */
 	public this (GstBus* gstBus)
 	{
-		if(gstBus is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstBus);
-		if( ptr !is null )
-		{
-			this = cast(Bus)ptr;
-			return;
-		}
 		super(cast(GstObject*)gstBus);
 		this.gstBus = gstBus;
 	}
@@ -240,7 +229,7 @@ public class Bus : ObjectGst
 	{
 		foreach ( void delegate(Message, Bus) dlg ; _bus.onMessageListeners )
 		{
-			dlg(new Message(message), _bus);
+			dlg(ObjectG.getDObject!Message(message), _bus);
 		}
 	}
 	
@@ -273,7 +262,7 @@ public class Bus : ObjectGst
 	{
 		foreach ( void delegate(Message, Bus) dlg ; _bus.onSyncMessageListeners )
 		{
-			dlg(new Message(message), _bus);
+			dlg(ObjectG.getDObject!Message(message), _bus);
 		}
 	}
 	
@@ -327,11 +316,13 @@ public class Bus : ObjectGst
 	{
 		// GstMessage* gst_bus_peek (GstBus *bus);
 		auto p = gst_bus_peek(gstBus);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Message(cast(GstMessage*) p);
+		
+		return ObjectG.getDObject!Message(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -342,11 +333,13 @@ public class Bus : ObjectGst
 	{
 		// GstMessage* gst_bus_pop (GstBus *bus);
 		auto p = gst_bus_pop(gstBus);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Message(cast(GstMessage*) p);
+		
+		return ObjectG.getDObject!Message(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -362,11 +355,13 @@ public class Bus : ObjectGst
 	{
 		// GstMessage* gst_bus_timed_pop (GstBus *bus,  GstClockTime timeout);
 		auto p = gst_bus_timed_pop(gstBus, timeout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Message(cast(GstMessage*) p);
+		
+		return ObjectG.getDObject!Message(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -407,11 +402,13 @@ public class Bus : ObjectGst
 	{
 		// GSource* gst_bus_create_watch (GstBus *bus);
 		auto p = gst_bus_create_watch(gstBus);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Source(cast(GSource*) p);
+		
+		return ObjectG.getDObject!Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -552,10 +549,12 @@ public class Bus : ObjectGst
 	{
 		// GstMessage* gst_bus_poll (GstBus *bus,  GstMessageType events,  GstClockTimeDiff timeout);
 		auto p = gst_bus_poll(gstBus, events, timeout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Message(cast(GstMessage*) p);
+		
+		return ObjectG.getDObject!Message(cast(GstMessage*) p);
 	}
 }

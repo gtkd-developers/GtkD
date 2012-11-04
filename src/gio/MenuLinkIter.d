@@ -59,6 +59,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -187,11 +188,6 @@ public class MenuLinkIter
 	 */
 	public this (GMenuLinkIter* gMenuLinkIter)
 	{
-		if(gMenuLinkIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMenuLinkIter = gMenuLinkIter;
 	}
 	
@@ -235,7 +231,7 @@ public class MenuLinkIter
 		
 		auto p = g_menu_link_iter_get_next(gMenuLinkIter, outLink, &outvalue);
 		
-		value = new MenuModel(outvalue);
+		value = ObjectG.getDObject!MenuModel(outvalue);
 		return p;
 	}
 	
@@ -249,11 +245,13 @@ public class MenuLinkIter
 	{
 		// GMenuModel * g_menu_link_iter_get_value (GMenuLinkIter *iter);
 		auto p = g_menu_link_iter_get_value(gMenuLinkIter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MenuModel(cast(GMenuModel*) p);
+		
+		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
 	}
 	
 	/**

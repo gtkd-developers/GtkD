@@ -69,6 +69,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -119,18 +120,6 @@ public class VolumeMonitor : ObjectG
 	 */
 	public this (GVolumeMonitor* gVolumeMonitor)
 	{
-		if(gVolumeMonitor is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gVolumeMonitor);
-		if( ptr !is null )
-		{
-			this = cast(VolumeMonitor)ptr;
-			return;
-		}
 		super(cast(GObject*)gVolumeMonitor);
 		this.gVolumeMonitor = gVolumeMonitor;
 	}
@@ -183,7 +172,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveChangedListeners )
 		{
-			dlg(new Drive(drive), _volumeMonitor);
+			dlg(ObjectG.getDObject!Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -210,7 +199,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveConnectedListeners )
 		{
-			dlg(new Drive(drive), _volumeMonitor);
+			dlg(ObjectG.getDObject!Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -237,7 +226,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveDisconnectedListeners )
 		{
-			dlg(new Drive(drive), _volumeMonitor);
+			dlg(ObjectG.getDObject!Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -265,7 +254,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveEjectButtonListeners )
 		{
-			dlg(new Drive(drive), _volumeMonitor);
+			dlg(ObjectG.getDObject!Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -293,7 +282,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(DriveIF, VolumeMonitor) dlg ; _volumeMonitor.onDriveStopButtonListeners )
 		{
-			dlg(new Drive(drive), _volumeMonitor);
+			dlg(ObjectG.getDObject!Drive(drive), _volumeMonitor);
 		}
 	}
 	
@@ -320,7 +309,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; _volumeMonitor.onMountAddedListeners )
 		{
-			dlg(new Mount(mount), _volumeMonitor);
+			dlg(ObjectG.getDObject!Mount(mount), _volumeMonitor);
 		}
 	}
 	
@@ -347,7 +336,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; _volumeMonitor.onMountChangedListeners )
 		{
-			dlg(new Mount(mount), _volumeMonitor);
+			dlg(ObjectG.getDObject!Mount(mount), _volumeMonitor);
 		}
 	}
 	
@@ -374,7 +363,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; _volumeMonitor.onMountPreUnmountListeners )
 		{
-			dlg(new Mount(mount), _volumeMonitor);
+			dlg(ObjectG.getDObject!Mount(mount), _volumeMonitor);
 		}
 	}
 	
@@ -401,7 +390,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(MountIF, VolumeMonitor) dlg ; _volumeMonitor.onMountRemovedListeners )
 		{
-			dlg(new Mount(mount), _volumeMonitor);
+			dlg(ObjectG.getDObject!Mount(mount), _volumeMonitor);
 		}
 	}
 	
@@ -428,7 +417,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; _volumeMonitor.onVolumeAddedListeners )
 		{
-			dlg(new Volume(volume), _volumeMonitor);
+			dlg(ObjectG.getDObject!Volume(volume), _volumeMonitor);
 		}
 	}
 	
@@ -455,7 +444,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; _volumeMonitor.onVolumeChangedListeners )
 		{
-			dlg(new Volume(volume), _volumeMonitor);
+			dlg(ObjectG.getDObject!Volume(volume), _volumeMonitor);
 		}
 	}
 	
@@ -484,7 +473,7 @@ public class VolumeMonitor : ObjectG
 	{
 		foreach ( void delegate(VolumeIF, VolumeMonitor) dlg ; _volumeMonitor.onVolumeRemovedListeners )
 		{
-			dlg(new Volume(volume), _volumeMonitor);
+			dlg(ObjectG.getDObject!Volume(volume), _volumeMonitor);
 		}
 	}
 	
@@ -499,11 +488,13 @@ public class VolumeMonitor : ObjectG
 	{
 		// GList * g_volume_monitor_get_connected_drives  (GVolumeMonitor *volume_monitor);
 		auto p = g_volume_monitor_get_connected_drives(gVolumeMonitor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -516,11 +507,13 @@ public class VolumeMonitor : ObjectG
 	{
 		// GList * g_volume_monitor_get_volumes (GVolumeMonitor *volume_monitor);
 		auto p = g_volume_monitor_get_volumes(gVolumeMonitor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -533,11 +526,13 @@ public class VolumeMonitor : ObjectG
 	{
 		// GList * g_volume_monitor_get_mounts (GVolumeMonitor *volume_monitor);
 		auto p = g_volume_monitor_get_mounts(gVolumeMonitor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -578,11 +573,13 @@ public class VolumeMonitor : ObjectG
 	{
 		// GVolume * g_volume_monitor_adopt_orphan_mount (GMount *mount);
 		auto p = g_volume_monitor_adopt_orphan_mount((mount is null) ? null : mount.getMountTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Volume(cast(GVolume*) p);
+		
+		return ObjectG.getDObject!Volume(cast(GVolume*) p);
 	}
 	
 	/**
@@ -595,11 +592,13 @@ public class VolumeMonitor : ObjectG
 	{
 		// GMount * g_volume_monitor_get_mount_for_uuid (GVolumeMonitor *volume_monitor,  const char *uuid);
 		auto p = g_volume_monitor_get_mount_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Mount(cast(GMount*) p);
+		
+		return ObjectG.getDObject!Mount(cast(GMount*) p);
 	}
 	
 	/**
@@ -612,10 +611,12 @@ public class VolumeMonitor : ObjectG
 	{
 		// GVolume * g_volume_monitor_get_volume_for_uuid  (GVolumeMonitor *volume_monitor,  const char *uuid);
 		auto p = g_volume_monitor_get_volume_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Volume(cast(GVolume*) p);
+		
+		return ObjectG.getDObject!Volume(cast(GVolume*) p);
 	}
 }

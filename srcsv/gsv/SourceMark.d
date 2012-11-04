@@ -57,6 +57,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,18 +104,6 @@ public class SourceMark : TextMark
 	 */
 	public this (GtkSourceMark* gtkSourceMark)
 	{
-		if(gtkSourceMark is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceMark);
-		if( ptr !is null )
-		{
-			this = cast(SourceMark)ptr;
-			return;
-		}
 		super(cast(GtkTextMark*)gtkSourceMark);
 		this.gtkSourceMark = gtkSourceMark;
 	}
@@ -178,11 +167,13 @@ public class SourceMark : TextMark
 	{
 		// GtkSourceMark * gtk_source_mark_next (GtkSourceMark *mark,  const gchar *category);
 		auto p = gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceMark(cast(GtkSourceMark*) p);
+		
+		return ObjectG.getDObject!SourceMark(cast(GtkSourceMark*) p);
 	}
 	
 	/**
@@ -198,10 +189,12 @@ public class SourceMark : TextMark
 	{
 		// GtkSourceMark * gtk_source_mark_prev (GtkSourceMark *mark,  const gchar *category);
 		auto p = gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceMark(cast(GtkSourceMark*) p);
+		
+		return ObjectG.getDObject!SourceMark(cast(GtkSourceMark*) p);
 	}
 }

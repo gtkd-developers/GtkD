@@ -63,6 +63,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -118,18 +119,6 @@ public class ObjectAtk : ObjectG
 	 */
 	public this (AtkObject* atkObject)
 	{
-		if(atkObject is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkObject);
-		if( ptr !is null )
-		{
-			this = cast(ObjectAtk)ptr;
-			return;
-		}
 		super(cast(GObject*)atkObject);
 		this.atkObject = atkObject;
 	}
@@ -342,11 +331,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkObject * atk_implementor_ref_accessible (AtkImplementor *implementor);
 		auto p = atk_implementor_ref_accessible(implementor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -377,11 +368,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkObject * atk_object_get_parent (AtkObject *accessible);
 		auto p = atk_object_get_parent(atkObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -406,11 +399,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkObject * atk_object_ref_accessible_child (AtkObject *accessible,  gint i);
 		auto p = atk_object_ref_accessible_child(atkObject, i);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -421,11 +416,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkRelationSet * atk_object_ref_relation_set (AtkObject *accessible);
 		auto p = atk_object_ref_relation_set(atkObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RelationSet(cast(AtkRelationSet*) p);
+		
+		return ObjectG.getDObject!RelationSet(cast(AtkRelationSet*) p);
 	}
 	
 	/**
@@ -472,11 +469,13 @@ public class ObjectAtk : ObjectG
 	{
 		// AtkStateSet * atk_object_ref_state_set (AtkObject *accessible);
 		auto p = atk_object_ref_state_set(atkObject);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StateSet(cast(AtkStateSet*) p);
+		
+		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
 	}
 	
 	/**

@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -116,18 +117,6 @@ public class DBusServer : ObjectG, InitableIF
 	 */
 	public this (GDBusServer* gDBusServer)
 	{
-		if(gDBusServer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusServer);
-		if( ptr !is null )
-		{
-			this = cast(DBusServer)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusServer);
 		this.gDBusServer = gDBusServer;
 	}

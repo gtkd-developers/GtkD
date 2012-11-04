@@ -57,6 +57,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -94,11 +95,6 @@ public class PgScriptIter
 	 */
 	public this (PangoScriptIter* pangoScriptIter)
 	{
-		if(pangoScriptIter is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoScriptIter = pangoScriptIter;
 	}
 	

@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -105,18 +106,6 @@ public class Range : Widget, OrientableIF
 	 */
 	public this (GtkRange* gtkRange)
 	{
-		if(gtkRange is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRange);
-		if( ptr !is null )
-		{
-			this = cast(Range)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkRange);
 		this.gtkRange = gtkRange;
 	}
@@ -361,11 +350,13 @@ public class Range : Widget, OrientableIF
 	{
 		// GtkAdjustment * gtk_range_get_adjustment (GtkRange *range);
 		auto p = gtk_range_get_adjustment(gtkRange);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**

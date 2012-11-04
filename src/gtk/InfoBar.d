@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -128,18 +129,6 @@ public class InfoBar : Box
 	 */
 	public this (GtkInfoBar* gtkInfoBar)
 	{
-		if(gtkInfoBar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkInfoBar);
-		if( ptr !is null )
-		{
-			this = cast(InfoBar)ptr;
-			return;
-		}
 		super(cast(GtkBox*)gtkInfoBar);
 		this.gtkInfoBar = gtkInfoBar;
 	}
@@ -175,7 +164,14 @@ public class InfoBar : Box
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		return new Button(cast(GtkButton*)gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(StockDesc[stockID]), responseId));
+		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(StockDesc[stockID]), responseId);
+		
+		if ( p is null )
+		{
+			return null;
+		}
+		
+		return new Button(cast(GtkButton*)p);
 	}
 	
 	/** */
@@ -345,11 +341,13 @@ public class InfoBar : Box
 	{
 		// GtkWidget * gtk_info_bar_add_button (GtkInfoBar *info_bar,  const gchar *button_text,  gint response_id);
 		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(buttonText), responseId);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

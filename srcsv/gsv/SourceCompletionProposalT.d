@@ -60,6 +60,7 @@ public  import gsvc.gsvtypes;
 
 public import gsvc.gsv;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -175,11 +176,13 @@ public template SourceCompletionProposalT(TStruct)
 	{
 		// GdkPixbuf * gtk_source_completion_proposal_get_icon  (GtkSourceCompletionProposal *proposal);
 		auto p = gtk_source_completion_proposal_get_icon(getSourceCompletionProposalTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

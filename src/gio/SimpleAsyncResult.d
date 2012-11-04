@@ -68,6 +68,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -169,18 +170,6 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 */
 	public this (GSimpleAsyncResult* gSimpleAsyncResult)
 	{
-		if(gSimpleAsyncResult is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSimpleAsyncResult);
-		if( ptr !is null )
-		{
-			this = cast(SimpleAsyncResult)ptr;
-			return;
-		}
 		super(cast(GObject*)gSimpleAsyncResult);
 		this.gSimpleAsyncResult = gSimpleAsyncResult;
 	}

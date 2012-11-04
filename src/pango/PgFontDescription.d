@@ -58,6 +58,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -99,11 +100,6 @@ public class PgFontDescription : Boxed
 	 */
 	public this (PangoFontDescription* pangoFontDescription)
 	{
-		if(pangoFontDescription is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoFontDescription = pangoFontDescription;
 	}
 	
@@ -146,11 +142,13 @@ public class PgFontDescription : Boxed
 	{
 		// PangoFontDescription * pango_font_description_copy (const PangoFontDescription *desc);
 		auto p = pango_font_description_copy(pangoFontDescription);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -164,11 +162,13 @@ public class PgFontDescription : Boxed
 	{
 		// PangoFontDescription * pango_font_description_copy_static  (const PangoFontDescription *desc);
 		auto p = pango_font_description_copy_static(pangoFontDescription);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -538,11 +538,13 @@ public class PgFontDescription : Boxed
 	{
 		// PangoFontDescription * pango_font_description_from_string  (const char *str);
 		auto p = pango_font_description_from_string(Str.toStringz(str));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**

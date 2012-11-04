@@ -55,6 +55,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -89,18 +90,6 @@ public class IMContextSimple : IMContext
 	 */
 	public this (GtkIMContextSimple* gtkIMContextSimple)
 	{
-		if(gtkIMContextSimple is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkIMContextSimple);
-		if( ptr !is null )
-		{
-			this = cast(IMContextSimple)ptr;
-			return;
-		}
 		super(cast(GtkIMContext*)gtkIMContextSimple);
 		this.gtkIMContextSimple = gtkIMContextSimple;
 	}

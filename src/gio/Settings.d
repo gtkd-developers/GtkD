@@ -70,6 +70,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -211,18 +212,6 @@ public class Settings : ObjectG
 	 */
 	public this (GSettings* gSettings)
 	{
-		if(gSettings is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSettings);
-		if( ptr !is null )
-		{
-			this = cast(Settings)ptr;
-			return;
-		}
 		super(cast(GObject*)gSettings);
 		this.gSettings = gSettings;
 	}
@@ -560,11 +549,13 @@ public class Settings : ObjectG
 	{
 		// GVariant * g_settings_get_value (GSettings *settings,  const gchar *key);
 		auto p = g_settings_get_value(gSettings, Str.toStringz(key));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -662,11 +653,13 @@ public class Settings : ObjectG
 	{
 		// GSettings * g_settings_get_child (GSettings *settings,  const gchar *name);
 		auto p = g_settings_get_child(gSettings, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Settings(cast(GSettings*) p);
+		
+		return ObjectG.getDObject!Settings(cast(GSettings*) p);
 	}
 	
 	/**
@@ -799,11 +792,13 @@ public class Settings : ObjectG
 	{
 		// GVariant * g_settings_get_range (GSettings *settings,  const gchar *key);
 		auto p = g_settings_get_range(gSettings, Str.toStringz(key));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -1270,10 +1265,12 @@ public class Settings : ObjectG
 	{
 		// GAction * g_settings_create_action (GSettings *settings,  const gchar *key);
 		auto p = g_settings_create_action(gSettings, Str.toStringz(key));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Action(cast(GAction*) p);
+		
+		return ObjectG.getDObject!Action(cast(GAction*) p);
 	}
 }

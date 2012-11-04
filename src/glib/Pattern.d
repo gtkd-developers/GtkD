@@ -110,11 +110,6 @@ public class Pattern
 	 */
 	public this (GPatternSpec* gPatternSpec)
 	{
-		if(gPatternSpec is null)
-		{
-			this = null;
-			return;
-		}
 		this.gPatternSpec = gPatternSpec;
 	}
 	

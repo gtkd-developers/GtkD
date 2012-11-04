@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -116,18 +117,6 @@ public class MenuItem : Bin, ActivatableIF
 	 */
 	public this (GtkMenuItem* gtkMenuItem)
 	{
-		if(gtkMenuItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMenuItem);
-		if( ptr !is null )
-		{
-			this = cast(MenuItem)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkMenuItem);
 		this.gtkMenuItem = gtkMenuItem;
 	}
@@ -512,11 +501,13 @@ public class MenuItem : Bin, ActivatableIF
 	{
 		// GtkWidget * gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
 		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

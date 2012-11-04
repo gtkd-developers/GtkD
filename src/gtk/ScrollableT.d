@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import gtk.Adjustment;
@@ -111,11 +112,13 @@ public template ScrollableT(TStruct)
 	{
 		// GtkAdjustment * gtk_scrollable_get_hadjustment (GtkScrollable *scrollable);
 		auto p = gtk_scrollable_get_hadjustment(getScrollableTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -138,11 +141,13 @@ public template ScrollableT(TStruct)
 	{
 		// GtkAdjustment * gtk_scrollable_get_vadjustment (GtkScrollable *scrollable);
 		auto p = gtk_scrollable_get_vadjustment(getScrollableTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**

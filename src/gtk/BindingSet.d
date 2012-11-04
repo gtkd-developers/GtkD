@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -149,11 +150,6 @@ public class BindingSet
 	 */
 	public this (GtkBindingSet* gtkBindingSet)
 	{
-		if(gtkBindingSet is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkBindingSet = gtkBindingSet;
 	}
 	
@@ -206,11 +202,13 @@ public class BindingSet
 	{
 		// GtkBindingSet * gtk_binding_set_by_class (gpointer object_class);
 		auto p = gtk_binding_set_by_class(objectClass);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new BindingSet(cast(GtkBindingSet*) p);
+		
+		return ObjectG.getDObject!BindingSet(cast(GtkBindingSet*) p);
 	}
 	
 	/**
@@ -225,11 +223,13 @@ public class BindingSet
 	{
 		// GtkBindingSet * gtk_binding_set_find (const gchar *set_name);
 		auto p = gtk_binding_set_find(Str.toStringz(setName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new BindingSet(cast(GtkBindingSet*) p);
+		
+		return ObjectG.getDObject!BindingSet(cast(GtkBindingSet*) p);
 	}
 	
 	/**

@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -484,18 +485,6 @@ public class RcStyle : ObjectG
 	 */
 	public this (GtkRcStyle* gtkRcStyle)
 	{
-		if(gtkRcStyle is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRcStyle);
-		if( ptr !is null )
-		{
-			this = cast(RcStyle)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkRcStyle);
 		this.gtkRcStyle = gtkRcStyle;
 	}
@@ -519,11 +508,13 @@ public class RcStyle : ObjectG
 	{
 		// GScanner * gtk_rc_scanner_new (void);
 		auto p = gtk_rc_scanner_new();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ScannerG(cast(GScanner*) p);
+		
+		return ObjectG.getDObject!ScannerG(cast(GScanner*) p);
 	}
 	
 	/**
@@ -543,11 +534,13 @@ public class RcStyle : ObjectG
 	{
 		// GtkStyle * gtk_rc_get_style (GtkWidget *widget);
 		auto p = gtk_rc_get_style((widget is null) ? null : widget.getWidgetStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Style(cast(GtkStyle*) p);
+		
+		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -572,11 +565,13 @@ public class RcStyle : ObjectG
 	{
 		// GtkStyle * gtk_rc_get_style_by_paths (GtkSettings *settings,  const char *widget_path,  const char *class_path,  GType type);
 		auto p = gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Style(cast(GtkStyle*) p);
+		
+		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -880,11 +875,13 @@ public class RcStyle : ObjectG
 	{
 		// GtkRcStyle * gtk_rc_style_new (void);
 		auto p = gtk_rc_style_new();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RcStyle(cast(GtkRcStyle*) p);
+		
+		return ObjectG.getDObject!RcStyle(cast(GtkRcStyle*) p);
 	}
 	
 	/**
@@ -899,10 +896,12 @@ public class RcStyle : ObjectG
 	{
 		// GtkRcStyle * gtk_rc_style_copy (GtkRcStyle *orig);
 		auto p = gtk_rc_style_copy(gtkRcStyle);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RcStyle(cast(GtkRcStyle*) p);
+		
+		return ObjectG.getDObject!RcStyle(cast(GtkRcStyle*) p);
 	}
 }

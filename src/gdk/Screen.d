@@ -69,6 +69,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -122,18 +123,6 @@ public class Screen : ObjectG
 	 */
 	public this (GdkScreen* gdkScreen)
 	{
-		if(gdkScreen is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkScreen);
-		if( ptr !is null )
-		{
-			this = cast(Screen)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkScreen);
 		this.gdkScreen = gdkScreen;
 	}
@@ -248,11 +237,13 @@ public class Screen : ObjectG
 	{
 		// GdkScreen * gdk_screen_get_default (void);
 		auto p = gdk_screen_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -266,11 +257,13 @@ public class Screen : ObjectG
 	{
 		// GdkVisual * gdk_screen_get_system_visual (GdkScreen *screen);
 		auto p = gdk_screen_get_system_visual(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -292,11 +285,13 @@ public class Screen : ObjectG
 	{
 		// GdkVisual * gdk_screen_get_rgba_visual (GdkScreen *screen);
 		auto p = gdk_screen_get_rgba_visual(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -323,11 +318,13 @@ public class Screen : ObjectG
 	{
 		// GdkWindow * gdk_screen_get_root_window (GdkScreen *screen);
 		auto p = gdk_screen_get_root_window(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -339,11 +336,13 @@ public class Screen : ObjectG
 	{
 		// GdkDisplay * gdk_screen_get_display (GdkScreen *screen);
 		auto p = gdk_screen_get_display(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -417,11 +416,13 @@ public class Screen : ObjectG
 	{
 		// GList * gdk_screen_list_visuals (GdkScreen *screen);
 		auto p = gdk_screen_list_visuals(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -437,11 +438,13 @@ public class Screen : ObjectG
 	{
 		// GList * gdk_screen_get_toplevel_windows (GdkScreen *screen);
 		auto p = gdk_screen_get_toplevel_windows(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -618,11 +621,13 @@ public class Screen : ObjectG
 	{
 		// const cairo_font_options_t * gdk_screen_get_font_options  (GdkScreen *screen);
 		auto p = gdk_screen_get_font_options(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FontOption(cast(cairo_font_options_t*) p);
+		
+		return ObjectG.getDObject!FontOption(cast(cairo_font_options_t*) p);
 	}
 	
 	/**
@@ -688,11 +693,13 @@ public class Screen : ObjectG
 	{
 		// GdkWindow * gdk_screen_get_active_window (GdkScreen *screen);
 		auto p = gdk_screen_get_active_window(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -714,10 +721,12 @@ public class Screen : ObjectG
 	{
 		// GList * gdk_screen_get_window_stack (GdkScreen *screen);
 		auto p = gdk_screen_get_window_stack(gdkScreen);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 }

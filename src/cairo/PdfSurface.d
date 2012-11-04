@@ -94,11 +94,6 @@ public class PdfSurface : Surface
 	 */
 	public this (cairo_surface_t* cairo_surface)
 	{
-		if(cairo_surface is null)
-		{
-			this = null;
-			return;
-		}
 		super(cast(cairo_surface_t*)cairo_surface);
 		this.cairo_surface = cairo_surface;
 	}
@@ -123,10 +118,12 @@ public class PdfSurface : Surface
 	{
 		// cairo_surface_t * cairo_pdf_surface_create (const char *filename,  double width_in_points,  double height_in_points);
 		auto p = cairo_pdf_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new PdfSurface(cast(cairo_surface_t*) p);
 	}
 	
@@ -148,10 +145,12 @@ public class PdfSurface : Surface
 	{
 		// cairo_surface_t * cairo_pdf_surface_create_for_stream (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
 		auto p = cairo_pdf_surface_create_for_stream(writeFunc, closure, widthInPoints, heightInPoints);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new PdfSurface(cast(cairo_surface_t*) p);
 	}
 	

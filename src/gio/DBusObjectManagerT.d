@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -134,7 +135,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onInterfaceAddedListeners )
 		{
-			dlg(new DBusObject(object), new DBusInterface(iface), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!DBusObject(object), ObjectG.getDObject!DBusInterface(iface), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -168,7 +169,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onInterfaceRemovedListeners )
 		{
-			dlg(new DBusObject(object), new DBusInterface(iface), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!DBusObject(object), ObjectG.getDObject!DBusInterface(iface), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -200,7 +201,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onObjectAddedListeners )
 		{
-			dlg(new DBusObject(object), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!DBusObject(object), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -232,7 +233,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onObjectRemovedListeners )
 		{
-			dlg(new DBusObject(object), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!DBusObject(object), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -257,11 +258,13 @@ public template DBusObjectManagerT(TStruct)
 	{
 		// GList * g_dbus_object_manager_get_objects (GDBusObjectManager *manager);
 		auto p = g_dbus_object_manager_get_objects(getDBusObjectManagerTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -275,11 +278,13 @@ public template DBusObjectManagerT(TStruct)
 	{
 		// GDBusObject * g_dbus_object_manager_get_object (GDBusObjectManager *manager,  const gchar *object_path);
 		auto p = g_dbus_object_manager_get_object(getDBusObjectManagerTStruct(), Str.toStringz(objectPath));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusObject(cast(GDBusObject*) p);
+		
+		return ObjectG.getDObject!DBusObject(cast(GDBusObject*) p);
 	}
 	
 	/**
@@ -307,10 +312,12 @@ public template DBusObjectManagerT(TStruct)
 	{
 		// GDBusInterface * g_dbus_object_manager_get_interface (GDBusObjectManager *manager,  const gchar *object_path,  const gchar *interface_name);
 		auto p = g_dbus_object_manager_get_interface(getDBusObjectManagerTStruct(), Str.toStringz(objectPath), Str.toStringz(interfaceName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusInterface(cast(GDBusInterface*) p);
+		
+		return ObjectG.getDObject!DBusInterface(cast(GDBusInterface*) p);
 	}
 }

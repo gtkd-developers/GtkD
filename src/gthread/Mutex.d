@@ -154,11 +154,6 @@ public class Mutex
 	 */
 	public this (GMutex* gMutex)
 	{
-		if(gMutex is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMutex = gMutex;
 	}
 	

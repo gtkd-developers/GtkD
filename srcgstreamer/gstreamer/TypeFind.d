@@ -63,6 +63,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -102,11 +103,6 @@ public class TypeFind
 	 */
 	public this (GstTypeFind* gstTypeFind)
 	{
-		if(gstTypeFind is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstTypeFind = gstTypeFind;
 	}
 	

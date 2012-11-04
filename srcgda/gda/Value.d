@@ -64,6 +64,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -99,11 +100,6 @@ public class Value
 	 */
 	public this (GdaValue* gdaValue)
 	{
-		if(gdaValue is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaValue = gdaValue;
 	}
 	
@@ -545,11 +541,13 @@ public class Value
 	{
 		// GdaValue* gda_value_copy (GdaValue *value);
 		auto p = gda_value_copy(gdaValue);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GdaValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GdaValue*) p);
 	}
 	
 	/**
@@ -723,11 +721,13 @@ public class Value
 	{
 		// const GObject* gda_value_get_gobject (GdaValue *value);
 		auto p = gda_value_get_gobject(gdaValue);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectG(cast(GObject*) p);
+		
+		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
 	}
 	
 	/**

@@ -114,6 +114,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -202,11 +203,13 @@ public class X11
 	{
 		// GdkDevice * gdk_x11_device_manager_lookup (GdkDeviceManager *device_manager,  gint device_id);
 		auto p = gdk_x11_device_manager_lookup((deviceManager is null) ? null : deviceManager.getDeviceManagerStruct(), deviceId);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Device(cast(GdkDevice*) p);
+		
+		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
 	}
 	
 	/**

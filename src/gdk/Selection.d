@@ -59,6 +59,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Display;
@@ -149,11 +150,13 @@ public class Selection
 	{
 		// GdkWindow * gdk_selection_owner_get (GdkAtom selection);
 		auto p = gdk_selection_owner_get(selection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -171,11 +174,13 @@ public class Selection
 	{
 		// GdkWindow * gdk_selection_owner_get_for_display (GdkDisplay *display,  GdkAtom selection);
 		auto p = gdk_selection_owner_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**

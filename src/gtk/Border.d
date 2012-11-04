@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -237,11 +238,6 @@ public class Border : Boxed
 	 */
 	public this (GtkBorder* gtkBorder)
 	{
-		if(gtkBorder is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkBorder = gtkBorder;
 	}
 	
@@ -308,11 +304,13 @@ public class Border : Boxed
 	{
 		// GtkBorder * gtk_border_copy (const GtkBorder *border_);
 		auto p = gtk_border_copy(gtkBorder);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Border(cast(GtkBorder*) p);
+		
+		return ObjectG.getDObject!Border(cast(GtkBorder*) p);
 	}
 	
 	/**

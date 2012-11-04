@@ -88,6 +88,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -292,18 +293,6 @@ public class StyleContext : ObjectG
 	 */
 	public this (GtkStyleContext* gtkStyleContext)
 	{
-		if(gtkStyleContext is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkStyleContext);
-		if( ptr !is null )
-		{
-			this = cast(StyleContext)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkStyleContext);
 		this.gtkStyleContext = gtkStyleContext;
 	}
@@ -446,11 +435,13 @@ public class StyleContext : ObjectG
 	{
 		// GtkStyleContext * gtk_style_context_get_parent (GtkStyleContext *context);
 		auto p = gtk_style_context_get_parent(gtkStyleContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StyleContext(cast(GtkStyleContext*) p);
+		
+		return ObjectG.getDObject!StyleContext(cast(GtkStyleContext*) p);
 	}
 	
 	/**
@@ -461,11 +452,13 @@ public class StyleContext : ObjectG
 	{
 		// const GtkWidgetPath * gtk_style_context_get_path (GtkStyleContext *context);
 		auto p = gtk_style_context_get_path(gtkStyleContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new WidgetPath(cast(GtkWidgetPath*) p);
+		
+		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -492,11 +485,13 @@ public class StyleContext : ObjectG
 	{
 		// GdkScreen * gtk_style_context_get_screen (GtkStyleContext *context);
 		auto p = gtk_style_context_get_screen(gtkStyleContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -568,11 +563,13 @@ public class StyleContext : ObjectG
 	{
 		// GtkCssSection * gtk_style_context_get_section (GtkStyleContext *context,  const gchar *property);
 		auto p = gtk_style_context_get_section(gtkStyleContext, Str.toStringz(property));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CssSection(cast(GtkCssSection*) p);
+		
+		return ObjectG.getDObject!CssSection(cast(GtkCssSection*) p);
 	}
 	
 	/**
@@ -668,11 +665,13 @@ public class StyleContext : ObjectG
 	{
 		// const PangoFontDescription * gtk_style_context_get_font (GtkStyleContext *context,  GtkStateFlags state);
 		auto p = gtk_style_context_get_font(gtkStyleContext, state);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -734,11 +733,13 @@ public class StyleContext : ObjectG
 	{
 		// GtkIconSet * gtk_style_context_lookup_icon_set (GtkStyleContext *context,  const gchar *stock_id);
 		auto p = gtk_style_context_lookup_icon_set(gtkStyleContext, Str.toStringz(stockId));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconSet(cast(GtkIconSet*) p);
+		
+		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -1038,11 +1039,13 @@ public class StyleContext : ObjectG
 	{
 		// GList * gtk_style_context_list_classes (GtkStyleContext *context);
 		auto p = gtk_style_context_list_classes(gtkStyleContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1096,11 +1099,13 @@ public class StyleContext : ObjectG
 	{
 		// GList * gtk_style_context_list_regions (GtkStyleContext *context);
 		auto p = gtk_style_context_list_regions(gtkStyleContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1403,11 +1408,13 @@ public class StyleContext : ObjectG
 	{
 		// GdkPixbuf * gtk_render_icon_pixbuf (GtkStyleContext *context,  const GtkIconSource *source,  GtkIconSize size);
 		auto p = gtk_render_icon_pixbuf(gtkStyleContext, (source is null) ? null : source.getIconSourceStruct(), size);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

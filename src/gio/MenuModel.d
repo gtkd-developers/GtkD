@@ -67,6 +67,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -199,18 +200,6 @@ public class MenuModel : ObjectG
 	 */
 	public this (GMenuModel* gMenuModel)
 	{
-		if(gMenuModel is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gMenuModel);
-		if( ptr !is null )
-		{
-			this = cast(MenuModel)ptr;
-			return;
-		}
 		super(cast(GObject*)gMenuModel);
 		this.gMenuModel = gMenuModel;
 	}
@@ -315,11 +304,13 @@ public class MenuModel : ObjectG
 	{
 		// GVariant * g_menu_model_get_item_attribute_value  (GMenuModel *model,  gint item_index,  const gchar *attribute,  const GVariantType *expected_type);
 		auto p = g_menu_model_get_item_attribute_value(gMenuModel, itemIndex, Str.toStringz(attribute), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -337,11 +328,13 @@ public class MenuModel : ObjectG
 	{
 		// GMenuModel * g_menu_model_get_item_link (GMenuModel *model,  gint item_index,  const gchar *link);
 		auto p = g_menu_model_get_item_link(gMenuModel, itemIndex, Str.toStringz(link));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MenuModel(cast(GMenuModel*) p);
+		
+		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
 	}
 	
 	/**
@@ -357,11 +350,13 @@ public class MenuModel : ObjectG
 	{
 		// GMenuAttributeIter * g_menu_model_iterate_item_attributes  (GMenuModel *model,  gint item_index);
 		auto p = g_menu_model_iterate_item_attributes(gMenuModel, itemIndex);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MenuAttributeIter(cast(GMenuAttributeIter*) p);
+		
+		return ObjectG.getDObject!MenuAttributeIter(cast(GMenuAttributeIter*) p);
 	}
 	
 	/**
@@ -377,11 +372,13 @@ public class MenuModel : ObjectG
 	{
 		// GMenuLinkIter * g_menu_model_iterate_item_links (GMenuModel *model,  gint item_index);
 		auto p = g_menu_model_iterate_item_links(gMenuModel, itemIndex);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MenuLinkIter(cast(GMenuLinkIter*) p);
+		
+		return ObjectG.getDObject!MenuLinkIter(cast(GMenuLinkIter*) p);
 	}
 	
 	/**

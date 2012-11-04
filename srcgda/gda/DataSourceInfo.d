@@ -57,6 +57,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ListG;
@@ -95,11 +96,6 @@ public class DataSourceInfo
 	 */
 	public this (GdaDataSourceInfo* gdaDataSourceInfo)
 	{
-		if(gdaDataSourceInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaDataSourceInfo = gdaDataSourceInfo;
 	}
 	

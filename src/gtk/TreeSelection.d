@@ -67,6 +67,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -130,18 +131,6 @@ public class TreeSelection : ObjectG
 	 */
 	public this (GtkTreeSelection* gtkTreeSelection)
 	{
-		if(gtkTreeSelection is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeSelection);
-		if( ptr !is null )
-		{
-			this = cast(TreeSelection)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkTreeSelection);
 		this.gtkTreeSelection = gtkTreeSelection;
 	}
@@ -316,11 +305,13 @@ public class TreeSelection : ObjectG
 	{
 		// GtkTreeView * gtk_tree_selection_get_tree_view (GtkTreeSelection *selection);
 		auto p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeView(cast(GtkTreeView*) p);
+		
+		return ObjectG.getDObject!TreeView(cast(GtkTreeView*) p);
 	}
 	
 	/**
@@ -341,7 +332,7 @@ public class TreeSelection : ObjectG
 		
 		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, (iter is null) ? null : iter.getTreeIterStruct());
 		
-		model = new TreeModel(outmodel);
+		model = ObjectG.getDObject!TreeModel(outmodel);
 		return p;
 	}
 	

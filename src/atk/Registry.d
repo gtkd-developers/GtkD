@@ -59,6 +59,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import atk.ObjectFactory;
@@ -100,18 +101,6 @@ public class Registry : ObjectG
 	 */
 	public this (AtkRegistry* atkRegistry)
 	{
-		if(atkRegistry is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkRegistry);
-		if( ptr !is null )
-		{
-			this = cast(Registry)ptr;
-			return;
-		}
 		super(cast(GObject*)atkRegistry);
 		this.atkRegistry = atkRegistry;
 	}
@@ -162,11 +151,13 @@ public class Registry : ObjectG
 	{
 		// AtkObjectFactory * atk_registry_get_factory (AtkRegistry *registry,  GType type);
 		auto p = atk_registry_get_factory(atkRegistry, type);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectFactory(cast(AtkObjectFactory*) p);
+		
+		return ObjectG.getDObject!ObjectFactory(cast(AtkObjectFactory*) p);
 	}
 	
 	/**
@@ -183,10 +174,12 @@ public class Registry : ObjectG
 	{
 		// AtkRegistry * atk_get_default_registry (void);
 		auto p = atk_get_default_registry();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Registry(cast(AtkRegistry*) p);
+		
+		return ObjectG.getDObject!Registry(cast(AtkRegistry*) p);
 	}
 }

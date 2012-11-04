@@ -74,6 +74,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -122,18 +123,6 @@ public class PgLayout : ObjectG
 	 */
 	public this (PangoLayout* pangoLayout)
 	{
-		if(pangoLayout is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoLayout);
-		if( ptr !is null )
-		{
-			this = cast(PgLayout)ptr;
-			return;
-		}
 		super(cast(GObject*)pangoLayout);
 		this.pangoLayout = pangoLayout;
 	}
@@ -187,11 +176,13 @@ public class PgLayout : ObjectG
 	{
 		// PangoLayout * pango_layout_copy (PangoLayout *src);
 		auto p = pango_layout_copy(pangoLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -202,11 +193,13 @@ public class PgLayout : ObjectG
 	{
 		// PangoContext * pango_layout_get_context (PangoLayout *layout);
 		auto p = pango_layout_get_context(pangoLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgContext(cast(PangoContext*) p);
+		
+		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -304,11 +297,13 @@ public class PgLayout : ObjectG
 	{
 		// PangoAttrList * pango_layout_get_attributes (PangoLayout *layout);
 		auto p = pango_layout_get_attributes(pangoLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgAttributeList(cast(PangoAttrList*) p);
+		
+		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -334,11 +329,13 @@ public class PgLayout : ObjectG
 	{
 		// const PangoFontDescription * pango_layout_get_font_description  (PangoLayout *layout);
 		auto p = pango_layout_get_font_description(pangoLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontDescription(cast(PangoFontDescription*) p);
+		
+		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -660,11 +657,13 @@ public class PgLayout : ObjectG
 	{
 		// PangoTabArray * pango_layout_get_tabs (PangoLayout *layout);
 		auto p = pango_layout_get_tabs(pangoLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgTabArray(cast(PangoTabArray*) p);
+		
+		return ObjectG.getDObject!PgTabArray(cast(PangoTabArray*) p);
 	}
 	
 	/**
@@ -744,6 +743,12 @@ public class PgLayout : ObjectG
 		// const PangoLogAttr * pango_layout_get_log_attrs_readonly  (PangoLayout *layout,  gint *n_attrs);
 		int nAttrs;
 		auto p = pango_layout_get_log_attrs_readonly(pangoLayout, &nAttrs);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. nAttrs];
 	}
 	
@@ -981,11 +986,13 @@ public class PgLayout : ObjectG
 	{
 		// PangoLayoutLine * pango_layout_get_line (PangoLayout *layout,  int line);
 		auto p = pango_layout_get_line(pangoLayout, line);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayoutLine(cast(PangoLayoutLine*) p);
+		
+		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
 	}
 	
 	/**
@@ -1003,11 +1010,13 @@ public class PgLayout : ObjectG
 	{
 		// PangoLayoutLine * pango_layout_get_line_readonly (PangoLayout *layout,  int line);
 		auto p = pango_layout_get_line_readonly(pangoLayout, line);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayoutLine(cast(PangoLayoutLine*) p);
+		
+		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
 	}
 	
 	/**
@@ -1020,11 +1029,13 @@ public class PgLayout : ObjectG
 	{
 		// GSList * pango_layout_get_lines (PangoLayout *layout);
 		auto p = pango_layout_get_lines(pangoLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -1039,11 +1050,13 @@ public class PgLayout : ObjectG
 	{
 		// GSList * pango_layout_get_lines_readonly (PangoLayout *layout);
 		auto p = pango_layout_get_lines_readonly(pangoLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -1054,10 +1067,12 @@ public class PgLayout : ObjectG
 	{
 		// PangoLayoutIter * pango_layout_get_iter (PangoLayout *layout);
 		auto p = pango_layout_get_iter(pangoLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayoutIter(cast(PangoLayoutIter*) p);
+		
+		return ObjectG.getDObject!PgLayoutIter(cast(PangoLayoutIter*) p);
 	}
 }

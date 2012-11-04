@@ -73,6 +73,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -250,18 +251,6 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public this (GtkUIManager* gtkUIManager)
 	{
-		if(gtkUIManager is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkUIManager);
-		if( ptr !is null )
-		{
-			this = cast(UIManager)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkUIManager);
 		this.gtkUIManager = gtkUIManager;
 	}
@@ -334,7 +323,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Widget, UIManager) dlg ; _uIManager.onAddWidgetListeners )
 		{
-			dlg(new Widget(widget), _uIManager);
+			dlg(ObjectG.getDObject!Widget(widget), _uIManager);
 		}
 	}
 	
@@ -366,7 +355,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onConnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), _uIManager);
+			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _uIManager);
 		}
 	}
 	
@@ -395,7 +384,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onDisconnectProxyListeners )
 		{
-			dlg(new Action(action), new Widget(proxy), _uIManager);
+			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _uIManager);
 		}
 	}
 	
@@ -426,7 +415,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPostActivateListeners )
 		{
-			dlg(new Action(action), _uIManager);
+			dlg(ObjectG.getDObject!Action(action), _uIManager);
 		}
 	}
 	
@@ -459,7 +448,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPreActivateListeners )
 		{
-			dlg(new Action(action), _uIManager);
+			dlg(ObjectG.getDObject!Action(action), _uIManager);
 		}
 	}
 	
@@ -553,11 +542,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GList * gtk_ui_manager_get_action_groups (GtkUIManager *manager);
 		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -569,11 +560,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GtkAccelGroup * gtk_ui_manager_get_accel_group (GtkUIManager *manager);
 		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AccelGroup(cast(GtkAccelGroup*) p);
+		
+		return ObjectG.getDObject!AccelGroup(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -597,11 +590,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GtkWidget * gtk_ui_manager_get_widget (GtkUIManager *manager,  const gchar *path);
 		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -617,11 +612,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GSList * gtk_ui_manager_get_toplevels (GtkUIManager *manager,  GtkUIManagerItemType types);
 		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -636,11 +633,13 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GtkAction * gtk_ui_manager_get_action (GtkUIManager *manager,  const gchar *path);
 		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Action(cast(GtkAction*) p);
+		
+		return ObjectG.getDObject!Action(cast(GtkAction*) p);
 	}
 	
 	/**

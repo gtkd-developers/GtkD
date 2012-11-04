@@ -59,6 +59,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import atk.ObjectAtk;
@@ -98,18 +99,6 @@ public class NoOpObject : ObjectAtk
 	 */
 	public this (AtkNoOpObject* atkNoOpObject)
 	{
-		if(atkNoOpObject is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkNoOpObject);
-		if( ptr !is null )
-		{
-			this = cast(NoOpObject)ptr;
-			return;
-		}
 		super(cast(AtkObject*)atkNoOpObject);
 		this.atkNoOpObject = atkNoOpObject;
 	}
@@ -134,10 +123,12 @@ public class NoOpObject : ObjectAtk
 	{
 		// AtkObject * atk_no_op_object_new (GObject *obj);
 		auto p = atk_no_op_object_new((obj is null) ? null : obj.getObjectGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 }

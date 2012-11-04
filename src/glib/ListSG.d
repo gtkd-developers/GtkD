@@ -117,11 +117,6 @@ public class ListSG
 	 */
 	public this (GSList* gSList)
 	{
-		if(gSList is null)
-		{
-			this = null;
-			return;
-		}
 		this.gSList = gSList;
 	}
 	
@@ -153,10 +148,12 @@ public class ListSG
 	{
 		// GSList * g_slist_alloc (void);
 		auto p = g_slist_alloc();
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -179,10 +176,12 @@ public class ListSG
 	{
 		// GSList * g_slist_append (GSList *list,  gpointer data);
 		auto p = g_slist_append(gSList, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -200,10 +199,12 @@ public class ListSG
 	{
 		// GSList * g_slist_prepend (GSList *list,  gpointer data);
 		auto p = g_slist_prepend(gSList, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -221,10 +222,12 @@ public class ListSG
 	{
 		// GSList * g_slist_insert (GSList *list,  gpointer data,  gint position);
 		auto p = g_slist_insert(gSList, data, position);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -239,10 +242,12 @@ public class ListSG
 	{
 		// GSList * g_slist_insert_before (GSList *slist,  GSList *sibling,  gpointer data);
 		auto p = g_slist_insert_before(gSList, (sibling is null) ? null : sibling.getListSGStruct(), data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -260,10 +265,12 @@ public class ListSG
 	{
 		// GSList * g_slist_insert_sorted (GSList *list,  gpointer data,  GCompareFunc func);
 		auto p = g_slist_insert_sorted(gSList, data, func);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -279,10 +286,12 @@ public class ListSG
 	{
 		// GSList * g_slist_remove (GSList *list,  gconstpointer data);
 		auto p = g_slist_remove(gSList, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -305,10 +314,12 @@ public class ListSG
 	{
 		// GSList * g_slist_remove_link (GSList *list,  GSList *link_);
 		auto p = g_slist_remove_link(gSList, (link is null) ? null : link.getListSGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -330,10 +341,12 @@ public class ListSG
 	{
 		// GSList * g_slist_delete_link (GSList *list,  GSList *link_);
 		auto p = g_slist_delete_link(gSList, (link is null) ? null : link.getListSGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -350,10 +363,12 @@ public class ListSG
 	{
 		// GSList * g_slist_remove_all (GSList *list,  gconstpointer data);
 		auto p = g_slist_remove_all(gSList, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -420,10 +435,12 @@ public class ListSG
 	{
 		// GSList * g_slist_copy (GSList *list);
 		auto p = g_slist_copy(gSList);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -444,10 +461,12 @@ public class ListSG
 	{
 		// GSList * g_slist_copy_deep (GSList *list,  GCopyFunc func,  gpointer user_data);
 		auto p = g_slist_copy_deep(gSList, func, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -459,10 +478,12 @@ public class ListSG
 	{
 		// GSList * g_slist_reverse (GSList *list);
 		auto p = g_slist_reverse(gSList);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -482,10 +503,12 @@ public class ListSG
 	{
 		// GSList * g_slist_insert_sorted_with_data (GSList *list,  gpointer data,  GCompareDataFunc func,  gpointer user_data);
 		auto p = g_slist_insert_sorted_with_data(gSList, data, func, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -503,10 +526,12 @@ public class ListSG
 	{
 		// GSList * g_slist_sort (GSList *list,  GCompareFunc compare_func);
 		auto p = g_slist_sort(gSList, compareFunc);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -521,10 +546,12 @@ public class ListSG
 	{
 		// GSList * g_slist_sort_with_data (GSList *list,  GCompareDataFunc compare_func,  gpointer user_data);
 		auto p = g_slist_sort_with_data(gSList, compareFunc, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -540,10 +567,12 @@ public class ListSG
 	{
 		// GSList * g_slist_concat (GSList *list1,  GSList *list2);
 		auto p = g_slist_concat(gSList, (list2 is null) ? null : list2.getListSGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -569,10 +598,12 @@ public class ListSG
 	{
 		// GSList * g_slist_last (GSList *list);
 		auto p = g_slist_last(gSList);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -586,10 +617,12 @@ public class ListSG
 	{
 		// GSList * g_slist_nth (GSList *list,  guint n);
 		auto p = g_slist_nth(gSList, n);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -616,10 +649,12 @@ public class ListSG
 	{
 		// GSList * g_slist_find (GSList *list,  gconstpointer data);
 		auto p = g_slist_find(gSList, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	
@@ -640,10 +675,12 @@ public class ListSG
 	{
 		// GSList * g_slist_find_custom (GSList *list,  gconstpointer data,  GCompareFunc func);
 		auto p = g_slist_find_custom(gSList, data, func);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new ListSG(cast(GSList*) p);
 	}
 	

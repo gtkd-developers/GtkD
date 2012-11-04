@@ -154,11 +154,6 @@ public class RWLock
 	 */
 	public this (GRWLock* gRWLock)
 	{
-		if(gRWLock is null)
-		{
-			this = null;
-			return;
-		}
 		this.gRWLock = gRWLock;
 	}
 	

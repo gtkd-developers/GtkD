@@ -88,6 +88,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -165,18 +166,6 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public this (GtkTreeView* gtkTreeView)
 	{
-		if(gtkTreeView is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeView);
-		if( ptr !is null )
-		{
-			this = cast(TreeView)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
 	}
@@ -415,7 +404,7 @@ public class TreeView : Container, ScrollableIF
 	{
 		foreach ( void delegate(TreePath, TreeViewColumn, TreeView) dlg ; _treeView.onRowActivatedListeners )
 		{
-			dlg(new TreePath(path), new TreeViewColumn(column), _treeView);
+			dlg(ObjectG.getDObject!TreePath(path), ObjectG.getDObject!TreeViewColumn(column), _treeView);
 		}
 	}
 	
@@ -442,7 +431,7 @@ public class TreeView : Container, ScrollableIF
 	{
 		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onRowCollapsedListeners )
 		{
-			dlg(new TreeIter(iter), new TreePath(path), _treeView);
+			dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView);
 		}
 	}
 	
@@ -469,7 +458,7 @@ public class TreeView : Container, ScrollableIF
 	{
 		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onRowExpandedListeners )
 		{
-			dlg(new TreeIter(iter), new TreePath(path), _treeView);
+			dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView);
 		}
 	}
 	
@@ -622,7 +611,7 @@ public class TreeView : Container, ScrollableIF
 	{
 		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onTestCollapseRowListeners )
 		{
-			if ( dlg(new TreeIter(iter), new TreePath(path), _treeView) )
+			if ( dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView) )
 			{
 				return 1;
 			}
@@ -656,7 +645,7 @@ public class TreeView : Container, ScrollableIF
 	{
 		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onTestExpandRowListeners )
 		{
-			if ( dlg(new TreeIter(iter), new TreePath(path), _treeView) )
+			if ( dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView) )
 			{
 				return 1;
 			}
@@ -831,11 +820,13 @@ public class TreeView : Container, ScrollableIF
 	{
 		// GtkTreeModel * gtk_tree_view_get_model (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_model(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -859,11 +850,13 @@ public class TreeView : Container, ScrollableIF
 	{
 		// GtkTreeSelection * gtk_tree_view_get_selection (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_selection(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeSelection(cast(GtkTreeSelection*) p);
+		
+		return ObjectG.getDObject!TreeSelection(cast(GtkTreeSelection*) p);
 	}
 	
 	/**
@@ -1035,11 +1028,13 @@ public class TreeView : Container, ScrollableIF
 	{
 		// GtkTreeViewColumn * gtk_tree_view_get_column (GtkTreeView *tree_view,  gint n);
 		auto p = gtk_tree_view_get_column(gtkTreeView, n);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeViewColumn(cast(GtkTreeViewColumn*) p);
+		
+		return ObjectG.getDObject!TreeViewColumn(cast(GtkTreeViewColumn*) p);
 	}
 	
 	/**
@@ -1051,11 +1046,13 @@ public class TreeView : Container, ScrollableIF
 	{
 		// GList * gtk_tree_view_get_columns (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_columns(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1095,11 +1092,13 @@ public class TreeView : Container, ScrollableIF
 	{
 		// GtkTreeViewColumn * gtk_tree_view_get_expander_column (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_expander_column(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeViewColumn(cast(GtkTreeViewColumn*) p);
+		
+		return ObjectG.getDObject!TreeViewColumn(cast(GtkTreeViewColumn*) p);
 	}
 	
 	/**
@@ -1235,8 +1234,8 @@ public class TreeView : Container, ScrollableIF
 		
 		gtk_tree_view_get_cursor(gtkTreeView, &outpath, &outfocusColumn);
 		
-		path = new TreePath(outpath);
-		focusColumn = new TreeViewColumn(outfocusColumn);
+		path = ObjectG.getDObject!TreePath(outpath);
+		focusColumn = ObjectG.getDObject!TreeViewColumn(outfocusColumn);
 	}
 	
 	/**
@@ -1398,8 +1397,8 @@ public class TreeView : Container, ScrollableIF
 		
 		auto p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY);
 		
-		path = new TreePath(outpath);
-		column = new TreeViewColumn(outcolumn);
+		path = ObjectG.getDObject!TreePath(outpath);
+		column = ObjectG.getDObject!TreeViewColumn(outcolumn);
 		return p;
 	}
 	
@@ -1435,8 +1434,8 @@ public class TreeView : Container, ScrollableIF
 		
 		auto p = gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY);
 		
-		path = new TreePath(outpath);
-		column = new TreeViewColumn(outcolumn);
+		path = ObjectG.getDObject!TreePath(outpath);
+		column = ObjectG.getDObject!TreeViewColumn(outcolumn);
 		return p;
 	}
 	
@@ -1516,8 +1515,8 @@ public class TreeView : Container, ScrollableIF
 		
 		auto p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath);
 		
-		startPath = new TreePath(outstartPath);
-		endPath = new TreePath(outendPath);
+		startPath = ObjectG.getDObject!TreePath(outstartPath);
+		endPath = ObjectG.getDObject!TreePath(outendPath);
 		return p;
 	}
 	
@@ -1531,11 +1530,13 @@ public class TreeView : Container, ScrollableIF
 	{
 		// GdkWindow * gtk_tree_view_get_bin_window (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_bin_window(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1712,7 +1713,7 @@ public class TreeView : Container, ScrollableIF
 		
 		gtk_tree_view_get_drag_dest_row(gtkTreeView, &outpath, &pos);
 		
-		path = new TreePath(outpath);
+		path = ObjectG.getDObject!TreePath(outpath);
 	}
 	
 	/**
@@ -1734,7 +1735,7 @@ public class TreeView : Container, ScrollableIF
 		
 		auto p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos);
 		
-		path = new TreePath(outpath);
+		path = ObjectG.getDObject!TreePath(outpath);
 		return p;
 	}
 	
@@ -1749,11 +1750,13 @@ public class TreeView : Container, ScrollableIF
 	{
 		// cairo_surface_t * gtk_tree_view_create_row_drag_icon (GtkTreeView *tree_view,  GtkTreePath *path);
 		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		
+		return ObjectG.getDObject!Surface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -1844,11 +1847,13 @@ public class TreeView : Container, ScrollableIF
 	{
 		// GtkEntry * gtk_tree_view_get_search_entry (GtkTreeView *tree_view);
 		auto p = gtk_tree_view_get_search_entry(gtkTreeView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Entry(cast(GtkEntry*) p);
+		
+		return ObjectG.getDObject!Entry(cast(GtkEntry*) p);
 	}
 	
 	/**
@@ -2170,8 +2175,8 @@ public class TreeView : Container, ScrollableIF
 		
 		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, &x, &y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
 		
-		model = new TreeModel(outmodel);
-		path = new TreePath(outpath);
+		model = ObjectG.getDObject!TreeModel(outmodel);
+		path = ObjectG.getDObject!TreePath(outpath);
 		return p;
 	}
 	

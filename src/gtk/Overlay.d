@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -109,18 +110,6 @@ public class Overlay : Bin
 	 */
 	public this (GtkOverlay* gtkOverlay)
 	{
-		if(gtkOverlay is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkOverlay);
-		if( ptr !is null )
-		{
-			this = cast(Overlay)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkOverlay);
 		this.gtkOverlay = gtkOverlay;
 	}
@@ -170,7 +159,7 @@ public class Overlay : Bin
 	{
 		foreach ( bool delegate(Widget, GdkRectangle*, Overlay) dlg ; _overlay.onGetChildPositionListeners )
 		{
-			if ( dlg(new Widget(widget), allocation, _overlay) )
+			if ( dlg(ObjectG.getDObject!Widget(widget), allocation, _overlay) )
 			{
 				return 1;
 			}

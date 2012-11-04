@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import cairo.Context;
@@ -114,18 +115,6 @@ public class PrintContext : ObjectG
 	 */
 	public this (GtkPrintContext* gtkPrintContext)
 	{
-		if(gtkPrintContext is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPrintContext);
-		if( ptr !is null )
-		{
-			this = cast(PrintContext)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkPrintContext);
 		this.gtkPrintContext = gtkPrintContext;
 	}
@@ -149,11 +138,13 @@ public class PrintContext : ObjectG
 	{
 		// cairo_t * gtk_print_context_get_cairo_context (GtkPrintContext *context);
 		auto p = gtk_print_context_get_cairo_context(gtkPrintContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Context(cast(cairo_t*) p);
+		
+		return ObjectG.getDObject!Context(cast(cairo_t*) p);
 	}
 	
 	/**
@@ -184,11 +175,13 @@ public class PrintContext : ObjectG
 	{
 		// GtkPageSetup * gtk_print_context_get_page_setup (GtkPrintContext *context);
 		auto p = gtk_print_context_get_page_setup(gtkPrintContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PageSetup(cast(GtkPageSetup*) p);
+		
+		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
 	}
 	
 	/**
@@ -247,11 +240,13 @@ public class PrintContext : ObjectG
 	{
 		// PangoFontMap * gtk_print_context_get_pango_fontmap (GtkPrintContext *context);
 		auto p = gtk_print_context_get_pango_fontmap(gtkPrintContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgFontMap(cast(PangoFontMap*) p);
+		
+		return ObjectG.getDObject!PgFontMap(cast(PangoFontMap*) p);
 	}
 	
 	/**
@@ -264,11 +259,13 @@ public class PrintContext : ObjectG
 	{
 		// PangoContext * gtk_print_context_create_pango_context  (GtkPrintContext *context);
 		auto p = gtk_print_context_create_pango_context(gtkPrintContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgContext(cast(PangoContext*) p);
+		
+		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -281,11 +278,13 @@ public class PrintContext : ObjectG
 	{
 		// PangoLayout * gtk_print_context_create_pango_layout  (GtkPrintContext *context);
 		auto p = gtk_print_context_create_pango_layout(gtkPrintContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLayout(cast(PangoLayout*) p);
+		
+		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**

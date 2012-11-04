@@ -59,6 +59,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -102,18 +103,6 @@ public class SourceLanguageManager : ObjectG
 	 */
 	public this (GtkSourceLanguageManager* gtkSourceLanguageManager)
 	{
-		if(gtkSourceLanguageManager is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceLanguageManager);
-		if( ptr !is null )
-		{
-			this = cast(SourceLanguageManager)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceLanguageManager);
 		this.gtkSourceLanguageManager = gtkSourceLanguageManager;
 	}
@@ -152,11 +141,13 @@ public class SourceLanguageManager : ObjectG
 	{
 		// GtkSourceLanguageManager * gtk_source_language_manager_get_default  (void);
 		auto p = gtk_source_language_manager_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceLanguageManager(cast(GtkSourceLanguageManager*) p);
+		
+		return ObjectG.getDObject!SourceLanguageManager(cast(GtkSourceLanguageManager*) p);
 	}
 	
 	/**
@@ -208,11 +199,13 @@ public class SourceLanguageManager : ObjectG
 	{
 		// GtkSourceLanguage * gtk_source_language_manager_get_language  (GtkSourceLanguageManager *lm,  const gchar *id);
 		auto p = gtk_source_language_manager_get_language(gtkSourceLanguageManager, Str.toStringz(id));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceLanguage(cast(GtkSourceLanguage*) p);
+		
+		return ObjectG.getDObject!SourceLanguage(cast(GtkSourceLanguage*) p);
 	}
 	
 	/**
@@ -228,10 +221,12 @@ public class SourceLanguageManager : ObjectG
 	{
 		// GtkSourceLanguage * gtk_source_language_manager_guess_language  (GtkSourceLanguageManager *lm,  const gchar *filename,  const gchar *content_type);
 		auto p = gtk_source_language_manager_guess_language(gtkSourceLanguageManager, Str.toStringz(filename), Str.toStringz(contentType));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceLanguage(cast(GtkSourceLanguage*) p);
+		
+		return ObjectG.getDObject!SourceLanguage(cast(GtkSourceLanguage*) p);
 	}
 }

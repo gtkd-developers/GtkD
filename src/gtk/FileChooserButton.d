@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -116,18 +117,6 @@ public class FileChooserButton : Box, FileChooserIF
 	 */
 	public this (GtkFileChooserButton* gtkFileChooserButton)
 	{
-		if(gtkFileChooserButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFileChooserButton);
-		if( ptr !is null )
-		{
-			this = cast(FileChooserButton)ptr;
-			return;
-		}
 		super(cast(GtkBox*)gtkFileChooserButton);
 		this.gtkFileChooserButton = gtkFileChooserButton;
 	}

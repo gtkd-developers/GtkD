@@ -102,11 +102,6 @@ public class Script : Device
 	 */
 	public this (cairo_device_t* cairo_device)
 	{
-		if(cairo_device is null)
-		{
-			this = null;
-			return;
-		}
 		super(cast(cairo_device_t*)cairo_device);
 		this.cairo_device = cairo_device;
 	}
@@ -126,10 +121,12 @@ public class Script : Device
 	{
 		// cairo_device_t * cairo_script_create (const char *filename);
 		auto p = cairo_script_create(Str.toStringz(filename));
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Script(cast(cairo_device_t*) p);
 	}
 	
@@ -146,10 +143,12 @@ public class Script : Device
 	{
 		// cairo_device_t * cairo_script_create_for_stream (cairo_write_func_t write_func,  void *closure);
 		auto p = cairo_script_create_for_stream(writeFunc, closure);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Script(cast(cairo_device_t*) p);
 	}
 	

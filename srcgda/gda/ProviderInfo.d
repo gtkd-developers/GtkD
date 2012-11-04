@@ -58,6 +58,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -96,11 +97,6 @@ public class ProviderInfo
 	 */
 	public this (GdaProviderInfo* gdaProviderInfo)
 	{
-		if(gdaProviderInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaProviderInfo = gdaProviderInfo;
 	}
 	
@@ -137,11 +133,13 @@ public class ProviderInfo
 	{
 		// GdaProviderInfo* gda_provider_info_copy (GdaProviderInfo *src);
 		auto p = gda_provider_info_copy(gdaProviderInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ProviderInfo(cast(GdaProviderInfo*) p);
+		
+		return ObjectG.getDObject!ProviderInfo(cast(GdaProviderInfo*) p);
 	}
 	
 	/**

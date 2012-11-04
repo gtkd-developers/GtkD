@@ -70,6 +70,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -131,18 +132,6 @@ public class StatusIcon : ObjectG
 	 */
 	public this (GtkStatusIcon* gtkStatusIcon)
 	{
-		if(gtkStatusIcon is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkStatusIcon);
-		if( ptr !is null )
-		{
-			this = cast(StatusIcon)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkStatusIcon);
 		this.gtkStatusIcon = gtkStatusIcon;
 	}
@@ -393,7 +382,7 @@ public class StatusIcon : ObjectG
 	{
 		foreach ( bool delegate(gint, gint, gboolean, Tooltip, StatusIcon) dlg ; _statusIcon.onQueryTooltipListeners )
 		{
-			if ( dlg(x, y, keyboardMode, new Tooltip(tooltip), _statusIcon) )
+			if ( dlg(x, y, keyboardMode, ObjectG.getDObject!Tooltip(tooltip), _statusIcon) )
 			{
 				return 1;
 			}
@@ -624,11 +613,13 @@ public class StatusIcon : ObjectG
 	{
 		// GdkPixbuf * gtk_status_icon_get_pixbuf (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_pixbuf(gtkStatusIcon);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -675,11 +666,13 @@ public class StatusIcon : ObjectG
 	{
 		// GIcon * gtk_status_icon_get_gicon (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_gicon(gtkStatusIcon);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -722,11 +715,13 @@ public class StatusIcon : ObjectG
 	{
 		// GdkScreen * gtk_status_icon_get_screen (GtkStatusIcon *status_icon);
 		auto p = gtk_status_icon_get_screen(gtkStatusIcon);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -938,7 +933,7 @@ public class StatusIcon : ObjectG
 		
 		auto p = gtk_status_icon_get_geometry(gtkStatusIcon, &outscreen, &area, &orientation);
 		
-		screen = new Screen(outscreen);
+		screen = ObjectG.getDObject!Screen(outscreen);
 		return p;
 	}
 	

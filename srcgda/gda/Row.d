@@ -61,6 +61,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -97,11 +98,6 @@ public class Row
 	 */
 	public this (GdaRow* gdaRow)
 	{
-		if(gdaRow is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaRow = gdaRow;
 	}
 	
@@ -162,11 +158,13 @@ public class Row
 	{
 		// GdaRow* gda_row_copy (GdaRow *row);
 		auto p = gda_row_copy(gdaRow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Row(cast(GdaRow*) p);
+		
+		return ObjectG.getDObject!Row(cast(GdaRow*) p);
 	}
 	
 	/**
@@ -186,11 +184,13 @@ public class Row
 	{
 		// GdaDataModel* gda_row_get_model (GdaRow *row);
 		auto p = gda_row_get_model(gdaRow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DataModel(cast(GdaDataModel*) p);
+		
+		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
 	}
 	
 	/**
@@ -254,11 +254,13 @@ public class Row
 	{
 		// GdaValue* gda_row_get_value (GdaRow *row,  gint num);
 		auto p = gda_row_get_value(gdaRow, num);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Value(cast(GdaValue*) p);
+		
+		return ObjectG.getDObject!Value(cast(GdaValue*) p);
 	}
 	
 	/**

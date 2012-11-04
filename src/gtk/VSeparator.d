@@ -55,6 +55,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -93,18 +94,6 @@ public class VSeparator : Separator
 	 */
 	public this (GtkVSeparator* gtkVSeparator)
 	{
-		if(gtkVSeparator is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkVSeparator);
-		if( ptr !is null )
-		{
-			this = cast(VSeparator)ptr;
-			return;
-		}
 		super(cast(GtkSeparator*)gtkVSeparator);
 		this.gtkVSeparator = gtkVSeparator;
 	}

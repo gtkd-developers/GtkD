@@ -60,6 +60,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -97,18 +98,6 @@ public class IndexFactory : PluginFeature
 	 */
 	public this (GstIndexFactory* gstIndexFactory)
 	{
-		if(gstIndexFactory is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstIndexFactory);
-		if( ptr !is null )
-		{
-			this = cast(IndexFactory)ptr;
-			return;
-		}
 		super(cast(GstPluginFeature*)gstIndexFactory);
 		this.gstIndexFactory = gstIndexFactory;
 	}
@@ -160,11 +149,13 @@ public class IndexFactory : PluginFeature
 	{
 		// GstIndexFactory* gst_index_factory_find (const gchar *name);
 		auto p = gst_index_factory_find(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IndexFactory(cast(GstIndexFactory*) p);
+		
+		return ObjectG.getDObject!IndexFactory(cast(GstIndexFactory*) p);
 	}
 	
 	/**
@@ -176,11 +167,13 @@ public class IndexFactory : PluginFeature
 	{
 		// GstIndex* gst_index_factory_create (GstIndexFactory *factory);
 		auto p = gst_index_factory_create(gstIndexFactory);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Index(cast(GstIndex*) p);
+		
+		return ObjectG.getDObject!Index(cast(GstIndex*) p);
 	}
 	
 	/**
@@ -194,10 +187,12 @@ public class IndexFactory : PluginFeature
 	{
 		// GstIndex* gst_index_factory_make (const gchar *name);
 		auto p = gst_index_factory_make(Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Index(cast(GstIndex*) p);
+		
+		return ObjectG.getDObject!Index(cast(GstIndex*) p);
 	}
 }

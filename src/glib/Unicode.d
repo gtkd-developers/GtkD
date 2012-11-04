@@ -583,6 +583,12 @@ public class Unicode
 		// gunichar * g_unicode_canonical_decomposition (gunichar ch,  gsize *result_len);
 		gsize resultLen;
 		auto p = g_unicode_canonical_decomposition(ch, &resultLen);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. resultLen];
 	}
 	
@@ -1092,6 +1098,12 @@ public class Unicode
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. itemsWritten];
 	}
 	
@@ -1122,6 +1134,12 @@ public class Unicode
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. itemsWritten];
 	}
 	
@@ -1140,6 +1158,12 @@ public class Unicode
 		// gunichar * g_utf8_to_ucs4_fast (const gchar *str,  glong len,  glong *items_written);
 		glong itemsWritten;
 		auto p = g_utf8_to_ucs4_fast(cast(char*)str.ptr, cast(int) str.length, &itemsWritten);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. itemsWritten];
 	}
 	
@@ -1167,6 +1191,12 @@ public class Unicode
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
 		}
 		
 		return p[0 .. itemsWritten];
@@ -1232,6 +1262,12 @@ public class Unicode
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
 		}
 		
 		return p[0 .. itemsWritten];

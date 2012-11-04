@@ -67,6 +67,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -134,18 +135,6 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public this (GtkSourceMarkAttributes* gtkSourceMarkAttributes)
 	{
-		if(gtkSourceMarkAttributes is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceMarkAttributes);
-		if( ptr !is null )
-		{
-			this = cast(SourceMarkAttributes)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkSourceMarkAttributes);
 		this.gtkSourceMarkAttributes = gtkSourceMarkAttributes;
 	}
@@ -190,7 +179,7 @@ public class SourceMarkAttributes : ObjectG
 	{
 		foreach ( string delegate(SourceMark, SourceMarkAttributes) dlg ; _sourceMarkAttributes.onQueryTooltipMarkupListeners )
 		{
-			dlg(new SourceMark(mark), _sourceMarkAttributes);
+			dlg(ObjectG.getDObject!SourceMark(mark), _sourceMarkAttributes);
 		}
 	}
 	
@@ -220,7 +209,7 @@ public class SourceMarkAttributes : ObjectG
 	{
 		foreach ( string delegate(SourceMark, SourceMarkAttributes) dlg ; _sourceMarkAttributes.onQueryTooltipTextListeners )
 		{
-			dlg(new SourceMark(mark), _sourceMarkAttributes);
+			dlg(ObjectG.getDObject!SourceMark(mark), _sourceMarkAttributes);
 		}
 	}
 	
@@ -327,11 +316,13 @@ public class SourceMarkAttributes : ObjectG
 	{
 		// GIcon * gtk_source_mark_attributes_get_gicon  (GtkSourceMarkAttributes *attributes);
 		auto p = gtk_source_mark_attributes_get_gicon(gtkSourceMarkAttributes);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -354,11 +345,13 @@ public class SourceMarkAttributes : ObjectG
 	{
 		// const GdkPixbuf * gtk_source_mark_attributes_get_pixbuf  (GtkSourceMarkAttributes *attributes);
 		auto p = gtk_source_mark_attributes_get_pixbuf(gtkSourceMarkAttributes);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -376,11 +369,13 @@ public class SourceMarkAttributes : ObjectG
 	{
 		// const GdkPixbuf * gtk_source_mark_attributes_render_icon  (GtkSourceMarkAttributes *attributes,  GtkWidget *widget,  gint size);
 		auto p = gtk_source_mark_attributes_render_icon(gtkSourceMarkAttributes, (widget is null) ? null : widget.getWidgetStruct(), size);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

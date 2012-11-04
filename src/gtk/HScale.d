@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Adjustment;
@@ -97,18 +98,6 @@ public class HScale : Scale
 	 */
 	public this (GtkHScale* gtkHScale)
 	{
-		if(gtkHScale is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkHScale);
-		if( ptr !is null )
-		{
-			this = cast(HScale)ptr;
-			return;
-		}
 		super(cast(GtkScale*)gtkHScale);
 		this.gtkHScale = gtkHScale;
 	}

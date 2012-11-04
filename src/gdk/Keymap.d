@@ -59,6 +59,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -150,18 +151,6 @@ public class Keymap : ObjectG
 	 */
 	public this (GdkKeymap* gdkKeymap)
 	{
-		if(gdkKeymap is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkKeymap);
-		if( ptr !is null )
-		{
-			this = cast(Keymap)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkKeymap);
 		this.gdkKeymap = gdkKeymap;
 	}
@@ -273,11 +262,13 @@ public class Keymap : ObjectG
 	{
 		// GdkKeymap * gdk_keymap_get_default (void);
 		auto p = gdk_keymap_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Keymap(cast(GdkKeymap*) p);
+		
+		return ObjectG.getDObject!Keymap(cast(GdkKeymap*) p);
 	}
 	
 	/**
@@ -291,11 +282,13 @@ public class Keymap : ObjectG
 	{
 		// GdkKeymap * gdk_keymap_get_for_display (GdkDisplay *display);
 		auto p = gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Keymap(cast(GdkKeymap*) p);
+		
+		return ObjectG.getDObject!Keymap(cast(GdkKeymap*) p);
 	}
 	
 	/**

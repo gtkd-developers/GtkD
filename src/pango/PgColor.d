@@ -58,6 +58,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -97,11 +98,6 @@ public class PgColor
 	 */
 	public this (PangoColor* pangoColor)
 	{
-		if(pangoColor is null)
-		{
-			this = null;
-			return;
-		}
 		this.pangoColor = pangoColor;
 	}
 	
@@ -137,11 +133,13 @@ public class PgColor
 	{
 		// PangoColor * pango_color_copy (const PangoColor *src);
 		auto p = pango_color_copy(pangoColor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgColor(cast(PangoColor*) p);
+		
+		return ObjectG.getDObject!PgColor(cast(PangoColor*) p);
 	}
 	
 	/**

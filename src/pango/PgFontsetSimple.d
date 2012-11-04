@@ -60,6 +60,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import pango.PgLanguage;
@@ -103,18 +104,6 @@ public class PgFontsetSimple : PgFontset
 	 */
 	public this (PangoFontsetSimple* pangoFontsetSimple)
 	{
-		if(pangoFontsetSimple is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)pangoFontsetSimple);
-		if( ptr !is null )
-		{
-			this = cast(PgFontsetSimple)ptr;
-			return;
-		}
 		super(cast(PangoFontset*)pangoFontsetSimple);
 		this.pangoFontsetSimple = pangoFontsetSimple;
 	}

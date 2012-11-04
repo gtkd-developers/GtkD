@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import gtk.Action;
@@ -133,11 +134,13 @@ public template ActivatableT(TStruct)
 	{
 		// GtkAction * gtk_activatable_get_related_action (GtkActivatable *activatable);
 		auto p = gtk_activatable_get_related_action(getActivatableTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Action(cast(GtkAction*) p);
+		
+		return ObjectG.getDObject!Action(cast(GtkAction*) p);
 	}
 	
 	/**

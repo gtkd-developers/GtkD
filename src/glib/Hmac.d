@@ -105,11 +105,6 @@ public class Hmac
 	 */
 	public this (GHmac* gHmac)
 	{
-		if(gHmac is null)
-		{
-			this = null;
-			return;
-		}
 		this.gHmac = gHmac;
 	}
 	
@@ -184,10 +179,12 @@ public class Hmac
 	{
 		// GHmac * g_hmac_copy (const GHmac *hmac);
 		auto p = g_hmac_copy(gHmac);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Hmac(cast(GHmac*) p);
 	}
 	
@@ -201,10 +198,12 @@ public class Hmac
 	{
 		// GHmac * g_hmac_ref (GHmac *hmac);
 		auto p = g_hmac_ref(gHmac);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Hmac(cast(GHmac*) p);
 	}
 	

@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -106,18 +107,6 @@ public class CellRendererCombo : CellRendererText
 	 */
 	public this (GtkCellRendererCombo* gtkCellRendererCombo)
 	{
-		if(gtkCellRendererCombo is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellRendererCombo);
-		if( ptr !is null )
-		{
-			this = cast(CellRendererCombo)ptr;
-			return;
-		}
 		super(cast(GtkCellRendererText*)gtkCellRendererCombo);
 		this.gtkCellRendererCombo = gtkCellRendererCombo;
 	}
@@ -165,7 +154,7 @@ public class CellRendererCombo : CellRendererText
 	{
 		foreach ( void delegate(string, TreeIter, CellRendererCombo) dlg ; _cellRendererCombo.onChangedListeners )
 		{
-			dlg(Str.toString(pathString), new TreeIter(newIter), _cellRendererCombo);
+			dlg(Str.toString(pathString), ObjectG.getDObject!TreeIter(newIter), _cellRendererCombo);
 		}
 	}
 	

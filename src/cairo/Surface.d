@@ -116,11 +116,6 @@ public class Surface
 	 */
 	public this (cairo_surface_t* cairo_surface)
 	{
-		if(cairo_surface is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo_surface = cairo_surface;
 	}
 	
@@ -174,10 +169,12 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_create_similar (cairo_surface_t *other,  cairo_content_t content,  int width,  int height);
 		auto p = cairo_surface_create_similar(cairo_surface, content, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
@@ -199,10 +196,12 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_create_similar_image (cairo_surface_t *other,  cairo_format_t format,  int width,  int height);
 		auto p = cairo_surface_create_similar_image(cairo_surface, format, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
@@ -231,10 +230,12 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_create_for_rectangle (cairo_surface_t *target,  double x,  double y,  double width,  double height);
 		auto p = cairo_surface_create_for_rectangle(cairo_surface, x, y, width, height);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
@@ -251,10 +252,12 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_reference (cairo_surface_t *surface);
 		auto p = cairo_surface_reference(cairo_surface);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
@@ -329,10 +332,12 @@ public class Surface
 	{
 		// cairo_device_t * cairo_surface_get_device (cairo_surface_t *surface);
 		auto p = cairo_surface_get_device(cairo_surface);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Device(cast(cairo_device_t*) p);
 	}
 	
@@ -649,10 +654,12 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_map_to_image (cairo_surface_t *surface,  const cairo_rectangle_int_t *extents);
 		auto p = cairo_surface_map_to_image(cairo_surface, &extents);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 	

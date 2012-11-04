@@ -64,6 +64,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -104,11 +105,6 @@ public class DBusAnnotationInfo : Boxed
 	 */
 	public this (GDBusAnnotationInfo* gDBusAnnotationInfo)
 	{
-		if(gDBusAnnotationInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDBusAnnotationInfo = gDBusAnnotationInfo;
 	}
 	
@@ -148,11 +144,13 @@ public class DBusAnnotationInfo : Boxed
 	{
 		// GDBusAnnotationInfo * g_dbus_annotation_info_ref (GDBusAnnotationInfo *info);
 		auto p = g_dbus_annotation_info_ref(gDBusAnnotationInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusAnnotationInfo(cast(GDBusAnnotationInfo*) p);
+		
+		return ObjectG.getDObject!DBusAnnotationInfo(cast(GDBusAnnotationInfo*) p);
 	}
 	
 	/**

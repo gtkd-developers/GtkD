@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -104,18 +105,6 @@ public class TextTagTable : ObjectG
 	 */
 	public this (GtkTextTagTable* gtkTextTagTable)
 	{
-		if(gtkTextTagTable is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTextTagTable);
-		if( ptr !is null )
-		{
-			this = cast(TextTagTable)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkTextTagTable);
 		this.gtkTextTagTable = gtkTextTagTable;
 	}
@@ -152,7 +141,7 @@ public class TextTagTable : ObjectG
 	{
 		foreach ( void delegate(TextTag, TextTagTable) dlg ; _textTagTable.onTagAddedListeners )
 		{
-			dlg(new TextTag(tag), _textTagTable);
+			dlg(ObjectG.getDObject!TextTag(tag), _textTagTable);
 		}
 	}
 	
@@ -178,7 +167,7 @@ public class TextTagTable : ObjectG
 	{
 		foreach ( void delegate(TextTag, gboolean, TextTagTable) dlg ; _textTagTable.onTagChangedListeners )
 		{
-			dlg(new TextTag(tag), sizeChanged, _textTagTable);
+			dlg(ObjectG.getDObject!TextTag(tag), sizeChanged, _textTagTable);
 		}
 	}
 	
@@ -204,7 +193,7 @@ public class TextTagTable : ObjectG
 	{
 		foreach ( void delegate(TextTag, TextTagTable) dlg ; _textTagTable.onTagRemovedListeners )
 		{
-			dlg(new TextTag(tag), _textTagTable);
+			dlg(ObjectG.getDObject!TextTag(tag), _textTagTable);
 		}
 	}
 	
@@ -262,11 +251,13 @@ public class TextTagTable : ObjectG
 	{
 		// GtkTextTag * gtk_text_tag_table_lookup (GtkTextTagTable *table,  const gchar *name);
 		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextTag(cast(GtkTextTag*) p);
+		
+		return ObjectG.getDObject!TextTag(cast(GtkTextTag*) p);
 	}
 	
 	/**

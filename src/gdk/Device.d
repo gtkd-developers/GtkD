@@ -67,6 +67,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -114,18 +115,6 @@ public class Device : ObjectG
 	 */
 	public this (GdkDevice* gdkDevice)
 	{
-		if(gdkDevice is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkDevice);
-		if( ptr !is null )
-		{
-			this = cast(Device)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkDevice);
 		this.gdkDevice = gdkDevice;
 	}
@@ -292,11 +281,13 @@ public class Device : ObjectG
 	{
 		// GdkDevice * gdk_device_get_associated_device (GdkDevice *device);
 		auto p = gdk_device_get_associated_device(gdkDevice);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Device(cast(GdkDevice*) p);
+		
+		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
 	}
 	
 	/**
@@ -309,11 +300,13 @@ public class Device : ObjectG
 	{
 		// GList * gdk_device_list_slave_devices (GdkDevice *device);
 		auto p = gdk_device_list_slave_devices(gdkDevice);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -334,11 +327,13 @@ public class Device : ObjectG
 	{
 		// GdkDisplay * gdk_device_get_display (GdkDevice *device);
 		auto p = gdk_device_get_display(gdkDevice);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -487,7 +482,7 @@ public class Device : ObjectG
 		
 		gdk_device_get_position(gdkDevice, &outscreen, &x, &y);
 		
-		screen = new Screen(outscreen);
+		screen = ObjectG.getDObject!Screen(outscreen);
 	}
 	
 	/**
@@ -507,11 +502,13 @@ public class Device : ObjectG
 	{
 		// GdkWindow * gdk_device_get_window_at_position (GdkDevice *device,  gint *win_x,  gint *win_y);
 		auto p = gdk_device_get_window_at_position(gdkDevice, &winX, &winY);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -575,11 +572,13 @@ public class Device : ObjectG
 	{
 		// GList * gdk_device_list_axes (GdkDevice *device);
 		auto p = gdk_device_list_axes(gdkDevice);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

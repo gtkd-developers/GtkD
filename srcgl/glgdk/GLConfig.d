@@ -61,6 +61,7 @@ public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -104,18 +105,6 @@ public class GLConfig : ObjectG
 	 */
 	public this (GdkGLConfig* gdkGLConfig)
 	{
-		if(gdkGLConfig is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkGLConfig);
-		if( ptr !is null )
-		{
-			this = cast(GLConfig)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkGLConfig);
 		this.gdkGLConfig = gdkGLConfig;
 	}
@@ -254,11 +243,13 @@ public class GLConfig : ObjectG
 	{
 		// GdkScreen * gdk_gl_config_get_screen (GdkGLConfig *glconfig);
 		auto p = gdk_gl_config_get_screen(gdkGLConfig);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -283,11 +274,13 @@ public class GLConfig : ObjectG
 	{
 		// GdkVisual * gdk_gl_config_get_visual (GdkGLConfig *glconfig);
 		auto p = gdk_gl_config_get_visual(gdkGLConfig);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Visual(cast(GdkVisual*) p);
+		
+		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
 	}
 	
 	/**

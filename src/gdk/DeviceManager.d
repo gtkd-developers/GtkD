@@ -60,6 +60,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -166,18 +167,6 @@ public class DeviceManager : ObjectG
 	 */
 	public this (GdkDeviceManager* gdkDeviceManager)
 	{
-		if(gdkDeviceManager is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkDeviceManager);
-		if( ptr !is null )
-		{
-			this = cast(DeviceManager)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkDeviceManager);
 		this.gdkDeviceManager = gdkDeviceManager;
 	}
@@ -217,7 +206,7 @@ public class DeviceManager : ObjectG
 	{
 		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceAddedListeners )
 		{
-			dlg(new Device(device), _deviceManager);
+			dlg(ObjectG.getDObject!Device(device), _deviceManager);
 		}
 	}
 	
@@ -252,7 +241,7 @@ public class DeviceManager : ObjectG
 	{
 		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceChangedListeners )
 		{
-			dlg(new Device(device), _deviceManager);
+			dlg(ObjectG.getDObject!Device(device), _deviceManager);
 		}
 	}
 	
@@ -283,7 +272,7 @@ public class DeviceManager : ObjectG
 	{
 		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceRemovedListeners )
 		{
-			dlg(new Device(device), _deviceManager);
+			dlg(ObjectG.getDObject!Device(device), _deviceManager);
 		}
 	}
 	
@@ -312,11 +301,13 @@ public class DeviceManager : ObjectG
 	{
 		// GdkDisplay * gdk_device_manager_get_display (GdkDeviceManager *device_manager);
 		auto p = gdk_device_manager_get_display(gdkDeviceManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Display(cast(GdkDisplay*) p);
+		
+		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -344,10 +335,12 @@ public class DeviceManager : ObjectG
 	{
 		// GdkDevice * gdk_device_manager_get_client_pointer  (GdkDeviceManager *device_manager);
 		auto p = gdk_device_manager_get_client_pointer(gdkDeviceManager);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Device(cast(GdkDevice*) p);
+		
+		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
 	}
 }

@@ -63,6 +63,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gobject.ObjectG;
@@ -133,11 +134,6 @@ public class Closure
 	 */
 	public this (GClosure* gClosure)
 	{
-		if(gClosure is null)
-		{
-			this = null;
-			return;
-		}
 		this.gClosure = gClosure;
 	}
 	
@@ -176,11 +172,13 @@ public class Closure
 	{
 		// GClosure * g_closure_ref (GClosure *closure);
 		auto p = g_closure_ref(gClosure);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Closure(cast(GClosure*) p);
+		
+		return ObjectG.getDObject!Closure(cast(GClosure*) p);
 	}
 	
 	/**

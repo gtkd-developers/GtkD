@@ -79,6 +79,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -131,18 +132,6 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	 */
 	public this (GtkTreeViewColumn* gtkTreeViewColumn)
 	{
-		if(gtkTreeViewColumn is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTreeViewColumn);
-		if( ptr !is null )
-		{
-			this = cast(TreeViewColumn)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkTreeViewColumn);
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}
@@ -573,11 +562,13 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	{
 		// GtkWidget * gtk_tree_view_column_get_widget (GtkTreeViewColumn *tree_column);
 		auto p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

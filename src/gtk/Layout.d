@@ -68,6 +68,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Window;
@@ -117,18 +118,6 @@ public class Layout : Container, ScrollableIF
 	 */
 	public this (GtkLayout* gtkLayout)
 	{
-		if(gtkLayout is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkLayout);
-		if( ptr !is null )
-		{
-			this = cast(Layout)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkLayout);
 		this.gtkLayout = gtkLayout;
 	}
@@ -229,10 +218,12 @@ public class Layout : Container, ScrollableIF
 	{
 		// GdkWindow * gtk_layout_get_bin_window (GtkLayout *layout);
 		auto p = gtk_layout_get_bin_window(gtkLayout);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

@@ -56,6 +56,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -98,18 +99,6 @@ public class CellRendererAccel : CellRendererText
 	 */
 	public this (GtkCellRendererAccel* gtkCellRendererAccel)
 	{
-		if(gtkCellRendererAccel is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellRendererAccel);
-		if( ptr !is null )
-		{
-			this = cast(CellRendererAccel)ptr;
-			return;
-		}
 		super(cast(GtkCellRendererText*)gtkCellRendererAccel);
 		this.gtkCellRendererAccel = gtkCellRendererAccel;
 	}

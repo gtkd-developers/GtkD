@@ -60,6 +60,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -104,18 +105,6 @@ public class InetAddress : ObjectG
 	 */
 	public this (GInetAddress* gInetAddress)
 	{
-		if(gInetAddress is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gInetAddress);
-		if( ptr !is null )
-		{
-			this = cast(InetAddress)ptr;
-			return;
-		}
 		super(cast(GObject*)gInetAddress);
 		this.gInetAddress = gInetAddress;
 	}
@@ -219,6 +208,12 @@ public class InetAddress : ObjectG
 	{
 		// const guint8 * g_inet_address_to_bytes (GInetAddress *address);
 		auto p = g_inet_address_to_bytes(gInetAddress);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
 		return p[0 .. getNativeSize()];
 	}
 	

@@ -1038,10 +1038,12 @@ public class Str
 	{
 		// GString * g_string_ascii_up (GString *string);
 		auto p = g_string_ascii_up((string is null) ? null : string.getStringGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	
@@ -1055,10 +1057,12 @@ public class Str
 	{
 		// GString * g_string_ascii_down (GString *string);
 		auto p = g_string_ascii_down((string is null) ? null : string.getStringGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new StringG(cast(GString*) p);
 	}
 	

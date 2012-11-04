@@ -57,6 +57,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.OutputStream;
@@ -103,18 +104,6 @@ public class BufferedOutputStream : FilterOutputStream
 	 */
 	public this (GBufferedOutputStream* gBufferedOutputStream)
 	{
-		if(gBufferedOutputStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gBufferedOutputStream);
-		if( ptr !is null )
-		{
-			this = cast(BufferedOutputStream)ptr;
-			return;
-		}
 		super(cast(GFilterOutputStream*)gBufferedOutputStream);
 		this.gBufferedOutputStream = gBufferedOutputStream;
 	}

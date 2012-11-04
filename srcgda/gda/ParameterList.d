@@ -61,6 +61,7 @@ public  import gdac.gdatypes;
 
 private import gdac.gda;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -99,11 +100,6 @@ public class ParameterList
 	 */
 	public this (GdaParameterList* gdaParameterList)
 	{
-		if(gdaParameterList is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdaParameterList = gdaParameterList;
 	}
 	
@@ -151,11 +147,13 @@ public class ParameterList
 	{
 		// GdaParameterList* gda_parameter_list_copy (GdaParameterList *plist);
 		auto p = gda_parameter_list_copy(gdaParameterList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParameterList(cast(GdaParameterList*) p);
+		
+		return ObjectG.getDObject!ParameterList(cast(GdaParameterList*) p);
 	}
 	
 	/**
@@ -180,11 +178,13 @@ public class ParameterList
 	{
 		// GList* gda_parameter_list_get_names (GdaParameterList *plist);
 		auto p = gda_parameter_list_get_names(gdaParameterList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -197,11 +197,13 @@ public class ParameterList
 	{
 		// GdaParameter* gda_parameter_list_find (GdaParameterList *plist,  const gchar *name);
 		auto p = gda_parameter_list_find(gdaParameterList, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Parameter(cast(GdaParameter*) p);
+		
+		return ObjectG.getDObject!Parameter(cast(GdaParameter*) p);
 	}
 	
 	/**

@@ -58,6 +58,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -116,18 +117,6 @@ public class Task : ObjectGst
 	 */
 	public this (GstTask* gstTask)
 	{
-		if(gstTask is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstTask);
-		if( ptr !is null )
-		{
-			this = cast(Task)ptr;
-			return;
-		}
 		super(cast(GstObject*)gstTask);
 		this.gstTask = gstTask;
 	}
@@ -167,11 +156,13 @@ public class Task : ObjectGst
 	{
 		// GstTask* gst_task_create (GstTaskFunction func,  gpointer data);
 		auto p = gst_task_create(func, data);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Task(cast(GstTask*) p);
+		
+		return ObjectG.getDObject!Task(cast(GstTask*) p);
 	}
 	
 	/**

@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -114,18 +115,6 @@ public class TextMark : ObjectG
 	 */
 	public this (GtkTextMark* gtkTextMark)
 	{
-		if(gtkTextMark is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkTextMark);
-		if( ptr !is null )
-		{
-			this = cast(TextMark)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkTextMark);
 		this.gtkTextMark = gtkTextMark;
 	}
@@ -223,11 +212,13 @@ public class TextMark : ObjectG
 	{
 		// GtkTextBuffer * gtk_text_mark_get_buffer (GtkTextMark *mark);
 		auto p = gtk_text_mark_get_buffer(gtkTextMark);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TextBuffer(cast(GtkTextBuffer*) p);
+		
+		return ObjectG.getDObject!TextBuffer(cast(GtkTextBuffer*) p);
 	}
 	
 	/**

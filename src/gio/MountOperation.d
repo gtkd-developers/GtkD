@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -109,18 +110,6 @@ public class MountOperation : ObjectG
 	 */
 	public this (GMountOperation* gMountOperation)
 	{
-		if(gMountOperation is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gMountOperation);
-		if( ptr !is null )
-		{
-			this = cast(MountOperation)ptr;
-			return;
-		}
 		super(cast(GObject*)gMountOperation);
 		this.gMountOperation = gMountOperation;
 	}
@@ -287,7 +276,7 @@ public class MountOperation : ObjectG
 	{
 		foreach ( void delegate(string, ArrayG, GStrv, MountOperation) dlg ; _mountOperation.onShowProcessesListeners )
 		{
-			dlg(Str.toString(message), new ArrayG(processes), choices, _mountOperation);
+			dlg(Str.toString(message), ObjectG.getDObject!ArrayG(processes), choices, _mountOperation);
 		}
 	}
 	

@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.Widget;
@@ -109,18 +110,6 @@ public class Grid : Container, OrientableIF
 	 */
 	public this (GtkGrid* gtkGrid)
 	{
-		if(gtkGrid is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkGrid);
-		if( ptr !is null )
-		{
-			this = cast(Grid)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkGrid);
 		this.gtkGrid = gtkGrid;
 	}
@@ -204,11 +193,13 @@ public class Grid : Container, OrientableIF
 	{
 		// GtkWidget * gtk_grid_get_child_at (GtkGrid *grid,  gint left,  gint top);
 		auto p = gtk_grid_get_child_at(gtkGrid, left, top);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

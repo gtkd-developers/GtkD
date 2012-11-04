@@ -113,11 +113,6 @@ public class Directory
 	 */
 	public this (GDir* gDir)
 	{
-		if(gDir is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDir = gDir;
 	}
 	
@@ -179,10 +174,12 @@ public class Directory
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Directory(cast(GDir*) p);
 	}
 	

@@ -60,6 +60,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -125,11 +126,6 @@ public class SettingsSchema : Boxed
 	 */
 	public this (GSettingsSchema* gSettingsSchema)
 	{
-		if(gSettingsSchema is null)
-		{
-			this = null;
-			return;
-		}
 		this.gSettingsSchema = gSettingsSchema;
 	}
 	
@@ -153,11 +149,13 @@ public class SettingsSchema : Boxed
 	{
 		// GSettingsSchema * g_settings_schema_ref (GSettingsSchema *schema);
 		auto p = g_settings_schema_ref(gSettingsSchema);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SettingsSchema(cast(GSettingsSchema*) p);
+		
+		return ObjectG.getDObject!SettingsSchema(cast(GSettingsSchema*) p);
 	}
 	
 	/**

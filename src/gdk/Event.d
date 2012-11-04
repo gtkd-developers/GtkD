@@ -64,6 +64,7 @@ public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -107,11 +108,6 @@ public class Event
 	 */
 	public this (GdkEvent* gdkEvent)
 	{
-		if(gdkEvent is null)
-		{
-			this = null;
-			return;
-		}
 		this.gdkEvent = gdkEvent;
 	}
 	
@@ -272,11 +268,13 @@ public class Event
 	{
 		// GdkEvent * gdk_event_peek (void);
 		auto p = gdk_event_peek();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Event(cast(GdkEvent*) p);
+		
+		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -289,11 +287,13 @@ public class Event
 	{
 		// GdkEvent * gdk_event_get (void);
 		auto p = gdk_event_get();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Event(cast(GdkEvent*) p);
+		
+		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -334,11 +334,13 @@ public class Event
 	{
 		// GdkEvent * gdk_event_copy (const GdkEvent *event);
 		auto p = gdk_event_copy(gdkEvent);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Event(cast(GdkEvent*) p);
+		
+		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -652,11 +654,13 @@ public class Event
 	{
 		// GdkScreen * gdk_event_get_screen (const GdkEvent *event);
 		auto p = gdk_event_get_screen(gdkEvent);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Screen(cast(GdkScreen*) p);
+		
+		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -668,11 +672,13 @@ public class Event
 	{
 		// GdkDevice * gdk_event_get_device (const GdkEvent *event);
 		auto p = gdk_event_get_device(gdkEvent);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Device(cast(GdkDevice*) p);
+		
+		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
 	}
 	
 	/**
@@ -704,11 +710,13 @@ public class Event
 	{
 		// GdkDevice * gdk_event_get_source_device (const GdkEvent *event);
 		auto p = gdk_event_get_source_device(gdkEvent);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Device(cast(GdkDevice*) p);
+		
+		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
 	}
 	
 	/**

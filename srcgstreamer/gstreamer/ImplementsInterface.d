@@ -58,6 +58,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gstreamer.Element;
@@ -94,11 +95,6 @@ public class ImplementsInterface
 	 */
 	public this (GstImplementsInterface* gstImplementsInterface)
 	{
-		if(gstImplementsInterface is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstImplementsInterface = gstImplementsInterface;
 	}
 	

@@ -63,6 +63,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -100,11 +101,6 @@ public class SocketAddressEnumerator
 	 */
 	public this (GSocketAddressEnumerator* gSocketAddressEnumerator)
 	{
-		if(gSocketAddressEnumerator is null)
-		{
-			this = null;
-			return;
-		}
 		this.gSocketAddressEnumerator = gSocketAddressEnumerator;
 	}
 	

@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.Converter;
@@ -98,18 +99,6 @@ public class ConverterOutputStream : FilterOutputStream
 	 */
 	public this (GConverterOutputStream* gConverterOutputStream)
 	{
-		if(gConverterOutputStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gConverterOutputStream);
-		if( ptr !is null )
-		{
-			this = cast(ConverterOutputStream)ptr;
-			return;
-		}
 		super(cast(GFilterOutputStream*)gConverterOutputStream);
 		this.gConverterOutputStream = gConverterOutputStream;
 	}
@@ -150,10 +139,12 @@ public class ConverterOutputStream : FilterOutputStream
 	{
 		// GConverter * g_converter_output_stream_get_converter  (GConverterOutputStream *converter_stream);
 		auto p = g_converter_output_stream_get_converter(gConverterOutputStream);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Converter(cast(GConverter*) p);
+		
+		return ObjectG.getDObject!Converter(cast(GConverter*) p);
 	}
 }

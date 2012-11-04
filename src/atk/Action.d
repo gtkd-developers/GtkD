@@ -56,6 +56,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -111,11 +112,6 @@ public class Action
 	 */
 	public this (AtkAction* atkAction)
 	{
-		if(atkAction is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkAction = atkAction;
 	}
 	

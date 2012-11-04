@@ -129,11 +129,6 @@ public class DateTime
 	 */
 	public this (GDateTime* gDateTime)
 	{
-		if(gDateTime is null)
-		{
-			this = null;
-			return;
-		}
 		this.gDateTime = gDateTime;
 	}
 	
@@ -322,10 +317,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_ref (GDateTime *datetime);
 		auto p = g_date_time_ref(gDateTime);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -402,10 +399,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add (GDateTime *datetime,  GTimeSpan timespan);
 		auto p = g_date_time_add(gDateTime, timespan);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -421,10 +420,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add_years (GDateTime *datetime,  gint years);
 		auto p = g_date_time_add_years(gDateTime, years);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -440,10 +441,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add_months (GDateTime *datetime,  gint months);
 		auto p = g_date_time_add_months(gDateTime, months);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -459,10 +462,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add_weeks (GDateTime *datetime,  gint weeks);
 		auto p = g_date_time_add_weeks(gDateTime, weeks);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -478,10 +483,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add_days (GDateTime *datetime,  gint days);
 		auto p = g_date_time_add_days(gDateTime, days);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -496,10 +503,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add_hours (GDateTime *datetime,  gint hours);
 		auto p = g_date_time_add_hours(gDateTime, hours);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -514,10 +523,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add_minutes (GDateTime *datetime,  gint minutes);
 		auto p = g_date_time_add_minutes(gDateTime, minutes);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -532,10 +543,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add_seconds (GDateTime *datetime,  gdouble seconds);
 		auto p = g_date_time_add_seconds(gDateTime, seconds);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -556,10 +569,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_add_full (GDateTime *datetime,  gint years,  gint months,  gint days,  gint hours,  gint minutes,  gdouble seconds);
 		auto p = g_date_time_add_full(gDateTime, years, months, days, hours, minutes, seconds);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -871,10 +886,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_to_timezone (GDateTime *datetime,  GTimeZone *tz);
 		auto p = g_date_time_to_timezone(gDateTime, (tz is null) ? null : tz.getTimeZoneStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -890,10 +907,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_to_local (GDateTime *datetime);
 		auto p = g_date_time_to_local(gDateTime);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	
@@ -909,10 +928,12 @@ public class DateTime
 	{
 		// GDateTime * g_date_time_to_utc (GDateTime *datetime);
 		auto p = g_date_time_to_utc(gDateTime);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new DateTime(cast(GDateTime*) p);
 	}
 	

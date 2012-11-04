@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.CellArea;
@@ -101,18 +102,6 @@ public class CellAreaContext : ObjectG
 	 */
 	public this (GtkCellAreaContext* gtkCellAreaContext)
 	{
-		if(gtkCellAreaContext is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellAreaContext);
-		if( ptr !is null )
-		{
-			this = cast(CellAreaContext)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkCellAreaContext);
 		this.gtkCellAreaContext = gtkCellAreaContext;
 	}
@@ -141,11 +130,13 @@ public class CellAreaContext : ObjectG
 	{
 		// GtkCellArea * gtk_cell_area_context_get_area (GtkCellAreaContext *context);
 		auto p = gtk_cell_area_context_get_area(gtkCellAreaContext);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellArea(cast(GtkCellArea*) p);
+		
+		return ObjectG.getDObject!CellArea(cast(GtkCellArea*) p);
 	}
 	
 	/**

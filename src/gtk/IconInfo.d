@@ -71,6 +71,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -159,11 +160,6 @@ public class IconInfo
 	 */
 	public this (GtkIconInfo* gtkIconInfo)
 	{
-		if(gtkIconInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkIconInfo = gtkIconInfo;
 	}
 	
@@ -218,11 +214,13 @@ public class IconInfo
 	{
 		// GtkIconInfo * gtk_icon_info_copy (GtkIconInfo *icon_info);
 		auto p = gtk_icon_info_copy(gtkIconInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconInfo(cast(GtkIconInfo*) p);
+		
+		return ObjectG.getDObject!IconInfo(cast(GtkIconInfo*) p);
 	}
 	
 	/**
@@ -299,11 +297,13 @@ public class IconInfo
 	{
 		// GdkPixbuf * gtk_icon_info_get_builtin_pixbuf (GtkIconInfo *icon_info);
 		auto p = gtk_icon_info_get_builtin_pixbuf(gtkIconInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -334,11 +334,13 @@ public class IconInfo
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -382,11 +384,13 @@ public class IconInfo
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -418,11 +422,13 @@ public class IconInfo
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -454,11 +460,13 @@ public class IconInfo
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

@@ -72,6 +72,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -127,18 +128,6 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public this (GtkToolbar* gtkToolbar)
 	{
-		if(gtkToolbar is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToolbar);
-		if( ptr !is null )
-		{
-			this = cast(Toolbar)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkToolbar);
 		this.gtkToolbar = gtkToolbar;
 	}
@@ -354,11 +343,13 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	{
 		// GtkToolItem * gtk_toolbar_get_nth_item (GtkToolbar *toolbar,  gint n);
 		auto p = gtk_toolbar_get_nth_item(gtkToolbar, n);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ToolItem(cast(GtkToolItem*) p);
+		
+		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
 	}
 	
 	/**

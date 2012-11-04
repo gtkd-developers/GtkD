@@ -67,6 +67,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -147,18 +148,6 @@ public class Pipeline : Bin
 	 */
 	public this (GstPipeline* gstPipeline)
 	{
-		if(gstPipeline is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstPipeline);
-		if( ptr !is null )
-		{
-			this = cast(Pipeline)ptr;
-			return;
-		}
 		super(cast(GstBin*)gstPipeline);
 		this.gstPipeline = gstPipeline;
 	}
@@ -197,11 +186,13 @@ public class Pipeline : Bin
 	{
 		// GstBus* gst_pipeline_get_bus (GstPipeline *pipeline);
 		auto p = gst_pipeline_get_bus(gstPipeline);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Bus(cast(GstBus*) p);
+		
+		return ObjectG.getDObject!Bus(cast(GstBus*) p);
 	}
 	
 	/**
@@ -225,11 +216,13 @@ public class Pipeline : Bin
 	{
 		// GstClock* gst_pipeline_get_clock (GstPipeline *pipeline);
 		auto p = gst_pipeline_get_clock(gstPipeline);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Clock(cast(GstClock*) p);
+		
+		return ObjectG.getDObject!Clock(cast(GstClock*) p);
 	}
 	
 	/**

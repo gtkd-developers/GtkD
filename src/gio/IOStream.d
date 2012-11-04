@@ -66,6 +66,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -126,18 +127,6 @@ public class IOStream : ObjectG
 	 */
 	public this (GIOStream* gIOStream)
 	{
-		if(gIOStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gIOStream);
-		if( ptr !is null )
-		{
-			this = cast(IOStream)ptr;
-			return;
-		}
 		super(cast(GObject*)gIOStream);
 		this.gIOStream = gIOStream;
 	}
@@ -161,11 +150,13 @@ public class IOStream : ObjectG
 	{
 		// GInputStream * g_io_stream_get_input_stream (GIOStream *stream);
 		auto p = g_io_stream_get_input_stream(gIOStream);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new InputStream(cast(GInputStream*) p);
+		
+		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
 	}
 	
 	/**
@@ -178,11 +169,13 @@ public class IOStream : ObjectG
 	{
 		// GOutputStream * g_io_stream_get_output_stream (GIOStream *stream);
 		auto p = g_io_stream_get_output_stream(gIOStream);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new OutputStream(cast(GOutputStream*) p);
+		
+		return ObjectG.getDObject!OutputStream(cast(GOutputStream*) p);
 	}
 	
 	/**

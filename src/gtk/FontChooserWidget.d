@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -106,18 +107,6 @@ public class FontChooserWidget : Box, FontChooserIF
 	 */
 	public this (GtkFontChooserWidget* gtkFontChooserWidget)
 	{
-		if(gtkFontChooserWidget is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkFontChooserWidget);
-		if( ptr !is null )
-		{
-			this = cast(FontChooserWidget)ptr;
-			return;
-		}
 		super(cast(GtkBox*)gtkFontChooserWidget);
 		this.gtkFontChooserWidget = gtkFontChooserWidget;
 	}

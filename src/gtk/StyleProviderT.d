@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 public import gtkc.gtk;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
 public import gobject.ParamSpec;
@@ -109,11 +110,13 @@ public template StyleProviderT(TStruct)
 	{
 		// GtkIconFactory * gtk_style_provider_get_icon_factory (GtkStyleProvider *provider,  GtkWidgetPath *path);
 		auto p = gtk_style_provider_get_icon_factory(getStyleProviderTStruct(), (path is null) ? null : path.getWidgetPathStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconFactory(cast(GtkIconFactory*) p);
+		
+		return ObjectG.getDObject!IconFactory(cast(GtkIconFactory*) p);
 	}
 	
 	/**
@@ -127,11 +130,13 @@ public template StyleProviderT(TStruct)
 	{
 		// GtkStyleProperties * gtk_style_provider_get_style (GtkStyleProvider *provider,  GtkWidgetPath *path);
 		auto p = gtk_style_provider_get_style(getStyleProviderTStruct(), (path is null) ? null : path.getWidgetPathStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new StyleProperties(cast(GtkStyleProperties*) p);
+		
+		return ObjectG.getDObject!StyleProperties(cast(GtkStyleProperties*) p);
 	}
 	
 	/**

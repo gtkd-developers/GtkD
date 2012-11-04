@@ -87,6 +87,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -305,18 +306,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public this (GtkCellArea* gtkCellArea)
 	{
-		if(gtkCellArea is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellArea);
-		if( ptr !is null )
-		{
-			this = cast(CellArea)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkCellArea);
 		this.gtkCellArea = gtkCellArea;
 	}
@@ -362,7 +351,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg ; _cellArea.onAddEditableListeners )
 		{
-			dlg(new CellRenderer(renderer), new CellEditable(editable), cellArea, Str.toString(path), _cellArea);
+			dlg(ObjectG.getDObject!CellRenderer(renderer), ObjectG.getDObject!CellEditable(editable), cellArea, Str.toString(path), _cellArea);
 		}
 	}
 	
@@ -390,7 +379,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(TreeModelIF, TreeIter, gboolean, gboolean, CellArea) dlg ; _cellArea.onApplyAttributesListeners )
 		{
-			dlg(new TreeModel(model), new TreeIter(iter), isExpander, isExpanded, _cellArea);
+			dlg(ObjectG.getDObject!TreeModel(model), ObjectG.getDObject!TreeIter(iter), isExpander, isExpanded, _cellArea);
 		}
 	}
 	
@@ -424,7 +413,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(CellRenderer, string, CellArea) dlg ; _cellArea.onFocusChangedListeners )
 		{
-			dlg(new CellRenderer(renderer), Str.toString(path), _cellArea);
+			dlg(ObjectG.getDObject!CellRenderer(renderer), Str.toString(path), _cellArea);
 		}
 	}
 	
@@ -453,7 +442,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(CellRenderer, CellEditableIF, CellArea) dlg ; _cellArea.onRemoveEditableListeners )
 		{
-			dlg(new CellRenderer(renderer), new CellEditable(editable), _cellArea);
+			dlg(ObjectG.getDObject!CellRenderer(renderer), ObjectG.getDObject!CellEditable(editable), _cellArea);
 		}
 	}
 	
@@ -596,11 +585,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkCellRenderer * gtk_cell_area_get_cell_at_position (GtkCellArea *area,  GtkCellAreaContext *context,  GtkWidget *widget,  const GdkRectangle *cell_area,  gint x,  gint y,  GdkRectangle *alloc_area);
 		auto p = gtk_cell_area_get_cell_at_position(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), &cellArea, x, y, &allocArea);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellRenderer(cast(GtkCellRenderer*) p);
+		
+		return ObjectG.getDObject!CellRenderer(cast(GtkCellRenderer*) p);
 	}
 	
 	/**
@@ -616,11 +607,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkCellAreaContext * gtk_cell_area_create_context (GtkCellArea *area);
 		auto p = gtk_cell_area_create_context(gtkCellArea);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellAreaContext(cast(GtkCellAreaContext*) p);
+		
+		return ObjectG.getDObject!CellAreaContext(cast(GtkCellAreaContext*) p);
 	}
 	
 	/**
@@ -642,11 +635,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkCellAreaContext * gtk_cell_area_copy_context (GtkCellArea *area,  GtkCellAreaContext *context);
 		auto p = gtk_cell_area_copy_context(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellAreaContext(cast(GtkCellAreaContext*) p);
+		
+		return ObjectG.getDObject!CellAreaContext(cast(GtkCellAreaContext*) p);
 	}
 	
 	/**
@@ -840,11 +835,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GParamSpec * gtk_cell_area_class_find_cell_property  (GtkCellAreaClass *aclass,  const gchar *property_name);
 		auto p = gtk_cell_area_class_find_cell_property(aclass, Str.toStringz(propertyName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -858,6 +855,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		// GParamSpec ** gtk_cell_area_class_list_cell_properties  (GtkCellAreaClass *aclass,  guint *n_properties);
 		uint nProperties;
 		auto p = gtk_cell_area_class_list_cell_properties(aclass, &nProperties);
+		
 		if(p is null)
 		{
 			return null;
@@ -866,7 +864,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -1001,11 +999,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkCellRenderer * gtk_cell_area_get_focus_cell (GtkCellArea *area);
 		auto p = gtk_cell_area_get_focus_cell(gtkCellArea);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellRenderer(cast(GtkCellRenderer*) p);
+		
+		return ObjectG.getDObject!CellRenderer(cast(GtkCellRenderer*) p);
 	}
 	
 	/**
@@ -1063,11 +1063,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// const GList * gtk_cell_area_get_focus_siblings (GtkCellArea *area,  GtkCellRenderer *renderer);
 		auto p = gtk_cell_area_get_focus_siblings(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1085,11 +1087,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkCellRenderer * gtk_cell_area_get_focus_from_sibling  (GtkCellArea *area,  GtkCellRenderer *renderer);
 		auto p = gtk_cell_area_get_focus_from_sibling(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellRenderer(cast(GtkCellRenderer*) p);
+		
+		return ObjectG.getDObject!CellRenderer(cast(GtkCellRenderer*) p);
 	}
 	
 	/**
@@ -1101,11 +1105,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkCellRenderer * gtk_cell_area_get_edited_cell (GtkCellArea *area);
 		auto p = gtk_cell_area_get_edited_cell(gtkCellArea);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellRenderer(cast(GtkCellRenderer*) p);
+		
+		return ObjectG.getDObject!CellRenderer(cast(GtkCellRenderer*) p);
 	}
 	
 	/**
@@ -1117,11 +1123,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		// GtkCellEditable * gtk_cell_area_get_edit_widget (GtkCellArea *area);
 		auto p = gtk_cell_area_get_edit_widget(gtkCellArea);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new CellEditable(cast(GtkCellEditable*) p);
+		
+		return ObjectG.getDObject!CellEditable(cast(GtkCellEditable*) p);
 	}
 	
 	/**

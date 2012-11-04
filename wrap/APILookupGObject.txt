@@ -279,16 +279,6 @@ code: start
 		this.gObject = gObject;
 		if ( gObject !is  null )
 		{
-			//writefln("ObjectG.this\n");
-
-			//Check if there already is a D object for this gtk struct
-			void* ptr = getDObject(gObject);
-			if( ptr !is null )
-			{
-				this = cast(ObjectG)ptr;
-				return;
-			}
-
 			setDataFull("GObject", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
 			addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)this);
 
@@ -361,13 +351,28 @@ code: start
 	/**
 	 * Gets a D Object from the objects table of associations.
 	 * Params:
-	 *  object = GObject containing the associations.
-	 * Returns: the D Object if found, or NULL if no such Object exists.
+	 *  obj = GObject containing the associations.
+	 * Returns: the D Object if found, or a newly constructed object if no such Object exists.
 	 */
-	public static void* getDObject(GObject* obj)
+	public static T getDObject(T, U)(U obj)
 	{
-		//gpointer g_object_get_data(GObject *object, const gchar *key);
-		return g_object_get_data(obj, Str.toStringz("GObject"));
+		static if ( is(T : ObjectG) )
+		{
+			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
+
+			if ( p !is null )
+			{
+				return cast(T)p;
+			}
+			else
+			{
+				return new T(obj);
+			}
+		}
+		else
+		{
+			return new T(obj);
+		}
 	}
 
 	protected void setStruct(GObject* obj)

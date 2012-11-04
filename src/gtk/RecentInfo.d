@@ -69,6 +69,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -143,11 +144,6 @@ public class RecentInfo
 	 */
 	public this (GtkRecentInfo* gtkRecentInfo)
 	{
-		if(gtkRecentInfo is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkRecentInfo = gtkRecentInfo;
 	}
 	
@@ -171,11 +167,13 @@ public class RecentInfo
 	{
 		// GtkRecentInfo * gtk_recent_info_ref (GtkRecentInfo *info);
 		auto p = gtk_recent_info_ref(gtkRecentInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new RecentInfo(cast(GtkRecentInfo*) p);
+		
+		return ObjectG.getDObject!RecentInfo(cast(GtkRecentInfo*) p);
 	}
 	
 	/**
@@ -374,11 +372,13 @@ public class RecentInfo
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new AppInfo(cast(GAppInfo*) p);
+		
+		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -428,11 +428,13 @@ public class RecentInfo
 	{
 		// GdkPixbuf * gtk_recent_info_get_icon (GtkRecentInfo *info,  gint size);
 		auto p = gtk_recent_info_get_icon(gtkRecentInfo, size);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -444,11 +446,13 @@ public class RecentInfo
 	{
 		// GIcon * gtk_recent_info_get_gicon (GtkRecentInfo *info);
 		auto p = gtk_recent_info_get_gicon(gtkRecentInfo);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**

@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -108,18 +109,6 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public this (GtkRadioMenuItem* gtkRadioMenuItem)
 	{
-		if(gtkRadioMenuItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkRadioMenuItem);
-		if( ptr !is null )
-		{
-			this = cast(RadioMenuItem)ptr;
-			return;
-		}
 		super(cast(GtkCheckMenuItem*)gtkRadioMenuItem);
 		this.gtkRadioMenuItem = gtkRadioMenuItem;
 	}
@@ -291,10 +280,12 @@ public class RadioMenuItem : CheckMenuItem
 	{
 		// GSList * gtk_radio_menu_item_get_group (GtkRadioMenuItem *radio_menu_item);
 		auto p = gtk_radio_menu_item_get_group(gtkRadioMenuItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 }

@@ -62,6 +62,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -102,18 +103,6 @@ public class IOModule : TypeModule
 	 */
 	public this (GIOModule* gIOModule)
 	{
-		if(gIOModule is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gIOModule);
-		if( ptr !is null )
-		{
-			this = cast(IOModule)ptr;
-			return;
-		}
 		super(cast(GTypeModule*)gIOModule);
 		this.gIOModule = gIOModule;
 	}
@@ -158,11 +147,13 @@ public class IOModule : TypeModule
 	{
 		// GList * g_io_modules_load_all_in_directory (const gchar *dirname);
 		auto p = g_io_modules_load_all_in_directory(Str.toStringz(dirname));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -179,11 +170,13 @@ public class IOModule : TypeModule
 	{
 		// GList * g_io_modules_load_all_in_directory_with_scope  (const gchar *dirname,  GIOModuleScope *scope);
 		auto p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scop is null) ? null : scop.getIOModuleScopeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

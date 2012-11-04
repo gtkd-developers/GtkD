@@ -77,6 +77,7 @@ public  import gtkc.giotypes;
 
 public import gtkc.gio;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -268,11 +269,13 @@ public template MountT(TStruct)
 	{
 		// GIcon * g_mount_get_icon (GMount *mount);
 		auto p = g_mount_get_icon(getMountTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -284,11 +287,13 @@ public template MountT(TStruct)
 	{
 		// GIcon * g_mount_get_symbolic_icon (GMount *mount);
 		auto p = g_mount_get_symbolic_icon(getMountTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Icon(cast(GIcon*) p);
+		
+		return ObjectG.getDObject!Icon(cast(GIcon*) p);
 	}
 	
 	/**
@@ -301,11 +306,13 @@ public template MountT(TStruct)
 	{
 		// GDrive * g_mount_get_drive (GMount *mount);
 		auto p = g_mount_get_drive(getMountTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Drive(cast(GDrive*) p);
+		
+		return ObjectG.getDObject!Drive(cast(GDrive*) p);
 	}
 	
 	/**
@@ -316,11 +323,13 @@ public template MountT(TStruct)
 	{
 		// GFile * g_mount_get_root (GMount *mount);
 		auto p = g_mount_get_root(getMountTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**
@@ -331,11 +340,13 @@ public template MountT(TStruct)
 	{
 		// GVolume * g_mount_get_volume (GMount *mount);
 		auto p = g_mount_get_volume(getMountTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Volume(cast(GVolume*) p);
+		
+		return ObjectG.getDObject!Volume(cast(GVolume*) p);
 	}
 	
 	/**
@@ -348,11 +359,13 @@ public template MountT(TStruct)
 	{
 		// GFile * g_mount_get_default_location (GMount *mount);
 		auto p = g_mount_get_default_location(getMountTStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new File(cast(GFile*) p);
+		
+		return ObjectG.getDObject!File(cast(GFile*) p);
 	}
 	
 	/**

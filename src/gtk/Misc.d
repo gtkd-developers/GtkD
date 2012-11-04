@@ -55,6 +55,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 
@@ -101,18 +102,6 @@ public class Misc : Widget
 	 */
 	public this (GtkMisc* gtkMisc)
 	{
-		if(gtkMisc is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMisc);
-		if( ptr !is null )
-		{
-			this = cast(Misc)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkMisc);
 		this.gtkMisc = gtkMisc;
 	}

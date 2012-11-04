@@ -64,6 +64,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -108,18 +109,6 @@ public class TlsCertificate : ObjectG
 	 */
 	public this (GTlsCertificate* gTlsCertificate)
 	{
-		if(gTlsCertificate is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gTlsCertificate);
-		if( ptr !is null )
-		{
-			this = cast(TlsCertificate)ptr;
-			return;
-		}
 		super(cast(GObject*)gTlsCertificate);
 		this.gTlsCertificate = gTlsCertificate;
 	}
@@ -242,11 +231,13 @@ public class TlsCertificate : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -258,11 +249,13 @@ public class TlsCertificate : ObjectG
 	{
 		// GTlsCertificate * g_tls_certificate_get_issuer (GTlsCertificate *cert);
 		auto p = g_tls_certificate_get_issuer(gTlsCertificate);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsCertificate(cast(GTlsCertificate*) p);
+		
+		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
 	}
 	
 	/**

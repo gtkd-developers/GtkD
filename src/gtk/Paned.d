@@ -62,6 +62,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -128,18 +129,6 @@ public class Paned : Container, OrientableIF
 	 */
 	public this (GtkPaned* gtkPaned)
 	{
-		if(gtkPaned is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkPaned);
-		if( ptr !is null )
-		{
-			this = cast(Paned)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkPaned);
 		this.gtkPaned = gtkPaned;
 	}
@@ -464,11 +453,13 @@ public class Paned : Container, OrientableIF
 	{
 		// GtkWidget * gtk_paned_get_child1 (GtkPaned *paned);
 		auto p = gtk_paned_get_child1(gtkPaned);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -480,11 +471,13 @@ public class Paned : Container, OrientableIF
 	{
 		// GtkWidget * gtk_paned_get_child2 (GtkPaned *paned);
 		auto p = gtk_paned_get_child2(gtkPaned);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -521,10 +514,12 @@ public class Paned : Container, OrientableIF
 	{
 		// GdkWindow * gtk_paned_get_handle_window (GtkPaned *paned);
 		auto p = gtk_paned_get_handle_window(gtkPaned);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 }

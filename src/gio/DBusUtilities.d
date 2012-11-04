@@ -67,6 +67,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -189,11 +190,13 @@ public class DBusUtilities
 	{
 		// GVariant * g_dbus_gvalue_to_gvariant (const GValue *gvalue,  const GVariantType *type);
 		auto p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -299,11 +302,13 @@ public class DBusUtilities
 		}
 		
 		outGuid = Str.toString(outoutGuid);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOStream(cast(GIOStream*) p);
+		
+		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -334,11 +339,13 @@ public class DBusUtilities
 		}
 		
 		outGuid = Str.toString(outoutGuid);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IOStream(cast(GIOStream*) p);
+		
+		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
 	}
 	
 	/**

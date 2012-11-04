@@ -59,6 +59,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -100,18 +101,6 @@ public class CheckButton : ToggleButton
 	 */
 	public this (GtkCheckButton* gtkCheckButton)
 	{
-		if(gtkCheckButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCheckButton);
-		if( ptr !is null )
-		{
-			this = cast(CheckButton)ptr;
-			return;
-		}
 		super(cast(GtkToggleButton*)gtkCheckButton);
 		this.gtkCheckButton = gtkCheckButton;
 	}

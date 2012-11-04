@@ -71,6 +71,7 @@ public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -163,16 +164,6 @@ public class ObjectG
 		this.gObject = gObject;
 		if ( gObject !is  null )
 		{
-			//writefln("ObjectG.this\n");
-			
-			//Check if there already is a D object for this gtk struct
-			void* ptr = getDObject(gObject);
-			if( ptr !is null )
-			{
-				this = cast(ObjectG)ptr;
-				return;
-			}
-			
 			setDataFull("GObject", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
 			addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)this);
 			
@@ -245,13 +236,28 @@ public class ObjectG
 	/**
 	 * Gets a D Object from the objects table of associations.
 	 * Params:
-	 *  object = GObject containing the associations.
-	 * Returns: the D Object if found, or NULL if no such Object exists.
+	 *  obj = GObject containing the associations.
+	 * Returns: the D Object if found, or a newly constructed object if no such Object exists.
 	 */
-	public static void* getDObject(GObject* obj)
+	public static T getDObject(T, U)(U obj)
 	{
-		//gpointer g_object_get_data(GObject *object, const gchar *key);
-		return g_object_get_data(obj, Str.toStringz("GObject"));
+		static if ( is(T : ObjectG) )
+		{
+			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
+			
+			if ( p !is null )
+			{
+				return cast(T)p;
+			}
+			else
+			{
+				return new T(obj);
+			}
+		}
+		else
+		{
+			return new T(obj);
+		}
 	}
 	
 	protected void setStruct(GObject* obj)
@@ -335,7 +341,7 @@ public class ObjectG
 	{
 		foreach ( void delegate(ParamSpec, ObjectG) dlg ; _objectG.onNotifyListeners )
 		{
-			dlg(new ParamSpec(pspec), _objectG);
+			dlg(ObjectG.getDObject!ParamSpec(pspec), _objectG);
 		}
 	}
 	
@@ -395,11 +401,13 @@ public class ObjectG
 	{
 		// GParamSpec * g_object_class_find_property (GObjectClass *oclass,  const gchar *property_name);
 		auto p = g_object_class_find_property(oclass, Str.toStringz(propertyName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -413,6 +421,7 @@ public class ObjectG
 		// GParamSpec ** g_object_class_list_properties (GObjectClass *oclass,  guint *n_properties);
 		uint nProperties;
 		auto p = g_object_class_list_properties(oclass, &nProperties);
+		
 		if(p is null)
 		{
 			return null;
@@ -421,7 +430,7 @@ public class ObjectG
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -500,11 +509,13 @@ public class ObjectG
 	{
 		// GParamSpec * g_object_interface_find_property (gpointer g_iface,  const gchar *property_name);
 		auto p = g_object_interface_find_property(iface, Str.toStringz(propertyName));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ParamSpec(cast(GParamSpec*) p);
+		
+		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -523,6 +534,7 @@ public class ObjectG
 		// GParamSpec ** g_object_interface_list_properties (gpointer g_iface,  guint *n_properties_p);
 		uint nPropertiesP;
 		auto p = g_object_interface_list_properties(iface, &nPropertiesP);
+		
 		if(p is null)
 		{
 			return null;
@@ -531,7 +543,7 @@ public class ObjectG
 		ParamSpec[] arr = new ParamSpec[nPropertiesP];
 		for(int i = 0; i < nPropertiesP; i++)
 		{
-			arr[i] = new ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -623,7 +635,7 @@ public class ObjectG
 		
 		g_clear_object(&outobjectPtr);
 		
-		objectPtr = new ObjectG(outobjectPtr);
+		objectPtr = ObjectG.getDObject!ObjectG(outobjectPtr);
 	}
 	
 	/**

@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -108,18 +109,6 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	 */
 	public this (GDBusActionGroup* gDBusActionGroup)
 	{
-		if(gDBusActionGroup is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gDBusActionGroup);
-		if( ptr !is null )
-		{
-			this = cast(DBusActionGroup)ptr;
-			return;
-		}
 		super(cast(GObject*)gDBusActionGroup);
 		this.gDBusActionGroup = gDBusActionGroup;
 	}
@@ -176,10 +165,12 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	{
 		// GDBusActionGroup * g_dbus_action_group_get (GDBusConnection *connection,  const gchar *bus_name,  const gchar *object_path);
 		auto p = g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusActionGroup(cast(GDBusActionGroup*) p);
+		
+		return ObjectG.getDObject!DBusActionGroup(cast(GDBusActionGroup*) p);
 	}
 }

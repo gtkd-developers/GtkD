@@ -72,6 +72,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -121,18 +122,6 @@ public class TlsDatabase : ObjectG
 	 */
 	public this (GTlsDatabase* gTlsDatabase)
 	{
-		if(gTlsDatabase is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gTlsDatabase);
-		if( ptr !is null )
-		{
-			this = cast(TlsDatabase)ptr;
-			return;
-		}
 		super(cast(GObject*)gTlsDatabase);
 		this.gTlsDatabase = gTlsDatabase;
 	}
@@ -265,11 +254,13 @@ public class TlsDatabase : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsCertificate(cast(GTlsCertificate*) p);
+		
+		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
 	}
 	
 	/**
@@ -311,11 +302,13 @@ public class TlsDatabase : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsCertificate(cast(GTlsCertificate*) p);
+		
+		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
 	}
 	
 	/**
@@ -343,11 +336,13 @@ public class TlsDatabase : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -392,11 +387,13 @@ public class TlsDatabase : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -449,11 +446,13 @@ public class TlsDatabase : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsCertificate(cast(GTlsCertificate*) p);
+		
+		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
 	}
 	
 	/**
@@ -497,10 +496,12 @@ public class TlsDatabase : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TlsCertificate(cast(GTlsCertificate*) p);
+		
+		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
 	}
 }

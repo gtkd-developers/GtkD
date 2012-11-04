@@ -97,11 +97,6 @@ public class Timer
 	 */
 	public this (GTimer* gTimer)
 	{
-		if(gTimer is null)
-		{
-			this = null;
-			return;
-		}
 		this.gTimer = gTimer;
 	}
 	

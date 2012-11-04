@@ -57,6 +57,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gobject.Value;
@@ -98,11 +99,6 @@ public class ValueAtk
 	 */
 	public this (AtkValue* atkValue)
 	{
-		if(atkValue is null)
-		{
-			this = null;
-			return;
-		}
 		this.atkValue = atkValue;
 	}
 	

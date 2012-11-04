@@ -57,6 +57,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -105,18 +106,6 @@ public class SpinButton : Entry
 	 */
 	public this (GtkSpinButton* gtkSpinButton)
 	{
-		if(gtkSpinButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSpinButton);
-		if( ptr !is null )
-		{
-			this = cast(SpinButton)ptr;
-			return;
-		}
 		super(cast(GtkEntry*)gtkSpinButton);
 		this.gtkSpinButton = gtkSpinButton;
 	}
@@ -364,11 +353,13 @@ public class SpinButton : Entry
 	{
 		// GtkAdjustment * gtk_spin_button_get_adjustment (GtkSpinButton *spin_button);
 		auto p = gtk_spin_button_get_adjustment(gtkSpinButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Adjustment(cast(GtkAdjustment*) p);
+		
+		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**

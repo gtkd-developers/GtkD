@@ -64,6 +64,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -108,11 +109,6 @@ public class MenuItem
 	 */
 	public this (GMenuItem* gMenuItem)
 	{
-		if(gMenuItem is null)
-		{
-			this = null;
-			return;
-		}
 		this.gMenuItem = gMenuItem;
 	}
 	
@@ -291,11 +287,13 @@ public class MenuItem
 	{
 		// GVariant * g_menu_item_get_attribute_value (GMenuItem *menu_item,  const gchar *attribute,  const GVariantType *expected_type);
 		auto p = g_menu_item_get_attribute_value(gMenuItem, Str.toStringz(attribute), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Variant(cast(GVariant*) p);
+		
+		return ObjectG.getDObject!Variant(cast(GVariant*) p);
 	}
 	
 	/**
@@ -309,11 +307,13 @@ public class MenuItem
 	{
 		// GMenuModel * g_menu_item_get_link (GMenuItem *menu_item,  const gchar *link);
 		auto p = g_menu_item_get_link(gMenuItem, Str.toStringz(link));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MenuModel(cast(GMenuModel*) p);
+		
+		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
 	}
 	
 	/**

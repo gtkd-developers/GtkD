@@ -60,6 +60,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -123,11 +124,6 @@ public class TagSetter
 	 */
 	public this (GstTagSetter* gstTagSetter)
 	{
-		if(gstTagSetter is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstTagSetter = gstTagSetter;
 	}
 	
@@ -183,11 +179,13 @@ public class TagSetter
 	{
 		// const GstTagList* gst_tag_setter_get_tag_list (GstTagSetter *setter);
 		auto p = gst_tag_setter_get_tag_list(gstTagSetter);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TagList(cast(GstTagList*) p);
+		
+		return ObjectG.getDObject!TagList(cast(GstTagList*) p);
 	}
 	
 	/**

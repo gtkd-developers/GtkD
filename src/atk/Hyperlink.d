@@ -58,6 +58,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -101,18 +102,6 @@ public class Hyperlink : ObjectG
 	 */
 	public this (AtkHyperlink* atkHyperlink)
 	{
-		if(atkHyperlink is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkHyperlink);
-		if( ptr !is null )
-		{
-			this = cast(Hyperlink)ptr;
-			return;
-		}
 		super(cast(GObject*)atkHyperlink);
 		this.atkHyperlink = atkHyperlink;
 	}
@@ -183,11 +172,13 @@ public class Hyperlink : ObjectG
 	{
 		// AtkObject * atk_hyperlink_get_object (AtkHyperlink *link_,  gint i);
 		auto p = atk_hyperlink_get_object(atkHyperlink, i);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ObjectAtk(cast(AtkObject*) p);
+		
+		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

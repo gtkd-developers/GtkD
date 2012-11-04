@@ -56,6 +56,7 @@ public  import gsvc.gsvtypes;
 
 public import gsvc.gsv;
 public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;

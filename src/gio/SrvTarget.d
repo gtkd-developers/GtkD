@@ -59,6 +59,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -108,11 +109,6 @@ public class SrvTarget : Boxed
 	 */
 	public this (GSrvTarget* gSrvTarget)
 	{
-		if(gSrvTarget is null)
-		{
-			this = null;
-			return;
-		}
 		this.gSrvTarget = gSrvTarget;
 	}
 	
@@ -151,11 +147,13 @@ public class SrvTarget : Boxed
 	{
 		// GSrvTarget * g_srv_target_copy (GSrvTarget *target);
 		auto p = g_srv_target_copy(gSrvTarget);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SrvTarget(cast(GSrvTarget*) p);
+		
+		return ObjectG.getDObject!SrvTarget(cast(GSrvTarget*) p);
 	}
 	
 	/**
@@ -230,10 +228,12 @@ public class SrvTarget : Boxed
 	{
 		// GList * g_srv_target_list_sort (GList *targets);
 		auto p = g_srv_target_list_sort((targets is null) ? null : targets.getListGStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 }

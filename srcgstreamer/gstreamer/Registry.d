@@ -64,6 +64,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -145,18 +146,6 @@ public class Registry : ObjectGst
 	 */
 	public this (GstRegistry* gstRegistry)
 	{
-		if(gstRegistry is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstRegistry);
-		if( ptr !is null )
-		{
-			this = cast(Registry)ptr;
-			return;
-		}
 		super(cast(GstObject*)gstRegistry);
 		this.gstRegistry = gstRegistry;
 	}
@@ -239,11 +228,13 @@ public class Registry : ObjectGst
 	{
 		// GstRegistry* gst_registry_get_default (void);
 		auto p = gst_registry_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Registry(cast(GstRegistry*) p);
+		
+		return ObjectG.getDObject!Registry(cast(GstRegistry*) p);
 	}
 	
 	/**
@@ -256,11 +247,13 @@ public class Registry : ObjectGst
 	{
 		// GList* gst_registry_get_feature_list (GstRegistry *registry,  GType type);
 		auto p = gst_registry_get_feature_list(gstRegistry, type);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -273,11 +266,13 @@ public class Registry : ObjectGst
 	{
 		// GList* gst_registry_get_feature_list_by_plugin  (GstRegistry *registry,  const gchar *name);
 		auto p = gst_registry_get_feature_list_by_plugin(gstRegistry, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -288,11 +283,13 @@ public class Registry : ObjectGst
 	{
 		// GList* gst_registry_get_path_list (GstRegistry *registry);
 		auto p = gst_registry_get_path_list(gstRegistry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -304,11 +301,13 @@ public class Registry : ObjectGst
 	{
 		// GList* gst_registry_get_plugin_list (GstRegistry *registry);
 		auto p = gst_registry_get_plugin_list(gstRegistry);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -352,11 +351,13 @@ public class Registry : ObjectGst
 	{
 		// GList* gst_registry_plugin_filter (GstRegistry *registry,  GstPluginFilter filter,  gboolean first,  gpointer user_data);
 		auto p = gst_registry_plugin_filter(gstRegistry, filter, first, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -374,11 +375,13 @@ public class Registry : ObjectGst
 	{
 		// GList* gst_registry_feature_filter (GstRegistry *registry,  GstPluginFeatureFilter filter,  gboolean first,  gpointer user_data);
 		auto p = gst_registry_feature_filter(gstRegistry, filter, first, userData);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -392,11 +395,13 @@ public class Registry : ObjectGst
 	{
 		// GstPlugin* gst_registry_find_plugin (GstRegistry *registry,  const gchar *name);
 		auto p = gst_registry_find_plugin(gstRegistry, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Plugin(cast(GstPlugin*) p);
+		
+		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**
@@ -410,11 +415,13 @@ public class Registry : ObjectGst
 	{
 		// GstPluginFeature* gst_registry_find_feature (GstRegistry *registry,  const gchar *name,  GType type);
 		auto p = gst_registry_find_feature(gstRegistry, Str.toStringz(name), type);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PluginFeature(cast(GstPluginFeature*) p);
+		
+		return ObjectG.getDObject!PluginFeature(cast(GstPluginFeature*) p);
 	}
 	
 	/**
@@ -427,11 +434,13 @@ public class Registry : ObjectGst
 	{
 		// GstPluginFeature* gst_registry_lookup_feature (GstRegistry *registry,  const char *name);
 		auto p = gst_registry_lookup_feature(gstRegistry, Str.toStringz(name));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PluginFeature(cast(GstPluginFeature*) p);
+		
+		return ObjectG.getDObject!PluginFeature(cast(GstPluginFeature*) p);
 	}
 	
 	/**
@@ -508,11 +517,13 @@ public class Registry : ObjectGst
 	{
 		// GstPlugin* gst_registry_lookup (GstRegistry *registry,  const char *filename);
 		auto p = gst_registry_lookup(gstRegistry, Str.toStringz(filename));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Plugin(cast(GstPlugin*) p);
+		
+		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
 	}
 	
 	/**

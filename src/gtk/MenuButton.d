@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.MenuModel;
@@ -124,18 +125,6 @@ public class MenuButton : ToggleButton
 	 */
 	public this (GtkMenuButton* gtkMenuButton)
 	{
-		if(gtkMenuButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMenuButton);
-		if( ptr !is null )
-		{
-			this = cast(MenuButton)ptr;
-			return;
-		}
 		super(cast(GtkToggleButton*)gtkMenuButton);
 		this.gtkMenuButton = gtkMenuButton;
 	}
@@ -188,11 +177,13 @@ public class MenuButton : ToggleButton
 	{
 		// GtkMenu * gtk_menu_button_get_popup (GtkMenuButton *menu_button);
 		auto p = gtk_menu_button_get_popup(gtkMenuButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Menu(cast(GtkMenu*) p);
+		
+		return ObjectG.getDObject!Menu(cast(GtkMenu*) p);
 	}
 	
 	/**
@@ -220,11 +211,13 @@ public class MenuButton : ToggleButton
 	{
 		// GMenuModel * gtk_menu_button_get_menu_model (GtkMenuButton *menu_button);
 		auto p = gtk_menu_button_get_menu_model(gtkMenuButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new MenuModel(cast(GMenuModel*) p);
+		
+		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
 	}
 	
 	/**
@@ -278,10 +271,12 @@ public class MenuButton : ToggleButton
 	{
 		// GtkWidget * gtk_menu_button_get_align_widget (GtkMenuButton *menu_button);
 		auto p = gtk_menu_button_get_align_widget(gtkMenuButton);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 }

@@ -71,6 +71,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -110,11 +111,6 @@ public class TextChildAnchor
 	 */
 	public this (GtkTextChildAnchor* gtkTextChildAnchor)
 	{
-		if(gtkTextChildAnchor is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkTextChildAnchor = gtkTextChildAnchor;
 	}
 	
@@ -148,11 +144,13 @@ public class TextChildAnchor
 	{
 		// GList * gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor);
 		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListG(cast(GList*) p);
+		
+		return ObjectG.getDObject!ListG(cast(GList*) p);
 	}
 	
 	/**

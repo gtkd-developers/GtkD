@@ -67,6 +67,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -117,18 +118,6 @@ public class FileInputStream : InputStream, SeekableIF
 	 */
 	public this (GFileInputStream* gFileInputStream)
 	{
-		if(gFileInputStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFileInputStream);
-		if( ptr !is null )
-		{
-			this = cast(FileInputStream)ptr;
-			return;
-		}
 		super(cast(GInputStream*)gFileInputStream);
 		this.gFileInputStream = gFileInputStream;
 	}
@@ -169,11 +158,13 @@ public class FileInputStream : InputStream, SeekableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInfo(cast(GFileInfo*) p);
+		
+		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -219,10 +210,12 @@ public class FileInputStream : InputStream, SeekableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new FileInfo(cast(GFileInfo*) p);
+		
+		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
 	}
 }

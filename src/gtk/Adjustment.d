@@ -55,6 +55,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -102,18 +103,6 @@ public class Adjustment : ObjectG
 	 */
 	public this (GtkAdjustment* gtkAdjustment)
 	{
-		if(gtkAdjustment is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAdjustment);
-		if( ptr !is null )
-		{
-			this = cast(Adjustment)ptr;
-			return;
-		}
 		super(cast(GObject*)gtkAdjustment);
 		this.gtkAdjustment = gtkAdjustment;
 	}

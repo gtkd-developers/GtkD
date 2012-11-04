@@ -79,6 +79,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -138,18 +139,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 */
 	public this (GtkCellView* gtkCellView)
 	{
-		if(gtkCellView is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellView);
-		if( ptr !is null )
-		{
-			this = cast(CellView)ptr;
-			return;
-		}
 		super(cast(GtkWidget*)gtkCellView);
 		this.gtkCellView = gtkCellView;
 	}
@@ -287,11 +276,13 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	{
 		// GtkTreeModel * gtk_cell_view_get_model (GtkCellView *cell_view);
 		auto p = gtk_cell_view_get_model(gtkCellView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreeModel(cast(GtkTreeModel*) p);
+		
+		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -322,11 +313,13 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	{
 		// GtkTreePath * gtk_cell_view_get_displayed_row (GtkCellView *cell_view);
 		auto p = gtk_cell_view_get_displayed_row(gtkCellView);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new TreePath(cast(GtkTreePath*) p);
+		
+		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**

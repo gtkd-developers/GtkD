@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.OrientableIF;
@@ -97,18 +98,6 @@ public class CellRendererProgress : CellRenderer, OrientableIF
 	 */
 	public this (GtkCellRendererProgress* gtkCellRendererProgress)
 	{
-		if(gtkCellRendererProgress is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellRendererProgress);
-		if( ptr !is null )
-		{
-			this = cast(CellRendererProgress)ptr;
-			return;
-		}
 		super(cast(GtkCellRenderer*)gtkCellRendererProgress);
 		this.gtkCellRendererProgress = gtkCellRendererProgress;
 	}

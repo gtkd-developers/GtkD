@@ -65,6 +65,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -158,11 +159,6 @@ public class Resource
 	 */
 	public this (GResource* gResource)
 	{
-		if(gResource is null)
-		{
-			this = null;
-			return;
-		}
 		this.gResource = gResource;
 	}
 	
@@ -200,11 +196,13 @@ public class Resource
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Resource(cast(GResource*) p);
+		
+		return ObjectG.getDObject!Resource(cast(GResource*) p);
 	}
 	
 	/**
@@ -231,11 +229,13 @@ public class Resource
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Resource(cast(GResource*) p);
+		
+		return ObjectG.getDObject!Resource(cast(GResource*) p);
 	}
 	
 	/**
@@ -248,11 +248,13 @@ public class Resource
 	{
 		// GResource * g_resource_ref (GResource *resource);
 		auto p = g_resource_ref(gResource);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Resource(cast(GResource*) p);
+		
+		return ObjectG.getDObject!Resource(cast(GResource*) p);
 	}
 	
 	/**
@@ -299,11 +301,13 @@ public class Resource
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Bytes(cast(GBytes*) p);
+		
+		return ObjectG.getDObject!Bytes(cast(GBytes*) p);
 	}
 	
 	/**
@@ -329,11 +333,13 @@ public class Resource
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new InputStream(cast(GInputStream*) p);
+		
+		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
 	}
 	
 	/**
@@ -446,11 +452,13 @@ public class Resource
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Bytes(cast(GBytes*) p);
+		
+		return ObjectG.getDObject!Bytes(cast(GBytes*) p);
 	}
 	
 	/**
@@ -477,11 +485,13 @@ public class Resource
 			throw new GException( new ErrorG(err) );
 		}
 		
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new InputStream(cast(GInputStream*) p);
+		
+		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
 	}
 	
 	/**

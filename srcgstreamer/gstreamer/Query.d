@@ -67,6 +67,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -112,11 +113,6 @@ public class Query
 	 */
 	public this (GstQuery* gstQuery)
 	{
-		if(gstQuery is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstQuery = gstQuery;
 	}
 	
@@ -132,7 +128,14 @@ public class Query
 	public static Query newPosition(GstFormat format)
 	{
 		// GstQuery* gst_query_new_position (GstFormat format);
-		return new Query( cast(GstQuery*)gst_query_new_position(format) );
+		auto p = gst_query_new_position(format);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_position");
+		}
+		
+		return new Query( cast(GstQuery*)p );
 	}	/**
 	 * Constructs a new stream duration query object to query in the given format.
 	 * Use gst_query_unref() when done with it. A duration query will give the
@@ -145,7 +148,14 @@ public class Query
 	public static Query newDuration(GstFormat format)
 	{
 		// GstQuery* gst_query_new_duration (GstFormat format);
-		return new Query( cast(GstQuery*)gst_query_new_duration(format) );
+		auto p = gst_query_new_duration(format);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_duration");
+		}
+		
+		return new Query( cast(GstQuery*)p );
 	}	/**
 	 * Constructs a new query object for querying seeking properties of
 	 * the stream.
@@ -157,7 +167,14 @@ public class Query
 	public static Query newSeeking(GstFormat format)
 	{
 		// GstQuery* gst_query_new_seeking (GstFormat format);
-		return new Query(cast(GstQuery*)gst_query_new_seeking(format) );
+		auto p = gst_query_new_seeking(format);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_seeking");
+		}
+		
+		return new Query(cast(GstQuery*)p );
 	}	/**
 	 * Constructs a new query object for querying formats of
 	 * the stream.
@@ -168,7 +185,14 @@ public class Query
 	public static Query newFormats()
 	{
 		// GstQuery* gst_query_new_formats (void);
-		return new Query(cast(GstQuery*)gst_query_new_formats() );
+		auto p = gst_query_new_formats();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_formats");
+		}
+		
+		return new Query(cast(GstQuery*)p );
 	}	/**
 	 * Constructs a new segment query object. Use gst_query_unref()
 	 * when done with it. A segment query is used to discover information about the
@@ -181,7 +205,14 @@ public class Query
 	public static Query newSegment(GstFormat format)
 	{
 		// GstQuery* gst_query_new_segment (GstFormat format);
-		return new Query(cast(GstQuery*)gst_query_new_segment(format) );
+		auto p = gst_query_new_segment(format);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_segment");
+		}
+		
+		return new Query(cast(GstQuery*)p );
 	}
 	
 	/**
@@ -271,11 +302,13 @@ public class Query
 	{
 		// GstIterator* gst_query_type_iterate_definitions (void);
 		auto p = gst_query_type_iterate_definitions();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Iterator(cast(GstIterator*) p);
+		
+		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -305,11 +338,13 @@ public class Query
 	{
 		// GstStructure* gst_query_get_structure (GstQuery *query);
 		auto p = gst_query_get_structure(gstQuery);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**

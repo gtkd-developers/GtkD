@@ -69,6 +69,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -151,11 +152,6 @@ public class IconSet : Boxed
 	 */
 	public this (GtkIconSet* gtkIconSet)
 	{
-		if(gtkIconSet is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkIconSet = gtkIconSet;
 	}
 	
@@ -209,11 +205,13 @@ public class IconSet : Boxed
 	{
 		// GtkIconSet * gtk_icon_set_copy (GtkIconSet *icon_set);
 		auto p = gtk_icon_set_copy(gtkIconSet);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconSet(cast(GtkIconSet*) p);
+		
+		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -267,11 +265,13 @@ public class IconSet : Boxed
 	{
 		// GtkIconSet * gtk_icon_set_ref (GtkIconSet *icon_set);
 		auto p = gtk_icon_set_ref(gtkIconSet);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new IconSet(cast(GtkIconSet*) p);
+		
+		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -301,11 +301,13 @@ public class IconSet : Boxed
 	{
 		// GdkPixbuf * gtk_icon_set_render_icon (GtkIconSet *icon_set,  GtkStyle *style,  GtkTextDirection direction,  GtkStateType state,  GtkIconSize size,  GtkWidget *widget,  const gchar *detail);
 		auto p = gtk_icon_set_render_icon(gtkIconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -325,11 +327,13 @@ public class IconSet : Boxed
 	{
 		// GdkPixbuf * gtk_icon_set_render_icon_pixbuf (GtkIconSet *icon_set,  GtkStyleContext *context,  GtkIconSize size);
 		auto p = gtk_icon_set_render_icon_pixbuf(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

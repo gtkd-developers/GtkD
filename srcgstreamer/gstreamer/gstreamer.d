@@ -60,6 +60,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -190,11 +191,13 @@ public class GStreamer
 	{
 		// GOptionGroup* gst_init_get_option_group (void);
 		auto p = gst_init_get_option_group();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new OptionGroup(cast(GOptionGroup*) p);
+		
+		return ObjectG.getDObject!OptionGroup(cast(GOptionGroup*) p);
 	}
 	
 	/**

@@ -63,6 +63,7 @@ public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gdk.Window;
@@ -101,18 +102,6 @@ public class GLWindow : ObjectG, GLDrawableIF
 	 */
 	public this (GdkGLWindow* gdkGLWindow)
 	{
-		if(gdkGLWindow is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkGLWindow);
-		if( ptr !is null )
-		{
-			this = cast(GLWindow)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkGLWindow);
 		this.gdkGLWindow = gdkGLWindow;
 	}
@@ -159,11 +148,13 @@ public class GLWindow : ObjectG, GLDrawableIF
 	{
 		// GdkWindow * gdk_gl_window_get_window (GdkGLWindow *glwindow);
 		auto p = gdk_gl_window_get_window(gdkGLWindow);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Window(cast(GdkWindow*) p);
+		
+		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -181,11 +172,13 @@ public class GLWindow : ObjectG, GLDrawableIF
 	{
 		// GdkGLWindow * gdk_window_set_gl_capability (GdkWindow *window,  GdkGLConfig *glconfig,  const int *attrib_list);
 		auto p = gdk_window_set_gl_capability((window is null) ? null : window.getWindowStruct(), (glconfig is null) ? null : glconfig.getGLConfigStruct(), attribList);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLWindow(cast(GdkGLWindow*) p);
+		
+		return ObjectG.getDObject!GLWindow(cast(GdkGLWindow*) p);
 	}
 	
 	/**
@@ -222,10 +215,12 @@ public class GLWindow : ObjectG, GLDrawableIF
 	{
 		// GdkGLWindow * gdk_window_get_gl_window (GdkWindow *window);
 		auto p = gdk_window_get_gl_window((window is null) ? null : window.getWindowStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new GLWindow(cast(GdkGLWindow*) p);
+		
+		return ObjectG.getDObject!GLWindow(cast(GdkGLWindow*) p);
 	}
 }

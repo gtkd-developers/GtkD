@@ -64,6 +64,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -118,11 +119,6 @@ public class WidgetPath
 	 */
 	public this (GtkWidgetPath* gtkWidgetPath)
 	{
-		if(gtkWidgetPath is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkWidgetPath = gtkWidgetPath;
 	}
 	
@@ -194,11 +190,13 @@ public class WidgetPath
 	{
 		// GtkWidgetPath * gtk_widget_path_copy (const GtkWidgetPath *path);
 		auto p = gtk_widget_path_copy(gtkWidgetPath);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new WidgetPath(cast(GtkWidgetPath*) p);
+		
+		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -209,11 +207,13 @@ public class WidgetPath
 	{
 		// GtkWidgetPath * gtk_widget_path_ref (GtkWidgetPath *path);
 		auto p = gtk_widget_path_ref(gtkWidgetPath);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new WidgetPath(cast(GtkWidgetPath*) p);
+		
+		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -371,11 +371,13 @@ public class WidgetPath
 	{
 		// const GtkWidgetPath * gtk_widget_path_iter_get_siblings (const GtkWidgetPath *path,  gint pos);
 		auto p = gtk_widget_path_iter_get_siblings(gtkWidgetPath, pos);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new WidgetPath(cast(GtkWidgetPath*) p);
+		
+		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -490,11 +492,13 @@ public class WidgetPath
 	{
 		// GSList * gtk_widget_path_iter_list_classes (const GtkWidgetPath *path,  gint pos);
 		auto p = gtk_widget_path_iter_list_classes(gtkWidgetPath, pos);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -508,11 +512,13 @@ public class WidgetPath
 	{
 		// GSList * gtk_widget_path_iter_list_regions (const GtkWidgetPath *path,  gint pos);
 		auto p = gtk_widget_path_iter_list_regions(gtkWidgetPath, pos);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**

@@ -57,6 +57,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.InputStream;
@@ -96,18 +97,6 @@ public class FilterInputStream : InputStream
 	 */
 	public this (GFilterInputStream* gFilterInputStream)
 	{
-		if(gFilterInputStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gFilterInputStream);
-		if( ptr !is null )
-		{
-			this = cast(FilterInputStream)ptr;
-			return;
-		}
 		super(cast(GInputStream*)gFilterInputStream);
 		this.gFilterInputStream = gFilterInputStream;
 	}
@@ -129,11 +118,13 @@ public class FilterInputStream : InputStream
 	{
 		// GInputStream * g_filter_input_stream_get_base_stream  (GFilterInputStream *stream);
 		auto p = g_filter_input_stream_get_base_stream(gFilterInputStream);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new InputStream(cast(GInputStream*) p);
+		
+		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
 	}
 	
 	/**

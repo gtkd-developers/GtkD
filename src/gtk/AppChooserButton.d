@@ -61,6 +61,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -119,18 +120,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 */
 	public this (GtkAppChooserButton* gtkAppChooserButton)
 	{
-		if(gtkAppChooserButton is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkAppChooserButton);
-		if( ptr !is null )
-		{
-			this = cast(AppChooserButton)ptr;
-			return;
-		}
 		super(cast(GtkComboBox*)gtkAppChooserButton);
 		this.gtkAppChooserButton = gtkAppChooserButton;
 	}

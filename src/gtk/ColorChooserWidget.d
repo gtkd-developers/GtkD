@@ -58,6 +58,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.ColorChooserIF;
@@ -107,18 +108,6 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	 */
 	public this (GtkColorChooserWidget* gtkColorChooserWidget)
 	{
-		if(gtkColorChooserWidget is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkColorChooserWidget);
-		if( ptr !is null )
-		{
-			this = cast(ColorChooserWidget)ptr;
-			return;
-		}
 		super(cast(GtkBox*)gtkColorChooserWidget);
 		this.gtkColorChooserWidget = gtkColorChooserWidget;
 	}

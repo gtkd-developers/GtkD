@@ -65,6 +65,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -114,18 +115,6 @@ public class ToolItem : Bin, ActivatableIF
 	 */
 	public this (GtkToolItem* gtkToolItem)
 	{
-		if(gtkToolItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkToolItem);
-		if( ptr !is null )
-		{
-			this = cast(ToolItem)ptr;
-			return;
-		}
 		super(cast(GtkBin*)gtkToolItem);
 		this.gtkToolItem = gtkToolItem;
 	}
@@ -542,11 +531,13 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		// GtkWidget * gtk_tool_item_retrieve_proxy_menu_item  (GtkToolItem *tool_item);
 		auto p = gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -565,11 +556,13 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		// GtkWidget * gtk_tool_item_get_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id);
 		auto p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -625,10 +618,12 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		// GtkSizeGroup * gtk_tool_item_get_text_size_group (GtkToolItem *tool_item);
 		auto p = gtk_tool_item_get_text_size_group(gtkToolItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SizeGroup(cast(GtkSizeGroup*) p);
+		
+		return ObjectG.getDObject!SizeGroup(cast(GtkSizeGroup*) p);
 	}
 }

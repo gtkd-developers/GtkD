@@ -71,6 +71,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -211,18 +212,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public this (GApplication* gApplication)
 	{
-		if(gApplication is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gApplication);
-		if( ptr !is null )
-		{
-			this = cast(Application)ptr;
-			return;
-		}
 		super(cast(GObject*)gApplication);
 		this.gApplication = gApplication;
 	}
@@ -526,11 +515,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	{
 		// GDBusConnection * g_application_get_dbus_connection (GApplication *application);
 		auto p = g_application_get_dbus_connection(gApplication);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new DBusConnection(cast(GDBusConnection*) p);
+		
+		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -825,10 +816,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	{
 		// GApplication * g_application_get_default (void);
 		auto p = g_application_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Application(cast(GApplication*) p);
+		
+		return ObjectG.getDObject!Application(cast(GApplication*) p);
 	}
 }

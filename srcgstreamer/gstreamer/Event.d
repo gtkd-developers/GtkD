@@ -70,6 +70,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -128,11 +129,6 @@ public class Event
 	 */
 	public this (GstEvent* gstEvent)
 	{
-		if(gstEvent is null)
-		{
-			this = null;
-			return;
-		}
 		this.gstEvent = gstEvent;
 	}
 	
@@ -151,7 +147,14 @@ public class Event
 	public static Event newBufferSize(GstFormat format, long minsize, long maxsize, int async)
 	{
 		// GstEvent* gst_event_new_buffer_size (GstFormat format,  gint64 minsize,  gint64 maxsize,  gboolean async);
-		return new Event(cast(GstEvent*)gst_event_new_buffer_size(format, minsize, maxsize, async) );
+		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_buffer_size");
+		}
+		
+		return new Event(cast(GstEvent*)p);
 	}	/**
 	 * Create a new EOS event. The eos event can only travel downstream
 	 * synchronized with the buffer flow. Elements that receive the EOS
@@ -168,7 +171,14 @@ public class Event
 	public static Event newEOS()
 	{
 		// GstEvent* gst_event_new_eos (void);
-		return new Event(cast(GstEvent*)gst_event_new_eos() );
+		auto p = gst_event_new_eos();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_eos");
+		}
+		
+		return new Event(cast(GstEvent*)p );
 	}	/**
 	 * Allocate a new flush start event. The flush start event can be send
 	 * upstream and downstream and travels out-of-bounds with the dataflow.
@@ -183,7 +193,14 @@ public class Event
 	public static Event newFlushStart()
 	{
 		// GstEvent* gst_event_new_flush_start (void);
-		return new Event(cast(GstEvent*)gst_event_new_flush_start() );
+		auto p = gst_event_new_flush_start();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_flush_start");
+		}
+		
+		return new Event(cast(GstEvent*)p );
 	}	/**
 	 * Allocate a new flush stop event. The flush start event can be send
 	 * upstream and downstream and travels out-of-bounds with the dataflow.
@@ -199,7 +216,14 @@ public class Event
 	public static Event newFlushStop()
 	{
 		// GstEvent* gst_event_new_flush_stop (void);
-		return new Event(cast(GstEvent*)gst_event_new_flush_stop() );
+		auto p = gst_event_new_flush_stop();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_flush_stop");
+		}
+		
+		return new Event(cast(GstEvent*)p );
 	}/**
 	 * Create a new navigation event from the given description.
 	 * Params:
@@ -210,7 +234,14 @@ public class Event
 	public static Event newNavigation(Structure structure)
 	{
 		// GstEvent* gst_event_new_navigation (GstStructure *structure);
-		return new Event(cast(GstEvent*)gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct()) );
+		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_navigation");
+		}
+		
+		return new Event(cast(GstEvent*)p);
 	}
 	
 	/**
@@ -224,11 +255,13 @@ public class Event
 	{
 		// const GstStructure* gst_event_get_structure (GstEvent *event);
 		auto p = gst_event_get_structure(gstEvent);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Structure(cast(GstStructure*) p);
+		
+		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -561,7 +594,7 @@ public class Event
 		
 		gst_event_parse_tag(gstEvent, &outtaglist);
 		
-		taglist = new TagList(outtaglist);
+		taglist = ObjectG.getDObject!TagList(outtaglist);
 	}
 	
 	/**
@@ -572,11 +605,13 @@ public class Event
 	{
 		// GstEvent* gst_event_ref (GstEvent *event);
 		auto p = gst_event_ref(gstEvent);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Event(cast(GstEvent*) p);
+		
+		return ObjectG.getDObject!Event(cast(GstEvent*) p);
 	}
 	
 	/**

@@ -67,6 +67,7 @@ public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.ErrorG;
@@ -114,18 +115,6 @@ public class PixbufAnimation : ObjectG
 	 */
 	public this (GdkPixbufAnimation* gdkPixbufAnimation)
 	{
-		if(gdkPixbufAnimation is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gdkPixbufAnimation);
-		if( ptr !is null )
-		{
-			this = cast(PixbufAnimation)ptr;
-			return;
-		}
 		super(cast(GObject*)gdkPixbufAnimation);
 		this.gdkPixbufAnimation = gdkPixbufAnimation;
 	}
@@ -225,11 +214,13 @@ public class PixbufAnimation : ObjectG
 	{
 		// GdkPixbufAnimationIter * gdk_pixbuf_animation_get_iter (GdkPixbufAnimation *animation,  const GTimeVal *start_time);
 		auto p = gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, &startTime);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PixbufAnimationIter(cast(GdkPixbufAnimationIter*) p);
+		
+		return ObjectG.getDObject!PixbufAnimationIter(cast(GdkPixbufAnimationIter*) p);
 	}
 	
 	/**
@@ -258,10 +249,12 @@ public class PixbufAnimation : ObjectG
 	{
 		// GdkPixbuf * gdk_pixbuf_animation_get_static_image  (GdkPixbufAnimation *animation);
 		auto p = gdk_pixbuf_animation_get_static_image(gdkPixbufAnimation);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		
+		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
 	}
 }

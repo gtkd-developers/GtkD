@@ -66,6 +66,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -115,11 +116,6 @@ public class SymbolicColor
 	 */
 	public this (GtkSymbolicColor* gtkSymbolicColor)
 	{
-		if(gtkSymbolicColor is null)
-		{
-			this = null;
-			return;
-		}
 		this.gtkSymbolicColor = gtkSymbolicColor;
 	}
 	
@@ -255,11 +251,13 @@ public class SymbolicColor
 	{
 		// GtkSymbolicColor * gtk_symbolic_color_ref (GtkSymbolicColor *color);
 		auto p = gtk_symbolic_color_ref(gtkSymbolicColor);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SymbolicColor(cast(GtkSymbolicColor*) p);
+		
+		return ObjectG.getDObject!SymbolicColor(cast(GtkSymbolicColor*) p);
 	}
 	
 	/**

@@ -60,6 +60,7 @@ public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import pango.PgLanguage;
@@ -109,10 +110,12 @@ public class PgScript
 	{
 		// PangoLanguage * pango_script_get_sample_language (PangoScript script);
 		auto p = pango_script_get_sample_language(script);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new PgLanguage(cast(PangoLanguage*) p);
+		
+		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
 	}
 }

@@ -181,10 +181,12 @@ public class UnixUtils
 	{
 		// GSource * g_unix_signal_source_new (gint signum);
 		auto p = g_unix_signal_source_new(signum);
+		
 		if(p is null)
 		{
 			return null;
 		}
+		
 		return new Source(cast(GSource*) p);
 	}
 	

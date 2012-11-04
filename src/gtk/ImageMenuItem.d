@@ -63,6 +63,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -103,18 +104,6 @@ public class ImageMenuItem : MenuItem
 	 */
 	public this (GtkImageMenuItem* gtkImageMenuItem)
 	{
-		if(gtkImageMenuItem is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkImageMenuItem);
-		if( ptr !is null )
-		{
-			this = cast(ImageMenuItem)ptr;
-			return;
-		}
 		super(cast(GtkMenuItem*)gtkImageMenuItem);
 		this.gtkImageMenuItem = gtkImageMenuItem;
 	}
@@ -207,11 +196,13 @@ public class ImageMenuItem : MenuItem
 	{
 		// GtkWidget * gtk_image_menu_item_get_image (GtkImageMenuItem *image_menu_item);
 		auto p = gtk_image_menu_item_get_image(gtkImageMenuItem);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

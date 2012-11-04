@@ -102,11 +102,6 @@ public class Matrix
 	 */
 	public this (cairo_matrix_t* cairo_matrix)
 	{
-		if(cairo_matrix is null)
-		{
-			this = null;
-			return;
-		}
 		this.cairo_matrix = cairo_matrix;
 	}
 	

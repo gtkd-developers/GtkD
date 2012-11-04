@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gtk.CellRenderer;
@@ -112,18 +113,6 @@ public class CellAreaBox : CellArea, OrientableIF
 	 */
 	public this (GtkCellAreaBox* gtkCellAreaBox)
 	{
-		if(gtkCellAreaBox is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkCellAreaBox);
-		if( ptr !is null )
-		{
-			this = cast(CellAreaBox)ptr;
-			return;
-		}
 		super(cast(GtkCellArea*)gtkCellAreaBox);
 		this.gtkCellAreaBox = gtkCellAreaBox;
 	}

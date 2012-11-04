@@ -61,6 +61,7 @@ public  import gtkc.atktypes;
 
 private import gtkc.atk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import atk.ObjectAtk;
@@ -104,18 +105,6 @@ public class RelationSet : ObjectG
 	 */
 	public this (AtkRelationSet* atkRelationSet)
 	{
-		if(atkRelationSet is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)atkRelationSet);
-		if( ptr !is null )
-		{
-			this = cast(RelationSet)ptr;
-			return;
-		}
 		super(cast(GObject*)atkRelationSet);
 		this.atkRelationSet = atkRelationSet;
 	}
@@ -200,11 +189,13 @@ public class RelationSet : ObjectG
 	{
 		// AtkRelation * atk_relation_set_get_relation (AtkRelationSet *set,  gint i);
 		auto p = atk_relation_set_get_relation(atkRelationSet, i);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Relation(cast(AtkRelation*) p);
+		
+		return ObjectG.getDObject!Relation(cast(AtkRelation*) p);
 	}
 	
 	/**
@@ -217,11 +208,13 @@ public class RelationSet : ObjectG
 	{
 		// AtkRelation * atk_relation_set_get_relation_by_type  (AtkRelationSet *set,  AtkRelationType relationship);
 		auto p = atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Relation(cast(AtkRelation*) p);
+		
+		return ObjectG.getDObject!Relation(cast(AtkRelation*) p);
 	}
 	
 	/**

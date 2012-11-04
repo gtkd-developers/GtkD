@@ -62,6 +62,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -120,18 +121,6 @@ public class SettingsBackend : ObjectG
 	 */
 	public this (GSettingsBackend* gSettingsBackend)
 	{
-		if(gSettingsBackend is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gSettingsBackend);
-		if( ptr !is null )
-		{
-			this = cast(SettingsBackend)ptr;
-			return;
-		}
 		super(cast(GObject*)gSettingsBackend);
 		this.gSettingsBackend = gSettingsBackend;
 	}
@@ -157,11 +146,13 @@ public class SettingsBackend : ObjectG
 	{
 		// GSettingsBackend * g_settings_backend_get_default (void);
 		auto p = g_settings_backend_get_default();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SettingsBackend(cast(GSettingsBackend*) p);
+		
+		return ObjectG.getDObject!SettingsBackend(cast(GSettingsBackend*) p);
 	}
 	
 	/**
@@ -327,7 +318,7 @@ public class SettingsBackend : ObjectG
 		values = new Variant[keys.length];
 		for(int i = 0; i < keys.length; i++)
 		{
-			values[i] = new Variant(cast(GVariant*) outvalues[i]);
+			values[i] = ObjectG.getDObject!Variant(cast(GVariant*) outvalues[i]);
 		}
 	}
 	
@@ -352,11 +343,13 @@ public class SettingsBackend : ObjectG
 	{
 		// GSettingsBackend * g_keyfile_settings_backend_new (const gchar *filename,  const gchar *root_path,  const gchar *root_group);
 		auto p = g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SettingsBackend(cast(GSettingsBackend*) p);
+		
+		return ObjectG.getDObject!SettingsBackend(cast(GSettingsBackend*) p);
 	}
 	
 	/**
@@ -371,11 +364,13 @@ public class SettingsBackend : ObjectG
 	{
 		// GSettingsBackend * g_memory_settings_backend_new (void);
 		auto p = g_memory_settings_backend_new();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SettingsBackend(cast(GSettingsBackend*) p);
+		
+		return ObjectG.getDObject!SettingsBackend(cast(GSettingsBackend*) p);
 	}
 	
 	/**
@@ -389,10 +384,12 @@ public class SettingsBackend : ObjectG
 	{
 		// GSettingsBackend * g_null_settings_backend_new (void);
 		auto p = g_null_settings_backend_new();
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SettingsBackend(cast(GSettingsBackend*) p);
+		
+		return ObjectG.getDObject!SettingsBackend(cast(GSettingsBackend*) p);
 	}
 }

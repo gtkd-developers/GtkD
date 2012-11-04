@@ -58,6 +58,7 @@ public  import gtkc.giotypes;
 
 private import gtkc.gio;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import gio.SeekableT;
@@ -98,18 +99,6 @@ public class MemoryInputStream : InputStream, SeekableIF
 	 */
 	public this (GMemoryInputStream* gMemoryInputStream)
 	{
-		if(gMemoryInputStream is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gMemoryInputStream);
-		if( ptr !is null )
-		{
-			this = cast(MemoryInputStream)ptr;
-			return;
-		}
 		super(cast(GInputStream*)gMemoryInputStream);
 		this.gMemoryInputStream = gMemoryInputStream;
 	}

@@ -71,6 +71,7 @@ public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -125,18 +126,6 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this (GtkSourceBuffer* gtkSourceBuffer)
 	{
-		if(gtkSourceBuffer is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkSourceBuffer);
-		if( ptr !is null )
-		{
-			this = cast(SourceBuffer)ptr;
-			return;
-		}
 		super(cast(GtkTextBuffer*)gtkSourceBuffer);
 		this.gtkSourceBuffer = gtkSourceBuffer;
 	}
@@ -177,7 +166,7 @@ public class SourceBuffer : TextBuffer
 	{
 		foreach ( void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg ; _sourceBuffer.onBracketMatchedListeners )
 		{
-			dlg(new TextIter(iter), state, _sourceBuffer);
+			dlg(ObjectG.getDObject!TextIter(iter), state, _sourceBuffer);
 		}
 	}
 	
@@ -203,7 +192,7 @@ public class SourceBuffer : TextBuffer
 	{
 		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; _sourceBuffer.onHighlightUpdatedListeners )
 		{
-			dlg(new TextIter(arg1), new TextIter(arg2), _sourceBuffer);
+			dlg(ObjectG.getDObject!TextIter(arg1), ObjectG.getDObject!TextIter(arg2), _sourceBuffer);
 		}
 	}
 	
@@ -379,11 +368,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GtkSourceLanguage * gtk_source_buffer_get_language (GtkSourceBuffer *buffer);
 		auto p = gtk_source_buffer_get_language(gtkSourceBuffer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceLanguage(cast(GtkSourceLanguage*) p);
+		
+		return ObjectG.getDObject!SourceLanguage(cast(GtkSourceLanguage*) p);
 	}
 	
 	/**
@@ -435,11 +426,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GtkSourceStyleScheme * gtk_source_buffer_get_style_scheme  (GtkSourceBuffer *buffer);
 		auto p = gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
+		
+		return ObjectG.getDObject!SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
 	}
 	
 	/**
@@ -583,11 +576,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GtkSourceMark * gtk_source_buffer_create_source_mark  (GtkSourceBuffer *buffer,  const gchar *name,  const gchar *category,  const GtkTextIter *where);
 		auto p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceMark(cast(GtkSourceMark*) p);
+		
+		return ObjectG.getDObject!SourceMark(cast(GtkSourceMark*) p);
 	}
 	
 	/**
@@ -635,11 +630,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GSList * gtk_source_buffer_get_source_marks_at_line  (GtkSourceBuffer *buffer,  gint line,  const gchar *category);
 		auto p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -655,11 +652,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GSList * gtk_source_buffer_get_source_marks_at_iter  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
 		auto p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new ListSG(cast(GSList*) p);
+		
+		return ObjectG.getDObject!ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -749,11 +748,13 @@ public class SourceBuffer : TextBuffer
 	{
 		// GtkSourceUndoManager * gtk_source_buffer_get_undo_manager  (GtkSourceBuffer *buffer);
 		auto p = gtk_source_buffer_get_undo_manager(gtkSourceBuffer);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new SourceUndoManager(cast(GtkSourceUndoManager*) p);
+		
+		return ObjectG.getDObject!SourceUndoManager(cast(GtkSourceUndoManager*) p);
 	}
 	
 	/**

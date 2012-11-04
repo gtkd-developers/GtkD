@@ -62,6 +62,7 @@ public  import gstreamerc.gstreamertypes;
 
 private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 
 private import glib.Str;
@@ -111,18 +112,6 @@ public class GhostPad : Pad
 	 */
 	public this (GstGhostPad* gstGhostPad)
 	{
-		if(gstGhostPad is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gstGhostPad);
-		if( ptr !is null )
-		{
-			this = cast(GhostPad)ptr;
-			return;
-		}
 		super(cast(GstPad*)gstGhostPad);
 		this.gstGhostPad = gstGhostPad;
 	}
@@ -238,10 +227,12 @@ public class GhostPad : Pad
 	{
 		// GstPad* gst_ghost_pad_get_target (GstGhostPad *gpad);
 		auto p = gst_ghost_pad_get_target(gstGhostPad);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Pad(cast(GstPad*) p);
+		
+		return ObjectG.getDObject!Pad(cast(GstPad*) p);
 	}
 }

@@ -60,6 +60,7 @@ public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 private import glib.ConstructionException;
+private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -105,18 +106,6 @@ public class MenuShell : Container
 	 */
 	public this (GtkMenuShell* gtkMenuShell)
 	{
-		if(gtkMenuShell is null)
-		{
-			this = null;
-			return;
-		}
-		//Check if there already is a D object for this gtk struct
-		void* ptr = getDObject(cast(GObject*)gtkMenuShell);
-		if( ptr !is null )
-		{
-			this = cast(MenuShell)ptr;
-			return;
-		}
 		super(cast(GtkContainer*)gtkMenuShell);
 		this.gtkMenuShell = gtkMenuShell;
 	}
@@ -270,7 +259,7 @@ public class MenuShell : Container
 	{
 		foreach ( void delegate(Widget, gint, MenuShell) dlg ; _menuShell.onInsertListeners )
 		{
-			dlg(new Widget(child), position, _menuShell);
+			dlg(ObjectG.getDObject!Widget(child), position, _menuShell);
 		}
 	}
 	
@@ -520,11 +509,13 @@ public class MenuShell : Container
 	{
 		// GtkWidget * gtk_menu_shell_get_selected_item (GtkMenuShell *menu_shell);
 		auto p = gtk_menu_shell_get_selected_item(gtkMenuShell);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -537,11 +528,13 @@ public class MenuShell : Container
 	{
 		// GtkWidget * gtk_menu_shell_get_parent_shell (GtkMenuShell *menu_shell);
 		auto p = gtk_menu_shell_get_parent_shell(gtkMenuShell);
+		
 		if(p is null)
 		{
 			return null;
 		}
-		return new Widget(cast(GtkWidget*) p);
+		
+		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
