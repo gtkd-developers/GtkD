@@ -84,7 +84,7 @@ class CustomList : TreeModel
 	 * We simply store a pointer to our CustomRecord
 	 * structure that represents that row in the tree iter.
 	 */
-	int getIter(TreeIter iter, TreePath path)
+	override int getIter(TreeIter iter, TreePath path)
 	{
 		CustomRecord* record;
 		int[]         indices;
