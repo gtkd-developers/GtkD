@@ -240,28 +240,28 @@ gtkdgl-$(MAJOR).pc:
 	echo Description: OpenGL capabilities for GtkD. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdgl-$(MAJOR) >> $@
-	echo Requires: gtkd-2 >> $@
+	echo Requires: gtkd-$(MAJOR) >> $@
 
 gtkdsv-$(MAJOR).pc:
 	echo Name: GtkD SourceView > $@
 	echo Description: A D binding and OO wrapper for GtkSourceView. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdsv-$(MAJOR) >> $@
-	echo Requires: gtkd-2 >> $@
+	echo Requires: gtkd-$(MAJOR) >> $@
 
 gtkdgda-$(MAJOR).pc:
 	echo Name: GdaD > $@
 	echo Description: A D binding and OO wrapper for Gda. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdgda-$(MAJOR) >> $@
-	echo Requires: gtkd-2 >> $@
+	echo Requires: gtkd-$(MAJOR) >> $@
 
 gstreamerd-1.pc:
 	echo Name: GstreamerD > $@
 	echo Description: A D binding and OO wrapper for Gstreamer. >> $@
 	echo Version: 1.6.0 >> $@
 	echo Libs: $(LINKERFLAG)-lgstreamerd-1 >> $@
-#	echo Requires: gtkd-2 >> $@
+#	echo Requires: gtkd-$(MAJOR) >> $@
 
 #######################################################################
 
