@@ -354,7 +354,7 @@ public class Requisition
 			return null;
 		}
 		
-		return ObjectG.getDObject!Requisition(cast(GtkRequisition*) p);
+		return ObjectG.getDObject!(Requisition)(cast(GtkRequisition*) p);
 	}
 	
 	/**

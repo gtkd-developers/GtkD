@@ -133,7 +133,7 @@ public class PgFontset : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class PgFontset : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontMetrics(cast(PangoFontMetrics*) p);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p);
 	}
 	
 	/**

@@ -300,7 +300,7 @@ public class SourceGutterRenderer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextView(cast(GtkTextView*) p);
+		return ObjectG.getDObject!(TextView)(cast(GtkTextView*) p);
 	}
 	
 	/**

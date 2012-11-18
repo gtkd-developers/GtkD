@@ -117,7 +117,7 @@ public template ProxyResolverT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ProxyResolver(cast(GProxyResolver*) p);
+		return ObjectG.getDObject!(ProxyResolver)(cast(GProxyResolver*) p);
 	}
 	
 	/**

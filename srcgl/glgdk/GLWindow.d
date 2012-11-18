@@ -154,7 +154,7 @@ public class GLWindow : ObjectG, GLDrawableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -178,7 +178,7 @@ public class GLWindow : ObjectG, GLDrawableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLWindow(cast(GdkGLWindow*) p);
+		return ObjectG.getDObject!(GLWindow)(cast(GdkGLWindow*) p);
 	}
 	
 	/**
@@ -221,6 +221,6 @@ public class GLWindow : ObjectG, GLDrawableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLWindow(cast(GdkGLWindow*) p);
+		return ObjectG.getDObject!(GLWindow)(cast(GdkGLWindow*) p);
 	}
 }

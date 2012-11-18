@@ -116,7 +116,7 @@ public template AppChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
 	}
 	
 	/**

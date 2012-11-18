@@ -170,7 +170,7 @@ public class SettingsSchemaSource
 			return null;
 		}
 		
-		return ObjectG.getDObject!SettingsSchemaSource(cast(GSettingsSchemaSource*) p);
+		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p);
 	}
 	
 	/**
@@ -188,7 +188,7 @@ public class SettingsSchemaSource
 			return null;
 		}
 		
-		return ObjectG.getDObject!SettingsSchemaSource(cast(GSettingsSchemaSource*) p);
+		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p);
 	}
 	
 	/**
@@ -276,6 +276,6 @@ public class SettingsSchemaSource
 			return null;
 		}
 		
-		return ObjectG.getDObject!SettingsSchema(cast(GSettingsSchema*) p);
+		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p);
 	}
 }

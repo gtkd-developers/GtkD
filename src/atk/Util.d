@@ -205,7 +205,7 @@ public class Util
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -223,7 +223,7 @@ public class Util
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**

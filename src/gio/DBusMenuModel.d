@@ -152,6 +152,6 @@ public class DBusMenuModel : MenuModel
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusMenuModel(cast(GDBusMenuModel*) p);
+		return ObjectG.getDObject!(DBusMenuModel)(cast(GDBusMenuModel*) p);
 	}
 }

@@ -124,7 +124,7 @@ public class FilterOutputStream : OutputStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!OutputStream(cast(GOutputStream*) p);
+		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) p);
 	}
 	
 	/**

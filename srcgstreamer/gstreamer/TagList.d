@@ -293,7 +293,7 @@ public class TagList
 			return null;
 		}
 		
-		return ObjectG.getDObject!TagList(cast(GstTagList*) p);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
 	}
 	
 	/**
@@ -326,7 +326,7 @@ public class TagList
 			return null;
 		}
 		
-		return ObjectG.getDObject!TagList(cast(GstTagList*) p);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
 	}
 	
 	/**
@@ -420,7 +420,7 @@ public class TagList
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 	
 	/**
@@ -848,7 +848,7 @@ public class TagList
 		
 		auto p = gst_tag_list_get_date(gstTagList, Str.toStringz(tag), &outvalue);
 		
-		value = ObjectG.getDObject!Date(outvalue);
+		value = ObjectG.getDObject!(Date)(outvalue);
 		return p;
 	}
 	
@@ -868,7 +868,7 @@ public class TagList
 		
 		auto p = gst_tag_list_get_date_index(gstTagList, Str.toStringz(tag), index, &outvalue);
 		
-		value = ObjectG.getDObject!Date(outvalue);
+		value = ObjectG.getDObject!(Date)(outvalue);
 		return p;
 	}
 }

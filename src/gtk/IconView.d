@@ -223,7 +223,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	{
 		foreach ( void delegate(TreePath, IconView) dlg ; _iconView.onItemActivatedListeners )
 		{
-			dlg(ObjectG.getDObject!TreePath(path), _iconView);
+			dlg(ObjectG.getDObject!(TreePath)(path), _iconView);
 		}
 	}
 	
@@ -513,7 +513,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel)(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -612,7 +612,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -639,8 +639,8 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		
 		auto p = gtk_icon_view_get_item_at_pos(gtkIconView, x, y, &outpath, &outcell);
 		
-		path = ObjectG.getDObject!TreePath(outpath);
-		cell = ObjectG.getDObject!CellRenderer(outcell);
+		path = ObjectG.getDObject!(TreePath)(outpath);
+		cell = ObjectG.getDObject!(CellRenderer)(outcell);
 		return p;
 	}
 	
@@ -701,8 +701,8 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		
 		auto p = gtk_icon_view_get_cursor(gtkIconView, &outpath, &outcell);
 		
-		path = ObjectG.getDObject!TreePath(outpath);
-		cell = ObjectG.getDObject!CellRenderer(outcell);
+		path = ObjectG.getDObject!(TreePath)(outpath);
+		cell = ObjectG.getDObject!(CellRenderer)(outcell);
 		return p;
 	}
 	
@@ -1013,7 +1013,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -1094,8 +1094,8 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		
 		auto p = gtk_icon_view_get_visible_range(gtkIconView, &outstartPath, &outendPath);
 		
-		startPath = ObjectG.getDObject!TreePath(outstartPath);
-		endPath = ObjectG.getDObject!TreePath(outendPath);
+		startPath = ObjectG.getDObject!(TreePath)(outstartPath);
+		endPath = ObjectG.getDObject!(TreePath)(outendPath);
 		return p;
 	}
 	
@@ -1160,8 +1160,8 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		
 		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, &x, &y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
 		
-		model = ObjectG.getDObject!TreeModel(outmodel);
-		path = ObjectG.getDObject!TreePath(outpath);
+		model = ObjectG.getDObject!(TreeModel)(outmodel);
+		path = ObjectG.getDObject!(TreePath)(outpath);
 		return p;
 	}
 	
@@ -1341,7 +1341,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		
 		gtk_icon_view_get_drag_dest_item(gtkIconView, &outpath, &pos);
 		
-		path = ObjectG.getDObject!TreePath(outpath);
+		path = ObjectG.getDObject!(TreePath)(outpath);
 	}
 	
 	/**
@@ -1362,7 +1362,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		
 		auto p = gtk_icon_view_get_dest_item_at_pos(gtkIconView, dragX, dragY, &outpath, &pos);
 		
-		path = ObjectG.getDObject!TreePath(outpath);
+		path = ObjectG.getDObject!(TreePath)(outpath);
 		return p;
 	}
 	
@@ -1384,6 +1384,6 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Surface(cast(cairo_surface_t*) p);
+		return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
 	}
 }

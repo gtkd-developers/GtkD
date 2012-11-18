@@ -173,7 +173,7 @@ public class RecentInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!RecentInfo(cast(GtkRecentInfo*) p);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p);
 	}
 	
 	/**
@@ -378,7 +378,7 @@ public class RecentInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -434,7 +434,7 @@ public class RecentInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -452,7 +452,7 @@ public class RecentInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**

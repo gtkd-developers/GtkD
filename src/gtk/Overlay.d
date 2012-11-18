@@ -159,7 +159,7 @@ public class Overlay : Bin
 	{
 		foreach ( bool delegate(Widget, GdkRectangle*, Overlay) dlg ; _overlay.onGetChildPositionListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Widget(widget), allocation, _overlay) )
+			if ( dlg(ObjectG.getDObject!(Widget)(widget), allocation, _overlay) )
 			{
 				return 1;
 			}

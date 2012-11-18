@@ -234,7 +234,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Registry(cast(GstRegistry*) p);
+		return ObjectG.getDObject!(Registry)(cast(GstRegistry*) p);
 	}
 	
 	/**
@@ -253,7 +253,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -272,7 +272,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -289,7 +289,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -307,7 +307,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -357,7 +357,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -381,7 +381,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -401,7 +401,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p);
 	}
 	
 	/**
@@ -421,7 +421,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!PluginFeature(cast(GstPluginFeature*) p);
+		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p);
 	}
 	
 	/**
@@ -440,7 +440,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!PluginFeature(cast(GstPluginFeature*) p);
+		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p);
 	}
 	
 	/**
@@ -523,7 +523,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p);
 	}
 	
 	/**

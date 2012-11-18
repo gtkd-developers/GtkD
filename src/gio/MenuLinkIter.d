@@ -231,7 +231,7 @@ public class MenuLinkIter
 		
 		auto p = g_menu_link_iter_get_next(gMenuLinkIter, outLink, &outvalue);
 		
-		value = ObjectG.getDObject!MenuModel(outvalue);
+		value = ObjectG.getDObject!(MenuModel)(outvalue);
 		return p;
 	}
 	
@@ -251,7 +251,7 @@ public class MenuLinkIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 	
 	/**

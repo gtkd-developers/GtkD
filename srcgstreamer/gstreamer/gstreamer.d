@@ -197,7 +197,7 @@ public class GStreamer
 			return null;
 		}
 		
-		return ObjectG.getDObject!OptionGroup(cast(GOptionGroup*) p);
+		return ObjectG.getDObject!(OptionGroup)(cast(GOptionGroup*) p);
 	}
 	
 	/**

@@ -135,7 +135,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onInterfaceAddedListeners )
 		{
-			dlg(ObjectG.getDObject!DBusObject(object), ObjectG.getDObject!DBusInterface(iface), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!(DBusObject)(object), ObjectG.getDObject!(DBusInterface)(iface), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -169,7 +169,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onInterfaceRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!DBusObject(object), ObjectG.getDObject!DBusInterface(iface), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!(DBusObject)(object), ObjectG.getDObject!(DBusInterface)(iface), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -201,7 +201,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onObjectAddedListeners )
 		{
-			dlg(ObjectG.getDObject!DBusObject(object), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!(DBusObject)(object), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -233,7 +233,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onObjectRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!DBusObject(object), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!(DBusObject)(object), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -264,7 +264,7 @@ public template DBusObjectManagerT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -284,7 +284,7 @@ public template DBusObjectManagerT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusObject(cast(GDBusObject*) p);
+		return ObjectG.getDObject!(DBusObject)(cast(GDBusObject*) p);
 	}
 	
 	/**
@@ -318,6 +318,6 @@ public template DBusObjectManagerT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusInterface(cast(GDBusInterface*) p);
+		return ObjectG.getDObject!(DBusInterface)(cast(GDBusInterface*) p);
 	}
 }

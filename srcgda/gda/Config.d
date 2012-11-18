@@ -253,7 +253,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -273,7 +273,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -346,7 +346,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -376,7 +376,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!ProviderInfo(cast(GdaProviderInfo*) p);
+		return ObjectG.getDObject!(ProviderInfo)(cast(GdaProviderInfo*) p);
 	}
 	
 	/**
@@ -396,7 +396,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
+		return ObjectG.getDObject!(DataModel)(cast(GdaDataModel*) p);
 	}
 	
 	/**
@@ -415,7 +415,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!DataSourceInfo(cast(GdaDataSourceInfo*) p);
+		return ObjectG.getDObject!(DataSourceInfo)(cast(GdaDataSourceInfo*) p);
 	}
 	
 	/**
@@ -446,7 +446,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!DataSourceInfo(cast(GdaDataSourceInfo*) p);
+		return ObjectG.getDObject!(DataSourceInfo)(cast(GdaDataSourceInfo*) p);
 	}
 	
 	/**
@@ -498,7 +498,7 @@ public class Config
 			return null;
 		}
 		
-		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
+		return ObjectG.getDObject!(DataModel)(cast(GdaDataModel*) p);
 	}
 	
 	/**

@@ -137,7 +137,7 @@ public class NumerableIcon : GioEmblemedIcon
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class NumerableIcon : GioEmblemedIcon
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -178,7 +178,7 @@ public class NumerableIcon : GioEmblemedIcon
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -304,7 +304,7 @@ public class NumerableIcon : GioEmblemedIcon
 			return null;
 		}
 		
-		return ObjectG.getDObject!StyleContext(cast(GtkStyleContext*) p);
+		return ObjectG.getDObject!(StyleContext)(cast(GtkStyleContext*) p);
 	}
 	
 	/**

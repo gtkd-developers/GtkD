@@ -164,7 +164,7 @@ public class Row
 			return null;
 		}
 		
-		return ObjectG.getDObject!Row(cast(GdaRow*) p);
+		return ObjectG.getDObject!(Row)(cast(GdaRow*) p);
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class Row
 			return null;
 		}
 		
-		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
+		return ObjectG.getDObject!(DataModel)(cast(GdaDataModel*) p);
 	}
 	
 	/**
@@ -260,7 +260,7 @@ public class Row
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GdaValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GdaValue*) p);
 	}
 	
 	/**

@@ -189,7 +189,7 @@ public template CellLayoutT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellArea(cast(GtkCellArea*) p);
+		return ObjectG.getDObject!(CellArea)(cast(GtkCellArea*) p);
 	}
 	
 	/**
@@ -207,7 +207,7 @@ public template CellLayoutT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

@@ -311,7 +311,7 @@ public class TreeSelection : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeView(cast(GtkTreeView*) p);
+		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
 	}
 	
 	/**
@@ -332,7 +332,7 @@ public class TreeSelection : ObjectG
 		
 		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, (iter is null) ? null : iter.getTreeIterStruct());
 		
-		model = ObjectG.getDObject!TreeModel(outmodel);
+		model = ObjectG.getDObject!(TreeModel)(outmodel);
 		return p;
 	}
 	

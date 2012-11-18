@@ -137,7 +137,7 @@ public class PgAttributeList
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class PgAttributeList
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -258,7 +258,7 @@ public class PgAttributeList
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -276,6 +276,6 @@ public class PgAttributeList
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttributeIterator(cast(PangoAttrIterator*) p);
+		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) p);
 	}
 }

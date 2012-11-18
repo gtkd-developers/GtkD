@@ -116,7 +116,7 @@ public template StyleProviderT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconFactory(cast(GtkIconFactory*) p);
+		return ObjectG.getDObject!(IconFactory)(cast(GtkIconFactory*) p);
 	}
 	
 	/**
@@ -136,7 +136,7 @@ public template StyleProviderT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!StyleProperties(cast(GtkStyleProperties*) p);
+		return ObjectG.getDObject!(StyleProperties)(cast(GtkStyleProperties*) p);
 	}
 	
 	/**

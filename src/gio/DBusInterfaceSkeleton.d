@@ -238,7 +238,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -310,7 +310,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -328,7 +328,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

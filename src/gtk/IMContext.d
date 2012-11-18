@@ -384,7 +384,7 @@ public class IMContext : ObjectG
 		gtk_im_context_get_preedit_string(gtkIMContext, &outstr, &outattrs, &cursorPos);
 		
 		str = Str.toString(outstr);
-		attrs = ObjectG.getDObject!PgAttributeList(outattrs);
+		attrs = ObjectG.getDObject!(PgAttributeList)(outattrs);
 	}
 	
 	/**

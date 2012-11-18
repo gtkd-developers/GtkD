@@ -173,7 +173,7 @@ public class ParamSpecPool
 			return null;
 		}
 		
-		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class ParamSpecPool
 		ParamSpec[] arr = new ParamSpec[nPspecsP];
 		for(int i = 0; i < nPspecsP; i++)
 		{
-			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -220,6 +220,6 @@ public class ParamSpecPool
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 }

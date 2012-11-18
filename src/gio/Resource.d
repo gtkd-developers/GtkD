@@ -202,7 +202,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!Resource(cast(GResource*) p);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) p);
 	}
 	
 	/**
@@ -235,7 +235,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!Resource(cast(GResource*) p);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) p);
 	}
 	
 	/**
@@ -254,7 +254,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!Resource(cast(GResource*) p);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) p);
 	}
 	
 	/**
@@ -307,7 +307,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!Bytes(cast(GBytes*) p);
+		return ObjectG.getDObject!(Bytes)(cast(GBytes*) p);
 	}
 	
 	/**
@@ -339,7 +339,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 	
 	/**
@@ -458,7 +458,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!Bytes(cast(GBytes*) p);
+		return ObjectG.getDObject!(Bytes)(cast(GBytes*) p);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 	
 	/**

@@ -154,7 +154,7 @@ public class Export : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -173,7 +173,7 @@ public class Export : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -245,7 +245,7 @@ public class Export : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Connection(cast(GdaConnection*) p);
+		return ObjectG.getDObject!(Connection)(cast(GdaConnection*) p);
 	}
 	
 	/**

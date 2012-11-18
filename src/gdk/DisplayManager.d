@@ -156,7 +156,7 @@ public class DisplayManager : ObjectG
 	{
 		foreach ( void delegate(Display, DisplayManager) dlg ; _displayManager.onDisplayOpenedListeners )
 		{
-			dlg(ObjectG.getDObject!Display(display), _displayManager);
+			dlg(ObjectG.getDObject!(Display)(display), _displayManager);
 		}
 	}
 	
@@ -180,7 +180,7 @@ public class DisplayManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DisplayManager(cast(GdkDisplayManager*) p);
+		return ObjectG.getDObject!(DisplayManager)(cast(GdkDisplayManager*) p);
 	}
 	
 	/**
@@ -198,7 +198,7 @@ public class DisplayManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -228,7 +228,7 @@ public class DisplayManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -247,6 +247,6 @@ public class DisplayManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 }

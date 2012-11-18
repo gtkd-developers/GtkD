@@ -627,7 +627,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	{
 		foreach ( void delegate(CssSection, ErrorG, CssProvider) dlg ; _cssProvider.onParsingErrorListeners )
 		{
-			dlg(ObjectG.getDObject!CssSection(section), ObjectG.getDObject!ErrorG(error), _cssProvider);
+			dlg(ObjectG.getDObject!(CssSection)(section), ObjectG.getDObject!(ErrorG)(error), _cssProvider);
 		}
 	}
 	
@@ -647,7 +647,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CssProvider(cast(GtkCssProvider*) p);
+		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) p);
 	}
 	
 	/**
@@ -668,7 +668,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CssProvider(cast(GtkCssProvider*) p);
+		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) p);
 	}
 	
 	/**

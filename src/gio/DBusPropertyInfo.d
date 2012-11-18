@@ -117,7 +117,7 @@ public class DBusPropertyInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusPropertyInfo(cast(GDBusPropertyInfo*) p);
+		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p);
 	}
 	
 	/**

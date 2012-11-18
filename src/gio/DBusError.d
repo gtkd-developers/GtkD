@@ -270,7 +270,7 @@ public class DBusError
 		
 		g_dbus_error_set_dbus_error_valist(&outerror, Str.toStringz(dbusErrorName), Str.toStringz(dbusErrorMessage), Str.toStringz(format), varArgs);
 		
-		error = ObjectG.getDObject!ErrorG(outerror);
+		error = ObjectG.getDObject!(ErrorG)(outerror);
 	}
 	
 	/**

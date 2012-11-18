@@ -516,7 +516,7 @@ public class InputStream : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Bytes(cast(GBytes*) p);
+		return ObjectG.getDObject!(Bytes)(cast(GBytes*) p);
 	}
 	
 	/**
@@ -575,6 +575,6 @@ public class InputStream : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Bytes(cast(GBytes*) p);
+		return ObjectG.getDObject!(Bytes)(cast(GBytes*) p);
 	}
 }

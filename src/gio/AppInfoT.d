@@ -176,7 +176,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -193,7 +193,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -291,7 +291,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -604,7 +604,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -626,7 +626,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -647,7 +647,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -669,7 +669,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!AppInfo(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -691,7 +691,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -716,7 +716,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

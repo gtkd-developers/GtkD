@@ -221,7 +221,7 @@ public class FontSelection : Box
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontFace(cast(PangoFontFace*) p);
+		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) p);
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public class FontSelection : Box
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -262,7 +262,7 @@ public class FontSelection : Box
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontFamily(cast(PangoFontFamily*) p);
+		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) p);
 	}
 	
 	/**
@@ -296,7 +296,7 @@ public class FontSelection : Box
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -316,7 +316,7 @@ public class FontSelection : Box
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -337,7 +337,7 @@ public class FontSelection : Box
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -357,6 +357,6 @@ public class FontSelection : Box
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 }

@@ -164,7 +164,7 @@ public class ToolItemGroup : Container, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
+		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
 	}
 	
 	/**
@@ -229,7 +229,7 @@ public class ToolItemGroup : Container, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -249,7 +249,7 @@ public class ToolItemGroup : Container, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
+		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
 	}
 	
 	/**

@@ -521,7 +521,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -822,6 +822,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Application(cast(GApplication*) p);
+		return ObjectG.getDObject!(Application)(cast(GApplication*) p);
 	}
 }

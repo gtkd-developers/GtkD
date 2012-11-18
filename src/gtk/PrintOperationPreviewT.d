@@ -159,7 +159,7 @@ public template PrintOperationPreviewT(TStruct)
 	{
 		foreach ( void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg ; _printOperationPreviewIF.onGotPageSizeListeners )
 		{
-			dlg(ObjectG.getDObject!PrintContext(context), ObjectG.getDObject!PageSetup(pageSetup), _printOperationPreviewIF);
+			dlg(ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(PageSetup)(pageSetup), _printOperationPreviewIF);
 		}
 	}
 	
@@ -194,7 +194,7 @@ public template PrintOperationPreviewT(TStruct)
 	{
 		foreach ( void delegate(PrintContext, PrintOperationPreviewIF) dlg ; _printOperationPreviewIF.onReadyListeners )
 		{
-			dlg(ObjectG.getDObject!PrintContext(context), _printOperationPreviewIF);
+			dlg(ObjectG.getDObject!(PrintContext)(context), _printOperationPreviewIF);
 		}
 	}
 	

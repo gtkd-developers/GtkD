@@ -127,7 +127,7 @@ public template DBusObjectT(TStruct)
 	{
 		foreach ( void delegate(DBusInterfaceIF, DBusObjectIF) dlg ; _dBusObjectIF.onInterfaceAddedListeners )
 		{
-			dlg(ObjectG.getDObject!DBusInterface(iface), _dBusObjectIF);
+			dlg(ObjectG.getDObject!(DBusInterface)(iface), _dBusObjectIF);
 		}
 	}
 	
@@ -159,7 +159,7 @@ public template DBusObjectT(TStruct)
 	{
 		foreach ( void delegate(DBusInterfaceIF, DBusObjectIF) dlg ; _dBusObjectIF.onInterfaceRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!DBusInterface(iface), _dBusObjectIF);
+			dlg(ObjectG.getDObject!(DBusInterface)(iface), _dBusObjectIF);
 		}
 	}
 	
@@ -190,7 +190,7 @@ public template DBusObjectT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -219,6 +219,6 @@ public template DBusObjectT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusInterface(cast(GDBusInterface*) p);
+		return ObjectG.getDObject!(DBusInterface)(cast(GDBusInterface*) p);
 	}
 }

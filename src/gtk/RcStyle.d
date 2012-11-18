@@ -514,7 +514,7 @@ public class RcStyle : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ScannerG(cast(GScanner*) p);
+		return ObjectG.getDObject!(ScannerG)(cast(GScanner*) p);
 	}
 	
 	/**
@@ -540,7 +540,7 @@ public class RcStyle : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -571,7 +571,7 @@ public class RcStyle : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -881,7 +881,7 @@ public class RcStyle : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!RcStyle(cast(GtkRcStyle*) p);
+		return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) p);
 	}
 	
 	/**
@@ -902,6 +902,6 @@ public class RcStyle : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!RcStyle(cast(GtkRcStyle*) p);
+		return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) p);
 	}
 }

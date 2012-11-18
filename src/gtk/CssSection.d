@@ -630,7 +630,7 @@ public class CssSection : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!File(cast(GFile*) p);
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 	
 	/**
@@ -653,7 +653,7 @@ public class CssSection : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!CssSection(cast(GtkCssSection*) p);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
 	}
 	
 	/**
@@ -703,7 +703,7 @@ public class CssSection : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!CssSection(cast(GtkCssSection*) p);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
 	}
 	
 	/**

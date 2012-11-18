@@ -198,7 +198,7 @@ public class PrintJob : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PrintSettings(cast(GtkPrintSettings*) p);
+		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class PrintJob : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Printer(cast(GtkPrinter*) p);
+		return ObjectG.getDObject!(Printer)(cast(GtkPrinter*) p);
 	}
 	
 	/**
@@ -293,7 +293,7 @@ public class PrintJob : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Surface(cast(cairo_surface_t*) p);
+		return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
 	}
 	
 	/**

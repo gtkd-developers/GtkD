@@ -122,6 +122,6 @@ public class SourceStyle : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceStyle(cast(GtkSourceStyle*) p);
+		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) p);
 	}
 }

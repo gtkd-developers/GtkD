@@ -164,7 +164,7 @@ public class FileInputStream : InputStream, SeekableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -216,6 +216,6 @@ public class FileInputStream : InputStream, SeekableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
 	}
 }

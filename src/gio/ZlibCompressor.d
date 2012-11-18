@@ -150,7 +150,7 @@ public class ZlibCompressor : ObjectG, ConverterIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
 	}
 	
 	/**

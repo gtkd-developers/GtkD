@@ -240,7 +240,7 @@ public class Plugin : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Module(cast(GModule*) p);
+		return ObjectG.getDObject!(Module)(cast(GModule*) p);
 	}
 	
 	/**
@@ -291,7 +291,7 @@ public class Plugin : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p);
 	}
 	
 	/**
@@ -308,7 +308,7 @@ public class Plugin : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p);
 	}
 	
 	/**
@@ -327,7 +327,7 @@ public class Plugin : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Plugin(cast(GstPlugin*) p);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p);
 	}
 	
 	/**

@@ -355,7 +355,7 @@ public class PgRenderer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgColor(cast(PangoColor*) p);
+		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) p);
 	}
 	
 	/**
@@ -387,7 +387,7 @@ public class PgRenderer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgMatrix(cast(PangoMatrix*) p);
+		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p);
 	}
 	
 	/**
@@ -409,7 +409,7 @@ public class PgRenderer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -431,6 +431,6 @@ public class PgRenderer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 }

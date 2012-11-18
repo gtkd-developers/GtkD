@@ -293,7 +293,7 @@ public class TreeRowReference
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel)(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -311,7 +311,7 @@ public class TreeRowReference
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -349,7 +349,7 @@ public class TreeRowReference
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeRowReference(cast(GtkTreeRowReference*) p);
+		return ObjectG.getDObject!(TreeRowReference)(cast(GtkTreeRowReference*) p);
 	}
 	
 	/**

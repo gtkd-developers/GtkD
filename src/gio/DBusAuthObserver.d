@@ -183,7 +183,7 @@ public class DBusAuthObserver : ObjectG
 	{
 		foreach ( bool delegate(IOStream, Credentials, DBusAuthObserver) dlg ; _dBusAuthObserver.onAuthorizeAuthenticatedPeerListeners )
 		{
-			if ( dlg(ObjectG.getDObject!IOStream(stream), ObjectG.getDObject!Credentials(credentials), _dBusAuthObserver) )
+			if ( dlg(ObjectG.getDObject!(IOStream)(stream), ObjectG.getDObject!(Credentials)(credentials), _dBusAuthObserver) )
 			{
 				return 1;
 			}

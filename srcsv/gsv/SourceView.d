@@ -176,7 +176,7 @@ public class SourceView : TextView
 	{
 		foreach ( void delegate(TextIter, Event, SourceView) dlg ; _sourceView.onLineMarkActivatedListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(iter), ObjectG.getDObject!Event(event), _sourceView);
+			dlg(ObjectG.getDObject!(TextIter)(iter), ObjectG.getDObject!(Event)(event), _sourceView);
 		}
 	}
 	
@@ -333,7 +333,7 @@ public class SourceView : TextView
 	{
 		foreach ( void delegate(TextIter, gint, SourceView) dlg ; _sourceView.onSmartHomeEndListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(iter), count, _sourceView);
+			dlg(ObjectG.getDObject!(TextIter)(iter), count, _sourceView);
 		}
 	}
 	
@@ -548,7 +548,7 @@ public class SourceView : TextView
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceMarkAttributes(cast(GtkSourceMarkAttributes*) p);
+		return ObjectG.getDObject!(SourceMarkAttributes)(cast(GtkSourceMarkAttributes*) p);
 	}
 	
 	/**
@@ -717,7 +717,7 @@ public class SourceView : TextView
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceCompletion(cast(GtkSourceCompletion*) p);
+		return ObjectG.getDObject!(SourceCompletion)(cast(GtkSourceCompletion*) p);
 	}
 	
 	/**
@@ -741,6 +741,6 @@ public class SourceView : TextView
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceGutter(cast(GtkSourceGutter*) p);
+		return ObjectG.getDObject!(SourceGutter)(cast(GtkSourceGutter*) p);
 	}
 }

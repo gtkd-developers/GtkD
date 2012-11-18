@@ -166,7 +166,7 @@ public template ColorChooserT(TStruct)
 	{
 		foreach ( void delegate(RGBA, ColorChooserIF) dlg ; _colorChooserIF.onColorActivatedListeners )
 		{
-			dlg(ObjectG.getDObject!RGBA(color), _colorChooserIF);
+			dlg(ObjectG.getDObject!(RGBA)(color), _colorChooserIF);
 		}
 	}
 	

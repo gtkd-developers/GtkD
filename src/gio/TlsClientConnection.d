@@ -182,7 +182,7 @@ public class TlsClientConnection : TlsConnection
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnectable(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(SocketConnectable)(cast(GSocketConnectable*) p);
 	}
 	
 	/**
@@ -259,6 +259,6 @@ public class TlsClientConnection : TlsConnection
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 }

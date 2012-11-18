@@ -205,7 +205,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -233,7 +233,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -254,7 +254,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontMap(cast(PangoFontMap*) p);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
 	}
 	
 	/**
@@ -326,7 +326,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -354,7 +354,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -480,7 +480,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgMatrix(cast(PangoMatrix*) p);
+		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p);
 	}
 	
 	/**
@@ -518,7 +518,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -539,7 +539,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontset(cast(PangoFontset*) p);
+		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) p);
 	}
 	
 	/**
@@ -574,7 +574,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontMetrics(cast(PangoFontMetrics*) p);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p);
 	}
 	
 	/**
@@ -596,7 +596,7 @@ public class PgContext : ObjectG
 		families = new PgFontFamily[nFamilies];
 		for(int i = 0; i < nFamilies; i++)
 		{
-			families[i] = ObjectG.getDObject!PgFontFamily(cast(PangoFontFamily*) outfamilies[i]);
+			families[i] = ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) outfamilies[i]);
 		}
 	}
 	

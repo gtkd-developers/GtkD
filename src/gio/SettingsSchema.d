@@ -155,7 +155,7 @@ public class SettingsSchema : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!SettingsSchema(cast(GSettingsSchema*) p);
+		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p);
 	}
 	
 	/**

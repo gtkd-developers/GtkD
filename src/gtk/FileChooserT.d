@@ -836,7 +836,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -959,7 +959,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -1037,7 +1037,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -1149,7 +1149,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -1196,7 +1196,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -1231,7 +1231,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!FileFilter(cast(GtkFileFilter*) p);
+		return ObjectG.getDObject!(FileFilter)(cast(GtkFileFilter*) p);
 	}
 	
 	/**
@@ -1299,7 +1299,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -1367,7 +1367,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -1386,7 +1386,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!File(cast(GFile*) p);
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 	
 	/**
@@ -1408,7 +1408,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!File(cast(GFile*) p);
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 	
 	/**
@@ -1427,7 +1427,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -1446,7 +1446,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!File(cast(GFile*) p);
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 	
 	/**

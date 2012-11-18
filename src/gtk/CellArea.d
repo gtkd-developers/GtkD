@@ -351,7 +351,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg ; _cellArea.onAddEditableListeners )
 		{
-			dlg(ObjectG.getDObject!CellRenderer(renderer), ObjectG.getDObject!CellEditable(editable), cellArea, Str.toString(path), _cellArea);
+			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable)(editable), cellArea, Str.toString(path), _cellArea);
 		}
 	}
 	
@@ -379,7 +379,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(TreeModelIF, TreeIter, gboolean, gboolean, CellArea) dlg ; _cellArea.onApplyAttributesListeners )
 		{
-			dlg(ObjectG.getDObject!TreeModel(model), ObjectG.getDObject!TreeIter(iter), isExpander, isExpanded, _cellArea);
+			dlg(ObjectG.getDObject!(TreeModel)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, _cellArea);
 		}
 	}
 	
@@ -413,7 +413,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(CellRenderer, string, CellArea) dlg ; _cellArea.onFocusChangedListeners )
 		{
-			dlg(ObjectG.getDObject!CellRenderer(renderer), Str.toString(path), _cellArea);
+			dlg(ObjectG.getDObject!(CellRenderer)(renderer), Str.toString(path), _cellArea);
 		}
 	}
 	
@@ -442,7 +442,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(CellRenderer, CellEditableIF, CellArea) dlg ; _cellArea.onRemoveEditableListeners )
 		{
-			dlg(ObjectG.getDObject!CellRenderer(renderer), ObjectG.getDObject!CellEditable(editable), _cellArea);
+			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable)(editable), _cellArea);
 		}
 	}
 	
@@ -591,7 +591,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellRenderer(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
 	}
 	
 	/**
@@ -613,7 +613,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellAreaContext(cast(GtkCellAreaContext*) p);
+		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) p);
 	}
 	
 	/**
@@ -641,7 +641,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellAreaContext(cast(GtkCellAreaContext*) p);
+		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) p);
 	}
 	
 	/**
@@ -841,7 +841,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -864,7 +864,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -1005,7 +1005,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellRenderer(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
 	}
 	
 	/**
@@ -1069,7 +1069,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -1093,7 +1093,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellRenderer(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
 	}
 	
 	/**
@@ -1111,7 +1111,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellRenderer(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
 	}
 	
 	/**
@@ -1129,7 +1129,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellEditable(cast(GtkCellEditable*) p);
+		return ObjectG.getDObject!(CellEditable)(cast(GtkCellEditable*) p);
 	}
 	
 	/**

@@ -171,7 +171,7 @@ public class Binding : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 	
 	/**
@@ -201,7 +201,7 @@ public class Binding : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 	
 	/**
@@ -249,7 +249,7 @@ public class Binding : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Binding(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
 	}
 	
 	/**
@@ -284,7 +284,7 @@ public class Binding : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Binding(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
 	}
 	
 	/**
@@ -318,6 +318,6 @@ public class Binding : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Binding(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
 	}
 }

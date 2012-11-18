@@ -143,7 +143,7 @@ public class MiniObject
 			return null;
 		}
 		
-		return ObjectG.getDObject!MiniObject(cast(GstMiniObject*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
 	}
 	
 	/**
@@ -177,7 +177,7 @@ public class MiniObject
 			return null;
 		}
 		
-		return ObjectG.getDObject!MiniObject(cast(GstMiniObject*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
 	}
 	
 	/**
@@ -200,7 +200,7 @@ public class MiniObject
 			return null;
 		}
 		
-		return ObjectG.getDObject!MiniObject(cast(GstMiniObject*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
 	}
 	
 	/**
@@ -228,7 +228,7 @@ public class MiniObject
 		
 		gst_mini_object_replace(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct());
 		
-		olddata = ObjectG.getDObject!MiniObject(outolddata);
+		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
 	}
 	
 	/**
@@ -251,7 +251,7 @@ public class MiniObject
 			return null;
 		}
 		
-		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -300,6 +300,6 @@ public class MiniObject
 			return null;
 		}
 		
-		return ObjectG.getDObject!MiniObject(cast(GstMiniObject*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
 	}
 }

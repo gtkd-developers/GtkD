@@ -237,7 +237,7 @@ public class TlsCertificate : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -255,7 +255,7 @@ public class TlsCertificate : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
 	}
 	
 	/**

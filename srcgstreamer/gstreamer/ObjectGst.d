@@ -187,7 +187,7 @@ public class ObjectGst : ObjectG
 	{
 		foreach ( void delegate(ObjectGst, ParamSpec, ObjectGst) dlg ; _objectGst.onDeepNotifyListeners )
 		{
-			dlg(ObjectG.getDObject!ObjectGst(propObject), ObjectG.getDObject!ParamSpec(prop), _objectGst);
+			dlg(ObjectG.getDObject!(ObjectGst)(propObject), ObjectG.getDObject!(ParamSpec)(prop), _objectGst);
 		}
 	}
 	
@@ -242,7 +242,7 @@ public class ObjectGst : ObjectG
 	{
 		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentSetListeners )
 		{
-			dlg(ObjectG.getDObject!ObjectG(parent), _objectGst);
+			dlg(ObjectG.getDObject!(ObjectG)(parent), _objectGst);
 		}
 	}
 	
@@ -269,7 +269,7 @@ public class ObjectGst : ObjectG
 	{
 		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentUnsetListeners )
 		{
-			dlg(ObjectG.getDObject!ObjectG(parent), _objectGst);
+			dlg(ObjectG.getDObject!(ObjectG)(parent), _objectGst);
 		}
 	}
 	
@@ -332,7 +332,7 @@ public class ObjectGst : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectGst(cast(GstObject*) p);
+		return ObjectG.getDObject!(ObjectGst)(cast(GstObject*) p);
 	}
 	
 	/**
@@ -505,7 +505,7 @@ public class ObjectGst : ObjectG
 		
 		gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct());
 		
-		oldobj = ObjectG.getDObject!ObjectGst(outoldobj);
+		oldobj = ObjectG.getDObject!(ObjectGst)(outoldobj);
 	}
 	
 	/**

@@ -150,7 +150,7 @@ public class DBusAnnotationInfo : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusAnnotationInfo(cast(GDBusAnnotationInfo*) p);
+		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) p);
 	}
 	
 	/**

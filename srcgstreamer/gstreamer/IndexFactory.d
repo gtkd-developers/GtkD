@@ -155,7 +155,7 @@ public class IndexFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!IndexFactory(cast(GstIndexFactory*) p);
+		return ObjectG.getDObject!(IndexFactory)(cast(GstIndexFactory*) p);
 	}
 	
 	/**
@@ -173,7 +173,7 @@ public class IndexFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!Index(cast(GstIndex*) p);
+		return ObjectG.getDObject!(Index)(cast(GstIndex*) p);
 	}
 	
 	/**
@@ -193,6 +193,6 @@ public class IndexFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!Index(cast(GstIndex*) p);
+		return ObjectG.getDObject!(Index)(cast(GstIndex*) p);
 	}
 }

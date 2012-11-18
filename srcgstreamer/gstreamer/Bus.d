@@ -229,7 +229,7 @@ public class Bus : ObjectGst
 	{
 		foreach ( void delegate(Message, Bus) dlg ; _bus.onMessageListeners )
 		{
-			dlg(ObjectG.getDObject!Message(message), _bus);
+			dlg(ObjectG.getDObject!(Message)(message), _bus);
 		}
 	}
 	
@@ -262,7 +262,7 @@ public class Bus : ObjectGst
 	{
 		foreach ( void delegate(Message, Bus) dlg ; _bus.onSyncMessageListeners )
 		{
-			dlg(ObjectG.getDObject!Message(message), _bus);
+			dlg(ObjectG.getDObject!(Message)(message), _bus);
 		}
 	}
 	
@@ -322,7 +322,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Message(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -339,7 +339,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Message(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -361,7 +361,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Message(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
 	}
 	
 	/**
@@ -408,7 +408,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Source(cast(GSource*) p);
+		return ObjectG.getDObject!(Source)(cast(GSource*) p);
 	}
 	
 	/**
@@ -555,6 +555,6 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Message(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
 	}
 }

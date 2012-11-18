@@ -259,7 +259,7 @@ public class MenuShell : Container
 	{
 		foreach ( void delegate(Widget, gint, MenuShell) dlg ; _menuShell.onInsertListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(child), position, _menuShell);
+			dlg(ObjectG.getDObject!(Widget)(child), position, _menuShell);
 		}
 	}
 	
@@ -515,7 +515,7 @@ public class MenuShell : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -534,7 +534,7 @@ public class MenuShell : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

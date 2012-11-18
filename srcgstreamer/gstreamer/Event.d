@@ -261,7 +261,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -594,7 +594,7 @@ public class Event
 		
 		gst_event_parse_tag(gstEvent, &outtaglist);
 		
-		taglist = ObjectG.getDObject!TagList(outtaglist);
+		taglist = ObjectG.getDObject!(TagList)(outtaglist);
 	}
 	
 	/**
@@ -611,7 +611,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!Event(cast(GstEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GstEvent*) p);
 	}
 	
 	/**

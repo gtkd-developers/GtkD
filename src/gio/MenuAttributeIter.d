@@ -222,7 +222,7 @@ public class MenuAttributeIter
 		auto p = g_menu_attribute_iter_get_next(gMenuAttributeIter, &outoutName, &outvalue);
 		
 		outName = Str.toString(outoutName);
-		value = ObjectG.getDObject!Variant(outvalue);
+		value = ObjectG.getDObject!(Variant)(outvalue);
 		return p;
 	}
 	
@@ -255,7 +255,7 @@ public class MenuAttributeIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**

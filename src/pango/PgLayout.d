@@ -182,7 +182,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -303,7 +303,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -335,7 +335,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -663,7 +663,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgTabArray(cast(PangoTabArray*) p);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
 	}
 	
 	/**
@@ -992,7 +992,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 	
 	/**
@@ -1016,7 +1016,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 	
 	/**
@@ -1035,7 +1035,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -1056,7 +1056,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -1073,6 +1073,6 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayoutIter(cast(PangoLayoutIter*) p);
+		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) p);
 	}
 }

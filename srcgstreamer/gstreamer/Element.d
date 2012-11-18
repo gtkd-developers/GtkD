@@ -323,7 +323,7 @@ public class Element : ObjectGst
 	{
 		foreach ( void delegate(Pad, Element) dlg ; _element.onPadAddedListeners )
 		{
-			dlg(ObjectG.getDObject!Pad(newPad), _element);
+			dlg(ObjectG.getDObject!(Pad)(newPad), _element);
 		}
 	}
 	
@@ -352,7 +352,7 @@ public class Element : ObjectGst
 	{
 		foreach ( void delegate(Pad, Element) dlg ; _element.onPadRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!Pad(oldPad), _element);
+			dlg(ObjectG.getDObject!(Pad)(oldPad), _element);
 		}
 	}
 	
@@ -391,7 +391,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!PadTemplate(cast(GstPadTemplate*) p);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -490,7 +490,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pad(cast(GstPad*) p);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) p);
 	}
 	
 	/**
@@ -523,7 +523,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pad(cast(GstPad*) p);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) p);
 	}
 	
 	/**
@@ -543,7 +543,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!PadTemplate(cast(GstPadTemplate*) p);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -564,7 +564,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pad(cast(GstPad*) p);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) p);
 	}
 	
 	/**
@@ -584,7 +584,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pad(cast(GstPad*) p);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) p);
 	}
 	
 	/**
@@ -653,7 +653,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -670,7 +670,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -687,7 +687,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -846,7 +846,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Bus(cast(GstBus*) p);
+		return ObjectG.getDObject!(Bus)(cast(GstBus*) p);
 	}
 	
 	/**
@@ -863,7 +863,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ElementFactory(cast(GstElementFactory*) p);
+		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) p);
 	}
 	
 	/**
@@ -893,7 +893,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Index(cast(GstIndex*) p);
+		return ObjectG.getDObject!(Index)(cast(GstIndex*) p);
 	}
 	
 	/**
@@ -945,7 +945,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Clock(cast(GstClock*) p);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) p);
 	}
 	
 	/**
@@ -979,7 +979,7 @@ public class Element : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Clock(cast(GstClock*) p);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) p);
 	}
 	
 	/**

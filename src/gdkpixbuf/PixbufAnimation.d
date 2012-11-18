@@ -220,7 +220,7 @@ public class PixbufAnimation : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PixbufAnimationIter(cast(GdkPixbufAnimationIter*) p);
+		return ObjectG.getDObject!(PixbufAnimationIter)(cast(GdkPixbufAnimationIter*) p);
 	}
 	
 	/**
@@ -255,6 +255,6 @@ public class PixbufAnimation : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 }

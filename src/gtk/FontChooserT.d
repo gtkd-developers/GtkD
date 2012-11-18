@@ -149,7 +149,7 @@ public template FontChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontFamily(cast(PangoFontFamily*) p);
+		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) p);
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public template FontChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontFace(cast(PangoFontFace*) p);
+		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) p);
 	}
 	
 	/**
@@ -231,7 +231,7 @@ public template FontChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**

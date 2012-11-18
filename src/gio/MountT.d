@@ -275,7 +275,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -293,7 +293,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -312,7 +312,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Drive(cast(GDrive*) p);
+		return ObjectG.getDObject!(Drive)(cast(GDrive*) p);
 	}
 	
 	/**
@@ -329,7 +329,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!File(cast(GFile*) p);
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 	
 	/**
@@ -346,7 +346,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Volume(cast(GVolume*) p);
+		return ObjectG.getDObject!(Volume)(cast(GVolume*) p);
 	}
 	
 	/**
@@ -365,7 +365,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!File(cast(GFile*) p);
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 	
 	/**

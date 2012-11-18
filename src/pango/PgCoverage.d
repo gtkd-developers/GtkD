@@ -129,7 +129,7 @@ public class PgCoverage
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgCoverage(cast(PangoCoverage*) p);
+		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p);
 	}
 	
 	/**
@@ -157,7 +157,7 @@ public class PgCoverage
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgCoverage(cast(PangoCoverage*) p);
+		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p);
 	}
 	
 	/**
@@ -231,6 +231,6 @@ public class PgCoverage
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgCoverage(cast(PangoCoverage*) p);
+		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p);
 	}
 }

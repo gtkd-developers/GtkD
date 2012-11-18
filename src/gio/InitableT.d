@@ -188,7 +188,7 @@ public template InitableT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 	
 	/**

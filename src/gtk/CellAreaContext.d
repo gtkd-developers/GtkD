@@ -136,7 +136,7 @@ public class CellAreaContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!CellArea(cast(GtkCellArea*) p);
+		return ObjectG.getDObject!(CellArea)(cast(GtkCellArea*) p);
 	}
 	
 	/**

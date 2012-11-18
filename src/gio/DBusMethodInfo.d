@@ -117,7 +117,7 @@ public class DBusMethodInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusMethodInfo(cast(GDBusMethodInfo*) p);
+		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) p);
 	}
 	
 	/**

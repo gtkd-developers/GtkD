@@ -195,7 +195,7 @@ public class DragContext : ObjectG
 		
 		gdk_drag_find_window_for_screen(gdkDragContext, (dragWindow is null) ? null : dragWindow.getWindowStruct(), (screen is null) ? null : screen.getScreenStruct(), xRoot, yRoot, &outdestWindow, &protocol);
 		
-		destWindow = ObjectG.getDObject!Window(outdestWindow);
+		destWindow = ObjectG.getDObject!(Window)(outdestWindow);
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class DragContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DragContext(cast(GdkDragContext*) p);
+		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p);
 	}
 	
 	/**
@@ -243,7 +243,7 @@ public class DragContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DragContext(cast(GdkDragContext*) p);
+		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p);
 	}
 	
 	/**
@@ -324,7 +324,7 @@ public class DragContext : ObjectG
 		
 		auto p = gdk_window_get_drag_protocol((window is null) ? null : window.getWindowStruct(), &outtarget);
 		
-		target = ObjectG.getDObject!Window(outtarget);
+		target = ObjectG.getDObject!(Window)(outtarget);
 		return p;
 	}
 	
@@ -377,7 +377,7 @@ public class DragContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -394,7 +394,7 @@ public class DragContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 	
 	/**
@@ -424,7 +424,7 @@ public class DragContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -441,7 +441,7 @@ public class DragContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**

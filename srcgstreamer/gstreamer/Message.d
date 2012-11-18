@@ -492,7 +492,7 @@ public class Message
 			return null;
 		}
 		
-		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -704,7 +704,7 @@ public class Message
 		
 		gst_message_parse_clock_lost(gstMessage, &outclock);
 		
-		clock = ObjectG.getDObject!Clock(outclock);
+		clock = ObjectG.getDObject!(Clock)(outclock);
 	}
 	
 	/**
@@ -722,7 +722,7 @@ public class Message
 		
 		gst_message_parse_clock_provide(gstMessage, &outclock, &ready);
 		
-		clock = ObjectG.getDObject!Clock(outclock);
+		clock = ObjectG.getDObject!(Clock)(outclock);
 	}
 	
 	/**
@@ -741,7 +741,7 @@ public class Message
 		
 		gst_message_parse_error(gstMessage, &outgerror, &outdbug);
 		
-		gerror = ObjectG.getDObject!ErrorG(outgerror);
+		gerror = ObjectG.getDObject!(ErrorG)(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -762,7 +762,7 @@ public class Message
 		
 		gst_message_parse_info(gstMessage, &outgerror, &outdbug);
 		
-		gerror = ObjectG.getDObject!ErrorG(outgerror);
+		gerror = ObjectG.getDObject!(ErrorG)(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -780,7 +780,7 @@ public class Message
 		
 		gst_message_parse_new_clock(gstMessage, &outclock);
 		
-		clock = ObjectG.getDObject!Clock(outclock);
+		clock = ObjectG.getDObject!(Clock)(outclock);
 	}
 	
 	/**
@@ -853,7 +853,7 @@ public class Message
 		
 		gst_message_parse_warning(gstMessage, &outgerror, &outdbug);
 		
-		gerror = ObjectG.getDObject!ErrorG(outgerror);
+		gerror = ObjectG.getDObject!(ErrorG)(outgerror);
 		dbug = Str.toString(outdbug);
 	}
 	
@@ -900,6 +900,6 @@ public class Message
 			return null;
 		}
 		
-		return ObjectG.getDObject!Message(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
 	}
 }

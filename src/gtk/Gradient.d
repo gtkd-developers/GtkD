@@ -205,7 +205,7 @@ public class Gradient
 			return null;
 		}
 		
-		return ObjectG.getDObject!Gradient(cast(GtkGradient*) p);
+		return ObjectG.getDObject!(Gradient)(cast(GtkGradient*) p);
 	}
 	
 	/**
@@ -236,7 +236,7 @@ public class Gradient
 		
 		auto p = gtk_gradient_resolve(gtkGradient, (props is null) ? null : props.getStylePropertiesStruct(), &outresolvedGradient);
 		
-		resolvedGradient = ObjectG.getDObject!Pattern(outresolvedGradient);
+		resolvedGradient = ObjectG.getDObject!(Pattern)(outresolvedGradient);
 		return p;
 	}
 	
@@ -252,7 +252,7 @@ public class Gradient
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pattern(cast(cairo_pattern_t*) p);
+		return ObjectG.getDObject!(Pattern)(cast(cairo_pattern_t*) p);
 	}
 	
 	/**

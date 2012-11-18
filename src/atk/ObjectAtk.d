@@ -337,7 +337,7 @@ public class ObjectAtk : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -374,7 +374,7 @@ public class ObjectAtk : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -405,7 +405,7 @@ public class ObjectAtk : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -422,7 +422,7 @@ public class ObjectAtk : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!RelationSet(cast(AtkRelationSet*) p);
+		return ObjectG.getDObject!(RelationSet)(cast(AtkRelationSet*) p);
 	}
 	
 	/**
@@ -475,7 +475,7 @@ public class ObjectAtk : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p);
 	}
 	
 	/**

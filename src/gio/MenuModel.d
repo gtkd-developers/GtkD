@@ -310,7 +310,7 @@ public class MenuModel : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -334,7 +334,7 @@ public class MenuModel : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 	
 	/**
@@ -356,7 +356,7 @@ public class MenuModel : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!MenuAttributeIter(cast(GMenuAttributeIter*) p);
+		return ObjectG.getDObject!(MenuAttributeIter)(cast(GMenuAttributeIter*) p);
 	}
 	
 	/**
@@ -378,7 +378,7 @@ public class MenuModel : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!MenuLinkIter(cast(GMenuLinkIter*) p);
+		return ObjectG.getDObject!(MenuLinkIter)(cast(GMenuLinkIter*) p);
 	}
 	
 	/**

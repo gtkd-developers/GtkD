@@ -136,6 +136,6 @@ public template GLDrawableT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLConfig(cast(GdkGLConfig*) p);
+		return ObjectG.getDObject!(GLConfig)(cast(GdkGLConfig*) p);
 	}
 }

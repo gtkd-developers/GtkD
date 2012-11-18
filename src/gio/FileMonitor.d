@@ -147,7 +147,7 @@ public class FileMonitor : ObjectG
 	{
 		foreach ( void delegate(File, File, GFileMonitorEvent, FileMonitor) dlg ; _fileMonitor.onChangedListeners )
 		{
-			dlg(ObjectG.getDObject!File(file), ObjectG.getDObject!File(otherFile), eventType, _fileMonitor);
+			dlg(ObjectG.getDObject!(File)(file), ObjectG.getDObject!(File)(otherFile), eventType, _fileMonitor);
 		}
 	}
 	

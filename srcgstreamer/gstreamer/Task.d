@@ -162,7 +162,7 @@ public class Task : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Task(cast(GstTask*) p);
+		return ObjectG.getDObject!(Task)(cast(GstTask*) p);
 	}
 	
 	/**

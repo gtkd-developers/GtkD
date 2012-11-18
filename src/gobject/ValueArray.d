@@ -129,7 +129,7 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 	
 	/**
@@ -170,7 +170,7 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
+		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -203,7 +203,7 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
+		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -225,7 +225,7 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
+		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
+		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -270,7 +270,7 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
+		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -293,7 +293,7 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
+		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 	
 	/**
@@ -318,6 +318,6 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!ValueArray(cast(GValueArray*) p);
+		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 }

@@ -188,7 +188,7 @@ public class Application : GioApplication
 	{
 		foreach ( void delegate(Window, Application) dlg ; _application.onWindowAddedListeners )
 		{
-			dlg(ObjectG.getDObject!Window(window), _application);
+			dlg(ObjectG.getDObject!(Window)(window), _application);
 		}
 	}
 	
@@ -218,7 +218,7 @@ public class Application : GioApplication
 	{
 		foreach ( void delegate(Window, Application) dlg ; _application.onWindowRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!Window(window), _application);
+			dlg(ObjectG.getDObject!(Window)(window), _application);
 		}
 	}
 	
@@ -314,7 +314,7 @@ public class Application : GioApplication
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -333,7 +333,7 @@ public class Application : GioApplication
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -354,7 +354,7 @@ public class Application : GioApplication
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -429,7 +429,7 @@ public class Application : GioApplication
 			return null;
 		}
 		
-		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 	
 	/**
@@ -471,7 +471,7 @@ public class Application : GioApplication
 			return null;
 		}
 		
-		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 	
 	/**

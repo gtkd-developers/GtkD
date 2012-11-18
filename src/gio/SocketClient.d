@@ -213,7 +213,7 @@ public class SocketClient : ObjectG
 	{
 		foreach ( void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg ; _socketClient.onListeners )
 		{
-			dlg(event, ObjectG.getDObject!SocketConnectable(connectable), ObjectG.getDObject!IOStream(connection), _socketClient);
+			dlg(event, ObjectG.getDObject!(SocketConnectable)(connectable), ObjectG.getDObject!(IOStream)(connection), _socketClient);
 		}
 	}
 	
@@ -274,7 +274,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -321,7 +321,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -374,7 +374,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -422,7 +422,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -462,7 +462,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -508,7 +508,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -554,7 +554,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -602,7 +602,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -771,7 +771,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
 	}
 	
 	/**

@@ -151,7 +151,7 @@ public class StreamableContent
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOChannel(cast(GIOChannel*) p);
+		return ObjectG.getDObject!(IOChannel)(cast(GIOChannel*) p);
 	}
 	
 	/**

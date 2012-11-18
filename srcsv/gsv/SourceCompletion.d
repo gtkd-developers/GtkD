@@ -288,7 +288,7 @@ public class SourceCompletion : ObjectG
 	{
 		foreach ( void delegate(SourceCompletionContext, SourceCompletion) dlg ; _sourceCompletion.onPopulateContextListeners )
 		{
-			dlg(ObjectG.getDObject!SourceCompletionContext(context), _sourceCompletion);
+			dlg(ObjectG.getDObject!(SourceCompletionContext)(context), _sourceCompletion);
 		}
 	}
 	
@@ -382,7 +382,7 @@ public class SourceCompletion : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -424,7 +424,7 @@ public class SourceCompletion : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceCompletionInfo(cast(GtkSourceCompletionInfo*) p);
+		return ObjectG.getDObject!(SourceCompletionInfo)(cast(GtkSourceCompletionInfo*) p);
 	}
 	
 	/**
@@ -441,7 +441,7 @@ public class SourceCompletion : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceView(cast(GtkSourceView*) p);
+		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
 	}
 	
 	/**
@@ -462,7 +462,7 @@ public class SourceCompletion : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceCompletionContext(cast(GtkSourceCompletionContext*) p);
+		return ObjectG.getDObject!(SourceCompletionContext)(cast(GtkSourceCompletionContext*) p);
 	}
 	
 	/**

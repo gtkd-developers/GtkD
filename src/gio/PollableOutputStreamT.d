@@ -152,7 +152,7 @@ public template PollableOutputStreamT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Source(cast(GSource*) p);
+		return ObjectG.getDObject!(Source)(cast(GSource*) p);
 	}
 	
 	/**

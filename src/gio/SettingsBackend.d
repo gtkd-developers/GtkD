@@ -152,7 +152,7 @@ public class SettingsBackend : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SettingsBackend(cast(GSettingsBackend*) p);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p);
 	}
 	
 	/**
@@ -318,7 +318,7 @@ public class SettingsBackend : ObjectG
 		values = new Variant[keys.length];
 		for(int i = 0; i < keys.length; i++)
 		{
-			values[i] = ObjectG.getDObject!Variant(cast(GVariant*) outvalues[i]);
+			values[i] = ObjectG.getDObject!(Variant)(cast(GVariant*) outvalues[i]);
 		}
 	}
 	
@@ -349,7 +349,7 @@ public class SettingsBackend : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SettingsBackend(cast(GSettingsBackend*) p);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p);
 	}
 	
 	/**
@@ -370,7 +370,7 @@ public class SettingsBackend : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SettingsBackend(cast(GSettingsBackend*) p);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p);
 	}
 	
 	/**
@@ -390,6 +390,6 @@ public class SettingsBackend : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SettingsBackend(cast(GSettingsBackend*) p);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p);
 	}
 }

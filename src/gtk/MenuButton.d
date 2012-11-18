@@ -183,7 +183,7 @@ public class MenuButton : ToggleButton
 			return null;
 		}
 		
-		return ObjectG.getDObject!Menu(cast(GtkMenu*) p);
+		return ObjectG.getDObject!(Menu)(cast(GtkMenu*) p);
 	}
 	
 	/**
@@ -217,7 +217,7 @@ public class MenuButton : ToggleButton
 			return null;
 		}
 		
-		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 	
 	/**
@@ -277,6 +277,6 @@ public class MenuButton : ToggleButton
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 }

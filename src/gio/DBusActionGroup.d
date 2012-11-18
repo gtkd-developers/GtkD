@@ -171,6 +171,6 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusActionGroup(cast(GDBusActionGroup*) p);
+		return ObjectG.getDObject!(DBusActionGroup)(cast(GDBusActionGroup*) p);
 	}
 }

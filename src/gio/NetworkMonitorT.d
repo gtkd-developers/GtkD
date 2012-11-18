@@ -156,7 +156,7 @@ public template NetworkMonitorT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!NetworkMonitor(cast(GNetworkMonitor*) p);
+		return ObjectG.getDObject!(NetworkMonitor)(cast(GNetworkMonitor*) p);
 	}
 	
 	/**

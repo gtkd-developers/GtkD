@@ -233,6 +233,6 @@ public class GhostPad : Pad
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pad(cast(GstPad*) p);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) p);
 	}
 }

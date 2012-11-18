@@ -287,7 +287,7 @@ public class Device : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 	
 	/**
@@ -306,7 +306,7 @@ public class Device : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -333,7 +333,7 @@ public class Device : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -482,7 +482,7 @@ public class Device : ObjectG
 		
 		gdk_device_get_position(gdkDevice, &outscreen, &x, &y);
 		
-		screen = ObjectG.getDObject!Screen(outscreen);
+		screen = ObjectG.getDObject!(Screen)(outscreen);
 	}
 	
 	/**
@@ -508,7 +508,7 @@ public class Device : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -578,7 +578,7 @@ public class Device : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

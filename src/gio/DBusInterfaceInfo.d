@@ -134,7 +134,7 @@ public class DBusInterfaceInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusMethodInfo(cast(GDBusMethodInfo*) p);
+		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) p);
 	}
 	
 	/**
@@ -156,7 +156,7 @@ public class DBusInterfaceInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusSignalInfo(cast(GDBusSignalInfo*) p);
+		return ObjectG.getDObject!(DBusSignalInfo)(cast(GDBusSignalInfo*) p);
 	}
 	
 	/**
@@ -178,7 +178,7 @@ public class DBusInterfaceInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusPropertyInfo(cast(GDBusPropertyInfo*) p);
+		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p);
 	}
 	
 	/**
@@ -243,7 +243,7 @@ public class DBusInterfaceInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
 	}
 	
 	/**

@@ -139,7 +139,7 @@ public class SourceStyleSchemeManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceStyleSchemeManager(cast(GtkSourceStyleSchemeManager*) p);
+		return ObjectG.getDObject!(SourceStyleSchemeManager)(cast(GtkSourceStyleSchemeManager*) p);
 	}
 	
 	/**
@@ -218,7 +218,7 @@ public class SourceStyleSchemeManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
+		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) p);
 	}
 	
 	/**

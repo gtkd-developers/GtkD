@@ -107,7 +107,7 @@ public template SocketConnectableT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketAddressEnumerator(cast(GSocketAddressEnumerator*) p);
+		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p);
 	}
 	
 	/**
@@ -130,6 +130,6 @@ public template SocketConnectableT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketAddressEnumerator(cast(GSocketAddressEnumerator*) p);
+		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p);
 	}
 }

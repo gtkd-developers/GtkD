@@ -200,7 +200,7 @@ public class StyleProperties : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SymbolicColor(cast(GtkSymbolicColor*) p);
+		return ObjectG.getDObject!(SymbolicColor)(cast(GtkSymbolicColor*) p);
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class StyleProperties : ObjectG
 		
 		auto p = gtk_style_properties_lookup_property(Str.toStringz(propertyName), &parseFunc, &outpspec);
 		
-		pspec = ObjectG.getDObject!ParamSpec(outpspec);
+		pspec = ObjectG.getDObject!(ParamSpec)(outpspec);
 		return p;
 	}
 	

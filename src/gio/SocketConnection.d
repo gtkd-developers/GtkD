@@ -233,7 +233,7 @@ public class SocketConnection : IOStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
 	}
 	
 	/**
@@ -260,7 +260,7 @@ public class SocketConnection : IOStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
 	}
 	
 	/**
@@ -280,7 +280,7 @@ public class SocketConnection : IOStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!Socket(cast(GSocket*) p);
+		return ObjectG.getDObject!(Socket)(cast(GSocket*) p);
 	}
 	
 	/**
@@ -301,7 +301,7 @@ public class SocketConnection : IOStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**

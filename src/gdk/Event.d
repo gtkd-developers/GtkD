@@ -274,7 +274,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -293,7 +293,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -340,7 +340,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -660,7 +660,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -678,7 +678,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 	
 	/**
@@ -716,7 +716,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 	
 	/**

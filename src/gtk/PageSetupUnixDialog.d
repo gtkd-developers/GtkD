@@ -169,7 +169,7 @@ public class PageSetupUnixDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
 	}
 	
 	/**
@@ -200,6 +200,6 @@ public class PageSetupUnixDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!PrintSettings(cast(GtkPrintSettings*) p);
+		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p);
 	}
 }

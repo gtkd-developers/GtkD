@@ -161,7 +161,7 @@ public class TargetList : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!TargetList(cast(GtkTargetList*) p);
+		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 	}
 	
 	/**

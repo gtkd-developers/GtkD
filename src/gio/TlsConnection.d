@@ -186,7 +186,7 @@ public class TlsConnection : IOStream
 	{
 		foreach ( bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg ; _tlsConnection.onAcceptCertificateListeners )
 		{
-			if ( dlg(ObjectG.getDObject!TlsCertificate(peerCert), errors, _tlsConnection) )
+			if ( dlg(ObjectG.getDObject!(TlsCertificate)(peerCert), errors, _tlsConnection) )
 			{
 				return 1;
 			}
@@ -239,7 +239,7 @@ public class TlsConnection : IOStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
 	}
 	
 	/**
@@ -259,7 +259,7 @@ public class TlsConnection : IOStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!TlsCertificate(cast(GTlsCertificate*) p);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
 	}
 	
 	/**
@@ -411,7 +411,7 @@ public class TlsConnection : IOStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!TlsDatabase(cast(GTlsDatabase*) p);
+		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p);
 	}
 	
 	/**
@@ -450,7 +450,7 @@ public class TlsConnection : IOStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!TlsInteraction(cast(GTlsInteraction*) p);
+		return ObjectG.getDObject!(TlsInteraction)(cast(GTlsInteraction*) p);
 	}
 	
 	/**

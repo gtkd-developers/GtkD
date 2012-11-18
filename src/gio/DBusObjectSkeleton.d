@@ -153,7 +153,7 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	{
 		foreach ( bool delegate(DBusInterfaceSkeleton, GDBusMethodInvocation*, DBusObjectSkeleton) dlg ; _dBusObjectSkeleton.onAuthorizeMethodListeners )
 		{
-			if ( dlg(ObjectG.getDObject!DBusInterfaceSkeleton(iface), invocation, _dBusObjectSkeleton) )
+			if ( dlg(ObjectG.getDObject!(DBusInterfaceSkeleton)(iface), invocation, _dBusObjectSkeleton) )
 			{
 				return 1;
 			}

@@ -732,7 +732,7 @@ public class TextView : Container, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextBuffer(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -1013,7 +1013,7 @@ public class TextView : Container, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1507,7 +1507,7 @@ public class TextView : Container, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgTabArray(cast(PangoTabArray*) p);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
 	}
 	
 	/**
@@ -1559,7 +1559,7 @@ public class TextView : Container, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
+		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p);
 	}
 	
 	/**

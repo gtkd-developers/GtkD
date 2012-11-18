@@ -179,7 +179,7 @@ public class SourceMarkAttributes : ObjectG
 	{
 		foreach ( string delegate(SourceMark, SourceMarkAttributes) dlg ; _sourceMarkAttributes.onQueryTooltipMarkupListeners )
 		{
-			dlg(ObjectG.getDObject!SourceMark(mark), _sourceMarkAttributes);
+			dlg(ObjectG.getDObject!(SourceMark)(mark), _sourceMarkAttributes);
 		}
 	}
 	
@@ -209,7 +209,7 @@ public class SourceMarkAttributes : ObjectG
 	{
 		foreach ( string delegate(SourceMark, SourceMarkAttributes) dlg ; _sourceMarkAttributes.onQueryTooltipTextListeners )
 		{
-			dlg(ObjectG.getDObject!SourceMark(mark), _sourceMarkAttributes);
+			dlg(ObjectG.getDObject!(SourceMark)(mark), _sourceMarkAttributes);
 		}
 	}
 	
@@ -322,7 +322,7 @@ public class SourceMarkAttributes : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -351,7 +351,7 @@ public class SourceMarkAttributes : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -375,7 +375,7 @@ public class SourceMarkAttributes : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**

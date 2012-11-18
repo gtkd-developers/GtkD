@@ -162,7 +162,7 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Action(cast(GAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GAction*) p);
 	}
 	
 	/**

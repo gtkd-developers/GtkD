@@ -200,7 +200,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -239,7 +239,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -337,7 +337,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -461,7 +461,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -481,7 +481,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -500,7 +500,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -533,7 +533,7 @@ public class Caps
 		
 		gst_caps_replace(&outcaps, (newcaps is null) ? null : newcaps.getCapsStruct());
 		
-		caps = ObjectG.getDObject!Caps(outcaps);
+		caps = ObjectG.getDObject!(Caps)(outcaps);
 	}
 	
 	/**
@@ -563,7 +563,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -585,7 +585,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -610,7 +610,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -633,7 +633,7 @@ public class Caps
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**

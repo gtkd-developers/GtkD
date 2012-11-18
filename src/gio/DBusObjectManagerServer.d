@@ -167,7 +167,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 	
 	/**

@@ -555,7 +555,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -659,7 +659,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Settings(cast(GSettings*) p);
+		return ObjectG.getDObject!(Settings)(cast(GSettings*) p);
 	}
 	
 	/**
@@ -798,7 +798,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -1271,6 +1271,6 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Action(cast(GAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GAction*) p);
 	}
 }

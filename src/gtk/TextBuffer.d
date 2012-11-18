@@ -294,7 +294,7 @@ public class TextBuffer : ObjectG
 				else version(D_Version2)
 				stderr.writefln("TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
 				else
-				writefln(stderr, "TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
+				fwritefln(stderr, "TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
 				
 				//TODO: throw segfaults, druntime bug?
 				throw new Exception("TextBuffer.CreateTag: Unsuported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
@@ -352,7 +352,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg ; _textBuffer.onApplyTagListeners )
 		{
-			dlg(ObjectG.getDObject!TextTag(tag), ObjectG.getDObject!TextIter(start), ObjectG.getDObject!TextIter(end), _textBuffer);
+			dlg(ObjectG.getDObject!(TextTag)(tag), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), _textBuffer);
 		}
 	}
 	
@@ -450,7 +450,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(TextIter, TextIter, TextBuffer) dlg ; _textBuffer.onDeleteRangeListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(start), ObjectG.getDObject!TextIter(end), _textBuffer);
+			dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), _textBuffer);
 		}
 	}
 	
@@ -520,7 +520,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(TextIter, TextChildAnchor, TextBuffer) dlg ; _textBuffer.onInsertChildAnchorListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(location), ObjectG.getDObject!TextChildAnchor(anchor), _textBuffer);
+			dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextChildAnchor)(anchor), _textBuffer);
 		}
 	}
 	
@@ -553,7 +553,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(TextIter, Pixbuf, TextBuffer) dlg ; _textBuffer.onInsertPixbufListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(location), ObjectG.getDObject!Pixbuf(pixbuf), _textBuffer);
+			dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(Pixbuf)(pixbuf), _textBuffer);
 		}
 	}
 	
@@ -588,7 +588,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(TextIter, string, gint, TextBuffer) dlg ; _textBuffer.onInsertTextListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(location), Str.toString(text), len, _textBuffer);
+			dlg(ObjectG.getDObject!(TextIter)(location), Str.toString(text), len, _textBuffer);
 		}
 	}
 	
@@ -616,7 +616,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(TextMark, TextBuffer) dlg ; _textBuffer.onMarkDeletedListeners )
 		{
-			dlg(ObjectG.getDObject!TextMark(mark), _textBuffer);
+			dlg(ObjectG.getDObject!(TextMark)(mark), _textBuffer);
 		}
 	}
 	
@@ -647,7 +647,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(TextIter, TextMark, TextBuffer) dlg ; _textBuffer.onMarkSetListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(location), ObjectG.getDObject!TextMark(mark), _textBuffer);
+			dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextMark)(mark), _textBuffer);
 		}
 	}
 	
@@ -705,7 +705,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(Clipboard, TextBuffer) dlg ; _textBuffer.onPasteDoneListeners )
 		{
-			dlg(ObjectG.getDObject!Clipboard(arg1), _textBuffer);
+			dlg(ObjectG.getDObject!(Clipboard)(arg1), _textBuffer);
 		}
 	}
 	
@@ -740,7 +740,7 @@ public class TextBuffer : ObjectG
 	{
 		foreach ( void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg ; _textBuffer.onRemoveTagListeners )
 		{
-			dlg(ObjectG.getDObject!TextTag(tag), ObjectG.getDObject!TextIter(start), ObjectG.getDObject!TextIter(end), _textBuffer);
+			dlg(ObjectG.getDObject!(TextTag)(tag), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), _textBuffer);
 		}
 	}
 	
@@ -800,7 +800,7 @@ public class TextBuffer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextTagTable(cast(GtkTextTagTable*) p);
+		return ObjectG.getDObject!(TextTagTable)(cast(GtkTextTagTable*) p);
 	}
 	
 	/**
@@ -1083,7 +1083,7 @@ public class TextBuffer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextChildAnchor(cast(GtkTextChildAnchor*) p);
+		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) p);
 	}
 	
 	/**
@@ -1118,7 +1118,7 @@ public class TextBuffer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextMark(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -1212,7 +1212,7 @@ public class TextBuffer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextMark(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -1232,7 +1232,7 @@ public class TextBuffer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextMark(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -1258,7 +1258,7 @@ public class TextBuffer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextMark(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -1760,7 +1760,7 @@ public class TextBuffer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TargetList(cast(GtkTargetList*) p);
+		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 	}
 	
 	/**
@@ -1803,7 +1803,7 @@ public class TextBuffer : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TargetList(cast(GtkTargetList*) p);
+		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 	}
 	
 	/**

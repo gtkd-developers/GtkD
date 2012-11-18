@@ -61,7 +61,7 @@ public class DefReader
 		lines = std.string.splitLines(cast(string) std.file.read(fileName));
 	}
 
-	public string toString()
+	public override string toString()
 	{
 		string str;
 		str ~= "\n[DefReader]"

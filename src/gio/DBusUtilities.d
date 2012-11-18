@@ -196,7 +196,7 @@ public class DBusUtilities
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -308,7 +308,7 @@ public class DBusUtilities
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -345,7 +345,7 @@ public class DBusUtilities
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
 	}
 	
 	/**

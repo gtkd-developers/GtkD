@@ -363,7 +363,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -381,7 +381,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!TargetEntry(cast(GtkTargetEntry*) p);
+		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
@@ -399,7 +399,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!TargetEntry(cast(GtkTargetEntry*) p);
+		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
@@ -420,7 +420,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ToolItemGroup(cast(GtkToolItemGroup*) p);
+		return ObjectG.getDObject!(ToolItemGroup)(cast(GtkToolItemGroup*) p);
 	}
 	
 	/**
@@ -442,7 +442,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
+		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
 	}
 	
 	/**

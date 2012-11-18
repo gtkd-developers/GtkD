@@ -166,7 +166,7 @@ public class FileInfo : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -409,7 +409,7 @@ public class FileInfo : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 	
 	/**
@@ -656,7 +656,7 @@ public class FileInfo : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -674,7 +674,7 @@ public class FileInfo : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**

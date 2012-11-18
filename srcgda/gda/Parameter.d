@@ -221,7 +221,7 @@ public class Parameter
 			return null;
 		}
 		
-		return ObjectG.getDObject!Parameter(cast(GdaParameter*) p);
+		return ObjectG.getDObject!(Parameter)(cast(GdaParameter*) p);
 	}
 	
 	/**
@@ -266,7 +266,7 @@ public class Parameter
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GdaValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GdaValue*) p);
 	}
 	
 	/**

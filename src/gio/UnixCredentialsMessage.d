@@ -165,7 +165,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 			return null;
 		}
 		
-		return ObjectG.getDObject!Credentials(cast(GCredentials*) p);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p);
 	}
 	
 	/**

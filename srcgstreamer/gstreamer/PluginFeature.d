@@ -186,7 +186,7 @@ public class PluginFeature : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!PluginFeature(cast(GstPluginFeature*) p);
+		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p);
 	}
 	
 	/**

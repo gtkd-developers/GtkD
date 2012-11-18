@@ -171,7 +171,7 @@ public class Command
 			return null;
 		}
 		
-		return ObjectG.getDObject!Command(cast(GdaCommand*) p);
+		return ObjectG.getDObject!(Command)(cast(GdaCommand*) p);
 	}
 	
 	/**
@@ -252,7 +252,7 @@ public class Command
 			return null;
 		}
 		
-		return ObjectG.getDObject!Transaction(cast(GdaTransaction*) p);
+		return ObjectG.getDObject!(Transaction)(cast(GdaTransaction*) p);
 	}
 	
 	/**

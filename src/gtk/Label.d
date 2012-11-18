@@ -427,7 +427,7 @@ public class Label : Misc
 	{
 		foreach ( void delegate(Menu, Label) dlg ; _label.onPopulatePopupListeners )
 		{
-			dlg(ObjectG.getDObject!Menu(menu), _label);
+			dlg(ObjectG.getDObject!(Menu)(menu), _label);
 		}
 	}
 	
@@ -731,7 +731,7 @@ public class Label : Misc
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -810,7 +810,7 @@ public class Label : Misc
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -850,7 +850,7 @@ public class Label : Misc
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

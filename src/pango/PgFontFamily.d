@@ -168,7 +168,7 @@ public class PgFontFamily : ObjectG
 		faces = new PgFontFace[nFaces];
 		for(int i = 0; i < nFaces; i++)
 		{
-			faces[i] = ObjectG.getDObject!PgFontFace(cast(PangoFontFace*) outfaces[i]);
+			faces[i] = ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) outfaces[i]);
 		}
 	}
 }

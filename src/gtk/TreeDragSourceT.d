@@ -194,8 +194,8 @@ public template TreeDragSourceT(TStruct)
 		
 		auto p = gtk_tree_get_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), &outtreeModel, &outpath);
 		
-		treeModel = ObjectG.getDObject!TreeModel(outtreeModel);
-		path = ObjectG.getDObject!TreePath(outpath);
+		treeModel = ObjectG.getDObject!(TreeModel)(outtreeModel);
+		path = ObjectG.getDObject!(TreePath)(outpath);
 		return p;
 	}
 }

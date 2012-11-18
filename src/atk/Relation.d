@@ -201,7 +201,7 @@ public class Relation : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PtrArray(cast(GPtrArray*) p);
+		return ObjectG.getDObject!(PtrArray)(cast(GPtrArray*) p);
 	}
 	
 	/**

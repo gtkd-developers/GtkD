@@ -157,7 +157,7 @@ public class OffscreenWindow : Window
 			return null;
 		}
 		
-		return ObjectG.getDObject!Surface(cast(cairo_surface_t*) p);
+		return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -178,6 +178,6 @@ public class OffscreenWindow : Window
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 }

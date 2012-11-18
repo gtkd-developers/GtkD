@@ -141,7 +141,7 @@ public class TextTagTable : ObjectG
 	{
 		foreach ( void delegate(TextTag, TextTagTable) dlg ; _textTagTable.onTagAddedListeners )
 		{
-			dlg(ObjectG.getDObject!TextTag(tag), _textTagTable);
+			dlg(ObjectG.getDObject!(TextTag)(tag), _textTagTable);
 		}
 	}
 	
@@ -167,7 +167,7 @@ public class TextTagTable : ObjectG
 	{
 		foreach ( void delegate(TextTag, gboolean, TextTagTable) dlg ; _textTagTable.onTagChangedListeners )
 		{
-			dlg(ObjectG.getDObject!TextTag(tag), sizeChanged, _textTagTable);
+			dlg(ObjectG.getDObject!(TextTag)(tag), sizeChanged, _textTagTable);
 		}
 	}
 	
@@ -193,7 +193,7 @@ public class TextTagTable : ObjectG
 	{
 		foreach ( void delegate(TextTag, TextTagTable) dlg ; _textTagTable.onTagRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!TextTag(tag), _textTagTable);
+			dlg(ObjectG.getDObject!(TextTag)(tag), _textTagTable);
 		}
 	}
 	
@@ -257,7 +257,7 @@ public class TextTagTable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextTag(cast(GtkTextTag*) p);
+		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) p);
 	}
 	
 	/**

@@ -105,7 +105,7 @@ public static Source pollableSourceNew(ObjectG pollableStream)
 		return null;
 	}
 	
-	return ObjectG.getDObject!Source(cast(GSource*) p);
+	return ObjectG.getDObject!(Source)(cast(GSource*) p);
 }
 
 /**
@@ -131,7 +131,7 @@ public static Source pollableSourceNewFull(void* pollableStream, Source childSou
 		return null;
 	}
 	
-	return ObjectG.getDObject!Source(cast(GSource*) p);
+	return ObjectG.getDObject!(Source)(cast(GSource*) p);
 }
 
 /**

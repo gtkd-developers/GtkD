@@ -253,7 +253,7 @@ public class Assistant : Window
 	{
 		foreach ( void delegate(Widget, Assistant) dlg ; _assistant.onPrepareListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(page), _assistant);
+			dlg(ObjectG.getDObject!(Widget)(page), _assistant);
 		}
 	}
 	
@@ -332,7 +332,7 @@ public class Assistant : Window
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -500,7 +500,7 @@ public class Assistant : Window
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -541,7 +541,7 @@ public class Assistant : Window
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**

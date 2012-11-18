@@ -674,11 +674,11 @@ public struct Funct
 			}
 			else if (GtkDClass.endsWith(param.typeWrap, "IF"))
 			{
-				parmToGtkD = "ObjectG.getDObject!"~param.typeWrap[0..$-2]~"("~ param.convName ~")";
+				parmToGtkD = "ObjectG.getDObject!("~param.typeWrap[0..$-2]~")("~ param.convName ~")";
 			}
 			else
 			{
-				parmToGtkD = "ObjectG.getDObject!"~param.typeWrap~"("~ param.convName ~")";
+				parmToGtkD = "ObjectG.getDObject!("~param.typeWrap~")("~ param.convName ~")";
 			}
 		}
 		else
@@ -734,7 +734,7 @@ public struct Funct
 			if ( convParms.outPack == "cairo" || convParms.outPack == "glib" || convParms.outPack == "gthread" )
 				return "new "~ type;
 			else
-				return "ObjectG.getDObject!"~ type;
+				return "ObjectG.getDObject!("~ type ~")";
 		}
 
 		/* 1st: construct the actual GTK+ call. */

@@ -123,7 +123,7 @@ public class PgLayoutIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayoutIter(cast(PangoLayoutIter*) p);
+		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) p);
 	}
 	
 	/**
@@ -261,7 +261,7 @@ public class PgLayoutIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 	
 	/**
@@ -282,7 +282,7 @@ public class PgLayoutIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayoutLine(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 	
 	/**
@@ -300,7 +300,7 @@ public class PgLayoutIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**

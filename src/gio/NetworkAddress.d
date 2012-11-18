@@ -252,6 +252,6 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnectable(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(SocketConnectable)(cast(GSocketConnectable*) p);
 	}
 }

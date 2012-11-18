@@ -170,7 +170,7 @@ public class IconSource
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconSource(cast(GtkIconSource*) p);
+		return ObjectG.getDObject!(IconSource)(cast(GtkIconSource*) p);
 	}
 	
 	/**
@@ -237,7 +237,7 @@ public class IconSource
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**

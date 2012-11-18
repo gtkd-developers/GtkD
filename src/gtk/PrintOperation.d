@@ -192,7 +192,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		foreach ( void delegate(PrintContext, PrintOperation) dlg ; _printOperation.onBeginPrintListeners )
 		{
-			dlg(ObjectG.getDObject!PrintContext(context), _printOperation);
+			dlg(ObjectG.getDObject!(PrintContext)(context), _printOperation);
 		}
 	}
 	
@@ -260,7 +260,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		foreach ( void delegate(Widget, PrintOperation) dlg ; _printOperation.onCustomWidgetApplyListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(widget), _printOperation);
+			dlg(ObjectG.getDObject!(Widget)(widget), _printOperation);
 		}
 	}
 	
@@ -330,7 +330,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		foreach ( void delegate(PrintContext, gint, PrintOperation) dlg ; _printOperation.onDrawPageListeners )
 		{
-			dlg(ObjectG.getDObject!PrintContext(context), pageNr, _printOperation);
+			dlg(ObjectG.getDObject!(PrintContext)(context), pageNr, _printOperation);
 		}
 	}
 	
@@ -360,7 +360,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		foreach ( void delegate(PrintContext, PrintOperation) dlg ; _printOperation.onEndPrintListeners )
 		{
-			dlg(ObjectG.getDObject!PrintContext(context), _printOperation);
+			dlg(ObjectG.getDObject!(PrintContext)(context), _printOperation);
 		}
 	}
 	
@@ -399,7 +399,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		foreach ( bool delegate(PrintContext, PrintOperation) dlg ; _printOperation.onPaginateListeners )
 		{
-			if ( dlg(ObjectG.getDObject!PrintContext(context), _printOperation) )
+			if ( dlg(ObjectG.getDObject!(PrintContext)(context), _printOperation) )
 			{
 				return 1;
 			}
@@ -445,7 +445,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		foreach ( bool delegate(GtkPrintOperationPreview*, PrintContext, Window, PrintOperation) dlg ; _printOperation.onPreviewListeners )
 		{
-			if ( dlg(preview, ObjectG.getDObject!PrintContext(context), ObjectG.getDObject!Window(parent), _printOperation) )
+			if ( dlg(preview, ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(Window)(parent), _printOperation) )
 			{
 				return 1;
 			}
@@ -480,7 +480,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		foreach ( void delegate(PrintContext, gint, PageSetup, PrintOperation) dlg ; _printOperation.onRequestPageSetupListeners )
 		{
-			dlg(ObjectG.getDObject!PrintContext(context), pageNr, ObjectG.getDObject!PageSetup(setup), _printOperation);
+			dlg(ObjectG.getDObject!(PrintContext)(context), pageNr, ObjectG.getDObject!(PageSetup)(setup), _printOperation);
 		}
 	}
 	
@@ -541,7 +541,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		foreach ( void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg ; _printOperation.onUpdateCustomWidgetListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(widget), ObjectG.getDObject!PageSetup(setup), ObjectG.getDObject!PrintSettings(settings), _printOperation);
+			dlg(ObjectG.getDObject!(Widget)(widget), ObjectG.getDObject!(PageSetup)(setup), ObjectG.getDObject!(PrintSettings)(settings), _printOperation);
 		}
 	}
 	
@@ -628,7 +628,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
 	}
 	
 	/**
@@ -663,7 +663,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!PrintSettings(cast(GtkPrintSettings*) p);
+		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p);
 	}
 	
 	/**
@@ -1047,7 +1047,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
 	}
 	
 	/**

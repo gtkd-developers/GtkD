@@ -150,7 +150,7 @@ public class DataModelHash : DataModel
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GdaValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GdaValue*) p);
 	}
 	
 	/**
@@ -205,6 +205,6 @@ public class DataModelHash : DataModel
 			return null;
 		}
 		
-		return ObjectG.getDObject!Row(cast(GdaRow*) p);
+		return ObjectG.getDObject!(Row)(cast(GdaRow*) p);
 	}
 }

@@ -257,7 +257,7 @@ public class SymbolicColor
 			return null;
 		}
 		
-		return ObjectG.getDObject!SymbolicColor(cast(GtkSymbolicColor*) p);
+		return ObjectG.getDObject!(SymbolicColor)(cast(GtkSymbolicColor*) p);
 	}
 	
 	/**

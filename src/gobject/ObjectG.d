@@ -341,7 +341,7 @@ public class ObjectG
 	{
 		foreach ( void delegate(ParamSpec, ObjectG) dlg ; _objectG.onNotifyListeners )
 		{
-			dlg(ObjectG.getDObject!ParamSpec(pspec), _objectG);
+			dlg(ObjectG.getDObject!(ParamSpec)(pspec), _objectG);
 		}
 	}
 	
@@ -407,7 +407,7 @@ public class ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -430,7 +430,7 @@ public class ObjectG
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -515,7 +515,7 @@ public class ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -543,7 +543,7 @@ public class ObjectG
 		ParamSpec[] arr = new ParamSpec[nPropertiesP];
 		for(int i = 0; i < nPropertiesP; i++)
 		{
-			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -635,7 +635,7 @@ public class ObjectG
 		
 		g_clear_object(&outobjectPtr);
 		
-		objectPtr = ObjectG.getDObject!ObjectG(outobjectPtr);
+		objectPtr = ObjectG.getDObject!(ObjectG)(outobjectPtr);
 	}
 	
 	/**

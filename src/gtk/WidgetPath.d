@@ -196,7 +196,7 @@ public class WidgetPath
 			return null;
 		}
 		
-		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -213,7 +213,7 @@ public class WidgetPath
 			return null;
 		}
 		
-		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -377,7 +377,7 @@ public class WidgetPath
 			return null;
 		}
 		
-		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -498,7 +498,7 @@ public class WidgetPath
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -518,7 +518,7 @@ public class WidgetPath
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**

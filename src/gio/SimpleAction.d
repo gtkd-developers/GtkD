@@ -152,7 +152,7 @@ public class SimpleAction : ObjectG, ActionIF
 	{
 		foreach ( void delegate(Variant, SimpleAction) dlg ; _simpleAction.onActivateListeners )
 		{
-			dlg(ObjectG.getDObject!Variant(parameter), _simpleAction);
+			dlg(ObjectG.getDObject!(Variant)(parameter), _simpleAction);
 		}
 	}
 	
@@ -192,7 +192,7 @@ public class SimpleAction : ObjectG, ActionIF
 	{
 		foreach ( void delegate(Variant, SimpleAction) dlg ; _simpleAction.onChangeStateListeners )
 		{
-			dlg(ObjectG.getDObject!Variant(value), _simpleAction);
+			dlg(ObjectG.getDObject!(Variant)(value), _simpleAction);
 		}
 	}
 	

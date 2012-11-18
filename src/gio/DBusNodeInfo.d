@@ -163,7 +163,7 @@ public class DBusNodeInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusInterfaceInfo(cast(GDBusInterfaceInfo*) p);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class DBusNodeInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusNodeInfo(cast(GDBusNodeInfo*) p);
+		return ObjectG.getDObject!(DBusNodeInfo)(cast(GDBusNodeInfo*) p);
 	}
 	
 	/**

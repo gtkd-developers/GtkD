@@ -182,6 +182,6 @@ public class PgEngine : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgEngine(cast(PangoEngine*) p);
+		return ObjectG.getDObject!(PgEngine)(cast(PangoEngine*) p);
 	}
 }

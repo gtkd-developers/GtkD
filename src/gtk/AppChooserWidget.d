@@ -163,7 +163,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	{
 		foreach ( void delegate(AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onApplicationActivatedListeners )
 		{
-			dlg(ObjectG.getDObject!AppInfo(application), _appChooserWidget);
+			dlg(ObjectG.getDObject!(AppInfo)(application), _appChooserWidget);
 		}
 	}
 	
@@ -190,7 +190,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	{
 		foreach ( void delegate(AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onApplicationSelectedListeners )
 		{
-			dlg(ObjectG.getDObject!AppInfo(application), _appChooserWidget);
+			dlg(ObjectG.getDObject!(AppInfo)(application), _appChooserWidget);
 		}
 	}
 	
@@ -220,7 +220,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	{
 		foreach ( void delegate(Menu, AppInfo, AppChooserWidget) dlg ; _appChooserWidget.onPopulatePopupListeners )
 		{
-			dlg(ObjectG.getDObject!Menu(menu), ObjectG.getDObject!AppInfo(application), _appChooserWidget);
+			dlg(ObjectG.getDObject!(Menu)(menu), ObjectG.getDObject!(AppInfo)(application), _appChooserWidget);
 		}
 	}
 	

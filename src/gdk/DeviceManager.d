@@ -206,7 +206,7 @@ public class DeviceManager : ObjectG
 	{
 		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceAddedListeners )
 		{
-			dlg(ObjectG.getDObject!Device(device), _deviceManager);
+			dlg(ObjectG.getDObject!(Device)(device), _deviceManager);
 		}
 	}
 	
@@ -241,7 +241,7 @@ public class DeviceManager : ObjectG
 	{
 		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceChangedListeners )
 		{
-			dlg(ObjectG.getDObject!Device(device), _deviceManager);
+			dlg(ObjectG.getDObject!(Device)(device), _deviceManager);
 		}
 	}
 	
@@ -272,7 +272,7 @@ public class DeviceManager : ObjectG
 	{
 		foreach ( void delegate(Device, DeviceManager) dlg ; _deviceManager.onDeviceRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!Device(device), _deviceManager);
+			dlg(ObjectG.getDObject!(Device)(device), _deviceManager);
 		}
 	}
 	
@@ -307,7 +307,7 @@ public class DeviceManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -341,6 +341,6 @@ public class DeviceManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 }

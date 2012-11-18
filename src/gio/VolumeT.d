@@ -256,7 +256,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -274,7 +274,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -291,7 +291,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Drive(cast(GDrive*) p);
+		return ObjectG.getDObject!(Drive)(cast(GDrive*) p);
 	}
 	
 	/**
@@ -308,7 +308,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Mount(cast(GMount*) p);
+		return ObjectG.getDObject!(Mount)(cast(GMount*) p);
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!File(cast(GFile*) p);
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 	
 	/**

@@ -118,7 +118,7 @@ public static Surface gdkWindowCreateSimilarSurface(Window window, cairo_content
 		return null;
 	}
 	
-	return ObjectG.getDObject!Surface(cast(cairo_surface_t*) p);
+	return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
 }
 
 /**
@@ -142,7 +142,7 @@ public static Context createContext(Window window)
 		return null;
 	}
 	
-	return ObjectG.getDObject!Context(cast(cairo_t*) p);
+	return ObjectG.getDObject!(Context)(cast(cairo_t*) p);
 }
 
 /**
@@ -270,6 +270,6 @@ public static Region regionCreateFromSurface(Surface surface)
 		return null;
 	}
 	
-	return ObjectG.getDObject!Region(cast(cairo_region_t*) p);
+	return ObjectG.getDObject!(Region)(cast(cairo_region_t*) p);
 }
 

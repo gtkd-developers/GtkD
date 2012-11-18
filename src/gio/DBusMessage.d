@@ -303,7 +303,7 @@ public class DBusMessage : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusMessage(cast(GDBusMessage*) p);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p);
 	}
 	
 	/**
@@ -412,7 +412,7 @@ public class DBusMessage : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -444,7 +444,7 @@ public class DBusMessage : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!UnixFDList(cast(GUnixFDList*) p);
+		return ObjectG.getDObject!(UnixFDList)(cast(GUnixFDList*) p);
 	}
 	
 	/**
@@ -514,7 +514,7 @@ public class DBusMessage : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -830,7 +830,7 @@ public class DBusMessage : ObjectG
 		
 		auto p = g_dbus_message_to_gerror(gDBusMessage, &outerror);
 		
-		error = ObjectG.getDObject!ErrorG(outerror);
+		error = ObjectG.getDObject!(ErrorG)(outerror);
 		return p;
 	}
 }

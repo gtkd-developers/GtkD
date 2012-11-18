@@ -310,7 +310,7 @@ public class Border : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!Border(cast(GtkBorder*) p);
+		return ObjectG.getDObject!(Border)(cast(GtkBorder*) p);
 	}
 	
 	/**

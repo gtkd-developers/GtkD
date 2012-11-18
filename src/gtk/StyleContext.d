@@ -441,7 +441,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!StyleContext(cast(GtkStyleContext*) p);
+		return ObjectG.getDObject!(StyleContext)(cast(GtkStyleContext*) p);
 	}
 	
 	/**
@@ -458,7 +458,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -569,7 +569,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!CssSection(cast(GtkCssSection*) p);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
 	}
 	
 	/**
@@ -671,7 +671,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -739,7 +739,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -1045,7 +1045,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -1105,7 +1105,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -1414,7 +1414,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**

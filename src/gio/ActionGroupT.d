@@ -261,7 +261,7 @@ public template ActionGroupT(TStruct)
 	{
 		foreach ( void delegate(string, Variant, ActionGroupIF) dlg ; _actionGroupIF.onActionStateChangedListeners )
 		{
-			dlg(Str.toString(actionName), ObjectG.getDObject!Variant(value), _actionGroupIF);
+			dlg(Str.toString(actionName), ObjectG.getDObject!(Variant)(value), _actionGroupIF);
 		}
 	}
 	
@@ -322,10 +322,10 @@ public template ActionGroupT(TStruct)
 		
 		auto p = g_action_group_query_action(getActionGroupTStruct(), Str.toStringz(actionName), &enabled, &outparameterType, &outstateType, &outstateHint, &outstate);
 		
-		parameterType = ObjectG.getDObject!VariantType(outparameterType);
-		stateType = ObjectG.getDObject!VariantType(outstateType);
-		stateHint = ObjectG.getDObject!Variant(outstateHint);
-		state = ObjectG.getDObject!Variant(outstate);
+		parameterType = ObjectG.getDObject!(VariantType)(outparameterType);
+		stateType = ObjectG.getDObject!(VariantType)(outstateType);
+		stateHint = ObjectG.getDObject!(Variant)(outstateHint);
+		state = ObjectG.getDObject!(Variant)(outstate);
 		return p;
 	}
 	
@@ -383,7 +383,7 @@ public template ActionGroupT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!VariantType(cast(GVariantType*) p);
+		return ObjectG.getDObject!(VariantType)(cast(GVariantType*) p);
 	}
 	
 	/**
@@ -415,7 +415,7 @@ public template ActionGroupT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!VariantType(cast(GVariantType*) p);
+		return ObjectG.getDObject!(VariantType)(cast(GVariantType*) p);
 	}
 	
 	/**
@@ -448,7 +448,7 @@ public template ActionGroupT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -473,7 +473,7 @@ public template ActionGroupT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**

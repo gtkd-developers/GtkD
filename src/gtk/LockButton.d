@@ -154,7 +154,7 @@ public class LockButton : Button
 			return null;
 		}
 		
-		return ObjectG.getDObject!Permission(cast(GPermission*) p);
+		return ObjectG.getDObject!(Permission)(cast(GPermission*) p);
 	}
 	
 	/**

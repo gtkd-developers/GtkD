@@ -450,7 +450,7 @@ public template RecentChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!RecentInfo(cast(GtkRecentInfo*) p);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p);
 	}
 	
 	/**
@@ -526,7 +526,7 @@ public template RecentChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -593,7 +593,7 @@ public template RecentChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -625,6 +625,6 @@ public template RecentChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!RecentFilter(cast(GtkRecentFilter*) p);
+		return ObjectG.getDObject!(RecentFilter)(cast(GtkRecentFilter*) p);
 	}
 }

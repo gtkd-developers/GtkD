@@ -276,7 +276,7 @@ public class MountOperation : ObjectG
 	{
 		foreach ( void delegate(string, ArrayG, GStrv, MountOperation) dlg ; _mountOperation.onShowProcessesListeners )
 		{
-			dlg(Str.toString(message), ObjectG.getDObject!ArrayG(processes), choices, _mountOperation);
+			dlg(Str.toString(message), ObjectG.getDObject!(ArrayG)(processes), choices, _mountOperation);
 		}
 	}
 	

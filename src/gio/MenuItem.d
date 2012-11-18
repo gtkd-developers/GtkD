@@ -293,7 +293,7 @@ public class MenuItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -313,7 +313,7 @@ public class MenuItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!MenuModel(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 	
 	/**

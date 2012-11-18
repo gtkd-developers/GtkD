@@ -140,7 +140,7 @@ public class TypeFindFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -170,7 +170,7 @@ public class TypeFindFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**

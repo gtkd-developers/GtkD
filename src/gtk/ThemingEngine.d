@@ -182,7 +182,7 @@ public class ThemingEngine : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!WidgetPath(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class ThemingEngine : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public class ThemingEngine : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -446,7 +446,7 @@ public class ThemingEngine : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ThemingEngine(cast(GtkThemingEngine*) p);
+		return ObjectG.getDObject!(ThemingEngine)(cast(GtkThemingEngine*) p);
 	}
 	
 	/**

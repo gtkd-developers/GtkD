@@ -178,7 +178,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -227,7 +227,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!FileInfo(cast(GFileInfo*) p);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
 	}
 	
 	/**

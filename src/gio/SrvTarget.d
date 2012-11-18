@@ -153,7 +153,7 @@ public class SrvTarget : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!SrvTarget(cast(GSrvTarget*) p);
+		return ObjectG.getDObject!(SrvTarget)(cast(GSrvTarget*) p);
 	}
 	
 	/**
@@ -234,6 +234,6 @@ public class SrvTarget : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 }

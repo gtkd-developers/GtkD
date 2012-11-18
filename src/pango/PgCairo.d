@@ -147,7 +147,7 @@ public class PgCairo
 			return null;
 		}
 		
-		return ObjectG.getDObject!ScaledFont(cast(cairo_scaled_font_t*) p);
+		return ObjectG.getDObject!(ScaledFont)(cast(cairo_scaled_font_t*) p);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class PgCairo
 			return null;
 		}
 		
-		return ObjectG.getDObject!FontOption(cast(cairo_font_options_t*) p);
+		return ObjectG.getDObject!(FontOption)(cast(cairo_font_options_t*) p);
 	}
 	
 	/**
@@ -280,7 +280,7 @@ public class PgCairo
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -326,7 +326,7 @@ public class PgCairo
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**

@@ -514,9 +514,9 @@ public class Builder : ObjectG
 		{
 			return null;
 		}
-
+		
 		void* dObj = g_object_get_data(cobj, Str.toStringz("GObject"));
-
+		
 		if ( dObj !is null )
 		{
 			return cast(ObjectG)dObj;

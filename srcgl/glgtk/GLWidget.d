@@ -124,7 +124,7 @@ public static GLConfig getGLConfig(Widget widget)
 		return null;
 	}
 	
-	return ObjectG.getDObject!GLConfig(cast(GdkGLConfig*) p);
+	return ObjectG.getDObject!(GLConfig)(cast(GdkGLConfig*) p);
 }
 
 /**
@@ -150,7 +150,7 @@ public static GLContext createGLContext(Widget widget, GLContext shareList, int 
 		return null;
 	}
 	
-	return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
+	return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
 }
 
 /**
@@ -173,7 +173,7 @@ public static GLContext getGLContext(Widget widget)
 		return null;
 	}
 	
-	return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
+	return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
 }
 
 /**
@@ -192,6 +192,6 @@ public static GLWindow getGLWindow(Widget widget)
 		return null;
 	}
 	
-	return ObjectG.getDObject!GLWindow(cast(GdkGLWindow*) p);
+	return ObjectG.getDObject!(GLWindow)(cast(GdkGLWindow*) p);
 }
 

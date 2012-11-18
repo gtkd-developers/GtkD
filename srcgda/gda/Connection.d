@@ -200,7 +200,7 @@ public class Connection : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Client(cast(GdaClient*) p);
+		return ObjectG.getDObject!(Client)(cast(GdaClient*) p);
 	}
 	
 	/**
@@ -419,7 +419,7 @@ public class Connection : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -456,7 +456,7 @@ public class Connection : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
+		return ObjectG.getDObject!(DataModel)(cast(GdaDataModel*) p);
 	}
 	
 	/**
@@ -544,7 +544,7 @@ public class Connection : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -583,6 +583,6 @@ public class Connection : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DataModel(cast(GdaDataModel*) p);
+		return ObjectG.getDObject!(DataModel)(cast(GdaDataModel*) p);
 	}
 }

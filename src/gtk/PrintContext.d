@@ -144,7 +144,7 @@ public class PrintContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Context(cast(cairo_t*) p);
+		return ObjectG.getDObject!(Context)(cast(cairo_t*) p);
 	}
 	
 	/**
@@ -181,7 +181,7 @@ public class PrintContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
 	}
 	
 	/**
@@ -246,7 +246,7 @@ public class PrintContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontMap(cast(PangoFontMap*) p);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
 	}
 	
 	/**
@@ -265,7 +265,7 @@ public class PrintContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -284,7 +284,7 @@ public class PrintContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**

@@ -161,7 +161,7 @@ public class TargetEntry
 			return null;
 		}
 		
-		return ObjectG.getDObject!TargetEntry(cast(GtkTargetEntry*) p);
+		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p);
 	}
 	
 	/**
