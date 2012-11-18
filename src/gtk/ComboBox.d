@@ -46,6 +46,7 @@
  * omit code:
  * 	- gtk_combo_box_new
  * 	- gtk_combo_box_new_text
+ * 	- gtk_combo_box_new_with_entry
  * omit signals:
  * imports:
  * 	- atk.ObjectAtk
@@ -413,21 +414,6 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 		}
 	}
 	
-	
-	/**
-	 * Creates a new empty GtkComboBox with an entry.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GtkWidget * gtk_combo_box_new_with_entry (void);
-		auto p = gtk_combo_box_new_with_entry();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_combo_box_new_with_entry()");
-		}
-		this(cast(GtkComboBox*) p);
-	}
 	
 	/**
 	 * Creates a new GtkComboBox with the model initialized to model.

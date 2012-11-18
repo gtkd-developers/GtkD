@@ -5180,6 +5180,7 @@ import: gtk.CellEditableIF
 
 nocode: gtk_combo_box_new
 nocode: gtk_combo_box_new_text
+nocode: gtk_combo_box_new_with_entry
 
 code: start
 
