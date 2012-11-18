@@ -193,7 +193,7 @@ public class DBusMethodInvocation : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class DBusMethodInvocation : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusMessage(cast(GDBusMessage*) p);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p);
 	}
 	
 	/**
@@ -235,7 +235,7 @@ public class DBusMethodInvocation : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**

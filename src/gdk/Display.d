@@ -179,7 +179,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -241,7 +241,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -259,7 +259,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -379,7 +379,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -398,7 +398,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -419,7 +419,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -502,7 +502,7 @@ public class Display : ObjectG
 		
 		gdk_display_get_pointer(gdkDisplay, &outscreen, &x, &y, &mask);
 		
-		screen = ObjectG.getDObject!Screen(outscreen);
+		screen = ObjectG.getDObject!(Screen)(outscreen);
 	}
 	
 	/**
@@ -528,7 +528,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -642,7 +642,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**

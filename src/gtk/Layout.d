@@ -153,7 +153,7 @@ public class Layout : Container
 	{
 		foreach ( void delegate(Adjustment, Adjustment, Layout) dlg ; _layout.onSetScrollAdjustmentsListeners )
 		{
-			dlg(ObjectG.getDObject!Adjustment(vertical), ObjectG.getDObject!Adjustment(arg2), _layout);
+			dlg(ObjectG.getDObject!(Adjustment)(vertical), ObjectG.getDObject!(Adjustment)(arg2), _layout);
 		}
 	}
 	
@@ -273,7 +273,7 @@ public class Layout : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -294,7 +294,7 @@ public class Layout : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -336,6 +336,6 @@ public class Layout : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 }

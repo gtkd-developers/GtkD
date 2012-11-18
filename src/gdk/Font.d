@@ -265,7 +265,7 @@ public class Font
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -290,7 +290,7 @@ public class Font
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -314,7 +314,7 @@ public class Font
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -340,7 +340,7 @@ public class Font
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -365,7 +365,7 @@ public class Font
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -392,7 +392,7 @@ public class Font
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -412,7 +412,7 @@ public class Font
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -431,7 +431,7 @@ public class Font
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**

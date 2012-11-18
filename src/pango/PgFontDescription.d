@@ -147,7 +147,7 @@ public class PgFontDescription
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -167,7 +167,7 @@ public class PgFontDescription
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -543,7 +543,7 @@ public class PgFontDescription
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontDescription(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**

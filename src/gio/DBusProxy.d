@@ -219,7 +219,7 @@ public class DBusProxy : ObjectG
 	{
 		foreach ( void delegate(Variant, GStrv, DBusProxy) dlg ; _dBusProxy.onGPropertiesChangedListeners )
 		{
-			dlg(ObjectG.getDObject!Variant(changedProperties), invalidatedProperties, _dBusProxy);
+			dlg(ObjectG.getDObject!(Variant)(changedProperties), invalidatedProperties, _dBusProxy);
 		}
 	}
 	
@@ -247,7 +247,7 @@ public class DBusProxy : ObjectG
 	{
 		foreach ( void delegate(string, string, Variant, DBusProxy) dlg ; _dBusProxy.onGSignalListeners )
 		{
-			dlg(Str.toString(senderName), Str.toString(signalName), ObjectG.getDObject!Variant(parameters), _dBusProxy);
+			dlg(Str.toString(senderName), Str.toString(signalName), ObjectG.getDObject!(Variant)(parameters), _dBusProxy);
 		}
 	}
 	
@@ -417,7 +417,7 @@ public class DBusProxy : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -517,7 +517,7 @@ public class DBusProxy : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -652,7 +652,7 @@ public class DBusProxy : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -697,6 +697,6 @@ public class DBusProxy : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 }

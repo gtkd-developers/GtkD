@@ -178,7 +178,7 @@ public class Hyperlink : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**

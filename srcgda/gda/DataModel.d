@@ -258,7 +258,7 @@ public class DataModel : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!FieldAttributes(cast(GdaFieldAttributes*) p);
+		return ObjectG.getDObject!(FieldAttributes)(cast(GdaFieldAttributes*) p);
 	}
 	
 	/**
@@ -313,7 +313,7 @@ public class DataModel : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Row(cast(GdaRow*) p);
+		return ObjectG.getDObject!(Row)(cast(GdaRow*) p);
 	}
 	
 	/**
@@ -335,7 +335,7 @@ public class DataModel : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GdaValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GdaValue*) p);
 	}
 	
 	/**
@@ -366,7 +366,7 @@ public class DataModel : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Row(cast(GdaRow*) p);
+		return ObjectG.getDObject!(Row)(cast(GdaRow*) p);
 	}
 	
 	/**

@@ -185,7 +185,7 @@ public class TagSetter
 			return null;
 		}
 		
-		return ObjectG.getDObject!TagList(cast(GstTagList*) p);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
 	}
 	
 	/**

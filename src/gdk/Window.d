@@ -329,7 +329,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -346,7 +346,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -428,7 +428,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1230,7 +1230,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
+		return ObjectG.getDObject!(Region)(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -1337,7 +1337,7 @@ public class Window : Drawable
 		
 		gdk_window_get_internal_paint_info(gdkWindow, &outrealDrawable, &xOffset, &yOffset);
 		
-		realDrawable = ObjectG.getDObject!Drawable(outrealDrawable);
+		realDrawable = ObjectG.getDObject!(Drawable)(outrealDrawable);
 	}
 	
 	/**
@@ -1763,7 +1763,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pattern(cast(cairo_pattern_t*) p);
+		return ObjectG.getDObject!(Pattern)(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -1799,7 +1799,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Cursor(cast(GdkCursor*) p);
+		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -2172,7 +2172,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2198,7 +2198,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2219,7 +2219,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2243,7 +2243,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2264,7 +2264,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2286,7 +2286,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -2304,7 +2304,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -2450,7 +2450,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2529,7 +2529,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -2547,7 +2547,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2589,7 +2589,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -2623,7 +2623,7 @@ public class Window : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**

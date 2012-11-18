@@ -121,7 +121,7 @@ public class Testing
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -148,7 +148,7 @@ public class Testing
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class Testing
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -203,7 +203,7 @@ public class Testing
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

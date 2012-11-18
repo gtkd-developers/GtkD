@@ -154,7 +154,7 @@ public class TextTag : ObjectG
 	{
 		foreach ( bool delegate(ObjectG, Event, TextIter, TextTag) dlg ; _textTag.onListeners )
 		{
-			if ( dlg(ObjectG.getDObject!ObjectG(object), ObjectG.getDObject!Event(event), ObjectG.getDObject!TextIter(iter), _textTag) )
+			if ( dlg(ObjectG.getDObject!(ObjectG)(object), ObjectG.getDObject!(Event)(event), ObjectG.getDObject!(TextIter)(iter), _textTag) )
 			{
 				return 1;
 			}

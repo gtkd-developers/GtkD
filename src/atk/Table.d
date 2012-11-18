@@ -334,7 +334,7 @@ public class Table
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -436,7 +436,7 @@ public class Table
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -479,7 +479,7 @@ public class Table
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -498,7 +498,7 @@ public class Table
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -515,7 +515,7 @@ public class Table
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**

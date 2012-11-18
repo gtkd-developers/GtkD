@@ -184,7 +184,7 @@ public template BuildableT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 	
 	/**
@@ -271,6 +271,6 @@ public template BuildableT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 }

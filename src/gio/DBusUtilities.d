@@ -272,7 +272,7 @@ public class DBusUtilities
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class DBusUtilities
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
 	}
 	
 	/**

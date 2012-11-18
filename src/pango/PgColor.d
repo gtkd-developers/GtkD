@@ -139,7 +139,7 @@ public class PgColor
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgColor(cast(PangoColor*) p);
+		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) p);
 	}
 	
 	/**

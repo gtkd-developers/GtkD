@@ -158,7 +158,7 @@ public class PgAttribute
 			throw new GException( new ErrorG(err) );
 		}
 		
-		attrList = ObjectG.getDObject!PgAttributeList(outattrList);
+		attrList = ObjectG.getDObject!(PgAttributeList)(outattrList);
 		text = Str.toString(outtext);
 		return p;
 	}
@@ -225,7 +225,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -269,7 +269,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -288,7 +288,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -307,7 +307,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -326,7 +326,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -345,7 +345,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -383,7 +383,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -403,7 +403,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -424,7 +424,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -445,7 +445,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -485,7 +485,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -509,7 +509,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -528,7 +528,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -552,7 +552,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -575,7 +575,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -604,7 +604,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -624,7 +624,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -644,7 +644,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -665,7 +665,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -690,7 +690,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -710,7 +710,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -730,6 +730,6 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 }

@@ -267,7 +267,7 @@ public class Selections
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -454,7 +454,7 @@ public class Selections
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**

@@ -205,7 +205,7 @@ public class Device
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -334,7 +334,7 @@ public class Device
 			return null;
 		}
 		
-		return ObjectG.getDObject!Device(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 	
 	/**

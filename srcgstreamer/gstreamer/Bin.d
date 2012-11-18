@@ -232,7 +232,7 @@ public class Bin : Element
 	{
 		foreach ( void delegate(Element, Bin) dlg ; _bin.onElementAddedListeners )
 		{
-			dlg(ObjectG.getDObject!Element(element), _bin);
+			dlg(ObjectG.getDObject!(Element)(element), _bin);
 		}
 	}
 	
@@ -259,7 +259,7 @@ public class Bin : Element
 	{
 		foreach ( void delegate(Element, Bin) dlg ; _bin.onElementRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!Element(element), _bin);
+			dlg(ObjectG.getDObject!(Element)(element), _bin);
 		}
 	}
 	
@@ -336,7 +336,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 	
 	/**
@@ -356,7 +356,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 	
 	/**
@@ -380,7 +380,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 	
 	/**
@@ -400,7 +400,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -421,7 +421,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -442,7 +442,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -487,7 +487,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -512,7 +512,7 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -535,6 +535,6 @@ public class Bin : Element
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pad(cast(GstPad*) p);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) p);
 	}
 }

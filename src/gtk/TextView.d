@@ -653,7 +653,7 @@ public class TextView : Container
 	{
 		foreach ( void delegate(Adjustment, Adjustment, TextView) dlg ; _textView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(ObjectG.getDObject!Adjustment(vertical), ObjectG.getDObject!Adjustment(arg2), _textView);
+			dlg(ObjectG.getDObject!(Adjustment)(vertical), ObjectG.getDObject!(Adjustment)(arg2), _textView);
 		}
 	}
 	
@@ -791,7 +791,7 @@ public class TextView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextBuffer(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -1041,7 +1041,7 @@ public class TextView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1538,7 +1538,7 @@ public class TextView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgTabArray(cast(PangoTabArray*) p);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
 	}
 	
 	/**
@@ -1590,7 +1590,7 @@ public class TextView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
+		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p);
 	}
 	
 	/**
@@ -1641,7 +1641,7 @@ public class TextView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -1659,6 +1659,6 @@ public class TextView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 }

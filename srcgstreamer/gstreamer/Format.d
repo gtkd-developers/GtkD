@@ -161,6 +161,6 @@ public static Iterator iterateDefinitions()
 		return null;
 	}
 	
-	return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+	return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 }
 

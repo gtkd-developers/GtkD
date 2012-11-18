@@ -129,7 +129,7 @@ public template SourceCompletionProviderT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -187,7 +187,7 @@ public template SourceCompletionProviderT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

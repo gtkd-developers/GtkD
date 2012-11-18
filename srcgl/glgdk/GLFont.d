@@ -99,7 +99,7 @@ public class GLFont
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -122,6 +122,6 @@ public class GLFont
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p);
 	}
 }

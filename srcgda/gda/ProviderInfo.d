@@ -139,7 +139,7 @@ public class ProviderInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!ProviderInfo(cast(GdaProviderInfo*) p);
+		return ObjectG.getDObject!(ProviderInfo)(cast(GdaProviderInfo*) p);
 	}
 	
 	/**

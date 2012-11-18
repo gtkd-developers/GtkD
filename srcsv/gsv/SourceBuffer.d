@@ -157,7 +157,7 @@ public class SourceBuffer : TextBuffer
 	{
 		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; _sourceBuffer.onHighlightUpdatedListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(arg1), ObjectG.getDObject!TextIter(arg2), _sourceBuffer);
+			dlg(ObjectG.getDObject!(TextIter)(arg1), ObjectG.getDObject!(TextIter)(arg2), _sourceBuffer);
 		}
 	}
 	
@@ -339,7 +339,7 @@ public class SourceBuffer : TextBuffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceLanguage(cast(GtkSourceLanguage*) p);
+		return ObjectG.getDObject!(SourceLanguage)(cast(GtkSourceLanguage*) p);
 	}
 	
 	/**
@@ -395,7 +395,7 @@ public class SourceBuffer : TextBuffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceStyleScheme(cast(GtkSourceStyleScheme*) p);
+		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) p);
 	}
 	
 	/**
@@ -529,7 +529,7 @@ public class SourceBuffer : TextBuffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceMark(cast(GtkSourceMark*) p);
+		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
 	}
 	
 	/**
@@ -551,7 +551,7 @@ public class SourceBuffer : TextBuffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -573,7 +573,7 @@ public class SourceBuffer : TextBuffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**

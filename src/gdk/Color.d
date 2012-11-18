@@ -259,7 +259,7 @@ public class Color
 			return null;
 		}
 		
-		return ObjectG.getDObject!Color(cast(GdkColor*) p);
+		return ObjectG.getDObject!(Color)(cast(GdkColor*) p);
 	}
 	
 	/**

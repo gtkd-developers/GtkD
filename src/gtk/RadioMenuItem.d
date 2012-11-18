@@ -291,6 +291,6 @@ public class RadioMenuItem : CheckMenuItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 }

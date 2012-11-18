@@ -130,7 +130,7 @@ public template LoadableIconT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 	
 	/**
@@ -178,6 +178,6 @@ public template LoadableIconT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 }

@@ -184,7 +184,7 @@ public class Pixmap : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -213,14 +213,14 @@ public class Pixmap : Drawable
 		
 		auto p = gdk_pixmap_create_from_xpm((drawable is null) ? null : drawable.getDrawableStruct(), &outmask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringz(filename));
 		
-		mask = ObjectG.getDObject!Bitmap(outmask);
+		mask = ObjectG.getDObject!(Bitmap)(outmask);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -251,14 +251,14 @@ public class Pixmap : Drawable
 		
 		auto p = gdk_pixmap_colormap_create_from_xpm((drawable is null) ? null : drawable.getDrawableStruct(), (colormap is null) ? null : colormap.getColormapStruct(), &outmask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringz(filename));
 		
-		mask = ObjectG.getDObject!Bitmap(outmask);
+		mask = ObjectG.getDObject!(Bitmap)(outmask);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -287,14 +287,14 @@ public class Pixmap : Drawable
 		
 		auto p = gdk_pixmap_create_from_xpm_d((drawable is null) ? null : drawable.getDrawableStruct(), &outmask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringzArray(data));
 		
-		mask = ObjectG.getDObject!Bitmap(outmask);
+		mask = ObjectG.getDObject!(Bitmap)(outmask);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -326,14 +326,14 @@ public class Pixmap : Drawable
 		
 		auto p = gdk_pixmap_colormap_create_from_xpm_d((drawable is null) ? null : drawable.getDrawableStruct(), (colormap is null) ? null : colormap.getColormapStruct(), &outmask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringzArray(data));
 		
-		mask = ObjectG.getDObject!Bitmap(outmask);
+		mask = ObjectG.getDObject!(Bitmap)(outmask);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**

@@ -406,7 +406,7 @@ public class Dialog : Window
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -510,7 +510,7 @@ public class Dialog : Window
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

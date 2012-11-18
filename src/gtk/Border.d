@@ -192,7 +192,7 @@ public class Border
 			return null;
 		}
 		
-		return ObjectG.getDObject!Border(cast(GtkBorder*) p);
+		return ObjectG.getDObject!(Border)(cast(GtkBorder*) p);
 	}
 	
 	/**

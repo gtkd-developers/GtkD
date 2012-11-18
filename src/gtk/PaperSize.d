@@ -204,7 +204,7 @@ public class PaperSize : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!PaperSize(cast(GtkPaperSize*) p);
+		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p);
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class PaperSize : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

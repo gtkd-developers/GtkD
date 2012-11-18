@@ -204,7 +204,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf( p );
+		return ObjectG.getDObject!(Pixbuf)( p );
 	}
 	
 	/**
@@ -513,7 +513,7 @@ public class Pixbuf : ObjectG
 		
 		gdk_pixbuf_render_pixmap_and_mask(gdkPixbuf, &pixmapReturn, &outmaskReturn, alphaThreshold);
 		
-		maskReturn = ObjectG.getDObject!Bitmap(outmaskReturn);
+		maskReturn = ObjectG.getDObject!(Bitmap)(outmaskReturn);
 	}
 	
 	/**
@@ -542,7 +542,7 @@ public class Pixbuf : ObjectG
 		
 		gdk_pixbuf_render_pixmap_and_mask_for_colormap(gdkPixbuf, (colormap is null) ? null : colormap.getColormapStruct(), &pixmapReturn, &outmaskReturn, alphaThreshold);
 		
-		maskReturn = ObjectG.getDObject!Bitmap(outmaskReturn);
+		maskReturn = ObjectG.getDObject!(Bitmap)(outmaskReturn);
 	}
 	
 	/**
@@ -570,7 +570,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -724,7 +724,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1094,7 +1094,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1151,7 +1151,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1235,7 +1235,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1256,7 +1256,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1285,7 +1285,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1351,7 +1351,7 @@ public class Pixbuf : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**

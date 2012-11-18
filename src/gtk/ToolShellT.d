@@ -197,6 +197,6 @@ public template ToolShellT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!SizeGroup(cast(GtkSizeGroup*) p);
+		return ObjectG.getDObject!(SizeGroup)(cast(GtkSizeGroup*) p);
 	}
 }

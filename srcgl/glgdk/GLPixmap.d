@@ -158,7 +158,7 @@ public class GLPixmap : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -182,7 +182,7 @@ public class GLPixmap : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLPixmap(cast(GdkGLPixmap*) p);
+		return ObjectG.getDObject!(GLPixmap)(cast(GdkGLPixmap*) p);
 	}
 	
 	/**
@@ -225,6 +225,6 @@ public class GLPixmap : Drawable
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLPixmap(cast(GdkGLPixmap*) p);
+		return ObjectG.getDObject!(GLPixmap)(cast(GdkGLPixmap*) p);
 	}
 }

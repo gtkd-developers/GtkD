@@ -140,7 +140,7 @@ public class Structure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class Structure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class Structure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -270,7 +270,7 @@ public class Structure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 	
 	/**
@@ -303,7 +303,7 @@ public class Structure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 	
 	/**
@@ -539,7 +539,7 @@ public class Structure
 		
 		auto p = gst_structure_get_date(gstStructure, Str.toStringz(fieldname), &outvalue);
 		
-		value = ObjectG.getDObject!Date(outvalue);
+		value = ObjectG.getDObject!(Date)(outvalue);
 		return p;
 	}
 	
@@ -664,7 +664,7 @@ public class Structure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**

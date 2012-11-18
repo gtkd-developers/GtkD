@@ -223,7 +223,7 @@ public class Clock : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Clock(cast(GstClock*) p);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) p);
 	}
 	
 	/**

@@ -180,7 +180,7 @@ public template SourceCompletionProposalT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**

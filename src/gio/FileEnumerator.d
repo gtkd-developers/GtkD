@@ -241,7 +241,7 @@ public class FileEnumerator : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -339,6 +339,6 @@ public class FileEnumerator : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!File(cast(GFile*) p);
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 }

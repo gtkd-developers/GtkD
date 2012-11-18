@@ -547,7 +547,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GdaValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GdaValue*) p);
 	}
 	
 	/**
@@ -727,7 +727,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 	
 	/**

@@ -141,7 +141,7 @@ public class SourceView : TextView
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceBuffer( cast(GtkSourceBuffer*)p );
+		return ObjectG.getDObject!(SourceBuffer)( cast(GtkSourceBuffer*)p );
 	}
 	
 	/**
@@ -173,7 +173,7 @@ public class SourceView : TextView
 	{
 		foreach ( void delegate(TextIter, GdkEvent*, SourceView) dlg ; _sourceView.onLineMarkActivatedListeners )
 		{
-			dlg(ObjectG.getDObject!TextIter(iter), event, _sourceView);
+			dlg(ObjectG.getDObject!(TextIter)(iter), event, _sourceView);
 		}
 	}
 	
@@ -504,7 +504,7 @@ public class SourceView : TextView
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -797,6 +797,6 @@ public class SourceView : TextView
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceGutter(cast(GtkSourceGutter*) p);
+		return ObjectG.getDObject!(SourceGutter)(cast(GtkSourceGutter*) p);
 	}
 }

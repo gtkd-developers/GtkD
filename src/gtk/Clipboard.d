@@ -229,7 +229,7 @@ public class Clipboard : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Clipboard(cast(GtkClipboard*) p);
+		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
 	}
 	
 	/**
@@ -272,7 +272,7 @@ public class Clipboard : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Clipboard(cast(GtkClipboard*) p);
+		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
 	}
 	
 	/**
@@ -290,7 +290,7 @@ public class Clipboard : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -352,7 +352,7 @@ public class Clipboard : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectG(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 	
 	/**
@@ -566,7 +566,7 @@ public class Clipboard : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**

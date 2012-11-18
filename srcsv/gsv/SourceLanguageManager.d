@@ -149,7 +149,7 @@ public class SourceLanguageManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceLanguageManager(cast(GtkSourceLanguageManager*) p);
+		return ObjectG.getDObject!(SourceLanguageManager)(cast(GtkSourceLanguageManager*) p);
 	}
 	
 	/**
@@ -207,7 +207,7 @@ public class SourceLanguageManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceLanguage(cast(GtkSourceLanguage*) p);
+		return ObjectG.getDObject!(SourceLanguage)(cast(GtkSourceLanguage*) p);
 	}
 	
 	/**
@@ -229,6 +229,6 @@ public class SourceLanguageManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceLanguage(cast(GtkSourceLanguage*) p);
+		return ObjectG.getDObject!(SourceLanguage)(cast(GtkSourceLanguage*) p);
 	}
 }

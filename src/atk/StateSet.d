@@ -220,7 +220,7 @@ public class StateSet : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p);
 	}
 	
 	/**
@@ -239,7 +239,7 @@ public class StateSet : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p);
 	}
 	
 	/**
@@ -260,6 +260,6 @@ public class StateSet : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!StateSet(cast(AtkStateSet*) p);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p);
 	}
 }

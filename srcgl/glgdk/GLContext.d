@@ -172,7 +172,7 @@ public class GLContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLDrawable(cast(GdkGLDrawable*) p);
+		return ObjectG.getDObject!(GLDrawable)(cast(GdkGLDrawable*) p);
 	}
 	
 	/**
@@ -189,7 +189,7 @@ public class GLContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLConfig(cast(GdkGLConfig*) p);
+		return ObjectG.getDObject!(GLConfig)(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -207,7 +207,7 @@ public class GLContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
+		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
 	}
 	
 	/**
@@ -244,6 +244,6 @@ public class GLContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!GLContext(cast(GdkGLContext*) p);
+		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
 	}
 }

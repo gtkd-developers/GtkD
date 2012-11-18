@@ -163,7 +163,7 @@ public class StockItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!StockItem(cast(GtkStockItem*) p);
+		return ObjectG.getDObject!(StockItem)(cast(GtkStockItem*) p);
 	}
 	
 	/**
@@ -195,7 +195,7 @@ public class StockItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**

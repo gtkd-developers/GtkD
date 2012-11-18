@@ -161,7 +161,7 @@ public class QuarkList
 			return null;
 		}
 		
-		return ObjectG.getDObject!QuarkList(cast(GdaQuarkList*) p);
+		return ObjectG.getDObject!(QuarkList)(cast(GdaQuarkList*) p);
 	}
 	
 	/**

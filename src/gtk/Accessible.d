@@ -133,7 +133,7 @@ public class Accessible : ObjectAtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

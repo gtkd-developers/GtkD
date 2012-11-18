@@ -352,7 +352,7 @@ public class SpinButton : Entry
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**

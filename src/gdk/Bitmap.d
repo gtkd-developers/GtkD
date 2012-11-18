@@ -140,6 +140,6 @@ public class Bitmap
 			return null;
 		}
 		
-		return ObjectG.getDObject!Bitmap(cast(GdkBitmap*) p);
+		return ObjectG.getDObject!(Bitmap)(cast(GdkBitmap*) p);
 	}
 }

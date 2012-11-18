@@ -188,7 +188,7 @@ public class MountOperation : GioMountOperation
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -219,7 +219,7 @@ public class MountOperation : GioMountOperation
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**

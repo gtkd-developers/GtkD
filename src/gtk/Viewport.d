@@ -150,7 +150,7 @@ public class Viewport : Bin
 	{
 		foreach ( void delegate(Adjustment, Adjustment, Viewport) dlg ; _viewport.onSetScrollAdjustmentsListeners )
 		{
-			dlg(ObjectG.getDObject!Adjustment(vertical), ObjectG.getDObject!Adjustment(arg2), _viewport);
+			dlg(ObjectG.getDObject!(Adjustment)(vertical), ObjectG.getDObject!(Adjustment)(arg2), _viewport);
 		}
 	}
 	
@@ -187,7 +187,7 @@ public class Viewport : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -204,7 +204,7 @@ public class Viewport : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -266,7 +266,7 @@ public class Viewport : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -284,6 +284,6 @@ public class Viewport : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 }

@@ -156,7 +156,7 @@ public class IOStream : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!InputStream(cast(GInputStream*) p);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class IOStream : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!OutputStream(cast(GOutputStream*) p);
+		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) p);
 	}
 	
 	/**

@@ -208,7 +208,7 @@ public class GC : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -606,7 +606,7 @@ public class GC : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**

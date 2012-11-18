@@ -155,7 +155,7 @@ public class X11
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -196,7 +196,7 @@ public class X11
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -217,7 +217,7 @@ public class X11
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**

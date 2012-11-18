@@ -153,7 +153,7 @@ public class ParameterList
 			return null;
 		}
 		
-		return ObjectG.getDObject!ParameterList(cast(GdaParameterList*) p);
+		return ObjectG.getDObject!(ParameterList)(cast(GdaParameterList*) p);
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class ParameterList
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -203,7 +203,7 @@ public class ParameterList
 			return null;
 		}
 		
-		return ObjectG.getDObject!Parameter(cast(GdaParameter*) p);
+		return ObjectG.getDObject!(Parameter)(cast(GdaParameter*) p);
 	}
 	
 	/**

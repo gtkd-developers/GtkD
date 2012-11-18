@@ -226,7 +226,7 @@ public class ToolItem : Bin, ActivatableIF
 	{
 		foreach ( bool delegate(Tooltips, string, string, ToolItem) dlg ; _toolItem.onSetTooltipListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), _toolItem) )
+			if ( dlg(ObjectG.getDObject!(Tooltips)(tooltips), Str.toString(tipText), Str.toString(tipPrivate), _toolItem) )
 			{
 				return 1;
 			}
@@ -610,7 +610,7 @@ public class ToolItem : Bin, ActivatableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -635,7 +635,7 @@ public class ToolItem : Bin, ActivatableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -697,6 +697,6 @@ public class ToolItem : Bin, ActivatableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!SizeGroup(cast(GtkSizeGroup*) p);
+		return ObjectG.getDObject!(SizeGroup)(cast(GtkSizeGroup*) p);
 	}
 }

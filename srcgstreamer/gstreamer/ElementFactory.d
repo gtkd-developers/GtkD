@@ -177,7 +177,7 @@ public class ElementFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!ElementFactory(cast(GstElementFactory*) p);
+		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) p);
 	}
 	
 	/**
@@ -295,7 +295,7 @@ public class ElementFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 	
 	/**
@@ -318,7 +318,7 @@ public class ElementFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 	
 	/**
@@ -359,6 +359,6 @@ public class ElementFactory : PluginFeature
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 }

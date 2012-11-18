@@ -216,7 +216,7 @@ public class Main
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class Main
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -680,7 +680,7 @@ public class Main
 			return null;
 		}
 		
-		return ObjectG.getDObject!Event(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -726,7 +726,7 @@ public class Main
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

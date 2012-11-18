@@ -144,7 +144,7 @@ public class IOExtensionPoint
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOExtension(cast(GIOExtension*) p);
+		return ObjectG.getDObject!(IOExtension)(cast(GIOExtension*) p);
 	}
 	
 	/**
@@ -162,7 +162,7 @@ public class IOExtensionPoint
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class IOExtensionPoint
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOExtension(cast(GIOExtension*) p);
+		return ObjectG.getDObject!(IOExtension)(cast(GIOExtension*) p);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class IOExtensionPoint
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOExtensionPoint(cast(GIOExtensionPoint*) p);
+		return ObjectG.getDObject!(IOExtensionPoint)(cast(GIOExtensionPoint*) p);
 	}
 	
 	/**
@@ -235,7 +235,7 @@ public class IOExtensionPoint
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOExtensionPoint(cast(GIOExtensionPoint*) p);
+		return ObjectG.getDObject!(IOExtensionPoint)(cast(GIOExtensionPoint*) p);
 	}
 	
 	/**

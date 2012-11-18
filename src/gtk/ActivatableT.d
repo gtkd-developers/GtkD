@@ -139,7 +139,7 @@ public template ActivatableT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Action(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
 	}
 	
 	/**

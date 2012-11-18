@@ -388,7 +388,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
+		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
 	}
 	
 	/**
@@ -529,7 +529,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -557,7 +557,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -587,7 +587,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -656,7 +656,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -690,7 +690,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -726,7 +726,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -814,7 +814,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

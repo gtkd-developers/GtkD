@@ -162,7 +162,7 @@ public class PgCairoFontMap : PgFontMap
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontMap(cast(PangoFontMap*) p);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
 	}
 	
 	/**
@@ -282,6 +282,6 @@ public class PgCairoFontMap : PgFontMap
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 	}
 }

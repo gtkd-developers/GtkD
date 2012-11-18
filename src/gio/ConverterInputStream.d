@@ -143,6 +143,6 @@ public class ConverterInputStream : FilterInputStream
 			return null;
 		}
 		
-		return ObjectG.getDObject!Converter(cast(GConverter*) p);
+		return ObjectG.getDObject!(Converter)(cast(GConverter*) p);
 	}
 }

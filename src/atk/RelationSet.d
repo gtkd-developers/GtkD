@@ -195,7 +195,7 @@ public class RelationSet : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Relation(cast(AtkRelation*) p);
+		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) p);
 	}
 	
 	/**
@@ -214,7 +214,7 @@ public class RelationSet : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Relation(cast(AtkRelation*) p);
+		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) p);
 	}
 	
 	/**

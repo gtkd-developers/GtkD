@@ -167,7 +167,7 @@ public class Colormap
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -196,7 +196,7 @@ public class Colormap
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -314,7 +314,7 @@ public class Colormap
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -332,7 +332,7 @@ public class Colormap
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**

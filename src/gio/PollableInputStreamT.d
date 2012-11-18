@@ -155,7 +155,7 @@ public template PollableInputStreamT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Source(cast(GSource*) p);
+		return ObjectG.getDObject!(Source)(cast(GSource*) p);
 	}
 	
 	/**
@@ -214,6 +214,6 @@ public template PollableInputStreamT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Source(cast(GSource*) p);
+		return ObjectG.getDObject!(Source)(cast(GSource*) p);
 	}
 }

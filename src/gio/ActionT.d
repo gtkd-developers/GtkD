@@ -144,7 +144,7 @@ public template ActionT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!VariantType(cast(GVariantType*) p);
+		return ObjectG.getDObject!(VariantType)(cast(GVariantType*) p);
 	}
 	
 	/**
@@ -171,7 +171,7 @@ public template ActionT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!VariantType(cast(GVariantType*) p);
+		return ObjectG.getDObject!(VariantType)(cast(GVariantType*) p);
 	}
 	
 	/**
@@ -202,7 +202,7 @@ public template ActionT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -238,7 +238,7 @@ public template ActionT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**

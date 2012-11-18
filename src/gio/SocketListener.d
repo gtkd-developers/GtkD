@@ -217,7 +217,7 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		effectiveAddress = ObjectG.getDObject!SocketAddress(outeffectiveAddress);
+		effectiveAddress = ObjectG.getDObject!(SocketAddress)(outeffectiveAddress);
 		return p;
 	}
 	
@@ -311,14 +311,14 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		sourceObject = ObjectG.getDObject!ObjectG(outsourceObject);
+		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -360,14 +360,14 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		sourceObject = ObjectG.getDObject!ObjectG(outsourceObject);
+		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketConnection(cast(GSocketConnection*) p);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
 	}
 	
 	/**
@@ -402,14 +402,14 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		sourceObject = ObjectG.getDObject!ObjectG(outsourceObject);
+		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!Socket(cast(GSocket*) p);
+		return ObjectG.getDObject!(Socket)(cast(GSocket*) p);
 	}
 	
 	/**
@@ -451,14 +451,14 @@ public class SocketListener : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		sourceObject = ObjectG.getDObject!ObjectG(outsourceObject);
+		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!Socket(cast(GSocket*) p);
+		return ObjectG.getDObject!(Socket)(cast(GSocket*) p);
 	}
 	
 	/**

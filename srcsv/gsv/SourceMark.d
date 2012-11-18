@@ -173,7 +173,7 @@ public class SourceMark : TextMark
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceMark(cast(GtkSourceMark*) p);
+		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
 	}
 	
 	/**
@@ -195,6 +195,6 @@ public class SourceMark : TextMark
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceMark(cast(GtkSourceMark*) p);
+		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
 	}
 }

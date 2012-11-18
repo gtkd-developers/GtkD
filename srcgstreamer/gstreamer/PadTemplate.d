@@ -169,7 +169,7 @@ public class PadTemplate : ObjectGst
 	{
 		foreach ( void delegate(Pad, PadTemplate) dlg ; _padTemplate.onPadCreatedListeners )
 		{
-			dlg(ObjectG.getDObject!Pad(pad), _padTemplate);
+			dlg(ObjectG.getDObject!(Pad)(pad), _padTemplate);
 		}
 	}
 	
@@ -190,7 +190,7 @@ public class PadTemplate : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!PadTemplate(cast(GstPadTemplate*) p);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -209,7 +209,7 @@ public class PadTemplate : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -248,6 +248,6 @@ public class PadTemplate : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 }

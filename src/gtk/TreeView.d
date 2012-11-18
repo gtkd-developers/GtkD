@@ -402,7 +402,7 @@ public class TreeView : Container
 	{
 		foreach ( void delegate(TreePath, TreeViewColumn, TreeView) dlg ; _treeView.onRowActivatedListeners )
 		{
-			dlg(ObjectG.getDObject!TreePath(path), ObjectG.getDObject!TreeViewColumn(column), _treeView);
+			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeViewColumn)(column), _treeView);
 		}
 	}
 	
@@ -429,7 +429,7 @@ public class TreeView : Container
 	{
 		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onRowCollapsedListeners )
 		{
-			dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView);
+			dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), _treeView);
 		}
 	}
 	
@@ -456,7 +456,7 @@ public class TreeView : Container
 	{
 		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onRowExpandedListeners )
 		{
-			dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView);
+			dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), _treeView);
 		}
 	}
 	
@@ -578,7 +578,7 @@ public class TreeView : Container
 	{
 		foreach ( void delegate(Adjustment, Adjustment, TreeView) dlg ; _treeView.onSetScrollAdjustmentsListeners )
 		{
-			dlg(ObjectG.getDObject!Adjustment(vertical), ObjectG.getDObject!Adjustment(arg2), _treeView);
+			dlg(ObjectG.getDObject!(Adjustment)(vertical), ObjectG.getDObject!(Adjustment)(arg2), _treeView);
 		}
 	}
 	
@@ -638,7 +638,7 @@ public class TreeView : Container
 	{
 		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onTestCollapseRowListeners )
 		{
-			if ( dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView) )
+			if ( dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), _treeView) )
 			{
 				return 1;
 			}
@@ -672,7 +672,7 @@ public class TreeView : Container
 	{
 		foreach ( bool delegate(TreeIter, TreePath, TreeView) dlg ; _treeView.onTestExpandRowListeners )
 		{
-			if ( dlg(ObjectG.getDObject!TreeIter(iter), ObjectG.getDObject!TreePath(path), _treeView) )
+			if ( dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), _treeView) )
 			{
 				return 1;
 			}
@@ -850,7 +850,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel)(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -880,7 +880,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeSelection(cast(GtkTreeSelection*) p);
+		return ObjectG.getDObject!(TreeSelection)(cast(GtkTreeSelection*) p);
 	}
 	
 	/**
@@ -897,7 +897,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -925,7 +925,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -1104,7 +1104,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeViewColumn(cast(GtkTreeViewColumn*) p);
+		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) p);
 	}
 	
 	/**
@@ -1122,7 +1122,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -1168,7 +1168,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeViewColumn(cast(GtkTreeViewColumn*) p);
+		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) p);
 	}
 	
 	/**
@@ -1304,8 +1304,8 @@ public class TreeView : Container
 		
 		gtk_tree_view_get_cursor(gtkTreeView, &outpath, &outfocusColumn);
 		
-		path = ObjectG.getDObject!TreePath(outpath);
-		focusColumn = ObjectG.getDObject!TreeViewColumn(outfocusColumn);
+		path = ObjectG.getDObject!(TreePath)(outpath);
+		focusColumn = ObjectG.getDObject!(TreeViewColumn)(outfocusColumn);
 	}
 	
 	/**
@@ -1467,8 +1467,8 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY);
 		
-		path = ObjectG.getDObject!TreePath(outpath);
-		column = ObjectG.getDObject!TreeViewColumn(outcolumn);
+		path = ObjectG.getDObject!(TreePath)(outpath);
+		column = ObjectG.getDObject!(TreeViewColumn)(outcolumn);
 		return p;
 	}
 	
@@ -1548,8 +1548,8 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath);
 		
-		startPath = ObjectG.getDObject!TreePath(outstartPath);
-		endPath = ObjectG.getDObject!TreePath(outendPath);
+		startPath = ObjectG.getDObject!(TreePath)(outstartPath);
+		endPath = ObjectG.getDObject!(TreePath)(outendPath);
 		return p;
 	}
 	
@@ -1569,7 +1569,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1784,7 +1784,7 @@ public class TreeView : Container
 		
 		gtk_tree_view_get_drag_dest_row(gtkTreeView, &outpath, &pos);
 		
-		path = ObjectG.getDObject!TreePath(outpath);
+		path = ObjectG.getDObject!(TreePath)(outpath);
 	}
 	
 	/**
@@ -1806,7 +1806,7 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos);
 		
-		path = ObjectG.getDObject!TreePath(outpath);
+		path = ObjectG.getDObject!(TreePath)(outpath);
 		return p;
 	}
 	
@@ -1827,7 +1827,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -1924,7 +1924,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Entry(cast(GtkEntry*) p);
+		return ObjectG.getDObject!(Entry)(cast(GtkEntry*) p);
 	}
 	
 	/**
@@ -2243,8 +2243,8 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
 		
-		model = ObjectG.getDObject!TreeModel(outmodel);
-		path = ObjectG.getDObject!TreePath(outpath);
+		model = ObjectG.getDObject!(TreeModel)(outmodel);
+		path = ObjectG.getDObject!(TreePath)(outpath);
 		return p;
 	}
 	

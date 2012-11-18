@@ -260,7 +260,7 @@ public class Cursor
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -281,7 +281,7 @@ public class Cursor
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class Cursor
 			return null;
 		}
 		
-		return ObjectG.getDObject!Cursor(cast(GdkCursor*) p);
+		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) p);
 	}
 	
 	/**

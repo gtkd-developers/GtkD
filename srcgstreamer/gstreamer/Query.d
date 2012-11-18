@@ -273,7 +273,7 @@ public class Query
 			return null;
 		}
 		
-		return ObjectG.getDObject!Iterator(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class Query
 			return null;
 		}
 		
-		return ObjectG.getDObject!Structure(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**

@@ -269,7 +269,7 @@ public class Keymap : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Keymap(cast(GdkKeymap*) p);
+		return ObjectG.getDObject!(Keymap)(cast(GdkKeymap*) p);
 	}
 	
 	/**
@@ -289,7 +289,7 @@ public class Keymap : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Keymap(cast(GdkKeymap*) p);
+		return ObjectG.getDObject!(Keymap)(cast(GdkKeymap*) p);
 	}
 	
 	/**

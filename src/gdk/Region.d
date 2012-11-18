@@ -148,7 +148,7 @@ public class Region
 			return null;
 		}
 		
-		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
+		return ObjectG.getDObject!(Region)(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class Region
 			return null;
 		}
 		
-		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
+		return ObjectG.getDObject!(Region)(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class Region
 			return null;
 		}
 		
-		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
+		return ObjectG.getDObject!(Region)(cast(GdkRegion*) p);
 	}
 	
 	/**

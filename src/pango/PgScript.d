@@ -116,6 +116,6 @@ public class PgScript
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
 	}
 }

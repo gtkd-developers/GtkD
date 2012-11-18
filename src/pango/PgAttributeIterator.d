@@ -127,7 +127,7 @@ public class PgAttributeIterator
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttributeIterator(cast(PangoAttrIterator*) p);
+		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) p);
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class PgAttributeIterator
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttribute(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
 	}
 	
 	/**
@@ -202,8 +202,8 @@ public class PgAttributeIterator
 		
 		pango_attr_iterator_get_font(pangoAttrIterator, (desc is null) ? null : desc.getPgFontDescriptionStruct(), &outlanguage, &outextraAttrs);
 		
-		language = ObjectG.getDObject!PgLanguage(outlanguage);
-		extraAttrs = ObjectG.getDObject!ListSG(outextraAttrs);
+		language = ObjectG.getDObject!(PgLanguage)(outlanguage);
+		extraAttrs = ObjectG.getDObject!(ListSG)(outextraAttrs);
 	}
 	
 	/**
@@ -222,7 +222,7 @@ public class PgAttributeIterator
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**

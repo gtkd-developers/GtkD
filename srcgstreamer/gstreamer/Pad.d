@@ -225,7 +225,7 @@ public class Pad : ObjectGst
 	{
 		foreach ( bool delegate(MiniObject, Pad) dlg ; _pad.onHaveDataListeners )
 		{
-			if ( dlg(ObjectG.getDObject!MiniObject(miniObj), _pad) )
+			if ( dlg(ObjectG.getDObject!(MiniObject)(miniObj), _pad) )
 			{
 				return 1;
 			}
@@ -257,7 +257,7 @@ public class Pad : ObjectGst
 	{
 		foreach ( void delegate(Pad, Pad) dlg ; _pad.onLinkedListeners )
 		{
-			dlg(ObjectG.getDObject!Pad(peer), _pad);
+			dlg(ObjectG.getDObject!(Pad)(peer), _pad);
 		}
 	}
 	
@@ -313,7 +313,7 @@ public class Pad : ObjectGst
 	{
 		foreach ( void delegate(Pad, Pad) dlg ; _pad.onUnlinkedListeners )
 		{
-			dlg(ObjectG.getDObject!Pad(peer), _pad);
+			dlg(ObjectG.getDObject!(Pad)(peer), _pad);
 		}
 	}
 	
@@ -345,7 +345,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 	
 	/**
@@ -362,7 +362,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!PadTemplate(cast(GstPadTemplate*) p);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
 	}
 	
 	/**
@@ -432,7 +432,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -453,7 +453,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -474,7 +474,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -525,7 +525,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pad(cast(GstPad*) p);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) p);
 	}
 	
 	/**
@@ -542,7 +542,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -803,7 +803,7 @@ public class Pad : ObjectGst
 		
 		auto p = gst_pad_alloc_buffer(gstPad, offset, size, (caps is null) ? null : caps.getCapsStruct(), &outbuf);
 		
-		buf = ObjectG.getDObject!Buffer(outbuf);
+		buf = ObjectG.getDObject!(Buffer)(outbuf);
 		return p;
 	}
 	
@@ -825,7 +825,7 @@ public class Pad : ObjectGst
 		
 		auto p = gst_pad_alloc_buffer_and_set_caps(gstPad, offset, size, (caps is null) ? null : caps.getCapsStruct(), &outbuf);
 		
-		buf = ObjectG.getDObject!Buffer(outbuf);
+		buf = ObjectG.getDObject!(Buffer)(outbuf);
 		return p;
 	}
 	
@@ -889,7 +889,7 @@ public class Pad : ObjectGst
 		
 		auto p = gst_pad_get_range(gstPad, offset, size, &outbuffer);
 		
-		buffer = ObjectG.getDObject!Buffer(outbuffer);
+		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
 		return p;
 	}
 	
@@ -1018,7 +1018,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -1091,7 +1091,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -1224,7 +1224,7 @@ public class Pad : ObjectGst
 		
 		auto p = gst_pad_pull_range(gstPad, offset, size, &outbuffer);
 		
-		buffer = ObjectG.getDObject!Buffer(outbuffer);
+		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
 		return p;
 	}
 	
@@ -1494,7 +1494,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -1515,7 +1515,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

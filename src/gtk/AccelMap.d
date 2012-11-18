@@ -338,7 +338,7 @@ public class AccelMap : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!AccelMap(cast(GtkAccelMap*) p);
+		return ObjectG.getDObject!(AccelMap)(cast(GtkAccelMap*) p);
 	}
 	
 	/**

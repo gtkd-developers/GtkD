@@ -221,7 +221,7 @@ public class Buffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public class Buffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -296,7 +296,7 @@ public class Buffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -315,7 +315,7 @@ public class Buffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!Caps(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -358,7 +358,7 @@ public class Buffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -404,7 +404,7 @@ public class Buffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -443,7 +443,7 @@ public class Buffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 	
 	/**
@@ -467,6 +467,6 @@ public class Buffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!Buffer(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 }

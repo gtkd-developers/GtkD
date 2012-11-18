@@ -470,7 +470,7 @@ public class Socket : ObjectG, InitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
-		address = ObjectG.getDObject!SocketAddress(outaddress);
+		address = ObjectG.getDObject!(SocketAddress)(outaddress);
 		return p;
 	}
 	
@@ -554,12 +554,12 @@ public class Socket : ObjectG, InitableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
-		address = ObjectG.getDObject!SocketAddress(outaddress);
+		address = ObjectG.getDObject!(SocketAddress)(outaddress);
 		
 		messages = new SocketControlMessage[numMessages];
 		for(int i = 0; i < numMessages; i++)
 		{
-			messages[i] = ObjectG.getDObject!SocketControlMessage(cast(GSocketControlMessage*) outmessages[i]);
+			messages[i] = ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) outmessages[i]);
 		}
 		return p;
 	}
@@ -879,7 +879,7 @@ public class Socket : ObjectG, InitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Source(cast(GSource*) p);
+		return ObjectG.getDObject!(Source)(cast(GSource*) p);
 	}
 	
 	/**
@@ -1124,7 +1124,7 @@ public class Socket : ObjectG, InitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
 	}
 	
 	/**
@@ -1164,7 +1164,7 @@ public class Socket : ObjectG, InitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketAddress(cast(GSocketAddress*) p);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
 	}
 	
 	/**
@@ -1228,6 +1228,6 @@ public class Socket : ObjectG, InitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Credentials(cast(GCredentials*) p);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p);
 	}
 }

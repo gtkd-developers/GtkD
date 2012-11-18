@@ -184,7 +184,7 @@ public class SourcePrintCompositor : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SourceBuffer(cast(GtkSourceBuffer*) p);
+		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
 	}
 	
 	/**

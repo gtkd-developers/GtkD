@@ -236,7 +236,7 @@ public class Drawable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -256,7 +256,7 @@ public class Drawable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -275,7 +275,7 @@ public class Drawable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -311,7 +311,7 @@ public class Drawable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public class Drawable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
+		return ObjectG.getDObject!(Region)(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -384,7 +384,7 @@ public class Drawable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
+		return ObjectG.getDObject!(Region)(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -901,7 +901,7 @@ public class Drawable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ImageGdk(cast(GdkImage*) p);
+		return ObjectG.getDObject!(ImageGdk)(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -932,6 +932,6 @@ public class Drawable : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ImageGdk(cast(GdkImage*) p);
+		return ObjectG.getDObject!(ImageGdk)(cast(GdkImage*) p);
 	}
 }

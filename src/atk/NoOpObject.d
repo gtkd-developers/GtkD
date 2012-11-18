@@ -129,6 +129,6 @@ public class NoOpObject : ObjectAtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 }

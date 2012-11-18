@@ -126,7 +126,7 @@ public class IMMulticontext : IMContext
 			return null;
 		}
 		
-		return ObjectG.getDObject!IMContext(cast(GtkIMContext*) p);
+		return ObjectG.getDObject!(IMContext)(cast(GtkIMContext*) p);
 	}
 	
 	/**

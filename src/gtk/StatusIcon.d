@@ -382,7 +382,7 @@ public class StatusIcon : ObjectG
 	{
 		foreach ( bool delegate(gint, gint, gboolean, Tooltip, StatusIcon) dlg ; _statusIcon.onQueryTooltipListeners )
 		{
-			if ( dlg(x, y, keyboardMode, ObjectG.getDObject!Tooltip(tooltip), _statusIcon) )
+			if ( dlg(x, y, keyboardMode, ObjectG.getDObject!(Tooltip)(tooltip), _statusIcon) )
 			{
 				return 1;
 			}
@@ -618,7 +618,7 @@ public class StatusIcon : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -671,7 +671,7 @@ public class StatusIcon : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -720,7 +720,7 @@ public class StatusIcon : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -976,7 +976,7 @@ public class StatusIcon : ObjectG
 		
 		auto p = gtk_status_icon_get_geometry(gtkStatusIcon, &outscreen, &area, &orientation);
 		
-		screen = ObjectG.getDObject!Screen(outscreen);
+		screen = ObjectG.getDObject!(Screen)(outscreen);
 		return p;
 	}
 	

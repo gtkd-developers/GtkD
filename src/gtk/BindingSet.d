@@ -234,7 +234,7 @@ public class BindingSet
 			return null;
 		}
 		
-		return ObjectG.getDObject!BindingSet(cast(GtkBindingSet*) p);
+		return ObjectG.getDObject!(BindingSet)(cast(GtkBindingSet*) p);
 	}
 	
 	/**
@@ -255,7 +255,7 @@ public class BindingSet
 			return null;
 		}
 		
-		return ObjectG.getDObject!BindingSet(cast(GtkBindingSet*) p);
+		return ObjectG.getDObject!(BindingSet)(cast(GtkBindingSet*) p);
 	}
 	
 	/**

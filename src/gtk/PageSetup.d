@@ -164,7 +164,7 @@ public class PageSetup : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
 	}
 	
 	/**
@@ -205,7 +205,7 @@ public class PageSetup : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PaperSize(cast(GtkPaperSize*) p);
+		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p);
 	}
 	
 	/**

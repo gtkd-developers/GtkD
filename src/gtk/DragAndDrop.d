@@ -237,7 +237,7 @@ public class DragAndDrop
 			return null;
 		}
 		
-		return ObjectG.getDObject!TargetList(cast(GtkTargetList*) p);
+		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 	}
 	
 	/**
@@ -387,7 +387,7 @@ public class DragAndDrop
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -446,7 +446,7 @@ public class DragAndDrop
 			return null;
 		}
 		
-		return ObjectG.getDObject!DragContext(cast(GdkDragContext*) p);
+		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p);
 	}
 	
 	/**
@@ -693,7 +693,7 @@ public class DragAndDrop
 			return null;
 		}
 		
-		return ObjectG.getDObject!TargetList(cast(GtkTargetList*) p);
+		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 	}
 	
 	/**

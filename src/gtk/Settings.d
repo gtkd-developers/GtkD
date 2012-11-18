@@ -152,7 +152,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Settings(cast(GtkSettings*) p);
+		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
 	}
 	
 	/**
@@ -172,7 +172,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Settings(cast(GtkSettings*) p);
+		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
 	}
 	
 	/**

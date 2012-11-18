@@ -157,7 +157,7 @@ public class CClosure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Closure(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 	
 	/**
@@ -179,7 +179,7 @@ public class CClosure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Closure(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 	
 	/**
@@ -203,7 +203,7 @@ public class CClosure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Closure(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 	
 	/**
@@ -227,7 +227,7 @@ public class CClosure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Closure(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 	
 	/**

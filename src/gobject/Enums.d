@@ -129,7 +129,7 @@ public class Enums
 			return null;
 		}
 		
-		return ObjectG.getDObject!Enums(cast(GEnumValue*) p);
+		return ObjectG.getDObject!(Enums)(cast(GEnumValue*) p);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class Enums
 			return null;
 		}
 		
-		return ObjectG.getDObject!Enums(cast(GEnumValue*) p);
+		return ObjectG.getDObject!(Enums)(cast(GEnumValue*) p);
 	}
 	
 	/**
@@ -169,7 +169,7 @@ public class Enums
 			return null;
 		}
 		
-		return ObjectG.getDObject!Enums(cast(GEnumValue*) p);
+		return ObjectG.getDObject!(Enums)(cast(GEnumValue*) p);
 	}
 	
 	/**

@@ -301,7 +301,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -343,7 +343,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusConnection(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 	
 	/**
@@ -712,7 +712,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -773,7 +773,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Credentials(cast(GCredentials*) p);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p);
 	}
 	
 	/**
@@ -840,7 +840,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -891,7 +891,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Variant(cast(GVariant*) p);
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
 	}
 	
 	/**
@@ -1083,7 +1083,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusMessage(cast(GDBusMessage*) p);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p);
 	}
 	
 	/**
@@ -1139,7 +1139,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!DBusMessage(cast(GDBusMessage*) p);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p);
 	}
 	
 	/**

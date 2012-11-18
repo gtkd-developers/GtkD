@@ -237,7 +237,7 @@ public class CellView : Widget, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeModel(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel)(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -274,7 +274,7 @@ public class CellView : Widget, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -321,6 +321,6 @@ public class CellView : Widget, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 }

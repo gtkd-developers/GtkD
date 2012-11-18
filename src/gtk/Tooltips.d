@@ -244,7 +244,7 @@ public class Tooltips : ObjectGtk
 		
 		auto p = gtk_tooltips_get_info_from_tip_window((tipWindow is null) ? null : tipWindow.getWindowStruct(), &tooltips, &outcurrentWidget);
 		
-		currentWidget = ObjectG.getDObject!Widget(outcurrentWidget);
+		currentWidget = ObjectG.getDObject!(Widget)(outcurrentWidget);
 		return p;
 	}
 }

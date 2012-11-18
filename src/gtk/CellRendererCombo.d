@@ -160,7 +160,7 @@ public class CellRendererCombo : CellRendererText
 	{
 		foreach ( void delegate(string, TreeIter, CellRendererCombo) dlg ; _cellRendererCombo.onChangedListeners )
 		{
-			dlg(Str.toString(pathString), ObjectG.getDObject!TreeIter(newIter), _cellRendererCombo);
+			dlg(Str.toString(pathString), ObjectG.getDObject!(TreeIter)(newIter), _cellRendererCombo);
 		}
 	}
 	

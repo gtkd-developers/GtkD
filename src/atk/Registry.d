@@ -157,7 +157,7 @@ public class Registry : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectFactory(cast(AtkObjectFactory*) p);
+		return ObjectG.getDObject!(ObjectFactory)(cast(AtkObjectFactory*) p);
 	}
 	
 	/**
@@ -180,6 +180,6 @@ public class Registry : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Registry(cast(AtkRegistry*) p);
+		return ObjectG.getDObject!(Registry)(cast(AtkRegistry*) p);
 	}
 }

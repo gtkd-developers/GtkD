@@ -146,7 +146,7 @@ public class TextIter : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextBuffer(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -166,7 +166,7 @@ public class TextIter : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextIter(cast(GtkTextIter*) p);
+		return ObjectG.getDObject!(TextIter)(cast(GtkTextIter*) p);
 	}
 	
 	/**
@@ -354,7 +354,7 @@ public class TextIter : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -375,7 +375,7 @@ public class TextIter : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -399,7 +399,7 @@ public class TextIter : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -418,7 +418,7 @@ public class TextIter : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextChildAnchor(cast(GtkTextChildAnchor*) p);
+		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) p);
 	}
 	
 	/**
@@ -498,7 +498,7 @@ public class TextIter : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -718,7 +718,7 @@ public class TextIter : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
 	}
 	
 	/**

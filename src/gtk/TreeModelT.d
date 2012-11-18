@@ -260,7 +260,7 @@ public template TreeModelT(TStruct)
 	{
 		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; _treeModelIF.onRowChangedListeners )
 		{
-			dlg(ObjectG.getDObject!TreePath(path), ObjectG.getDObject!TreeIter(iter), _treeModelIF);
+			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), _treeModelIF);
 		}
 	}
 	
@@ -296,7 +296,7 @@ public template TreeModelT(TStruct)
 	{
 		foreach ( void delegate(TreePath, TreeModelIF) dlg ; _treeModelIF.onRowDeletedListeners )
 		{
-			dlg(ObjectG.getDObject!TreePath(path), _treeModelIF);
+			dlg(ObjectG.getDObject!(TreePath)(path), _treeModelIF);
 		}
 	}
 	
@@ -328,7 +328,7 @@ public template TreeModelT(TStruct)
 	{
 		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; _treeModelIF.onRowHasChildToggledListeners )
 		{
-			dlg(ObjectG.getDObject!TreePath(path), ObjectG.getDObject!TreeIter(iter), _treeModelIF);
+			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), _treeModelIF);
 		}
 	}
 	
@@ -362,7 +362,7 @@ public template TreeModelT(TStruct)
 	{
 		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg ; _treeModelIF.onRowInsertedListeners )
 		{
-			dlg(ObjectG.getDObject!TreePath(path), ObjectG.getDObject!TreeIter(iter), _treeModelIF);
+			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), _treeModelIF);
 		}
 	}
 	
@@ -401,7 +401,7 @@ public template TreeModelT(TStruct)
 	{
 		foreach ( void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg ; _treeModelIF.onRowsReorderedListeners )
 		{
-			dlg(ObjectG.getDObject!TreePath(path), ObjectG.getDObject!TreeIter(iter), newOrder, _treeModelIF);
+			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), newOrder, _treeModelIF);
 		}
 	}
 	
@@ -484,7 +484,7 @@ public template TreeModelT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreePath(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
 	}
 	
 	/**

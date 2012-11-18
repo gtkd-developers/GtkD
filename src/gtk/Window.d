@@ -301,7 +301,7 @@ public class Window : Bin
 	{
 		foreach ( void delegate(Widget, Window) dlg ; _window.onSetFocusListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(widget), _window);
+			dlg(ObjectG.getDObject!(Widget)(widget), _window);
 		}
 	}
 	
@@ -671,7 +671,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -723,7 +723,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -815,7 +815,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -850,7 +850,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -1392,7 +1392,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -1488,7 +1488,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1507,7 +1507,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -1671,7 +1671,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -1756,7 +1756,7 @@ public class Window : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!WindowGroup(cast(GtkWindowGroup*) p);
+		return ObjectG.getDObject!(WindowGroup)(cast(GtkWindowGroup*) p);
 	}
 	
 	/**

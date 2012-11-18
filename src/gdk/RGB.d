@@ -419,7 +419,7 @@ public class RGB
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -442,7 +442,7 @@ public class RGB
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**

@@ -547,7 +547,7 @@ public class TreeIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!TreeIter(cast(GtkTreeIter*) p);
+		return ObjectG.getDObject!(TreeIter)(cast(GtkTreeIter*) p);
 	}
 	
 	/**

@@ -501,7 +501,7 @@ public class Action : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -661,7 +661,7 @@ public class Action : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Closure(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 	
 	/**
@@ -773,7 +773,7 @@ public class Action : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**

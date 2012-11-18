@@ -138,7 +138,7 @@ public class FieldAttributes
 			return null;
 		}
 		
-		return ObjectG.getDObject!FieldAttributes(cast(GdaFieldAttributes*) p);
+		return ObjectG.getDObject!(FieldAttributes)(cast(GdaFieldAttributes*) p);
 	}
 	
 	/**
@@ -419,7 +419,7 @@ public class FieldAttributes
 			return null;
 		}
 		
-		return ObjectG.getDObject!Value(cast(GdaValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GdaValue*) p);
 	}
 	
 	/**

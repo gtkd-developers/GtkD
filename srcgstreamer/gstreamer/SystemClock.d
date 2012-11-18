@@ -133,6 +133,6 @@ public class SystemClock : Clock
 			return null;
 		}
 		
-		return ObjectG.getDObject!Clock(cast(GstClock*) p);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) p);
 	}
 }

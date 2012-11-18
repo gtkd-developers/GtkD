@@ -154,7 +154,7 @@ public class Hypertext
 			return null;
 		}
 		
-		return ObjectG.getDObject!Hyperlink(cast(AtkHyperlink*) p);
+		return ObjectG.getDObject!(Hyperlink)(cast(AtkHyperlink*) p);
 	}
 	
 	/**

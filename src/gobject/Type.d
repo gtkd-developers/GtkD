@@ -718,7 +718,7 @@ public class Type
 			return null;
 		}
 		
-		return ObjectG.getDObject!TypePlugin(cast(GTypePlugin*) p);
+		return ObjectG.getDObject!(TypePlugin)(cast(GTypePlugin*) p);
 	}
 	
 	/**
@@ -741,7 +741,7 @@ public class Type
 			return null;
 		}
 		
-		return ObjectG.getDObject!TypePlugin(cast(GTypePlugin*) p);
+		return ObjectG.getDObject!(TypePlugin)(cast(GTypePlugin*) p);
 	}
 	
 	/**

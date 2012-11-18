@@ -176,7 +176,7 @@ public class TextAttributes
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
+		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p);
 	}
 	
 	/**
@@ -215,6 +215,6 @@ public class TextAttributes
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextAttributes(cast(GtkTextAttributes*) p);
+		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p);
 	}
 }

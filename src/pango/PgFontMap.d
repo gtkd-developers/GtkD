@@ -150,7 +150,7 @@ public class PgFontMap : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -170,7 +170,7 @@ public class PgFontMap : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFont(cast(PangoFont*) p);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -192,7 +192,7 @@ public class PgFontMap : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgFontset(cast(PangoFontset*) p);
+		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) p);
 	}
 	
 	/**
@@ -213,7 +213,7 @@ public class PgFontMap : ObjectG
 		families = new PgFontFamily[nFamilies];
 		for(int i = 0; i < nFamilies; i++)
 		{
-			families[i] = ObjectG.getDObject!PgFontFamily(cast(PangoFontFamily*) outfamilies[i]);
+			families[i] = ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) outfamilies[i]);
 		}
 	}
 	

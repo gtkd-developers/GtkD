@@ -240,7 +240,7 @@ public class Image : Misc
 		
 		gtk_image_get_icon_set(gtkImage, &outiconSet, &size);
 		
-		iconSet = ObjectG.getDObject!IconSet(outiconSet);
+		iconSet = ObjectG.getDObject!(IconSet)(outiconSet);
 	}
 	
 	/**
@@ -263,8 +263,8 @@ public class Image : Misc
 		
 		gtk_image_get_image(gtkImage, &outgdkImage, &outmask);
 		
-		gdkImage = ObjectG.getDObject!ImageGdk(outgdkImage);
-		mask = ObjectG.getDObject!Bitmap(outmask);
+		gdkImage = ObjectG.getDObject!(ImageGdk)(outgdkImage);
+		mask = ObjectG.getDObject!(Bitmap)(outmask);
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public class Image : Misc
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -308,8 +308,8 @@ public class Image : Misc
 		
 		gtk_image_get_pixmap(gtkImage, &outpixmap, &outmask);
 		
-		pixmap = ObjectG.getDObject!Pixmap(outpixmap);
-		mask = ObjectG.getDObject!Bitmap(outmask);
+		pixmap = ObjectG.getDObject!(Pixmap)(outpixmap);
+		mask = ObjectG.getDObject!(Bitmap)(outmask);
 	}
 	
 	/**
@@ -352,7 +352,7 @@ public class Image : Misc
 			return null;
 		}
 		
-		return ObjectG.getDObject!PixbufAnimation(cast(GdkPixbufAnimation*) p);
+		return ObjectG.getDObject!(PixbufAnimation)(cast(GdkPixbufAnimation*) p);
 	}
 	
 	/**
@@ -398,7 +398,7 @@ public class Image : Misc
 		
 		gtk_image_get_gicon(gtkImage, &outgicon, &size);
 		
-		gicon = ObjectG.getDObject!Icon(outgicon);
+		gicon = ObjectG.getDObject!(Icon)(outgicon);
 	}
 	
 	/**
@@ -745,8 +745,8 @@ public class Image : Misc
 		
 		gtk_image_get(gtkImage, &outval, &outmask);
 		
-		val = ObjectG.getDObject!ImageGdk(outval);
-		mask = ObjectG.getDObject!Bitmap(outmask);
+		val = ObjectG.getDObject!(ImageGdk)(outval);
+		mask = ObjectG.getDObject!(Bitmap)(outmask);
 	}
 	
 	/**

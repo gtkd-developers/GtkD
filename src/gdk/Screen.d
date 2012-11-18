@@ -256,7 +256,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -274,7 +274,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -304,7 +304,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -324,7 +324,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -348,7 +348,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -373,7 +373,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -401,7 +401,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -421,7 +421,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -454,7 +454,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -472,7 +472,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -552,7 +552,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -574,7 +574,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -754,7 +754,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!FontOption(cast(cairo_font_options_t*) p);
+		return ObjectG.getDObject!(FontOption)(cast(cairo_font_options_t*) p);
 	}
 	
 	/**
@@ -826,7 +826,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -854,7 +854,7 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

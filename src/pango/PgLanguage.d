@@ -126,7 +126,7 @@ public class PgLanguage
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public class PgLanguage
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLanguage(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
 	}
 	
 	/**

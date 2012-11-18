@@ -508,7 +508,7 @@ public class Glade : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Glade(cast(GladeXML*) p);
+		return ObjectG.getDObject!(Glade)(cast(GladeXML*) p);
 	}
 	
 	/**

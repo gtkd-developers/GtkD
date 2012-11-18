@@ -210,7 +210,7 @@ public class RecentManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!RecentManager(cast(GtkRecentManager*) p);
+		return ObjectG.getDObject!(RecentManager)(cast(GtkRecentManager*) p);
 	}
 	
 	/**
@@ -241,7 +241,7 @@ public class RecentManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!RecentManager(cast(GtkRecentManager*) p);
+		return ObjectG.getDObject!(RecentManager)(cast(GtkRecentManager*) p);
 	}
 	
 	/**
@@ -362,7 +362,7 @@ public class RecentManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!RecentInfo(cast(GtkRecentInfo*) p);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p);
 	}
 	
 	/**
@@ -455,7 +455,7 @@ public class RecentManager : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

@@ -193,7 +193,7 @@ public class ImageGdk
 			return null;
 		}
 		
-		return ObjectG.getDObject!ImageGdk(cast(GdkImage*) p);
+		return ObjectG.getDObject!(ImageGdk)(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -212,7 +212,7 @@ public class ImageGdk
 			return null;
 		}
 		
-		return ObjectG.getDObject!ImageGdk(cast(GdkImage*) p);
+		return ObjectG.getDObject!(ImageGdk)(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -245,7 +245,7 @@ public class ImageGdk
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -373,7 +373,7 @@ public class ImageGdk
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**

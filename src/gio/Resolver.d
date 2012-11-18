@@ -176,7 +176,7 @@ public class Resolver : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Resolver(cast(GResolver*) p);
+		return ObjectG.getDObject!(Resolver)(cast(GResolver*) p);
 	}
 	
 	/**
@@ -238,7 +238,7 @@ public class Resolver : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -289,7 +289,7 @@ public class Resolver : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -427,7 +427,7 @@ public class Resolver : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -481,7 +481,7 @@ public class Resolver : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

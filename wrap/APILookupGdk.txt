@@ -549,7 +549,7 @@ code: start
 			return null;
 		}
 
-		return ObjectG.getDObject!Pixbuf( p );
+		return ObjectG.getDObject!(Pixbuf)( p );
 	}
 	
 	/**

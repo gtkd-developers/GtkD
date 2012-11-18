@@ -158,6 +158,6 @@ public class DataModelList : DataModel
 			return null;
 		}
 		
-		return ObjectG.getDObject!Row(cast(GdaRow*) p);
+		return ObjectG.getDObject!(Row)(cast(GdaRow*) p);
 	}
 }

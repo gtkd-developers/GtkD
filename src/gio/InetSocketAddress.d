@@ -142,7 +142,7 @@ public class InetSocketAddress : SocketAddress
 			return null;
 		}
 		
-		return ObjectG.getDObject!InetAddress(cast(GInetAddress*) p);
+		return ObjectG.getDObject!(InetAddress)(cast(GInetAddress*) p);
 	}
 	
 	/**

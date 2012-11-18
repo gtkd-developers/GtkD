@@ -139,7 +139,7 @@ public template ProxyT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -185,7 +185,7 @@ public template ProxyT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!IOStream(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
 	}
 	
 	/**
@@ -206,7 +206,7 @@ public template ProxyT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!Proxy(cast(GProxy*) p);
+		return ObjectG.getDObject!(Proxy)(cast(GProxy*) p);
 	}
 	
 	/**

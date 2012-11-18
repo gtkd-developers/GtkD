@@ -202,7 +202,7 @@ public class UnixMountEntry
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -255,7 +255,7 @@ public class UnixMountEntry
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -277,7 +277,7 @@ public class UnixMountEntry
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -299,7 +299,7 @@ public class UnixMountEntry
 			return null;
 		}
 		
-		return ObjectG.getDObject!UnixMountEntry(cast(GUnixMountEntry*) p);
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p);
 	}
 	
 	/**

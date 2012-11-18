@@ -128,7 +128,7 @@ public class Flags
 			return null;
 		}
 		
-		return ObjectG.getDObject!Flags(cast(GFlagsValue*) p);
+		return ObjectG.getDObject!(Flags)(cast(GFlagsValue*) p);
 	}
 	
 	/**
@@ -148,7 +148,7 @@ public class Flags
 			return null;
 		}
 		
-		return ObjectG.getDObject!Flags(cast(GFlagsValue*) p);
+		return ObjectG.getDObject!(Flags)(cast(GFlagsValue*) p);
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public class Flags
 			return null;
 		}
 		
-		return ObjectG.getDObject!Flags(cast(GFlagsValue*) p);
+		return ObjectG.getDObject!(Flags)(cast(GFlagsValue*) p);
 	}
 	
 	/**

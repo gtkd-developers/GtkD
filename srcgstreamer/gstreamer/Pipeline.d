@@ -192,7 +192,7 @@ public class Pipeline : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Bus(cast(GstBus*) p);
+		return ObjectG.getDObject!(Bus)(cast(GstBus*) p);
 	}
 	
 	/**
@@ -222,7 +222,7 @@ public class Pipeline : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!Clock(cast(GstClock*) p);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) p);
 	}
 	
 	/**

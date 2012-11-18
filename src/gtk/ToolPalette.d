@@ -170,7 +170,7 @@ public class ToolPalette : Container, OrientableIF
 	{
 		foreach ( void delegate(Adjustment, Adjustment, ToolPalette) dlg ; _toolPalette.onSetScrollAdjustmentsListeners )
 		{
-			dlg(ObjectG.getDObject!Adjustment(hadjustment), ObjectG.getDObject!Adjustment(vadjustment), _toolPalette);
+			dlg(ObjectG.getDObject!(Adjustment)(hadjustment), ObjectG.getDObject!(Adjustment)(vadjustment), _toolPalette);
 		}
 	}
 	
@@ -382,7 +382,7 @@ public class ToolPalette : Container, OrientableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -425,7 +425,7 @@ public class ToolPalette : Container, OrientableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ToolItemGroup(cast(GtkToolItemGroup*) p);
+		return ObjectG.getDObject!(ToolItemGroup)(cast(GtkToolItemGroup*) p);
 	}
 	
 	/**
@@ -447,7 +447,7 @@ public class ToolPalette : Container, OrientableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ToolItem(cast(GtkToolItem*) p);
+		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
 	}
 	
 	/**
@@ -481,7 +481,7 @@ public class ToolPalette : Container, OrientableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -499,6 +499,6 @@ public class ToolPalette : Container, OrientableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 }

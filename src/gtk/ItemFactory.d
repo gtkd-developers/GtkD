@@ -201,7 +201,7 @@ public class ItemFactory : ObjectGtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!ItemFactory(cast(GtkItemFactory*) p);
+		return ObjectG.getDObject!(ItemFactory)(cast(GtkItemFactory*) p);
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public class ItemFactory : ObjectGtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -266,7 +266,7 @@ public class ItemFactory : ObjectGtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -291,7 +291,7 @@ public class ItemFactory : ObjectGtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -314,7 +314,7 @@ public class ItemFactory : ObjectGtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -515,7 +515,7 @@ public class ItemFactory : ObjectGtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!ItemFactory(cast(GtkItemFactory*) p);
+		return ObjectG.getDObject!(ItemFactory)(cast(GtkItemFactory*) p);
 	}
 	
 	/**

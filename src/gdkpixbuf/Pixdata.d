@@ -156,7 +156,7 @@ public class Pixdata
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -229,6 +229,6 @@ public class Pixdata
 			return null;
 		}
 		
-		return ObjectG.getDObject!StringG(cast(GString*) p);
+		return ObjectG.getDObject!(StringG)(cast(GString*) p);
 	}
 }

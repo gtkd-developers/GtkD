@@ -241,7 +241,7 @@ public class Container : Widget
 	{
 		foreach ( void delegate(Widget, Container) dlg ; _container.onAddListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(widget), _container);
+			dlg(ObjectG.getDObject!(Widget)(widget), _container);
 		}
 	}
 	
@@ -293,7 +293,7 @@ public class Container : Widget
 	{
 		foreach ( void delegate(Widget, Container) dlg ; _container.onRemoveListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(widget), _container);
+			dlg(ObjectG.getDObject!(Widget)(widget), _container);
 		}
 	}
 	
@@ -319,7 +319,7 @@ public class Container : Widget
 	{
 		foreach ( void delegate(Widget, Container) dlg ; _container.onSetFocusChildListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(widget), _container);
+			dlg(ObjectG.getDObject!(Widget)(widget), _container);
 		}
 	}
 	
@@ -434,7 +434,7 @@ public class Container : Widget
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -467,7 +467,7 @@ public class Container : Widget
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -501,7 +501,7 @@ public class Container : Widget
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -538,7 +538,7 @@ public class Container : Widget
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -732,7 +732,7 @@ public class Container : Widget
 		
 		auto p = gtk_container_get_focus_chain(gtkContainer, &outfocusableWidgets);
 		
-		focusableWidgets = ObjectG.getDObject!ListG(outfocusableWidgets);
+		focusableWidgets = ObjectG.getDObject!(ListG)(outfocusableWidgets);
 		return p;
 	}
 	
@@ -778,7 +778,7 @@ public class Container : Widget
 			return null;
 		}
 		
-		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -814,7 +814,7 @@ public class Container : Widget
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;

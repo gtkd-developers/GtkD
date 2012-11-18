@@ -185,7 +185,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; _actionGroup.onConnectProxyListeners )
 		{
-			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _actionGroup);
+			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _actionGroup);
 		}
 	}
 	
@@ -217,7 +217,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, Widget, ActionGroup) dlg ; _actionGroup.onDisconnectProxyListeners )
 		{
-			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _actionGroup);
+			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _actionGroup);
 		}
 	}
 	
@@ -248,7 +248,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, ActionGroup) dlg ; _actionGroup.onPostActivateListeners )
 		{
-			dlg(ObjectG.getDObject!Action(action), _actionGroup);
+			dlg(ObjectG.getDObject!(Action)(action), _actionGroup);
 		}
 	}
 	
@@ -279,7 +279,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, ActionGroup) dlg ; _actionGroup.onPreActivateListeners )
 		{
-			dlg(ObjectG.getDObject!Action(action), _actionGroup);
+			dlg(ObjectG.getDObject!(Action)(action), _actionGroup);
 		}
 	}
 	
@@ -384,7 +384,7 @@ public class ActionGroup : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Action(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -402,7 +402,7 @@ public class ActionGroup : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

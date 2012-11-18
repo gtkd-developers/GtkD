@@ -204,7 +204,7 @@ public class IconFactory : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -227,7 +227,7 @@ public class IconFactory : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 	
 	/**

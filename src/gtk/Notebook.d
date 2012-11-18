@@ -219,7 +219,7 @@ public class Notebook : Container
 	{
 		foreach ( GtkNotebook* delegate(Widget, gint, gint, Notebook) dlg ; _notebook.onCreateWindowListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(page), x, y, _notebook);
+			dlg(ObjectG.getDObject!(Widget)(page), x, y, _notebook);
 		}
 	}
 	
@@ -305,7 +305,7 @@ public class Notebook : Container
 	{
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageAddedListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(child), pageNum, _notebook);
+			dlg(ObjectG.getDObject!(Widget)(child), pageNum, _notebook);
 		}
 	}
 	
@@ -334,7 +334,7 @@ public class Notebook : Container
 	{
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(child), pageNum, _notebook);
+			dlg(ObjectG.getDObject!(Widget)(child), pageNum, _notebook);
 		}
 	}
 	
@@ -363,7 +363,7 @@ public class Notebook : Container
 	{
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; _notebook.onPageReorderedListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(child), pageNum, _notebook);
+			dlg(ObjectG.getDObject!(Widget)(child), pageNum, _notebook);
 		}
 	}
 	
@@ -755,7 +755,7 @@ public class Notebook : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -775,7 +775,7 @@ public class Notebook : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -807,7 +807,7 @@ public class Notebook : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -1235,7 +1235,7 @@ public class Notebook : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

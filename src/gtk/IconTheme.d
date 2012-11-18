@@ -239,7 +239,7 @@ public class IconTheme : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconTheme(cast(GtkIconTheme*) p);
+		return ObjectG.getDObject!(IconTheme)(cast(GtkIconTheme*) p);
 	}
 	
 	/**
@@ -266,7 +266,7 @@ public class IconTheme : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconTheme(cast(GtkIconTheme*) p);
+		return ObjectG.getDObject!(IconTheme)(cast(GtkIconTheme*) p);
 	}
 	
 	/**
@@ -408,7 +408,7 @@ public class IconTheme : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconInfo(cast(GtkIconInfo*) p);
+		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p);
 	}
 	
 	/**
@@ -437,7 +437,7 @@ public class IconTheme : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconInfo(cast(GtkIconInfo*) p);
+		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p);
 	}
 	
 	/**
@@ -462,7 +462,7 @@ public class IconTheme : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconInfo(cast(GtkIconInfo*) p);
+		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p);
 	}
 	
 	/**
@@ -504,7 +504,7 @@ public class IconTheme : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -523,7 +523,7 @@ public class IconTheme : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -548,7 +548,7 @@ public class IconTheme : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**

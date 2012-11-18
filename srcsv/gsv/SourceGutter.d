@@ -157,7 +157,7 @@ public class SourceGutter : ObjectG
 	{
 		foreach ( void delegate(CellRenderer, GtkTextIter*, GdkEvent*, SourceGutter) dlg ; _sourceGutter.onCellActivatedListeners )
 		{
-			dlg(ObjectG.getDObject!CellRenderer(renderer), iter, event, _sourceGutter);
+			dlg(ObjectG.getDObject!(CellRenderer)(renderer), iter, event, _sourceGutter);
 		}
 	}
 	
@@ -187,7 +187,7 @@ public class SourceGutter : ObjectG
 	{
 		foreach ( bool delegate(CellRenderer, GtkTextIter*, GtkTooltip*, SourceGutter) dlg ; _sourceGutter.onQueryTooltipListeners )
 		{
-			if ( dlg(ObjectG.getDObject!CellRenderer(renderer), iter, tooltip, _sourceGutter) )
+			if ( dlg(ObjectG.getDObject!(CellRenderer)(renderer), iter, tooltip, _sourceGutter) )
 			{
 				return 1;
 			}
@@ -213,7 +213,7 @@ public class SourceGutter : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**

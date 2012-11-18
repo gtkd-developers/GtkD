@@ -219,7 +219,7 @@ public class TextMark : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!TextBuffer(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
 	}
 	
 	/**

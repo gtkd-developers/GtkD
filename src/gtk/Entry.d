@@ -719,7 +719,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!EntryBuffer(cast(GtkEntryBuffer*) p);
+		return ObjectG.getDObject!(EntryBuffer)(cast(GtkEntryBuffer*) p);
 	}
 	
 	/**
@@ -895,7 +895,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Border(cast(GtkBorder*) p);
+		return ObjectG.getDObject!(Border)(cast(GtkBorder*) p);
 	}
 	
 	/**
@@ -1051,7 +1051,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -1162,7 +1162,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!EntryCompletion(cast(GtkEntryCompletion*) p);
+		return ObjectG.getDObject!(EntryCompletion)(cast(GtkEntryCompletion*) p);
 	}
 	
 	/**
@@ -1199,7 +1199,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Adjustment(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -1398,7 +1398,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1450,7 +1450,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Icon(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -1647,7 +1647,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1671,6 +1671,6 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 }

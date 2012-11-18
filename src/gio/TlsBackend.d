@@ -111,7 +111,7 @@ public class TlsBackend
 			return null;
 		}
 		
-		return ObjectG.getDObject!TlsBackend(cast(GTlsBackend*) p);
+		return ObjectG.getDObject!(TlsBackend)(cast(GTlsBackend*) p);
 	}
 	
 	/**

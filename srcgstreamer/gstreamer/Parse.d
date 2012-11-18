@@ -126,7 +126,7 @@ public class Parse
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 	
 	/**
@@ -156,7 +156,7 @@ public class Parse
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 	
 	/**
@@ -195,6 +195,6 @@ public class Parse
 			return null;
 		}
 		
-		return ObjectG.getDObject!Element(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 }

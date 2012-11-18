@@ -173,7 +173,7 @@ public class UnixFDMessage : SocketControlMessage
 			return null;
 		}
 		
-		return ObjectG.getDObject!UnixFDList(cast(GUnixFDList*) p);
+		return ObjectG.getDObject!(UnixFDList)(cast(GUnixFDList*) p);
 	}
 	
 	/**

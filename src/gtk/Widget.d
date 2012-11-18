@@ -739,7 +739,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( void delegate(ParamSpec, Widget) dlg ; _widget.onChildNotifyListeners )
 		{
-			dlg(ObjectG.getDObject!ParamSpec(pspec), _widget);
+			dlg(ObjectG.getDObject!(ParamSpec)(pspec), _widget);
 		}
 	}
 	
@@ -868,7 +868,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDamageListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
+			if ( dlg(ObjectG.getDObject!(Event)(event), _widget) )
 			{
 				return 1;
 			}
@@ -904,7 +904,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDeleteListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
+			if ( dlg(ObjectG.getDObject!(Event)(event), _widget) )
 			{
 				return 1;
 			}
@@ -942,7 +942,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( bool delegate(Event, Widget) dlg ; _widget.onDestroyEventListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
+			if ( dlg(ObjectG.getDObject!(Event)(event), _widget) )
 			{
 				return 1;
 			}
@@ -1361,7 +1361,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( bool delegate(Event, Widget) dlg ; _widget.onListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
+			if ( dlg(ObjectG.getDObject!(Event)(event), _widget) )
 			{
 				return 1;
 			}
@@ -1395,7 +1395,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( void delegate(Event, Widget) dlg ; _widget.onEventAfterListeners )
 		{
-			dlg(ObjectG.getDObject!Event(event), _widget);
+			dlg(ObjectG.getDObject!(Event)(event), _widget);
 		}
 	}
 	
@@ -1565,7 +1565,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( bool delegate(Event, Widget) dlg ; _widget.onGrabBrokenListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
+			if ( dlg(ObjectG.getDObject!(Event)(event), _widget) )
 			{
 				return 1;
 			}
@@ -1688,7 +1688,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( void delegate(Widget, Widget) dlg ; _widget.onHierarchyChangedListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(previousToplevel), _widget);
+			dlg(ObjectG.getDObject!(Widget)(previousToplevel), _widget);
 		}
 	}
 	
@@ -1885,7 +1885,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( bool delegate(Event, Widget) dlg ; _widget.onMapEventListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
+			if ( dlg(ObjectG.getDObject!(Event)(event), _widget) )
 			{
 				return 1;
 			}
@@ -2285,7 +2285,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( void delegate(Screen, Widget) dlg ; _widget.onScreenChangedListeners )
 		{
-			dlg(ObjectG.getDObject!Screen(previousScreen), _widget);
+			dlg(ObjectG.getDObject!(Screen)(previousScreen), _widget);
 		}
 	}
 	
@@ -2638,7 +2638,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( void delegate(Style, Widget) dlg ; _widget.onStyleSetListeners )
 		{
-			dlg(ObjectG.getDObject!Style(previousStyle), _widget);
+			dlg(ObjectG.getDObject!(Style)(previousStyle), _widget);
 		}
 	}
 	
@@ -2695,7 +2695,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		foreach ( bool delegate(Event, Widget) dlg ; _widget.onUnmapEventListeners )
 		{
-			if ( dlg(ObjectG.getDObject!Event(event), _widget) )
+			if ( dlg(ObjectG.getDObject!(Event)(event), _widget) )
 			{
 				return 1;
 			}
@@ -2853,7 +2853,7 @@ public class Widget : ObjectGtk, BuildableIF
 		
 		gtk_widget_destroyed(gtkWidget, &outwidgetPointer);
 		
-		widgetPointer = ObjectG.getDObject!Widget(outwidgetPointer);
+		widgetPointer = ObjectG.getDObject!(Widget)(outwidgetPointer);
 	}
 	
 	/**
@@ -3179,7 +3179,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -3399,7 +3399,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -3541,7 +3541,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -3568,7 +3568,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -3586,7 +3586,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -3617,7 +3617,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -3737,7 +3737,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -3802,7 +3802,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -3819,7 +3819,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Colormap(cast(GdkColormap*) p);
+		return ObjectG.getDObject!(Colormap)(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -3837,7 +3837,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Visual(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -4038,7 +4038,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!RcStyle(cast(GtkRcStyle*) p);
+		return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) p);
 	}
 	
 	/**
@@ -4172,7 +4172,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -4198,7 +4198,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgContext(cast(PangoContext*) p);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -4224,7 +4224,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -4256,7 +4256,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -4514,7 +4514,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -4538,7 +4538,7 @@ public class Widget : ObjectGtk, BuildableIF
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!ParamSpec(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
 		
 		return arr;
@@ -4565,7 +4565,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Region(cast(GdkRegion*) p);
+		return ObjectG.getDObject!(Region)(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -4673,7 +4673,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ObjectAtk(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -4764,7 +4764,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -4785,7 +4785,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Settings(cast(GtkSettings*) p);
+		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
 	}
 	
 	/**
@@ -4812,7 +4812,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Clipboard(cast(GtkClipboard*) p);
+		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
 	}
 	
 	/**
@@ -4835,7 +4835,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Display(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -4859,7 +4859,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Window(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -4883,7 +4883,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Screen(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -5040,7 +5040,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -5094,7 +5094,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Action(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -5304,7 +5304,7 @@ public class Widget : ObjectGtk, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixmap(cast(GdkPixmap*) p);
+		return ObjectG.getDObject!(Pixmap)(cast(GdkPixmap*) p);
 	}
 	
 	/**

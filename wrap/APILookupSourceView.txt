@@ -102,7 +102,7 @@ code: start
 			return null;
 		}
 
-		return ObjectG.getDObject!SourceBuffer( cast(GtkSourceBuffer*)p );
+		return ObjectG.getDObject!(SourceBuffer)( cast(GtkSourceBuffer*)p );
 	}
 code: end
 outFile: SourceView

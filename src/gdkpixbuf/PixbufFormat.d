@@ -183,7 +183,7 @@ public class PixbufFormat
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -201,7 +201,7 @@ public class PixbufFormat
 			return null;
 		}
 		
-		return ObjectG.getDObject!PixbufFormat(cast(GdkPixbufFormat*) p);
+		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p);
 	}
 	
 	/**
@@ -345,6 +345,6 @@ public class PixbufFormat
 			return null;
 		}
 		
-		return ObjectG.getDObject!PixbufFormat(cast(GdkPixbufFormat*) p);
+		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p);
 	}
 }

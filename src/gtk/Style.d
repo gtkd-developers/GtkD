@@ -238,7 +238,7 @@ public class Style : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -262,7 +262,7 @@ public class Style : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Style(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -334,7 +334,7 @@ public class Style : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -362,7 +362,7 @@ public class Style : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -384,7 +384,7 @@ public class Style : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**

@@ -752,7 +752,7 @@ public class Label : Misc
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgAttributeList(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 	
 	/**
@@ -830,7 +830,7 @@ public class Label : Misc
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgLayout(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -870,7 +870,7 @@ public class Label : Misc
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**

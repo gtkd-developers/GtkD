@@ -195,7 +195,7 @@ public class IconSet
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -255,7 +255,7 @@ public class IconSet
 			return null;
 		}
 		
-		return ObjectG.getDObject!IconSet(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -289,7 +289,7 @@ public class IconSet
 			return null;
 		}
 		
-		return ObjectG.getDObject!Pixbuf(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
 	/**

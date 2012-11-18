@@ -160,7 +160,7 @@ public class AccelGroup : ObjectG
 	{
 		foreach ( bool delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg ; _accelGroup.onAccelActivateListeners )
 		{
-			if ( dlg(ObjectG.getDObject!ObjectG(acceleratable), keyval, modifier, _accelGroup) )
+			if ( dlg(ObjectG.getDObject!(ObjectG)(acceleratable), keyval, modifier, _accelGroup) )
 			{
 				return 1;
 			}
@@ -199,7 +199,7 @@ public class AccelGroup : ObjectG
 	{
 		foreach ( void delegate(guint, GdkModifierType, Closure, AccelGroup) dlg ; _accelGroup.onAccelChangedListeners )
 		{
-			dlg(keyval, modifier, ObjectG.getDObject!Closure(accelClosure), _accelGroup);
+			dlg(keyval, modifier, ObjectG.getDObject!(Closure)(accelClosure), _accelGroup);
 		}
 	}
 	
@@ -382,7 +382,7 @@ public class AccelGroup : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!AccelGroup(cast(GtkAccelGroup*) p);
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -430,7 +430,7 @@ public class AccelGroup : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**

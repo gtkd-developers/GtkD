@@ -178,7 +178,7 @@ public class Closure
 			return null;
 		}
 		
-		return ObjectG.getDObject!Closure(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 	
 	/**

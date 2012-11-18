@@ -158,7 +158,7 @@ public class FileAttributeMatcher : Boxed
 			return null;
 		}
 		
-		return ObjectG.getDObject!FileAttributeMatcher(cast(GFileAttributeMatcher*) p);
+		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p);
 	}
 	
 	/**

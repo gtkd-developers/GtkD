@@ -145,7 +145,7 @@ public class SocketControlMessage : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!SocketControlMessage(cast(GSocketControlMessage*) p);
+		return ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) p);
 	}
 	
 	/**

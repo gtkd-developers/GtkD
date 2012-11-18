@@ -132,7 +132,7 @@ public class PgTabArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!PgTabArray(cast(PangoTabArray*) p);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
 	}
 	
 	/**

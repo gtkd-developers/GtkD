@@ -189,7 +189,7 @@ public class PrintUnixDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!PageSetup(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class PrintUnixDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!PrintSettings(cast(GtkPrintSettings*) p);
+		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p);
 	}
 	
 	/**
@@ -266,7 +266,7 @@ public class PrintUnixDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!Printer(cast(GtkPrinter*) p);
+		return ObjectG.getDObject!(Printer)(cast(GtkPrinter*) p);
 	}
 	
 	/**

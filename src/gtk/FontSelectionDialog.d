@@ -175,7 +175,7 @@ public class FontSelectionDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!Font(cast(GdkFont*) p);
+		return ObjectG.getDObject!(Font)(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public class FontSelectionDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -262,7 +262,7 @@ public class FontSelectionDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -280,6 +280,6 @@ public class FontSelectionDialog : Dialog
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 }

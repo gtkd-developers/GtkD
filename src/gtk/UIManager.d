@@ -323,7 +323,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Widget, UIManager) dlg ; _uIManager.onAddWidgetListeners )
 		{
-			dlg(ObjectG.getDObject!Widget(widget), _uIManager);
+			dlg(ObjectG.getDObject!(Widget)(widget), _uIManager);
 		}
 	}
 	
@@ -355,7 +355,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onConnectProxyListeners )
 		{
-			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _uIManager);
+			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _uIManager);
 		}
 	}
 	
@@ -384,7 +384,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onDisconnectProxyListeners )
 		{
-			dlg(ObjectG.getDObject!Action(action), ObjectG.getDObject!Widget(proxy), _uIManager);
+			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _uIManager);
 		}
 	}
 	
@@ -415,7 +415,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPostActivateListeners )
 		{
-			dlg(ObjectG.getDObject!Action(action), _uIManager);
+			dlg(ObjectG.getDObject!(Action)(action), _uIManager);
 		}
 	}
 	
@@ -448,7 +448,7 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPreActivateListeners )
 		{
-			dlg(ObjectG.getDObject!Action(action), _uIManager);
+			dlg(ObjectG.getDObject!(Action)(action), _uIManager);
 		}
 	}
 	
@@ -539,7 +539,7 @@ public class UIManager : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListG(cast(GList*) p);
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
 	}
 	
 	/**
@@ -557,7 +557,7 @@ public class UIManager : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!AccelGroup(cast(GtkAccelGroup*) p);
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -587,7 +587,7 @@ public class UIManager : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Widget(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -609,7 +609,7 @@ public class UIManager : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!ListSG(cast(GSList*) p);
+		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
 	}
 	
 	/**
@@ -630,7 +630,7 @@ public class UIManager : ObjectG, BuildableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!Action(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
 	}
 	
 	/**

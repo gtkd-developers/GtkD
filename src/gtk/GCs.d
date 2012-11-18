@@ -107,7 +107,7 @@ public class GCs
 			return null;
 		}
 		
-		return ObjectG.getDObject!GC(cast(GdkGC*) p);
+		return ObjectG.getDObject!(GC)(cast(GdkGC*) p);
 	}
 	
 	/**
