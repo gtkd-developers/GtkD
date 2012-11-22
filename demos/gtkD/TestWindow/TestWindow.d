@@ -250,7 +250,7 @@ class TestWindow : MainWindow
 		testDialogs(notebook);
 		testViewport(notebook);
 
-		version(Win32)
+		version(Windows)
 		{
 			// todo - threads are still broken on windows
 		}
@@ -1223,7 +1223,7 @@ void main(string[] args)
 	Linker.dumpLoadLibraries();
 	Linker.dumpFailedLoads();
 
-	version(Win32)
+	version(Windows)
 	{
 		// todo threads are still broken on windows...
 		Main.init(args);
