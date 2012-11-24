@@ -204,9 +204,9 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_module_supported, \"g_module_supported\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_build_path, \"g_module_build_path\", LIBRARY.GLIB, LIBRARY.GMODULE);
-	Linker.link(g_module_open, \"g_module_open\", LIBRARY.GLIB, LIBRARY.GMODULE);
+	Linker.link(g_module_open, \"g_module_open"~ _utfPostfix ~"\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_symbol, \"g_module_symbol\", LIBRARY.GLIB, LIBRARY.GMODULE);
-	Linker.link(g_module_name, \"g_module_name\", LIBRARY.GLIB, LIBRARY.GMODULE);
+	Linker.link(g_module_name, \"g_module_name"~ _utfPostfix ~"\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_make_resident, \"g_module_make_resident\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_close, \"g_module_close\", LIBRARY.GLIB, LIBRARY.GMODULE);
 	Linker.link(g_module_error, \"g_module_error\", LIBRARY.GLIB, LIBRARY.GMODULE);

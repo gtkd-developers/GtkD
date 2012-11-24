@@ -895,6 +895,15 @@ public class GtkWrapper : WrapperIF
 				else
 					return library;
 			}
+			
+			string getUtfPostfix(string funct)
+			{
+				if ( funct == "g_module_open" ||
+					funct == "g_module_name" )
+					return "\"~ _utfPostfix ~\"";
+					
+				return "";
+			}
 
 			//Generate the static this, where the linking takes place
 			foreach ( string declaration; declarations )
@@ -921,7 +930,7 @@ public class GtkWrapper : WrapperIF
 						string functName = std.string.strip(dec[pos+1..$]);
 						if ( functName.length > 0 )
 						{
-							externalText ~= "Linker.link("~ functName ~", \\\""~ functName ~"\\\", "~ getLibrary(functName) ~");";
+							externalText ~= "Linker.link("~ functName ~", \\\""~ functName ~ getUtfPostfix(functName) ~"\\\", "~ getLibrary(functName) ~");";
 						}
 					}
 					externalText ~= '\n';

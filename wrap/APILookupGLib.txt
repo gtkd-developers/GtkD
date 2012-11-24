@@ -86,11 +86,21 @@ version(D_Version2)
 {
 	mixin("enum _shared = \"shared \";");
 	mixin("enum gshared = \"__gshared \";");
+
+	version( Windows )
+		mixin("enum _utfPostfix = \"_utf8\";");
+	else
+		mixin("enum _utfPostfix = \"_utf8\";");
 }
 else
 {
 	const char[] _shared = "";
 	const char[] gshared = "";
+
+	version( Windows )
+		const char[] _utfPostfix = "_utf8";
+	else
+		const char[] _utfPostfix = "";
 }
 
 version (Windows)
