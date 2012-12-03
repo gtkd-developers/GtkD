@@ -259,7 +259,7 @@ gtkdgda-$(MAJOR).pc:
 gstreamerd-1.pc:
 	echo Name: GstreamerD > $@
 	echo Description: A D binding and OO wrapper for Gstreamer. >> $@
-	echo Version: 1.6.0 >> $@
+	echo Version: 1.7.0 >> $@
 	echo Libs: $(LINKERFLAG)-lgstreamerd-1 >> $@
 #	echo Requires: gtkd-$(MAJOR) >> $@
 
@@ -305,8 +305,8 @@ install-shared-gda: $(SONAME_GTKDGDA) install-shared-gtkd
 	$(install-so)
 
 install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
-	install -m 755 $< $(DESTDIR)$(prefix)/$(libdir)/$<.$(SO_VERSION).6.0
-	cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION).6.0 $<.$(SO_VERSION)
+	install -m 755 $< $(DESTDIR)$(prefix)/$(libdir)/$<.$(SO_VERSION).7.0
+	cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION).7.0 $<.$(SO_VERSION)
 	cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION) $<
 
 install-headers-gtkd: gtkd-$(MAJOR).pc install-headers-gtkd
@@ -369,7 +369,7 @@ uninstall-gstreamer:
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION).6.0
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION).7.0
 
 clean:
 	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       gtkd-$(MAJOR).pc     $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
