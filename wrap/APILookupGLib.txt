@@ -225,7 +225,7 @@ array: g_poll fds nfds
 code: start
 	~this()
 	{
-		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		if ( Linker.isLoaded(LIBRARY.GLIB) )
 		{
 			unref();
 		}
@@ -666,7 +666,7 @@ nocode: g_io_channel_read_to_end
 code: start
 	~this()
 	{
-		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		if ( Linker.isLoaded(LIBRARY.GLIB) )
 		{
 			unref();
 		}

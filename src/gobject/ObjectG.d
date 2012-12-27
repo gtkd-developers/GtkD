@@ -226,7 +226,7 @@ public class ObjectG
 	
 	~this()
 	{
-		if ( importLibs[LIBRARY.GOBJECT] in Linker.loadedLibraries && gObject !is null )
+		if ( Linker.isLoaded(LIBRARY.GOBJECT) && gObject !is null )
 		{
 			unref();
 		}

@@ -158,7 +158,7 @@ public class Context
 	
 	~this ()
 	{
-		if ( importLibs[LIBRARY.CAIRO] in Linker.loadedLibraries && cairo !is null )
+		if ( Linker.isLoaded(LIBRARY.CAIRO) && cairo !is null )
 		{
 			cairo_destroy(cairo);
 		}

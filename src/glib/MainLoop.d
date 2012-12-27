@@ -169,7 +169,7 @@ public class MainLoop
 	
 	~this()
 	{
-		if ( importLibs[LIBRARY.GLIB] in Linker.loadedLibraries )
+		if ( Linker.isLoaded(LIBRARY.GLIB) )
 		{
 			unref();
 		}
