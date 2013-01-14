@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_tls_certificate_new_from_file
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -169,35 +170,6 @@ public class TlsCertificate : ObjectG
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_tls_certificate_new_from_pem(cast(char*)data.ptr, cast(int) data.length, &err)");
-		}
-		this(cast(GTlsCertificate*) p);
-	}
-	
-	/**
-	 * Creates a GTlsCertificate from the PEM-encoded data in file. If
-	 * file cannot be read or parsed, the function will return NULL and
-	 * set error. Otherwise, this behaves like g_tls_certificate_new().
-	 * Since 2.28
-	 * Params:
-	 * file = file containing a PEM-encoded certificate to import
-	 * Throws: GException on failure.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string file)
-	{
-		// GTlsCertificate * g_tls_certificate_new_from_file (const gchar *file,  GError **error);
-		GError* err = null;
-		
-		auto p = g_tls_certificate_new_from_file(Str.toStringz(file), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_tls_certificate_new_from_file(Str.toStringz(file), &err)");
 		}
 		this(cast(GTlsCertificate*) p);
 	}

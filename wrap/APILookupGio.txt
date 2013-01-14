@@ -1646,6 +1646,9 @@ structWrap: GList* ListG
 structWrap: GSocketConnectable* SocketConnectableIF
 structWrap: GTlsCertificate* TlsCertificate
 array: g_tls_certificate_new_from_pem data length
+
+#conflicts with: g_tls_certificate_new_from_pem
+nocode: g_tls_certificate_new_from_file
 openFile: TlsCertificate
 
 file: gio-TLS-Overview.html
