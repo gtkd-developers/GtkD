@@ -97,7 +97,7 @@ version (Windows)
 		//Phobos defines this function in std.c.stdio
 		extern (C) FILE*  fdopen(int, char*);
 	}
-	version(D_Version2)
+	version(D_Version2) version(Win64)
 	{
 		private import core.stdc.stdio;
 		
