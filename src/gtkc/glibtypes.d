@@ -85,7 +85,7 @@ version(D_Version2)
 	version( Windows )
 	mixin("enum _utfPostfix = \"_utf8\";");
 	else
-	mixin("enum _utfPostfix = \"_utf8\";");
+	mixin("enum _utfPostfix = \"\";");
 }
 else
 {
