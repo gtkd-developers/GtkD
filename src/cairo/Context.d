@@ -42,6 +42,7 @@
  * omit prefixes:
  * omit code:
  * 	- cairo_destroy
+ * 	- cairo_create
  * omit signals:
  * imports:
  * 	- cairo.FontFace
@@ -117,12 +118,18 @@ public class Context
 		return cast(void*)cairo;
 	}
 	
+	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (cairo_t* cairo)
+	public this (cairo_t* cairo, bool ownedRef = false)
 	{
 		this.cairo = cairo;
+		
+		if ( !ownedRef )
+		{
+			cairo_reference(this.cairo);
+		}
 	}
 	
 	~this ()
@@ -195,6 +202,36 @@ public class Context
 	}
 	
 	/**
+	 * Creates a new context with all graphics state parameters set to
+	 * default values and with target as a target surface.
+	 *
+	 * Since 1.0
+	 * Params:
+	 *     target = target surface for the context
+	 *
+	 * Returns:
+	 *    a newly allocated context. This function never returns null.
+	 *    If memory cannot be allocated, a special context will be returned
+	 *    on which status() returns CairoStatus.NO_MEMORY.
+	 *    If you attempt to target a surface which does not support writing
+	 *    (such as cairo_mime_surface_t) then a CairoStatus.WRITE_ERROR will
+	 *    be raised. You can use this object normally, but no drawing will
+	 *    be done.
+	 */
+	public static Context create(Surface target)
+	{
+		// cairo_t * cairo_create (cairo_surface_t *target);
+		auto p = cairo_create((target is null) ? null : target.getSurfaceStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new Context(cast(cairo_t*) p, true);
+	}
+	
+	/**
 	 * Description
 	 * Paths are the most basic drawing tools and are primarily used to implicitly
 	 * generate simple masks.
@@ -228,34 +265,6 @@ public class Context
 	 * the pangocairo that is part of the Pango text layout and rendering library.
 	 * Pango is available from http://www.pango.org/.
 	 */
-	
-	/**
-	 * Creates a new cairo_t with all graphics state parameters set to
-	 * default values and with target as a target surface. The target
-	 * surface should be constructed with a backend-specific function such
-	 * as cairo_image_surface_create() (or any other
-	 * cairo_backend_surface_create()
-	 * variant).
-	 * This function references target, so you can immediately
-	 * call cairo_surface_destroy() on it if you don't need to
-	 * maintain a separate reference to it.
-	 * Since 1.0
-	 * Params:
-	 * target = target surface for the context
-	 * Returns: a newly allocated cairo_t with a reference count of 1. The initial reference count should be released with cairo_destroy() when you are done using the cairo_t. This function never returns NULL. If memory cannot be allocated, a special cairo_t object will be returned on which cairo_status() returns CAIRO_STATUS_NO_MEMORY. If you attempt to target a surface which does not support writing (such as cairo_mime_surface_t) then a CAIRO_STATUS_WRITE_ERROR will be raised. You can use this object normally, but no drawing will be done.
-	 */
-	public static Context create(Surface target)
-	{
-		// cairo_t * cairo_create (cairo_surface_t *target);
-		auto p = cairo_create((target is null) ? null : target.getSurfaceStruct());
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new Context(cast(cairo_t*) p);
-	}
 	
 	/**
 	 * Increases the reference count on cr by one. This prevents

@@ -571,7 +571,7 @@ public class GtkDClass
 						text ~= "}";
 					}
 					text ~= "";
-					if ( "GObject" != convParms.strct )
+					if ( "GObject" != convParms.strct && "cairo_t" != convParms.strct )
 					{
 						// GObject has a specific constructor for the struct
 						if ( !convParms.isInterface )
