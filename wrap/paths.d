@@ -166,44 +166,15 @@ version(Windows)
 
 		libPath = GetEnvironmentVariable("GTK_BASEPATH");
 
-		if ( libPath.length > 0 )
+		if ( libPath.length > 5 )
 		{
-			if ( libPath.length > 5 && libPath[$-5..$] == "\\bin\\" )
+			if ( libPath[$-5..$] == "\\bin\\" )
 				return libPath;
+			else if ( libPath[$-4..$] == "\\bin" )
+				return libPath ~ "\\";
 			else
 				return libPath ~ "\\bin\\";
 		}
-
-/* Throws an Access Violation with DMD 2.*
-		// version(Phobos)
-		version(Tango){} else
-		{
-			// When using phobos Also try the Register
-
-			Key k = Registry.localMachine();
-
-			debug(register) foreach ( Key key ; k.keys() )
-			{
-				writefln("key = ", key.name());
-			}
-
-			try
-			{
-				k = k.getKey("SOFTWARE");
-				//writefln("key.value = %s", k.name());
-				k = k.getKey("GTK");
-				//writefln("key.value = %s", k.name());
-				k = k.getKey("2.0");
-				//writefln("key.value = %s", k.name());
-				Value v = k.getValue("DllPath");
-				libPath = v.value_SZ() ~ "\\";
-			}
-			catch ( Exception e )
-			{
-				libPath = "";
-			}
-		}
-*/
 
 		// Returns the found location or an empty string
 		// to load the libraries from the path.
