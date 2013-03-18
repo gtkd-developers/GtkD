@@ -80,32 +80,16 @@ private import gstreamer.TagList;
  * need to do is watch for tag messages on your pipeline's bus. This
  * interface is only for setting metadata, not for extracting it. To set tags
  * from the application, find tagsetter elements and set tags using e.g.
- * gst_tag_setter_merge_tags() or gst_tag_setter_add_tags(). The application
- * should do that before the element goes to GST_STATE_PAUSED.
+ * gst_tag_setter_merge_tags() or gst_tag_setter_add_tags(). Also consider
+ * setting the GstTagMergeMode that is used for tag events that arrive at the
+ * tagsetter element (default mode is to keep existing tags).
+ * The application should do that before the element goes to GST_STATE_PAUSED.
  *
  * Elements implementing the GstTagSetter interface often have to merge
  * any tags received from upstream and the tags set by the application via
  * the interface. This can be done like this:
  *
- * GstTagMergeMode merge_mode;
- * const GstTagList *application_tags;
- * const GstTagList *event_tags;
- * GstTagSetter *tagsetter;
- * GstTagList *result;
- *
- * tagsetter = GST_TAG_SETTER (element);
- *
- * merge_mode = gst_tag_setter_get_tag_merge_mode (tagsetter);
- * tagsetter_tags = gst_tag_setter_get_tag_list (tagsetter);
- * event_tags = (const GstTagList *) element->event_tags;
- *
- * GST_LOG_OBJECT (tagsetter, "merging tags, merge mode = %d", merge_mode);
- * GST_LOG_OBJECT (tagsetter, "event tags: %" GST_PTR_FORMAT, event_tags);
- * GST_LOG_OBJECT (tagsetter, "set tags: %" GST_PTR_FORMAT, application_tags);
- *
- * result = gst_tag_list_merge (application_tags, event_tags, merge_mode);
- *
- * GST_LOG_OBJECT (tagsetter, "final tags: %" GST_PTR_FORMAT, result);
+ * $(DDOC_COMMENT example)
  *
  * Last reviewed on 2006-05-18 (0.10.6)
  */
@@ -140,6 +124,16 @@ public class TagSetter
 	 */
 	
 	/**
+	 * Reset the internal taglist. Elements should call this from within the
+	 * state-change handler.
+	 */
+	public void resetTags()
+	{
+		// void gst_tag_setter_reset_tags (GstTagSetter *setter);
+		gst_tag_setter_reset_tags(gstTagSetter);
+	}
+	
+	/**
 	 * Merges the given list into the setter's list using the given mode.
 	 * Params:
 	 * list = a tag list to merge from
@@ -149,6 +143,19 @@ public class TagSetter
 	{
 		// void gst_tag_setter_merge_tags (GstTagSetter *setter,  const GstTagList *list,  GstTagMergeMode mode);
 		gst_tag_setter_merge_tags(gstTagSetter, (list is null) ? null : list.getTagListStruct(), mode);
+	}
+	
+	/**
+	 * Adds the given tag / GValue pair on the setter using the given merge mode.
+	 * Params:
+	 * mode = the mode to use
+	 * tag = tag to set
+	 * value = GValue to set for the tag
+	 */
+	public void addTagValue(GstTagMergeMode mode, string tag, GValue* value)
+	{
+		// void gst_tag_setter_add_tag_value (GstTagSetter *setter,  GstTagMergeMode mode,  const gchar *tag,  const GValue *value);
+		gst_tag_setter_add_tag_value(gstTagSetter, mode, Str.toStringz(tag), value);
 	}
 	
 	/**
@@ -182,11 +189,12 @@ public class TagSetter
 	/**
 	 * Returns the current list of tags the setter uses. The list should not be
 	 * modified or freed.
-	 * Returns: a current snapshot of the taglist used in the setter or NULL if none is used.
+	 * This function is not thread-safe.
+	 * Returns: a current snapshot of the taglist used in the setter or NULL if none is used. [transfer none]
 	 */
 	public TagList getTagList()
 	{
-		// const GstTagList* gst_tag_setter_get_tag_list (GstTagSetter *setter);
+		// const GstTagList * gst_tag_setter_get_tag_list (GstTagSetter *setter);
 		auto p = gst_tag_setter_get_tag_list(gstTagSetter);
 		
 		if(p is null)

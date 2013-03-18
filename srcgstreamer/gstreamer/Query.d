@@ -78,19 +78,19 @@ private import gstreamer.Structure;
 
 
 /**
- * GstQuery functions are used to register a new query types to the gstreamer
- * core.
- * Query types can be used to perform queries on pads and elements.
+ * Queries can be performed on pads (gst_pad_query()) and elements
+ * (gst_element_query()). Please note that some queries might need a running
+ * pipeline to work.
  *
- * Queries can be created using the gst_query_new_xxx() functions.
- * Query values can be set using gst_query_set_xxx(), and parsed using
- * gst_query_parse_xxx() helpers.
+ * Queries can be created using the gst_query_new_*() functions.
+ * Query values can be set using gst_query_set_*(), and parsed using
+ * gst_query_parse_*() helpers.
  *
  * The following example shows how to query the duration of a pipeline:
  *
  * $(DDOC_COMMENT example)
  *
- * Last reviewed on 2006-02-14 (0.10.4)
+ * Last reviewed on 2012-03-29 (0.11.3)
  */
 public class Query
 {
@@ -222,101 +222,127 @@ public class Query
 	 */
 	
 	/**
+	 * Gets the GstQueryTypeFlags associated with type.
+	 * Params:
+	 * type = a GstQueryType
+	 * Returns: a GstQueryTypeFlags.
+	 */
+	public static GstQueryTypeFlags typeGetFlags(GstQueryType type)
+	{
+		// GstQueryTypeFlags gst_query_type_get_flags (GstQueryType type);
+		return gst_query_type_get_flags(type);
+	}
+	
+	/**
 	 * Get a printable name for the given query type. Do not modify or free.
 	 * Params:
-	 * query = the query type
+	 * type = the query type
 	 * Returns: a reference to the static name of the query.
 	 */
-	public static string typeGetName(GstQueryType query)
+	public static string typeGetName(GstQueryType type)
 	{
-		// const gchar* gst_query_type_get_name (GstQueryType query);
-		return Str.toString(gst_query_type_get_name(query));
+		// const gchar * gst_query_type_get_name (GstQueryType type);
+		return Str.toString(gst_query_type_get_name(type));
 	}
 	
 	/**
 	 * Get the unique quark for the given query type.
 	 * Params:
-	 * query = the query type
+	 * type = the query type
 	 * Returns: the quark associated with the query type
 	 */
-	public static GQuark typeToQuark(GstQueryType query)
+	public static GQuark typeToQuark(GstQueryType type)
 	{
-		// GQuark gst_query_type_to_quark (GstQueryType query);
-		return gst_query_type_to_quark(query);
+		// GQuark gst_query_type_to_quark (GstQueryType type);
+		return gst_query_type_to_quark(type);
 	}
 	
 	/**
-	 * Create a new GstQueryType based on the nick or return an
-	 * already registered query with that nick
-	 * Params:
-	 * nick = The nick of the new query
-	 * description = The description of the new query
-	 * Returns: A new GstQueryType or an already registered query with the same nick.
+	 * Increases the refcount of the given query by one.
+	 * Returns: q
 	 */
-	public static GstQueryType typeRegister(string nick, string description)
+	public Query doref()
 	{
-		// GstQueryType gst_query_type_register (const gchar *nick,  const gchar *description);
-		return gst_query_type_register(Str.toStringz(nick), Str.toStringz(description));
-	}
-	
-	/**
-	 * Get the query type registered with nick.
-	 * Params:
-	 * nick = The nick of the query
-	 * Returns: The query registered with nick or GST_QUERY_NONE if the query was not registered.
-	 */
-	public static GstQueryType typeGetByNick(string nick)
-	{
-		// GstQueryType gst_query_type_get_by_nick (const gchar *nick);
-		return gst_query_type_get_by_nick(Str.toStringz(nick));
-	}
-	
-	/**
-	 * See if the given GstQueryType is inside the types query types array.
-	 * Params:
-	 * types = The query array to search
-	 * type = the GstQueryType to find
-	 * Returns: TRUE if the type is found inside the array
-	 */
-	public static int typesContains(GstQueryType* types, GstQueryType type)
-	{
-		// gboolean gst_query_types_contains (const GstQueryType *types,  GstQueryType type);
-		return gst_query_types_contains(types, type);
-	}
-	
-	/**
-	 * Get details about the given GstQueryType.
-	 * Params:
-	 * type = a GstQueryType
-	 * Returns: The GstQueryTypeDefinition for type or NULL on failure.
-	 */
-	public static GstQueryTypeDefinition* typeGetDetails(GstQueryType type)
-	{
-		// const GstQueryTypeDefinition* gst_query_type_get_details  (GstQueryType type);
-		return gst_query_type_get_details(type);
-	}
-	
-	/**
-	 * Get a GstIterator of all the registered query types. The definitions
-	 * iterated over are read only.
-	 * Returns: A GstIterator of GstQueryTypeDefinition.
-	 */
-	public static Iterator typeIterateDefinitions()
-	{
-		// GstIterator* gst_query_type_iterate_definitions (void);
-		auto p = gst_query_type_iterate_definitions();
+		// GstQuery * gst_query_ref (GstQuery *q);
+		auto p = gst_query_ref(gstQuery);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Query)(cast(GstQuery*) p);
 	}
 	
 	/**
-	 * Constructs a new custom application query object. Use gst_query_unref()
+	 * Decreases the refcount of the query. If the refcount reaches 0, the query
+	 * will be freed.
+	 */
+	public void unref()
+	{
+		// void gst_query_unref (GstQuery *q);
+		gst_query_unref(gstQuery);
+	}
+	
+	/**
+	 * Copies the given query using the copy function of the parent GstStructure.
+	 * Free-function: gst_query_unref
+	 * Returns: a new copy of q. [transfer full]
+	 */
+	public Query copy()
+	{
+		// GstQuery * gst_query_copy (const GstQuery *q);
+		auto p = gst_query_copy(gstQuery);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Query)(cast(GstQuery*) p);
+	}
+	
+	/**
+	 * Modifies a pointer to a GstQuery to point to a different GstQuery. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * query is unreffed, the new one is reffed).
+	 * Either new_query or the GstQuery pointed to by old_query may be NULL.
+	 * Params:
+	 * oldQuery = pointer to a pointer to a GstQuery
+	 * to be replaced. [inout][transfer full]
+	 * newQuery = pointer to a GstQuery that will
+	 * replace the query pointed to by old_query. [allow-none][transfer none]
+	 * Returns: TRUE if new_query was different from old_query
+	 */
+	public static int replace(GstQuery** oldQuery, Query newQuery)
+	{
+		// gboolean gst_query_replace (GstQuery **old_query,  GstQuery *new_query);
+		return gst_query_replace(oldQuery, (newQuery is null) ? null : newQuery.getQueryStruct());
+	}
+	
+	/**
+	 * Get the structure of a query. This method should be called with a writable
+	 * query so that the returned structure is guranteed to be writable.
+	 * Returns: the GstStructure of the query. The structure is still owned by the query and will therefore be freed when the query is unreffed. [transfer none]
+	 */
+	public Structure writableStructure()
+	{
+		// GstStructure * gst_query_writable_structure (GstQuery *query);
+		auto p = gst_query_writable_structure(gstQuery);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+	}
+	
+	/**
+	 * Constructs a new custom query object. Use gst_query_unref()
 	 * when done with it.
+	 * Free-function: gst_query_unref
 	 * Params:
 	 * type = the query type
 	 * structure = a structure for the query
@@ -324,22 +350,22 @@ public class Query
 	 */
 	public this (GstQueryType type, Structure structure)
 	{
-		// GstQuery* gst_query_new_application (GstQueryType type,  GstStructure *structure);
-		auto p = gst_query_new_application(type, (structure is null) ? null : structure.getStructureStruct());
+		// GstQuery * gst_query_new_custom (GstQueryType type,  GstStructure *structure);
+		auto p = gst_query_new_custom(type, (structure is null) ? null : structure.getStructureStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_query_new_application(type, (structure is null) ? null : structure.getStructureStruct())");
+			throw new ConstructionException("null returned by gst_query_new_custom(type, (structure is null) ? null : structure.getStructureStruct())");
 		}
 		this(cast(GstQuery*) p);
 	}
 	
 	/**
 	 * Get the structure of a query.
-	 * Returns: The GstStructure of the query. The structure is still owned by the query and will therefore be freed when the query is unreffed.
+	 * Returns: the GstStructure of the query. The structure is still owned by the query and will therefore be freed when the query is unreffed. [transfer none]
 	 */
 	public Structure getStructure()
 	{
-		// GstStructure* gst_query_get_structure (GstQuery *query);
+		// const GstStructure * gst_query_get_structure (GstQuery *query);
 		auto p = gst_query_get_structure(gstQuery);
 		
 		if(p is null)
@@ -354,6 +380,7 @@ public class Query
 	 * Constructs a new convert query object. Use gst_query_unref()
 	 * when done with it. A convert query is used to ask for a conversion between
 	 * one format and another.
+	 * Free-function: gst_query_unref
 	 * Params:
 	 * srcFormat = the source GstFormat for the new query
 	 * value = the value to convert
@@ -362,7 +389,7 @@ public class Query
 	 */
 	public this (GstFormat srcFormat, long value, GstFormat destFormat)
 	{
-		// GstQuery* gst_query_new_convert (GstFormat src_format,  gint64 value,  GstFormat dest_format);
+		// GstQuery * gst_query_new_convert (GstFormat src_format,  gint64 value,  GstFormat dest_format);
 		auto p = gst_query_new_convert(srcFormat, value, destFormat);
 		if(p is null)
 		{
@@ -389,10 +416,13 @@ public class Query
 	 * Parse a convert query answer. Any of src_format, src_value, dest_format,
 	 * and dest_value may be NULL, in which case that value is omitted.
 	 * Params:
-	 * srcFormat = the storage for the GstFormat of the source value, or NULL
-	 * srcValue = the storage for the source value, or NULL
-	 * destFormat = the storage for the GstFormat of the destination value, or NULL
-	 * destValue = the storage for the destination value, or NULL
+	 * srcFormat = the storage for the GstFormat of the
+	 * source value, or NULL. [out][allow-none]
+	 * srcValue = the storage for the source value, or NULL. [out][allow-none]
+	 * destFormat = the storage for the GstFormat of the
+	 * destination value, or NULL. [out][allow-none]
+	 * destValue = the storage for the destination value,
+	 * or NULL. [out][allow-none]
 	 */
 	public void parseConvert(ref GstFormat srcFormat, ref long srcValue, ref GstFormat destFormat, ref long destValue)
 	{
@@ -416,8 +446,9 @@ public class Query
 	 * Parse a position query, writing the format into format, and the position
 	 * into cur, if the respective parameters are non-NULL.
 	 * Params:
-	 * format = the storage for the GstFormat of the position values (may be NULL)
-	 * cur = the storage for the current position (may be NULL)
+	 * format = the storage for the GstFormat of the
+	 * position values (may be NULL). [out][allow-none]
+	 * cur = the storage for the current position (may be NULL). [out][allow-none]
 	 */
 	public void parsePosition(ref GstFormat format, ref long cur)
 	{
@@ -441,8 +472,9 @@ public class Query
 	 * Parse a duration query answer. Write the format of the duration into format,
 	 * and the value into duration, if the respective variables are non-NULL.
 	 * Params:
-	 * format = the storage for the GstFormat of the duration value, or NULL.
-	 * duration = the storage for the total duration, or NULL.
+	 * format = the storage for the GstFormat of the duration
+	 * value, or NULL. [out][allow-none]
+	 * duration = the storage for the total duration, or NULL. [out][allow-none]
 	 */
 	public void parseDuration(ref GstFormat format, ref long duration)
 	{
@@ -455,11 +487,12 @@ public class Query
 	 * Use gst_query_unref() when done with it. A latency query is usually performed
 	 * by sinks to compensate for additional latency introduced by elements in the
 	 * pipeline.
+	 * Free-function: gst_query_unref
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
-		// GstQuery* gst_query_new_latency (void);
+		// GstQuery * gst_query_new_latency (void);
 		auto p = gst_query_new_latency();
 		if(p is null)
 		{
@@ -471,10 +504,9 @@ public class Query
 	/**
 	 * Parse a latency query answer.
 	 * Params:
-	 * live = storage for live or NULL
-	 * minLatency = the storage for the min latency or NULL
-	 * maxLatency = the storage for the max latency or NULL
-	 * Since 0.10.12
+	 * live = storage for live or NULL. [out][allow-none]
+	 * minLatency = the storage for the min latency or NULL. [out][allow-none]
+	 * maxLatency = the storage for the max latency or NULL. [out][allow-none]
 	 */
 	public void parseLatency(ref int live, ref GstClockTime minLatency, ref GstClockTime maxLatency)
 	{
@@ -486,9 +518,8 @@ public class Query
 	 * Answer a latency query by setting the requested values in the given format.
 	 * Params:
 	 * live = if there is a live element upstream
-	 * minLatency = the minimal latency of the live element
-	 * maxLatency = the maximal latency of the live element
-	 * Since 0.10.12
+	 * minLatency = the minimal latency of the upstream elements
+	 * maxLatency = the maximal latency of the upstream elements
 	 */
 	public void setLatency(int live, GstClockTime minLatency, GstClockTime maxLatency)
 	{
@@ -515,10 +546,11 @@ public class Query
 	 * other results into the passed parameters, if the respective parameters
 	 * are non-NULL
 	 * Params:
-	 * format = the format to set for the segment_start and segment_end values
-	 * seekable = the seekable flag to set
-	 * segmentStart = the segment_start to set
-	 * segmentEnd = the segment_end to set
+	 * format = the format to set for the segment_start
+	 * and segment_end values, or NULL. [out][allow-none]
+	 * seekable = the seekable flag to set, or NULL. [out][allow-none]
+	 * segmentStart = the segment_start to set, or NULL. [out][allow-none]
+	 * segmentEnd = the segment_end to set, or NULL. [out][allow-none]
 	 */
 	public void parseSeeking(ref GstFormat format, ref int seekable, ref long segmentStart, ref long segmentEnd)
 	{
@@ -530,25 +562,24 @@ public class Query
 	 * Set the formats query result fields in query. The number of formats passed
 	 * in the formats array must be equal to n_formats.
 	 * Params:
-	 * formats = An array containing n_formats GstFormat values.
-	 * Since 0.10.4
+	 * formats = an array containing n_formats
+	 * GstFormat values. [in][array length=n_formats]
 	 */
 	public void setFormatsv(GstFormat[] formats)
 	{
-		// void gst_query_set_formatsv (GstQuery *query,  gint n_formats,  GstFormat *formats);
+		// void gst_query_set_formatsv (GstQuery *query,  gint n_formats,  const GstFormat *formats);
 		gst_query_set_formatsv(gstQuery, cast(int) formats.length, formats.ptr);
 	}
 	
 	/**
 	 * Parse the number of formats in the formats query.
 	 * Params:
-	 * nFormats = the number of formats in this query.
-	 * Since 0.10.4
+	 * nFormats = the number of formats in this query. [out][allow-none]
 	 */
-	public void parseFormatsLength(out uint nFormats)
+	public void parseNFormats(uint* nFormats)
 	{
-		// void gst_query_parse_formats_length (GstQuery *query,  guint *n_formats);
-		gst_query_parse_formats_length(gstQuery, &nFormats);
+		// void gst_query_parse_n_formats (GstQuery *query,  guint *n_formats);
+		gst_query_parse_n_formats(gstQuery, nFormats);
 	}
 	
 	/**
@@ -556,14 +587,13 @@ public class Query
 	 * format. If the list contains less elements than nth, format will be
 	 * set to GST_FORMAT_UNDEFINED.
 	 * Params:
-	 * nth = the nth format to retrieve.
-	 * format = a pointer to store the nth format
-	 * Since 0.10.4
+	 * nth = the nth format to retrieve. [out]
+	 * format = a pointer to store the nth format. [out][allow-none]
 	 */
-	public void parseFormatsNth(uint nth, out GstFormat format)
+	public void parseNthFormat(uint nth, GstFormat* format)
 	{
-		// void gst_query_parse_formats_nth (GstQuery *query,  guint nth,  GstFormat *format);
-		gst_query_parse_formats_nth(gstQuery, nth, &format);
+		// void gst_query_parse_nth_format (GstQuery *query,  guint nth,  GstFormat *format);
+		gst_query_parse_nth_format(gstQuery, nth, format);
 	}
 	
 	/**
@@ -594,14 +624,585 @@ public class Query
 	 * stop_value may be NULL, which will cause this value to be omitted.
 	 * See gst_query_set_segment() for an explanation of the function arguments.
 	 * Params:
-	 * rate = the storage for the rate of the segment, or NULL
-	 * format = the storage for the GstFormat of the values, or NULL
-	 * startValue = the storage for the start value, or NULL
-	 * stopValue = the storage for the stop value, or NULL
+	 * rate = the storage for the rate of the segment, or NULL. [out][allow-none]
+	 * format = the storage for the GstFormat of the values,
+	 * or NULL. [out][allow-none]
+	 * startValue = the storage for the start value, or NULL. [out][allow-none]
+	 * stopValue = the storage for the stop value, or NULL. [out][allow-none]
 	 */
 	public void parseSegment(ref double rate, ref GstFormat format, ref long startValue, ref long stopValue)
 	{
 		// void gst_query_parse_segment (GstQuery *query,  gdouble *rate,  GstFormat *format,  gint64 *start_value,  gint64 *stop_value);
 		gst_query_parse_segment(gstQuery, &rate, &format, &startValue, &stopValue);
+	}
+	
+	/**
+	 * Constructs a new query object for querying the caps.
+	 * The CAPS query should return the allowable caps for a pad in the context
+	 * of the element's state, its link to other elements, and the devices or files
+	 * it has opened. These caps must be a subset of the pad template caps. In the
+	 * NULL state with no links, the CAPS query should ideally return the same caps
+	 * as the pad template. In rare circumstances, an object property can affect
+	 * the caps returned by the CAPS query, but this is discouraged.
+	 * For most filters, the caps returned by CAPS query is directly affected by the
+	 * allowed caps on other pads. For demuxers and decoders, the caps returned by
+	 * the srcpad's getcaps function is directly related to the stream data. Again,
+	 * the CAPS query should return the most specific caps it reasonably can, since this
+	 * helps with autoplugging.
+	 * The filter is used to restrict the result caps, only the caps matching
+	 * filter should be returned from the CAPS query. Specifying a filter might
+	 * greatly reduce the amount of processing an element needs to do.
+	 * Free-function: gst_query_unref
+	 * Params:
+	 * filter = a filter
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GstCaps* filter)
+	{
+		// GstQuery * gst_query_new_caps (GstCaps *filter);
+		auto p = gst_query_new_caps(filter);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_caps(filter)");
+		}
+		this(cast(GstQuery*) p);
+	}
+	
+	/**
+	 * Get the filter from the caps query. The caps remains valid as long as
+	 * query remains valid.
+	 * Params:
+	 * filter = A pointer to the caps filter. [out]
+	 */
+	public void parseCaps(GstCaps** filter)
+	{
+		// void gst_query_parse_caps (GstQuery *query,  GstCaps **filter);
+		gst_query_parse_caps(gstQuery, filter);
+	}
+	
+	/**
+	 * Set the caps result in query.
+	 * Params:
+	 * caps = A pointer to the caps. [in]
+	 */
+	public void setCapsResult(GstCaps* caps)
+	{
+		// void gst_query_set_caps_result (GstQuery *query,  GstCaps *caps);
+		gst_query_set_caps_result(gstQuery, caps);
+	}
+	
+	/**
+	 * Get the caps result from query. The caps remains valid as long as
+	 * query remains valid.
+	 * Params:
+	 * caps = A pointer to the caps. [out]
+	 */
+	public void parseCapsResult(GstCaps** caps)
+	{
+		// void gst_query_parse_caps_result (GstQuery *query,  GstCaps **caps);
+		gst_query_parse_caps_result(gstQuery, caps);
+	}
+	
+	/**
+	 * Get the caps from query. The caps remains valid as long as query remains
+	 * valid.
+	 * Params:
+	 * caps = A pointer to the caps. [out]
+	 */
+	public void parseAcceptCaps(GstCaps** caps)
+	{
+		// void gst_query_parse_accept_caps (GstQuery *query,  GstCaps **caps);
+		gst_query_parse_accept_caps(gstQuery, caps);
+	}
+	
+	/**
+	 * Set result as the result for the query.
+	 * Params:
+	 * result = the result to set
+	 */
+	public void setAcceptCapsResult(int result)
+	{
+		// void gst_query_set_accept_caps_result (GstQuery *query,  gboolean result);
+		gst_query_set_accept_caps_result(gstQuery, result);
+	}
+	
+	/**
+	 * Parse the result from query and store in result.
+	 * Params:
+	 * result = location for the result
+	 */
+	public void parseAcceptCapsResult(int* result)
+	{
+		// void gst_query_parse_accept_caps_result (GstQuery *query,  gboolean *result);
+		gst_query_parse_accept_caps_result(gstQuery, result);
+	}
+	
+	/**
+	 * Constructs a new query object for querying the buffering status of
+	 * a stream.
+	 * Free-function: gst_query_unref
+	 * Params:
+	 * format = the default GstFormat for the new query
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GstFormat format)
+	{
+		// GstQuery * gst_query_new_buffering (GstFormat format);
+		auto p = gst_query_new_buffering(format);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_buffering(format)");
+		}
+		this(cast(GstQuery*) p);
+	}
+	
+	/**
+	 * Set the percentage of buffered data. This is a value between 0 and 100.
+	 * The busy indicator is TRUE when the buffering is in progress.
+	 * Params:
+	 * busy = if buffering is busy
+	 * percent = a buffering percent
+	 */
+	public void setBufferingPercent(int busy, int percent)
+	{
+		// void gst_query_set_buffering_percent (GstQuery *query,  gboolean busy,  gint percent);
+		gst_query_set_buffering_percent(gstQuery, busy, percent);
+	}
+	
+	/**
+	 * Get the percentage of buffered data. This is a value between 0 and 100.
+	 * The busy indicator is TRUE when the buffering is in progress.
+	 * Params:
+	 * busy = if buffering is busy, or NULL. [out][allow-none]
+	 * percent = a buffering percent, or NULL. [out][allow-none]
+	 */
+	public void parseBufferingPercent(int* busy, int* percent)
+	{
+		// void gst_query_parse_buffering_percent (GstQuery *query,  gboolean *busy,  gint *percent);
+		gst_query_parse_buffering_percent(gstQuery, busy, percent);
+	}
+	
+	/**
+	 * Configures the buffering stats values in query.
+	 * Params:
+	 * mode = a buffering mode
+	 * avgIn = the average input rate
+	 * avgOut = the average output rate
+	 * bufferingLeft = amount of buffering time left in milliseconds
+	 */
+	public void setBufferingStats(GstBufferingMode mode, int avgIn, int avgOut, long bufferingLeft)
+	{
+		// void gst_query_set_buffering_stats (GstQuery *query,  GstBufferingMode mode,  gint avg_in,  gint avg_out,  gint64 buffering_left);
+		gst_query_set_buffering_stats(gstQuery, mode, avgIn, avgOut, bufferingLeft);
+	}
+	
+	/**
+	 * Extracts the buffering stats values from query.
+	 * Params:
+	 * mode = a buffering mode, or NULL. [out][allow-none]
+	 * avgIn = the average input rate, or NULL. [out][allow-none]
+	 * avgOut = the average output rat, or NULLe. [out][allow-none]
+	 * bufferingLeft = amount of buffering time left in
+	 * milliseconds, or NULL. [out][allow-none]
+	 */
+	public void parseBufferingStats(GstBufferingMode* mode, int* avgIn, int* avgOut, long* bufferingLeft)
+	{
+		// void gst_query_parse_buffering_stats (GstQuery *query,  GstBufferingMode *mode,  gint *avg_in,  gint *avg_out,  gint64 *buffering_left);
+		gst_query_parse_buffering_stats(gstQuery, mode, avgIn, avgOut, bufferingLeft);
+	}
+	
+	/**
+	 * Set the available query result fields in query.
+	 * Params:
+	 * format = the format to set for the start and stop values
+	 * start = the start to set
+	 * stop = the stop to set
+	 * estimatedTotal = estimated total amount of download time
+	 */
+	public void setBufferingRange(GstFormat format, long start, long stop, long estimatedTotal)
+	{
+		// void gst_query_set_buffering_range (GstQuery *query,  GstFormat format,  gint64 start,  gint64 stop,  gint64 estimated_total);
+		gst_query_set_buffering_range(gstQuery, format, start, stop, estimatedTotal);
+	}
+	
+	/**
+	 * Parse an available query, writing the format into format, and
+	 * other results into the passed parameters, if the respective parameters
+	 * are non-NULL
+	 * Params:
+	 * format = the format to set for the segment_start
+	 * and segment_end values, or NULL. [out][allow-none]
+	 * start = the start to set, or NULL. [out][allow-none]
+	 * stop = the stop to set, or NULL. [out][allow-none]
+	 * estimatedTotal = estimated total amount of download
+	 * time, or NULL. [out][allow-none]
+	 */
+	public void parseBufferingRange(GstFormat* format, long* start, long* stop, long* estimatedTotal)
+	{
+		// void gst_query_parse_buffering_range (GstQuery *query,  GstFormat *format,  gint64 *start,  gint64 *stop,  gint64 *estimated_total);
+		gst_query_parse_buffering_range(gstQuery, format, start, stop, estimatedTotal);
+	}
+	
+	/**
+	 * Set the buffering-ranges array field in query. The current last
+	 * start position of the array should be inferior to start.
+	 * Params:
+	 * start = start position of the range
+	 * stop = stop position of the range
+	 * Returns: a gboolean indicating if the range was added or not.
+	 */
+	public int addBufferingRange(long start, long stop)
+	{
+		// gboolean gst_query_add_buffering_range (GstQuery *query,  gint64 start,  gint64 stop);
+		return gst_query_add_buffering_range(gstQuery, start, stop);
+	}
+	
+	/**
+	 * Retrieve the number of values currently stored in the
+	 * buffered-ranges array of the query's structure.
+	 * Returns: the range array size as a guint.
+	 */
+	public uint getNBufferingRanges()
+	{
+		// guint gst_query_get_n_buffering_ranges (GstQuery *query);
+		return gst_query_get_n_buffering_ranges(gstQuery);
+	}
+	
+	/**
+	 * Parse an available query and get the start and stop values stored
+	 * at the index of the buffered ranges array.
+	 * Params:
+	 * index = position in the buffered-ranges array to read
+	 * start = the start position to set, or NULL. [out][allow-none]
+	 * stop = the stop position to set, or NULL. [out][allow-none]
+	 * Returns: a gboolean indicating if the parsing succeeded.
+	 */
+	public int parseNthBufferingRange(uint index, long* start, long* stop)
+	{
+		// gboolean gst_query_parse_nth_buffering_range (GstQuery *query,  guint index,  gint64 *start,  gint64 *stop);
+		return gst_query_parse_nth_buffering_range(gstQuery, index, start, stop);
+	}
+	
+	/**
+	 * Parse an URI query, writing the URI into uri as a newly
+	 * allocated string, if the respective parameters are non-NULL.
+	 * Free the string with g_free() after usage.
+	 * Params:
+	 * uri = the storage for the current URI
+	 * (may be NULL). [out callee-allocates][allow-none]
+	 */
+	public void parseUri(char** uri)
+	{
+		// void gst_query_parse_uri (GstQuery *query,  gchar **uri);
+		gst_query_parse_uri(gstQuery, uri);
+	}
+	
+	/**
+	 * Answer a URI query by setting the requested URI.
+	 * Params:
+	 * uri = the URI to set
+	 */
+	public void setUri(string uri)
+	{
+		// void gst_query_set_uri (GstQuery *query,  const gchar *uri);
+		gst_query_set_uri(gstQuery, Str.toStringz(uri));
+	}
+	
+	/**
+	 * Constructs a new query object for querying the allocation properties.
+	 * Free-function: gst_query_unref
+	 * Params:
+	 * caps = the negotiated caps
+	 * needPool = return a pool
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GstCaps* caps, int needPool)
+	{
+		// GstQuery * gst_query_new_allocation (GstCaps *caps,  gboolean need_pool);
+		auto p = gst_query_new_allocation(caps, needPool);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_allocation(caps, needPool)");
+		}
+		this(cast(GstQuery*) p);
+	}
+	
+	/**
+	 * Parse an allocation query, writing the requested caps in caps and
+	 * whether a pool is needed in need_pool, if the respective parameters
+	 * are non-NULL.
+	 * Params:
+	 * caps = The GstCaps. [out][transfer none][allow-none]
+	 * needPool = Whether a GstBufferPool is needed. [out][allow-none]
+	 */
+	public void parseAllocation(GstCaps** caps, int* needPool)
+	{
+		// void gst_query_parse_allocation (GstQuery *query,  GstCaps **caps,  gboolean *need_pool);
+		gst_query_parse_allocation(gstQuery, caps, needPool);
+	}
+	
+	/**
+	 * Set the pool parameters in query.
+	 * Params:
+	 * pool = the GstBufferPool
+	 * size = the size
+	 * minBuffers = the min buffers
+	 * maxBuffers = the max buffers
+	 */
+	public void addAllocationPool(GstBufferPool* pool, uint size, uint minBuffers, uint maxBuffers)
+	{
+		// void gst_query_add_allocation_pool (GstQuery *query,  GstBufferPool *pool,  guint size,  guint min_buffers,  guint max_buffers);
+		gst_query_add_allocation_pool(gstQuery, pool, size, minBuffers, maxBuffers);
+	}
+	
+	/**
+	 * Retrieve the number of values currently stored in the
+	 * pool array of the query's structure.
+	 * Returns: the pool array size as a guint.
+	 */
+	public uint getNAllocationPools()
+	{
+		// guint gst_query_get_n_allocation_pools (GstQuery *query);
+		return gst_query_get_n_allocation_pools(gstQuery);
+	}
+	
+	/**
+	 * Get the pool parameters in query.
+	 * Unref pool with gst_object_unref() when it's not needed any more.
+	 * Params:
+	 * index = index to parse
+	 * pool = the GstBufferPool. [out][allow-none][transfer full]
+	 * size = the size. [out][allow-none]
+	 * minBuffers = the min buffers. [out][allow-none]
+	 * maxBuffers = the max buffers. [out][allow-none]
+	 */
+	public void parseNthAllocationPool(uint index, GstBufferPool** pool, uint* size, uint* minBuffers, uint* maxBuffers)
+	{
+		// void gst_query_parse_nth_allocation_pool (GstQuery *query,  guint index,  GstBufferPool **pool,  guint *size,  guint *min_buffers,  guint *max_buffers);
+		gst_query_parse_nth_allocation_pool(gstQuery, index, pool, size, minBuffers, maxBuffers);
+	}
+	
+	/**
+	 * Set the pool parameters in query.
+	 * Params:
+	 * index = index to modify
+	 * pool = the GstBufferPool
+	 * size = the size
+	 * minBuffers = the min buffers
+	 * maxBuffers = the max buffers
+	 */
+	public void setNthAllocationPool(uint index, GstBufferPool* pool, uint size, uint minBuffers, uint maxBuffers)
+	{
+		// void gst_query_set_nth_allocation_pool (GstQuery *query,  guint index,  GstBufferPool *pool,  guint size,  guint min_buffers,  guint max_buffers);
+		gst_query_set_nth_allocation_pool(gstQuery, index, pool, size, minBuffers, maxBuffers);
+	}
+	
+	/**
+	 * Add allocator and its params as a supported memory allocator.
+	 * Params:
+	 * allocator = the memory allocator. [transfer none][allow-none]
+	 * params = a GstAllocationParams. [transfer none][allow-none]
+	 */
+	public void addAllocationParam(GstAllocator* allocator, GstAllocationParams* params)
+	{
+		// void gst_query_add_allocation_param (GstQuery *query,  GstAllocator *allocator,  const GstAllocationParams *params);
+		gst_query_add_allocation_param(gstQuery, allocator, params);
+	}
+	
+	/**
+	 * Retrieve the number of values currently stored in the
+	 * allocator params array of the query's structure.
+	 * If no memory allocator is specified, the downstream element can handle
+	 * the default memory allocator.
+	 * Returns: the allocator array size as a guint.
+	 */
+	public uint getNAllocationParams()
+	{
+		// guint gst_query_get_n_allocation_params (GstQuery *query);
+		return gst_query_get_n_allocation_params(gstQuery);
+	}
+	
+	/**
+	 * Parse an available query and get the alloctor and its params
+	 * at index of the allocator array.
+	 * Params:
+	 * index = position in the allocator array to read
+	 * allocator = variable to hold the result. [out][transfer none][allow-none]
+	 * params = parameters for the allocator. [out][allow-none]
+	 */
+	public void parseNthAllocationParam(uint index, GstAllocator** allocator, GstAllocationParams* params)
+	{
+		// void gst_query_parse_nth_allocation_param  (GstQuery *query,  guint index,  GstAllocator **allocator,  GstAllocationParams *params);
+		gst_query_parse_nth_allocation_param(gstQuery, index, allocator, params);
+	}
+	
+	/**
+	 * Parse an available query and get the alloctor and its params
+	 * at index of the allocator array.
+	 * Params:
+	 * index = position in the allocator array to set
+	 * allocator = new allocator to set. [transfer none][allow-none]
+	 * params = parameters for the allocator. [transfer none][allow-none]
+	 */
+	public void setNthAllocationParam(uint index, GstAllocator* allocator, GstAllocationParams* params)
+	{
+		// void gst_query_set_nth_allocation_param (GstQuery *query,  guint index,  GstAllocator *allocator,  const GstAllocationParams *params);
+		gst_query_set_nth_allocation_param(gstQuery, index, allocator, params);
+	}
+	
+	/**
+	 * Add api with params as one of the supported metadata API to query.
+	 * Params:
+	 * api = the metadata API
+	 * params = API specific parameters. [transfer none][allow-none]
+	 */
+	public void addAllocationMeta(GType api, Structure params)
+	{
+		// void gst_query_add_allocation_meta (GstQuery *query,  GType api,  const GstStructure *params);
+		gst_query_add_allocation_meta(gstQuery, api, (params is null) ? null : params.getStructureStruct());
+	}
+	
+	/**
+	 * Retrieve the number of values currently stored in the
+	 * meta API array of the query's structure.
+	 * Returns: the metadata API array size as a guint.
+	 */
+	public uint getNAllocationMetas()
+	{
+		// guint gst_query_get_n_allocation_metas (GstQuery *query);
+		return gst_query_get_n_allocation_metas(gstQuery);
+	}
+	
+	/**
+	 * Parse an available query and get the metadata API
+	 * at index of the metadata API array.
+	 * Params:
+	 * index = position in the metadata API array to read
+	 * params = API specific flags. [out][allow-none]
+	 * Returns: a GType of the metadata API at index.
+	 */
+	public GType parseNthAllocationMeta(uint index, GstStructure** params)
+	{
+		// GType gst_query_parse_nth_allocation_meta (GstQuery *query,  guint index,  const GstStructure **params);
+		return gst_query_parse_nth_allocation_meta(gstQuery, index, params);
+	}
+	
+	/**
+	 * Remove the metadata API at index of the metadata API array.
+	 * Params:
+	 * index = position in the metadata API array to remove
+	 */
+	public void removeNthAllocationMeta(uint index)
+	{
+		// void gst_query_remove_nth_allocation_meta  (GstQuery *query,  guint index);
+		gst_query_remove_nth_allocation_meta(gstQuery, index);
+	}
+	
+	/**
+	 * Check if query has metadata api set. When this function returns TRUE,
+	 * index will contain the index where the requested API and the flags can be
+	 * found.
+	 * Params:
+	 * api = the metadata API
+	 * index = the index. [out][allow-none]
+	 * Returns: TRUE when api is in the list of metadata.
+	 */
+	public int findAllocationMeta(GType api, uint* index)
+	{
+		// gboolean gst_query_find_allocation_meta (GstQuery *query,  GType api,  guint *index);
+		return gst_query_find_allocation_meta(gstQuery, api, index);
+	}
+	
+	/**
+	 * Set the scheduling properties.
+	 * Params:
+	 * flags = GstSchedulingFlags. [out][allow-none]
+	 * minsize = the suggested minimum size of pull requests. [out][allow-none]
+	 * maxsize = the suggested maximum size of pull requests:. [out][allow-none]
+	 */
+	public void parseScheduling(GstSchedulingFlags* flags, int* minsize, int* maxsize, int* alig)
+	{
+		// void gst_query_parse_scheduling (GstQuery *query,  GstSchedulingFlags *flags,  gint *minsize,  gint *maxsize,  gint *align);
+		gst_query_parse_scheduling(gstQuery, flags, minsize, maxsize, alig);
+	}
+	
+	/**
+	 * Set the scheduling properties.
+	 * Params:
+	 * flags = GstSchedulingFlags
+	 * minsize = the suggested minimum size of pull requests
+	 * maxsize = the suggested maximum size of pull requests
+	 */
+	public void setScheduling(GstSchedulingFlags flags, int minsize, int maxsize, int alig)
+	{
+		// void gst_query_set_scheduling (GstQuery *query,  GstSchedulingFlags flags,  gint minsize,  gint maxsize,  gint align);
+		gst_query_set_scheduling(gstQuery, flags, minsize, maxsize, alig);
+	}
+	
+	/**
+	 * Add mode as aone of the supported scheduling modes to query.
+	 * Params:
+	 * mode = a GstPadMode
+	 */
+	public void addSchedulingMode(GstPadMode mode)
+	{
+		// void gst_query_add_scheduling_mode (GstQuery *query,  GstPadMode mode);
+		gst_query_add_scheduling_mode(gstQuery, mode);
+	}
+	
+	/**
+	 * Retrieve the number of values currently stored in the
+	 * scheduling mode array of the query's structure.
+	 * Returns: the scheduling mode array size as a guint.
+	 */
+	public uint getNSchedulingModes()
+	{
+		// guint gst_query_get_n_scheduling_modes (GstQuery *query);
+		return gst_query_get_n_scheduling_modes(gstQuery);
+	}
+	
+	/**
+	 * Parse an available query and get the scheduling mode
+	 * at index of the scheduling modes array.
+	 * Params:
+	 * index = position in the scheduling modes array to read
+	 * Returns: a GstPadMode of the scheduling mode at index.
+	 */
+	public GstPadMode parseNthSchedulingMode(uint index)
+	{
+		// GstPadMode gst_query_parse_nth_scheduling_mode (GstQuery *query,  guint index);
+		return gst_query_parse_nth_scheduling_mode(gstQuery, index);
+	}
+	
+	/**
+	 * Check if query has scheduling mode set.
+	 * Note
+	 *  When checking if upstream supports pull mode, it is usually not
+	 *  enough to just check for GST_PAD_MODE_PULL with this function, you
+	 *  also want to check whether the scheduling flags returned by
+	 *  gst_query_parse_scheduling() have the seeking flag set (meaning
+	 *  random access is supported, not only sequential pulls).
+	 * Params:
+	 * mode = the scheduling mode
+	 * Returns: TRUE when mode is in the list of scheduling modes.
+	 */
+	public int hasSchedulingMode(GstPadMode mode)
+	{
+		// gboolean gst_query_has_scheduling_mode (GstQuery *query,  GstPadMode mode);
+		return gst_query_has_scheduling_mode(gstQuery, mode);
+	}
+	
+	/**
+	 * Check if query has scheduling mode set and flags is set in
+	 * query scheduling flags.
+	 * Params:
+	 * mode = the scheduling mode
+	 * flags = GstSchedulingFlags
+	 * Returns: TRUE when mode is in the list of scheduling modes and flags are compatible with query flags.
+	 */
+	public int hasSchedulingModeWithFlags(GstPadMode mode, GstSchedulingFlags flags)
+	{
+		// gboolean gst_query_has_scheduling_mode_with_flags  (GstQuery *query,  GstPadMode mode,  GstSchedulingFlags flags);
+		return gst_query_has_scheduling_mode_with_flags(gstQuery, mode, flags);
 	}
 }

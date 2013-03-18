@@ -76,11 +76,15 @@ private import gthread.Mutex;
  * Various GStreamer objects provide access to their internal structures using
  * an iterator.
  *
+ * In general, whenever calling a GstIterator function results in your code
+ * receiving a refcounted object, the refcount for that object will have been
+ * increased. Your code is responsible for unrefing that object after use.
+ *
  * The basic use pattern of an iterator is as follows:
  *
  * $(DDOC_COMMENT example)
  *
- * Last reviewed on 2005-11-09 (0.9.4)
+ * Last reviewed on 2009-06-16 (0.10.24)
  */
 public class Iterator
 {
@@ -121,70 +125,93 @@ public class Iterator
 	 * size = the size of the iterator structure
 	 * type = GType of children
 	 * lock = pointer to a GMutex.
-	 * masterCookie = pointer to a guint32 to protect the iterated object.
+	 * masterCookie = pointer to a guint32 that is changed when the items in the
+	 * iterator changed.
+	 * copy = copy function
 	 * next = function to get next item
 	 * item = function to call on each item retrieved
 	 * resync = function to resync the iterator
 	 * free = function to free the iterator
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (uint size, GType type, Mutex lock, ref uint masterCookie, GstIteratorNextFunction next, GstIteratorItemFunction item, GstIteratorResyncFunction resync, GstIteratorFreeFunction free)
+	public this (uint size, GType type, Mutex lock, ref uint masterCookie, GstIteratorCopyFunction copy, GstIteratorNextFunction next, GstIteratorItemFunction item, GstIteratorResyncFunction resync, GstIteratorFreeFunction free)
 	{
-		// GstIterator* gst_iterator_new (guint size,  GType type,  GMutex *lock,  guint32 *master_cookie,  GstIteratorNextFunction next,  GstIteratorItemFunction item,  GstIteratorResyncFunction resync,  GstIteratorFreeFunction free);
-		auto p = gst_iterator_new(size, type, (lock is null) ? null : lock.getMutexStruct(), &masterCookie, next, item, resync, free);
+		// GstIterator * gst_iterator_new (guint size,  GType type,  GMutex *lock,  guint32 *master_cookie,  GstIteratorCopyFunction copy,  GstIteratorNextFunction next,  GstIteratorItemFunction item,  GstIteratorResyncFunction resync,  GstIteratorFreeFunction free);
+		auto p = gst_iterator_new(size, type, (lock is null) ? null : lock.getMutexStruct(), &masterCookie, copy, next, item, resync, free);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_iterator_new(size, type, (lock is null) ? null : lock.getMutexStruct(), &masterCookie, next, item, resync, free)");
+			throw new ConstructionException("null returned by gst_iterator_new(size, type, (lock is null) ? null : lock.getMutexStruct(), &masterCookie, copy, next, item, resync, free)");
 		}
 		this(cast(GstIterator*) p);
 	}
 	
 	/**
 	 * Create a new iterator designed for iterating list.
+	 * The list you iterate is usually part of a data structure owner and is
+	 * protected with lock.
+	 * The iterator will use lock to retrieve the next item of the list and it
+	 * will then call the item function before releasing lock again.
+	 * When a concurrent update to the list is performed, usually by owner while
+	 * holding lock, master_cookie will be updated. The iterator implementation
+	 * will notice the update of the cookie and will return GST_ITERATOR_RESYNC to
+	 * the user of the iterator in the next call to gst_iterator_next().
 	 * Params:
 	 * type = GType of elements
 	 * lock = pointer to a GMutex protecting the list.
-	 * masterCookie = pointer to a guint32 to protect the list.
+	 * masterCookie = pointer to a guint32 that is incremented when the list
+	 * is changed.
 	 * list = pointer to the list
 	 * owner = object owning the list
-	 * item = function to call for each item
-	 * free = function to call when the iterator is freed
+	 * item = function to call on each item retrieved
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GType type, Mutex lock, uint* masterCookie, GList** list, void* owner, GstIteratorItemFunction item, GstIteratorDisposeFunction free)
+	public this (GType type, Mutex lock, uint* masterCookie, GList** list, GObject* owner, GstIteratorItemFunction item)
 	{
-		// GstIterator* gst_iterator_new_list (GType type,  GMutex *lock,  guint32 *master_cookie,  GList **list,  gpointer owner,  GstIteratorItemFunction item,  GstIteratorDisposeFunction free);
-		auto p = gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, list, owner, item, free);
+		// GstIterator * gst_iterator_new_list (GType type,  GMutex *lock,  guint32 *master_cookie,  GList **list,  GObject *owner,  GstIteratorItemFunction item);
+		auto p = gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, list, owner, item);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, list, owner, item, free)");
+			throw new ConstructionException("null returned by gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, list, owner, item)");
 		}
 		this(cast(GstIterator*) p);
 	}
 	
 	/**
-	 * Get the next item from the iterator. For iterators that return
-	 * refcounted objects, the returned object will have its refcount
-	 * increased and should therefore be unreffed after usage.
+	 * This GstIterator is a convenient iterator for the common
+	 * case where a GstIterator needs to be returned but only
+	 * a single object has to be considered. This happens often
+	 * for the GstPadIterIntLinkFunction.
 	 * Params:
-	 * elem = pointer to hold next element
-	 * Returns: The result of the iteration. Unref after usage if this is a refcounted object. MT safe.
+	 * type = GType of the passed object
+	 * object = object that this iterator should return
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public GstIteratorResult next(void** elem)
+	public this (GType type, GValue* object)
 	{
-		// GstIteratorResult gst_iterator_next (GstIterator *it,  gpointer *elem);
-		return gst_iterator_next(gstIterator, elem);
+		// GstIterator * gst_iterator_new_single (GType type,  const GValue *object);
+		auto p = gst_iterator_new_single(type, object);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_iterator_new_single(type, object)");
+		}
+		this(cast(GstIterator*) p);
 	}
 	
 	/**
-	 * Resync the iterator. this function is mostly called
-	 * after gst_iterator_next() returned GST_ITERATOR_RESYNC.
-	 * MT safe.
+	 * Copy the iterator and its state.
+	 * Returns: a new copy of it.
 	 */
-	public void resync()
+	public Iterator copy()
 	{
-		// void gst_iterator_resync (GstIterator *it);
-		gst_iterator_resync(gstIterator);
+		// GstIterator * gst_iterator_copy (const GstIterator *it);
+		auto p = gst_iterator_copy(gstIterator);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -198,11 +225,49 @@ public class Iterator
 	}
 	
 	/**
+	 * Get the next item from the iterator in elem.
+	 * Only when this function returns GST_ITERATOR_OK, elem will contain a valid
+	 * value. elem must have been initialized to the type of the iterator or
+	 * initialized to zeroes with g_value_unset(). The caller is responsible for
+	 * unsetting or resetting elem with g_value_unset() or g_value_reset()
+	 * after usage.
+	 * When this function returns GST_ITERATOR_DONE, no more elements can be
+	 * retrieved from it.
+	 * A return value of GST_ITERATOR_RESYNC indicates that the element list was
+	 * concurrently updated. The user of it should call gst_iterator_resync() to
+	 * get the newly updated list.
+	 * A return value of GST_ITERATOR_ERROR indicates an unrecoverable fatal error.
+	 * Params:
+	 * elem = pointer to hold next element. [out caller-allocates]
+	 * Returns: The result of the iteration. Unset elem after usage. MT safe.
+	 */
+	public GstIteratorResult next(GValue* elem)
+	{
+		// GstIteratorResult gst_iterator_next (GstIterator *it,  GValue *elem);
+		return gst_iterator_next(gstIterator, elem);
+	}
+	
+	/**
+	 * Resync the iterator. this function is mostly called
+	 * after gst_iterator_next() returned GST_ITERATOR_RESYNC.
+	 * When an iterator was pushed on it, it will automatically be popped again
+	 * with this function.
+	 * MT safe.
+	 */
+	public void resync()
+	{
+		// void gst_iterator_resync (GstIterator *it);
+		gst_iterator_resync(gstIterator);
+	}
+	
+	/**
 	 * Pushes other iterator onto it. All calls performed on it are
-	 * forwarded tot other. If other returns GST_ITERATOR_DONE, it is
+	 * forwarded to other. If other returns GST_ITERATOR_DONE, it is
 	 * popped again and calls are handled by it again.
 	 * This function is mainly used by objects implementing the iterator
 	 * next function to recurse into substructures.
+	 * When gst_iterator_resync() is called on it, other will automatically be
+	 * popped.
 	 * MT safe.
 	 * Params:
 	 * other = The GstIterator to push
@@ -216,17 +281,18 @@ public class Iterator
 	/**
 	 * Create a new iterator from an existing iterator. The new iterator
 	 * will only return those elements that match the given compare function func.
-	 * func should return 0 for elements that should be included
-	 * in the iterator.
+	 * The first parameter that is passed to func is the GValue of the current
+	 * iterator element and the second parameter is user_data. func should
+	 * return 0 for elements that should be included in the filtered iterator.
 	 * When this iterator is freed, it will also be freed.
 	 * Params:
-	 * func = the compare function to select elements
-	 * userData = user data passed to the compare function
-	 * Returns: a new GstIterator. MT safe.
+	 * func = the compare function to select elements. [scope call]
+	 * userData = user data passed to the compare function. [closure]
+	 * Returns: a new GstIterator. MT safe. [transfer full]
 	 */
-	public Iterator filter(GCompareFunc func, void* userData)
+	public Iterator filter(GCompareFunc func, GValue* userData)
 	{
-		// GstIterator* gst_iterator_filter (GstIterator *it,  GCompareFunc func,  gpointer user_data);
+		// GstIterator * gst_iterator_filter (GstIterator *it,  GCompareFunc func,  const GValue *user_data);
 		auto p = gst_iterator_filter(gstIterator, func, userData);
 		
 		if(p is null)
@@ -238,12 +304,12 @@ public class Iterator
 	}
 	
 	/**
-	 * Folds func over the elements of iter. That is to say, proc will be called
-	 * as proc (object, ret, user_data) for each object in iter. The normal use
+	 * Folds func over the elements of iter. That is to say, func will be called
+	 * as func (object, ret, user_data) for each object in it. The normal use
 	 * of this procedure is to accumulate the results of operating on the objects in
 	 * ret.
-	 * This procedure can be used (and is used internally) to implement the foreach
-	 * and find_custom operations.
+	 * This procedure can be used (and is used internally) to implement the
+	 * gst_iterator_foreach() and gst_iterator_find_custom() operations.
 	 * The fold will proceed as long as func returns TRUE. When the iterator has no
 	 * more arguments, GST_ITERATOR_DONE will be returned. If func returns FALSE,
 	 * the fold will stop, and GST_ITERATOR_OK will be returned. Errors or resyncs
@@ -251,9 +317,9 @@ public class Iterator
 	 * appropriate.
 	 * The iterator will not be freed.
 	 * Params:
-	 * func = the fold function
+	 * func = the fold function. [scope call]
 	 * ret = the seed value passed to the fold function
-	 * userData = user data passed to the fold function
+	 * userData = user data passed to the fold function. [closure]
 	 * Returns: A GstIteratorResult, as described above. MT safe.
 	 */
 	public GstIteratorResult fold(GstIteratorFoldFunction func, GValue* ret, void* userData)
@@ -266,30 +332,34 @@ public class Iterator
 	 * Iterate over all element of it and call the given function func for
 	 * each element.
 	 * Params:
-	 * func = the function to call for each element.
-	 * userData = user data passed to the function
+	 * func = the function to call for each element. [scope call]
+	 * userData = user data passed to the function. [closure]
 	 * Returns: the result call to gst_iterator_fold(). The iterator will not be freed. MT safe.
 	 */
-	public GstIteratorResult foreac(GFunc func, void* userData)
+	public GstIteratorResult foreac(GstIteratorForeachFunction func, void* userData)
 	{
-		// GstIteratorResult gst_iterator_foreach (GstIterator *it,  GFunc func,  gpointer user_data);
+		// GstIteratorResult gst_iterator_foreach (GstIterator *it,  GstIteratorForeachFunction func,  gpointer user_data);
 		return gst_iterator_foreach(gstIterator, func, userData);
 	}
 	
 	/**
 	 * Find the first element in it that matches the compare function func.
-	 * func should return 0 when the element is found.
+	 * func should return 0 when the element is found. The first parameter
+	 * to func will be the current element of the iterator and the
+	 * second parameter will be user_data.
+	 * The result will be stored in elem if a result is found.
 	 * The iterator will not be freed.
-	 * This function will return NULL if an error or resync happened to
-	 * the iterator.
+	 * This function will return FALSE if an error happened to the iterator
+	 * or if the element wasn't found.
 	 * Params:
-	 * func = the compare function to use
-	 * userData = user data passed to the compare function
-	 * Returns: The element in the iterator that matches the compare function or NULL when no element matched. MT safe.
+	 * func = the compare function to use. [scope call]
+	 * elem = pointer to a GValue where to store the result. [out]
+	 * userData = user data passed to the compare function. [closure]
+	 * Returns: Returns TRUE if the element was found, else FALSE. MT safe.
 	 */
-	public void* findCustom(GCompareFunc func, void* userData)
+	public int findCustom(GCompareFunc func, GValue* elem, void* userData)
 	{
-		// gpointer gst_iterator_find_custom (GstIterator *it,  GCompareFunc func,  gpointer user_data);
-		return gst_iterator_find_custom(gstIterator, func, userData);
+		// gboolean gst_iterator_find_custom (GstIterator *it,  GCompareFunc func,  GValue *elem,  gpointer user_data);
+		return gst_iterator_find_custom(gstIterator, func, elem, userData);
 	}
 }

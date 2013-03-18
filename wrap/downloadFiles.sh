@@ -48,8 +48,8 @@ curl https://developer.gnome.org/gtksourceview/gtksourceview-html-3.8.0.tar.gz |
 ln -s gtksourceview-html-3.8.0 sourceview
 
 #gstreamer
-curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.14.tar.gz | tar xvfz -
-ln -s gstreamer-0.10.14/docs/gst/html gstreamer
-curl http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.14.tar.gz | tar xvfz -
-ln -s gst-plugins-base-0.10.14/docs/libs/html gstinterfaces
+curl https://developer.gnome.org/gstreamer/gstreamer-html-1.0.5.tar.gz | tar xvfz -
+ln -s gstreamer-html-1.0.5 gstreamer
+curl http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.0.5.tar.xz | tar xvfJ -
+ln -s gst-plugins-base-1.0.5/docs/libs/html gstinterfaces
 

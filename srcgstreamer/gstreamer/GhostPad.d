@@ -76,10 +76,10 @@ private import gstreamer.Pad;
 /**
  * GhostPads are useful when organizing pipelines with GstBin like elements.
  * The idea here is to create hierarchical element graphs. The bin element
- * contains a sub-graph. Now one would like to treat the bin-element like other
- * GstElements. This is where GhostPads come into play. A GhostPad acts as a
- * proxy for another pad. Thus the bin can have sink and source ghost-pads that
- * are associated with sink and source pads of the child elements.
+ * contains a sub-graph. Now one would like to treat the bin-element like any
+ * other GstElement. This is where GhostPads come into play. A GhostPad acts as
+ * a proxy for another pad. Thus the bin can have sink and source ghost-pads
+ * that are associated with sink and source pads of the child elements.
  *
  * If the target pad is known at creation time, gst_ghost_pad_new() is the
  * function to use to get a ghost-pad. Otherwise one can use gst_ghost_pad_new_no_target()
@@ -132,13 +132,13 @@ public class GhostPad : Pad
 	 * from the target pad. target must be unlinked.
 	 * Will ref the target.
 	 * Params:
-	 * name = the name of the new pad, or NULL to assign a default name.
-	 * target = the pad to ghost.
+	 * name = the name of the new pad, or NULL to assign a default name. [allow-none]
+	 * target = the pad to ghost. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, Pad target)
 	{
-		// GstPad* gst_ghost_pad_new (const gchar *name,  GstPad *target);
+		// GstPad * gst_ghost_pad_new (const gchar *name,  GstPad *target);
 		auto p = gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct());
 		if(p is null)
 		{
@@ -153,13 +153,13 @@ public class GhostPad : Pad
 	 * gst_ghost_pad_set_target() function.
 	 * The created ghostpad will not have a padtemplate.
 	 * Params:
-	 * name = the name of the new pad, or NULL to assign a default name.
+	 * name = the name of the new pad, or NULL to assign a default name. [allow-none]
 	 * dir = the direction of the ghostpad
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, GstPadDirection dir)
 	{
-		// GstPad* gst_ghost_pad_new_no_target (const gchar *name,  GstPadDirection dir);
+		// GstPad * gst_ghost_pad_new_no_target (const gchar *name,  GstPadDirection dir);
 		auto p = gst_ghost_pad_new_no_target(Str.toStringz(name), dir);
 		if(p is null)
 		{
@@ -173,14 +173,14 @@ public class GhostPad : Pad
 	 * from the target pad. The template used on the ghostpad will be template.
 	 * Will ref the target.
 	 * Params:
-	 * name = the name of the new pad, or NULL to assign a default name.
-	 * target = the pad to ghost.
-	 * templ = the GstPadTemplate to use on the ghostpad.
+	 * name = the name of the new pad, or NULL to assign a default name. [allow-none]
+	 * target = the pad to ghost. [transfer none]
+	 * templ = the GstPadTemplate to use on the ghostpad. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, Pad target, PadTemplate templ)
 	{
-		// GstPad* gst_ghost_pad_new_from_template (const gchar *name,  GstPad *target,  GstPadTemplate *templ);
+		// GstPad * gst_ghost_pad_new_from_template (const gchar *name,  GstPad *target,  GstPadTemplate *templ);
 		auto p = gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), (templ is null) ? null : templ.getPadTemplateStruct());
 		if(p is null)
 		{
@@ -193,13 +193,13 @@ public class GhostPad : Pad
 	 * Create a new ghostpad based on templ, without setting a target. The
 	 * direction will be taken from the templ.
 	 * Params:
-	 * name = the name of the new pad, or NULL to assign a default name.
-	 * templ = the GstPadTemplate to create the ghostpad from.
+	 * name = the name of the new pad, or NULL to assign a default name. [allow-none]
+	 * templ = the GstPadTemplate to create the ghostpad from. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, PadTemplate templ)
 	{
-		// GstPad* gst_ghost_pad_new_no_target_from_template  (const gchar *name,  GstPadTemplate *templ);
+		// GstPad * gst_ghost_pad_new_no_target_from_template  (const gchar *name,  GstPadTemplate *templ);
 		auto p = gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), (templ is null) ? null : templ.getPadTemplateStruct());
 		if(p is null)
 		{
@@ -210,10 +210,11 @@ public class GhostPad : Pad
 	
 	/**
 	 * Set the new target of the ghostpad gpad. Any existing target
-	 * is unlinked and links to the new target are established.
+	 * is unlinked and links to the new target are established. if newtarget is
+	 * NULL the target will be cleared.
 	 * Params:
-	 * newtarget = the new pad target
-	 * Returns: TRUE if the new target could be set. This function can return FALSE when the internal pads could not be linked.
+	 * newtarget = the new pad target. [transfer none][allow-none]
+	 * Returns: TRUE if the new target could be set. This function can return FALSE when the internal pads could not be linked. [transfer full]
 	 */
 	public int setTarget(Pad newtarget)
 	{
@@ -223,11 +224,11 @@ public class GhostPad : Pad
 	
 	/**
 	 * Get the target pad of gpad. Unref target pad after usage.
-	 * Returns: the target GstPad, can be NULL if the ghostpad has no target set. Unref target pad after usage.
+	 * Returns: the target GstPad, can be NULL if the ghostpad has no target set. Unref target pad after usage. [transfer full]
 	 */
 	public Pad getTarget()
 	{
-		// GstPad* gst_ghost_pad_get_target (GstGhostPad *gpad);
+		// GstPad * gst_ghost_pad_get_target (GstGhostPad *gpad);
 		auto p = gst_ghost_pad_get_target(gstGhostPad);
 		
 		if(p is null)
@@ -236,5 +237,124 @@ public class GhostPad : Pad
 		}
 		
 		return ObjectG.getDObject!(Pad)(cast(GstPad*) p);
+	}
+	
+	/**
+	 * Finish initialization of a newly allocated ghost pad.
+	 * This function is most useful in language bindings and when subclassing
+	 * GstGhostPad; plugin and application developers normally will not call this
+	 * function. Call this function directly after a call to g_object_new
+	 * (GST_TYPE_GHOST_PAD, "direction", dir, ..., NULL).
+	 * Returns: TRUE if the construction succeeds, FALSE otherwise.
+	 */
+	public int construct()
+	{
+		// gboolean gst_ghost_pad_construct (GstGhostPad *gpad);
+		return gst_ghost_pad_construct(gstGhostPad);
+	}
+	
+	/**
+	 * Invoke the default activate mode function of a ghost pad.
+	 * Params:
+	 * pad = the GstPad to activate or deactivate.
+	 * parent = the parent of pad or NULL
+	 * mode = the requested activation mode
+	 * active = whether the pad should be active or not.
+	 * Returns: TRUE if the operation was successful.
+	 */
+	public static int activateModeDefault(Pad pad, GstObject* parent, GstPadMode mode, int active)
+	{
+		// gboolean gst_ghost_pad_activate_mode_default (GstPad *pad,  GstObject *parent,  GstPadMode mode,  gboolean active);
+		return gst_ghost_pad_activate_mode_default((pad is null) ? null : pad.getPadStruct(), parent, mode, active);
+	}
+	
+	/**
+	 * Invoke the default activate mode function of a proxy pad that is
+	 * owned by a ghost pad.
+	 * Params:
+	 * pad = the GstPad to activate or deactivate.
+	 * parent = the parent of pad or NULL
+	 * mode = the requested activation mode
+	 * active = whether the pad should be active or not.
+	 * Returns: TRUE if the operation was successful.
+	 */
+	public static int internalActivateModeDefault(Pad pad, GstObject* parent, GstPadMode mode, int active)
+	{
+		// gboolean gst_ghost_pad_internal_activate_mode_default  (GstPad *pad,  GstObject *parent,  GstPadMode mode,  gboolean active);
+		return gst_ghost_pad_internal_activate_mode_default((pad is null) ? null : pad.getPadStruct(), parent, mode, active);
+	}
+	
+	/**
+	 * Get the internal pad of pad. Unref target pad after usage.
+	 * The internal pad of a GstGhostPad is the internally used
+	 * pad of opposite direction, which is used to link to the target.
+	 * Params:
+	 * pad = the GstProxyPad
+	 * Returns: the target GstProxyPad, can be NULL. Unref target pad after usage. [transfer full]
+	 */
+	public static GstProxyPad* proxyPadGetInternal(GstProxyPad* pad)
+	{
+		// GstProxyPad * gst_proxy_pad_get_internal (GstProxyPad *pad);
+		return gst_proxy_pad_get_internal(pad);
+	}
+	
+	/**
+	 * Invoke the default iterate internal links function of the proxy pad.
+	 * Params:
+	 * pad = the GstPad to get the internal links of.
+	 * parent = the parent of pad or NULL
+	 * Returns: a GstIterator of GstPad, or NULL if pad has no parent. Unref each returned pad with gst_object_unref().
+	 */
+	public static GstIterator* proxyPadIterateInternalLinksDefault(Pad pad, GstObject* parent)
+	{
+		// GstIterator * gst_proxy_pad_iterate_internal_links_default  (GstPad *pad,  GstObject *parent);
+		return gst_proxy_pad_iterate_internal_links_default((pad is null) ? null : pad.getPadStruct(), parent);
+	}
+	
+	/**
+	 * Invoke the default chain function of the proxy pad.
+	 * Params:
+	 * pad = a sink GstPad, returns GST_FLOW_ERROR if not.
+	 * parent = the parent of pad or NULL
+	 * buffer = the GstBuffer to send, return GST_FLOW_ERROR
+	 * if not. [transfer full]
+	 * Returns: a GstFlowReturn from the pad.
+	 */
+	public static GstFlowReturn proxyPadChainDefault(Pad pad, GstObject* parent, GstBuffer* buffer)
+	{
+		// GstFlowReturn gst_proxy_pad_chain_default (GstPad *pad,  GstObject *parent,  GstBuffer *buffer);
+		return gst_proxy_pad_chain_default((pad is null) ? null : pad.getPadStruct(), parent, buffer);
+	}
+	
+	/**
+	 * Invoke the default chain list function of the proxy pad.
+	 * Params:
+	 * pad = a sink GstPad, returns GST_FLOW_ERROR if not.
+	 * parent = the parent of pad or NULL
+	 * list = the GstBufferList to send, return GST_FLOW_ERROR
+	 * if not. [transfer full]
+	 * Returns: a GstFlowReturn from the pad.
+	 */
+	public static GstFlowReturn proxyPadChainListDefault(Pad pad, GstObject* parent, GstBufferList* list)
+	{
+		// GstFlowReturn gst_proxy_pad_chain_list_default (GstPad *pad,  GstObject *parent,  GstBufferList *list);
+		return gst_proxy_pad_chain_list_default((pad is null) ? null : pad.getPadStruct(), parent, list);
+	}
+	
+	/**
+	 * Invoke the default getrange function of the proxy pad.
+	 * Params:
+	 * pad = a src GstPad, returns GST_FLOW_ERROR if not.
+	 * parent = the parent of pad
+	 * offset = The start offset of the buffer
+	 * size = The length of the buffer
+	 * buffer = a pointer to hold the GstBuffer,
+	 * returns GST_FLOW_ERROR if NULL. [out callee-allocates]
+	 * Returns: a GstFlowReturn from the pad.
+	 */
+	public static GstFlowReturn proxyPadGetrangeDefault(Pad pad, GstObject* parent, ulong offset, uint size, GstBuffer** buffer)
+	{
+		// GstFlowReturn gst_proxy_pad_getrange_default (GstPad *pad,  GstObject *parent,  guint64 offset,  guint size,  GstBuffer **buffer);
+		return gst_proxy_pad_getrange_default((pad is null) ? null : pad.getPadStruct(), parent, offset, size, buffer);
 	}
 }

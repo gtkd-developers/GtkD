@@ -123,11 +123,11 @@ public class SystemClock : Clock
 	 * Get a handle to the default system clock. The refcount of the
 	 * clock will be increased so you need to unref the clock after
 	 * usage.
-	 * Returns: the default clock. MT safe.
+	 * Returns: the default clock. MT safe. [transfer full]
 	 */
 	public static Clock obtain()
 	{
-		// GstClock* gst_system_clock_obtain (void);
+		// GstClock * gst_system_clock_obtain (void);
 		auto p = gst_system_clock_obtain();
 		
 		if(p is null)

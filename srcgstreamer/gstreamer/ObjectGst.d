@@ -88,51 +88,56 @@ private import gobject.ObjectG;
 /**
  * GstObject provides a root for the object hierarchy tree filed in by the
  * GStreamer library. It is currently a thin wrapper on top of
- * GObject. It is an abstract class that is not very usable on its own.
+ * GInitiallyUnowned. It is an abstract class that is not very usable on its own.
  *
  * GstObject gives us basic refcounting, parenting functionality and locking.
  * Most of the function are just extended for special GStreamer needs and can be
  * found under the same name in the base class of GstObject which is GObject
  * (e.g. g_object_ref() becomes gst_object_ref()).
  *
- * The most interesting difference between GstObject and GObject is the
- * "floating" reference count. A GObject is created with a reference count of
- * 1, owned by the creator of the GObject. (The owner of a reference is the
- * code section that has the right to call gst_object_unref() in order to
- * remove that reference.) A GstObject is created with a reference count of 1
- * also, but it isn't owned by anyone; Instead, the initial reference count
- * of a GstObject is "floating". The floating reference can be removed by
- * anyone at any time, by calling gst_object_sink(). gst_object_sink() does
- * nothing if an object is already sunk (has no floating reference).
- *
- * When you add a GstElement to its parent container, the parent container will
- * do this:
- *
- * $(DDOC_COMMENT example)
- *
- * This means that the container now owns a reference to the child element
- * (since it called gst_object_ref()), and the child element has no floating
- * reference.
- *
- * The purpose of the floating reference is to keep the child element alive
- * until you add it to a parent container, which then manages the lifetime of
- * the object itself:
- *
- * $(DDOC_COMMENT example)
- *
- * Another effect of this is, that calling gst_object_unref() on a bin object,
- * will also destoy all the GstElement objects in it. The same is true for
- * calling gst_bin_remove().
- *
- * Special care has to be taken for all methods that gst_object_sink() an object
- * since if the caller of those functions had a floating reference to the object,
- * the object reference is now invalid.
+ * Since GstObject dereives from GInitiallyUnowned, it also inherits the
+ * floating reference. Be aware that functions such as gst_bin_add() and
+ * gst_element_add_pad() take ownership of the floating reference.
  *
  * In contrast to GObject instances, GstObject adds a name property. The functions
  * gst_object_set_name() and gst_object_get_name() are used to set/get the name
  * of the object.
  *
- * Last reviewed on 2005-11-09 (0.9.4)
+ * controlled properties
+ *
+ * Controlled properties offers a lightweight way to adjust gobject
+ * properties over stream-time. It works by using time-stamped value pairs that
+ * are queued for element-properties. At run-time the elements continously pull
+ * values changes for the current stream-time.
+ *
+ * What needs to be changed in a GstElement?
+ * Very little - it is just two steps to make a plugin controllable!
+ *
+ *  mark gobject-properties paramspecs that make sense to be controlled,
+ *  by GST_PARAM_CONTROLLABLE.
+ *
+ *  when processing data (get, chain, loop function) at the beginning call
+ *  gst_object_sync_values(element,timestamp).
+ *  This will made the controller to update all gobject properties that are under
+ *  control with the current values based on timestamp.
+ *
+ * What needs to be done in applications?
+ * Again it's not a lot to change.
+ *
+ *  create a GstControlSource.
+ *  csource = gst_interpolation_control_source_new();
+ *  g_object_set (csource, "mode", GST_INTERPOLATION_MODE_LINEAR, NULL);
+ *
+ *  Attach the GstControlSource on the controller to a property.
+ *  gst_object_add_control_binding (object, gst_direct_control_binding_new (object, "prop1", csource));
+ *
+ *  Set the control values
+ *  gst_timed_value_control_source_set ((GstTimedValueControlSource *)csource,0 * GST_SECOND, value1);
+ *  gst_timed_value_control_source_set ((GstTimedValueControlSource *)csource,1 * GST_SECOND, value2);
+ *
+ *  start your pipeline
+ *
+ * Last reviewed on 2012-03-29 (0.11.3)
  */
 public class ObjectGst : ObjectG
 {
@@ -201,88 +206,6 @@ public class ObjectGst : ObjectG
 		}
 	}
 	
-	void delegate(void*, ObjectGst)[] onObjectSavedListeners;
-	/**
-	 * Trigered whenever a new object is saved to XML. You can connect to this
-	 * signal to insert custom XML tags into the core XML.
-	 */
-	void addOnObjectSaved(void delegate(void*, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("object-saved" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"object-saved",
-			cast(GCallback)&callBackObjectSaved,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["object-saved"] = 1;
-		}
-		onObjectSavedListeners ~= dlg;
-	}
-	extern(C) static void callBackObjectSaved(GstObject* gstobjectStruct, void* xmlNode, ObjectGst _objectGst)
-	{
-		foreach ( void delegate(void*, ObjectGst) dlg ; _objectGst.onObjectSavedListeners )
-		{
-			dlg(xmlNode, _objectGst);
-		}
-	}
-	
-	void delegate(ObjectG, ObjectGst)[] onParentSetListeners;
-	/**
-	 * Emitted when the parent of an object is set.
-	 */
-	void addOnParentSet(void delegate(ObjectG, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("parent-set" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"parent-set",
-			cast(GCallback)&callBackParentSet,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["parent-set"] = 1;
-		}
-		onParentSetListeners ~= dlg;
-	}
-	extern(C) static void callBackParentSet(GstObject* gstobjectStruct, GObject* parent, ObjectGst _objectGst)
-	{
-		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentSetListeners )
-		{
-			dlg(ObjectG.getDObject!(ObjectG)(parent), _objectGst);
-		}
-	}
-	
-	void delegate(ObjectG, ObjectGst)[] onParentUnsetListeners;
-	/**
-	 * Emitted when the parent of an object is unset.
-	 */
-	void addOnParentUnset(void delegate(ObjectG, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("parent-unset" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"parent-unset",
-			cast(GCallback)&callBackParentUnset,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["parent-unset"] = 1;
-		}
-		onParentUnsetListeners ~= dlg;
-	}
-	extern(C) static void callBackParentUnset(GstObject* gstobjectStruct, GObject* parent, ObjectGst _objectGst)
-	{
-		foreach ( void delegate(ObjectG, ObjectGst) dlg ; _objectGst.onParentUnsetListeners )
-		{
-			dlg(ObjectG.getDObject!(ObjectG)(parent), _objectGst);
-		}
-	}
-	
 	
 	/**
 	 * Sets the name of object, or gives object a guaranteed unique
@@ -304,19 +227,18 @@ public class ObjectGst : ObjectG
 	 * Caller should g_free() the return value after usage.
 	 * For a nameless object, this returns NULL, which you can safely g_free()
 	 * as well.
-	 * Returns: the name of object. g_free() after usage. MT safe. This function grabs and releases object's LOCK.
+	 * Free-function: g_free
+	 * Returns: the name of object. g_free() after usage. MT safe. This function grabs and releases object's LOCK. [transfer full]
 	 */
 	public string getName()
 	{
-		// gchar* gst_object_get_name (GstObject *object);
+		// gchar * gst_object_get_name (GstObject *object);
 		return Str.toString(gst_object_get_name(gstObject));
 	}
 	
 	/**
 	 * Sets the parent of object to parent. The object's reference count will
-	 * be incremented, and any floating reference will be removed (see gst_object_sink()).
-	 * This function causes the parent-set signal to be emitted when the parent
-	 * was successfully set.
+	 * be incremented, and any floating reference will be removed (see gst_object_ref_sink()).
 	 * Params:
 	 * parent = new parent of object
 	 * Returns: TRUE if parent could be set or FALSE when object already had a parent or object and parent are the same. MT safe. Grabs and releases object's LOCK.
@@ -330,11 +252,11 @@ public class ObjectGst : ObjectG
 	/**
 	 * Returns the parent of object. This function increases the refcount
 	 * of the parent object so you should gst_object_unref() it after usage.
-	 * Returns: parent of object, this can be NULL if object has no parent. unref after usage. MT safe. Grabs and releases object's LOCK.
+	 * Returns: parent of object, this can be NULL if object has no parent. unref after usage. MT safe. Grabs and releases object's LOCK. [transfer full]
 	 */
 	public ObjectGst getParent()
 	{
-		// GstObject* gst_object_get_parent (GstObject *object);
+		// GstObject * gst_object_get_parent (GstObject *object);
 		auto p = gst_object_get_parent(gstObject);
 		
 		if(p is null)
@@ -357,33 +279,6 @@ public class ObjectGst : ObjectG
 	}
 	
 	/**
-	 * Returns a copy of the name prefix of object.
-	 * Caller should g_free() the return value after usage.
-	 * For a prefixless object, this returns NULL, which you can safely g_free()
-	 * as well.
-	 * Returns: the name prefix of object. g_free() after usage. MT safe. This function grabs and releases object's LOCK.
-	 */
-	public string getNamePrefix()
-	{
-		// gchar* gst_object_get_name_prefix (GstObject *object);
-		return Str.toString(gst_object_get_name_prefix(gstObject));
-	}
-	
-	/**
-	 * Sets the name prefix of object to name_prefix.
-	 * This function makes a copy of the provided name prefix, so the caller
-	 * retains ownership of the name prefix it sent.
-	 * MT safe. This function grabs and releases object's LOCK.
-	 * Params:
-	 * namePrefix = new name prefix of object
-	 */
-	public void setNamePrefix(string namePrefix)
-	{
-		// void gst_object_set_name_prefix (GstObject *object,  const gchar *name_prefix);
-		gst_object_set_name_prefix(gstObject, Str.toStringz(namePrefix));
-	}
-	
-	/**
 	 * A default deep_notify signal callback for an object. The user data
 	 * should contain a pointer to an array of strings that should be excluded
 	 * from the notify. The default handler will print the new value of the property
@@ -394,8 +289,8 @@ public class ObjectGst : ObjectG
 	 * object = the GObject that signalled the notify.
 	 * orig = a GstObject that initiated the notify.
 	 * pspec = a GParamSpec of the property.
-	 * excludedProps = a set of user-specified properties to exclude or
-	 *  NULL to show all changes.
+	 * excludedProps = a set of user-specified properties to exclude or NULL to show
+	 * all changes. [array zero-terminated=1][element-type gchar*][allow-none]
 	 */
 	public static void defaultDeepNotify(ObjectG object, ObjectGst orig, ParamSpec pspec, string[] excludedProps)
 	{
@@ -404,15 +299,15 @@ public class ObjectGst : ObjectG
 	}
 	
 	/**
-	 * A default error function.
+	 * A default error function that uses g_printerr() to display the error message
+	 * and the optional debug sting..
 	 * The default handler will simply print the error string using g_print.
 	 * Params:
-	 * error = the GError.
-	 * dbug = an additional debug information string, or NULL.
+	 * error = the GError. [in]
 	 */
 	public void defaultError(ErrorG error, string dbug)
 	{
-		// void gst_object_default_error (GstObject *source,  GError *error,  gchar *debug);
+		// void gst_object_default_error (GstObject *source,  const GError *error,  const gchar *debug);
 		gst_object_default_error(gstObject, (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
 	}
 	
@@ -423,7 +318,8 @@ public class ObjectGst : ObjectG
 	 * will lock each GstObject in the list to compare the name, so be
 	 * carefull when passing a list with a locked object.
 	 * Params:
-	 * list = a list of GstObject to check through
+	 * list = a list of GstObject to
+	 * check through. [transfer none][element-type Gst.Object]
 	 * name = the name to search for
 	 * Returns: TRUE if a GstObject named name does not appear in list, FALSE if it does. MT safe. Grabs and releases the LOCK of each object in the list.
 	 */
@@ -435,7 +331,7 @@ public class ObjectGst : ObjectG
 	
 	/**
 	 * Check if object has an ancestor ancestor somewhere up in
-	 * the hierarchy.
+	 * the hierarchy. One can e.g. check if a GstElement is inside a GstPipeline.
 	 * Params:
 	 * ancestor = a GstObject to check as ancestor
 	 * Returns: TRUE if ancestor is an ancestor of object. MT safe. Grabs and releases object's locks.
@@ -447,13 +343,13 @@ public class ObjectGst : ObjectG
 	}
 	
 	/**
-	 * Increments the refence count on object. This function
+	 * Increments the reference count on object. This function
 	 * does not take the lock on object because it relies on
 	 * atomic refcounting.
 	 * This object returns the input parameter to ease writing
 	 * Params:
-	 * object = a GstObject to reference
-	 * Returns: A pointer to object
+	 * object = a GstObject to reference. [type Gst.Object]
+	 * Returns: A pointer to object. [transfer full][type Gst.Object]
 	 */
 	public static void* doref(void* object)
 	{
@@ -462,13 +358,13 @@ public class ObjectGst : ObjectG
 	}
 	
 	/**
-	 * Decrements the refence count on object. If reference count hits
+	 * Decrements the reference count on object. If reference count hits
 	 * zero, destroy object. This function does not take the lock
 	 * on object as it relies on atomic refcounting.
 	 * The unref method should never be called with the LOCK held since
 	 * this might deadlock the dispose function.
 	 * Params:
-	 * object = a GstObject to unreference
+	 * object = a GstObject to unreference. [type Gst.Object]
 	 */
 	public static void unref(void* object)
 	{
@@ -477,55 +373,246 @@ public class ObjectGst : ObjectG
 	}
 	
 	/**
-	 * If object was floating, the GST_OBJECT_FLOATING flag is removed
-	 * and object is unreffed. When object was not floating,
-	 * this function does nothing.
-	 * Any newly created object has a refcount of 1 and is floating.
-	 * This function should be used when creating a new object to
-	 * symbolically 'take ownership' of object. This done by first doing a
-	 * gst_object_ref() to keep a reference to object and then gst_object_sink()
-	 * to remove and unref any floating references to object.
-	 * Use gst_object_set_parent() to have this done for you.
-	 * MT safe. This function grabs and releases object lock.
+	 * Increase the reference count of object, and possibly remove the floating
+	 * reference, if object has a floating reference.
+	 * In other words, if the object is floating, then this call "assumes ownership"
+	 * of the floating reference, converting it to a normal reference by clearing
+	 * the floating flag while leaving the reference count unchanged. If the object
+	 * is not floating, then this call adds a new normal reference increasing the
+	 * reference count by one.
 	 * Params:
 	 * object = a GstObject to sink
 	 */
-	public static void sink(void* object)
+	public static void* refSink(void* object)
 	{
-		// void gst_object_sink (gpointer object);
-		gst_object_sink(object);
+		// gpointer gst_object_ref_sink (gpointer object);
+		return gst_object_ref_sink(object);
 	}
 	
 	/**
-	 * Unrefs the GstObject pointed to by oldobj, refs newobj and
-	 * puts newobj in *oldobj. Be carefull when calling this
-	 * function, it does not take any locks. You might want to lock
-	 * the object owning oldobj pointer before calling this
-	 * function.
-	 * Make sure not to LOCK oldobj because it might be unreffed
-	 * which could cause a deadlock when it is disposed.
+	 * Atomically modifies a pointer to point to a new object.
+	 * The reference count of oldobj is decreased and the reference count of
+	 * newobj is increased.
+	 * Either newobj and the value pointed to by oldobj may be NULL.
 	 * Params:
-	 * oldobj = pointer to a place of a GstObject to replace
-	 * newobj = a new GstObject
+	 * oldobj = pointer to a place of a GstObject to
+	 * replace. [inout][transfer full]
+	 * newobj = a new GstObject. [transfer none]
+	 * Returns: TRUE if newobj was different from oldobj
 	 */
-	public static void replace(ref ObjectGst oldobj, ObjectGst newobj)
+	public static int replace(ref ObjectGst oldobj, ObjectGst newobj)
 	{
-		// void gst_object_replace (GstObject **oldobj,  GstObject *newobj);
+		// gboolean gst_object_replace (GstObject **oldobj,  GstObject *newobj);
 		GstObject* outoldobj = (oldobj is null) ? null : oldobj.getObjectGstStruct();
 		
-		gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct());
+		auto p = gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct());
 		
 		oldobj = ObjectG.getDObject!(ObjectGst)(outoldobj);
+		return p;
 	}
 	
 	/**
 	 * Generates a string describing the path of object in
 	 * the object hierarchy. Only useful (or used) for debugging.
-	 * Returns: a string describing the path of object. You must g_free() the string after usage. MT safe. Grabs and releases the GstObject's LOCK for all objects in the hierarchy.
+	 * Free-function: g_free
+	 * Returns: a string describing the path of object. You must g_free() the string after usage. MT safe. Grabs and releases the GstObject's LOCK for all objects in the hierarchy. [transfer full]
 	 */
 	public string getPathString()
 	{
-		// gchar* gst_object_get_path_string (GstObject *object);
+		// gchar * gst_object_get_path_string (GstObject *object);
 		return Str.toString(gst_object_get_path_string(gstObject));
+	}
+	
+	/**
+	 * Returns a suggestion for timestamps where buffers should be split
+	 * to get best controller results.
+	 * Returns: Returns the suggested timestamp or GST_CLOCK_TIME_NONE if no control-rate was set.
+	 */
+	public GstClockTime suggestNextSync()
+	{
+		// GstClockTime gst_object_suggest_next_sync (GstObject *object);
+		return gst_object_suggest_next_sync(gstObject);
+	}
+	
+	/**
+	 * Sets the properties of the object, according to the GstControlSources that
+	 * (maybe) handle them and for the given timestamp.
+	 * If this function fails, it is most likely the application developers fault.
+	 * Most probably the control sources are not setup correctly.
+	 * Params:
+	 * timestamp = the time that should be processed
+	 * Returns: TRUE if the controller values could be applied to the object properties, FALSE otherwise
+	 */
+	public int syncValues(GstClockTime timestamp)
+	{
+		// gboolean gst_object_sync_values (GstObject *object,  GstClockTime timestamp);
+		return gst_object_sync_values(gstObject, timestamp);
+	}
+	
+	/**
+	 * Check if the object has an active controlled properties.
+	 * Returns: TRUE if the object has active controlled properties
+	 */
+	public int hasActiveControlBindings()
+	{
+		// gboolean gst_object_has_active_control_bindings  (GstObject *object);
+		return gst_object_has_active_control_bindings(gstObject);
+	}
+	
+	/**
+	 * This function is used to disable all controlled properties of the object for
+	 * some time, i.e. gst_object_sync_values() will do nothing.
+	 * Params:
+	 * disabled = boolean that specifies whether to disable the controller
+	 * or not.
+	 */
+	public void setControlBindingsDisabled(int disabled)
+	{
+		// void gst_object_set_control_bindings_disabled  (GstObject *object,  gboolean disabled);
+		gst_object_set_control_bindings_disabled(gstObject, disabled);
+	}
+	
+	/**
+	 * This function is used to disable the GstController on a property for
+	 * some time, i.e. gst_controller_sync_values() will do nothing for the
+	 * property.
+	 * Params:
+	 * propertyName = property to disable
+	 * disabled = boolean that specifies whether to disable the controller
+	 * or not.
+	 */
+	public void setControlBindingDisabled(string propertyName, int disabled)
+	{
+		// void gst_object_set_control_binding_disabled  (GstObject *object,  const gchar *property_name,  gboolean disabled);
+		gst_object_set_control_binding_disabled(gstObject, Str.toStringz(propertyName), disabled);
+	}
+	
+	/**
+	 * Sets the GstControlBinding. If there already was a GstControlBinding
+	 * for this property it will be replaced.
+	 * The object will take ownership of the binding.
+	 * Params:
+	 * binding = the GstControlBinding that should be used. [transfer full]
+	 * Returns: FALSE if the given binding has not been setup for this object or TRUE otherwise.
+	 */
+	public int addControlBinding(GstControlBinding* binding)
+	{
+		// gboolean gst_object_add_control_binding (GstObject *object,  GstControlBinding *binding);
+		return gst_object_add_control_binding(gstObject, binding);
+	}
+	
+	/**
+	 * Gets the corresponding GstControlBinding for the property. This should be
+	 * unreferenced again after use.
+	 * Params:
+	 * propertyName = name of the property
+	 * Returns: the GstControlBinding for property_name or NULL if the property is not controlled. [transfer full]
+	 */
+	public GstControlBinding* getControlBinding(string propertyName)
+	{
+		// GstControlBinding * gst_object_get_control_binding (GstObject *object,  const gchar *property_name);
+		return gst_object_get_control_binding(gstObject, Str.toStringz(propertyName));
+	}
+	
+	/**
+	 * Removes the corresponding GstControlBinding. If it was the
+	 * last ref of the binding, it will be disposed.
+	 * Params:
+	 * binding = the binding
+	 * Returns: TRUE if the binding could be removed.
+	 */
+	public int removeControlBinding(GstControlBinding* binding)
+	{
+		// gboolean gst_object_remove_control_binding (GstObject *object,  GstControlBinding *binding);
+		return gst_object_remove_control_binding(gstObject, binding);
+	}
+	
+	/**
+	 * Gets the value for the given controlled property at the requested time.
+	 * Params:
+	 * propertyName = the name of the property to get
+	 * timestamp = the time the control-change should be read from
+	 * Returns: the GValue of the property at the given time, or NULL if the property isn't controlled.
+	 */
+	public GValue* getValue(string propertyName, GstClockTime timestamp)
+	{
+		// GValue * gst_object_get_value (GstObject *object,  const gchar *property_name,  GstClockTime timestamp);
+		return gst_object_get_value(gstObject, Str.toStringz(propertyName), timestamp);
+	}
+	
+	/**
+	 * Gets a number of values for the given controlled property starting at the
+	 * requested time. The array values need to hold enough space for n_values of
+	 * the same type as the objects property's type.
+	 * This function is useful if one wants to e.g. draw a graph of the control
+	 * curve or apply a control curve sample by sample.
+	 * The values are unboxed and ready to be used. The similar function
+	 * gst_object_get_g_value_array() returns the array as GValues and is
+	 * better suites for bindings.
+	 * Params:
+	 * propertyName = the name of the property to get
+	 * timestamp = the time that should be processed
+	 * interval = the time spacing between subsequent values
+	 * nValues = the number of values
+	 * values = array to put control-values in
+	 * Returns: TRUE if the given array could be filled, FALSE otherwise
+	 */
+	public int getValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, void* values)
+	{
+		// gboolean gst_object_get_value_array (GstObject *object,  const gchar *property_name,  GstClockTime timestamp,  GstClockTime interval,  guint n_values,  gpointer values);
+		return gst_object_get_value_array(gstObject, Str.toStringz(propertyName), timestamp, interval, nValues, values);
+	}
+	
+	/**
+	 * Gets a number of GValues for the given controlled property starting at the
+	 * requested time. The array values need to hold enough space for n_values of
+	 * GValue.
+	 * This function is useful if one wants to e.g. draw a graph of the control
+	 * curve or apply a control curve sample by sample.
+	 * Params:
+	 * propertyName = the name of the property to get
+	 * timestamp = the time that should be processed
+	 * interval = the time spacing between subsequent values
+	 * nValues = the number of values
+	 * values = array to put control-values in
+	 * Returns: TRUE if the given array could be filled, FALSE otherwise
+	 */
+	public int getGValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, GValue* values)
+	{
+		// gboolean gst_object_get_g_value_array (GstObject *object,  const gchar *property_name,  GstClockTime timestamp,  GstClockTime interval,  guint n_values,  GValue *values);
+		return gst_object_get_g_value_array(gstObject, Str.toStringz(propertyName), timestamp, interval, nValues, values);
+	}
+	
+	/**
+	 * Obtain the control-rate for this object. Audio processing GstElement
+	 * objects will use this rate to sub-divide their processing loop and call
+	 * gst_object_sync_values() inbetween. The length of the processing segment
+	 * should be up to control-rate nanoseconds.
+	 * If the object is not under property control, this will return
+	 * GST_CLOCK_TIME_NONE. This allows the element to avoid the sub-dividing.
+	 * The control-rate is not expected to change if the element is in
+	 * GST_STATE_PAUSED or GST_STATE_PLAYING.
+	 * Returns: the control rate in nanoseconds
+	 */
+	public GstClockTime getControlRate()
+	{
+		// GstClockTime gst_object_get_control_rate (GstObject *object);
+		return gst_object_get_control_rate(gstObject);
+	}
+	
+	/**
+	 * Change the control-rate for this object. Audio processing GstElement
+	 * objects will use this rate to sub-divide their processing loop and call
+	 * gst_object_sync_values() inbetween. The length of the processing segment
+	 * should be up to control-rate nanoseconds.
+	 * The control-rate should not change if the element is in GST_STATE_PAUSED or
+	 * GST_STATE_PLAYING.
+	 * Params:
+	 * controlRate = the new control-rate in nanoseconds.
+	 */
+	public void setControlRate(GstClockTime controlRate)
+	{
+		// void gst_object_set_control_rate (GstObject *object,  GstClockTime control_rate);
+		gst_object_set_control_rate(gstObject, controlRate);
 	}
 }

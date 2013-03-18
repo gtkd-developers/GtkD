@@ -87,36 +87,35 @@ private import glib.Str;
  * with a start value of 0 and a stop/duration of -1, which is undefined. The default
  * rate and applied_rate is 1.0.
  *
- * If the segment is used for managing seeks, the segment duration should be set with
- * gst_segment_set_duration(). The public duration field contains the duration of the
- * segment. When using the segment for seeking, the start and time members should
- * normally be left to their default 0 value. The stop position is left to -1 unless
- * explicitly configured to a different value after a seek event.
+ * The public duration field contains the duration of the segment. When using
+ * the segment for seeking, the start and time members should normally be left
+ * to their default 0 value. The stop position is left to -1 unless explicitly
+ * configured to a different value after a seek event.
  *
- * The current position in the segment should be set with the gst_segment_set_last_stop().
- * The public last_stop field contains the last set stop position in the segment.
+ * The current position in the segment should be set by changing the position
+ * member in the structure.
  *
  * For elements that perform seeks, the current segment should be updated with the
- * gst_segment_set_seek() and the values from the seek event. This method will update
- * all the segment fields. The last_stop field will contain the new playback position.
- * If the cur_type was different from GST_SEEK_TYPE_NONE, playback continues from
- * the last_stop position, possibly with updated flags or rate.
+ * gst_segment_do_seek() and the values from the seek event. This method will update
+ * all the segment fields. The position field will contain the new playback position.
+ * If the start_type was different from GST_SEEK_TYPE_NONE, playback continues from
+ * the position position, possibly with updated flags or rate.
  *
- * For elements that want to use GstSegment to track the playback region, use
- * gst_segment_set_newsegment() to update the segment fields with the information from
- * the newsegment event. The gst_segment_clip() method can be used to check and clip
+ * For elements that want to use GstSegment to track the playback region,
+ * update the segment fields with the information from the newsegment event.
+ * The gst_segment_clip() method can be used to check and clip
  * the media data to the segment boundaries.
  *
  * For elements that want to synchronize to the pipeline clock, gst_segment_to_running_time()
  * can be used to convert a timestamp to a value that can be used to synchronize
- * to the clock. This function takes into account all accumulated segments as well as
+ * to the clock. This function takes into account the base as well as
  * any rate or applied_rate conversions.
  *
  * For elements that need to perform operations on media data in stream_time,
  * gst_segment_to_stream_time() can be used to convert a timestamp and the segment
  * info to stream time (which is always between 0 and the duration of the stream).
  *
- * Last reviewed on 2007-05-17 (0.10.13)
+ * Last reviewed on 2012-03-29 (0.11.3)
  */
 public class Segment
 {
@@ -163,18 +162,18 @@ public class Segment
 	 * format = the format of the segment.
 	 * start = the start position in the segment
 	 * stop = the stop position in the segment
-	 * clipStart = the clipped start position in the segment
-	 * clipStop = the clipped stop position in the segment
+	 * clipStart = the clipped start position in the segment. [out][allow-none]
+	 * clipStop = the clipped stop position in the segment. [out][allow-none]
 	 * Returns: TRUE if the given start and stop times fall partially or completely in segment, FALSE if the values are completely outside of the segment.
 	 */
-	public int clip(GstFormat format, long start, long stop, ref long clipStart, ref long clipStop)
+	public int clip(GstFormat format, ulong start, ulong stop, ref ulong clipStart, ref ulong clipStop)
 	{
-		// gboolean gst_segment_clip (GstSegment *segment,  GstFormat format,  gint64 start,  gint64 stop,  gint64 *clip_start,  gint64 *clip_stop);
+		// gboolean gst_segment_clip (const GstSegment *segment,  GstFormat format,  guint64 start,  guint64 stop,  guint64 *clip_start,  guint64 *clip_stop);
 		return gst_segment_clip(gstSegment, format, start, stop, &clipStart, &clipStop);
 	}
 	
 	/**
-	 * The start/last_stop positions are set to 0 and the stop/duration
+	 * The start/position fields are set to 0 and the stop/duration
 	 * fields are set to -1 (unknown). The default rate of 1.0 and no
 	 * flags are set.
 	 * Initialize segment to its default values.
@@ -190,17 +189,36 @@ public class Segment
 	/**
 	 * Allocate a new GstSegment structure and initialize it using
 	 * gst_segment_init().
+	 * Free-function: gst_segment_free
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
-		// GstSegment* gst_segment_new (void);
+		// GstSegment * gst_segment_new (void);
 		auto p = gst_segment_new();
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_segment_new()");
 		}
 		this(cast(GstSegment*) p);
+	}
+	
+	/**
+	 * Create a copy of given segment.
+	 * Free-function: gst_segment_free
+	 * Returns: a new GstSegment, free with gst_segment_free(). [transfer full]
+	 */
+	public Segment copy()
+	{
+		// GstSegment * gst_segment_copy (const GstSegment *segment);
+		auto p = gst_segment_copy(gstSegment);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Segment)(cast(GstSegment*) p);
 	}
 	
 	/**
@@ -213,115 +231,48 @@ public class Segment
 	}
 	
 	/**
-	 * Set the duration of the segment to duration. This function is mainly
-	 * used by elements that perform seeking and know the total duration of the
-	 * segment.
-	 * This field should be set to allow seeking requests relative to the
-	 * duration.
-	 * Params:
-	 * format = the format of the segment.
-	 * duration = the duration of the segment info or -1 if unknown.
-	 */
-	public void setDuration(GstFormat format, long duration)
-	{
-		// void gst_segment_set_duration (GstSegment *segment,  GstFormat format,  gint64 duration);
-		gst_segment_set_duration(gstSegment, format, duration);
-	}
-	
-	/**
-	 * Set the last observed stop position in the segment to position.
-	 * This field should be set to allow seeking requests relative to the
-	 * current playing position.
-	 * Params:
-	 * format = the format of the segment.
-	 * position = the position
-	 */
-	public void setLastStop(GstFormat format, long position)
-	{
-		// void gst_segment_set_last_stop (GstSegment *segment,  GstFormat format,  gint64 position);
-		gst_segment_set_last_stop(gstSegment, format, position);
-	}
-	
-	/**
-	 * Update the segment structure with the field values of a new segment event and
-	 * with a default applied_rate of 1.0.
-	 * Params:
-	 * segment = a GstSegment structure.
-	 * update = flag indicating a new segment is started or updated
-	 * rate = the rate of the segment.
-	 * format = the format of the segment.
-	 * start = the new start value
-	 * stop = the new stop value
-	 * time = the new stream time
-	 * Since 0.10.6
-	 */
-	public void setNewsegment(int update, double rate, GstFormat format, long start, long stop, long time)
-	{
-		// void gst_segment_set_newsegment (GstSegment *segment,  gboolean update,  gdouble rate,  GstFormat format,  gint64 start,  gint64 stop,  gint64 time);
-		gst_segment_set_newsegment(gstSegment, update, rate, format, start, stop, time);
-	}
-	
-	/**
-	 * Update the segment structure with the field values of a new segment event.
-	 * Params:
-	 * segment = a GstSegment structure.
-	 * update = flag indicating a new segment is started or updated
-	 * rate = the rate of the segment.
-	 * appliedRate = the applied rate of the segment.
-	 * format = the format of the segment.
-	 * start = the new start value
-	 * stop = the new stop value
-	 * time = the new stream time
-	 */
-	public void setNewsegmentFull(int update, double rate, double appliedRate, GstFormat format, long start, long stop, long time)
-	{
-		// void gst_segment_set_newsegment_full (GstSegment *segment,  gboolean update,  gdouble rate,  gdouble applied_rate,  GstFormat format,  gint64 start,  gint64 stop,  gint64 time);
-		gst_segment_set_newsegment_full(gstSegment, update, rate, appliedRate, format, start, stop, time);
-	}
-	
-	/**
 	 * Update the segment structure with the field values of a seek event (see
 	 * gst_event_new_seek()).
-	 * After calling this method, the segment field last_stop and time will
+	 * After calling this method, the segment field position and time will
 	 * contain the requested new position in the segment. The new requested
 	 * position in the segment depends on rate and start_type and stop_type.
 	 * For positive rate, the new position in the segment is the new segment
 	 * start field when it was updated with a start_type different from
 	 * GST_SEEK_TYPE_NONE. If no update was performed on segment start position
-	 * (GST_SEEK_TYPE_NONE), start is ignored and segment last_stop is
+	 * (GST_SEEK_TYPE_NONE), start is ignored and segment position is
 	 * unmodified.
 	 * For negative rate, the new position in the segment is the new segment
 	 * stop field when it was updated with a stop_type different from
 	 * GST_SEEK_TYPE_NONE. If no stop was previously configured in the segment, the
 	 * duration of the segment will be used to update the stop position.
 	 * If no update was performed on segment stop position (GST_SEEK_TYPE_NONE),
-	 * stop is ignored and segment last_stop is unmodified.
+	 * stop is ignored and segment position is unmodified.
 	 * The applied rate of the segment will be set to 1.0 by default.
 	 * If the caller can apply a rate change, it should update segment
 	 * rate and applied_rate after calling this function.
 	 * update will be set to TRUE if a seek should be performed to the segment
-	 * last_stop field. This field can be FALSE if, for example, only the rate
+	 * position field. This field can be FALSE if, for example, only the rate
 	 * has been changed but not the playback position.
 	 * Params:
 	 * rate = the rate of the segment.
 	 * format = the format of the segment.
-	 * flags = the seek flags for the segment
+	 * flags = the segment flags for the segment
 	 * startType = the seek method
 	 * start = the seek start value
 	 * stopType = the seek method
 	 * stop = the seek stop value
-	 * update = boolean holding whether last_stop was updated.
+	 * update = boolean holding whether position was updated.
+	 * Returns: TRUE if the seek could be performed.
 	 */
-	public void setSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop, ref int update)
+	public int doSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, ulong start, GstSeekType stopType, ulong stop, int* update)
 	{
-		// void gst_segment_set_seek (GstSegment *segment,  gdouble rate,  GstFormat format,  GstSeekFlags flags,  GstSeekType start_type,  gint64 start,  GstSeekType stop_type,  gint64 stop,  gboolean *update);
-		gst_segment_set_seek(gstSegment, rate, format, flags, startType, start, stopType, stop, &update);
+		// gboolean gst_segment_do_seek (GstSegment *segment,  gdouble rate,  GstFormat format,  GstSeekFlags flags,  GstSeekType start_type,  guint64 start,  GstSeekType stop_type,  guint64 stop,  gboolean *update);
+		return gst_segment_do_seek(gstSegment, rate, format, flags, startType, start, stopType, stop, update);
 	}
 	
 	/**
 	 * Translate position to the total running time using the currently configured
-	 * and previously accumulated segments. Position is a value between segment
-	 * start and stop time.
+	 * segment. Position is a value between segment start and stop time.
 	 * This function is typically used by elements that need to synchronize to the
 	 * global clock in a pipeline. The runnning time is a constantly increasing value
 	 * starting from 0. When gst_segment_init() is called, this value will reset to
@@ -332,9 +283,9 @@ public class Segment
 	 * position = the position in the segment
 	 * Returns: the position as the total running time or -1 when an invalid position was given.
 	 */
-	public long toRunningTime(GstFormat format, long position)
+	public ulong toRunningTime(GstFormat format, ulong position)
 	{
-		// gint64 gst_segment_to_running_time (GstSegment *segment,  GstFormat format,  gint64 position);
+		// guint64 gst_segment_to_running_time (const GstSegment *segment,  GstFormat format,  guint64 position);
 		return gst_segment_to_running_time(gstSegment, format, position);
 	}
 	
@@ -353,9 +304,48 @@ public class Segment
 	 * position = the position in the segment
 	 * Returns: the position in stream_time or -1 when an invalid position was given.
 	 */
-	public long toStreamTime(GstFormat format, long position)
+	public ulong toStreamTime(GstFormat format, ulong position)
 	{
-		// gint64 gst_segment_to_stream_time (GstSegment *segment,  GstFormat format,  gint64 position);
+		// guint64 gst_segment_to_stream_time (const GstSegment *segment,  GstFormat format,  guint64 position);
 		return gst_segment_to_stream_time(gstSegment, format, position);
+	}
+	
+	/**
+	 * Convert running_time into a position in the segment so that
+	 * gst_segment_to_running_time() with that position returns running_time.
+	 * Params:
+	 * format = the format of the segment.
+	 * runningTime = the running_time in the segment
+	 * Returns: the position in the segment for running_time. This function returns -1 when running_time is -1 or when it is not inside segment.
+	 */
+	public ulong toPosition(GstFormat format, ulong runningTime)
+	{
+		// guint64 gst_segment_to_position (const GstSegment *segment,  GstFormat format,  guint64 running_time);
+		return gst_segment_to_position(gstSegment, format, runningTime);
+	}
+	
+	/**
+	 * Adjust the start/stop and base values of segment such that the next valid
+	 * buffer will be one with running_time.
+	 * Params:
+	 * format = the format of the segment.
+	 * runningTime = the running_time in the segment
+	 * Returns: TRUE if the segment could be updated successfully. If FALSE is returned, running_time is -1 or not in segment.
+	 */
+	public int setRunningTime(GstFormat format, ulong runningTime)
+	{
+		// gboolean gst_segment_set_running_time (GstSegment *segment,  GstFormat format,  guint64 running_time);
+		return gst_segment_set_running_time(gstSegment, format, runningTime);
+	}
+	
+	/**
+	 * Copy the contents of src into dest.
+	 * Params:
+	 * dest = a GstSegment. [transfer none]
+	 */
+	public void copyInto(Segment dest)
+	{
+		// void gst_segment_copy_into (const GstSegment *src,  GstSegment *dest);
+		gst_segment_copy_into(gstSegment, (dest is null) ? null : dest.getSegmentStruct());
 	}
 }

@@ -139,7 +139,7 @@ public class TypeFind
 	 */
 	public void suggest(uint probability, Caps caps)
 	{
-		// void gst_type_find_suggest (GstTypeFind *find,  guint probability,  const GstCaps *caps);
+		// void gst_type_find_suggest (GstTypeFind *find,  guint probability,  GstCaps *caps);
 		gst_type_find_suggest(gstTypeFind, probability, (caps is null) ? null : caps.getCapsStruct());
 	}
 	
@@ -158,22 +158,23 @@ public class TypeFind
 	 * registering this function will be available for typefinding.
 	 * This function is typically called during an element's plugin initialization.
 	 * Params:
-	 * plugin = A GstPlugin.
+	 * plugin = A GstPlugin, or NULL for a static typefind function
 	 * name = The name for registering
 	 * rank = The rank (or importance) of this typefind function
 	 * func = The GstTypeFindFunction to use
-	 * extensions = Optional extensions that could belong to this type
+	 * extensions = Optional comma-separated list of extensions
+	 * that could belong to this type. [allow-none]
 	 * possibleCaps = Optionally the caps that could be returned when typefinding
-	 *  succeeds
+	 * succeeds
 	 * data = Optional user data. This user data must be available until the plugin
-	 *  is unloaded.
+	 * is unloaded.
 	 * dataNotify = a GDestroyNotify that will be called on data when the plugin
-	 *  is unloaded.
+	 * is unloaded.
 	 * Returns: TRUE on success, FALSE otherwise
 	 */
-	public static int register(Plugin plugin, string name, uint rank, GstTypeFindFunction func, string[] extensions, Caps possibleCaps, void* data, GDestroyNotify dataNotify)
+	public static int register(Plugin plugin, string name, uint rank, GstTypeFindFunction func, string extensions, Caps possibleCaps, void* data, GDestroyNotify dataNotify)
 	{
-		// gboolean gst_type_find_register (GstPlugin *plugin,  const gchar *name,  guint rank,  GstTypeFindFunction func,  gchar **extensions,  const GstCaps *possible_caps,  gpointer data,  GDestroyNotify data_notify);
-		return gst_type_find_register((plugin is null) ? null : plugin.getPluginStruct(), Str.toStringz(name), rank, func, Str.toStringzArray(extensions), (possibleCaps is null) ? null : possibleCaps.getCapsStruct(), data, dataNotify);
+		// gboolean gst_type_find_register (GstPlugin *plugin,  const gchar *name,  guint rank,  GstTypeFindFunction func,  const gchar *extensions,  GstCaps *possible_caps,  gpointer data,  GDestroyNotify data_notify);
+		return gst_type_find_register((plugin is null) ? null : plugin.getPluginStruct(), Str.toStringz(name), rank, func, Str.toStringz(extensions), (possibleCaps is null) ? null : possibleCaps.getCapsStruct(), data, dataNotify);
 	}
 }

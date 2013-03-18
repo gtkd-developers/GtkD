@@ -85,20 +85,30 @@ private import gstreamer.ObjectGst;
  * gst_task_set_lock().
  *
  * The task can be started, paused and stopped with gst_task_start(), gst_task_pause()
- * and gst_task_stop() respectively.
+ * and gst_task_stop() respectively or with the gst_task_set_state() function.
  *
- * A GstTask will repeadedly call the GstTaskFunction with the user data
- * that was provided when creating the task with gst_task_create(). Before calling
- * the function it will acquire the provided lock.
+ * A GstTask will repeatedly call the GstTaskFunction with the user data
+ * that was provided when creating the task with gst_task_new(). While calling
+ * the function it will acquire the provided lock. The provided lock is released
+ * when the task pauses or stops.
  *
- * Stopping a task with gst_task_stop() will not immediatly make sure the task is
+ * Stopping a task with gst_task_stop() will not immediately make sure the task is
  * not running anymore. Use gst_task_join() to make sure the task is completely
  * stopped and the thread is stopped.
  *
  * After creating a GstTask, use gst_object_unref() to free its resources. This can
- * only be done it the task is not running anymore.
+ * only be done when the task is not running anymore.
  *
- * Last reviewed on 2006-02-13 (0.10.4)
+ * Task functions can send a GstMessage to send out-of-band data to the
+ * application. The application can receive messages from the GstBus in its
+ * mainloop.
+ *
+ * For debugging purposes, the task will configure its object name as the thread
+ * name on Linux. Please note that the object name should be configured before the
+ * task is started; changing the object name after the task has been started, has
+ * no effect on the thread name.
+ *
+ * Last reviewed on 2012-03-29 (0.11.3)
  */
 public class Task : ObjectGst
 {
@@ -138,38 +148,101 @@ public class Task : ObjectGst
 	 */
 	
 	/**
-	 * Wait for all tasks to be stopped. This is mainly used internally
-	 * to ensure proper cleanup of internal datastructures in testsuites.
-	 * MT safe.
-	 */
-	public static void cleanupAll()
-	{
-		// void gst_task_cleanup_all (void);
-		gst_task_cleanup_all();
-	}
-	
-	/**
-	 * Create a new Task that will repeadedly call the provided func
-	 * with data as a parameter. Typically the task will run in
+	 * Create a new Task that will repeatedly call the provided func
+	 * with user_data as a parameter. Typically the task will run in
 	 * a new thread.
 	 * The function cannot be changed after the task has been created. You
 	 * must create a new GstTask to change the function.
+	 * This function will not yet create and start a thread. Use gst_task_start() or
+	 * gst_task_pause() to create and start the GThread.
+	 * Before the task can be used, a GStaticRecMutex must be configured using the
+	 * gst_task_set_lock() function. This lock will always be acquired while
+	 * func is called.
 	 * Params:
 	 * func = The GstTaskFunction to use
-	 * data = User data to pass to func
-	 * Returns: A new GstTask. MT safe.
+	 * userData = User data to pass to func
+	 * notify = the function to call when user_data is no longer needed.
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static Task create(GstTaskFunction func, void* data)
+	public this (GstTaskFunction func, void* userData, GDestroyNotify notify)
 	{
-		// GstTask* gst_task_create (GstTaskFunction func,  gpointer data);
-		auto p = gst_task_create(func, data);
-		
+		// GstTask * gst_task_new (GstTaskFunction func,  gpointer user_data,  GDestroyNotify notify);
+		auto p = gst_task_new(func, userData, notify);
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gst_task_new(func, userData, notify)");
 		}
-		
-		return ObjectG.getDObject!(Task)(cast(GstTask*) p);
+		this(cast(GstTask*) p);
+	}
+	
+	/**
+	 * Set the mutex used by the task. The mutex will be acquired before
+	 * calling the GstTaskFunction.
+	 * This function has to be called before calling gst_task_pause() or
+	 * gst_task_start().
+	 * MT safe.
+	 * Params:
+	 * mutex = The GRecMutex to use
+	 */
+	public void setLock(GRecMutex* mutex)
+	{
+		// void gst_task_set_lock (GstTask *task,  GRecMutex *mutex);
+		gst_task_set_lock(gstTask, mutex);
+	}
+	
+	/**
+	 * Set pool as the new GstTaskPool for task. Any new streaming threads that
+	 * will be created by task will now use pool.
+	 * MT safe.
+	 * Params:
+	 * pool = a GstTaskPool. [transfer none]
+	 */
+	public void setPool(GstTaskPool* pool)
+	{
+		// void gst_task_set_pool (GstTask *task,  GstTaskPool *pool);
+		gst_task_set_pool(gstTask, pool);
+	}
+	
+	/**
+	 * Get the GstTaskPool that this task will use for its streaming
+	 * threads.
+	 * MT safe.
+	 * Returns: the GstTaskPool used by task. gst_object_unref() after usage. [transfer full]
+	 */
+	public GstTaskPool* getPool()
+	{
+		// GstTaskPool * gst_task_get_pool (GstTask *task);
+		return gst_task_get_pool(gstTask);
+	}
+	
+	/**
+	 * Call enter_func when the task function of task is entered. user_data will
+	 * be passed to enter_func and notify will be called when user_data is no
+	 * longer referenced.
+	 * Params:
+	 * enterFunc = a GstTaskThreadFunc. [in]
+	 * userData = user data passed to enter_func
+	 * notify = called when user_data is no longer referenced
+	 */
+	public void setEnterCallback(GstTaskThreadFunc enterFunc, void* userData, GDestroyNotify notify)
+	{
+		// void gst_task_set_enter_callback (GstTask *task,  GstTaskThreadFunc enter_func,  gpointer user_data,  GDestroyNotify notify);
+		gst_task_set_enter_callback(gstTask, enterFunc, userData, notify);
+	}
+	
+	/**
+	 * Call leave_func when the task function of task is left. user_data will
+	 * be passed to leave_func and notify will be called when user_data is no
+	 * longer referenced.
+	 * Params:
+	 * leaveFunc = a GstTaskThreadFunc. [in]
+	 * userData = user data passed to leave_func
+	 * notify = called when user_data is no longer referenced
+	 */
+	public void setLeaveCallback(GstTaskThreadFunc leaveFunc, void* userData, GDestroyNotify notify)
+	{
+		// void gst_task_set_leave_callback (GstTask *task,  GstTaskThreadFunc leave_func,  gpointer user_data,  GDestroyNotify notify);
+		gst_task_set_leave_callback(gstTask, leaveFunc, userData, notify);
 	}
 	
 	/**
@@ -183,18 +256,19 @@ public class Task : ObjectGst
 	}
 	
 	/**
-	 * Joins task. After this call, it is safe to unref the task
-	 * and clean up the lock set with gst_task_set_lock().
-	 * The task will automatically be stopped with this call.
-	 * This function cannot be called from within a task function as this
-	 * would cause a deadlock. The function will detect this and print a
-	 * g_warning.
-	 * Returns: TRUE if the task could be joined. MT safe.
+	 * Sets the state of task to state.
+	 * The task must have a lock associated with it using
+	 * gst_task_set_lock() when going to GST_TASK_STARTED or GST_TASK_PAUSED or
+	 * this function will return FALSE.
+	 * MT safe.
+	 * Params:
+	 * state = the new task state
+	 * Returns: TRUE if the state could be changed.
 	 */
-	public int join()
+	public int setState(GstTaskState state)
 	{
-		// gboolean gst_task_join (GstTask *task);
-		return gst_task_join(gstTask);
+		// gboolean gst_task_set_state (GstTask *task,  GstTaskState state);
+		return gst_task_set_state(gstTask, state);
 	}
 	
 	/**
@@ -211,23 +285,8 @@ public class Task : ObjectGst
 	}
 	
 	/**
-	 * Set the mutex used by the task. The mutex will be acquired before
-	 * calling the GstTaskFunction.
-	 * This function has to be called before calling gst_task_pause() or
-	 * gst_task_start().
-	 * MT safe.
-	 * Params:
-	 * mutex = The GMutex to use
-	 */
-	public void setLock(void* mutex)
-	{
-		// void gst_task_set_lock (GstTask *task,  GStaticRecMutex *mutex);
-		gst_task_set_lock(gstTask, mutex);
-	}
-	
-	/**
 	 * Starts task. The task must have a lock associated with it using
-	 * gst_task_set_lock() or thsi function will return FALSE.
+	 * gst_task_set_lock() or this function will return FALSE.
 	 * Returns: TRUE if the task could be started. MT safe.
 	 */
 	public int start()
@@ -246,5 +305,31 @@ public class Task : ObjectGst
 	{
 		// gboolean gst_task_stop (GstTask *task);
 		return gst_task_stop(gstTask);
+	}
+	
+	/**
+	 * Joins task. After this call, it is safe to unref the task
+	 * and clean up the lock set with gst_task_set_lock().
+	 * The task will automatically be stopped with this call.
+	 * This function cannot be called from within a task function as this
+	 * would cause a deadlock. The function will detect this and print a
+	 * g_warning.
+	 * Returns: TRUE if the task could be joined. MT safe.
+	 */
+	public int join()
+	{
+		// gboolean gst_task_join (GstTask *task);
+		return gst_task_join(gstTask);
+	}
+	
+	/**
+	 * Wait for all tasks to be stopped. This is mainly used internally
+	 * to ensure proper cleanup of internal data structures in test suites.
+	 * MT safe.
+	 */
+	public static void cleanupAll()
+	{
+		// void gst_task_cleanup_all (void);
+		gst_task_cleanup_all();
 	}
 }

@@ -73,12 +73,33 @@ private import gobject.Value;
 
 
 /**
- * GstMiniObject is a baseclass like GObject, but has been stripped down of
- * features to be fast and small.
- * It offers sub-classing and ref-counting in the same way as GObject does.
- * It has no properties and no signal-support though.
+ * GstMiniObject is a simple structure that can be used to implement refcounted
+ * types.
  *
- * Last reviewed on 2005-11-23 (0.9.5)
+ * Subclasses will include GstMiniObject as the first member in their structure
+ * and then call gst_mini_object_init() to initialize the GstMiniObject fields.
+ *
+ * gst_mini_object_ref() and gst_mini_object_unref() increment and decrement the
+ * refcount respectively. When the refcount of a mini-object reaches 0, the
+ * dispose function is called first and when this returns TRUE, the free
+ * function of the miniobject is called.
+ *
+ * A copy can be made with gst_mini_object_copy().
+ *
+ * gst_mini_object_is_writable() will return TRUE when the refcount of the
+ * object is exactly 1, meaning the current caller has the only reference to the
+ * object. gst_mini_object_make_writable() will return a writable version of the
+ * object, which might be a new copy when the refcount was not 1.
+ *
+ * Opaque data can be associated with a GstMiniObject with
+ * gst_mini_object_set_qdata() and gst_mini_object_get_qdata(). The data is
+ * meant to be specific to the particular object and is not automatically copied
+ * with gst_mini_object_copy() or similar methods.
+ *
+ * A weak reference can be added and remove with gst_mini_object_weak_ref()
+ * and gst_mini_object_weak_unref() respectively.
+ *
+ * Last reviewed on 2012-06-15 (0.11.93)
  */
 public class MiniObject
 {
@@ -111,73 +132,19 @@ public class MiniObject
 	 */
 	
 	/**
-	 * Creates a new mini-object of the desired type.
-	 * MT safe
+	 * Initializes a mini-object with the desired type and copy/dispose/free
+	 * functions.
 	 * Params:
+	 * flags = initial GstMiniObjectFlags
 	 * type = the GType of the mini-object to create
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 * copyFunc = the copy function, or NULL
+	 * disposeFunc = the dispose function, or NULL
+	 * freeFunc = the free function or NULL
 	 */
-	public this (GType type)
+	public void init(uint flags, GType type, GstMiniObjectCopyFunction copyFunc, GstMiniObjectDisposeFunction disposeFunc, GstMiniObjectFreeFunction freeFunc)
 	{
-		// GstMiniObject* gst_mini_object_new (GType type);
-		auto p = gst_mini_object_new(type);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_mini_object_new(type)");
-		}
-		this(cast(GstMiniObject*) p);
-	}
-	
-	/**
-	 * Creates a copy of the mini-object.
-	 * MT safe
-	 * Returns: the new mini-object.
-	 */
-	public MiniObject copy()
-	{
-		// GstMiniObject* gst_mini_object_copy (const GstMiniObject *mini_object);
-		auto p = gst_mini_object_copy(gstMiniObject);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
-	}
-	
-	/**
-	 * Checks if a mini-object is writable. A mini-object is writable
-	 * if the reference count is one and the GST_MINI_OBJECT_FLAG_READONLY
-	 * flag is not set. Modification of a mini-object should only be
-	 * done after verifying that it is writable.
-	 * MT safe
-	 * Returns: TRUE if the object is writable.
-	 */
-	public int isWritable()
-	{
-		// gboolean gst_mini_object_is_writable (const GstMiniObject *mini_object);
-		return gst_mini_object_is_writable(gstMiniObject);
-	}
-	
-	/**
-	 * Checks if a mini-object is writable. If not, a writeable copy is made and
-	 * returned. This gives away the reference to the original mini object,
-	 * and returns a reference to the new object.
-	 * MT safe
-	 * Returns: a mini-object (possibly the same pointer) that is writable.
-	 */
-	public MiniObject makeWritable()
-	{
-		// GstMiniObject* gst_mini_object_make_writable (GstMiniObject *mini_object);
-		auto p = gst_mini_object_make_writable(gstMiniObject);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
+		// void gst_mini_object_init (GstMiniObject *mini_object,  guint flags,  GType type,  GstMiniObjectCopyFunction copy_func,  GstMiniObjectDisposeFunction dispose_func,  GstMiniObjectFreeFunction free_func);
+		gst_mini_object_init(gstMiniObject, flags, type, copyFunc, disposeFunc, freeFunc);
 	}
 	
 	/**
@@ -186,13 +153,13 @@ public class MiniObject
 	 * of mini-object, see gst_mini_object_is_writable(). It is
 	 * important to note that keeping additional references to
 	 * GstMiniObject instances can potentially increase the number
-	 * of memcpy operations in a pipeline, especially if the minibject
+	 * of memcpy operations in a pipeline, especially if the miniobject
 	 * is a GstBuffer.
-	 * Returns: the mini-object.
+	 * Returns: the mini-object. [transfer full]
 	 */
 	public MiniObject doref()
 	{
-		// GstMiniObject* gst_mini_object_ref (GstMiniObject *mini_object);
+		// GstMiniObject * gst_mini_object_ref (GstMiniObject *mini_object);
 		auto p = gst_mini_object_ref(gstMiniObject);
 		
 		if(p is null)
@@ -214,86 +181,215 @@ public class MiniObject
 	}
 	
 	/**
-	 * Modifies a pointer to point to a new mini-object. The modification
-	 * is done atomically, and the reference counts are updated correctly.
-	 * Either newdata and the value pointed to by olddata may be NULL.
+	 * Adds a weak reference callback to a mini object. Weak references are
+	 * used for notification when a mini object is finalized. They are called
+	 * "weak references" because they allow you to safely hold a pointer
+	 * to the mini object without calling gst_mini_object_ref()
+	 * (gst_mini_object_ref() adds a strong reference, that is, forces the object
+	 * to stay alive).
 	 * Params:
-	 * olddata = pointer to a pointer to a mini-object to be replaced
-	 * newdata = pointer to new mini-object
+	 * notify = callback to invoke before the mini object is freed
+	 * data = extra data to pass to notify
 	 */
-	public static void replace(ref MiniObject olddata, MiniObject newdata)
+	public void weakRef(GstMiniObjectNotify notify, void* data)
 	{
-		// void gst_mini_object_replace (GstMiniObject **olddata,  GstMiniObject *newdata);
-		GstMiniObject* outolddata = (olddata is null) ? null : olddata.getMiniObjectStruct();
-		
-		gst_mini_object_replace(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct());
-		
-		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
+		// void gst_mini_object_weak_ref (GstMiniObject *object,  GstMiniObjectNotify notify,  gpointer data);
+		gst_mini_object_weak_ref(gstMiniObject, notify, data);
 	}
 	
 	/**
-	 * Creates a new GParamSpec instance that hold GstMiniObject references.
+	 * Removes a weak reference callback from a mini object.
 	 * Params:
-	 * name = the canonical name of the property
-	 * nick = the nickname of the property
-	 * blurb = a short description of the property
-	 * objectType = the GstMiniObjectType for the property
-	 * flags = a combination of GParamFlags
-	 * Returns: a newly allocated GParamSpec instance
+	 * notify = callback to search for
+	 * data = data to search for
 	 */
-	public static ParamSpec gstParamSpecMiniObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
+	public void weakUnref(GstMiniObjectNotify notify, void* data)
 	{
-		// GParamSpec* gst_param_spec_mini_object (const char *name,  const char *nick,  const char *blurb,  GType object_type,  GParamFlags flags);
-		auto p = gst_param_spec_mini_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
+		// void gst_mini_object_weak_unref (GstMiniObject *object,  GstMiniObjectNotify notify,  gpointer data);
+		gst_mini_object_weak_unref(gstMiniObject, notify, data);
+	}
+	
+	/**
+	 * Lock the mini-object with the specified access mode in flags.
+	 * Params:
+	 * flags = GstLockFlags
+	 * Returns: TRUE if object could be locked.
+	 */
+	public int lock(GstLockFlags flags)
+	{
+		// gboolean gst_mini_object_lock (GstMiniObject *object,  GstLockFlags flags);
+		return gst_mini_object_lock(gstMiniObject, flags);
+	}
+	
+	/**
+	 * Unlock the mini-object with the specified access mode in flags.
+	 * Params:
+	 * flags = GstLockFlags
+	 */
+	public void unlock(GstLockFlags flags)
+	{
+		// void gst_mini_object_unlock (GstMiniObject *object,  GstLockFlags flags);
+		gst_mini_object_unlock(gstMiniObject, flags);
+	}
+	
+	/**
+	 * If mini_object has the LOCKABLE flag set, check if the current EXCLUSIVE
+	 * lock on object is the only one, this means that changes to the object will
+	 * not be visible to any other object.
+	 * If the LOCKABLE flag is not set, check if the refcount of mini_object is
+	 * exactly 1, meaning that no other reference exists to the object and that the
+	 * object is therefore writable.
+	 * Modification of a mini-object should only be done after verifying that it
+	 * is writable.
+	 * Returns: TRUE if the object is writable.
+	 */
+	public int isWritable()
+	{
+		// gboolean gst_mini_object_is_writable (const GstMiniObject *mini_object);
+		return gst_mini_object_is_writable(gstMiniObject);
+	}
+	
+	/**
+	 * Checks if a mini-object is writable. If not, a writable copy is made and
+	 * returned. This gives away the reference to the original mini object,
+	 * and returns a reference to the new object.
+	 * MT safe
+	 * Returns: a mini-object (possibly the same pointer) that is writable. [transfer full]
+	 */
+	public MiniObject makeWritable()
+	{
+		// GstMiniObject * gst_mini_object_make_writable (GstMiniObject *mini_object);
+		auto p = gst_mini_object_make_writable(gstMiniObject);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
 	}
 	
 	/**
-	 * Set the contents of a GST_TYPE_MINI_OBJECT derived GValue to
-	 * mini_object.
-	 * The caller retains ownership of the reference.
-	 * Params:
-	 * value = a valid GValue of GST_TYPE_MINI_OBJECT derived type
-	 * miniObject = mini object value to set
+	 * Creates a copy of the mini-object.
+	 * MT safe
+	 * Returns: the new mini-object. [transfer full]
 	 */
-	public static void gstValueSetMiniObject(Value value, MiniObject miniObject)
+	public MiniObject copy()
 	{
-		// void gst_value_set_mini_object (GValue *value,  GstMiniObject *mini_object);
-		gst_value_set_mini_object((value is null) ? null : value.getValueStruct(), (miniObject is null) ? null : miniObject.getMiniObjectStruct());
+		// GstMiniObject * gst_mini_object_copy (const GstMiniObject *mini_object);
+		auto p = gst_mini_object_copy(gstMiniObject);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
 	}
 	
 	/**
-	 * Set the contents of a GST_TYPE_MINI_OBJECT derived GValue to
-	 * mini_object.
-	 * Takes over the ownership of the caller's reference to mini_object;
-	 * the caller doesn't have to unref it any more.
+	 * This sets an opaque, named pointer on a miniobject.
+	 * The name is specified through a GQuark (retrived e.g. via
+	 * g_quark_from_static_string()), and the pointer
+	 * can be gotten back from the object with gst_mini_object_get_qdata()
+	 * until the object is disposed.
+	 * Setting a previously set user data pointer, overrides (frees)
+	 * the old pointer set, using NULL as pointer essentially
+	 * removes the data stored.
+	 * destroy may be specified which is called with data as argument
+	 * when the object is disposed, or the data is being overwritten by
+	 * a call to gst_mini_object_set_qdata() with the same quark.
 	 * Params:
-	 * value = a valid GValue of GST_TYPE_MINI_OBJECT derived type
-	 * miniObject = mini object value to take
+	 * quark = A GQuark, naming the user data pointer
+	 * data = An opaque user data pointer
+	 * destroy = Function to invoke with data as argument, when data
+	 * needs to be freed
 	 */
-	public static void gstValueTakeMiniObject(Value value, MiniObject miniObject)
+	public void setQdata(GQuark quark, void* data, GDestroyNotify destroy)
 	{
-		// void gst_value_take_mini_object (GValue *value,  GstMiniObject *mini_object);
-		gst_value_take_mini_object((value is null) ? null : value.getValueStruct(), (miniObject is null) ? null : miniObject.getMiniObjectStruct());
+		// void gst_mini_object_set_qdata (GstMiniObject *object,  GQuark quark,  gpointer data,  GDestroyNotify destroy);
+		gst_mini_object_set_qdata(gstMiniObject, quark, data, destroy);
 	}
 	
 	/**
-	 * Get the contents of a GST_TYPE_MINI_OBJECT derived GValue.
-	 * Does not increase the refcount of the returned object.
+	 * This function gets back user data pointers stored via
+	 * gst_mini_object_set_qdata().
 	 * Params:
-	 * value = a valid GValue of GST_TYPE_MINI_OBJECT derived type
-	 * Returns: mini object contents of value
+	 * quark = A GQuark, naming the user data pointer
+	 * Returns: The user data pointer set, or NULL. [transfer none]
 	 */
-	public static MiniObject gstValueGetMiniObject(Value value)
+	public void* getQdata(GQuark quark)
 	{
-		// GstMiniObject* gst_value_get_mini_object (const GValue *value);
-		auto p = gst_value_get_mini_object((value is null) ? null : value.getValueStruct());
+		// gpointer gst_mini_object_get_qdata (GstMiniObject *object,  GQuark quark);
+		return gst_mini_object_get_qdata(gstMiniObject, quark);
+	}
+	
+	/**
+	 * This function gets back user data pointers stored via gst_mini_object_set_qdata()
+	 * and removes the data from object without invoking its destroy() function (if
+	 * any was set).
+	 * Params:
+	 * quark = A GQuark, naming the user data pointer
+	 * Returns: The user data pointer set, or NULL. [transfer full]
+	 */
+	public void* stealQdata(GQuark quark)
+	{
+		// gpointer gst_mini_object_steal_qdata (GstMiniObject *object,  GQuark quark);
+		return gst_mini_object_steal_qdata(gstMiniObject, quark);
+	}
+	
+	/**
+	 * Atomically modifies a pointer to point to a new mini-object.
+	 * The reference count of olddata is decreased and the reference count of
+	 * newdata is increased.
+	 * Either newdata and the value pointed to by olddata may be NULL.
+	 * Params:
+	 * olddata = pointer to a pointer to a mini-object to
+	 * be replaced. [inout][transfer full]
+	 * newdata = pointer to new mini-object
+	 * Returns: TRUE if newdata was different from olddata
+	 */
+	public static int replace(ref MiniObject olddata, MiniObject newdata)
+	{
+		// gboolean gst_mini_object_replace (GstMiniObject **olddata,  GstMiniObject *newdata);
+		GstMiniObject* outolddata = (olddata is null) ? null : olddata.getMiniObjectStruct();
+		
+		auto p = gst_mini_object_replace(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct());
+		
+		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
+		return p;
+	}
+	
+	/**
+	 * Modifies a pointer to point to a new mini-object. The modification
+	 * is done atomically. This version is similar to gst_mini_object_replace()
+	 * except that it does not increase the refcount of newdata and thus
+	 * takes ownership of newdata.
+	 * Either newdata and the value pointed to by olddata may be NULL.
+	 * Params:
+	 * olddata = pointer to a pointer to a mini-object to
+	 * be replaced. [inout][transfer full]
+	 * newdata = pointer to new mini-object
+	 * Returns: TRUE if newdata was different from olddata
+	 */
+	public static int take(GstMiniObject** olddata, MiniObject newdata)
+	{
+		// gboolean gst_mini_object_take (GstMiniObject **olddata,  GstMiniObject *newdata);
+		return gst_mini_object_take(olddata, (newdata is null) ? null : newdata.getMiniObjectStruct());
+	}
+	
+	/**
+	 * Replace the current GstMiniObject pointer to by olddata with NULL and
+	 * return the old value.
+	 * Params:
+	 * olddata = pointer to a pointer to a mini-object to
+	 * be stolen. [inout][transfer full]
+	 * Returns: the GstMiniObject at oldata
+	 */
+	public static MiniObject steal(GstMiniObject** olddata)
+	{
+		// GstMiniObject * gst_mini_object_steal (GstMiniObject **olddata);
+		auto p = gst_mini_object_steal(olddata);
 		
 		if(p is null)
 		{

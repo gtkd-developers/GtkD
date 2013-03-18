@@ -83,8 +83,7 @@ private import gstreamer.Bin;
  * A GstPipeline is a special GstBin used as the toplevel container for
  * the filter graph. The GstPipeline will manage the selection and
  * distribution of a global GstClock as well as provide a GstBus to the
- * application. It will also implement a default behavour for managing
- * seek events (see gst_element_seek()).
+ * application.
  *
  * gst_pipeline_new() is used to create a pipeline. when you are done with
  * the pipeline, use gst_object_unref() to free its resources including all
@@ -116,21 +115,18 @@ private import gstreamer.Bin;
  * gst_pipeline_auto_clock() the default clock selection algorithm can be
  * restored.
  *
- * A GstPipeline maintains a stream time for the elements. The stream
+ * A GstPipeline maintains a running time for the elements. The running
  * time is defined as the difference between the current clock time and
  * the base time. When the pipeline goes to READY or a flushing seek is
- * performed on it, the stream time is reset to 0. When the pipeline is
+ * performed on it, the running time is reset to 0. When the pipeline is
  * set from PLAYING to PAUSED, the current clock time is sampled and used to
  * configure the base time for the elements when the pipeline is set
- * to PLAYING again. This default behaviour can be changed with the
- * gst_pipeline_set_new_stream_time() method.
+ * to PLAYING again. The effect is that the running time (as the difference
+ * between the clock time and the base time) will count how much time was spent
+ * in the PLAYING state. This default behaviour can be changed with the
+ * gst_element_set_start_time() method.
  *
- * When sending a flushing seek event to a GstPipeline (see
- * gst_element_seek()), it will make sure that the pipeline is properly
- * PAUSED and resumed as well as set the new stream time to 0 when the
- * seek succeeded.
- *
- * Last reviewed on 2006-03-12 (0.10.5)
+ * Last reviewed on 2012-03-29 (0.11.3)
  */
 public class Pipeline : Bin
 {
@@ -177,7 +173,7 @@ public class Pipeline : Bin
 	 */
 	public this (string name)
 	{
-		// GstElement* gst_pipeline_new (const gchar *name);
+		// GstElement * gst_pipeline_new (const gchar *name);
 		auto p = gst_pipeline_new(Str.toStringz(name));
 		if(p is null)
 		{
@@ -187,12 +183,13 @@ public class Pipeline : Bin
 	}
 	
 	/**
-	 * Gets the GstBus of pipeline.
-	 * Returns: a GstBus, unref after usage. MT safe.
+	 * Gets the GstBus of pipeline. The bus allows applications to receive
+	 * GstMessage packets.
+	 * Returns: a GstBus, unref after usage. MT safe. [transfer full]
 	 */
 	public override Bus getBus()
 	{
-		// GstBus* gst_pipeline_get_bus (GstPipeline *pipeline);
+		// GstBus * gst_pipeline_get_bus (GstPipeline *pipeline);
 		auto p = gst_pipeline_get_bus(gstPipeline);
 		
 		if(p is null)
@@ -207,7 +204,7 @@ public class Pipeline : Bin
 	 * Set the clock for pipeline. The clock will be distributed
 	 * to all the elements managed by the pipeline.
 	 * Params:
-	 * clock = the clock to set
+	 * clock = the clock to set. [transfer none]
 	 * Returns: TRUE if the clock could be set on the pipeline. FALSE if some element did not accept the clock. MT safe.
 	 */
 	public override int setClock(Clock clock)
@@ -218,11 +215,11 @@ public class Pipeline : Bin
 	
 	/**
 	 * Gets the current clock used by pipeline.
-	 * Returns: a GstClock, unref after usage.
+	 * Returns: a GstClock, unref after usage. [transfer full]
 	 */
 	public override Clock getClock()
 	{
-		// GstClock* gst_pipeline_get_clock (GstPipeline *pipeline);
+		// GstClock * gst_pipeline_get_clock (GstPipeline *pipeline);
 		auto p = gst_pipeline_get_clock(gstPipeline);
 		
 		if(p is null)
@@ -241,7 +238,7 @@ public class Pipeline : Bin
 	 * the pipeline run as fast as possible.
 	 * MT safe.
 	 * Params:
-	 * clock = the clock to use
+	 * clock = the clock to use. [transfer none]
 	 */
 	public void useClock(Clock clock)
 	{
@@ -264,41 +261,6 @@ public class Pipeline : Bin
 	}
 	
 	/**
-	 * Set the new stream time of pipeline to time. The stream time is used to
-	 * set the base time on the elements (see gst_element_set_base_time())
-	 * in the PAUSED->PLAYING state transition.
-	 * Setting time to GST_CLOCK_TIME_NONE will disable the pipeline's management
-	 * of element base time. The application will then be responsible for
-	 * performing base time distribution. This is sometimes useful if you want to
-	 * synchronize capture from multiple pipelines, and you can also ensure that the
-	 * pipelines have the same clock.
-	 * MT safe.
-	 * Params:
-	 * time = the new stream time to set
-	 */
-	public void setNewStreamTime(GstClockTime time)
-	{
-		// void gst_pipeline_set_new_stream_time (GstPipeline *pipeline,  GstClockTime time);
-		gst_pipeline_set_new_stream_time(gstPipeline, time);
-	}
-	
-	/**
-	 * Gets the last stream time of pipeline. If the pipeline is PLAYING,
-	 * the returned time is the stream time used to configure the element's
-	 * base time in the PAUSED->PLAYING state. If the pipeline is PAUSED, the
-	 * returned time is the stream time when the pipeline was paused.
-	 * This function returns GST_CLOCK_TIME_NONE if the pipeline was
-	 * configured to not handle the management of the element's base time
-	 * (see gst_pipeline_set_new_stream_time()).
-	 * Returns: a GstClockTime. MT safe.
-	 */
-	public GstClockTime getLastStreamTime()
-	{
-		// GstClockTime gst_pipeline_get_last_stream_time (GstPipeline *pipeline);
-		return gst_pipeline_get_last_stream_time(gstPipeline);
-	}
-	
-	/**
 	 * Usually, when a pipeline goes from READY to NULL state, it automatically
 	 * flushes all pending messages on the bus, which is done for refcounting
 	 * purposes, to break circular references.
@@ -313,7 +275,6 @@ public class Pipeline : Bin
 	 * Params:
 	 * autoFlush = whether or not to automatically flush the bus when
 	 * the pipeline goes from READY to NULL state
-	 * Since 0.10.4
 	 */
 	public void setAutoFlushBus(int autoFlush)
 	{
@@ -324,7 +285,7 @@ public class Pipeline : Bin
 	/**
 	 * Check if pipeline will automatically flush messages when going to
 	 * the NULL state.
-	 * Returns: whether the pipeline will automatically flush its bus when going from READY to NULL state or not. MT safe. Since 0.10.4
+	 * Returns: whether the pipeline will automatically flush its bus when going from READY to NULL state or not. MT safe.
 	 */
 	public int getAutoFlushBus()
 	{
@@ -343,7 +304,6 @@ public class Pipeline : Bin
 	 * MT safe.
 	 * Params:
 	 * delay = the delay
-	 * Since 0.10.5
 	 */
 	public void setDelay(GstClockTime delay)
 	{
@@ -353,7 +313,7 @@ public class Pipeline : Bin
 	
 	/**
 	 * Get the configured delay (see gst_pipeline_set_delay()).
-	 * Returns: The configured delay. MT safe. Since 0.10.5
+	 * Returns: The configured delay. MT safe.
 	 */
 	public GstClockTime getDelay()
 	{

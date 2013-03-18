@@ -42,14 +42,14 @@
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gst_caps_save_thyself
- * 	- gst_caps_load_thyself
  * 	- gst_caps_new_any
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.Value
  * 	- gstreamer.Structure
  * structWrap:
+ * 	- GValue* -> Value
  * 	- GstCaps* -> Caps
  * 	- GstStructure* -> Structure
  * module aliases:
@@ -68,39 +68,36 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import gobject.Value;
 private import gstreamer.Structure;
 
 
 
 
 /**
- * Caps (capabilities) are lighweight refcounted objects describing media types.
+ * Caps (capabilities) are lightweight refcounted objects describing media types.
  * They are composed of an array of GstStructure.
  *
  * Caps are exposed on GstPadTemplate to describe all possible types a
  * given pad can handle. They are also stored in the GstRegistry along with
  * a description of the GstElement.
  *
- * Caps are exposed on the element pads using the gst_pad_get_caps() pad
+ * Caps are exposed on the element pads using the gst_pad_query_caps() pad
  * function. This function describes the possible types that the pad can
  * handle or produce at runtime.
- *
- * Caps are also attached to buffers to describe to content of the data
- * pointed to by the buffer with gst_buffer_set_caps(). Caps attached to
- * a GstBuffer allow for format negotiation upstream and downstream.
  *
  * A GstCaps can be constructed with the following code fragment:
  *
  * $(DDOC_COMMENT example)
  *
  * A GstCaps is fixed when it has no properties with ranges or lists. Use
- * gst_caps_is_fixed() to test for fixed caps. Only fixed caps can be
- * set on a GstPad or GstBuffer.
+ * gst_caps_is_fixed() to test for fixed caps. Fixed caps can be used in a
+ * caps event to notify downstream elements of the current media type.
  *
  * Various methods exist to work with the media types such as subtracting
  * or intersecting.
  *
- * Last reviewed on 2007-02-13 (0.10.10)
+ * Last reviewed on 2011-03-28 (0.11.3)
  */
 public class Caps
 {
@@ -154,16 +151,36 @@ public class Caps
 	/**
 	 * Creates a new GstCaps that is empty. That is, the returned
 	 * GstCaps contains no media formats.
+	 * The GstCaps is guaranteed to be writable.
 	 * Caller is responsible for unreffing the returned caps.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this ()
 	{
-		// GstCaps* gst_caps_new_empty (void);
+		// GstCaps * gst_caps_new_empty (void);
 		auto p = gst_caps_new_empty();
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_caps_new_empty()");
+		}
+		this(cast(GstCaps*) p);
+	}
+	
+	/**
+	 * Creates a new GstCaps that contains one GstStructure with name
+	 * media_type.
+	 * Caller is responsible for unreffing the returned caps.
+	 * Params:
+	 * mediaType = the media type of the structure
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string mediaType)
+	{
+		// GstCaps * gst_caps_new_empty_simple (const char *media_type);
+		auto p = gst_caps_new_empty_simple(Str.toStringz(mediaType));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_caps_new_empty_simple(Str.toStringz(mediaType))");
 		}
 		this(cast(GstCaps*) p);
 	}
@@ -179,7 +196,7 @@ public class Caps
 	 */
 	public this (Structure structure, void* varArgs)
 	{
-		// GstCaps* gst_caps_new_full_valist (GstStructure *structure,  va_list var_args);
+		// GstCaps * gst_caps_new_full_valist (GstStructure *structure,  va_list var_args);
 		auto p = gst_caps_new_full_valist((structure is null) ? null : structure.getStructureStruct(), varArgs);
 		if(p is null)
 		{
@@ -199,7 +216,7 @@ public class Caps
 	 */
 	public Caps copy()
 	{
-		// GstCaps* gst_caps_copy (const GstCaps *caps);
+		// GstCaps * gst_caps_copy (const GstCaps *caps);
 		auto p = gst_caps_copy(gstCaps);
 		
 		if(p is null)
@@ -215,11 +232,11 @@ public class Caps
 	 * contained in caps.
 	 * Params:
 	 * nth = the nth structure to copy
-	 * Returns: the new GstCaps
+	 * Returns: the new GstCaps. [transfer full]
 	 */
 	public Caps copyNth(uint nth)
 	{
-		// GstCaps* gst_caps_copy_nth (const GstCaps *caps,  guint nth);
+		// GstCaps * gst_caps_copy_nth (const GstCaps *caps,  guint nth);
 		auto p = gst_caps_copy_nth(gstCaps, nth);
 		
 		if(p is null)
@@ -234,11 +251,11 @@ public class Caps
 	 * Converts a GstStaticCaps to a GstCaps.
 	 * Params:
 	 * staticCaps = the GstStaticCaps to convert
-	 * Returns: A pointer to the GstCaps. Unref after usage. Since the core holds an additional ref to the returned caps, use gst_caps_make_writable() on the returned caps to modify it.
+	 * Returns: a pointer to the GstCaps. Unref after usage. Since the core holds an additional ref to the returned caps, use gst_caps_make_writable() on the returned caps to modify it. [transfer full]
 	 */
 	public static Caps staticCapsGet(GstStaticCaps* staticCaps)
 	{
-		// GstCaps* gst_static_caps_get (GstStaticCaps *static_caps);
+		// GstCaps * gst_static_caps_get (GstStaticCaps *static_caps);
 		auto p = gst_static_caps_get(staticCaps);
 		
 		if(p is null)
@@ -250,11 +267,22 @@ public class Caps
 	}
 	
 	/**
+	 * Clean up the cached caps contained in static_caps.
+	 * Params:
+	 * staticCaps = the GstStaticCaps to clean
+	 */
+	public static void staticCapsCleanup(GstStaticCaps* staticCaps)
+	{
+		// void gst_static_caps_cleanup (GstStaticCaps *static_caps);
+		gst_static_caps_cleanup(staticCaps);
+	}
+	
+	/**
 	 * Appends the structures contained in caps2 to caps1. The structures in
 	 * caps2 are not copied -- they are transferred to caps1, and then caps2 is
 	 * freed. If either caps is ANY, the resulting caps will be ANY.
 	 * Params:
-	 * caps2 = the GstCaps to append
+	 * caps2 = the GstCaps to append. [transfer full]
 	 */
 	public void append(Caps caps2)
 	{
@@ -265,23 +293,30 @@ public class Caps
 	/**
 	 * Appends the structures contained in caps2 to caps1 if they are not yet
 	 * expressed by caps1. The structures in caps2 are not copied -- they are
-	 * transferred to caps1, and then caps2 is freed.
+	 * transferred to a writable copy of caps1, and then caps2 is freed.
 	 * If either caps is ANY, the resulting caps will be ANY.
 	 * Params:
-	 * caps2 = the GstCaps to merge in
-	 * Since 0.10.10
+	 * caps2 = the GstCaps to merge in. [transfer full]
+	 * Returns: the merged caps. [transfer full]
 	 */
-	public void merge(Caps caps2)
+	public Caps merge(Caps caps2)
 	{
-		// void gst_caps_merge (GstCaps *caps1,  GstCaps *caps2);
-		gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		// GstCaps * gst_caps_merge (GstCaps *caps1,  GstCaps *caps2);
+		auto p = gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
 	 * Appends structure to caps. The structure is not copied; caps
 	 * becomes the owner of structure.
 	 * Params:
-	 * structure = the GstStructure to append
+	 * structure = the GstStructure to append. [transfer full]
 	 */
 	public void appendStructure(Structure structure)
 	{
@@ -302,15 +337,42 @@ public class Caps
 	}
 	
 	/**
-	 * Appends structure to caps if its not already expressed by caps. The
-	 * structure is not copied; caps becomes the owner of structure.
+	 * Retrieves the structure with the given index from the list of structures
+	 * contained in caps. The caller becomes the owner of the returned structure.
 	 * Params:
-	 * structure = the GstStructure to merge
+	 * index = Index of the structure to retrieve
+	 * Returns: a pointer to the GstStructure corresponding to index. [transfer full]
 	 */
-	public void mergeStructure(Structure structure)
+	public Structure stealStructure(uint index)
 	{
-		// void gst_caps_merge_structure (GstCaps *caps,  GstStructure *structure);
-		gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct());
+		// GstStructure * gst_caps_steal_structure (GstCaps *caps,  guint index);
+		auto p = gst_caps_steal_structure(gstCaps, index);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+	}
+	
+	/**
+	 * Appends structure to caps if its not already expressed by caps.
+	 * Params:
+	 * structure = the GstStructure to merge. [transfer full]
+	 * Returns: the merged caps. [transfer full]
+	 */
+	public Caps mergeStructure(Structure structure)
+	{
+		// GstCaps * gst_caps_merge_structure (GstCaps *caps,  GstStructure *structure);
+		auto p = gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
@@ -329,14 +391,20 @@ public class Caps
 	 * WARNING: This function takes a const GstCaps *, but returns a
 	 * non-const GstStructure *. This is for programming convenience --
 	 * the caller should be aware that structures inside a constant
-	 * GstCaps should not be modified.
+	 * GstCaps should not be modified. However, if you know the caps
+	 * are writable, either because you have just copied them or made
+	 * them writable with gst_caps_make_writable(), you may modify the
+	 * structure returned in the usual way, e.g. with functions like
+	 * gst_structure_set().
+	 * You do not need to free or unref the structure returned, it
+	 * belongs to the GstCaps.
 	 * Params:
 	 * index = the index of the structure
-	 * Returns: a pointer to the GstStructure corresponding to index
+	 * Returns: a pointer to the GstStructure corresponding to index. [transfer none]
 	 */
 	public Structure getStructure(uint index)
 	{
-		// GstStructure* gst_caps_get_structure (const GstCaps *caps,  guint index);
+		// GstStructure * gst_caps_get_structure (const GstCaps *caps,  guint index);
 		auto p = gst_caps_get_structure(gstCaps, index);
 		
 		if(p is null)
@@ -348,8 +416,21 @@ public class Caps
 	}
 	
 	/**
-	 * Sets fields in a simple GstCaps. A simple GstCaps is one that
-	 * only has one structure. The arguments must be passed in the same
+	 * Sets the given field on all structures of caps to the given value.
+	 * This is a convenience function for calling gst_structure_set_value() on
+	 * all structures of caps.
+	 * Params:
+	 * field = name of the field to set
+	 * value = value to set the field to
+	 */
+	public void setValue(string field, Value value)
+	{
+		// void gst_caps_set_value (GstCaps *caps,  const char *field,  const GValue *value);
+		gst_caps_set_value(gstCaps, Str.toStringz(field), (value is null) ? null : value.getValueStruct());
+	}
+	
+	/**
+	 * Sets fields in a GstCaps. The arguments must be passed in the same
 	 * manner as gst_structure_set(), and be NULL-terminated.
 	 * Params:
 	 * field = first field to set
@@ -357,7 +438,7 @@ public class Caps
 	 */
 	public void setSimpleValist(string field, void* varargs)
 	{
-		// void gst_caps_set_simple_valist (GstCaps *caps,  char *field,  va_list varargs);
+		// void gst_caps_set_simple_valist (GstCaps *caps,  const char *field,  va_list varargs);
 		gst_caps_set_simple_valist(gstCaps, Str.toStringz(field), varargs);
 	}
 	
@@ -398,7 +479,6 @@ public class Caps
 	 * Note
 	 * This function does not work reliably if optional properties for caps
 	 * are included on one caps and omitted on the other.
-	 * This function deals correctly with passing NULL for any of the caps.
 	 * Params:
 	 * caps2 = another GstCaps
 	 * Returns: TRUE if both caps are equal.
@@ -420,6 +500,18 @@ public class Caps
 	{
 		// gboolean gst_caps_is_equal_fixed (const GstCaps *caps1,  const GstCaps *caps2);
 		return gst_caps_is_equal_fixed(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+	}
+	
+	/**
+	 * Checks if the given caps are exactly the same set of caps.
+	 * Params:
+	 * caps2 = another GstCaps
+	 * Returns: TRUE if both caps are strictly equal.
+	 */
+	public int isStrictlyEqual(Caps caps2)
+	{
+		// gboolean gst_caps_is_strictly_equal (const GstCaps *caps1,  const GstCaps *caps2);
+		return gst_caps_is_strictly_equal(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
 	}
 	
 	/**
@@ -452,15 +544,41 @@ public class Caps
 	}
 	
 	/**
+	 * Checks if structure is a subset of caps. See gst_caps_is_subset()
+	 * for more information.
+	 * Params:
+	 * structure = a potential GstStructure subset of caps
+	 * Returns: TRUE if structure is a subset of caps
+	 */
+	public int isSubsetStructure(Structure structure)
+	{
+		// gboolean gst_caps_is_subset_structure (const GstCaps *caps,  const GstStructure *structure);
+		return gst_caps_is_subset_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct());
+	}
+	
+	/**
+	 * Tries intersecting caps1 and caps2 and reports whether the result would not
+	 * be empty
+	 * Params:
+	 * caps2 = a GstCaps to intersect
+	 * Returns: TRUE if intersection would be not empty
+	 */
+	public int canIntersect(Caps caps2)
+	{
+		// gboolean gst_caps_can_intersect (const GstCaps *caps1,  const GstCaps *caps2);
+		return gst_caps_can_intersect(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+	}
+	
+	/**
 	 * Creates a new GstCaps that contains all the formats that are common
-	 * to both caps1 and caps2.
+	 * to both caps1 and caps2. Defaults to GST_CAPS_INTERSECT_ZIG_ZAG mode.
 	 * Params:
 	 * caps2 = a GstCaps to intersect
 	 * Returns: the new GstCaps
 	 */
 	public Caps intersect(Caps caps2)
 	{
-		// GstCaps* gst_caps_intersect (const GstCaps *caps1,  const GstCaps *caps2);
+		// GstCaps * gst_caps_intersect (GstCaps *caps1,  GstCaps *caps2);
 		auto p = gst_caps_intersect(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
 		
 		if(p is null)
@@ -472,16 +590,18 @@ public class Caps
 	}
 	
 	/**
-	 * Creates a new GstCaps that contains all the formats that are in
-	 * either caps1 and caps2.
+	 * Creates a new GstCaps that contains all the formats that are common
+	 * to both caps1 and caps2, the order is defined by the GstCapsIntersectMode
+	 * used.
 	 * Params:
-	 * caps2 = a GstCaps to union
+	 * caps2 = a GstCaps to intersect
+	 * mode = The intersection algorithm/mode to use
 	 * Returns: the new GstCaps
 	 */
-	public Caps unio(Caps caps2)
+	public Caps intersectFull(Caps caps2, GstCapsIntersectMode mode)
 	{
-		// GstCaps* gst_caps_union (const GstCaps *caps1,  const GstCaps *caps2);
-		auto p = gst_caps_union(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		// GstCaps * gst_caps_intersect_full (GstCaps *caps1,  GstCaps *caps2,  GstCapsIntersectMode mode);
+		auto p = gst_caps_intersect_full(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(), mode);
 		
 		if(p is null)
 		{
@@ -492,14 +612,15 @@ public class Caps
 	}
 	
 	/**
-	 * Creates a new GstCaps that represents the same set of formats as
+	 * Returns a GstCaps that represents the same set of formats as
 	 * caps, but contains no lists. Each list is expanded into separate
 	 * GstStructures.
-	 * Returns: the new GstCaps
+	 * This function takes ownership of caps.
+	 * Returns: the normalized GstCaps. [transfer full]
 	 */
 	public Caps normalize()
 	{
-		// GstCaps* gst_caps_normalize (const GstCaps *caps);
+		// GstCaps * gst_caps_normalize (GstCaps *caps);
 		auto p = gst_caps_normalize(gstCaps);
 		
 		if(p is null)
@@ -511,46 +632,70 @@ public class Caps
 	}
 	
 	/**
-	 * Modifies the given caps inplace into a representation that represents the
+	 * Converts the given caps into a representation that represents the
 	 * same set of formats, but in a simpler form. Component structures that are
 	 * identical are merged. Component structures that have values that can be
 	 * merged are also merged.
-	 * Returns: TRUE, if the caps could be simplified
+	 * This method does not preserve the original order of caps.
+	 * Returns: The simplified caps.
 	 */
-	public int doSimplify()
+	public Caps simplify()
 	{
-		// gboolean gst_caps_do_simplify (GstCaps *caps);
-		return gst_caps_do_simplify(gstCaps);
+		// GstCaps * gst_caps_simplify (GstCaps *caps);
+		auto p = gst_caps_simplify(gstCaps);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 	
 	/**
-	 * Replaces *caps with newcaps. Unrefs the GstCaps in the location
-	 * pointed to by caps, if applicable, then modifies caps to point to
-	 * newcaps. An additional ref on newcaps is taken.
-	 * This function does not take any locks so you might want to lock
-	 * the object owning caps pointer.
+	 * Modifies a pointer to a GstCaps to point to a different GstCaps. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * caps is unreffed, the new is reffed).
+	 * Either ncaps or the GstCaps pointed to by ocaps may be NULL.
 	 * Params:
-	 * caps = a pointer to GstCaps
-	 * newcaps = a GstCaps to replace *caps
+	 * oldCaps = pointer to a pointer to a GstCaps to be
+	 * replaced. [inout][transfer full]
+	 * newCaps = pointer to a GstCaps that will
+	 * replace the caps pointed to by ocaps. [transfer none][allow-none]
+	 * Returns: TRUE if new_caps was different from old_caps
 	 */
-	public static void replace(ref Caps caps, Caps newcaps)
+	public static int replace(GstCaps** oldCaps, Caps newCaps)
 	{
-		// void gst_caps_replace (GstCaps **caps,  GstCaps *newcaps);
-		GstCaps* outcaps = (caps is null) ? null : caps.getCapsStruct();
-		
-		gst_caps_replace(&outcaps, (newcaps is null) ? null : newcaps.getCapsStruct());
-		
-		caps = ObjectG.getDObject!(Caps)(outcaps);
+		// gboolean gst_caps_replace (GstCaps **old_caps,  GstCaps *new_caps);
+		return gst_caps_replace(oldCaps, (newCaps is null) ? null : newCaps.getCapsStruct());
+	}
+	
+	/**
+	 * Modifies a pointer to a GstCaps to point to a different GstCaps. This
+	 * function is similar to gst_caps_replace() except that it takes ownership
+	 * of new_caps.
+	 * Params:
+	 * oldCaps = pointer to a pointer to a GstCaps to be
+	 * replaced. [inout][transfer full]
+	 * newCaps = pointer to a GstCaps that will
+	 * replace the caps pointed to by ocaps. [transfer full][allow-none]
+	 * Returns: TRUE if new_caps was different from old_caps
+	 */
+	public static int take(GstCaps** oldCaps, Caps newCaps)
+	{
+		// gboolean gst_caps_take (GstCaps **old_caps,  GstCaps *new_caps);
+		return gst_caps_take(oldCaps, (newCaps is null) ? null : newCaps.getCapsStruct());
 	}
 	
 	/**
 	 * Converts caps to a string representation. This string representation
 	 * can be converted back to a GstCaps by gst_caps_from_string().
-	 * Returns: a newly allocated string representing caps.
+	 * Returns: a newly allocated string representing caps. [transfer full]
 	 */
 	public override string toString()
 	{
-		// gchar* gst_caps_to_string (const GstCaps *caps);
+		// gchar * gst_caps_to_string (const GstCaps *caps);
 		return Str.toString(gst_caps_to_string(gstCaps));
 	}
 	
@@ -558,11 +703,11 @@ public class Caps
 	 * Converts caps from a string representation.
 	 * Params:
 	 * string = a string to convert to GstCaps
-	 * Returns: a newly allocated GstCaps
+	 * Returns: a newly allocated GstCaps. [transfer full]
 	 */
 	public static Caps fromString(string string)
 	{
-		// GstCaps* gst_caps_from_string (const gchar *string);
+		// GstCaps * gst_caps_from_string (const gchar *string);
 		auto p = gst_caps_from_string(Str.toStringz(string));
 		
 		if(p is null)
@@ -579,12 +724,12 @@ public class Caps
 	 * This function does not work reliably if optional properties for caps
 	 * are included on one caps and omitted on the other.
 	 * Params:
-	 * subtrahend = GstCaps to substract
+	 * subtrahend = GstCaps to subtract
 	 * Returns: the resulting caps
 	 */
 	public Caps subtract(Caps subtrahend)
 	{
-		// GstCaps* gst_caps_subtract (const GstCaps *minuend,  const GstCaps *subtrahend);
+		// GstCaps * gst_caps_subtract (GstCaps *minuend,  GstCaps *subtrahend);
 		auto p = gst_caps_subtract(gstCaps, (subtrahend is null) ? null : subtrahend.getCapsStruct());
 		
 		if(p is null)
@@ -596,21 +741,33 @@ public class Caps
 	}
 	
 	/**
-	 * Returns a writable copy of caps.
-	 * If there is only one reference count on caps, the caller must be the owner,
-	 * and so this function will return the caps object unchanged. If on the other
-	 * hand there is more than one reference on the object, a new caps object will
-	 * be returned. The caller's reference on caps will be removed, and instead the
-	 * caller will own a reference to the returned object.
-	 * In short, this function unrefs the caps in the argument and refs the caps
-	 * that it returns. Don't access the argument after calling this function. See
-	 * also: gst_caps_ref().
-	 * Returns: the same GstCaps object.
+	 * Discard all but the first structure from caps. Useful when
+	 * fixating.
+	 * Returns: truncated caps. [transfer full]
 	 */
-	public Caps makeWritable()
+	public Caps truncate()
 	{
-		// GstCaps* gst_caps_make_writable (GstCaps *caps);
-		auto p = gst_caps_make_writable(gstCaps);
+		// GstCaps * gst_caps_truncate (GstCaps *caps);
+		auto p = gst_caps_truncate(gstCaps);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+	}
+	
+	/**
+	 * Modifies the given caps into a representation with only fixed
+	 * values. First the caps will be truncated and then the first structure will be
+	 * fixated with gst_structure_fixate().
+	 * Returns: the fixated caps. [transfer full]
+	 */
+	public Caps fixate()
+	{
+		// GstCaps * gst_caps_fixate (GstCaps *caps);
+		auto p = gst_caps_fixate(gstCaps);
 		
 		if(p is null)
 		{
@@ -626,13 +783,13 @@ public class Caps
 	 * gst_caps_make_writable(), it is guaranteed that the caps object will not
 	 * change. This means its structures won't change, etc. To use a GstCaps
 	 * object, you must always have a refcount on it -- either the one made
-	 * implicitly by gst_caps_new(), or via taking one explicitly with this
-	 * function.
+	 * implicitly by e.g. gst_caps_new_simple(), or via taking one explicitly with
+	 * this function.
 	 * Returns: the same GstCaps object.
 	 */
 	public Caps doref()
 	{
-		// GstCaps* gst_caps_ref (GstCaps *caps);
+		// GstCaps * gst_caps_ref (GstCaps *caps);
 		auto p = gst_caps_ref(gstCaps);
 		
 		if(p is null)
@@ -641,16 +798,6 @@ public class Caps
 		}
 		
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
-	}
-	
-	/**
-	 * Destructively discard all but the first structure from caps. Useful when
-	 * fixating. caps must be writable.
-	 */
-	public void truncate()
-	{
-		// void gst_caps_truncate (GstCaps *caps);
-		gst_caps_truncate(gstCaps);
 	}
 	
 	/**
